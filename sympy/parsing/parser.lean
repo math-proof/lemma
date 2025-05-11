@@ -318,7 +318,7 @@ cond = {← ppExpr cond}
         return const (Constant.ident name)
     | .BinaryInfix ⟨`HDiv.hDiv⟩ =>
       if e.isIntDiv then
-        return Basic (.ExprWithAttr (.LMethod `Int.ediv)) args
+        return Basic (.ExprWithAttr (.LMethod `Int.ediv 0)) args
     | _ =>
       pure ()
     return Basic func args

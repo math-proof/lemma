@@ -99,6 +99,7 @@ def UnaryPrefix.func : UnaryPrefix → Func
     | `Nat.cast
     | `Int.cast
     | `Rat.cast
+    | `Fin.val
     | `Subtype.val => ⟨72, "↑", "\\uparrow"⟩  -- L_uparrow
     | `DFunLike.coe => ⟨72, "⇑", "\\Uparrow"⟩  -- LUparrow
     | `Real.sqrt
@@ -203,9 +204,11 @@ def Special.func : Special → Func
     | `ite => ⟨60, "ite", "ite"⟩  -- LITE
     | `dite => ⟨60, "ite", "ite"⟩  -- LITE
     | `Subtype.mk
+    | `Fin.mk
     | `Prod.mk => ⟨117, "⟨%s, %s⟩", "\\langle %s, %s \\rangle"⟩  -- LAngleBracket
     | `List.get
     | `List.Vector.get
+    | `Tensor.get
     | `GetElem.getElem => ⟨99, "%s[%s]", "%s_%s"⟩  -- LGetElem
     | `GetElem?.getElem? => ⟨99, "%s[%s]?", "%s_{%s?}"⟩  -- LGetElemQue
     | `Nat.ModEq => ⟨32, "%s ≡ %s [MOD %s]", "%s \\equiv %s\\ \\left[\\operatorname{MOD}\\ %s\\right]"⟩  -- L_equiv
@@ -221,9 +224,9 @@ def Special.func : Special → Func
 inductive ExprWithAttr where
   | L_function (name : Name)
   | L_operatorname (name : Name)
-  | LMethod (name : Name)
   | L_typeclass (name : Name)
-  | LAttr (name : Name)
+  | LMethod (name : Name) (idx : Nat) --idx denotes the first index of the self parameter in the default argument list
+  | LProperty (name : Name)
 deriving BEq, Repr
 
 
@@ -238,9 +241,6 @@ def ExprWithAttr.func : ExprWithAttr → Func
       name,
       "\\operatorname{%s}".format name.escape_specials
     ⟩
-  | LMethod name =>
-    let name := name.getLast.toString
-    ⟨71, s!"%s.{name} %s", s!"%s.{name.escape_specials}\\ %s"⟩
   | L_typeclass name =>
     let name := name.getLast.toString
     ⟨
@@ -248,7 +248,10 @@ def ExprWithAttr.func : ExprWithAttr → Func
       name,
       "\\operatorname{\\color{#770088}{%s}}".format name.escape_specials
     ⟩
-  | LAttr name =>
+  | LMethod name idx =>
+    let name := name.getLast.toString
+    ⟨73, s!"%s.{name} %s", s!"%s.{name.escape_specials}\\ %s"⟩
+  | LProperty name =>
     let name := name.getLast.toString
     ⟨81, s!".{name}", s!".{name.escape_specials}"⟩
 
@@ -256,13 +259,13 @@ def ExprWithAttr.func : ExprWithAttr → Func
 def ExprWithAttr.name : ExprWithAttr → Name
   | L_function name
   | L_operatorname name
-  | LMethod name
   | L_typeclass name
-  | LAttr name => name
+  | LMethod name idx
+  | LProperty name => name
 
 
 def ExprWithAttr.isProp : ExprWithAttr → Bool
-  | .LAttr `IsConstant.is_constant => true
+  | .LProperty `IsConstant.is_constant => true
   | _ => false
 
 
@@ -308,6 +311,10 @@ instance : ToString Operator where
 
 def Operator.command : Operator → String :=
   Func.command ∘ Operator.func
+
+def Operator.methodIdx : Operator → Nat
+  | ExprWithAttr (.LMethod _ idx) => idx
+  | _ => 0
 
 
 inductive Expr where
@@ -465,6 +472,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Nat.cast
     | `Int.cast
     | `Rat.cast
+    | `Fin.val
     | `Subtype.val
     | `DFunLike.coe =>
       return .Operator (.UnaryPrefix ⟨declName⟩)
@@ -478,32 +486,6 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Real.arcsin
     | `Complex.arg =>
       return .Operator (.ExprWithAttr (.L_function declName))
-
-    | `List.length
-    | `List.tail
-    | `List.sum
-    | `List.prod
-    | `List.flatten
-    | `Prod.fst
-    | `Prod.snd
-    | `List.Vector.length
-    | `List.Vector.head
-    | `List.Vector.tail
-    | `List.Vector.sum
-    | `List.Vector.toList
-    | `List.Vector.flatten
-    | `List.Vector.unflatten
-    | `Nat.pred
-    | `Nat.succ
-    | `Complex.cos
-    | `Complex.sin
-    | `Complex.exp
-    | `Complex.log
-    | `IsConstant.is_constant
-    | `Tensor.shape
-    | `Tensor.args
-    | `Int.negSucc =>
-      return .Operator (.ExprWithAttr (.LAttr declName))
 
     | `id
     | `Real.exp
@@ -546,10 +528,12 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Norm.norm           -- LNorm
     | `Int.ceil            -- LCeil
     | `Int.floor           -- LFloor
+    | `Fin.mk
     | `Subtype.mk
     | `Prod.mk             -- LAngleBracket
     | `List.get
     | `List.Vector.get
+    | `Tensor.get
     | `GetElem.getElem     -- LGetElem
     | `GetElem?.getElem?   -- LGetElemQue
     | `ite                 -- LITE
@@ -560,18 +544,6 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Decidable.decide    -- LDecide
     | `Nat.ModEq =>        -- L_equiv
       return .Operator (.Special ⟨declName⟩)
-
-    | `List.map
-    | `List.headD
-    | `List.substr
-    | `List.Vector.map
-    | `List.Vector.headD
-    | `List.Vector.substr
-    | `Int.fdiv
-    | `Int.fmod
-    | `Int.tdiv
-    | `Int.tmod =>
-      return .Operator (.ExprWithAttr (.LMethod declName))
 
     | `True =>
       return .const (const .True)
@@ -626,10 +598,34 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
       return .Operator (.Special ⟨declName⟩)
 
     | _ =>
-      if Lean.isClass (← Lean.getEnv) declName || (← toExpr (← declName.toConstantInfo).type []).isTypeClass then
-        return .Operator (.ExprWithAttr (.L_typeclass declName))
-      else
-        return .Operator (.ExprWithAttr (.L_operatorname declName))
+      let op : Name → ExprWithAttr ←
+        if Lean.isClass (← Lean.getEnv) declName then
+          pure ExprWithAttr.L_typeclass
+        else
+          if (← toExpr (← declName.toConstantInfo).type []).isTypeClass then
+            pure ExprWithAttr.L_typeclass
+          else
+            match declName with
+            | .anonymous
+            | .num _ _
+            | .str .anonymous _ =>
+              pure ExprWithAttr.L_operatorname
+            | .str classname _ =>
+              let binderInfo ← declName.binderInfo
+              let binderType ← declName.binderType
+              let defaultType :=
+                List.zip binderInfo binderType |>.filterMap fun (binderInfo, binderType) =>
+                match binderInfo with
+                  | .default => some binderType.declName
+                  | _ => none
+              if let some idx := defaultType.idxOf? classname then
+                if defaultType.length == 1 then
+                  pure ExprWithAttr.LProperty
+                else
+                  pure (fun name : Name => ExprWithAttr.LMethod name idx)
+              else
+                pure ExprWithAttr.L_operatorname
+      return .Operator (.ExprWithAttr (op declName))
 
   | .app fn arg =>
     let op ← Expr.func fn toExpr binders
@@ -705,16 +701,16 @@ e = {e}, e.ctorName = {e.ctorName}"
 
 def Expr.filter_default (func : Operator) (args : List Expr) : MetaM (List Expr × List Expr) := do
   let name := func.name
-  match name with
-  | .anonymous =>
+  if name == default then
     return ⟨args, []⟩
-  | _ =>
-    let binderInfo ← func.name.binderInfo
+  else
+    let binderInfo ← name.binderInfo
     return ⟨
       List.zip binderInfo args |>.filterMap fun (binderInfo, arg) =>
-        match binderInfo with
-        | .default => some arg
-        | _ => none,
+        if binderInfo == .default then
+          some arg
+        else
+          none,
       args.drop binderInfo.length
     ⟩
 

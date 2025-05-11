@@ -48,6 +48,13 @@ def Lean.Expr.toString (e : Expr) : String :=
   ToString.toString e
 
 
+def Lean.Expr.declName (e : Expr) : Name :=
+  match e with
+  | .app e _ => e.declName
+  | .const declName _ => declName
+  | _ => default
+
+
 def Lean.Expr.binderInfos (e : Expr) : List BinderInfo :=
   match e with
   | .forallE _ _ body bi =>
@@ -58,6 +65,17 @@ def Lean.Expr.binderInfos (e : Expr) : List BinderInfo :=
 
 def Lean.Name.binderInfo (name : Name) : MetaM (List BinderInfo) := do
   (·.binderInfos) <$> name.toExpr
+
+
+def Lean.Expr.binderTypes (e : Expr) : List Expr :=
+  match e with
+  | .forallE _ binderType body _ =>
+    binderType :: body.binderTypes
+  | _  =>
+    []
+
+def Lean.Name.binderType (name : Name) : MetaM (List Expr) := do
+  (·.binderTypes) <$> name.toExpr
 
 
 partial def Lean.Expr.subs (e : Expr) (fvarId : FVarId) (deBruijnIndex : Nat) : MetaM Expr := do

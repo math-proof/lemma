@@ -32,7 +32,7 @@ print(t)
 ```
 -/
 structure Tensor (α : Type _) (shape : List ℕ) where
-  args : List.Vector α shape.prod
+  data : List.Vector α shape.prod
 
 
 def Tensor.length  (t : Tensor α shape)  : ℕ :=
@@ -54,23 +54,23 @@ def Tensor.toVector (t : Tensor α s) : List.Vector (Tensor α s.tail) (s.headD 
     have h_EqHeadD := EqHeadD.of.GtLength_0 h_GtLength_0 0
     if h_GtGetElem_0 : s[0] > 0 then
       let rows := s[0] -- the number of rows
-      let cols := t.args.length / rows -- the number of columns
-      have h_precondition : s.prod = t.args.length := by simp
+      let cols := t.data.length / rows -- the number of columns
+      have h_precondition : s.prod = t.data.length := by simp
       have h_eq_prod_tail := Eq_DivProd_ProdTail.of.GtLength_0.Gt_0 h_GtLength_0 h_GtGetElem_0
-      have h_eq_prod_tail : s.tail.prod = t.args.length / rows := h_precondition ▸ h_eq_prod_tail
+      have h_eq_prod_tail : s.tail.prod = t.data.length / rows := h_precondition ▸ h_eq_prod_tail
       have h_eq_prod_tail : s.tail.prod = cols := by rw [h_eq_prod_tail]
       have h_eq_mul := Eq_Mul_ProdTail_Prod.of.GtLength_0.Gt_0 h_GtLength_0 h_GtGetElem_0
-      have h_eq_mul : t.args.length = rows * cols := by
+      have h_eq_mul : t.data.length = rows * cols := by
         rw [h_precondition, h_eq_prod_tail] at h_eq_mul
         exact h_eq_mul
       let v : List.Vector (Tensor α s.tail) rows := (List.Vector.range rows).map fun i : Fin rows =>
         -- iterate over the slices
         have h_Eq : (cols ⊓ (s.prod - ↑i * cols)) = s.tail.prod := by
-          rw [(show s.prod = t.args.length by simp)]
+          rw [(show s.prod = t.data.length by simp)]
           rw [h_eq_mul]
           rw [h_eq_prod_tail]
           apply EqMin_SubMulS
-        ⟨cast (by rw [h_Eq]) (t.args.substr (i * cols) cols)⟩
+        ⟨cast (by rw [h_Eq]) (t.data.substr (i * cols) cols)⟩
       cast (by rw [(show rows = s.headD 0 by rw [h_EqHeadD])]) v
     else
       ⟨
@@ -98,10 +98,10 @@ def Ones [One α] (shape : List ℕ) : Tensor α shape :=
 
 
 instance [Mul α] : Mul (Tensor α s) where
-  mul a b := ⟨a.args.val.zipWith HMul.hMul b.args.val , by simp [Tensor.args]⟩
+  mul a b := ⟨a.data.val.zipWith HMul.hMul b.data.val , by simp [Tensor.data]⟩
 
 
-def Tensor.getElem [Inhabited α] (t : Tensor α s) (i : ℤ) : Tensor α s.tail :=
+def Tensor.get [Inhabited α] (t : Tensor α s) (i : ℤ) : Tensor α s.tail :=
   let i := Slice.Add_Mul_DivSub1Sign_2 t.length i
   if h_i : i < 0 ∨ i ≥ t.length then
     default
@@ -136,13 +136,13 @@ def Tensor.getElem [Inhabited α] (t : Tensor α s) (i : ℤ) : Tensor α s.tail
     t.toVector[i]
 
 instance [Inhabited α] : GetElem (Tensor α [n]) ℤ α fun _ _ => True where
-  getElem v i _ := (v.getElem i).args[0]
+  getElem v i _ := (v.get i).data[0]
 
 instance [Inhabited α] : GetElem (Tensor α [n]) ℕ α fun _ _ => True where
   getElem v i _ := v[(i : ℤ)]
 
 instance [Inhabited α] : GetElem (Tensor α shape) ℤ (Tensor α shape.tail) fun _ _ => True where
-  getElem v i _ := v.getElem i
+  getElem v i _ := v.get i
 
 instance [Inhabited α] : GetElem (Tensor α shape) ℕ (Tensor α shape.tail) fun _ _ => True where
   getElem v i _ := v[(i : ℤ)]
@@ -166,7 +166,7 @@ def Tensor.getSlice
   (slice : Slice) :
   Tensor α (slice.length t.length :: s.tail) :=
   let tensors := (List.Vector.indices slice t.length).map fun i =>
-    t[i].args
+    t[i].data
   ⟨tensors.flatten.val, by simp⟩
 
 def Tensor.getSlice2
@@ -190,13 +190,13 @@ def Tensor.getSlice2
           simp
         simp [← h_s] at h_Eq
         exact h_Eq.symm
-    let args : List.Vector α (slice1.length s[1] * (s.drop 2).prod) := ⟨
-      (t[i].getSlice slice1).args.val,
+    let data : List.Vector α (slice1.length s[1] * (s.drop 2).prod) := ⟨
+      (t[i].getSlice slice1).data.val,
       by
         simp
         rw [h_Eq, TailTail.eq.Drop_2]
     ⟩
-    args
+    data
   ⟨tensors.flatten.val, by simp⟩
 
 
@@ -216,9 +216,9 @@ def Tensor.getSlice3 [Inhabited α] (t : Tensor α s) (slice0 : Slice) (slice1 :
           simp
         simp [← h_s] at h_Eq
         exact h_Eq.symm
-    let ti : Tensor α (s.drop 1) := ⟨t[i].args.val, by simp⟩
+    let ti : Tensor α (s.drop 1) := ⟨t[i].data.val, by simp⟩
     have h_shape : (s.drop 1).length ≥ 2 := LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1 (by norm_num) h_shape
-    ⟨(ti.getSlice2 (h_shape := h_shape) slice1 slice2).args.val, by simp⟩
+    ⟨(ti.getSlice2 (h_shape := h_shape) slice1 slice2).data.val, by simp⟩
   ⟨tensors.flatten.val, by simp⟩
 
 

@@ -3,18 +3,24 @@ import stdlib.String
 open Lean
 
 def Lean.Name.head (name : Name) : Name :=
-  name.components.headD anonymous
+  name.components.headD default
 
 def Lean.Name.get (name : Name) (i : Nat): Name :=
-  name.components.getD i anonymous
+  name.components.getD i default
 
 def Lean.Name.getLast (name : Name) : Name :=
   match name with
   | str _ s => s.toName
-  | _ => anonymous
+  | _ => default
+
+def Lean.Name.dropLast (name : Name) : Name :=
+  match name with
+  | str pre _
+  | num pre _ => pre
+  | _ => default
 
 def Lean.Name.normalized (name : Name) : Name :=
-  if name == anonymous then
+  if name == default then
     `main
   else
     let components := name.components

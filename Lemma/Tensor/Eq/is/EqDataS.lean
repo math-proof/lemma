@@ -7,7 +7,7 @@ private lemma main
   [Inhabited α]
   {a b : Tensor α s} :
 -- imply
-  a = b ↔ a.args = b.args := by
+  a = b ↔ a.data = b.data := by
 -- proof
   cases a
   cases b

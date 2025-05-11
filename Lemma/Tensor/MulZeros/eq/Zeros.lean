@@ -15,7 +15,7 @@ private lemma main
   rw [Mul.eq.Prod]
   congr
   simp [Zeros]
-  have h_Eq : s.prod = a.args.val.length := by simp
+  have h_Eq : s.prod = a.data.val.length := by simp
   have h_Le := Le.of.Eq h_Eq
   rw [ZipWithHMul.eq.Replicate_0.of.Le h_Le]
 

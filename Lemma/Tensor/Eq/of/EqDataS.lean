@@ -1,4 +1,4 @@
-import Lemma.Tensor.Eq.is.EqArgsS
+import Lemma.Tensor.Eq.is.EqDataS
 open Tensor
 
 
@@ -7,11 +7,11 @@ private lemma main
   [Inhabited α]
   {a b : Tensor α s}
 -- given
-  (h : a.args = b.args) :
+  (h : a.data = b.data) :
 -- imply
   a = b :=
 -- proof
-  Eq.is.EqArgsS.mpr h
+  Eq.is.EqDataS.mpr h
 
 
 -- created on 2025-05-06

@@ -323,7 +323,7 @@ abstract class Lean implements JsonSerializable
                         $self = $parent;
                         $parent = $parent->parent;
                     }
-                    if ($this instanceof LToken || $this instanceof LAttr || $this instanceof LParenthesis)
+                    if ($this instanceof LToken || $this instanceof LProperty || $this instanceof LParenthesis)
                         $indexed = $prev_token != ' ';
                 }
 
@@ -1062,7 +1062,7 @@ abstract class LPairedGroup extends LUnary
     public function is_indented()
     {
         $parent = $this->parent;
-        if ($parent instanceof LTactic || $parent instanceof LArgsCommaSeparated || $parent instanceof LAssign || $parent instanceof LArgsSpaceSeparated || $parent instanceof LRelational || $parent instanceof LRightarrow || $parent instanceof LUnaryArithmeticPre || $parent instanceof LArithmetic || $parent instanceof LAttr || $parent instanceof LColon)
+        if ($parent instanceof LTactic || $parent instanceof LArgsCommaSeparated || $parent instanceof LAssign || $parent instanceof LArgsSpaceSeparated || $parent instanceof LRelational || $parent instanceof LRightarrow || $parent instanceof LUnaryArithmeticPre || $parent instanceof LArithmetic || $parent instanceof LProperty || $parent instanceof LColon)
             return false;
         return true;
     }
@@ -1529,7 +1529,7 @@ abstract class LBinary extends LArgs
     }
 }
 
-class LAttr extends LBinary
+class LProperty extends LBinary
 {
     public static $input_priority = 81; // LPow::$input_priority + 1
     public function append_attr($caret)
@@ -2171,8 +2171,8 @@ class LMul extends LArithmetic
                 if (
                     $lhs instanceof LToken && ($rhs->is_space_separated() || $rhs instanceof LToken && $rhs->starts_with_2_letters()) ||
                     $lhs instanceof LToken && $lhs->ends_with_2_letters() && $rhs instanceof LToken ||
-                    $lhs instanceof LAttr || 
-                    $rhs instanceof LAttr
+                    $lhs instanceof LProperty || 
+                    $rhs instanceof LProperty
                 )
                     return '\ ';
 
@@ -4118,7 +4118,7 @@ class LModule extends LStatements
                 preg_split('/\./', $module),
                 function ($carry, $token) {
                     $token = new LToken($token, 0);
-                    return $carry ? new LAttr($carry, $token, 0) : $token;
+                    return $carry ? new LProperty($carry, $token, 0) : $token;
                 },
             ),
             0
@@ -4166,7 +4166,7 @@ class L_import extends LCommand
     {
         if ($caret == $this->arg) {
             $new = new LCaret($this->indent);
-            $this->arg = new LAttr($this->arg, $new, $this->indent);
+            $this->arg = new LProperty($this->arg, $new, $this->indent);
             return $new;
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
@@ -4204,7 +4204,7 @@ class L_open extends LCommand
     {
         if ($caret == $this->arg) {
             $new = new LCaret($this->indent);
-            $this->arg = new LAttr($this->arg, $new, $this->indent);
+            $this->arg = new LProperty($this->arg, $new, $this->indent);
             return $new;
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
@@ -4390,7 +4390,7 @@ class LRightarrow extends LBinary
         if ($expr instanceof LArgsSpaceSeparated) {
             if ($expr->args[0] instanceof LToken)
                 $func = $expr->args[0]->arg;
-            elseif ($expr->args[0] instanceof LAttr && $expr->args[0]->lhs instanceof LCaret && $expr->args[0]->rhs instanceof LToken)
+            elseif ($expr->args[0] instanceof LProperty && $expr->args[0]->lhs instanceof LCaret && $expr->args[0]->rhs instanceof LToken)
                 $func = $expr->args[0]->rhs->arg;
             else
                 $func = null;
@@ -5005,7 +5005,7 @@ class LArgsSpaceSeparated extends LArgs
             }
         } elseif ($this->is_Bool()) {
             return '\left|{%s}\right|';
-        } elseif ($func instanceof LAttr) {
+        } elseif ($func instanceof LProperty) {
             if ($func->rhs instanceof LToken) {
                 switch ($func->rhs->arg) {
                     case 'fmod':
@@ -5028,7 +5028,7 @@ class LArgsSpaceSeparated extends LArgs
     {
         $args = $this->args;
         $func = $args[0];
-        return $func instanceof LAttr && $func->rhs instanceof LToken && $func->rhs->arg == 'toNat' && $func->lhs instanceof LToken && $func->lhs->arg == 'Bool';
+        return $func instanceof LProperty && $func->rhs instanceof LToken && $func->rhs->arg == 'toNat' && $func->lhs instanceof LToken && $func->lhs->arg == 'Bool';
     }
 
     public function latexArgs(&$syntax = null)
@@ -5193,7 +5193,7 @@ class LArgsNewLineSeparated extends LArgs
 
         if ($this->indent < $indent) {
             $end = end($this->args);
-            if ($end instanceof LToken || $end instanceof LAttr) {
+            if ($end instanceof LToken || $end instanceof LProperty) {
                 // function call
                 $caret = new LCaret($indent);
                 $new = new LArgsNewLineSeparated([$caret], $indent);
@@ -5295,7 +5295,7 @@ class LArgsIndented extends LBinary
 
         if ($this->indent < $indent) {
             $end = end($this->args);
-            if ($end instanceof LToken || $end instanceof LAttr) {
+            if ($end instanceof LToken || $end instanceof LProperty) {
                 // function call
                 $caret = new LCaret($indent);
                 $new = new LArgsNewLineSeparated([$caret], $indent);
@@ -6839,7 +6839,7 @@ class L_def extends LArgs
     {
         if ($this->indent < $indent) {
             if ($caret === $this->assignment) {
-                if ($caret instanceof LToken || $caret instanceof LAttr) {
+                if ($caret instanceof LToken || $caret instanceof LProperty) {
                     $caret = new LCaret($indent);
                     $new = new LArgsNewLineSeparated([$caret], $indent);
                     $caret = $new->push_newlines($newline_count - 1);
@@ -7485,13 +7485,13 @@ function compile($code)
                 else
                     // $caret instanceof LToken ||
                     // $caret instanceof LPairedGroup ||
-                    // $caret instanceof LAttr ||
+                    // $caret instanceof LProperty ||
                     // $caret instanceof LCaret && ($caret->parent instanceof LPairedGroup || $caret->parent instanceof LBar                
-                    $caret = $caret->append_binary("LAttr");
+                    $caret = $caret->append_binary("LProperty");
                 break;
 
             case 'is':
-                if ($caret instanceof LCaret && $caret->parent instanceof LAttr)
+                if ($caret instanceof LCaret && $caret->parent instanceof LProperty)
                     $caret = $caret->parent->insert_token($caret, $token);
                 else {
                     $Type = "L_$token";

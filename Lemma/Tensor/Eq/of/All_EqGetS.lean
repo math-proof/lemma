@@ -1,6 +1,6 @@
 import sympy.sets.sets
-import Lemma.Tensor.Eq.of.EqArgsS
-import Lemma.Tensor.Eq.is.EqArgsS
+import Lemma.Tensor.Eq.of.EqDataS
+import Lemma.Tensor.Eq.is.EqDataS
 open Tensor
 
 
@@ -13,8 +13,8 @@ private lemma main
 -- imply
   a = b := by
 -- proof
-  apply Eq.of.EqArgsS
-  simp [Eq.is.EqArgsS] at h
+  apply Eq.of.EqDataS
+  simp [Eq.is.EqDataS] at h
   sorry
 
 

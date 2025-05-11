@@ -48,7 +48,7 @@ Get-ChildItem -Path Lemma -Recurse -File -Filter *.lean | Where-Object { $_.Name
     $content = [System.IO.File]::ReadAllText($_.FullName, [System.Text.Encoding]::UTF8)
     $newContent = $content -replace "$srcReg$submodule", "$dst`$1"
     if ($newContent -ne $content) {
-        [System.IO.File]::WriteAllText($_.FullName, $newContent, [System.Text.Encoding]::UTF8)
+        [System.IO.File]::WriteAllText($_.FullName, $newContent, [System.Text.UTF8Encoding]::new($false))
     }
 }
 
@@ -63,7 +63,7 @@ if ($package_dst -ne $package_src) {
     Get-ChildItem -Path Lemma -Recurse -File -Filter *.lean | Where-Object { $_.Name -notlike "*.echo.lean" } | ForEach-Object {
         $file = $_.FullName
         $tempFile = "$file.tmp"
-        $content = Get-Content $file
+        $content = Get-Content $file.FullName -Raw -Encoding UTF8
         $newContent = @()
         foreach ($line in $content) {
             if ($line -match '^open\s+') {
@@ -76,7 +76,7 @@ if ($package_dst -ne $package_src) {
             }
             $newContent += $line
         }
-        Set-Content -Path $tempFile -Value $newContent
+        [System.IO.File]::WriteAllText($tempFile, $newContent, [System.Text.UTF8Encoding]::new($false))
         Move-Item -Path $tempFile -Destination $file -Force
     }
 
@@ -95,9 +95,9 @@ $filesWithOpenPackageDst = Get-ChildItem -Path Lemma -Recurse -File -Filter *.le
 }
 
 $filesWithOpenPackageDst | ForEach-Object {
-    $content = [System.IO.File]::ReadAllText($_.FullName, [System.Text.Encoding]::UTF8)
+    $content = Get-Content $_.FullName -Raw -Encoding UTF8
     $newContent = $content -replace "\b$lemmaNameSrc$submodule", "$lemmaNameDstOrig`$1"
     if ($newContent -ne $content) {
-        [System.IO.File]::WriteAllText($_.FullName, $content, [System.Text.Encoding]::UTF8)
+        [System.IO.File]::WriteAllText($_.FullName, $newContent, [System.Text.UTF8Encoding]::new($false))
     }
 }

@@ -1,6 +1,7 @@
 import sympy.core.expr
 import stdlib.Lean.Name
 import stdlib.Lean.Level
+import stdlib.List
 open Lean (FVarId Name)
 
 def Expr.is_Propositional : Expr → Bool
@@ -142,7 +143,7 @@ def Expr.strFormat : Expr → String
           else
             "%s"
         s!"{opStr} " ++ " ".intercalate args
-      | .LMethod name =>
+      | .LMethod name idx =>
         let attr := name.getLast.toString
         match attr, args with
         | "map", [fn, obj] =>
@@ -157,21 +158,22 @@ def Expr.strFormat : Expr → String
             else
               "%s"
           s!"{obj}.{attr} {fn}"
-        | _, obj :: args =>
-          let obj :=
-            if func.priority ≥ obj.priority then
-              "(%s)"
-            else
-              "%s"
-          let args := args.map fun arg =>
-            if func.priority > arg.priority then
-              "(%s)"
-            else
-              "%s"
-          let args := " ".intercalate args
-          s!"{obj}.{attr} {args}"
-        | _, _ =>
-          opStr
+        | _, args =>
+          if let obj :: args := args.swap 0 idx then
+            let obj :=
+              if func.priority ≥ obj.priority then
+                "(%s)"
+              else
+                "%s"
+            let args := args.map fun arg =>
+              if func.priority > arg.priority then
+                "(%s)"
+              else
+                "%s"
+            let args := " ".intercalate args
+            s!"{obj}.{attr} {args}"
+          else
+            opStr
       | .L_typeclass _ =>
         let args := args.map fun arg =>
           if func.priority ≥ arg.priority then
@@ -180,9 +182,9 @@ def Expr.strFormat : Expr → String
             "%s"
         let args := " ".intercalate args
         s!"{opStr} {args}"
-      | .LAttr name =>
+      | .LProperty name =>
         match args with
-        | [arg] =>
+        | arg :: _ =>
           let arg :=
             if func.priority > arg.priority then
               "(%s)"
@@ -191,8 +193,6 @@ def Expr.strFormat : Expr → String
           s!"{arg}{opStr}"
         | .nil =>
           name.toString
-        | _ =>
-          s!"%s{opStr}"
 
   | Binder binder binderName _ value =>
     let binderName := binderName.escape_specials " "
@@ -267,9 +267,10 @@ where
         [a.toString, b.toString, d.toString]
       | _ =>
         map args
-    | .BinaryInfix ⟨`Membership.mem⟩
-    | .ExprWithAttr (.LMethod (.str _ "map")) =>
+    | .BinaryInfix ⟨`Membership.mem⟩ =>
       map args |>.reverse
+    | .ExprWithAttr (.LMethod _ idx) =>
+      map (args.swap 0 idx)
     | _ =>
       map args
 

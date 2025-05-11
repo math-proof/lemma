@@ -1,5 +1,6 @@
 import stdlib.Lean.Level
 import stdlib.Lean.Name
+import stdlib.List
 import sympy.core.expr
 open Lean (Name)
 
@@ -234,21 +235,9 @@ def Expr.latexFormat : Expr → String
             else
               "%s"
           opStr ++ "\\ " ++ "\\ ".intercalate args
-      | .LMethod name =>
+      | .LMethod name idx =>
         let attr := name.getLast.toString.escape_specials
         match attr, args with
-        | "map", [fn, obj] =>
-          let fn :=
-            if func.priority ≥ fn.priority then
-              "\\left(%s\\right)"
-            else
-              "%s"
-          let obj :=
-            if func.priority ≥ obj.priority then
-              "\\left(%s\\right)"
-            else
-              "%s"
-          s!"{obj}.{attr}\\ {fn}"
         | "ediv", [left, right] =>
           let divOperator : BinaryInfix := ⟨`HDiv.hDiv⟩
           let func := divOperator.func
@@ -291,21 +280,22 @@ def Expr.latexFormat : Expr → String
             else
               "%s"
           "%s \\textcolor{red}{\\%%%%} %s".format left, right
-        | _, obj :: args =>
-          let obj :=
-            if func.priority ≥ obj.priority then
-              "\\left(%s\\right)"
-            else
-              "%s"
-          let args := args.map fun arg =>
-            if func.priority > arg.priority then
-              "\\left(%s\\right)"
-            else
-              "%s"
-          let args := "\\ ".intercalate args
-          s!"{obj}.{attr}\\ {args}"
-        | _, _ =>
-          opStr
+        | _, args =>
+          if let obj :: args := args.swap 0 idx then
+            let obj :=
+              if func.priority ≥ obj.priority then
+                "\\left(%s\\right)"
+              else
+                "%s"
+            let args := args.map fun arg =>
+              if func.priority > arg.priority then
+                "\\left(%s\\right)"
+              else
+                "%s"
+            let args := "\\ ".intercalate args
+            s!"{obj}.{attr}\\ {args}"
+          else
+            opStr
       | .L_typeclass _ =>
         let args := args.map fun arg =>
           if func.priority ≥ arg.priority then
@@ -314,7 +304,7 @@ def Expr.latexFormat : Expr → String
             "%s"
         let args := "\\ ".intercalate args
         s!"{opStr}\\ {args}"
-      | .LAttr name =>
+      | .LProperty name =>
         let attr := name.getLast.toString
         match name with
         | `Complex.exp =>
@@ -327,7 +317,7 @@ def Expr.latexFormat : Expr → String
           "%s\\ {\\color{blue}\\text{is}}\\ {constant}"
         | _ =>
           match args with
-          | [arg] =>
+          | arg :: _ =>
             let arg :=
               if func.priority > arg.priority then
                 "{\\left(%s\\right)}"
@@ -336,8 +326,6 @@ def Expr.latexFormat : Expr → String
             s!"{arg}.{attr}"
           | .nil =>
             name.toString
-          | _ =>
-            s!"%s.{attr}"
 
   | Binder binder binderName _ value =>
     let binderName := binderName.escape_specials "\\ "
@@ -386,7 +374,7 @@ where
             let limits := limits.map fun arg =>
               match arg with
               | Binder .default name _ nil =>
-                name.toString
+                name.toString.escape_specials
               | _ =>
                 arg.toLatex
             limits.reverse ++ [expr.toLatex]
@@ -424,9 +412,10 @@ where
           map args
       | _ =>
         map args
-    | .BinaryInfix ⟨`Membership.mem⟩
-    | .ExprWithAttr (.LMethod (.str _ "map")) =>
+    | .BinaryInfix ⟨`Membership.mem⟩ =>
       map args |>.reverse
+    | .ExprWithAttr (.LMethod _ idx) =>
+      map (args.swap 0 idx)
     | .UnaryPrefix ⟨`Not⟩ =>
       match args with
       | [arg] =>

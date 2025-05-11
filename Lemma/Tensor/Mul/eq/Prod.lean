@@ -7,7 +7,7 @@ private lemma main
   [Mul α]
   {a b : Tensor α s} :
 -- imply
-  a * b = ⟨a.args.val.zipWith HMul.hMul b.args.val, by simp [Tensor.args]⟩ := by
+  a * b = ⟨a.data.val.zipWith HMul.hMul b.data.val, by simp [Tensor.data]⟩ := by
 -- proof
   rfl
 

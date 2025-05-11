@@ -13,19 +13,19 @@ private lemma main
   (t : Tensor α (s₀ :: s))
   (h : s₀ > 0) :
 -- imply
-  t.args = ((List.Vector.range s₀).map fun i => t[i].args).flatten := by
+  t.data = ((List.Vector.range s₀).map fun i => t[i].data).flatten := by
 -- proof
   simp [GetElem.getElem]
-  simp [Tensor.getElem]
+  simp [Tensor.get]
   simp [EqAdd_Mul_DivSub1Sign_2]
   have h_length : t.length = s₀ := by simp [Tensor.length]
   simp [h_length]
   norm_cast
   simp [NotLe]
   simp [Tensor.toVector, h]
-  have h_length : t.args.length = s₀ * s.prod := by
+  have h_length : t.data.length = s₀ * s.prod := by
     simp
-  have : t.args.length / s₀ = s.prod := by
+  have : t.data.length / s₀ = s.prod := by
     rw [h_length]
     apply EqDivMul.of.Ne_0.left
     linarith [h]
