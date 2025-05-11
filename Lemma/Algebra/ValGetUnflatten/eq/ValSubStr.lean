@@ -5,6 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
+  [Inhabited α]
 -- given
   (v : List.Vector α (m * n))
   (i : Fin m) :

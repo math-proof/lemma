@@ -175,11 +175,11 @@ def Expr.strFormat : Expr → String
       | .L_typeclass _ =>
         let args := args.map fun arg =>
           if func.priority ≥ arg.priority then
-            "\\left(%s\\right)"
+            "(%s)"
           else
             "%s"
-        let args := "\\ ".intercalate args
-        s!"{opStr}\\ {args}"
+        let args := " ".intercalate args
+        s!"{opStr} {args}"
       | .LAttr name =>
         match args with
         | [arg] =>

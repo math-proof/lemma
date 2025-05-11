@@ -1,0 +1,31 @@
+import stdlib.List.Vector
+import Lemma.Logic.EqFunS.of.Eq
+import Lemma.Algebra.Eq_EmptyList.of.Length.eq.Zero
+import Lemma.Algebra.Eq_Cons_Tail
+import Lemma.Algebra.ValFlattenCons.eq.ValAppend_Flatten
+import Lemma.Algebra.Eq.of.EqFlattenSMap.EqLengthS
+open Logic Algebra
+
+
+@[main]
+private lemma main
+  [Inhabited α]
+  {a b : List.Vector (List.Vector α n) m}
+-- given
+  (h : a.flatten = b.flatten) :
+-- imply
+  a = b := by
+-- proof
+  simp [List.Vector.flatten] at h
+  simp [List.Vector.toList] at h
+  let ⟨a, ha_length⟩ := a
+  let ⟨b, hb_length⟩ := b
+  congr
+  have h := EqFunS.of.Eq h fun t => t.val
+  simp at h
+  have h_length : a.length = b.length := by
+    aesop
+  apply Eq.of.EqFlattenSMap.EqLengthS h_length h
+
+
+-- created on 2025-05-11

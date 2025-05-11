@@ -1062,7 +1062,7 @@ abstract class LPairedGroup extends LUnary
     public function is_indented()
     {
         $parent = $this->parent;
-        if ($parent instanceof LTactic || $parent instanceof LArgsCommaSeparated || $parent instanceof LAssign || $parent instanceof LArgsSpaceSeparated || $parent instanceof LRelational || $parent instanceof LRightarrow || $parent instanceof LUnaryArithmeticPre || $parent instanceof LArithmetic || $parent instanceof LAttr)
+        if ($parent instanceof LTactic || $parent instanceof LArgsCommaSeparated || $parent instanceof LAssign || $parent instanceof LArgsSpaceSeparated || $parent instanceof LRelational || $parent instanceof LRightarrow || $parent instanceof LUnaryArithmeticPre || $parent instanceof LArithmetic || $parent instanceof LAttr || $parent instanceof LColon)
             return false;
         return true;
     }

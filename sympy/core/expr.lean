@@ -98,7 +98,8 @@ def UnaryPrefix.func : UnaryPrefix → Func
     | `Int.ofNat
     | `Nat.cast
     | `Int.cast
-    | `Rat.cast => ⟨72, "↑", "\\uparrow"⟩  -- L_uparrow
+    | `Rat.cast
+    | `Subtype.val => ⟨72, "↑", "\\uparrow"⟩  -- L_uparrow
     | `DFunLike.coe => ⟨72, "⇑", "\\Uparrow"⟩  -- LUparrow
     | `Real.sqrt
     | `Root.sqrt => ⟨72, "√", "\\sqrt"⟩  -- L_sqrt
@@ -201,6 +202,7 @@ def Special.func : Special → Func
     | `Int.floor => ⟨72, "⌊%s⌋", "\\left\\lfloor%s\\right\\rfloor"⟩  -- LFloor
     | `ite => ⟨60, "ite", "ite"⟩  -- LITE
     | `dite => ⟨60, "ite", "ite"⟩  -- LITE
+    | `Subtype.mk
     | `Prod.mk => ⟨117, "⟨%s, %s⟩", "\\langle %s, %s \\rangle"⟩  -- LAngleBracket
     | `List.get
     | `List.Vector.get
@@ -347,8 +349,8 @@ def getExprMVarAssignment (mvarId : Lean.MVarId) : MetaM Lean.Expr := do
       return e
     if let some dAssign ← Lean.getDelayedMVarAssignment? mvarId then
       if let some e' ← Lean.getExprMVarAssignment? dAssign.mvarIdPending then
-        let ctx := (← getMCtx).getDecl dAssign.mvarIdPending
-        return ← withLCtx ctx.lctx ctx.localInstances do
+        let mdecl := (← getMCtx).getDecl dAssign.mvarIdPending
+        return ← withLCtx mdecl.lctx mdecl.localInstances do
           let mut e := e'
           let mut binderName := #[]
           let mut binderType := #[]
@@ -363,16 +365,8 @@ def getExprMVarAssignment (mvarId : Lean.MVarId) : MetaM Lean.Expr := do
               binderName := binderName.push name
               binderType := binderType.push (← inferType fvar)
 
-          e := Array.zip binderName binderType |>.foldl (init := e) fun e (name, type) =>
+          return Array.zip binderName binderType |>.foldl (init := e) fun e (name, type) =>
             .lam name type e .implicit
-/-
-          println! s!"getExprMVarAssignment :
-e' = {e'}, e' = {← ppExpr e'}, e'.type = {← inferType e'}
-e = {e}, e = {← ppExpr e}, e.type = {← inferType e}
-dAssign.fvars = {dAssign.fvars}
-"
--/
-          pure e
     return .const `«?» []
 
 
@@ -397,7 +391,18 @@ partial def Expr.func (e : Lean.Expr) (toExpr : Lean.Expr → List Expr → Meta
       let type := decl.type
       return .const (Symbol decl.userName (← toExpr type []))
     else
-      panic! s!"Expr.func.fvar : unknown free variable {fvarId.name}"
+      for (_, mdecl) in (← getMCtx).decls do
+        let lctx := mdecl.lctx
+        let e : Option TreeNode ← withLCtx lctx mdecl.localInstances do
+          if let some decl := lctx.find? fvarId then
+            let type := decl.type
+            return TreeNode.const (Symbol decl.userName (← toExpr type []))
+          else
+            return none
+        if let some e := e then
+          return e
+      panic! s!"Expr.func.fvar : unknown free variable {e}"
+      -- return .const (Symbol `«?» nil)
 
   | .mvar mvarId  =>
 /-
@@ -460,6 +465,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Nat.cast
     | `Int.cast
     | `Rat.cast
+    | `Subtype.val
     | `DFunLike.coe =>
       return .Operator (.UnaryPrefix ⟨declName⟩)
 
@@ -494,7 +500,6 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Complex.exp
     | `Complex.log
     | `IsConstant.is_constant
-    | `Subtype.val
     | `Tensor.shape
     | `Tensor.args
     | `Int.negSucc =>
@@ -541,6 +546,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Norm.norm           -- LNorm
     | `Int.ceil            -- LCeil
     | `Int.floor           -- LFloor
+    | `Subtype.mk
     | `Prod.mk             -- LAngleBracket
     | `List.get
     | `List.Vector.get
@@ -623,9 +629,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
       if Lean.isClass (← Lean.getEnv) declName || (← toExpr (← declName.toConstantInfo).type []).isTypeClass then
         return .Operator (.ExprWithAttr (.L_typeclass declName))
       else
-        -- println! s!"unknown constant {declName}"
         return .Operator (.ExprWithAttr (.L_operatorname declName))
-        -- return .const nil
 
   | .app fn arg =>
     let op ← Expr.func fn toExpr binders

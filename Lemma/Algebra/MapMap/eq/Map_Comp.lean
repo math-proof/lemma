@@ -3,6 +3,7 @@ import Lemma.Basic
 
 @[main]
 private lemma main
+-- given
   (g : β → γ)
   (f : α → β)
   (l : List α) :

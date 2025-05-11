@@ -10,6 +10,7 @@ open Algebra Logic
 
 @[main]
 private lemma main
+  [Inhabited α]
   {v : List.Vector α (m * n)}
   {u : Fin m → List.Vector α n}
 -- given
@@ -19,10 +20,10 @@ private lemma main
 -- proof
   have h_All := ValGetUnflatten.eq.ValSubStr v
   have h_All_And := All_And.of.All.All h_All h
-  have h_All : ∀ i : Fin m, v.unflatten[i].val = (v.substr (i * n) n).val ∧ (v.substr (i * n) n).val = (u i).val → v.unflatten[i].val = (u i).val := by
+  have h_All_Imp : ∀ (i : Fin m), v.unflatten[i].val = (v.substr (i * n) n).val ∧ (v.substr (i * n) n).val = (u i).val → v.unflatten[i].val = (u i).val := by
     intro i ⟨h₀, h₁⟩
     apply h₀.trans h₁
-  have h_All := All.of.All.All_Imp h_All h_All_And
+  have h_All := All.of.All.All_Imp h_All_Imp h_All_And
   have h_All : ∀ i : Fin m, u i = v.unflatten[i] := by
     intro i
     have := h_All i

@@ -1,7 +1,5 @@
 import stdlib.List.Vector
-import Lemma.Algebra.Eq_Cons_Tail.of.Ne_0
-import Lemma.Algebra.EqValS.of.Eq
-open Algebra
+import Lemma.Basic
 
 
 @[main]
@@ -20,3 +18,4 @@ private lemma main
 
 
 -- created on 2025-05-08
+-- updated on 2025-05-10

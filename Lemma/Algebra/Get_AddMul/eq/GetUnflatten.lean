@@ -10,9 +10,10 @@ open Algebra
 @[main]
 private lemma main
   [Inhabited α]
-  {v : List.Vector α (m * n)}
-  {i : Fin m}
-  {j : Fin n} :
+-- given
+  (v : List.Vector α (m * n))
+  (i : Fin m)
+  (j : Fin n):
 -- imply
   v[i * n + j] = v.unflatten[i, j] := by
 -- proof

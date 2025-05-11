@@ -5,9 +5,9 @@ import Lemma.Basic
 private lemma main
   {s : List α}
 -- given
-  (h: s.length ≠ 0) :
+  (h : s.length ≠ 0) :
 -- imply
-  s = s[0]::s.tail := by
+  s = s[0] :: s.tail := by
 -- proof
   match s with
   | .nil =>
@@ -20,3 +20,4 @@ private lemma main
 
 
 -- created on 2024-07-01
+-- updated on 2025-05-11

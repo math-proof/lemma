@@ -1,13 +1,12 @@
 import stdlib.List.Vector
-import Lemma.Algebra.Substr.eq.TakeDrop
 import Lemma.Algebra.Eq_Cons_Tail
 import Lemma.Algebra.GetCons__Add_1.eq.Get
-import Lemma.Algebra.EqToListS.of.Eq
 import Lemma.Algebra.FlattenMapToListCons.eq.Append_FlattenMapToList
 import Lemma.Algebra.MulAdd_1.eq.Add_Mul
 import Lemma.Algebra.Drop_Add.eq.DropDrop
 import Lemma.Algebra.EqDropAppend__Length
-open Algebra
+import Lemma.Logic.EqFunS.of.Eq
+open Algebra Logic
 
 
 @[main]
@@ -62,7 +61,7 @@ private lemma main
         simp [h_Cons]
       rw [h_Cons]
       have h_v := Eq_Cons_Tail v
-      have h_v := EqToListS.of.Eq h_v
+      have h_v := EqFunS.of.Eq h_v (List.Vector.toList)
       rw [h_v]
       simp only [GetElem.getElem]
       simp only [GetElem.getElem] at ih
@@ -78,3 +77,4 @@ private lemma main
 
 
 -- created on 2025-05-08
+-- updated on 2025-05-10
