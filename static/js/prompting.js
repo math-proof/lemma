@@ -90,7 +90,7 @@ function get_url(model, stream, kwargs) {
         }
         return {
             method: json_post,
-            url: 'http://rd-gateway.patsnap.io/compute/openai_chatgpt_turbo',
+            url: 'http://localhost/compute/openai_chatgpt_turbo',
             data(message) {
                 if (message.isArray)
                     var [message, messages] = [null, message];
