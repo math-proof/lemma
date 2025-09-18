@@ -36,6 +36,10 @@ export default {
             return this.lemma[index].type;
         },
 
+		lemmaName(index) {
+            return this.lemma[index].name;
+        },
+
 		new_file() {
 			var {lemma} = this;
 			var module = lemma[0].name;

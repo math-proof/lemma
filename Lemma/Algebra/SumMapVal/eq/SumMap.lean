@@ -1,5 +1,5 @@
-import Lemma.Algebra.All_EqSumMap_FunMul__DotMapS
-import Lemma.Algebra.SumMap_FunMul.eq.MulSumMap
+import stdlib.List.Vector
+import Lemma.Basic
 
 
 @[main]
@@ -8,7 +8,7 @@ private lemma main
   {s : List.Vector α n}
   {f : α → β} :
 -- imply
-  (s.val.map f).sum = (s.map f).sum := by
+  (s.val.map f).sum = (s.map f).sum :=
 -- proof
   rfl
 

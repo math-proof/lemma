@@ -1,6 +1,6 @@
 import Lemma.Algebra.Div.eq.One.of.Ne_0
 import Lemma.Algebra.DivNeg.eq.NegDiv
-import Lemma.Algebra.EqNegS.of.Eq
+import Lemma.Algebra.EqNegS.is.Eq
 open Algebra
 
 

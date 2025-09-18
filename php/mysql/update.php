@@ -17,6 +17,8 @@ if (isset($set['eq'])) {
     $eq = $set['eq'];
     $setter = $eq[0];
     [$lhs, $rhs] = $eq;
+    if (is_array($lhs) && count($lhs) == 1)
+        [[, $lhs]] = std\entries($lhs);
     $as = ["as" => [$rhs, $lhs]];
 }
 else {
@@ -42,7 +44,7 @@ foreach ($Field2Type as $Field => $Type) {
     if (is_array($setter)) {
         $index = array_search($Field, $setter);
         if ($index !== false)
-            $Field = $as[$index];
+            $Field = is_string($index) ? $as : $as[$index];
     }
     elseif ($Field == $setter)
         $Field = $as;
@@ -67,7 +69,7 @@ unset($kwargs_select['update']);
 
 [$sql_select, $Field2Type] = parse_statement($kwargs_select, $Field2Type, $return);
 
-if (is_array($setter)) {
+if (std\is_list($setter)) {
     foreach($eq as $assign) {
         if (is_string($assign[1]))
             $functor[] = '';
@@ -128,7 +130,12 @@ if ($functor) {
     }
     elseif (($with = $kwargs['with']) && ($as = $with['as']) && ($as[0] == $functor)) {
         $update = parse_table($kwargs['update'], $Field2Type);
-        $sql_update = "update $update set $setter = $functor.$setter ";
+        if (is_array($setter)) {
+            [[$_t, $field]] = std\entries($setter);
+            $sql_update = "update $update set $_t.$field = $functor.$field ";
+        }
+        else 
+            $sql_update = "update $update set $setter = $functor.$setter ";
     }
     else {
         $update = parse_table($kwargs['update'], $Field2Type);

@@ -1,23 +1,25 @@
 import Lemma.Set.EqUnionSDiff__Inter
-import Lemma.Set.Union.comm
+import Lemma.Set.Union
 open Set
 
 
 @[main]
-private lemma finset
+private lemma fin
   [DecidableEq ι]
-  {s t : Finset ι} :
+-- given
+  (s t : Finset ι) :
 -- imply
   s ∩ t ∪ s \ t = s := by
 -- proof
-  have := EqUnionSDiff__Inter.finset (s := s) (t := t)
+  have := EqUnionSDiff__Inter.fin (s := s) (t := t)
   rw [Union.comm.finset] at this
   assumption
 
 
 @[main]
 private lemma main
-  {s t : Set α} :
+-- given
+  (s t : Set α) :
 -- imply
   s ∩ t ∪ s \ t = s :=
 -- proof
@@ -25,3 +27,4 @@ private lemma main
 
 
 -- created on 2025-04-30
+-- updated on 2025-07-20

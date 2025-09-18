@@ -1,16 +1,14 @@
-import Lemma.Algebra.NegSub.eq.Sub
-open Algebra
+import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [AddGroup α]
-  -- [Neg α]
-  {a b : α} :
+  (a b : α) :
 -- imply
   a - b = -(b - a) := by
 -- proof
-  rw [NegSub.eq.Sub]
+  simp
 
 
 -- created on 2024-11-29

@@ -1,9 +1,9 @@
 import Lemma.Algebra.Sub.eq.Add_Neg
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Add
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
   [AddCommGroup α]
   {a b : α} :

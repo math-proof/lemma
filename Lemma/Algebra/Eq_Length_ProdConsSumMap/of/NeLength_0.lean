@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Algebra.LengthJoin.eq.SumMap_FunLength
 import Lemma.Algebra.ProdCons.eq.Mul_Prod
-import Lemma.Algebra.Mul.comm
+import Lemma.Algebra.Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 open Algebra
 
@@ -20,8 +20,7 @@ private lemma main
   let data := (s.map fun t => t.data.val).flatten
   have h : data.length = ((s.map fun t => t.data.val).map fun t => t.length).sum :=
     LengthJoin.eq.SumMap_FunLength
-  have h_eq_prod : (head_dimension :: tail_dimension).prod = head_dimension * tail_dimension.prod :=
-    ProdCons.eq.Mul_Prod
+  have h_eq_prod := ProdCons.eq.Mul_Prod head_dimension tail_dimension
   rw [h, h_eq_prod]
   simp
   have h_Eq_Fun : ((fun t => t.length) ∘ fun t : Tensor α shape => t.data.val) = fun t => t.data.val.length := by
@@ -40,4 +39,4 @@ private lemma main
 
 
 -- created on 2024-07-01
--- updated on 2025-05-02
+-- updated on 2025-05-31

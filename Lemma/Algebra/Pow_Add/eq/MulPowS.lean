@@ -1,11 +1,11 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Monoid M]
-  {a : M}
-  {m n : ℕ} :
+  (a : M)
+  (m n : ℕ) :
 -- imply
   a ^ (m + n) = a ^ m * a ^ n :=
 -- proof

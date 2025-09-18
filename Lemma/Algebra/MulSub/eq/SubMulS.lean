@@ -1,22 +1,22 @@
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.NegMul.eq.MulNeg
-import Lemma.Algebra.AddMulS.eq.MulAdd
+import Lemma.Algebra.MulAdd.eq.AddMulS
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma nat
-  {x a b : ℕ} :
+  (x a b : ℕ) :
 -- imply
-  (a - b) * x = a * x - b * x := by
+  (a - b) * x = a * x - b * x :=
 -- proof
-  rw [Nat.sub_mul]
+  Nat.sub_mul a b x
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Ring α]
-  {x a b : α} :
+  (x a b : α) :
 -- imply
   (a - b) * x = a * x - b * x := by
 -- proof

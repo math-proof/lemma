@@ -1,5 +1,5 @@
 import stdlib.List.Vector
-import Lemma.Logic.All_EqFunS.of.All_Eq
+import Lemma.Logic.All_EqUFnS.of.All_Eq
 open Logic
 
 
@@ -17,7 +17,19 @@ private lemma main
     simp [IsConstant.is_constant]
   | cons =>
     simp [IsConstant.is_constant]
-    exact All_EqFunS.of.All_Eq.list h
+    exact All_EqUFnS.of.All_Eq.list h
+
+
+@[main]
+private lemma vector
+  {s : List.Vector α n}
+-- given
+  (h: s is constant)
+  (f : α → β) :
+-- imply
+  (s.map f) is constant :=
+-- proof
+  main h f
 
 
 -- created on 2024-07-01

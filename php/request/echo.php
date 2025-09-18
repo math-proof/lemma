@@ -1,6 +1,6 @@
 <?php
 require_once '../std.php';
-require_once '../lean/compile.php';
+require_once '../parser/lean.php';
 $module = $_POST['module'];
 
 $leanFile = dirname(dirname(dirname(__FILE__))) . "/Lemma/" . str_replace('.', '/', $module) . ".lean";

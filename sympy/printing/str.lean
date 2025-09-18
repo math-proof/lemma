@@ -1,7 +1,5 @@
 import sympy.core.expr
-import stdlib.Lean.Name
 import stdlib.Lean.Level
-import stdlib.List
 open Lean (FVarId Name)
 
 def Expr.is_Propositional : Expr → Bool
@@ -16,6 +14,35 @@ def Expr.is_Propositional : Expr → Bool
     u == .zero
   | _ => false
 
+
+def BinaryInfix.strFormat (op : BinaryInfix) (left right : Expr) : String :=
+  let func := op.func
+  let opStr := func.operator
+  -- left associative operators
+  let left :=
+    if func.priority > left.priority then
+      "(%s)"
+    else
+      "%s"
+  let right :=
+    if func.priority ≥ right.priority then
+      "(%s)"
+    else
+      "%s"
+  s!"{left} {opStr} {right}"
+
+def List.swap0 (l : List α) (idx : Nat) : List α :=
+  match idx with
+  | 0 => l
+  | .succ idx =>
+     match l with
+    | [] => []
+    | head :: tail =>
+      if let (middle, elemAtIdx :: tail) := tail.splitAt idx then
+        elemAtIdx :: (middle ++ head :: tail)
+      else
+        l
+
 def Expr.strFormat : Expr → String
   | nil => ""
 
@@ -27,7 +54,7 @@ def Expr.strFormat : Expr → String
   | Basic func args =>
     let opStr := func.operator
     match func with
-    | .BinaryInfix ⟨op⟩ =>
+    | .BinaryInfix binop@(⟨op⟩) =>
       match args with
       | [left, right] =>
         match op with
@@ -46,21 +73,15 @@ def Expr.strFormat : Expr → String
             else
               "%s"
           s!"{left} {opStr} {right}"
+        | `List.cons =>
+          if let [_, .const (.ident `List.nil)] := args then
+            s!"[%s]"
+          else
+            binop.strFormat left right
         | `Membership.mem
         | `List.Mem
         | _ =>
-          -- left associative operators
-          let left :=
-            if func.priority > left.priority then
-              "(%s)"
-            else
-              "%s"
-          let right :=
-            if func.priority ≥ right.priority then
-              "(%s)"
-            else
-              "%s"
-          s!"{left} {opStr} {right}"
+          binop.strFormat left right
       | _ =>
         opStr
 
@@ -71,6 +92,12 @@ def Expr.strFormat : Expr → String
             "(%s)"
           else
             "%s"
+        let arg :=
+          if func.priority == 76 then
+            -- UnaryPrefix resulted from Lean.Expr.proj
+            " " ++ arg
+          else
+            arg
         s!"{opStr}{arg}"
       else
         op.toString
@@ -90,20 +117,17 @@ def Expr.strFormat : Expr → String
     | .ExprWithLimits op =>
       let opStr' :=
         match op with
-        | .L_forall =>
+        | .Lean_forall =>
           match args with
-          | [_, Binder .given _ _ nil] =>
+          | [_, Binder .given _ _ nil]
+          | [_, Binder .default _ _ nil] =>
             "%s → %s"
-          | [expr, _] =>
-            if expr.is_Propositional then
-              -- α → Prop
-              "%s → %s"
-            else
-              ""
           | _ =>
             ""
-        | .L_lambda =>
+        | .Lean_lambda =>
           opStr ++ " %s".repeat (args.length - 1) ++ " ↦ %s"
+        | .Lean_let =>
+          s!"{opStr} %s; ".repeat (args.length - 1) ++ "%s"
         | _ =>
           ""
       if opStr' == "" then
@@ -135,15 +159,15 @@ def Expr.strFormat : Expr → String
 
     | .ExprWithAttr op =>
       match op with
-      | .L_function _
-      | .L_operatorname _ =>
+      | .Lean_function _
+      | .Lean_operatorname _ =>
         let args := args.map fun arg =>
           if func.priority ≥ arg.priority then
             "(%s)"
           else
             "%s"
         s!"{opStr} " ++ " ".intercalate args
-      | .LMethod name idx =>
+      | .LeanMethod name idx =>
         let attr := name.getLast.toString
         match attr, args with
         | "map", [fn, obj] =>
@@ -159,7 +183,16 @@ def Expr.strFormat : Expr → String
               "%s"
           s!"{obj}.{attr} {fn}"
         | _, args =>
-          if let obj :: args := args.swap 0 idx then
+          if args.length ≤ idx then
+            let op := name.toString
+            let args := args.map fun arg =>
+              if func.priority > arg.priority then
+                "(%s)"
+              else
+                "%s"
+            let args := " ".intercalate args
+            s!"{op} {args}"
+          else if let obj :: args := args.swap0 idx then
             let obj :=
               if func.priority ≥ obj.priority then
                 "(%s)"
@@ -174,7 +207,7 @@ def Expr.strFormat : Expr → String
             s!"{obj}.{attr} {args}"
           else
             opStr
-      | .L_typeclass _ =>
+      | .Lean_typeclass _ =>
         let args := args.map fun arg =>
           if func.priority ≥ arg.priority then
             "(%s)"
@@ -182,20 +215,31 @@ def Expr.strFormat : Expr → String
             "%s"
         let args := " ".intercalate args
         s!"{opStr} {args}"
-      | .LProperty name =>
+      | .LeanProperty name =>
         match args with
         | arg :: _ =>
           let arg :=
             if func.priority > arg.priority then
-              "(%s)"
+              if let .Basic (.BinaryInfix ⟨`List.cons⟩) [_, .const (.ident `List.nil)] := arg then
+                "%s"
+              else
+                "(%s)"
             else
               "%s"
           s!"{arg}{opStr}"
         | .nil =>
           name.toString
+      | .LeanLemma name =>
+        let args := args.map fun arg =>
+          if func.priority ≥ arg.priority then
+            "(%s)"
+          else
+            "%s"
+        s!"{name} " ++ " ".intercalate args
+        -- opStr
 
   | Binder binder binderName _ value =>
-    let binderName := binderName.escape_specials " "
+    let binderName := " ".intercalate (binderName.normalized)
     match binder with
     | .instImplicit =>
       binder.func.operator
@@ -221,14 +265,14 @@ where
     [u.toString]
 
   | Symbol name _ =>
-    [name.normalized.toString]
+    [".".intercalate name.normalized]
 
   | Basic func args =>
     match func with
     | .ExprWithLimits op =>
       let args' :=
         match op with
-        | .L_forall =>
+        | .Lean_forall =>
           match args with
           | [returnType@(Symbol _ (sort u)), Binder .default _ binderType nil] =>
             match u with
@@ -239,22 +283,29 @@ where
               []
           | [returnType@((sort .zero)), Binder .default name binderType nil] =>
             [" → ".intercalate (List.replicate name.components.length binderType.toString), returnType.toString]
-          | [returnType, Binder .given _ binderType nil] =>
+          | [returnType, Binder .given _ binderType nil]
+          | [returnType, Binder .default _ binderType nil] =>
             [binderType.toString, returnType.toString]
           | _ =>
             []
-        | .L_lambda =>
+        | .Lean_lambda =>
           match args with
           | expr :: limits =>
             let limits := limits.map fun arg =>
               match arg with
-              | Binder .default name _ nil =>
-                name.toString
+              | Binder .default binderName _ nil =>
+                " ".intercalate (binderName.normalized)
               | _ =>
                 arg.toString
             limits.reverse ++ [expr.toString]
           | .nil =>
             []
+        | .Lean_let =>
+          args.reverse.map fun expr =>
+            if let Binder _ name type value := expr then
+              "%s : %s := %s".format name.toString, type.toString, value.toString
+            else
+              "%s".format expr.toString
         | _ =>
           []
       if args' == [] then
@@ -269,8 +320,8 @@ where
         map args
     | .BinaryInfix ⟨`Membership.mem⟩ =>
       map args |>.reverse
-    | .ExprWithAttr (.LMethod _ idx) =>
-      map (args.swap 0 idx)
+    | .ExprWithAttr (.LeanMethod _ idx) =>
+      map (args.swap0 idx)
     | _ =>
       map args
 
@@ -281,15 +332,12 @@ where
   | [] => []
   | head :: tail => head.toString :: map tail
 
-
 instance : ToString Expr where
   toString := Expr.toString
-
 
 instance : ToString Operator where
   toString : Operator → String
   | op => op.operator
-
 
 instance : ToString FVarId where
   toString : FVarId → String

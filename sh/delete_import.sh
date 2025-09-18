@@ -1,10 +1,12 @@
 modules=(
-    "sympy.core.relational:^ +denote "
-    "sympy.core.logic:^ +mpr? \\["
-    "sympy.functions.elementary.integers:\\b(is even|is odd|fract|sign)\\b|//"
-    "sympy.tensor.tensor:\\b(Tensor|Zeros|Ones|Indexed|Sliced)\\b"
-    "stdlib.Slice:Slice"
-    "sympy.sets.sets:\\b(Ioo|Ico|Iio|Icc|Iic|Ioc|Ici|Ioi|range)\\b"
+    'sympy.core.relational:^ +denote '
+    'sympy.core.logic:^ +mpr? \['
+    'sympy.functions.elementary.integers:\b(is even|is odd|fract|sign|IntegerRing)\b|//'
+    'sympy.tensor.tensor:\b(Tensor|Zeros|Ones|Indexed|Sliced)\b'
+    'sympy.sets.sets:\b(Ioo|Ico|Iio|Icc|Iic|Ioc|Ici|Ioi|range)\b'
+    'stdlib.Slice:Slice'
+    'stdlib.SEq:≃'
+    'stdlib.List:\b(List|substr|slice|enumerate|is constant|swap)\b'
 )
 
 for entry in "${modules[@]}"; do

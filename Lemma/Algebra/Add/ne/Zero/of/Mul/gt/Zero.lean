@@ -1,8 +1,8 @@
-import Lemma.Algebra.Eq_Sub.of.EqAdd
-import Lemma.Algebra.MulNeg.eq.NegMul
+import Lemma.Algebra.EqSub.of.EqAdd
+import Lemma.Algebra.NegMul.eq.MulNeg
 import Lemma.Algebra.MulNeg.eq.NegSquare
-import Lemma.Algebra.Neg.lt.Zero.of.Gt_0
-import Lemma.Algebra.Square.ge.Zero
+import Lemma.Algebra.LtNeg_0.of.Gt_0
+import Lemma.Algebra.GeSquare_0
 import Lemma.Algebra.Lt.of.Lt.Le
 open Algebra
 
@@ -21,9 +21,9 @@ private lemma main
   simp at h'
   rw [h'] at h
   rw [MulNeg.eq.NegSquare] at h
-  have h := Neg.lt.Zero.of.Gt_0 h
+  have h := LtNeg_0.of.Gt_0 h
   simp at h
-  have h := Lt.of.Lt.Le h (Square.ge.Zero (a := b))
+  have h := Lt.of.Lt.Le h (GeSquare_0 (a := b))
   simp at h
 
 

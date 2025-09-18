@@ -1,0 +1,46 @@
+import Lemma.Algebra.SliceAppend.eq.Take_Sub.of.Eq_Length
+import Lemma.Algebra.LengthTake.eq.Min_Length
+import Lemma.Algebra.Cons.eq.Append
+import Lemma.Algebra.AppendAppend.eq.Append_Append
+import Lemma.Algebra.AppendAppend.eq.Append_Append
+import Lemma.Algebra.LengthAppend.eq.AddLengthS
+import Lemma.Algebra.EqTakeAppend.of.Eq_Length
+import Lemma.Algebra.Le.of.Lt.Lt
+import Lemma.Algebra.LengthSlice.eq.SubMin
+import Lemma.Algebra.EqMin.of.Lt
+open Algebra
+
+
+@[main]
+private lemma main
+  {i j : ℕ}
+-- given
+  (h : i < j)
+  (a : List α) :
+-- imply
+  (a.swap i j).slice (i + 1) j = a.slice (i + 1) j := by
+-- proof
+  unfold List.swap
+  split_ifs with h_eq h_j
+  ·
+    rfl
+  ·
+    rw [Cons.eq.Append a[j]]
+    rw [Append_Append.eq.AppendAppend]
+    rw [AppendAppend.eq.Append_Append]
+    rw [SliceAppend.eq.Take_Sub.of.Eq_Length]
+    ·
+      rw [EqTakeAppend.of.Eq_Length]
+      rw [LengthSlice.eq.SubMin]
+      rw [EqMin.of.Lt h_j]
+    ·
+      rw [LengthAppend.eq.AddLengthS]
+      rw [LengthTake.eq.Min_Length]
+      simp
+      apply Le.of.Lt.Lt h h_j
+  ·
+    rfl
+
+
+-- created on 2025-05-17
+-- updated on 2025-05-18

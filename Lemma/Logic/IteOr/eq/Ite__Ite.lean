@@ -1,8 +1,14 @@
-import Lemma.Logic.Ite__Ite.eq.IteOr
+import sympy.core.relational
+import Lemma.Logic.BFn_Ite__Ite.is.And.ou.OrAndS
+import Lemma.Logic.OrOr.is.Or_Or
+import Lemma.Logic.And_Or.is.OrAndS
+import Lemma.Logic.Or_And_Not.is.Or
+import Lemma.Logic.BFn_Ite.is.OrAndS
+import Lemma.Logic.NotOr.is.AndNotS
 open Logic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Decidable p]
   [Decidable q]
@@ -16,9 +22,18 @@ private lemma main
   else if q then
     a
   else
-    b :=
+    b := by
 -- proof
-  Ite__Ite.eq.IteOr.symm
+  denote h : R = left
+  rw [← h]
+  rw [BFn_Ite__Ite.is.And.ou.OrAndS (R := Eq)]
+  rw [Or_Or.is.OrOr]
+  simp [OrAndS.is.And_Or]
+  rw [Or_And_Not.is.Or]
+  rw [BFn_Ite.is.OrAndS (R := Eq)] at h
+  rw [NotOr.is.AndNotS] at h
+  assumption
+
 
 
 -- created on 2025-04-28

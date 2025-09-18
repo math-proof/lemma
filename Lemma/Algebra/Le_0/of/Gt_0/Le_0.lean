@@ -16,7 +16,7 @@ private lemma main
 -- imply
   x * y ≤ 0 := by
 -- proof
-  cases' Eq.ou.Lt.of.Le h₁ with hy hy
+  obtain hy | hy := Eq.ou.Lt.of.Le h₁
   simp_all
   apply Le.of.Lt
   apply Lt_0.of.Gt_0.Lt_0 h₀ hy

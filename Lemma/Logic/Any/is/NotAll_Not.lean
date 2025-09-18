@@ -1,25 +1,47 @@
-import Lemma.Logic.NotAll_Not.of.Any
-import Lemma.Logic.Any.of.NotAll_Not
+import Lemma.Logic.Any_Not.of.NotAll
 open Logic
 
 
-@[main]
-private lemma finset
-  {p : ι → Prop}
-  {s : Finset ι} :
+@[main, comm, mp, mpr]
+private lemma fin
+-- given
+  (s : Finset ι)
+  (p : ι → Prop) :
 -- imply
-  (∃ x : s, p x) ↔ ¬∀ x : s, ¬p x :=
+  (∃ x : s, p x) ↔ ¬∀ x : s, ¬p x := by
 -- proof
-  ⟨NotAll_Not.of.Any.finset, Any.of.NotAll_Not.finset⟩
+  constructor <;>
+    intro h
+  ·
+    intro h_All
+    let ⟨x, h⟩ := h
+    have h := h_All x
+    contradiction
+  ·
+    have h := Any_Not.of.NotAll h
+    simp at h
+    let ⟨a, ha, pa⟩ := h
+    use ⟨a, ha⟩
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
-  {p : α → Prop} :
+-- given
+  (p : α → Prop) :
 -- imply
-  (∃ x : α, p x) ↔ ¬∀ x : α, ¬p x :=
+  (∃ x : α, p x) ↔ ¬∀ x : α, ¬p x := by
 -- proof
-  ⟨NotAll_Not.of.Any, Any.of.NotAll_Not⟩
+  constructor <;>
+    intro h
+  ·
+    intro h_All
+    let ⟨x, h⟩ := h
+    have h := h_All x
+    contradiction
+  ·
+    have h := Any_Not.of.NotAll h
+    simp at h
+    exact h
 
 
 -- created on 2024-07-01

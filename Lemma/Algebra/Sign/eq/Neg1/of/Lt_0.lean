@@ -8,9 +8,10 @@ private lemma main
 -- given
   (h : x < 0) :
 -- imply
-  sign x = -1 := by
+  sign x = -1 :=
 -- proof
-  apply Int.sign_eq_neg_one_of_neg h
+  Int.sign_eq_neg_one_of_neg h
 
 
 -- created on 2025-03-30
+-- updated on 2025-06-26

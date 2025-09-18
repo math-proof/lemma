@@ -16,8 +16,7 @@ private lemma main
 -- proof
   have := LtDivS.of.Lt.Gt_0 h₀ h₁
   have h_Ne_0 := Ne.of.Gt h₁
-  rw [EqDivMul.of.Ne_0 h_Ne_0] at this
-  assumption
+  rwa [EqDivMul.of.Ne_0 h_Ne_0] at this
 
 
 -- created on 2025-03-30

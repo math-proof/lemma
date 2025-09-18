@@ -201,8 +201,8 @@ EOT;
             ]
         ];
 
-        $module = preg_replace_callback('#(?<=[./\\\\])(In|Is)(?=[./\\\\])#', function($matches) {
-            return strtolower($matches[0]);
+        $module = preg_replace_callback('#(^\w+[./\\\\].+[./\\\\])(In|Is)(?=[./\\\\][A-Z])#', function($matches) {
+            return $matches[1] . strtolower($matches[2]);
         }, $module);
     }
     $lemma['name'] = 'main';

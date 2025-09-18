@@ -1,5 +1,5 @@
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
-import Lemma.Logic.Ne.of.NotEq
+import Lemma.Logic.Ne.is.NotEq
 open Algebra Logic
 
 

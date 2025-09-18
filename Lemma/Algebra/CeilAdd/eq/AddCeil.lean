@@ -1,12 +1,12 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [LinearOrderedRing α]
   [FloorRing α]
-  {x : α}
-  {d : ℤ} :
+  (x : α)
+  (d : ℤ) :
 -- imply
   ⌈x + d⌉ = ⌈x⌉ + d :=
 -- proof

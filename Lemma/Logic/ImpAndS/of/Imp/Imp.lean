@@ -6,17 +6,17 @@ open Logic
 @[main]
 private lemma main
 -- given
-  (h₀ : p0 → q0)
-  (h₁ : p1 → q1) :
+  (h₀ : p₀ → q₀)
+  (h₁ : p₁ → q₁) :
 -- imply
-  p0 ∧ p1 → q0 ∧ q1 := by
+  p₀ ∧ p₁ → q₀ ∧ q₁ := by
 -- proof
   apply Imp_And.of.Imp.Imp
   ·
-    have : p0 ∧ p1 → p0 := by tauto
+    have : p₀ ∧ p₁ → p₀ := by tauto
     exact Imp.of.Imp.Imp this h₀
   ·
-    have : p0 ∧ p1 → p1 := by tauto
+    have : p₀ ∧ p₁ → p₁ := by tauto
     exact Imp.of.Imp.Imp this h₁
 
 

@@ -1,18 +1,20 @@
-import Lemma.Logic.OrAnd.is.AndOrS
-open Logic
+import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main :
 -- imply
   r ∨ p ∧ q ↔ (r ∨ p) ∧ (r ∨ q) := by
 -- proof
-  rw [
-    Or.comm,
-    Or.comm (a := r),
-    Or.comm (a := r)
-  ]
-  apply OrAnd.is.AndOrS
+  aesop
+
+
+@[main, comm, mp, mpr]
+private lemma Comm :
+-- imply
+  r ∨ p ∧ q ↔ (p ∨ r) ∧ (q ∨ r) := by
+-- proof
+  aesop
 
 
 -- created on 2024-07-01

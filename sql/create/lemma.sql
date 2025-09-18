@@ -3,6 +3,7 @@ CREATE TABLE `lemma` (
   module varchar(256) NOT NULL,
   imports json NOT NULL,
   open json NOT NULL,
+  set_option json,
   def json NOT NULL,
   lemma json NOT NULL,
   error json,

@@ -1,5 +1,5 @@
 import Lemma.Algebra.FModAdd.eq.FMod.of.FMod.eq.Zero
-import Lemma.Algebra.Add_Neg.eq.Sub
+import Lemma.Algebra.Sub.eq.Add_Neg
 open Algebra
 
 

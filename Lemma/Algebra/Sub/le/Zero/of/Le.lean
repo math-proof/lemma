@@ -1,5 +1,5 @@
 import Lemma.Algebra.Sub.eq.Zero
-import Lemma.Algebra.LeSubS.of.Le
+import Lemma.Algebra.LeSubS.is.Le
 open Algebra
 
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   x - y ≤ 0 := by
 -- proof
-  have := LeSubS.of.Le h y
+  have := LeSubS.of.Le y h
   rw [Sub.eq.Zero] at this
   assumption
 

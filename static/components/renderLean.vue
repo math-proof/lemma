@@ -248,6 +248,22 @@ export default {
         openContainingFolder() {
             this.$parent.openContainingFolder();
         },
+
+        update(source) {
+            var cm = this.editor;
+            var line = cm.lastLine();
+            if (source)
+                // cm.setValue(source.editor.getValue());
+                // cm.clearHistory(); // Clears undo history and marks state as clean
+                source = source.editor.getValue();
+            else
+                source = '';
+            cm.replaceRange(
+                source,
+                { line: 0, ch: 0 },
+                { line, ch: cm.getLine(line).length},
+            );
+        }
     },
     
     mounted: codeMirror.mounted,

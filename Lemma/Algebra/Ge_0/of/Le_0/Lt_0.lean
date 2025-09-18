@@ -19,7 +19,7 @@ private lemma main
 -- imply
   x * y ≥ 0 := by
 -- proof
-  cases' Eq.ou.Lt.of.Le h₀ with hx hx'
+  obtain hx | hx' := Eq.ou.Lt.of.Le h₀
   ·
     -- Case 1: x = 0
     simp_all

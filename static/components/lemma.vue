@@ -23,7 +23,7 @@
 
         <div v-if=given>
             <hr>
-            <span v-clipboard class=green :data-clipboard-text=module :index=index><b>-- given</b></span>
+            <span v-clipboard class=green :data-clipboard-text=lemmaName :index=index><b>-- given</b></span>
             <div v-for="given, i of given" @keydown=keydown_div @click.left.stop=click_select :index=i :class="class_given(i)" tabindex="1000">
                 <renderLean v-if=given.insert :text=given.lean :index="[index, 'given', i]"></renderLean>
                 <template v-else>
@@ -37,7 +37,7 @@
         <renderLean v-if=explicit :text=explicit :index="[index, 'explicit']"></renderLean>
         <hr>
         <a style='font-size: inherit' :href="module? `?callee=${module}`: `?q=${name}&fullText=on`" title='callee hierarchy'>
-            <span v-clipboard class=green :data-clipboard-text=module><b>-- imply</b></span>
+            <span v-clipboard class=green :data-clipboard-text=lemmaName><b>-- imply</b></span>
         </a>
         <div @keydown=keydown_div @click.left.stop=click_select :class=class_imply tabindex="1000">
             <renderLean v-if=imply.insert :text=imply.lean :index="[index, 'imply']"></renderLean>
@@ -145,6 +145,10 @@ export default {
 
         leanSourceCode() {
             return this.$parent.leanSourceCode(this.index);
+        },
+
+        lemmaName() {
+            return this.$parent.lemmaName(this.index);
         },
     },
 
@@ -299,8 +303,6 @@ ${latex}
                     await this.Escape(given[i], [index, 'given', i]);
                 else
                     break;
-
-                // typesetPromise();
                 leanCode.remove();
                 break;
             case 'Delete':
@@ -310,9 +312,29 @@ ${latex}
                 if (target.className == 'focus' && target.parentElement.className == 'lemma') {
                     var {lemma} = this.$parent;
                     if (lemma.length > 1) {
+                        var {renderLean} = this.$parent;
+                        for (var i of range(index, lemma.length - 1)) {
+                            var {instImplicit, implicit, strictImplicit, explicit, given, proof} = renderLean[i];
+                            if (instImplicit)
+                                instImplicit.update(renderLean[i + 1].instImplicit);
+                            if (implicit)
+                                implicit.update(renderLean[i + 1].implicit);
+                            if (strictImplicit)
+                                strictImplicit.update(renderLean[i + 1].strictImplicit);
+                            if (given)
+                                given.update(renderLean[i + 1].given);
+                            if (explicit)
+                                explicit.update(renderLean[i + 1].explicit);
+                            if (proof) {
+                                var attr = proof.by? 'by': proof.calc? 'calc': '';
+                                if (attr) {
+                                    for (var j of range(proof[attr].length)) {
+                                        proof[attr][j].update(renderLean[i + 1]?.proof[attr][j]);
+                                    }
+                                }
+                            }
+                        }
                         lemma.delete(index);
-                        this.$parent.renderLean.clear();
-                        this.$parent.refresh = true;
                         if (lemma.length == 1)
                             lemma[0].name = 'main';
                     }

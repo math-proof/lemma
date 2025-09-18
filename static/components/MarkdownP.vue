@@ -6,6 +6,8 @@
 
 <script setup>
 import Vue from "../js/vue.js"
+import MarkdownParser from "../js/parser/markdown.js"
+const {components} = MarkdownParser;
 // console.log('import MarkdownP.vue');
 
 const props = defineProps({
@@ -14,16 +16,7 @@ const props = defineProps({
 });
 
 const self = new Vue({
-    components: [
-        'MarkdownText', 
-        'MarkdownBracket',
-        'MarkdownA',
-        'MarkdownB', 
-        'MarkdownI',
-        'MarkdownLatex',
-        'MarkdownUL',
-        'MarkdownOL',
-    ],
+    components,
 	props,
 
     data: {
@@ -36,5 +29,3 @@ const self = new Vue({
     },
 });
 </script>
-<style>
-</style>

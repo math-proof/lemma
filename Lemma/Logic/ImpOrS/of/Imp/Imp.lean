@@ -1,11 +1,9 @@
-import Lemma.Logic.Imp.of.Or_Not
+import Lemma.Logic.Imp.is.Or_Not
 import Lemma.Logic.NotOr.is.AndNotS
 import Lemma.Logic.NotAnd.is.OrNotS
 import Lemma.Logic.IffNotNot
-import Lemma.Logic.Or_Not.of.Imp
-import Lemma.Logic.And_And.is.AndAnd
 import Lemma.Logic.AndOr.is.OrAndS
-import Lemma.Logic.OrAndS.of.And_Or
+import Lemma.Logic.And_Or.is.OrAndS
 import Lemma.Logic.AndAnd.is.And_And
 import Lemma.Logic.Or_Not.is.NotAndNot
 open Logic
@@ -32,7 +30,7 @@ private lemma main
   rw [And_And.is.AndAnd] at this
   rw [AndOr.is.OrAndS] at this
   simp at this
-  have := OrAndS.of.And_Or this
+  have := OrAndS.of.And_Or this.1 this.2
   rw [And.comm (b := p₀)] at this
   rw [And_And.is.AndAnd] at this
   rw [And_And.is.AndAnd] at this

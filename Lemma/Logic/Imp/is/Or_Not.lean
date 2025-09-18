@@ -2,7 +2,7 @@ import Lemma.Logic.Imp.is.OrNot
 open Logic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main:
 -- imply
   (p → q ↔ q ∨ ¬p) := by

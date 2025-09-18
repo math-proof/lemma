@@ -1,22 +1,25 @@
-import Lemma.Basic
+import Lemma.Algebra.EqMax.is.OrAndS
+open Algebra
 
 
 @[main]
 private lemma main
-  (x : ℚ) :
+  [LinearOrderedField α]
+-- given
+  (x : α) :
 -- imply
   |x - 3| = 4 + 2 * x ↔ x = -1 / 3 := by
 -- proof
   rw [abs_eq_max_neg]
-  constructor <;>
+  constructor <;> 
     intro h
-  ·
-    cases' max_eq_iff.mp h with h₀ h₁ <;>
+  · 
+    obtain h₀ | h₁ := OrAndS.of.EqMax h <;> 
       linarith
-  ·
+  · 
     rw [h]
     norm_num
 
 
 -- created on 2025-03-31
--- updated on 2025-04-05
+-- updated on 2025-08-02

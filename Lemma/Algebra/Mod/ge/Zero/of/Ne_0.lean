@@ -7,12 +7,10 @@ private lemma main
 -- given
   (h : d ≠ 0)
   (n : ℤ):
-
 -- imply
   n % d ≥ 0 := by
 -- proof
-  -- Apply the theorem `Int.emod_nonneg` which states that for any integers `n` and `d ≠ 0`, `n % d ≥ 0`.
-  apply Int.emod_nonneg
+  apply Int.emod_nonneg -- Apply the theorem `Int.emod_nonneg` which states that for any integers `n` and `d ≠ 0`, `n % d ≥ 0`.
   assumption
 
 

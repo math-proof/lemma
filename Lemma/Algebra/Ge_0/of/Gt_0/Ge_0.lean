@@ -18,7 +18,7 @@ private lemma main
 -- imply
   x * y ≥ 0 := by
 -- proof
-  cases' Eq.ou.Gt.of.Ge h₁ with hy hy
+  obtain hy | hy := Eq.ou.Gt.of.Ge h₁
   simp_all
   have := Gt_0.of.Gt_0.Gt_0 h₀ hy
   exact Ge.of.Gt this

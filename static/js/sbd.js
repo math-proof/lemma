@@ -115,7 +115,10 @@ export function sbd(text) {
             else
                 // for the following comma case:
                 // ”,IEEE Jounalon Selected Areas in Communications,Vol.31,No.2,Feburary2013所述。
-                texts[texts.length - 1] += line;
+                if (texts.length)
+                    texts[texts.length - 1] += line;
+                else
+                    texts.push(line);
         } else {
             m = line.match(/^.[;.!?:；。！？：…\r\n]+/);
             boundaryIndex = m ? m[0].length : 1;

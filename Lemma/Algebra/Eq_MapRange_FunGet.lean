@@ -1,12 +1,11 @@
 import stdlib.List.Vector
-import Lemma.Algebra.GetElemRange.eq.Some.is.Lt.Eq
-import Lemma.Algebra.GetElem.eq.Some.is.Any_Eq
+import Lemma.Algebra.GetElem!Range.eq.Some.is.Lt.Eq
+import Lemma.Algebra.GetElem!.eq.Some.is.Any_Eq
 open Algebra
 
 
 @[main]
 private lemma main
-  [Inhabited α]
 -- given
   (v : List.Vector α m) :
 -- imply
@@ -21,8 +20,8 @@ private lemma main
   congr
   ext i a
   simp
-  simp [GetElemRange.eq.Some.is.Lt.Eq]
-  simp only [GetElem.eq.Some.is.Any_Eq]
+  simp [GetElem!Range.eq.Some.is.Lt.Eq]
+  simp only [GetElem!.eq.Some.is.Any_Eq]
   simp only [h_length]
   simp only [Eq.comm]
 

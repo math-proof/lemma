@@ -1,7 +1,6 @@
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.EqSub.of.Eq_Add
-import Lemma.Algebra.Add.comm
-import Lemma.Algebra.Eq_Add.of.EqSub
+import Lemma.Algebra.EqSub.is.Eq_Add
+import Lemma.Algebra.Add
 import Lemma.Algebra.Sub.eq.Zero
 import Lemma.Set.FDiv.eq.Zero.of.Gt_Zero.Icc0Sub_1
 open Algebra Set

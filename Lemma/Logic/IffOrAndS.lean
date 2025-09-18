@@ -1,5 +1,5 @@
-import Lemma.Logic.OrAndS.is.And_Or
-import Lemma.Logic.Or_Not.law_of_excluded_middle
+import Lemma.Logic.And_Or.is.OrAndS
+import Lemma.Logic.Or_Not
 open Logic
 
 
@@ -9,8 +9,8 @@ private lemma main
 -- imply
   p ∧ q ∨ p ∧ ¬q ↔ p := by
 -- proof
-  simp [OrAndS.is.And_Or.left]
-  simp [Or_Not.law_of_excluded_middle]
+  simp [OrAndS.is.And_Or]
+  simp [Or_Not]
 
 
 -- created on 2025-04-09

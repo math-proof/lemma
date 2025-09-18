@@ -1,0 +1,17 @@
+import Lemma.Basic
+
+
+@[main, comm, mp, mpr]
+private lemma main
+  [LinearOrderedRing α]
+  [FloorRing α]
+-- given
+  (x : α)
+  (n : ℤ) :
+-- imply
+  ⌊x⌋ ≥ n ↔ x ≥ n :=
+-- proof
+  Int.le_floor
+
+
+-- created on 2025-05-05

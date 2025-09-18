@@ -1,4 +1,4 @@
-import Lemma.Algebra.Eq_Add.of.EqSub
+import Lemma.Algebra.EqSub.is.Eq_Add
 open Algebra
 
 

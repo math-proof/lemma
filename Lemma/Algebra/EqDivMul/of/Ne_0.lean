@@ -1,6 +1,9 @@
 import Lemma.Basic
 
 
+/--
+This lemma applies to Nat, Int as well
+-/
 @[main]
 private lemma left
   [CommMonoidWithZero α]
@@ -16,6 +19,9 @@ private lemma left
   mul_div_cancel_left₀ b h
 
 
+/--
+This lemma applies to Nat, Int as well
+-/
 @[main]
 private lemma main
   [MonoidWithZero α]

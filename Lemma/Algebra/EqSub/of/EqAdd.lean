@@ -1,8 +1,21 @@
-import Lemma.Algebra.Eq_Sub.of.EqAdd
+import Lemma.Algebra.EqSubS.is.Eq
+import Lemma.Algebra.EqSubAdd
 open Algebra
 
 
-@[main]
+@[main, comm]
+private lemma nat
+  {x y d : ℕ}
+-- given
+  (h : d + x = y) :
+-- imply
+  y - x = d := by
+-- proof
+  rw [← h]
+  rw [EqSubAdd.int]
+
+
+@[main, comm]
 private lemma main
   [AddGroup α]
   {x y d : α}
@@ -11,8 +24,9 @@ private lemma main
 -- imply
   y - x = d := by
 -- proof
-  have := Eq_Sub.of.EqAdd h
-  apply Eq.symm this
+  have h := EqSubS.of.Eq x h
+  rw [EqSubAdd] at h
+  simp_all
 
 
 -- created on 2025-04-16

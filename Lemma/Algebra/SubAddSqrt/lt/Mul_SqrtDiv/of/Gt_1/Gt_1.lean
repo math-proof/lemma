@@ -1,6 +1,6 @@
 import Lemma.Algebra.Lt.of.LtSquareS.Ge_0
 import Lemma.Algebra.Mul.ge.Zero.of.Ge_0.Ge_0
-import Lemma.Algebra.Sqrt.ge.Zero
+import Lemma.Algebra.GeSqrt_0
 import Lemma.Algebra.SquareMul.eq.MulSquareS
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Gt_0
@@ -9,16 +9,16 @@ import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Algebra.EqDivSquare
 import Lemma.Algebra.Mul_Add.eq.AddMulS
-import Lemma.Algebra.Lt.of.Sub.gt.Zero
-import Lemma.Algebra.SubAdd.eq.AddSub
+import Lemma.Algebra.Sub.gt.Zero.is.Lt
+import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubMul.eq.MulSub_1
-import Lemma.Algebra.SubSub.comm
+import Lemma.Algebra.SubSub
 import Lemma.Algebra.AddSub.eq.Add_Sub
-import Lemma.Algebra.SubMulS.eq.MulSub
+import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Algebra.Square.eq.Mul
-import Lemma.Algebra.Mul.comm
-import Lemma.Algebra.AddMulS.eq.MulAdd
+import Lemma.Algebra.Mul
+import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.EqSub_Sub
 import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Algebra.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
@@ -78,7 +78,7 @@ private lemma main
     ·
       simp
     ·
-      apply Sqrt.ge.Zero
+      apply GeSqrt_0
 
 
 -- created on 2025-04-06

@@ -15,11 +15,11 @@ private lemma main
   -- Use the property that the product of two elements is non-negative if and only if both are non-negative or both are non-positive.
   rw [Div.eq.Mul_Inv]
   -- Split the proof into two cases based on the signs of x and y.
-  cases' le_total 0 x with hx hx <;>
+  obtain hx | hx := le_total 0 x <;>
   ·
-    cases' le_total 0 y with hy hy <;>
+    obtain hy | hy := le_total 0 y <;>
     ·
-      cases' le_total 0 y⁻¹ with hy_inv hy_inv <;>
+      obtain hy_inv | hy_inv := le_total 0 y⁻¹ <;>
       ·
         simp_all [Mul.ge.Zero.is.AndGeS_0.ou.AndLeS_0]
 

@@ -1,14 +1,14 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [DivisionMonoid α] [HasDistribNeg α]
-  {a b : α} :
+  (a b : α) :
 -- imply
-  a / -b = -(a / b) := by
+  a / -b = -(a / b) :=
 -- proof
-  rw [div_neg]
+  div_neg a
 
 
 -- created on 2024-07-01

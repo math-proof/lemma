@@ -129,14 +129,14 @@ export default {
 			return section + '.' + module;
 		}
 		
-		async function select_mathlib(module) {
+		async function select_mathlib(module, op='=') {
 			var sql = `
 select 
   name 
 from 
   mathlib
 where 
-  name = "${module}"`;
+  name ${op} "${module}"`;
 			var list = await form_post(`php/request/execute.php`, {sql});
 			return list.length;
 		}
@@ -145,6 +145,7 @@ where
 		    var cursor = cm.getCursor();
 		    var text = cm.getLine(cursor.line);
 			var prefix = text.slice(0, cursor.ch) + text.slice(cursor.ch).match(/^[\w']*/)[0];
+			var postfix = text.slice(prefix.length);
 		    var m = prefix.match(/([\w']+)(?:\.[\w']+)*$/);
 		    var module = m[0];
 			m = module.match(/^Lemma\.(.+)/);
@@ -159,14 +160,17 @@ where
 					var symbol = module;
 					module = await locate_definition(cm, cursor.line, symbol);
 					if (module == null){
-						var href = `?mathlib=${symbol}`;
-						if (refresh)
-							location.href = href;
-						else
-							window.open(href);
-						return;
+						if (await select_mathlib(symbol.replace('.', '\\.'), 'regexp')) {
+							var href = `?mathlib=${symbol}`;
+							if (refresh)
+								location.href = href;
+							else
+								window.open(href);
+							return;
+						}
+						module = self.module.split(/[./]/)[0] + '.' + symbol;
 					}
-					m = text.slice(prefix.length).match(/\.([\w']+)/);
+					m = postfix.match(/\.([\w']+)/);
 					symbol = m? m[1]: null;
 				}
 			}
@@ -177,14 +181,15 @@ where
 						if (await select_mathlib(module))
 							table = 'mathlib';
 						else
-							return;
+							table = 'module';
 					}
 				}
 				else{
 					if (await select_mathlib(module))
 						table = 'mathlib';
 					else {
-						var regexp = `^([\\w'']+)\\.${module.replace('.', '\\.')}(?=\\.|$)`.replace(/\\/g, "\\\\");
+						var char = postfix.match(/^\.[A-Z]/)? '\\.': '$';
+						var regexp = `^([\\w'']+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`.replace(/\\/g, "\\\\");
 						var sql = `
 select 
 	regexp_replace(module, "${regexp}.*", '$1')
@@ -193,7 +198,15 @@ from
 where 
 	module regexp "${regexp}"`;
 						console.log('sql =', sql);
-						var [section] = await form_post(`php/request/execute.php`, {sql});
+						var section = await form_post(`php/request/execute.php`, {sql});
+						section = section.map(s => s[0]);
+						if (section.length > 1) {
+							section = section.array_intersect(self.$parent.$parent.open_sections);
+							if (section.length > 1) {
+								// todo
+							}
+						}
+						[section] = section;
 						module = section + '.' + module;
 					}
 				}
@@ -209,29 +222,70 @@ where
 				window.open(href);
 		}
 		
-		function open(cm, ch) {
-			var [first, second] = ch.split('');
-			cm.replaceSelection(first);
+		function open(cm, pair) {
+			cm.replaceSelection(pair[0]);
 
 			var cursor = cm.getCursor();
 			console.log("cursor.ch = " + cursor.ch);
 
 			var text = cm.getLine(cursor.line);
 
+			var group_count = {
+				'(': 0,
+				'[': 0,
+				'{': 0,
+			};
+			// scan for unmatch right parenthesis/bracket/brace and replace it with the current closing punctuation
+			var hit = null;
+			for (var selectionStart of range(cursor.ch, text.length)) {
+				var char = text[selectionStart];
+				switch (char) {
+					case '(':
+					case '[':
+					case '{':
+						++group_count[char];
+						break;
+					case ')':
+						if (group_count['('])
+							--group_count['('];
+						else
+							hit = selectionStart;
+						break;
+					case ']':
+						if (group_count['['])
+							--group_count['[']
+						else
+							hit = selectionStart;
+						break;
+					case '}':
+						if (group_count['}']) 
+							--group_count['}'];
+						else
+							hit = selectionStart;
+						break;
+				}
+				if (hit) {
+					// replace the unmatch right parenthesis/bracket/brace with the current closing punctuation
+					var {line} = cursor;
+					cm.replaceRange(
+						pair[1],
+						{line, ch: hit},
+						{line, ch: hit + 1},
+					);
+					cm.setCursor(cursor.line, hit + 1);
+					return;
+				}
+			}
 			var selectionStart = cursor.ch;
-			console.log("selectionStart = " + selectionStart);
-
 			var left_parenthesis_count = 0;
 			var left_bracket_count = 0;
 			var left_brace_count = 0;
+
 			if (text[selectionStart] != '.') {
 				for (; selectionStart < text.length; ++selectionStart) {
 					var char = text[selectionStart];
-
-					if (char >= 'a' && char <= 'z' || char >= 'A' && char <= 'Z') {
+					if (char.isalpha() || char.isdigit())
 						continue;
-					}
-
 					switch (char) {
 						case '_':
 						case '.':
@@ -274,9 +328,8 @@ where
 					break;
 				}
 			}
-
 			cm.setCursor(cursor.line, selectionStart);
-			cm.replaceSelection(second);
+			cm.replaceSelection(pair[1]);
 			cm.setCursor(cursor.line, selectionStart);
 		}
 
@@ -593,8 +646,7 @@ where
 								m = prefix.match(/([\w.]*\.)(\w*)$/);
 								var [_, prefix, phrase] = m;
 								m = prefix.match(/^(\w*)\.$/);
-								m = m && !m[1].fullmatch(self.regexp_section);
-									
+								m = !m || m && !m[1].fullmatch(self.regexp_section);
 							}
 							if (m)
 								prefix = preppend(prefix);
@@ -630,9 +682,8 @@ from
 where 
 	user = '${user}' and module like concat("${prefix}", '%')`;
 							}
-
 							if (!search_lemma)
-								sql += ` having phrase regexp '${phrase}' COLLATE utf8mb4_0900_bin`;
+								sql += ` having phrase regexp '${phrase}' COLLATE utf8mb4_0900_bin order by phrase`;
 						} else {
 							token.start -= prefix.length - (tokenString.length - (token.end - cur.ch));
 							token.end = cur.ch;
@@ -706,7 +757,7 @@ SELECT
   name
 FROM
   json_table(
-    '${JSON.stringify(constants)}',
+    ${JSON.stringify(constants).mysqlStr()},
     '$[*]' columns(name text path '$')
   ) as _t
 where name like binary '${prefix}%'`;

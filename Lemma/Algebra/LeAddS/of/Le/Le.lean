@@ -1,4 +1,4 @@
-import Lemma.Algebra.LeAddS.of.Le
+import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Algebra.Le.of.Le.Le
 open Algebra
 
@@ -16,8 +16,8 @@ private lemma main
 -- imply
   a + x ≤ b + y := by
 -- proof
-  have h₂ := LeAddS.of.Le h₀ x
-  have h₃ := LeAddS.of.Le.left h₁ b
+  have h₂ := LeAddS.of.Le x h₀
+  have h₃ := LeAddS.of.Le.left b h₁
   apply Le.of.Le.Le h₂ h₃
 
 

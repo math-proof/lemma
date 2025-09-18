@@ -1,13 +1,13 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [LinearOrderedRing α]
 -- given
   (a b : α) :
 -- imply
-  |a * b| = (  |a|) * (  |b|) :=
+  |a * b| = |a| * |b| :=
   -- proof
   abs_mul a b
 

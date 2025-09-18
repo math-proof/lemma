@@ -24,8 +24,8 @@ export function has_typeclasses(lemma) {
 		return true;
 	if (implicit) {
 		for (var [, alpha] of implicit.matchAll(/\{\w+(?: \w+)* : ([\p{Script=Greek}a-zA-Z0-9_]+)\}/ug)) {
-			if (alpha == 'Prop' || implicit.match(new RegExp(`\\{\\w+(?: \\w+)* : Set ${alpha}\\}`, 'u')))
-				// alpha is Prop or a typeclass for Set
+			if (alpha == 'Prop' || implicit.match(new RegExp(`\\{\\w+(?: \\w+)* : (Set|List) ${alpha}\\}`, 'u')))
+				// alpha is Prop or a container of Set/List
 				continue;
 			return false;
 		}

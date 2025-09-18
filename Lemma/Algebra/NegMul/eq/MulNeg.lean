@@ -1,14 +1,14 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Mul α] [HasDistribNeg α]
-  {a b : α} :
+  (a b : α) :
 -- imply
-  -(a * b) = -a * b := by
+  -(a * b) = -a * b :=
 -- proof
-  rw [neg_mul_eq_neg_mul]
+  neg_mul_eq_neg_mul a b
 
 
 -- created on 2024-07-01

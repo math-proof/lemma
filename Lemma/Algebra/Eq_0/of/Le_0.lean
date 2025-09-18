@@ -11,7 +11,7 @@ private lemma main
 -- imply
   n = 0 := by
 -- proof
-  have := Ge_0 (n := n)
+  have := Ge_0.nat n
   apply Eq.of.Ge.Le this h
 
 

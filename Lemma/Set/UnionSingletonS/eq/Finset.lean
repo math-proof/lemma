@@ -1,4 +1,4 @@
-import Lemma.Set.Mem_Finset
+import Lemma.Set.In_Finset
 open Set
 
 
@@ -15,22 +15,22 @@ private lemma main
   constructor
   ·
     intro h
-    cases' h with h h
+    obtain h | h := h
     ·
       -- If x ∈ {a}, then x = a.
       rw [h]
-      apply Mem_Finset
+      apply In_Finset
     ·
       -- If x ∈ {b}, then x = b.
       rw [h]
       simp [Set.mem_singleton]
   ·
     intro h
-    cases' h with h h
+    obtain h | h := h
     ·
       -- If x = a, then x ∈ {a}.
       rw [h]
-      apply Mem_Finset
+      apply In_Finset
     ·
       -- If x = b, then x ∈ {b}.
       rw [h]

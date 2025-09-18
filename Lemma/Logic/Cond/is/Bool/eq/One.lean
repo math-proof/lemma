@@ -2,7 +2,7 @@ import Lemma.Logic.Bool.eq.Ite
 open Logic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
   [Decidable p] :
 -- imply

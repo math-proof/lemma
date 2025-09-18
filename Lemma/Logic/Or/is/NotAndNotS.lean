@@ -1,7 +1,7 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, mp, mpr]
 private lemma main
   [Decidable a]
   [Decidable b] :

@@ -1,6 +1,6 @@
-import Lemma.Algebra.Inv.gt.Zero.of.Gt_0
+import Lemma.Algebra.GtInv_0.is.Gt_0
 import Lemma.Algebra.Mul.lt.Zero.of.Lt_0.Gt_0
-import Lemma.Algebra.Mul_Inv.eq.Div
+import Lemma.Algebra.Div.eq.Mul_Inv
 open Algebra
 
 
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   x / y < 0 := by
 -- proof
-  have h₁ := Inv.gt.Zero.of.Gt_0 h₁
+  have h₁ := GtInv_0.of.Gt_0 h₁
   have := Mul.lt.Zero.of.Lt_0.Gt_0 h₀ h₁
   rw [Mul_Inv.eq.Div] at this
   assumption

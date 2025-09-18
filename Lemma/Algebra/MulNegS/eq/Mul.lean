@@ -1,4 +1,4 @@
-import Lemma.Algebra.MulNeg.eq.NegMul
+import Lemma.Algebra.NegMul.eq.MulNeg
 import Lemma.Algebra.Mul_Neg.eq.NegMul
 import Lemma.Algebra.EqNegNeg
 open Algebra

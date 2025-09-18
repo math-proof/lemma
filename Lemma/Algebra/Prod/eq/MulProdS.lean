@@ -1,7 +1,7 @@
 import Lemma.Algebra.Prod.eq.Prod_Pow_Bool
-import Lemma.Algebra.MulProdS.eq.Prod_Mul
-import Lemma.Algebra.MulPowS.eq.Pow_Add
-import Lemma.Set.BoolMem.eq.AddBoolSMem
+import Lemma.Algebra.Prod_Mul.eq.MulProdS
+import Lemma.Algebra.Pow_Add.eq.MulPowS
+import Lemma.Set.BoolIn.eq.AddBoolSIn
 open Algebra Set
 
 
@@ -10,8 +10,9 @@ private lemma main
   [Fintype ι]
   [DecidableEq ι]
   [CommMonoid α]
-  {A B : Finset ι}
-  {f : ι → α} :
+-- given
+  (A B : Finset ι)
+  (f : ι → α) :
 -- imply
   ∏ x ∈ A, f x = (∏ x ∈ A ∩ B, f x) * ∏ x ∈ A \ B, f x := by
 -- proof
@@ -20,7 +21,7 @@ private lemma main
   rw [Prod.eq.Prod_Pow_Bool (s := A \ B)]
   rw [MulProdS.eq.Prod_Mul]
   simp only [MulPowS.eq.Pow_Add]
-  simp only [← BoolMem.eq.AddBoolSMem.finset]
+  simp only [AddBoolSIn.eq.BoolIn.fin]
 
 
 -- created on 2025-04-30

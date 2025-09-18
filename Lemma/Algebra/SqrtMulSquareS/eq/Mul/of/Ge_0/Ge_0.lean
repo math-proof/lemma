@@ -1,5 +1,5 @@
 import sympy.core.power
-import Lemma.Algebra.Square.ge.Zero
+import Lemma.Algebra.GeSquare_0
 import Lemma.Algebra.EqSqrtSquare.of.Ge_0
 open Algebra
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   √(x² * y²) = x * y := by
 -- proof
-  have := Square.ge.Zero (a := x)
+  have := GeSquare_0 (a := x)
   have := Real.sqrt_mul this y²
   rw [EqSqrtSquare.of.Ge_0 h₀, EqSqrtSquare.of.Ge_0 h₁] at this
   assumption

@@ -543,8 +543,6 @@ class XMLNodeContainerTag extends XMLNode
             default:
                 return parent::__get($vname);
         }
-
-        return null;
     }
 
     function logical2physical($pos)

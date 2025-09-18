@@ -4,14 +4,9 @@ open Lean
 inductive Constant where
   | True
   | False
-  | Infinity
-  | NegativeInfinity
-  | Infinitesimal
-  | NegativeInfinitesimal
   | NaN
   | EmptySet
   | UniversalSet
-  | EmptyList
   | Pi
   | ImaginaryUnit
   | Nat
@@ -29,14 +24,9 @@ inductive Constant where
 def Constant.toString : Constant → String
   | True => "True"
   | False => "False"
-  | Infinity => "Infinity"
-  | NegativeInfinity => "NegativeInfinity"
-  | Infinitesimal => "0⁺"
-  | NegativeInfinitesimal => "0⁻"
   | NaN => "NaN"
   | EmptySet => "∅"
   | UniversalSet => "UniversalSet"
-  | EmptyList => "[]"
   | Pi => "π"
   | ImaginaryUnit => "ImaginaryUnit"
   | Nat => "ℕ"
@@ -47,7 +37,11 @@ def Constant.toString : Constant → String
   | true => "true"
   | false => "false"
   | natVal val => s!"{val}"
-  | ident name => name.toString
+  | ident name =>
+    match name with
+    | `EmptyCollection.emptyCollection => "∅"
+    | `List.nil => "[]"
+    | _ => name.toString
 
 
 instance : ToString Constant where
@@ -57,14 +51,9 @@ instance : ToString Constant where
 def Constant.toLatex : Constant → String
   | True => "\\top"
   | False => "\\bot"
-  | Infinity => "\\infty"
-  | NegativeInfinity => "-\\infty"
-  | Infinitesimal => "0^+"
-  | NegativeInfinitesimal => "0^-"
   | NaN => "\\mathrm{NaN}"
   | EmptySet => "\\emptyset"
   | UniversalSet => "\\mathbb{U}"
-  | EmptyList => "[]"
   | Pi => "\\pi"
   | ImaginaryUnit => "\\color{blue}\\text{I}"
   | Nat => "\\mathbb{N}"
@@ -78,4 +67,7 @@ def Constant.toLatex : Constant → String
   | ident name =>
     match name with
     | `EmptyCollection.emptyCollection => "\\emptyset"
+    | `List.nil => "[]"
+    | `Hyperreal.epsilon => "0^+"
+    | `Hyperreal.omega => "\\infty"
     | _ => name.escape_specials "."

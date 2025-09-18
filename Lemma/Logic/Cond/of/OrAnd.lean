@@ -9,7 +9,7 @@ private lemma main
 -- imply
   p := by
 -- proof
-  cases' h with h_pq hp
+  obtain h_pq | hp := h
   ·
     exact h_pq.left
   ·

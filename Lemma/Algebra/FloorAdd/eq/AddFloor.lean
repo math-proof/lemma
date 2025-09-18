@@ -1,12 +1,12 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma nat
   [LinearOrderedRing R]
   [FloorRing R]
-  {x : R}
-  {d : ℕ} :
+  (x : R)
+  (d : ℕ) :
 -- imply
   ⌊x + d⌋ = ⌊x⌋ + d := by
 -- proof
@@ -14,16 +14,16 @@ private lemma nat
   norm_cast at this
 
 
-@[main]
+@[main, comm]
 private lemma main
   [LinearOrderedRing R]
   [FloorRing R]
-  {x : R}
-  {d : ℤ} :
+  (x : R)
+  (d : ℤ) :
 -- imply
-  ⌊x + d⌋ = ⌊x⌋ + d := by
+  ⌊x + d⌋ = ⌊x⌋ + d :=
 -- proof
-  apply Int.floor_add_int
+  Int.floor_add_int x d
 
 
 -- created on 2025-03-04

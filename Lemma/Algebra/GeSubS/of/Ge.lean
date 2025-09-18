@@ -1,3 +1,4 @@
+import Lemma.Algebra.LeSubS.is.Le
 import Lemma.Algebra.LeSubS.of.Le
 open Algebra
 
@@ -24,7 +25,7 @@ private lemma main
 -- imply
   x - z ≥ y - z :=
 -- proof
-  LeSubS.of.Le h z
+  LeSubS.of.Le z h
 
 
 -- created on 2024-07-01

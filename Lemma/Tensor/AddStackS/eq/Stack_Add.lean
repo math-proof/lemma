@@ -1,0 +1,25 @@
+import sympy.tensor.stack
+import Lemma.Algebra.MapMap.eq.Map_Comp
+import Lemma.Algebra.Add
+import Lemma.Algebra.AddFlattenS.eq.FlattenAdd
+import Lemma.Algebra.AddMapS.eq.Map_FunAdd
+open Algebra
+
+
+@[main]
+private lemma main
+  [Add α]
+-- given
+  (A B : Tensor α (s₀ :: s)) :
+-- imply
+  ([i < s₀] A[i]) + [i < s₀] B[i] = [i < s₀] (A[i] + B[i]) := by
+-- proof
+  unfold Stack Tensor.fromVector
+  simp only [HAdd.hAdd]
+  simp only [Add.add]
+  rw [AddFlattenS.eq.FlattenAdd]
+  simp [MapMap.eq.Map_Comp.vector]
+  rw [AddMapS.eq.Map_FunAdd]
+
+
+-- created on 2025-07-20

@@ -2,7 +2,7 @@ import Lemma.Basic
 
 
 @[main]
-private lemma finset
+private lemma fin
   [DecidableEq α]
   {s t : Finset α} :
 -- imply

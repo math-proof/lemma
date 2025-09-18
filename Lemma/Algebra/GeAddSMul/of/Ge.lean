@@ -1,5 +1,5 @@
 import Lemma.Algebra.GeMulS.of.Ge
-import Lemma.Algebra.GeAddS.of.Ge
+import Lemma.Algebra.GeAddS.is.Ge
 open Algebra
 
 
@@ -13,7 +13,7 @@ private lemma main
   k * x + t ≥ k * y + t := by
 -- proof
   have := GeMulS.of.Ge h k
-  apply GeAddS.of.Ge this
+  apply GeAddS.of.Ge _ this
 
 
 -- created on 2025-03-31

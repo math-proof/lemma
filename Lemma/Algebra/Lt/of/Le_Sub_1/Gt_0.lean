@@ -1,4 +1,3 @@
-import sympy.polys.domains
 import Lemma.Basic
 
 

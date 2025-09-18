@@ -1,5 +1,5 @@
-import Lemma.Algebra.NegSub.eq.Sub
-import Lemma.Algebra.Add_Neg.eq.Sub
+import Lemma.Algebra.Sub.eq.NegSub
+import Lemma.Algebra.Sub.eq.Add_Neg
 open Algebra
 
 

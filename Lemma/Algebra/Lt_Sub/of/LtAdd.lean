@@ -1,5 +1,5 @@
 import Lemma.Algebra.LtSubS.of.Lt
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Add
 open Algebra
 
 
@@ -15,7 +15,7 @@ private lemma nat
 
 
 @[main]
-private lemma nat.left
+private lemma left.nat
   {a b c : ℕ}
 -- given
   (h : a + b < c) :

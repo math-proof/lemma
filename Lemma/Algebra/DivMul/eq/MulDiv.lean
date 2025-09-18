@@ -1,14 +1,14 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [DivisionCommMonoid α]
-  {a b c : α} :
+  (a b c : α) :
 -- imply
-  a * b / c = a / c * b := by
+  a * b / c = a / c * b :=
 -- proof
-  rw [mul_div_right_comm]
+  mul_div_right_comm a b c
 
 
 -- created on 2024-07-01

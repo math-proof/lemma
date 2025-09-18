@@ -1,7 +1,7 @@
 import Lemma.Algebra.Sum.eq.Zero
 import Lemma.Algebra.Dot.eq.Zero
 import Lemma.Algebra.Map.eq.Cons_MapTail
-import Lemma.Algebra.SumCons.eq.Add_Sum.vector
+import Lemma.Algebra.SumCons.eq.Add_Sum
 import Lemma.Algebra.DotConsS.eq.AddDotS
 open Algebra
 

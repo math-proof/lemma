@@ -1,4 +1,4 @@
-import Lemma.Algebra.SumCons.eq.Add_Sum.vector
+import Lemma.Algebra.SumCons.eq.Add_Sum
 import Lemma.Algebra.Sum.eq.Zero
 import Lemma.Algebra.EqHeadD
 import Lemma.Algebra.EqHeadDCons

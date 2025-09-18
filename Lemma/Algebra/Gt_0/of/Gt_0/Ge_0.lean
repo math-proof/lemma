@@ -1,4 +1,3 @@
-import Lemma.Algebra.GtAddS.of.Gt
 import Lemma.Algebra.GtAddS.of.Gt.Ge
 import Lemma.Algebra.EqAdd_0
 open Algebra

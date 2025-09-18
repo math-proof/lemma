@@ -1,9 +1,9 @@
 import sympy.core.relational
 import Lemma.Algebra.Eq_AddMulDiv___Mod
-import Lemma.Algebra.Eq_Add.of.EqSub
+import Lemma.Algebra.EqSub.is.Eq_Add
 import Lemma.Algebra.MulAdd.eq.AddMulS
-import Lemma.Algebra.AddAdd.rotate
-import Lemma.Algebra.LeAddS.of.Le
+import Lemma.Algebra.AddAdd
+import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Algebra.LeAdd_1.of.Lt
 import Lemma.Algebra.LtMod.of.Gt_0
 open Algebra
@@ -24,11 +24,10 @@ private lemma main
   denote h_r : r = (n - 1) % d
   rw [← h_q]
   rw [← h_q, ← h_r] at h₀
-  have := Eq_Add.of.EqSub h₀
-  rw [this]
+  rw [Eq_Add.of.EqSub h₀]
   rw [MulAdd.eq.AddMulS]
   norm_num
-  rw [AddAdd.rotate]
+  rw [AddAdd.permute]
   apply LeAddS.of.Le (a := q * d)
   apply LeAdd_1.of.Lt
   have := LtMod.of.Gt_0 h (n - 1)

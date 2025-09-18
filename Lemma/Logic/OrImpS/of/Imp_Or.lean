@@ -1,6 +1,6 @@
 import Lemma.Logic.Imp.is.OrNot
-import Lemma.Logic.Or_Or.is.OrOr
-import Lemma.Logic.Or_Or.comm
+import Lemma.Logic.OrOr.is.Or_Or
+import Lemma.Logic.Or_Or
 open Logic
 
 

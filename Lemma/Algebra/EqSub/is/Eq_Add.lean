@@ -1,26 +1,44 @@
-import Lemma.Algebra.Eq_Add.of.EqSub
-import Lemma.Algebra.EqSub.of.Eq_Add
+import Lemma.Algebra.EqSub.of.EqAdd
+import Lemma.Algebra.EqSubAdd
+import Lemma.Algebra.EqAddS.is.Eq
 open Algebra
 
 
-@[main]
+@[main, comm, mp, mpr, mp.comm, mpr.comm]
 private lemma left
   [AddCommGroup α]
-  {x y d : α} :
+-- given
+  (d x y : α) :
 -- imply
-  y - d = x ↔ y = d + x:=
+  y - d = x ↔ y = d + x := by
 -- proof
-  ⟨Eq_Add.of.EqSub.left, EqSub.of.Eq_Add.left⟩
+  constructor <;>
+    intro h
+  ·
+    have h := EqAddS.of.Eq d h
+    simp at h
+    rw [Add.comm] at h
+    exact h
+  ·
+    rw [h]
+    rw [EqSubAdd.left]
 
 
-@[main]
+@[main, comm, mp, mpr, mp.comm, mpr.comm]
 private lemma main
   [AddGroup α]
-  {x y d : α} :
+-- given
+  (d x y : α) :
 -- imply
-  y - x = d ↔ y = d + x:=
+  y - x = d ↔ y = d + x := by
 -- proof
-  ⟨Eq_Add.of.EqSub, EqSub.of.Eq_Add⟩
-
+  constructor <;>
+    intro h
+  ·
+    have h := EqAddS.of.Eq x h
+    simp at h
+    exact h
+  ·
+    exact (Eq_Sub.of.EqAdd h.symm).symm
 
 -- created on 2025-04-26

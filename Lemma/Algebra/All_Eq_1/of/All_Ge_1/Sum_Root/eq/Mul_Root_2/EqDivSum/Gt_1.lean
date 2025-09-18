@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Algebra.Root_2.eq.Sqrt
+import Lemma.Algebra.Sqrt.eq.Root_2
 import Lemma.Logic.Any_Not.of.NotAll
 import Lemma.Algebra.Ne.of.Lt
 import Lemma.Algebra.Sum_Root.lt.Mul_Sqrt.of.EqDivSum.Any_Ne_1.All_Ge_1.Gt_1
@@ -23,7 +23,7 @@ private lemma main
 -- proof
   rw [Root_2.eq.Sqrt] at h₂
   by_contra h
-  have h : ∃ i ∈ range n, ¬(x i = 1) := Any_Not.of.NotAll.finset h
+  have h := Any_Not.of.NotAll.fin h
   have := Sum_Root.lt.Mul_Sqrt.of.EqDivSum.Any_Ne_1.All_Ge_1.Gt_1 h₀ h₃ h h₁
   have := Ne.of.Lt this
   contradiction

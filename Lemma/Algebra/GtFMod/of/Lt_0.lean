@@ -2,7 +2,7 @@ import Lemma.Algebra.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.SubNatNat.eq.Sub
 import Lemma.Algebra.LtNegS.of.Gt
 import Lemma.Algebra.LtNeg.of.Gt_Neg
-import Lemma.Algebra.NegSub.eq.Sub
+import Lemma.Algebra.Sub.eq.NegSub
 import Lemma.Algebra.LtMod.of.Gt_0
 open Algebra
 

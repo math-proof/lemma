@@ -77,6 +77,43 @@ function get_url(model, stream, kwargs) {
             },
             header,
         };
+
+    default:
+        temperature ||= 0.7;
+        top_p ||= 0.9;
+        var header = null;
+        for (var engine in X_Ai_Engine){
+            if (X_Ai_Engine[engine].contains(model)) {
+                header = {'X-Ai-Engine': engine};
+                break;
+            }
+        }
+        return {
+            method: json_post,
+            url: 'http://rd-gateway.patsnap.io/compute/openai_chatgpt_turbo',
+            data(message) {
+                if (message.isArray)
+                    var [message, messages] = [null, message];
+                else
+                    messages = null;
+                return {
+                    message,
+                    messages,
+                    model,
+                    stream,
+                    // role: "user",
+                    // stop: null,
+                    // n: 1,
+                    max_tokens: 16384,
+                    // frequency_penalty: 0,
+                    // presence_penalty: 0,
+                    // temperature,
+                    // top_k: 40,
+                    // top_p,
+                };
+            },
+            header,
+        };
     }
 }
 
@@ -113,7 +150,12 @@ export function parse_token(data, think) {
     if (choices) {
         var [{delta: {content: text, reasoning_content}}] = choices;
         if (think)
+            think.reasoning_content = reasoning_content;        
+/*        if (think) {
             think.reasoning_content = reasoning_content;
+            if (reasoning_content)
+                return reasoning_content;
+        }*/
     }
     else {
         if (generated_text)

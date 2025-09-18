@@ -1,4 +1,4 @@
-import Lemma.Algebra.Max.comm
+import Lemma.Algebra.Max
 import Lemma.Algebra.Max.eq.IteLe
 open Algebra
 

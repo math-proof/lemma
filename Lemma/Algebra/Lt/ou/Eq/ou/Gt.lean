@@ -4,6 +4,7 @@ import Lemma.Basic
 @[main]
 private lemma main
   [LinearOrder α]
+-- given
   (a b : α) :
 -- imply
   a < b ∨ a = b ∨ a > b :=

@@ -1,7 +1,7 @@
-import Lemma.Algebra.EqSubS.of.Eq
-import Lemma.Algebra.EqAddS.of.Eq
+import Lemma.Algebra.EqSubS.is.Eq
+import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.SubSquareS.eq.MulAdd__Sub
-import Lemma.Algebra.OrEqS_0.of.Mul.eq.Zero
+import Lemma.Algebra.Mul.eq.Zero.is.OrEqS_0
 open Algebra
 
 
@@ -14,17 +14,17 @@ private lemma main
 -- imply
   x = c ∨ x = -c := by
 -- proof
-  have h := EqSubS.of.Eq h c²
+  have h := EqSubS.of.Eq c² h
   simp at h
   rw [SubSquareS.eq.MulAdd__Sub] at h
   have h := OrEqS_0.of.Mul.eq.Zero h
   cases h with
   | inl h =>
-    have h := EqSubS.of.Eq h c
+    have h := EqSubS.of.Eq c h
     simp at h
     exact Or.inr h
   | inr h =>
-    have h := EqAddS.of.Eq h c
+    have h := EqAddS.of.Eq c h
     simp at h
     exact Or.inl h
 

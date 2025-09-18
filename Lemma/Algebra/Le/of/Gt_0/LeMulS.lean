@@ -1,4 +1,4 @@
-import Lemma.Algebra.Gt.of.NotLe
+import Lemma.Algebra.NotLe.is.Gt
 import Lemma.Algebra.GtMulS.of.Gt_0.Gt
 import Lemma.Algebra.NotLe.of.Gt
 open Algebra

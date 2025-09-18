@@ -1,7 +1,7 @@
-import Lemma.Algebra.Mul_Inv.eq.Div
+import Lemma.Algebra.Div.eq.Mul_Inv
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.GeMulS.of.Le.Lt_0
-import Lemma.Algebra.Inv.lt.Zero.of.Lt_0
+import Lemma.Algebra.LtInv_0.is.Lt_0
 import Lemma.Algebra.Ne.of.Lt
 open Algebra
 
@@ -16,7 +16,7 @@ private lemma main
 -- imply
   y / x ≥ t := by
 -- proof
-  have : x⁻¹ < 0 := Inv.lt.Zero.of.Lt_0 h₁
+  have : x⁻¹ < 0 := LtInv_0.of.Lt_0 h₁
   have := GeMulS.of.Le.Lt_0 h₀ this
   rw [
     Mul_Inv.eq.Div,

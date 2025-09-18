@@ -1,36 +1,42 @@
-import sympy.sets.sets
 import sympy.tensor.tensor
-import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
-import Lemma.Algebra.NotLe
+import Lemma.Algebra.EqFlattenUnflatten
+import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Algebra.Ge.of.NotLt
+import Lemma.Algebra.EqGetRange
 import Lemma.Algebra.EqDivMul.of.Ne_0
-open Algebra
+import Lemma.Algebra.Ne.of.Gt
+import Lemma.Algebra.NotGt.is.Le
+import Lemma.Algebra.Eq_0.of.Le_0
+import Lemma.Logic.EqCast.of.Eq
+import Lemma.Algebra.ArraySlice.as.GetSplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail
+import Lemma.Algebra.GetCast_Map.eq.UFnGet.of.Eq.Lt
+import Lemma.Logic.EqCast.of.SEq
+open Algebra Logic
 
 
 @[main]
 private lemma main
-  [Inhabited α]
 -- given
-  (t : Tensor α (s₀ :: s))
-  (h : s₀ > 0) :
+  (t : Tensor α (s₀ :: s)) :
 -- imply
   t.data = ((List.Vector.range s₀).map fun i => t[i].data).flatten := by
 -- proof
+  let data : List.Vector α (s₀ * s.prod) := t.data
+  have h_data : t.data = data := rfl
+  rw [h_data, Eq_FlattenUnflatten data]
+  apply EqUFnS.of.Eq _ List.Vector.flatten
+  rw [List.Vector.unflatten]
+  congr
+  funext i
+  simp [GetElem.getElem, Tensor.get, Tensor.toVector]
+  rw [h_data]
+  apply EqCast.of.SEq
+  have := ArraySlice.as.GetSplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail (s := s₀ :: s) (n := s.prod) (i := i) (by simp_all) (by simp_all) (by simp_all) data
+  apply SEq.of.SEq.SEq this
+  rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin _ (by simp)]
   simp [GetElem.getElem]
-  simp [Tensor.get]
-  simp [EqAdd_Mul_DivSub1Sign_2]
-  have h_length : t.length = s₀ := by simp [Tensor.length]
-  simp [h_length]
-  norm_cast
-  simp [NotLe]
-  simp [Tensor.toVector, h]
-  have h_length : t.data.length = s₀ * s.prod := by
-    simp
-  have : t.data.length / s₀ = s.prod := by
-    rw [h_length]
-    apply EqDivMul.of.Ne_0.left
-    linarith [h]
-  sorry
+  rfl
 
 
 -- created on 2025-05-06
--- updated on 2025-05-10
+-- updated on 2025-05-18

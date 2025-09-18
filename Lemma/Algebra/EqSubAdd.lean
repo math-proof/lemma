@@ -1,27 +1,28 @@
-import Lemma.Algebra.Add.comm
-import sympy.polys.domains
+import sympy.functions.elementary.integers
+import Lemma.Algebra.Add
 open Algebra
+
+
+@[main]
+private lemma left.int
+  [IntegerRing Z]
+  {a b : Z} :
+-- imply
+  b + a - b = a := by
+-- proof
+  have := IntegerRing.add_sub_cancel a b
+  rw [Add.comm] at this
+  assumption
 
 
 @[main]
 private lemma int
   [IntegerRing Z]
-  {a b : Z}
-  (left : Bool := false) :
+  {a b : Z} :
 -- imply
-  match left with
-  | true =>
-    b + a - b = a
-  | false =>
-    a + b - b = a := by
+  a + b - b = a := by
 -- proof
-  match left with
-  | true =>
-    have := IntegerRing.add_sub_cancel a b
-    rw [Add.comm] at this
-    assumption
-  | false =>
-    apply IntegerRing.add_sub_cancel
+  apply IntegerRing.add_sub_cancel
 
 
 @[main]

@@ -1,12 +1,12 @@
 import sympy.core.power
 import Lemma.Algebra.Bool.eq.Zero.ou.Bool.eq.One
 import Lemma.Algebra.Mul.eq.Zero.of.OrEqS
-import Lemma.Algebra.AddNeg.eq.Sub
-import Lemma.Algebra.Eq.of.Sub.eq.Zero
+import Lemma.Algebra.Sub.eq.AddNeg
+import Lemma.Algebra.Sub.eq.Zero.is.Eq
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Decidable p] :
 -- imply

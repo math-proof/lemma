@@ -1,9 +1,8 @@
-import Lemma.Algebra.Lt.of.NotGe
-import Lemma.Algebra.NotGe.of.Lt
+import Lemma.Algebra.NotGe.is.Lt
 open Algebra
 
 
-@[main]
+@[main, comm, mp]
 private lemma main
   [LinearOrder α]
   {a b : α} :

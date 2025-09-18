@@ -1,18 +1,57 @@
-import Lemma.Basic
+import Lemma.Set.Inter
+import Lemma.Set.In.In.of.In_Inter
+open Set
 
 
 @[main]
 private lemma main
-  {A B : Set α} :
+-- given
+  (A B : Set α) :
 -- imply
   A ∩ B ⊆ B := by
 -- proof
-    -- Introduce an arbitrary element x in the intersection of A and B.
   intro x hx
-    -- By the definition of intersection, x must be in both A and B.
-  cases' hx with hxA hxB
-    -- Since x is in B by the definition of intersection, we can directly conclude x ∈ B.
+  let ⟨hxA, hxB⟩ := hx
   exact hxB
 
 
+@[main]
+private lemma left
+-- given
+  (A B : Set α) :
+-- imply
+  A ∩ B ⊆ A := by
+-- proof
+  have := main B A
+  rw [Inter.comm] at this
+  assumption
+
+
+@[main]
+private lemma left.fin
+  [DecidableEq α]
+-- given
+  (A B : Finset α) :
+-- imply
+  A ∩ B ⊆ A := by
+-- proof
+  intro x hx
+  let ⟨hxA, hxB⟩ := In.In.of.In_Inter.fin hx
+  assumption
+
+
+@[main]
+private lemma fin
+  [DecidableEq α]
+-- given
+  (A B : Finset α) :
+-- imply
+  A ∩ B ⊆ B := by
+-- proof
+  have := left.fin B A
+  rw [Inter.comm.fin] at this
+  assumption
+
+
 -- created on 2025-04-08
+-- updated on 2025-08-13

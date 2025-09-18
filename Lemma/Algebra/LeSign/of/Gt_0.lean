@@ -1,4 +1,4 @@
-import Lemma.Algebra.Sign.eq.One.of.Gt_0
+import Lemma.Algebra.EqSign_1.of.Gt_0
 import Lemma.Algebra.Ge_Add_1.of.Gt
 open Algebra
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   sign d ≤ d := by
 -- proof
-  have := Sign.eq.One.of.Gt_0 h
+  have := EqSign_1.of.Gt_0 h
   rw [this]
   have := Ge_Add_1.of.Gt h
   simp_all

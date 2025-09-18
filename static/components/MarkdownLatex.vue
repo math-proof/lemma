@@ -1,11 +1,11 @@
 <template>
-	<span v-if=self.kwargs.block v-latex.block=self.arg.text></span>
+	<span v-if=self.block v-latex.block=self.arg.text></span>
 	<span v-else v-latex.inline=self.arg.text></span>
 </template>
 
 <script setup>
 import Vue from "../js/vue.js"
-console.log('import MarkdownLatex.vue');
+// console.log('import MarkdownLatex.vue');
 const latex = {
 	// usage:
 	// block latex:
@@ -70,6 +70,9 @@ const self = new Vue({
     },
 
     computed: {
+		block() {
+			return ['\\[', '$$'].includes(self.kwargs.block[0]);
+		},
 		arg() {
 			return self.args[0];
 		},
@@ -80,6 +83,3 @@ const self = new Vue({
 	}
 });
 </script>
-
-<style>
-</style>

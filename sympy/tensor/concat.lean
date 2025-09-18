@@ -12,7 +12,7 @@ def concat
   Tensor α (shape.headD 1 * s.length :: shape.tail) :=
   if h : s.length ≠ 0 then
     ⟨
-      (s.map (fun t => t.args.val)).flatten,
+      (s.map (fun t => t.data.val)).flatten,
       (Eq_Length_ProdConsSumMap.of.NeLength_0 h).symm
     ⟩
   else

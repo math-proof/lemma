@@ -1,6 +1,6 @@
 import Lemma.Algebra.EqDivS.of.Eq
 import Lemma.Algebra.Or_Eq_NegSqrt.of.EqSquare
-import Lemma.Algebra.NegDiv.eq.DivNeg
+import Lemma.Algebra.DivNeg.eq.NegDiv
 open Algebra
 
 

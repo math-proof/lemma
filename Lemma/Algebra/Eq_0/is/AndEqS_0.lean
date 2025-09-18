@@ -1,6 +1,6 @@
-import Lemma.Algebra.Re.eq.Zero.of.Eq_0
-import Lemma.Algebra.Im.eq.Zero.of.Eq_0
-import Lemma.Algebra.Eq_0.of.Re.eq.Zero.Im.eq.Zero
+import Lemma.Algebra.EqRe_0.of.Eq_0
+import Lemma.Algebra.EqIm_0.of.Eq_0
+import Lemma.Algebra.Eq_0.of.EqRe_0.EqIm_0
 open Algebra
 
 
@@ -12,9 +12,9 @@ private lemma main
 -- proof
   constructor
   intro h_Eq_0
-  exact ⟨Re.eq.Zero.of.Eq_0 h_Eq_0, Im.eq.Zero.of.Eq_0 h_Eq_0⟩
+  exact ⟨EqRe_0.of.Eq_0 h_Eq_0, EqIm_0.of.Eq_0 h_Eq_0⟩
   intro ⟨h_Re, h_Im⟩
-  apply Eq_0.of.Re.eq.Zero.Im.eq.Zero <;> assumption
+  apply Eq_0.of.EqRe_0.EqIm_0 <;> assumption
 
 
 -- created on 2025-01-17

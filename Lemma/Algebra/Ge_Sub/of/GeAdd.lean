@@ -1,4 +1,4 @@
-import Lemma.Algebra.LeSub.of.Le_Add
+import Lemma.Algebra.LeSub.is.Le_Add
 open Algebra
 
 
@@ -14,14 +14,14 @@ private lemma nat
 
 
 @[main]
-private lemma nat.left
+private lemma left.nat
   {a b c : ℕ}
 -- given
   (h : a + b ≥ c) :
 -- imply
   b ≥ c - a :=
 -- proof
-  LeSub.of.Le_Add.nat.left h
+  LeSub.of.Le_Add.left.nat h
 
 
 @[main]

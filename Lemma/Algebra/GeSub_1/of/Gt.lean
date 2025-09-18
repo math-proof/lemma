@@ -1,5 +1,5 @@
-import sympy.polys.domains
-import Lemma.Basic
+import Lemma.Algebra.Le_Sub_1.of.Lt
+open Algebra
 
 
 @[main]
@@ -11,7 +11,8 @@ private lemma main
 -- imply
   a - 1 ≥ b :=
 -- proof
-  IntegerRing.le_pred_of_lt h
+  Le_Sub_1.of.Lt h
 
 
 -- created on 2024-07-01
+-- updated on 2025-06-02

@@ -1,5 +1,5 @@
 import sympy.core.numbers
-import Lemma.Algebra.Mul.eq.Square
+import Lemma.Algebra.Square.eq.Mul
 open Algebra
 
 

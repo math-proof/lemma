@@ -17,8 +17,7 @@ private lemma main
     simp [this]
   have h : (d : ℚ) > 0 := by simp [h]
   have := LtDivS.of.Lt.Gt_0 this h
-  rw [Div.eq.One.of.Gt_0 h] at this
-  assumption
+  rwa [Div.eq.One.of.Gt_0 h] at this
 
 
 -- created on 2025-03-20

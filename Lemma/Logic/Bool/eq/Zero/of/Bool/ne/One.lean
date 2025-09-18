@@ -1,5 +1,5 @@
 import Lemma.Logic.Bool.eq.Ite
-import Lemma.Logic.Cond_Ite.is.OrAndS
+import Lemma.Logic.BFn_Ite.is.OrAndS
 open Logic
 
 
@@ -13,11 +13,11 @@ private lemma main
 -- proof
   rw [Bool.eq.Ite] at h
   have h := h.symm
-  rw [Cond_Ite.is.OrAndS (R := Ne)] at h
+  rw [BFn_Ite.is.OrAndS (R := Ne)] at h
   simp at h
   rw [Bool.eq.Ite]
   apply Eq.symm
-  rw [Cond_Ite.is.OrAndS (R := Eq)]
+  rw [BFn_Ite.is.OrAndS (R := Eq)]
   simp [h]
 
 

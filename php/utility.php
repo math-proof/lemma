@@ -514,7 +514,7 @@ where
     type = '$type'
 EOT;
     } else
-        $sql = "select count(*) from lemma where user = '$user'";
+        $sql = "select count(*) from lemma where user = '$user' and json_length(imports) > 0";
     foreach (get_rows($sql, MYSQLI_NUM) as $count) {
         return $count[0];
     }

@@ -1,16 +1,16 @@
-import Lemma.Logic.Cond_Ite.of.Imp.Imp
+import Lemma.Logic.BFn_Ite.is.Imp.Imp
 import Lemma.Algebra.FDiv.eq.EDiv.of.Ge_0
 import Lemma.Logic.NotAnd.is.OrNotS
 import Lemma.Algebra.NotGe.is.Lt
 import Lemma.Logic.Eq_Ite.of.Cond.NotAnd.Eq
 import Lemma.Logic.IffAndSAnd
-import Lemma.Algebra.Gt.et.Lt.is.False
+import Lemma.Algebra.Gt.Lt.is.False
 import Lemma.Logic.Iff_True.of.Cond
-import Lemma.Algebra.Add_Neg.eq.Sub
+import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.Eq.is.False.of.Lt
 import Lemma.Algebra.Gt.is.False.of.Lt
-import Lemma.Algebra.AddNeg.eq.Sub
-import Lemma.Algebra.SubNeg.comm
+import Lemma.Algebra.Sub.eq.AddNeg
+import Lemma.Algebra.SubNeg
 import Lemma.Algebra.FDiv.eq.Ite.of.Lt_0
 import Lemma.Algebra.FDiv.eq.Ite__Ite.of.Lt_0
 open Logic Algebra
@@ -32,7 +32,7 @@ private lemma main
     else
       -n / -d := by
 -- proof
-  apply Cond_Ite.of.Imp.Imp
+  apply BFn_Ite.of.Imp.Imp
   intro ⟨_, h⟩
   apply FDiv.eq.EDiv.of.Ge_0 (n := n) h
   rw [NotAnd.is.OrNotS]
@@ -42,7 +42,7 @@ private lemma main
   | inl h_Lt_0 =>
     apply Eq_Ite.of.Cond.NotAnd.Eq h_Lt_0
     rw [IffAndSAnd]
-    rw [Gt.et.Lt.is.False]
+    rw [Gt.Lt.is.False]
     simp
     have := Iff_True.of.Cond h_Lt_0
     simp [this]

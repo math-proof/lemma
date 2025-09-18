@@ -1,15 +1,16 @@
-import Lemma.Algebra.AddMulS.eq.Mul_Add
-open Algebra
+import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Mul α] [Add α] [LeftDistribClass α]
-  {x a b : α} :
+-- given
+  (x a b : α) :
 -- imply
-  x * (a + b) = x * a + x * b := by
+  x * (a + b) = x * a + x * b :=
 -- proof
-  rw [AddMulS.eq.Mul_Add]
+  mul_add x a b
 
 
 -- created on 2024-07-01
+-- updated on 2025-07-14

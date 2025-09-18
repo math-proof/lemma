@@ -3,14 +3,14 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [LinearOrderedSemiring α]
   {x y : α}
 -- given
   (h : x = 0 ∧ y ≥ 0 ∨ y = 0 ∧ x ≥ 0) :
 -- imply
   x * y = 0 := by
 -- proof
-  cases' h with h h <;>
+  obtain h | h := h <;>
   ·
     let ⟨h, _⟩ := h
     rw [h]

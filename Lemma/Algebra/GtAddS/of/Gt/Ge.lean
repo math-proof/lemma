@@ -1,5 +1,5 @@
-import Lemma.Algebra.GtAddS.of.Gt
-import Lemma.Algebra.GeAddS.of.Ge
+import Lemma.Algebra.GtAddS.is.Gt
+import Lemma.Algebra.GeAddS.is.Ge
 import Lemma.Algebra.Gt.of.Gt.Ge
 open Algebra
 
@@ -17,8 +17,8 @@ private lemma main
 -- imply
   a + x > b + y := by
 -- proof
-  have h₂ := GtAddS.of.Gt h₀ x
-  have h₃ := GeAddS.of.Ge.left h₁ b
+  have h₂ := GtAddS.of.Gt x h₀
+  have h₃ := GeAddS.of.Ge.left b h₁
   apply Gt.of.Gt.Ge h₂ h₃
 
 

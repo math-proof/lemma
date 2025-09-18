@@ -1,0 +1,29 @@
+import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Algebra.MulMul
+import Lemma.Algebra.EqMulS.of.Eq
+import Lemma.Algebra.ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length
+import Lemma.Algebra.Prod.eq.MulProdTake__ProdDrop
+open Algebra
+
+
+@[main]
+private lemma main
+  [CommMonoid α]
+  {v : List α}
+-- given
+  (i : Fin v.length)
+  (t : α) :
+-- imply
+  (v.set i (v[i] * t)).prod = v.prod * t := by
+-- proof
+  rw [List.prod_set]
+  simp
+  rw [MulMul.eq.Mul_Mul]
+  rw [MulMul.comm]
+  rw [Mul_Mul.eq.MulMul]
+  apply EqMulS.of.Eq
+  rw [← ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length]
+  rw [← Prod.eq.MulProdTake__ProdDrop]
+
+
+-- created on 2025-06-08

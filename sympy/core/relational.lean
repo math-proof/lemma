@@ -53,7 +53,7 @@ Syntax for `denote` tactic:
   - denote h_t : t = right
   - denote h_t : right = t
 
-- extract the left binding (which is the `let statement) of the main goal
+- extract the left `let-binding` (which is the `let expression`) of the main goal
   - denote h_t : t = _
   - denote h_t : _ = t
 
@@ -96,16 +96,4 @@ def evalDenote : Tactic
   | _ =>
     throwError "denote: invalid syntax, lhs `{lhs}` must be one of left, right, _ or term"
 | stx => do
-  throwError "invalid syntax: {stx}
-Usage:
-denote h_t : t = h.left
-denote h_t : t = h.right
-denote h_t : t = left
-denote h_t : t = right
-denote h_t : t = _
-or conversely:
-denote h_t : h.left = t
-denote h_t : h.right = t
-denote h_t : left = t
-denote h_t : right = t
-denote h_t : _ = t"
+  throwError "invalid syntax: {stx}"

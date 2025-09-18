@@ -5,7 +5,7 @@
 [sympy](https://github.com/sympy/sympy) 改写, 其中函数命名主要参考数学软件语言
 [Mathematica](https://reference.wolfram.com/language/index.html.en?source=footer), [Lean](https://github.com/cosmosZhou/axiom/tree/main)版本的定理库由Python版本翻译而来。 
 其主要特征在于：半机械化、公理化、严密的推理逻辑。  
-基本设计理念是：语法精确，表达简洁，执行高效，书写美观。
+基本设计理念是：语法精确，表达简洁，执行高效，书写美观，力求体现数学美学标准：理论完美性，结构对称性，应用普适性
 	
 	
 * 所述半机械化，是指目前做不到全自动根据数学命题题设直接打印出证明过程，而是需要人脑的辅助，人必须通过检索定理库，告诉计算机，面对什么样的题型使用什么样的定理；全机械化，自动化的符号推理算法尚未有可演示的研究成果；

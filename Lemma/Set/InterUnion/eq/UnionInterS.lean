@@ -3,7 +3,8 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  {s t u : Set α} :
+-- given
+  (s t u : Set α) :
 -- imply
   (s ∪ t) ∩ u = s ∩ u ∪ t ∩ u := by
 -- proof
@@ -11,3 +12,4 @@ private lemma main
 
 
 -- created on 2024-07-01
+-- updated on 2025-07-20

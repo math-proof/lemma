@@ -16,8 +16,7 @@ private lemma main
 -- proof
   have := LeMulS.of.Le.Gt_0 h₀ h₁
   have h₁ := Ne.of.Gt h₁
-  rw [EqMulDiv.of.Ne_0 h₁ a] at this
-  rw [EqMulDiv.of.Ne_0 h₁ b] at this
+  repeat rw [EqMulDiv.of.Ne_0 h₁] at this
   assumption
 
 

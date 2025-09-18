@@ -1,8 +1,8 @@
 import sympy.core.relational
 import sympy.sets.sets
-import Lemma.Algebra.EqAddSub.of.Le
-import Lemma.Algebra.Add.comm
-import Lemma.Algebra.EqAddS.of.Eq
+import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Algebra.Add
+import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.EqSubAdd
 open Algebra
 
@@ -20,7 +20,7 @@ private lemma main
   denote h_n' : n' = n - 1
   have h_n : n = n' + 1 := by
     simp [h_n']
-    simp [EqAddSub.of.Le (by linarith [h] : 1 ≤ n)]
+    simp [EqAddSub.of.Ge (by linarith [h] : 1 ≤ n)]
   rw [h_n]
   rw [Finset.sum_range_succ']
   rw [Add.comm]

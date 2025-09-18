@@ -2,7 +2,7 @@ import sympy.sets.sets
 import Lemma.Algebra.Any_Gt.of.All_Ge.Any_Ne
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Algebra.Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0
-import Lemma.Set.Lt.of.Mem_Range
+import Lemma.Set.Lt.of.In_Range
 import Lemma.Algebra.Sum_Root.lt.Mul_Sqrt.of.EqDivSum.All_Ge_1.Gt_1.Gt_1
 import Lemma.Algebra.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Algebra.LtSumS.of.All_Le.Any_Lt
@@ -30,7 +30,7 @@ private lemma main
   have := Any_Gt.of.All_Ge.Any_Ne h₁ h₂
   let ⟨i, h⟩ := this
   let ⟨h_In, h_Gt⟩ := h
-  have := Lt.of.Mem_Range h_In
+  have := Lt.of.In_Range h_In
   have h_n : n > 0 := by
     linarith [this]
   by_cases h : i = 0

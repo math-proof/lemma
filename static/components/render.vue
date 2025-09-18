@@ -4,6 +4,7 @@
             <input type=hidden name=imports :value=JSON.stringify(imports) />
             <input type=hidden name=def :value=JSON.stringify(def) />
             <input type=hidden name=open :value=JSON.stringify(open) />
+            <input type=hidden name=set_option :value=JSON.stringify(set_option) />
             <input type=hidden name=date :value=JSON.stringify(date) />
             <def v-for="lean, index in def" :lean=lean :index=index></def>
             <lemma v-for="lemma, index in lemma" :comment=lemma.comment :attribute=lemma.attribute :accessibility=lemma.accessibility :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :given=lemma.given :explicit=lemma.explicit :imply=lemma.imply :proof=lemma.proof :index=index></lemma>
@@ -44,7 +45,7 @@ import lemma from "./lemma.vue"
 import def from "./def.vue"
 import { mounted, click_left, fetch_lemma, has_typeclasses } from "../js/lemma.js"
 import { generate, parse_token } from "../js/prompting.js"
-import StreamedParser from "../js/markdownParser.js"
+import MarkdownParser from "../js/parser/markdown.js"
 import { tactics } from "../codemirror/mode/lean/tactics.js"
 import { sbd } from "../js/sbd.js"
 console.log('import render.vue');
@@ -56,13 +57,16 @@ function postprocess_word(text, word) {
 }
 
 function postprocess_char(parser, char) {
-	parser.parse(char);
+	if (!parser.start)
+		parser.start = 0;
+	parser.parse(char, parser.start);
+	parser.start++;
 	return parser;
 }
 
 export default {
     components: { lemma, def },
-    props : [ 'imports', 'open', 'def', 'lemma', 'error', 'module', 'date'],
+    props : [ 'imports', 'open', 'set_option', 'def', 'lemma', 'error', 'module', 'date'],
     
     created() {
     },
@@ -89,6 +93,8 @@ export default {
                 'IntegerRing', 
                 // typeclass for: Complex, Real, Rational, Integer with supported operators +-* 
                 'Ring', 
+                'MulOneClass',
+                'Monoid', 'CommMonoid', 'AddCommMonoid',
 
                 'FloorRing', 
                 'AddGroup', 'AddCommGroup', 'OrderedAddCommGroup', 
@@ -97,7 +103,9 @@ export default {
                 // Preorder ⊆ PartialOrder ⊆ LinearOrder
                 'Preorder', 'PartialOrder', 'LinearOrder', 
                 'Decidable', 'DecidableEq', 'DecidablePred', 'DecidableRel',
-                'LE', 'LT'
+                'LE', 'LT',
+                // functions
+                'KroneckerDelta',
             ],
             tactics,
             selectedIndex: [],
@@ -210,7 +218,7 @@ export default {
                 indices.push(0);
                 line = this.indices2line(indices);
             } else {
-                var indices = this.text2indices(line);
+                var [indices] = this.regexp2indices(line.replace(/\./g, '\\.'));
                 if (indices)
                     line = this.indices2line(indices);
                 else 
@@ -218,12 +226,41 @@ export default {
             }
             if (line)
                 this.highlight(line, col);
+            else {
+                switch (hash) {
+                case 'window.close':
+                    window.close();
+                    break;
+                case 'lean4web':
+                    this.click_lean4web();
+                    break;
+                }
+            }
         }
 
         var {error} = this;
+        var sorry = [];
         for (var err of reversed(error)) {
             var {line, col, info} = err;
-            this.highlight(line, col, info);
+            if (info == "declaration uses 'sorry'")
+                sorry.push(err);
+            else
+                this.highlight(line, col, info);
+        }
+        if (sorry.length) {
+            var sorryRegexp = /(?<!^ *--.*)\bsorry\b/;
+            var [...indices] = this.regexp2indices(sorryRegexp, false, false);
+            for (var [err, index] of zip(sorry, indices)) {
+                var line = this.indices2line(index);
+                var offset = index.pop();
+                var code = getitem(this.lemma, ...index);
+                var m = code.lean.split('\n')[offset].match(sorryRegexp);
+                if (m)
+                    col = m.index;
+                this.highlight(line, col, err.info);
+                err.line = line;
+                err.col = col;
+            }
         }
 
         var model = getParameterByName('model');
@@ -251,6 +288,14 @@ export default {
             if (!module)
                 module = getParameterByName('module');
             return `Lemma/${module.replace(/[.]/g, '/')}.lean`;
+        },
+
+        lemmaName(index) {
+            var {name} = this.lemma[index];
+            var {module} = this;
+            if (name != 'main')
+                module += '.' + name.toLowerCase();
+            return module;
         },
 
         async lean() {
@@ -291,7 +336,7 @@ with topology as (
 select * from topology
 JOIN axiom.lemma as _t using(module)
 order by depth desc`);
-            return code.join("\n\n\n");
+            return code.join("\n\n");
         },
 
         async piece_together(sql, axiom) {
@@ -430,7 +475,7 @@ order by depth desc`);
             var imports = [];
             for (var section in imports_dict)
                 imports.push(...Object.keys(prequisite[section]).map(module => `import ${module}`));
-            return [[...imports, ...Object.values(linter), ...this.fetch_open(open)].join('\n'), ...stdlib_code, ...sympy_code].join("\n\n\n");
+            return [[...imports, ...Object.values(linter), ...this.fetch_open(open)].join('\n'), ...stdlib_code, ...sympy_code].join("\n\n");
         },
 
         fetch_code_given_package(pkg, requisites) {
@@ -448,7 +493,7 @@ order by depth desc`);
                         var index = requisites.findIndex(code => code.module == name);
                         if (index >= 0) {
                             var {def, lemma} = requisites[index];
-                            return [...def, ...lemma].join("\n\n\n");
+                            return [...def, ...lemma].join("\n\n");
                         }
                     }).filter(code => code);
                     codes.push(...axiom);
@@ -490,6 +535,7 @@ where
                         codeObject.imports = JSON.parse(codeObject.imports);
                         codeObject.lemma = JSON.parse(codeObject.lemma);
                         codeObject.open = JSON.parse(codeObject.open);
+                        codeObject.set_option = JSON.parse(codeObject.set_option);
                         codeObject.def = JSON.parse(codeObject.def);
                         await this.fetch_lemma(codeObject, axiom, parent);
                     }
@@ -553,11 +599,10 @@ where
                 var codes = [];
                 for (var f of functions) {
                     var m = code.match(new RegExp(`(?<=\n)def ${f.replace(/\./g, '\\.')}\\b(?!\\.)[\\s\\S]*`));
-                    if (m) {
-                        codes.push(m[0].split("\n\n\n")[0]);
-                    }
+                    if (m)
+                        codes.push(m[0].split(/\n\n+/)[0]);
                 }
-                prequisite[pkg][module].code = codes.join("\n\n\n");
+                prequisite[pkg][module].code = codes.join("\n\n");
                 return;
             }
             code = code.split("\n");
@@ -600,7 +645,24 @@ where
                 }
             }
             code = code.slice(index).join("\n");
+            code = code.replace(/\/--.*?-\/\n*/sg, ''); // remove all docstrings
             prequisite[pkg][module].code = code.rtrim();
+        },
+
+        window_open(module) {
+            if (this.seconds) {
+                this.seconds += 10;
+                this.seconds = Math.min(86400, this.seconds);
+            }
+            else
+                this.seconds = 10;
+            setTimeout(async seconds => {
+                await sleep(seconds);
+                window.open(
+                    location.origin + location.pathname + `?module=${module}#window.close`,
+                    '_blank'
+                );
+            }, 1000, this.seconds);
         },
 
         async fetch_lemma(codeObject, axiom, parent) {
@@ -612,16 +674,13 @@ where
             else if (module.match(/(?<=\.|^)([\w']+)\.\1(?=\.|$)/))
                 prequisite.linter['linter.dupNamespace'] = 'set_option linter.dupNamespace false';
             if (!lemma.length)
-                window.open(
-                    location.origin + location.pathname + `?module=${module}`,
-                    '_blank'
-                );
+                this.window_open(module);
             var hit = false;
             for (var [i, lemma] of enumerate(lemma)) {
                 var {name} = lemma;
                 lemma.name = module;
                 if (name != 'main')
-                    lemma.name += '.' + name;
+                    lemma.name += '.' + name.toLowerCase();
                 var lemmaType;
                 if (module == this.module && name == 'main')
                     lemmaType = 'theorem';
@@ -637,29 +696,22 @@ where
                     lemmaType = 'lemma';
                     hit ||= !lemma.comment;
                 }
-                if (lemma.attribute)
-                    lemma.attribute.remove('main');
+                if (lemma.attribute) {
+                    // lemma.attribute.remove('main');
+                    lemma.attribute.clear();
+                }
                 delete lemma.accessibility;
                 lemma = fetch_lemma(lemma, lemmaType, false);
                 codeObject.lemma[i] = lemma;
                 if (lemma.match(/\bmain\]/)) {
                     console.log(lemma);
-                    window.open(
-                        location.origin + location.pathname + `?module=${module}`,
-                        '_blank'
-                    );
+                    this.window_open(module);
                 }
             }
 
-            if (hit) {
+            if (hit && false)
                 // console.log(module, 'has no comment');
-                if (false) {
-                    window.open(
-                        location.origin + location.pathname + `?module=${module}&model=${this.model}`,
-                        '_blank'
-                    );
-                }
-            }
+                this.window_open(module);
             var submodules = [];
             for (let module of imports) {
                 var section = module.split('.');
@@ -702,10 +754,7 @@ where
                 catch (err) {
                     var {module} = codeObject;
                     alert(`error fetching ${module}`);
-                    window.open(
-                        location.origin + location.pathname + `?module=${module}`,
-                        '_blank'
-                    );
+                    this.window_open(module);
                 }
             }
         },
@@ -753,40 +802,54 @@ where
             var line = this.indices2line(index) + cursor_line;
             var {error, module, imports} = this;
             var lemma = deepCopy(this.lemma, ['think', 'final']);
-            setitem(this.lemma, ...index, 'think', new StreamedParser);
+            setitem(this.lemma, ...index, 'think', new MarkdownParser);
             setitem(this.lemma, ...index, 'final', '');
-            var errorIndex = error.findIndex(err => err.line == line);
+            var errorIndex = error.findIndex(err => err.line == line && err.type != 'warning');
             var lemmaType = lemma[index[0]].name == 'main'? 'theorem': 'lemma';
             if (errorIndex < 0) {
-                if (error.length || getitem(lemma, ...index).lean.match(/^ *sorry *$/m)) {
+                var sorry = false;
+                if (error.length || (sorry = getitem(lemma, ...index).lean.match(/^ *sorry *$/m))) {
+                    var {by} = lemma[index[0]].proof;
+                    if (by && by.length == 1) {
+                        console.log(by);
+                        if (by[0].lean.match(/^ *sorry *$/)) {
+                            by[0].lean += ' -- please try to apply builtin lemmas in mathlib to prove this theorem';
+                            sorry = true;
+                        }
+                    }
                     var codes = ranged(index[0] + 1).map(i => {
-                        lemma[i].attribute.remove('main');
+                        // lemma[i].attribute.remove('main');
+                        lemma[i].attribute.clear();
                         var {name} = lemma[i];
                         if (name == 'main') {
                             lemma[i].name = module;
                             var lemmaType = 'theorem';
                         }
                         else {
-                            lemma[i].name = module + '.' + name;
+                            lemma[i].name = module + '.' + name.toLowerCase();
                             var lemmaType = 'lemma';
                         }
                         return fetch_lemma(lemma[i], lemmaType);
                     });
-                    var code = codes.join("\n\n\n");
+                    var code = codes.join("\n\n");
                     code = code.rtrim();
-                    var m = code.match(/^ *sorry *$/m);
-                    if (!m) {
-                        m = code.match(/(\n +).+$/);
-                        var spaces = m ? m[1] : '\n  ';
-                        code += spaces + 'sorry';
+                    if (!sorry) {
+                        var m = code.match(/^ *sorry *$/m);
+                        if (!m) {
+                            m = code.match(/(\n +).+$/);
+                            var spaces = m ? m[1] : '\n  ';
+                            code += spaces + 'sorry';
+                        }
                     }
                 }
                 else {
                     if (lemma[index[0]].comment)
                         return;
                     lemma.forEach(lemma => {
-                        if (lemma.attribute)
-                            lemma.attribute.remove('main');
+                        if (lemma.attribute) {
+                            // lemma.attribute.remove('main');
+                            lemma.attribute.clear();
+                        }
                         delete lemma.accessibility;
                     });
                     var codes = ranged(index[0] + 1).map(i => {
@@ -797,7 +860,7 @@ where
                             lemma[i].comment = `Please add the docstring here to describe the purpose of the following ${lemmaType}.`;
                         return fetch_lemma(lemma[i], lemmaType);
                     });
-                    var code = codes.join("\n\n\n");
+                    var code = codes.join("\n\n");
                     code = code.rtrim();
                     errorIndex = -2;
                 }
@@ -812,8 +875,10 @@ where
 ${error.filter(err => err.line == line).sort((a, b) => a.col - b.col).map(err => `/-\n${err.info}\n-/`).join("\n")}
 ${old_lean_tail}`;
                 var codes = ranged(index[0] + 1).map(i => {
-                    if (lemma[i].attribute)
-                        lemma[i].attribute.remove('main');
+                    if (lemma[i].attribute) {
+                        // lemma[i].attribute.remove('main');
+                        lemma[i].attribute.clear();
+                    }
                     var {name} = lemma[i];
                     var lemmaType;
                     if (name == 'main') {
@@ -821,12 +886,12 @@ ${old_lean_tail}`;
                         lemmaType = 'theorem';
                     }
                     else {
-                        lemma[i].name = module + '.' + name;
+                        lemma[i].name = module + '.' + name.toLowerCase();
                         lemmaType = 'lemma';
                     }
                     return fetch_lemma(lemma[i], lemmaType);
                 });
-                var code = codes.join("\n\n\n");
+                var code = codes.join("\n\n");
                 code = code.rtrim();
             }
             var [prequisite, ...imports] = await this.piece_together(`
@@ -848,7 +913,7 @@ FROM
                 else
                     imports[imports.length - 1] += `\n\n-- The axiom above is actually a lemma proven to be true, with detailed proofs omitted here for simplicity. It is listed here to facilitate proving the current ${lemmaType}.`;
             }
-            prequisite = [prequisite, ...imports].join("\n\n\n");
+            prequisite = [prequisite, ...imports].join("\n\n");
             var has_intermediate_step = code.match(/^  -- (Goals? to prove: |Premises? given: )?\\\[[^\n]+\\\]$/m);
             if (has_intermediate_step) {
                 var proven = errorIndex == -2 ? '' : 'partially proven ';
@@ -1100,13 +1165,11 @@ ${task}`;
                     if (find < line)
                         return [index, 'comment', null];
                 }
-
                 if (lemma.attribute) {
                     ++line; // @[main]
                     if (find < line)
                         return [index, 'attribute', null];
                 }
-
                 ++line; // private lemma main
                 if (find < line)
                     return [index, 'name', null];
@@ -1172,7 +1235,11 @@ ${task}`;
                 proof = proof.by?? proof.calc?? proof;
                 for (var i of range(proof.length)) {
                     var line_start = line;
-                    line += proof[i].lean.split("\n").length;
+                    var {lean, latex} = proof[i]
+                    if (!lean) continue;
+                    // if (!lean && latex) continue;
+                    line += lean.split("\n").length;
+                    // at this point, `line` is exact the line number of the `lean` code 
                     if (find < line) {
                         var offset = find - line_start;
                         if (attr)
@@ -1190,6 +1257,11 @@ ${task}`;
         indices2line(indices) {
             var line = this.initial_line + 1;
             var [i, attr] = indices;
+            const By = typeof indices[2] == 'string' ? indices[2] : null;
+            const Index = By ? indices[3] : indices[2];
+            var offset = By ? indices[4] : indices[3];
+            if (offset)
+                line += offset;
             for (let index of range(i + 1)) {
                 line += 2;
                 var lemma = this.lemma[index];
@@ -1258,13 +1330,14 @@ ${task}`;
                     return line;
                 ++line; // -- proof
                 var {proof} = this.lemma[index];
-                var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
-                const Index = indices[1] == 'proof'? (attr? indices[3]: indices[2]): null;
+                // var by = proof.by? 'by' : (proof.calc? 'calc' : null);
                 proof = proof.by?? proof.calc?? proof;
                 for (var j of range(proof.length)) {
                     if (index == i && j == Index)
                         return line;
-                    line += proof[j].lean.split("\n").length;
+                    var {lean} = proof[j];
+                    if (lean)
+                        line += lean.split("\n").length;
                 }
             }
 
@@ -1273,7 +1346,11 @@ ${task}`;
             return line + 1;
         },
 
-        text2indices(text) {
+        *regexp2indices(regexp, match_comment, whole_word=true) {
+            if (whole_word) {
+                regexp = `\\b${regexp}\\b`;
+                regexp = new RegExp(regexp);
+            }
             for (let index of range(this.lemma.length)) {
                 var lemma = this.lemma[index];
 
@@ -1281,46 +1358,46 @@ ${task}`;
                 if (instImplicit) {
                     // instImplicit: [Field α]
                     for (var [offset, line] of enumerate(instImplicit.split("\n"))) {
-                        if (line.includes(text))
-                            return [index, 'instImplicit', offset];
+                        if (line.match(regexp))
+                            yield [index, 'instImplicit', offset];
                     }
                 }
 
                 if (strictImplicit) {
                     // strictImplicit: ⦃x : α⦄
                     for (var [offset, line] of enumerate(strictImplicit.split("\n"))) {
-                        if (line.includes(text))
-                            return [index, 'strictImplicit', offset];
+                        if (line.match(regexp))
+                            yield [index, 'strictImplicit', offset];
                     }
                 }
                     
                 if (implicit) {
                     // implicit: {x : α}
                     for (var [offset, line] of enumerate(implicit.split("\n"))) {
-                        if (line.includes(text))
-                            return [index, 'implicit', offset];
+                        if (line.match(regexp))
+                            yield [index, 'implicit', offset];
                     }
                 }
                 if (given) {
                     // given: (h : a = b)
                     for (var i of range(given.length)) {
                         for (var [offset, line] of enumerate(given[i].lean.split("\n"))) {
-                            if (line.includes(text))
-                                return [index, 'given', i, offset];
+                            if (line.match(regexp))
+                                yield [index, 'given', i, offset];
                         }
                     }
                 }
                 if (explicit) {
                     // explicit: (left : Bool := false)
                     for (var [offset, line] of enumerate(explicit.split("\n"))) {
-                        if (line.includes(text))
-                            return [index, 'explicit', offset];
+                        if (line.match(regexp))
+                            yield [index, 'explicit', offset];
                     }
                 }
 
                 for (var [offset, line] of enumerate(lemma.imply.lean.split("\n"))) {
-                    if (line.includes(text))
-                        return [index, 'imply', offset];
+                    if (line.match(regexp))
+                        yield [index, 'imply', offset];
                 }
 
                 var {proof} = this.lemma[index];
@@ -1328,21 +1405,21 @@ ${task}`;
                 proof = proof.by?? proof.calc?? proof;
                 for (var i of range(proof.length)) {
                     for (var [offset, line] of enumerate(proof[i].lean.split("\n"))) {
-                        if (line.includes(text))
+                        if (line.match(regexp))
                             if (attr)
-                                return [index, 'proof', attr, i, offset];
+                                yield [index, 'proof', attr, i, offset];
                             else
-                                return [index, 'proof', i, offset];
+                                yield [index, 'proof', i, offset];
                     }
                 }
             }
 
             for (let index of range(this.lemma.length)) {
                 var lemma = this.lemma[index];
-                if (lemma.comment) {
+                if (lemma.comment && match_comment) {
                     for (var [offset, line] of enumerate(lemma.comment.split("\n"))) {
-                        if (line.includes(text))
-                            return [index, 'comment', offset];
+                        if (line.match(regexp))
+                            yield [index, 'comment', offset];
                     }
                 }
             }
@@ -1389,7 +1466,7 @@ ${task}`;
         async echo(module){
             var code = await form_post('php/request/echo.php', {module});
             console.log(JSON.stringify(code, null, "\t"));
-            var {imports, open, def, lemma, error, date} = code;
+            var {imports, open, set_option, def, lemma, error, date} = code;
             this.lemma.array_assign(lemma);
             this.error.array_assign(error);
             this.refresh = true;
@@ -1397,12 +1474,13 @@ ${task}`;
             var sql = `
 replace into 
     axiom.lemma
-    (user, module, imports, open, def, lemma, error, date) 
+    (user, module, imports, open, set_option, def, lemma, error, date) 
     values (
         '${user}',
         "${module}",
         ${JSON.stringify(imports).mysqlStr()},
         ${JSON.stringify(open).mysqlStr()},
+        ${JSON.stringify(set_option).mysqlStr()},
         ${JSON.stringify(def).mysqlStr()},
         ${JSON.stringify(lemma).mysqlStr()},
         ${JSON.stringify(error).mysqlStr()},

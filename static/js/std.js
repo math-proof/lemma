@@ -1362,6 +1362,10 @@ Array.prototype.shuffle = function() {
 	return this;
 }
 
+Array.prototype.clone = function() {
+	return this.map(value => (typeof value?.clone === 'function')? value.clone() : value);
+}
+
 function compareTo(lhs, rhs) {
 	if (lhs.isString)
 		return compareTo(lhs.map(ch => ord(ch)), rhs.map(ch => ord(ch)));
@@ -1432,6 +1436,17 @@ Array.prototype.array_assign = function (other) {
 	// this.splice(0, this.length, ...other);
 }
 
+Array.prototype.array_intersect = function (other) {
+	var set = [];
+	if (!(other instanceof Set))
+		other = new Set(other);
+	for (let x of this) {
+		if (other.has(x))
+			set.push(x);
+	}
+	return set;
+}
+
 Set.prototype.array_diff = function (other) {
 	return new Set([...this].array_diff(other));
 }
@@ -1452,15 +1467,23 @@ Set.prototype.array_intersect = function (other) {
 /**
  * @template T
  */
-class Queue {
+class Deque {
 	/**
-	 * @param {Iterable<T>=} items The initial elements.
+	 * @param {Iterable<T>=} items The initial elements. The actual logical list is represented as :
+	 * [...itemsReversed.reverse(), ...items]
 	 */
 	constructor(items) {
 		/** @private @type {T[]} */
 		this._list = items ? Array.from(items) : [];
 		/** @private @type {T[]} */
 		this._listReversed = [];
+		return new Proxy(this, {
+			get(target, prop) {
+				if (prop.isInteger)
+					return target.at(Number(prop));
+				return target[prop];
+			}
+		});
 	}
 
 	/**
@@ -1479,27 +1502,39 @@ class Queue {
 	 * @param {T} item The element to add.
 	 * @returns {void}
 	 */
-	push(item) {
-		this._list.push(item);
+	push(...args) {
+		this._list.push(...args);
 	}
 
+	unshift(...args) {
+		this._listReversed.push(...args.reverse());
+	}
 	/**
 	 * Retrieves and removes the head of this queue.
 	 * @returns {T | undefined} The head of the queue of `undefined` if this queue is empty.
 	 */
-	pop() {
+	shift() {
 		if (this._listReversed.length === 0) {
 			if (this._list.length === 0) return undefined;
 			if (this._list.length === 1) return this._list.pop();
 			if (this._list.length < 16) return this._list.shift();
 			const temp = this._listReversed;
-			this._listReversed = this._list;
-			this._listReversed.reverse();
+			this._listReversed = this._list.reverse();
 			this._list = temp;
 		}
 		return this._listReversed.pop();
 	}
-
+	pop() {
+        if (this._list.length === 0) {
+            if (this._listReversed.length === 0) return undefined;
+            if (this._listReversed.length === 1) return this._listReversed.pop();
+            if (this._listReversed.length < 16) return this._listReversed.shift();
+            const temp = this._list;
+            this._list = this._listReversed.reverse();
+            this._listReversed = temp;
+        }
+		return this._list.pop();
+    }
 	/**
 	 * Finds and removes an item
 	 * @param {T} item the item
@@ -1515,25 +1550,20 @@ class Queue {
 		}
 	}
 
-	[Symbol.iterator]() {
-		let i = -1;
-		let reversed = false;
-		let {_list, _listReversed} = this;
-		return {
-			next() {
-				if (!reversed) {
-					i++;
-					if (i < _list.length)
-						return {value: _list[i]};
-					reversed = true;
-					i = _listReversed.length;
-				}
-				i--;
-				if (i < 0)
-					return {done: true};
-				return {value: _listReversed[i]};
-			}
-		};
+	at(index) {
+		const n = this.length;
+		if (index < 0) index += n;
+		if (index < 0 || index >= n) return undefined;
+		const leftLen = this._listReversed.length;
+		if (index < leftLen)
+			return this._listReversed[leftLen - 1 - index];
+		return this._list[index - leftLen];
+	}
+
+	*[Symbol.iterator]() {
+		for (let i of range(this._listReversed.length - 1, -1, -1))
+            yield this._listReversed[i];
+        yield* this._list;
 	}
 }
 
@@ -4356,9 +4386,8 @@ function arraycopy(src, srcPos, dest, destPos, length){
 
 function *enumerate(array){
 	var i = 0;
-	for (var e of array){
+	for (var e of array)
 		yield [i++, e];
-	}
 }
 
 function enumerated(array){
@@ -4865,8 +4894,7 @@ function sample(data, count) {
 	return data.slice(0, count);
 }
 
-function deleteIndices(arr, fn, postprocess)
-{
+function deleteIndices(arr, fn, postprocess) {
     var indicesToDelete = [];
     for (var i of range(arr.length)) {
         if (fn.length == 2 ? fn(arr, i): fn(arr[i]))
@@ -5515,5 +5543,12 @@ function get_class(obj) {
 	if (obj == null)
 		return null;
 	return obj.constructor.name;
+}
+
+function isinstance(obj, cls) {
+	if (cls.isArray)
+		return cls.some(cls => obj instanceof cls);
+	else
+		return obj instanceof cls;
 }
 console.log("import std.js");

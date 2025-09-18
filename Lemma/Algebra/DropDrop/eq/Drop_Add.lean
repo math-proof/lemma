@@ -1,8 +1,7 @@
-import stdlib.Slice
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List α} :
 -- imply

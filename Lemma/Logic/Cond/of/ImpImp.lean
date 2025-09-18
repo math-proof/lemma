@@ -1,5 +1,5 @@
-import Lemma.Logic.And_Not.of.NotImp
-import Lemma.Logic.ImpNotS.of.Imp
+import Lemma.Logic.NotImp.is.And_Not
+import Lemma.Logic.Imp.is.ImpNotS
 import Lemma.Logic.False.of.AndNot
 open Logic
 

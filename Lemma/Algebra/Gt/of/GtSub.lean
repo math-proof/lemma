@@ -1,5 +1,5 @@
 import Lemma.Algebra.Gt_0.of.Gt
-import Lemma.Algebra.Gt.of.Sub.gt.Zero
+import Lemma.Algebra.Sub.gt.Zero.is.Gt
 open Algebra
 
 

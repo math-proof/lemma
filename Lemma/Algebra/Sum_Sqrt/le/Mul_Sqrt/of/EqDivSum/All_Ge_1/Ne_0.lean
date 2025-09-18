@@ -1,18 +1,18 @@
 import sympy.sets.sets
 import Lemma.Logic.All.of.All.All_Imp
-import Lemma.Algebra.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0.cauchy_schwarz
+import Lemma.Algebra.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.EqMulDiv.of.Ne_0
-import Lemma.Algebra.Mul_Mul.comm
-import Lemma.Algebra.Mul.eq.Square
-import Lemma.Algebra.Mul.comm
+import Lemma.Algebra.Mul_Mul
+import Lemma.Algebra.Square.eq.Mul
+import Lemma.Algebra.Mul
 import Lemma.Algebra.Sum.ge.Zero.of.All_Ge_0
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Algebra.GeDivS.of.Ge.Gt_0
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
-import Lemma.Algebra.Sqrt.ge.Zero
+import Lemma.Algebra.GeSqrt_0
 open Logic Algebra
 
 
@@ -34,7 +34,7 @@ private lemma main
   have : ∀ t : ℝ, t ≥ 1 → t ≥ 0 := by
     intro t h
     linarith
-  have h_Ge_0 := All.of.All.All_Imp.finset this h₁
+  have h_Ge_0 := All.of.All.All_Imp.fin this h₁
   have h_Le := Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0.cauchy_schwarz h_Ge_0
   simp only [Finset.card_range] at h_Le
   have h_Eq := EqMulS.of.Eq h₂ n
@@ -53,7 +53,7 @@ private lemma main
   rw [EqDivMul.of.Ne_0 (by simp [h₀] : (n : ℝ) ≠ 0)] at this
   have := EqSquareSqrt.of.Ge_0 this
   rw [← this] at h_Le
-  rw [SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0 (by norm_num) (by apply Sqrt.ge.Zero)] at h_Le
+  rw [SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0 (by norm_num) (by apply GeSqrt_0)] at h_Le
   assumption
 
 

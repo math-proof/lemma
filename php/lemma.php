@@ -3,17 +3,97 @@
 require_once 'init.php';
 require_once 'std.php';
 if ($_POST) {
-	$term = "(?:[A-Z][\w']*|(of|eq|ne|gt|lt|ge|le|is|in|to|mod|et|ou)(?=\.)|comm\b)";
+	function module_exists(string $module)  {
+		$path = module_to_lean($module);
+		// Case-insensitive check first (works on both OS)
+		if (!file_exists($path)) {
+			$tokens = explode('.', $module);
+			switch ($tokens[2]) {
+			case 'eq':
+			case 'is':
+			case 'as':
+				[$tokens[1], $tokens[3]] = [$tokens[3], $tokens[1]]; // swap
+				$module = implode('.', $tokens);
+				$path = module_to_lean($module);
+				if (!file_exists($path))
+					return;
+				break;
+			case 'of':
+				$index = 2;
+				$tokens[$index] = 'is';
+				$module = implode('.', $tokens);
+				$path = module_to_lean($module);
+				if (!file_exists($path)) {
+					$section = $tokens[0];
+					$first = array_slice($tokens, 1, $index - 1);
+					$second = array_slice($tokens, $index + 1);
+					$tokens = array_merge([$section], $second, ['is'], $first);
+					$module = implode('.', $tokens);
+					$path = module_to_lean($module);
+					if (!file_exists($path))
+						return;
+				}
+				break;
+			default:
+				return;
+			}
+		}
+	
+		// Linux (and case-sensitive macOS): Use built-in check
+		if (!std\is_linux()) {
+			// Windows: Verify exact case via directory scan
+			$dir = pathinfo($path, PATHINFO_DIRNAME);
+			$file = pathinfo($path, PATHINFO_BASENAME);
+			$items = @scandir($dir);
+			if (($items === false) || !in_array($file, $items, true))
+				return;
+		}
+		return $module;
+	}
+
+	$term = "(?:[A-Z][\w']*|(?:of|is|et|ou|to|eq|ne|gt|lt|ge|le|in|as|dvd|subset|supset|mod)(?=\.))";
 	$sections = std\listdir($root = dirname(dirname(__FILE__)) . "/Lemma/");
 	$sectionRegex = implode('|', $sections);
+	$sectionRegex = "(?:$sectionRegex)(?=\.[A-Z])";
 
+	function detect_lemma(&$line)  {
+		global $sectionRegex, $term, $open_section, $imports, $sections;
+		while (preg_match("/\b($sectionRegex)((?:\.$term)+)/", $line, $matches)) {
+			if (!in_array($matches[1], $open_section))
+				$open_section[] = $matches[1];
+
+			$module = module_exists($matches[0]);
+			if ($module && !in_array($module = "Lemma." . $module, $imports))
+				$imports[] = $module;
+
+			$line = preg_replace("/\b($sectionRegex)\.(?=$term)/", '', $line);
+		}
+
+		if ($matches = std\matchAll("/\b(?!$sectionRegex)($term(?:\.$term)*)((?:\.[a-z_]+)*)(?=\b[^.]|$)/", $line)) {
+			foreach ($matches as [, [$lemmaName], [$submodule]]) {
+				if ($submodule == '.symm' && $lemmaName == 'Eq')
+					continue;
+				$lemmaNameReg = str_replace('.','\.', $lemmaName);
+				if (array_filter($imports, fn ($import) => preg_match("/^Lemma\.(\w+)\.$lemmaNameReg$/", $import)))
+					continue;
+				foreach ([...$open_section, ...$sections] as $section) {
+					$module = $section . '.' . $lemmaName;
+					if ($module = module_exists($module)) {
+						$module = 'Lemma.' . $module;
+						if (!in_array($module, $imports))
+							$imports[] = $module;
+						if (!in_array($section, $open_section))
+							$open_section[] = $section;
+						break;
+					}
+				}
+			}
+		}
+	}
 	$leanCode = [];
-
 	$imports = std\decode($_POST['imports']);
 	if (is_string($imports))
 		$imports = [$imports];
-	$moduleExists = [];
-
 	$open = std\decode($_POST['open']);
 	$open_section = [];
 	$open_mathlib = [];
@@ -24,7 +104,7 @@ if ($_POST) {
 				foreach ($packages as $package) {
 					if (in_array($package, $sections))
 						$open_section[] = $package;
-					else
+					elseif ($package)
 						$open_mathlib[] = $package;
 				}
 			} else
@@ -32,6 +112,7 @@ if ($_POST) {
 		}
 	}
 
+	$set_option = std\decode($_POST['set_option']);
 	$def = $_POST['def'];
 	if (is_string($def))
 		$def = std\decode($def);
@@ -81,42 +162,15 @@ if ($_POST) {
 		$declspec = implode("\n", $declspec);
 
 		$imply = preg_replace("/^/m", '  ', $lemma["imply"]);
+		detect_lemma($imply);
 
 		$proof = $lemma['proof'];
 		$by = $proof['by'] ? 'by' : ($proof['calc'] ? 'calc' : '');
 		if ($by)
 			$proof = $proof[$by];
 
-		foreach ($proof as &$line) {
-			while (preg_match("/\b($sectionRegex)((?:\.$term)+)/", $line, $matches)) {
-				if (!in_array($matches[1], $open_section))
-					$open_section[] = $matches[1];
-
-				$module = "Lemma." . $matches[0];
-				if (!in_array($module, $imports))
-					$imports[] = $module;
-
-				$line = preg_replace("/\b($sectionRegex)\.(?=$term)/", '', $line);
-			}
-
-			if ($matches = std\matchAll("/\b(?!(?:$sectionRegex)\b)($term(?:\.$term)*)/", $line)) {
-				foreach ($matches as [[$submodule]]) {
-					foreach ($sections as $section) {
-						$module = $section . '.' . $submodule;
-
-						if (file_exists(module_to_lean($module))) {
-							$module = 'Lemma.' . $module;
-							if (!in_array($module, $imports))
-								$imports[] = $module;
-							$moduleExists[$module] = true;
-							if (!in_array($section, $open_section))
-								$open_section[] = $section;
-							break;
-						}
-					}
-				}
-			}
-		}
+		foreach ($proof as &$line)
+			detect_lemma($line);
 		$proof = array_map(fn($line) => preg_replace("/^/m", '  ', $line), $proof);
 		$proof = ltrim(implode("\n", $proof), "\n");
 		$proof = rtrim($proof);
@@ -136,26 +190,60 @@ EOT;
 	}
 	$lemmaCode = implode("\n\n\n", $lemmaCode);
 	$imports = array_filter($imports, function ($import) use ($lemmaCode, $open_section) {
-		$imports = explode('.', $import);
-		switch ($imports[0]) {
+		$tokens = explode('.', $import);
+		switch ($tokens[0]) {
 		case 'Lemma':
-			array_shift($imports);
-			if (in_array($imports[0], $open_section))
-				array_shift($imports);
-			$import = implode('.', $imports);
+			array_shift($tokens);
+			if (in_array($tokens[0], $open_section))
+				array_shift($tokens);
+			$import = implode('.', $tokens);
 			break;
 		case 'sympy':
 		case 'stdlib':
 		case 'Mathlib':
 			return true;
 		}
-		$import = str_replace('.', '\.', $import);
-		return preg_match("/\b$import\b/", $lemmaCode);
+		$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
+		if (preg_match("/\b$import\b/", $lemmaCode))
+			return true;
+		switch ($tokens[1]) {
+		case 'eq':
+		case 'as':
+		case 'ne':
+			[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
+			$import = implode('.', $tokens);
+			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
+			if (preg_match("/\b$import\b/", $lemmaCode))
+				return true;
+			break;
+		case 'is':
+			# try mp:
+			$tokens[1] = 'of';
+			$import = implode('.', $tokens);
+			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
+			if (preg_match("/\b$import\b/", $lemmaCode))
+				return true;
+			# try mpr:
+			[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
+			$import = implode('.', $tokens);
+			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
+			if (preg_match("/\b$import\b/", $lemmaCode))
+				return true;
+			# try comm:
+			$tokens[1] = 'is';
+			$import = implode('.', $tokens);
+			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
+			if (preg_match("/\b$import\b/", $lemmaCode))
+				return true;
+			break;
+		default:
+			return;
+		}
 	});
 	if (!array_filter($imports, fn($import) => str_starts_with($import, 'Lemma.')))
 		$imports[] = "Lemma.Basic";
 
-	$open_section = array_reduce($imports, function ($carry, $import) use (&$moduleExists) {
+	$open_section = array_reduce($imports, function ($carry, $import)  {
 		$module = explode('.', $import);
 		if ($module[0] == 'Lemma' && $module[1] != 'Basic')
 			$carry[$module[1]] = true;
@@ -174,6 +262,13 @@ EOT;
 		[[$section, $variables]] = std\entries($entity);
 		$variables = implode(" ", $variables);
 		$leanCode[] = "open $section ($variables)";
+	}
+
+	if ($set_option) {
+		foreach ($set_option as $option) {
+			if (std\is_list($option))
+				$leanCode[] = "set_option " . implode(" ", $option);
+		}
 	}
 
 	if ($def)
@@ -299,13 +394,22 @@ EOF;
 		case 'setOf':
 			$modify |= $import_syntax('sympy.concrete.quantifier');
 			break;
-		case 'LLamda':
-			$modify |= $import_syntax('sympy.concrete.expr_with_limits.lamda');
+		case 'LeanStack':
+			$modify |= $import_syntax('sympy.tensor.stack');
 			break;
 		case 'Tensor':
-		case 'Ones':
-		case 'Zeros':
-			$modify |= $import_syntax('sympy.tensor.tensor');
+			if (array_search('sympy.tensor.tensor', $code['imports']) === false && 
+				array_search('sympy.tensor.stack', $code['imports']) === false)
+				$modify |= $import_syntax('sympy.tensor.Basic');
+			break;
+		case 'IntegerRing':
+			$modify |= $import_syntax('sympy.polys.domains');
+			break;
+		case 'KroneckerDelta':
+			$modify |= $import_syntax('sympy.functions.special.tensor_functions');
+			break;
+		case 'eye':
+			$modify |= $import_syntax('sympy.matrices.expressions.special');
 			break;
 		}
 	}

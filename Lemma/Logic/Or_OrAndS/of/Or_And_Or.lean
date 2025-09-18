@@ -1,4 +1,4 @@
-import Lemma.Logic.OrAndS.is.And_Or
+import Lemma.Logic.And_Or.is.OrAndS
 open Logic
 
 
@@ -9,8 +9,7 @@ private lemma main
 -- imply
   t ∨ p ∧ q ∨ p ∧ r := by
 -- proof
-  simp [OrAndS.is.And_Or.left]
-  assumption
+  simpa [OrAndS.is.And_Or]
 
 
 -- created on 2025-04-21

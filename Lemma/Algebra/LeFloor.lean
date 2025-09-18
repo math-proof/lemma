@@ -1,4 +1,4 @@
-import Lemma.Set.Mem_IcoFloor
+import Lemma.Set.In_IcoFloor
 open Set
 
 
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   ⌊x⌋ ≤ x := by
 -- proof
-  have := Mem_IcoFloor (x := x)
+  have := In_IcoFloor (x := x)
   exact this.left
 
 

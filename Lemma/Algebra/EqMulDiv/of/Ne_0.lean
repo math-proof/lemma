@@ -7,7 +7,7 @@ private lemma main
   {b : α}
 -- given
   (h : b ≠ 0)
-  (a : α):
+  (a : α) :
 -- imply
   a / b * b = a := by
 -- proof

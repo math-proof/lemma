@@ -1,10 +1,10 @@
 import Lemma.Algebra.LtFMod.of.Gt_0
 import Lemma.Algebra.LtDivS.of.Lt.Gt_0
-import Lemma.Algebra.LtCoeS.of.Lt
-import Lemma.Algebra.GtCoeS.of.Gt
+import Lemma.Algebra.LtCoeS.is.Lt
+import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Algebra.GtFMod.of.Lt_0
-import Lemma.Algebra.Le.of.NotGt
+import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.Lt.of.Le.Ne
 import Lemma.Algebra.LtDivS.of.Gt.Lt_0
 import Lemma.Algebra.Div.eq.One.of.Lt_0
@@ -22,19 +22,17 @@ private lemma main
   have := LtCoeS.of.Lt.int (R := ℚ) this
   have h' := GtCoeS.of.Gt.int (R := ℚ) h
   have := LtDivS.of.Lt.Gt_0 this h'
-  rw [Div.eq.One.of.Gt_0 h'] at this
-  assumption
+  rwa [Div.eq.One.of.Gt_0 h'] at this
   by_cases h' : d = 0
   rw [h']
   norm_num
   have h := Le.of.NotGt h
-  have h := Lt.of.Le.Ne h h'
+  have h := Lt.of.Le.Ne h' h
   have := GtFMod.of.Lt_0 (n := n) h
   have := GtCoeS.of.Gt.int (R := ℚ) this
   have h' := LtCoeS.of.Lt.int (R := ℚ) h
   have := LtDivS.of.Gt.Lt_0 this h'
-  rw [Div.eq.One.of.Lt_0 h'] at this
-  assumption
+  rwa [Div.eq.One.of.Lt_0 h'] at this
 
 
 -- created on 2025-03-28

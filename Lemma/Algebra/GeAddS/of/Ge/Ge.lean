@@ -1,4 +1,4 @@
-import Lemma.Algebra.GeAddS.of.Ge
+import Lemma.Algebra.GeAddS.is.Ge
 import Lemma.Algebra.Ge.of.Ge.Ge
 open Algebra
 
@@ -16,8 +16,8 @@ private lemma main
 -- imply
   a + x ≥ b + y := by
 -- proof
-  have h₂ := GeAddS.of.Ge h₀ x
-  have h₃ := GeAddS.of.Ge.left h₁ b
+  have h₂ := GeAddS.of.Ge x h₀
+  have h₃ := GeAddS.of.Ge.left b h₁
   apply Ge.of.Ge.Ge h₂ h₃
 
 

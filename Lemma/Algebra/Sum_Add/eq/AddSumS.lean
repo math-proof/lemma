@@ -1,4 +1,3 @@
-import sympy.core.power
 import Lemma.Basic
 
 
@@ -15,10 +14,9 @@ private lemma main
   ·
     simp
   ·
-    -- Inductive step: assume the statement holds for s, prove for s ∪ {j}
     intro j s hj ih
-    simp_all [Finset.sum_insert hj]
-    simp_all [add_assoc, add_comm, add_left_comm]
+    simp [Finset.sum_insert hj]
+    simp_all [add_assoc, add_left_comm]
 
 
 -- created on 2025-04-06

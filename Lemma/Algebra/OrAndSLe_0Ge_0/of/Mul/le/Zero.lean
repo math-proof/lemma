@@ -2,7 +2,7 @@ import Lemma.Algebra.Gt_0.of.Gt_0.Gt_0
 import Lemma.Algebra.Gt_0.of.Lt_0.Lt_0
 import Lemma.Algebra.Le.of.Eq
 import Lemma.Algebra.Ge.of.Eq
-import Lemma.Logic.Or.of.NotAndNotS
+import Lemma.Logic.Or.is.NotAndNotS
 import Lemma.Logic.NotAnd.is.Imp_Not
 import Lemma.Algebra.NotLe.is.Gt
 import Lemma.Algebra.NotLt.of.Ge

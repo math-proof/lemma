@@ -2,7 +2,7 @@ import sympy.functions.elementary.integers
 import Lemma.Algebra.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.EqNegNeg
 import Lemma.Algebra.EqSubAdd
-import Lemma.Algebra.SubNeg.eq.NegAdd
+import Lemma.Algebra.NegAdd.eq.SubNeg
 open Algebra
 
 

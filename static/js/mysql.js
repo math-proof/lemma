@@ -91,6 +91,7 @@ export async function show_full_columns(database, table, host, token){
 function parse_table(name, kwargs){
 	var entries = Object.entries(kwargs);
 	var database = null;
+	var sql = [];
 	if (entries.length > 1) {
 		if (kwargs.join || kwargs.inner_join) {
 			var using = kwargs.using;
@@ -107,11 +108,16 @@ function parse_table(name, kwargs){
 			using = on = null;
 			var [table, join_table] = table;
 		}
+		else if (join_type == 'as') {
+			var [table, value] = table;
+			sql.push(...parse_table([...name, join_type, 0], table));
+			sql.push({name: [...name, join_type, 1], value});
+			return sql;
+		}
 		else
 			database = join_type;
 	}
 	// for cases of table joined
-	var sql = [];
 	if (table.isString) {
 		if (database)
 			sql.push({name: [...name, database], value: table});

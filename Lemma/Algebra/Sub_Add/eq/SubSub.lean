@@ -1,23 +1,23 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma nat
-  {a b c : ℕ} :
+  (a b c : ℕ) :
 -- imply
-  a - (b + c) = a - b - c := by
+  a - (b + c) = a - b - c :=
 -- proof
-  rw [Nat.sub_add_eq]
+  Nat.sub_add_eq a b c
 
 
-@[main]
+@[main, comm]
 private lemma main
   [SubtractionCommMonoid α]
-  {a b c : α} :
+  (a b c : α) :
 -- imply
-  a - (b + c) = a - b - c := by
+  a - (b + c) = a - b - c :=
 -- proof
-  rw [sub_add_eq_sub_sub]
+  sub_add_eq_sub_sub a b c
 
 
 -- created on 2024-07-01

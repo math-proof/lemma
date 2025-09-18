@@ -1,4 +1,4 @@
-import Lemma.Algebra.GtAddS.of.Gt
+import Lemma.Algebra.GtAddS.is.Gt
 open Algebra
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   a > c + b := by
 -- proof
-  have h := GtAddS.of.Gt h b
+  have h := GtAddS.of.Gt b h
   simp at h
   exact h
 

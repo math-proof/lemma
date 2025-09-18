@@ -1,6 +1,6 @@
 import Lemma.Logic.Bool.eq.Ite
-import Lemma.Set.MemIte.of.OrAndS
-import Lemma.Logic.Or_Not.law_of_excluded_middle
+import Lemma.Set.InIte.is.OrAndS
+import Lemma.Logic.Or_Not
 open Logic Set
 
 
@@ -11,9 +11,9 @@ private lemma main
   (Bool.toNat p) ∈ ({0, 1} : Set ℕ) := by
 -- proof
   rw [Bool.eq.Ite (p := p)]
-  apply MemIte.of.OrAndS
+  apply InIte.of.OrAndS
   simp
-  apply Or_Not.law_of_excluded_middle
+  apply Or_Not
 
 
 -- created on 2025-04-20

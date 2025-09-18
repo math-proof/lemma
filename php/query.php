@@ -54,7 +54,7 @@ $sql = std\pop($_GET, 'sql');
 $kwargs = array_merge($_POST, $_GET);
 // error_log('$kwargs = std\decode(' . std\encode(std\encode($kwargs)) . ');');
 if ($sql) {
-    require_once 'mysql/compile.php';
+    require_once 'parser/sql.php';
     //error_log('$sql = '.$sql);
     $kwargs = array_merge($kwargs, SQL::compile($sql)->jsonSerialize());
 }

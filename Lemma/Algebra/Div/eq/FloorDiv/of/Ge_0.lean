@@ -1,5 +1,5 @@
 import Lemma.Algebra.Div.eq.FloorDiv.of.Gt_0
-import Lemma.Algebra.Gt.of.Ge.Ne
+import Lemma.Algebra.Gt.is.Ge.Ne
 open Algebra
 
 

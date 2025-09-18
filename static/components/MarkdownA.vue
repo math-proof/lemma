@@ -6,16 +6,16 @@
 
 <script setup>
 import Vue from "../js/vue.js"
-console.log('import MarkdownA.vue');
+import MarkdownParser from "../js/parser/markdown.js"
+const {components} = MarkdownParser;
+// console.log('import MarkdownA.vue');
 
 const props = defineProps({
 	args : Array,
 });
 
 const self = new Vue({
-	components: [
-		'MarkdownText',
-	],
+	components,
 	props,
 
     data: {
@@ -23,7 +23,11 @@ const self = new Vue({
 
     computed: {
 		href() {
-			return 'http://' + self.args[1].toString();
+			var href = self.args[1].toString();
+			if (href.startsWith('http://') || href.startsWith('https://')) {
+				return href;
+			}
+			return `http://${href}`;
 		},
 
 		text() {
@@ -35,6 +39,3 @@ const self = new Vue({
 	}
 });
 </script>
-
-<style>
-</style>

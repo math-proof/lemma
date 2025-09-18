@@ -1,5 +1,5 @@
 import Lemma.Algebra.Ne.of.Gt
-import Lemma.Algebra.Eq_Mul_ProdTail_Prod.of.NeLength_0.Ne_0
+import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.Ne_0.NeLength_0
 open Algebra
 
 
@@ -14,7 +14,7 @@ private lemma main
 -- proof
   have h₀' := Ne.of.Gt h₀
   have h₁' := Ne.of.Gt h₁
-  apply Eq_Mul_ProdTail_Prod.of.NeLength_0.Ne_0 h₀' h₁'
+  apply Prod.eq.Mul_ProdTail.of.Ne_0.NeLength_0 h₀' h₁'
 
 
 -- created on 2024-07-01

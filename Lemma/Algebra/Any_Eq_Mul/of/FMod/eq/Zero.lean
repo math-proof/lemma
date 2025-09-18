@@ -1,5 +1,5 @@
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.Eq.of.Sub.eq.Zero
+import Lemma.Algebra.Sub.eq.Zero.is.Eq
 open Algebra
 
 

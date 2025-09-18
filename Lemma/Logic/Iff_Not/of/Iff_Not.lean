@@ -1,4 +1,4 @@
-import Lemma.Logic.IffNotS.of.Iff
+import Lemma.Logic.Iff.is.IffNotS
 open Logic
 
 
@@ -16,3 +16,4 @@ private lemma main
 
 
 -- created on 2024-07-01
+-- updated on 2025-08-13

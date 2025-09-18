@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/compile.php';
+require_once __DIR__.'/../parser/regexp.php';
 
 class Lexeme
 {

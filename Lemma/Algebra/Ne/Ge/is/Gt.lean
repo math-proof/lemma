@@ -1,4 +1,4 @@
-import Lemma.Algebra.Ge.Ne.is.Gt
+import Lemma.Algebra.Gt.is.Ge.Ne
 open Algebra
 
 

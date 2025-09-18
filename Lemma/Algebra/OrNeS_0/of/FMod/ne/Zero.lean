@@ -1,4 +1,4 @@
-import Lemma.Logic.AndNotS.of.NotOr
+import Lemma.Logic.NotOr.is.AndNotS
 import Lemma.Logic.Eq.of.NotNe
 open Logic
 

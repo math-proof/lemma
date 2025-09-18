@@ -1,7 +1,7 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main :
 -- imply
   (p ∧ q) ∧ r ↔ p ∧ q ∧ r :=

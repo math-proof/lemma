@@ -1,5 +1,5 @@
-import Lemma.Algebra.SubSub.eq.Sub_Add
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Algebra.Add
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.Sub.eq.Zero
 open Algebra

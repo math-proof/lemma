@@ -1,4 +1,4 @@
-import Lemma.Algebra.LeSubS.of.Le
+import Lemma.Algebra.Le_Sub.is.LeAdd.of.Le
 open Algebra
 
 
@@ -10,23 +10,20 @@ private lemma nat
 -- imply
   a ≤ c - b := by
 -- proof
-  have h := LeSubS.of.Le.nat h b
-  simp at h
-  exact h
+  apply Le_Sub.of.LeAdd.Le _ h
+  linarith
 
 
 @[main]
-private lemma main
-  [OrderedAddCommGroup α]
-  {a b c : α}
+private lemma left.nat
+  {a b c : ℕ}
 -- given
   (h : a + b ≤ c) :
 -- imply
-  a ≤ c - b := by
+  b ≤ c - a := by
 -- proof
-  have h := LeSubS.of.Le h b
-  simp at h
-  exact h
+  apply Le_Sub.of.LeAdd.Le.left _ h
+  linarith
 
 
--- created on 2024-11-27
+-- created on 2025-08-02

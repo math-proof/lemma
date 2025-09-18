@@ -11,9 +11,9 @@ private lemma main
 -- given
   (h : -x ≤ -y) :
 -- imply
-  x ≥ y := by
+  x ≥ y :=
 -- proof
-  exact le_of_neg_le_neg h
+  le_of_neg_le_neg h
 
 
 -- created on 2025-03-20

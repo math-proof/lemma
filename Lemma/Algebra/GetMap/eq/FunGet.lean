@@ -1,9 +1,9 @@
-import stdlib.List.Vector
 import Lemma.Basic
 
 
 @[main]
 private lemma main
+  {β : Type*}
 -- given
   (v : List.Vector α n)
   (f : α → β)

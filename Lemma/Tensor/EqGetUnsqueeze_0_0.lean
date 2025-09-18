@@ -1,0 +1,64 @@
+import sympy.tensor.tensor
+import Lemma.Logic.EqCast.of.SEq
+import Lemma.Algebra.ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
+import Lemma.Logic.EqCast.of.SEq.Eq
+import Lemma.Logic.SEq.of.Eq
+import Lemma.Logic.EqCast.of.Eq
+import Lemma.Algebra.Eq.of.All_EqGetS
+import Lemma.Algebra.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Algebra.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
+import Lemma.Algebra.EqGetMapRange.of.Lt
+open Algebra Logic
+
+
+@[main]
+private lemma main
+-- given
+  (X : Tensor α s) :
+-- imply
+  have : (X.unsqueeze 0).length > 0 := by simp [Tensor.length]
+  (X.unsqueeze 0)[0] = X := by
+-- proof
+  unfold Tensor.unsqueeze
+  simp
+  match X with
+  | ⟨data⟩ =>
+    simp [GetElem.getElem]
+    simp [Tensor.get]
+    simp [Tensor.toVector]
+    simp [GetElem.getElem]
+    apply EqCast.of.SEq
+    rw [ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod (s := 1 :: s)]
+    ·
+      apply EqCast.of.SEq.Eq <;>
+        simp
+      apply SEq.of.Eq
+      unfold List.Vector.splitAt
+      simp
+      apply Eq.of.All_EqGetS
+      intro i
+      unfold List.Vector.unflatten
+      simp [List.Vector.get]
+      rw [GetCast.eq.Get.of.Eq.Lt _ (by simp)]
+      rw [GetArraySlice.eq.Get_Add.of.Lt_Min_Sub (by simp)]
+      rw [EqGetMapRange.of.Lt] <;>
+        simp
+      simp only [GetElem.getElem]
+      simp [List.Vector.get]
+      congr
+      apply EqCast.of.Eq
+      simp
+    repeat simp
+
+
+@[main]
+private lemma fin
+-- given
+  (X : Tensor α s) :
+-- imply
+  (X.unsqueeze 0).get ⟨0, by simp [Tensor.length]⟩ = X := by
+-- proof
+  apply main
+
+
+-- created on 2025-07-11

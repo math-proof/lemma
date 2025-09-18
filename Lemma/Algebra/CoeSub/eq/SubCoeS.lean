@@ -1,7 +1,7 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma int
   [AddGroupWithOne α]
   {a b : ℤ} :
@@ -11,7 +11,7 @@ private lemma int
   Int.cast_sub a b
 
 
-@[main]
+@[main, comm]
 private lemma main
   [DivisionRing α]
   [CharZero α]

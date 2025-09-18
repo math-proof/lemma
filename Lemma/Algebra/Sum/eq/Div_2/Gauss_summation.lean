@@ -4,7 +4,8 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  {n : ℕ} :
+-- given
+  (n : ℕ) :
 -- imply
   ∑ i ∈ range n, i = n * (n - 1) / 2 := by
 -- proof
@@ -12,3 +13,4 @@ private lemma main
 
 
 -- created on 2024-12-21
+-- updated on 2025-07-14

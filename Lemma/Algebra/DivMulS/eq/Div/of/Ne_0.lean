@@ -1,5 +1,4 @@
 import Lemma.Algebra.MulMul.eq.Mul_Mul
-import Lemma.Algebra.Mul_Mul.eq.MulMul
 import Lemma.Algebra.Div.eq.Mul_Inv
 open Algebra
 

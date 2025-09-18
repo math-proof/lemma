@@ -3,7 +3,7 @@ import Lemma.Basic
 
 
 @[main]
-private lemma finset
+private lemma fin
   {f g : ι → Prop}
   {s : Finset ι}
 -- given

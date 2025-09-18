@@ -1,4 +1,4 @@
-import Lemma.Algebra.EqAddS.of.Eq
+import Lemma.Algebra.EqAddS.is.Eq
 open Algebra
 
 
@@ -13,7 +13,7 @@ private lemma main
   x - d ≠ y - d := by
 -- proof
   intro h'
-  have h' := EqAddS.of.Eq h' d
+  have h' := EqAddS.of.Eq d h'
   simp at h'
   exact h h'
 

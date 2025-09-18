@@ -16,7 +16,7 @@ private lemma main
 -- imply
   x * y ≤ 0 := by
 -- proof
-  cases' Eq.ou.Gt.of.Ge h₀ with hx hx'
+  obtain hx | hx' := Eq.ou.Gt.of.Ge h₀
   ·
     simp_all
   ·

@@ -1,17 +1,17 @@
 import sympy.core.relational
 import Lemma.Algebra.FDiv.eq.FloorDiv
-import Lemma.Algebra.EqFloor.is.Le.et.Lt
+import Lemma.Algebra.EqFloor.is.Le.Lt
 import Lemma.Algebra.DivNeg.eq.NegDiv
 import Lemma.Algebra.DivInt.eq.Div
 import Lemma.Algebra.CoeNeg.eq.NegCoe
 import Lemma.Algebra.LeNegS.of.Ge
 import Lemma.Algebra.DivFMod.lt.One
-import Lemma.Algebra.Neg.lt.Zero.of.Gt_0
+import Lemma.Algebra.LtNeg_0.of.Gt_0
 import Lemma.Algebra.DivFMod.ge.Zero
-import Lemma.Algebra.Gt.of.Ge.Ne
+import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Div.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Algebra.NeCoeS.of.Ne
-import Lemma.Logic.Ne.of.NotEq
+import Lemma.Logic.Ne.is.NotEq
 open Algebra Logic
 
 
@@ -29,7 +29,7 @@ private lemma main
   rw [FDiv.eq.FloorDiv]
   norm_cast
   simp
-  rw [EqFloor.is.Le.et.Lt]
+  rw [EqFloor.is.Le.Lt]
   constructor
   ·
     norm_cast
@@ -47,7 +47,7 @@ private lemma main
     rw [DivInt.eq.Div]
     rw [CoeNeg.eq.NegCoe]
     rw [DivNeg.eq.NegDiv]
-    apply Neg.lt.Zero.of.Gt_0
+    apply LtNeg_0.of.Gt_0
     have := DivFMod.ge.Zero (n := n) (d := d)
     rw [← h_r] at this
     apply Gt.of.Ge.Ne this

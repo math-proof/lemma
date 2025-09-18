@@ -1,4 +1,5 @@
-import Lemma.Basic
+import Lemma.Algebra.NegSucc.eq.NegCoeAdd_1
+open Algebra
 
 
 @[main]
@@ -7,8 +8,7 @@ private lemma main
 -- imply
   Int.negSucc n = -(n + 1) :=
 -- proof
-  Int.negSucc_eq n
+  NegSucc.eq.NegCoeAdd_1
 
 
 -- created on 2025-03-27
--- updated on 2025-03-28

@@ -2,12 +2,11 @@ import Lemma.Algebra.Sum_SquareAddMul.ge.Zero
 import Lemma.Algebra.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Algebra.Sum_Add.eq.AddSumS
 import Lemma.Algebra.SquareMul.eq.MulSquareS
-import Lemma.Algebra.Sum_Mul.eq.MulSum
-import Lemma.Algebra.AddAdd.comm
-import Lemma.Algebra.Mul.comm
-import Lemma.Algebra.Mul_Mul.eq.MulMul
+import Lemma.Algebra.MulSum.eq.Sum_Mul
+import Lemma.Algebra.AddAdd
+import Lemma.Algebra.Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
-import Lemma.Algebra.Sum_Mul.eq.Mul_Sum
+import Lemma.Algebra.Mul_Sum.eq.Sum_Mul
 open Algebra
 
 
@@ -32,7 +31,6 @@ private lemma main
   simp [MulMul.eq.Mul_Mul (a := 2 * x)] at this
   rw [Sum_Mul.eq.Mul_Sum] at this
   simp only [Mul.comm (b := x²)] at this
-  rw [Sum_Mul.eq.Mul_Sum] at this
   assumption
 
 

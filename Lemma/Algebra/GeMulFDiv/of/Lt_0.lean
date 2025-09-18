@@ -3,10 +3,10 @@ import Lemma.Logic.Iff_True.of.Cond
 import Lemma.Algebra.Ge.is.False.of.Lt
 import Lemma.Algebra.Eq.is.False.of.Lt
 import Lemma.Algebra.Gt.is.False.of.Lt
-import Lemma.Algebra.AddNeg.eq.Sub
+import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Algebra.GeMulSubEDiv.of.Lt_0
-import Lemma.Algebra.Neg.ge.Zero.of.Le_0
-import Lemma.Algebra.Le.of.NotGt
+import Lemma.Algebra.GeNeg_0.of.Le_0
+import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.LeMulEDiv.of.Ge_0
 import Lemma.Algebra.GeNeg.of.Le_Neg
 open Algebra Logic
@@ -36,7 +36,7 @@ private lemma main
     apply GeMulSubEDiv.of.Lt_0 h
   ·
     have h := Le.of.NotGt h'
-    have := Neg.ge.Zero.of.Le_0 h
+    have := GeNeg_0.of.Le_0 h
     apply GeNeg.of.Le_Neg
     apply LeMulEDiv.of.Ge_0 this d
 

@@ -1,5 +1,5 @@
 import Lemma.Algebra.Eq.of.Le.Ge
-import Lemma.Algebra.Le.of.NotGt
+import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.Ge.of.NotLt
 open Algebra
 

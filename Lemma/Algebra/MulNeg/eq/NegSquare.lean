@@ -1,5 +1,5 @@
-import Lemma.Algebra.MulNeg.eq.NegMul
-import Lemma.Algebra.Mul.eq.Square
+import Lemma.Algebra.NegMul.eq.MulNeg
+import Lemma.Algebra.Square.eq.Mul
 open Algebra
 
 

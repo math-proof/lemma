@@ -1,5 +1,4 @@
-import stdlib.Slice
-import Lemma.Algebra.Drop_1.eq.Tail
+import Lemma.Algebra.Tail.eq.Drop_1
 import Lemma.Algebra.LengthTail.gt.Sub_1.of.GtLength.Gt_0
 open Algebra
 

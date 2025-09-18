@@ -1,7 +1,7 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma nat
   [NonAssocSemiring α]
   {a b : ℕ} :
@@ -11,7 +11,7 @@ private lemma nat
   Nat.cast_mul a b
 
 
-@[main]
+@[main, comm]
 private lemma main
   [NonAssocRing α]
   {a b : ℤ} :

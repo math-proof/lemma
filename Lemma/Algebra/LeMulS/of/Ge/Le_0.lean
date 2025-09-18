@@ -1,5 +1,5 @@
 import Lemma.Algebra.GeMulS.of.Ge.Ge_0
-import Lemma.Algebra.Neg.ge.Zero.of.Le_0
+import Lemma.Algebra.GeNeg_0.of.Le_0
 import Lemma.Algebra.Mul_Neg.eq.NegMul
 import Lemma.Algebra.Le.of.GeNegS
 open Algebra
@@ -15,9 +15,9 @@ private lemma main
 -- imply
   a * x ≤ b * x := by
 -- proof
-  have := Neg.ge.Zero.of.Le_0 h₁
+  have := GeNeg_0.of.Le_0 h₁
   have := GeMulS.of.Ge.Ge_0 h₀ this
-  rw [Mul_Neg.eq.NegMul, Mul_Neg.eq.NegMul] at this
+  repeat rw [Mul_Neg.eq.NegMul] at this
   apply Le.of.GeNegS this
 
 

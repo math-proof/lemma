@@ -1,6 +1,6 @@
 import Lemma.Logic.Bool.eq.Ite
 import Lemma.Algebra.AddIteS.eq.IteAnd
-import Lemma.Logic.Ite__Ite.eq.IteOr
+import Lemma.Logic.IteOr.eq.Ite__Ite
 import Lemma.Algebra.SubIteS.eq.IteAnd
 import Lemma.Logic.Ite__Ite.eq.Ite
 import Lemma.Logic.Or.is.OrAnd

@@ -1,0 +1,29 @@
+import Lemma.Algebra.EqFloor.is.Le.Lt
+import Lemma.Algebra.Div.ge.Zero
+import Lemma.Algebra.LtDiv.of.Lt_Mul.Gt_0
+import Lemma.Algebra.Gt_0
+open Algebra
+
+
+@[main]
+private lemma main
+  {n : ℕ}
+-- given
+  (j : Fin n) :
+-- imply
+  ⌊(j : ℚ) / n⌋ = 0 := by
+-- proof
+  apply EqFloor.of.Le.Lt
+  ·
+    apply Div.ge.Zero
+  ·
+    simp
+    apply LtDiv.of.Lt_Mul.Gt_0
+    ·
+      simp
+    ·
+      have := Gt_0 j
+      simpa
+
+
+-- created on 2025-07-06

@@ -1,4 +1,4 @@
-import Lemma.Set.Mem.of.Mem.Subset
+import Lemma.Set.Union
 open Set
 
 
@@ -18,14 +18,26 @@ private lemma main
   ·
     intro h'
     simp [h] at h'
-    cases' h' with h_A h_B
+    obtain h_A | h_B := h'
     ·
-      -- exact h h_A
-      apply Mem.of.Mem.Subset h_A h
+      exact h h_A
     ·
       assumption
   ·
     tauto
 
 
+@[main]
+private lemma left
+  {A B : Set α}
+-- given
+  (h : B ⊆ A) :
+-- imply
+  A ∪ B = A := by
+-- proof
+  rw [Union.comm]
+  apply main h
+
+
 -- created on 2025-04-05
+-- updated on 2025-07-20

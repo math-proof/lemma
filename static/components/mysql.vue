@@ -9,7 +9,7 @@
 		<form name=mysql :action=action method=post>
 			<component :is="'mysql' + cmd.capitalize()" :ref=cmd v-cmd :kwargs=kwargs @keydown=keydown></component>
 			<input id=submit_query type=submit value=query />
-			<mysqlExecute v-if=sql :cmd=cmd :sql=sql></mysqlExecute>
+			<mysqlExecute v-if=sql :cmd=cmd :sql=sql :database=database :table=table></mysqlExecute>
 			<input v-for="func, Field in transform" :name="`transform[${Field}]`" type=hidden :value=func /> <br>
 			<input type=hidden name=token :value=token />
 		</form>
@@ -256,7 +256,6 @@ export default {
 				kwargs.host = host;
 
 			var url_kwargs = get_url(kwargs);
-    		var url_insert = 'query.php?' + url_kwargs;
     		var url = [];
     		var {kwargs} = this;
 
@@ -281,14 +280,8 @@ export default {
 				if (limit != null)
     				url.push('limit=' + limit);
 			}
-
-			if (url.length) {
-				url = url.join('&');
-				if (url_kwargs)
-					url = '&' + url;
-				url_insert += url;
-			}
-			return url_insert;
+			url.push(url_kwargs);
+			return 'query.php?' + url.join('&');
 		},
 
 		style_select_table() {
@@ -727,11 +720,13 @@ export default {
 				}
 				return result;
 			}
-
-			var [lhs, rhs] = cond[func];
-			if (filterRhs && !rhs || !lhs.isString)
-				return {};
-			return fromEntries(lhs, cond);
+			if (cond[func].isArray) {
+				var [lhs, rhs] = cond[func];
+				if (filterRhs && !rhs || !lhs.isString)
+					return {};
+				return fromEntries(lhs, cond);
+			}
+			return {};
 		},
 
 		parse_expression(cond, Field2Type){
@@ -1011,7 +1006,6 @@ export default {
 			mounted.mysql = 1;
 
 		var {body} = document;
-		var self = this;
 		body.addEventListener("keydown", event => {
 			switch (event.key) {
 			case 'Home':

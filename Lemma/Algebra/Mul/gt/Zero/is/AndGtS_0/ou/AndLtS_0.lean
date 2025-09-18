@@ -1,7 +1,7 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
   [Semiring α]
   [LinearOrder α]

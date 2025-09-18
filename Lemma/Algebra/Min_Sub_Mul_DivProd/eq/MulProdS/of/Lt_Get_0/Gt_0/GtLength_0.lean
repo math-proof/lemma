@@ -1,0 +1,32 @@
+import Lemma.Algebra.ProdAppend.eq.MulProdS
+import Lemma.Algebra.EqMin.of.Le
+import Lemma.Algebra.Tail.eq.AppendTakeTail__Drop.of.Gt_0
+import Lemma.Algebra.ProdTail.eq.DivProd.of.GtLength_0.Gt_0
+import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
+import Lemma.Algebra.Le_SubMulS.of.Lt
+import Lemma.Algebra.Gt_0
+open Algebra
+
+
+@[main]
+private lemma main
+  {s : List ℕ}
+-- given
+  (h_s : s.length > 0)
+  (h_d : d > 0)
+  (h_i : i < s[0]) :
+-- imply
+  s.prod / s[0] ⊓ (s.prod - i * (s.prod / s[0])) = (s.tail.take (d - 1)).prod * (s.drop d).prod := by
+-- proof
+  have h_s := Gt_0.of.Gt h_i
+  rw [MulProdS.eq.ProdAppend]
+  rw [EqMin.of.Le]
+  rw [← Tail.eq.AppendTakeTail__Drop.of.Gt_0]
+  rwa [DivProd.eq.ProdTail.of.GtLength_0.Gt_0 (by assumption) (by assumption)]
+  rw [DivProd.eq.ProdTail.of.GtLength_0.Gt_0]
+  rw [Prod.eq.Mul_ProdTail.of.GtLength_0 (v := s) (by linarith)]
+  apply Le_SubMulS.of.Lt
+  repeat assumption
+
+
+-- created on 2025-07-07

@@ -1,8 +1,8 @@
 import Lemma.Trigonometry.Arg.eq.Ite__Ite_Arcsin
-import Lemma.Logic.Cond_Ite.is.OrAndS
-import Lemma.Logic.Cond_Ite.is.AndImpS
-import Lemma.Logic.ImpEq.is.ImpEq.subs
-import Lemma.Logic.NotEq.is.Ne
+import Lemma.Logic.BFn_Ite.is.OrAndS
+import Lemma.Logic.BFn_Ite.is.Imp.Imp
+import Lemma.Logic.ImpEq.is.ImpEq
+import Lemma.Logic.Ne.is.NotEq
 import Lemma.Trigonometry.Arg.eq.Ite__Ite_Arccos.of.Ne_0
 open Logic Trigonometry
 
@@ -19,9 +19,9 @@ private lemma main
     else
       -arccos (re z / ‖z‖) := by
 -- proof
-  rw [Cond_Ite.is.AndImpS (R := Eq)]
+  rw [BFn_Ite.is.Imp.Imp (R := Eq)]
   constructor
-  rw [ImpEq.is.ImpEq.subs (p := fun z => arg z = 0)]
+  rw [ImpEq.is.ImpEq.subst (p := fun z => arg z = 0)]
   simp
   rw [NotEq.is.Ne]
   intro h_ne

@@ -1,10 +1,10 @@
 import sympy.core.relational
 import Lemma.Algebra.Any_Eq_Mul.of.FMod.eq.Zero
-import Lemma.Algebra.EqNegS.of.Eq
+import Lemma.Algebra.EqNegS.is.Eq
 import Lemma.Algebra.NegMul.eq.MulNeg
 import Lemma.Algebra.FMod.eq.Zero.of.Any_Eq_Mul
 import Lemma.Algebra.Any_Eq_AddMul.of.EqFMod
-import Lemma.Logic.Ne.of.NotEq
+import Lemma.Logic.Ne.is.NotEq
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.FDiv.eq.FloorDiv
 import Lemma.Algebra.NegAdd.eq.SubNeg
@@ -16,11 +16,10 @@ import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.FloorAdd.eq.Add_Floor
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Sub_Add.eq.SubSub
-import Lemma.Algebra.EqSubS.of.Eq
-import Lemma.Algebra.NegDiv.eq.DivNeg
+import Lemma.Algebra.EqSubS.is.Eq
+import Lemma.Algebra.DivNeg.eq.NegDiv
 import Lemma.Algebra.FDivNegFMod.eq.Neg1.of.FMod.ne.Zero.Ne_0
 import Lemma.Algebra.DivInt.eq.Div
-import Lemma.Algebra.FloorDiv.eq.FDiv
 open Algebra Logic
 
 

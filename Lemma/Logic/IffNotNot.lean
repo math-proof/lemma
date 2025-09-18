@@ -8,9 +8,10 @@ import Lemma.Basic
 private lemma main
   {p : Prop} :
 -- imply
-  ¬¬p ↔ p := by
+  ¬¬p ↔ p :=
 -- proof
-  simp
+  Classical.not_not
 
 
 -- created on 2024-07-01
+-- updated on 2025-08-02

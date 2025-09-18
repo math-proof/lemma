@@ -1,4 +1,3 @@
-import sympy.polys.domains
 import Lemma.Algebra.Lt.of.Le_Sub_1.Gt_0
 open Algebra
 
@@ -8,7 +7,6 @@ private lemma main
   {x y : ℕ}
 -- given
   (h₀ : y > 0)
-
   (h₁ : y - 1 ≥ x) :
 -- imply
   y > x :=

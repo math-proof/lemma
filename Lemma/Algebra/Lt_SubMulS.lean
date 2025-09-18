@@ -12,7 +12,7 @@ private lemma main
   j < m * n - i * n := by
 -- proof
   have h := AddMul.lt.Mul i j
-  apply Lt_Sub.of.LtAdd.nat.left h
+  apply Lt_Sub.of.LtAdd.left.nat h
 
 
 -- created on 2025-05-09

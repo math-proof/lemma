@@ -1,7 +1,7 @@
 <?php
 require_once '../std.php';
 if (!std\is_linux())
-    require_once '../lean/compile.php';
+    require_once '../parser/lean.php';
 
 $name = $_POST['name'];
 

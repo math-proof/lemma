@@ -1,5 +1,5 @@
-import Lemma.Logic.Or_Or.is.OrOr
-import Lemma.Logic.OrAndS.is.AndOr
+import Lemma.Logic.OrOr.is.Or_Or
+import Lemma.Logic.AndOr.is.OrAndS
 open Logic
 
 
@@ -11,7 +11,7 @@ private lemma main
   (p ∨ q) ∧ c ∨ r := by
 -- proof
   rw [Or_Or.is.OrOr] at h
-  simp only [OrAndS.is.AndOr true] at h
+  simp only [OrAndS.is.AndOr] at h
   assumption
 
 

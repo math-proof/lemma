@@ -3,7 +3,7 @@ import Lemma.Algebra.Ge.of.Gt
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
   [AddGroupWithOne α]
   {a b : ℕ}

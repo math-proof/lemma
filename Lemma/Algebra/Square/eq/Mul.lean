@@ -6,10 +6,10 @@ import Lemma.Basic
 This lemma confirms that in a monoid, the square of an element `x` is defined as the product of `x` with itself.
 It ensures the consistency of exponentiation with the monoid's multiplicative structure, serving as a basic yet essential property in algebraic manipulations.
 -/
-@[main]
+@[main, comm]
 private lemma main
   [Monoid α]
-  {x : α} :
+  (x : α) :
 -- imply
   x² = x * x :=
 -- proof

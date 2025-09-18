@@ -1,32 +1,33 @@
-import Lemma.Algebra.Eq_Sub.of.EqAdd
-import Lemma.Algebra.MulNeg.eq.NegMul
-import Lemma.Algebra.MulNeg.eq.NegSquare
-import Lemma.Algebra.Neg.lt.Zero.of.Gt_0
-import Lemma.Algebra.Square.ge.Zero
-import Lemma.Algebra.Lt.of.Lt.Le
+import Lemma.Basic
+
+
+@[main]
+private lemma left
+  [PartialOrder α] [MulZeroClass α]
+  {a b : α}
+-- given
+  (h : a * b > 0) :
+-- imply
+  a ≠ 0 := by
+-- proof
+  by_contra h'
+  rw [h'] at h
+  simp at h
 
 
 @[main]
 private lemma main
-  [OrderedRing α]
+  [PartialOrder α] [MulZeroClass α]
   {a b : α}
 -- given
-  (h : a * b > 0)
-  (left : Bool := true) :
+  (h : a * b > 0) :
 -- imply
-  match left with
-  | true => a ≠ 0
-  | false => b ≠ 0 := by
+  b ≠ 0 := by
 -- proof
-  match left with
-  | true =>
-    by_contra h'
-    rw [h'] at h
-    simp at h
-  | false =>
-    by_contra h'
-    rw [h'] at h
-    simp at h
+  by_contra h'
+  rw [h'] at h
+  simp at h
 
 
 -- created on 2024-11-30
+-- updated on 2025-06-13

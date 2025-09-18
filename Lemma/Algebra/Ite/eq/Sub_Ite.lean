@@ -1,14 +1,10 @@
-import Lemma.Algebra.Sub.eq.AddNeg
-import Lemma.Algebra.Ite.eq.AddIte
-import Lemma.Algebra.EqAddS.of.Eq
-import Lemma.Algebra.Ite.eq.NegIte
-open Algebra
+import Lemma.Basic
 
 
 @[main]
 private lemma main
   [Decidable p]
-  [AddCommGroup α]
+  [Sub α]
   {a b c : α} :
 -- imply
   (if p then
@@ -19,12 +15,8 @@ private lemma main
   else
     b := by
 -- proof
-  rw [Sub.eq.AddNeg]
-  rw [Sub.eq.AddNeg]
-  rw [Ite.eq.AddIte]
-  rw [Sub.eq.AddNeg]
-  apply EqAddS.of.Eq
-  apply Ite.eq.NegIte
+  split_ifs with h <;> rfl
 
 
 -- created on 2025-04-26
+-- updated on 2025-05-14

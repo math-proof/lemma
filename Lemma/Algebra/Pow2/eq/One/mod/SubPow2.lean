@@ -1,7 +1,7 @@
 import sympy.core.relational
 import Lemma.Algebra.Pow2.ge.One
 import Lemma.Algebra.ModEq_Add
-import Lemma.Algebra.EqAddSub.of.Le
+import Lemma.Algebra.EqAddSub.of.Ge
 open Algebra
 
 
@@ -16,7 +16,7 @@ private lemma main
   rw [← h_eq_k]
   rw [← h_eq_k] at h_Ge_1
   have := ModEq_Add (n := k - 1) (k := 1)
-  rw [EqAddSub.of.Le h_Ge_1] at this
+  rw [EqAddSub.of.Ge h_Ge_1] at this
   assumption
 
 

@@ -22,7 +22,7 @@ private lemma main
   ·
     -- If `h` is false, the `else` branch is taken, and we need to show `x * y = 0`.
     rw [NotAnd.is.OrNotS] at h
-    cases' h with h h <;>
+    obtain h | h := h <;>
     ·
       have h := Eq.of.NotNe h
       rw [h]

@@ -1,18 +1,14 @@
 import Lemma.Basic
 
 
-/--
-In a `DivInvMonoid`, division of `a` by `b` is defined as multiplication of `a` by the inverse of `b`.
-This lemma confirms the equivalence `a / b = a * b⁻¹`, enabling the use of inverse properties in algebraic expressions involving division.
--/
-@[main]
+@[main, comm]
 private lemma main
   [DivInvMonoid α]
-  {a b : α} :
+  (a b : α) :
 -- imply
-  a / b = a * b⁻¹ := by
+  a / b = a * b⁻¹ :=
 -- proof
-  rw [div_eq_mul_inv]
+  div_eq_mul_inv a b
 
 
 -- created on 2024-07-01

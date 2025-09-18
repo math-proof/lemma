@@ -1,12 +1,10 @@
-import Lemma.Algebra.Add.comm
-import Lemma.Algebra.Ite.eq.Add_Ite
-open Algebra
+import Lemma.Basic
 
 
 @[main]
 private lemma main
   [Decidable p]
-  [AddCommGroup α]
+  [Add α]
   {a b c : α} :
 -- imply
   (if p then
@@ -17,10 +15,8 @@ private lemma main
   else
     b) + c := by
 -- proof
-  rw [Add.comm]
-  rw [Add.comm (a := b)]
-  rw [Add.comm (b := c)]
-  apply Ite.eq.Add_Ite
+  split_ifs with h <;> rfl
 
 
 -- created on 2025-04-26
+-- updated on 2025-05-14

@@ -4,7 +4,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [PartialOrder α]
+  [Preorder α]
   {a b : α}
 -- given
   (h : a > b) :
@@ -15,3 +15,4 @@ private lemma main
 
 
 -- created on 2025-03-29
+-- updated on 2025-07-19

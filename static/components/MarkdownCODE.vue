@@ -1,72 +1,42 @@
 <template>
-	<div :title=self.title tabindex="8">
-		<pre :class=self.className><code :class=self.className v-clipboard v-prism=self.arg.text @contextmenu.stop.prevent="contextmenu"></code></pre>
-	</div>
+	<code>
+		<component v-for="arg of self.args" :is=self.components[arg.func] v-bind=arg.bind />
+	</code>
 </template>
 
 <script setup>
 import Vue from "../js/vue.js"
-console.log('import MarkdownCODE.vue');
+import MarkdownParser from "../js/parser/markdown.js"
+const {components} = MarkdownParser;
+// console.log('import MarkdownCODE.vue');
 
 const props = defineProps({
-	args : Array,
-	kwargs : Object
+	args: Array,
+	kwargs: Object
 });
 
 const self = new Vue({
-	components : ['MarkdownText'],
+	components,
 	props,
 
     data: {
     },
 
     computed: {
-		title() {
-			return `right click to copy the ${self.lang} code`;
-		},
-
-		lang() {
-			return self.kwargs.lang;
-		},
-
-		arg() {
-			return self.args[0];
-		},
-
-		className() {
-			return 'language-' + self.lang;
-		},
     },
-
-	directives: {
-		prism : {
-			mounted(el, binding) {
-				highlight(el, binding);
-			},
-
-			updated(el, binding) {
-				if (binding.oldValue === binding.value)
-					return;
-				highlight(el, binding);
-			},
-		},
-		clipboard
-	},
 
 	mounted() {
 	}
 });
-
-function highlight(el, binding) {
-	var {value : code} = binding;
-	var {lang} = self;
-	if (Prism.languages[lang])
-		el.innerHTML = Prism.highlight(code, Prism.languages[lang], lang);
-	else
-		console.warn(`Language ${lang} not supported by Prism.js`);
-}
-
-var contextmenu = clipboard.contextmenu;
 </script>
-<style>
+<style scoped>
+code {
+    color: #c00;               /* Dark red color */
+    background: #f8f8f8;       /* Light gray background */
+    padding: 0.2em 0.4em;       /* Vertical and horizontal padding */
+    font-family: monospace;     /* Monospace font for code */
+    border-radius: 3px;         /* Slightly rounded corners */
+	font-size: 0.9em;           /* Slightly smaller font size */
+	background: #fff0f0; /* Light red background */
+}
 </style>

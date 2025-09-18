@@ -1,4 +1,4 @@
-import Lemma.Algebra.EqSubS.of.Eq
+import Lemma.Algebra.EqSubS.is.Eq
 import Lemma.Algebra.EqSubAdd
 open Algebra
 
@@ -19,12 +19,12 @@ private lemma main
   match left with
   | true =>
     intro h'
-    have h' := EqSubS.of.Eq h' d
+    have h' := EqSubS.of.Eq d h'
     simp at h'
     exact h h'
   | false =>
     intro h'
-    have h' := EqSubS.of.Eq h' d
+    have h' := EqSubS.of.Eq d h'
     simp only [EqSubAdd] at h'
     exact h h'
 

@@ -1,16 +1,16 @@
-import Lemma.Algebra.Le_Sub_1.of.Lt
-open Algebra
+import sympy.functions.elementary.integers
+import Lemma.Basic
 
 
 @[main]
 private lemma main
+  [IntegerRing Z]
 -- given
-  (i : Fin n):
+  (n : Z) :
 -- imply
-  i ≤ n - 1 := by
+  n - 1 ≤ n :=
 -- proof
-  have : i < n := by simp
-  apply Le_Sub_1.of.Lt this
+  IntegerRing.pred_le n
 
 
--- created on 2025-05-07
+-- created on 2025-06-02

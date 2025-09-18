@@ -13,10 +13,10 @@ private lemma main
   (h₀ : a < b)
   (h₁ : x > 0) :
 -- imply
-  a * x < b * x := by
+  a * x < b * x :=
 -- proof
-  exact mul_lt_mul_of_pos_right h₀ h₁
+  mul_lt_mul_of_pos_right h₀ h₁
 
 
 -- created on 2024-07-01
--- updated on 2025-04-04
+-- updated on 2025-07-06

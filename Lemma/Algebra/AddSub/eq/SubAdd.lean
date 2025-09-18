@@ -1,17 +1,10 @@
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.AddAdd.eq.Add_Add
-import Lemma.Algebra.Add.comm
-import Lemma.Algebra.Add_Add.eq.AddAdd
-import Lemma.Algebra.Add_Neg.eq.Sub
+import Lemma.Algebra.Add
 open Algebra
 
 
-/--
-In an additive commutative group, the expression \(a - b + c\) is equivalent to \(a + c - b\).
-This lemma demonstrates that subtraction and addition can be reordered while preserving equality, leveraging the commutativity and associativity of the group operation.
-The proof systematically applies fundamental group axioms to rearrange terms and verify the equivalence.
--/
-@[main]
+@[main, comm]
 private lemma main
   [AddCommGroup α]
   {a b c : α} :

@@ -1,6 +1,6 @@
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.Eq_Add.of.EqSub
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.EqSub.is.Eq_Add
+import Lemma.Algebra.Add
 open Algebra
 
 

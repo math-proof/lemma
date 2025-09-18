@@ -1,4 +1,4 @@
-import Lemma.Logic.Imp.of.Or_Not
+import Lemma.Logic.Imp.is.Or_Not
 open Logic
 
 

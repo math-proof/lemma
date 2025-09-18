@@ -1,4 +1,4 @@
-import sympy.polys.domains
+import sympy.functions.elementary.integers
 import Lemma.Basic
 
 

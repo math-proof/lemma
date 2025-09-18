@@ -1,8 +1,8 @@
 import Lemma.Algebra.FDiv.eq.FloorDiv
-import Lemma.Algebra.EqFloor.of.Le.et.Lt
+import Lemma.Algebra.EqFloor.is.Le.Lt
 import Lemma.Algebra.GeDiv.of.Ge_Mul.Gt_0
 import Lemma.Algebra.DivInt.eq.Div
-import Lemma.Algebra.GtCoeS.of.Gt
+import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Algebra.Div.lt.Zero.of.Lt_0.Gt_0
 open Algebra
 
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   have := GtCoeS.of.Gt.int (R := ℚ) h
   rw [FDiv.eq.FloorDiv]
-  apply EqFloor.of.Le.et.Lt
+  apply EqFloor.of.Le.Lt
   ·
     norm_cast
     simp

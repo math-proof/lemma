@@ -22,18 +22,12 @@ foreach ($package in $packages) {
         Write-Host "The following lines will be modified (removing '$package' from 'open' statements):"
         
         # Show lines to be modified
-        $lines = Get-Content $file.FullName
-        $lines | ForEach-Object -Begin { $i = 1 } -Process {
-            if ($_ -match $patternOpen) {
-                "$i : $_"
-            }
-            $i++
-        }
-
+        $content = Get-Content $file.FullName -Encoding UTF8
+        $newContent = @()
         # Modify file content
-        $newContent = $lines | ForEach-Object {
-            $line = $_
+        $newContent = foreach ($line in $content) {
             if ($line -match '^open ') {
+                Write-Host "$line"
                 # Remove package name
                 $newLine = $line -replace "\b$escapedPackage\b", ''
                 # Collapse spaces
@@ -41,13 +35,15 @@ foreach ($package in $packages) {
                 # Trim trailing space
                 $newLine = $newLine.TrimEnd()
                 # Skip empty 'open' lines
-                if ($newLine -eq 'open') { $null } else { $newLine }
+                if ($newLine -eq 'open') { continue }
+                $newLine
             } else {
                 $line
             }
-        } | Where-Object { $_ -ne $null }
-
+        }
+        $newContent = $newContent -join "`n"
+        $newContent += "`n"
         # Write changes back to file
-        $newContent | Set-Content -Path $file.FullName
+        [System.IO.File]::WriteAllText($file.FullName, $newContent, [System.Text.UTF8Encoding]::new($false))
     }
 }

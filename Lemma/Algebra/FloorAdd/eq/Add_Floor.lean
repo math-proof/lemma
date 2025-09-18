@@ -1,4 +1,4 @@
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Add
 import Lemma.Algebra.FloorAdd.eq.AddFloor
 open Algebra
 

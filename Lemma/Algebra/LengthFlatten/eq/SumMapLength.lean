@@ -1,7 +1,7 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (L : List (List α)) :

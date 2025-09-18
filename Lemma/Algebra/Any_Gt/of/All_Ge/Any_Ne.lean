@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Logic.All_Not.of.NotAny
+import Lemma.Logic.NotAny.is.All_Not
 import Lemma.Logic.All.of.All.All_Imp
 import Lemma.Logic.All_And.of.All.All
 import Lemma.Logic.NotAny_Not.of.All
@@ -18,16 +18,16 @@ private lemma main
   ∃ i ∈ range n, x i > a := by
 -- proof
   by_contra h
-  have h := All_Not.of.NotAny.finset h
+  have h := All_Not.of.NotAny.fin h
   have : ∀ t : ℝ, ¬t > a → t ≤ a := by
     intro t h
     linarith
-  have h_Ge_0 := All.of.All.All_Imp.finset (α := ℝ) this h
-  have h := All_And.of.All.All.finset h₀ h_Ge_0
+  have h_Ge_0 := All.of.All.All_Imp.fin (α := ℝ) this h
+  have h := All_And.of.All.All.fin h₀ h_Ge_0
   have : ∀ t : ℝ, t ≥ a ∧ t ≤ a → t = a := by
     intro t h
     linarith
-  have h := All.of.All.All_Imp.finset this h
+  have h := All.of.All.All_Imp.fin this h
   have := NotAny_Not.of.All h
   have h_NotAny : ¬∃ i ∈ range n, x i ≠ a := by
     simp [this]

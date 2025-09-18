@@ -1,24 +1,23 @@
-import Lemma.Algebra.SubMulS.eq.Mul_Sub
-open Algebra
+import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma nat
-  {x a b : ℕ} :
+  (x a b : ℕ) :
 -- imply
-  x * (a - b) = x * a - x * b := by
+  x * (a - b) = x * a - x * b :=
 -- proof
-  rw [SubMulS.eq.Mul_Sub.nat]
+  Nat.mul_sub x a b
 
 
-@[main]
+@[main, comm]
 private lemma main
   [NonUnitalNonAssocRing α]
-  {x a b : α} :
+  (x a b : α) :
 -- imply
-  x * (a - b) = x * a - x * b := by
+  x * (a - b) = x * a - x * b :=
 -- proof
-  rw [SubMulS.eq.Mul_Sub]
+  mul_sub x a b
 
 
 -- created on 2024-07-01

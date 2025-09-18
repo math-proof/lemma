@@ -1,5 +1,4 @@
-import sympy.polys.domains
-import Lemma.Algebra.Gt.of.NotLe
+import Lemma.Algebra.NotLe.is.Gt
 import Lemma.Algebra.GeSub_1.of.Gt
 import Lemma.Algebra.Lt.of.Lt.Le
 open Algebra

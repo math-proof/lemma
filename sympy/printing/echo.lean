@@ -10,7 +10,7 @@ def logInfo (hypId : Name) (hypType : TacticM Lean.Expr) (goal : Bool := false) 
   Lean.logInfo m!"{Json.compress (Json.mkObj [(toString ((← getFileMap).toPosition ((← getRef).getPos?.getD 0)).line, latex)])}"
 
 
-syntax (name := echo) "echo" ((ident <|> "_"),+ <|> "*") : tactic
+syntax (name := echo) "echo" ((ident <|> "_" <|> "⊢"),+ <|> "*") : tactic
 
 @[tactic echo]
 def evalEcho : Tactic := fun stx => do
@@ -21,8 +21,8 @@ def evalEcho : Tactic := fun stx => do
       -- let hypId := identStx.getId
       let hypId :=
         match identStx with
-        | .node _ `token._ #[.atom _ "_"] => "_"
-        | .atom _ val => val
+        | .node _ (.str `token _) #[.atom _ val]
+        | .atom _ val
         | .ident _ _ (.str _ val) _ => val
         | _ => ""
       -- println! s!"identStx = {identStx}, hypId = {hypId}"
@@ -36,10 +36,10 @@ def evalEcho : Tactic := fun stx => do
                 logInfo decl.userName hypType
         -- Print the main target
         logInfo default getMainTarget true
-      else if hypId == "main" then
+      else if hypId == "⊢" then
         if sepArgs.size > 1 then
           -- Print the main target
-          logInfo `main getMainTarget true
+          logInfo default getMainTarget true
         else
           -- Print the all goals
           let gs ← getGoals
@@ -58,4 +58,7 @@ def evalEcho : Tactic := fun stx => do
       else if hypId != "" then
         -- Print the specific local hypothesis
         let hypId := Name.mkSimple hypId
-        logInfo hypId (inferType (← getLocalDeclFromUserName hypId).toExpr)
+        try
+          logInfo hypId (inferType (← getLocalDeclFromUserName hypId).toExpr)
+        catch e =>
+          Lean.logInfo m!"{e.toMessageData}"

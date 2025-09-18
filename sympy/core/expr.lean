@@ -23,44 +23,74 @@ def BinaryInfix.func : BinaryInfix → Func
   | ⟨name⟩ =>
     match name with
     -- relational operator
-    | `Iff => ⟨21, "↔", "\\leftrightarrow"⟩  -- L_leftrightarrow
-    | `Or => ⟨30, "∨", "\\lor"⟩  -- L_lor
-    | `And => ⟨35, "∧", "\\land"⟩  -- L_land
-    | `LE.le => ⟨51, "≤", "\\le"⟩  -- L_le
-    | `GE.ge => ⟨51, "≥", "\\ge"⟩  -- L_ge
-    | `LT.lt => ⟨51, "<", "<"⟩  -- L_lt
-    | `GT.gt => ⟨51, ">", ">"⟩  -- L_gt
-    | `Eq => ⟨51, "=", "="⟩  -- LEq
-    | `Ne => ⟨51, "≠", "\\ne"⟩ -- L_ne
+    | `Iff => ⟨20, "↔", "\\leftrightarrow"⟩  -- Lean_leftrightarrow, https://github.com/leanprover/lean4/blob/v4.18.0/src/Init/Core.lean#L134
+    | `Or => ⟨30, "∨", "\\lor"⟩  -- Lean_lor
+    | `or => ⟨30, "||", "||"⟩  -- LeanLogicOr
+    | `And => ⟨35, "∧", "\\land"⟩  -- Lean_land
+    | `and => ⟨35, "&&", "&&"⟩  -- LeanLogicAnd
+    | `LE.le => ⟨50, "≤", "\\le"⟩  -- Lean_le
+    | `GE.ge => ⟨50, "≥", "\\ge"⟩  -- Lean_ge
+    | `LT.lt => ⟨50, "<", "<"⟩  -- Lean_lt
+    | `GT.gt => ⟨50, ">", ">"⟩  -- Lean_gt
+    | `Eq => ⟨50, "=", "="⟩  -- LeanEq
+    | `Ne => ⟨50, "≠", "\\ne"⟩ -- Lean_ne
+    | `BEq.beq => ⟨50, "==", "=="⟩  -- LeanBEq
+    | `bne => ⟨50, "!=", "!="⟩  -- Lean_bne
+    | `xor => ⟨33, "^^", "^^"⟩  -- Lean_xor
+    | `SEq => ⟨50, "≃", "\\simeq"⟩  -- Lean_simeq
     | `Membership.mem
-    | `List.Mem => ⟨51, "∈", "\\in"⟩  -- L_in ∋ \\ni
-    | `HasSubset.Subset => ⟨51, "⊆", "\\subseteq"⟩  -- L_subset
-    | `Superset => ⟨51, "⊇", "\\supseteq"⟩  -- L_supset
-    | `Dvd.dvd => ⟨51, "∣", "\\mid"⟩  -- L_mid
+    | `List.Mem => ⟨50, "∈", "\\in"⟩  -- Lean_in ∋ \\ni
+    | `HasSubset.Subset => ⟨50, "⊆", "\\subseteq"⟩  -- Lean_subseteq
+    | `HasSSubset.SSubset => ⟨50, "⊂", "\\subset"⟩  -- Lean_subset
+    | `Superset => ⟨50, "⊇", "\\supseteq"⟩  -- Lean_supseteq
+    | `SSuperset => ⟨50, "⊃", "\\supset"⟩    -- Lean_supset
+    | `Dvd.dvd => ⟨50, "∣", "{\\color{red}{\\ \\mid\\ }}"⟩  -- Lean_mid
+    | `HOr.hOr => ⟨55, "|||", "\\mid\\mid\\mid"⟩  -- Lean_HOr
+    | `HXor.hXor => ⟨58, "^^^", "\\^\\^\\^"⟩  -- Lean_HXor
+    | `HAnd.hAnd => ⟨60, "&&&", "&&&"⟩  -- Lean_HXor
+    | `HasEquiv.Equiv => ⟨50, "≈", "≈"⟩
     -- arithmetic operator
-    | `HAdd.hAdd => ⟨66, "+", "+"⟩ -- LAdd
-    | `HSub.hSub => ⟨66, "-", "-"⟩  -- LSub
-    | `HAppend.hAppend => ⟨66, "++", "+\\!\\!+"⟩ -- LAppend
-    | `HMul.hMul => ⟨71, "*", "\\cdot"⟩  -- LMul
-    | `HDiv.hDiv => ⟨71, "/", "\\frac"⟩  -- LDiv
-    | `Rat.divInt => ⟨71, "/", "\\frac"⟩  -- LDiv
-    | `HMod.hMod => ⟨71, "%%", "\\%%"⟩  -- LMod
-    | `SDiff.sdiff => ⟨71, "\\", "\\setminus"⟩  -- L_setminus
-    | `Union.union => ⟨66, "∪", "\\cup"⟩  -- L_cup
-    | `Inter.inter => ⟨71, "∩", "\\cap"⟩  -- L_cap
-    | `OPlus.oplus => ⟨31, "⊕", "\\oplus"⟩  -- L_oplus
-    | `OTimes.otimes => ⟨32, "⊗", "\\otimes"⟩  -- L_otimes
-    | `ODot.odot => ⟨73, "⊙", "\\odot"⟩  -- L_odot
+    | `Nat.add
+    | `HAdd.hAdd => ⟨65, "+", "+"⟩ -- LeanAdd
+    | `Nat.sub
+    | `HSub.hSub => ⟨65, "-", "-"⟩  -- LeanSub
+    | `HAppend.hAppend => ⟨65, "++", "+\\!\\!+"⟩ -- LeanAppend
+    | `HMul.hMul => ⟨70, "*", "\\cdot"⟩  -- LeanMul
+    | `HDiv.hDiv => ⟨70, "/", "\\frac"⟩  -- LeanDiv
+    | `Rat.divInt => ⟨70, "/", "\\frac"⟩  -- LeanDiv
+    | `HMod.hMod => ⟨70, "%%", "\\%%"⟩  -- LeanMod
+    | `HShiftLeft.hShiftLeft => ⟨75, "<<<", "<<<"⟩ -- LeanHShiftLeft
+    | `HShiftRight.hShiftRight => ⟨75, ">>>", ">>>"⟩
+    | `SDiff.sdiff => ⟨70, "\\", "\\setminus"⟩  -- Lean_setminus
+    | `Union.union => ⟨65, "∪", "\\cup"⟩  -- Lean_cup
+    | `Inter.inter => ⟨70, "∩", "\\cap"⟩  -- Lean_cap
+    | `OPlus.oplus => ⟨30, "⊕", "\\oplus"⟩  -- Lean_oplus
+    | `OTimes.otimes => ⟨32, "⊗", "\\otimes"⟩  -- Lean_otimes
+    | `ODot.odot => ⟨73, "⊙", "\\odot"⟩  -- Lean_odot
     | `Bullet.bullet
-    | `HSMul.hSMul => ⟨73, "•", "\\bullet"⟩  -- L_bullet
-    | `List.cons => ⟨68, "::", "::"⟩  -- LConstruct
-    | `List.Vector.cons => ⟨68, "::ᵥ", "::_v"⟩  -- LVConstruct
-    | `Max.max => ⟨68, "⊔", "\\sqcup"⟩  -- L_sqcup
-    | `Min.min => ⟨69, "⊓", "\\sqcap"⟩  -- L_sqcap
+    | `HSMul.hSMul => ⟨73, "•", "\\bullet"⟩  -- Lean_bullet
+    | `List.cons => ⟨67, "::", "::"⟩  -- LeanConstruct
+    | `List.Vector.cons => ⟨67, "::ᵥ", "::_v"⟩  -- LeanVConstruct
+    | `Max.max => ⟨68, "⊔", "\\sqcup"⟩  -- Lean_sqcup
+    | `Min.min => ⟨69, "⊓", "\\sqcap"⟩  -- Lean_sqcap
     | `Dot.dot
-    | `List.Vector.dot => ⟨71, "⬝", "{\\color{red}\\cdotp}"⟩  -- L_cdotp
-    | `HPow.hPow => ⟨80, "^", "^"⟩  -- LPow
-    | `Function.comp => ⟨91, "∘", "\\circ"⟩  -- L_circ
+    | `List.Vector.dot => ⟨70, "⬝", "{\\color{red}\\cdotp}"⟩  -- Lean_cdotp
+    | `MatMul.dot => ⟨70, "@", "{\\color{red}\\times}"⟩  -- LeanMatMul
+    | `HPow.hPow => ⟨80, "^", "^"⟩  -- LeanPow
+    | `Function.comp => ⟨90, "∘", "\\circ"⟩  -- Lean_circ
+    | `Prod => ⟨35, "×", "×"⟩  -- Lean_Prod
+    | `PProd => ⟨35, "×'", "×'"⟩  -- Lean_Prod
+    | `Functor.map => ⟨100, "<$>", "<$>"⟩
+    | `Functor.mapRev => ⟨100, "<&>", "<&>"⟩
+    | `orM => ⟨30, "<||>", "<||>"⟩
+    | `andM => ⟨35, "<&&>", "<&&>"⟩
+    | `Bind.bind => ⟨55, ">>=", ">>="⟩
+    | `Bind.kleisliRight => ⟨55, ">=>", ">=>"⟩
+    | `Bind.kleisliLeft => ⟨55, "<=<", "<=<"⟩
+    | `Bind.bindLeft => ⟨55, "=<<", "=<<"⟩
+    | `List.IsPrefix => ⟨50, "<+:", "<+:"⟩
+    | `List.IsSuffix => ⟨50, "<:+", "<:+"⟩
+    | `List.IsInfix => ⟨50, "<:+:", "<:+:"⟩
     | _ => panic! s!"BinaryInfix.func : unknown operator {name}"
 
 
@@ -73,13 +103,16 @@ def BinaryInfix.isProp : BinaryInfix → Bool
     | `GT.gt
     | `Eq
     | `Ne
+    | `SEq
     | `And
     | `Or
     | `Iff
     | `Membership.mem
     | `List.Mem
     | `HasSubset.Subset
+    | `HasSSubset.SSubset
     | `Superset
+    | `SSuperset
     | `Dvd.dvd => true
     | _ => false
 
@@ -92,20 +125,23 @@ deriving BEq, CtorName, Repr
 def UnaryPrefix.func : UnaryPrefix → Func
   | ⟨name⟩ =>
     match name with
-    | `Neg.neg => ⟨68, "-", "-"⟩  -- LNeg
-    | `Not => ⟨50, "¬", "\\lnot"⟩  -- L_lnot
-    | `Complex.ofReal => ⟨72, "↑", "\\uparrow"⟩  -- L_uparrow
+    | `Neg.neg => ⟨75, "-", "-"⟩  -- LeanNeg
+    | `Not => ⟨40, "¬", "\\lnot"⟩  -- Lean_lnot
+    | `Bool.not => ⟨40, "!", "\\text{!}"⟩  -- LeanNot
+    | `Complement.complement => ⟨100, "~~~", "~~~"⟩
+    | `Complex.ofReal
     | `Int.ofNat
     | `Nat.cast
     | `Int.cast
     | `Rat.cast
     | `Fin.val
-    | `Subtype.val => ⟨72, "↑", "\\uparrow"⟩  -- L_uparrow
-    | `DFunLike.coe => ⟨72, "⇑", "\\Uparrow"⟩  -- LUparrow
+    | `Finset.toSet
+    | `Subtype.val => ⟨72, "↑", "\\uparrow"⟩  -- Lean_uparrow
+    | `DFunLike.coe => ⟨72, "⇑", "\\Uparrow"⟩  -- LeanUparrow
     | `Real.sqrt
-    | `Root.sqrt => ⟨72, "√", "\\sqrt"⟩  -- L_sqrt
-    | `OfNat.ofNat => ⟨107, "cast", ""⟩  -- L_cast
-    | _ => panic! s!"UnaryPrefix.func : unknown operator {name}"
+    | `Root.sqrt => ⟨72, "√", "\\sqrt"⟩  -- Lean_sqrt
+    | `OfNat.ofNat => ⟨107, "cast", ""⟩  -- Lean_cast
+    | _ => ⟨76, name.toString, name.toString⟩  -- UnaryPrefix resulted from Lean.Expr.proj
 
 
 def UnaryPrefix.isProp : UnaryPrefix → Bool
@@ -126,55 +162,54 @@ def UnaryPostfix.func: UnaryPostfix → Func
 
 
 inductive ExprWithLimits where
-  | L_sum
-  | L_prod
-  | L_int (name : Name)
-  | L_bigcap (name : Name)
-  | L_bigcup (name : Name)
-  | L_lim (name : Name)
-  | L_sup (name : Name)
-  | L_inf (name : Name)
-  | L_max (name : Name)
-  | L_min (name : Name)
-  | L_forall
-  | L_exists
-  | L_lambda
-  | L_let
+  | Lean_sum
+  | Lean_prod
+  | Lean_int (name : Name)
+  | Lean_bigcap
+  | Lean_bigcup
+  | Lean_lim (name : Name)
+  | Lean_sup (name : Name)
+  | Lean_inf (name : Name)
+  | Lean_max (name : Name)
+  | Lean_min (name : Name)
+  | Lean_forall
+  | Lean_exists
+  | Lean_lambda
+  | Lean_let
 deriving BEq, Repr
 
 
 def ExprWithLimits.func : ExprWithLimits → Func
-  | L_sum  => ⟨52, "∑", "\\sum"⟩
-  | L_prod => ⟨52, "∏", "\\prod"⟩
-  | L_int _ => ⟨52, "∫", "\\int"⟩
-  | L_bigcap _ => ⟨52, "⋂", "\\bigcap"⟩
-  | L_bigcup _ => ⟨52, "⋃", "\\bigcup"⟩
-  | L_lim _ => ⟨52, "lim", "\\lim"⟩
-  | L_sup _ => ⟨52, "sup", "\\sup"⟩
-  | L_inf _ => ⟨52, "inf", "\\inf"⟩
-  | L_max _ => ⟨52, "max", "\\max"⟩
-  | L_min _ => ⟨52, "min", "\\min"⟩
-  | L_forall => ⟨24, "∀", "\\forall"⟩
-  | L_exists => ⟨24, "∃", "\\exists"⟩
-  | L_lambda => ⟨72, "fun", "\\operatorname{\\color{magenta}fun}"⟩
-  | L_let => ⟨47, "let", "let"⟩
-
+  | Lean_sum  => ⟨66, "∑", "\\sum"⟩
+  | Lean_prod => ⟨71, "∏", "\\prod"⟩
+  | Lean_int _ => ⟨52, "∫", "\\int"⟩
+  | Lean_bigcap => ⟨52, "⋂", "\\bigcap"⟩
+  | Lean_bigcup => ⟨51, "⋃", "\\bigcup"⟩
+  | Lean_lim _ => ⟨52, "lim", "\\lim"⟩
+  | Lean_sup _ => ⟨52, "sup", "\\sup"⟩
+  | Lean_inf _ => ⟨52, "inf", "\\inf"⟩
+  | Lean_max _ => ⟨52, "max", "\\max"⟩
+  | Lean_min _ => ⟨52, "min", "\\min"⟩
+  | Lean_forall => ⟨24, "∀", "\\forall"⟩
+  | Lean_exists => ⟨24, "∃", "\\exists"⟩
+  | Lean_lambda => ⟨72, "fun", "\\operatorname{\\color{magenta}fun}"⟩
+  | Lean_let => ⟨47, "let", "{\\color{blue}{let}}"⟩
 
 def ExprWithLimits.name : ExprWithLimits → Name
-  | L_forall => default
-  | L_exists => `Exists
-  | L_sum => `Finset.sum
-  | L_prod => `Finset.prod
-  | L_int name
-  | L_bigcap name
-  | L_bigcup name
-  | L_lim name
-  | L_sup name
-  | L_inf name
-  | L_max name
-  | L_min name
-  | L_lambda
-  | L_let => default
+  | Lean_forall => default
+  | Lean_exists => `Exists
+  | Lean_sum => `Finset.sum
+  | Lean_prod => `Finset.prod
+  | Lean_int name
+  | Lean_bigcap => `Set.iInter
+  | Lean_bigcup => `Set.iUnion
+  | Lean_lim name
+  | Lean_sup name
+  | Lean_inf name
+  | Lean_max name
+  | Lean_min name
+  | Lean_lambda
+  | Lean_let => default
 
 
 def Binder.func : Binder → Func
@@ -194,78 +229,85 @@ deriving BEq, Repr
 def Special.func : Special → Func
   | ⟨name⟩ =>
     match name with
-    | .anonymous => ⟨72, "__call__", "__call__"⟩
-    | `abs => ⟨72, "|%s|", "\\left|%s\\right|"⟩  -- LAbs
-    | `Bool.toNat => ⟨72, "Bool.toNat %s", "\\left|%s\\right|"⟩  -- LAbs
-    | `Finset.card => ⟨72, "#%s", "\\left|%s\\right|"⟩  -- LCard
-    | `Norm.norm => ⟨60, "‖%s‖", "\\left\\lVert%s\\right\\rVert"⟩  -- LNorm
-    | `Int.ceil => ⟨72, "⌈%s⌉", "\\left\\lceil%s\\right\\rceil"⟩  -- LCeil
-    | `Int.floor => ⟨72, "⌊%s⌋", "\\left\\lfloor%s\\right\\rfloor"⟩  -- LFloor
-    | `ite => ⟨60, "ite", "ite"⟩  -- LITE
-    | `dite => ⟨60, "ite", "ite"⟩  -- LITE
-    | `Subtype.mk
-    | `Fin.mk
-    | `Prod.mk => ⟨117, "⟨%s, %s⟩", "\\langle %s, %s \\rangle"⟩  -- LAngleBracket
+    | .anonymous => ⟨75, "__call__", "__call__"⟩
+    | `abs => ⟨72, "|%s|", "\\left|%s\\right|"⟩  -- LeanAbs
+    | `Bool.toNat => ⟨72, "Bool.toNat %s", "\\left|%s\\right|"⟩  -- LeanAbs
+    | `Finset.card => ⟨72, "#%s", "\\left|%s\\right|"⟩  -- LeanCard
+    | `Norm.norm => ⟨60, "‖%s‖", "\\left\\lVert%s\\right\\rVert"⟩  -- LeanNorm
+    | `Int.ceil => ⟨72, "⌈%s⌉", "\\left\\lceil%s\\right\\rceil"⟩  -- LeanCeil
+    | `Int.floor => ⟨72, "⌊%s⌋", "\\left\\lfloor%s\\right\\rfloor"⟩  -- LeanFloor
+    | `ite => ⟨60, "ite", "ite"⟩  -- LeanITE
+    | `dite => ⟨60, "ite", "ite"⟩  -- LeanITE
     | `List.get
     | `List.Vector.get
     | `Tensor.get
-    | `GetElem.getElem => ⟨99, "%s[%s]", "%s_%s"⟩  -- LGetElem
-    | `GetElem?.getElem? => ⟨99, "%s[%s]?", "%s_{%s?}"⟩  -- LGetElemQue
-    | `Nat.ModEq => ⟨32, "%s ≡ %s [MOD %s]", "%s \\equiv %s\\ \\left[\\operatorname{MOD}\\ %s\\right]"⟩  -- L_equiv
+    | `GetElem.getElem => ⟨99, "%s[%s]", "%s_%s"⟩  -- LeanGetElem
+    | `GetElem?.getElem? => ⟨99, "%s[%s]?", "%s_{%s?}"⟩  -- LeanGetElemQue
+    | `Nat.ModEq => ⟨32, "%s ≡ %s [MOD %s]", "%s \\equiv %s\\ \\left[\\operatorname{MOD}\\ %s\\right]"⟩  -- Lean_equiv
     | `Singleton.singleton
-    | `Insert.insert => ⟨72, "{%s}", "\\left\\{%s\\right\\}"⟩  -- LBrace
-    | `setOf => ⟨72, "{%s | %s}", "\\left\\{%s \\mid %s\\right\\}"⟩  -- LSetOf
-    | .str _ "match_1"
-    | .str _ "match_2" => ⟨60, "match", "match"⟩  -- L_match
-    | `Decidable.decide => ⟨72, "%s", "%s"⟩  -- LDecide
+    | `Insert.insert => ⟨72, "{%s}", "\\left\\{%s\\right\\}"⟩  -- LeanBrace
+    | `setOf => ⟨72, "{%s | %s}", "\\left\\{%s \\mid %s\\right\\}"⟩  -- LeanSetOf
+    | `Decidable.decide => ⟨72, "%s", "%s"⟩  -- LeanDecide
+    | .str _ op  =>
+      if op.endsWithNumberedWord "match" then
+        ⟨60, "match", "match"⟩  -- Lean_match
+      else if op == "mk" then
+        ⟨117, "⟨%s, %s⟩", "\\langle %s, %s \\rangle"⟩  -- LeanAngleBracket
+      else
+        panic! s!"Special.func : unknown operator {name}"
     | _ => panic! s!"Special.func : unknown operator {name}"
 
 
 inductive ExprWithAttr where
-  | L_function (name : Name)
-  | L_operatorname (name : Name)
-  | L_typeclass (name : Name)
-  | LMethod (name : Name) (idx : Nat) --idx denotes the first index of the self parameter in the default argument list
-  | LProperty (name : Name)
+  | Lean_function (name : Name)
+  | Lean_operatorname (name : Name)
+  | Lean_typeclass (name : Name)
+  | LeanLemma (name : Name)
+  | LeanMethod (name : Name) (idx : Nat) --idx denotes the first index of the self parameter in the default argument list
+  | LeanProperty (name : Name)
 deriving BEq, Repr
 
 
 def ExprWithAttr.func : ExprWithAttr → Func
-  | L_function name =>
+  | Lean_function name =>
     let name := name.getLast.toString
-    ⟨71, name, "\\" ++ name⟩
-  | L_operatorname name =>
+    ⟨75, name, "\\" ++ name⟩
+  | Lean_operatorname name =>
     let name := name.getLast.toString
     ⟨
-      72,
+      75,
       name,
       "\\operatorname{%s}".format name.escape_specials
     ⟩
-  | L_typeclass name =>
+  | Lean_typeclass name =>
     let name := name.getLast.toString
     ⟨
-      72,
+      75,
       name,
       "\\operatorname{\\color{#770088}{%s}}".format name.escape_specials
     ⟩
-  | LMethod name idx =>
+  | LeanLemma name =>
     let name := name.getLast.toString
-    ⟨73, s!"%s.{name} %s", s!"%s.{name.escape_specials}\\ %s"⟩
-  | LProperty name =>
+    ⟨75, "⋯", "\\cdots"⟩
+  | LeanMethod name idx =>
+    let name := name.getLast.toString
+    ⟨75, s!"%s.{name} %s", s!"%s.{name.escape_specials}\\ %s"⟩
+  | LeanProperty name =>
     let name := name.getLast.toString
     ⟨81, s!".{name}", s!".{name.escape_specials}"⟩
 
 
 def ExprWithAttr.name : ExprWithAttr → Name
-  | L_function name
-  | L_operatorname name
-  | L_typeclass name
-  | LMethod name idx
-  | LProperty name => name
+  | Lean_function name
+  | Lean_operatorname name
+  | Lean_typeclass name
+  | LeanLemma name
+  | LeanMethod name idx
+  | LeanProperty name => name
 
 
 def ExprWithAttr.isProp : ExprWithAttr → Bool
-  | .LProperty `IsConstant.is_constant => true
+  | .LeanProperty `IsConstant.is_constant => true
   | _ => false
 
 
@@ -313,7 +355,7 @@ def Operator.command : Operator → String :=
   Func.command ∘ Operator.func
 
 def Operator.methodIdx : Operator → Nat
-  | ExprWithAttr (.LMethod _ idx) => idx
+  | ExprWithAttr (.LeanMethod _ idx) => idx
   | _ => 0
 
 
@@ -347,7 +389,7 @@ def Expr.isEmpty : Expr → Bool
 
 
 def Expr.isTypeClass : Expr → Bool
-  | Basic (.ExprWithLimits .L_forall) (.sort .zero :: _) => true
+  | Basic (.ExprWithLimits .Lean_forall) (.sort .zero :: _) => true
   | _ => false
 
 
@@ -384,6 +426,40 @@ inductive TreeNode where
   | Operator (op : Operator)
   | const (expr : Expr)
 
+
+def ExprWithAttr.toTreeNode (declName : Name) (toExpr : Lean.Expr → List Expr → MetaM Expr) : MetaM TreeNode := do
+  let op : Name → ExprWithAttr ←
+    if Lean.isClass (← Lean.getEnv) declName then
+      pure ExprWithAttr.Lean_typeclass
+    else
+      if (← toExpr (← declName.toConstantInfo).type []).isTypeClass then
+        pure ExprWithAttr.Lean_typeclass
+      else
+        match declName with
+        | .anonymous
+        | .num _ _
+        | .str .anonymous _ =>
+          pure ExprWithAttr.Lean_operatorname
+        | .str classname _ =>
+          let binderInfo ← declName.binderInfo
+          let binderType ← declName.binderType
+          let defaultType :=
+            List.zip binderInfo binderType |>.filterMap fun (binderInfo, binderType) =>
+            match binderInfo with
+              | .default => some binderType.declName
+              | _ => none
+          if let some idx := defaultType.idxOf? classname then
+            if defaultType.length == 1 then
+              pure ExprWithAttr.LeanProperty
+            else if ← declName.is_Lemma then
+              pure ExprWithAttr.LeanLemma
+            else
+              pure (fun name : Name => ExprWithAttr.LeanMethod name idx)
+          else if ← declName.is_Lemma then
+            pure ExprWithAttr.LeanLemma
+          else
+            pure ExprWithAttr.Lean_operatorname
+  return .Operator (.ExprWithAttr (op declName))
 
 partial def Expr.func (e : Lean.Expr) (toExpr : Lean.Expr → List Expr → MetaM Expr) (binders : List Expr) : MetaM TreeNode := do
   match e with
@@ -428,9 +504,12 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `LT.lt
     | `GE.ge
     | `GT.gt
-    | `Ne
     | `Eq
+    | `Ne
+    | `SEq
+    | `Nat.add
     | `HAdd.hAdd
+    | `Nat.sub
     | `HSub.hSub
     | `HAppend.hAppend
     | `HMul.hMul
@@ -450,10 +529,13 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `List.cons
     | `List.Vector.cons
     | `List.Vector.dot
+    | `MatMul.dot
     | `Max.max
     | `Min.min
     | `HasSubset.Subset
+    | `HasSSubset.SSubset
     | `Superset
+    | `SSuperset
     | `Dvd.dvd
     | `OPlus.oplus
     | `OTimes.otimes
@@ -464,6 +546,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
 
     | `Neg.neg
     | `Not
+    | `Bool.not
     | `Real.sqrt
     | `Root.sqrt
     | `Complex.ofReal
@@ -473,6 +556,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Int.cast
     | `Rat.cast
     | `Fin.val
+    | `Finset.toSet
     | `Subtype.val
     | `DFunLike.coe =>
       return .Operator (.UnaryPrefix ⟨declName⟩)
@@ -485,7 +569,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Real.arccos
     | `Real.arcsin
     | `Complex.arg =>
-      return .Operator (.ExprWithAttr (.L_function declName))
+      return .Operator (.ExprWithAttr (.Lean_function declName))
 
     | `id
     | `Real.exp
@@ -503,11 +587,19 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Set.Ioc
     | `Set.Ici
     | `Set.Ioi
+    | `Finset.Ioo
+    | `Finset.Ico
+    | `Finset.Iio
+    | `Finset.Icc
+    | `Finset.Iic
+    | `Finset.Ioc
+    | `Finset.Ici
+    | `Finset.Ioi
     | `Int.sign
     | `List.Vector.replicate
     | `toIcoDiv
     | `Int.subNatNat =>
-      return .Operator (.ExprWithAttr (.L_operatorname declName))
+      return .Operator (.ExprWithAttr (.Lean_operatorname declName))
 
     -- instImplicit
     | `Set
@@ -520,43 +612,32 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Bullet
     | `List.Vector
     | `Tensor =>
-      return .Operator (.ExprWithAttr (.L_typeclass declName))
+      return .Operator (.ExprWithAttr (.Lean_typeclass declName))
 
-    | `abs                 -- LAbs
-    | `Bool.toNat          -- LAbs
-    | `Finset.card         -- LAbs
-    | `Norm.norm           -- LNorm
-    | `Int.ceil            -- LCeil
-    | `Int.floor           -- LFloor
-    | `Fin.mk
-    | `Subtype.mk
-    | `Prod.mk             -- LAngleBracket
+    | `abs                 -- LeanAbs
+    | `Bool.toNat          -- LeanAbs
+    | `Finset.card         -- LeanAbs
+    | `Norm.norm           -- LeanNorm
+    | `Int.ceil            -- LeanCeil
+    | `Int.floor           -- LeanFloor
     | `List.get
     | `List.Vector.get
     | `Tensor.get
-    | `GetElem.getElem     -- LGetElem
-    | `GetElem?.getElem?   -- LGetElemQue
-    | `ite                 -- LITE
-    | `dite                -- LITE
-    | `Singleton.singleton -- LBrace
-    | `Insert.insert       -- LBrace
-    | `setOf               -- LSetOf
-    | `Decidable.decide    -- LDecide
-    | `Nat.ModEq =>        -- L_equiv
+    | `GetElem.getElem     -- LeanGetElem
+    | `GetElem?.getElem?   -- LeanGetElemQue
+    | `ite                 -- LeanITE
+    | `dite                -- LeanITE
+    | `Singleton.singleton -- LeanBrace
+    | `Insert.insert       -- LeanBrace
+    | `setOf               -- LeanSetOf
+    | `Decidable.decide    -- LeanDecide
+    | `Nat.ModEq =>        -- Lean_equiv
       return .Operator (.Special ⟨declName⟩)
 
     | `True =>
       return .const (const .True)
     | `False =>
       return .const (const .False)
-    | `Infinity =>
-      return .const (const .Infinity)
-    | `NegativeInfinity =>
-      return .const (const .NegativeInfinity)
-    | `Infinitesimal =>
-      return .const (const .Infinitesimal)
-    | `NegativeInfinitesimal =>
-      return .const (const .NegativeInfinitesimal)
     | `NaN =>
       return .const (const .NaN)
     | `EmptySet =>
@@ -576,7 +657,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Real =>
       return .const (const .Real)
     | `List.nil =>
-      return .const (const .EmptyList)
+      return .const (const (.ident declName))
     | `Complex =>
       return .const (const .Complex)
     | `Complex.instZero =>
@@ -587,45 +668,23 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
       return .const (const .false)
 
     | `Finset.sum =>
-      return .Operator (.ExprWithLimits .L_sum)
+      return .Operator (.ExprWithLimits .Lean_sum)
     | `Finset.prod =>
-      return .Operator (.ExprWithLimits .L_prod)
+      return .Operator (.ExprWithLimits .Lean_prod)
     | `Exists =>
-      return .Operator (.ExprWithLimits .L_exists)
+      return .Operator (.ExprWithLimits .Lean_exists)
+    | `Set.iUnion =>
+      return .Operator (.ExprWithLimits .Lean_bigcup)
+    | `Set.iInter =>
+      return .Operator (.ExprWithLimits .Lean_bigcap)
 
-    | .str _ "match_1"
-    | .str _ "match_2" =>
-      return .Operator (.Special ⟨declName⟩)
-
+    | .str _ op =>
+      if op.endsWithNumberedWord "match" || op == "mk" then
+        return .Operator (.Special ⟨declName⟩)
+      else
+        ExprWithAttr.toTreeNode declName toExpr
     | _ =>
-      let op : Name → ExprWithAttr ←
-        if Lean.isClass (← Lean.getEnv) declName then
-          pure ExprWithAttr.L_typeclass
-        else
-          if (← toExpr (← declName.toConstantInfo).type []).isTypeClass then
-            pure ExprWithAttr.L_typeclass
-          else
-            match declName with
-            | .anonymous
-            | .num _ _
-            | .str .anonymous _ =>
-              pure ExprWithAttr.L_operatorname
-            | .str classname _ =>
-              let binderInfo ← declName.binderInfo
-              let binderType ← declName.binderType
-              let defaultType :=
-                List.zip binderInfo binderType |>.filterMap fun (binderInfo, binderType) =>
-                match binderInfo with
-                  | .default => some binderType.declName
-                  | _ => none
-              if let some idx := defaultType.idxOf? classname then
-                if defaultType.length == 1 then
-                  pure ExprWithAttr.LProperty
-                else
-                  pure (fun name : Name => ExprWithAttr.LMethod name idx)
-              else
-                pure ExprWithAttr.L_operatorname
-      return .Operator (.ExprWithAttr (op declName))
+      ExprWithAttr.toTreeNode declName toExpr
 
   | .app fn arg =>
     let op ← Expr.func fn toExpr binders
@@ -641,7 +700,7 @@ func = {func}
 "
 -/
       match func with
-      | .ExprWithLimits .L_lambda =>
+      | .ExprWithLimits .Lean_lambda =>
         return .Operator (.Special ⟨default⟩)
 
       | .UnaryPrefix ⟨`DFunLike.coe⟩ =>
@@ -667,37 +726,34 @@ c.ctorName = {c.ctorName}
 "
 -/
       match c with
-      | Symbol _ (Basic (.ExprWithLimits .L_forall) _) =>
+      | Symbol _ (Basic (.ExprWithLimits .Lean_forall) _) =>
         return .Operator (.Special ⟨default⟩)
-      | const .EmptyList =>
+      | const (.ident `List.nil) =>
         return .const c
       | _ =>
         return .const (.Basic (.Special ⟨default⟩) [c, ← toExpr arg binders])
 
   | .lam ..  =>
-    return .Operator (.ExprWithLimits .L_lambda)
+    return .Operator (.ExprWithLimits .Lean_lambda)
 
   | .forallE ..  =>
-    return .Operator (.ExprWithLimits .L_forall)
+    return .Operator (.ExprWithLimits .Lean_forall)
 
   | .letE ..    =>
-    return .Operator (.ExprWithLimits .L_let)
+    return .Operator (.ExprWithLimits .Lean_let)
 
   | .lit val =>
     match val with
     | .natVal val =>
       return .const (const (.natVal val))
     | .strVal val =>
-      panic! s!"Expr.toExpr :
-e = {e}, e.ctorName = {e.ctorName}, val = {val}"
+      return .const default
 
   | .mdata _ e =>
     Expr.func e toExpr binders
 
-  | .proj .. =>
-    panic! s!"Expr.toExpr :
-e = {e}, e.ctorName = {e.ctorName}"
-
+  | .proj typeName idx _ =>
+    return .Operator (.UnaryPrefix ⟨← typeName.projFieldName idx⟩)
 
 def Expr.filter_default (func : Operator) (args : List Expr) : MetaM (List Expr × List Expr) := do
   let name := func.name
@@ -720,7 +776,7 @@ def Expr.isProp : Expr → Bool
     match func, args with
     | .BinaryInfix op, _ => op.isProp
     | .UnaryPrefix op, _ => op.isProp
-    | .ExprWithLimits .L_forall, expr :: _ => expr.isProp
+    | .ExprWithLimits .Lean_forall, expr :: _ => expr.isProp
     | .ExprWithAttr op, _ => op.isProp
     | .Special ⟨`ite⟩, [_, thenBranch, _] => thenBranch.isProp
     | _, _ => false

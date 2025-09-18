@@ -1,5 +1,5 @@
 import Lemma.Algebra.Eq_Add.of.EqSub.Le
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Add
 open Algebra
 
 

@@ -1,4 +1,4 @@
-import Lemma.Set.NotMem.of.NotMem.Subset
+import Lemma.Set.NotIn.of.NotIn.Subset
 open Set
 
 
@@ -19,7 +19,7 @@ private lemma main
     simp_all [Set.mem_diff, h]
   ·
     simp_all [Set.mem_diff, h]
-    apply NotMem.of.NotMem.Subset h_NotIn h
+    apply NotIn.of.NotIn.Subset h_NotIn h
 
 
 -- created on 2025-04-08

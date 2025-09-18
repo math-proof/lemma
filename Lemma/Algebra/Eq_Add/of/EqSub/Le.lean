@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqAddSub.of.Le
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Algebra.Add
 open Algebra
 
 
@@ -13,7 +13,7 @@ private lemma main
   x = a + b := by
 -- proof
   rw [← h₀]
-  rw [EqAddSub.of.Le]
+  rw [EqAddSub.of.Ge]
   have : a ≥ 0 := by simp
   assumption
 

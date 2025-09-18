@@ -1,0 +1,144 @@
+import Lemma.Algebra.CoeAdd_1.eq.AddCoe_1
+import Lemma.Logic.OrOr.is.Or_Or
+import Lemma.Algebra.LeToNatS.of.Le
+import Lemma.Algebra.Lt.of.Lt.Le
+import Lemma.Algebra.EqToNat_0.of.Le_0
+import Lemma.Algebra.CeilDivSubMin.le.Zero.of.Le
+import Lemma.Algebra.Min
+import Lemma.Algebra.LeAddS.is.Le
+import Lemma.Algebra.NotLe.of.Gt
+import Lemma.Algebra.EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
+import Lemma.Algebra.EqGetSSlicedIndices'.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
+open Algebra Logic
+
+
+@[main]
+private lemma main
+-- given
+  (h_start : start = start')
+  (h_stop : stop = stop')
+  (h_step : step = step')
+  (h_n : n = n')
+  (h_i' : i < (⟨start', stop', step'⟩ : Slice).length n')
+  (h_i : i < (⟨start, stop, step⟩ : Slice).length n) :
+-- imply
+  (List.Vector.indices ⟨start, stop, step⟩ n)[i].val = (List.Vector.indices ⟨start', stop', step'⟩ n')[i].val := by
+-- proof
+  unfold List.Vector.indices
+  unfold Slice.toList
+  match step with
+  | .ofNat step =>
+    match step' with
+    | .ofNat step' =>
+      simp at h_step
+      match step with
+      | .zero =>
+        simp
+        match step' with
+        | .zero =>
+          unfold Slice.length at h_i
+          simp at h_i
+        | .succ step' =>
+          contradiction
+      | .succ step =>
+        match step' with
+        | .zero =>
+          contradiction
+        | .succ step' =>
+          simp
+          split_ifs with h
+          ·
+            simp at h_i
+            unfold Slice.length at h_i
+            rw [AddCoe_1.eq.CoeAdd_1] at h_i
+            simp at h_i
+            rw [OrOr.is.Or_Or] at h
+            rcases h with h | h | h
+            ·
+              have h := LeToNatS.of.Le h
+              have h := CeilDivSubMin.le.Zero.of.Le h step n
+              have h_i := Lt.of.Lt.Le h_i h
+              contradiction
+            ·
+              have h := EqToNat_0.of.Le_0 h
+              have h_ge : (Slice.Add_Mul_DivSub1Sign_2 n start).toNat ≥ 0 := by simp
+              rw [← h] at h_ge
+              have h := CeilDivSubMin.le.Zero.of.Le h_ge step n
+              have h_i := Lt.of.Lt.Le h_i h
+              contradiction
+            ·
+              have h := CeilDivSubMin.le.Zero.of.Le h step (Slice.Add_Mul_DivSub1Sign_2 n stop).toNat
+              rw [Min.comm] at h
+              have h_i := Lt.of.Lt.Le h_i h
+              contradiction
+          ·
+            simp [GetElem.getElem]
+            simp [List.Vector.get]
+            rw [h_n, h_stop, h_start] at h
+            simp at h
+            let ⟨⟨h_lt, h_stop'⟩, h_start'⟩ := h
+            have h_lt := NotLe.of.Gt h_lt
+            have h_stop' := NotLe.of.Gt h_stop'
+            have h_start' := NotLe.of.Gt h_start'
+            simp [h_lt, h_stop', h_start']
+            apply EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
+            ·
+              rw [h_start, h_n]
+            ·
+              rw [h_stop, h_n]
+            ·
+              simp_all [h_step]
+    | .negSucc step' =>
+      contradiction
+  | .negSucc step =>
+    match step' with
+    | .ofNat step' =>
+      contradiction
+    | .negSucc step' =>
+      simp
+      simp at h_step
+      split_ifs with h
+      ·
+        unfold Slice.length at h_i
+        simp at h_i
+        rw [OrOr.is.Or_Or] at h
+        rcases h with h | h | h
+        ·
+          have h := LeAddS.of.Le 1 h
+          have h := LeToNatS.of.Le h
+          have h := CeilDivSubMin.le.Zero.of.Le h step n
+          have h_i := Lt.of.Lt.Le h_i h
+          contradiction
+        ·
+          have h := EqToNat_0.of.Le_0 h
+          have h_ge : (Slice.Add_Mul_DivSub1Sign_2 n stop + 1).toNat ≥ 0 := by simp
+          rw [← h] at h_ge
+          have h := CeilDivSubMin.le.Zero.of.Le h_ge step n
+          have h_i := Lt.of.Lt.Le h_i h
+          contradiction
+        ·
+          have h := CeilDivSubMin.le.Zero.of.Le h step (Slice.Add_Mul_DivSub1Sign_2 n start + 1).toNat
+          rw [Min.comm] at h
+          have h_i := Lt.of.Lt.Le h_i h
+          contradiction
+      ·
+        simp [GetElem.getElem]
+        simp [List.Vector.get]
+        rw [h_n, h_stop, h_start] at h
+        simp at h
+        let ⟨⟨h_lt, h_stop'⟩, h_start'⟩ := h
+        have h_lt := NotLe.of.Gt h_lt
+        have h_stop' := NotLe.of.Gt h_stop'
+        have h_start' := NotLe.of.Gt h_start'
+        simp [h_lt, h_stop', h_start']
+        apply EqGetSSlicedIndices'.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
+        ·
+          rw [h_start, h_n]
+        ·
+          rw [h_stop, h_n]
+        ·
+          simp_all [h_step]
+
+
+-- created on 2025-05-27
+-- updated on 2025-05-28

@@ -1,7 +1,7 @@
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
-import Lemma.Algebra.Sqrt.eq.Zero.of.Lt_0
-import Lemma.Algebra.Sqrt.gt.Zero.of.Gt_0
+import Lemma.Algebra.EqSqrt_0.of.Lt_0
+import Lemma.Algebra.GtSqrt_0.of.Gt_0
 open Algebra
 
 
@@ -16,9 +16,9 @@ private lemma main
 -- proof
   by_cases h : y < 0
   ·
-    have := Sqrt.eq.Zero.of.Lt_0 h
+    have := EqSqrt_0.of.Lt_0 h
     rw [this]
-    apply Sqrt.gt.Zero.of.Gt_0 h₁
+    apply GtSqrt_0.of.Gt_0 h₁
   ·
     have h := Ge.of.NotLt h
     -- Use the fact that the square root function is increasing on the positive real numbers.

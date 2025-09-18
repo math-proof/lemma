@@ -1,5 +1,5 @@
-import Lemma.Algebra.Mul.eq.Square
-import Lemma.Algebra.Square.ge.Zero
+import Lemma.Algebra.Square.eq.Mul
+import Lemma.Algebra.GeSquare_0
 open Algebra
 
 
@@ -13,7 +13,7 @@ private lemma main
   a * a ≥ 0 := by
 -- proof
   rw [Mul.eq.Square]
-  apply Square.ge.Zero
+  apply GeSquare_0
 
 
 -- created on 2024-11-29

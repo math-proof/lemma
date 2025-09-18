@@ -1,4 +1,4 @@
-import Lemma.Algebra.LeAddS.of.Le
+import Lemma.Algebra.LeAddS.is.Le
 open Algebra
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   x ≥ y := by
 -- proof
-  have := LeAddS.of.Le h y
+  have := LeAddS.of.Le y h
   simp at this
   assumption
 

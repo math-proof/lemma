@@ -1,8 +1,8 @@
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.SubAdd.eq.Add_Sub
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Add
 import Lemma.Algebra.Sub.eq.Add_Neg
-import Lemma.Algebra.EqAddS.of.Eq
+import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.FDiv.eq.FloorDiv
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.DivAdd.eq.Add1Div

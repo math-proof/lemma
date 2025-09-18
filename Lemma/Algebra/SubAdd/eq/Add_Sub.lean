@@ -1,15 +1,14 @@
-import Lemma.Algebra.Add_Sub.eq.SubAdd
-open Algebra
+import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [SubNegMonoid α]
-  {a b c : α} :
+  (a b c : α) :
 -- imply
-  a + b - c = a + (b - c) := by
+  a + b - c = a + (b - c) :=
 -- proof
-  rw [Add_Sub.eq.SubAdd]
+  add_sub_assoc a b c
 
 
 -- created on 2024-07-01

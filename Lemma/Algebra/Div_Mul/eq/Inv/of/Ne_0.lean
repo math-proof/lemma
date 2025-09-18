@@ -1,5 +1,5 @@
-import Lemma.Algebra.Div_Mul.eq.DivDiv
-import Lemma.Algebra.Mul.comm
+import Lemma.Algebra.DivDiv.eq.Div_Mul
+import Lemma.Algebra.Mul
 open Algebra
 
 

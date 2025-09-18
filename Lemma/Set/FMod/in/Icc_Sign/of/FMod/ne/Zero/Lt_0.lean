@@ -2,14 +2,13 @@ import Lemma.Algebra.FMod.le.Zero.of.Lt_0
 import Lemma.Algebra.Lt.of.Le.Ne
 import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.Algebra.Sign.eq.Neg1.of.Lt_0
-import Lemma.Set.Mem_Icc.of.Le.Le
+import Lemma.Set.In_Icc.of.Le.Le
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.FDiv.eq.FloorDiv
-import Lemma.Algebra.Le_Sub.of.LeAdd
-import Lemma.Algebra.Add.comm
-import Lemma.Algebra.LeAdd.of.Le_Sub
-import Lemma.Algebra.LtCoeS.of.Lt
-import Lemma.Algebra.Le.of.LeCoeS
+import Lemma.Algebra.Le_Sub.is.LeAdd
+import Lemma.Algebra.Add
+import Lemma.Algebra.LtCoeS.is.Lt
+import Lemma.Algebra.LeCoeS.is.Le
 import Lemma.Algebra.Le.of.GeDivS.Lt_0
 import Lemma.Algebra.CoeSub.eq.SubCoeS
 import Lemma.Algebra.DivSub.eq.SubDivS
@@ -17,8 +16,8 @@ import Lemma.Algebra.Div.eq.One.of.Lt_0
 import Lemma.Algebra.CoeMul.eq.MulCoeS
 import Lemma.Algebra.Ne.of.Lt
 import Lemma.Algebra.EqDivMul.of.Ne_0
-import Lemma.Set.Lt.of.Mem_Ico
-import Lemma.Set.Mem_IcoFloor
+import Lemma.Set.Lt.of.In_Ico
+import Lemma.Set.In_IcoFloor
 open Algebra Set
 
 
@@ -31,7 +30,7 @@ private lemma main
 -- imply
   n.fmod d ∈ Icc d (sign d) := by
 -- proof
-  apply Mem_Icc.of.Le.Le
+  apply In_Icc.of.Le.Le
   ·
     rw [FMod.eq.Sub_MulFDiv]
     rw [FDiv.eq.FloorDiv]
@@ -47,16 +46,15 @@ private lemma main
     rw [CoeMul.eq.MulCoeS]
     have h_Ne := Ne.of.Lt h₁
     rw [EqDivMul.of.Ne_0 h_Ne]
-    have := Mem_IcoFloor (x := (n : ℚ) / d)
-    have := Lt.of.Mem_Ico this
+    have := In_IcoFloor (x := (n : ℚ) / d)
+    have := Lt.of.In_Ico this
     linarith
   ·
     have := FMod.le.Zero.of.Lt_0 h₁ n
-    have := Lt.of.Le.Ne this h₀
+    have := Lt.of.Le.Ne h₀ this
     have := Le_Sub_1.of.Lt this
     simp at this
-    have h_Eq := Sign.eq.Neg1.of.Lt_0 h₁
-    rw [← h_Eq] at this
+    rw [← Sign.eq.Neg1.of.Lt_0 h₁] at this
     assumption
 
 

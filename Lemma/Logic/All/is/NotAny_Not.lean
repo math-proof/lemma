@@ -2,9 +2,10 @@ import Lemma.Logic.Any.is.NotAll_Not
 open Logic
 
 
-@[main]
+@[main, comm, mpr]
 private lemma main
-  {p : α → Prop} :
+-- given
+  (p : α → Prop) :
 -- imply
   (∀ x : α, p x) ↔ ¬∃ x : α, ¬p x := by
 -- proof

@@ -1,6 +1,6 @@
-import Lemma.Algebra.SubCoeS.eq.CoeSub
+import Lemma.Algebra.CoeSub.eq.SubCoeS
 import Lemma.Algebra.Ceil.eq.FloorDivSub_Sign
-import Lemma.Algebra.AddCoeS.eq.CoeAdd
+import Lemma.Algebra.CoeAdd.eq.AddCoeS
 open Algebra
 
 

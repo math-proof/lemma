@@ -1,3 +1,4 @@
+import stdlib.List.Vector
 import Lemma.Basic
 
 
@@ -5,9 +6,19 @@ import Lemma.Basic
 private lemma main
   {l : List α} :
 -- imply
-  (a :: l.tail).tail = l.tail := by
+  (a :: l.tail).tail = l.tail :=
 -- proof
   rfl
 
+
+@[main]
+private lemma vector
+-- given
+  (l : List.Vector α n)
+  (a : α):
+-- imply
+  (a ::ᵥ l.tail).tail = l.tail :=
+-- proof
+  rfl
 
 -- created on 2024-07-01

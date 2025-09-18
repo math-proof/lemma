@@ -1,3 +1,5 @@
+# usage :
+# bash sh/run.sh
 start_time=$(date +%s)
 source ./sh/utility.sh
 
@@ -55,6 +57,59 @@ for module in ${imports[*]}; do
   submodules=${imports_dict[$module]}
   submodules=${submodules//\'/\'\'}
   echo "  ('$user', \"$module\", '$submodules', '[]', '[]', '[]', '[]', '[]')," >> test.sql
+done
+grep -rl --include='*.lean' --exclude='*.echo.lean' -E "^@\[main, [^]]+\]" Lemma | while read -r file; do
+  module=${file#Lemma/}
+  module=${module//\//.}
+  module=${module%.lean}
+  if grep -q -E '^@\[main, .*\bcomm( [0-9]+)?\b' "$file"; then
+    IFS='.' read -ra tokens <<< $module
+    deBruijn=$(grep -Eo '^@\[main, .*\bcomm( [0-9]+)?\b' "$file")
+    case "${tokens[2]}" in
+      eq|is|as|ne)
+        tmp=${tokens[1]}
+        tokens[1]=${tokens[3]}
+        tokens[3]=$tmp
+        ;;
+      *)
+        first=${tokens[1]}
+        if [[ $first == Eq_* ]]; then
+          first="Eq${first:3}"
+        elif [[ $first == Eq* ]]; then
+          first="Eq_${first:2}"
+        elif [[ $first == SEq_* ]]; then
+          first="SEq${first:4}"
+        elif [[ $first == SEq* ]]; then
+          first="SEq_${first:3}"
+        else
+          echo "panic! Expected the operator to be 'S?Eq.*', got: $first"
+        fi
+        tokens[1]=$first
+        ;;
+    esac
+    new_module=$(IFS='.'; echo "${tokens[*]}")
+    echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> test.sql
+  fi
+  if grep -q -E '^@\[main, .*\bmp\b' "$file"; then
+    if [[ $module =~ ^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$ ]]; then
+      new_module="${BASH_REMATCH[1]}.${BASH_REMATCH[3]}.of.${BASH_REMATCH[2]}${BASH_REMATCH[4]}"
+      echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> test.sql
+    fi
+  fi
+  if grep -q -E '^@\[main, .*\bmpr\b' "$file"; then
+    if [[ $module =~ ^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$ ]]; then
+      new_module="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.of.${BASH_REMATCH[3]}${BASH_REMATCH[4]}"
+      echo "  ('$user', \"$new_module\", '[]', '[]', '[]', '[]', '[]', '[]')," >> test.sql
+    fi
+  fi
+  if grep -q -E '^@\[main, .*\bmp\.comm\b' "$file"; then
+    IFS='.' read -ra tokens <<< $module
+    echo "@[mp.comm] at $file"
+  fi
+  if grep -q -E '^@\[main, .*\bmpr\.comm\b' "$file"; then
+    IFS='.' read -ra tokens <<< $module
+    echo "@[mpr.comm] at $file"
+  fi
 done
 sed -i '$ s/,$/\nON DUPLICATE KEY UPDATE imports = VALUES(imports), error = VALUES(error);/' test.sql
 

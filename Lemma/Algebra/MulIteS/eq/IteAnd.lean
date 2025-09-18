@@ -1,5 +1,5 @@
 import Lemma.Algebra.BFnIteS.eq.IteAnd
-import Lemma.Algebra.Mul.comm
+import Lemma.Algebra.Mul
 import Lemma.Algebra.BFnIteS.eq.IteAnd.of.All_Eq
 open Algebra
 

@@ -1,0 +1,32 @@
+import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Algebra.DivSub.eq.SubDivS
+import Lemma.Logic.Ne.is.NotEq
+import Lemma.Algebra.Div.eq.One.of.Ne_0
+import Lemma.Algebra.Lt_Sub.of.LtAdd
+open Algebra Logic
+
+
+@[main]
+private lemma main
+  {start stop step i : ℕ}
+-- given
+  (h : i + 1 < ⌈(stop - start : ℚ) / step⌉) :
+-- imply
+  i < ⌈(stop - (start + step) : ℚ) / step⌉ := by
+-- proof
+  by_cases h_step : step = 0
+  ·
+    rw [h_step] at h
+    simp_all
+    contradiction
+  ·
+    have h_step := Ne.of.NotEq h_step
+    have h_step : (step : ℚ) ≠ 0 := by
+      simp_all
+    rw [Sub_Add.eq.SubSub]
+    rw [DivSub.eq.SubDivS]
+    simp [Div.eq.One.of.Ne_0 h_step]
+    apply Lt_Sub.of.LtAdd h
+
+
+-- created on 2025-05-24

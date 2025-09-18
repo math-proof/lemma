@@ -1,7 +1,15 @@
-import sympy.tensor.tensor
-import Lemma.Basic
+import Lemma.Tensor.Eq.is.All_EqGetS
+import Lemma.Tensor.GetDot.eq.Sum_MulGetS
+import Lemma.Algebra.MulSum.eq.Sum_Mul
+import Lemma.Algebra.Mul_Sum.eq.Sum_Mul
+import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Algebra.EqSumS
+open Tensor Algebra
 
 
+/--
+tensor version of Matrix.mul_assoc
+-/
 @[main]
 private lemma main
   [NonUnitalSemiring α]
@@ -9,10 +17,31 @@ private lemma main
   {M : Tensor α [m, n]}
   {N : Tensor α [n, o]} :
 -- imply
-  L @ M @ N = L @ (M @ N) := by
+  (L @ M) @ N = L @ (M @ N) := by
 -- proof
-  -- apply Matrix.mul_assoc
-  sorry
+  apply Eq.of.All_EqGetS (m := l)
+  intro i
+  apply Eq.of.All_EqGetS (m := o)
+  intro j
+  have := GetDot.eq.Sum_MulGetS (L @ M) N i j
+  simp_all
+  have := GetDot.eq.Sum_MulGetS L (M @ N) i j
+  simp_all
+  have := GetDot.eq.Sum_MulGetS L M i
+  simp_all
+  have := GetDot.eq.Sum_MulGetS M N (j := j)
+  simp_all
+  have : ∀ k : Fin n, (∑ ι : Fin m, L[i][ι] * M[ι][k]) * N[k][j] = ∑ ι : Fin m, L[i][ι] * M[ι][k] * N[k][j] := by
+    simp [MulSum.eq.Sum_Mul]
+  simp_all [this]
+  have : ∀ k : Fin m, L[i][k] * ∑ ι : Fin n, M[k][ι] * N[ι][j] = ∑ ι : Fin n, L[i][k] * (M[k][ι] * N[ι][j]) := by
+    simp [Mul_Sum.eq.Sum_Mul]
+  simp_all [this]
+  have : ∀ k : Fin m, ∑ ι : Fin n, L[i][k] * (M[k][ι] * N[ι][j]) = ∑ ι : Fin n, L[i][k] * M[k][ι] * N[ι][j] := by
+    simp [MulMul.eq.Mul_Mul]
+  simp_all [this]
+  apply EqSumS.comm
 
 
 -- created on 2025-05-03
+-- updated on 2025-07-19

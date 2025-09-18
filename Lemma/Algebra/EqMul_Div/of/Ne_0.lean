@@ -1,5 +1,5 @@
 import Lemma.Algebra.EqMulDiv.of.Ne_0
-import Lemma.Algebra.Mul.comm
+import Lemma.Algebra.Mul
 open Algebra
 
 

@@ -1,5 +1,17 @@
-import Lemma.Algebra.GtSubS.of.Gt
+import Lemma.Algebra.LtSub.of.Lt_Add
 open Algebra
+
+
+@[main]
+private lemma left
+  [OrderedAddCommGroup α]
+  {a b c : α}
+-- given
+  (h : a + b > c) :
+-- imply
+  b > c - a :=
+-- proof
+  LtSub.of.Lt_Add.left h
 
 
 @[main]
@@ -9,11 +21,9 @@ private lemma main
 -- given
   (h : a + b > c) :
 -- imply
-  a > c - b := by
+  a > c - b :=
 -- proof
-  have h := GtSubS.of.Gt h b
-  simp at h
-  exact h
+  LtSub.of.Lt_Add h
 
 
 -- created on 2024-11-26

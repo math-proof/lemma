@@ -1,4 +1,4 @@
-import Lemma.Algebra.Le.of.NotGt
+import Lemma.Algebra.NotGt.is.Le
 open Algebra
 
 

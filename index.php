@@ -5,8 +5,7 @@
 // ^ *error_log
 require_once 'php/utility.php';
 require_once 'php/mysql.php';
-require_once 'php/lean/compile.php';
-
+require_once 'php/parser/lean.php';
 
 $key = array_keys($_GET);
 switch (count($key)) {
@@ -73,8 +72,8 @@ switch (count($key)) {
 
 if (str_ends_with($module, '.lean')) {
     $module = lean_to_module($module);
-    $user = get_project_name();
     header("location:?module=$module");
+    exit();
 }
 
 $module = str_replace('/', '.', $module);
@@ -91,9 +90,44 @@ if (! str_ends_with($path_info, '/')) {
             $lastDotPosition = strrpos($module, '.');
             $module = substr($module, 0, $lastDotPosition) . '#' . substr($module, $lastDotPosition + 1);
             header("location:?module=$module");
+            exit();
         }
-        else
-            $leanFile = null;
+        else {
+            $tokens = explode('.', $module);
+            switch ($tokens[2]) {
+                case 'eq':
+                case 'is':
+                case 'as':
+                case 'ne':
+                    $tmp = $tokens[1];
+                    $tokens[1] = $tokens[3];
+                    $tokens[3] = $tmp;
+                    break;
+                case 'of':
+                    $tokens[2] = 'is';
+                    break;
+                default:
+                    $first = $tokens[1];
+                    if (preg_match($first, "^(S?Eq)_([\w'!]+)$", $m))
+                        $tokens[1] = $m[1] . $m[2];
+                    else if ($index = array_search('of', $tokens))
+                        $tokens[$index] = 'is';
+                    else if ($index = array_search('is', $tokens)) {
+                        $section = $tokens[0];
+                        $first = array_slice($tokens, 1, $index - 1);
+                        $second = array_slice($tokens, $index + 1);
+                        $tokens = array_merge([$section], $second, ['is'], $first);
+                    }
+                    else 
+                        $leanFile = null;
+                    break;
+            }
+            if ($leanFile) {
+                $module = implode('.', $tokens);
+                header("location:?module=$module");
+                exit();
+            }
+        }
     }
 }
 

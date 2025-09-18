@@ -1,24 +1,24 @@
-import Lemma.Algebra.MulSub_1.eq.SubMul
+import Lemma.Algebra.MulSub.eq.SubMulS
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma nat
   {x a : ℕ} :
 -- imply
   a * x - x = (a - 1) * x := by
 -- proof
-  rw [MulSub_1.eq.SubMul.nat]
+  simp [MulSub.eq.SubMulS.nat]
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Ring α]
   {x a : α} :
 -- imply
   a * x - x = (a - 1) * x := by
 -- proof
-  rw [MulSub_1.eq.SubMul]
+  simp [MulSub.eq.SubMulS]
 
 
 -- created on 2025-03-31

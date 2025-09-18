@@ -1,15 +1,14 @@
-import Lemma.Algebra.Add.eq.Mul_2
-open Algebra
+import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [NonAssocSemiring α]
-  {a : α} :
+  (n : α) :
 -- imply
-  a * 2 = a + a :=
+  n * 2 = n + n :=
 -- proof
-  Add.eq.Mul_2.symm
+  mul_two n
 
 
 -- created on 2025-05-04

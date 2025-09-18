@@ -1,18 +1,18 @@
-import Lemma.Algebra.EqFloor.is.Le.et.Lt
+import Lemma.Algebra.EqFloor.is.Le.Lt
 import Lemma.Algebra.Div.ge.FDiv
 import Lemma.Algebra.Div.lt.Add1FDiv
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Add
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
-  {n d : ℤ} :
+  (n d : ℤ) :
 -- imply
   n // d = ⌊n / (d : ℚ)⌋ := by
 -- proof
   apply Eq.symm
-  rw [EqFloor.is.Le.et.Lt]
+  rw [EqFloor.is.Le.Lt]
   constructor
   apply Div.ge.FDiv
   rw [Add.comm]

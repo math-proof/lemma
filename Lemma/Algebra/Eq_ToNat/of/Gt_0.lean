@@ -1,4 +1,4 @@
-import Lemma.Algebra.Eq_ToNat.of.Ge_0
+import Lemma.Algebra.EqToNat.of.Ge_0
 import Lemma.Algebra.Ge.of.Gt
 open Algebra
 

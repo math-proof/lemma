@@ -1,15 +1,15 @@
-import Lemma.Algebra.Sign.eq.One.of.Gt_0
-import Lemma.Algebra.Le.of.NotGt
+import Lemma.Algebra.EqSign_1.of.Gt_0
+import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.Lt.of.Le.Ne
-import Lemma.Logic.Ne.of.NotEq
+import Lemma.Logic.Ne.is.NotEq
 import Lemma.Algebra.Sign.eq.Neg1.of.Lt_0
 import Lemma.Algebra.AddSub.eq.Sub_Sub
 import Lemma.Algebra.GeSub_1.of.Gt
-import Lemma.Set.Mem_Icc.of.MulSubS.le.Zero.Le
-import Lemma.Algebra.Add_Neg.eq.Sub
-import Lemma.Algebra.SubSub.eq.Sub_Add
+import Lemma.Set.In_Icc.of.MulSubS.le.Zero.Le
+import Lemma.Algebra.Sub.eq.Add_Neg
+import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.LeAdd_1.of.Lt
-import Lemma.Algebra.Mul.comm
+import Lemma.Algebra.Mul
 import Lemma.Set.EqFMod.of.Gt_Zero.Icc0Sub_1
 import Lemma.Set.EqFMod.of.Lt_0.IccAdd_1'0
 open Algebra Set Logic
@@ -31,19 +31,19 @@ private lemma main
   ·
     by_cases h_d' : d > 0
     ·
-      have := Sign.eq.One.of.Gt_0 h_d'
+      have := EqSign_1.of.Gt_0 h_d'
       rw [this] at h
       rw [AddSub.eq.Sub_Sub] at h
       have := GeSub_1.of.Gt h_d'
       have h_Mem : n ∈ Icc 0 (d - 1) := by
-        apply Mem_Icc.of.MulSubS.le.Zero.Le _ this
+        apply In_Icc.of.MulSubS.le.Zero.Le _ this
         norm_num
         exact h
       apply EqFMod.of.Gt_Zero.Icc0Sub_1 h_d' h_Mem
     ·
       have := Le.of.NotGt h_d'
       have h_d := Ne.of.NotEq h_d
-      have h_d := Lt.of.Le.Ne this h_d
+      have h_d := Lt.of.Le.Ne h_d this
       have := Sign.eq.Neg1.of.Lt_0 h_d
       rw [this] at h
       rw [Add_Neg.eq.Sub] at h
@@ -51,7 +51,7 @@ private lemma main
       have := LeAdd_1.of.Lt h_d
       rw [Mul.comm] at h
       have h_Mem : n ∈ Icc (d + 1) 0 := by
-        apply Mem_Icc.of.MulSubS.le.Zero.Le _ this
+        apply In_Icc.of.MulSubS.le.Zero.Le _ this
         norm_num
         exact h
       apply EqFMod.of.Lt_0.IccAdd_1'0 h_d h_Mem

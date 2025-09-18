@@ -167,5 +167,33 @@ def String.escape_specials (s : String) : String :=
     formatStr.printf [String.mk head, tail]
   else s
 
+def String.endsWithNumberedWord (s : String) (word : String) : Bool :=
+  -- match the regexp expression : \\w+_\\d+
+  if s.startsWith (word ++ "_") then
+    let rest := s.drop (word.length + 1)
+    rest.length ≥ 1 && rest.all Char.isDigit
+  else
+    false
+
+def String.is_relational_operator : String → Bool
+  | "et" | "ou" | "to" | "eq" | "ne" | "gt" | "lt" | "ge" | "le" | "in" | "as" | "dvd" | "subset" | "supset" => true
+  | _ => false
+
+def String.transformEq (first : String) : String :=
+  if first.startsWith "Eq_" then
+    "Eq" ++ first.drop 3
+  else if first.startsWith "Eq" then
+    "Eq_" ++ first.drop 2
+  else if first.startsWith "SEq_" then
+    "SEq" ++ first.drop 4
+  else if first.startsWith "SEq" then
+    "SEq_" ++ first.drop 3
+  else if first.startsWith "Iff_" then
+    "Iff" ++ first.drop 4
+  else if first.startsWith "Iff" then
+    "Iff_" ++ first.drop 3
+  else
+    panic! s!"Expected the operator to be '(S?Eq|Iff).*', got: {first}"
+
 -- #eval "%%Hello %%%-10s! %5.2f%%".format "World", -20.666666 + 1
 -- #eval "number: %4.2f".format -1

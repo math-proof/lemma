@@ -1,4 +1,4 @@
-import Lemma.Algebra.Min.comm
+import Lemma.Algebra.Min
 import Lemma.Algebra.Min.eq.IteLe
 open Algebra
 

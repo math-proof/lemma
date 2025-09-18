@@ -1,7 +1,7 @@
 import Lemma.Trigonometry.Arg.eq.Ite__Ite_Arcsin
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Ge_0
 import Lemma.Algebra.SquareDiv.eq.DivSquareS
-import Lemma.Algebra.Norm.ge.Zero
+import Lemma.Algebra.GeNorm_0
 open Algebra Trigonometry
 
 
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   rw [Arg.eq.Ite__Ite_Arcsin]
   simp [h_GeRe_0]
-  have h_Ge_0 := Norm.ge.Zero (a := z)
+  have h_Ge_0 := GeNorm_0 (a := z)
   have h_GeDiv__0 := Div.ge.Zero.of.Ge_0.Ge_0 h_GeRe_0 h_Ge_0
   have h_EqArccos := Real.arccos_eq_arcsin h_GeDiv__0
   rw [SquareDiv.eq.DivSquareS] at h_EqArccos

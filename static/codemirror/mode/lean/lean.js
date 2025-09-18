@@ -18,18 +18,20 @@ import { tactics } from "./tactics.js"
 
   var wordOperators = wordRegexp(['and', 'or', 'not', 'is']);
   var commonKeywords = [
-    'assert', 'break', 'class', 'continue',
+    'assert', 'abs', 'eval', 'id', 'map', 'max', 'min', 'this', 'sorry'
+  ];
+  var commonBuiltins = [
+    'import', 'open', 
     'def', 'else', 'catch', 'finally', 'then',
-    'for', 'from', 'if', 'import',
+    'for', 'from', 'if', 'fun',
+    'break', 'class', 'continue',
+    'False', 'True', 'false', 'true', 
+    'have', 'let', 'at', 'using', 'generalizing', 'by', 'show', 
+    'private', 'protected', 'public', 'noncomputable', 'unsafe', 'partial', 
     'return', 'try', 'with', 'in',
     'lemma', 'theorem', 'example', 'axiom',
     'constant', 'variable', 
-    'have', 'let', 'at', 'using', 'generalizing', 'by', 'show',
-    'private', 'protected', 'public', 'noncomputable', 'unsafe', 'partial', 'fun', 'this', 'sorry'
-  ];
-  var commonBuiltins = [
-    'abs', 'eval', 'id', 'map', 'max', 'min',
-    'False', 'True', 'false', 'true', 
+    "isn't",
     ...tactics
   ];
   CodeMirror.registerHelper('hintWords', 'lean', commonKeywords.concat(commonBuiltins).concat(['exec', 'print']));

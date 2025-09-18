@@ -23,5 +23,3 @@ const self = new Vue({
     },
 });
 </script>
-<style>
-</style>

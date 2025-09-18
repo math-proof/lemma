@@ -1,4 +1,4 @@
-import Lemma.Algebra.LeCeil.of.Le
+import Lemma.Algebra.LeCeil.is.Le
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Ge_0
 import Lemma.Algebra.DivNeg.eq.NegDiv
 open Algebra

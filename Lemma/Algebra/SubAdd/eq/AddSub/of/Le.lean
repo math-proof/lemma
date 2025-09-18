@@ -1,8 +1,8 @@
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Add
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
   {a b c : ℕ}
 -- given

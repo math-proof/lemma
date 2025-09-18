@@ -2,7 +2,7 @@ import Lemma.Basic
 
 
 @[main]
-private lemma main
+private lemma int
   [Sub α]
   {x y : α}
 -- given

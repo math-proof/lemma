@@ -1,6 +1,6 @@
 import Lemma.Algebra.GtMulS.of.Gt.Gt_0
-import Lemma.Algebra.Mul_Inv.eq.Div
-import Lemma.Algebra.Inv.gt.Zero.of.Gt_0
+import Lemma.Algebra.Div.eq.Mul_Inv
+import Lemma.Algebra.GtInv_0.is.Gt_0
 open Algebra
 
 
@@ -18,12 +18,10 @@ private lemma main
 -- imply
   a / x > b / x := by
 -- proof
-  have h₂ : x⁻¹ > 0 := Inv.gt.Zero.of.Gt_0 h₁
+  have h₂ := GtInv_0.of.Gt_0 h₁
   have h₃ := GtMulS.of.Gt.Gt_0 h₀ h₂
-  rw [
-    Mul_Inv.eq.Div, Mul_Inv.eq.Div
-  ] at h₃
-  exact h₃
+  repeat rw [Mul_Inv.eq.Div] at h₃
+  assumption
 
 
 -- created on 2024-11-25

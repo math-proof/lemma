@@ -1,4 +1,4 @@
-import Lemma.Logic.Ne.of.NotEq
+import Lemma.Logic.Ne.is.NotEq
 import Lemma.Algebra.Mul.ne.Zero.of.Ne_0.Ne_0
 open Algebra Logic
 

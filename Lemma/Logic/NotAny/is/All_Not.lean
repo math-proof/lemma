@@ -1,14 +1,26 @@
-import Lemma.Logic.All_Not.is.NotAny
+import Lemma.Logic.All.is.NotAny_Not
 open Logic
 
 
-@[main]
-private lemma main
-  {p : α → Prop} :
+@[main, comm, mp, mpr]
+private lemma fin
+  (s : Finset ι)
+  (p : ι → Prop) :
 -- imply
-  (¬∃ x : α, p x) ↔ ∀ x : α, ¬p x :=
+  ¬(∃ i ∈ s, p i) ↔ ∀ i ∈ s, ¬(p i) := by
 -- proof
-  All_Not.is.NotAny.symm
+  rw [All.is.NotAny_Not]
+  simp
+
+
+@[main, comm, mp, mpr]
+private lemma main
+  (p : α → Prop) :
+-- imply
+  (¬∃ x : α, p x) ↔ ∀ x : α, ¬p x := by
+-- proof
+  rw [All.is.NotAny_Not]
+  simp
 
 
 -- created on 2024-07-01

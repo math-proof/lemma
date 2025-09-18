@@ -1,82 +1,120 @@
-import Lemma.Algebra.LengthToList.eq.Length
-import Lemma.Algebra.EqMin_SubMulS
+import stdlib.List.Vector.Basic
+import Lemma.Algebra.Zero.eq.Replicate
+import Lemma.Algebra.Add.eq.Map2
+import Lemma.Algebra.Mul.eq.Map2
+import Lemma.Algebra.GetMul.eq.MulGetS
+import Lemma.Algebra.GetAdd.eq.AddGetS
 open Algebra
-
-
-class Dot (α : Type u) (β : Type v) (γ : outParam (Type w)) where
-  dot : α → β → γ
-
-infix:71 "⬝" => Dot.dot
-
--- abbrev NDArray := List.Vector
 
 namespace List.Vector
 
--- Implement the instance for Vector
-instance : IsConstant (Vector α n) where
-  is_constant v := v.val is constant
+instance [AddSemigroup α] : AddSemigroup (Vector α n) where
+  add_assoc a b c := by
+    repeat rw [Add.eq.Map2]
+    ext i
+    repeat rw [get_map₂]
+    apply add_assoc
 
+instance [AddZeroClass α]  : AddZeroClass (Vector α n) where
+  zero_add := by
+    intro a
+    rw [Add.eq.Map2]
+    ext i
+    simp [Zero.eq.Replicate]
+  add_zero := by
+    intro a
+    rw [Add.eq.Map2]
+    ext i
+    simp [Zero.eq.Replicate]
 
-def dot [Add α] [Zero α] [Mul α] (v1 v2 : Vector α n) : α :=
-  match n, v1, v2 with
-  | 0, ⟨[], _⟩, ⟨[], _⟩ => 0
-  | n + 1, ⟨x :: xs, h₁⟩, ⟨y :: ys, h₂⟩ =>
-    have h₁ : xs.length = n := by
-      simp [List.length, h₁] at h₁
-      assumption
-    have h₂ : ys.length = n := by
-      simp [List.length, h₂] at h₂
-      assumption
-    x * y + dot ⟨xs, h₁⟩ ⟨ys, h₂⟩
+instance [MulZeroClass α] : MulZeroClass (Vector α n) where
+  zero_mul := by
+    intro a
+    rw [Mul.eq.Map2]
+    ext i
+    simp [Zero.eq.Replicate]
+  mul_zero := by
+    intro a
+    rw [Mul.eq.Map2]
+    ext i
+    simp [Zero.eq.Replicate]
 
+instance [AddCommMagma α] : AddCommMagma (Vector α n) where
+  add_comm := by
+    intro a b
+    repeat rw [Add.eq.Map2]
+    ext i
+    simp [Zero.eq.Replicate]
+    apply add_comm
 
-instance [Add α] [Zero α] [Mul α] : Dot (Vector α n) (Vector α n) α := ⟨dot⟩
+instance [AddMonoid α] : AddMonoid (Vector α n) where
+  zero_add := AddZeroClass.zero_add
+  add_zero := AddZeroClass.add_zero
+  nsmul n v := v.map (fun x => n • x)
+  nsmul_zero := by
+    intro v
+    ext i
+    simp [Zero.eq.Replicate]
+    apply AddMonoid.nsmul_zero
+  nsmul_succ := by
+    intro n v
+    ext i
+    simp [Add.eq.Map2]
+    apply AddMonoid.nsmul_succ
 
-def sum [Add α] [Zero α] : Vector α n → α
-  | ⟨v, _⟩ => v.sum
+instance [AddCommSemigroup α] : AddCommSemigroup (Vector α n) where
+  add_comm := AddCommMagma.add_comm
 
-def headD : Vector α n → α → α
-  | ⟨v, _⟩, d => v.headD d
+instance [AddCommMonoid α] : AddCommMonoid (Vector α n) where
+  zero_add := AddMonoid.zero_add
+  add_zero := AddMonoid.add_zero
+  add_comm := AddCommSemigroup.add_comm
+  nsmul := AddMonoid.nsmul
+  nsmul_zero := AddMonoid.nsmul_zero
+  nsmul_succ := AddMonoid.nsmul_succ
 
-def push {n : ℕ} (v : Vector α n) (x : α) : Vector α (n + 1) :=
-  match n with
-  | 0 => x ::ᵥ .nil
-  | _ + 1 => v.head ::ᵥ (push v.tail x)
+instance [Mul α] [Add α] [LeftDistribClass α]: LeftDistribClass (Vector α n) where
+  left_distrib := by
+    intros
+    ext i
+    repeat rw [GetAdd.eq.AddGetS.fin]
+    repeat rw [GetMul.eq.MulGetS.fin]
+    rw [GetAdd.eq.AddGetS.fin]
+    apply left_distrib
 
-def range (n : Nat) : Vector (Fin n) n :=
-  -- Use `List.range n` to generate the list of numbers from `0` to `n-1`.
-  -- `List.pmap` allows mapping with a dependent function that requires a proof for each element.
-  -- For each element `i` in `List.range n`, we have a proof `hi` that `i ∈ List.range n`.
-  -- Using the lemma `List.mem_range`, we convert `i` to `Fin n` by proving `i < n`.
-  ⟨
-    List.range n |>.pmap
-      (
-        fun i hi =>
-          ⟨i, (List.mem_range (n := n) (m := i)).mp hi⟩
-      )
-      (by simp),
-    by simp
-  ⟩
+instance [Mul α] [Add α] [RightDistribClass α]: RightDistribClass (Vector α n) where
+  right_distrib := by
+    intros
+    ext i
+    repeat rw [GetAdd.eq.AddGetS.fin]
+    repeat rw [GetMul.eq.MulGetS.fin]
+    rw [GetAdd.eq.AddGetS.fin]
+    apply right_distrib
 
-def indices (s : Slice) (n : ℕ) : Vector (Fin n) (s.length n) :=
-  ⟨s.toList n, LengthToList.eq.Length (s := s) (n := n)⟩
+instance [Distrib α] : Distrib (Vector α n) where
+  left_distrib := LeftDistribClass.left_distrib
+  right_distrib := RightDistribClass.right_distrib
 
-def flatten (xs : Vector (Vector α n) m) : Vector α (m * n) :=
-  ⟨(xs.toList.map Vector.toList).flatten, by rcases xs; simp_all [Function.comp_def, List.map_const']⟩
+instance [NonUnitalNonAssocSemiring α] : NonUnitalNonAssocSemiring (Vector α n) where
+  zero_mul := MulZeroClass.zero_mul
+  mul_zero := MulZeroClass.mul_zero
+  left_distrib := Distrib.left_distrib
+  right_distrib := Distrib.right_distrib
 
-def substr (L : Vector α n) (start : Nat) (step : Nat) : Vector α (min step (n - start)) :=
-  (take (step) ∘ drop start) L
+instance [Semigroup α] : Semigroup (Vector α n) where
+  mul_assoc := by
+    intros
+    ext i
+    repeat rw [GetMul.eq.MulGetS.fin]
+    apply mul_assoc
 
-def unflatten (xs : Vector α (m * n)) : Vector (Vector α n) m :=
-  (range m).map fun i : Fin m => cast (by rw [EqMin_SubMulS]) (xs.substr (i * n) n)
+instance [SemigroupWithZero α] : SemigroupWithZero (Vector α n) where
+  mul_assoc := Semigroup.mul_assoc
+  zero_mul := MulZeroClass.zero_mul
+  mul_zero := MulZeroClass.mul_zero
 
-instance [Inhabited α] : GetElem (List.Vector α n) ℕ α fun _ _ => True where
-  getElem v i _ :=
-    if h : i < n then
-      v[(⟨i, h⟩ : Fin n)]
-    else
-      default
+instance [NonUnitalSemiring α] : NonUnitalSemiring (Vector α n) where
+  mul_assoc := Semigroup.mul_assoc
 
-instance : HAppend (List.Vector α n) (List.Vector α m) (List.Vector α (n + m)) := ⟨List.Vector.append⟩
 
 end List.Vector

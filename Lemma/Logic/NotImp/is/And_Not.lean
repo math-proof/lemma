@@ -1,14 +1,16 @@
-import Lemma.Logic.And_Not.of.NotImp
-import Lemma.Logic.NotImp.of.And_Not
-open Logic
+import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main :
 -- imply
-  ¬(p → q) ↔ p ∧ ¬q :=
+  ¬(p → q) ↔ p ∧ ¬q := by
 -- proof
-  ⟨And_Not.of.NotImp, NotImp.of.And_Not⟩
+  constructor <;>
+  · 
+    intro h
+    simp_all
 
 
 -- created on 2024-07-01
+-- updated on 2025-07-30

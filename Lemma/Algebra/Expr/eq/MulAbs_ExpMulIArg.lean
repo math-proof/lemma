@@ -1,6 +1,6 @@
-import Lemma.Trigonometry.ExpMulI.eq.AddCos_MulISin.Euler
+import Lemma.Trigonometry.ExpMulI.eq.AddCos_MulISin
 import Lemma.Algebra.Expr.eq.AddRe_MulIIm
-import Lemma.Logic.Eq.of.Eq.Eq.trans
+import Lemma.Logic.Eq.of.Eq.Eq
 import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Trigonometry.Re.eq.MulAbs_CosArg
 import Lemma.Trigonometry.Im.eq.MulAbs_SinArg
@@ -14,8 +14,8 @@ private lemma main
 -- imply
   z = ‖z‖ * (I * arg z).exp := by
 -- proof
-  rw [ExpMulI.eq.AddCos_MulISin.Euler]
-  apply Eq.of.Eq.Eq.trans (f := fun z _ => ↑z.re + I * ↑z.im) (h_a := (Expr.eq.AddRe_MulIIm (z := z)).symm)
+  rw [ExpMulI.eq.AddCos_MulISin]
+  apply Eq.of.Eq.Eq (f := fun z _ => ↑z.re + I * ↑z.im) (h_a := (Expr.eq.AddRe_MulIIm (z := z)).symm)
   rw [Mul_Add.eq.AddMulS]
   apply Eq.of.EqReS.EqImS
   simp at *

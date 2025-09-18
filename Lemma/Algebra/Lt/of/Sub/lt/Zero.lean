@@ -1,4 +1,4 @@
-import Lemma.Algebra.LtAddS.of.Lt
+import Lemma.Algebra.LtAddS.is.Lt
 open Algebra
 
 
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   x < y := by
 -- proof
-  have := LtAddS.of.Lt h y
+  have := LtAddS.of.Lt y h
   simp at this
   assumption
 

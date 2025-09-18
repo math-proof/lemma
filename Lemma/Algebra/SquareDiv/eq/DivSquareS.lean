@@ -1,6 +1,6 @@
-import Lemma.Algebra.Mul.eq.Square
-import Lemma.Algebra.Mul_Div.eq.DivMul
-import Lemma.Algebra.MulDiv.eq.DivMul
+import Lemma.Algebra.Square.eq.Mul
+import Lemma.Algebra.DivMul.eq.Mul_Div
+import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Algebra.DivDiv.eq.Div_Mul
 open Algebra
 

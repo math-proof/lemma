@@ -1,6 +1,5 @@
-import Lemma.Algebra.Eq.of.Sub.eq.Zero
-import Lemma.Logic.NotNe.of.Eq
-open Algebra Logic
+import Lemma.Algebra.Sub.eq.Zero.is.Eq
+open Algebra
 
 
 @[main]
@@ -14,7 +13,6 @@ private lemma main
 -- proof
   by_contra h'
   have := Eq.of.Sub.eq.Zero h'
-  have := NotNe.of.Eq this
   contradiction
 
 

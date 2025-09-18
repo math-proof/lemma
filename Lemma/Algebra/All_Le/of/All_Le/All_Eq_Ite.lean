@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Logic.Ne.of.NotEq
+import Lemma.Logic.Ne.is.NotEq
 open Logic
 
 

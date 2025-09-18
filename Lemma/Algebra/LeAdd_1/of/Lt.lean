@@ -1,11 +1,11 @@
-import sympy.polys.domains
+import sympy.functions.elementary.integers
 import Lemma.Basic
 
 
 @[main]
 private lemma main
-  [IntegerRing α]
-  {x y : α}
+  [IntegerRing Z]
+  {x y : Z}
 -- given
   (h : x < y) :
 -- imply

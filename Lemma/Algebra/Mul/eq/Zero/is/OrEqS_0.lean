@@ -1,7 +1,7 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
   [MulZeroClass α] [NoZeroDivisors α]
   {a b : α} :

@@ -1,0 +1,20 @@
+import Lemma.Algebra.InsertIdxAppend.eq.Append_InsertIdx
+import Lemma.Algebra.EqAdd_Sub.of.Ge
+open Algebra
+
+
+@[main]
+private lemma main
+  {a : List α}
+-- given
+  (h : i ≥ a.length)
+  (x : α) :
+-- imply
+  (a ++ b).insertIdx i x = a ++ b.insertIdx (i - a.length) x := by
+-- proof
+  have := InsertIdxAppend.eq.Append_InsertIdx a b (i - a.length) x
+  rw [EqAdd_Sub.of.Ge h] at this
+  assumption
+
+
+-- created on 2025-06-09

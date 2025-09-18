@@ -1,16 +1,15 @@
-import sympy.tensor.tensor
+import sympy.tensor.Basic
 import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
-  [Inhabited α]
-  {a b : Tensor α s} :
+  (A B : Tensor α s) :
 -- imply
-  a = b ↔ a.data = b.data := by
+  A = B ↔ A.data = B.data := by
 -- proof
-  cases a
-  cases b
+  cases A
+  cases B
   simp
 
 

@@ -1,9 +1,9 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
-  {x : ℝ} :
+  (x : ℝ) :
 -- imply
   √x = x ^ (1 / 2 : ℝ) :=
 -- proof

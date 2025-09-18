@@ -1,7 +1,7 @@
 import Lemma.Algebra.EqMulS.of.Eq
-import Lemma.Algebra.SquareBool.eq.Bool
-import Lemma.Algebra.Mul.eq.Square
-import Lemma.Logic.Imp.of.Bool.eq.MulBoolS
+import Lemma.Algebra.Bool.eq.SquareBool
+import Lemma.Algebra.Square.eq.Mul
+import Lemma.Logic.Imp.is.Bool.eq.MulBoolS
 open Algebra Logic
 
 

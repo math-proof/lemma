@@ -1,7 +1,7 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma nat
   [AddMonoidWithOne R]
   [CharZero R]
@@ -12,7 +12,7 @@ private lemma nat
   Nat.cast_inj
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma int
   [AddGroupWithOne R]
   [CharZero R]
@@ -23,7 +23,7 @@ private lemma int
   Int.cast_inj
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
   [DivisionRing R]
   [CharZero R]

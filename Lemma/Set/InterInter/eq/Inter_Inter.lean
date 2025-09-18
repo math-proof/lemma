@@ -1,13 +1,13 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
-  {a b c : Set α} :
+  (A B C : Set α) :
 -- imply
-  a ∩ b ∩ c = a ∩ (b ∩ c) := by
+  A ∩ B ∩ C = A ∩ (B ∩ C) :=
 -- proof
-  rw [Set.inter_assoc]
+  Set.inter_assoc A B C
 
 
 -- created on 2024-12-21

@@ -1,7 +1,7 @@
-import Lemma.Logic.AndNotS.is.NotOr
-import Lemma.Logic.Or_Not.is.Imp
-import Lemma.Logic.OrNot.is.Imp
-import Lemma.Logic.ImpOr.is.AndImpS
+import Lemma.Logic.NotOr.is.AndNotS
+import Lemma.Logic.Imp.is.Or_Not
+import Lemma.Logic.Imp.is.OrNot
+import Lemma.Logic.ImpOr.is.Imp.Imp
 open Logic
 
 
@@ -15,7 +15,7 @@ private lemma main
   rw [Or_Not.is.Imp]
   rw [Or_Not.is.Imp]
   rw [OrNot.is.Imp]
-  rw [ImpOr.is.AndImpS]
+  rw [ImpOr.is.Imp.Imp]
   tauto
 
 

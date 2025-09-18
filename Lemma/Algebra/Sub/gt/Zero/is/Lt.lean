@@ -1,20 +1,22 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma nat
-  {a b : ℕ} :
+  [LinearOrderedAddCommMonoid α] [CanonicallyOrderedAdd α] [Sub α] [OrderedSub α]
+  {a b : α} :
 -- imply
   b - a > 0 ↔ a < b :=
 -- proof
-  Nat.sub_pos_iff_lt
+  -- Nat.sub_pos_iff_lt
+  tsub_pos_iff_lt
 
 
 /--
 This lemma establishes that in an additive group with a strict order and right-strict monotonicity, the difference `b - a` being positive is equivalent to `a` being less than `b`.
 It leverages the properties of additive groups and the `AddRightStrictMono` typeclass to connect the algebraic operation of subtraction with the order relation.
 -/
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
   [AddGroup α] [LT α] [AddRightStrictMono α]
   {a b : α} :

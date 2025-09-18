@@ -1,10 +1,10 @@
-import Lemma.Algebra.GeCoeS.of.Ge
+import Lemma.Algebra.GeCoeS.is.Ge
 import Lemma.Algebra.FDiv.eq.FloorDiv
-import Lemma.Algebra.EqFloor.is.Le.et.Lt
-import Lemma.Set.Ge.of.Mem_Icc
+import Lemma.Algebra.EqFloor.is.Le.Lt
+import Lemma.Set.Ge.of.In_Icc
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Gt_0
-import Lemma.Algebra.GtCoeS.of.Gt
-import Lemma.Set.Le.of.Mem_Icc
+import Lemma.Algebra.GtCoeS.is.Gt
+import Lemma.Set.Le.of.In_Icc
 import Lemma.Algebra.Lt_Add_1.of.Le
 import Lemma.Algebra.LtDiv.of.Lt.Gt_0
 open Algebra Set
@@ -20,11 +20,11 @@ private lemma main
   n // d = 0 := by
 -- proof
   rw [FDiv.eq.FloorDiv]
-  rw [EqFloor.is.Le.et.Lt]
+  rw [EqFloor.is.Le.Lt]
   constructor
   ·
     apply Div.ge.Zero.of.Ge_0.Gt_0
-    have := Ge.of.Mem_Icc h₁
+    have := Ge.of.In_Icc h₁
     exact GeCoeS.of.Ge.int this
     exact GtCoeS.of.Gt.int h₀
   ·
@@ -32,7 +32,7 @@ private lemma main
     apply LtDiv.of.Lt.Gt_0
     ·
       norm_num
-      have := Le.of.Mem_Icc h₁
+      have := Le.of.In_Icc h₁
       have := Lt_Add_1.of.Le this
       simp at this
       assumption

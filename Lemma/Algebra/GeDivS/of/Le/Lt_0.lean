@@ -1,4 +1,4 @@
-import Lemma.Algebra.Neg.gt.Zero.of.Lt_0
+import Lemma.Algebra.GtNeg_0.of.Lt_0
 import Lemma.Algebra.Div_Neg.eq.NegDiv
 import Lemma.Algebra.LeDivS.of.Le.Gt_0
 import Lemma.Algebra.Ge.of.LeNegS
@@ -15,10 +15,9 @@ private lemma main
 -- imply
   a / x ≥ b / x := by
 -- proof
-  have := Neg.gt.Zero.of.Lt_0 h₁
+  have := GtNeg_0.of.Lt_0 h₁
   have := LeDivS.of.Le.Gt_0 h₀ this
-  rw [Div_Neg.eq.NegDiv] at this
-  rw [Div_Neg.eq.NegDiv] at this
+  repeat rw [Div_Neg.eq.NegDiv] at this
   exact Ge.of.LeNegS this
 
 

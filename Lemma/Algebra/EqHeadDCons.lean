@@ -9,7 +9,7 @@ private lemma main
   (a : α)
   (default : α) :
 -- imply
-  (a ::ᵥ s).headD default = a := by
+  (a ::ᵥ s).headD default = a :=
 -- proof
   rfl
 

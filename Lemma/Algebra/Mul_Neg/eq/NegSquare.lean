@@ -1,4 +1,4 @@
-import Lemma.Algebra.Mul.eq.Square
+import Lemma.Algebra.Square.eq.Mul
 import Lemma.Algebra.Mul_Neg.eq.NegMul
 open Algebra
 

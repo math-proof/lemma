@@ -14,7 +14,7 @@ private lemma main
 -- imply
   x / y ≤ 0 := by
 -- proof
-  cases' Eq.ou.Lt.of.Le h₀ with hx hx
+  obtain hx | hx := Eq.ou.Lt.of.Le h₀
   ·
     simp_all
   ·

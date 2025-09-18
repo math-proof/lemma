@@ -14,8 +14,7 @@ private lemma main
 -- proof
   have := FMod.ge.Zero.of.Gt_0 (n := n) h
   have := GeMulS.of.Ge.Gt_0 this h
-  rw [Mul0.eq.Zero] at this
-  assumption
+  rwa [Mul0.eq.Zero] at this
 
 
 -- created on 2025-03-23

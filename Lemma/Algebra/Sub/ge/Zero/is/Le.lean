@@ -1,7 +1,7 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
   [AddGroup α] [LE α] [AddRightMono α]
   {a b : α} :

@@ -13,12 +13,10 @@ private lemma main
 -- imply
   i * n + n ≤ m * n := by
 -- proof
-  have h := LeMulS.of.Le.Ge_0
-    (LeAdd_1.of.Lt h)
-    (by simp : n >= 0)
+  have h := LeMulS.of.Le.Ge_0 (LeAdd_1.of.Lt h) (by simp : n >= 0)
   rw [MulAdd.eq.AddMulS] at h
   simp at h
-  exact h
+  assumption
 
 
 -- created on 2024-07-01

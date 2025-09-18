@@ -1,17 +1,16 @@
-import stdlib.List
+import stdlib.Slice
 import Lemma.Algebra.Ge.of.NotLt
-import Lemma.Algebra.GeCoeS.of.Ge
+import Lemma.Algebra.GeCoeS.is.Ge
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.CeilDivSub.eq.One.of.GeAdd.Gt_0
-import Lemma.Algebra.GtCoeS.of.Gt
+import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Algebra.LeSubS.of.Le
 import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Algebra.CeilSub_1.eq.SubCeil_1
-import Lemma.Algebra.SubSub.eq.Sub_Add
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.Le.of.Sub.eq.Zero
-import Lemma.Algebra.MulAdd_1.eq.AddMul
+import Lemma.Algebra.AddMul.eq.MulAdd_1
 import Lemma.Algebra.EqSubAdd
 open Algebra
 
@@ -39,7 +38,7 @@ private lemma main
       have h' := LeSubS.of.Le.nat h step
       rw [MulAdd_1.eq.AddMul] at h'
       rw [SubSub.eq.Sub_Add.nat] at h'
-      rw [EqSubAdd.int false] at h'
+      rw [EqSubAdd.int] at h'
       have h_Eq := ih h' h_start'
       rw [h_Eq]
       rw [CoeAdd.eq.AddCoeS.nat]

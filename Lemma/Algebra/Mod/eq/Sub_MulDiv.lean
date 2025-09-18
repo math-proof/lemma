@@ -12,8 +12,8 @@ private lemma main
   n % d = n - n / d * d := by
 -- proof
   have := Eq_AddMulDiv___Mod (n := n) (d := d)
-  have := EqSubS.of.Eq this (n / d * d)
-  rw [EqSubAdd.int true] at this
+  have := EqSubS.of.Eq.int this (n / d * d)
+  rw [EqSubAdd.left.int] at this
   exact this.symm
 
 

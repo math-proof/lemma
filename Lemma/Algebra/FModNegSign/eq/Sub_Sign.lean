@@ -1,12 +1,12 @@
 import Lemma.Algebra.Lt.ou.Eq.ou.Gt
 import Lemma.Algebra.Sign.eq.Neg1.of.Lt_0
-import Lemma.Algebra.Sign.eq.One.of.Gt_0
+import Lemma.Algebra.EqSign_1.of.Gt_0
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.Sub.eq.AddNeg
-import Lemma.Algebra.EqAddS.of.Eq
+import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.FDiv1.eq.Neg1.of.Lt_0
-import Lemma.Algebra.SubNeg.comm
-import Lemma.Algebra.EqSubS.of.Eq
+import Lemma.Algebra.SubNeg
+import Lemma.Algebra.EqSubS.is.Eq
 import Lemma.Algebra.FDivNeg1.eq.Neg1.of.Gt_0
 open Algebra
 
@@ -24,14 +24,14 @@ private lemma main
     simp
     rw [FMod.eq.Sub_MulFDiv]
     rw [Sub.eq.AddNeg]
-    apply EqAddS.of.Eq (d := 1)
+    apply EqAddS.of.Eq 1
     rw [FDiv1.eq.Neg1.of.Lt_0 h_d]
     simp
   ·
     rw [h_d]
     norm_num
   ·
-    have := Sign.eq.One.of.Gt_0 h_d
+    have := EqSign_1.of.Gt_0 h_d
     rw [this]
     rw [FMod.eq.Sub_MulFDiv]
     rw [SubNeg.comm]

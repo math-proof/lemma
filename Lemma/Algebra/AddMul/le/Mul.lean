@@ -1,6 +1,5 @@
-import Lemma.Algebra.LeAdd_1
-import Lemma.Algebra.AddMul.eq.Mul_Add_1
-import Lemma.Algebra.LeMulS.of.Ge_0.Le
+import Lemma.Algebra.AddMul.le.Mul.of.Lt
+import Lemma.Algebra.LtVal
 open Algebra
 
 
@@ -11,9 +10,9 @@ private lemma main
 -- imply
   m * i + m ≤ m * n := by
 -- proof
-  have := LeAdd_1 (n := n) (i := i)
-  rw [AddMul.eq.Mul_Add_1]
-  apply LeMulS.of.Ge_0.Le (by simp) this
+  have hi := LtVal i
+  apply AddMul.le.Mul.of.Lt hi
 
 
 -- created on 2025-05-06
+-- updated on 2025-05-31

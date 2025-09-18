@@ -1,28 +1,18 @@
+import sympy.functions.elementary.integers
 import Lemma.Basic
 
 
 @[main]
-private lemma nat
-  {d : ℕ}
--- given
-  (h : d > 0)
-  (n : ℕ) :
--- imply
-  n % d < d := by
--- proof
-  exact Nat.mod_lt n h
-
-
-@[main]
 private lemma main
-  {d : ℤ}
+  [IntegerRing Z]
+  {d : Z}
 -- given
   (h : d > 0)
-  (n : ℤ) :
+  (n : Z) :
 -- imply
-  n % d < d := by
+  n % d < d :=
 -- proof
-  exact Int.emod_lt_of_pos n h
+  IntegerRing.mod_lt h n
 
 
 -- created on 2025-03-20

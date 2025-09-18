@@ -1,16 +1,14 @@
-import Lemma.Algebra.Le.of.NotGt
-import Lemma.Algebra.NotGt.of.Le
-open Algebra
+import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp]
 private lemma main
   [LinearOrder α]
-  {a b : α} :
+  (a b : α) :
 -- imply
   ¬a > b ↔ a ≤ b :=
 -- proof
-  ⟨Le.of.NotGt, NotGt.of.Le⟩
+  not_lt
 
 
 -- created on 2025-04-18

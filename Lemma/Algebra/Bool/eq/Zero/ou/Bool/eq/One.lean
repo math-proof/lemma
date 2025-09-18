@@ -1,6 +1,6 @@
 import sympy.core.power
 import Lemma.Set.Bool.in.Finset
-import Lemma.Set.OrEqS.of.Mem_Finset
+import Lemma.Set.OrEqS.of.In_Finset
 open Set
 
 
@@ -11,7 +11,7 @@ private lemma main
   Bool.toNat p = 0 ∨ Bool.toNat p = 1 := by
 -- proof
   have := Bool.in.Finset (p := p)
-  exact OrEqS.of.Mem_Finset this
+  exact OrEqS.of.In_Finset this
 
 
 -- created on 2025-04-20

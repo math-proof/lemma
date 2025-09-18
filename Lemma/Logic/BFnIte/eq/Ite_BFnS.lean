@@ -1,4 +1,4 @@
-import Lemma.Logic.Cond_Ite.of.OrAndS
+import Lemma.Logic.BFn_Ite.is.OrAndS
 open Logic
 
 
@@ -17,7 +17,7 @@ private lemma main
   else
     f b c := by
 -- proof
-  apply Cond_Ite.of.OrAndS (R := Eq)
+  apply BFn_Ite.of.OrAndS (R := Eq)
   -- This decomposes the proof into two cases: when `p` is true and when `p` is false.
   split_ifs <;>
     simp_all

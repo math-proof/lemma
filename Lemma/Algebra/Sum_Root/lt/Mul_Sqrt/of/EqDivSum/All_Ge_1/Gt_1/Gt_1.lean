@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Algebra.Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0
-import Lemma.Logic.All_Not.of.NotAny
-import Lemma.Logic.And_And.is.AndAnd
+import Lemma.Logic.NotAny.is.All_Not
+import Lemma.Logic.AndAnd.is.And_And
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.Algebra.AllIco.of.AllRange
 import Lemma.Logic.All_And.of.All.All
@@ -11,8 +11,8 @@ import Lemma.Algebra.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Algebra.LtSumS.of.All_Le.Any_Lt
 import Lemma.Algebra.Sum.eq.Add_Sum.of.Gt_0
 import Lemma.Algebra.EqSumS.of.All_Eq
-import Lemma.Algebra.Root_2.eq.Sqrt
-import Lemma.Algebra.Add_Sub.eq.SubAdd
+import Lemma.Algebra.Sqrt.eq.Root_2
+import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.CoeSub.eq.SubCoeS
 import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Algebra.Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0
@@ -20,8 +20,9 @@ import Lemma.Algebra.Lt.of.Lt.Le
 import Lemma.Algebra.Pow1.eq.One
 import Lemma.Algebra.SubNatNat.eq.Sub
 import Lemma.Algebra.SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
-import Lemma.Logic.All_EqFunS.of.All_Eq
+import Lemma.Logic.All_EqUFnS.of.All_Eq
 import Lemma.Algebra.EqAdd0
+import Lemma.Algebra.Cast_0.eq.Zero
 open Algebra Logic
 
 
@@ -71,18 +72,17 @@ private lemma main
       rw [Finset.mem_Ico] at hi
       exact this i hi.left hi.right
     have h_All_Ge_1 := AllIco.of.AllRange h₁ 1
-    have h_All_And := All_And.of.All.All.finset h_All_Le_1 h_All_Ge_1
+    have h_All_And := All_And.of.All.All.fin h_All_Le_1 h_All_Ge_1
     have : ∀ t : ℝ, t ≤ 1 ∧ t ≥ 1 → t = 1 := by
       intro t ht
       exact Eq.of.Le.Ge ht.left ht.right
-    have h_All_Eq := All.of.All.All_Imp.finset this h_All_And
+    have h_All_Eq := All.of.All.All_Imp.fin this h_All_And
     let f := fun (xi : ℝ) (i : ℕ) => xi ^ (1 / (i + 2) : ℝ)
-    have h_All_Eq_Root := All_EqFunS.of.All_Eq.binary (f := f) h_All_Eq
+    have h_All_Eq_Root := All_EqUFnS.of.All_Eq.binary (f := f) h_All_Eq
     simp only [f] at h_All_Eq_Root
     let f := fun i : ℕ => (x i) ^ (1 / (i + 2) : ℝ)
     have h_Eq_Sum := Sum.eq.Add_Sum.of.Gt_0 (x := f) (by linarith [h₀])
-    simp only [f] at h_Eq_Sum
-    simp only [EqAdd0.nat (R := ℝ)] at h_Eq_Sum
+    simp only [f, Cast_0.eq.Zero, EqAdd0] at h_Eq_Sum
     rw [Root_2.eq.Sqrt] at h_Eq_Sum
     have h_Eq_Sum' := EqSumS.of.All_Eq h_All_Eq_Root
     simp only [Pow1.eq.One] at h_Eq_Sum'
@@ -108,9 +108,8 @@ private lemma main
     rw [h_Eq_Sum] at h₃
     rw [← h₃]
     apply SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
-    assumption
-    assumption
+    repeat assumption
 
 
 -- created on 2025-04-06
--- updated on 2025-04-26
+-- updated on 2025-06-08

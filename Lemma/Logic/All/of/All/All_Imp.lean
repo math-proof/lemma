@@ -22,7 +22,7 @@ private lemma binary
 
 
 @[main]
-private lemma finset
+private lemma fin
   {s : Finset ι}
   {x : ι → α}
   {p q : α → Prop}

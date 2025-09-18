@@ -1,4 +1,4 @@
-import Lemma.Algebra.GeAddS.of.Ge
+import Lemma.Algebra.GeAddS.is.Ge
 open Algebra
 
 
@@ -10,7 +10,7 @@ private lemma nat
 -- imply
   a + b ≥ c := by
 -- proof
-  have h := GeAddS.of.Ge h b
+  have h := GeAddS.of.Ge b h
   simp at h
   exact h
 
@@ -24,7 +24,7 @@ private lemma main
 -- imply
   a + b ≥ c := by
 -- proof
-  have h := GeAddS.of.Ge h b
+  have h := GeAddS.of.Ge b h
   simp at h
   exact h
 

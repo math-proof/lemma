@@ -1,6 +1,6 @@
 import Lemma.Algebra.BFnIteS.eq.IteAnd
 import Lemma.Algebra.BFnIteS.eq.IteAnd.of.All_Eq
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Add
 open Algebra
 
 

@@ -1,5 +1,5 @@
 import Lemma.Algebra.FDiv.eq.SubNegDiv.of.Lt_0.Gt_0
-import Lemma.Algebra.Le.of.NotGt
+import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.Lt.of.Le.Ne
 import Lemma.Algebra.FDiv.eq.NegDivNeg.of.Lt_0.Lt_0
 open Algebra
@@ -27,7 +27,7 @@ private lemma main
     apply FDiv.eq.SubNegDiv.of.Lt_0.Gt_0 h h₁
   ·
     have h₁ := Le.of.NotGt h₁
-    have h_Lt := Lt.of.Le.Ne h₁ h₀
+    have h_Lt := Lt.of.Le.Ne h₀ h₁
     apply FDiv.eq.NegDivNeg.of.Lt_0.Lt_0 h h_Lt
 
 

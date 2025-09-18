@@ -5,7 +5,7 @@ import Lemma.Basic
 @[main]
 private lemma main
   [Inhabited α]
-  {i : ℕ}
+  {i : Fin n}
   {v : List.Vector α n}
 -- given
   (h : v = default) :

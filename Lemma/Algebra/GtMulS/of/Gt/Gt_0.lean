@@ -10,9 +10,9 @@ private lemma main
   (h₀ : a > b)
   (h₁ : x > 0) :
 -- imply
-  a * x > b * x := by
+  a * x > b * x :=
 -- proof
-  apply LtMulS.of.Lt.Gt_0 h₀ h₁
+  LtMulS.of.Lt.Gt_0 h₀ h₁
 
 
 -- created on 2024-07-01

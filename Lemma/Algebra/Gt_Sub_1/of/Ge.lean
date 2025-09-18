@@ -1,4 +1,3 @@
-import sympy.polys.domains
 import Lemma.Basic
 
 
@@ -10,7 +9,6 @@ private lemma main
 -- imply
   x > y - 1 := by
 -- proof
-  -- Use the `linarith` tactic to solve the inequality involving integers.
   linarith
 
 

@@ -27,6 +27,8 @@ console.log('import mysqlExecute.vue');
 
 const props = defineProps({
 	cmd : String,
+	database : String,
+	table : String,
 	sql : Object, // String | Array
 	kwargs: Object,
 });
@@ -268,7 +270,8 @@ async function dblclick(event) {
 		}
 		else{
 			sql = sql.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
-			var {database, table} = self.$parent;
+			// var {database, table} = self.$parent;
+			var {database, table} = self;
 			if (table.match(/\W/)) {
 				table = '`' + table + '`';
 				if (table.match(/\//))

@@ -1,4 +1,4 @@
-import Lemma.Set.Mem_IocCeil
+import Lemma.Set.In_IocCeil
 open Set
 
 
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   ⌈x⌉ ≥ x := by
 -- proof
-  have := Mem_IocCeil (x := x)
+  have := In_IocCeil (x := x)
   exact this.right
 
 

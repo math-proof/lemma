@@ -1,4 +1,4 @@
-import Lemma.Logic.Cond_Ite.of.Imp.Imp
+import Lemma.Logic.BFn_Ite.is.Imp.Imp
 import Lemma.Logic.Imp.of.Cond
 import Lemma.Algebra.FDiv.eq.Ite__Ite__Ite__Ite__Ite
 open Algebra Logic
@@ -23,7 +23,7 @@ private lemma main
       -n / -d := by
 -- proof
   -- Split the proof into cases based on the conditions provided.
-  apply Cond_Ite.of.Imp.Imp
+  apply BFn_Ite.of.Imp.Imp
   intro h
   rw [h]
   norm_num

@@ -1,14 +1,14 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [DivInvMonoid α]
-  {a : α} :
+  (a : α) :
 -- imply
-  1 / a = a⁻¹ := by
+  1 / a = a⁻¹ :=
 -- proof
-  rw [one_div]
+  one_div a
 
 
 -- created on 2024-07-01

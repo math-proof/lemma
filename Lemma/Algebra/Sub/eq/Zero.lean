@@ -1,4 +1,16 @@
+import sympy.functions.elementary.integers
 import Lemma.Basic
+
+
+@[main]
+private lemma int
+  [IntegerRing Z]
+-- given
+  (a : Z) :
+-- imply
+  a - a = 0 :=
+-- proof
+  IntegerRing.sub_self a
 
 
 /--
@@ -10,10 +22,10 @@ private lemma main
   [AddGroup α]
   {a : α} :
 -- imply
-  a - a = 0 := by
+  a - a = 0 :=
 -- proof
-  rw [sub_self]
+  sub_self a
 
 
 -- created on 2024-07-01
--- updated on 2025-04-04
+-- updated on 2025-07-11

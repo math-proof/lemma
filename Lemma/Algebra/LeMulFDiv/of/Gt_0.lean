@@ -3,12 +3,12 @@ import Lemma.Logic.Iff_True.of.Cond
 import Lemma.Algebra.Lt.is.False.of.Gt
 import Lemma.Algebra.Ge.is.True.of.Gt
 import Lemma.Algebra.Eq.is.False.of.Gt
-import Lemma.Algebra.Add_Neg.eq.Sub
+import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.LeMulEDiv.of.Ge_0
-import Lemma.Algebra.SubNeg.eq.NegAdd
-import Lemma.Algebra.MulNeg.eq.NegMul
+import Lemma.Algebra.NegAdd.eq.SubNeg
+import Lemma.Algebra.NegMul.eq.MulNeg
 import Lemma.Algebra.LeNeg.of.Ge_Neg
-import Lemma.Algebra.Neg.gt.Zero.of.Lt_0
+import Lemma.Algebra.GtNeg_0.of.Lt_0
 import Lemma.Algebra.GeMulAdd1EDiv.of.Gt_0
 open Algebra Logic
 

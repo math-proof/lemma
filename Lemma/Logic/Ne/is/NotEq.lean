@@ -1,14 +1,16 @@
-import Lemma.Logic.NotEq.is.Ne
-open Logic
+import Lemma.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
   {a b : α} :
 -- imply
-  a ≠ b ↔ (¬a = b) :=
+  a ≠ b ↔ ¬a = b := by
 -- proof
-  NotEq.is.Ne.symm
+  constructor <;>
+  ·
+    intro h h_eq
+    contradiction
 
 
 -- created on 2025-04-20

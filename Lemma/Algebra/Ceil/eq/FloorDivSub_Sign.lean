@@ -3,30 +3,27 @@ import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Algebra.DivAdd.eq.AddDivS
 import Lemma.Algebra.Div.eq.One.of.Ne_0
 import Lemma.Algebra.SubAdd.eq.Add_Sub
-import Lemma.Algebra.Eq_Add.of.EqSub
-import Lemma.Algebra.Eq.of.EqNegS
-import Lemma.Algebra.NegSub.eq.Sub
-import Lemma.Algebra.Sub_Neg.eq.Add
+import Lemma.Algebra.EqSub.is.Eq_Add
+import Lemma.Algebra.EqNegS.is.Eq
+import Lemma.Algebra.Sub.eq.NegSub
+import Lemma.Algebra.Add.eq.Sub_Neg
 import Lemma.Algebra.EqAddS.of.Eq.Eq
 import Lemma.Algebra.FloorAdd1.eq.Add1Floor
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.FDivAdd.eq.Add1FDiv.of.Ne_0
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.FModAdd.eq.FMod
-import Lemma.Algebra.Add_Sub.eq.SubAdd
-import Lemma.Algebra.Add_Neg.eq.Sub
+import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.AddFModS.eq.FModNegSign
 import Lemma.Algebra.FModNegSign.eq.Sub_Sign
-import Lemma.Algebra.SubNeg.comm
-import Lemma.Algebra.SubSub.eq.Sub_Add
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.SubNeg
+import Lemma.Algebra.Add
 import Lemma.Algebra.Sub_Add.eq.SubSub
-import Lemma.Algebra.Eq.of.EqSubS
-import Lemma.Algebra.Mul.comm
-import Lemma.Algebra.EqNegS.of.Eq
-import Lemma.Algebra.EqAddS.of.Eq
+import Lemma.Algebra.EqSubS.is.Eq
+import Lemma.Algebra.Mul
+import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.AddMul.eq.MulAdd_1
-import Lemma.Logic.Ne.of.NotEq
+import Lemma.Logic.Ne.is.NotEq
 import Lemma.Algebra.Eq_0.of.Mul.eq.Zero.Ne_0
 import Lemma.Algebra.Eq_Neg.of.Add.eq.Zero
 import Lemma.Algebra.FDiv.eq.FloorDiv
@@ -83,13 +80,13 @@ private lemma main
     rw [SubSub.eq.Sub_Add] at this
     rw [Add.comm] at this
     rw [Sub_Add.eq.SubSub] at this
-    have := Eq.of.EqSubS this (sign d)
+    have := Eq.of.EqSubS this
     rw [Mul.comm (a := d)] at this
     have := EqNegS.of.Eq this
     rw [NegSub.eq.Sub] at this
     rw [Sub_Neg.eq.Add] at this
     rw [← MulAdd.eq.AddMulS] at this
-    have := EqAddS.of.Eq this d
+    have := EqAddS.of.Eq d this
     simp at this
     have := this.symm
     rw [AddMul.eq.MulAdd_1] at this

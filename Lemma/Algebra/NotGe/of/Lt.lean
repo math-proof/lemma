@@ -1,19 +1,20 @@
-import Lemma.Basic
+import Lemma.Algebra.Lt.is.Le.NotGe
+open Algebra
 
 
 @[main]
 private lemma main
-  [PartialOrder α]
+  [Preorder α]
   {a b : α}
 -- given
   (h : a < b) :
 -- imply
   ¬a ≥ b := by
 -- proof
-  -- Decompose the strict order into its components: a ≤ b and a ≠ b
-  let ⟨_, h⟩ := lt_iff_le_not_le.mp h
+  let ⟨_, h⟩ := Le.NotGe.of.Lt h
   intro h
   contradiction
 
 
 -- created on 2025-03-21
+-- updated on 2025-08-02

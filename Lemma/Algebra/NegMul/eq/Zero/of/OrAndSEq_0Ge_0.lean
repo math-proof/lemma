@@ -1,5 +1,5 @@
 import Lemma.Algebra.Mul.eq.Zero.of.OrAndSEq_0Ge_0
-import Lemma.Algebra.Neg.eq.Zero.of.Eq_0
+import Lemma.Algebra.EqNeg_0.of.Eq_0
 open Algebra
 
 
@@ -13,7 +13,7 @@ private lemma main
   -(x * y) = 0 := by
 -- proof
   have := Mul.eq.Zero.of.OrAndSEq_0Ge_0 h
-  apply Neg.eq.Zero.of.Eq_0 this
+  apply EqNeg_0.of.Eq_0 this
 
 
 -- created on 2025-04-19

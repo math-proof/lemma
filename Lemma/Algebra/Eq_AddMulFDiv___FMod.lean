@@ -1,5 +1,5 @@
 import sympy.functions.elementary.integers
-import Lemma.Algebra.Mul.comm
+import Lemma.Algebra.Mul
 open Algebra
 
 

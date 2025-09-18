@@ -1,4 +1,4 @@
-import Lemma.Set.Mem_Union.of.Mem
+import Lemma.Set.In_Union.of.In
 open Set
 
 
@@ -12,27 +12,27 @@ private lemma main
   constructor <;> intro h
   ·
     let ⟨hAB, hC⟩ := h
-    cases' hAB with hA hB
+    obtain hA | hB := hAB
     ·
-      apply Mem_Union.of.Mem (B := B \ C)
+      apply In_Union.of.In (B := B \ C)
       simp [hA, hC]
     ·
-      apply Mem_Union.of.Mem (B := A \ C) (left := true)
+      apply In_Union.of.In (B := A \ C) (left := true)
       simp [hB, hC]
   ·
-    cases' h with hAC hBC
+    obtain hAC | hBC := h
     ·
       let ⟨hA, hC⟩ := hAC
       constructor
       ·
-        apply Mem_Union.of.Mem hA B
+        apply In_Union.of.In hA B
       ·
         assumption
     ·
       let ⟨hB, hC⟩ := hBC
       constructor
       ·
-        apply Mem_Union.of.Mem hB A (left := true)
+        apply In_Union.of.In hB A (left := true)
       ·
         assumption
 

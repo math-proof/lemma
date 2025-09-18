@@ -19,7 +19,7 @@ private lemma main
 -- proof
   have h := GeDivS.of.Ge.Ge_0 h₀ h₁
   simp only [Div0.eq.Zero] at h
-  exact h
+  assumption
 
 
 -- created on 2025-01-14

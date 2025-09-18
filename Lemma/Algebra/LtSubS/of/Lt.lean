@@ -1,4 +1,4 @@
-import Lemma.Algebra.LtAddS.of.Lt
+import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.Sub.eq.Add_Neg
 open Algebra
 
@@ -19,7 +19,7 @@ private lemma main
   x - z < y - z := by
 -- proof
   rw [Sub.eq.Add_Neg (a := x), Sub.eq.Add_Neg (a := y)]
-  apply LtAddS.of.Lt h (-z)
+  apply LtAddS.of.Lt _ h
 
 
 -- created on 2024-07-01

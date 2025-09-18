@@ -1,4 +1,4 @@
-import Lemma.Algebra.LtAddS.of.Lt
+import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.Lt.of.Lt.Lt
 open Algebra
 
@@ -20,8 +20,8 @@ private lemma main
 -- imply
   a + x < b + y := by
 -- proof
-  have h₂ := LtAddS.of.Lt h₀ x
-  have h₃ := LtAddS.of.Lt.left h₁ b
+  have h₂ := LtAddS.of.Lt x h₀
+  have h₃ := LtAddS.of.Lt.left b h₁
   apply Lt.of.Lt.Lt h₂ h₃
 
 

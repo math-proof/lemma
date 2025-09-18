@@ -1,0 +1,19 @@
+import Lemma.Algebra.Add_ToNatNeg.eq.ToNatSub.of.Le_0
+import Lemma.Algebra.Le.of.Lt
+open Algebra
+
+
+@[main]
+private lemma main
+  {n : ℤ}
+-- given
+  (h : n < 0)
+  (m : ℕ) :
+-- imply
+  (-n).toNat + m = (m - n).toNat := by
+-- proof
+  apply Add_ToNatNeg.eq.ToNatSub.of.Le_0
+  apply Le.of.Lt h
+
+
+-- created on 2025-07-14

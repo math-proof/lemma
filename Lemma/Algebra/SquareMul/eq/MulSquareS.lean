@@ -1,7 +1,5 @@
-import Lemma.Algebra.Mul.eq.Square
-import Lemma.Algebra.Mul_Mul.eq.MulMul
-import Lemma.Algebra.Mul.comm
 import Lemma.Algebra.Square.eq.Mul
+import Lemma.Algebra.Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 open Algebra
 

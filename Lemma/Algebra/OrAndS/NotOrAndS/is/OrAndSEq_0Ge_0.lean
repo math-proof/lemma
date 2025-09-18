@@ -6,7 +6,8 @@ open Algebra
 @[main]
 private lemma main
   [LinearOrderedRing α]
-  {x y : α} :
+-- given
+  (x y : α) :
 -- imply
   (x ≥ 0 ∧ y ≥ 0 ∨ x < 0 ∧ y < 0) ∧ ¬(x > 0 ∧ y > 0 ∨ x < 0 ∧ y < 0) ↔ x = 0 ∧ y ≥ 0 ∨ y = 0 ∧ x ≥ 0 := by
 -- proof
@@ -37,3 +38,4 @@ private lemma main
 
 
 -- created on 2025-04-19
+-- updated on 2025-08-03

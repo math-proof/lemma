@@ -1,9 +1,9 @@
 import Lemma.Algebra.Add_Mul.eq.MulAdd1
-import Lemma.Algebra.Add.comm
+import Lemma.Algebra.Add
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Semiring α]
   {k d : α} :

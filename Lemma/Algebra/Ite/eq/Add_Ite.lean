@@ -1,16 +1,10 @@
-import sympy.core.relational
-import Lemma.Logic.CondIte.of.OrAndS
-import Lemma.Logic.OrAndS.of.Cond_Ite
-import Lemma.Algebra.EqSub.of.Eq_Add
-import Lemma.Algebra.EqSub.is.Eq_Add
-import Lemma.Algebra.Add.comm
-open Logic Algebra
+import Lemma.Basic
 
 
 @[main]
 private lemma main
   [Decidable p]
-  [AddCommGroup α]
+  [Add α]
   {a b c : α} :
 -- imply
   (if p then
@@ -21,18 +15,8 @@ private lemma main
   else
     b := by
 -- proof
-  denote h_Ite : I = right
-  have := EqSub.of.Eq_Add.left h_Ite
-  have := OrAndS.of.Cond_Ite this
-  rw [EqSub.is.Eq_Add] at this
-  rw [EqSub.is.Eq_Add] at this
-  rw [Eq.comm] at this
-  rw [Eq.comm (a := I)] at this
-  rw [Add.comm] at this
-  rw [Add.comm (a := b)] at this
-  rw [← h_Ite]
-  apply CondIte.of.OrAndS
-  assumption
+  split_ifs with h <;> rfl
 
 
 -- created on 2025-04-26
+-- updated on 2025-05-14

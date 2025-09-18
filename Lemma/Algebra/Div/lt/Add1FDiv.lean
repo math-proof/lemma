@@ -1,6 +1,6 @@
 import Lemma.Algebra.Div.eq.AddFDiv___FMod
-import Lemma.Algebra.Add.comm
-import Lemma.Algebra.LtAddS.of.Lt
+import Lemma.Algebra.Add
+import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.DivFMod.lt.One
 open Algebra
 

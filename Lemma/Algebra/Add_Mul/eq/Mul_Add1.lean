@@ -2,15 +2,14 @@ import Lemma.Algebra.Mul_Add.eq.AddMulS
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Semiring α]
   {k d : α} :
 -- imply
   d + d * k = d * (1 + k) := by
 -- proof
-  rw [Mul_Add.eq.AddMulS]
-  simp
+  simp [Mul_Add.eq.AddMulS]
 
 
 -- created on 2025-05-04

@@ -1,7 +1,6 @@
 import sympy.core.relational
-import Lemma.Logic.Cond_Ite.of.OrAndS
+import Lemma.Logic.BFn_Ite.is.OrAndS
 import Lemma.Logic.IffNotNot
-import Lemma.Logic.OrAndS.of.Cond_Ite
 open Logic
 
 
@@ -19,9 +18,9 @@ private lemma main
     a := by
 -- proof
   denote h_P : P = left
-  have := OrAndS.of.Cond_Ite h_P
+  have := OrAndS.of.BFn_Ite h_P
   rw [← h_P]
-  apply Cond_Ite.of.OrAndS
+  apply BFn_Ite.of.OrAndS
   rw [IffNotNot]
   rw [Or.comm]
   assumption

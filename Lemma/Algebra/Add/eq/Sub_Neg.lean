@@ -3,11 +3,10 @@ import Lemma.Algebra.EqNegNeg
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
   [AddGroup α]
-
-  {a b : α} :
+  (a b : α) :
 -- imply
   a + b = a - -b := by
 -- proof

@@ -11,10 +11,10 @@ private lemma main
 -- imply
   n / d = ⌈n / (d : ℚ)⌉ := by
 -- proof
-  by_cases h_Eq_0 : d = 0
-  rw [h_Eq_0]
+  by_cases h_eq : d = 0
+  rw [h_eq]
   norm_num
-  have := Lt.of.Le.Ne h h_Eq_0
+  have := Lt.of.Le.Ne h_eq h
   apply Div.eq.CeilDiv.of.Lt_0 this
 
 

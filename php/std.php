@@ -1142,8 +1142,15 @@ function range($start, $stop = null, $step = 1)
             yield $i;
         }
     } else {
-        for ($i = $start; $i < $stop; $i += $step) {
-            yield $i;
+        if ($step > 0) {
+            for ($i = $start; $i < $stop; $i += $step) {
+                yield $i;
+            }
+        }
+        else {
+            for ($i = $start; $i > $stop; $i += $step) {
+                yield $i;
+            }
         }
     }
 }
@@ -2815,6 +2822,11 @@ function equal_range(&$self, &$value, $compareTo)
     ];
 }
 
+function utf8_split($input) {
+    // $input = mb_str_split($input);
+    return preg_split('//u', $input, -1, PREG_SPLIT_NO_EMPTY);
+}
+
 function enumerate(&$array)
 {
     foreach (range(count($array)) as $i) {
@@ -3550,4 +3562,132 @@ function listdir($cwd) {
         }
     }
     return $dir;
+}
+
+class Expr {
+    public $func = null;
+    public $args = null;
+    public $parent = null;
+
+    public $cache = null;
+    public function __construct($func, $args) {
+        $this->func = $func;
+        $this->args = $args;
+        foreach ($args as $arg)
+            $arg->parent = $this;
+    }
+
+    public function is_operator() {
+        return count($this->args);
+    }
+    public function is_operand() {
+        return !$this->is_operator();
+    }
+
+    public function traverse($visit) {
+        $visit($this);
+        foreach ($this->args as $arg)
+            $arg->traverse($visit);
+    }
+
+    public function __toString() {
+        return $this->func->__toString();
+    }
+
+    public function size() {
+        if (isset($this->cache['size']))
+            return $this->cache['size'];
+        $size = 1;
+        foreach ($this->args as $arg)
+            $size += $arg->size();
+        $this->cache['size'] = $size;
+        return $size;
+    }
+}
+
+function eval_prefix($expressions, $operand_count) {
+    $stack = array();
+    foreach (array_reverse($expressions) as $token) {
+        $operand = [];
+        foreach (range($operand_count($token)) as $i)
+            $operand[$i] = array_pop($stack);
+        array_push($stack, new Expr($token, $operand));
+    }
+    return array_reverse($stack);
+}
+
+interface DecoratorAttribute {
+    public function getCallback(callable $wrapped, \ReflectionMethod $method): callable;
+    public function __init__(string $class, string $method) ;
+}
+
+
+trait MethodDecorator {
+    private static array $decoratorsInfo = [];
+    private static array $staticWrappers = [];
+    private array $objectWrappers = [];
+
+    private static function initializeClassDecorators(): void {
+        $className = static::class;
+        if (isset(self::$decoratorsInfo[$className])) return;
+
+        $reflection = new \ReflectionClass($className);
+        foreach ($reflection->getMethods() as $method) {
+            $attributes = $method->getAttributes(DecoratorAttribute::class, \ReflectionAttribute::IS_INSTANCEOF);
+            if (empty($attributes)) continue;
+
+            $decorators = array_map(fn($attr) => $attr->newInstance(), $attributes);
+            $methodName = $method->getName();
+            self::$decoratorsInfo[$className][$methodName] = [
+                'decorators' => $decorators,
+                'isStatic' => $method->isStatic(),
+            ];
+            foreach (array_reverse($decorators) as $decorator) {
+                $decorator->__init__($className, $methodName);
+            }
+        }
+    }
+
+    private static function getWrapper(string $className, string $methodName, mixed $self): callable {
+        $info = self::$decoratorsInfo[$className][$methodName] ?? null;
+        if (!$info) {
+            $type = $self === null ? 'static' : 'object';
+            throw new \BadMethodCallException("Decorated $type method '$methodName' not found in '$className'.");
+        }
+        $reflectionMethod = new \ReflectionMethod($className, $methodName);
+        $reflectionMethod->setAccessible(true);
+        $wrapped = function(...$args) use ($reflectionMethod, $self) {
+            return $reflectionMethod->invoke($self, ...$args);
+        };
+        foreach (array_reverse($info['decorators']) as $decorator) {
+            $wrapped = $decorator->getCallback($wrapped, $reflectionMethod);
+        }
+        return $wrapped;
+    }
+
+    private static function getStaticWrapper(string $className, string $methodName): callable {
+        if (isset(self::$staticWrappers[$className][$methodName]))
+            return self::$staticWrappers[$className][$methodName];
+        return self::$staticWrappers[$className][$methodName] = self::getWrapper($className, $methodName, null);
+    }
+
+    private function getObjectWrapper(string $methodName): callable {
+        if (isset($this->objectWrappers[$methodName]))
+            return $this->objectWrappers[$methodName];
+        return $this->objectWrappers[$methodName] = self::getWrapper(static::class, $methodName, $this);
+    }
+
+    public static function __callStatic(string $method, array $args) {
+        self::initializeClassDecorators();
+        $className = static::class;
+        if (isset(self::$decoratorsInfo[$className][$method]))
+            return self::getStaticWrapper($className, $method)(...$args);
+    }
+
+    public function __call(string $method, array $args) {
+        self::initializeClassDecorators();
+        $className = static::class;
+        if (isset(self::$decoratorsInfo[$className][$method]))
+            return $this->getObjectWrapper($method)(...$args);
+    }
 }

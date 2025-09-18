@@ -1,0 +1,18 @@
+import sympy.sets.sets
+import Lemma.Basic
+
+
+@[main]
+private lemma main
+  [LinearOrder α]
+  {x a : α}
+-- given
+  (h : x > a) :
+-- imply
+  x ∉ Iic a := by
+-- proof
+  contrapose! h
+  assumption
+
+
+-- created on 2025-07-19

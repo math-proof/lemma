@@ -1,4 +1,4 @@
-import Lemma.Algebra.Ge_Zero
+import Lemma.Algebra.Ge_0
 import Lemma.Algebra.Gt_Sub_1.of.Ge
 open Algebra
 
@@ -9,7 +9,7 @@ private lemma main
 -- imply
   (n : ℤ) > -1 := by
 -- proof
-  have := Ge_Zero (n := n)
+  have := Ge_0 (R := ℤ) (n := n)
   have := Gt_Sub_1.of.Ge this
   norm_num at this
   assumption

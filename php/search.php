@@ -94,8 +94,13 @@ else  {
     if ($like) {
         if ($regex == null)
             $data = select_lemma_by_type($user, $type, $limit);
-        else
+        else {
             $data = select_lemma_by_like($user, $regex, $caseSensitive, $limit);
+            if (!$data && !$caseSensitive && ($index = strpos($regex, ' ')) !== false) {
+                $regex = str_replace(' ', '.*', $regex);
+                $data = select_lemma_by_regex($user, $regex, $caseSensitive, $limit);
+            }
+        }
     } else
         $data = select_lemma_by_regex($user, $regex, $caseSensitive, $limit);
     

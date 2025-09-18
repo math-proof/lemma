@@ -1,19 +1,40 @@
-import Lemma.Basic
+import Lemma.Algebra.Add
+open Algebra
 
 
-/--
-This lemma demonstrates the associativity of addition in an additive semigroup, showing that the expression `a + b + c` is equal to `a + (b + c)`.
-The proof utilizes the `add_assoc` axiom inherent to the structure of an additive semigroup to rearrange the parentheses, thereby establishing the equality.
--/
-@[main]
+@[main, comm]
 private lemma main
   [AddSemigroup α]
-  {a b : α} :
+-- given
+  (a b c : α) :
 -- imply
-  a + b + c = a + (b + c) := by
+  a + b + c = a + (b + c) :=
 -- proof
-  rw [add_assoc]
+  add_assoc a b c
+
+
+@[main, comm]
+private lemma comm.nat
+-- given
+  (a b c : ℕ) :
+-- imply
+  a + b + c = a + (c + b) := by
+-- proof
+  rw [main]
+  rw [Add.comm (a := b)]
+
+
+@[main, comm]
+private lemma Comm
+  [AddCommGroup α]
+-- given
+  (a b c : α) :
+-- imply
+  a + b + c = a + (c + b) := by
+-- proof
+  rw [main]
+  rw [Add.comm (a := b)]
 
 
 -- created on 2024-07-01
--- updated on 2025-04-04
+-- updated on 2025-05-24

@@ -1,14 +1,16 @@
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Mul α] [Add α] [RightDistribClass α]
-  {a b c : α} :
+-- given
+  (a b c : α) :
 -- imply
-  (a + b) * c = a * c + b * c := by
+  (a + b) * c = a * c + b * c :=
 -- proof
-  rw [right_distrib]
+  right_distrib a b c
 
 
 -- created on 2024-07-01
+-- updated on 2025-07-15

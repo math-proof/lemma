@@ -1,7 +1,7 @@
 import Mathlib.Tactic
 import Lemma.Logic.Or.of.Or.Imp
 import Lemma.Logic.And.of.And.Imp
-import Lemma.Logic.ImpNotS.of.Imp
+import Lemma.Logic.Imp.is.ImpNotS
 import Lemma.Logic.Imp.of.Imp.Imp
 import stdlib.Lean.Expr -- using Lean.Expr.is_Prop
 import stdlib.Lean.FVarId

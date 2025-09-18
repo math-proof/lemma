@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Set.Mem_Range.of.Lt
+import Lemma.Set.In_Range.of.Lt
 open Set
 
 
@@ -19,8 +19,24 @@ private lemma main
   -- Use linear arithmetic to prove `i < n` from `i < m` and `m < n`
   have hi' : i < n := by linarith [h₀, hi]
   -- Apply the universal equality hypothesis `h₁` to `i` and the proof `i < n`
-  have h_Mem := Mem_Range.of.Lt hi'
+  have h_Mem := In_Range.of.Lt hi'
   exact h₁ i h_Mem
+
+
+@[main]
+private lemma is_constant
+  {x : ℕ → α}
+  {a : α}
+-- given
+  (h₀ : m<n)
+  (h₁ : ∀ i ∈ range n, x i = a) :
+-- imply
+  ∀ i ∈ range m, x i = a := by
+-- proof
+  let y := fun _ : ℕ => a
+  have := main (y := y) h₀ h₁
+  simp only [y] at this
+  assumption
 
 
 -- created on 2025-04-26

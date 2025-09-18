@@ -1,4 +1,3 @@
-import sympy.polys.domains
 import Lemma.Algebra.LtSub_1.of.Le.Gt_0
 open Algebra
 

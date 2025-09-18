@@ -5,7 +5,7 @@ import Lemma.Set.SubsetInter
 import Lemma.Set.SDiff_SDiff.eq.Inter.of.Subset
 import Lemma.Set.SubsetSDiff
 import Lemma.Set.SDiffSDiff.eq.SDiff.of.Subset
-import Lemma.Set.Union.comm
+import Lemma.Set.Union
 open Set
 
 

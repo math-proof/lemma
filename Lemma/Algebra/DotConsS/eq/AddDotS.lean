@@ -8,7 +8,7 @@ private lemma main
   {a a' : α}
   {s s' : List.Vector α n} :
 -- imply
-  (a ::ᵥ s) ⬝ (a' ::ᵥ s') = a * a' + s ⬝ s' := by
+  (a ::ᵥ s) ⬝ (a' ::ᵥ s') = a * a' + s ⬝ s' :=
 -- proof
   rfl
 

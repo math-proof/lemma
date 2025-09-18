@@ -1,6 +1,6 @@
 import Lemma.Algebra.FDiv.eq.FloorDiv
-import Lemma.Algebra.LtCoeS.of.Lt
-import Lemma.Algebra.EqFloor.of.Le.et.Lt
+import Lemma.Algebra.LtCoeS.is.Lt
+import Lemma.Algebra.EqFloor.is.Le.Lt
 import Lemma.Algebra.DivInt.eq.Div
 import Lemma.Algebra.GeDiv.of.Le_Mul.Lt_0
 import Lemma.Algebra.Le_Sub_1.of.Lt
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   have := LtCoeS.of.Lt.int (R := ℚ) h
   rw [FDiv.eq.FloorDiv]
-  apply EqFloor.of.Le.et.Lt
+  apply EqFloor.of.Le.Lt
   ·
     norm_cast
     simp

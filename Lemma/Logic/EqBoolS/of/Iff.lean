@@ -1,6 +1,6 @@
 import Lemma.Logic.Imp.of.Iff
-import Lemma.Logic.Bool.eq.MulBoolS.of.Imp
-import Lemma.Algebra.Mul.comm
+import Lemma.Logic.Imp.is.Bool.eq.MulBoolS
+import Lemma.Algebra.Mul
 open Logic Algebra
 
 

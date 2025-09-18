@@ -6,7 +6,9 @@
 
 <script setup>
 import Vue from "../js/vue.js"
-// console.log('import MarkdownSpan.vue');
+import MarkdownParser from "../js/parser/markdown.js"
+const {components} = MarkdownParser;
+// console.log('import MarkdownSPAN.vue');
 
 const props = defineProps({
     args: Array,
@@ -14,17 +16,7 @@ const props = defineProps({
 });
 
 const self = new Vue({
-    components: [
-        'MarkdownText', 
-        'MarkdownBracket',
-        'MarkdownA', 
-        'MarkdownB', 
-        'MarkdownI', 
-        'MarkdownLatex',
-        // uncommon tags in span
-        'MarkdownUL',
-        'MarkdownOL',
-    ],
+    components,
 	props,
 
     data: {
@@ -34,10 +26,6 @@ const self = new Vue({
     },
 
     mounted() {
-        // console.log('mounted on MarkdownSpan');
-        // console.log('kwargs = ', self.kwargs);
     },
 });
 </script>
-<style>
-</style>

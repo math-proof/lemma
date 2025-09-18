@@ -4,7 +4,7 @@ import Lemma.Algebra.ModEq.of.Eq
 import Lemma.Algebra.EqMul1
 import Lemma.Algebra.ModEq.of.ModEq.ModEq__AddMul
 import Lemma.Algebra.Eq_AddMulDiv___Mod
-import Lemma.Algebra.Mul.comm
+import Lemma.Algebra.Mul
 open Algebra
 
 

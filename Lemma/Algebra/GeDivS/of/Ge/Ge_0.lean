@@ -1,5 +1,5 @@
-import Lemma.Algebra.Mul_Inv.eq.Div
-import Lemma.Algebra.Inv.ge.Zero.of.Ge_0
+import Lemma.Algebra.Div.eq.Mul_Inv
+import Lemma.Algebra.GeInv_0.is.Ge_0
 import Lemma.Algebra.GeMulS.of.Ge.Ge_0
 open Algebra
 
@@ -18,13 +18,10 @@ private lemma main
 -- imply
   a / x ≥ b / x := by
 -- proof
-  have : x⁻¹ ≥ 0 := Inv.ge.Zero.of.Ge_0 h₁
+  have := GeInv_0.of.Ge_0 h₁
   have := GeMulS.of.Ge.Ge_0 h₀ this
-  rw [
-    Mul_Inv.eq.Div,
-    Mul_Inv.eq.Div
-  ] at this
-  exact this
+  repeat rw [Mul_Inv.eq.Div] at this
+  assumption
 
 
 -- created on 2025-01-14

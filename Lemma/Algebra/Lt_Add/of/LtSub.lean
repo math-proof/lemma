@@ -1,4 +1,4 @@
-import Lemma.Algebra.LtAddS.of.Lt
+import Lemma.Algebra.LtAddS.is.Lt
 open Algebra
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   a < c + b := by
 -- proof
-  have h := LtAddS.of.Lt h b
+  have h := LtAddS.of.Lt b h
   simp at h
   exact h
 

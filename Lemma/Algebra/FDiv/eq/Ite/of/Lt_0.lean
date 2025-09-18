@@ -1,6 +1,6 @@
 import Lemma.Algebra.FDiv.eq.Sub_1.of.Gt_0.Lt_0
 import Lemma.Algebra.FDiv.eq.NegEDivNeg.of.Le_0.Lt_0
-import Lemma.Algebra.Le.of.NotGt
+import Lemma.Algebra.NotGt.is.Le
 open Algebra
 
 

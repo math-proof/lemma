@@ -1,9 +1,8 @@
-import stdlib.Slice
 import Lemma.Algebra.Gt_Sub_1.of.Ge
 import Lemma.Algebra.Gt_Sub_1.of.Ge.Gt_0
 import Lemma.Algebra.LengthTail.gt.Sub_1.of.GtLength.Gt_0
 import Lemma.Algebra.Ge.of.Gt_Sub_1
-import Lemma.Algebra.Sub.gt.Zero.of.Gt
+import Lemma.Algebra.Sub.gt.Zero.is.Gt
 open Algebra
 
 

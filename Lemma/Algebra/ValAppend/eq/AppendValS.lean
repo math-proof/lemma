@@ -2,7 +2,7 @@ import stdlib.List.Vector
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (a : List.Vector α m)

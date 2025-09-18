@@ -1,8 +1,5 @@
-import sympy.core.logic
-import sympy.core.relational
 import Lemma.Algebra.Eq_Neg.of.EqNeg
-import Lemma.Logic.Cond_Ite.of.OrAndS
-import Lemma.Logic.OrAndS.of.Cond_Ite
+import Lemma.Logic.BFn_Ite.is.OrAndS
 import Lemma.Algebra.EqNeg.of.Eq_Neg
 open Algebra Logic
 
@@ -10,8 +7,9 @@ open Algebra Logic
 @[main]
 private lemma main
   [Decidable p]
-  [InvolutiveNeg α]
-  {a b : α} :
+  [Neg α]
+-- given
+  (a b : α) :
 -- imply
   (if p then
     -a
@@ -21,14 +19,8 @@ private lemma main
   else
     b := by
 -- proof
-  denote h_I : I = left
-  have := OrAndS.of.Cond_Ite h_I
-  mp [EqNeg.of.Eq_Neg (a := I) (b := a)] at this
-  mp [EqNeg.of.Eq_Neg (a := I) (b := b)] at this
-  rw [← h_I]
-  apply Eq_Neg.of.EqNeg
-  apply Cond_Ite.of.OrAndS
-  assumption
+  split_ifs with h <;> rfl
 
 
 -- created on 2025-04-26
+-- updated on 2025-05-14

@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Set.Mem_Range.of.Lt
+import Lemma.Set.In_Range.of.Lt
 open Set
 
 
@@ -15,7 +15,22 @@ private lemma main
   -- Apply the universal statement `h₁` to the specific index `m`
   apply h₁ m
   -- Provide the proof that `m < n` (from `h₀`) to satisfy the membership in `range n`
-  apply Mem_Range.of.Lt h₀
+  apply In_Range.of.Lt h₀
+
+
+@[main]
+private lemma is_constant
+  {x : ℕ → α}
+-- given
+  (h₀ : m < n)
+  (h₁ : ∀ i ∈ range n, x i = a) :
+-- imply
+  x m = a := by
+-- proof
+  let y := fun _ : ℕ => a
+  have := main (y := y) h₀ h₁
+  simp only [y] at this
+  assumption
 
 
 -- created on 2025-04-26

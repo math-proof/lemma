@@ -1,11 +1,11 @@
 import Lemma.Algebra.FDiv.eq.FloorDiv
-import Lemma.Algebra.EqFloor.is.Le.et.Lt
+import Lemma.Algebra.EqFloor.is.Le.Lt
 import Lemma.Algebra.Div.ge.Zero.of.Le_0.Lt_0
-import Lemma.Set.Le.of.Mem_Icc
-import Lemma.Algebra.LeCoeS.of.Le
-import Lemma.Algebra.LtCoeS.of.Lt
+import Lemma.Set.Le.of.In_Icc
+import Lemma.Algebra.LeCoeS.is.Le
+import Lemma.Algebra.LtCoeS.is.Lt
 import Lemma.Algebra.LtDiv.of.Gt.Lt_0
-import Lemma.Set.Ge.of.Mem_Icc
+import Lemma.Set.Ge.of.In_Icc
 import Lemma.Algebra.Gt.of.Ge_Add_1
 open Algebra Set
 
@@ -20,12 +20,12 @@ private lemma main
   n // d = 0 := by
 -- proof
   rw [FDiv.eq.FloorDiv]
-  rw [EqFloor.is.Le.et.Lt]
+  rw [EqFloor.is.Le.Lt]
   constructor
   ·
     apply Div.ge.Zero.of.Le_0.Lt_0
     ·
-      have := Le.of.Mem_Icc h₁
+      have := Le.of.In_Icc h₁
       exact LeCoeS.of.Le.int this
     ·
       exact LtCoeS.of.Lt.int h₀
@@ -34,7 +34,7 @@ private lemma main
     apply LtDiv.of.Gt.Lt_0
     ·
       norm_num
-      have := Ge.of.Mem_Icc h₁
+      have := Ge.of.In_Icc h₁
       exact Gt.of.Ge_Add_1 this
     ·
       exact LtCoeS.of.Lt.int h₀

@@ -1,18 +1,16 @@
-import stdlib.List
 import Lemma.Algebra.GeCeil
 import Lemma.Algebra.LeMulS.of.Le.Gt_0
-import Lemma.Algebra.GtCoeS.of.Gt
+import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Algebra.EqMulDiv.of.Gt_0
-import Lemma.Algebra.Sub.gt.Zero.of.Gt
+import Lemma.Algebra.Sub.gt.Zero.is.Gt
 import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Algebra.GtDivS.of.Gt.Gt_0
 import Lemma.Algebra.Gt.of.Ge.Gt
-import Lemma.Algebra.Gt.of.GtCoeS
+import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Algebra.Eq_ToNat.of.Gt_0
-import Lemma.Algebra.SubCoeS.eq.CoeSub
-import Lemma.Algebra.SubCoeS.eq.CoeSub.of.Gt
+import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Algebra.LengthSlicedIndices.eq.CeilDivSub.of.Gt_0.Le.Lt.Sub.le.Mul
-import Lemma.Algebra.Eq.of.EqCoeS
+import Lemma.Algebra.EqCoeS.is.Eq
 open Algebra
 
 

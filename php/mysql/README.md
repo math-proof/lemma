@@ -451,7 +451,7 @@ show global variables like "%buffer_pool_size%";
 
 alter table id2feature partition by key() partitions 128;  
 关于delete from id2feature_ limit 10000  
-关于后存储空间不变小的问题：  
+关于delete后存储空间不变小的问题：  
 使用 OPTIMIZE TABLE id2feature_;进行磁盘优化！  
 
 若出现以下错误：  

@@ -1,4 +1,4 @@
-import Lemma.Logic.ImpNotS.of.Imp
+import Lemma.Logic.Imp.is.ImpNotS
 import Lemma.Logic.IffNotNot
 open Logic
 

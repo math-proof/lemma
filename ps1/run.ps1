@@ -43,8 +43,8 @@ $imports = Get-Content test.lean
 # Create or clear test.log
 New-Item -Path test.log -ItemType File -Force
 
-# Split into batches of up to 500
-$batches = batches -Data $imports -BatchSize 200
+# Split into batches
+$batches = batches -Data $imports -BatchSize 10
 
 # Write each batch to a separate file
 for ($i = 0; $i -lt $batches.Count; $i++) {

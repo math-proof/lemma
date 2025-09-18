@@ -1,4 +1,4 @@
-import Lemma.Algebra.Eq.of.EqNegS
+import Lemma.Algebra.EqNegS.is.Eq
 import Lemma.Algebra.EqNegNeg
 open Algebra
 

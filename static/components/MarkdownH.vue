@@ -10,8 +10,10 @@
 
 <script setup>
 import Vue from "../js/vue.js"
+import MarkdownParser from "../js/parser/markdown.js"
+const {components} = MarkdownParser;
 import buttonExpand from "./buttonExpand.vue"
-console.log('import MarkdownH.vue');
+// console.log('import MarkdownH.vue');
 
 const props = defineProps({
 	args: Array,
@@ -19,21 +21,7 @@ const props = defineProps({
 });
 
 const self = new Vue({
-	components: [
-		'MarkdownText',
-		'MarkdownBracket', 
-		'MarkdownA',
-		'MarkdownB',
-		'MarkdownI',
-		'MarkdownH',
-		'MarkdownP',
-		'MarkdownSPAN',
-		'MarkdownUL',
-		'MarkdownOL',
-		'MarkdownTABLE',
-		'MarkdownCODE',
-		'MarkdownLatex',
-	],
+	components,
 	props,
 
 	refs: {
@@ -62,6 +50,3 @@ const self = new Vue({
 	}
 });
 </script>
-
-<style>
-</style>

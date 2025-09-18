@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<MarkdownDocument :args=root.args />
+		<MarkdownDocument v-bind=root.bind />
 	</div>
 </template>
 
@@ -30,5 +30,3 @@ const self = new Vue({
 });
 
 </script>
-<style>
-</style>

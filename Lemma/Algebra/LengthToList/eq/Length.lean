@@ -1,12 +1,11 @@
-import stdlib.Slice
 import sympy.core.relational
 import Lemma.Algebra.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
-import Lemma.Algebra.Eq_Sub.of.Eq_Add
+import Lemma.Algebra.EqSub.is.Eq_Add
 import Lemma.Algebra.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt
-import Lemma.Algebra.ToNatCeil.eq.Zero.of.Le
+import Lemma.Algebra.EqToNatCeil_0.of.Le
 import Lemma.Algebra.ToNatCeilDivNeg.eq.Zero
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.ToNat.eq.Zero.of.Le_0
+import Lemma.Algebra.EqToNat_0.of.Le_0
 open Algebra
 
 
@@ -37,7 +36,7 @@ private lemma main
         ]
         have h_Le : stop.toNat.min n ≤ start.toNat := by
           simp_all
-        rw [ToNatCeil.eq.Zero.of.Le h_Le]
+        rw [EqToNatCeil_0.of.Le h_Le]
       ·
         simp only [
           ← h_stop_def,
@@ -68,14 +67,14 @@ private lemma main
       ]
       have h_Le : start.toNat.min n ≤ stop.toNat := by
         simp_all
-      rw [ToNatCeil.eq.Zero.of.Le h_Le]
+      rw [EqToNatCeil_0.of.Le h_Le]
     ·
       simp only [
         ← h_start_def,
         (show (start.toNat : ℚ) ⊓ (n : ℚ) = start.toNat.min n by simp),
         (show (step : ℚ) + 1 = step.succ by simp [Nat.succ])
       ]
-      rw [Eq_Sub.of.Eq_Add.left h_start_def] at h_Le
+      rw [Eq_Sub.of.Eq_Add h_start_def] at h_Le
       let start := start.toNat.min n
       let stop := stop.toNat
       let step := step.succ

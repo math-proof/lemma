@@ -1,5 +1,5 @@
 <template>
-	<ol>
+	<ol :start=self.start>
 		<component v-for="arg of self.args" :is=self.components[arg.func] v-bind=arg.bind />
 	</ol>
 </template>
@@ -10,6 +10,7 @@ import Vue from "../js/vue.js"
 
 const props = defineProps({
 	args : Array,
+	kwargs : Object,
 });
 
 const self = new Vue({
@@ -22,12 +23,12 @@ const self = new Vue({
     },
 
     computed: {
+		start() {
+			return props.kwargs.start;
+		}
     },
 
 	directives: {
 	}
 });
 </script>
-
-<style>
-</style>

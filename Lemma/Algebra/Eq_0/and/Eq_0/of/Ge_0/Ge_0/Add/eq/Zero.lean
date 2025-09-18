@@ -1,6 +1,6 @@
 import Lemma.Logic.NotAnd.is.OrNotS
-import Lemma.Logic.NotEq.is.Ne
-import Lemma.Algebra.Gt.of.Ge.Ne
+import Lemma.Logic.Ne.is.NotEq
+import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Add.gt.Zero.of.Gt_0.Ge_0
 import Lemma.Algebra.Add.gt.Zero.of.Ge_0.Gt_0
 import Lemma.Algebra.Ne.of.Gt

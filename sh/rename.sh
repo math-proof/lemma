@@ -29,10 +29,11 @@ fi
 mv $srcFile $dstFile
 
 srcReg=${src//./\\.}
+srcReg="\b$srcReg"
 echo srcReg = $srcReg
-submodule="((\.[a-z]+)?(\b[^.]|$))"
-echo find Lemma -type f -name "*.lean" -not -name "*.echo.lean" -exec sed -i -E "s/$srcReg$submodule/$dst\1/g" {} +
-find Lemma -type f -name "*.lean" -not -name "*.echo.lean" -exec sed -i -E "s/$srcReg$submodule/$dst\1/g" {} +
+submodule="((\.[a-z_]+)*(\b[^.]|$))"
+echo find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -exec sed -i -E "s/$srcReg$submodule/$dst\1/g" {} +
+find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -exec sed -i -E "s/$srcReg$submodule/$dst\1/g" {} +
 
 package_src=$(echo $src | cut -d'.' -f1)
 echo package_src = $package_src
@@ -79,4 +80,4 @@ if [ $package_dst != $package_src ]; then
 fi
 
 # xargs: unmatched single quote; by default quotes are special to xargs unless you use the -0 option
-find Lemma -type f -name "*.lean" -not -name "*.echo.lean" -print0 | xargs -0 grep -lZE "open( [[:alnum:]_.]+)* $package_dst\b" | xargs -0 sed -i -E "s/\b$lemmaNameSrc$submodule/$lemmaNameDst\1/g"
+find Lemma sympy -type f -name "*.lean" -not -name "*.echo.lean" -print0 | xargs -0 grep -lZE "open( [[:alnum:]_.]+)* $package_dst\b" | xargs -0 sed -i -E "s/([^.]\b|^)$lemmaNameSrc$submodule/\1$lemmaNameDst\2/g"

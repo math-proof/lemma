@@ -1,20 +1,20 @@
-import Lemma.Algebra.Sub_Sub.eq.AddSub
-open Algebra
+import Lemma.Algebra.Eq.of.Le.Ge
+import Lemma.Algebra.EqAddSub.of.Gt
+import Lemma.Algebra.EqSubAdd
+import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Basic
 
 
-/--
-This lemma demonstrates that in an additive commutative group, the expression `a - b + c` is equivalent to `a - (b - c)`.
-It leverages the group's properties to rearrange terms involving subtraction and addition, showing how inverses and associativity allow such algebraic manipulations.
--/
-@[main]
+@[main, comm]
 private lemma main
-  [AddCommGroup α]
-  {a b c : α} :
+  [SubtractionCommMonoid α]
+-- given
+  (a b c : α) :
 -- imply
-  a - b + c = a - (b - c) := by
+  a - b + c = a - (b - c) :=
 -- proof
-  rw [Sub_Sub.eq.AddSub]
+  sub_add a b c
 
 
 -- created on 2025-03-24
--- updated on 2025-04-04
+-- updated on 2025-06-18

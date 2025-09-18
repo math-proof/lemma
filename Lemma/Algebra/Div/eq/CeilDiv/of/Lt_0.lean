@@ -1,8 +1,8 @@
 import Lemma.Algebra.Div.eq.AddDiv___Mod
-import Lemma.Algebra.EqCeil.is.Lt.et.Le
+import Lemma.Algebra.EqCeil.is.Lt.Le
 import Lemma.Algebra.Div.gt.Neg1.of.Lt_0
 import Lemma.Algebra.Gt_Add.of.Eq_Add.Gt
-import Lemma.Algebra.Add_Neg.eq.Sub
+import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.LeDivS.of.Lt_0
 open Algebra
 
@@ -16,7 +16,7 @@ private lemma main
   n / d = ⌈n / (d : ℚ)⌉ := by
 -- proof
   apply Eq.symm
-  rw [EqCeil.is.Lt.et.Le]
+  rw [EqCeil.is.Lt.Le]
   constructor
   have h_Eq := Div.eq.AddDiv___Mod (n := n) (d := d)
   have := Div.gt.Neg1.of.Lt_0 (n := n) h
