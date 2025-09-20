@@ -110,11 +110,17 @@ instance [Mul α] : Mul (Tensor α s) where
 instance [Mul α] : HMul (Tensor α s) α (Tensor α s) where
   hMul A b := ⟨A.data * b⟩
 
+instance [Mul α] : HMul (Tensor α s) (Tensor α []) (Tensor α s) where
+  hMul A b := ⟨A.data * b.data[0]⟩
+
 instance [Div α] : Div (Tensor α s) where
   div A B := ⟨A.data / B.data⟩
 
 instance [Div α] : HDiv (Tensor α s) α (Tensor α s) where
   hDiv A b := ⟨A.data / b⟩
+
+instance [Div α] : HDiv (Tensor α s) (Tensor α []) (Tensor α s) where
+  hDiv A b := ⟨A.data / b.data[0]⟩
 
 instance [Mul α] : HMul (Tensor α [m, n].tail.tail) (Tensor α [m', n'].tail.tail) (Tensor α []) where
   hMul A B :=
@@ -150,7 +156,7 @@ def Tensor.fromVector (X : List.Vector (Tensor α s) n) : Tensor α (n :: s) :=
 /--
 [torch.sum](https://docs.pytorch.org/docs/stable/generated/torch.sum.html)
 -/
-def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ) : Tensor α (s.eraseIdx dim) :=
+def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α (s.eraseIdx dim) :=
   if h_dim : dim < s.length then
     match h : dim with
     | .zero =>
@@ -174,12 +180,9 @@ def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ) : Tensor α (s.e
 
 Compute the mean of a tensor along a given dimension.
 -/
-def Tensor.mean [Add α] [Zero α] [Div α] [NatCast α] (X : Tensor α s) (dim : ℕ) : Tensor α (s.eraseIdx dim) :=
-  if h_dim : dim < s.length then
-    let size := s.get ⟨dim, h_dim⟩
-    X.sum dim / (size : α)
-  else
-    0
+def Tensor.mean [Add α] [Zero α] [Div α] [NatCast α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α (s.eraseIdx dim) :=
+  let size := if h_dim : dim < s.length then s.get ⟨dim, h_dim⟩ else 1
+  X.sum dim / (size : α)
 
 /--
 index the tensor physically, i.e. calculate the (row-major (C-style)) index in the data vector
@@ -423,3 +426,15 @@ instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α [m, k]) (Tensor α [k, 
   dot A B :=
     let A : Tensor α ([] ++ [m, k]) := A
     A.dot B
+
+def Tensor.map (f : α → β) (X : Tensor α s) : Tensor β s :=
+  ⟨X.data.map f⟩
+
+instance [Coe α β] : Coe (Tensor α s) (Tensor β s) where
+  coe X := X.map (fun a => Coe.coe a)
+
+instance : Coe Bool ℕ where
+  coe b := b.toNat
+
+instance [NatCast α] : Coe ℕ α where
+  coe n := (n : α)

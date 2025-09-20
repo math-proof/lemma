@@ -316,6 +316,7 @@ def Expr.latexFormat : Expr → String
           s!"\\left[%s < %s\\right] {arg}"
         | `letFun => "{\\begin{align*}&{\\color{blue}{let}}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
+        | `OfScientific.ofScientific => "%s%s.%s"
         | _  =>
           let args := args.map fun arg =>
             if func.priority ≥ arg.priority then
@@ -575,6 +576,29 @@ where
           map args
       | .Lean_operatorname `cast =>
         cdots args
+      | .Lean_operatorname `OfScientific.ofScientific =>
+        if let [mantissa, exponentSign, decimalExponent] := args then
+          let mantissa :=
+            if let const (.natVal mantissa) := mantissa then
+              mantissa
+            else
+              0
+          let decimalExponent :=
+            if let const (.natVal decimalExponent) := decimalExponent then
+              decimalExponent
+            else
+              0
+          let pow10 := 10 ^ decimalExponent
+          let integer := toString (mantissa / pow10)
+          let fraction := toString (mantissa % pow10)
+          let sign :=
+            if let const .true := exponentSign then
+              ""
+            else
+              "-"
+          [sign, integer, fraction]
+        else
+          map args
       | .Lean_typeclass `HEq =>
         cdots args
       | _ =>

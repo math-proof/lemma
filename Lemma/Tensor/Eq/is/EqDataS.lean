@@ -4,6 +4,7 @@ import Lemma.Basic
 
 @[main, comm, mp, mpr]
 private lemma main
+-- given
   (A B : Tensor α s) :
 -- imply
   A = B ↔ A.data = B.data := by

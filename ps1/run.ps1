@@ -21,7 +21,7 @@ function echo_import {
     $module = $lemma -replace '\\', '.'
     Add-Content -Path test.lean -Value "import $module"
     
-    $module = $module -replace '^Lemma\.', ''
+    $module = $module -creplace '^Lemma\.', ''
     $lines = @(Get-Content -Path $file | Where-Object { $_ -match '^import\s+' } | ForEach-Object { $_ -replace '^import\s+', '' })
     
     if ($lines.Count -eq 0) {
@@ -54,7 +54,7 @@ for ($i = 0; $i -lt $batches.Count; $i++) {
 }
 
 # Remove lines starting with 'import ' from test.lean
-(Get-Content test.lean) | ForEach-Object { $_ -replace '^import ', '' } | Set-Content test.lean
+(Get-Content test.lean) | ForEach-Object { $_ -creplace '^import ', '' } | Set-Content test.lean
 
 # Read the modified content into $imports again
 $imports = Get-Content test.lean
@@ -71,7 +71,7 @@ Write-Output "modules:"
 # Process each module in the imports array
 foreach ($module in $imports) {
     # Remove the 'Lemma.' prefix from the module name
-    $module = $module -replace '^Lemma\.', ''
+    $module = $module -creplace '^Lemma\.', ''
 
     # Skip processing if the module is not present in imports_dict or has an empty value
     if (-not $imports_dict.ContainsKey($module) -or [string]::IsNullOrEmpty($imports_dict[$module])) {
@@ -81,6 +81,69 @@ foreach ($module in $imports) {
     $submodules = $imports_dict[$module]
     $submodules = $submodules -replace "'", "''"
     "  ('$user', `"$module`", '$submodules', '[]', '[]', '[]', '[]', '[]')," | Add-Content -Path test.sql
+}
+
+# Get all .lean files except *.echo.lean under Lemma/
+Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForEach-Object {
+    $file = $_.FullName
+    if (!(Select-String -Path $file -Pattern '^@\[main, [^]]+\]' -Quiet)) {return}
+    $file = Resolve-Path -Relative $file
+    $module = $file -creplace '^\.\\Lemma\\', ''
+    $module = $module -replace '\\', '.'
+    $module = $module -replace '\.lean$', ''
+
+    if (Select-String -Path $file -Pattern '^@\[main, .*\bcomm( [0-9]+)?\b' -Quiet) {
+        $tokens = $module -split '\.'
+        $match = Select-String -Path $file -Pattern '^@\[main, .*\bcomm( [0-9]+)?\b' -AllMatches
+        if ($match) {
+            # Take the first match's first group
+            $deBruijn = $match.Matches[0].Groups[1].Value
+        }
+        switch -regex ($tokens[2]) {
+            "^(eq|is|as|ne)$" {
+                $tmp = $tokens[1]
+                $tokens[1] = $tokens[3]
+                $tokens[3] = $tmp
+            }
+            default {
+                $first = $tokens[1]
+                if ($first -like 'Eq_*') {
+                    $first = "Eq" + $first.Substring(3)
+                } elseif ($first -like 'Eq*') {
+                    $first = "Eq_" + $first.Substring(2)
+                } elseif ($first -like 'SEq_*') {
+                    $first = "SEq" + $first.Substring(4)
+                } elseif ($first -like 'SEq*') {
+                    $first = "SEq_" + $first.Substring(3)
+                } else {
+                    Write-Host "panic! Expected the operator to be 'S?Eq.*', got: $first"
+                }
+                $tokens[1] = $first
+            }
+        }
+        $new_module = $tokens -join "."
+        Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+    }
+    if (Select-String -Path $file -Pattern '^@\[main, .*\bmp\b' -Quiet) {
+        if ($module -match '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$') {
+            $new_module = "$($matches[1]).$($matches[3]).of.$($matches[2])$($matches[4])"
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
+    }
+    if (Select-String -Path $file -Pattern '^@\[main, .*\bmpr\b' -Quiet) {
+        if ($module -match '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$') {
+            $new_module = "$($matches[1]).$($matches[2]).of.$($matches[3])$($matches[4])"
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
+    }
+    if (Select-String -Path $file -Pattern '^@\[main, .*\bmp\.comm\b' -Quiet) {
+        $tokens = $module -split '\.'
+        Write-Host "@[mp.comm] at $file"
+    }
+    if (Select-String -Path $file -Pattern '^@\[main, .*\bmpr\.comm\b' -Quiet) {
+        $tokens = $module -split '\.'
+        Write-Host "@[mpr.comm] at $file"
+    }
 }
 
 # Modify the last line to complete the SQL statement
@@ -106,7 +169,7 @@ foreach ($module in $sorryModules) {
     ($module -replace '\.', '/') + ".lean" | Write-Output
     
     # Remove 'Lemma.' prefix from module name
-    $module = $module -replace '^Lemma\.', ''
+    $module = $module -creplace '^Lemma\.', ''
     
     # Skip modules starting with 'sympy' or 'Basic'
     if ($module -match '^sympy' -or $module -match '^Basic') {
@@ -150,7 +213,7 @@ foreach ($module in $failingModules) {
     Write-Output "$leanPath.lean"
 
     # Remove 'Lemma.' prefix
-    $modifiedModule = $module -replace '^Lemma\.', ''
+    $modifiedModule = $module -creplace '^Lemma\.', ''
 
     # Skip modules starting with sympy or Basic
     if ($modifiedModule -like "sympy*" -or $modifiedModule -like "Basic*") {
