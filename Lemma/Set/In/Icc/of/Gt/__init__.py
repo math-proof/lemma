@@ -22,10 +22,8 @@ if __name__ == '__main__':
 # created on 2019-07-28
 del Gt
 del Lt
-del Le
 del Ge
 from . import Gt
 from . import average
 from . import Lt
-from . import Le
 from . import Ge

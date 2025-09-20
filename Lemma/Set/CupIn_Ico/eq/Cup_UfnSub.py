@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Element).apply(Set.In_Icc.Is.InNeg)
 
-    Eq << Eq[-1].this.rhs.apply(Set.CupIn_Ico.offset, -c)
+    Eq << Eq[-1].this.rhs.apply(Set.CupIn_Ico.eq.Cup_UfnAdd, -c)
 
 
 if __name__ == '__main__':

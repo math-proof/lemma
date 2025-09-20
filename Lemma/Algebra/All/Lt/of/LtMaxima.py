@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.given.Cond.apply(Eq[-1])
 
-    Eq.infer_is_empty = Eq[-2].this.apply(Logic.Imp.contraposition)
+    Eq.infer_is_empty = Eq[-2].this.apply(Logic.Imp.Is.ImpNotS)
 
     Eq << Eq[0].this.lhs.limits_subs(x, t)
 

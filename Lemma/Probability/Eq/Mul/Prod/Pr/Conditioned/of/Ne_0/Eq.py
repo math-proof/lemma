@@ -19,7 +19,7 @@ def apply(eq, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Logic
+    from Lemma import Probability, Algebra, Logic, Tensor
 
     m, n, t = Symbol(integer=True, positive=True)
     # suppose you have a set of documents y which is labeled with some semantic tags called keywords x;
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Probability.Eq.of.Ne_0.bayes.Conditioned.apply(Eq.yt_given_x_nonzero, y[t])
 
-    Eq << Eq[-1].this.lhs.find(And).apply(Algebra.Eq.of.Eq.Eq.concat)
+    Eq << Eq[-1].this.lhs.find(And).apply(Tensor.EqStackS.of.EqStackS.Eq)
 
     Eq << Eq[-1].subs(Eq.yt_given_y_historic)
 

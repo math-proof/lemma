@@ -30,7 +30,7 @@ def prove(Eq):
     e, a, b = Symbol(real=True, given=True)
     Eq << apply((e < a) | (e >= b))
 
-    Eq <<= Set.NotIn_Icc.given.Or.apply(Eq[1])
+    Eq <<= Set.NotIn_Icc.given.OrLtS.apply(Eq[1])
 
 
 if __name__ == '__main__':

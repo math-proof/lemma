@@ -19,9 +19,9 @@ def prove(Eq):
     k = Symbol(integer=True)
     Eq << apply(Cup[k:-n:0](Interval(k, k + 1, left_open=True)))
 
-    Eq << Eq[-1].this.lhs.apply(Set.Cup.limits.subst.Neg, k, -1 - k)
+    Eq << Eq[-1].this.lhs.apply(Set.CupIn_Ico.eq.Cup_UfnSub, k, -1 - k)
 
-    Eq << Eq[-1].this.lhs.apply(Set.Cup.eq.Icc.induct.negative.left_open)
+    Eq << Eq[-1].this.lhs.apply(Set.Cup_Ioc.eq.IocNeg_0)
 
 
 if __name__ == '__main__':

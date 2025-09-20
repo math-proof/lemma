@@ -16,7 +16,7 @@ def prove(Eq):
     x, y = Symbol(real=True, given=True)
     Eq << apply(x >= y)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.Ite.Lt)
+    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.IteLt)
 
     Eq << Eq[-1].this.lhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
 

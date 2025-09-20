@@ -56,7 +56,7 @@ def apply(eq, eq_historic):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Logic, Tensor
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Eq.of.Eq.Eq.concat, simplify=None)
+    Eq << Eq[-2].this.lhs.apply(Tensor.EqStackS.of.EqStackS.Eq, simplify=None)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.And.Eq.of.Eq.split, simplify=None)
 

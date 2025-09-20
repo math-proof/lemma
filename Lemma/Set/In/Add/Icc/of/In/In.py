@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] + Eq[-4], Eq[-1] + Eq[-3]
 
-    Eq << Set.In.Icc.of.Gt.Le.apply(Eq[-2], Eq[-1])
+    Eq << Set.In_Ico.of.Le.Gt.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

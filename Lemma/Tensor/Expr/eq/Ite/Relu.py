@@ -17,7 +17,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(x)
 
-    Eq << Algebra.Expr.eq.Ite.apply(x, lower=S.Zero)
+    Eq << Algebra.Expr.eq.IteGe.apply(x, lower=S.Zero)
 
     Eq << Eq[-1].this.find(LessEqual).reversed
 

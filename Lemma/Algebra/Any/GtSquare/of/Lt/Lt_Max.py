@@ -38,7 +38,7 @@ def prove(Eq):
     Eq <<= Logic.And.Imp.of.Imp.apply(Eq[-4], simplify=None), \
         Eq[-3].this.rhs.args[:4:2].apply(Logic.Cond.of.Eq.Cond.subst, simplify=None), \
         Eq[-2].this.rhs.args[::2].apply(Algebra.EqMax.of.Ge_0.Lt, ret=slice(None)), \
-        Eq[-1].this.apply(Logic.Imp.contraposition)
+        Eq[-1].this.apply(Logic.Imp.Is.ImpNotS)
 
     Eq <<= Eq[-5].this.rhs.rhs.apply(Logic.Cond.of.And, index=slice(2, None, -2), simplify=None), \
         Eq[-4].this.rhs.rhs.apply(Logic.Cond.of.And, index=slice(3, None, -3), simplify=None), \

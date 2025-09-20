@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Less).reversed
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.Ite.Gt)
+    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.IteGt)
 
 
 if __name__ == '__main__':

@@ -1,1 +1,1 @@
-from . import Or
+from . import OrLtS

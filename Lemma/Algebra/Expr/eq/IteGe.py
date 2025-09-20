@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[0].apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
 
-    Eq << Eq[-1].this.find(Min).apply(Algebra.Min.eq.Ite.Lt)
+    Eq << Eq[-1].this.find(Min).apply(Algebra.Min.eq.IteLt)
 
     Eq << Eq[-1].this.find(And).apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
 

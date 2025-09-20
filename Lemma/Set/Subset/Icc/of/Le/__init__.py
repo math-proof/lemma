@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True, given=True)
     Eq << apply(x <= y)
 
-    Eq << Set.EqIcc.of.Le.apply(Eq[0])
+    Eq << Set.Icc.eq.InterSingletonS.of.Le.apply(Eq[0])
 
     Eq << Eq[1].subs(Eq[-1])
 

@@ -80,11 +80,11 @@ def prove(Eq):
 
     Eq.le_ceiling = Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
 
-    Eq <<= Eq.eq_K_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.Ite, upper=Eq.le_ceiling.lhs), Eq.eq_V_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.Ite, upper=Eq.le_ceiling.lhs)
+    Eq <<= Eq.eq_K_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs), Eq.eq_V_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs)
 
     Eq <<= Eq[-2].this.rhs().find(GreaterEqual).simplify(), Eq[-1].this.rhs().find(GreaterEqual).simplify()
 
-    Eq <<= Eq[-2].this.find(Min).args[0].apply(Algebra.Expr.eq.Ite, lower=Eq.le_ceiling.lhs), Eq[-1].this.find(Min).args[0].apply(Algebra.Expr.eq.Ite, lower=Eq.le_ceiling.lhs)
+    Eq <<= Eq[-2].this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, lower=Eq.le_ceiling.lhs), Eq[-1].this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, lower=Eq.le_ceiling.lhs)
 
     Eq <<= Logic.BFn.of.BFnIte.Cond.apply(Eq.le_ceiling, Eq[-2]), Logic.BFn.of.BFnIte.Cond.apply(Eq.le_ceiling, Eq[-1])
 

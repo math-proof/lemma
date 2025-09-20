@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i + 1 - Min(i + 1, l), i + 1))
 
-    Eq << Eq[-1].this.rhs.find(~Indexed - Indexed).args[1].apply(Algebra.Expr.eq.Ite, upper=n - 1)
+    Eq << Eq[-1].this.rhs.find(~Indexed - Indexed).args[1].apply(Algebra.Expr.eq.IteGe, upper=n - 1)
 
     Eq << Eq[-1].this(i).rhs(j).find(GreaterEqual).simplify()
 

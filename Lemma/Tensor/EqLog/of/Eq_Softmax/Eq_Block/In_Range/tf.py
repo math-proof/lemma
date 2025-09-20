@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq.ge_neg_min, Eq.lt_min = Set.And.of.In_Range.apply(Eq[2])
 
-    Eq <<= Eq.ge_neg_min.this.find(Min[~Symbol]).apply(Algebra.Expr.eq.Ite, upper=n - 1), Eq.lt_min.this.find(Add).apply(Algebra.Expr.eq.Ite, upper=n)
+    Eq <<= Eq.ge_neg_min.this.find(Min[~Symbol]).apply(Algebra.Expr.eq.IteGe, upper=n - 1), Eq.lt_min.this.find(Add).apply(Algebra.Expr.eq.IteGe, upper=n)
 
     Eq <<= -Eq[-2].this(i).find(GreaterEqual).simplify(), Eq[-1].this(i).find(GreaterEqual).simplify()
 

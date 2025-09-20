@@ -5,7 +5,6 @@ from . import Any
 from . import given
 from . import Is
 from . import flatten
-from . import contraposition
 from . import fold
 from . import Or
 from . import swap

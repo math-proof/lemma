@@ -15,7 +15,7 @@ def apply(n, P_quote=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Logic, Tensor
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq.mapping_quote = All[x[:n + 1]:P_quote](Equal(x_quote, x[:n + 1]), plausible=True)
 
-    Eq << Eq.mapping_quote.this.expr.apply(Algebra.Eq.given.And.Eq.Block)
+    Eq << Eq.mapping_quote.this.expr.apply(Tensor.EqSliceS.given.EqSliceS.Eq.Lt)
 
     Eq << Logic.All_And.given.All.All.apply(Eq[-1])
 

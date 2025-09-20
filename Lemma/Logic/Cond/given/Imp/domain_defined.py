@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].cond.invert().this.apply(Algebra.Cond.of.Cond.domain_defined)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.contraposition)
+    Eq << Eq[-1].this.apply(Logic.Imp.Is.ImpNotS)
 
 
 

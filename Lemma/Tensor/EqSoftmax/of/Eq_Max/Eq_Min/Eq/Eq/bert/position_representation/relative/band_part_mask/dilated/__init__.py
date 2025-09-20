@@ -120,11 +120,11 @@ def prove(Eq):
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le, Eq.K_dquote[i], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le, Eq.V_dquote[i], step=d)
 
-    Eq <<= Eq[-2].this.find(Add[2]).apply(Algebra.Expr.eq.Ite, upper=ζ[i] - 1), Eq[-1].this.find(Add[2]).apply(Algebra.Expr.eq.Ite, upper=ζ[i] - 1)
+    Eq <<= Eq[-2].this.find(Add[2]).apply(Algebra.Expr.eq.IteGe, upper=ζ[i] - 1), Eq[-1].this.find(Add[2]).apply(Algebra.Expr.eq.IteGe, upper=ζ[i] - 1)
 
     Eq <<= Eq[-2].this.rhs().find(GreaterEqual).simplify(), Eq[-1].this.rhs().find(GreaterEqual).simplify()
 
-    Eq <<= Eq[-2].this.find(Min[~Add]).apply(Algebra.Expr.eq.Ite, lower=ζ[i] - 1), Eq[-1].this.find(Min[~Add]).apply(Algebra.Expr.eq.Ite, lower=ζ[i] - 1)
+    Eq <<= Eq[-2].this.find(Min[~Add]).apply(Algebra.Expr.eq.IteGe, lower=ζ[i] - 1), Eq[-1].this.find(Min[~Add]).apply(Algebra.Expr.eq.IteGe, lower=ζ[i] - 1)
 
     Eq <<= Logic.BFn.of.BFnIte.Cond.apply(Eq.le_zeta_i, Eq[-2]), Logic.BFn.of.BFnIte.Cond.apply(Eq.le_zeta_i, Eq[-1])
 

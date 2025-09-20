@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Cup).apply(Set.CupIn_Ico.offset, -d)
+    Eq << Eq[-1].this.find(Cup).apply(Set.CupIn_Ico.eq.Cup_UfnAdd, -d)
 
     Eq << Eq[-1].this.find(Measure).apply(Set.Measure.offset)
 

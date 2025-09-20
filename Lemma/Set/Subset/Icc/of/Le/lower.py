@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq <<= Logic.All.given.All_Or_Not.apply(Eq[-2]), Logic.All.given.All_Or_Not.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.args[1].apply(Set.NotIn_Icc.given.Or), Eq[-1].this.find(NotElement).apply(Set.NotIn_Icc.given.Or)
+    Eq <<= Eq[-2].this.args[1].apply(Set.NotIn_Icc.given.OrLtS), Eq[-1].this.find(NotElement).apply(Set.NotIn_Icc.given.OrLtS)
 
     Eq << Algebra.Or.given.Or.apply(Eq[-1], slice(0, 2))
 

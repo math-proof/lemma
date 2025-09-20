@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + u))
 
-    Eq << Eq[-1].this.find(~Indexed -Indexed).args[1].apply(Algebra.Expr.eq.Ite, upper=n - 1)
+    Eq << Eq[-1].this.find(~Indexed -Indexed).args[1].apply(Algebra.Expr.eq.IteGe, upper=n - 1)
 
     Eq.V_lower = Eq[-1].this(i).expr.rhs(j).find(GreaterEqual).simplify()
 

@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[0] + Eq[1]
 
-    Eq << Eq[-1].this.apply(Algebra.Gt.simp.common_terms)
+    Eq << Eq[-1].this.apply(Algebra.GtAddS.Is.Gt)
 
 
 if __name__ == '__main__':

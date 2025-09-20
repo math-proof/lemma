@@ -33,7 +33,7 @@ def apply(self, i=None, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Logic, Tensor
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq <<= Logic.Imp_And.given.Imp.delete.apply(Eq[-2]), Eq[-1].this.lhs.args[0].apply(Algebra.And.Eq.of.Eq.split, simplify=None)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Eq.of.Eq.Eq.concat, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Tensor.EqStackS.of.EqStackS.Eq, simplify=None)
 
 
 

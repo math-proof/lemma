@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[1].invert().this.apply(Probability.Ne_0.of.Ne_0.delete)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.contraposition)
+    Eq << Eq[-1].this.apply(Logic.Imp.Is.ImpNotS)
 
     Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 

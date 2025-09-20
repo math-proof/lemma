@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq <<= Logic.All.given.All_Or_Not.apply(Eq[-3]), Eq[-2].this.expr.apply(Set.In_Ico.given.Ge.Lt), Logic.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq <<= Eq[-4].this.args[1].apply(Set.NotIn_Icc.given.Or)
+    Eq <<= Eq[-4].this.args[1].apply(Set.NotIn_Icc.given.OrLtS)
 
     Eq <<= Logic.All.given.Imp.apply(Eq[-3]), Eq[-2] * 2, Logic.All.given.Imp.apply(Eq[-1])
 

@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq.ge_relu, Eq.lt_1 = Set.And.of.In_Range.apply(Eq[2])
 
-    Eq << Eq.ge_relu.this.find(Min).args[0].apply(Algebra.Expr.eq.Ite, upper=n - 1)
+    Eq << Eq.ge_relu.this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, upper=n - 1)
 
     Eq << Eq[-1].this(i).find(GreaterEqual).simplify()
 

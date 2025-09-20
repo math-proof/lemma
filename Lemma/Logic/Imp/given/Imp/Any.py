@@ -16,9 +16,9 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(Imply(p(x) >= 0, q(x) >= 0), var=x)
 
-    Eq << Eq[0].this.apply(Logic.Imp.contraposition)
+    Eq << Eq[0].this.apply(Logic.Imp.Is.ImpNotS)
 
-    Eq << Eq[1].this.apply(Logic.Imp.contraposition)
+    Eq << Eq[1].this.apply(Logic.Imp.Is.ImpNotS)
 
     Eq << Eq[-1].this.lhs.simplify()
 

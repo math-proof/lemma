@@ -20,14 +20,14 @@ def apply(eq_historic, eq_n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Tensor
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
     f, g = Function(real=True)
     Eq << apply(Equal(Stack[k:n](f(k)), Stack[k:n](g(k))), Equal(f(n), g(n)))
 
-    Eq << Algebra.Eq.given.And.Eq.Block.apply(Eq[-1], simplify=None)
+    Eq << Tensor.EqSliceS.given.EqSliceS.Eq.Lt.apply(Eq[-1], simplify=None)
 
 
 if __name__ == '__main__':

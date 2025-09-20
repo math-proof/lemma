@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq <<= Algebra.GtDiv.of.Gt_0.Gt.apply(Eq[0], Eq[-2]), Algebra.LeDiv.of.Gt_0.Le.apply(Eq[0], Eq[-1])
 
-    Eq << Set.In.Icc.of.Gt.Le.apply(Eq[-2], Eq[-1])
+    Eq << Set.In_Ico.of.Le.Gt.apply(Eq[-2], Eq[-1])
 
 
 

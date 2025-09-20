@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Logic, Tensor
 
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True, given=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[1].apply(Logic.All.given.All.AllNot, cond=k >= 2)
 
-    Eq << Eq[-1].this().expr.lhs.rhs.apply(Algebra.Eq.given.And.Eq.Block)
+    Eq << Eq[-1].this().expr.lhs.rhs.apply(Tensor.EqSliceS.given.EqSliceS.Eq.Lt)
 
 
 

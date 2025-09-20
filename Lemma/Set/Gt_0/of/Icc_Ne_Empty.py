@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + a
 
-    Eq << Set.EqIcc.of.Le.apply(Eq[-1], left_open=True)
+    Eq << Set.Icc.eq.InterSingletonS.of.Le.apply(Eq[-1], left_open=True)
 
     Eq << ~Eq[-1]
 

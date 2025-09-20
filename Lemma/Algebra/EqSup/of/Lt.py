@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Algebra.All.given.And.All.split.apply(Eq[-2], cond=y < m), Logic.All.given.All_Or_Not.apply(Eq[-1])
 
-    Eq <<= Eq[-2].subs(Eq.eq_min), Eq[-3].this.expr.apply(Algebra.Any.given.Cond.subst, x, (M + y) / 2), Eq[-1].this.find(NotElement).apply(Set.NotIn_Icc.given.Or)
+    Eq <<= Eq[-2].subs(Eq.eq_min), Eq[-3].this.expr.apply(Algebra.Any.given.Cond.subst, x, (M + y) / 2), Eq[-1].this.find(NotElement).apply(Set.NotIn_Icc.given.OrLtS)
 
     Eq <<= Eq[-2].this.expr.apply(Algebra.Any.given.Cond.subst, x, (m + M) / 2), Logic.All_And.given.All.All.apply(Eq[-1])
 
