@@ -1,7 +1,8 @@
 import sympy.tensor.tensor
 import Lemma.Logic.SEqCast.of.Eq
 import Lemma.Algebra.EqEraseIdx.of.Ge_Length
-open Algebra Logic
+import Lemma.Algebra.NotGe.of.Lt
+open Logic Algebra
 
 
 @[main]
@@ -17,10 +18,12 @@ private lemma main
   unfold Tensor.sum
   split_ifs with h
   ·
-    linarith
+    have h := NotGe.of.Lt h
+    contradiction
   ·
     apply SEqCast.of.Eq
     rwa [EqEraseIdx.of.Ge_Length]
 
 
 -- created on 2025-06-23
+-- updated on 2025-09-20
