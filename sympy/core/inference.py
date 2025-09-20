@@ -683,8 +683,8 @@ class Inference:
 
                 if other.is_nonzero:
                     return self.func(lhs, rhs, equivalent=self)
-                from sympy import Or, ZeroMatrix
-                return Or(self.func(other, ZeroMatrix(*other.shape)), self.func(lhs, rhs), equivalent=self)
+                from sympy import Or, Zeros
+                return Or(self.func(other, Zeros(*other.shape)), self.func(lhs, rhs), equivalent=self)
                             
             if other.is_positive:
                 return Inference(self.func(self.lhs / other, self.rhs / other), equivalent=self)
@@ -701,8 +701,8 @@ class Inference:
 
             if other.is_nonzero:
                 return self.func(lhs, rhs, equivalent=self)
-            from sympy import Or, ZeroMatrix
-            return Or(self.func(other, ZeroMatrix(*other.shape)), self.func(lhs, rhs), equivalent=self)
+            from sympy import Or, Zeros
+            return Or(self.func(other, Zeros(*other.shape)), self.func(lhs, rhs), equivalent=self)
         
     def __iter__(self):
         raise TypeError

@@ -36,11 +36,11 @@ class Cofactors(MatrixExpr):
 
     def _entry(self, i, j=None, **_):
         from sympy.matrices.expressions.minors import Minors
-        from sympy.concrete.expr_with_limits import Lamda
+        from sympy.concrete.expr_with_limits import Stack
         m, n = self.rows, self.cols
         if j is None:
             j = self.generate_var(integer=True)
-            return Lamda[j:n]((-1) * (i + j) * Minors(self.arg)[m - 1 - i, n - 1 - j])
+            return Stack[j:n]((-1) * (i + j) * Minors(self.arg)[m - 1 - i, n - 1 - j])
         return (-1) ** (i + j) * Minors(self.arg)[m - 1 - i, n - 1 - j]
 
 # Needs["Combinatorica`"]

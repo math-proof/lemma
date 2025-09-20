@@ -593,7 +593,7 @@ class MutableDenseMatrix(DenseMatrix):
     r"""
     >>> n = 20
     >>> i, j = Symbol(integer=True)
-    >>> Lamda[j:n, i:n](j - i).this.doit()
+    >>> Stack[j:n, i:n](j - i).this.doit()
     """
     
     __slots__ = []
@@ -972,8 +972,8 @@ class MutableDenseMatrix(DenseMatrix):
         sympy.simplify.simplify.simplify
         """
         if all(arg.is_Zero for arg in self.args):
-            from sympy.matrices.expressions.matexpr import ZeroMatrix
-            return ZeroMatrix(*self.shape)
+            from sympy.matrices.expressions.matexpr import Zeros
+            return Zeros(*self.shape)
         return self
 
     def zip_row_op(self, i, k, f):

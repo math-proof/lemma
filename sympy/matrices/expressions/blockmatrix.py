@@ -4,7 +4,7 @@ from sympy.strategies import typed, exhaust, condition, do_one, unpack
 from sympy.strategies.traverse import bottom_up
 from sympy.utilities import sift
 
-from sympy.matrices.expressions.matexpr import MatrixExpr, ZeroMatrix, Identity
+from sympy.matrices.expressions.matexpr import MatrixExpr, Zeros, Identity
 from sympy.matrices.expressions.matpow import MatPow
 from sympy.matrices.expressions.transpose import Transpose, transpose
 
@@ -555,16 +555,16 @@ class BlockMatrix(MatrixExpr):
                 if arg.is_DenseMatrix:
                     if not mat or mat[0].is_DenseMatrix:
                         mat.append(arg)
-                elif arg.is_ZeroMatrix:
-                    if not mat or mat[0].is_ZeroMatrix:
+                elif arg.is_Zeros:
+                    if not mat or mat[0].is_Zeros:
                         mat.append(arg)
 
             if len(mat) == len(self.args):
                 if mat[0].is_DenseMatrix:
                     return self.to_DenseMatrix()
                 
-                if mat[0].is_ZeroMatrix:
-                    return ZeroMatrix(*self.shape)
+                if mat[0].is_Zeros:
+                    return Zeros(*self.shape)
 
         elif self.axis == 1:
             if blocks := self.blocks:
@@ -911,7 +911,7 @@ class BlockDiagMatrix(MatrixExpr):
     def blocks(self):
         from sympy.matrices.immutable import ImmutableDenseMatrix
         mats = self.args
-        data = [[mats[i] if i == j else ZeroMatrix(mats[i].rows, mats[j].cols)
+        data = [[mats[i] if i == j else Zeros(mats[i].rows, mats[j].cols)
                         for j in range(len(mats))]
                         for i in range(len(mats))]
         return ImmutableDenseMatrix(data)
@@ -957,12 +957,12 @@ def block_collapse(expr):
     """Evaluates a block matrix expression
 
     >>> from sympy import MatrixSymbol, BlockMatrix, symbols, \
-                          Identity, Matrix, ZeroMatrix, block_collapse
+                          Identity, Matrix, Zeros, block_collapse
     >>> n,m,l = symbols('n m l')
     >>> X = MatrixSymbol('X', n, n)
     >>> Y = MatrixSymbol('Y', m ,m)
     >>> Z = MatrixSymbol('Z', n, m)
-    >>> B = BlockMatrix([[X, Z], [ZeroMatrix(m, n), Y]])
+    >>> B = BlockMatrix([[X, Z], [Zeros(m, n), Y]])
     >>> print(B)
     Matrix([
     [X, Z],

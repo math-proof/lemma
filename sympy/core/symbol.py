@@ -385,7 +385,7 @@ class Symbol(AtomicExpr, NotIterable):
         if name is None:
             import traceback
             line = traceback.extract_stack()[-2].line
-            name = re.match('(.+?) *= *Symbol\(.+ *$', line)[1]
+            name = re.match(r'(.+?) *= *Symbol\(.+ *$', line)[1]
             if ',' in name:
                 return (Symbol(name.strip(), **assumptions) for name in name.split(','))
             
@@ -739,16 +739,16 @@ class Symbol(AtomicExpr, NotIterable):
 
     def equality_defined(self):
         from sympy import Mul, Equal
-        from sympy.concrete.expr_with_limits import Lamda
+        from sympy.concrete.expr_with_limits import Stack
         definition = self.definition
-        if definition.is_Lamda:
+        if definition.is_Stack:
             vars = definition.variables[::-1]
             return Equal(self[vars], definition[vars], evaluate=False, plausible=None)
         elif definition.is_Mul:
             args = []
             ref = None
             for arg in definition.args:
-                if isinstance(arg, Lamda):
+                if isinstance(arg, Stack):
                     assert ref is None
                     ref = arg
                 else:
@@ -895,7 +895,7 @@ class Symbol(AtomicExpr, NotIterable):
         
         else:
             definition = self.definition
-            if definition is not None and definition.is_Lamda:
+            if definition is not None and definition.is_Stack:
                 if len(definition.limits) == 1 and definition.expr.is_RandomSymbol:
                     return definition[indices]
 
@@ -1335,7 +1335,7 @@ class Symbol(AtomicExpr, NotIterable):
                     
                 definition = self.definition
                 if definition is not None:
-                    if definition.is_Lamda:
+                    if definition.is_Stack:
                         for var in definition.variables:
                             if old == var:
                                 return self
@@ -1564,11 +1564,10 @@ class Symbol(AtomicExpr, NotIterable):
 
     @classmethod
     def compile_definition_statement(cls, line):
-        m = re.match('(.+?) *= *(Symbol|Function)\((.+)\) *$', line)
-        if m:
+        if m := re.match(r'(.+?) *= *(Symbol|Function)\((.+)\) *$', line):
             name, func, kwargs = m.groups()
             if ',' in name:
-                line = "%s = %s" % (name, ', '.join(["%s('%s', %s)" % (func, n, kwargs) for n in re.split("\s*,\s*", name)]))
+                line = "%s = %s" % (name, ', '.join(["%s('%s', %s)" % (func, n, kwargs) for n in re.split(r"\s*,\s*", name)]))
             elif re.match("'[^']+'", kwargs) or re.match('"[^"]+"', kwargs):
                 ...
             else:
@@ -1581,8 +1580,8 @@ class Symbol(AtomicExpr, NotIterable):
         for next_sym, next_definition in next_definitions:
             for i in range(len(definition) - 1, -1, -1):
                 last_sym, last_definition = definition[i]
-                if (m_last := re.search(f'(.+) = (Symbol|Function)\((.+)\)', last_definition)):
-                    if (m_next := re.search(f'(.+) = (Symbol|Function)\((.+)\)', next_definition)) and m_last[2] == m_next[2] and m_last[3] == m_next[3]:
+                if (m_last := re.search(fr'(.+) = (Symbol|Function)\((.+)\)', last_definition)):
+                    if (m_next := re.search(fr'(.+) = (Symbol|Function)\((.+)\)', next_definition)) and m_last[2] == m_next[2] and m_last[3] == m_next[3]:
                         if isinstance(last_sym, list):
                             if isinstance(next_sym, list):
                                 last_sym += next_sym

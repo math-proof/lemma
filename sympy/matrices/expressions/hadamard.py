@@ -1,5 +1,5 @@
 from sympy.core import Mul, sympify
-from sympy.matrices.expressions.matexpr import MatrixExpr, Identity, OneMatrix, ZeroMatrix
+from sympy.matrices.expressions.matexpr import MatrixExpr, Identity, Ones, Zeros
 from ..common import ShapeError
 from sympy.strategies import unpack, flatten, condition, exhaust, do_one, rm_id, sort
 from sympy.core.cache import cacheit
@@ -139,7 +139,7 @@ def canonicalize(x):
     ========
 
     >>> from sympy.matrices.expressions import MatrixSymbol, HadamardProduct
-    >>> from sympy.matrices.expressions import OneMatrix, ZeroMatrix
+    >>> from sympy.matrices.expressions import Ones, Zeros
     >>> from sympy.matrices.expressions.hadamard import canonicalize
 
     >>> A = MatrixSymbol('A', 2, 2)
@@ -169,7 +169,7 @@ def canonicalize(x):
 
     Hadamard product identity:
 
-    >>> X = HadamardProduct(A, OneMatrix(2, 2))
+    >>> X = HadamardProduct(A, Ones(2, 2))
     >>> X
     A.*1
     >>> canonicalize(X)
@@ -177,7 +177,7 @@ def canonicalize(x):
 
     Absorbing element of Hadamard product:
 
-    >>> X = HadamardProduct(A, ZeroMatrix(2, 2))
+    >>> X = HadamardProduct(A, Zeros(2, 2))
     >>> X
     A.*0
     >>> canonicalize(X)
@@ -224,14 +224,14 @@ def canonicalize(x):
     # Identity
     fun = condition(
             lambda x: isinstance(x, HadamardProduct),
-            rm_id(lambda x: isinstance(x, OneMatrix))
+            rm_id(lambda x: isinstance(x, Ones))
         )
     x = fun(x)
 
     # Absorbing by Zero Matrix
     def absorb(x):
-        if any(isinstance(c, ZeroMatrix) for c in x.args):
-            return ZeroMatrix(*x.shape)
+        if any(isinstance(c, Zeros) for c in x.args):
+            return Zeros(*x.shape)
         else:
             return x
 

@@ -900,10 +900,10 @@ class AssumptionKeys(object):
         Examples
         ========
 
-        >>> from sympy import Q, ask, ZeroMatrix, Identity
+        >>> from sympy import Q, ask, Zeros, Identity
         >>> ask(Q.upper_triangular(Identity(3)))
         True
-        >>> ask(Q.upper_triangular(ZeroMatrix(3, 3)))
+        >>> ask(Q.upper_triangular(Zeros(3, 3)))
         True
 
         References
@@ -925,10 +925,10 @@ class AssumptionKeys(object):
         Examples
         ========
 
-        >>> from sympy import Q, ask, ZeroMatrix, Identity
+        >>> from sympy import Q, ask, Zeros, Identity
         >>> ask(Q.lower_triangular(Identity(3)))
         True
-        >>> ask(Q.lower_triangular(ZeroMatrix(3, 3)))
+        >>> ask(Q.lower_triangular(Zeros(3, 3)))
         True
 
         References
@@ -950,9 +950,9 @@ class AssumptionKeys(object):
         Examples
         ========
 
-        >>> from sympy import Q, ask, MatrixSymbol, ZeroMatrix
+        >>> from sympy import Q, ask, MatrixSymbol, Zeros
         >>> X = MatrixSymbol('X', 2, 2)
-        >>> ask(Q.diagonal(ZeroMatrix(3, 3)))
+        >>> ask(Q.diagonal(Zeros(3, 3)))
         True
         >>> ask(Q.diagonal(X), Q.lower_triangular(X) &
         ...     Q.upper_triangular(X))
@@ -979,11 +979,11 @@ class AssumptionKeys(object):
         Examples
         ========
 
-        >>> from sympy import Q, ask, MatrixSymbol, ZeroMatrix, Identity
+        >>> from sympy import Q, ask, MatrixSymbol, Zeros, Identity
         >>> X = MatrixSymbol('X', 2, 2)
         >>> ask(Q.fullrank(X.T), Q.fullrank(X))
         True
-        >>> ask(Q.fullrank(ZeroMatrix(3, 3)))
+        >>> ask(Q.fullrank(Zeros(3, 3)))
         False
         >>> ask(Q.fullrank(Identity(3)))
         True
@@ -1002,14 +1002,14 @@ class AssumptionKeys(object):
         Examples
         ========
 
-        >>> from sympy import Q, ask, MatrixSymbol, ZeroMatrix, Identity
+        >>> from sympy import Q, ask, MatrixSymbol, Zeros, Identity
         >>> X = MatrixSymbol('X', 2, 2)
         >>> Y = MatrixSymbol('X', 2, 3)
         >>> ask(Q.square(X))
         True
         >>> ask(Q.square(Y))
         False
-        >>> ask(Q.square(ZeroMatrix(3, 3)))
+        >>> ask(Q.square(Zeros(3, 3)))
         True
         >>> ask(Q.square(Identity(3)))
         True

@@ -6,7 +6,7 @@ from .cofactor import Cofactors
 
 from .funcmatrix import FunctionMatrix
 from .inverse import Inverse
-from .matexpr import Identity, MatrixExpr, MatrixSymbol, ZeroMatrix, OneMatrix, matrix_symbols, SwapMatrix, AddMatrix, MulMatrix, ShiftMatrix
+from .matexpr import Identity, MatrixExpr, MatrixSymbol, Zeros, Ones, matrix_symbols, SwapMatrix, AddMatrix, MulMatrix, ShiftMatrix
 
 from .matmul import MatMul
 from .matpow import MatPow

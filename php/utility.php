@@ -18,7 +18,7 @@ function py_to_module($py)
     for (;;) {
         $dirname = dirname($pythonFile);
         $basename = basename($pythonFile);
-        if (std\equals($basename, 'Axiom')) {
+        if (std\equals($basename, 'Lemma')) {
             break;
         }
 
@@ -65,7 +65,7 @@ function module_to_path($theorem)
 {
     $theorem = str_replace(".", "/", $theorem);
 
-    return dirname(dirname(__file__)) . "/Axiom/$theorem";
+    return dirname(dirname(__file__)) . "/Lemma/$theorem";
 }
 
 function reference(&$value)
@@ -258,7 +258,7 @@ function yield_from_py($python_file)
     if ($i < $count) {
         $statement = $py[$i];
 
-        if (preg_match('/^    from Axiom import (.+)/', $statement, $matches)) {
+        if (preg_match('/^    from Lemma import (.+)/', $statement, $matches)) {
             $section = explode(", ", $matches[1]);
             yield [
                 'line' => $i,
@@ -387,7 +387,9 @@ function yield_from_py($python_file)
 
 function match_section($statement, &$matches)
 {
-    return preg_match_all('/\b(?:Algebra|Calculus|Discrete|Geometry|Neuro|Prob|Set)(?:\.\w+)+/', $statement, $matches, PREG_SET_ORDER);
+    $sections = std\listdir(dirname(dirname(__FILE__)) . "/Lemma/");
+	$sectionRegex = implode('|', $sections);
+    return preg_match_all("/\\b(?:$sectionRegex)(?:\\.\\w+)+/", $statement, $matches, PREG_SET_ORDER);
 }
 
 function has_unterminated_parantheses($statement) {
@@ -428,7 +430,7 @@ function determine_section($proveCodes)
     $section = new std\Set($section);
     $section = $section->jsonSerialize();
     $section = implode(", ", $section);
-    $section = "from Axiom import $section";
+    $section = "from Lemma import $section";
     return $section;
 }
 
@@ -861,7 +863,7 @@ function fetch_codes($module, $fetch_prove = false)
     if ($fetch_prove) {
         $prove = [];
         $line = $py[$i];
-        if (preg_match('/^    from Axiom import \w+/', $line, $matches)) {
+        if (preg_match('/^    from Lemma import \w+/', $line, $matches)) {
             ++ $i;
         }
 
@@ -891,7 +893,7 @@ function fetch_codes($module, $fetch_prove = false)
 
 function axiom_directory()
 {
-    return dirname(dirname(__file__)) . "/Axiom/";
+    return dirname(dirname(__file__)) . "/Lemma/";
 }
 
 function select_axiom_by_state($user, $state, $limit=100)
@@ -1237,9 +1239,9 @@ function replace_with_callee($user, $old, $new)
         $pyFile->preg_replace($old_regex_hierarchy, $new);
     }
 
-    $old_regex = "(?<=from Axiom\.)$old_regex(?= import \w+)";
+    $old_regex = "(?<=from Lemma\.)$old_regex(?= import \w+)";
     // php doesn't support variable-lenth looking-behind assertion
-    // $old_regex = "(?<=^ *from Axiom\.)$old_regex(?= import \w+)";
+    // $old_regex = "(?<=^ *from Lemma\.)$old_regex(?= import \w+)";
     foreach (get_rows("select caller from `function` where user = '$user' and callee = '$old'", MYSQLI_NUM) as [$caller]) {
         $pyFile = module_to_py($caller);
         $pyFile = new Text($pyFile);

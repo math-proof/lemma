@@ -344,8 +344,8 @@ class Pow(Expr):
             if e is S.ComplexInfinity:
                 return S.NaN
             if e is S.Zero:
-                from sympy import OneMatrix
-                return OneMatrix(*b.shape)
+                from sympy import Ones
+                return Ones(*b.shape)
             elif e is S.One:
                 return b
             elif e == -1 and not b:

@@ -24,7 +24,7 @@ SparseMatrix = MutableSparseMatrix
 from .expressions import (
     MatrixSlice, BlockDiagMatrix, BlockMatrix, FunctionMatrix, Identity,
     Inverse, MatMul, MatPow, MatrixExpr, MatrixSymbol, Trace,
-    Transpose, ZeroMatrix, OneMatrix, blockcut, block_collapse, matrix_symbols, Adjoint,
+    Transpose, Zeros, Ones, blockcut, block_collapse, matrix_symbols, Adjoint,
     hadamard_product, HadamardProduct, HadamardPower, Det, Determinant, det,
     diagonalize_vector, DiagonalizeVector, DiagonalMatrix, DiagonalOf, trace,
     DotProduct, kronecker_product, KroneckerProduct, MatrixSet, Cofactors, SwapMatrix, AddMatrix, MulMatrix, ShiftMatrix)

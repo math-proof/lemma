@@ -1,6 +1,6 @@
 from sympy.core.function import Function
 from sympy.core.symbol import Symbol
-from sympy.concrete.expr_with_limits import Lamda
+from sympy.concrete.expr_with_limits import Stack
 from sympy.functions.elementary.miscellaneous import Max, Min
 from sympy.concrete.summations import Sum
 from sympy.concrete.reduced import ReducedMean
@@ -68,7 +68,7 @@ def conv1d(x, w, b, stride=1, padding=0, dilation=1, groups=1):
         
     i0 = i - padding
     
-    return Lamda[i:(seq_length + 2 * padding - dilation[0] * (kernel_size[0] - 1) - 1 + stride) // stride, 
+    return Stack[i:(seq_length + 2 * padding - dilation[0] * (kernel_size[0] - 1) - 1 + stride) // stride, 
                  k:batch_size](
         Sum[sum_limit(dilation, kernel_size, seq_length, di, i0)](
             x[k, i0 + di * dilation[0]] @ w[di] + b))

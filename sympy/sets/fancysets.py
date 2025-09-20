@@ -1556,11 +1556,7 @@ class Range(Set):
             return 'Range(%s, %s, %s)' % (self.start, self.stop, self.step)
 
     def _lean(self, p):
-        def wrap(arg):
-            if arg.is_Add or arg.is_Mul:
-                return "(%s)" % p._print(arg)
-            return p._print(arg)
-
+        from sympy import Function
         start = self.start
         stop = self.stop
         step = self.step
@@ -1568,12 +1564,12 @@ class Range(Set):
             if start.is_NegativeInfinity:
                 if stop.is_Infinity:
                     return '(univ : Set \N{DOUBLE-STRUCK CAPITAL Z})'
-                return 'Iio %s' % wrap(stop)
+                return Function.lean_fun('Iio', stop, p=p)
             if stop.is_Infinity:
-                return 'Ici %s' % wrap(start)
-            return 'Ico %s %s' % (wrap(start), wrap(stop))
+                return Function.lean_fun('Ici', start, p=p)
+            return Function.lean_fun('Ico', start, stop, p=p)
         else:
-            return 'range %s %s %s' % (start, stop, step)
+            return Function.lean_fun('range', start, stop, step, p=p)
 
     def handle_finite_sets(self, unk):
         if all(arg.domain in self for arg in unk.args):
@@ -2452,20 +2448,20 @@ class ExtendedComplexes(CartesianComplexRegion, metaclass=Singleton):
 
 
 def arange(*args):
-    from sympy.concrete.expr_with_limits import Lamda
+    from sympy.concrete.expr_with_limits import Stack
     args = [*map(sympify, args)]
     if len(args) == 1:
         [size] = args
         i = size.generate_var(integer=True, var='i')
-        return Lamda[i:size](i)
+        return Stack[i:size](i)
     
     if len(args) == 2:
         start, stop = args
         i = stop.generate_var(integer=True, var='i', excludes=start.free_symbols)
-        return Lamda[i:stop - start](i + start)
+        return Stack[i:stop - start](i + start)
     
     if len(args) == 3:
         start, stop, step = args
         i = stop.generate_var(integer=True, var='i', excludes=start.free_symbols | step.free_symbols)
         from sympy.functions.elementary.integers import Ceil
-        return Lamda[i: Ceil((stop - start) / step)](i * step + start)
+        return Stack[i: Ceil((stop - start) / step)](i * step + start)

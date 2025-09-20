@@ -3042,8 +3042,8 @@ class Basic(Printable, metaclass=ManagedProperties):
             axis += len(limits) + 1
             
         index = len(limits) - axis
-        from sympy.concrete.expr_with_limits import Lamda
-        tensor = Lamda(self[tuple(indices)], *limits[:index], (i, 0, size), *limits[index:]).simplify()
+        from sympy.concrete.expr_with_limits import Stack
+        tensor = Stack(self[tuple(indices)], *limits[:index], (i, 0, size), *limits[index:]).simplify()
         try:
             S[self], S[axis], S[size] = tensor.of_unsqueeze()
         except Exception as e:
@@ -3056,10 +3056,10 @@ class Basic(Printable, metaclass=ManagedProperties):
         limits = self._limits
         indices = self._variables
         
-        from sympy.concrete.expr_with_limits import Lamda
+        from sympy.concrete.expr_with_limits import Stack
         from sympy.functions.elementary.piecewise import Piecewise
         
-        return Lamda(
+        return Stack(
             Piecewise(
                 (lhs[indices], self[indices]),
                 (rhs[indices], True)), 
@@ -3069,8 +3069,8 @@ class Basic(Printable, metaclass=ManagedProperties):
         #precondition: indices must be nonnegative in case of index error
         args, limits = indices.variables_with_limits({*self.free_symbols})
         args = tuple(args)
-        from sympy.concrete.expr_with_limits import Lamda
-        return Lamda(self[(*args[:axis], indices[args], *args[axis + 1:])], *limits)
+        from sympy.concrete.expr_with_limits import Stack
+        return Stack(self[(*args[:axis], indices[args], *args[axis + 1:])], *limits)
     
     def is_default_slice(self, index, length=1):
         if isinstance(index, slice):
@@ -3174,8 +3174,8 @@ class Basic(Printable, metaclass=ManagedProperties):
         i = indices[axis]
         i = size - 1 - i
         indices[axis] = i
-        from sympy.concrete.expr_with_limits import Lamda
-        return Lamda(self[tuple(indices)], *limits)
+        from sympy.concrete.expr_with_limits import Stack
+        return Stack(self[tuple(indices)], *limits)
     
     def expand_indices(self, limits, **kwargs):
         return self

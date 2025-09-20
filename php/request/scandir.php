@@ -19,7 +19,7 @@ switch($folder[0]){
 
 $folder = str_replace('.', '/', $folder);
 
-$folder = dirname(dirname(dirname(__file__))).'/Axiom'.$folder;
+$folder = dirname(dirname(dirname(__file__))).'/Lemma'.$folder;
 
 foreach (scandir($folder) as $file) {
     switch ($file) {

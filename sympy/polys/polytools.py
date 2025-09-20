@@ -150,7 +150,7 @@ class Poly(Basic):
 
         if isinstance(rep, (DMP, DMF, ANP, DomainElement)):
             return cls._from_domain_element(rep, opt)
-        elif iterable(rep, exclude=str) and not (isinstance(rep, Basic) and rep.is_Symbol or rep.is_Lamda or rep.is_Function):
+        elif iterable(rep, exclude=str) and not (isinstance(rep, Basic) and rep.is_Symbol or rep.is_Stack or rep.is_Function):
             if isinstance(rep, dict):
                 return cls._from_dict(rep, opt)
             else:

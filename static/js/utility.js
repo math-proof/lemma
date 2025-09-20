@@ -99,7 +99,7 @@ const sections = [
 	'Discrete',
 	'Geometry',
 	'Logic',
-	'Neuro',
+	'Tensor',
 	'Probability',
 	'Set',
 ];

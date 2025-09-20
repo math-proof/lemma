@@ -51,7 +51,7 @@ export default {
 				for (var m of m){
 					var folder = m[1];
 					var names = folder.split(/[\/\\]/);
-					var index = names.indexOf('Axiom');
+					var index = names.indexOf('Lemma');
 					names = names.slice(index + 1);
 					var section = names.pop();
 					var parentFolder = names.join('.');
@@ -63,9 +63,10 @@ export default {
 			var undeletables = '';
 			if (this.module != module){
 				console.log('oldText = ' + this.module);
-				console.log('newText = ' + module);			
-				
-				undeletables = await form_post(`php/request/rename.php`, { old: this.module.replace(/\//g, '.'), new: module.replace(/\//g, '.')});
+				console.log('newText = ' + module);
+				var $new = module.replace(/\//g, '.')
+				$new = $new.replace(/\bis\b/, 'Is');
+				undeletables = await form_post(`php/request/rename.php`, {old: this.module.replace(/\//g, '.'), new: $new});
 				console.log('undeletables = ' + undeletables);
 				
 				var modules = this.$root.list;
@@ -157,8 +158,8 @@ export default {
 			var undeletables = '';
 			if (old != $new){
 				console.log('oldText = ' + old);
-				console.log('newText = ' + $new);			
-				
+				console.log('newText = ' + $new);
+				$new = $new.replace(/\bis\b/, 'Is');
 				undeletables = await form_post(`php/request/rename.php`, { old, new: $new});
 				console.log('undeletables = ' + undeletables);
 				this.delete_folder(undeletables);

@@ -810,8 +810,8 @@ class Norm(Function):
         except Exception as e:
             if str(e) == 'empty slices':
                 if any(s._has(old) for s in arg.shape):
-                    from sympy import ZeroMatrix
-                    return ZeroMatrix(*self.shape)
+                    from sympy import Zeros
+                    return Zeros(*self.shape)
             
             raise e
         if len(arg.shape) < len(self.arg.shape):

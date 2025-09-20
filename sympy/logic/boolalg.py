@@ -2472,7 +2472,7 @@ class Given(BooleanAssumption):
             return p._print_Function(self)
     
     def _latex(self, p, rotate=False):
-        return Imply._latex(self, p, '\Leftarrow', rotate=rotate)
+        return Imply._latex(self, p, r'\Leftarrow', rotate=rotate)
 
     def __and__(self, other):
         """Overloading for & operator"""
@@ -3948,7 +3948,7 @@ def simplify_patterns_xor():
                      )
     return _matchers_xor
 
-binary_operators = 'equ', 'Is', 'eq', 'ne', 'gt', 'ge', 'lt', 'le', 'In', 'to', 'subset', 'supset', 'et', 'ou', 'distributed'
+binary_operators = 'equ', 'Is', 'eq', 'ne', 'gt', 'ge', 'lt', 'le', 'at', 'to', 'subset', 'supset', 'et', 'ou', 'distributed'
 def inference_type(tokens):
 
     for token in ('of', 'given', *binary_operators):

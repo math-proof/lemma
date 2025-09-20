@@ -218,7 +218,7 @@ class Mul(Expr, AssocOp):
 
         from sympy.calculus.util import AccumBounds
         from sympy.matrices.expressions import MatrixExpr
-        from sympy.matrices.expressions.matexpr import ZeroMatrix
+        from sympy.matrices.expressions.matexpr import Zeros
         rv = None
         
         infinitesimals = [x for x in seq if x.infinitesimality is not None]
@@ -343,10 +343,10 @@ class Mul(Expr, AssocOp):
                 neg1e += S.Half
                 continue
 
-            elif o.is_ZeroMatrix:
+            elif o.is_Zeros:
                 coeff = o * coeff
                 continue
-            elif o.is_OneMatrix:
+            elif o.is_Ones:
                 if len(coeff.shape) < len(o.shape):
                     if coeff.is_infinite and c_powers:
                         indices_to_be_deleted = []
@@ -361,8 +361,8 @@ class Mul(Expr, AssocOp):
                             indices_to_be_deleted.reverse()
                             for index in indices_to_be_deleted:
                                 del c_powers[index]
-                    elif coeff.is_Zero or coeff.is_ZeroMatrix:
-                        coeff = ZeroMatrix(*o.shape)
+                    elif coeff.is_Zero or coeff.is_Zeros:
+                        coeff = Zeros(*o.shape)
                         o = coeff
                                      
                     coeff = Mul(coeff, o, evaluate=False)
@@ -656,7 +656,7 @@ class Mul(Expr, AssocOp):
 
         # 0
         elif coeff.is_zero:
-            # we know for sure the result will be 0 / ZeroMatrix except the multiplicand
+            # we know for sure the result will be 0 / Zeros except the multiplicand
             # is infinity or a matrix
             if any(isinstance(c, MatrixExpr) for c in nc_part):
                 return [coeff], nc_part, order_symbols
@@ -664,7 +664,7 @@ class Mul(Expr, AssocOp):
                 return [S.NaN], [], order_symbols
             
             shape = Add.broadcast_from_sequence(seq)
-            coeff = ZeroMatrix(*shape)
+            coeff = Zeros(*shape)
             return [coeff], [], order_symbols
 
         # check for straggling Numbers that were produced
@@ -682,7 +682,7 @@ class Mul(Expr, AssocOp):
         # current code expects coeff to be always in slot-0
         if coeff.is_One:
             ...
-        elif coeff.is_OneMatrix:
+        elif coeff.is_Ones:
             if not c_part or len(coeff.shape) > max((len(arg.shape) for arg in c_part)):
                 c_part.insert(0, coeff)
         elif coeff.is_Mul:
@@ -1966,9 +1966,9 @@ class Mul(Expr, AssocOp):
 
         # but it can't be multiplied by oo
         if coeff.is_NegativeInfinity:
-            from sympy.matrices.expressions.matexpr import ZeroMatrix
+            from sympy.matrices.expressions.matexpr import Zeros
             if terms.is_extended_positive or terms.is_extended_negative:
-                return ZeroMatrix(*terms.shape)
+                return Zeros(*terms.shape)
             return
         elif coeff.is_Infinity:
             return
@@ -2126,7 +2126,7 @@ class Mul(Expr, AssocOp):
             return Expr.simplify(self, deep=True, **kwargs)
         
         for i, arg in enumerate(self.args):
-            if arg.is_Lamda:
+            if arg.is_Stack:
                 _arg = arg.simplify(squeeze=True)
                 if _arg != arg:
                     args = [*self.args]
@@ -2414,11 +2414,11 @@ class Mul(Expr, AssocOp):
                         _tex += numbersep
                     elif _tex:
                         prev = args[i - 1]
-                        if prev.is_OneMatrix or \
-                        term.is_OneMatrix or \
-                        (prev.is_Atom or prev.is_Lamda) and (term.is_Lamda or term.is_Mod) or \
+                        if prev.is_Ones or \
+                        term.is_Ones or \
+                        (prev.is_Atom or prev.is_Stack) and (term.is_Stack or term.is_Mod) or \
                         prev.is_Product and term.is_ExprWithLimits:
-                            _tex += " \cdot "
+                            _tex += r" \cdot "
                         else:
                             _tex += separator
 
@@ -2711,7 +2711,7 @@ class Mul(Expr, AssocOp):
         return super(Mul, self).dtype
 
     def squeeze(self):
-        return self.func(*[t for t in self.args if not t.is_OneMatrix])
+        return self.func(*[t for t in self.args if not t.is_Ones])
 
     def of(self, cls, **kwargs):
         from sympy.core.of import Basic
@@ -2929,8 +2929,8 @@ class Mul(Expr, AssocOp):
             
             if unmodified:
                 if max(len(expr.shape) for expr in unmodified) < len(self.expr.shape):
-                    from sympy import OneMatrix
-                    one = OneMatrix(*self.expr.shape)
+                    from sympy import Ones
+                    one = Ones(*self.expr.shape)
                     try:
                         del constants[constants.index(one)]
                         if not constants and not modified:

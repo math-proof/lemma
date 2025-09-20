@@ -137,7 +137,7 @@ export default {
 		var self = this;
 		
 		function locate_definition(cm, index, symbol) {
-		    var regex = eval(`/(?:    )*from Axiom\\.(.+) import ${symbol}\\b/`);
+		    var regex = eval(`/(?:    )*from Lemma\\.(.+) import ${symbol}\\b/`);
 
 		    for (; index >= 0; --index) {
 		        var line = cm.getLine(index);
@@ -193,7 +193,7 @@ export default {
 		            else
 		                var apply = false;
 
-		            m = module.match(/^Axiom\.(.+)/);
+		            m = module.match(/^Lemma\.(.+)/);
 		            if (m)
 		                module = m[1];
 

@@ -299,7 +299,7 @@ class ExprWithIntLimits(ExprWithLimits):
 #                     "\right." here is necessary to match the previous \left
                     tex += r"\limits_{%s \left| %s \right.}" % (var.latex, domain.latex)
                 else:
-                    tex += r"\limits_{\substack{%s \in %s}} " % tuple([p._print(i) for i in limit])                
+                    tex += r"\limits_{\substack{%s \in %s}} " % tuple([p._print(i) for i in limit])
             else:
                 if limit[1].is_bool:
                     tex += r"\limits_{{%s \in %s} \left| %s \right.}" % (limit[0].latex, limit[2].latex, limit[1].latex)

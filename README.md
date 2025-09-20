@@ -29,7 +29,7 @@ open the folder target, and then you can browse the visualized structure of pyth
 to debug one single file, execute the following command:  
 python run.py Discrete.Binom.eq.Add.Pascal  
 or try to open and execute the python file directly:   
-.\Axiom\Discrete/Binom/eq/Add/Pascal.py  
+.\Lemma\Discrete/Binom/eq/Add/Pascal.py  
 
 
 # IDE for online-debugging

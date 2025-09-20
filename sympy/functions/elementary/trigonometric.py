@@ -285,7 +285,7 @@ class Sin(TrigonometricFunction):
     >>> n, d = 10, 14
     >>> b = Symbol(real=True)
     >>> k, i = Symbol(integer=True)
-    >>> theta = k / b ** (Lamda[i:d // 2](i) / (d // 2))
+    >>> theta = k / b ** (Stack[i:d // 2](i) / (d // 2))
     >>> R_k = Symbol(BlockMatrix([[Identity(d // 2) * cos(theta), -Identity(d // 2) * sin(theta)], [Identity(d // 2) * sin(theta), Identity(d // 2) * cos(theta)]]))
     >>> R_k.this.definition
     >>> Eq[-1].rhs.doit(deep=True)
@@ -607,7 +607,7 @@ class Cos(TrigonometricFunction):
     >>> n, d = 10, 14
     >>> b = Symbol(real=True)
     >>> i, j, k = Symbol(integer=True)
-    >>> R = Symbol(Lamda[k:d, j:d, i:n](Piecewise((Piecewise((cos(i / b ** (j / d)), Equal(j, k)), (-sin(i / b ** (j / d)), Equal(j, k - 1)), (0, True)), Equal(j % 2, 0)), (Piecewise((cos(i / b ** ((j - 1) / d)), Equal(j, k)), (sin(i / b ** ((j - 1) / d)), Equal(j, k + 1)), (0, True)), True))))
+    >>> R = Symbol(Stack[k:d, j:d, i:n](Piecewise((Piecewise((cos(i / b ** (j / d)), Equal(j, k)), (-sin(i / b ** (j / d)), Equal(j, k - 1)), (0, True)), Equal(j % 2, 0)), (Piecewise((cos(i / b ** ((j - 1) / d)), Equal(j, k)), (sin(i / b ** ((j - 1) / d)), Equal(j, k + 1)), (0, True)), True))))
     >>> R.this.definition
     >>> Eq[-1].rhs[i].doit()
     See Also

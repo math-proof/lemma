@@ -117,7 +117,7 @@ class Add(Expr, AssocOp):
         order_factors = []
 
         infinitesimal = None
-        from sympy import OneMatrix, ZeroMatrix
+        from sympy import Ones, Zeros
         for i, o in enumerate(seq):
 
             # O(x)
@@ -173,7 +173,7 @@ class Add(Expr, AssocOp):
             # Mul([...])
             elif o.is_Mul:
                 c, s = o.as_coeff_Mul()
-                if not c.shape and s.is_OneMatrix:
+                if not c.shape and s.is_Ones:
                     shape = Add.broadcast_from_sequence(seq[:i] + seq[i + 1:])
                     if len(shape) >= len(s.shape):
                         s = S.One
@@ -189,7 +189,7 @@ class Add(Expr, AssocOp):
 
             elif o.is_zero:
                 if o.shape:
-                    coeff *= OneMatrix(*o.shape) 
+                    coeff *= Ones(*o.shape) 
                 # skipping any zero values
                 continue
             else:
@@ -217,7 +217,7 @@ class Add(Expr, AssocOp):
         newseq = []
         noncommutative = False
         for s, c in terms.items():
-            if s.is_OneMatrix:
+            if s.is_Ones:
                 if coeff.is_zero or coeff.is_infinite:
                     ...
                 else:
@@ -302,7 +302,7 @@ class Add(Expr, AssocOp):
         if not newseq:
             shape = Add.broadcast_from_sequence(seq)
             if shape:
-                newseq.append(ZeroMatrix(*shape))
+                newseq.append(Zeros(*shape))
         
         return newseq, [], None
 
@@ -941,8 +941,8 @@ class Add(Expr, AssocOp):
             if not vector:
                 return self.func(*(arg.T for arg in self.args))
 
-            from sympy import OneMatrix
-            one = OneMatrix(*self.shape)
+            from sympy import Ones
+            one = Ones(*self.shape)
             vector = [v * one for v in vector]
             matrix += vector
 
@@ -1260,7 +1260,7 @@ class Add(Expr, AssocOp):
                 return this
             
         for i, arg in enumerate(self.args):
-            if arg.is_Lamda:
+            if arg.is_Stack:
                 _arg = arg.simplify(squeeze=True)
                 if _arg != arg:
                     args = [*self.args]
@@ -1322,7 +1322,7 @@ class Add(Expr, AssocOp):
         max_len = self.max_len_shape()
         
         for i, times in enumerate(self.args):
-            if times.is_Mul and any(t.is_OneMatrix for t in times.args):
+            if times.is_Mul and any(t.is_Ones for t in times.args):
                 if len(times.shape) < max_len or \
                 len(times.shape) == max_len and max_len == max(len(arg.shape) for j, arg in enumerate(self.args) if j != i):
                     args = [*self.args]

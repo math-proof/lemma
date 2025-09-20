@@ -1,4 +1,4 @@
-from .matexpr import MatrixExpr, Identity, ZeroMatrix
+from .matexpr import MatrixExpr, Identity, Zeros
 from ..common import ShapeError
 from sympy.core import S
 
@@ -84,9 +84,9 @@ class MatPow(MatrixExpr):
             if isinstance(base, MatrixBase):
                 return base.func(Identity(base.shape[0]))
             return Identity(base.shape[0])
-        elif isinstance(base, ZeroMatrix) and exp.is_negative:
+        elif isinstance(base, Zeros) and exp.is_negative:
             raise ValueError("Matrix determinant is 0, not invertible.")
-        elif base.is_Identity or isinstance(base, ZeroMatrix):
+        elif base.is_Identity or isinstance(base, Zeros):
             return base
         elif isinstance(base, MatrixBase) and exp.is_number:
             if exp is S.One:

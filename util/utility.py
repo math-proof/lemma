@@ -125,14 +125,14 @@ class Eq:
                         assert _expr == '?'
                         
                     if self.debug: 
-                        print("%s%s%s : %s" % (_expr, arrow, expr, eq))                        
+                        print("%s%s%s : %s" % (_expr, arrow, expr, eq))
 
-                    res.append(_expr)                
+                    res.append(_expr)
                     res.append(arrow)
                 elif eq.plausible == False:
                     res.append('~')
-                                    
-                res.append(expr)                
+
+                res.append(expr)
                 res.append(line[m.end(1):m.end()])
                 i = m.end()
                 
@@ -583,7 +583,7 @@ def run():
         from util import javaScript as MySQL
 
     try:
-        state, lapse, latex, lean = prove_with_timing(res, debug=True, slow=True)
+        state, lapse, latex, lean, *_ = prove_with_timing(res, debug=True, slow=True)
 #         if len(latex) > 65535:
 #             print('truncating date to 65535 bytes, original length =', len(latex))
 #             latex = latex[:65535]
@@ -591,7 +591,7 @@ def run():
         sql = 'update axiom set state = "%s", lapse = %s, latex = %s, lean = %s where user = "%s" and axiom = "%s"' % (state, lapse, json_encode(latex), "'%s'" % json_encode(lean).replace("'", "''"), user, package)
         # print(sql)
     except AttributeError as e: 
-        if m := re.match("'(\w+)' object has no attribute 'prove'", str(e)):
+        if m := re.match(r"'(\w+)' object has no attribute 'prove'", str(e)):
             if m[1] == 'function':
                 raise e
             else:
@@ -603,13 +603,13 @@ def run():
                 res = tackle_type_error('.'.join(paths[:index + 1]), False)
                 args = analyze_results_from_run(res)
                 sql = 'update axiom set state = "%s", lapse = %s, latex = %s where user = "%s" and axiom = "%s"' % args
-        elif m := re.match("module '([\w.]+)' has no attribute 'prove'", str(e)):
+        elif m := re.match(r"module '([\w.]+)' has no attribute 'prove'", str(e)):
             if m[1].startswith('sympy.'):
                 if tackle_type_error(package):
                     return
             else:
                 raise e
-        elif re.match("type object '[\w.]+' has no attribute 'prove'", str(e)):
+        elif re.match(r"type object '[\w.]+' has no attribute 'prove'", str(e)):
             if tackle_type_error(package):
                 return
         else: 
@@ -620,9 +620,9 @@ def run():
 
     if MySQL.instance.execute(sql) <= 0:
         
-        m = re.match('update axiom set state = "(\w+)", lapse = (\S+), latex = "([\s\S]+)" where user = "(\w+)" and axiom = "(\S+)"', sql)
-        state, lapse, latex, _, axiom = m.groups()
-        sql = 'insert into axiom values("%s", "%s", "%s", %s, "%s")' % (user, axiom, state, lapse, latex)
+        m = re.match(r'update axiom set state = "(\w+)", lapse = (\S+), latex = "([\s\S]+)", lean = \'([\s\S]+)\' where user = "(\w+)" and axiom = "(\S+)"', sql)
+        state, lapse, latex, lean, _, axiom = m.groups()
+        sql = 'insert into axiom values("%s", "%s", "%s", %s, "%s", \'%s\')' % (user, axiom, state, lapse, latex, lean)
         rowcount = MySQL.instance.execute(sql)
         assert rowcount > 0
           
@@ -644,7 +644,7 @@ def analyze_results_from_run(lines, latex=True):
 
 # PermissionError: [WinError 32]
     if latex: 
-        m = re.match('exit_code = (\S+)', line)
+        m = re.match(r'exit_code = (\S+)', line)
         assert m, line
         state = int(m[1])
         if state < 0:
@@ -667,14 +667,14 @@ def from_axiom_import(py, section, eqs):
     codes = []
     for line in file:
         codes.append(line)
-        if re.match('def prove\(', line):
+        if re.match(r'def prove\(', line):
             break
     
     firstStatement, *restLines = file
-    if re.match(' +from +Axiom +import +', firstStatement):
+    if re.match(' +from +Lemma +import +', firstStatement):
         firstStatement += ", " + section
     else: 
-        codes.append('    from Axiom import ' + section)
+        codes.append('    from Lemma import ' + section)
     codes.append(firstStatement)
     codes += restLines
     file.writelines(codes)
@@ -710,7 +710,7 @@ def _prove(func, debug=True, **kwargs):
     except AttributeError as e:
         messages = source_error()
         
-        m = re.match("^module 'sympy(?:\.\w+)*\.(algebra|sets|calculus|discrete|geometry|keras|stats)(?:\.\w+)*' has no attribute '(\w+)'$", str(e))
+        m = re.match(r"^module 'sympy(?:\.\w+)*\.(algebra|sets|calculus|discrete|geometry|keras|stats)(?:\.\w+)*' has no attribute '(\w+)'$", str(e))
         if m: 
             import_axiom = False
             if m[2] == 'func':
@@ -726,7 +726,7 @@ def _prove(func, debug=True, **kwargs):
             if import_axiom:
                 return from_axiom_import(py, m[1], eqs)
             
-        m = re.match("^'(\w+)' object has no attribute '(\w+)'$", str(e))
+        m = re.match(r"^'(\w+)' object has no attribute '(\w+)'$", str(e))
         if m:
             t = m[1]
             if t == 'function':
@@ -734,7 +734,7 @@ def _prove(func, debug=True, **kwargs):
                 statement = messages[1].strip()
                 from run import tackle_type_error
                 from util.search import sections
-                if m := re.search(f"(?:{'|'.join(sections)})(?:\.\w+)+", statement):
+                if m := re.search(fr"(?:{'|'.join(sections)})(?:\.\w+)+", statement):
                     package = m[0]
                     paths = package.split('.')
                     if attribute == 'apply':
@@ -754,7 +754,7 @@ def _prove(func, debug=True, **kwargs):
                 elif attribute == 'apply' and statement == '__kwdefaults__ = axiom.apply.__closure__[0].cell_contents.__kwdefaults__':
                     messages = source_error(index=-4)
                     statement = messages[1].strip()
-                    if m := re.search(f"(?:{'|'.join(sections)})(?:\.\w+)+", statement):
+                    if m := re.search(fr"(?:{'|'.join(sections)})(?:\.\w+)+", statement):
                         lines = tackle_type_error(m[0], False)
                         args = analyze_results_from_run(lines)
                         if len(args) != 2:
@@ -779,7 +779,7 @@ def _prove(func, debug=True, **kwargs):
             
             __line__ = -1
             for i, line in enumerate(lines):
-                if re.match('^def prove\(', line):
+                if re.match(r'^def prove\(', line):
                     break
                 
                 if re.match(r' +return( *| +None *)$', line):
@@ -806,7 +806,7 @@ def _prove(func, debug=True, **kwargs):
         ret = RetCode.failed
     except NameError as e:
         from util.search import sections
-        if (m := re.fullmatch("name '(\w+)' is not defined", str(e))) and m[1] in sections:
+        if (m := re.fullmatch(r"name '(\w+)' is not defined", str(e))) and m[1] in sections:
             return from_axiom_import(py, m[1], eqs)
         ret = default_error_handler(source_error(), py, e)
     except Exception as e: 
@@ -862,7 +862,7 @@ def detect_error_in_prove(py, messages):
                         
                         start = i
                         skips = 0
-                        if re.match("    from Axiom import \w+", lines[i]):
+                        if re.match(r"    from Lemma import \w+", lines[i]):
                             i += 1
                             skips += 1
                             
@@ -906,7 +906,7 @@ def detect_error_in_apply(py, messages, index=-3):
             kwargs['code'] = code
             
             if pyFile != py:
-                m = re.search(fr"\b{user}[/\\](Axiom[/\\].+)\.py", pyFile)
+                m = re.search(fr"\b{user}[/\\](Lemma[/\\].+)\.py", pyFile)
                 if m:
                     file = m[1].replace(os.path.sep, '.')
                     file = file.replace(".__init__", '')
@@ -949,7 +949,7 @@ def detect_error_in_sympy(py, _messages, index=-3):
 
 def detect_error_in_axiom(py, _messages, index=-3):
     for line in _messages:
-        m = re.fullmatch(r'File "([^"]+[\\/]Axiom[\\/]([^"]+)\.py)", line (\d+), in (\w+)', line)
+        m = re.fullmatch(r'File "([^"]+[\\/]Lemma[\\/]([^"]+)\.py)", line (\d+), in (\w+)', line)
         if m:
             messages = source_error(index)
             kwargs = detect_error_in_apply(py, messages) or detect_error_in_prove(py, messages) or detect_error_in_invoke(py, messages, index=index - 1)
@@ -965,7 +965,7 @@ def remove_annotation(func, state):
     print(py, "has been proved already!")
     [*lines] = Text(py)
     for i, line in enumerate(lines):
-        if re.match(f"@prove\({state}=False\)", line): 
+        if re.match(fr"@prove\({state}=False\)", line): 
             print(i, line)
             line = '@prove'
             lines[i] = line
@@ -1433,7 +1433,7 @@ def balancedGroups(parentheses, depth, multiple=True):
 
 
 def balancedBrackets(depth, multiple=False):
-    return balancedGroups("\[\]", depth, multiple)
+    return balancedGroups(r"\[\]", depth, multiple)
 
 
 def balancedParentheses(depth, multiple=False):
@@ -1445,7 +1445,7 @@ balancedParanthesis = balancedParentheses(7)
 
 def detect_axiom(statement):
 #     // Eq << Eq.x_j_subset.apply(Discrete.Set.subset.nonempty, Eq.x_j_inequality, evaluate=False)
-    matches = re.compile('\.apply\((.+)\)').search(statement)
+    matches = re.compile(r'\.apply\((.+)\)').search(statement)
     if matches:
         theorem = matches[1].split(',')[0].strip()
         
@@ -1466,8 +1466,8 @@ def detect_axiom_given_theorem(theorem, statement):
 
 
 def dependency_analysis(theorem):
-    import Axiom
-    prove = eval('Axiom.' + theorem).prove
+    import Lemma
+    prove = eval('Lemma.' + theorem).prove
     import inspect
     prove = prove.__closure__[0].cell_contents
     if isinstance(prove, tuple):
@@ -1475,54 +1475,40 @@ def dependency_analysis(theorem):
         
     for statement in inspect.getsource(prove).splitlines()[2:]:
 #         // remove comments starting with #
-        if re.compile('^\s*#.*').match(statement): 
+        if re.compile(r'^\s*#.*').match(statement): 
             continue
         
-#         // stop analyzing if return statement is encountered.
         statement = statement[4:]
-        if re.compile('^return\s*$').match(statement):
+        if re.compile(r'^return\s*$').match(statement):
             break
-        
         if not statement:
             continue
         
-#         print(statement, file=sys.stderr)
-#    // Eq <<= Geometry.plane.trigonometry.sine.principle.add.apply(*Eq[-2].rhs.arg.args), Geometry.plane.trigonometry.cosine.principle.add.apply(*Eq[-1].rhs.arg.args)
-        matches = re.compile("((?:Eq *<<= *|Eq\.\w+, *Eq\.\w+ *= *)([\w.]+|Eq[-\w.\[\]]*\[-?\d+\][\w.]*)\.apply%s\s*[,&]\s*)(.+)" % balancedParanthesis).match(statement) 
+        matches = re.compile(r"((?:Eq *<<= *|Eq\.\w+, *Eq\.\w+ *= *)([\w.]+|Eq[-\w.\[\]]*\[-?\d+\][\w.]*)\.apply%s\s*[,&]\s*)(.+)" % balancedParanthesis).match(statement) 
         if matches:
-#             // error_log('theorem detected: ' . $theorem);
             first_statement = matches[1]
             yield from detect_axiom_given_theorem(matches[2], first_statement)
-
             second_statement = matches[3]
             if second_statement != "\\":
-                matches = re.compile("([\w.]+|Eq[-\w.\[\]]*\[-?\d+\])\.apply\(").search(second_statement)
+                matches = re.compile(r"([\w.]+|Eq[-\w.\[\]]*\[-?\d+\])\.apply\(").search(second_statement)
                 assert matches
                 yield from detect_axiom_given_theorem(matches[1], second_statement)
-                                    
             continue
-        m = re.compile("([\w.]+)\.apply\(").search(statement)
-        if m:
-#             // error_log('theorem detected: ' . $theorem);
+        if m := re.compile(r"([\w.]+)\.apply\(").search(statement):
             theorem = m[1]
             yield from detect_axiom_given_theorem(m[1], statement)
             
             continue
         
-        matches = re.compile('(=|<<) *apply\(').search(statement)
-        if matches:
+        if re.compile(r'(=|<<) *apply\(').search(statement):
             continue
-#             // error_log('yield statement: ' . $statement);
-#             // error_log("php = $php");
-# 
-#             $yield['module'] = py_to_module(endsWith($python_file, '__init__.py') ? substr($python_file, 0, - strlen('/__init__.py')) . '.php' : $python_file);
         
         yield from detect_axiom(statement)
 
 
 def filename2module(filename):
     words = filename.replace(os.path.sep, '.').split('.')
-    index = words.index('Axiom')
+    index = words.index('Lemma')
     words = words[index + 1:-1]
     if words[-1] == '__init__':
         *words, _ = words
@@ -1562,7 +1548,7 @@ def recursive_parsing(theorem):
         
 def chmod():
     if os.sep == '/':  # is Linux system
-        cmd = 'chmod -R a+rwx Axiom'
+        cmd = 'chmod -R a+rwx Lemma'
     #         os.system(cmd)
         for s in os.popen(cmd).readlines():
             print(s)

@@ -131,13 +131,11 @@ class ReducedSum(Reduced):
         # return '\N{N-ARY SUMMATION}(%s)' % p._print(self.arg)
         axis = self.axis
         if axis == self.default_axis:
-            return 'ReducedSum(%s)' % p._print(self.arg)
+            return Function.lean_method('sum', self.arg, p=p)
         else:
-            if isinstance(axis, (tuple, Tuple)):
-                axis = ', '.join(p._print(axis) for axis in axis)
-            else:
-                axis = p._print(axis)
-            return 'ReducedSum[%s](%s)' % (axis, p._print(self.arg))
+            if not isinstance(axis, (tuple, Tuple)):
+                axis = (axis,)
+            return Function.lean_method('sum', self.arg, *axis, p=p)
 
     def _latex(self, p, exp=None):
         axis = self.axis
@@ -191,7 +189,7 @@ class ReducedSum(Reduced):
         return self.func(self.arg[indices])
         
     def simplify(self, deep=False, **kwargs):
-        if self.arg.is_Lamda:
+        if self.arg.is_Stack:
             if len(self.arg.limits) == 1 and not self.arg.variable.shape:
                 function = self.arg.expr
                 self = Sum(function, *self.arg.limits).simplify(**kwargs)
@@ -399,7 +397,7 @@ class ReducedMinMaxBase(Reduced):
         return self.func(self.arg[indices])
         
     def simplify(self, deep=False, **kwargs):
-        if self.arg.is_Lamda:
+        if self.arg.is_Stack:
             if len(self.arg.limits) == 1 and not self.arg.variable.shape:
                 function = self.arg.expr
                 self = self.operator(function, *self.arg.limits).simplify(**kwargs)

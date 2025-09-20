@@ -3,7 +3,7 @@ from sympy.core.sympify import _sympify
 from sympy.functions import KroneckerDelta
 
 from .matexpr import MatrixExpr
-from .special import ZeroMatrix, Identity, OneMatrix
+from .special import Zeros, Identity, Ones
 from sympy.core.cache import cacheit
 
 
@@ -268,7 +268,7 @@ class MatrixPermute(MatrixExpr):
             elif axis is S.One:
                 return PermutationMatrix(perm**-1)
 
-        if isinstance(mat, (ZeroMatrix, OneMatrix)):
+        if isinstance(mat, (Zeros, Ones)):
             return mat
 
         if isinstance(mat, MatrixPermute) and mat.args[2] == axis:

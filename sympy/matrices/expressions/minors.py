@@ -32,12 +32,12 @@ class Minors(MatrixExpr):
             return self
     
     def _entry(self, i, j=None, **_):
-        from sympy.concrete.expr_with_limits import Lamda
+        from sympy.concrete.expr_with_limits import Stack
         from sympy.matrices.expressions.determinant import Det
         m, n = self.rows, self.cols
         if j is None:
             j = self.generate_var(integer=True)
-            return Lamda[j:n](Det(self.arg.drop(m - 1 - i, n - 1 - j)))
+            return Stack[j:n](Det(self.arg.drop(m - 1 - i, n - 1 - j)))
         return Det(self.arg.drop(m - 1 - i, n - 1 - j))
 
 # Needs["Combinatorica`"]

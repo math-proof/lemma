@@ -42,12 +42,12 @@ def prove(Eq):
     from Axiom.Algebra.And.Eq.of.And.just_intonation import equate
 
     λ_1, λ_2, λ_3, λ_4, λ_5, λ_6, λ_7 = Symbol(real=True, positive=True)
-    λ_1_sharp = Symbol("λ_{1^\#}", real=True, positive=True)
-    λ_2_sharp = Symbol("λ_{2^\#}", real=True, positive=True)
-    λ_4_sharp = Symbol("λ_{4^\#}", real=True, positive=True)
-    λ_5_sharp = Symbol("λ_{5^\#}", real=True, positive=True)
-    λ_6_sharp = Symbol("λ_{6^\#}", real=True, positive=True)
-    λ_1_high = Symbol("λ_\dot{1}", real=True, positive=True)
+    λ_1_sharp = Symbol(r"λ_{1^\#}", real=True, positive=True)
+    λ_2_sharp = Symbol(r"λ_{2^\#}", real=True, positive=True)
+    λ_4_sharp = Symbol(r"λ_{4^\#}", real=True, positive=True)
+    λ_5_sharp = Symbol(r"λ_{5^\#}", real=True, positive=True)
+    λ_6_sharp = Symbol(r"λ_{6^\#}", real=True, positive=True)
+    λ_1_high = Symbol(r"λ_\dot{1}", real=True, positive=True)
     Eq << apply(Equal(λ_1_high / λ_1, S.One / 2),
                 equate(λ_1_sharp / λ_1, λ_2 / λ_1_sharp, λ_2_sharp / λ_2, λ_3 / λ_2_sharp, λ_4 / λ_3, λ_4_sharp / λ_4, λ_5 / λ_4_sharp, λ_5_sharp / λ_5, λ_6 / λ_5_sharp, λ_6_sharp / λ_6, λ_7 / λ_6_sharp, λ_1_high / λ_7))
 

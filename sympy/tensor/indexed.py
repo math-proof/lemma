@@ -288,7 +288,7 @@ class Indexed(Expr):
                 return base[args[0]]
             else:
                 return base[args]
-        if base.is_Lamda:
+        if base.is_Stack:
             return base[args]
             
         if len(args) == 1 and args[0].is_Piecewise:
@@ -402,7 +402,7 @@ class Indexed(Expr):
         exp = None
         if base.is_Symbol:
             import re
-            if m := re.match("(\w+)\^([\w-]+)", base.name):
+            if m := re.match(r"(\w+)\^([\w-]+)", base.name):
                 tex_base, exp = m.groups()
 
         if exp is None:
@@ -1074,7 +1074,7 @@ class Sliced(Expr):
 
     base = property(lambda self: self.args[0])
     start = property(lambda self: self.args[1][0])
-    stop = property(lambda self: self.args[1][1])    
+    stop = property(lambda self: self.args[1][1])
     indices = property(lambda self: self.args[1:])
     index = property(lambda self: self.args[1])
 
@@ -1361,7 +1361,7 @@ class Sliced(Expr):
                     
         elif not hasattr(base, '__getitem__') and not isinstance(base, Symbol):
             assert len(base.shape) >= len(indices)            
-        elif base.is_Lamda:
+        elif base.is_Stack:
             if len(indices) == 1:
                 [domain] = indices
                 start, stop, step = domain.args
@@ -1692,7 +1692,7 @@ class Sliced(Expr):
         import re
         if base.is_Indexed:
             if base.base.is_Symbol:
-                if m := re.match("(\w+)\^([\w-]+)", base.base.name):
+                if m := re.match(r"(\w+)\^([\w-]+)", base.base.name):
                     tex_base, exp = m.groups()
                 
             indices = [p._print(index) for index in base.indices]
@@ -1703,7 +1703,7 @@ class Sliced(Expr):
                 tex = '{%s}_{%s}^{%s}' % (tex_base, ', '.join(indices), exp)
         else:
             if base.is_Symbol:
-                if m := re.match("(\w+)\^([\w-]+)", base.name):
+                if m := re.match(r"(\w+)\^([\w-]+)", base.name):
                     tex_base, exp = m.groups()
 
             if exp is None:
@@ -2464,7 +2464,7 @@ class SlicedIndexed(Expr):
             assert len(base.shape) >= 2
         elif not hasattr(base, '__getitem__') and not isinstance(base, Symbol):
             raise TypeError("""Indexed expects string, Symbol, or IndexedBase as base.""")
-        elif base.is_Lamda:
+        elif base.is_Stack:
             start, stop = args
             assert start != stop
             return base[start: stop]

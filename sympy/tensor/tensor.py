@@ -47,7 +47,7 @@ from sympy.utilities.exceptions import SymPyDeprecationWarning
 import warnings
 from sympy.logic.boolalg import Boolean, BooleanAtom
 from sympy.core.parameters import global_parameters
-from sympy.matrices.expressions.matexpr import OneMatrix
+from sympy.matrices.expressions.matexpr import Ones
 from sympy.core.cache import cacheit
 from sympy.core.relational import Equal, Unequal, GreaterEqual, LessEqual,\
     Greater, Less
@@ -5360,9 +5360,9 @@ class TensorInequality(TensorRelational):
         rhs = _sympify(rhs)
 
         if len(lhs.shape) > len(rhs.shape):
-            rhs *= OneMatrix(*lhs.shape)
+            rhs *= Ones(*lhs.shape)
         elif len(lhs.shape) < len(rhs.shape):
-            lhs *= OneMatrix(*rhs.shape)
+            lhs *= Ones(*rhs.shape)
 
         evaluate = options.pop('evaluate', global_parameters.evaluate)
         if evaluate:

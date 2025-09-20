@@ -3995,38 +3995,38 @@ class Expr(Basic, EvalfMixin):
     
     def drop(self, I, J):
         from sympy.functions.elementary.piecewise import Piecewise
-        from sympy.concrete.expr_with_limits import Lamda
+        from sympy.concrete.expr_with_limits import Stack
         excludes = I.free_symbols | J.free_symbols
         i = self.generate_var(excludes=excludes, integer=True)
         j = self.generate_var(excludes=excludes | {i}, integer=True)
         m, n = self.shape
         
-        Lamda = Lamda[j:n - 1, i:m - 1]
+        Stack = Stack[j:n - 1, i:m - 1]
         if m - 1 == I:
             if n - 1 == J:
-                ref = Lamda(self[i, j])
+                ref = Stack(self[i, j])
             else: 
                 if J.is_zero:
-                    ref = Lamda(self[i, j + 1])                    
+                    ref = Stack(self[i, j + 1])                    
                 else:
-                    ref = Lamda(Piecewise((self[i, j], j < J), (self[i, j + 1], True)))
+                    ref = Stack(Piecewise((self[i, j], j < J), (self[i, j + 1], True)))
         else:
             if n - 1 == J:
                 if I.is_zero:
-                    ref = Lamda(self[i + 1, j])            
+                    ref = Stack(self[i + 1, j])            
                 else:
-                    ref = Lamda(Piecewise((self[i, j], i < I), (self[i + 1, j], True)))
+                    ref = Stack(Piecewise((self[i, j], i < I), (self[i + 1, j], True)))
             else:
                 if I.is_zero:
                     if J.is_zero:
-                        ref = Lamda(self[i + 1, j + 1])
+                        ref = Stack(self[i + 1, j + 1])
                     else:
-                        ref = Lamda(Piecewise((self[i + 1, j], j < J), (self[i + 1, j + 1], True)))
+                        ref = Stack(Piecewise((self[i + 1, j], j < J), (self[i + 1, j + 1], True)))
                 else:
                     if J.is_zero:
-                        ref = Lamda(Piecewise((self[i, j + 1], i < I), (self[i + 1, j + 1], True)))
+                        ref = Stack(Piecewise((self[i, j + 1], i < I), (self[i + 1, j + 1], True)))
                     else: 
-                        ref = Lamda(Piecewise(
+                        ref = Stack(Piecewise(
                             (Piecewise((self[i, j], j < J), (self[i, j + 1], True)), i < I),
                             (Piecewise((self[i + 1, j], j < J), (self[i + 1, j + 1], True)), True)))
         return ref.simplify()
@@ -4115,10 +4115,10 @@ class Expr(Basic, EvalfMixin):
         
         if len(self.shape) == 1:
             if len(other.shape) == 1:
-                from sympy import OneMatrix
+                from sympy import Ones
                 m, = self.shape
                 n, = other.shape
-                return (self * OneMatrix(n, m)).T * other
+                return (self * Ones(n, m)).T * other
             
         return self @ other.T
 
@@ -4155,7 +4155,7 @@ class Expr(Basic, EvalfMixin):
         return self, S.Zero
 
     def reshape(self, *shape):
-        from sympy import Lamda, Range
+        from sympy import Stack, Range
         def prod(shape):
             return reduce(lambda x, y : x * y, shape)
         
@@ -4166,10 +4166,10 @@ class Expr(Basic, EvalfMixin):
                 # inflate a vector into a tensor
                 n, *shape = shape
                 step = prod(shape)                
-                i = self.generate_var(integer=True, excludes=self.variables_set if self.is_Lamda else None, domain=Range(n))
+                i = self.generate_var(integer=True, excludes=self.variables_set if self.is_Stack else None, domain=Range(n))
                 start = i * step
                 self = self[start : start + step]
-                if self.is_Lamda:
+                if self.is_Stack:
                     expr, *limits = self.args
                     hit = False
                     for t, (k, *ab) in enumerate(limits):
@@ -4179,9 +4179,9 @@ class Expr(Basic, EvalfMixin):
                             limits[t] = _k,
                             hit = True
                     if hit:
-                        self = Lamda(expr, *limits)
+                        self = Stack(expr, *limits)
                 self = self.simplify()
-                return Lamda[i](self.reshape(*shape))
+                return Stack[i](self.reshape(*shape))
         else:
             if len(self.shape) > 1:
                 # collapse a tensor into a vector
@@ -4199,7 +4199,7 @@ class Expr(Basic, EvalfMixin):
                     indices[i] = var // size[i]
                     var %= size[i]
                 assert not var
-                return Lamda[k](self[indices])
+                return Stack[k](self[indices])
             else:
                 return self
 
@@ -4253,7 +4253,7 @@ class AtomicExpr(Atom, Expr):
                     from sympy.matrices.expressions.matexpr import Identity
                     return Identity(*self.shape)
                 else:
-                    from sympy import Lamda, KroneckerDelta
+                    from sympy import Stack, KroneckerDelta
                     excludes = set()
                     limits_f = []
                     limits_d = []
@@ -4266,7 +4266,7 @@ class AtomicExpr(Atom, Expr):
                         limits_f.append((i, 0, n))
                         limits_d.append((j, 0, n))
                         prod *= KroneckerDelta(i, j)
-                    return Lamda(prod, *limits_f, *limits_d)
+                    return Stack(prod, *limits_f, *limits_d)
                 
             return S.One
         return S.Zero

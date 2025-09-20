@@ -1876,28 +1876,29 @@ class Interval(Set, EvalfMixin):
             
         return (format + "(%s, %s)") % (self.start, self.stop)
 
-    def _lean(self, _):
+    def _lean(self, p):
+        from sympy import Function
         if self.left_open:
             if self.right_open:
-                format = "Ioo" 
+                if self.start is S.NegativeInfinity:
+                    if self.stop is S.Infinity:
+                        return "Set ℝ.univ"
+                    else:
+                        return Function.lean_fun('Iio', self.stop, p=p)
+                else:
+                    format = "Ioo" 
+                    if self.stop is S.Infinity:
+                        return Function.lean_fun('Ioi', self.start, p=p)
             else:
                 format = "Ioc"
-
-                if self.stop is S.Infinity:
-                    return "Ioc %s %s" % (self.start, self.stop)
         else:
             if self.right_open:
                 format = "Ico"
+                if self.stop is S.Infinity:
+                    return Function.lean_fun('Ici', self.start, p=p)
             else:
                 format = "Icc"
-
-                if self.start is S.NegativeInfinity:
-                    if self.stop is S.Infinity:
-                        return "Icc %s %s" % (self.start, self.stop)
-                    else:
-                        return "Ico %s %s" % (self.start, self.stop)
-            
-        return (format + " %s %s") % (self.start, self.stop)
+        return Function.lean_fun(format, self.start, self.stop, p=p)
 
     def handle_finite_sets(self, unk):
         if all(arg.domain in self for arg in unk.args):
@@ -2698,7 +2699,7 @@ class Intersection(Set, LatticeOp):
         args = ["(%s)" % p._print(a) if a.is_Complement or a.is_Union else p._print(a) for a in self.args]
         if self.args[0].is_FiniteSet:
             if self.args[1].is_FiniteSet:
-                args[0] = 'FiniteSet(%s)' % args[0][1:-1]
+                args[0] = '{%s}' % args[0][1:-1]
 
         return ' \N{INTERSECTION} '.join(args)
 
@@ -3342,7 +3343,8 @@ class EmptySet(Set):
         return f'dtype.{self.etype}.emptySet'
 
     def _lean(self, _):
-        return '\N{LATIN CAPITAL LETTER O WITH STROKE}'
+        return '\N{EMPTY SET}'
+        # return '\N{LATIN CAPITAL LETTER O WITH STROKE}'
 
     def _latex(self, p):
         return r"\emptyset"
@@ -3920,7 +3922,7 @@ class FiniteSet(Set):
         args = [p._print(el) for el in printset]
         for i in range(len(printset)):
             if printset[i].is_FiniteSet:
-                args[i] = 'FiniteSet(%s)' % args[i][1:-1]
+                args[i] = '{%s}' % args[i][1:-1]
 
         return '{%s}' % ', '.join(args)
 

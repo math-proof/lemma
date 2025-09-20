@@ -149,62 +149,91 @@ class Tuple(Basic):
             domain &= arg.domain_defined(x)
         return domain
 
-    def _format_ineq(self, p):
-        if p.printmethod == '_latex':
-            if len(self) == 3:
-                x, a, b = self
-                if b.is_set:
-                    return r"%s \in %s \left| %s \right. " % (p._print(x), p._print(b), p._print(a))
-                else:
+    def _format_ineq(self, p, **kwargs):
+        match p.printmethod:
+            case '_latex':
+                if len(self) == 3:
+                    x, a, b = self
+                    if b.is_set:
+                        return r"%s \in %s \left| %s \right. " % (p._print(x), p._print(b), p._print(a))
                     if x.is_integer:
                         if b.is_Add and b.args[0].is_One:
                             return r"%s \leq %s \leq %s" % tuple([p._print(s) for s in (a, x, b - 1)])
                         else:
                             return r"%s \leq %s \lt %s" % tuple([p._print(s) for s in (a, x, b)])
                     return r"%s \lt %s \lt %s" % tuple([p._print(s) for s in (a, x, b)])
-            elif len(self) == 2:
-                x, cond = self
-                if cond.is_set:
-                    return r"%s \in %s" % (p._print(x), p._print(cond))
-                else:
+                elif len(self) == 2:
+                    x, cond = self
+                    if cond.is_set:
+                        return r"%s \in %s" % (p._print(x), p._print(cond))
                     if cond.is_BinaryCondition and cond.lhs == x:
                         return p._print(cond)
                     return r"%s \left| %s \right. " % (p._print(x), p._print(cond))
-            else:
-                return p._print(self[0])
-        elif p.printmethod == '_sympystr':
-            if len(self) == 3:
-                if self[1].is_zero:
-                    return r"%s:%s" % tuple([p._print(s) for s in (self[0], self[2])])
                 else:
-                    return r"%s:%s:%s" % tuple([p._print(s) for s in (self[0], self[1], self[2])])
-            elif len(self) == 2:
-                e, s = self
-                if s.is_Range:
-                    start, stop, *step = s.args
-                    if step:
-                        step, = step
+                    return p._print(self[0])
+            case '_sympystr':
+                if len(self) == 3:
+                    if self[1].is_zero:
+                        return r"%s:%s" % tuple([p._print(s) for s in (self[0], self[2])])
                     else:
-                        step = 1
+                        return r"%s:%s:%s" % tuple([p._print(s) for s in (self[0], self[1], self[2])])
+                elif len(self) == 2:
+                    e, s = self
+                    if s.is_Range:
+                        start, stop, *step = s.args
+                        if step:
+                            step, = step
+                        else:
+                            step = 1
 
-                    if step == 1:
-                        if start.is_Zero:
-                            return r"%s:%s" % tuple([p._print(s) for s in (e, stop)])
-                        return r"%s:%s:%s" % tuple([p._print(s) for s in (e, start, stop)])
-                return r"%s:%s" % tuple([p._print(s) for s in (e, self[1])])
-            else:
-                return p._print(self[0])
-        else:
-            if len(self) == 3:
-                if self[1].is_zero:
-                    return r"%s:%s" % tuple([str(s) for s in (self[0], self[2])])
+                        if step == 1:
+                            if start.is_Zero:
+                                return r"%s:%s" % tuple([p._print(s) for s in (e, stop)])
+                            return r"%s:%s:%s" % tuple([p._print(s) for s in (e, start, stop)])
+                    return r"%s:%s" % tuple([p._print(s) for s in (e, self[1])])
                 else:
-                    return r"%s:%s:%s" % tuple([str(s) for s in (self[0], self[1], self[2])])
-            elif len(self) == 2:
-                return r"%s:%s" % tuple([str(s) for s in (self[0], self[1])])
-            else:
-                return str(self[0])
-                        
+                    return p._print(self[0])
+            case '_lean':
+                if len(self) == 3:
+                    from sympy import Function
+                    x, a, b = self
+                    x = p._print(x)
+                    if b.is_set:
+                        S, cond = p._print(b), p._print(a)
+                        return f"{x} ∈ {S} | {cond}"
+                    if self[0].is_integer:
+                        if b.is_Add and b.args[0].is_One:
+                            return f"{x} ∈ {Function.lean_fun('Icc', a, b - 1, p=p)}"
+                        else:
+                            if a == 0:
+                                if kwargs.get('lt'):
+                                    return f"{x} < {b}"
+                                return f"{x} : {Function.lean_fun('Fin', b, p=p)}"
+                            else:
+                                return f"{x} ∈ {Function.lean_fun('Ico', a, b, p=p)}"
+                    return f"{x} ∈ {Function.lean_fun('Ioo', a, b, p=p)}"
+                elif len(self) == 2:
+                    x, cond = self
+                    if cond.is_set:
+                        x, S = p._print(x), p._print(cond)
+                        return f"{x} ∈ {S}"
+                    if cond.is_BinaryCondition and cond.lhs == x:
+                        return p._print(cond)
+                    x, cond = p._print(x), p._print(cond)
+                    return f"{x} | {cond}"
+                else:
+                    return p._print(self[0])
+            case _:
+                if len(self) == 3:
+                    if self[1].is_zero:
+                        return r"%s:%s" % tuple([str(s) for s in (self[0], self[2])])
+                    else:
+                        return r"%s:%s:%s" % tuple([str(s) for s in (self[0], self[1], self[2])])
+                elif len(self) == 2:
+                    return r"%s:%s" % tuple([str(s) for s in (self[0], self[1])])
+                else:
+                    return str(self[0])
+
     def domain_latex(self, domain=None):
         if domain.is_Range:
             start, end = domain.start, domain.stop

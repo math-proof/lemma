@@ -27,7 +27,7 @@ if __name__ == '__main__':
             
             data.append([
                 user,
-                "Axiom." + prefix,
+                "Lemma." + prefix,
                 phrases[i + 1],
                 1
             ])
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     for sec in sections:
         data.append([
             user,
-            'Axiom.',
+            'Lemma.',
             sec,
             1
         ])

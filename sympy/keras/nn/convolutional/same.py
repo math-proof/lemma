@@ -1,6 +1,6 @@
 from sympy.functions.elementary.miscellaneous import Max, Min
 from sympy.core.symbol import Symbol
-from sympy.concrete.expr_with_limits import Lamda
+from sympy.concrete.expr_with_limits import Stack
 from sympy.core.function import Function
 from sympy.concrete.summations import Sum
 
@@ -49,12 +49,12 @@ def conv1d(x, w, *limits):
         
         i0 = i - d0
         
-        return Lamda[i:n0](Sum[sum_limit((r,), w, n0, di, i0)](x[i0 + di * r] @ w[di]))
+        return Stack[i:n0](Sum[sum_limit((r,), w, n0, di, i0)](x[i0 + di * r] @ w[di]))
             
     if batch_size:
         batch_size = batch_size[0]
         k = Symbol(integer=True)        
-        return Lamda[k:batch_size](conv1d(x[k], w))
+        return Stack[k:batch_size](conv1d(x[k], w))
     else:
         return conv1d(x, w)    
 
@@ -84,12 +84,12 @@ def conv2d(x, w, *limits):
         i0 = i - d0
         j0 = j - d1
         
-        return Lamda[j:n1, i:n0](Sum[sum_limit(r, w, n1, dj, j0, 1), sum_limit(r, w, n0, di, i0, 0)](x[i0 + di * r[0], j0 + dj * r[1]] @ w[di, dj]))
+        return Stack[j:n1, i:n0](Sum[sum_limit(r, w, n1, dj, j0, 1), sum_limit(r, w, n0, di, i0, 0)](x[i0 + di * r[0], j0 + dj * r[1]] @ w[di, dj]))
             
     if batch_size:
         batch_size = batch_size[0]
         k = Symbol(integer=True)        
-        return Lamda[k:batch_size](conv2d(x[k], w))
+        return Stack[k:batch_size](conv2d(x[k], w))
     else:
         return conv2d(x, w)    
 
@@ -124,11 +124,11 @@ def conv3d(x, w, *limits):
         j0 = j - d1
         t0 = t - d2
         
-        return Lamda[t:n2, j:n1, i:n0](Sum[sum_limit(r, w, n2, dt, t0, 2), sum_limit(r, w, n1, dj, j0, 1), sum_limit(r, w, n0, di, i0, 0)](x[i0 + di * r[0], j0 + dj * r[1], t0 + dt * r[2]] @ w[di, dj, dt]))
+        return Stack[t:n2, j:n1, i:n0](Sum[sum_limit(r, w, n2, dt, t0, 2), sum_limit(r, w, n1, dj, j0, 1), sum_limit(r, w, n0, di, i0, 0)](x[i0 + di * r[0], j0 + dj * r[1], t0 + dt * r[2]] @ w[di, dj, dt]))
             
     if batch_size:
         batch_size = batch_size[0]
         k = Symbol(integer=True)        
-        return Lamda[k:batch_size](conv3d(x[k], w))
+        return Stack[k:batch_size](conv3d(x[k], w))
     else:
         return conv3d(x, w)    

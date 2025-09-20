@@ -55,7 +55,7 @@ for ($i = 0; $i < $size; ++ $i) {
 mysql\insertmany("suggest", $tuples);
 
 $theorem = str_replace('.', '/', $axiom);
-$dir = $ROOT . "/" . $user . "/Axiom";
+$dir = $ROOT . "/" . $user . "/Lemma";
 $py = "$dir/$theorem.py";
 if (! file_exists($py)) {
     $py = "$dir/$theorem/__init__.py";

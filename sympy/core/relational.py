@@ -303,11 +303,11 @@ class Relational(BinaryCondition, Expr, EvalfMixin):
             return this
         
         if rhs.is_Mul:
-            if rhs.args[0].is_OneMatrix:
+            if rhs.args[0].is_Ones:
                 if lhs.shape == rhs.shape:
                     rhs = rhs.func(*rhs.args[1:])
                     return self.func(lhs, rhs, evaluate=False)
-        elif rhs.is_OneMatrix:
+        elif rhs.is_Ones:
             if lhs.shape == rhs.shape:
                 return self.func(lhs, S.One, evaluate=False)
                 

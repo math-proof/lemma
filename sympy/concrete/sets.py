@@ -12,7 +12,7 @@ from sympy.core.singleton import S
 from sympy.utilities.iterables import sift
 from itertools import zip_longest
 
-                
+
 class Cup(Set, ExprWithLimits):
     """
     Represents a union of sets as a :class:`Set`.
@@ -388,12 +388,9 @@ class Cup(Set, ExprWithLimits):
 
     def _lean(self, p):
         if self.is_ConditionSet: 
-            return 'conditionset(%s)' % ', '.join(p._print(arg) for arg in self.limits[0])
-        
-        limits = ','.join([limit._format_ineq(p) for limit in self.limits])
-        if limits:
-            return 'Cup[%s](%s)' % (limits, p._print(self.expr))
-        return 'Cup(%s)' % p._print(self.expr)
+            return 'setOf(%s)' % ', '.join(p._print(arg) for arg in self.limits[0])
+        limits = ','.join((limit._format_ineq(p) for limit in self.limits))
+        return '\N{N-ARY UNION} %s, %s' % (limits, p._print(self.expr))
     
     def int_limit(self):
         if len(self.limits) == 1:
@@ -447,7 +444,7 @@ class Cup(Set, ExprWithLimits):
     def _latex(self, p):
         finite_set = self.finite_set()
         if finite_set is not None:
-            return r"\left\{*%s\right\} " % p._print(finite_set)
+            return p._print(finite_set)
 
         if self.is_ConditionSet:
             vars_print = p._print(self.variable)
@@ -1277,10 +1274,8 @@ class Cap(Set, ExprWithLimits):
         return 'Cap(%s)' % p._print(self.expr)
 
     def _lean(self, p):
-        limits = ','.join([limit._format_ineq(p) for limit in self.limits])
-        if limits:
-            return 'Cap[%s](%s)' % (limits, p._print(self.expr))
-        return 'Cap(%s)' % p._print(self.expr)
+        limits = ','.join((limit._format_ineq(p) for limit in self.limits))
+        return '\N{N-ARY INTERSECTION} %s, %s' % (limits, p._print(self.expr))
     
     @property
     def etype(self):

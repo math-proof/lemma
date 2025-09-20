@@ -15,20 +15,9 @@ def piece_together(input):
     input.clear()
     return code 
 
-#(?:\( *Eq\.\w+ *(?:, (*Eq\.\w+|\*Eq\[-\d+:\]))+ *\)
-#(?:, *(?:\( *Eq\.\w+ *(?:, *Eq\.\w+)+ *\)|Eq\.\w+|\[\*Eq\[-\d+:\]\]))
 def is_latex_print(latex):
-    # Eq.first, Eq.result = ...
-    # Eq.first, result = ...
-    # Eq.first, *result = ...
-    # Eq.given, Eq.where, Eq.imply = ...
-    # Eq.given, (Eq.where, Eq.where1), Eq.imply = ...
-    # Eq[-2:], (Eq.where, *Eq[-2:]), Eq[-2:] = ...
-    # (*Eq[-4:], Eq.eq_s, Eq.eq_x, Eq.eq_G), Eq[-1] = ...
-    # *Eq[-5:], Eq.hypothesis = ...
-
     res = []
-    while matches := re.match('(Eq\.\w+|\((Eq\.\w+|\*Eq\[-\d+:\]) *(, *Eq\.\w+)+ *\)|Eq\[-(\d+:|1)\]|\*Eq\[-\d+:\]|\*\w+|\w+)', latex):
+    while matches := re.match(r'(Eq\.\w+|\((Eq\.\w+|\*Eq\[-\d+:\]) *(, *Eq\.\w+)+ *\)|Eq\[-(\d+:|1)\]|\*Eq\[-\d+:\]|\*\w+|\w+)', latex):
         res.append(matches[0])
         latex = latex[len(matches[0]):]
         if re.match(' *= *', latex):
@@ -47,7 +36,7 @@ def get_args_for_writing(module, latexStr):
     input = []
     counterOfLengths = 0
     lengths = []
-    m = re.search('([\w.]+)\.(of|given)\.', module)
+    m = re.search(r'([\w.]+)\.(of|given)\.', module)
     numOfRequisites = len(m[1].split(".")) - 1 if m else 0
     createdTime = updatedTime = None
     indexOfYield = -1
@@ -101,14 +90,14 @@ def get_args_for_writing(module, latexStr):
             else:
                 input.append(text)
         
-        if matches := re.match('Eq *(<<|\[ *(- *\d+ *)?(: *)?\] *=) *', statement):
+        if matches := re.match(r'Eq *(<<|\[ *(- *\d+ *)?(: *)?\] *=) *', statement):
             inputs.append(piece_together(input))
 
             counterOfLengths += 1
             lengths.append(1)
         elif matches := is_latex_print(statement):
 
-            regexp = 'Eq\.\w+|Eq\[-(\d+:|1)\]'
+            regexp = r'Eq\.\w+|Eq\[-(\d+:|1)\]'
             if 'module' in dict:
                 count = len(matches)
                 match count:
@@ -159,13 +148,13 @@ def get_args_for_writing(module, latexStr):
         if "\t" in latex:
             matches = []
             for tex in latex.split("\t"):
-                if m := re.findall('\\\\\[.+?\\\\\]', tex):
+                if m := re.findall(r'\\\\\[.+?\\\\\]', tex):
                     matches.append(''.join(m))
                 else:
                     return []
             return matches
         
-        return re.findall('\\\\\[.+?\\\\\]', latex)
+        return re.findall(r'\\\\\[.+?\\\\\]', latex)
     
     resultsFromApply = []
     for statement in latexStr.split("\n"):
@@ -268,21 +257,21 @@ class LocalJsWriter:
                 def transform(text):
                     with open(parentPath + 'codemirror/mode/python/python.js', 'r', encoding='utf8') as file:
                         python = file.read()
-                        python = re.search("function\(CodeMirror\) \{(.+)\}\);\s*$", python, re.S)[1]
+                        python = re.search(r"function\(CodeMirror\) \{(.+)\}\);\s*$", python, re.S)[1]
                         
                     with open(parentPath + 'codemirror/addon/selection/active-line.js', 'r', encoding='utf8') as file:
                         active_line = file.read()
-                        active_line = re.search("function\(CodeMirror\) \{(.+)\}\);\s*$", active_line, re.S)[1]
+                        active_line = re.search(r"function\(CodeMirror\) \{(.+)\}\);\s*$", active_line, re.S)[1]
                         
                     with open(parentPath + 'codemirror/addon/hint/show-hint.js', 'r', encoding='utf8') as file:
                         show_hint = file.read()
-                        show_hint = re.search("function\(CodeMirror\) \{(.+)\}\);\s*$", show_hint, re.S)[1]
+                        show_hint = re.search(r"function\(CodeMirror\) \{(.+)\}\);\s*$", show_hint, re.S)[1]
                         
                     with open(parentPath + 'codemirror/addon/edit/matchbrackets.js', 'r', encoding='utf8') as file:
                         matchbrackets = file.read()
-                        matchbrackets = re.search("function\(CodeMirror\) \{(.+)\}\);\s*$", matchbrackets, re.S)[1]
+                        matchbrackets = re.search(r"function\(CodeMirror\) \{(.+)\}\);\s*$", matchbrackets, re.S)[1]
                         
-                    text = re.sub("\(function\(global, factory\) \{.+\}\)\)\);\s*$", "export default CodeMirror\n", text, flags=re.S)
+                    text = re.sub(r"\(function\(global, factory\) \{.+\}\)\)\);\s*$", "export default CodeMirror\n", text, flags=re.S)
                     text += python + active_line + show_hint + matchbrackets
                     text = text.replace('"use strict";', '')
                     return text
@@ -300,7 +289,7 @@ class LocalJsWriter:
         total = 0
         
         targetFiles = self.targetFiles
-        for package, module, state, lapse, latex in data:
+        for package, module, state, lapse, latex, *_ in data:
             state_count_pairs[state.name] += 1
             total += 1
             
@@ -319,8 +308,7 @@ class LocalJsWriter:
         return len(targetFiles)
     
     def execute(self, sql):
-        m = re.match('update axiom set state = "\w+", lapse = \S+, latex = ("[\s\S]+") where user = "\w+" and axiom = "(\S+)"', sql)
-        if m:
+        if m := re.match(r'update axiom set state = "\w+", lapse = \S+, latex = ("[\s\S]+") where user = "\w+" and axiom = "(\S+)"', sql):
             latex, module = m.groups()
             latex = eval(latex)
             html = write_html(module, generate_theorem(*get_args_for_writing(module, latex), self.targetFiles))
@@ -358,20 +346,20 @@ def generate_js(file, transform=None, attributes=None):
             text = transform(text)
 
         text = text.replace('\\', '\\\\')
-        text = text.replace('`', "\`")
-        text = text.replace('${', "\${")
+        text = text.replace('`', r"\`")
+        text = text.replace('${', r"\${")
         
         if attributes:
             window = 'window.js'
             previousAssignments = []
             for attr in attributes[:-1]:
-                attr = re.sub('\W', '_', attr)
+                attr = re.sub(r'\W', '_', attr)
                 previousAssignments.append(f'if (!{window}.{attr}) {window}.{attr} = {{}};\n')
                 window += "." + attr
 
             previousAssignments = ''.join(previousAssignments)
             assert '-' not in previousAssignments
-            lastAttribute = re.sub('\W', '_', attributes[-1])
+            lastAttribute = re.sub(r'\W', '_', attributes[-1])
             text = previousAssignments + f"{window}.{lastAttribute} = `{text}`;"
             mjs = 'target/%s.js' % '/'.join(attributes)
         else:

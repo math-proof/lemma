@@ -1,6 +1,6 @@
 from sympy.logic.boolalg import Boolean, And, Or
 from sympy.concrete.expr_with_limits import ExprWithLimits
-from sympy.concrete.conditional_boolean import Quantifier
+from sympy.concrete.quantifier import Quantifier
 from sympy.core.sympify import sympify
 from sympy.core.relational import Equal
 from sympy.core.singleton import S
@@ -197,9 +197,14 @@ class ForAll(Quantifier):
         limits = ','.join([limit._format_ineq(p) for limit in self.limits])        
         return 'All[%s](%s)' % (limits, p._print(self.expr))
 
-    def _lean(self, p):
-        limits = ','.join([limit._format_ineq(p) for limit in self.limits])        
-        return '\N{FOR ALL} %s, %s' % (limits, p._print(self.expr))
+    def _lean(self, p, operator='\N{FOR ALL}'):
+        limits = [limit._format_ineq(p) for limit in self.limits]
+        if all(len(limit) == 1 for limit in self.limits):
+            operator += "".join(' ' + limit for limit in limits)
+        else:
+            operator = ", ".join(reversed(["%s %s" % (operator, limit) for limit in limits]))
+        operator = operator.replace('%', '%%')
+        return f'{operator}, %s' % p._print(self.expr)
 
     def _pretty(self, p):
         return Quantifier._pretty(self, p, '\N{FOR ALL}')
@@ -276,7 +281,7 @@ class ForAll(Quantifier):
         return S.true.copy(**kwargs)
 
     @classmethod
-    def is_identity(cls, self):        
+    def is_identity(cls, self):
         return self.is_BooleanTrue
 
     latexname = 'forall'

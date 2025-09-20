@@ -72,17 +72,17 @@ def topological_sort():
 
 
 def update_timestamp_for_axiom(module, create_time):
-    import Axiom
+    import Lemma
     module = eval('axiom.' + module)
 #     print(module, 'is created on', create_time)
     file = module.__file__
     original_create_time = None
     original_update_time = None
     for line in Text(file):
-        if m := re.match('(?:    )*#created on (\d\d\d\d-\d\d-\d\d)', line):
+        if m := re.match(r'(?:    )*#created on (\d\d\d\d-\d\d-\d\d)', line):
             original_create_time = m[1]
             
-        if m := re.match('(?:    )*#updated on (\d\d\d\d-\d\d-\d\d)', line):
+        if m := re.match(r'(?:    )*#updated on (\d\d\d\d-\d\d-\d\d)', line):
             original_update_time = m[1]
             
     if original_update_time or original_create_time:
@@ -117,4 +117,4 @@ def update_timestamp():
 # update_timestamp()
 if __name__ == '__main__':
     insert_into_hierarchy()
-    # update_timestamp()    
+    # update_timestamp()

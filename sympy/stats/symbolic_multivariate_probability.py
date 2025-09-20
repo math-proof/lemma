@@ -1,6 +1,6 @@
 import itertools
 
-from sympy import (MatrixExpr, Expr, ShapeError, ZeroMatrix,
+from sympy import (MatrixExpr, Expr, ShapeError, Zeros,
                     Add, Mul, MatMul, S, expand as _expand)
 from sympy.stats.rv import RandomSymbol
 from sympy.core.sympify import _sympify
@@ -158,7 +158,7 @@ class VarianceMatrix(MatrixExpr):
         condition = self._condition
 
         if not arg.is_random:
-            return ZeroMatrix(*self.shape)
+            return Zeros(*self.shape)
 
         if isinstance(arg, RandomSymbol):
             return self
@@ -180,7 +180,7 @@ class VarianceMatrix(MatrixExpr):
                 else:
                     nonrv.append(a)
             if len(rv) == 0:
-                return ZeroMatrix(*self.shape)
+                return Zeros(*self.shape)
             # Avoid possible infinite loops with MatMul:
             if len(nonrv) == 0:
                 return self
@@ -257,7 +257,7 @@ class CrossCovarianceMatrix(MatrixExpr):
             return VarianceMatrix(arg1, condition).expand()
 
         if not arg1.is_random or not arg2.is_random:
-            return ZeroMatrix(*self.shape)
+            return Zeros(*self.shape)
 
         if isinstance(arg1, RandomSymbol) and isinstance(arg2, RandomSymbol):
             return CrossCovarianceMatrix(arg1, arg2, condition)

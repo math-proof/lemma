@@ -2015,7 +2015,7 @@ class ArgMinMaxBase(ExprWithLimits):
     
     def simplify(self, deep=False, **kwargs):
         if not self.limits:
-            if self.expr.is_Lamda:
+            if self.expr.is_Stack:
                 if len(self.expr.limits) == 1 and not self.expr.variable.shape:
                     expr = self.expr.expr
                     return self.func(expr, *self.expr.limits).simplify(**kwargs)
@@ -2120,8 +2120,8 @@ class ArgMin(ArgMinMaxBase):
             elif p.degree() == 0:
                 return self
             elif p.degree() <= 0:
-                from sympy.matrices.expressions.matexpr import ZeroMatrix
-                return ZeroMatrix(*self.shape)
+                from sympy.matrices.expressions.matexpr import Zeros
+                return Zeros(*self.shape)
         elif self.expr.is_MinMaxBase:
             print('warning, unreliable implementation')
             return self.expr.func(*(self.func(arg, *self.limits).doit() for arg in self.expr.args))
@@ -2168,8 +2168,8 @@ class ArgMax(ArgMinMaxBase):
             elif p.degree() == 0:
                 return self
             elif p.degree() <= 0:
-                from sympy.matrices.expressions.matexpr import ZeroMatrix
-                return ZeroMatrix(*self.shape)
+                from sympy.matrices.expressions.matexpr import Zeros
+                return Zeros(*self.shape)
         elif self.expr.is_MinMaxBase:
             print('error, unreliable implementation')
             return self.expr.func(*(self.func(arg, *self.limits).doit() for arg in self.expr.args))
@@ -2526,12 +2526,12 @@ Sup.reversed_type = Inf
 Inf.reversed_type = Sup
 
 
-class Lamda(ExprWithLimits):
-    r"""Represents unevaluated Lamda operator.
+class Stack(ExprWithLimits):
+    r"""Represents unevaluated Stack operator.
     >>> n = Symbol(integer=True, positive=True)
     >>> A = Symbol(shape=(n, n), real=True)
     >>> B = Symbol(shape=(n, n), real=True)
-    >>> discrete.matmul.to.lamda.apply(A @ B)
+    >>> Discrete.Dot.eq.Lamda.apply(A @ B)
     """
     
     operator = BlockMatrix
@@ -2600,9 +2600,9 @@ class Lamda(ExprWithLimits):
     @classmethod
     def simplify_Equal(cls, self, lhs, rhs):
         """
-        precondition: self.lhs is a Lamda object!
+        precondition: self.lhs is a Stack object!
         """
-        if rhs.is_Lamda:
+        if rhs.is_Stack:
             if lhs.limits == rhs.limits:
                 from sympy import All
                 return All(self.func(lhs.expr, rhs.expr), *lhs.limits).simplify()        
@@ -2733,8 +2733,8 @@ class Lamda(ExprWithLimits):
             elif len(indices) < len(self.limits): 
                 if expr.is_zero:
                     shape = self.shape[len(indices):]
-                    from sympy.matrices.expressions.matexpr import ZeroMatrix
-                    return ZeroMatrix(*shape)
+                    from sympy.matrices.expressions.matexpr import Zeros
+                    return Zeros(*shape)
                 expr = self.func(expr, *self.limits[:-len(indices)])
                 
             for k, v in reps.items():
@@ -2991,9 +2991,11 @@ class Lamda(ExprWithLimits):
                 args.append(p._print(k))
             elif len(limit) == 2:
                 var, domain = limit
+                op = ":"
                 if domain.step == 1:
                     if domain.start == 0:
                         parmas = [var, domain.stop]
+                        op = "<"
                     else:
                         parmas = [var, domain.start, domain.stop]
                 else:
@@ -3001,10 +3003,10 @@ class Lamda(ExprWithLimits):
                         parmas = [var, '', domain.stop, domain.step]
                     else:
                         parmas = [var, *domain.args]
-                args.append(":".join((p._print(e) for e in parmas)))
+                args.append(op.join((p._print(e) for e in parmas)))
             elif len(limit) == 3:
                 if limit[1] == 0:
-                    args.append(r"%s:%s" % (p._print(limit[0]), p._print(limit[2])))
+                    args.append(r"%s<%s" % (p._print(limit[0]), p._print(limit[2])))
                 else:
                     args.append(r"%s:%s:%s" % (p._print(limit[0]), p._print(limit[1]), p._print(limit[2])))
 
@@ -3020,11 +3022,12 @@ class Lamda(ExprWithLimits):
 
     def _sympystr(self, p):
         limits = ', '.join([limit._format_ineq(p) for limit in self.limits])
-        return 'Lamda[%s](%s)' % (limits, p._print(self.expr))
+        return 'Stack[%s](%s)' % (limits, p._print(self.expr))
 
     def _lean(self, p):
-        limits = ', '.join([limit._format_ineq(p) for limit in self.limits])
-        return 'Lamda[%s](%s)' % (limits, p._print(self.expr))
+        limits = [limit._format_ineq(p, lt=True) for limit in self.limits]
+        operator = " ".join(reversed(["[%s]" % limit for limit in limits]))
+        return f'{operator} {p._print(self.expr)}'
     
     def _eval_is_finite(self):
         expr = self.expr
@@ -3159,7 +3162,7 @@ class Lamda(ExprWithLimits):
             indices.insert(axis, i)
             limits.insert(axis, (i, 0, size))
             
-            return Lamda(self[indices], *limits)
+            return Stack(self[indices], *limits)
         else:
             limits = [*self._limits]
             indices = [*self._variables]
@@ -3170,7 +3173,7 @@ class Lamda(ExprWithLimits):
             indices.insert(axis, i)
             limits.insert(axis, (i, 0, size))
             
-            return Lamda(self[indices], *limits)
+            return Stack(self[indices], *limits)
     
     @cacheit
     def of_embedding(self):
@@ -3291,11 +3294,11 @@ class Lamda(ExprWithLimits):
                         tensors.append(arg)
     
                 tensor = None
-                if any(t.is_Lamda for t in tensors) and all(t.is_elementwise and t.arg.is_Lamda for t in tensors if not t.is_Lamda):
+                if any(t.is_Stack for t in tensors) and all(t.is_elementwise and t.arg.is_Stack for t in tensors if not t.is_Stack):
                     
                     limits = set()
                     for t in tensors:
-                        if t.is_Lamda:
+                        if t.is_Stack:
                             limits.add(t.limits)
                         else:
                             limits.add(t.arg.limits)
@@ -3305,12 +3308,11 @@ class Lamda(ExprWithLimits):
                         
                         exprs = []
                         for t in tensors:
-                            if t.is_Lamda:
+                            if t.is_Stack:
                                 exprs.append(t.expr)
                             else:
                                 exprs.append(t.func(t.arg.expr))
-                            
-                        tensor = Lamda(expr.func(*exprs), *limits)
+                        tensor = Stack(expr.func(*exprs), *limits)
                         
                 if tensor is None:
                     tensor = expr.func(*tensors)
@@ -3342,7 +3344,7 @@ class Lamda(ExprWithLimits):
                 
                 tensor, axis, size = self.func(expr.arg, *limits).of_unsqueeze(excludes=excludes)
                 
-                if tensor.is_Lamda:
+                if tensor.is_Stack:
                     tensor = tensor.func(expr.func(tensor.expr), *tensor.limits)
                 else:
                     tensor = expr.func(tensor)

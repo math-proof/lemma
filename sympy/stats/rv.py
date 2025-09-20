@@ -236,7 +236,7 @@ class SinglePSpace(PSpace):
             assumptions = symbol.assumptions0
             if symbol.is_Indexed:
                 from sympy import Lamda
-                distribution = Lamda(distribution, *((i,) for i in symbol.indices))
+                distribution = Stack(distribution, *((i,) for i in symbol.indices))
                 value = symbol.base.copy(distribution=distribution, **assumptions)[symbol.indices]
             else:
                 value = symbol.copy(distribution=distribution, **assumptions)

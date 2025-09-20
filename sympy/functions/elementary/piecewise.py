@@ -1743,7 +1743,7 @@ class Piecewise(Function):
         limits_dict = self.limits_dict
         if len(limits_dict) > 1:
             expr = self.func(self.expr, self.limits[0]).simplify(squeeze=squeeze)
-            if not expr.is_Lamda:
+            if not expr.is_Stack:
                 return self.func(expr, *self.limits[1:]).simplify(squeeze=squeeze)
             if not expr.expr.is_Piecewise:
                 return self.func(expr.expr, *expr.limits, *self.limits[1:])

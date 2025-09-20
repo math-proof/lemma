@@ -65,10 +65,17 @@
 			</tr>	
 		</table><br>
 		<div class=clear>
-			most wanted <input size=2 v-model=topk @change=change_input />of {{count[0] - whitelist.length}} unformalized lemmas:
-			<a v-for="axiom of wantedLemma" :href=href_module(axiom) target="_blank">
-				<p>{{axiom}}</p>
-			</a>
+			most wanted <input size=2 v-model=topk @change=change_input />of {{count[0] - whitelist.length}} unformalized lemmas: <br>
+			<table tabindex=0 align=left border=1>
+				<tr>
+					<th>lemma</th>
+					<th>depth</th>
+				</tr>
+				<tr v-for="data of wantedLemma">
+					<td><a :href=href_module(data.module) target="_blank">{{data.module}}</a></td>
+					<td>{{data.depth}}</td>
+				</tr>
+			</table>
 		</div>
 		<br>
 	</div>
@@ -103,10 +110,24 @@ export default {
 			latex: null,
 			count: [],
 			whitelist : [
-				'Algebra.Cond.of.Cond.Cond.subs',
-				'Algebra.And.of.And',
-				'Algebra.Cond.Cond.of.And.subs',
-				'Logic.Cond.of.Iff.Cond.subs',
+				'Logic.Cond.of.Eq.Cond.subst',
+				'Logic.Cond.of.Iff.Cond.subst',
+				'Logic.All_In_Insert.Is.And_All', // Logic.AllIn_Insert.Is.And_All
+				'Logic.Cond.Or.of.OrAndS', // Logic.Cond.Or.given.OrAndS, Logic.And_Or.given.OrAndS
+				'Logic.Cond.of.All_Imp', 
+				'Logic.All.of.Given', // plausible
+				'Logic.All.of.Cond', // plausible
+				'Logic.Imp.Is.All', // plausible
+
+				'Set.Eq.of.ImpIn.ImpIn', // plausible
+				
+				'Algebra.Eq.of.Ge.squeeze',
+				'Algebra.Ge.Is.Eq.squeeze',
+				'Algebra.EqSumS.of.Eq', // Algebra.EqSumS.of.All_Eq
+				'Algebra.GeSqrt_0.of.Ge_0', // Algebra.GeSqrt_0
+
+				'Tensor.Ne_0.Ne_0.of.Mul.ne.Zero', // Algebra.Ne_0.Ne_0.of.Mul.ne.Zero
+				'Tensor.EqStackS.of.Eq', // Tensor.EqStackS.of.All_Eq
 			],
 		};
 	},
@@ -148,16 +169,18 @@ select
 	distinct h_left.caller
 from
 	axiom.hierarchy as h_left
-	left join axiom.hierarchy as h_right 
-	on 
-		h_left.user = h_right.user and 
-		h_left.caller = h_right.callee
+	left join 
+		axiom.hierarchy as h_right 
+		on 
+			h_left.user = h_right.user and 
+			h_left.caller = h_right.callee
 where
 	h_right.callee is null and 
 	h_left.user = 'py' 
-limit 2`;
+limit 1`;
 			console.log(sql);
 			var data = await form_post('php/request/execute.php', {sql, resultType: 1});
+			data = [{caller: 'Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate'}];
 			console.log(data);
 			data = data.map(row => row.caller);
 			var sql = `
@@ -183,19 +206,21 @@ with _t as (
 	group by caller
 )
 select 
-	module
+	_t.module, _t.depth
 from 
 	_t
-	left join axiom.lemma as _s using (module)
+	left join 
+		axiom.lemma as _s 
+		on 
+			_s.module = regexp_replace(_t.module, '\\\\.[a-z]+$', '', 1, 0, 'c')
 where 
 	_s.module is null and 
-	not json_contains(${JSON.stringify(this.whitelist).mysqlStr()}, json_quote(module))
+	not json_contains(${JSON.stringify(this.whitelist).mysqlStr()}, json_quote(_t.module))
 order by depth desc
 limit ${this.topk}`;
 			console.log(sql);
-			var data = await form_post('php/request/execute.php', {sql, resultType: 1});
-			console.log(data);
-			this.wantedLemma = data.map(row => row.module);
+			this.wantedLemma = await form_post('php/request/execute.php', {sql, resultType: 1});
+			console.log(this.wantedLemma);
 		},
 
 		change_input(event){
@@ -210,9 +235,10 @@ with statistic as (
 		if (_s.module is null, 0, 1) as status
 	from 
 		axiom.axiom as _t
-		left join axiom.lemma as _s 
-		on 
-			_t.axiom = _s.module
+		left join 
+			axiom.lemma as _s 
+			on 
+				_s.module = regexp_replace(_t.axiom, '\\\\.[a-z]+$', '', 1, 0, 'c')
 )
 select 
 	count(*) as count,

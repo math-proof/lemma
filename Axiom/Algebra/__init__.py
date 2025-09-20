@@ -63,7 +63,6 @@ from . import All_Or
 from . import Iff
 from . import All_Any
 from . import Or_Any
-from . import ZeroMatrix
 from . import Bool
 from . import Eq_Bool
 from . import Eq_Sum
@@ -90,7 +89,6 @@ from . import ReducedMin
 from . import ReducedSum
 from . import ReducedArgMin
 from . import Inf
-from . import OneMatrix
 from . import Lt_Abs
 from . import Le_Abs
 from . import Any_And
@@ -235,7 +233,6 @@ from . import LtPow
 from . import LeMinimaS
 from . import LeSupS
 from . import LeMaximaS
-from . import AndNeS_0
 from . import NeMatrix
 from . import NeLamda
 from . import NeMul
@@ -328,3 +325,12 @@ from . import MulAbsS
 from . import EqPowS
 from . import SquareBool
 from . import EqAddS
+from . import Any_AndEq
+from . import Add_Ite
+from . import AddIteS
+from . import Pow_Ite
+from . import EqFunS
+from . import Prod_Mul
+from . import MulProdS
+from . import Zeros
+from . import Ones

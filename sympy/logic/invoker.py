@@ -184,7 +184,7 @@ class Invoker:
         else:
             for i in range(-2, -len(self._objs), -1):
                 parent = self._objs[i]
-                if parent.is_ExprWithLimits and not (parent.is_Expectation or parent.is_Variance or parent.is_Lamda):
+                if parent.is_ExprWithLimits and not (parent.is_Expectation or parent.is_Variance or parent.is_Stack):
                     self.watch_domain_defined(obj, *parent.limits)
                     
         simplify = kwargs.get('simplify', True)
@@ -490,7 +490,7 @@ class Invoker:
         if args:
             for x in args:
                 if target.is_ExprWithLimits and x in target.variables:
-                    if target.is_Lamda:
+                    if target.is_Stack:
                         continue
                     else:
                         expr = target.expr

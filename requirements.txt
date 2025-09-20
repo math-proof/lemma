@@ -1,3 +1,5 @@
+# mandatory
+mpmath
 mysql-connector
-flask
+# ln -s ../std/std std
 std.algorithm

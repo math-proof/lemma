@@ -930,8 +930,8 @@ class Number(AtomicExpr):
                 size = b - a
             shape.append(size)
         shape.reverse()
-        from sympy.matrices.expressions.matexpr import OneMatrix
-        return self.expr * OneMatrix(*shape)
+        from sympy.matrices.expressions.matexpr import Ones
+        return self.expr * Ones(*shape)
     
     def is_consistently_of(self, struct):
         return struct.is_Number
@@ -2808,14 +2808,14 @@ class Zero(with_metaclass(Singleton, IntegerConstant)):
 
     def __mul__(self, other):
         if isinstance(other, Basic) and other.shape:
-            from sympy import ZeroMatrix
-            return ZeroMatrix(*other.shape)
+            from sympy import Zeros
+            return Zeros(*other.shape)
         return self
 
     def __rmul__(self, lhs):
         if isinstance(lhs, Basic) and lhs.shape:
-            from sympy import ZeroMatrix
-            return ZeroMatrix(*lhs.shape)
+            from sympy import Zeros
+            return Zeros(*lhs.shape)
         return self
     
     def _eval_power(self, expt):
@@ -2924,8 +2924,8 @@ class Zero(with_metaclass(Singleton, IntegerConstant)):
                 size = b - a
             shape.append(size)
         shape.reverse()
-        from sympy.matrices.expressions.matexpr import ZeroMatrix
-        return ZeroMatrix(*shape)
+        from sympy.matrices.expressions.matexpr import Zeros
+        return Zeros(*shape)
         
         
 class One(with_metaclass(Singleton, IntegerConstant)):
@@ -3004,8 +3004,8 @@ class One(with_metaclass(Singleton, IntegerConstant)):
                 size = b - a
             shape.append(size)
         shape.reverse()
-        from sympy.matrices.expressions.matexpr import OneMatrix
-        return OneMatrix(*shape)
+        from sympy.matrices.expressions.matexpr import Ones
+        return Ones(*shape)
 
 
 class NegativeOne(with_metaclass(Singleton, IntegerConstant)):

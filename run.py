@@ -36,7 +36,7 @@ from std.file import Text
 from os.path import dirname, basename, realpath, isdir, isfile, join, sep, exists
 
 try:
-    import Axiom
+    import Lemma
 except ImportError as e:
     from util.utility import source_error
     args = source_error()
@@ -82,8 +82,8 @@ from util.utility import RetCode
 def axiom_directory():
     directory = dirname(__file__)
     if not directory:
-        return './Axiom'
-    return directory + '/Axiom'
+        return './Lemma'
+    return directory + '/Lemma'
 
 
 class Globals:
@@ -115,7 +115,7 @@ def delete_unused_imports_from_init(path):
     file = Text(path)
     lines = file.readlines()
     for i, line in enumerate(lines):
-        if (m := re.match('from *\. *import +(\w+)', line)) or (m := re.match('del (\w+)', line)):
+        if (m := re.match(r'from *\. *import +(\w+)', line)) or (m := re.match(r'del (\w+)', line)):
             module = parent + '/' + m[1]
             if not isdir(module) and not isfile(module + '.py'):
                 print(f'deleting "{line}" at line {i + 1} from {path}')
@@ -158,8 +158,8 @@ def readFolder(rootdir, sufix='.py'):
                     except UnboundLocalError:
                         removeFile(path)
                         raise RuntimeError(f"removeFile({path})")
-                    
-                if re.match('from *\. *import +\w+', line):
+
+                if re.match(r'from *\. *import +\w+', line):
                     continue
 
                 path = path[:-len(sufix) - len('/__init__')]
@@ -176,7 +176,7 @@ def readFolder(rootdir, sufix='.py'):
 
             paths = re.split(r'[\\/]+', path)
 #             print(path)
-            index = rindex(paths, 'Axiom')
+            index = rindex(paths, 'Lemma')
 
             package = '.'.join(paths[index + 1:])
 
@@ -216,7 +216,7 @@ def create_module(package, module):
         file = Text(__init__)
         
         for line in file:
-            m = re.match('from \. import (\w+(?:, *\w+)*)', line)
+            m = re.match(r'from \. import (\w+(?:, *\w+)*)', line)
             if m and module in m[1].split(', *'):
                 print('module', module, 'is already added in', package)
                 return True
@@ -247,25 +247,25 @@ def run(package, debug=True):
     
 def import_module(package):
     try:
-        module = Axiom
+        module = Lemma
         for attr in package.split('.'):
             module = getattr(module, attr)
         return module
     
     except AttributeError as e: 
         print(e)
-        if m := re.fullmatch("module '([\w\.]+)' has no attribute '(\w+)'", str(e)):
+        if m := re.fullmatch(r"module '([\w\.]+)' has no attribute '(\w+)'", str(e)):
             if create_module(*m.groups()) is not None:
                 print(package, 'is created newly')
             return -1
-        
-        if m := re.fullmatch("'function' object has no attribute '(\w+)'", str(e)):
+
+        if m := re.fullmatch(r"'function' object has no attribute '(\w+)'", str(e)):
             paths = package.split('.')
             index = paths.index(m[1])
             paths = paths[:index]
             return tackle_type_error('.'.join(paths))
 
-        if m := re.fullmatch("type object '(\w+)' has no attribute '(\w+)'", str(e)):
+        if m := re.fullmatch(r"type object '(\w+)' has no attribute '(\w+)'", str(e)):
             paths = package.split('.')
             match Ty := m[1]:
                 case 'Equal':
@@ -369,11 +369,10 @@ def process(package, debug=False):
         if module is not None:
             print(module, 'from', module)
             print(e)
-            if m := re.fullmatch("module '([\w\.]+)' has no attribute '(\w+)'", str(e)):
+            if m := re.fullmatch(r"module '([\w\.]+)' has no attribute '(\w+)'", str(e)):
                 print('importing errors found in', package)
-    
-                _package, module = re.match('(.*)\.(\w+)', package).groups()
-                _package = 'Axiom.' + _package
+                _package, module = re.match(r'(.*)\.(\w+)', package).groups()
+                _package = 'Lemma.' + _package
                 if create_module(_package, module):
                     print("file =", file, type(file))
                     if m[2] == 'prove' and basename(file) == '__init__.py':
@@ -384,7 +383,7 @@ def process(package, debug=False):
                             file = Text(file)
                             file.writelines([*Text(pyFile)] + [*file])
                             removeFile(pyFile)
-            elif re.match("type object '[\w.]+' has no attribute 'prove'", str(e)):
+            elif re.match(r"type object '[\w.]+' has no attribute 'prove'", str(e)):
                 lapse = 0
                 latex = None
                 lean = ()
@@ -423,7 +422,7 @@ try:
             return {axiom: lapse for axiom, lapse in self.query("select axiom, lapse from axiom where user='%s'" % user)}
         except mysql.connector.errors.ProgrammingError as err:
             print(err.msg)
-            m = re.compile("Table '(\w+)\.([\w_]+)' doesn't exist").search(err.msg)
+            m = re.compile(r"Table '(\w+)\.([\w_]+)' doesn't exist").search(err.msg)
             assert m
             assert m[1] == 'axiom'
             assert m[2] == 'axiom'
@@ -573,8 +572,7 @@ def prove(debug=False, parallel=True):
         print(command)
         exit_code = os.system(command)
         print('exit_code =', exit_code)
-        exit(exit_code)
-        return
+        return exit(exit_code)
 
 #     taskSet = {*[*taskSet][:1000]}
 
@@ -618,10 +616,7 @@ def prove(debug=False, parallel=True):
         timings[i] += timing
         pq.put((timings[i], i))
         
-    for proc, timing in zip(packages, timings):
-        print('timing =', timing)
-        print('python run.py ' + ' '.join(proc))
-        
+
     print('total timing =', sum(timings))
     
     data = []
@@ -739,7 +734,7 @@ def retry(package):
     __init__ = dirname(file) + '/__init__.py'
     bn = basename(file)[:-3]
     for line in Text(__init__):
-        if re.match('from \. import %s' % bn, line):
+        if re.match(r'from \. import %s' % bn, line):
             return post_process_returns(run(package, debug=False))
 
     return RetCode.failed, None, None
@@ -770,7 +765,7 @@ def post_process_returns(returns):
             sql = m[1]
             text = Text(sql)
             for line in text:
-                m = re.match('update axiom set state = "\w+", lapse = \S+, latex = ("[\s\S]+") where user = "\w+" and axiom = "\S+"', line)
+                m = re.match(r'update axiom set state = "\w+", lapse = \S+, latex = ("[\s\S]+") where user = "\w+" and axiom = "\S+"', line)
                 if m:
                     latex = eval(m[1])
 
@@ -797,7 +792,7 @@ def run_with_module(*modules, debug=True):
                 try:
                     args = prove_with_timing(module, debug=debug, slow=True)
                 except AttributeError as e:
-                    if m := re.match("'(\w+)' object has no attribute 'prove'", str(e)):
+                    if m := re.match(r"'(\w+)' object has no attribute 'prove'", str(e)):
                         if m[1] == 'function':
                             args = retry(package)
                         else:
@@ -812,13 +807,13 @@ def run_with_module(*modules, debug=True):
                             else:
                                 args = retry(package)
 
-                    elif m := re.match("module '([\w.]+)' has no attribute 'prove'", str(e)):
+                    elif m := re.match(r"module '([\w.]+)' has no attribute 'prove'", str(e)):
                         if m[1].startswith('sympy.'):
                             args = post_process_returns(tackle_type_error(package, False))
                         else:
                             args = retry(package)
 
-                    elif re.match("type object '[\w.]+' has no attribute 'prove'", str(e)):
+                    elif re.match(r"type object '[\w.]+' has no attribute 'prove'", str(e)):
                         args = post_process_returns(tackle_type_error(package, False))
 
                     else: 
@@ -946,8 +941,8 @@ clearInterval(ret);
 # python run.py Algebra.EqX.Add.Zero.to.And.Imply.quartic
 # python run.py Algebra.EqX.Add.Zero.to.And.Imply.quartic.one_leaded
 # python run.py Discrete.Det.to.Sum.expansion_by_minors
-# python run.py Neuro.Eq.Lamda.Bool.to.Eq.conv2d
-# python run.py Neuro.Eq.Lamda.Lool.to.Eq.conv3d
+# python run.py Tensor.Eq.Lamda.Bool.to.Eq.conv2d
+# python run.py Tensor.Eq.Lamda.Lool.to.Eq.conv3d
 
 # python -c "exec(open('./util/hierarchy.py').read()); exec(open('./util/function.py').read())"
 # python -c "exec(open('./util/hint.py').read())"

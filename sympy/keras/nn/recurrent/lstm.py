@@ -3,8 +3,8 @@ from sympy.keras.nn import sigmoid
 from sympy.functions.elementary.hyperbolic import tanh
 from sympy.matrices.expressions.blockmatrix import BlockMatrix
 from sympy.functions.elementary.piecewise import Piecewise
-from sympy.matrices.expressions.matexpr import ZeroMatrix
-from sympy.concrete.expr_with_limits import Lamda
+from sympy.matrices.expressions.matexpr import Zeros
+from sympy.concrete.expr_with_limits import Stack
 from sympy.core.symbol import Symbol
 from sympy.core.function import Function
 from sympy.core.containers import Tuple
@@ -57,7 +57,7 @@ def lstm(x, *limits):
     c = f * c + i * tanh(xt @ Wc + h @ Whc + bc)
     o = sigmoid(xt @ Wo + h @ Who + bo)    
      
-    return Piecewise((BlockMatrix(o * tanh(c), c), t > 0), (ZeroMatrix(*hc.shape), True))
+    return Piecewise((BlockMatrix(o * tanh(c), c), t > 0), (Zeros(*hc.shape), True))
 
     
 @Function(real=True, integer=None, shape=shape)    
@@ -67,7 +67,7 @@ def LSTM(x, *weights):
     t = Symbol(integer=True)
     expr = lstm[W, Wh, b, t](x)
     d = expr.shape[0] / 2
-    return Lamda[t:n](Sliced(lstm[W, Wh, b, t](x), Tuple(0, d)))
+    return Stack[t:n](Sliced(lstm[W, Wh, b, t](x), Tuple(0, d)))
 
 
 @Function(real=True, integer=None, shape=shape)
@@ -77,5 +77,5 @@ def LSTMCell(x, *weights):
     t = Symbol(integer=True)
     expr = lstm[W, Wh, b, t](x)
     d = expr.shape[0] / 2
-    return Lamda[t:n](Sliced(expr, Tuple(d, d * 2)))
+    return Stack[t:n](Sliced(expr, Tuple(d, d * 2)))
 

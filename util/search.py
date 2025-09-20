@@ -4,7 +4,7 @@ from std import listfolders
 from collections import defaultdict
 
 def axiom_directory():
-    return os.path.dirname(os.path.dirname(__file__)) + '/Axiom'
+    return os.path.dirname(os.path.dirname(__file__)) + '/Lemma'
 
 def get_sections():
     return [os.path.basename(name) for name in listfolders(axiom_directory())]
@@ -99,14 +99,14 @@ def is_axiom_plausible(php):
     for statement in yield_from_mysql(php):
         matches = is_latex(statement)
         for match in matches:
-            if re.compile(".+tag\*\{(\?=.+)\}.+").search(match[0]):
+            if re.compile(r".+tag\*\{(\?=.+)\}.+").search(match[0]):
                 return True
             
     return False
 
     
 def is_latex(latex): 
-    return re.compile('\\\\\[.+?\\\\\]').finditer(latex)
+    return re.compile(r'\\\\\[.+?\\\\\]').finditer(latex)
 
 
 def get_extension(file):
@@ -124,7 +124,7 @@ def module_to_py(theorem):
 
 def module_to_path(theorem):
     theorem = theorem.replace(".", "/")
-    return os.path.dirname(os.path.dirname(__file__)) + f"/Axiom/{theorem}"
+    return os.path.dirname(os.path.dirname(__file__)) + f"/Lemma/{theorem}"
 
     
 def py_to_module(py, delimiter='.'):
@@ -133,7 +133,7 @@ def py_to_module(py, delimiter='.'):
     while True:
         dirname = os.path.dirname(pythonFile)
         basename = os.path.basename(pythonFile)
-        if basename == 'Axiom':
+        if basename == 'Lemma':
             break
         
         module.append(basename)
@@ -199,16 +199,15 @@ def is_py_theorem(py):
     for line in Text(py):
         if not line:
             continue
-        if re.match('from util import \*', line):
+        if re.match(r'from util import \*', line):
             return True
-        assert re.match('from \. import \w+', line), py
+        assert re.match(r'from \. import \w+', line), py
         return False
     
 def yield_callee_from_py(py):
     prove = False
     for line in Text(py):
-#         print("line =", line)
-        if re.match('^def prove\(', line):
+        if re.match(r'^def prove\(', line):
             prove = True
             continue
 
@@ -220,15 +219,14 @@ def yield_callee_from_py(py):
                 continue
 
             for m in re.finditer(fr"\b(?:{'|'.join(sections)})(?:\.\w+)+", line):
-                module = m[0]        
-                m = re.match('(.+)\.apply$', module)
+                module = m[0]
+                m = re.match(r'(.+)\.apply$', module)
                 if m:
                     module = m[1]
-    #             print("module =", module)
                 yield module
         
 def is_def_start(funcname, statement):
-    return re.match(f"def +{funcname}\([^)]*\) *: *", statement)
+    return re.match(fr"def +{funcname}\([^)]*\) *: *", statement)
         
 def analyze_apply(py, i):
     count = len(py)
@@ -239,7 +237,7 @@ def analyze_apply(py, i):
             break
 
         if matches := re.match('@prove(.+)', statement):
-            if matches := re.match('\((.+)=(.+)\)', matches[1]):
+            if matches := re.match(r'\((.+)=(.+)\)', matches[1]):
                 provability = matches[1]
             
         i += 1
@@ -260,14 +258,14 @@ def yield_from_py(module):
         statement = py[i]
         if matches := re.match('from +(.+) +import +(.*)', statement):
             prefix, namespaces = matches.groups()
-            namespaces = [s for s in re.split("[\s,]+", namespaces) if s]
+            namespaces = [s for s in re.split(r"[\s,]+", namespaces) if s]
 
             if namespaces and namespaces[-1] == '\\':
                 namespaces.pop()
                 i += 1
                 statement = py[i]
 
-                namespaces_addition = [s for s in re.split("[\s,]+", statement) if s]
+                namespaces_addition = [s for s in re.split(r"[\s,]+", statement) if s]
 
                 namespaces += namespaces_addition
             i += 1
@@ -275,10 +273,10 @@ def yield_from_py(module):
         
         if matches := re.match('import +(.+)', statement):
             packages = matches[1]
-            packages = [s for s in re.split("\s*,\s*", packages) if s]
+            packages = [s for s in re.split(r"\s*,\s*", packages) if s]
 
             for package in packages:
-                package = [s for s in re.split("\s+", package) if s]
+                package = [s for s in re.split(r"\s+", package) if s]
                 match len(package):
                     case 1:
                         package, = package
@@ -305,7 +303,7 @@ def yield_from_py(module):
 
     if i < count:
         statement = py[i]
-        if matches := re.match('    from Axiom import (.+)', statement):
+        if matches := re.match('    from Lemma import (.+)', statement):
             section = matches[1].split(", ")
             yield {
                 'line' : i,
@@ -317,12 +315,12 @@ def yield_from_py(module):
             statement = py[i]
             statement = statement.rstrip()
             # skip empty lines
-            if re.match('\s*$', statement):
+            if re.match(r'\s*$', statement):
                 i += 1
                 continue
 
             # the start of the next global statement other than def prove
-            if re.match('\w', statement):
+            if re.match(r'\w', statement):
                 break
 
             # stop analyzing if return statement is encountered.
@@ -342,12 +340,12 @@ def yield_from_py(module):
 
                     statement = statement.rstrip()
                     # skip empty lines
-                    if re.match('\s*', statement):
+                    if re.match(r'\s*', statement):
                         i += 1
                         continue
 
                     # the start of the next global statement other than def prove
-                    if re.match('\w', statement):
+                    if re.match(r'\w', statement):
                         break
 
                     obj = {
@@ -355,7 +353,7 @@ def yield_from_py(module):
                         'unused' : True
                     }
 
-                    if matches := re.match('\s*#(.*)', statement):
+                    if matches := re.match(r'\s*#(.*)', statement):
                         obj['comment'] = True
                         obj['statement'] = "#" + matches[1].lstrip()
                     else:
@@ -370,7 +368,7 @@ def yield_from_py(module):
                 'line' : i
             }
             # cope with comments starting with #
-            if matches := re.match('\s*#(.*)', statement):
+            if matches := re.match(r'\s*#(.*)', statement):
                 obj['comment'] = True
                 obj['statement'] = "#" + matches[1].lstrip()
 
@@ -382,7 +380,7 @@ def yield_from_py(module):
 
             obj['statement'] = statement
 
-            if re.search('(=|<<) *apply\(', statement):
+            if re.search(r'(=|<<) *apply\(', statement):
                 obj['module'] = py_to_module(python_file)
                         
             elif matches := match_section(statement):
@@ -406,8 +404,8 @@ def yield_from_py(module):
             statement = py[i]
             statement = statement.rstrip()
             # cope with comments starting with #
-            if matches := re.match('\s*#(.*)', statement):
-                if matches := re.search('(created|updated) on (\d\d\d\d-\d\d-\d\d)', matches[1]):
+            if matches := re.match(r'\s*#(.*)', statement):
+                if matches := re.search(r'(created|updated) on (\d\d\d\d-\d\d-\d\d)', matches[1]):
                     yield {
                         'line' : i,
                         'comment': True,
@@ -420,18 +418,16 @@ def yield_from_py(module):
 def yield_function_from_py(py):
     # prove = False
     for line in Text(py):
-#         print("line =", line)
-            
-        if m := re.match('(?:    )+from Axiom((?:\.\w+)+) import (\w+)', line):
+        if m := re.match(r'(?:    )+from Lemma((?:\.\w+)+) import (\w+)', line):
             callee, func = m.groups()
             callee = callee[1:]
-            print(callee, func)        
+            print(callee, func)
             yield callee, func
         
 def detect_and_change():
     for py in read_all_py(axiom_directory()):
         lines = Text(py).collect()
-        regex = '    (\w+(?:, \w+)*) = (Symbol|Function)\((.+)\) *$'
+        regex = r'    (\w+(?:, \w+)*) = (Symbol|Function)\((.+)\) *$'
         pivot = -1
         for i, line in enumerate(lines):
             if re.match('def prove', line):

@@ -3344,4 +3344,18 @@ function boolval($bool) {
 function capitalize($s) {
     return strtoupper($s[0]).strtolower(substring($s, 1));
 }
-?>
+
+function listdir($cwd) {
+    $dir = [];
+    foreach (scandir($cwd) as $file) {
+        switch ($file) {
+            case '.':
+            case '..':
+                break;
+            default:
+                if (is_dir($cwd . DIRECTORY_SEPARATOR . $file))
+                    $dir[] = $file;
+        }
+    }
+    return $dir;
+}

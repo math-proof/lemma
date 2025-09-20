@@ -487,8 +487,8 @@ class KroneckerDelta(Function):
         return 'KroneckerDelta(%s)' % ', '.join(p._print(arg) for arg in self.args)
         
     def _lean(self, p):
-        return 'KroneckerDelta(%s)' % ', '.join(p._print(arg) for arg in self.args)
-        
+        return Function.lean_fun('KroneckerDelta', *self.args, p=p)
+
     def _latex(self, p, exp=None):
         i = p._print(self.args[0])
         j = p._print(self.args[1])

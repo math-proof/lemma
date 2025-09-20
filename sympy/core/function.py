@@ -672,8 +672,25 @@ class Function(Application, Expr):
     def _sympystr(self, p):
         return self.func.__name__ + "(%s)" % p.stringify(self.args, ", ")
 
+    @classmethod
+    def lean_fun(cls, name, *args, p=None):
+        if format := ["(%s)" if arg.is_Add or arg.is_Mul else '%s' for arg in args]:
+            name += ' '
+        return name + ' '.join(f % p._print(arg) for f, arg in zip(format, args))
+    
+    @classmethod
+    def lean_method(cls, name, self, *args, p=None):
+        if self.is_Add or self.is_Mul:
+            format = f"(%s).{name}"
+        else:
+            format = f"%s.{name}"
+        format = [format]
+        format += ["(%s)" if arg.is_Add or arg.is_Mul else '%s' for arg in args]
+        args = (self,) + args
+        return ' '.join(f % p._print(arg) for f, arg in zip(format, args))
+
     def _lean(self, p):
-        return self.func.__name__ + "(%s)" % p.stringify(self.args, ", ")
+        return self.lean_fun(self.func.__name__, *self.args, p=p)
 
     def _pretty(self, p):
         # optional argument func_name for supplying custom names
@@ -872,9 +889,11 @@ class AppliedUndef(Function):
         limits = self.limits
         name = Symbol.subs_specials(self.func.__name__)
         if limits: 
-            limits = [x for x, *_ in limits]
-            return name + "[%s](%s)" % (p.stringify(limits, ", "), p.stringify(self.inputs, ", "))
-        return name + "(%s)" % p.stringify(self.args, ", ")
+            args = [x for x, *_ in limits]
+            args.extend(self.inputs)
+        else:
+            args = self.args
+        return self.lean_fun(name, *args, p=p)
 
     def _pretty(self, p):
         limits = self.limits
@@ -1177,8 +1196,7 @@ class UndefinedFunction(ManagedProperties):
         if name is None:
             import traceback, re
             line = traceback.extract_stack()[-3].line
-            name = re.match('(.+?) *= *Function\(.+ *$', line)
-            if name:
+            if name := re.match(r'(.+?) *= *Function\(.+ *$', line):
                 name = name[1]
                 if ',' in name:
                     return (Function(name.strip(), bases, __dict__=__dict__, **kwargs) for name in name.split(','))
@@ -1630,8 +1648,8 @@ class Derivative(Expr):
                 for x, n in variable_count:
                     for _ in range(n):
                         shape += [*x.shape]
-                from sympy import ZeroMatrix
-                return ZeroMatrix(*shape)
+                from sympy import Zeros
+                return Zeros(*shape)
 
             # make the order of symbols canonical
             # TODO: check if assumption of discontinuous derivatives exist
@@ -1878,8 +1896,8 @@ class Derivative(Expr):
         if expr.is_AppliedUndef:
             if self.expr.has(*self.variables):
                 return self
-            from sympy import ZeroMatrix
-            return ZeroMatrix(*self.shape)
+            from sympy import Zeros
+            return Zeros(*self.shape)
         
         if hints.get('deep', True):
             try:
@@ -1917,8 +1935,8 @@ class Derivative(Expr):
                 fx = self.expr.arg
                 den = fx
                 if len(self.shape) > len(fx.shape) > 0:
-                    from sympy import OneMatrix
-                    den *= OneMatrix(*self.shape)
+                    from sympy import Ones
+                    den *= Ones(*self.shape)
                     den = den.T
                     
                 return Expr.__new__(self.func, fx, *self.limits) / den
@@ -2230,8 +2248,8 @@ class Derivative(Expr):
                 return self.expr
 
             if n > 0:
-                from sympy import ZeroMatrix
-                return ZeroMatrix(*self.shape)
+                from sympy import Zeros
+                return Zeros(*self.shape)
          
         return Expr.__new__(self.func, dependent, *self.limits) * independent
 

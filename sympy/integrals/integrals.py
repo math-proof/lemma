@@ -1522,13 +1522,13 @@ class Integral(AddWithLimits):
 
     @classmethod
     def identity(cls, self, **assumptions):
-        from sympy import ZeroMatrix
-        return ZeroMatrix(*self.shape)
+        from sympy import Zeros
+        return Zeros(*self.shape)
 
     @classmethod
     def is_identity(cls, self, **_):
         if self.shape:
-            return self.is_ZeroMatrix
+            return self.is_Zeros
         return self.is_Zero
 
 

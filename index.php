@@ -102,7 +102,7 @@ function is_latex_print($latex, &$res)
 $module = str_replace('/', '.', $module);
 $title = str_replace('.', '/', $module);
 
-$path_info = substr(__FILE__, 0, -9) . "Axiom/" . $title;
+$path_info = substr(__FILE__, 0, -9) . "Lemma/" . $title;
 
 $indexOfYield = -1;
 if (! str_ends_with($path_info, '/')) {

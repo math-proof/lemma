@@ -1333,15 +1333,15 @@ domain & limit[1] = %s
         return finite_set_sum(s)
     
     def as_Sum(self):
-        from sympy.concrete.expr_with_limits import Lamda
+        from sympy.concrete.expr_with_limits import Stack
         function = self.expr
-        if not function.is_Lamda: 
-            function = function.astype(Lamda)
+        if not function.is_Stack: 
+            function = function.astype(Stack)
 
         limit = function.limits[-1]
         limits = function.limits[:-1]
         if limits:
-            function = Lamda(function.expr, *limits)
+            function = Stack(function.expr, *limits)
         else:
             function = function.expr
 
@@ -1357,7 +1357,7 @@ domain & limit[1] = %s
         return self.expr.shape
 
     def _pretty(self, p):
-        from sympy.printing.pretty.stringpict import stringPict, prettyForm
+        from sympy.printing.pretty.stringpict import prettyForm
         return prettyForm(self.__str__())
 
     def _sympystr(self, p):
@@ -1428,13 +1428,13 @@ domain & limit[1] = %s
 
     @classmethod
     def identity(cls, self, **_):
-        from sympy import ZeroMatrix
-        return ZeroMatrix(*self.shape)
+        from sympy import Zeros
+        return Zeros(*self.shape)
 
     @classmethod
     def is_identity(cls, self, **_):
         if self.shape:
-            return self.is_ZeroMatrix
+            return self.is_Zeros
         return self.is_Zero
 
     @classmethod

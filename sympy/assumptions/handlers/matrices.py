@@ -74,7 +74,7 @@ class AskSymmetricHandler(CommonHandler):
             return True
 
     @staticmethod
-    def ZeroMatrix(expr, assumptions):
+    def Zeros(expr, assumptions):
         return ask(Q.square(expr), assumptions)
 
     @staticmethod
@@ -135,7 +135,7 @@ class AskInvertibleHandler(CommonHandler):
 
     Identity, Inverse = [staticmethod(CommonHandler.AlwaysTrue)]*2
 
-    ZeroMatrix = staticmethod(CommonHandler.AlwaysFalse)
+    Zeros = staticmethod(CommonHandler.AlwaysFalse)
 
     @staticmethod
     def Transpose(expr, assumptions):
@@ -189,7 +189,7 @@ class AskOrthogonalHandler(CommonHandler):
 
     Identity = staticmethod(CommonHandler.AlwaysTrue)
 
-    ZeroMatrix = staticmethod(CommonHandler.AlwaysFalse)
+    Zeros = staticmethod(CommonHandler.AlwaysFalse)
 
     @staticmethod
     def Transpose(expr, assumptions):
@@ -260,7 +260,7 @@ class AskUnitaryHandler(CommonHandler):
 
     Identity = staticmethod(CommonHandler.AlwaysTrue)
 
-    ZeroMatrix = staticmethod(CommonHandler.AlwaysFalse)
+    Zeros = staticmethod(CommonHandler.AlwaysFalse)
 
 class AskFullRankHandler(CommonHandler):
     """
@@ -283,7 +283,7 @@ class AskFullRankHandler(CommonHandler):
 
     Identity = staticmethod(CommonHandler.AlwaysTrue)
 
-    ZeroMatrix = staticmethod(CommonHandler.AlwaysFalse)
+    Zeros = staticmethod(CommonHandler.AlwaysFalse)
 
     @staticmethod
     def Transpose(expr, assumptions):
@@ -334,7 +334,7 @@ class AskPositiveDefiniteHandler(CommonHandler):
 
     Identity = staticmethod(CommonHandler.AlwaysTrue)
 
-    ZeroMatrix = staticmethod(CommonHandler.AlwaysFalse)
+    Zeros = staticmethod(CommonHandler.AlwaysFalse)
 
     @staticmethod
     def Transpose(expr, assumptions):
@@ -383,7 +383,7 @@ class AskUpperTriangularHandler(CommonHandler):
         if Q.upper_triangular(expr) in conjuncts(assumptions):
             return True
 
-    Identity, ZeroMatrix = [staticmethod(CommonHandler.AlwaysTrue)]*2
+    Identity, Zeros = [staticmethod(CommonHandler.AlwaysTrue)]*2
 
     @staticmethod
     def Transpose(expr, assumptions):
@@ -436,7 +436,7 @@ class AskLowerTriangularHandler(CommonHandler):
         if Q.lower_triangular(expr) in conjuncts(assumptions):
             return True
 
-    Identity, ZeroMatrix = [staticmethod(CommonHandler.AlwaysTrue)]*2
+    Identity, Zeros = [staticmethod(CommonHandler.AlwaysTrue)]*2
 
     @staticmethod
     def Transpose(expr, assumptions):
@@ -497,7 +497,7 @@ class AskDiagonalHandler(CommonHandler):
         if Q.diagonal(expr) in conjuncts(assumptions):
             return True
 
-    Identity, ZeroMatrix = [staticmethod(CommonHandler.AlwaysTrue)]*2
+    Identity, Zeros = [staticmethod(CommonHandler.AlwaysTrue)]*2
 
     @staticmethod
     def Transpose(expr, assumptions):
@@ -564,7 +564,7 @@ class AskIntegerElementsHandler(CommonHandler):
 
     HadamardProduct, Determinant, Trace, Transpose = [MatAdd]*4
 
-    ZeroMatrix, Identity = [staticmethod(CommonHandler.AlwaysTrue)]*2
+    Zeros, Identity = [staticmethod(CommonHandler.AlwaysTrue)]*2
 
     MatMul = staticmethod(partial(MatMul_elements, Q.integer_elements,
                                                    Q.integer))

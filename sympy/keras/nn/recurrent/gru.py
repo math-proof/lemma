@@ -1,10 +1,10 @@
 from sympy.functions.elementary.piecewise import Piecewise
-from sympy.matrices.expressions.matexpr import ZeroMatrix
+from sympy.matrices.expressions.matexpr import Zeros
 from sympy.keras.nn import sigmoid
 from sympy.functions.elementary.hyperbolic import tanh
 from sympy.core.function import Function
 from sympy.core.symbol import Symbol
-from sympy.concrete.expr_with_limits import Lamda
+from sympy.concrete.expr_with_limits import Stack
 
 @property
 def shape(self):
@@ -45,7 +45,7 @@ def gru(x, *limits):
     r = sigmoid(xt @ Wxr + h @ Whr + br)     
     gh = tanh(xt @ Wxh + (r * h) @ Whh + bh)
     
-    return Piecewise(((1 - z) * gh + z * h, t > 0), (ZeroMatrix(*h.shape), True))
+    return Piecewise(((1 - z) * gh + z * h, t > 0), (Zeros(*h.shape), True))
 
 
 @Function(real=True, shape=shape)
@@ -53,5 +53,5 @@ def GRU(x, *limits):
     (Wx,), (Wh,), (b,) = limits
     n = x.shape[0]
     t = Symbol(integer=True)
-    return Lamda[t:n](gru[Wx, Wh, b, t](x))
+    return Stack[t:n](gru[Wx, Wh, b, t](x))
 

@@ -98,7 +98,7 @@ export default {
 			});
 		},
 		
-		keydown(event) {				
+		keydown(event) {
 			var self = event.target;
 			var key = event.key;
 

@@ -151,7 +151,7 @@ export default {
 			var {protocol, host, pathname, search, hash} = location;
             if (pathname.match(/\/py\/(index\.php)?/)) {
                 pathname = '/lean/';
-                search = search.replace(/(?<=[.\/\\])(In|Is)(?=[.\/\\])/g, m => m.toLowerCase());
+                search = search.replace(/(?<=[./\\][A-Z]\w*[./\\])(In|Is)(?=[.\/\\][A-Z])/g, m => m.toLowerCase());
                 search = search.replace(/(?<=[.\/\\])(given)(?=[.\/\\])/g, 'of');
             }
 			return `${protocol}\/\/${host}${pathname}${search}${hash}`;
@@ -200,7 +200,7 @@ export default {
             	break;
         	case 'apply':
                 console.log(error);
-                var module = error.file.match(/Axiom\.([\w.]+)/)[1];
+                var module = error.file.match(/Lemma\.([\w.]+)/)[1];
                 if (module == this.module) {
                 	this.open_apply(error.line);
                 }

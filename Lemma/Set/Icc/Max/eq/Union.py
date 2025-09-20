@@ -1,0 +1,38 @@
+from util import *
+
+
+@apply
+def apply(self, index=-1):
+    a, b = self.of(Interval)
+    kwargs = self.kwargs
+    args = b.of(Max)
+    former = Max(*args[:index])
+    latter = Max(*args[index:])
+    return Equal(self, Union(Interval(a, former, **kwargs), Interval(a, latter, **kwargs), evaluate=False))
+
+
+@prove
+def prove(Eq):
+    from Lemma import Set, Algebra
+
+    a, b, c = Symbol(integer=True)
+    Eq << apply(Interval(a, Max(b, c), left_open=True, right_open=True))
+
+    Eq << Set.Eq.given.All_Imp.All_Imp.apply(Eq[0])
+
+    Eq <<= Eq[-2].this.lhs.apply(Set.Ge.Le.of.In_Icc), Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Lt)
+
+    Eq <<= Eq[-2].this.find(Less).apply(Algebra.Or.Lt.of.Lt_Max), Eq[-1].this.find(Less).apply(Algebra.Lt_Max.given.Or.Lt)
+
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Union.given.OrInS, simplify=None), Eq[-1].this.find(Element).apply(Set.OrInS.of.In_Union, simplify=None)
+
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.Ge.Lt), Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
+
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.Ge.Lt), Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
+
+
+
+
+if __name__ == '__main__':
+    run()
+# created on 2022-01-08

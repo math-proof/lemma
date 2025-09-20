@@ -14,7 +14,7 @@
 Eq << Equal(a, b)  
 就是借用了C++的重载输出运算符:  
 cout << "Hello World";  
-符号lambda表达式（Lamda[k] (h[k])）的定义在latex输出上也极像C++的lambda表达式：  
+符号lambda表达式（Stack[k] (h[k])）的定义在latex输出上也极像C++的lambda表达式：  
 例如C++风格的lambda表达式： [k]{return h[k];}  
 
 在定理证明过程中对数学Object的操作也用了this关键字，也是沿用了C++的写作风格。例如：  

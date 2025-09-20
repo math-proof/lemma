@@ -1,0 +1,17 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "torchrun",
+            "type": "shell",
+            "command": "if [ ! -f torchrun ]; then rm -f torchrun && ln -s $(pip show torch | grep Location | awk '{print $2}')/torch/distributed/run.py torchrun; fi"
+        },
+        {
+            "label": "rm-lock",
+            "type": "shell",
+            "command": "rm -f *.lock"
+        }
+    ]
+}

@@ -654,8 +654,11 @@ class Product(ExprWithIntLimits):
         return 'Product[%s](%s)' % (limits, p._print(self.expr))
 
     def _lean(self, p):
-        limits = ','.join([':'.join([p._print(arg) for arg in limit]) for limit in self.limits])
-        return '\N{N-ARY PRODUCT} %s, %s' % (limits, p._print(self.expr))
+        operator = '\N{N-ARY PRODUCT}'
+        limits = [limit._format_ineq(p) for limit in self.limits]
+        operator = ", ".join(reversed(["%s %s" % (operator, limit) for limit in limits]))
+        operator = operator.replace('%', '%%')
+        return f'{operator}, %s' % p._print(self.expr)
 
     latex_name_of_operator = 'prod'
 
@@ -670,20 +673,20 @@ class Product(ExprWithIntLimits):
                     return self.func(self.expr, (i, a - 1 , b)).simplify()
 
     def as_two_terms(self):
-        first, second = self.expr.as_two_terms()        
+        first, second = self.expr.as_two_terms()
         if isinstance(self.expr, self.operator):
             return self.operator(self.func(first, *self.limits), self.func(second, *self.limits))
         return self
 
     @classmethod
     def identity(cls, self, **_):
-        from sympy import OneMatrix
-        return OneMatrix(*self.shape)
+        from sympy import Ones
+        return Ones(*self.shape)
 
     @classmethod
     def is_identity(cls, self, **_):
         if self.shape:
-            return self.is_OneMatrix
+            return self.is_Ones
         return self.is_One
 
 

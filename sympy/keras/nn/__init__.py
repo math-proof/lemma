@@ -39,9 +39,9 @@ class Softmax(Function):
             i, *rest = indices
             if isinstance(i, Tuple):
                 if len(self.shape) == 2:
-                    from sympy import Lamda, Basic
+                    from sympy import Stack, Basic
                     j = self.generate_var(integer=True, excludes={j for j in indices if isinstance(j, Basic)})
-                    self = Lamda[j:self.shape[0]](self.func(self.arg[j]))
+                    self = Stack[j:self.shape[0]](self.func(self.arg[j]))
                     return self[indices]
             else:
                 return self.func(self.arg[i])[rest]

@@ -1449,8 +1449,8 @@ class Variance(ExprWithLimits):
     
     @classmethod
     def constant_expr(cls, expr):
-        from sympy import ZeroMatrix
-        return ZeroMatrix(*expr.shape)
+        from sympy import Zeros
+        return Zeros(*expr.shape)
 
     def expand(self, **hints):
         arg = self.args[0]

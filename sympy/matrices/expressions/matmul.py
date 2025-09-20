@@ -3,7 +3,7 @@ from sympy.core import Mul, Basic, sympify
 
 from sympy.strategies import (rm_id, unpack, typed, flatten, exhaust,
         do_one, new)
-from sympy.matrices.expressions.matexpr import MatrixExpr, Identity, ZeroMatrix
+from sympy.matrices.expressions.matexpr import MatrixExpr, Identity, Zeros
 from sympy.matrices.common import ShapeError
 from sympy.matrices.expressions.blockmatrix import BlockMatrix
 from sympy.matrices.expressions.matpow import MatPow
@@ -98,7 +98,7 @@ class MatMul(MatrixExpr):
                         if len(second_last.shape) > 1:
                             matrices[-1], matrices[-2] = second_last.T, last
                     
-            if mat.is_ZeroMatrix:
+            if mat.is_Zeros:
                 from sympy import S
                 coeffs.append(S.Zero)
             
@@ -470,7 +470,7 @@ class MatMul(MatrixExpr):
         if excludes is None:
             excludes = set()
             
-        if A.is_Lamda or not B.is_Lamda:
+        if A.is_Stack or not B.is_Stack:
             return A.generate_int_limit(0, excludes | B.free_symbols, **kwargs)
         
         return B.generate_int_limit(0 if len(B.shape) == 1 else 1, excludes | A.free_symbols, **kwargs)
@@ -479,7 +479,7 @@ class MatMul(MatrixExpr):
         if not deep:
             return MatrixExpr.expand(self)
          
-        from sympy.concrete.expr_with_limits import Lamda
+        from sympy.concrete.expr_with_limits import Stack
         from sympy.concrete.summations import Sum
         if len(self.args) > 2:
             matmul = self.func(*self.args[:-1]).expand(var=var, deep=deep) @ self.args[-1]
@@ -530,7 +530,7 @@ class MatMul(MatrixExpr):
                                     if b.shape[0] == n:
                                         i = a.generate_var(b.free_symbols, integer=True)
                                         j = a.generate_var(b.free_symbols | {i}, integer=True)                                
-                                        product = Lamda[j:n, i:n](a[i] * b[j]).simplify()
+                                        product = Stack[j:n, i:n](a[i] * b[j]).simplify()
                                     else:
                                         return self
                                 else:
@@ -778,7 +778,7 @@ class MatMul(MatrixExpr):
             except Exception as e:
                 if str(e) == 'empty slices':
                     if any(s._has(old) for s in arg.shape):
-                        return ZeroMatrix(*self.shape)
+                        return Zeros(*self.shape)
                 
                 raise e
         if hit:
@@ -858,17 +858,17 @@ def newmul(*args):
 
 
 def any_zeros(mul):
-    if any([arg.is_zero or (arg.is_Matrix and arg.is_ZeroMatrix) for arg in mul.args]):
+    if any([arg.is_zero or (arg.is_Matrix and arg.is_Zeros) for arg in mul.args]):
 #         matrices = [arg for arg in mul.args if arg.is_Matrix]
         matrices = mul.args
         if len(matrices[0].shape) == 1:
             if len(matrices[-1].shape) == 1:
                 from sympy import S
                 return S.Zero
-            return ZeroMatrix(matrices[-1].cols)
+            return Zeros(matrices[-1].cols)
         if len(matrices[-1].shape) == 1:
-            return ZeroMatrix(matrices[0].rows)
-        return ZeroMatrix(matrices[0].rows, matrices[-1].cols)
+            return Zeros(matrices[0].rows)
+        return Zeros(matrices[0].rows, matrices[-1].cols)
     return mul
 
 

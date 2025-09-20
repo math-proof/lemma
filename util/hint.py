@@ -83,7 +83,7 @@ sections = get_sections()
 from sympy import *
 import sympy
 import re
-from Axiom import *
+from Lemma import *
 
 def local_eval(python, __globals__):    
     try:

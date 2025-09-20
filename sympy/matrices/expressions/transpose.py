@@ -37,7 +37,7 @@ class Transpose(MatrixExpr):
         else:
             arg, = args
             axis = kwargs.pop('axis', (-2, 1))
-                
+
         arg = _sympify(arg)
         axis = arg.normalize_axis(axis)
                 
@@ -330,8 +330,8 @@ class Transpose(MatrixExpr):
         #         axes.append(consistent_shape_len + j - i)
 
         if len(self.shape) < len(shape):
-            from sympy import OneMatrix
-            self *= OneMatrix(*extra_shape, *consistent_shape)
+            from sympy import Ones
+            self *= Ones(*extra_shape, *consistent_shape)
 
         for axis in axes:
             self = Transpose[axis](self)

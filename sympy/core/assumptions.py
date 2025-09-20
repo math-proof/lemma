@@ -675,7 +675,7 @@ class ManagedProperties(BasicMeta):
         return self.is_Application
     
 
-# in the form of : Lamda[Tuple[2]], BlockMatrix[1][Identity @ Expr]
+# in the form of : Stack[Tuple[2]], BlockMatrix[1][Identity @ Expr]
 class IndexedOperator:
     is_Basic = False
     is_IndexedOperator = True

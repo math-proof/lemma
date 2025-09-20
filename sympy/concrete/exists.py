@@ -1,5 +1,5 @@
 from sympy.logic.boolalg import Boolean, And, Or
-from sympy.concrete.conditional_boolean import Quantifier
+from sympy.concrete.quantifier import Quantifier
 from sympy.sets.sets import FiniteSet
 from sympy.concrete.expr_with_limits import ExprWithLimits
 from sympy.core.relational import Unequal
@@ -95,7 +95,7 @@ class Exists(Quantifier):
                     if domain.is_FiniteSet:
                         expr = Element(domain.arg, S)
                     else:
-                        expr = Unequal(S & domain, x.emptySet)                        
+                        expr = Unequal(S & domain, x.emptySet)
                 else:
                     expr = None
                 
@@ -189,8 +189,7 @@ class Exists(Quantifier):
         return 'Any[%s](%s)' % (limits, p._print(self.expr))
 
     def _lean(self, p):
-        limits = ','.join([limit._format_ineq(p) for limit in self.limits])
-        return '\N{THERE EXISTS} %s, %s' % (limits, p._print(self.expr))
+        return All._lean(self, p, '\N{THERE EXISTS}')
 
     def _pretty(self, p):
         return Quantifier._pretty(self, p, '\N{THERE EXISTS}')
@@ -269,11 +268,11 @@ class Exists(Quantifier):
         return self
 
     @classmethod
-    def identity(cls, self, **kwargs):        
+    def identity(cls, self, **kwargs):
         return S.false.copy(**kwargs)
 
     @classmethod
-    def is_identity(cls, self):        
+    def is_identity(cls, self):
         return self.is_BooleanFalse
 
 
