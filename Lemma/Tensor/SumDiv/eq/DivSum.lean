@@ -2,7 +2,9 @@ import sympy.tensor.tensor
 import Lemma.Algebra.EqEraseIdx.of.Ge_Length
 import Lemma.Tensor.CastDiv.eq.DivCast
 import Lemma.Tensor.Eq.is.EqDataS
-open Algebra Tensor
+import Lemma.Tensor.DataDiv.eq.DivDataS
+import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
+open Algebra Tensor Vector
 
 
 @[main]
@@ -24,10 +26,10 @@ private lemma main
       simp
       apply Eq.of.EqDataS
       simp
-      simp [HDiv.hDiv]
       let ⟨data⟩ := X
       simp
-      sorry
+      repeat rw [DataDiv.eq.DivDataS.scalar]
+      simp [CastSum.eq.DivCastSumSplitAt_1]
     | .succ dim =>
       simp
       sorry

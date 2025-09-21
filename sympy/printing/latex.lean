@@ -575,7 +575,11 @@ where
         else
           map args
       | .Lean_operatorname `cast =>
-        cdots args
+        match args with
+        | [Basic (.ExprWithAttr _) _, a] =>
+          "\\cdots" :: map [a]
+        | args =>
+          map args
       | .Lean_operatorname `OfScientific.ofScientific =>
         if let [mantissa, exponentSign, decimalExponent] := args then
           let mantissa :=
