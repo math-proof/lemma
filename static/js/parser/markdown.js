@@ -2777,6 +2777,17 @@ export default class MarkdownParser extends AbstractParser {
         'MarkdownBracket',
         'MarkdownArgsBarSeparated',
     ];
+
+    get is_MarkdownCaret() {
+        var {args} = this.root;
+        if (args.length == 1)
+            return isinstance(args[0], MarkdownCaret);
+    }
+
+    get is_MarkdownCaret() {
+        var {caret} = this;
+        return isinstance(caret, MarkdownText);
+    }
 }
 
 console.log('import markdown.js');

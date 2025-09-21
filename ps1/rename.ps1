@@ -57,19 +57,21 @@ $package_src = ($src -split '\.')[0]
 $package_dst = ($dst -split '\.')[0]
 
 $lemmaNameSrcOrig = if ($src.Contains('.')) { $src.Substring($src.IndexOf('.') + 1) } else { $src }
+$lemmaNameSrc = [regex]::Escape($lemmaNameSrcOrig)
 $lemmaNameDstOrig = if ($dst.Contains('.')) { $dst.Substring($dst.IndexOf('.') + 1) } else { $dst }
+$lemmaNameDst = [regex]::Escape($lemmaNameDstOrig)
 
 # Update 'open' statements if package changed
 if ($package_dst -ne $package_src) {
     # Escape variables for regex to handle special characters
-    $pattern = "\b$([regex]::Escape($lemmaNameSrc))$([regex]::Escape($submodule))"
+    $pattern = "\b$lemmaNameSrc$submodule"
     Get-ChildItem -Path Lemma -Recurse -File -Filter *.lean | 
         Where-Object { $_.Name -notlike "*.echo.lean" } | 
         Where-Object { Select-String -Path $_.FullName -Pattern $pattern -Quiet } | 
         ForEach-Object {
         $file = $_.FullName
         $tempFile = "$file.tmp"
-        $content = Get-Content $file -Raw -Encoding UTF8
+        $content = Get-Content $file -Encoding UTF8
         $newContent = @()
         $hit = $false
         foreach ($line in $content) {
@@ -85,6 +87,8 @@ if ($package_dst -ne $package_src) {
             $newContent += $line
         }
         if ($hit) {
+            $newContent = $newContent -join "`n"
+            $newContent += "`n"
             [System.IO.File]::WriteAllText($tempFile, $newContent, [System.Text.UTF8Encoding]::new($false))
             Move-Item -Path $tempFile -Destination $file -Force
         }
@@ -97,7 +101,6 @@ if ($package_dst -ne $package_src) {
 }
 
 # Final replacement for lemma names in files with the destination package
-$lemmaNameSrc = [regex]::Escape($lemmaNameSrcOrig)
 
 $filesWithOpenPackageDst = Get-ChildItem -Path @("Lemma", "sympy") -Recurse -File -Filter *.lean | Where-Object { 
     $_.Name -notlike "*.echo.lean" -and 

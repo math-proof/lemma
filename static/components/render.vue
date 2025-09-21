@@ -1009,11 +1009,16 @@ ${task}`;
 					var word = parse_token(data, think);
 					if (word) {
 						var {lemma} = this;
+                        var content = getitem(lemma, ...index);
+                        if (!think.reasoning_content) {
+                            if (content.is_MarkdownText)
+                                word += '</think>';
+                        }
                         setitem(
                             lemma,
                             ...index,
                             this.postprocess(
-                                getitem(lemma, ...index), 
+                                content, 
                                 word,
                                 postprocess_word
                             )
@@ -1027,6 +1032,22 @@ ${task}`;
                             );
                         }
 					}
+                    else if (think.reasoning_content) {
+                        word = think.reasoning_content;
+						var {lemma} = this;
+                        var content = getitem(lemma, ...index);
+                        if (content && content.is_MarkdownCaret)
+                            word = '<think>' + word;
+                        setitem(
+                            lemma,
+                            ...index,
+                            this.postprocess(
+                                content, 
+                                word,
+                                postprocess_word
+                            )
+                        );
+                    }
 				}
 				catch(err) {
 					console.log(message);

@@ -110,9 +110,6 @@ instance [Mul α] : Mul (Tensor α s) where
 instance [Mul α] : HMul (Tensor α s) α (Tensor α s) where
   hMul A b := ⟨A.data * b⟩
 
-instance [Mul α] : HMul (Tensor α s) (Tensor α []) (Tensor α s) where
-  hMul A b := ⟨A.data * b.data[0]⟩
-
 instance [Div α] : Div (Tensor α s) where
   div A B := ⟨A.data / B.data⟩
 
@@ -142,6 +139,9 @@ instance [Mul α] : HMul (Tensor α (n :: s).tail) (Tensor α s) (Tensor α s) w
   hMul A B :=
     let A : Tensor α s := A
     A * B
+
+instance [Mul α] : HMul (Tensor α s) (Tensor α []) (Tensor α s) where
+  hMul A b := ⟨A.data * b.data[0]⟩
 
 /-- Append two vectors. -/
 def Tensor.append (xs : Tensor α (n :: s)) (ys : Tensor α (m :: s)) : Tensor α ((n + m) :: s) :=

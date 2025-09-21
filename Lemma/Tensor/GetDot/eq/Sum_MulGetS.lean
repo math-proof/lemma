@@ -66,6 +66,8 @@ private lemma main
   rw [Sum_0.eq.Sum_Get.fin]
   simp [GetMul.eq.MulGetS.fin (A := A.get i)]
   simp [GetTranspose.eq.Get.fin B]
+  -- simp [HMul.hMul, Mul.mul]
+  -- simp [Vector.Map2.eq.Map.of.Eq_1]
 
 
 -- created on 2025-06-22

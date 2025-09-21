@@ -23,7 +23,7 @@ console.log('import searchContextmenu.vue');
 export default {
     data() {
         return {
-            focusedIndex: -1,    
+            focusedIndex: -1,
         };
     },
     
@@ -46,7 +46,7 @@ export default {
 		},
     	
         click(event, args){
-            console.log(event);            
+            console.log(event);
             console.log(args);
         },
     
@@ -61,11 +61,11 @@ export default {
             
             var self = parent.children[indexFocused];
             self.remove();
-            parent.remove(indexFocused);            
+            parent.remove(indexFocused);
         },
         
         clickMoveTo(event){
-            parent = this.$parent;            
+            parent = this.$parent;
             parent.left = -1;
             
             var href = location.href;
@@ -87,11 +87,11 @@ export default {
             });
         },
         
-        clickRename(event){            
+        clickRename(event){
             var parent = this.$parent;
             //var icon = parent.children[parent.focusedIndex];
             //console.log('icon = ');
-            //console.log(icon);            
+            //console.log(icon);
             
             parent.showContextmenu = false;
             parent.is_edit = true;
@@ -155,7 +155,7 @@ export default {
             }
         },
         
-        mouseover(event){                        
+        mouseover(event){
             var li = event.target;  
             var focusedIndex = this.$el.children.indexOf(li);
             console.log("focusedIndex = " + focusedIndex);
