@@ -72,8 +72,8 @@ export default {
     },
     
     data() {
-        const model = 'deepseek-r1';
-        // const model = 'deepseek-reasoner';
+        // const model = 'deepseek-r1';
+        const model = 'deepseek-reasoner';
         return {
         	renderLean: [],
             refresh: false,
