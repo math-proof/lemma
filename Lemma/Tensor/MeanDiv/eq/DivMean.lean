@@ -12,8 +12,13 @@ private lemma main
   (X / n).mean = X.mean / n := by
 -- proof
   simp [Tensor.mean]
-  sorry
+  by_cases h : 0 < s.length
+  <;> simp [h]
+  · 
+    sorry
+  · 
+    sorry
 
 
 -- created on 2025-08-29
--- updated on 2025-09-04
+-- updated on 2025-09-21

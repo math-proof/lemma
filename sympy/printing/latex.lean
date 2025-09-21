@@ -407,7 +407,7 @@ def Expr.latexFormat : Expr → String
             opStr
       | .Lean_typeclass _ =>
         let args := args.map fun arg =>
-          if func.priority ≥ arg.priority then
+          if arg.priority ≤ func.priority && arg.toList == none then
             "\\left(%s\\right)"
           else
             "%s"

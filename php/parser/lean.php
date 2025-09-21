@@ -6408,7 +6408,7 @@ class LeanTactic extends LeanSyntax
     public function is_indented()
     {
         $parent = $this->parent;
-        return !$parent || $parent instanceof LeanStatements || $parent instanceof LeanSequentialTacticCombinator && $this->indent >= $parent->indent;
+        return !$parent || $parent instanceof LeanStatements || $parent instanceof LeanSequentialTacticCombinator && $this->indent >= $parent->indent && !$parent->newline;
     }
 
     public function strFormat()
@@ -6416,9 +6416,16 @@ class LeanTactic extends LeanSyntax
         $func = $this->func;
         if ($this->only)
             $func .= " only";
-        if (!($this->arg instanceof LeanCaret))
-            $func .= ' ';
-        return $func . implode(' ', array_fill(0, count($this->args), "%s"));
+        $args = [];
+        foreach ($this->args as $arg) {
+            if ($arg instanceof LeanCaret);
+            elseif ($arg instanceof LeanSequentialTacticCombinator && $arg->newline)
+                $args[] = "\n";
+            else
+                $args[] = ' ';
+            $args[] = '%s';
+        }
+        return $func . implode('', $args);
     }
 
     public function latexFormat()
@@ -6690,8 +6697,15 @@ class LeanTactic extends LeanSyntax
             }
             elseif ($block instanceof LeanTactic && $block->indent >= $this->indent) {
                 $self = clone $this;
-                $block = $self->sequential_tactic_combinator->arg;
-                $self->sequential_tactic_combinator->arg = new LeanCaret(0);
+                if ($sequential_tactic_combinator->newline) {
+                    $block = $self->sequential_tactic_combinator;
+                    assert(end($self->args) instanceof LeanSequentialTacticCombinator);
+                    array_pop($self->args);
+                }
+                else {
+                    $block = $self->sequential_tactic_combinator->arg;
+                    $self->sequential_tactic_combinator->arg = new LeanCaret(0);
+                }
                 $array = [$self];
                 array_push($array, ...$block->split($syntax));
                 return $array;
@@ -6711,8 +6725,12 @@ class LeanTactic extends LeanSyntax
     public function insert_sequential_tactic_combinator($caret)
     {
         if ($caret === end($this->args)) {
-            $caret = new LeanCaret(0); # use 0 as the temporary indentation
-            $this->push(new LeanSequentialTacticCombinator($caret, $this->indent));
+            if ($caret instanceof LeanCaret)
+                $this->replace($caret, new LeanSequentialTacticCombinator($caret, $this->indent, true));
+            else {
+                $caret = new LeanCaret(0); # use 0 as the temporary indentation
+                $this->push(new LeanSequentialTacticCombinator($caret, $this->indent));
+            }
             return $caret;
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
@@ -6732,11 +6750,19 @@ class LeanTactic extends LeanSyntax
 
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
-        if ($this->indent < $indent) {
-            if ($caret === $this->arg && $caret instanceof LeanArgsSpaceSeparated) {
-                $new = new LeanCaret($this->indent);
-                $caret->push($new);
-                return $new;
+        if ($caret === $this->arg) {
+            if ($this->indent < $indent) {
+                if ($caret instanceof LeanArgsSpaceSeparated) {
+                    $new = new LeanCaret($this->indent);
+                    $caret->push($new);
+                    return $new;
+                }
+            }
+            if ($next == '<') {
+                // possibly newline-indented <;>
+                $caret = new LeanCaret($indent);
+                $this->push($caret);
+                return $caret;
             }
         }
         return parent::insert_newline($caret, $newline_count, $indent, $next);
@@ -7223,14 +7249,21 @@ class LeanGeneralizing extends LeanUnary
 
 class LeanSequentialTacticCombinator extends LeanUnary
 {
+    public $newline = null;
+    public function __construct($arg, $indent, $newline=false, $parent = null)
+    {
+        parent::__construct($arg, $indent, $parent);
+        $this->newline = $newline;
+    }
+
     public function is_indented()
     {
-        return false;
+        return $this->newline;
     }
 
     public function sep()
     {
-        return $this->arg instanceof LeanTacticBlock || $this->arg->indent > 0 ? "\n" : ' ';
+        return $this->arg instanceof LeanTacticBlock || $this->arg->indent > 0 && !$this->newline ? "\n" : ' ';
     }
     public function strFormat()
     {
@@ -7290,9 +7323,16 @@ class LeanSequentialTacticCombinator extends LeanUnary
         else if ($arg->indent > 0) {
             $indent = $arg->indent;
             $echo = new LeanTactic('echo', new LeanToken('⊢', $indent), $indent);
-            $echo->push(new LeanSequentialTacticCombinator($arg, $indent));
-            $this->arg = $echo;
-            $arg->echo();
+            if ($this->parent instanceof LeanTactic && $this->parent->func == 'by_cases') {
+                while (($sequential_tactic_combinator = $arg->sequential_tactic_combinator) && $sequential_tactic_combinator->arg->indent)
+                    $arg = $sequential_tactic_combinator;
+                $arg->push(new LeanSequentialTacticCombinator($echo, $indent, true));
+            }
+            else {
+                $echo->push(new LeanSequentialTacticCombinator($arg, $indent));
+                $this->arg = $echo;
+                $arg->echo();
+            }
         }
     }
 
@@ -7302,6 +7342,27 @@ class LeanSequentialTacticCombinator extends LeanUnary
         if ($this->arg instanceof LeanTacticBlock || $this->arg->indent >= $this->indent)
             ++$line;
         return $this->arg->set_line($line);
+    }
+
+    public function split(&$syntax = null)
+    {
+        if (!$this->newline)
+            return [$this];
+        $arg = $this->arg;
+        $args = $arg->split($syntax);
+        $self = clone $this;
+        $self->arg = $args[0];
+        $args[0] = $self;
+        return $args;
+    }
+
+    public function getEcho()
+    {
+        if ($this->newline) {
+            $echo = $this->arg;
+            if ($echo instanceof LeanTactic && $echo->func == 'echo')
+                return $echo;
+        }
     }
 }
 
