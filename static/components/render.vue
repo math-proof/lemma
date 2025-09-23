@@ -74,39 +74,209 @@ export default {
     data() {
         // const model = 'deepseek-r1';
         const model = 'deepseek-reasoner';
+        const PartialOrder = {
+            Preorder: [],
+        };
+        const Mul = [];
+        const Add = [];
+        const Zero = [];
+        const One = [];
+        const AddSemigroup = {Add};
+        const AddMonoid = {
+            AddSemigroup,
+            AddZeroClass: [],
+        };
+        const AddCommMonoid = {
+            AddMonoid, 
+            AddCommSemigroup: {
+                AddSemigroup,
+                AddCommMagma: {Add},
+            }
+        };
+        const AddGroup = [];
+        const AddCommGroup = {
+            AddGroup, 
+            AddCommMonoid,
+        };
+        const LeftDistribClass = {Mul, Add};
+        const RightDistribClass = {Mul, Add};
+        const Distrib = {
+            Mul, Add, 
+            LeftDistribClass, // Distrib.leftDistribClass
+            RightDistribClass, // Distrib.rightDistribClass
+        };
+        const MulZeroClass = {Mul, Zero};
+        const MulOneClass = {One, Mul};
+        const NonUnitalNonAssocSemiring = {
+            AddCommMonoid, 
+            Distrib, 
+            MulZeroClass
+        };
+        const Semigroup = {
+            Mul,
+        };
+        const Monoid = {
+            Semigroup,
+            // typeclass for: Complex, Real, Rational, Integer with supported operators +-* 
+            MulOneClass,
+        };
+        const SemigroupWithZero = {Semigroup, MulZeroClass};
+        const MulZeroOneClass = {MulOneClass, MulZeroClass};
+        const MonoidWithZero = {
+            Monoid,
+            MulZeroOneClass,
+            SemigroupWithZero,
+        };
+        const AddMonoidWithOne = {
+            NatCast: [], 
+            AddMonoid, 
+            One,
+        };
+        const AddCommMonoidWithOne = {
+            AddMonoidWithOne, 
+            AddCommMonoid,
+        };
+        const NonUnitalSemiring = {NonUnitalNonAssocSemiring, SemigroupWithZero};
+        const NonAssocSemiring = {NonUnitalNonAssocSemiring, MulZeroOneClass, AddCommMonoidWithOne};
+        const Semiring = {NonUnitalSemiring, NonAssocSemiring, MonoidWithZero}
+        const AddGroupWithOne = {
+            IntCast: [], 
+            AddMonoidWithOne, 
+            AddGroup,
+        };
+        const NonUnitalNonAssocRing = {
+            AddCommGroup, 
+            NonUnitalNonAssocSemiring
+        };
+        const AddCommGroupWithOne = {
+            AddCommGroup, 
+            AddGroupWithOne, 
+            AddCommMonoidWithOne,
+        };
+        const NonAssocRing = {
+            NonUnitalNonAssocRing, 
+            NonAssocSemiring,
+            AddCommGroupWithOne,
+        };
+        const NonUnitalRing = {
+            NonUnitalNonAssocRing, 
+            NonUnitalSemiring
+        };
+        const Ring = {
+            Semiring,
+            AddCommGroup, 
+            AddGroupWithOne,
+            NonUnitalRing, //Ring.toNonUnitalRing
+            NonAssocRing, // Ring.toNonAssocRing
+        };
+        const CommMagma = {Mul};
+        const CommMonoid = {
+            Monoid, 
+            CommSemigroup : {
+                Semigroup, 
+                CommMagma,
+            },
+        };
+        const CommSemiring = {
+            Semiring, 
+            CommMonoid,
+        };
+        const DivInvMonoid = {
+            Monoid, 
+            Inv: [], 
+            Div: [],
+        };
+        const GroupWithZero = {
+            MonoidWithZero, 
+            DivInvMonoid,
+            Nontrivial: [],
+        }
+        const DivisionSemiring = {
+            Semiring, 
+            GroupWithZero,
+        };
+        const NonUnitalCommRing = {
+            NonUnitalRing,
+            NonUnitalNonAssocCommRing: {
+                NonUnitalNonAssocRing, 
+                NonUnitalNonAssocCommSemiring: {
+                    NonUnitalNonAssocSemiring, 
+                    CommMagma,
+                }
+            }
+        };
         return {
         	renderLean: [],
             refresh: false,
             action: '',
             sections: [],
-            typeclass: [
-                // typeclass for: Complex, Real, Rational, Integer with supported operators +-*
-                'CommRing',
-                'IsDomain',
-                // typeclass for: Complex, Real, Rational with supported operators +-*/
-                'Field',
+            typeclass: {
                 // typeclass for: Real, Rational with supported operators +-*/<>≤≥ 
-                'LinearOrderedField', 
-                // typeclass for: Real, Rational, Integer with supported operators +-*<>≤≥ 
-                'LinearOrderedRing',
+                LinearOrderedField: {
+                    // typeclass for: Complex, Real, Rational with supported operators +-*/
+                    Field : {
+                        // typeclass for: Complex, Real, Rational, Integer with supported operators +-*
+                        CommRing: {
+                            Ring, 
+                            CommMonoid,
+                            CommSemiring, // CommRing.toCommSemiring
+                            AddCommGroupWithOne,// CommRing.toAddCommGroupWithOne
+                            NonUnitalCommRing, // CommRing.toNonUnitalCommRing
+                        },
+                        DivisionRing: {
+                            Ring, 
+                            DivInvMonoid,
+                            DivisionSemiring, // DivisionRing.toDivisionSemiring
+                        },
+                        // Field.toSemifield
+                        Semifield: {
+                            CommSemiring, 
+                            DivisionSemiring, 
+                            CommGroupWithZero: {
+                                CommMonoidWithZero: [], 
+                                GroupWithZero,
+                                // CommGroupWithZero.toDivisionCommMonoid
+                                DivisionCommMonoid: {
+                                    DivisionMonoid: {
+                                       DivInvMonoid,
+                                    },
+                                    CommMonoid,
+                                }, 
+                            },
+                        }
+                    },
+                    LinearOrderedCommRing: {
+                        // typeclass for: Real, Rational, Integer with supported operators +-*<>≤≥ 
+                        LinearOrderedRing: {
+                            StrictOrderedRing: {
+                                Ring, 
+                                OrderedAddCommGroup: {
+                                    AddCommGroup, 
+                                    PartialOrder,
+                                },
+                            }, 
+                            LinearOrder: {
+                                PartialOrder,
+                            },
+                        },
+                        CommMonoid,
+                    }
+                },
                 // typeclass for: Integer, Natural with supported operators +-*<>≤≥ 
-                'IntegerRing', 
-                // typeclass for: Complex, Real, Rational, Integer with supported operators +-* 
-                'Ring', 
-                'MulOneClass',
-                'Monoid', 'CommMonoid', 'AddCommMonoid',
+                IntegerRing:[], 
+                FloorRing: [],
+                Inhabited: [],
+                GetElem: [],
 
-                'FloorRing', 
-                'AddGroup', 'AddCommGroup', 'OrderedAddCommGroup', 
-                'Inhabited',
-                'GetElem',
-                // Preorder ⊆ PartialOrder ⊆ LinearOrder
-                'Preorder', 'PartialOrder', 'LinearOrder', 
-                'Decidable', 'DecidableEq', 'DecidablePred', 'DecidableRel',
-                'LE', 'LT',
+                Decidable: [],
+                DecidableEq: [],
+                DecidablePred: [],
+                DecidableRel: [],
+                LE: [], 
+                LT: [],
                 // functions
-                'KroneckerDelta',
-            ],
+                KroneckerDelta: [],
+            },
             tactics,
             selectedIndex: [],
             model : getParameterByName('model', model),
@@ -127,6 +297,26 @@ export default {
     },
 
     computed: {
+        typeclasses() {
+            var keys = new Set();
+            const queue = new Deque([this.typeclass]);
+            while (!queue.isEmpty()) {
+                var item = queue.shift();
+                if (typeof item === "string") 
+                    keys.add(item);
+                else {
+                    for (var [key, value] of Object.entries(item)) {
+                        keys.add(key);
+                        if (value.isArray)
+                            queue.push(...value);
+                        else
+                            queue.push(value);
+                    }
+                }
+            }
+            return [...keys];
+        },
+
         submodules() {
             return this.imports.flatMap(imp => {
                 var m = imp.match(/^Lemma\.(?!Basic$)(.+)/); 
@@ -1011,8 +1201,10 @@ ${task}`;
 						var {lemma} = this;
                         var content = getitem(lemma, ...index);
                         if (!think.reasoning_content) {
-                            if (content.is_MarkdownText)
+                            if (!this.think_closed && content.is_MarkdownText) {
                                 word += '</think>';
+                                this.think_closed = true;
+                            }
                         }
                         setitem(
                             lemma,

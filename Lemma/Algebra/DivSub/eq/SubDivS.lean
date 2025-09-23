@@ -5,7 +5,7 @@ open Algebra
 
 @[main, comm]
 private lemma main
-  [Field α]
+  [DivisionRing α]
   {x y a : α} :
 -- imply
   (x - y) / a = x / a - y / a := by

@@ -1,9 +1,9 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Algebra.Eq.of.All_EqGetS
-import Lemma.Algebra.Get.eq.Zero.of.Lt
+import Lemma.Vector.EqGet0'0.of.Lt
 import Lemma.Algebra.Sum.eq.Zero
-open Tensor Algebra
+open Tensor Algebra Vector
 
 
 @[main]
@@ -23,7 +23,7 @@ private lemma main
   intro i
   have h_i : i < ((0 :: s).eraseIdx 0).prod := by
     simp
-  simp [Get.eq.Zero.of.Lt h_i]
+  simp [EqGet0'0.of.Lt h_i]
   rw [Sum.eq.Zero]
 
 

@@ -7,7 +7,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [Field α]
+  [DivisionCommMonoid α]
   {a b : α} :
 -- imply
   (a / b)² = a² / b² := by

@@ -110,6 +110,9 @@ instance [Zero α] : Zero (Vector α n) where
 instance [One α] : One (Vector α n) where
   one := Vector.replicate n 1
 
+instance [Inv α] : Inv (Vector α n) where
+  inv a := a.map (·⁻¹)
+
 def transpose (xs : Vector (Vector α n) m) : Vector (Vector α m) n :=
   (range n).map fun j => (range m).map fun i => xs[i][j]
 

@@ -5,18 +5,14 @@ open Algebra
 
 @[main]
 private lemma main
-  [Field α]
+  [DivisionRing α]
   {a b x : α}
 -- given
   (h : b ≠ 0) :
 -- imply
   x - a / b = (x * b - a) / b := by
 -- proof
-  rw [
-    Div.eq.Mul_Inv,
-    Div.eq.Mul_Inv
-  ]
-
+  repeat rw [Div.eq.Mul_Inv]
   rw [MulSub.eq.SubMulS]
   simp [h]
 

@@ -2784,7 +2784,7 @@ export default class MarkdownParser extends AbstractParser {
             return isinstance(args[0], MarkdownCaret);
     }
 
-    get is_MarkdownCaret() {
+    get is_MarkdownText() {
         var {caret} = this;
         return isinstance(caret, MarkdownText);
     }

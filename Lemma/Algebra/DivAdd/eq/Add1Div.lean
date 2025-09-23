@@ -5,8 +5,9 @@ open Algebra
 
 @[main]
 private lemma main
-  [Field α]
+  [DivisionSemiring α]
   {x d : α}
+-- given
   (h : d ≠ 0) :
 -- imply
   (d + x) / d = 1 + x / d := by

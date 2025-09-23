@@ -1,5 +1,5 @@
-import stdlib.List.Vector
-import Lemma.Basic
+import Lemma.Vector.EqGet_0.of.Eq_0
+open Vector
 
 
 @[main]
@@ -12,8 +12,9 @@ private lemma main
 -- imply
   a[i] = 0 := by
 -- proof
-  rw [h]
-  apply List.Vector.get_replicate
+  simp [GetElem.getElem]
+  apply EqGet_0.of.Eq_0 h
 
 
 -- created on 2025-09-04
+-- updated on 2025-09-23

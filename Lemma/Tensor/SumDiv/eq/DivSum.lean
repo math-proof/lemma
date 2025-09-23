@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import Lemma.Algebra.EqEraseIdx.of.Ge_Length
-import Lemma.Tensor.CastDiv.eq.DivCast
+import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
@@ -35,8 +35,8 @@ private lemma main
       sorry
   ·
     simp at h
-    rw [CastDiv.eq.DivCast.scalar]
-    rw [EqEraseIdx.of.Ge_Length h]
+    have h := EqEraseIdx.of.Ge_Length h
+    rw [CastDiv.eq.DivCast.of.Eq.scalar h.symm X]
 
 
 -- created on 2025-09-21

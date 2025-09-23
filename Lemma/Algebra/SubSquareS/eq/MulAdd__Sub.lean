@@ -4,7 +4,7 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  [Field α]
+  [CommRing α]
   {a b : α} :
 -- imply
   a² - b² = (a + b) * (a - b) := by

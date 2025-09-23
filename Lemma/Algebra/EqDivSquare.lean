@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [Field α]
+  [GroupWithZero α]
   {x : α} :
 -- imply
   x² / x = x := by

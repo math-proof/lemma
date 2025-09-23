@@ -6,7 +6,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [Field α]
+  [CommSemiring α]
   {a b : α} :
 -- imply
   (a * b)² = a² * b² := by

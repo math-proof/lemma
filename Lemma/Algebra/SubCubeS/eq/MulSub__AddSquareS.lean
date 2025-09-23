@@ -8,7 +8,7 @@ Verified within the context of a field \( \alpha \), it confirms the validity of
 -/
 @[main]
 private lemma main
-  [Field α]
+  [CommRing α]
   {x : α} :
 -- imply
   x³ - y³ = (x - y) * (x² + y² + x * y) := by

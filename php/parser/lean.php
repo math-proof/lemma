@@ -335,6 +335,7 @@ abstract class Lean extends IndentedNode
                         $this instanceof LeanToken || 
                         $this instanceof LeanProperty || 
                         $this instanceof LeanGetElemBase || 
+                        $this instanceof LeanInv || 
                         $this instanceof LeanPairedGroup && $this->is_Expr()
                     ) {
                         # consider the case: (f x)[n], f[m][n]

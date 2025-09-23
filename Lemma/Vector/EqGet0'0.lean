@@ -1,5 +1,5 @@
-import Lemma.Algebra.Get.eq.Zero.of.Lt
-open Algebra
+import Lemma.Vector.EqGet0'0.of.Lt
+open Vector
 
 
 @[main]
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   (0 : List.Vector α n)[i] = 0 := by
 -- proof
-  apply Get.eq.Zero.of.Lt
+  apply EqGet0'0.of.Lt
 
 
 @[main]

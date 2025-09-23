@@ -11,12 +11,12 @@ private lemma main
   |x - 3| = 4 + 2 * x ↔ x = -1 / 3 := by
 -- proof
   rw [abs_eq_max_neg]
-  constructor <;> 
+  constructor <;>
     intro h
-  · 
-    obtain h₀ | h₁ := OrAndS.of.EqMax h <;> 
+  ·
+    obtain h₀ | h₁ := OrAndS.of.EqMax h <;>
       linarith
-  · 
+  ·
     rw [h]
     norm_num
 

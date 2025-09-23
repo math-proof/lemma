@@ -6,7 +6,7 @@ open Algebra
 @[main]
 private lemma main
   [Preorder α]
-  [Field α]
+  [DivisionRing α]
   {x : α}
 -- given
   (h : x > 0) :

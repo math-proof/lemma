@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [Field α]
+  [DivisionRing α]
   {n d a : α}
 -- given
   (h : a ≠ 0) :

@@ -4,7 +4,7 @@ open Algebra
 
 
 private lemma inv'
-  [Field α]
+  [CommGroupWithZero α]
   {a b : α}
 -- given
   (h : a ≠ 0) :
@@ -19,7 +19,7 @@ open namespace in
 -/
 @[main]
 private lemma main
-  [Field α]
+  [CommGroupWithZero α]
   {a b : α}
 -- given
   (h : a ≠ 0)

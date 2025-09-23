@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  [Field α]
+  [CommSemiring α]
   {a b : α}
   {n : ℕ} :
 -- imply

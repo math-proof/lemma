@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [Field α]
+  [CommRing α]
   {a b : α} :
 -- imply
   (a - b)² = a² + b² - 2 * a * b := by

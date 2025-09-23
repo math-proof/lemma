@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  [Field α]
+  [GroupWithZero α]
   {b : α}
 -- given
   (h : b ≠ 0)

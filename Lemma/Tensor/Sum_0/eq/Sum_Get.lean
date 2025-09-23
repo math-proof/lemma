@@ -1,10 +1,10 @@
-import Lemma.Algebra.Sum.eq.Sum_Get
+import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataSum.eq.Sum_Data
 import Lemma.Algebra.LtVal
 import Lemma.Logic.HEq.of.All_Eq.Eq
 import Lemma.Algebra.GetCast_Map.eq.UFnGet.of.Eq.Lt
-open Algebra Tensor Logic
+open Algebra Tensor Logic Vector
 
 
 @[main]

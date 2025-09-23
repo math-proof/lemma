@@ -15,4 +15,18 @@ private lemma main
   aesop
 
 
+@[main]
+private lemma scalar
+  [Div α]
+-- given
+  (h : n = n')
+  (a : List.Vector α n)
+  (c : α) :
+-- imply
+  have h : List.Vector α n = List.Vector α n' := by rw [h]
+  cast h (a / c) = cast h a / c := by
+-- proof
+  aesop
+
+
 -- created on 2025-09-21

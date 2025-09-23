@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [Field α]
+  [CommGroupWithZero α]
   {a b : α}
 -- given
   (h : a ≠ 0) :

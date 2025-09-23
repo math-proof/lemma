@@ -750,8 +750,8 @@ where
   latex = "${hint}"
 order by char_length(unicode)`;
 							} else if (m = prefix.match(/^[A-Za-z_]+$/)) {
-								var {sections, typeclass, tactics} = self.$parent.$parent;
-								var constants = [...sections, ...typeclass, ...tactics];
+								var {sections, typeclasses, tactics} = self.$parent.$parent;
+								var constants = [...sections, ...typeclasses, ...tactics];
 								var sql = `
 SELECT
   name
