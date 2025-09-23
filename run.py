@@ -852,7 +852,7 @@ if __name__ == '__main__':
         args = ''
         
     else:
-        from std import argparse
+        from std.parser import argparse
         args, kwargs = argparse()
         
     debug = kwargs.pop('debug', False)
