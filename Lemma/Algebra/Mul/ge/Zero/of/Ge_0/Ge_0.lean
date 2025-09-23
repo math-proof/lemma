@@ -1,5 +1,5 @@
 import Lemma.Algebra.GeMulS.of.Ge_0.Ge
-import Lemma.Algebra.Mul_0.eq.Zero
+import Lemma.Algebra.EqMul_0'0
 open Algebra
 
 
@@ -14,7 +14,7 @@ private lemma main
   a * b ≥ 0 := by
 -- proof
   have h := GeMulS.of.Ge_0.Ge h₀ h₁
-  simp only [Mul_0.eq.Zero] at h
+  simp only [EqMul_0'0] at h
   exact h
 
 

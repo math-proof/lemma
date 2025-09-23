@@ -2,8 +2,8 @@ import Lemma.Algebra.LtMod.of.Gt_0
 import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Algebra.EqMod.of.Lt
 import Lemma.Algebra.Get.eq.GetFlatten_AddMul.of.Lt.Lt
-import Lemma.Algebra.EqGetReplicate.of.Lt
-open Algebra
+import Lemma.Vector.EqGetReplicate.of.Lt
+open Algebra Vector
 
 
 @[main]

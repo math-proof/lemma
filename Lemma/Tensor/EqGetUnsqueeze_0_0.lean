@@ -5,10 +5,10 @@ import Lemma.Logic.EqCast.of.SEq.Eq
 import Lemma.Logic.SEq.of.Eq
 import Lemma.Logic.EqCast.of.Eq
 import Lemma.Algebra.Eq.of.All_EqGetS
-import Lemma.Algebra.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Algebra.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Algebra.EqGetMapRange.of.Lt
-open Algebra Logic
+open Algebra Logic Vector
 
 
 @[main]

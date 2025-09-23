@@ -13,7 +13,7 @@ import Lemma.Algebra.TailSet_0.eq.Tail
 import Lemma.Logic.EqCastS.of.Eq.Eq.Eq
 import Lemma.Algebra.Eq.of.All_EqGetS.Eq
 import Lemma.Algebra.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.Algebra.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.Get.eq.GetFlatten_AddMul.of.Lt.Lt
 import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
@@ -35,7 +35,7 @@ import Lemma.Algebra.ProdSet__MulGet.eq.Mul_Prod.of.Lt_Length
 import Lemma.Algebra.GtProdTail_0.of.Lt_ProdTailSet_0
 import Lemma.Algebra.ProdTake_1.eq.HeadD_1
 import Lemma.Algebra.EqGetSet.of.Lt_Length
-open Tensor Algebra Logic
+open Tensor Algebra Logic Vector
 
 
 @[main]

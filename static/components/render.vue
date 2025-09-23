@@ -122,10 +122,23 @@ export default {
         };
         const SemigroupWithZero = {Semigroup, MulZeroClass};
         const MulZeroOneClass = {MulOneClass, MulZeroClass};
+        const CommMagma = {Mul};
+        const CommMonoid = {
+            Monoid, 
+            CommSemigroup : {
+                Semigroup, 
+                CommMagma,
+            },
+        };
         const MonoidWithZero = {
             Monoid,
             MulZeroOneClass,
             SemigroupWithZero,
+        };
+        const CommMonoidWithZero = {
+            // Nat
+            CommMonoid, 
+            MonoidWithZero,
         };
         const AddMonoidWithOne = {
             NatCast: [], 
@@ -168,14 +181,6 @@ export default {
             AddGroupWithOne,
             NonUnitalRing, //Ring.toNonUnitalRing
             NonAssocRing, // Ring.toNonAssocRing
-        };
-        const CommMagma = {Mul};
-        const CommMonoid = {
-            Monoid, 
-            CommSemigroup : {
-                Semigroup, 
-                CommMagma,
-            },
         };
         const CommSemiring = {
             Semiring, 
@@ -233,7 +238,7 @@ export default {
                             CommSemiring, 
                             DivisionSemiring, 
                             CommGroupWithZero: {
-                                CommMonoidWithZero: [], 
+                                CommMonoidWithZero, 
                                 GroupWithZero,
                                 // CommGroupWithZero.toDivisionCommMonoid
                                 DivisionCommMonoid: {

@@ -5,9 +5,9 @@ import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.EqGetRange.of.Lt
 import Lemma.Algebra.GetTake.eq.Get.of.Lt_Min
 import Lemma.Algebra.GetDrop.eq.Get_Add.of.Lt_Sub
-import Lemma.Algebra.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Logic.EqCast.of.SEq
-open Algebra Logic
+open Algebra Logic Vector
 
 
 @[main]

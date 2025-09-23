@@ -1,5 +1,5 @@
-import Lemma.Algebra.Mul0.eq.Zero
-import Lemma.Algebra.Mul_0.eq.Zero
+import Lemma.Algebra.EqMul0'0
+import Lemma.Algebra.EqMul_0'0
 open Algebra
 
 
@@ -14,7 +14,7 @@ private lemma left
 -- proof
   by_contra h'
   rw [h'] at h
-  rw [Mul0.eq.Zero] at h
+  rw [EqMul0'0] at h
   simp at h
 
 
@@ -29,7 +29,7 @@ private lemma main
 -- proof
   by_contra h'
   rw [h'] at h
-  rw [Mul_0.eq.Zero] at h
+  rw [EqMul_0'0] at h
   simp at h
 
 

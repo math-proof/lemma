@@ -1,6 +1,6 @@
 import Lemma.Algebra.GetMap.eq.UFnGet.of.Lt
-import Lemma.Algebra.GetCast.eq.Get.of.Eq.Lt
-open Algebra
+import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+open Algebra Vector
 
 
 @[main]

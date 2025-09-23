@@ -7,7 +7,7 @@ import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Algebra.GetSet.eq.Get.of.Ne.Lt_Length
 import Lemma.Algebra.Gt_0
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
-import Lemma.Algebra.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Logic.EqCastS.of.Eq.Eq.Eq
 import Lemma.Algebra.GetMap.eq.UFnGet.of.Lt
 import Lemma.Algebra.Ge_1.of.Gt_0
@@ -43,7 +43,7 @@ import Lemma.Algebra.Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Algebra.SEqFlattenSSplitAt.of.SEq
 import Lemma.Logic.SEqCast.of.Eq
-open Tensor Algebra Logic
+open Tensor Algebra Logic Vector
 
 
 @[main]

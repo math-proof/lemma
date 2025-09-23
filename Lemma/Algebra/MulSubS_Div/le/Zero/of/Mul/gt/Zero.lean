@@ -12,7 +12,7 @@ import Lemma.Algebra.DivDiv.eq.Div_Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.MulMul
 import Lemma.Algebra.GtMulS.of.Gt.Gt_0
-import Lemma.Algebra.Mul0.eq.Zero
+import Lemma.Algebra.EqMul0'0
 import Lemma.Algebra.LeNegSquare_0
 import Lemma.Algebra.Add.ne.Zero.of.Mul.gt.Zero
 import Lemma.Algebra.GtSquare_0.of.Ne_0
@@ -74,12 +74,12 @@ private lemma main
   rw [MulMul.comm (a := P + N)] at h
   rw [Mul.eq.Square] at h
   rw [MulMul.eq.Mul_Mul] at h
-  have h_gt_Zero := GtMulS.of.Gt.Gt_0 (GtSquare_0.of.Ne_0 h_Add_ne_Zero) h₀
-  simp only [Mul0.eq.Zero] at h_gt_Zero
-  have h_le_Zero := LeNegSquare_0 (a := TN * P - TP * N)
-  have h_le_Zero := LeDivS.of.Le.Gt_0 h_le_Zero h_gt_Zero
-  simp at h_le_Zero
-  rwa [← h] at h_le_Zero
+  have h_gt_0 := GtMulS.of.Gt.Gt_0 (GtSquare_0.of.Ne_0 h_Add_ne_Zero) h₀
+  simp only [EqMul0'0] at h_gt_0
+  have h_le_0 := LeNegSquare_0 (a := TN * P - TP * N)
+  have h_le_0 := LeDivS.of.Le.Gt_0 h_le_0 h_gt_0
+  simp at h_le_0
+  rwa [← h] at h_le_0
 
 
 -- created on 2024-11-29

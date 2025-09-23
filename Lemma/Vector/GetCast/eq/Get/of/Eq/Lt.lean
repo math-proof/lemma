@@ -1,5 +1,5 @@
-import Lemma.Algebra.GetCast.eq.Get.of.Eq
-open Algebra
+import Lemma.Vector.GetCast.eq.Get.of.Eq
+open Algebra Vector
 
 
 @[main]

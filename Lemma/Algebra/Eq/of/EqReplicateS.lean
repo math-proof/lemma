@@ -1,6 +1,6 @@
 import Lemma.Algebra.EqGetS.of.Eq.Lt
-import Lemma.Algebra.EqGetReplicate.of.Lt
-open Algebra
+import Lemma.Vector.EqGetReplicate.of.Lt
+open Algebra Vector
 
 
 @[main]
