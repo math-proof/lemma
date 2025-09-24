@@ -81,16 +81,31 @@ export default {
         const Add = [];
         const Zero = [];
         const One = [];
+        const Semigroup = {Mul};
         const AddSemigroup = {Add};
+        const Monoid = {
+            // typeclass for: Complex, Real, Rational, Integer with supported operators +-* 
+            Semigroup,
+            MulOneClass,
+        };
         const AddMonoid = {
             AddSemigroup,
             AddZeroClass: [],
+        };
+        const CommMagma = {Mul};
+        const AddCommMagma = {Add};
+        const CommMonoid = {
+            Monoid, 
+            CommSemigroup : {
+                Semigroup, 
+                CommMagma,
+            },
         };
         const AddCommMonoid = {
             AddMonoid, 
             AddCommSemigroup: {
                 AddSemigroup,
-                AddCommMagma: {Add},
+                AddCommMagma,
             }
         };
         const AddGroup = [];
@@ -112,24 +127,8 @@ export default {
             Distrib, 
             MulZeroClass
         };
-        const Semigroup = {
-            Mul,
-        };
-        const Monoid = {
-            Semigroup,
-            // typeclass for: Complex, Real, Rational, Integer with supported operators +-* 
-            MulOneClass,
-        };
         const SemigroupWithZero = {Semigroup, MulZeroClass};
         const MulZeroOneClass = {MulOneClass, MulZeroClass};
-        const CommMagma = {Mul};
-        const CommMonoid = {
-            Monoid, 
-            CommSemigroup : {
-                Semigroup, 
-                CommMagma,
-            },
-        };
         const MonoidWithZero = {
             Monoid,
             MulZeroOneClass,
