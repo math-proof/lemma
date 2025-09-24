@@ -24,7 +24,8 @@ import Lemma.Algebra.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
 import Lemma.Algebra.ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length
 import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
 import Lemma.Algebra.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Algebra.GetFlatten_AddMul.eq.Get.of.Eq_AddMul
+import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Eq_AddMul
+import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
 import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.Mul
@@ -113,7 +114,7 @@ private lemma main
             have h_t_prod := Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0 h h_t
             have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin
               h_i_prod h_t_prod
-              ((cast h_eq (List.Vector.map (fun row ↦ (List.Vector.replicate n row).flatten) (data.splitAt d)).flatten))
+              ((cast h_eq (List.Vector.map (·.repeat n) (data.splitAt d)).flatten))
             simp at this
             simp [this]
             rw [GetCast.eq.Get.of.Eq.Lt.fin (n' := (s.set d (n * s[d])).prod)]
@@ -136,11 +137,11 @@ private lemma main
               have h_j' := LtVal j'
               obtain ⟨j_i', j_j', h_eq⟩ := Any_EqAddMul.of.Lt_Mul h_j'
               obtain ⟨h_j_i'_eq, h_j_j'_eq⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_eq.symm
-              simp [GetFlatten_AddMul.eq.Get.of.Eq_AddMul.fin h_eq.symm]
+              simp [GetRepeat_AddMul.eq.Get.of.Eq_AddMul.fin h_eq.symm]
               have h_j'' := LtVal j''
               obtain ⟨j_i'', j_j'', h_eq⟩ := Any_EqAddMul.of.Lt_Mul h_j''
               obtain ⟨h_j_i''_eq, h_j_j''_eq⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_eq.symm
-              simp [GetFlatten_AddMul.eq.Get.of.Eq_AddMul.fin h_eq.symm]
+              simp [GetRepeat_AddMul.eq.Get.of.Eq_AddMul.fin h_eq.symm]
               simp [EqGetS]
               simp [h_i''_eq, h_j_j''_eq, h_j''_eq, h_i'_eq, h_j_j'_eq, h_j'_eq]
               simp [EqAddSub.of.Ge h_d]

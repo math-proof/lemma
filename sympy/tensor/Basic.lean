@@ -269,7 +269,7 @@ def Tensor.repeat (X : Tensor α s) (k : ℕ) (dim : Fin s.length) : Tensor α (
       apply EqMulS.of.Eq.left
       simp
     )
-    ((X.data.splitAt dim).map fun row => row.repeat k).flatten
+    ((X.data.splitAt dim).map (·.repeat k)).flatten
   ⟨data⟩
 
 def Tensor.rotate (X : Tensor α s) (i : ℕ): Tensor α (s.rotate i) :=

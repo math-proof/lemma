@@ -22,7 +22,7 @@ import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.GetMap.eq.UFnGet.of.Lt
 import Lemma.Algebra.EqGetSplitAt_0'0
 import Lemma.Algebra.EqGetS
-import Lemma.Algebra.GetFlattenReplicate.eq.Get_Mod.of.Lt_Mul.Gt_0
+import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 import Lemma.Algebra.Gt_0
 import Lemma.Algebra.GtProd_0.of.Get_0.gt.Zero.ProdTail.gt.Zero.GtLength_0
 import Lemma.Algebra.MulAdd.eq.AddMulS
@@ -103,26 +103,19 @@ private lemma main
                 rw [EqGetSplitAt_0'0.fin data]
                 repeat rw [EqGetS]
                 simp
-                rw [GetFlattenReplicate.eq.Get_Mod.of.Lt_Mul.Gt_0]
-                ·
-                  congr
-                  rw [MulAdd.eq.AddMulS]
-                  rw [MulMul.eq.Mul_Mul]
-                  have h_prod := Prod.eq.Mul_ProdTail.of.GtLength_0 h_s
-                  rw [← h_prod]
-                  rw [AddAdd.eq.Add_Add]
-                  rw [ModAddMul.eq.Mod]
-                  apply EqMod.of.Lt
-                  have := AddMul.lt.Mul.of.Lt.Lt (LtVal i) h_k
-                  simp at this
-                  rw [TailSet_0.eq.Tail] at this
-                  convert this
-                ·
-                  apply GtProd_0.of.Get_0.gt.Zero.ProdTail.gt.Zero.GtLength_0
-                  ·
-                    assumption
-                  ·
-                    apply GtProdTail_0.of.Lt_ProdTailSet_0 h_k
+                rw [GetRepeat.eq.Get_Mod.of.Lt_Mul]
+                congr
+                rw [MulAdd.eq.AddMulS]
+                rw [MulMul.eq.Mul_Mul]
+                have h_prod := Prod.eq.Mul_ProdTail.of.GtLength_0 h_s
+                rw [← h_prod]
+                rw [AddAdd.eq.Add_Add]
+                rw [ModAddMul.eq.Mod]
+                apply EqMod.of.Lt
+                have := AddMul.lt.Mul.of.Lt.Lt (LtVal i) h_k
+                simp at this
+                rw [TailSet_0.eq.Tail] at this
+                convert this
               ·
                 assumption
             ·
