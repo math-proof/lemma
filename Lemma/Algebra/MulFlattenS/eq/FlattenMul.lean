@@ -18,7 +18,6 @@ private lemma main
   ext k
   obtain ⟨i, j, h_eq⟩ := Any_Eq_AddMul k
   have hk := LtVal k
-  rw [Mul.comm (a := n)] at h_eq
   simp [List.Vector.get]
   rw [GetVal.eq.Get.of.Lt hk]
   rw [GetVal.eq.Get.of.Lt hk]
@@ -29,3 +28,4 @@ private lemma main
 
 
 -- created on 2025-07-03
+-- updated on 2025-09-24

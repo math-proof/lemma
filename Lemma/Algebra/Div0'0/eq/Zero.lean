@@ -1,6 +1,6 @@
-import Lemma.Algebra.Eq.of.All_EqGetS
+import Lemma.Vector.Eq.of.All_EqGetS
 import Lemma.Vector.EqGet0'0
-open Algebra Vector
+open Vector
 
 
 @[main]

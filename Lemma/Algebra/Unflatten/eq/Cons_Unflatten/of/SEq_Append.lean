@@ -6,11 +6,11 @@ import Lemma.Algebra.AddAdd
 import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.Lt.of.AddMul.lt.Mul
 import Lemma.Algebra.EqValS.of.Eq
-import Lemma.Algebra.GetUnflatten.eq.Get_AddMul
+import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.EqGetS.of.Eq_Append.of.Lt.Lt
 import Lemma.Algebra.Get_Add.eq.Get.of.SEq_Append.of.Lt.LtAdd
-open Algebra
+open Algebra Vector
 
 
 @[main]

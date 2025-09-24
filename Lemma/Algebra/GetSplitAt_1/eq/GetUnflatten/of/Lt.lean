@@ -1,5 +1,5 @@
-import Lemma.Algebra.GetUnflatten.eq.GetSplitAt_1
-open Algebra
+import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
+open Vector
 
 
 @[main]

@@ -5,13 +5,13 @@ import Lemma.Algebra.GetAppend.eq.Get.of.Lt
 import Lemma.Algebra.AddMul.lt.Mul.of.Lt
 import Lemma.Algebra.Get_AddMul.eq.GetUnflatten.of.Lt
 import Lemma.Algebra.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
-import Lemma.Algebra.GetUnflatten.eq.Get_AddMul
+import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Algebra.EqGetS.of.Eq.Lt
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
 import Lemma.Algebra.MulSub.eq.SubMulS
-open Algebra
+open Algebra Vector
 
 
 @[main]

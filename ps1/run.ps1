@@ -1,5 +1,9 @@
 # usage :
-# powershell ps1\run.ps1
+# powershell ps1\run.ps1 1
+param(
+    [int]$limit = 100
+)
+
 $start_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()
 . .\ps1\utility.ps1
 
@@ -44,13 +48,14 @@ $imports = Get-Content test.lean
 New-Item -Path test.log -ItemType File -Force
 
 # Split into batches
-$batches = batches -Data $imports -BatchSize 10
+$batches = batches -Data $imports -BatchSize $limit
 
 # Write each batch to a separate file
 for ($i = 0; $i -lt $batches.Count; $i++) {
     $batches[$i] | Set-Content "test.$i.lean"
     $batchContent = $batches[$i] -join " "
     cmd /c "lake setup-file test.$i.lean Init import $batchContent" 2>&1 | Tee-Object -FilePath test.log -Append
+    Start-Sleep -Seconds 1
 }
 
 # Remove lines starting with 'import ' from test.lean

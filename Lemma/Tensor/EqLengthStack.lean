@@ -1,6 +1,6 @@
 import sympy.tensor.stack
-import Lemma.Algebra.MapMap.eq.Map_Comp
-open Algebra
+import Lemma.Vector.MapMap.eq.Map_Comp
+open Vector
 
 
 @[main]
@@ -11,7 +11,7 @@ private lemma fin
   ([i < n] f i).length = n := by
 -- proof
   unfold Stack Tensor.fromVector
-  rw [MapMap.eq.Map_Comp.vector]
+  rw [MapMap.eq.Map_Comp]
   unfold Function.comp
   simp
   aesop
@@ -29,4 +29,4 @@ private lemma main
 
 
 -- created on 2025-05-23
--- updated on 2025-06-24
+-- updated on 2025-09-24

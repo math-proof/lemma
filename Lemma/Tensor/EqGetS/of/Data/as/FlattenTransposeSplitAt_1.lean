@@ -1,14 +1,14 @@
 import sympy.tensor.tensor
 import Lemma.Algebra.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Algebra.Eq.of.All_EqGetS
-import Lemma.Algebra.GetUnflatten.eq.Get_AddMul
+import Lemma.Vector.Eq.of.All_EqGetS
+import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Algebra.EqGetS
 import Lemma.Algebra.EqFlattenUnflatten
 import Lemma.Algebra.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.Algebra.GetTranspose.eq.Get
-import Lemma.Algebra.GetUnflatten.eq.GetSplitAt_1
+import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
 import Lemma.Algebra.EqGetS.of.Eq_FlattenTransposeSplitAt_1
-open Algebra
+open Algebra Vector
 
 
 @[main]

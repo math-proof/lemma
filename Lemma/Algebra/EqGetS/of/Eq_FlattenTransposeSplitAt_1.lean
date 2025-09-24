@@ -1,11 +1,11 @@
-import Lemma.Algebra.GetUnflatten.eq.Get_AddMul
+import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Algebra.EqGetS
 import Lemma.Algebra.EqFlattenUnflatten
 import Lemma.Algebra.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.Algebra.GetTranspose.eq.Get
-import Lemma.Algebra.GetUnflatten.eq.GetSplitAt_1
+import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
 import Lemma.Algebra.AddMul.lt.Mul
-open Algebra
+open Algebra Vector
 
 
 @[main]

@@ -397,7 +397,7 @@ def Expr.latexFormat : Expr → String
               else
                 "%s"
             let args := args.map fun arg =>
-              if func.priority > arg.priority then
+              if arg.priority ≤ func.priority then
                 "\\left(%s\\right)"
               else
                 "%s"

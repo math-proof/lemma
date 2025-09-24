@@ -1,7 +1,7 @@
 import Lemma.Algebra.AddMul.lt.Mul
 import Lemma.Algebra.AddMul.lt.Mul.of.Lt
-import Lemma.Algebra.GetUnflatten.eq.Get_AddMul
-open Algebra
+import Lemma.Vector.GetUnflatten.eq.Get_AddMul
+open Algebra Vector
 
 
 @[main]

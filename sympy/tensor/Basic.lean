@@ -36,6 +36,7 @@ import Lemma.Algebra.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.Algebra.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.Algebra.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
 import Lemma.Algebra.ProdTake_1.eq.HeadD_1
+import Lemma.Algebra.EqMulDiv.of.Dvd
 open Algebra Logic
 
 /--
@@ -268,7 +269,7 @@ def Tensor.repeat (X : Tensor α s) (k : ℕ) (dim : Fin s.length) : Tensor α (
       apply EqMulS.of.Eq.left
       simp
     )
-    ((X.data.splitAt dim).map fun row => (List.Vector.replicate k row).flatten).flatten
+    ((X.data.splitAt dim).map fun row => row.repeat k).flatten
   ⟨data⟩
 
 def Tensor.rotate (X : Tensor α s) (i : ℕ): Tensor α (s.rotate i) :=
@@ -438,3 +439,6 @@ instance : Coe Bool ℕ where
 
 instance [NatCast α] : Coe ℕ α where
   coe n := (n : α)
+
+def Tensor.broadcast (X : Tensor α s) (S : List ℕ) (h : s.prod ∣ S.prod) : Tensor α S :=
+  ⟨cast (by rw [EqMulDiv.of.Dvd h]) (X.data.repeat (S.prod / s.prod))⟩

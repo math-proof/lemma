@@ -79,10 +79,13 @@ export default {
         };
         const Mul = [];
         const Add = [];
+        const Inv = [];
         const Zero = [];
         const One = [];
         const Semigroup = {Mul};
         const AddSemigroup = {Add};
+        const MulZeroClass = {Mul, Zero};
+        const MulOneClass = {One, Mul};
         const Monoid = {
             // typeclass for: Complex, Real, Rational, Integer with supported operators +-* 
             Semigroup,
@@ -120,8 +123,6 @@ export default {
             LeftDistribClass, // Distrib.leftDistribClass
             RightDistribClass, // Distrib.rightDistribClass
         };
-        const MulZeroClass = {Mul, Zero};
-        const MulOneClass = {One, Mul};
         const NonUnitalNonAssocSemiring = {
             AddCommMonoid, 
             Distrib, 
@@ -187,7 +188,7 @@ export default {
         };
         const DivInvMonoid = {
             Monoid, 
-            Inv: [], 
+            Inv,
             Div: [],
         };
         const GroupWithZero = {
@@ -243,6 +244,7 @@ export default {
                                 DivisionCommMonoid: {
                                     DivisionMonoid: {
                                        DivInvMonoid,
+                                       InvolutiveInv: {Inv},
                                     },
                                     CommMonoid,
                                 }, 

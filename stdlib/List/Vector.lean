@@ -8,9 +8,7 @@ import Lemma.Algebra.GetMul.eq.MulGetS
 import Lemma.Algebra.GetAdd.eq.AddGetS
 import Lemma.Vector.GetInv.eq.InvGet
 import Lemma.Vector.NeReplicateS.of.Ne.Gt_0
-import Lemma.Vector.EqGet0'0
 import Lemma.Vector.EqGet1'1
-import Lemma.Vector.NeGet_0.of.Ne_0
 open Algebra Vector
 
 namespace List.Vector
@@ -185,45 +183,7 @@ instance [NeZero n] [Nontrivial α] : Nontrivial (Vector α n) where
     use List.Vector.replicate n x, List.Vector.replicate n y
     apply NeReplicateS.of.Ne.Gt_0 (NeZero.pos n) h_eq
 
-instance [NeZero n] [GroupWithZero α] : GroupWithZero (Vector α n) where
-  div_eq_mul_inv := DivInvMonoid.div_eq_mul_inv
-  inv_zero := by
-    ext i
-    simp [Inv.inv]
-    rw [EqGet0'0.fin]
-    apply inv_zero
-  mul_inv_cancel a h_ne := by
-    ext i
-    rw [GetMul.eq.MulGetS.fin]
-    rw [EqGet1'1.fin]
-    rw [Vector.GetInv.eq.InvGet.fin]
-    apply GroupWithZero.mul_inv_cancel
-    apply NeGet_0.of.Ne_0 h_ne
-
 instance [NNRatCast α] : NNRatCast (Vector α n) where
   nnratCast q := List.Vector.replicate n (NNRatCast.nnratCast q)
-
-instance [NeZero n] [DivisionSemiring α] : DivisionSemiring (Vector α n) where
-  inv_zero := GroupWithZero.inv_zero
-  mul_inv_cancel := GroupWithZero.mul_inv_cancel
-  div_eq_mul_inv := DivInvMonoid.div_eq_mul_inv
-  nnqsmul q a := a.map (DivisionSemiring.nnqsmul q ·)
-  nnqsmul_def q a := by
-    simp
-    simp [HMul.hMul, Mul.mul]
-    ext i
-    simp [get_map₂]
-    simp [NNRat.cast]
-    simp [NNRatCast.nnratCast]
-    apply DivisionSemiring.nnqsmul_def
-  nnratCast_def q := by
-    simp [NNRat.cast]
-    simp [NNRatCast.nnratCast]
-    ext i
-    simp [get_replicate]
-    rw [GetDiv.eq.DivGetS.fin]
-    simp [Nat.cast]
-    simp [NatCast.natCast]
-    apply DivisionSemiring.nnratCast_def
 
 end List.Vector

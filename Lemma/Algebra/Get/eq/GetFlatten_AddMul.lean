@@ -34,5 +34,17 @@ private lemma main
   rw [this]
 
 
+@[main, comm]
+private lemma fin
+-- given
+  (v : List.Vector (List.Vector α n) m)
+  (i : Fin m)
+  (j : Fin n) :
+-- imply
+  (v.get i).get j = v.flatten.get ⟨i * n + j, AddMul.lt.Mul i j⟩ := by
+-- proof
+  apply main
+
+
 -- created on 2025-05-31
 -- updated on 2025-07-09

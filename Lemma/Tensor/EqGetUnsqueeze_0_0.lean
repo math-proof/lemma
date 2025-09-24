@@ -4,7 +4,7 @@ import Lemma.Algebra.ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0
 import Lemma.Logic.EqCast.of.SEq.Eq
 import Lemma.Logic.SEq.of.Eq
 import Lemma.Logic.EqCast.of.Eq
-import Lemma.Algebra.Eq.of.All_EqGetS
+import Lemma.Vector.Eq.of.All_EqGetS
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Algebra.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Algebra.EqGetMapRange.of.Lt

@@ -8,7 +8,7 @@ import Lemma.Algebra.EqUnflattenFlatten
 import Lemma.Algebra.GetMap.eq.UFnGet.of.Lt
 import Lemma.Algebra.EqGetIndices.of.Lt_Min
 import Lemma.Algebra.Eq.of.EqValS
-open Tensor Algebra Vector
+open Tensor Algebra
 
 
 @[main]

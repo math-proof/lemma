@@ -121,3 +121,6 @@ def splitAt {s : List ℕ} (v : Vector α s.prod) (d : ℕ) : Vector (Vector α 
   v.unflatten
 
 end List.Vector
+
+def List.Vector.repeat (x : Vector α n) (m : ℕ) : Vector α (m * n) :=
+  (List.Vector.replicate m x).flatten

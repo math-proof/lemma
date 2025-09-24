@@ -6,7 +6,7 @@ import Lemma.Tensor.EqGetRepeatUnsqueeze_0_0.of.Lt
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get_0.of.Lt_Mul_Get_0.GtLength_0
 import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
-import Lemma.Algebra.Mod_1.eq.Zero
+import Lemma.Algebra.EqMod_1'0
 import Lemma.Tensor.GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Tensor.EqGetUnsqueeze_0_0
 import Lemma.Tensor.Sum_0.eq.Sum_Get
@@ -52,7 +52,7 @@ private lemma main
     (s := [m, 1, l].tail) (i := j) (n := n)
     (by simp) (by simp)
     ((A.unsqueeze 1).get ⟨i, by simp_all [LengthUnsqueeze.eq.Length.of.Gt_0, Tensor.length]⟩)
-  simp [Mod_1.eq.Zero] at this
+  simp [EqMod_1'0] at this
   simp [this]
   have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
     (s := [m, l]) (d := 1) (i := i)

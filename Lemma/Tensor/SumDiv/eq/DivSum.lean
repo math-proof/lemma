@@ -1,15 +1,16 @@
-import sympy.tensor.tensor
 import Lemma.Algebra.EqEraseIdx.of.Ge_Length
 import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.DataDiv.eq.DivDataS
+import Lemma.Tensor.DataDiv.eq.DivData
 import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
+import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Broadcast
+import Lemma.Vector.MapMap.eq.Map_Comp
 open Algebra Tensor Vector
 
 
 @[main]
 private lemma main
-  [Add α] [Zero α] [Div α] [NatCast α]
+  [DivisionSemiring α]
 -- given
   (X : Tensor α s)
   (n : Tensor α [])
@@ -23,16 +24,21 @@ private lemma main
   ·
     match dim with
     | .zero =>
-      simp
       apply Eq.of.EqDataS
-      simp
       let ⟨data⟩ := X
-      simp
-      repeat rw [DataDiv.eq.DivDataS.scalar]
-      simp [CastSum.eq.DivCastSumSplitAt_1]
+      repeat rw [DataDiv.eq.DivData]
+      simp_all [CastSum.eq.DivCastSumSplitAt_1]
     | .succ dim =>
       simp
-      sorry
+      match s with
+      | .nil =>
+        contradiction
+      | s₀ :: s =>
+        rw [ToVectorDiv.eq.DivToVector_Broadcast]
+        simp [HDiv.hDiv]
+        apply Eq.of.EqDataS
+        simp
+        sorry
   ·
     simp at h
     have h := EqEraseIdx.of.Ge_Length h
@@ -40,3 +46,4 @@ private lemma main
 
 
 -- created on 2025-09-21
+-- updated on 2025-09-24

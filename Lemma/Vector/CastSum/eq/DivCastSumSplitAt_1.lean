@@ -1,15 +1,15 @@
 import Lemma.Vector.CastDiv.eq.DivCast.of.Eq
 import Lemma.Algebra.Prod.eq.MulProdTake__ProdDrop
+import Lemma.Vector.Div.eq.Mul_Inv
 import Lemma.Vector.UnflattenDiv.eq.DivUnflatten_Replicate
-import Lemma.Vector.SumDiv.eq.DivSum
+import Lemma.Vector.SumMul.eq.MulSum
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Algebra.EraseIdx_0.eq.Drop_1
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.GetDiv.eq.DivGet
-import Lemma.Algebra.ProdTake.ne.Zero.of.NeProd_0
-import Lemma.Algebra.ProdDrop.ne.Zero.of.NeProd_0
+import Lemma.Algebra.GetMul.eq.MulGetS
+import Lemma.Vector.InvReplicate.eq.ReplicateInv
 open Vector Algebra Logic
 
 
@@ -18,12 +18,10 @@ private lemma main
   [DivisionSemiring α]
   {s : List ℕ}
 -- given
-  (h : s.prod ≠ 0)
   (x : List.Vector α s.prod)
   (n : α) :
 -- imply
-  have h : List.Vector α (s.drop 1).prod = List.Vector α (s.eraseIdx 0).prod := by
-    simp
+  have h : List.Vector α (s.drop 1).prod = List.Vector α (s.eraseIdx 0).prod := by simp
   cast h ((x / n).splitAt 1).sum = cast h (x.splitAt 1).sum / n := by
 -- proof
   unfold List.Vector.splitAt
@@ -31,18 +29,19 @@ private lemma main
   have h_prod := Prod.eq.MulProdTake__ProdDrop s 1
   rw [CastDiv.eq.DivCast.of.Eq.scalar h_prod]
   rw [UnflattenDiv.eq.DivUnflatten_Replicate]
-  have h_ne_take : NeZero (List.take 1 s).prod := ⟨ProdTake.ne.Zero.of.NeProd_0 h 1⟩
-  have h_ne_drop : NeZero (List.drop 1 s).prod := ⟨ProdDrop.ne.Zero.of.NeProd_0 h 1⟩
-  rw [SumDiv.eq.DivSum (a := List.Vector.replicate (List.drop 1 s).prod n)]
+  rw [Div.eq.Mul_Inv (A := List.Vector.replicate (List.drop 1 s).prod n)]
+  rw [SumMul.eq.MulSum]
   ext i
   have h_s := Drop_1.eq.EraseIdx_0 s
   have h_s := EqUFnS.of.Eq h_s List.prod
   rw [GetCast.eq.Get.of.Eq.fin h_s]
-  rw [GetDiv.eq.DivGetS.fin]
+  rw [GetMul.eq.MulGetS.fin]
+  rw [InvReplicate.eq.ReplicateInv]
   rw [EqGetReplicate]
   rw [GetDiv.eq.DivGet.fin]
   rw [GetCast.eq.Get.of.Eq.fin h_s]
+  rw [Div.eq.Mul_Inv (b := n)]
 
 
 -- created on 2025-09-21
--- updated on 2025-09-23
+-- updated on 2025-09-24

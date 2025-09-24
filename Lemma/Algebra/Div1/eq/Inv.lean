@@ -4,6 +4,7 @@ import Lemma.Basic
 @[main, comm]
 private lemma main
   [DivInvMonoid α]
+-- given
   (a : α) :
 -- imply
   1 / a = a⁻¹ :=

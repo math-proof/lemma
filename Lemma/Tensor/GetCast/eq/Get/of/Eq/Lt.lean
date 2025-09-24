@@ -1,6 +1,6 @@
 import sympy.tensor.Basic
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-open Algebra Vector
+open Vector
 
 
 @[main]

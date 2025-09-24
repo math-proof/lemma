@@ -3,7 +3,6 @@ import Lemma.Algebra.Get.eq.GetFlatten_AddMul
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.GetVal.eq.Get.of.Lt
 import Lemma.Algebra.Add
-import Lemma.Algebra.Mul
 import Lemma.Algebra.GetAdd.eq.AddGetS.of.Lt_Length
 open Algebra
 
@@ -19,7 +18,6 @@ private lemma main
   ext k
   obtain ⟨i, j, h_eq⟩ := Any_Eq_AddMul k
   have hk := LtVal k
-  rw [Mul.comm (a := n)] at h_eq
   simp [List.Vector.get]
   rw [GetVal.eq.Get.of.Lt hk]
   rw [GetVal.eq.Get.of.Lt hk]
@@ -30,3 +28,4 @@ private lemma main
 
 
 -- created on 2025-07-20
+-- updated on 2025-09-24

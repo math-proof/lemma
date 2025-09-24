@@ -5,6 +5,7 @@ open Algebra
 @[main, comm]
 private lemma main
   [DivInvMonoid α]
+-- given
   (a b c : α) :
 -- imply
   a * b / c = a * (b / c) :=
@@ -15,6 +16,7 @@ private lemma main
 @[main, comm]
 private lemma Comm
   [Semifield α]
+-- given
   (a b c : α) :
 -- imply
   b * a / c = a * (b / c) := by
