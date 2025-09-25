@@ -71,12 +71,15 @@ elan self update
 ```
 
 ### install lean using elan
-this is not suggested due to slow network.
+in linux, this is not suggested due to slow network.
 ```sh
 elan toolchain install stable
 elan default stable
 ```
-
+in windows
+```ps1
+elan default leanprover/lean4:v4.18.0
+```
 ## Update mathlib4 using commit-id
 copy the content of https://github.com/leanprover-community/mathlib4/blob/aa936c36e8484abd300577139faf8e945850831a/lake-manifest.json and replace your own version with it. Then use the following script to automatically and incrementally update the dependency git projects required by mathlib4
 ```sh
