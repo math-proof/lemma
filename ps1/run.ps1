@@ -1,7 +1,7 @@
 # usage :
 # powershell ps1\run.ps1 1
 param(
-    [int]$limit = 100
+    [int]$limit = 128
 )
 
 $start_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()
