@@ -10,12 +10,8 @@ private lemma fin
 -- imply
   ∃ i ∈ s, ¬(f i) := by
 -- proof
-  -- Use classical reasoning to handle the negation and existence
-  classical
-  -- Apply the principle of excluded middle to derive the existence of an element not satisfying f
   by_contra! h'
-  -- Obtain a contradiction by combining the original hypothesis with the derived universal statement
-  exact h (fun i hi => by simpa using h' i hi)
+  contradiction
 
 
 @[main]

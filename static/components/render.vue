@@ -1208,7 +1208,7 @@ ${task}`;
                         var content = getitem(lemma, ...index);
                         if (!think.reasoning_content) {
                             if (!this.think_closed && content.is_MarkdownText) {
-                                word += '</think>';
+                                word = '</think>' + word;
                                 this.think_closed = true;
                             }
                         }

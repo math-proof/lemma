@@ -7,7 +7,7 @@ import Lemma.Vector.Head.eq.Get_0
 open Vector Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Div α]
 -- given

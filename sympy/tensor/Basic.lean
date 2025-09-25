@@ -30,14 +30,14 @@ import Lemma.Algebra.EqMaxS.of.Mk.eq.IteGt
 import Lemma.Algebra.LengthPermute.eq.Length
 import Lemma.Algebra.Swap.eq.PermutePermute.of.Lt.Lt_Length
 import Lemma.Algebra.EqSwapS.of.Mk.eq.IteGt
-import Lemma.Algebra.EqEraseIdx.of.Ge_Length
+import Lemma.List.EqEraseIdx.of.Ge_Length
 import Lemma.Algebra.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.Algebra.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.Algebra.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.Algebra.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
 import Lemma.Algebra.ProdTake_1.eq.HeadD_1
 import Lemma.Algebra.EqMulDiv.of.Dvd
-open Algebra Logic
+open Algebra Logic List
 
 /--
 the concept of a Tensor is a generalization of a matrix, like the Tensor concept in pytorch / tensorflow
