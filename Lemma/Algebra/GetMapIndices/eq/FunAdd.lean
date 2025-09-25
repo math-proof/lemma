@@ -1,8 +1,8 @@
 import stdlib.List.Vector
 import Lemma.Algebra.GetIndices.eq.Add
-import Lemma.Algebra.GetMap.eq.FunGet
+import Lemma.Vector.GetMap.eq.FunGet
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
-open Algebra
+open Algebra Vector
 
 
 @[main]

@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqGetMapRange
-open Algebra
+import Lemma.Vector.EqGetMapRange
+open Vector
 
 
 @[main]

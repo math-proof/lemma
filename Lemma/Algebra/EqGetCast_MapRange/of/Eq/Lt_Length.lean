@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqGetCast_MapRange.of.Eq
-open Algebra
+import Lemma.Vector.EqGetCast_MapRange.of.Eq
+open Vector
 
 
 @[main]

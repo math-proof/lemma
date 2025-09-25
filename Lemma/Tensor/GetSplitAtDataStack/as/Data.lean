@@ -3,7 +3,7 @@ import Lemma.Algebra.EqValS.of.Eq
 import Lemma.Algebra.LtVal
 import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
 import Lemma.Algebra.EqUnflattenFlatten
-import Lemma.Algebra.EqGetMapRange
+import Lemma.Vector.EqGetMapRange
 import Lemma.Tensor.SEqDataS.of.SEq
 import Lemma.Algebra.EqGetRange.of.Lt
 open Algebra Tensor Vector

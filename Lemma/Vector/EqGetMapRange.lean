@@ -1,6 +1,6 @@
-import Lemma.Algebra.GetMap.eq.FunGet
+import Lemma.Vector.GetMap.eq.FunGet
 import Lemma.Algebra.EqGetRange
-open Algebra
+open Algebra Vector
 
 
 @[main]

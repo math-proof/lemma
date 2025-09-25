@@ -1,9 +1,9 @@
-import Lemma.Algebra.EqGetMapRange.of.Lt
+import Lemma.Vector.EqGetMapRange.of.Lt
 import Lemma.Logic.EqCastS.of.Eq.Eq.Eq
 import Lemma.Algebra.EqArraySliceS.of.Eq.Eq.Eq
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le_SubMulS.of.Lt
-open Algebra Logic
+open Algebra Logic Vector
 
 
 @[main]

@@ -2,9 +2,9 @@ import Lemma.Algebra.CartesianProductCons.eq.FlatMapFunMapCartesianProduct
 import Lemma.Algebra.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Algebra.GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength
+import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength
 import Lemma.Algebra.LengthGetCartesianProduct.eq.Length.of.Lt_LengthCartesianProduct
-open Algebra
+open Algebra List
 
 
 @[main]

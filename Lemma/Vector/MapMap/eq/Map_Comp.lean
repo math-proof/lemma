@@ -2,7 +2,7 @@ import Mathlib.Data.Vector.MapLemmas
 import Lemma.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (l : List.Vector α n)

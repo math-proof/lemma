@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqGetMapRange
+import Lemma.Vector.EqGetMapRange
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-open Algebra Vector
+open Vector
 
 
 @[main]

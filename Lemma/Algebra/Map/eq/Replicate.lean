@@ -1,5 +1,5 @@
-import Lemma.Algebra.GetMap.eq.FunGet
-open Algebra
+import Lemma.Vector.GetMap.eq.FunGet
+open Vector
 
 
 @[main]

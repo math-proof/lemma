@@ -3,8 +3,8 @@ import Lemma.Algebra.CartesianProductNil.eq.ListNil
 import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.CartesianProductCons.eq.FlatMapFunMapCartesianProduct
-import Lemma.Algebra.GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength
-open Algebra
+import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength
+open Algebra List
 
 
 @[main]

@@ -5,7 +5,7 @@ import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Algebra.EqGetS
-import Lemma.Algebra.Get.eq.GetFlatten_AddMul.of.Lt.Lt
+import Lemma.Vector.Get.eq.GetFlatten_AddMul.of.Lt.Lt
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.EqGetRange.of.Lt
 import Lemma.Algebra.Le_SubMulS.of.Lt

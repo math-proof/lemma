@@ -1,10 +1,10 @@
 import Lemma.Algebra.Any_Eq_AddMul
-import Lemma.Algebra.Get.eq.GetFlatten_AddMul
+import Lemma.Vector.Get.eq.GetFlatten_AddMul
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.GetVal.eq.Get.of.Lt
 import Lemma.Algebra.Add
 import Lemma.Algebra.GetAdd.eq.AddGetS.of.Lt_Length
-open Algebra
+open Algebra Vector
 
 
 @[main]

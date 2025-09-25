@@ -26,9 +26,9 @@ private lemma left
 private lemma main
   {k n m : ℕ}
 -- given
-  (h : k < n * m) :
+  (h : k < m * n) :
 -- imply
-  ∃ (i : Fin n) (j : Fin m), i * m + j = k := by
+  ∃ (i : Fin m) (j : Fin n), i * n + j = k := by
 -- proof
   rw [Mul.comm] at h
   apply left h

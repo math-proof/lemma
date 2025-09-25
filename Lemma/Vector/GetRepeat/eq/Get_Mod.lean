@@ -3,9 +3,9 @@ import Lemma.Algebra.Ne_0
 import Lemma.Algebra.Ne_0.of.Mul.ne.Zero
 import Lemma.Algebra.LtMod.of.Ne_0
 import Lemma.Algebra.Any_Eq_AddMul
-import Lemma.Algebra.Get.eq.GetFlatten_AddMul
+import Lemma.Vector.Get.eq.GetFlatten_AddMul
 import Lemma.Algebra.EqMod
-open Algebra
+open Algebra Vector
 
 
 @[main]

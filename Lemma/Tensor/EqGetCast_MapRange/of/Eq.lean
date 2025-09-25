@@ -1,8 +1,8 @@
 import Lemma.Logic.SEq.of.SEq.SEq
-import Lemma.Algebra.EqGetMapRange
+import Lemma.Vector.EqGetMapRange
 import Lemma.Tensor.GetCast.as.Get.of.Eq
 import Lemma.Logic.SEq.of.Eq
-open Tensor Algebra Logic
+open Tensor Logic Vector
 
 
 @[main]

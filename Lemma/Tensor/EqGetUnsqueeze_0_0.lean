@@ -7,7 +7,7 @@ import Lemma.Logic.EqCast.of.Eq
 import Lemma.Vector.Eq.of.All_EqGetS
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Algebra.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
-import Lemma.Algebra.EqGetMapRange.of.Lt
+import Lemma.Vector.EqGetMapRange.of.Lt
 open Algebra Logic Vector
 
 
