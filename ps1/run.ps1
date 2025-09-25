@@ -55,7 +55,7 @@ for ($i = 0; $i -lt $batches.Count; $i++) {
     $batches[$i] | Set-Content "test.$i.lean"
     $batchContent = $batches[$i] -join " "
     cmd /c "lake setup-file test.$i.lean Init import $batchContent" 2>&1 | Tee-Object -FilePath test.log -Append
-    Start-Sleep -Seconds 1
+    # Start-Sleep -Seconds 1
 }
 
 # Remove lines starting with 'import ' from test.lean
