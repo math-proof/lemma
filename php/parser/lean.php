@@ -8585,7 +8585,7 @@ function get_lake_path() {
 function get_lean_env()
 {
     // add to the file D:\wamp64\bin\apache\apache2.4.54.2\conf\extra\httpd-vhosts.conf
-    // SetEnv USERPROFILE "C:\Users\admin"
+    // SetEnv USERPROFILE "C:\Users\admin" / "C:\Users\Administrator"
     // Configure Git environment variables to trust the directory
     $cwd = getcwd();
     $repository = scandir("$cwd/.lake/packages");

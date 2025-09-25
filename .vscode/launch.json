@@ -6,6 +6,20 @@
             "type": "php",
             "request": "launch",
             "port": 9003
+// D:\wamp64\bin\apache\apache2.4.54.2\bin\php.ini
+// ; XDEBUG Extension
+// [xdebug]
+// zend_extension="d:/wamp64/bin/php/php8.0.26/zend_ext/php_xdebug-3.1.6-8.0-vs16-x86_64.dll"
+// xdebug.mode =debug
+// xdebug.output_dir ="d:/wamp64/tmp"
+// xdebug.show_local_vars=0
+// xdebug.log="d:/wamp64/logs/xdebug.log"
+// xdebug.log_level=7
+// xdebug.profiler_output_name=trace.%H.%t.%p.cgrind
+// xdebug.use_compression=false
+// xdebug.start_with_request = yes
+// xdebug.client_port=9003
+// xdebug.client_host=localhost
         },
         {
             "name": "Python: Current File",

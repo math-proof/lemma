@@ -189,21 +189,35 @@ where
 						table = 'mathlib';
 					else {
 						var char = postfix.match(/^\.[A-Z]/)? '\\.': '$';
-						var regexp = `^([\\w'']+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`.replace(/\\/g, "\\\\");
+						var regexp = `^([\\w'']+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`;
+						var regexp_mysql = regexp.replace(/\\/g, "\\\\");
 						var sql = `
 select 
-	regexp_replace(module, "${regexp}.*", '$1')
+	regexp_replace(module, "${regexp_mysql}.*", '$1')
 from 
 	axiom.lemma
 where 
-	module regexp "${regexp}"`;
+	module regexp "${regexp_mysql}"`;
 						console.log('sql =', sql);
 						var section = await form_post(`php/request/execute.php`, {sql});
 						section = section.map(s => s[0]);
 						if (section.length > 1) {
-							section = section.array_intersect(self.$parent.$parent.open_sections);
+							var root = self.$parent.$parent;
+							section = section.array_intersect(root.open_sections);
 							if (section.length > 1) {
-								// todo
+								regexp = new RegExp(regexp);
+								for (var $import of root.imports) {
+									var m = $import.match(/^Lemma\.(.+)/);
+									if (m) {
+										m = m[1].match(regexp);
+										if (m) {
+											if (section.includes(m[1])) {
+												section = [m[1]];
+												break;
+											}
+										}
+									}
+								}
 							}
 						}
 						[section] = section;
