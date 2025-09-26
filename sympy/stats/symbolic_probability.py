@@ -885,7 +885,7 @@ class Expectation(ExprWithLimits):
             if varsAltered:
                 limits = [*limits]
                 for x, xks in varsAltered.items():
-                    i = std.indexFor(limits, lambda limit: limit[0] == x)
+                    i = std.findIndex(limits, lambda limit: limit[0] == x)
                     std.splice(limits, i, 1, *xks)
 
         else:
