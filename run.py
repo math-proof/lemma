@@ -433,6 +433,7 @@ CREATE TABLE `axiom` (
   `state` enum('proved', 'failed', 'plausible', 'unproved', 'unprovable', 'slow') NOT NULL,
   `lapse` double default NULL,
   `latex` mediumblob NOT NULL,
+  `lean` json DEFAULT NULL,
   PRIMARY KEY (`user`, `axiom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 PARTITION BY KEY() PARTITIONS 8'''
