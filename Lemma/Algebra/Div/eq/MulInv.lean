@@ -3,7 +3,7 @@ import Lemma.Algebra.Mul
 open Algebra
 
 
-@[main]
+@[main, comm]
 private lemma main
   [CommGroup α]
   {a b : α} :

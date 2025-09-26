@@ -55,8 +55,10 @@ def BinaryInfix.func : BinaryInfix → Func
     | `Nat.sub
     | `HSub.hSub => ⟨65, "-", "-"⟩  -- LeanSub
     | `HAppend.hAppend => ⟨65, "++", "+\\!\\!+"⟩ -- LeanAppend
+    | `Mul.mul
     | `HMul.hMul => ⟨70, "*", "\\cdot"⟩  -- LeanMul
-    | `HDiv.hDiv => ⟨70, "/", "\\frac"⟩  -- LeanDiv
+    | `Div.div
+    | `HDiv.hDiv
     | `Rat.divInt => ⟨70, "/", "\\frac"⟩  -- LeanDiv
     | `HMod.hMod => ⟨70, "%%", "\\%%"⟩  -- LeanMod
     | `HShiftLeft.hShiftLeft => ⟨75, "<<<", "<<<"⟩ -- LeanHShiftLeft
@@ -512,8 +514,10 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Nat.sub
     | `HSub.hSub
     | `HAppend.hAppend
+    | `Mul.mul
     | `HMul.hMul
     | `HPow.hPow
+    | `Div.div
     | `HDiv.hDiv
     | `Rat.divInt
     | `HMod.hMod

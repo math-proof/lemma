@@ -405,10 +405,10 @@ abstract class Lean extends IndentedNode
         }
     }
 
-    public function insert_sequential_tactic_combinator($caret)
+    public function insert_sequential_tactic_combinator($caret, $next_token)
     {
         if ($this->parent)
-            return $this->parent->insert_sequential_tactic_combinator($this);
+            return $this->parent->insert_sequential_tactic_combinator($this, $next_token);
     }
 
     public function relocate_last_comment() {}
@@ -587,7 +587,7 @@ abstract class Lean extends IndentedNode
                     return $this->push_binary('Lean_le');
                 } elseif ($i + 2 < $count && $tokens[$i + 1] == ';' && $tokens[$i + 2] == '>') {
                     $i += 2;
-                    return $this->parent->insert_sequential_tactic_combinator($this);
+                    return $this->parent->insert_sequential_tactic_combinator($this, $tokens[$i + 1]);
                 } else
                     return $this->push_binary('Lean_lt');
             case '>':
@@ -6723,11 +6723,11 @@ class LeanTactic extends LeanSyntax
         return [$this];
     }
 
-    public function insert_sequential_tactic_combinator($caret)
+    public function insert_sequential_tactic_combinator($caret, $next_token)
     {
         if ($caret === end($this->args)) {
             if ($caret instanceof LeanCaret)
-                $this->replace($caret, new LeanSequentialTacticCombinator($caret, $this->indent, true));
+                $this->replace($caret, new LeanSequentialTacticCombinator($caret, $this->indent, $next_token != "\n"));
             else {
                 $caret = new LeanCaret(0); # use 0 as the temporary indentation
                 $this->push(new LeanSequentialTacticCombinator($caret, $this->indent));

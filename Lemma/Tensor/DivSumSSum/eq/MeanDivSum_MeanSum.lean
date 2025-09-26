@@ -1,6 +1,15 @@
 import Lemma.Tensor.MeanDiv.eq.DivMean
 import Lemma.Tensor.Sum.eq.Zero
-open Tensor
+import Lemma.Tensor.EqDiv0'0
+import Lemma.Logic.Ne.is.NotEq
+import Lemma.Algebra.NeCoeS.of.Ne
+import Lemma.Tensor.Div.eq.DivDivS.of.Ne_0
+import Lemma.Tensor.DataDiv.eq.DivDataS
+import Lemma.Vector.GetDiv.eq.DivGetS
+import Lemma.Algebra.Eq_0
+open Tensor Logic Algebra Vector
+set_option synthInstance.maxHeartbeats 100000
+set_option maxHeartbeats 1000000
 
 
 /--
@@ -14,7 +23,8 @@ X.mean = X.mean (-1)
 -/
 @[main]
 private lemma main
-  [Semifield float]
+  [Field float]
+  [CharZero float]
 -- given
   (loss : Tensor float [batch_size, seq_length])
   (mask : Tensor Bool [batch_size, seq_length]) :
@@ -32,16 +42,24 @@ private lemma main
   by_cases hb : batch_size = 0
   ·
     subst hb
-    repeat rw [Sum.eq.Zero]
-    simp [HDiv.hDiv]
-    simp [Div.div]
-    sorry
+    rw [Sum.eq.Zero (X := loss_sum)]
+    rw [Sum.eq.Zero (X := mask_sum)]
+    rw [EqDiv0'0.scalar]
+    rfl
   ·
-    have hnb : (batch_size : float) ≠ 0 := by
-      simp
-      sorry
-    -- simp [Tensor.mean]
-    sorry
+    rw [Div.eq.DivDivS.of.Ne_0 (A := ↑batch_size)]
+    .
+      simp [HDiv.hDiv]
+      apply Eq.of.EqDataS
+      ext i
+      simp [Div.eq.HDiv]
+      simp [DataDiv.eq.DivDataS]
+      simp [GetDiv.eq.DivGetS.fin]
+      simp [Eq_0.prod]
+      simp [GetElem.getElem]
+    .
+      have hb := Ne.of.NotEq hb
+      simpa [NeCoeS.of.Ne.nat hb (R := float)]
 
 
 -- created on 2025-08-29

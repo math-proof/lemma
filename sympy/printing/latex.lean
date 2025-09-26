@@ -6,7 +6,14 @@ open Lean (Name)
 
 
 def Expr.is_Div : Expr → Bool
-  | Basic (.BinaryInfix ⟨`HDiv.hDiv⟩) _ => true
+  | Basic (.BinaryInfix ⟨op⟩) _ =>
+    match op with
+    | `Div.div
+    | `HDiv.hDiv
+    | `Rat.divInt =>
+      true
+    | _ =>
+      false
   | _ => false
 
 
@@ -106,6 +113,7 @@ def Expr.latexFormat : Expr → String
       match args with
       | [left, right] =>
         match op with
+        | `Div.div
         | `HDiv.hDiv
         | `Rat.divInt =>
           if left.is_Div then

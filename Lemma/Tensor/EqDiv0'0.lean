@@ -1,7 +1,8 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Vector.EqDiv0'0
-open Tensor Vector
+import Lemma.Algebra.EqDiv0'0
+open Tensor Vector Algebra
 
 
 @[main]
@@ -17,7 +18,26 @@ private lemma main
   simp [HDiv.hDiv]
   simp [Div.div]
   rw [EqData0'0]
-  apply EqDiv0'0
+  apply EqDiv0'0 X.data
+
+
+@[main]
+private lemma scalar
+  [GroupWithZero α]
+-- given
+  (x : α)
+  (s : List ℕ) :
+-- imply
+  (0 : Tensor α s) / x = 0 := by
+-- proof
+  apply Eq.of.EqDataS
+  rw [EqData0'0]
+  simp [HDiv.hDiv]
+  rw [EqData0'0]
+  ext i
+  simp
+  rw [EqGet0'0.fin]
+  apply EqDiv0'0 (a := x)
 
 
 -- created on 2025-09-04
