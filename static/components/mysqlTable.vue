@@ -293,7 +293,7 @@ export default {
     		console.log('model = ', model);
     		for (var i of range(10)) {
     			try {
-    				var {bool, prompt, reply, label, error_code} = await json_post('http://192.168.18.133:5000/prompt/classify', {model, text, lang, label: labels});
+    				var {bool, prompt, reply, label, error_code} = await json_post('http://localhost:5000/prompt/classify', {model, text, lang, label: labels});
     				if (error_code)
     					return {bool: false, prompt: '', reply, label: null, error_code};
     				if (prompt && reply)

@@ -689,7 +689,7 @@ def from_axiom_import(py, section, eqs):
         traceback.print_exc()
         return RetCode.failed, eqs.postprocess(), None
     
-localhost='192.168.18.131:8000'
+localhost='localhost'
 def website(py):
     return f"http://{localhost}/{basename(dirname(dirname(__file__)))}/?module={py_to_module(py, '.')}"
 
