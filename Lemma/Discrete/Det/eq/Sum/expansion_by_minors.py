@@ -20,7 +20,7 @@ def apply(self, i=None, j=None):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Tensor
 
     print('this is a validation, not a proof in', __file__)
     n, i = Symbol(integer=True, positive=True)

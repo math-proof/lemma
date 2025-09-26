@@ -489,7 +489,7 @@ CREATE TABLE `symbol` (
   `symbol` varchar(64) NOT NULL,
   `script` text NOT NULL,
   `latex` text NOT NULL,
-  PRIMARY KEY (`symbol`)                                                                                    
+  PRIMARY KEY (`symbol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 PARTITION BY KEY() PARTITIONS 8'''
             self.execute(sql)
