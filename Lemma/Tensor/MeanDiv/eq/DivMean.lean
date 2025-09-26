@@ -1,10 +1,12 @@
-import sympy.tensor.tensor
-import Lemma.Basic
+import Lemma.Tensor.SumDiv.eq.DivSum
+import Lemma.Tensor.Div.eq.Div_GetData_0
+import Lemma.Tensor.EqDivSDiv
+open Tensor
 
 
 @[main]
 private lemma main
-  [Add α] [Zero α] [Div α] [NatCast α]
+  [Semifield α]
 -- given
   (X : Tensor α s)
   (n : Tensor α []) :
@@ -12,13 +14,10 @@ private lemma main
   (X / n).mean = X.mean / n := by
 -- proof
   simp [Tensor.mean]
-  by_cases h : 0 < s.length
-  <;> simp [h]
-  · 
-    sorry
-  · 
-    sorry
+  rw [SumDiv.eq.DivSum]
+  repeat rw [Div.eq.Div_GetData_0]
+  rw [EqDivSDiv]
 
 
 -- created on 2025-08-29
--- updated on 2025-09-21
+-- updated on 2025-09-26

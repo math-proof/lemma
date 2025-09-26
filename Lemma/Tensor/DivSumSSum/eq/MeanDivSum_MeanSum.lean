@@ -14,7 +14,7 @@ X.mean = X.mean (-1)
 -/
 @[main]
 private lemma main
-  [Add float] [NatCast float] [GroupWithZero float]
+  [Semifield float]
 -- given
   (loss : Tensor float [batch_size, seq_length])
   (mask : Tensor Bool [batch_size, seq_length]) :
