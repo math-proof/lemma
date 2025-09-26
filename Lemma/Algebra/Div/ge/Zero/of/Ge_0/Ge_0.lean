@@ -1,5 +1,5 @@
 import Lemma.Algebra.GeDivS.of.Ge.Ge_0
-import Lemma.Algebra.Div0.eq.Zero
+import Lemma.Algebra.EqDiv0'0
 open Algebra
 
 
@@ -18,7 +18,7 @@ private lemma main
   a / b ≥ 0 := by
 -- proof
   have h := GeDivS.of.Ge.Ge_0 h₀ h₁
-  simp only [Div0.eq.Zero] at h
+  simp only [EqDiv0'0] at h
   assumption
 
 

@@ -16,7 +16,7 @@ import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.Data0.eq.Zero
+import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
 import Lemma.Set.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
 open Tensor Algebra Set Logic
@@ -175,24 +175,24 @@ instance [AddZeroClass α] : AddZeroClass (Tensor α s) where
     intro a
     apply Eq.of.EqDataS
     rw [DataAdd.eq.AddDataS]
-    simp [Data0.eq.Zero]
+    simp [EqData0'0]
   add_zero := by
     intro a
     apply Eq.of.EqDataS
     rw [DataAdd.eq.AddDataS]
-    simp [Data0.eq.Zero]
+    simp [EqData0'0]
 
 instance [MulZeroClass α] : MulZeroClass (Tensor α s) where
   zero_mul := by
     intro a
     apply Eq.of.EqDataS
     rw [DataMul.eq.MulDataS]
-    simp [Data0.eq.Zero]
+    simp [EqData0'0]
   mul_zero := by
     intro a
     apply Eq.of.EqDataS
     rw [DataMul.eq.MulDataS]
-    simp [Data0.eq.Zero]
+    simp [EqData0'0]
 
 instance [AddCommMagma α] : AddCommMagma (Tensor α s) where
   add_comm := by

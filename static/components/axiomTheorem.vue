@@ -42,7 +42,7 @@ export default {
 			var href = location.href;
 			var m = href.match(/\/([^\/]+)\/(?:index\.php)?\?module=([^#]+)/);
 			var module = m[2];
-			module = module.replace(/\//g, '.');
+			module = module.replace(/\//g, '.').replace(/%27/g, "'");
 			if (module.endsWith('.'))
 				module = module.slice(0, -1);
 
