@@ -166,10 +166,12 @@ if ($content.Count -gt 0) {
 Write-Output "plausible:"
 
 # Extract and process the modules with 'sorry' warnings
+$cwd = [regex]::Escape((Get-Location).Path) 
+$cwd = "($cwd\\|(\.[\\/])*)"
 $sorryModules = Get-Content test.log | 
-    Select-String -Pattern "^warning: (\.[\\/])*[\w\\/]+\.lean:\d+:\d+: declaration uses 'sorry'" | 
+    Select-String -Pattern "^warning: $cwd[\w\\/]+\.lean:\d+:\d+: declaration uses 'sorry'" | 
     ForEach-Object {
-        $_.Line -replace '^warning: (\.[\\/])*', '' -replace '\.lean:\d+:\d+: declaration uses ''sorry''', '' -replace '[\\/]', '.'
+        $_.Line -replace "^warning: $cwd", '' -replace '\.lean:\d+:\d+: declaration uses ''sorry''', '' -replace '[\\/]', '.'
     } | 
     Select-Object -Unique
 
