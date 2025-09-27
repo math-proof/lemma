@@ -15,9 +15,9 @@ private lemma main
   rw [InterSDiff.eq.SDiffInterS]
   rw [SDiff.eq.Empty.of.Subset]
   apply Subset_Inter.of.Subset.Subset
-  · 
+  ·
     assumption
-  · 
+  ·
     simp
 
 

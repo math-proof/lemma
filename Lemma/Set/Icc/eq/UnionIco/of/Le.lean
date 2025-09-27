@@ -3,7 +3,7 @@ import Lemma.Basic
 
 
 @[main]
-private lemma main
+private lemma MAIN
   [PartialOrder α]
   {a b : α}
 -- given

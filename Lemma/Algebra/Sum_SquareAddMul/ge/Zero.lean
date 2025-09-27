@@ -6,7 +6,7 @@ open Algebra
 @[main]
 private lemma main
   [DecidableEq ι]
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x : α}
   {a b : ι → α} :
 -- imply

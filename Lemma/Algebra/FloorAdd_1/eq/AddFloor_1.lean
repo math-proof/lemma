@@ -4,7 +4,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedRing R]
+  [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
   [FloorRing R]
   {x : R} :
 -- imply

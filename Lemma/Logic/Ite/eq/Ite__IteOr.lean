@@ -25,7 +25,7 @@ private lemma main
   denote h_P : P = right
   rw [← h_P]
   rw [Ite__Ite.eq.Ite__IteAnd_Not] at h_P
-  simp [AndOr.is.OrAndS] at h_P
+  simp [AndOr.is.OrAndS (p := ¬p)] at h_P
   rw [h_P]
   apply Ite__Ite.eq.Ite__IteAnd_Not
 

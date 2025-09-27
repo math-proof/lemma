@@ -82,6 +82,9 @@ export default {
         const Inv = [];
         const Zero = [];
         const One = [];
+        const Min = [];
+        const Max = [];
+        const Ord = [];
         const Semigroup = {Mul};
         const AddSemigroup = {Add};
         const MulZeroClass = {Mul, Zero};
@@ -136,7 +139,7 @@ export default {
             SemigroupWithZero,
         };
         const CommMonoidWithZero = {
-            // Nat
+            // Nat/Int
             CommMonoid, 
             MonoidWithZero,
         };
@@ -191,11 +194,17 @@ export default {
             Inv,
             Div: [],
         };
+        const Nontrivial = [];
         const GroupWithZero = {
             MonoidWithZero, 
             DivInvMonoid,
-            Nontrivial: [],
+            Nontrivial,
         }
+        const IsStrictOrderedRing = {
+            IsOrderedCancelAddMonoid: [], 
+            ZeroLEOneClass : [], 
+            Nontrivial,
+        };
         const DivisionSemiring = {
             Semiring, 
             GroupWithZero,
@@ -216,57 +225,53 @@ export default {
             action: '',
             sections: [],
             typeclass: {
-                // typeclass for: Real, Rational with supported operators +-*/<>≤≥ 
-                LinearOrderedField: {
-                    // typeclass for: Complex, Real, Rational with supported operators +-*/
-                    Field : {
-                        // typeclass for: Complex, Real, Rational, Integer with supported operators +-*
-                        CommRing: {
-                            Ring, 
-                            CommMonoid,
-                            CommSemiring, // CommRing.toCommSemiring
-                            AddCommGroupWithOne,// CommRing.toAddCommGroupWithOne
-                            NonUnitalCommRing, // CommRing.toNonUnitalCommRing
-                        },
-                        DivisionRing: {
-                            Ring, 
-                            DivInvMonoid,
-                            DivisionSemiring, // DivisionRing.toDivisionSemiring
-                        },
-                        // Field.toSemifield
-                        Semifield: {
-                            CommSemiring, 
-                            DivisionSemiring, 
-                            CommGroupWithZero: {
-                                CommMonoidWithZero, 
-                                GroupWithZero,
-                                // CommGroupWithZero.toDivisionCommMonoid
-                                DivisionCommMonoid: {
-                                    DivisionMonoid: {
-                                       DivInvMonoid,
-                                       InvolutiveInv: {Inv},
-                                    },
-                                    CommMonoid,
-                                }, 
-                            },
-                        }
-                    },
-                    LinearOrderedCommRing: {
-                        // typeclass for: Real, Rational, Integer with supported operators +-*<>≤≥ 
-                        LinearOrderedRing: {
-                            StrictOrderedRing: {
-                                Ring, 
-                                OrderedAddCommGroup: {
-                                    AddCommGroup, 
-                                    PartialOrder,
-                                },
-                            }, 
-                            LinearOrder: {
-                                PartialOrder,
-                            },
-                        },
+                // typeclass for: Complex, Real, Rational with supported operators +-*/
+                Field : {
+                    // typeclass for: Complex, Real, Rational, Integer with supported operators +-*
+                    CommRing: {
+                        Ring, 
                         CommMonoid,
+                        CommSemiring, // CommRing.toCommSemiring
+                        AddCommGroupWithOne,// CommRing.toAddCommGroupWithOne
+                        NonUnitalCommRing, // CommRing.toNonUnitalCommRing
+                    },
+                    DivisionRing: {
+                        Ring, 
+                        DivInvMonoid,
+                        DivisionSemiring, // DivisionRing.toDivisionSemiring
+                    },
+                    // Field.toSemifield
+                    Semifield: {
+                        CommSemiring, 
+                        DivisionSemiring, 
+                        CommGroupWithZero: {
+                            CommMonoidWithZero, 
+                            GroupWithZero,
+                            // CommGroupWithZero.toDivisionCommMonoid
+                            DivisionCommMonoid: {
+                                DivisionMonoid: {
+                                    DivInvMonoid,
+                                    InvolutiveInv: {Inv},
+                                },
+                                CommMonoid,
+                            }, 
+                        },
                     }
+                },
+                LinearOrderedCommRing: {
+                    // typeclass for: Real, Rational, Integer with supported operators +-*<>≤≥ 
+                    StrictOrderedRing: {
+                        Ring, 
+                        OrderedAddCommGroup: {
+                            AddCommGroup, 
+                            PartialOrder,
+                        },
+                    }, 
+                    LinearOrder: {
+                        PartialOrder,
+                        Min, Max, Ord,
+                    },
+                    CommMonoid,
                 },
                 // typeclass for: Integer, Natural with supported operators +-*<>≤≥ 
                 IntegerRing:[], 
@@ -1000,7 +1005,7 @@ where
             var lemma = deepCopy(this.lemma, ['think', 'final']);
             setitem(this.lemma, ...index, 'think', new MarkdownParser);
             setitem(this.lemma, ...index, 'final', '');
-            var errorIndex = error.findIndex(err => err.line == line && err.type != 'warning');
+            var errorIndex = error.findIndex(err => err.line == line && (err.type != 'warning' || err.info.match(/^aesop:/)));
             var lemmaType = lemma[index[0]].name == 'main'? 'theorem': 'lemma';
             if (errorIndex < 0) {
                 var sorry = false;

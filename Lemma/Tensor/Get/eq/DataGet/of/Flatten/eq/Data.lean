@@ -27,7 +27,7 @@ private lemma main
   rw [← h]
   unfold List.Vector.flatten
   simp [List.Vector.get]
-  simp [GetVal.eq.Get.of.Lt]
+  simp [GetVal.eq.Get.of.Lt (show i.val < v.length by simp)]
   rw [GetCast.eq.Get.of.Eq.Lt (by simp) (by simp)]
   simp [GetElem.getElem]
   rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]

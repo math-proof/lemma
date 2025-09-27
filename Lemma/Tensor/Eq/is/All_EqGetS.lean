@@ -15,7 +15,7 @@ private lemma main
   .
     aesop
   .
-    simp [Eq.is.EqDataS] at h
+    simp [Eq.is.EqDataS (s := s)] at h
     simp [GetElem.getElem] at h
     simp [Tensor.get] at h
     have h_all : ∀ i : Fin m, A.toVector[i].data = B.toVector[i].data := by

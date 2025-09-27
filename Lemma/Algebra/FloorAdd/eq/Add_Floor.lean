@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma nat
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {x : α}
   {d : ℕ} :
@@ -19,7 +19,7 @@ private lemma nat
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {x : α}
   {d : ℤ} :

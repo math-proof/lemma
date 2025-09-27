@@ -53,7 +53,7 @@ def Lean.Name.projFieldName (typeName : Name) (idx : Nat) : MetaM Name := do
 
 def Lean.Name.suffix : Name → Name
   | str prev name =>
-    str (prev.suffix) name.toLower
+    str (prev.suffix) (name.toLower.dropRightWhile (· = '\''))
   | _ =>
     default
 

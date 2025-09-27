@@ -3,7 +3,8 @@
 param(
     [int]$limit = 128
 )
-
+[System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
 $start_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()
 . .\ps1\utility.ps1
 

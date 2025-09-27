@@ -5,8 +5,7 @@ open Logic
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
-  -- [CommRing α] [DecidableEq α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α} :
 -- imply
   x * y = if x ≠ 0 ∧ y ≠ 0 then

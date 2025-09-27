@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  [LinearOrderedSemiring α]
+  [Semiring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}
 -- given
   (h : x = 0 ∧ y ≥ 0 ∨ y = 0 ∧ x ≥ 0) :

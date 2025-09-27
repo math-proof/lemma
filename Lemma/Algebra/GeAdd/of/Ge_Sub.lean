@@ -17,7 +17,7 @@ private lemma nat
 
 @[main]
 private lemma main
-  [OrderedAddCommGroup α]
+  [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {a b c : α}
 -- given
   (h : a ≥ c - b) :

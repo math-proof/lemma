@@ -10,7 +10,7 @@ open Algebra Logic
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {x : α}
   {n : ℤ}

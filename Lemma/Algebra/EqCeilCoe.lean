@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main]
 private lemma nat
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
 -- given
   (a : ℕ) :
@@ -15,7 +15,7 @@ private lemma nat
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
 -- given
   (a : ℤ) :

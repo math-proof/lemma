@@ -16,7 +16,7 @@ private lemma nat
 
 @[main]
 private lemma left
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}
 -- given
   (h : x ≤ y)
@@ -29,7 +29,7 @@ private lemma left
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}
 -- given
   (h : x ≤ y)

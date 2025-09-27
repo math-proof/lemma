@@ -7,9 +7,9 @@ private lemma main
   (v : List α)
   (n : ℕ) :
 -- imply
-  v.splitAt n = ⟨v.take n, v.drop n⟩ :=
+  v.splitAt n = ⟨v.take n, v.drop n⟩ := by
 -- proof
-  List.splitAt_eq n v
+  apply List.splitAt_eq
 
 
 -- created on 2025-06-15

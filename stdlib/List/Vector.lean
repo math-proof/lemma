@@ -64,6 +64,7 @@ instance [AddCommSemigroup α] : AddCommSemigroup (Vector α n) where
   add_comm
 
 instance [AddCommMonoid α] : AddCommMonoid (Vector α n) where
+  nsmul := AddMonoid.nsmul
   nsmul_zero := AddMonoid.nsmul_zero
   nsmul_succ := AddMonoid.nsmul_succ
   zero_add

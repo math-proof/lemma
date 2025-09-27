@@ -6,7 +6,7 @@ open Set Algebra
 
 @[main]
 private lemma main
-  [OrderedAddCommGroup α]
+  [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {x a b : α}
 -- given
   (h : x ∈ Ico a b)

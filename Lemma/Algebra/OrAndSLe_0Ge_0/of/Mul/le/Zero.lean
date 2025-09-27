@@ -14,7 +14,7 @@ open Algebra Logic
 
 
 @[main]
-private lemma main
+private lemma Main
   [Semiring α]
   [LinearOrder α]
   [ExistsAddOfLE α]

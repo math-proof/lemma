@@ -9,9 +9,9 @@ private lemma main
   (h : i > v.length)
   (a : α) :
 -- imply
-  (v.insertIdx i a).length = v.length :=
+  (v.insertIdx i a).length = v.length := by
 -- proof
-  List.length_insertIdx_of_length_lt h
+  apply List.length_insertIdx_of_length_lt h
 
 
 -- created on 2025-07-12

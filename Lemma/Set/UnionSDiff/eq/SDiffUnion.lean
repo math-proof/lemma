@@ -2,7 +2,7 @@ import Lemma.Basic
 
 
 @[main]
-private lemma main
+private lemma Main'
 -- given
   (s t u : Set α) :
 -- imply

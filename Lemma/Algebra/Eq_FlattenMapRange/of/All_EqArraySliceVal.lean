@@ -12,7 +12,7 @@ private lemma main
 -- imply
   v = ((List.Vector.range m).map fun i => u i).flatten := by
 -- proof
-  simp only [← ValArraySlice.eq.ArraySliceVal] at h
+  simp only [← ValArraySlice.eq.ArraySliceVal v] at h
   apply Eq_FlattenMapRange.of.All_EqValS h
 
 

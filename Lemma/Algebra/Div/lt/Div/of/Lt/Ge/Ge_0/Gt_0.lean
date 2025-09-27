@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  [LinearOrderedSemifield α]
+  [GroupWithZero α] [PartialOrder α] [PosMulReflectLT α] [MulPosReflectLT α]
   {a b c d : α}
 -- given
   (h₀ : a < c)

@@ -9,7 +9,7 @@ open Algebra Logic
 
 @[main, mp, mpr]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given
   (x y : α) :
 -- imply

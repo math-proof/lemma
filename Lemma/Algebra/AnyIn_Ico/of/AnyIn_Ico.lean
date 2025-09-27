@@ -5,7 +5,7 @@ open Algebra Set
 
 @[main]
 private lemma offset
-  [OrderedAddCommGroup ι]
+  [AddCommGroup ι] [PartialOrder ι] [IsOrderedAddMonoid ι]
   {f : ι → Prop}
   {a m : ι}
 -- given

@@ -6,7 +6,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {n d : ℕ} :
 -- imply

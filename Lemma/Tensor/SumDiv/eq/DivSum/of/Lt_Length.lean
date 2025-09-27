@@ -27,7 +27,7 @@ private lemma main
     apply Eq.of.EqDataS
     let ⟨data⟩ := X
     repeat rw [DataDiv.eq.DivData]
-    simp_all [CastSum.eq.DivCastSumSplitAt_1]
+    rw [CastSum.eq.DivCastSumSplitAt_1]
   | succ dim ih =>
     unfold Tensor.sum
     simp [h]

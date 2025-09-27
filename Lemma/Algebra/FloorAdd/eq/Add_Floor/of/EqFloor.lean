@@ -5,7 +5,7 @@ open Algebra Real
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {x y : α}
 -- given

@@ -11,7 +11,7 @@ This lemma establishes that `x` belongs to the range of the integer embedding in
 -/
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {x : α}
 -- given

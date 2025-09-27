@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}
 -- given
   (h₀ : a ≠ 0)

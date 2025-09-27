@@ -28,7 +28,7 @@ private lemma main
   rw [← h]
   rw [BFn_Ite__Ite.is.And.ou.OrAndS (R := Eq)]
   rw [Or_Or.is.OrOr]
-  simp [OrAndS.is.And_Or]
+  simp [OrAndS.is.And_Or (p := R = a)]
   rw [Or_And_Not.is.Or]
   rw [BFn_Ite.is.OrAndS (R := Eq)] at h
   rw [NotOr.is.AndNotS] at h

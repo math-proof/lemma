@@ -5,7 +5,7 @@ open Algebra Logic
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x : α} :
 -- imply
   |x| = if x < 0 then

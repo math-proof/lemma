@@ -18,7 +18,7 @@ open Algebra
 @[main]
 private lemma main
 -- R is a linear ordered field, e.g. ℝ or ℚ
-  [LinearOrderedField R]
+  [Field R] [LinearOrder R] [IsStrictOrderedRing R]
 -- p, the correctness percentage of the dataset
 -- rₜₚ denotes True Positive Rate
 -- rₜₙ denotes True Negative Rate

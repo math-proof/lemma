@@ -11,7 +11,7 @@ open Set Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedRing R]
+  [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
 -- given
   (n : ℕ) :
 -- imply

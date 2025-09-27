@@ -8,7 +8,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y t : α}
 -- given
   (h₀ : y ≤ t * x)

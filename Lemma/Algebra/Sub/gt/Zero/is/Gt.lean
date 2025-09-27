@@ -4,7 +4,7 @@ open Algebra
 
 @[main, comm, mp, mpr]
 private lemma nat
-  [LinearOrderedAddCommMonoid α] [CanonicallyOrderedAdd α] [Sub α] [OrderedSub α]
+  [AddCommMonoid α] [LinearOrder α] [CanonicallyOrderedAdd α] [Sub α] [OrderedSub α]
   {a b : α} :
 -- imply
   b - a > 0 ↔ b > a :=

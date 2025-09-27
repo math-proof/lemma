@@ -9,7 +9,7 @@ open Algebra Logic
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}
 -- given
   (h_x : x ≥ 0)

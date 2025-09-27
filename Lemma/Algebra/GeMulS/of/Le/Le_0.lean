@@ -4,7 +4,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a b : α}
 -- given
   (h₀ : a ≤ b)

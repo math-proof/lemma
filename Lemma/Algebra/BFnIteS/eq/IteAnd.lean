@@ -32,7 +32,7 @@ private lemma main
   rw [BFnIte.eq.Ite_BFnS (f := f)] at h_X
   rw [BFnIte.eq.Ite_BFnS (f := f)] at h_X
   rw [Ite_Ite.eq.Ite__Ite] at h_X
-  simp [And.comm] at h_X
+  simp [And.comm (a := q)] at h_X
   assumption
 
 

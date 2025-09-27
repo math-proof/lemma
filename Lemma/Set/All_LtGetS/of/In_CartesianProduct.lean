@@ -16,7 +16,7 @@ private lemma main
   let ⟨j, h⟩ := Any_Eq_Get.of.In h
   have h_j := LtVal j
   have h_i : i < s.cartesianProduct[j].length := by rwa [← h]
-  simp_all [GetCartesianProduct.lt.Get.of.Lt_Length.Lt_LengthCartesianProduct]
+  simp_all [GetCartesianProduct.lt.Get.of.Lt_Length.Lt_LengthCartesianProduct h_j h_s]
 
 
 -- created on 2025-06-14

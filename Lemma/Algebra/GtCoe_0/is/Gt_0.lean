@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main, mp, mpr]
 private lemma main
-  [OrderedSemiring α]
+  [Semiring α] [PartialOrder α] [IsOrderedRing α]
   [Nontrivial α]
   {n : ℕ} :
 -- imply

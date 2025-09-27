@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedField R]
+  [Field R] [LinearOrder R] [IsStrictOrderedRing R]
   {a b : ℕ} :
 -- imply
   (a : R) / (b : R) ≥ 0 := by

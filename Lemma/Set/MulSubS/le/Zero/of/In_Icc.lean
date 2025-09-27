@@ -7,7 +7,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}
 -- given
   (h : x ∈ Icc a b) :

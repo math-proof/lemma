@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main]
 private lemma nat
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {x : α}
   {d : ℕ} :
@@ -15,14 +15,14 @@ private lemma nat
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {x : α}
   {d : ℤ} :
 -- imply
   ⌈x - d⌉ = ⌈x⌉ - d :=
 -- proof
-  Int.ceil_sub_int x d
+  Int.ceil_sub_intCast x d
 
 
 

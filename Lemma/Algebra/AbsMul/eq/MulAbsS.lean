@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main, comm]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given
   (a b : α) :
 -- imply

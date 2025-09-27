@@ -28,7 +28,7 @@ private lemma main
 -- proof
   rw [h]
   rw [BFnIteS.eq.IteAnd (f := f)]
-  simp [And.comm]
+  simp [And.comm (a := q)]
   rw [h]
   rw [h b' a]
   rw [h b a']

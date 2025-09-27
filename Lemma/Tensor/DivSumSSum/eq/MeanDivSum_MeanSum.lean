@@ -8,7 +8,7 @@ import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Algebra.Eq_0
 open Tensor Logic Algebra Vector
-set_option synthInstance.maxHeartbeats 100000
+set_option synthInstance.maxHeartbeats 200000
 set_option maxHeartbeats 1000000
 
 

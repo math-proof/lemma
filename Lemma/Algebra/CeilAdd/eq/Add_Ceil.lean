@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {x : α}
   {d : ℤ} :

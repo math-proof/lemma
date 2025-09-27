@@ -4,7 +4,7 @@ open Set
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}
 -- given
   (h : x ∈ Icc a b)

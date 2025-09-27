@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main, comm]
 private lemma nat
-  [LinearOrderedSemiring  α]
+  [Semiring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given
   (a b : ℕ) :
 -- imply
@@ -14,7 +14,7 @@ private lemma nat
 
 @[main, comm]
 private lemma int
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given
   (a b : ℤ) :
 -- imply
@@ -25,7 +25,7 @@ private lemma int
 
 @[main, comm]
 private lemma rat
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given
   (a b : ℚ) :
 -- imply

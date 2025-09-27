@@ -5,7 +5,7 @@ import Lemma.Basic
 @[main]
 private lemma main
   [DecidableEq ι]
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {s : Finset ι}
   {a : ι → α} :
 -- imply

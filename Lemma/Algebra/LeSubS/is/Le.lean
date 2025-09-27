@@ -6,7 +6,7 @@ open Algebra
 
 @[main, comm, mp, mpr]
 private lemma main
-  [OrderedAddCommGroup α]
+  [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
 -- given
   (x y z : α) :
 -- imply

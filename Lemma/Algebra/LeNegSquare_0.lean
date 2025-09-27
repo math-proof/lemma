@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a : α} :
 -- imply
   -a² ≤ 0 := by

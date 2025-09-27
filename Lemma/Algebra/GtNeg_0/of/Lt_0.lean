@@ -6,7 +6,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [OrderedAddCommGroup α]
+  [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {a : α}
 -- given
   (h : a < 0) :

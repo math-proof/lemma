@@ -19,7 +19,7 @@ private lemma main :
   simp
   rw [OrOr.is.Or_Or]
   rw [OrAnd.is.AndOrS (q := r)]
-  simp [OrAndS.is.AndOr.apart]
+  simp [OrAndS.is.AndOr.apart (p := r)]
   rw [Or_Or.is.OrOr]
   simp [IffAndOr true]
 

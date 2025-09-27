@@ -27,7 +27,7 @@ private lemma int
 
 @[main, comm, mp, mpr]
 private lemma main
-  [LinearOrderedField R]
+  [Field R] [LinearOrder R] [IsStrictOrderedRing R]
 -- given
   (a b : ℚ) :
 -- imply

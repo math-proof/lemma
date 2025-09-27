@@ -50,7 +50,7 @@ private lemma main
       rw [Sub_Add.eq.SubSub.nat] at h_length_slice
       simp [h_length_slice]
     ·
-      apply Sub.gt.Zero.of.Lt.nat h_lt
+      apply Sub.gt.Zero.of.Lt.nat h_lt (α := ℕ)
   ·
     have h_i := Ge.of.NotLt h_i
     linarith

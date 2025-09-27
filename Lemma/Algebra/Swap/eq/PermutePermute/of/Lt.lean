@@ -89,11 +89,12 @@ private lemma main
   ext k x
   by_cases h_k : k < s.length
   ·
-    have h_k' : k < (s.swap i j).length := by
+    have h_k : k < (s.swap i j).length := by
       simpa [LengthSwap.eq.Length]
-    have h_k'' : k < ((s.permute i (d - 1 : ℕ)).permute ⟨j, by simp [LengthPermute.eq.Length]⟩ (-d)).length := by
+    simp [h_k]
+    have h_k : k < ((s.permute i (d - 1 : ℕ)).permute ⟨j, by simp [LengthPermute.eq.Length]⟩ (-d)).length := by
       simpa [LengthPermute.eq.Length]
-    simp [h_k', h_k'']
+    simp [h_k]
     apply IffEqS.of.Eq
     rw [GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt (by assumption) (by assumption) (by assumption)]
     split_ifs with h_ki h_kj

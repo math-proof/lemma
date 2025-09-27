@@ -13,7 +13,7 @@ private lemma nat
 
 @[main]
 private lemma main
-  [OrderedSemiring R]
+  [Semiring R] [PartialOrder R] [IsOrderedRing R]
   {n : ℕ} :
 -- imply
   (n : R) ≥ 0 := by

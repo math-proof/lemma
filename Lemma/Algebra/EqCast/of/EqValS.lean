@@ -18,6 +18,9 @@ private lemma main
   intro h
   let ⟨a, ha⟩ := a
   let ⟨b, hb⟩ := b
+  simp at h_eq
+  simp [h_eq.symm]
+  simp_all
   aesop
 
 

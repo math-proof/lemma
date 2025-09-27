@@ -38,7 +38,7 @@ private lemma main
   simp at h_ij
   simp [EqGetS]
   simp [h_ij]
-  have h_eq : Fin (List.insertIdx dim 1 (n :: s).tail).prod = Fin (n :: s).tail.prod := by
+  have h_eq : Fin ((n :: s).tail.insertIdx dim 1).prod = Fin (n :: s).tail.prod := by
     simp_all
   have := GetFlatten_AddMul.eq.Get.of.Lt.Lt h_i h_j ((⟨data⟩ : Tensor α (n :: s)).toVector.map (fun X ↦ List.Vector.map (fun k ↦ X.data[cast h_eq k]) (List.Vector.range (s.insertIdx dim 1).prod)))
   simp_all
@@ -55,7 +55,7 @@ private lemma main
   have := GetCast_Map.eq.UFnGet.of.Eq.Lt (i := i) (n := ((n :: s).take 1).prod) (n' := (n :: s).headD 1) (by simp_all) (by simp_all) (data.splitAt 1) (fun data ↦ (⟨data⟩ : Tensor α s))
   simp at this
   simp [this]
-  have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop (s := n :: s) (d := 1) (i := i) (j := (cast h_eq (List.Vector.range (List.insertIdx dim 1 s).prod)[j]).val)
+  have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop (s := n :: s) (d := 1) (i := i) (j := (cast h_eq (List.Vector.range (s.insertIdx dim 1).prod)[j]).val)
     (by simp_all) (by simp_all) data
   simp at this
   simp [this]

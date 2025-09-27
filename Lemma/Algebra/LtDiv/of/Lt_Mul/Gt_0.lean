@@ -6,7 +6,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {k n m : α}
 -- given
   (h₀ : k < n * m)

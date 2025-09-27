@@ -5,7 +5,7 @@ open Algebra
 
 
 @[main]
-private lemma main
+private lemma Main'
 -- given
   (v : List.Vector α m) :
 -- imply

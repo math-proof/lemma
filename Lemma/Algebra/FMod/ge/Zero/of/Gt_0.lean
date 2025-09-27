@@ -10,7 +10,7 @@ private lemma main
 -- imply
   n.fmod d ≥ 0 :=
 -- proof
-  Int.fmod_nonneg' n h
+  Int.fmod_nonneg_of_pos n h
 
 
 -- created on 2025-03-21

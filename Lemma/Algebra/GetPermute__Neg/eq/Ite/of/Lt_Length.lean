@@ -39,7 +39,7 @@ open Algebra
 
 
 @[main]
-private lemma main
+private lemma MAIN
   {a : List α}
   {i : Fin a.length}
   {d t : ℕ}

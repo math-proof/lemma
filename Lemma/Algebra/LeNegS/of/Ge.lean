@@ -3,14 +3,13 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  [OrderedAddCommGroup α]
+  [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {x y : α}
 -- given
   (h : x ≥ y) :
 -- imply
   -x ≤ -y := by
 -- proof
-  -- apply Le.of.GeNegS
   apply neg_le_neg h
 
 

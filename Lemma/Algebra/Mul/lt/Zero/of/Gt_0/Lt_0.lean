@@ -19,8 +19,7 @@ private lemma int
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
-  -- [LinearOrderedRing α] does not work
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x y : α}
 -- given
   (h₀ : x > 0)

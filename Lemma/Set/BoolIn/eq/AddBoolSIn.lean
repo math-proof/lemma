@@ -7,7 +7,7 @@ open Set Logic
 
 
 @[main, comm]
-private lemma fin
+private lemma FIN
   [DecidableEq α]
   {A B : Finset α}
   {x : α} :
@@ -21,7 +21,7 @@ private lemma fin
   suffices h : Bool.toNat (x ∈ A ∩ B ∧ x ∈ A \ B) = 0 by
     rw [h]
     simp
-  simp only [In.In.is.In_Inter.fin]
+  simp only [In.In.is.In_Inter.fin (e := x)]
   simp
 
 
@@ -40,7 +40,7 @@ private lemma main
   suffices h : Bool.toNat (x ∈ A ∩ B ∧ x ∈ A \ B) = 0 by
     rw [h]
     simp
-  simp only [In.In.is.In_Inter]
+  simp only [In.In.is.In_Inter (e := x)]
   simp only [InterInter.eq.Inter_Inter]
   simp
 

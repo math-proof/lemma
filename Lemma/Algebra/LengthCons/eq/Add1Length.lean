@@ -10,7 +10,7 @@ private lemma main
 -- imply
   (a :: l).length = 1 + l.length := by
 -- proof
-  have := List.length_cons a l
+  have := List.length_cons (a := a) (as := l)
   rw [Add.comm] at this
   assumption
 

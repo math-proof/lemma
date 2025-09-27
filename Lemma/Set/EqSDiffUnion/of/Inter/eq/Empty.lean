@@ -3,7 +3,7 @@ open Set
 
 
 @[main]
-private lemma main
+private lemma main''
   {A B : Set α}
 -- given
   (h : A ∩ B = ∅) :

@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α} :
 -- imply
   a² + b² ≥ 0 := by

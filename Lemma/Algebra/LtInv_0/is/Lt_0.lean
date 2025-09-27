@@ -3,7 +3,7 @@ import Lemma.Basic
 
 @[main, comm, mp, mpr]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   (x : α) :
 -- imply
   x⁻¹ < 0 ↔ x < 0 := by

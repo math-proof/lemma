@@ -8,9 +8,9 @@ private lemma main
   (g : β → γ)
   (f : α → β) :
 -- imply
-  (l.map f).map g = l.map (g ∘ f) :=
+  (l.map f).map g = l.map (g ∘ f) := by
 -- proof
-  List.map_map g f l
+  apply List.map_map
 
 
 -- created on 2024-07-01

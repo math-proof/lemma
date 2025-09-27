@@ -6,7 +6,7 @@ open Set Algebra
 
 @[main]
 private lemma main
-  [OrderedAddCommGroup ι]
+  [AddCommGroup ι] [PartialOrder ι] [IsOrderedAddMonoid ι]
 -- given
   (a b d : ι)
   (f : ι → Set β) :

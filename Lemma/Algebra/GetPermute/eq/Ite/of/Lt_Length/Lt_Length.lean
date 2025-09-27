@@ -115,7 +115,7 @@ private lemma main
         simp [SubSub.eq.Sub_Add.nat]
         rw [EqAdd_Sub.of.Ge]
         apply Ge_Add_1.of.Gt
-        simp_all [Gt.of.Ge.Ne]
+        apply Gt.of.Ge.Ne h_1 h_eq
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
       simp [LengthTake.eq.Min_Length]
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
@@ -130,11 +130,11 @@ private lemma main
       ·
         rw [SubSub.eq.Sub_Add.nat]
         apply Sub.gt.Zero.of.Gt.nat
-        simp_all [Gt.of.Ge.Ne]
+        apply Gt.of.Ge.Ne h_1 h_eq
       ·
         rw [LengthSlice.eq.SubMin]
         rw [h_eq_i]
-        simp_all [GeSub.of.Ge_Add.left.nat]
+        apply GeSub.of.Ge_Add.left.nat h_1
       ·
         rw [LengthTake.eq.Min_Length]
         simp_all [h_min]

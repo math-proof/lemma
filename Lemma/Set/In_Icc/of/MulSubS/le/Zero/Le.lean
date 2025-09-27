@@ -10,7 +10,7 @@ open Algebra Set
 
 @[main]
 private lemma main
-  [LinearOrderedRing α]
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}
 -- given
   (h₀ : (x - a) * (x - b) ≤ 0)

@@ -10,7 +10,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a : α}
 -- given
   (h₀ : a > 0)

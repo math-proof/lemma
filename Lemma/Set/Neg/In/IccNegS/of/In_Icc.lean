@@ -5,7 +5,7 @@ open Algebra
 
 @[main]
 private lemma main
-  [OrderedAddCommGroup α]
+  [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {x a b : α}
 -- given
   (h : x ∈ Icc a b) :

@@ -18,17 +18,16 @@ private lemma main
   have h := Eq_AddMulDiv___Mod (k : Z) n
   apply Eq.symm
   apply h.trans
-  simp
+  suffices k / n * n = 0 by
+    rw [this]
+    simp
   apply Mul.eq.Zero.of.OrAndSEq_0Ge_0
   left
   constructor
-  · 
+  ·
     apply IntegerRing.div_eq_zero_of_lt
-    · 
-      assumption
-    · 
-      assumption
-  · 
+    repeat assumption
+  ·
     apply Ge.of.Ge.Gt h₁ h₀
 
 

@@ -25,7 +25,7 @@ open Algebra
 @[main]
 private lemma main
   -- R is a linear ordered field, e.g. ℝ or ℚ
-  [LinearOrderedField R]
+  [Field R] [LinearOrder R] [IsStrictOrderedRing R]
   -- TP denotes true positives
   -- TN denotes true negatives
   -- P denotes positives

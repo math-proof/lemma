@@ -19,7 +19,7 @@ open Algebra
 
 
 @[main]
-private lemma main
+private lemma main'
   {a : List α}
   {i j t : ℕ}
 -- given

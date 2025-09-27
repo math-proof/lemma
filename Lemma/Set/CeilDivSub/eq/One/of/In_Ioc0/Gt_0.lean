@@ -8,7 +8,7 @@ open Set Algebra
 
 @[main]
 private lemma main
-  [LinearOrderedField α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {a b : α}
 -- given

@@ -10,7 +10,7 @@ private lemma main
 -- imply
   ∏ i ∈ s, a i * b i = (∏ i ∈ s, a i) * ∏ i ∈ s, b i := by
 -- proof
-  apply Finset.induction_on (p := fun s => ∏ i ∈ s, a i * b i = (∏ i ∈ s, a i) * ∏ i ∈ s, b i) s
+  apply Finset.induction_on (motive := fun s => ∏ i ∈ s, a i * b i = (∏ i ∈ s, a i) * ∏ i ∈ s, b i) s
   ·
     simp
   ·

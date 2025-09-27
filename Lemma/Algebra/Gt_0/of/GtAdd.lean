@@ -25,7 +25,7 @@ private lemma nat
 
 @[main]
 private lemma left
-  [OrderedAddCommGroup α]
+  [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {a b : α}
 -- given
   (h : b + a > b) :
@@ -37,7 +37,7 @@ private lemma left
 
 @[main]
 private lemma main
-  [OrderedAddCommGroup α]
+  [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {a b : α}
 -- given
   (h : a + b > b) :

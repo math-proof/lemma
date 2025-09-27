@@ -2,7 +2,7 @@ import Lemma.Basic
 
 
 @[main]
-private lemma main
+private lemma MAIN
   {p q r : Prop} :
 -- imply
   p ∧ ¬(q ∧ ¬r) ↔ p ∧ q ∧ r ∨ p ∧ ¬q := by

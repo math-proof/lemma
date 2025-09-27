@@ -6,7 +6,7 @@ open Logic
 
 
 @[main, comm, mp, mpr]
-private lemma main :
+private lemma Main :
 -- imply
   ¬(p ∨ q) ↔ ¬p ∧ ¬q := by
 -- proof

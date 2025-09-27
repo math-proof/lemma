@@ -25,7 +25,7 @@ private lemma main
   denote h_P : P = left
   rw [Ite__Ite.eq.IteAnd_Not__Ite] at h_P
   rw [Ite__Ite.eq.IteAnd_Not__Ite] at h_P
-  simp only [IffAnd_NotAnd_Not] at h_P
+  simp only [IffAnd_NotAnd_Not (p := p)] at h_P
   assumption
 
 

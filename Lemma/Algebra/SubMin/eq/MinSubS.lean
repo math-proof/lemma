@@ -33,8 +33,8 @@ private lemma nat
 
 
 @[main, comm]
-private lemma main
-  [LinearOrderedRing α]
+private lemma Main
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given
   (a b d : α) :
 -- imply

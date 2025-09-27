@@ -12,7 +12,7 @@ private lemma main
   v.take i ++ v.slice i j = v.take j := by
 -- proof
   unfold List.slice List.array_slice Function.comp
-  have := List.take_add v i (j - i)
+  have := v.take_add (i := i) (j := j - i)
   rw [EqAdd_Sub.of.Ge h] at this
   rw [this]
 

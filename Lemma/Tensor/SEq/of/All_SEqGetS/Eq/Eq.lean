@@ -67,7 +67,7 @@ private lemma main
         simp [← h_eq]
         let v_n : List.Vector (List.Vector α s₀.prod) n := (List.Vector.range n).map fun i ↦ A[i].data
         have h_a := GetFlatten_AddMul.eq.Get v_n
-        simp [AddMul.lt.Mul] at h_a
+        simp [AddMul.lt.Mul (m := n)] at h_a
         have h_i : i.val < s₁.prod := by
           rw [← h₁]
           simp

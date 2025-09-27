@@ -7,7 +7,7 @@ notation:max n "is" "odd" => Odd n
 notation:max n "isn't" "odd" => ¬Odd n
 infixl:70 "//" => Int.fdiv
 
-class IntegerRing (Z : Type) extends LinearOrderedSemiring Z, Sub Z, Div Z, Mod Z, CommMagma Z, MulDivCancelClass Z, CommMonoidWithZero Z where
+class IntegerRing (Z : Type) extends Semiring Z, LinearOrder Z, IsStrictOrderedRing Z, Sub Z, Div Z, Mod Z, CommMagma Z, MulDivCancelClass Z, CommMonoidWithZero Z where
   succ_le_of_lt {a b : Z} : a < b → a + 1 ≤ b
   lt_of_succ_le {a b : Z} : a + 1 ≤ b → a < b
   lt_succ_of_le {a b : Z} : a ≤ b → a < b + 1
