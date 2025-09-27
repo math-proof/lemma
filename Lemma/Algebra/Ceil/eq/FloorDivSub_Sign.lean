@@ -12,7 +12,6 @@ import Lemma.Algebra.FloorAdd1.eq.Add1Floor
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.FDivAdd.eq.Add1FDiv.of.Ne_0
 import Lemma.Algebra.MulAdd.eq.AddMulS
-import Lemma.Algebra.FModAdd.eq.FMod
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.AddFModS.eq.FModNegSign
 import Lemma.Algebra.FModNegSign.eq.Sub_Sign
@@ -69,7 +68,6 @@ private lemma main
     rw [FDivAdd.eq.Add1FDiv.of.Ne_0 h] at h₁
     rw [MulAdd.eq.AddMulS] at h₁
     norm_num at h₁
-    rw [FModAdd.eq.FMod] at h₁
     have := EqAddS.of.Eq.Eq h₀ h₁
     ring_nf at this
     rw [Add_Sub.eq.SubAdd] at this

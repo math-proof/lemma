@@ -31,6 +31,7 @@ import Lemma.Algebra.Ge_1.of.Gt
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Algebra.Eq.of.EqSubS.Ge.Ge
 open Logic Algebra
+set_option maxHeartbeats 300000
 
 
 @[main]

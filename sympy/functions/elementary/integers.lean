@@ -88,7 +88,7 @@ instance : IntegerRing Int where
   add_mul_mod_self_left := Int.add_mul_emod_self_left
   add_mul_mod_self_right := by
     intros
-    apply Int.add_mul_emod_self
+    apply Int.add_mul_emod_self_right
   mul_comm := Int.mul_comm
   add_div_of_dvd_left {a b c : ℤ} (h : c ∣ b) := by
     rw [add_comm]

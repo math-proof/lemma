@@ -52,11 +52,11 @@ private lemma main
       ·
         linarith
       ·
-        simp
+        congr
       ·
         linarith
       ·
-        simp
+        congr
   | Int.negSucc offset =>
     simp
     split_ifs with h_d

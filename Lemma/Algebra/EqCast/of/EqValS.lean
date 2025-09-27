@@ -1,5 +1,6 @@
 import Lemma.Logic.EqUFnS.of.Eq
-open Logic
+import Lemma.Vector.GetCast.eq.Get.of.Eq
+open Logic Vector
 
 
 @[main, comm 1]
@@ -19,10 +20,11 @@ private lemma main
   let ⟨a, ha⟩ := a
   let ⟨b, hb⟩ := b
   simp at h_eq
-  simp [h_eq.symm]
-  simp_all
+  subst h_eq
+  have h_mn := ha.symm.trans hb
+  ext i
+  rw [GetCast.eq.Get.of.Eq.fin h_mn]
   aesop
-
 
 
 -- created on 2025-05-23

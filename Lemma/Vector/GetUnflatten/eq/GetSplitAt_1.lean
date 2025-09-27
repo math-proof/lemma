@@ -25,34 +25,6 @@ private lemma main
       simp_all
     ·
       simp [Prod.eq.Foldr]
-  ·
-    simp
-  ·
-    apply HEq.of.All_Eq.Eq.Eq _ rfl
-    ·
-      simp_all
-    ·
-      simp [Prod.eq.Foldr]
-  ·
-    simp
-  ·
-    apply HEq.of.All_Eq.Eq.Eq _ rfl
-    ·
-      simp_all
-    ·
-      simp [Prod.eq.Foldr]
-  ·
-    simp
-  ·
-    apply HEq.of.All_HEq.Eq
-    ·
-      apply EqImpS_Decidable.of.Eq
-      simp
-    ·
-      intro x
-      rw [Nat.mul_one]
-    ·
-      simp [Prod.eq.Foldr]
   repeat simp
 
 

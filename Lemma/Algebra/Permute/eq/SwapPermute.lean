@@ -104,7 +104,6 @@ private lemma main
       simp at h_j
       let h_j' := h_j
       rw [← h_length] at h_j
-      simp
       rw [GetElem!.eq.None.of.Ge_Length h_j]
       rw [← h_length'] at h_j'
       simp_all [GetElem!.eq.None.of.Ge_Length h_j']

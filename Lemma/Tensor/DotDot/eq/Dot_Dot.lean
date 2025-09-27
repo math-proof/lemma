@@ -5,6 +5,7 @@ import Lemma.Algebra.Mul_Sum.eq.Sum_Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.EqSumS
 open Tensor Algebra
+set_option maxHeartbeats 1000000
 
 
 /--

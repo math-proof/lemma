@@ -27,8 +27,7 @@ private lemma coe
 -- imply
   ((List.Vector.indices ⟨j, (n + j : ℕ), 1⟩ (n + j)).map fun i : Fin (n + j) => f i)[i] = f (i + j) := by
 -- proof
-  have := GetIndices.eq.Add.coe j n i
-  simp_all [GetMap.eq.FunGet]
+  apply main
 
 
 -- created on 2025-05-23

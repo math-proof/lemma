@@ -1,7 +1,6 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Tensor.LengthGetSlice.eq.Min
-open Tensor Algebra
+open Tensor
 
 
 @[main]
@@ -16,7 +15,6 @@ private lemma main
   | [] =>
     simp [Tensor.length]
     simp [Slice.length]
-    simp [EqAdd_Mul_DivSub1Sign_2.zero]
   | s₀ :: s =>
     rw [LengthGetSlice.eq.Min]
     rw [Length.eq.Get_0.of.GtLength_0 (by simp)]

@@ -1,10 +1,11 @@
 # usage:
-# . .\ps1\update.ps1 v4.19.0
+# . .\ps1\update.ps1
 # Read the lean-toolchain file
 param(
-    [String]$version
+    [String]$version = "v4.20.0"
 )
-
+$versionNumber = $version.Substring(1)
+elan override set leanprover/lean4:$versionNumber
 [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
@@ -14,13 +15,14 @@ $versionRegex = "leanprover/lean4:(v[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)?)"
 if ($content -match $versionRegex) {
     if ($matches[1] -eq $version) {
         Write-Host "leanprover/lean4:$version is already set, skipping"
-        exit 0;
     }
-    # write the text `leanprover/lean4:$version` into file lean-toolchain, without BOM
-    $newContent = "leanprover/lean4:$version"
-    # Write to file without BOM
-    [System.IO.File]::WriteAllText("lean-toolchain", $newContent, [System.Text.UTF8Encoding]::new($false))
-    Write-Host "✅ lean-toolchain updated to $newContent"
+    else {
+        # write the text `leanprover/lean4:$version` into file lean-toolchain, without BOM
+        $newContent = "leanprover/lean4:$version`n"
+        # Write to file without BOM
+        [System.IO.File]::WriteAllText("lean-toolchain", $newContent, [System.Text.UTF8Encoding]::new($false))
+        Write-Host "✅ lean-toolchain updated to $newContent"
+    }
 }
 else {
     throw "Could not find version info in lean-toolchain"
@@ -126,7 +128,8 @@ foreach ($package in $mathlibManifest.packages) {
 
 # Save updated manifest
 if ($updated) {
-    $currentManifest | ConvertTo-Json -Depth 10 | Set-Content -Path "lake-manifest.json" -Encoding utf8NoBOM
+    $jsonString = $currentManifest | ConvertTo-Json -Depth 10
+    [System.IO.File]::WriteAllText("lake-manifest.json", $jsonString, [System.Text.UTF8Encoding]::new($false))
     Write-Host "🌟 lake-manifest.json updated successfully."
 }
 

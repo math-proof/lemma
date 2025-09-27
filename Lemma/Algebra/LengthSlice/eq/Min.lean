@@ -15,7 +15,6 @@ private lemma main
 -- proof
   unfold Slice.length
   simp [EqAdd_Mul_DivSub1Sign_2]
-  simp [EqAdd_Mul_DivSub1Sign_2.zero]
   rw [MinCoeS.eq.CoeMin.nat]
   simp only [EqCeilCoe.nat]
   simp only [EqToNat]

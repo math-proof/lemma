@@ -29,6 +29,14 @@ source ~/.bashrc
 
 # yum install libgmp-dev
 ```
+for windows
+```ps1
+# suppose the binary installer file is copied here.
+cd ~/.elan/toolchains
+mkdir leanprover--lean4---v4.20.0
+tar --strip-components=1 -xf lean-4.20.0-windows.tar.zst -C "leanprover--lean4---v4.20.0"
+```
+
 
 ### build from source
 install prerequisites
@@ -76,7 +84,7 @@ in linux, this is not suggested due to slow network.
 elan toolchain install stable
 elan default stable
 ```
-in windows
+in windows (https://github.com/PowerShell/PowerShell/releases/download/v7.5.3/PowerShell-7.5.3-win-x64.msi)
 ```ps1
 elan default leanprover/lean4:v4.18.0
 # install a particular version

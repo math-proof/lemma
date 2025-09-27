@@ -26,7 +26,7 @@ private lemma main
   intro i
   by_cases h : i.val = n
   ·
-    simp [GetElem.getElem]
+    simp only [GetElem.getElem]
     repeat rw [GetGetSlice.eq.Get.of.Lt_Min_Length.fin]
     aesop
   ·
@@ -36,11 +36,11 @@ private lemma main
     rw [EqMin.of.Le (by omega)] at h_i
     have h_i := Le.of.Lt_Add_1 h_i
     have h := Lt.of.Le.Ne h h_i
-    simp [GetElem.getElem]
+    simp only [GetElem.getElem]
     repeat rw [GetGetSlice.eq.Get.of.Lt_Min_Length.fin]
     ·
       have h₀ := All_EqGetS.of.Eq h₀
-      simp [GetElem.getElem] at h₀
+      simp only [GetElem.getElem] at h₀
       have h_i : i < ((⟨0, n, 1⟩: Slice).length X.length) := by
         simp_all [LengthSlice.eq.Min]
         simp [Tensor.length]
