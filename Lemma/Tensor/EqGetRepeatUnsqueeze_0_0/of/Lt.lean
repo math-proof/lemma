@@ -26,5 +26,20 @@ private lemma main
     simpa
 
 
+@[main]
+private lemma fin
+-- given
+  (h_i : i < n)
+  (X : Tensor α s) :
+-- imply
+  have h_i : i < ((X.unsqueeze 0).repeat n ⟨0, by simp⟩).length := by
+    rw [LengthRepeat.eq.MulGet_0.of.GtLength_0]
+    simpa
+  ((X.unsqueeze 0).repeat n ⟨0, by simp⟩).get ⟨i, h_i⟩ = X := by
+-- proof
+  apply main
+  assumption
+
+
 -- created on 2025-07-10
 -- updated on 2025-07-11

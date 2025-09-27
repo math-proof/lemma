@@ -8,7 +8,7 @@ private lemma main
 -- imply
   ¬(a > a) :=
 -- proof
-  gt_irrefl a
+  lt_irrefl a
 
 
 -- created on 2025-03-27

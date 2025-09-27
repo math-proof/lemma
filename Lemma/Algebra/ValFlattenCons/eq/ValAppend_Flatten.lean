@@ -11,7 +11,6 @@ private lemma main
   (head ::ᵥ tail).flatten.val = (head ++ tail.flatten).val := by
 -- proof
   simp [List.Vector.flatten, HAppend.hAppend]
-  simp [List.Vector.append]
   simp [List.Vector.toList]
   simp [Append.append]
   let ⟨head, _⟩ := head

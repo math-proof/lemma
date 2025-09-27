@@ -10,7 +10,7 @@ private lemma main
 -- imply
   ¬a < b :=
 -- proof
-  not_lt_of_le h
+  not_lt_of_ge h
 
 
 -- created on 2025-03-29

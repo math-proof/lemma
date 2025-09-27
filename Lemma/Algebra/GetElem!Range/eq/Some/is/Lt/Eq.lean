@@ -11,15 +11,8 @@ private lemma main
 -- imply
   (List.range n)[i]? = some j ↔ i < n ∧ i = j := by
 -- proof
-  by_cases hi : i < n
-  ·
+  by_cases hi : i < n <;>
     simp [hi]
-  ·
-    simp [hi]
-    have hi := Ge.of.NotLt hi
-    have := GetElem!Range.eq.None.of.Ge hi
-    rw [this]
-    simp
 
 
 -- created on 2025-05-10

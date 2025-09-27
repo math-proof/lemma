@@ -69,10 +69,10 @@ private lemma main
       simp [List.enumerate] at hi
       let ⟨i, h_some, h_lt, hi, hb⟩ := hi
       have h := h i' tail[i']
-      use i + 1, tail[i]
+      use (⟨i, by omega⟩: Fin (tail.length + 1)) + 1, tail[i]
       constructor
       ·
-        rw [Eq.of.GetElem!Range.eq.Some h_some]
+        simp [Eq.of.GetElem!Range.eq.Some h_some]
         have : i + 1 < (head :: tail).length := by
           simp_all
         have := GetElem!Enumerate.eq.Some.of.Lt_length this
@@ -84,7 +84,7 @@ private lemma main
         rw [EqMod.of.Lt h_lt]
       ·
         rw [← hc]
-        rw [hi]
+        simp [hi]
         simp [← hb]
         rw [hi] at h
         simp at h
@@ -92,20 +92,11 @@ private lemma main
         simp_all
         rw [← h]
         congr
-        have h_eq := One.eq.Cast_1 (R := Fin (tail.length + 1))
-        rw [h_eq]
-        rw [AddCoeS.eq.CoeAdd.nat]
-        congr
         apply Eq.of.EqValS.fin
-        simp
-        rw [h_eq]
-        rw [AddCoeS.eq.CoeAdd.nat]
-        simp only [Nat.cast]
-        simp only [NatCast.natCast]
-        simp only [Fin.ofNat']
-        have h_lt : i + 1 < tail.length + 1 := by
-          simp_all
-        rw [EqMod.of.Lt h_lt]
+        simp [HAdd.hAdd]
+        simp [Add.add]
+        simp [Fin.add]
+        simp_all
 
 
 -- created on 2025-06-02

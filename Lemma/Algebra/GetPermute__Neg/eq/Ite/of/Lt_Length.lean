@@ -157,12 +157,16 @@ private lemma MAIN
   ·
     simp at h_d
     subst h_d
-    simp_all [Slice.eq.Nil]
+    simp [Slice.eq.Nil]
+    intro h_it
     apply Eq.symm
-    split_ifs with h_lt h_eq h_1 <;>
-      simp_all
-    have := Eq.of.Le.Le h_lt h_1
-    contradiction
+    split_ifs
+    .
+      aesop
+    .
+      omega
+    .
+      rfl
 
 
 -- created on 2025-06-21

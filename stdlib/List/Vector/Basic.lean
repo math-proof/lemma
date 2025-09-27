@@ -87,8 +87,6 @@ def a : List.Vector (Fin 10) 10 := List.Vector.range 10
 def getSlice (L : Vector α n) (s : Slice) : Vector α (s.length n) :=
   (indices s L.length).map fun i => L[i]
 
-instance : HAppend (Vector α n) (Vector α m) (Vector α (n + m)) := ⟨Vector.append⟩
-
 instance [Add α] : Add (Vector α n) where
   add a b := a.map₂ HAdd.hAdd b
 

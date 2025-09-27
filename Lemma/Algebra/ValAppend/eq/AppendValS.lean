@@ -13,7 +13,6 @@ private lemma main
   simp [HAppend.hAppend]
   cases a
   cases b
-  simp [List.Vector.append]
   simp [Append.append]
 
 

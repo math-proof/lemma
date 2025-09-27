@@ -43,8 +43,8 @@ private lemma main
   have := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0 (show (⟨1, by simp⟩ : Fin 3) > 0 by simp) h_i (A.unsqueeze 1) n
   simp at this
   simp [this]
-  have := EqGetRepeatUnsqueeze_0_0.of.Lt h_i Bᵀ
-  simp [GetElem.getElem] at this
+  have := EqGetRepeatUnsqueeze_0_0.of.Lt.fin h_i Bᵀ
+  simp at this
   simp only [GetElem.getElem]
   rw [this]
   rw [GetCast.eq.Cast_Get.of.Eq.Lt_Get_0.GtLength_0.fin (by simp) (by simp) (by simp)]

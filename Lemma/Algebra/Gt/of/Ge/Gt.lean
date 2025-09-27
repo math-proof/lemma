@@ -11,7 +11,7 @@ private lemma main
 -- imply
   a > c :=
 -- proof
-  gt_of_ge_of_gt h₀ h₁
+  lt_of_le_of_lt' h₀ h₁
 
 
 -- created on 2025-01-17

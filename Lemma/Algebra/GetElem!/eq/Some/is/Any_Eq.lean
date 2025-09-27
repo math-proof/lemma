@@ -13,14 +13,8 @@ private lemma main
 -- imply
   v[i]? = some a ↔ ∃ h : i < v.length, v[i] = a := by
 -- proof
-  by_cases hi : i < v.length
-  ·
+  by_cases hi : i < v.length <;>
     simp [hi]
-  ·
-    simp [hi]
-    have hi := Ge.of.NotLt hi
-    have := GetElem!.eq.None.of.Ge_Length hi
-    simp [this]
 
 
 -- created on 2025-05-10

@@ -33,8 +33,8 @@ for windows
 ```ps1
 # suppose the binary installer file is copied here.
 cd ~/.elan/toolchains
-mkdir leanprover--lean4---v4.20.0
-tar --strip-components=1 -xf lean-4.20.0-windows.tar.zst -C "leanprover--lean4---v4.20.0"
+mkdir leanprover--lean4---v4.21.0
+tar --strip-components=1 -xf lean-4.21.0-windows.tar.zst -C "leanprover--lean4---v4.21.0"
 ```
 
 
@@ -156,6 +156,43 @@ https://www.leanprover.cn/projects/lean4web/
 https://github.com/hhu-adam/lean4web-tools
 https://github.com/leanprover-community/lean4web
 
-# Naming Convention
+# Lemma Naming Convention
 ## CamelCase
-LogExpSum
+CamelCase is used for unary function, eg:  
+LogExpSum  
+generally, if F is a unary function, and X is its argument, then
+FX denote the expression: F X
+
+## Snake_Case
+Snake_Case is used for binary function, eg:  
+Eq_Log  
+generally, if F is a binary function, and Y is its second argument, then
+F_Y denote the expression: F _ Y
+wherein:
+- _ (wild card) denotes any types of X
+- Y is the given type for the second argument of F
+
+## Apostrophe
+Apostrophe is used to separate consecutive digits, eg: 
+Div1'2 denotes: 1 / 2
+Apostrophe is introduced to resolve ambiguity, otherwise 1 / 2 will have to be written as:  
+DivOneTwo, etc.
+
+## Infix Operators
+small-letter binary infix operators are short name for Capital-letter operator name, eg:
+| infix operators  | prefix operators |
+| :--: |  :--: | 
+| X.eq.Y | EqXY | 
+| X.ne.Y | NeXY | 
+| X.gt.Y | GtXY | 
+| X.lt.Y | LtXY | 
+| X.ge.Y | GeXY | 
+| X.le.Y | LeXY | 
+| X.in.Y | InXY | 
+| X.is.Y | IffXY | 
+| X.as.Y | SEqXY | 
+| X.or.Y | OrXY | 
+| X.and.Y | AndXY | 
+| X.dvd.Y | DvdXY | 
+| X.sub.Y | SubsetXY | 
+| X.sup.Y | SupsetXY | 

@@ -19,7 +19,7 @@ private lemma main
     have hx_lt : a < x := lt_of_lt_of_le h₀ h.1
     refine ⟨⟨hx_lt, h.2⟩, ?_⟩ -- Show x ∈ Ioc a b and ¬(x ∈ Ioo a c)
     intro h' -- Assume x ∈ Ioo a c (to derive contradiction)
-    exact not_le_of_lt h'.2 h.1 -- h'.2 gives x < c, but h.1 has c ≤ x
+    exact not_le_of_gt h'.2 h.1 -- h'.2 gives x < c, but h.1 has c ≤ x
   ·
     intro h -- Backward direction: assume x ∈ Ioc a b \ Ioo a c
     have hx_ge_c : c ≤ x := by

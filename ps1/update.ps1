@@ -2,7 +2,7 @@
 # . .\ps1\update.ps1
 # Read the lean-toolchain file
 param(
-    [String]$version = "v4.20.0"
+    [String]$version = "v4.21.0"
 )
 $versionNumber = $version.Substring(1)
 elan override set leanprover/lean4:$versionNumber
@@ -74,7 +74,7 @@ $updated = $false
 $currentManifest = Get-Content -Raw -Path "lake-manifest.json" | ConvertFrom-Json
 foreach ($package in $mathlibManifest.packages) {
     $name = $package.name
-    Write-Error "updating $name in lake-manifest.json from mathlib"
+    Write-Host "updating $name in lake-manifest.json from mathlib"
     $inputRev = $package.inputRev
     $rev = $package.rev
     ## how to update $currentManifest if the corresponding field (inputRev/rev) has been changed?

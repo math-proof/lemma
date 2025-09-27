@@ -25,7 +25,7 @@ start - step is the next index, etc
 -/
 def Nat.sliced_indices' (h_stop : start > stop) (h_start : start ≤ n) (h_step : step > 0) : List (Fin n) :=
   -- now we have stop < start ≤ n and step > 0
-  ⟨start - 1, LtSub_1.of.Le.Gt_0 (by linarith [gt_of_ge_of_gt h_start h_stop]) h_start⟩ :: (if h_stop : start - step > stop then Nat.sliced_indices' h_stop (show start - step ≤ n by simp; linarith) h_step else [])
+  ⟨start - 1, LtSub_1.of.Le.Gt_0 (by linarith [Gt.of.Ge.Gt h_start h_stop]) h_start⟩ :: (if h_stop : start - step > stop then Nat.sliced_indices' h_stop (show start - step ≤ n by simp; linarith) h_step else [])
 
 
 def Slice.toList (s : Slice) (n : ℕ) : List (Fin n) :=
