@@ -44,7 +44,7 @@ $versionRegex = "leanprover/lean4:(v[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)?)"
 # Use regex to extract the version (the part starting with v...)
 if ($content -match $versionRegex) {
     if ($matches[1] -eq $version) {
-        Write-Host "leanprover/lean4:$version is already set, skipping"
+        Write-Host "leanprover/lean4:$version is already installed, skipping"
     }
     else {
         # write the text `leanprover/lean4:$version` into file lean-toolchain, without BOM
