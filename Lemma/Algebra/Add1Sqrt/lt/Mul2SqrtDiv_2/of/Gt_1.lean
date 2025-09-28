@@ -38,6 +38,7 @@ private lemma main
       rw [SquareAdd.eq.AddAddSquareS_MulMul2]
       norm_num
       field_simp
+      rw [EqSquareSqrt.of.Ge_0 (by linarith)]
       rw [Mul_Add.eq.AddMulS]
       rw [DivAdd.eq.AddDivS]
       rw [DivMul.eq.MulDiv]

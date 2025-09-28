@@ -9,7 +9,7 @@ private lemma main
 -- imply
   range (n + 1) \ {n} = range n := by
 -- proof
-  rw [Finset.range_succ]
+  rw [Finset.range_add_one]
   aesop
 
 

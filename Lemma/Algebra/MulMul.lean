@@ -14,4 +14,15 @@ private lemma Comm
   rw [Mul_Mul.eq.MulMul]
 
 
+@[main]
+private lemma main
+  [CommSemigroup α]
+  {a b : α} :
+-- imply
+  a * b * c = c * a * b := by
+-- proof
+  rw [Mul.comm (b := c)]
+  rw [Mul_Mul.eq.MulMul]
+
+
 -- created on 2024-11-29

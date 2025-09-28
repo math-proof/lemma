@@ -58,7 +58,7 @@ for ($i = 0; $i -lt $batches.Count; $i++) {
         $batchContent = $batches[$i] -join " "
         Write-Host "executing: $batchContent" -ForegroundColor Green
     }
-    cmd /c "lake setup-file test.$i.lean" 2>&1 | Tee-Object -FilePath test.log -Append
+    cmd /c "lake setup-file test.$i.lean" 2>&1 | Select-Object -SkipLast 1 | Tee-Object -FilePath test.log -Append
     # Start-Sleep -Seconds 1
 }
 
@@ -101,9 +101,9 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
     $module = $module -replace '\\', '.'
     $module = $module -replace '\.lean$', ''
 
-    if (Select-String -Path $file -Pattern '^@\[main, .*\bcomm( [0-9]+)?\b' -Quiet) {
+    if (Select-String -Path $file -Pattern '^@\[main, .*\b(?<!mpr?\.)comm( [0-9]+)?\b' -Quiet) {
         $tokens = $module -split '\.'
-        $match = Select-String -Path $file -Pattern '^@\[main, .*\bcomm( [0-9]+)?\b' -AllMatches
+        $match = Select-String -Path $file -Pattern '^@\[main, .*\b(?<!mpr?\.)comm( [0-9]+)?\b' -AllMatches
         if ($match) {
             # Take the first match's first group
             $deBruijn = $match.Matches[0].Groups[1].Value
@@ -125,7 +125,7 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
                 } elseif ($first -like 'SEq*') {
                     $first = "SEq_" + $first.Substring(3)
                 } else {
-                    Write-Host "panic! Expected the operator to be 'S?Eq.*', got: $first"
+                    Write-Host "panic! Expected the operator to be 'S?Eq.*', got: $first in $module"
                 }
                 $tokens[1] = $first
             }
@@ -201,7 +201,7 @@ $content = Get-Content test.log
 $flag = $false
 $failingModules = @()
 foreach ($line in $content) {
-    if ($line -match 'Some required builds logged failures:') {
+    if ($line -match 'Some required targets logged failures:') {
         $flag = $true
         continue
     }

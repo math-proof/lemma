@@ -18,7 +18,7 @@ instance [AddSemigroup α] : AddSemigroup (Vector α n) where
     repeat rw [Add.eq.Map2]
     ext i
     repeat rw [get_map₂]
-    apply add_assoc
+    apply AddSemigroup.add_assoc
 
 instance [AddZeroClass α]  : AddZeroClass (Vector α n) where
   zero_add a := by
@@ -75,7 +75,7 @@ instance [Mul α] [Add α] [LeftDistribClass α]: LeftDistribClass (Vector α n)
     repeat rw [GetAdd.eq.AddGetS.fin]
     repeat rw [GetMul.eq.MulGetS.fin]
     rw [GetAdd.eq.AddGetS.fin]
-    apply left_distrib
+    apply LeftDistribClass.left_distrib
 
 instance [Mul α] [Add α] [RightDistribClass α]: RightDistribClass (Vector α n) where
   right_distrib a b c := by
@@ -83,7 +83,7 @@ instance [Mul α] [Add α] [RightDistribClass α]: RightDistribClass (Vector α 
     repeat rw [GetAdd.eq.AddGetS.fin]
     repeat rw [GetMul.eq.MulGetS.fin]
     rw [GetAdd.eq.AddGetS.fin]
-    apply right_distrib
+    apply RightDistribClass.right_distrib
 
 instance [Distrib α] : Distrib (Vector α n) where
   left_distrib
@@ -99,7 +99,7 @@ instance [Semigroup α] : Semigroup (Vector α n) where
   mul_assoc a b c := by
     ext i
     repeat rw [GetMul.eq.MulGetS.fin]
-    apply mul_assoc
+    apply Semigroup.mul_assoc
 
 instance [SemigroupWithZero α] : SemigroupWithZero (Vector α n) where
   zero_mul

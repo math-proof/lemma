@@ -1,3 +1,4 @@
+import Lemma.Algebra.MulMul
 import Lemma.Algebra.Lt.of.LtSquareS.Ge_0
 import Lemma.Algebra.Mul.ge.Zero.of.Ge_0.Ge_0
 import Lemma.Algebra.GeSqrt_0
@@ -43,8 +44,7 @@ private lemma main
       rw [SubAdd.eq.Add_Sub]
       rw [SquareAdd.eq.AddAddSquareS_MulMul2]
       field_simp
-      rw [DivMul.eq.MulDiv]
-      rw [EqDivSquare]
+      rw [EqSquareSqrt.of.Ge_0 (by linarith)]
       rw [SubAdd.eq.Add_Sub]
       rw [Mul_Add.eq.AddMulS]
       apply Lt.of.Sub.gt.Zero
@@ -58,6 +58,7 @@ private lemma main
       rw [SubMulS.eq.MulSub]
       rw [EqSub_Sub]
       rw [Mul.comm]
+      rw [MulMul]
       rw [SubMulS.eq.MulSub]
       rw [AddMulS.eq.MulAdd]
       apply Mul.gt.Zero.of.Gt_0.Gt_0

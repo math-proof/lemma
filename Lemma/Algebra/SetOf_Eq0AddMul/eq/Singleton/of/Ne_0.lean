@@ -36,12 +36,10 @@ private lemma main
     exact h_In.symm
   ·
     -- Given x = -b / a, substitute and verify 0 = a * x + b
+    simp at h_In
     field_simp [h] at h_In
-    simp
     apply Eq_Add.of.EqSub
-    simp
-    rw [Mul.comm]
-    exact h_In.symm
+    simp_all [Mul.comm]
 
 
 -- created on 2025-04-02
