@@ -28,7 +28,7 @@ for linux: (better to use VPN to download, using a browser not by wget!)
 ```sh
 # suppose ~/github is your working directory and the binary installer file is copied here.
 cd ~/github
-versionNumber=4.22.0
+versionNumber=4.23.0
 # prepare zstd
 # Ubuntu/Debian
 sudo apt install zstd
