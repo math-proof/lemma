@@ -9,32 +9,29 @@ if (-not $env:MYSQL_USER) {
 # Generate json/mathlib.jsonl if missing
 if (-not (Test-Path "json/mathlib.jsonl")) {
     Write-Host "Building Mathlib..."
-    Measure-Command { lake build Mathlib } | Out-Host
+    Measure-Command { & lake build Mathlib 2>&1 } | Out-Host
     Write-Host "Generating mathlib.jsonl..."
     Measure-Command { lake env lean sympy/printing/mathlib.lean | Out-File "json/mathlib.jsonl" -Encoding utf8 } | Out-Host
 }
 
 # Generate json/mathlib.tsv if missing
 if (-not (Test-Path "json/mathlib.tsv")) {
-    # Check if jq is available
-    if (-not (Get-Command "jq" -ErrorAction SilentlyContinue)) {
-        # Install jq if missing
-        # Define paths and URLs
-        $jqUrl = "https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-windows-amd64.exe"
-        $mingwBin = Join-Path $env:MINGW_HOME "bin"
-        # rename to jq.exe and put it at the directory %MINGW_HOME%/bin
-        $jqPath = Join-Path $mingwBin "jq.exe"
-        
-        # Create MINGW bin directory if it doesn't exist
-        if (-not (Test-Path $mingwBin)) {
-            New-Item -Path $mingwBin -ItemType Directory -Force | Out-Null
+    # Read all lines, parse JSON, produce TSV, write as UTF8
+    $tsv = Get-Content -Path "json/mathlib.jsonl" | ForEach-Object {
+        try {
+            $obj = $_ | ConvertFrom-Json -ErrorAction Stop
+            # handle missing/empty properties gracefully
+            $name = if ($obj.name) { $obj.name } else { "" }
+            $type = if ($obj.type) { $obj.type } else { "" }
+            # produce a tab-separated string
+            "$name`t$type"
+        } catch {
+            # if line isn't valid JSON, skip or log; here we output an empty pair
+            Write-Warning "Skipping invalid JSON line: $_"
+            "`t"
         }
-        
-        # Download and install jq
-        Write-Host "Installing jq to $mingwBin..."
-        Invoke-WebRequest -Uri $jqUrl -OutFile $jqPath
     }
-    jq -r '[.name, .type] | @tsv' json/mathlib.jsonl | Out-File "json/mathlib.tsv"
+    $tsv | Out-File -FilePath "json/mathlib.tsv" -Encoding utf8
 }
 
 # Run MySQL import and log output

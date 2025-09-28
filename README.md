@@ -89,7 +89,6 @@ in windows (https://github.com/PowerShell/PowerShell/releases/download/v7.5.3/Po
 elan default leanprover/lean4:v$versionNumber
 # install a particular version
 elan toolchain install leanprover/lean4:$versionNumber
-elan override set leanprover/lean4:$versionNumber
 ```
 ## Update mathlib4 using commit-id
 use the following script to automatically and incrementally update the dependency git projects required by mathlib4
