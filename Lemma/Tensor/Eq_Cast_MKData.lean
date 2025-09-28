@@ -8,10 +8,9 @@ private lemma main
   (X : Tensor α [m, n].tail.tail) :
 -- imply
   have h : Tensor α [m, n].tail.tail = Tensor α [] := by simp
-  X = cast h (⟨X.data⟩ : Tensor α []) := by
+  X = cast h ⟨X.data⟩ := by
 -- proof
-  let ⟨data⟩ := X
-  simp
+  aesop
 
 
 -- created on 2025-07-19

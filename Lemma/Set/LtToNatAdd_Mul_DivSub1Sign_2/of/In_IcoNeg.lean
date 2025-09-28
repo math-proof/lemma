@@ -17,7 +17,7 @@ private lemma main
   have h := InAdd_Mul_DivSub1Sign_2.of.In_IcoNeg h
   let ⟨h_le, h_lt⟩ := h
   have := EqToNat.of.Ge_0 h_le
-  simp_all [this]
+  simp_all
 
 
 -- created on 2025-06-26

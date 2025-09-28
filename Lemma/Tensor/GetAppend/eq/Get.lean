@@ -35,7 +35,6 @@ private lemma main
   simp [Tensor.append]
   simp [Tensor.toVector]
   repeat rw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp_all) (by simp)]
-  simp [List.Vector.length]
   unfold List.Vector.splitAt
   simp
   apply Eq.of.SEq.simp

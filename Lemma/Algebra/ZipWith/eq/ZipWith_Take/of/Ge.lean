@@ -14,7 +14,7 @@ private lemma main
   induction b generalizing a with
   | nil =>
     -- Base case: b is empty, so the zipWith operation on a and b is empty.
-    simp [List.zipWith]
+    simp
   | cons y ys ih =>
     -- Inductive step: Assume the statement holds for ys, prove for y :: ys.
     cases a with
@@ -23,7 +23,7 @@ private lemma main
       contradiction
     | cons x xs =>
       -- a is non-empty, so we can split it into x and xs.
-      simp [List.zipWith, List.take]
+      simp [List.zipWith]
       simp at h
       apply ih h
 

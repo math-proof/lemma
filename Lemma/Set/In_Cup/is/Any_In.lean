@@ -35,7 +35,7 @@ private lemma set
 -- imply
   x ∈ ⋃ i ∈ s, f i ↔ ∃ i ∈ s, x ∈ f i := by
 -- proof
-  simp [main]
+  simp
 
 
 @[main, comm, mp, mpr]
@@ -48,7 +48,7 @@ private lemma fin
 -- imply
   x ∈ ⋃ i ∈ s, f i ↔ ∃ i ∈ s, x ∈ f i := by
 -- proof
-  simp [main]
+  simp
 
 
 @[main, comm, mp, mpr]
@@ -62,7 +62,7 @@ private lemma set₂
 -- imply
   x ∈ ⋃ i ∈ s_i, ⋃ j ∈ s_j i, f i j ↔ ∃ i ∈ s_i, ∃ j ∈ s_j i, x ∈ f i j := by
 -- proof
-  simp [double]
+  simp
 
 
 -- created on 2025-07-29

@@ -10,7 +10,6 @@ private lemma main
   x ∈ s ↔ ∃ i : Fin s.length, x = s[i] := by
 -- proof
   rw [List.mem_iff_get]
-  simp [List.get]
   simp [Eq.comm]
 
 

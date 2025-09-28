@@ -111,7 +111,7 @@ private lemma main
         linarith
       ·
         simp only [GetElem.getElem]
-        simp [List.get]
+        simp
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
         ·
           split_ifs with h_lt' h_1 h_eq'

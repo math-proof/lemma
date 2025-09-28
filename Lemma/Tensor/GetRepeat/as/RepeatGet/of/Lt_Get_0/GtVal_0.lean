@@ -65,12 +65,6 @@ private lemma main
 -- proof
   intro h_i' h_d' h_i'
   unfold Tensor.repeat
-  have h_set := Gt_0.of.Gt h_i
-  have h_get_set := GetSet.eq.Get.of.Ne.Lt_Length (i := 0) (d := d) (by linarith) (by linarith) (n * s[d])
-  simp at h_get_set
-  let h_0 := h_set
-  simp [← h_get_set] at h_set
-  have h_s := Gt_0 d
   constructor
   ·
     rw [← TailSet.eq.SetTail.of.Gt_0 (by assumption)]
@@ -83,6 +77,7 @@ private lemma main
     simp [Tensor.get]
     simp [Tensor.toVector]
     obtain ⟨data⟩ := X
+    have h_s := Gt_0 d
     have h_d := Ge_1.of.Gt_0 h
     simp
     -- /(?<!Lemma\.)(Tensor|Algebra)\.(?![a-z]|T\b)/i
@@ -92,7 +87,7 @@ private lemma main
       apply HEq.of.SEqDataS.Eq (by simp_all)
       apply EqCastS.of.Eq.Eq.Eq
       ·
-        simp [List.Vector.length]
+        simp
       ·
         rw [MulProd_Mul_Prod.eq.Mul_Prod]
         rw [ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length]
@@ -166,7 +161,7 @@ private lemma main
         ·
           rw [ProdTake_1.eq.HeadD_1]
       ·
-        simp_all
+        simp [h_s]
         rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0]
         repeat assumption
     ·

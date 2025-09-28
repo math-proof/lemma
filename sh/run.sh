@@ -28,15 +28,8 @@ while read -r file; do
   echo_import "$file"
 done < <(find Lemma -type f -name "*.lean" -not -name "*.echo.lean" -not -name "Basic.lean") 
 
-imports=$(cat test.lean)
-
 touch test.log
-# lake setup-file test.lean Init $imports 2>&1 | \
-#   grep -v -E 'warning: .*\.lean:[0-9]+:[0-9]+: `[^`]+'\''` is missing a doc-string, please add one\.' | \
-#   grep -v "Declarations whose name ends with a \`'\` are expected to contain an explanation for the presence of a \`'\` in their doc-string. This may consist of discussion of the difference relative to the unprimed version, or an explanation as to why no better naming scheme is possible." | \
-#   grep -v 'note: this linter can be disabled with `set_option linter.docPrime false`' | \
-#   tee test.log
-lake setup-file test.lean Init $imports 2>&1 | tee test.log
+lake setup-file test.lean 2>&1 | tee test.log
 
 sed -i -E "s/^import //" test.lean
 imports=$(cat test.lean)

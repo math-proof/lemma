@@ -58,7 +58,7 @@ private lemma main
       ext k x
       by_cases h : k < A.data.val.length
       ·
-        simp_all [h]
+        simp_all
         apply IffEqS.of.Eq
         repeat rw [GetVal.eq.Get.of.Lt (by simp_all)]
         rw [← h₀, ← h₁] at h
@@ -67,7 +67,7 @@ private lemma main
         simp [← h_eq]
         let v_n : List.Vector (List.Vector α s₀.prod) n := (List.Vector.range n).map fun i ↦ A[i].data
         have h_a := GetFlatten_AddMul.eq.Get v_n
-        simp [AddMul.lt.Mul (m := n)] at h_a
+        simp at h_a
         have h_i : i.val < s₁.prod := by
           rw [← h₁]
           simp
@@ -75,7 +75,7 @@ private lemma main
           rw [← h₀]
           simp
         let v_m : List.Vector (List.Vector α s₁.prod) m := (List.Vector.range m).map fun i ↦ B[i].data
-        have h_b := GetFlatten_AddMul.eq.Get v_m (⟨j, h_j⟩ : Fin m) (⟨i, h_i⟩ : Fin s₁.prod)
+        have h_b := GetFlatten_AddMul.eq.Get v_m ⟨j, h_j⟩ ⟨i, h_i⟩
         simp [← h₁] at h_b
         simp [v_n] at h_a
         rw [h_a]
@@ -89,9 +89,8 @@ private lemma main
         have hj := EqValS.of.Eq hj
         apply EqGetS.of.Eq.Lt_Length (show i < A[j].data.val.length by simp_all) hj
       ·
-        have h := Ge.of.NotLt h
-        simp [h]
         apply IffEqS.of.Eq
+        have h := Ge.of.NotLt h
         rw [GetElem!.eq.None.of.Ge_Length h]
         simp_all
 

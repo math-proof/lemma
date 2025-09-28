@@ -14,6 +14,6 @@ private lemma main
     simp [List.replicate]
     rfl
   case cons h t ih =>
-    simp_all [List.Vector.toList, List.map, List.replicate, List.length]
+    simp_all [List.Vector.toList, List.replicate]
 
 -- created on 2025-05-27

@@ -29,7 +29,7 @@ private lemma main
   have := ModEq.of.Eq this (2 ^ m - 1)
   have h_ModEq := Pow2.eq.One.mod.SubPow2 (n := m)
   have := ModEq.of.ModEq.ModEq__AddMul h_ModEq this
-  simp [EqMul1] at this
+  simp at this
   assumption
 
 

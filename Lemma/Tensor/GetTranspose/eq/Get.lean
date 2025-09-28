@@ -17,7 +17,7 @@ private lemma main
   Xᵀ[j, i] = X[i, j] := by
 -- proof
   unfold Tensor.T
-  simp [EqGetRange.of.Lt]
+  simp
   unfold Tensor.transpose
   simp [Permute__0.eq.Cast]
   simp [Permute.eq.Ite X]

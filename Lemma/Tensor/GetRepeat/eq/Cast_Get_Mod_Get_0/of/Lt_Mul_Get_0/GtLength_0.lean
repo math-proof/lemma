@@ -22,7 +22,7 @@ private lemma main
     rw [Length.eq.Get_0.of.GtLength_0 h_s]
     apply LtMod.of.Gt_0
     assumption
-  have : s.tail = (s.set (⟨0, h_s⟩ : Fin s.length) (n * s[(⟨0, h_s⟩ : Fin s.length)])).tail := by
+  have : s.tail = (s.set 0 (n * s[(⟨0, h_s⟩ : Fin s.length)])).tail := by
     rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length h_s]
     simp
   (X.repeat n ⟨0, h_s⟩)[i] = cast (by rw [this]) X[i % s[0]] := by
@@ -45,7 +45,7 @@ private lemma fin
     rw [Length.eq.Get_0.of.GtLength_0 h_s]
     apply LtMod.of.Gt_0
     assumption
-  have : s.tail = (s.set (⟨0, h_s⟩ : Fin s.length) (n * s[(⟨0, h_s⟩ : Fin s.length)])).tail := by
+  have : s.tail = (s.set 0 (n * s[(⟨0, h_s⟩ : Fin s.length)])).tail := by
     rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length h_s]
     simp
   (X.repeat n ⟨0, h_s⟩).get ⟨i, by assumption⟩ = cast (by rw [this]) (X.get ⟨i % s[0], by assumption⟩) := by

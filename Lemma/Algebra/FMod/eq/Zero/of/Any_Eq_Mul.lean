@@ -14,13 +14,9 @@ private lemma main
   let ⟨k, h⟩ := h
   rw [h]
   rw [FMod.eq.Sub_MulFDiv]
-  by_cases h : d = 0
+  by_cases h : d = 0 <;>
   ·
-    simp_all [h]
-  ·
-    have := Ne.of.NotEq h
-    have := Int.mul_fdiv_cancel k this
-    simp_all [this]
+    simp_all
 
 
 -- created on 2025-03-30

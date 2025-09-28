@@ -66,7 +66,7 @@ private lemma main
     exact Lt.of.Lt.Le h_Lt this
   ·
     have := All_Not.of.NotAny h
-    simp [And_And.is.AndAnd] at this
+    simp at this
     have h_All_Le_1 : ∀ i ∈ Finset.Ico 1 n, x i ≤ 1 := by
       intro i hi
       rw [Finset.mem_Ico] at hi

@@ -23,7 +23,7 @@ private lemma main
   have h_i := LtVal i
   simp [Tensor.toVector]
   simp [GetElem.getElem]
-  simp_all [GetMap.eq.FunGet]
+  simp_all
   rw [← h]
   unfold List.Vector.flatten
   simp [List.Vector.get]

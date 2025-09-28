@@ -12,6 +12,6 @@ private lemma main
 -- proof
   cases head
   cases tail
-  simp [List.Vector.toList, List.map, List.flatten]
+  simp [List.Vector.toList]
 
 -- created on 2025-05-08

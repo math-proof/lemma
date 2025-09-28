@@ -4,9 +4,7 @@ import Lemma.Basic
 
 @[main]
 private lemma main
-  [Semiring α] [LinearOrder α]
-  [IsRightCancelAdd α] [ZeroLEOneClass α] [ExistsAddOfLE α]
-  [PosMulMono α] [AddLeftStrictMono α]
+  [Semiring α] [LinearOrder α] [ExistsAddOfLE α] [PosMulMono α] [AddLeftMono α]
   {a : α} :
 -- imply
   a² ≥ 0 :=

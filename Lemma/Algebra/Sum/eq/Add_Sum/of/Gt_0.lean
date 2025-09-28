@@ -26,7 +26,6 @@ private lemma main
   rw [Add.comm]
   apply EqAddS.of.Eq.left
   rw [Finset.sum_Ico_eq_sum_range]
-  simp [EqSubAdd.int]
   simp [Add.comm]
 
 

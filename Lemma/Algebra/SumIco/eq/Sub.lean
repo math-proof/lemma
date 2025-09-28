@@ -9,7 +9,7 @@ private lemma main
 -- imply
   ∑ _ ∈ Finset.Ico a b, 1 = b - a := by
 -- proof
-  simp [Sum.eq.MulCard]
+  simp
 
 
 -- created on 2025-04-06

@@ -30,7 +30,7 @@ private lemma main
     intro i
     simp [GetTake.eq.Get.of.Lt_Min]
     rw [GetDrop.eq.Get_Add.of.Lt_Sub]
-    simp [EqGetRange.of.Lt]
+    simp
     rw [GetCast.eq.Get.of.Eq.Lt]
     simp
   ·
@@ -45,7 +45,7 @@ private lemma fin
 -- given
   (v : List.Vector α s.prod) :
 -- imply
-  (v.splitAt 0).get (⟨0, by simp⟩: Fin 1) = v := by
+  (v.splitAt 0).get ⟨0, by simp⟩ = v := by
 -- proof
   have := main v
   simp [GetElem.getElem] at this

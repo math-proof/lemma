@@ -20,9 +20,7 @@ private lemma main
       apply Le.of.Lt.Le h_n
       apply LtMod.of.Ne_0 h_d n
     ·
-      simp at h_n
-      rw [Mod.eq.Sub_MulDiv]
-      simp [h_n]
+      simp [Mod.eq.Sub_MulDiv]
 
 
 -- created on 2025-07-09

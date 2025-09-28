@@ -51,7 +51,6 @@ private lemma main
       rw [GetToVector.eq.Get.fin]
       rw [GetMkFlatten.eq.MkGet]
       apply Eq.of.EqDataS
-      simp [EqLengthSlice]
       simp [GetElem.getElem]
       simp [List.Vector.get]
       congr

@@ -10,10 +10,10 @@ private lemma main
 -- proof
   match n with
   | .zero =>
-    simp [Nat.pow_succ]     -- Simplify using the definition of Nat.pow_succ
+    simp
   | .succ n =>
     by_cases h : p <;>
-      simp_all [Nat.pow_succ, pow_succ]
+      simp_all [pow_succ]
 
 
 -- created on 2025-04-20

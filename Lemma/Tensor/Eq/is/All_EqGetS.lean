@@ -21,9 +21,7 @@ private lemma main
     have h_all : ∀ i : Fin m, A.toVector[i].data = B.toVector[i].data := by
       intro i
       have h_eq := h i
-      simp [show ¬(i : ℕ) < 0 by simp] at h_eq
       have hi : i < A.length := by
-        simp_all
         simp [Tensor.length]
       have hi : i < B.length := by
         simp [Tensor.length]

@@ -10,7 +10,6 @@ private lemma fin
 -- imply
   ((List.Vector.range n).map f).get i = f i := by
 -- proof
-  simp [GetMap.eq.FunGet]
   congr
   simp [EqGetRange.fin]
 

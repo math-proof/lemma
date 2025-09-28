@@ -15,7 +15,7 @@ private lemma main
   ((List.Vector.indices ⟨j, n + j, 1⟩ (n + j)).map fun i : Fin (n + j) => f i)[i] = f (i + j) := by
 -- proof
   have := GetIndices.eq.Add j n i
-  simp_all [GetMap.eq.FunGet]
+  simp_all
 
 
 @[main]

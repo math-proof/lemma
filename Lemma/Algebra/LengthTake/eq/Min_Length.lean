@@ -9,7 +9,7 @@ private lemma main
 -- imply
   (s.take n).length = n ⊓ s.length := by
 -- proof
-  simp [min]
+  simp
 
 
 -- created on 2025-05-13

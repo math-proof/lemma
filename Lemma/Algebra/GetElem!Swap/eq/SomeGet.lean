@@ -46,7 +46,6 @@ private lemma main
     rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
     ·
       have h_length_slice := LengthSlice.eq.SubMin a (j + 1) i
-      simp [h_i] at h_length_slice
       rw [Sub_Add.eq.SubSub.nat] at h_length_slice
       simp [h_length_slice]
     ·

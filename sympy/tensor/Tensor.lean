@@ -100,7 +100,7 @@ def Sliced
         simp_all
         linarith
       have : (s.drop 1).length ≥ slices.length:= by
-        simp [this]
+        simp
         apply Le_Sub_1.of.Lt
         assumption
       let shape := slices.enumerate.map fun ⟨i, slice⟩ => slice.length (s.drop 1)[i]
@@ -144,8 +144,7 @@ def Sliced
         simp_all
       ⟨
         cast (by
-            simp [namedPattern]
-            rw [Mul_Mul.eq.MulMul]
+            simp [Mul_Mul.eq.MulMul]
             rw [h_prod]
             simp [← h_length]
             congr

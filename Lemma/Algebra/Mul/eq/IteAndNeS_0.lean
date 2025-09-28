@@ -17,7 +17,7 @@ private lemma main
   split_ifs with h
   ·
     -- If `h` is true, the `if` branch is taken, and we need to show `x * y = x * y`, which is trivially true.
-    simp_all [mul_comm]
+    simp_all
   ·
     -- If `h` is false, the `else` branch is taken, and we need to show `x * y = 0`.
     rw [NotAnd.is.OrNotS] at h

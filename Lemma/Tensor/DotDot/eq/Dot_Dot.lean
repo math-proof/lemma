@@ -34,13 +34,13 @@ private lemma main
   simp_all
   have : ∀ k : Fin n, (∑ ι : Fin m, L[i][ι] * M[ι][k]) * N[k][j] = ∑ ι : Fin m, L[i][ι] * M[ι][k] * N[k][j] := by
     simp [MulSum.eq.Sum_Mul]
-  simp_all [this]
+  simp_all
   have : ∀ k : Fin m, L[i][k] * ∑ ι : Fin n, M[k][ι] * N[ι][j] = ∑ ι : Fin n, L[i][k] * (M[k][ι] * N[ι][j]) := by
     simp [Mul_Sum.eq.Sum_Mul]
-  simp_all [this]
+  simp_all
   have : ∀ k : Fin m, ∑ ι : Fin n, L[i][k] * (M[k][ι] * N[ι][j]) = ∑ ι : Fin n, L[i][k] * M[k][ι] * N[ι][j] := by
     simp [MulMul.eq.Mul_Mul]
-  simp_all [this]
+  simp_all
   apply EqSumS.comm
 
 

@@ -17,7 +17,6 @@ private lemma main
   constructor
   ·
     intro h'
-    simp [h] at h'
     obtain h_A | h_B := h'
     ·
       exact h h_A

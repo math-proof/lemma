@@ -15,11 +15,10 @@ private lemma main
   | .nil =>
     simp [IsConstant.is_constant]
   | .cons x s =>
-    simp [IsConstant.is_constant] at h
+    simp at h
     intro t t_in_s
     have h₀ : x = x₀ := h.left
     have h₁ : ∀ a ∈ s, a = x₀ := h.right
-    -- Use the universal quantifier to get `t = x₀`
     have h₂ : t = x₀ := h₁ t t_in_s
     rw [h₀, h₂]
 

@@ -12,7 +12,7 @@ private lemma main
   simp [Dot.dot]
   match x, y with
   | ⟨x, xProperty⟩, ⟨y, yProperty⟩ =>
-    simp [List.Vector.dot] at xProperty yProperty
+    simp at xProperty yProperty
     simp [List.Vector.dot, xProperty, yProperty]
 
 

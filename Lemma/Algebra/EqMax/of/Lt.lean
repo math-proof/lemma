@@ -11,8 +11,7 @@ private lemma main
 -- imply
   a ⊔ b = b := by
 -- proof
-  simp [h]
-  apply Le.of.Lt h
+  simp [Le.of.Lt h]
 
 
 -- created on 2025-06-07

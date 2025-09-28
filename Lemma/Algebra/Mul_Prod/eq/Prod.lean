@@ -18,10 +18,8 @@ private lemma main
 -- imply
   f i * ∏ k ∈ Finset.Ico ((i : ℕ) + 1) n, f k = ∏ k ∈ Finset.Ico (i : ℕ) n, f k := by
 -- proof
-  rw [Prod.eq.MulProdS (Finset.Ico (i : ℕ) n)   {(i : ℕ)} f]
-  have hi := In_Ico i
-  have h_eq := EqInterSingleton.of.In hi
-  simp [h_eq]
+  rw [Prod.eq.MulProdS (Finset.Ico (i : ℕ) n) {(i : ℕ)} f]
+  simp
   apply EqMulS.of.Eq.left
   congr
   apply Ico.eq.SDiffIco.fin

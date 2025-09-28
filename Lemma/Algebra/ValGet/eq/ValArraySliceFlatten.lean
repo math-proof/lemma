@@ -38,7 +38,6 @@ private lemma main
         rw [h_v] at h'
         contradiction
       | head :: tail =>
-        simp [List.take]
         have h_Eq : v.toList = v.val := by
           rfl
         simp [← h_Eq]
@@ -55,7 +54,7 @@ private lemma main
       have h_tail_length : v.tail.val.length = m := by
         simp
       have h_Cons : v.val[i + 1].val = v.tail.val[i].val := by
-        simp [h_Cons]
+        simp
       rw [h_Cons]
       have h_v := Eq_Cons_Tail v
       have h_v := EqUFnS.of.Eq h_v (List.Vector.toList)

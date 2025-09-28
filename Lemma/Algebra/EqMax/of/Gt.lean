@@ -11,8 +11,7 @@ private lemma main
 -- imply
   a ⊔ b = a := by
 -- proof
-  simp [h]
-  apply Ge.of.Gt h
+  simp [Ge.of.Gt h]
 
 
 -- created on 2025-05-17

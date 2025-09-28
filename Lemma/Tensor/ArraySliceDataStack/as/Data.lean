@@ -16,7 +16,7 @@ private lemma fin
   ([i < n] f i).data.array_slice (i * s.prod) s.prod ≃ (f i).data := by
 -- proof
   have := ArraySlice.as.GetUnflatten ([i < n] f i).data i
-  simp [Foldr.eq.Prod] at this
+  simp at this
   apply SEq.trans this
   apply SEq.of.Eq
   apply GetUnflattenDataStack.eq.Data.fin

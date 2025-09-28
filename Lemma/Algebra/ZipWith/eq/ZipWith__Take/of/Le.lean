@@ -23,7 +23,7 @@ private lemma main
       contradiction
     | cons x xs =>
       -- a is non-empty, so we can split it into x and xs.
-      simp [List.zipWith, List.take]
+      simp [List.zipWith]
       simp at h
       apply ih h
 

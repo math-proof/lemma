@@ -66,7 +66,7 @@ private lemma main'
         ·
           repeat rw [GetAppend.eq.Get.of.Lt_Length]
           rw [GetTake.eq.Get.of.Lt_LengthTake]
-          simp_all [LengthTake.eq.Min_Length]
+          simp_all
         ·
           linarith
       ·
@@ -87,9 +87,9 @@ private lemma main'
             simp [h_i]
             simp [h_eq_ti]
           ·
-            simp_all [LengthTake.eq.Min_Length]
+            simp_all
           ·
-            simp_all [LengthTake.eq.Min_Length]
+            simp_all
           ·
             rw [LengthAppend.eq.AddLengthS]
             rw [LengthTake.eq.Min_Length]
@@ -107,7 +107,6 @@ private lemma main'
             apply EqAdd_Sub.of.Ge
             linarith
           rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
-          simp [LengthAppend.eq.AddLengthS]
           simp [LengthSlice.eq.SubMin]
           simp [h_i, h_j]
           simp [h_eq_ij']

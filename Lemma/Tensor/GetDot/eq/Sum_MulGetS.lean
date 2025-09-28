@@ -33,8 +33,7 @@ private lemma main
 -- proof
   simp [MatMul.dot]
   simp [Tensor.dot]
-  have h_all_ij : ∀ X : Tensor α [m, n, l], (X.sum 2)[i][j] = X[i][j].sum 0 := GetSum_2.eq.SumGet__0 (i := i) (j := j)
-  simp_all [h_all_ij]
+  have : ∀ X : Tensor α [m, n, l], (X.sum 2)[i][j] = X[i][j].sum 0 := GetSum_2.eq.SumGet__0 (i := i) (j := j)
   simp_all [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0 (s := [m, n, l])]
   simp_all [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0 (s := [n, l])]
   repeat rw [GetCast.eq.Cast_Get.of.Eq.Lt_Get_0.GtLength_0 (by simp) (by simp) (by simp)]
@@ -51,7 +50,7 @@ private lemma main
   have := GetRepeat.eq.Cast_Get_Mod_Get_0.of.Lt_Mul_Get_0.GtLength_0.fin
     (s := [m, 1, l].tail) (i := j) (n := n)
     (by simp) (by simp)
-    ((A.unsqueeze 1).get ⟨i, by simp_all [LengthUnsqueeze.eq.Length.of.Gt_0, Tensor.length]⟩)
+    ((A.unsqueeze 1).get ⟨i, by simp_all [Tensor.length]⟩)
   simp [EqMod_1'0] at this
   simp [this]
   have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
@@ -66,8 +65,6 @@ private lemma main
   rw [Sum_0.eq.Sum_Get.fin]
   simp [GetMul.eq.MulGetS.fin (A := A.get i)]
   simp [GetTranspose.eq.Get.fin B]
-  -- simp [HMul.hMul, Mul.mul]
-  -- simp [Vector.Map2.eq.Map.of.Eq_1]
 
 
 -- created on 2025-06-22

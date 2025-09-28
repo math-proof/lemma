@@ -11,7 +11,7 @@ private lemma main
   -- Use the extensionality principle to show set equality.
   ext k
   -- Simplify the membership conditions using known lemmas.
-  simp [Finset.mem_Ico, Finset.mem_range]
+  simp [Finset.mem_range]
 
 
 -- created on 2025-04-06

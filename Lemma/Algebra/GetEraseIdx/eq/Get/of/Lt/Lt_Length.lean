@@ -26,10 +26,11 @@ private lemma main
       | zero =>
         rfl
       | succ j' =>
-        simp only [List.get, List.eraseIdx]
-        have h₀ := Lt.of.LtAddS h₀
-        have h₁ := Lt.of.LtAddS h₁
-        apply ih h₀ h₁
+        simp only [List.eraseIdx]
+        apply ih <;>
+        .
+          apply Lt.of.LtAddS (by assumption)
+
 
 
 -- created on 2025-06-22

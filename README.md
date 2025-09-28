@@ -6,46 +6,46 @@ https://www.lemma.cn/lean/website/index.php
 
 the latex is printed with the aid of the following project:
 
-https://github.com/mathjax/MathJax.git
+https://github.com/KaTeX/KaTeX
+## quick start
+```bash
+git clone https://github.com/cosmosZhou/lemma.git
+cd lemma
+# suppose you have installed lean already
+lake clean
+lake build
+# for Windows
+# . ps1/run.ps1
+# for Linux
+bash sh/run.sh
+```
 
 # install
 ## lean
 ### build from binary
-check https://github.com/leanprover/lean4/releases/tag/v4.18.0 to see the available installer for your system.  
+check https://github.com/leanprover/lean4/tags to see the available installer for your system.  
 for linux: (better to use VPN to download, using a browser not by wget!)
 ```sh
-# suppose ~/gitlab is your working directory and the binary installer file is copied here.
-cd ~/gitlab
+# suppose ~/github is your working directory and the binary installer file is copied here.
+cd ~/github
+versionNumber=4.22.0
 # prepare zstd
 # Ubuntu/Debian
 sudo apt install zstd
 # CentOS/RHEL
 sudo yum install zstd
 
-tar -I zstd -xf lean-4.18.0-linux.tar.zst
-# tar --use-compress-program=zstd -xvf lean-4.18.0-linux.tar.zst
-echo 'export PATH="$PATH:~/gitlab/lean-4.18.0-linux/bin"' >> ~/.bashrc
+tar -I zstd -xf lean-$versionNumber-linux.tar.zst
+# tar --use-compress-program=zstd -xvf lean-$versionNumber-linux.tar.zst
+echo 'export PATH="$PATH:~/github/lean-$versionNumber-linux/bin"' >> ~/.bashrc
 source ~/.bashrc
-
-# yum install libgmp-dev
 ```
-for windows
-```ps1
-# suppose the binary installer file is copied here.
-cd ~/.elan/toolchains
-mkdir leanprover--lean4---v4.21.0
-tar --strip-components=1 -xf lean-4.21.0-windows.tar.zst -C "leanprover--lean4---v4.21.0"
-```
-
 
 ### build from source
-install prerequisites
-```sh
+```bash
+# install prerequisites
 yum install gmp-devel 
 yum install libuv libuv-devel
-```
-
-```sh
 git clone https://github.com/leanprover/lean4
 cd lean4
 cmake --preset release
@@ -53,12 +53,12 @@ make -C build/release -j$(nproc || sysctl -n hw.logicalcpu)
 ```
 
 ## elan
-check https://github.com/leanprover/elan/releases/tag/v4.0.0 to see available installer for your system.  
+check https://github.com/leanprover/elan/tags to see available installer for your system.  
 for linux:  
-```sh
-# suppose ~/gitlab is your working directory
-cd ~/gitlab
-wget https://github.com/leanprover/elan/releases/download/v4.0.0/elan-x86_64-unknown-linux-gnu.tar.gz
+```bash
+# suppose ~/github is your working directory
+cd ~/github
+wget https://github.com/leanprover/elan/releases/download/v4.1.2/elan-x86_64-unknown-linux-gnu.tar.gz
 tar -xzf elan-x86_64-unknown-linux-gnu.tar.gz
 # ./elan-init -y --default-toolchain stable
 # skipping the stable default-toolchain installation
@@ -67,8 +67,8 @@ tar -xzf elan-x86_64-unknown-linux-gnu.tar.gz
 cat ~/.bashrc
 cat ~/.bash_profile
 cat ~/.profile
-elan toolchain link v4.18.0 ~/gitlab/lean-4.18.0-linux
-elan default v4.18.0
+elan toolchain link v$versionNumber ~/github/lean-$versionNumber-linux
+elan default v$versionNumber
 elan show
 
 lake --version
@@ -86,15 +86,18 @@ elan default stable
 ```
 in windows (https://github.com/PowerShell/PowerShell/releases/download/v7.5.3/PowerShell-7.5.3-win-x64.msi)
 ```ps1
-elan default leanprover/lean4:v4.18.0
+elan default leanprover/lean4:v$versionNumber
 # install a particular version
-elan toolchain install leanprover/lean4:4.19.0
-elan override set leanprover/lean4:4.19.0
+elan toolchain install leanprover/lean4:$versionNumber
+elan override set leanprover/lean4:$versionNumber
 ```
 ## Update mathlib4 using commit-id
-copy the content of https://github.com/leanprover-community/mathlib4/blob/aa936c36e8484abd300577139faf8e945850831a/lake-manifest.json and replace your own version with it. Then use the following script to automatically and incrementally update the dependency git projects required by mathlib4
+use the following script to automatically and incrementally update the dependency git projects required by mathlib4
 ```sh
 bash sh/update.sh
+```
+```ps1
+. ps1/update.ps1
 ```
 
 # trouble-shooting for VSCode

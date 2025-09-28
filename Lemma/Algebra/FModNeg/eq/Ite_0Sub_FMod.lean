@@ -58,7 +58,7 @@ private lemma main
     simp
     by_cases h_d : d = 0
     ·
-      simp_all [h_d]
+      simp_all
     ·
       have h_d := Ne.of.NotEq h_d
       rw [NegMul.eq.MulNeg (b := (d : ℚ))]
@@ -70,7 +70,7 @@ private lemma main
       rw [Sub_Add.eq.SubSub]
       ring_nf
       apply EqSubS.of.Eq
-      simp [NegDiv.eq.DivNeg]
+      simp
       rw [DivInt.eq.Div]
       rw [FloorDiv.eq.FDiv]
       rw [← h_r]

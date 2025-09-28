@@ -17,7 +17,7 @@ private lemma main
   rw [AddCoeS.eq.CoeAdd.nat]
   rw [EqAdd_Mul_DivSub1Sign_2]
   simp only [EqToNat]
-  simp [Min]
+  simp
   rw [AddCoeS.eq.CoeAdd.nat]
   simp only [EqToNat]
   simp

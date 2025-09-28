@@ -13,13 +13,12 @@ private lemma Main'
 -- proof
   simp [List.Vector.map]
   simp only [List.Vector.range]
-  simp [GetElem.getElem]
+  simp only [GetElem.getElem]
   simp only [List.Vector.get]
-  simp_all [List.map_pmap, List.pmap_eq_map, Fin.val_mk]
+  simp_all [List.map_pmap]
   let ⟨v, h_length⟩ := v
   congr
   ext i a
-  simp
   simp [GetElem!Range.eq.Some.is.Lt.Eq]
   simp only [GetElem!.eq.Some.is.Any_Eq]
   simp only [h_length]

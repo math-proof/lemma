@@ -1,7 +1,7 @@
 import sympy.tensor.Basic
+import Mathlib.Data.Vector.MapLemmas
 import Lemma.Algebra.ProdInsertIdx.eq.Prod
 import Lemma.Algebra.EqGetRange
-import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Algebra.EqGetS
@@ -43,7 +43,6 @@ private lemma main
   have := GetFlatten_AddMul.eq.Get.of.Lt.Lt h_i h_j ((⟨data⟩ : Tensor α (n :: s)).toVector.map (fun X ↦ List.Vector.map (fun k ↦ X.data[cast h_eq k]) (List.Vector.range (s.insertIdx dim 1).prod)))
   simp_all
   unfold Tensor.toVector
-  simp [MapMap.eq.Map_Comp]
   have h_prod : data.length / n = s.prod := by
     simp [List.Vector.length]
     rw [EqDivMul.of.Ne_0.left]

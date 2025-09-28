@@ -61,7 +61,7 @@ private lemma main
     simp at h_j
     have h_ge : j ≥ v[i.val].val.length := by
       simp_all
-    simp [h_ge]
+    simp
     rw [GetElem!.eq.None.of.Ge_Length h_ge]
     simp
     have h_ge : j ≥ ((List.map List.Vector.toList v.toList).flatten.array_slice (↑i * n) n).length := by

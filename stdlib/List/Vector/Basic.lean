@@ -22,10 +22,10 @@ def dot [Add α] [Zero α] [Mul α] (v1 v2 : Vector α n) : α :=
   | 0, ⟨[], _⟩, ⟨[], _⟩ => 0
   | n + 1, ⟨x :: xs, h₁⟩, ⟨y :: ys, h₂⟩ =>
     have h₁ : xs.length = n := by
-      simp [List.length, h₁] at h₁
+      simp [List.length] at h₁
       assumption
     have h₂ : ys.length = n := by
-      simp [List.length, h₂] at h₂
+      simp [List.length] at h₂
       assumption
     x * y + dot ⟨xs, h₁⟩ ⟨ys, h₂⟩
 

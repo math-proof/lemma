@@ -12,8 +12,8 @@ private lemma main
   have h : List.Vector α n = List.Vector α n' := by rw [h₁]
   (cast h ((List.Vector.range n).map f))[i] = f ⟨i, h₀⟩ := by
 -- proof
-  have h := EqGetCast_MapRange.of.Eq h₁ f (⟨i, h₀⟩ : Fin n)
-  simp_all [h]
+  have := EqGetCast_MapRange.of.Eq h₁ f ⟨i, h₀⟩
+  simp_all
 
 
 -- created on 2025-07-06

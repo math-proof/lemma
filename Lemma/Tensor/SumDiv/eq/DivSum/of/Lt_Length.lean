@@ -36,7 +36,7 @@ private lemma main
       contradiction
     | s₀ :: s =>
       rw [ToVectorDiv.eq.DivToVector_Broadcast]
-      simp [MapMap.eq.Map_Comp, HDiv.hDiv]
+      simp [HDiv.hDiv]
       apply Eq.of.EqDataS
       simp [Div.eq.HDiv]
       simp [Div_Broadcast.eq.Div]
@@ -64,7 +64,7 @@ private lemma main
       rw [GetMap.eq.FunGet]
       obtain ⟨i, j, h_k⟩ := Any_Eq_AddMul k
       repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
-      simp [GetMap.eq.FunGet]
+      simp
       rw [DataDiv.eq.DivData]
       rw [GetDiv.eq.DivGet.fin (a := n.data[0])]
       rfl

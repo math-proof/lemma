@@ -11,7 +11,7 @@ private lemma main
 -- proof
   match s with
   | ⟨v, property⟩ =>
-    simp [List.Vector.sum] at property
+    simp at property
     simp [List.Vector.sum, property]
 
 

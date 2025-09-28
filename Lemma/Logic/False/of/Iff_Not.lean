@@ -8,7 +8,7 @@ private lemma main
 -- imply
   False := by
 -- proof
-  simp [Iff] at h
+  simp at h
 
 
 -- created on 2024-07-01

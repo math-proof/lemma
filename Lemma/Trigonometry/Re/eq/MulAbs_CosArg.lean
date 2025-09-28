@@ -17,7 +17,7 @@ private lemma main
   simp [h_Ne_0] at h
   rw [Mul.comm] at h
   exact h.symm
-  simp [h_Ne_0]
+  simp
 
 
 -- created on 2025-01-13

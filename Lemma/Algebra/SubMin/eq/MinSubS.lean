@@ -41,8 +41,7 @@ private lemma Main
   a ⊓ b - d = (a - d) ⊓ (b - d) := by
 -- proof
   repeat rw [Min.eq.IteLe]
-  rw [SubIte.eq.Ite]
-  simp [LeSubS.is.Le]
+  simp [SubIte.eq.Ite]
 
 
 -- created on 2025-07-18

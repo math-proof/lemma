@@ -22,8 +22,7 @@ private lemma main
       apply In_Finset
     ·
       -- If x ∈ {b}, then x = b.
-      rw [h]
-      simp [Set.mem_singleton]
+      simp [h]
   ·
     intro h
     obtain h | h := h
@@ -34,9 +33,7 @@ private lemma main
     ·
       -- If x = b, then x ∈ {b}.
       rw [h]
-      simp [Set.mem_singleton]
-
-
+      simp
 
 
 -- created on 2025-04-04

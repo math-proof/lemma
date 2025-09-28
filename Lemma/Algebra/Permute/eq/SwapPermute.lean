@@ -60,20 +60,14 @@ private lemma main
           linarith
         ·
           rfl
-        ·
-          linarith
-        ·
-          linarith
+        repeat linarith
       ·
         simp [h₁]
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length (by linarith) (by linarith)]
         simp [(show a.permute i (↑d + 1) = a.permute i ↑(d + 1) by simp)]
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length (by linarith) (by linarith)]
         split_ifs with h_lt h_lt' h_eq
-        ·
-          linarith
-        ·
-          linarith
+        repeat linarith
         ·
           rfl
         ·
@@ -83,30 +77,19 @@ private lemma main
         simp [(show a.permute i (↑d + 1) = a.permute i ↑(d + 1) by simp)]
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length (by linarith) (by linarith)]
         split_ifs with h_lt h_lt? h_j h_eq? h_lt' h_j'
-        ·
-          rfl
-        ·
-          rfl
+        repeat rfl
         ·
           simp at h_j
           have h_le := Le.of.Lt_Add_1 h_lt?
           have h_eq := Eq.of.Ge.Le h_j h_le
           contradiction
-        ·
-          contradiction
-        ·
-          contradiction
+        repeat contradiction
         ·
           linarith
         ·
           rfl
     ·
-      simp at h_j
-      let h_j' := h_j
-      rw [← h_length] at h_j
-      rw [GetElem!.eq.None.of.Ge_Length h_j]
-      rw [← h_length'] at h_j'
-      simp_all [GetElem!.eq.None.of.Ge_Length h_j']
+      simp_all
 
 
 -- created on 2025-06-07

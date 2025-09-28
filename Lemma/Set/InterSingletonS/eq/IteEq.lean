@@ -15,7 +15,7 @@ private lemma main
     ∅ := by
 -- proof
   apply BFn_Ite.of.OrAndS
-  simp [Singleton]
+  simp
   simp [Eq.comm]
   apply Or_Not
 

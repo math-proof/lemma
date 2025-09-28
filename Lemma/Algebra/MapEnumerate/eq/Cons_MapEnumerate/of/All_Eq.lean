@@ -69,7 +69,7 @@ private lemma main
       simp [List.enumerate] at hi
       let ⟨i, h_some, h_lt, hi, hb⟩ := hi
       have h := h i' tail[i']
-      use (⟨i, by omega⟩: Fin (tail.length + 1)) + 1, tail[i]
+      use ⟨i, by omega⟩ + 1, tail[i]
       constructor
       ·
         simp [Eq.of.GetElem!Range.eq.Some h_some]

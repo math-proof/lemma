@@ -50,7 +50,7 @@ private lemma vector
   rw [h_eq_length, h_eq_headD] at h
   let vec : List.Vector α n := ⟨
     List.replicate s.length (s.headD default),
-    by simp [h_eq_length]
+    by simp
   ⟩
   have h_eq_vector : List.Vector.replicate s.length (s.headD default) = vec := rfl
   let vec' : List.Vector α n := ⟨

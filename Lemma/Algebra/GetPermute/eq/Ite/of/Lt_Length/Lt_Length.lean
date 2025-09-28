@@ -41,7 +41,7 @@ private lemma main
     if t < i then
       a[t]
     else if h : t < i + d then
-      a[(⟨t + 1, by linarith⟩ : Fin a.length)]
+      a[t + 1]
     else if t = i + d then
       a[i]
     else
@@ -59,26 +59,16 @@ private lemma main
       rw [AddAdd.eq.Add_Add]
       rw [Add.comm (a := 1)]
       rw [EqSubAdd.int]
-    have h_length : i + ((a.slice (i + 1) (i + (d + 1))).length + (a[(i : ℕ)] :: List.drop (i + (d + 1)) a).length) = a.length := by
-      rw [LengthCons.eq.Add1Length]
-      rw [LengthSlice.eq.SubMin]
-      rw [LengthDrop.eq.SubLength]
-      rw [h_eq_i]
-      repeat rw [Add_Add.eq.AddAdd]
-      rw [EqAdd_Sub.of.Ge (by linarith)]
-    have h_min : (i : ℕ) ⊓ a.length = i := by
-      rw [EqMin.of.Lt (by linarith)]
     apply Eq.symm
     split_ifs with h_i h_1 h_eq
     ·
       rw [GetAppend.eq.Get.of.Lt_Length]
       rw [GetTake.eq.Get.of.Lt_LengthTake]
       rw [LengthTake.eq.Min_Length]
-      simp_all [EqMin.of.Lt]
+      simp_all
     ·
       simp at h_i
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
-      simp [LengthTake.eq.Min_Length]
       rw [GetAppend.eq.Get.of.Lt_Length]
       rw [GetSlice.eq.Get_Add.of.Lt_LengthSlice]
       ·
@@ -88,14 +78,11 @@ private lemma main
       ·
         rw [LengthSlice.eq.SubMin]
         rw [h_eq_i]
-        apply LtSub.of.Lt_Add.Ge h_i h_1
+        simp [LtSub.of.Lt_Add.Ge h_i h_1]
       ·
-        rw [LengthTake.eq.Min_Length]
-        simp_all [h_min]
+        simp_all
     ·
-      rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
-      simp [LengthTake.eq.Min_Length]
-      rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+      repeat rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
       ·
         simp [LengthSlice.eq.SubMin]
         simp [h_eq_i]
@@ -105,9 +92,7 @@ private lemma main
         rw [h_eq_i]
         simp [h_eq]
       ·
-        rw [LengthTake.eq.Min_Length]
-        rw [h_min]
-        linarith
+        simp_all
     ·
       simp at h_i h_1 h_eq
       have h_eq_t : ↑i + (d + 1) + (t - ↑i - d - 1) = t := by
@@ -116,9 +101,7 @@ private lemma main
         rw [EqAdd_Sub.of.Ge]
         apply Ge_Add_1.of.Gt
         apply Gt.of.Ge.Ne h_1 h_eq
-      rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
-      simp [LengthTake.eq.Min_Length]
-      rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+      repeat rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
       simp [LengthSlice.eq.SubMin]
       simp [h_eq_i]
       rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
@@ -126,7 +109,7 @@ private lemma main
       ·
         simp [h_eq_t]
       ·
-        simp_all [h_eq_t]
+        simp_all
       ·
         rw [SubSub.eq.Sub_Add.nat]
         apply Sub.gt.Zero.of.Gt.nat
@@ -134,10 +117,9 @@ private lemma main
       ·
         rw [LengthSlice.eq.SubMin]
         rw [h_eq_i]
-        apply GeSub.of.Ge_Add.left.nat h_1
+        simp [GeSub.of.Ge_Add.left.nat h_1]
       ·
-        rw [LengthTake.eq.Min_Length]
-        simp_all [h_min]
+        simp_all
 
 
 -- created on 2025-06-08

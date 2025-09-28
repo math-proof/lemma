@@ -13,7 +13,7 @@ private lemma main
   s.prod = s[0] * s.tail.prod := by
 -- proof
   have h_prod : (s[0]::s.tail).prod = s[0] * s.tail.prod := by
-    simp [ProdCons.eq.Mul_Prod]
+    simp
   rw [← Eq_Cons_Tail.of.NeLength_0 h₀] at h_prod
   exact h_prod
 

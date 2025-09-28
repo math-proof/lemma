@@ -11,7 +11,7 @@ private lemma main''
   (A ∪ B) \ A = B := by
 -- proof
   ext x
-  simp only [Set.mem_diff, Set.mem_union, Set.mem_inter_iff, Set.mem_empty_iff_false]
+  simp only [Set.mem_diff, Set.mem_union]
   constructor
   ·
     rintro ⟨haB | hB, hA⟩

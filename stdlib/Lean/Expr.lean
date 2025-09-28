@@ -263,7 +263,7 @@ def Lean.Expr.comm : Expr → Expr
   -- HEq.{u} {α : Sort u} : α → {β : Sort u} → β → Prop
     (Expr.const `HEq us).mkApp [β, b, α, a]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, or HEq, but got: {e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, or HEq, but got {e.ctorName} : {e}"
 
 def Lean.Expr.symm : Expr → Expr
   | .app (.app (.app (.const `Eq us) α) a) b =>
@@ -276,7 +276,7 @@ def Lean.Expr.symm : Expr → Expr
     -- HEq.symm.{u} {α β : Sort u} {a : α} {b : β} (h : HEq a b) : HEq b a -- different from `HEq
     (Expr.const `HEq.symm us).mkApp [α, β, a, b]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, or HEq, but got: {e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, or HEq, but got {e.ctorName} : {e}"
 
 def Lean.Expr.decomposeType : Expr → Expr × Expr
   | .app (.app (.app (.app (.const `letFun us) α) β) v) (.lam binderName binderType body binderInfo) =>
@@ -285,8 +285,8 @@ def Lean.Expr.decomposeType : Expr → Expr × Expr
       (Expr.const `letFun us).mkApp [α, β, v, .lam binderName binderType args.fst binderInfo],
       .letE binderName binderType v args.snd false
     ⟩
-  | .letE declName type value body false =>
-    let fn := fun body => .letE declName type value body false
+  | .letE declName type value body nondep =>
+    let fn := fun body => .letE declName type value body nondep
     body.decomposeType.map fn fn
   | e  =>
     ⟨e.comm, e.symm⟩

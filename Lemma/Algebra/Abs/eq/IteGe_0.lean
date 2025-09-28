@@ -15,15 +15,11 @@ private lemma main
 -- proof
   -- Split the proof into two cases based on the condition x ≥ 0
   split_ifs with h
-  -- Case 1: x ≥ 0
-  -- By the definition of absolute value, |x| = x when x ≥ 0
   ·
     apply abs_of_nonneg h
-  -- Case 2: x < 0
-  -- By the definition of absolute value, |x| = -x when x < 0
   ·
     have := Lt.of.NotGe h
-    simp [abs_of_neg]
+    simp
     apply Le.of.Lt this
 
 

@@ -64,10 +64,9 @@ private lemma main
         simp [h_d]
         rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
         ·
-          simp [Add_Sub.eq.SubAdd.of.Ge h_d]
+          simp
           rw [EqAddSub.of.Ge (by simp_all)]
           rw [Append_Append.eq.AppendAppend]
-          simp [AppendTake_Slice.eq.Take.of.Le (LeSubS.of.Ge.nat h_d (s.length - 1)) s]
           rw [Cons.eq.Append]
           repeat rw [Append_Append.eq.AppendAppend]
           apply EqAppendS.of.Eq
@@ -104,7 +103,7 @@ private lemma main
           apply EqAppendS.of.Eq
           rw [DropTake.eq.ListGet.of.Lt_Length]
         ·
-          simp_all [LengthTake.eq.Min_Length]
+          simp_all
 
 
 -- created on 2025-06-18

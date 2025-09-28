@@ -8,7 +8,7 @@ private lemma main
   (i : Fin n) :
 -- imply
   have h : Fin m = Fin n := by rw [h_n]
-  cast h (⟨i, by simp_all [h_n]⟩ : Fin m) = i := by
+  cast h ⟨i, by simp_all⟩ = i := by
 -- proof
   aesop
 

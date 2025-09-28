@@ -26,9 +26,8 @@ private lemma main
   | .negSucc a, 0 =>
     contradiction
   | .negSucc m, .ofNat (.succ n) =>
-    simp [Int.negSucc]
-    rw [NegSucc.eq.NegAdd_1]
-    rw [NegSucc.eq.NegAdd_1]
+    simp
+    repeat rw [NegSucc.eq.NegAdd_1]
     rw [EqNegNeg]
     rw [EqSubAdd]
     rw [SubNeg.eq.NegAdd]

@@ -22,9 +22,8 @@ private lemma main
   | Int.ofNat m, Int.ofNat n =>
     contradiction
   | Int.ofNat (.succ n), Int.negSucc d =>
-    simp [Int.negSucc]
-    rw [NegSucc.eq.NegAdd_1]
-    rw [NegSucc.eq.NegAdd_1]
+    simp
+    repeat rw [NegSucc.eq.NegAdd_1]
     ring_nf
     rw [SubNeg.eq.NegAdd (b := (d : ℤ))]
     rw [EDiv_Neg.eq.NegEDiv]

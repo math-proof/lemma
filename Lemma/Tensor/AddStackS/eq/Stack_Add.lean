@@ -1,9 +1,9 @@
 import sympy.tensor.stack
+import Mathlib.Data.Vector.MapLemmas
 import Lemma.Algebra.Add
 import Lemma.Algebra.AddFlattenS.eq.FlattenAdd
 import Lemma.Algebra.AddMapS.eq.Map_FunAdd
-import Lemma.Vector.MapMap.eq.Map_Comp
-open Algebra Vector
+open Algebra
 
 
 @[main]
@@ -18,7 +18,7 @@ private lemma main
   simp only [HAdd.hAdd]
   simp only [Add.add]
   rw [AddFlattenS.eq.FlattenAdd]
-  simp [MapMap.eq.Map_Comp]
+  simp
   rw [AddMapS.eq.Map_FunAdd]
 
 

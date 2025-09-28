@@ -19,7 +19,6 @@ private lemma main
 -- imply
   x ∈ Set.range Int.cast := by
 -- proof
-  simp [In_Range.is.Any_EqUFn]
   use ⌊x⌋
   apply Eq.symm
   apply Eq.of.Sub.eq.Zero

@@ -87,7 +87,7 @@ private lemma main
             ·
               rw [h_stop, h_n]
             ·
-              simp_all [h_step]
+              simp_all
     | .negSucc step' =>
       contradiction
   | .negSucc step =>
@@ -137,7 +137,7 @@ private lemma main
         ·
           rw [h_stop, h_n]
         ·
-          simp_all [h_step]
+          simp_all
 
 
 -- created on 2025-05-27

@@ -16,7 +16,6 @@ private lemma main
     simp [IsConstant.is_constant]
   | .cons x0 X =>
     simp [IsConstant.is_constant] at h
-    simp [TailCons.eq.Tail]
     apply IsConstant.of.All_Eq h
 
 

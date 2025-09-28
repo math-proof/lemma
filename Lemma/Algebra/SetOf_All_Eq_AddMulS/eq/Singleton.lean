@@ -66,7 +66,7 @@ private lemma mpr
   let ⟨h₀, h₁⟩ := h
   rw [h₀, h₁]
   intro n hn
-  simp [G, fib]
+  simp [G]
   norm_cast
   rw [Mul_Sub.eq.SubMulS.nat, Mul_Sub.eq.SubMulS.nat]
   norm_num

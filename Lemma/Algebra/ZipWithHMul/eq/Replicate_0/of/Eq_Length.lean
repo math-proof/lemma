@@ -14,11 +14,8 @@ private lemma main
   | nil =>
     simp_all
   | cons head tail ih =>
-    match l with
-    | .zero =>
-      contradiction
-    | .succ l =>
-      simp_all [List.zipWith, List.replicate]
+    cases l <;>
+      simp_all [List.replicate]
 
 
 -- created on 2025-05-02

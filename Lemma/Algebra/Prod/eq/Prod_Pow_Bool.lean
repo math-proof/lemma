@@ -14,7 +14,7 @@ private lemma main
 -- proof
   simp only [Bool.eq.Ite]
   simp only [Pow_Ite.eq.Ite_PowS]
-  simp [Finset.prod_ite]
+  simp
 
 
 -- created on 2025-04-29

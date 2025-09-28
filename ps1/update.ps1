@@ -2,10 +2,40 @@
 # . .\ps1\update.ps1
 # Read the lean-toolchain file
 param(
-    [String]$version = "v4.21.0"
+    [String]$version = "v4.22.0"
 )
 $versionNumber = $version.Substring(1)
+# cd ~/.elan/toolchains
+Push-Location "$HOME\.elan\toolchains"
+$targetDir = "leanprover--lean4---$version"
+# check if $targetDir already exists
+if (Test-Path "$targetDir\bin\lean.exe") {
+    Write-Host "Lean $version is already installed, skipping installing."
+}
+else {
+    $tarFile = "lean-$versionNumber-windows.tar.zst"
+    # check if $tarFile exists
+    if (-Not (Test-Path $tarFile)) {
+        $url = "https://releases.lean-lang.org/lean4/$version/$tarFile"
+        # download from $url and save to ~/.elan/toolchains
+        Write-Host "Downloading Lean $version from $url..."
+        try {
+            Invoke-WebRequest -Uri $url -OutFile $tarFile
+            if ($LASTEXITCODE -ne 0) {
+                throw "Download failed with exit code $LASTEXITCODE"
+            }
+        }
+        catch {
+            throw "Failed to download Lean $version from $url. Error: $_"
+        }
+    }
+    # mkdir leanprover--lean4---$version
+    New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+    tar --strip-components=1 -xf $tarFile -C $targetDir
+}
+Pop-Location
 elan override set leanprover/lean4:$versionNumber
+
 [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
 

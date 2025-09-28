@@ -1,7 +1,6 @@
 import sympy.core.relational
 import Lemma.Algebra.Pow2.eq.One.mod.SubPow2
 import Lemma.Algebra.ModEq.of.Eq
-import Lemma.Algebra.EqMul1
 import Lemma.Algebra.ModEq.of.ModEq.ModEq__AddMul
 import Lemma.Algebra.Eq_AddMulDiv___Mod
 import Lemma.Algebra.Mul
@@ -20,9 +19,8 @@ private lemma main
   rw [← h_eq_k] at h_ModEq__1
   have h_Eq_Add := Eq_AddMulDiv___Mod (n := n) (d := k)
   have h_ModEq := ModEq.of.Eq h_Eq_Add (k - 1)
-  -- rw [Mul.comm] at h_ModEq
   have := ModEq.of.ModEq.ModEq__AddMul h_ModEq__1 h_ModEq
-  simp [EqMul1] at this
+  simp at this
   assumption
 
 

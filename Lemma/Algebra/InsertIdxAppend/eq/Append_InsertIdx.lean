@@ -1,5 +1,4 @@
 import Lemma.Algebra.AddAdd
-import Lemma.Algebra.InsertIdxCons.eq.Cons_InsertIdx
 open Algebra
 
 
@@ -12,13 +11,8 @@ private lemma main
 -- imply
   (a ++ b).insertIdx (a.length + i) x = a ++ b.insertIdx i x := by
 -- proof
-  induction a with
-  | nil =>
-    simp_all
-  | cons head tail ih =>
-    simp
-    rw [AddAdd.comm]
-    simp_all [InsertIdxCons.eq.Cons_InsertIdx]
+  induction a <;>
+    simp_all [AddAdd.comm]
 
 
 -- created on 2025-06-09

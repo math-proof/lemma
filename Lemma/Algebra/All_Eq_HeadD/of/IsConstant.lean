@@ -13,7 +13,7 @@ private lemma main
 -- proof
   match s with
   | .nil =>
-    simp [IsConstant.is_constant]
+    simp
   | .cons x xs =>
     simp [IsConstant.is_constant] at *
     intro x x_in_s

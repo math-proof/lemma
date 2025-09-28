@@ -41,7 +41,7 @@ private lemma main
     ·
       have h₀ := All_EqGetS.of.Eq h₀
       simp only [GetElem.getElem] at h₀
-      have h_i : i < ((⟨0, n, 1⟩: Slice).length X.length) := by
+      have h_i : i < (⟨0, n, 1⟩ : Slice).length X.length := by
         simp_all [LengthSlice.eq.Min]
         simp [Tensor.length]
         linarith

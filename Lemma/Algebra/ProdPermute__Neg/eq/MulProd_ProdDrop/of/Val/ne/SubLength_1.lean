@@ -36,7 +36,6 @@ private lemma main
   apply EqAppendS.of.Eq
   rw [Add.comm (a := k)]
   rw [Sub_Add.eq.SubSub.nat]
-  simp [EqSubAdd]
   congr
   rw [Add.comm (b := k)]
   rw [MinAddS.eq.AddMin]

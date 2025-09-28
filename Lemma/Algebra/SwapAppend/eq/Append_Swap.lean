@@ -33,11 +33,10 @@ private lemma main
       let h'' := h'
       rw [AddLengthS.eq.LengthAppend] at h'
       rw [← LengthSwap.eq.Length (a ++ b) (a.length + i) (a.length + j)] at h'
-      simp_all [h, h']
+      simp_all
       apply IffEqS.of.Eq
       rw [GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt_Length (by simp_all) (by simp_all) (by simp_all)]
       repeat rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by linarith) (by simp_all)]
-      simp [EqSubAdd.left.int]
       by_cases h_k : k < a.length
       ·
         repeat rw [GetAppend.eq.Get.of.Lt_Length (by simp_all)]

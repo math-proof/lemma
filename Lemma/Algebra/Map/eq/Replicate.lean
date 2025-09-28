@@ -11,7 +11,7 @@ private lemma main
 -- proof
   apply List.Vector.ext
   intro i
-  simp [GetMap.eq.FunGet]
+  simp
 
 
 -- created on 2024-07-01

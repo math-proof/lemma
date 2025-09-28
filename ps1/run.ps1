@@ -54,11 +54,11 @@ $batches = batches -Data $imports -BatchSize $limit
 # Write each batch to a separate file
 for ($i = 0; $i -lt $batches.Count; $i++) {
     $batches[$i] | Set-Content "test.$i.lean"
-    $batchContent = $batches[$i] -join " "
     if ($limit -eq 1) {
+        $batchContent = $batches[$i] -join " "
         Write-Host "executing: $batchContent" -ForegroundColor Green
     }
-    cmd /c "lake setup-file test.$i.lean Init import $batchContent" 2>&1 | Tee-Object -FilePath test.log -Append
+    cmd /c "lake setup-file test.$i.lean" 2>&1 | Tee-Object -FilePath test.log -Append
     # Start-Sleep -Seconds 1
 }
 

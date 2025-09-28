@@ -19,10 +19,7 @@ private lemma main
     simp
     contradiction
   | head :: tail =>
-    -- For a non-empty list, the tail's length is s.length.
-    -- From the induction hypothesis, we know s.length > i - 1.
-    simp_all [Nat.succ_eq_add_one]
-    -- Use omega to solve the inequality involving natural numbers.
+    simp_all
     have h_Le := Le.of.Lt_Add_1 h₁
     have := Gt.of.Ge.Gt h_Le h₀
     apply LtSub_1.of.Le.Gt_0 this h_Le

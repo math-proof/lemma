@@ -44,8 +44,7 @@ instance [AddCommMagma α] : AddCommMagma (Vector α n) where
   add_comm a b := by
     repeat rw [Add.eq.Map2]
     ext i
-    simp [Zero.eq.Replicate]
-    apply add_comm
+    simp [AddCommMagma.add_comm]
 
 instance [AddMonoid α] : AddMonoid (Vector α n) where
   zero_add
@@ -54,7 +53,6 @@ instance [AddMonoid α] : AddMonoid (Vector α n) where
   nsmul_zero x := by
     ext i
     simp [Zero.eq.Replicate]
-    apply AddMonoid.nsmul_zero
   nsmul_succ n x := by
     ext i
     simp [Add.eq.Map2]

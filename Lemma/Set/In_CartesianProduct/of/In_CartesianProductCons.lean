@@ -20,7 +20,7 @@ private lemma main
   ·
     intro i h_x h_s
     have h := h_all (i + 1) (by simp_all) (by simp_all)
-    simp_all [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
+    simp_all
 
 
 -- created on 2025-06-14

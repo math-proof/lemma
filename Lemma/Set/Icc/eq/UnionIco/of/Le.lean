@@ -12,7 +12,7 @@ private lemma MAIN
   Icc a b = Ico a b ∪ ({b} : Set α) := by
 -- proof
   ext x
-  simp only [Set.mem_Icc, Set.mem_Ico, Set.mem_singleton, Set.mem_union]
+  simp only [Set.mem_Icc, Set.mem_Ico, Set.mem_union]
   constructor
   ·
     intro hx

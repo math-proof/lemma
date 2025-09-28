@@ -16,7 +16,7 @@ private lemma main
   p → R x a := by
 -- proof
   intro hp
-  simp_all [h, hp]
+  simp_all
 
 
 -- created on 2025-01-12

@@ -12,7 +12,7 @@ private lemma main
   have : i < (x.set d a).length := by simpa
   (x.set d a)[i] = x[i] := by
 -- proof
-  simp_all [List.getElem_set]
+  simp_all
 
 
 -- created on 2025-07-05

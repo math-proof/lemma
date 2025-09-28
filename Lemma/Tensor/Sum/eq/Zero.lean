@@ -20,11 +20,7 @@ private lemma main
     rfl
   simp [h_zero]
   apply Eq.of.All_EqGetS
-  intro i
-  have h_i : i < ((0 :: s).eraseIdx 0).prod := by
-    simp
-  simp [EqGet0'0.of.Lt h_i]
-  rw [Sum.eq.Zero]
+  simp [Sum.eq.Zero]
 
 
 -- created on 2025-09-04

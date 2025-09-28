@@ -30,7 +30,7 @@ private lemma main
   have h := All.of.All.All_Imp.fin this h
   have := NotAny_Not.of.All h
   have h_NotAny : ¬∃ i ∈ range n, x i ≠ a := by
-    simp [this]
+    simp
     simp at h
     exact h
   contradiction

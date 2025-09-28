@@ -80,17 +80,16 @@ private lemma MAIN
     ·
       rw [GetAppend.eq.Get.of.Lt_Length]
       rw [GetTake.eq.Get.of.Lt_LengthTake]
-      simp_all [LengthTake.eq.Min_Length, EqMin.of.Lt]
+      simp_all [EqMin.of.Lt]
     ·
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp_all) (by simp_all)]
-      simp_all [LengthTake.eq.Min_Length, EqMin.of.Lt]
+      simp_all [EqMin.of.Lt]
     ·
       simp at h_i
       have h_i := LeSub.of.Le_Add.nat h_i
       have h_i' := Lt.of.Le.Ne (by simp_all [Ne.symm]) h_i
       have h_i'' := Sub.ge.One.of.Gt h_i'
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp_all) (by simp_all)]
-      simp [LengthTake.eq.Min_Length]
       simp [EqMin.of.Lt h_sub]
       rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0 (by linarith)]
       rw [GetAppend.eq.Get.of.Lt_Length]
@@ -101,12 +100,11 @@ private lemma MAIN
       ·
         rw [LengthSlice.eq.SubMin]
         rw [SubSub.comm.nat]
-        simp [EqMin.of.Lt]
         apply LtSubS.of.Lt.Le
         ·
           apply Le_Sub_1.of.Lt h_i'
         ·
-          apply LtSub_1.of.Le.Gt_0.left (by linarith) (by assumption)
+          apply LtSub_1.of.Le.Gt_0.left (by linarith) (by simp_all)
     ·
       simp at h_i h_1 h_eq
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
@@ -114,7 +112,6 @@ private lemma MAIN
         have h_i := LeSub.of.Le_Add.nat h_i
         have h_i' := Lt.of.Le.Ne (by simp_all [Ne.symm]) h_i
         have h_i'' := Sub.ge.One.of.Gt h_i'
-        simp [LengthTake.eq.Min_Length]
         simp [EqMin.of.Lt h_sub]
         rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
         ·
@@ -145,8 +142,7 @@ private lemma MAIN
               simp_all
           ·
             rw [LengthSlice.eq.SubMin]
-            simp [EqMin.of.Lt]
-            rw [Add.comm]
+            simp [Add.comm]
             rw [Add_Sub.eq.SubAdd.of.Ge (by simp_all)]
             rw [EqAdd_Sub.of.Ge (by simp_all)]
             apply Le_Sub_1.of.Lt h_1

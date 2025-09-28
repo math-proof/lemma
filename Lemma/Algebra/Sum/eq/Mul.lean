@@ -11,7 +11,7 @@ private lemma main
 -- imply
   ∑ _ : Fin n, x = n * x := by
 -- proof
-  simp [Sum.eq.MulCard]
+  simp
 
 
 -- created on 2025-07-19

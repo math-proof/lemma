@@ -16,9 +16,9 @@ private lemma main
   constructor <;>
     intro ⟨_, h_NotIn⟩
   ·
-    simp_all [Set.mem_diff, h]
+    simp_all [Set.mem_diff]
   ·
-    simp_all [Set.mem_diff, h]
+    simp_all [Set.mem_diff]
     apply NotIn.of.NotIn.Subset h_NotIn h
 
 

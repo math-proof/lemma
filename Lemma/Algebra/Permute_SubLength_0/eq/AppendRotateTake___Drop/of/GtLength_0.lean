@@ -31,7 +31,7 @@ private lemma main
   (d : ℕ) :
 -- imply
   let d' := a.length - 1 - d
-  a.permute ⟨a.length - 1, by simp_all [h]⟩ (-(d : ℕ)) = a.take d' ++ (a.drop d').rotate (d ⊓ (a.length - 1)) := by
+  a.permute ⟨a.length - 1, by simp_all⟩ (-(d : ℕ)) = a.take d' ++ (a.drop d').rotate (d ⊓ (a.length - 1)) := by
 -- proof
   intro d'
   simp [d']
