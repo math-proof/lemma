@@ -8594,6 +8594,8 @@ function get_lean_env()
         'GIT_CONFIG_COUNT' => count($repository),
         // Preserve other important environment variables
         'PATH' => getenv('PATH'),
+        // tricks for system profile user on Windows
+        // Copy-Item -Path "$HOME\.elan" -Destination "C:\Windows\System32\config\systemprofile\.elan" -Recurse -Force
         'SystemRoot' => getenv('SystemRoot'),
         'HOME' => getenv('HOME')
     ];
