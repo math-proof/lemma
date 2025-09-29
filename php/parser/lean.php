@@ -7324,7 +7324,7 @@ class LeanSequentialTacticCombinator extends LeanUnary
         else if ($arg->indent > 0) {
             $indent = $arg->indent;
             $echo = new LeanTactic('echo', new LeanToken('⊢', $indent), $indent);
-            if ($this->parent instanceof LeanTactic && $this->parent->func == 'by_cases') {
+            if (($by_cases = $this->parent) instanceof LeanTactic && $by_cases->func == 'by_cases' && $by_cases->has_tactic_block_followed()) {
                 while (($sequential_tactic_combinator = $arg->sequential_tactic_combinator) && $sequential_tactic_combinator->arg->indent)
                     $arg = $sequential_tactic_combinator;
                 $arg->push(new LeanSequentialTacticCombinator($echo, $indent, true));

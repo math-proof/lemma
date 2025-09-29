@@ -4,13 +4,15 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [Decidable p] :
+  [Decidable p]
+  [NeZero n] :
 -- imply
-  Bool.toNat p = (Bool.toNat p) ^ (Nat.succ n) := by
+  Bool.toNat p = (Bool.toNat p) ^ n := by
 -- proof
-  match n with
+  match h : n with
   | .zero =>
-    simp
+    have h := NeZero.ne n
+    contradiction
   | .succ n =>
     by_cases h : p <;>
       simp_all [pow_succ]
