@@ -3,6 +3,7 @@ import sympy.Basic
 
 @[main, comm]
 private lemma main
+-- given
   (s : List α) :
 -- imply
   s.tail = s.drop 1 := by

@@ -13,8 +13,7 @@ private lemma main
   (p → q) ∨ (p → r) := by
 -- proof
   rw [Imp.is.OrNot] at h
-  rw [Imp.is.OrNot]
-  rw [Imp.is.OrNot]
+  repeat rw [Imp.is.OrNot]
   rw [OrOr.is.Or_Or]
   rw [Or_Or.comm] at h
   apply Or.inr h

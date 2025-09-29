@@ -98,7 +98,7 @@ export default {
 			var count = 0;
 			for (var {module} of this.data) {
 				this.window_open(module);
-				await sleep(1.1);
+				await sleep(1);
 				console.log(`count = ${++count}
 module = ${module}`);
 			}

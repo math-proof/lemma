@@ -4,6 +4,7 @@ import sympy.Basic
 @[main, comm]
 private lemma main
   [SubNegMonoid α]
+-- given
   (a b c : α) :
 -- imply
   a + b - c = a + (b - c) :=

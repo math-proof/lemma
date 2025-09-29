@@ -3,6 +3,7 @@ import sympy.Basic
 
 @[main, comm]
 private lemma main
+-- given
   (A B C : Set α) :
 -- imply
   A ∩ B ∩ C = A ∩ (B ∩ C) :=

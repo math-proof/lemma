@@ -13,6 +13,7 @@ open Logic
 private lemma main
   [Decidable p]
   [Decidable q]
+-- given
   (a b c : α) :
 -- imply
   (if p then
