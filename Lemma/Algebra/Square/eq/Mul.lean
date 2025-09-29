@@ -9,6 +9,7 @@ It ensures the consistency of exponentiation with the monoid's multiplicative st
 @[main, comm]
 private lemma main
   [Monoid α]
+-- given
   (x : α) :
 -- imply
   x² = x * x :=

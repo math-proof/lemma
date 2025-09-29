@@ -4,6 +4,7 @@ import sympy.Basic
 @[main]
 private lemma main
   {a b : ℕ}
+-- given
   (h : a = b)
   (d : ℕ) :
 -- imply

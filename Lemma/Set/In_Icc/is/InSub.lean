@@ -11,6 +11,7 @@ This equivalence is fundamental for understanding how interval endpoints behave 
 @[main, comm, mp, mpr]
 private lemma main
   [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
+-- given
   (x a b d : α) :
 -- imply
   x ∈ Icc a b ↔ x - d ∈ Icc (a - d) (b - d) := by

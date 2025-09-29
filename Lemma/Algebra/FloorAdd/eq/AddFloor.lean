@@ -5,6 +5,7 @@ import sympy.Basic
 private lemma nat
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
   [FloorRing R]
+-- given
   (x : R)
   (d : ℕ) :
 -- imply
@@ -18,6 +19,7 @@ private lemma nat
 private lemma main
   [Ring R] [LinearOrder R] [IsStrictOrderedRing R]
   [FloorRing R]
+-- given
   (x : R)
   (d : ℤ) :
 -- imply

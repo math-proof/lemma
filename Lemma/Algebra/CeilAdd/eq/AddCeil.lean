@@ -5,6 +5,7 @@ import sympy.Basic
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
+-- given
   (x : α)
   (d : ℤ) :
 -- imply

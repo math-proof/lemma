@@ -7,6 +7,7 @@ open Algebra
 private lemma main
   [Field α]
   {a b : α}
+-- given
   (h₀ : a ≠ 0)
   (h₁ : b ≠ 0) :
 -- imply

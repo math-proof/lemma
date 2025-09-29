@@ -3,6 +3,7 @@ import sympy.Basic
 
 @[main, comm]
 private lemma nat
+-- given
   (a b c : ℕ) :
 -- imply
   a - (b + c) = a - b - c :=
@@ -13,6 +14,7 @@ private lemma nat
 @[main, comm]
 private lemma main
   [SubtractionCommMonoid α]
+-- given
   (a b c : α) :
 -- imply
   a - (b + c) = a - b - c :=

@@ -5,6 +5,7 @@ import sympy.Basic
 
 @[main]
 private lemma main
+-- given
   (z : ℂ) :
 -- imply
   arg z ∈ Ioc (-π) π :=

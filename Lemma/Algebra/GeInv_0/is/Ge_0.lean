@@ -7,6 +7,7 @@ private lemma main
   [PartialOrder α]
   [ZeroLEOneClass α]
   [PosMulReflectLT α]
+-- given
   (a : α) :
 -- imply
   a⁻¹ ≥ 0 ↔ a ≥ 0 :=

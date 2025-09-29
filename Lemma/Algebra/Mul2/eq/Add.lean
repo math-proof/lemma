@@ -4,6 +4,7 @@ import sympy.Basic
 @[main, comm]
 private lemma main
   [NonAssocSemiring α]
+-- given
   (n : α) :
 -- imply
   2 * n = n + n :=

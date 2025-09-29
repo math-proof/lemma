@@ -4,6 +4,7 @@ import sympy.Basic
 @[main]
 private lemma main
   [GroupWithZero α]
+-- given
   (a : α) :
 -- imply
   0 / a = 0 := by

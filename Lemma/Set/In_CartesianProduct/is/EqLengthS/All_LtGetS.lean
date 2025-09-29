@@ -7,6 +7,7 @@ open Set Algebra
 
 @[main, comm, mp, mpr]
 private lemma main
+-- given
   (x s : List ℕ) :
 -- imply
   x ∈ s.cartesianProduct ↔ x.length = s.length ∧ ∀ i (h_x : i < x.length) (h_s : i < s.length), x[i] < s[i] := by

@@ -7,12 +7,12 @@ private lemma main :
   p ∨ False ↔ p := by
 -- proof
   apply Iff.intro
-  focus
+  .
     intro h
     match h with
     | Or.inl hp => exact hp
     | Or.inr hf => exact hf.elim
-  focus
+  .
     intro hp
     exact Or.inl hp
 

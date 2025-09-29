@@ -6,6 +6,7 @@ open Algebra
 
 @[main, comm]
 private lemma nat
+-- given
   (x a b : ℕ) :
 -- imply
   (a - b) * x = a * x - b * x :=
@@ -16,6 +17,7 @@ private lemma nat
 @[main, comm]
 private lemma main
   [Ring α]
+-- given
   (x a b : α) :
 -- imply
   (a - b) * x = a * x - b * x := by

@@ -4,6 +4,7 @@ open Logic
 
 @[main, comm]
 private lemma fin
+-- given
   (s : Finset ι)
   (p : ι → Prop) :
 -- imply
@@ -15,6 +16,7 @@ private lemma fin
 
 @[main, comm]
 private lemma main
+-- given
   (p : α → Prop) :
 -- imply
   (¬∀ x : α, p x) ↔ ∃ x : α, ¬p x := by
