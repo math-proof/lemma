@@ -3,6 +3,7 @@ import Lemma.Basic
 
 @[main]
 private lemma main
+-- given
   (s : Finset ι)
   (f g : ι → ℝ) :
 -- imply

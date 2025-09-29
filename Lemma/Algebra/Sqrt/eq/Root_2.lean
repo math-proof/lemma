@@ -3,6 +3,7 @@ import Lemma.Basic
 
 @[main, comm]
 private lemma main
+-- given
   (x : ℝ) :
 -- imply
   √x = x ^ (1 / 2 : ℝ) :=

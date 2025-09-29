@@ -33,8 +33,9 @@ export default {
 	computed: {
 		href() {
 			var {q, replacement, limit} = this;
-			q = q.encodeURI();
-			var kwargs = {q};
+			var kwargs = {};
+			if (q)
+				kwargs.q = q.encodeURI();
 			if (this.caseSensitive)
 				kwargs.caseSensitive = 'on';
 			if (this.wholeWord)
@@ -79,7 +80,27 @@ export default {
 			while (this.data.length)
 				await this.replace();
 		},
-	},		
+
+        async window_open(module) {
+            setTimeout(async seconds => {
+                await sleep(seconds);
+                window.open(
+                    location.origin + location.pathname + `?module=${module}#window.close`,
+                    '_blank'
+                );
+            }, 1000, 1);
+			await sleep(1.5);
+        },
+	},
+
+	async mounted() {
+		var {hash} = location;
+		if (hash == '#window.close') {
+			for (var {module} of this.data) {
+				await this.window_open(module);
+			}
+		}
+	},
 }
 
 </script>

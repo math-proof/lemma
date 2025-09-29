@@ -4,6 +4,7 @@ import Lemma.Basic
 @[main, comm]
 private lemma main
   [Monoid M]
+-- given
   (a : M)
   (m n : ℕ) :
 -- imply

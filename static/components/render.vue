@@ -430,6 +430,19 @@ export default {
             else {
                 switch (hash) {
                 case 'window.close':
+                    var count = 0;
+                    while (!count) {
+                        sleep(1);
+                        var sql = `
+SELECT
+    count(*) as count
+FROM
+    axiom.lemma
+where
+    user = "${this.user}" and module = "${module}" and json_length(lemma) > 0`;
+                        console.log(sql);
+                        var [{count}] = await form_post('php/request/execute.php', {sql, resultType: 1});
+                    }
                     window.close();
                     break;
                 case 'lean4web':

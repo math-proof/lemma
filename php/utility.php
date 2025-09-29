@@ -442,6 +442,20 @@ EOT;
     return get_rows($sql);
 }
 
+function select_lemma_missing($user, $limit = 100)
+{
+    $sql = <<<EOT
+select
+    module
+from
+    lemma
+where
+    user = '$user' and json_length(imports) > 0 and json_length(lemma) = 0
+limit $limit
+EOT;
+    return get_rows($sql);
+}
+
 function select_lemma_by_regex($user, $regex, $binary = false, $limit = 100)
 {
     if ($binary)

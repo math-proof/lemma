@@ -59,14 +59,14 @@ switch (count($key)) {
         if ($module)
             break;
     default:
-        if ($_GET['q']?? null) {
+        if ($_GET['q']?? null || $_GET['type']?? null) {
             require_once 'php/search.php';
             exit();
         }
         if ($_GET['mathlib']?? null) {
             require_once 'php/mathlib.php';
             exit();
-        }        
+        }
         break;
 }
 

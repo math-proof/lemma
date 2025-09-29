@@ -92,8 +92,12 @@ else  {
     require_once 'init.php';
     $user = get_project_name();
     if ($like) {
-        if ($regex == null)
-            $data = select_lemma_by_type($user, $type, $limit);
+        if ($regex == null) {
+            if ($type == 'missing')
+                $data = select_lemma_missing($user, $limit);
+            else
+                $data = select_lemma_by_type($user, $type, $limit);
+        }
         else {
             $data = select_lemma_by_like($user, $regex, $caseSensitive, $limit);
             if (!$data && !$caseSensitive && ($index = strpos($regex, ' ')) !== false) {
