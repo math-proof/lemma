@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq.eq, Eq.ne = Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(Card(Y), 1))
 
-    Eq.suffice_et = Logic.Imp.And.of.Cond.apply(Eq[1], cond=Eq.eq.lhs)
+    Eq.suffice_et = Logic.Imp_And.of.Cond.apply(Eq[1], cond=Eq.eq.lhs)
 
     Eq << Eq.suffice_et.this.rhs.apply(Set.Eq_Empty.of.Eq.In)
 
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Set.GeCard.of.In.apply(Eq[1])
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[-1], cond=Eq.ne.lhs)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[-1], cond=Eq.ne.lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ge.of.Gt.strengthen)
 

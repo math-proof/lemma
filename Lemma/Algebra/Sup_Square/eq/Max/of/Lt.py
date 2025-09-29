@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Logic.All.given.Imp.apply(Eq[-1])
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.GtSquare.of.Lt.Lt_Max)
 

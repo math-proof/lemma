@@ -20,13 +20,13 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(M > 0, m <= 0, x=x)
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[0], cond=m < 0)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[0], cond=m < 0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Inf_Square.eq.Zero.of.Gt_0.Lt_0)
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[2], cond=m < 0)
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[0] & Eq[1], cond=m >= 0)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=m >= 0)
 
     Eq << Eq[-1].this.rhs.args[1:].apply(Algebra.Eq.of.Le.Ge)
 

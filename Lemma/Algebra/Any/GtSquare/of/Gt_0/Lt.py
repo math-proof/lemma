@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=U >= 0)
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[1], cond=Eq[-1].lhs)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-1].lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtSqrt.of.Ge_0.Lt)
 

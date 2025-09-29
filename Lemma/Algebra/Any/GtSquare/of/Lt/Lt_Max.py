@@ -25,10 +25,10 @@ def prove(Eq):
 
     Eq <<= Eq[-4].this.apply(Logic.Imp.flatten), Eq[-3].this.apply(Logic.Imp.flatten), Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
 
-    Eq <<= Logic.Imp.And.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-4].lhs),\
-        Logic.Imp.And.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-3].lhs),\
+    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-4].lhs),\
+        Logic.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-3].lhs),\
         Eq[-2].this.lhs.apply(Algebra.Lt.of.Le.Gt),\
-        Logic.Imp.And.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-1].lhs)
+        Logic.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-1].lhs)
 
     Eq <<= Eq[-3].this.rhs.apply(Logic.And.Imp.And.of.Cond.split, cond=M + m > 0), \
         Eq[-1].this.rhs.args[::2].apply(Algebra.EqMax.of.Le_0.Lt, simplify=None, ret=slice(None)), \

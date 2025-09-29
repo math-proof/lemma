@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Any.Lt_0.of.Gt_0, x=x, b=b)
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.Lt_0.of.Lt_0.simple, x=x, b=b)
 

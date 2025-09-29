@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
 
-    Eq <<= Logic.Imp.given.Imp.And.apply(Eq[-3]), Logic.Imp.given.Imp.And.apply(Eq[-2])
+    Eq <<= Logic.Imp.given.Imp_And.apply(Eq[-3]), Logic.Imp.given.Imp_And.apply(Eq[-2])
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Lt_0.Eq.given.And.Div), Eq[-1].this.rhs.apply(Algebra.Gt_0.Eq.given.And.Div)
 

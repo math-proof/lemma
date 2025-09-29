@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.given.Cond.apply(Eq[-1])
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[0], cond=a > 0)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[0], cond=a > 0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sup.eq.MaxAddS_Mul_Square.of.Gt_0.Lt, a * x ** 2 + b * x + c, x)
 

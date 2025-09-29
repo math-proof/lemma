@@ -16,7 +16,7 @@ def prove(Eq):
     X = Symbol(etype=dtype.integer[n], given=True)
     Eq << apply(Subset(A, B), X)
 
-    Eq << Eq[1].this.apply(Logic.Imp.given.Imp.And)
+    Eq << Eq[1].this.apply(Logic.Imp.given.Imp_And)
 
     Eq << Set.EqInter.of.Subset.apply(Eq[0])
 

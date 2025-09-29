@@ -24,7 +24,7 @@ def prove(Eq):
     t, f, g = Function(integer=True)
     Eq << apply(Imply(Equal(t(x), y) & (f(x) > y), Equal(f(t(x), y), g(x))))
 
-    Eq << Logic.Imp.given.Imp.And.apply(Eq[0])
+    Eq << Logic.Imp.given.Imp_And.apply(Eq[0])
 
     Eq << Eq[-1].this.rhs.args[:2].apply(Algebra.Eq.Ufn.given.Eq.Ufn, swap=True)
 

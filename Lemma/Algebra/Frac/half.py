@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(n % 2, 0))
 
-    Eq <<= Logic.Imp.given.Imp.And.apply(Eq[-2]), Logic.Imp.given.Imp.And.apply(Eq[-1])
+    Eq <<= Logic.Imp.given.Imp_And.apply(Eq[-2]), Logic.Imp.given.Imp_And.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.rhs.find(Equal[0]).apply(Algebra.Eq_even.given.Any), Eq[-1].this.rhs.find(Unequal[0]).apply(Algebra.Mod.ne.Zero.given.Any)
 

@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Algebra.GtSquare.of.Ge_0.Gt.apply(Eq[0], Eq[-1])
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[-1], cond=U < m ** 2)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[-1], cond=U < m ** 2)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Gt.of.Gt.Lt)
 
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq.is_nonnegative = Eq[-2].this.rhs.apply(Algebra.Mul.gt.Zero.given.And.Gt_0)
 
-    Eq <<= Logic.Imp.And.of.Cond.apply(Eq[2], cond=U >= 0)
+    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[2], cond=U >= 0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtSqrt.of.Ge_0.Lt)
 
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.lhs.apply(Algebra.GeSqrt_0.of.Ge_0)
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[1].reversed, cond=U >= m ** 2)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[1].reversed, cond=U >= m ** 2)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.GeSqrt.of.Ge)
 

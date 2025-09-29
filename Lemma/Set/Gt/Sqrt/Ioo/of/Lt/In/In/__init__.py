@@ -26,13 +26,13 @@ def prove(Eq):
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[2])
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[-1], cond=x <= 0)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[-1], cond=x <= 0)
 
     Eq.x_is_nonpositive = Eq[-1].this.rhs.apply(Algebra.Mul.le.Zero.of.Le_0.Gt_0)
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[1])
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[-1], cond=y > 0)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[-1], cond=y > 0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Gt_0.of.Gt_0.Gt_0)
 
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-1], cond=Eq[0], invert=True)
 
-    Eq <<= Logic.Imp.And.of.Cond.apply(Eq[1], cond=x > 0), Logic.Imp.And.of.Cond.apply(Eq[2], cond=y > 0)
+    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[1], cond=x > 0), Logic.Imp_And.of.Cond.apply(Eq[2], cond=y > 0)
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In.Icc.Inter.of.Gt.In_Icc), Eq[-1].this.rhs.apply(Set.In.Icc.Inter.of.Gt.In_Icc)
 
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.Gt.Sqrt.Ioo.of.Lt.In.In.positive)
 
-    Eq <<= Logic.Imp.And.of.Cond.apply(Eq[1], cond=x <= 0), Logic.Imp.And.of.Cond.apply(Eq[2], cond=y <= 0)
+    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[1], cond=x <= 0), Logic.Imp_And.of.Cond.apply(Eq[2], cond=y <= 0)
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In.Icc.Inter.of.Le.In_Icc), Eq[-1].this.rhs.apply(Set.In.Icc.Inter.of.Le.In_Icc)
 

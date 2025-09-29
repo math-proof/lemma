@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[1] + Eq[3].lhs * b /2
 
-    Eq <<= Logic.Imp.And.of.Cond.apply(Eq[-1] & Eq[0], cond=Eq[-1].lhs >= 0), Logic.Imp.And.of.Cond.apply(Eq[-1] & Eq[0], cond=Eq[-1].rhs <= 0)
+    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[-1] & Eq[0], cond=Eq[-1].lhs >= 0), Logic.Imp_And.of.Cond.apply(Eq[-1] & Eq[0], cond=Eq[-1].rhs <= 0)
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Inf_Square.eq.Square.of.Gt_0.Ge_0.Lt), \
         Eq[-2].this.rhs.apply(Algebra.Min.eq.Square.of.Gt_0.Ge_0.Lt),\

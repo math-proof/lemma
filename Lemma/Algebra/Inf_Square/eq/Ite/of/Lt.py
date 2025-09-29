@@ -19,7 +19,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(m < M, x=x)
 
-    Eq <<= Logic.Imp.And.of.Cond.apply(Eq[0], cond=m >= 0), Logic.Imp.And.of.Cond.apply(Eq[0], cond=M <= 0)
+    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[0], cond=m >= 0), Logic.Imp_And.of.Cond.apply(Eq[0], cond=M <= 0)
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Inf_Square.eq.Square.of.Ge_0.Lt), Eq[-2].this.rhs.apply(Algebra.EqMin.of.Ge_0.Lt), \
         Eq[-1].this.rhs.apply(Algebra.Inf_Square.eq.Square.of.Le_0.Lt), Eq[-1].this.rhs.apply(Algebra.EqMin.of.Le_0.Lt)

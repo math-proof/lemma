@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << apply(n < 0, k)
 
     m = Symbol(integer=True, nonpositive=True)
-    Eq << Set.Cup.eq.Icc.left_open.negative.apply(Cup[k:m:0](Eq[1].lhs.expr))
+    Eq << Set.CupIcoNeg_0.eq.IocNeg_0.apply(Cup[k:m:0](Eq[1].lhs.expr))
 
     Eq << Eq[-1].subs(m, n)
 

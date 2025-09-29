@@ -23,7 +23,7 @@ def prove(Eq):
     t, f, g = Function(integer=True)
     Eq << apply(Imply(Element(t(x), A), Equal(Piecewise((f(t(x), y), Element(t(x), A)), (g(x), True)), g(x))))
 
-    Eq << Logic.Imp.given.Imp.And.apply(Eq[0])
+    Eq << Logic.Imp.given.Imp_And.apply(Eq[0])
 
     Eq << Eq[-1].this.rhs.apply(Logic.Cond.BFnIte.given.And_BFn)
 

@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne_0.of.Gt)
 
-    Eq << Logic.Imp.given.Imp.And.apply(Eq[-1])
+    Eq << Logic.Imp.given.Imp_And.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ne_0.Eq.given.And.Mul)
 

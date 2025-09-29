@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.Pow.eq.Add)
 
-    Eq << Logic.Imp.given.Imp.And.apply(Eq[-1])
+    Eq << Logic.Imp.given.Imp_And.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Gt_0.Gt.given.And.Div)
 

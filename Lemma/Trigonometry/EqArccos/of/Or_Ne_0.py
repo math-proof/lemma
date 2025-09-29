@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq.sqrt_is_positive = Algebra.Sqrt.gt.Zero.of.Or_Ne_0.apply(Eq[0])
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_nonnegative.lhs)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_nonnegative.lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.GeDiv.of.Gt_0.Ge)
 
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow[~Add]).apply(Algebra.Add.eq.Mul.together)
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_negative.lhs)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_negative.lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtDiv.of.Gt_0.Lt)
 

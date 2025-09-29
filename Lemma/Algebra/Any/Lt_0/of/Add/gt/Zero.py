@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.Lt_0.of.Ne_0, x=x, b=c)
 
-    Eq << Logic.Imp.And.of.Cond.apply(Eq[0], cond=Eq[2].lhs)
+    Eq << Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[2].lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.Lt_0.of.Ne_0.Add.gt.Zero, x=x)
 

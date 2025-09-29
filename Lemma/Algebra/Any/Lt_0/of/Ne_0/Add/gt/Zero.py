@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a > 0)
 
-    Eq <<= Logic.Imp.And.of.Cond.apply(Eq[1], cond=Eq[-2].lhs), Logic.Imp.And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
+    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-2].lhs), Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
     Eq << Eq[-2].this.rhs.apply(Algebra.Any.Lt_0.of.Gt_0.Add.gt.Zero, x=x)
 

@@ -45,4 +45,3 @@ if __name__ == '__main__':
     run()
 # created on 2018-10-20
 # updated on 2023-08-26
-from . import negative

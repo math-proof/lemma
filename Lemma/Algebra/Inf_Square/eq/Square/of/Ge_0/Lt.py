@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq <<= Logic.All.given.Imp.apply(Eq[-3]), Eq[-2].subs(Eq.eq_max), Eq[-1].this.lhs.apply(Set.Gt.of.In_Icc)
 
-    Eq <<= Eq[-3].this.rhs.apply(Algebra.Any.given.Cond.subst, x, (m + sqrt(y)) / 2), Eq[-2].this.expr.apply(Algebra.Any.given.Cond.subst, x, (M + m) / 2), Eq[-1].this.lhs.apply(Logic.Imp.And.of.Cond, cond=Eq[0])
+    Eq <<= Eq[-3].this.rhs.apply(Algebra.Any.given.Cond.subst, x, (m + sqrt(y)) / 2), Eq[-2].this.expr.apply(Algebra.Any.given.Cond.subst, x, (M + m) / 2), Eq[-1].this.lhs.apply(Logic.Imp_And.of.Cond, cond=Eq[0])
 
     Eq <<= Logic.Imp_And.given.Imp.Imp.apply(Eq[-3]), Logic.And_And.given.And.Cond.apply(Eq[-2]), Logic.Imp_Imp.given.And.Imp.apply(Eq[-1])
 
