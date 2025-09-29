@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq.eq = Eq[1].subs(Eq[-1])
 
-    Eq << Eq.eq.rhs.this.find(Add).apply(Algebra.Add.eq.Mul)
+    Eq << Eq.eq.rhs.this.find(Add).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Pow[Mul]).apply(Algebra.Pow.eq.Mul.split.base)
 

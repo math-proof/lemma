@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Add).apply(Algebra.Add.principle.inclusive_exclusive)
 

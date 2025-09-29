@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Probability.Var.eq.Sub.Expect)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Algebra.Lt_0.given.And.split.Mul.apply(Eq[-1])
 

@@ -149,7 +149,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In.Is.In_Inter.ou.In_SDiff, B)
 

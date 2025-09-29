@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq.ge
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Algebra.Ge.of.Eq.Ge.subst.apply(Eq.eq, Eq[-1])
 

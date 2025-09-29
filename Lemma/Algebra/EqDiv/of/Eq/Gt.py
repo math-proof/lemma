@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
 
 

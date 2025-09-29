@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq.lhs.this.apply(Calculus.Eq.Is.Any_All.limit_definition, epsilon=epsilon, delta=delta)
 
-    Eq << Eq[-1].this.expr.expr.find(Add).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.expr.expr.find(Add).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Abs[Mul]).apply(Algebra.Abs.eq.Mul)
 

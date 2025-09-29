@@ -60,9 +60,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.expr.args[1:3].apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.expr.args[1:3].apply(Algebra.AddMulS.eq.Mul_Add)
 
-    Eq.matmul_QRK = Eq[-1].this.rhs.expr.args[1:].apply(Algebra.Add.eq.Mul)
+    Eq.matmul_QRK = Eq[-1].this.rhs.expr.args[1:].apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[2].find(BlockMatrix @ BlockMatrix).this.apply(Tensor.Dot.eq.Block)
 

@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.find(Mul - Mul).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Mul - Mul).apply(Algebra.AddMulS.eq.Mul_Add)
 
 
 

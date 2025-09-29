@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-4])
 

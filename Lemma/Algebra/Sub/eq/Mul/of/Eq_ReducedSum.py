@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.Eq.given.And.Mul.apply(Eq[-1], Eq[1], simplify=None)
 
-    Eq << Eq[-1].this.lhs.args[:3:2].apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.args[:3:2].apply(Algebra.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.lhs.args[::2].apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.args[::2].apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Discrete.EqDiff.of.Eq_ReducedSum.apply(Eq[0])
 
@@ -45,7 +45,7 @@ def prove(Eq):
     Eq << -Eq[-1]
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
-    # Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul)
+    # Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
 
 

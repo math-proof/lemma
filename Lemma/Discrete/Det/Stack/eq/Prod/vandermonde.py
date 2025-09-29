@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.All.Eq.of.Eq)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq.recursion = Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this().rhs.find(And).simplify()
 
-    Eq << Eq[-1].this.find(Pow - Mul).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Pow - Mul).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq.recursion = Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
 

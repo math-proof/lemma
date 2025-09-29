@@ -29,13 +29,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Derivative).doit()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.rhs.args[2].apply(Algebra.Add.eq.Mul.together)
 
     Eq << Eq[-1].this.rhs.args[2].expand()
 
-    # Eq << Eq[-1].this.rhs.args[2].apply(Algebra.Add.eq.Mul)
+    # Eq << Eq[-1].this.rhs.args[2].apply(Algebra.AddMulS.eq.Mul_Add)
     @Function(real=True)
     def h(x):
         return x ** 2 * (cos(x) + 1) - sin(x) * (x + sin(x))
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-2].reversed, Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     # https://www.zhihu.com/question/355479801
 

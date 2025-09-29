@@ -83,7 +83,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add ** Add]).powsimp()
 
-    Eq << Eq[-1].this.find(Add[Mul]).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Add[Mul]).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Add ** Mul).apply(Algebra.Pow.Neg)
 

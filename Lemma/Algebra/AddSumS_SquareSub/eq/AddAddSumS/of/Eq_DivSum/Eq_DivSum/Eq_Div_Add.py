@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq <<= Eq[-4].subs(Eq[-2].reversed), Eq[-3].subs(Eq[-1].reversed)
 
-    Eq <<= Eq[-2].this.find(Mul - Mul).apply(Algebra.Add.eq.Mul), Eq[-1].this.find(Mul - Mul).apply(Algebra.Add.eq.Mul)
+    Eq <<= Eq[-2].this.find(Mul - Mul).apply(Algebra.AddMulS.eq.Mul_Add), Eq[-1].this.find(Mul - Mul).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq <<= Eq[-2].this.rhs.subs(Eq[2]), Eq[-1].this.rhs.subs(Eq[2])
 
@@ -46,13 +46,13 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS), Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq <<= Eq[-2].this.rhs.find((~Add) ** 2).apply(Algebra.Add.eq.Mul), Eq[-1].this.rhs.find((~Add) ** 2).apply(Algebra.Add.eq.Mul)
+    Eq <<= Eq[-2].this.rhs.find((~Add) ** 2).apply(Algebra.AddMulS.eq.Mul_Add), Eq[-1].this.rhs.find((~Add) ** 2).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-2].this.rhs.find(Add ** 2).apply(Algebra.Square.Neg)
 
     Eq << Eq[-2] + Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
 
     Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=slice(2, None))

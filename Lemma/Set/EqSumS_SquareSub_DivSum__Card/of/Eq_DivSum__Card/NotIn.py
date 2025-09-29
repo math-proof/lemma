@@ -37,9 +37,9 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.find(Add[Mul[Card]]).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Add[Mul[Card]]).apply(Algebra.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.find(Add[Mul[Card]]).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Add[Mul[Card]]).apply(Algebra.AddMulS.eq.Mul_Add)
 
 
 if __name__ == '__main__':

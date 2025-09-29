@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << -Eq[-1].reversed
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << -Algebra.Ne_0.of.Ne.apply(Eq[0])
 

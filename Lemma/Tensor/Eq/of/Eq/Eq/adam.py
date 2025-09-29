@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Mul.split.exponent)
 
-    Eq << Eq[-1].this.find(Add).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Add).apply(Algebra.AddMulS.eq.Mul_Add)
 
     # https://arxiv.org/abs/1412.6980
 

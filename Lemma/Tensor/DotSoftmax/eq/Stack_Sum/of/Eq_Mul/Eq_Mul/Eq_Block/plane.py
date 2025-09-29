@@ -84,10 +84,10 @@ def prove(Eq):
 
     Eq << Eq[-5].subs(*Eq[-4:])
 
-    Eq <<= Add(*Eq[-1].find(Sum).expr.args[1:3]).this.apply(Algebra.Add.eq.Mul), \
-        Add(*Eq[-1].find(Sum).expr.args[::3]).this.apply(Algebra.Add.eq.Mul), \
-        Add(*Eq[-1].find(Sum[2]).expr.args[1:3]).this.apply(Algebra.Add.eq.Mul),\
-        Add(*Eq[-1].find(Sum[2]).expr.args[::3]).this.apply(Algebra.Add.eq.Mul)
+    Eq <<= Add(*Eq[-1].find(Sum).expr.args[1:3]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
+        Add(*Eq[-1].find(Sum).expr.args[::3]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
+        Add(*Eq[-1].find(Sum[2]).expr.args[1:3]).this.apply(Algebra.AddMulS.eq.Mul_Add),\
+        Add(*Eq[-1].find(Sum[2]).expr.args[::3]).this.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 

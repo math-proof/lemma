@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.factor2mul.reversed)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
 

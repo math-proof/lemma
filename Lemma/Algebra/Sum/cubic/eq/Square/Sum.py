@@ -54,11 +54,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Add[Mul]).expand()
 
-    Eq << Eq[-1].this.find(Add[Mul]).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Add[Mul]).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[0].this.rhs.find(Sum).apply(Algebra.Sum.eq.Mul.series.arithmetic)
 

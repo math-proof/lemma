@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Cos[Piecewise]).apply(Trigonometry.Cos.eq.Ite), Eq[-1].this.find(Sin[Piecewise]).apply(Trigonometry.Sin.eq.Ite)
 
-    Eq <<= Eq[-2].this.find(Add).apply(Algebra.Add.eq.Mul, simplify=None), Eq[-1].this.find(Add).apply(Algebra.Add.eq.Mul, simplify=None)
+    Eq <<= Eq[-2].this.find(Add).apply(Algebra.AddMulS.eq.Mul_Add, simplify=None), Eq[-1].this.find(Add).apply(Algebra.AddMulS.eq.Mul_Add, simplify=None)
 
     Eq.F_def = Eq[-2].this.find(Mul[Add]).apply(Algebra.Mul.Neg, simplify=None)
 

@@ -101,7 +101,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1:].apply(Algebra.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.find(Sum).expr.args[1:].apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Sum).expr.args[1:].apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(MatMul + MatMul).apply(Tensor.Add.eq.Dot)
 

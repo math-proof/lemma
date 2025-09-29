@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Probability.Add.Expect.eq.Expect)
 
-    Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.rhs.apply(Probability.Expect.eq.Mul)
 
@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq << Algebra.GeInf.of.Ge.apply(Eq[-1], (s[t].var,))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq.gt_zero = Greater(1 - γ, 0, plausible=True)
 

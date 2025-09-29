@@ -113,7 +113,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).expr.args[1:].apply(Algebra.Add.eq.Re)
 
-    Eq << Eq[-1].this.find(Re[~Add]).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Re[~Add]).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Re, Add).apply(Tensor.Add.eq.Dot)
 

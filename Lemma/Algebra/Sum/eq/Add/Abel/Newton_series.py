@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq.abel.find(Sum - Sum).this.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.rhs.apply(Discrete.Sum.Binom.telescope)
 

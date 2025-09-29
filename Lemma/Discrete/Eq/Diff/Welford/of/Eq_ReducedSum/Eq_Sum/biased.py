@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Eq[-1] - Eq[1].lhs
 
-    Eq << Eq[-1].this.lhs.args[:3:2].apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.args[:3:2].apply(Algebra.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
 
@@ -42,7 +42,7 @@ def prove(Eq):
     Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[-4])
 
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
 
 if __name__ == '__main__':

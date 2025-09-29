@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(k, l)
 
-    Eq << Eq[-1].this.find(Add).args[:2].apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Add).args[:2].apply(Algebra.AddMulS.eq.Mul_Add)
 
     l = Symbol(domain=Range(P))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq.h_local_in, l)

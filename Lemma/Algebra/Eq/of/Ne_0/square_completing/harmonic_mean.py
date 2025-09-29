@@ -23,9 +23,9 @@ def prove(Eq):
 
     Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], rhs=2)
 
-    Eq << Eq[-1].this.rhs.find(Add[Mul, Mul, Mul]).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.find(Add[Mul, Mul, Mul]).apply(Algebra.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Mul[Add[-Pow, -Pow]]).apply(Algebra.Mul.Neg)
 
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Add[Pow]).apply(Algebra.Add.eq.Mul.together)
 
-    Eq << Eq[-1].this.rhs.find(Add[Add * Pow]).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.find(Add[Add * Pow]).apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], lhs=2)
 

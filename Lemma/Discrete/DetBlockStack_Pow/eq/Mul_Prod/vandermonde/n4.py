@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find((1 - Symbol) ** Add).apply(Algebra.Pow.eq.Mul.Neg)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq.eq_block.subs(Eq[-1])
 

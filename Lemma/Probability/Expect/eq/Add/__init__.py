@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add[Sum]).apply(Algebra.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.find(Add[Mul]).apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Add[Mul]).apply(Algebra.AddMulS.eq.Mul_Add)
 
 
 

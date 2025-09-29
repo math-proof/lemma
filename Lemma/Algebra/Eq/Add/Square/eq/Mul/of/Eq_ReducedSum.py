@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=1)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.Square.Neg)
 

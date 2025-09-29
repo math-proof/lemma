@@ -20,7 +20,7 @@ def apply(self):
                 factors.append(arg.base)
     assert factors
 
-    from Lemma.Algebra.Add.eq.Mul import common_terms
+    from Lemma.Algebra.AddMulS.eq.Mul_Add import common_terms
     if c := common_terms(factors):
         factors, c = Mul.factorize(factors, c)
         factor = Mul(*factors) * c

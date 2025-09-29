@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[0] * (x + n)
 

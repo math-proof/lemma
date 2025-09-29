@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().find(Min).simplify()
 
-    Eq.def_RoPE = Eq[-1].this.rhs.expr.apply(Algebra.Add.eq.Mul)
+    Eq.def_RoPE = Eq[-1].this.rhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq.def_RoPE.subs(t, t + 1)
 
@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Exp * Exp).args[-2:].apply(Algebra.Mul.eq.Exp)
 
-    Eq << Eq[-1].this.find(Exp).arg.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.find(Exp).arg.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Algebra.EqIm.of.Eq.apply(Eq[-1])
 
@@ -198,7 +198,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].find(1 - Mul ** Mul).apply(Algebra.Sub.Square.eq.Mul)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1] * (2 * ReducedMin(x ** 2))
 

@@ -1,4 +1,4 @@
-# powershell ps1/run.ps1
+# . ps1/run.ps1
 while ($true) {
     # Set up process start info
     $psi = New-Object System.Diagnostics.ProcessStartInfo

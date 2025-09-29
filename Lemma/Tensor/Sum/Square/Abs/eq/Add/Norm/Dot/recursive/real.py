@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[~MatMul[Transpose]]).T
 
-    Eq << Eq[-1].this.rhs.args[1:3].apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.rhs.args[1:3].apply(Algebra.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Mul[~Add]).apply(Tensor.Add.eq.Dot)
 

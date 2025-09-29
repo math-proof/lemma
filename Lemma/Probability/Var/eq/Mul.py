@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find((~Expectation) ** 2).apply(Probability.Expect.eq.Mul)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
 
 if __name__ == '__main__':
