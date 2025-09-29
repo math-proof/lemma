@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq <<= Logic.Imp_And.given.Imp.delete.apply(Eq[-2]), Eq[-1].this.lhs.args[0].apply(Algebra.And.Eq.of.Eq.split, simplify=None)
+    Eq <<= Logic.Imp_And.given.Imp.delete.apply(Eq[-2]), Eq[-1].this.lhs.args[0].apply(Tensor.EqSliceS.Eq.of.Eq, simplify=None)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.EqStackS.of.EqStackS.Eq, simplify=None)
 

@@ -26,7 +26,7 @@ def apply(given, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Logic, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n + 1,))
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.And.Eq.of.Eq.split)
+    Eq << Eq[-2].this.lhs.apply(Tensor.EqSliceS.Eq.of.Eq)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.And.concat, 1, 0)
 

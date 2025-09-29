@@ -35,7 +35,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Logic, Tensor
 
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True)
@@ -86,7 +86,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq.y_nonzero_assumption
 
-    Eq.y_joint_y_historic = Eq[-1].this.lhs.arg.apply(Algebra.And.Eq.of.Eq.split)
+    Eq.y_joint_y_historic = Eq[-1].this.lhs.arg.apply(Tensor.EqSliceS.Eq.of.Eq)
 
     Eq << Probability.Ne_0.Conditioned.of.Ne_0.apply(Eq.y_joint_y_historic, y[:k])
 

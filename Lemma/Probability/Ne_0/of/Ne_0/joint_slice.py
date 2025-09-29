@@ -21,16 +21,16 @@ def apply(given, indices):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability
+    from Lemma import Probability, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x, y = Symbol(real=True, shape=(n,), random=True)
     t = Symbol(domain=Range(1, n))
     Eq << apply(Unequal(Pr(x, y), 0), [slice(0, t), slice(0, t)])
 
-    Eq << Eq[0].this.lhs.arg.args[-1].apply(Algebra.And.Eq.of.Eq.split, t)
+    Eq << Eq[0].this.lhs.arg.args[-1].apply(Tensor.EqSliceS.Eq.of.Eq, t)
 
-    Eq << Eq[-1].this.lhs.arg.args[0].apply(Algebra.And.Eq.of.Eq.split, t)
+    Eq << Eq[-1].this.lhs.arg.args[0].apply(Tensor.EqSliceS.Eq.of.Eq, t)
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

@@ -10,7 +10,7 @@ def apply(ne_zero, index):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability
+    from Lemma import Probability, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(real=True, shape=(n,), random=True)
@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << apply(Unequal(Pr(x), 0), slice(0, t))
 
     t = Symbol(domain=Range(1, n))
-    Eq << Eq[0].this.lhs.arg.apply(Algebra.And.Eq.of.Eq.split, t)
+    Eq << Eq[0].this.lhs.arg.apply(Tensor.EqSliceS.Eq.of.Eq, t)
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

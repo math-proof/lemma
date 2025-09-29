@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[0].apply(Logic.AllIn.of.All, (k, 2, oo))
 
-    Eq << Eq[-1].this().expr.lhs.rhs.args[1].apply(Algebra.And.Eq.of.Eq.split)
+    Eq << Eq[-1].this().expr.lhs.rhs.args[1].apply(Tensor.EqSliceS.Eq.of.Eq)
 
     Eq << Probability.Eq.of.Eq_Conditioned.single_condition_w.apply(Eq[-1], wrt=Eq[-1].lhs.rhs.args[-1].lhs)
 

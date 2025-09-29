@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Tensor.EqStackS.of.EqStackS.Eq, simplify=None)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.And.Eq.of.Eq.split, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Tensor.EqSliceS.Eq.of.Eq, simplify=None)
 
 
 
