@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.Le.of.In_Range.stop.apply(Eq[0])
 
-    Eq << Set.Ge.of.In_Range.apply(Eq[0])
+    Eq << Set.Ge.of.In_Ico.int.apply(Eq[0])
 
 
 if __name__ == '__main__':

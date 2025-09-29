@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Set.In.Mul.of.Gt_0.In.apply(Eq.w1_is_positive, Eq[2])
 
-    Eq << Set.In.Add.Icc.of.In.In.apply(Eq[-2], Eq[-1])
+    Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 

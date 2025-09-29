@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Trigonometry.In.Arcsin.of.In.apply(Eq[-1])
 
-    Eq << Set.In.Add.Icc.of.In.In.apply(Eq[-1], Eq[-3])
+    Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[-3])
 
     Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq.any_eq, simplify=None)
 

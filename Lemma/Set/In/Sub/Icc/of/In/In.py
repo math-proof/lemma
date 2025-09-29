@@ -21,7 +21,7 @@ def prove(Eq):
     Eq << apply(Element(x0, Interval(a, b, left_open=True)), Element(x1, Interval(c, d, right_open=True)))
 
     Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[1])
-    Eq << Set.In.Add.Icc.of.In.In.apply(Eq[-1], Eq[0])
+    Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':

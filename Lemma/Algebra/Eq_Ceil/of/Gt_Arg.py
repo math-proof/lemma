@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq <<= Set.Arg.In.IocNegPiPi.apply(A), Set.Arg.In.IocNegPiPi.apply(B)
 
-    Eq << Set.In.Add.Icc.of.In.In.apply(Eq[-1], Eq[-2], simplify=None)
+    Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[-2], simplify=None)
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], S.Pi * 2)
 
