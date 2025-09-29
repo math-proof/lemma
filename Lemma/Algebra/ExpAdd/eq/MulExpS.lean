@@ -1,5 +1,5 @@
 import sympy.functions.elementary.exponential
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

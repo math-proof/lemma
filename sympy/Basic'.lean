@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 import stdlib.Prod
 import sympy.parsing.parser
 open Lean Lean.Meta

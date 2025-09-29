@@ -1,5 +1,5 @@
 import stdlib.SEq
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main, comm 1]

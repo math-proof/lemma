@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
@@ -14,7 +14,7 @@ private lemma main
     b) = Bool.toNat p * a + (Bool.toNat ¬p) * b := by
 -- proof
   split_ifs <;>
-  · 
+  ·
     simp_all
 
 

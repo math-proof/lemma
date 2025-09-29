@@ -1,5 +1,5 @@
 import sympy.core.relational
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

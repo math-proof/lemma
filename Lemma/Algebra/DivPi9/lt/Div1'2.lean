@@ -1,6 +1,6 @@
 import sympy.core.numbers
 import Mathlib.Analysis.Real.Pi.Bounds
-import Lemma.Basic
+import sympy.Basic
 
 
 /--

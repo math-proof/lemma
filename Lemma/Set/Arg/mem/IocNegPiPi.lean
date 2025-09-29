@@ -1,6 +1,6 @@
 import sympy.functions.elementary.complexes
 import sympy.sets.sets
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

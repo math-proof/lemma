@@ -1,5 +1,5 @@
 import sympy.functions.elementary.trigonometric
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

@@ -1,5 +1,5 @@
 import sympy.core.numbers
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

@@ -1,5 +1,5 @@
 import sympy.concrete.quantifier
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

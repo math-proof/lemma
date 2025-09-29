@@ -7,6 +7,7 @@ open Algebra
 
 @[main, comm]
 private lemma main
+-- given
   (n d : ℤ) :
 -- imply
   n // d = ⌊n / (d : ℚ)⌋ := by

@@ -1,5 +1,5 @@
 import sympy.tensor.Basic
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
@@ -8,7 +8,7 @@ private lemma main
 -- given
   (a b : Tensor α s) :
 -- imply
-  (a + b).data = a.data + b.data := 
+  (a + b).data = a.data + b.data :=
 -- proof
   rfl
 

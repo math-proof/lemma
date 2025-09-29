@@ -241,11 +241,11 @@ EOT;
 		}
 	});
 	if (!array_filter($imports, fn($import) => str_starts_with($import, 'Lemma.')))
-		$imports[] = "Lemma.Basic";
+		$imports[] = "sympy.Basic";
 
 	$open_section = array_reduce($imports, function ($carry, $import)  {
 		$module = explode('.', $import);
-		if ($module[0] == 'Lemma' && $module[1] != 'Basic')
+		if ($module[0] == 'Lemma')
 			$carry[$module[1]] = true;
 		return $carry;
 	}, []);

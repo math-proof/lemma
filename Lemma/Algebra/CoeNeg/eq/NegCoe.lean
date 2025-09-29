@@ -1,9 +1,10 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
 private lemma main
   [AddGroupWithOne R]
+-- given
   (n : ℤ) :
 -- imply
   ((-n : ℤ) : R) = -n :=

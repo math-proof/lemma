@@ -1,5 +1,5 @@
 import sympy.tensor.stack
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

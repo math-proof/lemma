@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
@@ -8,7 +8,7 @@ private lemma main
   (h_a : p)
   (h_b : p):
 -- imply
-  h_a = h_b := 
+  h_a = h_b :=
 -- proof
   proof_irrel h_a h_b
 

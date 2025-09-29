@@ -1,5 +1,5 @@
 import Mathlib.Analysis.Real.Hyperreal
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

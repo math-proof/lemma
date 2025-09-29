@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
@@ -7,7 +7,7 @@ private lemma main
   {A : Set α}
 
 -- given
-  (h : ∀ x ∈ A, p x) 
+  (h : ∀ x ∈ A, p x)
   (x : α):
 -- imply
   p x ∨ x ∉ A := by

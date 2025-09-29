@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
@@ -8,7 +8,7 @@ private lemma main
 -- given
   (h : HEq a b) :
 -- imply
-  α = β := 
+  α = β :=
 -- proof
   type_eq_of_heq h
 

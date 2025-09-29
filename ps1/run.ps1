@@ -37,7 +37,7 @@ function echo_import {
 }
 
 Get-ChildItem -Path "Lemma" -Recurse -File -Filter "*.lean" |
-Where-Object { $_.Name -notlike "*.echo.lean" -and $_.Name -ne "Basic.lean" } |
+Where-Object { $_.Name -notlike "*.echo.lean" } |
 ForEach-Object {
     echo_import $_.FullName
 }
@@ -181,9 +181,9 @@ foreach ($module in $sorryModules) {
     
     # Remove 'Lemma.' prefix from module name
     $module = $module -creplace '^Lemma\.', ''
-    
-    # Skip modules starting with 'sympy' or 'Basic'
-    if ($module -match '^sympy' -or $module -match '^Basic') {
+
+    # Skip modules starting with 'sympy'
+    if ($module -match '^sympy') {
         continue
     }
     
@@ -226,8 +226,8 @@ foreach ($module in $failingModules) {
     # Remove 'Lemma.' prefix
     $modifiedModule = $module -creplace '^Lemma\.', ''
 
-    # Skip modules starting with sympy or Basic
-    if ($modifiedModule -like "sympy*" -or $modifiedModule -like "Basic*") {
+    # Skip modules starting with sympy
+    if ($modifiedModule -like "sympy*") {
         continue
     }
 
@@ -414,3 +414,12 @@ Write-Output "total failed    = $($failingModules.Count)"
 .\ps1\delete_import.ps1
 
 Remove-Item $tempConfigPath -Force -ErrorAction SilentlyContinue
+
+# Find all .lean files (excluding *.echo.lean) that import both sympy.Basic and Lemma.*
+Get-ChildItem -Recurse -Filter *.lean |
+    Where-Object { $_.Name -notlike '*.echo.lean' } |
+    Where-Object {
+        (Select-String -Path $_.FullName -Pattern '^import sympy\.Basic' -Quiet) -and
+        (Select-String -Path $_.FullName -Pattern '^import Lemma\.' -Quiet)
+    } |
+    Select-Object -ExpandProperty FullName

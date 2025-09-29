@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
@@ -9,7 +9,7 @@ private lemma main
   (h₀ : a < x)
   (h₁ : b > x) :
 -- imply
-  b > a := 
+  b > a :=
 -- proof
   h₀.trans h₁
 

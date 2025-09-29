@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main, comm, mp, mpr]
@@ -7,7 +7,7 @@ private lemma main :
   ¬(p → q) ↔ p ∧ ¬q := by
 -- proof
   constructor <;>
-  · 
+  ·
     intro h
     simp_all
 

@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 
 -- define the circled plus operator
 class OPlus (α : Type u) where

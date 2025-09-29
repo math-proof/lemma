@@ -1,6 +1,6 @@
 import stdlib.SEq
 import stdlib.List.Vector
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

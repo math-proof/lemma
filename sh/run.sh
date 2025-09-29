@@ -26,7 +26,7 @@ function echo_import {
 
 while read -r file; do
   echo_import "$file"
-done < <(find Lemma -type f -name "*.lean" -not -name "*.echo.lean" -not -name "Basic.lean") 
+done < <(find Lemma -type f -name "*.lean" -not -name "*.echo.lean") 
 
 touch test.log
 lake setup-file test.lean 2>&1 | tee test.log
@@ -111,7 +111,7 @@ sorryModules=($(grep -P "^warning: (\./)*[\w/]+\.lean:\d+:\d+: declaration uses 
 for module in ${sorryModules[*]}; do
   echo "${module//.//}.lean"
   module=${module#Lemma.}
-  if [[ $module =~ ^sympy ]] || [[ $module =~ ^Basic ]]; then
+  if [[ $module =~ ^sympy ]]; then
     continue
   fi
   echo "UPDATE lemma set error = '[{\"code\": \"\", \"file\": \"\", \"info\": \"declaration uses ''sorry''\", \"line\": 0, \"type\": \"warning\"}]' where user = '$user' and module = \"$module\";" >> test.sql
@@ -122,7 +122,7 @@ failingModules=($(awk '/Some required builds logged failures:/{flag=1;next}/^[^-
 for module in ${failingModules[*]}; do
   echo "${module//.//}.lean"
   module=${module#Lemma.}
-  if [[ $module =~ ^sympy ]] || [[ $module =~ ^Basic ]]; then
+  if [[ $module =~ ^sympy ]]; then
     continue
   fi
   echo "UPDATE lemma set error = '[{\"code\": \"\", \"file\": \"\", \"info\": \"\", \"line\": 0, \"type\": \"error\"}]' where user = '$user' and module = \"$module\";" >> test.sql

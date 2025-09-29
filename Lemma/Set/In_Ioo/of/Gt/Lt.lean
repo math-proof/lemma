@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

@@ -1,5 +1,5 @@
 import stdlib.List.Vector.Basic
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main, comm]

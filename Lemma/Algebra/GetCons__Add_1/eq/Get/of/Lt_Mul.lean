@@ -1,11 +1,11 @@
 import stdlib.List.Vector
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
 private lemma main
 -- given
-  (h : i < m) 
+  (h : i < m)
   (head : List.Vector α n)
   (tail : List.Vector (List.Vector α n) m):
 -- imply

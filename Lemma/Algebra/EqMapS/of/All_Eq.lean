@@ -1,5 +1,5 @@
 import stdlib.List.Vector
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   L.map f = L.map g := by
 -- proof
-  have h_eq : f = g := by 
+  have h_eq : f = g := by
     funext i
     apply h
   rw [h_eq]

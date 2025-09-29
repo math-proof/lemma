@@ -1,8 +1,9 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main, comm]
 private lemma nat
+-- given
   (x a b : ℕ) :
 -- imply
   x * (a - b) = x * a - x * b :=
@@ -13,6 +14,7 @@ private lemma nat
 @[main, comm]
 private lemma main
   [NonUnitalNonAssocRing α]
+-- given
   (x a b : α) :
 -- imply
   x * (a - b) = x * a - x * b :=

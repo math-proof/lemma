@@ -1,6 +1,6 @@
 import sympy.functions.special.tensor_functions
 import sympy.matrices.expressions.special
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

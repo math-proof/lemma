@@ -1,5 +1,5 @@
 import sympy.tensor.Basic
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main, comm, mp, mpr]

@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
@@ -7,7 +7,7 @@ private lemma main
   (h : i < n)
   (a : α) :
 -- imply
-  (List.replicate n a)[i]? = some a := 
+  (List.replicate n a)[i]? = some a :=
 -- proof
   List.getElem?_replicate_of_lt h
 

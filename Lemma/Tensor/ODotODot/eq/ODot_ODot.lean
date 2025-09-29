@@ -1,5 +1,5 @@
 import sympy.concrete.prefix_sum.all_prefix_sums
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

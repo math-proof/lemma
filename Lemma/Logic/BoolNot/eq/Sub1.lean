@@ -1,4 +1,4 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
@@ -8,7 +8,7 @@ private lemma main
   Bool.toNat (¬p) = 1 - Bool.toNat p := by
 -- proof
   by_cases h : p <;>
-  · 
+  ·
     simp_all
 
 

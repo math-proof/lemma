@@ -1,5 +1,5 @@
 import sympy.polys.polyroots
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

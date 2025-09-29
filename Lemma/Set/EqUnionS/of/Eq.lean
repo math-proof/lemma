@@ -1,11 +1,11 @@
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]
 private lemma main
   {A B : Set α}
 -- given
-  (h : A = B) 
+  (h : A = B)
   (X : Set α):
 -- imply
   A ∪ X = B ∪ X := by

@@ -1,6 +1,6 @@
 import sympy.sets.sets
 import sympy.functions.elementary.trigonometric
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

@@ -1,5 +1,5 @@
 import sympy.core.power
-import Lemma.Basic
+import sympy.Basic
 
 
 @[main]

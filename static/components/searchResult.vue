@@ -81,7 +81,7 @@ export default {
 				await this.replace();
 		},
 
-        async window_open(module) {
+        window_open(module) {
             setTimeout(async seconds => {
                 await sleep(seconds);
                 window.open(
@@ -89,15 +89,18 @@ export default {
                     '_blank'
                 );
             }, 1000, 1);
-			await sleep(1.5);
         },
 	},
 
 	async mounted() {
 		var {hash} = location;
 		if (hash == '#window.close') {
+			var count = 0;
 			for (var {module} of this.data) {
-				await this.window_open(module);
+				this.window_open(module);
+				await sleep(1.1);
+				console.log(`count = ${++count}
+module = ${module}`);
 			}
 		}
 	},
