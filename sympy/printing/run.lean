@@ -2,6 +2,7 @@
 -- lake env lean sympy/printing/run.lean
 import sympy.printing.json
 import sympy.io
+import Mathlib
 
 #eval do
   let name := `Matrix.mul_apply
@@ -15,4 +16,4 @@ import sympy.io
 def main (args : List String) : IO Unit := do
   IO.println <| ← Name.toJson args.head!.toName |> exec
 
-#check Matrix.mul_apply
+#check CommGrp.forget_commGrp_preserves_epi

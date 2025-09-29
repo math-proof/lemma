@@ -63,7 +63,7 @@ switch (count($key)) {
             require_once 'php/search.php';
             exit();
         }
-        if ($_GET['mathlib']?? null) {
+        if (array_key_exists('mathlib', $_GET)) {
             require_once 'php/mathlib.php';
             exit();
         }

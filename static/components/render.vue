@@ -330,7 +330,7 @@ export default {
 
         submodules() {
             return this.imports.flatMap(imp => {
-                var m = imp.match(/^Lemma\.(?!Basic$)(.+)/); 
+                var m = imp.match(/^Lemma\.(.+)/); 
                 return m? [m[1]] : [];
             });
         },
@@ -931,13 +931,13 @@ where
                 var section = module.split('.');
                 switch (section[0]) {
                 case 'Lemma':
-                    if (section[1] == 'Basic')
-                        break;
                     module = section.slice(1).join('.');
                     submodules.push(module);
                     break;
                 case 'sympy':
                 case 'stdlib':
+                    if (section[1] == 'Basic')
+                        break;
                     console.log(`from ${codeObject.module} import ${module}`);
                     await this.fetch_module_recursively(module, null, parent);
                     break;

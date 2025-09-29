@@ -66,18 +66,25 @@ export default {
 			}
 		},
 
+		has_remaining() {
+			for (var lemma of this.lemma) {
+				var {type, imply} = lemma;
+				if (!type || !imply || !imply.lean || !imply.latex)
+					return true;
+			}
+		},
+
 		async build(lemma) {
 			if (!lemma) {
 				for (var lemma of this.lemma) {
 					var {type, imply} = lemma;
 					if (!type || !imply || !imply.lean || !imply.latex)
-						await this.build(lemma);
+						this.build(lemma);
 				}
 				return;
 			}
 			var {name} = lemma;
 			var {type, instImplicit, strictImplicit, implicit, given, default: explicit, imply} = await form_post('php/request/mathlib.php', {name});
-			Object.assign(lemma, {type, instImplicit, strictImplicit, implicit, given, explicit, imply});
             var sql = `
 replace into 
     axiom.mathlib
@@ -94,14 +101,23 @@ replace into
     )
 `;
             console.log(sql);
+			Object.assign(lemma, {type, instImplicit, strictImplicit, implicit, given, explicit, imply});
             var rowcount = await form_post('php/request/execute.php', {sql});
             console.log("rowcount =", rowcount);
 		},
 	},
 	
-	mounted() {
+	async mounted() {
 		this.build();
 		mounted(this);
+		if (!getParameterByName('mathlib')) {
+			while (this.has_remaining()) {
+				// wait until all lemmas are built
+				await sleep(10, 'waiting for all lemmas to be built');
+			}
+			// refresh the current page with ?mathlib=
+			location.search = `?mathlib=`;
+		}
 	},
 }
 </script>

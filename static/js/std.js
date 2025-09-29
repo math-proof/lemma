@@ -4747,9 +4747,13 @@ class Rational extends Real {
 	}
 }
 
-function sleep(time) {
+function sleep(time, message) {
 	//usage: await sleep(1000);
-	console.log(`sleeping for ${time} seconds`);
+	if (message)
+		message = ' : ' + message;
+	else
+		message = '';
+	console.log(`sleeping for ${time} seconds${message}`);
 	time *= 1000;
 	return new Promise((resolve, reject) => setTimeout(resolve, time));
 }

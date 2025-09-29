@@ -21,10 +21,15 @@ $lemma = [];
 foreach (get_rows("select * from mathlib where name = \"$name\"", MYSQLI_NUM) as $args)
     $lemma[] = get_lemma($args);
 if (!$lemma) {
-    $regexp = str_replace(".", '\.', $name);
-    $limit = $_GET["limit"]?? 40;
-    $binary = 'COLLATE utf8mb4_bin';
-    foreach (get_rows("select * from mathlib where name $binary regexp \"$regexp\" limit $limit", MYSQLI_NUM) as $args)
+    $limit = $_GET["limit"]?? 100;
+    if ($name) {
+        $regexp = str_replace(".", '\.', $name);
+        $binary = 'COLLATE utf8mb4_bin';
+        $where = "name $binary regexp \"$regexp\"";
+    }
+    else
+        $where = "json_length(imply) = 0";
+    foreach (get_rows("select * from mathlib where $where limit $limit", MYSQLI_NUM) as $args)
         $lemma[] = get_lemma($args);
 }
 ?>

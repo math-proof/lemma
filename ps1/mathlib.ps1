@@ -16,8 +16,8 @@ if (-not (Test-Path "json/mathlib.jsonl")) {
     Write-Host "Generating mathlib.jsonl..."
     New-Item -Path "json/mathlib.jsonl" -ItemType File -Force
     # lake env lean sympy/printing/mathlib.lean | Out-File "json/mathlib.jsonl" -Encoding utf8
-    cmd /c "lake env lean sympy/printing/mathlib.lean" 2>&1 | Tee-Object -FilePath "json/mathlib.jsonl" -Append
-    # cmd /c "lake setup-file sympy/printing/mathlib.lean" 2>&1 | Tee-Object -FilePath "json/mathlib.jsonl" -Append
+    cmd /c "lake env lean sympy/printing/mathlib.lean" | Tee-Object -FilePath "json/mathlib.jsonl" -Append
+    # cmd /c "lake setup-file sympy/printing/mathlib.lean" | Tee-Object -FilePath "json/mathlib.jsonl" -Append
 }
 
 # Generate json/mathlib.tsv if missing
@@ -28,7 +28,9 @@ if (-not (Test-Path "json/mathlib.tsv")) {
             $obj = $_ | ConvertFrom-Json -ErrorAction Stop
             # handle missing/empty properties gracefully
             $name = ConvertTo-Json $obj.name -Compress
+            $name = $name.Trim('"')
             $type = ConvertTo-Json $obj.type -Compress
+            $type = $type.Trim('"')
             # produce a tab-separated string
             "$name`t$type"
         } catch {

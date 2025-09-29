@@ -36,7 +36,7 @@
 
         <renderLean v-if=explicit :text=explicit :index="[index, 'explicit']"></renderLean>
         <hr>
-        <a style='font-size: inherit' :href="module? `?callee=${module}`: `?q=${name}&fullText=on`" title='callee hierarchy'>
+        <a style='font-size: inherit' :href="module? `?callee=${module}`: `?mathlib=${name}`" title='callee hierarchy'>
             <span v-clipboard class=green :data-clipboard-text=lemmaName><b>-- imply</b></span>
         </a>
         <div @keydown=keydown_div @click.left.stop=click_select :class=class_imply tabindex="1000">
