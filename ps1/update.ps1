@@ -187,6 +187,6 @@ if ($null -ne $node) {
 }
 
 # Run lake commands
-lake clean -v
-lake build
+lake clean
+lake build -v
 . .\ps1\run.ps1

@@ -1,4 +1,5 @@
-# usage: powershell sh/mathlib.ps1
+# usage: 
+# . ps1/mathlib.ps1
 
 # Check if MYSQL_USER is set
 if (-not $env:MYSQL_USER) {
@@ -21,8 +22,8 @@ if (-not (Test-Path "json/mathlib.tsv")) {
         try {
             $obj = $_ | ConvertFrom-Json -ErrorAction Stop
             # handle missing/empty properties gracefully
-            $name = if ($obj.name) { $obj.name } else { "" }
-            $type = if ($obj.type) { $obj.type } else { "" }
+            $name = ConvertTo-Json $obj.name -Compress
+            $type = ConvertTo-Json $obj.type -Compress
             # produce a tab-separated string
             "$name`t$type"
         } catch {
