@@ -51,7 +51,7 @@ if ($_POST) {
 		return $module;
 	}
 
-	$term = "(?:[A-Z][\w']*|(?:of|is|et|ou|to|eq|ne|gt|lt|ge|le|in|as|dvd|subset|supset|mod)(?=\.))";
+	$term = "(?:[A-Z][\w']*|(?:of|is|et|ou|or|and||to|eq|ne|gt|lt|ge|le|in|as|dvd|sub|sup|subset|supset|mod)(?=\.))";
 	$sections = std\listdir($root = dirname(dirname(__FILE__)) . "/Lemma/");
 	$sectionRegex = implode('|', $sections);
 	$sectionRegex = "(?:$sectionRegex)(?=\.[A-Z])";
@@ -240,7 +240,7 @@ EOT;
 			return;
 		}
 	});
-	if (!array_filter($imports, fn($import) => str_starts_with($import, 'Lemma.')))
+	if (!array_filter($imports, fn($import) => str_starts_with($import, 'Lemma.')) && array_search('sympy.Basic', $imports) === false)
 		$imports[] = "sympy.Basic";
 
 	$open_section = array_reduce($imports, function ($carry, $import)  {
