@@ -13,8 +13,8 @@ private lemma main
   x ∈ Icc a b := by
 -- proof
   constructor
-  assumption
-  assumption
+  repeat assumption
 
 
 -- created on 2025-03-30
+-- updated on 2025-09-30

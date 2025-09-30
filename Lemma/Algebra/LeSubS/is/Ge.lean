@@ -5,14 +5,14 @@ import sympy.Basic
 private lemma main
   [AddGroup α]
   [LE α]
+  [AddLeftMono α]
   [AddRightMono α]
 -- given
-  (x y c : α) :
+  (a x y : α) :
 -- imply
-  x - c ≤ y - c ↔ x ≤ y :=
+  a - y ≤ a - x ↔ y ≥ x :=
 -- proof
-  sub_le_sub_iff_right c
+  sub_le_sub_iff_left a
 
 
--- created on 2025-05-14
--- updated on 2025-09-30
+-- created on 2025-09-30

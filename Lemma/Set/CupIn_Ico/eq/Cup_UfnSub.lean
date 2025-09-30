@@ -1,21 +1,27 @@
-import Lemma.Set.CupIn_Ico.eq.Cup_UfnAdd
-import Lemma.Algebra.Sub.eq.Add_Neg
-import Lemma.Algebra.Add.eq.Sub_Neg
-open Set Algebra
+import sympy.functions.elementary.integers
+import sympy.sets.sets
+import Lemma.Set.Cup.eq.Cup_Ite
+open Set
 
 
 @[main]
 private lemma main
-  [AddCommGroup ι] [PartialOrder ι] [IsOrderedAddMonoid ι]
+  [IntegerRing ι]
 -- given
-  (a b d : ι)
-  (f : ι → Set β) :
+  (a b c : ι)
+  (f : ι → Set β)
+  (h : (x : ι) → Decidable (x ∈ Ico a b)) :
 -- imply
-  ⋃ n ∈ Ico a b, f n = ⋃ n ∈ Ico (a + d) (b + d), f (n - d) := by
+  ⋃ i ∈ Ico a b, f i = ⋃ i ∈ Ico (c - b + 1) (c - a + 1), f (c - i) := by
 -- proof
-  rw [CupIn_Ico.eq.Cup_UfnAdd (d := -d)]
-  simp only [Add_Neg.eq.Sub]
-  simp only [Sub_Neg.eq.Add]
+  have h_iff : ∀ x, x ∈ Ico (c - b + 1) (c - a + 1) ↔ (c - x) ∈ Ico a b := by
+    intro x
+    sorry
+  -- have h : ((x : ι) → Decidable (x ∈ Ico (c - b + 1) (c - a + 1))) := by
+  -- sorry
+  rw [Cup.eq.Cup_Ite _ (fun i => f (c - i))]
+  sorry
 
 
 -- created on 2025-08-04
+-- updated on 2025-09-30

@@ -4275,9 +4275,9 @@ class LeanModule extends LeanStatements
         );
         $lakePath = get_lake_path();
         if ($imports) {
-            $imports = implode(' ', array_map(fn($import) => "$import", $imports));
-            // $cmd = "$lakePath build $imports";
-            $cmd = $lakePath . " setup-file \"$leanEchoFile\" Init $imports";
+            $imports = implode(' ', array_map(fn($import) => "$import->arg", $imports));
+            $cmd = "$lakePath build $imports";
+            // $cmd = $lakePath . " setup-file \"$leanEchoFile\"";
             error_log("executing cmd = $cmd");
             if (std\is_linux())
                 shell_exec($cmd);

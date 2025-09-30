@@ -7,7 +7,6 @@ import Lemma.Algebra.AppendAppend.eq.Append_Append
 import Lemma.Algebra.AppendTake_Slice.eq.Take.of.Le
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Algebra.Ge_1
-import Lemma.Algebra.LeSubS.of.Ge
 import Lemma.Algebra.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.Algebra.LengthTake.eq.Min_Length
 import Lemma.Algebra.EqMin.of.Le
