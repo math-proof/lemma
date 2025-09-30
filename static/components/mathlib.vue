@@ -92,7 +92,7 @@ delete from
 where name = ${name.mysqlStr()};
 `;
 				if (!imply)
-					this.imply = {lean: '?', latex: '?'};
+					lemma.imply = {lean: '?', latex: '?'};
 			}
 			else {
             	var sql = `
