@@ -24,7 +24,7 @@ def prove(Eq):
     r = Symbol(real=True)
     Eq << apply(r < 0, Max(r * x, r * y))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Max.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Algebra.Max.eq.IteGe)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Min.eq.IteLe)
 

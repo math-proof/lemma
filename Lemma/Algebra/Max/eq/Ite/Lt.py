@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].lhs.this.apply(Algebra.Max.eq.Ite)
+    Eq << Eq[-1].lhs.this.apply(Algebra.Max.eq.IteGe)
 
     Eq << Eq[-1].subs(x, z)
 

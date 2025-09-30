@@ -16,7 +16,7 @@ def prove(Eq):
     Eq << Eq[0].this.find(relu).defun()
 
 
-    Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Max.eq.Ite)
+    Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Max.eq.IteGe)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
 

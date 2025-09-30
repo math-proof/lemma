@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Algebra.Abs.eq.IteGe_0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Max.eq.Ite)
+    Eq << Eq[-1].this.rhs.apply(Algebra.Max.eq.IteGe)
 
     Eq << Eq[-1].this.find(Expr >= -Expr).apply(Algebra.Ge.Is.Ge_0)
 

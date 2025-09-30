@@ -36,7 +36,7 @@ def prove(Eq):
     r = Symbol(real=True, negative=True)
     Eq << apply(Max(x * r, y * r))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Max.eq.Ite)
+    Eq << Eq[0].this.lhs.apply(Algebra.Max.eq.IteGe)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Min.eq.IteLe)
 

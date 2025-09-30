@@ -31,9 +31,9 @@ def prove(Eq):
     r = Symbol(real=True, positive=True)
     Eq << apply(Max(x * r, y * r))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Max.eq.Ite)
+    Eq << Eq[0].this.lhs.apply(Algebra.Max.eq.IteGe)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Max.eq.Ite)
+    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Max.eq.IteGe)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.Mul)
 

@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(x, y)
 
-    Eq << Eq[0].this.rhs.apply(Algebra.Max.eq.Ite)
+    Eq << Eq[0].this.rhs.apply(Algebra.Max.eq.IteGe)
 
 
 if __name__ == '__main__':

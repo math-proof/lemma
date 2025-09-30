@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[0])
 
-    Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.Ite)
+    Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.IteGe)
 
     Eq << Eq[-1].this.args[0].apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
 

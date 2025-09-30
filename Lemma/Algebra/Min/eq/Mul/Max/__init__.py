@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Algebra.Min.eq.IteLe)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Max.eq.Ite)
+    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Max.eq.IteGe)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.Mul)
 

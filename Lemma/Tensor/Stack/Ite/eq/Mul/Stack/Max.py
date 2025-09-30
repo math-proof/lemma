@@ -26,7 +26,7 @@ def prove(Eq):
     i, j = Symbol(domain=Range(n))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], (i, j))
 
-    Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.Ite)
+    Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.IteGe)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
 

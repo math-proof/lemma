@@ -5,3 +5,4 @@ from . import Maxima
 from . import Ite
 from . import Square
 from . import Ceil
+from . import IteGe

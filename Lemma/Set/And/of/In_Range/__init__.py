@@ -18,7 +18,7 @@ def prove(Eq):
     a, b = Symbol(integer=True, given=True)
     Eq << apply(Element(x, Range(a, b)), False)
 
-    Eq << Set.Le.of.In_Range.stop.apply(Eq[0])
+    Eq << Set.Le.of.In_Ico.apply(Eq[0])
 
     Eq << Set.Ge.of.In_Ico.int.apply(Eq[0])
 
