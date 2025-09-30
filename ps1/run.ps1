@@ -3,8 +3,8 @@
 param(
     [int]$limit = 4096
 )
-[System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [Text.Encoding]::UTF8
+$OutputEncoding = [Text.Encoding]::UTF8
 $start_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()
 . .\ps1\utility.ps1
 
@@ -22,17 +22,18 @@ function echo_import {
         [string]$file
     )
     $file = $file.Substring($root.Length + 1)
-    $lemma = Join-Path (Split-Path $file -Parent) ([System.IO.Path]::GetFileNameWithoutExtension($file))
+    $lemma = Join-Path (Split-Path $file -Parent) ([IO.Path]::GetFileNameWithoutExtension($file))
     $module = $lemma -replace '\\', '.'
     Add-Content -Path test.lean -Value "import $module"
     
     $module = $module -creplace '^Lemma\.', ''
     $lines = @(Get-Content -Path $file | Where-Object { $_ -match '^import\s+' } | ForEach-Object { $_ -replace '^import\s+', '' })
-    
+    # $lines is guaranteed to be an array!
     if ($lines.Count -eq 0) {
         $imports_dict[$module] = "[]"
     } else {
-        $imports_dict[$module] = $lines | ConvertTo-Json -Compress
+        # PowerShell’s ConvertTo-Json outputs a JSON string for single-element arrays instead of a JSON array.
+        $imports_dict[$module] = ,$lines | ConvertTo-Json -Compress
     }
 }
 
@@ -244,7 +245,7 @@ if (-not $env:MYSQL_PORT) {
     $env:MYSQL_PORT = 3306 
 }
 # Create a temporary config file with .ini extension
-$tempConfigPath = [System.IO.Path]::ChangeExtension((New-TemporaryFile).FullName, '.ini')
+$tempConfigPath = [IO.Path]::ChangeExtension((New-TemporaryFile).FullName, '.ini')
 @"
 [client]
 user = $env:MYSQL_USER
@@ -301,7 +302,7 @@ if (Select-String -Path test.log -Pattern "ERROR \d+ \(\w+\) at line \d+: Table 
 mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "delete from lemma where error is NULL" 2>&1 | Tee-Object -FilePath test.log
 
 # Calculate time cost
-$end_time = [System.DateTimeOffset]::Now.ToUnixTimeSeconds()
+$end_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()
 $time_cost = $end_time - $start_time
 
 # Output the time cost (optional)
@@ -310,7 +311,7 @@ Write-Output "Operation completed in $time_cost seconds"
 function remove_invalid_ir_file {
     param(
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
-        [System.IO.FileInfo]$File
+        [IO.FileInfo]$File
     )
 
     $module = ($File | Resolve-Path -Relative) -replace '\\', '/'

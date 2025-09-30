@@ -8,9 +8,9 @@ private lemma main
 -- given
   (x a b : α) :
 -- imply
-  x ∈ Icc a b ↔ -x ∈ Icc (-b) (-a) := by
+  x ∈ Ioc a b ↔ -x ∈ Ico (-b) (-a) := by
 -- proof
   aesop
 
 
--- created on 2025-08-02
+-- created on 2025-09-30

@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   {A : Set α}
 -- given
@@ -16,10 +16,10 @@ private lemma main
   ext x
   simp only [Set.iUnion_ite]
   constructor
-  · 
+  ·
     rintro ⟨a, haA, hxf⟩
     aesop
-  · 
+  ·
     rintro ⟨a, ⟨haA, hxf⟩⟩
     aesop
     aesop

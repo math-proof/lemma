@@ -9,7 +9,7 @@ open Set Algebra
 private lemma main
   [AddCommGroup ι] [PartialOrder ι] [IsOrderedAddMonoid ι]
 -- given
-  (a b d : ι)
+  (d a b : ι)
   (f : ι → Set β) :
 -- imply
   ⋃ n ∈ Ico a b, f n = ⋃ n ∈ Ico (a - d) (b - d), f (n + d) := by

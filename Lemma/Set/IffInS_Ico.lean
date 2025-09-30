@@ -7,7 +7,7 @@ open Set
 @[main]
 private lemma main
 -- given
-  (x a b c : ℤ) :
+  (c a b x : ℤ) :
 -- imply
   x ∈ Ico a b ↔ c - x ∈ Ico (c - b + 1) (c - a + 1) := by
 -- proof
