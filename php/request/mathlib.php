@@ -6,6 +6,7 @@ if (!std\is_linux())
 $name = $_POST['name'];
 
 $leanFile = "test.$name.lean";
+$leanFile = str_replace('?', "%3F", $leanFile);
 chdir("../../");
 if (!file_exists($leanFile)) {
     error_log("create new lean file = $leanFile");
