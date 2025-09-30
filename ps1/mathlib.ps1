@@ -1,5 +1,8 @@
 # usage: 
 # . ps1/mathlib.ps1
+param(
+    [bool]$refresh = $true
+)
 
 # Check if MYSQL_USER is set
 if (-not $env:MYSQL_USER) {
@@ -10,7 +13,7 @@ if (-not $env:MYSQL_USER) {
 $OutputEncoding = [Text.Encoding]::UTF8
 
 # Generate json/mathlib.jsonl if missing
-if (-not (Test-Path "json/mathlib.jsonl")) {
+if ($refresh || -not (Test-Path "json/mathlib.jsonl")) {
     Write-Host "Building Mathlib..."
     lake build Mathlib
     Write-Host "Generating mathlib.jsonl..."
@@ -21,7 +24,7 @@ if (-not (Test-Path "json/mathlib.jsonl")) {
 }
 
 # Generate json/mathlib.tsv if missing
-if (-not (Test-Path "json/mathlib.tsv")) {
+if ($refresh || -not (Test-Path "json/mathlib.tsv")) {
     # Read all lines, parse JSON, produce TSV, write as UTF8
     $tsv = Get-Content -Path "json/mathlib.jsonl" | ForEach-Object {
         try {
