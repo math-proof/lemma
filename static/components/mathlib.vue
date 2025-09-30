@@ -122,7 +122,8 @@ replace into
 		this.build();
 		mounted(this);
 		if (!getParameterByName('mathlib')) {
-			while (this.has_remaining()) {
+			var count = 0;
+			while (this.has_remaining() && count++ < 100) {
 				// wait until all lemmas are built
 				await sleep(10, 'waiting for all lemmas to be built');
 			}
