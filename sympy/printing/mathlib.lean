@@ -24,6 +24,8 @@ def hasStrValLiteral: Expr → Bool
   let env ← getEnv
   -- for ⟨name, info⟩ in env.constants.toList |>.take 1 do
   for ⟨name, info⟩ in env.constants.toList do
+    if ← isInstance name then
+      continue
     let name := name.toString
     if name.containsSubstr "._" ||
       name.startsWith "_private." ||
