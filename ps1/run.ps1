@@ -1,7 +1,7 @@
 # usage :
 # . ps1\run.ps1
 param(
-    [int]$limit = 128
+    [int]$limit = 512
 )
 [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8

@@ -85,7 +85,17 @@ export default {
 			}
 			var {name} = lemma;
 			var {type, instImplicit, strictImplicit, implicit, given, default: explicit, imply} = await form_post('php/request/mathlib.php', {name});
-            var sql = `
+			if (!type || !imply) {
+	            var sql = `
+delete from
+    axiom.mathlib
+where name = ${name.mysqlStr()};
+`;
+				if (!imply)
+					this.imply = {lean: '?', latex: '?'};
+			}
+			else {
+            	var sql = `
 replace into 
     axiom.mathlib
     (name, type, instImplicit, strictImplicit, implicit, given, \`default\`, imply) 
@@ -100,8 +110,9 @@ replace into
         ${JSON.stringify(imply).mysqlStr()}
     )
 `;
+				Object.assign(lemma, {type, instImplicit, strictImplicit, implicit, given, explicit, imply});
+			}	
             console.log(sql);
-			Object.assign(lemma, {type, instImplicit, strictImplicit, implicit, given, explicit, imply});
             var rowcount = await form_post('php/request/execute.php', {sql});
             console.log("rowcount =", rowcount);
 		},
