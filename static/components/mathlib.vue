@@ -101,9 +101,9 @@ replace into
     )
 `;
             console.log(sql);
+			Object.assign(lemma, {type, instImplicit, strictImplicit, implicit, given, explicit, imply});
             var rowcount = await form_post('php/request/execute.php', {sql});
             console.log("rowcount =", rowcount);
-			Object.assign(lemma, {type, instImplicit, strictImplicit, implicit, given, explicit, imply});
 		},
 	},
 	
