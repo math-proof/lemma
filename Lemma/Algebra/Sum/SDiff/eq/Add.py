@@ -17,7 +17,7 @@ def prove(Eq):
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(Sum[x:A - B](f(x)))
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.eq.Add.split, cond=B)
+    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.eq.AddSumS, cond=B)
 
 
 

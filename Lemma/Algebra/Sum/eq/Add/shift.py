@@ -32,7 +32,7 @@ def prove(Eq):
     f, h = Function(real=True)
     Eq << apply(Sum[i:n + 1](f(i) + h(i)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={0})
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
 
 
 

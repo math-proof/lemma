@@ -27,7 +27,7 @@ def prove(Eq):
     f, h = Function(real=True)
     Eq << apply(Sum[i:1:n](f(i) + h(i)))
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Add.split, cond={0})
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={0})
 
 
 

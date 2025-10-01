@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Set.EqSum.of.Eq_Cup.apply(Eq[0], Sum[x:X](f(x)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={y})
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={y})
 
     Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.contains, Eq[-1])
 
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq.eq.subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.eq.Add.split, cond={i})
+    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.eq.AddSumS, cond={i})
 
     Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[3], Eq[-1])
 

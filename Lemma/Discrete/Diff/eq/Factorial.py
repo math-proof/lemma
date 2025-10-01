@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Discrete.Diff.eq.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond=n.set)
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond=n.set)
 
     Eq << Eq[-1].this.find(Factorial).apply(Discrete.Factorial.eq.Mul)
 

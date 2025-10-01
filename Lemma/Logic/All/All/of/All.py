@@ -2,7 +2,7 @@ from util import *
 
 
 def split(All, given, cond, wrt):
-    from Lemma.Algebra.Sum.eq.Add.split import split
+    from Lemma.Algebra.Sum.eq.AddSumS import split
 
     if isinstance(cond, Boolean):
         if wrt is None:

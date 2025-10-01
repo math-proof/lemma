@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq.le_given = Eq.le_given.subs(Eq[-1])
 
-    Eq << Eq.le_given.find(- ~Sum).this.apply(Algebra.Sum.eq.Add.split, cond={m - 1})
+    Eq << Eq.le_given.find(- ~Sum).this.apply(Algebra.Sum.eq.AddSumS, cond={m - 1})
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.eq.Sub.push)
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split, cond={m - 1})
+    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={m - 1})
 
     Eq << Eq[-1] - Eq[-1].rhs.args[-1]
 

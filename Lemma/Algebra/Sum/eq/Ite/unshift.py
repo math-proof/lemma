@@ -17,7 +17,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Sum[i:1:n](f(i)))
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Add.split, cond={0})
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={0})
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=n >= 1)
 

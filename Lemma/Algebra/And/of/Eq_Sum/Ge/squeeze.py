@@ -22,7 +22,7 @@ def prove(Eq):
     a = Symbol(real=True, negative=False)
     Eq << apply(Equal(Sum[i:n + 1](x[i]), a), x[n] >= a)
 
-    Eq.eq = Eq[0].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq.eq = Eq[0].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
 
     Eq << GreaterEqual(Eq.eq.find(Sum), 0, plausible=True)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.Gt_0.of.Ne_0)
 
-    Eq << Eq[-3].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={i})
+    Eq << Eq[-3].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
 
     Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 

@@ -19,7 +19,7 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(Equal(Intersection(A, B), A.etype.emptySet), Sum[x:A | B](f(x)))
 
-    Eq << Algebra.Sum.eq.Add.split.apply(Eq[1].lhs, cond=B)
+    Eq << Algebra.Sum.eq.AddSumS.apply(Eq[1].lhs, cond=B)
 
     Eq << Set.EqSDiff.of.Inter.eq.Empty.apply(Eq[0])
 

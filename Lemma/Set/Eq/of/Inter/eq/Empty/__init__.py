@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq.as_Plus = Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
 
-    Eq <<= Eq.as_Plus.rhs.args[0].this.apply(Algebra.Sum.eq.Add.split, cond=A), Eq.as_Plus.rhs.args[1].this.apply(Algebra.Sum.eq.Add.split, cond=B)
+    Eq <<= Eq.as_Plus.rhs.args[0].this.apply(Algebra.Sum.eq.AddSumS, cond=A), Eq.as_Plus.rhs.args[1].this.apply(Algebra.Sum.eq.AddSumS, cond=B)
 
     Eq << Eq[-1] + Eq[-2]
 

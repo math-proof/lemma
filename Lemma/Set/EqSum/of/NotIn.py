@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.Eq_Empty.Inter.of.NotIn.apply(Eq[0])
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={e})
+    Eq << Eq[1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={e})
 
     Eq << Set.EqSDiff.of.NotIn.apply(Eq[0])
     Eq << Eq[-2].subs(Eq[-1])

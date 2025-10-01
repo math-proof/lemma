@@ -20,7 +20,7 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(Add(Sum[k:1 + i:n](f(k)), f(i)))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split, cond={i})
+    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
 
 
 if __name__ == '__main__':

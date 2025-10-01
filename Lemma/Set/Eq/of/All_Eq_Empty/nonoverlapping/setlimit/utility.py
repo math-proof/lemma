@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Eq.induct.rhs.this.apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq.induct.rhs.this.apply(Algebra.Sum.eq.AddSumS, cond={n})
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

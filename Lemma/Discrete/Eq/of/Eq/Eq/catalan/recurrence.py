@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split, cond={0})
+    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
 
     Eq.g_derivative = Eq[-1].this.rhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
 

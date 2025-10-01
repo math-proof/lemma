@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(n, n + 1)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={n})
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.pop)
 

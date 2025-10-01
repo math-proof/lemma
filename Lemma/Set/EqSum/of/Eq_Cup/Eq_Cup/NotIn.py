@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq.plausible.subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={y})
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={y})
 
     Eq << Set.EqSDiff.of.NotIn.apply(Eq[2])
 

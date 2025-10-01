@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.domain_defined)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={0})
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
 
     Eq << Eq[-1] - Eq[-1].lhs.args[1]
 

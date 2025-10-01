@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << Calculus.Exp.eq.Sum.maclaurin.apply(i * x)
 
     n = Eq[-1].rhs.variable
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split, cond=Equal(n % 2, 0))
+    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond=Equal(n % 2, 0))
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.halve)
 

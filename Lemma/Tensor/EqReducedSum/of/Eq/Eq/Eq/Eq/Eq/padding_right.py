@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs().find(Bool).simplify()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split, cond=k < Eq[-1].find(ReducedArgMax))
+    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond=k < Eq[-1].find(ReducedArgMax))
 
     Eq << Tensor.Eq_0.Sum.of.Eq_Stack.padding_left.apply(Eq[0])
 

@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Algebra.LeAdd.of.Le.Le.apply(Eq[0], Eq[1])
 
-    Eq << Eq[2].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={a - 1})
+    Eq << Eq[2].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={a - 1})
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split, cond={a - 1})
+    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={a - 1})
 
 
 if __name__ == '__main__':

@@ -24,7 +24,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
 
     k = Eq[-1].find(Sum).variable
-    Eq << Eq[-1].this.expr.rhs.find(Sum).apply(Algebra.Sum.eq.Add.split, cond=k<=i)
+    Eq << Eq[-1].this.expr.rhs.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond=k<=i)
 
     Eq << Eq[-1].this().find(Min).simplify()
 

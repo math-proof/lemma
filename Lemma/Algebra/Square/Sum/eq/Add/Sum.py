@@ -27,13 +27,13 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.find(Sum).apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq.induct.this.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={n})
 
     Eq << Eq[-1].this.lhs.expand()
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={n})
 
-    Eq << Eq[-1].this.rhs.find(Number * ~Sum).apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq[-1].this.rhs.find(Number * ~Sum).apply(Algebra.Sum.eq.AddSumS, cond={n})
 
     Eq << Eq[-1].this.rhs.find(Number * ~Sum).simplify()
 

@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(sigma).defun()
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond=CartesianSpace(Range(n), k))
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond=CartesianSpace(Range(n), k))
 
     Eq << Eq[-1].this.find(Complement).apply(Set.SDiff.eq.Conditionset)
 

@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Sum[k:s_j](k).this.limits[0][1].definition
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split, cond={0})
+    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
 
     Eq.crossproduct = Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 

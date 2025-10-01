@@ -21,7 +21,7 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(Add(Sum[k:i:n](f(k)), f(n)))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
 
 
 if __name__ == '__main__':

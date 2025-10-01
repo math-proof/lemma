@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq.All_is_nonnegative, Eq[-1])
 
-    Eq << Eq[-3].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={i})
+    Eq << Eq[-3].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
 
     Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 

@@ -26,7 +26,7 @@ def prove(Eq):
     Eq << Eq[-3].subs(Eq[-2], Eq[-1])
 
     k = Eq[-1].find(Sum).variable
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Add.split, cond=k <= i)
+    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond=k <= i)
 
     Eq << Eq[-1].this.rhs().find(Min).simplify()
 

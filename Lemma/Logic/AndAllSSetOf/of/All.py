@@ -18,7 +18,7 @@ def apply(given, *, cond=None, wrt=None):
         given = All(given, (wrt,))
     assert given.is_ForAll
 
-    from Lemma.Algebra.Sum.eq.Add.split import split
+    from Lemma.Algebra.Sum.eq.AddSumS import split
     given = split(All, given, wrt.domain_conditioned(cond))
     lhs, rhs = given.of(And)
     return lhs, rhs

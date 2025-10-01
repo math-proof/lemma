@@ -31,16 +31,16 @@ def prove(Eq):
     Eq << apply(Sum[i:n](x[i]))
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
 
 
 if __name__ == '__main__':

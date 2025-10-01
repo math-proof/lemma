@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.limits_subs(i, j)
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.Add.split, cond={i})
+    Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
 
     Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 

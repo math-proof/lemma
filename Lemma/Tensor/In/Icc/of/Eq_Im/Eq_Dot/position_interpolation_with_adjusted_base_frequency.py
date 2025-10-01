@@ -96,7 +96,7 @@ def prove(Eq):
 
     Eq << (Norm(x) ** 2).this.base.apply(Algebra.Norm.eq.Sqrt, simplify=None)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split, cond=Equal(Eq[-1].rhs.variable % 2, 0))
+    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond=Equal(Eq[-1].rhs.variable % 2, 0))
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.halve)
 
