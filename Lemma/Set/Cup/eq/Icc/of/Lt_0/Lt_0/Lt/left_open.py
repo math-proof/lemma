@@ -28,13 +28,13 @@ def prove(Eq):
 
     Eq <<= Eq[-2].rhs.args[0].this.subs(Eq.min_b0), Eq[-2].rhs.args[1].this.subs(Eq[-1])
 
-    Eq << Set.Cup.eq.Icc.of.Lt_0.left_open.apply(Eq[1], k)
+    Eq << Set.Cup_Ioc.eq.Ioc_0.of.Lt_0.apply(Eq[1], k)
 
     Eq << Eq[-2].subs(Eq[-1])
 
     Eq << Eq[4].subs(Eq[-1], Eq[-4]).reversed
 
-    Eq << Set.Cup.eq.Icc.of.Lt_0.left_open.apply(Eq[0], k)
+    Eq << Set.Cup_Ioc.eq.Ioc_0.of.Lt_0.apply(Eq[0], k)
 
     Eq << Eq[-2].subs(Eq[-1])
 
