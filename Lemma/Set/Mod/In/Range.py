@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Algebra.Mod.eq.Sub_Mul_Div)
 
-    Eq << Set.In_Range.given.And.apply(Eq[-1])
+    Eq << Set.In_Ico.given.And.apply(Eq[-1])
 
 
 

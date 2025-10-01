@@ -16,7 +16,7 @@ def prove(Eq):
     x, a, b = Symbol(integer=True)
     Eq << apply(Element(x, Range(a, b)))
 
-    Eq << Set.And.of.In_Range.apply(Eq[0])
+    Eq << Set.And.of.In_Ico.apply(Eq[0])
 
     Eq << Algebra.Lt.of.Ge.Lt.apply(*Eq[-2:])
 

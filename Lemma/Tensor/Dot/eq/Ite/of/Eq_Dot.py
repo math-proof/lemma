@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this(t).find(Min).simplify()
 
-    Eq << Eq[-1].this.lhs.apply(Set.In_Range.given.And)
+    Eq << Eq[-1].this.lhs.apply(Set.In_Ico.given.And)
 
     Eq << Eq[-1].this(k).find(Less).simplify()
 

@@ -22,7 +22,7 @@ def prove(Eq):
     x = Eq[1].variable
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], x, b - 1)
 
-    Eq << Set.In_Range.given.And.apply(Eq[-1])
+    Eq << Set.In_Ico.given.And.apply(Eq[-1])
     Eq << Eq[-1].reversed
 
 

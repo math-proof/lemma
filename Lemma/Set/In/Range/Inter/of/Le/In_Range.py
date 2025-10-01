@@ -17,9 +17,9 @@ def prove(Eq):
     a, b, c, x, y = Symbol(integer=True)
     Eq << apply(x <= a, Element(x, Range(b, c)))
 
-    Eq << Set.In_Range.given.And.apply(Eq[2])
+    Eq << Set.In_Ico.given.And.apply(Eq[2])
 
-    Eq << Set.And.of.In_Range.apply(Eq[1])
+    Eq << Set.And.of.In_Ico.apply(Eq[1])
 
     Eq << Algebra.Lt.of.Le.relax.apply(Eq[0])
     Eq << Algebra.LtMin.of.Lt.Lt.apply(Eq[-2], Eq[-1])

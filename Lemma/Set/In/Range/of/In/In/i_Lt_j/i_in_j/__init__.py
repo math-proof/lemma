@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq << Set.In.given.In.Sub.apply(Eq[2], d)
 
-    Eq <<= Set.In_Range.given.And.apply(Eq[3]), Set.In_Range.given.And.apply(Eq[-1])
+    Eq <<= Set.In_Ico.given.And.apply(Eq[3]), Set.In_Ico.given.And.apply(Eq[-1])
 
-    Eq <<= Set.And.of.In_Range.apply(Eq[4]), Set.And.of.In_Range.apply(Eq[1])
+    Eq <<= Set.And.of.In_Ico.apply(Eq[4]), Set.And.of.In_Ico.apply(Eq[1])
 
     Eq << Eq[-2].reversed
 

@@ -18,9 +18,9 @@ def prove(Eq):
     a, b, a_quote, b_quote, x = Symbol(integer=True, given=True)
     Eq << apply(a_quote <= a, b_quote >= b, Element(x, Range(a, b)))
 
-    Eq << Set.In_Range.given.And.apply(Eq[-1])
+    Eq << Set.In_Ico.given.And.apply(Eq[-1])
 
-    Eq << Set.And.of.In_Range.apply(Eq[2])
+    Eq << Set.And.of.In_Ico.apply(Eq[2])
 
     Eq << Algebra.Ge.of.Ge.Ge.apply(Eq[-2], Eq[0])
 

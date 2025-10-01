@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.And.of.Imp.domain_defined.apply(Eq[-1], t)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Range.given.And)
+    Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.given.And)
 
     Eq << Eq[-1].this(t).find(GreaterEqual).simplify()
 

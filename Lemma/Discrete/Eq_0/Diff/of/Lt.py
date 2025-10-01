@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2].variable, d)
 
-    Eq << Eq[-1].this.lhs.apply(Set.In_Range.given.And)
+    Eq << Eq[-1].this.lhs.apply(Set.In_Ico.given.And)
 
     Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 

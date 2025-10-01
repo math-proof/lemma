@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Element(n, Range(1, m), plausible=True)
 
-    Eq << Set.In_Range.given.And.apply(Eq[-1])
+    Eq << Set.In_Ico.given.And.apply(Eq[-1])
 
     Eq << Eq[-1].reversed
 

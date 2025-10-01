@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.And.of.In_Range)
+    Eq << Eq[-1].this.find(Element).apply(Set.And.of.In_Ico)
 
     Eq << Eq[-1].this.expr.apply(Logic.Cond.of.And, slice(0, 3, 2))
 

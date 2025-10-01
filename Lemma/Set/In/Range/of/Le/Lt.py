@@ -26,7 +26,7 @@ def prove(Eq):
     # Eq << apply(x >= b, a > x)
     Eq << apply(x <= b, a < x)
 
-    Eq << Set.In_Range.given.And.apply(Eq[-1])
+    Eq << Set.In_Ico.given.And.apply(Eq[-1])
 
     Eq << Algebra.Lt.given.Le.strengthen.apply(Eq[-1])
 

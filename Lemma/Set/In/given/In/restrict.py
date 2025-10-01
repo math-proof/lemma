@@ -19,7 +19,7 @@ def prove(Eq):
     U, S = Symbol(etype=dtype.integer)
     Eq << apply(Element(e, U), S)
 
-    Eq << Set.And.of.In_Inter.apply(Eq[1])
+    Eq << Set.In.In.of.In_Inter.apply(Eq[1])
 
 
 

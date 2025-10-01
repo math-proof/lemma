@@ -19,7 +19,7 @@ def prove(Eq):
     i, j = Symbol(domain=Range(n), given=True)
     Eq << apply(j >= i, i >= n - Min(n, u))
 
-    Eq << Set.In_Range.given.And.apply(Eq[-1])
+    Eq << Set.In_Ico.given.And.apply(Eq[-1])
 
     Eq << Eq[0] - i
 

@@ -26,7 +26,7 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Set, Logic
 
     m, n = Symbol(integer=True, positive=True)
     f = Symbol(real=True, shape=(n,))
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Range).apply(Set.Range.Min.eq.Inter, simplify=None)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Inter.given.And, simplify=None)
+    Eq << Eq[-1].this.find(Element).apply(Set.In_Inter.given.In.In, simplify=None)
 
     Eq << Eq[-1].this(i).find(Element[2]).simplify()
 

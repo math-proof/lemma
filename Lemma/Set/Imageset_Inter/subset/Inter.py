@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.rhs.definition
 
-    Eq << Eq[-1].this.rhs.apply(Set.In_Inter.given.And, simplify=False)
+    Eq << Eq[-1].this.rhs.apply(Set.In_Inter.given.In.In, simplify=False)
 
     Eq << Eq[-1].apply(Logic.Imp_And.given.Imp.Imp)
 

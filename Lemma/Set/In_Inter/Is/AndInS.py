@@ -11,7 +11,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Set, Logic
 
     e = Symbol(integer=True, given=True)
     A, B = Symbol(etype=dtype.integer, given=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq <<= Eq[-2].this.lhs.apply(Set.And.of.In_Inter), Eq[-1].this.lhs.apply(Set.In_Inter.of.In.In)
+    Eq <<= Eq[-2].this.lhs.apply(Set.In.In.of.In_Inter), Eq[-1].this.lhs.apply(Set.In_Inter.of.In.In)
 
 
 

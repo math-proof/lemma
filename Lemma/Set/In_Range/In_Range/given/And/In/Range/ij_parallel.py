@@ -27,7 +27,7 @@ def prove(Eq):
     a, i, j, n, m, d = Symbol(integer=True)
     Eq << apply(Element(i, Range(d + j, n + j)), Element(j, Range(a, m)))
 
-    Eq <<= Set.In_Range.given.And.apply(Eq[0]), Set.In_Range.given.And.apply(Eq[1]), Set.And.of.In_Range.apply(Eq[-1])
+    Eq <<= Set.In_Ico.given.And.apply(Eq[0]), Set.In_Ico.given.And.apply(Eq[1]), Set.And.of.In_Ico.apply(Eq[-1])
 
     Eq <<= Algebra.And.Ge.of.Ge_Max.apply(Eq[-2]), Algebra.And.Lt.of.Lt_Min.apply(Eq[-1])
 

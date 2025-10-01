@@ -32,9 +32,9 @@ def prove(Eq):
 
     Eq << Set.In.given.In.Sub.apply(Eq[2], d)
 
-    Eq <<= Set.In_Range.given.And.apply(Eq[-1]), Set.In_Range.given.And.apply(Eq[3])
+    Eq <<= Set.In_Ico.given.And.apply(Eq[-1]), Set.In_Ico.given.And.apply(Eq[3])
 
-    Eq <<= Set.And.of.In_Range.apply(Eq[0]), Set.And.of.In_Range.apply(Eq[4])
+    Eq <<= Set.And.of.In_Ico.apply(Eq[0]), Set.And.of.In_Ico.apply(Eq[4])
 
     Eq << Algebra.Gt.of.Ge.relax.apply(Eq[-2])
 

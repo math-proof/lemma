@@ -27,7 +27,7 @@ def prove(Eq):
     a, i, j, n, m, d = Symbol(integer=True)
     Eq << apply(Element(i, Range(d + j, n + j)), Element(j, Range(a, m)))
 
-    Eq.ge, Eq.lt = Set.And.of.In_Range.apply(Eq[0])
+    Eq.ge, Eq.lt = Set.And.of.In_Ico.apply(Eq[0])
 
     Eq << Eq.ge.this.apply(Algebra.Ge.transport, rhs=0)
 
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Eq[1] & Eq[-1]
 
-    Eq << Set.And.of.In_Range.apply(Eq[1])
+    Eq << Set.And.of.In_Ico.apply(Eq[1])
 
     Eq <<= Algebra.Ge.of.Ge.Ge.apply(Eq.ge, Eq[-2] + d), Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
 

@@ -20,7 +20,7 @@ def prove(Eq):
     Eq << apply(b < x, x < a)
 
     # Eq << apply(x < b, a <= x)
-    Eq << Set.In_Range.given.And.apply(Eq[-1])
+    Eq << Set.In_Ico.given.And.apply(Eq[-1])
 
 
 

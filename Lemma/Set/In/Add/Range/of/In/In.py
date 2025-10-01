@@ -18,11 +18,11 @@ def prove(Eq):
     a, b, c, d, x0, x1 = Symbol(integer=True)
     Eq << apply(Element(x0, Range(a, b)), Element(x1, Range(c, d)))
 
-    Eq << Set.And.of.In_Range.apply(Eq[0])
+    Eq << Set.And.of.In_Ico.apply(Eq[0])
 
     Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
 
-    Eq << Set.And.of.In_Range.apply(Eq[1])
+    Eq << Set.And.of.In_Ico.apply(Eq[1])
 
     Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
 

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(GreaterEqual).apply(Algebra.And.Ge.of.Ge_Max), Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge_Max.given.And.Ge)
 
-    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Inter.given.And, simplify=None), Eq[-1].this.find(Element).apply(Set.And.of.In_Inter, simplify=None)
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Inter.given.In.In, simplify=None), Eq[-1].this.find(Element).apply(Set.In.In.of.In_Inter, simplify=None)
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.Ge.Lt), Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
 
