@@ -3,6 +3,7 @@ import Lemma.Algebra.Eq_0
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqSliceS.Eq.of.Eq
+import Lemma.Tensor.GetSliceStack.as.StackUFn
 open Tensor Algebra
 
 
@@ -20,11 +21,15 @@ private lemma main
     let ⟨h_slice, h_n⟩ := Tensor.EqSliceS.Eq.of.Eq h
     constructor
     ·
-      simp at h_slice
-      sorry
+      apply Logic.Eq.of.SEq.simp
+      have h_f := Tensor.GetSliceStack.as.StackUFn f n 1
+      rw [h_slice] at h_f
+      apply h_f.symm.trans
+      apply Tensor.GetSliceStack.as.StackUFn g n 1
     ·
-      simp at h_n
-      sorry
+      simp only [GetElem.getElem] at h_n
+      simp [Tensor.EqGetStack.fin] at h_n
+      assumption
   ·
     intro ⟨h₀, h₁⟩
     calc
