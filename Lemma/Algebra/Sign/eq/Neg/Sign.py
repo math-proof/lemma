@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sign).apply(Algebra.Sign.eq.Ite.Abs)
 
-    Eq << Eq[-1].this.find(Equal[0]).apply(Algebra.Eq.transport)
+    Eq << Eq[-1].this.find(Equal[0]).apply(Algebra.EqAdd.Is.Eq_Sub)
 
-    Eq << Eq[-1].this.find(Equal[0]).apply(Algebra.Eq.transport)
+    Eq << Eq[-1].this.find(Equal[0]).apply(Algebra.EqAdd.Is.Eq_Sub)
 
     Eq << Eq[-1].this.find(Equal).reversed
 

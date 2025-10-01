@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Set.EqSDiff.of.Eq.apply(Eq[-1], {a[n]})
+    Eq << Set.EqSDiffS.of.Eq.apply(Eq[-1], {a[n]})
 
     return
     Eq << Eq[2].subs(Eq[-1].reversed).reversed

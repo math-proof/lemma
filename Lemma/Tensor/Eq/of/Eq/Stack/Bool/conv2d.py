@@ -51,10 +51,10 @@ def prove(Eq):
     Eq << Eq[-1].rhs.find(conv2d).this.defun()
 
     d0 = Symbol((l[0] - 1) // 2 * r[0] + (r[0] // 2) * (1 - l[0] % 2))
-    Eq.mul_floor_0 = d0.this.definition.reversed.this.apply(Algebra.Eq.transport, lhs=0)
+    Eq.mul_floor_0 = d0.this.definition.reversed.this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     d1 = Symbol((l[1] - 1) // 2 * r[1] + (r[1] // 2) * (1 - l[1] % 2))
-    Eq.mul_floor_1 = d1.this.definition.reversed.this.apply(Algebra.Eq.transport, lhs=0)
+    Eq.mul_floor_1 = d1.this.definition.reversed.this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
     Eq.conv2d = Eq[-1].subs(Eq.mul_floor_0, Eq.mul_floor_1)
 
     C = Symbol(Eq[1].lhs)

@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Card.eq.Add.split, x[j])
 
-    Eq << Set.EqSDiff.of.Eq.apply(Eq[0], Eq.paradox.lhs)
+    Eq << Set.EqSDiffS.of.Eq.apply(Eq[0], Eq.paradox.lhs)
 
     Eq << Eq[-1].apply(Set.EqCard.of.Eq)
 

@@ -16,7 +16,7 @@ def prove(Eq):
     Eq << apply(Element(x, Interval(a, b, left_open=True)))
 
     Eq << Set.EqIcc.of.In.split.apply(Eq[0])
-    Eq << Set.EqSDiff.of.Eq.apply(Eq[-1], {x})
+    Eq << Set.EqSDiffS.of.Eq.apply(Eq[-1], {x})
 
 
 if __name__ == '__main__':

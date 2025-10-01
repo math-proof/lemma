@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.Gt_0.of.Ne_Empty.apply(Eq[-1])
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

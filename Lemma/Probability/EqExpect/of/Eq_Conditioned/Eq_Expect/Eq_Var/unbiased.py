@@ -41,11 +41,11 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq.eq_expect_square = Eq[-1].this.apply(Algebra.Eq.transport, lhs=0)
+    Eq.eq_expect_square = Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-3].subs(Eq.eq_expect_square, Eq[1])
 
-    Eq << -Eq[-1].this.apply(Algebra.Eq.transport, lhs=0) * n
+    Eq << -Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0) * n
 
     Eq << Eq[-1].this.rhs.expand()
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.eq_expect_square)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=0)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-1] / 2
 

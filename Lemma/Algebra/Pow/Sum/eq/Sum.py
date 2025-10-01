@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Equal[~ReducedSum]).apply(Algebra.ReducedSum.eq.Add.pop)
 
-    Eq << Eq[-1].this.rhs.find(Equal).apply(Algebra.Eq.transport, lhs=0)
+    Eq << Eq[-1].this.rhs.find(Equal).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.pop.CartesianSpace.Cond)
 

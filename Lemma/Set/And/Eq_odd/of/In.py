@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Gt.Ge.apply(Eq.strict_greater_than, Algebra.Mul_FloorDiv.ge.SubAdd_1.apply(a, 2))
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
 
     Eq << Algebra.LeFloor.apply((b - 1) / 2) * 2 + 1
 

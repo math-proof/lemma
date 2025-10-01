@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=0)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-1].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
 
@@ -94,11 +94,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.ReducedArgMax.eq.Stack.ReducedArgMax)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=slice(0, 2)).reversed
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=slice(0, 2)).reversed
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Stack.eq.Add)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=-1)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1)
 
     Eq << Eq.eq_reducedArgMax.subs(Eq[-1])
 
@@ -110,7 +110,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack[2]).apply(Tensor.Stack.eq.ReducedArgMax)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=3)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=3)
 
     Eq << Eq[-1].this.find(ReducedArgMax).arg.definition
 

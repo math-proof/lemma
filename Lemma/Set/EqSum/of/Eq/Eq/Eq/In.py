@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.contains, Eq[-1])
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=0)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-1].this.rhs.subs(Eq[2])
 

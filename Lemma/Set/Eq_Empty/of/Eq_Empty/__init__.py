@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Card.eq.Add, slice(1, None))
 
-    Eq << Set.EqSDiff.of.Eq.apply(Eq[0], A)
+    Eq << Set.EqSDiffS.of.Eq.apply(Eq[0], A)
 
     Eq << Eq[-1].apply(Set.EqCard.of.Eq)
 

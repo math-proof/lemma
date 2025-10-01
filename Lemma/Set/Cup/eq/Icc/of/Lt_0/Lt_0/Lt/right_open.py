@@ -42,7 +42,7 @@ def prove(Eq):
     Eq << Eq[-2].subs(Eq[-1])
 
     interval_b = Eq[-1].lhs.args[0]
-    Eq << Set.EqSDiff.of.Eq.apply(Eq[-1], interval_b)
+    Eq << Set.EqSDiffS.of.Eq.apply(Eq[-1], interval_b)
 
     Eq.eq_complement = Eq[-1].subs(Eq.min_b0)
 
@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[0].apply(Set.Lt.of.Ioc.ne.Empty)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Ge.of.Gt.strengthen)
+    Eq << Eq[-1].this.find(Greater).apply(Algebra.Ge_Add_1.of.Gt)
 
     Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq.eq_complement, Eq.is_empty)
 

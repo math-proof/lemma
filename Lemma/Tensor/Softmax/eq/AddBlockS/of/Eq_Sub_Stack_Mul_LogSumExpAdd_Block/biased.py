@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Algebra.Mul.eq.Block)
 
-    Eq.matmul_subs_right = Eq[-1].this.apply(Algebra.Eq.transport, rhs=0).reversed
+    Eq.matmul_subs_right = Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0).reversed
 
     Eq << Eq.z_def.rhs.find(BlockMatrix[1] + Stack[BlockMatrix]).this.args[0].apply(Tensor.Expr.eq.Stack, i)
 
@@ -150,7 +150,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[BlockMatrix]).apply(Algebra.Mul.eq.Block)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=1).reversed
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=1).reversed
 
     Eq << Eq.z_def.subs(Eq.left_upper_part.reversed, Eq.left_lower_part.reversed, Eq[-1], Eq.upper_part.reversed, Eq.lower_part)
 

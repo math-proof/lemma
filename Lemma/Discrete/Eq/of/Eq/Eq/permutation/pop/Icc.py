@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Set.EqSDiff.of.Eq.apply(Eq[-1], {n})
+    Eq << Set.EqSDiffS.of.Eq.apply(Eq[-1], {n})
 
     Eq << Eq[2].subs(Eq[-1].reversed).reversed
 

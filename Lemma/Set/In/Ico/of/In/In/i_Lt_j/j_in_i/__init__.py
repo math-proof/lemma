@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-2].reversed
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

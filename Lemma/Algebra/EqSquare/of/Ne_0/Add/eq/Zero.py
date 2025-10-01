@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Eq[1].this.apply(Algebra.Eq.transport)
+    Eq << Eq[1].this.apply(Algebra.EqAdd.Is.Eq_Sub)
 
     Eq << Eq[-2].subs(Eq[-1])
 

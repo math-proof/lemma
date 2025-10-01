@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Discrete.Binom.eq.Add.Pascal.apply(Binomial(i + 1, 2))
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=1)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=1)
 
     Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (i, a, b)).reversed
 

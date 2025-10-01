@@ -131,11 +131,11 @@ def prove(Eq):
 
     Eq.block3 = Eq[-3].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.ReducedArgMax)
 
-    Eq.block0 = Eq[-2].this.rhs.apply(Algebra.Eq.transport, rhs=slice(0, 3))
+    Eq.block0 = Eq[-2].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=slice(0, 3))
 
     Eq << Eq[-1].this.rhs.find(ReducedArgMax[BlockMatrix]).apply(Algebra.ReducedArgMax.Block.eq.ReducedArgMax)
 
-    Eq.block1 = Eq[-1].this.rhs.apply(Algebra.Eq.transport, rhs=slice(0, 3))
+    Eq.block1 = Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=slice(0, 3))
 
     Eq << Logic.EqIteS.of.Imp_Eq.apply(Eq.block0, Eq.four_blocks.rhs, index=0, reverse=True)
 
@@ -155,7 +155,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.z_quote_def)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=3)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=3)
 
 
 

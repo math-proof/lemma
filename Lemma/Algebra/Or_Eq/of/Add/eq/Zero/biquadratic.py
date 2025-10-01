@@ -31,13 +31,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[-1].apply(Algebra.OrEqS_0.of.Eq_Square)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.Eq.transport)
+    Eq << Eq[-1].this.args[-1].apply(Algebra.EqAdd.Is.Eq_Sub)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.Eq.transport)
+    Eq << Eq[-1].this.args[-1].apply(Algebra.EqAdd.Is.Eq_Sub)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.Eq.transport)
+    Eq << Eq[-1].this.args[-1].apply(Algebra.EqAdd.Is.Eq_Sub)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.Eq.transport)
+    Eq << Eq[-1].this.args[-1].apply(Algebra.EqAdd.Is.Eq_Sub)
 
 
 

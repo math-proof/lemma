@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[-1], Eq[0] - 1)
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
     Eq <<= Eq[-4] & Eq[-1]
 
 

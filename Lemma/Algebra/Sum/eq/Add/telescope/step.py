@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sub.unshift)
 

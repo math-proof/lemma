@@ -55,7 +55,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=slice(2, None))
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=slice(2, None))
     # http://i.stanford.edu/pub/cstr/reports/cs/tr/79/773/CS-TR-79-773.pdf
 
 

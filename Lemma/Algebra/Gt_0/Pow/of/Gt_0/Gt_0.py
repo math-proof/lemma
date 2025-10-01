@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2].variable, n)
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[0])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[0])
 
     Eq << Logic.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
 

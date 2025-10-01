@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.eq.Sub.push)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=0).reversed
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0).reversed
 
     Eq << Eq[-4].subs(Eq[-1])
 

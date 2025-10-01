@@ -52,7 +52,7 @@ def prove(Eq):
     Eq.w, Eq.w_conj, Eq.add_ww, Eq.mul_ww, Eq.w_square, Eq.w_conj_square, Eq.w3 = Algebra.AndEqS.omega.apply('omega')
 
     w = Eq.w.lhs
-    Eq.w_sub = Eq.add_ww.this.apply(Algebra.Eq.transport)
+    Eq.w_sub = Eq.add_ww.this.apply(Algebra.EqAdd.Is.Eq_Sub)
 
     Eq.w3_conj = Algebra.EqConj.of.Eq.apply(Eq.w3)
 

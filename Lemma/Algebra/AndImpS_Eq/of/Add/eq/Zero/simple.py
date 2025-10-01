@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Logic.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(a, 0))
 
-    Eq <<= Logic.Imp_And.of.ImpAnd.apply(Eq[-2]), Eq[-1].this.rhs.apply(Algebra.Eq.transport, lhs=0)
+    Eq <<= Logic.Imp_And.of.ImpAnd.apply(Eq[-2]), Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq <<= Eq[-2].this.rhs.apply(Logic.Cond.of.Eq.Cond.subst), Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
 

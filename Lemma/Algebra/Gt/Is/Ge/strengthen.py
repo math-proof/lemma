@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge.of.Gt.strengthen), Eq[-1].this.rhs.apply(Algebra.Gt.given.Ge.strengthen)
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge_Add_1.of.Gt), Eq[-1].this.rhs.apply(Algebra.Gt.given.Ge.strengthen)
 
     Eq <<= Eq[-2].this.lhs.reversed, Eq[-1].this.rhs.reversed
 

@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Ge.Gt.apply(Eq[2], Eq[-1])
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
 
     Eq.gt_floor = Algebra.Floor.gt.Sub_1.apply(x)
 
@@ -44,10 +44,10 @@ def prove(Eq):
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
 
-    Eq <<= Algebra.Ge.of.Gt.strengthen.apply(Eq[-2]), Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq <<= Algebra.Ge_Add_1.of.Gt.apply(Eq[-2]), Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Algebra.Eq.of.Ge.Le.apply(Eq[-1], Eq[-2])
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub)
 
 
 if __name__ == '__main__':

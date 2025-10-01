@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[1])
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[0])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[0])
 
     Eq << Algebra.GeMax.of.Ge.Ge.apply(Eq[-1], Eq[-2])
 

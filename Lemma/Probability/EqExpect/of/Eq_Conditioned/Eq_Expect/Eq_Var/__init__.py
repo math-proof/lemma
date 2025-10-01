@@ -39,13 +39,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=0)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[2].this.lhs.apply(Probability.Var.eq.Sub.Expect)
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=0)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-4].subs(Eq[-1])
 

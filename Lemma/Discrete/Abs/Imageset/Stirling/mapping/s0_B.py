@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq.B_assertion = Set.All_Any_Eq.split.Imageset.apply(B)
 
-    Eq << Eq.B_assertion.this.expr.expr.apply(Set.EqSDiff.of.Eq, {n.set})
+    Eq << Eq.B_assertion.this.expr.expr.apply(Set.EqSDiffS.of.Eq, {n.set})
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq.all_s0_equality, Eq[-1], simplify=None)
 

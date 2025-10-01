@@ -39,7 +39,7 @@ def prove(Eq):
     Eq << Eq[-1].rhs.expr.args[1].this.defun()
 
     d0 = Symbol((l - 1) // 2 * r + (r // 2) * (1 - l % 2))
-    Eq.mul_floor = d0.this.definition.reversed.this.apply(Algebra.Eq.transport, lhs=0)
+    Eq.mul_floor = d0.this.definition.reversed.this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq.conv1d = Eq[-1].subs(Eq.mul_floor)
 

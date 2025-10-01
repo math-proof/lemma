@@ -16,7 +16,7 @@ def prove(Eq):
     x_bar = Symbol(r"\bar {x}", real=True, shape=(oo,))
     Eq << apply(Equal(x_bar[n], ReducedSum(x[:n]) / n))
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=1)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=1)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
 

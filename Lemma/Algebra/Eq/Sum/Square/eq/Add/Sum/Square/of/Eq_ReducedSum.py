@@ -19,7 +19,7 @@ def prove(Eq):
     x_bar = Symbol(r"{\bar {x}}", real=True)
     Eq << apply(Equal(x_bar, ReducedSum(x[:n]) / n), t, k)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=-1)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=-1)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
 

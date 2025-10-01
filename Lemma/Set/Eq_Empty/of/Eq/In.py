@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.EqFinset.of.Eq.In.apply(Eq[0], Eq[1])
 
-    Eq << Set.EqSDiff.of.Eq.apply(Eq[-1], a.set)
+    Eq << Set.EqSDiffS.of.Eq.apply(Eq[-1], a.set)
 
 
 if __name__ == '__main__':

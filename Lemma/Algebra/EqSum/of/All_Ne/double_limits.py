@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(All).apply(Algebra.EqSum.of.All_Ne, Eq.hypothesis.rhs.lhs)
 
-    Eq << Eq[-1].this.lhs.find(Equal).apply(Algebra.Eq.transport, rhs=0)
+    Eq << Eq[-1].this.lhs.find(Equal).apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0)
 
     Eq << Eq[-1].this.lhs.find(Equal).reversed
 

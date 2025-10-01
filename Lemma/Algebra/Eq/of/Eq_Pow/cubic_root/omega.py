@@ -24,7 +24,7 @@ def prove(Eq):
     d = Symbol(Eq[1].find(Ceil - Ceil))
     Eq << d.this.definition
 
-    Eq.difference = Eq[-1].this.apply(Algebra.Eq.transport, rhs=-1).reversed
+    Eq.difference = Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=-1).reversed
 
     Eq << Eq[1].this.lhs.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
 

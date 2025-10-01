@@ -223,3 +223,4 @@ from . import NotIn_Ioi
 from . import In_Range
 from . import GtFrac_0
 from . import In_Ioo
+from . import EqSDiffS

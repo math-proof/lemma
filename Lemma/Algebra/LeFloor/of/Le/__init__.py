@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
 
     Eq << Algebra.LeFloor.apply(x)
 

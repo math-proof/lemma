@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq <<= Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.Eq.transport), Eq[-1].this.rhs.apply(Algebra.Eq.transport)
+    Eq <<= Eq[-2].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub), Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub)
 
-    Eq.is_nonnegative, Eq.is_negative = Eq[-2].this.rhs.reversed, Eq[-1].this.rhs.apply(Algebra.Eq.transport, rhs=0)
+    Eq.is_nonnegative, Eq.is_negative = Eq[-2].this.rhs.reversed, Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0)
 
     Eq << Eq.is_negative.this.rhs.reversed
 

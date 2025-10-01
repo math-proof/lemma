@@ -56,13 +56,13 @@ def prove(Eq):
     Eq << Eq[1].rhs.find(conv3d).this.defun()
 
     d0 = Symbol((l[0] - 1) // 2 * r[0] + (r[0] // 2) * (1 - l[0] % 2))
-    Eq.mul_floor_0 = d0.this.definition.reversed.this.apply(Algebra.Eq.transport, lhs=0)
+    Eq.mul_floor_0 = d0.this.definition.reversed.this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     d1 = Symbol((l[1] - 1) // 2 * r[1] + (r[1] // 2) * (1 - l[1] % 2))
-    Eq.mul_floor_1 = d1.this.definition.reversed.this.apply(Algebra.Eq.transport, lhs=0)
+    Eq.mul_floor_1 = d1.this.definition.reversed.this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     d2 = Symbol((l[2] - 1) // 2 * r[2] + (r[2] // 2) * (1 - l[2] % 2))
-    Eq.mul_floor_2 = d2.this.definition.reversed.this.apply(Algebra.Eq.transport, lhs=0)
+    Eq.mul_floor_2 = d2.this.definition.reversed.this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq.conv3d = Eq[-1].subs(Eq.mul_floor_0, Eq.mul_floor_1, Eq.mul_floor_2)
 

@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Gt.Gt.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

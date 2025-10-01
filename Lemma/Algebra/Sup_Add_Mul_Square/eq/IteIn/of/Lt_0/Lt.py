@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Sup).expr.expand(), Eq[-1].this.find(Sup).expr.expand()
 
-    Eq <<= Eq[-2].this.find(Equal).apply(Algebra.Eq.transport, lhs=0), Eq[-1].this.find(Equal).apply(Algebra.Eq.transport, lhs=0)
+    Eq <<= Eq[-2].this.find(Equal).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0), Eq[-1].this.find(Equal).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge_0.of.Le), Eq[-1].this.lhs.apply(Algebra.Le_0.of.Ge)
 

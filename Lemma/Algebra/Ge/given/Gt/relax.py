@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(integer=True, given=True)
     Eq << apply(x >= y)
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[1])
 
 
 if __name__ == '__main__':

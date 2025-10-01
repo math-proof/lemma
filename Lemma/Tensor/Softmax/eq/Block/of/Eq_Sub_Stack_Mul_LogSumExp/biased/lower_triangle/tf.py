@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Block)
 
-    Eq.matmul_subs = Eq[-1].this.apply(Algebra.Eq.transport, rhs=0).reversed
+    Eq.matmul_subs = Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0).reversed
 
     Eq << Eq.z_def.rhs.find(Add).this.args[0].apply(Tensor.Expr.eq.Stack, i)
 

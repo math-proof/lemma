@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Gt_0.Ceil.of.Gt_0)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ge.of.Gt.strengthen)
+    Eq << Eq[-1].this.lhs.apply(Algebra.Ge_Add_1.of.Gt)
 
 
 

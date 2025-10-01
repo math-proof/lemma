@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=0)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     j = Symbol(integer=True)
     Eq << Eq[0][i + n - Min(n, u), j - i]
@@ -103,7 +103,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.Block.eq.Stack.Ite)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=0)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.ReducedArgMax)
 

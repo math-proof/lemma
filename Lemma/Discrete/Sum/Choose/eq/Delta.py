@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.pop.CartesianSpace.Cond, simplify=None)
 
-    Eq << Eq[-1].this.rhs.find(Equal).apply(Algebra.Eq.transport, lhs=slice(1, None))
+    Eq << Eq[-1].this.rhs.find(Equal).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=slice(1, None))
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
 

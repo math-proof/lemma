@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Logic.Imp_And.of.Cond.apply(Eq[-1], cond=Eq.ne.lhs)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ge.of.Gt.strengthen)
+    Eq << Eq[-1].this.rhs.apply(Algebra.Ge_Add_1.of.Gt)
 
     Eq << Logic.Imp.of.Cond.apply(Eq[0] & Eq[1] & Eq[2], cond=Eq.ne.lhs)
 

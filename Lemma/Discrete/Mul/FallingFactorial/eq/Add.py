@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=-1)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=-1)
 
     Eq << Eq[-1].reversed
 

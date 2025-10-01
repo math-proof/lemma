@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Trigonometry.Eq.of.Cos.eq.Zero.In.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub)
 
     # https://en.wikipedia.org/wiki/Argument_(complex_analysis)
 

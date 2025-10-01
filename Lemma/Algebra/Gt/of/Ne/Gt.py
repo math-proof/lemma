@@ -16,7 +16,7 @@ def prove(Eq):
     a, x = Symbol(integer=True)
     Eq << apply(Unequal(x, a), x > a - 1)
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[1])
 
     Eq <<= Eq[-1] & Eq[0]
 

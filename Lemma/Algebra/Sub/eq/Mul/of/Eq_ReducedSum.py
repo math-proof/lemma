@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, 1)
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.transport, lhs=1)
+    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=1)
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 

@@ -38,7 +38,7 @@ def prove(Eq):
     Eq << Eq[-2].subs(Eq[-1])
 
     interval_a = Eq[-1].rhs.args[0]
-    Eq << Set.EqSDiff.of.Eq.apply(Eq[-1], interval_a)
+    Eq << Set.EqSDiffS.of.Eq.apply(Eq[-1], interval_a)
 
     Eq << Algebra.EqMax.of.Ge.apply(Eq[0])
 

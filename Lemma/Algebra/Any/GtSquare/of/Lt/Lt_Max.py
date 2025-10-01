@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq.is_negative = Eq[-2].this.rhs.rhs.apply(Algebra.Any.GtSquare.of.Ge_0.Lt_0.Lt)
 
-    Eq << Eq[-1].this.rhs.rhs.args[0].apply(Algebra.Eq.transport, lhs=0)
+    Eq << Eq[-1].this.rhs.rhs.args[0].apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-1].this.rhs.rhs.apply(Logic.Cond.of.Eq.Cond.subst, ret=0)
 

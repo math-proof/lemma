@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.Cond.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
 
     Eq << LessEqual(Eq[-1].lhs, 1, plausible=True)
 
