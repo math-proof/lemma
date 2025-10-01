@@ -3,15 +3,16 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {q : Prop}
+  {p q : Prop}
 -- given
-  (r : Prop)
-  (h₁ : p → q) :
+  (h : p → q)
+  (r : Prop):
 -- imply
   r ∧ p → q := by
 -- proof
-  intro h
-  exact h₁ h.right
+  intro ⟨hr, hp⟩
+  exact h hp
 
 
 -- created on 2025-07-20
+-- updated on 2025-10-01
