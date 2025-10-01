@@ -15,7 +15,7 @@ def apply(eq_given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus
+    from Lemma import Algebra, Calculus, Logic
 
     n = Symbol(integer=True, positive=True)
     φ = Function(real=True, shape=(n,))
@@ -25,7 +25,7 @@ def prove(Eq):
     Eq << apply(Equal(Pr[a:θ](a | s), Exp(-(a.var - φ(s.var) @ θ) ** 2 / (2 * σ ** 2)) / (sqrt(2 * S.Pi) * σ)))
 
     a = a.var
-    Eq << Algebra.EqLogS.of.Eq.apply(Eq[0])
+    Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], log)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Log.eq.Add)
 

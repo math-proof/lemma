@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Logic
 
     x, y = Symbol(real=True)
     Eq << apply(Equal(y, sigmoid(x)))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul.together)
 
-    Eq << Algebra.EqLogS.of.Eq.apply(Eq[-1])
+    Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
 
     Eq << -Eq[-1]
 

@@ -11,7 +11,7 @@ def apply(eq_given):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus
+    from Lemma import Probability, Algebra, Calculus, Logic
 
     m, n = Symbol(integer=True, positive=True)
     φ = Function(real=True, shape=(m, n))
@@ -24,7 +24,7 @@ def prove(Eq):
     a = a.var
     Eq << Eq[0][a]
 
-    Eq << Algebra.EqLogS.of.Eq.apply(Eq[-1])
+    Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Log.eq.Add)
 

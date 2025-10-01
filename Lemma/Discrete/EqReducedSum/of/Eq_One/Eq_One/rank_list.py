@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Tensor.EqSigmoid.of.Eq.apply(Eq[-1])
 
-    Eq << Algebra.EqLogS.of.Eq.apply(Eq[-1])
+    Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
 
     Eq << Algebra.EqSum.of.Eq_Transpose.apply(Eq[-1], i, j)
 

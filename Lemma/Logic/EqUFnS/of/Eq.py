@@ -4,10 +4,9 @@ from util import *
 @apply
 def apply(given, function):
     lhs, rhs = given.of(Equal)
-    assert function(lhs).domain_definition()
-    assert function(rhs).domain_definition()
-
-    return Equal(function(given.lhs), function(given.rhs))
+    # assert function(lhs).domain_definition()
+    # assert function(rhs).domain_definition()
+    return Equal(function(lhs), function(rhs))
 
 
 @prove

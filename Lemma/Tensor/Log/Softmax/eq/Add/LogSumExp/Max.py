@@ -9,7 +9,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra
+    from Lemma import Tensor, Logic
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -17,12 +17,11 @@ def prove(Eq):
 
     Eq << Tensor.nn.Softmax.translation.apply(x, -ReducedMax(x)).reversed
 
-    Eq << Eq[-1].apply(Algebra.EqLogS.of.Eq)
+    Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
 
     Eq << Eq[-1].this.rhs.arg.apply(Tensor.Softmax.eq.Mul.ReducedSum)
 
     Eq << Eq[-1].this.find(Log[ReducedSum]).apply(Tensor.Log.ReducedSum.eq.LogSumExp)
-
 
 
 if __name__ == '__main__':
