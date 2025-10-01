@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Element).apply(Set.Ne_Empty.of.In, simplify=None)
 
-    Eq.any = Eq[-1].this.rhs.find(Unequal).apply(Set.Gt_0.of.Icc_Ne_Empty, simplify=None)
+    Eq.any = Eq[-1].this.rhs.find(Unequal).apply(Set.Sub.gt.Zero.of.Ioc.ne.Empty, simplify=None)
 
     Eq << Logic.Imp_And.of.Cond.Imp.apply(Eq[1], Eq.le)
 

@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Set.All.And.of.All.apply(Eq[2], simplify=None)
 
-    Eq << Eq[-1].this.find(Unequal).apply(Set.Gt_0.of.Icc_Ne_Empty, simplify=None)
+    Eq << Eq[-1].this.find(Unequal).apply(Set.Sub.gt.Zero.of.Ioc.ne.Empty, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Set.In.Mul.of.Gt_0.In)
 

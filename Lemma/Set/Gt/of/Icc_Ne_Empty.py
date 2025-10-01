@@ -16,7 +16,7 @@ def prove(Eq):
     a, b = Symbol(real=True, given=True)
     Eq << apply(Unequal(Interval(a, b, left_open=True), a.emptySet))
 
-    Eq << Set.Gt_0.of.Icc_Ne_Empty.apply(Eq[0])
+    Eq << Set.Sub.gt.Zero.of.Ioc.ne.Empty.apply(Eq[0])
 
     Eq << Eq[-1] + a
 

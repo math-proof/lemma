@@ -1,7 +1,7 @@
 # . ps1/run.ps1
 while ($true) {
     # Set up process start info
-    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi = New-Object Diagnostics.ProcessStartInfo
     $psi.FileName = "python"
     $psi.Arguments = "run.py"
     # Run in the same window
@@ -12,7 +12,7 @@ while ($true) {
     $psi.RedirectStandardError = $false
 
     # Start the process
-    $process = [System.Diagnostics.Process]::Start($psi)
+    $process = [Diagnostics.Process]::Start($psi)
 
     # Wait for 2 minutes (120,000 milliseconds)
     $exited = $process.WaitForExit(120000)
