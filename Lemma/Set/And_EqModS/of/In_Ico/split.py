@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Logic.And_And.of.And.apply(Eq[-1], None)
 
-    Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.And.of.In_Ico.apply(Eq[0])
 
-    Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq <<= Eq[-3] / d, Eq[-1] / d
 

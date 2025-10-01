@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Algebra.Lt.of.Le.relax.apply(Eq[-2].reversed + n, lower=i)
 
-    Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[-1]).reversed + d
+    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1]).reversed + d
 
 
 if __name__ == '__main__':

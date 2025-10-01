@@ -15,7 +15,7 @@ def prove(Eq):
     x, y = Symbol(integer=True, given=True)
     Eq << apply(x < y)
 
-    Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[0])
+    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[0])
 
     Eq << Eq[-1] + 1
 

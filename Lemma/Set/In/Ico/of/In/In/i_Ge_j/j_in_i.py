@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-2] + d
 
-    Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Algebra.Lt.of.Le.Lt.apply(Eq[-1], Eq[5]) - d
 

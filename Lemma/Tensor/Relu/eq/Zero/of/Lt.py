@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.lhs.apply(Tensor.Relu.eq.Add.Min)
 
-    Eq << Algebra.Le.of.Lt.strengthen.plus.apply(Eq[0])
+    Eq << Algebra.LeAdd_1.of.Lt.apply(Eq[0])
 
     Eq << Algebra.EqMin.of.Le.apply(Eq[-1])
 

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.Lt.of.Gt.Le, ret=0)
 
-    Eq << Eq[-1].this.expr.args[0].apply(Algebra.Le.of.Lt.strengthen)
+    Eq << Eq[-1].this.expr.args[0].apply(Algebra.Le_Sub_1.of.Lt)
 
     Eq << Eq[-1].this.find(Expr <= -1) + 1
 

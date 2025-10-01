@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Set.Eq_Empty.Ico.of.Ge.apply(Eq[-2] + 1)
 
-    Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Set.Eq_Empty.Ico.of.Le.apply(Eq[-1])
 

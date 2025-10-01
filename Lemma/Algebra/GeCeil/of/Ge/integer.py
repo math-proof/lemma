@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
+    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Algebra.Le.of.Ge.Le.apply(Eq[0], Eq[-1])
 

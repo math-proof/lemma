@@ -16,7 +16,7 @@ def prove(Eq):
     a, x = Symbol(integer=True)
     Eq << apply(Unequal(x, a), x < a + 1)
 
-    Eq << Algebra.Le.of.Lt.strengthen.apply(Eq[1])
+    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[1])
 
     Eq <<= Eq[-1] & Eq[0]
 

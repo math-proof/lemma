@@ -334,3 +334,5 @@ from . import LtAddS
 from . import AddSumS_SquareSub
 from . import AddMulS
 from . import Eq_Div
+from . import LeAdd_1
+from . import Le_Sub_1

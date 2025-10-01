@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Le.of.Lt.strengthen)
+    Eq << Eq[-1].this.expr.apply(Algebra.Le_Sub_1.of.Lt)
 
     Eq << Algebra.LeSum.of.All_Le.apply(Eq[-1])
 

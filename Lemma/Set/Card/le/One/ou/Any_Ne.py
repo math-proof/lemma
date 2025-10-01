@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.All.limits_assert.apply(Eq.lt.limits)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Le.of.Lt.strengthen)
+    Eq << Eq[-1].this.expr.apply(Algebra.Le_Sub_1.of.Lt)
 
     Eq << Algebra.All_Or.given.All.apply(Eq.lt)
 

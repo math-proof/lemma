@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Set.And.of.In_Ico.apply(Eq[1])
 
-    Eq <<= Algebra.Ge.of.Ge.Ge.apply(Eq.ge, Eq[-2] + d), Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
+    Eq <<= Algebra.Ge.of.Ge.Ge.apply(Eq.ge, Eq[-2] + d), Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Algebra.Lt.of.Lt.Le.apply(Eq.lt, Eq[-1] + n)
 

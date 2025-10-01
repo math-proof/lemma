@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
 
-    Eq <<= Algebra.Ge.of.Gt.strengthen.apply(Eq[-2]), Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
+    Eq <<= Algebra.Ge.of.Gt.strengthen.apply(Eq[-2]), Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Algebra.Eq.of.Ge.Le.apply(Eq[-1], Eq[-2])
     Eq << Eq[-1].this.apply(Algebra.Eq.transport)

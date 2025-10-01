@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(All[~And]).apply(Logic.Cond.of.And, simplify=0)
 
-    Eq << Eq[-1].this.find(Less).apply(Algebra.Le.of.Lt.strengthen, simplify=None)
+    Eq << Eq[-1].this.find(Less).apply(Algebra.Le_Sub_1.of.Lt, simplify=None)
 
     Eq << Eq[-1].this.find(Or).apply(Logic.Or.Or.of.Or_And, simplify=None)
 

@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1:].apply(Algebra.Lt.of.Lt.Lt, ret=1)
 
-    Eq << Eq[-1].this.expr.args[1].apply(Algebra.Le.of.Lt.strengthen.plus)
+    Eq << Eq[-1].this.expr.args[1].apply(Algebra.LeAdd_1.of.Lt)
 
     Eq << Eq[-1].this.find(Expr <= 0).apply(Algebra.EqMin.of.Le)
 

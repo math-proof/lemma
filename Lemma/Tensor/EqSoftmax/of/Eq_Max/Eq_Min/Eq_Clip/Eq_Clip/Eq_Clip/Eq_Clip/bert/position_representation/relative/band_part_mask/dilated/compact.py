@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Algebra.Lt.of.Lt.relax.apply(Eq[-1], upper=n)
 
-    Eq.le_ceiling = Algebra.Le.of.Lt.strengthen.apply(Eq[-1])
+    Eq.le_ceiling = Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq <<= Eq.eq_K_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs), Eq.eq_V_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs)
 

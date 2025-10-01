@@ -30,7 +30,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Gt.relax, upper=1)
     Eq << Eq[0][k]
     Eq << Eq[-2].subs(Eq[-1])
-    Eq << Eq[-1].this.expr.apply(Algebra.Le.of.Lt.strengthen)
+    Eq << Eq[-1].this.expr.apply(Algebra.Le_Sub_1.of.Lt)
     Eq << Eq[-1].this.expr.apply(Algebra.Eq_0.of.Le_0)
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.of.Eq_0.invert)
     Eq << Eq[-1].this.expr.apply(Algebra.Eq_0.of.Le_0)
