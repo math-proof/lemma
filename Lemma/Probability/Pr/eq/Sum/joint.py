@@ -40,19 +40,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes, y)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).simplify()
 
     Eq << Eq[-1].this.find(Sum).apply(Probability.Sum.eq.One.Conditioned)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[1])
 
     Eq << Eq[-1].this.rhs.reversed
 
     Eq << Eq[-1].this.lhs.apply(Probability.Eq_0.of.Eq_0.joint, y)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
 
 

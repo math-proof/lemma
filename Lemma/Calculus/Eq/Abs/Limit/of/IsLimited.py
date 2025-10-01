@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1], None)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-3])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-3])
 
     Eq << Eq[-1].this.lhs.apply(Calculus.Eq_0.Limit.Abs.of.Eq_0)
 

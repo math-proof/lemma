@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq <<= Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Calculus.EqZero.of.Ne, f, x)
 

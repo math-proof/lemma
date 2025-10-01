@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.given.And.Imp.split.apply(Eq[-1], cond=x >= 0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Logic.Imp.given.Cond.invert.apply(Eq[-1])
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.given.And.Imp.split.apply(Eq.ge, cond=x > S.Pi)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     t = Symbol(x - S.Pi)
     Eq << t.this.definition

@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq.induct.subs(k, t - 1)
 
-    Eq << Algebra.Gt.of.Gt_0.apply(Eq[-1])
+    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
 
 

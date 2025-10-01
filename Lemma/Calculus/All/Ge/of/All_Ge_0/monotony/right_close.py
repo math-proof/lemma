@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Eq.of.Ge.In)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=a < b)
 

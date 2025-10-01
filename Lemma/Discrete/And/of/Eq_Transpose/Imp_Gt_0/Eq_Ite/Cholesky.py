@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.given.All.apply(Eq.gt_infer, i)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq.eq_infer)
+    Eq << Logic.Imp.given.ImpEq.apply(Eq.eq_infer)
 
     Eq << Logic.Imp.given.Cond.apply(Eq[-1])
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Imply(Equal(j, i), Equal(Eq[-1].rhs.args[1].expr, Eq[-1].rhs.args[2].expr), plausible=True)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.lhs.apply(Tensor.Square.Norm.eq.Dot.Conj, swap=True)
 

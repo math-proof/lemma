@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Ceil.gt.Zero.apply(Eq[-1])
 
-    Eq << Algebra.Gt.of.Gt_0.apply(Eq[-1])
+    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
     Eq << Eq[-1] * S.Pi * 2
 
 

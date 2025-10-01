@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Ge_0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq.eq2 = Logic.EqIteS.of.Imp_Eq.apply(Eq.suffice, Eq.eq1.lhs)
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Lt_0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Logic.Ite__Ite.eq.Ite__IteAnd_Not.apply(Eq.eq2.rhs, 1, 2)
 

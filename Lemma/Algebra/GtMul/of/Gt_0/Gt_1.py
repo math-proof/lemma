@@ -21,7 +21,7 @@ def prove(Eq):
     Eq << Algebra.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
-    Eq << Algebra.Gt.of.Gt_0.apply(Eq[-1])
+    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
 
 if __name__ == '__main__':

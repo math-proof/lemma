@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq.lt_zero, Eq.is_zero = Logic.Imp.given.And.Imp.split.apply(Eq.le_zero, cond=γ < 0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq.is_zero)
+    Eq << Logic.Imp.given.ImpEq.apply(Eq.is_zero)
 
     Eq << Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq.gt_zero)
 

@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq.lt_zero, Eq.is_zero = Logic.Imp.given.And.Imp.split.apply(Eq.le_zero, cond=γ < 0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq.is_zero)
+    Eq << Logic.Imp.given.ImpEq.apply(Eq.is_zero)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Add.shift)
 

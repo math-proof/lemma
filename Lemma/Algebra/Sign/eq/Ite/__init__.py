@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(x, 0))
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Gt_0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq.lt_zero.this.rhs.apply(Logic.Cond_Ite.given.And.Imp)
 
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Lt_0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
 
 

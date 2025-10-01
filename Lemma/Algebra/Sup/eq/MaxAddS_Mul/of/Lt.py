@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3].this.lhs.apply(Algebra.Sup.eq.MaxAddS_Mul.of.Gt_0.Lt, a * x + b, x), Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
 
-    Eq <<= Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq <<= Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Sup.eq.MaxAddS_Mul.of.Lt_0.Lt, a * x + b, x), Logic.Imp.given.Cond.apply(Eq[-1])
 

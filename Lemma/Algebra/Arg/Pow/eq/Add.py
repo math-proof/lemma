@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Unequal(z, 0))
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.GtAbs_0.of.Ne_0)
 
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqArg.of.Gt_0, Eq[-1].find(Exp))
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.lhs.apply(Algebra.Arg.ExpI.eq.Add.Ceil)
 

@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[2].this.lhs.apply(Algebra.Eq_0.of.Le_0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Logic.Imp.given.All.apply(Eq[1])
 

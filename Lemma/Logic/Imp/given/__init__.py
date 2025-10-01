@@ -5,3 +5,4 @@ from . import All
 from . import Given
 from . import Or_Not
 from . import Imp_And
+from . import ImpEq

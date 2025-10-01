@@ -25,15 +25,15 @@ def prove(Eq):
 
     Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Logic.Imp.given.Imp.subst.Bool.apply(Eq[2], invert=True)
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Eq[-1].find(ExprCondPair[~Equal]))
 
-    Eq <<= Logic.Imp.given.Imp.subst.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Logic.Imp.given.ImpEq.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
     Eq <<= Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.lhs.apply(Algebra.Or_Eq.Arg.of.Ceil.ne.Zero)
 
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Logic.Imp.given.Imp.subst.apply(Eq[-2]), Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq <<= Logic.Imp.given.ImpEq.apply(Eq[-2]), Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Eq.of.Ne_0.Ne_0.Eq.cubic_root)

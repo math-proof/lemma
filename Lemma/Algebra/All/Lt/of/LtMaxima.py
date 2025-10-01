@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Equal(S, S.etype.emptySet))
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.Lt.given.And)
 

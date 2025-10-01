@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Algebra.Gt.of.Gt_0.apply(Eq[-1])
+    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[2])
 

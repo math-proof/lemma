@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Calculus.Integral.eq.Limit.Riemann.of.Gt, Eq[0].lhs)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
 
 if __name__ == '__main__':

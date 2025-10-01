@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Probability.Eq.of.Ne_0.bayes.Conditioned, r[t])
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Integral)
 

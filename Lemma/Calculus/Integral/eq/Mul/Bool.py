@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Icc.eq.Empty.of.Gt)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
 
 if __name__ == '__main__':

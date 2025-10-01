@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Logic.Cond_Ite.given.And.Imp.apply(Eq[0])
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqSum.of.Ne.geometric_series, Eq[0].lhs)
 

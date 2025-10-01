@@ -15,7 +15,7 @@ def prove(Eq):
     a, b = Symbol(integer=True, given=True)
     Eq << apply(Unequal(Range(a, b), a.emptySet))
 
-    Eq << Algebra.Gt.of.Gt_0.apply(Eq[-1])
+    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
     Eq << Set.Ico.ne.Empty.of.Gt.apply(Eq[-1])
 

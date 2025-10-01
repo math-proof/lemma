@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.given.And.Imp.split.apply(Eq.le_zero, cond=n < 0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2])
 

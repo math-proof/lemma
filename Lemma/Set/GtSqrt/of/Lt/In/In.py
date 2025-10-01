@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[3], cond=Equal(x, -1))
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Logic.Imp.given.Cond.apply(Eq[-1])
 

@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].subs(Eq[2]), Eq[-1].this.lhs.apply(Algebra.Gt.of.Gt.relax, lower=0, ret=0)
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Algebra.Gt_0.Sqrt.of.Gt_0), Eq[-1].this.lhs.args[0].apply(Algebra.Gt.of.Gt_0.scale, 4)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Algebra.Gt_0.Sqrt.of.Gt_0), Eq[-1].this.lhs.args[0].apply(Algebra.GtMul.of.Gt_0.Gt_1, 4)
 
     Eq <<= Eq[-1].this.lhs.apply(Algebra.Gt.of.Gt.Gt)
 

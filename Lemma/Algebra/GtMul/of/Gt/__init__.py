@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expand()
 
-    Eq << Algebra.Gt.of.Gt_0.apply(Eq[-1])
+    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
 
 if __name__ == '__main__':

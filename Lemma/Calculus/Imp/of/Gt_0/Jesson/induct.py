@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq.initial.this.lhs.apply(Logic.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq.induct = Eq[1].subs(n, n + 1)
 

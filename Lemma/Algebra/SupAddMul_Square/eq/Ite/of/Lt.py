@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3].this.apply(Logic.Imp.flatten), Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.lhs.apply(Algebra.Sup_Add_Mul_Square.eq.IteIn.of.Lt_0.Lt, a * x ** 2 + b * x + c, x)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Logic.Imp.given.Cond.apply(Eq[-1])
 

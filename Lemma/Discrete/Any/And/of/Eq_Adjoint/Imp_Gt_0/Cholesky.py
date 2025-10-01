@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.simplify()
 
-    Eq <<= Logic.Imp.given.All.apply(Eq[-3]), Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq <<= Logic.Imp.given.All.apply(Eq[-3]), Logic.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq <<= Algebra.All.given.All.limits.domain_defined.apply(Eq[-2]), Eq[-1].this.rhs.simplify()
 

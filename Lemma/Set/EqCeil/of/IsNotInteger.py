@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Frac.eq.Sub_Floor)
 
-    Eq << Algebra.Gt.of.Gt_0.apply(Eq[-1])
+    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
     Eq.lt_floor = Eq[-1].reversed
 

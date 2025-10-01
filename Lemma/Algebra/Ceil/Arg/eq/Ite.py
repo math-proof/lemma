@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(p, 0))
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Algebra.Mul.Root.eq.Mul.Ite.cubic_root.apply(Eq[-1].find(Arg[~Mul]))
 

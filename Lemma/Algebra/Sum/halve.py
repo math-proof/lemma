@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Eq_odd.of.Ne_0)
 
-    Eq <<= Logic.Imp.given.Imp.subst.apply(Eq[-3]), Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq <<= Logic.Imp.given.ImpEq.apply(Eq[-3]), Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Eq_odd.of.Eq_even, ret=0), Eq[-1].this.lhs.apply(Algebra.Eq_even.of.Eq_odd, ret=0)
 

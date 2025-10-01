@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.Gt.of.Gt_0.apply(Eq[-1])
+    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
 
 

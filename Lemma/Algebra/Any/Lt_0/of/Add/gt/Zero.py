@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Unequal(a, 0))
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=Equal(a, 0))
 

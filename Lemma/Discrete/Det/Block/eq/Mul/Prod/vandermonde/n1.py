@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Discrete.Eq.Det.Block.eq.Mul.Prod.of.Ne_0.vandermonde.n1, n, x1)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-2])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Block.shift)
 

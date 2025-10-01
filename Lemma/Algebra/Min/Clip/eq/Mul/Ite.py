@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.given.And.Imp.split.apply(Eq[-2], cond=A_t > 0)
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq <<= Logic.Imp.given.Imp_And.apply(Eq[-3]), Logic.Imp.given.Imp_And.apply(Eq[-2])
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.reversed
 
-    Eq <<= Logic.Imp.given.Imp.subst.apply(Eq[-2]), Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq <<= Logic.Imp.given.ImpEq.apply(Eq[-2]), Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.find(Min).apply(Algebra.Min.eq.Mul), Eq[-1].this.find(Min).apply(Algebra.Min.eq.Mul.Max)
 

@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Logic.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
 
-    Eq << Logic.Imp.given.Imp.subst.apply(Eq[-1])
+    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
 
