@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq.plausible_notcontains.this.expr.apply(Set.Eq_Empty.Inter.of.NotIn)
 
-    Eq.all_s0_equality = Eq[-1].this.expr.apply(Set.EqSDiff.of.Inter_Eq_Empty)
+    Eq.all_s0_equality = Eq[-1].this.expr.apply(Set.EqSDiff.of.Inter.eq.Empty)
 
     x_hat = Symbol(r"\hat{x}", Stack[i](Piecewise((x[i] - {n} , Equal(i, j)), (x[i], True))))
     Eq.x_hat_definition = x_hat[i].this.definition

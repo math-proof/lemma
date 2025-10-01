@@ -694,8 +694,9 @@ def process_debug(packages):
 @process.register(tuple) 
 def _(items, debug=False, parallel=True):  # @DuplicatedSignature
     proc = process_debug if debug else process
-    if parallel:
-        return batch_map(proc, items, processes=cpu_count()) 
+    processes = cpu_count() // 4
+    if parallel and processes > 1:
+        return batch_map(proc, items, processes=processes) 
     else:
         return map(proc, items)
 

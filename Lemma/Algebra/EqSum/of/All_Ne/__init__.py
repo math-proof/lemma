@@ -22,9 +22,9 @@ def prove(Eq):
     f = Function(complex=True)
     Eq << apply(All[i:n](Unequal(y, x[i])), Sum[t:x[:n].cup_finiteset()](f(t)))
 
-    Eq << Set.Inter_Eq_Empty.of.All_Ne.apply(Eq[0])
+    Eq << Set.Inter.eq.Empty.of.All_Ne.apply(Eq[0])
 
-    Eq << Set.EqSum.of.Inter_Eq_Empty.apply(Eq[-1], Eq[1].rhs.args[1])
+    Eq << Set.EqSum.of.Inter.eq.Empty.apply(Eq[-1], Eq[1].rhs.args[1])
 
     Eq << Eq[-1].this.apply(Algebra.Eq.transport, rhs=0)
     Eq << Eq[-1].reversed

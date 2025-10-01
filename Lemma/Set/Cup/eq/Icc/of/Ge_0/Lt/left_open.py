@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[0].apply(Set.Gt.of.Icc.ne.Empty)
 
-    Eq << Set.Eq.of.Inter_Eq_Empty.Eq_SDiff.apply(Eq.is_empty, Eq.eq_complement)
+    Eq << Set.Eq.of.Inter.eq.Empty.Eq_SDiff.apply(Eq.is_empty, Eq.eq_complement)
 
 
 

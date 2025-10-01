@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Set.Eq_Empty.Stirling.of.Eq.Eq.apply(Eq[0], Eq[1])
 
-    Eq << Set.EqSDiff.of.Inter_Eq_Empty.apply(Eq[-1], reverse=True)
+    Eq << Set.EqSDiff.of.Inter.eq.Empty.apply(Eq[-1], reverse=True)
 
 if __name__ == '__main__':
     run()

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(C.this.definition)
 
-    Eq << Set.Eq.of.Inter_Eq_Empty.apply(Eq[-1])
+    Eq << Set.Eq.of.Inter.eq.Empty.apply(Eq[-1])
 
     Eq << Eq[-1].subs(C.this.definition)
 

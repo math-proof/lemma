@@ -10,7 +10,7 @@ from . import In_Finset
 from . import In
 from . import All_In
 from . import All_Eq_Empty
-from . import Inter_Eq_Empty
 from . import Eq_Empty
 from . import ImpIn
 from . import All_Imp
+from . import Inter

@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Set.Eq_Empty.Inter.of.NotIn.apply(Eq[0])
 
-    Eq << Set.Eq.of.Inter_Eq_Empty.apply(Eq[-1])
+    Eq << Set.Eq.of.Inter.eq.Empty.apply(Eq[-1])
 
 
 if __name__ == '__main__':

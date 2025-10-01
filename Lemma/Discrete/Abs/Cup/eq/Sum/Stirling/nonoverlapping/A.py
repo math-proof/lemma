@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq.nonoverlapping_s1_quote = Eq[-1].this.expr.apply(Set.is_empty.then.All_is_empty.intersect)
 
-    Eq.xi_complement_n = Eq.nonoverlapping_s1_quote.this.expr.apply(Set.EqSDiff.of.Inter_Eq_Empty, reverse=True)
+    Eq.xi_complement_n = Eq.nonoverlapping_s1_quote.this.expr.apply(Set.EqSDiff.of.Inter.eq.Empty, reverse=True)
 
     A_quote = Symbol(Stack[j](Eq[2].rhs.expr))
     Eq.A_quote_definition = A_quote.this.definition

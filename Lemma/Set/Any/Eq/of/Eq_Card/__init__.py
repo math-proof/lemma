@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).args[-2:].apply(Logic.Cond.of.Eq.Cond.subst)
 
-    Eq << Eq[-1].this.find(Equal[2]).apply(Set.NotIn.of.Inter_Eq_Empty, simplify=None)
+    Eq << Eq[-1].this.find(Equal[2]).apply(Set.NotIn.of.Inter.eq.Empty, simplify=None)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.All_NotIn.of.NotIn)
 
