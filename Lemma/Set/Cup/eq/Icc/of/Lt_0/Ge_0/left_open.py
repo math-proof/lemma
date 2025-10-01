@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[3].subs(Eq[-1], Eq[-2])
 
-    Eq << Set.Eq.Union.Icc.of.Lt.Le.left_open.apply(Eq[0], Eq[1].reversed, left_open=True)
+    Eq << Set.Union.eq.Icc.of.Lt.Le.apply(Eq[0], Eq[1].reversed, left_open=True)
 
     Eq << Eq[-2].subs(Eq[-1])
 

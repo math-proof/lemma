@@ -1,4 +1,3 @@
-from . import concat
 from . import collect
 from . import invert
 from . import distribute

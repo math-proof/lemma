@@ -52,11 +52,11 @@ def prove(Eq):
 
     Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-2], x[:k + 1], y[k])
 
-    Eq << Eq[-1].this.lhs.arg.apply(Algebra.And.concat, i=2, j=0)
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.EqStackS.Is.EqStackS.Eq, i=2, j=0)
 
     Eq << Probability.Eq.of.Ne_0.bayes.Conditioned.apply(Eq[-3], x[k], y[k])
 
-    Eq << Eq[-1].this.lhs.find(And).apply(Algebra.And.concat, i=2, j=0)
+    Eq << Eq[-1].this.lhs.find(And).apply(Tensor.EqStackS.Is.EqStackS.Eq, i=2, j=0)
 
     Eq << Eq[-3].subs(Eq[-1])
 

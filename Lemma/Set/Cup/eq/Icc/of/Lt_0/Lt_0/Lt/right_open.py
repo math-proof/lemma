@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[:2].apply(Logic.Cond.of.Eq.Cond.subst)
 
-    Eq << Eq[-1].this.expr.args[0].apply(Set.Gt.of.Icc.ne.Empty)
+    Eq << Eq[-1].this.expr.args[0].apply(Set.Lt.of.Ioc.ne.Empty)
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.Ge.of.Gt.strengthen)
 
