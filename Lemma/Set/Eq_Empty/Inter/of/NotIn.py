@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Set.Any_In.of.Inter_Ne_Empty.apply(Eq[-1])
+    Eq << Set.Any_In.of.Inter.ne.Empty.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[0]
 

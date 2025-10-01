@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Set.Lt.of.Icc_Ne_Empty.apply(Eq[-1])
+    Eq << Set.Lt.of.Icc.ne.Empty.apply(Eq[-1])
 
     Eq << ~Eq[-1]
 

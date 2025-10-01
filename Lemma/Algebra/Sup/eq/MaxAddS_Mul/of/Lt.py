@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.find(Sup).simplify()
 
-    Eq <<= Set.Icc_Ne_Empty.of.Lt.apply(Eq[0])
+    Eq <<= Set.Icc.ne.Empty.of.Lt.apply(Eq[0])
 
 
 if __name__ == '__main__':

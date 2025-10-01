@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << Element(x, domain, plausible=True)
 
     Eq << Set.Ne_Empty.of.In.apply(Eq[-1])
-    Eq << Set.Le.of.Icc_Ne_Empty.apply(Eq[-1])
+    Eq << Set.Le.of.Icc.ne.Empty.apply(Eq[-1])
 
 
 if __name__ == '__main__':

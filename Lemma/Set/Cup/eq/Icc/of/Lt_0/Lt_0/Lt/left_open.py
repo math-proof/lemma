@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << ~Eq.is_empty
 
-    Eq << Set.Any_In.of.Inter_Ne_Empty.apply(Eq[-1], simplify=None, index=1)
+    Eq << Set.Any_In.of.Inter.ne.Empty.apply(Eq[-1], simplify=None, index=1)
 
     Eq << Eq[-1].this.expr.apply(Set.Any_In.of.In_Cup)
 
@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[:2].apply(Logic.Cond.of.Eq.Cond.subst)
 
-    Eq << Eq[-1].this.expr.args[0].apply(Set.Gt.of.Icc_Ne_Empty)
+    Eq << Eq[-1].this.expr.args[0].apply(Set.Gt.of.Icc.ne.Empty)
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.Ge.of.Gt.strengthen)
 

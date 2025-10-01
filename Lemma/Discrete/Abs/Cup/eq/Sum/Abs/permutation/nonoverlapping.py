@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << ~Eq.nonoverlapping
 
-    Eq << Eq[-1].this.expr.apply(Set.Any_In.of.Inter_Ne_Empty, wrt=Eq[0].rhs.variable, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Set.Any_In.of.Inter.ne.Empty, wrt=Eq[0].rhs.variable, simplify=None)
 
     Eq << Eq[-1].this.find(Element).rhs.definition
 

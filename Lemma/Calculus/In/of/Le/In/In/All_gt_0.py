@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Set.All.And.of.All.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.find(Unequal).apply(Set.Ge_0.of.Icc_Ne_Empty, simplify=None)
+    Eq << Eq[-1].this.find(Unequal).apply(Set.Ge_0.of.Icc.ne.Empty, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Algebra.Ge_0.of.Ge_0.Gt_0)
 
