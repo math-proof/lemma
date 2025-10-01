@@ -13,8 +13,7 @@ private lemma main
   x ∈ Ioo a b := by
 -- proof
   constructor
-  assumption
-  assumption
+  repeat assumption
 
 
 -- created on 2025-03-30
