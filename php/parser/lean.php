@@ -796,7 +796,7 @@ abstract class Lean extends IndentedNode
                 }
                 return $this;
             case 'by':
-            case 'calc': # modifiers
+            # modifiers
             case 'using':
             case 'at':
             case 'with':
@@ -811,10 +811,17 @@ abstract class Lean extends IndentedNode
                     }
                     return $this->parent->insert_word($this, $token);
                 }
-                else {
-                    $token = ucfirst($token);
-                    return $this->parent->insert($this, "Lean$token", "modifier");
+                $token = ucfirst($token);
+                return $this->parent->insert($this, "Lean$token", "modifier");
+            case 'calc': 
+                if ($this instanceof LeanCaret && $this->parent instanceof LeanProperty) {
+                    while (preg_match("/['!?\w]/", $tokens[$i + 1])) {
+                        ++$i;
+                        $token .= $tokens[$i];
+                    }
+                    return $this->parent->insert_word($this, $token);
                 }
+                return $this->parent->insert_calc($this);
             case '·':
                 if ($this->parent instanceof LeanStatements || $this->parent instanceof LeanSequentialTacticCombinator)
                     return $this->parent->insert_unary($this, 'LeanTacticBlock');
@@ -1369,6 +1376,17 @@ abstract class LeanArgs extends Lean
             return $caret;
         }
         return $this->insert_word($caret, $type);
+    }
+
+    public function insert_calc($caret)
+    {
+        if (end($this->args) === $caret) {
+            if ($caret instanceof LeanCaret) {
+                $this->replace($caret, new LeanCalc($caret, $caret->indent));
+                return $caret;
+            }
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 }
 
@@ -6957,7 +6975,7 @@ class LeanCalc extends LeanUnary
 {
     public function is_indented()
     {
-        return false;
+        return $this->parent instanceof LeanStatements;
     }
 
     public function sep()

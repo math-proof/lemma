@@ -26,12 +26,12 @@ import { tactics } from "./tactics.js"
     'for', 'from', 'if', 'fun',
     'break', 'class', 'continue',
     'False', 'True', 'false', 'true', 
-    'have', 'let', 'at', 'using', 'generalizing', 'by', 'show', 
+    'have', 'let', 'at', 'using', 'generalizing', 'by', 'show',
     'private', 'protected', 'public', 'noncomputable', 'unsafe', 'partial', 
     'return', 'try', 'with', 'in',
     'lemma', 'theorem', 'example', 'axiom',
     'constant', 'variable', 
-    "isn't",
+    "isn't", 'calc',
     ...tactics
   ];
   CodeMirror.registerHelper('hintWords', 'lean', commonKeywords.concat(commonBuiltins).concat(['exec', 'print']));
