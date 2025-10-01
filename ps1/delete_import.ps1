@@ -23,17 +23,13 @@ foreach ($entry in $modules) {
             Select-String -Path $_.FullName -Pattern "^import $escapedModule`$" -CaseSensitive -Quiet
         }
 
-    # Filter files that don't contain the pattern
-    $filesToProcess = $files | Where-Object {
-        $content = Get-Content $_.FullName -Raw -Encoding UTF8
-        -not ($content -match $pattern)
-    }
-
     # Process each file
-    foreach ($file in $filesToProcess) {
-        Write-Host "Processing file: $($file.FullName)"
+    foreach ($file in $files) {
         $content = Get-Content $file.FullName -Raw -Encoding UTF8
-        
+        if ($content -match $pattern) { continue }
+        # deal with files that don't contain the pattern
+        Write-Host "Processing file: $($file.FullName)"
+
         # Find matching import lines
         $matchingLines = [regex]::Matches($content, "^import $escapedModule`$", [System.Text.RegularExpressions.RegexOptions]::Multiline)
         
@@ -42,7 +38,7 @@ foreach ($entry in $modules) {
             $matchingLines | ForEach-Object {
                 Write-Host "$($file.Name): $($_.Value)"
             }
-            
+
             # Remove the import lines and save the file without BOM
             $newContent = [regex]::Replace($content, "^import $escapedModule`$\r?\n?", '', [System.Text.RegularExpressions.RegexOptions]::Multiline)
             [System.IO.File]::WriteAllText($file.FullName, $newContent, [System.Text.UTF8Encoding]::new($false))

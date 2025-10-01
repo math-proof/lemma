@@ -1,4 +1,3 @@
-import sympy.Basic
 import Lemma.Algebra.Le.of.Le.Le
 open Algebra
 
