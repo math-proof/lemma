@@ -7,14 +7,15 @@ open Algebra
 @[main]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
-  {x : α} :
+-- given
+  (x : α) :
 -- imply
   |x| = if x > 0 then
     x
   else
     -x := by
 -- proof
-  have h := Abs.eq.IteLt_0 (x := -x)
+  have h := Abs.eq.IteLt_0 (-x)
   rw [EqNegNeg] at h
   rw [AbsNeg.eq.Abs] at h
   simp at h
@@ -22,3 +23,4 @@ private lemma main
 
 
 -- created on 2025-04-18
+-- updated on 2025-10-01

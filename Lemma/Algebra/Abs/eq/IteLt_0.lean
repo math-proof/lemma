@@ -6,7 +6,8 @@ open Algebra Logic
 @[main]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
-  {x : α} :
+-- given
+  (x : α) :
 -- imply
   |x| = if x < 0 then
     -x
@@ -19,3 +20,4 @@ private lemma main
 
 
 -- created on 2025-04-17
+-- updated on 2025-10-01
