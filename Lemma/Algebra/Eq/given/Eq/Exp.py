@@ -8,13 +8,13 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Logic
 
     x = Symbol(real=True)
     f, g = Function(shape=(), real=True)
     Eq << apply(Equal(f(x), g(x)))
 
-    Eq << Eq[1].apply(Algebra.EqLogS.of.Eq)
+    Eq << Eq[1].apply(Logic.EqUfnS.of.Eq, log)
 
 
 if __name__ == '__main__':
