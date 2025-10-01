@@ -6,3 +6,4 @@ from . import Cond_Ite
 from . import Bool
 from . import AllSetOf
 from . import Imp_And
+from . import Imp_Ite

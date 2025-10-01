@@ -21,11 +21,11 @@ def prove(Eq):
 
     Eq << Logic.And.Imp.of.Cond.split.apply(Eq[-1], cond=Eq[0].find(Element))
 
-    Eq << Logic.Imp.of.Imp.subst.Bool.apply(Eq[-2])
+    Eq << Logic.Imp.of.Imp_Ite.apply(Eq[-2])
 
     Eq.former, Eq.latter = Logic.And.Imp.of.Imp.split.apply(Eq[-1], cond=Eq[0].find(ExprCondPair[2]).cond)
 
-    Eq << Logic.Imp.of.Imp.subst.Bool.apply(Eq.former)
+    Eq << Logic.Imp.of.Imp_Ite.apply(Eq.former)
 
     Eq << Eq[-1].this.lhs.apply(Set.In_SDiff.given.And, simplify=None)
 
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 0)
 
-    Eq << Logic.Imp.of.Imp.subst.Bool.apply(Eq[-1])
+    Eq << Logic.Imp.of.Imp_Ite.apply(Eq[-1])
 
 
 
