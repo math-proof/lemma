@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(Pr(x), 0))
 
-    Eq << Logic.ImpAnd.of.Cond.Imp.apply(Eq[0] & Eq[1], Eq[-1])
+    Eq << Logic.ImpAnd.of.Imp.cond.apply(Eq[0] & Eq[1], Eq[-1])
 
 
 

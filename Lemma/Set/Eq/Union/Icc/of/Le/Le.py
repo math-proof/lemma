@@ -35,9 +35,9 @@ def prove(Eq):
 
     Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Logic.Imp.given.Imp.split.And.apply(Eq[-2])
+    Eq << Logic.ImpAnd.given.Imp.apply(Eq[-2])
 
-    Eq << Logic.Imp.given.Imp.split.And.apply(Eq[-1])
+    Eq << Logic.ImpAnd.given.Imp.apply(Eq[-1])
 
 
 

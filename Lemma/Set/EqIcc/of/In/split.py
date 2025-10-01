@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Logic.Imp.given.Imp.split.And.apply(Eq[-2], 1), Logic.Imp.given.Imp.split.And.apply(Eq[-1], 0)
+    Eq <<= Logic.ImpAnd.given.Imp.apply(Eq[-2], 1), Logic.ImpAnd.given.Imp.apply(Eq[-1], 0)
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
 

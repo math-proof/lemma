@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq.gt_zero = Set.Lt.of.In_Icc.apply(Eq[-1]).this.apply(Algebra.Gt_0.of.Lt)
 
-    Eq << Logic.ImpAnd.of.Cond.Imp.apply(Eq[-1], Eq[-2])
+    Eq << Logic.ImpAnd.of.Imp.cond.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Set.In.In.given.And.In)
 
