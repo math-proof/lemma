@@ -1,12 +1,13 @@
+# rules: delete the import line if the file does not contain any of the specified patterns
 $modules = @(
-    'sympy.core.relational:^ +denote '
-    'sympy.core.logic:^ +mpr? \['
+    'sympy.core.relational:\n +denote '
+    'sympy.core.logic:\n +mpr? \['
     'sympy.functions.elementary.integers:\b(is even|is odd|fract|sign|IntegerRing)\b|//'
     'sympy.tensor.tensor:\b(Tensor|Zeros|Ones|Indexed|Sliced)\b'
     'sympy.sets.sets:\b(Ioo|Ico|Iio|Icc|Iic|Ioc|Ici|Ioi|range)\b'
     'stdlib.Slice:Slice'
     'stdlib.List:\b(List|substr|slice|enumerate|is constant|swap)\b'
-    'sympy.Basic:^(?!import Lemma)'
+    'sympy.Basic:^([\s\S](?!\nimport Lemma))*$'
 )
 
 foreach ($entry in $modules) {
@@ -24,7 +25,8 @@ foreach ($entry in $modules) {
 
     # Filter files that don't contain the pattern
     $filesToProcess = $files | Where-Object {
-        -not (Select-String -Path $_.FullName -Pattern $pattern -CaseSensitive -Quiet)
+        $content = Get-Content $_.FullName -Raw -Encoding UTF8
+        -not ($content -match $pattern)
     }
 
     # Process each file
