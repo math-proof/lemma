@@ -199,6 +199,8 @@ EOT;
 			$import = implode('.', $tokens);
 			break;
 		case 'sympy':
+			if ($tokens[1] == 'Basic')
+				return;
 		case 'stdlib':
 		case 'Mathlib':
 			return true;
