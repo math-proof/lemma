@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Calculus.Limit.eq.Mul), Eq[-1].this.rhs.find(Limit).apply(Calculus.Limit.eq.Mul)
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[-2])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-2])
 
     Eq << Calculus.Eq.Limit.Abs.of.IsPositive.apply(Eq[-1])
 

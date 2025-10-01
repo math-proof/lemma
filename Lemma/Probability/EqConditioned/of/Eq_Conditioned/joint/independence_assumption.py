@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq.eq_st = Probability.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[-1], 0)
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Eq[-1].subs(t, t + 1)
 

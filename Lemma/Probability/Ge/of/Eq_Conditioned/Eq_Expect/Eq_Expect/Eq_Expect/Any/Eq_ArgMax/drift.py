@@ -37,7 +37,7 @@ def prove(Eq):
                     Equal(Pr[π, π_hat](s[0]), Piecewise((Pr[π, π](s[0]), Equal(s[0].var, s[t].var)), (Pr[π, π_quote](s[0]), True))))),
                 Equal(π_tilde, ArgMax[π_quote](Expectation[s:π]((MDV[π, π_quote] ^ γ)(s[0])))))
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[3])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[3])
 
     Eq.ne_zero = Eq[-1].subs(t, 0)
 
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Logic.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Eq[4].this.find(Equal[Piecewise]).apply(Logic.And.Imp.of.Cond_Ite)
 

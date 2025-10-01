@@ -25,13 +25,13 @@ def prove(Eq):
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, right_open=True)))
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[0])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[0])
 
     Eq << Set.In_Ico.Ceil.of.In_Icc.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ceil.eq.Neg.Floor)
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(-~Ceil).apply(Algebra.Ceil.eq.Neg.Floor)
 

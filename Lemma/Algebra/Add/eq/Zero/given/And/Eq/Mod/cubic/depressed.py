@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Set.Ite.In.Finset.apply(Eq[1].find(Piecewise))
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-1])
 
     Eq << Set.In.Add.Finset.of.In.In.apply(Eq[-1], Eq[-3])
 

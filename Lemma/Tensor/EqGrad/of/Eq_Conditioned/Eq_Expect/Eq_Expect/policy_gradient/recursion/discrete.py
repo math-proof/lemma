@@ -66,7 +66,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Pr * Sum).apply(Algebra.Mul_Sum.eq.Sum_Mul)
     Eq << Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.swap)
     Eq.eq_grad = Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.separate)
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0]).subs(t, t + 1)
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [-1, -1])
     Eq << Probability.Cond.Pr.of.Cond.weighted.apply(Eq[-1], (a, π))
     Eq << Probability.Eq.Pr.Conditioned.eq.Mul.Pr.Conditioned.of.Ne_0.bayes.apply(Eq[-1], s[t + 1], a[t])

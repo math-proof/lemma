@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[-1])
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[0], simplify=None)
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[0], simplify=None)
 
 
 

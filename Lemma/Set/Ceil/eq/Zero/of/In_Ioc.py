@@ -15,7 +15,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(-1, 0, left_open=True)))
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[0])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[0])
 
     Eq << Set.Floor.eq.Zero.of.In_Ico.apply(Eq[-1])
 

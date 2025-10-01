@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Calculus.Limit.eq.Mul), -Eq[-1].this.expr
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[-2])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-2])
 
     Eq << Calculus.Le_0.Limit.of.IsReal.All_Le.apply(*Eq[-2:])
 

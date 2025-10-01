@@ -16,7 +16,7 @@ def prove(Eq):
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x | y), 0))
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-1], x)
 

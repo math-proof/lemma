@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Set.In.Icc.of.Gt.Lt.apply(Eq.gt_floor, Eq.lt_floor)
 
-    Eq << Set.In.Sub.Icc.of.In.In.apply(Eq[-2], Eq[-1])
+    Eq << Set.Sub.In.Ioc.of.In.In.apply(Eq[-2], Eq[-1])
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
 

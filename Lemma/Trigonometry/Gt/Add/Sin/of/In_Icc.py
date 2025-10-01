@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq.eq_grad = Logic.Eq.of.Eq.Eq.apply(Eq.eq_grad, Eq[-1])
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq.eq_grad)
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq.eq_grad)
 
     Eq << Algebra.Square.gt.Zero.of.Ne_0.apply(Eq[-1])
 

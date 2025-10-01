@@ -93,7 +93,7 @@ def prove(Eq):
 
     Eq.ge = Algebra.GeDiv.of.Gt_0.Ge.apply(Eq.gt_zero, Eq[-1])
 
-    Eq <<= Probability.KL.ge.Zero.apply(Eq.ge.find(KL)), Probability.Pr.ge.Zero.apply(Eq.ge.find(Pr)), Algebra.Cond.of.Cond.domain_defined.apply(Eq.ge)
+    Eq <<= Probability.KL.ge.Zero.apply(Eq.ge.find(KL)), Probability.Pr.ge.Zero.apply(Eq.ge.find(Pr)), Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq.ge)
 
     Eq <<= Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-2], Eq[-3]), Algebra.Inv.gt.Zero.of.Ne_0.apply(Eq[-1])
 

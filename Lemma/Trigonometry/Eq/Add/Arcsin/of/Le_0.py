@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq <<= Trigonometry.In.Arcsin.of.In.apply(Eq[-1]), Set.In.Sqrt.Max.of.In.apply(Eq[-1])
 
-    Eq <<= Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[-2]), Trigonometry.In.Arcsin.of.In.apply(Eq[-1])
+    Eq <<= Set.Neg.In.Icc.of.In_Icc.apply(Eq[-2]), Trigonometry.In.Arcsin.of.In.apply(Eq[-1])
 
     Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[-2])
 

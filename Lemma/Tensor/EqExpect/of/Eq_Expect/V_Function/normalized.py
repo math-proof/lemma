@@ -27,7 +27,7 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, left_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(Equal((Q ^ γ)(s[t].var, a[t].var), (1 - γ) * γ ** Stack[k](k) @ Expectation(r[t:] | s[t] & a[t])))
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Probability.Ne_0.of.Ne_0.delete.apply(Eq[-1], 0)
 

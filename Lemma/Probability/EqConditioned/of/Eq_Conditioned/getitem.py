@@ -27,7 +27,7 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x))
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq.y_nonzero, Eq.z_nonzero = Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

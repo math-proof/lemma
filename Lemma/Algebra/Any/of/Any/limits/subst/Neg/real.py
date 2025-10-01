@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Algebra.Any_UfnNeg.of.Any.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(Element).apply(Set.Neg.In.IccNegS.of.In_Icc)
+    Eq << Eq[-1].this.find(Element).apply(Set.Neg.In.Icc.of.In_Icc)
 
     Eq << Algebra.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], -c)
 

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Algebra.GeAdd.of.Eq.Ge.apply(Eq[-1], Eq[0])
 
-    Eq << Set.Cup.eq.Icc.of.Ge_0.left_open.apply(Eq[-1], k)
+    Eq << Set.Cup_Ioc.eq.Ioc0.of.Ge_0.apply(Eq[-1], k)
 
     Eq << Eq[-1].this.rhs.subs(Eq[-3])
 
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq.b_is_nonnegative = Algebra.Ge.of.Ge.Lt.relax.apply(Eq[0], Eq[1])
 
-    Eq << Set.Cup.eq.Icc.of.Ge_0.left_open.apply(Eq.b_is_nonnegative, k)
+    Eq << Set.Cup_Ioc.eq.Ioc0.of.Ge_0.apply(Eq.b_is_nonnegative, k)
 
     Eq << Eq[-2].subs(Eq[-1])
 

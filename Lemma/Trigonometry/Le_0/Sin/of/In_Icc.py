@@ -15,7 +15,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(-S.Pi, 0)))
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[0])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[0])
 
     Eq << Trigonometry.Ge_0.Sin.of.In_Icc.apply(Eq[-1])
     Eq << -Eq[-1]

@@ -15,9 +15,9 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(NotElement(x, Integers))
 
-    Eq << Set.Frac.In.Ioo.of.NotIn_Ico.apply(Eq[0])
+    Eq << Set.Frac.In.Ioo.of.NotIn_Range.apply(Eq[0])
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-1])
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
 

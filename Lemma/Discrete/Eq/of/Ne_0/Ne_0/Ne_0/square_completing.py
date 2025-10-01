@@ -131,7 +131,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[-1])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[-1])
 
     Eq << Discrete.Eq.of.Ne_0.square_completing.apply(Eq[-1], Eq[-2].rhs)
 

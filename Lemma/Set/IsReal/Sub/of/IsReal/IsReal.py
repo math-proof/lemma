@@ -18,7 +18,7 @@ def prove(Eq):
     x, y = Symbol(hyper_real=True)
     Eq << apply(Element(x, Reals), Element(y, Reals))
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[1])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[1])
 
     Eq << Set.IsReal.Add.of.IsReal.IsReal.apply(Eq[-1], Eq[0])
 

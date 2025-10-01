@@ -1,1 +1,1 @@
-from . import IccNegS
+from . import Icc

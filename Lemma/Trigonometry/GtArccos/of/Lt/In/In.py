@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Trigonometry.Arccos.In.Icc.apply(y)
 
-    Eq << Set.In.Sub.Icc.of.In.In.apply(Eq[-2], Eq[-1])
+    Eq << Set.Sub.In.Ioc.of.In.In.apply(Eq[-2], Eq[-1])
 
     Eq << Set.Or.of.In_Icc.apply(Eq[-1], 0, left_open=True)
 

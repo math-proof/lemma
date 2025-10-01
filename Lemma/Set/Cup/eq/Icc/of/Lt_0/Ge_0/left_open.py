@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3].rhs.args[1].this.subs(Eq[-2]), Eq[-3].rhs.args[0].this.subs(Eq[-1])
 
-    Eq <<= Set.Cup.eq.Icc.of.Ge_0.left_open.apply(Eq[1], k), Set.Cup.eq.Icc.of.Lt_0.left_open.apply(Eq[0], k)
+    Eq <<= Set.Cup_Ioc.eq.Ioc0.of.Ge_0.apply(Eq[1], k), Set.Cup.eq.Icc.of.Lt_0.left_open.apply(Eq[0], k)
 
     Eq <<= Eq[-4].subs(Eq[-2]), Eq[-3].subs(Eq[-1])
 

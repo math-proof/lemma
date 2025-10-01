@@ -24,7 +24,7 @@ def prove(Eq):
     X, Y = Symbol(etype=dtype.integer, finiteset=True, given=True)
     Eq << apply(abs(t[y_quote] - Sum[x:X](t[x]) / Card(X)) <= abs(t[y_quote] - Sum[y:Y](t[y]) / Card(Y)), Card(Y) >= 2, Element(y_quote, Y), NotElement(y_quote, X))
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Logic.Cond.of.And.apply(Eq[-1], 0)
 

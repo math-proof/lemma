@@ -16,7 +16,7 @@ def prove(Eq):
     a, b = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[1])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[1])
 
 
 if __name__ == '__main__':

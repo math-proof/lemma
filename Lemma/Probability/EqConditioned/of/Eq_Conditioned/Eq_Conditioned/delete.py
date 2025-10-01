@@ -24,7 +24,7 @@ def prove(Eq):
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x | y), Equal(z | y, z))
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq.y_nonzero, Eq.yz_nonzero = Logic.And_And.of.And.apply(Eq[-1])
 

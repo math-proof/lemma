@@ -20,9 +20,9 @@ def prove(Eq):
     x, y = Symbol(hyper_real=True)
     Eq << apply(Element(x, Interval.open(-oo, 0)), Element(y, Interval.open(-oo, 0)))
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[0])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[0])
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[1])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[1])
 
     Eq << Set.IsPositive.of.IsPositive.IsPositive.apply(Eq[-1], Eq[-2])
 

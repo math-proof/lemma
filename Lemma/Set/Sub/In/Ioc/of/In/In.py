@@ -20,7 +20,7 @@ def prove(Eq):
     x0, x1, a, b, c, d = Symbol(real=True)
     Eq << apply(Element(x0, Interval(a, b, left_open=True)), Element(x1, Interval(c, d, right_open=True)))
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[1])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[1])
     Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[0])
 
 

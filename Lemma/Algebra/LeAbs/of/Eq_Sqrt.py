@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[0][i]
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[-1])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[-1])
 
     Eq << Algebra.Gt_0.of.Ne_0.apply(Eq[-1])
 

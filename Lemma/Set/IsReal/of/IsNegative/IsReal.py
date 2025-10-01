@@ -17,11 +17,11 @@ def prove(Eq):
     x, y = Symbol(super_real=True)
     Eq << apply(Element(x, Interval.open(-oo, 0)), Element(y, Interval(-oo, oo)))
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[0])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[0])
 
     Eq << Set.IsReal.of.IsPositive.IsReal.apply(Eq[-1], Eq[1])
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-1])
 
 
 

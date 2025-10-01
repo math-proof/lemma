@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Logic.Cond.of.And.apply(Eq[-1], 1).reversed + 1
 

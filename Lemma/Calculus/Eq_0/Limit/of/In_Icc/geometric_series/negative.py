@@ -17,7 +17,7 @@ def prove(Eq):
     x = Symbol(real=True, given=True)
     Eq << apply(Element(x, Interval(-1, 0, left_open=True, right_open=True)), n)
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[0])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[0])
 
     Eq << Set.Lt.of.In_Icc.apply(Eq[0])
 

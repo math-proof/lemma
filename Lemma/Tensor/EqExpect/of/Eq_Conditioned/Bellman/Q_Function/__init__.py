@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq.eq_expect = Eq[-1].this.rhs.apply(Calculus.Integral.limits.separate)
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0]).subs(t, t + 1)
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
 
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [t, slice(t, t + 2)])
 

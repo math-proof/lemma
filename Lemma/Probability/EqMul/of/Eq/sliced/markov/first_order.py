@@ -18,7 +18,7 @@ def prove(Eq):
     k = Symbol(integer=True)  # time step counter
     Eq << apply(Equal(s[k] | s[:k], s[k] | s[k - 1]))
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Logic.Cond.of.And.apply(Eq[-1])
 

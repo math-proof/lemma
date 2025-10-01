@@ -19,7 +19,6 @@ from . import Arccos
 from . import Cap
 from . import SwapMatrix
 from . import Eq
-from . import Sub
 from . import Imageset
 from . import Inv
 from . import NotIn

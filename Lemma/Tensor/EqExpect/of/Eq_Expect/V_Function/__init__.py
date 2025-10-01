@@ -29,7 +29,7 @@ def prove(Eq):
     # V Function : State-Value Function, aka expected cumulative reward
     Eq << apply(Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[k](k) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])))
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

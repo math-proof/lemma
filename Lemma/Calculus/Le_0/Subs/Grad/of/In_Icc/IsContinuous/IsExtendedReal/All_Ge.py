@@ -42,7 +42,7 @@ def prove(Eq):
         Eq[-2].this.expr.lhs.apply(Calculus.Grad.eq.Mul, simplify=None),\
         -Eq[-1].this.expr
 
-    Eq << Eq[-2].this.expr.apply(Set.Neg.In.IccNegS.of.In_Icc, simplify=None)
+    Eq << Eq[-2].this.expr.apply(Set.Neg.In.Icc.of.In_Icc, simplify=None)
 
     Eq << Calculus.Ge_0.Subs.Grad.of.In_Icc.IsContinuous.IsExtendedReal.All_Le.apply(Eq[0], Eq[-4], Eq[-1], Eq[-2])
 

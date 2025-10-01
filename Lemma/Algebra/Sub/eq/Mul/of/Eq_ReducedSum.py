@@ -16,7 +16,7 @@ def prove(Eq):
     x_bar = Symbol(r"\bar {x}", real=True, shape=(oo,))
     Eq << apply(Equal(x_bar[n], ReducedSum(x[:n]) / n))
 
-    Eq << Algebra.Cond.of.Cond.domain_defined.apply(Eq[0])
+    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Logic.Cond.of.And.apply(Eq[-1], 1).reversed + 1
 

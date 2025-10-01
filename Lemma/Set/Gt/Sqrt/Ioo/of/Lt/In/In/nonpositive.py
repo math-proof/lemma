@@ -20,9 +20,9 @@ def prove(Eq):
 
     Eq << -Eq[0].reversed
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[1])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[1])
 
-    Eq << Set.Neg.In.IccNegS.of.In_Icc.apply(Eq[2])
+    Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[2])
     Eq << Set.Gt.Sqrt.Ioo.of.Lt.In.In.nonnegative.apply(Eq[-3], Eq[-1], Eq[-2])
 
 
