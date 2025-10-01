@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[1] - c
 
-    Eq << Algebra.Eq.of.Ne_0.Eq.scalar.apply(Eq[0], Eq[-1])
+    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     t = Symbol(sqrt(Eq[-1].rhs))
     Eq << t.this.definition

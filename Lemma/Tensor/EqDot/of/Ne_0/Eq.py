@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.Eq.of.Ne_0.Eq.scalar.apply(Eq[0], Eq[-1])
+    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     Eq << Discrete.EqDet.of.Ne_0.apply(Eq[0]) * Determinant(A)
 

@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.arg.apply(Algebra.And.concat, i=3, j=0)
 
-    Eq.recursion = Algebra.Eq.of.Ne_0.Eq.scalar.apply(Eq.ne_zero, Eq[-1])
+    Eq.recursion = Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq.ne_zero, Eq[-1])
 
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], [slice(0, k + 1), slice(0, k), slice(0, k + 1)])
 

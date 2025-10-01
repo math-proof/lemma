@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.eq.Pr.marginal)
 
-    Eq << Algebra.Eq.of.Ne_0.Eq.scalar.apply(Eq[-1], Eq.z_nonzero)
+    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq.z_nonzero)
 
 
 

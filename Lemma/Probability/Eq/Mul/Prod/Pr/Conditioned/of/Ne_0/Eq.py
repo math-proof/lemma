@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.yt_given_y_historic)
 
-    Eq << Algebra.Eq.of.Ne_0.Eq.scalar.apply(Eq[-1], Eq.yt_given_x_nonzero)
+    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq.yt_given_x_nonzero)
 
     Eq << Algebra.EqProd.of.Eq.apply(Eq[-1], (t, 1, m))
 

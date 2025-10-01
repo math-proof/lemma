@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-4])
 
-    Eq << Algebra.Eq.of.Ne_0.Eq.scalar.apply(Eq[-1], Eq.y_nonzero)
+    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq.y_nonzero)
 
     Eq << Eq[-1].reversed
 

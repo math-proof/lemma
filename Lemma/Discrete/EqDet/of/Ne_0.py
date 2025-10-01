@@ -18,11 +18,11 @@ def prove(Eq):
 
     Eq << Tensor.Dot.eq.Mul.adjugate.apply(A)
 
-    Eq << Algebra.Eq.of.Ne_0.Eq.scalar.apply(Eq[0], Eq[-1])
+    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     Eq << Discrete.EqInv.of.Eq.apply(Eq[-1])
 
-    Eq << Algebra.Eq.of.Ne_0.Eq.scalar.apply(Eq[0], Eq[-1])
+    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].lhs.args[0].base @ Eq[-1]
 

@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.xy_joint_probability.reversed)
 
-    Eq.recursion = Algebra.Eq.of.Ne_0.Eq.scalar.apply(Eq[0], Eq[-1])
+    Eq.recursion = Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq.xy_nonzero_assumption, [k, k])
 
