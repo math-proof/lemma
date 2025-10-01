@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Lt.Ge)
+    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Ge.Lt)
 
 
 if __name__ == '__main__':

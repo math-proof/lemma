@@ -24,7 +24,7 @@ def prove(Eq):
     x = Eq[-1].variable
     Eq.ge, Eq.lt = Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=U >= m ** 2)
 
-    Eq << Algebra.Gt.of.Lt.Ge.apply(Eq[1], Eq[0])
+    Eq << Algebra.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
 
     Eq << Eq.lt.this.rhs.apply(Algebra.Any.given.Cond.subst, x, (m + M) / 2)
 

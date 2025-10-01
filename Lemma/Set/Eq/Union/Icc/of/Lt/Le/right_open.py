@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq <<= Logic.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-3].lhs), Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-2].lhs), Eq[-1].this.rhs.apply(Set.NotIn_Icc.given.OrLtS)
 
-    Eq <<= Eq[-3].this.rhs.args[::2].apply(Algebra.Le.of.Le.Lt.relax), Eq[-2].this.rhs.args[::2].apply(Algebra.Gt.of.Lt.Ge),  Eq[-1].this.lhs.apply(Logic.OrAndS.of.And_Or)
+    Eq <<= Eq[-3].this.rhs.args[::2].apply(Algebra.Le.of.Le.Lt.relax), Eq[-2].this.rhs.args[::2].apply(Algebra.Gt.of.Ge.Lt),  Eq[-1].this.lhs.apply(Logic.OrAndS.of.And_Or)
 
     Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
 

@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).simplify()
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Lt.Ge)
+    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Ge.Lt)
 
     Eq << ~Eq[-1]
 

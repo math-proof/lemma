@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Lt.of.Lt.Ge), Eq[-1].this.lhs.apply(Algebra.Gt.of.Lt.Ge)
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.Lt.of.Lt.Ge), Eq[-1].this.lhs.apply(Algebra.Gt.of.Ge.Lt)
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Ne.of.Lt)
 
