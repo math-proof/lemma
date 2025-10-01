@@ -97,7 +97,7 @@ def prove(Eq):
 
     Eq.distribute_ab = Eq[-1].this.expr.apply(Logic.OrAndS.of.And_Or)
 
-    Eq.j_equality = Set.All_CupFinset.eq.Range.apply(s_j)
+    Eq.j_equality = Set.All_CupFinset.eq.Ico.apply(s_j)
 
     Eq << Eq.j_equality.limits_subs(k, a)
 

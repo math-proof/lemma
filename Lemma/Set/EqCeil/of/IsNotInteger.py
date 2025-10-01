@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Algebra.GeCeil.apply(x)
 
-    Eq << Set.Frac.gt.Zero.of.NotIn_Range.apply(Eq[0])
+    Eq << Set.Frac.gt.Zero.of.NotIn_Ico.apply(Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Frac.eq.Sub_Floor)
 

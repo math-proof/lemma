@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.lhs.expr.args[-1].arg.apply(Set.In_Range.In_Range.transform.ij_parallel)
+    Eq << Eq[-1].this.lhs.expr.args[-1].arg.apply(Set.In_Ico.In_Ico.transform.ij_parallel)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
 

@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.find(Range).apply(Set.Range.Min.eq.union, simplify=None)
+    Eq << Eq[-1].this.find(Range).apply(Set.Ico.Min.eq.union, simplify=None)
 
     Eq << Eq[-1].this(i).find(Element).simplify()
 

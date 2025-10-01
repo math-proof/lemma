@@ -65,7 +65,7 @@ def prove(Eq):
     Eq << Logic.All_And.given.All.All.apply(Eq[-1])
 
     P = Eq[-1].limits[0][1]
-    Eq << Set.All_CupFinset.eq.Range.apply(P)
+    Eq << Set.All_CupFinset.eq.Ico.apply(P)
 
     Eq << Eq[-1].this.expr.apply(Set.Eq.of.Eq.permutation, x)
 

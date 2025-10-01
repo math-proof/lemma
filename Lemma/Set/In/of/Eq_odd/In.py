@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.InSub.of.In_Icc, 1, simplify=None)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In.Div.Range.of.In, 2, simplify=None)
+    Eq << Eq[-1].this.find(Element).apply(Set.In.Div.Ico.of.In, 2, simplify=None)
 
     Eq << Eq[-1].this.find(Equal) - 1
 

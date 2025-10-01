@@ -39,11 +39,11 @@ def prove(Eq):
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], S.Pi * 2, simplify=None)
 
-    Eq << Set.In_Range.Ceil.of.In_Icc.apply(Eq[-1])
+    Eq << Set.In_Ico.Ceil.of.In_Icc.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Range.eq.Finset)
+    Eq << Eq[-1].this.rhs.apply(Set.Ico.eq.Finset)
 
     Eq << Set.Ite.In.Finset.apply(Eq[1].find(Piecewise))
 

@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq.x_quote_n_definition = Eq[-2].subs(i, n)
 
-    Eq << Set.All_CupFinset.eq.Range.apply(P)
+    Eq << Set.All_CupFinset.eq.Ico.apply(P)
 
     Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])
 
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Set.All_CupFinset.eq.Range.apply(P_quote)
+    Eq << Set.All_CupFinset.eq.Ico.apply(P_quote)
 
     Eq << Logic.All.All.of.All_And.apply(Eq[-1])
 

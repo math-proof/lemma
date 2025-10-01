@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge.of.Gt.strengthen.apply(Eq[-1])
 
-    Eq << Set.In.Range.of.Ge.apply(Eq[-1])
+    Eq << Set.In.Ico.of.Ge.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[0]
 

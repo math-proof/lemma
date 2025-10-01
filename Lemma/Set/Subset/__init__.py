@@ -2,9 +2,9 @@ from . import given
 from . import of
 from . import Cup
 from . import Icc
-from . import Range
 from . import Ite
 from . import Union
 from . import Is
 from . import SDiff
 from . import Finset
+from . import Ico

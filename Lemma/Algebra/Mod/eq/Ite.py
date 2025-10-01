@@ -19,9 +19,9 @@ def prove(Eq):
 
     Eq << Set.Or.given.In.Finset.apply(Eq[-1])
 
-    Eq << Set.Mod.In.Range.apply(Eq[-1].lhs)
+    Eq << Set.Mod.In.Ico.apply(Eq[-1].lhs)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Range.eq.Finset)
+    Eq << Eq[-1].this.rhs.apply(Set.Ico.eq.Finset)
 
 
 

@@ -14,9 +14,9 @@ def prove(Eq):
 
     Eq << apply(Unequal(n % 2, 0))
 
-    Eq << Set.Mod.In.Range.apply(n % 2)
+    Eq << Set.Mod.In.Ico.apply(n % 2)
 
-    Eq << Set.Or.of.In_Range.apply(Eq[-1])
+    Eq << Set.Or.of.In_Ico.apply(Eq[-1])
 
     Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
 

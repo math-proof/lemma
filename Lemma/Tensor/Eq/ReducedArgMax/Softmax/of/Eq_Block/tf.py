@@ -118,7 +118,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Lt.Lt.Is.Lt.Min)
 
-    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Range)
+    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico)
 
     Eq.four_blocks = Eq[-1].this.find(And).apply(Algebra.Ge.Ge.Is.Ge.Max)
 

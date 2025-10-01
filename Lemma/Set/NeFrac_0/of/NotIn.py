@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Set.In_Range.of.EqFrac_0.apply(Eq[-1])
+    Eq << Set.In_Ico.of.EqFrac_0.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[0]
 

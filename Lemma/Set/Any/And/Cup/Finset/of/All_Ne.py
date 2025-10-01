@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
 
-    Eq <<= Eq[-2].this.lhs.apply(Set.In.Range.Inter.of.Lt.In_Range), Eq[-1].this.lhs.apply(Set.In.Range.Inter.of.Ge.In_Range)
+    Eq <<= Eq[-2].this.lhs.apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
     Eq <<= Logic.Imp.given.All.apply(Eq[-2]), Logic.Imp.given.All.apply(Eq[-1])
 
@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
 
-    Eq <<= Eq[-2].this.lhs.apply(Set.In.Range.Inter.of.Lt.In_Range), Eq[-1].this.lhs.apply(Set.In.Range.Inter.of.Ge.In_Range)
+    Eq <<= Eq[-2].this.lhs.apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
     Eq <<= Logic.Imp.given.All.apply(Eq[-2]), Logic.Imp.given.All.apply(Eq[-1])
 
@@ -101,7 +101,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
 
-    Eq <<= Eq[-2].this.lhs.args[::2].apply(Set.In.Range.Inter.of.Lt.In_Range), Eq[-1].this.lhs.args[::2].apply(Set.In.Range.Inter.of.Ge.In_Range)
+    Eq <<= Eq[-2].this.lhs.args[::2].apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.args[::2].apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
     Eq <<= Eq[-2].this.rhs.apply(Logic.Cond_Ite.given.And.Imp), Eq[-1].this.rhs.apply(Logic.Cond_Ite.given.And.Imp)
 
@@ -109,11 +109,11 @@ def prove(Eq):
 
     Eq <<= Eq[-4].this.apply(Logic.Imp.flatten), Eq[-3].this.apply(Logic.Imp.flatten), Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
 
-    Eq << Eq[-2].this.find(Element[2]).apply(Set.Gt.of.In_Range.domain)
+    Eq << Eq[-2].this.find(Element[2]).apply(Set.Gt.of.In_Ico.domain)
 
-    Eq <<= Eq[-4].this.lhs.args[:2].apply(Set.In.Range.Inter.of.Lt.In_Range), \
-        Eq[-3].this.lhs.args[:2].apply(Set.In.Range.Inter.of.Ge.In_Range),\
-        Eq[-1].this.lhs.args[:2].apply(Set.In.Range.Inter.of.Ge.In_Range)
+    Eq <<= Eq[-4].this.lhs.args[:2].apply(Set.In.Ico.Inter.of.Lt.In_Ico), \
+        Eq[-3].this.lhs.args[:2].apply(Set.In.Ico.Inter.of.Ge.In_Ico),\
+        Eq[-1].this.lhs.args[:2].apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
     Eq <<= Eq[-3].this.apply(Logic.Imp.fold, 0),\
         Eq[-2].this.apply(Logic.Imp.fold, 0),\

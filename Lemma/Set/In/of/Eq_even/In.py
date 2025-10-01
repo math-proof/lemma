@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In.Div.Range.of.In, 2, simplify=None)
+    Eq << Eq[-1].this.find(Element).apply(Set.In.Div.Ico.of.In, 2, simplify=None)
 
     Eq << Eq[-1].this.find(Equal).apply(Algebra.EqDiv.of.Eq, 2, simplify=None)
 

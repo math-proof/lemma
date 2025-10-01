@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Logic.All.given.Imp.apply(Eq[1])
 
-    Eq << Eq[-1].this.find(Element).apply(Set.Lt.of.In_Range)
+    Eq << Eq[-1].this.find(Element).apply(Set.Lt.of.In_Ico)
 
 
 

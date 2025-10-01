@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.expr.apply(Set.In.Range.of.Lt.Ge)
+    Eq << Eq[-1].this.expr.apply(Set.In.Ico.of.Lt.Ge)
 
 
     Eq << Algebra.Any.of.Any_Eq.Cond.subst.apply(Eq[-1], Eq[2])

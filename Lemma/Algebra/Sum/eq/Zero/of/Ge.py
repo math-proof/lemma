@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
 
-    Eq << Set.Eq_Empty.Range.of.Ge.apply(Eq[0])
+    Eq << Set.Eq_Empty.Ico.of.Ge.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 

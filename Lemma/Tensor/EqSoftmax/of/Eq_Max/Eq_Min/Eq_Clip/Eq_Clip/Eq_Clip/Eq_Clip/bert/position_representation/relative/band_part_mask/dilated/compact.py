@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-2], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-1], step=d)
 
-    Eq <<= Eq[-2].this.rhs.apply(Tensor.Stack.Range.simp), Eq[-1].this.rhs.apply(Tensor.Stack.Range.simp)
+    Eq <<= Eq[-2].this.rhs.apply(Tensor.Stack.Ico.simp), Eq[-1].this.rhs.apply(Tensor.Stack.Ico.simp)
 
     Eq.eq_K_dquote = Eq[-2].this.rhs.subs(Eq.K_quote)
 

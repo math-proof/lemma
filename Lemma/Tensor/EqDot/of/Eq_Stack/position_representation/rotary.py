@@ -44,12 +44,12 @@ def prove(Eq):
 
     Eq.el_finite_mul_1 = Eq.el_to_et_1.find(Element[FiniteSet]).this.apply(Set.In.Finset.Mul, 2)
 
-    Eq <<= Eq.el_to_et.find(Element[Range]).this.apply(Set.In.Range.Mul.dilated, 2), \
-        Eq.el_to_et_1.find(Element[Range]).this.apply(Set.In.Range.Mul.dilated, 2).this.rhs.apply(Set.In_Icc.Is.InAdd, 1)
+    Eq <<= Eq.el_to_et.find(Element[Range]).this.apply(Set.In.Ico.Mul.dilated, 2), \
+        Eq.el_to_et_1.find(Element[Range]).this.apply(Set.In.Ico.Mul.dilated, 2).this.rhs.apply(Set.In_Icc.Is.InAdd, 1)
 
-    Eq.el_Range_mul = Eq[-2].this.rhs.apply(Set.In_Range.Is.And.split.Range)
+    Eq.el_Range_mul = Eq[-2].this.rhs.apply(Set.In_Ico.Is.And.split.Ico)
 
-    Eq.el_Range_mul_1 = Eq[-1].this.rhs.apply(Set.In_Range.Is.And.split.Range)
+    Eq.el_Range_mul_1 = Eq[-1].this.rhs.apply(Set.In_Ico.Is.And.split.Ico)
 
     Eq << Eq[-3].subs(Eq.el_to_et, Eq.el_to_et_1, Eq.el_finite_mul, Eq.el_Range_mul, Eq.el_finite_mul_1, Eq.el_Range_mul_1)
 

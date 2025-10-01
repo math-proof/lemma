@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Zero.of.Lt, Eq[-1].find(Sum))
 
-    Eq << Eq[-2].this.find(Element).apply(Set.In_Range.Is.And)
+    Eq << Eq[-2].this.find(Element).apply(Set.In_Ico.Is.And)
 
     Eq << Eq[-1].this.find(Less).reversed
 

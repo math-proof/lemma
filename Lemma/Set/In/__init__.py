@@ -4,7 +4,6 @@ from . import Icc
 from . import In
 from . import Mul
 from . import of
-from . import Range
 from . import Union
 from . import Add
 from . import CartesianSpace
@@ -24,3 +23,4 @@ from . import Sub
 from . import Imageset
 from . import Inv
 from . import NotIn
+from . import Ico

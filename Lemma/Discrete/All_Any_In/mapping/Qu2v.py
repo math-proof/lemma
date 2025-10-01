@@ -20,7 +20,7 @@ def prove(Eq):
 
     w, i, j = Eq[0].lhs.args
     Q = Eq[2].lhs.base
-    Eq << Set.All_CupFinset.eq.Range.apply(Q[u])
+    Eq << Set.All_CupFinset.eq.Ico.apply(Q[u])
 
     Eq << Logic.All.of.All_And.apply(Eq[-1], 1)
 

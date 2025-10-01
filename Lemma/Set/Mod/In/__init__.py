@@ -1,2 +1,2 @@
-from . import Range
-from . import Range_
+from . import Ico_
+from . import Ico

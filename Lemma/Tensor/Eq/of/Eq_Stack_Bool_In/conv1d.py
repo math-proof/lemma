@@ -34,7 +34,7 @@ def prove(Eq):
     i, k = Symbol(integer=True)
     Eq << apply(Equal(M, Stack[i:n, k:m](Bool(Element(i, Range(β[k], ζ[k]))))), x, w, r)
 
-    Eq.M_def = Eq[0].this.find(Element).apply(Set.In_Range.Is.And)
+    Eq.M_def = Eq[0].this.find(Element).apply(Set.In_Ico.Is.And)
 
     Eq << Eq[-1].rhs.expr.args[1].this.defun()
 

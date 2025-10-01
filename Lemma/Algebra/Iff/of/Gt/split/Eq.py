@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].reversed
 
-    Eq << Set.Iff.of.In_Range.split.Eq.apply(Eq[2], x, y)
+    Eq << Set.Iff.of.In_Ico.split.Eq.apply(Eq[2], x, y)
 
 
 

@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Logic.ImpNot.of.Or.apply(Eq[-1], 1)
 
-    Eq << Element(i, Range(-1, n + 1)).this.apply(Set.Union.eq.SDiff.of.In_Range)
+    Eq << Element(i, Range(-1, n + 1)).this.apply(Set.Union.eq.SDiff.of.In_Ico)
 
     Eq << Eq[-1].this.lhs.apply(Set.In.given.In.restrict, Range(0, n))
 

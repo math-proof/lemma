@@ -27,9 +27,9 @@ def prove(Eq):
     assert f.shape == g.shape == ()
 
     Eq << apply(All[x:A](Equal(g(x), 1)), All[x:B](Equal(f(x), 1)))
-    Eq << Set.All_CupFinset.eq.Range.apply(A)
+    Eq << Set.All_CupFinset.eq.Ico.apply(A)
 
-    Eq << Set.All_CupFinset.eq.Range.apply(B)
+    Eq << Set.All_CupFinset.eq.Ico.apply(B)
 
     Eq << All[x:A](Element(x, B), plausible=True)
 

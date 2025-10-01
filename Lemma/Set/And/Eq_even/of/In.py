@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq.contains = Eq[-1].subs(Eq[-2]).simplify()
 
-    Eq << Set.In.Mul.Range.of.In.apply(Eq.contains, 2)
+    Eq << Set.In.Mul.Ico.of.In.apply(Eq.contains, 2)
 
     Eq << Set.And.of.In_Ico.apply(Eq[-1], right_open=False)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Algebra.Le.of.Le.Le.apply(Eq[-2], Algebra.LeFloor.apply(b / 2) * 2)
 
-    Eq << Set.In.Range.of.Ge.Le.apply(Eq[-2], Eq[-1])
+    Eq << Set.In.Ico.of.Ge.Le.apply(Eq[-2], Eq[-1])
 
     Eq << Subset(Eq.contains.rhs, Integers, plausible=True)
 

@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[1].lhs.this.apply(Algebra.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Range.Is.And.split.Range)
+    Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And.split.Ico)
 
     Eq << Eq[-1].subs(Eq[0])
 

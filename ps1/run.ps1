@@ -1,4 +1,8 @@
 # . ps1/run.ps1
+param(
+    [bool]$continue = $false
+)
+
 while ($true) {
     # Set up process start info
     $psi = New-Object Diagnostics.ProcessStartInfo
@@ -33,6 +37,9 @@ while ($true) {
         }
         0 {
             Write-Host "Python program completed within the time limit."
+            if ($continue) {
+                $exit_status = 1
+            }
             break
         }
         default {

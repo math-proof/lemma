@@ -18,7 +18,7 @@ def prove(Eq):
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)
 
-    Eq << Set.All_CupFinset.eq.Range.apply(Eq[-1].lhs)
+    Eq << Set.All_CupFinset.eq.Ico.apply(Eq[-1].lhs)
 
     Eq << Logic.All.All.of.All_And.apply(Eq[-1])
 
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq.all_P_quote = Eq[-1] & Eq[-3]
 
-    Eq << Set.All_CupFinset.eq.Range.apply(Eq[1].lhs)
+    Eq << Set.All_CupFinset.eq.Ico.apply(Eq[1].lhs)
 
     Eq << Logic.All.All.of.All_And.apply(Eq[-1])
 

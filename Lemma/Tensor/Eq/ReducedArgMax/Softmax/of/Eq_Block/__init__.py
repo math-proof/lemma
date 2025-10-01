@@ -74,15 +74,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 0)
 
-    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Range)
+    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico)
 
     Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 0)
 
-    Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn_Range.Is.Or)
+    Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn_Ico.Is.Or)
 
     Eq << Eq[-1].this.find(And).apply(Logic.And_Or.Is.OrAndS)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Range.Is.And)
+    Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 
     Eq << Eq[-1].this.find(Or).apply(Algebra.Or.Is.And)
 
@@ -126,7 +126,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Lt.Lt.Is.Lt.Min)
 
-    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Range)
+    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico)
 
     Eq.four_blocks = Eq[-1].this.find(And).apply(Algebra.Ge.Ge.Is.Ge.Max)
 

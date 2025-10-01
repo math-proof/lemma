@@ -50,9 +50,9 @@ def prove(Eq):
     Eq << Eq[-1].subs(Eq.s2_definition)
 
     s0_plausible = Eq[-1]
-    Eq.s2_quote_definition = Set.All_CupFinset.eq.Range.apply(s2_quote)
+    Eq.s2_quote_definition = Set.All_CupFinset.eq.Ico.apply(s2_quote)
 
-    Eq << Set.All_CupFinset.eq.Range.apply(s0_quote)
+    Eq << Set.All_CupFinset.eq.Ico.apply(s0_quote)
 
     Eq.x_abs_positive = Logic.All.of.All_And.apply(Eq[-1])
     Eq.x_abs_sum = Logic.All.of.All_And.apply(Eq[-1], 1)

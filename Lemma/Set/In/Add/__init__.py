@@ -1,2 +1,2 @@
 from . import Finset
-from . import Range
+from . import Ico

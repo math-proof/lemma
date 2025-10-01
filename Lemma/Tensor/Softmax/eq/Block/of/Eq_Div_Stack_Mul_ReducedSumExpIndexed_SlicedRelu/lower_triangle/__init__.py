@@ -94,7 +94,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(ExprCondPair[2]).expr.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, i=0)
 
-    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Range)
+    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, i)
 
@@ -120,7 +120,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Symbol < Symbol + 1).apply(Algebra.Lt.Is.Le.strengthen)
 
-    Eq << Eq[-1].this(i, j).find(And).apply(Set.Or.Or.Is.sub.In.Range.BandPart.lower)
+    Eq << Eq[-1].this(i, j).find(And).apply(Set.Or.Or.Is.sub.In.Ico.BandPart.lower)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InNeg)
 

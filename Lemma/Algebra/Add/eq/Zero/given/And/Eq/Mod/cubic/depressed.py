@@ -43,9 +43,9 @@ def prove(Eq):
 
     Eq << Set.InSub.of.In_Icc.apply(Eq[-1], S.One / 2)
 
-    Eq << Set.In_Range.Ceil.of.In_Icc.apply(Eq[-1])
+    Eq << Set.In_Ico.Ceil.of.In_Icc.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Set.Range.eq.Finset)
+    Eq << Eq[-1].this.rhs.apply(Set.Ico.eq.Finset)
 
     Eq << Set.Ite.In.Finset.apply(Eq[1].find(Piecewise))
 

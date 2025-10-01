@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(Eq[1].lhs, 0, plausible=True)
 
-    Eq << Set.In.Range.of.Ge.Lt.apply(Eq[-1], Eq[1])
+    Eq << Set.In.Ico.of.Ge.Lt.apply(Eq[-1], Eq[1])
 
     Eq << Set.Eq.of.In.definition.apply(Eq[-1])
 

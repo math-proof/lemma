@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Set.In.Range.of.In.In.i_Lt_j.i_in_j)
+    Eq << Eq[-2].this.lhs.apply(Set.In.Ico.of.In.In.i_Lt_j.i_in_j)
 
-    Eq << Eq[-1].this.lhs.apply(Set.In.Range.of.In.In.i_Lt_j.j_in_i)
+    Eq << Eq[-1].this.lhs.apply(Set.In.Ico.of.In.In.i_Lt_j.j_in_i)
 
 
 if __name__ == '__main__':

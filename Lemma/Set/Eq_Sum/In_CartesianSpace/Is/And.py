@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Logic.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
 
-    Eq << Eq[-1].this.lhs.apply(Set.In.CartesianSpace.Range.of.In_CartesianSpace.relax, upper=m + 1)
+    Eq << Eq[-1].this.lhs.apply(Set.In.CartesianSpace.Ico.of.In_CartesianSpace.relax, upper=m + 1)
 
     Eq << Eq[1].this.lhs.apply(Set.In.CartesianSpace.of.Eq_Sum.In_CartesianSpace)
 

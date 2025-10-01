@@ -38,9 +38,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Range.Is.And)
+    Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Range.Is.And)
+    Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 
     Eq << Eq[-1].this.find(-Min).apply(Algebra.Mul.eq.Max)
 

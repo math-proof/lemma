@@ -40,11 +40,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.halve)
 
-    Eq <<= Eq[-1].find(Element).this.apply(Set.In.Range.Mul.dilated, 2), \
-        Eq[-1].find(Piecewise[2]).find(Element).this.apply(Set.In.Range.Mul.dilated, 2).this.rhs.apply(Set.In_Icc.Is.InAdd, 1)
+    Eq <<= Eq[-1].find(Element).this.apply(Set.In.Ico.Mul.dilated, 2), \
+        Eq[-1].find(Piecewise[2]).find(Element).this.apply(Set.In.Ico.Mul.dilated, 2).this.rhs.apply(Set.In_Icc.Is.InAdd, 1)
 
-    Eq <<= Eq[-2].this.rhs.apply(Set.In_Range.Is.And.split.Range),\
-        Eq[-1].this.rhs.apply(Set.In_Range.Is.And.split.Range)
+    Eq <<= Eq[-2].this.rhs.apply(Set.In_Ico.Is.And.split.Ico),\
+        Eq[-1].this.rhs.apply(Set.In_Ico.Is.And.split.Ico)
 
     Eq << Eq[-5].subs(*Eq[-2:])
 

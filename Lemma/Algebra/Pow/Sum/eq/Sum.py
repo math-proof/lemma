@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Logic.ImpNot.of.Or.apply(Eq[-1], 1)
 
-    Eq << Eq[-1].this.lhs.apply(Set.In_Range.given.In.Range.restrict, upper=m + 1)
+    Eq << Eq[-1].this.lhs.apply(Set.In_Ico.given.In.Ico.restrict, upper=m + 1)
 
     Eq << Eq[-1].this.lhs.apply(Set.In_Icc.Is.InNeg)
 

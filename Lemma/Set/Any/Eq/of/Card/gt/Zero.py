@@ -25,7 +25,7 @@ def prove(Eq):
     s = Symbol(etype=dtype.integer[k], given=True)
     Eq << apply(Card(s) > 0)
 
-    Eq << Set.In.Range.of.Gt.apply(Eq[0])
+    Eq << Set.In.Ico.of.Gt.apply(Eq[0])
 
     m = Symbol(integer=True, positive=True)
     Eq << Set.Any.Eq.of.In.apply(Eq[-1], var=m)

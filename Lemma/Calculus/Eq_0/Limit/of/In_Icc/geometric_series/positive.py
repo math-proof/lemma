@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Set.In.Div.of.Lt_0.In.apply(Eq.lt_zero, Eq[-1], simplify=None)
 
-    Eq.Ceiling_el = Set.In_Range.Ceil.of.In_Icc.apply(Eq[-1])
+    Eq.Ceiling_el = Set.In_Ico.Ceil.of.In_Icc.apply(Eq[-1])
 
     Eq << Algebra.Any.given.Cond.subst.apply(Eq.any, Eq.any.variable, Eq.Ceiling_el.lhs)
 

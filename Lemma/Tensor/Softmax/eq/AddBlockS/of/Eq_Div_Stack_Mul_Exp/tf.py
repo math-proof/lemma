@@ -113,9 +113,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].find(Piecewise[ExprCondPair[3]]).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, i=0)
 
-    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Range, simplify=None)
+    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico, simplify=None)
 
-    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Range, simplify=None)
+    Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico, simplify=None)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, i, simplify=None)
 
@@ -131,11 +131,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Algebra.And.collect, cond=Eq[-1].find(Element))
 
-    Eq << Eq[-1].this(i, j).find(And).apply(Set.Or.Or.Is.In.Range.BandPart.lower.offset)
+    Eq << Eq[-1].this(i, j).find(And).apply(Set.Or.Or.Is.In.Ico.BandPart.lower.offset)
 
     Eq << Eq[-1].this.find(And).apply(Algebra.And.collect, cond=Eq[-1].rhs.args[1].find(Element))
 
-    Eq.zij_dquote_def = Eq[-1].this(i, j).find(And).apply(Set.Or.Or.Is.In.Range.BandPart.upper.offset)
+    Eq.zij_dquote_def = Eq[-1].this(i, j).find(And).apply(Set.Or.Or.Is.In.Ico.BandPart.upper.offset)
 
     Eq.zi_quote_def = Eq[0][i]
 

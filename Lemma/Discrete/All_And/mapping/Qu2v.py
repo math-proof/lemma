@@ -36,7 +36,7 @@ def prove(Eq):
 
     w, i, j = Eq[0].lhs.args
     Q = Eq[2].lhs.base
-    Eq << Set.All_CupFinset.eq.Range.apply(Q[u])
+    Eq << Set.All_CupFinset.eq.Ico.apply(Q[u])
 
     Eq.x_slice_last, Eq.x_slice_domain = Logic.All.All.of.All_And.apply(Eq[-1])
 

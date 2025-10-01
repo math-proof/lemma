@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Range.Is.And)
+    Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 
     Eq << Eq[-1].this.lhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
 

@@ -2,8 +2,8 @@ from . import Is
 from . import given
 from . import Ite
 from . import SDiff
-from . import Range
 from . import Cup
 from . import of
 from . import Neg
 from . import Icc
+from . import Ico

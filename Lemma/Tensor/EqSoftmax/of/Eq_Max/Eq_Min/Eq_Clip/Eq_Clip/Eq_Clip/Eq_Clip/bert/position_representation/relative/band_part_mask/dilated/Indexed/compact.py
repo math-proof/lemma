@@ -54,9 +54,9 @@ def prove(Eq):
         Equal(V_dquote, Stack[j:Ceil(Min(n, l + u - 1) / d), i:n](w_V[k + clip(r[Min(n - 1, β[i] + d * j)] - r[i], -k, k)])),
         Q, K, V)
 
-    Eq.K_dquote = Eq.K_dquote.this.rhs.apply(Tensor.Stack.Range.retain.step)
+    Eq.K_dquote = Eq.K_dquote.this.rhs.apply(Tensor.Stack.Ico.retain.step)
 
-    Eq.V_dquote = Eq.V_dquote.this.rhs.apply(Tensor.Stack.Range.retain.step)
+    Eq.V_dquote = Eq.V_dquote.this.rhs.apply(Tensor.Stack.Ico.retain.step)
 
     K_dquote = Symbol('K^\"', Stack[j:Min(n, l + u - 1), i:n](K_quote[i, Min(n - 1, j + β[i])]))
     V_dquote = Symbol('V^\"', Stack[j:Min(n, l + u - 1), i:n](V_quote[i, Min(n - 1, j + β[i])]))
@@ -68,9 +68,9 @@ def prove(Eq):
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-2], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq[-1], step=d)
 
-    Eq.slice_K_dquote = Eq[-2].this.rhs.apply(Tensor.Stack.Range.simp)
+    Eq.slice_K_dquote = Eq[-2].this.rhs.apply(Tensor.Stack.Ico.simp)
 
-    Eq.slice_V_dquote = Eq[-1].this.rhs.apply(Tensor.Stack.Range.simp)
+    Eq.slice_V_dquote = Eq[-1].this.rhs.apply(Tensor.Stack.Ico.simp)
 
     Eq <<= Eq.K_quote[i], Eq.V_quote[i]
 

@@ -25,7 +25,7 @@ def prove(Eq):
     Eq << apply(n, k)
 
     s1_quote = Eq[1].lhs
-    Eq.s1_quote_definition = Set.All_CupFinset.eq.Range.apply(s1_quote)
+    Eq.s1_quote_definition = Set.All_CupFinset.eq.Ico.apply(s1_quote)
 
     i = Eq[0].lhs.indices[0]
     Eq.x_abs_positive_s1 = Logic.All.of.All_And.apply(Eq.s1_quote_definition)

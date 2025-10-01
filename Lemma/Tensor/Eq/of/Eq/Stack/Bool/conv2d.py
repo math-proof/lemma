@@ -46,7 +46,7 @@ def prove(Eq):
     Eq << apply(
         Equal(M, Stack[j:n[1], i:n[0], k:m](Bool(Element(i, Range(β0[k], ζ0[k])) & Element(j, Range(β1[k], ζ1[k]))))), x, w, r)
 
-    Eq.M_def = Eq[0].this.find(Element).apply(Set.In_Range.Is.And).this.find(Element).apply(Set.In_Range.Is.And)
+    Eq.M_def = Eq[0].this.find(Element).apply(Set.In_Ico.Is.And).this.find(Element).apply(Set.In_Ico.Is.And)
 
     Eq << Eq[-1].rhs.find(conv2d).this.defun()
 

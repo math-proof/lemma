@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Cup).apply(Set.Cup.eq.Cup_Ite)
 
-    Eq << (a >= b).this.apply(Set.Eq_Empty.Range.of.Ge)
+    Eq << (a >= b).this.apply(Set.Eq_Empty.Ico.of.Ge)
 
     Eq <<= Eq[-1] & Eq[-2]
 

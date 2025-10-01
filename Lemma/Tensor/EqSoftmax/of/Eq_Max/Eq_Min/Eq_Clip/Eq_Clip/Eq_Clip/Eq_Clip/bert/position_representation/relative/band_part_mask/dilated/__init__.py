@@ -82,11 +82,11 @@ def prove(Eq):
 
     Eq <<= Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq[-2]), Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Tensor.Stack.Range.simp), Eq[-1].this.rhs.apply(Tensor.Stack.Range.simp)
+    Eq <<= Eq[-2].this.rhs.apply(Tensor.Stack.Ico.simp), Eq[-1].this.rhs.apply(Tensor.Stack.Ico.simp)
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq.K_dquote[i], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le_min, Eq.V_dquote[i], step=d)
 
-    Eq <<= Eq[-2].this.rhs.apply(Tensor.Stack.Range.simp), Eq[-1].this.rhs.apply(Tensor.Stack.Range.simp)
+    Eq <<= Eq[-2].this.rhs.apply(Tensor.Stack.Ico.simp), Eq[-1].this.rhs.apply(Tensor.Stack.Ico.simp)
 
     Eq <<= Logic.Eq.of.Eq.Eq.apply(Eq[-6], Eq[-2]), Logic.Eq.of.Eq.Eq.apply(Eq[-5], Eq[-1])
 

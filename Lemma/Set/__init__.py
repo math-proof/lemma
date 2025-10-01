@@ -16,7 +16,6 @@ from . import Cup
 from . import Cap
 from . import Inter
 from . import Subset
-from . import Range
 from . import Union
 from . import All_Ne
 from . import Eq_Floor
@@ -159,7 +158,6 @@ from . import Frac
 from . import Any_In
 from . import In_Ici
 from . import In_Inter
-from . import In_Range
 from . import In_SDiff
 from . import In
 from . import InIte__Ite
@@ -179,7 +177,6 @@ from . import Any_And_AndInS
 from . import Any_And_In
 from . import In_Union
 from . import NotIn_Inter
-from . import NotIn_Range
 from . import NotInAdd
 from . import In_Cup
 from . import InAdd
@@ -198,8 +195,6 @@ from . import Eq_Empty
 from . import Icc_Eq_Empty
 from . import Icc_Ne_Empty
 from . import Ne_Empty
-from . import Range_Eq_Empty
-from . import Range_Ne_Empty
 from . import Inter_Eq_Empty
 from . import EqEmpty
 from . import AllIn_SDiff
@@ -226,3 +221,7 @@ from . import Cup_Ioc
 from . import Add
 from . import CupIcoNeg_0
 from . import Sub
+from . import Ico_Eq_Empty
+from . import Ico_Ne_Empty
+from . import Ico
+from . import Le_Sub_1

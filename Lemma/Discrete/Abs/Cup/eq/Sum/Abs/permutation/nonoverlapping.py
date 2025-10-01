@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Logic.Any.of.Any_And.apply(Eq[-1], index=1)
 
-    Eq << Set.All_CupFinset.eq.Range.apply(Q[t])
+    Eq << Set.All_CupFinset.eq.Ico.apply(Q[t])
 
     Eq << Logic.All.of.All_And.apply(Eq[-1], index=0)
 

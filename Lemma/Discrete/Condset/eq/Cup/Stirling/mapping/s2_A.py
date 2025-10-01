@@ -34,7 +34,7 @@ def prove(Eq):
     Eq.s2_definition = imageset(Eq[0].rhs.variable, Eq[0].rhs.expr.arg, s2_quote).this.subs(Eq[-1]).subs(Eq[0].reversed).reversed
 
     s1_quote = Eq[2].lhs
-    Eq << Set.All_CupFinset.eq.Range.apply(s1_quote)
+    Eq << Set.All_CupFinset.eq.Ico.apply(s1_quote)
 
     i = Eq[1].lhs.indices[0]
     x_slice = Eq[-1].limits[0][0]

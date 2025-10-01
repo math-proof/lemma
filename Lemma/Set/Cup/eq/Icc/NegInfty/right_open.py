@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Logic.Any_And.of.AnySetOf_AnySetOf, simplify=None), Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-3].this.lhs.find(Element).apply(Set.Le.of.In_Range), Eq[-1].this.rhs.apply(Set.In_Ico.given.And), Logic.Imp.given.Cond.apply(Eq[-2])
+    Eq <<= Eq[-3].this.lhs.find(Element).apply(Set.Le.of.In_Ico), Eq[-1].this.rhs.apply(Set.In_Ico.given.And), Logic.Imp.given.Cond.apply(Eq[-2])
 
     Eq <<= Eq[-3].this.lhs.expr.apply(Algebra.LtAdd.of.Le.Lt), Eq[-2].this.rhs.apply(Algebra.Ge.transport, lhs=0), Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
 

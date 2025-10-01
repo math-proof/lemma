@@ -14,7 +14,7 @@ def prove(Eq):
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(cos(x), 0))
 
-    Eq << Set.Sub_Mul_FloorDiv.In.Range.apply(x, S.Pi)
+    Eq << Set.Sub_Mul_FloorDiv.In.Ico.apply(x, S.Pi)
 
     Eq << Trigonometry.Cos.eq.Zero.of.Cos.eq.Zero.apply(Eq[0], -Floor(x / S.Pi))
 

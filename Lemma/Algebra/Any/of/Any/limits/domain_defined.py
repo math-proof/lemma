@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Logic.AnySetOf.given.Any_And.apply(Eq[1], simplify=None)
 
-    Eq << Eq[-1].this.find(Range).apply(Set.Range.Min.eq.Inter, simplify=None)
+    Eq << Eq[-1].this.find(Range).apply(Set.Ico.Min.eq.Inter, simplify=None)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Inter.given.In.In, simplify=None)
 
