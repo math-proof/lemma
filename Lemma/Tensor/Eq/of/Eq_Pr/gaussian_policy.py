@@ -25,7 +25,7 @@ def prove(Eq):
     Eq << apply(Equal(Pr[a:θ](a | s), Exp(-(a.var - φ(s.var) @ θ) ** 2 / (2 * σ ** 2)) / (sqrt(2 * S.Pi) * σ)))
 
     a = a.var
-    Eq << Algebra.EqLog.of.Eq.apply(Eq[0])
+    Eq << Algebra.EqLogS.of.Eq.apply(Eq[0])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Log.eq.Add)
 

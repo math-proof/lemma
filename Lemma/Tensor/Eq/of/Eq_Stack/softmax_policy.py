@@ -24,7 +24,7 @@ def prove(Eq):
     a = a.var
     Eq << Eq[0][a]
 
-    Eq << Algebra.EqLog.of.Eq.apply(Eq[-1])
+    Eq << Algebra.EqLogS.of.Eq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Log.eq.Add)
 

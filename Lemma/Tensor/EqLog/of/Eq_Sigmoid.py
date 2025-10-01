@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul.together)
 
-    Eq << Algebra.EqLog.of.Eq.apply(Eq[-1])
+    Eq << Algebra.EqLogS.of.Eq.apply(Eq[-1])
 
     Eq << -Eq[-1]
 

@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].find(softmax).this.apply(Tensor.Softmax.eq.Mul.ReducedSum)
 
-    Eq << Eq[-1].apply(Algebra.EqLog.of.Eq)
+    Eq << Eq[-1].apply(Algebra.EqLogS.of.Eq)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Log.eq.Add)
 

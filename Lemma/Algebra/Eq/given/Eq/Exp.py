@@ -14,7 +14,7 @@ def prove(Eq):
     f, g = Function(shape=(), real=True)
     Eq << apply(Equal(f(x), g(x)))
 
-    Eq << Eq[1].apply(Algebra.EqLog.of.Eq)
+    Eq << Eq[1].apply(Algebra.EqLogS.of.Eq)
 
 
 if __name__ == '__main__':

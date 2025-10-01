@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.lt_1, Eq[-1])
 
-    Eq << Algebra.EqLog.of.Eq.apply(Eq[-1])
+    Eq << Algebra.EqLogS.of.Eq.apply(Eq[-1])
 
     Eq.loss = -Algebra.EqSumS.of.Eq.apply(Eq[3] * (1 + log(1 - h[i] / 2)), (i, 0, n))
 

@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Tensor.nn.Softmax.translation.apply(x, -ReducedMax(x)).reversed
 
-    Eq << Eq[-1].apply(Algebra.EqLog.of.Eq)
+    Eq << Eq[-1].apply(Algebra.EqLogS.of.Eq)
 
     Eq << Eq[-1].this.rhs.arg.apply(Tensor.Softmax.eq.Mul.ReducedSum)
 
