@@ -20,7 +20,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(M > 0, m < 0, x=x)
 
-    Eq << Set.In.Icc.of.Gt.Lt.apply(Eq[0], Eq[1])
+    Eq << Set.In_Ioo.of.Gt.Lt.apply(Eq[0], Eq[1])
     Eq << Algebra.Eq.given.And.squeeze.apply(Eq[2])
 
     t = Symbol(real=True)

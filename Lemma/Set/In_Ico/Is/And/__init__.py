@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Set.And.of.In_Ico, simplify=False)
+    Eq << Eq[-2].this.lhs.apply(Set.Ge.Le_Sub_1.of.In_Ico, simplify=False)
 
     Eq << Eq[-1].this.lhs.apply(Set.In.Ico.of.Lt.Ge)
 

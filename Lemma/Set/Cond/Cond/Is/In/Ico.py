@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Set.In.Ico.of.Lt.Lt)
 
-    Eq << Eq[-1].this.lhs.apply(Set.And.of.In_Ico)
+    Eq << Eq[-1].this.lhs.apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Gt.of.Ge.relax)
 

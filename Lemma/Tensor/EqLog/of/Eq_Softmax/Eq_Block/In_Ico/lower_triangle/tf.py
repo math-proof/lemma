@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq.eq = Eq[-1][i + h[i]]
 
-    Eq.ge_relu, Eq.lt_1 = Set.And.of.In_Ico.apply(Eq[2])
+    Eq.ge_relu, Eq.lt_1 = Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[2])
 
     Eq << Eq.ge_relu.this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, upper=n - 1)
 

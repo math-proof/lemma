@@ -41,7 +41,7 @@ def prove(Eq):
     Eq << Eq[0][k] * k
     Eq << Eq[-2].subs(Eq[-1])
     Eq << Algebra.All.And.of.All.apply(Eq[-1])
-    Eq << Eq[-1].this.find(Element).apply(Set.Ge.of.In_Ico.int)
+    Eq << Eq[-1].this.find(Element).apply(Set.Ge.of.In_Ico)
     Eq << Eq[-1].this.find(GreaterEqual[2]).apply(Algebra.Gt_0.of.Ge, ret=True, simplify=None)
     Eq << Eq[-1].this.find(Greater).apply(Algebra.Div.gt.Zero.of.Gt_0)
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.GeMul.of.Gt_0.Ge, ret=0)

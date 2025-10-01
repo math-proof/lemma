@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Set.In_Ico.given.And.apply(Eq[1])
 
-    Eq << Set.And.of.In_Ico.apply(Eq[0])
+    Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 
     Eq << Algebra.Lt.of.Lt.relax.apply(Eq[-1], upper=b + 1)
 

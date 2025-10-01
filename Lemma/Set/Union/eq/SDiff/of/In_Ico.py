@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq <<= Set.NotIn.given.Eq_Empty.apply(Eq[-2]), Set.NotIn.given.Eq_Empty.apply(Eq[-1])
 
-    Eq << Set.And.of.In_Ico.apply(Eq[0])
+    Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 
     Eq << Set.Eq_Empty.Ico.of.Ge.apply(Eq[-2] + 1)
 

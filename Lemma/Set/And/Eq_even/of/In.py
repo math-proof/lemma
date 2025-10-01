@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Set.In.Mul.Ico.of.In.apply(Eq.contains, 2)
 
-    Eq << Set.And.of.In_Ico.apply(Eq[-1], right_open=False)
+    Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[-1], right_open=False)
 
     Eq << Algebra.Ge.of.Ge.Ge.apply(Eq[-2], Algebra.Mul_FloorDiv.ge.SubAdd_1.apply(a + 1, 2))
 

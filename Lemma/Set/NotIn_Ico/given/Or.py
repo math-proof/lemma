@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq <<= ~Eq[0] & Eq[1]
 
-    Eq << Eq[-1].this.find(Element).apply(Set.And.of.In_Ico)
+    Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
     Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1])
 

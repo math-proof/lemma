@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq.eq = Eq[-1][i + h[i]]
 
-    Eq.ge_neg_min, Eq.lt_min = Set.And.of.In_Ico.apply(Eq[2])
+    Eq.ge_neg_min, Eq.lt_min = Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[2])
 
     Eq <<= Eq.ge_neg_min.this.find(Min[~Symbol]).apply(Algebra.Expr.eq.IteGe, upper=n - 1), Eq.lt_min.this.find(Add).apply(Algebra.Expr.eq.IteGe, upper=n)
 

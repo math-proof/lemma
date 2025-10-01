@@ -19,15 +19,15 @@ def prove(Eq):
 
     Eq << Set.Eq.given.All_Imp.All_Imp.apply(Eq[0])
 
-    Eq <<= Eq[-2].this.lhs.apply(Set.And.of.In_Ico), Eq[-1].this.rhs.apply(Set.In_Ico.given.And)
+    Eq <<= Eq[-2].this.lhs.apply(Set.Ge.Le_Sub_1.of.In_Ico), Eq[-1].this.rhs.apply(Set.In_Ico.given.And)
 
     Eq <<= Eq[-2].this.find(Less).apply(Algebra.Or.Lt.of.Lt_Max), Eq[-1].this.find(Less).apply(Algebra.Lt_Max.given.Or.Lt)
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Union.given.OrInS, simplify=None), Eq[-1].this.find(Element).apply(Set.OrInS.of.In_Union, simplify=None)
 
-    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.And), Eq[-1].this.find(Element).apply(Set.And.of.In_Ico)
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.And), Eq[-1].this.find(Element).apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
-    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.And), Eq[-1].this.find(Element).apply(Set.And.of.In_Ico)
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.And), Eq[-1].this.find(Element).apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
 
 

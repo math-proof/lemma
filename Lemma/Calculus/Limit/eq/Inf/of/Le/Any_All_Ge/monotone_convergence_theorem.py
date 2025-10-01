@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Algebra.Lt.of.Le.relax.apply(Eq.le_inf, upper=oo)
 
-    Eq.inf_is_real = Set.In.Icc.of.Gt.Lt.apply(Eq[-2], Eq[-1], simplify=None)
+    Eq.inf_is_real = Set.In_Ioo.of.Gt.Lt.apply(Eq[-2], Eq[-1], simplify=None)
 
     Eq << Logic.Any_And.of.Any.All.apply(Eq.inf_is_real, Eq.any_ge, simplify=None)
 

@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Set.Any_In.of.Ne_Empty.apply(Eq[0])
 
-    Eq << Eq[-1].this.expr.apply(Set.And.of.In_Ico)
+    Eq << Eq[-1].this.expr.apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
     Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Lt.Ge)
 

@@ -22,7 +22,7 @@ def prove(Eq):
     d = Symbol(integer=True, positive=True)
     Eq << apply(Element(x, Range(a, b)), d)
 
-    Eq << Set.And.of.In_Ico.apply(Eq[0], right_open=False)
+    Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0], right_open=False)
 
     Eq <<= Eq[-1] * d, Eq[-2] * d
 

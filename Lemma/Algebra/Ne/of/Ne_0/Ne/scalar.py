@@ -15,7 +15,7 @@ def prove(Eq):
     x, a, b = Symbol(real=True)
     Eq << apply(Unequal(x, 0), Unequal(x * a, b))
 
-    Eq << Algebra.Or.Div.of.Ne.apply(Eq[1], x)
+    Eq << Algebra.Eq_0.ou.NeDivS.of.Ne.apply(Eq[1], x)
 
     Eq <<= Eq[-1] & Eq[0]
 

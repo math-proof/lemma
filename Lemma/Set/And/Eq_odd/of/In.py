@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Set.In.Mul.Ico.of.In.apply(Eq.contains, 2)
 
-    Eq.greater_than, Eq.less_than = Set.And.of.In_Ico.apply(Eq[-1], right_open=False)
+    Eq.greater_than, Eq.less_than = Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[-1], right_open=False)
 
     Eq.strict_greater_than = Algebra.Gt.of.Ge.relax.apply(Eq.greater_than)
 

@@ -24,7 +24,7 @@ def prove(Eq):
     d = Symbol(integer=True, positive=True)
     Eq << apply(Element(d * x, Range(a, b + 1)), d)
 
-    Eq << Set.And.of.In_Ico.apply(Eq[0])
+    Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 
     Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 

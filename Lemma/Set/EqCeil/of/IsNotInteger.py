@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << Algebra.Ceil.lt.Add_1.apply(x)
 
-    Eq << Set.In.Icc.of.Gt.Lt.apply(Eq[-1], Eq[-2])
+    Eq << Set.In_Ioo.of.Gt.Lt.apply(Eq[-1], Eq[-2])
 
-    Eq << Set.In.Icc.of.Gt.Lt.apply(Eq.gt_floor, Eq.lt_floor)
+    Eq << Set.In_Ioo.of.Gt.Lt.apply(Eq.gt_floor, Eq.lt_floor)
 
     Eq << Set.Sub.In.Ioc.of.In.In.apply(Eq[-2], Eq[-1])
 

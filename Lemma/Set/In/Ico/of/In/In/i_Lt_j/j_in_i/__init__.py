@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq <<= Set.In_Ico.given.And.apply(Eq[-1]), Set.In_Ico.given.And.apply(Eq[3])
 
-    Eq <<= Set.And.of.In_Ico.apply(Eq[0]), Set.And.of.In_Ico.apply(Eq[4])
+    Eq <<= Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0]), Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[4])
 
     Eq << Algebra.Gt.of.Ge.relax.apply(Eq[-2])
 

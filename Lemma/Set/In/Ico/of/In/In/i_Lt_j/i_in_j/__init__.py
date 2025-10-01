@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq <<= Set.In_Ico.given.And.apply(Eq[3]), Set.In_Ico.given.And.apply(Eq[-1])
 
-    Eq <<= Set.And.of.In_Ico.apply(Eq[4]), Set.And.of.In_Ico.apply(Eq[1])
+    Eq <<= Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[4]), Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[1])
 
     Eq << Eq[-2].reversed
 
