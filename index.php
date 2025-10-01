@@ -95,8 +95,14 @@ if (! str_ends_with($path_info, '/')) {
         else {
             $tokens = explode('.', $module);
             switch ($tokens[2]) {
-                case 'eq':
                 case 'is':
+                    $index = array_search('of', $tokens);
+                    if ($index === false)
+                        $tokens = array_merge([$tokens[0]], array_slice($tokens, 3), ['is'], [$tokens[1]]);
+                    else
+                        $tokens = array_merge([$tokens[0]], array_slice($tokens, 3, $index - 3), ['is'], [$tokens[1]], array_slice($tokens, $index));
+                    break;
+                case 'eq':
                 case 'as':
                 case 'ne':
                     $tmp = $tokens[1];
