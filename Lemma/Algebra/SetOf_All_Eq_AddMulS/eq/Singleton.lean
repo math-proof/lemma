@@ -3,7 +3,7 @@ import Lemma.Algebra.GeSubSMul.of.Ge
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.AddAdd
 import Lemma.Algebra.Mul2.eq.Add
-import Lemma.Algebra.EqAdd.of.Eq_Sub
+import Lemma.Algebra.EqAdd.is.Eq_Sub
 import Lemma.Algebra.EqAdd.of.Eq_Sub.Le
 import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Algebra.SubAdd.eq.AddSub.of.Le

@@ -7,8 +7,9 @@ open Set
 @[main]
 private lemma fin
   [DecidableEq ι]
-  {A B : Finset ι}
-  {x : ι} :
+-- given
+  (A B : Finset ι)
+  (x : ι) :
 -- imply
   x ∈ A ↔ x ∈ A ∩ B ∨ x ∈ A \ B := by
 -- proof
@@ -21,8 +22,9 @@ private lemma fin
 
 @[main]
 private lemma main
-  {A B : Set α}
-  {x : α} :
+-- given
+  (A B : Set α)
+  (x : α) :
 -- imply
   x ∈ A ↔ x ∈ A ∩ B ∨ x ∈ A \ B := by
 -- proof

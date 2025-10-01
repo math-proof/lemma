@@ -8,15 +8,15 @@ open Algebra Set
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
-  {x : α} :
+-- given
+  (x : α) :
 -- imply
   x ∈ Ioc (⌈x⌉ - 1 : α) (⌈x⌉ : α) := by
 -- proof
   denote h_d : d = ⌈x⌉
   have := Lt.Le.of.EqCeil h_d.symm
   let ⟨h₀, h₁⟩ := this
-  rw [h_d] at h₀
-  rw [h_d] at h₁
+  rw [h_d] at h₀ h₁
   apply In_Ioc.of.Lt.Le h₀ h₁
 
 

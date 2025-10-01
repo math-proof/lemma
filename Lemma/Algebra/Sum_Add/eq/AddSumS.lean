@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [DecidableEq ι]
   [AddCommMonoid α]

@@ -1,8 +1,7 @@
-import stdlib.List
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (d : ℕ) :

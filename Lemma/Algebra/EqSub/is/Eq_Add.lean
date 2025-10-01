@@ -12,16 +12,7 @@ private lemma left
 -- imply
   y - d = x ↔ y = d + x := by
 -- proof
-  constructor <;>
-    intro h
-  ·
-    have h := EqAddS.of.Eq d h
-    simp at h
-    rw [Add.comm] at h
-    exact h
-  ·
-    rw [h]
-    rw [EqSubAdd.left]
+  aesop
 
 
 @[main, comm, mp, mpr, mp.comm, mpr.comm]
@@ -32,13 +23,6 @@ private lemma main
 -- imply
   y - x = d ↔ y = d + x := by
 -- proof
-  constructor <;>
-    intro h
-  ·
-    have h := EqAddS.of.Eq x h
-    simp at h
-    exact h
-  ·
-    exact (Eq_Sub.of.EqAdd h.symm).symm
+  aesop
 
 -- created on 2025-04-26
