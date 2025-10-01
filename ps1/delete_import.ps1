@@ -6,6 +6,7 @@ $modules = @(
     'sympy.sets.sets:\b(Ioo|Ico|Iio|Icc|Iic|Ioc|Ici|Ioi|range)\b'
     'stdlib.Slice:Slice'
     'stdlib.List:\b(List|substr|slice|enumerate|is constant|swap)\b'
+    'sympy.Basic:^(?!import Lemma)'
 )
 
 foreach ($entry in $modules) {

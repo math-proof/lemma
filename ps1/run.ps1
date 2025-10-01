@@ -415,12 +415,3 @@ Write-Output "total failed    = $($failingModules.Count)"
 .\ps1\delete_import.ps1
 
 Remove-Item $tempConfigPath -Force -ErrorAction SilentlyContinue
-
-# Find all .lean files (excluding *.echo.lean) that import both sympy.Basic and Lemma.*
-Get-ChildItem -Recurse -Filter *.lean |
-    Where-Object { $_.Name -notlike '*.echo.lean' } |
-    Where-Object {
-        (Select-String -Path $_.FullName -Pattern '^import sympy\.Basic' -Quiet) -and
-        (Select-String -Path $_.FullName -Pattern '^import Lemma\.' -Quiet)
-    } |
-    Select-Object -ExpandProperty FullName
