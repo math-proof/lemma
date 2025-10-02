@@ -1,4 +1,4 @@
-import stdlib.List.Vector.Basic
+import sympy.vector.Basic
 import Lemma.Algebra.Zero.eq.Replicate
 import Lemma.Vector.One.eq.Replicate
 import Lemma.Algebra.Add.eq.Map2

@@ -1,4 +1,4 @@
-import stdlib.List.Vector.Basic
+import sympy.vector.Basic
 import Lemma.Algebra.Ne_0
 import Lemma.Algebra.Ne_0.of.Mul.ne.Zero
 import Lemma.Algebra.LtMod.of.Ne_0
