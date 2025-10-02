@@ -1,6 +1,5 @@
 import sympy.functions.elementary.complexes
 import sympy.functions.elementary.trigonometric
-import Lemma.Algebra.ExpAdd.eq.MulExpS
 import Lemma.Algebra.DivMul.eq.Mul_Div
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.DivAdd.eq.AddDivS

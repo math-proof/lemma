@@ -33,7 +33,7 @@ class IntegerRing (Z : Type) extends Semiring Z, LinearOrder Z, IsStrictOrderedR
   odd_iff {n : Z} : Odd n ↔ n % 2 = 1
   mod_two_ne_one {n : Z} : n % 2 ≠ 1 ↔ n % 2 = 0
 
-instance : IntegerRing Nat where
+instance : IntegerRing ℕ where
   succ_le_of_lt := Nat.succ_le_of_lt
   lt_of_succ_le := Nat.lt_of_succ_le
   lt_succ_of_le := Nat.lt_succ_of_le
@@ -66,7 +66,7 @@ instance : IntegerRing Nat where
   odd_iff := Nat.odd_iff
   mod_two_ne_one := Nat.mod_two_not_eq_one
 
-instance : IntegerRing Int where
+instance : IntegerRing ℤ where
   succ_le_of_lt := Int.add_one_le_of_lt
   lt_of_succ_le := Int.lt_of_add_one_le
   lt_succ_of_le := Int.lt_add_one_of_le

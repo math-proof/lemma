@@ -170,32 +170,27 @@ instance [AddSemigroup α] : AddSemigroup (Tensor α s) where
     apply add_assoc
 
 instance [AddZeroClass α] : AddZeroClass (Tensor α s) where
-  zero_add := by
-    intro a
+  zero_add X := by
     apply Eq.of.EqDataS
     rw [DataAdd.eq.AddDataS]
     simp [EqData0'0]
-  add_zero := by
-    intro a
+  add_zero X := by
     apply Eq.of.EqDataS
     rw [DataAdd.eq.AddDataS]
     simp [EqData0'0]
 
 instance [MulZeroClass α] : MulZeroClass (Tensor α s) where
-  zero_mul := by
-    intro a
+  zero_mul X := by
     apply Eq.of.EqDataS
     rw [DataMul.eq.MulDataS]
     simp [EqData0'0]
-  mul_zero := by
-    intro a
+  mul_zero X := by
     apply Eq.of.EqDataS
     rw [DataMul.eq.MulDataS]
     simp [EqData0'0]
 
 instance [AddCommMagma α] : AddCommMagma (Tensor α s) where
-  add_comm := by
-    intro a b
+  add_comm X Y := by
     apply Eq.of.EqDataS
     repeat rw [DataAdd.eq.AddDataS]
     apply add_comm
@@ -203,13 +198,11 @@ instance [AddCommMagma α] : AddCommMagma (Tensor α s) where
 instance [AddMonoid α] : AddMonoid (Tensor α s) where
   zero_add := AddZeroClass.zero_add
   add_zero := AddZeroClass.add_zero
-  nsmul n t := ⟨n • t.data⟩
-  nsmul_zero := by
-    intro t
+  nsmul n X := ⟨n • X.data⟩
+  nsmul_zero X := by
     apply Eq.of.EqDataS
     apply AddMonoid.nsmul_zero
-  nsmul_succ := by
-    intro n t
+  nsmul_succ n X := by
     apply Eq.of.EqDataS
     apply AddMonoid.nsmul_succ
 
@@ -225,8 +218,7 @@ instance [AddCommMonoid α] : AddCommMonoid (Tensor α s) where
   nsmul_succ := AddMonoid.nsmul_succ
 
 instance [Mul α] [Add α] [LeftDistribClass α]: LeftDistribClass (Tensor α n) where
-  left_distrib := by
-    intros
+  left_distrib A B C := by
     apply Eq.of.EqDataS
     repeat rw [DataAdd.eq.AddDataS]
     repeat rw [DataMul.eq.MulDataS]
@@ -234,8 +226,7 @@ instance [Mul α] [Add α] [LeftDistribClass α]: LeftDistribClass (Tensor α n)
     apply left_distrib
 
 instance [Mul α] [Add α] [RightDistribClass α]: RightDistribClass (Tensor α n) where
-  right_distrib := by
-    intros
+  right_distrib A B C := by
     apply Eq.of.EqDataS
     repeat rw [DataAdd.eq.AddDataS]
     repeat rw [DataMul.eq.MulDataS]
@@ -253,8 +244,7 @@ instance [NonUnitalNonAssocSemiring α] : NonUnitalNonAssocSemiring (Tensor α s
   right_distrib := Distrib.right_distrib
 
 instance [Semigroup α] : Semigroup (Tensor α s) where
-  mul_assoc := by
-    intros
+  mul_assoc A B C := by
     apply Eq.of.EqDataS
     repeat rw [DataMul.eq.MulDataS]
     apply mul_assoc

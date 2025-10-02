@@ -576,6 +576,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
       return .Operator (.ExprWithAttr (.Lean_function declName))
 
     | `id
+    | `Exp.exp
     | `Real.exp
     | `Complex.re
     | `Complex.im

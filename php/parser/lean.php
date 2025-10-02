@@ -482,7 +482,9 @@ abstract class Lean extends IndentedNode
             case 'public':
             case 'private':
             case 'protected':
+            case 'scoped':
             case 'noncomputable':
+            case 'nonrec':
                 while ($tokens[++$i] == ' ');
                 return $this->push_accessibility("Lean_$tokens[$i]", $token);
             case ' ':

@@ -295,6 +295,7 @@ def Expr.latexFormat : Expr → String
         opStr ++ "\\ " ++ "\\ ".intercalate args
       | .Lean_operatorname name =>
         match name with
+        | `Exp.exp
         | `Real.exp => "{\\color{RoyalBlue} e} ^ %s"
         | `Finset.Ioo
         | `Set.Ioo => "\\left(%s, %s\\right)"
