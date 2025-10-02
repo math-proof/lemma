@@ -13,7 +13,7 @@ def apply(eq):
                         NegativeInfinity * Ones
                     ],
                 ]
-            ] - Stack[Ones * logsumexp[Add[BlockMatrix[Expr, Zeros]]]]])
+            ] - Stack[Ones * Log[ReducedSum[Exp[Add[BlockMatrix[Expr, Zeros]]]]]]])
     assert n >= 2 and u >= 2
     breadth = Min(u, n) - 1
     return Equal(softmax(A + H * Identity(n) + (BandPart[0, u - 1](Ones(n, n)) - 1) * oo),
@@ -33,7 +33,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     Eq << apply(Equal(z, BlockMatrix[1](H, Zeros(n, Min(u, n) - 1)) + BlockMatrix(
             Stack[i:n - Min(u, n) + 1](A[i, i:i + Min(u, n)]),
-            Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1)))) - Stack[i:n](Ones(Min(u, n)) * logsumexp((A[i, i:Min(n, i + u)] + BlockMatrix(H[i], Zeros(Min(n - i, u) - 1)))))))
+            Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1)))) - Stack[i:n](Ones(Min(u, n)) * Log(ReducedSum(Exp(A[i, i:Min(n, i + u)] + BlockMatrix(H[i], Zeros(Min(n - i, u) - 1))))))))
 
     Eq << Eq[0].this.find(BlockMatrix[1]).apply(Algebra.Block.split, n + 1 - Min(u, n))
 

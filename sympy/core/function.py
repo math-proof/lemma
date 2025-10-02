@@ -1040,7 +1040,7 @@ class AppliedUndef(Function):
         if cls not in free_symbols:
             name = cls.__name__
             if cls._kwargs.get('eval'):
-                if name in ('conv1d', 'conv2d', 'conv3d', 'gru', 'GRU', 'lstm', 'LSTM', 'LSTMCell', 'relu', 'sigmoid', 'BandPart', 'crossentropy', 'logsumexp', 'clip'):
+                if name in ('conv1d', 'conv2d', 'conv3d', 'gru', 'GRU', 'lstm', 'LSTM', 'LSTMCell', 'relu', 'sigmoid', 'BandPart', 'crossentropy', 'clip'):
                     return definition
 
             from sympy import Symbol

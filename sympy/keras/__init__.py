@@ -1,5 +1,4 @@
 from .ops import clip
-from .math import logsumexp
 from .losses import crossentropy
 from .linalg import BandPart
 from .nn.recurrent.gru import GRU
