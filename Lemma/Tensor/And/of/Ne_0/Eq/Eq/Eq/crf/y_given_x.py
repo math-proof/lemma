@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.of.Eq.Eq.subst.rhs)
 
-    Eq << Eq[-1].this.find(Log).apply(Algebra.Log.eq.Add)
+    Eq << Eq[-1].this.find(Log).apply(Algebra.LogMul.eq.AddLogS)
 
     Eq.z_definition_by_x_quote = Logic.EqUFnS.of.Eq.apply(Eq[6].reversed, exp)
 
@@ -104,7 +104,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Gt)
 
-    Eq << Eq[-1].this.find(log).apply(Tensor.Log.ReducedSum.eq.LogSumExp)
+    Eq << Eq[-1].this.find(log).apply(Tensor.LogSumExp.definition)
 
     Eq.xy_joint_nonzero = Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], (slice(0, t + 1), slice(0, t + 1)))
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq << Logic.And_And.of.And.apply(Eq[-1] & Eq.xy_joint_nonzero)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Log.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Algebra.LogMul.eq.AddLogS)
 
     Eq << Logic.EqUFnS.of.Eq.apply(Eq[4].reversed, exp)
 

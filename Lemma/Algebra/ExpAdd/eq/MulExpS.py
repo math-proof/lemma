@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << apply(exp(a + b))
 
     Eq << Algebra.Eq.given.EqLogS.apply(Eq[-1])
-    Eq << Eq[-1].this.rhs.apply(Algebra.Log.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Algebra.LogMul.eq.AddLogS)
 
 
 if __name__ == '__main__':

@@ -128,6 +128,7 @@ export default {
 
 				'Tensor.Ne_0.Ne_0.of.Mul.ne.Zero', // Algebra.Ne_0.Ne_0.of.Mul.ne.Zero
 				'Tensor.EqStackS.of.Eq', // Tensor.EqStackS.of.All_Eq
+				'Tensor.LogSumExp.definition',
 			],
 		};
 	},

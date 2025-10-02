@@ -27,7 +27,7 @@ def prove(Eq):
     a = a.var
     Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], log)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Log.eq.Add)
+    Eq << Eq[-1].this.rhs.apply(Algebra.LogMul.eq.AddLogS)
 
     Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], [θ])
 

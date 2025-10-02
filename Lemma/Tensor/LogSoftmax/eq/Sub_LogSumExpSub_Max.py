@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.arg.apply(Tensor.Softmax.eq.Div_SumExp)
 
-    Eq << Eq[-1].this.find(Log[ReducedSum]).apply(Tensor.Log.ReducedSum.eq.LogSumExp)
+    Eq << Eq[-1].this.find(Log[ReducedSum]).apply(Tensor.LogSumExp.definition)
 
 
 if __name__ == '__main__':
