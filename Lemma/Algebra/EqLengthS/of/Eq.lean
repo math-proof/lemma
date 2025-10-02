@@ -1,5 +1,5 @@
 import stdlib.SEq
-import stdlib.List.Vector
+import sympy.vector.vector
 
 
 @[main]

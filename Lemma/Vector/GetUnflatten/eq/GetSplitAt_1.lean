@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Logic.HEq.of.All_Eq.Eq.Eq
 import Lemma.Algebra.Prod.eq.Foldr
 import Lemma.Logic.HEq.of.All_HEq.Eq

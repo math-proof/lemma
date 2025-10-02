@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.GetVal.eq.Get.of.Lt
 import Lemma.Algebra.EqGetRange
 open Algebra

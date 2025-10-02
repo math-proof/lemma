@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Logic.All_EqUFnS.of.All_Eq
 open Logic
 

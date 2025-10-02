@@ -1,4 +1,6 @@
 import Mathlib.Tactic
+import Mathlib.Analysis.Real.Hyperreal
+open Filter
 
 class Exp (α : Type u) extends Add α, Mul α where
   exp : α → α
@@ -11,6 +13,15 @@ noncomputable instance : Exp ℝ where
 noncomputable instance : Exp ℂ where
   exp := Complex.exp
   exp_add := Complex.exp_add
+
+noncomputable instance : Exp ℝ* where
+  exp x := x.map Real.exp
+  exp_add x y := by
+    refine Germ.inductionOn₂ x y fun f g => ?_
+    rw [Germ.map]
+    apply Germ.coe_eq.mpr ∘ Eventually.of_forall
+    simp [Real.exp_add]
+
 
 class Log (α : Type u) where
   log : α → α

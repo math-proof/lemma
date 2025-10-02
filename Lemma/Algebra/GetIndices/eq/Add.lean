@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Logic.OrOr.is.Or_Or

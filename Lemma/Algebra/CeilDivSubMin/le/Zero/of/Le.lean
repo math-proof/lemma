@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.LeCoeS.is.Le
 import Lemma.Algebra.LeMin.of.Le
 import Lemma.Algebra.Sub.le.Zero.of.Le

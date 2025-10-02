@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Algebra.Div.eq.Mul_Inv

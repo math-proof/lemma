@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.HEq.is.HEqValS.of.Eq
 import Lemma.Algebra.Eq.of.HEq
 open Algebra

@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.ValGetUnflatten.eq.ValArraySlice
 import Lemma.Logic.All_And.of.All.All
 import Lemma.Logic.All.of.All.All_Imp

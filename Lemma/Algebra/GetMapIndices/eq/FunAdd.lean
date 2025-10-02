@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.GetIndices.eq.Add
 import Lemma.Vector.GetMap.eq.FunGet
 import Lemma.Algebra.CoeAdd.eq.AddCoeS

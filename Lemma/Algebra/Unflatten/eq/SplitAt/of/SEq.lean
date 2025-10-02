@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Logic.EqCast.of.SEq
 open Logic
 

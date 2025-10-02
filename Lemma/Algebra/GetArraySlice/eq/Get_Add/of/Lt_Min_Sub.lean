@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.GetTake.eq.Get.of.Lt_Min
 import Lemma.Algebra.GetDrop.eq.Get_Add.of.Lt_Sub
 import Lemma.Algebra.Lt.of.Lt_Min

@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.Eq_Nil.of.EqLength_0
 import Lemma.Algebra.LengthCons.eq.Add1Length
 import Lemma.Algebra.EqAddS.is.Eq

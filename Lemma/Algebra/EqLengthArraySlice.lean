@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le_SubMulS
 import Lemma.Algebra.Mul

@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.Algebra.GetElem!.eq.None.of.Ge_Length
 open Algebra

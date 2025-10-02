@@ -1,4 +1,4 @@
-import stdlib.List.Vector
+import sympy.vector.vector
 import Lemma.Algebra.Prod.eq.MulProdTake__ProdDrop
 open Algebra
 
