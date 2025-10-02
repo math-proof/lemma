@@ -23,7 +23,7 @@ def apply(eq_V, eq_V_quote, eq):
                     NegativeInfinity * Ones
                 ]
             ]
-        ] - Stack[Ones * logsumexp[Add]]])
+        ] - Stack[Ones * Log[ReducedSum[Exp[Add]]]]])
 
     assert n >= 2 and u >= 2 and u <= n
 
@@ -48,7 +48,7 @@ def prove(Eq):
         Equal(V_quote, Stack[j:u, i:n](w[k + clip(r[Min(n - 1, i + j)] - r[i], -k, k)])),
         Equal(z, BlockMatrix(
             V_quote[:n - u] + Stack[i:n - u](A[i, i:i + u]),
-            Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:] + V_quote[i + n - u, :u - i], -oo * Ones(i)))) - Stack[i:n](Ones(u) * logsumexp(A[i, i:Min(n, i + u)] + V_quote[i, :Min(n, i + u) - i]))))
+            Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:] + V_quote[i + n - u, :u - i], -oo * Ones(i)))) - Stack[i:n](Ones(u) * Log(ReducedSum(Exp(A[i, i:Min(n, i + u)] + V_quote[i, :Min(n, i + u) - i]))))))
 
     Eq << Tensor.All.Eq.of.Eq_Block.Eq_Block.relative_distance.upper_triangle.lower_part.apply(Eq[0], Eq[1])
 

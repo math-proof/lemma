@@ -15,7 +15,7 @@ def apply(eq):
                     Sliced[Indexed],
                     NegativeInfinity * Ones],
             ]
-        ] - Stack[Ones * logsumexp]])
+        ] - Stack[Ones * Log[ReducedSum[Exp]]]])
 
     assert n >= 2 and u >= 2 and u <= n
     return Equal(ReducedArgMax(softmax(A + (BandPart[0, u - 1](Ones(n, n)) - 1) * oo)) - Stack[i:n](i), ReducedArgMax(z))
@@ -32,7 +32,7 @@ def prove(Eq):
     z = Symbol(shape=(n, u), extended_real=True)
     Eq << apply(Equal(z, BlockMatrix(
             Stack[i:n - u](A[i, i:i + u]),
-            Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) - Stack[i:n](Ones(u) * logsumexp(A[i, i:Min(n, i + u)]))))
+            Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) - Stack[i:n](Ones(u) * Log(ReducedSum(Exp(A[i, i:Min(n, i + u)]))))))
 
     Eq << Tensor.Softmax.eq.Block.of.Eq_SubBlock__Stack_Mul_LogSumExp.upper_triangle.apply(Eq[0])
 

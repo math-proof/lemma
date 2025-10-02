@@ -25,8 +25,9 @@ def apply(eq_C, eq_V, eq_V_quote, eq):
                         ],
                 ],
                 Add[Stack]
-                ] - Stack[Ones * logsumexp[Add]]
-            ])
+            ] - Stack[Ones * Log[ReducedSum[Exp[Add]]]]
+        ]
+    )
 
     assert n >= 2 and l >= 2 and l <= n
 
@@ -55,7 +56,7 @@ def prove(Eq):
         Equal(V_quote, Stack[j:l, i:n](w[k + clip(r[Min(n - 1, relu(i - l + 1) + j)] - r[i], -k, k)])),
         Equal(z, BlockMatrix(
             Stack[i:l](BlockMatrix(-oo * Ones(l - i - 1), A[i, :i + 1] + V_quote[i, :i + 1] * (1 + C_quote[i] @ C_quote[:i + 1].T))),
-            V_quote[l:] * Stack[i:n - l](1 + C_quote[i + l] @ C_quote[i + 1:i + l + 1].T) + Stack[i:n - l](A[i + l, i + 1:i + l + 1])) - Stack[i:n](Ones(l) * logsumexp(A[i, relu(i + 1 - l):i + 1] + V_quote[i, :Min(i + 1, l)] * (1 + C_quote[i] @ C_quote[relu(i - l + 1):i + 1].T)))))
+            V_quote[l:] * Stack[i:n - l](1 + C_quote[i + l] @ C_quote[i + 1:i + l + 1].T) + Stack[i:n - l](A[i + l, i + 1:i + l + 1])) - Stack[i:n](Ones(l) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):i + 1] + V_quote[i, :Min(i + 1, l)] * (1 + C_quote[i] @ C_quote[relu(i - l + 1):i + 1].T)))))))
 
     Eq << Tensor.All.Eq.of.Eq_Block.Eq_Block.relative_distance.lower_triangle.upper_part.apply(Eq[1], Eq[2])
 

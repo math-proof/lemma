@@ -15,7 +15,7 @@ def apply(eq_z, eq_z_quote, el):
                     NegativeInfinity * Ones
                 ],
             ]
-        ] - Stack[Ones * logsumexp]])
+        ] - Stack[Ones * Log[ReducedSum[Exp]]]])
 
     (S[A], (([S[0]], [S[u - 1]]), S[oo])), z = eq_z.of(Equal[Softmax[Add[Mul[BandPart[Ones] - 1]]]])
 
@@ -41,7 +41,7 @@ def prove(Eq):
         Equal(z, softmax(A + (BandPart[0, u - 1](Ones(n, n)) - 1) * oo)),
         Equal(z_quote, BlockMatrix(
             Stack[i:n - u](A[i, i:i + u]),
-            Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) - Stack[i:n](Ones(u) * logsumexp(A[i, i:Min(n, i + u)]))),
+            Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) - Stack[i:n](Ones(u) * Log(ReducedSum(Exp(A[i, i:Min(n, i + u)]))))),
         Element(h[i], Range(Min(n - i, u))))
 
     Eq << Tensor.Softmax.eq.Block.of.Eq_SubBlock__Stack_Mul_LogSumExp.upper_triangle.apply(Eq[1])

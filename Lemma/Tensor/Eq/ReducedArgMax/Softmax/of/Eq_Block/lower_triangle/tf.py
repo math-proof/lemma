@@ -15,7 +15,7 @@ def apply(eq):
                     Tuple[Expr - 1]
                 ],
                 Stack[Tuple[Expr + 1 - Expr]]
-            ] - Stack[Ones * logsumexp]
+            ] - Stack[Ones * Log[ReducedSum[Exp]]]
         ])
 
     assert n >= 2 and l >= 2 and l <= n
@@ -33,7 +33,7 @@ def prove(Eq):
     z = Symbol(shape=(n, l), extended_real=True)
     Eq << apply(Equal(z, BlockMatrix(
             Stack[i:l - 1](BlockMatrix(-oo * Ones(l - i - 1), A[i, :i + 1])),
-            Stack[i:n - l + 1](A[i + l - 1, i:i + l])) - Stack[i:n](Ones(l) * logsumexp(A[i, relu(i + 1 - l):i + 1]))))
+            Stack[i:n - l + 1](A[i + l - 1, i:i + l])) - Stack[i:n](Ones(l) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):i + 1]))))))
 
     Eq << Tensor.Softmax.eq.Block.of.Eq_Sub_Stack_Mul_LogSumExp.lower_triangle.tf.apply(Eq[0])
 

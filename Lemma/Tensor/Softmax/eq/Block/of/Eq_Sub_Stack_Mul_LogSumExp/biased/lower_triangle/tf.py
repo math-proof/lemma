@@ -15,7 +15,7 @@ def apply(eq):
                     Tuple[Expr - 1]
                 ],
                 Stack[Tuple[Expr + 1 - Expr]]
-            ] - Stack[Ones * logsumexp[Add[BlockMatrix[Zeros, Expr]]]]])
+            ] - Stack[Ones * Log[ReducedSum[Exp[Add[BlockMatrix[Zeros, Expr]]]]]]])
     assert n >= 2 and l >= 2
 
     return Equal(softmax(A + H * Identity(n) + (BandPart[l - 1, 0](Ones(n, n)) - 1) * oo),
@@ -36,7 +36,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     Eq << apply(Equal(z, BlockMatrix[1](Zeros(n, l - 1), H) + BlockMatrix(
             Stack[i:l - 1](BlockMatrix(-oo * Ones(l - i - 1), A[i, :i + 1])),
-            Stack[i:n - l + 1](A[i + l - 1, i:i + l])) - Stack[i:n](Ones(l) * logsumexp((A[i, relu(i + 1 - l):i + 1] + BlockMatrix(Zeros(Min(i, l - 1)), H[i]))))))
+            Stack[i:n - l + 1](A[i + l - 1, i:i + l])) - Stack[i:n](Ones(l) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):i + 1] + BlockMatrix(Zeros(Min(i, l - 1)), H[i])))))))
 
     Eq << Eq[0].this.find(BlockMatrix[1]).apply(Algebra.Block.split, Min(l, n) - 1)
 

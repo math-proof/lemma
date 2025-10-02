@@ -17,7 +17,7 @@ def apply(eq):
                         NegativeInfinity * Ones
                     ],
                 ]
-            ] - Stack[Ones * logsumexp[MatMul + BlockMatrix[Expr, Zeros]]]])
+            ] - Stack[Ones * Log[ReducedSum[Exp[MatMul + BlockMatrix[Expr, Zeros]]]]]])
     assert n >= 2 and u >= 2 and u <= n
 
     return Equal(softmax(Q @ W @ K.T + H * Identity(n) + (BandPart[0, u - 1](Ones(n, n)) - 1) * oo),
@@ -41,7 +41,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     Eq << apply(Equal(z, BlockMatrix[1](H, Zeros(n, u - 1)) + BlockMatrix(
             Stack[i:n - u](Q[i] @ W @ K[i:i + u].T),
-            Stack[i:u](BlockMatrix(Q[i + n - u] @ W @ K[n - u + i:].T, -oo * Ones(i)))) - Stack[i:n](Ones(u) * logsumexp((Q[i] @ W @ K[i:Min(n, i + u)].T + BlockMatrix(H[i], Zeros(Min(n - i, u) - 1)))))))
+            Stack[i:u](BlockMatrix(Q[i + n - u] @ W @ K[n - u + i:].T, -oo * Ones(i)))) - Stack[i:n](Ones(u) * Log(ReducedSum(Exp(Q[i] @ W @ K[i:Min(n, i + u)].T + BlockMatrix(H[i], Zeros(Min(n - i, u) - 1))))))))
 
     A = Symbol(Eq[1].find(MatMul))
     Eq.A_def = A.this.definition

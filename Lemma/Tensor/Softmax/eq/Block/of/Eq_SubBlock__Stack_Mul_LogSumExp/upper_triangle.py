@@ -13,7 +13,7 @@ def apply(eq):
             Stack[
                 BlockMatrix[NegativeInfinity * Ones]
             ]
-        ] - Stack[Ones * logsumexp]])
+        ] - Stack[Ones * Log[ReducedSum[Exp]]]])
 
     assert n >= 2 and u >= 2 and u <= n
 
@@ -33,7 +33,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     Eq << apply(Equal(z, BlockMatrix(
         Stack[i:n - u](A[i, i:i + u]),
-        Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) - Stack[i:n](Ones(u) * logsumexp(A[i, i:Min(n, i + u)]))))
+        Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) - Stack[i:n](Ones(u) * Log(ReducedSum(Exp(A[i, i:Min(n, i + u)]))))))
 
     Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], exp)
 
@@ -46,8 +46,6 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Exp[Stack]).apply(Tensor.Exp.eq.Stack)
 
     Eq << Eq[-1].this.find(Exp[BlockMatrix]).apply(Algebra.Exp.eq.Block)
-
-    Eq << Eq[-1].this.find(logsumexp).defun()
 
     Eq << Eq[-1].this.rhs.find(Exp[Mul[Stack]]).apply(Tensor.Exp.eq.Stack)
 

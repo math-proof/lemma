@@ -24,7 +24,7 @@ def apply(eq_V, eq_V_quote, eq):
                     ],
                 ],
                 Add[Stack]
-            ] - Stack[Ones * logsumexp[Add]]
+            ] - Stack[Ones * Log[ReducedSum[Exp[Add]]]]
         ])
 
     assert n >= 2 and l >= 2 and l <= n
@@ -52,7 +52,7 @@ def prove(Eq):
         Equal(V_quote, Stack[j:l, i:n](w[k + clip(r[Min(n - 1, relu(i - l + 1) + j)] - r[i], -k, k)])),
         Equal(z, BlockMatrix(
             Stack[i:l - 1](BlockMatrix(-oo * Ones(l - i - 1), A[i, :i + 1] + V_quote[i, :i + 1])),
-            V_quote[l - 1:] + Stack[i:n - l + 1](A[i + l - 1, i:i + l])) - Stack[i:n](Ones(l) * logsumexp(A[i, relu(i + 1 - l):i + 1] + V_quote[i, :Min(i + 1, l)]))))
+            V_quote[l - 1:] + Stack[i:n - l + 1](A[i + l - 1, i:i + l])) - Stack[i:n](Ones(l) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):i + 1] + V_quote[i, :Min(i + 1, l)]))))))
 
     Eq << Tensor.All.Eq.of.Eq_Block.Eq_Block.relative_distance.lower_triangle.upper_part.tf.apply(Eq[0], Eq[1])
 

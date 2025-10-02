@@ -14,7 +14,7 @@ def apply(eq):
                     ],
                     Tuple[Expr - 1]],
                 Stack[Tuple[Expr + 1 - Expr]]
-            ] - Stack[Ones * logsumexp]])
+            ] - Stack[Ones * Log[ReducedSum[Exp]]]])
 
     assert n >= 2 and l >= 2 and l <= n
     return Equal(softmax(A + (BandPart[l - 1, 0](Ones(n, n)) - 1) * oo), BlockMatrix(
@@ -33,7 +33,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     Eq << apply(Equal(z, BlockMatrix(
             Stack[i:l - 1](BlockMatrix(-oo * Ones(l - i - 1), A[i, :i + 1])),
-            Stack[i:n - l + 1](A[i + l - 1, i:i + l])) - Stack[i:n](Ones(l) * logsumexp(A[i, relu(i + 1 - l):i + 1]))))
+            Stack[i:n - l + 1](A[i + l - 1, i:i + l])) - Stack[i:n](Ones(l) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):i + 1]))))))
 
     Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], exp)
 
@@ -46,8 +46,6 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Exp[Stack]).apply(Tensor.Exp.eq.Stack)
 
     Eq << Eq[-1].this.find(Exp[BlockMatrix]).apply(Algebra.Exp.eq.Block)
-
-    Eq << Eq[-1].this.find(logsumexp).defun()
 
     Eq << Eq[-1].this.rhs.find(Exp[Mul[Stack]]).apply(Tensor.Exp.eq.Stack)
 
