@@ -11,7 +11,7 @@ def apply(self):
 @prove
 def prove(Eq):
     x = Symbol(real=True)
-    Eq << apply(log(ReducedSum(Exp(x))))
+    Eq << apply(Log(ReducedSum(Exp(x))))
 
 
     Eq << Eq[0].this.rhs.defun()
