@@ -26,8 +26,8 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
     x_quote = Symbol(Stack[t](log(z[t])))
 
-    return Imply(t > 0, Equal(x_quote[t], logsumexp(x_quote[t - 1] + G) + x[t])), \
-        Equal(-log(y_given_x_probability), logsumexp(x_quote[n - 1]) - s[n - 1])
+    return Imply(t > 0, Equal(x_quote[t], Log(ReducedSum(Exp(x_quote[t - 1] + G))) + x[t])), \
+        Equal(-log(y_given_x_probability), Log(ReducedSum(Exp(x_quote[n - 1]))) - s[n - 1])
 
 
 @prove
@@ -104,8 +104,6 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Gt)
 
-    Eq << Eq[-1].this.find(log).apply(Tensor.LogSumExp.definition)
-
     Eq.xy_joint_nonzero = Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], (slice(0, t + 1), slice(0, t + 1)))
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq.xy_joint_nonzero)
@@ -135,9 +133,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(t, n - 1)
 
-    Eq << Eq[10].this.rhs.args[1].defun().reversed
-
-    Eq << Eq[-1] + Eq[-2]
+    Eq << Eq[10].reversed + Eq[-1]
 
     # reference: Neural Architectures for Named Entity Recognition.pdf
     # https://spaces.ac.cn/archives/5542
