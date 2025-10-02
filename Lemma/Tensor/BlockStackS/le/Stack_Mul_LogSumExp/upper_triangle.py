@@ -9,7 +9,7 @@ def apply(A, u):
     i = Symbol(integer=True)
     return BlockMatrix(
             Stack[i:n - u](A[i, i:i + u]),
-            Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) <= Stack[i:n](Ones(u) * logsumexp(A[i, i:Min(n, i + u)]))
+            Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) <= Stack[i:n](Ones(u) * Log(ReducedSum(Exp(A[i, i:Min(n, i + u)]))))
 
 
 @prove
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(LessEqual[BlockMatrix]).apply(Algebra.LeBlock.given.And.Le)
 
-    Eq.ou = Eq[-1].this.find(LessEqual[Mul, logsumexp]).apply(Algebra.Le.given.All.Le)
+    Eq.ou = Eq[-1].this.find(LessEqual[Mul, Log[ReducedSum[Exp]]]).apply(Algebra.Le.given.All.Le)
 
     Eq <<= Tensor.Le_LogSumExp.apply(Eq.ou.args[1].find(Sliced)), Tensor.Le_LogSumExp.apply(Eq.ou.find(Sliced))
 

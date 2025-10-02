@@ -5,7 +5,7 @@ from util import *
 def apply(self):
     x = self.of(log[softmax])
     n, = x.shape
-    return Equal(self, x - logsumexp(x))
+    return Equal(self, x - Log(ReducedSum(Exp(x))))
 
 
 @prove
@@ -21,8 +21,6 @@ def prove(Eq):
     Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LogMul.eq.AddLogS)
-
-    Eq << Eq[-1].this.find(Log[ReducedSum]).apply(Tensor.LogSumExp.definition)
 
 
 if __name__ == '__main__':

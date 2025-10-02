@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    x, S[x] = self.of(Expr - logsumexp)
+    x, S[x] = self.of(Expr - Log[ReducedSum[Exp]])
     n, = x.shape
     return Equal(self, log(softmax(x)))
 
@@ -14,7 +14,7 @@ def prove(Eq):
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
-    Eq << apply(x - logsumexp(x))
+    Eq << apply(x - Log(ReducedSum(Exp(x))))
 
     Eq << Eq[0].this.rhs.apply(Tensor.Log.Softmax.eq.Add.LogSumExp)
 

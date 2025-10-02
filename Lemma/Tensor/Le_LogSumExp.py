@@ -5,7 +5,7 @@ from util import *
 def apply(x):
     n, = x.shape
     assert x.is_real
-    return x <= logsumexp(x)
+    return x <= Log(ReducedSum(Exp(x)))
 
 
 @prove
