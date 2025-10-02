@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import sympy.vector.vector.functions
+import sympy.vector.functions
 open Tensor
 
 /--

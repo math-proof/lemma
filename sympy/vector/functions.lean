@@ -2,8 +2,9 @@ import sympy.vector.vector
 import sympy.functions.elementary.exponential
 open Algebra
 
+namespace List.Vector
 
-instance [Exp α] : Exp (List.Vector α n) where
+instance [Exp α] : Exp (Vector α n) where
   exp a := a.map Exp.exp
   exp_add x y := by
     ext i
@@ -12,5 +13,12 @@ instance [Exp α] : Exp (List.Vector α n) where
     apply Exp.exp_add
 
 
-instance [Log α] : Log (List.Vector α n) where
+instance [Log α] : Log (Vector α n) where
   log a := a.map Log.log
+
+
+def softmax [Zero α] [Div α] [Exp α] (x : Vector α n) : Vector α n :=
+  let x_exp := exp x
+  x_exp / x_exp.sum
+
+end List.Vector
