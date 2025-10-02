@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Tensor.Softmax.eq.Mul.ReducedSum)
+    Eq << Eq[-1].this.rhs.args[0].apply(Tensor.Softmax.eq.Div_SumExp)
 
     Eq.zi_definition = Eq[-1].this.rhs.subs(Eq[-4])
 

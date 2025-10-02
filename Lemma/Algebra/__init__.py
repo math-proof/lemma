@@ -263,10 +263,6 @@ from . import EqReducedMax
 from . import EqReducedSum
 from . import EqSum
 from . import EqConj
-from . import EqExp
-from . import EqMod
-from . import EqNeg
-from . import EqArg
 from . import EqBool
 from . import EqFloor
 from . import EqLog
@@ -337,3 +333,6 @@ from . import Eq_Div
 from . import LeAdd_1
 from . import Le_Sub_1
 from . import Ge_Add_1
+from . import EqArg
+from . import EqMod
+from . import EqNeg

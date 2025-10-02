@@ -32,7 +32,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Logic, Probability
+    from Lemma import Tensor, Algebra, Set, Logic, Probability
 
     from Lemma.Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov import markov_assumptions
     d, n = Symbol(domain=Range(2, oo))
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Log).apply(Algebra.Log.eq.Add)
 
-    Eq.z_definition_by_x_quote = Algebra.EqExp.of.Eq.apply(Eq[6].reversed)
+    Eq.z_definition_by_x_quote = Logic.EqUFnS.of.Eq.apply(Eq[6].reversed, exp)
 
     Eq << Eq[-1].subs(Eq.z_definition_by_x_quote)
 
@@ -123,7 +123,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Log.eq.Add)
 
-    Eq << Algebra.EqExp.of.Eq.apply(Eq[4].reversed)
+    Eq << Logic.EqUFnS.of.Eq.apply(Eq[4].reversed, exp)
 
     Eq.y_given_x_log = Eq[-2].subs(Eq[-1])
 

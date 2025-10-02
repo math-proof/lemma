@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[4].reversed
 
-    Eq << Eq[-1].apply(Algebra.EqExp.of.Eq)
+    Eq << Eq[-1].apply(Logic.EqUFnS.of.Eq, exp)
 
     Eq << Algebra.EqMaxima.of.Eq.apply(Eq[-1], (y[:t + 1],))
 

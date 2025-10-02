@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Algebra.EqExp.of.Eq.apply(Eq[-1])
+    Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], exp)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Exp.eq.Ite)
 

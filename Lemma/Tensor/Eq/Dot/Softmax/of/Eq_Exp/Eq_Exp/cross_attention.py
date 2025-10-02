@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq << Eq[-1].this.find(softmax).apply(Tensor.Softmax.eq.Mul.ReducedSum)
+    Eq << Eq[-1].this.find(softmax).apply(Tensor.Softmax.eq.Div_SumExp)
 
     Eq.zi_definition = Eq[-1].this.rhs.subs(Eq[-4])
 
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1][h:n], Eq[-1][:h]
 
-    Eq <<= Algebra.EqExp.of.Eq.apply(Eq[-2]), Algebra.EqExp.of.Eq.apply(Eq[-1])
+    Eq <<= Logic.EqUFnS.of.Eq.apply(Eq[-2], exp), Logic.EqUFnS.of.Eq.apply(Eq[-1], exp)
 
     Eq.lower_part, Eq.upper_part = Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[0][i]), \
         Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[1][i - h])

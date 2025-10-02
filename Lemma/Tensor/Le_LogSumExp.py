@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Algebra.Le.given.Le.Exp.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Softmax.eq.Mul.ReducedSum)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Softmax.eq.Div_SumExp)
 
     Eq << GreaterEqual(exp(x), Zeros(*x.shape), plausible=True)
 

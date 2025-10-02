@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << apply(Derivative[x](softmax(f(x))))
 
     i = Symbol(integer=True)
-    Eq << Derivative[x[i]](log(softmax(f(x)))).this.find(softmax).apply(Tensor.Softmax.eq.Mul.ReducedSum)
+    Eq << Derivative[x[i]](log(softmax(f(x)))).this.find(softmax).apply(Tensor.Softmax.eq.Div_SumExp)
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
 

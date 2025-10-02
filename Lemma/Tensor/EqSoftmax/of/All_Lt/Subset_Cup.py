@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Softmax.eq.Mul.ReducedSum)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Softmax.eq.Div_SumExp)
 
     Eq.zi_def = Eq[-1].this.rhs.subs(Eq.a_quote_exp[i])
 

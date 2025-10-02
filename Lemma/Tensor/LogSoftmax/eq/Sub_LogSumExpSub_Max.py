@@ -15,11 +15,11 @@ def prove(Eq):
     x = Symbol(real=True, shape=(n,))
     Eq << apply(x)
 
-    Eq << Tensor.nn.Softmax.translation.apply(x, -ReducedMax(x)).reversed
+    Eq << Tensor.SoftmaxAdd.eq.Softmax.apply(x, -ReducedMax(x)).reversed
 
     Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
 
-    Eq << Eq[-1].this.rhs.arg.apply(Tensor.Softmax.eq.Mul.ReducedSum)
+    Eq << Eq[-1].this.rhs.arg.apply(Tensor.Softmax.eq.Div_SumExp)
 
     Eq << Eq[-1].this.find(Log[ReducedSum]).apply(Tensor.Log.ReducedSum.eq.LogSumExp)
 
