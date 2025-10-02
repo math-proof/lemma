@@ -23,7 +23,7 @@ def apply(eq):
                     ]
                 ]
             ]
-        ] - Stack[Ones * logsumexp]])
+        ] - Stack[Ones * Log[ReducedSum[Exp]]]])
 
     assert n >= 2 and u >= 2
     breadth = Add(Min(l, n), Min(u, n), -1)
@@ -49,7 +49,8 @@ def prove(Eq):
             Stack[i:n - Min(l, n) + 1](A[i + Min(l, n) - 1, i:i + Min(l, n) - 1])),
         BlockMatrix(
             Stack[i:n - Min(u, n) + 1](A[i, i:i + Min(u, n)]),
-            Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1))))) - Stack[i:n](Ones(breadth) * logsumexp(A[i, relu(i + 1 - l):Min(n, i + u)]))))
+            Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1)))
+        )) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):Min(n, i + u)]))))))
 
     Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], exp)
 
@@ -68,8 +69,6 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Exp[Stack]).apply(Tensor.Exp.eq.Stack)
 
     Eq << Eq[-1].this.find(Exp[BlockMatrix]).apply(Algebra.Exp.eq.Block)
-
-    Eq << Eq[-1].this.find(logsumexp).defun()
 
     Eq << Eq[-1].this.rhs.find(Exp[Mul[Stack]]).apply(Tensor.Exp.eq.Stack)
 

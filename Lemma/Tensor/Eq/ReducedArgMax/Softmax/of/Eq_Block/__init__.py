@@ -166,9 +166,6 @@ def prove(Eq):
     Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=3)
 
 
-
-
-
 if __name__ == '__main__':
     run()
 # created on 2022-01-03

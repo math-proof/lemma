@@ -24,7 +24,7 @@ def apply(eq):
                     ]
                 ]
             ]
-        ] - Stack[Ones * logsumexp[Add[BlockMatrix[Zeros, Expr, Zeros]]]]])
+        ] - Stack[Ones * Log[ReducedSum[Exp[Add[BlockMatrix[Zeros, Expr, Zeros]]]]]]])
     assert n >= 2 and u >= 2 and l >= 2
     breadth = Add(Min(l, n), Min(u, n), -1)
     return Equal(softmax(A + H * Identity(n) + (BandPart[l - 1, u - 1](Ones(n, n)) - 1) * oo),
@@ -55,7 +55,8 @@ def prove(Eq):
         BlockMatrix(
             Stack[i:n - Min(u, n) + 1](A[i, i:i + Min(u, n)]),
             Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1)))
-        )) - Stack[i:n](Ones(breadth) * logsumexp((A[i, relu(i + 1 - l):Min(n, i + u)] + BlockMatrix(Zeros(Min(i, l - 1)), H[i], Zeros(Min(n - i, u) - 1)))))))
+            
+        )) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):Min(n, i + u)] + BlockMatrix(Zeros(Min(i, l - 1)), H[i], Zeros(Min(n - i, u) - 1))))))))
 
     Eq << BlockMatrix[1](H, Zeros(n, Min(u, n) - 1)).this.apply(Algebra.Block.split, n + 1 - Min(u, n))
 

@@ -25,7 +25,7 @@ def apply(eq):
                 Tuple[Min - 1]
                 ]
             ]
-        ] - Stack[Ones * logsumexp]])
+        ] - Stack[Ones * Log[ReducedSum[Exp]]]])
 
     assert n >= 2 and l >= 2 and u >= 2
     return Imply(i < Min(Min(l, n) - 1, n + 1 - Min(u, n)), Equal(z[i], BlockMatrix(-oo * Ones(Min(l, n) - i - 1), z[i, Min(l, n) - i - 1:]))), \
@@ -45,10 +45,12 @@ def prove(Eq):
     Eq << apply(Equal(z, BlockMatrix[1](
         BlockMatrix(
             Stack[i:Min(l, n) - 1](BlockMatrix(-oo * Ones(Min(l, n) - i - 1), A[i, :i])),
-            Stack[i:n - Min(l, n) + 1](A[i + Min(l, n) - 1, i:i + Min(l, n) - 1])),
+            Stack[i:n - Min(l, n) + 1](A[i + Min(l, n) - 1, i:i + Min(l, n) - 1])
+        ),
         BlockMatrix(
-        Stack[i:n - Min(u, n) + 1](A[i, i:i + Min(u, n)]),
-        Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1))))) - Stack[i:n](Ones(breadth) * logsumexp(A[i, relu(i + 1 - l):Min(n, i + u)]))))
+            Stack[i:n - Min(u, n) + 1](A[i, i:i + Min(u, n)]),
+            Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1)))
+        )) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):Min(n, i + u)]))))))
 
     Eq << Logic.Imp.given.All.apply(Eq[1])
 
@@ -69,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.z_ij_def)
 
-    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Ite.eq.SubIte, Eq[-1].find(logsumexp))
+    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Ite.eq.SubIte, Eq[-1].find(Log[ReducedSum[Exp]]))
 
     Eq << Eq[-1].this(i).find(Symbol < Add[-Min]).simplify()
 
@@ -93,7 +95,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.z_ij_def)
 
-    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Ite.eq.SubIte, Eq[-1].find(logsumexp))
+    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Ite.eq.SubIte, Eq[-1].find(Log[ReducedSum[Exp]]))
 
     Eq << Eq[-1].this(i).find(Symbol < Add[-Min]).simplify()
 
@@ -123,7 +125,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.z_ij_def)
 
-    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Ite.eq.SubIte, Eq[-1].find(logsumexp))
+    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Ite.eq.SubIte, Eq[-1].find(Log[ReducedSum[Exp]]))
 
     Eq << Eq[-1].this(i).find(Symbol < Add[-Min]).simplify()
 
