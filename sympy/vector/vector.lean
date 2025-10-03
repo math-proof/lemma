@@ -1,8 +1,8 @@
 import sympy.vector.Basic
 import Lemma.Algebra.Zero.eq.Replicate
 import Lemma.Vector.One.eq.Replicate
-import Lemma.Algebra.Add.eq.Map2
-import Lemma.Algebra.Mul.eq.Map2
+import Lemma.Vector.Add.eq.Map2
+import Lemma.Vector.Mul.eq.Map2
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Algebra.GetMul.eq.MulGetS
 import Lemma.Algebra.GetAdd.eq.AddGetS
