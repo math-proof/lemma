@@ -1,6 +1,6 @@
 import Lemma.Algebra.ValArraySlice.eq.ArraySliceVal
-import Lemma.Algebra.Eq_FlattenMapRange.of.All_EqValS
-open Algebra
+import Lemma.Vector.Eq_FlattenMapRange.of.All_EqValS
+open Algebra Vector
 
 
 @[main]

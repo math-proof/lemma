@@ -1,5 +1,5 @@
 import Lemma.Vector.Eq_Cons_Tail
-import Lemma.Algebra.FlattenMapToListCons.eq.Append_FlattenMapToList
+import Lemma.Vector.FlattenMapToListCons.eq.Append_FlattenMapToList
 import Lemma.Algebra.Add_Mul.eq.MulAdd_1
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.EqDropAppend__Length

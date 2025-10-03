@@ -1,6 +1,6 @@
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Algebra.EqGetS
-import Lemma.Algebra.EqFlattenUnflatten
+import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Vector.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.Algebra.GetTranspose.eq.Get
 import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1

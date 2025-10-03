@@ -3,7 +3,7 @@ import Lemma.Algebra.GetVal.eq.Get.of.Lt
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.Algebra.GetAppend.eq.Get.of.Lt
 import Lemma.Algebra.AddMul.lt.Mul.of.Lt
-import Lemma.Algebra.Get_AddMul.eq.GetUnflatten.of.Lt
+import Lemma.Vector.Get_AddMul.eq.GetUnflatten.of.Lt
 import Lemma.Algebra.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Algebra.EqGetS.of.Eq.Lt

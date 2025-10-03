@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Algebra.EqFlattenUnflatten
+import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.Algebra.EqGetRange

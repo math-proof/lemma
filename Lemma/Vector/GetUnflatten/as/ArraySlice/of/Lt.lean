@@ -1,5 +1,5 @@
-import Lemma.Algebra.GetUnflatten.as.ArraySlice
-open Algebra
+import Lemma.Vector.GetUnflatten.as.ArraySlice
+open Vector
 
 
 @[main]

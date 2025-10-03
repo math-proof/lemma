@@ -3,7 +3,7 @@ import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Algebra.LengthSlice.eq.Min
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Algebra.GetSplitAt_1.eq.GetUnflatten.of.Lt
+import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Algebra.GetMap.eq.UFnGet.of.Lt
 import Lemma.Algebra.EqGetIndices.of.Lt_Min

@@ -1,6 +1,6 @@
-import Lemma.Algebra.ValGetUnflatten.eq.ValArraySlice
+import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
 import Lemma.Vector.EqUnflattenFlatten
-import Lemma.Algebra.GetUnflatten.as.ArraySlice
+import Lemma.Vector.GetUnflatten.as.ArraySlice
 import Lemma.Algebra.Prod.eq.Foldr
 import Lemma.Tensor.GetUnflattenDataStack.eq.Data
 import Lemma.Logic.SEq.of.Eq

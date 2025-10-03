@@ -3,7 +3,7 @@ import Lemma.Algebra.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.Eq.of.All_EqGetS
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Algebra.EqGetS
-import Lemma.Algebra.EqFlattenUnflatten
+import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Vector.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.Algebra.GetTranspose.eq.Get
 import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1

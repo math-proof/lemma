@@ -6,8 +6,8 @@ import Lemma.Logic.Eq.of.SEq
 import Lemma.Logic.SEq.of.SEq.SEq
 import Lemma.Vector.EqGetSUnflatten.of.Eq.Lt.Eq.Eq
 import Lemma.Logic.EqCast.of.Eq
-import Lemma.Algebra.GetUnflatten.as.ArraySliceAppend
-import Lemma.Algebra.GetUnflatten.eq.Cast_ArraySlice.of.Lt
+import Lemma.Vector.GetUnflatten.as.ArraySliceAppend
+import Lemma.Vector.GetUnflatten.eq.Cast_ArraySlice.of.Lt
 import Lemma.Logic.EqCast.of.SEq.Eq
 import Lemma.Algebra.EqArraySliceS.of.Eq
 import Lemma.Algebra.MulAdd.eq.AddMulS

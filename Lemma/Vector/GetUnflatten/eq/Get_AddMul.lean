@@ -1,4 +1,4 @@
-import Lemma.Algebra.ValGetUnflatten.eq.ValArraySlice
+import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
 import Lemma.Algebra.Lt_Sub.of.LtAdd
 import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Algebra.AddMul.lt.Mul

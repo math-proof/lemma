@@ -1,7 +1,7 @@
 import sympy.vector.vector
-import Lemma.Algebra.EqLengthS.of.EqFlattenSMap.Gt_0
-import Lemma.Algebra.Eq.of.EqFlattenSMap.EqLengthS
-open Algebra
+import Lemma.Vector.EqLengthS.of.EqFlattenSMap.Gt_0
+import Lemma.Vector.Eq.of.EqFlattenSMap.EqLengthS
+open Vector
 
 
 @[main]

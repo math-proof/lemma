@@ -2,8 +2,8 @@ import sympy.vector.vector
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Algebra.Eq_Nil.of.EqLength_0
 import Lemma.Vector.Eq_Cons_Tail
-import Lemma.Algebra.ValFlattenCons.eq.ValAppend_Flatten
-import Lemma.Algebra.Eq.of.EqFlattenSMap.EqLengthS
+import Lemma.Vector.ValFlattenCons.eq.ValAppend_Flatten
+import Lemma.Vector.Eq.of.EqFlattenSMap.EqLengthS
 open Logic Algebra Vector
 
 

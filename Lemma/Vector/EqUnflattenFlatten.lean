@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqFlattenUnflatten
+import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Vector.Eq.of.EqFlattenS
-open Algebra Vector
+open Vector
 
 
 @[main, comm]

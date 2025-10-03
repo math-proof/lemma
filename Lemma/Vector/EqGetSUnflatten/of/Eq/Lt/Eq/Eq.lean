@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqGetSUnflatten.of.Eq.Eq.Lt.Eq.Eq
-open Algebra
+import Lemma.Vector.EqGetSUnflatten.of.Eq.Eq.Lt.Eq.Eq
+open Vector
 
 
 @[main]

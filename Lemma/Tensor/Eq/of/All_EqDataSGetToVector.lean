@@ -1,11 +1,11 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.Data.eq.FlattenMapRange_GetToVector
-import Lemma.Algebra.Eq_FlattenMapRange.of.All_EqValS
+import Lemma.Vector.Eq_FlattenMapRange.of.All_EqValS
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
 import Lemma.Algebra.EqValS.of.Eq
-open Tensor Algebra Logic
+open Tensor Algebra Logic Vector
 
 
 @[main]
