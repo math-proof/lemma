@@ -3,10 +3,10 @@ import Lemma.Algebra.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Logic.OrOr.is.Or_Or
 import Lemma.Algebra.LtVal
-import Lemma.Algebra.EqLengthSlice
-import Lemma.Algebra.GetSlicedIndices.eq.Add.of.Lt_Length.Gt_0.Le.Lt.Eq_Add.Eq
+import Lemma.List.EqLengthSlice
+import Lemma.List.GetSlicedIndices.eq.Add.of.Lt_Length.Gt_0.Le.Lt.Eq_Add.Eq
 import Lemma.Algebra.EqToNat
-open Algebra Logic
+open Algebra Logic List
 
 
 @[main]

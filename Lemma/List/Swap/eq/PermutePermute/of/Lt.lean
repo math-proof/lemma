@@ -16,7 +16,7 @@ import Lemma.Algebra.LtSub.of.Lt
 import Lemma.Algebra.Eq_0.of.Eq_Sub_1
 import Lemma.Algebra.Ge_Sub_1
 import Lemma.Algebra.EqAdd_Sub.of.Gt
-import Lemma.Algebra.GetElem!.eq.None.of.Ge_Length
+import Lemma.List.GetElem!.eq.None.of.Ge_Length
 import Lemma.Algebra.GeSub_1.of.Gt
 import Lemma.Algebra.Le.of.LtSub_1
 import Lemma.Algebra.LeSub.is.Le_Add

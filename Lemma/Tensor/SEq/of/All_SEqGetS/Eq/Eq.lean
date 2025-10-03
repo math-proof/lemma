@@ -3,19 +3,19 @@ import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Tensor.All_SEqDataSGet.of.All_SEqGetS.Eq
 import Lemma.Logic.IffEqS.of.Eq
 import Lemma.Algebra.Ge.of.NotLt
-import Lemma.Algebra.GetElem!.eq.None.of.Ge_Length
+import Lemma.List.GetElem!.eq.None.of.Ge_Length
 import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
 import Lemma.Tensor.Data.eq.FlattenMapRange
 import Lemma.Algebra.GetVal.eq.Get.of.Lt
 import Lemma.Vector.Get.eq.GetFlatten_AddMul
 import Lemma.Algebra.AddMul.lt.Mul
 import Lemma.Algebra.EqGetRange
-import Lemma.Algebra.EqGetS.of.Eq.Lt_Length
+import Lemma.List.EqGetS.of.Eq.Lt_Length
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Algebra.Eq.of.EqValS
 import Lemma.Algebra.EqValS.of.Eq
 import Lemma.Algebra.SEq.of.EqValS
-open Algebra Tensor Logic Vector
+open Algebra Tensor Logic Vector List
 
 
 @[main]

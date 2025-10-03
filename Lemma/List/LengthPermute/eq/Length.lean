@@ -1,9 +1,9 @@
 import Lemma.List.Permute.eq.Ite
-import Lemma.Algebra.LengthAppend.eq.AddLengthS
-import Lemma.Algebra.LengthCons.eq.Add1Length
+import Lemma.List.LengthAppend.eq.AddLengthS
+import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.List.LengthDrop.eq.SubLength
-import Lemma.Algebra.LengthSlice.eq.SubMin
+import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Algebra.Add
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.EqAddSub.of.Ge

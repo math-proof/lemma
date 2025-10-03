@@ -5,8 +5,8 @@ import Lemma.Algebra.SumMapVal.eq.Mul
 import Lemma.Algebra.GetVal.eq.Get
 import Lemma.Algebra.GetVal.eq.Get.of.Lt
 import Lemma.Algebra.Ge.of.NotLt
-import Lemma.Algebra.GetElem!.eq.None.of.Ge_Length
-import Lemma.Algebra.EqGetS.of.Eq.Lt_Length
+import Lemma.List.GetElem!.eq.None.of.Ge_Length
+import Lemma.List.EqGetS.of.Eq.Lt_Length
 open Algebra Vector List
 
 

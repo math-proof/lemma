@@ -1,6 +1,6 @@
-import Lemma.Algebra.HeadD.eq.Get_0.of.GtLength_0
+import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.Lt
-open Algebra Tensor
+open Tensor List
 
 
 @[main]

@@ -1,6 +1,6 @@
-import Lemma.Algebra.GtLength_0.of.Ne_Nil
+import Lemma.List.GtLength_0.of.Ne_Nil
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-open Algebra Tensor
+open Tensor List
 
 
 @[main]

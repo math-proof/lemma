@@ -4,7 +4,7 @@ import Lemma.Algebra.LtSubS.of.Lt.Le
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Algebra.EqAddSub.of.Ge
-import Lemma.Algebra.GetSet.eq.Get.of.Ne.Lt_Length
+import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
 import Lemma.Algebra.Gt_0
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
@@ -21,7 +21,7 @@ import Lemma.Algebra.MulProd_Mul_Prod.eq.Mul_Prod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.List.AddMul_ProdSet.lt.MulProd_Mul_Prod.of.Lt_Mul_ProdTail.Lt_Get_0.GtVal_0.GtLength_0
 import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
-import Lemma.Algebra.ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length
 import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
 import Lemma.Algebra.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -31,12 +31,12 @@ import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.Mul
 import Lemma.Algebra.EqGetS
 import Lemma.List.ProdTakeSet__1.eq.Get_0.of.Gt_0.GtLength_0
-import Lemma.Algebra.GetSet.eq.Get_0.of.Gt_0.GtLength_0
-import Lemma.Algebra.HeadDSet.eq.Get_0.of.Gt_0.Lt_Length
+import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
+import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.Lt_Length
 import Lemma.List.ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Algebra.MulProd_Mul_Prod.eq.ProdSet.of.Lt_Length
+import Lemma.List.MulProd_Mul_Prod.eq.ProdSet.of.Lt_Length
 import Lemma.Vector.EqGetSSplitAt.of.Lt_Mul_ProdTail.Gt_0.Lt_Get_0.GtLength_0
 import Lemma.Vector.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.List.Lt_ProdTakeSet.of.Gt_0.Lt_Get_0.GtLength_0

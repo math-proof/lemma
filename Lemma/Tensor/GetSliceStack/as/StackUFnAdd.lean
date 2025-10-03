@@ -2,7 +2,7 @@ import sympy.tensor.stack
 import Lemma.Tensor.EqLengthStack
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.EqLengthSlice
+import Lemma.List.EqLengthSlice
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqGetStack.of.Eq
 import Lemma.Algebra.EqMapS.of.All_Eq
@@ -10,7 +10,7 @@ import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.GetMkFlatten.eq.MkGet
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Algebra.GetValIndices.eq.Add.of.Lt
-open Tensor Algebra
+open Tensor Algebra List
 
 
 @[main]

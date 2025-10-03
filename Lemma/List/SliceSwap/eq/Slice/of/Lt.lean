@@ -3,10 +3,10 @@ import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Algebra.Cons.eq.Append
 import Lemma.Algebra.AppendAppend.eq.Append_Append
 import Lemma.Algebra.AppendAppend.eq.Append_Append
-import Lemma.Algebra.LengthAppend.eq.AddLengthS
+import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.Algebra.Le.of.Lt.Lt
-import Lemma.Algebra.LengthSlice.eq.SubMin
+import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Algebra.EqMin.of.Lt
 open Algebra List
 

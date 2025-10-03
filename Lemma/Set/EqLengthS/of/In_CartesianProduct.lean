@@ -1,7 +1,7 @@
 import stdlib.List
 import Lemma.Set.EqLengthS.of.In_Product
-import Lemma.Algebra.LengthMap.eq.Length
-open Set Algebra
+import Lemma.List.LengthMap.eq.Length
+open Set List
 
 
 @[main]

@@ -1,5 +1,5 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.GetSet.eq.Get.of.Ne.Lt_Length
+import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
 import Lemma.Algebra.Ne.of.Gt
 open Algebra List
 

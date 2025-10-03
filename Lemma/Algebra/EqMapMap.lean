@@ -1,5 +1,5 @@
-import Lemma.Algebra.LengthMap.eq.Length
-open Algebra
+import Lemma.List.LengthMap.eq.Length
+open List
 
 
 @[main]

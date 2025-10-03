@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Algebra.Sum.eq.SumFinLength_Get
-open Algebra
+import Lemma.List.Sum.eq.SumFinLength_Get
+open List
 
 
 @[main]

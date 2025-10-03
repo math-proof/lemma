@@ -1,11 +1,11 @@
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min_Length
 import Lemma.Algebra.LtVal
-import Lemma.Algebra.LengthSlice.eq.Min
+import Lemma.List.LengthSlice.eq.Min
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le.of.Lt_Add_1
 import Lemma.Algebra.Lt.of.Le.Ne
 import Lemma.Tensor.Eq.is.All_EqGetS
-open Tensor Algebra
+open Tensor Algebra List
 
 
 /--

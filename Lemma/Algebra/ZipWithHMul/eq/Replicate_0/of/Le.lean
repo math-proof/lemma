@@ -1,8 +1,8 @@
 import Lemma.List.EqLengthTake.of.Ge
-import Lemma.Algebra.EqLengthReplicate
-import Lemma.Algebra.ZipWithHMul.eq.Replicate_0.of.Eq_Length
+import Lemma.List.EqLengthReplicate
+import Lemma.List.ZipWithHMul.eq.Replicate_0.of.Eq_Length
 import Lemma.List.ZipWith.eq.ZipWith__Take.of.Le
-open Algebra List
+open List
 
 
 @[main]

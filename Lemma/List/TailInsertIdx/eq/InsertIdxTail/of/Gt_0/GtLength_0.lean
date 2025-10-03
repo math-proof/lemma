@@ -1,6 +1,6 @@
 import Lemma.List.TailInsertIdx.eq.InsertIdxTail.of.Gt_0.Ne_Nil
-import Lemma.Algebra.Ne_Nil.of.GtLength_0
-open Algebra List
+import Lemma.List.Ne_Nil.of.GtLength_0
+open List
 
 
 @[main]

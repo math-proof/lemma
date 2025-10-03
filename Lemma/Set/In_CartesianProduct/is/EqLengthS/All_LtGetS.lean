@@ -1,8 +1,8 @@
 import Lemma.Set.In.is.Any_Eq_Get
-import Lemma.Algebra.Any_Eq_GetCartesianProduct.of.All_LtGetS.EqLengthS
-import Lemma.Algebra.EqLengthS.of.In_CartesianProduct
+import Lemma.List.Any_Eq_GetCartesianProduct.of.All_LtGetS.EqLengthS
+import Lemma.List.EqLengthS.of.In_CartesianProduct
 import Lemma.Set.All_LtGetS.of.In_CartesianProduct
-open Set Algebra
+open Set List
 
 
 @[main, comm, mp, mpr]

@@ -1,6 +1,6 @@
 import Lemma.Set.In.is.Any_Eq_Get
-import Lemma.Algebra.LengthGetProduct.eq.Length.of.Lt_LengthProduct
-open Set Algebra
+import Lemma.List.LengthGetProduct.eq.Length.of.Lt_LengthProduct
+open Set List
 
 
 @[main]

@@ -7,9 +7,9 @@ import Lemma.Algebra.CeilDivSubMin.le.Zero.of.Le
 import Lemma.Algebra.Min
 import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Algebra.NotLe.of.Gt
-import Lemma.Algebra.EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
-import Lemma.Algebra.EqGetSSlicedIndices'.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
-open Algebra Logic
+import Lemma.List.EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
+import Lemma.List.EqGetSSlicedIndices'.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
+open Algebra Logic List
 
 
 @[main]

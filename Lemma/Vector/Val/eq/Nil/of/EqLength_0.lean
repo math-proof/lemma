@@ -1,5 +1,5 @@
-import Lemma.Algebra.Eq_Nil.of.EqLength_0
-open Algebra
+import Lemma.List.Eq_Nil.of.EqLength_0
+open List
 
 
 @[main]

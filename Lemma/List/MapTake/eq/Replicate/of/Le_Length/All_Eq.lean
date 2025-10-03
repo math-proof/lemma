@@ -1,5 +1,5 @@
-import Lemma.Algebra.Eq_Replicate.is.EqLength.All_Eq
-open Algebra
+import Lemma.List.Eq_Replicate.is.EqLength.All_Eq
+open List
 
 
 @[main]

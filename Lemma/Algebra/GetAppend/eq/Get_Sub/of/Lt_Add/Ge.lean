@@ -1,6 +1,6 @@
 import Lemma.Algebra.ValAppend.eq.AppendValS
-import Lemma.Algebra.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
-open Algebra
+import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
+open Algebra List
 
 
 @[main]

@@ -6,7 +6,7 @@ import Lemma.Algebra.Gt_0.of.GtMul
 import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
 import Lemma.Algebra.EqMod
 import Lemma.Algebra.LtVal
-import Lemma.Algebra.HeadD.eq.Get_0.of.GtLength_0
+import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Algebra.AddMul.lt.Mul
 import Lemma.Tensor.SEq.of.SEqDataS.Eq
 import Lemma.List.TailSet_0.eq.Tail
@@ -31,10 +31,10 @@ import Lemma.Algebra.EqMod.of.Lt
 import Lemma.Algebra.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.List.EqProdTakeSet__1.of.GtLength_0
 import Lemma.List.AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.Lt_Get_0.GtLength_0
-import Lemma.Algebra.ProdSet__MulGet.eq.Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet__MulGet.eq.Mul_Prod.of.Lt_Length
 import Lemma.List.GtProdTail_0.of.Lt_ProdTailSet_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
-import Lemma.Algebra.EqGetSet.of.Lt_Length
+import Lemma.List.EqGetSet.of.Lt_Length
 open Tensor Algebra Logic Vector List
 
 

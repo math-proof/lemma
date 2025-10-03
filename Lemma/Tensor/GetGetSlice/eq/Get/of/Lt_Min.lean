@@ -1,14 +1,14 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.LengthSlice.eq.Min
+import Lemma.List.LengthSlice.eq.Min
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Algebra.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.EqGetIndices.of.Lt_Min
 import Lemma.Algebra.Eq.of.EqValS
-open Tensor Algebra Vector
+open Tensor Algebra Vector List
 
 
 @[main]

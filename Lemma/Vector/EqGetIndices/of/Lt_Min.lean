@@ -1,8 +1,8 @@
 import sympy.vector.vector
-import Lemma.Algebra.LengthSlice.eq.Min
+import Lemma.List.LengthSlice.eq.Min
 import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
-import Lemma.Algebra.GetSlicedIndices.eq.Add.of.Lt_Length.Gt_0.Le.Lt.Eq_0
-open Algebra
+import Lemma.List.GetSlicedIndices.eq.Add.of.Lt_Length.Gt_0.Le.Lt.Eq_0
+open Algebra List
 
 
 @[main]

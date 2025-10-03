@@ -1,10 +1,10 @@
 import sympy.vector.vector
-import Lemma.Algebra.Eq_Nil.of.EqLength_0
-import Lemma.Algebra.LengthCons.eq.Add1Length
+import Lemma.List.Eq_Nil.of.EqLength_0
+import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.MapCons.eq.Cons_Map
 import Lemma.List.FlattenCons.eq.Append_Flatten
-import Lemma.Algebra.Eq.of.EqAppendS.EqLengthS
+import Lemma.List.Eq.of.EqAppendS.EqLengthS
 import Lemma.Algebra.Eq.of.EqToListS
 open Algebra List
 

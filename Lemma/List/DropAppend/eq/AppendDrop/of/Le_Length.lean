@@ -1,12 +1,12 @@
 import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
 import Lemma.Logic.IffEqS.of.Eq
-import Lemma.Algebra.GetAppend.eq.Get.of.Lt_Length
+import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.Algebra.Lt_Sub.of.LtAdd
 import Lemma.List.GetDrop.eq.Get_Add.of.Add.lt.Length
-import Lemma.Algebra.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
+import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.Algebra.Add
 import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
-import Lemma.Algebra.GetElem!.eq.None.of.Ge_Length
+import Lemma.List.GetElem!.eq.None.of.Ge_Length
 import Lemma.Algebra.LeSub.is.Le_Add
 open Algebra Logic List
 

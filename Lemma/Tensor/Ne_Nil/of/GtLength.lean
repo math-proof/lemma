@@ -1,7 +1,7 @@
-import Lemma.Algebra.Ne_Nil.of.GtLength_0
+import Lemma.List.Ne_Nil.of.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength
 import sympy.tensor.Basic
-open Tensor Algebra
+open Tensor List
 
 
 @[main]

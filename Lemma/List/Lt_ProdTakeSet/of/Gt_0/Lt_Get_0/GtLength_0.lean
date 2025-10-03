@@ -1,7 +1,7 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.LengthSet.eq.Length
-import Lemma.Algebra.GetSet.eq.Get_0.of.Gt_0.GtLength_0
-open Algebra List
+import Lemma.List.LengthSet.eq.Length
+import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
+open List
 
 
 @[main]

@@ -1,9 +1,9 @@
-import sympy.tensor.stack
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
-import Lemma.Algebra.LengthSlice.eq.Min
+import Lemma.List.LengthSlice.eq.Min
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min_Length
-open Tensor Algebra
+import Lemma.Algebra.LtVal
+open Tensor List Algebra
 
 
 @[main]

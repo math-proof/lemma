@@ -1,10 +1,10 @@
 import sympy.vector.vector
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Algebra.Eq_Nil.of.EqLength_0
+import Lemma.List.Eq_Nil.of.EqLength_0
 import Lemma.Vector.Eq_Cons_Tail
 import Lemma.Vector.ValFlattenCons.eq.ValAppend_Flatten
 import Lemma.Vector.Eq.of.EqFlattenSMap.EqLengthS
-open Logic Algebra Vector
+open Logic Vector List
 
 
 @[main]

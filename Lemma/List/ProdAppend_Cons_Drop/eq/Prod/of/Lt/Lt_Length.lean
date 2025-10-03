@@ -1,5 +1,5 @@
 import Lemma.Algebra.ProdAppend.eq.MulProdS
-import Lemma.Algebra.ProdCons.eq.Mul_Length
+import Lemma.List.ProdCons.eq.Mul_Length
 import Lemma.Algebra.MulMul
 import Lemma.List.ProdTake_Add_1.eq.MulProdTake.of.Lt_Length
 import Lemma.Algebra.MulMul.eq.Mul_Mul
