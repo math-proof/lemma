@@ -1,6 +1,6 @@
-import Lemma.Algebra.LengthArraySlice.eq.Min_SubLength
+import Lemma.List.LengthArraySlice.eq.Min_SubLength
 import Lemma.Algebra.SubMin.eq.MinSubS
-open Algebra
+open Algebra List
 
 
 @[main]

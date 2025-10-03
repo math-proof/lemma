@@ -12,7 +12,7 @@ import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
 import Lemma.List.SwapAppend.eq.Append_Swap.of.Ge_Length.Ge_Length
 import Lemma.List.EqSwap_0'1
 import Lemma.List.ProdSwap.eq.Prod
-import Lemma.Algebra.Rotate_Mod.eq.Rotate
+import Lemma.List.Rotate_Mod.eq.Rotate
 import Lemma.Algebra.LtMod.of.Gt_0
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.List.EqPermute__0

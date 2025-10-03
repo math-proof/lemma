@@ -1,5 +1,5 @@
 import Lemma.Vector.ValGet.eq.ValArraySliceFlatten
-import Lemma.Algebra.LengthArraySlice.eq.Min_SubLength
+import Lemma.List.LengthArraySlice.eq.Min_SubLength
 import Lemma.List.LengthFlatten.eq.SumMapLength
 import Lemma.Algebra.SumMapVal.eq.Mul
 import Lemma.Algebra.GetVal.eq.Get

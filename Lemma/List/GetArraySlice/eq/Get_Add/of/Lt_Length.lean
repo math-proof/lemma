@@ -1,7 +1,7 @@
-import Lemma.Algebra.LengthArraySlice.eq.Min_SubLength
+import Lemma.List.LengthArraySlice.eq.Min_SubLength
 import Lemma.Algebra.Lt.of.Lt_Min
 import Lemma.Algebra.LtAdd.of.Lt_Sub
-open Algebra
+open Algebra List
 
 
 @[main]

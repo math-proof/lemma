@@ -1,8 +1,8 @@
-import Lemma.Algebra.GetArraySlice.eq.Get_Add.of.Lt_Length
+import Lemma.List.GetArraySlice.eq.Get_Add.of.Lt_Length
 import Lemma.Algebra.LengthSlice.eq.SubMin
 import Lemma.Algebra.LtAdd.of.Lt_Sub
 import Lemma.Algebra.Lt.of.Lt_Min
-open Algebra
+open Algebra List
 
 
 @[main]
