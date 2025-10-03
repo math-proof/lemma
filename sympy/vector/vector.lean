@@ -1,5 +1,5 @@
 import sympy.vector.Basic
-import Lemma.Algebra.Zero.eq.Replicate
+import Lemma.Vector.Zero.eq.Replicate
 import Lemma.Vector.One.eq.Replicate
 import Lemma.Vector.Add.eq.Map2
 import Lemma.Vector.Mul.eq.Map2

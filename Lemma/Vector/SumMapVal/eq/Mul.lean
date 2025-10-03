@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Algebra.MapVal.eq.Replicate
-open Algebra
+import Lemma.Vector.MapVal.eq.Replicate
+open Vector
 
 
 @[main]

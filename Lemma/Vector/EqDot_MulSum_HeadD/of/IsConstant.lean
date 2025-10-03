@@ -1,7 +1,7 @@
 import Lemma.Algebra.SumCons.eq.Add_Sum
 import Lemma.Vector.SumMap_FunMul.eq.DotMapS
 import Lemma.Algebra.EqMap_Id
-import Lemma.Algebra.Map.eq.Replicate
+import Lemma.Vector.Map.eq.Replicate
 import Lemma.Vector.Eq_Replicate_HeadD.of.IsConstant
 import Lemma.Vector.SumMap_FunMul.eq.MulSumMap
 open Algebra Vector
