@@ -12,14 +12,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     j, i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     f = Function(integer=True)
     Eq << apply(Log(Product[i:n, j:n](f(j, i))))
 
-    Eq << Algebra.Eq.given.EqExpS.apply(Eq[0])
+    Eq << Real.Eq.given.EqExpS.apply(Eq[0])
 
 
 if __name__ == '__main__':

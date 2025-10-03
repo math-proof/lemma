@@ -21,12 +21,12 @@ def apply(self, pivot=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     a, b, c, d = Symbol(real=True, positive=True)
     Eq << apply(Log(a * b * c * d), pivot=2)
 
-    Eq << Algebra.Eq.given.EqExpS.apply(Eq[0])
+    Eq << Real.Eq.given.EqExpS.apply(Eq[0])
 
 
 

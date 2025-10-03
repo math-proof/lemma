@@ -9,13 +9,13 @@ def apply(is_positive, z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Logic, Real
 
     z = Symbol(complex=True, given=True)
     r = Symbol(complex=True)
     Eq << apply(r > 0, z)
 
-    Eq << Algebra.Eq.given.EqExpS.apply(Eq[1])
+    Eq << Real.Eq.given.EqExpS.apply(Eq[1])
 
     Eq.el = Set.IsReal.Log.of.Gt_0.apply(Eq[0], simplify=None)
 

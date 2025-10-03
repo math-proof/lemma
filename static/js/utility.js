@@ -95,6 +95,7 @@ function find_and_jump(event) {
 
 const sections = [
 	'Algebra',
+	'Real',
 	'Calculus',
 	'Discrete',
 	'Geometry',

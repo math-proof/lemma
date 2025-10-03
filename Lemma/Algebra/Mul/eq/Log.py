@@ -11,13 +11,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Logic, Real
 
     t = Symbol(real=True)
     x = Symbol(real=True, positive=True)
     Eq << apply(t * log(x))
 
-    Eq << Algebra.Eq.given.EqExpS.apply(Eq[0])
+    Eq << Real.Eq.given.EqExpS.apply(Eq[0])
 
     y = Symbol(log(x))
     Eq << y.this.definition

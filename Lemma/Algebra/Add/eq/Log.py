@@ -28,12 +28,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Real
 
     a, b = Symbol(real=True)
     Eq << apply(Log(a) - Log(b))
 
-    Eq << Algebra.Eq.given.EqExpS.apply(Eq[-1])
+    Eq << Real.Eq.given.EqExpS.apply(Eq[-1])
 
 
 if __name__ == '__main__':

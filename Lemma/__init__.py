@@ -6,3 +6,4 @@ from . import Discrete
 from . import Trigonometry
 from . import Logic
 from . import Calculus
+from . import Real
