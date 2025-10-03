@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.lhs.find(Log).apply(Real.LogMul.eq.AddLogS, pivot=2)
+    Eq << Eq[-1].this.lhs.find(Log).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0, pivot=2)
 
     Eq << Eq[-1].this.lhs.expr.apply(Algebra.Mul_Add.eq.AddMulS)
 

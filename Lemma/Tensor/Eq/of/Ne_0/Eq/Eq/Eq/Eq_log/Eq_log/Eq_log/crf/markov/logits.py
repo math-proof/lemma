@@ -35,13 +35,13 @@ def prove(Eq):
 
     Eq << Eq.eq_s.this.rhs.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS)
+    Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].subs(Eq.eq_x.subs(t, 0).reversed)
 
     Eq << Eq[-1].this.find(Log[Product]).apply(Algebra.Log.eq.Sum)
 
-    Eq << Eq[-1].this.find(Log[Mul]).apply(Real.LogMul.eq.AddLogS)
+    Eq << Eq[-1].this.find(Log[Mul]).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
 

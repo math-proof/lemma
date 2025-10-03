@@ -76,11 +76,11 @@ def prove(Eq):
 
     Eq << Algebra.EqLog.of.Ne_0.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS)
+    Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.find(Log[Product]).apply(Algebra.Log.eq.Sum)
 
-    Eq << Eq[-1].this.find(Log[Mul]).apply(Real.LogMul.eq.AddLogS)
+    Eq << Eq[-1].this.find(Log[Mul]).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
     Eq << Calculus.EqGrad.of.Eq.apply(Eq[-1], [π])
 
