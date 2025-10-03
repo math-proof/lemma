@@ -1,5 +1,5 @@
-import Lemma.Algebra.Cons.eq.Append
-import Lemma.Algebra.AppendAppend.eq.Append_Append
+import Lemma.List.Cons.eq.Append
+import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqDropAppend.of.Eq_Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthList.eq.One

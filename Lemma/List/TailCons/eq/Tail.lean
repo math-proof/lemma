@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import sympy.Basic
 
 
@@ -10,7 +9,7 @@ private lemma main
 -- imply
   (a :: l.tail).tail = l.tail :=
 -- proof
-rfl
+  rfl
 
 
 -- created on 2024-07-01

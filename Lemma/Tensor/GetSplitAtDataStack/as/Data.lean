@@ -1,5 +1,5 @@
 import sympy.tensor.stack
-import Lemma.Algebra.EqValS.of.Eq
+import Lemma.Vector.EqValS.of.Eq
 import Lemma.Algebra.LtVal
 import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
 import Lemma.Vector.EqUnflattenFlatten

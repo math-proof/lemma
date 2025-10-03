@@ -4,8 +4,8 @@ import Lemma.Tensor.Data.eq.FlattenMapRange_GetToVector
 import Lemma.Vector.Eq_FlattenMapRange.of.All_EqValS
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
-import Lemma.Algebra.EqValS.of.Eq
-open Tensor Algebra Logic Vector
+import Lemma.Vector.EqValS.of.Eq
+open Tensor Logic Vector
 
 
 @[main]

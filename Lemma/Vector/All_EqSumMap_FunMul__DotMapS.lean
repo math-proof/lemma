@@ -1,9 +1,9 @@
 import Lemma.Vector.Sum.eq.Zero
-import Lemma.Algebra.Dot.eq.Zero
+import Lemma.Vector.Dot.eq.Zero
 import Lemma.Vector.Map.eq.Cons_MapTail
 import Lemma.Vector.SumCons.eq.Add_Sum
-import Lemma.Algebra.DotConsS.eq.AddDotS
-open Algebra Vector
+import Lemma.Vector.DotConsS.eq.AddDotS
+open Vector
 
 
 @[main]

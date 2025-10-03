@@ -1,6 +1,6 @@
-import Lemma.Algebra.Cons.eq.Append
-import Lemma.Algebra.AppendAppend.eq.Append_Append
-import Lemma.Algebra.EqAppendS.of.Eq
+import Lemma.List.Cons.eq.Append
+import Lemma.List.AppendAppend.eq.Append_Append
+import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.EqPermute__0
 import Lemma.Algebra.EqAddSub.of.Ge

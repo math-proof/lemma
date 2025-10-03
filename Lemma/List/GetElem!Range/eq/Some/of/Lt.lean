@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.List.GetElem!Range.eq.Some.is.Lt.Eq
 open List
 

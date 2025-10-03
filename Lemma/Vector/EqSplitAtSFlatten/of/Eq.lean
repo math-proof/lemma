@@ -1,7 +1,7 @@
 import Lemma.Vector.EqFlattenUnflatten
-import Lemma.Algebra.EqValS.of.Eq
+import Lemma.Vector.EqValS.of.Eq
 import Lemma.Logic.EqCastS.of.Eq.Eq.Eq
-open Algebra Logic Vector
+open Logic Vector
 
 
 @[main]

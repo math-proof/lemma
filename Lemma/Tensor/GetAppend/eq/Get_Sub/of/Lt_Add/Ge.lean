@@ -4,7 +4,7 @@ import Lemma.Logic.SEq.of.SEq.SEq
 import Lemma.List.AddProdSCons.eq.MulAdd
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
-import Lemma.List.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
+import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Logic.EqCast.of.Eq
 import Lemma.Logic.EqCast.of.SEq.Eq
 import Lemma.Logic.SEq.of.Eq

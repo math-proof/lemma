@@ -7,9 +7,9 @@ private lemma main
   [Exp α] [Zero α] [Div α]
 -- given
   (x : Tensor α s)
-  (dim : ℕ := s.length - 1):
+  (dim : ℕ) :
 -- imply
-  x.softmax dim = exp x / (exp x).sum dim:= by
+  x.softmax dim = exp x / (exp x).sum_keepdim dim := by
 -- proof
   unfold Tensor.softmax
   simp

@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Algebra.Eq.of.Eq_Cast.Eq
-open Algebra
+import Lemma.Vector.Eq.of.Eq_Cast.Eq
+open Vector
 
 
 @[main]

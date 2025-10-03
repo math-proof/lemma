@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.List.GetElem!Range.eq.None.of.Ge
 open Algebra List

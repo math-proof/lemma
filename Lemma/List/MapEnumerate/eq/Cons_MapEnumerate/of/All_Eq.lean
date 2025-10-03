@@ -92,7 +92,7 @@ private lemma main
         simp_all
         rw [← h]
         congr
-        apply Eq.of.EqValS.fin
+        apply Eq.of.EqValS
         simp [HAdd.hAdd]
         simp [Add.add]
         simp [Fin.add]

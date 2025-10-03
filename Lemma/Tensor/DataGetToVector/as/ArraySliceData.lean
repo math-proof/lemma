@@ -1,6 +1,7 @@
-import Lemma.Algebra.HEq.of.EqValS
+import Lemma.Vector.HEq.of.EqValS
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
-open Tensor Algebra
+import Lemma.Algebra.Le_SubMulS
+open Tensor Vector Algebra
 
 
 @[main]

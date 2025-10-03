@@ -2,8 +2,8 @@ import Lemma.Vector.ValGet.eq.ValArraySliceFlatten
 import Lemma.List.LengthArraySlice.eq.Min_SubLength
 import Lemma.List.LengthFlatten.eq.SumMapLength
 import Lemma.Vector.SumMapVal.eq.Mul
-import Lemma.List.GetVal.eq.Get
-import Lemma.List.GetVal.eq.Get.of.Lt
+import Lemma.Vector.GetVal.eq.Get
+import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.List.GetElem!.eq.None.of.Ge_Length
 import Lemma.List.EqGetS.of.Eq.Lt_Length

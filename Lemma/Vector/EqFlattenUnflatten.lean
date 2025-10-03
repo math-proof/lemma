@@ -1,11 +1,11 @@
-import Lemma.Algebra.AppendValS.eq.Val.of.EqAdd
-import Lemma.Algebra.Eq.of.EqValS
-import Lemma.Algebra.ValAppend.eq.AppendValS
+import Lemma.Vector.AppendValS.eq.Val.of.EqAdd
+import Lemma.Vector.Eq.of.EqValS
+import Lemma.Vector.ValAppend.eq.AppendValS
 import Lemma.Algebra.Add_Mul.eq.MulAdd_1
 import Lemma.Vector.ValFlattenCons.eq.ValAppend_Flatten
 import Lemma.Vector.Unflatten.eq.Cons_Unflatten.of.SEq_Append
 import Lemma.Logic.HEq.of.SEq
-import Lemma.Algebra.HEq.of.EqValS
+import Lemma.Vector.HEq.of.EqValS
 open Algebra Logic Vector
 
 

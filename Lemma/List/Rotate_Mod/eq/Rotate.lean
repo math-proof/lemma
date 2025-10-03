@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Algebra.ModMod.eq.Mod
 open Algebra
 

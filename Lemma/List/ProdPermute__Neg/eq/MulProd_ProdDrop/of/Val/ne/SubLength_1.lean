@@ -4,8 +4,8 @@ import Lemma.Algebra.EqMin.of.Lt
 import Lemma.Algebra.LtAdd.of.Lt_Sub
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Algebra.AppendAppend.eq.Append_Append
-import Lemma.Algebra.EqAppendS.of.Eq
+import Lemma.List.AppendAppend.eq.Append_Append
+import Lemma.List.EqAppendS.of.Eq
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.MinAddS.eq.AddMin
 import Lemma.Algebra.Val.lt.Sub_1.of.Val.ne.Sub_1

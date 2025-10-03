@@ -1,8 +1,8 @@
 import stdlib.SEq
 import sympy.tensor.Basic
-import Lemma.Algebra.HEq.of.EqValS
+import Lemma.Vector.HEq.of.EqValS
 import Lemma.Logic.IffEqS.of.Eq
-open Algebra Logic
+open Logic Vector
 
 
 @[main]

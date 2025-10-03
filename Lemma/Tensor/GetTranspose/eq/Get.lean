@@ -2,9 +2,9 @@ import sympy.tensor.tensor
 import Lemma.Vector.EqGetRange.of.Lt
 import Lemma.Tensor.Permute__0.eq.Cast
 import Lemma.Tensor.Permute.eq.Ite
-import Lemma.Algebra.Eq.of.Eq_Cast.Eq
+import Lemma.Vector.Eq.of.Eq_Cast.Eq
 import Lemma.Tensor.EqGetS.of.Data.as.FlattenTransposeSplitAt_1
-open Algebra Tensor Vector
+open Tensor Vector
 
 
 @[main]

@@ -1,8 +1,8 @@
-import Lemma.Algebra.All_Eq_HeadD.of.IsConstant
+import Lemma.List.All_Eq_HeadD.of.IsConstant
 import Lemma.List.IsConstantTail.of.IsConstant
 import Lemma.List.Expr.in.Cons
 import Lemma.List.Eq_Cons_Tail.of.NeLength_0
-open Algebra List
+open List
 
 
 @[main]

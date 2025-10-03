@@ -1,7 +1,7 @@
 import sympy.vector.vector
 import Lemma.Vector.EqGetS.of.Val.eq.ValAppend.of.Lt.Lt
-import Lemma.Algebra.EqValS.of.Eq
-open Algebra Vector
+import Lemma.Vector.EqValS.of.Eq
+open Vector
 
 
 @[main]

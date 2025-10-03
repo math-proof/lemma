@@ -1,6 +1,6 @@
 import Lemma.List.TailCons.eq.Tail
-import Lemma.Algebra.IsConstant.of.All_Eq
-open Algebra List
+import Lemma.List.IsConstant.of.All_Eq
+open List
 
 
 @[main]

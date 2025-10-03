@@ -1,6 +1,6 @@
-import sympy.vector.vector
-import Lemma.Logic.All_EqUFnS.of.All_Eq
-open Logic
+import stdlib.List
+import Lemma.List.All_EqUFnS.of.All_Eq
+open List
 
 
 @[main]
@@ -17,7 +17,7 @@ private lemma main
     simp [IsConstant.is_constant]
   | cons =>
     simp [IsConstant.is_constant]
-    exact All_EqUFnS.of.All_Eq.list h
+    exact All_EqUFnS.of.All_Eq h
 
 
 -- created on 2024-07-01

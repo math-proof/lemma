@@ -2,10 +2,10 @@ import sympy.vector.vector
 import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
 import Lemma.Logic.All_And.of.All.All
 import Lemma.Logic.All.of.All.All_Imp
-import Lemma.Algebra.Eq.of.EqValS
-import Lemma.List.Eq_MapRange_FunGet
+import Lemma.Vector.Eq.of.EqValS
+import Lemma.Vector.Eq_MapRange_FunGet
 import Lemma.Vector.EqFlattenUnflatten
-open Algebra Logic Vector List
+open Logic Vector
 
 
 @[main]

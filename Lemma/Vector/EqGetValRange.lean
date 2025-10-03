@@ -1,7 +1,7 @@
 import sympy.vector.vector
-import Lemma.List.GetVal.eq.Get.of.Lt
+import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Vector.EqGetRange
-open Vector List
+open Vector
 
 
 @[main]

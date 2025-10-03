@@ -1,8 +1,8 @@
 import Lemma.Vector.SumCons.eq.Add_Sum
 import Lemma.Vector.Sum.eq.Zero
-import Lemma.Algebra.EqHeadD
-import Lemma.Algebra.EqHeadDCons
-open Algebra Vector
+import Lemma.Vector.EqHeadD
+import Lemma.Vector.EqHeadDCons
+open Vector
 
 
 @[main]

@@ -8,6 +8,7 @@ import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.Algebra.Ge.of.Gt
 import Lemma.Algebra.Gt.of.Gt.Gt
 import Lemma.Algebra.Ge_Min.of.Ge
+import Lemma.Algebra.Sub.gt.Zero.is.Gt
 open Algebra List
 
 
@@ -21,17 +22,17 @@ private lemma main
   a.insertIdx i x = a.take j ++ (a.drop j).insertIdx (i - j) x := by
 -- proof
   by_cases h_j : j ≤ a.length
-  · 
+  ·
     conv_lhs =>
       rw [← EqAppendTake__Drop a j]
-    rw [InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length] <;> 
+    rw [InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length] <;>
       rw [LengthTake.eq.Min_Length]
-    · 
+    ·
       rwa [EqMin.of.Le]
-    · 
+    ·
       apply Ge_Min.of.Ge ∘ Ge.of.Gt
       assumption
-  · 
+  ·
     simp at h_j
     have h_i := Gt.of.Gt.Gt h h_j
     rw [EqInsertIdx.of.Gt_Length h_i]

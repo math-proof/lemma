@@ -3,7 +3,7 @@ import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Algebra.LeAdd_1
 import Lemma.List.Slice.eq.Nil
 import Lemma.Algebra.EqAddSub.of.Ge
-import Lemma.Algebra.AppendAppend.eq.Append_Append
+import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.AppendTake_Slice.eq.Take.of.Le
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Algebra.Ge_1
@@ -13,18 +13,18 @@ import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Gt_0
 import Lemma.Algebra.EqSub.of.EqAdd
 import Lemma.Algebra.Eq.of.EqVal
-import Lemma.Algebra.Cons.eq.Append
-import Lemma.Algebra.EqAppendS.of.Eq
+import Lemma.List.Cons.eq.Append
+import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.TakeDrop.eq.Slice
 import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.Algebra.AppendAppend.eq.Append_Append
+import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.DropTake.eq.ListGet.of.Lt_Length
 import Lemma.List.SliceTake.eq.Slice.of.Ge
 import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Algebra.Add
 import Lemma.Algebra.Sub.eq.Zero.of.Lt
 import Lemma.List.Slice_0.eq.Take
-import Lemma.Algebra.Cons_Append.eq.AppendCons
+import Lemma.List.Cons_Append.eq.AppendCons
 import Lemma.Algebra.EqMin.of.Gt
 open Algebra List
 

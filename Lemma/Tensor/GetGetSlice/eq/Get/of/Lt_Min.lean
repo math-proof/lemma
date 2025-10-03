@@ -8,7 +8,7 @@ import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.EqGetIndices.of.Lt_Min
 import Lemma.Algebra.Eq.of.EqValS
-open Tensor Algebra Vector List
+open Tensor Vector List Algebra
 
 
 @[main]
@@ -37,7 +37,7 @@ private lemma main
     rw [EqUnflattenFlatten]
     rw [GetMap.eq.UFnGet.of.Lt.fin]
     congr
-    apply Eq.of.EqValS.fin
+    apply Eq.of.EqValS (b := ⟨i, hi⟩)
     simp
     rw [EqGetIndices.of.Lt_Min.fin]
     rw [Length.eq.Get_0.of.GtLength_0 (by simp)]

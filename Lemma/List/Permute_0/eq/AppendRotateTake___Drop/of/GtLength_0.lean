@@ -1,11 +1,11 @@
-import Lemma.Algebra.Cons.eq.Append
-import Lemma.Algebra.AppendAppend.eq.Append_Append
-import Lemma.Algebra.EqAppendS.of.Eq
+import Lemma.List.Cons.eq.Append
+import Lemma.List.AppendAppend.eq.Append_Append
+import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.Algebra.Le_Min.of.Le.Le
 import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.Algebra.EqAppendS.of.Eq.Eq
+import Lemma.List.EqAppendS.of.Eq.Eq
 import Lemma.List.Take_1.eq.List.of.Gt_0
 import Lemma.List.TakeTail.eq.TailTake
 open Algebra List

@@ -1,7 +1,7 @@
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul.of.Lt.Lt
-import Lemma.Algebra.EqValS.of.Eq
-open Algebra Vector
+import Lemma.Vector.EqValS.of.Eq
+open Vector
 
 
 @[main]

@@ -1,9 +1,9 @@
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Algebra.ValAppend.eq.AppendValS
+import Lemma.Vector.ValAppend.eq.AppendValS
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.EqGetS.of.Eq.Lt_Length
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
-open Algebra Logic List
+open Logic List Vector
 
 
 @[main]

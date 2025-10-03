@@ -1,10 +1,8 @@
-import sympy.vector.vector
-import Lemma.Logic.EqUFnS.of.Eq
-open Logic
+import sympy.Basic
 
 
 @[main]
-private lemma fin
+private lemma main
   {a b : Fin n}
 -- given
   (h : a.val = b.val) :
@@ -14,16 +12,5 @@ private lemma fin
   Fin.eq_of_val_eq h
 
 
-@[main]
-private lemma main
-  {a b : List.Vector α n}
--- given
-  (h : a.val = b.val) :
--- imply
-  a = b :=
--- proof
-  List.Vector.eq a b h
-
-
 -- created on 2024-07-01
--- updated on 2025-05-11
+-- updated on 2025-10-03

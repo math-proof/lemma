@@ -5,8 +5,8 @@ import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.List.MapCons.eq.Cons_Map
 import Lemma.List.FlattenCons.eq.Append_Flatten
 import Lemma.List.Eq.of.EqAppendS.EqLengthS
-import Lemma.Algebra.Eq.of.EqToListS
-open Algebra List
+import Lemma.Vector.Eq.of.EqToListS
+open Algebra List Vector
 
 
 @[main]

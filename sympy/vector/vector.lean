@@ -4,8 +4,8 @@ import Lemma.Vector.One.eq.Replicate
 import Lemma.Vector.Add.eq.Map₂
 import Lemma.Vector.Mul.eq.Map₂
 import Lemma.Vector.GetDiv.eq.DivGetS
-import Lemma.List.GetMul.eq.MulGetS
-import Lemma.List.GetAdd.eq.AddGetS
+import Lemma.Vector.GetMul.eq.MulGetS
+import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.GetInv.eq.InvGet
 import Lemma.Vector.NeReplicateS.of.Ne.Gt_0
 import Lemma.Vector.EqGet1'1

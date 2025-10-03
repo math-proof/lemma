@@ -1,7 +1,8 @@
 import stdlib.SEq
 import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
-import Lemma.Algebra.HEq.of.EqValS
-open Algebra Vector
+import Lemma.Vector.HEq.of.EqValS
+import Lemma.Algebra.Le_SubMulS
+open Vector Algebra
 
 
 @[main, comm]
