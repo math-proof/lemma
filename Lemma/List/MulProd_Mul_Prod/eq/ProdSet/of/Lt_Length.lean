@@ -2,7 +2,7 @@ import Lemma.List.ProdSet.eq.MulMulProd__Prod.of.Lt_Length
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.Lt_Length
-import Lemma.Algebra.ProdCons.eq.Mul_Prod
+import Lemma.List.ProdCons.eq.Mul_Prod
 open Algebra List
 
 

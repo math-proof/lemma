@@ -5,7 +5,7 @@ import Lemma.Algebra.Le.of.Eq
 import Lemma.Algebra.Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.EqMulS.of.Eq
-import Lemma.Algebra.ProdAppend.eq.MulProdS
+import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 open Algebra List
 

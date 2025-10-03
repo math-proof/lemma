@@ -1,5 +1,5 @@
 import Lemma.Vector.SumCons.eq.Add_Sum
-import Lemma.Algebra.Sum.eq.Zero
+import Lemma.Vector.Sum.eq.Zero
 import Lemma.Algebra.EqHeadD
 import Lemma.Algebra.EqHeadDCons
 open Algebra Vector

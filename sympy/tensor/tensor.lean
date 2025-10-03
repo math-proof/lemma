@@ -6,7 +6,7 @@ import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
 import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.LtVal
-import Lemma.Set.GtLength_0.of.Cons.in.CartesianProduct
+import Lemma.List.GtLength_0.of.Cons.in.CartesianProduct
 import Lemma.List.Eq_Cons_Tail.of.GtLength_0
 import Lemma.Set.In_CartesianProduct.of.In_CartesianProductCons
 import Lemma.Set.Lt.of.In_CartesianProductCons

@@ -1,6 +1,6 @@
 import Lemma.List.Take.eq.Cons_TakeTail.of.GtLength_0.Gt_0
-import Lemma.Algebra.ProdCons.eq.Mul_Prod
-open Algebra List
+import Lemma.List.ProdCons.eq.Mul_Prod
+open List
 
 
 @[main]

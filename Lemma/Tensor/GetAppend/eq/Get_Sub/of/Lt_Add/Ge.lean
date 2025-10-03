@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.Logic.SEq.of.SEq.SEq
-import Lemma.Algebra.AddProdSCons.eq.MulAdd
+import Lemma.List.AddProdSCons.eq.MulAdd
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
 import Lemma.List.GetAppend.eq.Get_Sub.of.Lt_Add.Ge

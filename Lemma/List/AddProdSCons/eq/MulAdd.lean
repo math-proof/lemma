@@ -1,6 +1,6 @@
-import Lemma.Algebra.ProdCons.eq.Mul_Prod
+import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.Algebra.MulAdd.eq.AddMulS
-open Algebra
+open Algebra List
 
 
 @[main]

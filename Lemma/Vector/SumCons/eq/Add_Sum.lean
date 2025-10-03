@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Algebra.SumCons.eq.Add_Sum
-open Algebra
+import Lemma.List.SumCons.eq.Add_Sum
+open List
 
 
 @[main]

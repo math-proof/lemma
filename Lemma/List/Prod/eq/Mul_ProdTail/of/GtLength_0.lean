@@ -1,7 +1,7 @@
 import Lemma.List.Eq_Cons_Tail.of.GtLength_0
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Algebra.ProdCons.eq.Mul_Prod
-open Algebra Logic List
+import Lemma.List.ProdCons.eq.Mul_Prod
+open Logic List
 
 
 @[main]

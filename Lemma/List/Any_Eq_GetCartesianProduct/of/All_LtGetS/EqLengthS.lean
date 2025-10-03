@@ -1,5 +1,5 @@
 import Lemma.List.LengthCartesianProduct.eq.Prod
-import Lemma.Algebra.CartesianProductNil.eq.ListNil
+import Lemma.List.CartesianProductNil.eq.ListNil
 import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Algebra.LtVal
 import Lemma.List.CartesianProductCons.eq.FlatMapFunMapCartesianProduct

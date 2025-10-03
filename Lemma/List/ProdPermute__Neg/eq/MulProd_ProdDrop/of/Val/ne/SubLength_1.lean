@@ -2,7 +2,7 @@ import Lemma.Algebra.NegSucc.eq.NegCoeAdd_1
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
 import Lemma.Algebra.EqMin.of.Lt
 import Lemma.Algebra.LtAdd.of.Lt_Sub
-import Lemma.Algebra.ProdAppend.eq.MulProdS
+import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Algebra.AppendAppend.eq.Append_Append
 import Lemma.Algebra.EqAppendS.of.Eq

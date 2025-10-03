@@ -1,4 +1,4 @@
-import Lemma.Algebra.Sum.eq.Zero
+import Lemma.Vector.Sum.eq.Zero
 import Lemma.Algebra.Dot.eq.Zero
 import Lemma.Vector.Map.eq.Cons_MapTail
 import Lemma.Vector.SumCons.eq.Add_Sum

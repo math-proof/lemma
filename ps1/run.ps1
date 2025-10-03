@@ -251,6 +251,7 @@ $tempConfigPath = [IO.Path]::ChangeExtension((New-TemporaryFile).FullName, '.ini
 user = $env:MYSQL_USER
 password = $env:MYSQL_PASSWORD
 port = $env:MYSQL_PORT
+default-character-set=utf8mb4
 "@ | Set-Content $tempConfigPath
 
 # Run the initial MySQL command and log output
@@ -281,7 +282,7 @@ if (Select-String -Path test.log -Pattern "ERROR \d+ \(\d+\): Unknown database '
 
 # Run the MySQL command and log output
 
-Get-Content test.sql | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | Tee-Object -FilePath test.log
+Get-Content test.sql -Encoding UTF8 | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | Tee-Object -FilePath test.log
 
 # Check for specific error pattern
 if (Select-String -Path test.log -Pattern "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.lemma' doesn't exist" -Quiet) {

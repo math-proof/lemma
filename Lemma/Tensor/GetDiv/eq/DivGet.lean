@@ -3,8 +3,8 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Algebra.Prod.eq.Foldr
-open Tensor Vector Algebra
+import Lemma.List.Prod.eq.Foldr
+open Tensor Vector List
 
 
 @[main]

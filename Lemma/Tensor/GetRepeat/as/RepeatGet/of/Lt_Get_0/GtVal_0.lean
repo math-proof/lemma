@@ -17,7 +17,7 @@ import Lemma.Algebra.MulMul
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.Eq.of.All_EqGetS.Eq
 import Lemma.Algebra.Mul_Mul
-import Lemma.Algebra.MulProd_Mul_Prod.eq.Mul_Prod
+import Lemma.List.MulProd_Mul_Prod.eq.Mul_Prod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.List.AddMul_ProdSet.lt.MulProd_Mul_Prod.of.Lt_Mul_ProdTail.Lt_Get_0.GtVal_0.GtLength_0
 import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0

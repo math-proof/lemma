@@ -1,5 +1,5 @@
-import Lemma.Algebra.CartesianProductNil.eq.ListNil
-open Algebra
+import Lemma.List.CartesianProductNil.eq.ListNil
+open List
 
 
 @[main]

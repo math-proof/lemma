@@ -2,8 +2,8 @@ import sympy.tensor.tensor
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Eq.of.All_EqGetS
 import Lemma.Vector.EqGet0'0.of.Lt
-import Lemma.Algebra.Sum.eq.Zero
-open Tensor Algebra Vector
+import Lemma.Vector.Sum.eq.Zero
+open Tensor Vector
 
 
 @[main]

@@ -1,6 +1,6 @@
 import Lemma.Set.In_Append.of.In
-import Lemma.Algebra.EqProd_0.is.In0
-open Set Algebra
+import Lemma.List.EqProd_0.is.In0
+open Set List
 
 
 @[main]

@@ -1,10 +1,10 @@
 import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetUnflatten.as.ArraySlice
-import Lemma.Algebra.Prod.eq.Foldr
+import Lemma.List.Prod.eq.Foldr
 import Lemma.Tensor.GetUnflattenDataStack.eq.Data
 import Lemma.Logic.SEq.of.Eq
-open Algebra Tensor Logic Vector
+open Tensor Logic Vector List
 
 
 @[main]

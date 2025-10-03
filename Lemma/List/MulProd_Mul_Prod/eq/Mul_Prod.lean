@@ -1,6 +1,6 @@
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.MulMul
-import Lemma.Algebra.ProdAppend.eq.MulProdS
+import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.EqAppendTake__Drop
 import Lemma.Algebra.Mul
 open Algebra List

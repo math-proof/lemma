@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import Lemma.List.LengthJoin.eq.SumMap_FunLength
-import Lemma.Algebra.ProdCons.eq.Mul_Prod
+import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.Algebra.Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 open Algebra List

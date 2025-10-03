@@ -12,8 +12,8 @@ import Lemma.Logic.EqCast.of.SEq.Eq
 import Lemma.Vector.EqArraySliceS.of.Eq
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Le_SubMulS.of.Lt
-import Lemma.Algebra.Prod.eq.Foldr
-open Algebra Logic Vector
+import Lemma.List.Prod.eq.Foldr
+open Algebra Logic Vector List
 
 
 @[main]

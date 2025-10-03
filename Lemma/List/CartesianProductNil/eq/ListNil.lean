@@ -1,6 +1,6 @@
 import stdlib.List
-import Lemma.Algebra.ProductNil.eq.ListNil
-open Algebra
+import Lemma.List.ProductNil.eq.ListNil
+open List
 
 
 @[main]
