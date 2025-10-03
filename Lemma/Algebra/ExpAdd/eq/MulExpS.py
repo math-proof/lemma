@@ -17,7 +17,7 @@ def prove(Eq):
     b, a = Symbol(real=True)
     Eq << apply(exp(a + b))
 
-    Eq << Real.Eq.given.EqLogS.apply(Eq[-1])
+    Eq << Real.Eq.given.EqLogS.Gt_0.Gt_0.apply(Eq[-1])
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
 
