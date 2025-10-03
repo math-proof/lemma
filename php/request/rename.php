@@ -12,8 +12,9 @@ function rename_lemma($old, $new)
         $cmd .= " \"$old\" \"$new\"";
     }
     else {
-        $args = "-src " . escapeshellarg($old) . " -dst ". escapeshellarg($new);
-        $cmd = "powershell -ExecutionPolicy Bypass -NoProfile -File ".  escapeshellarg("ps1\\rename.ps1") . " -ArgumentList $args";;
+        // using json_encode instead of escapeshellarg due to ! character
+        $args = "-src " . json_encode($old) . " -dst ". json_encode($new);
+        $cmd = "powershell -ExecutionPolicy Bypass -NoProfile -File ".  json_encode("ps1\\rename.ps1") . " -ArgumentList $args";;
     }
 
     error_log("cmd = $cmd");

@@ -1,8 +1,8 @@
 import sympy.vector.vector
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Algebra.LengthFlatten.eq.SumMapLength
+import Lemma.List.LengthFlatten.eq.SumMapLength
 import Lemma.Algebra.MapMap.eq.Map_Comp
-open Logic Algebra
+open Logic Algebra List
 
 
 @[main]

@@ -1,7 +1,7 @@
 import stdlib.SEq
 import sympy.tensor.tensor
-import Lemma.Algebra.EqPermute__0
-open Algebra
+import Lemma.List.EqPermute__0
+open List
 
 
 @[main]

@@ -4305,7 +4305,8 @@ class LeanModule extends LeanStatements
                 std\exec($cmd, $_, get_lean_env());
         }
         // 10000 heartbeats approximates 1 second
-        $cmd = $lakePath . ' env lean -D"linter.unusedTactic=false" -D"linter.dupNamespace=false" -D"diagnostics.threshold=1000" -D"maxHeartbeats=4000000" '. escapeshellarg($leanEchoFile);
+        // using json_encode instead of escapeshellarg due to ! character
+        $cmd = $lakePath . ' env lean -D"linter.unusedTactic=false" -D"linter.dupNamespace=false" -D"diagnostics.threshold=1000" -D"maxHeartbeats=4000000" '. json_encode($leanEchoFile);
         if (std\is_linux())
             exec($cmd, $output_array);
         else

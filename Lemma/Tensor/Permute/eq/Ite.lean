@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
-import Lemma.Algebra.EqPermute__0
+import Lemma.List.EqPermute__0
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
-import Lemma.Algebra.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
+import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
 import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1.Le_0

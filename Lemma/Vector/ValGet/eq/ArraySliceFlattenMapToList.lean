@@ -1,13 +1,13 @@
 import Lemma.Vector.ValGet.eq.ValArraySliceFlatten
 import Lemma.Algebra.LengthArraySlice.eq.Min_SubLength
-import Lemma.Algebra.LengthFlatten.eq.SumMapLength
+import Lemma.List.LengthFlatten.eq.SumMapLength
 import Lemma.Algebra.SumMapVal.eq.Mul
 import Lemma.Algebra.GetVal.eq.Get
 import Lemma.Algebra.GetVal.eq.Get.of.Lt
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.Algebra.GetElem!.eq.None.of.Ge_Length
 import Lemma.Algebra.EqGetS.of.Eq.Lt_Length
-open Algebra Vector
+open Algebra Vector List
 
 
 @[main]

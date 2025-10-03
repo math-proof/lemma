@@ -1,6 +1,6 @@
 import stdlib.List
 import Lemma.List.TakeSwap.eq.Take.of.Lt
-import Lemma.Algebra.SliceSwap.eq.Slice.of.Lt
+import Lemma.List.SliceSwap.eq.Slice.of.Lt
 import Lemma.List.DropSwap.eq.Drop.of.Lt
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.DropDrop.eq.Drop_Add
