@@ -1,5 +1,5 @@
 import Lemma.Algebra.EqAppendTake__Drop
-import Lemma.Algebra.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
+import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
 import Lemma.Algebra.LengthTake.eq.Min_Length
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.List.EqInsertIdx.of.Gt_Length

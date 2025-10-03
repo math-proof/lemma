@@ -1,11 +1,11 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.LengthInsertIdx.eq.Add1Length.of.Le_Length
-import Lemma.Algebra.LengthInsertIdx.eq.Length.of.Gt_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Length.of.Gt_Length
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Algebra.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
+import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
 import Lemma.Algebra.Ge_1.of.Gt_0
 import Lemma.Algebra.Eq.of.Ge.Le
-open Tensor Algebra Logic
+open Tensor Algebra Logic List
 
 
 @[main]
@@ -22,7 +22,7 @@ private lemma main
     match h_insert : [].insertIdx d 1, h_d : X.unsqueeze d with
     | [], t =>
       simp
-    | length :: tail, t =>
+    | _ :: tail, t =>
       simp
       have := EqUFnS.of.Eq h_insert List.length
       simp at this

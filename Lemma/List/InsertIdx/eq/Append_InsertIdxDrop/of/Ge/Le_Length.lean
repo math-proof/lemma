@@ -1,7 +1,7 @@
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Gt
 import Lemma.Algebra.EqAppendTake__Drop
-import Lemma.Algebra.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
+import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
 import Lemma.Algebra.LengthTake.eq.Min_Length
 import Lemma.Algebra.EqMin.of.Le
 open Algebra List

@@ -2,13 +2,13 @@ import sympy.vector.vector
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.LtVal
-import Lemma.Algebra.ProdInsertIdx.eq.Prod
+import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Algebra.ProdSet__MulGet.eq.Mul_Prod
 import Lemma.Algebra.Lt_Sub.of.LtAdd
-import Lemma.Algebra.Erase_Succ.eq.Cons_EraseTail.of.Lt_LengthTail
+import Lemma.List.EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx
-import Lemma.Algebra.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
+import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
 import Lemma.Algebra.SwapAppend.eq.Append_Swap.of.Ge_Length.Ge_Length
 import Lemma.Algebra.EqSwap_0'1
 import Lemma.Algebra.ProdSwap.eq.Prod
@@ -168,7 +168,7 @@ def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) 
         simp at h_dim
         apply Lt_Sub.of.LtAdd.nat h_dim
       cast
-        (by simp_all [Erase_Succ.eq.Cons_EraseTail.of.Lt_LengthTail h_lt 1])
+        (by simp_all [EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_lt 1])
         (Tensor.fromVector ((X.toVector).map (·.sum dim)))
   else
     cast (by

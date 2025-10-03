@@ -8,10 +8,10 @@ import Lemma.Algebra.Ne.of.Gt
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.Eq_0.of.Le_0
 import Lemma.Logic.EqCast.of.Eq
-import Lemma.Algebra.ArraySlice.as.GetSplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail
+import Lemma.Vector.ArraySlice.as.GetSplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail
 import Lemma.Algebra.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Logic.EqCast.of.SEq
-open Algebra Logic
+open Algebra Logic Vector
 
 
 @[main]

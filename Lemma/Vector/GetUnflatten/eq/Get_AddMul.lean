@@ -1,8 +1,8 @@
 import Lemma.Algebra.ValGetUnflatten.eq.ValArraySlice
 import Lemma.Algebra.Lt_Sub.of.LtAdd
-import Lemma.Algebra.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
+import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Algebra.AddMul.lt.Mul
-open Algebra
+open Algebra Vector
 
 
 @[main, comm]

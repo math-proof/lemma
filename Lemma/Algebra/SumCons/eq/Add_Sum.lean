@@ -13,15 +13,5 @@ private lemma main
   List.sum_cons
 
 
-@[main]
-private lemma vector
-  [Add α] [Zero α]
-  {l : List.Vector α n}
-  {a : α} :
--- imply
-  (a ::ᵥ l).sum = a + l.sum :=
--- proof
-  main
-
 -- created on 2024-07-01
--- updated on 2025-05-08
+-- updated on 2025-10-03

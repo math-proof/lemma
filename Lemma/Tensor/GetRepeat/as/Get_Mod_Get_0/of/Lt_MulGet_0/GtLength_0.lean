@@ -12,7 +12,7 @@ import Lemma.Tensor.SEq.of.SEqDataS.Eq
 import Lemma.Algebra.TailSet_0.eq.Tail
 import Lemma.Logic.EqCastS.of.Eq.Eq.Eq
 import Lemma.Algebra.Eq.of.All_EqGetS.Eq
-import Lemma.Algebra.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
+import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Vector.Get.eq.GetFlatten_AddMul.of.Lt.Lt
@@ -20,7 +20,7 @@ import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.GetMap.eq.UFnGet.of.Lt
-import Lemma.Algebra.EqGetSplitAt_0'0
+import Lemma.Vector.EqGetSplitAt_0'0
 import Lemma.Algebra.EqGetS
 import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 import Lemma.Algebra.Gt_0

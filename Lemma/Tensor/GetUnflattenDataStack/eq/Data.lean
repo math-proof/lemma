@@ -1,6 +1,6 @@
 import sympy.tensor.stack
-import Lemma.Algebra.EqUnflattenFlatten
-open Algebra
+import Lemma.Vector.EqUnflattenFlatten
+open Vector
 
 
 @[main]

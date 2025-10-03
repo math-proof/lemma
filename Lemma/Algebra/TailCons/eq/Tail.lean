@@ -4,21 +4,14 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {l : List α} :
+-- given
+  (l : List α)
+  (a : α) :
 -- imply
   (a :: l.tail).tail = l.tail :=
 -- proof
-  rfl
+rfl
 
-
-@[main]
-private lemma vector
--- given
-  (l : List.Vector α n)
-  (a : α):
--- imply
-  (a ::ᵥ l.tail).tail = l.tail :=
--- proof
-  rfl
 
 -- created on 2024-07-01
+-- updated on 2025-10-03

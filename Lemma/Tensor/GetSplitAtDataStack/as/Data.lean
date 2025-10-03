@@ -2,7 +2,7 @@ import sympy.tensor.stack
 import Lemma.Algebra.EqValS.of.Eq
 import Lemma.Algebra.LtVal
 import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
-import Lemma.Algebra.EqUnflattenFlatten
+import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.EqGetMapRange
 import Lemma.Tensor.SEqDataS.of.SEq
 import Lemma.Algebra.EqGetRange.of.Lt

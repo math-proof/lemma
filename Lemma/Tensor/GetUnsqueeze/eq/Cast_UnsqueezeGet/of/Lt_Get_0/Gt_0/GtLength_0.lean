@@ -2,8 +2,8 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Logic.EqCast.of.SEq
-import Lemma.Algebra.TailInsertIdx.eq.InsertIdxTail.of.Gt_0.GtLength_0
-open Tensor Algebra Logic
+import Lemma.List.TailInsertIdx.eq.InsertIdxTail.of.Gt_0.GtLength_0
+open Tensor Logic List
 
 
 @[main]

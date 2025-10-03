@@ -1,6 +1,6 @@
 import sympy.tensor.Basic
 import Mathlib.Data.Vector.MapLemmas
-import Lemma.Algebra.ProdInsertIdx.eq.Prod
+import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Algebra.EqGetRange
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
@@ -10,12 +10,12 @@ import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.EqGetRange.of.Lt
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Algebra.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Algebra.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
+import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Logic.EqCast.of.HEq
 import Lemma.Logic.HEq.of.All_HEq.Eq
 import Lemma.Logic.HEqMkS.of.Eq.Eq.Lt
 import Lemma.Algebra.EqValCast.of.Lt.Eq
-open Algebra Logic Vector
+open Algebra Logic Vector List
 
 
 @[main]

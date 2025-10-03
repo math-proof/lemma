@@ -1,14 +1,14 @@
 import sympy.tensor.tensor
 import Lemma.Logic.EqCast.of.SEq
-import Lemma.Algebra.ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
+import Lemma.Vector.ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
 import Lemma.Logic.EqCast.of.SEq.Eq
 import Lemma.Logic.SEq.of.Eq
 import Lemma.Logic.EqCast.of.Eq
 import Lemma.Vector.Eq.of.All_EqGetS
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
-import Lemma.Algebra.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
+import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Vector.EqGetMapRange.of.Lt
-open Algebra Logic Vector
+open Logic Vector
 
 
 @[main]
