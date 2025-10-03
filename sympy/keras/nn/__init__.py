@@ -54,6 +54,13 @@ class Softmax(Function):
     def _latex(self, p):
         return r"softmax\left(%s\right)" % p._print(self.arg)
  
+    def _lean(self, p):
+        arg = self.arg
+        argStr = p._print(arg)
+        if arg.is_Add or arg.is_Mul:
+            argStr = r"(%s)" % argStr
+        return r"%s.softmax" % argStr
+
     @property
     def T(self):
         from sympy import Transpose
