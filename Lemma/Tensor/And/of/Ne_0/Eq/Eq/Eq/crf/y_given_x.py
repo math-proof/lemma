@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.of.Eq.Eq.subst.rhs)
 
-    Eq << Eq[-1].this.find(Log).apply(Algebra.LogMul.eq.AddLogS)
+    Eq << Eq[-1].this.find(Log).apply(Real.LogMul.eq.AddLogS)
 
     Eq.z_definition_by_x_quote = Logic.EqUFnS.of.Eq.apply(Eq[6].reversed, exp)
 
@@ -119,7 +119,7 @@ def prove(Eq):
 
     Eq << Logic.And_And.of.And.apply(Eq[-1] & Eq.xy_joint_nonzero)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.LogMul.eq.AddLogS)
+    Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS)
 
     Eq << Logic.EqUFnS.of.Eq.apply(Eq[4].reversed, exp)
 

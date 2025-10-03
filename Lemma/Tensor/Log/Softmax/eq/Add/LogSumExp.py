@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.LogMul.eq.AddLogS)
+    Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS)
 
 
 if __name__ == '__main__':
