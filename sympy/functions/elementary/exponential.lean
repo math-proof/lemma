@@ -26,5 +26,15 @@ noncomputable instance : Exp ℝ* where
 class Log (α : Type u) where
   log : α → α
 
+noncomputable instance : Log ℝ where
+  log := Real.log
+
+noncomputable instance : Log ℂ where
+  log := Complex.log
+
+noncomputable instance : Log ℝ* where
+  log x := x.map Real.log
+
 
 export Exp (exp)
+export Log (log)

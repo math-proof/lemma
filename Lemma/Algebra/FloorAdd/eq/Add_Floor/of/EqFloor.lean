@@ -1,6 +1,6 @@
 import sympy.core.relational
 import Lemma.Algebra.FloorAdd.eq.Add_Floor
-open Algebra Real
+open Algebra
 
 
 @[main]
@@ -11,7 +11,7 @@ private lemma main
 -- given
   (h : ⌊x⌋ = x) :
 -- imply
-  ⌊x + y⌋ = x +   ⌊y⌋ := by
+  ⌊x + y⌋ = x + ⌊y⌋ := by
 -- proof
   denote h_Eq : d = ⌊x⌋
   rw [← h_Eq] at h

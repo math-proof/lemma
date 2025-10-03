@@ -92,6 +92,8 @@ if (! str_ends_with($path_info, '/')) {
             header("location:?module=$module");
             exit();
         }
+        elseif (is_dir($path_info))
+            $leanFile = null;
         else {
             $tokens = explode('.', $module);
             switch ($tokens[2]) {
