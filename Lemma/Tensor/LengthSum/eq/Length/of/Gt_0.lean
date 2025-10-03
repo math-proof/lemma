@@ -2,9 +2,9 @@ import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.EqLength_0.of.Eq_Nil
 import Lemma.Tensor.LengthSum.eq.Length.of.Ge_Length
-import Lemma.Algebra.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-import Lemma.Algebra.GetEraseIdx.eq.Get.of.Lt.Lt_Length
-open Tensor Algebra
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
+open Tensor List
 
 
 @[main]

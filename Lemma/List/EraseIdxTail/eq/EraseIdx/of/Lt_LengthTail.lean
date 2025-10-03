@@ -1,5 +1,5 @@
-import Lemma.Algebra.EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1
-open Algebra
+import Lemma.List.EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1
+open List
 
 
 @[main]

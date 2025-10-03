@@ -1,6 +1,6 @@
-import Lemma.Algebra.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.Algebra.LtAddS.is.Lt
-open Algebra
+open Algebra List
 
 
 @[main]

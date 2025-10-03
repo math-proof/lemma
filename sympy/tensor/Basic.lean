@@ -7,7 +7,7 @@ import Lemma.Algebra.ProdSet__MulGet.eq.Mul_Prod
 import Lemma.Algebra.Lt_Sub.of.LtAdd
 import Lemma.Algebra.Erase_Succ.eq.Cons_EraseTail.of.Lt_LengthTail
 import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
-import Lemma.Algebra.EraseIdxAppend.eq.Append_EraseIdx
+import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx
 import Lemma.Algebra.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
 import Lemma.Algebra.SwapAppend.eq.Append_Swap.of.Ge_Length.Ge_Length
 import Lemma.Algebra.EqSwap_0'1
