@@ -4557,7 +4557,6 @@ class LeanModule extends LeanStatements
                             $latex = [];
                             $pivot = null;
                             $vars = null;
-                            $indicesToDelete = [];
                             foreach (std\enumerate($given) as [$i, $stmt]) {
                                 if ($stmt instanceof LeanParenthesis) {
                                     $colon = $stmt->arg;
@@ -4585,7 +4584,6 @@ class LeanModule extends LeanStatements
                                     $given[$pivot] = new LeanParenthesis($stmt->arg, $stmt->indent, $stmt->parent);
                                     break;
                                 } elseif ($stmt instanceof LeanCaret) {
-                                    $indicesToDelete[] = $i;
                                 } else {
                                     $error[] = [
                                         'code' => "$stmt",
