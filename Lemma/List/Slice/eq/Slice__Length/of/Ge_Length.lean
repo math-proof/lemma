@@ -1,6 +1,6 @@
 import stdlib.List
-import Lemma.Algebra.Slice.eq.Nil.of.Gt
-open Algebra
+import Lemma.List.Slice.eq.Nil.of.Gt
+open List
 
 
 @[main]

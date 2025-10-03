@@ -11,7 +11,7 @@ import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.EqSubAdd
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
-import Lemma.Algebra.Slice.eq.Nil
+import Lemma.List.Slice.eq.Nil
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.Algebra.LeAdd_1
 import Lemma.Algebra.EqAddSub.of.Ge

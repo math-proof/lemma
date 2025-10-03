@@ -1,6 +1,6 @@
 import Lemma.Algebra.Eq.of.EqValS
-import Lemma.Algebra.Eq_Replicate_HeadD.of.IsConstant
-open Algebra
+import Lemma.List.Eq_Replicate_HeadD.of.IsConstant
+open Algebra List
 
 
 @[main]

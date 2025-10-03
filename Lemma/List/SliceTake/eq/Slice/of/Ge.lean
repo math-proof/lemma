@@ -1,4 +1,4 @@
-import Lemma.Algebra.Slice.eq.Nil.of.Ge
+import Lemma.List.Slice.eq.Nil.of.Ge
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.List.EqAppendTake__Drop
 import Lemma.Logic.EqUFnS.of.Eq

@@ -1,7 +1,7 @@
 import stdlib.List
 import Lemma.List.Permute.eq.Ite
-import Lemma.Algebra.Slice.eq.Nil
-open Algebra List
+import Lemma.List.Slice.eq.Nil
+open List
 
 
 @[main]

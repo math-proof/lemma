@@ -3,7 +3,7 @@ import Lemma.Logic.HEq.of.All_HEq
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
 import Lemma.Algebra.Le_Sub_1.of.Lt
-import Lemma.Algebra.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
+import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
 import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.LtVal
 import Lemma.Set.GtLength_0.of.Cons.in.CartesianProduct
