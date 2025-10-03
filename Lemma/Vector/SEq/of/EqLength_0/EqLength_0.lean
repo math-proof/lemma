@@ -1,7 +1,7 @@
 import stdlib.SEq
-import Lemma.Algebra.Val.eq.Nil.of.EqLength_0
+import Lemma.Vector.Val.eq.Nil.of.EqLength_0
 import Lemma.Algebra.HEq.of.EqValS
-open Algebra
+open Algebra Vector
 
 
 @[main]

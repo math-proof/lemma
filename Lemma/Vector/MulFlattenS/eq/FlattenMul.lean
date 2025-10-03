@@ -3,7 +3,7 @@ import Lemma.Algebra.Mul
 import Lemma.Vector.Get.eq.GetFlatten_AddMul
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.GetVal.eq.Get.of.Lt
-import Lemma.Algebra.GetMul.eq.MulGetS.of.Lt_Length
+import Lemma.Vector.GetMul.eq.MulGetS.of.Lt_Length
 open Algebra Vector
 
 

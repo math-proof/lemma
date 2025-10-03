@@ -6,7 +6,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Algebra.GetMap.eq.UFnGet.of.Lt
-import Lemma.Algebra.EqGetIndices.of.Lt_Min
+import Lemma.Vector.EqGetIndices.of.Lt_Min
 import Lemma.Algebra.Eq.of.EqValS
 open Tensor Algebra Vector
 

@@ -1,4 +1,4 @@
-import Lemma.Algebra.SEq.of.EqLength_0.EqLength_0
+import Lemma.Vector.SEq.of.EqLength_0.EqLength_0
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Tensor.All_SEqDataSGet.of.All_SEqGetS.Eq
 import Lemma.Logic.IffEqS.of.Eq

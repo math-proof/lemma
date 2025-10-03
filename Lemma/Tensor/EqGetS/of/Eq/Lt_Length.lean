@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqLengthS.of.Eq
+import Lemma.Tensor.EqLengthS.of.SEq
 import Lemma.Tensor.EqTFnS.of.Eq.Lt_Length
 open Tensor
 
@@ -12,7 +12,7 @@ private lemma main
   (h₀ : i < A.length)
   (h₁ : A ≃ B) :
 -- imply
-  have : i < B.length := by rwa [EqLengthS.of.Eq h₁] at h₀
+  have : i < B.length := by rwa [EqLengthS.of.SEq h₁] at h₀
   A[i] ≃ B[i] := by
 -- proof
   apply EqTFnS.of.Eq.Lt_Length.tensor h₀ h₁ _ (fun s X i => X.get i)

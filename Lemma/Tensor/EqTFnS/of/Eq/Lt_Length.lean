@@ -1,6 +1,6 @@
 import Lemma.Algebra.HEq.of.EqValS
 import Lemma.Logic.IffEqS.of.Eq
-import Lemma.Tensor.EqLengthS.of.Eq
+import Lemma.Tensor.EqLengthS.of.SEq
 import Lemma.Logic.HEq.of.Cond.Cond
 open Algebra Logic Tensor
 
@@ -41,7 +41,7 @@ private lemma tensor
   (g : List ℕ → List ℕ)
   (f : (s : List ℕ) → (X : Tensor α s) → (i : Fin X.length) → Tensor α (g s)) :
 -- imply
-  f s A ⟨i, h_i⟩ ≃ f s' B ⟨i, by rwa [← EqLengthS.of.Eq h]⟩ := by
+  f s A ⟨i, h_i⟩ ≃ f s' B ⟨i, by rwa [← Tensor.EqLengthS.of.SEq h]⟩ := by
 -- proof
   simp [SEq] at h ⊢
   let ⟨h_s, h⟩ := h

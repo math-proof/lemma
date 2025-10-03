@@ -6,7 +6,7 @@ import Lemma.Algebra.AddMul.lt.Mul.of.Lt
 import Lemma.Vector.Get_AddMul.eq.GetUnflatten.of.Lt
 import Lemma.Algebra.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Algebra.EqGetS.of.Eq.Lt
+import Lemma.Vector.EqGetS.of.Eq.Lt
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.SubAdd.eq.AddSub.of.Le

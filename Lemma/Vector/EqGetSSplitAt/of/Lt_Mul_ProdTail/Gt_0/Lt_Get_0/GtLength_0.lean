@@ -4,7 +4,7 @@ import Lemma.List.ModAddMulProdTail.lt.ProdDrop.of.Lt_Mul_ProdTail.Lt_Get_0.GtLe
 import Lemma.List.Div_Mul_ProdDrop.lt.ProdTakeDrop_1.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.List.ModProdDrop.lt.ProdDropDrop_1.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.Algebra.EqGetS.of.Eq.Lt
+import Lemma.Vector.EqGetS.of.Eq.Lt
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Algebra.DivDiv.eq.Div_Mul
 import Lemma.Algebra.MulDiv.eq.Sub_Mod

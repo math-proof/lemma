@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqLengthS.of.Eq
+import Lemma.Tensor.EqLengthS.of.SEq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.EqTFnS.of.Eq.Lt_Length
 open Tensor
@@ -16,7 +16,7 @@ private lemma main
   (f : (s : List ℕ) → (X : Tensor α s) → (i : Fin X.length) → Tensor α (g s)) :
 -- imply
   have h_i : i < A.length := by rwa [Length.eq.Get_0.of.GtLength_0 h_s]
-  f s A ⟨i, h_i⟩ ≃ f s' B ⟨i, by rwa [← EqLengthS.of.Eq h]⟩ := by
+  f s A ⟨i, h_i⟩ ≃ f s' B ⟨i, by rwa [← EqLengthS.of.SEq h]⟩ := by
 -- proof
   intro h_i
   apply EqTFnS.of.Eq.Lt_Length.tensor h_i h

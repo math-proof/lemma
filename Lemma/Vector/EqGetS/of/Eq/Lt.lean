@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqLengthS.of.Eq
+import Lemma.Vector.EqLengthS.of.SEq
 import Lemma.Algebra.All_EqGetS.of.Eq
-open Algebra
+open Algebra Vector
 
 
 @[main]
@@ -38,7 +38,7 @@ private lemma heter
   (h_i : i < n)
   (h : a ≃ b) :
 -- imply
-  have h_length := EqLengthS.of.Eq h
+  have h_length := EqLengthS.of.SEq h
   have h_length : n = m := by
     simp [List.Vector.length] at h_length
     assumption
