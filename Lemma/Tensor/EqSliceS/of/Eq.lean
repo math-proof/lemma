@@ -2,7 +2,6 @@ import Lemma.Algebra.LtVal
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min
 import Lemma.List.LengthSlice.eq.Min
-import Lemma.Algebra.All_EqGetS.of.Eq
 import Lemma.Algebra.Lt_Min.is.Lt.Lt
 open Algebra Tensor List
 

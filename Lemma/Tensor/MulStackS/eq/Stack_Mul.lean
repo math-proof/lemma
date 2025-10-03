@@ -2,7 +2,7 @@ import Mathlib.Data.Vector.MapLemmas
 import sympy.tensor.stack
 import Lemma.Algebra.Mul
 import Lemma.Vector.MulFlattenS.eq.FlattenMul
-import Lemma.Algebra.MulMapS.eq.Map_FunMul
+import Lemma.Vector.MulMapS.eq.Map_FunMul
 open Algebra Vector
 
 

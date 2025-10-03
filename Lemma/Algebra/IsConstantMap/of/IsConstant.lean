@@ -20,17 +20,5 @@ private lemma main
     exact All_EqUFnS.of.All_Eq.list h
 
 
-@[main]
-private lemma vector
-  {s : List.Vector α n}
--- given
-  (h: s is constant)
-  (f : α → β) :
--- imply
-  (s.map f) is constant :=
--- proof
-  main h f
-
-
 -- created on 2024-07-01
--- updated on 2025-02-23
+-- updated on 2025-10-03

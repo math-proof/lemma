@@ -8,8 +8,8 @@ import Lemma.Algebra.Lt.of.AddMul.lt.Mul
 import Lemma.Algebra.EqValS.of.Eq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Algebra.LtVal
-import Lemma.Algebra.EqGetS.of.Eq_Append.of.Lt.Lt
-import Lemma.Algebra.Get_Add.eq.Get.of.SEq_Append.of.Lt.LtAdd
+import Lemma.Vector.EqGetS.of.SEq_Append.of.Lt.Lt
+import Lemma.Vector.Get_Add.eq.Get.of.SEq_Append.of.Lt.LtAdd
 open Algebra Vector
 
 
@@ -39,7 +39,7 @@ private lemma main
     have hj : j < (m + 1) * n := by
       nlinarith
     have hj' := LtVal j
-    have := EqGetS.of.Eq_Append.of.Lt.Lt hj hj' h
+    have := EqGetS.of.SEq_Append.of.Lt.Lt hj hj' h
     assumption
   | .succ i =>
     simp [MulAdd_1.eq.Add_Mul]

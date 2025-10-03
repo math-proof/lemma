@@ -1,6 +1,6 @@
 import Lemma.Vector.EqLengthS.of.SEq
-import Lemma.Algebra.All_EqGetS.of.Eq
-open Algebra Vector
+import Lemma.Vector.All_EqGetS.of.SEq
+open Vector
 
 
 @[main]
@@ -53,7 +53,7 @@ private lemma heter
   have hi : i < b.val.length := by
     simp_all
   have h : a.val[i] = b.val[i] := by
-    have h := All_EqGetS.of.Eq h
+    have h := All_EqGetS.of.SEq h
     specialize h ⟨i, by simp_all⟩
     aesop
   simp [List.Vector.get]

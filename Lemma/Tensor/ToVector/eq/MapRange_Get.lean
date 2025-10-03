@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetToVector.eq.Get
-import Lemma.Algebra.EqGetRange
-open Tensor Algebra
+import Lemma.Vector.EqGetRange
+open Tensor Vector
 
 
 @[main]

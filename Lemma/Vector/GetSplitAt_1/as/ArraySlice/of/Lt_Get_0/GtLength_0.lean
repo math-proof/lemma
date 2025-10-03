@@ -5,7 +5,7 @@ import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Logic.SEqCast.of.Eq
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
-import Lemma.Algebra.EqGetRange.of.Lt
+import Lemma.Vector.EqGetRange.of.Lt
 open Algebra Logic List Vector
 
 

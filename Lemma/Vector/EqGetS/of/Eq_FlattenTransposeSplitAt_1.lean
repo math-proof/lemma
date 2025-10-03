@@ -1,8 +1,8 @@
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Algebra.EqGetS
+import Lemma.Vector.EqGetS
 import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Vector.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
-import Lemma.Algebra.GetTranspose.eq.Get
+import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
 import Lemma.Algebra.AddMul.lt.Mul
 open Algebra Vector

@@ -9,13 +9,13 @@ import Lemma.Algebra.Gt_0
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Logic.EqCastS.of.Eq.Eq.Eq
-import Lemma.Algebra.GetMap.eq.UFnGet.of.Lt
+import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Algebra.Ge_1.of.Gt_0
 import Lemma.Algebra.Gt_0.of.Gt
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.MulMul
-import Lemma.Algebra.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Algebra.Eq.of.All_EqGetS.Eq
+import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
+import Lemma.Vector.Eq.of.All_EqGetS.Eq
 import Lemma.Algebra.Mul_Mul
 import Lemma.Algebra.MulProd_Mul_Prod.eq.Mul_Prod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
@@ -29,7 +29,7 @@ import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
 import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.Mul
-import Lemma.Algebra.EqGetS
+import Lemma.Vector.EqGetS
 import Lemma.List.ProdTakeSet__1.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.Lt_Length

@@ -1,6 +1,6 @@
 import sympy.tensor.stack
-import Lemma.Algebra.EqGetRange
-open Algebra
+import Lemma.Vector.EqGetRange
+open Vector
 
 
 @[main]

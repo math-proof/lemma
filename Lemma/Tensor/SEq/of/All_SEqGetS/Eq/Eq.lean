@@ -9,7 +9,7 @@ import Lemma.Tensor.Data.eq.FlattenMapRange
 import Lemma.Algebra.GetVal.eq.Get.of.Lt
 import Lemma.Vector.Get.eq.GetFlatten_AddMul
 import Lemma.Algebra.AddMul.lt.Mul
-import Lemma.Algebra.EqGetRange
+import Lemma.Vector.EqGetRange
 import Lemma.List.EqGetS.of.Eq.Lt_Length
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Algebra.Eq.of.EqValS

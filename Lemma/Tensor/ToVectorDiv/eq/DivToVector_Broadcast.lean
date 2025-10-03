@@ -1,9 +1,9 @@
 import Lemma.Tensor.ToVector.eq.MapRange_Get
-import Lemma.Algebra.EqGetRange
+import Lemma.Vector.EqGetRange
 import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Tensor.Div.eq.Div_Broadcast
-open Tensor Algebra Vector
+open Tensor Vector
 
 
 @[main]
