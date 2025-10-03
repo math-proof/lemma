@@ -7,8 +7,8 @@ open Algebra
 
 @[main]
 private lemma main
-  {s : List.Vector α (m * n)}
 -- given
+  (s : List.Vector α (m * n))
   (i : Fin m) :
 -- imply
   (s.array_slice (i * n) n).length = n := by

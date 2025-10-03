@@ -2,11 +2,11 @@ import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Logic.EqCast.of.SEq.Eq
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le_SubMulS.of.Lt
-import Lemma.Algebra.EqArraySliceS.of.Eq.Eq.Eq
+import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Logic.SEqCast.of.Eq
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
 import Lemma.Algebra.EqGetRange.of.Lt
-open Algebra Logic List
+open Algebra Logic List Vector
 
 
 @[main, comm]
@@ -31,7 +31,7 @@ private lemma main
     apply Le_SubMulS.of.Lt
     simp
   ·
-    apply EqArraySliceS.of.Eq.Eq.Eq
+    apply EqArraySliceS.of.SEq.Eq.Eq
     ·
       simp [EqGetRange.of.Lt]
     ·

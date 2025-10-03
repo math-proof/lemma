@@ -1,7 +1,7 @@
 import Lemma.List.EqSwapS
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetElem!Swap.eq.SomeGet
-open Algebra List
+open List
 
 
 @[main]

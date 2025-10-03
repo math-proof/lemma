@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Algebra.EqArraySliceS.of.Eq.Eq.Eq
-open Algebra
+import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
+open Vector
 
 
 @[main]
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   v.array_slice i s ≃ v.array_slice i' s' := by
 -- proof
-  apply EqArraySliceS.of.Eq.Eq.Eq h₀ h₁
+  apply EqArraySliceS.of.SEq.Eq.Eq h₀ h₁
   simp [SEq]
 
 

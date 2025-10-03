@@ -2,7 +2,7 @@ import sympy.tensor.tensor
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.Logic.SEq.of.SEq.SEq
 import Lemma.Algebra.AddProdSCons.eq.MulAdd
-import Lemma.Algebra.EqArraySliceS.of.Eq.Eq.Eq
+import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
 import Lemma.Algebra.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Logic.EqCast.of.Eq
@@ -67,7 +67,7 @@ private lemma main
         ·
           apply SEq.of.SEq.SEq (c := ab.array_slice (i * s.prod) s.prod)
           ·
-            apply EqArraySliceS.of.Eq.Eq.Eq rfl rfl
+            apply EqArraySliceS.of.SEq.Eq.Eq rfl rfl
             simp [ab]
             apply Eq_Cast.of.SEq.Eq (by assumption)
             apply SEq.of.Eq rfl

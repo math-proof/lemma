@@ -1,7 +1,7 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
 import Lemma.Logic.SEq.of.SEq.SEq
-import Lemma.Algebra.EqArraySliceS.of.Eq.Eq.Eq
+import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Logic.EqCast.of.SEq.Eq
 open Algebra Logic Vector List
@@ -24,7 +24,7 @@ private lemma main
   intro h h_i'
   have := GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0 h_s h_i (cast h v)
   apply SEq.of.SEq.SEq _ this
-  apply EqArraySliceS.of.Eq.Eq.Eq
+  apply EqArraySliceS.of.SEq.Eq.Eq
   ·
     apply EqMulS.of.Eq.left h_n
   ·

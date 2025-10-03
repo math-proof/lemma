@@ -9,7 +9,7 @@ import Lemma.Logic.EqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySliceAppend
 import Lemma.Vector.GetUnflatten.eq.Cast_ArraySlice.of.Lt
 import Lemma.Logic.EqCast.of.SEq.Eq
-import Lemma.Algebra.EqArraySliceS.of.Eq
+import Lemma.Vector.EqArraySliceS.of.Eq
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Algebra.Prod.eq.Foldr
