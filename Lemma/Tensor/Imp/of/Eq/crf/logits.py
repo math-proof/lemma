@@ -12,7 +12,7 @@ def apply(given, G, x, s):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Logic, Real
 
     # d is the number of output labels
     # oo is the length of the sequence

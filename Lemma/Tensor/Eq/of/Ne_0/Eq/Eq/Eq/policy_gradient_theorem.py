@@ -54,7 +54,7 @@ def apply(sar_independence_assumption, ne, T=None, t=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus
+    from Lemma import Probability, Algebra, Calculus, Real
 
     b, d, L, D = Symbol(domain=Range(2, oo))
     s = Symbol(shape=(L + 1, b), real=True, random=True)

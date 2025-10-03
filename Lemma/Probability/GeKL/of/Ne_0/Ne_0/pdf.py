@@ -11,7 +11,7 @@ def apply(ne_zero_lhs, ne_zero_rhs, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus
+    from Lemma import Probability, Algebra, Calculus, Real
 
 
     D, m, n = Symbol(integer=True, positive=True)

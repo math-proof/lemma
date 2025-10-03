@@ -11,7 +11,7 @@ def apply(ne_zero_lhs, ne_zero_rhs, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Real
 
     D, m, n = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))

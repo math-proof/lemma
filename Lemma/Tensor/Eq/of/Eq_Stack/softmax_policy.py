@@ -11,7 +11,7 @@ def apply(eq_given):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Logic
+    from Lemma import Probability, Algebra, Calculus, Logic, Real
 
     m, n = Symbol(integer=True, positive=True)
     φ = Function(real=True, shape=(m, n))
