@@ -1,4 +1,4 @@
-import Lemma.Set.Arg.mem.IocNegPiPi
+import Lemma.Complex.Arg.in.IocNegPiPi
 import Lemma.Set.InDiv.of.In_Ioc.Gt_0
 import Lemma.Set.InSub.of.In_Ioc
 import Lemma.Algebra.DivSub.eq.SubDivS
@@ -19,7 +19,7 @@ import Lemma.Algebra.LeInv_1.of.Gt_0
 import Lemma.Algebra.Ge_Sub.of.GeAdd
 import Lemma.Algebra.GtCoe_0.is.Gt_0
 import Lemma.Algebra.Le_Sub.of.LeAdd
-open Set Algebra
+open Set Algebra Complex
 
 
 @[main]
@@ -31,7 +31,7 @@ private lemma main
 -- imply
   ⌈arg z / (2 * n * π) - 1 / 2⌉ = 0 := by
 -- proof
-  have h_mem := Arg.mem.IocNegPiPi z
+  have h_mem := Arg.in.IocNegPiPi z
   have h_mem := InDiv.of.In_Ioc.Gt_0 h_mem (by apply GtCoe_0.of.Gt_0 h : (n : ℝ) > 0)
   have h_mem := InSub.of.In_Ioc h_mem π
   have h_Gt_0 := Mul.gt.Zero.of.Gt_0.Gt_0 (by norm_num : (2 : ℝ) > 0) Pi.gt.Zero

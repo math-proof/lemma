@@ -1,6 +1,6 @@
 import Lemma.Algebra.All_Eq_HeadD.of.IsConstant
 import Lemma.List.IsConstantTail.of.IsConstant
-import Lemma.Set.Expr.mem.Cons
+import Lemma.List.Expr.in.Cons
 import Lemma.List.Eq_Cons_Tail.of.NeLength_0
 open Algebra List
 
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   apply h_all s[0]
   have h_eq := Eq_Cons_Tail.of.NeLength_0 h_ne
-  have h_in : s[0] ∈ s[0] :: s.tail := Set.Expr.mem.Cons
+  have h_in : s[0] ∈ s[0] :: s.tail := List.Expr.in.Cons
   rw [h_eq.symm] at h_in
   exact h_in
 
