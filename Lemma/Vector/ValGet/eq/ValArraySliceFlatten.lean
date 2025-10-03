@@ -1,11 +1,11 @@
 import Lemma.Vector.Eq_Cons_Tail
 import Lemma.Algebra.FlattenMapToListCons.eq.Append_FlattenMapToList
 import Lemma.Algebra.Add_Mul.eq.MulAdd_1
-import Lemma.Algebra.DropDrop.eq.Drop_Add
-import Lemma.Algebra.EqDropAppend__Length
+import Lemma.List.DropDrop.eq.Drop_Add
+import Lemma.List.EqDropAppend__Length
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Algebra.GetCons__Add_1.eq.Get.of.Lt_Mul
-open Algebra Logic Vector
+open Algebra Logic Vector List
 
 
 @[main]
@@ -37,7 +37,7 @@ private lemma main
         have h' : v.toList.length = m + 1 := by simp
         rw [h_v] at h'
         contradiction
-      | head :: tail =>
+      | _ :: _ =>
         have h_Eq : v.toList = v.val := by
           rfl
         simp [← h_Eq]

@@ -1,7 +1,7 @@
-import Lemma.Algebra.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.EqEraseIdx.of.Ge_Length
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-open Algebra List
+open List
 
 
 @[main]

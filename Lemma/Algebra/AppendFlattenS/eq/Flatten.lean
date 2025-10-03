@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqAppendTake__Drop
-open Algebra
+import Lemma.List.EqAppendTake__Drop
+open List
 
 
 @[main]

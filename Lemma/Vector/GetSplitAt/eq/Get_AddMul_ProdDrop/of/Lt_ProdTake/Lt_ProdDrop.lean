@@ -1,7 +1,7 @@
-import Lemma.Algebra.AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.Algebra.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop
+import Lemma.List.Prod.eq.MulProdTake__ProdDrop
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-open Algebra Vector
+open Vector List
 
 
 @[main]

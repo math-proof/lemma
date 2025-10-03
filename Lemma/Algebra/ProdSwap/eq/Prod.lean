@@ -2,8 +2,8 @@ import stdlib.List
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.Lt.of.Le.Ne
 import Lemma.Logic.Ne.is.NotEq
-import Lemma.Algebra.ProdAppend_Cons_Drop.eq.Prod.of.Lt.Lt_Length
-open Algebra Logic
+import Lemma.List.ProdAppend_Cons_Drop.eq.Prod.of.Lt.Lt_Length
+open Algebra Logic List
 
 
 @[main]

@@ -1,12 +1,12 @@
 import stdlib.List
-import Lemma.Algebra.TakeSwap.eq.Take.of.Lt
+import Lemma.List.TakeSwap.eq.Take.of.Lt
 import Lemma.Algebra.SliceSwap.eq.Slice.of.Lt
-import Lemma.Algebra.DropSwap.eq.Drop.of.Lt
-import Lemma.Algebra.EqAppendTake__Drop
-import Lemma.Algebra.DropDrop.eq.Drop_Add
+import Lemma.List.DropSwap.eq.Drop.of.Lt
+import Lemma.List.EqAppendTake__Drop
+import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.Algebra.LeAdd_1.of.Lt
 import Lemma.Algebra.EqAdd_Sub.of.Ge
-open Algebra
+open Algebra List
 
 
 @[main]

@@ -1,5 +1,5 @@
 import Lemma.Vector.CastDiv.eq.DivCast.of.Eq
-import Lemma.Algebra.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdTake__ProdDrop
 import Lemma.Vector.Div.eq.Mul_Inv
 import Lemma.Vector.UnflattenDiv.eq.DivUnflatten_Replicate
 import Lemma.Vector.SumMul.eq.MulSum

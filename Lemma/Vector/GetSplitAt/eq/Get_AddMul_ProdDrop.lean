@@ -1,9 +1,9 @@
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Algebra.Prod.eq.MulProdTake__ProdDrop
-import Lemma.Algebra.AddMul_ProdDrop.lt.Prod
+import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.AddMul_ProdDrop.lt.Prod
 import Lemma.Logic.HEq.of.SEq
 import Lemma.Algebra.Eq.of.Eq_Cast.Eq
-open Algebra Logic Vector
+open Algebra Logic Vector List
 
 
 @[main]

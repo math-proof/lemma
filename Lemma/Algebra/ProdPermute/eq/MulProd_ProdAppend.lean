@@ -1,6 +1,6 @@
-import Lemma.Algebra.Permute.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.Algebra.ProdAppend.eq.MulProdS
-open Algebra
+open Algebra List
 
 
 @[main]

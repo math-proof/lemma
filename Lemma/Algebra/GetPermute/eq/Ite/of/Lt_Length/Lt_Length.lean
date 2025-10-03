@@ -1,7 +1,7 @@
 import Lemma.Algebra.Permute.eq.Ite
 import Lemma.Algebra.GetAppend.eq.Get.of.Lt_Length
-import Lemma.Algebra.GetTake.eq.Get.of.Lt_LengthTake
-import Lemma.Algebra.LengthTake.eq.Min_Length
+import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
+import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Algebra.EqMin.of.Lt
 import Lemma.Algebra.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.Algebra.GetSlice.eq.Get_Add.of.Lt_LengthSlice
@@ -14,17 +14,17 @@ import Lemma.Algebra.EqSubAdd
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.Algebra.LengthAppend.eq.AddLengthS
 import Lemma.Algebra.LengthCons.eq.Add1Length
-import Lemma.Algebra.LengthDrop.eq.SubLength
+import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.Algebra.EqAdd_Sub.of.Ge
 import Lemma.Algebra.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
-import Lemma.Algebra.GetDrop.eq.Get_Add.of.Add.lt.Length
+import Lemma.List.GetDrop.eq.Get_Add.of.Add.lt.Length
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.Sub.gt.Zero.is.Gt
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Ge_Add_1.of.Gt
 import Lemma.Algebra.GeSub.of.Ge_Add
 import Lemma.Algebra.LengthPermute.eq.Length
-open Algebra
+open Algebra List
 
 
 @[main]

@@ -2,10 +2,10 @@ import Lemma.Tensor.LengthData.eq.Mul_Prod.of.GtLength_0
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.Ne_0
 import Lemma.Algebra.EqMin.of.Le
-import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
+import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Algebra.LtVal
-open Tensor Algebra
+open Tensor Algebra List
 
 
 @[main]

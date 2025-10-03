@@ -1,10 +1,10 @@
-import Lemma.Algebra.EqAppendTake__Drop
+import Lemma.List.EqAppendTake__Drop
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
-import Lemma.Algebra.LengthTake.eq.Min_Length
+import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.List.EqInsertIdx.of.Gt_Length
-import Lemma.Algebra.EqTake.of.Ge_Length
-import Lemma.Algebra.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.Algebra.Ge.of.Gt
 import Lemma.Algebra.Gt.of.Gt.Gt
 import Lemma.Algebra.Ge_Min.of.Ge

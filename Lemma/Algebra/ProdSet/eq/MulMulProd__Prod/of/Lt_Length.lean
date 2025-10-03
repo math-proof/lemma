@@ -1,9 +1,9 @@
-import Lemma.Algebra.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
+import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
 import Lemma.Algebra.ProdAppend.eq.MulProdS
 import Lemma.Algebra.ProdCons.eq.Mul_Prod
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.MulMul.eq.Mul_Mul
-open Algebra
+open Algebra List
 
 
 @[main]

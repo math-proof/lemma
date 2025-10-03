@@ -12,10 +12,10 @@ import Lemma.Algebra.EqMax.of.Gt
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.EqToNat
-import Lemma.Algebra.Drop.eq.Nil.of.Ge_Length
-import Lemma.Algebra.Drop.eq.Nil
+import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.Drop.eq.Nil
 import Lemma.Algebra.Slice.eq.Slice__Length.of.Ge_Length
-open Algebra
+open Algebra List
 
 
 @[main]

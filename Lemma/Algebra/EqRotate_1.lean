@@ -1,5 +1,5 @@
-import Lemma.Algebra.Rotate.eq.AppendDrop__Take.of.Lt_Length
-open Algebra
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.Lt_Length
+open List
 
 
 @[main]

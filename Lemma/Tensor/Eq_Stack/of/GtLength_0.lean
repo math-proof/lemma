@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq_Stack
-import Lemma.Algebra.Eq_Cons_Tail.of.GtLength_0
-open Tensor Algebra
+import Lemma.List.Eq_Cons_Tail.of.GtLength_0
+open Tensor List
 
 
 @[main]

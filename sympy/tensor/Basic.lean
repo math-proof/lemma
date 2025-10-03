@@ -6,7 +6,7 @@ import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Algebra.ProdSet__MulGet.eq.Mul_Prod
 import Lemma.Algebra.Lt_Sub.of.LtAdd
 import Lemma.List.EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail
-import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
+import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
 import Lemma.Algebra.SwapAppend.eq.Append_Swap.of.Ge_Length.Ge_Length
@@ -16,12 +16,12 @@ import Lemma.Algebra.Rotate_Mod.eq.Rotate
 import Lemma.Algebra.LtMod.of.Gt_0
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Algebra.EqPermute__0
-import Lemma.Algebra.EqTake.of.Ge_Length
-import Lemma.Algebra.Drop.eq.Nil.of.Ge_Length
-import Lemma.Algebra.Take.eq.Nil.of.Eq_0
-import Lemma.Algebra.EqDrop.of.Eq_0
+import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.Take.eq.Nil.of.Eq_0
+import Lemma.List.EqDrop.of.Eq_0
 import Lemma.Algebra.Eq_0.of.EqVal_0
-import Lemma.Algebra.LengthDrop.eq.SubLength
+import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.Algebra.LeAdd_1
 import Lemma.Algebra.Sub.eq.Add_1.of.Eq_SubSub_1
 import Lemma.Algebra.LtAdd.of.Lt_Sub
@@ -31,11 +31,11 @@ import Lemma.Algebra.LengthPermute.eq.Length
 import Lemma.Algebra.Swap.eq.PermutePermute.of.Lt.Lt_Length
 import Lemma.Algebra.EqSwapS.of.Mk.eq.IteGt
 import Lemma.List.EqEraseIdx.of.Ge_Length
-import Lemma.Algebra.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
+import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.Algebra.ProdPermute.eq.MulProd_ProdAppend
-import Lemma.Algebra.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
-import Lemma.Algebra.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
-import Lemma.Algebra.ProdTake_1.eq.HeadD_1
+import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
+import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
+import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Algebra.EqMulDiv.of.Dvd
 open Algebra Logic List
 

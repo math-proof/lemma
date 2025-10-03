@@ -1,7 +1,7 @@
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.LengthData.eq.Prod
-import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
-open Tensor Algebra
+import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
+open Tensor List
 
 
 @[main]

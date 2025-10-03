@@ -3,8 +3,9 @@ import Lemma.Tensor.DataGetToVector.as.ArraySliceData
 import Lemma.Tensor.EqArraySliceSData.of.Eq
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.Lt_Get_0.GtLength_0
-import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
-open Tensor Algebra
+import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
+import Lemma.Algebra.Le_SubMulS.of.Lt
+open Tensor List Algebra
 
 
 @[main]
@@ -24,8 +25,7 @@ private lemma main
   constructor
   .
     rw [Prod.eq.Mul_ProdTail.of.GtLength_0 h]
-    apply Le_SubMulS.of.Lt
-    simp
+    simp [Le_SubMulS.of.Lt]
   .
     apply HEq.of.EqValS
     rw [ValDataGetToVector.eq.ValArraySliceData.of.Lt_Get_0.GtLength_0 (by assumption)]

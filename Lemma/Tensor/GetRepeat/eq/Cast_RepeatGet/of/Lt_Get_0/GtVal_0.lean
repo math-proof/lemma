@@ -3,8 +3,8 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
 import Lemma.Logic.EqCast.of.SEq
-import Lemma.Algebra.TailSet.eq.SetTail.of.Gt_0
-open Algebra Tensor Logic
+import Lemma.List.TailSet.eq.SetTail.of.Gt_0
+open Algebra Tensor Logic List
 
 
 @[main]

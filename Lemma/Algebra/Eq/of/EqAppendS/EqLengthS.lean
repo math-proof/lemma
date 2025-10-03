@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqTakeAppend__Length
-import Lemma.Algebra.EqDropAppend__Length
-open Algebra
+import Lemma.List.EqTakeAppend__Length
+import Lemma.List.EqDropAppend__Length
+open List
 
 
 @[main]

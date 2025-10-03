@@ -1,11 +1,11 @@
 import Lemma.Algebra.ProdAppend.eq.MulProdS
 import Lemma.Algebra.EqMin.of.Le
-import Lemma.Algebra.Tail.eq.AppendTakeTail__Drop.of.Gt_0
-import Lemma.Algebra.ProdTail.eq.DivProd.of.GtLength_0.Gt_0
-import Lemma.Algebra.Prod.eq.Mul_ProdTail.of.GtLength_0
+import Lemma.List.Tail.eq.AppendTakeTail__Drop.of.Gt_0
+import Lemma.List.ProdTail.eq.DivProd.of.GtLength_0.Gt_0
+import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Algebra.Gt_0
-open Algebra
+open Algebra List
 
 
 @[main]

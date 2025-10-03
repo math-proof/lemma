@@ -1,21 +1,21 @@
 import sympy.tensor.tensor
 import Lemma.Algebra.EqPermute__0
-import Lemma.Algebra.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
+import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
 import Lemma.Algebra.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
-import Lemma.Algebra.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
+import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
 import Lemma.Algebra.NotGt.is.Le
-import Lemma.Algebra.ProdPermute.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1.Le_0
+import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1.Le_0
 import Lemma.Logic.EqCastS.of.SEq.Eq
-import Lemma.Algebra.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
+import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.Algebra.NegSucc.eq.NegCoeAdd_1
 import Lemma.Algebra.Add
-import Lemma.Algebra.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
 import Lemma.Algebra.ToNatSubOfNat_NegSucc.eq.AddAdd1
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.SubMin.eq.MinSubS
 import Lemma.Algebra.Min.eq.Add_1
-open Algebra Logic
+open Algebra Logic List
 
 
 @[main]

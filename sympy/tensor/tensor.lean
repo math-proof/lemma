@@ -1,16 +1,16 @@
 import sympy.tensor.Basic
 import Lemma.Logic.HEq.of.All_HEq
 import Lemma.Algebra.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
+import Lemma.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
 import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.Algebra.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
 import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.LtVal
 import Lemma.Set.GtLength_0.of.Cons.in.CartesianProduct
-import Lemma.Algebra.Eq_Cons_Tail.of.GtLength_0
+import Lemma.List.Eq_Cons_Tail.of.GtLength_0
 import Lemma.Set.In_CartesianProduct.of.In_CartesianProductCons
 import Lemma.Set.Lt.of.In_CartesianProductCons
-import Lemma.Algebra.LengthTake.gt.Zero.of.LengthTake.gt.Zero
+import Lemma.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
@@ -19,7 +19,7 @@ import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
 import Lemma.Set.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
-open Tensor Algebra Set Logic
+open Tensor Algebra Set Logic List
 
 def Tensor.get (t : Tensor α s) (i : Fin t.length) : Tensor α s.tail :=
   have h_i := LtVal i
@@ -82,19 +82,19 @@ def Sliced
   (t : Tensor α s)
   (slices : List Slice)
   {h_shape : slices.length ≤ s.length} :
-  Tensor α ((slices.enumerate.map fun ⟨i, slice⟩ => slice.length s[i]) ++ s.drop slices.length) :=
+  Tensor α ((slices.enumerate.map fun ⟨i, index⟩ => index.length s[i]) ++ s.drop slices.length) :=
   match h_slice : slices with
   | .nil =>
     t
-  | slice :: slices =>
+  | index :: slices =>
     match h_slices : slices with
     | .nil =>
       have := Length.eq.Get_0.of.GtLength_0 (s := s) (by simpa [h_shape]) t
-      have : (slice.length t.length :: s.tail).prod = (slice.length s[0] :: List.drop 1 s).prod := by
+      have : (index.length t.length :: s.tail).prod = (index.length s[0] :: List.drop 1 s).prod := by
         simp_all
-      (⟨cast (by rw [this]) (t.getSlice slice).data⟩ : Tensor α (slice.length s[0] :: s.drop 1))
+      (⟨cast (by rw [this]) (t.getSlice index).data⟩ : Tensor α (index.length s[0] :: s.drop 1))
     | slices'h :: slices't =>
-      have h_shape : s.length ≥ (slice :: slices).length:= by
+      have h_shape : s.length ≥ (index :: slices).length:= by
         simp_all
       have : s.length > slices.length := by
         simp_all
@@ -103,13 +103,13 @@ def Sliced
         simp
         apply Le_Sub_1.of.Lt
         assumption
-      let shape := slices.enumerate.map fun ⟨i, slice⟩ => slice.length (s.drop 1)[i]
+      let shape := slices.enumerate.map fun ⟨i, index⟩ => index.length (s.drop 1)[i]
       let s_rest := (s.drop 1).drop slices.length
       let indices :
-        List.Vector (Fin s[0]) (slice.length s[0]) :=
-        List.Vector.indices slice s[0]
+        List.Vector (Fin s[0]) (index.length s[0]) :=
+        List.Vector.indices index s[0]
       let tensors :
-        List.Vector (List.Vector α (shape.prod * s_rest.prod)) (slice.length s[0]) :=
+        List.Vector (List.Vector α (shape.prod * s_rest.prod)) (index.length s[0]) :=
         indices.map fun i : Fin s[0] =>
           have : i < t.length := by
             simp_all [Length.eq.Get_0.of.GtLength (by assumption) t]
@@ -119,7 +119,7 @@ def Sliced
           have h_eq : (shape ++ s_rest).prod = shape.prod * s_rest.prod := by
             simp
           cast (by rw [h_eq]) sliced.data
-      have h_cons : slice.length s[0] :: shape = (slice :: slices).enumerate.map (fun ⟨i, slice⟩ => slice.length s[i]) := by
+      have h_cons : index.length s[0] :: shape = (index :: slices).enumerate.map (fun ⟨i, index⟩ => index.length s[i]) := by
         simp [shape]
         let g := fun x : Fin slices.length × Slice => x.2.length s[x.1.val + 1]
         let f := fun x : Fin (slices.length + 1) × Slice => x.2.length s[x.1]
@@ -133,10 +133,10 @@ def Sliced
           intro i a
           simp [f]
           simp [g]
-        have := MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq h_all slice
+        have := MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq h_all index
         simp [f] at this
         rw [this]
-      have h_prod : slice.length s[0] * shape.prod = ((slice :: slices).enumerate.map (fun ⟨i, slice⟩ => slice.length s[i])).prod := by
+      have h_prod : index.length s[0] * shape.prod = ((index :: slices).enumerate.map (fun ⟨i, index⟩ => index.length s[i])).prod := by
         rw [← h_cons]
         simp
       have h_length : slices.length = slices't.length + 1 := by
@@ -196,8 +196,8 @@ instance [AddCommMagma α] : AddCommMagma (Tensor α s) where
     apply add_comm
 
 instance [AddMonoid α] : AddMonoid (Tensor α s) where
-  zero_add := AddZeroClass.zero_add
-  add_zero := AddZeroClass.add_zero
+  zero_add
+  add_zero
   nsmul n X := ⟨n • X.data⟩
   nsmul_zero X := by
     apply Eq.of.EqDataS
@@ -207,12 +207,12 @@ instance [AddMonoid α] : AddMonoid (Tensor α s) where
     apply AddMonoid.nsmul_succ
 
 instance [AddCommSemigroup α] : AddCommSemigroup (Tensor α n) where
-  add_comm := AddCommMagma.add_comm
+  add_comm
 
 instance [AddCommMonoid α] : AddCommMonoid (Tensor α s) where
-  zero_add := AddMonoid.zero_add
-  add_zero := AddMonoid.add_zero
-  add_comm := AddCommMagma.add_comm
+  zero_add
+  add_zero
+  add_comm
   nsmul := AddMonoid.nsmul
   nsmul_zero := AddMonoid.nsmul_zero
   nsmul_succ := AddMonoid.nsmul_succ
@@ -234,14 +234,14 @@ instance [Mul α] [Add α] [RightDistribClass α]: RightDistribClass (Tensor α 
     apply right_distrib
 
 instance [Distrib α] : Distrib (Tensor α s) where
-  left_distrib := LeftDistribClass.left_distrib
-  right_distrib := RightDistribClass.right_distrib
+  left_distrib
+  right_distrib
 
 instance [NonUnitalNonAssocSemiring α] : NonUnitalNonAssocSemiring (Tensor α s) where
-  zero_mul := MulZeroClass.zero_mul
-  mul_zero := MulZeroClass.mul_zero
-  left_distrib := Distrib.left_distrib
-  right_distrib := Distrib.right_distrib
+  zero_mul
+  mul_zero
+  left_distrib
+  right_distrib
 
 instance [Semigroup α] : Semigroup (Tensor α s) where
   mul_assoc A B C := by
@@ -250,9 +250,9 @@ instance [Semigroup α] : Semigroup (Tensor α s) where
     apply mul_assoc
 
 instance [SemigroupWithZero α] : SemigroupWithZero (Tensor α s) where
-  mul_assoc := Semigroup.mul_assoc
-  zero_mul := MulZeroClass.zero_mul
-  mul_zero := MulZeroClass.mul_zero
+  mul_assoc
+  zero_mul
+  mul_zero
 
 instance [NonUnitalSemiring α] : NonUnitalSemiring (Tensor α s) where
-  mul_assoc := Semigroup.mul_assoc
+  mul_assoc

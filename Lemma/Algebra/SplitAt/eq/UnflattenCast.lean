@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Algebra.Prod.eq.MulProdTake__ProdDrop
-open Algebra
+import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+open List
 
 
 @[main, comm]

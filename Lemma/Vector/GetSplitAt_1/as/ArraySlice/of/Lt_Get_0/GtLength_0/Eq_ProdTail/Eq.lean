@@ -1,6 +1,6 @@
-import Lemma.Algebra.ProdTake_1.eq.Get_0.of.GtLength_0
+import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Vector.ArraySlice.as.GetSplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail
-open Algebra Vector
+open Vector List
 
 
 @[main]

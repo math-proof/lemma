@@ -1,14 +1,14 @@
-import Lemma.Algebra.SliceAppend.eq.Take_Sub.of.Eq_Length
-import Lemma.Algebra.LengthTake.eq.Min_Length
+import Lemma.List.SliceAppend.eq.Take_Sub.of.Eq_Length
+import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Algebra.Cons.eq.Append
 import Lemma.Algebra.AppendAppend.eq.Append_Append
 import Lemma.Algebra.AppendAppend.eq.Append_Append
 import Lemma.Algebra.LengthAppend.eq.AddLengthS
-import Lemma.Algebra.EqTakeAppend.of.Eq_Length
+import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.Algebra.Le.of.Lt.Lt
 import Lemma.Algebra.LengthSlice.eq.SubMin
 import Lemma.Algebra.EqMin.of.Lt
-open Algebra
+open Algebra List
 
 
 @[main]

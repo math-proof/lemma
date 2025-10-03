@@ -4,7 +4,7 @@ import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.Algebra.EqAdd_Sub.of.Ge
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Algebra.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
+import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
 import Lemma.List.TakeInsertIdx.eq.Take.of.Ge
 import Lemma.List.TakeEraseIdx.eq.Take.of.Ge
 open Tensor Algebra Logic List

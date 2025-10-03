@@ -1,6 +1,6 @@
-import Lemma.Algebra.IsConstantTail.of.IsConstant
+import Lemma.List.IsConstantTail.of.IsConstant
 import Lemma.Algebra.FunGet_0.of.NeLength_0.All_Fun
-open Algebra
+open Algebra List
 
 
 @[main]

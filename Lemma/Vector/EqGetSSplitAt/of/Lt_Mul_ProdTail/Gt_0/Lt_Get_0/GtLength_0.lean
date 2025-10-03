@@ -1,8 +1,8 @@
-import Lemma.Algebra.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.Div_Mul_ProdDrop.lt.ProdTake.of.Lt_Mul_ProdTail.Lt_Get_0.GtLength_0
-import Lemma.Algebra.ModAddMulProdTail.lt.ProdDrop.of.Lt_Mul_ProdTail.Lt_Get_0.GtLength_0
-import Lemma.Algebra.Div_Mul_ProdDrop.lt.ProdTakeDrop_1.of.Lt_Mul_ProdTail.GtVal_0
-import Lemma.Algebra.ModProdDrop.lt.ProdDropDrop_1.of.Lt_Mul_ProdTail.GtVal_0
+import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
+import Lemma.List.Div_Mul_ProdDrop.lt.ProdTake.of.Lt_Mul_ProdTail.Lt_Get_0.GtLength_0
+import Lemma.List.ModAddMulProdTail.lt.ProdDrop.of.Lt_Mul_ProdTail.Lt_Get_0.GtLength_0
+import Lemma.List.Div_Mul_ProdDrop.lt.ProdTakeDrop_1.of.Lt_Mul_ProdTail.GtVal_0
+import Lemma.List.ModProdDrop.lt.ProdDropDrop_1.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Algebra.EqGetS.of.Eq.Lt
 import Lemma.Algebra.EqAddSub.of.Ge
@@ -10,7 +10,7 @@ import Lemma.Algebra.DivDiv.eq.Div_Mul
 import Lemma.Algebra.MulDiv.eq.Sub_Mod
 import Lemma.Algebra.Dvd_Mul
 import Lemma.Algebra.Gt_0.of.GtMul
-import Lemma.Algebra.ProdDrop.dvd.ProdTail.of.Gt_0
+import Lemma.List.ProdDrop.dvd.ProdTail.of.Gt_0
 import Lemma.Algebra.DivAdd.eq.AddDivS.of.Dvd
 import Lemma.Algebra.DivMul.eq.Mul_Div.of.Dvd
 import Lemma.Algebra.EqDivMul.of.Ne_0
@@ -20,7 +20,7 @@ import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Algebra.Ge_Mod
 import Lemma.Algebra.Dvd_Mul.of.Dvd
-open Algebra Vector
+open Algebra Vector List
 
 
 @[main]

@@ -1,8 +1,8 @@
-import Lemma.Algebra.LengthAppend_Cons_Drop.eq.Length.of.Lt.Lt_Length
+import Lemma.List.LengthAppend_Cons_Drop.eq.Length.of.Lt.Lt_Length
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.Lt.of.Le.Ne
 import Lemma.Logic.Ne.is.NotEq
-open Algebra Logic
+open Algebra Logic List
 
 
 @[main]
