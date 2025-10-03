@@ -1,4 +1,4 @@
-import Lemma.Vector.Div.eq.Map2
+import Lemma.Vector.Div.eq.Map₂
 open Vector
 
 
@@ -11,7 +11,7 @@ private lemma fin
 -- imply
   (a / b).get i = a.get i / b.get i := by
 -- proof
-  rw [Div.eq.Map2]
+  rw [Div.eq.Map₂]
   rw [List.Vector.get_map₂]
 
 

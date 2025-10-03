@@ -194,8 +194,8 @@ small-letter binary infix operators are short name for Capital-letter operator n
 | X.in.Y | InXY | 
 | X.is.Y | IffXY | 
 | X.as.Y | SEqXY | 
-| X.or.Y | OrXY | 
-| X.and.Y | AndXY | 
+| X.ou.Y | OrXY | 
+| X.et.Y | AndXY | 
 | X.dvd.Y | DvdXY | 
 | X.sub.Y | SubsetXY | 
 | X.sup.Y | SupsetXY | 

@@ -1,5 +1,5 @@
-import Lemma.Algebra.ProductCons.eq.FlatMapFunMapProduct
-open Algebra
+import Lemma.List.ProductCons.eq.FlatMapFunMapProduct
+open List
 
 
 @[main]

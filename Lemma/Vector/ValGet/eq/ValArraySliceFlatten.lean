@@ -4,7 +4,7 @@ import Lemma.Algebra.Add_Mul.eq.MulAdd_1
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.EqDropAppend__Length
 import Lemma.Logic.EqUFnS.of.Eq
-import Lemma.Algebra.GetCons__Add_1.eq.Get.of.Lt_Mul
+import Lemma.List.GetCons__Add_1.eq.Get.of.Lt_Mul
 open Algebra Logic Vector List
 
 

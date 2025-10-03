@@ -3691,3 +3691,8 @@ trait MethodDecorator {
             return $this->getObjectWrapper($method)(...$args);
     }
 }
+
+function escapeshellarg($path) {
+    // beware of the native escapeshellarg due to ! character
+    return '"' . str_replace("\\", "\\\\", str_replace('"', '\\"', $path)) . '"';
+}

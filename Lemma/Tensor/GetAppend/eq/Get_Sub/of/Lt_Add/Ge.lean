@@ -4,7 +4,7 @@ import Lemma.Logic.SEq.of.SEq.SEq
 import Lemma.Algebra.AddProdSCons.eq.MulAdd
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
-import Lemma.Algebra.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
+import Lemma.List.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Logic.EqCast.of.Eq
 import Lemma.Logic.EqCast.of.SEq.Eq
 import Lemma.Logic.SEq.of.Eq
@@ -15,7 +15,7 @@ import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
 import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
-open Algebra Logic Vector
+open Algebra Logic Vector List
 
 
 @[main]

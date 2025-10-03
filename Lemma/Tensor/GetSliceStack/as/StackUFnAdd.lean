@@ -5,7 +5,7 @@ import Lemma.Algebra.CoeAdd.eq.AddCoeS
 import Lemma.List.EqLengthSlice
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqGetStack.of.Eq
-import Lemma.Algebra.EqMapS.of.All_Eq
+import Lemma.List.EqMapS.of.All_Eq
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.GetMkFlatten.eq.MkGet
 import Lemma.Tensor.Eq.is.EqDataS

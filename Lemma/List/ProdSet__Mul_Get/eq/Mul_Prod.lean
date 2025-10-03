@@ -1,6 +1,6 @@
+import Lemma.List.ProdSet__MulGet.eq.MulProd
 import Lemma.Algebra.Mul
-import Lemma.Algebra.ProdSet__MulGet.eq.MulProd
-open Algebra
+open Algebra List
 
 
 @[main]
@@ -13,8 +13,7 @@ private lemma main
 -- imply
   (v.set i (t * v[i])).prod = t * v.prod := by
 -- proof
-  rw [Mul.comm]
-  rw [Mul.comm (b := v.prod)]
+  repeat rw [Mul.comm (a := t)]
   apply ProdSet__MulGet.eq.MulProd
 
 

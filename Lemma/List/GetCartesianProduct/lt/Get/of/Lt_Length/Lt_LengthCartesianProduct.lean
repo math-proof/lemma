@@ -1,5 +1,5 @@
-import Lemma.Algebra.CartesianProductCons.eq.FlatMapFunMapCartesianProduct
-import Lemma.Algebra.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
+import Lemma.List.CartesianProductCons.eq.FlatMapFunMapCartesianProduct
+import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength

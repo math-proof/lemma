@@ -1,5 +1,5 @@
-import Lemma.Algebra.ProdSet__MulGet.eq.Mul_Prod
-open Algebra
+import Lemma.List.ProdSet__MulGet.eq.Mul_Prod
+open List
 
 
 @[main]

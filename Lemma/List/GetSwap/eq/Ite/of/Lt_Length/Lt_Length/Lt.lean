@@ -8,7 +8,7 @@ import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.Algebra.EqAdd_Sub.of.Ge
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
-import Lemma.Algebra.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
+import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.Gt.is.Ge.Ne

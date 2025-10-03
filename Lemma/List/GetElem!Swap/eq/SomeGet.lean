@@ -1,10 +1,10 @@
 import Lemma.List.LengthSwap.eq.Length
-import Lemma.Algebra.GetElem!.eq.SomeGet.of.Lt
+import Lemma.List.GetElem!.eq.SomeGet.of.Lt
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Logic.Ne.is.NotEq
 import Lemma.Algebra.Lt.of.Le.Ne
 import Lemma.Algebra.Ge.of.NotLt
-import Lemma.Algebra.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
+import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Algebra.Sub.gt.Zero.is.Lt
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Algebra.Sub_Add.eq.SubSub

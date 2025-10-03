@@ -6,7 +6,7 @@ import Lemma.Algebra.Ge.of.NotLt
 import Lemma.List.GetElem!.eq.None.of.Ge_Length
 import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
 import Lemma.Tensor.Data.eq.FlattenMapRange
-import Lemma.Algebra.GetVal.eq.Get.of.Lt
+import Lemma.List.GetVal.eq.Get.of.Lt
 import Lemma.Vector.Get.eq.GetFlatten_AddMul
 import Lemma.Algebra.AddMul.lt.Mul
 import Lemma.Vector.EqGetRange

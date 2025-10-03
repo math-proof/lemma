@@ -1,6 +1,6 @@
 import Lemma.List.LengthProduct.eq.ProdMap
-import Lemma.Algebra.EqMapMap
-open Algebra List
+import Lemma.List.EqMapMap
+open List
 
 
 @[main]

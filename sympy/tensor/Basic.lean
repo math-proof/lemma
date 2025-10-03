@@ -3,7 +3,7 @@ import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.LtVal
 import Lemma.List.ProdInsertIdx.eq.Prod
-import Lemma.Algebra.ProdSet__MulGet.eq.Mul_Prod
+import Lemma.List.ProdSet__MulGet.eq.Mul_Prod
 import Lemma.Algebra.Lt_Sub.of.LtAdd
 import Lemma.List.EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0

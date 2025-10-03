@@ -1,7 +1,7 @@
 import sympy.vector.vector
-import Lemma.Algebra.GetElem!Range.eq.Some.is.Lt.Eq
-import Lemma.Algebra.GetElem!.eq.Some.is.Any_Eq
-open Algebra
+import Lemma.List.GetElem!Range.eq.Some.is.Lt.Eq
+import Lemma.List.GetElem!.eq.Some.is.Any_Eq
+open List
 
 
 @[main]

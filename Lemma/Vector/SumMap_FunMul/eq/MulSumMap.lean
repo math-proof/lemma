@@ -1,6 +1,6 @@
-import Lemma.Algebra.SumMapVal.eq.SumMap
-import Lemma.Algebra.SumMap_FunMul.eq.MulSumMap
-open Algebra
+import Lemma.List.SumMapVal.eq.SumMap
+import Lemma.List.SumMap_FunMul.eq.MulSumMap
+open List
 
 
 @[main]

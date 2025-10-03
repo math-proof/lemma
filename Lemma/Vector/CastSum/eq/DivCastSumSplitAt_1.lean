@@ -8,9 +8,10 @@ import Lemma.List.EraseIdx_0.eq.Drop_1
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.GetDiv.eq.DivGet
-import Lemma.Algebra.GetMul.eq.MulGetS
+import Lemma.List.GetMul.eq.MulGetS
 import Lemma.Vector.InvReplicate.eq.ReplicateInv
-open Vector Algebra Logic List
+import Lemma.Algebra.Div.eq.Mul_Inv
+open Vector Logic List Algebra
 
 
 @[main]

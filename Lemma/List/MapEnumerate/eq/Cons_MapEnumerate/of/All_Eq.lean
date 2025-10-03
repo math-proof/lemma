@@ -1,6 +1,6 @@
 import stdlib.List
 import Lemma.Algebra.LtAddS.is.Lt
-import Lemma.Algebra.Eq.of.GetElem!Range.eq.Some
+import Lemma.List.Eq.of.GetElem!Range.eq.Some
 import Lemma.List.GetElem!Enumerate.eq.Some.of.Lt_length
 import Lemma.Algebra.EqMod.of.Lt
 import Lemma.Algebra.CoeAdd.eq.AddCoeS

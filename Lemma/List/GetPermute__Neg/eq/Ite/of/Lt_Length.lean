@@ -15,7 +15,7 @@ import Lemma.List.Slice.eq.Nil
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.Algebra.LeAdd_1
 import Lemma.Algebra.EqAddSub.of.Ge
-import Lemma.Algebra.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
+import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Algebra.SubSub
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
 import Lemma.Algebra.LeSub.is.Le_Add

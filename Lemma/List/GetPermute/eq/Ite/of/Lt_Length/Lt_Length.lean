@@ -16,7 +16,7 @@ import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.Algebra.EqAdd_Sub.of.Ge
-import Lemma.Algebra.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
+import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.List.GetDrop.eq.Get_Add.of.Add.lt.Length
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.Sub.gt.Zero.is.Gt

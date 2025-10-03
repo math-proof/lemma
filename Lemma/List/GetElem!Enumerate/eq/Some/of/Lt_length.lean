@@ -1,6 +1,6 @@
-import Lemma.Algebra.GetElem!.eq.SomeGet.of.Lt
+import Lemma.List.GetElem!.eq.SomeGet.of.Lt
 import Lemma.List.LengthEnumerate.eq.Length
-open Algebra List
+open List
 
 
 @[main]

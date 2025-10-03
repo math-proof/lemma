@@ -1,48 +1,48 @@
 import sympy.vector.Basic
 import Lemma.Vector.Zero.eq.Replicate
 import Lemma.Vector.One.eq.Replicate
-import Lemma.Vector.Add.eq.Map2
-import Lemma.Vector.Mul.eq.Map2
+import Lemma.Vector.Add.eq.Map₂
+import Lemma.Vector.Mul.eq.Map₂
 import Lemma.Vector.GetDiv.eq.DivGetS
-import Lemma.Algebra.GetMul.eq.MulGetS
-import Lemma.Algebra.GetAdd.eq.AddGetS
+import Lemma.List.GetMul.eq.MulGetS
+import Lemma.List.GetAdd.eq.AddGetS
 import Lemma.Vector.GetInv.eq.InvGet
 import Lemma.Vector.NeReplicateS.of.Ne.Gt_0
 import Lemma.Vector.EqGet1'1
-open Algebra Vector
+open Vector
 
 namespace List.Vector
 
 instance [AddSemigroup α] : AddSemigroup (Vector α n) where
   add_assoc a b c := by
-    repeat rw [Add.eq.Map2]
+    repeat rw [Add.eq.Map₂]
     ext i
     repeat rw [get_map₂]
     apply AddSemigroup.add_assoc
 
 instance [AddZeroClass α]  : AddZeroClass (Vector α n) where
   zero_add a := by
-    rw [Add.eq.Map2]
+    rw [Add.eq.Map₂]
     ext i
     simp [Zero.eq.Replicate]
   add_zero a := by
-    rw [Add.eq.Map2]
+    rw [Add.eq.Map₂]
     ext i
     simp [Zero.eq.Replicate]
 
 instance [MulZeroClass α] : MulZeroClass (Vector α n) where
   zero_mul a := by
-    rw [Mul.eq.Map2]
+    rw [Mul.eq.Map₂]
     ext i
     simp [Zero.eq.Replicate]
   mul_zero a := by
-    rw [Mul.eq.Map2]
+    rw [Mul.eq.Map₂]
     ext i
     simp [Zero.eq.Replicate]
 
 instance [AddCommMagma α] : AddCommMagma (Vector α n) where
   add_comm a b := by
-    repeat rw [Add.eq.Map2]
+    repeat rw [Add.eq.Map₂]
     ext i
     simp [AddCommMagma.add_comm]
 
@@ -55,7 +55,7 @@ instance [AddMonoid α] : AddMonoid (Vector α n) where
     simp [Zero.eq.Replicate]
   nsmul_succ n x := by
     ext i
-    simp [Add.eq.Map2]
+    simp [Add.eq.Map₂]
     apply AddMonoid.nsmul_succ
 
 instance [AddCommSemigroup α] : AddCommSemigroup (Vector α n) where
@@ -110,11 +110,11 @@ instance [NonUnitalSemiring α] : NonUnitalSemiring (Vector α n) where
 
 instance [MulOneClass α] : MulOneClass (Vector α n) where
   one_mul a := by
-    rw [Mul.eq.Map2]
+    rw [Mul.eq.Map₂]
     ext i
     simp [One.eq.Replicate]
   mul_one a := by
-    rw [Mul.eq.Map2]
+    rw [Mul.eq.Map₂]
     ext i
     simp [One.eq.Replicate]
 

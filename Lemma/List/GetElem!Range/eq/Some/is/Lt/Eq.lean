@@ -1,7 +1,7 @@
 import sympy.vector.vector
 import Lemma.Algebra.Ge.of.NotLt
-import Lemma.Algebra.GetElem!Range.eq.None.of.Ge
-open Algebra
+import Lemma.List.GetElem!Range.eq.None.of.Ge
+open Algebra List
 
 
 @[main, mp, mpr]

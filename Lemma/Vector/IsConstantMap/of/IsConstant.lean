@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Algebra.IsConstantMap.of.IsConstant
-open Algebra
+import Lemma.List.IsConstantMap.of.IsConstant
+open List
 
 
 @[main]

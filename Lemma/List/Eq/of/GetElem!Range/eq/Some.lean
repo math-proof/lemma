@@ -1,5 +1,6 @@
-import Lemma.Algebra.GetElem!Range.eq.None.of.Ge
-open Algebra
+import Lemma.List.GetElem!Range.eq.None.of.Ge
+import Lemma.Algebra.Ge.of.NotLt
+open List Algebra
 
 
 @[main]

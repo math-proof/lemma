@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Algebra.GetAppend.eq.Get
-open Algebra
+import Lemma.List.GetAppend.eq.Get
+open List
 
 
 @[main]

@@ -1,5 +1,5 @@
-import Lemma.Algebra.GetAdd.eq.AddGetS
-open Algebra
+import Lemma.List.GetAdd.eq.AddGetS
+open List
 
 
 @[main]
