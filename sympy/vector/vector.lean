@@ -7,6 +7,7 @@ import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.GetInv.eq.InvGet
+import Lemma.Vector.GetNeg.eq.NegGet
 import Lemma.Vector.NeReplicateS.of.Ne.Gt_0
 import Lemma.Vector.EqGet1'1
 open Vector
@@ -128,7 +129,6 @@ instance [NatCast α] : NatCast (Vector α n) where
   natCast a := List.Vector.replicate n a
 
 instance [AddMonoidWithOne α] : AddMonoidWithOne (Vector α n) where
-  natCast := NatCast.natCast
   natCast_zero := by
     simp [NatCast.natCast]
     rfl
@@ -168,21 +168,42 @@ instance [Monoid α] : Monoid (Vector α n) where
   one_mul
   mul_one
 
+
+instance [SubNegMonoid α] : SubNegMonoid (Vector α n) where
+  zsmul n v := v.map (fun x => n • x)
+  zsmul_zero' x := by
+    ext i
+    simp [Zero.eq.Replicate]
+  zsmul_succ' n x := by
+    ext i
+    simp [Add.eq.Map₂]
+    have h := SubNegMonoid.zsmul_succ' n (x.get i)
+    simp at h
+    assumption
+  zsmul_neg' n x := by
+    ext i
+    simp
+    have h := SubNegMonoid.zsmul_neg' n (x.get i)
+    simp at h
+    rw [h]
+    rw [GetNeg.eq.NegGet.fin]
+    simp
+
 instance [DivInvMonoid α] : DivInvMonoid (Vector α n) where
   div_eq_mul_inv a b := by
     ext i
     rw [GetDiv.eq.DivGetS.fin]
     rw [GetMul.eq.MulGetS.fin]
     rw [GetInv.eq.InvGet.fin]
-    rw [div_eq_mul_inv]
+    rw [DivInvMonoid.div_eq_mul_inv]
+
+instance [NNRatCast α] : NNRatCast (Vector α n) where
+  nnratCast q := List.Vector.replicate n (NNRatCast.nnratCast q)
 
 instance [NeZero n] [Nontrivial α] : Nontrivial (Vector α n) where
   exists_pair_ne := by
     let ⟨x, y, h_eq⟩ := Nontrivial.exists_pair_ne (α := α)
     use List.Vector.replicate n x, List.Vector.replicate n y
     apply NeReplicateS.of.Ne.Gt_0 (NeZero.pos n) h_eq
-
-instance [NNRatCast α] : NNRatCast (Vector α n) where
-  nnratCast q := List.Vector.replicate n (NNRatCast.nnratCast q)
 
 end List.Vector

@@ -1,8 +1,5 @@
 import sympy.vector.vector
 import sympy.functions.elementary.exponential
-import Lemma.Vector.GetMap.eq.FunGet
-import Lemma.Vector.GetInv.eq.InvGet
-import Lemma.Vector.GetNeg.eq.NegGet
 open Vector
 
 namespace List.Vector
@@ -16,16 +13,13 @@ instance [Exp α] : Exp (Vector α n) where
     apply Exp.exp_add
   exp_zero := by
     ext i
-    rw [GetMap.eq.FunGet]
     simp [Zero.eq.Replicate]
     simp [One.eq.Replicate]
     apply Exp.exp_zero
   exp_neg x := by
     ext i
-    rw [GetMap.eq.FunGet]
-    rw [GetInv.eq.InvGet.fin]
-    rw [GetNeg.eq.NegGet.fin]
-    rw [GetMap.eq.FunGet]
+    simp [GetInv.eq.InvGet.fin]
+    simp [GetNeg.eq.NegGet.fin]
     apply Exp.exp_neg
 
 instance [NeZero n] [ExpNeZero α] : ExpNeZero (Vector α n) where

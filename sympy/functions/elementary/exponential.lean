@@ -2,7 +2,7 @@ import Mathlib.Tactic
 import Mathlib.Analysis.Real.Hyperreal
 open Filter
 
-class Exp (α : Type u) extends Add α, Mul α, Zero α, One α, Neg α, Inv α where
+class Exp (α : Type u) extends SubNegMonoid α, DivInvMonoid α where
   exp : α → α
   exp_add (x y : α) : exp (x + y) = exp x * exp y
   exp_zero : exp 0 = 1

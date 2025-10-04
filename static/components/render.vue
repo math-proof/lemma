@@ -78,7 +78,10 @@ export default {
             Preorder: [],
         };
         const Mul = [];
+        const Div = [];
         const Add = [];
+        const Sub = [];
+        const Neg = [];
         const Inv = [];
         const Zero = [];
         const One = [];
@@ -189,10 +192,15 @@ export default {
             Semiring, 
             CommMonoid,
         };
+        const SubNegMonoid = {
+            AddMonoid, 
+            Neg, 
+            Sub,
+        }
         const DivInvMonoid = {
             Monoid, 
             Inv,
-            Div: [],
+            Div,
         };
         const Nontrivial = [];
         const GroupWithZero = {

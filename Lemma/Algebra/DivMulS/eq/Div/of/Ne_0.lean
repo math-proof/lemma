@@ -13,7 +13,7 @@ private lemma main
   (n * a) / (d * a) = n / d := by
 -- proof
   -- Step 1: Express division as multiplication by the inverse
-  rw [div_eq_mul_inv]
+  rw [Div.eq.Mul_Inv]
   -- Step 2: Apply the inverse of a product and use commutativity
   rw [mul_inv_rev]
   rw [MulMul.eq.Mul_Mul]
@@ -23,3 +23,4 @@ private lemma main
 
 
 -- created on 2025-04-06
+-- updated on 2025-10-04

@@ -13,8 +13,6 @@ import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
-import Lemma.Tensor.DataNeg.eq.NegData
-import Lemma.Tensor.DataInv.eq.InvData
 open Tensor Algebra Logic List
 
 /--

@@ -16,6 +16,9 @@ import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataMul.eq.MulDataS
+import Lemma.Tensor.DataDiv.eq.DivDataS
+import Lemma.Tensor.DataNeg.eq.NegData
+import Lemma.Tensor.DataInv.eq.InvData
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
 import Lemma.Set.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
@@ -256,3 +259,98 @@ instance [SemigroupWithZero α] : SemigroupWithZero (Tensor α s) where
 
 instance [NonUnitalSemiring α] : NonUnitalSemiring (Tensor α s) where
   mul_assoc
+
+instance [MulOneClass α] : MulOneClass (Tensor α s) where
+  one_mul a := by
+    apply Eq.of.EqDataS
+    rw [DataMul.eq.MulDataS]
+    apply one_mul
+  mul_one a := by
+    apply Eq.of.EqDataS
+    rw [DataMul.eq.MulDataS]
+    apply mul_one
+
+instance [MulZeroOneClass α] : MulZeroOneClass (Tensor α s) where
+  one_mul
+  mul_one
+  zero_mul
+  mul_zero
+
+instance [NatCast α] : NatCast (Tensor α n) where
+  natCast a := ⟨NatCast.natCast a⟩
+
+instance [AddMonoidWithOne α] : AddMonoidWithOne (Tensor α s) where
+  natCast_zero := by
+    simp [NatCast.natCast]
+    rfl
+  natCast_succ a := by
+    apply Eq.of.EqDataS
+    rw [DataAdd.eq.AddDataS]
+    apply AddMonoidWithOne.natCast_succ
+
+instance [AddCommMonoidWithOne α] : AddCommMonoidWithOne (Tensor α s) where
+  add_comm
+
+instance [NonAssocSemiring α] : NonAssocSemiring (Tensor α s) where
+  one_mul
+  mul_one
+  zero_mul
+  mul_zero
+  left_distrib
+  right_distrib
+  natCast_zero := AddMonoidWithOne.natCast_zero
+  natCast_succ := AddMonoidWithOne.natCast_succ
+
+instance [MonoidWithZero α] : MonoidWithZero (Tensor α s) where
+  one_mul
+  mul_one
+  zero_mul
+  mul_zero
+
+instance [Semiring α] : Semiring (Tensor α s) where
+  one_mul
+  mul_one
+  natCast_zero := AddMonoidWithOne.natCast_zero
+  natCast_succ := AddMonoidWithOne.natCast_succ
+
+instance [Monoid α] : Monoid (Tensor α s) where
+  one_mul
+  mul_one
+
+instance [SubNegMonoid α] : SubNegMonoid (Tensor α s) where
+  zsmul n v := ⟨n • v.data⟩
+  zsmul_zero' x := by
+    apply Eq.of.EqDataS
+    simp
+    rfl
+  zsmul_succ' n x := by
+    apply Eq.of.EqDataS
+    rw [DataAdd.eq.AddDataS]
+    simp
+    have h := SubNegMonoid.zsmul_succ' n x.data
+    simp at h
+    assumption
+  zsmul_neg' n x := by
+    apply Eq.of.EqDataS
+    rw [DataNeg.eq.NegData]
+    simp
+    have h := SubNegMonoid.zsmul_neg' n x.data
+    simp at h
+    rw [h]
+
+instance [DivInvMonoid α] : DivInvMonoid (Tensor α s) where
+  div_eq_mul_inv a b := by
+    apply Eq.of.EqDataS
+    rw [DataDiv.eq.DivDataS]
+    rw [DataMul.eq.MulDataS]
+    rw [DataInv.eq.InvData]
+    rw [DivInvMonoid.div_eq_mul_inv]
+
+instance [NNRatCast α] : NNRatCast (Tensor α s) where
+  nnratCast q := ⟨NNRatCast.nnratCast q⟩
+
+instance [NeZero s.prod] [Nontrivial α] : Nontrivial (Tensor α s) where
+  exists_pair_ne := by
+    let ⟨a, b, h_eq⟩ := Nontrivial.exists_pair_ne (α := List.Vector α s.prod)
+    use ⟨a⟩, ⟨b⟩
+    simp_all
