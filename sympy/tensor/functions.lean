@@ -25,6 +25,9 @@ instance [Exp α] : Exp (Tensor α s) where
     rw [DataAdd.eq.AddDataS]
     rw [DataMul.eq.MulDataS]
     apply Exp.exp_add
+  exp_zero := by
+    apply Eq.of.EqDataS
+    apply Exp.exp_zero
 
 /--
 [log](https://pytorch.org/docs/stable/generated/torch.log.html)
