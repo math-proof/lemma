@@ -2021,12 +2021,23 @@ class LeanProperty extends LeanBinary
     }
     public function latexFormat()
     {
-        $rhs = $this->rhs;
+        [$lhs, $rhs] = $this->args;
         if ($rhs instanceof LeanToken) {
             $command = $rhs->text;
             switch ($command) {
                 case 'exp':
-                    return '{\color{RoyalBlue} e} ^ {%s}';
+                    $arg = '%s';
+                    if ($lhs instanceof LeanToken) {
+                        switch ($lhs->text) {
+                            case 'Real':
+                            case 'Complex':
+                            case 'Exp':
+                                $arg = null;
+                        }
+                    }
+                    if ($arg)
+                        return '{\color{RoyalBlue} e} ^ {%s}';
+                    break;
                 case 'cos':
                 case 'sin':
                 case 'tan':
@@ -2050,15 +2061,27 @@ class LeanProperty extends LeanBinary
 
     public function latexArgs(&$syntax = null)
     {
-        $rhs = $this->rhs;
+        [$lhs, $rhs] = $this->args;
         if ($rhs instanceof LeanToken) {
             switch ($rhs->text) {
                 case 'exp':
-                    $exponent = $this->lhs;
-                    if ($exponent instanceof LeanParenthesis) {
-                        $exponent = $exponent->arg;
+                    $arg = '%s';
+                    if ($lhs instanceof LeanToken) {
+                        switch ($lhs->text) {
+                            case 'Real':
+                            case 'Complex':
+                            case 'Exp':
+                                $arg = null;
+                        }
                     }
-                    return [$exponent->toLatex($syntax)];
+                    if ($arg) {
+                        $exponent = $this->lhs;
+                        if ($exponent instanceof LeanParenthesis) {
+                            $exponent = $exponent->arg;
+                        }
+                        return [$exponent->toLatex($syntax)];
+                    }
+                    break;
                 case 'cos':
                 case 'sin':
                 case 'tan':
