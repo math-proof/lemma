@@ -108,6 +108,9 @@ instance [Zero α] : Zero (Vector α n) where
 instance [One α] : One (Vector α n) where
   one := Vector.replicate n 1
 
+instance [Neg α] : Neg (Vector α n) where
+  neg a := a.map (-·)
+
 instance [Inv α] : Inv (Vector α n) where
   inv a := a.map (·⁻¹)
 

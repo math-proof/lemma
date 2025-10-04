@@ -10,11 +10,11 @@ private lemma main
 -- imply
   ∏ i ∈ s, a i * b i = (∏ i ∈ s, a i) * ∏ i ∈ s, b i := by
 -- proof
-  apply Finset.induction_on (motive := fun s => ∏ i ∈ s, a i * b i = (∏ i ∈ s, a i) * ∏ i ∈ s, b i) s
-  ·
+  -- apply Finset.induction_on (motive := fun s => ∏ i ∈ s, a i * b i = (∏ i ∈ s, a i) * ∏ i ∈ s, b i) s
+  induction s using Finset.induction_on with
+  | empty =>
     simp
-  ·
-    intro j s hj ih
+  | insert j s hj ih =>
     simp [Finset.prod_insert hj]
     simp_all [mul_assoc, mul_left_comm]
 

@@ -120,6 +120,12 @@ instance [Div α] : HDiv (Tensor α s) α (Tensor α s) where
 instance [Div α] : HDiv (Tensor α s) (Tensor α []) (Tensor α s) where
   hDiv A b := ⟨A.data / b.data[0]⟩
 
+instance [Neg α] : Neg (Tensor α s) where
+  neg X := ⟨-X.data⟩
+
+instance [Inv α] : Inv (Tensor α s) where
+  inv X := ⟨X.data⁻¹⟩
+
 instance [Mul α] : HMul (Tensor α [m, n].tail.tail) (Tensor α [m', n'].tail.tail) (Tensor α []) where
   hMul A B :=
     let A : Tensor α [] := A

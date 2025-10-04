@@ -1117,6 +1117,7 @@ class LeanToken extends Lean
         switch ($this->text) {
             case 'Sort':
             case 'Type':
+            case 'ℝ':
                 return true;
         }
     }

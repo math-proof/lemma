@@ -15,11 +15,11 @@ private lemma main
 -- imply
   f (∑ i ∈ s, x i) = ∑ i ∈ s, f (x i) := by
 -- proof
-  apply Finset.induction_on (motive := fun s => f (∑ i ∈ s, x i) = ∑ i ∈ s, f (x i)) s
-  ·
+  induction s using Finset.induction_on with
+  -- apply Finset.induction_on (motive := fun s => f (∑ i ∈ s, x i) = ∑ i ∈ s, f (x i)) s
+  | empty =>
     simp_all
-  ·
-    intro j s hj ih
+  | insert j s hj ih =>
     simp [Finset.sum_insert hj]
     simp_all
 

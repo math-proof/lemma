@@ -4,13 +4,13 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [Add α]
+  [Inv α]
 -- given
-  (A B : Tensor α s) :
+  (X : Tensor α s) :
 -- imply
-  (A + B).data = A.data + B.data :=
+  X⁻¹.data = X.data⁻¹ :=
 -- proof
   rfl
 
 
--- created on 2025-06-22
+-- created on 2025-10-04

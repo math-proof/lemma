@@ -13,6 +13,8 @@ import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
+import Lemma.Tensor.DataNeg.eq.NegData
+import Lemma.Tensor.DataInv.eq.InvData
 open Tensor Algebra Logic List
 
 /--
@@ -28,6 +30,11 @@ instance [Exp α] : Exp (Tensor α s) where
   exp_zero := by
     apply Eq.of.EqDataS
     apply Exp.exp_zero
+  exp_neg x := by
+    apply Eq.of.EqDataS
+    rw [DataNeg.eq.NegData]
+    rw [DataInv.eq.InvData]
+    apply Exp.exp_neg
 
 instance [NeZero s.prod] [ExpNeZero α] : ExpNeZero (Tensor α s) where
   exp_ne_zero x := by
