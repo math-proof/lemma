@@ -8,11 +8,13 @@ private lemma main
   {a : Vector n}
   {b : Vector m}
 -- given
-  (h : a ≃ b) :
+  (h : n = m)
+  (h_eq : cast (by congr) a = b) :
 -- imply
-  b ≃ a :=
+  a ≃ b := by
 -- proof
-  SEq.symm h
+  aesop
 
 
 -- created on 2025-07-25
+-- updated on 2025-10-04

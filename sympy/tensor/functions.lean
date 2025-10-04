@@ -10,6 +10,9 @@ import Lemma.List.TakeEraseIdx.eq.Take.of.Ge
 import Lemma.List.EqGetInsertIdx.of.Lt_Length
 import Lemma.List.DropInsertIdx.eq.Drop.of.Lt
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
+import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
+import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
+import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
 open Tensor Algebra Logic List
 
 /--
@@ -35,29 +38,12 @@ Tensor.sum (keepdim=True)
 -/
 def Tensor.sum_keepdim [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α s :=
   if h : dim < s.length then
-    let x_sum := X.sum dim
-    let x_sum := x_sum.unsqueeze dim
-    have h_dim : dim ≤ (s.eraseIdx dim).length := by
-      rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length h]
-      apply Le_Sub_1.of.Lt h
-    have h_dim : dim < ((s.eraseIdx dim).insertIdx dim 1).length := by
-      rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]
-      rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length h]
-      rwa [EqAdd_Sub.of.Ge]
-      apply Ge_1.of.Gt h
-    let x_sum := x_sum.repeat s[dim] ⟨dim, h_dim⟩
     cast
-      (by
-        rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length (by simp [h_dim])]
-        rw [TakeInsertIdx.eq.Take.of.Ge (by simp)]
-        rw [TakeEraseIdx.eq.Take.of.Ge (by simp)]
-        simp only [GetElem.getElem]
-        rw [EqGetInsertIdx.of.Lt_Length.fin (by assumption)]
-        rw [DropInsertIdx.eq.Drop.of.Lt (by simp)]
-        rw [DropEraseIdx.eq.Drop.of.Le (by rfl)]
-        simp
-      )
-      x_sum
+      (by simp [List.EqSetInsertIdxEraseIdx.of.Lt_Length h])
+      (((X.sum dim).unsqueeze dim).repeat s[dim] ⟨
+        dim,
+        Lt_LengthInsertIdxEraseIdx.of.Lt_Length h 1
+      ⟩)
   else
     X
 
