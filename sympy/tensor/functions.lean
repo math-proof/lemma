@@ -29,6 +29,14 @@ instance [Exp α] : Exp (Tensor α s) where
     apply Eq.of.EqDataS
     apply Exp.exp_zero
 
+instance [NeZero s.prod] [ExpNeZero α] : ExpNeZero (Tensor α s) where
+  exp_ne_zero x := by
+    intro h_eq
+    rw [Eq.is.EqDataS] at h_eq
+    simp [EqData0'0] at h_eq
+    have h := ExpNeZero.exp_ne_zero x.data
+    contradiction
+
 /--
 [log](https://pytorch.org/docs/stable/generated/torch.log.html)
 -/
