@@ -2,13 +2,13 @@ import sympy.functions.elementary.exponential
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (x : ℝ*)
   (n : ℕ) :
 -- imply
-  exp (n • x) = exp x ^ n :=
+  (n • x).exp = x.exp ^ n :=
 -- proof
   MonoidHom.map_pow Hyperreal.expMonoidHom _ _
 
