@@ -3,7 +3,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Algebra.LtMod.of.Gt_0
 import Lemma.Algebra.Gt_0.of.GtMul
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
-import Lemma.Tensor.GetRepeat.as.Get_Mod_Get_0.of.Lt_MulGet_0.GtLength_0
+import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0
 import Lemma.Logic.EqCast.of.SEq
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
 open Tensor Algebra Logic List
@@ -29,7 +29,7 @@ private lemma main
 -- proof
   intros
   apply Eq_Cast.of.SEq
-  apply GetRepeat.as.Get_Mod_Get_0.of.Lt_MulGet_0.GtLength_0 h_s h_i X
+  apply GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0 h_s h_i X
 
 
 @[main]
