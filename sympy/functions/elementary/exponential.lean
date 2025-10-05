@@ -2,24 +2,6 @@ import Mathlib.Tactic
 import Mathlib.Analysis.Real.Hyperreal
 open Filter
 
-class Exp (α : Type u) extends SubNegMonoid α, DivInvMonoid α where
-  exp : α → α
-  exp_add (x y : α) : exp (x + y) = exp x * exp y
-  exp_zero : exp 0 = 1
-  exp_neg (x : α) : exp (-x) = (exp x)⁻¹
-
-noncomputable instance : Exp ℝ where
-  exp := Real.exp
-  exp_add := Real.exp_add
-  exp_zero := Real.exp_zero
-  exp_neg := Real.exp_neg
-
-noncomputable instance : Exp ℂ where
-  exp := Complex.exp
-  exp_add := Complex.exp_add
-  exp_zero := Complex.exp_zero
-  exp_neg := Complex.exp_neg
-
 noncomputable def Hyperreal.exp (x : ℝ*) : ℝ* :=
   x.map Real.exp
 
@@ -47,6 +29,38 @@ theorem Hyperreal.exp_neg x : exp (-x) = (exp x)⁻¹ := by
   apply Germ.coe_eq.mpr ∘ Eventually.of_forall
   simp [Real.exp_neg]
 
+theorem Hyperreal.exp_ne_zero x : exp x ≠ 0 := by
+  refine Germ.inductionOn x fun f => ?_
+  -- rw [Germ.map]
+  intro h
+  obtain ⟨n, hn⟩ := Filter.nonempty_of_mem (Germ.coe_eq.mp h)
+  simp at hn
+
+theorem Hyperreal.exp_pos x : exp x > 0 := by
+    refine Germ.inductionOn x fun f => ?_
+    -- show 0 < Germ.ofFun (fun n => Real.exp (f n))
+    apply Germ.coe_lt.mpr ∘ Eventually.of_forall
+    simp [Real.exp_pos]
+
+
+class Exp (α : Type u) extends SubNegMonoid α, DivInvMonoid α where
+  exp : α → α
+  exp_add (x y : α) : exp (x + y) = exp x * exp y
+  exp_zero : exp 0 = 1
+  exp_neg (x : α) : exp (-x) = (exp x)⁻¹
+
+noncomputable instance : Exp ℝ where
+  exp := Real.exp
+  exp_add := Real.exp_add
+  exp_zero := Real.exp_zero
+  exp_neg := Real.exp_neg
+
+noncomputable instance : Exp ℂ where
+  exp := Complex.exp
+  exp_add := Complex.exp_add
+  exp_zero := Complex.exp_zero
+  exp_neg := Complex.exp_neg
+
 noncomputable instance : Exp ℝ* where
   exp := Hyperreal.exp
   exp_add := Hyperreal.exp_add
@@ -64,25 +78,16 @@ noncomputable instance : ExpNeZero ℂ where
   exp_ne_zero := Complex.exp_ne_zero
 
 noncomputable instance : ExpNeZero ℝ* where
-  exp_ne_zero x := by
-    refine Germ.inductionOn x fun f => ?_
-    -- rw [Germ.map]
-    intro h
-    obtain ⟨n, hn⟩ := Filter.nonempty_of_mem (Germ.coe_eq.mp h)
-    simp at hn
+  exp_ne_zero := Hyperreal.exp_ne_zero
 
-class ExpPos (α : Type u) extends ExpNeZero α, LT α where
+class ExpPos (α : Type u) extends ExpNeZero α, Preorder α where
   exp_pos (x : α) : exp x > 0
 
 noncomputable instance : ExpPos ℝ where
   exp_pos := Real.exp_pos
 
 noncomputable instance : ExpPos ℝ* where
-  exp_pos x := by
-    refine Germ.inductionOn x fun f => ?_
-    -- show 0 < Germ.ofFun (fun n => Real.exp (f n))
-    apply Germ.coe_lt.mpr ∘ Eventually.of_forall
-    simp [Real.exp_pos]
+  exp_pos := Hyperreal.exp_pos
 
 class Log (α : Type u) where
   log : α → α

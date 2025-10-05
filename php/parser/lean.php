@@ -5630,7 +5630,7 @@ class LeanITE extends LeanArgs
 
 class LeanArgsSpaceSeparated extends LeanArgs
 {
-    public static $input_priority = 75;
+    public static $input_priority = 80; // exp x ^ n where exp x evaluates first
     public $cache = null;
     public function is_space_separated()
     {
