@@ -1,7 +1,7 @@
 import Lemma.List.LengthPermute.eq.Length
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.Logic.IffEqS.of.Eq
-import Lemma.List.GetElem!.eq.None.of.Ge_Length
+import Lemma.List.GetElem.eq.None.of.Ge_Length
 import Lemma.List.GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt_Length
 import Lemma.List.EqSwap.of.Ge_Length
 import Lemma.List.Permute.eq.Permute__Sub.of.Add.ge.SubLength_1

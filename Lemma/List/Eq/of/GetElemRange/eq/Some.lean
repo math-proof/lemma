@@ -1,4 +1,4 @@
-import Lemma.List.GetElem!Range.eq.None.of.Ge
+import Lemma.List.GetElemRange.eq.None.of.Ge
 import Lemma.Algebra.Ge.of.NotLt
 open List Algebra
 
@@ -17,7 +17,7 @@ private lemma main
     simp_all
   ·
     have hi := Ge.of.NotLt hi
-    have := GetElem!Range.eq.None.of.Ge hi
+    have := GetElemRange.eq.None.of.Ge hi
     rw [this] at h
     contradiction
 

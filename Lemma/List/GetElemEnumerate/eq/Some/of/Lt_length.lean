@@ -1,4 +1,4 @@
-import Lemma.List.GetElem!.eq.SomeGet.of.Lt
+import Lemma.List.GetElem.eq.SomeGet.of.Lt
 import Lemma.List.LengthEnumerate.eq.Length
 open List
 
@@ -13,7 +13,7 @@ private lemma main
 -- proof
   have := LengthEnumerate.eq.Length a
   rw [← this] at h
-  have := GetElem!.eq.SomeGet.of.Lt h
+  have := GetElem.eq.SomeGet.of.Lt h
   rw [this]
   congr
   simp [List.enumerate]

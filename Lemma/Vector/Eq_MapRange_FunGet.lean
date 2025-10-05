@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.List.GetElem!Range.eq.Some.is.Lt.Eq
-import Lemma.List.GetElem!.eq.Some.is.Any_Eq
+import Lemma.List.GetElemRange.eq.Some.is.Lt.Eq
+import Lemma.List.GetElem.eq.Some.is.Any_Eq
 open List
 
 
@@ -19,8 +19,8 @@ private lemma Main'
   let ⟨v, h_length⟩ := v
   congr
   ext i a
-  simp [GetElem!Range.eq.Some.is.Lt.Eq]
-  simp only [GetElem!.eq.Some.is.Any_Eq]
+  simp [GetElemRange.eq.Some.is.Lt.Eq]
+  simp only [GetElem.eq.Some.is.Any_Eq]
   simp only [h_length]
   simp only [Eq.comm]
 

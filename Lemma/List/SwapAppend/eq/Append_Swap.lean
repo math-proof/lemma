@@ -8,7 +8,7 @@ import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.Algebra.NeSub.of.Ne_Add.Ge
 import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.Lt_Length
-import Lemma.List.GetElem!.eq.None.of.Ge_Length
+import Lemma.List.GetElem.eq.None.of.Ge_Length
 import Lemma.Logic.NotAnd.is.OrNotS
 import Lemma.List.EqSwap.of.Ge_Length
 open Logic Algebra List
@@ -67,7 +67,7 @@ private lemma main
             apply LtSub.of.Lt_Add.Ge (by assumption) (by assumption)
     ·
       simp at h
-      repeat rw [GetElem!.eq.None.of.Ge_Length]
+      repeat rw [GetElem.eq.None.of.Ge_Length]
       ·
         rw [LengthAppend.eq.AddLengthS]
         rw [LengthSwap.eq.Length]

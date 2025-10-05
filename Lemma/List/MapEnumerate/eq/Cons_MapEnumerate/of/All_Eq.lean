@@ -1,7 +1,7 @@
 import stdlib.List
 import Lemma.Algebra.LtAddS.is.Lt
-import Lemma.List.Eq.of.GetElem!Range.eq.Some
-import Lemma.List.GetElem!Enumerate.eq.Some.of.Lt_length
+import Lemma.List.Eq.of.GetElemRange.eq.Some
+import Lemma.List.GetElemEnumerate.eq.Some.of.Lt_length
 import Lemma.Algebra.EqMod.of.Lt
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.Eq.of.EqValS
@@ -48,7 +48,7 @@ private lemma main
       let ⟨i, b, hi, hc⟩ := hi
       simp [List.enumerate] at hi
       let ⟨i, h_succ, _, hi, hb⟩ := hi
-      have h_succ := Eq.of.GetElem!Range.eq.Some h_succ
+      have h_succ := Eq.of.GetElemRange.eq.Some h_succ
       have hi' : i' < tail.length := by
         simp_all
         linarith
@@ -56,7 +56,7 @@ private lemma main
       have h := h ⟨i', hi'⟩ tail[i']
       constructor
       ·
-        rw [GetElem!Enumerate.eq.Some.of.Lt_length]
+        rw [GetElemEnumerate.eq.Some.of.Lt_length]
       ·
         rw [← hc]
         rw [hi]
@@ -72,10 +72,10 @@ private lemma main
       use ⟨i, by omega⟩ + 1, tail[i]
       constructor
       ·
-        simp [Eq.of.GetElem!Range.eq.Some h_some]
+        simp [Eq.of.GetElemRange.eq.Some h_some]
         have : i + 1 < (head :: tail).length := by
           simp_all
-        have := GetElem!Enumerate.eq.Some.of.Lt_length this
+        have := GetElemEnumerate.eq.Some.of.Lt_length this
         simp_all
         congr
         simp
