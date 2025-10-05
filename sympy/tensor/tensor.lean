@@ -1,16 +1,24 @@
 import sympy.tensor.Basic
 import Lemma.Logic.HEq.of.All_HEq
-import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
 import Lemma.Algebra.Le_Sub_1.of.Lt
-import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
 import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.LtVal
+import Lemma.Algebra.GtVal_0.of.Ne_0
+import Lemma.Algebra.LtSubS_1.of.Lt.Ne_0
+import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
+import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
+import Lemma.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
 import Lemma.List.GtLength_0.of.Cons.in.CartesianProduct
 import Lemma.List.Eq_Cons_Tail.of.GtLength_0
-import Lemma.Set.In_CartesianProduct.of.In_CartesianProductCons
-import Lemma.Set.Lt.of.In_CartesianProductCons
 import Lemma.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
+import Lemma.List.EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1
+import Lemma.List.Sub_1.lt.LengthTail.of.Gt_0.Lt_Length
+import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
+import Lemma.List.In_CartesianProduct.of.In_CartesianProductCons
+import Lemma.List.Lt.of.In_CartesianProductCons
+import Lemma.Set.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
@@ -21,15 +29,64 @@ import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DataInv.eq.InvData
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
-import Lemma.Set.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
-open Tensor Algebra Set Logic List
+open Logic Set Algebra List Tensor
 
-def Tensor.get (t : Tensor α s) (i : Fin t.length) : Tensor α s.tail :=
+def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
   have h_i := LtVal i
-  have h_GtLength_0 := GtLength_0.of.GtLength_0 (t := t) (by linarith)
+  have h_GtLength_0 := GtLength_0.of.GtLength_0 (t := X) (by linarith)
   have h_EqHeadD := HeadD.eq.Get_0.of.GtLength_0 h_GtLength_0 1
-  have := Get_0.eq.Length.of.GtLength_0 h_GtLength_0 t
-  t.toVector[i]
+  have := Get_0.eq.Length.of.GtLength_0 h_GtLength_0 X
+  X.toVector[i]
+
+/--
+x[..., i] where ... means all indices before i
+-/
+def Tensor.getEllipsis (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset])  : Tensor α (s.eraseIdx offset) :=
+  have h_s_length := Gt_0 offset
+  if h : offset = ⟨0, h_s_length⟩ then
+    cast
+      (by
+        substs h
+        simp
+      )
+      (X.get ⟨i, by
+        have h_i := LtVal i
+        simp [h] at h_i
+        rwa [Tensor.Length.eq.Get_0.of.GtLength_0 h_s_length]
+      ⟩)
+  else
+    have h := GtVal_0.of.Ne_0 h
+    have h_lt := LtSubS_1.of.Lt.Ne_0 (by linarith) (by simp) (n := offset) (m := s.length)
+    have h_1 := Ge_1.of.Gt_0 h
+    have X : Tensor α (s.headD 1 :: s.tail.eraseIdx (offset - 1)) := Tensor.fromVector (
+      X.toVector.map (
+        ·.getEllipsis
+          ⟨offset - 1, Sub_1.lt.LengthTail.of.Gt_0.Lt_Length (by simp) h⟩
+          ⟨i, by
+            simp only [GetElem.getElem]
+            rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1.fin]
+            simp [EqAddSub.of.Ge h_1]
+            assumption
+          ⟩
+      )
+    )
+    cast
+      (by
+        rw [EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1 (by assumption)]
+        simp only [EqAddSub.of.Ge h_1]
+        conv_rhs =>
+          rw [Eq_Cons_Tail.of.GtLength_0 (v := s.eraseIdx offset) (show (s.eraseIdx offset).length > 0 by
+            rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length]
+            · linarith
+            · simp
+          )]
+        congr
+        rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length]
+        · apply List.HeadD.eq.Get_0.of.GtLength_0
+        · simp
+        · assumption
+      )
+      X
 
 instance : GetElem (Tensor α s) ℕ (Tensor α s.tail) fun t i => i < t.length where
   getElem t i h := t.get ⟨i, h⟩

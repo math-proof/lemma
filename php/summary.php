@@ -47,8 +47,8 @@ include_once 'script.php';
 
 <script type=module>
 createApp('axiomSummary', {
-		state_count_pairs : <?php echo std\encode($state_count_pairs)?>,
-		repertoire : <?php echo std\encode($repertoire)?>,
+    state_count_pairs : <?php echo std\encode($state_count_pairs)?>,
+    repertoire : <?php echo std\encode($repertoire)?>,
 });
 
 </script>

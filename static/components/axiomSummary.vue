@@ -26,7 +26,7 @@
 		<br>
 		in summary, the following is the total count of each type for all lemmas:
 		<br>
-		<table tabindex=2 border=1>
+		<table tabindex=2 align=left border=1>
 			<tr>
 				<th>type</th>
 				<th>count</th>
@@ -36,10 +36,22 @@
 				<td>{{tuple.count}}</td>
 			</tr>
 		</table>
-		most recent <input size=2 v-model=topk @change=change_input>axioms updated:
-		<a v-for="axiom of recentAxioms" :href=href_module(axiom)>
-			<p>{{axiom}}</p>
-		</a>
+		<table tabindex=2 align=left border=1>
+			<tr>
+				<th>section</th>
+				<th>count</th>
+			</tr>
+			<tr v-for="tuple of sectionStatistics">
+				<td><a :href="`?module=${tuple.section}`">{{tuple.section}}</a></td>
+				<td>{{tuple.count}}</td>
+			</tr>
+		</table><br>
+		<div class=clear>
+			most recent <input size=2 v-model=topk @change=change_input>axioms updated:
+			<a v-for="axiom of recentAxioms" :href=href_module(axiom)>
+				<p>{{axiom}}</p>
+			</a>
+		</div>
 		<br>
 	</div>
 </template>
@@ -63,6 +75,7 @@ export default {
 	data() {
 		return {
 			issearch: false,
+			sectionStatistics: [],
 			recentAxioms: [],
 			topk: 10,
 			q: '',
@@ -114,6 +127,22 @@ export default {
 		change_input(event){
 			this.updateRecentAxioms();
 		},
+
+		async updateSectionStatistics() {
+			var sql = `
+select
+	SUBSTRING_INDEX(module, '.', 1) as section,
+	count(*) as count
+from axiom.lemma
+where
+	user = 'lean' and json_length(imports) > 0 
+group by
+	section
+WITH ROLLUP;`;
+			console.log(sql);
+			this.sectionStatistics = await form_post('php/request/execute.php', {sql, resultType: 1});
+			console.log(this.sectionStatistics);
+		},
 	},
 	
 	mounted() {
@@ -122,6 +151,7 @@ export default {
 			document.querySelector('a[href$=unprovable]');
 		if (error)
 			error.focus();
+		this.updateSectionStatistics();
 	},
 }
 </script>
@@ -145,6 +175,10 @@ font.unprovable{
 
 font.warning{
 	color: yellow;
+}
+
+div.clear{
+	clear: both;
 }
 
 </style>

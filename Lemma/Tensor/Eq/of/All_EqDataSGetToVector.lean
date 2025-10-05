@@ -4,7 +4,7 @@ import Lemma.Tensor.Data.eq.FlattenMapRange_GetToVector
 import Lemma.Vector.Eq_FlattenMapRange.of.All_EqValS
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
-import Lemma.Vector.EqValS.of.Eq
+import Lemma.Vector.EqValS.of.SEq
 open Tensor Logic Vector
 
 
@@ -25,7 +25,7 @@ private lemma main
   rw [h_data]
   intro i
   have h_eq := DataGetToVector.as.ArraySliceData a i
-  rw [← EqValS.of.Eq h_eq]
+  rw [← EqValS.of.SEq h_eq]
   have hi := h i
   apply EqUFnS.of.Eq hi (·.val)
 

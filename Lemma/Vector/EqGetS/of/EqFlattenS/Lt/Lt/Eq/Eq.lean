@@ -1,6 +1,6 @@
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul.of.Lt.Lt
-import Lemma.Vector.EqValS.of.Eq
+import Lemma.Vector.EqValS.of.SEq
 open Vector
 
 
@@ -25,7 +25,7 @@ private lemma main
   simp [h_n]
   simp [GetElem.getElem]
   simp [List.Vector.get]
-  simp [EqValS.of.Eq h]
+  simp [EqValS.of.SEq h]
 
 
 -- created on 2025-07-09

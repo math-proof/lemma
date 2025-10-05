@@ -86,14 +86,14 @@ if (! str_ends_with($path_info, '/')) {
     $leanFile = $path_info . ".lean";
     if (!file_exists($leanFile)) {
         if ($_POST);
+        elseif (is_dir($path_info))
+            $leanFile = null;
         elseif (file_exists($dirname = dirname($leanFile) . '.lean')) {
             $lastDotPosition = strrpos($module, '.');
             $module = substr($module, 0, $lastDotPosition) . '#' . substr($module, $lastDotPosition + 1);
             header("location:?module=$module");
             exit();
         }
-        elseif (is_dir($path_info))
-            $leanFile = null;
         else {
             $tokens = explode('.', $module);
             switch ($tokens[2]) {

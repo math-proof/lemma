@@ -13,7 +13,7 @@ import Lemma.Vector.EqGetRange
 import Lemma.List.EqGetS.of.Eq.Lt_Length
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Algebra.Eq.of.EqValS
-import Lemma.Vector.EqValS.of.Eq
+import Lemma.Vector.EqValS.of.SEq
 import Lemma.Vector.SEq.of.EqValS
 open Algebra Tensor Logic Vector List
 
@@ -86,7 +86,7 @@ private lemma main
         simp [List.Vector.get]
         repeat rw [GetVal.eq.Get.of.Lt (by simp_all)]
         have hj := h₂ j
-        have hj := EqValS.of.Eq hj
+        have hj := EqValS.of.SEq hj
         apply EqGetS.of.Eq.Lt_Length (show i < A[j].data.val.length by simp_all) hj
       ·
         apply IffEqS.of.Eq

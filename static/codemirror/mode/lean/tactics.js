@@ -71,6 +71,7 @@ export const tactics = [
     'split_ands',
     'split_ifs',
     'subst',
+    'substs',
     'suffices',
     'swap',
     'symm',

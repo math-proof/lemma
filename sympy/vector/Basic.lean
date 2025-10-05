@@ -1,5 +1,5 @@
-import Lemma.List.LengthToList.eq.Length
 import Lemma.Algebra.EqMin_SubMulS
+import Lemma.List.LengthToList.eq.Length
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
 open Algebra
 

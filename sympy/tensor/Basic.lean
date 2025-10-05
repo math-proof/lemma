@@ -2,9 +2,18 @@ import sympy.vector.vector
 import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.LtVal
+import Lemma.Algebra.Lt_Sub.of.LtAdd
+import Lemma.Algebra.LtMod.of.Gt_0
+import Lemma.Algebra.Gt_0.of.Ne_0
+import Lemma.Algebra.Eq_0.of.EqVal_0
+import Lemma.Algebra.LeAdd_1
+import Lemma.Algebra.Sub.eq.Add_1.of.Eq_SubSub_1
+import Lemma.Algebra.LtAdd.of.Lt_Sub
+import Lemma.Algebra.Lt.of.Mk.eq.IteGt.Ne
+import Lemma.Algebra.EqMaxS.of.Mk.eq.IteGt
+import Lemma.Algebra.EqMulDiv.of.Dvd
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.ProdSet__MulGet.eq.Mul_Prod
-import Lemma.Algebra.Lt_Sub.of.LtAdd
 import Lemma.List.EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx
@@ -13,20 +22,12 @@ import Lemma.List.SwapAppend.eq.Append_Swap.of.Ge_Length.Ge_Length
 import Lemma.List.EqSwap_0'1
 import Lemma.List.ProdSwap.eq.Prod
 import Lemma.List.Rotate_Mod.eq.Rotate
-import Lemma.Algebra.LtMod.of.Gt_0
-import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.List.EqPermute__0
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.List.Take.eq.Nil.of.Eq_0
 import Lemma.List.EqDrop.of.Eq_0
-import Lemma.Algebra.Eq_0.of.EqVal_0
 import Lemma.List.LengthDrop.eq.SubLength
-import Lemma.Algebra.LeAdd_1
-import Lemma.Algebra.Sub.eq.Add_1.of.Eq_SubSub_1
-import Lemma.Algebra.LtAdd.of.Lt_Sub
-import Lemma.Algebra.Lt.of.Mk.eq.IteGt.Ne
-import Lemma.Algebra.EqMaxS.of.Mk.eq.IteGt
 import Lemma.List.LengthPermute.eq.Length
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.Lt_Length
 import Lemma.List.EqSwapS.of.Mk.eq.IteGt
@@ -36,8 +37,7 @@ import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
 import Lemma.List.ProdTake_1.eq.HeadD_1
-import Lemma.Algebra.EqMulDiv.of.Dvd
-open Algebra Logic List
+open Logic Algebra List
 
 /--
 the concept of a Tensor is a generalization of a matrix, like the Tensor concept in pytorch / tensorflow
@@ -175,7 +175,7 @@ def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) 
         apply Lt_Sub.of.LtAdd.nat h_dim
       cast
         (by simp_all [EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_lt 1])
-        (Tensor.fromVector ((X.toVector).map (·.sum dim)))
+        (Tensor.fromVector (X.toVector.map (·.sum dim)))
   else
     cast (by
       simp at h_dim
