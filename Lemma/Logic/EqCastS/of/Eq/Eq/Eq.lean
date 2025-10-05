@@ -1,4 +1,4 @@
-import Lemma.Logic.EqCast.of.SEq.Eq
+import Lemma.Logic.SEqCast.of.SEq.Eq
 open Logic
 
 
@@ -16,8 +16,8 @@ private lemma main
   have h' : Vector m = Vector m' := by rw [h₁]
   cast h a ≃ cast h' b := by
 -- proof
-  apply EqCast.of.SEq.Eq h₀
-  apply Eq_Cast.of.SEq.Eq h₁ h₂
+  apply SEqCast.of.SEq.Eq h₀
+  apply SEq_Cast.of.SEq.Eq h₁ h₂
 
 
 -- created on 2025-06-29

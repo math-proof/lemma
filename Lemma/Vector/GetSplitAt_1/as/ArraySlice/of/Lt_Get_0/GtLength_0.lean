@@ -1,5 +1,5 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.Logic.EqCast.of.SEq.Eq
+import Lemma.Logic.SEqCast.of.SEq.Eq
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
@@ -25,7 +25,7 @@ private lemma main
   simp
   unfold List.Vector.unflatten
   simp
-  apply EqCast.of.SEq.Eq
+  apply SEqCast.of.SEq.Eq
   ·
     rw [EqMin.of.Le]
     apply Le_SubMulS.of.Lt

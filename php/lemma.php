@@ -27,11 +27,21 @@ if ($_POST) {
 					$section = $tokens[0];
 					$first = array_slice($tokens, 1, $index - 1);
 					$second = array_slice($tokens, $index + 1);
-					$tokens = array_merge([$section], $second, ['is'], $first);
-					$module = implode('.', $tokens);
+					$module = implode('.', array_merge([$section], $second, ['is'], $first));
 					$path = module_to_lean($module);
-					if (!file_exists($path))
-						return;
+					if (!file_exists($path)) {
+						if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches)) {
+							$tokens[1] = $matches[1] . $matches[2];
+							$tokens[$index] = 'of';
+							$module = implode('.', $tokens);
+							$path = module_to_lean($module);
+							if (!file_exists($path)) {
+								return;
+							}
+						}
+						else
+							return;
+					}
 				}
 				break;
 			default:
@@ -233,6 +243,19 @@ EOT;
 				return true;
 			# try comm:
 			$tokens[1] = 'is';
+			$import = implode('.', $tokens);
+			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
+			if (preg_match("/\b$import\b/", $lemmaCode))
+				return true;
+			break;
+		case 'of':
+			# try comm:
+			if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[0], $matches))
+				$tokens[0] = $matches[1] . $matches[2];
+			elseif (preg_match("/^([SH]?Eq|Iff)(.+)/", $tokens[0], $matches))
+				$tokens[0] = $matches[1] . "_" . $matches[2];
+			else
+				break;
 			$import = implode('.', $tokens);
 			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
 			if (preg_match("/\b$import\b/", $lemmaCode))

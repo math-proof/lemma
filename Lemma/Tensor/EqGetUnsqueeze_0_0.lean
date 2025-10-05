@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Logic.EqCast.of.SEq
 import Lemma.Vector.ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
-import Lemma.Logic.EqCast.of.SEq.Eq
+import Lemma.Logic.SEqCast.of.SEq.Eq
 import Lemma.Logic.SEq.of.Eq
 import Lemma.Logic.EqCast.of.Eq
 import Lemma.Vector.Eq.of.All_EqGetS
@@ -30,7 +30,7 @@ private lemma main
     apply EqCast.of.SEq
     rw [ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod (s := 1 :: s)]
     ·
-      apply EqCast.of.SEq.Eq <;>
+      apply SEqCast.of.SEq.Eq <;>
         simp
       apply SEq.of.Eq
       unfold List.Vector.splitAt

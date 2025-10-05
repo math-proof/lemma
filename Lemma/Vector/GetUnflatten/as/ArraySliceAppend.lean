@@ -4,7 +4,7 @@ import Lemma.Logic.SEq.of.SEq.SEq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
 import Lemma.Vector.GetAppend.eq.Get
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
-import Lemma.Logic.EqCast.of.SEq.Eq
+import Lemma.Logic.SEqCast.of.SEq.Eq
 import Lemma.Logic.SEq.of.Eq
 import Lemma.Logic.SEqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
@@ -33,7 +33,7 @@ private lemma main
     apply SEq.of.SEq.SEq (c := ab.array_slice (i * k) k)
     ·
       apply EqArraySliceS.of.SEq.Eq.Eq rfl rfl
-      apply Eq_Cast.of.SEq.Eq (by assumption)
+      apply SEq_Cast.of.SEq.Eq (by assumption)
       apply SEq.of.Eq rfl
     ·
       have := LtVal i

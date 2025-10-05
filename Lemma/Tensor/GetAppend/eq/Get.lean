@@ -8,7 +8,7 @@ import Lemma.Vector.EqGetSUnflatten.of.Eq.Lt.Eq.Eq
 import Lemma.Logic.EqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySliceAppend
 import Lemma.Vector.GetUnflatten.eq.Cast_ArraySlice.of.Lt
-import Lemma.Logic.EqCast.of.SEq.Eq
+import Lemma.Logic.SEqCast.of.SEq.Eq
 import Lemma.Vector.EqArraySliceS.of.Eq
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Le_SubMulS.of.Lt
@@ -43,7 +43,7 @@ private lemma main
     apply SEq.of.SEq.SEq (c := (a.data ++ b.data).array_slice (i * s.prod) s.prod)
     ·
       rw [GetUnflatten.eq.Cast_ArraySlice.of.Lt (by linarith)]
-      apply EqCast.of.SEq.Eq
+      apply SEqCast.of.SEq.Eq
       ·
         simp_all [Le_SubMulS.of.Lt h_lt]
       ·

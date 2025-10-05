@@ -3,7 +3,6 @@ import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
 import Lemma.Logic.SEq.of.SEq.SEq
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Algebra.EqMulS.of.Eq
-import Lemma.Logic.EqCast.of.SEq.Eq
 open Algebra Logic Vector List
 
 

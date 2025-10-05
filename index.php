@@ -112,7 +112,18 @@ if (! str_ends_with($path_info, '/')) {
                     $tokens[3] = $tmp;
                     break;
                 case 'of':
-                    $tokens[2] = 'is';
+                    $first = $tokens[1];
+                    if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $first, $matches)) {
+                        $tokens[1] = $matches[1] . $matches[2];
+                        $module = implode('.', $tokens);
+                        $path = module_to_lean($module);
+                        if (!file_exists($path)) {
+                            $tokens[1] = $first;
+                            $tokens[2] = 'is';
+                        }
+                    }
+                    else
+                        $tokens[2] = 'is';
                     break;
                 default:
                     $first = $tokens[1];

@@ -6,7 +6,7 @@ import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Logic.EqCast.of.Eq
-import Lemma.Logic.EqCast.of.SEq.Eq
+import Lemma.Logic.SEqCast.of.SEq.Eq
 import Lemma.Logic.SEq.of.Eq
 import Lemma.Logic.Eq.of.SEq
 import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
@@ -69,7 +69,7 @@ private lemma main
           ·
             apply EqArraySliceS.of.SEq.Eq.Eq rfl rfl
             simp [ab]
-            apply Eq_Cast.of.SEq.Eq (by assumption)
+            apply SEq_Cast.of.SEq.Eq (by assumption)
             apply SEq.of.Eq rfl
           ·
             apply GetUnflatten.as.ArraySlice.of.Lt (by assumption)
