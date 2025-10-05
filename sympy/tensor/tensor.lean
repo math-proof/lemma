@@ -59,7 +59,7 @@ instance : GetElem (Tensor α (m :: s)) (Tensor (Fin k) [n].tail) (Tensor α s) 
 Represents a mathematical object with indices.
 X[i, j, k].shape = X.shape.drop 3
 -/
-def Indexed (base : Tensor α s) (indices : List ℕ) (h : indices ∈ (s.take indices.length).cartesianProduct) : Tensor α (s.drop indices.length) :=
+def Tensor.getElem (base : Tensor α s) (indices : List ℕ) (h : indices ∈ (s.take indices.length).cartesianProduct) : Tensor α (s.drop indices.length) :=
   match indices with
   | .nil =>
     base
@@ -71,7 +71,7 @@ def Indexed (base : Tensor α s) (indices : List ℕ) (h : indices ∈ (s.take i
     have h := In_CartesianProduct.of.In_CartesianProductCons h_in
     have := Lt.of.In_CartesianProductCons h_in
     have h_eq := Length.eq.Get_0.of.GtLength_0 h_Gt_0 base
-    cast (by simp) (Indexed (base.get ⟨index, by rwa [h_eq]⟩) indices h)
+    cast (by simp) (getElem (base.get ⟨index, by rwa [h_eq]⟩) indices h)
 
 def Tensor.getSlice
   (t : Tensor α s)
@@ -81,7 +81,7 @@ def Tensor.getSlice
     t[i].data
   ⟨cast (by simp) tensors.flatten⟩
 
-def Sliced
+def Tensor.getSlices
   (t : Tensor α s)
   (slices : List Slice)
   {h_shape : slices.length ≤ s.length} :
@@ -118,7 +118,7 @@ def Sliced
             simp_all [Length.eq.Get_0.of.GtLength (by assumption) t]
           let ti : Tensor α (s.drop 1) := ⟨t[i].data.val, by simp⟩
           have h_shape : slices.length ≤ (s.drop 1).length := LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1 (by simp_all) h_shape
-          let sliced : Tensor α (shape ++ s_rest) := Sliced ti slices (h_shape := h_shape)
+          let sliced : Tensor α (shape ++ s_rest) := getSlices ti slices (h_shape := h_shape)
           have h_eq : (shape ++ s_rest).prod = shape.prod * s_rest.prod := by
             simp
           cast (by rw [h_eq]) sliced.data
