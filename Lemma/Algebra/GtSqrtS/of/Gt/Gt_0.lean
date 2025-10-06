@@ -16,16 +16,13 @@ private lemma main
 -- proof
   by_cases h : y < 0
   ·
-    have := EqSqrt_0.of.Lt_0 h
-    rw [this]
+    rw [EqSqrt_0.of.Lt_0 h]
     apply GtSqrt_0.of.Gt_0 h₁
   ·
     have h := Ge.of.NotLt h
     -- Use the fact that the square root function is increasing on the positive real numbers.
     apply Real.lt_sqrt_of_sq_lt
-    have := EqSquareSqrt.of.Ge_0 h
-    rw [this]
-    assumption
+    rwa [EqSquareSqrt.of.Ge_0 h]
 
 
 -- created on 2025-04-06

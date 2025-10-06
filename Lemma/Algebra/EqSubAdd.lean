@@ -11,8 +11,7 @@ private lemma left.int
   b + a - b = a := by
 -- proof
   have := IntegerRing.add_sub_cancel a b
-  rw [Add.comm] at this
-  assumption
+  rwa [Add.comm] at this
 
 
 @[main]

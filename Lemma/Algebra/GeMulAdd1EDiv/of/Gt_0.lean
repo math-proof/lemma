@@ -31,8 +31,7 @@ private lemma main
   apply LeAddS.of.Le (a := q * d)
   apply LeAdd_1.of.Lt
   have := LtMod.of.Gt_0 h (n - 1)
-  rw [← h_r] at this
-  assumption
+  rwa [← h_r] at this
 
 
 -- created on 2025-03-29

@@ -28,8 +28,7 @@ private lemma main
   simp at h
   have h := EqDivS.of.Eq h 2
   rw [EqDivMul.of.Ne_0.left (by norm_num)] at h
-  rw [EqDivMul.of.Ne_0 (by norm_num)] at h
-  assumption
+  rwa [EqDivMul.of.Ne_0 (by norm_num)] at h
 
 
 -- created on 2025-08-12

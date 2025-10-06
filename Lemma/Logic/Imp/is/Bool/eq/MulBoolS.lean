@@ -55,8 +55,7 @@ private lemma main
     norm_cast at this
     rw [Bool.eq.One.is.Cond] at this
     rw [Eq.comm] at this
-    rw [Bool.eq.One.is.Cond] at this
-    assumption
+    rwa [Bool.eq.One.is.Cond] at this
 
 
 -- created on 2025-04-20

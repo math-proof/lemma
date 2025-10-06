@@ -54,8 +54,7 @@ private lemma main
     have := Lt.of.Le.Ne h₀ this
     have := Le_Sub_1.of.Lt this
     simp at this
-    rw [← Sign.eq.Neg1.of.Lt_0 h₁] at this
-    assumption
+    rwa [← Sign.eq.Neg1.of.Lt_0 h₁] at this
 
 
 -- created on 2025-03-30

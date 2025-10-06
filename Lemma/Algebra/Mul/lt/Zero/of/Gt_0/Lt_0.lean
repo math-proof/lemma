@@ -13,8 +13,7 @@ private lemma int
   x * y < 0 := by
 -- proof
   have := Mul.lt.Zero.of.Lt_0.Gt_0.int h₁ h₀
-  rw [Mul.comm] at this
-  assumption
+  rwa [Mul.comm] at this
 
 
 @[main]
@@ -28,8 +27,7 @@ private lemma main
   x * y < 0 := by
 -- proof
   have := Mul.lt.Zero.of.Lt_0.Gt_0 h₁ h₀
-  rw [Mul.comm] at this
-  assumption
+  rwa [Mul.comm] at this
 
 
 -- created on 2025-07-20

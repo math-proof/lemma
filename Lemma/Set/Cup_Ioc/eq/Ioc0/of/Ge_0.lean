@@ -28,8 +28,7 @@ private lemma main
     aesop
   rw [EqCupS.of.All_Eq.set h_all] at h_n
   rw [Coe.eq.CoeCoe.int n.toNat] at h_n
-  rw [EqToNat.of.Ge_0 h] at h_n
-  assumption
+  rwa [EqToNat.of.Ge_0 h] at h_n
 
 
 -- created on 2025-10-01

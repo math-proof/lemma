@@ -13,7 +13,7 @@ private lemma main
 -- proof
   simp [Tensor.length] at h
   let i : Fin n := ⟨i, h⟩
-  have := GetToVector.eq.Get v i
+  have := GetToVector.eq.Get.cons v i
   simp_all
   assumption
 

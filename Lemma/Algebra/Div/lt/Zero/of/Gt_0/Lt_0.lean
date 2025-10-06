@@ -16,8 +16,7 @@ private lemma main
 -- proof
   have h₁ := LtInv_0.of.Lt_0 h₁
   have := Mul.lt.Zero.of.Gt_0.Lt_0 h₀ h₁
-  rw [Mul_Inv.eq.Div] at this
-  assumption
+  rwa [Mul_Inv.eq.Div] at this
 
 
 -- created on 2025-07-20

@@ -17,8 +17,7 @@ private lemma main
   have h₁ := NotIn.of.Ne h₁
   have := NotIn_Union.of.NotIn.NotIn h₀ h₁
   -- Use the fact that {a, b} is equivalent to {a} ∪ {b} to rewrite the goal
-  rw [UnionSingletonS.eq.Finset] at this
-  assumption
+  rwa [UnionSingletonS.eq.Finset] at this
 
 
 -- created on 2025-04-04

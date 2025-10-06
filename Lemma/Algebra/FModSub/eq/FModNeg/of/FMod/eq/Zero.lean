@@ -13,8 +13,7 @@ private lemma main
   (n - m).fmod d = (-m).fmod d := by
 -- proof
   have := FModAdd.eq.FMod.of.FMod.eq.Zero h (-m)
-  rw [Add_Neg.eq.Sub] at this
-  assumption
+  rwa [Add_Neg.eq.Sub] at this
 
 
 -- created on 2025-03-30

@@ -1,5 +1,5 @@
 import Lemma.Vector.EqGetMapRange.of.Lt
-import Lemma.Logic.EqCastS.of.Eq.Eq.Eq
+import Lemma.Logic.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le_SubMulS.of.Lt
@@ -23,7 +23,7 @@ private lemma main
   unfold List.Vector.unflatten
   repeat rw [EqGetMapRange.of.Lt (by simp_all)]
   simp
-  apply EqCastS.of.Eq.Eq.Eq
+  apply SEqCastS.of.SEq.Eq.Eq
   repeat {
     rw [EqMin.of.Le]
     apply Le_SubMulS.of.Lt

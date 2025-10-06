@@ -13,8 +13,7 @@ private lemma main
   b < a + b := by
 -- proof
   have := GtAddS.of.Gt b h
-  rw [EqAdd0] at this
-  assumption
+  rwa [EqAdd0] at this
 
 
 @[main]
@@ -26,8 +25,7 @@ private lemma nat
   b < a + b := by
 -- proof
   have := GtAddS.of.Gt b h
-  rw [EqAdd0] at this
-  assumption
+  rwa [EqAdd0] at this
 
 
 -- created on 2025-05-24

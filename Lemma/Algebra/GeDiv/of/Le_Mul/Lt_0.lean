@@ -23,8 +23,7 @@ private lemma main
     Mul_Inv.eq.Div
   ] at this
   have h_Ne := Ne.of.Lt h₁
-  rw [EqDivMul.of.Ne_0 h_Ne] at this
-  assumption
+  rwa [EqDivMul.of.Ne_0 h_Ne] at this
 
 
 -- created on 2025-03-30

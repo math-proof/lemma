@@ -1,13 +1,13 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List α}
 -- given
   (h : s.length ≠ 0) :
 -- imply
-  s = s[0] :: s.tail := by
+  s[0] :: s.tail = s:= by
 -- proof
   cases s
   ·

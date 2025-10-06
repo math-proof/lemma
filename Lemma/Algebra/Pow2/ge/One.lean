@@ -12,8 +12,7 @@ private lemma main
 -- proof
   have := Pow2.gt.Zero (n := n)
   have := Ge_Add_1.of.Gt this
-  rw [EqAdd0] at this
-  assumption
+  rwa [EqAdd0] at this
 
 
 -- created on 2025-03-15

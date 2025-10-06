@@ -1,7 +1,6 @@
-import Lemma.List.Eq_Cons_Tail.of.GtLength_0
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.ProdCons.eq.Mul_Prod
-open Logic List
+open List
 
 
 @[main]
@@ -13,9 +12,8 @@ private lemma main
 -- imply
   v.prod = v[0] * v.tail.prod := by
 -- proof
-  have := Eq_Cons_Tail.of.GtLength_0 h
-  have := EqUFnS.of.Eq this (·.prod)
-  rw [this]
+  conv_lhs =>
+    rw [Eq_Cons_Tail.of.GtLength_0 h]
   rw [ProdCons.eq.Mul_Prod]
 
 

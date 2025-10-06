@@ -15,8 +15,7 @@ private lemma main
   apply Nat.lt_of_le_sub_one h₀
   apply Nat.le_of_succ_le_succ
   simp
-  rw [EqAddSub.of.Ge]
-  assumption
+  rwa [EqAddSub.of.Ge]
   linarith
 
 

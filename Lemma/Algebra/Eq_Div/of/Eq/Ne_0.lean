@@ -16,8 +16,7 @@ private lemma main
   a = b / x := by
 -- proof
   have h := EqDivS.of.Eq h₀ x
-  rw [EqDivMul.of.Ne_0 h₁] at h
-  assumption
+  rwa [EqDivMul.of.Ne_0 h₁] at h
 
 
 -- created on 2025-10-01

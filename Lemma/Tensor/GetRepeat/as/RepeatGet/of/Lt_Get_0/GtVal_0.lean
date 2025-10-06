@@ -8,7 +8,7 @@ import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
 import Lemma.Algebra.Gt_0
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
-import Lemma.Logic.EqCastS.of.Eq.Eq.Eq
+import Lemma.Logic.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Algebra.Ge_1.of.Gt_0
 import Lemma.Algebra.Gt_0.of.Gt
@@ -85,7 +85,7 @@ private lemma main
     ·
       rw [GetMap.eq.UFnGet.of.Lt]
       apply HEq.of.SEqDataS.Eq (by simp_all)
-      apply EqCastS.of.Eq.Eq.Eq
+      apply SEqCastS.of.SEq.Eq.Eq
       ·
         simp
       ·

@@ -8255,7 +8255,10 @@ class Lean_show extends LeanSyntax
 
     public function latexFormat()
     {
-        return $this->strFormat();
+        //cm-def {color: #00f;} 
+        //defined in static/codemirror/lib/codemirror.css
+        $func = "\\textcolor{#0000ff}{{$this->func}}";
+        return "$func\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
     }
 
     public function jsonSerialize(): mixed

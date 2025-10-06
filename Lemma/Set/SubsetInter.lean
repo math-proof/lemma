@@ -23,8 +23,7 @@ private lemma left
   A ∩ B ⊆ A := by
 -- proof
   have := main B A
-  rw [Inter.comm] at this
-  assumption
+  rwa [Inter.comm] at this
 
 
 @[main]
@@ -49,8 +48,7 @@ private lemma fin
   A ∩ B ⊆ B := by
 -- proof
   have := left.fin B A
-  rw [Inter.comm.fin] at this
-  assumption
+  rwa [Inter.comm.fin] at this
 
 
 -- created on 2025-04-08

@@ -19,9 +19,7 @@ private lemma cauchy_schwarz
     intro t h
     apply EqSquareSqrt.of.Ge_0 h
   have := All.of.All.All_Imp.fin this h
-  have := EqSumS.of.All_Eq this
-  rw [this] at h_Le
-  assumption
+  rwa [EqSumS.of.All_Eq this] at h_Le
 
 
 -- created on 2025-06-06

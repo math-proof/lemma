@@ -28,8 +28,7 @@ private lemma main
   have h := GtCoeS.of.Gt.nat (R := R) h
   rw [CoeAdd.eq.AddCoeS.nat] at h
   rw [One.eq.Cast_1]
-  rw [Zero.eq.Cast_0]
-  assumption
+  rwa [Zero.eq.Cast_0]
 
 
 -- created on 2025-05-28

@@ -39,8 +39,7 @@ private lemma main
   simp at h₁
   rw [h₀]
   rw [AddDivS.eq.DivAdd]
-  rw [Add.comm (a := TN)]
-  assumption
+  rwa [Add.comm (a := TN)]
 
 
 -- created on 2024-11-28

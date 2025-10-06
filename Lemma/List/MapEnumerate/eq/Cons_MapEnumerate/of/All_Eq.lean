@@ -30,8 +30,7 @@ private lemma main
       let ⟨i, b, hi, hc⟩ := hi
       simp [List.enumerate] at hi
       let ⟨hi, hb⟩ := hi
-      rw [hi, hb]
-      assumption
+      rwa [hi, hb]
     ·
       intro hi
       use 0, head

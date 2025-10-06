@@ -1,7 +1,7 @@
 import Lemma.List.All_Eq_HeadD.of.IsConstant
 import Lemma.List.IsConstantTail.of.IsConstant
 import Lemma.List.Expr.in.Cons
-import Lemma.List.Eq_Cons_Tail.of.NeLength_0
+import Lemma.List.EqCons_Tail.of.NeLength_0
 open List
 
 
@@ -16,10 +16,8 @@ private lemma main
   p s[0] := by
 -- proof
   apply h_all s[0]
-  have h_eq := Eq_Cons_Tail.of.NeLength_0 h_ne
   have h_in : s[0] ∈ s[0] :: s.tail := List.Expr.in.Cons
-  rw [h_eq.symm] at h_in
-  exact h_in
+  rwa [EqCons_Tail.of.NeLength_0 h_ne] at h_in
 
 
 -- created on 2024-07-01

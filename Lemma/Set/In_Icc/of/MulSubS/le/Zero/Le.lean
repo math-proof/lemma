@@ -29,11 +29,9 @@ private lemma main
     have := Eq.of.Ge.Le this h₁
     apply In_Icc.of.Le.Ge
     ·
-      rw [← this]
-      assumption
+      rwa [← this]
     ·
-      rw [this]
-      assumption
+      rwa [this]
   ·
     let ⟨h_Le, h_Ge⟩ := h_And
     have h_Le := Le.of.Sub.le.Zero h_Le

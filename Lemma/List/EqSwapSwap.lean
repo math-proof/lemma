@@ -57,8 +57,7 @@ private lemma swap
   (a.swap i j).swap i j = a := by
 -- proof
   have := main a i j
-  rw [EqSwapS _ j i] at this
-  assumption
+  rwa [EqSwapS _ j i] at this
 
 
 -- created on 2025-05-17

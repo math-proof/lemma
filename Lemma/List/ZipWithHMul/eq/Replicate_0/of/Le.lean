@@ -21,8 +21,7 @@ private lemma main
   have h_Eq' := EqLengthTake.of.Ge h
   rw [h_Eq] at h_Eq'
   have h₂ := ZipWithHMul.eq.Replicate_0.of.Eq_Length h_Eq'.symm
-  rw [h₂] at h₁
-  assumption
+  rwa [h₂] at h₁
 
 
 -- created on 2025-05-02

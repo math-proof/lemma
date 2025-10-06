@@ -13,8 +13,7 @@ private lemma main
   (a ++ b).insertIdx i x = a ++ b.insertIdx (i - a.length) x := by
 -- proof
   have := InsertIdxAppend.eq.Append_InsertIdx a b (i - a.length) x
-  rw [EqAdd_Sub.of.Ge h] at this
-  assumption
+  rwa [EqAdd_Sub.of.Ge h] at this
 
 
 -- created on 2025-06-09

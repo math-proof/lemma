@@ -17,8 +17,7 @@ private lemma left
 -- proof
   have h := AddMul.le.Mul.of.Lt h m
   apply Le_Sub.of.LeAdd.nat
-  rw [Add.comm]
-  assumption
+  rwa [Add.comm]
 
 
 @[main]

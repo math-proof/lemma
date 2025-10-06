@@ -16,8 +16,7 @@ private lemma main
   -a > b := by
 -- proof
   apply Gt.of.LtNegS
-  rw [EqNegNeg]
-  assumption
+  rwa [EqNegNeg]
 
 
 -- created on 2025-03-29

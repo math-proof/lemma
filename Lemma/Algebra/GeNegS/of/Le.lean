@@ -16,8 +16,7 @@ private lemma main
   -x ≥ - y := by
 -- proof
   apply Ge.of.LeNegS
-  rw [EqNegNeg]
-  rw [EqNegNeg]
+  repeat rw [EqNegNeg]
   assumption
 
 

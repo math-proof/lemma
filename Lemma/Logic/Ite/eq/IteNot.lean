@@ -22,8 +22,7 @@ private lemma main
   rw [← h_P]
   apply BFn_Ite.of.OrAndS
   rw [IffNotNot]
-  rw [Or.comm]
-  assumption
+  rwa [Or.comm]
 
 
 -- created on 2025-04-17

@@ -9,7 +9,7 @@ import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
 import Lemma.List.GtLength_0.of.Cons.in.CartesianProduct
-import Lemma.List.Eq_Cons_Tail.of.GtLength_0
+import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
 import Lemma.List.EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1
 import Lemma.List.Sub_1.lt.LengthTail.of.Gt_0.Lt_Length
@@ -52,7 +52,7 @@ def Tensor.getEllipsis (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offs
       (X.get ⟨i, by
         have h_i := LtVal i
         simp [h] at h_i
-        rwa [Tensor.Length.eq.Get_0.of.GtLength_0 h_s_length]
+        rwa [Length.eq.Get_0.of.GtLength_0 h_s_length]
       ⟩)
   else
     have h := GtVal_0.of.Ne_0 h
@@ -123,8 +123,7 @@ def Tensor.getElem (base : Tensor α s) (indices : List ℕ) (h : indices ∈ (s
   | index :: indices =>
     have h_Gt_0 := GtLength_0.of.Cons.in.CartesianProduct h
     have h_Gt_0 := LengthTake.gt.Zero.of.LengthTake.gt.Zero h_Gt_0
-    have h_shape := Eq_Cons_Tail.of.GtLength_0 h_Gt_0
-    have h_in : index :: indices ∈ (s[0] :: s.tail.take indices.length).cartesianProduct := by rwa [h_shape] at h
+    have h_in : index :: indices ∈ (s[0] :: s.tail.take indices.length).cartesianProduct := by rwa [Eq_Cons_Tail.of.GtLength_0 h_Gt_0] at h
     have h := In_CartesianProduct.of.In_CartesianProductCons h_in
     have := Lt.of.In_CartesianProductCons h_in
     have h_eq := Length.eq.Get_0.of.GtLength_0 h_Gt_0 base

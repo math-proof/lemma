@@ -13,8 +13,7 @@ private lemma main
   a = -b := by
 -- proof
   apply Eq.of.EqNegS
-  rw [EqNegNeg]
-  assumption
+  rwa [EqNegNeg]
 
 
 -- created on 2025-03-29

@@ -70,12 +70,10 @@ private lemma main
       repeat rw [GetElem.eq.None.of.Ge_Length]
       ·
         rw [LengthAppend.eq.AddLengthS]
-        rw [LengthSwap.eq.Length]
-        assumption
+        rwa [LengthSwap.eq.Length]
       ·
         rw [LengthSwap.eq.Length]
-        rw [LengthAppend.eq.AddLengthS]
-        assumption
+        rwa [LengthAppend.eq.AddLengthS]
   ·
     rw [NotAnd.is.OrNotS] at h
     simp at h

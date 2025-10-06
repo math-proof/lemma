@@ -24,8 +24,7 @@ private lemma main
   else
     c := by
 -- proof
-  rw [EqIteS.of.Imp_Eq h₀] at h₁
-  assumption
+  rwa [EqIteS.of.Imp_Eq h₀] at h₁
 
 
 -- created on 2025-04-19

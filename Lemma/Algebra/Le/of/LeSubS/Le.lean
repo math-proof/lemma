@@ -12,8 +12,7 @@ private lemma main
   x ≤ y := by
 -- proof
   simp at h₁
-  rw [EqAddSub.of.Ge h₀] at h₁
-  assumption
+  rwa [EqAddSub.of.Ge h₀] at h₁
 
 
 -- created on 2025-05-14

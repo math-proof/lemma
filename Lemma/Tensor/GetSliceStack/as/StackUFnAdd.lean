@@ -47,7 +47,7 @@ private lemma main
       simp [Tensor.get]
       simp [Tensor.length]
       simp [GetElem.getElem]
-      rw [GetToVector.eq.Get.fin]
+      rw [GetToVector.eq.Get.cons.fin]
       rw [GetMkFlatten.eq.MkGet]
       apply Eq.of.EqDataS
       simp [GetElem.getElem]

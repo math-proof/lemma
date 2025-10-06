@@ -14,8 +14,7 @@ private lemma main
   x / a - x / b = x * (b - a) / (a * b) := by
 -- proof
   have := SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0 (x := x) (y := x) h₀ h₁
-  rw [SubMulS.eq.Mul_Sub] at this
-  assumption
+  rwa [SubMulS.eq.Mul_Sub] at this
 
 
 -- created on 2025-04-06

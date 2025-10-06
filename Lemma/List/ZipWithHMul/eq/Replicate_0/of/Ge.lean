@@ -20,9 +20,7 @@ private lemma main
   rw [h_Eq] at h₁
   have h_Eq' := EqLengthTake.of.Ge h
   rw [h_Eq] at h_Eq'
-  have h₂ := ZipWithHMul.eq.Replicate_0.of.EqLength h_Eq'
-  rw [h₂] at h₁
-  assumption
+  rwa [ZipWithHMul.eq.Replicate_0.of.EqLength h_Eq'] at h₁
 
 
 -- created on 2025-05-02

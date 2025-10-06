@@ -24,8 +24,7 @@ private lemma main
   rw [this] at h_Gt_0
   have := EqSquareSqrt.of.Gt_0 (by linarith [h] : x > 0)
   rw [this] at h_Gt_0
-  rw [SubAdd.eq.AddSub] at h_Gt_0
-  assumption
+  rwa [SubAdd.eq.AddSub] at h_Gt_0
 
 
 -- created on 2025-04-06

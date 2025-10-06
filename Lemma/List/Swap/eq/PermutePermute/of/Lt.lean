@@ -59,8 +59,7 @@ private lemma main
       assumption
   have h_d : d.val ≥ 1 := by
     simp_all [d]
-    rw [ValSub.eq.SubValS.of.Gt (by assumption)]
-    assumption
+    rwa [ValSub.eq.SubValS.of.Gt (by assumption)]
   have h_dj : d.val ≤ j.val := by
     simp_all [d]
     apply Le.of.Lt

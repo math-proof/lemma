@@ -11,8 +11,7 @@ private lemma main
   q → ¬p := by
 -- proof
   have := ImpNotS.of.Imp h
-  rw [IffNotNot] at this
-  assumption
+  rwa [IffNotNot] at this
 
 
 -- created on 2025-04-14

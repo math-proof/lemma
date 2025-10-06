@@ -15,8 +15,7 @@ private lemma main
 -- proof
   have := GeSquare_0 (a := x)
   have := Real.sqrt_mul this y²
-  rw [EqSqrtSquare.of.Ge_0 h₀, EqSqrtSquare.of.Ge_0 h₁] at this
-  assumption
+  rwa [EqSqrtSquare.of.Ge_0 h₀, EqSqrtSquare.of.Ge_0 h₁] at this
 
 
 -- created on 2025-04-06

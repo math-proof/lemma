@@ -17,8 +17,7 @@ private lemma main
 -- proof
   have := SwapAppend.eq.Append_Swap a b (i - a.length) (j - a.length)
   rw [EqAdd_Sub.of.Ge h₀] at this
-  rw [EqAdd_Sub.of.Ge h₁] at this
-  assumption
+  rwa [EqAdd_Sub.of.Ge h₁] at this
 
 
 -- created on 2025-06-10

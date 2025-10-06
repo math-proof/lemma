@@ -5,7 +5,7 @@ open Tensor
 
 
 @[main]
-private lemma main
+private lemma cons
 -- given
   (v : Tensor α (n :: s))
   (i : Fin n) :
@@ -18,20 +18,20 @@ private lemma main
 
 
 @[main]
-private lemma fin
+private lemma cons.fin
 -- given
   (v : Tensor α (n :: s))
   (i : Fin n) :
 -- imply
   v.toVector.get i = v[i] := by
 -- proof
-  have := main v i
+  have := cons v i
   simp [GetElem.getElem] at *
   assumption
 
 
 @[main]
-private nonrec lemma length.fin
+private lemma fin
 -- given
   (X : Tensor α s)
   (i : Fin X.length) :
@@ -43,11 +43,11 @@ private nonrec lemma length.fin
   | [] =>
     contradiction
   | s₀ :: s =>
-    apply fin
+    apply cons.fin
 
 
 @[main]
-private lemma length
+private lemma main
 -- given
   (X : Tensor α s)
   (i : Fin X.length) :
@@ -55,7 +55,7 @@ private lemma length
   have := Lt_HeadD i
   X.toVector[i] = X[i] := by
 -- proof
-  apply length.fin
+  apply fin
 
 
 -- created on 2025-05-23

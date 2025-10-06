@@ -56,10 +56,8 @@ private lemma main
   norm_num at this
   rw [h_Eq] at this
   rw [EqDivMul.of.Ne_0 (by simp [h₀] : (n : ℝ) ≠ 0)] at this
-  have := EqSquareSqrt.of.Ge_0 this
-  rw [← this] at h_Le
-  rw [SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0 (by norm_num) (by apply GeSqrt_0)] at h_Le
-  assumption
+  rw [← EqSquareSqrt.of.Ge_0 this] at h_Le
+  rwa [SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0 (by norm_num) (by apply GeSqrt_0)] at h_Le
 
 
 -- created on 2025-04-06

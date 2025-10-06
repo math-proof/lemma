@@ -21,8 +21,7 @@ private lemma main
   have h_Eq := Div.eq.AddDiv___Mod (n := n) (d := d)
   have := Div.gt.Neg1.of.Lt_0 (n := n) h
   have := Gt_Add.of.Eq_Add.Gt h_Eq this
-  rw [Add_Neg.eq.Sub] at this
-  assumption
+  rwa [Add_Neg.eq.Sub] at this
   exact LeDivS.of.Lt_0 h
 
 

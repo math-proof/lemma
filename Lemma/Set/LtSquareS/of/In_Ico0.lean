@@ -17,9 +17,8 @@ private lemma main
 -- proof
   -- Extract the bounds from the interval `Ico 0 b`
   have ⟨h₁, h₂⟩ := h₀
-
   have := mul_self_lt_mul_self h₁ h₂
-  rw [Mul.eq.Square, Mul.eq.Square] at this
+  repeat rw [Mul.eq.Square] at this
   assumption
 
 

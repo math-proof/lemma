@@ -16,7 +16,7 @@ private lemma main
   have hi := LtVal i
   X.toVector.get ⟨i, by rwa [HeadD.eq.Get_0.of.GtLength_0 h 1]⟩ = X.get ⟨i, by rwa [Length.eq.Get_0.of.GtLength_0 h]⟩ :=
 -- proof
-  GetToVector.eq.Get.length.fin X ⟨i, by simp [Length.eq.Get_0.of.GtLength_0 h X]⟩
+  GetToVector.eq.Get.fin X ⟨i, by simp [Length.eq.Get_0.of.GtLength_0 h X]⟩
 
 
 @[main]

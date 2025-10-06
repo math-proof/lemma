@@ -16,8 +16,7 @@ private lemma fin
   have := EqUnionInter__SDiff.fin (s := A) (t := B)
   have := IffInS.of.Eq.fin this x
   rw [In_Union.is.OrInS.fin] at this
-  rw [Iff.comm]
-  assumption
+  rwa [Iff.comm]
 
 
 @[main]
@@ -31,8 +30,7 @@ private lemma main
   have := EqUnionInter__SDiff (s := A) (t := B)
   have := IffInS.of.Eq this x
   rw [In_Union.is.OrInS] at this
-  rw [Iff.comm]
-  assumption
+  rwa [Iff.comm]
 
 
 -- created on 2025-04-30

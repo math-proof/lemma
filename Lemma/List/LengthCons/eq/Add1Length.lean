@@ -11,8 +11,7 @@ private lemma main
   (a :: l).length = 1 + l.length := by
 -- proof
   have := List.length_cons (a := a) (as := l)
-  rw [Add.comm] at this
-  assumption
+  rwa [Add.comm] at this
 
 
 -- created on 2025-05-08

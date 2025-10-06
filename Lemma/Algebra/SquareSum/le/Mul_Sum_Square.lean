@@ -12,8 +12,7 @@ private lemma cauchy_schwarz
 -- proof
   have := SquareSum_Mul.le.MulSumS_Square.cauchy_schwarz (s := s) (a := x) (b := fun i => 1)
   norm_num at this
-  rw [Mul.comm] at this
-  assumption
+  rwa [Mul.comm] at this
 
 
 -- created on 2025-06-06

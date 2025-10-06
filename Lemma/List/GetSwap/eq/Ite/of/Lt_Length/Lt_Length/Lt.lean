@@ -45,8 +45,7 @@ private lemma main'
     rw [EqAdd_Sub.of.Ge]
     linarith
   have h_eq_ij' : i + ((j - (i + 1)) + 1) = j := by
-    rw [Add.comm (a := 1)] at h_eq_ij
-    assumption
+    rwa [Add.comm (a := 1)] at h_eq_ij
   split_ifs with h_ti h_tj
   ·
     simp [h_ti]
@@ -96,8 +95,7 @@ private lemma main'
             rw [LengthCons.eq.Add1Length]
             rw [LengthSlice.eq.SubMin]
             simp [h_i, h_j]
-            rw [h_eq_ij]
-            assumption
+            rwa [h_eq_ij]
         ·
           simp at h_tj
           have h_gt : t > j := Gt.of.Ge.Ne h_tj (by assumption)

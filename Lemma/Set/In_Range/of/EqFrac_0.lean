@@ -22,8 +22,7 @@ private lemma main
   use ⌊x⌋
   apply Eq.symm
   apply Eq.of.Sub.eq.Zero
-  rw [← Frac.eq.Sub_Floor]
-  assumption
+  rwa [← Frac.eq.Sub_Floor]
 
 
 -- created on 2025-04-04

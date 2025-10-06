@@ -12,7 +12,7 @@ private lemma fin
 -- proof
   ext i
   simp
-  rw [GetToVector.eq.Get.fin]
+  rw [GetToVector.eq.Get.cons.fin]
   rw [EqGetRange.fin]
   simp [GetElem.getElem]
 

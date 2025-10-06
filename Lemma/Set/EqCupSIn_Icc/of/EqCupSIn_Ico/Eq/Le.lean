@@ -22,8 +22,7 @@ private lemma main
   have h_fb := EqCupIn_Singleton f b
   rw [← h_gb, ← h_fb] at this
   repeat rw [UnionCupS.eq.CupIn_Union] at this
-  rw [← Icc.eq.UnionIco.of.Le h₀] at this
-  assumption
+  rwa [← Icc.eq.UnionIco.of.Le h₀] at this
 
 
 -- created on 2025-07-20

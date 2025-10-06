@@ -16,8 +16,7 @@ private lemma main
   -x < -y := by
 -- proof
   apply Lt.of.GtNegS
-  rw [EqNegNeg]
-  rw [EqNegNeg]
+  repeat rw [EqNegNeg]
   assumption
 
 

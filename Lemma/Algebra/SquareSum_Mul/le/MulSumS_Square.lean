@@ -39,8 +39,7 @@ private lemma cauchy_schwarz
     rw [MulMul.eq.Mul_Mul] at this
     rw [EqMul_Div.of.Ne_0 (by norm_num : (2 : ℝ) ≠ 0)] at this
     rw [Mul.comm] at this
-    rw [Mul.comm (a := x)] at this
-    assumption
+    rwa [Mul.comm (a := x)] at this
   ·
     apply Sum_Square.ge.Zero
 

@@ -17,8 +17,7 @@ private lemma main
   x - y < 0 := by
 -- proof
   have := LtSubS.of.Lt h y
-  rw [Sub.eq.Zero] at this
-  assumption
+  rwa [Sub.eq.Zero] at this
 
 
 -- created on 2025-03-15

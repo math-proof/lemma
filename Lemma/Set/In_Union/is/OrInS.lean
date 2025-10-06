@@ -14,8 +14,7 @@ private lemma fin
   constructor <;>
     intro h
   .
-    rw [Finset.mem_union] at h
-    exact h
+    rwa [Finset.mem_union] at h
   .
     by_contra h
     have := AndNotSIn.of.NotIn_Union.fin h
@@ -33,8 +32,7 @@ private lemma main
   constructor <;>
     intro h
   .
-    rw [Set.mem_union] at h
-    exact h
+    rwa [Set.mem_union] at h
   .
     by_contra h
     have := AndNotSIn.of.NotIn_Union h

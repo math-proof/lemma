@@ -32,8 +32,7 @@ private lemma main
   have := SDiffSDiff.eq.SDiff.of.Subset this A
   rw [this] at h
   rw [h_I] at h
-  rw [Union.comm] at h
-  assumption
+  rwa [Union.comm] at h
 
 
 -- created on 2025-04-08

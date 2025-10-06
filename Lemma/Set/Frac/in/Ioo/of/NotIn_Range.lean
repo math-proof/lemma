@@ -20,8 +20,7 @@ private lemma main
   have h := NeFrac_0.of.NotIn h
   have := Frac.in.Ico (x := x)
   have := In_SDiff.of.In.Ne this h
-  rw [Ico.cut.Singleton.eq.Ioo] at this
-  assumption
+  rwa [Ico.cut.Singleton.eq.Ioo] at this
 
 
 -- created on 2025-04-04

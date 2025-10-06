@@ -5,10 +5,10 @@ import sympy.Basic
 @[main, comm 2]
 private lemma main
   {Vector : α → Sort v}
-  {a : Vector n}
-  {b : Vector m}
+  {a : Vector n_a}
+  {b : Vector n_b}
 -- given
-  (h : n = m')
+  (h : n_a = n_b')
   (h_eq : a ≃ b) :
 -- imply
   cast (congr_arg Vector h) a ≃ b := by

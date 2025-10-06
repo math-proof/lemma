@@ -12,8 +12,7 @@ private lemma fin
   s ∩ t ∪ s \ t = s := by
 -- proof
   have := EqUnionSDiff__Inter.fin (s := s) (t := t)
-  rw [Union.comm.finset] at this
-  assumption
+  rwa [Union.comm.finset] at this
 
 
 @[main]

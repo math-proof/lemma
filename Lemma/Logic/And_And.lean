@@ -10,11 +10,9 @@ private lemma Comm :
   constructor <;>
     intro h
   ·
-    rw [And.comm (b := q)]
-    assumption
+    rwa [And.comm (b := q)]
   ·
-    rw [And.comm (a := q)]
-    assumption
+    rwa [And.comm (a := q)]
 
 
 -- created on 2025-06-06

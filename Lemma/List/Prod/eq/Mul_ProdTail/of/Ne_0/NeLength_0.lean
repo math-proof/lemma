@@ -1,4 +1,4 @@
-import Lemma.List.Eq_Cons_Tail.of.NeLength_0
+import Lemma.List.EqCons_Tail.of.NeLength_0
 import Lemma.List.ProdCons.eq.Mul_Prod
 open List
 
@@ -14,8 +14,7 @@ private lemma main
 -- proof
   have h_prod : (s[0]::s.tail).prod = s[0] * s.tail.prod := by
     simp
-  rw [← Eq_Cons_Tail.of.NeLength_0 h₀] at h_prod
-  exact h_prod
+  rwa [EqCons_Tail.of.NeLength_0 h₀] at h_prod
 
 
 -- created on 2024-07-01

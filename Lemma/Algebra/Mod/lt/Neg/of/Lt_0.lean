@@ -14,8 +14,7 @@ private lemma main
 -- proof
   have := Ne.of.Lt h
   have := Int.emod_lt_abs (a := n) this
-  rw [Abs.eq.Neg.of.Lt_0 h] at this
-  assumption
+  rwa [Abs.eq.Neg.of.Lt_0 h] at this
 
 
 -- created on 2025-03-20
