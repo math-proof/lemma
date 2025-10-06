@@ -1,4 +1,3 @@
-import Lemma.Vector.Eq.of.All_EqGetS
 import Lemma.Vector.EqGet0'0
 open Vector
 
@@ -12,8 +11,9 @@ private lemma main
 -- imply
   a = 0 := by
 -- proof
-  apply Eq.of.All_EqGetS.fin
-  simpa [EqGet0'0.fin]
+  ext i
+  simp_all [EqGet0'0.fin]
+
 
 
 -- created on 2025-09-24

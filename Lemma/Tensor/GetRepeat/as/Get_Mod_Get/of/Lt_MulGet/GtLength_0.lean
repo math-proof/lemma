@@ -11,7 +11,7 @@ import Lemma.Algebra.AddMul.lt.Mul
 import Lemma.Tensor.SEq.of.SEqDataS.Eq
 import Lemma.List.TailSet_0.eq.Tail
 import Lemma.Logic.EqCastS.of.Eq.Eq.Eq
-import Lemma.Vector.Eq.of.All_EqGetS.Eq
+import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
@@ -45,22 +45,21 @@ private lemma main
   (h_i : i < n * s[0])
   (X : Tensor α s) :
 -- imply
-  have : i < (X.repeat n ⟨0, h_s⟩).length := by rwa [LengthRepeat.eq.Mul_Get_0.of.GtLength_0]
-  have := Gt_0.of.GtMul h_i
-  have : i % s[0] < X.length := by
+  have h_i : i < (X.repeat n ⟨0, h_s⟩).length := by rwa [LengthRepeat.eq.Mul_Get_0.of.GtLength_0]
+  have h_mod : i % s[0] < X.length := by
     rw [Length.eq.Get_0.of.GtLength_0 h_s]
-    apply LtMod.of.Gt_0
+    apply LtMod.of.Gt_0 ∘ Gt_0.of.GtMul
     assumption
   (X.repeat n ⟨0, h_s⟩)[i] ≃ X[i % s[0]] := by
 -- proof
-  intro h_i' h_s_0 h_i_mod
+  intros
   obtain ⟨j, i, h_ij⟩ := Any_EqAddMul.of.Lt_Mul h_i
   simp [← h_ij]
   simp [EqMod]
   unfold Tensor.repeat
   simp
   simp only [GetElem.getElem]
-  simp [Tensor.get]
+  unfold Tensor.get
   unfold Tensor.toVector
   simp
   repeat rw [GetCast_Map.eq.UFnGet.of.Eq.Lt]
@@ -79,7 +78,7 @@ private lemma main
         match X with
         | ⟨data⟩ =>
           simp
-          apply Eq.of.All_EqGetS.Eq
+          apply SEq.of.All_EqGetS.Eq
           ·
             intro k
             have h_k := LtVal k
@@ -136,6 +135,23 @@ private lemma main
     rw [HeadD.eq.Get_0.of.GtLength_0]
     rw [EqGetSet.of.Lt_Length h_s]
 
+
+@[main]
+private lemma fin
+-- given
+  (h_s : s.length > 0)
+  (h_i : i < n * s[0])
+  (X : Tensor α s) :
+-- imply
+  have h_i : i < (X.repeat n ⟨0, h_s⟩).length := by rwa [LengthRepeat.eq.Mul_Get_0.of.GtLength_0]
+  have h_mod : i % s[0] < X.length := by
+    rw [Length.eq.Get_0.of.GtLength_0 h_s]
+    apply LtMod.of.Gt_0 ∘ Gt_0.of.GtMul
+    assumption
+  (X.repeat n ⟨0, h_s⟩).get ⟨i, h_i⟩ ≃ X.get ⟨i % s[0], h_mod⟩ := by
+-- proof
+  apply main
+  assumption
 
 -- created on 2025-07-10
 -- updated on 2025-07-18

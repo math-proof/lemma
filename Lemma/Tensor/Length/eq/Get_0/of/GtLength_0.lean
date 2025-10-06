@@ -6,16 +6,16 @@ import sympy.Basic
 private lemma main
 -- given
   (h : s.length > 0)
-  (t : Tensor α s) :
+  (X : Tensor α s) :
 -- imply
-  t.length = s[0] := by
+  X.length = s[0] := by
 -- proof
   simp [Tensor.length]
   cases s
   ·
     contradiction
   ·
-    cases t
+    cases X
     simp
 
 

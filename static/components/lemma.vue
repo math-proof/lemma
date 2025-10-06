@@ -66,7 +66,7 @@
 import renderLean from "./renderLean.vue"
 import markdown from "./markdown.vue"
 console.log('import lemma.vue');
-const accessibilities = ['public', 'protected', 'private', 'noncomputable'];
+const accessibilities = ['public', 'protected', 'private', 'public nonrec', 'protected nonrec', 'private nonrec', 'noncomputable', 'scoped', 'nonrec'];
 
 export default {
     components: { renderLean, markdown },

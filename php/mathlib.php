@@ -27,8 +27,9 @@ if (!$lemma) {
         $binary = 'COLLATE utf8mb4_bin';
         $where = "name $binary regexp \"$regexp\"";
     }
-    else
-        $where = "json_length(imply) = 0";
+    else {
+        $where = "json_length(imply) = 0 order by rand()";
+    }
     foreach (get_rows("select * from mathlib where $where limit $limit", MYSQLI_NUM) as $args)
         $lemma[] = get_lemma($args);
 }

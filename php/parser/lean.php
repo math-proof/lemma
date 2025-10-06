@@ -482,6 +482,13 @@ abstract class Lean extends IndentedNode
             case 'public':
             case 'private':
             case 'protected':
+                while ($tokens[++$i] == ' ');
+                if ($tokens[$i] == 'nonrec') {
+                    $token .= ' nonrec';
+                    ++$i;
+                    while ($tokens[++$i] == ' ');
+                }
+                return $this->push_accessibility("Lean_$tokens[$i]", $token);
             case 'scoped':
             case 'noncomputable':
             case 'nonrec':
@@ -1391,6 +1398,17 @@ abstract class LeanArgs extends Lean
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
+
+    public function push_args_indented($indent, $newline_count, $function_call = true) {
+        $end = end($this->args);
+        if (!$function_call || $end instanceof LeanToken || $end instanceof LeanProperty || $end instanceof LeanParenthesis) {
+            $caret = new LeanCaret($indent);
+            $new = new LeanArgsNewLineSeparated([$caret], $indent);
+            $caret = $new->push_newlines($newline_count - 1);
+            $this->replace($end, new LeanArgsIndented($end, $new, $this->indent));
+            return $caret;
+        }
+    }
 }
 
 # Frac|Abs|Norm|Length|Sign|Square|Sqrt|Floor|Ceil|Sin|Cos|Tan|Cot|Arg|Neg|Inv|Cast|Coe|Exp|Log|Val|Card|ToNat|Arccos|Arcsin|Arctan|Arccot|Re|Im|Succ
@@ -1632,10 +1650,7 @@ class LeanParenthesis extends LeanPairedGroup
                 } else {
                     if ($this->indent == $indent)
                         $indent = $this->indent + 2;
-                    $caret = new LeanCaret($indent);
-                    $new = new LeanArgsNewLineSeparated([$caret], $indent);
-                    $caret = $new->push_newlines($newline_count - 1);
-                    $this->arg = new LeanArgsIndented($this->arg, $new, $this->indent);
+                    $caret = $this->push_args_indented($indent, $newline_count, false);
                 }
                 return $caret;
             }
@@ -2180,18 +2195,8 @@ class LeanProperty extends LeanBinary
 
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
-        if ($this->parent instanceof LeanTactic && $indent > $this->indent) {
-            $caret = new LeanCaret($indent);
-            $newline = new LeanArgsNewLineSeparated([$caret], $indent);
-            $caret = $newline->push_newlines($newline_count - 1);
-            $this->parent->replace($this, new LeanArgsIndented(
-                $this,
-                $newline,
-                $this->indent
-            ));
-            return $caret;
-        }
-
+        if ($this->parent instanceof LeanTactic && $indent > $this->indent)
+            return $this->parent->push_args_indented($indent, $newline_count, false);
         return $this->parent->insert_newline($this, $newline_count, $indent, $next);
     }
 }
@@ -2309,10 +2314,7 @@ class LeanAssign extends LeanBinary
                     if ($this->parent)
                         return $this->parent->insert_newline($this, $newline_count, $indent, $next);
                 } else {
-                    $caret = new LeanCaret($indent);
-                    $new = new LeanArgsNewLineSeparated([$caret], $indent);
-                    $caret = $new->push_newlines($newline_count - 1);
-                    $this->rhs = new LeanArgsIndented($this->rhs, $new, $this->indent);
+                    $caret = $this->push_args_indented($indent, $newline_count, false);
                 }
                 return $caret;
             }
@@ -4041,8 +4043,11 @@ class LeanStatements extends LeanArgs
         if ($this->indent > $indent)
             return parent::insert_newline($caret, $newline_count, $indent, $next);
 
-        if ($this->indent < $indent)
+        if ($this->indent < $indent) {
+            if ($caret = $this->push_args_indented($indent, $newline_count))
+                return $caret;
             throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+        }
 
         for ($i = 0; $i < $newline_count; ++$i) {
             $caret = new LeanCaret($indent);
@@ -5980,30 +5985,24 @@ class LeanArgsNewLineSeparated extends LeanArgs
             return parent::insert_newline($caret, $newline_count, $indent, $next);
 
         if ($this->indent < $indent) {
-            $end = end($this->args);
-            $caret = new LeanCaret($indent);
-            if ($end instanceof LeanToken || $end instanceof LeanProperty) {
-                // function call
-                $new = new LeanArgsNewLineSeparated([$caret], $indent);
-                $caret = $new->push_newlines($newline_count - 1);
-                $this->replace($end, new LeanArgsIndented($end, $new, $this->indent));
-            }
-            else
-                $this->push($caret);
-            return $caret;
-        } elseif ($this->parent instanceof LeanAssign && !($caret instanceof LeanLineComment))
-            return parent::insert_newline($caret, $newline_count, $indent, $next);
-        else {
-
-            if (end($this->args) === $caret) {
-                for ($i = 0; $i < $newline_count; ++$i) {
-                    $caret = new LeanCaret($indent);
-                    $this->push($caret);
-                }
+            if ($caret = $this->push_args_indented($indent, $newline_count))
                 return $caret;
-            }
-            throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+            $caret = new LeanCaret($indent);
+            $this->push($caret);
+            return $caret;
         }
+
+        if ($this->parent instanceof LeanAssign && !($caret instanceof LeanLineComment))
+            return parent::insert_newline($caret, $newline_count, $indent, $next);
+
+        if (end($this->args) === $caret) {
+            for ($i = 0; $i < $newline_count; ++$i) {
+                $caret = new LeanCaret($indent);
+                $this->push($caret);
+            }
+            return $caret;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
     public function __get($vname)
@@ -6073,7 +6072,7 @@ class LeanArgsIndented extends LeanBinary
     }
     public function is_indented()
     {
-        return false;
+        return $this->parent instanceof LeanStatements;
     }
 
     public function strFormat()
@@ -6094,29 +6093,21 @@ class LeanArgsIndented extends LeanBinary
             return parent::insert_newline($caret, $newline_count, $indent, $next);
 
         if ($this->indent < $indent) {
-            $end = end($this->args);
-            if ($end instanceof LeanToken || $end instanceof LeanProperty) {
-                // function call
-                $caret = new LeanCaret($indent);
-                $new = new LeanArgsNewLineSeparated([$caret], $indent);
-                $caret = $new->push_newlines($newline_count - 1);
-                $this->replace($end, new LeanArgsIndented($end, $new, $this->indent));
+            if ($caret = $this->push_args_indented($indent, $newline_count))
                 return $caret;
-            }
-            throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-        } elseif ($this->parent instanceof LeanAssign)
-            return parent::insert_newline($caret, $newline_count, $indent, $next);
-        else {
-
-            if (end($this->args) === $caret) {
-                for ($i = 0; $i < $newline_count; ++$i) {
-                    $caret = new LeanCaret($indent);
-                    $this->push($caret);
-                }
-                return $caret;
-            }
             throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
         }
+        if ($this->parent instanceof LeanAssign)
+            return parent::insert_newline($caret, $newline_count, $indent, $next);
+
+        if (end($this->args) === $caret) {
+            for ($i = 0; $i < $newline_count; ++$i) {
+                $caret = new LeanCaret($indent);
+                $this->push($caret);
+            }
+            return $caret;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
     public function __get($vname)
@@ -6475,7 +6466,7 @@ class LeanTactic extends LeanSyntax
     {
         $func = escape_specials($this->func);
         if ($this->only)
-            $func .= " only";
+            $func .= '\ only';
         //cm-def {color: #00f;} 
         //cm-keyword {color: #708;} 
         //defined in static/codemirror/lib/codemirror.css
@@ -7993,17 +7984,8 @@ class Lean_def extends LeanArgs
     {
         if ($this->indent < $indent) {
             if ($caret === $this->assignment) {
-                if ($caret instanceof LeanToken || $caret instanceof LeanProperty) {
-                    $caret = new LeanCaret($indent);
-                    $new = new LeanArgsNewLineSeparated([$caret], $indent);
-                    $caret = $new->push_newlines($newline_count - 1);
-                    $this->assignment = new LeanArgsIndented(
-                        $this->assignment,
-                        $new,
-                        $this->indent
-                    );
-                    return $caret;
-                }
+                if ($new = $this->push_args_indented($indent, $newline_count))
+                    return $new;
                 if ($caret instanceof LeanColon) {
                     if ($caret->rhs instanceof LeanCaret) {
                         $caret = $caret->rhs;

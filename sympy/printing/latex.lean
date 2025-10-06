@@ -326,6 +326,7 @@ def Expr.latexFormat : Expr → String
         | `letFun => "{\\begin{align*}&{\\color{blue}{let}}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
         | `OfScientific.ofScientific => "%s%s.%s"
+        -- | `cast
         | _  =>
           let args := args.map fun arg =>
             if func.priority ≥ arg.priority then
@@ -585,8 +586,13 @@ where
           map args
       | .Lean_operatorname `cast =>
         match args with
-        | [Basic (.ExprWithAttr _) _, a] =>
-          "\\cdots" :: map [a]
+        | [Basic func _, a] =>
+          match func with
+          | .ExprWithAttr _
+          | .Special ⟨.anonymous⟩ =>
+            "\\cdots" :: map [a]
+          | _ =>
+            map args
         | args =>
           map args
       | .Lean_operatorname `OfScientific.ofScientific =>

@@ -54,6 +54,7 @@ def Expr.joinWithAnd : List Expr → Expr
 partial def Expr.toExpr (e : Lean.Expr) (binders : List Expr) : MetaM Expr := do
   match ← Expr.func e Expr.toExpr binders with
   | .Operator func =>
+    -- panic! s!"first e : {e.ctorName} = \n{e}"
     let res ← match_condition_set e binders
     if res != nil then
       return res
@@ -62,10 +63,10 @@ partial def Expr.toExpr (e : Lean.Expr) (binders : List Expr) : MetaM Expr := do
     let ⟨args, extra_args⟩ ← Expr.filter_default func full_args
 /-
     if e.toString == "" then
-      println! s!"Expr.toExpr.Operator :
-e = {e}
-e = {← ppExpr e}, e.ctorName = {e.ctorName}
-func = {func}, func.ctorName = {func.ctorName}
+      Lean.logInfo s!"Expr.toExpr.Operator :
+e ← {← ppExpr e}
+e : {e.ctorName} = {e}
+func : {func.ctorName} = {func}
 binders = {binders}
 full_args.length = {full_args.length} :
 {"\n".intercalate (full_args.map fun arg => arg.toString)}
@@ -80,7 +81,7 @@ args.length = {args.length} :
   | .const expr =>
 /-
     if e.toString == "" then
-      println! s!"Expr.toExpr.const :
+      Lean.logInfo s!"Expr.toExpr.const :
 e = {e}, e = {← ppExpr e}, e.ctorName = {e.ctorName}
 expr = {expr}, expr.ctorName = {expr.ctorName}
 "
@@ -118,17 +119,17 @@ where
       let arg ← Expr.toExpr e_arg binders
 /-
       if e.toString == "" then
-        println! s!"Expr.toExpr.get_args.app :
+        Lean.logInfo s!"Expr.toExpr.get_args.app :
 func = {func}
-e = {e}
-e = {← ppExpr e}
-e_fn = {e_fn}
-e_fn = {← ppExpr e_fn}
+e ← {← ppExpr e}
+e : {e.ctorName} = {e}
+e_fn ← {← ppExpr e_fn}
+e_fn : {e_fn.ctorName} = \n{e_fn}
 e_fn.args :
 {"\n".intercalate (args.map fun arg => arg.toString)}
-e_arg = {e_arg}
-e_arg = {← ppExpr e_arg}
+e_arg ← {← ppExpr e_arg}
 e_arg = {arg}
+e_arg : {e_arg.ctorName} = \n{e_arg}
 binders = {binders}
 "
 -/
@@ -169,15 +170,15 @@ binders = {binders}
     let binderInfo := Binder.mk binderInfo binderType
 /-
       if e.toString == "" then
-        println! s!"Expr.toExpr.args_from_binders :
-e = {e}
-e = {← ppExpr e}
+        Lean.logInfo s!"Expr.toExpr.args_from_binders :
+e ← {← ppExpr e}
+e : {e.ctorName} = {e}
 binders = {binders}
 binderName = {binderName}
 binderType = {binderType}
 binderInfo = {binderInfo}
-body = {body}
-body' = {body'}
+body = {body'}
+body : {body.ctorName} = \n{body}
 "
 -/
 
@@ -187,7 +188,7 @@ body' = {body'}
     if let .app (.app (.const `setOf _) type) (.lam var type' cond .default) := e then
       if type' == type then
 /-
-        println! s!"Expr.toExpr.setOf.app :
+        Lean.logInfo s!"Expr.toExpr.setOf.app :
 type = {type}
 cond = {cond}
 cond = {← ppExpr cond}
@@ -203,7 +204,7 @@ cond = {← ppExpr cond}
             )
             (.lam arg0 type0 (.lam arg1 type1 cond .default) .default) := cond then
 /-
-        println! s!"Expr.toExpr.setOf.app :
+        Lean.logInfo s!"Expr.toExpr.setOf.app :
 var' = {var'}
 var = {var}
 type' = {type'}
@@ -411,4 +412,4 @@ def Lean.Expr.toExpr (e : Lean.Expr) (binders : List (Name × Lean.Expr)) : Core
   return ← MetaM.run' <| (_root_.Expr.toExpr e binders)
 
 def Lean.Expr.println (expr : Lean.Expr) (context : List (Name × Lean.Expr)) (hint : String) : CoreM Unit := do
-  println! "{hint}:\n{← expr.toExpr context}\nformat:\n{expr.format}\n"
+  Lean.logInfo s!"{hint}:\n{← expr.toExpr context}\nformat:\n{expr.format}\n"

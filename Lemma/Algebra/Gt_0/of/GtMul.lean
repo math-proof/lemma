@@ -1,4 +1,5 @@
-import Lemma.Algebra.Eq_0.of.NotGt_0
+import Lemma.Algebra.Gt_0.of.Gt
+import Lemma.Algebra.Gt_0.of.Mul.gt.Zero
 import Lemma.Algebra.Mul
 open Algebra
 
@@ -9,12 +10,9 @@ private lemma left
 -- given
   (h : n * m > k) :
 -- imply
-  n > 0 := by
+  n > 0 :=
 -- proof
-  by_contra h_n
-  have h_n := Eq_0.of.NotGt_0 h_n
-  rw [h_n] at h
-  simp_all
+  (Gt_0.of.Mul.gt.Zero.left ∘ Gt_0.of.Gt) h
 
 
 @[main]

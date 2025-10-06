@@ -492,7 +492,7 @@ partial def Expr.func (e : Lean.Expr) (toExpr : Lean.Expr → List Expr → Meta
   | .mvar mvarId  =>
 /-
     if e.toString == "" then
-      println! s!"Expr.func.mvar :
+      Lean.logInfo s!"Expr.func.mvar :
 e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
 -/
     Expr.func (← getExprMVarAssignment mvarId) toExpr binders
@@ -697,7 +697,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | .Operator func =>
 /-
       if e.toString == "" then
-        println! s!"Expr.func.app.Operator :
+        Lean.logInfo s!"Expr.func.app.Operator :
 e = {e}, e = {← ppExpr e}
 fn = {fn}, fn = {← ppExpr fn}
 arg = {arg}, arg = {← ppExpr arg}
@@ -723,7 +723,7 @@ func = {func}
     | .const c =>
 /-
       if e.toString == "" then
-        println! s!"Expr.func.app.const :
+        Lean.logInfo s!"Expr.func.app.const :
 e = {e}, e = {← ppExpr e}
 fn = {fn}, fn = {← ppExpr fn}, fn.ctoName = {fn.ctorName}
 arg = {arg}, arg = {← ppExpr arg}, arg.ctoName = {arg.ctorName}

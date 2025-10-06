@@ -64,6 +64,7 @@ if ($_POST) {
 	$term = "(?:[A-Z][\w']*|(?:of|is|et|ou|to|eq|ne|gt|lt|ge|le|in|as|dvd|sub|sup|subset|supset|mod)(?=\.))";
 	$sections = std\listdir($root = dirname(dirname(__FILE__)) . "/Lemma/");
 	$sectionRegex = implode('|', $sections);
+	$sectionRegex = str_replace('List', 'List(?!\.Vector)', $sectionRegex); // avoid List.Vector
 	$sectionRegex = "(?:$sectionRegex)(?=\.[A-Z])";
 
 	function detect_lemma(&$line)  {

@@ -15,7 +15,7 @@ import Lemma.Algebra.Gt_0.of.Gt
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.MulMul
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Vector.Eq.of.All_EqGetS.Eq
+import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Algebra.Mul_Mul
 import Lemma.List.MulProd_Mul_Prod.eq.Mul_Prod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
@@ -95,7 +95,7 @@ private lemma main
         rw [GetCast_Map.eq.UFnGet.of.Eq.Lt]
         ·
           simp
-          apply Eq.of.All_EqGetS.Eq
+          apply SEq.of.All_EqGetS.Eq
           ·
             intro t
             have h_t : t < n * s.tail.prod := by

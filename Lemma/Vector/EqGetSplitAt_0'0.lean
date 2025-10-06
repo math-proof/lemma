@@ -1,6 +1,6 @@
 import sympy.vector.vector
 import Lemma.Logic.EqCast.of.Eq
-import Lemma.Vector.Eq.of.All_EqGetS.Eq
+import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Vector.EqGetRange.of.Lt
 import Lemma.Vector.GetTake.eq.Get.of.Lt_Min
@@ -25,7 +25,7 @@ private lemma main
   unfold List.Vector.array_slice
   simp
   apply EqCast.of.SEq
-  apply Eq.of.All_EqGetS.Eq
+  apply SEq.of.All_EqGetS.Eq
   ·
     intro i
     simp [GetTake.eq.Get.of.Lt_Min]

@@ -81,8 +81,8 @@ def Expr.mp' (type proof : Lean.Expr) (parity : Nat) (reverse : Bool := false) :
       let ⟨lamBinders, intro⟩ := proof.decompose_lam []
       let ⟨us, mp, mpr⟩ := intro.decomposeIff
       let mp := if reverse then mpr else mp
-      println! s!"us = {us}"
-      println! s!"mp = {mp}"
+      Lean.logInfo s!"us = {us}"
+      Lean.logInfo s!"mp = {mp}"
       for deBruijn in deBruijn do
         if mp.containsBVar deBruijn then
           let ⟨_, instType, _⟩ := lamBinders[deBruijn]!
@@ -120,7 +120,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.parity
-    println! s!"parity = {parity}"
+    Lean.logInfo s!"parity = {parity}"
     let ⟨type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity
     addAndCompile <| .thmDecl {
       name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
@@ -155,6 +155,6 @@ initialize registerBuiltinAttribute {
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
-    -- println! "decl.type = \n{decl.type.format}"
-    println! "decl.value! = \n{decl.value!.format}"
+    -- Lean.logInfo "decl.type = \n{decl.type.format}"
+    Lean.logInfo "decl.value! = \n{decl.value!.format}"
 }

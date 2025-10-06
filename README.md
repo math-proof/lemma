@@ -99,6 +99,11 @@ bash sh/update.sh
 . ps1/update.ps1
 ```
 
+## Start lake server manually
+```sh
+lake serve -- yourProjectDir
+```
+
 # trouble-shooting for VSCode
 
 ## Error loading webview
