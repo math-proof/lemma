@@ -125,7 +125,7 @@ replace into
 			var count = 0;
 			while (this.has_remaining() && count++ < 30) {
 				// wait until all lemmas are built
-				await sleep(10, 'waiting for all lemmas to be built');
+				await sleep(10, `waiting ${count * 10} seconds for all lemmas to be built`);
 			}
 			// refresh the current page with ?mathlib=
 			location.search = `?mathlib=`;
