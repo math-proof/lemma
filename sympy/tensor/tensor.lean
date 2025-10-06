@@ -11,7 +11,7 @@ import Lemma.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
 import Lemma.List.GtLength_0.of.Cons.in.CartesianProduct
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
-import Lemma.List.EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1
+import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.Sub_1.lt.LengthTail.of.Gt_0.Lt_Length
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
@@ -72,7 +72,7 @@ def Tensor.getEllipsis (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offs
     )
     cast
       (by
-        rw [EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1 (by assumption)]
+        rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 (by assumption)]
         simp only [EqAddSub.of.Ge h_1]
         conv_rhs =>
           rw [Eq_Cons_Tail.of.GtLength_0 (v := s.eraseIdx offset) (show (s.eraseIdx offset).length > 0 by

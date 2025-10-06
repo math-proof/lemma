@@ -8,6 +8,14 @@ import Lemma.Tensor.ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.Logic.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Algebra.Gt_0.of.Gt
+import Lemma.Algebra.Lt_Sub.of.LtAdd
+import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
+import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
+import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.EqCons_Tail.of.GtLength_0
+import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
+import Lemma.List.GetSet.eq.Get.of.Gt.Lt_Length
 open Algebra Tensor Logic List
 
 
@@ -43,12 +51,28 @@ private lemma main
     simp at ih
     apply SEqCastS.of.SEq.Eq.Eq
     ·
-      rw [List.HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
-      rw [List.GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)]
-      rw [List.EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1 (by simpa)]
-      sorry
+      rw [HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
+      rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)]
+      rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 (by simpa)]
+      have h_length : ((s.set (dim + 1) (n * s[dim + 1])).eraseIdx (dim + 1)).length > 0 := by
+        rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simpa)]
+        simp_all
+      conv_rhs =>
+        rw [Eq_Cons_Tail.of.GtLength_0 h_length]
+      simp
+      rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
+      rw [GetSet.eq.Get.of.Gt.Lt_Length]
+      simp
     ·
-      sorry
+      rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 (by simpa)]
+      rw [HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
+      have h_length : (s.eraseIdx (dim + 1)).length > 0 := by
+        rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simpa)]
+        simp_all
+      conv_rhs =>
+        rw [Eq_Cons_Tail.of.GtLength_0 h_length]
+      simp
+      rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
     ·
       sorry
 

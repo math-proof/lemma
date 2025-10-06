@@ -1,4 +1,4 @@
-import Lemma.List.EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1
+import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 open List
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   s.tail.eraseIdx i = (s.eraseIdx (i + 1)).tail := by
 -- proof
-  apply EraseIdxTail.eq.EraseIdx.of.Lt_SubLength_1
+  apply EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
   simp at h
   assumption
 
