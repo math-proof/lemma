@@ -7,7 +7,15 @@ import Lemma.Algebra.Gt_0
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
-open Tensor Algebra List
+import Lemma.Logic.EqCast.of.SEq
+import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
+import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
+import Lemma.List.TailSet.eq.SetTail.of.Gt_0
+import Lemma.Logic.SEqCast.of.Eq.Eq
+import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
+import Lemma.Algebra.Ge_1.of.Gt_0
+import Lemma.Vector.EqGetRange
+open Tensor Algebra List Logic Vector
 
 
 @[main]
@@ -49,7 +57,29 @@ private lemma main
   ext i
   simp
   rw [GetToVector.eq.Get.of.GtLength_0.headd (by simpa)]
-  sorry
+  apply Eq_Cast.of.SEq
+  simp
+  have hi := LtVal i
+  simp only [HeadD.eq.Get_0.of.GtLength_0 (by simp_all) (s := s.set d (n * s[d]))] at hi
+  rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by assumption) (by assumption)] at hi
+  have h_eq := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0 h hi X n
+  simp at h_eq
+  simp only [GetElem.getElem] at h_eq
+  rw [h_eq]
+  apply SEqCast.of.Eq.Eq
+  ·
+    rw [TailSet.eq.SetTail.of.Gt_0 (by assumption)]
+    rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1]
+    ·
+      have h_d := Ge_1.of.Gt_0 h
+      simp [EqAddSub.of.Ge h_d]
+    ·
+      simp at h_d_1
+      assumption
+  ·
+    congr
+    simp [s₀]
+    rw [EqGetRange.fin]
 
 
 -- created on 2025-10-05

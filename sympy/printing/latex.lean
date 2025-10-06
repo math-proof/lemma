@@ -544,7 +544,26 @@ where
         | _ =>
           map args
       | `Fin.mk =>
-        cdots args
+        let a : Option Expr :=
+          match args with
+          | [a, Basic op _] =>
+            match op with
+            | .ExprWithAttr _
+            | .ExprWithLimits .Lean_let =>
+              a
+            | .UnaryPrefix op =>
+              if op.func.priority == 76 then
+                a
+              else
+                none
+            | _ =>
+              none
+          | _ =>
+            none
+        if let some a := a then
+          map [a] ++ ["\\cdots"]
+        else
+          map args
       | _ =>
         map args
     | .BinaryInfix ⟨`Membership.mem⟩ =>
