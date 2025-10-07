@@ -3,9 +3,9 @@ import Lemma.Algebra.All_Le.of.All_Le.All_Eq_Ite
 import Lemma.Algebra.Sum.eq.Sum_Add_Sub.of.In_Range.All_Eq_Ite
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Lt.of.Eq_Add.Lt_0
-import Lemma.Algebra.LeSumS.of.All_Le
+import Lemma.Finset.LeSumS.of.All_Le
 import Lemma.Algebra.Lt.of.Le.Lt
-open Algebra
+open Algebra Finset
 
 
 @[main]

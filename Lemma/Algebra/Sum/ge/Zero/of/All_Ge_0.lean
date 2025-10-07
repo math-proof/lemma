@@ -1,5 +1,5 @@
-import Lemma.Algebra.GeSumS.of.All_Ge
-open Algebra
+import Lemma.Finset.GeSumS.of.All_Ge
+open Finset
 
 
 @[main]

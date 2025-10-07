@@ -777,24 +777,6 @@ where
             var {list, dict} = open;
             var keys = Object.keys(list);
             var open = [];
-            for (let key of keys) {
-                switch (key) {
-                case 'Set':
-                case 'Algebra':
-                case 'Lean':
-                case 'Elab.Tactic':
-                case 'Lean.Meta':
-                case 'Meta':
-                case 'Elab':
-                case 'Tactic':
-                case 'Command':
-                case 'Parser.Term':
-                case 'Parser.Tactic':
-                    break;
-                default:
-                    open.push(`namespace ${key}\nend ${key}`);
-                }
-            }
             keys = keys.join(' ');
             if (keys)
                 open.push(`open ${keys}`);
