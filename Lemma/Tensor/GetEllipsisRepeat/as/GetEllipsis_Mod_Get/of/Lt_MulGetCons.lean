@@ -16,7 +16,17 @@ import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
 import Lemma.List.GetSet.eq.Get.of.Gt.Lt_Length
-open Algebra Tensor Logic List
+import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
+import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
+import Lemma.List.TailSet.eq.SetTail.of.Gt_0
+import Lemma.Algebra.EqSubAdd
+import Lemma.List.EraseIdxSet.eq.EraseIdx
+import Lemma.Tensor.GetFromVector.eq.Get
+import Lemma.Algebra.LtVal
+import Lemma.List.LengthSet.eq.Length
+import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Lemma.Vector.EqGetRange
+open Algebra Tensor Logic List Vector
 
 
 @[main]
@@ -42,12 +52,12 @@ private lemma main
     simp
     rw [ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0 (by simp)]
     simp
-    have h_s : s.tail.length > 0 := by
+    have h_tail : s.tail.length > 0 := by
       simp
       linarith
     have h_dim := Lt_Sub.of.LtAdd.nat h_dim
     have ih := ih (s := s.tail) (by simp [h_dim]) (by rwa [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)])
-    simp only [h_s] at ih
+    simp only [h_tail] at ih
     simp at ih
     apply SEqCastS.of.SEq.Eq.Eq
     ·
@@ -74,8 +84,34 @@ private lemma main
       simp
       rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
     ·
-      sorry
+      rw [ToVector.eq.MapRange_Get.of.GtLength_0 (by simpa)]
+      simp
+      apply SEq.of.All_SEqGetS.Eq.Eq
+      ·
+        rw [TailSet.eq.SetTail.of.Gt_0 (by simp)]
+        rw [EqSubAdd.int]
+        rw [EraseIdxSet.eq.EraseIdx]
+      ·
+        intro t
+        repeat rw [GetFromVector.eq.Get]
+        simp
+        have h_t := LtVal t
+        have h_fin := EqGetRange.fin (⟨t, by simp_all⟩ : Fin ((s.set (dim + 1) (n * s.get ⟨dim + 1, by simpa⟩)).headD 1))
+        simp only [HeadD.eq.Get_0.of.GtLength_0 (show (s.set (dim + 1) (n * s[dim + 1])).length > 0 by rwa [LengthSet.eq.Length])] at h_t
+        rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)] at h_t
+        have := EqGetRange.fin (⟨t, by simp only [HeadD.eq.Get_0.of.GtLength_0 h_s]; assumption⟩ : Fin (s.headD 1))
+        rw [← Length.eq.Get_0.of.GtLength_0 h_s X] at h_t
+        have ih := ih X[t]
+        simp only [GetElem.getElem] at ih
+        simp only [GetElem.getElem]
+        simp only [this]
+        simp only [h_fin]
+        apply SEq.symm ∘ Logic.SEq.of.SEq.SEq ih.symm
+        sorry
+      ·
+        repeat rw [HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
+        rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)]
 
 
 -- created on 2025-10-05
--- updated on 2025-10-06
+-- updated on 2025-10-07

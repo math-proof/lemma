@@ -6,9 +6,9 @@ open Tensor Vector
 @[main]
 private lemma fin
 -- given
-  (v : Tensor α (n :: s)) :
+  (X : Tensor α (n :: s)) :
 -- imply
-  v.toVector = (List.Vector.range n).map fun i => v.get i := by
+  X.toVector = (List.Vector.range n).map fun i => X.get i := by
 -- proof
   ext i
   simp
@@ -20,9 +20,9 @@ private lemma fin
 @[main]
 private lemma main
 -- given
-  (v : Tensor α (n :: s)) :
+  (X : Tensor α (n :: s)) :
 -- imply
-  v.toVector = (List.Vector.range n).map fun i => v[i] := by
+  X.toVector = (List.Vector.range n).map fun i => X[i] := by
 -- proof
   apply fin
 
