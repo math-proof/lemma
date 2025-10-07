@@ -1,22 +1,37 @@
 import sympy.tensor.tensor
-import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0
-import Lemma.Algebra.EqMod_1'0
-import Lemma.Tensor.EqGetUnsqueeze
 import Lemma.List.Lt_LengthInsertIdx
-open Tensor Algebra List
+import Lemma.Tensor.GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.Tensor.SEqGetEllipsisUnsqueeze.of.Le_Length
+import Lemma.Algebra.EqMod_1'0
+open List Tensor Algebra
 
 
 @[main]
 private lemma main
+  {s : List ℕ}
 -- given
   (h_i : i < n)
-  (X : Tensor α s)
-  (dim : Fin s.length) :
+  (h_dim : dim ≤ s.length)
+  (X : Tensor α s) :
 -- imply
-  have h_dim := Lt_LengthInsertIdx dim 1
-  ((X.unsqueeze dim).repeat n ⟨dim, h_dim⟩).getEllipsis ⟨dim, by simp_all⟩ ⟨i, by simp_all⟩ ≃ X := by
+  have h_dim : dim < (s.insertIdx dim 1).length := by
+    rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]
+    omega
+  ((X.unsqueeze dim).repeat n ⟨dim, h_dim⟩).getEllipsis ⟨dim, by simpa⟩ ⟨i, by simp_all⟩ ≃ X := by
 -- proof
-  sorry
+  intro h_dim
+  let s' := s.insertIdx dim 1
+  let dim' : Fin s'.length := ⟨dim, by simpa⟩
+  have h_i : i < n * s'[dim'] := by
+    simpa [s', dim']
+  have h := GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet h_i (X.unsqueeze dim)
+  simp [dim', s'] at h
+  apply h.trans
+  simp [EqMod_1'0]
+  apply SEqGetEllipsisUnsqueeze.of.Le_Length
+  omega
 
 
 -- created on 2025-10-05
+-- updated on 2025-10-07
