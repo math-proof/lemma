@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 import Lemma.Logic.Or.of.Or.Imp
-import Lemma.Logic.And.of.And.Imp
+import Lemma.Bool.And.of.And.Imp
 import Lemma.Logic.Imp.is.ImpNotS
 import Lemma.Logic.Imp.of.Imp.Imp
 import stdlib.Lean.Expr -- using Lean.Expr.is_Prop
@@ -11,8 +11,8 @@ open Lean Elab.Tactic Meta Parser.Tactic
 A helper that returns the correct lemma name for each path step.
 -/
 def lemmaName : String × Bool → Name
-  | ("And", true)  => `Logic.And.of.And.Imp.left
-  | ("And", false) => `Logic.And.of.And.Imp
+  | ("And", true)  => `Bool.And.of.And.Imp.left
+  | ("And", false) => `Bool.And.of.And.Imp
   | ("Or",  true)  => `Logic.Or.of.Or.Imp.left
   | ("Or",  false) => `Logic.Or.of.Or.Imp
   | ("Not",  _) => `Logic.ImpNotS.of.Imp

@@ -8,9 +8,9 @@ import Lemma.Logic.BFn_Ite__Ite.is.And.ou.OrAndS
 import Lemma.Logic.And_NotAnd.of.And_Not
 import Lemma.Logic.Cond.of.OrAnd
 import Lemma.Logic.Or.of.Or.Imp
-import Lemma.Logic.And.of.And.Imp
+import Lemma.Bool.And.of.And.Imp
 import Lemma.Logic.Imp.is.ImpNotS
-open Logic
+open Logic Bool
 
 
 @[main, comm]
