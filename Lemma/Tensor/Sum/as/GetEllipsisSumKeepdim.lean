@@ -5,6 +5,7 @@ import Lemma.Logic.SEqCast.of.SEq.Eq
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Algebra.LtVal
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
+import Lemma.Tensor.GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet
 open Tensor Logic List Algebra
 
 
@@ -32,7 +33,11 @@ private lemma main
   ·
     simp [EqSetInsertIdxEraseIdx.of.Lt_Length]
   ·
+    have h := GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet (by simpa) ((X.sum dim).unsqueeze dim) (i := 0) (dim := ⟨dim, by simpa⟩)
+    apply SEq.symm ∘ h.trans
+    simp
     sorry
 
 
 -- created on 2025-10-05
+-- updated on 2025-10-07
