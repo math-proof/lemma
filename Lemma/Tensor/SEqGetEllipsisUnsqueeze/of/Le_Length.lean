@@ -13,8 +13,8 @@ open List Tensor Vector
 @[main]
 private lemma main
 -- given
-  (X : Tensor α s)
-  (h_dim : dim ≤ s.length) :
+  (h_dim : dim ≤ s.length)
+  (X : Tensor α s) :
 -- imply
   (X.unsqueeze dim).getEllipsis ⟨dim, by rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by
 -- proof
@@ -45,7 +45,7 @@ private lemma main
           simp at h
           rw [h]
           simp at h_dim
-          have ih := ih (X.get (List.Vector.range s₀)[i]) h_dim
+          have ih := ih h_dim (X.get (List.Vector.range s₀)[i])
           apply SEq.trans ih
           simp [GetElem.getElem]
           rw [EqGetRange.fin]

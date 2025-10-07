@@ -6,6 +6,8 @@ import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Algebra.LtVal
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Tensor.GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet
+import Lemma.Tensor.SEqGetEllipsisUnsqueeze.of.Le_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 open Tensor Logic List Algebra
 
 
@@ -35,8 +37,9 @@ private lemma main
   ·
     have h := GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet (by simpa) ((X.sum dim).unsqueeze dim) (i := 0) (dim := ⟨dim, by simpa⟩)
     apply SEq.symm ∘ h.trans
-    simp
-    sorry
+    apply SEqGetEllipsisUnsqueeze.of.Le_Length
+    rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_lt]
+    omega
 
 
 -- created on 2025-10-05
