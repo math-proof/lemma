@@ -26,6 +26,7 @@ import Lemma.Algebra.LtVal
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Vector.EqGetRange
+import Lemma.Tensor.GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq
 open Algebra Tensor Logic List Vector
 
 
@@ -99,15 +100,15 @@ private lemma main
         have h_fin := EqGetRange.fin (⟨t, by simp_all⟩ : Fin ((s.set (dim + 1) (n * s.get ⟨dim + 1, by simpa⟩)).headD 1))
         simp only [HeadD.eq.Get_0.of.GtLength_0 (show (s.set (dim + 1) (n * s[dim + 1])).length > 0 by rwa [LengthSet.eq.Length])] at h_t
         rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)] at h_t
-        have := EqGetRange.fin (⟨t, by simp only [HeadD.eq.Get_0.of.GtLength_0 h_s]; assumption⟩ : Fin (s.headD 1))
+        have h_fin' := EqGetRange.fin (⟨t, by simp only [HeadD.eq.Get_0.of.GtLength_0 h_s]; assumption⟩ : Fin (s.headD 1))
         rw [← Length.eq.Get_0.of.GtLength_0 h_s X] at h_t
         have ih := ih X[t]
-        simp only [GetElem.getElem] at ih
-        simp only [GetElem.getElem]
-        simp only [this]
-        simp only [h_fin]
-        apply SEq.symm ∘ Logic.SEq.of.SEq.SEq ih.symm
-        sorry
+        simp only [GetElem.getElem] at ih ⊢
+        simp only [h_fin', h_fin]
+        apply SEq.symm ∘ SEq.of.SEq.SEq ih.symm
+        rw [GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq (by simp) ((X.get ⟨t, by assumption⟩).repeat n ⟨dim, by simpa⟩) ⟨dim, by simpa⟩ ⟨i, by simpa⟩]
+        apply Logic.SEqCast.of.Eq
+        simp
       ·
         repeat rw [HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
         rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)]
