@@ -1,7 +1,7 @@
-import Lemma.Trigonometry.Arg.eq.Ite__Ite_Arccos
+import Lemma.Complex.Arg.eq.Ite__Ite_Arccos
 import Lemma.Algebra.AbsAdd_MulI.eq.SqrtAddSquareS
 import Lemma.Algebra.EqAdd_MulI_0.eq.AndEqS_0
-open Algebra Trigonometry
+open Algebra Complex
 
 
 @[main]

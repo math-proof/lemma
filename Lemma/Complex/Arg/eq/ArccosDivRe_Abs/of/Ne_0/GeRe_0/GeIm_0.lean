@@ -1,8 +1,8 @@
-import Lemma.Trigonometry.Arg.eq.Ite__Ite_Arcsin
+import Lemma.Complex.Arg.eq.Ite__Ite_Arcsin
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Ge_0
 import Lemma.Algebra.SquareDiv.eq.DivSquareS
 import Lemma.Algebra.GeNorm_0
-open Algebra Trigonometry
+open Algebra Complex
 
 
 @[main]

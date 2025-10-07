@@ -1,11 +1,11 @@
-import Lemma.Trigonometry.ExpMulI.eq.AddCos_MulISin
+import Lemma.Complex.ExpMulI.eq.AddCos_MulISin
 import Lemma.Algebra.Expr.eq.AddRe_MulIIm
 import Lemma.Bool.Eq.of.Eq.Eq
 import Lemma.Algebra.Mul_Add.eq.AddMulS
-import Lemma.Trigonometry.Re.eq.MulAbs_CosArg
-import Lemma.Trigonometry.Im.eq.MulAbs_SinArg
+import Lemma.Complex.Re.eq.MulAbs_CosArg
+import Lemma.Complex.Im.eq.MulAbs_SinArg
 import Lemma.Algebra.Eq.of.EqReS.EqImS
-open Algebra Trigonometry Bool
+open Algebra Bool Complex
 
 
 @[main]
@@ -19,13 +19,13 @@ private lemma main
   rw [Mul_Add.eq.AddMulS]
   apply Eq.of.EqReS.EqImS
   simp at *
-  have h_Eq : (z.arg : ℂ).cos.re = cos z.arg := by
-    simp [cos]
+  have h_Eq : (z.arg : ℂ).cos.re = z.arg.cos := by
+    simp [Real.cos]
   rw [h_Eq]
   apply Re.eq.MulAbs_CosArg (z := z)
   simp at *
-  have h_Eq : (z.arg : ℂ).sin.re = sin z.arg := by
-    simp [sin]
+  have h_Eq : (z.arg : ℂ).sin.re = z.arg.sin := by
+    simp [Real.sin]
   rw [h_Eq]
   apply Im.eq.MulAbs_SinArg (z := z)
 
