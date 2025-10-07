@@ -1,6 +1,6 @@
-import Lemma.Logic.Any_Iff
+import Lemma.Bool.Any_Iff
 import Lemma.Logic.Imp.of.BFn_Ite
-open Logic
+open Logic Bool
 
 
 @[main]

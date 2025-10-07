@@ -1,10 +1,10 @@
 import sympy.sets.sets
 import Lemma.Algebra.Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0
 import Lemma.Logic.NotAny.is.All_Not
-import Lemma.Logic.AndAnd.is.And_And
+import Lemma.Bool.AndAnd.is.And_And
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.Algebra.AllIco.of.AllRange
-import Lemma.Logic.All_And.of.All.All
+import Lemma.Bool.All_And.of.All.All
 import Lemma.Algebra.Eq.of.Le.Ge
 import Lemma.Logic.All.of.All.All_Imp
 import Lemma.Algebra.All_LeRoot_Sqrt.of.All_Ge_1
@@ -20,10 +20,10 @@ import Lemma.Algebra.Lt.of.Lt.Le
 import Lemma.Algebra.Pow1.eq.One
 import Lemma.Algebra.SubNatNat.eq.Sub
 import Lemma.Algebra.SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
-import Lemma.Logic.All_EqUFnS.of.All_Eq
+import Lemma.Bool.All_EqUFnS.of.All_Eq
 import Lemma.Algebra.EqAdd0
 import Lemma.Algebra.Cast_0.eq.Zero
-open Algebra Logic
+open Algebra Logic Bool
 
 
 /--

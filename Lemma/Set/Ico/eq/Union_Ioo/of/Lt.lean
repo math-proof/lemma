@@ -1,6 +1,6 @@
 import sympy.sets.sets
-import Lemma.Logic.Ne.is.NotEq
-open Logic
+import Lemma.Bool.Ne.is.NotEq
+open Bool
 
 
 @[main]

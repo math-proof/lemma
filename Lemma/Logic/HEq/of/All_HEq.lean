@@ -1,5 +1,5 @@
-import Lemma.Logic.HEq.of.All_HEq.Eq
-open Logic
+import Lemma.Bool.HEq.of.All_HEq.Eq
+open Bool
 
 
 @[main]

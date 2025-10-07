@@ -1,11 +1,11 @@
 import sympy.tensor.tensor
-import Lemma.Logic.EqCast.of.SEq
+import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Algebra.LtVal
 import Lemma.Vector.EqUnflattenFlatten
-open Logic Vector Tensor Algebra
+open Vector Tensor Algebra Bool
 
 
 @[main]

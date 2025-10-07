@@ -1,5 +1,5 @@
-import Lemma.Logic.AndAnd.is.And_And
-open Logic
+import Lemma.Bool.AndAnd.is.And_And
+open Bool
 
 
 @[main]

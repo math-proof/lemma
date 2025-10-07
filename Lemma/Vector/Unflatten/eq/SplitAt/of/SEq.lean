@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Logic.EqCast.of.SEq
-open Logic
+import Lemma.Bool.EqCast.of.SEq
+open Bool
 
 
 @[main]

@@ -1,7 +1,7 @@
 import Lemma.Logic.NotOr.is.AndNotS
 import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Logic.Imp.is.OrNot
-import Lemma.Logic.ImpOr.is.Imp.Imp
+import Lemma.Bool.ImpOr.is.Imp.Imp
 open Logic Bool
 
 

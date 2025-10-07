@@ -1,6 +1,6 @@
-import Lemma.Logic.BFn_Ite.is.OrAndS
+import Lemma.Bool.BFn_Ite.is.OrAndS
 import Lemma.Algebra.Min.eq.IteGe
-open Logic Algebra
+open Algebra Bool
 
 
 @[main]

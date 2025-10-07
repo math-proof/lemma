@@ -1,9 +1,9 @@
 import sympy.core.relational
 import Lemma.Bool.BFn_Ite__Ite.is.And.ou.OrAndS
-import Lemma.Logic.And_NotAnd_Not.is.OrAndS
+import Lemma.Bool.And_NotAnd_Not.is.OrAndS
 import Lemma.Logic.And_And.is.And.of.Imp
 import Lemma.Logic.IffOrAndS
-import Lemma.Logic.OrOr
+import Lemma.Bool.OrOr
 import Lemma.Logic.OrOr.is.Or_Or
 import Lemma.Logic.NotOr.is.Imp.Not
 open Logic Bool

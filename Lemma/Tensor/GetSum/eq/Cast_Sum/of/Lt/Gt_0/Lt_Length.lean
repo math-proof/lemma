@@ -4,8 +4,8 @@ import Lemma.List.Sub_1.lt.LengthTail.of.Gt_0.Lt_Length
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_LengthTail
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length
-import Lemma.Logic.EqCast.of.SEq
-open Tensor Algebra Logic List
+import Lemma.Bool.EqCast.of.SEq
+open Tensor Algebra List Bool
 
 
 @[main]

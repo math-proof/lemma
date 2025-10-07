@@ -1,6 +1,6 @@
 import Lemma.Algebra.Min.eq.IteLe
-import Lemma.Logic.Ite.eq.IteNot
-open Algebra Logic
+import Lemma.Bool.Ite.eq.IteNot
+open Algebra Bool
 
 
 @[main]

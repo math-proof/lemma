@@ -1,7 +1,7 @@
 import Lemma.List.Slice.eq.Nil.of.Ge
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.List.EqAppendTake__Drop
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.DropAppend.eq.AppendDrop.of.Le_Length
 import Lemma.Algebra.Le.of.Le.Lt
 import Lemma.Logic.NotAnd.is.OrNotS
@@ -10,7 +10,7 @@ import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Algebra.GeSubS.of.Ge
 import Lemma.List.DropTake.eq.TakeDrop
-open Algebra Logic List
+open Algebra Logic List Bool
 
 
 @[main]

@@ -1,8 +1,8 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.Get.eq.DataGet.of.Flatten.eq.Data
-import Lemma.Logic.EqUFnS.of.Eq
-open Tensor Logic
+import Lemma.Bool.EqUFnS.of.Eq
+open Tensor Bool
 
 
 @[main]

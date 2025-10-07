@@ -1,6 +1,6 @@
-import Lemma.Logic.Ite.eq.IteNot
+import Lemma.Bool.Ite.eq.IteNot
 import Lemma.Algebra.Max.eq.IteLe
-open Logic Algebra
+open Algebra Bool
 
 
 @[main]

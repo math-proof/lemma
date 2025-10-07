@@ -1,5 +1,5 @@
-import Lemma.Logic.SEq.of.Eq
-open Logic
+import Lemma.Bool.SEq.of.Eq
+open Bool
 
 
 @[main, comm]

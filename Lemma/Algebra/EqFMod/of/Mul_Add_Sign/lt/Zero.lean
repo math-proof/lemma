@@ -1,7 +1,7 @@
 import Lemma.Algebra.EqSign_1.of.Gt_0
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.Lt.of.Le.Ne
-import Lemma.Logic.Ne.is.NotEq
+import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.Sign.eq.Neg1.of.Lt_0
 import Lemma.Algebra.AddSub.eq.Sub_Sub
 import Lemma.Algebra.GeSub_1.of.Gt
@@ -12,7 +12,7 @@ import Lemma.Algebra.LeAdd_1.of.Lt
 import Lemma.Algebra.Mul
 import Lemma.Set.EqFMod.of.Gt_Zero.Icc0Sub_1
 import Lemma.Set.EqFMod.of.Lt_0.IccAdd_1'0
-open Algebra Set Logic
+open Algebra Set Bool
 
 
 @[main]

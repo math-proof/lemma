@@ -4,7 +4,7 @@ import Lemma.Algebra.EqNegS.is.Eq
 import Lemma.Algebra.NegMul.eq.MulNeg
 import Lemma.Algebra.FMod.eq.Zero.of.Any_Eq_Mul
 import Lemma.Algebra.Any_Eq_AddMul.of.EqFMod
-import Lemma.Logic.Ne.is.NotEq
+import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.FDiv.eq.FloorDiv
 import Lemma.Algebra.NegAdd.eq.SubNeg
@@ -20,7 +20,7 @@ import Lemma.Algebra.EqSubS.is.Eq
 import Lemma.Algebra.DivNeg.eq.NegDiv
 import Lemma.Algebra.FDivNegFMod.eq.Neg1.of.FMod.ne.Zero.Ne_0
 import Lemma.Algebra.DivInt.eq.Div
-open Algebra Logic
+open Algebra Bool
 
 
 @[main]

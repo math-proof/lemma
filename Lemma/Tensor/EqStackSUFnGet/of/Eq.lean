@@ -1,7 +1,7 @@
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.EqGetStack
-import Lemma.Logic.SEq.of.Eq
-open Tensor Logic
+import Lemma.Bool.SEq.of.Eq
+open Tensor Bool
 
 
 @[main]

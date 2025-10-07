@@ -1,7 +1,7 @@
 import stdlib.SEq
 import Lemma.Vector.Eq.of.EqValS
-import Lemma.Logic.EqUFnS.of.Eq
-open Vector Logic
+import Lemma.Bool.EqUFnS.of.Eq
+open Vector Bool
 
 
 @[main]

@@ -8,11 +8,11 @@ import Lemma.Algebra.Gt.of.Gt.Gt
 import Lemma.Algebra.All_Eq.of.All_Eq.Eq
 import Lemma.Algebra.All_Eq.of.All_Eq.Lt
 import Lemma.Algebra.Eq.of.All_Eq.Lt
-import Lemma.Logic.All_EqUFnS.of.All_Eq
+import Lemma.Bool.All_EqUFnS.of.All_Eq
 import Lemma.Algebra.Pow1.eq.One
 import Lemma.Algebra.Ge.of.Eq
 import Lemma.Logic.All.of.All.All_Imp
-open Algebra Logic
+open Algebra Logic Bool
 
 
 /--

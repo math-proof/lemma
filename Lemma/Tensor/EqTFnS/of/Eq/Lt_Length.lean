@@ -1,8 +1,8 @@
 import Lemma.Vector.HEq.of.EqValS
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.Tensor.EqLengthS.of.SEq
-import Lemma.Logic.HEq.of.Cond.Cond
-open Logic Tensor Vector Bool
+import Lemma.Bool.HEq.of.Cond.Cond
+open Tensor Vector Bool
 
 
 @[main]

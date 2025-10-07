@@ -1,9 +1,9 @@
 import Lemma.Logic.HEq.of.Eq_Cast
 import Lemma.Logic.EqCast.of.HEq
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Tensor.Cast_Data.eq.DataCast.of.Eq
-open Logic Tensor
+open Logic Tensor Bool
 
 
 @[main]

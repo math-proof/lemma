@@ -1,7 +1,7 @@
 import Lemma.Algebra.Le.of.Mk.eq.IteGt
 import Lemma.Algebra.Lt.of.Le.Ne
-import Lemma.Logic.EqUFnS.of.Eq
-open Algebra Logic
+import Lemma.Bool.EqUFnS.of.Eq
+open Algebra Bool
 
 
 @[main]

@@ -1,9 +1,9 @@
 import sympy.sets.sets
 import Lemma.Logic.NotAny.is.All_Not
 import Lemma.Logic.All.of.All.All_Imp
-import Lemma.Logic.All_And.of.All.All
+import Lemma.Bool.All_And.of.All.All
 import Lemma.Logic.NotAny_Not.of.All
-open Logic
+open Logic Bool
 
 
 @[main]

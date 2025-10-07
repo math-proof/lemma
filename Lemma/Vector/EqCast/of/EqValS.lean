@@ -1,6 +1,6 @@
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-open Logic Vector
+open Vector Bool
 
 
 @[main, comm 1]

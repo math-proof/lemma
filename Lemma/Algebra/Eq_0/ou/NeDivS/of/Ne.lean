@@ -1,6 +1,6 @@
-import Lemma.Logic.Ne.is.NotEq
+import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.NeDivS.of.Ne.Ne_0
-open Logic Algebra
+open Algebra Bool
 
 
 @[main]

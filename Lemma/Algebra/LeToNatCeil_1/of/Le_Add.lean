@@ -1,5 +1,5 @@
 import Lemma.Algebra.Div.eq.One.of.Gt_0
-import Lemma.Logic.Ne.is.NotEq
+import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Algebra.LeSub.is.Le_Add
 import Lemma.Algebra.LeCoeS.is.Le
@@ -13,7 +13,7 @@ import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Div.lt.Zero.of.Lt_0.Gt_0
 import Lemma.Algebra.Le.of.Lt
 import Lemma.Algebra.EqToNat_0.of.Le_0
-open Algebra Logic
+open Algebra Bool
 
 
 @[main]

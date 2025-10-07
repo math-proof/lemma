@@ -1,7 +1,7 @@
 import Lemma.Algebra.Eq_Neg.of.EqNeg
-import Lemma.Logic.BFn_Ite.is.OrAndS
+import Lemma.Bool.BFn_Ite.is.OrAndS
 import Lemma.Algebra.EqNeg.of.Eq_Neg
-open Algebra Logic
+open Algebra Bool
 
 
 @[main]

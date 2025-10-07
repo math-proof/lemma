@@ -1,10 +1,10 @@
 import Lemma.Logic.Imp.is.OrNot
-import Lemma.Logic.And_Or.is.OrAndS
+import Lemma.Bool.And_Or.is.OrAndS
 import Lemma.Logic.AndOr.is.OrAndS
 import Lemma.Logic.OrOr.is.Or_Or
 import Lemma.Logic.OrAnd.is.AndOrS
 import Lemma.Logic.IffAndOr
-open Logic
+open Logic Bool
 
 
 @[main]

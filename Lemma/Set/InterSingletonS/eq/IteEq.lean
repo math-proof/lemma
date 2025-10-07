@@ -1,6 +1,6 @@
-import Lemma.Logic.BFn_Ite.is.OrAndS
+import Lemma.Bool.BFn_Ite.is.OrAndS
 import Lemma.Logic.Or_Not
-open Logic
+open Logic Bool
 
 
 @[main]

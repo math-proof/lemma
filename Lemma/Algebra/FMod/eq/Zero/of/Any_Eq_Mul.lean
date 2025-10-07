@@ -1,6 +1,6 @@
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
-import Lemma.Logic.Ne.is.NotEq
-open Algebra Logic
+import Lemma.Bool.Ne.is.NotEq
+open Algebra Bool
 
 
 @[main]

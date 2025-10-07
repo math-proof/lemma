@@ -1,8 +1,8 @@
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Vector.ValAppend.eq.AppendValS
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.EqGetS.of.Eq.Lt_Length
-open Logic List Vector
+open List Vector Bool
 
 
 @[main]

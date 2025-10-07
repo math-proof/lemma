@@ -1,8 +1,8 @@
 import Lemma.Algebra.Ite.eq.AddMulSBool
-import Lemma.Logic.BoolNot.eq.Sub1
+import Lemma.Bool.BoolNot.eq.Sub1
 import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Logic.Bool.le.One
-open Algebra Logic
+open Algebra Logic Bool
 
 
 @[main]

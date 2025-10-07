@@ -1,8 +1,8 @@
 import stdlib.SEq
 import sympy.tensor.tensor
 import Lemma.Tensor.GetEllipsisCast.as.GetEllipsis.of.Eq
-import Lemma.Logic.EqCast.of.SEq
-open Tensor Logic
+import Lemma.Bool.EqCast.of.SEq
+open Tensor Bool
 
 
 @[main]

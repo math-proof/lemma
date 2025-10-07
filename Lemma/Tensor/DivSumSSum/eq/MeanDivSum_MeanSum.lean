@@ -1,13 +1,13 @@
 import Lemma.Tensor.MeanDiv.eq.DivMean
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Tensor.EqDiv0'0
-import Lemma.Logic.Ne.is.NotEq
+import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.NeCoeS.of.Ne
 import Lemma.Tensor.Div.eq.DivDivS.of.Ne_0
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Algebra.Eq_0
-open Tensor Logic Algebra Vector
+open Tensor Algebra Vector Bool
 set_option synthInstance.maxHeartbeats 200000
 set_option maxHeartbeats 1000000
 

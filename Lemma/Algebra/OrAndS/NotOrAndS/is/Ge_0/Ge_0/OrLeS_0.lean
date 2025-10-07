@@ -3,8 +3,8 @@ import Lemma.Logic.NotAnd.is.OrNotS
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.NotLt.is.Ge
 import Lemma.Algebra.Ge_0.Ge_0.is.OrGeS_0.OrAndS
-import Lemma.Logic.AndAnd.is.And_And
-open Algebra Logic
+import Lemma.Bool.AndAnd.is.And_And
+open Algebra Logic Bool
 
 
 @[main, mp, mpr]

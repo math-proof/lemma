@@ -1,8 +1,8 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.ProdDrop_1.eq.MinProdTail.of.Lt_Get_0.GtLength_0
 import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
-import Lemma.Logic.EqCast.of.SEq
-open Logic Vector List
+import Lemma.Bool.EqCast.of.SEq
+open Vector List Bool
 
 
 @[main]

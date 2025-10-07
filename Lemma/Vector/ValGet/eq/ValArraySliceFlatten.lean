@@ -3,9 +3,9 @@ import Lemma.Vector.FlattenMapToListCons.eq.Append_FlattenMapToList
 import Lemma.Algebra.Add_Mul.eq.MulAdd_1
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.EqDropAppend__Length
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Vector.GetCons__Add_1.eq.Get.of.Lt_Mul
-open Algebra Logic Vector List
+open Algebra Vector List Bool
 
 
 @[main]

@@ -1,5 +1,5 @@
-import Lemma.Logic.Any.is.NotAll_Not
-open Logic
+import Lemma.Bool.Any.is.NotAll_Not
+open Bool
 
 
 @[main, comm, mpr]

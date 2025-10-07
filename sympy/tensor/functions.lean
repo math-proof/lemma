@@ -1,6 +1,5 @@
 import sympy.tensor.tensor
 import sympy.vector.functions
-import Lemma.Logic.EqUFnS.of.Eq
 import Lemma.Algebra.EqAdd_Sub.of.Ge
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
@@ -13,7 +12,7 @@ import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
-open Logic Algebra List Tensor
+open Algebra List Tensor
 
 /--
 [exp](https://pytorch.org/docs/stable/generated/torch.exp.html)

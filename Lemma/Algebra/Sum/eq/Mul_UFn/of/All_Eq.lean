@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Algebra.Sum.eq.Mul.of.All_Eq
-import Lemma.Logic.All_EqUFnS.of.All_Eq
-open Algebra Logic
+import Lemma.Bool.All_EqUFnS.of.All_Eq
+open Algebra Bool
 
 
 @[main]

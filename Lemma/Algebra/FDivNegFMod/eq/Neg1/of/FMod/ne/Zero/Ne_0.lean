@@ -11,8 +11,8 @@ import Lemma.Algebra.DivFMod.ge.Zero
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Div.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Algebra.NeCoeS.of.Ne
-import Lemma.Logic.Ne.is.NotEq
-open Algebra Logic
+import Lemma.Bool.Ne.is.NotEq
+open Algebra Bool
 
 
 @[main]

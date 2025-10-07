@@ -1,8 +1,8 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.EqPermute__0
 import Lemma.List.EqPermute__0
-import Lemma.Logic.EqCast.of.SEq
-open Logic Tensor List
+import Lemma.Bool.EqCast.of.SEq
+open Tensor List Bool
 
 
 @[main]

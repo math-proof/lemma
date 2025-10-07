@@ -6,8 +6,8 @@ import Lemma.Vector.EqGetRange.of.Lt
 import Lemma.Vector.GetTake.eq.Get.of.Lt_Min
 import Lemma.Vector.GetDrop.eq.Get_Add.of.Lt_Sub
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
-import Lemma.Logic.EqCast.of.SEq
-open Algebra Logic Vector
+import Lemma.Bool.EqCast.of.SEq
+open Algebra Logic Vector Bool
 
 
 @[main]

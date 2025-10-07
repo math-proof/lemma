@@ -1,8 +1,8 @@
-import Lemma.Logic.BFn_Ite.is.OrAndS
+import Lemma.Bool.BFn_Ite.is.OrAndS
 import Lemma.Logic.AndOr.is.OrAndS
-import Lemma.Logic.AndAnd.is.And_And
+import Lemma.Bool.AndAnd.is.And_And
 import Lemma.Logic.NotOr.is.AndNotS
-open Logic
+open Logic Bool
 
 
 @[main, comm, mp, mpr]

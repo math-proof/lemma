@@ -1,6 +1,6 @@
 import Lemma.Algebra.Max.eq.IteLe
-import Lemma.Logic.BFn_Ite.is.OrAndS
-open Algebra Logic
+import Lemma.Bool.BFn_Ite.is.OrAndS
+open Algebra Bool
 
 
 @[main]

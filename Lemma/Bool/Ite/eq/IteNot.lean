@@ -1,7 +1,7 @@
 import sympy.core.relational
-import Lemma.Logic.BFn_Ite.is.OrAndS
-import Lemma.Logic.IffNotNot
-open Logic
+import Lemma.Bool.BFn_Ite.is.OrAndS
+import Lemma.Bool.IffNotNot
+open Bool
 
 
 @[main]

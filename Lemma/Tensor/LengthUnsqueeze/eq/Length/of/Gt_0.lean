@@ -1,11 +1,11 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
 import Lemma.List.LengthInsertIdx.eq.Length.of.Gt_Length
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
 import Lemma.Algebra.Ge_1.of.Gt_0
 import Lemma.Algebra.Eq.of.Ge.Le
-open Tensor Algebra Logic List
+open Tensor Algebra List Bool
 
 
 @[main]

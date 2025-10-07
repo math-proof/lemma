@@ -1,9 +1,9 @@
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.DivSub.eq.SubDivS
-import Lemma.Logic.Ne.is.NotEq
+import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.Div.eq.One.of.Ne_0
 import Lemma.Algebra.Lt_Sub.of.LtAdd
-open Algebra Logic
+open Algebra Bool
 
 
 @[main]

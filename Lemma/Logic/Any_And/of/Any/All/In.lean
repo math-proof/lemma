@@ -1,6 +1,6 @@
 import sympy.concrete.quantifier
-import Lemma.Logic.Any_And.of.Any.All.All_Imp
-open Logic
+import Lemma.Bool.Any_And.of.Any.All.All_Imp
+open Bool
 
 
 @[main]

@@ -1,5 +1,5 @@
 import sympy.core.logic
-import Lemma.Logic.All.of.All_Or_Not
+import Lemma.Bool.All.of.All_Or_Not
 import Lemma.Set.NotIn_Inter.of.OrNotSIn
 import Lemma.Logic.OrOr.is.Or_Or
 import Lemma.Bool.Imp.is.Or_Not

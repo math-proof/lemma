@@ -22,13 +22,13 @@ import Lemma.Algebra.EqSubS.is.Eq
 import Lemma.Algebra.Mul
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.AddMul.eq.MulAdd_1
-import Lemma.Logic.Ne.is.NotEq
+import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.Eq_0.of.Mul.eq.Zero.Ne_0
 import Lemma.Algebra.Eq_Neg.of.Add.eq.Zero
 import Lemma.Algebra.FDiv.eq.FloorDiv
 import Lemma.Algebra.CoeNeg.eq.NegCoe
 import Lemma.Algebra.DivNeg.eq.NegDiv
-open Algebra Logic
+open Algebra Bool
 
 
 /--

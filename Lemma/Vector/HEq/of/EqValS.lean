@@ -1,7 +1,7 @@
 import sympy.vector.vector
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Vector.Eq.of.EqValS
-open Logic Vector
+open Vector Bool
 
 
 @[main]

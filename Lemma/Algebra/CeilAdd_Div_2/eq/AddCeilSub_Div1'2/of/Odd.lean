@@ -4,8 +4,8 @@ import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.Odd.is.Any_Eq_AddMul2
 import Lemma.Algebra.DivAdd.eq.AddDivS
 import Lemma.Algebra.AddAdd.eq.Add_Add
-import Lemma.Logic.EqUFnS.of.Eq
-open Algebra Logic
+import Lemma.Bool.EqUFnS.of.Eq
+open Algebra Bool
 
 
 @[main]

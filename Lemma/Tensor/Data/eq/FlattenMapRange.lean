@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import Lemma.Vector.EqFlattenUnflatten
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.Vector.EqGetRange
 import Lemma.Algebra.EqDivMul.of.Ne_0
@@ -10,8 +10,8 @@ import Lemma.Algebra.Eq_0.of.Le_0
 import Lemma.Logic.EqCast.of.Eq
 import Lemma.Vector.ArraySlice.as.GetSplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Logic.EqCast.of.SEq
-open Algebra Logic Vector
+import Lemma.Bool.EqCast.of.SEq
+open Algebra Logic Vector Bool
 
 
 @[main]

@@ -1,5 +1,5 @@
 import sympy.core.relational
-import Lemma.Logic.Ne.is.NotEq
+import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.FModNeg.eq.Ite_0Sub_FMod
 import Lemma.Algebra.FModNeg.eq.Zero.of.FMod.eq.Zero
 import Lemma.Algebra.FModSub.eq.FModNeg.of.FMod.eq.Zero
@@ -19,7 +19,7 @@ import Lemma.Algebra.Lt.of.Le.Ne
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Set.FMod.in.IccSign.of.FMod.ne.Zero.Gt_0
 import Lemma.Set.FMod.in.Icc_Sign.of.FMod.ne.Zero.Lt_0
-open Algebra Set Logic
+open Algebra Set Bool
 
 
 @[main]

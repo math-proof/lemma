@@ -1,6 +1,6 @@
-import Lemma.Logic.EqCast.of.SEq
+import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.EqGetCast_MapRange.of.Eq.Lt_Length
-open Tensor Logic
+open Tensor Bool
 
 
 @[main]

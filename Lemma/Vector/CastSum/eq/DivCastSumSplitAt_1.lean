@@ -5,13 +5,13 @@ import Lemma.Vector.UnflattenDiv.eq.DivUnflatten_Replicate
 import Lemma.Vector.SumMul.eq.MulSum
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.EraseIdx_0.eq.Drop_1
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.InvReplicate.eq.ReplicateInv
 import Lemma.Algebra.Div.eq.Mul_Inv
-open Vector Logic List Algebra
+open Vector List Algebra Bool
 
 
 @[main]

@@ -1,5 +1,5 @@
 import sympy.vector.vector
-import Lemma.Logic.EqUFnS.of.Eq
+import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.Lt_Sub.of.LtAdd
@@ -37,7 +37,7 @@ import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
 import Lemma.List.ProdTake_1.eq.HeadD_1
-open Logic Algebra List
+open Bool Algebra List
 
 /--
 the concept of a Tensor is a generalization of a matrix, like the Tensor concept in pytorch / tensorflow

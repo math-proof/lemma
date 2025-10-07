@@ -7,7 +7,7 @@ import Lemma.Algebra.Gt_0
 import Lemma.Algebra.LtVal
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
-import Lemma.Logic.EqCast.of.SEq
+import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
@@ -15,7 +15,7 @@ import Lemma.Logic.SEqCast.of.Eq.Eq
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.Algebra.Ge_1.of.Gt_0
 import Lemma.Vector.EqGetRange
-open Tensor Algebra List Logic Vector
+open Tensor Algebra List Logic Vector Bool
 
 
 @[main]

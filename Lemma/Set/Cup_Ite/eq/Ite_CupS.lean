@@ -1,5 +1,5 @@
 import sympy.core.logic
-import Lemma.Logic.BFn_Ite.is.OrAndS
+import Lemma.Bool.BFn_Ite.is.OrAndS
 import Lemma.Logic.BFnUFnFunIte.Cond.of.AndBFnUFn
 import Lemma.Bool.BFnUFnFunIte.Not.of.AndBFnUFn
 import Lemma.Logic.Or_Not

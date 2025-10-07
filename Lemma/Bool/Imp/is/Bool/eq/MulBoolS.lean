@@ -1,5 +1,5 @@
 import sympy.core.logic
-import Lemma.Logic.Cond.is.Bool.eq.One
+import Lemma.Bool.Cond.is.Bool.eq.One
 import Lemma.Logic.Imp.of.Imp.Imp
 import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Bool.Bool.eq.Zero.of.Bool.ne.One
@@ -12,7 +12,7 @@ import Lemma.Algebra.CoeMul.eq.MulCoeS
 import Lemma.Algebra.Sub_Mul.eq.Mul_Sub1
 import Lemma.Algebra.Mul.eq.Zero.is.OrEqS_0
 import Lemma.Algebra.Ne_1.of.Eq_0
-import Lemma.Logic.Ne.is.NotEq
+import Lemma.Bool.Ne.is.NotEq
 import Lemma.Logic.Imp.is.OrNot
 open Logic Algebra Bool
 
