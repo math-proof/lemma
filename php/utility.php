@@ -456,15 +456,16 @@ EOT;
     return get_rows($sql);
 }
 
-function select_lemma_by_regex($user, $regex, $binary = false, $limit = 100)
+function select_lemma_by_regex($user, $regex, $binary = false, $limit = 100, $replacement = null)
 {
     if ($binary)
         $binary = 'COLLATE utf8mb4_bin';
     else
         $binary = '';
-
-    $sql = "select module from lemma where user = '$user' and module regexp \"$regex\" $binary limit $limit";
-    return get_rows($sql);
+    $where = "user = '$user' and module regexp \"$regex\" $binary";
+    if ($replacement)
+        $where .= " and json_length(imports) > 0";
+    return get_rows("select module from lemma where $where limit $limit");
 }
 
 function select_lemma_by_like($user, $keyword, $binary = false, $limit = 100)
@@ -634,6 +635,22 @@ function update_axiom($user, $old, $new, $is_folder = false)
     }
 
     // error_log("sql = $sql");
+    $rows_affected = mysql\execute($sql);
+    if ($rows_affected < 1)
+        error_log("error found in $sql");
+    if ($is_folder)
+        return;
+    $old = str_replace("'", "''", $old);
+    $new = str_replace("'", "''", $new);
+    $sql = <<<EOT
+UPDATE `lemma`
+SET `imports` = JSON_REPLACE(
+  `imports`,
+  JSON_UNQUOTE(JSON_SEARCH(`imports`, 'one', '$old')),
+  '$new'
+)
+WHERE JSON_CONTAINS(imports, JSON_QUOTE('$old'));
+EOT;
     $rows_affected = mysql\execute($sql);
     if ($rows_affected < 1)
         error_log("error found in $sql");

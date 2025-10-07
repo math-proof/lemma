@@ -91,6 +91,7 @@ if ($fullText) {
 else  {
     require_once 'init.php';
     $user = get_project_name();
+    $replacement = array_key_exists("replacement", $dict) ? $dict["replacement"] : null;
     if ($like) {
         if ($regex == null) {
             if ($type == 'missing')
@@ -102,13 +103,12 @@ else  {
             $data = select_lemma_by_like($user, $regex, $caseSensitive, $limit);
             if (!$data && !$caseSensitive && ($index = strpos($regex, ' ')) !== false) {
                 $regex = str_replace(' ', '.*', $regex);
-                $data = select_lemma_by_regex($user, $regex, $caseSensitive, $limit);
+                $data = select_lemma_by_regex($user, $regex, $caseSensitive, $limit, $replacement);
             }
         }
     } else
-        $data = select_lemma_by_regex($user, $regex, $caseSensitive, $limit);
+        $data = select_lemma_by_regex($user, $regex, $caseSensitive, $limit, $replacement);
     
-    $replacement = array_key_exists("replacement", $dict) ? $dict["replacement"] : null;
     if ($replacement) {
         if ($like)
             $regex = str_replace(".", "\\.", $regex);
