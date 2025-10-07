@@ -1,8 +1,8 @@
 import stdlib.SEq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.tensor
-import Lemma.Logic.SEqCast.of.Eq
-open Tensor Logic
+import Lemma.Bool.SEqCast.of.Eq
+open Tensor Bool
 
 
 @[main]

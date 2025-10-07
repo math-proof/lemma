@@ -1,7 +1,7 @@
 import Lemma.Vector.EqFlattenUnflatten
-import Lemma.Logic.SEqCast.of.Eq
+import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
-open Logic List Vector
+open List Vector Bool
 
 
 @[main]

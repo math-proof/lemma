@@ -1,5 +1,5 @@
-import Lemma.Logic.Eq.is.All_Iff
-open Logic
+import Lemma.Bool.Eq.is.All_Iff
+open Bool
 
 
 @[main]

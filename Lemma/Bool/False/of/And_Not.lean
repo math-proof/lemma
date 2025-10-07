@@ -1,5 +1,5 @@
-import Lemma.Logic.False.of.AndNot
-open Logic
+import Lemma.Bool.False.of.AndNot
+open Bool
 
 
 @[main]

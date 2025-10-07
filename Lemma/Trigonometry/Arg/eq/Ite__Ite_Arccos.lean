@@ -1,10 +1,10 @@
 import Lemma.Trigonometry.Arg.eq.Ite__Ite_Arcsin
 import Lemma.Bool.BFn_Ite.is.OrAndS
-import Lemma.Logic.BFn_Ite.is.Imp.Imp
+import Lemma.Bool.BFn_Ite.is.Imp.Imp
 import Lemma.Bool.ImpEq.is.ImpEq
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Trigonometry.Arg.eq.Ite__Ite_Arccos.of.Ne_0
-open Logic Trigonometry Bool
+open Trigonometry Bool
 
 
 @[main]

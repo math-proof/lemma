@@ -1,8 +1,8 @@
 import Mathlib.Tactic
-import Lemma.Logic.Or.of.Or.Imp
+import Lemma.Bool.Or.of.Or.Imp
 import Lemma.Bool.And.of.And.Imp
-import Lemma.Logic.Imp.is.ImpNotS
-import Lemma.Logic.Imp.of.Imp.Imp
+import Lemma.Bool.Imp.is.ImpNotS
+import Lemma.Bool.Imp.of.Imp.Imp
 import stdlib.Lean.Expr -- using Lean.Expr.is_Prop
 import stdlib.Lean.FVarId
 open Lean Elab.Tactic Meta Parser.Tactic
@@ -13,11 +13,11 @@ A helper that returns the correct lemma name for each path step.
 def lemmaName : String × Bool → Name
   | ("And", true)  => `Bool.And.of.And.Imp.left
   | ("And", false) => `Bool.And.of.And.Imp
-  | ("Or",  true)  => `Logic.Or.of.Or.Imp.left
-  | ("Or",  false) => `Logic.Or.of.Or.Imp
-  | ("Not",  _) => `Logic.ImpNotS.of.Imp
-  | ("Imp",  true) => `Logic.Imp.of.Imp.Imp
-  | ("Imp",  false) => `Logic.Imp.of.Imp.Imp.right
+  | ("Or",  true)  => `Bool.Or.of.Or.Imp.left
+  | ("Or",  false) => `Bool.Or.of.Or.Imp
+  | ("Not",  _) => `Bool.ImpNotS.of.Imp
+  | ("Imp",  true) => `Bool.Imp.of.Imp.Imp
+  | ("Imp",  false) => `Bool.Imp.of.Imp.Imp.right
   | (_, _)         => panic! "unknown path step"
 
 

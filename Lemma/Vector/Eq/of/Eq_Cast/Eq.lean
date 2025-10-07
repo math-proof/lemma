@@ -1,8 +1,8 @@
-import Lemma.Logic.Eq.of.SEq
-import Lemma.Logic.EqCast.of.Eq
-import Lemma.Logic.SEq.of.SEq.SEq
-import Lemma.Logic.HEq.of.Eq_Cast
-open Logic
+import Lemma.Bool.Eq.of.SEq
+import Lemma.Bool.EqCast.of.Eq
+import Lemma.Bool.SEq.of.SEq.SEq
+import Lemma.Bool.HEq.of.Eq_Cast
+open Bool
 
 
 @[main]

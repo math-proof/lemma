@@ -1,5 +1,5 @@
-import Lemma.Logic.BFnIte.is.OrAndS
-open Logic
+import Lemma.Bool.BFnIte.is.OrAndS
+open Bool
 
 
 @[main, comm, mp, mpr]

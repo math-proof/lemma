@@ -1,6 +1,6 @@
-import Lemma.Logic.Iff_True.of.Cond
+import Lemma.Bool.Iff_True.of.Cond
 import Lemma.Algebra.Ge.of.Gt
-open Algebra Logic
+open Algebra Bool
 
 
 @[main]

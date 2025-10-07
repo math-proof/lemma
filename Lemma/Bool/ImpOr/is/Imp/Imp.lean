@@ -1,10 +1,10 @@
-import Lemma.Logic.Imp.is.OrNot
+import Lemma.Bool.Imp.is.OrNot
 import Lemma.Bool.And_Or.is.OrAndS
-import Lemma.Logic.AndOr.is.OrAndS
-import Lemma.Logic.OrOr.is.Or_Or
-import Lemma.Logic.OrAnd.is.AndOrS
-import Lemma.Logic.IffAndOr
-open Logic Bool
+import Lemma.Bool.AndOr.is.OrAndS
+import Lemma.Bool.OrOr.is.Or_Or
+import Lemma.Bool.OrAnd.is.AndOrS
+import Lemma.Bool.IffAndOr
+open Bool
 
 
 @[main]

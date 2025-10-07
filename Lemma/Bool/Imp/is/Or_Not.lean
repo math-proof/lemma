@@ -1,5 +1,5 @@
-import Lemma.Logic.Imp.is.OrNot
-open Logic
+import Lemma.Bool.Imp.is.OrNot
+open Bool
 
 
 @[main, comm, mp, mpr]

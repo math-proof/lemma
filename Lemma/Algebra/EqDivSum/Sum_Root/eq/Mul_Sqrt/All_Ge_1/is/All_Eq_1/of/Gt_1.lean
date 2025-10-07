@@ -11,8 +11,8 @@ import Lemma.Algebra.Eq.of.All_Eq.Lt
 import Lemma.Bool.All_EqUFnS.of.All_Eq
 import Lemma.Algebra.Pow1.eq.One
 import Lemma.Algebra.Ge.of.Eq
-import Lemma.Logic.All.of.All.All_Imp
-open Algebra Logic Bool
+import Lemma.Bool.All.of.All.All_Imp
+open Algebra Bool
 
 
 /--

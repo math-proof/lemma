@@ -4,9 +4,9 @@ import Lemma.Vector.ValAppend.eq.AppendValS
 import Lemma.Algebra.Add_Mul.eq.MulAdd_1
 import Lemma.Vector.ValFlattenCons.eq.ValAppend_Flatten
 import Lemma.Vector.Unflatten.eq.Cons_Unflatten.of.SEq_Append
-import Lemma.Logic.HEq.of.SEq
+import Lemma.Bool.HEq.of.SEq
 import Lemma.Vector.HEq.of.EqValS
-open Algebra Logic Vector
+open Algebra Vector Bool
 
 
 @[main, comm]

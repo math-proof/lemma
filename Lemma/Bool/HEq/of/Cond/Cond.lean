@@ -1,5 +1,5 @@
-import Lemma.Logic.HEq.of.Iff.Cond.Cond
-open Logic
+import Lemma.Bool.HEq.of.Iff.Cond.Cond
+open Bool
 
 
 @[main]

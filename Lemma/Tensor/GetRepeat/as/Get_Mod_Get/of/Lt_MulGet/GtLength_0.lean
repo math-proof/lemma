@@ -10,7 +10,7 @@ import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Algebra.AddMul.lt.Mul
 import Lemma.Tensor.SEq.of.SEqDataS.Eq
 import Lemma.List.TailSet_0.eq.Tail
-import Lemma.Logic.SEqCastS.of.SEq.Eq.Eq
+import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
@@ -35,7 +35,7 @@ import Lemma.List.ProdSet__MulGet.eq.Mul_Prod.of.Lt_Length
 import Lemma.List.GtProdTail_0.of.Lt_ProdTailSet_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.List.EqGetSet.of.Lt_Length
-open Tensor Algebra Logic Vector List
+open Tensor Algebra Vector List Bool
 
 
 @[main]

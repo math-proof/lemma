@@ -1,11 +1,11 @@
 import Lemma.Trigonometry.ExpMulI.eq.AddCos_MulISin
 import Lemma.Algebra.Expr.eq.AddRe_MulIIm
-import Lemma.Logic.Eq.of.Eq.Eq
+import Lemma.Bool.Eq.of.Eq.Eq
 import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Trigonometry.Re.eq.MulAbs_CosArg
 import Lemma.Trigonometry.Im.eq.MulAbs_SinArg
 import Lemma.Algebra.Eq.of.EqReS.EqImS
-open Algebra Logic Trigonometry
+open Algebra Trigonometry Bool
 
 
 @[main]

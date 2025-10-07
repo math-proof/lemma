@@ -1,5 +1,5 @@
-import Lemma.Logic.AndAllSSetOf.of.All
-open Logic
+import Lemma.Bool.AndAllSSetOf.of.All
+open Bool
 
 
 @[main]

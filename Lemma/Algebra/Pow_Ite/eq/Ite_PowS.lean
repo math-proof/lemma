@@ -1,5 +1,5 @@
-import Lemma.Logic.BFn_Ite.eq.Ite_BFnS
-open Logic
+import Lemma.Bool.BFn_Ite.eq.Ite_BFnS
+open Bool
 
 
 @[main]

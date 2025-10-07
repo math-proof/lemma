@@ -1,14 +1,14 @@
 import Lemma.Algebra.MulAdd.eq.AddMulS
-import Lemma.Logic.EqCast.of.Eq
-import Lemma.Logic.SEq.of.SEq.SEq
+import Lemma.Bool.EqCast.of.Eq
+import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
 import Lemma.Vector.GetAppend.eq.Get
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
-import Lemma.Logic.SEqCast.of.SEq.Eq
+import Lemma.Bool.SEqCast.of.SEq.Eq
 import Lemma.Bool.SEq.of.Eq
-import Lemma.Logic.SEqCast.of.Eq
+import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
-open Algebra Logic Vector Bool
+open Algebra Vector Bool
 
 
 @[main]

@@ -1,6 +1,6 @@
-import Lemma.Logic.NotAnd.is.OrNotS
+import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Logic.Eq.of.NotNe
-open Logic
+open Logic Bool
 
 
 @[main]

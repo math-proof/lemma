@@ -2,18 +2,18 @@ import sympy.tensor.tensor
 import Lemma.Algebra.Lt_Add
 import Lemma.Algebra.LtVal
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Logic.Eq.of.SEq
-import Lemma.Logic.SEq.of.SEq.SEq
+import Lemma.Bool.Eq.of.SEq
+import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.EqGetSUnflatten.of.Eq.Lt.Eq.Eq
-import Lemma.Logic.EqCast.of.Eq
+import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySliceAppend
 import Lemma.Vector.GetUnflatten.eq.Cast_ArraySlice.of.Lt
-import Lemma.Logic.SEqCast.of.SEq.Eq
+import Lemma.Bool.SEqCast.of.SEq.Eq
 import Lemma.Vector.EqArraySliceS.of.Eq
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.List.Prod.eq.Foldr
-open Algebra Logic Vector List
+open Algebra Vector List Bool
 
 
 @[main]

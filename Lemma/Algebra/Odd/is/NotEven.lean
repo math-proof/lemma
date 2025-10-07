@@ -1,7 +1,7 @@
 import sympy.functions.elementary.integers
-import Lemma.Logic.Iff.is.IffNotS
+import Lemma.Bool.Iff.is.IffNotS
 import Lemma.Algebra.NotOdd.is.Even
-open Logic Algebra
+open Algebra Bool
 
 
 @[main, comm, mp, mpr]

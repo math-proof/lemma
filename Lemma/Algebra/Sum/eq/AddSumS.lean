@@ -3,9 +3,9 @@ import Lemma.Algebra.Sum_Add.eq.AddSumS
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Set.In.is.In_Inter.ou.In_SDiff
 import Lemma.Bool.BoolOr.eq.SubAddBoolS
-import Lemma.Logic.ToNatDecide.eq.Bool
+import Lemma.Bool.ToNatDecide.eq.Bool
 import Lemma.Set.In_Inter.In_SDiff.is.False
-open Algebra Set Logic Bool
+open Algebra Set Bool
 
 
 @[main]

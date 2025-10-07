@@ -1,9 +1,9 @@
 import sympy.vector.vector
-import Lemma.Logic.HEq.of.All_Eq.Eq.Eq
+import Lemma.Bool.HEq.of.All_Eq.Eq.Eq
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Bool.HEq.of.All_HEq.Eq
-import Lemma.Logic.EqImpS_Decidable.of.Eq
-open Logic List Bool
+import Lemma.Bool.EqImpS_Decidable.of.Eq
+open List Bool
 
 
 @[main, comm]

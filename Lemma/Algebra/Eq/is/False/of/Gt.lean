@@ -1,6 +1,6 @@
 import Lemma.Algebra.Ne.of.Gt
-import Lemma.Logic.Eq.is.False.of.Ne
-open Algebra Logic
+import Lemma.Bool.Eq.is.False.of.Ne
+open Algebra Bool
 
 
 @[main]

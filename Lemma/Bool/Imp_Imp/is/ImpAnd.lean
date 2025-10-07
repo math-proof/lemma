@@ -1,7 +1,7 @@
-import Lemma.Logic.Imp.is.OrNot
-import Lemma.Logic.NotAnd.is.OrNotS
-import Lemma.Logic.OrOr.is.Or_Or
-open Logic
+import Lemma.Bool.Imp.is.OrNot
+import Lemma.Bool.NotAnd.is.OrNotS
+import Lemma.Bool.OrOr.is.Or_Or
+open Bool
 
 
 @[main]

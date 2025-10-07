@@ -1,7 +1,7 @@
-import Lemma.Logic.AndAnd__Not.is.False
-import Lemma.Logic.Iff_Not.of.Iff_Not
-import Lemma.Logic.Imp.of.Cond
-open Logic
+import Lemma.Bool.AndAnd__Not.is.False
+import Lemma.Bool.Iff_Not.of.Iff_Not
+import Lemma.Bool.Imp.of.Cond
+open Bool
 
 
 @[main]

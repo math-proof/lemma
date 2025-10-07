@@ -1,6 +1,6 @@
-import Lemma.Logic.Or_Not.of.All
+import Lemma.Bool.Or_Not.of.All
 import Lemma.Set.Any_In.is.Ne_Empty
-open Logic Set
+open Set Bool
 
 
 @[main]

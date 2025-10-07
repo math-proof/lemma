@@ -1,11 +1,11 @@
 import stdlib.SEq
 import Lemma.Algebra.LtMod.of.Lt_Mul
 import Lemma.Tensor.GetEllipsis_0.as.Get.of.Gt_Length_0.Lt_Get_0
-import Lemma.Logic.SEq.of.SEq.SEq
+import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0
 import Lemma.Tensor.ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
-import Lemma.Logic.SEqCastS.of.SEq.Eq.Eq
+import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Algebra.Gt_0.of.Gt
 import Lemma.Algebra.Lt_Sub.of.LtAdd
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
@@ -26,8 +26,8 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Vector.EqGetRange
 import Lemma.Tensor.GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq
 import Lemma.List.EqCons_Tail.of.Eq_Get_0.GtLength_0
-import Lemma.Logic.SEqCast.of.Eq
-open Algebra Tensor Logic List Vector
+import Lemma.Bool.SEqCast.of.Eq
+open Algebra Tensor List Vector Bool
 
 
 @[main]

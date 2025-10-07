@@ -1,5 +1,5 @@
 import sympy.vector.vector
-import Lemma.Logic.EqCast.of.Eq
+import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Vector.EqGetRange.of.Lt
@@ -7,7 +7,7 @@ import Lemma.Vector.GetTake.eq.Get.of.Lt_Min
 import Lemma.Vector.GetDrop.eq.Get_Add.of.Lt_Sub
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Bool.EqCast.of.SEq
-open Algebra Logic Vector Bool
+open Algebra Vector Bool
 
 
 @[main]

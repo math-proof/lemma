@@ -1,7 +1,7 @@
-import Lemma.Logic.NotImp.is.And_Not
-import Lemma.Logic.Imp.is.ImpNotS
-import Lemma.Logic.False.of.AndNot
-open Logic
+import Lemma.Bool.NotImp.is.And_Not
+import Lemma.Bool.Imp.is.ImpNotS
+import Lemma.Bool.False.of.AndNot
+open Bool
 
 
 @[main]

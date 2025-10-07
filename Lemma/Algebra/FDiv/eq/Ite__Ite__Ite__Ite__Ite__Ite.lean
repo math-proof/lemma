@@ -1,7 +1,7 @@
-import Lemma.Logic.BFn_Ite.is.Imp.Imp
-import Lemma.Logic.Imp.of.Cond
+import Lemma.Bool.BFn_Ite.is.Imp.Imp
+import Lemma.Bool.Imp.of.Cond
 import Lemma.Algebra.FDiv.eq.Ite__Ite__Ite__Ite__Ite
-open Algebra Logic
+open Algebra Bool
 
 
 @[main]

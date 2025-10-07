@@ -1,6 +1,6 @@
 import Lemma.Algebra.NotGe.of.Lt
-import Lemma.Logic.Iff_False.of.Not
-open Algebra Logic
+import Lemma.Bool.Iff_False.of.Not
+open Algebra Bool
 
 
 @[main]

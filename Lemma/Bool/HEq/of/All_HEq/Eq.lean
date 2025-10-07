@@ -1,6 +1,6 @@
-import Lemma.Logic.EqCast.of.HEq
-import Lemma.Logic.HEq.of.All_Eq_Cast.Eq.Eq
-open Logic
+import Lemma.Bool.EqCast.of.HEq
+import Lemma.Bool.HEq.of.All_Eq_Cast.Eq.Eq
+open Bool
 
 
 @[main]

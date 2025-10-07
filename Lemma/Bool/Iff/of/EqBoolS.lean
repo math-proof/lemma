@@ -1,5 +1,5 @@
-import Lemma.Logic.Imp.of.EqBoolS
-open Logic
+import Lemma.Bool.Imp.of.EqBoolS
+open Bool
 
 
 @[main]

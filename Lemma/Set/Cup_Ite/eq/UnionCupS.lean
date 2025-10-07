@@ -3,11 +3,11 @@ import Lemma.Set.In_Cup.is.Any_In
 import Lemma.Set.In_Ite.is.OrAndS
 import Lemma.Bool.Any_Or.is.OrAnyS
 import Lemma.Set.In_Union.is.OrInS
-import Lemma.Logic.Any_And.is.AnyAnd
+import Lemma.Bool.Any_And.is.AnyAnd
 import Lemma.Set.In_Inter.is.In.In
 import Lemma.Set.In_SDiff.is.In.NotIn
 import Lemma.Set.Inter
-open Set Logic Bool
+open Set Bool
 
 
 @[main, comm]

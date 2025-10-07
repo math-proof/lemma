@@ -1,6 +1,6 @@
 import Lemma.Trigonometry.Arg.eq.Ite__Ite_Arcsin
-import Lemma.Logic.BFn_Ite.is.Imp.Imp
-open Logic Trigonometry
+import Lemma.Bool.BFn_Ite.is.Imp.Imp
+open Trigonometry Bool
 
 
 @[main]

@@ -2,9 +2,9 @@ import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataSum.eq.Sum_Data
 import Lemma.Algebra.LtVal
-import Lemma.Logic.HEq.of.All_Eq.Eq
+import Lemma.Bool.HEq.of.All_Eq.Eq
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-open Algebra Tensor Logic Vector
+open Algebra Tensor Vector Bool
 
 
 @[main]

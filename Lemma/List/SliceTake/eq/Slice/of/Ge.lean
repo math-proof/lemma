@@ -4,13 +4,13 @@ import Lemma.List.EqAppendTake__Drop
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.DropAppend.eq.AppendDrop.of.Le_Length
 import Lemma.Algebra.Le.of.Le.Lt
-import Lemma.Logic.NotAnd.is.OrNotS
+import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Algebra.Ge.of.Gt.Ge
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Algebra.GeSubS.of.Ge
 import Lemma.List.DropTake.eq.TakeDrop
-open Algebra Logic List Bool
+open Algebra List Bool
 
 
 @[main]

@@ -1,6 +1,6 @@
 import Lemma.Set.AndNotSIn.of.NotIn_Union
-import Lemma.Logic.NotOr.is.AndNotS
-open Set Logic
+import Lemma.Bool.NotOr.is.AndNotS
+open Set Bool
 
 
 @[main, comm, mp, mpr]

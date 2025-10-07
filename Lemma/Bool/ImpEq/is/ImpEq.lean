@@ -1,5 +1,5 @@
-import Lemma.Logic.ImpEq.of.ImpEq
-open Logic
+import Lemma.Bool.ImpEq.of.ImpEq
+open Bool
 
 
 @[main]

@@ -1,8 +1,8 @@
 import sympy.tensor.tensor
 import Lemma.Bool.SEq.of.Eq
-import Lemma.Logic.SEqCast.of.Eq
-import Lemma.Logic.SEq.of.SEq.SEq
-open Logic Bool
+import Lemma.Bool.SEqCast.of.Eq
+import Lemma.Bool.SEq.of.SEq.SEq
+open Bool
 
 
 @[main]

@@ -1,9 +1,9 @@
 import sympy.core.logic
 import Lemma.Bool.BFn_Ite.is.OrAndS
-import Lemma.Logic.BFnUFnFunIte.Cond.of.AndBFnUFn
+import Lemma.Bool.BFnUFnFunIte.Cond.of.AndBFnUFn
 import Lemma.Bool.BFnUFnFunIte.Not.of.AndBFnUFn
-import Lemma.Logic.Or_Not
-open Logic Bool
+import Lemma.Bool.Or_Not
+open Bool
 
 
 @[main, comm]

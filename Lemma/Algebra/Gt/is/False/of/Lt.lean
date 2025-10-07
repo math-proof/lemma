@@ -1,7 +1,7 @@
 import Lemma.Algebra.Le.of.Lt
 import Lemma.Algebra.NotGt.of.Le
-import Lemma.Logic.Iff_False.of.Not
-open Algebra Logic
+import Lemma.Bool.Iff_False.of.Not
+open Algebra Bool
 
 
 @[main]

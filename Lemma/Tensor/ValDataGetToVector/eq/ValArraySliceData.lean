@@ -1,9 +1,9 @@
 import sympy.tensor.tensor
 import Lemma.Algebra.EqMin_SubMulS
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Logic.HEq.of.SEq
+import Lemma.Bool.HEq.of.SEq
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
-open Algebra Logic Vector
+open Algebra Vector Bool
 
 
 @[main]

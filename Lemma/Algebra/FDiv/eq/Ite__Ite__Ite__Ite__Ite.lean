@@ -1,11 +1,11 @@
-import Lemma.Logic.BFn_Ite.is.Imp.Imp
+import Lemma.Bool.BFn_Ite.is.Imp.Imp
 import Lemma.Algebra.FDiv.eq.EDiv.of.Ge_0
-import Lemma.Logic.NotAnd.is.OrNotS
+import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Algebra.NotGe.is.Lt
-import Lemma.Logic.Eq_Ite.of.Cond.NotAnd.Eq
+import Lemma.Bool.Eq_Ite.of.Cond.NotAnd.Eq
 import Lemma.Bool.IffAndSAnd
 import Lemma.Algebra.Gt.Lt.is.False
-import Lemma.Logic.Iff_True.of.Cond
+import Lemma.Bool.Iff_True.of.Cond
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.Eq.is.False.of.Lt
 import Lemma.Algebra.Gt.is.False.of.Lt
@@ -13,7 +13,7 @@ import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Algebra.SubNeg
 import Lemma.Algebra.FDiv.eq.Ite.of.Lt_0
 import Lemma.Algebra.FDiv.eq.Ite__Ite.of.Lt_0
-open Logic Algebra Bool
+open Algebra Bool
 
 
 @[main]

@@ -2,8 +2,8 @@ import Lemma.Tensor.EqGetS.of.Eq.Lt_Length
 import Lemma.Algebra.LtVal
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEqBFnS.of.SEq
-import Lemma.Logic.Eq.of.SEq
-open Tensor Algebra Logic
+import Lemma.Bool.Eq.of.SEq
+open Tensor Algebra Bool
 
 
 @[main]

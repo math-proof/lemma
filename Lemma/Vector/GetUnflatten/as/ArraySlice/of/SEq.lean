@@ -1,7 +1,7 @@
-import Lemma.Logic.SEq.of.SEq.SEq
+import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.GetUnflatten.as.ArraySlice
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
-open Logic Vector
+open Vector Bool
 
 
 @[main]

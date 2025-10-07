@@ -1,6 +1,6 @@
 import sympy.core.logic
 import Lemma.Bool.Cond.is.Bool.eq.One
-import Lemma.Logic.Imp.of.Imp.Imp
+import Lemma.Bool.Imp.of.Imp.Imp
 import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Bool.Bool.eq.Zero.of.Bool.ne.One
 import Lemma.Algebra.Mul.eq.Zero.of.OrEqS
@@ -13,8 +13,8 @@ import Lemma.Algebra.Sub_Mul.eq.Mul_Sub1
 import Lemma.Algebra.Mul.eq.Zero.is.OrEqS_0
 import Lemma.Algebra.Ne_1.of.Eq_0
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Logic.Imp.is.OrNot
-open Logic Algebra Bool
+import Lemma.Bool.Imp.is.OrNot
+open Algebra Bool
 
 
 @[main, comm, mp, mpr]

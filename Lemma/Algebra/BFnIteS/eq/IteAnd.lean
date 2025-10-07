@@ -1,8 +1,8 @@
 import sympy.core.relational
 import Lemma.Bool.Ite_Ite.eq.Ite__Ite
-import Lemma.Logic.BFn_Ite.eq.Ite_BFnS
-import Lemma.Logic.BFnIte.eq.Ite_BFnS
-open Logic Bool
+import Lemma.Bool.BFn_Ite.eq.Ite_BFnS
+import Lemma.Bool.BFnIte.eq.Ite_BFnS
+open Bool
 
 
 @[main]

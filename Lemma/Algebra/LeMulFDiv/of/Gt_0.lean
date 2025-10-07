@@ -1,5 +1,5 @@
 import Lemma.Algebra.FDiv.eq.Ite__Ite__Ite__Ite__Ite
-import Lemma.Logic.Iff_True.of.Cond
+import Lemma.Bool.Iff_True.of.Cond
 import Lemma.Algebra.Lt.is.False.of.Gt
 import Lemma.Algebra.Ge.is.True.of.Gt
 import Lemma.Algebra.Eq.is.False.of.Gt
@@ -10,7 +10,7 @@ import Lemma.Algebra.NegMul.eq.MulNeg
 import Lemma.Algebra.LeNeg.of.Ge_Neg
 import Lemma.Algebra.GtNeg_0.of.Lt_0
 import Lemma.Algebra.GeMulAdd1EDiv.of.Gt_0
-open Algebra Logic
+open Algebra Bool
 
 
 @[main]

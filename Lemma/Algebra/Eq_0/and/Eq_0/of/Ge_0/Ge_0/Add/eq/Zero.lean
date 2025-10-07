@@ -1,10 +1,10 @@
-import Lemma.Logic.NotAnd.is.OrNotS
+import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Add.gt.Zero.of.Gt_0.Ge_0
 import Lemma.Algebra.Add.gt.Zero.of.Ge_0.Gt_0
 import Lemma.Algebra.Ne.of.Gt
-open Algebra Logic Bool
+open Algebra Bool
 
 
 @[main]

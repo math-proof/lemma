@@ -1,8 +1,8 @@
 import sympy.tensor.tensor
-import Lemma.Logic.SEqCast.of.Eq
+import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.EqEraseIdx.of.Ge_Length
 import Lemma.Algebra.NotGe.of.Lt
-open Logic Algebra List
+open Algebra List Bool
 
 
 @[main]

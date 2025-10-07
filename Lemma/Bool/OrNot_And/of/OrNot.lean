@@ -1,6 +1,6 @@
-import Lemma.Logic.Or_AndNot.of.Or
+import Lemma.Bool.Or_AndNot.of.Or
 import Lemma.Bool.IffNotNot
-open Logic Bool
+open Bool
 
 
 @[main]

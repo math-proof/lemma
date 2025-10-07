@@ -1,7 +1,7 @@
 import sympy.concrete.quantifier
-import Lemma.Logic.Imp.of.AllSetOf
-import Lemma.Logic.Imp.of.Imp.Imp
-open Logic
+import Lemma.Bool.Imp.of.AllSetOf
+import Lemma.Bool.Imp.of.Imp.Imp
+open Bool
 
 
 @[main]

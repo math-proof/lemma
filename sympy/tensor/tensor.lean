@@ -1,5 +1,5 @@
 import sympy.tensor.Basic
-import Lemma.Logic.HEq.of.All_HEq
+import Lemma.Bool.HEq.of.All_HEq
 import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.LtVal
@@ -29,7 +29,7 @@ import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DataInv.eq.InvData
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
-open Logic Set Algebra List Tensor
+open Bool Set Algebra List Tensor
 
 def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
   have h_i := LtVal i

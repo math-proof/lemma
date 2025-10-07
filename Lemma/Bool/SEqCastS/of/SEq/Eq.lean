@@ -1,6 +1,6 @@
 import stdlib.SEq
-import Lemma.Logic.EqCastS.of.SEq.Eq
-open Logic
+import Lemma.Bool.EqCastS.of.SEq.Eq
+open Bool
 
 
 @[main, comm 2]

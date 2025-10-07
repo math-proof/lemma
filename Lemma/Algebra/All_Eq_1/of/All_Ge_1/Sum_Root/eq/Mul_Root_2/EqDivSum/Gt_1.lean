@@ -1,9 +1,9 @@
 import sympy.sets.sets
 import Lemma.Algebra.Sqrt.eq.Root_2
-import Lemma.Logic.Any_Not.of.NotAll
+import Lemma.Bool.Any_Not.of.NotAll
 import Lemma.Algebra.Ne.of.Lt
 import Lemma.Algebra.Sum_Root.lt.Mul_Sqrt.of.EqDivSum.Any_Ne_1.All_Ge_1.Gt_1
-open Algebra Logic
+open Algebra Bool
 
 
 /--

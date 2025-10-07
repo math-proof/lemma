@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Algebra.Root_Add_2.le.Sqrt.of.Ge_1
-import Lemma.Logic.All.of.All.All_Imp
-open Algebra Logic
+import Lemma.Bool.All.of.All.All_Imp
+open Algebra Bool
 
 
 @[main]

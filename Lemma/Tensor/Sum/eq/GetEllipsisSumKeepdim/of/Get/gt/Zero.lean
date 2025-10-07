@@ -1,14 +1,14 @@
 import stdlib.SEq
 import sympy.tensor.functions
 import Lemma.Tensor.GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq
-import Lemma.Logic.EqCast.of.SEq.Eq
+import Lemma.Bool.EqCast.of.SEq.Eq
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Algebra.LtVal
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Tensor.GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqGetEllipsisUnsqueeze.of.Le_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-open Tensor Logic List Algebra
+open Tensor List Algebra Bool
 
 
 @[main]

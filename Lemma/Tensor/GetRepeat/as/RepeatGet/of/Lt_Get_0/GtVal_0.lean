@@ -8,7 +8,7 @@ import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
 import Lemma.Algebra.Gt_0
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
-import Lemma.Logic.SEqCastS.of.SEq.Eq.Eq
+import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Algebra.Ge_1.of.Gt_0
 import Lemma.Algebra.Gt_0.of.Gt
@@ -43,8 +43,8 @@ import Lemma.List.Lt_ProdTakeSet.of.Gt_0.Lt_Get_0.GtLength_0
 import Lemma.List.Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Vector.SEqFlattenSSplitAt.of.SEq
-import Lemma.Logic.SEqCast.of.Eq
-open Tensor Algebra Logic Vector List Bool
+import Lemma.Bool.SEqCast.of.Eq
+open Tensor Algebra Vector List Bool
 
 
 @[main]

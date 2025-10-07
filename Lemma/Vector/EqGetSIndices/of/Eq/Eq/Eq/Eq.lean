@@ -1,5 +1,5 @@
 import Lemma.Algebra.CoeAdd_1.eq.AddCoe_1
-import Lemma.Logic.OrOr.is.Or_Or
+import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Algebra.LeToNatS.of.Le
 import Lemma.Algebra.Lt.of.Lt.Le
 import Lemma.Algebra.EqToNat_0.of.Le_0
@@ -9,7 +9,7 @@ import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Algebra.NotLe.of.Gt
 import Lemma.List.EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
 import Lemma.List.EqGetSSlicedIndices'.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
-open Algebra Logic List
+open Algebra List Bool
 
 
 @[main]

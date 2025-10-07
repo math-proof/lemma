@@ -1,6 +1,6 @@
 import Lemma.Tensor.HEq.of.HEqDataS.Eq
-import Lemma.Logic.HEq.of.SEq
-open Tensor Logic
+import Lemma.Bool.HEq.of.SEq
+open Tensor Bool
 
 
 @[main]

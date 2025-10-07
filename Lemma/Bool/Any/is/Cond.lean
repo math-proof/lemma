@@ -1,6 +1,6 @@
-import Lemma.Logic.Cond.of.Any
-import Lemma.Logic.Any.of.Cond
-open Logic
+import Lemma.Bool.Cond.of.Any
+import Lemma.Bool.Any.of.Cond
+open Bool
 
 
 @[main]

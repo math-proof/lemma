@@ -10,11 +10,11 @@ import Lemma.Vector.EqGetRange.of.Lt
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.Logic.EqCast.of.HEq
+import Lemma.Bool.EqCast.of.HEq
 import Lemma.Bool.HEq.of.All_HEq.Eq
-import Lemma.Logic.HEqMkS.of.Eq.Eq.Lt
+import Lemma.Bool.HEqMkS.of.Eq.Eq.Lt
 import Lemma.Algebra.EqValCast.of.Lt.Eq
-open Algebra Logic Vector List Bool
+open Algebra Vector List Bool
 
 
 @[main]

@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Logic.All.of.All.All_Imp
+import Lemma.Bool.All.of.All.All_Imp
 import Lemma.Algebra.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.EqMulDiv.of.Ne_0
@@ -13,7 +13,7 @@ import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
 import Lemma.Algebra.GeSqrt_0
-open Logic Algebra
+open Algebra Bool
 
 
 /--

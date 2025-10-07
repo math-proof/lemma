@@ -21,7 +21,7 @@ private lemma main
     let ⟨h_slice, h_n⟩ := Tensor.EqSliceS.Eq.of.Eq h
     constructor
     ·
-      apply Logic.Eq.of.SEq.simp
+      apply Bool.Eq.of.SEq.simp
       have h_f := Tensor.GetSliceStack.as.StackUFn f n 1
       rw [h_slice] at h_f
       apply h_f.symm.trans

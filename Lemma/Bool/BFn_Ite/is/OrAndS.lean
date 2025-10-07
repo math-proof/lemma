@@ -1,10 +1,10 @@
-import Lemma.Logic.BFn_Ite.is.Imp.Imp
-import Lemma.Logic.Imp.is.OrNot
-import Lemma.Logic.Or.is.ImpNot
-import Lemma.Logic.OrAndS.of.Or.Or
-import Lemma.Logic.Or.of.OrAndS
-import Lemma.Logic.OrNot.of.OrAndS
-open Logic
+import Lemma.Bool.BFn_Ite.is.Imp.Imp
+import Lemma.Bool.Imp.is.OrNot
+import Lemma.Bool.Or.is.ImpNot
+import Lemma.Bool.OrAndS.of.Or.Or
+import Lemma.Bool.Or.of.OrAndS
+import Lemma.Bool.OrNot.of.OrAndS
+open Bool
 
 
 @[main, comm, mp, mpr]
