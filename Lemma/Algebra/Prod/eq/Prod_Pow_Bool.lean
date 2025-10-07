@@ -1,6 +1,6 @@
-import Lemma.Logic.Bool.eq.Ite
+import Lemma.Bool.Bool.eq.Ite
 import Lemma.Algebra.Pow_Ite.eq.Ite_PowS
-open Logic Algebra
+open Algebra Bool
 
 
 @[main]

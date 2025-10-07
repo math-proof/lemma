@@ -1,7 +1,7 @@
-import Lemma.Logic.Bool.eq.Ite
+import Lemma.Bool.Bool.eq.Ite
 import Lemma.Algebra.Mul_Ite.eq.Ite_MulS
 import Lemma.Logic.Ite_Ite.eq.Ite__Ite
-open Logic Algebra
+open Logic Algebra Bool
 
 
 @[main]

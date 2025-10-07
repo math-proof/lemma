@@ -1,7 +1,7 @@
-import Lemma.Logic.Bool.eq.Ite
+import Lemma.Bool.Bool.eq.Ite
 import Lemma.Set.InIte.is.OrAndS
 import Lemma.Logic.Or_Not
-open Logic Set
+open Logic Set Bool
 
 
 @[main]

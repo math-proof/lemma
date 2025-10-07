@@ -1,4 +1,4 @@
-import Lemma.Logic.IffEqS.of.Eq
+import Lemma.Bool.IffEqS.of.Eq
 import Lemma.List.LengthPermute.eq.Length
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt
@@ -30,7 +30,7 @@ import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Ge_1.of.Gt
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Algebra.Eq.of.EqSubS.Ge.Ge
-open Logic Algebra List
+open Algebra List Bool
 set_option maxHeartbeats 300000
 
 

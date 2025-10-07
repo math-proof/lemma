@@ -1,6 +1,6 @@
 import Lemma.Logic.Imp.of.BFn_Ite
-import Lemma.Logic.ImpNot.of.BFn_Ite
-open Logic
+import Lemma.Bool.ImpNot.of.BFn_Ite
+open Logic Bool
 
 
 @[main, comm, mp, mpr]

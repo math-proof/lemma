@@ -1,6 +1,6 @@
-import Lemma.Logic.Imp_And.of.Imp.Imp
+import Lemma.Bool.Imp_And.of.Imp.Imp
 import Lemma.Logic.Imp.of.Imp.Imp
-open Logic
+open Logic Bool
 
 
 @[main]

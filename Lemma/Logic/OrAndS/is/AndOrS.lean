@@ -1,8 +1,8 @@
 import Lemma.Logic.NotOr.is.AndNotS
-import Lemma.Logic.Imp.is.Or_Not
+import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Logic.Imp.is.OrNot
 import Lemma.Logic.ImpOr.is.Imp.Imp
-open Logic
+open Logic Bool
 
 
 @[main]

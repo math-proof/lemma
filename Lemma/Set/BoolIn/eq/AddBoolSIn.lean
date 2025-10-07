@@ -1,9 +1,9 @@
 import Lemma.Set.In.is.In_Inter.ou.In_SDiff
 import Lemma.Logic.EqBoolS.of.Iff
-import Lemma.Logic.BoolOr.eq.SubAddBoolS
+import Lemma.Bool.BoolOr.eq.SubAddBoolS
 import Lemma.Set.In_Inter.is.In.In
 import Lemma.Set.InterInter.eq.Inter_Inter
-open Set Logic
+open Set Logic Bool
 
 
 @[main, comm]

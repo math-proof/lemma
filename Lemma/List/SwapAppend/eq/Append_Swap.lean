@@ -1,4 +1,4 @@
-import Lemma.Logic.IffEqS.of.Eq
+import Lemma.Bool.IffEqS.of.Eq
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt_Length
@@ -11,7 +11,7 @@ import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.Lt_Length
 import Lemma.List.GetElem.eq.None.of.Ge_Length
 import Lemma.Logic.NotAnd.is.OrNotS
 import Lemma.List.EqSwap.of.Ge_Length
-open Logic Algebra List
+open Logic Algebra List Bool
 
 
 @[main]

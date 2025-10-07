@@ -2,10 +2,10 @@ import Lemma.Algebra.Sum.eq.Sum_MulBool
 import Lemma.Algebra.Sum_Add.eq.AddSumS
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Set.In.is.In_Inter.ou.In_SDiff
-import Lemma.Logic.BoolOr.eq.SubAddBoolS
+import Lemma.Bool.BoolOr.eq.SubAddBoolS
 import Lemma.Logic.ToNatDecide.eq.Bool
 import Lemma.Set.In_Inter.In_SDiff.is.False
-open Algebra Set Logic
+open Algebra Set Logic Bool
 
 
 @[main]

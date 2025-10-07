@@ -1,6 +1,6 @@
 import sympy.core.relational
-import Lemma.Logic.EqIteS.of.Imp_Eq
-open Logic
+import Lemma.Bool.EqIteS.of.Imp_Eq
+open Bool
 
 
 @[main]

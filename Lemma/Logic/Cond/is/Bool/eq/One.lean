@@ -1,5 +1,5 @@
-import Lemma.Logic.Bool.eq.Ite
-open Logic
+import Lemma.Bool.Bool.eq.Ite
+open Bool
 
 
 @[main, comm, mp, mpr]

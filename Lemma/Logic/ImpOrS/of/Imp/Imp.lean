@@ -1,4 +1,4 @@
-import Lemma.Logic.Imp.is.Or_Not
+import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Logic.NotOr.is.AndNotS
 import Lemma.Logic.NotAnd.is.OrNotS
 import Lemma.Logic.IffNotNot
@@ -6,7 +6,7 @@ import Lemma.Logic.AndOr.is.OrAndS
 import Lemma.Logic.And_Or.is.OrAndS
 import Lemma.Logic.AndAnd.is.And_And
 import Lemma.Logic.Or_Not.is.NotAndNot
-open Logic
+open Logic Bool
 
 
 @[main]

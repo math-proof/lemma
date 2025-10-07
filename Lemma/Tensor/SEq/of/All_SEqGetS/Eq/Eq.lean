@@ -1,7 +1,7 @@
 import Lemma.Vector.SEq.of.EqLength_0.EqLength_0
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Tensor.All_SEqDataSGet.of.All_SEqGetS.Eq
-import Lemma.Logic.IffEqS.of.Eq
+import Lemma.Bool.IffEqS.of.Eq
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.List.GetElem.eq.None.of.Ge_Length
 import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
@@ -15,7 +15,7 @@ import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Algebra.Eq.of.EqValS
 import Lemma.Vector.EqValS.of.SEq
 import Lemma.Vector.SEq.of.EqValS
-open Algebra Tensor Logic Vector List
+open Algebra Tensor Vector List Bool
 
 
 @[main]
