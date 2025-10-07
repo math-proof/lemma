@@ -11,8 +11,8 @@ open List Tensor Algebra
 private lemma main
   {s : List ℕ}
 -- given
-  (h_i : i < n)
   (h_dim : dim ≤ s.length)
+  (h_i : i < n)
   (X : Tensor α s) :
 -- imply
   have h_dim : dim < (s.insertIdx dim 1).length := by
@@ -20,7 +20,7 @@ private lemma main
     omega
   ((X.unsqueeze dim).repeat n ⟨dim, h_dim⟩).getEllipsis ⟨dim, by simpa⟩ ⟨i, by simp_all⟩ ≃ X := by
 -- proof
-  intro h_dim
+  intros
   let s' := s.insertIdx dim 1
   let dim' : Fin s'.length := ⟨dim, by simpa⟩
   have h_i : i < n * s'[dim'] := by
@@ -29,8 +29,7 @@ private lemma main
   simp [dim', s'] at h
   apply h.trans
   simp [EqMod_1'0]
-  apply SEqGetEllipsisUnsqueeze.of.Le_Length
-  omega
+  apply SEqGetEllipsisUnsqueeze.of.Le_Length h_dim
 
 
 -- created on 2025-10-05

@@ -1,7 +1,7 @@
 import stdlib.SEq
 import sympy.tensor.functions
 import Lemma.Tensor.GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq
-import Lemma.Logic.SEqCast.of.SEq.Eq
+import Lemma.Logic.EqCast.of.SEq.Eq
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Algebra.LtVal
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
@@ -20,7 +20,7 @@ private lemma main
   (h : s[dim] > 0)
   (X : Tensor α s) :
 -- imply
-  X.sum dim ≃ (X.sum_keepdim dim).getEllipsis dim ⟨0, h⟩ := by
+  X.sum dim = (X.sum_keepdim dim).getEllipsis dim ⟨0, h⟩ := by
 -- proof
   unfold Tensor.sum_keepdim
   have h_lt := LtVal dim
@@ -31,7 +31,7 @@ private lemma main
     (s' := s)
   simp at h_cast
   simp [h_cast]
-  apply SEq_Cast.of.SEq.Eq
+  apply Eq_Cast.of.SEq.Eq
   ·
     simp [EqSetInsertIdxEraseIdx.of.Lt_Length]
   ·
