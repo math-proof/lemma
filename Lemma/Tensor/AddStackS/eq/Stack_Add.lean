@@ -1,5 +1,4 @@
 import sympy.tensor.stack
-import Mathlib.Data.Vector.MapLemmas
 import Lemma.Algebra.Add
 import Lemma.Vector.AddFlattenS.eq.FlattenAdd
 import Lemma.Vector.AddMapS.eq.Map_FunAdd

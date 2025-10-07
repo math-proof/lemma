@@ -1,5 +1,4 @@
 import sympy.tensor.Basic
-import Mathlib.Data.Vector.MapLemmas
 import Lemma.Algebra.EqDivSDiv
 open Algebra
 

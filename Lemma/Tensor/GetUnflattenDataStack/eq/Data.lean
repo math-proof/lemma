@@ -12,8 +12,7 @@ private lemma fin
   ([i < n] f i).data.unflatten[i] = (f i).data := by
 -- proof
   unfold Stack Tensor.fromVector
-  simp
-  rw [← Eq_UnflattenFlatten]
+  simp [← Eq_UnflattenFlatten]
   simp [GetElem.getElem]
   congr
   simp [List.Vector.get]

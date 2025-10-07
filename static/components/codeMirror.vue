@@ -188,7 +188,7 @@ where
 					if (await select_mathlib(module))
 						table = 'mathlib';
 					else {
-						var char = postfix.match(/^\.[A-Z]/)? '\\.': '$';
+						var char = postfix.match(/^\.[A-Z]/)? '\\.': '$|\\.';
 						var regexp = `^([\\w'']+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`;
 						var regexp_mysql = regexp.replace(/\\/g, "\\\\");
 						var sql = `
@@ -201,19 +201,23 @@ where
 						console.log('sql =', sql);
 						var section = await form_post(`php/request/execute.php`, {sql});
 						section = section.map(s => s[0]);
+						section = [...new Set(section)];
 						if (section.length > 1) {
 							var root = self.$parent.$parent;
-							section = section.array_intersect(root.open_sections);
-							if (section.length > 1) {
-								regexp = new RegExp(regexp);
-								for (var $import of root.imports) {
-									var m = $import.match(/^Lemma\.(.+)/);
-									if (m) {
-										m = m[1].match(regexp);
+							var sectionIntersect = section.array_intersect(root.open_sections);
+							if (sectionIntersect.length) {
+								section = sectionIntersect;
+								if (section.length > 1) {
+									regexp = new RegExp(regexp);
+									for (var $import of root.imports) {
+										var m = $import.match(/^Lemma\.(.+)/);
 										if (m) {
-											if (section.includes(m[1])) {
-												section = [m[1]];
-												break;
+											m = m[1].match(regexp);
+											if (m) {
+												if (section.includes(m[1])) {
+													section = [m[1]];
+													break;
+												}
 											}
 										}
 									}

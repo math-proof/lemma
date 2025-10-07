@@ -1,5 +1,4 @@
 import stdlib.SEq
-import Mathlib.Data.Vector.MapLemmas
 import Lemma.Algebra.LtMod.of.Lt_Mul
 import Lemma.Tensor.GetEllipsis_0.as.Get.of.Gt_Length_0.Lt_Get_0
 import Lemma.Logic.SEq.of.SEq.SEq
@@ -15,7 +14,6 @@ import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
-import Lemma.List.GetSet.eq.Get.of.Gt.Lt_Length
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
@@ -27,6 +25,8 @@ import Lemma.List.LengthSet.eq.Length
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Vector.EqGetRange
 import Lemma.Tensor.GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq
+import Lemma.List.EqCons_Tail.of.Eq_Get_0.GtLength_0
+import Lemma.Logic.SEqCast.of.Eq
 open Algebra Tensor Logic List Vector
 
 
@@ -65,24 +65,13 @@ private lemma main
       rw [HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
       rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)]
       rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 (by simpa)]
-      have h_length : ((s.set (dim + 1) (n * s[dim + 1])).eraseIdx (dim + 1)).length > 0 := by
-        rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simpa)]
-        simp_all
-      conv_rhs =>
-        rw [Eq_Cons_Tail.of.GtLength_0 h_length]
-      simp
+      apply EqCons_Tail.of.Eq_Get_0.GtLength_0
       rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
-      rw [GetSet.eq.Get.of.Gt.Lt_Length]
       simp
     ·
       rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 (by simpa)]
       rw [HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
-      have h_length : (s.eraseIdx (dim + 1)).length > 0 := by
-        rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simpa)]
-        simp_all
-      conv_rhs =>
-        rw [Eq_Cons_Tail.of.GtLength_0 h_length]
-      simp
+      apply EqCons_Tail.of.Eq_Get_0.GtLength_0
       rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
     ·
       rw [ToVector.eq.MapRange_Get.of.GtLength_0 (by simpa)]
@@ -107,7 +96,7 @@ private lemma main
         simp only [h_fin', h_fin]
         apply SEq.symm ∘ SEq.of.SEq.SEq ih.symm
         rw [GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq (by simp) ((X.get ⟨t, by assumption⟩).repeat n ⟨dim, by simpa⟩) ⟨dim, by simpa⟩ ⟨i, by simpa⟩]
-        apply Logic.SEqCast.of.Eq
+        apply SEqCast.of.Eq
         simp
       ·
         repeat rw [HeadD.eq.Get_0.of.GtLength_0 (by simpa)]

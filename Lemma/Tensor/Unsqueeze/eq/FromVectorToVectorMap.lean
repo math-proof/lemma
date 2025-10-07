@@ -1,5 +1,4 @@
 import sympy.tensor.Basic
-import Mathlib.Data.Vector.MapLemmas
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Vector.EqGetRange
 import Lemma.Algebra.LtVal

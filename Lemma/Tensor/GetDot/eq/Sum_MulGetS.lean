@@ -8,7 +8,7 @@ import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0
 import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
 import Lemma.Algebra.EqMod_1'0
 import Lemma.Tensor.GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
-import Lemma.Tensor.EqGetUnsqueeze_0_0
+import Lemma.Tensor.EqGetUnsqueeze
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetTranspose.eq.Get
@@ -59,7 +59,7 @@ private lemma main
     A
   simp [GetElem.getElem] at this
   rw [this]
-  have := EqGetUnsqueeze_0_0.fin (A.get i)
+  have := EqGetUnsqueeze.fin (A.get i)
   simp at this
   simp [this]
   rw [Sum_0.eq.Sum_Get.fin]

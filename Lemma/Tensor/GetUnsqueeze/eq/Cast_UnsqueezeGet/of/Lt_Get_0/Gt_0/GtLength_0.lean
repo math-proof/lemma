@@ -22,4 +22,20 @@ private lemma main
   apply Eq_Cast.of.SEq this
 
 
+@[main]
+private lemma fin
+-- given
+  (h_s : s.length > 0)
+  (h_d : d > 0)
+  (h_i : i < s[0])
+  (X : Tensor α s) :
+-- imply
+  have h_Xi: i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0 h_s]
+  have hi : i < (X.unsqueeze d).length := by rwa [LengthUnsqueeze.eq.Length.of.Gt_0 h_d]
+  (X.unsqueeze d).get ⟨i, hi⟩ = cast (by rwa [TailInsertIdx.eq.InsertIdxTail.of.Gt_0.GtLength_0 h_s]) ((X.get ⟨i, h_Xi⟩).unsqueeze (d - 1)) := by
+-- proof
+  apply main
+  repeat assumption
+
+
 -- created on 2025-07-13

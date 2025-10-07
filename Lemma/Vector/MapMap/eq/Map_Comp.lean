@@ -1,5 +1,5 @@
-import Mathlib.Data.Vector.MapLemmas
 import sympy.Basic
+import sympy.vector.Basic
 
 
 @[main, comm]
@@ -9,9 +9,9 @@ private lemma main
   (g : β → γ)
   (f : α → β) :
 -- imply
-  (l.map f).map g = l.map (g ∘ f) :=
+  (l.map f).map g = l.map (g ∘ f) := by
 -- proof
-  List.Vector.map_map l g f
+  aesop
 
 
 -- created on 2025-09-24

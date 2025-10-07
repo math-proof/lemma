@@ -23,8 +23,7 @@ private lemma main
   have h_i := LtVal i
   have := GetSplitAt_1.eq.GetUnflatten ((List.Vector.map Tensor.data ((List.Vector.range n).map (fun i : Fin n ↦ f i))).flatten) i
   simp_all
-  rw [EqUnflattenFlatten]
-  simp
+  simp [EqUnflattenFlatten]
   congr
   apply EqGetRange i
 
