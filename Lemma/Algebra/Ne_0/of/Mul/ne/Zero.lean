@@ -1,4 +1,4 @@
-import Lemma.Algebra.EqMul0'0
+import Lemma.Algebra.EqMul0_0
 import Lemma.Algebra.EqMul_0'0
 open Algebra
 
@@ -14,7 +14,7 @@ private lemma left
 -- proof
   by_contra h'
   rw [h'] at h
-  rw [EqMul0'0] at h
+  rw [EqMul0_0] at h
   simp at h
 
 

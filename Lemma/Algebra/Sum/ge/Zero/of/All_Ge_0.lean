@@ -1,18 +1,17 @@
-import sympy.sets.sets
 import Lemma.Algebra.GeSumS.of.All_Ge
 open Algebra
 
 
 @[main]
 private lemma main
-  {n : ℕ}
-  {x : ℕ → ℝ}
+  {s : Finset ι}
+  {x : ι → ℝ}
 -- given
-  (h : ∀ i ∈ range n, x i ≥ 0) :
+  (h : ∀ i ∈ s, x i ≥ 0) :
 -- imply
-  ∑ i ∈ range n, (x i) ≥ 0 := by
+  ∑ i ∈ s, (x i) ≥ 0 := by
 -- proof
-  have := GeSumS.of.All_Ge (n := n) (x := x) (y := fun _ => 0) h
+  have := GeSumS.of.All_Ge (x := x) (y := fun _ => 0) h
   simp at this
   assumption
 

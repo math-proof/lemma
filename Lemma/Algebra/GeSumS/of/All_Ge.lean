@@ -1,18 +1,17 @@
-import sympy.sets.sets
 import Lemma.Algebra.LeSumS.of.All_Le
 open Algebra
 
 
 @[main]
 private lemma main
-  {n : ℕ}
-  {x y : ℕ → ℝ}
+  {s : Finset ι}
+  {x y : ι → ℝ}
 -- given
-  (h₀ : ∀ i ∈ range n, x i ≥ y i) :
+  (h : ∀ i ∈ s, x i ≥ y i) :
 -- imply
-  ∑ i ∈ range n, x i ≥ ∑ i ∈ range n, y i := by
+  ∑ i ∈ s, x i ≥ ∑ i ∈ s, y i :=
 -- proof
-  exact LeSumS.of.All_Le (n := n) (x := y) (y := x) h₀
+  LeSumS.of.All_Le (x := y) (y := x) h
 
 
 -- created on 2025-04-06
