@@ -640,8 +640,8 @@ function update_axiom($user, $old, $new, $is_folder = false)
         error_log("error found in $sql");
     if ($is_folder)
         return;
-    $old = str_replace("'", "''", $old);
-    $new = str_replace("'", "''", $new);
+    $old = "Lemma." . str_replace("'", "''", $old);
+    $new = "Lemma." . str_replace("'", "''", $new);
     $sql = <<<EOT
 UPDATE `lemma`
 SET `imports` = JSON_REPLACE(
@@ -649,7 +649,9 @@ SET `imports` = JSON_REPLACE(
   JSON_UNQUOTE(JSON_SEARCH(`imports`, 'one', '$old')),
   '$new'
 )
-WHERE JSON_CONTAINS(imports, JSON_QUOTE('$old'));
+WHERE
+    user = '$user' and 
+    JSON_CONTAINS(imports, JSON_QUOTE('$old'))
 EOT;
     $rows_affected = mysql\execute($sql);
     if ($rows_affected < 1)

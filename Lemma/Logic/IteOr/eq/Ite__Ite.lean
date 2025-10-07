@@ -1,11 +1,11 @@
 import sympy.core.relational
-import Lemma.Logic.BFn_Ite__Ite.is.And.ou.OrAndS
+import Lemma.Bool.BFn_Ite__Ite.is.And.ou.OrAndS
 import Lemma.Logic.OrOr.is.Or_Or
 import Lemma.Logic.And_Or.is.OrAndS
 import Lemma.Logic.Or_And_Not.is.Or
 import Lemma.Logic.BFn_Ite.is.OrAndS
 import Lemma.Logic.NotOr.is.AndNotS
-open Logic
+open Logic Bool
 
 
 @[main, comm]

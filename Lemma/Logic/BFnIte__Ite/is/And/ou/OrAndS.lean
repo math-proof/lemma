@@ -1,6 +1,6 @@
 import Lemma.Logic.Any_Iff
-import Lemma.Logic.BFn_Ite__Ite.is.And.ou.OrAndS
-open Logic
+import Lemma.Bool.BFn_Ite__Ite.is.And.ou.OrAndS
+open Logic Bool
 
 
 @[main, comm, mp, mpr]

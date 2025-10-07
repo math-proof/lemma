@@ -4,7 +4,7 @@ import Lemma.Logic.BFn_Ite.is.OrAndS
 import Lemma.Logic.AndOr.is.OrAndS
 import Lemma.Logic.AndAnd.is.And_And
 import Lemma.Logic.OrOr.is.Or_Or
-import Lemma.Logic.BFn_Ite__Ite.is.And.ou.OrAndS
+import Lemma.Bool.BFn_Ite__Ite.is.And.ou.OrAndS
 import Lemma.Logic.And_NotAnd.of.And_Not
 import Lemma.Logic.Cond.of.OrAnd
 import Lemma.Logic.Or.of.Or.Imp
