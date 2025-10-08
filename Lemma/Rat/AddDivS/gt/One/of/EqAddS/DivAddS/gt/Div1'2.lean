@@ -4,10 +4,10 @@ import Lemma.Algebra.Mul
 import Lemma.Algebra.AddAdd
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.Mul_Add.eq.AddMulS
-import Lemma.Algebra.DivDiv.eq.Div_Mul
+import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Algebra.GtMulS.of.Gt.Gt_0
 import Lemma.Algebra.DivAdd.eq.AddDivS
-open Algebra
+open Algebra Rat
 
 
 @[main]

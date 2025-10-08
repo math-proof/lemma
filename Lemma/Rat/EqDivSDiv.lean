@@ -1,6 +1,6 @@
-import Lemma.Algebra.DivDiv.eq.Div_Mul
+import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Algebra.Mul
-open Algebra
+open Algebra Rat
 
 
 @[main]

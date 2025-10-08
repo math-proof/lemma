@@ -6,7 +6,7 @@ import Lemma.List.ModProdDrop.lt.ProdDropDrop_1.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Vector.EqGetS.of.Eq.Lt
 import Lemma.Algebra.EqAddSub.of.Ge
-import Lemma.Algebra.DivDiv.eq.Div_Mul
+import Lemma.Nat.DivDiv.eq.Div_Mul
 import Lemma.Algebra.MulDiv.eq.Sub_Mod
 import Lemma.Algebra.Dvd_Mul
 import Lemma.Algebra.Gt_0.of.GtMul
@@ -20,7 +20,7 @@ import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Algebra.Ge_Mod
 import Lemma.Algebra.Dvd_Mul.of.Dvd
-open Algebra Vector List
+open Algebra Vector List Nat
 
 
 @[main]
@@ -45,7 +45,7 @@ private lemma main
   apply EqGetS.of.Eq.Lt.nat
   simp
   rw [EqAddSub.of.Ge (by linarith)]
-  rw [Div_Mul.eq.DivDiv.nat]
+  rw [Div_Mul.eq.DivDiv]
   rw [MulDiv.eq.Sub_Mod]
   have := Dvd_Mul.left n s.tail.prod
   have := Gt_0.of.GtMul.left h_t
@@ -61,7 +61,7 @@ private lemma main
       rw [SubAdd.eq.Add_Sub.of.Ge]
       ·
         apply EqAddS.of.Eq.left
-        rw [Div_Mul.eq.DivDiv.nat]
+        rw [Div_Mul.eq.DivDiv]
         rw [MulDiv.eq.Sub_Mod]
       ·
         apply Ge_Mod

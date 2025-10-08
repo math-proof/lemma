@@ -12,13 +12,5 @@ private lemma main
   rw [div_mul_eq_div_div]
 
 
-@[main, comm]
-private lemma nat
--- given
-  (a b c : ℕ) :
--- imply
-  a / b / c = a / (b * c) :=
--- proof
-  Nat.div_div_eq_div_mul a b c
-
 -- created on 2024-07-01
+-- updated on 2025-10-08

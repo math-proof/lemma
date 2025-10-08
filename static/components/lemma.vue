@@ -403,6 +403,12 @@ ${latex}
                 console.log('F5');
                 event.preventDefault();
                 break;
+            case 's':
+                if (event.ctrlKey) {
+                    this.save();
+                    event.preventDefault();
+                }
+                break;
             }
         },
 

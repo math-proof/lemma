@@ -1,6 +1,6 @@
-import Lemma.Algebra.DivDiv.eq.Div_Mul
+import Lemma.Nat.DivDiv.eq.Div_Mul
 import Lemma.Algebra.Mul
-open Algebra
+open Algebra Nat
 
 
 @[main]
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   a / b / c = a / c / b := by
 -- proof
-  repeat rw [DivDiv.eq.Div_Mul.nat]
+  repeat rw [DivDiv.eq.Div_Mul]
   rw [Mul.comm]
 
 

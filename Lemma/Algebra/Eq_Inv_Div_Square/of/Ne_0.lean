@@ -1,6 +1,6 @@
 import Lemma.Algebra.Square.eq.Mul
-import Lemma.Algebra.DivDiv.eq.Div_Mul
-open Algebra
+import Lemma.Rat.DivDiv.eq.Div_Mul
+open Algebra Rat
 
 
 @[main]

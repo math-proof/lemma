@@ -22,10 +22,10 @@ import Lemma.Algebra.Mul_Neg.eq.NegMul
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Algebra.DivMul.eq.Mul_Div
-import Lemma.Algebra.DivDiv.eq.Div_Mul
+import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Algebra.Div_Mul.eq.Inv.of.Ne_0
-open Algebra
+open Algebra Rat
 
 
 @[main]
