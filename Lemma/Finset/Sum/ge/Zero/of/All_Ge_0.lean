@@ -4,8 +4,9 @@ open Finset
 
 @[main]
 private lemma main
+  [AddCommMonoid N] [PartialOrder N] [IsOrderedAddMonoid N]
   {s : Finset ι}
-  {x : ι → ℝ}
+  {x : ι → N}
 -- given
   (h : ∀ i ∈ s, x i ≥ 0) :
 -- imply
