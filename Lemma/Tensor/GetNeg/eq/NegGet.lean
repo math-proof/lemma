@@ -1,5 +1,4 @@
 import sympy.tensor.functions
-import Lemma.Tensor.LengthExp.eq.Length
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.List.ProdTake_1.eq.HeadD_1
@@ -9,22 +8,22 @@ import Lemma.Vector.GetSplitAt_1.eq.Cast_GetUnflatten
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Nat.AddMul.lt.Mul
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
 import Lemma.Vector.GetCast.eq.Get.of.Eq
+import Lemma.Tensor.LengthNeg.eq.Length
 open Tensor Vector List Nat Bool
 
 
 @[main]
 private lemma fin
-  [Exp α]
+  [Neg α]
 -- given
   (X : Tensor α s)
   (i : Fin X.length) :
 -- imply
-  (exp X).get ⟨i, by simp [LengthExp.eq.Length]⟩ = exp (X.get i) := by
+  (-X).get ⟨i, by simp [LengthNeg.eq.Length]⟩ = -(X.get i) := by
 -- proof
-  simp [Exp.exp]
+  simp [Neg.neg]
   apply Eq.of.EqDataS
   simp [Tensor.get]
   simp [Tensor.toVector]
@@ -51,13 +50,13 @@ private lemma fin
 
 @[main]
 private lemma main
-  [Exp α]
+  [Neg α]
 -- given
   (X : Tensor α s)
   (i : Fin X.length) :
 -- imply
-  have hi : i < (exp X).length := by simp [LengthExp.eq.Length]
-  (exp X)[i] = exp X[i] := by
+  have hi : i < (-X).length := by simp [LengthNeg.eq.Length]
+  (-X)[i] = -X[i] := by
 -- proof
   apply fin
 

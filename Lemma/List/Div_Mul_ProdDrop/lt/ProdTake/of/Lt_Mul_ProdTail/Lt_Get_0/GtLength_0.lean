@@ -2,8 +2,8 @@ import Lemma.Algebra.LtDiv.of.Lt_Mul
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
 import Lemma.Algebra.Mul_Mul
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
-import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
-open Algebra List
+import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
+open Algebra List Nat
 
 
 @[main]

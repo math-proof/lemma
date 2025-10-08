@@ -1,7 +1,7 @@
-import Lemma.Algebra.AddMul.lt.Mul
+import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Algebra.EqMod
-open Algebra Vector
+open Algebra Vector Nat
 
 
 @[main]

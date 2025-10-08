@@ -1,5 +1,5 @@
 import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
-import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
+import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Algebra.Lt.of.Lt.Le
 import Lemma.Algebra.Le.of.Eq
 import Lemma.Nat.Mul

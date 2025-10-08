@@ -1,8 +1,8 @@
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Algebra.EqMul_Div.of.Dvd
 import Lemma.List.Dvd_ProdSet.of.Lt_Length
-import Lemma.Algebra.AddMul.lt.Mul
-open Algebra List
+import Lemma.Nat.AddMul.lt.Mul
+open Algebra List Nat
 
 
 @[main]

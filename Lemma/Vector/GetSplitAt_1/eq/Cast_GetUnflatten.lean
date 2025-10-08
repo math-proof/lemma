@@ -3,6 +3,7 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Nat.LtVal
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
+import Lemma.List.Prod.eq.Foldr
 open List Vector Nat
 
 
@@ -13,7 +14,7 @@ private lemma fin
   (v : List.Vector α s.prod)
   (i : Fin (s.take 1).prod) :
 -- imply
-  (cast (congrArg (List.Vector α) (Prod.eq.MulProdTake__ProdDrop s 1)) v).unflatten.get i = (v.splitAt 1).get i := by
+  (v.splitAt 1).get i = (cast (congrArg (List.Vector α) (Prod.eq.MulProdTake__ProdDrop s 1)) v).unflatten.get i := by
 -- proof
   match s with
   | [] =>
@@ -22,8 +23,9 @@ private lemma fin
     have hi := LtVal i
     rw [GetSplitAt_1.eq.GetUnflatten.fin v ⟨i, by simp_all⟩]
     ext j
-    repeat rw [GetUnflatten.eq.Get_AddMul.fin]
-    simp [GetCast.eq.Get.of.Eq.fin]
+    simp [GetUnflatten.eq.Get_AddMul.fin]
+    rw [GetCast.eq.Get.of.Eq.fin]
+    simp [Foldr.eq.Prod]
 
 
 @[main, comm]
@@ -33,7 +35,7 @@ private lemma main
   (v : List.Vector α s.prod)
   (i : Fin (s.take 1).prod) :
 -- imply
-  (cast (congrArg (List.Vector α) (Prod.eq.MulProdTake__ProdDrop s 1)) v).unflatten[i] = (v.splitAt 1)[i] := by
+  (v.splitAt 1)[i] = (cast (congrArg (List.Vector α) (Prod.eq.MulProdTake__ProdDrop s 1)) v).unflatten[i] := by
 -- proof
   apply fin
 

@@ -26,7 +26,7 @@ import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
 import Lemma.Algebra.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
-import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
+import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
 import Lemma.Vector.EqGetS

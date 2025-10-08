@@ -1,10 +1,10 @@
-import Lemma.Algebra.AddMul.lt.Mul
+import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Algebra.Add_Mul.eq.MulAdd_1
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.AddMul.eq.MulAdd_1
 import Lemma.Algebra.AddAdd
 import Lemma.Algebra.LtAddS.is.Lt
-import Lemma.Algebra.Lt.of.AddMul.lt.Mul
+import Lemma.Nat.Lt.of.AddMul.lt.Mul
 import Lemma.Vector.EqValS.of.SEq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Nat.LtVal

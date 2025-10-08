@@ -8,11 +8,9 @@ private lemma main
 -- given
   (h : x.exp = y.exp) :
 -- imply
-  x = y := by
+  x = y :=
 -- proof
-  have h := EqUFnS.of.Eq h Real.log
-  simp at h
-  assumption
+  Real.exp_injective h
 
 
 -- created on 2025-10-02

@@ -8,14 +8,14 @@ import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
 import Lemma.Tensor.Data.eq.FlattenMapRange
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Vector.Get.eq.GetFlatten_AddMul
-import Lemma.Algebra.AddMul.lt.Mul
+import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.EqGetRange
 import Lemma.List.EqGetS.of.Eq.Lt_Length
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Algebra.Eq.of.EqValS
 import Lemma.Vector.EqValS.of.SEq
 import Lemma.Vector.SEq.of.EqValS
-open Algebra Tensor Vector List Bool
+open Algebra Tensor Vector List Bool Nat
 
 
 @[main]

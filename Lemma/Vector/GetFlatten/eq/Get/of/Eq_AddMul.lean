@@ -1,6 +1,6 @@
 import Lemma.Vector.Get.eq.GetFlatten_AddMul
-import Lemma.Algebra.AddMul.lt.Mul
-open Algebra Vector
+import Lemma.Nat.AddMul.lt.Mul
+open Vector Nat
 
 
 @[main]

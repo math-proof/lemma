@@ -1,6 +1,6 @@
 import Lemma.List.LengthFlatten.eq.MulLength.of.All_EqLength
-import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
-open Algebra List
+import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
+open List Nat
 
 
 @[main]

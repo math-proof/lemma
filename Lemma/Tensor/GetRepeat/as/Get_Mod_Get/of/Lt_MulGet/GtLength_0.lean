@@ -7,7 +7,7 @@ import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
 import Lemma.Algebra.EqMod
 import Lemma.Nat.LtVal
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.AddMul.lt.Mul
+import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Tensor.SEq.of.SEqDataS.Eq
 import Lemma.List.TailSet_0.eq.Tail
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -16,7 +16,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Vector.Get.eq.GetFlatten_AddMul.of.Lt.Lt
-import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
+import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt

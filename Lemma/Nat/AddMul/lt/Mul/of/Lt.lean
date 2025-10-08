@@ -1,5 +1,5 @@
-import Lemma.Algebra.AddMul.lt.Mul
-open Algebra
+import Lemma.Nat.AddMul.lt.Mul
+open Nat
 
 
 @[main]
