@@ -1,6 +1,6 @@
 import Lemma.Algebra.And_Imp_Eq_DivNeg.of.Eq0AddMul
-import Lemma.Algebra.Or_Eq_Div_Mul2_Sub_Sqrt.of.Ne_0.AddMul_Square_Mul.eq.Zero
-open Algebra
+import Lemma.Complex.Or_Eq_Div_Mul2_Sub_Sqrt.of.Ne_0.AddMul_Square_Mul.eq.Zero
+open Algebra Complex
 
 
 @[main]
