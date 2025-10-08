@@ -2,7 +2,7 @@ import sympy.core.relational
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.Algebra.EqSub.is.Eq_Add
 import Lemma.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt
-import Lemma.Algebra.EqToNatCeil_0.of.Le
+import Lemma.Rat.EqToNatCeil_0.of.Le
 import Lemma.Rat.ToNatCeilDivNeg.eq.Zero
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.EqToNat_0.of.Le_0
