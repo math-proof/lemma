@@ -1,6 +1,6 @@
 import Lemma.Algebra.GeAdd.of.Ge_Sub
-import Lemma.Algebra.LeToNatCeil_1.of.Le_Add
-open Algebra
+import Lemma.Rat.LeToNatCeil_1.of.Le_Add
+open Algebra Rat
 
 
 @[main]
