@@ -1,6 +1,7 @@
 import sympy.tensor.functions
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GetDiv.eq.DivGetS
+import Lemma.Tensor.GetExp.eq.ExpGet
 open Tensor
 
 
@@ -22,6 +23,7 @@ private lemma main
   unfold Tensor.softmax
   simp [GetElem.getElem]
   rw [GetDiv.eq.DivGetS.fin]
+  rw [GetExp.eq.ExpGet.fin]
   sorry
 
 
