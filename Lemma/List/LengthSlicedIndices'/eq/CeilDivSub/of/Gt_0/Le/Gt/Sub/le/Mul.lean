@@ -15,8 +15,8 @@ import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Algebra.CeilSub_1.eq.SubCeil_1
 import Lemma.Algebra.GeAdd.of.Ge_Sub
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
-open Algebra
+import Lemma.Nat.CoeAdd.eq.AddCoeS
+open Algebra Nat
 
 
 @[main]
@@ -58,7 +58,7 @@ private lemma main
       have h_Ge := Ge.of.NotLt h_start'
       have h_Ge := GeAdd.of.Ge_Sub.nat h_Ge
       have h_Ge := GeCoeS.of.Ge.nat (R := ℚ) h_Ge
-      rw [CoeAdd.eq.AddCoeS.nat] at h_Ge
+      rw [CoeAdd.eq.AddCoeS] at h_Ge
       have h_stop := LtCoeS.of.Lt.nat (R := ℚ) h_stop
       apply CeilDivSub.eq.One.of.GeAdd.Gt_0 (by apply GtCoeS.of.Gt.nat h_step) h_Ge h_stop
 

@@ -1,8 +1,8 @@
 import Lemma.Algebra.FDiv.eq.FloorDiv
 import Lemma.Algebra.DivAdd.eq.Add1Div
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Int.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.FloorAdd1.eq.Add1Floor
-open Algebra
+open Algebra Int
 
 
 @[main]
@@ -13,13 +13,12 @@ private lemma main
 -- imply
   (d + n) // d = 1 + n // d := by
 -- proof
-  rw [FDiv.eq.FloorDiv]
-  rw [FDiv.eq.FloorDiv]
-  rw [CoeAdd.eq.AddCoeS.int]
+  repeat rw [FDiv.eq.FloorDiv]
+  rw [CoeAdd.eq.AddCoeS]
   rw [DivAdd.eq.Add1Div (by simp [h] : (d : ℚ) ≠ 0)]
   -- Apply the property of the floor function for adding an integer
   rw [FloorAdd1.eq.Add1Floor]
 
 
 -- created on 2025-03-21
--- updated on 2025-04-20
+-- updated on 2025-10-08

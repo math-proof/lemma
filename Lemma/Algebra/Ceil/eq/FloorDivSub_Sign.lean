@@ -10,7 +10,7 @@ import Lemma.Algebra.Add.eq.Sub_Neg
 import Lemma.Algebra.EqAddS.of.Eq.Eq
 import Lemma.Algebra.FloorAdd1.eq.Add1Floor
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.FDivAdd.eq.Add1FDiv.of.Ne_0
+import Lemma.Int.FDivAdd.eq.Add1FDiv.of.Ne_0
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.AddFModS.eq.FModNegSign
@@ -28,7 +28,7 @@ import Lemma.Algebra.Eq_Neg.of.Add.eq.Zero
 import Lemma.Algebra.FDiv.eq.FloorDiv
 import Lemma.Algebra.CoeNeg.eq.NegCoe
 import Lemma.Algebra.DivNeg.eq.NegDiv
-open Algebra Bool
+open Algebra Bool Int
 
 
 /--

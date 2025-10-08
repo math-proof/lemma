@@ -1,8 +1,8 @@
 import stdlib.Slice
 import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.EqToNat
-open Algebra Int
+open Algebra Int Nat
 
 
 @[main]
@@ -14,11 +14,11 @@ private lemma main
 -- proof
   unfold Slice.length
   simp [EqAdd_Mul_DivSub1Sign_2]
-  rw [AddCoeS.eq.CoeAdd.nat]
+  rw [AddCoeS.eq.CoeAdd]
   rw [EqAdd_Mul_DivSub1Sign_2]
   simp only [EqToNat]
   simp
-  rw [AddCoeS.eq.CoeAdd.nat]
+  rw [AddCoeS.eq.CoeAdd]
   simp only [EqToNat]
   simp
 
@@ -30,7 +30,7 @@ private lemma coe
 -- imply
   (⟨i, (n + i:ℕ), 1⟩ : Slice).length (n + i) = n := by
 -- proof
-  rw [CoeAdd.eq.AddCoeS.nat]
+  rw [CoeAdd.eq.AddCoeS]
   apply main
 
 

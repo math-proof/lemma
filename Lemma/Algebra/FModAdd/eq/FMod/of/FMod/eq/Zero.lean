@@ -5,7 +5,7 @@ import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.FDiv.eq.FloorDiv
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Int.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.DivAdd.eq.AddDivS
 import Lemma.Algebra.CoeMul.eq.MulCoeS
 import Lemma.Algebra.EqDivMul.of.Ne_0
@@ -15,7 +15,7 @@ import Lemma.Algebra.FloorAdd.eq.AddFloor
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubSub.eq.Neg
-open Algebra Bool
+open Algebra Bool Int
 
 
 @[main]
@@ -46,7 +46,7 @@ private lemma main
     rw [Sub.eq.Add_Neg (a := m)]
     apply EqAddS.of.Eq.left
     rw [FDiv.eq.FloorDiv]
-    rw [CoeAdd.eq.AddCoeS.int]
+    rw [CoeAdd.eq.AddCoeS]
     rw [DivAdd.eq.AddDivS]
     rw [CoeMul.eq.MulCoeS]
     have := NeCoeS.of.Ne (R := ℚ) h_d

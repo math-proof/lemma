@@ -4,12 +4,12 @@ import Lemma.Algebra.Add
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.FDiv.eq.FloorDiv
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Int.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.DivAdd.eq.Add1Div
 import Lemma.Algebra.NeCoeS.of.Ne
 import Lemma.Algebra.FloorAdd1.eq.Add1Floor
 import Lemma.Algebra.MulAdd.eq.AddMulS
-open Algebra
+open Algebra Int
 
 
 @[main]
@@ -30,7 +30,7 @@ private lemma main
   apply EqAddS.of.Eq.left
   rw [FDiv.eq.FloorDiv]
   rw [FDiv.eq.FloorDiv]
-  rw [CoeAdd.eq.AddCoeS.int]
+  rw [CoeAdd.eq.AddCoeS]
   rw [Add.comm]
   have h := NeCoeS.of.Ne (R := ℚ) h
   rw [DivAdd.eq.Add1Div h]

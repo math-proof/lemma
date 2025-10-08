@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqLengthStack
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.List.EqLengthSlice
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqGetStack.of.Eq
@@ -9,7 +9,7 @@ import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.GetMkFlatten.eq.MkGet
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetValIndices.eq.Add.of.Lt
-open Tensor Algebra List Vector
+open Tensor List Vector Nat
 
 
 @[main]
@@ -26,7 +26,7 @@ private lemma main
     intro i
     have h_i : n = ((⟨j, (Stack (n + j) fun i ↦ f i).length, 1⟩ : Slice).length (Stack (n + j) fun i ↦ f i).length) := by
       simp [h_length]
-      rw [AddCoeS.eq.CoeAdd.nat]
+      rw [AddCoeS.eq.CoeAdd]
       simp [EqLengthSlice]
     have h_ij := EqGetStack.of.Eq h_i (fun i => f (i + j)) i
     simp [GetElem.getElem] at h_ij
@@ -57,7 +57,7 @@ private lemma main
       congr
       rw [GetValIndices.eq.Add.of.Lt]
   ·
-    rw [AddCoeS.eq.CoeAdd.nat]
+    rw [AddCoeS.eq.CoeAdd]
     apply EqLengthSlice
 
 

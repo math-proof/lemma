@@ -1,12 +1,12 @@
 import sympy.vector.vector
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Algebra.LtVal
 import Lemma.List.EqLengthSlice
 import Lemma.List.GetSlicedIndices.eq.Add.of.Lt_Length.Gt_0.Le.Lt.Eq_Add.Eq
 import Lemma.Int.EqToNat
-open Algebra List Bool Int
+open Algebra List Bool Int Nat
 
 
 @[main]
@@ -22,7 +22,7 @@ private lemma main
   simp
   split_ifs with h
   ·
-    rw [AddCoeS.eq.CoeAdd.nat] at h
+    rw [AddCoeS.eq.CoeAdd] at h
     rw [EqAdd_Mul_DivSub1Sign_2] at h
     rw [EqAdd_Mul_DivSub1Sign_2] at h
     simp at h
@@ -38,7 +38,7 @@ private lemma main
       rw [EqAdd_Mul_DivSub1Sign_2]
       simp
     ·
-      rw [AddCoeS.eq.CoeAdd.nat]
+      rw [AddCoeS.eq.CoeAdd]
       rw [EqAdd_Mul_DivSub1Sign_2]
       simp only [EqToNat]
       simp

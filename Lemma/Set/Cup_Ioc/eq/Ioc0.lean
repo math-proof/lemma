@@ -4,9 +4,9 @@ import Lemma.Set.SDiff_Singleton.eq.Range
 import Lemma.Set.InterRange.eq.Singleton
 import Lemma.Set.CupIn_Singleton.eq.Ufn
 import Lemma.Set.UnionIocS.eq.Ioc.of.Le.Le
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.NegAdd.eq.SubNeg
-open Set Algebra
+open Set Algebra Nat
 
 
 @[main]
@@ -29,7 +29,7 @@ private lemma main
     rw [Union.comm]
     rw [UnionIocS.eq.Ioc.of.Le.Le]
     ·
-      rw [CoeAdd.eq.AddCoeS.nat]
+      rw [CoeAdd.eq.AddCoeS]
       norm_num
     repeat simp
 

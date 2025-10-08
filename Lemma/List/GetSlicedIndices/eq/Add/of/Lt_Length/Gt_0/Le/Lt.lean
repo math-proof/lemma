@@ -4,11 +4,11 @@ import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.Algebra.Lt_Add.of.Gt_0
 import Lemma.Algebra.CoeAdd_1.eq.AddCoe_1
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.EqToNatCeil
 import Lemma.List.EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
 import Lemma.Algebra.Eq_0.of.LeAdd
-open Algebra List Int
+open Algebra List Int Nat
 
 
 @[main]
@@ -55,7 +55,7 @@ private lemma main
           rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start? h_stop h_step]
           simp_all
           rw [AddCoe_1.eq.CoeAdd_1] at h_i
-          rw [AddCoeS.eq.CoeAdd.nat] at h_i
+          rw [AddCoeS.eq.CoeAdd] at h_i
           rw [EqToNatCeil] at h_i
           ring_nf at h_i
           simp at h_i

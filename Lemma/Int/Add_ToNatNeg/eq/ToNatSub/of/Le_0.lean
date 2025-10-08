@@ -1,10 +1,10 @@
 import Lemma.Algebra.EqCoeS.is.Eq
 import Lemma.Int.EqToNat.of.Ge_0
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.ToNatNeg.eq.Neg.of.Le_0
 import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Algebra.Sub.ge.Zero.of.Ge
-open Algebra Int
+open Algebra Int Nat
 
 
 @[main]
@@ -19,7 +19,7 @@ private lemma main
   apply Eq.of.EqCoeS.nat (R := ℤ)
   rw [EqToNat.of.Ge_0]
   ·
-    rw [CoeAdd.eq.AddCoeS.nat]
+    rw [CoeAdd.eq.AddCoeS]
     rw [ToNatNeg.eq.Neg.of.Le_0 h]
     rw [AddNeg.eq.Sub]
   ·

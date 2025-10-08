@@ -1,8 +1,7 @@
 import sympy.vector.vector
 import Lemma.Vector.GetIndices.eq.Add
 import Lemma.Vector.GetMap.eq.FunGet
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
-open Algebra Vector
+open Vector
 
 
 @[main]

@@ -1,7 +1,7 @@
 import Lemma.Algebra.CoeSub.eq.SubCoeS
 import Lemma.Algebra.Ceil.eq.FloorDivSub_Sign
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
-open Algebra
+import Lemma.Int.CoeAdd.eq.AddCoeS
+open Algebra Int
 
 
 @[main]
@@ -11,7 +11,7 @@ private lemma main
   ⌊n / (d : ℚ)⌋ = ⌈(n - d + sign d) / (d : ℚ)⌉ := by
 -- proof
   rw [SubCoeS.eq.CoeSub.int]
-  rw [AddCoeS.eq.CoeAdd.int]
+  rw [AddCoeS.eq.CoeAdd]
   rw [Ceil.eq.FloorDivSub_Sign]
   simp
   ring_nf

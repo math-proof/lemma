@@ -10,12 +10,12 @@ import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Algebra.EqAddSub
 import Lemma.Algebra.EqMax.of.Gt
 import Lemma.Algebra.AddAdd.eq.Add_Add
-import Lemma.Algebra.CoeAdd.eq.AddCoeS
+import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.EqToNat
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.List.Drop.eq.Nil
 import Lemma.List.Slice.eq.Slice__Length.of.Ge_Length
-open Algebra List Int
+open Algebra List Int Nat
 
 
 @[main]
@@ -63,7 +63,7 @@ private lemma main
         linarith
       have h_nat : i + (d + 1).toNat = (i + d + 1).toNat := by
         rw [← h_nat]
-        rw [AddCoeS.eq.CoeAdd.nat]
+        rw [AddCoeS.eq.CoeAdd]
         apply EqToNat
       have h_ge : i + (d + 1).toNat ≥ a.length := by
         rw [h_nat]
