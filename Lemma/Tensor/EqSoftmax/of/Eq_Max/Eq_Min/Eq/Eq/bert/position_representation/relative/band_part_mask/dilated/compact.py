@@ -24,7 +24,7 @@ def apply(eq_max, eq_min, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n, l, u, d = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-3]), Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq <<= Logic.Eq.of.Eq.Eq.apply(Eq.eq_K_dquote, Eq[-2]), Logic.Eq.of.Eq.Eq.apply(Eq.eq_V_dquote, Eq[-1])
+    Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq.eq_K_dquote, Eq[-2]), Bool.Eq.of.Eq.Eq.apply(Eq.eq_V_dquote, Eq[-1])
 
     Eq << Tensor.EqSoftmax.of.Eq_Max.Eq_Min.Eq.Eq.bert.position_representation.relative.band_part_mask.dilated.apply(Eq.beta, Eq.zeta, Eq[0], Eq[1], Q, K, V)
 

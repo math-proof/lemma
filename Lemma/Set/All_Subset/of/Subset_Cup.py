@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Set.Subset.of.Subset.split.Union.apply(Eq[-1])
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (k,))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (k,))
 
 
 if __name__ == '__main__':

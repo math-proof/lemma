@@ -41,7 +41,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -49,7 +49,7 @@ def prove(Eq):
     s = Symbol(etype=dtype.integer)
     Eq << apply(All[x:n + 1](Element(f(x), s)), x, n)
 
-    Eq << Logic.All.All.of.All.apply(Eq[0], cond={n})
+    Eq << Bool.All.All.of.All.apply(Eq[0], cond={n})
 
 
 

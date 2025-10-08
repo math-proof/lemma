@@ -16,14 +16,14 @@ def apply(given, *limits, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     n = Symbol(integer=True, positive=True)
     i = Symbol(domain=Range(n))
     f, g = Function(shape=(), complex=True)
 
     Eq << apply(Equal(f(i), g(i)), (i, 0, n))
 
-    Eq << Logic.All.of.Cond.apply(Eq[0], i)
+    Eq << Bool.All.of.Cond.apply(Eq[0], i)
 
     Eq << Algebra.EqSumS.of.All_Eq.apply(Eq[-1])
 

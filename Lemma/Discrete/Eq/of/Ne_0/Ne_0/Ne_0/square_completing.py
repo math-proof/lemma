@@ -15,7 +15,7 @@ def apply(ne_zero_A, ne_zero_B, ne_zero, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Logic
+    from Lemma import Discrete, Algebra, Tensor, Bool
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(r"\vec x", real=True, shape=(n,))
@@ -141,7 +141,7 @@ def prove(Eq):
 
     Eq << Eq.eq.subs(W.this.definition.reversed)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], lhs=-1)
 

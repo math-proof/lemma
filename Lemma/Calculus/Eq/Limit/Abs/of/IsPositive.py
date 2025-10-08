@@ -11,7 +11,7 @@ def apply(is_positive):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Calculus, Algebra, Logic
+    from Lemma import Set, Calculus, Algebra, Bool
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.EqAbs.of.Gt)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
 
 if __name__ == '__main__':

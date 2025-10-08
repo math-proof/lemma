@@ -11,7 +11,7 @@ def apply(given, ε=None, δ=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     a = Symbol(real=True)
     x = Symbol(integer=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Calculus.Eq.Is.Any_All.limit_definition.apply(Eq[0])
 
-    Eq << Logic.Cond.of.Cond.Iff.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Cond.Iff.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].subs(Eq[0].reversed)
 

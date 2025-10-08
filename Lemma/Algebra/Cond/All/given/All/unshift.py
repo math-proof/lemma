@@ -13,14 +13,14 @@ def apply(cond, all):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k, a = Symbol(integer=True)
     b = Symbol(domain=Range(a + 1, oo))
     g = Function(integer=True)
     Eq << apply(g(a - 1) > 0, All[k:a:b](g(k) > 0))
 
-    Eq << Logic.All.All.of.All.apply(Eq[-1], cond={a - 1})
+    Eq << Bool.All.All.of.All.apply(Eq[-1], cond={a - 1})
 
 
 

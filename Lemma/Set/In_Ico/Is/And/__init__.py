@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x, a, b = Symbol(integer=True)
     Eq << apply(Element(x, Range(a, b)))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Set.Ge.Le_Sub_1.of.In_Ico, simplify=False)
 

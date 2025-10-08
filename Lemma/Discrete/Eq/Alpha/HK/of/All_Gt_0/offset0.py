@@ -17,7 +17,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic
+    from Lemma import Discrete, Algebra, Set, Bool
     from Lemma.Discrete.Alpha.gt.Zero import alpha
 
     x = Symbol(real=True, shape=(oo,))
@@ -30,12 +30,12 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(x_[:n], x[:n])
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1], 1)
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 1)
 
     Eq << Eq[-1].this.lhs.apply(Set.In_CartesianSpace.given.All.In)
 
     Eq << Eq[-1].this.lhs.expr.simplify()
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
 
 

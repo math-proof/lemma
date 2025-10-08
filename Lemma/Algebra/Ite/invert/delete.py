@@ -33,7 +33,7 @@ def apply(piecewise, i=0, offset=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(k,))
@@ -41,7 +41,7 @@ def prove(Eq):
     g, f, h = Function(shape=(), real=True)
     Eq << apply(Piecewise((g(x), Element(x, A)), (f(x), NotElement(x, A | B)), (h(x), True)))
 
-    Eq << Eq[0].this.rhs.apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not)
+    Eq << Eq[0].this.rhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not)
 
 
 if __name__ == '__main__':

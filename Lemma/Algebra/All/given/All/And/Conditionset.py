@@ -9,14 +9,14 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(integer=True)
     f, g = Function(shape=(), integer=True)
     A = Symbol(etype=dtype.integer)
 
     Eq << apply(All[x:g(x) > 0:A](f(x) > 0))
 
-    Eq << Logic.All.of.All_And.apply(Eq[1])
+    Eq << Bool.All.of.All_And.apply(Eq[1])
 
 
 if __name__ == '__main__':

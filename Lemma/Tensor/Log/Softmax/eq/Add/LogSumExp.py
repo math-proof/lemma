@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Logic, Real
+    from Lemma import Tensor, Algebra, Bool, Real
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].find(softmax).this.apply(Tensor.Softmax.eq.Div_SumExp)
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
 
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 

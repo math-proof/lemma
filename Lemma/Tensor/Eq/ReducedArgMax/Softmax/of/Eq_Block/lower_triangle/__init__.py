@@ -23,7 +23,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Logic
+    from Lemma import Tensor, Algebra, Bool
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
     j = Symbol(integer=True)
     Eq << Eq[0][i, j + Min(l, n) - i - 1]

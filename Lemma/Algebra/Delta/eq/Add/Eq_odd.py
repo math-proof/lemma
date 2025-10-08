@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True)
     Eq << apply(KroneckerDelta(1, n % 2))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     Eq << Eq[-1].this.find(Unequal).apply(Algebra.Ne_0.Is.Eq_odd)
 

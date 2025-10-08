@@ -24,7 +24,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(real=True, shape=(oo, oo))
     i, j, a, b, c, d = Symbol(integer=True)
     f = Function(integer=True)
@@ -40,19 +40,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.All.doit.outer.setlimit)
 
-    Eq << Logic.IffAndS.of.Iff.Iff.apply(Eq[-2], Eq[-1])
+    Eq << Bool.IffAndS.of.Iff.Iff.apply(Eq[-2], Eq[-1])
 
     Eq << Iff(All[j:f(i), i:{c}](x[i, j] > 0), All[j:f(c)](x[c, j] > 0), plausible=True)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.All.doit.outer.setlimit)
 
-    Eq << Logic.IffAndS.of.Iff.Iff.apply(Eq[-2], Eq[-1])
+    Eq << Bool.IffAndS.of.Iff.Iff.apply(Eq[-2], Eq[-1])
 
     Eq << Iff(All[j:f(i), i:{d}](x[i, j] > 0), All[j:f(d)](x[d, j] > 0), plausible=True)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.All.doit.outer.setlimit)
 
-    Eq << Logic.IffAndS.of.Iff.Iff.apply(Eq[-2], Eq[-1])
+    Eq << Bool.IffAndS.of.Iff.Iff.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

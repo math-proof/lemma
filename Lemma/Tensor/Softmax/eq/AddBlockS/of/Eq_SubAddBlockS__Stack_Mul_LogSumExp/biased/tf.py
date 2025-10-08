@@ -39,7 +39,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -55,7 +55,7 @@ def prove(Eq):
         BlockMatrix(
             Stack[i:n - Min(u, n) + 1](A[i, i:i + Min(u, n)]),
             Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1)))
-            
+
         )) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):Min(n, i + u)] + BlockMatrix(Zeros(Min(i, l - 1)), H[i], Zeros(Min(n - i, u) - 1))))))))
 
     Eq << BlockMatrix[1](H, Zeros(n, Min(u, n) - 1)).this.apply(Algebra.Block.split, n + 1 - Min(u, n))
@@ -105,19 +105,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.AddIteS.eq.IteAnd)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
     Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise).apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.find(Piecewise).apply(Bool.Ite_Ite.eq.Ite__Ite)
 
     Eq.lower_part = Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Stack.Block)
 
     Eq << Eq.A_def[i]#[i:i + Min(u, n)]
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (i, 0, n + 1 - Min(u, n)))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n + 1 - Min(u, n)))
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
 

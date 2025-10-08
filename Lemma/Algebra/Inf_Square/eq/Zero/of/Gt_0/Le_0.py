@@ -14,19 +14,19 @@ def apply(is_positive, is_nonpositive, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(M > 0, m <= 0, x=x)
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[0], cond=m < 0)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[0], cond=m < 0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Inf_Square.eq.Zero.of.Gt_0.Lt_0)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[2], cond=m < 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[2], cond=m < 0)
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=m >= 0)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=m >= 0)
 
     Eq << Eq[-1].this.rhs.args[1:].apply(Algebra.Eq.of.Le.Ge)
 

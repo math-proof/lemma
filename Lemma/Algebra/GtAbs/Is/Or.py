@@ -9,12 +9,12 @@ def apply(gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) > a)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Or.of.GtAbs)
 

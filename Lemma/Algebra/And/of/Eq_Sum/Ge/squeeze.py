@@ -14,7 +14,7 @@ def apply(eq, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True, negative=False, shape=(oo,), given=True)
     n = Symbol(integer=True, negative=False, given=True)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-3].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this().expr.find(Piecewise, Element).simplify()
 

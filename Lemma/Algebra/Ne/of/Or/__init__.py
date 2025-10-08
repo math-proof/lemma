@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(given, wrt=None):
-    from Lemma.Logic.BFnIte.of.OrAndS import expr_cond_pair
+    from Lemma.Bool.BFnIte.of.OrAndS import expr_cond_pair
     or_eqs = given.of(Or)
 
     return Unequal(Piecewise(*expr_cond_pair(Unequal, or_eqs, wrt, reverse=True)).simplify(), wrt)
@@ -11,7 +11,7 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(k,), given=True)
@@ -24,14 +24,14 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement[Union]).apply(Set.AndNotSIn.of.NotIn_Union, simplify=None)
 
-    Eq << Eq[-1].apply(Logic.OrAndOr.of.OrAnd__OrAnd, cond=NotElement(x, A))
+    Eq << Eq[-1].apply(Bool.OrAndOr.of.OrAnd__OrAnd, cond=NotElement(x, A))
 
     Eq << Eq[-1].this.find(Or).apply(Algebra.Ne.of.Or.two, wrt=p)
 
     Eq << Eq[-1].apply(Algebra.Ne.of.Or.two, wrt=p)
 
     Eq << Eq[-1].reversed
-    Eq << Eq[-1].this.lhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
 
 

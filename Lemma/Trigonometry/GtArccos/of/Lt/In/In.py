@@ -13,7 +13,7 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Set, Logic
+    from Lemma import Algebra, Trigonometry, Set, Bool
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(-1, 1)), Element(y, Interval(-1, 1, right_open=True)))
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Trigonometry.Le_0.Sin.of.In_Icc)
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq.sin_is_positive, Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq.sin_is_positive, Eq[-1])
 
     Eq << Set.Gt_0.of.IsPositive.apply(Eq[-1])
 

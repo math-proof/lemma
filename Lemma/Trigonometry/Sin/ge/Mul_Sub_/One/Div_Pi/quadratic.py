@@ -7,12 +7,12 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Logic
+    from Lemma import Algebra, Trigonometry, Bool
 
     x = Symbol(real=True)
     Eq << apply(x)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=x >= 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=x >= 0)
 
     Eq << Eq[-2].this.lhs.apply(Trigonometry.GeSin.of.Ge_0.quadratic)
     Eq << (x <= 0).this.apply(Trigonometry.GeSin.of.Le_0.quadratic)

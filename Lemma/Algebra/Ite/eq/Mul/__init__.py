@@ -36,7 +36,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, shape=(k,), given=True)
@@ -45,19 +45,19 @@ def prove(Eq):
     g, f, h = Function(shape=(), real=True)
     Eq << apply(Piecewise((r * g(x), Equal(x, y)), (r * f(x), Element(y, A)), (r * h(x), True)))
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[-1])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
-    Eq << Eq[-1].this.args[0].apply(Logic.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.args[0].apply(Bool.Cond.BFnIte.given.And_BFn)
 
-    Eq << Eq[-1].this.args[1].args[::2].apply(Logic.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.args[1].args[::2].apply(Bool.Cond.BFnIte.given.And_BFn)
 
-    Eq << Eq[-1].this.args[1].args[:2].apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.args[1].args[:2].apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
 
-    Eq << Eq[-1].this.args[-1].args[::2].apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.args[-1].args[::2].apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
 
-    Eq << Eq[-1].this.args[-1].args[:2].apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.args[-1].args[:2].apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
 
-    Eq << Logic.Or_OrAndS.given.Or_And_Or.apply(Eq[-1], cond=Unequal(x, y), simplify=None)
+    Eq << Bool.Or_OrAndS.given.Or_And_Or.apply(Eq[-1], cond=Unequal(x, y), simplify=None)
 
 
 

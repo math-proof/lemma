@@ -14,7 +14,7 @@ def apply(A, l):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Algebra.Le.given.Le_0.apply(Eq[-1])
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[-1])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(LessEqual).apply(Algebra.Le_0.given.Le)
 
@@ -38,11 +38,11 @@ def prove(Eq):
 
     Eq <<= Eq.ou.find(Less).this.apply(Tensor.Relu.eq.Zero.of.Lt), Eq.ou.find(GreaterEqual).this.apply(Tensor.EqRelu.of.Ge)
 
-    Eq <<= Logic.Imp_And.of.Cond.Imp.apply(Eq[-2], Eq[-4]), Logic.Imp_And.of.Cond.Imp.apply(Eq[-1], Eq[-3])
+    Eq <<= Bool.Imp_And.of.Cond.Imp.apply(Eq[-2], Eq[-4]), Bool.Imp_And.of.Cond.Imp.apply(Eq[-1], Eq[-3])
 
-    Eq <<= Eq[-2].this.rhs.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True, index=1), Eq[-1].this.rhs.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True, index=1)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, index=1), Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, index=1)
 
-    Eq << Logic.Or.of.Imp.Imp.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Or.of.Imp.Imp.apply(Eq[-2], Eq[-1])
 
 
 

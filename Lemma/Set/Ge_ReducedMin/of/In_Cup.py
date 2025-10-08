@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.Any_In.of.In_Cup.apply(Eq[0])
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Eq.Ge)
 

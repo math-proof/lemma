@@ -10,13 +10,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, y = Symbol(real=True)
     f = Function(shape=(), real=True)
 
     Eq << apply(Unequal(f(x), y))
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Bool.Bool.eq.Ite)
 
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@ def apply(given, piecewise, invert=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(integer=True)
     S = Symbol(etype=dtype.integer)
@@ -25,7 +25,7 @@ def prove(Eq):
     y = Symbol(Eq[-1].lhs)
     Eq << y.this.definition
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
 
     Eq << Eq[-2].subs(Eq[-1])
 

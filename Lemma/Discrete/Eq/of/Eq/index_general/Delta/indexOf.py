@@ -30,7 +30,7 @@ def apply(given, i=None, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True, given=True)
@@ -38,9 +38,9 @@ def prove(Eq):
     i, j = Symbol(domain=Range(n), given=True)
     Eq << apply(Equal(x[:n].cup_finiteset(k), Range(n)), i, j)
 
-    Eq << Eq[-1].apply(Logic.Cond.given.Or.OrNot, cond=Equal(i, j))
+    Eq << Eq[-1].apply(Bool.Cond.given.Or.OrNot, cond=Equal(i, j))
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= ~Eq[-1], ~Eq[-2]
 

@@ -9,17 +9,17 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     f = Function(real=True)
-    Eq << apply(GreaterEqual(Bool(f(x) >= 0) * y, 1))
+    Eq << apply(GreaterEqual((f(x) >= 0).toNat * y, 1))
 
     Eq << Algebra.Gt_0.of.Ge.apply(Eq[0])
 
     Eq << Algebra.Or.of.Gt_0.split.Mul.apply(Eq[-1])
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
     Eq << Algebra.Cond.of.Gt_0.apply(Eq[-1])
 

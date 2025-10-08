@@ -20,14 +20,14 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     f, g = Symbol(shape=(oo,), real=True)
     Eq << apply(Unequal(Stack[k:n](f[k]), Stack[k:n](g[k])))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Any.Ne.of.Ne)
 

@@ -11,14 +11,14 @@ def apply(x_given_z, y_given_z):
 
 @prove(provable=False)
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | z, x), Equal(y | z, y))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(Pr(x), 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(Pr(x), 0))
 
-    Eq << Logic.ImpAnd.of.Imp.cond.apply(Eq[0] & Eq[1], Eq[-1])
+    Eq << Bool.ImpAnd.of.Imp.cond.apply(Eq[0] & Eq[1], Eq[-1])
 
 
 

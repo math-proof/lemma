@@ -26,7 +26,7 @@ def apply(is_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x)
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq <<= Eq.ou & Eq[0]
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1], simplify=None)
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.find(Equal[-2] & Equal[0]).apply(Algebra.Or.Eq.of.Add.eq.Zero.Eq_Ceil.cubic, x, ret=0)
 
@@ -74,10 +74,10 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Equal[S(2)] & Equal[0]).apply(Algebra.Or.Eq.of.Add.eq.Zero.Eq_Ceil.cubic, x, ret=0)
 
     # find Equal[S(1)] & Equal[S(-2)]
-    Eq << Eq[-1].this.args[:3:2].apply(Logic.And_Or.of.OrAndS)
+    Eq << Eq[-1].this.args[:3:2].apply(Bool.And_Or.of.OrAndS)
 
     # find Equal[S(-1)] & Equal[S(2)]
-    Eq << Eq[-1].this.args[:2].apply(Logic.And_Or.of.OrAndS)
+    Eq << Eq[-1].this.args[:2].apply(Bool.And_Or.of.OrAndS)
 
     Eq << Eq[-1].this.find(Equal[Integer] | Equal[Integer]).apply(Algebra.EqMod.of.Or_Eq)
 
@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.eq_peicewise)
 
-    Eq << Logic.And.Imp.of.Or.apply(Eq[-1])
+    Eq << Bool.And.Imp.of.Or.apply(Eq[-1])
 
     Eq << Eq[1].this.lhs.apply(Algebra.Eq_0.Mod.of.Eq, 3)
 

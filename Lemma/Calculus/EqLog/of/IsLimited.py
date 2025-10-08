@@ -10,7 +10,7 @@ def apply(is_limited):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Logic
+    from Lemma import Calculus, Set, Algebra, Bool
 
     x, x0 = Symbol(real=True)
     f = Function(real=True)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[-1])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Set.Ne_0.of.In.apply(Eq[0])
 
@@ -57,7 +57,7 @@ def prove(Eq):
     epsilon1 = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
     Eq << Algebra.Or.of.Cond.subst.apply(Eq[-1], epsilon0, epsilon1 * A)
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq.A_is_positive * epsilon1, Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq.A_is_positive * epsilon1, Eq[-1])
 
 
 if __name__ == '__main__':

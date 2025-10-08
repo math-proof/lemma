@@ -9,13 +9,13 @@ def apply(self, index=0, offset=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n, m, d = Symbol(integer=True)
     f = Function(integer=True)
     Eq << apply(All[n:1:m + 1](f(n) > 0), d)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.AllIn_Ico.of.AllIn_Ico.offset, d)
 

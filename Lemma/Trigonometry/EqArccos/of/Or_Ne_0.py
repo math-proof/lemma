@@ -14,42 +14,42 @@ def apply(ou, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Logic
+    from Lemma import Trigonometry, Algebra, Bool
 
     x, y = Symbol(real=True)
     Eq << apply(Unequal(x, 0) | Unequal(y, 0))
 
     Eq << Eq[-1].this.lhs.apply(Trigonometry.Arccos.eq.Add.Arcsin)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x >= 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x >= 0)
 
-    Eq <<= Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
     Eq.x_is_nonnegative, Eq.x_is_negative = Eq[-2].this.find(acos).apply(Trigonometry.Arccos.eq.Ite.Arcsin), Eq[-1].this.find(acos).apply(Trigonometry.Arccos.eq.Ite.Arcsin)
 
     Eq.sqrt_is_positive = Algebra.Sqrt.gt.Zero.of.Or_Ne_0.apply(Eq[0])
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_nonnegative.lhs)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_nonnegative.lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.GeDiv.of.Gt_0.Ge)
 
     Eq <<= Eq.x_is_nonnegative & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.BFnIte.given.And_BFn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Pow[~Add]).apply(Algebra.Add.eq.Mul.together)
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_negative.lhs)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_negative.lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtDiv.of.Gt_0.Lt)
 
     Eq <<= Eq.x_is_negative & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Pow[~Add]).apply(Algebra.Add.eq.Mul.together)
 

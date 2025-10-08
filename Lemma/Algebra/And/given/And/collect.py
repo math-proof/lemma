@@ -20,18 +20,18 @@ def apply(self, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b, c, d = Symbol(integer=True, given=True)
     x, y = Symbol(real=True, given=True)
     f, g = Function(real=True)
     Eq << apply(((a < b) | (c < d)) & (f(x) < g(y)) & ((x < y) | (c < d)), cond=c < d)
 
-    Eq << Logic.Or.Or.of.Or_And.apply(Eq[-1])
+    Eq << Bool.Or.Or.of.Or_And.apply(Eq[-1])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[0])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[0])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
 
 

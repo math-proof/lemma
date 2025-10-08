@@ -16,21 +16,21 @@ def apply(lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x, m, M, a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(m < M, a * x + b, x)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a > 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a > 0)
 
-    Eq <<= Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a < 0)
+    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a < 0)
 
-    Eq <<= Eq[-3].this.lhs.apply(Algebra.Sup.eq.MaxAddS_Mul.of.Gt_0.Lt, a * x + b, x), Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq <<= Eq[-3].this.lhs.apply(Algebra.Sup.eq.MaxAddS_Mul.of.Gt_0.Lt, a * x + b, x), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
 
-    Eq <<= Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Sup.eq.MaxAddS_Mul.of.Lt_0.Lt, a * x + b, x), Logic.Imp.given.Cond.apply(Eq[-1])
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.Sup.eq.MaxAddS_Mul.of.Lt_0.Lt, a * x + b, x), Bool.Imp.given.Cond.apply(Eq[-1])
 
     Eq <<= Eq[-1].this.find(Sup).simplify()
 

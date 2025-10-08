@@ -42,13 +42,13 @@ def apply(given, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True, given=True)
     f, h, g = Function(real=True)
     Eq << apply(Or(Unequal(x, y) & (y > 0), Equal(f(x), g(y)) & (y > 0), Equal(h(x), g(y)) & (y > 0)), cond=y > 0)
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[1] & Eq[2], simplify=False)
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[1] & Eq[2], simplify=False)
 
 
 if __name__ == '__main__':

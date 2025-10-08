@@ -12,13 +12,13 @@ def apply(all_a, all_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     e = Symbol(real=True)
     f, g = Function(integer=True)
     Eq << apply(All[e:g(e) > 0](f(e) > 0), All[e:g(e) < 0](f(e) > 0))
 
-    Eq << Logic.All.All.of.All.apply(Eq[-1], cond=g(e) < 0)
+    Eq << Bool.All.All.of.All.apply(Eq[-1], cond=g(e) < 0)
 
 
 

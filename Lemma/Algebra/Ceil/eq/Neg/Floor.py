@@ -10,12 +10,12 @@ def apply(ceil):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x = Symbol(real=True)
     Eq << apply(ceil(x))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Element(x, Integers))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Element(x, Integers))
 
     Eq << Eq[-2].this.lhs.apply(Set.Any.Eq.of.In)
 

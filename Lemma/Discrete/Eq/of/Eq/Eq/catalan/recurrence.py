@@ -10,7 +10,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Discrete, Set, Logic
+    from Lemma import Algebra, Calculus, Discrete, Set, Bool
 
     n, k = Symbol(integer=True)
     # n = Symbol(integer=True, nonnegative=True)
@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq << Calculus.Mul.Sum.eq.Sum.Sum.apply(C, C, n=n, k=k, x=x)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Eq.g_definition ** 2
 
-    Eq.g_squared = Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq.g_squared = Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Eq.g_definition.this.rhs.apply(Algebra.Sum.eq.Add.shift)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-3])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-3])
 
     Eq << Algebra.Eq_0.of.Eq.apply(Eq[-1])
 
@@ -96,11 +96,11 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq.any_gt)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.any_gt)
 
     Eq << ~Eq.positive_sqrt
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[-1])
+    Eq << Bool.Or_Not.of.All.apply(Eq[-1])
 
     Eq << Eq[-1].subs(x_var, x)
 
@@ -108,33 +108,33 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Algebra.Eq.of.Ge.squeeze)
 
-    Eq.all_ne = Logic.All.of.All_OrNot.apply(Eq[-1], wrt=x)
+    Eq.all_ne = Bool.All.of.All_OrNot.apply(Eq[-1], wrt=x)
 
-    Eq << Eq.ou.apply(Logic.AndAllSSetOf.of.All, cond=x < S.One / 4)
+    Eq << Eq.ou.apply(Bool.AndAllSSetOf.of.All, cond=x < S.One / 4)
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], index=1)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], index=1)
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, x)
+    Eq << Bool.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, x)
 
     Eq << Eq[-1].this.find(NotElement).simplify()
 
-    Eq << Logic.All.of.All_OrNot.apply(Eq[-1], wrt=x)
+    Eq << Bool.All.of.All_OrNot.apply(Eq[-1], wrt=x)
 
     Eq <<= Eq.all_ne & Eq[-1]
 
-    Eq << Logic.All.of.All_And.apply(Eq[-1], index=0)
+    Eq << Bool.All.of.All_And.apply(Eq[-1], index=0)
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[-1])
+    Eq << Bool.Or_Not.of.All.apply(Eq[-1])
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], x)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], x)
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[-1])
+    Eq << Bool.Or_Not.of.All.apply(Eq[-1])
 
-    Eq << Eq.negative_sqrt.apply(Logic.All.given.All.AllNot, cond=x < S.One / 4)
+    Eq << Eq.negative_sqrt.apply(Bool.All.given.All.AllNot, cond=x < S.One / 4)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[-1])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[-1])
 
     Eq << Eq[-1].this.args[1].apply(Set.NotIn.given.Or.Icc)
 
@@ -166,7 +166,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.ratsimp()
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq.g_definition)
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq.g_definition)
 
     Eq << Calculus.Eq.series.Infty.of.Eq.coefficient.apply(Eq[-1].reversed, x=x)
 

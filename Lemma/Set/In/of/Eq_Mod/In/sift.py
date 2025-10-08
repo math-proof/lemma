@@ -18,7 +18,7 @@ def apply(eq_mod, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x = Symbol(integer=True)
     Eq << apply(Equal(x % 3, 1), Element(x, {-2, -1, 0, 1, 2}))
@@ -27,15 +27,15 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[0]
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1], simplify=None)
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.args[-1].apply(Logic.UFn.of.UFn.Eq, simplify=None)
+    Eq << Eq[-1].this.args[-1].apply(Bool.UFn.of.UFn.Eq, simplify=None)
 
-    Eq << Eq[-1].this.args[-2].apply(Logic.UFn.of.UFn.Eq, simplify=None)
+    Eq << Eq[-1].this.args[-2].apply(Bool.UFn.of.UFn.Eq, simplify=None)
 
-    Eq << Eq[-1].this.args[0].apply(Logic.UFn.of.UFn.Eq)
+    Eq << Eq[-1].this.args[0].apply(Bool.UFn.of.UFn.Eq)
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], 1)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], 1)
 
     Eq << Set.In.Finset.of.Or_Eq.apply(Eq[-1])
 

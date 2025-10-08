@@ -11,7 +11,7 @@ def apply(all_lt, subset, A):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Logic
+    from Lemma import Tensor, Algebra, Bool
 
     n, m = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, m), real=True)
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq.Sum.ReducedArgMax.of.All_Lt.Subset_Cup.apply(Eq[0], Eq[1], lambda i, j: exp(A[i, j]))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.ReducedSum)
 
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
 
 
 

@@ -17,14 +17,14 @@ def apply(Any_All, all):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     N, n = Symbol(integer=True)
     g, f = Function(shape=(), integer=True)
     M = Symbol(g(N))
     Eq << apply(Any[N](All[n:N:oo](f(n) <= M)), All[n:N](f(n) <= M))
 
-    Eq << Eq[0].this.expr.apply(Logic.AllOr.of.All.All, Eq[1])
+    Eq << Eq[0].this.expr.apply(Bool.AllOr.of.All.All, Eq[1])
 
 
 if __name__ == '__main__':

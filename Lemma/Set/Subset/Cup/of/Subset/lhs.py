@@ -10,7 +10,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     n, m = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
     x = Symbol(shape=(oo,), etype=dtype.complex[n])
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << apply(Subset(x[i], A), (i, 0, m))
 
-    Eq << Logic.AllIn.of.All.apply(Eq[0], (i, 0, m))
+    Eq << Bool.AllIn.of.All.apply(Eq[0], (i, 0, m))
 
     Eq << Set.Subset.Cup.of.All_Subset.apply(Eq[-1])
 

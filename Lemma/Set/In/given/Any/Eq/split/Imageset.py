@@ -21,7 +21,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic, Logic
+    from Lemma import Algebra, Set, Logic, Bool
 
     x, y = Symbol(integer=True)
     f = Function(integer=True)
@@ -35,7 +35,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Set.In.Imageset.of.In, f=f)
 
     Eq << Algebra.Any.of.Any_Eq.All.subst.apply(Eq[1].reversed, Eq[-1])
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -13,7 +13,7 @@ def apply(all_is_positive, eq_initial):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), complex=True)
@@ -70,11 +70,11 @@ def prove(Eq):
 
     Eq << Set.Ne_0.of.IsPositive.apply(Eq.Lkk_is_positive)
 
-    Eq << Logic.And_And.of.And.apply(Eq[-2])
+    Eq << Bool.And_And.of.And.apply(Eq[-2])
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq[1], Eq[-1], k, 0)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[1], Eq[-1], k, 0)
 
     Eq << Eq.induct.subs(k, t - 1)
 

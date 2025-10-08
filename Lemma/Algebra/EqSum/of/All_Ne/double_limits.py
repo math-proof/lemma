@@ -19,7 +19,7 @@ def apply(all_ne, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Equal).reversed
 
-    Eq << Logic.ImpAndS.of.Imp.apply(Eq.hypothesis, cond=Eq[-1].lhs.find(Equal))
+    Eq << Bool.ImpAndS.of.Imp.apply(Eq.hypothesis, cond=Eq[-1].lhs.find(Equal))
 
     Eq << Eq[-1].this.rhs.apply(Algebra.EqAdd.of.Eq.Eq)
 
@@ -52,9 +52,9 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
 
 
 

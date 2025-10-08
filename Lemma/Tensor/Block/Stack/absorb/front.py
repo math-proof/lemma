@@ -20,7 +20,7 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor
+    from Lemma import Algebra, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.AddIteS.eq.IteAnd)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not, 0)
+    Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 0)
 
 
 

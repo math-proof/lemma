@@ -39,7 +39,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -104,19 +104,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.AddIteS.eq.IteAnd)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
     Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise).apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.find(Piecewise).apply(Bool.Ite_Ite.eq.Ite__Ite)
 
     Eq.lower_part = Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Stack.Block)
 
     Eq << Eq.A_def[i]
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (i, 0, n - Min(u, n)))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n - Min(u, n)))
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
 

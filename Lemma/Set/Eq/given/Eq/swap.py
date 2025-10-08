@@ -19,7 +19,7 @@ def apply(imply, i=None, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     n = Symbol(positive=True, integer=True)
 
     x, y = Symbol(shape=(n,), etype=dtype.integer)
@@ -31,11 +31,11 @@ def prove(Eq):
 
     Eq << Set.EqSwapSwap.apply(x, i, j)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Set.EqSwapSwap.apply(y, i, j)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

@@ -12,14 +12,14 @@ def apply(self, pivot=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Pr(y | x & z))
 
-    Eq << Logic.Cond.given.Imp.domain_defined.apply(Eq[0])
+    Eq << Bool.Cond.given.Imp.domain_defined.apply(Eq[0])
 
-    Eq << Logic.Imp_And.given.Imp_And.And.apply(Eq[-1], -1)
+    Eq << Bool.Imp_And.given.Imp_And.And.apply(Eq[-1], -1)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ne_0.Eq.given.And.Mul)
 

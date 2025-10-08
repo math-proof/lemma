@@ -10,13 +10,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True)
     a = Symbol(real=True, positive=True)
     Eq << apply(x * a > 0)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Gt_0.Mul.of.Gt_0, 1 / a)
 

@@ -10,7 +10,7 @@ def apply(equal, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     A = Symbol(etype=dtype.integer, given=True)
     a = Symbol(integer=True, given=True)
@@ -18,11 +18,11 @@ def prove(Eq):
 
     Eq << Set.Any.Eq.One.of.Eq.apply(Eq[0], reverse=True)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Eq[-1].this.expr.apply(Logic.UFn.of.UFn.Eq, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, reverse=True)
 
 
 

@@ -11,19 +11,19 @@ def apply(gt_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(b ** 2 - 4 * a * c > 0, x=x)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Unequal(a, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Unequal(a, 0))
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=Equal(a, 0))
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=Equal(a, 0))
 
-    Eq << Logic.ImpEq.of.ImpEq.subst.apply(Eq[-1])
+    Eq << Bool.ImpEq.of.ImpEq.subst.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ne.of.Gt)
 
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.Lt_0.of.Ne_0, x=x, b=c)
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[2].lhs)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[0], cond=Eq[2].lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.Lt_0.of.Ne_0.Add.gt.Zero, x=x)
 

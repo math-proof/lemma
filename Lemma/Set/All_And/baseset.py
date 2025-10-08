@@ -12,7 +12,7 @@ def apply(P):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     n, m = Symbol(integer=True, positive=True)
     x = Symbol(shape=(oo,), integer=True)
 
@@ -21,7 +21,7 @@ def prove(Eq):
     P = Symbol(conditionset(x[:n], f(x[:n]) > 0, CartesianSpace(Range(m), n)))
     Eq << apply(P)
 
-    Eq << Logic.All.of.All_And.apply(Eq[-1])
+    Eq << Bool.All.of.All_And.apply(Eq[-1])
 
     Eq << All[x[:n]:P](Element(x[:n], P), plausible=True)
 

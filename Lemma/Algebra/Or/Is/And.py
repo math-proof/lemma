@@ -20,17 +20,17 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True, given=True)
     f, g = Function(real=True)
     Eq << apply(Or(Unequal(x, y) & (y > 0), Equal(f(x), g(y))))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Logic.Or.Or.of.Or_And)
+    Eq << Eq[-2].this.lhs.apply(Bool.Or.Or.of.Or_And)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Or_And.given.AndOrS)
+    Eq << Eq[-1].this.rhs.apply(Bool.Or_And.given.AndOrS)
 
 
 

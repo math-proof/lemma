@@ -10,7 +10,7 @@ def apply(is_nonpositive):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Set, Logic
+    from Lemma import Trigonometry, Algebra, Set, Bool
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(x <= 0)
@@ -42,9 +42,9 @@ def prove(Eq):
 
     Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[-2])
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq.any_eq, simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.any_eq, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
     Eq << Eq[-1].this.find(Element).apply(Set.InSub.of.In_Icc, S.Pi / 2)
 

@@ -10,7 +10,7 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, a, b, c = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << ~Eq[0]
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[1], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[1], Eq[-1])
 
 
 

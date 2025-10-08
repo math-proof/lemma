@@ -10,7 +10,7 @@ def apply(ne_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)
@@ -18,11 +18,11 @@ def prove(Eq):
     a = Symbol(real=True)
     Eq << apply(Unequal(a, 0), Distributed(x, NormalDistribution(mu, sigma ** 2)), b)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a > 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a > 0)
 
-    Eq << Logic.Imp.given.And.Imp.invert.apply(Eq[-1], cond=a < 0)
+    Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-1], cond=a < 0)
 
-    Eq <<= Logic.Cond.Imp.given.And.Imp.And.apply(Eq[1], Eq[-3]), Logic.Cond.Imp.given.And.Imp.And.apply(Eq[1], Eq[-1])
+    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[1], Eq[-3]), Bool.Cond.Imp.given.And.Imp.And.apply(Eq[1], Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Probability.Distributed.of.Gt_0.Distributed.scale.gaussian, b)
 

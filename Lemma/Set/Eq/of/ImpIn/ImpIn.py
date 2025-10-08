@@ -17,16 +17,16 @@ def apply(sufficient_A, necessary_B):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
     A, B = Symbol(etype=dtype.integer[n])
 
     Eq << apply(Imply(Element(x, A), Element(x, B)), Given(Element(x, A), Element(x, B)))
 
-    Eq << Eq[0].this.apply(Logic.Imp.Is.All, wrt=x)
+    Eq << Eq[0].this.apply(Bool.Imp.Is.All, wrt=x)
 
-    Eq << Logic.All.of.Given.apply(Eq[1], wrt=x)
+    Eq << Bool.All.of.Given.apply(Eq[1], wrt=x)
 
     Eq << Set.Eq.of.All_In.All_In.apply(Eq[-2], Eq[-1])
 

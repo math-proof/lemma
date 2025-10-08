@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(self):
     piece0, piece1 = self.of(Mul)
-    from Lemma.Logic.Ite_Ite.eq.Ite__Ite import flatten
+    from Lemma.Bool.Ite_Ite.eq.Ite__Ite import flatten
     return Equal(self, flatten(mul(piece0, piece1)))
 
 
@@ -33,7 +33,7 @@ def mul(self, other):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
@@ -46,7 +46,7 @@ def prove(Eq):
 
 
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.lhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
 
 

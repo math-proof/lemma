@@ -8,14 +8,14 @@ def apply(f_eq, *, old=None, new=None, simplify=True, assumptions={}):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
     f = Function(integer=True)
     Eq << apply(Equal(Piecewise((f(a), Element(a, A)), (f(b), True)), 0), old=Element(a, A), new=Element(b, B))
 
-    Eq << Logic.Cond.of.Iff.Cond.subst.apply(Eq[2].reversed, Eq[1])
+    Eq << Bool.Cond.of.Iff.Cond.subst.apply(Eq[2].reversed, Eq[1])
 
 
 if __name__ == '__main__':

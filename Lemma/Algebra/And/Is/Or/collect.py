@@ -22,14 +22,14 @@ def apply(self, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     p, q, r, s = Symbol(bool=True)
     Eq << apply(And(q | p, r | p, s | p), cond=p)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Logic.Or_And.of.AndOrS, cond=p)
+    Eq << Eq[-2].this.lhs.apply(Bool.Or_And.of.AndOrS, cond=p)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.And.given.Or.collect, cond=p)
 

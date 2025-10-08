@@ -9,7 +9,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     y, m, M, x = Symbol(real=True)
     f = Function(real=True)
@@ -18,7 +18,7 @@ def prove(Eq):
     z = Symbol(real=True)
     Eq << Algebra.Any.All.Lt.of.LtSup.apply(Eq[0], z)
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.expr.args[0].simplify()
 

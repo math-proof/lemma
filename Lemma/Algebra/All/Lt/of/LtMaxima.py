@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, t = Symbol(real=True)
     M = Symbol(real=True, given=True)
@@ -21,19 +21,19 @@ def prove(Eq):
 
     Eq << Algebra.All.Le.of.LeMaxima.apply(Eq[-1])
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Equal(S, S.etype.emptySet))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Equal(S, S.etype.emptySet))
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.Lt.given.And)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.All_And.given.All.All)
+    Eq << Eq[-1].this.rhs.apply(Bool.All_And.given.All.All)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Logic.Imp.given.Cond.apply(Eq[-1])
+    Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 
-    Eq.infer_is_empty = Eq[-2].this.apply(Logic.Imp.Is.ImpNotS)
+    Eq.infer_is_empty = Eq[-2].this.apply(Bool.Imp.Is.ImpNotS)
 
     Eq << Eq[0].this.lhs.limits_subs(x, t)
 
@@ -41,13 +41,13 @@ def prove(Eq):
 
     Eq << Eq[-1].limits_subs(t, x)
 
-    Eq << Logic.Cond.Imp.given.And.Imp.And.apply(Eq[-1], Eq.infer_is_empty)
+    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[-1], Eq.infer_is_empty)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Any_And.of.Any.All.All_Imp)
+    Eq << Eq[-1].this.lhs.apply(Bool.Any_And.of.Any.All.All_Imp)
 
     Eq << Eq[-1].this.lhs.expr.apply(Algebra.Le.of.Eq.Le)
 
-    Eq << Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

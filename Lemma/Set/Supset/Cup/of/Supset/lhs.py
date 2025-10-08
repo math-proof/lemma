@@ -10,7 +10,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
     x = Symbol(shape=(oo,), etype=dtype.complex[n])
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=m, start=1, simplify=None)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=m, start=1, simplify=None)
 
 
 if __name__ == '__main__':

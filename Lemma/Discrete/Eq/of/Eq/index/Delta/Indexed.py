@@ -22,7 +22,7 @@ def apply(given, i=None, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True, given=True)
@@ -30,9 +30,9 @@ def prove(Eq):
     i, j = Symbol(domain=Range(n), given=True)
     Eq << apply(Equal(x[:n].cup_finiteset(k), Range(n)), i, j)
 
-    Eq << Eq[-1].apply(Logic.Cond.given.Or.OrNot, cond=Equal(i, j))
+    Eq << Eq[-1].apply(Bool.Cond.given.Or.OrNot, cond=Equal(i, j))
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= ~Eq[-1], ~Eq[-2]
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.reversed
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, i)
+    Eq << Bool.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, i)
 
     Eq << Eq[-1].this.find(NotElement).simplify()
 

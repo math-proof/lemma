@@ -13,7 +13,7 @@ def apply(given):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     a = Symbol(real=True)
     b = Symbol(real=True, domain=Interval.open(a, oo))
@@ -29,12 +29,12 @@ def prove(Eq):
 
     Eq << Eq[-1].limits_subs(Eq[-1].variable, Eq[-2].variable)
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[-2])
 
     Eq << Element(Eq[-1].expr.rhs, Reals, plausible=True)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@ def apply(all_historic, y=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -35,25 +35,25 @@ def prove(Eq):
     a = Eq[-1].lhs.variable
     Eq << Algebra.Cond.of.Cond.subst.apply(Eq[2], x[:n], a[:n])
 
-    Eq << Logic.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
+    Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
 
-    Eq << Logic.Or.given.Cond.apply(Eq[-1], index=0)
+    Eq << Bool.Or.given.Cond.apply(Eq[-1], index=0)
 
-    Eq << Eq[-2].this.lhs.apply(Logic.Any_And.of.Any.All)
+    Eq << Eq[-2].this.lhs.apply(Bool.Any_And.of.Any.All)
 
-    Eq << Eq[-1].this.find(And).args[1:].apply(Logic.Cond.of.Imp.Cond)
+    Eq << Eq[-1].this.find(And).args[1:].apply(Bool.Cond.of.Imp.Cond)
 
     Eq << Any[y[n]](Equal(y[n], a[n]), plausible=True)
 
     Eq << Eq[-1].simplify()
 
-    Eq << Logic.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
+    Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
 
-    Eq << Logic.Or.given.Cond.apply(Eq[-1], index=0)
+    Eq << Bool.Or.given.Cond.apply(Eq[-1], index=0)
 
-    Eq << Eq[-2].this.lhs.apply(Logic.Any_And.of.Any.All)
+    Eq << Eq[-2].this.lhs.apply(Bool.Any_And.of.Any.All)
 
-    Eq << Eq[-1].this.find(And).args[:2].apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq << Eq[-1].this.find(And).args[:2].apply(Bool.Any_And.of.Any.All, simplify=None)
 
     Eq << Eq[-1].this.find(Equal & Greater).apply(Algebra.Gt.of.Eq.Gt, ret=0)
 
@@ -67,11 +67,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).args[:2].apply(Set.EqCupSIn_Icc.of.EqCupSIn_Ico.Eq.Le, simplify=None)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Any_And.of.AnySetOf_AnySetOf, -1)
+    Eq << Eq[-1].this.lhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf, -1)
 
-    Eq << Eq[-1].this.find(And).args[:2].apply(Logic.Eq.of.Eq.Eq, -1)
+    Eq << Eq[-1].this.find(And).args[:2].apply(Bool.Eq.of.Eq.Eq, -1)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Any_And.of.AnySetOf_AnySetOf)
+    Eq << Eq[-1].this.lhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf)
 
     Eq << Eq[-1].this.find(ReducedMax).apply(Algebra.ReducedMax.eq.Maxima)
 
@@ -83,13 +83,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).args[1:].apply(Algebra.All.of.Cond.All.push)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.AnySetOf.of.Any_And, 1)
+    Eq << Eq[-1].this.lhs.apply(Bool.AnySetOf.of.Any_And, 1)
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], start=1, n=n)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], start=1, n=n)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[2])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[2])
 
 
 if __name__ == '__main__':

@@ -14,14 +14,14 @@ def apply(cond, forall):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     B = Symbol(etype=dtype.real, empty=False)
     f, g = Function(integer=True)
     Eq << apply(f(x) > 0, All[y:B](g(y) > 0))
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
 
 

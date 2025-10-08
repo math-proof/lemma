@@ -23,7 +23,7 @@ def apply(eq_cup, eq_cup_complement, eq, contains, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic, Logic
+    from Lemma import Set, Algebra, Logic, Bool
 
     i = Symbol(integer=True, given=True)
     j = Symbol(integer=True)
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={y})
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.contains, Eq[-1])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.contains, Eq[-1])
 
     Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
 
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.eq.AddSumS, cond={i})
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[3], Eq[-1])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[3], Eq[-1])
 
 
 if __name__ == '__main__':

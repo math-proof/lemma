@@ -10,7 +10,7 @@ def apply(eq, infer, L, i, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), real=True)
@@ -23,15 +23,15 @@ def prove(Eq):
     L_quote = Symbol(super_real=True, shape=(n, n))
     Eq << Exists[L_quote](Eq[2].find(Equal[Indexed])._subs(L, L_quote), plausible=True)
 
-    Eq << Logic.Any_Ite.given.And.Imp.apply(Eq[-1])
+    Eq << Bool.Any_Ite.given.And.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.simplify()
 
-    Eq <<= Logic.Imp.given.All.apply(Eq[-3]), Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq <<= Bool.Imp.given.All.apply(Eq[-3]), Bool.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq <<= Algebra.All.given.All.limits.domain_defined.apply(Eq[-2]), Eq[-1].this.rhs.simplify()
 
-    Eq <<= Eq[-2].this(i).find(Min).simplify(), Logic.Imp.given.Cond.apply(Eq[-1])
+    Eq <<= Eq[-2].this(i).find(Min).simplify(), Bool.Imp.given.Cond.apply(Eq[-1])
 
     Eq <<= Eq[-2].this(j).expr.args[1].args[0].apply(Algebra.Expr.eq.Block, i + 1), Eq[-1].this(i).apply(Algebra.Any.limits.pop.Slice)
 
@@ -48,7 +48,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Algebra.Any.limits.swap)
     Eq << Eq[-1].this(j).expr.apply(Algebra.Any.limits.separate)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0] & Eq[1], Eq[3], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0] & Eq[1], Eq[3], simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Discrete.And.of.Eq_Transpose.Imp_Gt_0.Eq_Ite.Cholesky, simplify=False, ret=0)
 

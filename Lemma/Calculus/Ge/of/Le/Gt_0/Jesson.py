@@ -18,7 +18,7 @@ def apply(le, is_positive, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Logic
+    from Lemma import Calculus, Algebra, Set, Bool
 
     a, b = Symbol(real=True, given=True)
     domain = Interval(a, b, left_open=True, right_open=True)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq.le = Eq[-1].this.lhs.apply(Algebra.Add.collect, factor=x1)
 
-    Eq.all_is_positive = Logic.All.of.Cond.apply(Eq[1], x)
+    Eq.all_is_positive = Bool.All.of.Cond.apply(Eq[1], x)
 
     Eq.x0_contains, Eq.x1_contains = Element(x0, domain, plausible=True), Element(x1, domain, plausible=True)
 
@@ -85,23 +85,23 @@ def prove(Eq):
     Eq.any = Eq[-1].this.expr.rhs.apply(Algebra.Add.collect, factor=w * (1 - w) * (x1 - x0))
     Eq.suffice = Eq.any.limits_cond.this.apply(Set.Le.of.In.In)
     Eq <<= Set.Subset.Icc.of.In.In.apply(Eq.x0_contains, Eq.x_mean_contains), Set.Subset.Icc.of.In.In.apply(Eq.x_mean_contains, Eq.x1_contains)
-    Eq <<= Logic.Imp.of.Cond.apply(Eq[-2], cond=Eq.suffice.lhs.args[0]), Logic.Imp.of.Cond.apply(Eq[-1], cond=Eq.suffice.lhs.args[1])
-    Eq <<= Logic.Imp_And.of.ImpAnd.apply(Eq[-2]), Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq <<= Bool.Imp.of.Cond.apply(Eq[-2], cond=Eq.suffice.lhs.args[0]), Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq.suffice.lhs.args[1])
+    Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
     Eq <<= Eq[-2].this.rhs.apply(Set.In.of.In.Subset), Eq[-1].this.rhs.apply(Set.In.of.In.Subset)
-    Eq << Logic.ImpAndS.of.Imp.Imp.apply(Eq[-2], Eq[-1])
-    Eq << Logic.Imp.of.Cond.apply(Eq.all_is_positive, cond=Eq[-1].lhs)
+    Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Imp.of.Cond.apply(Eq.all_is_positive, cond=Eq[-1].lhs)
     Eq <<= Eq[-1] & Eq[-2] & Eq.suffice
     Eq << Eq[-1].this.rhs.apply(Calculus.In.of.Le.In.In.All_gt_0)
     Eq.is_nonnegative = Eq[-1].this.rhs.apply(Algebra.Ge_0.of.Le)
     Eq << GreaterEqual(w * (1 - w), 0, plausible=True)
     Eq << Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-1], -Eq.is_nonpositive)
-    Eq << Logic.Imp.of.Cond.apply(Eq[-1], cond=Eq[-3].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq[-3].lhs)
     Eq <<= Eq[-1] & Eq.is_nonnegative
     Eq <<= Eq[-1].this.rhs.apply(Algebra.Ge_0.of.Ge_0.Ge_0)
-    Eq << Logic.All.of.Imp.apply(Eq[-1], wrt=(x_, x__))
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
+    Eq << Bool.All.of.Imp.apply(Eq[-1], wrt=(x_, x__))
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
     Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Ge.Eq)
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
     Eq << Eq[-1] + Eq[2].rhs
 
 

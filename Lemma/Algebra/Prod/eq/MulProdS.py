@@ -9,7 +9,7 @@ def apply(self, *, cond=None, wrt=None, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x = Symbol(integer=True)
     f = Function(real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In.Is.In_Inter.ou.In_SDiff, B)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.BoolOr.eq.SubAddBoolS)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.BoolOr.eq.SubAddBoolS)
 
 
 

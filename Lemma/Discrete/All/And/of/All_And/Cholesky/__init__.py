@@ -9,7 +9,7 @@ def apply(All_And):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Discrete, Logic, Tensor
+    from Lemma import Algebra, Set, Discrete, Bool, Tensor
 
     n, t = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)
@@ -18,13 +18,13 @@ def prove(Eq):
     Eq << apply(
         All[i:t](Equal(L[t, i],  (A[t, i] - L[t, :i] @ ~L[i, :i]) / L[i, i]) & Element(L[i, i], Interval.open(0, oo)) & All[j:i](Element(L[i, j], S.Complexes))))
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[1])
 
-    Eq[-1], Eq.Lij_is_complex = Logic.All.All.of.All_And.apply(Eq[0])
+    Eq[-1], Eq.Lij_is_complex = Bool.All.All.of.All_And.apply(Eq[0])
 
     Eq << Eq[-1].this.expr.apply(Set.EqMul.of.IsPositive.Eq, ret=1)
 
-    Eq.Ati_def, Eq.Lii_is_positive = Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq.Ati_def, Eq.Lii_is_positive = Bool.All.All.of.All_And.apply(Eq[-1])
 
     k = Symbol(domain=Range(t), given=False)
     # apply the second mathematical induction
@@ -58,19 +58,19 @@ def prove(Eq):
 
     Eq <<= Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], -1)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], -1)
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], k, 0)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], k, 0)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq.hypothesis, Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq.hypothesis, Eq[-1])
 
     Eq << Eq.induct.subs(k, t - 1)
 
     Eq << Eq.Ati_def.this.find(MatMul).apply(Tensor.Dot.eq.Sum)
 
-    Eq << Logic.All_And.of.All.All.apply(Eq.Lij_conj_is_complex, Eq[3])
+    Eq << Bool.All_And.of.All.All.apply(Eq.Lij_conj_is_complex, Eq[3])
 
     Eq << Eq[-1].this.apply(Algebra.All.limits.separate, simplify=None)
 
@@ -84,7 +84,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot)
 
-    Eq << Logic.All_And.of.All.All.apply(Eq.Ati_def, Eq[-1])
+    Eq << Bool.All_And.of.All.All.apply(Eq.Ati_def, Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Set.EqAdd.of.IsComplex.Eq)
 
@@ -92,9 +92,9 @@ def prove(Eq):
 
     Eq << Eq.Lii_is_positive.this.expr.apply(Set.EqConj.of.IsReal, reverse=True)
 
-    Eq << Logic.All_And.of.All.All.apply(Eq[-1], Eq[-2])
+    Eq << Bool.All_And.of.All.All.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.expr.apply(Logic.UFn.of.UFn.Eq, swap=True)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
     Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.eq.Sub.push)
 

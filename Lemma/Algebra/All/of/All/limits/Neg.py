@@ -22,19 +22,19 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i, a, b = Symbol(integer=True)
     f = Function(real=True)
     Eq << apply(All[i:a:b](f(i) >= 0))
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[0])
+    Eq << Bool.Or_Not.of.All.apply(Eq[0])
 
     Eq << Eq[-1].subs(i, -i)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn.Neg.of.NotIn)
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[1])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[1])
 
 
 

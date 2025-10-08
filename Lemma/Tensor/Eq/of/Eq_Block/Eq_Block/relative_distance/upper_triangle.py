@@ -20,7 +20,7 @@ def apply(eq_V, eq_V_quote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n, k = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq <<= Eq[0][i]
 
-    Eq <<= Logic.AllIn.of.All.apply(Eq[-1], (i, 0, n), simplify=None)
+    Eq <<= Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n), simplify=None)
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, Min(n, i + u)))
 
@@ -45,11 +45,11 @@ def prove(Eq):
 
     Eq << Eq[1][i]
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (i, 0, n), simplify=None)
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n), simplify=None)
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(0, Min(n, u + i) - i))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.V_relu, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.V_relu, Eq[-1])
 
 
 

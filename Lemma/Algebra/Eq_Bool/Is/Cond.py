@@ -16,13 +16,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Bool
     x = Symbol(real=True)
     A = Symbol(etype=dtype.real)
 
-    Eq << apply(Equal(Bool(Element(x, A)), 1))
+    Eq << apply(Equal(functions.Bool(Element(x, A)), 1))
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
 
 if __name__ == '__main__':

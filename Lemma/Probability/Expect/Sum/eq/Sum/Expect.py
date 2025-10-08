@@ -35,7 +35,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     n = Symbol(integer=True, positive=True, given=False)
     f = Function(real=True)
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq_Ite.of.All_Imp.apply(Eq[-1], n, start=1)
+    Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n, start=1)
 
 
 

@@ -50,27 +50,27 @@ def apply(fx, is_nonzero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, alpha, beta, gamma = Symbol(complex=True, given=True)
     fx = x ** 4 + alpha * x ** 2 + beta * x + gamma
     Eq << apply(Equal(fx, 0), Unequal(beta, 0), x=x)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[2].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[2].lhs)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Or_Eq.of.Add.eq.Zero.Add.eq.Zero.Ne_0.quartic.depressed, x)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[3].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[3].lhs)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Or_Eq.of.Add.eq.Zero.Mod.eq.Zero.Ne_0.quartic.depressed, x)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[4].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[4].lhs)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Or_Eq.of.Add.eq.Zero.Mod.eq.Zero.Ne_0.quartic.depressed, x)
 

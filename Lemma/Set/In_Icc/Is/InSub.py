@@ -10,13 +10,13 @@ def apply(self, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     x = Symbol(integer=True)
     a, b, t = Symbol(real=True)
 
     Eq << apply(Element(x, Interval(a, b)), t)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Set.InSub.of.In_Icc, t)
 

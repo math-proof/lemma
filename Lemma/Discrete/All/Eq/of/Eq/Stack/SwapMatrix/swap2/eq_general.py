@@ -13,7 +13,7 @@ def apply(eq_w):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     w = Symbol(integer=True, shape=(n, n, n, n))
@@ -41,19 +41,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.args[-1].expr.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs().expr.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, -2)
+    Eq << Eq[-1].this.rhs().expr.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
     Eq << Eq[-1].this.rhs().expr.args[2].cond.simplify()
 
     Eq << Eq[-1].this.rhs.expr.args[2].cond.apply(Set.In.Is.Or.split.Finset)
 
-    Eq << Eq[-1].this.rhs().expr.apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not, 1)
+    Eq << Eq[-1].this.rhs().expr.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 1)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Logic.Ite.subst, index=2)
+    Eq << Eq[-1].this.rhs.expr.apply(Bool.Ite.subst, index=2)
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (j,))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (j,))
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], Eq[1].limits[0])
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], Eq[1].limits[0])
 
     Eq << Eq[-1].this().expr.simplify()
 
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this().expr.rhs().expr.simplify(wrt=True)
 
-    Eq << Eq[-1].this().expr.rhs().expr.args[-1].expr.args[1].apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this().expr.rhs().expr.args[-1].expr.args[1].apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     Eq << Eq[-1].this.expr.rhs.expr.apply(Algebra.Ite.eq.AddMulS)
 

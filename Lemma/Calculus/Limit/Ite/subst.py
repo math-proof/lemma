@@ -39,7 +39,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Logic
+    from Lemma import Calculus, Algebra, Set, Bool
 
     n = Symbol(integer=True)
     a = Symbol(integer=True, given=True)
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Calculus.Eq.Is.Any_All.limit_definition)
 
-    Eq << Eq[-1].this.find(Less).apply(Logic.BFn_Ite.given.OrAndS)
+    Eq << Eq[-1].this.find(Less).apply(Bool.BFn_Ite.given.OrAndS)
 
     Eq << Eq[-1].this.expr.apply(Algebra.All_Or.given.All)
 

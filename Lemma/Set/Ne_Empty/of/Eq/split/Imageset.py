@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, y = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer, given=True)
 
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.limits_subs(y, x)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[0])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[0])
 
     Eq << Eq[1].subs(Eq.A_definition.reversed)
 

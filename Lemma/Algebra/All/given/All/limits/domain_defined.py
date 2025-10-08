@@ -26,20 +26,20 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     m, n = Symbol(integer=True, positive=True, given=True)
     f = Symbol(real=True, shape=(n,), given=True)
     i = Symbol(integer=True)
     Eq << apply(All[i:Range(m)](f[i] > 0))
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[1])
+    Eq << Bool.Or_Not.of.All.apply(Eq[1])
 
     Eq << ~Eq[0]
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.find(Range).apply(Set.Ico.Min.eq.union, simplify=None)
 

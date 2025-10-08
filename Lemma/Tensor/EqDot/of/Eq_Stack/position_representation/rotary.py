@@ -9,7 +9,7 @@ def apply(eq_R):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Algebra, Set, Trigonometry, Logic, Tensor
+    from Lemma import Algebra, Set, Trigonometry, Bool, Tensor
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # b denotes 10000
     b = Symbol(integer=True, positive=True)
@@ -30,9 +30,9 @@ def prove(Eq):
     A = Symbol(Eq.lhs.find(Sum))
     Eq.A_def = A.this.definition
 
-    Eq << Eq.A_def.this.find(Piecewise).apply(Logic.Ite.subst, [0, 1])
+    Eq << Eq.A_def.this.find(Piecewise).apply(Bool.Ite.subst, [0, 1])
 
-    Eq << Eq[-1].this.find(Piecewise[2]).apply(Logic.Ite.subst, [0, 1])
+    Eq << Eq[-1].this.find(Piecewise[2]).apply(Bool.Ite.subst, [0, 1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.halve)
 
@@ -59,26 +59,26 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element[Symbol - 1, FiniteSet]).apply(Set.In_Icc.Is.InAdd, 1, simplify=None)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite.nest, pivot=slice(1, None))
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite.nest, pivot=slice(1, None))
 
     Eq << Eq[-1].this.find(Equal[1]).apply(Algebra.Eq_odd.Is.Ne.Zero)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise).apply(Logic.Ite.nest)
+    Eq << Eq[-1].this.rhs.find(Piecewise).apply(Bool.Ite.nest)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise).find(Piecewise).apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.find(Piecewise).find(Piecewise).apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite.nest, 1)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite.nest, 1)
 
-    Eq << Eq[-1].this.rhs.args[1].find(Piecewise).apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.args[1].find(Piecewise).apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq.A_def_simplified = Eq[-1].this.rhs.args[1].find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq.A_def_simplified = Eq[-1].this.rhs.args[1].find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     B = Symbol(Eq.lhs.find(Sum[2]))
     Eq.B_def = B.this.definition
 
-    Eq << Eq.B_def.this.find(Piecewise).apply(Logic.Ite.subst, [0, 1])
+    Eq << Eq.B_def.this.find(Piecewise).apply(Bool.Ite.subst, [0, 1])
 
-    Eq << Eq[-1].this.find(Piecewise[2]).apply(Logic.Ite.subst, [0, 1])
+    Eq << Eq[-1].this.find(Piecewise[2]).apply(Bool.Ite.subst, [0, 1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.halve)
 
@@ -90,19 +90,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element[Symbol - 1, FiniteSet]).apply(Set.In_Icc.Is.InAdd, 1)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite.nest, pivot=slice(1, None))
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite.nest, pivot=slice(1, None))
 
     Eq << Eq[-1].this.find(Equal[1]).apply(Algebra.Eq_odd.Is.Ne.Zero)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise).apply(Logic.Ite.nest)
+    Eq << Eq[-1].this.rhs.find(Piecewise).apply(Bool.Ite.nest)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise).find(Piecewise).apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.find(Piecewise).find(Piecewise).apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite.nest, 1)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite.nest, 1)
 
-    Eq << Eq[-1].this.rhs.args[1].find(Piecewise).apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.args[1].find(Piecewise).apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise).find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.rhs.find(Piecewise).find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     Eq << Eq[-1] + Eq.A_def_simplified
 
@@ -117,9 +117,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal[Symbol, Symbol + 1]) - 1
 
-    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Logic.Ite.subst, [0, 1], reverse=True)
+    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Bool.Ite.subst, [0, 1], reverse=True)
 
-    Eq << Eq[-1].this.rhs.args[1].find(Piecewise).apply(Logic.Ite.subst, [0, 1], reverse=True)
+    Eq << Eq[-1].this.rhs.args[1].find(Piecewise).apply(Bool.Ite.subst, [0, 1], reverse=True)
 
     Eq <<= Eq[-1].find(Cos[~Add]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
         Eq[-1].rhs.args[1].find(Cos[~Add]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
@@ -146,7 +146,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.limits.swap.subst).this.rhs.expr.simplify()
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 
 
 

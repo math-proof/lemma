@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
-    Eq << Logic.ImpAndS.of.Imp.apply(Eq.hypothesis, cond=Equal(f(n), g(n)))
+    Eq << Bool.ImpAndS.of.Imp.apply(Eq.hypothesis, cond=Equal(f(n), g(n)))
 
     Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
 
@@ -32,10 +32,10 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
 
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
 
 
 

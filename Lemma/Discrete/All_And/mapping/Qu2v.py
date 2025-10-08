@@ -27,7 +27,7 @@ def predefined_symbols(n):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Discrete, Logic, Tensor
+    from Lemma import Set, Algebra, Discrete, Bool, Tensor
 
     n = Symbol(integer=True, positive=True, given=True)
     u = Symbol(domain=Range(n + 1), given=True)
@@ -38,11 +38,11 @@ def prove(Eq):
     Q = Eq[2].lhs.base
     Eq << Set.All_CupFinset.eq.Ico.apply(Q[u])
 
-    Eq.x_slice_last, Eq.x_slice_domain = Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq.x_slice_last, Eq.x_slice_domain = Bool.All.All.of.All_And.apply(Eq[-1])
 
     Eq << Eq.x_slice_domain.this.expr.apply(Discrete.And.of.Eq.index, v)
 
-    Eq.h_domain, Eq.x_h_equality = Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq.h_domain, Eq.x_h_equality = Bool.All.All.of.All_And.apply(Eq[-1])
 
     hv = Eq.x_h_equality.expr.lhs.indices[0]
     Eq << Tensor.All_InDot.permutation.apply(n + 1, w=w)

@@ -62,18 +62,18 @@ def apply(given, x=None):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, a, b, c, d, e = Symbol(complex=True, given=True)
     Eq << apply(Equal(a * x ** 4 + b * x ** 3 + c * x ** 2 + d * x + e, 0), x=x)
 
-    Eq << Logic.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(a, 0))
+    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(a, 0))
 
-    Eq <<= Logic.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq <<= Bool.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq <<= Logic.And.Imp.of.Imp.apply(Eq[-2].this.rhs.apply(Algebra.And_Imp_Or_EqS.of.Add.eq.Zero.cubic), None), Eq[-1].this.rhs.apply(Algebra.EqDivS.of.Eq)
+    Eq <<= Bool.And.Imp.of.Imp.apply(Eq[-2].this.rhs.apply(Algebra.And_Imp_Or_EqS.of.Add.eq.Zero.cubic), None), Eq[-1].this.rhs.apply(Algebra.EqDivS.of.Eq)
 
-    Eq << Logic.And.Imp.of.Imp.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.of.Add.eq.Zero.quartic.one_leaded).subs(Eq[1].reversed, Eq[2].reversed, Eq[3].reversed), None)
+    Eq << Bool.And.Imp.of.Imp.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.of.Add.eq.Zero.quartic.one_leaded).subs(Eq[1].reversed, Eq[2].reversed, Eq[3].reversed), None)
 
 
 if __name__ == '__main__':

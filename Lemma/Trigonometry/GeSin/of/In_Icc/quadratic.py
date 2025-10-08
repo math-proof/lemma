@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Trigonometry, Algebra, Set, Logic
+    from Lemma import Calculus, Trigonometry, Algebra, Set, Bool
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi / 2)))
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge.of.Eq.Ge.apply(Eq.eq_grad, Eq[-1]) * 2
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (x, Interval(0, S.Pi / 2)))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (x, Interval(0, S.Pi / 2)))
 
     Eq << Calculus.All.Ge.of.All_Ge_0.monotony.right_close.apply(Eq[-1])
 
@@ -51,9 +51,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Ge_0)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
 
 

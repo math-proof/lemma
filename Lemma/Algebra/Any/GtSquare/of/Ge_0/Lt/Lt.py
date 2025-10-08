@@ -16,19 +16,19 @@ def apply(m_is_nonnegative, lt_mM, lt, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     m, M, U = Symbol(real=True, given=True)
     Eq << apply(m >= 0, m < M, U < M ** 2)
 
     x = Eq[-1].variable
-    Eq.ge, Eq.lt = Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=U >= m ** 2)
+    Eq.ge, Eq.lt = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=U >= m ** 2)
 
     Eq << Algebra.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
 
     Eq << Eq.lt.this.rhs.apply(Algebra.Any.given.Cond.subst, x, (m + M) / 2)
 
-    Eq.gt, Eq.contains = Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq.gt, Eq.contains = Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[1].reversed + m
 
@@ -36,11 +36,11 @@ def prove(Eq):
 
     Eq << Algebra.GtSquare.of.Ge_0.Gt.apply(Eq[0], Eq[-1])
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[-1], cond=U < m ** 2)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[-1], cond=U < m ** 2)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Gt.of.Gt.Lt)
 
-    Eq << Logic.Imp.given.Cond.apply(Eq.contains)
+    Eq << Bool.Imp.given.Cond.apply(Eq.contains)
 
     Eq << Set.In.Icc.of.Lt.average.apply(Eq[1])
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.given.Ge.Lt)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1], index=None)
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1], index=None)
 
     Eq <<= Eq[-1].this.rhs.apply(Algebra.Gt.given.Gt_0), Eq[-3].this.rhs.apply(Algebra.Lt.transport, lhs=0)
 
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq.is_nonnegative = Eq[-2].this.rhs.apply(Algebra.Mul.gt.Zero.given.And.Gt_0)
 
-    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[2], cond=U >= 0)
+    Eq <<= Bool.Imp_And.of.Cond.apply(Eq[2], cond=U >= 0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtSqrt.of.Ge_0.Lt)
 
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq.is_nonnegative)
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq.is_nonnegative)
 
     Eq <<= Eq[-2].this.rhs * 2, Eq[-1].this.rhs * 2
 
@@ -74,13 +74,13 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.args[1] / 3, Eq[-1].this.rhs.reversed
 
-    Eq <<= Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Logic.Imp.given.Cond.apply(Eq[-2])
+    Eq <<= Bool.Imp.given.Cond.apply(Eq[-2])
 
     Eq <<= Eq[-1].this.lhs.apply(Algebra.GeSqrt_0.of.Ge_0)
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[1].reversed, cond=U >= m ** 2)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[1].reversed, cond=U >= m ** 2)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.GeSqrt.of.Ge)
 

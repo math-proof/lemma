@@ -19,7 +19,7 @@ def apply(self, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
@@ -28,7 +28,7 @@ def prove(Eq):
     h = Function(real=True)
     Eq << apply(Equal(x[n + 1], x[n] * c + h(n)), k)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.rhs.apply(Algebra.Eq_Sum.given.Eq.rsolve)
 

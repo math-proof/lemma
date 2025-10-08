@@ -20,13 +20,13 @@ def apply(given, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     x = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
 
     Eq << apply(Element(x, A & B), index=0)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Set.In.of.In_Inter)
 

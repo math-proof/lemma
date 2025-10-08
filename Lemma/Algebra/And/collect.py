@@ -21,7 +21,7 @@ def apply(self, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     a, b, c, d = Symbol(integer=True, given=True)
 
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << apply(((a < b) | (c < d)) & (f(x) < g(y)) & ((x < y) | (c < d)), cond=c < d)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.And.of.And.collect, cond=c < d)
 

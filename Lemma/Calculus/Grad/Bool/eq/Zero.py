@@ -9,13 +9,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Calculus, Bool
 
     x = Symbol(real=True)
     p = Function(bool=True)
-    Eq << apply(Derivative[x](Bool(p(x))))
+    Eq << apply(Derivative[x](functions.Bool(p(x))))
 
-    Eq << Eq[0].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[0].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.lhs.apply(Calculus.Grad.eq.Ite)
 

@@ -14,7 +14,7 @@ def apply(given, f):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     x = Symbol(integer=True)
     y = Symbol(integer=True, given=True)
     f = Function(integer=True)
@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << Set.All_Subset.given.Subset.lhs.apply(Eq[-1])
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq.all_contains, x, y)
+    Eq << Bool.Or_NotIn.of.All.apply(Eq.all_contains, x, y)
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

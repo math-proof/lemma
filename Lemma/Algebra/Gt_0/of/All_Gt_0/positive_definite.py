@@ -10,7 +10,7 @@ def apply(infer, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Logic
+    from Lemma import Algebra, Discrete, Tensor, Bool
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], j)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 
     j = Eq[-1].lhs.index
     Eq << Eq[-1].subs(j, i)

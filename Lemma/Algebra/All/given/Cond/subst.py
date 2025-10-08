@@ -16,7 +16,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
 
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << apply(All[x:n + 1](Element(f(x), s)), x, m)
 
-    Eq << Logic.All.of.Cond.apply(Eq[1])
+    Eq << Bool.All.of.Cond.apply(Eq[1])
 
 
 if __name__ == '__main__':

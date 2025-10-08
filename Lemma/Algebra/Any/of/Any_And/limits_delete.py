@@ -37,7 +37,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     i, k = Symbol(integer=True)
@@ -47,8 +47,8 @@ def prove(Eq):
     f_quote = Function("f'", shape=(), integer=True)
     Eq << apply(Any[x[:n]:f(x[:n]) > 0, i:k]((g(i) > f_quote(j, x[:n])) & Equal(i, j)))
 
-    Eq << Eq[0].this.expr.apply(Logic.Cond.of.Eq.Cond.subst)
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Eq[0].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 
 if __name__ == '__main__':

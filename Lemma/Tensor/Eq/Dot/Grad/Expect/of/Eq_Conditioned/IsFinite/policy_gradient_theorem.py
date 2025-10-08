@@ -13,7 +13,7 @@ def apply(eq, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Tensor, Discrete, Probability, Algebra, Logic
+    from Lemma import Calculus, Tensor, Discrete, Probability, Algebra, Bool
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Probability.Sum.Expect.eq.Expect.Sum)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.eq_expect, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.eq_expect, Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot, 1)
 

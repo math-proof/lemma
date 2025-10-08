@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Trigonometry, Algebra, Logic
+    from Lemma import Calculus, Trigonometry, Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(real=True)
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Integral).expr.powsimp()
 
-    Eq << Logic.UFn.of.UFn.Eq.apply(Eq[0], Eq[-1])
+    Eq << Bool.UFn.of.UFn.Eq.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].this.rhs.ratsimp()
 
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq.of.Eq.Eq.Imp.induct.apply(Eq[1], Eq[2], Eq[-1], n=n, start=1)
+    Eq << Bool.Eq.of.Eq.Eq.Imp.induct.apply(Eq[1], Eq[2], Eq[-1], n=n, start=1)
 
 
 

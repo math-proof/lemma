@@ -19,7 +19,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     k, n = Symbol(integer=True, positive=True)
     S = Symbol(etype=dtype.integer[k], given=True)
@@ -27,9 +27,9 @@ def prove(Eq):
 
     Eq << Set.Any.Eq.Condset.Eq.of.Eq_Card.apply(Eq[0])
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True, simplify=None, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, simplify=None, ret=0)
 
 
 if __name__ == '__main__':

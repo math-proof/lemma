@@ -9,7 +9,7 @@ def apply(n, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic, Tensor
+    from Lemma import Discrete, Algebra, Bool, Tensor
 
     n = Symbol(integer=True, positive=True, given=False)
     a = Symbol(shape=(oo,), complex=True, zero=False)
@@ -75,15 +75,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack[~Add]).apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.find(Add, Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.find(Add, Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].this.find(Add, Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, -2)
+    Eq << Eq[-1].this.find(Add, Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
-    Eq << Eq[-1].this.find(Add, Piecewise).apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not)
+    Eq << Eq[-1].this.find(Add, Piecewise).apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not)
 
     Eq << Eq[-1].this.find(Add, Stack)().find(NotElement).simplify()
 
-    Eq << Eq[-1].this.find(Add, Piecewise).apply(Logic.Ite.subst, index=1)
+    Eq << Eq[-1].this.find(Add, Piecewise).apply(Bool.Ite.subst, index=1)
 
     Eq << Eq[-1].this.find(Add, Stack)().find(ExprCondPair)().expr.simplify()
 
@@ -124,13 +124,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Discrete.Det.eq.Mul)
 
-    Eq << Eq[-1].subs(Eq.det_lamda).apply(Logic.All.of.Cond, i)
+    Eq << Eq[-1].subs(Eq.det_lamda).apply(Bool.All.of.Cond, i)
 
     Eq << Algebra.And.given.And.subst.All_Eq.apply(Eq.deduction & Eq[-1])
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
 
 
 

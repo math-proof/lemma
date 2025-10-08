@@ -15,7 +15,7 @@ def apply(eq_sum, ge, all_is_nonnegative):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Set
+    from Lemma import Algebra, Bool, Set
 
     x = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True, given=True, negative=False)
@@ -41,11 +41,11 @@ def prove(Eq):
 
     Eq << ~Eq[4]
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq.All_is_nonnegative, Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq.All_is_nonnegative, Eq[-1])
 
     Eq << Eq[-3].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this().expr.find(Piecewise, Element).simplify()
 
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge_0.Sum.of.All_Ge_0.apply(Eq[-1])
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq.any_is_negative)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.any_is_negative)
 
 
 if __name__ == '__main__':

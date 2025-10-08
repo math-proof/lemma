@@ -10,13 +10,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, shape=(n,))
 
     Eq << apply(Equal(KroneckerDelta(x, y), 1))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.lhs.apply(Algebra.Delta.eq.Ite)
 

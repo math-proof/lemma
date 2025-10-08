@@ -11,13 +11,13 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Logic
+    from Lemma import Set, Bool
 
     e, a, b, c = Symbol(integer=True)
     d = Symbol(real=True, zero=False)
     Eq << apply(Element(e, {a, b, c}), d)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Set.In.Mul.Finset.of.In, d)
 

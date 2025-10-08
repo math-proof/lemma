@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     A = Symbol(etype=dtype.integer)
     Eq << apply(Unequal(A, A.etype.emptySet))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(Card(A), 0, plausible=True)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.expr.apply(Set.In.Ico.of.Lt.Ge)
 

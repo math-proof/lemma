@@ -25,7 +25,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, given=False)
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Cond.given.All, k)
 
-    Eq << Logic.Cond.of.Cond.Imp.induct.second.split.All.apply(Eq.initial, Eq[-1], n=n)
+    Eq << Bool.Cond.of.Cond.Imp.induct.second.split.All.apply(Eq.initial, Eq[-1], n=n)
 
     Eq << Eq[2].subs(n, k)
 

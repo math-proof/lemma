@@ -10,14 +10,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     S = Symbol(etype=dtype.integer)
     x = Symbol(integer=True)
     f = Function(real=True)
     Eq << apply(Product[x:S](f(x)))
 
-    Eq << Eq[0].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[0].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.Pow_Ite.eq.Ite_PowS)
 

@@ -22,7 +22,7 @@ def apply(lt, is_continuous, left_is_real, right_is_real, equal):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Logic
+    from Lemma import Calculus, Set, Algebra, Bool
 
     a, b, x = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -59,41 +59,41 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-4]
 
-    Eq << Eq[-1].this.apply(Logic.OrAndS.of.And_Or, simplify=None)
+    Eq << Eq[-1].this.apply(Bool.OrAndS.of.And_Or, simplify=None)
 
-    Eq << Eq[-1].this.find(And[Or]).apply(Logic.OrAndS.of.And_Or, simplify=None)
+    Eq << Eq[-1].this.find(And[Or]).apply(Bool.OrAndS.of.And_Or, simplify=None)
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Any.And.of.Any.Any)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.Cond.of.And, 1)
+    Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.And, 1)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.Cond.of.And)
+    Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.And)
 
-    Eq << Logic.Cond.given.And.Imp.apply(Eq[5], cond=Eq[-1])
+    Eq << Bool.Cond.given.And.Imp.apply(Eq[5], cond=Eq[-1])
 
-    Eq.any_max, Eq.any_min, Eq.any_boundary = Logic.ImpOr.given.Imp.Imp.apply(Eq[-1], None)
+    Eq.any_max, Eq.any_min, Eq.any_boundary = Bool.ImpOr.given.Imp.Imp.apply(Eq[-1], None)
 
-    Eq <<= Eq.any_min.this.lhs.apply(Logic.Any_And.of.AnySetOf_AnySetOf, simplify=None), \
-        Eq.any_max.this.lhs.apply(Logic.Any_And.of.AnySetOf_AnySetOf, simplify=None)
+    Eq <<= Eq.any_min.this.lhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf, simplify=None), \
+        Eq.any_max.this.lhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf, simplify=None)
 
     Eq <<= Eq[1] & Eq[2] & Eq[3]
 
-    Eq <<= Logic.Imp.given.And.Imp.invert.apply(Eq[-3], cond=Eq[-1]), Logic.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
+    Eq <<= Bool.Imp.given.And.Imp.invert.apply(Eq[-3], cond=Eq[-1]), Bool.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
 
-    Eq <<= Logic.Or.given.Cond.apply(Eq[-3], 0), Logic.Or.given.Cond.apply(Eq[-1], 0)
+    Eq <<= Bool.Or.given.Cond.apply(Eq[-3], 0), Bool.Or.given.Cond.apply(Eq[-1], 0)
 
-    Eq <<= Eq[-4].this.lhs.args[:2].apply(Logic.Any_And.of.Any.All, simplify=None), \
-        Eq[-2].this.lhs.args[:2].apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq <<= Eq[-4].this.lhs.args[:2].apply(Bool.Any_And.of.Any.All, simplify=None), \
+        Eq[-2].this.lhs.args[:2].apply(Bool.Any_And.of.Any.All, simplify=None)
 
-    Eq <<= Eq[-2].this.lhs.args[:2].apply(Logic.Any_And.of.Any.All, simplify=None), \
-        Eq[-1].this.lhs.args[:2].apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq <<= Eq[-2].this.lhs.args[:2].apply(Bool.Any_And.of.Any.All, simplify=None), \
+        Eq[-1].this.lhs.args[:2].apply(Bool.Any_And.of.Any.All, simplify=None)
 
-    Eq.Any_And_min = Eq[-2].this.lhs.apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq.Any_And_min = Eq[-2].this.lhs.apply(Bool.Any_And.of.Any.All, simplify=None)
 
-    Eq.Any_And_max = Eq[-1].this.lhs.apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq.Any_And_max = Eq[-1].this.lhs.apply(Bool.Any_And.of.Any.All, simplify=None)
 
     et = And(*Eq.Any_And_max.lhs.expr.args)
-    Eq <<= et.this.apply(Logic.Cond.of.And, slice(0, 4)), et.this.apply(Logic.Cond.of.And, slice(3, 2, -1))
+    Eq <<= et.this.apply(Bool.Cond.of.And, slice(0, 4)), et.this.apply(Bool.Cond.of.And, slice(3, 2, -1))
 
     Eq <<= Eq[-2].this.rhs.find(All[LessEqual]).apply(Set.AllIn_SDiff.of.All, Interval.open(a, b), simplify=None), Eq[-1].this.rhs.find(All[LessEqual]).apply(Set.AllIn_SDiff.of.All, Interval.open(a, b), simplify=None)
 
@@ -103,16 +103,16 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul.le.Zero.of.Le_0.Ge_0)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1], 0)
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], 0)
 
-    Eq << Logic.Imp.Any.of.Imp.apply(Eq[-1], c1)
+    Eq << Bool.Imp.Any.of.Imp.apply(Eq[-1], c1)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.AnySetOf.of.Any_And, 1)
+    Eq << Eq[-1].this.rhs.apply(Bool.AnySetOf.of.Any_And, 1)
 
     Eq << Eq[-1].this.rhs.limits_subs(c1, x)
 
     et = And(*Eq.Any_And_min.lhs.expr.args)
-    Eq <<= et.this.apply(Logic.Cond.of.And, slice(0, 4)), et.this.apply(Logic.Cond.of.And, slice(3, 2, -1))
+    Eq <<= et.this.apply(Bool.Cond.of.And, slice(0, 4)), et.this.apply(Bool.Cond.of.And, slice(3, 2, -1))
 
     Eq <<= Eq[-2].this.rhs.find(All[GreaterEqual]).apply(Set.AllIn_SDiff.of.All, Interval.open(a, b), simplify=None), Eq[-1].this.rhs.find(All[GreaterEqual]).apply(Set.AllIn_SDiff.of.All, Interval.open(a, b), simplify=None)
 
@@ -122,23 +122,23 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul.le.Zero.of.Le_0.Ge_0)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1], 0)
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], 0)
 
-    Eq << Logic.Imp.Any.of.Imp.apply(Eq[-1], c0)
+    Eq << Bool.Imp.Any.of.Imp.apply(Eq[-1], c0)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.AnySetOf.of.Any_And, 1)
+    Eq << Eq[-1].this.rhs.apply(Bool.AnySetOf.of.Any_And, 1)
 
     Eq << Eq[-1].this.rhs.limits_subs(c0, x)
 
-    Eq << Eq.any_boundary.this.lhs.apply(Logic.Any_And.of.AnySetOf_AnySetOf, simplify=None)
+    Eq << Eq.any_boundary.this.lhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf, simplify=None)
 
-    Eq << Logic.Cond.Imp.given.And.Imp.And.apply(Eq[4], Eq[-1])
+    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[4], Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Bool.Any_And.of.Any.All, simplify=None)
 
     Eq << Eq[-1].this.find(And).args[:-1].apply(Set.Eq.of.In_Finset.In_Finset.Eq)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.find(And).apply(Bool.Cond.of.Eq.Cond.subst)
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Eq.of.Le.Ge)
 
@@ -158,7 +158,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Cond.of.All.subst, x, (a + b) / 2)
 
-    Eq << Logic.Imp.given.Cond.apply(Eq[-1])
+    Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 
     Eq << Set.In.Icc.of.Lt.average.apply(Eq[0])
 

@@ -10,7 +10,7 @@ def apply(limited_f, dir=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Logic
+    from Lemma import Calculus, Algebra, Set, Bool
 
     x, x0, A = Symbol(real=True)
     f = Function(real=True)
@@ -26,9 +26,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And[~Less]).apply(Algebra.LtAbs.Is.And)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.And_Or.Is.OrAndS)
+    Eq << Eq[-1].this.find(And).apply(Bool.And_Or.Is.OrAndS)
 
-    Eq << Eq[-1].this.find(Or).apply(Logic.Or.given.Cond, 0)
+    Eq << Eq[-1].this.find(Or).apply(Bool.Or.given.Cond, 0)
 
     Eq << Eq[-1].this.find(Greater) + x0
 

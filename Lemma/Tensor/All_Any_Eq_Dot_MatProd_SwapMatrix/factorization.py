@@ -16,7 +16,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Discrete, Logic, Tensor
+    from Lemma import Algebra, Set, Discrete, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo), given=False)
     Eq << apply(n)
@@ -53,15 +53,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Algebra.Eq.given.And.split.Matrix)
 
-    Eq.premier, Eq.second = Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq.premier, Eq.second = Bool.All_And.given.All.All.apply(Eq[-1])
 
     Eq << Eq.limits_assertion.this.expr.apply(Set.And.of.Eq.split.Finset)
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
     Eq << Eq[-2].this.expr.apply(Set.Eq.Delta.Zero.of.In).reversed
 
@@ -123,11 +123,11 @@ def prove(Eq):
 
     Eq <<= Eq.any_n_plausible & Eq[-1]
 
-    Eq << Eq[-1].this.expr.apply(Logic.Any_And.of.Any.All)
+    Eq << Eq[-1].this.expr.apply(Bool.Any_And.of.Any.All)
 
     Eq << Eq[-1].this.expr.expr.apply(Discrete.Eq.of.Eq.Eq.permutation.pop.Icc)
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq.hypothesis, Eq.hypothesis.variable, p_quote[:n])
+    Eq << Bool.Or_NotIn.of.All.apply(Eq.hypothesis, Eq.hypothesis.variable, p_quote[:n])
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq[-1], Eq[-2])
 
@@ -137,18 +137,18 @@ def prove(Eq):
 
     Eq << Algebra.All.Any.And.of.Cond.All_Any.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.expr.expr.apply(Logic.UFn.of.UFn.Eq, swap=True)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
     Eq <<= Eq[-1] & Eq.any_n_plausible
 
     Eq << Eq[-1].this.expr.apply(Algebra.Any.And.of.Any.Any, simplify=None)
 
-    Eq << Eq[-1].this.expr.expr.apply(Logic.UFn.of.UFn.Eq, swap=True)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
     Eq << Eq[-1].this.find(Any).apply(Algebra.Any.limits.concat)
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
 
     Eq << Eq[1].subs(Eq[0])
 

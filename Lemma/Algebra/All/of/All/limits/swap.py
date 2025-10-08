@@ -17,17 +17,17 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, y = Symbol(real=True)
     f, g = Function(integer=True)
 
     Eq << apply(All[x:g(x) > 0, y:g(y) > 0](f(x, y) > 0))
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[0])
+    Eq << Bool.Or_Not.of.All.apply(Eq[0])
 
-    Eq << Logic.All.of.All_OrNot.apply(Eq[-1], pivot=1, wrt=x)
+    Eq << Bool.All.of.All_OrNot.apply(Eq[-1], pivot=1, wrt=x)
 
-    Eq << Eq[-1].this.expr.apply(Logic.All.of.All_OrNot, pivot=1, wrt=y)
+    Eq << Eq[-1].this.expr.apply(Bool.All.of.All_OrNot, pivot=1, wrt=y)
 
 
 if __name__ == '__main__':

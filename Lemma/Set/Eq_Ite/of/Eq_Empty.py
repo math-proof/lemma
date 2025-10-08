@@ -24,7 +24,7 @@ def apply(given, peicewise_A, peicewise_B):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     A, B = Symbol(etype=dtype.integer)
     x = Symbol(integer=True)
@@ -37,9 +37,9 @@ def prove(Eq):
 
     Eq << Eq[1].this.lhs.apply(Algebra.AddIteS.eq.IteAnd)
 
-    Eq << Eq[-1].apply(Logic.All.given.All.AllNot, cond=Element(x, A))
+    Eq << Eq[-1].apply(Bool.All.given.All.AllNot, cond=Element(x, A))
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= Eq[-2].this().expr.simplify(), Eq[-1].this().expr.simplify()
 

@@ -17,7 +17,7 @@ def apply(x, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic, Tensor
+    from Lemma import Discrete, Algebra, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(etype=dtype.integer, shape=(n,))
@@ -27,7 +27,7 @@ def prove(Eq):
     Eq << Discrete.Indexed.eq.Ite.swap1.apply(x, w)
 
     i, j = Eq[-1].rhs.args[0][1].args
-    Eq << Eq[-1].apply(Logic.AllIn.of.All, (i,), (j,))
+    Eq << Eq[-1].apply(Bool.AllIn.of.All, (i,), (j,))
 
     _i = i.unbounded
     Eq << Eq[-1].this.find(Stack).limits_subs(i, _i)

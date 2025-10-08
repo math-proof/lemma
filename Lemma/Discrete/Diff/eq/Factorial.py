@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic, Set
+    from Lemma import Discrete, Algebra, Bool, Set
 
     x = Symbol(real=True)
     k = Symbol(integer=True, nonnegative=True)
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
 
-    Eq << Logic.Cond.of.Cond.Imp.induct.second.split.All.apply(Eq.initial, Eq[-1], n=n)
+    Eq << Bool.Cond.of.Cond.Imp.induct.second.split.All.apply(Eq.initial, Eq[-1], n=n)
 
     Eq << Eq[0].subs(n, _k)
 

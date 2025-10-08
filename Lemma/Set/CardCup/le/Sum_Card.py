@@ -8,7 +8,7 @@ def apply(expr, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=False)
     k = Symbol(integer=True)
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq[1], Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[1], Eq[-1], n=n, start=1)
 
 
 if __name__ == '__main__':

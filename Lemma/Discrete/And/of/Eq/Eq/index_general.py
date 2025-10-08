@@ -28,7 +28,7 @@ def apply(a_size, xa_equality, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo), given=True)
     x, a = Symbol(shape=(n,), integer=True, given=True)
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
 
-    Eq.crossproduct = Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
+    Eq.crossproduct = Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 
     Eq.s_j_definition_reversed = Eq.s_j_definition.this.rhs.limits[0][1].reversed.reversed
 
@@ -85,35 +85,35 @@ def prove(Eq):
     (a, *_), (b, *_) = Eq.inequality_ab.limits
     Eq << Eq[1].apply(Set.EqCard.of.Eq)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[0])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[0])
 
     Eq << Set.All.Ne.SDiff.of.Eq.apply(Eq[-1], exclude=a)
 
     Eq << Eq[-1].subs(k_, a)
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, b)
+    Eq << Bool.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, b)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq.inequality_ab)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.inequality_ab)
 
-    Eq.distribute_ab = Eq[-1].this.expr.apply(Logic.OrAndS.of.And_Or)
+    Eq.distribute_ab = Eq[-1].this.expr.apply(Bool.OrAndS.of.And_Or)
 
     Eq.j_equality = Set.All_CupFinset.eq.Ico.apply(s_j)
 
     Eq << Eq.j_equality.limits_subs(k, a)
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq.j_equality.reversed, Eq.distribute_ab)
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq.j_equality.reversed, Eq.distribute_ab)
 
-    Eq << Eq[-1].this.expr.args[::2].apply(Logic.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.expr.args[::2].apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
     Eq << Eq[-1].this.expr.apply(Algebra.And.of.And.delete)
 
     Eq << Eq.j_equality.limits_subs(a, b)
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq.j_equality, Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq.j_equality, Eq[-1])
 
     Eq <<= Eq.ou & ~Eq.inequality_ab
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], index=0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], index=0)
 
     Eq <<= Eq.s_j_less_than_1 & Eq.s_j_greater_than_1
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq.index_domain = Eq[-1].subs(Eq.crossproduct.reversed)
 
-    Eq.ou = Logic.Or_NotIn.of.All.apply(Eq.j_equality, Eq.j_equality.variable, Eq.index_domain.lhs)
+    Eq.ou = Bool.Or_NotIn.of.All.apply(Eq.j_equality, Eq.j_equality.variable, Eq.index_domain.lhs)
 
     Eq <<= Eq.ou.args[1].copy(plausible=True), Eq.ou.args[0].copy(plausible=True)
 
@@ -129,7 +129,7 @@ def prove(Eq):
 
     Eq <<= Eq.ou & ~Eq[-2]
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], index=0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], index=0)
 
     Eq << Eq[-2].reversed
 

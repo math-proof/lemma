@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic, Logic
+    from Lemma import Set, Algebra, Logic, Bool
     x, y = Symbol(integer=True)
 
     Eq << apply(Equal({x, y}, {0, 1}))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Set.Ne.of.Eq.apply(Eq[0])
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[-1], Eq[-2])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[-1], Eq[-2])
 
 if __name__ == '__main__':
     run()

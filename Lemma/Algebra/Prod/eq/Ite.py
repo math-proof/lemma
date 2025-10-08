@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     i, j = Symbol(integer=True)
     x, y = Symbol(integer=True, given=True)
@@ -24,11 +24,11 @@ def prove(Eq):
     f, h = Function(real=True)
     Eq << apply(Sum[j:D, i:C](Piecewise((f(i, j), Element(x, A | B)), (h(i, j), True))))
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
-    Eq << Eq[-1].this.args[0].apply(Logic.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.args[0].apply(Bool.Cond.BFnIte.given.And_BFn)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.find(And).apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
 
 
 

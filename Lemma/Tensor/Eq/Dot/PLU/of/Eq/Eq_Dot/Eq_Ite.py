@@ -19,7 +19,7 @@ def apply(eq_initial, eq_B_def, eq_A_def):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Logic
+    from Lemma import Algebra, Discrete, Tensor, Bool
 
     n = Symbol(integer=True, positive=True)
     n = 7
@@ -42,13 +42,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).doit()
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
 
     Eq << Eq[1].subs(k, 0)
 
     Eq.back_subs0 = Tensor.EqInv.of.Eq_Dot.apply(Eq[-1], left=True)
 
-    Eq.back_subs0 = Logic.Eq.of.Eq.Eq.apply(Eq[0], Eq.back_subs0)
+    Eq.back_subs0 = Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq.back_subs0)
 
     Eq << Eq[-1].subs(Eq[-2])
 
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq.back_subs1 = Tensor.EqInv.of.Eq_Dot.apply(Eq[-1], left=True)
 
-    Eq.back_subs1 = Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs1)
+    Eq.back_subs1 = Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs1)
 
     Eq.back_subs1 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs1, left=True)
 
@@ -84,7 +84,7 @@ def prove(Eq):
 
     Eq.back_subs2 = Tensor.EqInv.of.Eq_Dot.apply(Eq[-1], left=True)
 
-    Eq.back_subs2 = Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs2)
+    Eq.back_subs2 = Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs2)
 
     Eq.back_subs2 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs2, left=True)
 
@@ -106,7 +106,7 @@ def prove(Eq):
 
     Eq.back_subs3 = Tensor.EqInv.of.Eq_Dot.apply(Eq[-1], left=True)
 
-    Eq.back_subs3 = Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs3)
+    Eq.back_subs3 = Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs3)
 
     Eq.back_subs3 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs3, left=True)
 
@@ -128,7 +128,7 @@ def prove(Eq):
 
     Eq.back_subs4 = Tensor.EqInv.of.Eq_Dot.apply(Eq[-1], left=True)
 
-    Eq.back_subs4 = Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs4)
+    Eq.back_subs4 = Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs4)
 
     Eq.back_subs4 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs4, left=True)
 
@@ -150,7 +150,7 @@ def prove(Eq):
 
     Eq.back_subs5 = Tensor.EqInv.of.Eq_Dot.apply(Eq[-1], left=True)
 
-    Eq.back_subs5 = Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs5)
+    Eq.back_subs5 = Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs5)
 
     Eq.back_subs5 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs5, left=True)
 
@@ -172,7 +172,7 @@ def prove(Eq):
 
     Eq.back_subs6 = Eq[-1].reversed
 
-    Eq.back_subs6 = Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs6)
+    Eq.back_subs6 = Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq.back_subs6)
 
     Eq.back_subs6 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs6, left=True)
 

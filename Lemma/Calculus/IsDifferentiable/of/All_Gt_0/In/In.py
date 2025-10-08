@@ -18,7 +18,7 @@ def apply(all_is_positive, contains0, contains1):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Logic
+    from Lemma import Calculus, Set, Bool
 
     a, b, x, x0, x1 = Symbol(real=True)
     f = Function(real=True)
@@ -33,10 +33,10 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(x1_, x1)
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[2], Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[2], Eq[-1])
 
     Eq << Eq[-1].subs(x0_, x0)
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[1], Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[1], Eq[-1])
 
 
 if __name__ == '__main__':

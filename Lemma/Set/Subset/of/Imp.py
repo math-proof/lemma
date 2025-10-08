@@ -15,14 +15,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
     A, B = Symbol(etype=dtype.integer[n])
 
     Eq << apply(Imply(Element(x, A), Element(x, B)))
 
-    Eq << Eq[0].this.apply(Logic.Imp.Is.All, wrt=x)
+    Eq << Eq[0].this.apply(Bool.Imp.Is.All, wrt=x)
 
     Eq << Set.Subset.of.All_In.apply(Eq[-1])
 

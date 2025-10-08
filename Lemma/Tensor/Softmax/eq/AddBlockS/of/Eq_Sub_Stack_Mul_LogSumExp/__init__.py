@@ -36,7 +36,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -51,7 +51,7 @@ def prove(Eq):
             Stack[i:n - Min(u, n)](A[i, i:i + Min(u, n)]),
             Stack[i:Min(u, n)](BlockMatrix(A[i + n - Min(u, n), n - Min(u, n) + i:], -oo * Ones(i))))) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):Min(n, i + u)]))))))
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], exp)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], exp)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.ExpAdd.eq.MulExpS)
 

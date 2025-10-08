@@ -23,7 +23,7 @@ def apply(self, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     x = Symbol(real=True, random=True)
     y = Symbol(real=True, shape=(oo,), random=True)
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n, 1)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n, 1)
 
 
 if __name__ == '__main__':

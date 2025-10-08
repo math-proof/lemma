@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i, j, d, a = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -23,9 +23,9 @@ def prove(Eq):
 
     Eq << Set.In.In.transform.i_Lt_j.apply(*Or(*Eq[-1].find(Or).args[:-1]).invert().args)
 
-    Eq << Eq[-1].this.apply(Logic.Iff.contraposition).reversed
+    Eq << Eq[-1].this.apply(Bool.Iff.contraposition).reversed
 
-    Eq << Logic.Iff.Or.of.Iff.apply(Eq[-1], cond=Eq[0].lhs.expr)
+    Eq << Bool.Iff.Or.of.Iff.apply(Eq[-1], cond=Eq[0].lhs.expr)
 
 
 

@@ -20,7 +20,7 @@ def apply(n, k, s2=None, B=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     k, n = Symbol(integer=True, positive=True)
     Eq << apply(n, k)
@@ -54,9 +54,9 @@ def prove(Eq):
 
     Eq << Set.All_CupFinset.eq.Ico.apply(s0_quote)
 
-    Eq.x_abs_positive = Logic.All.of.All_And.apply(Eq[-1])
-    Eq.x_abs_sum = Logic.All.of.All_And.apply(Eq[-1], 1)
-    Eq.x_union_s0 = Logic.All.of.All_And.apply(Eq[-1], 2)
+    Eq.x_abs_positive = Bool.All.of.All_And.apply(Eq[-1])
+    Eq.x_abs_sum = Bool.All.of.All_And.apply(Eq[-1], 1)
+    Eq.x_union_s0 = Bool.All.of.All_And.apply(Eq[-1], 2)
 
     i = Eq.x_union_s0.lhs.limits[0][0]
     x = Eq.x_union_s0.variable.base
@@ -110,12 +110,12 @@ def prove(Eq):
     Eq.s2_n_definition = s2_n.this.definition
     Eq << Set.then.all.baseset.apply(s2_n)
     Eq << Eq[-1].subs(Eq.s2_definition)
-    Eq << Logic.All.of.All_And.apply(Eq[-1])
+    Eq << Bool.All.of.All_And.apply(Eq[-1])
     Eq.s2_n_assertion = Eq[-2].this.expr.apply(Set.element.of.any_eq.split.imageset)
     Eq << Eq[-1].subs(Eq.s2_n_assertion)
     Eq << Eq[-1].apply(Set.element.then.any_contains.split.cup)
     Eq.x_j_definition = Eq[-1].limits_subs(Eq[-1].variable, j).reversed
-    Eq.x_abs_positive_s2, Eq.x_abs_sum_s2, Eq.x_union_s2 = Logic.All.of.All_And.apply(Eq.s2_quote_definition, simplify=None)
+    Eq.x_abs_positive_s2, Eq.x_abs_sum_s2, Eq.x_union_s2 = Bool.All.of.All_And.apply(Eq.s2_quote_definition, simplify=None)
     Eq << Algebra.All.any.then.Any_And.apply(Eq.x_union_s2, Eq.x_j_definition)
     Eq << Eq[-1].this.expr.apply(Set.Eq.Eq.then.Eq.Complement, swap=True)
     Eq << Eq[-1].this.expr.lhs.args[0].bisect({j})

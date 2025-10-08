@@ -19,7 +19,7 @@ def apply(given, n=None, a=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     n = Symbol(integer=True, nonnegative=True, given=False)
     r = Symbol(complex=True)
     f = Symbol(shape=(oo,), complex=True)
@@ -34,11 +34,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.powsimp()
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n)
+    Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n)
 
 
 if __name__ == '__main__':

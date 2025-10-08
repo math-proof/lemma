@@ -11,7 +11,7 @@ def apply(eq_A):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length

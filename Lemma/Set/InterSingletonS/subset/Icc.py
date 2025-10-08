@@ -8,14 +8,14 @@ def apply(a, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x, y)
 
     Eq << Eq[0].this.lhs.apply(Set.InterSingletonS.eq.IteEq)
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[-1])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 

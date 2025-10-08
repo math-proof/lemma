@@ -23,17 +23,17 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     g, h = Function(real=True)
     Eq << apply(Piecewise((g(x), x > 0), (h(x), True)) * y)
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
-    Eq << Eq[-1].this.args[0].apply(Logic.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.args[0].apply(Bool.Cond.BFnIte.given.And_BFn)
 
-    Eq << Eq[-1].this.args[1].apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.args[1].apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
 
 
 if __name__ == '__main__':

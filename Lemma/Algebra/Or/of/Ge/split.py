@@ -10,14 +10,14 @@ def apply(given, pivot):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x >= y, z)
 
     Eq << ~Eq[-1]
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
 
 
 if __name__ == '__main__':

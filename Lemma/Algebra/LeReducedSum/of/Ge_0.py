@@ -11,7 +11,7 @@ def apply(ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     x = Symbol(real=True, shape=(n,), given=True)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Algebra.GeAdd.of.Eq.Ge.apply(Eq[-3], Eq[-1])
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (i, 0, n))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n))
 
     Eq << Eq[-1].this(i).find(Element).simplify()
 

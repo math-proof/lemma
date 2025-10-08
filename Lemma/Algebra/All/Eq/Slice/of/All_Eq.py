@@ -18,14 +18,14 @@ def apply(self, index):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n, u = Symbol(integer=True, positive=True)
     A, B = Symbol(real=True, shape=(n, n))
     i = Symbol(integer=True)
     Eq << apply(All[i:Range(n - u)](Equal(A[i], B[i])), slice(i, i + u))
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[0])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[0])
 
     Eq <<= Eq[-1].this.lhs.apply(Set.In_Icc.Is.InAdd, u), Eq[-1].this.lhs.apply(Set.In_Union.of.In, Range(0, n))
 

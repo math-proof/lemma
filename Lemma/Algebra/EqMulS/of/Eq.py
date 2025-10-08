@@ -10,7 +10,7 @@ def apply(ne, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True, given=True)
     f, g, h = Function(real=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq[1])
 

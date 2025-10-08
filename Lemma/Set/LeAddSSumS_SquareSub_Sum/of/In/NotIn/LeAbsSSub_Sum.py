@@ -16,7 +16,7 @@ def apply(le, contains, notcontains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     y_quote = Symbol(integer=True, given=True)
     x, y = Symbol(integer=True)
@@ -24,9 +24,9 @@ def prove(Eq):
     X, Y = Symbol(etype=dtype.integer, finiteset=True, given=True)
     Eq << apply(abs(a[y_quote] - Sum[x:X](a[x]) / Card(X)) <= abs(a[y_quote] - Sum[y:Y](a[y]) / Card(Y)), Element(y_quote, Y), NotElement(y_quote, X))
 
-    Eq.eq, Eq.ne = Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(Card(Y), 1))
+    Eq.eq, Eq.ne = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(Card(Y), 1))
 
-    Eq.suffice_et = Logic.Imp_And.of.Cond.apply(Eq[1], cond=Eq.eq.lhs)
+    Eq.suffice_et = Bool.Imp_And.of.Cond.apply(Eq[1], cond=Eq.eq.lhs)
 
     Eq << Eq.suffice_et.this.rhs.apply(Set.Eq_Empty.of.Eq.In)
 
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq.suffice_eq = Eq.suffice_et.this.rhs.apply(Set.EqFinset.of.Eq.In)
 
@@ -42,19 +42,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Le.given.Eq)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
     Eq <<= Eq[-1] & Eq.suffice_eq
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq_0.of.Abs.le.Zero)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[2], cond=Eq[-1].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[2], cond=Eq[-1].lhs)
 
     Eq <<= Eq[-1] & Eq[-2]
 
@@ -66,11 +66,11 @@ def prove(Eq):
 
     Eq << Set.GeCard.of.In.apply(Eq[1])
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[-1], cond=Eq.ne.lhs)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[-1], cond=Eq.ne.lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ge_Add_1.of.Gt)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0] & Eq[1] & Eq[2], cond=Eq.ne.lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1] & Eq[2], cond=Eq.ne.lhs)
 
     Eq <<= Eq[-1] & Eq[-2]
 

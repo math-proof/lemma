@@ -19,7 +19,7 @@ def apply(is_real, given, epsilon=None, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Calculus, Logic
+    from Lemma import Set, Algebra, Calculus, Bool
 
     n = Symbol(integer=True, positive=True)
     x, x0 = Symbol(real=True)
@@ -29,13 +29,13 @@ def prove(Eq):
 
     Eq << Set.Any.Eq.of.In.apply(Eq[0], var='A')
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
     Eq << Eq[-1].this.expr.args[1].apply(Calculus.Any.All.of.Eq_Limit.limit_definition)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
 
 if __name__ == '__main__':

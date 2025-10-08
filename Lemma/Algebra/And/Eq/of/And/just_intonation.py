@@ -15,7 +15,7 @@ def apply(et_eq, model):
 
 @prove
 def prove(Eq):
-    from Lemma import Logic
+    from Lemma import Bool
 
     λ_1, λ_2, λ_3, λ_4, λ_5, λ_6, λ_7 = Symbol(real=True)
     λ_1_sharp = Symbol(r"λ_{{^\#}1}", real=True)
@@ -25,7 +25,7 @@ def prove(Eq):
     λ_6_sharp = Symbol(r"λ_{{^\#}6}", real=True)
     Eq << apply(equate(λ_1_sharp / λ_1, λ_2_sharp / λ_2, λ_4_sharp / λ_4, λ_5_sharp / λ_5, λ_6_sharp / λ_6), λ_1_sharp / λ_1)
 
-    Eq << Logic.And_And.of.And.apply(Eq[0], None)
+    Eq << Bool.And_And.of.And.apply(Eq[0], None)
 
     Eq << Eq[-4].reversed
 

@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     k = Symbol(integer=True)
     Eq << apply(Cup[k:oo](Interval(k, k + 1, left_open=True)))
@@ -25,9 +25,9 @@ def prove(Eq):
     x = Eq[-1].lhs.lhs
     Eq <<= Eq[-2].this.lhs.expr.apply(Set.Gt.of.In_Icc), Eq[-1].this.rhs.apply(Algebra.Any.given.Cond.subst, k, Ceil(x) - 1)
 
-    Eq <<= Eq[-2].this.lhs.apply(Logic.Any_And.of.AnySetOf_AnySetOf, simplify=None), Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq <<= Eq[-2].this.lhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf, simplify=None), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-3].this.lhs.find(Element).apply(Set.Ge.of.In_Ico), Logic.Imp.given.Cond.apply(Eq[-2]), Eq[-1].this.rhs.apply(Set.In_Ico.given.And)
+    Eq <<= Eq[-3].this.lhs.find(Element).apply(Set.Ge.of.In_Ico), Bool.Imp.given.Cond.apply(Eq[-2]), Eq[-1].this.rhs.apply(Set.In_Ico.given.And)
 
     Eq <<= Eq[-3].this.lhs.expr.apply(Algebra.Gt.of.Gt.Ge), Set.In_Ico.given.Ge.Lt.apply(Eq[-2]), Eq[-1].this.rhs.apply(Algebra.Ge.transport, lhs=0)
 

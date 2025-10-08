@@ -9,7 +9,7 @@ def apply(eq, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))
@@ -19,20 +19,20 @@ def prove(Eq):
                                                 [Ones(n - h, h), Zeros(n - h, n - h)]])), a)
 
     i, j = Symbol(integer=True)
-    Ξ_quote = Symbol("Ξ'", Stack[j:n, i:n](Bool((i < h) & (j >= h) | (i >= h) & (j < h))))
+    Ξ_quote = Symbol("Ξ'", Stack[j:n, i:n](functions.Bool((i < h) & (j >= h) | (i >= h) & (j < h))))
     Eq << Ξ_quote[i, j].this.definition
 
-    Eq.Ξ_quote_definition = Eq[-1].this.rhs.apply(Logic.Bool.eq.Ite)
+    Eq.Ξ_quote_definition = Eq[-1].this.rhs.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[0][i, j]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 0)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 0)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.And_Or.Is.OrAndS)
+    Eq << Eq[-1].this.find(And).apply(Bool.And_Or.Is.OrAndS)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.Ξ_quote_definition, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.Ξ_quote_definition, Eq[-1])
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 

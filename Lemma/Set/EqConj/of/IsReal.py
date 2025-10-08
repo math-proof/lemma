@@ -12,7 +12,7 @@ def apply(given, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x = Symbol(complex=True)
     Eq << apply(Element(x, Interval(-oo, oo)))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Algebra.EqConj.of.Eq.apply(Eq[-1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
 
 

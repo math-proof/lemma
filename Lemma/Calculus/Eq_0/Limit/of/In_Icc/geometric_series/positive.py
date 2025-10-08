@@ -11,7 +11,7 @@ def apply(el, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Logic
+    from Lemma import Calculus, Algebra, Set, Bool
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, given=True)
@@ -41,19 +41,19 @@ def prove(Eq):
 
     Eq << Algebra.Any.given.Cond.subst.apply(Eq.any, Eq.any.variable, Eq.Ceiling_el.lhs)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Logic.All.given.Imp.apply(Eq[-1])
+    Eq << Bool.All.given.Imp.apply(Eq[-1])
 
     Eq << Algebra.GeCeil.apply(Eq.Ceiling_el.lhs.arg)
 
     Eq << Algebra.Gt.of.Ge.relax.apply(Eq[-1], step=1)
 
-    Eq << Logic.Cond.Imp.given.And.Imp.And.apply(Eq[-1], Eq[-3])
+    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Gt.of.Ge.Gt)
 
-    Eq << Logic.Cond.Imp.given.And.Imp.And.apply(Eq.lt_zero, Eq[-1])
+    Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq.lt_zero, Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.LtMul.of.Lt_0.Gt)
 

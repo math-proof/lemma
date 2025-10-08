@@ -10,7 +10,7 @@ def apply(all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     M, x, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -25,11 +25,11 @@ def prove(Eq):
     Eq << Algebra.All.Le.of.Eq_ReducedMin.apply(Eq[-1])
 
     y = Eq[-1].variable
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].subs(y, M)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].this.lhs.definition
 

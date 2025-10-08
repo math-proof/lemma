@@ -14,7 +14,7 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True, given=True)
     Eq << apply(x < 0)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], Eq[1].variable, abs(x))
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << -Eq[-1].reversed
 

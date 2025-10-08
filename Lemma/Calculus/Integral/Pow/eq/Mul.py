@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     x = Symbol(real=True)
     n = Symbol(integer=True, nonnegative=True)
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.args[1].lhs.doit()
 
-    Eq << Eq[-1].this.expr.expr.apply(Logic.Eq.of.Eq.Eq)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.Eq.of.Eq.Eq)
 
     Eq << Eq[-1].reversed
 

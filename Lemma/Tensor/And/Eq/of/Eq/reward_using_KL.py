@@ -10,7 +10,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n, b, D = Symbol(integer=True, positive=True)
     # n is the sequence length
@@ -33,11 +33,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Logic.And.Imp.of.Cond_Ite.apply(Eq[-1])
+    Eq << Bool.And.Imp.of.Cond_Ite.apply(Eq[-1])
 
     Eq << Eq[-2].subs(t, n - 1)
 
-    Eq << Logic.Imp.And.of.Imp.domain_defined.apply(Eq[-1], t)
+    Eq << Bool.Imp.And.of.Imp.domain_defined.apply(Eq[-1], t)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.given.And)
 

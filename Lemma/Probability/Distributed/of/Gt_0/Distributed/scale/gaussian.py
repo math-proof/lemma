@@ -10,7 +10,7 @@ def apply(gt_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Probability, Logic
+    from Lemma import Algebra, Calculus, Probability, Bool
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq.eq_prob, *Eq[-2:] = Logic.And_And.given.And.Cond.apply(Eq[-1], None)
+    Eq.eq_prob, *Eq[-2:] = Bool.And_And.given.And.Cond.apply(Eq[-1], None)
 
     Eq << Algebra.Ne.of.Gt.apply(Eq[0])
 

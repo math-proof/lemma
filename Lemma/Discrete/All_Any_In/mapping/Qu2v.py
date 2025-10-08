@@ -12,7 +12,7 @@ def apply(n, u, v):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Discrete, Logic, Tensor
+    from Lemma import Set, Algebra, Discrete, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     u, v = Symbol(domain=Range(n + 1))
@@ -22,7 +22,7 @@ def prove(Eq):
     Q = Eq[2].lhs.base
     Eq << Set.All_CupFinset.eq.Ico.apply(Q[u])
 
-    Eq << Logic.All.of.All_And.apply(Eq[-1], 1)
+    Eq << Bool.All.of.All_And.apply(Eq[-1], 1)
 
     Eq.x_j_equality = Eq[-1].this.expr.apply(Discrete.Any.Eq.of.Eq.index, v)
 
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq <<= Eq.x_n1_cup_finiteset & Eq[-1]
 
-    Eq << Eq[-1].this.expr.apply(Logic.Any_And.of.Any.All)
+    Eq << Eq[-1].this.expr.apply(Bool.Any_And.of.Any.All)
 
     Eq << Eq[3].this.expr.expr.rhs.definition
 

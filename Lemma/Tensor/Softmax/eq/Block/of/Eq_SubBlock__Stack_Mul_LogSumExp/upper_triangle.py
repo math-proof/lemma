@@ -24,7 +24,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -35,7 +35,7 @@ def prove(Eq):
         Stack[i:n - u](A[i, i:i + u]),
         Stack[i:u](BlockMatrix(A[i + n - u, n - u + i:], -oo * Ones(i)))) - Stack[i:n](Ones(u) * Log(ReducedSum(Exp(A[i, i:Min(n, i + u)]))))))
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], exp)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], exp)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.ExpAdd.eq.MulExpS)
 

@@ -9,16 +9,16 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Bool
 
     x = Symbol(real=True, shape=(oo, oo))
     i, j, a = Symbol(integer=True)
     f = Function(integer=True)
     Eq << apply(All[j:f(i, j) > 0, i:{a}](x[i, j] > 0))
 
-    Eq << Iff(All[i:{a}](Equal(Bool(All[j:f(i, j) > 0](x[i, j] > 0)), 1)), All[j:f(i, j) > 0, i:{a}](x[i, j] > 0), plausible=True)
+    Eq << Iff(All[i:{a}](Equal((All[j:f(i, j) > 0](x[i, j] > 0)).toNat, 1)), All[j:f(i, j) > 0, i:{a}](x[i, j] > 0), plausible=True)
 
-    Eq << Eq[-1].this.lhs.expr.lhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.lhs.expr.lhs.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.rhs.simplify()
 

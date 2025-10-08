@@ -11,7 +11,7 @@ def apply(is_positive, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, b = Symbol(real=True)
     Eq << apply(x > 0, x <= b)
@@ -19,12 +19,12 @@ def prove(Eq):
     t = Symbol(positive=True)
     Eq << (t <= b).this.apply(Algebra.LeLog.of.Le)
 
-    Eq << Logic.Or.of.ImpNot.apply(Eq[-1])
+    Eq << Bool.Or.of.ImpNot.apply(Eq[-1])
 
     Eq << Algebra.Or.of.Cond.subst.apply(Eq[-1], t, x)
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[1], Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[1], Eq[-1])
 
 
 if __name__ == '__main__':

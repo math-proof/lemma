@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True)
     S = Symbol(etype=dtype.real, given=True, empty=False)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Algebra.All_LeMinima.apply(Eq[1].lhs)
 
-    Eq << Logic.All_And.of.All.All.apply(Eq[0], Eq[2])
+    Eq << Bool.All_And.of.All.All.apply(Eq[0], Eq[2])
 
     Eq << Eq[-1].this.expr.apply(Algebra.Lt.of.Le.Lt)
 

@@ -38,7 +38,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(integer=True, positive=True)
     a, b = Symbol(real=True)
@@ -46,13 +46,13 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(All[x[:n + 1]:CartesianSpace(Interval(a, b), n + 1)](f(x[:n + 1]) > 0), index=n)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[0])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Set.In_CartesianSpace.given.All.In)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.All.given.And.All, cond={n})
 
-    Eq << Logic.All.given.Imp.apply(Eq[1])
+    Eq << Bool.All.given.Imp.apply(Eq[1])
 
     Eq << Eq[-1].this.find(Element[CartesianSpace]).apply(Set.All.In.of.In_CartesianSpace)
 

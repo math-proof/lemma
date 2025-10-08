@@ -15,7 +15,7 @@ def apply(given, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Logic
+    from Lemma import Calculus, Algebra, Set, Bool
 
     n = Symbol(integer=True)
     x = Symbol(real=True, shape=(oo,), given=True)
@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Ne_0.Ge_0.apply(Eq.is_nonzero, Eq[-1])
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq.any)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.any)
 
 
 

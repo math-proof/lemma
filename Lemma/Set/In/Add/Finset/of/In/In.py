@@ -16,7 +16,7 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x0, x1, a, b, c, d, e = Symbol(integer=True)
     Eq << apply(Element(x0, {a, b, c}), Element(x1, {d, e}))
@@ -27,21 +27,21 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.apply(Logic.OrAndS.of.And_Or, 1, simplify=None)
+    Eq << Eq[-1].this.apply(Bool.OrAndS.of.And_Or, 1, simplify=None)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.OrAndS.of.And_Or, simplify=None)
+    Eq << Eq[-1].this.find(And).apply(Bool.OrAndS.of.And_Or, simplify=None)
 
     Eq << Eq[-1].this.args[0].apply(Algebra.EqAdd.of.Eq.Eq)
 
     Eq << Eq[-1].this.args[1].apply(Algebra.EqAdd.of.Eq.Eq)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.OrAndS.of.And_Or, simplify=None)
+    Eq << Eq[-1].this.find(And).apply(Bool.OrAndS.of.And_Or, simplify=None)
 
     Eq << Eq[-1].this.args[2].apply(Algebra.EqAdd.of.Eq.Eq)
 
     Eq << Eq[-1].this.args[3].apply(Algebra.EqAdd.of.Eq.Eq)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.OrAndS.of.And_Or, simplify=None)
+    Eq << Eq[-1].this.find(And).apply(Bool.OrAndS.of.And_Or, simplify=None)
 
     Eq << Eq[-1].this.args[4].apply(Algebra.EqAdd.of.Eq.Eq)
 

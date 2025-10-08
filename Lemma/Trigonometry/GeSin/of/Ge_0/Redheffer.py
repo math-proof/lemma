@@ -8,20 +8,20 @@ def apply(ge_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Trigonometry, Logic
+    from Lemma import Algebra, Set, Trigonometry, Bool
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x > 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x > 0)
 
-    Eq << Logic.Imp.given.And.Imp.split.apply(Eq[-1], cond=x >= 0)
+    Eq << Bool.Imp.given.And.Imp.split.apply(Eq[-1], cond=x >= 0)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
-    Eq << Logic.Imp.given.Cond.invert.apply(Eq[-1])
+    Eq << Bool.Imp.given.Cond.invert.apply(Eq[-1])
 
-    Eq.lt, Eq.ge = Logic.Imp.given.And.Imp.split.apply(Eq[2], cond=x < S.Pi)
+    Eq.lt, Eq.ge = Bool.Imp.given.And.Imp.split.apply(Eq[2], cond=x < S.Pi)
 
     Eq << Eq.lt.this.lhs.apply(Set.In.Icc.of.Lt.Gt)
 
@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ge.of.Gt.relax)
 
-    Eq << Logic.Imp.given.And.Imp.split.apply(Eq.ge, cond=x > S.Pi)
+    Eq << Bool.Imp.given.And.Imp.split.apply(Eq.ge, cond=x > S.Pi)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     t = Symbol(x - S.Pi)
     Eq << t.this.definition
@@ -54,11 +54,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.Pow.eq.Add)
 
-    Eq << Logic.Imp.given.Imp_And.apply(Eq[-1])
+    Eq << Bool.Imp.given.Imp_And.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Gt_0.Gt.given.And.Div)
 
-    Eq << Logic.Imp.And.of.Imp.apply(Eq.gt_1)
+    Eq << Bool.Imp.And.of.Imp.apply(Eq.gt_1)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.GtMul.of.Gt_0.Gt)
 

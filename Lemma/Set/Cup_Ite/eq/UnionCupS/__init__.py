@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     A, B = Symbol(etype=dtype.integer)
     x, y = Symbol(integer=True)
@@ -21,17 +21,17 @@ def prove(Eq):
     Eq <<= Eq[-2].this.lhs.apply(Set.Any_In.of.In_Cup), \
     Eq[-1].this.rhs.apply(Set.In_Cup.given.Any_In)
 
-    Eq <<= Eq[-2].this.lhs.expr.apply(Logic.OrAndS.of.BFn_Ite), \
-    Eq[-1].this.rhs.expr.apply(Logic.BFn_Ite.given.OrAndS)
+    Eq <<= Eq[-2].this.lhs.expr.apply(Bool.OrAndS.of.BFn_Ite), \
+    Eq[-1].this.rhs.expr.apply(Bool.BFn_Ite.given.OrAndS)
 
-    Eq <<= Eq[-2].this.lhs.apply(Logic.OrAnyS.of.Any_Or), \
-    Eq[-1].this.rhs.apply(Logic.Any_Or.given.OrAnyS)
+    Eq <<= Eq[-2].this.lhs.apply(Bool.OrAnyS.of.Any_Or), \
+    Eq[-1].this.rhs.apply(Bool.Any_Or.given.OrAnyS)
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Logic.AnySetOf.of.Any_And, index=0), \
-    Eq[-1].this.rhs.args[0].apply(Logic.Any_And.given.AnyAnd, index=0)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.AnySetOf.of.Any_And, index=0), \
+    Eq[-1].this.rhs.args[0].apply(Bool.Any_And.given.AnyAnd, index=0)
 
-    Eq <<= Eq[-2].this.lhs.args[1].apply(Logic.AnySetOf.of.Any_And, index=1), \
-    Eq[-1].this.rhs.args[1].apply(Logic.Any_And.given.AnyAnd, index=1)
+    Eq <<= Eq[-2].this.lhs.args[1].apply(Bool.AnySetOf.of.Any_And, index=1), \
+    Eq[-1].this.rhs.args[1].apply(Bool.Any_And.given.AnyAnd, index=1)
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In_Union.given.OrInS, simplify=None), \
     Eq[-1].this.lhs.apply(Set.OrInS.of.In_Union, simplify=None)

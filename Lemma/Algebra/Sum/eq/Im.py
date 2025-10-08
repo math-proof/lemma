@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, nonnegative=True, given=False)
     z = Symbol(complex=True, shape=(oo,))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq[1], plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n, 0)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n, 0)
 
 
 if __name__ == '__main__':

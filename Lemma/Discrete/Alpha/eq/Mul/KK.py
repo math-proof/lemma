@@ -22,7 +22,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
     from Lemma.Discrete.K.eq.Add.definition import K
     from Lemma.Discrete.Alpha.gt.Zero import alpha
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq.of.Eq.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
+    Eq << Bool.Eq.of.Eq.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
 
 
 if __name__ == '__main__':

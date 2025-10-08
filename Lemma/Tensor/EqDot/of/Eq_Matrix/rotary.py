@@ -11,7 +11,7 @@ def apply(eq_R, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Logic
+    from Lemma import Trigonometry, Algebra, Bool
 
     # R denotes rotary matrix
     R = Function(shape=(2, 2), real=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(k, k - t)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
 
 

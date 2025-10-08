@@ -12,7 +12,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic, Tensor
+    from Lemma import Algebra, Discrete, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo), given=False)
     a = Symbol(shape=(oo,), complex=True)
@@ -96,7 +96,7 @@ def prove(Eq):
     D = D._subs(i, _i)
     Eq << Discrete.Det.eq.Sum.expansion_by_minors.apply(Det(D), j=0)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], _i)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], _i)
 
     Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq.recursion)
 
@@ -110,7 +110,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
 
 
 

@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Logic
+    from Lemma import Algebra, Calculus, Set, Bool
 
     a, b = Symbol(real=True, given=True)
     domain = Interval(a, b, right_open=True)
@@ -19,9 +19,9 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(All[x:domain](Derivative[x](f(x)) >= 0))
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=t < b)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=t < b)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.All.of.Lt.All.limits.restrict)
 
@@ -46,15 +46,15 @@ def prove(Eq):
     η = Symbol(real=True, positive=True)
     Eq << Eq[-1].this.find(Greater).apply(Algebra.Any.Gt.of.Gt_0, var=η)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq << Eq[-1].this.find(And).apply(Bool.Any_And.of.Any.All, simplify=None)
 
     Eq << Algebra.Any.of.Any.limits.swap.apply(Eq[-1], simplify=None)
 
-    Eq << Logic.AnySetOf.of.Any_And.apply(Eq[-1], 1)
+    Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], 1)
 
     Eq << Eq.suffice.subs(e, η)
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[-2])
 
 
 

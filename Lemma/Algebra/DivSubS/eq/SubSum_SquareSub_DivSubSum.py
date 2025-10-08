@@ -23,7 +23,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(domain=Range(2, oo))
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Algebra.EqSum.of.Eq_Ite.apply(Eq[1], Eq[-1].rhs)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Algebra.Sum_SquareSub.eq.Sub_SquareSum.apply(Eq[-1].lhs.args[1])
 

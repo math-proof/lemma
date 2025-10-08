@@ -10,7 +10,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor
+    from Lemma import Algebra, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     Eq << apply(n)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1], Eq[2])
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (_i,), (_j,))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (_i,), (_j,))
 
     Eq << Eq[-1].reversed
 

@@ -11,7 +11,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     Eq << apply(n)
@@ -27,7 +27,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], x[:n], Stack[i:n](i))
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.simplify()
 

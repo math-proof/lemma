@@ -19,7 +19,7 @@ def apply(Any_All_0, Any_All_1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Set
+    from Lemma import Algebra, Bool, Set
 
     N, M = Symbol(integer=True)
     x, y = Symbol(real=True)
@@ -27,9 +27,9 @@ def prove(Eq):
     f, g = Function(shape=(), integer=True)
     Eq << apply(Any[M](All[x:A](f(x) <= M)), Any[N](All[x:B](g(x) <= N)))
 
-    Eq << Eq[-1].this.expr.apply(Logic.All_And.given.All.All)
+    Eq << Eq[-1].this.expr.apply(Bool.All_And.given.All.All)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Eq[-2].this.expr.apply(Set.AllIn.given.AllIn_Union, A)
 

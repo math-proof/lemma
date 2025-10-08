@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n, a = Symbol(integer=True)
     f = Function(complex=True)
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.doit()
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], _n)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], _n)
 
     Eq << Eq[-1].this.apply(Algebra.All.limits.subst.offset, -1).reversed
 

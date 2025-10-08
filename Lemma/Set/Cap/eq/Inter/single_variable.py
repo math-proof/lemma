@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     A, B = Symbol(etype=dtype.integer)
     x, y = Symbol(integer=True)
@@ -21,8 +21,8 @@ def prove(Eq):
     Eq <<= Eq[-2].this.lhs.apply(Set.All_In.of.In_Cap), \
     Eq[-1].this.rhs.apply(Set.In_Cap.given.All_In)
 
-    Eq <<= Eq[-2].this.lhs.expr.apply(Logic.OrAndS.of.BFn_Ite), \
-    Eq[-1].this.rhs.expr.apply(Logic.BFn_Ite.given.OrAndS)
+    Eq <<= Eq[-2].this.lhs.expr.apply(Bool.OrAndS.of.BFn_Ite), \
+    Eq[-1].this.rhs.expr.apply(Bool.BFn_Ite.given.OrAndS)
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In_Inter.given.In.In, simplify=None), \
     Eq[-1].this.lhs.apply(Set.In.In.of.In_Inter, simplify=None)
@@ -33,34 +33,34 @@ def prove(Eq):
     Eq <<= Eq[-2].this.rhs.find(Element).apply(Set.In_Cap.given.All_In), \
     Eq[-1].this.lhs.find(Element).apply(Set.All_In.of.In_Cap)
 
-    Eq <<= Eq[-2].this.lhs.apply(Logic.All.All.of.All, cond=A), Eq[-1].this.rhs.apply(Algebra.All.given.And.All.split, cond=A)
+    Eq <<= Eq[-2].this.lhs.apply(Bool.All.All.of.All, cond=A), Eq[-1].this.rhs.apply(Algebra.All.given.And.All.split, cond=A)
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Logic.All.Is.Imp), Eq[-1].this.rhs.args[0].apply(Logic.All.Is.Imp)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.All.Is.Imp), Eq[-1].this.rhs.args[0].apply(Bool.All.Is.Imp)
 
     Eq <<= Eq[-2].this.lhs.args[0].lhs.apply(Set.In_Inter.Is.And_In_Inter, index=0, simplify=False), \
     Eq[-1].this.rhs.args[0].lhs.apply(Set.In_Inter.Is.And_In_Inter, index=0, simplify=False)
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Logic.Imp.subst.Bool, index=0, invert=True), \
-    Eq[-1].this.rhs.args[0].apply(Logic.Imp.subst.Bool, index=0, invert=True)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.Imp.subst.Bool, index=0, invert=True), \
+    Eq[-1].this.rhs.args[0].apply(Bool.Imp.subst.Bool, index=0, invert=True)
 
     Eq <<= Eq[-2].this.lhs.args[0].lhs.args[1].apply(Set.In_Inter.Is.And_In_Inter), \
     Eq[-1].this.rhs.args[0].lhs.args[1].apply(Set.In_Inter.Is.And_In_Inter)
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Logic.Imp.Is.All, wrt=x), \
-    Eq[-1].this.rhs.args[0].apply(Logic.Imp.Is.All, wrt=x)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.Imp.Is.All, wrt=x), \
+    Eq[-1].this.rhs.args[0].apply(Bool.Imp.Is.All, wrt=x)
 
-    Eq <<= Eq[-2].this.lhs.args[1].apply(Logic.All.Is.Imp), Eq[-1].this.rhs.apply(Logic.All.Is.Imp)
+    Eq <<= Eq[-2].this.lhs.args[1].apply(Bool.All.Is.Imp), Eq[-1].this.rhs.apply(Bool.All.Is.Imp)
 
     Eq <<= Eq[-2].this.lhs.args[0].lhs.apply(Set.In_SDiff.Is.And_NotIn), \
     Eq[-1].this.rhs.lhs.apply(Set.In_SDiff.Is.And_NotIn)
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Logic.Imp.subst.Bool, index=1, invert=True), \
-    Eq[-1].this.rhs.apply(Logic.Imp.subst.Bool, index=1, invert=True)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.Imp.subst.Bool, index=1, invert=True), \
+    Eq[-1].this.rhs.apply(Bool.Imp.subst.Bool, index=1, invert=True)
 
     Eq <<= Eq[-2].this.lhs.args[0].lhs.simplify(), Eq[-1].this.rhs.lhs.simplify()
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Logic.Imp.Is.All, wrt=x), \
-    Eq[-1].this.rhs.apply(Logic.Imp.Is.All, wrt=x)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Bool.Imp.Is.All, wrt=x), \
+    Eq[-1].this.rhs.apply(Bool.Imp.Is.All, wrt=x)
 
 
 

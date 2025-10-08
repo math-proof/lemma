@@ -15,7 +15,7 @@ def apply(sup_lt_oo, is_oo, a=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x = Symbol(real=True, shape=(oo,))
     n, m = Symbol(integer=True)
@@ -29,32 +29,32 @@ def prove(Eq):
     # the sequence has infinitely many peaks, namely a0 < a1 < a2 < a3 < ... < a[j]
     Eq << Eq[-1].this.expr.apply(Set.All.of.Eq_Cup)
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(All).apply(Algebra.All.limits.subst.offset, 1)
 
-    Eq << Eq[-1].this.expr.apply(Logic.All_And.of.All.All, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Bool.All_And.of.All.All, simplify=None)
 
     # then the sequence x[a0] >= x[a1] >= x[a2] >= x[a3] > ... > x[a[j]] is a subsequence with the upper bound M
-    Eq << Eq[-1].this.find(All).apply(Logic.Or_NotIn.of.All, m, a[i + 1], ret=0, simplify=None)
+    Eq << Eq[-1].this.find(All).apply(Bool.Or_NotIn.of.All, m, a[i + 1], ret=0, simplify=None)
 
-    Eq << Eq[-1].this.find(Or).apply(Logic.All.of.All_OrNot)
+    Eq << Eq[-1].this.find(Or).apply(Bool.All.of.All_OrNot)
 
-    Eq << Eq[-1].this.find(All[~And]).apply(Logic.Cond.of.And, simplify=0)
+    Eq << Eq[-1].this.find(All[~And]).apply(Bool.Cond.of.And, simplify=0)
 
     Eq << Eq[-1].this.find(Less).apply(Algebra.Le_Sub_1.of.Lt, simplify=None)
 
-    Eq << Eq[-1].this.find(Or).apply(Logic.Or.Or.of.Or_And, simplify=None)
+    Eq << Eq[-1].this.find(Or).apply(Bool.Or.Or.of.Or_And, simplify=None)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.All_And.of.All.All, simplify=None)
+    Eq << Eq[-1].this.find(And).apply(Bool.All_And.of.All.All, simplify=None)
 
     Eq << Eq[-1].this.find(All).apply(Algebra.All.of.All.subst.inner, m, a[i] + 1, simplify=None)
 
-    Eq << Eq[-1].this.find(All).apply(Logic.All.All.of.All_And, simplify=None)
+    Eq << Eq[-1].this.find(All).apply(Bool.All.All.of.All_And, simplify=None)
 
     Eq << Eq[-1].this.find(All).limits_subs(i, n, simplify=None)
 
-    Eq << Logic.AnySetOf.of.Any_And.apply(Eq[-1])
+    Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Less).apply(Algebra.Gt.of.Lt.reverse, simplify=None)
 
@@ -66,12 +66,12 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Algebra.All.limits.domain_defined, simplify=None)
 
 
-    Eq << Eq[-1].this.expr.apply(Logic.Or_NotIn.of.All, n, a[i], simplify=None)
+    Eq << Eq[-1].this.expr.apply(Bool.Or_NotIn.of.All, n, a[i], simplify=None)
     return
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.then.all, i)
     Eq << Eq[-1].this.expr.apply(Algebra.All.limits.domain_defined)
     #Eq << Eq[-1].this.find(Less[2]).apply(Algebra.Cond.then.Cond.domain_defined, ret=0)
-    Eq << Eq[-1].this.expr.expr.apply(Logic.All.of.All_OrNot, wrt=a[i], simplify=None)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.All.of.All_OrNot, wrt=a[i], simplify=None)
     Eq << Eq[-1].this.expr.expr.apply(Algebra.All.limits.domain_defined, wrt=a[i], simplify=None)
 
 

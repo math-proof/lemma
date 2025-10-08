@@ -16,7 +16,7 @@ def apply(lt, self, n=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Calculus.Integral.eq.Mul.Limit.Minima.Darboux.of.Lt.apply(Eq[0], Eq[1].lhs)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Algebra.Gt_0.of.Lt.apply(Eq[0])
 

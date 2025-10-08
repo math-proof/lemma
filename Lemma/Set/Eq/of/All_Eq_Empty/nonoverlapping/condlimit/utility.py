@@ -18,21 +18,21 @@ def apply(given, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     i, j = Symbol(integer=True)
     n = Symbol(domain=Range(2, oo), given=False)
     x = Symbol(shape=(oo,), etype=dtype.integer, finiteset=True)
 
     Eq << apply(All(Equal(x[i] & x[j], x[i].etype.emptySet), (j, Unequal(j, i))), n)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[0])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Lt)
 
     j_ = Symbol('j', integer=True, nonnegative=True)
     Eq << Eq[-1].subs(j, j_)
 
-    Eq << Logic.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.Imp.apply(Eq[-1])
 
     Eq << Set.Eq.of.All_Eq_Empty.nonoverlapping.intlimit.utility.apply(Eq[-1], n)
 

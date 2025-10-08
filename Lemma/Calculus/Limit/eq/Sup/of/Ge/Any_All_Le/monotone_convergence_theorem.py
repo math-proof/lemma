@@ -10,7 +10,7 @@ def apply(ge, Any_All_Le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Logic
+    from Lemma import Algebra, Set, Calculus, Bool
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq.sup_is_real = Set.In.Icc.of.Lt.Gt.apply(Eq[-2], Eq[-1], simplify=None)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq.sup_is_real, Eq.any_le, simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq.sup_is_real, Eq.any_le, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Set.LeSub.of.Le.In)
 

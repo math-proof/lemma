@@ -31,15 +31,15 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k, n = Symbol(integer=True)
     λ = Symbol(real=True)
     Eq << apply(Sum[k:n](λ ** k))
 
-    Eq << Logic.Cond_Ite.given.And.Imp.apply(Eq[0])
+    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[0])
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqSum.of.Ne.geometric_series, Eq[0].lhs)
 

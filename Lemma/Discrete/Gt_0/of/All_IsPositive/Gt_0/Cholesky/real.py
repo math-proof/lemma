@@ -13,7 +13,7 @@ def apply(all_is_positive, eq_initial):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq[1], Eq[-1], k, 0)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[1], Eq[-1], k, 0)
 
     Eq << Eq.induct.subs(k, t - 1)
 

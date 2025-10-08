@@ -22,20 +22,20 @@ def apply(self, lower=None, upper=None, strict=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, a = Symbol(real=True)
     Eq << apply(x, upper=a)
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
     Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.IteGe)
 
-    Eq << Eq[-1].this.args[0].apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.args[0].apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
 
     Eq << Eq[-1].this.find(Min).apply(Algebra.Min.eq.IteLt)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.find(And).apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
 
 
 

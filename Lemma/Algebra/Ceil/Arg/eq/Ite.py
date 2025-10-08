@@ -21,7 +21,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     p, q = Symbol(complex=True, given=True)
     delta = 4 * p ** 3 / 27 + q ** 2
@@ -29,9 +29,9 @@ def prove(Eq):
     V = -sqrt(delta) - q
     Eq << apply(Ceil(3 * Arg(U ** (S.One / 3) * V ** (S.One / 3)) / (S.Pi * 2) - S.One / 2))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(p, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(p, 0))
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Algebra.Mul.Root.eq.Mul.Ite.cubic_root.apply(Eq[-1].find(Arg[~Mul]))
 
@@ -41,10 +41,10 @@ def prove(Eq):
 
     Eq << Unequal(p, 0).this.apply(Algebra.Ceil_Arg.eq.Ite.of.Ne_0, q)
 
-    Eq << Eq[-1].lhs.this.apply(Logic.Iff.Eq.of.Ne_0, Eq[-1].find(Equal[~Ceil, 0]))
+    Eq << Eq[-1].lhs.this.apply(Bool.Iff.Eq.of.Ne_0, Eq[-1].find(Equal[~Ceil, 0]))
 
     Eq <<= Eq[-1] & Eq[-2]
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond.of.Iff.Cond.subst)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Iff.Cond.subst)
 
 
 

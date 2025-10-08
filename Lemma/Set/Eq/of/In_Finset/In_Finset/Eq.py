@@ -15,7 +15,7 @@ def apply(x_el_finiteset, y_el_finiteset, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     a, b, x, y = Symbol(real=True)
     f = Function(real=True)
@@ -26,13 +26,13 @@ def prove(Eq):
 
     Eq <<= Set.Or.Eq.of.In_Finset.apply(Eq[0]), Set.Or.Eq.of.In_Finset.apply(Eq[1])
 
-    Eq <<= Eq[-2].this.args[0].apply(Logic.EqUFnS.of.Eq, f), Eq[-1].this.args[0].apply(Logic.EqUFnS.of.Eq, f)
+    Eq <<= Eq[-2].this.args[0].apply(Bool.EqUFnS.of.Eq, f), Eq[-1].this.args[0].apply(Bool.EqUFnS.of.Eq, f)
 
-    Eq <<= Eq[-2].this.args[0].apply(Logic.EqUFnS.of.Eq, f), Eq[-1].this.args[0].apply(Logic.EqUFnS.of.Eq, f)
+    Eq <<= Eq[-2].this.args[0].apply(Bool.EqUFnS.of.Eq, f), Eq[-1].this.args[0].apply(Bool.EqUFnS.of.Eq, f)
 
     Eq <<= Eq[-2].subs(Eq[2]), Eq[-1].subs(Eq[2])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(*Eq[-2:])
+    Eq << Bool.Eq.of.Eq.Eq.apply(*Eq[-2:])
 
 
 if __name__ == '__main__':

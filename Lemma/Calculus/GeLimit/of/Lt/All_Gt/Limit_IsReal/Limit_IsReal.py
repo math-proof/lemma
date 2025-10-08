@@ -28,7 +28,7 @@ def apply(lt, all_gt, limit_is_real_fx, limit_is_real_gx):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Logic
+    from Lemma import Calculus, Algebra, Set, Bool
 
     a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.expr.apply(Algebra.Gt.of.Eq.Gt.subst)
 
-    Eq <<= Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     epsilon = Symbol(positive=True)
     Eq <<= Eq[-1].subs(xi, b - epsilon)
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.lhs.apply(Set.In_Ico.given.Ge.Lt)
 
-    Eq << Logic.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.Imp.apply(Eq[-1])
 
     Eq << Algebra.Gt_0.of.Lt.apply(Eq[0])
 

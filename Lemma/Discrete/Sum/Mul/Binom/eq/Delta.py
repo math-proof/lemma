@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True, given=False)
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Eq.of.Eq.All_Imp.apply(Eq.initial, Eq[-1], i, 0)
+    Eq << Bool.Eq.of.Eq.All_Imp.apply(Eq.initial, Eq[-1], i, 0)
 
     Eq << Eq.hypothesis.subs(m, n - i)
 

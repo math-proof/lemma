@@ -12,27 +12,27 @@ def apply(given, a=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     x = Symbol(real=True, shape=(oo,))
     M = Symbol(real=True, positive=True)
     n, m = Symbol(integer=True)
     Eq << apply(Abs(x[n]) <= M)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Card({n: All[m:n + 1:oo](x[m] <= x[n])}) < oo)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Card({n: All[m:n + 1:oo](x[m] <= x[n])}) < oo)
 
-    Eq << Logic.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[0])
+    Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[0])
 
-    Eq << Logic.Or.given.Cond.apply(Eq[-1], 0)
+    Eq << Bool.Or.given.Cond.apply(Eq[-1], 0)
 
     a = Eq[1].variable
     Eq << Eq[-2].this.lhs.apply(Calculus.Any.IsLimited.of.LeAbs.Le_Infty.sequential_compactness_theorem, a)
 
     Eq << Eq[3].this.lhs.apply(Algebra.Eq.of.Ge.squeeze)
 
-    Eq << Logic.Imp.given.And.Imp.invert.apply(Eq[-1], cond=Eq[0])
+    Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-1], cond=Eq[0])
 
-    Eq << Logic.Or.given.Cond.apply(Eq[-1], 1)
+    Eq << Bool.Or.given.Cond.apply(Eq[-1], 1)
 
     Eq << Eq[-2].this.lhs.apply(Calculus.Any.IsLimited.of.LeAbs.Eq_Infty.sequential_compactness_theorem, a)
 

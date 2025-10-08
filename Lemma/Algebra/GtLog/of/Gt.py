@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Logic
+    from Lemma import Algebra, Logic, Bool
 
     x = Symbol(real=True, given=True)
     y = Symbol(positive=True, given=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq <<= ~Eq[1] & Eq[-1]
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
     Eq << Algebra.LeExp.of.Le.apply(Eq[-1])
 

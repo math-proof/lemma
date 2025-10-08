@@ -15,7 +15,7 @@ def apply(given, x=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -25,15 +25,15 @@ def prove(Eq):
 
     Eq << Set.Any.Eq.of.Eq_Card.apply(Eq[0], x)
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
 
-    Eq << Logic.AnySetOf.of.Any_And.apply(Eq[-1], 0)
+    Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], 0)
 
     Eq << Eq[-1].this.expr.apply(Set.Any.Eq.Cup.Finset.of.All_Ne)
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], 1)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], 1)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Eq.of.Eq.Eq)
+    Eq << Eq[-1].this.expr.apply(Bool.Eq.of.Eq.Eq)
 
 
 

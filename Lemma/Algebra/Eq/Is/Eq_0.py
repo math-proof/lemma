@@ -10,13 +10,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a = Symbol(real=True)
     b = Symbol(real=True, zero=False)
     Eq << apply(Equal(a, b))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Eq_0.of.Eq)
 

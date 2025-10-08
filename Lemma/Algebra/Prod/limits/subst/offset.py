@@ -9,7 +9,7 @@ def apply(self, index=0, offset=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n, d = Symbol(integer=True)
     f = Function(real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=m, start=0)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=m, start=0)
 
 
 if __name__ == '__main__':

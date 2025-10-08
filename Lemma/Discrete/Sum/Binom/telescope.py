@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
 
     f = Function(real=True)
     x = Symbol(real=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-4])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-4])
 
 
 

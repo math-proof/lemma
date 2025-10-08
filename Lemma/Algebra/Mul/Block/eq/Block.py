@@ -32,7 +32,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Logic, Algebra
+    from Lemma import Tensor, Bool, Algebra
 
     n, m = Symbol(integer=True, positive=True)
     A, B, C, D = Symbol(real=True, shape=(m, n))

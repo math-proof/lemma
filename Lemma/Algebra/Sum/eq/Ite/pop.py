@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i, n = Symbol(integer=True)
     f = Function(real=True)
@@ -23,13 +23,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     Eq << (n < 0).this.apply(Algebra.Sum.eq.Zero.of.Lt, Eq[-1].find(Sum))
 
-    Eq << Logic.EqIteS.of.Imp_Eq.apply(Eq[-1], Eq[-2].lhs)
+    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq[-1], Eq[-2].lhs)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
     Eq << Eq[-1].this.find(GreaterEqual).reversed
 
 

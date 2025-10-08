@@ -10,14 +10,14 @@ def apply(given, epsilon=None, delta=None, upper=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     x, a = Symbol(real=True)
     x = Symbol(integer=True)
     f = Function(real=True, shape=())
     Eq << apply(Equal(Limit[x:oo](f(x)), a))
 
-    Eq.all = Logic.All.of.Cond.apply(Eq[1], Eq[1].find(Abs < ~Symbol))
+    Eq.all = Bool.All.of.Cond.apply(Eq[1], Eq[1].find(Abs < ~Symbol))
 
     ε = Eq.all.variable
     Eq << All(Eq.all.expr, (ε, Interval(1, oo)), plausible=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Less).apply(Algebra.Lt.of.Lt.relax, χ)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], χ)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], χ)
 
     Eq <<= Eq.all & Eq[2]
 

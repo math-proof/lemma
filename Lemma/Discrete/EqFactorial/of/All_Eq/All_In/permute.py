@@ -26,7 +26,7 @@ def apply(all0, all1):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Discrete, Set, Logic
+    from Lemma import Discrete, Set, Bool
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n])
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Eq.all_x.this.expr.rhs.defun()
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
     P = Eq[-1].limits[0][1]
     Eq << Set.All_CupFinset.eq.Ico.apply(P)

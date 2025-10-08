@@ -20,25 +20,25 @@ def apply(lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, m, M, a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(m < M, a * x ** 2 + b * x + c, x)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a >= 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a >= 0)
 
-    Eq <<= Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2], invert=True), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1])
+    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2], invert=True), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1])
 
-    Eq <<= Logic.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=a > 0), Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
+    Eq <<= Bool.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=a > 0), Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
 
-    Eq <<= Eq[-3].this.apply(Logic.Imp.flatten), Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.lhs.apply(Algebra.Sup_Add_Mul_Square.eq.IteIn.of.Lt_0.Lt, a * x ** 2 + b * x + c, x)
+    Eq <<= Eq[-3].this.apply(Bool.Imp.flatten), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.lhs.apply(Algebra.Sup_Add_Mul_Square.eq.IteIn.of.Lt_0.Lt, a * x ** 2 + b * x + c, x)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Logic.Imp.given.Cond.apply(Eq[-1])
+    Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[0], cond=a > 0)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[0], cond=a > 0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sup.eq.MaxAddS_Mul_Square.of.Gt_0.Lt, a * x ** 2 + b * x + c, x)
 

@@ -13,7 +13,7 @@ def apply(eq_theta, eq_R, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Discrete, Logic
+    from Lemma import Tensor, Algebra, Discrete, Bool
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq.matmul_QRK)
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq.matmul_QRK)
 
     Eq << Eq.final.subs(Eq[-1].reversed)
 

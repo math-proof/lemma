@@ -19,7 +19,7 @@ def apply(all_contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     a, b, x = Symbol(real=True)
     f = Function(real=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.simplify().reversed
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], xi)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], xi)
 
 
 if __name__ == '__main__':

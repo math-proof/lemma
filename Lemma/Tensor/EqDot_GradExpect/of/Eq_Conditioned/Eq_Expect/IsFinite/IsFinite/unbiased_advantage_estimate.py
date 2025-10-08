@@ -15,7 +15,7 @@ def apply(eq, V_def, lt_dV, lt_V):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Calculus, Probability, Tensor, Logic
+    from Lemma import Discrete, Algebra, Calculus, Probability, Tensor, Bool
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(t, t + k)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], k, simplify=None)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], k, simplify=None)
 
     Eq << Algebra.LeSup.of.All_Le.apply(Eq[-1])
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq.limit.subs(Eq[-1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).apply(Tensor.Sum.eq.Dot)
 

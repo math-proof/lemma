@@ -15,7 +15,7 @@ def apply(el, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic, Logic
+    from Lemma import Algebra, Tensor, Logic, Bool
 
     n = Symbol(domain=Range(2, oo))
     t = Symbol(integer=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Algebra.EqReducedSum.of.Eq.apply(Eq[-1])
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.eq.Sum)
 

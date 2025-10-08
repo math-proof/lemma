@@ -12,7 +12,7 @@ def apply(self, pivot=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     a, b = Symbol(integer=True)
     c = Symbol(domain=Interval(a, b, left_open=True, right_open=True))
@@ -28,15 +28,15 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Icc.Is.And), Eq[-1].this.find(Element).apply(Set.In_Icc.Is.And)
 
-    Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Logic.Imp_And.given.Imp.delete.apply(Eq[-2]), Logic.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
+    Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2]), Bool.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ge.of.Ge.relax, a)
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Lt.of.Lt.relax, b)
 
-    Eq << Logic.Imp.given.Or_Not.apply(Eq[-1])
+    Eq << Bool.Imp.given.Or_Not.apply(Eq[-1])
 
 
 if __name__ == '__main__':

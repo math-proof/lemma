@@ -40,7 +40,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n, l, u = Symbol(domain=Range(2, oo))
     d_z = Symbol(integer=True, positive=True)
@@ -59,7 +59,7 @@ def prove(Eq):
         BlockMatrix(
             Stack[i:n - Min(u, n) + 1](Q[i] @ W @ K[i:i + Min(u, n)].T),
             Stack[i:Min(u, n) - 1](BlockMatrix(Q[i + n - Min(u, n) + 1] @ W @ K[n - Min(u, n) + i + 1:].T, -oo * Ones(i + 1)))
-            
+
         )) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(Q[i] @ W @ K[relu(i + 1 - l):Min(n, i + u)].T + BlockMatrix(Zeros(Min(i, l - 1)), H[i], Zeros(Min(n - i, u) - 1))))))))
 
     A = Symbol(Eq[1].find(MatMul))
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq.A_def[i]#[i:i + Min(u, n)]
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (i, 0, n + 1 - Min(u, n)))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n + 1 - Min(u, n)))
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
 

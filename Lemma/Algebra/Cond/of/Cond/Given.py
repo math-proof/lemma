@@ -11,13 +11,13 @@ def apply(cond, necessary):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, nonnegative=True, given=True)
     f, g = Symbol(integer=True, shape=(oo,), given=True)
     Eq << apply(LessEqual(f[0], g[0]), Given(LessEqual(f[n], g[n]), LessEqual(f[0], g[0])))
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[1].reversed)
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[1].reversed)
 
 
 

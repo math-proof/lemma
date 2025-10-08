@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     Eq << apply(LessEqual(x, y))
@@ -33,13 +33,13 @@ def prove(Eq):
     r = Symbol(nonnegative=True)
     Eq << GreaterEqual(exp(r), 1, plausible=True)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1])
+    Eq << Bool.All.of.Cond.apply(Eq[-1])
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq[-1].find(Symbol), t)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq.ge_zero, Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq.ge_zero, Eq[-1])
 
 
 

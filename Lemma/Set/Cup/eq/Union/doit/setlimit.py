@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Logic.AllIn_Insert.Is.And_All import doit
+    from Lemma.Bool.AllIn_Insert.Is.And_All import doit
     return Equal(self, doit(Cup, self))
 
 

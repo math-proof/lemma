@@ -35,7 +35,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor
+    from Lemma import Algebra, Bool, Tensor
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -52,13 +52,13 @@ def prove(Eq):
             Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1)))
         )) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):Min(n, i + u)]))))))
 
-    Eq << Logic.Imp.given.All.apply(Eq[1])
+    Eq << Bool.Imp.given.All.apply(Eq[1])
 
     Eq.block1 = Algebra.All.given.All.limits.domain_defined.apply(Eq[-1])
 
-    Eq.block2 = Logic.Imp.given.All.apply(Eq[2])
+    Eq.block2 = Bool.Imp.given.All.apply(Eq[2])
 
-    Eq << Logic.Imp.given.All.apply(Eq[3])
+    Eq << Bool.Imp.given.All.apply(Eq[3])
 
     Eq.block3 = Algebra.All.given.All.limits.domain_defined.apply(Eq[-1])
 
@@ -81,9 +81,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this(i).expr.rhs.find(ExprCondPair[~Piecewise]).find(Symbol < Min - 1).simplify()
 
-    Eq << Eq[-1].this.expr.lhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.expr.lhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.expr.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.expr.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
     Eq << Eq[-1].this(i).find(And).simplify()
 
@@ -105,9 +105,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this(i).expr.rhs.find(ExprCondPair[Piecewise[ExprCondPair[~Piecewise]]]).find(Symbol < Min - 1).simplify()
 
-    Eq << Eq[-1].this.expr.lhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.expr.lhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.expr.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.expr.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
     Eq << Eq[-1].this(i).find(And).simplify()
 

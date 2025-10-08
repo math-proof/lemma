@@ -10,16 +10,16 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     S = Symbol(etype=dtype.real)
     e = Symbol(real=True)
     f = Function(shape=(), integer=True)
     Eq << apply(All[e:S](f(e) > 0))
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[0])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[0])
 
-    Eq << Logic.Or.given.Cond.apply(Eq[-1], index=0)
+    Eq << Bool.Or.given.Cond.apply(Eq[-1], index=0)
 
 
 

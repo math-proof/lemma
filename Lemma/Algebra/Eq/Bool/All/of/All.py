@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(integer=True)
     f = Function(shape=(), integer=True)
     s, A = Symbol(etype=dtype.integer)
 
     Eq << apply(All[x:A](Element(f(x), s)))
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Bool.Bool.eq.Ite)
 
 
 if __name__ == '__main__':

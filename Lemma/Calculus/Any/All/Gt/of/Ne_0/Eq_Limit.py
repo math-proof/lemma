@@ -14,17 +14,17 @@ def apply(is_nonzero, eq, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     x, x0, A = Symbol(real=True)
     f = Function(real=True)
     Eq << apply(Unequal(A, 0), Equal(Limit[x:x0](f(x)), A))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[2], cond=A > 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[2], cond=A > 0)
 
-    Eq.gt, Eq.le = Logic.And.Imp.of.Cond.split.apply(Eq[1], cond=A > 0)
+    Eq.gt, Eq.le = Bool.And.Imp.of.Cond.split.apply(Eq[1], cond=A > 0)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq.gt)
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq.gt)
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Any.All.Gt.of.Gt_0.Eq_Limit)
 
@@ -32,19 +32,19 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
     Eq << Eq[-1].this.rhs.expr.expr.apply(Algebra.Gt_0.of.Gt.trans, ret=0)
 
     Eq << Eq[-1].this.rhs.expr.expr.args[0].apply(Algebra.EqAbs.of.Gt_0)
 
-    Eq << Eq[-1].this.rhs.expr.expr.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.expr.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
     Eq << And(A <= 0, Eq[0]).this.apply(Algebra.Lt_0.of.Ne_0.Le_0)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.fold)
+    Eq << Eq[-1].this.apply(Bool.Imp.fold)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
     Eq <<= Eq.le & Eq[-1]
 
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-3]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
     Eq << Eq[-1].this.rhs.expr.expr.apply(Algebra.Lt_0.of.Lt.trans, ret=0)
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << -Eq[-1].this.find(Equal)
 
-    Eq << Eq[-1].this.rhs.expr.expr.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.expr.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
     Eq << -Eq[-1].this.rhs.expr.expr
 

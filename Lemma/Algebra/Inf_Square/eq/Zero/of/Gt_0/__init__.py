@@ -13,7 +13,7 @@ def apply(is_positive, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -34,13 +34,13 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Greater) * Rational(4, 3), Eq[-1].this.args[0].apply(Set.In_Ico.given.Ge.Lt)
 
-    Eq <<= Logic.All_And.given.All.All.apply(Eq[-2]), Eq[-1].this.args[0].apply(Algebra.Lt.given.Gt_0)
+    Eq <<= Bool.All_And.given.All.All.apply(Eq[-2]), Eq[-1].this.args[0].apply(Algebra.Lt.given.Gt_0)
 
-    Eq <<= Logic.All.given.All_Or_Not.apply(Eq[-3]), Eq[-2].this.expr.apply(Set.In_Ico.given.Ge.Lt), Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq <<= Bool.All.given.All_Or_Not.apply(Eq[-3]), Eq[-2].this.expr.apply(Set.In_Ico.given.Ge.Lt), Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= Eq[-4].this.args[1].apply(Set.NotIn_Icc.given.OrLtS)
 
-    Eq <<= Logic.All.given.Imp.apply(Eq[-3]), Eq[-2] * 2, Logic.All.given.Imp.apply(Eq[-1])
+    Eq <<= Bool.All.given.Imp.apply(Eq[-3]), Eq[-2] * 2, Bool.All.given.Imp.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.lhs.apply(Set.Ge.Le.of.In_Icc), Eq[-1].this.rhs * 4
 
@@ -52,9 +52,9 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.lhs.apply(Algebra.Gt.of.Gt.Gt)
 
-    Eq <<= Logic.Imp_And.given.Imp.Imp.apply(Eq[-2])
+    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-2])
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Algebra.Lt.of.Gt_0.scale, S.One / 2), Logic.Imp_And.given.Imp.delete.apply(Eq[-1])
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Algebra.Lt.of.Gt_0.scale, S.One / 2), Bool.Imp_And.given.Imp.delete.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Lt.of.Le.Lt)
 

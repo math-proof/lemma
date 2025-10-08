@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Probability, Logic
+    from Lemma import Calculus, Algebra, Probability, Bool
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -36,7 +36,7 @@ def prove(Eq):
 
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
-    Eq << Logic.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=0)
+    Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=0)
 
 
 

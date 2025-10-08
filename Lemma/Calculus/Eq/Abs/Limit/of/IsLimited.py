@@ -11,7 +11,7 @@ def apply(is_limited):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Calculus, Logic
+    from Lemma import Set, Algebra, Calculus, Bool
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)
@@ -23,19 +23,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element[FiniteSet]).apply(Set.Eq.of.In_Finset, simplify=None)
 
-    Eq << Logic.Cond.given.And.Imp.apply(Eq[1], cond=Eq[-1], simplify=None)
+    Eq << Bool.Cond.given.And.Imp.apply(Eq[1], cond=Eq[-1], simplify=None)
 
-    Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1], None)
+    Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1], None)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-3])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-3])
 
     Eq << Eq[-1].this.lhs.apply(Calculus.Eq_0.Limit.Abs.of.Eq_0)
 
     Eq <<= Eq[-2].this.lhs.apply(Set.EqAbs.of.IsNegative, ret=0), Eq[-3].this.lhs.apply(Set.EqAbs.of.IsPositive, ret=0)
 
-    Eq <<= Logic.Imp_And.given.Imp.And.subst.apply(Eq[-2]), Logic.Imp_And.given.Imp.And.subst.apply(Eq[-1])
+    Eq <<= Bool.Imp_And.given.Imp.And.subst.apply(Eq[-2]), Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1])
 
-    Eq <<= Logic.Imp_And.given.Imp.delete.apply(Eq[-2], 0), Logic.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
+    Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2], 0), Bool.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
 
     Eq << Eq[-2].this.lhs.apply(Calculus.Eq.Limit.Abs.of.IsNegative)
 

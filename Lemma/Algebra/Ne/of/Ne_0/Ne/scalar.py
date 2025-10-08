@@ -11,7 +11,7 @@ def apply(unequality, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, a, b = Symbol(real=True)
     Eq << apply(Unequal(x, 0), Unequal(x * a, b))
 
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[0]
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 
 if __name__ == '__main__':

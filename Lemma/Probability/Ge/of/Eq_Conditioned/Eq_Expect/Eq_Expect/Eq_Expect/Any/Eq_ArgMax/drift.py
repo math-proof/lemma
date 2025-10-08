@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, any, eq_argmax):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Set, Logic
+    from Lemma import Algebra, Probability, Set, Bool
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -68,27 +68,27 @@ def prove(Eq):
 
     Eq << Eq.infer.subs(Eq.MDV_pi_tilde, Eq.MDV_pi_hat)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1], slice(None, 2))
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], slice(None, 2))
 
-    Eq << Logic.Imp_And.given.Imp.And.subst.apply(Eq[-1], 0)
+    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], 0)
 
-    Eq << Logic.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
+    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
 
     Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Eq[4].this.find(Equal[Piecewise]).apply(Logic.And.Imp.of.Cond_Ite)
+    Eq << Eq[4].this.find(Equal[Piecewise]).apply(Bool.And.Imp.of.Cond_Ite)
 
-    Eq << Eq[-1].this.find(Equal[Piecewise]).apply(Logic.And.Imp.of.Cond_Ite)
+    Eq << Eq[-1].this.find(Equal[Piecewise]).apply(Bool.And.Imp.of.Cond_Ite)
 
     Eq << Eq[-1].this.expr.apply(Algebra.And.of.And.delete, 1)
 
-    Eq << Eq[-1].this.expr.args[1:].apply(Logic.ImpAndS.of.Imp.Imp)
+    Eq << Eq[-1].this.expr.args[1:].apply(Bool.ImpAndS.of.Imp.Imp)
 
     Eq << Eq[-1].subs(π_quote, π_tilde)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq.infer)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.infer)
 
-    Eq.any = Eq[-1].this.expr.args[1:].apply(Logic.Imp.of.Imp.Imp)
+    Eq.any = Eq[-1].this.expr.args[1:].apply(Bool.Imp.of.Imp.Imp)
 
     Eq << Eq.ge_sum.this.find(Sum).apply(Algebra.Sum.eq.Sum_MulBool)
 
@@ -96,19 +96,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement).simplify()
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq.any.this.find(Imply[2]).apply(Logic.EqIteS.of.Imp_Eq, Eq[-1].find(Piecewise))
+    Eq << Eq.any.this.find(Imply[2]).apply(Bool.EqIteS.of.Imp_Eq, Eq[-1].find(Piecewise))
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 
-    Eq << Logic.And_And.of.And.apply(Eq.ne_zero)[1].subs(s[0].var, s[t].var)
+    Eq << Bool.And_And.of.And.apply(Eq.ne_zero)[1].subs(s[0].var, s[t].var)
 
     Eq << Algebra.Gt_0.of.Ne_0.apply(Eq[-1])
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-3])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.GeDiv.of.Gt_0.Ge)
 
@@ -122,7 +122,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.Lt.of.Ge.Lt)
 
-    Eq << Eq[-1].this.find(Imply).apply(Logic.ImpEq.of.ImpEq.subst)
+    Eq << Eq[-1].this.find(Imply).apply(Bool.ImpEq.of.ImpEq.subst)
 
     Eq << Eq[-1].subs(s[0].var, s[t].var)
 
@@ -132,7 +132,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
 
     Eq << Eq[3].subs(π_quote, π_tilde)
 

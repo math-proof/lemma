@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n, m = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.rhs.definition
 
-    Eq << Eq[-1].this.rhs.apply(Logic.AnySetOf.given.Any_And)
+    Eq << Eq[-1].this.rhs.apply(Bool.AnySetOf.given.Any_And)
 
     Eq << Eq[-1].this.lhs.args[1].apply(Set.Any.Eq.of.In.split.Imageset)
 
@@ -53,9 +53,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.Any.Eq.of.In.split.Imageset)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Any_And.of.AnySetOf)
+    Eq << Eq[-1].this.rhs.apply(Bool.Any_And.of.AnySetOf)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True, ret=0)
+    Eq << Eq[-1].this.rhs.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True, ret=0)
 
     Eq << Eq[-1].this.lhs.rhs.definition
 

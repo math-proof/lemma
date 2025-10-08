@@ -8,7 +8,7 @@ def apply(x, y, z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x, y, z)
@@ -24,13 +24,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[0].cond.reversed
 
-    Eq << Eq[-1].apply(Logic.Cond.given.Or.OrNot, cond=x - y <= 0)
+    Eq << Eq[-1].apply(Bool.Cond.given.Or.OrNot, cond=x - y <= 0)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= ~Eq[-2], ~Eq[-1]
 
-    Eq <<= Eq[-2].apply(Logic.BFn.of.BFnIte.Cond, swap=True, ret=1), Eq[-1].apply(Logic.BFn.of.BFnIte.Cond, invert=True, swap=True, ret=1)
+    Eq <<= Eq[-2].apply(Bool.BFn.of.BFnIte.Cond, swap=True, ret=1), Eq[-1].apply(Bool.BFn.of.BFnIte.Cond, invert=True, swap=True, ret=1)
 
     Eq <<= Eq[-2].this.args[1] + y, Eq[-1].this.args[1] + z
 

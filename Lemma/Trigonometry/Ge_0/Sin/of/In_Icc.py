@@ -10,24 +10,24 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Trigonometry, Logic
+    from Lemma import Algebra, Set, Trigonometry, Bool
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi)))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Equal(x, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Equal(x, 0))
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(x, S.Pi))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(x, S.Pi))
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
-    Eq << Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.args[::2].apply(Set.In_SDiff.of.In.Ne, simplify=None)
 

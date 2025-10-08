@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True, given=True)
     Eq << apply(x >= 0)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].simplify()
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1], simplify=None)
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1], simplify=None)
 
 
 

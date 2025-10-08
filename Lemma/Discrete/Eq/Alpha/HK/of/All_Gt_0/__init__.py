@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
     from Lemma.Discrete.Alpha.gt.Zero import alpha
     from Lemma.Discrete.H.eq.Add.definition import H
     from Lemma.Discrete.K.eq.Add.definition import K
@@ -22,13 +22,13 @@ def prove(Eq):
     j = Symbol(integer=True)
     Eq << apply(All[j:1:n](x[j] > 0))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=n >= 3)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=n >= 3)
 
-    Eq.case1, Eq.case2 = Logic.Imp.given.And.Imp.split.apply(Eq[-1], cond=n < 2)
+    Eq.case1, Eq.case2 = Bool.Imp.given.And.Imp.split.apply(Eq[-1], cond=n < 2)
 
     Eq << Eq.case1.this.lhs.apply(Algebra.Lt.Is.Eq.squeeze)
 
-    Eq << Eq[-1].this.apply(Logic.IffImpSAndEq)
+    Eq << Eq[-1].this.apply(Bool.IffImpSAndEq)
 
     Eq << Eq[-1].this.find(alpha).defun()
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(K).defun()
 
-    Eq << Eq.case2.this.apply(Logic.IffImpSAndEq)
+    Eq << Eq.case2.this.apply(Bool.IffImpSAndEq)
 
     Eq << Eq[-1].this.find(alpha).defun()
 
@@ -51,10 +51,10 @@ def prove(Eq):
     n_ = Symbol('n', domain=Range(3, oo))
     Eq << Discrete.Eq.Alpha.HK.of.All_Gt_0.induct.apply(Eq[0].subs(n, n_))
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], n_)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], n_)
 
     _n = Eq[-1].variable
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].subs(_n, n)
 

@@ -9,14 +9,14 @@ def apply(given, X):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(integer=True, positive=True)
     A, B = Symbol(etype=dtype.integer[n])
     X = Symbol(etype=dtype.integer[n], given=True)
     Eq << apply(Subset(A, B), X)
 
-    Eq << Eq[1].this.apply(Logic.Imp.given.Imp_And)
+    Eq << Eq[1].this.apply(Bool.Imp.given.Imp_And)
 
     Eq << Set.EqInter.of.Subset.apply(Eq[0])
 

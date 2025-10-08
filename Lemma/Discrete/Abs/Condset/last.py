@@ -15,7 +15,7 @@ def apply(n, P_quote=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic, Tensor
+    from Lemma import Set, Algebra, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)
@@ -45,21 +45,21 @@ def prove(Eq):
 
     Eq << Eq.P2P_quote.this.expr.rhs.definition
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Set.All_CupFinset.eq.Ico.apply(P_quote)
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq.x_quote_n_definition, Eq[-2], simplify=False)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Eq.of.Eq.Eq, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.Eq.of.Eq.Eq, reverse=True)
 
     Eq.mapping_quote = All[x[:n + 1]:P_quote](Equal(x_quote, x[:n + 1]), plausible=True)
 
     Eq << Eq.mapping_quote.this.expr.apply(Tensor.EqSliceS.given.EqSliceS.Eq.Lt)
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq.mapping)
 

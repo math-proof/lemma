@@ -21,7 +21,7 @@ def apply(contains, contains0, contains1, all_is_positive, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     w, x, x0, x1, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -34,25 +34,25 @@ def prove(Eq):
 
     Eq << Calculus.Ge.of.Gt_0.Jesson.apply(Eq[-1], w=w_)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], w_)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], w_)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
     x0 = Eq[-1].lhs.find(f).arg
-    Eq << Logic.All.of.Cond.apply(Eq[-1], x0)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], x0)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[1], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[1], Eq[-1])
 
     x1 = Eq[-1].lhs.find(Add * ~f).arg
-    Eq << Logic.All.of.Cond.apply(Eq[-1], x1)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], x1)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[2], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[2], Eq[-1])
 
 
 if __name__ == '__main__':

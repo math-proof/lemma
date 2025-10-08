@@ -25,7 +25,7 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k = Symbol(integer=True, positive=True)
     a, b = Symbol(integer=True)
@@ -33,7 +33,7 @@ def prove(Eq):
     f, g = Function(shape=(k,), real=True)
     Eq << apply(Unequal(x, y) & Equal(f(x), g(y)) & (a > b), index=0)
 
-    Eq << Logic.And_And.of.And.apply(Eq[0], 1)
+    Eq << Bool.And_And.of.And.apply(Eq[0], 1)
 
     Eq <<= Eq[1] & Eq[2]
 

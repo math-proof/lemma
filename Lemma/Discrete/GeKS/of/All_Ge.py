@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
     from Lemma.Discrete.K.eq.Add.definition import K
     x = Symbol(real=True, shape=(oo,))
     i = Symbol(integer=True)
@@ -22,17 +22,17 @@ def prove(Eq):
 
     Eq << apply(All[i:1:n + 1](x[i] >= 1))
 
-    Eq.case2, Eq.case1 = Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=n >= 2)
+    Eq.case2, Eq.case1 = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=n >= 2)
 
     Eq << Eq.case1.this.lhs.apply(Algebra.Lt.Is.Eq.squeeze)
 
-    Eq << Eq[-1].this.apply(Logic.IffImpSAndEq)
+    Eq << Eq[-1].this.apply(Bool.IffImpSAndEq)
 
     Eq << Eq[-1].this.find(K).defun()
 
     Eq << Eq[-1].this.find(K).defun()
 
-    Eq << Logic.Imp.given.Cond.apply(Eq[-1])
+    Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 
     Eq << Algebra.Cond.of.All.subst.apply(Eq[0], i, 1)
 
@@ -42,11 +42,11 @@ def prove(Eq):
 
     Eq << Discrete.GtKS.of.All_Ge.apply(Eq[-1])
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], _n)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], _n)
 
     Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Gt.relax)
 
-    Eq << Logic.Imp.given.All.apply(Eq.case2)
+    Eq << Bool.Imp.given.All.apply(Eq.case2)
 
 
 if __name__ == '__main__':

@@ -17,7 +17,7 @@ def apply(eq, infer, eq_piece, All_And):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic, Tensor
+    from Lemma import Algebra, Discrete, Bool, Tensor
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -35,19 +35,19 @@ def prove(Eq):
                 Element(L[i, j], Reals),
                 Equal(A[i, j], L[i,:j + 1] @ L[j,:j + 1]))))))
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[3])
+    Eq << Bool.All.All.of.All_And.apply(Eq[3])
 
-    Eq.Aii_def, Eq.Lii_is_positive = Logic.All.All.of.All_And.apply(Eq[-2])
+    Eq.Aii_def, Eq.Lii_is_positive = Bool.All.All.of.All_And.apply(Eq[-2])
 
-    Eq.Aij_def, Eq.Lij_is_complex = Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq.Aij_def, Eq.Lij_is_complex = Bool.All.All.of.All_And.apply(Eq[-1])
 
-    Eq << Logic.All_And.of.All.All.apply(Eq.Lii_is_positive, Eq.Lij_is_complex)
+    Eq << Bool.All_And.of.All.All.apply(Eq.Lii_is_positive, Eq.Lij_is_complex)
 
     Eq << Eq[2].subs(i, t).subs(j, i)
 
-    Eq << Logic.All.of.Imp.single_variable.apply(Eq[-1], i)
+    Eq << Bool.All.of.Imp.single_variable.apply(Eq[-1], i)
 
-    Eq << Logic.All_And.of.All.All.apply(Eq[-1], Eq[-3])
+    Eq << Bool.All_And.of.All.All.apply(Eq[-1], Eq[-3])
 
     Eq << Discrete.All.And.of.All_And.Cholesky.real.apply(Eq[-1])
 
@@ -82,7 +82,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.limits.swap.intlimit)
 
-    Eq << Logic.All.of.All_And.apply(Eq[5]).limits_subs(j, i)
+    Eq << Bool.All.of.All_And.apply(Eq[5]).limits_subs(j, i)
 
     # converting all A expression to L expression: A[i, j] = L[i, j] + .... if i < j
     Eq << Algebra.All.of.All_Eq.Cond.subst.apply(Eq[-1], Eq[-2])

@@ -36,7 +36,7 @@ def apply(given, domain=None, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Logic
+    from Lemma import Bool
 
     S = Symbol(etype=dtype.real, given=True)
     e = Symbol(real=True)
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[0], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

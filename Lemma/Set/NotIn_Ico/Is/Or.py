@@ -13,12 +13,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     e, a, b = Symbol(integer=True, given=True)
     Eq << apply(NotElement(e, Range(a, b)))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Set.Or.of.NotIn_Ico)
 

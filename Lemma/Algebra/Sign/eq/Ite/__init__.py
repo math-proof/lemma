@@ -11,46 +11,46 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True)
     Eq << apply(Sign(x))
 
     Eq << Eq[0].this.lhs.apply(Algebra.Sign.eq.Ite.Abs)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(x, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Equal(x, 0))
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
-    Eq << Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Or.of.Ne_0)
 
-    Eq.lt_zero, Eq.gt_zero = Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
+    Eq.lt_zero, Eq.gt_zero = Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Logic.Imp.given.Imp.subst.Bool.apply(Eq.gt_zero)
+    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq.gt_zero)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Gt_0)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Eq.lt_zero.this.rhs.apply(Logic.Cond_Ite.given.And.Imp)
+    Eq << Eq.lt_zero.this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.apply(Logic.Imp.flatten)
+    Eq << Eq[-2].this.apply(Bool.Imp.flatten)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Lt_0)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
 
 

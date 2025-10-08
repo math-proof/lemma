@@ -12,7 +12,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Logic
+    from Lemma import Calculus, Set, Algebra, Bool
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq.Limit_B_definition.subs(ε_1, Eq[-1].lhs)
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq.is_positive_real, Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq.is_positive_real, Eq[-1])
 
     Eq << Eq[-1].this.expr.expr.apply(Set.LtMul.of.Lt.IsPositive, Eq.abs_is_positive)
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.of.Lt.Le)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Imp.of.AllSetOf)
+    Eq << Eq[-1].this.expr.apply(Bool.Imp.of.AllSetOf)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In.given.In.Sub, x0)
 
@@ -83,7 +83,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In.given.In.Add, x0)
 
-    Eq << Eq[-1].this.expr.apply(Logic.All.of.Imp)
+    Eq << Eq[-1].this.expr.apply(Bool.All.of.Imp)
 
     Eq << Calculus.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 

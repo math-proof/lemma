@@ -19,7 +19,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(real=True)
     A = Symbol(etype=dtype.real)
 
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << apply(Or(Any[x:A]((g(x) > 0)), Any[x:A](f(x) > 0)))
 
-    Eq << Logic.OrAnyS.of.Any_Or.apply(Eq[1])
+    Eq << Bool.OrAnyS.of.Any_Or.apply(Eq[1])
 
 
 if __name__ == '__main__':

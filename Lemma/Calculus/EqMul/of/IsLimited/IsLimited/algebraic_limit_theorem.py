@@ -14,7 +14,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Logic
+    from Lemma import Calculus, Set, Algebra, Bool
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -27,26 +27,26 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].apply(Set.Any.Eq.of.In, var='B', simplify=None)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Bool.Any_And.of.Any.All, simplify=None)
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.EqMul.of.Eq.Eq)
 
-    Eq << Logic.ImpAndS.of.Imp.Imp.apply(Eq.is_zero, Eq[-1])
+    Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq.is_zero, Eq[-1])
 
-    Eq.mul_is_zero = Eq[-1].this.rhs.apply(Logic.Eq.of.Eq.Eq, reverse=True)
+    Eq.mul_is_zero = Eq[-1].this.rhs.apply(Bool.Eq.of.Eq.Eq, reverse=True)
 
     is_nonzero = And(Element(Eq[0].lhs, Reals - {0}), Eq[1])
     Eq << Imply(is_nonzero, is_nonzero, plausible=True)
 
     Eq << Eq[-1].this.rhs.apply(Calculus.EqMul.of.IsLimited.IsLimited.nonzero.algebraic_limit_theorem)
 
-    Eq << Logic.ImpOrS.of.Imp.Imp.apply(Eq.mul_is_zero, Eq[-1])
+    Eq << Bool.ImpOrS.of.Imp.Imp.apply(Eq.mul_is_zero, Eq[-1])
 
     Eq << Eq[-1].this.find(Equal[0]).apply(Set.Eq.given.In)
 
     Eq <<= Eq[0] & Eq[1]
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
 
 
 

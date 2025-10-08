@@ -24,7 +24,7 @@ def apply(eq_relu, eq_min, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Logic
+    from Lemma import Tensor, Algebra, Set, Discrete, Bool
 
     n, l, u = Symbol(integer=True, positive=True)
     # l denotes the size of the preceding context including current position;
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq.Xi_def.this.rhs.defun()[i]
 
-    Eq.Xi_def = Eq[-1].this.rhs.expr.apply(Logic.Bool.eq.Ite)
+    Eq.Xi_def = Eq[-1].this.rhs.expr.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq.zi_definition.find(ReducedSum).this.subs(Eq.Xi_def)
 
@@ -126,7 +126,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Symbol - 1).apply(Algebra.Expr.eq.IteGe, lower=ζ[i] - 1), Eq[-1].this.find(Symbol - 1).apply(Algebra.Expr.eq.IteGe, lower=ζ[i] - 1)
 
-    Eq <<= Logic.BFn.of.BFnIte.Cond.apply(Eq.le_zeta_i, Eq[-2]), Logic.BFn.of.BFnIte.Cond.apply(Eq.le_zeta_i, Eq[-1])
+    Eq <<= Bool.BFn.of.BFnIte.Cond.apply(Eq.le_zeta_i, Eq[-2]), Bool.BFn.of.BFnIte.Cond.apply(Eq.le_zeta_i, Eq[-1])
 
     Eq <<= Eq[-2].this.rhs().find(Min).simplify(), Eq[-1].this.rhs().find(Min).simplify()
 
@@ -134,7 +134,7 @@ def prove(Eq):
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[1], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[1], Eq[-1])
 
 
 

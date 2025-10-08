@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     e = Symbol(etype=dtype.integer.set)
     s = Symbol(etype=dtype.integer.set.set)
@@ -23,7 +23,7 @@ def prove(Eq):
     S = Symbol(imageset(e, f(e), s))
     Eq << apply(S)
 
-    Eq << Logic.All.given.Imp.apply(Eq[1])
+    Eq << Bool.All.given.Imp.apply(Eq[1])
 
     Eq << Eq[-1].this.lhs.rhs.definition
     Eq << Eq[-1].this.lhs.apply(Set.Any.Eq.of.In.split.Imageset)

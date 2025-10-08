@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     f = Function(real=True)
     k = Symbol(integer=True)
     n = Symbol(integer=True, given=False, positive=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=1)
+    Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=1)
 
 
 if __name__ == '__main__':

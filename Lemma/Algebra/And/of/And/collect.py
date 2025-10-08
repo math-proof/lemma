@@ -22,7 +22,7 @@ def apply(self, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b, c, d = Symbol(integer=True, given=True)
     x, y = Symbol(real=True, given=True)
@@ -33,9 +33,9 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[0]
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1])
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
-    Eq << Logic.And_And.of.And.apply(Eq[0], index=1)
+    Eq << Bool.And_And.of.And.apply(Eq[0], index=1)
 
 
 

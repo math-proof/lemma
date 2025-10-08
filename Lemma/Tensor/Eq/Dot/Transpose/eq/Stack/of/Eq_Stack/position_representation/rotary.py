@@ -15,7 +15,7 @@ def apply(eq_R, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic, Tensor
+    from Lemma import Algebra, Set, Bool, Tensor
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -48,13 +48,13 @@ def prove(Eq):
 
     Eq << Eq[-5].subs(*Eq[-2:])
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite.nest, pivot=slice(1, None))
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite.nest, pivot=slice(1, None))
 
-    Eq << Eq[-1].this.find(Piecewise[2]).apply(Logic.Ite.nest, pivot=slice(1, None))
+    Eq << Eq[-1].this.find(Piecewise[2]).apply(Bool.Ite.nest, pivot=slice(1, None))
 
-    Eq << Eq[-1].this.find(Piecewise[2]).apply(Logic.Ite.nest, pivot=slice(1, None))
+    Eq << Eq[-1].this.find(Piecewise[2]).apply(Bool.Ite.nest, pivot=slice(1, None))
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite.nest, pivot=slice(1, None))
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite.nest, pivot=slice(1, None))
 
     Eq << Eq[-1].find(Equal[1]).this.apply(Algebra.Eq_odd.Is.Ne.Zero)
 

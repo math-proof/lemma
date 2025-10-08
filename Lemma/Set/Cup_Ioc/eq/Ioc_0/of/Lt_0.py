@@ -12,7 +12,7 @@ def apply(is_nonnegative, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n, k = Symbol(integer=True)
     Eq << apply(n < 0, k)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[0]
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], 0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], 0)
 
 
 

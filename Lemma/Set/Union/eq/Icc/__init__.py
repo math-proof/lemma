@@ -17,12 +17,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     a, b = Symbol(real=True)
     Eq << apply(Interval(a, b) | Interval(b, a))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=a > b)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=a > b)
 
     Eq << Imply(a > b, Equal(Min(a, b), b), plausible=True)
 
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Imply(a > b, Equal(Max(a, b), a), plausible=True)
 
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Imply(a > b, Equal(Interval(a, b), a.emptySet), plausible=True)
 
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Imply(a <= b, Equal(Min(a, b), a), plausible=True)
 
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Imply(a <= b, Subset(Interval(b, a), Interval(a, b)), plausible=True)
 

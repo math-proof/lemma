@@ -10,7 +10,7 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, x, m, M = Symbol(real=True)
     f = Function(real=True)
@@ -26,19 +26,19 @@ def prove(Eq):
     z = Symbol(real=True)
     Eq <<= Algebra.All.Any.Lt.of.LeInf.apply(Eq[-2], z), Algebra.All.Ge.of.GeInf.apply(Eq[-1])
 
-    Eq <<= Logic.Imp.of.AllSetOf.apply(Eq[-2]), Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq <<= Bool.Imp.of.AllSetOf.apply(Eq[-2]), Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq <<= Eq[-2].subs(z, z * Eq.reciprocal.lhs), Logic.Imp_And.of.Cond.Imp.apply(Eq[0], Eq[-1])
+    Eq <<= Eq[-2].subs(z, z * Eq.reciprocal.lhs), Bool.Imp_And.of.Cond.Imp.apply(Eq[0], Eq[-1])
 
-    Eq <<= Logic.ImpAndS.of.Imp.apply(Eq[-2], cond=Eq[0]), Eq[-1].this.rhs.apply(Algebra.GeMul.of.Gt_0.Ge)
+    Eq <<= Bool.ImpAndS.of.Imp.apply(Eq[-2], cond=Eq[0]), Eq[-1].this.rhs.apply(Algebra.GeMul.of.Gt_0.Ge)
 
-    Eq << Eq[-2].this.rhs.apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq << Eq[-2].this.rhs.apply(Bool.Any_And.of.Any.All, simplify=None)
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.LtMul.of.Gt_0.Lt)
 
     Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Gt.given.And.scale.positive, a)
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1])
 
     Eq << Eq[1].subs(Eq[2])
 
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], z), Algebra.GeInf.given.All.Ge.apply(Eq[-1])
 
-    Eq <<= Logic.All.given.Imp.apply(Eq[-2]), Logic.All.given.Imp.apply(Eq[-1])
+    Eq <<= Bool.All.given.Imp.apply(Eq[-2]), Bool.All.given.Imp.apply(Eq[-1])
 
 
 if __name__ == '__main__':

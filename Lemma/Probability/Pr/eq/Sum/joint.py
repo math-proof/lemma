@@ -31,28 +31,28 @@ def apply(self, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     x, y = Symbol(integer=True, random=True)
     Eq << apply(Pr(x), y)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(Pr(x), 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(Pr(x), 0))
 
     Eq << Eq[-1].this.lhs.apply(Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes, y)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).simplify()
 
     Eq << Eq[-1].this.find(Sum).apply(Probability.Sum.eq.One.Conditioned)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[1])
 
     Eq << Eq[-1].this.rhs.reversed
 
     Eq << Eq[-1].this.lhs.apply(Probability.Eq_0.of.Eq_0.joint, y)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
 
 

@@ -16,7 +16,7 @@ def apply(equal_sum, equal_union):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     x = Symbol(shape=(oo,), etype=dtype.integer, finite=True)
     k, n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Set.EqCard.of.Eq.apply(Eq[1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[0])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[0])
 
     Eq << Set.All_Eq_Empty.SDiff.of.Eq.apply(Eq[-1])
 

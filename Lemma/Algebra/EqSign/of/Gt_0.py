@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(complex=True)
     Eq << apply(x > 0)
@@ -20,11 +20,11 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Logic.Imp.of.Cond_Ite.apply(Eq[-1], 1)
+    Eq << Bool.Imp.of.Cond_Ite.apply(Eq[-1], 1)
 
     Eq << Algebra.Ne.of.Gt.apply(Eq[0])
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
 
 
 

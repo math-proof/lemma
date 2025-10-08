@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic, Tensor
+    from Lemma import Algebra, Discrete, Bool, Tensor
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)
@@ -21,13 +21,13 @@ def prove(Eq):
     f = Function(real=True, shape=(m, m))
     Eq << apply(MatProduct[i:n + 1](f(i)))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=n > 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=n > 0)
 
     Eq << Eq[2].this.lhs.apply(Algebra.Eq_0.of.Le_0)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Logic.Imp.given.All.apply(Eq[1])
+    Eq << Bool.Imp.given.All.apply(Eq[1])
 
     n_ = Symbol('n', integer=True, positive=True)
     Eq << Algebra.All.given.Cond.subst.apply(Eq[-1], Eq[-1].variable, n_)

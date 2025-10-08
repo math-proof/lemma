@@ -28,7 +28,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
 
@@ -36,11 +36,11 @@ def prove(Eq):
 
     Eq << apply(And(All[i:n](x[i] > 0), x[n] > 0, x[n + 1] > 0))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.given.And.All, cond={n + 1}), Eq[-1].this.lhs.apply(Logic.All.All.of.All, cond={n + 1})
+    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.given.And.All, cond={n + 1}), Eq[-1].this.lhs.apply(Bool.All.All.of.All, cond={n + 1})
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.given.And.All, cond={n}), Eq[-1].this.lhs.args[1].apply(Logic.All.All.of.All, cond={n})
+    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.given.And.All, cond={n}), Eq[-1].this.lhs.args[1].apply(Bool.All.All.of.All, cond={n})
 
 
 if __name__ == '__main__':

@@ -36,7 +36,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     i, k = Symbol(integer=True)
@@ -46,7 +46,7 @@ def prove(Eq):
     f_quote = Function("f'", shape=(), integer=True)
     Eq << apply(Any[x[:n]:f(x[:n]) > 0, i:k]((g(i) > f_quote(j, x[:n])) & Equal(i, j)))
 
-    Eq << Eq[-1].this.expr.apply(Logic.Any_AndEq.of.Cond, wrt=j)
+    Eq << Eq[-1].this.expr.apply(Bool.Any_AndEq.of.Cond, wrt=j)
 
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.Delta.of.Eq.Cond, delta=False, simplify=None, ret=0)
 

@@ -20,7 +20,7 @@ def apply(x, d, w=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic, Tensor
+    from Lemma import Discrete, Algebra, Bool, Tensor
     n = Symbol(domain=Range(2, oo))
     assert n.is_integer
 
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=m, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=m, start=1)
 
 
 if __name__ == '__main__':

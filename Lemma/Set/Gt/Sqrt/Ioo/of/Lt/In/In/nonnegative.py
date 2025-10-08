@@ -13,7 +13,7 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(0, 1, right_open=True)), Element(y, Interval(0, 1, right_open=True)))
@@ -24,15 +24,15 @@ def prove(Eq):
 
     Eq.y_contains = Set.In.Icc.Inter.of.Gt.In_Icc.apply(Eq[-1], Eq[2])
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[3], cond=Equal(x, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[3], cond=Equal(x, 0))
 
-    Eq <<= Logic.Imp.given.ImpEq.apply(Eq[-2]), Logic.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-1].lhs)
+    Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-2]), Bool.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-1].lhs)
 
-    Eq << Logic.Imp.given.Cond.apply(Eq[-2])
+    Eq << Bool.Imp.given.Cond.apply(Eq[-2])
 
     Eq << Eq[-1].this.rhs.apply(Set.In_SDiff.of.In.Ne)
 
-    Eq << Logic.Imp_And.of.Cond.Imp.apply(Eq.y_contains & Eq[0], Eq[-1])
+    Eq << Bool.Imp_And.of.Cond.Imp.apply(Eq.y_contains & Eq[0], Eq[-1])
     Eq << Eq[-1].this.rhs.apply(Set.Gt.Sqrt.Ioo.of.Lt.In.In.positive)
 
 

@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x = Symbol(complex=True)
     Eq << apply(x <= 0)
@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq <<= Eq[0] & Eq[-1]
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1])
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1], simplify=None)
+    Eq << Bool.And_And.of.And.apply(Eq[-1], simplify=None)
 
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
 
     i, j = Symbol(integer=True)
     n, t = Symbol(integer=True, nonnegative=True)
@@ -18,15 +18,15 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(Sign).apply(Algebra.Sign.eq.Ite)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=t > 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=t > 0)
 
-    Eq <<= Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
     Eq << GreaterEqual(t, 0, plausible=True)
 
-    Eq << Logic.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
+    Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-2], cond=Eq[-1])
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
 
@@ -48,13 +48,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[~Binomial]).apply(Discrete.Binom.eq.Div.Binom)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[-1], cond=t > 0)
+    Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=t > 0)
 
-    Eq << Logic.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this().find(Mul[~Binomial]).simplify()
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ge.given.Gt.relax)
 

@@ -11,7 +11,7 @@ def apply(self, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
 
     f = Function(real=True)
     x = Symbol(real=True)
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq.of.Eq.All_Imp.apply(Eq.initial, Eq[-1], n=n)
+    Eq << Bool.Eq.of.Eq.All_Imp.apply(Eq.initial, Eq[-1], n=n)
 
 
 

@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(complex=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq[1], plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n, 0)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n, 0)
 
 
 

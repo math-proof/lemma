@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(real=True, given=True)
     Eq << apply(Unequal(abs(x), 0))
 
@@ -17,7 +17,7 @@ def prove(Eq):
 
 
 
-    Eq << Logic.Cond.of.Eq.Cond.subst.apply(Eq[-1], Eq[0])
+    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':

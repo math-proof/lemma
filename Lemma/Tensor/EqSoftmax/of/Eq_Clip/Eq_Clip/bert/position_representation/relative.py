@@ -20,7 +20,7 @@ def apply(eq_K_quote, eq_V_quote, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n, k = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 
     # reference:
     # Self-Attention with Relative Position Representations.pdf

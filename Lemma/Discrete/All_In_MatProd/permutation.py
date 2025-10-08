@@ -24,7 +24,7 @@ def apply(m, d, w=None, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic, Tensor
+    from Lemma import Discrete, Algebra, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     m = Symbol(integer=True, nonnegative=True, given=False)
@@ -36,19 +36,19 @@ def prove(Eq):
     w, i, j = Eq[0].lhs.args
     Eq << Tensor.All_InDot.permutation.apply(n, w, left=False).subs(i, m).subs(j, d[m])
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, Eq[2].expr.lhs)
+    Eq << Bool.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, Eq[2].expr.lhs)
 
     Eq << Eq[-1].this.args[0].lhs.simplify()
 
-    Eq << Eq[-1].apply(Logic.AllIn.of.All, Eq[-3].limits[0])
+    Eq << Eq[-1].apply(Bool.AllIn.of.All, Eq[-3].limits[0])
 
     Eq <<= Eq[-1] & Eq[2]
 
-    Eq << Logic.All.of.All_And.apply(Eq[-1], 1)
+    Eq << Bool.All.of.All_And.apply(Eq[-1], 1)
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=m)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=m)
 
 
 

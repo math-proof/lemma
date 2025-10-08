@@ -14,7 +14,7 @@ def apply(n, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     k = Symbol(domain=Range(1, n + 1), given=True)
@@ -27,11 +27,11 @@ def prove(Eq):
     a = Symbol(Stack[i:k](Piecewise((Range(k - 1, n), Equal(i, k - 1)), (i.set, True))))
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], x[:k], a)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1], 1)
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], 1)
 
     Eq << Eq[-2].this.find(Indexed).definition
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Eq[-2].this.find(Indexed).definition
 

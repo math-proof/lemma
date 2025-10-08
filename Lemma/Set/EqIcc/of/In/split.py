@@ -10,7 +10,7 @@ def apply(given, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x, a, b, t = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True)), right_open=False)
@@ -25,15 +25,15 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.Ge.Lt), Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
 
-    Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Logic.ImpAnd.given.Imp.apply(Eq[-2], 1), Logic.ImpAnd.given.Imp.apply(Eq[-1], 0)
+    Eq <<= Bool.ImpAnd.given.Imp.apply(Eq[-2], 1), Bool.ImpAnd.given.Imp.apply(Eq[-1], 0)
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
 
-    Eq <<= Logic.Imp.of.Cond.apply(Eq[-2], cond=t > x), Logic.Imp.of.Cond.apply(Eq[-1], cond=t <= x)
+    Eq <<= Bool.Imp.of.Cond.apply(Eq[-2], cond=t > x), Bool.Imp.of.Cond.apply(Eq[-1], cond=t <= x)
 
-    Eq <<= Logic.Imp_And.of.ImpAnd.apply(Eq[-2]), Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Gt.of.Gt.Gt), Eq[-1].this.rhs.apply(Algebra.Le.of.Le.Le)
 

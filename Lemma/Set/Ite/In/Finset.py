@@ -10,18 +10,18 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y, z, a, b = Symbol(real=True, given=True)
     Eq << apply(Piecewise((x, a > 0), (y, b > 0), (z, True)))
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].this.apply(Logic.OrAndS.of.And_Or)
+    Eq << Eq[-1].this.apply(Bool.OrAndS.of.And_Or)
 
-    Eq << Eq[-1].this.apply(Logic.OrAndS.of.And_Or)
+    Eq << Eq[-1].this.apply(Bool.OrAndS.of.And_Or)
 
 
 

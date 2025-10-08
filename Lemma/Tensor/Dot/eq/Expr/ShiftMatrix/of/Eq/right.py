@@ -10,7 +10,7 @@ def apply(eq, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), real=True)
@@ -32,11 +32,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().expr.args[1]().expr.simplify(wrt=Eq[-1].rhs.variable)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 0)
+    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 0)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
     #\.et\w*\.(to|given)
     Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).find(And).apply(Set.Ne.NotIn.Is.NotIn)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().expr.args[1].find(NotElement).apply(Set.NotIn.Is.In.SDiff)
 
-    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not, 0)
+    Eq << Eq[-1].this.rhs.find(Piecewise, Piecewise).apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 0)
 
     Eq << (Eq[-1] @ w[i, j].T).this.rhs.subs(Eq[0])
 
@@ -61,9 +61,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().expr.args[1]().expr.simplify(wrt=Eq[-1].rhs.variable)
 
-    Eq << Eq[-1].this.find(Piecewise, Piecewise).apply(Logic.Ite.eq.Ite__IteOr)
+    Eq << Eq[-1].this.find(Piecewise, Piecewise).apply(Bool.Ite.eq.Ite__IteOr)
 
-    Eq << Eq[-1].this.find(Piecewise, Piecewise).apply(Logic.Ite.subst, reverse=True)
+    Eq << Eq[-1].this.find(Piecewise, Piecewise).apply(Bool.Ite.subst, reverse=True)
 
     Eq << Eq[-1].this.rhs().expr.args[1]().expr.simplify()
 

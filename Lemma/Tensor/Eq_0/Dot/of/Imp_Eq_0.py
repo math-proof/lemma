@@ -8,24 +8,24 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     L = Symbol(shape=(n, n), super_complex=True)
     i, j = Symbol(integer=True)
     Eq << apply(Imply(j > i, Equal(L[i, j], 0)))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=j > i)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=j > i)
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.EqMin.of.Gt, ret=0), Eq[-1].this.lhs.apply(Algebra.EqMin.of.Le, ret=0)
 
-    Eq <<= Logic.Imp_And.given.Imp.And.subst.apply(Eq[-2]), Logic.Imp_And.given.Imp.And.subst.apply(Eq[-1])
+    Eq <<= Bool.Imp_And.given.Imp.And.subst.apply(Eq[-2]), Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1])
 
-    Eq <<= Logic.Imp_And.given.Imp.delete.apply(Eq[-2], 0), Logic.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
+    Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2], 0), Bool.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
 
-    Eq <<= Logic.Imp.given.All.apply(Eq[-2], i), Logic.Imp.given.All.apply(Eq[-1], j)
+    Eq <<= Bool.Imp.given.All.apply(Eq[-2], i), Bool.Imp.given.All.apply(Eq[-1], j)
 
-    Eq << Logic.Eq_0.Slice.of.Imp_Eq_0.apply(Eq[0])
+    Eq << Bool.Eq_0.Slice.of.Imp_Eq_0.apply(Eq[0])
 
     Eq << Eq[-1].subs(i, j)
 

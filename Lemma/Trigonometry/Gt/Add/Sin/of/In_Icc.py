@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Trigonometry, Algebra, Set, Logic
+    from Lemma import Calculus, Trigonometry, Algebra, Set, Bool
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval.open(0, S.Pi)))
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq.eq_grad = Logic.Eq.of.Eq.Eq.apply(Eq.eq_grad, Eq[-1])
+    Eq.eq_grad = Bool.Eq.of.Eq.Eq.apply(Eq.eq_grad, Eq[-1])
 
     Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq.eq_grad)
 
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Eq.Gt.apply(Eq[-1], Eq.eq_grad)
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (x, Interval(0, S.Pi, right_open=True)))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (x, Interval(0, S.Pi, right_open=True)))
 
     Eq << Calculus.All.Gt.of.All_Gt_0.monotony.right_open.apply(Eq[-1])
 
@@ -71,9 +71,9 @@ def prove(Eq):
     print('logic error here:', f(0), 'is not defined at 0')
     Eq << Eq[-1].this.find(f).defun()
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
     Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 

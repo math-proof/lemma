@@ -11,13 +11,13 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     e = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(Element(e, A), Element(e, B))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Set.In_Inter.of.In.In)
     Eq << Eq[-1].this.rhs.apply(Set.In.In.given.In.Inter)

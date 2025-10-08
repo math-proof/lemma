@@ -15,14 +15,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     A, B = Symbol(etype=dtype.real)
     x, y = Symbol(real=True)
     f = Function(real=True)
 
     Eq << apply(All[x:A, y:B](f(x, y) > 0))
 
-    Eq << Eq[1].this.expr.apply(Logic.Or_Not.given.All, pivot=1)
+    Eq << Eq[1].this.expr.apply(Bool.Or_Not.given.All, pivot=1)
 
 
 if __name__ == '__main__':

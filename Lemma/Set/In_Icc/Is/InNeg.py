@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Logic
+    from Lemma import Set, Bool
 
     x, a, b = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq <<= Eq[-2].apply(Logic.Imp.given.Or_Not), Eq[-1].apply(Logic.ImpNot.given.Or)
+    Eq <<= Eq[-2].apply(Bool.Imp.given.Or_Not), Eq[-1].apply(Bool.ImpNot.given.Or)
 
     Eq << Eq[-2].this.args[0].apply(Set.In_Icc.given.InNeg)
 

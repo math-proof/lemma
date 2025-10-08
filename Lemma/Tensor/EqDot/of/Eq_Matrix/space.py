@@ -48,7 +48,7 @@ def rotary_matrix(i, j, k, clustered=False):
             [     0,      0, sin(k),       0,       0,  cos(k)]]
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Logic
+    from Lemma import Trigonometry, Algebra, Bool
 
     # n denotes sequence length (seq_length)
     n = Symbol(integer=True, positive=True)
@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(i, i - i_quote).subs(j, j - j_quote).subs(k, k - k_quote)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
 
 

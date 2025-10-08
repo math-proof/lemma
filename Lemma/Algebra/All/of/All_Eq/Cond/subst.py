@@ -82,7 +82,7 @@ def apply(All_Eq, f_eq, reverse=False, simplify=True, assumptions={}):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     m, n = Symbol(integer=True, positive=True)
     a, b, c = Symbol(real=True, shape=(m, n))
@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq[1], Eq[0])
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
 
 
 

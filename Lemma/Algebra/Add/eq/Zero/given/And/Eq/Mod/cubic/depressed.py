@@ -32,7 +32,7 @@ def apply(is_zero, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x, d=1)
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq <<= Eq[0].cond.this.apply(Algebra.Add.eq.Zero.given.And.Eq.cubic.depressed, x, 1), Eq[0].cond.this.apply(Algebra.Add.eq.Zero.given.And.Eq.cubic.depressed, x, -2)
 
-    Eq <<= Logic.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[-2]) & Logic.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[-1])
+    Eq <<= Bool.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[-2]) & Bool.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Set.Or_Eq.given.In.Finset)
     Eq << Algebra.Cond.of.Cond.Given.apply(Eq.contains, Eq[-1])

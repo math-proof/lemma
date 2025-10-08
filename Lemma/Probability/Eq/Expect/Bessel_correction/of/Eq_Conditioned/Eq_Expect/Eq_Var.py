@@ -15,7 +15,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Logic
+    from Lemma import Probability, Algebra, Bool
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Probability.EqExpect.of.Eq_Conditioned.Eq_Expect.Eq_Var.unbiased.apply(*Eq[:3], n)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(*Eq[-2:]).reversed
+    Eq << Bool.Eq.of.Eq.Eq.apply(*Eq[-2:]).reversed
 
     # https://en.wikipedia.org/wiki/Bessel's_correction
 

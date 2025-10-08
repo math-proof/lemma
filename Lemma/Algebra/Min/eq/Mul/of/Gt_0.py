@@ -12,7 +12,7 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     r = Symbol(real=True)
@@ -28,9 +28,9 @@ def prove(Eq):
 
     Eq.equivalent = Iff(Eq[-1].find(LessEqual), Eq[-1].rhs.find(LessEqual), plausible=True)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq.equivalent)
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq.equivalent)
 
-    Eq <<= Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Algebra.Given.given.Given_And.apply(Eq[-1], cond=Eq[0])
+    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Algebra.Given.given.Given_And.apply(Eq[-1], cond=Eq[0])
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.LeDiv.of.Gt_0.Le), Eq[-1].this.rhs.apply(Algebra.LeMul.of.Gt_0.Le)
 

@@ -11,14 +11,14 @@ def apply(imply, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True, given=True)
     x = Symbol(shape=(n,), real=True, given=True)
     Eq << apply(x[i] > 0, wrt=i)
 
-    Eq << Logic.All.of.All_OrNot.apply(Eq[1], pivot=1)
+    Eq << Bool.All.of.All_OrNot.apply(Eq[1], pivot=1)
 
 
 

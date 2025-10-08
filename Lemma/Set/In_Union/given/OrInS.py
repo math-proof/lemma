@@ -9,7 +9,7 @@ def apply(self, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     e = Symbol(integer=True, given=True)
     A, B = Symbol(etype=dtype.integer, given=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.AndNotSIn.of.NotIn_Union, simplify=None)
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1])
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
 
 

@@ -15,7 +15,7 @@ def apply(given, piecewise):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(integer=True, given=True)
     S, A = Symbol(etype=dtype.integer, given=True)
@@ -23,35 +23,35 @@ def prove(Eq):
     f, g = Function(shape=())
     Eq << apply(Element(x, S), Piecewise((f(x), Element(x, s)), (g(x), True)))
 
-    Eq << Logic.Ite__Ite.eq.IteAnd_Not__Ite.apply(Eq[2].lhs)
+    Eq << Bool.Ite__Ite.eq.IteAnd_Not__Ite.apply(Eq[2].lhs)
 
     (gx, cond_contains), (fx, _) = Eq[-1].rhs.args
-    p = Symbol(Piecewise((gx, Equal(Bool(cond_contains), 1)), (fx, _)))
+    p = Symbol(Piecewise((gx, Equal((cond_contains).toNat, 1)), (fx, _)))
     (gx, cond_notcontains), (fx, _) = Eq[2].rhs.args
-    q = Symbol(Piecewise((gx, Equal(Bool(cond_notcontains), 1)), (fx, _)))
+    q = Symbol(Piecewise((gx, Equal((cond_notcontains).toNat, 1)), (fx, _)))
     Eq << p.this.definition
 
-    Eq.p_definition = Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq.p_definition = Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[2].subs(Eq.p_definition.reversed)
 
     Eq.q_definition = q.this.definition
 
-    Eq << Eq.q_definition.this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq.q_definition.this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq.bool_equality = Equal(Bool(cond_contains), Bool(cond_notcontains), plausible=True)
+    Eq.bool_equality = Equal(cond_contains.toNat, cond_notcontains.toNat, plausible=True)
 
-    Eq << Eq.bool_equality.this.rhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq.bool_equality.this.rhs.apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].apply(Logic.Cond.given.Or.OrNot, cond=cond_contains)
+    Eq << Eq[-1].apply(Bool.Cond.given.Or.OrNot, cond=cond_contains)
 
-    Eq.all_not_s, Eq.all_s = Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq.all_not_s, Eq.all_s = Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << ~Eq.all_not_s
 
-    Eq << Eq[-1].this.apply(Logic.BFn.of.BFnIte.Cond, swap=True, ret=1)
+    Eq << Eq[-1].this.apply(Bool.BFn.of.BFnIte.Cond, swap=True, ret=1)
 
     Eq << Eq[-1].this.args[0].simplify()
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << ~Eq.all_s
 
-    Eq << Eq[-1].this.apply(Logic.BFn.of.BFnIte.Cond, swap=True, invert=True, ret=1)
+    Eq << Eq[-1].this.apply(Bool.BFn.of.BFnIte.Cond, swap=True, invert=True, ret=1)
 
     Eq << Eq[-1].this.args[0].simplify()
 

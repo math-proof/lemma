@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     x = Symbol(shape=(oo,), etype=dtype.integer, finiteset=True, given=True)
@@ -23,11 +23,11 @@ def prove(Eq):
     b = Symbol(Stack[i:n](x[i].set))
     Eq << Card(Cup[i:n](b[i])).this.arg.expr.definition
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
 
     Eq << Sum[i:n](Card(b[i])).this.expr.arg.definition
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Set.All_Eq_Empty.of.Eq.apply(Eq[-1])
 

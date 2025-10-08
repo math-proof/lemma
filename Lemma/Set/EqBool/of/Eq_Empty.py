@@ -13,20 +13,20 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     A, B = Symbol(etype=dtype.integer)
 
     Eq << apply(Equal(A & B, A.etype.emptySet))
 
-    Eq <<= Eq[-1].rhs.args[0].this.apply(Logic.Bool.eq.Ite), Eq[-1].rhs.args[1].this.apply(Logic.Bool.eq.Ite)
+    Eq <<= Eq[-1].rhs.args[0].this.apply(Bool.Bool.eq.Ite), Eq[-1].rhs.args[1].this.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1] + Eq[-2]
 
     Eq << Set.Eq_Ite.of.Eq_Empty.apply(Eq[0], *Eq[-1].rhs.args)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[1].this.lhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[1].this.lhs.apply(Bool.Bool.eq.Ite)
 
 
 if __name__ == '__main__':

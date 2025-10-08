@@ -14,16 +14,16 @@ def apply(any_x, any_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
     f, g = Function(shape=(), integer=True)
     Eq << apply(Any[x:A](f(x, y) > 0), Any[y:B](g(y, x) > 0))
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0], Eq[1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[1])
 
-    Eq << Eq[-1].this.expr.apply(Logic.Any_And.of.Any.All)
+    Eq << Eq[-1].this.expr.apply(Bool.Any_And.of.Any.All)
 
 
 if __name__ == '__main__':

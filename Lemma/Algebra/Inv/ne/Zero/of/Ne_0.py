@@ -10,14 +10,14 @@ def apply(given, d=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True, given=True)
     Eq << apply(Unequal(x, 0))
 
     Eq << ~Eq[-1]
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1] * x
 

@@ -11,7 +11,7 @@ def apply(eq_conditioned, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     x = Symbol(real=True, shape=(oo,), random=True)
     n = Symbol(integer=True)
@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Eq.eq_var.this.find(Sum[2]).apply(Algebra.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Logic.EqIteS.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
+    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
 
     Eq << Eq[-2].subs(Eq[-1])
 
@@ -41,14 +41,14 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Logic.EqIteS.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
+    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
 
     Eq << Eq[-2].subs(Eq[-1])
 
 
-    Eq << Logic.EqIteS.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
+    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
     Eq << Eq[-2].subs(Eq[-1])
 
 

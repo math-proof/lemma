@@ -8,12 +8,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b = Symbol(integer=True)
     Eq << apply(a.set & b.set)
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 

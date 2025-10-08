@@ -13,12 +13,12 @@ def apply(is_even, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     a, b, n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 0), Element(n, Range(a, b + 1)))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Set.In.of.Eq_even.In)
 

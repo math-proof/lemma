@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x = Symbol(complex=True)
     Eq << apply(Element(x, Reals - {0}))
@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne.of.Gt)
 
-    Eq << Logic.ImpOrS.of.Imp.Imp.apply(Eq.is_negative, Eq.is_positive)
+    Eq << Bool.ImpOrS.of.Imp.Imp.apply(Eq.is_negative, Eq.is_positive)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
 
 

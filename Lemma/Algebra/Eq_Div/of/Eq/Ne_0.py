@@ -11,14 +11,14 @@ def apply(unequality, equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Logic
+    from Lemma import Algebra, Logic, Bool
     x, a, b = Symbol(real=True)
     Eq << apply(Unequal(x, 0), Equal(x * a, b))
 
     Eq << Eq[1] / x
     Eq <<= Eq[-1] & Eq[0]
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 
 if __name__ == '__main__':

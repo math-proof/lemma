@@ -47,7 +47,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Probability, Logic
+    from Lemma import Tensor, Algebra, Probability, Bool
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -62,13 +62,13 @@ def prove(Eq):
 
     Eq << Tensor.EqExpect.of.Eq_Expect.V_Function.normalized.apply(Eq[1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[2], Eq[-1])
 
     Eq << Probability.EqConditioned.of.Eq_Conditioned.getitem.apply(Eq[0], 1)
 
     Eq << Tensor.EqExpect.of.Eq_Conditioned.Bellman.V_Function.normalized.apply(Eq[-1], γ, t)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[2], Eq[-1])
 
     Eq << Eq[2].subs(t, t + 1)
 
@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Tensor.EqExpect.of.Eq_Conditioned.Bellman.Q_Function.normalized.apply(Eq[0], γ, t)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[1], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[1], Eq[-1])
 
     Eq << Eq[-1].subs(Eq.v_next.reversed)
 

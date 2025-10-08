@@ -11,7 +11,7 @@ def apply(eq, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     t = Symbol(real=True, shape=(oo,))
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.In_Ico.given.Ge.Lt)
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
 
 

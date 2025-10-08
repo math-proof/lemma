@@ -13,16 +13,16 @@ def apply(eq, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(integer=True, positive=True)
     t = Symbol(integer=True, shape=(oo,))
     m, k = Symbol(integer=True, nonnegative=True)
     Eq << apply(Equal(ReducedSum(t[:n]), m - k), Element(t[:n], CartesianSpace(Range(0, m + 1), n)))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Logic.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
+    Eq << Bool.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
 
     Eq << Eq[-1].this.lhs.apply(Set.In.CartesianSpace.Ico.of.In_CartesianSpace.relax, upper=m + 1)
 

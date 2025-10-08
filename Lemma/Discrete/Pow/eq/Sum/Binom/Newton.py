@@ -16,7 +16,7 @@ def apply(self, var=None, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
 
     x, y = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=n)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n)
 
 
 

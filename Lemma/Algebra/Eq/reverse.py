@@ -9,12 +9,12 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     b, a = Symbol(real=True, given=True)
     Eq << apply(Equal(a, b))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
 
 if __name__ == '__main__':

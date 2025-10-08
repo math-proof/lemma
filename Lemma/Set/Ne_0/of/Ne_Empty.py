@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     A = Symbol(etype=dtype.integer)
     Eq << apply(Unequal(A, A.etype.emptySet))
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Unequal(Eq[-1].find(Add), 0, plausible=True)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
 
 
     Eq << Eq[-1].this.expr.apply(Algebra.Ne.of.Eq.Ne)

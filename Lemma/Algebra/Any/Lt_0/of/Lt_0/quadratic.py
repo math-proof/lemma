@@ -11,15 +11,15 @@ def apply(lt_zero, x=None, b=None, c=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(a < 0, x=x, b=b, c=c)
 
-    Eq << Logic.And.Imp.of.Cond.split.apply(Eq[0], cond=b ** 2 - 4 * a * c >= 0)
+    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=b ** 2 - 4 * a * c >= 0)
 
-    Eq <<= Logic.Imp_And.of.ImpAnd.apply(Eq[-2]), Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Any.Lt_0.of.Lt_0.Add.ge.Zero, x=x), Eq[-1].this.rhs.apply(Algebra.Lt_0.of.Lt_0.Add.lt.Zero, x=x)
 

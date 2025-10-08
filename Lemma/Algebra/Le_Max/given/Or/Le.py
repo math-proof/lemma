@@ -12,13 +12,13 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x <= Max(y, z))
     Eq << ~Eq[0]
     Eq <<= Eq[-1] & Eq[1]
-    Eq << Eq[-1].this.apply(Logic.OrAndS.of.And_Or)
+    Eq << Eq[-1].this.apply(Bool.OrAndS.of.And_Or)
 
 
 if __name__ == '__main__':

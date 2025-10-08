@@ -26,16 +26,16 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Logic
+    from Lemma import Set, Bool
 
     m, n = Symbol(integer=True, positive=True)
     f = Symbol(real=True, shape=(n,))
     i = Symbol(integer=True)
     Eq << apply(Any[i:Range(m)](f[i] > 0))
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[0], simplify=None)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[0], simplify=None)
 
-    Eq << Logic.AnySetOf.given.Any_And.apply(Eq[1], simplify=None)
+    Eq << Bool.AnySetOf.given.Any_And.apply(Eq[1], simplify=None)
 
     Eq << Eq[-1].this.find(Range).apply(Set.Ico.Min.eq.Inter, simplify=None)
 

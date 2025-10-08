@@ -13,7 +13,7 @@ def apply(is_zero, n=None, negative=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Logic
+    from Lemma import Algebra, Trigonometry, Bool
 
     x = Symbol(real=True, given=True)
     n = Symbol(integer=True, given=False, nonnegative=True)
@@ -31,9 +31,9 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.apply(Trigonometry.Cos.Neg)
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq[0], Eq[-1], n=n, start=0)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[0], Eq[-1], n=n, start=0)
 
-    Eq << Logic.All.of.Cond.apply(Eq[2], n)
+    Eq << Bool.All.of.Cond.apply(Eq[2], n)
 
     # https://en.wikipedia.org/wiki/Argument_(complex_analysis)
 

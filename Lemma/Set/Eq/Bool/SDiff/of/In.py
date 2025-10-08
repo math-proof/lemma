@@ -9,12 +9,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     e = Symbol(integer=True)
     s, S = Symbol(etype=dtype.integer)
     Eq << apply(Element(e, S - s))
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Bool.Bool.eq.Ite)
 
     Eq << Set.NotIn.of.In_SDiff.apply(Eq[0])
 

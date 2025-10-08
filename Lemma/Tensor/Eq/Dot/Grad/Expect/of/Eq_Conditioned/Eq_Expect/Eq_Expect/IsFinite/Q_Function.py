@@ -11,7 +11,7 @@ def apply(eq, Q_def, V_def, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Calculus, Probability, Algebra, Discrete, Logic
+    from Lemma import Tensor, Calculus, Probability, Algebra, Discrete, Bool
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -42,13 +42,13 @@ def prove(Eq):
 
     Eq << Algebra.All_Le_Sup.apply(Eq[3].lhs)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], s[t].var, simplify=None)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], s[t].var, simplify=None)
 
     Eq << Algebra.LeSup.of.All_Le.apply(Eq[-1])
 
     Eq << Algebra.Le.of.Le.Le.apply(Eq[-1], Eq.le_sup)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], t, simplify=None)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], t, simplify=None)
 
     Eq << Algebra.LeSup.of.All_Le.apply(Eq[-1])
 

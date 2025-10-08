@@ -11,7 +11,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -35,13 +35,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Symbol >= Add).apply(Algebra.Ge.Is.Gt.strengthen)
 
-    Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Logic.Imp_And.given.Imp.Imp.apply(Eq[-1]), Logic.Imp_And.given.Imp.Imp.apply(Eq[-2])
+    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-1]), Bool.Imp_And.given.Imp.Imp.apply(Eq[-2])
 
-    Eq <<= Logic.Imp_And.given.Imp.delete.apply(Eq[-4]), Logic.Imp_And.given.Imp.delete.apply(Eq[-3]), Logic.Imp_And.given.Imp.delete.apply(Eq[-2], 0), Logic.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
+    Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-4]), Bool.Imp_And.given.Imp.delete.apply(Eq[-3]), Bool.Imp_And.given.Imp.delete.apply(Eq[-2], 0), Bool.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
 
-    Eq <<= Logic.Imp.given.Or_Not.apply(Eq[-4]), Logic.Imp.given.Or_Not.apply(Eq[-3]), Logic.Imp.given.Or_Not.apply(Eq[-2]), Logic.Imp.given.Or_Not.apply(Eq[-1])
+    Eq <<= Bool.Imp.given.Or_Not.apply(Eq[-4]), Bool.Imp.given.Or_Not.apply(Eq[-3]), Bool.Imp.given.Or_Not.apply(Eq[-2]), Bool.Imp.given.Or_Not.apply(Eq[-1])
 
     Eq <<= Set.Or.given.NotIn.Ico.apply(Eq[-2]), Set.Or.given.NotIn.Ico.apply(Eq[-1])
 

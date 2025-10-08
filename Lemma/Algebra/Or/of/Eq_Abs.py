@@ -15,19 +15,19 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, a = Symbol(real=True, given=True)
     Eq << apply(Equal(abs(x), a))
 
     Eq << Eq[0].this.lhs.apply(Algebra.Abs.eq.IteGe_0)
 
-    Eq << Logic.OrAndS.of.BFn_Ite.apply(Eq[-1])
+    Eq << Bool.OrAndS.of.BFn_Ite.apply(Eq[-1])
 
     Eq << ~Eq[1]
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1])
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
 
 

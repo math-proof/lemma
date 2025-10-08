@@ -18,14 +18,14 @@ def apply(f0, suffice, n=None, start=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     n = Symbol(integer=True, nonnegative=True)
     f = Symbol(integer=True, shape=(oo,))
     g = Symbol(etype=dtype.integer, shape=(oo,))
 
     Eq << apply(Element(f[0], g[0]), Imply(Element(f[n], g[n]), Element(f[n + 1], g[n + 1])), n=n)
 
-    h = Symbol(Stack[n](Bool(Element(f[n], g[n]))))
+    h = Symbol(Stack[n]((Element(f[n], g[n])).toNat))
 
     Eq << h[0].this.definition
 
@@ -39,17 +39,17 @@ def prove(Eq):
 
     Eq << Eq.suffice.this.lhs.lhs.definition
 
-    Eq << Eq[-1].this.lhs.lhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.lhs.lhs.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.rhs.lhs.definition
 
-    Eq << Eq[-1].this.rhs.lhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.rhs.lhs.apply(Bool.Bool.eq.Ite)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.equality, Eq.suffice, n=n)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.equality, Eq.suffice, n=n)
 
     Eq << Eq[-1].this.lhs.definition
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Bool.Bool.eq.Ite)
 
 
 if __name__ == '__main__':

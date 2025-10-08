@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True)
     A = Symbol(etype=dtype.real)
@@ -17,11 +17,11 @@ def prove(Eq):
     g, h = Function(real=True)
     Eq << apply(exp(Piecewise((g(x), Element(x, A)),(h(x), True))))
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
-    Eq << Eq[-1].this.args[0].apply(Logic.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.args[0].apply(Bool.Cond.BFnIte.given.And_BFn)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.find(And).apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
 
 
 

@@ -9,13 +9,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Bool
 
     x, y = Symbol(real=True)
     f = Function(real=True)
-    Eq << apply(GreaterEqual(Bool(f(x) >= 0) * y, 1))
+    Eq << apply(GreaterEqual((f(x) >= 0).toNat * y, 1))
 
-    Eq << Logic.Bool.eq.One.of.Cond.apply(Eq[-1])
+    Eq << Bool.Bool.eq.One.of.Cond.apply(Eq[-1])
 
     Eq << Eq[0].subs(Eq[-1])
 

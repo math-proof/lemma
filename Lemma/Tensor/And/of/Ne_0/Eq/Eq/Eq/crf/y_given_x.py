@@ -32,7 +32,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Logic, Probability, Real
+    from Lemma import Tensor, Algebra, Set, Bool, Probability, Real
 
     from Lemma.Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov import markov_assumptions
     d, n = Symbol(domain=Range(2, oo))
@@ -54,13 +54,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Set.NotInSub.of.NotIn_Icc, 1)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1])
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1])
 
     Eq << Eq.z_definition.subs(t, t + 1)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotInSub.of.NotIn_Icc, 1)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1])
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[-4]
 
@@ -82,7 +82,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotInSub.of.NotIn_Icc, 1)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1])
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1])
 
     Eq <<= Eq.z_recursion & Eq[-1]
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Log).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
-    Eq.z_definition_by_x_quote = Logic.EqUFnS.of.Eq.apply(Eq[6].reversed, exp)
+    Eq.z_definition_by_x_quote = Bool.EqUFnS.of.Eq.apply(Eq[6].reversed, exp)
 
     Eq << Eq[-1].subs(Eq.z_definition_by_x_quote)
 
@@ -100,7 +100,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotInAdd.of.NotIn, 1)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1])
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Gt)
 
@@ -117,11 +117,11 @@ def prove(Eq):
 
     Eq << Eq[-1].apply(Algebra.Or.Log.of.Eq)
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1] & Eq.xy_joint_nonzero)
+    Eq << Bool.And_And.of.And.apply(Eq[-1] & Eq.xy_joint_nonzero)
 
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[4].reversed, exp)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[4].reversed, exp)
 
     Eq.y_given_x_log = Eq[-2].subs(Eq[-1])
 

@@ -10,7 +10,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     n = Symbol(integer=True, positive=True)
     i = Symbol(domain=Range(n))
     f, g = Function(shape=(), real=True)
@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << apply(Equal(f(i), g(i)), (i, 0, n))
 
 #     Eq << Eq[-1].subs(Eq[0])
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], Minima[i:n], simplify=False)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], Minima[i:n], simplify=False)
 
 
 if __name__ == '__main__':

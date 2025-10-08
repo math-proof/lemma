@@ -10,14 +10,14 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
     x, a, b = Symbol(real=True)
 
     f, g = Function(shape=(), real=True)
 
     Eq << apply(LessEqual(f(x), g(x)), (x, a, b))
 
-    Eq << Eq[0].apply(Logic.AllIn.of.All, (x, a, b))
+    Eq << Eq[0].apply(Bool.AllIn.of.All, (x, a, b))
 
     Eq << Calculus.LeIntegral.of.All_Le.apply(Eq[-1])
 

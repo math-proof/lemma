@@ -12,7 +12,7 @@ def apply(self, *, simplify=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -20,9 +20,9 @@ def prove(Eq):
     g = Symbol(shape=(oo, oo), bool=True)
     Eq << apply(Any[i:n, j:n](f[j] & g[i, j]))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.expr.apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq << Eq[-1].this.lhs.expr.apply(Bool.Any_And.of.Any.All, simplify=None)
 
     Eq << Eq[-2].this.rhs.expr.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
 

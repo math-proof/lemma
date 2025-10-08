@@ -14,14 +14,14 @@ def apply(given, *limits, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     i = Symbol(domain=Range(n))
     f, g = Function(integer=True)
     Eq << apply(Equal(f(i), g(i)), (i,))
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], Stack[i], simplify=False)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], Stack[i], simplify=False)
 
 
 

@@ -11,7 +11,7 @@ def apply(le, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     M, M0, x, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq <<= Algebra.All.Le.of.Eq_Sup.apply(Eq[-1]), Eq[0].subs(Eq[-1].reversed), Algebra.Any.given.Cond.subst.apply(Eq[1], M, (y + M0) / 2)
 
-    Eq.all, *Eq[-2:] = Algebra.All.And.of.Cond.All.apply(Eq[-2], Eq[-3], simplify=None), Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq.all, *Eq[-2:] = Algebra.All.And.of.Cond.All.apply(Eq[-2], Eq[-3], simplify=None), Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Set.In.given.In.Mul.Icc.apply(Eq[-2], 2)
 

@@ -30,7 +30,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     i, j = Symbol(integer=True)
     A, B, C, D = Symbol(etype=dtype.integer)
 
@@ -46,11 +46,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.find(Bool[And]).apply(Logic.BoolAnd.eq.MulBoolS)
+    Eq << Eq[-1].this.find(functions.Bool[And]).apply(Bool.BoolAnd.eq.MulBoolS)
 
-    Eq << Eq[-1].this.find(Bool[And]).apply(Logic.BoolAnd.eq.MulBoolS)
+    Eq << Eq[-1].this.find(functions.Bool[And]).apply(Bool.BoolAnd.eq.MulBoolS)
 
-    Eq << Eq[-1].this.find(Bool[And]).apply(Logic.BoolAnd.eq.MulBoolS)
+    Eq << Eq[-1].this.find(functions.Bool[And]).apply(Bool.BoolAnd.eq.MulBoolS)
 
     Eq << Sum(Eq[-1].lhs.expr, Eq[-1].lhs.limits[0]).this.apply(Algebra.Sum.eq.Ite)
 

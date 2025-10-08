@@ -17,7 +17,7 @@ def apply(equality, inequality):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Logic
+    from Lemma import Probability, Algebra, Bool
 
     x, y = Symbol(real=True, random=True)
     given = Equal(Pr(x, y), Pr(x) * Pr(y))
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[1]
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 
 if __name__ == '__main__':

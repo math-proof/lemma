@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Set
+    from Lemma import Algebra, Bool, Set
     from Lemma.Discrete.K.eq.Add.definition import K
     x = Symbol(real=True, shape=(oo,))
     i = Symbol(integer=True)
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq.induct1.this.lhs.apply(Set.AllIn.given.AllIn_Union, Range(1, n + 2))
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(And, All).apply(Algebra.Cond.of.All.subst, Eq[-1].lhs.variable, n + 1)
 
@@ -50,9 +50,9 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis & Eq.induct1, Eq.induct2, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.Cond.Imp.induct.apply(Eq.initial0, Eq.initial1, Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.Cond.Imp.induct.apply(Eq.initial0, Eq.initial1, Eq[-1], n=n, start=1)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
     Eq << Eq.hypothesis.subs(n, n + 1)
     Eq << Eq.hypothesis.subs(n, n + 2)
 

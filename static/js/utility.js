@@ -99,7 +99,7 @@ const sections = [
 	'Calculus',
 	'Discrete',
 	'Geometry',
-	'Logic',
+	'Bool',
 	'Tensor',
 	'Probability',
 	'Set',

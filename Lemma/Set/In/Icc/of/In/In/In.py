@@ -15,7 +15,7 @@ def apply(contains0, contains1, contains2, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     a, b, x0, x1, w = Symbol(real=True)
     domain = Interval(a, b, left_open=True)
@@ -24,11 +24,11 @@ def prove(Eq):
     w = Symbol(domain=Eq[0].rhs)
     Eq << Set.In.Icc.of.In.In.apply(Eq[1], Eq[2], w=w)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], w)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], w)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
 
 

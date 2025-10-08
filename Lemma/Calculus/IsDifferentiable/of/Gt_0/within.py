@@ -14,7 +14,7 @@ def apply(is_positive, x0, x1, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Logic
+    from Lemma import Calculus, Algebra, Set, Bool
 
     a, b = Symbol(real=True)
     f = Function(real=True)
@@ -22,7 +22,7 @@ def prove(Eq):
     x, x0, x1 = Symbol(domain=Interval(a, b, left_open=True, right_open=True))
     Eq << apply(Derivative(f(x), (x, 2)) > 0, x0, x1)
 
-    Eq << Logic.All.of.Cond.apply(Eq[0], x)
+    Eq << Bool.All.of.Cond.apply(Eq[0], x)
 
     Eq << Calculus.IsDifferentiable.of.All_Gt_0.apply(Eq[-1])
 

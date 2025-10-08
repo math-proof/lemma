@@ -53,7 +53,7 @@ def apply(el, self, z=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     z, a, b, c = Symbol(complex=True)
     Eq << apply(Element(a, Reals - {0}), a * z * ~z + b * z + ~b * ~z + c)
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Set.Ne_0.of.IsNotZero.apply(Eq[0])
 

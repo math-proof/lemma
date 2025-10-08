@@ -19,7 +19,7 @@ def apply(all_is_positive_real, contains0, contains1, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Calculus, Algebra, Logic
+    from Lemma import Set, Calculus, Algebra, Bool
 
     a, b, x, x0, x1 = Symbol(real=True)
     f = Function(real=True)
@@ -44,11 +44,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.Gt_0.of.Gt_0.Gt_0)
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
 
     Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Gt.Eq)
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
     Eq << Algebra.Lt.of.Gt_0.apply(Eq[-1])
 

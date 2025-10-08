@@ -9,7 +9,7 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq.diff * n
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(*Eq[-2:]).reversed
+    Eq << Bool.Eq.of.Eq.Eq.apply(*Eq[-2:]).reversed
 
 
 

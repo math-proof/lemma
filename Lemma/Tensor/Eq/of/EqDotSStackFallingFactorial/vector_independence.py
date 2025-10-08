@@ -20,7 +20,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Logic
+    from Lemma import Algebra, Discrete, Tensor, Bool
 
     p = Symbol(complex=True)
     n = Symbol(integer=True, positive=True)
@@ -31,7 +31,7 @@ def prove(Eq):
     i = Symbol(domain=Range(n))
     Eq << Eq[0].subs(p, i)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], i)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], i)
 
     Eq << Tensor.EqStackS.of.All_Eq.apply(Eq[-1])
 

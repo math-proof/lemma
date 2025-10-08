@@ -14,7 +14,7 @@ def apply(all_ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(shape=(oo,), etype=dtype.integer, finiteset=True)
@@ -28,11 +28,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.reversed
 
-    Eq << Logic.AllOr.of.All.All.apply(Eq[-1], Eq[0])
+    Eq << Bool.AllOr.of.All.All.apply(Eq[-1], Eq[0])
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[-1])
+    Eq << Bool.Or_Not.of.All.apply(Eq[-1])
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1], 1)
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 1)
 
     Eq << Element(i, Range(-1, n + 1)).this.apply(Set.Union.eq.SDiff.of.In_Ico)
 
@@ -40,11 +40,11 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-3]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst)
 
-    Eq << Logic.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.Imp.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Logic.All.of.All_OrNot, 1)
+    Eq << Eq[-1].this.expr.apply(Bool.All.of.All_OrNot, 1)
 
 
 

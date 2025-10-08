@@ -40,7 +40,7 @@ def apply(given, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic
+    from Lemma import Discrete, Algebra, Set, Bool
 
     n = Symbol(domain=Range(2, oo))
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].apply(Set.EqCard.of.Eq)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[0], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq[-2])
 
     Eq << Discrete.And.of.Eq.Eq.index_general.apply(Eq[-2], Eq[-1])
 

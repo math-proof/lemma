@@ -14,7 +14,7 @@ def apply(all_is_real):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x = Symbol(super_complex=True, shape=(oo,))
     i = Symbol(integer=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq.induct = Eq[2].subs(n, n + 1)
 
-    Eq << Logic.ImpAndS.of.Imp.apply(Eq[2], cond=Element(x[n], Reals))
+    Eq << Bool.ImpAndS.of.Imp.apply(Eq[2], cond=Element(x[n], Reals))
 
     Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
 
@@ -34,9 +34,9 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=n, start=0)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=0)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[2])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[2])
 
 
 

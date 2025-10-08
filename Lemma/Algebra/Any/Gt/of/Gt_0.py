@@ -14,14 +14,14 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True, given=True)
     Eq << apply(x > 0)
 
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], Eq[1].variable, x / 2)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Eq[0] / 2
 

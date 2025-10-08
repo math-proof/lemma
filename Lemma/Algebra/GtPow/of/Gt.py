@@ -11,7 +11,7 @@ def apply(lt, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(real=True)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[1], Eq[2], plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq[0], Eq[-1], n, 1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq[0], Eq[-1], n, 1)
 
 
 

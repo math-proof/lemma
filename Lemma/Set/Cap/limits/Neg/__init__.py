@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     i = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)
     f = Function(etype=dtype.real)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=0)
+    Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=0)
 
 
 if __name__ == '__main__':

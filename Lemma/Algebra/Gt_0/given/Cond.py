@@ -8,14 +8,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Bool
 
     a, b = Symbol(real=True)
-    Eq << apply(Bool(a > b) > 0)
+    Eq << apply(functions.Bool(a > b) > 0)
 
-    Eq << Eq[0].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[0].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Logic.Cond_Ite.given.And.Imp.apply(Eq[-1])
+    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[-1])
 
 
 

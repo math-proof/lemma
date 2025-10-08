@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq[1], plausible=True)
 
-    Eq << Logic.Eq_Ite.of.All_Imp.apply(Eq[-1], n, 0)
+    Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n, 0)
 
 
 if __name__ == '__main__':

@@ -46,11 +46,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.Ge_0.of.Ge_0.Gt_0)
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
 
     Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Ge.Eq)
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
     Eq << Algebra.Le.of.Ge_0.apply(Eq[-2])
 

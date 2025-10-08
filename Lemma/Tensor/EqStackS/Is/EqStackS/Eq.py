@@ -33,7 +33,7 @@ def apply(self, i=None, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor
+    from Lemma import Algebra, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
@@ -42,9 +42,9 @@ def prove(Eq):
     A = Symbol(etype=dtype.real)
     Eq << apply(Equal(Stack[k:n](f(k)), Stack[k:n](g(k))) & Equal(f(n), g(n)) & Element(x, A), i=1, j=0)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq <<= Logic.Imp_And.given.Imp.delete.apply(Eq[-2]), Eq[-1].this.lhs.args[0].apply(Tensor.EqSliceS.Eq.of.Eq, simplify=None)
+    Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2]), Eq[-1].this.lhs.args[0].apply(Tensor.EqSliceS.Eq.of.Eq, simplify=None)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.EqStackS.of.EqStackS.Eq, simplify=None)
 

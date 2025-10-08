@@ -17,7 +17,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, shape=(k,), given=True)
@@ -26,9 +26,9 @@ def prove(Eq):
     B = Symbol(etype=dtype.real[k], given=True)
     Eq << apply(And(Unequal(x, y), Unequal(f(x), g(y)), Any[b:B](Equal(f(x), h(b)))))
 
-    Eq << Eq[0].this.args[1:].apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq << Eq[0].this.args[1:].apply(Bool.Any_And.of.Any.All, simplify=None)
 
-    Eq << Eq[-1].this.apply(Logic.Any_And.of.Any.All, simplify=None)
+    Eq << Eq[-1].this.apply(Bool.Any_And.of.Any.All, simplify=None)
 
 
 if __name__ == '__main__':

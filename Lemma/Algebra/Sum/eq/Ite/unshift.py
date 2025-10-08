@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i, n = Symbol(integer=True)
     f = Function(real=True)
@@ -19,9 +19,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={0})
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=n >= 1)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=n >= 1)
 
-    Eq <<= Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Zero.of.Lt, Eq[-1].find(Sum))
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Gt.of.Ge.relax, lower=0)
 
-    Eq << Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1])
+    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1])
 
 
 if __name__ == '__main__':

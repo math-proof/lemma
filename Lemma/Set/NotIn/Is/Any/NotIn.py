@@ -12,14 +12,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n, m = Symbol(positive=True, integer=True)
     x = Symbol(integer=True, shape=(n,))
     i = Symbol(integer=True)
     Eq << apply(NotElement(Stack[i:n](x[i]), CartesianSpace(Range(0, m), n)))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Set.Any.NotIn.of.NotIn)
 

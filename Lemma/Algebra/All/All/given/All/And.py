@@ -10,13 +10,13 @@ def apply(all_a, all_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     e = Symbol(real=True)
     f, g, h = Function(integer=True)
     Eq << apply(All[e:g(e) > 0](f(e) > 0), All[e:g(e) > 0](h(e) > 0))
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
 
 

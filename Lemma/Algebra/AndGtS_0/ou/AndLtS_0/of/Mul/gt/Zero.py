@@ -9,18 +9,18 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x * y > 0)
 
     Eq << ~Eq[-1]
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1], simplify=False)
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1], simplify=False)
 
-    Eq << Eq[-1].this.args[1].apply(Logic.OrAndS.of.And_Or)
+    Eq << Eq[-1].this.args[1].apply(Bool.OrAndS.of.And_Or)
 
-    Eq << Eq[-1].this.find(And[Or]).apply(Logic.OrAndS.of.And_Or)
+    Eq << Eq[-1].this.find(And[Or]).apply(Bool.OrAndS.of.And_Or)
 
     Eq << Eq[-1].this.find((Expr <= 0) & (Expr >= 0)).apply(Algebra.Mul.le.Zero.of.Le_0.Ge_0)
 

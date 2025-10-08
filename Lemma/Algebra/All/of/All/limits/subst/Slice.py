@@ -13,7 +13,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     n = Symbol(integer=True, positive=True)
 
     a, b = Symbol(real=True)
@@ -22,9 +22,9 @@ def prove(Eq):
 
     Eq << apply(All[x[:n]:CartesianSpace(Interval(a, b), n)](f(x[:n]) > 0), x[:n], x[1:n + 1])
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq[0], x[:n], x[1:n + 1])
+    Eq << Bool.Or_NotIn.of.All.apply(Eq[0], x[:n], x[1:n + 1])
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[1])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[1])
 
 
 if __name__ == '__main__':

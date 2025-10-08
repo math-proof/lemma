@@ -19,7 +19,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Logic
+    from Lemma import Discrete, Algebra, Tensor, Bool
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n])
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].simplify()
 
-    Eq << Logic.All_And.of.All.All.apply(Eq[-2], Eq[-3])
+    Eq << Bool.All_And.of.All.All.apply(Eq[-2], Eq[-3])
 
     Eq << Discrete.All_In.of.Eq.All_In.swap2.apply(Eq[1], Eq[-1])
 

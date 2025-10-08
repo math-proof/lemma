@@ -11,7 +11,7 @@ def apply(eq, i):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Logic
+    from Lemma import Probability, Algebra, Bool
 
     s, r = Symbol(shape=(oo,), real=True, random=True)
     t, i = Symbol(integer=True) # time counter
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Probability.Eq_0.Cov.of.Eq_Conditioned)
 
-    Eq << Logic.Imp.given.All.apply(Eq[1], i)
+    Eq << Bool.Imp.given.All.apply(Eq[1], i)
 
     Eq << Algebra.All.given.All.limits.domain_defined.apply(Eq[-1])
 

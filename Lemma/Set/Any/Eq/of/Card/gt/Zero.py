@@ -19,7 +19,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     k = Symbol(integer=True, positive=True)
     s = Symbol(etype=dtype.integer[k], given=True)
@@ -32,9 +32,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Any.And.of.Eq_Card, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Logic.UFn.of.UFn.Eq, swap=True, reverse=True, simplify=None, ret=1)
+    Eq << Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq, swap=True, reverse=True, simplify=None, ret=1)
 
-    Eq << Logic.AnySetOf.of.Any_And.apply(Eq[-1], 1)
+    Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], 1)
 
     Eq << Set.EqInter.of.In.apply(Eq[2])
 

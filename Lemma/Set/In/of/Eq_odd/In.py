@@ -14,16 +14,16 @@ def apply(is_odd, contains_n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     a, b, n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 1), Element(n, Range(a, b + 1)))
 
     Eq << Algebra.Any.of.Eq_odd.apply(Eq[0])
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
     Eq << Eq[-1].this.find(Element).apply(Set.InSub.of.In_Icc, 1, simplify=None)
 

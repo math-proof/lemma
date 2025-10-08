@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True)
     y = Symbol(positive=True)
@@ -26,13 +26,13 @@ def prove(Eq):
     t = Symbol(nonnegative=True)
     Eq << GreaterEqual(log(1 + t), 0, plausible=True)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], t)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], t)
 
     t = Eq[-1].variable
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].subs(t, Eq.is_nonnegative.lhs)
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq.is_nonnegative, Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq.is_nonnegative, Eq[-1])
 
 
 if __name__ == '__main__':

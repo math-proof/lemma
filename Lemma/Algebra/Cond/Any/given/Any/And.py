@@ -11,7 +11,7 @@ def apply(cond, any):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(integer=True)
     A = Symbol(etype=dtype.integer)
@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << apply(f(y) > 0, Any[x:A](g(x) > 0))
 
     Eq << Algebra.AndAnyS.of.Any_And.apply(Eq[-1])
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 
 if __name__ == '__main__':

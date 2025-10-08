@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic, Tensor
+    from Lemma import Algebra, Probability, Bool, Tensor
 
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True, given=True)
@@ -23,13 +23,13 @@ def prove(Eq):
     k = Symbol(integer=True)
     Eq << apply(Equal(y[k] | x[:k] & y[:k], y[k] | y[k - 1]))
 
-    Eq << Eq[0].apply(Logic.AllIn.of.All, (k, 2, oo))
+    Eq << Eq[0].apply(Bool.AllIn.of.All, (k, 2, oo))
 
     Eq << Eq[-1].this().expr.lhs.rhs.args[1].apply(Tensor.EqSliceS.Eq.of.Eq)
 
     Eq << Probability.Eq.of.Eq_Conditioned.single_condition_w.apply(Eq[-1], wrt=Eq[-1].lhs.rhs.args[-1].lhs)
 
-    Eq << Eq[1].apply(Logic.All.given.All.AllNot, cond=k >= 2)
+    Eq << Eq[1].apply(Bool.All.given.All.AllNot, cond=k >= 2)
 
     Eq << Eq[-1].this().expr.lhs.rhs.apply(Tensor.EqSliceS.given.EqSliceS.Eq.Lt)
 

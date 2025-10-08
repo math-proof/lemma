@@ -11,7 +11,7 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     a, b, x, y = Symbol(real=True, given=True)
     S = Interval(a, b, left_open=True)
@@ -21,13 +21,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.In_Ico.given.Ge.Lt)
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[-1])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn_Icc.given.OrLtS)
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].this.expr.apply(Logic.OrAndS.of.And_Or, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Bool.OrAndS.of.And_Or, simplify=None)
 
     Eq << Eq[-1].this.expr.args[0].apply(Algebra.And.of.And.delete, index=-1, simplify=None)
 

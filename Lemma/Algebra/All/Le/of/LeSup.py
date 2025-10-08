@@ -9,7 +9,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     m, M, x = Symbol(real=True)
     f = Function(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.Le.of.LeMinima.apply(Eq[-1])
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Algebra.All.And.of.Cond.All, simplify=None)
 

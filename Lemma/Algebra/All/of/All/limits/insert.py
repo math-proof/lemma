@@ -16,14 +16,14 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     A, B = Symbol(etype=dtype.real)
     x, y = Symbol(real=True)
     f = Function(real=True)
 
     Eq << apply(All[x:A](f(x, y) > 0), (y, B))
 
-    Eq << Eq[0].this.expr.apply(Logic.AllIn.of.All, (y, B))
+    Eq << Eq[0].this.expr.apply(Bool.AllIn.of.All, (y, B))
 
     Eq << Algebra.All.of.All.limits.swap.apply(Eq[-1])
 

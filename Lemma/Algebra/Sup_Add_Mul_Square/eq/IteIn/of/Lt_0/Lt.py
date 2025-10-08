@@ -19,7 +19,7 @@ def apply(is_negative, lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     m, M, x, a, b, c = Symbol(real=True, given=True)
     Eq << apply(a < 0, m < M, a * x ** 2 + b * x + c, x)
@@ -32,13 +32,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ite.eq.SubIte)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Eq[-1].find(Element))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Eq[-1].find(Element))
 
-    Eq <<= Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
-    Eq <<= Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Eq[-1].this.lhs.apply(Set.Or.of.NotIn_Icc)
+    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Eq[-1].this.lhs.apply(Set.Or.of.NotIn_Icc)
 
-    Eq <<= Eq[-2].this.lhs.apply(Set.SupAddMul_Square.eq.Sub.of.Lt_0.In, Eq[-2].find(Sup).expr, x), Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
+    Eq <<= Eq[-2].this.lhs.apply(Set.SupAddMul_Square.eq.Sub.of.Lt_0.In, Eq[-2].find(Sup).expr, x), Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.find(Sup).apply(Algebra.Sup.limits.subst.offset, Eq[3].lhs * -b /2), Eq[-1].this.find(Sup).apply(Algebra.Sup.limits.subst.offset, Eq[3].lhs * -b /2)
 
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[1] + Eq[3].lhs * b /2
 
-    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[-1] & Eq[0], cond=Eq[-1].lhs >= 0), Logic.Imp_And.of.Cond.apply(Eq[-1] & Eq[0], cond=Eq[-1].rhs <= 0)
+    Eq <<= Bool.Imp_And.of.Cond.apply(Eq[-1] & Eq[0], cond=Eq[-1].lhs >= 0), Bool.Imp_And.of.Cond.apply(Eq[-1] & Eq[0], cond=Eq[-1].rhs <= 0)
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Sup_Square.eq.Square.of.Lt_0.Ge_0.Lt), \
         Eq[-2].this.rhs.apply(Algebra.Max.eq.Square.of.Lt_0.Ge_0.Lt),\
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq <<= Eq[-4] & Eq[-3], Eq[-2] & Eq[-1]
 
-    Eq <<= Eq[-2].this.rhs.apply(Logic.Eq.of.Eq.Eq, reverse=True), Eq[-1].this.rhs.apply(Logic.Eq.of.Eq.Eq, reverse=True)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.Eq.of.Eq.Eq, reverse=True), Eq[-1].this.rhs.apply(Bool.Eq.of.Eq.Eq, reverse=True)
 
     Eq <<= Eq[-2].this.rhs.rhs.expand(), Eq[-1].this.rhs.rhs.expand()
 

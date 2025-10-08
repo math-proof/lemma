@@ -12,14 +12,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     a, b = Symbol(real=True)
     x = Symbol(domain=Interval(a, b, right_open=True))
     f = Function(real=True)
     Eq << apply(Derivative[x](f(x)) > 0)
 
-    Eq << Logic.All.of.Cond.apply(Eq[0], x)
+    Eq << Bool.All.of.Cond.apply(Eq[0], x)
 
     Eq << Calculus.All.Gt.of.All_Gt_0.monotony.right_open.apply(Eq[-1])
 

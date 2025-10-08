@@ -12,12 +12,12 @@ def apply(S):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     S = Symbol(etype=dtype.real)
 
     Eq << apply(S)
 
-    Eq << Eq[-1].apply(Logic.All.given.All.AllNot, cond=Unequal(S, S.etype.emptySet))
+    Eq << Eq[-1].apply(Bool.All.given.All.AllNot, cond=Unequal(S, S.etype.emptySet))
 
     Eq << Eq[-1].this.expr.apply(Set.Any_In.given.Ne_Empty)
 

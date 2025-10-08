@@ -19,7 +19,7 @@ def apply(self, pivot=-1, i=None, d=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
 
     d = Symbol(integer=True, positive=True, given=False)
     n = Symbol(domain=Range(d, oo))
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], d, 1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], d, 1)
 
     # https://en.wikipedia.org/wiki/Summation_by_parts
 

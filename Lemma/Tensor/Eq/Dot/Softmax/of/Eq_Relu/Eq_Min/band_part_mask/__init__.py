@@ -14,7 +14,7 @@ def apply(eq_relu, eq_min, A, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Logic
+    from Lemma import Tensor, Algebra, Set, Discrete, Bool
 
     n, l, u, d_z = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq.Xi_definition = Eq[-1].this.rhs.expr.apply(Logic.Bool.eq.Ite)
+    Eq.Xi_definition = Eq[-1].this.rhs.expr.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq.zi_definition.find(ReducedSum).this.arg.args[0].subs(Eq.Xi_definition)
 
@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_definition, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_definition, Eq[-1])
 
 
 

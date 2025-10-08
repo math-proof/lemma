@@ -27,7 +27,7 @@ def analyze(*given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n, m = Symbol(integer=True, positive=True)
     A = Symbol(etype=dtype.integer[n])
@@ -53,13 +53,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
     Eq << All[a:A](Any[b:B](Equal(f(a), b)), plausible=True)
 
     Eq << Eq[-1].this.expr.simplify()
 
-    Eq << Eq[-1].this.expr.expr.apply(Logic.EqUFnS.of.Eq, g)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.EqUFnS.of.Eq, g)
 
     Eq <<= Eq.supset_A & Eq.subset_A
 

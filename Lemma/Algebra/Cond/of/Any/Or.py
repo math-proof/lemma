@@ -14,7 +14,7 @@ def apply(exists, ou):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     A = Symbol(etype=dtype.real)
@@ -23,11 +23,11 @@ def prove(Eq):
 
     Eq <<= Eq[0] & Eq[1]
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1], simplify=False)
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1], simplify=False)
 
-    Eq << Eq[-1].this.args[1].apply(Logic.Any_And.of.Any.All)
+    Eq << Eq[-1].this.args[1].apply(Bool.Any_And.of.Any.All)
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], index=0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], index=0)
 
 
 

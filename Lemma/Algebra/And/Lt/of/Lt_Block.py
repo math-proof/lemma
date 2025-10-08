@@ -15,7 +15,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor, Set
+    from Lemma import Algebra, Bool, Tensor, Set
 
     n, m = Symbol(integer=True, positive=True)
     a = Symbol(shape=(n,), real=True)
@@ -25,11 +25,11 @@ def prove(Eq):
 
     Eq << Algebra.All.Lt.of.Lt.apply(Eq[0])
 
-    Eq << Logic.OrAndS.of.BFn_Ite.apply(Eq[-1])
+    Eq << Bool.OrAndS.of.BFn_Ite.apply(Eq[-1])
 
-    Eq << Logic.And.Imp.of.Or.apply(Eq[-1])
+    Eq << Bool.And.Imp.of.Or.apply(Eq[-1])
 
-    Eq <<= Logic.All.of.Imp.single_variable.apply(Eq[-2], simplify=None), Logic.All.of.Imp.single_variable.apply(Eq[-1], simplify=None)
+    Eq <<= Bool.All.of.Imp.single_variable.apply(Eq[-2], simplify=None), Bool.All.of.Imp.single_variable.apply(Eq[-1], simplify=None)
 
     Eq <<= Set.AllIn_SDiff.of.All.apply(Eq[-2], domain=Range(0, n), simplify=None), Set.AllIn_SDiff.of.All.apply(Eq[-1], domain=Range(n, m + n), simplify=None)
 

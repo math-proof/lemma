@@ -9,12 +9,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     Eq << apply(x * y)
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
     Eq << Eq[-1].this.args[1].apply(Algebra.Ne_0.Ne_0.given.Mul.ne.Zero)
 

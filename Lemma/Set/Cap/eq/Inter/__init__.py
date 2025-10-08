@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     A, B = Symbol(etype=dtype.integer)
     x, y = Symbol(integer=True)
@@ -30,7 +30,7 @@ def prove(Eq):
     Eq[-1].this.lhs.args[0].apply(Set.All_In.of.In_Cap)
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.All.All.given.All.And), \
-    Eq[-1].this.lhs.apply(Logic.All_And.of.All.All)
+    Eq[-1].this.lhs.apply(Bool.All_And.of.All.All)
 
     Eq <<= Eq[-2].this.lhs.apply(Set.All_In.of.In_Cap), \
     Eq[-1].this.rhs.apply(Set.In_Cap.given.All_In)

@@ -44,17 +44,17 @@ def apply(forall, exists):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     y, x, z = Symbol(real=True)
     f, g, h = Function(integer=True)
     Eq << apply(All[z:h(z) > y](h(y, z) > 0), Any[y:g(y) > 1, x:f(x) > 0](g(x) > 0))
 
-    Eq << Eq[-1].this.expr.apply(Logic.All_And.given.All.All)
+    Eq << Eq[-1].this.expr.apply(Bool.All_And.given.All.All)
 
-    Eq << Eq[-1].this.find(Or).apply(Logic.Or.given.Cond, 0)
+    Eq << Eq[-1].this.find(Or).apply(Bool.Or.given.Cond, 0)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0], Eq[1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[1])
 
 
 if __name__ == '__main__':

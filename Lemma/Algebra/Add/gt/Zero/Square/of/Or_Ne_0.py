@@ -9,14 +9,14 @@ def apply(ou):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     Eq << apply(Unequal(x, 0) | Unequal(y, 0))
 
     Eq << Equal(x ** 2 + y ** 2, 0).this.apply(Algebra.And.Eq_0.of.Add.eq.Zero)
 
-    Eq.is_nonzero = Logic.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
+    Eq.is_nonzero = Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
 
     Eq <<= Algebra.Add_.AddSquareS.Mul2.ge.Zero.apply(x), Algebra.Add_.AddSquareS.Mul2.ge.Zero.apply(y)
 

@@ -10,7 +10,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
 
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << apply(Supset(f(i), g(i)), (i, 0, n))
 
-    Eq << Eq[0].apply(Logic.AllIn.of.All, (i, 0, n))
+    Eq << Eq[0].apply(Bool.AllIn.of.All, (i, 0, n))
 
     Eq << Set.Supset.Union.of.All_Supset.apply(Eq[-1], simplify=False)
 

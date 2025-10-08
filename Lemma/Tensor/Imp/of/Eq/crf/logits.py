@@ -12,7 +12,7 @@ def apply(given, G, x, s):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic, Real
+    from Lemma import Algebra, Set, Bool, Real
 
     # d is the number of output labels
     # oo is the length of the sequence
@@ -43,9 +43,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
 
-    Eq << Logic.Cond.of.Eq.Cond.subst.apply(Eq.x_definition.reversed, Eq[-1])
+    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.x_definition.reversed, Eq[-1])
 
-    Eq << Logic.Cond.of.Eq.Cond.subst.apply(Eq.G_definition.reversed, Eq[-1])
+    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.G_definition.reversed, Eq[-1])
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.unshift)
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Set.NotInSub.of.NotIn_Icc, 1)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1], 0)
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.EqSub.of.Eq.Eq, Eq[-4])
 
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Set.NotInAdd.of.NotIn, 1)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1], 0)
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 0)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Gt)
 

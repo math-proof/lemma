@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     b, a = Symbol(real=True)
     x = Symbol(domain=Interval(a, b))
     f, g = Function(real=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[0])
 
-    Eq << Logic.Or_And.given.AndOrS.apply(Eq[-1])
+    Eq << Bool.Or_And.given.AndOrS.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq[0].reversed)
 

@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
     from Lemma.Discrete.Alpha.gt.Zero import alpha
     from Lemma.Discrete.H.eq.Add.definition import H
     from Lemma.Discrete.K.eq.Add.definition import K
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Discrete.K.ne.Zero.apply(x[:3])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-2])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-2])
 
 
     Eq << Eq[-1].this.lhs.args[1].apply(Algebra.InvAdd_Inv.eq.Div_AddMul, x[2])
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
 
 
 if __name__ == '__main__':

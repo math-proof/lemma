@@ -10,7 +10,7 @@ def apply(self, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq_Ite.of.All_Imp.apply(Eq[-1], n)
+    Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n)
 
 
 

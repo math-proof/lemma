@@ -38,7 +38,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Logic
+    from Lemma import Tensor, Algebra, Set, Bool
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Eq.ksi_def[i].this.find(BandPart).defun()
 
-    Eq.ksi_def = Eq[-1].this.rhs.expr.apply(Logic.Bool.eq.Ite)
+    Eq.ksi_def = Eq[-1].this.rhs.expr.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq.zi_def.find(ReducedSum).this.subs(Eq.ksi_def)
 
@@ -95,7 +95,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(BandPart).defun()
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     j = Eq.ksi_def.rhs.variable
     Eq << Eq[-1][j]
@@ -109,9 +109,9 @@ def prove(Eq):
 
     Eq << Eq.zi_dquote_def[j]
 
-    Eq << Eq[-1].this.find(Piecewise[ExprCondPair[3]]).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, i=0)
+    Eq << Eq[-1].this.find(Piecewise[ExprCondPair[3]]).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, i=0)
 
-    Eq << Eq[-1].this.rhs.args[0].find(Piecewise[ExprCondPair[3]]).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, i=0)
+    Eq << Eq[-1].this.rhs.args[0].find(Piecewise[ExprCondPair[3]]).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, i=0)
 
     Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico, simplify=None)
 
@@ -121,13 +121,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element[Symbol]).apply(Set.In_Icc.Is.InSub, i, simplify=None)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.args[1].apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.args[1].apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq[-1].this.rhs.args[0].apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq[-1].this.rhs.args[1].apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
     Eq << Eq[-1].this.find(And).apply(Algebra.And.collect, cond=Eq[-1].find(Element))
 
@@ -147,13 +147,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this(j).find(Symbol < 0).simplify()
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.zij_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.zij_def, Eq[-1])
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_dquote_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_dquote_def, Eq[-1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
 
 
 

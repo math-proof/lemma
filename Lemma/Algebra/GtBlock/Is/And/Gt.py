@@ -15,7 +15,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n, m = Symbol(integer=True, positive=True)
     a = Symbol(shape=(n,), real=True)
@@ -23,7 +23,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(BlockMatrix(a, b) > x)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.And.Gt.of.GtBlock)
 

@@ -8,7 +8,7 @@ def apply(eq_R):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     # n denotes sequence length (seq_length)
     n = Symbol(integer=True, positive=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.All.of.Cond.domain_defined.apply(Eq[0], k)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].this(t).find(Max).simplify()
 
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Le.given.Lt)
 
-    Eq << Logic.Cond_Ite.given.And.Imp.apply(Eq[1])
+    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[1])
 
 
 

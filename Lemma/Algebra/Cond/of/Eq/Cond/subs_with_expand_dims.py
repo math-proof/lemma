@@ -17,7 +17,7 @@ def apply(eq, f_eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     m, n = Symbol(integer=True, positive=True)
 
     a = Symbol(real=True, shape=(n,))
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << a.this.definition
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-2] * b
 

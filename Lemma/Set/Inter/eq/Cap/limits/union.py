@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     k = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)
     f = Function(etype=dtype.integer)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Set.Inter_Ite.eq.Ite_InterS)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.lhs.expr.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
 
 if __name__ == '__main__':

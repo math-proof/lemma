@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n, m = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
@@ -28,9 +28,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.In_Inter.given.In.In, simplify=False)
 
-    Eq << Eq[-1].apply(Logic.Imp_And.given.Imp.Imp)
+    Eq << Eq[-1].apply(Bool.Imp_And.given.Imp.Imp)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.rhs.rhs.apply(Set.Cup.eq.UnionCupS, cond=B), Eq[-1].this.rhs.rhs.apply(Set.Cup.eq.UnionCupS, cond=A)
 

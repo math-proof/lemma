@@ -15,13 +15,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor
+    from Lemma import Algebra, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     p = Function(bool=True)
     a = Symbol(real=True, shape=(n, n))
     i, j = Symbol(integer=True)
-    Ξ = Stack[j:n, i:n](Bool(p(i, j)))
+    Ξ = Stack[j:n, i:n](functions.Bool(p(i, j)))
     Eq << apply(exp(a - (1 - Ξ) * oo))
 
     a_quote = Symbol('a', a - (1 - Ξ) * oo)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i, j]
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite, simplify=None)
 
     Eq << Eq[-1].this.find(1 - Piecewise).apply(Algebra.Add_Ite.eq.Ite_AddS)
 
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], exp)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Exp.eq.Ite)
 

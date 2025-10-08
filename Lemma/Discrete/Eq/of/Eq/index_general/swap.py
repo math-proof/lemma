@@ -31,7 +31,7 @@ def apply(given, i=None, j=None, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True)
@@ -67,9 +67,9 @@ def prove(Eq):
 
     Eq.di_domain, Eq.x_di_eqaulity = Eq[-2].subs(Eq.di_definition.reversed), Eq[-1].subs(Eq.di_definition.reversed)
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.di_domain, Eq.expand)
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.di_domain, Eq.expand)
 
-    Eq.expand = Logic.BFn.of.BFnIte.Cond.apply(Eq.dj_domain, Eq[-1])
+    Eq.expand = Bool.BFn.of.BFnIte.Cond.apply(Eq.dj_domain, Eq[-1])
 
     Eq << Set.Subset.Finset.of.In.In.apply(Eq.dj_domain, Eq.di_domain, simplify=False)
 
@@ -102,7 +102,7 @@ def prove(Eq):
 
     Eq << Set.EqInter.of.In.apply(Eq.dj_domain)
 
-    Eq << Logic.UFn.of.UFn.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.UFn.of.UFn.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.rhs.find(Element).simplify()
 

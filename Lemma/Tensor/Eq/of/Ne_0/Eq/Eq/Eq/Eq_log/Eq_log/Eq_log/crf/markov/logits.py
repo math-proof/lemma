@@ -15,7 +15,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Logic, Real
+    from Lemma import Tensor, Algebra, Bool, Real
 
     d, n = Symbol(domain=Range(2, oo))
     X = Symbol("x", shape=(n, d), real=True, random=True)
@@ -46,9 +46,9 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
 
     i = Symbol(integer=True)
-    Eq << Logic.Cond.of.Eq.Cond.subst.apply(Eq.eq_x.subs(t, i).reversed, Eq[-1])
+    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.eq_x.subs(t, i).reversed, Eq[-1])
 
-    Eq << Logic.Cond.of.Eq.Cond.subst.apply(Eq.eq_G.subs(t, i).reversed, Eq[-1])
+    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.eq_G.subs(t, i).reversed, Eq[-1])
 
     Eq << Eq[-1].subs(t, t + 1)
 

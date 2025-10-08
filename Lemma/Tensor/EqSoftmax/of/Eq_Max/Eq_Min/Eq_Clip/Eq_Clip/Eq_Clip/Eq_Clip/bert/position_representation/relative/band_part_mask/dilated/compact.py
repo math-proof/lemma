@@ -30,7 +30,7 @@ def apply(eq_max, eq_min, eq_K_quote, eq_V_quote, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n, k, l, u, d = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)
@@ -86,7 +86,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, lower=Eq.le_ceiling.lhs), Eq[-1].this.find(Min).args[0].apply(Algebra.Expr.eq.IteGe, lower=Eq.le_ceiling.lhs)
 
-    Eq <<= Logic.BFn.of.BFnIte.Cond.apply(Eq.le_ceiling, Eq[-2]), Logic.BFn.of.BFnIte.Cond.apply(Eq.le_ceiling, Eq[-1])
+    Eq <<= Bool.BFn.of.BFnIte.Cond.apply(Eq.le_ceiling, Eq[-2]), Bool.BFn.of.BFnIte.Cond.apply(Eq.le_ceiling, Eq[-1])
 
     Eq.slice_K_dquote = Eq[-2].this.rhs().find(Min).simplify()
 
@@ -98,7 +98,7 @@ def prove(Eq):
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-3]), Algebra.EqSlice.of.Le.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq <<= Logic.Eq.of.Eq.Eq.apply(Eq.slice_K_dquote, Eq[-2]), Logic.Eq.of.Eq.Eq.apply(Eq.slice_V_dquote, Eq[-1])
+    Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq.slice_K_dquote, Eq[-2]), Bool.Eq.of.Eq.Eq.apply(Eq.slice_V_dquote, Eq[-1])
 
     Eq << Tensor.EqSoftmax.of.Eq_Max.Eq_Min.Eq.Eq.bert.position_representation.relative.band_part_mask.dilated.apply(Eq.beta, Eq.zeta, Eq[0], Eq[1], Q, K, V)
 

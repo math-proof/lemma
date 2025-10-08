@@ -17,7 +17,7 @@ def apply(n, k, s0=None, B=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n, k = Symbol(integer=True, positive=True, given=True)
     Eq << apply(n, k)
@@ -31,7 +31,7 @@ def prove(Eq):
     e = Symbol(etype=dtype.integer.set)
     Eq << Set.All_And.baseset.apply(s0_quote)
 
-    Eq.x_union_s0, *_ = Logic.All.All.of.All_And.apply(Eq[-1], slice(1, None, 2))
+    Eq.x_union_s0, *_ = Bool.All.All.of.All_And.apply(Eq[-1], slice(1, None, 2))
 
     i = Symbol(integer=True)
     x = Eq[0].rhs.variable.base
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Any_In.of.In_Cup)
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq.x_union_s0, Eq[-1].reversed, simplify=None)
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq.x_union_s0, Eq[-1].reversed, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Set.EqUnionS.of.Eq.Eq)
 
@@ -60,7 +60,7 @@ def prove(Eq):
     x_hat = Symbol(r"\hat{x}", Stack[i](Piecewise((x[i] - {n} , Equal(i, j)), (x[i], True))))
     Eq.x_hat_definition = x_hat[i].this.definition
 
-    Eq << Logic.OrAndS.of.BFn_Ite.apply(Eq.x_hat_definition)
+    Eq << Bool.OrAndS.of.BFn_Ite.apply(Eq.x_hat_definition)
 
     Eq.B_assertion = Set.All_Any_Eq.split.Imageset.apply(B)
 
@@ -68,15 +68,15 @@ def prove(Eq):
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq.all_s0_equality, Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Any_And.of.Any.All.All_Imp)
+    Eq << Eq[-1].this.expr.apply(Bool.Any_And.of.Any.All.All_Imp)
 
-    Eq.all_B_contains = Eq[-1].this.expr.expr.apply(Logic.UFn.of.UFn.Eq, swap=True).limits_subs(Eq[-1].variable, Eq.all_s0_equality.variable)
+    Eq.all_B_contains = Eq[-1].this.expr.expr.apply(Bool.UFn.of.UFn.Eq, swap=True).limits_subs(Eq[-1].variable, Eq.all_s0_equality.variable)
 
     Eq.all_s0_contains = Set.All_In.split.Imageset.apply(B)
 
     Eq << Eq.B_assertion.this.expr.expr.apply(Set.EqInter.of.Eq, {n.set})
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
     Eq << Eq[-1].limits_subs(Eq.B_assertion.variable, Eq.B_assertion.expr.variable)
 

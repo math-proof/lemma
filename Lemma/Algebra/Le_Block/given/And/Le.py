@@ -15,7 +15,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n, m = Symbol(integer=True, positive=True)
     a = Symbol(shape=(n,), real=True)
@@ -25,24 +25,24 @@ def prove(Eq):
 
     Eq << Algebra.Le.given.All.Le.apply(Eq[0])
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[-1])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
     Eq << Algebra.All.Le.of.Le.apply(Eq[1])
 
     i = Eq[-1].rhs.index
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (i, Range(-oo, n)), simplify=None)
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, Range(-oo, n)), simplify=None)
 
-    Eq.infer_lt = Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq.infer_lt = Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Algebra.All.Le.of.Le.apply(Eq[2])
 
     Eq << Eq[-1].subs(i, i - n)
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (i, Range(n, oo)), simplify=None)
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, Range(n, oo)), simplify=None)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Logic.Or.of.Imp.Imp.apply(Eq.infer_lt, Eq[-1])
+    Eq << Bool.Or.of.Imp.Imp.apply(Eq.infer_lt, Eq[-1])
 
 
 

@@ -13,7 +13,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     e, a, b = Symbol(integer=True, given=True)
     Eq << apply(NotElement(e, Range(a, b)))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1])
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
 
 

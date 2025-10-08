@@ -32,19 +32,19 @@ def apply(given, index=0, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x, a, b, c = Symbol(real=True)
     f = Function(shape=(), real=True)
     Eq << apply(All[x:Interval(a, b)]((x <= c) | (f(x) >= 1)), index=0)
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[1])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[1])
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn_Inter.given.OrNotSIn, simplify=None)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn_Ioi.given.Le, simplify=None)
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[0])
+    Eq << Bool.Or_Not.of.All.apply(Eq[0])
 
 
 

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].this.expr.lhs.apply(Calculus.Grad.eq.Limit)
 

@@ -9,7 +9,7 @@ def apply(given, epsilon=None, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     a = Symbol(real=True)
     x = Symbol(integer=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Calculus.Eq.Is.Any_All.limit_definition.apply(Eq[0])
 
-    Eq << Logic.Cond.of.Cond.Iff.apply(Eq[1], Eq[-1])
+    Eq << Bool.Cond.of.Cond.Iff.apply(Eq[1], Eq[-1])
 
 
 if __name__ == '__main__':

@@ -10,13 +10,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i, a, b = Symbol(integer=True)
     f = Function(real=True)
     Eq << apply(Any[i:a:b](f(i) >= 0))
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[0], simplify=False)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[0], simplify=False)
 
     Eq << Algebra.Any_UfnNeg.of.Any.apply(Eq[-1])
 

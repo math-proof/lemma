@@ -10,14 +10,14 @@ def apply(suffice, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Logic
+    from Lemma import Algebra, Logic, Bool
 
     a, b, c = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)
     f, g = Symbol(integer=True, shape=(oo,))
     Eq << apply(Given(Equal(a, 0), Equal(c, 0)), cond=Equal(b, 0))
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[1])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[2], Eq[1])
 
 
 if __name__ == '__main__':

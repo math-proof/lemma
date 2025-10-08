@@ -10,20 +10,20 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(complex=True, given=True)
     Eq << apply(Arg(x * y))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Eq[0].find(Or))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Eq[0].find(Or))
 
-    Eq << Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2])
+    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Zero.of.OrEqS)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Logic.Imp.given.Imp.subst.Bool.apply(Eq[2], invert=True)
+    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[2], invert=True)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Arg.eq.Add.of.Ne_0.Ne_0)
 

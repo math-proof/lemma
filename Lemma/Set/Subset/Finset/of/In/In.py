@@ -11,7 +11,7 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     x, y = Symbol(integer=True)
     S = Symbol(etype=dtype.integer)
 
@@ -19,9 +19,9 @@ def prove(Eq):
 
     Eq << Set.Subset.given.All_In.apply(Eq[-1])
 
-    Eq << Eq[-1].this.apply(Logic.AllIn_Insert.Is.And_All)
+    Eq << Eq[-1].this.apply(Bool.AllIn_Insert.Is.And_All)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
 
 if __name__ == '__main__':

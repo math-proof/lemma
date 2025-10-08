@@ -17,7 +17,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     C, x, y = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
@@ -25,9 +25,9 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(Any[C](All[x:A](f(x, C) > 0)), x, x0)
 
-    Eq << Eq[-1].this.expr.apply(Logic.All_And.given.All.All)
+    Eq << Eq[-1].this.expr.apply(Bool.All_And.given.All.All)
 
-    Eq << Eq[-1].this.find(Or).apply(Logic.Or.given.Cond, 1)
+    Eq << Eq[-1].this.find(Or).apply(Bool.Or.given.Cond, 1)
 
     Eq << Eq[0].this.expr.apply(Algebra.Cond.of.All.subst, x, x0, ret=0)
 

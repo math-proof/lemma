@@ -14,7 +14,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)
@@ -35,13 +35,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.rhs.definition
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
     Eq << Eq[-2].this.limits[0][1].definition
 
     Eq << Eq[-1].this.limits[0][1].definition
 
-    Eq << Logic.All.given.Imp.apply(Eq[-1])
+    Eq << Bool.All.given.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Set.In.of.EqCup_Finset, index=n)
 

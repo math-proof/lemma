@@ -13,7 +13,7 @@ def apply(n, Q=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     Eq << apply(n)
@@ -29,13 +29,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).rhs.definition
 
-    Eq << Logic.Any.of.Any_And.apply(Eq[-1], index=1)
+    Eq << Bool.Any.of.Any_And.apply(Eq[-1], index=1)
 
     Eq << Set.All_CupFinset.eq.Ico.apply(Q[t])
 
-    Eq << Logic.All.of.All_And.apply(Eq[-1], index=0)
+    Eq << Bool.All.of.All_And.apply(Eq[-1], index=0)
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[-3])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[-3])
 
     Eq << Set.Eq.of.All_Eq_Empty.nonoverlapping.setlimit.apply(Eq.nonoverlapping)
 

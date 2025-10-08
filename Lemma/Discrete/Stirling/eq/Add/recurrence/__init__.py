@@ -11,19 +11,19 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
 
     k, n = Symbol(integer=True, positive=True)
     Eq << apply(Stirling(n + 1, k + 1))
 
-    Eq << Eq[0].apply(Logic.All.given.All.AllNot, cond=k < n)
+    Eq << Eq[0].apply(Bool.All.given.All.AllNot, cond=k < n)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     k_ = Symbol('k', domain=Range(1, n))
     Eq << Discrete.Stirling.eq.Add.recurrence.k_Less_than_n.apply(n, k_)
 
-    Eq << Eq[-1].apply(Logic.AllIn.of.All, (k_,))
+    Eq << Eq[-1].apply(Bool.AllIn.of.All, (k_,))
 
     Eq << Algebra.All.given.And.All.apply(Eq[-2], cond=n.set)
 

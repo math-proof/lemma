@@ -13,7 +13,7 @@ def apply(given, limit):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     n = Symbol(positive=True, integer=True, given=False)
     x, k = Symbol(integer=True)
 
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
 
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     x, k = Symbol(integer=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.AndNotSIn.of.NotIn_Union.apply(Eq[-1], simplify=None)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-2], k)
+    Eq << Bool.All.of.Cond.apply(Eq[-2], k)
 
 
 if __name__ == '__main__':

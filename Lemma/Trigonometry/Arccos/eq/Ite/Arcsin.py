@@ -10,16 +10,16 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Logic
+    from Lemma import Trigonometry, Algebra, Bool
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(acos(x))
 
     Eq << Eq[0].this.lhs.apply(Trigonometry.Arccos.eq.Add.Arcsin)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x >= 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x >= 0)
 
-    Eq <<= Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub), Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub)
 

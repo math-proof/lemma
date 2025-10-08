@@ -25,7 +25,7 @@ def apply(is_positive, eq, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     x, A, x0 = Symbol(real=True)
     f = Function(real=True)
@@ -37,11 +37,11 @@ def prove(Eq):
 
     Eq << Algebra.Or.of.Cond.subst.apply(Eq[-1], epsilon, A / 2)
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[0] / 2, Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0] / 2, Eq[-1])
 
     Eq << Eq[-1].this.expr.expr.apply(Algebra.And.of.Lt.split.Abs)
 
-    Eq << Eq[-1].this.expr.expr.apply(Logic.Cond.of.And, index=1)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.Cond.of.And, index=1)
 
     Eq << Eq[-1].this.expr.expr.apply(Algebra.Gt.transport, lhs=0)
 

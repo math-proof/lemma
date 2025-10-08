@@ -12,12 +12,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y, z = Symbol(real=True)
     Eq << apply(Min(x, y))
 
-    Eq << Eq[0].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[0].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     Eq << Eq[-1].lhs.this.apply(Algebra.Min.eq.IteLe)
 

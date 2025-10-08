@@ -22,13 +22,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x = Symbol(complex=True, given=True)
     a, b = Symbol(integer=True, given=True)
     Eq << apply(Element(x, Interval(a, b, right_open=True)))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Set.Ge.Le.of.In_Icc)
 

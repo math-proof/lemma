@@ -11,14 +11,14 @@ def apply(all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor
+    from Lemma import Algebra, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True)
     i = Symbol(integer=True)
     Eq << apply(All[i:n](x[i] <= y[i]))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Tensor.LeStack.of.All_Le)
 

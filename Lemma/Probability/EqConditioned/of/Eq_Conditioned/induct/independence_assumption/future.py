@@ -11,7 +11,7 @@ def apply(eq, k):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Logic
+    from Lemma import Probability, Algebra, Bool
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq.of.Eq.All_Imp.apply(Eq[0], Eq[-1], k, start=1)
+    Eq << Bool.Eq.of.Eq.All_Imp.apply(Eq[0], Eq[-1], k, start=1)
 
 
 

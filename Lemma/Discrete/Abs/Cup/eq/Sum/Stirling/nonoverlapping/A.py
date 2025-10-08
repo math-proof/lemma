@@ -18,7 +18,7 @@ def apply(n, k, A=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(domain=Range(1, n))
@@ -28,11 +28,11 @@ def prove(Eq):
     Eq.s1_quote_definition = Set.All_CupFinset.eq.Ico.apply(s1_quote)
 
     i = Eq[0].lhs.indices[0]
-    Eq.x_abs_positive_s1 = Logic.All.of.All_And.apply(Eq.s1_quote_definition)
+    Eq.x_abs_positive_s1 = Bool.All.of.All_And.apply(Eq.s1_quote_definition)
 
-    Eq.x_abs_sum_s1 = Logic.All.of.All_And.apply(Eq.s1_quote_definition, 1)
+    Eq.x_abs_sum_s1 = Bool.All.of.All_And.apply(Eq.s1_quote_definition, 1)
 
-    Eq.x_Union_s1 = Logic.All.of.All_And.apply(Eq.s1_quote_definition, 2)
+    Eq.x_Union_s1 = Bool.All.of.All_And.apply(Eq.s1_quote_definition, 2)
 
     j = Symbol(domain=Range(k + 1))
     Eq << Set.EqCupS.of.All_Eq.fin.apply(Eq[0], (i, 0, k + 1))
@@ -55,11 +55,11 @@ def prove(Eq):
     u = Eq[-1].lhs.arg
     Eq.SqueezeTheorem = Set.CardCup.le.Sum_Card.apply(u.expr, *u.limits)
 
-    Eq << Logic.OrAndS.of.BFn_Ite.apply(x_quote_abs)
+    Eq << Bool.OrAndS.of.BFn_Ite.apply(x_quote_abs)
 
     Eq << Eq[-1].subs(i, j)
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-2], (i, Unequal(i, j)))
+    Eq << Bool.AllIn.of.All.apply(Eq[-2], (i, Unequal(i, j)))
 
     Eq << Set.CardUnion.ge.Card.apply(*Eq[-2].rhs.arg.args[::-1])
 
@@ -105,11 +105,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.subs(Eq.x_quote_definition)
 
-    Eq << Eq[-1].this.expr.apply(Logic.OrAndS.of.BFn_Ite)
+    Eq << Eq[-1].this.expr.apply(Bool.OrAndS.of.BFn_Ite)
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].this.expr.apply(Logic.All_And.given.All.All)
+    Eq << Eq[-1].this.expr.apply(Bool.All_And.given.All.All)
 
 
 if __name__ == '__main__':

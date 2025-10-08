@@ -11,7 +11,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Logic
+    from Lemma import Algebra, Probability, Calculus, Bool
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True)  # states / observation
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], 0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], 0)
 
     Eq <<= Eq[-1].subs(k, 1), Eq[-1].subs(k, k + 1)
 
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Probability.EqProd.of.Eq.markov.first_order.apply(Eq[0], k)
     Eq << Eq[-2].subs(Eq[-1])
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1], None)
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], None)
     Eq << Eq[-1].this.lhs.apply(Calculus.Mul.eq.Integral)
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Prod.limits.push)
     Eq << Eq[-1].this.rhs.apply(Probability.Pr.eq.Integral.joint, s[1:k])

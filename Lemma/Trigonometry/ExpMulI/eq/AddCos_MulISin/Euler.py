@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Trigonometry, Logic
+    from Lemma import Calculus, Algebra, Trigonometry, Bool
 
     x = Symbol(real=True)
     Eq << apply(exp(S.ImaginaryUnit * x))
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].args[1].expr.expand()
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.expand, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.expand, Eq[-1])
 
 
 

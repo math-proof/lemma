@@ -33,7 +33,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Logic
+    from Lemma import Tensor, Algebra, Set, Bool
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -53,7 +53,7 @@ def prove(Eq):
     z_quote = Symbol(Eq[-1].lhs)
     Eq.z_quote_def = z_quote.this.definition
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_quote_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_quote_def, Eq[-1])
 
     Eq << Eq[-1][i]
 
@@ -62,7 +62,7 @@ def prove(Eq):
     j = Symbol(integer=True)
     Eq << Eq.four_blocks.find(Add[BlockMatrix]).this.apply(Tensor.Expr.eq.Stack, j)
 
-    Eq << Eq[-1].this.find(Piecewise[2]).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 0)
+    Eq << Eq[-1].this.find(Piecewise[2]).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 0)
 
     Eq.block0 = Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Block)
 
@@ -72,15 +72,15 @@ def prove(Eq):
 
     Eq << Eq.four_blocks.find(ExprCondPair[3]).find(Add[BlockMatrix]).this.apply(Tensor.Expr.eq.Stack, j)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 0)
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 0)
 
     Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 0)
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 0)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn_Ico.Is.Or)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.And_Or.Is.OrAndS)
+    Eq << Eq[-1].this.find(And).apply(Bool.And_Or.Is.OrAndS)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Eq.four_blocks.find(ExprCondPair[4]).find(Add[BlockMatrix]).this.apply(Tensor.Expr.eq.Stack, j)
 
-    Eq << Eq[-1].this.find(Piecewise[ExprCondPair[3]]).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq[-1].this.find(Piecewise[ExprCondPair[3]]).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
     Eq << Eq[-1].this.find(Add[Piecewise]).apply(Algebra.AddIteS.eq.IteAnd)
 
@@ -118,11 +118,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(ReducedArgMax[Exp]).apply(Algebra.ReducedArgMax.Exp.eq.ReducedArgMax)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, -2)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not, 1)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 1)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not)
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Lt.Lt.Is.Lt.Min)
 
@@ -145,11 +145,11 @@ def prove(Eq):
 
     Eq.block1 = Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=slice(0, 3))
 
-    Eq << Logic.EqIteS.of.Imp_Eq.apply(Eq.block0, Eq.four_blocks.rhs, index=0, reverse=True)
+    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.block0, Eq.four_blocks.rhs, index=0, reverse=True)
 
-    Eq << Logic.EqIteS.of.Imp_Eq.apply(Eq.block1, Eq[-1].rhs, index=1, reverse=True)
+    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.block1, Eq[-1].rhs, index=1, reverse=True)
 
-    Eq << Logic.EqIteS.of.Imp_Eq.apply(Eq.block3, Eq[-1].rhs, index=1, reverse=True)
+    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.block3, Eq[-1].rhs, index=1, reverse=True)
 
     Eq << Algebra.Eq.of.And.apply(Eq.four_blocks & Eq[-1] & Eq[-2] & Eq[-3]).reversed
 

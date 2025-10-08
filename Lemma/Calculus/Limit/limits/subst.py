@@ -13,7 +13,7 @@ def apply(self, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     x, y, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Calculus.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[1])
 
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     b = Symbol(integer=True, positive=True)
     # states / observation of the agent
@@ -24,13 +24,13 @@ def prove(Eq):
     t = Symbol(integer=True)
     Eq << apply(Expectation[r[t]](r[t] | s[t] & a[t] & s[t + 1]))
 
-    Eq << Logic.Cond.given.Imp.domain_defined.apply(Eq[0])
+    Eq << Bool.Cond.given.Imp.domain_defined.apply(Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Probability.Ne_0.Conditioned.of.Ne_0, a[t], s[t])
 
     Eq << Eq[-1].this.lhs.apply(Probability.Eq.of.Ne_0.bayes.Conditioned, r[t])
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Integral)
 

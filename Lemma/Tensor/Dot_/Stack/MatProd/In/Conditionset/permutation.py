@@ -24,7 +24,7 @@ def apply(m, d, w=None, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
     n = Symbol(domain=Range(2, oo), given=True)
     m = Symbol(integer=True, nonnegative=True)
     d = Symbol(shape=(n,), integer=True, nonnegative=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Discrete.All_In_MatProd.permutation.apply(m, d, x=x)
 
-    Eq.ou = Logic.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, Eq[2].lhs.args[0])
+    Eq.ou = Bool.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, Eq[2].lhs.args[0])
 
     Eq << Any[x](Eq.ou.args[1], plausible=True)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq <<= Eq.ou & Eq[-1]
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], index=0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], index=0)
 
 
 if __name__ == '__main__':

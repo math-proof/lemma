@@ -15,7 +15,7 @@ def apply(A):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(domain=Range(2, oo))
     A = Symbol(etype=dtype.integer, shape=(n,))
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(_k, k)
 
-    Eq << Logic.All.of.All_OrNot.apply(Eq[-1], 1)
+    Eq << Bool.All.of.All_OrNot.apply(Eq[-1], 1)
 
     Eq << Eq[-3].this.lhs.subs(Eq[-1])
 

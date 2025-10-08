@@ -19,15 +19,15 @@ def apply(cond1, cond2, ou):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b, c, d = Symbol(integer=True, given=True)
     x, y = Symbol(real=True, given=True)
     f, h, g = Function(real=True)
     Eq << apply(f(x) < g(y), h(x) < g(y), (a < b) | (c < d))
 
-    Eq << Logic.And_Or.of.OrAndS.apply(Eq[-1], cond=f(x) < g(y))
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_Or.of.OrAndS.apply(Eq[-1], cond=f(x) < g(y))
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 
 if __name__ == '__main__':

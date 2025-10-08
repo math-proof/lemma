@@ -19,7 +19,7 @@ def apply(ne_zero, eq, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True, given=True)
     f, g, h = Function(real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[1] / f(x)
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
 
     Eq << Eq[2].this.rhs.ratsimp()
 

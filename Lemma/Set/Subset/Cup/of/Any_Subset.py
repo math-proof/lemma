@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq << Eq[0].this.expr.apply(Set.Subset.Union.of.Subset.rhs, Eq[1].find(Cup))
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
 
 
 if __name__ == '__main__':

@@ -22,7 +22,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
     i = Symbol(integer=True)
     n = 4
     a = Symbol(real=True, shape=(oo,))
@@ -63,11 +63,11 @@ def prove(Eq):
 
     Eq << Eq.All_And.this.apply(Algebra.All.Is.And.doit)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     _i = Symbol('i', domain=Range(4))
     Eq << Eq.All_And.limits_subs(i, _i)

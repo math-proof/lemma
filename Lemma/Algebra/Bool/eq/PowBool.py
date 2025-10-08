@@ -11,16 +11,16 @@ def apply(self, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, y = Symbol(real=True)
 
     n = Symbol(integer=True, positive=True, given=False)
 
-    Eq << apply(Bool(x > y), n)
+    Eq << apply(functions.Bool(x > y), n)
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq[0] * Bool(x > y)
+    Eq << Eq[0] * functions.Bool(x > y)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.SquareBool.eq.Bool)
 
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
 
 if __name__ == '__main__':
     run()

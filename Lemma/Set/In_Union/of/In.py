@@ -13,7 +13,7 @@ def apply(given, S):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     e = Symbol(integer=True)
     U, S = Symbol(etype=dtype.integer)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.In_Union.given.OrInS.apply(Eq[1])
 
-    Eq << Logic.Or.given.Cond.apply(Eq[-1], index=1)
+    Eq << Bool.Or.given.Cond.apply(Eq[-1], index=1)
 
 
 if __name__ == '__main__':

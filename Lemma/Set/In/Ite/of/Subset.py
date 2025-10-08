@@ -11,7 +11,7 @@ def apply(subset, piecewise=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Logic
+    from Lemma import Set, Bool
 
     x = Symbol(integer=True, given=True)
     S, A, B = Symbol(etype=dtype.integer, given=True)
@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq.bool_hx = Set.Eq.Bool.In.of.In.apply(Eq[-1])
 
-    Eq.plausible = Or(Equal(Bool(Element(f(x), S)), 1) & Element(x, A),
-                      Equal(Bool(Element(g(x), S)), 1) & Element(x, B - A),
-                      Equal(Bool(Element(h(x), S)), 1) & NotElement(x, A | B), plausible=True)
+    Eq.plausible = Or(Equal(functions.Bool(Element(f(x), S)), 1) & Element(x, A),
+                      Equal(functions.Bool(Element(g(x), S)), 1) & Element(x, B - A),
+                      Equal(functions.Bool(Element(h(x), S)), 1) & NotElement(x, A | B), plausible=True)
 
     Eq << Eq.plausible.subs(Eq.bool_fx).subs(Eq.bool_gx).subs(Eq.bool_hx)
 
@@ -41,11 +41,11 @@ def prove(Eq):
 
     Eq << Eq[-1].simplify()
 
-    Eq << Eq.plausible.this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq.plausible.this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Set.InIte__Ite.of.And.ou.OrAndS.apply(Eq[-1], wrt=S)
 

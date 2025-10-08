@@ -8,7 +8,7 @@ def apply(le_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Logic
+    from Lemma import Trigonometry, Algebra, Bool
 
     x = Symbol(real=True)
     Eq << apply(x <= 0)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << -Eq[-1].this.rhs
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

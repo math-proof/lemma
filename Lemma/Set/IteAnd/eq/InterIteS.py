@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     s = Function(etype=dtype.complex[n])
@@ -22,18 +22,18 @@ def prove(Eq):
 
     Eq << Set.Eq.given.All_Imp.All_Imp.apply(Eq[0], wrt=t)
 
-    Eq <<= Eq[-2].this.find(Element).apply(Logic.OrAndS.of.BFn_Ite), \
+    Eq <<= Eq[-2].this.find(Element).apply(Bool.OrAndS.of.BFn_Ite), \
     Eq[-1].this.find(Element).apply(Set.In.In.of.In_Inter)
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In_Inter.given.In.In, simplify=False), \
-    Eq[-1].this.lhs.find(Element).apply(Logic.OrAndS.of.BFn_Ite)
+    Eq[-1].this.lhs.find(Element).apply(Bool.OrAndS.of.BFn_Ite)
 
-    Eq <<= Eq[-2].this.rhs.find(Element).apply(Logic.BFn_Ite.given.OrAndS), \
-    Eq[-1].this.lhs.find(Element).apply(Logic.OrAndS.of.BFn_Ite)
+    Eq <<= Eq[-2].this.rhs.find(Element).apply(Bool.BFn_Ite.given.OrAndS), \
+    Eq[-1].this.lhs.find(Element).apply(Bool.OrAndS.of.BFn_Ite)
 
-    Eq << Eq[-2].this.rhs.apply(Logic.BFn_Ite.given.OrAndS)
+    Eq << Eq[-2].this.rhs.apply(Bool.BFn_Ite.given.OrAndS)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.BFn_Ite.given.OrAndS)
+    Eq << Eq[-1].this.rhs.apply(Bool.BFn_Ite.given.OrAndS)
 
 
 

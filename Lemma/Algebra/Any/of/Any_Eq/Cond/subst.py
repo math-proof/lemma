@@ -13,7 +13,7 @@ def apply(any_eq, cond, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, y = Symbol(integer=True)
     f, g = Function(integer=True)
 
@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq << apply(Any[x:S](Equal(g(x), f(x))), g(x) > y)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0], Eq[1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[1])
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
 
 
 if __name__ == '__main__':

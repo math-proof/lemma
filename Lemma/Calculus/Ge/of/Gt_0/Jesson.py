@@ -19,7 +19,7 @@ def apply(is_positive, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -32,17 +32,17 @@ def prove(Eq):
     (w, fx0), (_w, fx1) = Eq[1].lhs.of(Mul + Mul)
     x0 = fx0.arg
     x1 = fx1.arg
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=x0 <= x1)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=x0 <= x1)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=x0 <= x1)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=x0 <= x1)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Ge.of.Le.Gt_0.Jesson, w=w)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=x0 > x1)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=x0 > x1)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Le.of.Gt.relax)
 

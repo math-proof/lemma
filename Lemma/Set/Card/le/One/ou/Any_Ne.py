@@ -12,14 +12,14 @@ def apply(S):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     S = Symbol(etype=dtype.real)
     Eq << apply(S)
 
-    Eq << Eq[-1].apply(Logic.All.given.All.AllNot, cond=Card(S) >= 2)
+    Eq << Eq[-1].apply(Bool.All.given.All.AllNot, cond=Card(S) >= 2)
 
-    Eq.ge, Eq.lt = Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq.ge, Eq.lt = Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Algebra.All.limits_assert.apply(Eq.lt.limits)
 

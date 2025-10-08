@@ -13,14 +13,14 @@ def apply(contains1, contains2, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     a, b, x0, x1 = Symbol(real=True)
     domain = Interval(a, b, left_open=True)
     w = Symbol(domain=Interval(0, 1))
     Eq << apply(Element(x0, domain), Element(x1, domain), w)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w > 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w > 0)
 
     Eq << (w <= 0).this.apply(Algebra.Eq.of.Le.squeeze.Icc)
 
@@ -28,13 +28,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[1], cond=w<=0)
+    Eq << Bool.Imp.of.Cond.apply(Eq[1], cond=w<=0)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[3], cond=w < 1)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[3], cond=w < 1)
 
-    Eq.open_Interval, Eq.ge = Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq.open_Interval, Eq.ge = Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq << (w >= 1).this.apply(Algebra.Eq.of.Ge.squeeze)
 
@@ -42,15 +42,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=w >= 1)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=w >= 1)
 
     Eq << Eq.open_Interval.this.lhs.apply(Set.In.Icc.of.Lt.Gt, simplify=None)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-1].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-1].lhs)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Set.In.Icc.Ioo.of.In.In.In)
 

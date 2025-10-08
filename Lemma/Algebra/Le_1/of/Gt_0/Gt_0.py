@@ -10,7 +10,7 @@ def apply(gt_zero_a, gt_zero_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(domain=Range(2, oo))
     a, b = Symbol(shape=(n,), real=True, given=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2] & Eq[-3]
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], -1)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], -1)
 
     Eq << Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[0] * Eq[1])
 

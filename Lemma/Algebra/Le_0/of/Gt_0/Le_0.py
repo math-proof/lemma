@@ -10,18 +10,18 @@ def apply(is_positive_x, is_nonpositive_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     Eq << apply(x > 0, y <= 0)
 
     Eq.case0 = Imply(Equal(y, 0), Eq[-1], plausible=True)
 
-    Eq << Eq.case0.this.apply(Logic.IffImpSAndEq)
+    Eq << Eq.case0.this.apply(Bool.IffImpSAndEq)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=y < 0)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=y < 0)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Lt_0.of.Gt_0.Lt_0)
 
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq <<= Eq.case0 & Eq[-1]
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[1], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[1], Eq[-1])
 
 
 

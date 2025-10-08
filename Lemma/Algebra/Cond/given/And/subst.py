@@ -11,14 +11,14 @@ def apply(f_eq, old, new, reverse=False, simplify=True, assumptions={}):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     m, n = Symbol(integer=True, positive=True)
     a, b, c = Symbol(real=True, shape=(m, n))
     S = Symbol(etype=dtype.real[m][n])
     Eq << apply(Element(a * b, S), a, 2 * c)
 
-    Eq << Logic.Cond.of.Eq.Cond.subst.apply(Eq[2].reversed, Eq[1])
+    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq[2].reversed, Eq[1])
 
 
 if __name__ == '__main__':

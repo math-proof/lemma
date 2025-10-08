@@ -19,7 +19,7 @@ def apply(eq, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Logic
+    from Lemma import Probability, Algebra, Bool
 
     m, n, t = Symbol(integer=True, positive=True)
     # suppose you have a set of documents y which is labeled with some semantic tags called keywords x;
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[2].subs(Eq[-1])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Probability.Ne_0.of.Ne_0.delete.apply(Eq[1], 0)
 

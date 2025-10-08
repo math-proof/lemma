@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(given, wrt=None):
-    from Lemma.Logic.BFnIte.of.OrAndS import expr_cond_pair
+    from Lemma.Bool.BFnIte.of.OrAndS import expr_cond_pair
     or_eqs = given.of(Or)
 
     return Greater(Piecewise(*expr_cond_pair(Greater, or_eqs, wrt)).simplify(), wrt)
@@ -11,7 +11,7 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x = Symbol(real=True, given=True)
     A, B = Symbol(etype=dtype.real, given=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement[Union]).apply(Set.AndNotSIn.of.NotIn_Union, simplify=None)
 
-    Eq << Eq[-1].apply(Logic.OrAndOr.of.OrAnd__OrAnd, cond=NotElement(x, A))
+    Eq << Eq[-1].apply(Bool.OrAndOr.of.OrAnd__OrAnd, cond=NotElement(x, A))
 
     Eq << Eq[-1].this.find(Or).apply(Algebra.Gt.of.Or.two, wrt=p)
 

@@ -62,18 +62,18 @@ def apply(et, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Logic
+    from Lemma import Algebra, Logic, Bool
 
     x, y, a, b, c, d = Symbol(etype=dtype.real)
     Eq << apply(Equal(b, x) & Equal(x, a) & Equal(c, a) & Equal(d, c) & Equal(b, y))
 
-    Eq << Logic.And_And.of.And.apply(Eq[0], index=None)
+    Eq << Bool.And_And.of.And.apply(Eq[0], index=None)
 
-    Eq <<= Logic.Eq.of.Eq.Eq.apply(Eq[-5], Eq[-4]), Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-2])
+    Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq[-5], Eq[-4]), Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-2])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-3])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-3])
 
 
 

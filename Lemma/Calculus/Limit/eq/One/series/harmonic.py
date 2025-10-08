@@ -9,7 +9,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Logic
+    from Lemma import Algebra, Calculus, Set, Bool
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     k, *ab = Eq[-1].lhs.args[0].args[-1].limits[0]
     k = k.copy(domain=Range(*ab))
-    Eq << Eq.is_continuous.apply(Logic.AllIn.of.All, (x0, Interval(k, k + 1)))
+    Eq << Eq.is_continuous.apply(Bool.AllIn.of.All, (x0, Interval(k, k + 1)))
 
     Eq.mean_value_theorem = Calculus.Any.Eq.of.IsContinuous.mean_value_theorem.apply(Eq[-1])
 
@@ -32,14 +32,14 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Ge.Le.of.In_Icc)
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
-    Eq <<= Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq.mean_value_theorem), Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.mean_value_theorem)
+    Eq <<= Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq.mean_value_theorem), Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.mean_value_theorem)
 
-    Eq <<= Eq[-2].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True), \
-    Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq <<= Eq[-2].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True), \
+    Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
-    Eq <<= Eq[-2].apply(Logic.AllIn.of.All, (k, 1, n)), Eq[-1].apply(Logic.AllIn.of.All, (k, 1, n - 1))
+    Eq <<= Eq[-2].apply(Bool.AllIn.of.All, (k, 1, n)), Eq[-1].apply(Bool.AllIn.of.All, (k, 1, n - 1))
 
     Eq <<= Algebra.LeSum.of.All_Le.apply(Eq[-2]), Algebra.GeSum.of.All_Ge.apply(Eq[-1])
 

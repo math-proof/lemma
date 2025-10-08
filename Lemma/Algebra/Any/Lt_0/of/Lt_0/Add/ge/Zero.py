@@ -12,7 +12,7 @@ def apply(lt_zero, add_ge_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[2], x, Eq[-1].lhs)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1], simplify=None)
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 

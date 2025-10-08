@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq.le = Element(t, Interval(a, b, left_open=True)).this.apply(Set.Le.of.In_Icc)
 
-    Eq <<= Logic.Imp_And.of.Cond.Imp.apply(Eq.is_continuous, Eq.le), Logic.Imp_And.of.Cond.Imp.apply(Eq.is_differentiable, Eq.le)
+    Eq <<= Bool.Imp_And.of.Cond.Imp.apply(Eq.is_continuous, Eq.le), Bool.Imp_And.of.Cond.Imp.apply(Eq.is_differentiable, Eq.le)
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.All.of.Le.All.limits.restrict), Eq[-1].this.rhs.apply(Algebra.All.of.Le.All.limits.restrict)
 
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq.any = Eq[-1].this.rhs.find(Unequal).apply(Set.Sub.gt.Zero.of.Ioc.ne.Empty, simplify=None)
 
-    Eq << Logic.Imp_And.of.Cond.Imp.apply(Eq[1], Eq.le)
+    Eq << Bool.Imp_And.of.Cond.Imp.apply(Eq[1], Eq.le)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.All.of.Le.All.limits.restrict)
 
@@ -51,19 +51,19 @@ def prove(Eq):
 
     Eq <<= Eq.any & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Any_And.of.Any.All.All_Imp)
+    Eq << Eq[-1].this.rhs.apply(Bool.Any_And.of.Any.All.All_Imp)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.AnySetOf.of.Any_And, index=1)
+    Eq << Eq[-1].this.rhs.apply(Bool.AnySetOf.of.Any_And, index=1)
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.Gt_0.of.Gt_0.Gt_0)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Any_And.of.AnySetOf_AnySetOf)
+    Eq << Eq[-1].this.rhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf)
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.Gt.of.Gt.Eq)
 
-    Eq << Logic.Imp.of.Imp_And.apply(Eq[-1], 1)
+    Eq << Bool.Imp.of.Imp_And.apply(Eq[-1], 1)
 
-    Eq << Logic.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Sub.gt.Zero)
 

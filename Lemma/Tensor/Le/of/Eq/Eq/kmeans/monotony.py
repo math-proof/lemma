@@ -22,7 +22,7 @@ def apply(eq_sum, eq_union, x=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Logic
+    from Lemma import Tensor, Algebra, Set, Bool
 
     M, n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Tensor.Iff.of.Eq.Eq.kmeans.apply(Eq[0], Eq[1], x=x)
 
-    Eq << Logic.EqSum.of.Iff.collapse.apply(Eq[-1], Eq[3].rhs.expr)
+    Eq << Bool.EqSum.of.Iff.collapse.apply(Eq[-1], Eq[3].rhs.expr)
 
     i_ = Symbol('i', Eq[-1].find(Indexed, Sum))
     Eq << Eq[-1].subs(i_.this.definition.reversed)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Tensor.Iff.of.Eq.Eq.kmeans.w_quote.apply(Eq[0], Eq[1], x=x)
 
-    Eq << Logic.EqSum.of.Iff.collapse.apply(Eq[-1], Eq.plausible.lhs.expr)
+    Eq << Bool.EqSum.of.Iff.collapse.apply(Eq[-1], Eq.plausible.lhs.expr)
 
     i__ = Symbol("i'", Eq[-1].find(Indexed, ArgMin))
     Eq << Eq[-1].subs(i__.this.definition.reversed)

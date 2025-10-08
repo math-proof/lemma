@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x, a, b = Symbol(integer=True)
     d = Symbol(integer=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.apply(Set.In_Ico.Is.And.split.Ico)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
 
 if __name__ == '__main__':

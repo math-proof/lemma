@@ -18,14 +18,14 @@ def apply(given, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, y, z, a, b = Symbol(real=True)
 
     f, g = Function(shape=(), real=True)
 
     Eq << apply(All[x:0:a](Any[y:0:b]((g(x, y, z) <= 1) & (f(x, y, z) >= 1))), index=0)
 
-    Eq << Eq[0].this.expr.expr.apply(Logic.Cond.of.And, index=0)
+    Eq << Eq[0].this.expr.expr.apply(Bool.Cond.of.And, index=0)
 
 
 if __name__ == '__main__':

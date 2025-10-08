@@ -13,30 +13,30 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(-1, 1, left_open=True, right_open=True)), Element(y, Interval(-1, 1, left_open=True, right_open=True)))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=y > 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=y > 0)
 
-    Eq <<= Logic.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=x > 0), Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=x > 0)
+    Eq <<= Bool.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=x > 0), Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=x > 0)
 
-    Eq.gt_gt, Eq.le_gt, Eq.gt_le, Eq.le_le = Eq[-4].this.apply(Logic.Imp.flatten), Eq[-3].this.apply(Logic.Imp.flatten), Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq.gt_gt, Eq.le_gt, Eq.gt_le, Eq.le_le = Eq[-4].this.apply(Bool.Imp.flatten), Eq[-3].this.apply(Bool.Imp.flatten), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[2])
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[-1], cond=x <= 0)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[-1], cond=x <= 0)
 
     Eq.x_is_nonpositive = Eq[-1].this.rhs.apply(Algebra.Mul.le.Zero.of.Le_0.Gt_0)
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[1])
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[-1], cond=y > 0)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[-1], cond=y > 0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Gt_0.of.Gt_0.Gt_0)
 
-    Eq << Logic.ImpAndS.of.Imp.Imp.apply(Eq.x_is_nonpositive, Eq[-1])
+    Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq.x_is_nonpositive, Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Gt.of.Le.Gt)
 
@@ -46,25 +46,25 @@ def prove(Eq):
 
     Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-1], cond=Eq[0], invert=True)
 
-    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[1], cond=x > 0), Logic.Imp_And.of.Cond.apply(Eq[2], cond=y > 0)
+    Eq <<= Bool.Imp_And.of.Cond.apply(Eq[1], cond=x > 0), Bool.Imp_And.of.Cond.apply(Eq[2], cond=y > 0)
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In.Icc.Inter.of.Gt.In_Icc), Eq[-1].this.rhs.apply(Set.In.Icc.Inter.of.Gt.In_Icc)
 
-    Eq << Logic.ImpAndS.of.Imp.Imp.apply(Eq[-1], Eq[-2])
+    Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq[-1], Eq[-2])
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
     Eq <<= Eq[-1] & Eq[-2]
 
     Eq << Eq[-1].this.rhs.apply(Set.Gt.Sqrt.Ioo.of.Lt.In.In.positive)
 
-    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[1], cond=x <= 0), Logic.Imp_And.of.Cond.apply(Eq[2], cond=y <= 0)
+    Eq <<= Bool.Imp_And.of.Cond.apply(Eq[1], cond=x <= 0), Bool.Imp_And.of.Cond.apply(Eq[2], cond=y <= 0)
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In.Icc.Inter.of.Le.In_Icc), Eq[-1].this.rhs.apply(Set.In.Icc.Inter.of.Le.In_Icc)
 
-    Eq << Logic.ImpAndS.of.Imp.Imp.apply(Eq[-1], Eq[-2])
+    Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq[-1], Eq[-2])
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
     Eq <<= Eq[-1] & Eq[-2]
 

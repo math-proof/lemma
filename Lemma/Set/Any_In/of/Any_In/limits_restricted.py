@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     S = Symbol(etype=dtype.real, given=True)
     e, t = Symbol(real=True)
 
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Ne_Empty.of.Any_In.apply(Eq[0], simplify=None)
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (t, S))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (t, S))
 
     Eq <<= Eq[-1] & Eq[-3]
 

@@ -18,7 +18,7 @@ def apply(ne_zero, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     m, n = Symbol(integer=True, positive=True)
     x = Symbol(random=True, real=True, shape=(oo,))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Algebra.Iff.of.Gt.split.Eq.apply(Eq[1], *Eq[0].lhs.arg.args)
 
-    Eq << Logic.Cond.of.Iff.Cond.subst.apply(Eq[-1], Eq[0])
+    Eq << Bool.Cond.of.Iff.Cond.subst.apply(Eq[-1], Eq[0])
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

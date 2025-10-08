@@ -22,7 +22,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Logic
+    from Lemma import Tensor, Algebra, Set, Bool
 
     n, l = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq.ksi_def[i].this.find(BandPart).defun()
 
-    Eq.ksi_def = Eq[-1].this.rhs.expr.apply(Logic.Bool.eq.Ite)
+    Eq.ksi_def = Eq[-1].this.rhs.expr.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq.zi_def.find(ReducedSum).this.subs(Eq.ksi_def)
 
@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(BandPart).defun()
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     j = Eq.ksi_def.rhs.variable
     Eq << Eq[-1][j]
@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Eq.zi_dquote_def[j]
 
-    Eq << Eq[-1].this.find(ExprCondPair[2]).expr.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, i=0)
+    Eq << Eq[-1].this.find(ExprCondPair[2]).expr.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, i=0)
 
     Eq << Eq[-1].this.find(And).apply(Set.Cond.Cond.Is.In.Ico)
 
@@ -100,9 +100,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InNeg)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq.zij_dquote_def = Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq.zij_dquote_def = Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
     Eq.zi_quote_def = Eq[0][i]
 
@@ -124,13 +124,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InNeg)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.zij_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.zij_def, Eq[-1])
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_dquote_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_dquote_def, Eq[-1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
 
 
 

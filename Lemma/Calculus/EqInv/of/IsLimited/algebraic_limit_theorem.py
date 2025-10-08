@@ -11,7 +11,7 @@ def apply(is_limited):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Logic
+    from Lemma import Calculus, Set, Algebra, Bool
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[-1])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq.is_limited)
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq.A_is_positive) * ε / 2
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 
     Eq << Algebra.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1), δ)
 

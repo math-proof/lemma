@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Logic
+    from Lemma import Calculus, Algebra, Set, Bool
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)
@@ -18,15 +18,15 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.find(Integral).apply(Calculus.Integral.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.rhs.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Logic.Cond_Ite.given.And.Imp.apply(Eq[-1])
+    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Set.Icc.eq.Empty.of.Gt)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
 
 if __name__ == '__main__':

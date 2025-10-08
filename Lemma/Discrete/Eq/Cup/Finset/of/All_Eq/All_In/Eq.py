@@ -24,7 +24,7 @@ def apply(all_x, all_p, equality):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n])
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.All.And.of.All.Any.apply(Eq[0], Eq[-1])
 
-    Eq << Eq[-1].this.expr.expr.apply(Logic.Eq.of.Eq.Eq)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.Eq.of.Eq.Eq)
 
     a, cond = Eq[-1].limits[0]
     from Lemma.Discrete.And.of.Eq.index import index_function

@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic, Set
+    from Lemma import Algebra, Discrete, Bool, Set
     from Lemma.Discrete.Alpha.gt.Zero import alpha
 
     x = Symbol(real=True, shape=(oo,))
@@ -58,9 +58,9 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
 
 
 

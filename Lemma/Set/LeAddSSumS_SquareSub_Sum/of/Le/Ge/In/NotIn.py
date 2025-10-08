@@ -16,7 +16,7 @@ def apply(le, ge, contains, notcontains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     y_quote = Symbol(integer=True, given=True)
     x, y = Symbol(integer=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], 0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], 0)
 
     a, b, a_quote, b_quote = Symbol(shape=(oo,), integer=True)
     Eq << Set.Any.Eq.of.Card.ne.Zero.apply(Eq[-1], a)
@@ -49,7 +49,7 @@ def prove(Eq):
     Eq << Eq[-1].subs(Eq.abs_union)
     Eq << Algebra.Any.And.of.Any.Any.apply(Eq[-1], Eq[-4], simplify=None)
     Eq << Algebra.Any.And.of.Any.Any.apply(Eq.Any_And, Eq[-1], simplify=None)
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0] & Eq[3], Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0] & Eq[3], Eq[-1], simplify=None)
     Eq << Eq[-1].this.expr.apply(Set.Le.of.Eq_Cup.Eq_Cup.Eq_Cup.Eq_Cup.Le.NotIn)
 
 

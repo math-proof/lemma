@@ -14,17 +14,17 @@ def apply(M_is_positive, lt, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     M, U = Symbol(real=True, given=True)
     Eq << apply(M > 0, U < M ** 2)
 
     x = Eq[-1].variable
-    Eq.is_negative, Eq.is_nonnegative = Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=U < 0)
+    Eq.is_negative, Eq.is_nonnegative = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=U < 0)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=U >= 0)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=U >= 0)
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-1].lhs)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-1].lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtSqrt.of.Ge_0.Lt)
 
@@ -34,31 +34,31 @@ def prove(Eq):
 
     Eq << Eq.is_negative.this.rhs.apply(Algebra.Any.given.Cond.subst, x, 0)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Lt)
 
-    Eq << Logic.Imp.given.Cond.apply(Eq[-1])
+    Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 
     Eq << Eq[0].reversed
 
     Eq << Eq.is_nonnegative.this.rhs.apply(Algebra.Any.given.Cond.subst, x, (sqrt(U) + M) / 2)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Gt.given.Gt_0), Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Lt)
 
-    Eq <<= Eq[-2].this.find(Add).apply(Algebra.Sub.Square.eq.Mul), Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq <<= Eq[-2].this.find(Add).apply(Algebra.Sub.Square.eq.Mul), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq <<= Eq[-3].this.rhs.apply(Algebra.Mul.gt.Zero.given.And.Gt_0), Eq[-2].this.rhs * 2, Eq[-1].this.rhs * 2
 
-    Eq <<= Logic.Imp_And.given.Imp.Imp.apply(Eq[-3]), Eq[-2].this.rhs.apply(Algebra.Lt.transport, lhs=0), Eq[-1].this.rhs.apply(Algebra.Gt.given.Gt_0)
+    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-3]), Eq[-2].this.rhs.apply(Algebra.Lt.transport, lhs=0), Eq[-1].this.rhs.apply(Algebra.Gt.given.Gt_0)
 
     Eq <<= Eq[-3].this.rhs * 2, Eq[-2].this.rhs * 2, Eq[-1].this.rhs.apply(Algebra.Add.gt.Zero.given.And, index=1)
 
-    Eq <<= Eq[-3].this.rhs.apply(Algebra.Add.gt.Zero.given.And, index=0), Eq[-2].this.rhs.apply(Algebra.Gt.transport), Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq <<= Eq[-3].this.rhs.apply(Algebra.Add.gt.Zero.given.And, index=0), Eq[-2].this.rhs.apply(Algebra.Gt.transport), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Logic.Imp_And.given.Imp.Imp.apply(Eq[-4]), Eq[-3].this.rhs.reversed, Eq[-2].this.rhs / 3, Eq[-1].this.lhs.apply(Algebra.GeSqrt_0.of.Ge_0)
+    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-4]), Eq[-3].this.rhs.reversed, Eq[-2].this.rhs / 3, Eq[-1].this.lhs.apply(Algebra.GeSqrt_0.of.Ge_0)
 
     Eq << Eq[-1].this.rhs / 3
 

@@ -12,7 +12,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     y = Symbol(integer=True, given=True)
     x = Symbol(integer=True)
@@ -20,7 +20,7 @@ def prove(Eq):
     X = Symbol(etype=dtype.integer, finiteset=True, given=True)
     Eq << apply(Equal(a[y], Sum[x:X](a[x]) / Card(X)))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Element(y, X))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=Element(y, X))
 
     Eq << Element(y, X).this.apply(Set.EqUnion.of.In)
 
@@ -28,9 +28,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=Eq[3].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=Eq[3].lhs)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Set.EqSumS_SquareSub_DivSum__Card.of.Eq_DivSum__Card.NotIn)
 

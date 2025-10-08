@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(integer=True)
 
     A, B = Symbol(etype=dtype.integer, given=True)
 
     Eq << apply(All[x: A](NotElement(x, B)))
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[0], simplify=False)
+    Eq << Bool.Or_Not.of.All.apply(Eq[0], simplify=False)
 
     Eq << ~Eq[-1]
 

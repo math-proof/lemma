@@ -11,12 +11,12 @@ def apply(s, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     S = Symbol(etype=dtype.integer)
 
     Eq << apply(S)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.lhs.expr.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.lhs().expr.simplify()
 

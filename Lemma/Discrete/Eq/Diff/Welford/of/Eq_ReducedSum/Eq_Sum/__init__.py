@@ -12,7 +12,7 @@ def apply(eq_x_bar, eq_M2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, M = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq.Add.Square.eq.Mul.of.Eq_ReducedSum.apply(Eq[0])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(*Eq[-2:])
+    Eq << Bool.Eq.of.Eq.Eq.apply(*Eq[-2:])
 
 
 

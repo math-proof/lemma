@@ -9,11 +9,11 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(real=True)
     Eq << apply(abs(x))
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite.subst, reverse=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite.subst, reverse=True)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Abs.eq.IteGe_0)
 

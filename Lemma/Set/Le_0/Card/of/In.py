@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(complex=True, given=True)
     Eq << apply(Element(x, Reals - {0}))
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq_0.of.EqNorm_0.apply(Eq[-1])
 
-    Eq << Logic.Cond.of.Eq.Cond.subst.apply(Eq[-1], Eq[0])
+    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':

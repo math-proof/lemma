@@ -10,12 +10,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(integer=True)
     Eq << apply((-1) ** n)
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[0])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
     Eq << Eq[1].this.find(Equal & ~Equal).apply(Algebra.Eq_even.Is.Eq)
 

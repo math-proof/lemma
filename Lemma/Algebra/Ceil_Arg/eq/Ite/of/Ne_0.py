@@ -15,7 +15,7 @@ def apply(is_nonzero, q):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Set, Logic
+    from Lemma import Algebra, Trigonometry, Set, Bool
 
     p, q = Symbol(complex=True, given=True)
     Eq << apply(Unequal(p, 0), q)
@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Algebra.EqArg.of.Eq.apply(Eq.p_cubic)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Arg.ExpI.eq.Mul.Arg)
 
@@ -93,7 +93,7 @@ def prove(Eq):
 
     Eq << Algebra.EqArg.of.Eq.apply(Eq[-2])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.rhs.arg.apply(Algebra.Mul.eq.Exp)
 
@@ -123,7 +123,7 @@ def prove(Eq):
 
     Eq << Algebra.EqArg.of.Eq.apply(Eq[-2])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.rhs.arg.apply(Algebra.Mul.eq.Exp)
 

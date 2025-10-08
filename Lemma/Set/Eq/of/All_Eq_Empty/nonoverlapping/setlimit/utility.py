@@ -22,7 +22,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(domain=Range(2, oo), given=False)
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
 
 
 if __name__ == '__main__':

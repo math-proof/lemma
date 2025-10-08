@@ -318,9 +318,12 @@ class Boolean(Basic):
             from sympy.sets import conditionset
             return conditionset(x, self, x.domain)
         return x.domain
-        from sympy.functions.elementary.piecewise import Piecewise
-        return Piecewise((x.domain, self), (x.emptySet, True))
 
+    @property
+    def toNat(self):
+        from sympy.functions.special.tensor_functions import Bool
+        return Bool(self)
+    
     @classmethod
     def unnest(cls, expr, limits, symbols, evaluate=True, **assumptions):
     # unnest any nested calls

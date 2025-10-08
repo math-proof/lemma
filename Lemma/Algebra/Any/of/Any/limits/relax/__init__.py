@@ -34,7 +34,7 @@ def apply(given, domain=None, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b = Symbol(real=True, given=True)
     x, z = Symbol(real=True)
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[0])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':

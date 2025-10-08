@@ -23,7 +23,7 @@ def apply(subset, exist):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n = Symbol(complex=True, positive=True)
     A, B = Symbol(etype=dtype.complex[n])
@@ -31,9 +31,9 @@ def prove(Eq):
     f = Function(complex=True, shape=())
     Eq << apply(Subset(B, A), Any[x:B](f(x) > 1))
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[1], simplify=None)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[1], simplify=None)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.expr.args[1:].apply(Set.In.of.In.Subset)
 

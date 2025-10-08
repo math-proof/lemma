@@ -16,7 +16,7 @@ def apply(self, lower=True, upper=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic, Tensor
+    from Lemma import Algebra, Set, Bool, Tensor
 
     m, n, l, u = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, m), real=True)
@@ -30,9 +30,9 @@ def prove(Eq):
     j = Symbol(domain=Range(m))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[-1], (i, j))
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Ite)
 

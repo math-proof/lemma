@@ -15,15 +15,15 @@ def apply(lt_zero, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(a < 0, cond= a * x + b < 0)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[1])
 
-    Eq <<= Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
+    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.GtDiv.of.Lt_0.Lt)
 

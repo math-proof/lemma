@@ -23,7 +23,7 @@ def apply(el, all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic, Set
+    from Lemma import Calculus, Algebra, Bool, Set
 
     x = Symbol(real=True)
     x0 = Symbol(real=True, given=True)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Set.AllIn_SDiff.of.All.apply(Eq[1], domain=Interval.open(x0, x0 + Min(δ_quote, delta)))
 
-    Eq << Logic.Any_And.of.Any.All.apply(*Eq[-2:], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(*Eq[-2:], simplify=None)
 
 
 

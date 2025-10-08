@@ -10,7 +10,7 @@ def apply(eq, infer, L):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), real=True)
@@ -22,7 +22,7 @@ def prove(Eq):
     i, j = Symbol(integer=True)
     Eq << Discrete.Any.And.of.Eq_Transpose.Imp_Gt_0.Cholesky.apply(*Eq[:2], L, i, j)
 
-    Eq << Logic.Any.of.Any_And.apply(Eq[-1])
+    Eq << Bool.Any.of.Any_And.apply(Eq[-1])
 
 
 

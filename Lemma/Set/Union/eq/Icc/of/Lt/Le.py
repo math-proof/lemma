@@ -10,7 +10,7 @@ def apply(lt, le, right_open=False, left_open=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     a, b, x = Symbol(real=True, given=True)
     Eq << apply(a < x, x <= b)
@@ -19,21 +19,21 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Set.OrInS.of.In_Union), Eq[-1].this.rhs.apply(Set.In_Union.given.OrInS)
 
-    Eq <<= Logic.ImpOr.given.Imp.Imp.apply(Eq[-2]), Eq[-1].this.apply(Logic.Imp.Is.ImpNotS)
+    Eq <<= Bool.ImpOr.given.Imp.Imp.apply(Eq[-2]), Eq[-1].this.apply(Bool.Imp.Is.ImpNotS)
 
     Eq <<= Eq[-3].this.lhs.apply(Set.Ge.Le.of.In_Icc), Eq[-2].this.lhs.apply(Set.Ge.Le.of.In_Icc), Eq[-1].this.lhs.args[0].apply(Set.Or.of.NotIn_Icc)
 
     Eq <<= Eq[-3].this.rhs.apply(Set.In_Ico.given.Ge.Lt), Eq[-2].this.rhs.apply(Set.In_Ico.given.Ge.Lt), Eq[-1].this.lhs.find(NotElement).apply(Set.Or.of.NotIn_Icc)
 
-    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-3].lhs), Logic.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-2].lhs), Eq[-1].this.rhs.apply(Set.NotIn_Icc.given.OrLtS)
+    Eq <<= Bool.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-3].lhs), Bool.Imp_And.of.Cond.apply(Eq[1], cond=Eq[-2].lhs), Eq[-1].this.rhs.apply(Set.NotIn_Icc.given.OrLtS)
 
-    Eq <<= Eq[-3].this.rhs.args[:2].apply(Algebra.Ge.of.Lt.Gt), Eq[-2].this.rhs.args[:2].apply(Algebra.Le.of.Le.Le),  Eq[-1].this.lhs.apply(Logic.OrAndS.of.And_Or)
+    Eq <<= Eq[-3].this.rhs.args[:2].apply(Algebra.Ge.of.Lt.Gt), Eq[-2].this.rhs.args[:2].apply(Algebra.Le.of.Le.Le),  Eq[-1].this.lhs.apply(Bool.OrAndS.of.And_Or)
 
-    Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Logic.ImpAnd.given.Imp.apply(Eq[-2])
+    Eq << Bool.ImpAnd.given.Imp.apply(Eq[-2])
 
-    Eq << Logic.ImpAnd.given.Imp.apply(Eq[-1])
+    Eq << Bool.ImpAnd.given.Imp.apply(Eq[-1])
 
 
 

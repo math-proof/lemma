@@ -41,7 +41,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n, l, u = Symbol(domain=Range(2, oo))
     d_z = Symbol(integer=True, positive=True)
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq.A_def[i]#[i:i + Min(u, n)]
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (i, 0, n - Min(u, n)))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n - Min(u, n)))
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
 

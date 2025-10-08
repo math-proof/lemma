@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, given=True)
@@ -25,12 +25,12 @@ def prove(Eq):
     Eq << Eq.induct.this.lhs.lhs.apply(Algebra.Pow.eq.Mul.split.exponent)
     Eq << Eq[-1].this.lhs.apply(Algebra.OrEqS_0.of.Mul.eq.Zero)
 
-    Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
 
 
 

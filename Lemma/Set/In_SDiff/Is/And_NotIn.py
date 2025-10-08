@@ -11,15 +11,15 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
     Eq << apply(Element(x, B - A))
 
-    Eq.suffice, Eq.necessary = Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq.suffice, Eq.necessary = Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq.suffice)
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq.suffice)
 
     Eq << Eq[-2].this.lhs.apply(Set.In.of.In_SDiff)
 

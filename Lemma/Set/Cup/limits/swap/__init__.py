@@ -9,7 +9,7 @@ def apply(self, i=0, j=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=1)
+    Eq << Bool.Eq_Ite.of.All_Imp.apply(Eq[-1], n=n, start=1)
 
 
 

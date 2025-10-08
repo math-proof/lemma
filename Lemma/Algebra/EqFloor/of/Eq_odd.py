@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     # n = q * d + r
     n = Symbol(integer=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[0] - S.One / 2
 
-    Eq << Eq[-1].this.expr.apply(Logic.Eq.of.Eq.Eq)
+    Eq << Eq[-1].this.expr.apply(Bool.Eq.of.Eq.Eq)
 
     Eq << Eq[-1].reversed
 

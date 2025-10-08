@@ -10,7 +10,7 @@ def apply(is_nonzero):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Unequal(Ceil((Arg(A) + Arg(B)) / (S.Pi * 2) - S.One / 2), 0))
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Set.Or.Eq.of.In_Finset.apply(Eq[-1])
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
 
 
 

@@ -14,7 +14,7 @@ def apply(given, x=None, y=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     k = Symbol(integer=True, positive=True)
     S = Symbol(etype=dtype.integer[k])
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq.S_supset.this.expr.apply(Set.EqUnion.of.Subset, simplify=None, ret=0)
 
-    Eq << Logic.AnySetOf.of.Any_And.apply(Eq[-1], index=1)
+    Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], index=1)
 
     Eq << Eq[-1].this.expr.apply(Set.EqCard.of.Eq)
 
@@ -43,13 +43,13 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Algebra.Eq.of.Sub.eq.Zero)
     Eq << Any(Unequal(Eq[-1].rhs, 0), *Eq.S_supset.limits, plausible=True)
     Eq << Eq[-1].this.expr.apply(Algebra.EqDelta.of.Ne_0)
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
     Eq << ~Eq[-2]
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[-4])
-    Eq << Eq[-1].this.expr.apply(Logic.Eq.of.Eq.Eq)
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[-4])
+    Eq << Eq[-1].this.expr.apply(Bool.Eq.of.Eq.Eq)
     Eq << Eq[-1].this.expr.apply(Set.Subset.of.Eq_0)
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
-    Eq << Logic.AnySetOf.of.Any_And.apply(Eq[-1])
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
+    Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1])
     Eq << Eq[-1].this.expr.apply(Set.Eq.of.Subset.Subset.squeeze)
 
 

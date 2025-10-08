@@ -26,14 +26,14 @@ def apply(given, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor
+    from Lemma import Algebra, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n + 1,))
     y = Symbol(real=True, shape=(oo,))
     Eq << apply(Equal(x, y[:n + 1]))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Tensor.EqSliceS.Eq.of.Eq)
 

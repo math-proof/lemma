@@ -9,18 +9,18 @@ def apply(self, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
     f, h = Function(real=True)
     Eq << apply(All[i:n]((f(i) > 0) & (h(i) > 0)))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Logic.All.All.of.All_And)
+    Eq << Eq[-2].this.lhs.apply(Bool.All.All.of.All_And)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.All_And.given.All.All)
+    Eq << Eq[-1].this.rhs.apply(Bool.All_And.given.All.All)
 
 
 if __name__ == '__main__':

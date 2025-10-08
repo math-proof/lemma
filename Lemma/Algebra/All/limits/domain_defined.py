@@ -26,14 +26,14 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     m, n = Symbol(integer=True, positive=True)
     f = Symbol(real=True, shape=(n,))
     i = Symbol(integer=True)
     Eq << apply(All[i:Range(m)](f[i] > 0))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.All.of.All.limits.domain_defined)
     Eq << Eq[-1].this.rhs.apply(Algebra.All.given.All.limits.domain_defined)

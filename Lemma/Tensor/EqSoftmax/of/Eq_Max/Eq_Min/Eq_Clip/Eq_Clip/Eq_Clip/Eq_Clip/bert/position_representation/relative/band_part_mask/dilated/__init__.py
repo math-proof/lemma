@@ -30,7 +30,7 @@ def apply(eq_max, eq_min, eq_K_quote, eq_V_quote, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Logic
+    from Lemma import Tensor, Algebra, Bool
 
     n, k, l, u, d = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)
@@ -74,13 +74,13 @@ def prove(Eq):
 
     Eq.le_zeta = Algebra.Le.of.Eq.relax.apply(Eq.zeta[i], upper=n)
 
-    Eq <<= Logic.BFn.of.BFnIte.Cond.apply(Eq.le_zeta, Eq[-2]), Logic.BFn.of.BFnIte.Cond.apply(Eq.le_zeta, Eq[-1])
+    Eq <<= Bool.BFn.of.BFnIte.Cond.apply(Eq.le_zeta, Eq[-2]), Bool.BFn.of.BFnIte.Cond.apply(Eq.le_zeta, Eq[-1])
 
     Eq <<= Eq[-2].this.rhs().find(Min).simplify(), Eq[-1].this.rhs().find(Min).simplify()
 
     Eq <<= Algebra.EqSlice.of.Le.Eq.apply(Eq.le_zeta, Eq.K_quote[i], start=β[i], step=d), Algebra.EqSlice.of.Le.Eq.apply(Eq.le_zeta, Eq.V_quote[i], start=β[i], step=d)
 
-    Eq <<= Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq[-2]), Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
+    Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq[-2]), Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 
     Eq <<= Eq[-2].this.rhs.apply(Tensor.Stack.Ico.simp), Eq[-1].this.rhs.apply(Tensor.Stack.Ico.simp)
 
@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Tensor.Stack.Ico.simp), Eq[-1].this.rhs.apply(Tensor.Stack.Ico.simp)
 
-    Eq <<= Logic.Eq.of.Eq.Eq.apply(Eq[-6], Eq[-2]), Logic.Eq.of.Eq.Eq.apply(Eq[-5], Eq[-1])
+    Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq[-6], Eq[-2]), Bool.Eq.of.Eq.Eq.apply(Eq[-5], Eq[-1])
 
     Eq << Eq[2].subs(Eq[-2], Eq[-1])
 

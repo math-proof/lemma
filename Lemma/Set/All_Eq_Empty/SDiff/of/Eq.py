@@ -25,7 +25,7 @@ def apply(given, excludes=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     i = Symbol(integer=True)
     k = Symbol(integer=True, positive=True, given=True)
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.expr.apply(Algebra.Lt.of.Eq.Gt.subst, Eq[-1])
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=False)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=False)
 
     Eq.gt = Eq[-1].this.expr.apply(Algebra.GtSub.of.Eq.Lt)
 
@@ -63,9 +63,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this().expr.lhs.simplify()
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
-    Eq << Logic.AnySetOf.of.Any_And.apply(Eq[-1], index=1, simplify=None)
+    Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], index=1, simplify=None)
 
     Eq << Eq[-1].this.find(Element).apply(Set.Ne.of.In)
 

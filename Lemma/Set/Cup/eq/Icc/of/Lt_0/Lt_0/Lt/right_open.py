@@ -17,7 +17,7 @@ def apply(a_is_negative, b_is_negative, lt, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     a, b = Symbol(integer=True, given=True)
     k = Symbol(integer=True)
@@ -54,13 +54,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Any_In.of.In_Cup)
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.And, slice(0, 2))
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.And, slice(0, 2))
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[1], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[1], Eq[-1])
 
     Eq << Eq[-1].this.expr.args[1:].apply(Algebra.Lt.of.Lt.Lt, ret=1)
 
@@ -68,11 +68,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expr <= 0).apply(Algebra.EqMin.of.Le)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 
     Eq << Eq[-1].this.expr.args[1].apply(Algebra.EqMax.of.Lt, ret=0)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 
     Eq << Eq[-1].this.expr.args[0].apply(Set.Lt.of.Ioc.ne.Empty)
 

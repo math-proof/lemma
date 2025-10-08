@@ -18,7 +18,7 @@ def apply(is_positive, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -29,7 +29,7 @@ def prove(Eq):
     Eq << apply(Derivative(f(x), (x, 2)) > 0, Equal(Sum[i:n](w[i]), 1))
 
     Eq << Calculus.Imp.of.Gt_0.Jesson.apply(Eq[0], w=w, n=n, x=Eq[-1].lhs.find(f).arg.base)
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[1], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[1], Eq[-1])
 
 
 if __name__ == '__main__':

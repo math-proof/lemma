@@ -27,14 +27,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     x = Symbol(shape=(oo,), etype=dtype.integer, finite=True)
     Eq << apply(All[i:n](Unequal(x[n], x[i]) & All[j:i](Unequal(x[i], x[j]))))
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[0])
+    Eq << Bool.All.All.of.All_And.apply(Eq[0])
 
     Eq << Set.All.Ne.of.All_Ne.All_Ne.apply(Eq[-1], Eq[-2])
 

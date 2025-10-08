@@ -11,7 +11,7 @@ def apply(eq, all):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Set, Logic
+    from Lemma import Algebra, Discrete, Set, Bool
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n])
@@ -26,29 +26,29 @@ def prove(Eq):
     i_ = i.copy(domain=Range(n))
     Eq.given_i = Eq.given.subs(j_, i_)
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq.given, x, Eq.given_i.expr.lhs)
+    Eq << Bool.Or_NotIn.of.All.apply(Eq.given, x, Eq.given_i.expr.lhs)
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq[-1], Eq.given_i)
 
-    Eq << Logic.All.of.All_And.apply(Eq[-1], index=-1)
+    Eq << Bool.All.of.All_And.apply(Eq[-1], index=-1)
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq.given_i, x, Eq[-1].expr.lhs)
+    Eq << Bool.Or_NotIn.of.All.apply(Eq.given_i, x, Eq[-1].expr.lhs)
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq[-2], Eq[-1])
 
-    Eq << Logic.All.of.All_And.apply(Eq[-1], index=1)
+    Eq << Bool.All.of.All_And.apply(Eq[-1], index=1)
 
-    Eq.final_statement = Logic.AllIn.of.All.apply(Eq[-1], (i_,), (j_,))
+    Eq.final_statement = Bool.AllIn.of.All.apply(Eq[-1], (i_,), (j_,))
 
     Eq << Discrete.All.Eq.of.Eq.Stack.SwapMatrix.swap2.Eq.apply(Eq[0])
 
     Eq << Eq[-1].this.expr @ x
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (Eq[-1].limits[0].args[1].args[1].arg,))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (Eq[-1].limits[0].args[1].args[1].arg,))
 
-    Eq << Logic.All_And.of.All.All.apply(Eq.final_statement, Eq[-1])
+    Eq << Bool.All_And.of.All.All.apply(Eq.final_statement, Eq[-1])
 
-    Eq.i_complement = Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq.i_complement = Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
 
     Eq.plausible = All(Element(w[i, j] @ x, S), (x, S), (j, Range(1, n)), plausible=True)
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Discrete.EqSwapMatrix.of.Eq.swap.apply(Eq[0]).subs(j, 0)
 
-    Eq.given_i = Logic.AllIn.of.All.apply(Eq.given_i, (i_,))
+    Eq.given_i = Bool.AllIn.of.All.apply(Eq.given_i, (i_,))
 
     Eq << Eq.given_i.subs(Eq[-1].reversed)
 

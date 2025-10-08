@@ -10,7 +10,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(real=True)
     A = Symbol(etype=dtype.real)
 
@@ -18,11 +18,11 @@ def prove(Eq):
 
     Eq << apply(Any[x:A]((g(x) > 0) | (f(x) > 0)))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Logic.OrAnyS.of.Any_Or)
+    Eq << Eq[-2].this.lhs.apply(Bool.OrAnyS.of.Any_Or)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Any_Or.given.OrAnyS)
+    Eq << Eq[-1].this.rhs.apply(Bool.Any_Or.given.OrAnyS)
 
 
 if __name__ == '__main__':

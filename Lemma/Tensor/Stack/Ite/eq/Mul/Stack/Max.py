@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor
+    from Lemma import Algebra, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     i, j = Symbol(integer=True)
@@ -42,13 +42,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=False)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite, index=0)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite, index=0)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, -2)
+    Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not, 0)
+    Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 0)
 
     Eq << Eq[-1].this.lhs.find(Equal).reversed
 

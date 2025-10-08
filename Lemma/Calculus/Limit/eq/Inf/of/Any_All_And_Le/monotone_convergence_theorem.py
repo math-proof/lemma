@@ -10,7 +10,7 @@ def apply(Any_All_et_ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)
@@ -19,9 +19,9 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(And).apply(Algebra.Le.of.Le.Le, ret=1)
 
-    Eq << Eq[-1].this.expr.apply(Logic.All.All.of.All_And)
+    Eq << Eq[-1].this.expr.apply(Bool.All.All.of.All_And)
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
     Eq << Eq[-2].this.expr.expr.reversed
 

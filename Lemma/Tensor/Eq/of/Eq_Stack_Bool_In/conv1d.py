@@ -22,7 +22,7 @@ def apply(eq_M, x, w, r):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic, Tensor
+    from Lemma import Set, Algebra, Bool, Tensor
 
     m, n, d, d_quote, l, r = Symbol(integer=True, positive=True)
     # r is the dilation rate
@@ -32,7 +32,7 @@ def prove(Eq):
     w = Symbol(real=True, shape=(l, d, d_quote))
     M = Symbol(real=True, shape=(m, n))
     i, k = Symbol(integer=True)
-    Eq << apply(Equal(M, Stack[i:n, k:m](Bool(Element(i, Range(β[k], ζ[k]))))), x, w, r)
+    Eq << apply(Equal(M, Stack[i:n, k:m](functions.Bool(Element(i, Range(β[k], ζ[k]))))), x, w, r)
 
     Eq.M_def = Eq[0].this.find(Element).apply(Set.In_Ico.Is.And)
 
@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum, Stack).subs(Eq.M_def)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.find(Min, Add).apply(Algebra.Add.eq.Min)
 
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.M_def)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq.convolution_definition = Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
 
@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     Eq << Eq[-1].this.find(-Floor).apply(Algebra.Mul.eq.Ceil)
 
@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Min[Floor]).apply(Algebra.Min.eq.Floor)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.convolution_definition, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.convolution_definition, Eq[-1])
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n), (k, 0, m))
 

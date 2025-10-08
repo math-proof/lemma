@@ -13,7 +13,7 @@ def apply(lt, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -23,15 +23,15 @@ def prove(Eq):
 
     Eq << Element(x, Interval(m, M, left_open=True, right_open=True)).this.apply(Set.LtSquare.of.In_Icc)
 
-    Eq << Logic.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.Imp.apply(Eq[-1])
 
     Eq << Algebra.LeSup.of.All_Lt.apply(Eq[-1])
 
     Eq << Algebra.GeSup.given.All_Any_Gt.apply(Eq[3], 'U')
 
-    Eq << Logic.All.given.Imp.apply(Eq[-1])
+    Eq << Bool.All.given.Imp.apply(Eq[-1])
 
-    Eq << Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
+    Eq << Bool.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.GtSquare.of.Lt.Lt_Max)
 

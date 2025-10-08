@@ -16,7 +16,7 @@ def apply(le, is_continuous, is_differentiable):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic, Set
+    from Lemma import Calculus, Algebra, Bool, Set
 
     from Lemma.Calculus.Any.Eq.Rolle.of.Lt.IsContinuous.IsDifferentiable.Eq import is_differentiable
     from Lemma.Calculus.All.Any.Eq.of.All_Eq.intermediate_value_theorem import is_continuous
@@ -24,11 +24,11 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(a <= b, is_continuous(f, a, b), is_differentiable(f, a, b, open=False))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=b > a)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=b > a)
 
     Eq << Imply(b <= a, Equal(a, b), plausible=True)
 
-    Eq << Logic.Imp.given.Or_Not.apply(Eq[-1]).reversed
+    Eq << Bool.Imp.given.Or_Not.apply(Eq[-1]).reversed
 
     Eq <<= Eq[-2] & Eq[-1]
 
@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << Set.AllIn_SDiff.of.All.apply(Eq[2], Interval(a, b, left_open=True, right_open=True))
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[1] & Eq[-1], cond=b > a)
+    Eq << Bool.Imp.of.Cond.apply(Eq[1] & Eq[-1], cond=b > a)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.args[0].reversed
 

@@ -12,14 +12,14 @@ def apply(lt, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     a, b, k = Symbol(integer=True)
     Eq << apply(a < b, k)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[1], cond=a >= 0)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=a >= 0)
 
-    Eq <<= Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-2].lhs), Logic.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
+    Eq <<= Bool.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-2].lhs), Bool.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-1].lhs)
 
     Eq <<= Eq[-2].this.rhs.apply(Set.Cup.eq.Icc.of.Ge_0.Lt.right_open), Eq[-1].this.rhs.apply(Set.Cup.eq.Icc.of.Lt_0.Lt.right_open)
 

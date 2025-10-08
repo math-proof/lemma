@@ -23,7 +23,7 @@ def apply(eq_D, eq_Ah, eq_Al, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Discrete, Algebra, Logic
+    from Lemma import Tensor, Discrete, Algebra, Bool
 
     n, d_z = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))
@@ -98,13 +98,13 @@ def prove(Eq):
 
     Eq <<= Eq[-1][h:n], Eq[-1][:h], Eq[-1][i]
 
-    Eq <<= Logic.EqUFnS.of.Eq.apply(Eq[-3], exp), Logic.EqUFnS.of.Eq.apply(Eq[-2], exp), Logic.EqUFnS.of.Eq.apply(Eq[-1], exp)
+    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-3], exp), Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
 
     Eq << Eq[-1] * Ones(d_z)
 
-    Eq.lower_part, Eq.upper_part, Eq.diagonal_part = Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq[1][i]), \
-        Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[2][i - h]), \
-        Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq.M_definition)
+    Eq.lower_part, Eq.upper_part, Eq.diagonal_part = Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq[1][i]), \
+        Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[2][i - h]), \
+        Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq.M_definition)
 
     Eq << Eq.divisor_definition * Ones(d_z)
 
@@ -124,7 +124,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, -2)
+    Eq << Eq[-1].this.rhs.expr.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
     Eq << Eq[-1].this.rhs.expr.simplify(wrt=i)
 
@@ -186,7 +186,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.ReducedSum)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
 
 
 

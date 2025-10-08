@@ -12,18 +12,18 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic, Tensor
+    from Lemma import Algebra, Discrete, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x1, x2 = Symbol(complex=True)
     i, j = Symbol(integer=True)
     Eq << apply(Det([Stack[j:n + 2](x1 ** j), Stack[j:n + 2](j * x1 ** j), Stack[j:n + 2, i:n](j ** i * x2 ** j)]))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(x2, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(x2, 0))
 
     Eq << Eq[-1].this.lhs.apply(Discrete.Eq.Det.Block.eq.Mul.Prod.of.Ne_0.vandermonde.n2, n, x1)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Eq[-1].this.find(Stack[2]).apply(Tensor.Stack.eq.Block.shift)
 

@@ -14,7 +14,7 @@ def apply(is_nonnegative, lt, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     a, b = Symbol(integer=True, given=True)
     k = Symbol(integer=True)
@@ -57,25 +57,25 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Any_In.of.In_Cup)
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.And, slice(0, 3, 2))
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.And, slice(0, 3, 2))
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Gt.of.Ge.relax, step=1, ret=0)
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.EqMin.of.Gt)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].this.expr.args[1:].apply(Algebra.Ge.of.Ge.Ge, ret=1)
 
     Eq << Eq[-1].this.expr.args[1].apply(Algebra.EqMax.of.Ge)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 
     Eq << Eq[-1].this.expr.args[0].apply(Set.Lt.of.Ioc.ne.Empty)
 

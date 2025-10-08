@@ -38,7 +38,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Logic
+    from Lemma import Tensor, Algebra, Set, Bool
 
     n, l, u = Symbol(domain=Range(2, oo))
     h = Symbol(integer=True, shape=(n,))
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Tensor.Softmax.eq.AddBlockS.of.Eq_Sub_Stack_Mul_LogSumExp.tf.apply(Eq[1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
 
     i = Eq[2].lhs.index
     Eq << Eq[-1][i]
@@ -80,13 +80,13 @@ def prove(Eq):
 
     Eq.ge = -Eq[-1].this.rhs.apply(Algebra.Min.eq.Add)
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.ge, Eq.eq, invert=True)
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.ge, Eq.eq, invert=True)
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.lt, Eq[-1])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.lt, Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd)
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
 
     Eq.loss = -Algebra.EqSumS.of.Eq.apply(Eq[3] * (1 + log(1 + abs(h[i]) / 2)), (i, 0, n))
 

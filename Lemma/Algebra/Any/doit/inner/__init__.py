@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)
@@ -17,13 +17,13 @@ def prove(Eq):
     n = 5
     Eq << apply(Any[j:n, i:m](x[i, j] > 0))
 
-    Eq << Iff(Any[i:m](Equal(Bool(Any[j:n](x[i, j] > 0)), 1)), Any[j:n, i:m](x[i, j] > 0), plausible=True)
+    Eq << Iff(Any[i:m](Equal(functions.Bool(Any[j:n](x[i, j] > 0)), 1)), Any[j:n, i:m](x[i, j] > 0), plausible=True)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.find(Bool, Any).apply(Algebra.Any.Is.Or.doit)
+    Eq << Eq[-1].this.find(functions.Bool, Any).apply(Algebra.Any.Is.Or.doit)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].reversed
 

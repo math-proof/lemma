@@ -22,12 +22,12 @@ def apply(given, i=-1, j=None, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b, x, y = Symbol(real=True)
     Eq << apply(Greater(x, y) & Greater(a, b))
 
-    Eq << Eq[-1].this.rhs.apply(Logic.And_Or.Is.OrAndS)
+    Eq << Eq[-1].this.rhs.apply(Bool.And_Or.Is.OrAndS)
 
 
 

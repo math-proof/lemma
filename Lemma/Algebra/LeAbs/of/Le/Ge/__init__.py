@@ -10,20 +10,20 @@ def apply(le, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     y, x = Symbol(real=True)
     Eq << apply(x <= y, x >= -y)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Abs.eq.IteGe_0)
 
-    Eq << Eq[-1].apply(Logic.BFn_Ite.given.OrAndS)
+    Eq << Eq[-1].apply(Bool.BFn_Ite.given.OrAndS)
 
-    Eq << Logic.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[-1])
 
     Eq << -Eq[1]
 
-    Eq << Logic.Cond.BFnIte.given.And_BFn.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Cond.BFnIte.given.And_BFn.apply(Eq[-1], Eq[-2])
 
 
 

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
 
     k = Symbol(integer=True, nonnegative=True, given=False)
     n = Symbol(integer=True, nonnegative=True)
@@ -83,7 +83,7 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=k)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=k)
 
 
 

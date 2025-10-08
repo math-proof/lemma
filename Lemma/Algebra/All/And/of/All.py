@@ -18,13 +18,13 @@ def apply(given, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True)
     f, g = Function(real=True)
     Eq << apply(ForAll[x:g(x) > 0](f(x) > 0))
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
 
 if __name__ == '__main__':

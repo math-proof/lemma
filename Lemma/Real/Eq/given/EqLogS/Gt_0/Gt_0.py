@@ -11,13 +11,13 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Logic
+    from Lemma import Bool
     x = Symbol(real=True)
     f, g = Function(shape=(), real=True, positive=True)
 
     Eq << apply(Equal(f(x), g(x)))
 
-    Eq << Eq[1].apply(Logic.EqUFnS.of.Eq, exp)
+    Eq << Eq[1].apply(Bool.EqUFnS.of.Eq, exp)
 
 if __name__ == '__main__':
     run()

@@ -56,14 +56,14 @@ def apply(eq, eq_historic):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Tensor
+    from Lemma import Algebra, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
     f, g = Function(real=True)
     Eq << apply(Equal(f(n), g(n)), Equal(Stack[k:n](f(k)), Stack[k:n](g(k))))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Tensor.EqStackS.of.EqStackS.Eq, simplify=None)
 

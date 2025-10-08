@@ -10,7 +10,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True, positive=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis & Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.Cond.Imp.induct.apply(Eq.initial0, Eq.initial1, Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.Cond.Imp.induct.apply(Eq.initial0, Eq.initial1, Eq[-1], n=n, start=1)
 
     Eq << Eq[0].subs(n, n + 1)
 

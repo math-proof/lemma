@@ -15,7 +15,7 @@ def apply(eq_PE, eq_PE_quote, eq_Z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Tensor, Logic
+    from Lemma import Algebra, Trigonometry, Tensor, Bool
 
     n, b = Symbol(positive=True, integer=True)
     d = Symbol(integer=True, positive=True, even=True)
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd, simplify=None)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.cossin, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.cossin, Eq[-1])
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, d))
 
@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Trigonometry.Cos.eq.Sub), Eq[-1].this.rhs.apply(Trigonometry.Sin.eq.Add)
 
-    Eq <<= Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq[-2])
+    Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq[-2])
 
     Eq << Eq.PE_quote_definition.this.rhs.subs(Eq[-3])
 
@@ -105,7 +105,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.coscos, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.coscos, Eq[-1])
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, d))
 
@@ -137,7 +137,7 @@ def prove(Eq):
 
     Eq << Eq[2][k + i]
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].subs(k, 1)
 

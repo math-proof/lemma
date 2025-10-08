@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x = Symbol(integer=True, given=True)
     given = Element(x, {0, 1})
@@ -19,15 +19,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Delta.eq.Ite)
 
-    Eq << Eq[-1].apply(Logic.Cond.given.Or.OrNot, cond=Equal(1, x))
+    Eq << Eq[-1].apply(Bool.Cond.given.Or.OrNot, cond=Equal(1, x))
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= ~Eq[-1], ~Eq[-2]
 
     Eq << Eq[-2].apply(Algebra.Ne.of.Eq.Ne.subst)
 
-    Eq << Eq[-1].apply(Logic.BFn.of.BFnIte.Cond, invert=True, ret=0)
+    Eq << Eq[-1].apply(Bool.BFn.of.BFnIte.Cond, invert=True, ret=0)
 
     Eq << Eq[-1].apply(Set.NotIn.of.Ne.Ne, simplify=False)
 

@@ -1,6 +1,6 @@
 from util import *
 
-from Lemma.Logic.Eq.of.Eq.Eq import transit
+from Lemma.Bool.Eq.of.Eq.Eq import transit
 
 
 @apply
@@ -14,7 +14,7 @@ def apply(imply, swap=False, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     a, b, c = Symbol(integer=True, shape=(oo,))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << apply(Equal(a[i], b[i]) & Equal(b[i], c[i]))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[1], Eq[2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[1], Eq[2])
 
     Eq <<= Eq[-1] & Eq[1]
 

@@ -17,7 +17,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(positive=True, integer=True, given=True)
     x = Symbol(integer=True, given=True)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Set.In.of.In_Inter.apply(Eq[-1], index=0)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], k)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], k)
 
 
 if __name__ == '__main__':

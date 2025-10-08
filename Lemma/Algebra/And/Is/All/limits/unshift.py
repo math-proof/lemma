@@ -28,7 +28,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     a = Symbol(domain=Range(n))
@@ -37,11 +37,11 @@ def prove(Eq):
 
     Eq << apply(And(All[i:a:n](x[i] > 0), x[a - 1] > 0, x[a - 2] > 0))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.given.And.All, cond={a - 2}), Eq[-1].this.lhs.apply(Logic.All.All.of.All, cond={a - 2})
+    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.given.And.All, cond={a - 2}), Eq[-1].this.lhs.apply(Bool.All.All.of.All, cond={a - 2})
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.given.And.All, cond={a - 1}), Eq[-1].this.lhs.find(All).apply(Logic.All.All.of.All, cond={a - 1})
+    Eq <<= Eq[-2].this.rhs.apply(Algebra.All.given.And.All, cond={a - 1}), Eq[-1].this.lhs.find(All).apply(Bool.All.All.of.All, cond={a - 1})
 
 
 if __name__ == '__main__':

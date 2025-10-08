@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x, y = Symbol(etype=dtype.complex, given=True)
     a = Symbol(etype=dtype.complex, shape=(oo,), given=True)
@@ -26,9 +26,9 @@ def prove(Eq):
 
     Eq << Set.OrEqS.of.In_Finset.apply(Eq.x_contains, simplify=False)
 
-    Eq << Eq[2].apply(Logic.Cond.given.Or.OrNot, cond=Equal(x, a[0]))
+    Eq << Eq[2].apply(Bool.Cond.given.Or.OrNot, cond=Equal(x, a[0]))
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= ~Eq[-2], ~Eq[-1]
 
@@ -38,9 +38,9 @@ def prove(Eq):
 
     Eq <<= Eq.x_contains & Eq[-1]
 
-    Eq << Eq[3].apply(Logic.Cond.given.Or.OrNot, cond=Equal(x, a[0]))
+    Eq << Eq[3].apply(Bool.Cond.given.Or.OrNot, cond=Equal(x, a[0]))
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= ~Eq[-2], ~Eq[-1]
 
@@ -72,9 +72,9 @@ def prove(Eq):
 
     Eq <<= Imply(And(*Eq[-1].args[::2]), And(*Eq[-1].args[::2]), plausible=True), Imply(And(*Eq[-1].args[1::2]), And(*Eq[-1].args[1::2]), plausible=True)
 
-    Eq <<= Eq[-2].this.rhs.apply(Logic.Eq.of.Eq.Eq), Eq[-1].this.rhs.apply(Algebra.Ne.of.Eq.Ne)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.Eq.of.Eq.Eq), Eq[-1].this.rhs.apply(Algebra.Ne.of.Eq.Ne)
 
-    Eq << Logic.ImpAndS.of.Imp.Imp.apply(Eq[-2], Eq[-1])
+    Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq[-2], Eq[-1])
 
     Eq << ~Eq[-1]
 

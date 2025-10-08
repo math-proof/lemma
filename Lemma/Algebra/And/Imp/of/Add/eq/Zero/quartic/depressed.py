@@ -33,19 +33,19 @@ def apply(fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, alpha, beta, gamma = Symbol(complex=True, given=True)
     fx = x ** 4 + alpha * x ** 2 + beta * x + gamma
     Eq << apply(Equal(fx, 0), x=x)
 
-    Eq << Logic.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(beta, 0))
+    Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(beta, 0))
 
-    Eq <<= Logic.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq <<= Bool.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-2].this.rhs.apply(Algebra.Or_Eq.of.Add.eq.Zero.biquadratic, x)
 
-    Eq << Logic.And.Imp.of.Imp.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed, x), None)
+    Eq << Bool.And.Imp.of.Imp.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.of.Add.eq.Zero.Ne_0.quartic.depressed, x), None)
 
 
 if __name__ == '__main__':

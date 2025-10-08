@@ -14,15 +14,15 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, c = Symbol(real=True)
     a, b = Symbol(real=True, given=True)
     f = Function(shape=(), real=True)
     Eq << apply(Any[x:a:b]((x <= c) & (f(x) >= 1)))
 
-    Eq << Logic.Any.of.Any_And.apply(Eq[0], index=0)
-    Eq << Logic.Any.of.Any_And.apply(Eq[0], index=1)
+    Eq << Bool.Any.of.Any_And.apply(Eq[0], index=0)
+    Eq << Bool.Any.of.Any_And.apply(Eq[0], index=1)
 
 
 

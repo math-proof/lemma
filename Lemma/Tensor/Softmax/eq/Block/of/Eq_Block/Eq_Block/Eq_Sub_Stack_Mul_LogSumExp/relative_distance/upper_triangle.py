@@ -33,7 +33,7 @@ def apply(eq_V, eq_V_quote, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Logic
+    from Lemma import Tensor, Algebra, Bool
 
     n, k = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq.A_quote_def[i]#[i:i + u]
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (i, 0, n - u))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (i, 0, n - u))
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + u))
 

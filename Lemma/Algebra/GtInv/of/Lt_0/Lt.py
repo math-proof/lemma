@@ -11,7 +11,7 @@ def apply(is_positive, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(a < 0, x < a)
@@ -20,13 +20,13 @@ def prove(Eq):
 
     Eq << Algebra.Ne.of.Lt.apply(Eq[0])
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 
     Eq.x_is_negative = Algebra.Lt.of.Lt.Lt.apply(Eq[0], Eq[1])
 
     Eq << Algebra.Ne.of.Lt.apply(Eq.x_is_negative)
 
-    Eq << Logic.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 
     Eq << Algebra.Gt_0.of.Lt_0.Lt_0.apply(Eq[0], Eq.x_is_negative)
 

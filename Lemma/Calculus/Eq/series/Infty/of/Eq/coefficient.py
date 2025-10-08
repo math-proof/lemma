@@ -95,11 +95,11 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis_k, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.Imp.induct.second.apply(Eq.initial, Eq[-1], n=m + 1, k=k, hypothesis=True)
+    Eq << Bool.Cond.of.Cond.Imp.induct.second.apply(Eq.initial, Eq[-1], n=m + 1, k=k, hypothesis=True)
 
     Eq << Eq.hypothesis.subs(m, n)
 
-    Eq << Logic.All.of.All_OrNot.apply(Eq[-1], 1)
+    Eq << Bool.All.of.All_OrNot.apply(Eq[-1], 1)
 
 
 

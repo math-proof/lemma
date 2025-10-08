@@ -25,7 +25,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(domain=Range(2, oo))
@@ -37,27 +37,27 @@ def prove(Eq):
     y = Symbol(Stack[i](Piecewise((x[i], i < n), (emptySet, True))))
     Eq.y_definition = y[i].this.definition
 
-    Eq << Eq.y_definition.apply(Logic.AllIn.of.All, (i, 0, n))
+    Eq << Eq.y_definition.apply(Bool.AllIn.of.All, (i, 0, n))
 
     Eq.yi_definition = Eq[-1].this().expr.rhs.simplify()
 
     Eq << Eq.yi_definition.reversed
 
-    Eq << Logic.All_And.of.All.All.apply(Eq[0], Eq[-1], simplify=None)
+    Eq << Bool.All_And.of.All.All.apply(Eq[0], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
 
-    Eq << Logic.All_And.of.All.All.apply(Eq[-1], Eq[-3].limits_subs(i, j), simplify=None)
+    Eq << Bool.All_And.of.All.All.apply(Eq[-1], Eq[-3].limits_subs(i, j), simplify=None)
 
-    Eq.nonoverlapping = Eq[-1].this.expr.apply(Logic.UFn.of.UFn.Eq)
+    Eq.nonoverlapping = Eq[-1].this.expr.apply(Bool.UFn.of.UFn.Eq)
 
-    Eq << Eq.y_definition.apply(Logic.AllIn.of.All, (i, n, oo))
+    Eq << Eq.y_definition.apply(Bool.AllIn.of.All, (i, n, oo))
 
     Eq << Eq[-1].this().expr.rhs.simplify()
 
     Eq << Eq[-1].this.expr.apply(Set.EqInter.of.Eq, y[j])
 
-    Eq << Eq[-1].apply(Logic.AllIn.of.All, (j, j_domain))
+    Eq << Eq[-1].apply(Bool.AllIn.of.All, (j, j_domain))
 
     Eq <<= Eq[-1] & Eq.nonoverlapping
 

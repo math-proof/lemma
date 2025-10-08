@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
     from Lemma.Discrete.Alpha.gt.Zero import alpha
     from Lemma.Discrete.H.eq.Add.definition import H
     from Lemma.Discrete.K.eq.Add.definition import K
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne_0.of.Gt)
 
-    Eq << Logic.Imp.given.Imp_And.apply(Eq[-1])
+    Eq << Bool.Imp.given.Imp_And.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ne_0.Eq.given.And.Mul)
 
@@ -82,7 +82,7 @@ def prove(Eq):
 
     Eq <<= Eq.alpha_recurrence & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Eq.of.Eq.Eq, reverse=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Eq.of.Eq.Eq, reverse=True)
 
     Eq << Eq[-1].this.find(H).defun()
 
@@ -104,9 +104,9 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n, 2)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n, 2)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq.hypothesis)
 
 
 

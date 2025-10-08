@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     i = Symbol(integer=True)
     k = Symbol(integer=True, positive=True, given=True)
@@ -46,7 +46,7 @@ def prove(Eq):
     Eq << Eq[-4].subs(Eq[-1])
 
     Eq << Eq.paradox.this.expr.apply(Set.Gt_0.of.Ne_Empty)
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 
 
 

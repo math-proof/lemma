@@ -9,7 +9,7 @@ def apply(el):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi / 4)))
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq.ft.subs(t, S.Pi / 4)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Calculus.Any.Eq.Rolle.of.IsContinuous.IsDifferentiable.Eq.apply(Eq.All_Eq, Eq.all_el, Eq[-1])
 

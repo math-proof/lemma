@@ -20,7 +20,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic, Tensor
+    from Lemma import Discrete, Algebra, Bool, Tensor
     from Lemma.Discrete.Alpha.gt.Zero import alpha
     from Lemma.Discrete.H.eq.Add.definition import H
 
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq.of.Eq.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
+    Eq << Bool.Eq.of.Eq.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=2)
 
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Real
+    from Lemma import Algebra, Bool, Real
 
     t = Symbol(real=True)
     x = Symbol(real=True, positive=True)
@@ -22,10 +22,10 @@ def prove(Eq):
     y = Symbol(log(x))
     Eq << y.this.definition
 
-    Eq <<= Eq[-1] * t, Logic.EqUFnS.of.Eq.apply(Eq[-1], exp)
+    Eq <<= Eq[-1] * t, Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
 
-    Eq <<= Logic.EqUFnS.of.Eq.apply(Eq[-2], exp), Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=t)
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=t)
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

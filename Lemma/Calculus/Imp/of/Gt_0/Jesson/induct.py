@@ -25,7 +25,7 @@ def apply(is_positive, x=None, w=None, i=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Logic
+    from Lemma import Algebra, Set, Calculus, Bool
 
     n = Symbol(integer=True, positive=True, given=False)
     a, b = Symbol(real=True)
@@ -37,9 +37,9 @@ def prove(Eq):
 
     Eq.initial = Eq[1].subs(n, 1)
 
-    Eq << Eq.initial.this.lhs.apply(Logic.Cond.of.Eq.Cond.subst, ret=0)
+    Eq << Eq.initial.this.lhs.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq.induct = Eq[1].subs(n, n + 1)
 
@@ -47,15 +47,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(f[~Sum]).apply(Algebra.Sum.eq.Add.pop)
 
-    Eq.lt, Eq.ge = Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w[n] < 1)
+    Eq.lt, Eq.ge = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w[n] < 1)
 
-    Eq << Eq.ge.this.apply(Logic.Imp.flatten)
+    Eq << Eq.ge.this.apply(Bool.Imp.flatten)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
 
-    Eq << Logic.Imp_And.given.Imp.And.subst.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Cond.of.And, index=1)
+    Eq << Eq[-1].this.lhs.apply(Bool.Cond.of.And, index=1)
 
     i = Eq[-1].lhs.variable
     fxi = Eq[-1].rhs.find(Sum, f)
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     x = fxi.arg.base
     Eq << Eq[-1].lhs.this.apply(Algebra.Sum.eq.Zero.Mul.of.All_Eq_0, x)
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 
-    Eq << Eq.lt.this.apply(Logic.Imp.flatten)
+    Eq << Eq.lt.this.apply(Bool.Imp.flatten)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={n})
 
@@ -82,29 +82,29 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Less) - w[n]
 
-    Eq << Eq[-1].this.apply(Logic.Imp.fold, index=2)
+    Eq << Eq[-1].this.apply(Bool.Imp.fold, index=2)
 
     Eq << Eq[-1].this.find(And).apply(Algebra.EqDiv.of.Gt_0.Eq, simplify=None, ret=1)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.All.All.of.All, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Bool.All.All.of.All, cond={n})
 
-    Eq << Eq[-1].this.apply(Logic.Imp.fold)
+    Eq << Eq[-1].this.apply(Bool.Imp.fold)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp.fold, index=slice(1, None))
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, index=slice(1, None))
 
     Eq << Eq[-1].this.find(And).apply(Algebra.All.And.of.Cond.All, simplify=None)
 
     Eq << Eq[-1].this.find(And).apply(Algebra.GeDiv.of.Gt_0.Ge, ret=0)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp.fold, 1)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, 1)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
 
     w_ = Symbol('w', Stack[i:n](w[i] / (1 - w[n])))
     Eq << w_[i].this.definition * (1 - w[n])
@@ -125,9 +125,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(f[~Sum]).simplify()
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[-1], cond=Eq.induct1.lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq.induct1.lhs)
 
-    Eq << Eq[-1].this.apply(Logic.Imp_Imp.Is.Imp_Imp.And)
+    Eq << Eq[-1].this.apply(Bool.Imp_Imp.Is.Imp_Imp.And)
 
     Eq <<  Eq[-1].this.find(And[~Element]).apply(Set.Lt.of.In_Icc)
 
@@ -135,35 +135,35 @@ def prove(Eq):
 
     Eq.hypothesis = Eq[-1].this.find(GreaterEqual[Mul]) + w[n] * f(x[n])
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[0], cond=Eq.induct1.lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=Eq.induct1.lhs)
 
-    Eq << Eq[-1].this.find(Greater).apply(Logic.All.of.Cond, Eq[-1].find(Derivative).variable)
+    Eq << Eq[-1].this.find(Greater).apply(Bool.All.of.Cond, Eq[-1].find(Derivative).variable)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Element(x[n], domain, plausible=True)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[-1], cond=Eq[-2].lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq[-2].lhs)
 
     Eq <<= Eq[-3] & Eq[-1]
 
-    Eq.suffices = Eq[-1].this.rhs.apply(Logic.Imp.of.Cond, cond=Eq.induct1.rhs.lhs)
+    Eq.suffices = Eq[-1].this.rhs.apply(Bool.Imp.of.Cond, cond=Eq.induct1.rhs.lhs)
 
     Eq << Element(x[i], domain, plausible=True)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[-1], cond=Eq.induct1.rhs.lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq.induct1.rhs.lhs)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1], index=1)
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], index=1)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.All.And.of.Cond.All, simplify=None)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1], index=0)
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], index=0)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.domain_defined)
 
     Eq << Eq[-1].this.rhs.apply(Set.In.of.Eq_Sum.All.mean)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[-1], cond=Eq.suffices.lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq.suffices.lhs)
 
     Eq <<= Eq.suffices & Eq[-1]
 
@@ -179,7 +179,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
 
 
 

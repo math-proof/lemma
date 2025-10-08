@@ -25,7 +25,7 @@ def apply(eq0, eq1, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, a, b = Symbol(complex=True)
     c, d = Symbol(complex=True, zero=False)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq <<= Eq[0] / c, Eq[1] / d
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
 
 if __name__ == '__main__':

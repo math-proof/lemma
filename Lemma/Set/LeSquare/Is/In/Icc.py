@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x, a = Symbol(real=True)
     Eq << apply(x ** 2 <= a ** 2)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(GreaterEqual).reversed
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.And.Le.of.LeSquare)
 

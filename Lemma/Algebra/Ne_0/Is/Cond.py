@@ -9,12 +9,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b = Symbol(real=True)
-    Eq << apply(Unequal(Bool(a > b), 0))
+    Eq << apply(Unequal(functions.Bool(a > b), 0))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Cond.of.Ne_0)
 

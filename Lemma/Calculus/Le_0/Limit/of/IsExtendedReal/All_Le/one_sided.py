@@ -22,7 +22,7 @@ def apply(el, all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Logic
+    from Lemma import Algebra, Calculus, Set, Bool
 
     x = Symbol(real=True)
     x0 = Symbol(real=True, given=True)
@@ -32,15 +32,15 @@ def prove(Eq):
         Element(Limit[x:x0 + S.Infinitesimal](f(x)), ExtendedReals),
         All[x:x0:x0 + delta](f(x) <= 0))
 
-    Eq.is_real, Eq.is_not_real = Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Element(Limit[x:x0 + S.Infinitesimal](f(x)), Reals))
+    Eq.is_real, Eq.is_not_real = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Element(Limit[x:x0 + S.Infinitesimal](f(x)), Reals))
 
-    Eq << Logic.Imp.given.And.Imp.invert.apply(Eq.is_real, cond=Eq[1])
+    Eq << Bool.Imp.given.And.Imp.invert.apply(Eq.is_real, cond=Eq[1])
 
-    Eq << Logic.Or.given.Cond.apply(Eq[-1], -1)
+    Eq << Bool.Or.given.Cond.apply(Eq[-1], -1)
 
     Eq << Eq[-2].this.lhs.apply(Calculus.Le_0.Limit.of.IsReal.All_Le.one_sided)
 
-    Eq.infer, Eq.le_infinity = Logic.Imp.given.And.Imp.invert.apply(Eq.is_not_real, cond=Eq[0])
+    Eq.infer, Eq.le_infinity = Bool.Imp.given.And.Imp.invert.apply(Eq.is_not_real, cond=Eq[0])
 
     Eq << Eq[0].simplify()
 
@@ -55,9 +55,9 @@ def prove(Eq):
 
     Eq << Set.AllIn_SDiff.of.All.apply(Eq[1], domain=Interval.open(x0, x0 + Min(delta, δ_quote)))
 
-    Eq << Logic.Any_And.of.Any.All.apply(*Eq[-2:])
+    Eq << Bool.Any_And.of.Any.All.apply(*Eq[-2:])
 
-    Eq << Logic.Imp.given.And.Imp.invert.apply(Eq.infer, cond=Eq.ne_infinity)
+    Eq << Bool.Imp.given.And.Imp.invert.apply(Eq.infer, cond=Eq.ne_infinity)
 
     Eq << Eq[-1].this.lhs.apply(Set.In_SDiff.of.In.Ne)
 

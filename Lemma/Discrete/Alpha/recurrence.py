@@ -16,7 +16,7 @@ def apply(A):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
     from Lemma.Discrete.Alpha.gt.Zero import alpha
 
     x = Symbol(real=True, positive=True, shape=(oo,))
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
 
 
 

@@ -11,7 +11,7 @@ def apply(lt, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic
+    from Lemma import Discrete, Algebra, Set, Bool
 
     x = Symbol(real=True)
     n = Symbol(integer=True, positive=True)
@@ -21,15 +21,15 @@ def prove(Eq):
     d_quote = Symbol(domain=Range(n))
     Eq << Discrete.Diff.eq.Zero.apply(Difference(x ** d_quote, (x, n)))
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], d_quote)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], d_quote)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq[-2].variable, d)
 
     Eq << Eq[-1].this.lhs.apply(Set.In_Ico.given.And)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
 
 

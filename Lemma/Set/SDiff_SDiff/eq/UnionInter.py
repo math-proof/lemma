@@ -12,7 +12,7 @@ def apply(complement, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     A, B, C = Symbol(etype=dtype.integer)
     Eq << apply(A - (B - C))
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[0].rhs.this.subs(Eq[-1].reversed)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 
 
 if __name__ == '__main__':

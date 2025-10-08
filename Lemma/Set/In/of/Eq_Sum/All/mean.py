@@ -11,7 +11,7 @@ def apply(eq, forall):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -23,33 +23,33 @@ def prove(Eq):
 
     Eq.initial = Eq.hypothesis.subs(n, 1)
 
-    Eq << Logic.Imp_And.given.Imp.And.subst.apply(Eq.initial, index=0)
+    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq.initial, index=0)
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
-    Eq << Eq.induct.this.find(All).apply(Logic.All.All.of.All_And)
+    Eq << Eq.induct.this.find(All).apply(Bool.All.All.of.All_And)
 
     Eq << Eq[-1].this.find(Element[~Sum]).apply(Algebra.Sum.eq.Add.pop)
 
-    Eq.lt, Eq.ge = Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w[n] < 1)
+    Eq.lt, Eq.ge = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=w[n] < 1)
 
-    Eq << Eq.ge.this.rhs.apply(Logic.Imp.fold, 2, swap=True)
+    Eq << Eq.ge.this.rhs.apply(Bool.Imp.fold, 2, swap=True)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAll_Eq_0.of.Eq_Sum.Ge.All_Ge_0.squeeze)
 
     Eq << Eq[-1].this.find(All[Element]).apply(Algebra.Cond.of.All.subst, i, n)
 
-    Eq << Logic.Imp_And.given.Imp.And.subst.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(All).apply(Algebra.Sum.eq.Zero.Mul.of.All_Eq_0, x)
 
-    Eq << Logic.Imp_And.given.Imp.And.subst.apply(Eq[-1], index=1)
+    Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], index=1)
 
-    Eq << Eq.lt.this.rhs.apply(Logic.Imp.fold)
+    Eq << Eq.lt.this.rhs.apply(Bool.Imp.fold)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq << Eq[-1].this.find(Equal[~Sum]).apply(Algebra.Sum.eq.Add.pop)
 
@@ -63,31 +63,31 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(All[2]).apply(Algebra.All.Is.And.split, cond={n})
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp.fold, 2)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, 2)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.fold, slice(1, None))
+    Eq << Eq[-1].this.apply(Bool.Imp.fold, slice(1, None))
 
     Eq << Eq[-1].this.lhs.apply(Algebra.All.And.of.Cond.All, simplify=None)
 
     Eq << Eq[-1].this.lhs.find(And).apply(Algebra.GeDiv.of.Lt.Ge, ret=0)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.swap)
+    Eq << Eq[-1].this.apply(Bool.Imp.swap)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp.fold, slice(0, 2), swap=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, slice(0, 2), swap=True)
 
     Eq << Eq[-1].this.rhs.rhs.lhs.apply(Set.In.Icc.of.Lt.Ge)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp.fold, 0, swap=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, 0, swap=True)
 
-    Eq << Eq[-1].this.find(All & All).apply(Logic.All_And.of.All.All)
+    Eq << Eq[-1].this.find(All & All).apply(Bool.All_And.of.All.All)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
 
     w_ = Symbol('w', Stack[i:n](w[i] / (1 - w[n])))
     Eq << (w_[i].this.definition * (1 - w[n])).reversed
@@ -96,11 +96,11 @@ def prove(Eq):
 
     Eq << Algebra.Cond.of.Cond.subst.apply(Eq.hypothesis, w[:n], w_)
 
-    Eq << Logic.Imp.of.Cond.apply(Eq[-1], cond=Eq[-2].rhs.lhs)
+    Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq[-2].rhs.lhs)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.swap)
+    Eq << Eq[-1].this.apply(Bool.Imp.swap)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Imp_And.of.ImpAnd)
+    Eq << Eq[-1].this.rhs.apply(Bool.Imp_And.of.ImpAnd)
 
     Eq << Eq[-1].this.rhs.rhs.apply(Set.In.Icc.of.In.In.In)
 
@@ -110,9 +110,9 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=n, start=1)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0] & Eq[1], Eq.hypothesis)
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0] & Eq[1], Eq.hypothesis)
 
 
 

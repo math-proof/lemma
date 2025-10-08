@@ -9,7 +9,7 @@ def apply(x, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x = Symbol(integer=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)
@@ -25,19 +25,19 @@ def prove(Eq):
 
     Eq << Algebra.All.given.All.limits.split.apply(Eq[-1], index=1)
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[-1])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[-1])
 
     Eq.induct = Eq[0].subs(n, n + 2)
 
     Eq << Eq.induct.this.expr.lhs.defun()
 
-    Eq << Eq[0].this.expr.apply(Logic.AllIn.of.All, (x[n:n + 2], CartesianSpace(Range(1, oo), 2)), simplify=None)
+    Eq << Eq[0].this.expr.apply(Bool.AllIn.of.All, (x[n:n + 2], CartesianSpace(Range(1, oo), 2)), simplify=None)
 
     Eq.is_positive = Algebra.All.of.All.limits.merge.apply(Eq[-1])
 
     Eq.hypothesis = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.hypothesis.this.expr.apply(Logic.AllIn.of.All, (x[n + 1], 1, oo), simplify=None)
+    Eq << Eq.hypothesis.this.expr.apply(Bool.AllIn.of.All, (x[n + 1], 1, oo), simplify=None)
 
     Eq << Algebra.All.And.of.All.apply(Eq[-1], index=0)
 
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0] & Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.Cond.Imp.induct.apply(Eq.initial0, Eq.initial1, Eq[-1], n=n, start=1)
+    Eq << Bool.Cond.of.Cond.Cond.Imp.induct.apply(Eq.initial0, Eq.initial1, Eq[-1], n=n, start=1)
 
     Eq << Eq[0].subs(n, n + 1)
 

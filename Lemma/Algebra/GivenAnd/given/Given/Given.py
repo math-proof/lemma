@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, nonnegative=True)
     f, g = Symbol(integer=True, shape=(oo,))
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].reversed
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-2].reversed
 

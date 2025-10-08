@@ -104,21 +104,21 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     A, C = Symbol(etype=dtype.integer)
     B = Function(etype=dtype.integer)
     x, y, z = Symbol(integer=True)
     f = Function(real=True)
-    Eq << apply(Sum[x, y, z:C](f(x, y) * Bool(Element(x, A) & Element(y, B(x)))))
+    Eq << apply(Sum[x, y, z:C](f(x, y) * functions.Bool(Element(x, A) & Element(y, B(x)))))
 
     Eq << Eq[0].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.find(Bool).apply(Logic.BoolAnd.eq.MulBoolS)
+    Eq << Eq[-1].this.rhs.find(functions.Bool).apply(Bool.BoolAnd.eq.MulBoolS)
 
-    Eq << Eq[-1].this.lhs.find(Bool[And]).apply(Logic.BoolAnd.eq.MulBoolS)
+    Eq << Eq[-1].this.lhs.find(functions.Bool[And]).apply(Bool.BoolAnd.eq.MulBoolS)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap)
 

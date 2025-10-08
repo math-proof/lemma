@@ -9,7 +9,7 @@ def apply(eq, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))
@@ -19,10 +19,10 @@ def prove(Eq):
                                                 [Ones(n - h, h), Zeros(n - h, n - h)]])), a)
 
     i, j = Symbol(integer=True)
-    Ξ_quote = Symbol("Ξ'", Stack[j:n, i:n](Bool(Equal(i, j) | (i < h) & (j >= h) | (i >= h) & (j < h))))
+    Ξ_quote = Symbol("Ξ'", Stack[j:n, i:n](functions.Bool(Equal(i, j) | (i < h) & (j >= h) | (i >= h) & (j < h))))
     Eq << Ξ_quote[i, j].this.definition
 
-    Eq.Ξ_quote_definition = Eq[-1].this.rhs.apply(Logic.Bool.eq.Ite)
+    Eq.Ξ_quote_definition = Eq[-1].this.rhs.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[0][i, j]
 
@@ -38,25 +38,25 @@ def prove(Eq):
 
     Eq << Eq.Ξ_definition.this.rhs.args[-1].expr.apply(Algebra.Delta.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
     Eq << Eq[-1].this.rhs.args[0].expr.apply(Algebra.Delta.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite, index=0)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite, index=0)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, -2)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
     Eq << Eq[-1].this.rhs.args[1].cond.apply(Algebra.And.collect, cond=i < h)
 
     Eq << Eq[-1].this.rhs.args[1].cond.apply(Algebra.And.collect, cond=j < h)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, -2)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
     Eq << Eq[-1].this.find(And).apply(Algebra.And.Is.Or.collect, cond=Equal(i, j))
 
-    Eq << Eq[-1].this.find(And).apply(Logic.And_Or.Is.OrAndS)
+    Eq << Eq[-1].this.find(And).apply(Bool.And_Or.Is.OrAndS)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.Ξ_quote_definition, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.Ξ_quote_definition, Eq[-1])
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 

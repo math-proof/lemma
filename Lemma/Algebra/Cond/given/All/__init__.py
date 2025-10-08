@@ -5,19 +5,19 @@ from util import *
 def apply(given, var=None):
     if var is None:
         var = given.wrt
-    from Lemma.Logic.All.of.Cond import all
+    from Lemma.Bool.All.of.Cond import all
     return all(given, var)
 
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     e = Symbol(positive=True)
     f = Function(shape=(), integer=True)
     Eq << apply(f(e) > 0)
 
-    Eq << Logic.Or_Not.of.All.apply(Eq[1])
+    Eq << Bool.Or_Not.of.All.apply(Eq[1])
 
     Eq << Eq[-1].subs(Eq[1].variable, e)
 

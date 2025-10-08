@@ -16,14 +16,14 @@ def apply(given, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n, m = Symbol(integer=True, positive=True, given=True)
     i = Symbol(domain=Range(n))
     f, g = Function(shape=(m, m), integer=True)
     Eq << apply(Equal(f(i), g(i)))
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[0], det)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], det)
 
 
 

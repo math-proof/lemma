@@ -14,11 +14,11 @@ def apply(y, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     y = Symbol(complex=True)
     Eq << apply(y)
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[0])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[0])
 
 if __name__ == '__main__':
     run()

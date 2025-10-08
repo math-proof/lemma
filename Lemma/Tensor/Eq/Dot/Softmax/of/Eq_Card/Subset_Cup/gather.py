@@ -15,7 +15,7 @@ def apply(eq_cup, subset, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Logic
+    from Lemma import Tensor, Algebra, Set, Discrete, Bool
 
     n, k, m = Symbol(integer=True, positive=True)
     r = Symbol(shape=(n,), integer=True)
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Set.EqReducedSum.of.Eq_Card.apply(Eq[0], Eq[-1].find(Sum))
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq.zi_definition = Eq.zi_definition.subs(Eq[-1])
 
@@ -109,7 +109,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).limits_subs(i, j)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
 
 
 

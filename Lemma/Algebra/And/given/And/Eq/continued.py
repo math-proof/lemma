@@ -12,7 +12,7 @@ def apply(et_eq, model):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Logic
+    from Lemma import Algebra, Logic, Bool
 
     from Lemma.Algebra.And.Eq.of.And.just_intonation import equate
     λ_1, λ_2, λ_4, λ_5, λ_6 = Symbol(real=True, zero=False)
@@ -23,7 +23,7 @@ def prove(Eq):
     λ_6_sharp = Symbol(r"λ_{6^\#}", real=True)
     Eq << apply(equate(λ_1_sharp / λ_1, λ_2_sharp / λ_2, λ_4_sharp / λ_4, λ_5_sharp / λ_5, λ_6_sharp / λ_6), λ_1_sharp / λ_1)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[0], None)
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[0], None)
 
     Eq << Eq[-4].reversed
 

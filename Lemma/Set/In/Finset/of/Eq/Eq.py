@@ -12,14 +12,14 @@ def apply(equality_A, equality_B):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x, a, b = Symbol(integer=True)
 
     Eq << apply(Equal(x, a), Equal(x, b))
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[0], Eq[1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq[1])
 
     Eq << Eq[-2].subs(Eq[-1])
 

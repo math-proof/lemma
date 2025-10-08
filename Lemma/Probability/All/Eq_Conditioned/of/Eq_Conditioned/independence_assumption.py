@@ -11,7 +11,7 @@ def apply(eq, i):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Set, Logic
+    from Lemma import Probability, Algebra, Set, Bool
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -26,14 +26,14 @@ def prove(Eq):
     j = Symbol(integer=True, nonnegative=True)
     Eq << Eq[2][j]
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], j)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 
     Eq << Eq[-1].this.apply(Algebra.All.limits.subst.offset, -1)
 
     Eq << Eq[-1].this.apply(Algebra.All.limits.subst.offset, -t)
 
     j = Eq[-1].variable
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.reversed
 
@@ -45,7 +45,7 @@ def prove(Eq):
 
 
 
-    Eq << Logic.All.given.Imp.apply(Eq[1])
+    Eq << Bool.All.given.Imp.apply(Eq[1])
 
     Eq << Eq[-1].this.find(Element).apply(Set.Lt.of.In_Ico)
 

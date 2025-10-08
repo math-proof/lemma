@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.expr.apply(Algebra.Lt.of.Eq.Gt.subst, Eq[-1])
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=False)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=False)
 
     Eq.gt = Eq[-1].this.expr.apply(Algebra.GtSub.of.Eq.Lt)
 

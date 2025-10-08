@@ -12,7 +12,7 @@ def apply(is_positive, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True)
     f, g = Function(shape=(), real=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Eq[0].subs(Eq[1])
 

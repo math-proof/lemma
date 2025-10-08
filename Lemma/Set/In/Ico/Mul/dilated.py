@@ -16,13 +16,13 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x, a, b = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)
     Eq << apply(Element(x, Range(a, b)), d)
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[0])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
     Eq << Eq[-2].this.lhs.apply(Set.In.Mul.Ico.of.In.dilated, d)
 

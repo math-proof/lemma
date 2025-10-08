@@ -29,7 +29,7 @@ def apply(eq_theta_r, eq_theta_c, eq_R, i_, j_):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Discrete, Algebra, Trigonometry, Logic
+    from Lemma import Tensor, Discrete, Algebra, Trigonometry, Bool
     # n denotes sequence length (seq_length)
     # b_r, b_c denotes 10000
     n = Symbol(integer=True, positive=True)
@@ -117,7 +117,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(BlockMatrix[2]).apply(Algebra.Block.eq.Eye)
 
-    Eq.eq_matmul = Logic.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
+    Eq.eq_matmul = Bool.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
 
     Eq << Eq[2].subs(i, i_quote).subs(j, j_quote).T @ Eq[2]
 
@@ -140,7 +140,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
-    Eq.eq_matmul = Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq.eq_matmul)
+    Eq.eq_matmul = Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq.eq_matmul)
 
     Eq << Eq[2].subs(i, i - i_quote).subs(j, j - j_quote)
 
@@ -155,7 +155,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(-BlockMatrix).apply(Algebra.Mul.eq.Block)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.eq_matmul, Eq[-1])
 
 
 

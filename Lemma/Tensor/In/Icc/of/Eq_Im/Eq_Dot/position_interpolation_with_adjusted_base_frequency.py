@@ -18,7 +18,7 @@ def apply(eq_cosine_similarity, eq_rotary_ABF):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Trigonometry, Logic, Tensor
+    from Lemma import Discrete, Algebra, Set, Trigonometry, Bool, Tensor
 
     # N denotes sequence length (seq_length)
     # b denotes 10000 adjusted to 500000
@@ -129,13 +129,13 @@ def prove(Eq):
 
     Eq << Trigonometry.Gt_0.Sin.of.In_Icc.apply(Eq[-1])
 
-    Eq.gt_zero = Logic.All.of.Cond.apply(Eq[-1], j)
+    Eq.gt_zero = Bool.All.of.Cond.apply(Eq[-1], j)
 
     Eq << Algebra.All_Le_ReducedMax.apply(ReducedMax(x ** 2))
 
     Eq << Eq[-1].subs(i, 2 * j) + Eq[-1].subs(i, 2 * j + 1)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], j)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 
     Eq <<= Eq.gt_zero & Eq[-1]
 
@@ -147,7 +147,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(i, 2 * j) + Eq[-1].subs(i, 2 * j + 1)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], j)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 
     Eq <<= Eq.gt_zero & Eq[-1]
 
@@ -159,7 +159,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], j)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 
     Eq << Algebra.GeSum.of.All_Ge.apply(Eq[-1])
 
@@ -167,7 +167,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Mul.series.geometric)
 
-    Eq.Sum_ge_piece = Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq.Sum_ge_piece = Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     # Eq << Less(1 / (b * β) ** (2 / d), 1, plausible=True)
     Eq << Less(1 / (b * β), 1, plausible=True)
@@ -186,13 +186,13 @@ def prove(Eq):
 
     Eq.ne4 = Algebra.Ne.of.Lt.apply(Eq[-1])
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.ne, Eq.Sum_ge_piece)
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.ne, Eq.Sum_ge_piece)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Mul.series.geometric)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.ne4, Eq[-1])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.ne4, Eq[-1])
 
     Eq << Eq[-1].this.find(1 - Expr ** -2 * Expr ** -2).apply(Algebra.Sub.Square.eq.Mul)
 
@@ -206,15 +206,15 @@ def prove(Eq):
 
     Eq << Trigonometry.LeSin.of.Gt_0.apply(Eq.gt_zero_eta)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], j)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 
     Eq << Algebra.LeSum.of.All_Le.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Mul.series.geometric)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.ne, Eq[-1])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.ne, Eq[-1])
 
     Eq << Eq[-1] * (2 * ReducedMax(x ** 2))
 

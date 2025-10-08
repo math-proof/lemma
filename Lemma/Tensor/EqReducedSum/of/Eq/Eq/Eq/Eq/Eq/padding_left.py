@@ -16,7 +16,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote, eq_I_dquote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -30,9 +30,9 @@ def prove(Eq):
     I_quote = Symbol(integer=True, shape=(n + 1,)) # input_ids = hstack(input_ids, 1)
     I_dquote = Symbol('I^"', integer=True, shape=(n,)) # input_ids = torch.gather(input_ids, 1, position_ids)
     Eq << apply(
-        Equal(A, Stack[k:n](Bool(I[k] > 0))),
+        Equal(A, Stack[k:n](functions.Bool(I[k] > 0))),
         Equal(P, Stack[k:n](k) + ReducedArgMax(A * Stack[k:n](k)) + 2 - n),
-        Equal(P_quote, P * Stack[k:n](Bool(P[k] >= 0))),
+        Equal(P_quote, P * Stack[k:n](functions.Bool(P[k] >= 0))),
         Equal(I_quote, BlockMatrix(0, I)),
         Equal(I_dquote, Stack[k:n](I_quote[P_quote[k]])))
 
@@ -48,13 +48,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1], simplify=None)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, simplify=None)
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, simplify=None)
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.GeMul.Is.And, simplify=None)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite, simplify=None)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite_Ite.eq.Ite__Ite)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, -Eq[-1].find(ReducedArgMax) - 1 + n)
 

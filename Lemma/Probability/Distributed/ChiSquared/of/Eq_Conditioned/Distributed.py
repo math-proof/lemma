@@ -10,7 +10,7 @@ def apply(eq_conditioned, dist):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Set, Trigonometry, Logic
+    from Lemma import Probability, Algebra, Calculus, Set, Trigonometry, Bool
 
     i = Symbol(integer=True)
     x = Symbol(shape=(oo,), real=True, random=True)
@@ -87,11 +87,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Mul.eq.Add)
 
-    Eq << Eq[-1].this.find(Derivative[Bool]).apply(Calculus.Grad.Bool.eq.Zero)
+    Eq << Eq[-1].this.find(Derivative[functions.Bool]).apply(Calculus.Grad.Bool.eq.Zero)
 
     Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Integral.eq.Mul.Grad)
 
-    Eq << Eq[-1].this.find(Bool ** 2).apply(Algebra.SquareBool.eq.Bool)
+    Eq << Eq[-1].this.find(functions.Bool ** 2).apply(Algebra.SquareBool.eq.Bool)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 
@@ -125,7 +125,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=k, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=k, start=1)
     # https://www.asmeurer.com/blog/
 
 

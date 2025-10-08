@@ -9,7 +9,7 @@ def apply(is_positive, z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic, Real
+    from Lemma import Algebra, Set, Bool, Real
 
     z = Symbol(complex=True, given=True)
     r = Symbol(complex=True)
@@ -23,11 +23,11 @@ def prove(Eq):
 
     Eq << Eq[2].subs(Eq.x_def.reversed)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Algebra.Ne.of.Gt.apply(Eq[0])
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq.x_def, exp)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq.x_def, exp)
 
     Eq << Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=z)
 

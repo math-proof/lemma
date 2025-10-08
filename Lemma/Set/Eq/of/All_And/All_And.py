@@ -24,7 +24,7 @@ def apply(all_a, all_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     n, m = Symbol(integer=True, positive=True)
 
@@ -40,9 +40,9 @@ def prove(Eq):
     Eq << apply(All[a:A](Element(f(a), B) & Equal(a, g(f(a)))),
                 All[b:B](Element(g(b), A) & Equal(b, f(g(b)))))
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[0])
+    Eq << Bool.All.All.of.All_And.apply(Eq[0])
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[1])
+    Eq << Bool.All.All.of.All_And.apply(Eq[1])
 
     Eq << Set.Eq.of.All_In.All_In.All_Eq.All_Eq.apply(Eq[-3], Eq[-1], Eq[-4], Eq[-2])
 

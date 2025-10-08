@@ -15,13 +15,13 @@ def apply(self, n=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)
     Eq << apply(Integral[x:a:b](f(x)))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=a < b)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=a < b)
 
     Eq << (a < b).this.apply(Calculus.Integral.eq.Mul.Limit.Maxima.Darboux.of.Lt, Eq[0].lhs)
 
@@ -29,25 +29,25 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Eq.of.Eq.Eq)
+    Eq << Eq[-1].this.rhs.apply(Bool.Eq.of.Eq.Eq)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Gt_0.of.Lt)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.EqDiv.of.Gt_0.Eq)
 
-    Eq << Logic.Imp_And.of.ImpAnd.apply(Eq[-1])
+    Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Calculus.EqDarboux.of.Lt.Eq_Limit)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[2], cond=a > b)
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[2], cond=a > b)
 
-    Eq <<= Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq << Eq[-2].this.lhs.apply(Calculus.Integral.eq.Limit.Riemann.of.Gt, Eq[0].lhs)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
 
 if __name__ == '__main__':

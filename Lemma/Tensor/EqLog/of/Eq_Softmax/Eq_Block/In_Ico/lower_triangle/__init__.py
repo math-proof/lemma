@@ -26,7 +26,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Logic
+    from Lemma import Tensor, Algebra, Set, Bool
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Tensor.Softmax.eq.Block.of.Eq_Sub_Stack_Mul_LogSumExp.lower_triangle.apply(Eq[1])
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[0], Eq[-1])
 
     i = Eq[2].lhs.index
     Eq << Eq[-1][i]
@@ -61,11 +61,11 @@ def prove(Eq):
 
     Eq.ge = -Algebra.Le.of.Le.relax.apply(Eq[-1], upper=Min(l - 1, n - 1))
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.ge, Eq.eq, invert=True)
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.ge, Eq.eq, invert=True)
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq.lt_1, Eq[-1])
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.lt_1, Eq[-1])
 
-    Eq << Logic.EqUFnS.of.Eq.apply(Eq[-1], log)
+    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
 
     Eq.loss = -Algebra.EqSumS.of.Eq.apply(Eq[3] * (1 + log(1 - h[i] / 2)), (i, 0, n))
 

@@ -9,16 +9,16 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a, b = Symbol(integer=True)
     Eq << apply(FiniteSet(Piecewise((a, b > 0), (a + 2, True))))
 
-    Eq << Logic.Cond_Ite.given.And.Imp.apply(Eq[0])
+    Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[0])
 
-    Eq << Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2])
+    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2])
 
-    Eq << Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
 
 if __name__ == '__main__':

@@ -29,7 +29,7 @@ def apply(contains, forall):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Logic
+    from Lemma import Algebra, Logic, Bool
     n = Symbol(complex=True, positive=True)
     A = Symbol(etype=dtype.complex[n])
     a, b = Symbol(complex=True, shape=(n,))
@@ -41,11 +41,11 @@ def prove(Eq):
 
     Eq << apply(Element(b, A), All[a:A](Equal(f(a), 1)))
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq[1], a, b)
+    Eq << Bool.Or_NotIn.of.All.apply(Eq[1], a, b)
 
     Eq <<= Eq[-1] & Eq[0]
 
-    Eq << Logic.And_And.of.And.apply(Eq[-1])
+    Eq << Bool.And_And.of.And.apply(Eq[-1])
 
 
 if __name__ == '__main__':

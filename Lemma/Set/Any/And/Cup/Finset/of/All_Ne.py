@@ -15,7 +15,7 @@ def apply(all_historic, y=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -35,9 +35,9 @@ def prove(Eq):
 
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], y[:n + 1], Stack[i:n + 1](Piecewise((x[i], i < k), (x[i + 1], i < n), (x[k], True))))
 
-    Eq.eq, Eq.all_gt, Eq.all_ne = Logic.And_And.given.And.Cond.apply(Eq[-1], None)
+    Eq.eq, Eq.all_gt, Eq.all_ne = Bool.And_And.given.And.Cond.apply(Eq[-1], None)
 
-    Eq << Eq.eq.this.find(Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq.eq.this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
     Eq << Eq[-1].this.lhs.apply(Set.Cup.eq.UnionCupS, cond={n})
 
@@ -49,19 +49,19 @@ def prove(Eq):
 
     Eq << Eq.all_gt.this.expr.apply(Algebra.Gt.given.And)
 
-    Eq.all_ne_piece, Eq.all_ge = Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq.all_ne_piece, Eq.all_ge = Bool.All_And.given.All.All.apply(Eq[-1])
 
-    Eq << Logic.All.given.Imp.apply(Eq.all_ne_piece)
+    Eq << Bool.All.given.Imp.apply(Eq.all_ne_piece)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond_Ite.given.And.Imp)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq <<= Eq[-2].this.lhs.apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
-    Eq <<= Logic.Imp.given.All.apply(Eq[-2]), Logic.Imp.given.All.apply(Eq[-1])
+    Eq <<= Bool.Imp.given.All.apply(Eq[-2]), Bool.Imp.given.All.apply(Eq[-1])
 
     Eq << Eq[-1].limits_subs(i, i - 1)
 
@@ -73,41 +73,41 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.reversed
 
-    Eq << Logic.All.given.Imp.apply(Eq.all_ge)
+    Eq << Bool.All.given.Imp.apply(Eq.all_ge)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond_Ite.given.And.Imp)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq <<= Eq[-2].this.lhs.apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
-    Eq <<= Logic.Imp.given.All.apply(Eq[-2]), Logic.Imp.given.All.apply(Eq[-1])
+    Eq <<= Bool.Imp.given.All.apply(Eq[-2]), Bool.Imp.given.All.apply(Eq[-1])
 
     Eq << Eq[-1].limits_subs(i, i - 1)
 
     Eq << Algebra.All.Ge.of.Eq_ReducedArgMax.apply(Eq.k_def)
 
-    Eq << Logic.All.All.of.All.apply(Eq[-1], cond=i < k)
+    Eq << Bool.All.All.of.All.apply(Eq[-1], cond=i < k)
 
     Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], Range(k + 1, n + 1))
 
-    Eq << Logic.All.given.Imp.apply(Eq.all_ne)
+    Eq << Bool.All.given.Imp.apply(Eq.all_ne)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Cond_Ite.given.And.Imp)
+    Eq << Eq[-1].this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
 
-    Eq << Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq <<= Eq[-2].this.lhs.args[::2].apply(Set.In.Ico.Inter.of.Lt.In_Ico), Eq[-1].this.lhs.args[::2].apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
-    Eq <<= Eq[-2].this.rhs.apply(Logic.Cond_Ite.given.And.Imp), Eq[-1].this.rhs.apply(Logic.Cond_Ite.given.And.Imp)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.Cond_Ite.given.And.Imp), Eq[-1].this.rhs.apply(Bool.Cond_Ite.given.And.Imp)
 
-    Eq <<= Logic.Imp_And.given.Imp.Imp.apply(Eq[-2]), Logic.Imp_And.given.Imp.Imp.apply(Eq[-1])
+    Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-2]), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-4].this.apply(Logic.Imp.flatten), Eq[-3].this.apply(Logic.Imp.flatten), Eq[-2].this.apply(Logic.Imp.flatten), Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq <<= Eq[-4].this.apply(Bool.Imp.flatten), Eq[-3].this.apply(Bool.Imp.flatten), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq << Eq[-2].this.find(Element[2]).apply(Set.Gt.of.In_Ico.domain)
 
@@ -115,17 +115,17 @@ def prove(Eq):
         Eq[-3].this.lhs.args[:2].apply(Set.In.Ico.Inter.of.Ge.In_Ico),\
         Eq[-1].this.lhs.args[:2].apply(Set.In.Ico.Inter.of.Ge.In_Ico)
 
-    Eq <<= Eq[-3].this.apply(Logic.Imp.fold, 0),\
-        Eq[-2].this.apply(Logic.Imp.fold, 0),\
-        Eq[-1].this.apply(Logic.Imp.fold, 0)
+    Eq <<= Eq[-3].this.apply(Bool.Imp.fold, 0),\
+        Eq[-2].this.apply(Bool.Imp.fold, 0),\
+        Eq[-1].this.apply(Bool.Imp.fold, 0)
 
-    Eq <<= Logic.Imp.given.All.apply(Eq[-3]), \
-        Logic.Imp.given.All.apply(Eq[-2]), \
-        Logic.Imp.given.All.apply(Eq[-1])
+    Eq <<= Bool.Imp.given.All.apply(Eq[-3]), \
+        Bool.Imp.given.All.apply(Eq[-2]), \
+        Bool.Imp.given.All.apply(Eq[-1])
 
-    Eq <<= Eq[-3].this.expr.apply(Logic.Imp.given.All), \
-        Eq[-2].this.expr.apply(Logic.Imp.given.All), \
-        Eq[-1].this.expr.apply(Logic.Imp.given.All)
+    Eq <<= Eq[-3].this.expr.apply(Bool.Imp.given.All), \
+        Eq[-2].this.expr.apply(Bool.Imp.given.All), \
+        Eq[-1].this.expr.apply(Bool.Imp.given.All)
 
     Eq <<= Set.AllIn.given.AllIn_Union.apply(Eq[-3], (j, 0, i)),\
         Eq[-2].limits_subs(i, i - 1),\

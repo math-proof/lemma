@@ -11,12 +11,12 @@ def apply(self, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(integer=True)
     Eq << apply(KroneckerDelta(x, y))
 
-    Eq << Eq[0].this.rhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[0].this.rhs.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Delta.eq.Ite)
 

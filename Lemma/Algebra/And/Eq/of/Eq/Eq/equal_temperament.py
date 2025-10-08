@@ -38,7 +38,7 @@ def apply(eq_1_high, et_eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     from Lemma.Algebra.And.Eq.of.And.just_intonation import equate
 
     λ_1, λ_2, λ_3, λ_4, λ_5, λ_6, λ_7 = Symbol(real=True, positive=True)
@@ -54,7 +54,7 @@ def prove(Eq):
     w = Symbol(λ_1_sharp / λ_1)
     Eq.r_1_sharp = w.this.definition.reversed
 
-    Eq << Logic.And_And.of.And.apply(Eq[1], None)
+    Eq << Bool.And_And.of.And.apply(Eq[1], None)
 
     Eq.r_2 = Eq[12].subs(Eq.r_1_sharp).reversed
 

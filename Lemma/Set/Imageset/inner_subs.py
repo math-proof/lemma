@@ -18,7 +18,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     n, m = Symbol(integer=True, positive=True)
 
     x = Symbol(complex=True, shape=(n,))
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Set.Cup.eq.Cup_Ite)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Logic.Ite.subst)
+    Eq << Eq[-1].this.lhs.expr.apply(Bool.Ite.subst)
 
 
 if __name__ == '__main__':

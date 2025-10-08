@@ -11,7 +11,7 @@ def apply(le, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x, y, a, b = Symbol(real=True, given=True)
     t = Symbol(hyper_real=True, given=True)
@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq << Eq[0] + z
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-2], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-2], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, reverse=True)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 
 
 if __name__ == '__main__':

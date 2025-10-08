@@ -11,7 +11,7 @@ def apply(is_nonnegative, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x, y = Symbol(real=True)
     Eq << apply(x >= 0, LessEqual(x, y))
@@ -29,13 +29,13 @@ def prove(Eq):
 
     Eq << Set.In_Ici.of.Ge.apply(Eq[-1])
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[-1], Eq.ou, invert=True)
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[-1], Eq.ou, invert=True)
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.GtSquare.of.Gt)
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[1], Eq[-1], invert=True)
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[1], Eq[-1], invert=True)
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], 0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], 0)
 
 
 

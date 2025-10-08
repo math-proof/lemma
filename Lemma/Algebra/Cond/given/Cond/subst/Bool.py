@@ -13,14 +13,14 @@ def apply(f_eq, *, cond=None, simplify=True, invert=False, assumptions={}):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Logic
+    from Lemma import Algebra, Logic, Bool
 
     a, b = Symbol(real=True)
     A = Symbol(etype=dtype.real)
     f = Function(integer=True)
     Eq << apply(Equal(Piecewise((f(a), Element(a, A)), (f(b), True)), 0), cond=Element(a, A))
 
-    Eq << Logic.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[2])
+    Eq << Bool.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[2])
 
 
 if __name__ == '__main__':

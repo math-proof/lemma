@@ -20,7 +20,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Logic
+    from Lemma import Algebra, Calculus, Bool
 
     n = Symbol(integer=True, positive=True)
     f = Function(real=True)
@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.eq.Ite)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Eq[-1].find(Equal))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Eq[-1].find(Equal))
 
-    Eq <<= Logic.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Logic.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Calculus.EqZero.of.Ne, f, x)
 

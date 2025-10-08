@@ -11,7 +11,7 @@ def apply(self, var='k'):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Set, Logic
+    from Lemma import Algebra, Discrete, Set, Bool
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(complex=True, shape=(oo,))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.find(Bool).apply(Algebra.Bool.eq.Delta)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Algebra.Bool.eq.Delta)
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(m, m - k)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1], 1)
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 1)
 
     Eq << Eq[-1].this.lhs.apply(Set.In_Ico.given.In.Ico.restrict, upper=m + 1)
 
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.In_Icc.Is.InAdd, m)
 
-    Eq << Logic.All.of.Imp.single_variable.apply(Eq[-1])
+    Eq << Bool.All.of.Imp.single_variable.apply(Eq[-1])
 
     Eq << Eq[-1].this.expr * (x[n] ** k / (Factorial(m - k) * Factorial(k)))
 
@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Eq.of.Eq.All_Imp.apply(Eq[1], Eq[-1], n, 1)
+    Eq << Bool.Eq.of.Eq.All_Imp.apply(Eq[1], Eq[-1], n, 1)
 
 
 if __name__ == '__main__':

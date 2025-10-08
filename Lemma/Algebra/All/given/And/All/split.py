@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(given, *, cond=None, wrt=None):
-    from Lemma.Logic.All.All.of.All import split
+    from Lemma.Bool.All.All.of.All import split
     given = split(All, given, cond, wrt)
     return given.of(And)
 

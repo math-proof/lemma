@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, integrable=True)
@@ -22,15 +22,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(-Piecewise).apply(Algebra.Mul.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
     Eq << Eq[-1].this.rhs.args[1].cond.reversed
 
     Eq << Eq[-1].this.rhs.args[0].expr.apply(Calculus.Neg.eq.Integral)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, -2)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
-    Eq << Logic.BFn_Ite.given.OrAndS.apply(Eq[-1])
+    Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Ufn.given.Eq.Ufn)
 

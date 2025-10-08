@@ -9,7 +9,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(10, oo))
@@ -28,25 +28,25 @@ def prove(Eq):
 
     Eq << Eq[-1].simplify()
 
-    Eq.A_diagonal, *Eq[-2:] = Logic.And_And.of.And.apply(Eq[-1], None)
+    Eq.A_diagonal, *Eq[-2:] = Bool.And_And.of.And.apply(Eq[-1], None)
 
-    Eq <<= Logic.All.All.of.All_And.apply(Eq[-1]), Set.In_Union.of.In.apply(Eq[-2], Reals)
+    Eq <<= Bool.All.All.of.All_And.apply(Eq[-1]), Set.In_Union.of.In.apply(Eq[-2], Reals)
 
-    Eq.A_lower = Logic.Imp.of.AllSetOf.apply(Eq[-3])
+    Eq.A_lower = Bool.Imp.of.AllSetOf.apply(Eq[-3])
 
     Eq.L_lower = Algebra.All.of.Cond.All.push.apply(Eq[-1], Eq[-2])
 
     Eq << Algebra.All.of.All.limits.domain_defined.apply(Eq[-3])
 
-    Eq.L_is_zero = Logic.Imp.of.Cond_Ite.apply(Eq[2], -1)
+    Eq.L_is_zero = Bool.Imp.of.Cond_Ite.apply(Eq[2], -1)
 
     Eq << Eq.L_is_zero.this.rhs.apply(Set.In.Finset.of.Eq)
 
     Eq << Eq[-1].this.rhs.apply(Set.In_Union.of.In, Reals)
 
-    Eq << Logic.All.of.Imp.apply(Eq[-1], j)
+    Eq << Bool.All.of.Imp.apply(Eq[-1], j)
 
-    Eq << Logic.AllOr.of.All.All.apply(Eq[-1], Eq.L_lower)
+    Eq << Bool.AllOr.of.All.All.apply(Eq[-1], Eq.L_lower)
 
     Eq << Eq[-1].this(i).find(Union).simplify()
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Logic.All.of.Imp.apply(Eq[-1])
+    Eq << Bool.All.of.Imp.apply(Eq[-1])
 
     Eq << Algebra.All.of.All.limits.domain_defined.apply(Eq[-1])
 
@@ -72,48 +72,48 @@ def prove(Eq):
         (Eq[-1].expr.rhs, j > i),
         (Eq.A_diagonal.rhs, True)), plausible=True)
 
-    Eq.lt_infer, Eq.gt_infer, Eq.eq_infer = Logic.Cond_Ite.given.And.Imp.apply(Eq.A_ij)
+    Eq.lt_infer, Eq.gt_infer, Eq.eq_infer = Bool.Cond_Ite.given.And.Imp.apply(Eq.A_ij)
 
-    Eq << Logic.Imp.given.All.apply(Eq.lt_infer)
+    Eq << Bool.Imp.given.All.apply(Eq.lt_infer)
 
-    Eq << Logic.Imp.given.All.apply(Eq.gt_infer, i)
+    Eq << Bool.Imp.given.All.apply(Eq.gt_infer, i)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq.eq_infer)
+    Eq << Bool.Imp.given.ImpEq.apply(Eq.eq_infer)
 
-    Eq << Logic.Imp.given.Cond.apply(Eq[-1])
+    Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 
     Eq <<= Algebra.All.given.All.limits.domain_defined.apply(Eq[-3]), Algebra.All.given.All.limits.domain_defined.apply(Eq[-2])
 
-    Eq << Eq.A_ij.this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq.A_ij.this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.Ite__IteAnd_Not, 0)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 0)
 
     Eq << Imply(Equal(j, i), Equal(Eq[-1].rhs.args[1].expr, Eq[-1].rhs.args[2].expr), plausible=True)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.lhs.apply(Tensor.Square.Norm.eq.Dot.Conj, swap=True)
 
-    Eq << Logic.EqIteS.of.Imp_Eq.apply(Eq[-2], Eq[-3].rhs)
+    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq[-2], Eq[-3].rhs)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-4], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq[-1])
 
     Eq << Eq[-1].this.rhs.args[1].expr.T
 
-    Eq << Logic.Imp.of.Cond_Ite.apply(Eq[-1], 1)
+    Eq << Bool.Imp.of.Cond_Ite.apply(Eq[-1], 1)
 
-    Eq <<= Logic.Imp.And.of.Imp.apply(Eq.lt_infer), Logic.Imp.And.of.Imp.apply(Eq[-1])
+    Eq <<= Bool.Imp.And.of.Imp.apply(Eq.lt_infer), Bool.Imp.And.of.Imp.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.rhs.find(Less).apply(Algebra.EqMin.of.Lt, reverse=True), Eq[-1].this.rhs.find(GreaterEqual).apply(Algebra.EqMin.of.Ge, reverse=True)
 
     Eq <<= Eq[-2].this.rhs.args[0] + 1, Eq[-1].this.rhs.args[0] + 1
 
-    Eq <<= Eq[-2].this.rhs.apply(Logic.UFn.of.UFn.Eq, swap=True), Eq[-1].this.rhs.apply(Logic.UFn.of.UFn.Eq, swap=True)
+    Eq <<= Eq[-2].this.rhs.apply(Bool.UFn.of.UFn.Eq, swap=True), Eq[-1].this.rhs.apply(Bool.UFn.of.UFn.Eq, swap=True)
 
 
     Eq <<= Eq[-1] & Eq[-2]
     Eq << Tensor.EqDot.of.Imp_Eq_0.apply(Eq.L_is_zero)
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
 

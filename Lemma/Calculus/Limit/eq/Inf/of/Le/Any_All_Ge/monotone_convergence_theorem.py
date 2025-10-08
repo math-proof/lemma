@@ -11,7 +11,7 @@ def apply(le, Any_All_Ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Logic
+    from Lemma import Algebra, Set, Calculus, Bool
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq.inf_is_real = Set.In_Ioo.of.Gt.Lt.apply(Eq[-2], Eq[-1], simplify=None)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq.inf_is_real, Eq.any_ge, simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq.inf_is_real, Eq.any_ge, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Set.GeSub.of.Ge.In)
 

@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic, Tensor
+    from Lemma import Algebra, Discrete, Bool, Tensor
 
     d = Symbol(integer=True, positive=True)
     m = Symbol(domain=Range(d + 2, oo))
@@ -18,11 +18,11 @@ def prove(Eq):
     x1, x2 = Symbol(complex=True)
     Eq << apply(Det(BlockMatrix([Stack[j:m, i:d](j ** i * x1 ** j), Stack[j:m, i:m - d](j ** i * x2 ** j)])))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(x2, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(x2, 0))
 
     Eq << Eq[-1].this.lhs.apply(Discrete.Eq.Det.Block.eq.Mul.Prod.of.Ne_0.vandermonde.mn, x1, m, d)
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-2])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
     Eq << Eq[-1].this.find(Stack[2]).apply(Tensor.Stack.eq.Transpose.Block, 1)
 

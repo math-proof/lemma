@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     A, B = Symbol(etype=dtype.integer, given=True)
     Eq << apply(Subset(A, B))
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.In.of.In.Subset, Eq[0])
 
-    Eq << Logic.Any_And.of.AnySetOf.apply(Eq[-1])
+    Eq << Bool.Any_And.of.AnySetOf.apply(Eq[-1])
 
 
 if __name__ == '__main__':

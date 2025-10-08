@@ -34,7 +34,7 @@ def apply(eq_M, x, w, r):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic, Tensor
+    from Lemma import Set, Algebra, Bool, Tensor
 
     m, d, d_quote = Symbol(integer=True, positive=True)
     n, l, r = Symbol(shape=(3,), integer=True, positive=True)
@@ -77,11 +77,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum, Stack).subs(Eq.M_def)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Logic.Ite.nest, pivot=slice(3, None, -3))# deselect cond with i
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite.nest, pivot=slice(3, None, -3))# deselect cond with i
 
-    Eq << Eq[-1].this.find(Piecewise, Piecewise).apply(Logic.Ite.nest, pivot=slice(1, None, 2))# select cond with j
+    Eq << Eq[-1].this.find(Piecewise, Piecewise).apply(Bool.Ite.nest, pivot=slice(1, None, 2))# select cond with j
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate.Ite).this.find(Sum).apply(Algebra.Sum.limits.separate.Ite)
 
@@ -99,7 +99,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.M_def)
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(Bool).apply(Bool.Bool.eq.Ite)
 
     Eq.convolution_definition = Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
 
@@ -112,17 +112,17 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     Eq << Eq[-1][j]
 
-    Eq << Eq[-1].this.find(Piecewise, Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.find(Piecewise, Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     Eq << Eq[-1][t]
 
-    Eq << Eq[-1].this.find(Piecewise, Piecewise, Piecewise).apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[-1].this.find(Piecewise, Piecewise, Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
     Eq << Eq[-1].this.find(-Floor).apply(Algebra.Mul.eq.Ceil).this.find(-Floor).apply(Algebra.Mul.eq.Ceil).this.find(-Floor).apply(Algebra.Mul.eq.Ceil)
 
@@ -130,7 +130,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Min[Floor]).apply(Algebra.Min.eq.Floor).this.find(Min[Floor]).apply(Algebra.Min.eq.Floor).this.find(Min[Floor]).apply(Algebra.Min.eq.Floor)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.convolution_definition, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.convolution_definition, Eq[-1])
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (t, 0, n[2]), (j, 0, n[1]), (i, 0, n[0]), (k, 0, m))
 

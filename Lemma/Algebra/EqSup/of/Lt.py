@@ -9,7 +9,7 @@ def apply(lt, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     m, M, a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -22,25 +22,25 @@ def prove(Eq):
     y = Symbol(real=True)
     Eq <<= Algebra.GeSup.given.All_Any_Gt.apply(Eq[-1], y), Algebra.LeSup.given.All.Le.apply(Eq[-2])
 
-    Eq <<= Algebra.All.given.And.All.split.apply(Eq[-2], cond=y < m), Logic.All.given.All_Or_Not.apply(Eq[-1])
+    Eq <<= Algebra.All.given.And.All.split.apply(Eq[-2], cond=y < m), Bool.All.given.All_Or_Not.apply(Eq[-1])
 
     Eq <<= Eq[-2].subs(Eq.eq_min), Eq[-3].this.expr.apply(Algebra.Any.given.Cond.subst, x, (M + y) / 2), Eq[-1].this.find(NotElement).apply(Set.NotIn_Icc.given.OrLtS)
 
-    Eq <<= Eq[-2].this.expr.apply(Algebra.Any.given.Cond.subst, x, (m + M) / 2), Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq <<= Eq[-2].this.expr.apply(Algebra.Any.given.Cond.subst, x, (m + M) / 2), Bool.All_And.given.All.All.apply(Eq[-1])
 
-    Eq <<= Logic.And_And.given.And.Cond.apply(Eq[-3]), Logic.All.given.Imp.apply(Eq[-2]), Logic.All.given.Imp.apply(Eq[-1])
+    Eq <<= Bool.And_And.given.And.Cond.apply(Eq[-3]), Bool.All.given.Imp.apply(Eq[-2]), Bool.All.given.Imp.apply(Eq[-1])
 
     Eq << Set.In.Icc.of.Lt.average.apply(Eq[0])
 
-    Eq <<= Logic.All.given.Imp.apply(Eq[-3]), Eq[-2].this.rhs * 2, Eq[-1].this.rhs.apply(Set.In.given.In.Mul.Icc, 2)
+    Eq <<= Bool.All.given.Imp.apply(Eq[-3]), Eq[-2].this.rhs * 2, Eq[-1].this.rhs.apply(Set.In.given.In.Mul.Icc, 2)
 
-    Eq <<= Logic.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-3]), Eq[-2].this.rhs - y, Eq[-1].this.rhs.apply(Set.In.given.In.Sub, M)
+    Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-3]), Eq[-2].this.rhs - y, Eq[-1].this.rhs.apply(Set.In.given.In.Sub, M)
 
     Eq << Eq[-2].this.lhs.apply(Set.Gt.of.In_Icc)
 
     Eq <<= Eq[-3].this.lhs.apply(Algebra.Lt.of.Lt.Lt, ret=1), Eq[-1].this.rhs.apply(Set.In.given.And.strengthen, upper=m, strict=True)
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.LtAdd.of.Lt.Lt), Logic.Imp.given.Cond.apply(Eq[-1])
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.LtAdd.of.Lt.Lt), Bool.Imp.given.Cond.apply(Eq[-1])
 
     Eq << Eq[-1] + (M - m)
 

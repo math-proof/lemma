@@ -29,7 +29,7 @@ def apply(eq, infer, eq_piece, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Set, Logic
+    from Lemma import Algebra, Discrete, Set, Bool
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -41,11 +41,11 @@ def prove(Eq):
                Imply(Unequal(x, Zeros(n)), x @ A @ x > 0),
                Equal(L[i, j], Piecewise(((A[i, j] - L[i, :j] @ L[j, :j]) / L[j, j], j < i), (sqrt(A[i, i] - Norm(L[i, :i]) ** 2), Equal(j, i)), (0, True))), t)
 
-    Eq << Logic.Imp.of.Cond_Ite.apply(Eq[2])
+    Eq << Bool.Imp.of.Cond_Ite.apply(Eq[2])
 
     Eq.gt_zero, Eq.Atj_def_and_Ltj_is_real = Discrete.And.of.Eq_Transpose.Imp_Gt_0.Imp_Eq.All_And.Cholesky.apply(Eq[0], Eq[1], Eq[-1], Eq.hypothesis)
 
-    Eq << Logic.All.of.All_And.apply(Eq.Atj_def_and_Ltj_is_real, 1)
+    Eq << Bool.All.of.All_And.apply(Eq.Atj_def_and_Ltj_is_real, 1)
 
     Eq << Eq[-1].this.expr.apply(Set.IsNotNegative.Square.of.IsReal)
 
@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], t, 0)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], t, 0)
 
 
 

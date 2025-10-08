@@ -38,7 +38,7 @@ def apply(le, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     x, y = Function(real=True)
@@ -52,13 +52,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(t_, t)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1], 1)
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1], 1)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.flatten)
+    Eq << Eq[-1].this.apply(Bool.Imp.flatten)
 
     Eq <<= Eq[0] & Eq[1]
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
 
 
 

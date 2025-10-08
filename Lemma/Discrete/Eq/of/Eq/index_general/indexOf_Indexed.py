@@ -23,7 +23,7 @@ def apply(given, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic
+    from Lemma import Discrete, Algebra, Set, Bool
 
     n = Symbol(domain=Range(2, oo), given=True)
     x = Symbol(shape=(oo,), integer=True, given=True)
@@ -58,15 +58,15 @@ def prove(Eq):
 
     Eq <<= Eq.ou & ~Eq.xj_notcontains
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], index=0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], index=0)
 
     Eq <<= Eq.ou2 & ~Eq.xj_notcontains
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], index=1)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], index=1)
 
     Eq <<= Eq.ou1 & Eq.index_contains
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], index=0)
+    Eq << Bool.Cond.of.And.apply(Eq[-1], index=0)
 
     Eq << Eq[-1].subs(Eq.equality)
 

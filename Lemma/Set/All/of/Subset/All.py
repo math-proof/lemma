@@ -24,7 +24,7 @@ def apply(subset, forall):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(complex=True, positive=True)
     A, B = Symbol(etype=dtype.complex[n])
@@ -34,13 +34,13 @@ def prove(Eq):
 
     Eq << Set.All_In.of.Subset.apply(Eq[0], wrt=x)
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[1])
 
-    Eq << Logic.Imp.of.Imp.Imp.apply(Eq[-1], Eq[-2])
+    Eq << Bool.Imp.of.Imp.Imp.apply(Eq[-1], Eq[-2])
 
-    Eq << Logic.All.given.Imp.apply(Eq[2])
+    Eq << Bool.All.given.Imp.apply(Eq[2])
 
 
 if __name__ == '__main__':

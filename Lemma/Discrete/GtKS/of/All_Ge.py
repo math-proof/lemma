@@ -13,7 +13,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
     from Lemma.Discrete.K.eq.Add.definition import K
 
     x = Symbol(real=True, shape=(oo,))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(K).defun()
 
-    Eq << Logic.All.All.of.All.apply(Eq[0], cond={n})
+    Eq << Bool.All.All.of.All.apply(Eq[0], cond={n})
 
     Eq << Eq[-1].this.expr.apply(Algebra.Gt_0.of.Ge)
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[-4])
 
-    Eq << Logic.All.All.of.All.apply(Eq[-3], cond={n - 1})
+    Eq << Bool.All.All.of.All.apply(Eq[-3], cond={n - 1})
 
     Eq << Discrete.K.gt.Zero.of.All_Gt_0.apply(Eq[-1])
 

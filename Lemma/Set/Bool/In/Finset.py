@@ -9,12 +9,12 @@ def apply(boole):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Set, Bool
 
     x, y = Symbol(real=True)
-    Eq << apply(Bool(x > y))
+    Eq << apply(functions.Bool(x > y))
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Bool.Bool.eq.Ite)
 
     S = Symbol(Eq[1].rhs)
     Eq << Or(Element(1, S) & (x > y), Element(0, S) & (x <= y), plausible=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.definition
 
-    Eq << Logic.Ite__Ite.eq.IteAnd_Not__Ite.apply(Eq[-1].lhs)
+    Eq << Bool.Ite__Ite.eq.IteAnd_Not__Ite.apply(Eq[-1].lhs)
 
     Eq << Eq[-2].subs(Eq[-1])
 

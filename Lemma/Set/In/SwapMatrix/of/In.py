@@ -18,7 +18,7 @@ def apply(given, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Logic, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True)
@@ -29,7 +29,7 @@ def prove(Eq):
     Eq << Tensor.InDot.SwapMatrix.of.In.apply(Eq[0])
 
     k = Eq[-1].lhs.args[0].indices[-1]
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (k, 0, n))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (k, 0, n))
 
     Eq << Set.In_CartesianSpace.given.All.In.apply(Eq[2])
 

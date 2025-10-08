@@ -9,16 +9,16 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     A, B = Symbol(etype=dtype.integer)
     x, y = Symbol(integer=True)
     f = Function(real=True)
     Eq << apply(Sum[x:A, y:B](f(x, y)))
 
-    Eq << Eq[0].this.find(Bool).apply(Logic.BoolAnd.eq.MulBoolS)
+    Eq << Eq[0].this.find(functions.Bool).apply(Bool.BoolAnd.eq.MulBoolS)
 
-    Eq << Sum[x](Eq[-1].rhs.expr).this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Sum[x](Eq[-1].rhs.expr).this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Mul.eq.Mul_Sum)
 
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.rhs.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.expr.args[0].apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.rhs.expr.args[0].apply(Bool.Bool.eq.Ite)
 
 
 

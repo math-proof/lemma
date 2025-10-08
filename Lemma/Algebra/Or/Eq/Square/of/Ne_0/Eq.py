@@ -17,7 +17,7 @@ def apply(is_nonzero, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, a, c = Symbol(complex=True)
     Eq << apply(Unequal(a, 0), Equal(a * x ** 2 + c, 0), x=x)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq.t_squared = Eq[-1] ** 2
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq.t_squared)
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq.t_squared)
 
     Eq << Eq[-1] - Eq[-1].rhs
 

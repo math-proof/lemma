@@ -20,7 +20,7 @@ def apply(eq_k, eq_n, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     f, g = Symbol(integer=True, shape=(oo,))
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Algebra.All.given.And.All.apply(Eq[-1], cond={n})
 
-    Eq << Logic.All.of.Cond.apply(Eq[0], k)
+    Eq << Bool.All.of.Cond.apply(Eq[0], k)
 
 
 if __name__ == '__main__':

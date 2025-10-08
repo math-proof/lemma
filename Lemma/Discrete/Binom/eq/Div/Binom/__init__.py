@@ -14,19 +14,19 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Logic
+    from Lemma import Algebra, Discrete, Bool
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True, positive=True)
     Eq << apply(binomial(n, k))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(n, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(n, 0))
 
-    Eq << Eq[-2].this.apply(Logic.IffImpSAndEq)
+    Eq << Eq[-2].this.apply(Bool.IffImpSAndEq)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Gt_0.of.Ne_0)
 
-    Eq << Eq[-1].apply(Logic.Imp.given.All)
+    Eq << Eq[-1].apply(Bool.Imp.given.All)
 
     n_ = Symbol('n', integer=True, positive=True)
     Eq << Algebra.All.given.Cond.subst.apply(Eq[-1], Eq[-1].variable, n_)

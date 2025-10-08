@@ -9,20 +9,20 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x * y < 0)
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].this.args[0].apply(Logic.Or_AndNot.of.Or, pivot=1)
+    Eq << Eq[-1].this.args[0].apply(Bool.Or_AndNot.of.Or, pivot=1)
 
-    Eq << Eq[-1].this.find(Or).apply(Logic.Or_AndNot.of.Or, pivot=0)
+    Eq << Eq[-1].this.find(Or).apply(Bool.Or_AndNot.of.Or, pivot=0)
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1], 1, simplify=None)
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1], 1, simplify=None)
 
-    Eq << Eq[-1].this.find(And).apply(Logic.OrAndS.of.And_Or, 1)
+    Eq << Eq[-1].this.find(And).apply(Bool.OrAndS.of.And_Or, 1)
 
     Eq << Eq[-1].this.find((Expr > 0) & (Expr >= 0)).apply(Algebra.Ge_0.of.Ge_0.Gt_0)
 
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).args[:2].apply(Algebra.Ge_0.of.Le_0.Lt_0)
 
-    Eq << Logic.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
+    Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
 
     Eq << Eq[0].subs(Eq[-1])
 

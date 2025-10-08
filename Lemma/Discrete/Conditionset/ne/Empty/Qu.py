@@ -12,7 +12,7 @@ def apply(n, u=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Set, Algebra, Tensor, Logic
+    from Lemma import Discrete, Set, Algebra, Tensor, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     Eq << apply(n)
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Set.Ne_Empty.of.Any_In.apply(Eq.plausible)
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], _t)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], _t)
 
 
 

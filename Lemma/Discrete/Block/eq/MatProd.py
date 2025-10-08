@@ -12,7 +12,7 @@ def apply(n, m, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic, Tensor
+    from Lemma import Discrete, Algebra, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     m = Symbol(positive=True, integer=True, given=False)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=m, start=1)
+    Eq << Bool.Cond.of.Cond.All_Imp.apply(Eq.initial, Eq[-1], n=m, start=1)
 
 
 if __name__ == '__main__':

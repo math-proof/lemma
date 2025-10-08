@@ -26,7 +26,7 @@ def apply(given, domain=None, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     S = Symbol(etype=dtype.real)
     e, t = Symbol(real=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.given.Or.Any.split.apply(Eq[-1], cond={t})
 
-    Eq << Logic.Or.given.Cond.apply(Eq[-1], index=1)
+    Eq << Bool.Or.given.Cond.apply(Eq[-1], index=1)
 
 
 

@@ -29,7 +29,7 @@ def apply(eq_cup, subset, eq_K_quote, eq_V_quote, eq_K_dquote, eq_V_dquote, Q, K
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic
+    from Lemma import Algebra, Tensor, Bool
 
     n, k, m = Symbol(integer=True, positive=True)
     r = Symbol(shape=(n,), integer=True)
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq <<= Algebra.EqTranspose.of.Eq.apply(Eq[-2], (0, 1)), Algebra.EqTranspose.of.Eq.apply(Eq[-1], (0, 1))
 
-    Eq <<= Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[4]), Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[5])
+    Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[4]), Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[5])
 
     Eq << Algebra.EqTranspose.of.Eq.apply(Eq[-2], (1, 1))
     Eq << Tensor.Eq.Dot.Softmax.of.Eq_Card.Subset_Cup.position_representation.relative.gather.apply(Eq[0], Eq[1], Q, K, V, K_quote, V_quote)

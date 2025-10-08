@@ -13,7 +13,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Logic
+    from Lemma import Calculus, Set, Algebra, Bool
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Set.IsReal.Inv.of.In.apply(Eq[1])
 
-    Eq << Logic.Cond.of.Eq.Cond.subst.apply(Eq.inverse, Eq[-1], reverse=True)
+    Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.inverse, Eq[-1], reverse=True)
 
     Eq << Calculus.EqMul.of.IsLimited.IsLimited.algebraic_limit_theorem.apply(Eq[0], Eq[-1])
     Eq << Eq[-1].subs(Eq.inverse)

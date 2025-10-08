@@ -17,7 +17,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     x = Symbol(integer=True, shape=(oo,))
     S = Symbol(etype=dtype.integer)
@@ -28,7 +28,7 @@ def prove(Eq):
     Eq << Set.In_CartesianSpace.given.All.In.apply(Eq[1])
 
 
-    Eq << Logic.AllIn.of.All.apply(Eq[0], (i, 0, n))
+    Eq << Bool.AllIn.of.All.apply(Eq[0], (i, 0, n))
 
 
 

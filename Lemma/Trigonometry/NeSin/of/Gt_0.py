@@ -9,7 +9,7 @@ def apply(gt_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Trigonometry, Logic
+    from Lemma import Algebra, Calculus, Set, Trigonometry, Bool
 
     x = Symbol(real=True, given=True)
     Eq << apply(x > 0)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq.fx.subs(Eq[2])
 
-    Eq.eq = Logic.Eq.of.Eq.Eq.apply(Eq.f0, Eq[-1])
+    Eq.eq = Bool.Eq.of.Eq.Eq.apply(Eq.f0, Eq[-1])
 
     Eq.lt = Eq[0].reversed
 
@@ -49,13 +49,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.eq.Add)
 
-    Eq << Logic.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
 
     Eq << Trigonometry.Sin.In.Icc.apply(x)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].subs(Eq[2])
 
@@ -71,9 +71,9 @@ def prove(Eq):
 
     Eq << Trigonometry.Add_.SquareCos.SquareSin.eq.One.apply(t)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Logic.UFn.of.UFn.Eq, swap=True)
+    Eq << Eq[-1].this.expr.args[:2].apply(Bool.UFn.of.UFn.Eq, swap=True)
 
     Eq << Eq[-1].this.find(Expr > 0).apply(Algebra.Gt_0.Square.of.Gt_0)
 

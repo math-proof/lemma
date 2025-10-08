@@ -14,13 +14,13 @@ def apply(ne, NotIn):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic
+    from Lemma import Algebra, Set, Bool
 
     x, y = Symbol(integer=True, given=True)
     s = Symbol(etype=dtype.integer, given=True)
     Eq << apply(Unequal(x, y), NotElement(x, s))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Set.NotIn.of.Ne.NotIn)
 

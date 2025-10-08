@@ -18,7 +18,7 @@ def apply(given, m=None, b=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic, Tensor
+    from Lemma import Discrete, Algebra, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     m = Symbol(integer=True, nonnegative=True, given=False)
@@ -39,19 +39,19 @@ def prove(Eq):
 
     Eq << Eq.swap.subs(i, m).subs(j, b[m])
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq[-1], x, Eq[1].rhs.func(*Eq[1].rhs.args[:2]))
+    Eq << Bool.Or_NotIn.of.All.apply(Eq[-1], x, Eq[1].rhs.func(*Eq[1].rhs.args[:2]))
 
-    Eq << Eq[-1].apply(Logic.AllIn.of.All, (x, S))
+    Eq << Eq[-1].apply(Bool.AllIn.of.All, (x, S))
 
     Eq <<= Eq[-1] & Eq.hypothesis
 
-    Eq << Logic.All.of.All_And.apply(Eq[-1], 1)
+    Eq << Bool.All.of.All_And.apply(Eq[-1], 1)
 
     Eq << Eq[-1].subs(Eq[1].reversed)
 
     Eq << Imply(Eq.hypothesis, Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=m)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=m)
 
 
 

@@ -10,7 +10,7 @@ def apply(pow):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     z = Symbol(complex=True, given=True)
     n = Symbol(integer=True, given=True, positive=True)
@@ -20,9 +20,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.arg.apply(Algebra.Pow.eq.Mul.split.base)
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Unequal(z, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Unequal(z, 0))
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.GtAbs_0.of.Ne_0)
 
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqArg.of.Gt_0, Eq[-1].find(Exp))
 
-    Eq << Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.lhs.apply(Algebra.Arg.ExpI.eq.Add.Ceil)
 

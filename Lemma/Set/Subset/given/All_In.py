@@ -14,7 +14,7 @@ def apply(imply, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(complex=True, positive=True)
     A, B = Symbol(etype=dtype.complex[n], given=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.Any_In.of.SDiff.ne.Empty.apply(Eq[-1], simplify=False, wrt=Eq[1].variable)
 
-    Eq << Logic.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[1])
+    Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[1])
 
 
 if __name__ == '__main__':

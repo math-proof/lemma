@@ -22,7 +22,7 @@ def apply(n, k, s2=None, A=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
 
     k = Symbol(integer=True, positive=True)
     n = Symbol(integer=True, positive=True, given=True)
@@ -39,11 +39,11 @@ def prove(Eq):
     i = Eq[1].lhs.indices[0]
     x_slice = Eq[-1].limits[0][0]
     x = x_slice.base
-    Eq.x_abs_positive_s1 = Logic.All.of.All_And.apply(Eq[-1])
+    Eq.x_abs_positive_s1 = Bool.All.of.All_And.apply(Eq[-1])
 
-    Eq.x_abs_sum_s1 = Logic.All.of.All_And.apply(Eq[-1], 1)
+    Eq.x_abs_sum_s1 = Bool.All.of.All_And.apply(Eq[-1], 1)
 
-    Eq.x_union_s1 = Logic.All.of.All_And.apply(Eq[-1], 2)
+    Eq.x_union_s1 = Bool.All.of.All_And.apply(Eq[-1], 2)
 
     j = Symbol(domain=Range(k + 1))
     x_quote = Eq[1].lhs.base
@@ -84,11 +84,11 @@ def prove(Eq):
 
     Eq.SqueezeTheorem = Eq[-4] & Eq[-1]
 
-    Eq << Logic.OrAndS.of.BFn_Ite.apply(x_quote_abs)
+    Eq << Bool.OrAndS.of.BFn_Ite.apply(x_quote_abs)
 
     Eq << Eq[-1].subs(i, j)
 
-    Eq << Eq[-2].apply(Logic.AllIn.of.All, (i, Unequal(i, j)))
+    Eq << Eq[-2].apply(Bool.AllIn.of.All, (i, Unequal(i, j)))
 
     Eq << Set.CardUnion.ge.Card.apply(*Eq[-2].rhs.arg.args[::-1])
 
@@ -96,15 +96,15 @@ def prove(Eq):
 
     Eq.xj_is_positive = Eq[-1].subs(Eq[-4].reversed)
 
-    Eq << Logic.All_And.of.All.All.apply(Eq.x_abs_positive_s1, Eq[-3].reversed)
+    Eq << Bool.All_And.of.All.All.apply(Eq.x_abs_positive_s1, Eq[-3].reversed)
 
     Eq.xi_is_positive = Eq[-1].this.expr.apply(Algebra.Cond.of.Eq.Cond)
 
     Eq.xi_all_is_positive = Eq.xi_is_positive.apply(Algebra.All.given.All.limits.delete, index=0)
 
-    Eq << Eq.xi_all_is_positive.this.expr.apply(Logic.All.given.All.AllNot, cond=Equal(i, j))
+    Eq << Eq.xi_all_is_positive.this.expr.apply(Bool.All.given.All.AllNot, cond=Equal(i, j))
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
     Eq << Eq[-1].apply(Algebra.All.given.All.Or.limits.delete, simplify=None)
 
@@ -130,7 +130,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.simplify()
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
     Eq << ~Eq[-1]
 
@@ -154,7 +154,7 @@ def prove(Eq):
 
     Eq << Algebra.Le.of.Le.Le.subst.apply(Eq[-2], Eq[-1])
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq.set_size_inequality)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.set_size_inequality)
 
     Eq << Eq[-1].this.expr.apply(Algebra.LtAdd.of.Lt.Le)
 

@@ -18,7 +18,7 @@ def apply(eq_Ah, eq_Al, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Logic
+    from Lemma import Tensor, Algebra, Bool
 
     n, d_z = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))
@@ -75,10 +75,10 @@ def prove(Eq):
 
     Eq <<= Eq[-1][h:n], Eq[-1][:h]
 
-    Eq <<= Logic.EqUFnS.of.Eq.apply(Eq[-2], exp), Logic.EqUFnS.of.Eq.apply(Eq[-1], exp)
+    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
 
-    Eq.lower_part, Eq.upper_part = Logic.Eq.of.Eq.Eq.apply(Eq[-2], Eq[0][i]), \
-        Logic.Eq.of.Eq.Eq.apply(Eq[-1], Eq[1][i - h])
+    Eq.lower_part, Eq.upper_part = Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[0][i]), \
+        Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[1][i - h])
 
     Eq << Eq.divisor_definition.this.rhs.subs(Eq.lower_part, Eq.upper_part)
 
@@ -124,7 +124,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.ReducedSum)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_def, Eq[-1])
 
     # block-diagonal mask
     # https://arxiv.org/abs/2107.02027

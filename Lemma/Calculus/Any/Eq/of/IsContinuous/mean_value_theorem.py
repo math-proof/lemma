@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Logic
+    from Lemma import Calculus, Algebra, Set, Bool
 
     a = Symbol(real=True)
     b = Symbol(real=True, domain=Interval.open(a, oo))
@@ -47,11 +47,11 @@ def prove(Eq):
 
     Eq <<= Set.In_Icc.of.Le.Ge.apply(Eq[-4], Eq[-1])
 
-    Eq << Logic.Or_NotIn.of.All.apply(Eq.intermediate_value, Eq.intermediate_value.rhs, Eq[-1].lhs)
+    Eq << Bool.Or_NotIn.of.All.apply(Eq.intermediate_value, Eq.intermediate_value.rhs, Eq[-1].lhs)
 
     Eq << Algebra.Any.Or.of.Or.apply(Eq[-1], simplify=None)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[-3], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-3], simplify=None)
 
     Eq << Algebra.AndAnyS.of.Any_And.apply(Eq[-1])
 

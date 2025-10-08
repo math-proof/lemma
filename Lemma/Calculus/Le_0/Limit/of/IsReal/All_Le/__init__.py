@@ -15,7 +15,7 @@ def apply(el, all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     x = Symbol(real=True)
     x0 = Symbol(real=True, given=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.find(And[~Greater]).apply(Algebra.Gt.given.Gt.relax, lower=Min(δ_quote, delta))
 
-    Eq << Logic.Any_And.of.Any.All.apply(*Eq[-2:], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(*Eq[-2:], simplify=None)
 
     Eq << Eq[-1].subs(x, x0 + Min(δ_quote, delta) / 2)
 

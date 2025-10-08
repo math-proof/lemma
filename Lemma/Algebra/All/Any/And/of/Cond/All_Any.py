@@ -9,16 +9,16 @@ def apply(cond, exists):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
     f, g = Function(integer=True)
     Eq << apply(f(x, y) > 0, All[y:B](Any[x:A]((g(x, y) > 0))))
 
-    Eq << Eq[-1].this.expr.apply(Logic.Any_And.given.Any.All, index=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Any_And.given.Any.All, index=0)
 
-    Eq << Logic.All_And.given.All.All.apply(Eq[-1])
+    Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
     Eq << Algebra.All.given.Cond.apply(Eq[-1])
 

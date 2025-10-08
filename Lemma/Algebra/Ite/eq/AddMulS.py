@@ -132,7 +132,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     n, k = Symbol(integer=True, positive=True)
     i = Symbol(domain=Range(n))
@@ -140,7 +140,7 @@ def prove(Eq):
     g, f, h = Function(real=True)
     Eq << apply(Piecewise((g(i), i < n - 1), (h(i), True)))
 
-    Eq << Eq[0].this.lhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite)
+    Eq << Eq[0].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge.Is.Eq.squeeze)
 

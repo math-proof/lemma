@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Logic
+    from Lemma import Bool
 
     i = Symbol(integer=True)
     f = Function(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(i, -i)
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[-1], Eq[0])
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':

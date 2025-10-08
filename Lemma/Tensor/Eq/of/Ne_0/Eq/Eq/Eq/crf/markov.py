@@ -35,7 +35,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic, Tensor
+    from Lemma import Algebra, Probability, Bool, Tensor
 
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True)
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement).simplify()
 
-    Eq << Logic.All.of.All_OrNot.apply(Eq[-1])
+    Eq << Bool.All.of.All_OrNot.apply(Eq[-1])
 
     _, Eq.y_nonzero_assumption = Probability.And.Ne_0.of.Ne_0.apply(Eq.xy_nonzero_assumption)
 
@@ -117,7 +117,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement).simplify()
 
-    Eq << Logic.All.of.All_OrNot.apply(Eq[-1])
+    Eq << Bool.All.of.All_OrNot.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq.first
 

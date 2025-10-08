@@ -11,14 +11,14 @@ def apply(given, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x >= y)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Max.eq.IteGe)
 
-    Eq << Logic.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[-1])
 
 
 

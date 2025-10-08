@@ -13,23 +13,23 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     i, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
     Eq << apply(Sum[i:Range(a, b, 2)](f[i]))
 
-    Eq << Logic.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(a % 2, 0))
+    Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(a % 2, 0))
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Eq_odd.of.Ne_0)
 
-    Eq <<= Logic.Imp.given.ImpEq.apply(Eq[-3]), Logic.Imp.given.ImpEq.apply(Eq[-1])
+    Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-3]), Bool.Imp.given.ImpEq.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Eq_odd.of.Eq_even, ret=0), Eq[-1].this.lhs.apply(Algebra.Eq_even.of.Eq_odd, ret=0)
 
-    Eq <<= Logic.Imp_And.given.Imp.And.subst.apply(Eq[-2], 1), Logic.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
+    Eq <<= Bool.Imp_And.given.Imp.And.subst.apply(Eq[-2], 1), Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
 
-    Eq <<= Logic.Imp_And.given.Imp.delete.apply(Eq[-2]), Logic.Imp_And.given.Imp.delete.apply(Eq[-1])
+    Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2]), Bool.Imp_And.given.Imp.delete.apply(Eq[-1])
 
     Eq << Eq[-2].this.lhs.apply(Algebra.EqSum.of.Eq_even, Eq[0].lhs)
 

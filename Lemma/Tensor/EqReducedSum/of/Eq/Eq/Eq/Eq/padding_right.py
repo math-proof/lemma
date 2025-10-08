@@ -15,7 +15,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -27,9 +27,9 @@ def prove(Eq):
     I = Symbol(integer=True, nonnegative=True, shape=(n,)) # input_ids
     I_quote = Symbol(integer=True, shape=(n,)) # input_ids = torch.gather(input_ids, 1, position_ids)
     Eq << apply(
-        Equal(A, Stack[k:n](Bool(I[k] > 0))),
+        Equal(A, Stack[k:n](functions.Bool(I[k] > 0))),
         Equal(P, Stack[k:n](k) + ReducedArgMax(A)),
-        Equal(P_quote, P - n * Stack[k:n](Bool(P[k] >= n))),
+        Equal(P_quote, P - n * Stack[k:n](functions.Bool(P[k] >= n))),
         Equal(I_quote, Stack[k:n](I[P_quote[k]])))
 
     Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.eq.Sum, k)
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[3], Eq[2], Eq[1])
 
-    Eq << Eq[-1].this.find(Bool).apply(Logic.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Sum.limits.subst.offset, -Eq[-1].find(ReducedArgMax))
 

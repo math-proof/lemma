@@ -14,7 +14,7 @@ def apply(eq, is_nonzero_real, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Calculus, Logic
+    from Lemma import Set, Algebra, Calculus, Bool
 
     x, x0 = Symbol(real=True)
     A = Symbol(complex=True)
@@ -23,15 +23,15 @@ def prove(Eq):
 
     Eq << Set.Any.Eq.of.In.apply(Eq[1], var='a')
 
-    Eq << Logic.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Logic.Cond.of.Eq.Cond.subst, simplify=None, ret=0)
+    Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, simplify=None, ret=0)
 
-    Eq << Logic.Any_And.of.AnySetOf.apply(Eq[-1], simplify=None)
+    Eq << Bool.Any_And.of.AnySetOf.apply(Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.find(Element).apply(Set.Ne_0.of.In)
 
-    Eq << Logic.AnySetOf.of.Any_And.apply(Eq[-1], index=0, simplify=None)
+    Eq << Bool.AnySetOf.of.Any_And.apply(Eq[-1], index=0, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Calculus.Any.All.Gt.of.Ne_0.Eq_Limit)
 

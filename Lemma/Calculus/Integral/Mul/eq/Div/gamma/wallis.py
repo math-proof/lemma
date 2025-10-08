@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     # m is the inductive variable
     m = Symbol(integer=True, positive=True, given=False)
@@ -41,7 +41,7 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.apply(Calculus.Integral.Pow.eq.Mul)
     Eq << Eq[-1].this.rhs.expand(func=True)
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
-    Eq << Logic.Eq.of.Eq.Eq.Imp.induct.apply(Eq.one, Eq.two, Eq[-1], n=m, start=1)
+    Eq << Bool.Eq.of.Eq.Eq.Imp.induct.apply(Eq.one, Eq.two, Eq[-1], n=m, start=1)
 
 
 

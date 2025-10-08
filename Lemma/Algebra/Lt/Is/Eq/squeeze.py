@@ -14,14 +14,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     x = Symbol(domain=Range(1, oo))
 
     Eq << apply(Less(x, 2))
 
-    Eq << Logic.Iff.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.apply(Logic.Imp.Is.Or_Not)
+    Eq << Eq[-2].this.apply(Bool.Imp.Is.Or_Not)
 
     Eq << Eq[-1].this.apply(Algebra.Given.Is.Or)
 

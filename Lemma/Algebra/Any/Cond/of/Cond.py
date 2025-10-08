@@ -20,13 +20,13 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     e = Symbol(integer=True)
     A = Symbol(etype=dtype.integer, empty=False)
     f = Function(integer=True)
     Eq << apply(f(e) > 0, (e, A))
 
-    Eq << Logic.AllIn.of.All.apply(Eq[0], (e, A))
+    Eq << Bool.AllIn.of.All.apply(Eq[0], (e, A))
 
     Eq << Algebra.Any.of.All.apply(Eq[-1])
 

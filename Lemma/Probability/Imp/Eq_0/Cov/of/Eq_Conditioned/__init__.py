@@ -11,7 +11,7 @@ def apply(eq, i):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     x = Symbol(shape=(oo,), real=True, random=True)
     t, i = Symbol(integer=True) # time counter
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.lhs.apply(Algebra.Or.of.Ne)
 
-    Eq << Logic.ImpOr.given.Imp.Imp.apply(Eq[-1])
+    Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
     Eq << Probability.Imp.Eq_0.Cov.of.Eq_Conditioned.using.Gt.apply(Eq[0], i)
 

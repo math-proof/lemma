@@ -15,7 +15,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Logic
+    from Lemma import Algebra, Probability, Bool
 
     x = Symbol(real=True, shape=(oo,), random=True)
     i, j = Symbol(integer=True)
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n, 0)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n, 0)
 
 
 

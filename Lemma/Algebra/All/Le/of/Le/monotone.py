@@ -12,7 +12,7 @@ def apply(le, n, N=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n, N = Symbol(integer=True)
@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
-    Eq << Logic.Cond.of.All_Imp.apply(Eq[-1], n=m, start=0)
+    Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=m, start=0)
 
-    Eq << Logic.All.of.Cond.apply(Eq[2], m)
+    Eq << Bool.All.of.Cond.apply(Eq[2], m)
 
     Eq << Eq[-1].subs(n, N)
 

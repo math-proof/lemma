@@ -21,7 +21,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Logic
+    from Lemma import Calculus, Algebra, Bool
 
     t = Symbol(real=True, positive=True)
     x = Symbol(real=True)
@@ -33,11 +33,11 @@ def prove(Eq):
     Eq << Eq[-1] / t
 
     limits = Eq[-1].find(Sum).limits
-    Eq << Logic.AllIn.of.All.apply(Eq[0], *Eq[-1].find(Maxima).limits)
+    Eq << Bool.AllIn.of.All.apply(Eq[0], *Eq[-1].find(Maxima).limits)
 
     Eq << Algebra.GeMaxima.of.All_Ge.apply(Eq[-1])
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], *limits)
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], *limits)
 
     Eq << Algebra.GeSum.of.All_Ge.apply(Eq[-1])
 

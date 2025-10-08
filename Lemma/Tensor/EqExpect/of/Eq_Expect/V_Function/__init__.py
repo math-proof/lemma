@@ -16,7 +16,7 @@ def apply(Q_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Logic
+    from Lemma import Algebra, Probability, Calculus, Bool
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.eq.Sum)
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Logic.And_And.given.And.Cond.apply(Eq[-1])
+    Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Sum.eq.Integral)
 

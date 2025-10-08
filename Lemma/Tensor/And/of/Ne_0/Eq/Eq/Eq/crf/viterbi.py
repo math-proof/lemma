@@ -30,7 +30,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Logic
+    from Lemma import Tensor, Algebra, Set, Bool
 
     from Lemma.Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov import markov_assumptions
     d, n = Symbol(domain=Range(2, oo))
@@ -53,13 +53,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Set.NotInSub.of.NotIn_Icc, 1)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1])
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1])
 
     Eq << Eq.x_quote_definition.subs(t, t + 1)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotInSub.of.NotIn_Icc, 1)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1])
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[-4]
 
@@ -79,13 +79,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotInAdd.of.NotIn, 1)
 
-    Eq << Logic.ImpNot.of.Or.apply(Eq[-1])
+    Eq << Bool.ImpNot.of.Or.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Gt)
 
     Eq << Eq[4].reversed
 
-    Eq << Eq[-1].apply(Logic.EqUFnS.of.Eq, exp)
+    Eq << Eq[-1].apply(Bool.EqUFnS.of.Eq, exp)
 
     Eq << Algebra.EqMaxima.of.Eq.apply(Eq[-1], (y[:t + 1],))
 

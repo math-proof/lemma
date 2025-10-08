@@ -12,7 +12,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
     e = Symbol(integer=True, given=True)
     U, A = Symbol(etype=dtype.integer, given=True)
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[1]
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1])
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
 
 if __name__ == '__main__':

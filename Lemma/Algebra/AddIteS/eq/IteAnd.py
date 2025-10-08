@@ -45,7 +45,7 @@ def apply(self, swap=False, deep=False, *, simplify=True):
 
     rhs = add(ecs, _ecs, deep=deep, simplify=simplify)
     if simplify and rhs.is_Piecewise:
-        from Lemma.Logic.Ite_Ite.eq.Ite__Ite import flatten
+        from Lemma.Bool.Ite_Ite.eq.Ite__Ite import flatten
         rhs = flatten(rhs)
 
     return Equal(self, rhs, evaluate=False)
@@ -54,7 +54,7 @@ def apply(self, swap=False, deep=False, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     x = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].find(Add).apply(Algebra.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.lhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[-1].this.lhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
 
 

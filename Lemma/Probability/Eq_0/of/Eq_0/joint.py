@@ -10,16 +10,16 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Logic
+    from Lemma import Probability, Algebra, Bool
 
     x, y = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x), 0), y)
 
     Eq << Eq[1].invert().this.apply(Probability.Ne_0.of.Ne_0.delete)
 
-    Eq << Eq[-1].this.apply(Logic.Imp.Is.ImpNotS)
+    Eq << Eq[-1].this.apply(Bool.Imp.Is.ImpNotS)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

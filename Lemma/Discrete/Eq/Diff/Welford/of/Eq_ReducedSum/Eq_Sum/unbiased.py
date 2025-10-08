@@ -12,7 +12,7 @@ def apply(eq_x_bar, eq_s2):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Logic
+    from Lemma import Discrete, Algebra, Bool
 
     x, s = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
-    Eq << Logic.Cond.of.And.apply(Eq[-1], 1).reversed
+    Eq << Bool.Cond.of.And.apply(Eq[-1], 1).reversed
 
     Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[-3])
 

@@ -8,7 +8,7 @@ def apply(gt_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Trigonometry, Set, Algebra, Logic
+    from Lemma import Calculus, Trigonometry, Set, Algebra, Bool
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-4].reversed)
 
-    Eq << Logic.AllIn.of.All.apply(Eq[-1], (x, Interval(0, oo)))
+    Eq << Bool.AllIn.of.All.apply(Eq[-1], (x, Interval(0, oo)))
 
     Eq << Calculus.All.Ge.of.All_Ge_0.monotony.right_open.apply(Eq[-1])
 
@@ -38,11 +38,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(f).defun()
 
-    Eq << Logic.Imp.of.AllSetOf.apply(Eq[-1])
+    Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Le.of.Ge_0)
 
-    Eq << Logic.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
+    Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
 
 

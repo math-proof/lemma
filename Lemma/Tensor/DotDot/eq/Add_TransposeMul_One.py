@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Logic
+    from Lemma import Algebra, Discrete, Tensor, Bool
 
     n, d_z = Symbol(integer=True, positive=True)
     Q = Symbol(shape=(n, d_z), real=True)
@@ -39,13 +39,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Block, deep=True)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq.A_def_expand, Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq.A_def_expand, Eq[-1])
 
     Eq << Eq[-1].this.find(MatMul[Add]).apply(Tensor.Dot.eq.Add)
 
     Eq << Eq[-1].this.find(Transpose[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Logic.Eq.of.Eq.Eq.apply(Eq[1], Eq[-1])
+    Eq << Bool.Eq.of.Eq.Eq.apply(Eq[1], Eq[-1])
 
 
 if __name__ == '__main__':

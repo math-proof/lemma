@@ -13,7 +13,7 @@ def apply(piecewise, i=0, pivot=-1):
     latter = Or(*latter)
     ecs[i] = (ei, former)
     ecs.insert(i + 1, (ei, latter))
-    from Lemma.Logic.Ite__Ite.eq.IteAnd_Not__Ite import swap
+    from Lemma.Bool.Ite__Ite.eq.IteAnd_Not__Ite import swap
     ecs = swap(ecs, i + 1)
 
     last = Piecewise(*ecs[i + 1:])
@@ -24,7 +24,7 @@ def apply(piecewise, i=0, pivot=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic
+    from Lemma import Algebra, Bool
 
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(k,))
@@ -33,9 +33,9 @@ def prove(Eq):
     Eq << apply(Piecewise((f(x), Element(x, A) | Unequal(A, B)), (g(x), True)))
 
 
-    Eq << Eq[0].this.rhs.apply(Logic.Ite_Ite.eq.Ite__Ite)
+    Eq << Eq[0].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Logic.Ite__Ite.eq.IteAnd_Not__Ite, 1)
+    Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
 
 if __name__ == '__main__':

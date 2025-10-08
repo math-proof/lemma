@@ -16,7 +16,7 @@ def apply(complement):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic
+    from Lemma import Set, Algebra, Bool
     U = Symbol(etype=dtype.integer, given=True)
     n = Symbol(integer=True, given=True)
 
@@ -31,13 +31,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.rhs.definition
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[-1])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[-1])
 
     Eq << Eq[-1].this.args[1].apply(Set.NotIn_SDiff.given.Or)
 
     Eq << ~Eq[-1]
 
-    Eq << Logic.OrAndS.of.And_Or.apply(Eq[-1])
+    Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
     Eq << Eq[-1].this.args[0].apply(Algebra.Eq_odd.of.Ne_0)
 
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.rhs.definition
 
-    Eq << Logic.All.given.All_Or_Not.apply(Eq[-1])
+    Eq << Bool.All.given.All_Or_Not.apply(Eq[-1])
 
     Eq << Set.Eq.of.All_In.All_In.apply(Eq.all_contains_in_A, Eq.all_contains_in_B)
 

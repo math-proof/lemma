@@ -13,14 +13,14 @@ def apply(n, P_quote=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Discrete, Logic
+    from Lemma import Set, Algebra, Discrete, Bool
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)
 
     Eq << Set.All_CupFinset.eq.Ico.apply(Eq[-1].lhs)
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
     Eq << Eq[-3].this.expr.apply(Discrete.Eq.of.Eq.Eq.permutation.pop.Icc)
 
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Set.All_CupFinset.eq.Ico.apply(Eq[1].lhs)
 
-    Eq << Logic.All.All.of.All_And.apply(Eq[-1])
+    Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 
     Eq << Eq[-3].this.expr.apply(Discrete.Eq.of.Eq.Eq.permutation.push)
 

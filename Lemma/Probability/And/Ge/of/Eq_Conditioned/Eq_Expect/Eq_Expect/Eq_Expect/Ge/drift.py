@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Probability, Logic
+    from Lemma import Algebra, Tensor, Probability, Bool
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -99,7 +99,7 @@ def prove(Eq):
 
     Eq << Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[-2])
 
-    Eq << Logic.All.of.Cond.apply(Eq[-1], s[t].var, simplify=None)
+    Eq << Bool.All.of.Cond.apply(Eq[-1], s[t].var, simplify=None)
 
     Eq << Algebra.GeInf.of.All_Ge.apply(Eq[-1])
 
