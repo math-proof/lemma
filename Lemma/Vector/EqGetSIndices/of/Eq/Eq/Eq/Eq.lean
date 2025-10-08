@@ -1,3 +1,4 @@
+import sympy.vector.Basic
 import Lemma.Algebra.CoeAdd_1.eq.AddCoe_1
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Int.LeToNatS.of.Le

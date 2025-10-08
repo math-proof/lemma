@@ -326,15 +326,39 @@ ${latex}
                             if (explicit)
                                 explicit.update(renderLean[i + 1].explicit);
                             if (proof) {
-                                var attr = proof.by? 'by': proof.calc? 'calc': '';
-                                if (attr) {
-                                    for (var j of range(proof[attr].length)) {
-                                        proof[attr][j].update(renderLean[i + 1]?.proof[attr][j]);
+                                var attr = proof.by? 'by' : proof.calc? 'calc' : '';
+                                var next_proof = renderLean[i + 1].proof;
+                                var next_attr = next_proof.by? 'by' : next_proof.calc? 'calc' : '';
+                                if (attr != next_attr) {
+                                    if (attr) {
+                                        var proofValue = proof[attr];
+                                        delete proof[attr];
+                                    }
+                                    else {
+                                        var proofValue = [...proof];
+                                        proof.clear();
+                                    }
+                                    attr = next_attr;
+                                    if (attr) {
+                                        proof[attr] = [];
+                                        for (var j of range(proofValue.length)) {
+                                            proof[attr][j] = proofValue[j];
+                                        }
+                                    }
+                                    else {
+                                        for (var j of range(proofValue.length)) {
+                                            proof[j] = proofValue[j];
+                                        }
                                     }
                                 }
-                                else if (proof.length) {
+                                if (attr){
+                                    for (var j of range(proof[attr].length)) {
+                                        proof[attr][j].update(next_proof[attr][j]);
+                                    }
+                                }
+                                else {
                                     for (var j of range(proof.length)) {
-                                        proof[j].update(renderLean[i + 1]?.proof[j]);
+                                        proof[j].update(next_proof[j]);
                                     }
                                 }
                             }

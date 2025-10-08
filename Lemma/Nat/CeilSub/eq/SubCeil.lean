@@ -6,12 +6,11 @@ private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
   {x : α}
-  {d : ℤ} :
+  {d : ℕ} :
 -- imply
-  ⌈x - d⌉ = ⌈x⌉ - d :=
+  ⌈x - d⌉ = ⌈x⌉ - d := by
 -- proof
-  Int.ceil_sub_intCast x d
+  simp
 
 
--- created on 2025-05-04
--- updated on 2025-10-08
+-- created on 2025-10-08
