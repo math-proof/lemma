@@ -8,15 +8,17 @@ private lemma main
   [ExpPos α]
 -- given
   (h_s : s.length > 0)
-  (h : s[0] > 0)
+  (h : s[s.length - 1] > 0)
   (X : Tensor α s) :
 -- imply
-  (X.softmax 0).sum 0 = 1 := by
+  (X.softmax).sum = 1 := by
 -- proof
-  rw [Softmax.eq.Div_SumExp]
-  unfold Tensor.sum_keepdim
-  simp [h_s]
-  sorry
+  induction s with
+  | nil =>
+    contradiction
+  | cons s₀ s ih =>
+    sorry
 
 
 -- created on 2025-10-07
+-- updated on 2025-10-08

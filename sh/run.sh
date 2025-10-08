@@ -107,7 +107,7 @@ done
 sed -i '$ s/,$/\nON DUPLICATE KEY UPDATE imports = VALUES(imports), error = VALUES(error);/' test.sql
 
 echo "plausible:"
-sorryModules=($(grep -P "^warning: (\./)*[\w/]+\.lean:\d+:\d+: declaration uses 'sorry'" test.log | sed -E 's#^warning: ([.]/)*##' | sed -E "s/\.lean:[0-9]+:[0-9]+: declaration uses 'sorry'//" | sed 's#/#.#g' | sort -u))
+sorryModules=($(grep -P "^warning: (\./)*[\w'/]+\.lean:\d+:\d+: declaration uses 'sorry'" test.log | sed -E 's#^warning: ([.]/)*##' | sed -E "s/\.lean:[0-9]+:[0-9]+: declaration uses 'sorry'//" | sed 's#/#.#g' | sort -u))
 for module in ${sorryModules[*]}; do
   echo "${module//.//}.lean"
   module=${module#Lemma.}
