@@ -2,17 +2,8 @@ import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.Cast_0.eq.Zero
 import Lemma.Algebra.Cast_1.eq.One
-open Algebra
-
-
-@[main]
-private lemma nat
--- given
-  (n : ℕ) :
--- imply
-  n + 1 > 0 := by
--- proof
-  simp
+import Lemma.Nat.GtAdd_1'0
+open Algebra Nat
 
 
 @[main]
@@ -24,7 +15,7 @@ private lemma main
 -- imply
   n + 1 > (0 : R) := by
 -- proof
-  have h := nat n
+  have h := GtAdd_1'0 n
   have h := GtCoeS.of.Gt.nat (R := R) h
   rw [CoeAdd.eq.AddCoeS.nat] at h
   rw [One.eq.Cast_1]
@@ -32,4 +23,4 @@ private lemma main
 
 
 -- created on 2025-05-28
--- updated on 2025-06-08
+-- updated on 2025-10-08
