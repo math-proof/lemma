@@ -19,14 +19,14 @@ import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Algebra.SubSub
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
 import Lemma.Algebra.LeSub.is.Le_Add
-import Lemma.Algebra.Lt.of.Le.Ne
+import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Algebra.Sub.ge.One.of.Gt
 import Lemma.Algebra.LtSubS.of.Lt.Le
 import Lemma.Algebra.LtSub_1.of.Le.Gt_0
 import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.Algebra.Lt.of.Le.Lt
 import Lemma.Algebra.LeSub.of.Le
-import Lemma.Algebra.Eq.of.Le.Le
+import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Algebra.EqAdd_Sub.of.Ge
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge

@@ -1,6 +1,6 @@
-import Lemma.Algebra.Lt.of.Le.Ne
+import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Algebra.Div.eq.CeilDiv.of.Lt_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

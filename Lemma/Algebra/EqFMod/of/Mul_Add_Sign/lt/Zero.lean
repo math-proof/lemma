@@ -1,6 +1,6 @@
 import Lemma.Algebra.EqSign_1.of.Gt_0
 import Lemma.Algebra.NotGt.is.Le
-import Lemma.Algebra.Lt.of.Le.Ne
+import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.Sign.eq.Neg1.of.Lt_0
 import Lemma.Algebra.AddSub.eq.Sub_Sub

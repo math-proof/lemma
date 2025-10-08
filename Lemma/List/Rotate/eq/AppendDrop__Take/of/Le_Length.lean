@@ -1,7 +1,7 @@
 import stdlib.List
-import Lemma.Algebra.Lt.of.Le.Ne
+import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Lt_Length
-open Algebra List
+open List Nat
 
 
 @[main]

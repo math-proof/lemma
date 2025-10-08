@@ -2,14 +2,14 @@ import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetElem.eq.SomeGet.of.Lt
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Algebra.Lt.of.Le.Ne
+import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Algebra.Sub.gt.Zero.is.Lt
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.List.EqSwapS
-open Algebra List Bool
+open Algebra List Bool Nat
 
 
 @[main]

@@ -1,5 +1,5 @@
-import Lemma.Algebra.Eq.of.Le.Ge
-open Algebra
+import Lemma.Nat.Eq.of.Le.Ge
+open Nat
 
 
 @[main]
@@ -7,7 +7,7 @@ private lemma main
   [PartialOrder α]
   {a b : α}
 -- given
-  (h₀ : b ≤ a)
+  (h₀ : a ≥ b)
   (h₁ : a ≤ b) :
 -- imply
   a = b :=
@@ -15,4 +15,4 @@ private lemma main
   Eq.of.Le.Ge h₁ h₀
 
 
--- created on 2025-05-17
+-- created on 2024-11-29

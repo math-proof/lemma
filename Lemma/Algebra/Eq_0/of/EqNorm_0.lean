@@ -1,10 +1,10 @@
 import Lemma.Algebra.Norm.eq.SqrtAddSqaureS
 import Lemma.Algebra.EqSqrt_0.is.Le_0
 import Lemma.Algebra.AddSquareS.ge.Zero
-import Lemma.Algebra.Eq.of.Ge.Le
+import Lemma.Nat.Eq.of.Ge.Le
 import Lemma.Algebra.Eq.of.EqReS.EqImS
 import Lemma.Algebra.Eq_0.and.Eq_0.of.AddSquareS.eq.Zero
-open Algebra
+open Algebra Nat
 
 
 @[main]

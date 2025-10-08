@@ -2,10 +2,10 @@ import sympy.core.power
 import Lemma.Algebra.GeSqrt_0
 import Lemma.Algebra.GeSquare_0
 import Lemma.Algebra.Ge.of.Ge.Ge
-import Lemma.Algebra.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Ge
 import Lemma.Algebra.Eq_0.of.LeSquare_0
 import Lemma.Algebra.Le_Sqrt.is.LeSquare.of.Ge_0.Ge_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

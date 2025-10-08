@@ -7,7 +7,8 @@ import Lemma.List.EqSwap.of.Ge_Length
 import Lemma.List.Permute.eq.Permute__Sub.of.Add.ge.SubLength_1
 import Lemma.List.GetPermute.eq.Ite.of.Lt_Length.Lt_Length
 import Lemma.Algebra.Le.of.Lt_Add_1
-open Algebra List Bool
+import Lemma.Nat.Eq.of.Ge.Le
+open Algebra List Bool Nat
 
 
 @[main]

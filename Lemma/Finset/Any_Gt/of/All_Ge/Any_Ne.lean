@@ -2,8 +2,8 @@ import Lemma.Bool.NotAny.is.All_Not
 import Lemma.Bool.All.of.All.All_Imp
 import Lemma.Bool.All_And.of.All.All
 import Lemma.Bool.NotAny_Not.of.All
-import Lemma.Algebra.Eq.of.Le.Ge
-open Bool Algebra
+import Lemma.Nat.Eq.of.Le.Ge
+open Bool Nat
 
 
 @[main]

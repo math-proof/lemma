@@ -5,7 +5,7 @@ import Lemma.Bool.AndAnd.is.And_And
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.Algebra.AllIco.of.AllRange
 import Lemma.Bool.All_And.of.All.All
-import Lemma.Algebra.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Ge
 import Lemma.Bool.All.of.All.All_Imp
 import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
@@ -23,7 +23,7 @@ import Lemma.Algebra.SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
 import Lemma.Bool.All_EqUFnS.of.All_Eq
 import Lemma.Algebra.EqAdd0
 import Lemma.Algebra.Cast_0.eq.Zero
-open Algebra Bool Finset Real
+open Algebra Bool Finset Real Nat
 
 
 /--

@@ -2,8 +2,8 @@ import Lemma.Algebra.NotGt.is.Le
 import Lemma.Set.Icc.eq.Empty.of.Gt
 import Lemma.Set.InterSingletonS.subset.Icc
 import Lemma.Set.EqEmpty.is.Subset_Empty
-import Lemma.Algebra.Eq.of.Le.Ge
-open Algebra Set
+import Lemma.Nat.Eq.of.Le.Ge
+open Algebra Set Nat
 
 
 @[main]

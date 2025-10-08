@@ -1,7 +1,7 @@
-import Lemma.Algebra.Eq.of.Ge.Le
+import Lemma.Nat.Eq.of.Ge.Le
 import Lemma.Algebra.Le.of.Lt
 import Lemma.Algebra.Ne.of.Lt
-open Algebra
+open Algebra Nat
 
 
 @[main, comm, mp, mpr]

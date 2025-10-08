@@ -20,7 +20,7 @@ import Lemma.List.GetElem.eq.None.of.Ge_Length
 import Lemma.Algebra.GeSub_1.of.Gt
 import Lemma.Algebra.Le.of.LtSub_1
 import Lemma.Algebra.LeSub.is.Le_Add
-import Lemma.Algebra.Eq.of.Le.Le
+import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.Algebra.Le.of.LeSubS.Le
 import Lemma.Algebra.Lt.of.Lt.Lt
@@ -30,7 +30,7 @@ import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Ge_1.of.Gt
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Algebra.Eq.of.EqSubS.Ge.Ge
-open Algebra List Bool
+open Algebra List Bool Nat
 set_option maxHeartbeats 300000
 
 

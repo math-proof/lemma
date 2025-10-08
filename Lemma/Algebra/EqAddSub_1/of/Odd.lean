@@ -4,9 +4,9 @@ import Lemma.Algebra.Ge.of.Gt_Sub_1
 import Lemma.Algebra.Sub.eq.Zero
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Algebra.NotOdd.is.Even
-import Lemma.Algebra.Lt.of.Le.Ne
+import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Algebra.EqAddSub_1.of.Lt_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

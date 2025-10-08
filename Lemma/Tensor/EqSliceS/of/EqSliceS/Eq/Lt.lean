@@ -3,9 +3,9 @@ import Lemma.Algebra.LtVal
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le.of.Lt_Add_1
-import Lemma.Algebra.Lt.of.Le.Ne
+import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Tensor.Eq.is.All_EqGetS
-open Tensor Algebra List
+open Tensor Algebra List Nat
 
 
 /--

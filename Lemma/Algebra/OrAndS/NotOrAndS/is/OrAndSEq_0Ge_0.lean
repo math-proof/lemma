@@ -1,6 +1,6 @@
 import Lemma.Algebra.OrAndS.NotOrAndS.is.Ge_0.Ge_0.OrLeS_0
-import Lemma.Algebra.Eq.of.Le.Ge
-open Algebra
+import Lemma.Nat.Eq.of.Le.Ge
+open Algebra Nat
 
 
 @[main]

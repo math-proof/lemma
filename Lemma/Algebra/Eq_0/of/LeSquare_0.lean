@@ -1,7 +1,7 @@
 import Lemma.Algebra.GeSquare_0
-import Lemma.Algebra.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Ge
 import Lemma.Algebra.Eq_0.of.EqSquare_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

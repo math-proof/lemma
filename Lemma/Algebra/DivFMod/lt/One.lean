@@ -5,10 +5,10 @@ import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Algebra.GtFMod.of.Lt_0
 import Lemma.Algebra.NotGt.is.Le
-import Lemma.Algebra.Lt.of.Le.Ne
+import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Algebra.LtDivS.of.Gt.Lt_0
 import Lemma.Algebra.Div.eq.One.of.Lt_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

@@ -1,5 +1,5 @@
 import Lemma.Algebra.FMod.le.Zero.of.Lt_0
-import Lemma.Algebra.Lt.of.Le.Ne
+import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.Algebra.Sign.eq.Neg1.of.Lt_0
 import Lemma.Set.In_Icc.of.Le.Le

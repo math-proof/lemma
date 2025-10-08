@@ -3,9 +3,9 @@ import Lemma.Algebra.Le.of.Sub.le.Zero
 import Lemma.Algebra.Ge.of.Sub.ge.Zero
 import Lemma.Set.In_Icc.of.Le.Ge
 import Lemma.Algebra.Ge.of.Ge.Ge
-import Lemma.Algebra.Eq.of.Ge.Le
+import Lemma.Nat.Eq.of.Ge.Le
 import Lemma.Set.In_Icc.of.Ge.Le
-open Algebra Set
+open Algebra Set Nat
 
 
 @[main]

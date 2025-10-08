@@ -1,8 +1,8 @@
 import sympy.functions.elementary.integers
-import Lemma.Algebra.Eq.of.Le.Ge
+import Lemma.Nat.Eq.of.Le.Ge
 import Lemma.Algebra.GeAddSub_1
 import Lemma.Algebra.GeAddSub_1.of.Lt_0
-open Algebra
+open Algebra Nat
 
 
 @[main]
