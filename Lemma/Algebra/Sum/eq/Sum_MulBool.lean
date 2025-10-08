@@ -5,11 +5,10 @@ open Bool
 @[main]
 private lemma main
   [NonAssocSemiring β]
-  [Fintype α]
-  [DecidableEq α]
+  [Fintype ι] [DecidableEq ι]
 -- given
-  (A : Finset α)
-  (f : α → β) :
+  (A : Finset ι)
+  (f : ι → β) :
 -- imply
   ∑ x ∈ A, f x = ∑ x, Bool.toNat (x ∈ A) * f x := by
 -- proof

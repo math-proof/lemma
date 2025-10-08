@@ -6,11 +6,11 @@ determine the cardinality of List.Vector α n given α is of Fintype
 -/
 @[main]
 private lemma main
-  [Fintype α]
+  [Fintype ι]
 -- given
   (n : ℕ) :
 -- imply
-  Fintype.card (List.Vector α n) = Fintype.card α ^ n := by
+  Fintype.card (List.Vector ι n) = Fintype.card ι ^ n := by
 -- proof
   simp
 

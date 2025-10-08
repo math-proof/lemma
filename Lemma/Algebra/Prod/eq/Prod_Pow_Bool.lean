@@ -5,9 +5,8 @@ open Algebra Bool
 
 @[main]
 private lemma main
-  [Fintype ι]
+  [Fintype ι] [DecidableEq ι]
   [CommMonoid α]
-  [DecidableEq ι]
   {f : ι → α} :
 -- imply
   ∏ i ∈ s, f i = ∏ i ∈ Set.univ, f i ^ Bool.toNat (i ∈ s) := by

@@ -10,8 +10,7 @@ open Algebra Set Bool
 
 @[main]
 private lemma main
-  [DecidableEq ι]
-  [Fintype ι]
+  [Fintype ι] [DecidableEq ι]
   [NonAssocSemiring α]
 -- given
   (f : ι → α)

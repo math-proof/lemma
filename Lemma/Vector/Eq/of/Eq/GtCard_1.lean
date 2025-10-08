@@ -5,16 +5,16 @@ open Algebra Vector
 
 @[main]
 private lemma main
-  [Fintype α]
+  [Fintype ι]
 -- given
-  (h₀ : Fintype.card α > 1)
-  (h₁ : List.Vector α n = List.Vector α m) :
+  (h₀ : Fintype.card ι > 1)
+  (h₁ : List.Vector ι n = List.Vector ι m) :
 -- imply
   n = m := by
 -- proof
-  have h_n := Card.eq.PowCard (α := α) n
-  have h_m := Card.eq.PowCard (α := α) m
-  have h_card : Fintype.card (List.Vector α n) = Fintype.card (List.Vector α m) := by simp_all
+  have h_n := Card.eq.PowCard (ι := ι) n
+  have h_m := Card.eq.PowCard (ι := ι) m
+  have h_card : Fintype.card (List.Vector ι n) = Fintype.card (List.Vector ι m) := by simp_all
   have h_eq := h_n.symm.trans h_card |>.trans h_m
   apply Eq.of.EqPowS.Gt_1 h₀ h_eq
 

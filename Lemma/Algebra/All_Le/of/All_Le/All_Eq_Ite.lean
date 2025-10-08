@@ -1,18 +1,19 @@
-import sympy.sets.sets
 import Lemma.Bool.Ne.is.NotEq
 open Bool
 
 
 @[main]
 private lemma main
-  {n i' : ℕ}
-  {x y y' : ℕ → ℝ}
+  [DecidableEq ι]
+  {i' : ι}
+  {x y y' : ι → ℝ}
+  {s : Finset ι}
 -- given
-  (h₀ : i' ∈ range n)
-  (h₁ : ∀ i ∈ range n, x i ≤ y i)
-  (h₂ : ∀ i ∈ range n, y' i = if i = i' then x i else y i) :
+  (h₀ : i' ∈ s)
+  (h₁ : ∀ i ∈ s, x i ≤ y i)
+  (h₂ : ∀ i ∈ s, y' i = if i = i' then x i else y i) :
 -- imply
-  ∀ i ∈ range n, x i ≤ y' i := by
+  ∀ i ∈ s, x i ≤ y' i := by
 -- proof
   intro i h_In
   by_cases h : i = i'

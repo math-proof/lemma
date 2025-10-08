@@ -1,24 +1,25 @@
 import sympy.sets.sets
 import Lemma.Bool.All.of.All.All_Imp
-import Lemma.Algebra.Root_Add_2.le.Sqrt.of.Ge_1
-import Lemma.Finset.LeSumS.of.All_Le
 import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
-import Lemma.Algebra.Le.of.Le.Le
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.EqMulDiv.of.Ne_0
 import Lemma.Algebra.Mul_Mul
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.Mul
 import Lemma.Finset.Sum.ge.Zero.of.All_Ge_0
-import Lemma.Algebra.GeDivS.of.Ge.Gt_0
 import Lemma.Algebra.Gt_0.of.Ne_0
+import Lemma.Algebra.GeDivS.of.Ge.Gt_0
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
 import Lemma.Algebra.GeSqrt_0
-open Algebra Finset Bool Nat Real
+open Algebra Bool Nat Finset Real
 
 
+/--
+Given a non-zero natural number `n` and a sequence `x` of real numbers where each element is at least 1, if the average of the first `n` elements equals the `n`-th element, then the sum of the square roots of the first `n` elements is bounded above by `n` times the square root of the `n`-th element.
+This result leverages the Cauchy-Schwarz inequality and algebraic manipulations under the specified conditions.
+-/
 @[main]
 private lemma main
   {n : ℕ}
@@ -28,20 +29,14 @@ private lemma main
   (h₁ : ∀ i ∈ range n, x i ≥ 1)
   (h₂ : (∑ i ∈ range n, x i) / n = x n) :
 -- imply
-  (∑ i ∈ range n, (x i) ^ (1 / (i + 2) : ℝ)) ≤ n * √(x n) := by
+  (∑ i ∈ range n, √(x i)) ≤ n * √(x n) := by
 -- proof
-  have : ∀ (t : ℝ) (i : ℕ), t ≥ 1 → (t ^ (1 / (i + 2) : ℝ) ≤ √t) := by
-    intro t i h
-    apply Root_Add_2.le.Sqrt.of.Ge_1 h
-  have := All.of.All.All_Imp.binary this h₁
-  have h_Le := LeSumS.of.All_Le this
   have : ∀ t : ℝ, t ≥ 1 → t ≥ 0 := by
     intro t h
     linarith
   have h_Ge_0 := All.of.All.All_Imp.fin this h₁
-  have := Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0.cauchy_schwarz h_Ge_0
-  simp only [Finset.card_range] at this
-  have h_Le := Le.of.Le.Le h_Le this
+  have h_Le := Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0.cauchy_schwarz h_Ge_0
+  simp only [Finset.card_range] at h_Le
   have h_Eq := EqMulS.of.Eq h₂ n
   rw [EqMulDiv.of.Ne_0 (by simp [h₀] : (n : ℝ) ≠ 0)] at h_Eq
   rw [h_Eq] at h_Le

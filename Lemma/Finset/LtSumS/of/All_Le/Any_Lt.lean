@@ -1,6 +1,5 @@
-import sympy.sets.sets
 import Lemma.Algebra.All_Le.of.All_Le.All_Eq_Ite
-import Lemma.Algebra.Sum.eq.Sum_Add_Sub.of.In_Range.All_Eq_Ite
+import Lemma.Finset.Sum.eq.Sum_Add_Sub.of.In_Range.All_Eq_Ite
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Lt.of.Eq_Add.Lt_0
 import Lemma.Finset.LeSumS.of.All_Le
@@ -10,18 +9,19 @@ open Algebra Finset
 
 @[main]
 private lemma main
-  {n : ℕ}
-  {x y : ℕ → ℝ}
+  [DecidableEq ι]
+  {x y : ι → ℝ}
+  {s : Finset ι}
 -- given
-  (h₀ : ∀ i ∈ range n, x i ≤ y i)
-  (h₁ : ∃ i ∈ range n, x i < y i) :
+  (h₀ : ∀ i ∈ s, x i ≤ y i)
+  (h₁ : ∃ i ∈ s, x i < y i) :
 -- imply
-  ∑ i ∈ range n, x i < ∑ i ∈ range n, y i := by
+  ∑ i ∈ s, x i < ∑ i ∈ s, y i := by
 -- proof
   let ⟨i', h⟩ := h₁
   let ⟨h_In, h_Lt⟩ := h
   let y' := fun i => if i = i' then x i else y i
-  have h_y' : ∀ i ∈ range n, y' i = if i = i' then x i else y i := by
+  have h_y' : ∀ i ∈ s, y' i = if i = i' then x i else y i := by
     intro i hj
     by_cases h : i = i'
     ·
