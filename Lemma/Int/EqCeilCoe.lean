@@ -2,18 +2,6 @@ import sympy.Basic
 
 
 @[main]
-private lemma nat
-  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
-  [FloorRing α]
--- given
-  (a : ℕ) :
--- imply
-  ⌈(a : α)⌉ = a := by
--- proof
-  aesop
-
-
-@[main]
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
@@ -26,3 +14,4 @@ private lemma main
 
 
 -- created on 2025-08-04
+-- updated on 2025-10-08
