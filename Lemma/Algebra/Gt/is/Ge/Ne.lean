@@ -1,5 +1,5 @@
 import Lemma.Nat.Eq.of.Ge.Le
-import Lemma.Algebra.Le.of.Lt
+import Lemma.Nat.Le.of.Lt
 import Lemma.Algebra.Ne.of.Lt
 open Algebra Nat
 

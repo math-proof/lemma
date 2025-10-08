@@ -1,7 +1,7 @@
 import sympy.core.power
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
-import Lemma.Algebra.Ge.of.Gt
-open Algebra
+import Lemma.Nat.Ge.of.Gt
+open Algebra Nat
 
 
 @[main]

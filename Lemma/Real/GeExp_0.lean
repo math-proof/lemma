@@ -1,6 +1,6 @@
 import Lemma.Real.GtExp_0
-import Lemma.Algebra.Ge.of.Gt
-open Real Algebra
+import Lemma.Nat.Ge.of.Gt
+open Real Nat
 
 
 @[main]

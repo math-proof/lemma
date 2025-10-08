@@ -1,6 +1,6 @@
 import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Ge
-import Lemma.Algebra.Ge.of.Gt
-open Algebra
+import Lemma.Nat.Ge.of.Gt
+open Algebra Nat
 
 
 @[main, comm]

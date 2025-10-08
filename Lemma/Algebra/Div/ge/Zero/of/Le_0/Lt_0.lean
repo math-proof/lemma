@@ -1,6 +1,6 @@
-import Lemma.Algebra.Le.of.Lt
+import Lemma.Nat.Le.of.Lt
 import Lemma.Algebra.Div.ge.Zero.of.Le_0.Le_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

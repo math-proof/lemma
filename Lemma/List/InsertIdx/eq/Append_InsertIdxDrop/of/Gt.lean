@@ -5,11 +5,11 @@ import Lemma.Algebra.EqMin.of.Le
 import Lemma.List.EqInsertIdx.of.Gt_Length
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
-import Lemma.Algebra.Ge.of.Gt
+import Lemma.Nat.Ge.of.Gt
 import Lemma.Algebra.Gt.of.Gt.Gt
 import Lemma.Algebra.Ge_Min.of.Ge
 import Lemma.Algebra.Sub.gt.Zero.is.Gt
-open Algebra List
+open Algebra List Nat
 
 
 @[main]

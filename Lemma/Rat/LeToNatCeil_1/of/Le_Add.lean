@@ -11,9 +11,9 @@ import Lemma.Algebra.NotGe.is.Lt
 import Lemma.Algebra.LtCoeS.is.Lt
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Div.lt.Zero.of.Lt_0.Gt_0
-import Lemma.Algebra.Le.of.Lt
+import Lemma.Nat.Le.of.Lt
 import Lemma.Int.EqToNat_0.of.Le_0
-open Algebra Bool Int
+open Algebra Bool Int Nat
 
 
 @[main]

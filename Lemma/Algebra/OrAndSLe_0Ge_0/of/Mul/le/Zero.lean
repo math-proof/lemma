@@ -8,9 +8,9 @@ import Lemma.Algebra.NotLe.is.Gt
 import Lemma.Algebra.NotLt.of.Ge
 import Lemma.Algebra.Lt.ou.Eq.ou.Gt
 import Lemma.Algebra.NotGt.of.Lt
-import Lemma.Algebra.Ge.of.Gt
-import Lemma.Algebra.Le.of.Lt
-open Algebra Bool
+import Lemma.Nat.Ge.of.Gt
+import Lemma.Nat.Le.of.Lt
+open Algebra Bool Nat
 
 
 @[main]

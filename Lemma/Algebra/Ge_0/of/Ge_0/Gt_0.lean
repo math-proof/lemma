@@ -1,7 +1,7 @@
-import Lemma.Algebra.Ge.of.Gt
+import Lemma.Nat.Ge.of.Gt
 import Lemma.Algebra.Gt_0.of.Gt_0.Gt_0
 import Lemma.Algebra.Eq.ou.Gt.of.Ge
-open Algebra
+open Algebra Nat
 
 
 @[main]

@@ -6,12 +6,12 @@ import Lemma.List.LengthList.eq.One
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Algebra.Lt.of.Lt.Lt
-import Lemma.Algebra.Le.of.Lt
+import Lemma.Nat.Le.of.Lt
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Algebra.EqAdd_Sub.of.Lt
 import Lemma.Algebra.Sub.ge.One.of.Lt
-open Algebra List
+open Algebra List Nat
 
 
 @[main]

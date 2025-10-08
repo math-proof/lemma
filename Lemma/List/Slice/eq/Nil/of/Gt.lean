@@ -1,7 +1,7 @@
 import stdlib.List
 import Lemma.List.Slice.eq.Nil.of.Ge
-import Lemma.Algebra.Ge.of.Gt
-open Algebra List
+import Lemma.Nat.Ge.of.Gt
+open List Nat
 
 
 @[main]

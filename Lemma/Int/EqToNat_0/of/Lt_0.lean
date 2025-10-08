@@ -1,6 +1,6 @@
-import Lemma.Algebra.Le.of.Lt
+import Lemma.Nat.Le.of.Lt
 import Lemma.Int.EqToNat_0.of.Le_0
-open Algebra Int
+open Int Nat
 
 
 @[main]

@@ -1,5 +1,5 @@
-import Lemma.Algebra.Ge.of.Gt
-open Algebra
+import Lemma.Nat.Ge.of.Gt
+open Nat
 
 
 @[main]

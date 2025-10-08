@@ -1,7 +1,7 @@
 import sympy.functions.elementary.integers
 import Lemma.Algebra.EqAddSub.of.Ge
-import Lemma.Algebra.Ge.of.Gt
-open Algebra
+import Lemma.Nat.Ge.of.Gt
+open Algebra Nat
 
 
 @[main]

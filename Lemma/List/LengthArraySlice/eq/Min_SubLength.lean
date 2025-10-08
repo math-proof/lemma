@@ -2,7 +2,7 @@ import Lemma.List.EqLengthArraySlice.of.Add.le.Length
 import Lemma.Algebra.Le_Sub.is.LeAdd
 import Lemma.Algebra.NotLe.is.Gt
 import Lemma.List.EqLengthArraySlice.of.Add.gt.Length
-import Lemma.Algebra.Le.of.Lt
+import Lemma.Nat.Le.of.Lt
 import Lemma.Nat.Add
 open Algebra List Nat
 

@@ -1,12 +1,12 @@
 import sympy.core.relational
-import Lemma.Algebra.Ge.of.Gt
+import Lemma.Nat.Ge.of.Gt
 import Lemma.Set.In_Ico.of.Le.Lt
 import Lemma.Set.In_IooDivS.of.In_Ico0.Sub.eq.DivSqrt3'2
 import Lemma.Real.SinMul3.eq.SubMul3_Mul4SinMul3
 import Lemma.Real.SinDivPi3.eq.DivSqrt3'2
 import Lemma.Real.SinDivPi9.gt.Zero
 import Lemma.Real.SinDivPi9.lt.Div1'2
-open Set Algebra Real
+open Set Real Nat
 
 
 /--

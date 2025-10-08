@@ -2,7 +2,7 @@ import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.Lt_Length
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Algebra.Le.of.Lt
+import Lemma.Nat.Le.of.Lt
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.List.LengthCons.eq.Add1Length

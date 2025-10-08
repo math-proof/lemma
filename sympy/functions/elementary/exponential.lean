@@ -80,7 +80,7 @@ noncomputable instance : ExpNeZero ℂ where
 noncomputable instance : ExpNeZero ℝ* where
   exp_ne_zero := Hyperreal.exp_ne_zero
 
-class ExpPos (α : Type u) extends ExpNeZero α, Preorder α, DivisionSemiring α where
+class ExpPos (α : Type u) extends ExpNeZero α, PartialOrder α, DivisionSemiring α where
   exp_pos (x : α) : exp x > 0
 
 noncomputable instance : ExpPos ℝ where

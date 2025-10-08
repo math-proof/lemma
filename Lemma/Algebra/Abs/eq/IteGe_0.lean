@@ -1,6 +1,6 @@
 import Lemma.Algebra.NotGe.is.Lt
-import Lemma.Algebra.Le.of.Lt
-open Algebra
+import Lemma.Nat.Le.of.Lt
+open Algebra Nat
 
 
 @[main]

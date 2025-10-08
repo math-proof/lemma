@@ -1,11 +1,13 @@
 import sympy.vector.functions
 import Lemma.Vector.Sum.eq.Sum_Get
-open Vector
+import Lemma.Finset.Sum.gt.Zero.of.All_Gt_0.Ne_Empty
+import Lemma.Finset.Any_In.is.Ne_Empty
+open Vector Finset
 
 
 @[main]
 private lemma main
-  [ExpPos α]
+  [ExpPos α] [IsOrderedCancelAddMonoid α]
   [NeZero n]
 -- given
   (x : List.Vector α n) :
@@ -13,7 +15,15 @@ private lemma main
   (exp x).sum > 0 := by
 -- proof
   rw [Sum.eq.Sum_Get]
-  sorry
+  apply Sum.gt.Zero.of.All_Gt_0.Ne_Empty
+  .
+    apply Ne_Empty.of.Any_In
+    aesop
+  .
+    simp [Exp.exp]
+    intro i
+    apply ExpPos.exp_pos
 
 
 -- created on 2025-10-07
+-- updated on 2025-10-08

@@ -1,6 +1,6 @@
 import sympy.sets.sets
-import Lemma.Algebra.Le.of.Lt
-open Algebra
+import Lemma.Nat.Le.of.Lt
+open Nat
 
 
 @[main]

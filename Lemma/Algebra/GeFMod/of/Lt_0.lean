@@ -3,10 +3,10 @@ import Lemma.Algebra.SubNatNat.eq.Sub
 import Lemma.Algebra.LeNeg.of.Ge_Neg
 import Lemma.Algebra.LeNegS.of.Ge
 import Lemma.Algebra.LtMod.of.Gt_0
-import Lemma.Algebra.Ge.of.Gt
+import Lemma.Nat.Ge.of.Gt
 import Lemma.Algebra.NegSub.eq.Add_Neg
 import Lemma.Algebra.GeAddS.is.Ge
-open Algebra
+open Algebra Nat
 
 
 @[main]

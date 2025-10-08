@@ -3,11 +3,11 @@ import Lemma.List.Swap.eq.Ite
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.Algebra.Ge.of.NotLt
 import Lemma.Algebra.Gt.is.Ge.Ne
-import Lemma.Algebra.Ge.of.Gt
+import Lemma.Nat.Ge.of.Gt
 import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.Lt_Length
 import Lemma.List.EqAppend_ConsAppend_Cons.of.Lt_Length.Lt
 import Lemma.List.EqSwapS
-open Algebra List
+open Algebra List Nat
 
 
 @[main]

@@ -1,6 +1,6 @@
-import Lemma.Algebra.Ge.of.Gt
+import Lemma.Nat.Ge.of.Gt
 import Lemma.Algebra.LeMulS.of.Ge_0.Le
-open Algebra
+open Algebra Nat
 
 
 @[main]

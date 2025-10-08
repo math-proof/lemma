@@ -10,7 +10,7 @@ import Lemma.Algebra.Sub.ge.One.of.Lt
 import Lemma.Algebra.LtValS.of.Lt
 import Lemma.Algebra.EqSub_Sub.of.Gt
 import Lemma.Algebra.Sub.ge.One.of.Gt
-import Lemma.Algebra.Le.of.Lt
+import Lemma.Nat.Le.of.Lt
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Algebra.LtSub.of.Lt
 import Lemma.Algebra.Eq_0.of.Eq_Sub_1

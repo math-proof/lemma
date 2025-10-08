@@ -7,7 +7,7 @@ open Vector Algebra
 
 @[main]
 private lemma main
-  [ExpPos α]
+  [ExpPos α] [IsOrderedCancelAddMonoid α]
   [NeZero n]
 -- given
   (x : List.Vector α n) :

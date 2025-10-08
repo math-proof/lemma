@@ -1,6 +1,6 @@
-import Lemma.Algebra.Ge.of.Gt
+import Lemma.Nat.Ge.of.Gt
 import Lemma.List.EqLengthArraySlice.of.Add.ge.Length
-open Algebra List
+open List Nat
 
 
 @[main]
