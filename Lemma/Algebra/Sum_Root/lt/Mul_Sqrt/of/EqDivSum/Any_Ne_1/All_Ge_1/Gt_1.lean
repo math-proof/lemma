@@ -5,10 +5,10 @@ import Lemma.Algebra.Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0
 import Lemma.Set.Lt.of.In_Range
 import Lemma.Algebra.Sum_Root.lt.Mul_Sqrt.of.EqDivSum.All_Ge_1.Gt_1.Gt_1
 import Lemma.Algebra.All_LeRoot_Sqrt.of.All_Ge_1
-import Lemma.Algebra.LtSumS.of.All_Le.Any_Lt
+import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
 import Lemma.Algebra.Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0
 import Lemma.Algebra.Lt.of.Lt.Le
-open Algebra Set
+open Algebra Set Finset
 
 
 /--
