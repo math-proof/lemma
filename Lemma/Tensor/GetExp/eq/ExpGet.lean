@@ -5,7 +5,7 @@ import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Nat.Gt_0
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength_0
-import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
+import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 open Tensor Vector List Nat
 
 

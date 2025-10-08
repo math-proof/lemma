@@ -1,4 +1,4 @@
-import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
+import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 open Vector
 
 
@@ -9,9 +9,9 @@ private lemma main
   (v : List.Vector α (n :: s).prod) :
 -- imply
   have : i < ((n :: s).take 1 ).prod := by simp_all
-  v.unflatten[i] = (v.splitAt 1)[i] := by
+  (v.splitAt 1)[i] = v.unflatten[i] := by
 -- proof
-  have := GetUnflatten.eq.GetSplitAt_1 v ⟨i, h⟩
+  have := GetSplitAt_1.eq.GetUnflatten v ⟨i, h⟩
   simp_all
 
 
@@ -22,7 +22,7 @@ private lemma fin
   (v : List.Vector α (n :: s).prod) :
 -- imply
   have h_i : i < ((n :: s).take 1 ).prod := by simp_all
-  v.unflatten.get ⟨i, h⟩ = (v.splitAt 1).get ⟨i, h_i⟩ := by
+  (v.splitAt 1).get ⟨i, h_i⟩ = v.unflatten.get ⟨i, h⟩ := by
 -- proof
   apply main
 

@@ -12,7 +12,7 @@ private lemma main
   (v : List.Vector α (n :: s).prod)
   (i : Fin n) :
 -- imply
-  v.unflatten[i] = (v.splitAt 1)[i] := by
+  (v.splitAt 1)[i] = v.unflatten[i] := by
 -- proof
   unfold List.Vector.splitAt
   simp
@@ -34,7 +34,7 @@ private lemma fin
   (v : List.Vector α (n :: s).prod)
   (i : Fin n) :
 -- imply
-  v.unflatten.get i = (v.splitAt 1).get ⟨i, by simp⟩ := by
+  (v.splitAt 1).get ⟨i, by simp⟩ = v.unflatten.get i := by
 -- proof
   apply main
 

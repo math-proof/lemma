@@ -1,5 +1,5 @@
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
-import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
+import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Nat.LtVal
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
