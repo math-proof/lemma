@@ -1,6 +1,6 @@
-import Lemma.Algebra.Ge_0
+import Lemma.Nat.Ge_0
 import Lemma.Algebra.Eq.of.Ge.Le
-open Algebra
+open Algebra Nat
 
 
 @[main]
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   n = 0 := by
 -- proof
-  have := Ge_0.nat n
+  have := Ge_0 n
   apply Eq.of.Ge.Le this h
 
 

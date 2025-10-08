@@ -1,6 +1,6 @@
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Ge_0
-import Lemma.Algebra.Ge_0
-open Algebra
+import Lemma.Int.Ge_0
+open Algebra Int
 
 
 @[main]
