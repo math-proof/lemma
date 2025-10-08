@@ -30,18 +30,27 @@ private lemma main
   simp at this
   rw [this]
   congr
-  ·
-    rw [h]
-  ·
-    rw [h]
-  ·
-    rw [h]
+  repeat rw [h]
   ·
     apply HEq.of.SEq
     apply Eq.of.Eq_Cast.Eq (by simp)
     assumption
   ·
     simp
+
+
+@[main]
+private lemma fin
+  {s : List ℕ}
+  {d : ℕ}
+-- given
+  (v : List.Vector α s.prod)
+  (i : Fin (s.take d).prod)
+  (j : Fin (s.drop d).prod) :
+-- imply
+  ((v.splitAt d).get i).get j = v.get ⟨i * (s.drop d).prod + j, AddMul_ProdDrop.lt.Prod i j⟩ := by
+-- proof
+  apply main
 
 
 -- created on 2025-07-08

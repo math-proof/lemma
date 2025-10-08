@@ -65,6 +65,6 @@ def Tensor.sum_keepdim [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.leng
 /--
 [softmax](https://pytorch.org/docs/stable/generated/torch.softmax.html)
 -/
-def Tensor.softmax [Zero α] [Div α] [Exp α] (x : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α s :=
+def Tensor.softmax [Exp α] (x : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α s :=
   let x_exp := exp x
   x_exp / x_exp.sum_keepdim dim

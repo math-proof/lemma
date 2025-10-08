@@ -4,7 +4,7 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [Exp α] [Zero α] [Div α]
+  [Exp α]
 -- given
   (x : Tensor α s)
   (dim : ℕ) :

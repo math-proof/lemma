@@ -4,9 +4,9 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {t : Tensor α s}
+  {X : Tensor α s}
 -- given
-  (h : t.length > 0) :
+  (h : X.length > 0) :
 -- imply
   s.length > 0 := by
 -- proof

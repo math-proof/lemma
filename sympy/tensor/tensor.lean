@@ -33,7 +33,7 @@ open Bool Set Algebra List Tensor
 
 def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
   have h_i := LtVal i
-  have h_GtLength_0 := GtLength_0.of.GtLength_0 (t := X) (by linarith)
+  have h_GtLength_0 := GtLength_0.of.GtLength_0 (X := X) (by linarith)
   have h_EqHeadD := HeadD.eq.Get_0.of.GtLength_0 h_GtLength_0 1
   have := Get_0.eq.Length.of.GtLength_0 h_GtLength_0 X
   X.toVector[i]

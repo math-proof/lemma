@@ -1,6 +1,6 @@
 import stdlib.SEq
 import sympy.tensor.tensor
-import Lemma.Tensor.Length.eq.Ite
+import Lemma.Tensor.EqLengthS.of.Eq
 open Tensor
 
 
@@ -13,9 +13,8 @@ private lemma main
 -- imply
   X.length = Y.length := by
 -- proof
-  simp [SEq] at h
-  repeat rw [Length.eq.Ite]
-  rw [h.left]
+  apply EqLengthS.of.Eq h.left
 
 
 -- created on 2025-06-24
+-- updated on 2025-10-08

@@ -11,7 +11,7 @@ private lemma left
   (h₀ : n_a = n)
   (h₁ : a ≃ b) :
 -- imply
-  have h_a : Vector n_a = Vector n := by rw [h₀]
+  have h_a := congr_arg Vector h₀
   have h_b : Vector n_b = Vector n := by rwa [← h₁.left]
   cast h_a a = cast h_b b := by
 -- proof
@@ -31,8 +31,7 @@ private lemma main
   (h₁ : a ≃ b) :
 -- imply
   have h_a : Vector n_a = Vector n := by rw [h₁.left, h₀]
-  have h_b : Vector n_b = Vector n := by rw [h₀]
-  cast h_a a = cast h_b b := by
+  cast h_a a = cast (congr_arg Vector h₀) b := by
 -- proof
   apply left _ h₁
   rw [h₁.left, h₀]

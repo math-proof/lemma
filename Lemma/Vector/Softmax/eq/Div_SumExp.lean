@@ -4,7 +4,7 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [Exp α] [Div α]
+  [Exp α]
 -- given
   (x : List.Vector α n) :
 -- imply

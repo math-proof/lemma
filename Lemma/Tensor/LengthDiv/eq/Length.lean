@@ -6,14 +6,26 @@ import sympy.Basic
 private lemma main
   [Div α]
 -- given
-  (X : Tensor α s)
-  (a : Tensor α []) :
+  (A B : Tensor α s) :
 -- imply
-  (X / a).length = X.length := by
+  (A / B).length = B.length := by
 -- proof
   cases s <;>
   ·
     simp [Tensor.length]
 
 
--- created on 2025-09-24
+@[main]
+private lemma left
+  [Div α]
+-- given
+  (A B : Tensor α s) :
+-- imply
+  (A / B).length = A.length := by
+-- proof
+  cases s <;>
+  ·
+    simp [Tensor.length]
+
+
+-- created on 2025-10-08

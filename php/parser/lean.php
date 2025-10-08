@@ -4392,7 +4392,7 @@ class LeanModule extends LeanStatements
             $line = &$err['line'];
             $code = &$err['code'];
             if (preg_match("/^ +echo /", $code)) {
-                if ($err['type'] == 'error' && $err['info'] == "no goals to be solved")
+                if ($err['type'] == 'error' && $err['info'] == "No goals to be solved")
                     $code = $echo_codes[$line];
                 else {
                     $indicesToDelete[] = $i;
