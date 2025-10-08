@@ -1,4 +1,4 @@
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Algebra.Eq_Sub_1.of.Val.eq.Sub_1
 import Lemma.Algebra.NegSucc.eq.NegAdd_1
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0

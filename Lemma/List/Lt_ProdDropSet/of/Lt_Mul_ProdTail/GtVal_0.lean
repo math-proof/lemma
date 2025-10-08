@@ -1,6 +1,6 @@
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
-open Algebra List
+open List Nat
 
 
 @[main]

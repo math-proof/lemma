@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length
-import Lemma.Algebra.LtVal
-open Tensor Algebra
+import Lemma.Nat.LtVal
+open Tensor Nat
 
 
 @[main]

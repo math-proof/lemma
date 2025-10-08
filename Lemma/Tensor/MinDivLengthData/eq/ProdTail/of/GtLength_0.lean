@@ -4,8 +4,8 @@ import Lemma.Algebra.Ne_0
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.Le_SubMulS.of.Lt
-import Lemma.Algebra.LtVal
-open Tensor Algebra List
+import Lemma.Nat.LtVal
+open Tensor Algebra List Nat
 
 
 @[main]

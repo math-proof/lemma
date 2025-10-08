@@ -1,9 +1,9 @@
 import Lemma.Vector.EqGetRange
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.ToVector.eq.MapRange_Get
-open Vector Algebra List Tensor
+open Vector List Tensor Nat
 
 
 @[main]

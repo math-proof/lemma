@@ -3,10 +3,10 @@ import Lemma.Tensor.LengthExp.eq.Length
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.List.ProdTake_1.eq.HeadD_1
-import Lemma.Algebra.Gt_0
+import Lemma.Nat.Gt_0
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength_0
 import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1
-open Tensor Vector List Algebra
+open Tensor Vector List Nat
 
 
 @[main]

@@ -1,11 +1,11 @@
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Algebra.LtSubS.of.Lt.Le
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
-import Lemma.Algebra.Gt_0
+import Lemma.Nat.Gt_0
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq

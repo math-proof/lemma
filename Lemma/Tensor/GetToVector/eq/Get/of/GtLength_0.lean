@@ -1,9 +1,9 @@
 import sympy.tensor.stack
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GetToVector.eq.Get
-open Algebra Tensor List
+open Tensor List Nat
 
 
 @[main]

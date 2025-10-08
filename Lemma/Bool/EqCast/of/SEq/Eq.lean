@@ -11,7 +11,7 @@ private lemma main
   (h_n : n_a = n_b)
   (h : a ≃ b) :
 -- imply
-  cast (congr_arg Vector h_n) a = b := by
+  cast (congrArg Vector h_n) a = b := by
 -- proof
   simp [SEq] at h ⊢
   aesop

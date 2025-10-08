@@ -10,7 +10,7 @@ private lemma main
   (h : n = m)
   (h_eq : a = b) :
 -- imply
-  cast (congr_arg Vector h) a ≃ b := by
+  cast (congrArg Vector h) a ≃ b := by
 -- proof
   aesop
 

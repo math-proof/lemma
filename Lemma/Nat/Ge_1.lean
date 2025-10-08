@@ -1,5 +1,5 @@
-import Lemma.Algebra.LtVal
-open Algebra
+import Lemma.Nat.LtVal
+open Nat
 
 
 @[main]

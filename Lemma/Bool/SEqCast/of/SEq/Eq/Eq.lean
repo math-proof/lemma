@@ -12,7 +12,7 @@ private lemma main
   (h_b : n_b = n)
   (h : a ≃ b)  :
 -- imply
-  cast (congr_arg Vector h_a) a ≃ b := by
+  cast (congrArg Vector h_a) a ≃ b := by
 -- proof
   simp_all [SEq]
 

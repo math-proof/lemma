@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import Lemma.Algebra.Lt_Add
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Bool.Eq.of.SEq
 import Lemma.Bool.SEq.of.SEq.SEq
@@ -13,7 +13,7 @@ import Lemma.Vector.EqArraySliceS.of.Eq
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.List.Prod.eq.Foldr
-open Algebra Vector List Bool
+open Algebra Vector List Bool Nat
 
 
 @[main]

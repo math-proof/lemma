@@ -1,10 +1,10 @@
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataSum.eq.Sum_Data
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Bool.HEq.of.All_Eq.Eq
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-open Algebra Tensor Vector Bool
+open Tensor Vector Bool Nat
 
 
 @[main]

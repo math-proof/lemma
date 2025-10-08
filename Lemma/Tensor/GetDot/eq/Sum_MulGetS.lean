@@ -1,4 +1,4 @@
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Tensor.GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
@@ -12,7 +12,7 @@ import Lemma.Tensor.EqGetUnsqueeze
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetTranspose.eq.Get
-open Algebra Tensor
+open Algebra Tensor Nat
 set_option maxHeartbeats 1000000
 
 

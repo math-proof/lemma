@@ -12,7 +12,7 @@ private lemma left
   (h_a : n_a = n)
   (h_eq : a ≃ b) :
 -- imply
-  cast (congr_arg Vector h_a) a ≃ cast (congr_arg Vector (show n_b = n by rwa [← h_eq.left])) b := by
+  cast (congrArg Vector h_a) a ≃ cast (congrArg Vector (show n_b = n by rwa [← h_eq.left])) b := by
 -- proof
   have := EqCastS.of.SEq.Eq.left h_a h_eq
   aesop
@@ -27,7 +27,7 @@ private lemma main
   (h_b : n_b = n)
   (h_eq : a ≃ b) :
 -- imply
-  cast (congr_arg Vector (show n_a = n by rwa [h_eq.left])) a ≃ cast (congr_arg Vector h_b) b := by
+  cast (congrArg Vector (show n_a = n by rwa [h_eq.left])) a ≃ cast (congrArg Vector h_b) b := by
 -- proof
   have := EqCastS.of.SEq.Eq h_b h_eq
   aesop

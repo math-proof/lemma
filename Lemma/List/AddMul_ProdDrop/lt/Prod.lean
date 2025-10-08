@@ -1,6 +1,6 @@
 import Lemma.List.AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.Algebra.LtVal
-open Algebra List
+import Lemma.Nat.LtVal
+open List Nat
 
 
 @[main]

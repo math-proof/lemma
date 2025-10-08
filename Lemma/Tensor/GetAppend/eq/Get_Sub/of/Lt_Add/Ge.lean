@@ -12,7 +12,7 @@ import Lemma.Bool.Eq.of.SEq
 import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
 import Lemma.Algebra.Gt_0.of.Lt_Add.Ge
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
+import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1.of.Lt
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
 import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
 open Algebra Vector List Bool
@@ -74,7 +74,7 @@ private lemma main
           ·
             apply GetUnflatten.as.ArraySlice.of.Lt (by assumption)
     ·
-      have := GetSplitAt_1.eq.GetUnflatten.of.Lt h_lt b.data
+      have := GetUnflatten.eq.GetSplitAt_1.of.Lt h_lt b.data
       simp at this
       rw [this]
 

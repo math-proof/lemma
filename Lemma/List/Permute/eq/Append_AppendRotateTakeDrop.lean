@@ -1,9 +1,9 @@
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Algebra.Sub.gt.Zero.is.Lt
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.SliceDrop.eq.Slice_AddS
-open Algebra List
+open Algebra List Nat
 
 
 @[main]

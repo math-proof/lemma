@@ -1,9 +1,9 @@
 import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length
 import Lemma.Tensor.EqGetS.of.Eq.Lt_Length
 import Lemma.Tensor.GetSum_2.as.SumGet__1
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Bool.Eq.of.SEq
-open Tensor Algebra Bool
+open Tensor Bool Nat
 
 
 @[main]

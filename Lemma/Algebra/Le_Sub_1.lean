@@ -1,6 +1,6 @@
 import Lemma.Algebra.Le_Sub_1.of.Lt
-import Lemma.Algebra.LtVal
-open Algebra
+import Lemma.Nat.LtVal
+open Algebra Nat
 
 
 @[main]

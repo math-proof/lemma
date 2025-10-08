@@ -8,7 +8,8 @@ import Lemma.Bool.SEqCast.of.SEq.Eq
 import Lemma.Bool.SEq.of.Eq
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
-open Algebra Vector Bool
+import Lemma.Nat.LtVal
+open Algebra Vector Bool Nat
 
 
 @[main]

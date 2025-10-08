@@ -2,8 +2,8 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min_Length
-import Lemma.Algebra.LtVal
-open Tensor List Algebra
+import Lemma.Nat.LtVal
+open Tensor List Nat
 
 
 @[main]

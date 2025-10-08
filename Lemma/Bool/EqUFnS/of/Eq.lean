@@ -12,7 +12,7 @@ private lemma main
 -- imply
   f a₁ = f a₂ :=
 -- proof
-  congr_arg f h
+  congrArg f h
 
 
 -- created on 2025-03-04

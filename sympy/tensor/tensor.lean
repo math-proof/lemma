@@ -2,7 +2,7 @@ import sympy.tensor.Basic
 import Lemma.Bool.HEq.of.All_HEq
 import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.Algebra.LtAddS.is.Lt
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Algebra.GtVal_0.of.Ne_0
 import Lemma.Algebra.LtSubS_1.of.Lt.Ne_0
 import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
@@ -29,7 +29,7 @@ import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DataInv.eq.InvData
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
-open Bool Set Algebra List Tensor
+open Bool Set Algebra List Tensor Nat
 
 def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
   have h_i := LtVal i

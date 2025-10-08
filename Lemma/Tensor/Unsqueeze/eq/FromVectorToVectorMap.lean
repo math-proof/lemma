@@ -1,7 +1,7 @@
 import sympy.tensor.Basic
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Vector.EqGetRange
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.EqGetS
 import Lemma.Vector.Get.eq.GetFlatten_AddMul.of.Lt.Lt
@@ -14,7 +14,7 @@ import Lemma.Bool.EqCast.of.HEq
 import Lemma.Bool.HEq.of.All_HEq.Eq
 import Lemma.Bool.HEqMkS.of.Eq.Eq.Lt
 import Lemma.Algebra.EqValCast.of.Lt.Eq
-open Algebra Vector List Bool
+open Algebra Vector List Bool Nat
 
 
 @[main]

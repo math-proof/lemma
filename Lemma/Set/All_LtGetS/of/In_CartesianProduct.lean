@@ -1,7 +1,7 @@
 import Lemma.Set.In.is.Any_Eq_Get
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.List.GetCartesianProduct.lt.Get.of.Lt_Length.Lt_LengthCartesianProduct
-open Set Algebra List
+open Set List Nat
 
 
 @[main]

@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min_Length
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le.of.Lt_Add_1

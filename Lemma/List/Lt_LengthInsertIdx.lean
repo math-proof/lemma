@@ -1,7 +1,7 @@
 import stdlib.List
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
-import Lemma.Algebra.LtVal
-open List Algebra
+import Lemma.Nat.LtVal
+open List Nat
 
 
 @[main]

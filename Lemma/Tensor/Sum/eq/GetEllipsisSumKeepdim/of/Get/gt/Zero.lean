@@ -3,12 +3,12 @@ import sympy.tensor.functions
 import Lemma.Tensor.GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq
 import Lemma.Bool.EqCast.of.SEq.Eq
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Tensor.GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqGetEllipsisUnsqueeze.of.Le_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-open Tensor List Algebra Bool
+open Tensor List Bool Nat
 
 
 @[main]

@@ -6,11 +6,11 @@ import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.AppendTake_Slice.eq.Take.of.Le
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
-import Lemma.Algebra.Ge_1
+import Lemma.Nat.Ge_1
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Algebra.EqMin.of.Le
-import Lemma.Algebra.Gt_0
+import Lemma.Nat.Gt_0
 import Lemma.Nat.EqSub.of.EqAdd
 import Lemma.Algebra.Eq.of.EqVal
 import Lemma.List.Cons.eq.Append

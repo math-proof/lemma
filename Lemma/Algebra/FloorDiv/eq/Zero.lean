@@ -1,8 +1,8 @@
 import Lemma.Algebra.EqFloor.is.Le.Lt
 import Lemma.Algebra.Div.ge.Zero
 import Lemma.Algebra.LtDiv.of.Lt_Mul.Gt_0
-import Lemma.Algebra.Gt_0
-open Algebra
+import Lemma.Nat.Gt_0
+open Algebra Nat
 
 
 @[main]

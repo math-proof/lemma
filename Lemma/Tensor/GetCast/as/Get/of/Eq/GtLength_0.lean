@@ -1,8 +1,8 @@
 import stdlib.SEq
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.LtVal
-open Tensor Algebra
+import Lemma.Nat.LtVal
+open Tensor Nat
 
 
 @[main]

@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
+import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1.of.Lt
 import Lemma.Tensor.GetUnflattenDataStack.eq.Data
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
 open Tensor Vector

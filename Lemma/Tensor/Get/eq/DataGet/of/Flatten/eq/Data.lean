@@ -1,11 +1,11 @@
 import sympy.tensor.tensor
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Vector.GetMap.eq.FunGet
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
-import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
+import Lemma.Vector.GetUnflatten.eq.GetSplitAt_1.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
-open Algebra Tensor Vector
+open Tensor Vector Nat
 
 
 @[main]

@@ -6,7 +6,8 @@ import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.Lt_Get_0.GtLength
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Vector.HEq.of.EqValS
-open Tensor List Algebra Vector
+import Lemma.Nat.LtVal
+open Tensor List Algebra Vector Nat
 
 
 @[main]

@@ -7,10 +7,10 @@ import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.Lt.of.AddMul.lt.Mul
 import Lemma.Vector.EqValS.of.SEq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Vector.EqGetS.of.SEq_Append.of.Lt.Lt
 import Lemma.Vector.Get_Add.eq.Get.of.SEq_Append.of.Lt.LtAdd
-open Algebra Vector
+open Algebra Vector Nat
 
 
 @[main]

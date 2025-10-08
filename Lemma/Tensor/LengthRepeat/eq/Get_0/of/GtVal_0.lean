@@ -1,8 +1,8 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.Gt_0
+import Lemma.Nat.Gt_0
 import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
-open Tensor Algebra List
+open Tensor List Nat
 
 
 @[main]

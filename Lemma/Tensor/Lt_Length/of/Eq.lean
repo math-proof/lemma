@@ -1,9 +1,9 @@
 import stdlib.SEq
 import sympy.tensor.tensor
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthCons.gt.Zero
-open Algebra Tensor List
+open Tensor List Nat
 
 
 @[main]

@@ -10,7 +10,7 @@ private lemma main
   (h : n = n')
   (a b : List.Vector α n) :
 -- imply
-  have h := (congr_arg (List.Vector α) h)
+  have h := (congrArg (List.Vector α) h)
   cast h a / cast h b = cast h (a / b) := by
 -- proof
   intro h

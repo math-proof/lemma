@@ -1,8 +1,8 @@
 import Lemma.Set.In.is.Any_Eq_Get
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.Algebra.LtVal
+import Lemma.Nat.LtVal
 import Lemma.List.LengthGetProduct.eq.Length.of.Lt_LengthProduct
-open Set Algebra List Bool
+open Set List Bool Nat
 
 
 @[main]
