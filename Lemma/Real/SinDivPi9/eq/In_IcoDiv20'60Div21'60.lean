@@ -2,11 +2,11 @@ import sympy.core.relational
 import Lemma.Algebra.Ge.of.Gt
 import Lemma.Set.In_Ico.of.Le.Lt
 import Lemma.Set.In_IooDivS.of.In_Ico0.Sub.eq.DivSqrt3'2
-import Lemma.Trigonometry.SinMul3.eq.SubMul3_Mul4SinMul3
-import Lemma.Trigonometry.SinDivPi3.eq.DivSqrt3'2
-import Lemma.Trigonometry.SinDivPi9.gt.Zero
-import Lemma.Trigonometry.SinDivPi9.lt.Div1'2
-open Set Algebra Trigonometry
+import Lemma.Real.SinMul3.eq.SubMul3_Mul4SinMul3
+import Lemma.Real.SinDivPi3.eq.DivSqrt3'2
+import Lemma.Real.SinDivPi9.gt.Zero
+import Lemma.Real.SinDivPi9.lt.Div1'2
+open Set Algebra Real
 
 
 /--
@@ -16,12 +16,12 @@ By leveraging the triple angle formula for sine and known trigonometric values, 
 @[main]
 private lemma main:
 -- imply
-  sin (π / 9) ∈ Ioo (20 / 60) (21 / 60) := by
+  (Real.pi / 9).sin ∈ Ioo (20 / 60) (21 / 60) := by
 -- proof
-  denote h_t : t = π / 9
+  denote h_t : t = Real.pi / 9
   rw [← h_t]
   norm_num
-  have h_3t : 3 * t = π / 3 := by
+  have h_3t : 3 * t = Real.pi / 3 := by
      rw [h_t]
      ring
   have h_f : f (sin t) = sin (3 * t) := by
