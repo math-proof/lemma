@@ -2,15 +2,6 @@ import sympy.Basic
 
 
 @[main]
-private lemma nat
-  {a : ℕ} :
--- imply
-  a - 0 = a :=
--- proof
-  Nat.sub_zero a
-
-
-@[main]
 private lemma main
   [SubNegZeroMonoid α]
   {a : α} :
@@ -21,3 +12,4 @@ private lemma main
 
 
 -- created on 2025-04-11
+-- updated on 2025-10-08

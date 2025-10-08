@@ -332,6 +332,11 @@ ${latex}
                                         proof[attr][j].update(renderLean[i + 1]?.proof[attr][j]);
                                     }
                                 }
+                                else if (proof.length) {
+                                    for (var j of range(proof.length)) {
+                                        proof[j].update(renderLean[i + 1]?.proof[j]);
+                                    }
+                                }
                             }
                         }
                         lemma.delete(index);
