@@ -4,8 +4,9 @@ import sympy.Basic
 
 @[main]
 private lemma main
+  [AddCommMonoid N] [PartialOrder N] [IsOrderedAddMonoid N]
   {s : Finset ι}
-  {x y : ι → ℝ}
+  {x y : ι → N}
 -- given
   (h : ∀ i ∈ s, x i ≤ y i) :
 -- imply
