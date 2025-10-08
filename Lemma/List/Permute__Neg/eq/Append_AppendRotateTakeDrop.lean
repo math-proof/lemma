@@ -11,7 +11,7 @@ import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Gt_0
-import Lemma.Algebra.EqSub.of.EqAdd
+import Lemma.Nat.EqSub.of.EqAdd
 import Lemma.Algebra.Eq.of.EqVal
 import Lemma.List.Cons.eq.Append
 import Lemma.List.EqAppendS.of.Eq
@@ -26,7 +26,7 @@ import Lemma.Algebra.Sub.eq.Zero.of.Lt
 import Lemma.List.Slice_0.eq.Take
 import Lemma.List.Cons_Append.eq.AppendCons
 import Lemma.Algebra.EqMin.of.Gt
-open Algebra List
+open Algebra List Nat
 
 
 @[main]
@@ -41,7 +41,7 @@ private lemma main
   have h_i := LeAdd_1 i
   by_cases h_i' : i + 1 = s.length
   ·
-    have h_i' := Eq.of.EqVal (Eq_Sub.of.EqAdd.nat h_i')
+    have h_i' := Eq.of.EqVal (Eq_Sub.of.EqAdd h_i')
     rw [h_i']
     rw [Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0]
     ·

@@ -1,6 +1,6 @@
 import sympy.core.relational
-import Lemma.Algebra.FloorAdd.eq.Add_Floor
-open Algebra
+import Lemma.Int.FloorAdd.eq.Add_Floor
+open Int
 
 
 @[main]

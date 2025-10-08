@@ -1,5 +1,5 @@
-import Lemma.Algebra.FloorAdd.eq.AddFloor
-open Algebra
+import Lemma.Int.FloorAdd.eq.AddFloor
+open Int
 
 
 @[main]

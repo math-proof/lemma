@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqSub.of.EqAdd
-open Algebra
+import Lemma.Int.EqSub.of.EqAdd
+open Int
 
 
 @[main]

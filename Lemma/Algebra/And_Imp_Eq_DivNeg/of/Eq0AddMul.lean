@@ -1,7 +1,7 @@
-import Lemma.Algebra.Eq_Neg.of.Add.eq.Zero
+import Lemma.Int.Eq_Neg.of.Add.eq.Zero
 import Lemma.Algebra.EqDivS.of.Eq
 import Lemma.Algebra.Eq_Div.of.Ne_0.EqMul
-open Algebra
+open Algebra Int
 
 
 @[main]

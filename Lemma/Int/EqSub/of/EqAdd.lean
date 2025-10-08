@@ -1,18 +1,7 @@
 import Lemma.Algebra.EqSubS.is.Eq
 import Lemma.Algebra.EqSubAdd
+import Lemma.Algebra.EqSubS.of.Eq
 open Algebra
-
-
-@[main, comm]
-private lemma nat
-  {x y d : ℕ}
--- given
-  (h : d + x = y) :
--- imply
-  y - x = d := by
--- proof
-  rw [← h]
-  rw [EqSubAdd.int]
 
 
 @[main, comm]
@@ -29,4 +18,4 @@ private lemma main
   simp_all
 
 
--- created on 2025-04-16
+-- created on 2025-10-08

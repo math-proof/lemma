@@ -6,7 +6,7 @@ import Lemma.Algebra.DivAdd.eq.AddDivS
 import Lemma.Algebra.Ne_0
 import Lemma.Algebra.NeCoeS.of.Ne
 import Lemma.Algebra.EqDivMul.of.Ne_0
-import Lemma.Algebra.FloorAdd.eq.Add_Floor
+import Lemma.Nat.FloorAdd.eq.Add_Floor
 import Lemma.Algebra.FloorDiv.eq.Zero
 import Lemma.Algebra.FloorDivMod.eq.Zero
 open Algebra Nat
@@ -32,12 +32,12 @@ private lemma main
   have h_n := Ne_0 j
   have h_n := NeCoeS.of.Ne.nat (R := ℚ) h_n
   rw [EqDivMul.of.Ne_0 h_n] at h_div
-  rw [FloorAdd.eq.Add_Floor.nat] at h_div
+  rw [FloorAdd.eq.Add_Floor] at h_div
   rw [FloorDiv.eq.Zero] at h_div
   simp at h_div
   rw [DivAdd.eq.AddDivS] at h_div
   rw [EqDivMul.of.Ne_0 h_n] at h_div
-  rw [FloorAdd.eq.Add_Floor.nat] at h_div
+  rw [FloorAdd.eq.Add_Floor] at h_div
   rw [FloorDivMod.eq.Zero] at h_div
   simp at h_div
   norm_cast at h_div

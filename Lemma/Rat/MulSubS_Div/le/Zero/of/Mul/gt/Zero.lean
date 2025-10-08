@@ -14,12 +14,12 @@ import Lemma.Algebra.MulMul
 import Lemma.Algebra.GtMulS.of.Gt.Gt_0
 import Lemma.Algebra.EqMul0_0
 import Lemma.Algebra.LeNegSquare_0
-import Lemma.Algebra.Add.ne.Zero.of.Mul.gt.Zero
+import Lemma.Int.Add.ne.Zero.of.Mul.gt.Zero
 import Lemma.Algebra.GtSquare_0.of.Ne_0
 import Lemma.Algebra.LeDivS.of.Le.Gt_0
 import Lemma.Algebra.Ne_0.of.Mul.gt.Zero
 import Lemma.Algebra.Square.eq.Mul
-open Algebra Rat
+open Algebra Rat Int
 
 
 @[main]
