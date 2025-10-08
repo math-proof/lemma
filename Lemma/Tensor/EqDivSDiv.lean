@@ -1,6 +1,6 @@
 import sympy.tensor.Basic
-import Lemma.Algebra.EqDivSDiv
-open Algebra
+import Lemma.Rat.EqDivSDiv
+open Rat
 
 
 @[main]
