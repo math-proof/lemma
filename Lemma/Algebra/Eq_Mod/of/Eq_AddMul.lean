@@ -1,8 +1,8 @@
 import Lemma.Algebra.Eq_AddMulDiv___Mod
-import Lemma.Algebra.EqCoeS.is.Eq
+import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Algebra.EqModS.of.Eq
 import Lemma.Algebra.EqMod
-open Algebra
+open Algebra Nat
 
 
 @[main]
@@ -18,7 +18,7 @@ private lemma main
   have := Eq_AddMulDiv___Mod k n
   have := h_eq.symm.trans this
   have h_mod := EqModS.of.Eq this n
-  have h_mod := EqCoeS.of.Eq.nat (R := ℤ) h_mod
+  have h_mod := EqCoeS.of.Eq (R := ℤ) h_mod
   simp at h_mod
   norm_cast at h_mod
   rwa [EqMod] at h_mod

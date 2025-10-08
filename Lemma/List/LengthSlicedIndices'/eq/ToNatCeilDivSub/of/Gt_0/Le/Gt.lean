@@ -8,9 +8,9 @@ import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Int.Eq_ToNat.of.Gt_0
 import Lemma.Algebra.LeMulS.of.Le.Gt_0
 import Lemma.Algebra.EqMulDiv.of.Gt_0
-import Lemma.Algebra.EqCoeS.is.Eq
+import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.List.LengthSlicedIndices'.eq.CeilDivSub.of.Gt_0.Le.Gt.Sub.le.Mul
-open Algebra List Int
+open Algebra List Int Nat
 
 
 @[main]
@@ -32,15 +32,14 @@ private lemma main
   have h_Gt_0 := Gt.of.Ge.Gt h_Le h_Gt_0
   have h_Gt_0 := Gt.of.GtCoeS.int h_Gt_0
   have h_Eq := Eq_ToNat.of.Gt_0 h_Gt_0
-  apply Eq.of.EqCoeS.nat (R := ℤ)
+  apply Eq.of.EqCoeS (R := ℤ)
   rw [← h_Eq]
   have h_Le := LeMulS.of.Le.Gt_0 h_Le h_step'
   rw [EqMulDiv.of.Gt_0 h_step'] at h_Le
   rw [h_Eq] at h_Le
   rw [SubCoeS.eq.CoeSub.of.Gt h_stop] at h_Le
   have h_Le : start - stop ≤ ⌈((start - stop : ℕ) : ℚ) / step⌉.toNat * step := by
-    norm_cast
-    norm_cast at h_Le
+    norm_cast at h_Le ⊢
   apply LengthSlicedIndices'.eq.CeilDivSub.of.Gt_0.Le.Gt.Sub.le.Mul h_Le h_stop h_start h_step
 
 

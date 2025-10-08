@@ -6,7 +6,7 @@ import Lemma.Bool.Bool.eq.Zero.of.Bool.ne.One
 import Lemma.Algebra.Mul.eq.Zero.of.OrEqS
 import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Algebra.Mul
-import Lemma.Algebra.EqCoeS.is.Eq
+import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Algebra.Sub.eq.Zero.is.Eq
 import Lemma.Nat.CoeMul.eq.MulCoeS
 import Lemma.Algebra.Sub_Mul.eq.Mul_Sub1
@@ -37,12 +37,12 @@ private lemma main
     rw [MulSub.eq.SubMulS] at this
     simp at this
     have := Eq.of.Sub.eq.Zero this
-    have := Eq.of.EqCoeS.nat this
+    have := Eq.of.EqCoeS this
     rw [Mul.comm]
     apply Eq.symm
     assumption
   .
-    have := EqCoeS.of.Eq.nat (R := ℤ) h
+    have := EqCoeS.of.Eq (R := ℤ) h
     rw [CoeMul.eq.MulCoeS] at this
     have := Sub.eq.Zero.of.Eq this
     rw [Sub_Mul.eq.Mul_Sub1] at this

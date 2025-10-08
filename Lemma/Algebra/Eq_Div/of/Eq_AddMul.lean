@@ -1,6 +1,6 @@
 import Lemma.Algebra.Eq_AddMulDiv___Mod
 import Lemma.Algebra.EqDivS.of.Eq
-import Lemma.Algebra.EqCoeS.is.Eq
+import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Algebra.Div.eq.FloorDiv
 import Lemma.Algebra.DivAdd.eq.AddDivS
 import Lemma.Algebra.Ne_0
@@ -9,7 +9,7 @@ import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.FloorAdd.eq.Add_Floor
 import Lemma.Algebra.FloorDiv.eq.Zero
 import Lemma.Algebra.FloorDivMod.eq.Zero
-open Algebra
+open Algebra Nat
 
 
 @[main]
@@ -25,7 +25,7 @@ private lemma main
   have := Eq_AddMulDiv___Mod k n
   have := h_eq.symm.trans this
   have h_div := EqDivS.of.Eq this n
-  have h_div := EqCoeS.of.Eq.nat (R := ℤ) h_div
+  have h_div := EqCoeS.of.Eq (R := ℤ) h_div
   repeat rw [Div.eq.FloorDiv] at h_div
   simp at h_div
   rw [DivAdd.eq.AddDivS] at h_div

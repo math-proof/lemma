@@ -10,8 +10,8 @@ import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Int.Eq_ToNat.of.Gt_0
 import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.List.LengthSlicedIndices.eq.CeilDivSub.of.Gt_0.Le.Lt.Sub.le.Mul
-import Lemma.Algebra.EqCoeS.is.Eq
-open Algebra List Int
+import Lemma.Nat.EqCoeS.is.Eq
+open Algebra List Int Nat
 
 
 @[main]
@@ -33,7 +33,7 @@ private lemma main
   have h_Gt_0 := Gt.of.Ge.Gt h_Le h_Gt_0
   have h_Gt_0 := Gt.of.GtCoeS.int h_Gt_0
   have h_Eq := Eq_ToNat.of.Gt_0 h_Gt_0
-  apply Eq.of.EqCoeS.nat (R := ℤ)
+  apply Eq.of.EqCoeS (R := ℤ)
   rw [← h_Eq]
   have h_Le := LeMulS.of.Le.Gt_0 h_Le h_step'
   rw [EqMulDiv.of.Gt_0 h_step'] at h_Le
