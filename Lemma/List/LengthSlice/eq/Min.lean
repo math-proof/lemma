@@ -1,6 +1,6 @@
 import stdlib.Slice
 import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
-import Lemma.Algebra.CoeMin.eq.MinCoeS
+import Lemma.Nat.CoeMin.eq.MinCoeS
 import Lemma.Int.EqToNat
 import Lemma.Nat.EqCeilCoe
 open Algebra Int Nat
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   unfold Slice.length
   simp [EqAdd_Mul_DivSub1Sign_2]
-  rw [MinCoeS.eq.CoeMin.nat]
+  rw [MinCoeS.eq.CoeMin]
   simp only [EqCeilCoe]
   simp only [EqToNat]
 
