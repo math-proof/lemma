@@ -14,12 +14,12 @@ import Lemma.Algebra.LeCoeS.is.Le
 import Lemma.Algebra.CoeSub.eq.SubCoeS
 import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Algebra.Div.eq.One.of.Gt_0
-import Lemma.Algebra.CoeMul.eq.MulCoeS
+import Lemma.Int.CoeMul.eq.MulCoeS
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.Ne.of.Gt
 import Lemma.Set.In_IcoFloor
 import Lemma.Set.Lt.of.In_Ico
-open Algebra Set
+open Algebra Set Int
 
 
 @[main]

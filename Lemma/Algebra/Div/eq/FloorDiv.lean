@@ -1,6 +1,6 @@
 import Lemma.Algebra.Gt_0.of.Ne_0
-import Lemma.Algebra.Div.eq.FloorDiv.of.Gt_0
-open Algebra
+import Lemma.Nat.Div.eq.FloorDiv.of.Gt_0
+open Algebra Nat
 
 
 @[main]
@@ -15,7 +15,7 @@ private lemma main
     norm_num
   ·
     have := Gt_0.of.Ne_0 h_d
-    apply Div.eq.FloorDiv.of.Gt_0.nat this
+    apply Nat.Div.eq.FloorDiv.of.Gt_0 this
 
 
 -- created on 2025-07-06

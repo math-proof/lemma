@@ -1,6 +1,6 @@
-import Lemma.Algebra.Div.eq.FloorDiv.of.Gt_0
+import Lemma.Int.Div.eq.FloorDiv.of.Gt_0
 import Lemma.Algebra.Gt.is.Ge.Ne
-open Algebra
+open Algebra Int
 
 
 @[main]
