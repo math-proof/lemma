@@ -2,8 +2,8 @@ import Lemma.Algebra.LeCoeS.is.Le
 import Lemma.Algebra.Sub.le.Zero.of.Le
 import Lemma.Algebra.Div.le.Zero.of.Le_0.Ge_0
 import Lemma.Algebra.LeCeil.is.Le
-import Lemma.Algebra.EqToNat_0.of.Le_0
-open Algebra
+import Lemma.Int.EqToNat_0.of.Le_0
+open Algebra Int
 
 
 @[main]

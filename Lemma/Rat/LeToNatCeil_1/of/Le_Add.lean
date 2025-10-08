@@ -5,15 +5,15 @@ import Lemma.Algebra.LeSub.is.Le_Add
 import Lemma.Algebra.LeCoeS.is.Le
 import Lemma.Algebra.LeDivS.of.Le.Gt_0
 import Lemma.Algebra.LeCeil.is.Le
-import Lemma.Algebra.LeToNat.is.Le
+import Lemma.Int.LeToNat.is.Le
 import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Algebra.NotGe.is.Lt
 import Lemma.Algebra.LtCoeS.is.Lt
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Div.lt.Zero.of.Lt_0.Gt_0
 import Lemma.Algebra.Le.of.Lt
-import Lemma.Algebra.EqToNat_0.of.Le_0
-open Algebra Bool
+import Lemma.Int.EqToNat_0.of.Le_0
+open Algebra Bool Int
 
 
 @[main]

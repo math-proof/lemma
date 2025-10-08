@@ -1,8 +1,8 @@
 import Lemma.Algebra.EqCoeS.is.Eq
-import Lemma.Algebra.EqToNat.of.Ge_0
+import Lemma.Int.EqToNat.of.Ge_0
 import Lemma.Algebra.Add.ge.Zero.of.Ge_0.Ge_0
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
-open Algebra
+open Algebra Int
 
 
 @[main]

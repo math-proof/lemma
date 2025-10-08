@@ -5,12 +5,12 @@ import Lemma.Algebra.GtDivS.of.Gt.Gt_0
 import Lemma.Algebra.GeCeil
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.Algebra.GtCoeS.is.Gt
-import Lemma.Algebra.Eq_ToNat.of.Gt_0
+import Lemma.Int.Eq_ToNat.of.Gt_0
 import Lemma.Algebra.LeMulS.of.Le.Gt_0
 import Lemma.Algebra.EqMulDiv.of.Gt_0
 import Lemma.Algebra.EqCoeS.is.Eq
 import Lemma.List.LengthSlicedIndices'.eq.CeilDivSub.of.Gt_0.Le.Gt.Sub.le.Mul
-open Algebra List
+open Algebra List Int
 
 
 @[main]

@@ -1,8 +1,8 @@
 import Lemma.Set.CupIcoNeg_0.eq.IocNeg_0
-import Lemma.Algebra.ToNatNeg.eq.Neg.of.Lt_0
+import Lemma.Int.ToNatNeg.eq.Neg.of.Lt_0
 import Lemma.Algebra.EqNegNeg
 import Lemma.Algebra.CoeCoe.eq.Coe
-open Set Algebra
+open Set Algebra Int
 
 
 @[main]

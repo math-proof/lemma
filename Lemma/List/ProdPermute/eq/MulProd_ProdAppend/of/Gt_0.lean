@@ -1,7 +1,7 @@
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
-import Lemma.Algebra.AddToNat.eq.ToNatAdd.of.Gt_0
+import Lemma.Int.AddToNat.eq.ToNatAdd.of.Gt_0
 import Lemma.Algebra.EqMax.of.Gt
-open Algebra List
+open Algebra List Int
 
 
 @[main]

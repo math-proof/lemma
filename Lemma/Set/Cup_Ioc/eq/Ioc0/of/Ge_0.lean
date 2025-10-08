@@ -1,10 +1,10 @@
 import sympy.sets.sets
 import Lemma.Set.Cup_Ioc.eq.Ioc0
 import Lemma.Set.CupRange.eq.CupIco
-import Lemma.Algebra.EqToNat.of.Ge_0
+import Lemma.Int.EqToNat.of.Ge_0
 import Lemma.Set.EqCupS.of.All_Eq
 import Lemma.Algebra.CoeCoe.eq.Coe
-open Set Algebra
+open Set Algebra Int
 
 
 @[main]

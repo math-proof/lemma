@@ -1,8 +1,8 @@
 import stdlib.Slice
 import sympy.sets.sets
 import Lemma.Set.InAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
-import Lemma.Algebra.EqToNat.of.Ge_0
-open Set Algebra
+import Lemma.Int.EqToNat.of.Ge_0
+open Set Int
 
 
 @[main]

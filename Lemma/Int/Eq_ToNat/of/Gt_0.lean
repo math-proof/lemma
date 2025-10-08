@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqToNat.of.Ge_0
+import Lemma.Int.EqToNat.of.Ge_0
 import Lemma.Algebra.Ge.of.Gt
-open Algebra
+open Algebra Int
 
 
 @[main]

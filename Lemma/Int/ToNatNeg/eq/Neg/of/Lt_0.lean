@@ -1,6 +1,6 @@
-import Lemma.Algebra.ToNatNeg.eq.Neg.of.Le_0
+import Lemma.Int.ToNatNeg.eq.Neg.of.Le_0
 import Lemma.Algebra.Le.of.Lt
-open Algebra
+open Algebra Int
 
 
 @[main]

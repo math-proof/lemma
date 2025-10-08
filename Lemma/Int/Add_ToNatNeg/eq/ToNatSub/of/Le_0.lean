@@ -1,10 +1,10 @@
 import Lemma.Algebra.EqCoeS.is.Eq
-import Lemma.Algebra.EqToNat.of.Ge_0
+import Lemma.Int.EqToNat.of.Ge_0
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.ToNatNeg.eq.Neg.of.Le_0
+import Lemma.Int.ToNatNeg.eq.Neg.of.Le_0
 import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Algebra.Sub.ge.Zero.of.Ge
-open Algebra
+open Algebra Int
 
 
 @[main]

@@ -5,8 +5,8 @@ import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Algebra.LtVal
 import Lemma.List.EqLengthSlice
 import Lemma.List.GetSlicedIndices.eq.Add.of.Lt_Length.Gt_0.Le.Lt.Eq_Add.Eq
-import Lemma.Algebra.EqToNat
-open Algebra List Bool
+import Lemma.Int.EqToNat
+open Algebra List Bool Int
 
 
 @[main]

@@ -5,8 +5,8 @@ import Lemma.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt
 import Lemma.Rat.EqToNatCeil_0.of.Le
 import Lemma.Rat.ToNatCeilDivNeg.eq.Zero
 import Lemma.Algebra.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.EqToNat_0.of.Le_0
-open Algebra List Rat
+import Lemma.Int.EqToNat_0.of.Le_0
+open Algebra List Rat Int
 
 
 @[main]

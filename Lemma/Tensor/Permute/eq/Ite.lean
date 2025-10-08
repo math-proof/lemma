@@ -10,12 +10,12 @@ import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.Algebra.NegSucc.eq.NegCoeAdd_1
 import Lemma.Algebra.Add
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
-import Lemma.Algebra.ToNatSubOfNat_NegSucc.eq.AddAdd1
+import Lemma.Int.ToNatSubOfNat_NegSucc.eq.AddAdd1
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.SubMin.eq.MinSubS
 import Lemma.Algebra.Min.eq.Add_1
-open Algebra List Bool
+open Algebra List Bool Int
 
 
 @[main]

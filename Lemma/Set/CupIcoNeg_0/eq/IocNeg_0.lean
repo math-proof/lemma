@@ -4,10 +4,10 @@ import Lemma.Algebra.AddSubNeg.eq.Neg
 import Lemma.Algebra.SubNeg
 import Lemma.Set.CupIco.eq.CupAnd
 import Lemma.Set.CupRange.eq.CupIco
-import Lemma.Algebra.EqToNat.of.Ge_0
+import Lemma.Int.EqToNat.of.Ge_0
 import Lemma.Set.EqCupS.of.All_Eq
 import Lemma.Algebra.CoeCoe.eq.Coe
-open Set Algebra
+open Set Algebra Int
 
 
 @[main]
