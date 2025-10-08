@@ -1,7 +1,7 @@
 import sympy.vector.vector
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Vector.EqGetRange
-open Algebra Vector
+open Vector Nat
 
 
 @[main]

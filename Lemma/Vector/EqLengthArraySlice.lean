@@ -1,8 +1,8 @@
 import sympy.vector.vector
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le_SubMulS
-import Lemma.Algebra.Mul
-open Algebra
+import Lemma.Nat.Mul
+open Algebra Nat
 
 
 @[main]

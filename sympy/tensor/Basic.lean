@@ -270,7 +270,7 @@ def Tensor.repeat (X : Tensor α s) (k : ℕ) (dim : Fin s.length) : Tensor α (
       congr
       rw [ProdSet__MulGet.eq.Mul_Prod dim k]
       rw [Mul_Mul.eq.MulMul]
-      rw [Mul.comm (b := k)]
+      rw [mul_comm (b := k)]
       rw [MulMul.eq.Mul_Mul]
       apply EqMulS.of.Eq.left
       simp

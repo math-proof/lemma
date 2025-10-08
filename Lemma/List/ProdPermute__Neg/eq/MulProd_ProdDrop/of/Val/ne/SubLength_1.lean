@@ -9,9 +9,9 @@ import Lemma.List.EqAppendS.of.Eq
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.MinAddS.eq.AddMin
 import Lemma.Algebra.Val.lt.Sub_1.of.Val.ne.Sub_1
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.EqSubAdd
-open Algebra List Bool
+open Algebra List Bool Nat
 
 
 @[main]

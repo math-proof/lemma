@@ -1,6 +1,6 @@
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
-import Lemma.Algebra.Mul
-open Tensor Algebra
+import Lemma.Nat.Mul
+open Tensor Nat
 
 
 @[main]

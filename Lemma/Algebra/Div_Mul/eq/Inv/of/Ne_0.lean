@@ -1,6 +1,6 @@
 import Lemma.Rat.DivDiv.eq.Div_Mul
-import Lemma.Algebra.Mul
-open Algebra Rat
+import Lemma.Nat.Mul
+open Rat Nat
 
 
 private lemma inv'

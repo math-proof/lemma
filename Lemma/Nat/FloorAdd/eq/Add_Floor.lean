@@ -1,6 +1,6 @@
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Nat.FloorAdd.eq.AddFloor
-open Algebra Nat
+open Nat
 
 
 @[main]

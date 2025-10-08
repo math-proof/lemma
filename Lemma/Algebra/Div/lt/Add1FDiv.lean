@@ -1,8 +1,8 @@
 import Lemma.Algebra.Div.eq.AddFDiv___FMod
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.DivFMod.lt.One
-open Algebra
+open Algebra Nat
 
 
 @[main]

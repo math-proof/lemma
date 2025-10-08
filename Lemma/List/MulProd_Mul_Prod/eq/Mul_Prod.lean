@@ -2,8 +2,8 @@ import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.MulMul
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.EqAppendTake__Drop
-import Lemma.Algebra.Mul
-open Algebra List
+import Lemma.Nat.Mul
+open Algebra List Nat
 
 
 @[main]

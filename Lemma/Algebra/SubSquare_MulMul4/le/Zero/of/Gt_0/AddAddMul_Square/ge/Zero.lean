@@ -6,7 +6,7 @@ import Lemma.Algebra.SquareMul.eq.MulSquareS
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.DivMul.eq.Mul_Div
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.SubDivS.eq.DivMul_Sub.of.Ne_0.Ne_0
 import Lemma.Algebra.Ne.of.Gt
@@ -17,7 +17,7 @@ import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Algebra.LeMulS.of.Gt_0.Le
 import Lemma.Algebra.Mul_Sub.eq.SubMulS
 import Lemma.Algebra.EqMul_Div.of.Ne_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

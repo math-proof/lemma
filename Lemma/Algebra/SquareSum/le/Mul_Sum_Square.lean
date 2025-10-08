@@ -1,6 +1,6 @@
 import Lemma.Algebra.SquareSum_Mul.le.MulSumS_Square
-import Lemma.Algebra.Mul
-open Algebra
+import Lemma.Nat.Mul
+open Algebra Nat
 
 
 @[main]

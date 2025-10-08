@@ -2,8 +2,8 @@ import Lemma.Algebra.Eq_AddMulDiv___Mod
 import Lemma.Algebra.LtDiv.of.Lt_Mul
 import Lemma.Algebra.LtMod.of.Gt_0
 import Lemma.Algebra.Gt_0.of.GtMul
-import Lemma.Algebra.Mul
-open Algebra
+import Lemma.Nat.Mul
+open Algebra Nat
 
 
 @[main]

@@ -1,6 +1,6 @@
 import Lemma.Vector.EqGetRange
-import Lemma.Algebra.Add
-open Algebra Vector
+import Lemma.Nat.Add
+open Vector Nat
 
 
 @[main]

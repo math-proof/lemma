@@ -1,9 +1,9 @@
 import Lemma.Algebra.AddMul.le.Mul
 import Lemma.Algebra.Le_Sub.of.LeAdd
-import Lemma.Algebra.Add
-import Lemma.Algebra.Mul
+import Lemma.Nat.Add
+import Lemma.Nat.Mul
 import Lemma.Algebra.AddMul.le.Mul.of.Lt
-open Algebra
+open Algebra Nat
 
 
 @[main]

@@ -1,13 +1,13 @@
 import Lemma.Algebra.Mul2.eq.Add
-import Lemma.Algebra.Add
-import Lemma.Algebra.Mul
+import Lemma.Nat.Add
+import Lemma.Nat.Mul
 import Lemma.Algebra.AddAdd
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Algebra.GtMulS.of.Gt.Gt_0
 import Lemma.Algebra.DivAdd.eq.AddDivS
-open Algebra Rat
+open Algebra Rat Nat
 
 
 @[main]

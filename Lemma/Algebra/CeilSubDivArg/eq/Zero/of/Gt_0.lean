@@ -7,7 +7,7 @@ import Lemma.Algebra.DivNeg.eq.NegDiv
 import Lemma.Algebra.Div1.eq.Inv
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Algebra.Pi.gt.Zero
 import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Algebra.Pi.ne.Zero
@@ -19,7 +19,7 @@ import Lemma.Algebra.LeInv_1.of.Gt_0
 import Lemma.Algebra.Ge_Sub.of.GeAdd
 import Lemma.Algebra.GtCoe_0.is.Gt_0
 import Lemma.Algebra.Le_Sub.of.LeAdd
-open Set Algebra Complex Rat
+open Set Algebra Complex Rat Nat
 
 
 @[main]

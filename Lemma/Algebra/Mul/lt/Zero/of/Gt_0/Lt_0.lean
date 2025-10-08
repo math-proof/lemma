@@ -1,6 +1,6 @@
 import Lemma.Algebra.Mul.lt.Zero.of.Lt_0.Gt_0
-import Lemma.Algebra.Mul
-open Algebra
+import Lemma.Nat.Mul
+open Algebra Nat
 
 
 @[main]

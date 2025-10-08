@@ -1,6 +1,6 @@
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.List.ProdSet__MulGet.eq.MulProd.of.Lt_Length
-open Algebra List
+open List Nat
 
 
 @[main]

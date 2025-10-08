@@ -1,6 +1,6 @@
 import Lemma.Algebra.Div.eq.Mul_Inv
-import Lemma.Algebra.Mul
-open Algebra
+import Lemma.Nat.Mul
+open Algebra Nat
 
 
 @[main, comm]

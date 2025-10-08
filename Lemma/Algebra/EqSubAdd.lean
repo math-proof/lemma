@@ -1,6 +1,6 @@
 import sympy.functions.elementary.integers
-import Lemma.Algebra.Add
-open Algebra
+import Lemma.Nat.Add
+open Nat
 
 
 @[main]

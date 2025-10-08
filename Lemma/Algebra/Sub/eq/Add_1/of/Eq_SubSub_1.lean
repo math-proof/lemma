@@ -1,8 +1,8 @@
 import Lemma.Algebra.Sub_Add.eq.SubSub
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.EqSub_Sub.of.Ge
 import Lemma.Algebra.LeAdd_1
-open Algebra
+open Algebra Nat
 
 
 @[main]

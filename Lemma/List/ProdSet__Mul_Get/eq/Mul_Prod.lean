@@ -1,6 +1,6 @@
 import Lemma.List.ProdSet__MulGet.eq.MulProd
-import Lemma.Algebra.Mul
-open Algebra List
+import Lemma.Nat.Mul
+open List Nat
 
 
 @[main]

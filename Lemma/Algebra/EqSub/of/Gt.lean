@@ -3,11 +3,11 @@ import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.EqSubAdd
 import Lemma.Bool.BFnIte.is.Imp.Imp
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.Sub_1.eq.AddDivS_2.of.Odd
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Algebra.Odd.is.NotEven
-open Algebra Bool
+open Algebra Bool Nat
 
 
 @[main]

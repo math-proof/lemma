@@ -28,7 +28,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
 import Lemma.Algebra.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Algebra.MulMul.eq.Mul_Mul
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Vector.EqGetS
 import Lemma.List.ProdTakeSet__1.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
@@ -44,7 +44,7 @@ import Lemma.List.Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Vector.SEqFlattenSSplitAt.of.SEq
 import Lemma.Bool.SEqCast.of.Eq
-open Tensor Algebra Vector List Bool
+open Tensor Algebra Vector List Bool Nat
 
 
 @[main]

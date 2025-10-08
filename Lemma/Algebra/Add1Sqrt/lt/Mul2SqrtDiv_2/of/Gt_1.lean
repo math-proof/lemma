@@ -10,16 +10,16 @@ import Lemma.Algebra.DivAdd.eq.AddDivS
 import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Algebra.LtAdd.of.Lt_Sub
 import Lemma.Algebra.Sub.gt.Zero.is.Lt
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Algebra.GtSqrtS.of.Gt.Gt_0
 import Lemma.Algebra.GtSquare_0.of.Gt_0
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Algebra.EqSquareSqrt.of.Gt_0
 import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Algebra.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
-open Algebra
+open Algebra Nat
 
 
 @[main]

@@ -5,7 +5,7 @@ import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.EqMulDiv.of.Ne_0
 import Lemma.Algebra.Mul_Mul
 import Lemma.Algebra.Square.eq.Mul
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Algebra.Sum.ge.Zero.of.All_Ge_0
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Algebra.GeDivS.of.Ge.Gt_0
@@ -13,7 +13,7 @@ import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
 import Lemma.Algebra.GeSqrt_0
-open Algebra Bool
+open Algebra Bool Nat
 
 
 /--

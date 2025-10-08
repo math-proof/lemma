@@ -10,8 +10,8 @@ import Lemma.Algebra.Gt_Add.of.GtSub
 import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Algebra.EqMul1
 import Lemma.Algebra.EqMul_1
-import Lemma.Algebra.Add
-open Algebra
+import Lemma.Nat.Add
+open Algebra Nat
 
 
 -- prerequisite of data sifting using a reward model

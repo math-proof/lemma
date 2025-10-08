@@ -5,7 +5,7 @@ import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Bool.Bool.eq.Zero.of.Bool.ne.One
 import Lemma.Algebra.Mul.eq.Zero.of.OrEqS
 import Lemma.Algebra.MulSub.eq.SubMulS
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Algebra.Sub.eq.Zero.is.Eq
 import Lemma.Nat.CoeMul.eq.MulCoeS

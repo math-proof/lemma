@@ -27,7 +27,7 @@ private lemma Comm
 -- imply
   ∃ i : Fin m, ∃ j : Fin n, t = n * i + j := by
 -- proof
-  simp [Mul.comm (a := n)]
+  simp [mul_comm (a := n)]
   apply main
 
 -- created on 2025-07-03

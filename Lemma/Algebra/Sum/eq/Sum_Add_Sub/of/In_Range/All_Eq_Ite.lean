@@ -1,10 +1,10 @@
 import Lemma.Algebra.EqSumS.of.All_Eq
 import Lemma.Set.Lt.of.In_Range
 import Lemma.Algebra.SubAdd.eq.Add_Sub
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Algebra.EqAddS.is.Eq
-open Algebra Set
+open Algebra Set Nat
 
 
 @[main]

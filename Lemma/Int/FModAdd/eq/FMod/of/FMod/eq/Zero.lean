@@ -1,6 +1,6 @@
 import Lemma.Algebra.Any_Eq_Mul.of.FMod.eq.Zero
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.EqAddS.is.Eq
@@ -15,7 +15,7 @@ import Lemma.Int.FloorAdd.eq.AddFloor
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubSub.eq.Neg
-open Algebra Bool Int
+open Algebra Bool Int Nat
 
 
 @[main]

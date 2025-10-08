@@ -8,14 +8,14 @@ import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1.Le_0
 import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.Algebra.NegSucc.eq.NegCoeAdd_1
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
 import Lemma.Int.ToNatSubOfNat_NegSucc.eq.AddAdd1
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.SubMin.eq.MinSubS
 import Lemma.Algebra.Min.eq.Add_1
-open Algebra List Bool Int
+open Algebra List Bool Int Nat
 
 
 @[main]

@@ -7,7 +7,7 @@ import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.List.Drop.eq.Nil
 import Lemma.Algebra.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.Sub_Add.eq.SubSub
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.List.Drop_SubLength_1.eq.ListGet.of.GtLength_0
@@ -20,7 +20,7 @@ import Lemma.List.Slice_0.eq.Take
 import Lemma.Algebra.AddSub.eq.Sub_Sub.of.Ge.Ge
 import Lemma.Algebra.LeSubS.of.Le
 import Lemma.Algebra.LtSubS.of.Lt.Le
-open Algebra List
+open Algebra List Nat
 
 
 @[main]

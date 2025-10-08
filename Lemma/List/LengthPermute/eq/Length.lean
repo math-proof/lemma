@@ -4,7 +4,7 @@ import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.EqAddSub.of.Ge
 import Lemma.Algebra.Le_Min.of.Le.Le
@@ -16,7 +16,7 @@ import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Algebra.SubSub
 import Lemma.Algebra.EqSubAdd
-open Algebra List
+open Algebra List Nat
 
 
 @[main]

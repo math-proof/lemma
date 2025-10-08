@@ -1,8 +1,8 @@
 import Lemma.Algebra.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.Add.eq.Sub_Neg
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.AddAdd.eq.Add_Add
-open Algebra
+open Algebra Nat
 
 
 @[main]

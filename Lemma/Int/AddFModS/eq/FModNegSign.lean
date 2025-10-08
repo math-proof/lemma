@@ -9,17 +9,17 @@ import Lemma.Int.FModAddMul.eq.FMod
 import Lemma.Algebra.FModNegSign.eq.Sub_Sign
 import Lemma.Algebra.AddSub.eq.Sub_Sub
 import Lemma.Algebra.EqSub.is.Eq_Add
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.EqFMod.of.Mul_Add_Sign.lt.Zero
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.LeSign.of.Gt_0
 import Lemma.Set.MulSubS.le.Zero.of.In_Icc
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Algebra.Lt.of.Le.Ne
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Set.FMod.in.IccSign.of.FMod.ne.Zero.Gt_0
 import Lemma.Set.FMod.in.Icc_Sign.of.FMod.ne.Zero.Lt_0
-open Algebra Set Bool Int
+open Algebra Set Bool Int Nat
 
 
 @[main]

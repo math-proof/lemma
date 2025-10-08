@@ -6,7 +6,7 @@ import Lemma.Set.In_Icc.of.Le.Le
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.FDiv.eq.FloorDiv
 import Lemma.Algebra.LeSub.is.Le_Add
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.LeSub.is.Le_Add
 import Lemma.Algebra.Le.of.LeDivS.Gt_0
 import Lemma.Algebra.GtCoeS.is.Gt
@@ -19,7 +19,7 @@ import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.Ne.of.Gt
 import Lemma.Set.In_IcoFloor
 import Lemma.Set.Lt.of.In_Ico
-open Algebra Set Int
+open Algebra Set Int Nat
 
 
 @[main]

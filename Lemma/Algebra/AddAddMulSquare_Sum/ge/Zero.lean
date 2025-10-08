@@ -4,10 +4,10 @@ import Lemma.Algebra.Sum_Add.eq.AddSumS
 import Lemma.Algebra.SquareMul.eq.MulSquareS
 import Lemma.Algebra.MulSum.eq.Sum_Mul
 import Lemma.Algebra.AddAdd
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.Mul_Sum.eq.Sum_Mul
-open Algebra
+open Algebra Nat
 
 
 @[main]

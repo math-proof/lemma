@@ -1,10 +1,10 @@
 import Lemma.Algebra.EqSubAdd
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.EqAddSub.of.Gt
 import Lemma.Algebra.EqMod.of.Lt
 import Lemma.Algebra.LtSub.of.Lt
-open Algebra
+open Algebra Nat
 
 
 @[main]

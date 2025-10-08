@@ -1,8 +1,8 @@
 import sympy.functions.elementary.trigonometric
 import Lemma.Algebra.Expr.eq.AddRe_MulIIm
 import Lemma.Algebra.EqMulS.of.Eq
-import Lemma.Algebra.Mul
-open Algebra
+import Lemma.Nat.Mul
+open Algebra Nat
 
 
 @[main]

@@ -3,8 +3,8 @@ import sympy.functions.elementary.trigonometric
 import Lemma.Algebra.DivMul.eq.Mul_Div
 import Lemma.Algebra.MulMul.eq.Mul_Mul
 import Lemma.Algebra.DivAdd.eq.AddDivS
-import Lemma.Algebra.Mul
-open Algebra
+import Lemma.Nat.Mul
+open Algebra Nat
 
 
 @[main]

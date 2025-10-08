@@ -217,7 +217,7 @@ def Tensor.getSlices
                 simp_all
             .
               simp [s_rest]
-              rw [Add.comm]
+              rw [add_comm]
           )
           tensors.flatten
       ⟩

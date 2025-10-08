@@ -7,9 +7,9 @@ import Lemma.Algebra.Pow2.eq.One.mod.SubPow2
 import Lemma.Algebra.EqMul1
 import Lemma.Algebra.ModEq.of.ModEq.ModEq__AddMul
 import Lemma.Algebra.Eq_AddMulDiv___Mod
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Algebra.MulMul.eq.Mul_Mul
-open Algebra
+open Algebra Nat
 
 
 @[main]

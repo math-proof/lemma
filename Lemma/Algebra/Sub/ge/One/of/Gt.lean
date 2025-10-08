@@ -1,9 +1,9 @@
 import Lemma.Algebra.LeAdd_1.of.Lt
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Algebra.Le.of.Lt
 import Lemma.Algebra.EqAddSub.of.Ge
-open Algebra
+open Algebra Nat
 
 
 @[main]

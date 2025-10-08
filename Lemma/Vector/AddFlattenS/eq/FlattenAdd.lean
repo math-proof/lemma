@@ -2,9 +2,9 @@ import Lemma.Algebra.Any_Eq_AddMul
 import Lemma.Vector.Get.eq.GetFlatten_AddMul
 import Lemma.Algebra.LtVal
 import Lemma.Vector.GetVal.eq.Get.of.Lt
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Vector.GetAdd.eq.AddGetS.of.Lt_Length
-open Algebra Vector
+open Algebra Vector Nat
 
 
 @[main]

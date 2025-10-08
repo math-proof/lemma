@@ -1,7 +1,7 @@
 import Lemma.Algebra.EqSubAdd
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.Sub_Add.eq.SubSub
-open Algebra
+open Algebra Nat
 
 
 @[main, comm]

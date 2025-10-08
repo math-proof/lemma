@@ -3,10 +3,10 @@ import Lemma.Algebra.Eq_Sub_1.of.Val.eq.Sub_1
 import Lemma.Algebra.NegSucc.eq.NegAdd_1
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Algebra.Sub_Add.eq.SubSub
-import Lemma.Algebra.Add
+import Lemma.Nat.Add
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.MinSubS.eq.SubMin.of.Ge.Ge
-open Algebra List
+open Algebra List Nat
 
 
 @[main]

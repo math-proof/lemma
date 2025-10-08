@@ -9,10 +9,10 @@ import Lemma.Set.In_Icc.of.MulSubS.le.Zero.Le
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.LeAdd_1.of.Lt
-import Lemma.Algebra.Mul
+import Lemma.Nat.Mul
 import Lemma.Set.EqFMod.of.Gt_Zero.Icc0Sub_1
 import Lemma.Set.EqFMod.of.Lt_0.IccAdd_1'0
-open Algebra Set Bool
+open Algebra Set Bool Nat
 
 
 @[main]
