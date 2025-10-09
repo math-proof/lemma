@@ -5,7 +5,7 @@ import Lemma.Algebra.LtCoeS.is.Lt
 import Lemma.Algebra.Le.of.Sub.eq.Zero
 import Lemma.Algebra.LeSubS.of.Le
 import Lemma.Algebra.AddMul.eq.MulAdd_1
-import Lemma.Algebra.Ge.of.NotLt
+import Lemma.Nat.Ge.of.NotLt
 import Lemma.Algebra.GeCoeS.is.Ge
 import Lemma.Algebra.EqSubAdd
 import Lemma.Algebra.SubSub

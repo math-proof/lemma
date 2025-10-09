@@ -3,7 +3,7 @@ import Lemma.List.GetElem.eq.SomeGet.of.Lt
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.Lt.of.Le.Ne
-import Lemma.Algebra.Ge.of.NotLt
+import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Algebra.Sub.gt.Zero.is.Lt
 import Lemma.List.LengthSlice.eq.SubMin

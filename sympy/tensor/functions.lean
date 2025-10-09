@@ -1,6 +1,7 @@
 import sympy.tensor.tensor
 import sympy.vector.functions
 import Lemma.Algebra.EqAdd_Sub.of.Ge
+import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
@@ -12,7 +13,7 @@ import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
-open Algebra List Tensor
+open Algebra List Tensor Nat
 
 /--
 [exp](https://pytorch.org/docs/stable/generated/torch.exp.html)
@@ -55,15 +56,9 @@ def Tensor.keepdim (X : Tensor α (s.eraseIdx dim)) : Tensor α s :=
   if h : dim < s.length then
     cast
       (by simp [List.EqSetInsertIdxEraseIdx.of.Lt_Length h])
-      ((X.unsqueeze dim).repeat s[dim] ⟨
-        dim,
-        Lt_LengthInsertIdxEraseIdx.of.Lt_Length h 1
-      ⟩)
+      ((X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.Lt_Length h 1⟩)
   else
-    cast (by
-      simp at h
-      rw [EqEraseIdx.of.Ge_Length h]
-    ) X
+    cast (by rw [EqEraseIdx.of.Ge_Length (Ge.of.NotLt h)]) X
 
 /--
 [softmax](https://pytorch.org/docs/stable/generated/torch.softmax.html)

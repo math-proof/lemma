@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.Algebra.Ge.of.NotLt
+import Lemma.Nat.Ge.of.NotLt
 import Lemma.Vector.EqGetRange
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.Ne.of.Gt

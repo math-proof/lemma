@@ -1,7 +1,7 @@
 import stdlib.List
-import Lemma.Algebra.Ge.of.NotLt
+import Lemma.Nat.Ge.of.NotLt
 import Lemma.Nat.Eq.of.Ge.Ge
-open Algebra Nat
+open Nat
 
 
 @[main]

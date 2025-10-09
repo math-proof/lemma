@@ -1,6 +1,6 @@
-import Lemma.Algebra.Ge.of.NotLt
+import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.GetElemRange.eq.None.of.Ge
-open Algebra List
+open List Nat
 
 
 @[main, mp, mpr]

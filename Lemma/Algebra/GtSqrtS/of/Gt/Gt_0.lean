@@ -1,8 +1,8 @@
-import Lemma.Algebra.Ge.of.NotLt
+import Lemma.Nat.Ge.of.NotLt
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.EqSqrt_0.of.Lt_0
 import Lemma.Algebra.GtSqrt_0.of.Gt_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

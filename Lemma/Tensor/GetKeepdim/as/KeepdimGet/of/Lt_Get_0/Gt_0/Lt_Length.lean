@@ -7,8 +7,8 @@ import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
 import Lemma.List.GetInsertIdx.eq.Get.of.Lt.Le_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-import Lemma.Bool.SEq.of.EqCast.Eq
-open Tensor List Bool
+import Lemma.Tensor.Keepdim.eq.Cast_RepeatUnsqueeze.of.Lt_Length
+open Tensor List
 
 
 @[main]
@@ -32,7 +32,7 @@ private lemma main
       rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_s]
       omega⟩ := by
 -- proof
-  unfold Tensor.keepdim
+  have h := Keepdim.eq.Cast_RepeatUnsqueeze.of.Lt_Length h_s X
   sorry
 
 

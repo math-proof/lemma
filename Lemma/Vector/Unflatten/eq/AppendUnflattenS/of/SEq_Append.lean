@@ -1,6 +1,6 @@
 import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.GetVal.eq.Get.of.Lt
-import Lemma.Algebra.Ge.of.NotLt
+import Lemma.Nat.Ge.of.NotLt
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Nat.AddMul.lt.Mul.of.Lt
 import Lemma.Vector.Get_AddMul.eq.GetUnflatten.of.Lt
