@@ -4,6 +4,7 @@ import Lemma.Tensor.GetDiv.eq.DivGetS
 import Lemma.Tensor.GetExp.eq.ExpGet
 import Lemma.Tensor.LengthExp.eq.Length
 import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Tensor.GetKeepdim.as.GetRepeatUnsqueeze.of.Lt_Get_0.Gt_0.Lt_Length
 open Tensor Bool
 
 
@@ -27,6 +28,7 @@ private lemma main
   rw [GetDiv.eq.DivGetS.fin (i := ⟨i, by simpa [LengthExp.eq.Length]⟩)]
   rw [GetExp.eq.ExpGet.fin (i := ⟨i, h_i⟩)]
   apply EqUFnS.of.Eq _ (exp (X.get ⟨i, h_i⟩) / ·)
+  rw [GetKeepdim.as.GetRepeatUnsqueeze.of.Lt_Get_0.Gt_0.Lt_Length]
   sorry
 
 

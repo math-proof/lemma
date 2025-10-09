@@ -7,7 +7,8 @@ import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
 import Lemma.List.GetInsertIdx.eq.Get.of.Lt.Le_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-import Lemma.Tensor.Keepdim.eq.Cast_RepeatUnsqueeze.of.Lt_Length
+import Lemma.Tensor.Keepdim.as.RepeatUnsqueeze.of.Lt_Length
+import Lemma.Tensor.All_SEqGetS.of.SEq
 open Tensor List
 
 
@@ -32,8 +33,8 @@ private lemma main
       rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_s]
       omega⟩ := by
 -- proof
-  have h := Keepdim.eq.Cast_RepeatUnsqueeze.of.Lt_Length h_s X
-  sorry
+  have h := Keepdim.as.RepeatUnsqueeze.of.Lt_Length h_s X
+  apply All_SEqGetS.of.SEq h ⟨i, by rwa [Length.eq.Get_0.of.GtLength h_s]⟩
 
 
 -- created on 2025-10-09
