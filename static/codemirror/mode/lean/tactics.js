@@ -52,6 +52,7 @@ export const tactics = [
     'refine',
     'rename',
     'repeat',
+    'revert',
     'rfl',
     'right',
     'ring',

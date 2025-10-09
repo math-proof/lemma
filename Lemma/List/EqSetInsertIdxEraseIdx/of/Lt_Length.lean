@@ -12,7 +12,6 @@ open List Algebra
 
 @[main]
 private lemma main
-  [MulOneClass α]
   {dim : ℕ}
   {s : List α}
 -- given

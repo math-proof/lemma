@@ -179,21 +179,44 @@ def String.is_relational_operator : String → Bool
   | "et" | "ou" | "to" | "eq" | "ne" | "gt" | "lt" | "ge" | "le" | "in" | "as" | "dvd" | "subset" | "supset" => true
   | _ => false
 
-def String.transformEq (first : String) : String :=
-  if first.startsWith "Eq_" then
-    "Eq" ++ first.drop 3
-  else if first.startsWith "Eq" then
-    "Eq_" ++ first.drop 2
-  else if first.startsWith "SEq_" then
-    "SEq" ++ first.drop 4
-  else if first.startsWith "SEq" then
-    "SEq_" ++ first.drop 3
-  else if first.startsWith "Iff_" then
-    "Iff" ++ first.drop 4
-  else if first.startsWith "Iff" then
-    "Iff_" ++ first.drop 3
+def String.transformEq (s : String) : String :=
+  if s.startsWith "Eq_" then
+    "Eq" ++ s.drop 3
+  else if s.startsWith "Eq" then
+    if s.length > 2 then
+      "Eq_" ++ s.drop 2
+    else
+      s
+  else if s.startsWith "SEq_" then
+    "SEq" ++ s.drop 4
+  else if s.startsWith "SEq" then
+    if s.length > 3 then
+      "SEq_" ++ s.drop 3
+    else
+      s
+  else if s.startsWith "Iff_" then
+    "Iff" ++ s.drop 4
+  else if s.startsWith "Iff"  then
+    if s.length > 3 then
+      "Iff_" ++ s.drop 3
+    else
+      s
+  else if s.startsWith "Ne_" then
+    "Ne" ++ s.drop 3
+  else if s.startsWith "Ne"  then
+    if s.length > 2 then
+      "Ne_" ++ s.drop 2
+    else
+      s
+  else if s.startsWith "HEq_" then
+    "HEq" ++ s.drop 4
+  else if s.startsWith "HEq" then
+    if s.length > 3 then
+      "HEq_" ++ s.drop 3
+    else
+      s
   else
-    panic! s!"Expected the operator to be '(S?Eq|Iff).*', got: {first}"
+    panic! s!"Expected the operator to be '([SH]?Eq|Iff|Ne).*', got: {s}"
 
 -- #eval "%%Hello %%%-10s! %5.2f%%".format "World", -20.666666 + 1
 -- #eval "number: %4.2f".format -1

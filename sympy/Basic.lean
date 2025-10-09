@@ -44,10 +44,15 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def List.decomposeOf (list : List String) (map : List String → List String) (offset : Nat := 0): List String :=
+def List.decomposeOf (list : List String) (parity : List Bool) (map : List String → List String) (offset : ℕ := 0) : List String :=
   if let some i := list.idxOf? "of" then
     let ⟨first, ofPart⟩ := list.splitAt i
-    first.head! :: map first.tail ++ ofPart.drop offset
+    let ofPart :=
+      if offset == 0 then
+        ofPart[0]! :: ofPart.tail.zipWith (fun s b => if b then s.transformEq else s) parity
+      else
+        ofPart.drop offset
+    first.head! :: map first.tail ++ ofPart
   else
     list.head! :: map list.tail
 
@@ -58,8 +63,8 @@ def List.commutateIs (list : List String) (op : String := "is") : List String :=
   else
     []
 
-def List.comm (list : List String) : List String :=
-  list.decomposeOf fun list =>
+def List.comm (list : List String) (parity : List Bool) : List String :=
+  list.decomposeOf parity fun list =>
     let list' := list.commutateIs
     if list'.isEmpty then
       if let first :: rest := list then
@@ -76,7 +81,7 @@ def List.comm (list : List String) : List String :=
     else
       list'
 
-def List.zipParity (binders : List (Name × Expr × BinderInfo)) (parity : Nat) (info : BinderInfo := .default) : List (Bool × Name × Expr × BinderInfo) :=
+def List.zipParity (binders : List (Name × Expr × BinderInfo)) (parity : ℕ) (info : BinderInfo := .default) : List (Bool × Name × Expr × BinderInfo) :=
   binders.foldr
     (fun binder@⟨_, _, binderInfo⟩ ⟨binders, parity⟩ =>
       let ⟨bit, parity⟩ :=
@@ -89,7 +94,7 @@ def List.zipParity (binders : List (Name × Expr × BinderInfo)) (parity : Nat) 
     ([], parity)
   |> Prod.fst
 
-def Expr.comm (type proof : Expr) (parity : Nat) : Expr × Expr :=
+def Expr.comm (type proof : Expr) (parity : ℕ) : List Bool × Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
   let ⟨type, symm⟩ := type.decomposeType
@@ -104,9 +109,12 @@ def Expr.comm (type proof : Expr) (parity : Nat) : Expr × Expr :=
         body
       )
   let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
-  (type, .app symm (proof.mkApp ((List.range binders.length).map fun i => .bvar i).reverse)).map
-    (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE)
-    (telescope valueBinders .lam)
+  (
+    binders.filterMap fun ⟨comm, _, _, binderInfo⟩ => if binderInfo == .default then some comm else none,
+    (type, .app symm (proof.mkApp ((List.range binders.length).map fun i => .bvar i).reverse)).map
+      (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE)
+      (telescope valueBinders .lam)
+  )
 
 /--
 `@[comm]` (abbreviated from `law of commutativity` : 交换律) attribute automatically generates the symmetric version of a theorem
@@ -133,16 +141,16 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ := Expr.comm decl.type (.const declName (levelParams.map .param)) stx.parity
+    let ⟨parity, type, value⟩ := Expr.comm decl.type (.const declName (levelParams.map .param)) stx.parity
     addAndCompile <| .thmDecl {
-      name := ((← getEnv).moduleTokens.comm.foldl Name.str default).lemmaName declName
+      name := (((← getEnv).moduleTokens.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value
     }
 }
 
-def Expr.mp (type proof : Expr) (parity : Nat := 0) (reverse : Bool := false) : Expr × Expr :=
+def Expr.mp (type proof : Expr) (parity : ℕ := 0) (reverse : Bool := false) : Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
   let deBruijn := (binders.zipParity parity .instImplicit).zipIdx.filterMap fun ⟨⟨bit, _⟩, deBruijn⟩ => if bit then some deBruijn else none
   let decDeBruijnIndex := fun type => deBruijn.foldr (fun deBruijn type => type.decDeBruijnIndex 1 deBruijn) type
@@ -192,7 +200,7 @@ def Expr.mp (type proof : Expr) (parity : Nat := 0) (reverse : Bool := false) : 
   let proof := (deBruijn.zip pNameType).foldr (fun ⟨deBruijn, name, type⟩ proof => (.lam name (type.incDeBruijnIndex deBruijn) proof .default)) proof
   (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type proof .default).map (telescope Expr.forallE) (telescope .lam)
 
-def List.mp (list : List String) : List String := list.decomposeOf (fun list => list.commutateIs "of") 1
+def List.mp (list : List String) : List String := list.decomposeOf [] (fun list => list.commutateIs "of") 1
 
 /--
 `@[mp]` (abbreviated from `modus ponens`) attribute automatically generates the mp implication of a equivalence theorem.
@@ -228,9 +236,9 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.mpr (type proof : Expr) (parity : Nat := 0) : Expr × Expr := Expr.mp type proof parity true
+def Expr.mpr (type proof : Expr) (parity : ℕ := 0) : Expr × Expr := Expr.mp type proof parity true
 def List.mpr (list : List String) : List String :=
-  list.decomposeOf
+  list.decomposeOf []
     (fun list =>
       let i := list.idxOf "is"
       let ⟨first, second⟩ := list.splitAt i
@@ -282,9 +290,9 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.mp decl.type (.const declName (levelParams.map .param))
-    let ⟨type, value⟩ := Expr.comm type value stx.parity
+    let ⟨parity, type, value⟩ := Expr.comm type value stx.parity
     addAndCompile <| .thmDecl {
-      name := ((← getEnv).moduleTokens.mp.comm.foldl Name.str default).lemmaName declName
+      name := (((← getEnv).moduleTokens.mp.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value
@@ -309,9 +317,9 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.mpr decl.type (.const declName (levelParams.map .param))
-    let ⟨type, value⟩ := Expr.comm type value stx.parity
+    let ⟨parity, type, value⟩ := Expr.comm type value stx.parity
     addAndCompile <| .thmDecl {
-      name := ((← getEnv).moduleTokens.mpr.comm.foldl Name.str default).lemmaName declName
+      name := (((← getEnv).moduleTokens.mpr.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value

@@ -4,7 +4,8 @@ import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
-open Algebra Tensor List Bool
+import Lemma.Nat.EqAddSub.of.Ge
+open Algebra Tensor List Bool Nat
 
 
 @[main]

@@ -28,7 +28,7 @@ import Lemma.Algebra.Gt.of.Gt.Ge
 import Lemma.Algebra.Le.of.Le_Sub
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Ge_1.of.Gt
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.Eq.of.EqSubS.Ge.Ge
 open Algebra List Bool Nat
 set_option maxHeartbeats 300000

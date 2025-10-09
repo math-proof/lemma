@@ -5,7 +5,7 @@ import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.GetSet.eq.Get.of.Gt.Lt_Length
 import Lemma.Nat.Gt_0
 import Lemma.Nat.LtVal
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0

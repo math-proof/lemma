@@ -1,11 +1,14 @@
+import stdlib.SEq
 import sympy.tensor.functions
-import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
+import Lemma.Tensor.LengthKeepdim.eq.Length.of.Gt_0
+import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0
-import Lemma.Tensor.Sum.as.Stack_Sum.of.LtAdd_1Length
-import Lemma.Tensor.EqGetS.of.Eq.Lt_Length
-import Lemma.Tensor.EqGetStack.of.Lt
-open Tensor List
+import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
+import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
+import Lemma.List.GetInsertIdx.eq.Get.of.Lt.Le_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.Bool.SEq.of.EqCast.Eq
+open Tensor List Bool
 
 
 @[main]
@@ -13,13 +16,23 @@ private lemma main
   {dim i : ℕ}
   {s : List ℕ}
 -- given
-  (h : dim < s.length)
-  (h₁ : dim > 0)
+  (h_s : dim < s.length)
+  (h_dim : dim > 0)
   (h_i : i < s[0])
   (X : Tensor α (s.eraseIdx dim)) :
 -- imply
-  X.keepdim.get ⟨i, by sorry⟩ ≃ ((X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.Lt_Length h 1⟩).get ⟨i, by sorry⟩ := by
+  X.keepdim.get ⟨i, by
+    rwa [LengthKeepdim.eq.Length.of.Gt_0 h_dim X, Length.eq.Get_0.of.GtLength_0, GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_dim]⟩ ≃ ((X.unsqueeze dim).repeat s[dim] ⟨dim, by
+    rwa [LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length h_s]⟩).get ⟨i, by
+    rw [LengthRepeat.eq.Get_0.of.GtVal_0 h_dim]
+    rw [GetInsertIdx.eq.Get.of.Lt.Le_Length _ h_dim]
+    ·
+      rwa [GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_dim]
+    ·
+      rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_s]
+      omega⟩ := by
 -- proof
+  unfold Tensor.keepdim
   sorry
 
 

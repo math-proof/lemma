@@ -1,6 +1,6 @@
 import sympy.core.relational
 import sympy.sets.sets
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Add
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.EqSubAdd

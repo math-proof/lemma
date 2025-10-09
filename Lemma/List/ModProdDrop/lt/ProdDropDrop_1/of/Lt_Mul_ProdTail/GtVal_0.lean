@@ -1,10 +1,10 @@
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.LtMod.of.Gt_0
 import Lemma.List.Drop.eq.DropDrop__Sub.of.Ge
 import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.ProdDrop.gt.Zero.of.GtProd_0
 import Lemma.Algebra.Gt_0.of.GtMul
-open Algebra List
+open Algebra List Nat
 
 
 @[main]

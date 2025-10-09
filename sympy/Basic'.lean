@@ -3,7 +3,7 @@ import stdlib.Prod
 import sympy.parsing.parser
 open Lean Lean.Meta
 
-def Expr.comm' (type proof : Lean.Expr) (parity : Nat) : CoreM (Lean.Expr × Lean.Expr) := do
+def Expr.comm' (type proof : Lean.Expr) (parity : Nat) : CoreM (List Bool × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
   let ⟨type, symm⟩ := type.decomposeType
@@ -26,9 +26,13 @@ def Expr.comm' (type proof : Lean.Expr) (parity : Nat) : CoreM (Lean.Expr × Lea
       body.println [] s!"final {hint}"
       return body
   let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
-  (type, .app symm (proof.mkApp ((List.range binders.length).map fun i => .bvar i).reverse)).mapM
+  let (type, value) ← (type, .app symm (proof.mkApp ((List.range binders.length).map fun i => .bvar i).reverse)).mapM
     (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE "type")
     (telescope valueBinders .lam "proof")
+  return (
+    binders.filterMap fun ⟨comm, _, _, binderInfo⟩ => if binderInfo == .default then some comm else none,
+    type, value
+  )
 
 initialize registerBuiltinAttribute {
   name := `comm'
@@ -37,9 +41,11 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ ← Expr.comm' decl.type (.const declName (levelParams.map .param)) stx.parity
+    let ⟨parity, type, value⟩ ← Expr.comm' decl.type (.const declName (levelParams.map .param)) stx.parity
+    println! s!"parity = {parity}"
+    println! s!"(← getEnv).moduleTokens = {(← getEnv).moduleTokens}"
     addAndCompile <| .thmDecl {
-      name := ((← getEnv).moduleTokens.comm.foldl Name.str default).lemmaName declName
+      name := (((← getEnv).moduleTokens.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value

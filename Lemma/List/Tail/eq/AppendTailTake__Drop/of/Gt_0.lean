@@ -1,7 +1,7 @@
 import Lemma.List.EqAppendTake__Drop
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.TakeTail.eq.TailTake
-open Algebra List
+open List Nat
 
 
 @[main]

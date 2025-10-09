@@ -3,7 +3,7 @@ import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.EqPermute__0
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.Drop.eq.Nil
 import Lemma.Algebra.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.Sub_Add.eq.SubSub

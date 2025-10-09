@@ -1,6 +1,6 @@
 import Lemma.List.DropDrop.eq.Drop_Add
-import Lemma.Algebra.EqAddSub.of.Ge
-open Algebra List
+import Lemma.Nat.EqAddSub.of.Ge
+open List Nat
 
 
 @[main]

@@ -1,7 +1,7 @@
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Pow_Add.eq.MulPowS
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.ModEq.of.Eq
 import Lemma.Algebra.Pow2.eq.One.mod.SubPow2
 import Lemma.Algebra.EqMul1

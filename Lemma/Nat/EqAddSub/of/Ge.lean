@@ -4,8 +4,8 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [IntegerRing Z]
-  {a b : Z}
+  [IntegerRing N]
+  {a b : N}
 -- given
   (h : b ≥ a) :
 -- imply

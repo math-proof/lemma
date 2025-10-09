@@ -1,7 +1,7 @@
 import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.Lt_Length
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.Drop.eq.Nil
-open Algebra List
+open List Nat
 
 
 @[main]

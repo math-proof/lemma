@@ -2,9 +2,10 @@ import sympy.tensor.Basic
 import Lemma.Bool.HEq.of.All_HEq
 import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.Algebra.LtAddS.is.Lt
-import Lemma.Nat.LtVal
 import Lemma.Algebra.GtVal_0.of.Ne_0
 import Lemma.Algebra.LtSubS_1.of.Lt.Ne_0
+import Lemma.Nat.LtVal
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1

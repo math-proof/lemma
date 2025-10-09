@@ -1,8 +1,9 @@
 import Lemma.Algebra.EqAdd_Sub.of.Ge
-open Algebra
+import Lemma.Nat.EqAddSub.of.Ge
+open Algebra Nat
 
 
-@[main]
+@[main, comm 2]
 private lemma left
   {x a b : ℕ}
 -- given
@@ -17,7 +18,7 @@ private lemma left
   contradiction
 
 
-@[main]
+@[main, comm 2]
 private lemma main
   {x a b : ℕ}
 -- given

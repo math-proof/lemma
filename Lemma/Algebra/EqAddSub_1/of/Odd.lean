@@ -1,5 +1,5 @@
 import sympy.functions.elementary.integers
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.Ge.of.Gt_Sub_1
 import Lemma.Algebra.Sub.eq.Zero
 import Lemma.Algebra.NotGt.is.Le

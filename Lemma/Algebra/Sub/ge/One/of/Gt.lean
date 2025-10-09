@@ -2,7 +2,7 @@ import Lemma.Algebra.LeAdd_1.of.Lt
 import Lemma.Nat.Add
 import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Nat.Le.of.Lt
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 open Algebra Nat
 
 

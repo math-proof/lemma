@@ -33,12 +33,10 @@ private lemma main
   ·
     apply SEq.of.SEq.SEq (c := ab.array_slice (i * k) k)
     ·
-      apply EqArraySliceS.of.SEq.Eq.Eq rfl rfl
-      apply SEq_Cast.of.SEq.Eq (by assumption)
-      apply SEq.of.Eq rfl
+      apply EqArraySliceS.of.SEq.Eq.Eq rfl rfl ∘ SEq_Cast.of.SEq.Eq (by assumption) ∘ SEq.of.Eq
+      rfl
     ·
-      have := LtVal i
-      apply GetUnflatten.as.ArraySlice.of.Lt (by linarith)
+      apply GetUnflatten.as.ArraySlice.of.Lt
 
 
 -- created on 2025-07-15

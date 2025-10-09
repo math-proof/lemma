@@ -6,12 +6,12 @@ import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.Algebra.EqSubAdd
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
-import Lemma.Algebra.NeSub.of.Ne_Add.Ge
+import Lemma.Nat.Ne_Sub.of.NeAdd.Ge
 import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.Lt_Length
 import Lemma.List.GetElem.eq.None.of.Ge_Length
 import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.List.EqSwap.of.Ge_Length
-open Algebra List Bool
+open Algebra List Bool Nat
 
 
 @[main]

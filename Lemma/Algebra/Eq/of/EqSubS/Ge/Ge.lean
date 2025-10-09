@@ -1,6 +1,6 @@
 import Lemma.Algebra.EqSubAdd
-import Lemma.Algebra.EqAddSub.of.Ge
-open Algebra
+import Lemma.Nat.EqAddSub.of.Ge
+open Algebra Nat
 
 
 @[main]

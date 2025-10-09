@@ -5,8 +5,8 @@ import Lemma.Algebra.Lt.of.Le_Sub_1.Gt_0
 import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
-import Lemma.Algebra.EqAddSub.of.Ge
-open Algebra
+import Lemma.Nat.EqAddSub.of.Ge
+open Algebra Nat
 
 
 @[main]

@@ -251,19 +251,17 @@ def Lean.Expr.mkApp (f : Expr) (args : List Expr) : Expr :=
 
 def Lean.Expr.comm : Expr → Expr
   | .app (.app (.app (.const `Eq us) α) a) b =>
-    -- Eq.{u} {α : Sort u} : α → α → Prop
     (Expr.const `Eq us).mkApp [α, b, a]
   | .app (.app (.const `Iff us) a) b =>
-    -- Iff (a b : Prop) : Prop
     (Expr.const `Iff us).mkApp [b, a]
   | .app (.app (.app (.app (.app (.app (.const `SEq us) α) Vector) n) m) a) b =>
-  -- SEq.{u, v} {α : Type u} {Vector : α → Sort v} {n m : α} (a : Vector n) (b : Vector m) : Prop
     (Expr.const `SEq us).mkApp [α, Vector, m, n, b, a]
   | .app (.app (.app (.app (.const `HEq us) α) a) β) b =>
-  -- HEq.{u} {α : Sort u} : α → {β : Sort u} → β → Prop
     (Expr.const `HEq us).mkApp [β, b, α, a]
+  | .app (.app (.app (.const `Ne us) α) a) b =>
+    (Expr.const `Ne us).mkApp [α, b, a]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, or HEq, but got {e.ctorName} : {e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq or Ne, but got {e.ctorName} : {e}"
 
 def Lean.Expr.symm : Expr → Expr
   | .app (.app (.app (.const `Eq us) α) a) b =>
@@ -273,10 +271,11 @@ def Lean.Expr.symm : Expr → Expr
   | .app (.app (.app (.app (.app (.app (.const `SEq us) α) Vector) n) m) a) b =>
     (Expr.const `SEq.symm us).mkApp [α, Vector, n, m, a, b]
   | .app (.app (.app (.app (.const `HEq us) α) a) β) b =>
-    -- HEq.symm.{u} {α β : Sort u} {a : α} {b : β} (h : HEq a b) : HEq b a -- different from `HEq
     (Expr.const `HEq.symm us).mkApp [α, β, a, b]
+  | .app (.app (.app (.const `Ne us) α) a) b =>
+    (Expr.const `Ne.symm us).mkApp [α, a, b]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, or HEq, but got {e.ctorName} : {e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq or Ne, but got {e.ctorName} : {e}"
 
 def Lean.Expr.decomposeType : Expr → Expr × Expr
   | .app (.app (.app (.app (.const `letFun us) α) β) v) (.lam binderName binderType body binderInfo) =>

@@ -5,7 +5,7 @@ import Lemma.Algebra.EqSubAdd
 import Lemma.Bool.BFnIte.is.Imp.Imp
 import Lemma.Nat.Add
 import Lemma.Algebra.Sub_1.eq.AddDivS_2.of.Odd
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.Odd.is.NotEven
 open Algebra Bool Nat
 

@@ -2,10 +2,10 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0
 import Lemma.List.Sub_1.lt.LengthTail.of.Gt_0.Lt_Length
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_LengthTail
-import Lemma.Algebra.EqAddSub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length
 import Lemma.Bool.EqCast.of.SEq
-open Tensor Algebra List Bool
+open Tensor List Bool Nat
 
 
 @[main]
