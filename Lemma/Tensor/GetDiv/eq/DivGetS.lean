@@ -11,7 +11,7 @@ open Tensor Vector List
 
 
 @[main]
-private lemma left
+private lemma fin
   [Div α]
 -- given
   (A B : Tensor α s)
@@ -33,18 +33,6 @@ private lemma left
 
 
 @[main]
-private lemma fin
-  [Div α]
--- given
-  (A B : Tensor α s)
-  (i : Fin (A / B).length) :
--- imply
-  (A / B).get i = A.get ⟨i, by simp [← LengthDiv.eq.Length.left A B]⟩ / B.get ⟨i, by simp [← LengthDiv.eq.Length A B]⟩ := by
--- proof
-  apply left A B ⟨i, by simp [← LengthDiv.eq.Length.left A B]⟩
-
-
-@[main]
 private lemma main
   [Div α]
 -- given
@@ -57,7 +45,7 @@ private lemma main
     simp [EqLengthS B A]
   (A / B)[i] = A[i] / B[i] := by
 -- proof
-  apply left
+  apply fin
 
 
 -- created on 2025-10-08

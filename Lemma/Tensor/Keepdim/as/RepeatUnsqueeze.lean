@@ -8,19 +8,19 @@ open List Bool
 
 @[main]
 private lemma main
-  [Add α] [Zero α]
   {dim : ℕ}
+  {s : List ℕ}
 -- given
-  (X : Tensor α s)
+  (X : Tensor α (s.eraseIdx dim))
   (h : dim < s.length) :
 -- imply
-  X.sum_keepdim dim ≃ ((X.sum dim).unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.Lt_Length h 1⟩ := by
+  X.keepdim ≃ (X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.Lt_Length h 1⟩ := by
 -- proof
   apply SEq.of.EqCast.Eq
-  · 
-    unfold Tensor.sum_keepdim
+  ·
+    unfold Tensor.keepdim
     simp [h]
-  · 
+  ·
     simp [EqSetInsertIdxEraseIdx.of.Lt_Length h]
 
 

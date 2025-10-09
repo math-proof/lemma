@@ -1,6 +1,6 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0
-import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Add_1.lt.Length
+import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.LtAdd_1Length
 open Tensor
 
 
@@ -23,7 +23,7 @@ private lemma main
   | zero =>
     contradiction
   | succ dim =>
-    apply GetSum.as.SumGet.of.Lt_Get_0.Add_1.lt.Length (by linarith) (by assumption)
+    apply GetSum.as.SumGet.of.Lt_Get_0.LtAdd_1Length (by linarith) (by assumption)
 
 
 -- created on 2025-06-22

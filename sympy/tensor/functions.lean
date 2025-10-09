@@ -51,20 +51,23 @@ instance [Log α] : Log (Tensor α s) where
 /--
 Tensor.sum (keepdim=True)
 -/
-def Tensor.sum_keepdim [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α s :=
+def Tensor.keepdim (X : Tensor α (s.eraseIdx dim)) : Tensor α s :=
   if h : dim < s.length then
     cast
       (by simp [List.EqSetInsertIdxEraseIdx.of.Lt_Length h])
-      (((X.sum dim).unsqueeze dim).repeat s[dim] ⟨
+      ((X.unsqueeze dim).repeat s[dim] ⟨
         dim,
         Lt_LengthInsertIdxEraseIdx.of.Lt_Length h 1
       ⟩)
   else
-    X
+    cast (by
+      simp at h
+      rw [EqEraseIdx.of.Ge_Length h]
+    ) X
 
 /--
 [softmax](https://pytorch.org/docs/stable/generated/torch.softmax.html)
 -/
 def Tensor.softmax [Exp α] (x : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α s :=
   let x_exp := exp x
-  x_exp / x_exp.sum_keepdim dim
+  x_exp / (x_exp.sum dim).keepdim

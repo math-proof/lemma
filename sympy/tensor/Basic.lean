@@ -161,6 +161,7 @@ def Tensor.fromVector (X : List.Vector (Tensor α s) n) : Tensor α (n :: s) :=
 
 /--
 [torch.sum](https://docs.pytorch.org/docs/stable/generated/torch.sum.html)
+use (X.sum dim).keepdim to keep the dimension
 -/
 def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α (s.eraseIdx dim) :=
   if h_dim : dim < s.length then

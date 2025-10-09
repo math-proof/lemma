@@ -1,6 +1,6 @@
 import sympy.tensor.functions
 import Lemma.Tensor.Softmax.eq.Div_SumExp
-import Lemma.Tensor.Sum.eq.GetEllipsisSumKeepdim.of.Get.gt.Zero
+import Lemma.Tensor.Sum.eq.GetEllipsisKeepdimSum.of.Get.gt.Zero
 open Tensor
 
 
@@ -15,7 +15,7 @@ private lemma main
   (X.softmax dim).sum dim = 1 := by
 -- proof
   rw [Softmax.eq.Div_SumExp]
-  rw [Sum.eq.GetEllipsisSumKeepdim.of.Get.gt.Zero h]
+  rw [Sum.eq.GetEllipsisKeepdimSum.of.Get.gt.Zero h]
   sorry
 
 
