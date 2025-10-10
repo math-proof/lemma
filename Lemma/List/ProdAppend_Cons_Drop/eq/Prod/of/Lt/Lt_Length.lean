@@ -2,10 +2,10 @@ import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdCons.eq.Mul_Length
 import Lemma.Algebra.MulMul
 import Lemma.List.ProdTake_Add_1.eq.MulProdTake.of.Lt_Length
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop.of.Lt_Length
 import Lemma.List.ProdTake.eq.MulProdS.of.Le
-open Algebra List
+open Algebra List Nat
 
 
 @[main]

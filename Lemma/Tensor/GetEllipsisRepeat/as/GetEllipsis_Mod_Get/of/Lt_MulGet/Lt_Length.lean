@@ -1,5 +1,5 @@
 import stdlib.SEq
-import Lemma.Algebra.LtMod.of.Lt_Mul
+import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Tensor.GetEllipsis_0.as.Get.of.Gt_Length_0.Lt_Get_0
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0

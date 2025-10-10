@@ -22,12 +22,12 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.List.AddMul_ProdSet.lt.MulProd_Mul_Prod.of.Lt_Mul_ProdTail.Lt_Get_0.GtVal_0.GtLength_0
 import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
 import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length
-import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
 import Lemma.Algebra.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
 import Lemma.Vector.EqGetS
 import Lemma.List.ProdTakeSet__1.eq.Get_0.of.Gt_0.GtLength_0

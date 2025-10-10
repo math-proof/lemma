@@ -5,8 +5,8 @@ import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.AddAdd
 import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Algebra.LeAdd_1.of.Lt
-import Lemma.Algebra.LtMod.of.Gt_0
-open Algebra
+import Lemma.Nat.LtMod.of.Gt_0
+open Algebra Nat
 
 
 @[main]

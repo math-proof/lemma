@@ -2,9 +2,9 @@ import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Algebra.MulSum.eq.Sum_Mul
 import Lemma.Algebra.Mul_Sum.eq.Sum_Mul
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.EqSumS
-open Tensor Algebra
+open Tensor Algebra Nat
 set_option maxHeartbeats 1000000
 
 

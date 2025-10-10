@@ -1,9 +1,9 @@
 import stdlib.SEq
 import sympy.tensor.tensor
-import Lemma.Algebra.LtMod.of.Lt_Mul
+import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Nat.Gt_0
 import Lemma.Tensor.GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet.Lt_Length
-open Algebra Tensor Nat
+open Tensor Nat
 
 
 @[main]

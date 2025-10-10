@@ -8,7 +8,7 @@ import Lemma.Algebra.EqMul1
 import Lemma.Algebra.ModEq.of.ModEq.ModEq__AddMul
 import Lemma.Algebra.Eq_AddMulDiv___Mod
 import Lemma.Nat.Mul
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 open Algebra Nat
 
 

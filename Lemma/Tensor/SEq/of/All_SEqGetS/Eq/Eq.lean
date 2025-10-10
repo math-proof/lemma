@@ -4,7 +4,7 @@ import Lemma.Tensor.All_SEqDataSGet.of.All_SEqGetS.Eq
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.GetElem.eq.None.of.Ge_Length
-import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
 import Lemma.Tensor.Data.eq.FlattenMapRange
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Vector.Get.eq.GetFlatten_AddMul

@@ -12,7 +12,7 @@ import Lemma.Nat.Add
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
 import Lemma.Int.ToNatSubOfNat_NegSucc.eq.AddAdd1
 import Lemma.Algebra.EqMulS.of.Eq
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.SubMin.eq.MinSubS
 import Lemma.Algebra.Min.eq.Add_1
 open Algebra List Bool Int Nat

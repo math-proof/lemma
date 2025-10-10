@@ -6,7 +6,7 @@ import Lemma.Algebra.Div_Mul.eq.Inv.of.Ne_0
 import Lemma.Algebra.DivNeg.eq.NegDiv
 import Lemma.Algebra.Div1.eq.Inv
 import Lemma.Rat.DivDiv.eq.Div_Mul
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
 import Lemma.Algebra.Pi.gt.Zero
 import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0

@@ -2,8 +2,8 @@ import sympy.tensor.tensor
 import Lemma.List.LengthJoin.eq.SumMap_FunLength
 import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.Nat.Mul
-import Lemma.Algebra.MulMul.eq.Mul_Mul
-open Algebra List Nat
+import Lemma.Nat.MulMul.eq.Mul_Mul
+open List Nat
 
 
 @[main]

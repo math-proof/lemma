@@ -8,7 +8,7 @@ import Lemma.Algebra.Square.le.MulMul4.of.Ge_0.AddAddMul_Square.ge.Zero
 import Lemma.Algebra.Sum_Square.ge.Zero
 import Lemma.Algebra.AddAddMulSquare_Sum.ge.Zero
 import Lemma.Nat.Mul
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 open Algebra Nat
 
 

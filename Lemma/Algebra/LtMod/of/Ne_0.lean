@@ -1,6 +1,6 @@
 import Lemma.Algebra.Gt_0.of.Ne_0
-import Lemma.Algebra.LtMod.of.Gt_0
-open Algebra
+import Lemma.Nat.LtMod.of.Gt_0
+open Algebra Nat
 
 
 @[main]

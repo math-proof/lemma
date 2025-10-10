@@ -144,9 +144,9 @@ where
 		async function F3(cm, refresh) {
 		    var cursor = cm.getCursor();
 		    var text = cm.getLine(cursor.line);
-			var prefix = text.slice(0, cursor.ch) + text.slice(cursor.ch).match(/^[\w'₀-₉]*/)[0];
+			var prefix = text.slice(0, cursor.ch) + text.slice(cursor.ch).match(/^[\w'!₀-₉]*/)[0];
 			var postfix = text.slice(prefix.length);
-		    var m = prefix.match(/([\w'₀-₉]+)(?:\.[\w'₀-₉]+)*$/);
+		    var m = prefix.match(/([\w'!₀-₉]+)(?:\.[\w'!₀-₉]+)*$/);
 		    var module = m[0];
 			m = module.match(/^Lemma\.(.+)/);
 			if (m)
@@ -170,12 +170,12 @@ where
 						}
 						module = self.module.split(/[./]/)[0] + '.' + symbol;
 					}
-					m = postfix.match(/\.([\w'₀-₉]+)/);
+					m = postfix.match(/\.([\w'!₀-₉]+)/);
 					symbol = m? m[1]: null;
 				}
 			}
 			else {
-				m = module.match(/^([\w'₀-₉]+)\.(.+)/);
+				m = module.match(/^([\w'!₀-₉]+)\.(.+)/);
 				if (m[1].fullmatch(self.regexp_section)) {
 					if (!await form_post('php/request/disambiguate.php', {module: m[2]})) {
 						if (await select_mathlib(module))
@@ -189,7 +189,7 @@ where
 						table = 'mathlib';
 					else {
 						var char = postfix.match(/^\.[A-Z]/)? '\\.': '$|\\.';
-						var regexp = `^([\\w''₀-₉]+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`;
+						var regexp = `^([\\w''!₀-₉]+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`;
 						var regexp_mysql = regexp.replace(/\\/g, "\\\\");
 						var sql = `
 select 

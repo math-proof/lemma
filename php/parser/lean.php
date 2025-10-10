@@ -684,7 +684,7 @@ abstract class Lean extends IndentedNode
                 } else
                     return $this->parent->insert_bitand($this);
             case "'":
-                while (preg_match("/['\w]/", $tokens[$i + 1]))
+                while (preg_match("/[\w'!?₀-₉]/u", $tokens[$i + 1]))
                     $token .= $tokens[++$i];
                 return $this->push_quote($token);
             case '+':
@@ -861,7 +861,7 @@ abstract class Lean extends IndentedNode
                 $token_orig = $token;
                 global $tactics;
                 $index = std\binary_search($tactics, $token_orig, "strcmp");
-                while (preg_match("/['!?\w]/", $tokens[$i + 1])) {
+                while (preg_match("/[\w'!?₀-₉]/u", $tokens[$i + 1])) {
                     ++$i;
                     $token .= $tokens[$i];
                 }

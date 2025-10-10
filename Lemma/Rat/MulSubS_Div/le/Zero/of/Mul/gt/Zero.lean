@@ -9,7 +9,7 @@ import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Algebra.SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
 import Lemma.Algebra.Mul_Neg.eq.NegSquare
 import Lemma.Rat.DivDiv.eq.Div_Mul
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.MulMul
 import Lemma.Algebra.GtMulS.of.Gt.Gt_0
 import Lemma.Algebra.EqMul0_0
@@ -19,7 +19,7 @@ import Lemma.Algebra.GtSquare_0.of.Ne_0
 import Lemma.Algebra.LeDivS.of.Le.Gt_0
 import Lemma.Algebra.Ne_0.of.Mul.gt.Zero
 import Lemma.Algebra.Square.eq.Mul
-open Algebra Rat Int
+open Algebra Rat Int Nat
 
 
 @[main]

@@ -1,6 +1,6 @@
-import Lemma.Algebra.LtMod.of.Gt_0
-import Lemma.Algebra.Gt_0.of.GtMul
-open Algebra
+import Lemma.Nat.LtMod.of.Gt_0
+import Lemma.Nat.Gt_0.of.GtMul
+open Nat
 
 
 @[main]

@@ -3,8 +3,8 @@ import Lemma.Algebra.SubNatNat.eq.Sub
 import Lemma.Algebra.LtNegS.of.Gt
 import Lemma.Algebra.LtNeg.of.Gt_Neg
 import Lemma.Algebra.Sub.eq.NegSub
-import Lemma.Algebra.LtMod.of.Gt_0
-open Algebra
+import Lemma.Nat.LtMod.of.Gt_0
+open Algebra Nat
 
 
 @[main]

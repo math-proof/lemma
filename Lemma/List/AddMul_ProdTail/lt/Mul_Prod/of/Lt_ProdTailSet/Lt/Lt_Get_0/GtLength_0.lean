@@ -1,8 +1,8 @@
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.List.TailSet_0.eq.Tail
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
-import Lemma.Algebra.MulMul.eq.Mul_Mul
-open Algebra List Nat
+import Lemma.Nat.MulMul.eq.Mul_Mul
+open List Nat
 
 
 @[main]

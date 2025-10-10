@@ -1,7 +1,7 @@
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.Nat.Mul
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length
 import Lemma.Algebra.EqMulS.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS

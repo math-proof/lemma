@@ -4,7 +4,7 @@ import Lemma.Algebra.SubSub
 import Lemma.Algebra.Mul_Sub.eq.SubMulS
 import Lemma.Algebra.SubCubeS.eq.MulSub__AddSquareS
 import Lemma.Nat.Mul
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Mul.lt.Zero.of.Lt_0.Gt_0
 import Lemma.Algebra.Sub.gt.Zero.is.Lt

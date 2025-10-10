@@ -1,8 +1,8 @@
 import sympy.vector.vector
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.Lt_Sub.of.LtAdd
-import Lemma.Algebra.LtMod.of.Gt_0
+import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Algebra.Gt_0.of.Ne_0
 import Lemma.Algebra.Eq_0.of.EqVal_0
 import Lemma.Algebra.LeAdd_1

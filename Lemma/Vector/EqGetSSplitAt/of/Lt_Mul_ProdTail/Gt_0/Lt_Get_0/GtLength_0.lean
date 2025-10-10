@@ -9,7 +9,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.DivDiv.eq.Div_Mul
 import Lemma.Algebra.MulDiv.eq.Sub_Mod
 import Lemma.Algebra.Dvd_Mul
-import Lemma.Algebra.Gt_0.of.GtMul
+import Lemma.Nat.Gt_0.of.GtMul
 import Lemma.List.ProdDrop.dvd.ProdTail.of.Gt_0
 import Lemma.Algebra.DivAdd.eq.AddDivS.of.Dvd
 import Lemma.Algebra.DivMul.eq.Mul_Div.of.Dvd

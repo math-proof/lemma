@@ -1,12 +1,12 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.LtMod.of.Gt_0
-import Lemma.Algebra.Gt_0.of.GtMul
+import Lemma.Nat.LtMod.of.Gt_0
+import Lemma.Nat.Gt_0.of.GtMul
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
-open Tensor Algebra List Bool
+open Tensor List Bool Nat
 
 
 @[main]

@@ -1,4 +1,4 @@
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.MulMul
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.EqAppendTake__Drop

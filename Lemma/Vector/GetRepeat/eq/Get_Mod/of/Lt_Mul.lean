@@ -1,7 +1,7 @@
-import Lemma.Algebra.LtMod.of.Gt_0
+import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Vector.GetRepeat.eq.Get_Mod
-import Lemma.Algebra.Gt_0.of.GtMul
-open Algebra Vector
+import Lemma.Nat.Gt_0.of.GtMul
+open Vector Nat
 
 
 @[main]

@@ -1,9 +1,9 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Algebra.LtMod.of.Gt_0
-import Lemma.Algebra.Gt_0.of.GtMul
-import Lemma.Algebra.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.LtMod.of.Gt_0
+import Lemma.Nat.Gt_0.of.GtMul
+import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
 import Lemma.Algebra.EqMod
 import Lemma.Nat.LtVal
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
@@ -17,7 +17,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Vector.Get.eq.GetFlatten_AddMul.of.Lt.Lt
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Algebra.MulMul.eq.Mul_Mul
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.EqGetSplitAt_0'0
