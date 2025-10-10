@@ -29,4 +29,26 @@ private lemma main
   apply GetCast.as.Get.of.Eq.GtLength_0 h₀ h₁ X i
 
 
+@[main]
+private lemma fin
+  {s s' : List ℕ}
+-- given
+  (h₀ : s.length > 0)
+  (h₁ : s = s')
+  (X : Tensor α s)
+  (i : Fin s[0]) :
+-- imply
+  have h : Tensor α s = Tensor α s' := by rw [h₁]
+  have hi: i < X.length := by
+    rw [Length.eq.Get_0.of.GtLength_0]
+    apply LtVal i
+  have hi_cast : i < (cast h X).length := by
+    rw [Length.eq.Get_0.of.GtLength_0]
+    simp [← h₁]
+    rwa [← h₁]
+  (cast h X).get ⟨i, hi_cast⟩ = cast (by rw [h₁]) (X.get ⟨i, hi⟩) := by
+-- proof
+  apply main h₀ h₁ X i
+
+
 -- created on 2025-07-04
