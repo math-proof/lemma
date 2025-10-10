@@ -3,7 +3,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
 
-@[main]
+@[main, comm]
 private lemma main
   {v : List α}
 -- given
