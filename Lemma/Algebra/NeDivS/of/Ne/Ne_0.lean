@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqMulS.of.Eq
+import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Algebra.EqMulDiv.of.Ne_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

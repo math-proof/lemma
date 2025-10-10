@@ -1,4 +1,4 @@
-import Lemma.Algebra.NegSucc.eq.NegCoeAdd_1
+import Lemma.Int.NegSucc.eq.NegCoeAdd_1
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
 import Lemma.Algebra.EqMin.of.Lt
 import Lemma.Algebra.LtAdd.of.Lt_Sub
@@ -11,7 +11,7 @@ import Lemma.Algebra.MinAddS.eq.AddMin
 import Lemma.Algebra.Val.lt.Sub_1.of.Val.ne.Sub_1
 import Lemma.Nat.Add
 import Lemma.Algebra.EqSubAdd
-open Algebra List Bool Nat
+open Algebra List Bool Nat Int
 
 
 @[main]

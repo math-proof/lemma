@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Bool.All.of.All.All_Imp
 import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
-import Lemma.Algebra.EqMulS.of.Eq
+import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Algebra.EqMulDiv.of.Ne_0
 import Lemma.Algebra.Mul_Mul
 import Lemma.Algebra.Square.eq.Mul

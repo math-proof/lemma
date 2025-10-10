@@ -4,13 +4,10 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.Ne_0
-import Lemma.Algebra.Eq_0.of.EqVal_0
-import Lemma.Algebra.LeAdd_1
-import Lemma.Algebra.Sub.eq.Add_1.of.Eq_SubSub_1
-import Lemma.Algebra.LtAdd.of.Lt_Sub
 import Lemma.Nat.Lt.of.Mk.eq.IteGt.Ne
-import Lemma.Algebra.EqMaxS.of.Mk.eq.IteGt
-import Lemma.Algebra.EqMulDiv.of.Dvd
+import Lemma.Nat.EqMaxS.of.Mk.eq.IteGt
+import Lemma.Nat.EqMulDiv.of.Dvd
+import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.ProdSet__MulGet.eq.Mul_Prod
 import Lemma.List.EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail
@@ -36,7 +33,7 @@ import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
 import Lemma.List.ProdTake_1.eq.HeadD_1
-open Bool Algebra List Nat
+open Bool Nat Int List
 
 /--
 the concept of a Tensor is a generalization of a matrix, like the Tensor concept in pytorch / tensorflow

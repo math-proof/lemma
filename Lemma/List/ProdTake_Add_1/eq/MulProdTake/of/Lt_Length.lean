@@ -1,8 +1,8 @@
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
 import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.Algebra.EqMulS.of.Eq
+import Lemma.Nat.EqMulS.of.Eq
 import Lemma.List.DropTake.eq.ListGet.of.Lt_Length
-open Algebra List
+open List Nat
 
 
 @[main]

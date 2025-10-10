@@ -1,6 +1,6 @@
 import sympy.functions.elementary.trigonometric
 import Lemma.Algebra.Expr.eq.AddRe_MulIIm
-import Lemma.Algebra.EqMulS.of.Eq
+import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.Mul
 open Algebra Nat
 

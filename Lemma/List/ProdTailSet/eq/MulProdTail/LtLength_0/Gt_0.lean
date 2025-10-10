@@ -3,10 +3,10 @@ import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length
-import Lemma.Algebra.EqMulS.of.Eq
+import Lemma.Nat.EqMulS.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.Tail.eq.AppendTailTake__Drop.of.Gt_0
-open Algebra List Nat
+open List Nat
 
 
 @[main]

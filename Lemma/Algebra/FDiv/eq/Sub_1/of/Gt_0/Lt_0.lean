@@ -1,9 +1,9 @@
 import sympy.functions.elementary.integers
-import Lemma.Algebra.NegSucc.eq.NegAdd_1
+import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.NegAdd.eq.SubNeg
 import Lemma.Algebra.EDiv_Neg.eq.NegEDiv
 import Lemma.Algebra.Sub.eq.Add_Neg
-open Algebra
+open Algebra Int
 
 
 @[main]

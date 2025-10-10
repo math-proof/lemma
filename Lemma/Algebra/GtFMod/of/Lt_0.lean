@@ -1,10 +1,10 @@
-import Lemma.Algebra.NegSucc.eq.NegAdd_1
+import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.SubNatNat.eq.Sub
 import Lemma.Algebra.LtNegS.of.Gt
 import Lemma.Algebra.LtNeg.of.Gt_Neg
 import Lemma.Algebra.Sub.eq.NegSub
 import Lemma.Nat.LtMod.of.Gt_0
-open Algebra Nat
+open Algebra Nat Int
 
 
 @[main]

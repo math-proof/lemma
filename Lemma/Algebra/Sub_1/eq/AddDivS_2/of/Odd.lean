@@ -2,9 +2,9 @@ import sympy.functions.elementary.integers
 import Lemma.Algebra.Mul_2.eq.Add
 import Lemma.Algebra.EvenSub_1.of.Odd
 import Lemma.Algebra.Eq_AddDivS_2.of.Even
-import Lemma.Algebra.EqMulS.of.Eq
+import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Algebra.EqDivS_2.of.Odd
-open Algebra
+open Algebra Nat
 
 
 @[main, comm]

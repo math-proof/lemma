@@ -3,9 +3,9 @@ import Lemma.Finset.Prod.eq.MulProdS
 import Lemma.Set.Ico.eq.SDiffRangeS
 import Lemma.Set.In_Ico
 import Lemma.Set.EqInterSingleton.of.In
-import Lemma.Algebra.EqMulS.of.Eq
+import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Set.Ico.eq.SDiffIco
-open Algebra Set Finset
+open Set Finset Nat
 
 
 @[main]

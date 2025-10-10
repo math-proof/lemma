@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqMulDiv.of.Dvd
+import Lemma.Nat.EqMulDiv.of.Dvd
 import Lemma.Nat.Mul
-open Algebra Nat
+open Nat
 
 
 @[main]

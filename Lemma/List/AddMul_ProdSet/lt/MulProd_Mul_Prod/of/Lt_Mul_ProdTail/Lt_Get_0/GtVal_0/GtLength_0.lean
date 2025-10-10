@@ -4,7 +4,7 @@ import Lemma.Algebra.Lt.of.Lt.Le
 import Lemma.Algebra.Le.of.Eq
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Algebra.EqMulS.of.Eq
+import Lemma.Nat.EqMulS.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 open Algebra List Nat

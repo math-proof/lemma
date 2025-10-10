@@ -1,5 +1,5 @@
-import Lemma.Algebra.NegSucc.eq.NegCoeAdd_1
-open Algebra
+import Lemma.Int.NegSucc.eq.NegCoeAdd_1
+open Int
 
 
 @[main]

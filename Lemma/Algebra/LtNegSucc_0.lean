@@ -1,6 +1,6 @@
-import Lemma.Algebra.NegSucc.eq.NegAdd_1
+import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.Gt_Neg1
-open Algebra
+open Algebra Int
 
 
 @[main]

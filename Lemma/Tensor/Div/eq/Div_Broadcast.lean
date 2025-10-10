@@ -1,10 +1,10 @@
 import sympy.tensor.Basic
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Algebra.EqMulDiv.of.Dvd
+import Lemma.Nat.EqMulDiv.of.Dvd
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Algebra.EqMod_1'0
 import Lemma.Vector.Head.eq.Get_0
-open Vector Algebra
+open Vector Algebra Nat
 
 
 @[main, comm]

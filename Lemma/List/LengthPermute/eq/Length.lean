@@ -11,12 +11,12 @@ import Lemma.Algebra.Le_Min.of.Le.Le
 import Lemma.Algebra.LeAdd_1
 import Lemma.Algebra.Min
 import Lemma.Algebra.EqAddMin__Sub
-import Lemma.Algebra.NegSucc.eq.NegAdd_1
+import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Algebra.SubSub
 import Lemma.Algebra.EqSubAdd
-open Algebra List Nat
+open Algebra List Nat Int
 
 
 @[main]

@@ -1,6 +1,6 @@
 import stdlib.List
-import Lemma.Algebra.NegSucc.eq.NegAdd_1
-open Algebra
+import Lemma.Int.NegSucc.eq.NegAdd_1
+open Int
 
 
 @[main]
