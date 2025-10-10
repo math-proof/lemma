@@ -10,7 +10,7 @@ open Tensor
 private lemma main
   {i : ℕ}
 -- given
-  (h_s : 0 < s.length)
+  (h_s : s.length > 0)
   (h_i : i < s[0])
   (X : Tensor α s)
   (d : ℕ) :

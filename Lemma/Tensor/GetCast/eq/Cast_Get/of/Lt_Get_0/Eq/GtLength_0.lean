@@ -9,8 +9,8 @@ private lemma main
   {s s' : List ℕ}
 -- given
   (h₀ : s.length > 0)
-  (h_i : i < s[0])
   (h₁ : s = s')
+  (h_i : i < s[0])
   (X : Tensor α s) :
 -- imply
   have h : Tensor α s = Tensor α s' := by rw [h₁]
@@ -32,8 +32,8 @@ private lemma fin
   {s s' : List ℕ}
 -- given
   (h₀ : s.length > 0)
-  (h_i : i < s[0])
   (h₁ : s = s')
+  (h_i : i < s[0])
   (X : Tensor α s) :
 -- imply
   have h : Tensor α s = Tensor α s' := by rw [h₁]

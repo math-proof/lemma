@@ -11,7 +11,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Ne_Nil.is.GtLength_0
 import Lemma.List.TailInsertIdx.eq.InsertIdxTail.of.GtLength_0
-import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.Lt_Get_0.GtLength_0
+import Lemma.Tensor.GetCast.eq.Cast_Get.of.Lt_Get_0.Eq.GtLength_0
 open Tensor Nat List Bool
 
 
@@ -21,7 +21,7 @@ private lemma main
   {d : ℕ}
 -- given
   (h_s : s = s')
-  (h_d : d < s.length)
+  (h_d : d ≤ s.length)
   (X : Tensor α s) :
 -- imply
   X.unsqueeze d ≃ (cast (congrArg (Tensor α) h_s) X).unsqueeze d := by
@@ -68,7 +68,7 @@ private lemma main
           simp [← h_s]
           omega
         ·
-          rw [GetCast.eq.Cast_Get.of.Eq.Lt_Get_0.GtLength_0.fin _ (by simpa) h_s]
+          rw [GetCast.eq.Cast_Get.of.Lt_Get_0.Eq.GtLength_0.fin _ h_s (by simpa)]
           have h_s := congrArg (List.tail) h_s
           apply ih h_s (by simp; omega) (X.get ⟨i, by rwa [Tensor.Length.eq.Get_0.of.GtLength h_d]⟩)
       ·
