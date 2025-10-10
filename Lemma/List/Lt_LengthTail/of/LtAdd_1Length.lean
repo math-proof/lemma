@@ -1,5 +1,5 @@
-import Lemma.Algebra.Lt_Sub.of.LtAdd
-open Algebra
+import Lemma.Nat.Lt_Sub.of.LtAdd
+open Nat
 
 
 @[main]
@@ -12,7 +12,7 @@ private lemma main
   i < s.tail.length := by
 -- proof
   simp
-  apply Lt_Sub.of.LtAdd.nat h
+  apply Lt_Sub.of.LtAdd h
 
 
 -- created on 2025-06-24

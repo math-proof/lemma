@@ -1,9 +1,9 @@
 import sympy.vector.vector
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Algebra.Lt_Sub.of.LtAdd
+import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Nat.LtMod.of.Gt_0
-import Lemma.Algebra.Gt_0.of.Ne_0
+import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Algebra.Eq_0.of.EqVal_0
 import Lemma.Algebra.LeAdd_1
 import Lemma.Algebra.Sub.eq.Add_1.of.Eq_SubSub_1
@@ -172,7 +172,7 @@ def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) 
       have h_lt : dim < s.tail.length := by
         simp
         simp at h_dim
-        apply Lt_Sub.of.LtAdd.nat h_dim
+        apply Lt_Sub.of.LtAdd h_dim
       cast
         (by simp_all [EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_lt 1])
         (Tensor.fromVector (X.toVector.map (·.sum dim)))

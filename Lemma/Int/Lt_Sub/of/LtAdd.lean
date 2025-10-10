@@ -1,29 +1,5 @@
 import Lemma.Algebra.LtSubS.of.Lt
-import Lemma.Nat.Add
-open Algebra Nat
-
-
-@[main]
-private lemma nat
-  {a b c : ℕ}
--- given
-  (h : a + b < c) :
--- imply
-  a < c - b :=
--- proof
-  Nat.lt_sub_of_add_lt h
-
-
-@[main]
-private lemma left.nat
-  {a b c : ℕ}
--- given
-  (h : a + b < c) :
--- imply
-  b < c - a := by
--- proof
-  rw [Add.comm] at h
-  apply Nat.lt_sub_of_add_lt h
+open Algebra
 
 
 @[main]
@@ -55,4 +31,4 @@ private lemma main
 
 
 -- created on 2024-11-27
--- updated on 2025-05-04
+-- updated on 2025-10-10

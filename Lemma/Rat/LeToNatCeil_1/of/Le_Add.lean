@@ -1,6 +1,6 @@
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Algebra.Gt_0.of.Ne_0
+import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Algebra.LeSub.is.Le_Add
 import Lemma.Algebra.LeCoeS.is.Le
 import Lemma.Algebra.LeDivS.of.Le.Gt_0

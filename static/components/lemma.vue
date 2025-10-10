@@ -313,6 +313,7 @@ ${latex}
                     var {lemma} = this.$parent;
                     if (lemma.length > 1) {
                         var {renderLean} = this.$parent;
+                        // for (var i of reversed(range(index, lemma.length - 1))) {
                         for (var i of range(index, lemma.length - 1)) {
                             var {instImplicit, implicit, strictImplicit, explicit, given, proof} = renderLean[i];
                             if (instImplicit)

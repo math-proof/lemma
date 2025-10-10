@@ -1,6 +1,6 @@
 import sympy.sets.sets
 import Lemma.Finset.Any_Gt.of.All_Ge.Any_Ne
-import Lemma.Algebra.Gt_0.of.Ne_0
+import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Algebra.Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0
 import Lemma.Set.Lt.of.In_Range
 import Lemma.Real.Sum_Root.lt.Mul_Sqrt.of.EqDivSum.All_Ge_1.Gt_1.Gt_1
@@ -8,7 +8,7 @@ import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
 import Lemma.Real.Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0
 import Lemma.Algebra.Lt.of.Lt.Le
-open Algebra Set Finset Real
+open Algebra Set Finset Real Nat
 
 
 /--

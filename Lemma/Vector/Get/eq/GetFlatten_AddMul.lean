@@ -1,8 +1,8 @@
 import Lemma.Vector.ValGet.eq.ValArraySliceFlatten
-import Lemma.Algebra.Lt_Sub.of.LtAdd
+import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Nat.AddMul.lt.Mul
-open Algebra Vector Nat
+open Vector Nat
 
 
 @[main, comm]
@@ -27,7 +27,7 @@ private lemma main
   simp [h_vi]
   have h_lt : j < n ⊓ (m * n - i * n) := by
     simp_all
-    apply Lt_Sub.of.LtAdd.left.nat h
+    apply Lt_Sub.of.LtAdd.left h
   have := GetArraySlice.eq.Get_Add.of.Lt_Min_Sub h_lt v.flatten
   simp [GetElem.getElem] at this
   simp [List.Vector.get] at this

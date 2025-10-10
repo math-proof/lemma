@@ -1,8 +1,8 @@
 import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
-import Lemma.Algebra.Lt_Sub.of.LtAdd
+import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Nat.AddMul.lt.Mul
-open Algebra Vector Nat
+open Vector Nat
 
 
 @[main, comm]
@@ -26,7 +26,7 @@ private lemma main
   simp only [this]
   apply GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
   simp
-  apply Lt_Sub.of.LtAdd.left.nat h
+  apply Lt_Sub.of.LtAdd.left h
 
 
 @[main, comm]

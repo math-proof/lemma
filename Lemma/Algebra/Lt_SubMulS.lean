@@ -1,6 +1,6 @@
 import Lemma.Nat.AddMul.lt.Mul
-import Lemma.Algebra.Lt_Sub.of.LtAdd
-open Algebra Nat
+import Lemma.Nat.Lt_Sub.of.LtAdd
+open Nat
 
 
 @[main]
@@ -12,7 +12,7 @@ private lemma main
   j < m * n - i * n := by
 -- proof
   have h := AddMul.lt.Mul i j
-  apply Lt_Sub.of.LtAdd.left.nat h
+  apply Lt_Sub.of.LtAdd.left h
 
 
 -- created on 2025-05-09

@@ -1,7 +1,7 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Sum.as.Stack_Sum.of.Eq.Lt_Length
-import Lemma.Algebra.Lt_Sub.of.LtAdd
-open Tensor Algebra
+import Lemma.Nat.Lt_Sub.of.LtAdd
+open Tensor Nat
 
 
 @[main]
@@ -21,7 +21,7 @@ private lemma main
     contradiction
   | s₀ :: s =>
     apply Sum.as.Stack_Sum.of.Eq.Lt_Length rfl
-    apply Lt_Sub.of.LtAdd.nat h
+    apply Lt_Sub.of.LtAdd h
 
 
 -- created on 2025-06-27
