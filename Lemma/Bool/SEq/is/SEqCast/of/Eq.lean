@@ -2,10 +2,18 @@ import stdlib.SEq
 import sympy.Basic
 
 /--
-debug info : using mpr.comm 1 instead of mpr.comm 2 due to the fact that:
+design tricks : using mpr.comm 1 instead of mpr.comm 2 due to the fact that:
 (h : n_a = n_b')
 proposition `cast (congrArg Vector h) a ≃ b` is dependent on `h`, effectively making h an implicit argument.
 thus the resulted lemma name using attribute mpr.comm 1 is `Bool.SEq.of.SEq_Cast`
+| attributes | lemma |
+| --- | --- |
+| main | Bool.SEq.is.SEqCast.of.Eq |
+| comm | Bool.SEqCast.is.SEq.of.Eq |
+| mp  | Bool.SEqCast.of.SEq.Eq |
+| mpr   | Bool.SEq.of.SEqCast.Eq |
+| mp.comm 2 | Bool.SEq_Cast.of.SEq |
+| mpr.comm 1 | Bool.SEq.of.SEq_Cast |
 -/
 @[main, comm, mp, mpr, mp.comm 2, mpr.comm 1]
 private lemma main

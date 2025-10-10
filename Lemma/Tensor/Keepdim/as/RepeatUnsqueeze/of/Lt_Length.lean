@@ -1,7 +1,7 @@
 import stdlib.SEq
 import sympy.tensor.functions
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
-import Lemma.Bool.SEq.of.EqCast.Eq
+import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Tensor.Keepdim.eq.Cast_RepeatUnsqueeze.of.Lt_Length
 open List Bool Tensor
 
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   X.keepdim ≃ (X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.Lt_Length h 1⟩ := by
 -- proof
-  apply SEq.of.Eq_Cast.Eq
+  apply SEq.of.Eq_Cast
   .
     apply Keepdim.eq.Cast_RepeatUnsqueeze.of.Lt_Length h X
   .

@@ -1,7 +1,7 @@
 import stdlib.SEq
 import sympy.tensor.functions
 import Lemma.Tensor.GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq
-import Lemma.Bool.EqCast.of.SEq.Eq
+import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Nat.LtVal
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
