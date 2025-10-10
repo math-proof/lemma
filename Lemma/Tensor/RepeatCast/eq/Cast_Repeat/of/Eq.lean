@@ -1,7 +1,7 @@
 import sympy.tensor.Basic
 import stdlib.SEq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
+import Lemma.Tensor.Repeat.as.RepeatCast.of.Eq
 open Bool Tensor
 
 
@@ -19,7 +19,7 @@ private lemma main
   ·
     simp [h]
   ·
-    apply RepeatCast.as.Repeat.of.Eq h
+    apply RepeatCast.as.Repeat.of.Eq h.symm
 
 
 -- created on 2025-10-10

@@ -3,7 +3,7 @@ import stdlib.SEq
 import sympy.Basic
 
 
-@[main]
+@[main, comm 1]
 private lemma main
 -- given
   (h : s = s')
@@ -11,7 +11,7 @@ private lemma main
   (n : ℕ)
   (d : Fin s.length) :
 -- imply
-  ((cast (congrArg (Tensor α) h) X).repeat n ⟨d, by simp [← h]⟩) ≃ X.repeat n d := by
+  X.repeat n d ≃ ((cast (congrArg (Tensor α) h) X).repeat n ⟨d, by simp [← h]⟩) := by
 -- proof
   sorry
 
