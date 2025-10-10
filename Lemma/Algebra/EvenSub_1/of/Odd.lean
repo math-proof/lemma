@@ -1,8 +1,8 @@
 import sympy.functions.elementary.integers
 import Lemma.Algebra.Odd.is.Any_Eq_AddMul2
 import Lemma.Algebra.Even.is.Any_Eq_Mul2
-import Lemma.Algebra.EqSubAdd
-open Algebra
+import Lemma.Nat.EqSubAdd
+open Algebra Nat
 
 
 /--
@@ -22,7 +22,7 @@ private lemma main
   apply Even.of.Any_Eq_Mul2
   use k
   rw [h]
-  rw [EqSubAdd.int]
+  rw [EqSubAdd]
 
 
 -- created on 2025-08-12

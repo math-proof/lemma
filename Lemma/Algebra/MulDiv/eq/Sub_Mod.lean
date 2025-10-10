@@ -1,8 +1,8 @@
 import sympy.functions.elementary.integers
 import Lemma.Algebra.Eq_AddMulDiv___Mod
 import Lemma.Algebra.EqSubS.of.Eq
-import Lemma.Algebra.EqSubAdd
-open Algebra
+import Lemma.Nat.EqSubAdd
+open Algebra Nat
 
 
 @[main]
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   have h := Eq_AddMulDiv___Mod n d
   have h := EqSubS.of.Eq.int h (n % d)
-  rw [EqSubAdd.int] at h
+  rw [EqSubAdd] at h
   apply Eq.symm
   assumption
 

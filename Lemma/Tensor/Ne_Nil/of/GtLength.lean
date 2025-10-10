@@ -1,4 +1,4 @@
-import Lemma.List.Ne_Nil.of.GtLength_0
+import Lemma.List.Ne_Nil.is.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength
 import sympy.tensor.Basic
 open Tensor List

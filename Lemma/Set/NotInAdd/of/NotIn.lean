@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Set.In_Icc.is.InSub
-import Lemma.Algebra.EqSubAdd
-open Set Algebra
+import Lemma.Int.EqSubAdd
+open Set Int
 
 
 @[main]

@@ -1,5 +1,7 @@
 import sympy.tensor.Basic
-import sympy.Basic
+import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
+import Lemma.List.Ne_Nil.is.GtLength_0
+open Tensor List
 
 
 @[main, comm]
@@ -10,14 +12,8 @@ private lemma main
 -- imply
   X.length = s[0] := by
 -- proof
-  simp [Tensor.length]
-  cases s
-  ·
-    contradiction
-  ·
-    cases X
-    simp
+  simp [Length.eq.Get_0.of.Ne_Nil (Ne_Nil.of.GtLength_0 h)]
 
 
 -- created on 2025-06-14
--- updated on 2025-06-15
+-- updated on 2025-10-10

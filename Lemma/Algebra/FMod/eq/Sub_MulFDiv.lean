@@ -1,7 +1,7 @@
 import Lemma.Algebra.EqSubS.of.Eq
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.Algebra.Eq_AddMulFDiv___FMod
-open Algebra
+open Algebra Nat
 
 
 @[main]
@@ -12,7 +12,7 @@ private lemma main
 -- proof
   have := Eq_AddMulFDiv___FMod (n := n) (d := d)
   have := EqSubS.of.Eq.int this (n // d * d)
-  rw [EqSubAdd.left.int] at this
+  rw [EqSubAdd.left] at this
   exact this.symm
 
 

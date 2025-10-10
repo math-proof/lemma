@@ -13,7 +13,7 @@ import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Bool.SEqCast.of.Eq.Eq
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
-import Lemma.Algebra.Ge_1.of.Gt_0
+import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Vector.EqGetRange
 open Tensor Algebra List Vector Bool Nat
 

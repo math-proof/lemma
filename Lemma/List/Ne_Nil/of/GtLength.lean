@@ -1,4 +1,4 @@
-import Lemma.List.Ne_Nil.of.GtLength_0
+import Lemma.List.Ne_Nil.is.GtLength_0
 import Lemma.Nat.Gt_0.of.Gt
 open List Nat
 

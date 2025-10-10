@@ -63,7 +63,7 @@ private lemma main
       apply EqFMod.of.Mul_Add_Sign.lt.Zero
       rw [SubSub.eq.Sub_Add]
       rw [AddSub.eq.Sub_Sub]
-      rw [EqSubAdd.left.int]
+      rw [EqSubAdd.left]
       by_cases h_d' : d > 0
       ·
         apply MulSubS.le.Zero.of.In_Icc

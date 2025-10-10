@@ -3,7 +3,7 @@ import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt_Length
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.Nat.Ne_Sub.of.NeAdd.Ge

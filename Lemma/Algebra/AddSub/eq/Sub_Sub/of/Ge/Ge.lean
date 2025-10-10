@@ -1,4 +1,4 @@
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.GeSub.of.Ge_Add
@@ -15,10 +15,10 @@ private lemma main
   a - b + c = a - (b - c) := by
 -- proof
   let d := b - c
-  have h_b : b = d + c := by 
+  have h_b : b = d + c := by
     simp [d, h₁]
   rw [h_b] at h₀ ⊢
-  rw [EqSubAdd.int]
+  rw [EqSubAdd]
   rw [Sub_Add.eq.SubSub.nat]
   rw [EqAddSub.of.Ge]
   apply GeSub.of.Ge_Add.left.nat h₀

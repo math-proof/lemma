@@ -1,7 +1,7 @@
 import Lemma.Algebra.EqSubS.is.Eq
-import Lemma.Algebra.EqSubAdd
+import Lemma.Int.EqSubAdd
 import Lemma.Algebra.EqSubS.of.Eq
-open Algebra
+open Algebra Int
 
 
 @[main, comm]

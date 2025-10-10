@@ -1,7 +1,7 @@
 import stdlib.List
 import Lemma.Algebra.Sub_Add.eq.SubSub
-import Lemma.Algebra.EqSubAdd
-open Algebra
+import Lemma.Nat.EqSubAdd
+open Algebra Nat
 
 
 @[main]
@@ -16,7 +16,7 @@ private lemma main
   simp
   rw [Sub_Add.eq.SubSub.nat]
   rw [Sub_Add.eq.SubSub.nat]
-  rw [EqSubAdd.left.int]
+  rw [EqSubAdd.left]
 
 
 -- created on 2025-06-17

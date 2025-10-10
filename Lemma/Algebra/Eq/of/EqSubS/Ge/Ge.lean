@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.Nat.EqAddSub.of.Ge
-open Algebra Nat
+open Nat
 
 
 @[main]
@@ -14,10 +14,10 @@ private lemma main
   x = y := by
 -- proof
   let y' := y - d
-  have h_y : y = y' + d := by 
+  have h_y : y = y' + d := by
     simp [y', h₁]
   rw [h_y] at h₂ ⊢
-  rw [EqSubAdd.int] at h₂
+  rw [EqSubAdd] at h₂
   rw [← h₂]
   rw [EqAddSub.of.Ge h₀]
 

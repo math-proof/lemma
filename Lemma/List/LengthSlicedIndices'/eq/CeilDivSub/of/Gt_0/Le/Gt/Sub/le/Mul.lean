@@ -7,7 +7,7 @@ import Lemma.Algebra.LeSubS.of.Le
 import Lemma.Algebra.AddMul.eq.MulAdd_1
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.Algebra.GeCoeS.is.Ge
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.Algebra.SubSub
 import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Algebra.Gt.of.GtSub
@@ -42,7 +42,7 @@ private lemma main
       have h' := LeSubS.of.Le.nat h step
       rw [MulAdd_1.eq.AddMul] at h'
       rw [SubSub.comm.nat] at h'
-      rw [EqSubAdd.int] at h'
+      rw [EqSubAdd] at h'
       have h_Eq := ih h' h_start'
       rw [h_Eq]
       have h_Gt := Gt.of.GtSub h_start'

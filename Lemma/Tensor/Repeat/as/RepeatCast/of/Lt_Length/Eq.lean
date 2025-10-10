@@ -21,7 +21,7 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  X.repeat n ⟨d, h_d⟩ ≃ ((cast (congrArg (Tensor α) h) X).repeat n ⟨d, by simpa [← h]⟩) := by
+  X.repeat n ⟨d, h_d⟩ ≃ (cast (congrArg (Tensor α) h) X).repeat n ⟨d, by simpa [← h]⟩ := by
 -- proof
   induction d generalizing s s' X with
   | zero =>

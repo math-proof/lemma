@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqSubAdd
-open Algebra
+import Lemma.Nat.EqSubAdd
+open Nat
 
 
 @[main, comm]
@@ -11,7 +11,7 @@ private lemma main
   y - x = d := by
 -- proof
   rw [← h]
-  rw [EqSubAdd.int]
+  rw [EqSubAdd]
 
 
 -- created on 2025-04-16

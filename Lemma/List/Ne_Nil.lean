@@ -1,5 +1,5 @@
 import Lemma.Nat.LtVal
-import Lemma.List.Ne_Nil.of.GtLength_0
+import Lemma.List.Ne_Nil.is.GtLength_0
 open Nat List
 
 

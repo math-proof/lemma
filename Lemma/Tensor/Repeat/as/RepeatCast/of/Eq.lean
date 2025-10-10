@@ -12,7 +12,7 @@ private lemma main
   (n : ℕ)
   (d : Fin s.length) :
 -- imply
-  X.repeat n d ≃ ((cast (congrArg (Tensor α) h) X).repeat n ⟨d, by simp [← h]⟩) := by
+  X.repeat n d ≃ (cast (congrArg (Tensor α) h) X).repeat n ⟨d, by simp [← h]⟩ := by
 -- proof
   apply Repeat.as.RepeatCast.of.Lt_Length.Eq h
 

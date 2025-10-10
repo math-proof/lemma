@@ -1,6 +1,6 @@
 import Lemma.Nat.Eq.of.Le.Ge
 import Lemma.Algebra.EqAddSub.of.Gt
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.Algebra.Sub_Add.eq.SubSub
 
 

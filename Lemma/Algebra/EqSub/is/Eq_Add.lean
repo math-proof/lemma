@@ -1,5 +1,5 @@
 import Lemma.Nat.EqSub.of.EqAdd
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.Algebra.EqAddS.is.Eq
 open Algebra Nat
 

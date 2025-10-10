@@ -1,6 +1,6 @@
 import stdlib.List
-import Lemma.Algebra.EqSubAdd
-open Algebra
+import Lemma.Nat.EqSubAdd
+open Nat
 
 
 @[main]
@@ -11,7 +11,7 @@ private lemma main
   (v.drop i).take d = v.slice i (i + d) := by
 -- proof
   unfold List.slice List.array_slice Function.comp
-  rw [EqSubAdd.left.int]
+  rw [EqSubAdd.left]
 
 
 -- created on 2025-06-18

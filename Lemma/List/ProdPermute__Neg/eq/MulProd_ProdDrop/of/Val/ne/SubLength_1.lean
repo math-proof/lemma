@@ -10,7 +10,7 @@ import Lemma.Algebra.Sub_Add.eq.SubSub
 import Lemma.Algebra.MinAddS.eq.AddMin
 import Lemma.Algebra.Val.lt.Sub_1.of.Val.ne.Sub_1
 import Lemma.Nat.Add
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 open Algebra List Bool Nat Int
 
 

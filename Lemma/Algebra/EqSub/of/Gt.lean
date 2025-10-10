@@ -1,7 +1,7 @@
 import Lemma.Algebra.Ite.eq.SubIte
 import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Algebra.AddAdd.eq.Add_Add
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.Bool.BFnIte.is.Imp.Imp
 import Lemma.Nat.Add
 import Lemma.Algebra.Sub_1.eq.AddDivS_2.of.Odd
@@ -32,7 +32,7 @@ private lemma main
   repeat rw [Sub_Sub.eq.SubAdd.of.Ge]
   ·
     repeat rw [AddAdd.eq.Add_Add]
-    repeat rw [EqSubAdd.left.int]
+    repeat rw [EqSubAdd.left]
     apply BFnIte.of.Imp.Imp
     ·
       intro h

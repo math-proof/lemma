@@ -17,7 +17,7 @@ import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.List.EraseIdxSet.eq.EraseIdx
 import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Nat.LtVal
@@ -27,7 +27,7 @@ import Lemma.Vector.EqGetRange
 import Lemma.Tensor.GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq
 import Lemma.List.EqCons_Tail.of.Eq_Get_0.GtLength_0
 import Lemma.Bool.SEqCast.of.Eq
-open Algebra Tensor List Vector Bool Nat
+open Tensor List Vector Bool Nat
 
 
 @[main]
@@ -79,7 +79,7 @@ private lemma main
       apply SEq.of.All_SEqGetS.Eq.Eq
       ·
         rw [TailSet.eq.SetTail.of.Gt_0 (by simp)]
-        rw [EqSubAdd.int]
+        rw [EqSubAdd]
         rw [EraseIdxSet.eq.EraseIdx]
       ·
         intro t

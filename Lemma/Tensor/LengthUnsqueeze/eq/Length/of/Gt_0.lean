@@ -3,9 +3,9 @@ import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
 import Lemma.List.LengthInsertIdx.eq.Length.of.Gt_Length
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
-import Lemma.Algebra.Ge_1.of.Gt_0
+import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Nat.Eq.of.Ge.Le
-open Tensor Algebra List Bool Nat
+open Tensor List Bool Nat
 
 
 @[main]

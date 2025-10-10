@@ -8,7 +8,7 @@ import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Add
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Algebra.AddAdd.eq.Add_Add
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.Slice.eq.Nil
@@ -73,7 +73,7 @@ private lemma MAIN
       rw [Add_Sub.eq.SubAdd.of.Ge (by simp_all)]
       rw [AddAdd.eq.Add_Add]
       rw [Add.comm (a := 1)]
-      rw [EqSubAdd.left.int]
+      rw [EqSubAdd.left]
       rwa [EqAddSub.of.Ge (LeAdd_1 i)]
     apply Eq.symm
     split_ifs with h_i h_eq h_1

@@ -1,12 +1,12 @@
 import sympy.functions.elementary.integers
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.Eq_AddMulDiv___Mod
 import Lemma.Algebra.ModAddMul.eq.Mod
 import Lemma.Algebra.EqDivS.of.Eq
 import Lemma.Algebra.EqMod.of.Lt.Ge_0
 import Lemma.Algebra.Odd.is.Any_Eq_AddMul2
-open Algebra
+open Algebra Nat
 
 
 @[main, comm]
@@ -20,7 +20,7 @@ private lemma main
 -- proof
   obtain ⟨k, hk⟩ := Any_Eq_AddMul2.of.Odd h
   rw [hk]
-  rw [EqSubAdd.int]
+  rw [EqSubAdd]
   rw [EqDivMul.of.Ne_0.left (by norm_num)]
   have h := Eq_AddMulDiv___Mod (2 * k + 1) 2
   rw [ModAddMul.eq.Mod.left] at h

@@ -1,4 +1,4 @@
-import Lemma.Algebra.EqSubAdd
+import Lemma.Nat.EqSubAdd
 import Lemma.Nat.Add
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.EqAddSub.of.Gt
@@ -21,7 +21,7 @@ private lemma main
   have h_eq : i = d + j := by
     simp [d, h₀]
   rw [h_eq]
-  rw [EqSubAdd.int]
+  rw [EqSubAdd]
   rw [Add.comm (b := j)]
   rw [Add_Add.eq.AddAdd]
   rw [EqAddSub.of.Gt h₂]

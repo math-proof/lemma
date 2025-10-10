@@ -1,6 +1,6 @@
 import Lemma.Algebra.Mul2.eq.Add
-import Lemma.Algebra.EqSubAdd
-open Algebra
+import Lemma.Int.EqSubAdd
+open Algebra Int
 
 
 @[main]
