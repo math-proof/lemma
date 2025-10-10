@@ -1,6 +1,6 @@
-import Lemma.Algebra.Gt_0.of.Gt
+import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Algebra.Sub.gt.Zero.is.Gt
-open Algebra
+open Algebra Nat
 
 
 @[main]

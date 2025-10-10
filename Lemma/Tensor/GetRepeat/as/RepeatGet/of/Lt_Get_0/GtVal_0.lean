@@ -11,7 +11,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Algebra.Ge_1.of.Gt_0
-import Lemma.Algebra.Gt_0.of.Gt
+import Lemma.Nat.Gt_0.of.Gt
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.MulMul
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt

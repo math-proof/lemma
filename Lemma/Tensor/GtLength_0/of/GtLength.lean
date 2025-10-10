@@ -1,7 +1,7 @@
 import sympy.tensor.Basic
 import Lemma.Tensor.GtLength_0.of.GtLength_0
-import Lemma.Algebra.Gt_0.of.Gt
-open Tensor Algebra
+import Lemma.Nat.Gt_0.of.Gt
+open Tensor Nat
 
 
 @[main]

@@ -5,7 +5,7 @@ import Lemma.List.ProdTail.eq.DivProd.of.GtLength_0.Gt_0
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Nat.Gt_0
-import Lemma.Algebra.Gt_0.of.Gt
+import Lemma.Nat.Gt_0.of.Gt
 open Algebra List Nat
 
 

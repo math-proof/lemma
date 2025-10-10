@@ -6,7 +6,7 @@ import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0
 import Lemma.Tensor.ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.Algebra.Gt_0.of.Gt
+import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
