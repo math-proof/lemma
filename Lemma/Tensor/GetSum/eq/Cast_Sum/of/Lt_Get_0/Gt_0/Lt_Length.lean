@@ -1,6 +1,6 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0
-import Lemma.List.Sub_1.lt.LengthTail.of.Gt_0.Lt_Length
+import Lemma.List.Sub_1.lt.LengthTail.of.In_Ioo0Length
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_LengthTail
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length
@@ -21,7 +21,7 @@ private lemma main
   have h_shape := LengthSum.eq.Length.of.Gt_0 h₁ X
   have h_i : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
   (X.sum dim)[i] = cast (by
-    let h_dim := Sub_1.lt.LengthTail.of.Gt_0.Lt_Length h₀ h₁
+    let h_dim := Sub_1.lt.LengthTail.of.In_Ioo0Length ⟨h₁, h₀⟩
     rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_LengthTail h_dim]
     congr
     rw [EqAddSub.of.Ge (by assumption)]

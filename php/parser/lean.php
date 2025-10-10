@@ -60,6 +60,7 @@ $token2classname = [
     '≠' => 'Lean_ne',
     '≡' => 'Lean_equiv',
     '≢' => 'LeanNotEquiv',
+    '≍' => 'Lean_asymp',
     '≃' => 'Lean_simeq',
     '∣' => 'LeanDvd',
 ];
@@ -2573,6 +2574,20 @@ class Lean_simeq extends LeanRelational
         switch ($vname) {
             case 'operator':
                 return '≃';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
+class Lean_asymp extends LeanRelational
+{
+    public static $input_priority = 50;
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '≍';
             default:
                 return parent::__get($vname);
         }

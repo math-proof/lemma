@@ -4,6 +4,7 @@ import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.Algebra.LtAddS.is.Lt
 import Lemma.Algebra.GtVal_0.of.Ne_0
 import Lemma.Algebra.LtSubS_1.of.Lt.Ne_0
+import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Nat.LtVal
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
@@ -13,7 +14,7 @@ import Lemma.List.GtLength_0.of.Cons.in.CartesianProduct
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
-import Lemma.List.Sub_1.lt.LengthTail.of.Gt_0.Lt_Length
+import Lemma.List.Sub_1.lt.LengthTail.of.In_Ioo0Length
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
@@ -62,7 +63,7 @@ def Tensor.getEllipsis (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offs
     have X : Tensor α (s.headD 1 :: s.tail.eraseIdx (offset - 1)) := Tensor.fromVector (
       X.toVector.map (
         ·.getEllipsis
-          ⟨offset - 1, Sub_1.lt.LengthTail.of.Gt_0.Lt_Length (by simp) h⟩
+          ⟨offset - 1, Sub_1.lt.LengthTail.of.In_Ioo0Length ⟨h, by simp⟩⟩
           ⟨i, by
             simp only [GetElem.getElem]
             rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1.fin]

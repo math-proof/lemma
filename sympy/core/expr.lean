@@ -37,6 +37,7 @@ def BinaryInfix.func : BinaryInfix → Func
     | `BEq.beq => ⟨50, "==", "=="⟩  -- LeanBEq
     | `bne => ⟨50, "!=", "!="⟩  -- Lean_bne
     | `xor => ⟨33, "^^", "^^"⟩  -- Lean_xor
+    | `HEq => ⟨50, "≍", "\\asymp"⟩  -- Lean_asymp
     | `SEq => ⟨50, "≃", "\\simeq"⟩  -- Lean_simeq
     | `Membership.mem
     | `List.Mem => ⟨50, "∈", "\\in"⟩  -- Lean_in ∋ \\ni
@@ -105,6 +106,7 @@ def BinaryInfix.isProp : BinaryInfix → Bool
     | `GT.gt
     | `Eq
     | `Ne
+    | `HEq
     | `SEq
     | `And
     | `Or
@@ -508,6 +510,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `GT.gt
     | `Eq
     | `Ne
+    | `HEq
     | `SEq
     | `Nat.add
     | `HAdd.hAdd

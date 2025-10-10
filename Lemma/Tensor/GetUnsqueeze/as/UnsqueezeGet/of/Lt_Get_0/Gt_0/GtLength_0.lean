@@ -24,5 +24,19 @@ private lemma main
     apply GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.GtLength_0 (by linarith) (by assumption)
 
 
+@[main]
+private lemma fin
+-- given
+  (h_s : s.length > 0)
+  (h : d > 0)
+  (h_i : i < s[0])
+  (X : Tensor α s) :
+-- imply
+  have h_i : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0 h_s]
+  (X.unsqueeze d).get ⟨i, by rwa [LengthUnsqueeze.eq.Length.of.Gt_0 h]⟩ ≃ (X.get ⟨i, h_i⟩).unsqueeze (d - 1) := by
+-- proof
+  apply main h_s h h_i X
+
+
 -- created on 2025-07-12
 -- updated on 2025-07-13

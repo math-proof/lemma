@@ -32,7 +32,7 @@ import Lemma.Nat.Mul
 import Lemma.Vector.EqGetS
 import Lemma.List.ProdTakeSet__1.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
-import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.Lt_Length
+import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.Gt_Length
 import Lemma.List.ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Bool.EqUFnS.of.Eq
@@ -166,7 +166,7 @@ private lemma main
         repeat assumption
     ·
       rw [ProdTakeSet__1.eq.Get_0.of.Gt_0.GtLength_0 (by assumption) (by assumption)]
-      rw [HeadDSet.eq.Get_0.of.Gt_0.Lt_Length]
+      rw [HeadDSet.eq.Get_0.of.Gt_0.Gt_Length]
       repeat assumption
 
 

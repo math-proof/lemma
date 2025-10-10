@@ -638,7 +638,23 @@ where
         else
           map args
       | .Lean_typeclass `HEq =>
-        cdots args
+        match args with
+        | [a, Basic (.ExprWithAttr _) _] =>
+          map [a] ++ ["\\cdots"]
+        | args@([a, Basic (.UnaryPrefix op) _]) =>
+          if op.func.priority == 76 then
+            map [a] ++ ["\\cdots"]
+          else
+            map args
+        | [Basic (.ExprWithAttr _) _, a] =>
+          "\\cdots" :: map [a]
+        | args@([Basic (.UnaryPrefix op) _, a]) =>
+          if op.func.priority == 76 then
+            "\\cdots" :: map [a]
+          else
+            map args
+        | args =>
+          map args
       | _ =>
         map args
     | .UnaryPrefix ⟨`Not⟩ =>
@@ -662,24 +678,6 @@ where
   map : List Expr → List String
   | [] => []
   | head :: tail => ("{%s}".format head.toLatex) :: map tail
-
-  cdots : List Expr → List String
-  | [a, Basic (.ExprWithAttr _) _] =>
-    map [a] ++ ["\\cdots"]
-  | args@([a, Basic (.UnaryPrefix op) _]) =>
-    if op.func.priority == 76 then
-      map [a] ++ ["\\cdots"]
-    else
-      map args
-  | [Basic (.ExprWithAttr _) _, a] =>
-    "\\cdots" :: map [a]
-  | args@([Basic (.UnaryPrefix op) _, a]) =>
-    if op.func.priority == 76 then
-      "\\cdots" :: map [a]
-    else
-      map args
-  | args =>
-    map args
 
   merge_ite : Expr → List String → List String
   | Basic (.Special ⟨`ite⟩) args, cases =>
