@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqCast.of.SEq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 open Bool
 
 

@@ -1,5 +1,5 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.Bool.SEqCast.of.SEq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq

@@ -170,5 +170,21 @@ private lemma main
       repeat assumption
 
 
+@[main]
+private lemma fin
+  {d : Fin s.length}
+-- given
+  (h : d.val > 0)
+  (h_i : i < s[0])
+  (X : Tensor α s)
+  (n : ℕ) :
+-- imply
+  (X.repeat n d).get ⟨i, by simpa [LengthRepeat.eq.Get_0.of.GtVal_0 h]⟩ ≃ (X.get ⟨i, by rwa [Length.eq.Get_0.of.GtLength_0]⟩).repeat n ⟨d - 1, by
+    simp
+    apply LtSubS.of.Lt.Le (by linarith) (by simp)⟩ := by
+-- proof
+  apply main h h_i X n
+
+
 -- created on 2025-07-05
 -- updated on 2025-07-17

@@ -6,7 +6,7 @@ import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Bool.EqCast.of.Eq
-import Lemma.Bool.SEqCast.of.SEq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEq.of.Eq
 import Lemma.Bool.Eq.of.SEq
 import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt

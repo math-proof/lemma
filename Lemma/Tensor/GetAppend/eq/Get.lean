@@ -8,7 +8,7 @@ import Lemma.Vector.EqGetSUnflatten.of.Eq.Lt.Eq.Eq
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySliceAppend
 import Lemma.Vector.GetUnflatten.eq.Cast_ArraySlice.of.Lt
-import Lemma.Bool.SEqCast.of.SEq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Vector.EqArraySliceS.of.Eq
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Le_SubMulS.of.Lt

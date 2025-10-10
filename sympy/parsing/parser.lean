@@ -412,4 +412,4 @@ def Lean.Expr.toExpr (e : Lean.Expr) (binders : List (Name × Lean.Expr)) : Core
   return ← MetaM.run' <| (_root_.Expr.toExpr e binders)
 
 def Lean.Expr.println (expr : Lean.Expr) (context : List (Name × Lean.Expr)) (hint : String) : CoreM Unit := do
-  Lean.logInfo s!"{hint}:\n{← expr.toExpr context}\nformat:\n{expr.format}\n"
+  println! s!"{hint}:\n{← expr.toExpr context}\nformat:\n{expr.format}\n"

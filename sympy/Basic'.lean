@@ -3,7 +3,7 @@ import stdlib.Prod
 import sympy.parsing.parser
 open Lean Lean.Meta
 
-def Expr.comm' (type proof : Lean.Expr) (parity : Nat) : CoreM (List Bool × Lean.Expr × Lean.Expr) := do
+def Expr.comm' (type proof : Lean.Expr) (parity : ℕ) : CoreM (List Bool × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
   let ⟨type, symm⟩ := type.decomposeType
@@ -52,7 +52,7 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.mp' (type proof : Lean.Expr) (parity : Nat) (reverse : Bool := false) : CoreM (Lean.Expr × Lean.Expr) := do
+def Expr.mp' (type proof : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := false) : CoreM (Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let deBruijn := (binders.zipParity parity .instImplicit).zipIdx.filterMap fun ⟨⟨bit, _⟩, deBruijn⟩ => if bit then some deBruijn else none
   for deBruijn in deBruijn do
@@ -136,7 +136,7 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.mpr' (type proof : Lean.Expr) (parity : Nat) : CoreM (Lean.Expr × Lean.Expr) := Expr.mp' type proof parity true
+def Expr.mpr' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (Lean.Expr × Lean.Expr) := Expr.mp' type proof parity true
 
 initialize registerBuiltinAttribute {
   name := `mpr'
@@ -149,6 +149,41 @@ initialize registerBuiltinAttribute {
     let ⟨type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity
     addAndCompile <| .thmDecl {
       name := ((← getEnv).moduleTokens.mpr.foldl Name.str default).lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `mp.comm'
+  descr := "Automatically generate the two implications of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ ← Expr.mp' decl.type (.const declName (levelParams.map .param))
+    let ⟨parity, type, value⟩ ← Expr.comm' type value stx.parity
+    addAndCompile <| .thmDecl {
+      name := (((← getEnv).moduleTokens.mp.comm parity).foldl Name.str default).lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `mpr.comm'
+  descr := "Automatically generate the two implications of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    -- let ⟨type, value⟩ ← Expr.mpr' decl.type (.const declName (levelParams.map .param))
+    let ⟨type, value⟩ := Expr.mpr decl.type (.const declName (levelParams.map .param))
+    let ⟨parity, type, value⟩ := Expr.comm type value stx.parity
+    addAndCompile <| .thmDecl {
+      name := (((← getEnv).moduleTokens.mpr.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value
