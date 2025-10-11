@@ -3,6 +3,7 @@ import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.EqGetReplicate
+import Lemma.Vector.Div.eq.Div_Replicate
 open Vector
 
 
@@ -18,10 +19,11 @@ private lemma main
 -- proof
   ext i j
   rw [GetUnflatten.eq.Get_AddMul.fin]
-  repeat rw [GetDiv.eq.DivGet.fin]
-  rw [GetDiv.eq.DivGetS.fin]
+  rw [Div.eq.Div_Replicate]
+  rw [GetDiv.eq.DivGet.fin]
+  repeat rw [GetDiv.eq.DivGetS.fin]
   rw [EqGetReplicate]
-  rw [GetUnflatten.eq.Get_AddMul.fin]
+  simp [GetUnflatten.eq.Get_AddMul.fin]
 
 
 -- created on 2025-09-22

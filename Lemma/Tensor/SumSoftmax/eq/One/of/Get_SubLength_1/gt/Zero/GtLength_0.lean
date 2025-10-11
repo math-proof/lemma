@@ -1,5 +1,5 @@
 import sympy.tensor.functions
-import Lemma.Tensor.Softmax.eq.Div_SumExp
+import Lemma.Tensor.Eq.is.All_EqGetS
 open Tensor
 
 
@@ -17,8 +17,16 @@ private lemma main
   | nil =>
     contradiction
   | cons s₀ s ih =>
-    sorry
+    match s with
+    | .nil =>
+      unfold Tensor.softmax
+      unfold Tensor.sum
+      simp
+      sorry
+    | .cons s₁ s' =>
+      apply Eq.of.All_EqGetS
+      sorry
 
 
 -- created on 2025-10-07
--- updated on 2025-10-08
+-- updated on 2025-10-11
