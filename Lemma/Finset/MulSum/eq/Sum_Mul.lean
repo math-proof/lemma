@@ -1,16 +1,16 @@
 import Lemma.Algebra.MulAdd.eq.AddMulS
-import Lemma.Algebra.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
-open Algebra
+import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
+open Algebra Finset
 
 
 @[main, comm]
 private lemma main
   [DecidableEq ι]
-  [NonUnitalNonAssocSemiring α]
+  [NonUnitalNonAssocSemiring N]
 -- given
   (s : Finset ι)
-  (a : ι → α)
-  (x : α) :
+  (a : ι → N)
+  (x : N) :
 -- imply
   (∑ i ∈ s, a i) * x = ∑ i ∈ s, a i * x := by
 -- proof

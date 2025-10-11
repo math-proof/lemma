@@ -1,8 +1,8 @@
 import sympy.functions.elementary.integers
 import Lemma.Set.In_Range.is.Any_EqUFn
 import Lemma.Algebra.Frac.eq.Sub_Floor
-import Lemma.Algebra.Sub.eq.Zero.is.Eq
-open Set Algebra
+import Lemma.Int.Sub.eq.Zero.is.Eq
+open Set Algebra Int
 
 
 /--

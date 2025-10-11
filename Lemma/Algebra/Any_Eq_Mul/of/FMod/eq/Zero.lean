@@ -1,6 +1,6 @@
 import Lemma.Algebra.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.Sub.eq.Zero.is.Eq
-open Algebra
+import Lemma.Int.Sub.eq.Zero.is.Eq
+open Algebra Int
 
 
 @[main]

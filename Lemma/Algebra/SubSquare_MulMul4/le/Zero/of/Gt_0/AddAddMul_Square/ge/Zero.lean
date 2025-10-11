@@ -2,7 +2,7 @@ import sympy.core.power
 import Lemma.Algebra.DivNeg.eq.NegDiv
 import Lemma.Algebra.SquareNeg.eq.Square
 import Lemma.Algebra.SquareDiv.eq.DivSquareS
-import Lemma.Algebra.SquareMul.eq.MulSquareS
+import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.DivMul.eq.Mul_Div

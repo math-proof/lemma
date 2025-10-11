@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.DataAdd.eq.AddDataS
-import Lemma.Algebra.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
-open Tensor Algebra
+import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
+open Tensor Finset
 
 
 @[main, comm]

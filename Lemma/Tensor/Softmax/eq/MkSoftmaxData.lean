@@ -10,8 +10,10 @@ import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetUnsqueeze
-import Lemma.Vector.Sum.eq.Sum_Get
-open Tensor Vector Bool Nat
+import Lemma.Vector.GetSum.eq.SumMapGet
+import Lemma.Vector.GetUnflatten.eq.Get_AddMul
+import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+open Tensor Vector Bool Nat List
 
 
 @[main]
@@ -47,8 +49,17 @@ private lemma main
   unfold Tensor.sum
   simp [DataExp.eq.ExpData]
   unfold List.Vector.splitAt
-  simp [Sum.eq.Sum_Get]
-  sorry
+  have h_eq := Prod.eq.MulProdTake__ProdDrop [n] 1
+  have := GetSum.eq.SumMapGet (cast (congrArg (List.Vector α) h_eq) (exp X)).unflatten ⟨0, by simp⟩
+  simp at this
+  simp [this]
+  apply congrArg
+  ext i
+  simp
+  simp only [GetElem.getElem]
+  rw [GetUnflatten.eq.Get_AddMul.fin]
+  simp
+  rw [GetCast.eq.Get.of.Eq.fin (by simp)]
 
 
 -- created on 2025-10-11

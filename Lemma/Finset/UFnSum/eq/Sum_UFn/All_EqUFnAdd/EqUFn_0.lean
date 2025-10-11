@@ -4,14 +4,14 @@ import sympy.Basic
 @[main]
 private lemma main
   [DecidableEq ι]
-  [AddCommMonoid α]
-  [AddCommMonoid β]
-  {f : α → β}
+  [AddCommMonoid N]
+  [AddCommMonoid N']
+  {f : N → N'}
 -- given
   (h₀ : f 0 = 0)
   (h₁ : ∀ a b, f (a + b) = f a + f b)
   (s : Finset ι)
-  (x : ι → α):
+  (x : ι → N):
 -- imply
   f (∑ i ∈ s, x i) = ∑ i ∈ s, f (x i) := by
 -- proof

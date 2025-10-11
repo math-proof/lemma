@@ -10,7 +10,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
 import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Algebra.SquareDiv.eq.DivSquareS
-import Lemma.Algebra.SquareMul.eq.MulSquareS
+import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Algebra.Eq_Inv_Div_Square.of.Ne_0
 import Lemma.Algebra.Div.eq.Mul_Inv
 import Lemma.Algebra.Eq_Mul_Div_Mul__Sub__SubDivS.of.Ne_0.Ne_0

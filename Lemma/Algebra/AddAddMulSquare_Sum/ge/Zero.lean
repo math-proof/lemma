@@ -1,13 +1,13 @@
 import Lemma.Algebra.Sum_SquareAddMul.ge.Zero
 import Lemma.Algebra.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Algebra.Sum_Add.eq.AddSumS
-import Lemma.Algebra.SquareMul.eq.MulSquareS
-import Lemma.Algebra.MulSum.eq.Sum_Mul
+import Lemma.Nat.SquareMul.eq.MulSquareS
+import Lemma.Finset.MulSum.eq.Sum_Mul
 import Lemma.Algebra.AddAdd
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Algebra.Mul_Sum.eq.Sum_Mul
-open Algebra Nat
+import Lemma.Finset.Mul_Sum.eq.Sum_Mul
+open Algebra Nat Finset
 
 
 @[main]

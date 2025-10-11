@@ -1,7 +1,7 @@
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Vector.GetDiv.eq.DivGet
-import Lemma.Algebra.DivSum.eq.Sum_Div
-open Vector Algebra
+import Lemma.Finset.DivSum.eq.Sum_Div
+open Vector Finset
 
 
 @[main]

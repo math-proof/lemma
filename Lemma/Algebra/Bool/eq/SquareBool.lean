@@ -2,8 +2,8 @@ import sympy.core.power
 import Lemma.Algebra.Bool.eq.Zero.ou.Bool.eq.One
 import Lemma.Algebra.Mul.eq.Zero.of.OrEqS
 import Lemma.Algebra.Sub.eq.AddNeg
-import Lemma.Algebra.Sub.eq.Zero.is.Eq
-open Algebra
+import Lemma.Int.Sub.eq.Zero.is.Eq
+open Algebra Int
 
 
 @[main, comm]

@@ -1,10 +1,10 @@
 import Lemma.Tensor.Stack.eq.AppendStackS
-import Lemma.Algebra.Eq_0
+import Lemma.Nat.Eq_0
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqSliceS.Eq.of.Eq
 import Lemma.Tensor.GetSliceStack.as.StackUFn
-open Tensor Algebra
+open Tensor Nat
 
 
 @[main, comm, mp, mpr]

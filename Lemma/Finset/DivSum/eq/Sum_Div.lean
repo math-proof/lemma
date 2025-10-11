@@ -1,16 +1,16 @@
 import Lemma.Algebra.DivAdd.eq.AddDivS
-import Lemma.Algebra.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
-open Algebra
+import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
+open Algebra Finset
 
 
 @[main, comm]
 private lemma main
   [DecidableEq ι]
-  [DivisionSemiring α]
+  [DivisionSemiring Q]
 -- given
   (s : Finset ι)
-  (a : ι → α)
-  (x : α) :
+  (a : ι → Q)
+  (x : Q) :
 -- imply
   (∑ i ∈ s, a i) / x = ∑ i ∈ s, a i / x := by
 -- proof
