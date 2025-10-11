@@ -1,6 +1,6 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
-import Lemma.Tensor.EqArraySliceSData.of.Eq
+import Lemma.Tensor.SEqArraySliceSData.of.Eq
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.Lt_Get_0.GtLength_0
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0

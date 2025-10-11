@@ -9,7 +9,7 @@ import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySliceAppend
 import Lemma.Vector.GetUnflatten.eq.Cast_ArraySlice.of.Lt
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Vector.EqArraySliceS.of.Eq
+import Lemma.Vector.SEqArraySliceS.of.Eq
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.List.Prod.eq.Foldr
@@ -47,7 +47,7 @@ private lemma main
       ·
         simp_all [Le_SubMulS.of.Lt h_lt]
       ·
-        apply EqArraySliceS.of.Eq
+        apply SEqArraySliceS.of.Eq
         apply SEqCast.of.Eq
         simp [AddMulS.eq.MulAdd]
     ·

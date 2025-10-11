@@ -1,5 +1,5 @@
-import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
-open Algebra
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+open Nat
 
 
 @[main]

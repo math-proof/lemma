@@ -1,7 +1,7 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
-import Lemma.Vector.EqArraySliceS.of.Eq.Eq
+import Lemma.Vector.SEqArraySliceS.of.Eq.Eq
 open Vector List Bool
 
 
@@ -20,7 +20,7 @@ private lemma main
   intro h_i'
   have := GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0 h_s h_i v
   apply SEq.of.SEq.SEq _ this
-  apply EqArraySliceS.of.Eq.Eq <;>
+  apply SEqArraySliceS.of.Eq.Eq <;>
     rw [h_n]
 
 

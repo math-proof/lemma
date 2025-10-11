@@ -1,4 +1,4 @@
-import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
+import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 open Vector
 
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   v.array_slice i s ≃ v'.array_slice i s := by
 -- proof
-  apply EqArraySliceS.of.SEq.Eq.Eq rfl rfl h
+  apply SEqArraySliceS.of.SEq.Eq.Eq rfl rfl h
 
 
 -- created on 2025-06-29

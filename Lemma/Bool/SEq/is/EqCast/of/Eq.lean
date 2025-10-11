@@ -21,10 +21,8 @@ private lemma main
 -- imply
   a ≃ b ↔ cast (by congr) a = b:= by
 -- proof
-  constructor <;>
-  .
-    simp [SEq]
-    aesop
+  simp [SEq]
+  aesop
 
 
 -- created on 2025-07-25

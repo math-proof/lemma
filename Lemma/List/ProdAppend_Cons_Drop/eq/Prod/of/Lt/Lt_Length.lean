@@ -3,7 +3,7 @@ import Lemma.List.ProdCons.eq.Mul_Length
 import Lemma.Algebra.MulMul
 import Lemma.List.ProdTake_Add_1.eq.MulProdTake.of.Lt_Length
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.List.ProdDrop.eq.Mul_ProdDrop.of.Lt_Length
+import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length
 import Lemma.List.ProdTake.eq.MulProdS.of.Le
 open Algebra List Nat
 
@@ -27,7 +27,7 @@ private lemma main
   rw [Mul_Mul.eq.MulMul]
   rw [MulMul.comm (b := a[j])]
   rw [MulMul.eq.Mul_Mul]
-  rw [← ProdDrop.eq.Mul_ProdDrop.of.Lt_Length (by assumption)]
+  rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.Lt_Length (by assumption)]
   rw [← ProdTake.eq.MulProdS.of.Le (by assumption)]
   simp
 

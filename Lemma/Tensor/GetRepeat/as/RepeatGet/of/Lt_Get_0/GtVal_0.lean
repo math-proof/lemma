@@ -36,7 +36,7 @@ import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.Gt_Length
 import Lemma.List.ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.List.MulProd_Mul_Prod.eq.ProdSet.of.Lt_Length
+import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length
 import Lemma.Vector.EqGetSSplitAt.of.Lt_Mul_ProdTail.Gt_0.Lt_Get_0.GtLength_0
 import Lemma.Vector.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.List.Lt_ProdTakeSet.of.Gt_0.Lt_Get_0.GtLength_0
@@ -103,7 +103,7 @@ private lemma main
               simp
               rwa [ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0]
             simp only [GetElem.getElem]
-            have h_eq := MulProd_Mul_Prod.eq.ProdSet.of.Lt_Length (LtVal d) n
+            have h_eq := MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.Lt_Length (LtVal d) n
             have h_eq := EqUFnS.of.Eq h_eq (List.Vector α)
             have h_i_prod := Lt_ProdTakeSet.of.Gt_0.Lt_Get_0.GtLength_0 (by assumption) h_i h (n * s[d])
             have h_t_prod := Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0 h h_t
@@ -153,7 +153,7 @@ private lemma main
               apply AddMul_ProdSet.lt.MulProd_Mul_Prod.of.Lt_Mul_ProdTail.Lt_Get_0.GtVal_0.GtLength_0
               repeat assumption
             ·
-              apply MulProd_Mul_Prod.eq.ProdSet.of.Lt_Length
+              apply MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.Lt_Length
           ·
             simp
             rw [ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0]

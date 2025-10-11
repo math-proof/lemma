@@ -1,9 +1,9 @@
 import stdlib.List
 import Lemma.List.ProductCons.eq.FlatMapFunMapProduct
 import Lemma.List.LengthProductCons.eq.MulLengthS
-import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength
-open Algebra List
+open List Nat
 
 
 @[main]

@@ -1,6 +1,6 @@
 import Lemma.Vector.EqGetMapRange.of.Lt
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
+import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Algebra.EqMin.of.Le
 import Lemma.Algebra.Le_SubMulS.of.Lt
 open Algebra Vector Bool
@@ -30,7 +30,7 @@ private lemma main
     simp_all
   }
   ·
-    apply EqArraySliceS.of.SEq.Eq.Eq
+    apply SEqArraySliceS.of.SEq.Eq.Eq
     repeat simp_all
 
 

@@ -21,7 +21,7 @@ private lemma fin.fin
     simp_all
   have h_n : ((n :: s).take 1).prod = (n :: s).headD 1 := by
     simp_all
-  have := GetCast.eq.Get.of.Eq.Lt.fin h_i h_n ((([i < n] f i).data.splitAt 1).map (fun data ↦   ⟨data⟩))
+  have := GetCast.eq.Get.of.Eq.Lt.fin h_i h_n ((([i < n] f i).data.splitAt 1).map (fun data ↦ ⟨data⟩))
   simp at this
   rw [this]
   apply Eq.of.EqDataS

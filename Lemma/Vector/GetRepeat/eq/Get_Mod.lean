@@ -2,10 +2,10 @@ import sympy.vector.Basic
 import Lemma.Algebra.Ne_0
 import Lemma.Algebra.Ne_0.of.Mul.ne.Zero
 import Lemma.Algebra.LtMod.of.Ne_0
-import Lemma.Algebra.Any_Eq_AddMul
+import Lemma.Nat.Any_Eq_AddMul
 import Lemma.Vector.Get.eq.GetFlatten_AddMul
 import Lemma.Algebra.EqMod
-open Algebra Vector
+open Algebra Vector Nat
 
 
 @[main]
@@ -14,8 +14,8 @@ private lemma main
   (x : List.Vector α n)
   (k : Fin (m * n)) :
 -- imply
-  have h_k := LtMod.of.Ne_0 (Ne_0.of.Mul.ne.Zero (Ne_0 k)) k
-  (x.repeat m)[k] = x[k % n] := by
+  have := LtMod.of.Ne_0 (Ne_0.of.Mul.ne.Zero (Ne_0 k)) k
+  (x.repeat m)[k.val] = x[k % n] := by
 -- proof
   let ⟨i, j, h_ij⟩ := Any_Eq_AddMul k
   unfold List.Vector.repeat

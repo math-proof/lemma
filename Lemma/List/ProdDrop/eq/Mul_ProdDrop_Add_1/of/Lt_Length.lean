@@ -2,7 +2,7 @@ import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1
 open List
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Mul α] [One α]
   {v : List α}

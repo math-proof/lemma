@@ -3,7 +3,7 @@ import Lemma.Bool.EqCast.of.Eq
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
 import Lemma.Vector.GetAppend.eq.Get
-import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
+import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEq.of.Eq
 import Lemma.Bool.SEqCast.of.Eq
@@ -33,7 +33,7 @@ private lemma main
   ·
     apply SEq.of.SEq.SEq (c := ab.array_slice (i * k) k)
     ·
-      apply EqArraySliceS.of.SEq.Eq.Eq rfl rfl ∘ SEq_Cast.of.SEq.Eq (by assumption) ∘ SEq.of.Eq
+      apply SEqArraySliceS.of.SEq.Eq.Eq rfl rfl ∘ SEq_Cast.of.SEq.Eq (by assumption) ∘ SEq.of.Eq
       rfl
     ·
       apply GetUnflatten.as.ArraySlice.of.Lt

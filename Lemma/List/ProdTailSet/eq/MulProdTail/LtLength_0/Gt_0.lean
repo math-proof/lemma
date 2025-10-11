@@ -27,7 +27,7 @@ private lemma main
       simp
       rw [Mul.comm (b := n)]
       rw [MulMul.eq.Mul_Mul]
-      rw [← ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length]
+      rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.Lt_Length]
       rw [Mul.comm (a := n)]
       rw [Mul_Mul.eq.MulMul]
       apply EqMulS.of.Eq

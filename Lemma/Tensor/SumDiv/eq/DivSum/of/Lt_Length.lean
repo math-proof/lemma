@@ -7,7 +7,8 @@ import Lemma.Algebra.Div.eq.HDiv
 import Lemma.Tensor.Div.eq.Div_Broadcast
 import Lemma.Vector.GetMap.eq.FunGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-open Tensor Vector Algebra
+import Lemma.Nat.Any_Eq_AddMul
+open Tensor Vector Algebra Nat
 
 
 @[main]
@@ -62,7 +63,7 @@ private lemma main
       simp only [h_fun]
       ext k
       rw [GetMap.eq.FunGet]
-      obtain ⟨i, j, h_k⟩ := Any_Eq_AddMul k
+      let ⟨i, j, h_k⟩ := Any_Eq_AddMul k
       repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
       simp
       rw [DataDiv.eq.DivData]

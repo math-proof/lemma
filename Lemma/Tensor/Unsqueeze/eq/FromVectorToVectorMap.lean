@@ -2,7 +2,7 @@ import sympy.tensor.Basic
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Vector.EqGetRange
 import Lemma.Nat.LtVal
-import Lemma.Algebra.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.EqGetS
 import Lemma.Vector.Get.eq.GetFlatten_AddMul.of.Lt.Lt
 import Lemma.Algebra.EqDivMul.of.Ne_0

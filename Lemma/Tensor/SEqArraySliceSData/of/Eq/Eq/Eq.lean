@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqArraySliceSData.of.Eq
+import Lemma.Tensor.SEqArraySliceSData.of.Eq
 open Tensor
 
 
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   rw [h₁]
   rw [h₂]
-  apply EqArraySliceSData.of.Eq h
+  apply SEqArraySliceSData.of.Eq h
 
 
 -- created on 2025-06-29

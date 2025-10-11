@@ -16,12 +16,7 @@ private lemma main
   v.array_slice i s ≃ v'.array_slice i' s' := by
 -- proof
   simp [SEq] at *
-  constructor
-  .
-    simp_all
-  .
-    congr <;>
-      simp_all
+  aesop
 
 
 -- created on 2025-05-31

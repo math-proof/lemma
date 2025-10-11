@@ -1,5 +1,5 @@
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
-import Lemma.Algebra.EqMulS.is.Eq.of.Ne_0
+import Lemma.Nat.EqMulS.is.Eq.of.Ne_0
 import Lemma.Algebra.EqMul_Div.of.Ne_0
 import Lemma.Algebra.EqSub.is.Eq_Add
 import Lemma.Nat.Mul

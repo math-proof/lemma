@@ -22,7 +22,7 @@ private lemma main
   rw [MulMul.comm]
   rw [Mul_Mul.eq.MulMul]
   apply EqMulS.of.Eq
-  rw [← ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length]
+  rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.Lt_Length]
   rw [← Prod.eq.MulProdTake__ProdDrop]
 
 

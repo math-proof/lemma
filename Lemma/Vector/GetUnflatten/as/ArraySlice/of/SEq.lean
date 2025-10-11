@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.GetUnflatten.as.ArraySlice
-import Lemma.Vector.EqArraySliceS.of.SEq.Eq.Eq
+import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 open Vector Bool
 
 
@@ -18,7 +18,7 @@ private lemma main
   ·
     apply GetUnflatten.as.ArraySlice
   ·
-    apply EqArraySliceS.of.SEq.Eq.Eq rfl rfl h.symm
+    apply SEqArraySliceS.of.SEq.Eq.Eq rfl rfl h.symm
 
 
 -- created on 2025-05-31
