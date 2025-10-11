@@ -1,9 +1,9 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.LengthRepeat.eq.MulGet_0.of.GtLength_0
 import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0
-import Lemma.Algebra.EqMod_1'0
+import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetUnsqueeze
-open Tensor Algebra
+open Tensor Nat
 
 
 @[main]

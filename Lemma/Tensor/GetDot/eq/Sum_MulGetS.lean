@@ -6,13 +6,13 @@ import Lemma.Tensor.EqGetRepeatUnsqueeze.of.Lt
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0
 import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
-import Lemma.Algebra.EqMod_1'0
+import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Tensor.EqGetUnsqueeze
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetTranspose.eq.Get
-open Algebra Tensor Nat
+open Tensor Nat
 set_option maxHeartbeats 1000000
 
 

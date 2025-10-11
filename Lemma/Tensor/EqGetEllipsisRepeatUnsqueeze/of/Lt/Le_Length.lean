@@ -3,8 +3,8 @@ import Lemma.List.Lt_LengthInsertIdx
 import Lemma.Tensor.GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
 import Lemma.Tensor.SEqGetEllipsisUnsqueeze.of.Le_Length
-import Lemma.Algebra.EqMod_1'0
-open List Tensor Algebra
+import Lemma.Nat.EqMod_1'0
+open List Tensor Nat
 
 
 @[main]

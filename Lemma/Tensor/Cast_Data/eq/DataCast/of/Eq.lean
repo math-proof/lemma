@@ -2,7 +2,7 @@ import sympy.tensor.Basic
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s' : List ℕ}
 -- given
