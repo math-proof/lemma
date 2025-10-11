@@ -5,6 +5,8 @@ import Lemma.Tensor.Sum.eq.MkListSumData
 import Lemma.Vector.SumSoftmax.eq.One
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Nat.Eq_0
+import Lemma.Vector.EqGet1'1
+import Lemma.Tensor.GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length
 open Tensor Vector Nat
 
 
@@ -32,7 +34,7 @@ private lemma main
       ext i
       have h_1 : (1 : Tensor α ([s₀].eraseIdx ([s₀].length - 1))).data = 1 := rfl
       rw [h_1]
-      simp [Vector.EqGet1'1.fin]
+      simp [EqGet1'1.fin]
       have h_0 := Eq_0 i
       subst h_0
       simp [List.Vector.get]
@@ -45,6 +47,9 @@ private lemma main
     | .cons s₁ s =>
       apply Eq.of.All_EqGetS (m := s₀)
       intro i
+      have := GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length (by simp) (by simp) (by simp) X.softmax (dim := (s₀ :: s₁ :: s).length - 1) (i := i)
+      simp at this
+      simp [this]
       sorry
 
 
