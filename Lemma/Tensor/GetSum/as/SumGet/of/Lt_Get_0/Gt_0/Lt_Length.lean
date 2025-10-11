@@ -9,12 +9,12 @@ private lemma main
   [Add α] [Zero α]
   {dim i : ℕ}
 -- given
-  (h₀ : dim < s.length)
-  (h₁ : dim > 0)
-  (h₂ : i < s[0])
+  (h_s : dim < s.length)
+  (h_d : dim > 0)
+  (h_i : i < s[0])
   (X : Tensor α s) :
 -- imply
-  let h_shape := LengthSum.eq.Length.of.Gt_0 h₁ X
+  let h_shape := LengthSum.eq.Length.of.Gt_0 h_d X
   let h_i : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
   (X.sum dim)[i] ≃ X[i].sum (dim - 1) := by
 -- proof
@@ -24,6 +24,23 @@ private lemma main
     contradiction
   | succ dim =>
     apply GetSum.as.SumGet.of.Lt_Get_0.LtAdd_1Length (by linarith) (by assumption)
+
+
+@[main]
+private lemma fin
+  [Add α] [Zero α]
+  {dim i : ℕ}
+-- given
+  (h_s : dim < s.length)
+  (h_d : dim > 0)
+  (h_i : i < s[0])
+  (X : Tensor α s) :
+-- imply
+  have h_shape := LengthSum.eq.Length.of.Gt_0 h_d X
+  have h_i : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
+  (X.sum dim).get ⟨i, by simp_all⟩ ≃ (X.get ⟨i, h_i⟩).sum (dim - 1) := by
+-- proof
+  apply main h_s h_d h_i X
 
 
 -- created on 2025-06-22
