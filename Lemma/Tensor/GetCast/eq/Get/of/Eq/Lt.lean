@@ -10,8 +10,7 @@ private lemma main
   (h : m = m')
   (v : List.Vector (Tensor α s) m) :
 -- imply
-  have h : List.Vector (Tensor α s) m = List.Vector (Tensor α s) m' := by rw [h]
-  (cast h v)[i] = v[i] := by
+  (cast (congrArg (List.Vector (Tensor α s)) h) v)[i] = v[i] := by
 -- proof
   let i : Fin m := ⟨i, h_i⟩
   have := GetCast.eq.Get.of.Eq h v i
@@ -26,8 +25,7 @@ private lemma fin
   (h : m = m')
   (v : List.Vector (Tensor α s) m) :
 -- imply
-  have h : List.Vector (Tensor α s) m = List.Vector (Tensor α s) m' := by rw [h]
-  (cast h v).get ⟨i, by simp_all⟩ = v.get ⟨i, h_i⟩ := by
+  (cast (congrArg (List.Vector (Tensor α s)) h) v).get ⟨i, by simp_all⟩ = v.get ⟨i, h_i⟩ := by
 -- proof
   apply main
   assumption

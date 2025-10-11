@@ -1,5 +1,3 @@
-import stdlib.SEq
-import sympy.tensor.functions
 import Lemma.Tensor.LengthKeepdim.eq.Length.of.Gt_0
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_LengthTail
@@ -23,6 +21,8 @@ import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq
+import Lemma.Tensor.Repeat.as.RepeatCast.of.Eq
+import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq.Eq
 open Tensor List Nat Bool
 
 
@@ -45,19 +45,11 @@ private lemma main
   have h_get_eraseIdx := GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_dim
   have h := Keepdim.as.RepeatUnsqueeze.of.Lt_Length h_s X
   have h := All_SEqGetS.of.SEq h ⟨i, by rwa [Length.eq.Get_0.of.GtLength h_s]⟩
+  have h_dim_add_sub := EqAddSub.of.Ge (by omega : dim ≥ 1)
   rw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin h_dim] at h
   ·
-    have h := SEq.of.SEq_Cast h (h := by
-      simp
-      congr
-      ·
-        omega
-      ·
-        simp [EqAddSub.of.Ge (by omega : dim ≥ 1)]
-    )
     rw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin _ h_dim] at h
     ·
-      simp at h
       have h_length_pos : (s.eraseIdx dim).length > 0 := by
         rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_s]
         omega
@@ -75,37 +67,32 @@ private lemma main
       apply Eq.of.SEq.SEq h
       apply SEqCast.of.SEq.Eq.Eq
       ·
-        simp
-        rw [TailEraseIdx.eq.EraseIdxTail.of.Gt_0.Lt_SubLength h_s h_dim]
-        rw [EqSetInsertIdxEraseIdx.of.Eq_Get.Lt_Length]
-        ·
-          congr
-          simp [EqAddSub.of.Ge (by omega : dim ≥ 1)]
-          rw [EqSetInsertIdxEraseIdx.of.Lt_Length]
-        ·
-          exact h_lt_length_tail
-        ·
-          simp [EqAddSub.of.Ge (by omega : dim ≥ 1)]
+        rw [EqSetInsertIdxEraseIdx.of.Eq_Get.Lt_Length (by simpa) (by simp)]
+        congr
+        simp [EqAddSub.of.Ge (by omega : dim ≥ 1)]
+        rw [EqSetInsertIdxEraseIdx.of.Lt_Length]
       ·
-        rw [SetTail.eq.TailSet.of.Gt_0 h_dim]
         congr
         rw [EqSetInsertIdxEraseIdx.of.Eq_Get.Lt_Length h_s]
-        simp [EqAddSub.of.Ge (by omega : dim ≥ 1)]
+        simp
       ·
         have h_eq := TailEraseIdx.eq.EraseIdxTail.of.Gt_0.Lt_SubLength h_s h_dim
         have h := Keepdim.as.RepeatUnsqueeze.of.Lt_Length h_lt_length_tail (cast (congrArg (Tensor α) h_eq) (X.get ⟨i, h_i⟩))
         apply SEq.of.SEq.SEq _ h
         have h_get_tail := GetTail.eq.Get_Add_1.of.Lt_LengthTail h_lt_length_tail
         rw [h_get_tail]
-        rw [UnsqueezeCast.eq.CastUnsqueeze.of.Eq]
-        .
-          have h_s : ((s.eraseIdx dim).tail.insertIdx (dim - 1) 1) = ((s.tail.eraseIdx (dim - 1)).insertIdx (dim - 1) 1) := by
-            simp_all
-          have := Repeat.as.RepeatCast.of.Eq h_s ((X.get ⟨i, h_i⟩).unsqueeze (dim - 1)) s[dim - 1 + 1] ⟨dim - 1, h_d⟩
-          apply SEq.of.SEq.SEq _ this.symm
-          sorry
-        .
-          exact h_eq
+        rw [UnsqueezeCast.eq.CastUnsqueeze.of.Eq h_eq]
+        have h_s : (s.eraseIdx dim).tail.insertIdx (dim - 1) 1 = (s.tail.eraseIdx (dim - 1)).insertIdx (dim - 1) 1 := by
+          simp_all
+        have := Repeat.as.RepeatCast.of.Eq h_s ((X.get ⟨i, h_i⟩).unsqueeze (dim - 1)) s[dim - 1 + 1] ⟨dim - 1, h_d⟩
+        apply SEq.of.SEq.SEq _ this.symm
+        have h_tail_set : ((s.eraseIdx dim).tail.insertIdx (dim - 1) 1).set (dim - 1) s[dim] = (((s.eraseIdx dim).insertIdx dim 1).set dim s[dim]).tail := by
+          rw [TailSet.eq.SetTail.of.Gt_0 h_dim]
+          rw [TailInsertIdx.eq.InsertIdxTail.of.Gt_0.GtLength_0 h_length_pos h_dim]
+        apply SEqCast.of.SEq.Eq.Eq
+        repeat simpa [h_dim_add_sub]
+        apply SEqRepeatS.of.SEq.EqValS.Eq.Eq (by rfl) _ (by rfl) (by rfl)
+        simp [h_dim_add_sub]
     ·
       rwa [h_get_eraseIdx]
   ·
@@ -118,4 +105,4 @@ private lemma main
 
 
 -- created on 2025-10-09
--- updated on 2025-10-10
+-- updated on 2025-10-11
