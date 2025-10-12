@@ -9,7 +9,7 @@ import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Ge_1
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Algebra.EqMin.of.Le
+import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Gt_0
 import Lemma.Nat.EqSub.of.EqAdd
 import Lemma.Nat.Eq_Mk.of.EqVal
@@ -25,7 +25,7 @@ import Lemma.Nat.Add
 import Lemma.Algebra.Sub.eq.Zero.of.Lt
 import Lemma.List.Slice_0.eq.Take
 import Lemma.List.Cons_Append.eq.AppendCons
-import Lemma.Algebra.EqMin.of.Gt
+import Lemma.Nat.EqMin.of.Gt
 open Algebra List Nat
 
 

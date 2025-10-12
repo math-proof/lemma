@@ -1,7 +1,7 @@
 import stdlib.List
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.EqSubAdd
-open Algebra Nat
+open Nat
 
 
 @[main]
@@ -14,8 +14,7 @@ private lemma main
 -- proof
   unfold List.slice List.array_slice Function.comp
   simp
-  rw [Sub_Add.eq.SubSub.nat]
-  rw [Sub_Add.eq.SubSub.nat]
+  repeat rw [Sub_Add.eq.SubSub]
   rw [EqSubAdd.left]
 
 

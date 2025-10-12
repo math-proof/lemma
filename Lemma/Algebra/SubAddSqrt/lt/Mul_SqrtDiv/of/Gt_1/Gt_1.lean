@@ -12,9 +12,9 @@ import Lemma.Algebra.EqDivSquare
 import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Algebra.Sub.gt.Zero.is.Lt
 import Lemma.Algebra.AddSub.eq.SubAdd
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubMul.eq.MulSub_1
-import Lemma.Algebra.SubSub
+import Lemma.Int.SubSub
 import Lemma.Algebra.AddSub.eq.Add_Sub
 import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Algebra.Square.eq.Mul
@@ -23,7 +23,7 @@ import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.EqSub_Sub
 import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Algebra.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
-open Algebra Nat
+open Algebra Nat Int
 
 
 @[main]

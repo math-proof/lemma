@@ -7,8 +7,8 @@ import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.Algebra.Le.of.Lt.Lt
 import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Algebra.EqMin.of.Lt
-open Algebra List
+import Lemma.Nat.EqMin.of.Lt
+open Algebra List Nat
 
 
 @[main]

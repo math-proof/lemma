@@ -17,7 +17,7 @@ import Lemma.Int.AddFModS.eq.FModNegSign
 import Lemma.Algebra.FModNegSign.eq.Sub_Sign
 import Lemma.Algebra.SubNeg
 import Lemma.Nat.Add
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.EqSubS.is.Eq
 import Lemma.Nat.Mul
 import Lemma.Algebra.EqAddS.is.Eq

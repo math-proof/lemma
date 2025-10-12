@@ -3,7 +3,10 @@ import Lemma.List.LengthPermute.eq.Length
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
-open List Tensor Bool
+import Lemma.List.TakePermute.eq.Take
+import Lemma.Nat.EqSub_Sub.of.Gt
+import Lemma.Nat.EqMinSub
+open List Tensor Bool Nat
 
 
 @[main]
@@ -34,18 +37,11 @@ private lemma main
     ·
       rw [EqPermutePermute.of.In_Ioo_Length ⟨h, h_j⟩]
       simp [LengthPermute.eq.Length]
-      have : (1 + d : ℤ).toNat = s.length - i := by
-        omega
-      rw [this]
-      have : (s.length - (s.length - i)) = i := by
-        omega
-      rw [this]
-      have : min (s.length - i) s.length = s.length - i := by
-        omega
-      rw [this]
-      have : (d : ℤ) = (s.length - i - 1 : ℕ) := by
-        omega
-      rw [this]
+      rw [(show (1 + d : ℤ).toNat = s.length - i by omega)]
+      rw [EqSub_Sub.of.Gt (by linarith)]
+      rw [EqMinSub]
+      rw [(show (d : ℤ) = (s.length - i - 1 : ℕ) by omega)]
+      rw [TakePermute.eq.Take ⟨i, by linarith⟩ (s.length - i - 1)]
       sorry
     ·
       sorry

@@ -1,8 +1,8 @@
 import Lemma.Nat.Gt_0
 import Lemma.Int.AddToNat.eq.ToNatAdd.of.Gt_0
-import Lemma.Algebra.EqMax.of.Gt
+import Lemma.Nat.EqMax.of.Gt
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
-open Algebra List Int Nat
+open List Int Nat
 
 
 @[main]

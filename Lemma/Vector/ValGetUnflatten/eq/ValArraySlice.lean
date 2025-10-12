@@ -1,6 +1,6 @@
 import sympy.vector.vector
-import Lemma.Algebra.EqMin_SubMulS
-open Algebra
+import Lemma.Nat.EqMin_SubMulS
+open Nat
 
 
 @[main]

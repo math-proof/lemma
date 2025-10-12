@@ -1,12 +1,12 @@
 import Lemma.Int.NegSucc.eq.NegCoeAdd_1
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
-import Lemma.Algebra.EqMin.of.Lt
+import Lemma.Nat.EqMin.of.Lt
 import Lemma.Algebra.LtAdd.of.Lt_Sub
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqAppendS.of.Eq
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Algebra.MinAddS.eq.AddMin
 import Lemma.Algebra.Val.lt.Sub_1.of.Val.ne.Sub_1
 import Lemma.Nat.Add
@@ -35,7 +35,7 @@ private lemma main
   rw [Append_Append.eq.AppendAppend]
   apply EqAppendS.of.Eq
   rw [Add.comm (a := k)]
-  rw [Sub_Add.eq.SubSub.nat]
+  rw [Sub_Add.eq.SubSub]
   congr
   rw [Add.comm (b := k)]
   rw [MinAddS.eq.AddMin]

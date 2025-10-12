@@ -2,7 +2,7 @@ import Lemma.List.Permute.eq.Ite
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
 import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Algebra.EqMin.of.Lt
+import Lemma.Nat.EqMin.of.Lt
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Add
@@ -16,7 +16,7 @@ import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.Algebra.LeAdd_1
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
-import Lemma.Algebra.SubSub
+import Lemma.Nat.SubSub
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
 import Lemma.Algebra.LeSub.is.Le_Add
 import Lemma.Nat.Lt.of.Le.Ne
@@ -27,15 +27,15 @@ import Lemma.Algebra.Le_Sub_1.of.Lt
 import Lemma.Algebra.Lt.of.Le.Lt
 import Lemma.Algebra.LeSub.of.Le
 import Lemma.Nat.Eq.of.Le.Le
-import Lemma.Algebra.EqAdd_Sub.of.Ge
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.EqAdd_Sub.of.Ge
+import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Algebra.AddAdd
 import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
 import Lemma.Algebra.GeSub_1.of.Gt
 import Lemma.Algebra.LtSub
 import Lemma.List.LengthPermute.eq.Length
-open Algebra List Nat
+open Algebra List Nat Int
 
 
 @[main]
@@ -99,7 +99,7 @@ private lemma MAIN
         simp [Add_Sub.eq.SubAdd.of.Ge h_i]
       ·
         rw [LengthSlice.eq.SubMin]
-        rw [SubSub.comm.nat]
+        rw [SubSub.comm]
         apply LtSubS.of.Lt.Le
         ·
           apply Le_Sub_1.of.Lt h_i'

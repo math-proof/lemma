@@ -1,6 +1,6 @@
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
-import Lemma.Algebra.EqAdd_Sub.of.Ge
-open Algebra List
+import Lemma.Nat.EqAdd_Sub.of.Ge
+open List Nat
 
 
 @[main]

@@ -6,15 +6,15 @@ import Lemma.List.EqPermute__0
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.Drop.eq.Nil
 import Lemma.Int.NegSucc.eq.NegAdd_1
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
 import Lemma.Algebra.AddAdd.eq.Add_Add
-import Lemma.Algebra.EqMin.of.Le
+import Lemma.Nat.EqMin.of.Le
 import Lemma.List.Drop_SubLength_1.eq.ListGet.of.GtLength_0
 import Lemma.List.LengthDrop.eq.SubLength
-import Lemma.Algebra.EqSub_Sub.of.Ge
-import Lemma.Algebra.SubSub
-import Lemma.Algebra.EqMin.of.Gt
+import Lemma.Nat.EqSub_Sub.of.Ge
+import Lemma.Nat.SubSub
+import Lemma.Nat.EqMin.of.Gt
 import Lemma.Algebra.Sub.eq.Zero.of.Lt
 import Lemma.List.Slice_0.eq.Take
 import Lemma.Algebra.AddSub.eq.Sub_Sub.of.Ge.Ge
@@ -54,7 +54,7 @@ private lemma main
       rw [NegSucc.eq.NegAdd_1] at h
       simp at h
       subst h
-      rw [SubSub.eq.Sub_Add.nat]
+      rw [SubSub.eq.Sub_Add]
       rw [Add.comm]
       apply EqAppendS.of.Eq.left
       rw [EqAddSub.of.Ge (by linarith)]
@@ -76,7 +76,7 @@ private lemma main
           simp
           unfold List.slice List.array_slice Function.comp
           congr
-          rw [SubSub.comm.nat]
+          rw [SubSub.comm]
           rw [EqSub_Sub.of.Ge (by assumption)]
           simp
         ·

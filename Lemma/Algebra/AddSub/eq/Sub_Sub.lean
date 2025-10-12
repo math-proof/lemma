@@ -1,7 +1,7 @@
 import Lemma.Nat.Eq.of.Le.Ge
 import Lemma.Algebra.EqAddSub.of.Gt
 import Lemma.Nat.EqSubAdd
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Int.Sub_Add.eq.SubSub
 
 
 @[main, comm]

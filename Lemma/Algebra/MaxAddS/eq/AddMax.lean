@@ -1,8 +1,8 @@
 import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Algebra.GtAddS.is.Gt
-import Lemma.Algebra.EqMax.of.Le
-import Lemma.Algebra.EqMax.of.Gt
-open Algebra
+import Lemma.Nat.EqMax.of.Le
+import Lemma.Nat.EqMax.of.Gt
+open Algebra Nat
 
 
 @[main]

@@ -15,7 +15,7 @@ import Lemma.Algebra.NeCoeS.of.Ne
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Int.FloorAdd.eq.Add_Floor
 import Lemma.Algebra.MulAdd.eq.AddMulS
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.EqSubS.is.Eq
 import Lemma.Algebra.DivNeg.eq.NegDiv
 import Lemma.Algebra.FDivNegFMod.eq.Neg1.of.FMod.ne.Zero.Ne_0

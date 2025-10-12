@@ -1,6 +1,6 @@
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
-import Lemma.Algebra.EqSub_Sub.of.Ge
+import Lemma.Nat.EqSub_Sub.of.Ge
 import Lemma.Algebra.LeAdd_1
 open Algebra Nat
 
@@ -14,7 +14,7 @@ private lemma main
   n - j = i + 1 := by
 -- proof
   simp_all
-  rw [SubSub.eq.Sub_Add.nat]
+  rw [SubSub.eq.Sub_Add]
   rw [Add.comm]
   rw [EqSub_Sub.of.Ge]
   apply LeAdd_1

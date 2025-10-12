@@ -1,5 +1,5 @@
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.Algebra.EqMin.of.Le
+import Lemma.Nat.EqMin.of.Le
 import Lemma.List.Tail.eq.AppendTakeTail__Drop.of.Gt_0
 import Lemma.List.ProdTail.eq.DivProd.of.GtLength_0.Gt_0
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0

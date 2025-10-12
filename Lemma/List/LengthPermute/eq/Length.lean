@@ -14,7 +14,7 @@ import Lemma.Algebra.EqAddMin__Sub
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
-import Lemma.Algebra.SubSub
+import Lemma.Nat.SubSub
 import Lemma.Nat.EqSubAdd
 open Algebra List Nat Int
 
@@ -57,7 +57,7 @@ private lemma main
         rw [Add_Sub.eq.SubAdd.of.Ge (by simp_all)]
         rw [AddAdd.eq.Add_Add]
         rw [Add.comm (a := 1)]
-        rw [SubSub.comm.nat]
+        rw [SubSub.comm]
         rw [EqSubAdd]
       ·
         apply LeAdd_1

@@ -1,7 +1,7 @@
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.Add
-import Lemma.Algebra.Sub_Add.eq.SubSub
-open Algebra Nat
+import Lemma.Nat.Sub_Add.eq.SubSub
+open Nat
 
 
 @[main, comm]
@@ -19,7 +19,7 @@ private lemma main
   rw [h_b]
   rw [EqSubAdd]
   rw [Add.comm (a := d)]
-  rw [Sub_Add.eq.SubSub.nat]
+  rw [Sub_Add.eq.SubSub]
   rw [EqSubAdd]
 
 

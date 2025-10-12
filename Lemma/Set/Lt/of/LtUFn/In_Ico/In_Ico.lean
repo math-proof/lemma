@@ -1,6 +1,6 @@
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.AddSub.eq.Sub_Sub
-import Lemma.Algebra.SubSub
+import Lemma.Int.SubSub
 import Lemma.Algebra.Mul_Sub.eq.SubMulS
 import Lemma.Algebra.SubCubeS.eq.MulSub__AddSquareS
 import Lemma.Nat.Mul
@@ -10,7 +10,7 @@ import Lemma.Algebra.Lt_0.of.Mul.lt.Zero.Gt_0
 import Lemma.Set.AddAddSquareS.lt.Div3'4.of.In_Ico0.In_Ico0
 import Lemma.Algebra.LtMulS.of.Gt_0.Lt
 import Lemma.Algebra.Sub.gt.Zero.is.Lt
-open Algebra Set Nat
+open Algebra Set Nat Int
 
 
 def f (x : ℝ) := 3 * x - 4 * x ^ 3

@@ -7,7 +7,7 @@ import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Algebra.Sub.gt.Zero.is.Lt
 import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.List.EqSwapS
 open Algebra List Bool Nat
 
@@ -46,7 +46,7 @@ private lemma main
     rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
     ·
       have h_length_slice := LengthSlice.eq.SubMin a (j + 1) i
-      rw [Sub_Add.eq.SubSub.nat] at h_length_slice
+      rw [Sub_Add.eq.SubSub] at h_length_slice
       simp [h_length_slice]
     ·
       apply Sub.gt.Zero.of.Lt.nat h_lt (α := ℕ)

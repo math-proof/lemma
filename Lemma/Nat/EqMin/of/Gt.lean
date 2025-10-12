@@ -1,4 +1,5 @@
 import Lemma.Nat.Ge.of.Gt
+import Lemma.Nat.EqMin.of.Ge
 open Nat
 
 
@@ -9,9 +10,10 @@ private lemma main
 -- given
   (h : a > b) :
 -- imply
-  a ⊓ b = b := by
+  a ⊓ b = b := 
 -- proof
-  simp [Ge.of.Gt h]
+  EqMin.of.Ge (Ge.of.Gt h)
 
 
 -- created on 2025-06-07
+-- updated on 2025-10-12

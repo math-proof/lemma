@@ -1,7 +1,7 @@
 import Lemma.Tensor.LengthData.eq.Mul_Prod.of.GtLength_0
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.Ne_0
-import Lemma.Algebra.EqMin.of.Le
+import Lemma.Nat.EqMin.of.Le
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.Nat.LtVal

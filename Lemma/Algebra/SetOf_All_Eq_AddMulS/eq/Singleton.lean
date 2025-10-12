@@ -1,6 +1,6 @@
 import Lemma.Algebra.Mul_Sub.eq.SubMulS
 import Lemma.Algebra.GeSubSMul.of.Ge
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Algebra.AddAdd
 import Lemma.Algebra.Mul2.eq.Add
 import Lemma.Algebra.EqAdd.is.Eq_Sub
@@ -12,33 +12,11 @@ import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.Eq_Add.of.EqSub.Le
-open Algebra
-
-
-def fib (n : ℕ) : ℕ :=
-  match n with
-  | 0 => 0
-  | 1 => 1
-  | n + 2 => fib (n + 1) + fib n
+import Lemma.Nat.Fib.eq.AddFibS.of.Ge_2
+open Algebra Nat
 
 
 def G (n : ℕ) := fib (3 * n)
-
-
-private lemma fib_recurrence
-  {n : ℕ}
--- given
-  (h : n ≥ 2) :
--- imply
-  fib n = fib (n - 1) + fib (n - 2) := by
--- proof
-  match n with
-  | 0 =>
-    contradiction
-  | 1 =>
-    contradiction
-  | n + 2 =>
-    rfl
 
 
 -- Modus Ponens
@@ -71,11 +49,11 @@ private lemma mpr
   rw [Mul_Sub.eq.SubMulS.nat, Mul_Sub.eq.SubMulS.nat]
   norm_num
   norm_num
-  rw [fib_recurrence (n := 3 * n)]
+  rw [Fib.eq.AddFibS.of.Ge_2 (n := 3 * n)]
   ·
-    rw [fib_recurrence (n := 3 * n - 1)]
+    rw [Fib.eq.AddFibS.of.Ge_2 (n := 3 * n - 1)]
     ·
-      rw [SubSub.eq.Sub_Add.nat, SubSub.eq.Sub_Add.nat]
+      rw [SubSub.eq.Sub_Add, SubSub.eq.Sub_Add]
       norm_num
       rw [AddAdd.comm]
       rw [Add.eq.Mul2]
@@ -86,9 +64,9 @@ private lemma mpr
           rw [SubMul.eq.MulSub_1.nat]
           norm_num
           have := GeSubSMul.of.Ge hn 3 2
-          rw [fib_recurrence (n := 3 * n - 2)]
+          rw [Fib.eq.AddFibS.of.Ge_2 (n := 3 * n - 2)]
           ·
-            rw [SubSub.eq.Sub_Add.nat, SubSub.eq.Sub_Add.nat]
+            rw [SubSub.eq.Sub_Add, SubSub.eq.Sub_Add]
             norm_num
             rw [Mul_Add.eq.AddMulS]
             rw [EqAdd.of.Eq_Sub.Le.left]
@@ -97,18 +75,18 @@ private lemma mpr
               ·
                 rw [SubMulS.eq.MulSub.nat]
                 norm_num
-                rw [fib_recurrence (n := 3 * n - 3)]
+                rw [Fib.eq.AddFibS.of.Ge_2 (n := 3 * n - 3)]
                 ·
-                  rw [SubSub.eq.Sub_Add.nat, SubSub.eq.Sub_Add.nat]
+                  rw [SubSub.eq.Sub_Add, SubSub.eq.Sub_Add]
                   norm_num
                   rw [AddAdd.eq.Add_Add]
                   apply Eq_Add.of.EqSub.Le.left
                   ·
                     rw [SubMul.eq.MulSub_1.nat]
                     norm_num
-                    rw [fib_recurrence (n := 3 * n - 4)]
+                    rw [Fib.eq.AddFibS.of.Ge_2 (n := 3 * n - 4)]
                     ·
-                      rw [SubSub.eq.Sub_Add.nat, SubSub.eq.Sub_Add.nat]
+                      rw [SubSub.eq.Sub_Add, SubSub.eq.Sub_Add]
                     ·
                       have := GeSubSMul.of.Ge hn 3 4
                       linarith

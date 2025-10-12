@@ -2,9 +2,9 @@ import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length
 import Lemma.List.EqInsertIdx.of.Gt_Length
 import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Algebra.EqMin.of.Le
+import Lemma.Nat.EqMin.of.Le
 import Lemma.Algebra.Le.of.Le.Le
-open List Algebra
+open List Algebra Nat
 
 
 @[main]

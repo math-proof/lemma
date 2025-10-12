@@ -6,7 +6,7 @@ import Lemma.List.DropAppend.eq.Drop_Sub_Length.of.Ge_Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Algebra.Ge_Min.of.Ge
 import Lemma.Nat.Ge.of.Gt
-import Lemma.Algebra.EqMin.of.Le
+import Lemma.Nat.EqMin.of.Le
 import Lemma.List.DropCons.eq.Drop_Sub_1.of.Gt_0
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Algebra.EqAdd_Sub.of.Gt

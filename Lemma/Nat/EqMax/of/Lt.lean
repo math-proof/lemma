@@ -1,4 +1,5 @@
 import Lemma.Nat.Le.of.Lt
+import Lemma.Nat.EqMax.of.Le
 open Nat
 
 
@@ -9,9 +10,10 @@ private lemma main
 -- given
   (h : a < b) :
 -- imply
-  a ⊓ b = a := by
+  a ⊔ b = b := 
 -- proof
-  simp [Le.of.Lt h]
+  EqMax.of.Le (Le.of.Lt h)
 
 
--- created on 2025-05-17
+-- created on 2025-06-07
+-- updated on 2025-10-12

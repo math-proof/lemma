@@ -1,8 +1,8 @@
 import Lemma.Algebra.Lt_CeilDivSub_Add.of.Add_1.lt.CeilDivSub
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
-open Algebra Nat
+open Algebra Nat Int
 
 
 @[main]

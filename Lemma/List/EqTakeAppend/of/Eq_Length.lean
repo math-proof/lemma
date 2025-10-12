@@ -1,5 +1,5 @@
 import stdlib.List
-import Lemma.List.EqTakeAppend__Length
+import Lemma.List.EqTakeAppend
 open List
 
 
@@ -13,7 +13,7 @@ private lemma main
   (a ++ b).take n = a := by
 -- proof
   rw [← h]
-  apply EqTakeAppend__Length
+  apply EqTakeAppend
 
 
 -- created on 2025-05-17

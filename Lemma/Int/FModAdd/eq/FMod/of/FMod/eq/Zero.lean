@@ -13,7 +13,7 @@ import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.NeCoeS.of.Ne
 import Lemma.Int.FloorAdd.eq.AddFloor
 import Lemma.Algebra.MulAdd.eq.AddMulS
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubSub.eq.Neg
 open Algebra Bool Int Nat
 

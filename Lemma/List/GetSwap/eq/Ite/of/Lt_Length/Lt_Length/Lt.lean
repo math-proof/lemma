@@ -6,11 +6,11 @@ import Lemma.Nat.Le.of.Lt
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.List.LengthCons.eq.Add1Length
-import Lemma.Algebra.EqAdd_Sub.of.Ge
+import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Nat.Add
 import Lemma.List.GetDrop.eq.Get_Add.of.Add.lt.Length
@@ -71,7 +71,7 @@ private lemma main'
       ·
         simp at h_ti
         have h_eq_ti : i + 1 + (t - i - 1) = t := by
-          simp [SubSub.eq.Sub_Add.nat]
+          simp [SubSub.eq.Sub_Add]
           have := Gt.of.Ge.Ne h_ti (by assumption)
           apply EqAdd_Sub.of.Ge
           linarith
@@ -100,7 +100,7 @@ private lemma main'
           simp at h_tj
           have h_gt : t > j := Gt.of.Ge.Ne h_tj (by assumption)
           have h_eq_tj : j + 1 + (t - j - 1) = t := by
-            simp [SubSub.eq.Sub_Add.nat]
+            simp [SubSub.eq.Sub_Add]
             have := Gt.of.Ge.Ne h_tj (by assumption)
             apply EqAdd_Sub.of.Ge
             linarith

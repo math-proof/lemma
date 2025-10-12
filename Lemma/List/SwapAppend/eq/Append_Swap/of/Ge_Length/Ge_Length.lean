@@ -1,7 +1,7 @@
 import stdlib.List
 import Lemma.List.SwapAppend.eq.Append_Swap
-import Lemma.Algebra.EqAdd_Sub.of.Ge
-open Algebra List
+import Lemma.Nat.EqAdd_Sub.of.Ge
+open List Nat
 
 
 @[main]

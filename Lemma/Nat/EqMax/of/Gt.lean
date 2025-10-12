@@ -1,4 +1,5 @@
 import Lemma.Nat.Ge.of.Gt
+import Lemma.Nat.EqMax.of.Ge
 open Nat
 
 
@@ -9,9 +10,10 @@ private lemma main
 -- given
   (h : a > b) :
 -- imply
-  a ⊔ b = a := by
+  a ⊔ b = a := 
 -- proof
-  simp [Ge.of.Gt h]
+  EqMax.of.Ge (Ge.of.Gt h)
 
 
 -- created on 2025-05-17
+-- updated on 2025-10-12

@@ -1,5 +1,5 @@
 import Lemma.Nat.EqSubAdd
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.GeSub.of.Ge_Add
 open Algebra Nat
@@ -19,7 +19,7 @@ private lemma main
     simp [d, h₁]
   rw [h_b] at h₀ ⊢
   rw [EqSubAdd]
-  rw [Sub_Add.eq.SubSub.nat]
+  rw [Sub_Add.eq.SubSub]
   rw [EqAddSub.of.Ge]
   apply GeSub.of.Ge_Add.left.nat h₀
 

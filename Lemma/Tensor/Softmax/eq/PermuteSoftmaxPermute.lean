@@ -11,7 +11,8 @@ private lemma main
   (h : dim < s.length - 1)
   (X : Tensor α s) :
 -- imply
-  X.softmax dim ≃ (X.permute ⟨dim, by omega⟩ (s.length - 1 - dim)).softmax.permute ⟨s.length - 1, by simp [LengthPermute.eq.Length]; omega⟩ (dim + 1 - s.length) := by
+  let d := s.length - 1 - dim
+  X.softmax dim ≃ (X.permute ⟨dim, by omega⟩ d).softmax.permute ⟨s.length - 1, by simp [LengthPermute.eq.Length]; omega⟩ (-d) := by
 -- proof
   sorry
 

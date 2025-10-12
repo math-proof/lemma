@@ -1,8 +1,8 @@
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.Sub.eq.Zero
-open Algebra Nat
+open Algebra Nat Int
 
 
 @[main]

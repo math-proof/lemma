@@ -2,7 +2,7 @@ import Lemma.Nat.LtVal
 import Lemma.Algebra.Eq_Sub_1.of.Val.eq.Sub_1
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
 import Lemma.Algebra.AddAdd.eq.Add_Add
 import Lemma.Algebra.MinSubS.eq.SubMin.of.Ge.Ge
@@ -22,16 +22,13 @@ private lemma main
   have h_d := LtVal d
   simp_all [Eq_Sub_1.of.Val.eq.Sub_1 h]
   simp_all [Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0 h_d k]
-  rw [SubSub.eq.Sub_Add.nat]
+  rw [SubSub.eq.Sub_Add]
   rw [Add.comm (a := 1)]
   norm_num
   congr
   rw [← MinSubS.eq.SubMin.of.Ge.Ge]
   simp
-  .
-    linarith
-  .
-    linarith
+  repeat linarith
 
 
 -- created on 2025-07-14

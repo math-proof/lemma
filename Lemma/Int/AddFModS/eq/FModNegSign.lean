@@ -11,7 +11,7 @@ import Lemma.Algebra.AddSub.eq.Sub_Sub
 import Lemma.Algebra.EqSub.is.Eq_Add
 import Lemma.Nat.Add
 import Lemma.Algebra.EqFMod.of.Mul_Add_Sign.lt.Zero
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.LeSign.of.Gt_0
 import Lemma.Set.MulSubS.le.Zero.of.In_Icc
 import Lemma.Nat.Mul

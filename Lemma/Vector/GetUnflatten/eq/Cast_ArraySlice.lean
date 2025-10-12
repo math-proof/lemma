@@ -1,7 +1,7 @@
-import Lemma.Algebra.EqMin_SubMulS
+import Lemma.Nat.EqMin_SubMulS
 import Lemma.Vector.GetUnflatten.as.ArraySlice
 import Lemma.Bool.EqCast.of.SEq
-open Algebra Vector Bool
+open Vector Bool Nat
 
 
 @[main]

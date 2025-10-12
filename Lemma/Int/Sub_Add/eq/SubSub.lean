@@ -2,16 +2,6 @@ import sympy.Basic
 
 
 @[main, comm]
-private lemma nat
--- given
-  (a b c : ℕ) :
--- imply
-  a - (b + c) = a - b - c :=
--- proof
-  Nat.sub_add_eq a b c
-
-
-@[main, comm]
 private lemma main
   [SubtractionCommMonoid α]
 -- given
@@ -23,3 +13,4 @@ private lemma main
 
 
 -- created on 2024-07-01
+-- updated on 2025-10-12

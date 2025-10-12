@@ -1,8 +1,8 @@
 import Mathlib.Data.Vector.MapLemmas
-import Lemma.Algebra.EqMin_SubMulS
+import Lemma.Nat.EqMin_SubMulS
 import Lemma.List.LengthToList.eq.Length
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
-open Algebra
+open Nat
 
 
 class Dot (α : Type u) (β : Type v) (γ : outParam (Type w)) where

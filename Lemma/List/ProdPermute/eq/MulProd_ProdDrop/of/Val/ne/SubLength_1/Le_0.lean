@@ -1,8 +1,8 @@
 import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
 import Lemma.Int.Add_ToNatNeg.eq.ToNatSub.of.Le_0
-import Lemma.Algebra.EqMax.of.Ge
+import Lemma.Nat.EqMax.of.Ge
 import Lemma.Algebra.GeNeg_0.of.Le_0
-open Algebra List Int
+open Algebra List Int Nat
 
 
 @[main]

@@ -7,7 +7,7 @@ import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Algebra.Lt.of.Lt.Lt
 import Lemma.Nat.Le.of.Lt
-import Lemma.Algebra.Sub_Add.eq.SubSub
+import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.EqAdd_Sub.of.Lt
 import Lemma.Algebra.Sub.ge.One.of.Lt
@@ -38,7 +38,7 @@ private lemma main
     rw [LengthSlice.eq.SubMin]
     have h_i := Lt.of.Lt.Lt h h_j
     simp [Le.of.Lt h_i, Le.of.Lt h_j]
-    rw [Sub_Add.eq.SubSub.nat]
+    rw [Sub_Add.eq.SubSub]
     rw [EqAddSub.of.Ge]
     ·
       rw [EqAdd_Sub.of.Lt h]

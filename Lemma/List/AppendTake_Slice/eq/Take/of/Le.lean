@@ -1,6 +1,6 @@
 import stdlib.List
-import Lemma.Algebra.EqAdd_Sub.of.Ge
-open Algebra
+import Lemma.Nat.EqAdd_Sub.of.Ge
+open Nat
 
 
 @[main]
