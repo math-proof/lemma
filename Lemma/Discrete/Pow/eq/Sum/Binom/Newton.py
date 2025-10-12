@@ -16,7 +16,7 @@ def apply(self, var=None, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool
+    from Lemma import Algebra, Discrete, Bool, Finset
 
     x, y = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.powsimp()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.rhs.expr.expand()
 

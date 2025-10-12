@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)
@@ -22,13 +22,13 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Algebra.Prod.eq.MulProdS, cond={n + 1})
+    Eq << Eq.induct.this.lhs.apply(Finset.Prod.eq.MulProdS, cond={n + 1})
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Prod.eq.MulProdS, cond={-n - 1})
+    Eq << Eq[-1].this.lhs.args[1].apply(Finset.Prod.eq.MulProdS, cond={-n - 1})
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Prod.eq.MulProdS, cond={n + 1})
+    Eq << Eq[-1].this.rhs.apply(Finset.Prod.eq.MulProdS, cond={n + 1})
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Prod.eq.MulProdS, cond={-n - 1})
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.Prod.eq.MulProdS, cond={-n - 1})
 
     Eq << Eq[0] * f(-n -1) * f(n + 1)
 

@@ -13,7 +13,7 @@ def apply(lt, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
-    Eq <<= Eq[-1].this.lhs.apply(Algebra.Le.of.Lt), Bool.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=m <= 0)
+    Eq <<= Eq[-1].this.lhs.apply(Nat.Le.of.Lt), Bool.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=m <= 0)
 
     Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq <<= Bool.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=M > 0), Bool.Imp_And.given.Imp.delete.apply(Eq[-1], 1)
 
-    Eq <<= Eq[-3].this.apply(Bool.Imp.flatten), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.lhs.apply(Algebra.Ge.of.Gt.relax)
+    Eq <<= Eq[-3].this.apply(Bool.Imp.flatten), Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.lhs.apply(Nat.Ge.of.Gt)
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Inf_Square.eq.Zero.of.Gt_0.Le_0), Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1])
 

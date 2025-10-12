@@ -9,13 +9,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
     k, n = Symbol(integer=True)
     i = Symbol(domain=Range(n + 1))
     f = Function(integer=True)
     Eq << apply(Mul(Product[k:i:n](f(k)), f(n)))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-1].this.rhs.apply(Finset.Prod.eq.MulProdS, cond={n})
 
     # Eq << Eq[-1].this.rhs.args[0].apply(Algebra.product.to.Mul.doit.setlimit)
     return

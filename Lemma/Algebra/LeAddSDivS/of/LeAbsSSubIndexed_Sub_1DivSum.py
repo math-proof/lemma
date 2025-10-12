@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq.le_given.rhs.this.find(2 * ~Sum).expr.apply(Algebra.Mul.eq.Add.Square)
 
-    Eq << Eq[-1].this.rhs.find(Mul).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.find(Mul).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
 

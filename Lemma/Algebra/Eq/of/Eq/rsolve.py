@@ -19,7 +19,7 @@ def apply(self, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
 
 

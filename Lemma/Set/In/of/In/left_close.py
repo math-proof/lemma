@@ -11,7 +11,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     x, a, b = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True, right_open=True)))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[-1])
+    Eq << Nat.Ge.of.Gt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

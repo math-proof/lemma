@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo, k))
     i = Symbol(integer=True)
@@ -20,22 +20,22 @@ def prove(Eq):
     Eq << apply(Product[i:finiteset](x[i]))
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod.eq.MulProdS, cond={n}, simplify=False)
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod.eq.MulProdS, cond={n}, simplify=False)
 
     Eq << Eq[-1].this.lhs.find(Product).simplify()
 
     n -= 1
-    Eq << Eq[-1].lhs.find(Product).this.apply(Algebra.Prod.eq.MulProdS, cond={n}, simplify=False)
+    Eq << Eq[-1].lhs.find(Product).this.apply(Finset.Prod.eq.MulProdS, cond={n}, simplify=False)
 
     Eq << Eq[-1].this.rhs.find(Product).simplify()
 
     n -= 1
-    Eq << Eq[-1].rhs.find(Product).this.apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-1].rhs.find(Product).this.apply(Finset.Prod.eq.MulProdS, cond={n})
 
     Eq << Eq[-1].this.rhs.find(Product).simplify()
 
     n -= 1
-    Eq << Eq[-1].rhs.find(Product).this.apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-1].rhs.find(Product).this.apply(Finset.Prod.eq.MulProdS, cond={n})
 
     Eq << Eq[5].subs(Eq[-1])
 

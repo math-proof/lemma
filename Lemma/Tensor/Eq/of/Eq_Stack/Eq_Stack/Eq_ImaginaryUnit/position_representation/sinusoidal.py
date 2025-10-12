@@ -15,7 +15,7 @@ def apply(eq_PE, eq_PE_quote, eq_Z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Tensor, Bool
+    from Lemma import Algebra, Trigonometry, Tensor, Bool, Real
 
     n, b = Symbol(positive=True, integer=True)
     d = Symbol(integer=True, positive=True, even=True)
@@ -173,7 +173,7 @@ def prove(Eq):
 
     Eq << Eq[3].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.rhs.apply(Real.ExpAdd.eq.MulExpS)
 
     Eq.eq_euler = Eq[-1].this.find(exp).apply(Trigonometry.ExpMulI.eq.AddCos_MulISin.Euler)
 

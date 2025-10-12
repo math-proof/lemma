@@ -14,14 +14,14 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus
+    from Lemma import Probability, Algebra, Calculus, Nat, Nat
 
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y), 0))
 
     Eq.y_marginal_probability = Probability.Integral.eq.Pr.marginal.apply(Integral[y.var](Pr(x, y)))
 
-    Eq << Algebra.Gt_0.of.Ne_0.apply(Eq[0])
+    Eq << Nat.Gt_0.of.Ne_0.apply(Eq[0])
 
     Eq << Calculus.GtIntegral.of.All_Gt.apply(Eq[-1], (y.var,))
 

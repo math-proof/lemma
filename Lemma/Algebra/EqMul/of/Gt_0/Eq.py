@@ -14,7 +14,7 @@ def apply(is_positive, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x = Symbol(real=True, given=True)
     f, g, h = Function(real=True)
@@ -22,11 +22,11 @@ def prove(Eq):
 
     Eq << Algebra.Ne.of.Gt.apply(Eq[0])
 
-    Eq << Algebra.EqMulS.of.Eq.apply(Eq[-1], Eq[1])
+    Eq << Nat.EqMulS.of.Eq.apply(Eq[-1], Eq[1])
 
     Eq << Eq[2].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    
+
 
 
 if __name__ == '__main__':

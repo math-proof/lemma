@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Eq.of.Eq.Eq.subst.rhs)
 
-    Eq << Eq[-1].this.find(Exp).apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.find(Exp).apply(Real.ExpAdd.eq.MulExpS)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.pop.Slice)
 

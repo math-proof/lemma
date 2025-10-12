@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     k = Symbol(integer=True, positive=True)
     n = 5
@@ -20,16 +20,16 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.apply(Algebra.Prod.limits.domain_defined)
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod.eq.MulProdS, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.MulProdS, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.MulProdS, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.MulProdS, cond={n})
 
 
 if __name__ == '__main__':

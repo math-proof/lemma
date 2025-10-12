@@ -9,7 +9,7 @@ def apply(*imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     k, a = Symbol(integer=True)
     b = Symbol(domain=Range(a + 1, oo))
@@ -19,9 +19,9 @@ def prove(Eq):
 
     Eq << Algebra.LtMul.of.Lt.Lt.apply(Eq[0], Eq[1])
 
-    Eq << Eq[2].this.lhs.apply(Algebra.Prod.eq.MulProdS, cond={b})
+    Eq << Eq[2].this.lhs.apply(Finset.Prod.eq.MulProdS, cond={b})
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Prod.eq.MulProdS, cond={b})
+    Eq << Eq[-1].this.rhs.apply(Finset.Prod.eq.MulProdS, cond={b})
 
 
 if __name__ == '__main__':

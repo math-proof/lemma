@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete, Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(Difference).apply(Discrete.Diff.eq.Sum.Binom)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.lhs.expr.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap.intlimit)
 

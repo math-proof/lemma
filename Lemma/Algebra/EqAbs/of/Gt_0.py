@@ -9,12 +9,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x = Symbol(real=True)
 
     Eq << apply(x > 0)
 
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[0])
+    Eq << Nat.Ge.of.Gt.apply(Eq[0])
 
     Eq << Algebra.EqAbs.of.Ge_0.apply(Eq[-1])
 

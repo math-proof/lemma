@@ -13,13 +13,13 @@ def apply(is_nonnegative, lt, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     a, b = Symbol(integer=True, given=True)
     k = Symbol(integer=True)
     Eq << apply(a >= 0, a < b, k)
 
-    Eq << Algebra.EqMin.of.Lt.apply(Eq[1])
+    Eq << Nat.EqMin.of.Lt.apply(Eq[1])
 
     Eq << Algebra.GeAdd.of.Eq.Ge.apply(Eq[-1], Eq[0])
 

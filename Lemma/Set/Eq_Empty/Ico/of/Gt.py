@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Nat
 
     x, y = Symbol(integer=True, given=True)
     Eq << apply(x > y)
 
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[0])
+    Eq << Nat.Ge.of.Gt.apply(Eq[0])
     Eq << Set.Eq_Empty.Ico.of.Ge.apply(Eq[-1])
 
 

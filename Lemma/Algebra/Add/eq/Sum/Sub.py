@@ -9,13 +9,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     f, g = Function(integer=True)
     Eq << apply(Sum[k:n](f(k)) - Sum[k:n](g(k)))
 
-    Eq << Eq[0].this.find(-Sum).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[0].this.find(-Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
 

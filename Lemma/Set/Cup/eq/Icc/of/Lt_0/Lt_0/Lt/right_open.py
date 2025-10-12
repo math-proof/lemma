@@ -17,7 +17,7 @@ def apply(a_is_negative, b_is_negative, lt, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     a, b = Symbol(integer=True, given=True)
     k = Symbol(integer=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Set.Cup.eq.UnionCupS.apply(Cup[k:a:0](Eq[-1].lhs.expr), cond=Range(b, 0))
 
-    Eq.min_b0 = Algebra.EqMin.of.Lt.apply(Eq[1])
+    Eq.min_b0 = Nat.EqMin.of.Lt.apply(Eq[1])
 
     Eq << Algebra.EqMax.of.Lt.apply(Eq[2])
 
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1].apply(Algebra.LeAdd_1.of.Lt)
 
-    Eq << Eq[-1].this.find(Expr <= 0).apply(Algebra.EqMin.of.Le)
+    Eq << Eq[-1].this.find(Expr <= 0).apply(Nat.EqMin.of.Le)
 
     Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 

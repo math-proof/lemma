@@ -8,7 +8,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus
+    from Lemma import Algebra, Calculus, Nat, Nat
 
     x = Symbol(real=True)
     Eq << apply(x)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Calculus.Lt.of.Gt_0.monotony.apply(Eq.is_positive)
 
-    Eq << Algebra.Le.of.Lt.apply(Eq[-1])
+    Eq << Nat.Le.of.Lt.apply(Eq[-1])
 
     Eq << Calculus.Le.of.Le_0.monotony.apply(Eq.is_nonpositive)
 

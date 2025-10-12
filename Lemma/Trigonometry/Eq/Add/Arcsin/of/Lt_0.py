@@ -10,17 +10,17 @@ def apply(is_negative):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry
+    from Lemma import Algebra, Trigonometry, Nat
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(x < 0)
 
-    Eq << Algebra.Le.of.Lt.apply(Eq[0])
+    Eq << Nat.Le.of.Lt.apply(Eq[0])
 
     Eq << Trigonometry.Eq.Add.Arcsin.of.Le_0.apply(Eq[-1])
 
     # https://en.wikipedia.org/wiki/Argument_(complex_analysis)
-    
+
 
 
 if __name__ == '__main__':

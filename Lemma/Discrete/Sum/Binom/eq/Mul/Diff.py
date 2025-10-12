@@ -29,7 +29,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete
+    from Lemma import Algebra, Discrete, Finset
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True, given=True)
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * (-1) ** (n - i - j)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.lhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.lhs.apply(Discrete.Sum.Binom.eq.Diff, var=k)
 

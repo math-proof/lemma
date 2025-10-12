@@ -14,7 +14,7 @@ def apply(is_nonnegative, lt, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq <<= Eq[-5].this.lhs.apply(Set.Gt.of.In_Icc), Eq[-4].this.rhs.apply(Set.In.given.In.Sub, m / 2), Eq[-3].this.expr.apply(Algebra.Lt.given.Gt_0), Eq[-1].this.lhs.apply(Algebra.GtSquare.of.Ge_0.Gt)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ge.of.Gt.relax)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ge.of.Gt)
 
     Eq <<= Eq[-4].this.rhs.apply(Algebra.Lt.given.Gt_0), Eq[-3].this.rhs.apply(Set.In.given.In.Mul.Icc, 2), Bool.All.given.Imp.apply(Eq[-2])
 
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-3]), Eq[-2].this.rhs.apply(Algebra.Gt.given.And.strengthen, M, strict=True)
 
-    Eq <<= Bool.Imp.given.Cond.apply(Eq[-2]), Eq[-3].this.rhs / 3, Eq[-1].this.lhs.apply(Algebra.Ge.of.Gt.relax)
+    Eq <<= Bool.Imp.given.Cond.apply(Eq[-2]), Eq[-3].this.rhs / 3, Eq[-1].this.lhs.apply(Nat.Ge.of.Gt)
 
     Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 

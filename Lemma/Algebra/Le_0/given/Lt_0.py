@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x = Symbol(real=True)
     Eq << apply(x <= 0)
 
-    Eq << Algebra.Le.of.Lt.apply(Eq[1])
+    Eq << Nat.Le.of.Lt.apply(Eq[1])
 
-    
+
 
 
 if __name__ == '__main__':

@@ -13,7 +13,7 @@ def apply(sgm, *, simplify=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -21,7 +21,7 @@ def prove(Eq):
     g = Symbol(shape=(oo, oo), real=True)
     Eq << apply(Sum[i:n, j:n](f[j] * g[i, j]))
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.expr.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
 
 

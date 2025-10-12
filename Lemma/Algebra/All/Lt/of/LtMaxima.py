@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, t = Symbol(real=True)
     M = Symbol(real=True, given=True)
@@ -17,7 +17,7 @@ def prove(Eq):
     S = Symbol(etype=dtype.real)
     Eq << apply(Maxima[x:S](f(x)) < M)
 
-    Eq << Algebra.Le.of.Lt.apply(Eq[0])
+    Eq << Nat.Le.of.Lt.apply(Eq[0])
 
     Eq << Algebra.All.Le.of.LeMaxima.apply(Eq[-1])
 

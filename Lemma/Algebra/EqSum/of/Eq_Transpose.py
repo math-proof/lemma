@@ -9,7 +9,7 @@ def apply(eq, i, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
 
 

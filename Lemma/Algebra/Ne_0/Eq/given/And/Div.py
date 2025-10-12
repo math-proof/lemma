@@ -10,12 +10,12 @@ def apply(ne, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat
 
     x, y, z = Symbol(integer=True)
     Eq << apply(Unequal(x, 0), Equal(x + y, z))
 
-    Eq << Algebra.EqMulS.of.Eq.apply(Eq[0], Eq[2])
+    Eq << Nat.EqMulS.of.Eq.apply(Eq[0], Eq[2])
 
 
 

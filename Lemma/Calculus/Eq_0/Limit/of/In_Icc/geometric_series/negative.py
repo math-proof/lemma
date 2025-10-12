@@ -11,7 +11,7 @@ def apply(el, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Calculus
+    from Lemma import Set, Algebra, Calculus, Nat, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, given=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].subs(Eq.is_zero), Eq[-1].subs(Eq.is_zero)
 
-    Eq << Algebra.Eq.of.Ge.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[-2])
 
 
 if __name__ == '__main__':

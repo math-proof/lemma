@@ -9,7 +9,7 @@ def apply(le, m):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra
+    from Lemma import Tensor, Algebra, Nat
 
     k, n, m = Symbol(integer=True)
     Eq << apply(k <= n, m)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Relu.eq.Add.Min)
 
-    Eq << Algebra.EqMin.of.Le.apply(Eq[0])
+    Eq << Nat.EqMin.of.Le.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

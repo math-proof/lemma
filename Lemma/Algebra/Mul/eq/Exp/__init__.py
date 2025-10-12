@@ -12,12 +12,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real
 
     a, b = Symbol(real=True)
     Eq << apply(exp(a) * exp(b))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.rhs.apply(Real.ExpAdd.eq.MulExpS)
 
 
 if __name__ == '__main__':

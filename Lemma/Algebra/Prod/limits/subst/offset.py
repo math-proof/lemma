@@ -9,7 +9,7 @@ def apply(self, index=0, offset=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
 
     n, d = Symbol(integer=True)
     f = Function(real=True)
@@ -20,9 +20,9 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(m, m + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Algebra.Prod.eq.MulProdS, cond={m})
+    Eq << Eq.induct.this.lhs.apply(Finset.Prod.eq.MulProdS, cond={m})
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Prod.eq.MulProdS, cond={m - d})
+    Eq << Eq[-1].this.rhs.apply(Finset.Prod.eq.MulProdS, cond={m - d})
 
     Eq << Eq[0] * f(m)
 

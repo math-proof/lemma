@@ -59,7 +59,7 @@ def apply(lt, is_continuous, is_differentiable, equal):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Bool
+    from Lemma import Calculus, Set, Algebra, Bool, Int, Nat
 
     a, b = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Eq_0.of.Le_0)
+    Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
 
     Eq << Eq[-1].this.expr.apply(Algebra.Eq_0.of.Square.eq.Zero.complex)
 

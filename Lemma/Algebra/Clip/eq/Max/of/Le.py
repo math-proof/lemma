@@ -9,12 +9,12 @@ def apply(le, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, a, b = Symbol(real=True)
     Eq << apply(a <= b, x)
 
-    Eq << Algebra.EqMin.of.Le.apply(Eq[0])
+    Eq << Nat.EqMin.of.Le.apply(Eq[0])
 
     Eq << Eq[0].reversed
 
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.Cond.apply(Eq[-2])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqMin.of.Lt)
+    Eq << Eq[-1].this.lhs.apply(Nat.EqMin.of.Lt)
 
     Eq << Eq[-1].this.lhs.reversed
 

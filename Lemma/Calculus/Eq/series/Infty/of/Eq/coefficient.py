@@ -24,7 +24,7 @@ def apply(given, x):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Calculus
+    from Lemma import Algebra, Calculus, Finset
 
     A, B = Symbol(shape=(oo,), real=True)
     x = Symbol(real=True)
@@ -75,9 +75,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.subst.offset, m + 1)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Calculus.EqLimit.of.Eq.apply(Eq[-1], (r, 0))
 

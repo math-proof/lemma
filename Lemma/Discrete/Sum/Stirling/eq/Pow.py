@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool
+    from Lemma import Discrete, Algebra, Bool, Finset
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Pow.Add.exponent)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.lhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.lhs().expr.args[:2].apply(Discrete.Mul.FallingFactorial.eq.Add)
 

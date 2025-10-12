@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     a, b = Symbol(real=True)
     Eq << apply(Interval(a, b) | Interval(b, a))
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Imply(a <= b, Equal(Min(a, b), a), plausible=True)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqMin.of.Le)
+    Eq << Eq[-1].this.lhs.apply(Nat.EqMin.of.Le)
 
     Eq <<= Eq[-2] & Eq[-1]
 

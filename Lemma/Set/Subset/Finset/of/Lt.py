@@ -9,12 +9,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x < y)
 
-    Eq << Algebra.Le.of.Lt.apply(Eq[0])
+    Eq << Nat.Le.of.Lt.apply(Eq[0])
 
     Eq << Set.Subset.Finset.of.Le.apply(Eq[-1], simplify=None)
 

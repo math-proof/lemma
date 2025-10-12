@@ -17,7 +17,7 @@ def apply(f0, suffice, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Set, Bool, Tensor
+    from Lemma import Algebra, Discrete, Set, Bool, Tensor, Finset
 
     n = Symbol(integer=True, nonnegative=True, given=False)
     f = Symbol(integer=True, shape=(oo,))
@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, 1)
 
-    Eq << (-Eq[-1].rhs.expr.args[0].args[0].expr).this.apply(Algebra.Mul_Prod.eq.Prod)
+    Eq << (-Eq[-1].rhs.expr.args[0].args[0].expr).this.apply(Finset.Mul_Prod.eq.Prod)
 
     Eq << Eq[-2].subs(Eq[-1])
 

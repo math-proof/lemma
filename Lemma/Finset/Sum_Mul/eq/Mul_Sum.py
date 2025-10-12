@@ -26,7 +26,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
     i, j = Symbol(integer=True)
 
     C = Symbol(etype=dtype.integer, given=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << apply(Sum[i:C](f(i) * h(j)))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
 if __name__ == '__main__':
     run()

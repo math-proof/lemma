@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Finset
 
     n = Symbol(integer=True)
     x, y = Symbol(shape=(n,), real=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq.expansion = Eq[-1].this.rhs.expr.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq.expansion = Eq[-1].this.rhs.expr.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq.expansion.subs(W, W.T)
 

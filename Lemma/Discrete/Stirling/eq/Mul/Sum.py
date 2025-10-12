@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool
+    from Lemma import Discrete, Algebra, Bool, Finset
 
     k = Symbol(integer=True, nonnegative=True, given=False)
     n = Symbol(integer=True, nonnegative=True)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].args[0].defun()
 
-    Eq << Eq[-1].this.rhs.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.swap)
 
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find((~Pow) / Factorial).apply(Algebra.Pow.eq.Mul.split.exponent, simplify=None)
 
-    Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(Mul ** Symbol).apply(Algebra.Pow.eq.Mul.split.base)
 

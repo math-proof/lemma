@@ -11,7 +11,7 @@ def apply(lt_r, γ, λ, k=None, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Discrete, Tensor
+    from Lemma import Algebra, Calculus, Set, Discrete, Tensor, Finset
 
     t, k, i = Symbol(integer=True) # time step counter
     δ = Symbol(shape=(oo,), real=True) # TD residual
@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << apply(Less(Sup[t](Abs(δ[t])), oo), γ, λ, k, i)
 
     n = Symbol(integer=True)
-    Eq << Eq[1].lhs._subs(oo, n).this.find(Sum[~Mul[Sum]]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[1].lhs._subs(oo, n).this.find(Sum[~Mul[Sum]]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.swap.intlimit)
 

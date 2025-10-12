@@ -10,13 +10,13 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus
+    from Lemma import Algebra, Calculus, Nat
 
     x = Symbol(real=True)
     f, g = Function(shape=(), real=True)
     Eq << apply(Greater(f(x) / x, g(x) / x), (x, 0))
 
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[0])
+    Eq << Nat.Ge.of.Gt.apply(Eq[0])
 
     Eq << Calculus.GeLimit.of.Ge.apply(Eq[-1], (x, 0))
 

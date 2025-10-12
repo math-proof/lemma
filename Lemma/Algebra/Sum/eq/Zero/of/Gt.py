@@ -10,14 +10,14 @@ def apply(ge, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, b = Symbol(integer=True, given=True)
     n = Symbol(integer=True)
     f = Function(integer=True)
     Eq << apply(a > b, Sum[n:a:b](f(n)))
 
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[0])
+    Eq << Nat.Ge.of.Gt.apply(Eq[0])
     Eq << Algebra.Sum.eq.Zero.of.Ge.apply(Eq[-1], Eq[1].lhs)
 
 

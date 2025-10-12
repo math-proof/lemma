@@ -10,18 +10,18 @@ def apply(is_nonzero, is_nonpositive):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x = Symbol(real=True, given=True)
     Eq << apply(Unequal(x, 0), LessEqual(x, 0))
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.Eq.of.Ge.Le.apply(Eq[-1], Eq[1])
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[1])
 
     Eq << ~Eq[-1]
 
-    
+
 
 
 if __name__ == '__main__':

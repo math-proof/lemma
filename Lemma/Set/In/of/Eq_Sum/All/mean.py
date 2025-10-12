@@ -11,7 +11,7 @@ def apply(eq, forall):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqDiv.of.Eq.Lt, ret=1)
 
-    Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(All).apply(Algebra.All.Is.And.split, cond={n})
 

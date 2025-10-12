@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Finset
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().find(Symbol ** Symbol).apply(Discrete.Pow.eq.Sum.Stirling.FallingFactorial)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.expr.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap.intlimit)
 
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * (-1) ** (n - i)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul.Delta.subst)
 

@@ -10,13 +10,13 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, y, d = Symbol(real=True, given=True)
     Eq << apply(Unequal(x, y), d)
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].apply(Algebra.EqMulS.of.Eq)
+    Eq << Eq[-1].apply(Nat.EqMulS.of.Eq)
 
     Eq <<= ~Eq[-1] & Eq[0]
 

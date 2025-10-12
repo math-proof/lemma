@@ -42,7 +42,7 @@ def apply(self, index=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     x, k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -50,7 +50,7 @@ def prove(Eq):
     Eq << apply(-Sum[k:n](f(k)) * x, 1)
 
     Eq << Eq[-1].this.rhs.simplify()
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.lhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
 
 

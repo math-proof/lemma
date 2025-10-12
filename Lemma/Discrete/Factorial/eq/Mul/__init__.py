@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete, Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(factorial(n))
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(factorial).apply(Discrete.Factorial.eq.Prod)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod.eq.MulProdS, cond={n})
 
 
 if __name__ == '__main__':

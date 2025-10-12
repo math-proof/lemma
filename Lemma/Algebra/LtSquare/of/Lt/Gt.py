@@ -11,7 +11,7 @@ def apply(lt, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, m, M = Symbol(real=True, given=True)
     Eq << apply(x < M, x > m)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Less).apply(Algebra.Lt.of.Lt.relax, Eq[2].rhs)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Ge.of.Gt.relax)
+    Eq << Eq[-1].this.find(Greater).apply(Nat.Ge.of.Gt)
 
 
 

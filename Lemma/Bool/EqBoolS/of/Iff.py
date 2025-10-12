@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int, Int
 
     n = Symbol(integer=True, nonnegative=True)
     f, g = Symbol(integer=True, shape=(oo,))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - Eq[-3]
 
-    Eq << Algebra.Eq.of.Sub.eq.Zero.apply(Eq[-1], reverse=True)
+    Eq << Int.Eq.of.Sub.eq.Zero.apply(Eq[-1], reverse=True)
 
 
 

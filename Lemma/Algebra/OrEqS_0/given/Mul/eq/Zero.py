@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     a, b = Symbol(real=True, given=True)
     Eq << apply(Equal(a, 0) | Equal(b, 0))
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Algebra.EqDivS.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqMulS.of.Eq)
+    Eq << Eq[-1].this.lhs.apply(Nat.EqMulS.of.Eq)
 
     Eq << Bool.EqBoolS.of.Iff.apply(Eq[-3])
 

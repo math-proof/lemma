@@ -110,14 +110,13 @@ export default {
 			latex: null,
 			count: [],
 			whitelist : [
-				'Logic.Cond.of.Eq.Cond.subst',
-				'Logic.Cond.of.Iff.Cond.subst',
-				'Logic.All_In_Insert.Is.And_All', // Logic.AllIn_Insert.Is.And_All
-				'Logic.Cond.Or.of.OrAndS', // Logic.Cond.Or.given.OrAndS, Logic.And_Or.given.OrAndS
-				'Logic.Cond.of.All_Imp', 
-				'Logic.All.of.Given', // plausible
-				'Logic.All.of.Cond', // plausible
-				'Logic.Imp.Is.All', // plausible
+				'Bool.Cond.of.Eq.Cond.subst',
+				'Bool.Cond.of.Iff.Cond.subst',
+				'Bool.All_In_Insert.Is.And_All', // Bool.AllIn_Insert.Is.And_All
+				'Bool.Cond.of.All_Imp', 
+				'Bool.All.of.Given', // plausible
+				'Bool.All.of.Cond', // plausible
+				'Bool.Imp.Is.All', // plausible
 
 				'Set.Eq.of.ImpIn.ImpIn', // plausible
 				

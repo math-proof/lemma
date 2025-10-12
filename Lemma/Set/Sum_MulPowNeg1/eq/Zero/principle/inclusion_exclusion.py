@@ -15,7 +15,7 @@ def apply(A):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Finset
 
     n = Symbol(domain=Range(2, oo))
     A = Symbol(etype=dtype.integer, shape=(n,))
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - Eq[-1].lhs.args[1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[0].subs(_k, 0)
 

@@ -12,7 +12,7 @@ def apply(ge, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     a, b, c, x, y = Symbol(real=True)
     Eq << apply(a >= b, Element(x, Interval(a, b)))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Algebra.Le.of.Ge.Le.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Eq.of.Ge.Le.apply(Eq[-1], Eq[0])
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[0])
 
     Eq << Eq[1].subs(Eq[-1].reversed)
 

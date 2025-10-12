@@ -12,13 +12,13 @@ def apply(lt, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, x, b = Symbol(real=True)
     Eq << apply(a < x, b > x)
 
     Eq << Algebra.Gt.of.Lt.Gt.apply(Eq[0], Eq[1])
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[-1])
+    Eq << Nat.Ge.of.Gt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.Mul_Sum.eq.Sum_Mul import rewrite
+    from Lemma.Finset.Mul_Sum.eq.Sum_Mul import rewrite
     return Equal(self, rewrite(Integral, self))
 
 

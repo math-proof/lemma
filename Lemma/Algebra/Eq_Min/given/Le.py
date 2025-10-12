@@ -11,12 +11,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(integer=True)
     Eq << apply(Equal(x, Min(x, y)))
 
-    Eq << Algebra.EqMin.of.Le.apply(Eq[1])
+    Eq << Nat.EqMin.of.Le.apply(Eq[1])
 
     Eq << Eq[-1].reversed
 

@@ -14,7 +14,7 @@ def apply(A, u):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool, Nat
 
     n = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq <<= Eq.ou.find(Less).this.apply(Algebra.Lt.of.Lt.transport, rhs=1), Eq.ou.find(GreaterEqual).this.apply(Algebra.Ge.of.Ge.transport, rhs=1)
 
-    Eq <<= Eq[-1].this.rhs.apply(Algebra.EqMin.of.Ge), Eq[-2].this.rhs.apply(Algebra.EqMin.of.Lt)
+    Eq <<= Eq[-1].this.rhs.apply(Algebra.EqMin.of.Ge), Eq[-2].this.rhs.apply(Nat.EqMin.of.Lt)
 
     Eq <<= Bool.Imp_And.of.Cond.Imp.apply(Eq[-2], Eq[-6]), Bool.Imp_And.of.Cond.Imp.apply(Eq[-1], Eq[-5])
 

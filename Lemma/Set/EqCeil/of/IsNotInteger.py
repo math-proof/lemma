@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Nat, Nat
 
     x = Symbol(real=True)
     Eq << apply(NotElement(x, Integers))
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq <<= Algebra.Ge_Add_1.of.Gt.apply(Eq[-2]), Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
 
-    Eq << Algebra.Eq.of.Ge.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[-2])
     Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub)
 
 

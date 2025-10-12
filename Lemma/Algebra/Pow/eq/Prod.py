@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
     f = Function(real=True)
     k = Symbol(integer=True)
     n = Symbol(integer=True, given=False, positive=True)
@@ -23,9 +23,9 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.rhs.apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq.induct.this.rhs.apply(Finset.Prod.eq.MulProdS, cond={n})
 
-    Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.MulProdS, cond={n})
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Pow.eq.Mul.split.base)
 

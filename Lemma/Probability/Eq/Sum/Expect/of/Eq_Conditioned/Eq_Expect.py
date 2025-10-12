@@ -15,7 +15,7 @@ def apply(eq_conditioned, eq_expect, j=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Probability, Algebra
+    from Lemma import Discrete, Probability, Algebra, Finset
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -40,13 +40,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Eq[-1].subs(Eq[1].subs(k, j))
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.limits.separate)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.eq.Mul.series.arithmetic).reversed
 

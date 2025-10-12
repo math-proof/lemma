@@ -37,7 +37,7 @@ def prove(Eq):
     f, h, g = Function(real=True)
     Eq << apply(Unequal(x, y) | Equal(f(x), g(y)) & (y > 0) | Equal(h(x), g(y)) & (y > 0), cond=y > 0)
 
-    Eq << Eq[1].this.find(And).apply(Bool.Cond.Or.given.OrAndS, simplify=None)
+    Eq << Eq[1].this.find(And).apply(Bool.And_Or.given.OrAndS, simplify=None)
 
 
 

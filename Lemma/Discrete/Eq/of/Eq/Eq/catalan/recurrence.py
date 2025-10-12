@@ -10,7 +10,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Discrete, Set, Bool
+    from Lemma import Algebra, Calculus, Discrete, Set, Bool, Finset
 
     n, k = Symbol(integer=True)
     # n = Symbol(integer=True, nonnegative=True)
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq.g_squared * x
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.lhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-3])
 
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
 
-    Eq.g_derivative = Eq[-1].this.rhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq.g_derivative = Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Discrete.Gt_0.of.Eq.Eq.catalan.apply(Eq[0], Eq[1])
 
@@ -162,7 +162,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Div.Binom)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.rhs.expr.ratsimp()
 

@@ -19,13 +19,13 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Nat, Nat
 
     k = Symbol(integer=True, positive=True)
     s = Symbol(etype=dtype.integer[k], given=True)
     Eq << apply(Unequal(Card(s), 0))
 
-    Eq << Algebra.Gt_0.of.Ne_0.apply(Eq[0])
+    Eq << Nat.Gt_0.of.Ne_0.apply(Eq[0])
 
     Eq << Set.Any.Eq.of.Card.gt.Zero.apply(Eq[-1])
 

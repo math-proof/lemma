@@ -16,7 +16,7 @@ def apply(initial_condition, recurrence, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor, Algebra
+    from Lemma import Discrete, Tensor, Algebra, Finset
 
     v, θ = Symbol(shape=(oo,), real=True)
     t, n = Symbol(integer=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).ratsimp()
 
-    Eq << Eq[-1].this.find(Sum[~Mul]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Sum[~Mul]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.swap.intlimit)
 
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul - Pow * Pow).apply(Algebra.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(Sum).expr.args[:3].apply(Algebra.Mul_Add.eq.AddMulS)
 

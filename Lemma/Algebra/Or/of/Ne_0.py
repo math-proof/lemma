@@ -10,18 +10,18 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a = Symbol(real=True, given=True)
     Eq << apply(Unequal(a, 0))
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].this.apply(Algebra.Eq.of.Ge.Le)
+    Eq << Eq[-1].this.apply(Nat.Eq.of.Ge.Le)
 
     Eq << ~Eq[-1]
 
-    
+
 
 
 if __name__ == '__main__':

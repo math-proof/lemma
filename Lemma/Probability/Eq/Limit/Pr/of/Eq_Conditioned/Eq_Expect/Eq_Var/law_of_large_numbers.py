@@ -15,7 +15,7 @@ def apply(eq_conditioned, eq_expect, eq_var, ε=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus
+    from Lemma import Probability, Algebra, Calculus, Nat, Nat
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Calculus.LeLimit.of.Le.apply(Eq[-1], (n, oo))
 
-    Eq << Algebra.Eq.of.Ge.Le.apply(Eq[-1], Eq[-3])
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[-3])
 
 
 

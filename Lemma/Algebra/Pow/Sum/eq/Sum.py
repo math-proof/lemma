@@ -11,7 +11,7 @@ def apply(self, var='k'):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Set, Bool
+    from Lemma import Algebra, Discrete, Set, Bool, Finset
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(complex=True, shape=(oo,))
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Mul.pop)
 
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Sum_MulBool)
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr * (x[n] ** k / (Factorial(m - k) * Factorial(k)))
 
-    Eq << Eq[-1].this.expr.rhs.find(Sum).apply(Algebra.Sum_Mul.eq.Mul_Sum, simplify=1)
+    Eq << Eq[-1].this.expr.rhs.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum, simplify=1)
 
     Eq << Algebra.EqSumS.of.All_Eq.apply(Eq[-1])
 

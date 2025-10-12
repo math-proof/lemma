@@ -19,7 +19,7 @@ def apply(all_is_positive_real, contains0, contains1, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Calculus, Algebra, Bool
+    from Lemma import Set, Calculus, Algebra, Bool, Nat
 
     a, b, x, x0, x1 = Symbol(real=True)
     f = Function(real=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Calculus.IsContinuous.of.IsDifferentiable.apply(Eq.is_positive_real)
 
-    Eq << Algebra.Le.of.Lt.apply(Eq[3])
+    Eq << Nat.Le.of.Lt.apply(Eq[3])
 
     Eq.any = Calculus.Any.Eq.of.Le.IsContinuous.IsDifferentiable.mean_value_theorem.Lagrange.close.apply(Eq[-1], Eq[-2], Eq.is_positive_real)
 

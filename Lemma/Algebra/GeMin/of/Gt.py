@@ -9,11 +9,11 @@ def apply(given, m):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, y, z = Symbol(real=True, given=True)
 
     Eq << apply(x > y, z)
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[0])
+    Eq << Nat.Ge.of.Gt.apply(Eq[0])
 
     Eq << Algebra.GeMin.of.Ge.apply(Eq[-1], z)
 

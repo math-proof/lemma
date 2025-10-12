@@ -143,9 +143,6 @@ from . import AndEqS
 from . import SquareReducedSum
 from . import All_LeInf
 from . import OrAnyS
-from . import ExpAdd
-from . import Ite
-from . import Eq_Ite
 from . import Sup_Square
 from . import Inv
 from . import Sqrt
@@ -278,7 +275,6 @@ from . import EqReducedArgMin
 from . import EqReducedMin
 from . import EqSign
 from . import EqSqrt
-from . import EqMulS
 from . import EqDivS
 from . import EqAdd
 from . import EqCeil
@@ -304,12 +300,10 @@ from . import AddIteS
 from . import Pow_Ite
 from . import Prod_Mul
 from . import MulProdS
-from . import Mul_Prod
 from . import EqFrac
 from . import Frac
 from . import One
 from . import Zero
-from . import Mul_Sum
 from . import EqSumS
 from . import Sum_Add
 from . import NeAbs_0
@@ -336,3 +330,5 @@ from . import Ge_Add_1
 from . import EqArg
 from . import EqMod
 from . import EqNeg
+from . import Ite
+from . import Eq_Ite

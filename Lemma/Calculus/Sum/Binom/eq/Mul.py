@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra
+    from Lemma import Calculus, Algebra, Finset
 
     x, r = Symbol(real=True)
     n = Symbol(integer=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * x
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Sum.eq.Sum_Mul).reversed
+    Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul).reversed
     Eq << Eq[-1].this.rhs.powsimp()
 
 

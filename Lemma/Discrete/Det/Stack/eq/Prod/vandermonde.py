@@ -12,7 +12,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Tensor
+    from Lemma import Algebra, Discrete, Bool, Tensor, Finset
 
     n = Symbol(domain=Range(2, oo), given=False)
     a = Symbol(shape=(oo,), complex=True)
@@ -83,9 +83,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.MulProdS.eq.Prod_Mul)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Mul_Prod.eq.Prod)
+    Eq << Eq[-1].this.rhs.expr.apply(Finset.Mul_Prod.eq.Prod)
 
-    Eq << Product[j:i, i:n + 1](Eq[0].rhs.expr).this.apply(Algebra.Prod.eq.MulProdS, cond=slice(0, 1))
+    Eq << Product[j:i, i:n + 1](Eq[0].rhs.expr).this.apply(Finset.Prod.eq.MulProdS, cond=slice(0, 1))
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

@@ -12,13 +12,13 @@ def apply(lt_zero, gt_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(a < 0, b ** 2 - 4 * a * c > 0, x=x)
 
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[1])
+    Eq << Nat.Ge.of.Gt.apply(Eq[1])
 
     Eq << Algebra.Any.Lt_0.of.Lt_0.Add.ge.Zero.apply(Eq[0], Eq[-1], x=x)
 

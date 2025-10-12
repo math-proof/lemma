@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y = Symbol(real=True)
     f = Function(real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << LessEqual(Eq[-1].lhs, 1, plausible=True)
 
-    Eq << Algebra.Eq.of.Ge.Le.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[0].subs(Eq[-1])
 

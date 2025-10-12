@@ -7,3 +7,6 @@ from . import Trigonometry
 from . import Logic
 from . import Calculus
 from . import Real
+from . import Nat
+from . import Int
+from . import Finset

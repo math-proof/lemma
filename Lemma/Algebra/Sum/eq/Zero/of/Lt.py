@@ -10,14 +10,14 @@ def apply(le, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, b = Symbol(integer=True, given=True)
     n = Symbol(integer=True)
     f = Function(integer=True)
     Eq << apply(b < a, Sum[n:a:b](f(n)))
 
-    Eq << Algebra.Le.of.Lt.apply(Eq[0])
+    Eq << Nat.Le.of.Lt.apply(Eq[0])
     Eq << Algebra.Sum.eq.Zero.of.Le.apply(Eq[-1], Eq[1].lhs)
 
 

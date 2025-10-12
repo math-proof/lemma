@@ -14,7 +14,7 @@ def apply(eq, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat, Nat
 
     x = Symbol(real=True, negative=False, shape=(oo,), given=True)
     n = Symbol(integer=True, negative=False, given=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Algebra.LeSub.of.Eq.Ge.apply(Eq.eq, Eq[-1])
 
-    Eq << Algebra.Eq.of.Ge.Le.apply(Eq[1], Eq[-1])
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[1], Eq[-1])
 
     Eq << Eq.eq.subs(Eq[2]).this.apply(Algebra.EqAddS.Is.Eq)
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << ~Eq[3]
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt_0.of.Ne_0)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt_0.of.Ne_0)
 
     Eq << Eq[-3].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
 

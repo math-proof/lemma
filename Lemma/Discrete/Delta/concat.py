@@ -10,7 +10,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Int, Int
 
     n = Symbol(domain=Range(2, oo))
     Eq << apply(n)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-2] - Eq[-1]
 
-    Eq << Algebra.Eq.of.Sub.eq.Zero.apply(Eq[-1])
+    Eq << Int.Eq.of.Sub.eq.Zero.apply(Eq[-1])
 
     Eq << Eq[-1].apply(Tensor.EqStackS.of.Eq, (i,))
 

@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat
 
     a = Symbol(nonnegative=True)
     Eq << apply(Unequal(a, 0))
 
-    Eq << Algebra.Gt_0.of.Ne_0.apply(Eq[0])
+    Eq << Nat.Gt_0.of.Ne_0.apply(Eq[0])
 
     Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[-1])
 

@@ -11,7 +11,7 @@ def apply(eq_A):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Int, Nat
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -49,9 +49,9 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.GtMul.of.Gt_0.Gt)
     Eq << Eq[-1].this.expr.apply(Algebra.Lt.of.Lt.Ge)
     Eq << Eq[-1].this.expr.apply(Algebra.Le_Sub_1.of.Lt)
-    Eq << Eq[-1].this.expr.apply(Algebra.Eq_0.of.Le_0)
+    Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.of.Eq_0.invert)
-    Eq << Eq[-1].this.expr.apply(Algebra.Eq_0.of.Le_0)
+    Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
     Eq << Algebra.EqSumS.of.All_Eq.apply(Eq[-1])
     Eq << Eq[-1].subs(Eq.m_def)
 

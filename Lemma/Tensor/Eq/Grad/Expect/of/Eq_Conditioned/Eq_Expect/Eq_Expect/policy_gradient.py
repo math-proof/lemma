@@ -15,7 +15,7 @@ def apply(eq, Q_def, V_def, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Tensor, Algebra
+    from Lemma import Probability, Calculus, Tensor, Algebra, Finset
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Integral.eq.Add)
 
-    Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(Integral[Sum]).apply(Calculus.Integral.eq.Sum)
 

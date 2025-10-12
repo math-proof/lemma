@@ -11,7 +11,7 @@ def apply(x, delta):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra
+    from Lemma import Tensor, Algebra, Real
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Softmax.eq.Div_SumExp)
 
-    Eq << Eq[-1].this.find(ReducedSum[~Exp]).apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.find(ReducedSum[~Exp]).apply(Real.ExpAdd.eq.MulExpS)
 
     Eq << Eq[-1].this.lhs.powsimp()
 

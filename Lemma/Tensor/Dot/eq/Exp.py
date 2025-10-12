@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Real
 
     n, k, m = Symbol(integer=True, positive=True)
 
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.simplify()
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.rhs.expr.apply(Real.ExpAdd.eq.MulExpS)
 
 
 if __name__ == '__main__':

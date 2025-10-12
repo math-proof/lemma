@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     f, h = Function(real=True)
     Eq << apply(Product[i:n + 1](f(i) + h(i)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod.eq.MulProdS, cond={0})
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod.eq.MulProdS, cond={0})
 
 
 

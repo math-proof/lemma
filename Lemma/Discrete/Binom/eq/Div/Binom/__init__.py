@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool
+    from Lemma import Algebra, Discrete, Bool, Nat, Nat
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True, positive=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.apply(Bool.IffImpSAndEq)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Gt_0.of.Ne_0)
+    Eq << Eq[-1].this.lhs.apply(Nat.Gt_0.of.Ne_0)
 
     Eq << Eq[-1].apply(Bool.Imp.given.All)
 

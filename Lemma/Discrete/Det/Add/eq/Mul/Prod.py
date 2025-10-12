@@ -9,7 +9,7 @@ def apply(n, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Tensor
+    from Lemma import Discrete, Algebra, Bool, Tensor, Finset
 
     n = Symbol(integer=True, positive=True, given=False)
     a = Symbol(shape=(oo,), complex=True, zero=False)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq.deduct = (Eq[-1] - Eq[-1].lhs.args[0]).subs(Eq[0])
 
-    Eq << Eq.deduct.find(Product).this.apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq.deduct.find(Product).this.apply(Finset.Prod.eq.MulProdS, cond={n})
 
     Eq << Eq.deduct.find(Mul, Sum).this.apply(Algebra.Sum.eq.Add.pop)
 
@@ -116,7 +116,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Product[2]).apply(Algebra.Prod.limits.subst.offset, -1)
 
     k = Eq[-1].find(Product).variable
-    Eq << Product[k:n](Eq[-1].find(Product).expr).this.apply(Algebra.Prod.eq.MulProdS, cond={i})
+    Eq << Product[k:n](Eq[-1].find(Product).expr).this.apply(Finset.Prod.eq.MulProdS, cond={i})
 
     Eq.det_lamda = Eq[-2].subs((Eq[-1] / Eq[-1].rhs.args[0]).reversed)
 

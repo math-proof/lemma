@@ -9,7 +9,7 @@ def apply(self, i=0, j=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
 
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq.induct.this.lhs.apply(Finset.Prod.eq.MulProdS, cond={n})
 
     Eq << Eq[-1].this.lhs.find(Product).apply(Algebra.Prod.eq.Mul.doit.outer.setlimit)
 
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].apply(Algebra.EqProd.of.Eq, (i, 0, m))
 
-    Eq << Eq[-2].this.rhs.apply(Algebra.Prod.eq.MulProdS, cond={n})
+    Eq << Eq[-2].this.rhs.apply(Finset.Prod.eq.MulProdS, cond={n})
 
     Eq << Eq[-2].subs(Eq[-1])
 

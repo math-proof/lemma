@@ -8,7 +8,7 @@ def apply(ge_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Trigonometry, Bool
+    from Lemma import Algebra, Set, Trigonometry, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Trigonometry.GtSin.of.In_Icc)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ge.of.Gt.relax)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ge.of.Gt)
 
     Eq << Bool.Imp.given.And.Imp.split.apply(Eq.ge, cond=x > S.Pi)
 
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Lt.of.Gt.Le)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Le.of.Lt)
+    Eq << Eq[-1].this.rhs.apply(Nat.Le.of.Lt)
 
     # reference:
     # https://www.zhihu.com/question/355479801

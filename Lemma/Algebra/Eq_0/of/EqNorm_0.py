@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Nat
 
     x = Symbol(complex=True, given=True)
     Eq << apply(Equal(abs(x), 0))
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << ~Eq.Im_is_positive
 
-    Eq << Algebra.Eq_0.of.Le_0.apply(Eq[-1])
+    Eq << Nat.Eq_0.of.Le_0.apply(Eq[-1])
 
     Eq.Im_is_zero = Algebra.Eq_0.of.EqSquare_0.apply(Eq[-1])
 
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << ~Eq.Re_is_positive
 
-    Eq << Algebra.Eq_0.of.Le_0.apply(Eq[-1])
+    Eq << Nat.Eq_0.of.Le_0.apply(Eq[-1])
 
     Eq.Re_is_zero = Algebra.Eq_0.of.EqSquare_0.apply(Eq[-1])
 

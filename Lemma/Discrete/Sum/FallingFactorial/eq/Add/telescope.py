@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete, Algebra, Finset
 
     k = Symbol(integer=True)
     i, n = Symbol(integer=True, positive=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * i
 
-    Eq.final = Eq[-1].this.lhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq.final = Eq[-1].this.lhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << FallingFactorial(k - 1, i).this.apply(Discrete.FallingFactorial.eq.Mul.pop)
 

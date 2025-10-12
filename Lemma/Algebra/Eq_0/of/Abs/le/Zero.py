@@ -9,12 +9,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Nat
 
     x = Symbol(real=True)
     Eq << apply(abs(x) <= 0)
 
-    Eq << Algebra.Eq_0.of.Le_0.apply(Eq[0])
+    Eq << Nat.Eq_0.of.Le_0.apply(Eq[0])
     Eq << Algebra.Eq_0.of.EqNorm_0.apply(Eq[-1])
 
 

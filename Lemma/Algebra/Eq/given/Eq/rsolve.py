@@ -19,7 +19,7 @@ def apply(self, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Symbol * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
 
-    Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[1].subs(n, n + 1) - Eq[-1]
 

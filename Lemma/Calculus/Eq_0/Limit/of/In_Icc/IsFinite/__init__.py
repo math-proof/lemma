@@ -16,7 +16,7 @@ def apply(el, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus
+    from Lemma import Algebra, Set, Calculus, Nat
 
     x = Symbol(real=True, shape=(oo,))
     γ = Symbol(real=True)
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Calculus.GeLimit.of.Ge.apply(Eq[-1], (n, oo))
 
-    Eq << Algebra.Eq.of.Ge.Le.apply(Eq[-1], Eq[-3])
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[-3])
 
     Eq << Calculus.Limit.eq.Zero.of.LimitAbs.eq.Zero.apply(Eq[-1])
 

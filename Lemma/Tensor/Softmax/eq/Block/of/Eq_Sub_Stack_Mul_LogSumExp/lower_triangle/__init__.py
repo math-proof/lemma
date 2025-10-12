@@ -25,7 +25,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool, Real, Real
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], exp)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.rhs.apply(Real.ExpAdd.eq.MulExpS)
 
     Eq << Eq[-1].this.rhs.find(Exp[BlockMatrix]).apply(Algebra.Exp.eq.Block)
 

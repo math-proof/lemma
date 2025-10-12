@@ -17,14 +17,14 @@ def apply(A, B, n=None, k=None, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     A, B = Symbol(shape=(oo,), real=True)
     Eq << apply(A, B)
 
-    Eq << Eq[0].lhs.this.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[0].lhs.this.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.expr.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     i, n = Eq[-1].rhs.variables
     k = Eq[0].rhs.expr.args[1].variable

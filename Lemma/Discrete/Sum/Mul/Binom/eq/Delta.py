@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool
+    from Lemma import Algebra, Discrete, Bool, Finset
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True, given=False)
@@ -35,11 +35,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent, simplify=None)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Eq[-1].this.find((-1) ** Add).apply(Algebra.Pow.eq.Mul.split.exponent, simplify=None)
 
-    Eq << Eq[-1].this.find(Sum[Mul[~Sum]]).apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.find(Sum[Mul[~Sum]]).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Eq[-1].this.find(Sum[Pow * Binomial]).apply(Discrete.Sum.Binom.eq.Add)
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
 
-    Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.unshift)
 

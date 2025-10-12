@@ -18,7 +18,7 @@ def apply(el_c, el_x, start=True, stop=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     a, b, c, x = Symbol(real=True)
     Eq << apply(Element(c, Interval.open(a, b)), Element(x, Interval(a, b)))
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Ge.Gt.apply(Eq[-4], Eq[-2])
 
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[-1])
+    Eq << Nat.Ge.of.Gt.apply(Eq[-1])
 
     Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
 

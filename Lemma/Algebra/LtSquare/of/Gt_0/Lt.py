@@ -11,12 +11,12 @@ def apply(is_positive, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, M = Symbol(real=True)
     Eq << apply(x > 0, x < M)
 
-    Eq << Algebra.Ge.of.Gt.relax.apply(Eq[0])
+    Eq << Nat.Ge.of.Gt.apply(Eq[0])
 
     Eq << Algebra.LtSquare.of.Ge_0.Lt.apply(Eq[-1], Eq[1])
 

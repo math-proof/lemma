@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Finset
 
     r = Symbol(real=True)
     n = Symbol(integer=True, positive=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq.eq_block.rhs.args[1].expr.this.find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent, simplify=None)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Eq[-1].this.rhs.find(Sum).expr.apply(Algebra.Mul.simp.Pow.Mul.base)
 

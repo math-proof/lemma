@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Tensor
+    from Lemma import Algebra, Discrete, Bool, Tensor, Int, Int, Nat
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=n > 0)
 
-    Eq << Eq[2].this.lhs.apply(Algebra.Eq_0.of.Le_0)
+    Eq << Eq[2].this.lhs.apply(Nat.Eq_0.of.Le_0)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

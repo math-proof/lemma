@@ -17,7 +17,7 @@ def apply(eq, infer, eq_piece, All_And):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Tensor
+    from Lemma import Algebra, Discrete, Bool, Tensor, Finset
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0][i, t].reversed)
 
-    Eq << Eq[-1].this.find(Sum[~Mul]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Sum[~Mul]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(Add[~Sum]).apply(Algebra.Sum.eq.Add.split.limits)
 

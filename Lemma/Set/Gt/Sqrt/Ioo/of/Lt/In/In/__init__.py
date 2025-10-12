@@ -13,7 +13,7 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(-1, 1, left_open=True, right_open=True)), Element(y, Interval(-1, 1, left_open=True, right_open=True)))
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq.gt_le.this.lhs.apply(Algebra.Gt.of.Gt.Le)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ge.of.Gt.relax)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ge.of.Gt)
 
     Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-1], cond=Eq[0], invert=True)
 

@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     L = Symbol(shape=(n, n), super_complex=True)
@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=j > i)
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.EqMin.of.Gt, ret=0), Eq[-1].this.lhs.apply(Algebra.EqMin.of.Le, ret=0)
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.EqMin.of.Gt, ret=0), Eq[-1].this.lhs.apply(Nat.EqMin.of.Le, ret=0)
 
     Eq <<= Bool.Imp_And.given.Imp.And.subst.apply(Eq[-2]), Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1])
 

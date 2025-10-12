@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, any, eq_argmax):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Set, Bool
+    from Lemma import Algebra, Probability, Set, Bool, Nat, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -106,7 +106,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.of.And.apply(Eq.ne_zero)[1].subs(s[0].var, s[t].var)
 
-    Eq << Algebra.Gt_0.of.Ne_0.apply(Eq[-1])
+    Eq << Nat.Gt_0.of.Ne_0.apply(Eq[-1])
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-3])
 

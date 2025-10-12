@@ -11,7 +11,7 @@ def apply(self, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool
+    from Lemma import Discrete, Algebra, Bool, Finset
 
     f = Function(real=True)
     x = Symbol(real=True)
@@ -41,7 +41,7 @@ def prove(Eq):
     i = Eq[-1].find(Sum).variable
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.subst.offset, -1)
 
-    Eq << Eq[-1].this.find(-Sum).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(-Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.eq.AddSumS, cond={n + 1})
 

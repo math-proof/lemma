@@ -12,13 +12,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
     k = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)
     f = Function(integer=True)
     Eq << apply(Product[k:A](f(k)) / Product[k:A & B](f(k)))
 
-    Eq << Eq[0].this.lhs.find(Product).apply(Algebra.Prod.eq.MulProdS, cond=B)
+    Eq << Eq[0].this.lhs.find(Product).apply(Finset.Prod.eq.MulProdS, cond=B)
 
 
 if __name__ == '__main__':

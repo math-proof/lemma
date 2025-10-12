@@ -22,7 +22,7 @@ def apply(self, i=0, j=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
 
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-3].subs(Eq[-1])
 

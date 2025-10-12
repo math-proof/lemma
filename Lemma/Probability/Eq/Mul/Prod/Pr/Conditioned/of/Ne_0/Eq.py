@@ -19,7 +19,7 @@ def apply(eq, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool, Tensor
+    from Lemma import Probability, Algebra, Bool, Tensor, Finset
 
     m, n, t = Symbol(integer=True, positive=True)
     # suppose you have a set of documents y which is labeled with some semantic tags called keywords x;
@@ -51,7 +51,7 @@ def prove(Eq):
     t = Eq[-1].rhs.variable
     Eq << Eq[-1] * Eq[-1].find(Pow).base
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Prod.eq.Prod)
+    Eq << Eq[-1].this.rhs.apply(Finset.Mul_Prod.eq.Prod)
 
     Eq << Eq[-1].this.rhs.limits_subs(t, j)
 

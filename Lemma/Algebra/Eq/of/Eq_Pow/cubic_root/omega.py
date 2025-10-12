@@ -16,7 +16,7 @@ def apply(eq_pow):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Equal(A ** 3, B ** 3))
@@ -46,9 +46,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.find(Exp).apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.lhs.find(Exp).apply(Real.ExpAdd.eq.MulExpS)
 
-    Eq << Eq[-1].this.rhs.find(Exp).apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.rhs.find(Exp).apply(Real.ExpAdd.eq.MulExpS)
 
     Eq << Eq[-1].subs(Eq.difference)
 

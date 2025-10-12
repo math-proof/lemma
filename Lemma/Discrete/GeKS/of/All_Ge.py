@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool
+    from Lemma import Discrete, Algebra, Bool, Nat
     from Lemma.Discrete.K.eq.Add.definition import K
     x = Symbol(real=True, shape=(oo,))
     i = Symbol(integer=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], _n)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Gt.relax)
+    Eq << Eq[-1].this.expr.apply(Nat.Ge.of.Gt)
 
     Eq << Bool.Imp.given.All.apply(Eq.case2)
 

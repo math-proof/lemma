@@ -19,7 +19,7 @@ def apply(is_positive, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra
+    from Lemma import Calculus, Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << -Eq[-1]
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.lhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
 
 if __name__ == '__main__':

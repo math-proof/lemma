@@ -15,7 +15,7 @@ def apply(eq_sum, ge, all_is_nonnegative):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set
+    from Lemma import Algebra, Bool, Set, Nat, Nat
 
     x = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True, given=True, negative=False)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Algebra.LeSub.of.Eq.Ge.apply(Eq.eq, Eq[-1])
 
-    Eq << Algebra.Eq.of.Ge.Le.apply(Eq[1], Eq[-1])
+    Eq << Nat.Eq.of.Ge.Le.apply(Eq[1], Eq[-1])
 
     Eq << Eq.eq.subs(Eq[3])
 

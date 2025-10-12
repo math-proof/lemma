@@ -9,7 +9,7 @@ def apply(eq_C):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Discrete, Tensor, Nat
 
     n, d = Symbol(domain=Range(2, oo))
     C, C_quote = Symbol(shape=(n, d), real=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[-1])
 
-    Eq << Algebra.Gt_0.of.Ne_0.apply(Eq[-1])
+    Eq << Nat.Gt_0.of.Ne_0.apply(Eq[-1])
 
     Eq << Eq[-1].subs(i, j)
 

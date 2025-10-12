@@ -15,7 +15,7 @@ def apply(given, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool
+    from Lemma import Calculus, Algebra, Set, Bool, Nat, Int
 
     n = Symbol(integer=True)
     x = Symbol(real=True, shape=(oo,), given=True)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq.lt.this.expr.expr.apply(Algebra.Lt.of.Lt.Le, Eq[-1])
 
-    Eq.less_than = Eq[-1].this.expr.expr.apply(Algebra.Le.of.Lt)
+    Eq.less_than = Eq[-1].this.expr.expr.apply(Nat.Le.of.Lt)
 
     Eq << Algebra.All_GeMaxima.apply(Maxima[n:N + 1](abs(x[n])))
 
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.And.Ge.of.Eq_Max, simplify=None)
 
-    Eq << Eq[-1].this.expr.args[0].apply(Algebra.Eq_0.of.Le_0, simplify=None)
+    Eq << Eq[-1].this.expr.args[0].apply(Nat.Eq_0.of.Le_0, simplify=None)
 
     Eq << Eq[-1].this.find(Equal[0]).apply(Algebra.And.Ge.of.Eq_Max, simplify=None)
 

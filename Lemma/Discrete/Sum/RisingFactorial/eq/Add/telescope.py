@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete, Algebra, Finset
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * i
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.lhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].subs(Eq[-4].reversed)
 

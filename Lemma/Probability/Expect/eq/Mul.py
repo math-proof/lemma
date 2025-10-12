@@ -21,7 +21,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(n, n))
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
 
 

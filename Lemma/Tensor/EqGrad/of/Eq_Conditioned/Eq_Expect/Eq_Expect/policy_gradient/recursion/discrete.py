@@ -13,7 +13,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Calculus, Probability, Algebra
+    from Lemma import Tensor, Calculus, Probability, Algebra, Finset
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -63,7 +63,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Sum)
     Eq << Eq[-1].subs(Eq[-4])
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
-    Eq << Eq[-1].this.find(Pr * Sum).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Pr * Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)
     Eq << Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.swap)
     Eq.eq_grad = Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.separate)
     Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)

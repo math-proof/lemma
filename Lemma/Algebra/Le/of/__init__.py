@@ -3,7 +3,6 @@ from . import Le
 from . import Le_Max
 from . import Eq_Add
 from . import Ge
-from . import Lt
 from . import Eq_Max
 from . import Ge_0
 from . import Gt

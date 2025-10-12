@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Int, Int
 
     n = Symbol(integer=True, positive=True, given=True)
     i = Symbol(integer=True)
@@ -23,7 +23,7 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.apply(Tensor.Add_Stack.eq.Stack_Add)
 
     Eq << Tensor.All_Eq_0.of.Stack.eq.Zero.apply(Eq[-1])
-    Eq << Eq[-1].this.expr.apply(Algebra.Eq.of.Sub.eq.Zero)
+    Eq << Eq[-1].this.expr.apply(Int.Eq.of.Sub.eq.Zero)
 
     Eq << ~Eq[-1]
 

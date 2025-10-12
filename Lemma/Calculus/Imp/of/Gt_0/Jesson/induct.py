@@ -25,7 +25,7 @@ def apply(is_positive, x=None, w=None, i=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Bool
+    from Lemma import Algebra, Set, Calculus, Bool, Finset
 
     n = Symbol(integer=True, positive=True, given=False)
     a, b = Symbol(real=True)
@@ -86,7 +86,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Algebra.EqDiv.of.Gt_0.Eq, simplify=None, ret=1)
 
-    Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.lhs.apply(Bool.All.All.of.All, cond={n})
 

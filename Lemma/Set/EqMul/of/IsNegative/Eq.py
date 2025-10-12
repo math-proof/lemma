@@ -13,14 +13,14 @@ def apply(is_negative, equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat, Nat
     x = Symbol(real=True, given=True)
     g, h = Function(real=True)
     Eq << apply(Element(x, Interval.open(-oo, 0)), Equal(g(x), h(x)))
 
     Eq << Set.Ne_0.of.IsNegative.apply(Eq[0])
 
-    Eq << Algebra.EqMulS.of.Eq.apply(Eq[-1], Eq[1])
+    Eq << Nat.EqMulS.of.Eq.apply(Eq[-1], Eq[1])
 
 
 if __name__ == '__main__':

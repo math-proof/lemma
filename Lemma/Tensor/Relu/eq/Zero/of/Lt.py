@@ -9,7 +9,7 @@ def apply(lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra
+    from Lemma import Tensor, Algebra, Nat
 
     i, l = Symbol(integer=True)
     Eq << apply(i < l)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Algebra.LeAdd_1.of.Lt.apply(Eq[0])
 
-    Eq << Algebra.EqMin.of.Le.apply(Eq[-1])
+    Eq << Nat.EqMin.of.Le.apply(Eq[-1])
 
 
 if __name__ == '__main__':

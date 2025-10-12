@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
     a, b = Symbol(integer=True)
     f = Function(shape=())
 
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-2] - Eq[-1]
 
-    Eq << Algebra.Eq.of.Sub.eq.Zero.apply(Eq[-1])
+    Eq << Int.Eq.of.Sub.eq.Zero.apply(Eq[-1])
 
     Eq.suffice = Bool.Imp.of.Bool.eq.MulBoolS.apply(Eq[-1])
 

@@ -44,7 +44,7 @@ def apply(y):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra
+    from Lemma import Calculus, Algebra, Real
 
     a = Symbol(positive=True)
     b, c, x = Symbol(real=True)
@@ -58,9 +58,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.find(Exp).apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.lhs.find(Exp).apply(Real.ExpAdd.eq.MulExpS)
 
-    Eq << Eq[-1].this.rhs.find(Exp).apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.rhs.find(Exp).apply(Real.ExpAdd.eq.MulExpS)
 
     Eq << Eq[-1].this.lhs.apply(Calculus.Integral.limits.domain_defined)
 

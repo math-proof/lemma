@@ -11,7 +11,7 @@ def apply(le, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     M, M0, x, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.All.Gt.of.GtInf.apply(Eq[0])
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Ge.of.Gt.relax)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.Ge.of.Gt)
 
 
 if __name__ == '__main__':

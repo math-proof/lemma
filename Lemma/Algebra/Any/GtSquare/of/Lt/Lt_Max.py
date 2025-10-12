@@ -14,7 +14,7 @@ def apply(lt, lt_max, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     m, M, U = Symbol(real=True, given=True)
     Eq << apply(m < M, U < Max(M ** 2, m ** 2))
@@ -32,8 +32,8 @@ def prove(Eq):
 
     Eq <<= Eq[-3].this.rhs.apply(Bool.And.Imp.And.of.Cond.split, cond=M + m > 0), \
         Eq[-1].this.rhs.args[::2].apply(Algebra.EqMax.of.Le_0.Lt, simplify=None, ret=slice(None)), \
-        Eq[-4].this.rhs.args[-1].apply(Algebra.Ge.of.Gt.relax), \
-        Eq[-2].this.lhs.apply(Algebra.Le.of.Lt)
+        Eq[-4].this.rhs.args[-1].apply(Nat.Ge.of.Gt), \
+        Eq[-2].this.lhs.apply(Nat.Le.of.Lt)
 
     Eq <<= Bool.And.Imp.of.Imp.apply(Eq[-4], simplify=None), \
         Eq[-3].this.rhs.args[:4:2].apply(Bool.Cond.of.Eq.Cond.subst, simplify=None), \
@@ -57,7 +57,7 @@ def prove(Eq):
         Eq[-1].this.rhs.rhs.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 
     Eq <<= Eq[-2].this.rhs.apply(Bool.Imp_And.of.ImpAnd), \
-        Eq[-1].this.rhs.rhs.args[1].apply(Algebra.Ge.of.Gt.relax)
+        Eq[-1].this.rhs.rhs.args[1].apply(Nat.Ge.of.Gt)
 
     Eq.is_positive, Eq.is_nonpositive = Eq[-2].this.rhs.rhs.apply(Algebra.Any.GtSquare.of.Le_0.Gt_0.Lt),\
         Eq[-1].this.rhs.apply(Bool.Imp_And.of.ImpAnd)

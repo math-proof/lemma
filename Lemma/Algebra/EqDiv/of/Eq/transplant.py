@@ -18,7 +18,7 @@ def apply(given, lhs=0, rhs=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     d = Symbol(real=True, zero=False)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Algebra.Inv.ne.Zero.of.Ne_0.apply(Eq[-2])
 
-    Eq << Algebra.EqMulS.of.Eq.apply(Eq[-1], Eq[0])
+    Eq << Nat.EqMulS.of.Eq.apply(Eq[-1], Eq[0])
 
 
 

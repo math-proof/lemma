@@ -13,7 +13,7 @@ def apply(eq, Q_def, V_def, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool
+    from Lemma import Tensor, Algebra, Bool, Finset
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq.induct.this.find(Sum).apply(Algebra.Sum.eq.Add.pop)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Mul.eq.Mul_Sum)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
     Eq << Eq.recursion.subs(t, n)
 
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Symbol * Pow).powsimp()
 
-    Eq << Eq[-1].this.find(Product * Sum[Mul[Pr]]).apply(Algebra.Mul_Sum.eq.Sum_Mul)
+    Eq << Eq[-1].this.find(Product * Sum[Mul[Pr]]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-1].this.find(Pr * Product).args[1:].apply(Algebra.Mul.eq.Prod.limits.push)
 

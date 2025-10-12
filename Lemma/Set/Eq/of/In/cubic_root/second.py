@@ -12,7 +12,7 @@ def apply(contains_p):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Real
 
     p = Symbol(complex=True, given=True)
     Eq << apply(Element(Arg(p), Interval(S.Pi / 3, S.Pi, left_open=True)))
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.find(Exp[Add]).apply(Algebra.ExpAdd.eq.MulExpS)
+    Eq << Eq[-1].this.lhs.find(Exp[Add]).apply(Real.ExpAdd.eq.MulExpS)
 
     Eq << Eq[-1].this.lhs.args[-1].apply(Algebra.Expr.eq.AddRe_MulIIm)
 
