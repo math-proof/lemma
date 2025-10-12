@@ -9,7 +9,8 @@ private lemma main
 -- imply
   a = ⟨b, by simp_all [← h]⟩ := by
 -- proof
-  simp [← h]
+  ext
+  assumption
 
 
 -- created on 2025-06-20
