@@ -379,7 +379,7 @@ def Tensor.transpose (X : Tensor α s) (i : ℕ) (j : ℕ): Tensor α (s.swap i 
     cast
       (by
         apply EqUFnS.of.Eq (f := Tensor α)
-        rw [← Swap.eq.PermutePermute.of.Lt.Lt_Length (by assumption) (by assumption)]
+        rw [PermutePermute.eq.Swap.of.Lt.Lt_Length h_j h_lt]
         rw [EqSwapS.of.Mk.eq.IteGt h_ite]
       )
       ((X.permute ⟨i, h_i⟩ (d - 1)).permute ⟨j, h_j'⟩ (-d))

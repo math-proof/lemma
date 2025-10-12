@@ -34,7 +34,7 @@ open Bool List Algebra Nat
 set_option maxHeartbeats 300000
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List α}
 -- given
