@@ -1,6 +1,6 @@
 import Lemma.Algebra.Sub.gt.Zero.is.Gt
 import Lemma.Algebra.GtCoeS.is.Gt
-import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Gt
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Algebra.GtDivS.of.Gt.Gt_0
 import Lemma.Algebra.GeCeil
 import Lemma.Algebra.Gt.of.Ge.Gt

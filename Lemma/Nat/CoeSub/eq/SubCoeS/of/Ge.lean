@@ -3,12 +3,12 @@ import sympy.Basic
 
 @[main, comm]
 private lemma main
-  [AddGroupWithOne α]
+  [AddGroupWithOne Z]
   {a b : ℕ}
 -- given
   (h : a ≥ b) :
 -- imply
-  ((a - b : ℕ) : α) = a - b :=
+  ((a - b : ℕ) : Z) = a - b :=
 -- proof
   Nat.cast_sub h
 

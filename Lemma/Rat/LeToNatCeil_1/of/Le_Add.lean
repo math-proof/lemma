@@ -6,7 +6,7 @@ import Lemma.Algebra.LeCoeS.is.Le
 import Lemma.Algebra.LeDivS.of.Le.Gt_0
 import Lemma.Algebra.LeCeil.is.Le
 import Lemma.Int.LeToNat.is.Le
-import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Ge
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Algebra.NotGe.is.Lt
 import Lemma.Algebra.LtCoeS.is.Lt
 import Lemma.Algebra.Sub.lt.Zero.of.Lt

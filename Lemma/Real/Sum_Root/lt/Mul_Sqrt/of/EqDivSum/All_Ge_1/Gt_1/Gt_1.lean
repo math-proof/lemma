@@ -14,7 +14,7 @@ import Lemma.Algebra.EqSumS.of.All_Eq
 import Lemma.Algebra.Sqrt.eq.Root_2
 import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.CoeSub.eq.SubCoeS
-import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Ge
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Real.Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0
 import Lemma.Algebra.Lt.of.Lt.Le
 import Lemma.Algebra.Pow1.eq.One

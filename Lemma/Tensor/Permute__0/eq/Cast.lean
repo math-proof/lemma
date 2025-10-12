@@ -1,5 +1,4 @@
-import sympy.tensor.tensor
-import Lemma.Tensor.EqPermute__0
+import Lemma.Tensor.SEqPermute__0
 import Lemma.List.EqPermute__0
 import Lemma.Bool.EqCast.of.SEq
 open Tensor List Bool
@@ -14,7 +13,7 @@ private lemma main
   X.permute i 0 = cast (by rw [EqPermute__0 i]) X := by
 -- proof
   apply Eq_Cast.of.SEq
-  apply EqPermute__0 X
+  apply SEqPermute__0 X
 
 
 -- created on 2025-07-14

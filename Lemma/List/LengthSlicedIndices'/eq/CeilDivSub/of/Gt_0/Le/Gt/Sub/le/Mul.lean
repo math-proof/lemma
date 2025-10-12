@@ -9,7 +9,7 @@ import Lemma.Nat.Ge.of.NotLt
 import Lemma.Algebra.GeCoeS.is.Ge
 import Lemma.Nat.EqSubAdd
 import Lemma.Algebra.SubSub
-import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Gt
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Algebra.Gt.of.GtSub
 import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Algebra.Div.eq.One.of.Gt_0

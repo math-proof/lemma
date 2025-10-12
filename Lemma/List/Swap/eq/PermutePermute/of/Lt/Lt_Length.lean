@@ -4,7 +4,7 @@ import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt
 import Lemma.List.GetPermute__Neg.eq.Ite.of.Lt_Length
 import Lemma.List.GetPermute.eq.Ite.of.Lt_Length.Lt_Length
-import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Ge
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Algebra.ValSub.eq.SubValS.of.Gt
 import Lemma.Algebra.Sub.ge.One.of.Lt
 import Lemma.Algebra.LtValS.of.Lt

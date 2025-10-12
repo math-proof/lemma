@@ -3,12 +3,12 @@ import Lemma.Algebra.LeMulS.of.Le.Gt_0
 import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Algebra.EqMulDiv.of.Gt_0
 import Lemma.Algebra.Sub.gt.Zero.is.Gt
-import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Gt
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Algebra.GtDivS.of.Gt.Gt_0
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.Algebra.GtCoeS.is.Gt
 import Lemma.Int.Eq_ToNat.of.Gt_0
-import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Gt
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.List.LengthSlicedIndices.eq.CeilDivSub.of.Gt_0.Le.Lt.Sub.le.Mul
 import Lemma.Nat.EqCoeS.is.Eq
 open Algebra List Int Nat

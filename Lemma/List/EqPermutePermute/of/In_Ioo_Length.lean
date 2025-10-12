@@ -1,10 +1,11 @@
+import sympy.sets.sets
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.List.LengthPermute.eq.Length
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt
 import Lemma.List.GetPermute__Neg.eq.Ite.of.Lt_Length
 import Lemma.List.GetPermute.eq.Ite.of.Lt_Length.Lt_Length
-import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Ge
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Algebra.ValSub.eq.SubValS.of.Gt
 import Lemma.Algebra.Sub.ge.One.of.Lt
 import Lemma.Algebra.LtValS.of.Lt
@@ -28,6 +29,7 @@ import Lemma.Algebra.Gt.of.Gt.Ge
 import Lemma.Algebra.Le.of.Le_Sub
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Ge_1.of.Gt
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.Eq.of.EqSubS.Ge.Ge
 open Bool List Algebra Nat
@@ -37,12 +39,12 @@ open Bool List Algebra Nat
 private lemma main
   {s : List α}
 -- given
-  (h_j : j < s.length)
-  (h_ij : i < j) :
+  (h : j ∈ Ioo i s.length) :
 -- imply
   let d := j - i
-  (s.permute ⟨i, by linarith⟩ d).permute ⟨j, by simp_all [LengthPermute.eq.Length]⟩ (-d) = s := by
+  (s.permute ⟨i, h.left.trans h.right⟩ d).permute ⟨j, by simp [LengthPermute.eq.Length, h.right]⟩ (-d) = s := by
 -- proof
+  let ⟨h_ij, h_j⟩ := h
   intro d
   ext k x
   by_cases h_k_length : k < s.length

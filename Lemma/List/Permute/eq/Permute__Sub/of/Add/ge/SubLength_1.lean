@@ -2,7 +2,7 @@ import Lemma.List.Permute.eq.Ite
 import Lemma.Algebra.Le_Sub_1
 import Lemma.Algebra.Ge.of.Ge.Ge
 import Lemma.Algebra.GeCoeS.is.Ge
-import Lemma.Algebra.CoeSub.eq.SubCoeS.of.Ge
+import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.Ge_1
 import Lemma.Algebra.Lt.of.Sub.lt.Zero
 import Lemma.Algebra.CoeSub_1.eq.SubCoe_1.of.Ge_1
