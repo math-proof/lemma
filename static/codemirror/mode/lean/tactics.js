@@ -31,6 +31,7 @@ export const tactics = [
     'field_simp',
     'funext',
     'induction',
+    'infer_instance',
     'injection',
     'interval_cases',
     'intro',

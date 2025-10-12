@@ -9,10 +9,9 @@ private lemma main
   (i : Fin n) :
 -- imply
   have h : List.Vector α n = List.Vector α n' := by rw [h]
-  (cast h v)[i] = v[i] := by
+  (cast h v)[i.val] = v[i.val] := by
 -- proof
   intro h
-  simp_all
   simp [GetElem.getElem]
   simp [List.Vector.get]
   aesop

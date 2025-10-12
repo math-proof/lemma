@@ -6,7 +6,10 @@ import Lemma.Vector.SumSoftmax.eq.One
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Nat.Eq_0
 import Lemma.Vector.EqGet1'1
+import Lemma.Tensor.EqGet1'1
 import Lemma.Tensor.GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length
+import Lemma.Tensor.EqData1'1
+import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.Lt_Length
 open Tensor Vector Nat
 
 
@@ -32,9 +35,8 @@ private lemma main
       apply Eq.of.EqDataS
       simp
       ext i
-      have h_1 : (1 : Tensor α ([s₀].eraseIdx ([s₀].length - 1))).data = 1 := rfl
-      rw [h_1]
-      simp [EqGet1'1.fin]
+      rw [EqData1'1]
+      simp [EqGet1'1.fin (n := [].prod)]
       have h_0 := Eq_0 i
       subst h_0
       simp [List.Vector.get]
@@ -50,8 +52,12 @@ private lemma main
       have := GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length (by simp) (by simp) (by simp) X.softmax (dim := (s₀ :: s₁ :: s).length - 1) (i := i)
       simp at this
       simp [this]
-      sorry
+      have := EqGet1'1 (s := (s₀ :: s₁ :: s).eraseIdx ((s₀ :: s₁ :: s).length - 1)) (i := i) (α := α)
+      simp at this
+      simp [this]
+      rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.Lt_Length (by simp) (by simp) (by simp)]
+      exact ih (by simp) (by simp_all) X[i]
 
 
 -- created on 2025-10-07
--- updated on 2025-10-11
+-- updated on 2025-10-12
