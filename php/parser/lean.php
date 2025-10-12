@@ -6266,10 +6266,15 @@ class LeanArgsSemicolonSeparated extends LeanArgs
         return $caret;
     }
 
-    public function insert_tactic($caret, $token)
+    public function insert_tactic($caret, $type)
     {
-        if ($caret instanceof LeanCaret)
-            return $this->insert_word($caret, $token);
+        if ($caret instanceof LeanCaret) {
+            if (($this->parent instanceof LeanTactic) && $this->parent->is_inline_tactic_block()) {
+                $this->replace($caret, new LeanTactic($type, $caret, $this->indent));
+                return $caret;
+            }
+            return $this->insert_word($caret, $type);
+        }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
@@ -6400,6 +6405,11 @@ class LeanTactic extends LeanSyntax
         return $new;
     }
 
+    public function is_inline_tactic_block()
+    {
+        return in_array($this->func, ['repeat', 'try']);
+    }
+
     public function getEcho()
     {
         if ($this->func == 'echo')
@@ -6511,15 +6521,7 @@ class LeanTactic extends LeanSyntax
     public function insert_only($caret)
     {
         if ($caret === end($this->args)) {
-            if ($this->func == 'repeat') {
-                $caret = new LeanToken('only', $this->indent);
-                $this->arg = new LeanArgsSpaceSeparated(
-                    [$this->arg, $caret],
-                    $this->indent
-                );
-            }
-            else
-                $this->only = true;
+            $this->only = true;
             return $caret;
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
@@ -6788,8 +6790,8 @@ class LeanTactic extends LeanSyntax
     public function insert_tactic($caret, $type)
     {
         if ($caret === end($this->args) && $caret instanceof LeanCaret) {
-            if ($this->func == 'try') {
-                $caret->parent->replace($caret, new LeanTactic($type, $caret, $this->indent));
+            if ($this->is_inline_tactic_block()) {
+                $this->replace($caret, new LeanTactic($type, $caret, $this->indent));
                 return $caret;
             } else
                 return $this->insert_word($caret, $type);
@@ -6837,7 +6839,7 @@ class LeanTactic extends LeanSyntax
     public function insert_semicolon($caret)
     {
         if ($caret === $this->arg) {
-            if ($this->func == 'repeat') {
+            if ($this->is_inline_tactic_block()) {
                 $new = new LeanCaret($this->indent);
                 if ($caret instanceof LeanArgsSemicolonSeparated)
                     $caret->push($new);

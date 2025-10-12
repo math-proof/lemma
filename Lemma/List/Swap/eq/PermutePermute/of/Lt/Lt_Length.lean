@@ -44,32 +44,12 @@ private lemma main
   let d := j - i
   s.swap i j = (s.permute ⟨i, by linarith⟩ (d - 1)).permute ⟨j, by simp_all [LengthPermute.eq.Length]⟩ (-d) := by
 -- proof
-  have h_Ge_1 := Sub.ge.One.of.Gt h_ij
   intro d
   suffices h : s.swap i j = (s.permute ⟨i, by linarith⟩ (d - 1 : ℕ)).permute ⟨j, by simp_all [LengthPermute.eq.Length]⟩ (-d) by
     rwa [CoeSub.eq.SubCoeS.of.Ge] at h
     simp [d]
     apply Sub.ge.One.of.Lt h_ij
-  have h_sub : d ≥ 1 := by
-    simp_all [d]
-  have h_dj : d ≤ j := by
-    simp_all [d]
-  have h_Gt_0 : j > 0 := by
-    linarith
-  have h_j_add : j = i + d := by
-    simp [d]
-    rw [EqAdd_Sub.of.Gt h_ij]
-  have h_i : i = j - d := by
-    simp [h_j_add]
-  have h_Sub_1 : j - 1 ≥ i := GeSub_1.of.Gt h_ij
-  have h_ij' : i + (d - 1) = j - 1 := by
-    rw [Add_Sub.eq.SubAdd.of.Ge h_sub]
-    rw [← h_j_add]
-  have h_j_1 := LtSub.of.Lt h_j 1
-  have h_id : i + (d - 1) < s.length := by
-    rwa [h_ij']
-  have h_i_length : i < s.length := by linarith
-  have h_ge := Ge_Sub_1 j
+  have h_id : i + (d - 1) < s.length := by omega
   ext k x
   by_cases h_k_length : k < s.length
   ·
@@ -84,53 +64,65 @@ private lemma main
     split_ifs with h_ki h_kj
     ·
       simp [h_ki]
-      rw [GetPermute__Neg.eq.Ite.of.Lt_Length (by simpa [LengthPermute.eq.Length])]
-      apply Eq.symm
-      split_ifs with h_lt
-      ·
-        simp [d] at h_lt
-        rw [EqSub_Sub.of.Gt h_ij] at h_lt
+      rw [GetPermute__Neg.eq.Ite.of.Lt_Length]
+      .
+        apply Eq.symm
+        split_ifs with h_lt h_1 h_eq
+        ·
+          simp [d] at h_lt
+          omega
+        ·
+          simp only [GetElem.getElem]
+          simp
+          rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length h_id]
+          split_ifs with h_lt' h_1 h_eq'
+          ·
+            rfl
+          ·
+            simp [d] at h_1
+            omega
+          ·
+            simp at h_eq'
+            omega
+          ·
+            rfl
+        .
+          simp [d] at h_lt h_1
+          omega
+        .
+          simp at h_eq
+          omega
+      .
+        simp [LengthPermute.eq.Length]
         linarith
-      ·
-        simp only [GetElem.getElem]
-        simp
-        rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length h_id]
-        split_ifs with h_lt' h_1 h_eq'
-        ·
-          rfl
-        ·
-          rw [h_ij'] at h_1
-          linarith
-        ·
-          simp at h_lt h_1
-          simp at h_eq'
-          rw [h_ij'] at h_eq'
-          have := Eq_0.of.Eq_Sub_1 h_eq'
-          linarith
-        ·
-          rfl
     ·
       simp [h_kj]
       rw [GetPermute__Neg.eq.Ite.of.Lt_Length (by simpa [LengthPermute.eq.Length])]
       apply Eq.symm
       split_ifs with h_lt h_1 h_eq
       ·
-        linarith
+        simp [d] at h_lt
+        omega
       ·
-        linarith
+        simp [d] at h_1
+        omega
       ·
-        rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length h_id h_j_1]
-        split_ifs with h_lt' h_1 h_eq'
-        ·
-          linarith
-        ·
-          rw [h_ij'] at h_1
-          linarith
-        ·
-          rfl
-        ·
-          rw [h_ij'] at h_eq'
-          contradiction
+        rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length h_id]
+        .
+          split_ifs with h_lt' h_1 h_eq'
+          ·
+            simp at h_lt'
+            omega
+          ·
+            simp [d] at h_1
+            omega
+          ·
+            rfl
+          ·
+            simp [d] at h_eq'
+            omega
+        .
+          apply LtSub.of.Lt h_j
       ·
         linarith
     ·
@@ -140,72 +132,30 @@ private lemma main
       ·
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length h_id h_k_length]
         split_ifs with h_lt' h_1 h_eq'
-        ·
-          rfl
-        ·
-          simp at h_lt
-          rw [← h_i] at h_lt
-          contradiction
-        ·
-          simp at h_lt
-          rw [← h_i] at h_lt
-          simp at h_lt'
-          have := Lt.of.Lt.Le h_lt h_lt'
-          simp at this
-        ·
-          rfl
+        rfl
+        repeat simp at h_lt h_lt'; omega
       ·
         simp at h_lt h_1
         simp [h_1]
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length h_id h_j]
         split_ifs with h_lt' h_1' h_eq'
-        ·
-          linarith
-        ·
-          rw [h_ij'] at h_1'
-          have := Gt.of.Ge.Gt h_ge h_1'
-          simp at this
-        ·
-          rw [h_ij'] at h_eq'
-          simp_all [Eq_0.of.Eq_Sub_1 h_eq']
-        ·
-          rw [← h_i] at h_1
-          contradiction
+        repeat omega
       ·
         simp at h_lt h_1 h_eq
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length h_id]
         ·
           split_ifs with h_lt' h_1 h_eq'
           ·
-            have h_lt' := Le.of.LtSub_1 h_lt'
-            have h_lt := LeSub.of.Le_Add.nat h_lt
-            rw [← h_i] at h_lt
-            have h_eq := Eq.of.Le.Le h_lt h_lt'
-            contradiction
+            simp at h_lt'
+            omega
           ·
-            have h_le := LeSub.of.Le_Add.nat h_lt
-            rw [← h_i] at h_le
-            have h_gt := Gt.of.Ge.Ne h_le h_ki
-            have h_ge := Ge_1.of.Gt h_gt
-            simp [EqAddSub.of.Ge h_ge]
+            simp [EqAddSub.of.Ge (by omega : k ≥ 1)]
           ·
-            rw [h_ij'] at h_eq'
-            have h_lt := LeSub.of.Le_Add.nat h_lt
-            rw [← h_i] at h_lt
-            have h_gt := Gt.of.Ge.Ne h_lt h_ki
-            have h_ge := Ge_1.of.Gt h_gt
-            have h_eq' := Eq.of.EqSubS.Ge.Ge h_ge h_Gt_0 h_eq'
-            contradiction
+            simp [d] at h_eq'
+            omega
           ·
             simp at h_1
-            rw [h_ij'] at h_1
-            simp at h_lt'
-            have h_lt' := Le.of.Le_Sub h_lt'
-            have h_gt := Gt.of.Ge.Ne h_lt' h_ki
-            have h_ge := Ge_1.of.Gt h_gt
-            have := Le.of.LeSubS.Le h_ge h_1
-            have h_eq := Eq.of.Le.Le this h_eq
-            contradiction
+            omega
         ·
           apply LtSub.of.Lt h_k_length
       ·
@@ -214,17 +164,11 @@ private lemma main
         ·
           rfl
         ·
-          simp at h_eq
-          rw [h_ij'] at h_1
-          have := Lt.of.Lt.Lt h_eq h_1
-          have := Gt.of.Gt.Ge this h_ge
-          simp at this
+          simp at h_eq h_1
+          omega
         ·
-          simp at h_eq
-          rw [h_ij'] at h_eq'
-          rw [h_eq'] at h_eq
-          have := Gt.of.Ge.Gt h_ge h_eq
-          simp at this
+          simp at h_eq h_eq'
+          omega
         ·
           rfl
   ·

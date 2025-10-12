@@ -40,8 +40,93 @@ private lemma main
   (h_j : j < s.length)
   (h_ij : i < j) :
 -- imply
-  (s.permute ⟨i, by linarith⟩ (j - i)).permute ⟨j, by simp_all [LengthPermute.eq.Length]⟩ (i - j) = s := by
+  let d := j - i
+  (s.permute ⟨i, by linarith⟩ d).permute ⟨j, by simp_all [LengthPermute.eq.Length]⟩ (-d) = s := by
 -- proof
-  sorry
+  intro d
+  ext k x
+  by_cases h_k_length : k < s.length
+  .
+    simp [h_k_length]
+    have h_k : k < ((s.permute ⟨i, by linarith⟩ d).permute ⟨j, by simpa [LengthPermute.eq.Length]⟩ (-d)).length := by
+      simpa [LengthPermute.eq.Length]
+    simp [h_k]
+    apply IffEqS.of.Eq
+    rw [GetPermute__Neg.eq.Ite.of.Lt_Length (by simpa [LengthPermute.eq.Length])]
+    split_ifs with h_lt h_1 h_eq
+    .
+      simp [d] at h_lt
+      simp [EqSub_Sub.of.Gt h_ij] at h_lt
+      rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length _ h_k_length]
+      .
+        simp [h_lt]
+      .
+        simp [d]
+        simpa [EqAdd_Sub.of.Gt h_ij]
+    .
+      simp [d] at h_1
+      simp [EqSub_Sub.of.Gt h_ij] at h_1
+      subst h_1
+      simp
+      rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length _ h_j]
+      .
+        split_ifs with h_lt' h_1 h_eq'
+        .
+          linarith
+        .
+          simp [d] at h_1
+          omega
+        .
+          rfl
+        .
+          simp [d] at h_eq'
+          omega
+      .
+        simp [d]
+        simpa [EqAdd_Sub.of.Gt h_ij]
+    .
+      simp [d] at h_lt h_1 h_eq
+      simp [EqSub_Sub.of.Gt h_ij] at h_1
+      rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
+      .
+        split_ifs with h_lt' h_1 h_eq'
+        .
+          simp at h_lt'
+          omega
+        .
+          simp [EqAddSub.of.Ge (by omega : k ≥ 1)]
+        .
+          simp [d] at h_eq'
+          omega
+        .
+          simp [d] at h_1
+          omega
+      .
+        simp [d]
+        simpa [EqAdd_Sub.of.Gt h_ij]
+      .
+        omega
+    .
+      rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
+      .
+        split_ifs with h_lt' h_1 h_eq'
+        .
+          rfl
+        .
+          simp at h_eq h_1
+          omega
+        .
+          simp at *
+          omega
+        .
+          simp [d] at *
+      .
+        simp [d]
+        omega
+  .
+    simp at h_k_length
+    repeat rw [GetElem.eq.None.of.Ge_Length]
+    repeat simpa [LengthPermute.eq.Length]
+
 
 -- created on 2025-10-12
