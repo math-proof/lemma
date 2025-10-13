@@ -1,6 +1,6 @@
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
-import Lemma.Algebra.Gt_0.of.Lt
+import Lemma.Nat.Gt_0.of.Lt
 import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdDrop.gt.Zero.of.GtProd_0

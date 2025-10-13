@@ -20,7 +20,7 @@ import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.Mul
 import Lemma.Algebra.MulAdd.eq.AddMulS
-import Lemma.Algebra.EqSub_Sub
+import Lemma.Int.EqSub_Sub
 import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Algebra.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
 open Algebra Nat Int
@@ -49,8 +49,7 @@ private lemma main
       rw [Mul_Add.eq.AddMulS]
       apply Lt.of.Sub.gt.Zero
       rw [SubAdd.eq.AddSub]
-      rw [Sub_Add.eq.SubSub]
-      rw [Sub_Add.eq.SubSub]
+      repeat rw [Sub_Add.eq.SubSub]
       rw [SubMul.eq.MulSub_1]
       rw [SubSub.comm]
       rw [AddSub.eq.Add_Sub]

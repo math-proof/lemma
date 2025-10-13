@@ -119,6 +119,8 @@ where
       let level :=
         match func with
         -- | .UnaryPrefix ⟨`Subtype.val⟩
+        | .BinaryInfix _
+        | .Special _
         | .ExprWithAttr (.LeanProperty _)
         | .ExprWithAttr (.LeanMethod ..) =>
           level.succ

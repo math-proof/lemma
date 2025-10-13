@@ -5,25 +5,30 @@ import sympy.core.expr
 open Lean (Name)
 
 /--
-| index |   hex  |color |
-| ----- | ------ |----- |
-| 0     |"#000"|Black |
-| 1     |"#00f"| Blue |
-| 2     |"#0f0"|Green |
-| 3     |"#0ff"| Cyan |
-| 4     |"#f00"| Red  |
-| 5     |"#f0f"| Pink |
-| 6     |"#ff0"|Yellow|
+| index |   hex  | color|
+| ----- | ------ | -----|
+| 0     |"#999"| Gray |
+| 1     |"#99f"| Blue |
+| 2     |"#9f9"|Green |
+| 3     |"#9ff"| Cyan |
+| 4     |"#f99"| Red  |
+| 5     |"#f9f"| Pink |
+| 6     |"#ff9"|Yellow|
 | 7     |"#fff"|White |
 -/
 def Nat.toColor (n : ℕ) : String :=
   let n := (n + 1) &&& 7
-  let b := if n &&& 1 == 1 then "f" else "0"
+  let b := ['9', 'f'][n &&& 1]!
   let n := n >>> 1
-  let g := if n &&& 1 == 1 then "b" else "0"
+  let g := ['9', 'f'][n &&& 1]!
   let n := n >>> 1
-  let r := if n &&& 1 == 1 then "f" else "0"
-  s!"\u007b\\color\u007b#{r}{g}{b}\u007d\\left(%s\\right)\u007d"
+  let r := ['9', 'f'][n &&& 1]!
+  -- for katex
+  -- s!"\\colorbox\u007b#{r}{g}{b}\u007d\u007b$\\left(%s\\right)$\u007d"
+  -- for complex math
+  s!"\\colorbox\u007b#{r}{g}{b}\u007d\u007b$\\mathord\u007b\\left(%s\\right)\u007d$\u007d"
+  -- for mathjax
+  -- s!"\\bbox[#{r}{g}{b}]\u007b\\left(%s\\right)\u007d"
 
 def Expr.is_Div : Expr → Bool
   | Basic (.BinaryInfix ⟨op⟩) .. =>

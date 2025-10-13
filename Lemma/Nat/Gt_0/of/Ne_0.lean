@@ -7,9 +7,10 @@ private lemma main
 -- given
   (h : n ≠ 0) :
 -- imply
-  n > 0 := by
+  n > 0 := 
 -- proof
-  exact Nat.pos_of_ne_zero h
+  Nat.pos_of_ne_zero h
 
 
 -- created on 2024-07-01
+-- updated on 2025-10-13

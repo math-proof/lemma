@@ -1,5 +1,5 @@
 import Lemma.List.LengthSwap.eq.Length
-import Lemma.List.GetElem.eq.SomeGet.of.Lt
+import Lemma.List.GetElem.eq.SomeGet.of.Lt_Length
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.Lt.of.Le.Ne
@@ -24,7 +24,7 @@ private lemma main
   have h_i : i < (a.swap i j).length := by
     rw [this]
     simp
-  have h_some := GetElem.eq.SomeGet.of.Lt h_i
+  have h_some := GetElem.eq.SomeGet.of.Lt_Length h_i
   simp [h_some]
   unfold List.swap
   split_ifs with h_eq h_lt? h_j h_i

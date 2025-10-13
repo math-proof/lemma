@@ -4,6 +4,7 @@ import Lemma.List.LengthPermute.eq.Length
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.Nat.SubSub
 import Lemma.Nat.EqAdd_Sub.of.Ge
+import Lemma.List.DropPermute.eq.ListGet
 open List Nat
 
 
@@ -21,6 +22,7 @@ private lemma main
     rw [DropDrop.eq.Drop_Add]
     rw [SubSub.comm]
     rw [EqAdd_Sub.of.Ge (by omega)]
+    rw [DropPermute.eq.ListGet]
     sorry
   · 
     rw [LengthDrop.eq.SubLength]

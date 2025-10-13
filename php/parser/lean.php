@@ -1623,12 +1623,15 @@ class LeanParenthesis extends LeanPairedGroup
     public function toColor(): string
     {
         $n = $this->arg->level & 7;
-        $b = $n & 1 ? 'f' : '0';
+        $b = "9f"[$n & 1];
         $n >>= 1;
-        $g = $n & 1 ? 'b' : '0';
+        $g = "9f"[$n & 1];
         $n >>= 1;
-        $r = $n & 1 ? 'f' : '0';
-        return "{\\color{#{$r}{$g}{$b}}\\left(%s\\right)}";
+        $r = "9f"[$n & 1];
+        // for katex:
+        return "\\colorbox{#{$r}{$g}{$b}}{\$\\mathord{\\left(%s\\right)}\$}";
+        // for mathjax:
+        // return "\\bbox[#{$r}{$g}{$b}]{\\left(%s\\right)}";
     }
 
     public function latexFormat()
