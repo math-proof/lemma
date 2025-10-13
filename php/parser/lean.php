@@ -2061,7 +2061,7 @@ class LeanProperty extends LeanBinary
                 case 'log':
                     return "\\$command {%s}";
                 case 'fmod':
-                    return '{%s} \textcolor{red}{\%%}';
+                    return '{%s} {\color{red}\%%}';
                 case 'card':
                     if (!($this->lhs instanceof LeanToken && $this->parent instanceof LeanArgsSpaceSeparated && $this->parent->args[0] === $this))
                         return '\left|{%s}\right|';
@@ -6495,8 +6495,8 @@ class LeanTactic extends LeanSyntax
         //cm-def {color: #00f;} 
         //cm-keyword {color: #708;} 
         //defined in static/codemirror/lib/codemirror.css
-        $color = $func == 'sorry'? '770088' : '0000ff';
-        $func = "\\textcolor{#$color}{{$func}}";
+        $color = $func == 'sorry'? '708' : '00f';
+        $func = "{\\color{#$color}$func}";
         if (!($this->arg instanceof LeanCaret))
             $func .= '\ ';
         return $func . implode('\ ', array_fill(0, count($this->args), "%s"));
@@ -6873,7 +6873,7 @@ class LeanBy extends LeanUnary
         //cm-def {color: #00f;} 
         //defined in static/codemirror/lib/codemirror.css
         $arg = $this->arg;
-        $command = "\\textcolor{#0000ff}{{$this->command}}";
+        $command = "{\\color{#00f}$this->command}";
         if ($arg instanceof LeanStatements)
             return "\\begin{align*}\n$command && \\\\\n%s\n\\end{align*}";
         return "$command\\ %s";
@@ -7172,7 +7172,7 @@ class LeanAt extends LeanUnary
 
     public function latexFormat()
     {
-        return "\\textcolor{#0000ff}{{$this->command}}\ %s";
+        return "{\\color{#00f}$this->command}\ %s";
     }
 
     public function insert_newline($caret, $newline_count, $indent, $next)
@@ -8134,7 +8134,7 @@ class Lean_let extends LeanUnary
     {
         //cm-def {color: #00f;} 
         //defined in static/codemirror/lib/codemirror.css
-        return "\\textcolor{#0000ff}{{$this->command}}\\ %s";
+        return "{\\color{#00f}$this->command}\\ %s";
     }
     public function jsonSerialize(): mixed
     {
@@ -8274,7 +8274,7 @@ class Lean_show extends LeanSyntax
     {
         //cm-def {color: #00f;} 
         //defined in static/codemirror/lib/codemirror.css
-        $func = "\\textcolor{#0000ff}{{$this->func}}";
+        $func = "{\\color{#00f}$this->func}";
         return "$func\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
     }
 

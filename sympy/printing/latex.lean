@@ -4,6 +4,14 @@ import stdlib.List
 import sympy.core.expr
 open Lean (Name)
 
+def Nat.toColor (n : ℕ) : String :=
+  let n := n &&& 7
+  let b := if n &&& 1 == 1 then "e" else "0"
+  let n := n >>> 1
+  let g := if n &&& 1 == 1 then "e" else "0"
+  let n := n >>> 1
+  let r := if n &&& 1 == 1 then "e" else "0"
+  s!"\u007b\\color\u007b#{r}{g}{b}\u007d%s\u007d"
 
 def Expr.is_Div : Expr → Bool
   | Basic (.BinaryInfix ⟨op⟩) _ =>
@@ -69,7 +77,7 @@ def Expr.toList : Expr → Option (List Expr)
   | .const (.ident `List.nil) => some .nil
   | _ => none
 
-def Expr.traceCases (e : Expr) : Nat × Expr :=
+def Expr.traceCases (e : Expr) : ℕ × Expr :=
   match e with
   | Basic (.Special ⟨`ite⟩) args =>
     match args with
@@ -247,7 +255,7 @@ def Expr.latexFormat : Expr → String
       | `ite =>
         let ⟨n, last⟩ := e.traceCases
         if last == .nil then
-          "\\overbrace{\\begin{cases} %s \\end{cases}}^{\\color{blue}{match}}".format "\\\\".implode (["%s"].repeat n)
+          "\\overbrace{\\begin{cases} %s \\end{cases}}^{\\color{blue}match}".format "\\\\".implode (["%s"].repeat n)
         else
           "\\begin{cases} %s \\\\ {%%s} & {\\color{blue}\\text{else}} \\end{cases}".format "\\\\".implode (["%s"].repeat n)
       | `Insert.insert =>
@@ -323,7 +331,7 @@ def Expr.latexFormat : Expr → String
               false
           let arg := if parentheses then "{\\left(%s\\right)}" else "%s"
           s!"\\left[%s < %s\\right] {arg}"
-        | `letFun => "{\\begin{align*}&{\\color{blue}{let}}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
+        | `letFun => "{\\begin{align*}&{\\color{blue}let}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
         | `OfScientific.ofScientific => "%s%s.%s"
         -- | `cast
@@ -378,7 +386,7 @@ def Expr.latexFormat : Expr → String
               "{\\left(%s\\right)}"
             else
               "%s"
-          "%s \\textcolor{red}{\\%%%%} %s".format left, right
+          "%s {\\color{red}\\%%%%} %s".format left, right
         | "getSlice", [_, Basic (.Special ⟨`Slice.mk⟩) [start, _, step]] =>
           if let const (.natVal 1) := step then
             if let const (.natVal 0) := start then

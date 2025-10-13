@@ -45,7 +45,7 @@ def BinaryInfix.func : BinaryInfix → Func
     | `HasSSubset.SSubset => ⟨50, "⊂", "\\subset"⟩  -- Lean_subset
     | `Superset => ⟨50, "⊇", "\\supseteq"⟩  -- Lean_supseteq
     | `SSuperset => ⟨50, "⊃", "\\supset"⟩    -- Lean_supset
-    | `Dvd.dvd => ⟨50, "∣", "{\\color{red}{\\ \\mid\\ }}"⟩  -- Lean_mid
+    | `Dvd.dvd => ⟨50, "∣", "{\\color{red}\\ \\mid\\ }"⟩  -- Lean_mid
     | `HOr.hOr => ⟨55, "|||", "\\mid\\mid\\mid"⟩  -- Lean_HOr
     | `HXor.hXor => ⟨58, "^^^", "\\^\\^\\^"⟩  -- Lean_HXor
     | `HAnd.hAnd => ⟨60, "&&&", "&&&"⟩  -- Lean_HXor
@@ -197,7 +197,7 @@ def ExprWithLimits.func : ExprWithLimits → Func
   | Lean_forall => ⟨24, "∀", "\\forall"⟩
   | Lean_exists => ⟨24, "∃", "\\exists"⟩
   | Lean_lambda => ⟨72, "fun", "\\operatorname{\\color{magenta}fun}"⟩
-  | Lean_let => ⟨47, "let", "{\\color{blue}{let}}"⟩
+  | Lean_let => ⟨47, "let", "{\\color{blue}let}"⟩
 
 def ExprWithLimits.name : ExprWithLimits → Name
   | Lean_forall => default
@@ -288,7 +288,7 @@ def ExprWithAttr.func : ExprWithAttr → Func
     ⟨
       75,
       name,
-      "\\operatorname{\\color{#770088}{%s}}".format name.escape_specials
+      "\\operatorname{\\color{#708}%s}".format name.escape_specials
     ⟩
   | LeanLemma name =>
     let name := name.getLast.toString
