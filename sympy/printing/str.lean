@@ -51,7 +51,7 @@ def Expr.strFormat : Expr → String
   | Symbol .. =>
     "%s"
 
-  | Basic func args =>
+  | Basic func args _ =>
     let opStr := func.operator
     match func with
     | .BinaryInfix binop@(⟨op⟩) =>
@@ -220,7 +220,7 @@ def Expr.strFormat : Expr → String
         | arg :: _ =>
           let arg :=
             if func.priority > arg.priority then
-              if let .Basic (.BinaryInfix ⟨`List.cons⟩) [_, .const (.ident `List.nil)] := arg then
+              if let .Basic (.BinaryInfix ⟨`List.cons⟩) [_, .const (.ident `List.nil)] _ := arg then
                 "%s"
               else
                 "(%s)"
@@ -267,7 +267,7 @@ where
   | Symbol name _ =>
     [".".intercalate name.normalized]
 
-  | Basic func args =>
+  | Basic func args _ =>
     match func with
     | .ExprWithLimits op =>
       let args' :=

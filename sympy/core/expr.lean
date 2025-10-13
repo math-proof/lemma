@@ -140,8 +140,8 @@ def UnaryPrefix.func : UnaryPrefix → Func
     | `Rat.cast
     | `Fin.val
     | `Finset.toSet
-    | `Subtype.val => ⟨72, "↑", "\\uparrow"⟩  -- Lean_uparrow
-    | `DFunLike.coe => ⟨72, "⇑", "\\Uparrow"⟩  -- LeanUparrow
+    | `Subtype.val => ⟨1024, "↑", "\\uparrow"⟩  -- Lean_uparrow, https://github.com/leanprover/lean4/blob/v4.23.0/src/Init/Coe.lean#L296
+    | `DFunLike.coe => ⟨1024, "⇑", "\\Uparrow"⟩  -- LeanUparrow
     | `Real.sqrt
     | `Root.sqrt => ⟨72, "√", "\\sqrt"⟩  -- Lean_sqrt
     | `OfNat.ofNat => ⟨107, "cast", ""⟩  -- Lean_cast
@@ -373,7 +373,7 @@ inductive Expr where
 
   | Symbol (name : Name) (type : Expr)
 
-  | Basic (func : Operator) (args : List Expr)
+  | Basic (func : Operator) (args : List Expr) (level : Nat)
 
   | Binder (binder : Binder) (binderName : Name) (binderType : Expr) (value : Expr)
 deriving Inhabited, BEq, CtorName
@@ -381,11 +381,14 @@ deriving Inhabited, BEq, CtorName
 def Expr.priority : Expr → Nat
   | nil => 0
   | sort ..
-  | Symbol ..
   | const _ => 100
-  | Basic op _ => op.priority
-  | Binder binder _ _ _ => binder.func.priority
+  | Symbol .. => 1024
+  | Basic op ..  => op.priority
+  | Binder binder .. => binder.func.priority
 
+def Expr.level : Expr → Nat
+  | Basic op _ level  => level
+  | _ => 0
 
 def Expr.isEmpty : Expr → Bool
   | nil => true
@@ -393,7 +396,7 @@ def Expr.isEmpty : Expr → Bool
 
 
 def Expr.isTypeClass : Expr → Bool
-  | Basic (.ExprWithLimits .Lean_forall) (.sort .zero :: _) => true
+  | Basic (.ExprWithLimits .Lean_forall) (.sort .zero :: _) _ => true
   | _ => false
 
 
@@ -431,12 +434,12 @@ inductive TreeNode where
   | const (expr : Expr)
 
 
-def ExprWithAttr.toTreeNode (declName : Name) (toExpr : Lean.Expr → List Expr → MetaM Expr) : MetaM TreeNode := do
+def ExprWithAttr.toTreeNode (declName : Name) (toExpr : Lean.Expr → List Expr → Nat → MetaM Expr) (level : Nat) : MetaM TreeNode := do
   let op : Name → ExprWithAttr ←
     if Lean.isClass (← Lean.getEnv) declName then
       pure ExprWithAttr.Lean_typeclass
     else
-      if (← toExpr (← declName.toConstantInfo).type []).isTypeClass then
+      if (← toExpr (← declName.toConstantInfo).type [] level).isTypeClass then
         pure ExprWithAttr.Lean_typeclass
       else
         match declName with
@@ -465,7 +468,7 @@ def ExprWithAttr.toTreeNode (declName : Name) (toExpr : Lean.Expr → List Expr 
             pure ExprWithAttr.Lean_operatorname
   return .Operator (.ExprWithAttr (op declName))
 
-partial def Expr.func (e : Lean.Expr) (toExpr : Lean.Expr → List Expr → MetaM Expr) (binders : List Expr) : MetaM TreeNode := do
+partial def Expr.func (e : Lean.Expr) (toExpr : Lean.Expr → List Expr → Nat → MetaM Expr) (binders : List Expr) (level : Nat) : MetaM TreeNode := do
   match e with
   | .bvar deBruijnIndex  =>
     if h : deBruijnIndex < binders.length then
@@ -476,14 +479,14 @@ partial def Expr.func (e : Lean.Expr) (toExpr : Lean.Expr → List Expr → Meta
   | .fvar fvarId  =>
     if let some decl ← fvarId.findDecl? then
       let type := decl.type
-      return .const (Symbol decl.userName (← toExpr type []))
+      return .const (Symbol decl.userName (← toExpr type [] level))
     else
       for (_, mdecl) in (← getMCtx).decls do
         let lctx := mdecl.lctx
         let e : Option TreeNode ← withLCtx lctx mdecl.localInstances do
           if let some decl := lctx.find? fvarId then
             let type := decl.type
-            return TreeNode.const (Symbol decl.userName (← toExpr type []))
+            return TreeNode.const (Symbol decl.userName (← toExpr type [] level))
           else
             return none
         if let some e := e then
@@ -497,7 +500,7 @@ partial def Expr.func (e : Lean.Expr) (toExpr : Lean.Expr → List Expr → Meta
       Lean.logInfo s!"Expr.func.mvar :
 e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
 -/
-    Expr.func (← getExprMVarAssignment mvarId) toExpr binders
+    Expr.func (← getExprMVarAssignment mvarId) toExpr binders level
 
   | .sort u =>
     return .const (sort u)
@@ -690,12 +693,12 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
       if op.endsWithNumberedWord "match" || op == "mk" then
         return .Operator (.Special ⟨declName⟩)
       else
-        ExprWithAttr.toTreeNode declName toExpr
+        ExprWithAttr.toTreeNode declName toExpr level
     | _ =>
-      ExprWithAttr.toTreeNode declName toExpr
+      ExprWithAttr.toTreeNode declName toExpr level
 
   | .app fn arg =>
-    let op ← Expr.func fn toExpr binders
+    let op ← Expr.func fn toExpr binders level
     match op with
     | .Operator func =>
 /-
@@ -713,8 +716,8 @@ func = {func}
 
       | .UnaryPrefix ⟨`DFunLike.coe⟩ =>
         if arg.ctorName == "const" then
-          let arg_func ← Expr.func arg toExpr binders
-          match ← Expr.func arg toExpr binders with
+          let arg_func ← Expr.func arg toExpr binders level
+          match ← Expr.func arg toExpr binders level with
           | .Operator (.UnaryPrefix _) =>
             return arg_func
           | _ =>
@@ -734,12 +737,12 @@ c.ctorName = {c.ctorName}
 "
 -/
       match c with
-      | Symbol _ (Basic (.ExprWithLimits .Lean_forall) _) =>
+      | Symbol _ (Basic (.ExprWithLimits .Lean_forall) ..) =>
         return .Operator (.Special ⟨default⟩)
       | const (.ident `List.nil) =>
         return .const c
       | _ =>
-        return .const (.Basic (.Special ⟨default⟩) [c, ← toExpr arg binders])
+        return .const (.Basic (.Special ⟨default⟩) [c, ← toExpr arg binders level] level)
 
   | .lam ..  =>
     return .Operator (.ExprWithLimits .Lean_lambda)
@@ -758,7 +761,7 @@ c.ctorName = {c.ctorName}
       return .const default
 
   | .mdata _ e =>
-    Expr.func e toExpr binders
+    Expr.func e toExpr binders level
 
   | .proj typeName idx _ =>
     return .Operator (.UnaryPrefix ⟨← typeName.projFieldName idx⟩)
@@ -780,7 +783,7 @@ def Expr.filter_default (func : Operator) (args : List Expr) : MetaM (List Expr 
 
 
 def Expr.isProp : Expr → Bool
-  | Basic func args =>
+  | Basic func args _ =>
     match func, args with
     | .BinaryInfix op, _ => op.isProp
     | .UnaryPrefix op, _ => op.isProp

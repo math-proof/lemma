@@ -45,7 +45,7 @@ def Expr.toJson (this : Expr) : Json :=
   | nil =>
     .null
 
-  | Basic (.ExprWithLimits .Lean_forall) (expr :: limits) =>
+  | Basic (.ExprWithLimits .Lean_forall) (expr :: limits) _ =>
     let codeObject := limits.foldl (fun obj limit => limit.collect obj) (Json.mkObj ([]))
     let imply := Json.mkObj ([
       ("lean", expr.toString),
@@ -53,7 +53,7 @@ def Expr.toJson (this : Expr) : Json :=
     ])
     codeObject.setObjVal! "imply" imply
 
-  | Basic (.BinaryInfix op) _ =>
+  | Basic (.BinaryInfix op) .. =>
     if op.isProp then
       let imply := Json.mkObj ([
         ("lean", this.toString),
@@ -71,7 +71,7 @@ def Expr.toJson (this : Expr) : Json :=
 
 def Name.toJson (name : Name) : MetaM Json := do
   let type ← name.toExpr
-  let expr ← Expr.toExpr type []
+  let expr ← Expr.toExpr type [] 0
   let mut json := expr.toJson.setObjVal! "name" name.toString
   json := json.setObjVal! "type" (← ppExpr type).pretty
   for attr in (← getConstInfoInduct `Lean.BinderInfo).ctors do

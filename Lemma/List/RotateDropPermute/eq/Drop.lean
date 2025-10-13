@@ -17,15 +17,16 @@ private lemma main
   ((s.permute i ↑(s.length - i - 1)).drop i).rotate (s.length - i - 1) = s.drop i := by
 -- proof
   rw [Rotate.eq.AppendDrop__Take.of.Lt_Length]
-  ·
+  · 
     rw [DropDrop.eq.Drop_Add]
     rw [SubSub.comm]
     rw [EqAdd_Sub.of.Ge (by omega)]
     sorry
-  ·
+  · 
     rw [LengthDrop.eq.SubLength]
     rw [LengthPermute.eq.Length]
     sorry
 
 
 -- created on 2025-10-12
+-- updated on 2025-10-13

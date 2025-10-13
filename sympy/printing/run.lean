@@ -8,7 +8,7 @@ import Mathlib
   let name := `Matrix.mul_apply
   let expr ← name.toExpr
   println! ← Lean.Meta.ppExpr expr
-  let expr ← Expr.toExpr expr []
+  let expr ← Expr.toExpr expr [] 0
   println! expr
   println! expr.toLatex
   -- println! ← Name.toJson name
