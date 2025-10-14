@@ -662,8 +662,11 @@ function createNewFile($path, $throw = true)
     createDirectory($dir);
 
     $myfile = fopen($path, "wb");
-    if (! $myfile && $throw) {
-        throw new RuntimeException("fail to create file $path");
+    if (! $myfile) {
+        if ($throw)
+            throw new RuntimeException("fail to create file $path");
+        else
+            return;
     }
 
     fclose($myfile);
