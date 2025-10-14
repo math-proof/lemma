@@ -2,6 +2,7 @@ import stdlib.SEq
 import Lemma.List.LengthPermute.eq.Length
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.List.TakePermute.eq.Take
 import Lemma.Nat.EqSub_Sub.of.Gt
@@ -12,6 +13,7 @@ import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Int.EqToNat
 import Lemma.Nat.SubSub
+import Lemma.Tensor.SEq.of.SEqDataS.Eq
 open List Tensor Bool Nat Int
 
 
@@ -28,6 +30,12 @@ private lemma main
 -- proof
   intro d
   rw [Permute.eq.Ite (d := ⟨j, by simpa [LengthPermute.eq.Length]⟩) (k := -d)]
+  have h_toNat : (1 - -(d : ℤ)).toNat = 1 + d := by
+    rw [Sub_Neg.eq.Add]
+    have := AddCoeS.eq.CoeAdd (α := ℤ) 1 d
+    rw [Cast.eq.OfNat] at this
+    rw [this]
+    rw [EqToNat]
   split_ifs with h_sub h_pos h_j_0 h_j_length
   ·
     omega
@@ -54,11 +62,7 @@ private lemma main
     ·
       simp at h_sub
       simp at h_j_length
-      rw [Sub_Neg.eq.Add]
-      have := AddCoeS.eq.CoeAdd (α := ℤ) 1 d
-      rw [Cast.eq.OfNat] at this
-      rw [this]
-      rw [EqToNat]
+      rw [h_toNat]
       rw [Permute.eq.Ite (d := ⟨i, by linarith⟩) (k := ↑d)]
       simp
       split_ifs with h_pos? h_i_0 h_i_length
@@ -77,7 +81,29 @@ private lemma main
         omega
   ·
     simp
-    sorry
+    apply SEq.of.SEqDataS.Eq
+    .
+      rw [EqPermutePermute.of.In_Ioo_Length ⟨by omega, by omega⟩]
+    .
+      simp
+      apply SEqCast.of.SEq.Eq
+      .
+        simp at h_sub
+        simp at h_j_length
+        rw [h_toNat]
+        rw [EqPermutePermute.of.In_Ioo_Length ⟨by omega, by omega⟩]
+        simp [LengthPermute.eq.Length]
+        repeat rw [EqMin.of.Le (by omega)]
+        rw [EqSubAdd.left]
+        rw [Sub_Add.eq.SubSub]
+        rw [EqSubAdd]
+        have h_j : j = d + i := by omega
+        simp [h_j]
+        rw [TakeTake.eq.Take.of.Ge (by omega)]
+        sorry
+      .
+        rw [h_toNat]
+        sorry
 
 
 -- created on 2025-10-12
