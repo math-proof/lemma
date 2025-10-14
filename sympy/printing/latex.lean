@@ -16,19 +16,22 @@ open Lean (Name)
 | 6     |"#ff9"|Yellow|
 | 7     |"#fff"|White |
 -/
-def Nat.toColor (n : ℕ) : String :=
-  let n := (n + 1) &&& 7
-  let b := ['9', 'f'][n &&& 1]!
-  let n := n >>> 1
-  let g := ['9', 'f'][n &&& 1]!
-  let n := n >>> 1
-  let r := ['9', 'f'][n &&& 1]!
-  -- for katex
-  -- s!"\\colorbox\u007b#{r}{g}{b}\u007d\u007b$\\left(%s\\right)$\u007d"
-  -- for complex math
-  s!"\\colorbox\u007b#{r}{g}{b}\u007d\u007b$\\mathord\u007b\\left(%s\\right)\u007d$\u007d"
-  -- for mathjax
-  -- s!"\\bbox[#{r}{g}{b}]\u007b\\left(%s\\right)\u007d"
+def Nat.toColor (n : ℕ) (ignore : Bool) : String :=
+  if ignore then
+    "%s"
+  else
+    let n := (n + 1) &&& 7
+    let b := ['9', 'f'][n &&& 1]!
+    let n := n >>> 1
+    let g := ['9', 'f'][n &&& 1]!
+    let n := n >>> 1
+    let r := ['9', 'f'][n &&& 1]!
+    -- for katex
+    -- s!"\\colorbox\u007b#{r}{g}{b}\u007d\u007b$\\left(%s\\right)$\u007d"
+    -- for complex math
+    s!"\\colorbox\u007b#{r}{g}{b}\u007d\u007b$\\mathord\u007b\\left(%s\\right)\u007d$\u007d"
+    -- for mathjax
+    -- s!"\\bbox[#{r}{g}{b}]\u007b\\left(%s\\right)\u007d"
 
 def Expr.is_Div : Expr → Bool
   | Basic (.BinaryInfix ⟨op⟩) .. =>
@@ -111,17 +114,8 @@ def BinaryInfix.latexFormat (op : BinaryInfix) (left right : Expr) (level : ℕ)
   let func := op.func
   let opStr := func.command
   -- left associative operators
-  let left :=
-    if func.priority ≤ left.priority || left.is_Abs || left.is_Bool || left.is_Card then
-      "%s"
-    else
-      level.toColor
-  let right :=
-    if func.priority < right.priority || right.is_Div then
-      "%s"
-    else
-      level.toColor
-
+  let left := level.toColor (left.priority ≥ func.priority || left.is_Abs || left.is_Bool || left.is_Card)
+  let right := level.toColor (right.priority > func.priority || right.is_Div)
   s!"{left} {opStr} {right}"
 
 
@@ -150,26 +144,13 @@ def Expr.latexFormat : Expr → String
           "%s {/\\!\\!/} %s"
 
         | `HPow.hPow =>
-          let left :=
-            if func.priority ≤ left.priority || left.is_Abs || left.is_Bool || left.is_Card then
-              "%s"
-            else
-              level.toColor
+          let left := level.toColor (left.priority ≥ func.priority || left.is_Abs || left.is_Bool || left.is_Card)
           s!"{left} {opStr} %s"
         | `And
         | `Or =>
           -- right associative operators
-          let left :=
-            if func.priority ≥ left.priority then
-              level.toColor
-            else
-              "%s"
-          let right :=
-            if func.priority > right.priority then
-              level.toColor
-            else
-              "%s"
-
+          let left := level.toColor (left.priority > func.priority)
+          let right := level.toColor (right.priority ≥ func.priority)
           s!"{left} {opStr} {right}"
         | `List.cons =>
           if let some args := e.toList then
@@ -204,11 +185,7 @@ def Expr.latexFormat : Expr → String
           | _ =>
             ""
         if format.isEmpty then
-          let arg :=
-            if func.priority > arg.priority then
-              level.toColor
-            else
-              "%s"
+          let arg := level.toColor (arg.priority ≥ func.priority)
           let arg :=
             if func.priority == 76 then
               "\\ " ++ arg
@@ -222,11 +199,7 @@ def Expr.latexFormat : Expr → String
 
     | .UnaryPostfix ⟨op⟩ =>
       if let [arg] := args then
-        let arg :=
-          if func.priority > arg.priority then
-            level.toColor
-          else
-            "%s"
+        let arg := level.toColor (arg.priority ≥ func.priority)
         s!"{arg}{opStr}"
       else
         op.toString
@@ -264,10 +237,7 @@ def Expr.latexFormat : Expr → String
       | .anonymous =>
         -- similar like Python' list.enumerate
         let args := args.zipIdx.map fun ⟨arg, i⟩ =>
-          if i > 0 && arg.priority ≤ func.priority || i == 0 && arg.priority < func.priority then
-            level.toColor
-          else
-            "%s"
+          level.toColor ((i == 0 || arg.priority > func.priority) && (i > 0 || arg.priority ≥ func.priority))
         "\\ ".intercalate args
       | `ite =>
         let ⟨n, last⟩ := e.traceCases
@@ -283,22 +253,14 @@ def Expr.latexFormat : Expr → String
       | `GetElem.getElem =>
         match args with
         | list :: _ =>
-          let list :=
-            if func.priority < list.priority || list.is_Abs || list.is_Bool || list.is_Card || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty then
-              "%s"
-            else
-              level.toColor
+          let list := level.toColor (list.priority > func.priority || list.is_Abs || list.is_Bool || list.is_Card || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty)
           s!"{list}_%s"
         | _ =>
           opStr
       | `GetElem?.getElem? =>
         match args with
         | list :: _ =>
-          let list :=
-            if func.priority < list.priority || list.is_Abs || list.is_Bool || list.is_Card || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty then
-              "%s"
-            else
-              level.toColor
+          let list := level.toColor (list.priority > func.priority || list.is_Abs || list.is_Bool || list.is_Card || list.is_GetElem || list.is_GetElem? || list.is_LeanProperty)
           let index := "{%s?}"
           s!"{list}_{index}"
         | _ =>
@@ -313,10 +275,7 @@ def Expr.latexFormat : Expr → String
       match op with
       | .Lean_function _ =>
         let args := args.map fun arg =>
-          if func.priority ≥ arg.priority then
-            level.toColor
-          else
-            "%s"
+          level.toColor (arg.priority > func.priority)
         opStr ++ "\\ " ++ "\\ ".intercalate args
       | .Lean_operatorname name =>
         match name with
@@ -341,12 +300,12 @@ def Expr.latexFormat : Expr → String
         | `Zeros => "\\mathbf{0}_{%s}"
         | `Ones => "\\mathbf{1}_{%s}"
         | `Stack =>
-          let parentheses : Bool :=
+          let arg := level.toColor (
             if let [_, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default _ _ nil] _] := args then
-              fn.priority < (⟨`List.cons⟩ : BinaryInfix).func.priority
+              fn.priority ≥ (⟨`List.cons⟩ : BinaryInfix).func.priority
             else
-              false
-          let arg := if parentheses then level.toColor else "%s"
+              true
+          )
           s!"\\left[%s < %s\\right] {arg}"
         | `letFun => "{\\begin{align*}&{\\color{blue}let}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
@@ -354,10 +313,7 @@ def Expr.latexFormat : Expr → String
         -- | `cast
         | _  =>
           let args := args.map fun arg =>
-            if func.priority ≥ arg.priority then
-              level.toColor
-            else
-              "%s"
+            level.toColor (arg.priority > func.priority)
           opStr ++ "\\ " ++ "\\ ".intercalate args
       | .LeanMethod name idx =>
         let attr := name.getLast.toString.escape_specials
@@ -365,44 +321,20 @@ def Expr.latexFormat : Expr → String
         | "ediv", [left, right] =>
           let divOperator : BinaryInfix := ⟨`HDiv.hDiv⟩
           let func := divOperator.func
-          let left :=
-            if func.priority > left.priority then
-              level.toColor
-            else
-              "%s"
-          let right :=
-            if func.priority ≥ right.priority then
-              level.toColor
-            else
-              "%s"
+          let left := level.toColor (left.priority ≥ func.priority)
+          let right := level.toColor (right.priority > func.priority)
           s!"{left} \\div {right}"
         | "fdiv", [left, right] =>
           let divOperator : BinaryInfix := ⟨`HDiv.hDiv⟩
           let func := divOperator.func
-          let left :=
-            if func.priority > left.priority then
-              level.toColor
-            else
-              "%s"
-          let right :=
-            if func.priority ≥ right.priority then
-              level.toColor
-            else
-              "%s"
+          let left := level.toColor (left.priority ≥ func.priority)
+          let right := level.toColor (right.priority > func.priority)
           s!"{left} /\\!\\!/ {right}"
         | "fmod", [left, right] =>
           let divOperator : BinaryInfix := ⟨`HDiv.hDiv⟩
           let func := divOperator.func
-          let left :=
-            if func.priority ≥ left.priority then
-              level.toColor
-            else
-              "%s"
-          let right :=
-            if func.priority ≥ right.priority then
-              level.toColor
-            else
-              "%s"
+          let left := level.toColor (left.priority > func.priority)
+          let right := level.toColor (right.priority > func.priority)
           "%s {\\color{red}\\%%%%} %s".format left, right
         | "getSlice", [_, Basic (.Special ⟨`Slice.mk⟩) [start, _, step] _] =>
           if let const (.natVal 1) := step then
@@ -419,33 +351,20 @@ def Expr.latexFormat : Expr → String
           if args.length ≤ idx then
             let op := name.toString.escape_specials
             let args := args.map fun arg =>
-              if func.priority > arg.priority then
-                level.toColor
-              else
-                "%s"
+              level.toColor (arg.priority ≥ func.priority)
             let args := "\\ ".intercalate args
             s!"{op}\\ {args}"
           else if let obj :: args := args.swap 0 idx then
-            let obj :=
-              if func.priority ≥ obj.priority && obj.toList == none then
-                level.toColor
-              else
-                "%s"
+            let obj := level.toColor (obj.priority > func.priority || obj.toList != none)
             let args := args.map fun arg =>
-              if arg.priority ≤ func.priority then
-                level.toColor
-              else
-                "%s"
+              level.toColor (arg.priority > func.priority)
             let args := "\\ ".intercalate args
             s!"{obj}.{attr}\\ {args}"
           else
             opStr
       | .Lean_typeclass _ =>
         let args := args.map fun arg =>
-          if arg.priority ≤ func.priority && arg.toList == none then
-            level.toColor
-          else
-            "%s"
+          level.toColor (arg.priority > func.priority || arg.toList != none)
         let args := "\\ ".intercalate args
         s!"{opStr}\\ {args}"
       | .LeanProperty name =>
@@ -464,11 +383,7 @@ def Expr.latexFormat : Expr → String
         | _ =>
           match args with
           | arg :: _ =>
-            let arg :=
-              if func.priority > arg.priority && arg.toList == none then
-                level.toColor
-              else
-                "%s"
+            let arg := level.toColor (arg.priority ≥ func.priority && arg.toList != none)
             s!"{arg}.{attr}"
           | .nil =>
             name.toString.escape_specials

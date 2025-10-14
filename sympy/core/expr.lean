@@ -381,8 +381,8 @@ deriving Inhabited, BEq, CtorName
 def Expr.priority : Expr → Nat
   | nil => 0
   | sort ..
-  | const _ => 100
-  | Symbol .. => 1024
+  | const _ => 2048
+  | Symbol .. => 2048
   | Basic op ..  => op.priority
   | Binder binder .. => binder.func.priority
 
