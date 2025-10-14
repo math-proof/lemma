@@ -16,7 +16,7 @@ import Lemma.Nat.Fib.eq.AddFibS.of.Ge_2
 open Algebra Nat
 
 
-def G (n : ℕ) := fib (3 * n)
+private def G (n : ℕ) := fib (3 * n)
 
 
 -- Modus Ponens

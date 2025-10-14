@@ -8020,7 +8020,7 @@ class Lean_def extends LeanArgs
 {
     public function __construct($accessibility, $name, $indent = null, $level = null, $parent = null)
     {
-        if ($indent === null) {
+        if ($level === null) {
             $indent = $name;
             $name = $accessibility;
             $accessibility = 'public';
