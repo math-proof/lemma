@@ -383,7 +383,7 @@ def Expr.latexFormat : Expr → String
         | _ =>
           match args with
           | arg :: _ =>
-            let arg := level.toColor (arg.priority ≥ func.priority && arg.toList != none)
+            let arg := level.toColor (arg.priority ≥ func.priority || arg.toList != none)
             s!"{arg}.{attr}"
           | .nil =>
             name.toString.escape_specials

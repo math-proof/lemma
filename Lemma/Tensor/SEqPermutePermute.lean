@@ -13,6 +13,13 @@ import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Int.EqToNat
 import Lemma.Nat.SubSub
 import Lemma.Tensor.SEq.of.SEqDataS.Eq
+import Lemma.Nat.EqAdd_Sub.of.Ge
+import Lemma.Nat.EqAddSub.of.Ge
+import Lemma.Nat.EqMin.of.Le
+import Lemma.Nat.EqSubAdd
+import Lemma.Nat.Sub_Add.eq.SubSub
+import Lemma.List.TakeTake.eq.Take.of.Ge
+import Lemma.List.DropPermute.eq.Drop.of.Add.lt.Length
 open List Tensor Bool Nat Int
 
 
@@ -81,12 +88,12 @@ private lemma main
   ·
     simp
     apply SEq.of.SEqDataS.Eq
-    .
+    ·
       rw [EqPermutePermute.of.In_Ioo_Length ⟨by omega, by omega⟩]
-    .
+    ·
       simp
       apply SEqCast.of.SEq.Eq
-      .
+      ·
         simp at h_sub
         simp at h_j_length
         rw [h_toNat]
@@ -99,8 +106,17 @@ private lemma main
         have h_j : j = d + i := by omega
         simp [h_j]
         rw [TakeTake.eq.Take.of.Ge (by omega)]
-        sorry
-      .
+        rw [TakePermute.eq.Take ⟨i, by linarith⟩]
+        conv_lhs =>
+          arg 2
+          rw [Add.comm (a := d) (b := i)]
+        rw [DropPermute.eq.Drop.of.Add.lt.Length (i := ⟨i, by linarith⟩)] <;>
+          simp
+        .
+          sorry
+        .
+          omega
+      ·
         rw [h_toNat]
         sorry
 
