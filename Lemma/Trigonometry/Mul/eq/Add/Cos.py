@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(cos(x) * cos(y))
 
-    Eq << Eq[-1].this.find(Cos[Expr - Expr]).apply(Trigonometry.Cos.eq.Add)
+    Eq << Eq[-1].this.find(Cos[Expr - Expr]).apply(Trigonometry.CosSub.eq.AddSinSin_CosCos)
 
     Eq << Eq[-1].this.find(Cos[Expr + Expr]).apply(Trigonometry.Cos.eq.Sub)
 

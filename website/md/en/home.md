@@ -29,12 +29,12 @@ In the open-source community, other automatic thoerem libraries include: [leanpr
 As of this writing, <label id=count>____</label> theorems have been recored in the theorem repertoire, which can be applied in semi-mechanized axiomatized system of mathematical theorem proving.  
 It is mainly comprising of :  	
 	
-* [Algebra](../?module=Algebra) refers to elementary Algebra, which mainly delves into equations transformation、symbol substitution techniques, finite series [∑ telescoping](../?module=Algebra.Sum.eq.Add.telescope.step)、∏ product telescoping, the property of transitivity for inequalities, solving [simple equations](../?module=Algebra.AndImpS_Eq.of.Add.eq.Zero.simple), [quadratic equations](../?module=Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic), [cubic equations](../?module=Algebra.And_Imp_Or_EqS.of.Add.eq.Zero.cubic) and [quartic equations](../?module=Algebra.And_Imp_Or_EqS.of.Add.eq.Zero.quartic), [summation by parts](../?module=Algebra.Sum.eq.Add.by_parts), as well as the proof of [mathematical induction method](../?module=Logic.Eq_0.of.Eq_0.Imp.induct);   
+* [Algebra](../?module=Algebra) refers to elementary Algebra, which mainly delves into equations transformation、symbol substitution techniques, finite series [∑ telescoping](../?module=Algebra.Sum.eq.Add.telescope.step)、∏ product telescoping, the property of transitivity for inequalities, solving [simple equations](../?module=Algebra.AndImpS_Eq.of.Add.eq.Zero.simple), [quadratic equations](../?module=Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic), [cubic equations](../?module=Algebra.And_Imp_Or_EqS.of.Add.eq.Zero.cubic) and [quartic equations](../?module=Algebra.And_Imp_Or_EqS.of.Add.eq.Zero.quartic), [summation by parts](../?module=Algebra.Sum.eq.Add.by_parts), as well as the proof of [mathematical induction method](../?module=Bool.Eq_0.of.Eq_0.All_Imp);   
 * [Set](../?module=Set) refers to Set theory, which is the core foundation of the theories of whole mathematical proving and analysis. It involves lots of propositions using the terminologies like 
 ForAll, Exists, Element, Subset, for example: 
 the proof of [inclusion-exclusion principle](../?module=Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion). It can be so said that: set theory is the fundamental grammar of automatic theorem proving.  
-* [Geometry](../?module=Geometry) is comprised of identities of trigonometry: 
-[addition principle of cosine](../?module=Geometry.Cos.eq.Add), [product principle of trigonometry](../?module=Geometry.Mul.eq.Add.Sin), and so on.   
+* [Trigonometry](../?module=Trigonometry) is comprised of identities of trigonometry: 
+[addition principle of cosine](../?module=Trigonometry.CosSub.eq.AddSinSin_CosCos), [product principle of trigonometry](../?module=Trigonometry.MulSin_Cos.eq.AddDivSSin), and so on.   
 * [Calculus](../?module=Calculus) comprises :   
 [the definition of limit](../?module=Calculus.Any.All.of.Eq_Limit.limit_definition) and its fundamental theories which is the theoretical basis of Calculus.  
 proof of [integration by parts](../?module=Calculus.Integral.eq.Add.by_parts);  
@@ -43,15 +43,15 @@ determination of some integral for certain transcendental functions;
 combinatoric induction for [second Stirling Number](../?module=Discrete.Stirling.eq.Add.recurrence),  
 derivation for [Catalan Number](../?module=Discrete.Eq.of.Eq.Eq.catalan.recurrence)， 
 basics of [continued fraction](../?module=Discrete.Add.eq.Pow.HK.recurrence); as well as the existence of [Cholesky decomposition](../?module=Discrete.Any.Eq.of.Eq_Adjoint.Imp_Gt_0.Cholesky).  
-* [Prob](../?module=Prob) refers to statistics and probability theory, comprising: the derivation of the probability density formula of some common distribution (such as, binomial distribution, Gaussian distribution, poisson distribution, die distribution, Χ<sup>2</sup>distribution)，as well as propositions related to [Bayes theorem](../?module=Probability.Pr.eq.Div.Pr.bayes), and the [law of large numbers](../?module=Probability.Eq.Limit.Pr.of.Eq_Conditioned.Eq_Expect.Eq_Var.law_of_large_numbers);  
+* [Probability](../?module=Probability) refers to statistics and probability theory, comprising: the derivation of the probability density formula of some common distribution (such as, binomial distribution, Gaussian distribution, poisson distribution, die distribution, Χ<sup>2</sup>distribution)，as well as propositions related to [Bayes theorem](../?module=Probability.Pr.eq.Div.Pr.bayes), and the [law of large numbers](../?module=Probability.Eq.Limit.Pr.of.Eq_Conditioned.Eq_Expect.Eq_Var.law_of_large_numbers);  
 * [Tensor](../?module=Tensor) section is related to the mathematical theories behind the contemporary deep learning / machine learning techniques, including the mathematical modeling used in natural language processing / understanding, formulae deduction or proof of
 [LSTM](../?module=Tensor.Eq.of.Eq.Eq.long_short_term_memory),
 [GRU](../?module=Tensor.Eq_AddMulS.gated_recurrent_unit),
-[CNN](../?module=Tensor.Eq.of.Eq_Lamda_Bool_In.conv1d),
-[BERT](../?module=Tensor.DotSoftmax.eq.Lamda_Div.scaled_dot_product_attention),
-[GPT](../?module=Tensor.DotSoftmax.eq.Lamda_Dot.gpt),
+[CNN](../?module=Tensor.Eq.of.Eq_Stack_Bool_In.conv1d),
+[BERT](../?module=Tensor.DotSoftmax.eq.Stack_Div.scaled_dot_product_attention),
+[GPT](../?module=Tensor.DotSoftmax.eq.Stack_Dot.gpt),
 Conditional Random Field [CRF](../?module=Tensor.And.of.Ne_0.Eq.Eq.Eq.crf.y_given_x),
-KMeans [clustering convergence](../?module=Set.LeAddSSumS_SquareSub_Sum.of.In.NotIn.LeAbsSSub_Sum), [General Rotary Position Embedding](../?module=Tensor.DotSoftmax.eq.Lamda_Sum.of.Eq_Mul.Eq_Mul.Eq_Block.plane) for Vision Transformer, [Policy Gradient Theorem](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate) from Reinforcement Learning. 
+KMeans [clustering convergence](../?module=Set.LeAddSSumS_SquareSub_Sum.of.In.NotIn.LeAbsSSub_Sum), [General Rotary Position Embedding](../?module=Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane) for Vision Transformer, [Policy Gradient Theorem](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate) from Reinforcement Learning. 
 Probability theory provides the fundamental theoretical basis for machine learning so that this contemporary technique can be  explainable.  
 
 <br><br>

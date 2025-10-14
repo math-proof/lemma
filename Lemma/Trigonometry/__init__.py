@@ -69,3 +69,5 @@ from . import EqTan
 from . import Stack
 from . import In
 from . import EqDot
+from . import MulSin_Cos
+from . import CosSub
