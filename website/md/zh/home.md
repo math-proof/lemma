@@ -38,26 +38,14 @@
   
 目前积累了<label id=count>____</label>个已知数学定理用于交互式半机械化数学推导。涉及：	
 	
-* [Algebra](../?module=Algebra) 初等代数，主要涉及等式的恒等、换元变换、有限级数[∑裂项求和](../?module=Algebra.Sum.eq.Add.telescope.step)、∏裂项求积技巧，[一元一次方程](../?module=Algebra.Add.eq.Zero.to.AndImplyS_Eq.simple)，[一元二次方程](../?module=Algebra.Add.eq.Zero.to.And_Imply_Or_EqS_Div.quadratic)，[一元三次方程](../?module=Algebra.Add.eq.Zero.to.And_Imply_Or_EqS.cubic)，[一元四次方程](../?module=Algebra.Add.eq.Zero.to.And_Imply_Or_EqS.quartic)的求解问题，[分部求和](../?module=Algebra.Sum.eq.Add.by_parts)定理；
-[数学归纳法](../?module=Algebra.Ne_0.Imply.to.Ne_0.induct)的证明；
-* [Set](../?module=Set) 集合论, 即sets theory，集合论是整个数学分析、数学推导系统的理论核心；比如
-[容斥原理](../?module=Set.CardUnion.eq.Sub_.AddCards.CardIntersect.principle.inclusion_exclusion)的证明。
-* [Trigonometry](../?module=Trigonometry) 几何学，包含不少三角函数恒等式，比如
-[和差化积](../?module=Trigonometry.Cos.eq.Add)，[积化和差](../?module=Trigonometry.Mul.eq.Add.Sin)，等等。
-* [Calculus](../?module=Calculus) 微积分，主要包含以下内容： 
-[极限定义](../?module=Calculus.Eq_Limit.to.Any.All.limit_definition) 及其理论；
-[分部积分](../?module=Calculus.Integral.eq.Add.by_parts) 定理；
-* [Discrete](../?module=Discrete) 数论，离散数学，组合数学，线性代数，[第二类Stirling数](../?module=Discrete.Stirling.eq.Add.recurrence)的组合学推导，
-[Catalan数](../?module=Discrete.Eq.Eq.to.Eq.catalan.recurrence)的推导，[连分数](../?module=Discrete.Add.eq.Pow.HK.recurrence)初步理论；[Cholesky矩阵分解](../?module=Discrete.Eq_Adjoint.Imply_Gt_0.to.Any.Eq.Cholesky)存在定理。
-* [Probability](../?module=Probability) 概率统计学，比如[Bayes公式](../?module=Probability.Prob.eq.Div.Prob.bayes)，[大数定理](../?module=Probability.Eq_Conditioned.Eq_Expect.Eq_Var.to.Eq.Limit.Prob.law_of_large_numbers)；
-* [Neuro](../?module=Neuro) 机器学习，深度学习中的数学模型，
-[LSTM](../?module=Neuro.Eq.Eq.to.Eq.long_short_term_memory)，
-[GRU](../?module=Neuro.Eq_AddMulS.gated_recurrent_unit)，
-[CNN](../?module=Neuro.Eq_Lamda_Bool_In.to.Eq.conv1d)，
-[BERT](../?module=Neuro.DotSoftmax.eq.Lamda_Div.scaled_dot_product_attention)，
-[GPT](../?module=Neuro.DotSoftmax.eq.Lamda_Dot.gpt)，
-条件自由场[CRF](../?module=Neuro.Ne_0.Eq.Eq.Eq.to.And.crf.y_given_x)，KMeans
-[聚类收敛性](../?module=Set.In.NotIn.LeAbsSSub_Sum.to.LeAddSSumSSquareSub_Sum)、用于Vision Transformer的[广义旋转位置编码](../?module=Neuro.Eq_Mul.Eq_Mul.Eq_Block.to.DotSoftmax.eq.Lamda_Sum.plane)、强化学习的[策略梯度定理](../?module=Neuro.Eq_Conditioned.Eq_Expect.is_finite.is_finite.to.EqDot_GradExpect.unbiased_advantage_estimate)的推导及证明。  
+* [Nat](../?module=Nat) 自然数相关初等代数
+* [Int](../?module=Int) 整数相关初等代数
+* [Rat](../?module=Rat) 有理数相关初等代数
+* [Real](../?module=Real) 实数相关代数及实变分析
+* [Hyperreal](../?module=Real) 超实数相关代数
+* [Complex](../?module=Real) 复数相关代数及复变分析
+* [Set](../?module=Set) 集合论
+* [Finset](../?module=Set) 有限集合论
 
 <br><br>
 -------

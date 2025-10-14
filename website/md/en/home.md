@@ -29,30 +29,14 @@ In the open-source community, other automatic thoerem libraries include: [leanpr
 As of this writing, <label id=count>____</label> theorems have been recored in the theorem repertoire, which can be applied in semi-mechanized axiomatized system of mathematical theorem proving.  
 It is mainly comprising of :  	
 	
-* [Algebra](../?module=Algebra) refers to elementary Algebra, which mainly delves into equations transformation、symbol substitution techniques, finite series [∑ telescoping](../?module=Algebra.Sum.eq.Add.telescope.step)、∏ product telescoping, the property of transitivity for inequalities, solving [simple equations](../?module=Algebra.Add.eq.Zero.to.AndImplyS_Eq.simple), [quadratic equations](../?module=Algebra.Add.eq.Zero.to.And_Imply_Or_EqS_Div.quadratic), [cubic equations](../?module=Algebra.Add.eq.Zero.to.And_Imply_Or_EqS.cubic) and [quartic equations](../?module=Algebra.Add.eq.Zero.to.And_Imply_Or_EqS.quartic), [summation by parts](../?module=Algebra.Sum.eq.Add.by_parts), as well as the proof of [mathematical induction method](../?module=Algebra.Ne_0.Imply.to.Ne_0.induct);   
-* [Set](../?module=Set) refers to Set theory, which is the core foundation of the theories of whole mathematical proving and analysis. It involves lots of propositions using the terminologies like 
-ForAll, Exists, Element, Subset, for example: 
-the proof of [inclusion-exclusion principle](../?module=Set.CardUnion.eq.Sub_.AddCards.CardIntersect.principle.inclusion_exclusion). It can be so said that: set theory is the fundamental grammar of automatic theorem proving.  
-* [Trigonometry](../?module=Trigonometry) is comprised of identities of trigonometry: 
-[addition principle of cosine](../?module=Trigonometry.Cos.eq.Add), [product principle of trigonometry](../?module=Trigonometry.Mul.eq.Add.Sin), and so on.   
-* [Calculus](../?module=Calculus) comprises :   
-[the definition of limit](../?module=Calculus.Eq_Limit.to.Any.All.limit_definition) and its fundamental theories which is the theoretical basis of Calculus.  
-proof of [integration by parts](../?module=Calculus.Integral.eq.Add.by_parts);  
-determination of some integral for certain transcendental functions;  
-* [Discrete](../?module=Discrete) section is comprised of number theory, Discrete mathematics, combinatorics, linear Algebra, some basic counting techniques involving permutations, such as 
-combinatoric induction for [second Stirling Number](../?module=Discrete.Stirling.eq.Add.recurrence),  
-derivation for [Catalan Number](../?module=Discrete.Eq.Eq.to.Eq.catalan.recurrence)， 
-basics of [continued fraction](../?module=Discrete.Add.eq.Pow.HK.recurrence); as well as the existence of [Cholesky decomposition](../?module=Discrete.Eq_Adjoint.Imply_Gt_0.to.Any.Eq.Cholesky).  
-* [Probability](../?module=Probability) refers to statistics and probability theory, comprising: the derivation of the probability density formula of some common distribution (such as, binomial distribution, Gaussian distribution, poisson distribution, die distribution, Χ<sup>2</sup>distribution)，as well as propositions related to [Bayes theorem](../?module=Probability.Prob.eq.Div.Prob.bayes), and the [law of large numbers](../?module=Probability.Eq_Conditioned.Eq_Expect.Eq_Var.to.Eq.Limit.Prob.law_of_large_numbers);  
-* [Neuro](../?module=Neuro) section is related to the mathematical theories behind the contemporary deep learning / machine learning techniques, including the mathematical modeling used in natural language processing / understanding, formulae deduction or proof of
-[LSTM](../?module=Neuro.Eq.Eq.to.Eq.long_short_term_memory),
-[GRU](../?module=Neuro.Eq_AddMulS.gated_recurrent_unit),
-[CNN](../?module=Neuro.Eq_Lamda_Bool_In.to.Eq.conv1d),
-[BERT](../?module=Neuro.DotSoftmax.eq.Lamda_Div.scaled_dot_product_attention),
-[GPT](../?module=Neuro.DotSoftmax.eq.Lamda_Dot.gpt),
-Conditional Random Field [CRF](../?module=Neuro.Ne_0.Eq.Eq.Eq.to.And.crf.y_given_x),
-KMeans [clustering convergence](../?module=Set.In.NotIn.LeAbsSSub_Sum.to.LeAddSSumSSquareSub_Sum), [General Rotary Position Embedding](../?module=Neuro.Eq_Mul.Eq_Mul.Eq_Block.to.DotSoftmax.eq.Lamda_Sum.plane) for Vision Transformer, [Policy Gradient Theorem](../?module=Neuro.Eq_Conditioned.Eq_Expect.is_finite.is_finite.to.EqDot_GradExpect.unbiased_advantage_estimate) from Reinforcement Learning. 
-Probability theory provides the fundamental theoretical basis for machine learning so that this contemporary technique can be  explainable.  
+* [Nat](../?module=Nat) Elementary algebra related to natural numbers  
+* [Int](../?module=Int) Elementary algebra related to integers  
+* [Rat](../?module=Rat) Elementary algebra related to rational numbers  
+* [Real](../?module=Real) Algebra and real analysis related to real numbers  
+* [Hyperreal](../?module=Real) Algebra related to hyperreal numbers  
+* [Complex](../?module=Real) Algebra and complex analysis related to complex numbers  
+* [Set](../?module=Set) Set theory  
+* [Finset](../?module=Set) Finite set theory 
 
 <br><br>
 -------
