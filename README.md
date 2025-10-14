@@ -20,7 +20,7 @@ https://github.com/codemirror/codemirror5
 python >= 3.10
 
 ## scripts to generate visualized html
-git clone --depth=1 -b master https://github.com/cosmosZhou/axiom.git  
+git clone --depth=1 -b master https://github.com/math-proof/lemma.git  
 cd axiom  
 python run.py  
 

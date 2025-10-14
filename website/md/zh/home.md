@@ -1,9 +1,9 @@
 # 什么是axiom.top  
   <br>
 
-[axiom.top](../index.php)是一个基于数学定理知识库、用于证明数学命题的网站，目前有两种语言的版本，[Python](https://github.com/cosmosZhou/axiom/tree/master)版本的定理库主要依靠开源符号计算项目 
+[axiom.top](../index.php)是一个基于数学定理知识库、用于证明数学命题的网站，目前有两种语言的版本，[Python](https://github.com/math-proof/lemma/tree/master)版本的定理库主要依靠开源符号计算项目 
 [sympy](https://github.com/sympy/sympy) 改写, 其中函数命名主要参考数学软件语言
-[Mathematica](https://reference.wolfram.com/language/index.html.en?source=footer), [Lean](https://github.com/cosmosZhou/axiom/tree/main)版本的定理库由Python版本翻译而来。 
+[Mathematica](https://reference.wolfram.com/language/index.html.en?source=footer), [Lean](../../lean/website/index.php)版本的定理库由Python版本翻译而来。 
 其主要特征在于：半机械化、公理化、严密的推理逻辑。  
 基本设计理念是：语法精确，表达简洁，执行高效，书写美观。
 	

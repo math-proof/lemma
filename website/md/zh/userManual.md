@@ -115,7 +115,7 @@ DocumentRoot设定为所需的工程(网页)文件夹目录。<br>
 </li>
 <br>
 <li>使用git下载python工程源代码： <br> git clone --depth=1 <a
-	href=https://github.com/cosmosZhou/axiom.git>https://github.com/cosmosZhou/axiom.git</a>
+	href=https://github.com/math-proof/lemma.git>https://github.com/math-proof/lemma.git</a>
 </li>
 <br>
 <li>进入axiom文件夹：<br>cd axiom
