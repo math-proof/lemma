@@ -656,13 +656,13 @@ function renameDirectory($directory, $newDirectory)
     }
 }
 
-function createNewFile($path)
+function createNewFile($path, $throw = true)
 {
     $dir = dirname($path);
     createDirectory($dir);
 
     $myfile = fopen($path, "wb");
-    if (! $myfile) {
+    if (! $myfile && $throw) {
         throw new RuntimeException("fail to create file $path");
     }
 

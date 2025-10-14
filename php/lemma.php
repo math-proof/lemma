@@ -332,7 +332,7 @@ if (!file_exists($leanEchoFile) || filemtime($leanFile) < filemtime($leanEchoFil
 		$code['error'] = std\decode($code['error']);
 		$code['date'] = std\decode($code['date']);
 		if (!file_exists($leanEchoFile))
-			std\createNewFile($leanEchoFile);
+			std\createNewFile($leanEchoFile, false);
 	}
 }
 
