@@ -2,12 +2,12 @@ import sympy.sets.sets
 import Lemma.Set.Cup.eq.Cup_Ite
 import Lemma.Set.IffInS_Ico
 import Lemma.Set.Cup_Ufn.eq.Cup_UfnNeg
-import Lemma.Algebra.Add.eq.Sub_Neg
+import Lemma.Int.Add.eq.Sub_Neg
 import Lemma.Set.In_Ico.is.InNeg_Ioc
 import Lemma.Set.Ioc.eq.Ico
-import Lemma.Algebra.EqNegNeg
+import Lemma.Int.EqNegNeg
 import Lemma.Set.CupIn_Ico.eq.Cup_UfnAdd
-open Set Algebra
+open Set Int
 
 
 @[main]

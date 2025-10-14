@@ -1,6 +1,6 @@
 import Lemma.Algebra.Sub.eq.Add_Neg
-import Lemma.Algebra.EqNegNeg
-open Algebra
+import Lemma.Int.EqNegNeg
+open Algebra Int
 
 
 @[main, comm]

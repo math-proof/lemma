@@ -1,6 +1,6 @@
 import sympy.functions.elementary.integers
 import Lemma.Int.NegSucc.eq.NegAdd_1
-import Lemma.Algebra.EqNegNeg
+import Lemma.Int.EqNegNeg
 import Lemma.Nat.EqSubAdd
 import Lemma.Algebra.NegAdd.eq.SubNeg
 open Algebra Int Nat

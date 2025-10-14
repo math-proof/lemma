@@ -1,8 +1,8 @@
 import Lemma.Set.CupIcoNeg_0.eq.IocNeg_0
 import Lemma.Int.ToNatNeg.eq.Neg.of.Lt_0
-import Lemma.Algebra.EqNegNeg
-import Lemma.Algebra.CoeCoe.eq.Coe
-open Set Algebra Int
+import Lemma.Int.EqNegNeg
+import Lemma.Int.CoeCoe.eq.Coe
+open Set Int
 
 
 @[main]
@@ -19,7 +19,7 @@ private lemma main
   rw [ToNatNeg.eq.Neg.of.Lt_0 h] at h_n
   rw [EqNegNeg] at h_n
   rw [h_n]
-  rw [Coe.eq.CoeCoe.int]
+  rw [Coe.eq.CoeCoe]
   rw [ToNatNeg.eq.Neg.of.Lt_0 h]
   simp
 

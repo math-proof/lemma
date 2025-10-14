@@ -3,12 +3,13 @@ import sympy.Basic
 
 @[main, comm]
 private lemma main
--- given
+  [Semiring α]
+  -- given
   (d : ℕ) :
 -- imply
-  Int.ofNat d = Nat.cast d := by
+  OfNat.ofNat (α := α) d = Nat.cast d :=
 -- proof
-  simp
+  Lean.Grind.Semiring.ofNat_eq_natCast d
 
 
 -- created on 2025-06-17

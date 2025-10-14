@@ -1,7 +1,7 @@
 import Lemma.Algebra.Abs.eq.IteLt_0
-import Lemma.Algebra.EqNegNeg
+import Lemma.Int.EqNegNeg
 import Lemma.Algebra.AbsNeg.eq.Abs
-open Algebra
+open Algebra Int
 
 
 @[main]

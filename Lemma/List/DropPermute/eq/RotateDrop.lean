@@ -18,27 +18,27 @@ private lemma main
 -- given
   (i : Fin s.length) :
 -- imply
-  (s.permute i ↑(s.length - 1 - i)).drop i = (s.drop i).rotate 1 := by
+  (s.permute i ↑(s.length - i - 1)).drop i = (s.drop i).rotate 1 := by
 -- proof
   rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
-  · 
+  ·
     rw [DropDrop.eq.Drop_Add]
     rw [DropPermute.eq.AppendRotateTakeDrop]
+    rw [EqAddSub.of.Ge (by omega)]
+    rw [SubSub.comm]
     rw [EqAdd_Sub.of.Ge (by omega)]
     rw [EqAddSub.of.Ge (Ge_1 i)]
     simp
-    rw [SubSub.comm]
-    rw [EqAddSub.of.Ge (by omega)]
     rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
-    · 
+    ·
       rw [TakeTake.eq.Take.of.Ge (by omega)]
       apply EqAppendS.of.Eq
       rw [EqTake.of.Ge_Length (by simp)]
       simp
-    · 
+    ·
       simp
       omega
-  · 
+  ·
     simp
     omega
 

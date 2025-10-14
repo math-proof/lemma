@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqNegNeg
-open Algebra
+import Lemma.Int.EqNegNeg
+open Int
 
 
 @[main]

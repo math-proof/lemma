@@ -1,5 +1,5 @@
-import Lemma.Algebra.SubOfNat_NegSucc.eq.AddAdd1
-open Algebra
+import Lemma.Int.SubOfNat_NegSucc.eq.AddAdd1
+open Int
 
 
 @[main]

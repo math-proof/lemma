@@ -6,7 +6,13 @@ import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.List.TakePermute.eq.Take
 import Lemma.Nat.EqSub_Sub.of.Gt
 import Lemma.Nat.EqMinSub
-open List Tensor Bool Nat
+import Lemma.List.RotateDropPermute.eq.Drop
+import Lemma.Int.Add.eq.Sub_Neg
+import Lemma.Nat.CoeAdd.eq.AddCoeS
+import Lemma.Nat.OfNat.eq.Cast
+import Lemma.Int.EqToNat
+import Lemma.Nat.SubSub
+open List Tensor Bool Nat Int
 
 
 @[main]
@@ -42,16 +48,37 @@ private lemma main
       rw [EqMinSub]
       rw [(show (d : ℤ) = (s.length - i - 1 : ℕ) by omega)]
       rw [TakePermute.eq.Take ⟨i, by linarith⟩ (s.length - i - 1)]
-      sorry
+      simp [RotateDropPermute.eq.Drop (i := ⟨i, by linarith⟩)]
     ·
-      sorry
+      rw [EqPermutePermute.of.In_Ioo_Length ⟨by omega, by omega⟩]
     ·
-      sorry
-  -- rw [Permute.eq.Ite (k := j - i)]
-  -- simp
+      simp at h_sub
+      simp at h_j_length
+      rw [Sub_Neg.eq.Add]
+      have := AddCoeS.eq.CoeAdd (α := ℤ) 1 d
+      rw [Cast.eq.OfNat] at this
+      rw [this]
+      rw [EqToNat]
+      rw [Permute.eq.Ite (d := ⟨i, by linarith⟩) (k := ↑d)]
+      simp
+      split_ifs with h_pos? h_i_0 h_i_length
+      ·
+        subst d
+        subst h_i_0
+        simp
+        rw [EqAdd_Sub.of.Ge (by linarith)]
+        -- rw [EqAddSub.of.Ge (by linarith)]
+        sorry
+      ·
+        sorry
+      ·
+        omega
+      ·
+        omega
   ·
     simp
     sorry
 
 
 -- created on 2025-10-12
+-- updated on 2025-10-14
