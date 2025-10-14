@@ -19,11 +19,11 @@ private lemma mxfp4
   -- Exponent bias (or normalization adjustment)
   (h₅ : bias = sign E) :
 -- imply
-  FP4_VALUES[n] = (-1) ^ S * (2 ^ (E - bias)) * (M / 2 + bias)  := by
+  FP4_VALUES[n] = (-1) ^ S * (2 ^ (E - bias)) * (M / 2 + bias) := by
 -- proof
   rw [h₀, h₂, h₃, h₄, h₅, h₃]
   interval_cases n <;>
-  .
+  ·
     norm_num [Int.sign]
     simp
     rfl

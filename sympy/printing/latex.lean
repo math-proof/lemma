@@ -568,6 +568,7 @@ where
           [a.toLatex, "..." ++ b.toString]
         | _ =>
           map args
+      | `Subtype.mk
       | `Fin.mk =>
         let a : Option Expr :=
           match args with
