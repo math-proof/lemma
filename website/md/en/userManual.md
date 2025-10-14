@@ -136,7 +136,7 @@ Take windows system as an example:
 </li>
 <br>
 <li>use git to download the python source codes: <br> git clone
-	--depth=1 <a href=https://github.com/cosmosZhou/axiom.git>https://github.com/cosmosZhou/axiom.git</a>
+	--depth=1 <a href=https://github.com/math-proof/lemma.git>https://github.com/math-proof/lemma.git</a>
 </li>
 <br>
 <li>enter the axiom folder: <br>cd axiom

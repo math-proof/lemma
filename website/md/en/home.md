@@ -1,9 +1,9 @@
 # What is lemma.cn
   <br>
   
-[lemma.cn](../index.php) is a website for symbolic	semi-mechanized axiomatized theorem-proving system, consisting of two versions written respectively in Python and Lean language. The [Python](https://github.com/cosmosZhou/axiom/tree/master) version is based on open-source symbolic computation project of [sympy](https://github.com/sympy/sympy) and 
+[lemma.cn](../index.php) is a website for symbolic	semi-mechanized axiomatized theorem-proving system, consisting of two versions written respectively in Python and Lean language. The [Python](https://github.com/math-proof/lemma/tree/master) version is based on open-source symbolic computation project of [sympy](https://github.com/sympy/sympy) and 
 [Maxima](http://maxima.sourceforge.net), its main terminology is defined according to the naming conventions of the commercial algebraic system 
-[Mathematica](https://reference.wolfram.com/language/index.html.en?source=footer). The [Lean](https://github.com/cosmosZhou/axiom/tree/main) version is translated from the Python version. It's main ideals are: semi-mechanization, axiomatization, and the pursuit of logic correctness. At present, it can be used in conducting semi-automatic proving for theorems from mathematics textbook.  
+[Mathematica](https://reference.wolfram.com/language/index.html.en?source=footer). The [Lean](https://github.com/math-proof/lemma/tree/main) version is translated from the Python version. It's main ideals are: semi-mechanization, axiomatization, and the pursuit of logic correctness. At present, it can be used in conducting semi-automatic proving for theorems from mathematics textbook.  
 
 * the above-mentioned semi-mechanization is so defined that:   
 at present, we can't devise a fully-automatic machine to process human-like logic reasoning steps in theorem-proving according the given prerequisites and conclusions.  
