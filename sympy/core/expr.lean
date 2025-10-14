@@ -23,7 +23,7 @@ def BinaryInfix.func : BinaryInfix → Func
   | ⟨name⟩ =>
     match name with
     -- relational operator
-    | `Iff => ⟨20, "↔", "\\leftrightarrow"⟩  -- Lean_leftrightarrow, https://github.com/leanprover/lean4/blob/v4.18.0/src/Init/Core.lean#L134
+    | `Iff => ⟨20, "↔", "\\leftrightarrow"⟩  -- Lean_leftrightarrow, https://github.com/leanprover/lean4/blob/v4.23.0/src/Init/Core.lean#L190
     | `Or => ⟨30, "∨", "\\lor"⟩  -- Lean_lor
     | `or => ⟨30, "||", "||"⟩  -- LeanLogicOr
     | `And => ⟨35, "∧", "\\land"⟩  -- Lean_land
@@ -161,7 +161,7 @@ deriving BEq, Repr
 def UnaryPostfix.func: UnaryPostfix → Func
   | ⟨name⟩ =>
     match name with
-    | `Inv.inv => ⟨72, "⁻¹", "^{-1}"⟩
+    | `Inv.inv => ⟨2048, "⁻¹", "^{-1}"⟩  -- https://github.com/leanprover/lean4/blob/v4.23.0/src/Init/Notation.lean#L295
     | _ => panic! s!"UnaryPostfix.func : unknown operator {name}"
 
 
