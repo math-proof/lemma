@@ -9,7 +9,7 @@ the latex is printed with the aid of the following project:
 https://github.com/KaTeX/KaTeX
 ## quick start
 ```bash
-git clone https://github.com/cosmosZhou/lemma.git
+git clone https://github.com/math-proof/lemma.git
 cd lemma
 # suppose you have installed lean already
 lake clean
