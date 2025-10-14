@@ -50,12 +50,9 @@ private lemma main
   ] at h₁
   have h₁ := Eq_Neg.of.Add.eq.Zero h₁
   rw [Add_Sub.eq.SubAdd] at h₁
-  rw [Mul_Div.eq.DivMul] at h₁
-  rw [Mul_Div.eq.DivMul] at h₁
-  rw [Mul_Div.eq.DivMul] at h₁
+  repeat rw [Mul_Div.eq.DivMul] at h₁
   rw [Mul.eq.Square] at h₁
-  rw [Mul_Mul.eq.MulMul] at h₁
-  rw [Mul_Mul.eq.MulMul] at h₁
+  repeat rw [Mul_Mul.eq.MulMul] at h₁
   rw [Mul.comm (a := a) (b := 2)] at h₁
   rw [DivMul.eq.MulDiv] at h₁
   have h₂ : 2 * a ≠ 0 := by simp [h₀]

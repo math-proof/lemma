@@ -10,7 +10,7 @@ import Lemma.Bool.All.of.All.All_Imp
 import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
 import Lemma.Algebra.Sum.eq.Add_Sum.of.Gt_0
-import Lemma.Algebra.EqSumS.of.All_Eq
+import Lemma.Finset.EqSumS.of.All_Eq
 import Lemma.Algebra.Sqrt.eq.Root_2
 import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.CoeSub.eq.SubCoeS

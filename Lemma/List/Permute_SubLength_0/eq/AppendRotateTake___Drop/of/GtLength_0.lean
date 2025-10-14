@@ -8,7 +8,7 @@ import Lemma.List.Drop.eq.Nil
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
-import Lemma.Algebra.AddAdd.eq.Add_Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqMin.of.Le
 import Lemma.List.Drop_SubLength_1.eq.ListGet.of.GtLength_0
 import Lemma.List.LengthDrop.eq.SubLength

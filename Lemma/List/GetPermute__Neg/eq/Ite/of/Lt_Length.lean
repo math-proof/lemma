@@ -7,7 +7,7 @@ import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Add
 import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Algebra.AddAdd.eq.Add_Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqSubAdd
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
@@ -30,7 +30,7 @@ import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
-import Lemma.Algebra.AddAdd
+import Lemma.Nat.AddAdd
 import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
 import Lemma.Algebra.GeSub_1.of.Gt
 import Lemma.Algebra.LtSub

@@ -1,8 +1,8 @@
-import Lemma.Algebra.SquareSum.le.Mul_Sum_Square
+import Lemma.Finset.SquareSum.le.Mul_Sum_Square
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Bool.All.of.All.All_Imp
-import Lemma.Algebra.EqSumS.of.All_Eq
-open Algebra Bool
+import Lemma.Finset.EqSumS.of.All_Eq
+open Algebra Bool Finset
 
 
 @[main]

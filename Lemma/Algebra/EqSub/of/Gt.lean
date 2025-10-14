@@ -1,6 +1,6 @@
 import Lemma.Algebra.Ite.eq.SubIte
 import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
-import Lemma.Algebra.AddAdd.eq.Add_Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqSubAdd
 import Lemma.Bool.BFnIte.is.Imp.Imp
 import Lemma.Nat.Add

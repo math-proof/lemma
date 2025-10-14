@@ -15,7 +15,7 @@ import Lemma.Algebra.DivAdd.eq.AddDivS.of.Dvd
 import Lemma.Algebra.DivMul.eq.Mul_Div.of.Dvd
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.ModAdd.eq.Mod.of.Dvd
-import Lemma.Algebra.AddAdd.eq.Add_Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Algebra.Ge_Mod

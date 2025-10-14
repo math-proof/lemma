@@ -3,11 +3,11 @@ import Lemma.Algebra.Eq_AddMulDiv___Mod
 import Lemma.Algebra.EqSub.is.Eq_Add
 import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Algebra.Sub.eq.Add_Neg
-import Lemma.Algebra.AddAdd.eq.Add_Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Algebra.LeAdd_1.of.Lt
 import Lemma.Algebra.Mod.lt.Neg.of.Lt_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

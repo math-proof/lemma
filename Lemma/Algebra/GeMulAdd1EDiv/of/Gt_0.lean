@@ -2,7 +2,7 @@ import sympy.core.relational
 import Lemma.Algebra.Eq_AddMulDiv___Mod
 import Lemma.Algebra.EqSub.is.Eq_Add
 import Lemma.Algebra.MulAdd.eq.AddMulS
-import Lemma.Algebra.AddAdd
+import Lemma.Nat.AddAdd
 import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Algebra.LeAdd_1.of.Lt
 import Lemma.Nat.LtMod.of.Gt_0

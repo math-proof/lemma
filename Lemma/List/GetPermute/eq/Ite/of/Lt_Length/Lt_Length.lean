@@ -9,7 +9,7 @@ import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Add
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.EqMin.of.Le
-import Lemma.Algebra.AddAdd.eq.Add_Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqSubAdd
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.List.LengthAppend.eq.AddLengthS

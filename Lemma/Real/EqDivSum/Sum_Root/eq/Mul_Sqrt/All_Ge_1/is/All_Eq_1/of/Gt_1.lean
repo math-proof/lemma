@@ -1,6 +1,6 @@
 import sympy.sets.sets
 import Lemma.Real.All_Eq_1.of.All_Ge_1.Sum_Root.eq.Mul_Root_2.EqDivSum.Gt_1
-import Lemma.Algebra.Sum.eq.Mul.of.All_Eq
+import Lemma.Finset.Sum.eq.Mul.of.All_Eq
 import Lemma.Algebra.EqDivS.of.Eq
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Algebra.GtCoeS.is.Gt
@@ -12,7 +12,7 @@ import Lemma.Bool.All_EqUFnS.of.All_Eq
 import Lemma.Algebra.Pow1.eq.One
 import Lemma.Algebra.Ge.of.Eq
 import Lemma.Bool.All.of.All.All_Imp
-open Algebra Bool Real
+open Algebra Bool Real Finset
 
 
 /--
@@ -34,7 +34,7 @@ private lemma main
   ·
     intro ⟨h₀, h₁, h₂⟩
     have h' := All_Eq_1.of.All_Ge_1.Sum_Root.eq.Mul_Root_2.EqDivSum.Gt_1 h h₀ h₁ h₂
-    have := Sum.eq.Mul.of.All_Eq h'
+    have := Sum.eq.Mul.of.All_Eq.range h'
     simp at this
     have := EqDivS.of.Eq this n
     simp [Div.eq.One.of.Gt_0 h_Gt_0] at this
@@ -47,7 +47,7 @@ private lemma main
     have h_Eq := Eq.of.All_Eq.Lt.is_constant h_Lt h'
     split_ands
     ·
-      have := Sum.eq.Mul.of.All_Eq h_All_Eq
+      have := Sum.eq.Mul.of.All_Eq.range h_All_Eq
       simp at this
       have := EqDivS.of.Eq this n
       simp [Div.eq.One.of.Gt_0 h_Gt_0] at this
@@ -60,7 +60,7 @@ private lemma main
       have := All_EqUFnS.of.All_Eq.binary (b := b) (f := f) h_All_Eq
       simp only [b, f] at this
       simp only [Pow1.eq.One] at this
-      apply Sum.eq.Mul.of.All_Eq this
+      apply Sum.eq.Mul.of.All_Eq.range this
     ·
       have h_All : ∀ x : ℝ, x = 1 → x ≥ 1 := by
         intro i h_Eq

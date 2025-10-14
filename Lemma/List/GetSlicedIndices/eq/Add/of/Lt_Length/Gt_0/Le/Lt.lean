@@ -1,6 +1,6 @@
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.Nat.Add
-import Lemma.Algebra.AddAdd.eq.Add_Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.Algebra.Lt_Add.of.Gt_0
 import Lemma.Algebra.CoeAdd_1.eq.AddCoe_1

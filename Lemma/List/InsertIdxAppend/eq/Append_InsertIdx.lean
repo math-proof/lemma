@@ -1,5 +1,5 @@
-import Lemma.Algebra.AddAdd
-open Algebra
+import Lemma.Nat.AddAdd
+open Nat
 
 
 @[main]

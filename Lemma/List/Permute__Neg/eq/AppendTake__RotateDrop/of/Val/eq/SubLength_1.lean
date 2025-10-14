@@ -4,7 +4,7 @@ import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
-import Lemma.Algebra.AddAdd.eq.Add_Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Algebra.MinSubS.eq.SubMin.of.Ge.Ge
 open Algebra List Nat Int
 

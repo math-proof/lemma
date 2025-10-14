@@ -1,7 +1,7 @@
 import Lemma.Algebra.Mul_Sub.eq.SubMulS
 import Lemma.Algebra.GeSubSMul.of.Ge
 import Lemma.Nat.Sub_Add.eq.SubSub
-import Lemma.Algebra.AddAdd
+import Lemma.Nat.AddAdd
 import Lemma.Algebra.Mul2.eq.Add
 import Lemma.Algebra.EqAdd.is.Eq_Sub
 import Lemma.Algebra.EqAdd.of.Eq_Sub.Le
@@ -10,7 +10,7 @@ import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
 import Lemma.Algebra.SubMul.eq.MulSub_1
 import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Algebra.MulSub.eq.SubMulS
-import Lemma.Algebra.AddAdd.eq.Add_Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Algebra.Eq_Add.of.EqSub.Le
 import Lemma.Nat.Fib.eq.AddFibS.of.Ge_2
 open Algebra Nat
