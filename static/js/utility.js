@@ -2,7 +2,7 @@
 
 
 function axiom_user() {
-	var m = location.href.match(/([^\/]+)\/((?:index\.(?:php|html)|php\/\w+\.php|\?)\b|\?$)/);
+	var m = location.href.match(/([^\/]+)\/((?:index\.(?:php|html)|php\/\w+\.php|\?)\b|\??$)/);
 	return m && m[1];
 }
 
