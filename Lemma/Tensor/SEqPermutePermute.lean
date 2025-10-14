@@ -1,4 +1,3 @@
-import stdlib.SEq
 import Lemma.List.LengthPermute.eq.Length
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
