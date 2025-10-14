@@ -1,4 +1,3 @@
-import sympy.tensor.functions
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.Softmax.eq.MkSoftmaxData
 import Lemma.Tensor.Sum.eq.MkListSumData
