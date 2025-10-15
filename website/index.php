@@ -183,13 +183,13 @@ var text = await get(url);
 url = url.slice(0, -3);
 
 text = text.transform(/(?<=\n)!\[(.+)\]\((.+)\)/g, m=>{
-	var title = m[1];            	
+	var title = m[1];
 	var address = url + m[2].match(/[^\/]+(\/.+)/)[1];
 	return `![${title}](${address})`;
 });
 
 text = text.transform(/<script( type=module)?>([\s\S]*)<\/script>/g, m=>{
-    var script = m[2];    
+    var script = m[2];
     if (m[1])
         script = `(async function(){${script}})();`;
 

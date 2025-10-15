@@ -54,6 +54,10 @@ function latex_annotation(latex, space) {
 	var Prove = [];
 	for (var line of latex) {
 		var [_, latex, color, tag] = line.match(/(.+)\\tag\*\{\$\\color\{(red|green)\}([^$]+)\$\}$/);
+		latex = latex.replace(/\\color\{[^{}]+\} */g, '');
+		var m;
+		while (m = latex.match(/\\colorbox\{[^{}]+\}\{\$\\mathord\{(.+?)\}\$\}/))
+			latex = latex.slice(0, m.index) + m[1] + latex.slice(m.index + m[0].length);
 		(color == 'red'? Prove: Given).push(`${latex}\\tag*{$${tag}$}`);
 	}
 	latex = [];
@@ -77,7 +81,7 @@ function latex_annotation(latex, space) {
 }
 
 
-export function fetch_lemma(lemma, lemmaType, using_latex=true, using_given=false, using_imply=false, using_proof=false) {
+export function fetch_lemma(lemma, lemmaType, using_latex=true, using_given=false, using_imply=false, using_proof=false, using_comment=false) {
 	lemmaType ||= 'lemma';
 	var {comment, attribute, name, instImplicit, strictImplicit, implicit, given, explicit, imply, proof} = lemma;
 	if (proof) {
@@ -86,7 +90,7 @@ export function fetch_lemma(lemma, lemmaType, using_latex=true, using_given=fals
 			proof = proof[by];
 		// proof = proof.map(line => line.lean);
 	}
-	if (comment) {
+	if (comment && using_comment) {
 		var open_namespace = comment.match(/^open namespace in$/m);
 		comment = `/--\n${comment}\n-/\n`;
 		if (open_namespace)

@@ -400,12 +400,14 @@ export default {
 
         mounted(this);
         var {module} = this;
+        var model = getParameterByName('model[proof]');
         if (!module) {
             var module = getParameterByName('module');
             module = module.replace(/[\/\\]/g, '.');
             this.$parent.$data.module = module;
             this.$props.module = module;
-            await this.echo(module);
+            if (!model)
+                await this.echo(module);
         }
 
         var {hash} = location;
@@ -484,9 +486,32 @@ where
                 err.col = col;
             }
         }
-
-        var model = getParameterByName('model');
         if (model) {
+            this.model = model;
+            var i = this.lemma.findIndex(x => x.name == 'main');
+            if (i < 0)
+                i = 0;
+            var lemma = this.lemma[i];
+            var index = [i, 'proof'];
+            var {proof} = lemma;
+            var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
+            if (attr) {
+                index.push(attr);
+                proof = proof[attr];
+            }
+            proof.clear();
+            proof.push({lean : 'sorry', latex : null});
+            for (var [j, editor] of enumerate(this.renderLean[i].proof[attr])) {
+                if (j)
+                    editor.update();
+                else 
+                    editor.update('sorry');
+            }
+            index.push(proof.length - 1);
+            this.code_generation(index, proof.back().lean.split("\n").length - 1);
+            return;
+        }
+        if (model = getParameterByName('model')) {
             this.model = model;
             for (var [i, lemma] of enumerate(this.lemma)) {
                 if (lemma.name == 'main') {
@@ -499,6 +524,7 @@ where
                     }
                     index.push(proof.length - 1);
                     this.code_generation(index, proof.back().lean.split("\n").length - 1);
+                    break;
                 }
             }
         }
@@ -1195,7 +1221,7 @@ ${task}`;
 		postprocess(text, word, postprocess) {
             try {
                 if (!text)
-                word = word.ltrim();
+                    word = word.ltrim();
                 return postprocess(text, word);
             }
             catch (err) {
@@ -1304,6 +1330,8 @@ ${task}`;
 		},
 
         select_span(span) {
+            if (!span)
+                return;
             var range = document.createRange();
             range.selectNodeContents(span);
             var selection = window.getSelection();

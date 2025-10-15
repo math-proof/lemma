@@ -36,7 +36,7 @@ def BinaryInfix.func : BinaryInfix → Func
     | `Ne => ⟨50, "≠", "\\ne"⟩ -- Lean_ne
     | `BEq.beq => ⟨50, "==", "=="⟩  -- LeanBEq
     | `bne => ⟨50, "!=", "!="⟩  -- Lean_bne
-    | `xor => ⟨33, "^^", "^^"⟩  -- Lean_xor
+    | `xor => ⟨33, "^^", "\\^\\^"⟩  -- Lean_xor, https://github.com/leanprover/lean4/blob/v4.23.0/src/Init/Data/Bool.lean#L31
     | `HEq => ⟨50, "≍", "\\asymp"⟩  -- Lean_asymp
     | `SEq => ⟨50, "≃", "\\simeq"⟩  -- Lean_simeq
     | `Membership.mem
@@ -46,9 +46,9 @@ def BinaryInfix.func : BinaryInfix → Func
     | `Superset => ⟨50, "⊇", "\\supseteq"⟩  -- Lean_supseteq
     | `SSuperset => ⟨50, "⊃", "\\supset"⟩    -- Lean_supset
     | `Dvd.dvd => ⟨50, "∣", "{\\color{red}\\ \\mid\\ }"⟩  -- Lean_mid
-    | `HOr.hOr => ⟨55, "|||", "\\mid\\mid\\mid"⟩  -- Lean_HOr
-    | `HXor.hXor => ⟨58, "^^^", "\\^\\^\\^"⟩  -- Lean_HXor
-    | `HAnd.hAnd => ⟨60, "&&&", "&&&"⟩  -- Lean_HXor
+    | `HOr.hOr => ⟨55, "|||", "\\mid\\mid\\mid"⟩  -- LeanBitwiseOr
+    | `HXor.hXor => ⟨58, "^^^", "\\^\\^\\^"⟩  -- LeanBitwiseXor
+    | `HAnd.hAnd => ⟨60, "&&&", "\\&\\!\\!\\&\\!\\!\\&"⟩  -- LeanBitwiseAnd
     | `HasEquiv.Equiv => ⟨50, "≈", "≈"⟩
     -- arithmetic operator
     | `Nat.add
@@ -62,8 +62,8 @@ def BinaryInfix.func : BinaryInfix → Func
     | `HDiv.hDiv
     | `Rat.divInt => ⟨70, "/", "\\frac"⟩  -- LeanDiv
     | `HMod.hMod => ⟨70, "%%", "\\%%"⟩  -- LeanMod
-    | `HShiftLeft.hShiftLeft => ⟨75, "<<<", "<<<"⟩ -- LeanHShiftLeft
-    | `HShiftRight.hShiftRight => ⟨75, ">>>", ">>>"⟩
+    | `HShiftLeft.hShiftLeft => ⟨75, "<<<", "\\lll"⟩ -- Lean_lll
+    | `HShiftRight.hShiftRight => ⟨75, ">>>", "\\ggg"⟩  -- Lean_ggg
     | `SDiff.sdiff => ⟨70, "\\", "\\setminus"⟩  -- Lean_setminus
     | `Union.union => ⟨65, "∪", "\\cup"⟩  -- Lean_cup
     | `Inter.inter => ⟨70, "∩", "\\cap"⟩  -- Lean_cap
@@ -527,6 +527,11 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `HDiv.hDiv
     | `Rat.divInt
     | `HMod.hMod
+    | `HShiftLeft.hShiftLeft
+    | `HShiftRight.hShiftRight
+    | `HOr.hOr
+    | `HXor.hXor
+    | `HAnd.hAnd
     | `And
     | `Or
     | `Iff

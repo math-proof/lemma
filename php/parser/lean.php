@@ -34,13 +34,21 @@ $token2classname = [
     '⊡' => 'Lean_dotsquare',
     '∈' => 'Lean_in',
     '∉' => 'Lean_notin',
-    '&' => 'LeanBitAnd',
     '|' => 'LeanBitOr',
-    '^' => 'LeanPow',
-    '<<' => 'Lean_ll',
-    '>>' => 'Lean_gg',
+    '&' => 'LeanBitAnd',
     '||' => 'LeanLogicOr',
+    '|||' => 'LeanBitwiseOr',
     '&&' => 'LeanLogicAnd',
+    '&&&' => 'LeanBitwiseAnd',
+    '^' => 'LeanPow',
+    '^^' => 'LeanLogicXor',
+    '^^^' => 'LeanBitwiseXor',
+    '<' => 'Lean_lt',
+    '<<' => 'Lean_ll',
+    '<<<' => 'Lean_lll',
+    '>' => 'Lean_gt',
+    '>>' => 'Lean_gg',
+    '>>>' => 'Lean_ggg',
     '∨' => 'Lean_lor',
     '∧' => 'Lean_land',
     '∪' => 'Lean_cup',
@@ -608,17 +616,34 @@ abstract class Lean extends IndentedNode
                 if ($tokens[$i + 1] == '=') {
                     ++$i;
                     return $this->push_binary('Lean_le');
-                } elseif ($i + 2 < $count && $tokens[$i + 1] == ';' && $tokens[$i + 2] == '>') {
+                }
+                if ($i + 2 < $count && $tokens[$i + 1] == ';' && $tokens[$i + 2] == '>') {
                     $i += 2;
                     return $this->parent->insert_sequential_tactic_combinator($this, $tokens[$i + 1]);
-                } else
-                    return $this->push_binary('Lean_lt');
+                }
+                if ($tokens[$i + 1] == '<') {
+                    ++$i;
+                    $token .= '<';
+                    if ($tokens[$i + 1] == '<') {
+                        ++$i;
+                        $token .= '<';
+                    }
+                }
+                return $this->push_arithmetic($token);
             case '>':
                 if ($tokens[$i + 1] == '=') {
                     ++$i;
-                    return $this->push_binary('Lean_ge');
-                } else
-                    return $this->push_binary('Lean_gt');
+                    $token .= '=';
+                }
+                elseif ($tokens[$i + 1] == '>') {
+                    ++$i;
+                    $token .= '>';
+                    if ($tokens[$i + 1] == '>') {
+                        ++$i;
+                        $token .= '>';
+                    }
+                }
+                return $this->push_arithmetic($token);
             case '≤':
                 return $this->push_binary('Lean_le');
             case '≥':
@@ -680,8 +705,12 @@ abstract class Lean extends IndentedNode
                 $next = $tokens[$i + 1];
                 if ($next == '|') {
                     ++$i;
-                    return $this->parent->push_arithmetic('||');
-                } 
+                    if ($tokens[$i + 1] == '|') {
+                        ++$i;
+                        return $this->push_binary('LeanBitwiseOr');
+                    } 
+                    return $this->push_binary('LeanLogicOr');
+                }
                 if ($next == '>') {
                     ++$i;
                     if ($tokens[$i + 1] == '.') {
@@ -694,9 +723,13 @@ abstract class Lean extends IndentedNode
             case '&':
                 if ($tokens[$i + 1] == '&') {
                     ++$i;
-                    return $this->parent->push_arithmetic('&&');
-                } else
-                    return $this->parent->insert_bitand($this);
+                    $token .= '&';
+                    if ($tokens[$i + 1] == '&') {
+                        ++$i;
+                        $token .= '&';
+                    }
+                }
+                return $this->push_arithmetic($token);
             case "'":
                 while (preg_match("/[\w'!?₀-₉]/u", $tokens[$i + 1]))
                     $token .= $tokens[++$i];
@@ -704,13 +737,21 @@ abstract class Lean extends IndentedNode
             case '+':
                 if ($this instanceof LeanCaret)
                     return $this->parent->insert_unary($this, 'LeanPlus');
-                else {
-                    if ($tokens[$i + 1] == '+') {
-                        ++$i;
-                        $token .= '+';
-                    }
-                    return $this->push_arithmetic($token);
+                if ($tokens[$i + 1] == '+') {
+                    ++$i;
+                    $token .= '+';
                 }
+                return $this->push_arithmetic($token);
+            case '^':
+                if ($tokens[$i + 1] == '^') {
+                    ++$i;
+                    $token .= '^';
+                    if ($tokens[$i + 1] == '^') {
+                        ++$i;
+                        $token .= '^';
+                    } 
+                }
+                return $this->push_arithmetic($token);
             case '/':
                 if ($tokens[$i + 1] == '-') {
                     ++$i;
@@ -739,9 +780,6 @@ abstract class Lean extends IndentedNode
                     return $this->push_arithmetic('//');
                 }
             case '%':
-            case '^':
-            case '<<':
-            case '>>':
             case '×':
             case '⬝':
             case '∘':
@@ -2815,6 +2853,7 @@ class LeanMul extends LeanArithmetic
         [$lhs, $rhs] = $this->args;
         $level = $this->level;
         if ($rhs instanceof LeanParenthesis && $rhs->arg instanceof LeanDiv) {
+            // if $rhs->arg instanceof LeanPow, the parenthesis is unnecessary
             $rhs = $rhs->arg;
         } elseif ($rhs instanceof LeanNeg)
             $rhs = new LeanParenthesis($rhs, $this->indent, $level);
@@ -2994,6 +3033,39 @@ class LeanBitAnd extends LeanArithmetic
     }
 }
 
+class LeanBitwiseAnd extends LeanArithmetic
+{
+    public static $input_priority = 60;
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'command':
+                return '\\&\!\!\\&\!\!\\&';
+            case 'operator':
+                return '&&&';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
+class LeanBitwiseXor extends LeanArithmetic
+{
+    public static $input_priority = 60;
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'command':
+                return '\^\^\^';
+            case 'operator':
+                return '^^^';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
 
 class LeanBitOr extends LeanArithmetic
 {
@@ -3087,6 +3159,22 @@ class LeanBitOr extends LeanArithmetic
     }
 }
 
+class LeanBitwiseOr extends LeanArithmetic
+{
+    public static $input_priority = 55;
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'command':
+            case 'operator':
+                return '|||';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
 
 class LeanPow extends LeanArithmetic
 {
@@ -3132,6 +3220,18 @@ class Lean_ll extends LeanArithmetic
     }
 }
 
+class Lean_lll extends LeanArithmetic
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '<<<';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
 
 class Lean_gg extends LeanArithmetic
 {
@@ -3146,6 +3246,19 @@ class Lean_gg extends LeanArithmetic
     }
 }
 
+class Lean_ggg extends LeanArithmetic
+{
+    public static $input_priority = 75;
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '>>>';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
 
 class LeanModular extends LeanArithmetic
 {
@@ -3976,6 +4089,29 @@ class LeanLogicOr extends LeanLogic
     }
 }
 
+class LeanLogicXor extends LeanLogic
+{
+    public static $input_priority = 33;
+
+    public function strFormat()
+    {
+        return "%s $this->operator %s";
+    }
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'command':
+                return '\^\^';
+            case 'operator':
+                return '^^';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
+
 class Lean_lor extends LeanLogic
 {
     public static $input_priority = 30;
@@ -4243,6 +4379,11 @@ class LeanStatements extends LeanArgs
             if (is_array($result)) {
                 // zero-th element is the length to be replaced
                 $length = array_shift($result);
+                if ($index + 1 < count($args) && $args[$index + 1] instanceof LeanTactic && $args[$index + 1]->func == 'try' && 
+                    count($result) == 2 && $result[0] === $args[$index] && $result[1] instanceof LeanTactic && $result[1]->func == 'echo') {
+                    // next tactic is 'try', so the current echo tactic should also be 'try echo ..'
+                    $result[1] = new LeanTactic('try', $result[1], $result[1]->indent, $result[1]->level);
+                }
                 foreach ($result as $echo)
                     $echo->parent = $this;
                 $increment = std\index($result, $args[$index]);
@@ -6736,6 +6877,9 @@ class LeanTactic extends LeanSyntax
                 case 'sorry':
                 case 'echo':
                     return;
+                case 'try':
+                    if ($this->arg instanceof LeanTactic && $this->arg->func == 'echo')
+                        return;
             }
             if ($this->has_tactic_block_followed() || $this->parent instanceof LeanSequentialTacticCombinator);
             else if ($⊢)

@@ -2,7 +2,8 @@
     <div class=lemma>
         <template v-if=comment>
             <span class=green>/--</span><br>
-            <textarea class=green :name="`lemma[${index}][comment]`" :value=comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea></textarea>
+            <markdown v-if=markdownComment :root=markdownComment.root v-clipboard :data-clipboard-text=comment />
+            <textarea v-else class=green :name="`lemma[${index}][comment]`" :value=comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea></textarea>
             <span class=green>-/</span>
             <br>
         </template>
@@ -65,6 +66,7 @@
 <script>
 import renderLean from "./renderLean.vue"
 import markdown from "./markdown.vue"
+import MarkdownParser from "../js/parser/markdown.js"
 console.log('import lemma.vue');
 const accessibilities = ['public', 'protected', 'private', 'public nonrec', 'protected nonrec', 'private nonrec', 'noncomputable', 'scoped', 'nonrec'];
 
@@ -78,6 +80,7 @@ export default {
     data() {
         return {
             postname: 'lemma',
+            markdownComment: null,
             accessibilities,
         };
     },
@@ -156,6 +159,11 @@ export default {
     },
     
     mounted() {
+        if (this.comment) {
+            var markdownComment = new MarkdownParser;
+            markdownComment.build(this.comment);
+            this.markdownComment = markdownComment;
+        }
     },
 
     methods: {
