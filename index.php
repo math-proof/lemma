@@ -127,7 +127,7 @@ if (! str_ends_with($path_info, '/')) {
                     break;
                 default:
                     $first = $tokens[1];
-                    if (preg_match($first, "^(S?Eq)_([\w'!]+)$", $m))
+                    if (preg_match($first, "^(S?Eq)_([\w'!₀-₉]+)$", $m))
                         $tokens[1] = $m[1] . $m[2];
                     else if ($index = array_search('of', $tokens))
                         $tokens[$index] = 'is';

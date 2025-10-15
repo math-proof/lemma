@@ -20,6 +20,10 @@ import Lemma.Nat.EqSubAdd
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.List.DropPermute.eq.Drop.of.Add.lt.Length
+import Lemma.Nat.Add
+import Lemma.List.ProdDrop.eq.MulProdS
+import Lemma.Nat.AddAdd.eq.Add_Add
+import Lemma.List.TakeDrop.eq.RotateDropTakePermute
 open List Tensor Bool Nat Int
 
 
@@ -112,9 +116,15 @@ private lemma main
           rw [Add.comm (a := d) (b := i)]
         rw [DropPermute.eq.Drop.of.Add.lt.Length (i := ⟨i, by linarith⟩)] <;>
           simp
-        .
-          sorry
-        .
+        ·
+          have h_drop := ProdDrop.eq.MulProdS s i (d + 1)
+          rw [Add_Add.eq.AddAdd] at h_drop
+          have h_rotate := TakeDrop.eq.RotateDropTakePermute s ⟨i, by linarith⟩ d
+          simp at h_rotate
+          rw [← h_rotate]
+          rw [MulMul.eq.Mul_Mul]
+          simp [← h_drop]
+        ·
           omega
       ·
         rw [h_toNat]
@@ -122,4 +132,4 @@ private lemma main
 
 
 -- created on 2025-10-12
--- updated on 2025-10-14
+-- updated on 2025-10-15

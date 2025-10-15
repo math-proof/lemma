@@ -1,24 +1,24 @@
 with relational as (
   select
-    regexp_replace(module, '^(\\w+)\\.([A-Z][\\w''!]+)\\.(eq|as|ne)\\.([A-Z][\\w''!]+)(.*)', '$1.$4.$3.$2$5') as module,
+    regexp_replace(module, '^(\\w+)\\.([A-Z][\\w''!₀-₉]+)\\.(eq|as|ne)\\.([A-Z][\\w''!₀-₉]+)(.*)', '$1.$4.$3.$2$5') as module,
     module as original_module,
     substring_index(substring_index(module, '.', 2), '.', -1) as first,
     substring_index(substring_index(module, '.', 4), '.', -1) as second
   from
     lemma
   where
-    module regexp '^(\\w+)\\.([A-Z][\\w''!]+)\\.(eq|as|ne)\\.([A-Z][\\w''!]+)(.*)' and json_length(imports) > 0
+    module regexp '^(\\w+)\\.([A-Z][\\w''!₀-₉]+)\\.(eq|as|ne)\\.([A-Z][\\w''!₀-₉]+)(.*)' and json_length(imports) > 0
   having
     first != second and (char_length(first) < char_length(second) or char_length(first) = char_length(second) and first < second)
 ),
 equation as (
   select
-    regexp_replace(module, '^(\\w+)\\.(S?Eq)_([A-Z][\\w''!]+)(.*)', '$1.$2$3$4') as module,
+    regexp_replace(module, '^(\\w+)\\.(S?Eq)_([A-Z][\\w''!₀-₉]+)(.*)', '$1.$2$3$4') as module,
     module as original_module
   from
     lemma
   where
-    module regexp '^(\\w+)\\.S?Eq_([A-Z][\\w''!]+)(.*)' and json_length(imports) > 0
+    module regexp '^(\\w+)\\.S?Eq_([A-Z][\\w''!₀-₉]+)(.*)' and json_length(imports) > 0
 ),
 equivalence as (
   select

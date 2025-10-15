@@ -1,5 +1,9 @@
 <?php
 // ^ *error_log
+
+use function std\array_delete;
+use function std\array_insert;
+
 require_once 'init.php';
 require_once 'std.php';
 if ($_POST) {
@@ -21,26 +25,39 @@ if ($_POST) {
 			case 'of':
 				$index = 2;
 				$tokens[$index] = 'is';
+				if ($index + 2 < count($tokens))
+					// move of to the next position
+					array_insert($tokens, $index + 2, 'of');
 				$module = implode('.', $tokens);
 				$path = module_to_lean($module);
 				if (!file_exists($path)) {
-					$section = $tokens[0];
-					$first = array_slice($tokens, 1, $index - 1);
-					$second = array_slice($tokens, $index + 1);
-					$module = implode('.', array_merge([$section], $second, ['is'], $first));
-					$path = module_to_lean($module);
-					if (!file_exists($path)) {
-						if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches)) {
-							$tokens[1] = $matches[1] . $matches[2];
-							$tokens[$index] = 'of';
-							$module = implode('.', $tokens);
-							$path = module_to_lean($module);
-							if (!file_exists($path)) {
+					if ($index + 2 < count($tokens)) {
+						[$tokens[$index - 1], $tokens[$index + 1]] = [$tokens[$index + 1], $tokens[$index - 1]]; // swap
+						$module = implode('.', $tokens);
+						$path = module_to_lean($module);
+						if (!file_exists($path))
+							return;
+					}
+					else {
+						$section = $tokens[0];
+						$first = array_slice($tokens, 1, $index - 1);
+						$second = array_slice($tokens, $index + 1);
+						$module = implode('.', array_merge([$section], $second, ['is'], $first));
+						$path = module_to_lean($module);
+						if (!file_exists($path)) {
+							if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches)) {
+								$tokens[1] = $matches[1] . $matches[2];
+								$tokens[$index] = 'of';
+								$module = implode('.', $tokens);
+								$path = module_to_lean($module);
+								if (!file_exists($path)) {
+									return;
+								}
+							}
+							else {
 								return;
 							}
 						}
-						else
-							return;
 					}
 				}
 				break;
@@ -61,7 +78,7 @@ if ($_POST) {
 		return $module;
 	}
 
-	$term = "(?:[A-Z][\w']*|(?:of|is|et|ou|to|eq|ne|gt|lt|ge|le|in|as|dvd|sub|sup|subset|supset|mod)(?=\.))";
+	$term = "(?:[A-Z][\w'!₀-₉]*|(?:of|is|et|ou|to|eq|ne|gt|lt|ge|le|in|as|dvd|sub|sup|subset|supset|mod)(?=\.))";
 	$sections = std\listdir($root = dirname(dirname(__FILE__)) . "/Lemma/");
 	$sectionRegex = implode('|', $sections);
 	$sectionRegex = str_replace('List', 'List(?!\.Vector)', $sectionRegex); // avoid List.Vector
@@ -217,7 +234,7 @@ EOT;
 		case 'Mathlib':
 			return true;
 		}
-		$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
+		$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
 		if (preg_match("/\b$import\b/", $lemmaCode))
 			return true;
 		switch ($tokens[1]) {
@@ -226,29 +243,47 @@ EOT;
 		case 'ne':
 			[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
 			$import = implode('.', $tokens);
-			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
+			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
 			if (preg_match("/\b$import\b/", $lemmaCode))
 				return true;
 			break;
 		case 'is':
-			# try mp:
-			$tokens[1] = 'of';
-			$import = implode('.', $tokens);
-			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
-			if (preg_match("/\b$import\b/", $lemmaCode))
-				return true;
-			# try mpr:
-			[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
-			$import = implode('.', $tokens);
-			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
-			if (preg_match("/\b$import\b/", $lemmaCode))
-				return true;
-			# try comm:
-			$tokens[1] = 'is';
-			$import = implode('.', $tokens);
-			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
-			if (preg_match("/\b$import\b/", $lemmaCode))
-				return true;
+			$indexOf = array_search('of', $tokens);
+			if ($indexOf !== false) {
+				$tokens[1] = 'of';
+				array_delete($tokens, $indexOf);
+				# try mpr:
+				$import = implode('.', $tokens);
+				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
+				if (preg_match("/\b$import\b/", $lemmaCode))
+					return true;
+				# try mp:
+				[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
+				$import = implode('.', $tokens);
+				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
+				if (preg_match("/\b$import\b/", $lemmaCode))
+					return true;
+			}
+			else {
+				# try mp:
+				$tokens[1] = 'of';
+				$import = implode('.', $tokens);
+				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
+				if (preg_match("/\b$import\b/", $lemmaCode))
+					return true;
+				# try mpr:
+				[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
+				$import = implode('.', $tokens);
+				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
+				if (preg_match("/\b$import\b/", $lemmaCode))
+					return true;
+				# try comm:
+				$tokens[1] = 'is';
+				$import = implode('.', $tokens);
+				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
+				if (preg_match("/\b$import\b/", $lemmaCode))
+					return true;
+			}
 			break;
 		case 'of':
 			# try comm:
@@ -259,7 +294,7 @@ EOT;
 			else
 				break;
 			$import = implode('.', $tokens);
-			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w']*))";
+			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
 			if (preg_match("/\b$import\b/", $lemmaCode))
 				return true;
 			break;

@@ -901,7 +901,7 @@ where
             var {prequisite} = this;
             if (module.match(/__/))
                 prequisite.linter['linter.style.nameCheck'] = 'set_option linter.style.nameCheck false';
-            else if (module.match(/(?<=\.|^)([\w']+)\.\1(?=\.|$)/))
+            else if (module.match(/(?<=\.|^)([\w'!₀-₉]+)\.\1(?=\.|$)/))
                 prequisite.linter['linter.dupNamespace'] = 'set_option linter.dupNamespace false';
             if (!lemma.length)
                 this.window_open(module);
