@@ -44,12 +44,38 @@ initialize registerBuiltinAttribute {
     }
 }
 
+/--
+Helper functions for parsing and transforming declaration names based on infix operators. example:
+["Expr", "eq", "Expr", "Expr", "Expr", "lt", "Expr"].parseInfixSegments = [["Expr", "eq", "Expr"], ["Expr"], ["Expr", "lt", "Expr"]]
+-/
+def List.parseInfixSegments (list : List String) : List (List String) :=
+  match _: list with
+  | [] => []
+  | [x] => [[x]]
+  | x :: op :: y =>
+    match op with
+    | "eq" | "is" | "as" | "ne" | "lt" | "le" | "gt" | "ge" | "in" | "ou" | "et" =>
+      list.take 3 :: parseInfixSegments (y.drop 1)
+    | _ =>
+      [x] :: [op] :: parseInfixSegments y
+termination_by list.length
+
+def List.transformEq (list : List String) : List String :=
+  if list.length == 1 then
+    [list.head!.transformEq]
+  else
+    match list[1]! with
+    | "eq" | "is" | "as" | "ne" =>
+      list.reverse
+    | _ =>
+      list
+
 def List.decomposeOf (list : List String) (parity : List Bool) (map : List String → List String) (offset : ℕ := 0) : List String :=
   if let some i := list.idxOf? "of" then
     let ⟨first, ofPart⟩ := list.splitAt i
     let ofPart :=
       if offset == 0 then
-        ofPart[0]! :: ofPart.tail.zipWith (fun s b => if b then s.transformEq else s) parity
+        ofPart[0]! :: (ofPart.tail.parseInfixSegments.zipWith (fun s b => if b then s.transformEq else s) parity).flatten
       else
         ofPart.drop offset
     first.head! :: map first.tail ++ ofPart

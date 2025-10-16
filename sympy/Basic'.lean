@@ -43,9 +43,19 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let ⟨parity, type, value⟩ ← Expr.comm' decl.type (.const declName (levelParams.map .param)) stx.parity
     println! s!"parity = {parity}"
-    println! s!"(← getEnv).moduleTokens = {(← getEnv).moduleTokens}"
+    let moduleTokens := (← getEnv).moduleTokens
+    println! s!"(← getEnv).moduleTokens = {moduleTokens}"
+    if let some i := moduleTokens.idxOf? "of" then
+      println! s!"index of 'of' = {i}"
+      let ⟨first, ofPart⟩ := moduleTokens.splitAt i
+      println! s!"first = {first}"
+      println! s!"ofPart = {ofPart}"
+      let names := ofPart.tail.parseInfixSegments.zipWith (fun s b => if b then s.transformEq else s) parity
+      println! s!"names = {names}"
+    let name := ((moduleTokens.comm parity).foldl Name.str default).lemmaName declName
+    println! s!"name = {name}"
     addAndCompile <| .thmDecl {
-      name := (((← getEnv).moduleTokens.comm parity).foldl Name.str default).lemmaName declName
+      name := name
       levelParams := levelParams
       type := type
       value := value

@@ -23,7 +23,7 @@ import Lemma.List.DropPermute.eq.Drop.of.Add.lt.Length
 import Lemma.Nat.Add
 import Lemma.List.ProdDrop.eq.MulProdS
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.List.TakeDrop.eq.RotateDropTakePermute
+import Lemma.List.TakeDrop.eq.RotateDropTakePermute.of.Add.lt.Length
 open List Tensor Bool Nat Int
 
 
@@ -119,7 +119,7 @@ private lemma main
         ·
           have h_drop := ProdDrop.eq.MulProdS s i (d + 1)
           rw [Add_Add.eq.AddAdd] at h_drop
-          have h_rotate := TakeDrop.eq.RotateDropTakePermute s ⟨i, by linarith⟩ d
+          have h_rotate := TakeDrop.eq.RotateDropTakePermute.of.Add.lt.Length (s := s) (i := ⟨i, by linarith⟩) (d := d) (by simp; omega)
           simp at h_rotate
           rw [← h_rotate]
           rw [MulMul.eq.Mul_Mul]

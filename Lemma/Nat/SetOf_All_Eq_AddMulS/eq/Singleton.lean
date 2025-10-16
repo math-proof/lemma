@@ -3,7 +3,7 @@ import Lemma.Algebra.GeSubSMul.of.Ge
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.AddAdd
 import Lemma.Algebra.Mul2.eq.Add
-import Lemma.Algebra.EqAdd.is.Eq_Sub
+import Lemma.Int.EqAdd.is.Eq_Sub
 import Lemma.Algebra.EqAdd.of.Eq_Sub.Le
 import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
@@ -13,7 +13,7 @@ import Lemma.Algebra.MulSub.eq.SubMulS
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Algebra.Eq_Add.of.EqSub.Le
 import Lemma.Nat.Fib.eq.AddFibS.of.Ge_2
-open Algebra Nat
+open Algebra Nat Int
 
 
 private def G (n : ℕ) := fib (3 * n)
