@@ -1,9 +1,9 @@
 import sympy.sets.sets
 import Lemma.Real.All_Eq_1.of.All_Ge_1.Sum_Root.eq.Mul_Root_2.EqDivSum.Gt_1
 import Lemma.Finset.Sum.eq.Mul.of.All_Eq
-import Lemma.Algebra.EqDivS.of.Eq
+import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Algebra.Div.eq.One.of.Gt_0
-import Lemma.Algebra.GtCoeS.is.Gt
+import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Algebra.Gt.of.Gt.Gt
 import Lemma.Algebra.All_Eq.of.All_Eq.Eq
 import Lemma.Algebra.All_Eq.of.All_Eq.Lt
@@ -12,7 +12,7 @@ import Lemma.Bool.All_EqUFnS.of.All_Eq
 import Lemma.Algebra.Pow1.eq.One
 import Lemma.Algebra.Ge.of.Eq
 import Lemma.Bool.All.of.All.All_Imp
-open Algebra Bool Real Finset
+open Algebra Bool Real Finset Nat
 
 
 /--
@@ -28,7 +28,7 @@ private lemma main
 -- imply
   ((∑ i ∈ range n, x i) / n = x n ∧ (∑ i ∈ range n, (x i) ^ (1 / (i + 2) : ℝ)) = n * (x n) ^ (1 / 2 : ℝ) ∧ ∀ i ∈ range n, x i ≥ 1) ↔ ∀ i ∈ range (n + 1), x i = 1 := by
 -- proof
-  have h_Gt_1 := GtCoeS.of.Gt.nat (R := ℝ) h
+  have h_Gt_1 := GtCoeS.of.Gt (R := ℝ) h
   have h_Gt_0 : (n : ℝ) > 0 := by apply Gt.of.Gt.Gt h_Gt_1 (by norm_num)
   constructor
   ·
@@ -68,6 +68,5 @@ private lemma main
       apply All.of.All.All_Imp.fin h_All h_All_Eq
 
 
--- #check Algebra.All_Eq_1.of.EqDivSum.Sum_Root.eq.Mul_Sqrt.All_Ge_1.Gt_1
 -- created on 2025-04-26
 -- updated on 2025-04-27

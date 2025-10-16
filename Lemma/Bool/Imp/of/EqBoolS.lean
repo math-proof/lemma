@@ -1,5 +1,5 @@
 import Lemma.Nat.EqMulS.of.Eq
-import Lemma.Algebra.Bool.eq.SquareBool
+import Lemma.Nat.Bool.eq.SquareBool
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Bool.Imp.is.Bool.eq.MulBoolS
 open Algebra Bool Nat

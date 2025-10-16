@@ -1,7 +1,7 @@
-import Lemma.Algebra.EqDivS.of.Eq
+import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Algebra.Or_Eq_NegSqrt.of.EqSquare
 import Lemma.Algebra.DivNeg.eq.NegDiv
-open Algebra
+open Algebra Nat
 
 
 @[main]

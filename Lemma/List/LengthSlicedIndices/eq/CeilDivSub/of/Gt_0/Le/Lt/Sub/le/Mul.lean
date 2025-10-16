@@ -1,10 +1,10 @@
 import stdlib.Slice
 import Lemma.Nat.Ge.of.NotLt
-import Lemma.Algebra.GeCoeS.is.Ge
+import Lemma.Nat.GeCoeS.is.Ge
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.CeilDivSub.eq.One.of.GeAdd.Gt_0
-import Lemma.Algebra.GtCoeS.is.Gt
-import Lemma.Algebra.LeSubS.of.Le
+import Lemma.Nat.GtCoeS.is.Gt
+import Lemma.Nat.LeSubS.of.Le
 import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Algebra.CeilSub_1.eq.SubCeil_1
@@ -36,7 +36,7 @@ private lemma main
     simp
     split_ifs with h_start'
     ·
-      have h' := LeSubS.of.Le.nat h step
+      have h' := LeSubS.of.Le h step
       rw [MulAdd_1.eq.AddMul] at h'
       rw [@Nat.SubSub.eq.Sub_Add] at h'
       rw [EqSubAdd] at h'
@@ -52,9 +52,9 @@ private lemma main
       simp
       apply Eq.symm
       have h_Ge := Ge.of.NotLt h_start'
-      have h_Ge := GeCoeS.of.Ge.nat (R := ℚ) h_Ge
+      have h_Ge := GeCoeS.of.Ge (R := ℚ) h_Ge
       rw [CoeAdd.eq.AddCoeS] at h_Ge
-      apply CeilDivSub.eq.One.of.GeAdd.Gt_0 (by apply GtCoeS.of.Gt.nat h_step) h_Ge (by apply GtCoeS.of.Gt.nat h_start)
+      apply CeilDivSub.eq.One.of.GeAdd.Gt_0 (by apply GtCoeS.of.Gt h_step) h_Ge (by apply GtCoeS.of.Gt h_start)
 
 
 -- created on 2025-05-04

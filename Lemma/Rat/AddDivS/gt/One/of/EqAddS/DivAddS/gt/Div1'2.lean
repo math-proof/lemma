@@ -1,4 +1,4 @@
-import Lemma.Algebra.Mul2.eq.Add
+import Lemma.Nat.Mul2.eq.Add
 import Lemma.Nat.Add
 import Lemma.Nat.Mul
 import Lemma.Nat.AddAdd

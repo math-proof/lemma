@@ -1,7 +1,7 @@
 import Lemma.Algebra.CeilAdd.eq.AddCeil
 import Lemma.Algebra.AddSub.eq.Add_Sub
 import Lemma.Algebra.EqAddS.is.Eq
-import Lemma.Algebra.Odd.is.Any_Eq_AddMul2
+import Lemma.Nat.Odd.is.Any_Eq_AddMul2
 import Lemma.Algebra.DivAdd.eq.AddDivS
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Bool.EqUFnS.of.Eq

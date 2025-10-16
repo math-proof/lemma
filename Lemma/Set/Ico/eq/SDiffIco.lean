@@ -1,6 +1,6 @@
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Algebra.LeAdd_1.of.Lt
+import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Algebra.Ge.of.Ge.Ge
 import Lemma.Set.Le.of.In_Ico
 import Lemma.Set.Lt.of.In_Ico

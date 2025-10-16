@@ -21,41 +21,45 @@ private lemma main
 -- proof
   ext j
   by_cases h_j : j = 0
-  · 
+  ·
     subst h_j
     have := Gt_0 i
     repeat rw [GetElem.eq.SomeGet.of.Lt_Length]
-    · 
+    ·
       apply IffEqS.of.Eq
       apply congrArg
       rw [GetDrop.eq.Get_Add.of.Add.lt.Length]
-      · 
+      ·
         conv_rhs =>
           simp
         conv_lhs =>
           arg 2
           simp
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length (by omega)]
-        · 
+        ·
           split_ifs with h_i h_i_lt h_i_eq
           repeat omega
-          · 
+          ·
             rfl
-          · 
+          ·
             omega
-        · 
+        ·
           omega
-      · 
+      ·
         rw [LengthPermute.eq.Length]
         omega
-    · 
+    ·
       simp
-  · 
+    .
+      simp
+      rw [LengthPermute.eq.Length]
+      omega
+  ·
     have h_j := Ge_1.of.Ne_0 h_j
     repeat rw [GetElem.eq.None.of.Ge_Length]
-    · 
+    ·
       simpa
-    · 
+    ·
       rw [LengthDrop.eq.SubLength]
       rw [LengthPermute.eq.Length]
       omega

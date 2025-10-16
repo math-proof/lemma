@@ -10,13 +10,13 @@ import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Algebra.EqDivSquare
 import Lemma.Algebra.Mul_Add.eq.AddMulS
-import Lemma.Algebra.Sub.gt.Zero.is.Lt
+import Lemma.Int.Sub.gt.Zero.is.Lt
 import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Int.Sub_Add.eq.SubSub
-import Lemma.Algebra.SubMul.eq.MulSub_1
+import Lemma.Int.SubMul.eq.MulSub_1
 import Lemma.Int.SubSub
 import Lemma.Algebra.AddSub.eq.Add_Sub
-import Lemma.Algebra.MulSub.eq.SubMulS
+import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.Mul
 import Lemma.Algebra.MulAdd.eq.AddMulS
@@ -54,11 +54,11 @@ private lemma main
       rw [SubSub.comm]
       rw [AddSub.eq.Add_Sub]
       rw [Square.eq.Mul]
-      rw [SubMulS.eq.MulSub]
+      rw [@Int.SubMulS.eq.MulSub]
       rw [EqSub_Sub]
       rw [Mul.comm]
       rw [MulMul]
-      rw [SubMulS.eq.MulSub]
+      rw [@Int.SubMulS.eq.MulSub]
       rw [AddMulS.eq.MulAdd]
       apply Mul.gt.Zero.of.Gt_0.Gt_0
       ·

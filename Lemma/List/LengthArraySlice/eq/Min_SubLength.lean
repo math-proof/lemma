@@ -1,6 +1,6 @@
 import Lemma.List.EqLengthArraySlice.of.Add.le.Length
 import Lemma.Algebra.Le_Sub.is.LeAdd
-import Lemma.Algebra.NotLe.is.Gt
+import Lemma.Nat.NotLe.is.Gt
 import Lemma.List.EqLengthArraySlice.of.Add.gt.Length
 import Lemma.Nat.Le.of.Lt
 import Lemma.Nat.Add
@@ -18,7 +18,7 @@ private lemma main
   ·
     rw [EqLengthArraySlice.of.Add.le.Length h]
     simp
-    apply Le_Sub.of.LeAdd.left.nat h
+    apply Le_Sub.of.LeAdd.left h
   ·
     have h := Gt.of.NotLe h
     rw [EqLengthArraySlice.of.Add.gt.Length h]

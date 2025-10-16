@@ -80,7 +80,7 @@ instance : IntegerRing ℤ where
     apply Eq.symm
     rw [Int.add_comm]
     rw [Int.mul_comm]
-    apply Int.emod_add_ediv
+    apply Int.emod_add_mul_ediv
   mod_lt {d : ℤ} (h : d > 0) (n : ℤ) := Int.emod_lt_of_pos n h
   pred_le := by simp
   pred_lt := by simp

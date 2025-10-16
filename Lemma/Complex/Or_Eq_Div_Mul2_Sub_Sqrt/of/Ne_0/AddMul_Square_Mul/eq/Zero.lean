@@ -1,7 +1,7 @@
 import sympy.core.relational
 import sympy.polys.polyroots
 import Lemma.Algebra.SquareSub.eq.SubAddSquareS_MulMul2
-import Lemma.Algebra.Mul_Sub.eq.SubMulS
+import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
 import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.DivMul.eq.Mul_Div
@@ -23,7 +23,7 @@ import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Algebra.DivMul.eq.Mul_Div
 import Lemma.Rat.DivDiv.eq.Div_Mul
-import Lemma.Algebra.MulSub.eq.SubMulS
+import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Algebra.Div_Mul.eq.Inv.of.Ne_0
 open Algebra Rat Int Nat
 

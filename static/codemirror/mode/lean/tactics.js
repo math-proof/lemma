@@ -32,6 +32,7 @@ export const tactics = [
     'fin_cases',
     'fin_omega',
     'funext',
+    'grind',
     'induction',
     'infer_instance',
     'injection',

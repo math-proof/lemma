@@ -1,13 +1,13 @@
-import Lemma.Algebra.FDiv.eq.FloorDiv
+import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Algebra.EqFloor.is.Le.Lt
 import Lemma.Algebra.Div.ge.Zero.of.Le_0.Lt_0
 import Lemma.Set.Le.of.In_Icc
-import Lemma.Algebra.LeCoeS.is.Le
-import Lemma.Algebra.LtCoeS.is.Lt
+import Lemma.Int.LeCoeS.is.Le
+import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Algebra.LtDiv.of.Gt.Lt_0
 import Lemma.Set.Ge.of.In_Icc
 import Lemma.Algebra.Gt.of.Ge_Add_1
-open Algebra Set
+open Algebra Set Int
 
 
 @[main]
@@ -26,9 +26,9 @@ private lemma main
     apply Div.ge.Zero.of.Le_0.Lt_0
     ·
       have := Le.of.In_Icc h₁
-      exact LeCoeS.of.Le.int this
+      exact LeCoeS.of.Le this
     ·
-      exact LtCoeS.of.Lt.int h₀
+      exact LtCoeS.of.Lt h₀
   ·
     norm_num
     apply LtDiv.of.Gt.Lt_0
@@ -37,7 +37,7 @@ private lemma main
       have := Ge.of.In_Icc h₁
       exact Gt.of.Ge_Add_1 this
     ·
-      exact LtCoeS.of.Lt.int h₀
+      exact LtCoeS.of.Lt h₀
 
 
 -- created on 2025-03-30

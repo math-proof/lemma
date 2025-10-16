@@ -1,6 +1,6 @@
 import Lemma.List.Prod.eq.Mul_ProdTail.of.Ne_0.NeLength_0
-import Lemma.Algebra.EqDivS.of.Eq
-open Algebra List
+import Lemma.Nat.EqDivS.of.Eq
+open List Nat
 
 
 @[main]

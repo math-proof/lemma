@@ -1,6 +1,6 @@
 import Lemma.Set.Lt.of.In_Ico
-import Lemma.Algebra.Le_Sub_1.of.Lt
-open Set Algebra
+import Lemma.Nat.Le_Sub_1.of.Lt
+open Set Nat
 
 
 @[main]

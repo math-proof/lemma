@@ -1,13 +1,13 @@
-import Lemma.Algebra.GeCoeS.is.Ge
-import Lemma.Algebra.FDiv.eq.FloorDiv
+import Lemma.Int.GeCoeS.is.Ge
+import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Algebra.EqFloor.is.Le.Lt
 import Lemma.Set.Ge.of.In_Icc
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Gt_0
-import Lemma.Algebra.GtCoeS.is.Gt
+import Lemma.Int.GtCoeS.is.Gt
 import Lemma.Set.Le.of.In_Icc
-import Lemma.Algebra.Lt_Add_1.of.Le
+import Lemma.Nat.Lt_Add_1.of.Le
 import Lemma.Algebra.LtDiv.of.Lt.Gt_0
-open Algebra Set
+open Algebra Set Int Nat
 
 
 @[main]
@@ -25,8 +25,8 @@ private lemma main
   ·
     apply Div.ge.Zero.of.Ge_0.Gt_0
     have := Ge.of.In_Icc h₁
-    exact GeCoeS.of.Ge.int this
-    exact GtCoeS.of.Gt.int h₀
+    exact GeCoeS.of.Ge this
+    exact GtCoeS.of.Gt h₀
   ·
     norm_num
     apply LtDiv.of.Lt.Gt_0
@@ -37,7 +37,7 @@ private lemma main
       simp at this
       assumption
     ·
-      exact GtCoeS.of.Gt.int h₀
+      exact GtCoeS.of.Gt h₀
 
 
 -- created on 2025-03-30

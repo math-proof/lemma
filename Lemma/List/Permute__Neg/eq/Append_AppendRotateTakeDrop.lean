@@ -1,6 +1,6 @@
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.Algebra.LeAdd_1
+import Lemma.Nat.LeAdd_1
 import Lemma.List.Slice.eq.Nil
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.AppendAppend.eq.Append_Append

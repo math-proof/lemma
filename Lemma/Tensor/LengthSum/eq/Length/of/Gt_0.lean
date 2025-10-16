@@ -22,7 +22,7 @@ private lemma main
     repeat rw [Length.eq.Get_0.of.GtLength_0 (by assumption)]
     by_cases h : dim < s.length
     ·
-      repeat rw [Length.eq.Get_0.of.GtLength_0]
+      repeat rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
       rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by assumption) (by assumption)]
     ·
       simp at h

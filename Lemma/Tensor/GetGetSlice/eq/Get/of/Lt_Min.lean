@@ -28,8 +28,11 @@ private lemma main
   rw [Tensor.get]
   rw [Tensor.toVector]
   simp [GetElem.getElem]
-  rw [GetCast.eq.Get.of.Eq.Lt.fin]
+  rw [GetCast.eq.Get.of.Eq.Lt.fin _ (by simp)]
   ·
+    have h_s₀ : s₀ = X.length := by
+      rw [Length.eq.Get_0.of.GtLength_0 (by simp)]
+      simp
     simp
     apply Eq.of.EqDataS
     simp
@@ -40,11 +43,14 @@ private lemma main
     apply Eq.of.EqValS (b := ⟨i, hi⟩)
     simp
     rw [EqGetIndices.of.Lt_Min.fin]
-    rw [Length.eq.Get_0.of.GtLength_0 (by simp)]
-    simp_all
+    .
+      rwa [← h_s₀]
+    .
+      simp only [LengthSlice.eq.Min]
+      rwa [← h_s₀]
   ·
     rw [Length.eq.Get_0.of.GtLength_0 (by simp)]
-    simp
+    simp_all [LengthSlice.eq.Min]
 
 
 @[main]

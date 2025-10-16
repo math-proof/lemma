@@ -1,7 +1,7 @@
 import Lemma.List.LengthArraySlice.eq.Min_SubLength
 import Lemma.Algebra.Lt.of.Lt_Min
-import Lemma.Algebra.LtAdd.of.Lt_Sub
-open Algebra List
+import Lemma.Nat.LtAdd.of.Lt_Sub
+open Algebra List Nat
 
 
 @[main]
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   have : i + j < v.length := by
     rw [LengthArraySlice.eq.Min_SubLength] at h
-    apply LtAdd.of.Lt_Sub.left.nat (Lt.of.Lt_Min h)
+    apply LtAdd.of.Lt_Sub.left (Lt.of.Lt_Min h)
   (v.array_slice i n)[j] = v[i + j] := by
 -- proof
   unfold List.array_slice

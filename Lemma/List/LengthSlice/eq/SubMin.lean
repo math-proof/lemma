@@ -1,6 +1,6 @@
 import Lemma.List.LengthArraySlice.eq.Min_SubLength
-import Lemma.Algebra.SubMin.eq.MinSubS
-open Algebra List
+import Lemma.Nat.SubMin.eq.MinSubS
+open List Nat
 
 
 @[main]
@@ -13,7 +13,7 @@ private lemma main
 -- proof
   unfold List.slice
   rw [LengthArraySlice.eq.Min_SubLength]
-  rw [MinSubS.eq.SubMin.nat]
+  rw [MinSubS.eq.SubMin]
 
 
 -- created on 2025-05-13

@@ -10,14 +10,14 @@ import Lemma.Nat.Mul
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.SubDivS.eq.DivMul_Sub.of.Ne_0.Ne_0
 import Lemma.Algebra.Ne.of.Gt
-import Lemma.Algebra.MulSub.eq.SubMulS
+import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Algebra.NegMul.eq.MulNeg
 import Lemma.Algebra.DivMulS.eq.Div.of.Ne_0
 import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Algebra.LeMulS.of.Gt_0.Le
-import Lemma.Algebra.Mul_Sub.eq.SubMulS
+import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Algebra.EqMul_Div.of.Ne_0
-open Algebra Nat
+open Algebra Nat Int
 
 
 @[main]

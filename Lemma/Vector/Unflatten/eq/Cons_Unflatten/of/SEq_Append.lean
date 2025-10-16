@@ -3,7 +3,7 @@ import Lemma.Algebra.Add_Mul.eq.MulAdd_1
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Algebra.AddMul.eq.MulAdd_1
 import Lemma.Nat.AddAdd
-import Lemma.Algebra.LtAddS.is.Lt
+import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.Lt.of.AddMul.lt.Mul
 import Lemma.Vector.EqValS.of.SEq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul

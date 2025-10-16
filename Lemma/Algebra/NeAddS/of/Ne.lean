@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqSubS.is.Eq
+import Lemma.Int.EqSubS.is.Eq
 import Lemma.Int.EqSubAdd
-open Algebra Int
+open Int
 
 
 @[main]

@@ -9,23 +9,23 @@ import Lemma.Algebra.Sub.eq.NegSub
 import Lemma.Int.Add.eq.Sub_Neg
 import Lemma.Algebra.EqAddS.of.Eq.Eq
 import Lemma.Algebra.FloorAdd1.eq.Add1Floor
-import Lemma.Algebra.FMod.eq.Sub_MulFDiv
+import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.FDivAdd.eq.Add1FDiv.of.Ne_0
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Int.AddFModS.eq.FModNegSign
-import Lemma.Algebra.FModNegSign.eq.Sub_Sign
+import Lemma.Int.FModNegSign.eq.Sub_Sign
 import Lemma.Algebra.SubNeg
 import Lemma.Nat.Add
 import Lemma.Int.Sub_Add.eq.SubSub
-import Lemma.Algebra.EqSubS.is.Eq
+import Lemma.Int.EqSubS.is.Eq
 import Lemma.Nat.Mul
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.AddMul.eq.MulAdd_1
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.Eq_0.of.Mul.eq.Zero.Ne_0
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
-import Lemma.Algebra.FDiv.eq.FloorDiv
+import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Algebra.CoeNeg.eq.NegCoe
 import Lemma.Algebra.DivNeg.eq.NegDiv
 open Algebra Bool Int Nat

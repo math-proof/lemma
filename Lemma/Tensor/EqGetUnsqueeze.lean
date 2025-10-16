@@ -28,26 +28,24 @@ private lemma main
     simp [Tensor.toVector]
     simp [GetElem.getElem]
     apply EqCast.of.SEq
-    rw [ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod (s := 1 :: s)]
-    ·
-      apply SEqCast.of.SEq.Eq <;>
-        simp
-      apply SEq.of.Eq
-      unfold List.Vector.splitAt
+    rw [ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod (s := 1 :: s) _ (by grind)]
+    apply SEqCast.of.SEq.Eq <;>
       simp
-      apply Eq.of.All_EqGetS
-      intro i
-      unfold List.Vector.unflatten
-      simp [List.Vector.get]
-      rw [GetCast.eq.Get.of.Eq.Lt _ (by simp)]
-      rw [GetArraySlice.eq.Get_Add.of.Lt_Min_Sub (by simp)]
-      rw [EqGetMapRange.of.Lt] <;>
-        simp
-      simp only [GetElem.getElem]
-      simp [List.Vector.get]
-      congr
-      apply EqCast.of.Eq
-      simp
+    apply SEq.of.Eq
+    unfold List.Vector.splitAt
+    simp
+    apply Eq.of.All_EqGetS
+    intro i
+    unfold List.Vector.unflatten
+    simp [List.Vector.get]
+    rw [GetCast.eq.Get.of.Eq.Lt (by grind) (by simp)]
+    rw [GetArraySlice.eq.Get_Add.of.Lt_Min_Sub (by simp)]
+    rw [EqGetMapRange.of.Lt]
+    simp only [GetElem.getElem]
+    simp [List.Vector.get]
+    congr
+    apply EqCast.of.Eq
+    simp
     repeat simp
 
 

@@ -1,8 +1,8 @@
 import Lemma.List.GetArraySlice.eq.Get_Add.of.Lt_Length
 import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Algebra.LtAdd.of.Lt_Sub
+import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.Algebra.Lt.of.Lt_Min
-open Algebra List
+open Algebra List Nat
 
 
 @[main]
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   have : i + j < v.length := by
     rw [LengthSlice.eq.SubMin] at h
-    apply Lt.of.Lt_Min (LtAdd.of.Lt_Sub.left.nat h)
+    apply Lt.of.Lt_Min (LtAdd.of.Lt_Sub.left h)
   (v.slice i n)[j] = v[i + j] := by
 -- proof
   unfold List.slice

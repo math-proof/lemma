@@ -36,10 +36,10 @@ private lemma main
   (h_i : i < s[0])
   (X : Tensor α (s.eraseIdx dim)) :
 -- imply
-  X.keepdim.get ⟨i, by rwa [LengthKeepdim.eq.Length.of.Gt_0 h_dim X, Length.eq.Get_0.of.GtLength_0, GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_dim]⟩ = (cast
+  X.keepdim.get ⟨i, by rwa [LengthKeepdim.eq.Length.of.Gt_0 h_dim X, Length.eq.Get_0.of.GtLength_0 (by grind), GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_dim]⟩ = (cast
     (congrArg (Tensor α) (TailEraseIdx.eq.EraseIdxTail.of.Gt_0.Lt_SubLength h_s h_dim))
     (X.get ⟨i, by
-      rw [Length.eq.Get_0.of.GtLength_0]
+      rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
       rwa [GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_dim]⟩)).keepdim := by
 -- proof
   have h_get_eraseIdx := GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_dim
@@ -95,6 +95,10 @@ private lemma main
         simp [h_dim_add_sub]
     ·
       rwa [h_get_eraseIdx]
+    ·
+      simp
+      rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]
+      omega
   ·
     rw [GetInsertIdx.eq.Get.of.Lt.Le_Length _ h_dim]
     ·

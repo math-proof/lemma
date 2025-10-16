@@ -1,5 +1,5 @@
-import Lemma.Algebra.LtAdd.of.Lt_Sub
-open Algebra
+import Lemma.Nat.LtAdd.of.Lt_Sub
+open Nat
 
 
 @[main]
@@ -25,7 +25,7 @@ private lemma fin
   (h : i < s.length - 1) :
 -- imply
   have hi : i < s.tail.length := by simp_all
-  s.tail.get ⟨i, hi⟩ = s.get ⟨i + 1, LtAdd.of.Lt_Sub.nat h⟩ := by
+  s.tail.get ⟨i, hi⟩ = s.get ⟨i + 1, LtAdd.of.Lt_Sub h⟩ := by
 -- proof
   apply main h
 

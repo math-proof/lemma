@@ -13,18 +13,18 @@ import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.Slice.eq.Nil
 import Lemma.List.LengthDrop.eq.SubLength
-import Lemma.Algebra.LeAdd_1
+import Lemma.Nat.LeAdd_1
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Nat.SubSub
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
-import Lemma.Algebra.LeSub.is.Le_Add
+import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.Lt.of.Le.Ne
-import Lemma.Algebra.Sub.ge.One.of.Gt
+import Lemma.Nat.Sub.ge.One.of.Gt
 import Lemma.Algebra.LtSubS.of.Lt.Le
 import Lemma.Algebra.LtSub_1.of.Le.Gt_0
-import Lemma.Algebra.Le_Sub_1.of.Lt
-import Lemma.Algebra.Lt.of.Le.Lt
+import Lemma.Nat.Le_Sub_1.of.Lt
+import Lemma.Nat.Lt.of.Le.Lt
 import Lemma.Algebra.LeSub.of.Le
 import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.EqAdd_Sub.of.Ge
@@ -32,8 +32,8 @@ import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Nat.AddAdd
 import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
-import Lemma.Algebra.GeSub_1.of.Gt
-import Lemma.Algebra.LtSub
+import Lemma.Nat.GeSub_1.of.Gt
+import Lemma.Nat.LtSub
 import Lemma.List.LengthPermute.eq.Length
 open Algebra List Nat Int
 
@@ -86,7 +86,7 @@ private lemma MAIN
       simp_all [EqMin.of.Lt]
     ·
       simp at h_i
-      have h_i := LeSub.of.Le_Add.nat h_i
+      have h_i := LeSub.of.Le_Add h_i
       have h_i' := Lt.of.Le.Ne (by simp_all [Ne.symm]) h_i
       have h_i'' := Sub.ge.One.of.Gt h_i'
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp_all) (by simp_all)]
@@ -109,7 +109,7 @@ private lemma MAIN
       simp at h_i h_1 h_eq
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
       ·
-        have h_i := LeSub.of.Le_Add.nat h_i
+        have h_i := LeSub.of.Le_Add h_i
         have h_i' := Lt.of.Le.Ne (by simp_all [Ne.symm]) h_i
         have h_i'' := Sub.ge.One.of.Gt h_i'
         simp [EqMin.of.Lt h_sub]

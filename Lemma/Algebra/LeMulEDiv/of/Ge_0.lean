@@ -1,6 +1,6 @@
 import Lemma.Algebra.Mod.ge.Zero.of.Ne_0
-import Lemma.Algebra.Eq_AddMulDiv___Mod
-open Algebra
+import Lemma.Nat.Eq_AddMulDiv___Mod
+open Algebra Nat
 
 
 @[main]

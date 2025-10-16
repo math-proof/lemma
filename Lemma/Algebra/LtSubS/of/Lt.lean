@@ -1,6 +1,6 @@
-import Lemma.Algebra.LtAddS.is.Lt
+import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Algebra.Sub.eq.Add_Neg
-open Algebra
+open Algebra Nat
 
 
 /--

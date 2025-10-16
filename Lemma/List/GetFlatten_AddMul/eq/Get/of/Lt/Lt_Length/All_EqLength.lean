@@ -2,11 +2,11 @@ import Lemma.List.LengthFlattenTake.eq.Mul.of.Le_Length.All_Eq
 import Lemma.Nat.Le.of.Lt
 import Lemma.List.AppendFlattenS.eq.Flatten
 import Lemma.List.LengthAppend.eq.AddLengthS
-import Lemma.Algebra.LtAddS.is.Lt
+import Lemma.Nat.LtAddS.is.Lt
 import Lemma.List.FlattenDrop.eq.Append_FlattenDrop.of.Lt_Length
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.List.AddMul.lt.LengthFlatten.of.Lt.Lt_Length.All_EqLength
-open Algebra List Nat
+open List Nat
 
 
 @[main]

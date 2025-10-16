@@ -8,7 +8,7 @@ import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Algebra.Le_Min.of.Le.Le
-import Lemma.Algebra.LeAdd_1
+import Lemma.Nat.LeAdd_1
 import Lemma.Algebra.Min
 import Lemma.Algebra.EqAddMin__Sub
 import Lemma.Int.NegSucc.eq.NegAdd_1

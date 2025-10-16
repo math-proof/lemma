@@ -1,10 +1,10 @@
 import Lemma.List.Permute.eq.Ite
-import Lemma.Algebra.Le_Sub_1
+import Lemma.Nat.Le_Sub_1
 import Lemma.Algebra.Ge.of.Ge.Ge
-import Lemma.Algebra.GeCoeS.is.Ge
+import Lemma.Nat.GeCoeS.is.Ge
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.Ge_1
-import Lemma.Algebra.Lt.of.Sub.lt.Zero
+import Lemma.Int.Lt.of.Sub.lt.Zero
 import Lemma.Algebra.CoeSub_1.eq.SubCoe_1.of.Ge_1
 import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Algebra.EqAddSub
@@ -33,7 +33,7 @@ private lemma main
   rw [Permute.eq.Ite]
   split_ifs with h_d
   ·
-    have hi := GeCoeS.of.Ge.nat (R := ℤ) hi
+    have hi := GeCoeS.of.Ge (R := ℤ) hi
     rw [CoeSub.eq.SubCoeS.of.Ge] at hi
     have h_ge := Ge.of.Ge.Ge h hi
     linarith
@@ -68,10 +68,9 @@ private lemma main
       have h_ge : i + (d + 1).toNat ≥ a.length := by
         rw [h_nat]
         linarith
-      rw [Drop.eq.Nil.of.Ge_Length]
+      rw [Drop.eq.Nil.of.Ge_Length h_ge]
       rw [Drop.eq.Nil]
       rwa [Slice.eq.Slice__Length.of.Ge_Length]
-      assumption
 
 
 -- created on 2025-06-07

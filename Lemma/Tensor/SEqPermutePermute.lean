@@ -119,7 +119,7 @@ private lemma main
         ·
           have h_drop := ProdDrop.eq.MulProdS s i (d + 1)
           rw [Add_Add.eq.AddAdd] at h_drop
-          have h_rotate := TakeDrop.eq.RotateDropTakePermute.of.Add.lt.Length (s := s) (i := ⟨i, by linarith⟩) (d := d) (by simp; omega)
+          have h_rotate := TakeDrop.eq.RotateDropTakePermute.of.Add.lt.Length (s := s) (i := ⟨i, by linarith⟩) (d := d) (by grind)
           simp at h_rotate
           rw [← h_rotate]
           rw [MulMul.eq.Mul_Mul]

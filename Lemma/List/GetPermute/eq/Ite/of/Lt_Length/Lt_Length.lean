@@ -19,10 +19,10 @@ import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.List.GetDrop.eq.Get_Add.of.Add.lt.Length
 import Lemma.Nat.Sub_Add.eq.SubSub
-import Lemma.Algebra.Sub.gt.Zero.is.Gt
+import Lemma.Nat.Sub.gt.Zero.is.Gt
 import Lemma.Algebra.Gt.is.Ge.Ne
-import Lemma.Algebra.Ge_Add_1.of.Gt
-import Lemma.Algebra.GeSub.of.Ge_Add
+import Lemma.Nat.Ge_Add_1.of.Gt
+import Lemma.Nat.GeSub.of.Ge_Add
 import Lemma.List.LengthPermute.eq.Length
 open Algebra List Nat
 
@@ -112,12 +112,12 @@ private lemma main
         simp_all
       ·
         rw [SubSub.eq.Sub_Add]
-        apply Sub.gt.Zero.of.Gt.nat
+        apply Sub.gt.Zero.of.Gt
         apply Gt.of.Ge.Ne h_1 h_eq
       ·
         rw [LengthSlice.eq.SubMin]
         rw [h_eq_i]
-        simp [GeSub.of.Ge_Add.left.nat h_1]
+        simp [GeSub.of.Ge_Add.left h_1]
       ·
         simp_all
 

@@ -1,6 +1,6 @@
 import stdlib.List
-import Lemma.Algebra.Le_Sub.of.LeAdd
-open Algebra
+import Lemma.Nat.Le_Sub.of.LeAdd
+open Nat
 
 
 @[main]
@@ -13,7 +13,7 @@ private lemma main
   (s.array_slice i n |>.length) = n := by
 -- proof
   simp [List.array_slice]
-  apply Le_Sub.of.LeAdd.left.nat h
+  apply Le_Sub.of.LeAdd.left h
 
 
 -- created on 2024-07-01

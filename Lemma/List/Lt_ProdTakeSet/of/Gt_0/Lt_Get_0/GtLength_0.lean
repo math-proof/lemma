@@ -15,7 +15,7 @@ private lemma main
 -- imply
   i < ((s.set d x).take 1).prod := by
 -- proof
-  rw [ProdTake_1.eq.Get_0.of.GtLength_0]
+  rw [ProdTake_1.eq.Get_0.of.GtLength_0 (by grind)]
   rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0]
   repeat assumption
 

@@ -30,7 +30,7 @@ private lemma main
   simp [GetVal.eq.Get.of.Lt (show i.val < v.length by simp)]
   rw [GetCast.eq.Get.of.Eq.Lt (by simp) (by simp)]
   simp [GetElem.getElem]
-  rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]
+  rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin (by grind)]
   congr
   conv in v => rw [Eq_UnflattenFlatten v]
   congr

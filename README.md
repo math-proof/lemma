@@ -1,12 +1,30 @@
-# lemma
+# Purpose of this project
+This is Lean 4 machine learning project (related to Torch, SymPy, [KaTeX](https://github.com/KaTeX/KaTeX), and [arXiv](https://arxiv.org)):
+👉 **[https://github.com/math-proof/lemma](https://github.com/math-proof/lemma)**
 
-reference website:
+The main goals of this project are formalizing in Lean4:
 
-https://www.lemma.cn/lean/website/index.php
+* **machine learning framework Torch**
+  The most commonly used Torch operators — such as `softmax`, `sum`, `mean`, `unsqueeze`, `matmul`, `repeat`, `permute`, `transpose`, `exp`, and `log` — have already been translated into Lean 4.
 
-the latex is printed with the aid of the following project:
+* **symbolic mathematics from SymPy (symbolic mathematics for Python).**
+  SymPy is also a fundamental algorithmic component of the PyTorch framework.
 
-https://github.com/KaTeX/KaTeX
+* **mathematical foundations of reinforcement learning**
+  This part is based on the reference book [*Mathematical Foundation of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning) and is still in progress.
+
+* **mathematical arguments from arXiv machine learning papers.**
+  For example:
+  [Tensor.DivSumSSum.eq.MeanDivSum_MeanSum](http://www.lemma.cn/lean/index.php?module=Tensor.DivSumSSum.eq.MeanDivSum_MeanSum)
+  This theorem formalizes and proves a claim from a reinforcement learning paper on arXiv.
+  More examples can be found in the theorem library at [www.lemma.cn](http://www.lemma.cn).
+
+
+It also ficilitates reading by visualizing Lean 4 code with KaTeX. 
+This feature converts one-dimensional Lean code into rainbow-colored KaTeX-rendered mathematical formulas. Over **240,000 theorems from Mathlib** have already been visualized in KaTeX format, for example:
+  [http://www.lemma.cn/lean/?mathlib=Finset.*sum](http://www.lemma.cn/lean/?mathlib=Finset.*sum)
+  (You can use any regular expression to search.)
+
 ## quick start
 ```bash
 git clone https://github.com/math-proof/lemma.git
@@ -28,7 +46,7 @@ for linux: (better to use VPN to download, using a browser not by wget!)
 ```sh
 # suppose ~/github is your working directory and the binary installer file is copied here.
 cd ~/github
-versionNumber=4.23.0
+versionNumber=4.24.0
 # prepare zstd
 # Ubuntu/Debian
 sudo apt install zstd

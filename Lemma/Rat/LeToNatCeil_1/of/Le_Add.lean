@@ -1,14 +1,14 @@
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.Gt_0.of.Ne_0
-import Lemma.Algebra.LeSub.is.Le_Add
-import Lemma.Algebra.LeCoeS.is.Le
+import Lemma.Nat.LeSub.is.Le_Add
+import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Algebra.LeDivS.of.Le.Gt_0
 import Lemma.Algebra.LeCeil.is.Le
 import Lemma.Int.LeToNat.is.Le
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
-import Lemma.Algebra.NotGe.is.Lt
-import Lemma.Algebra.LtCoeS.is.Lt
+import Lemma.Nat.NotGe.is.Lt
+import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Div.lt.Zero.of.Lt_0.Gt_0
 import Lemma.Nat.Le.of.Lt
@@ -33,8 +33,8 @@ private lemma main
     have h_Gt_0 : (step : ℚ) > 0 := by simp_all
     by_cases h_Ge : stop ≥ start
     ·
-      have h := LeSub.of.Le_Add.left.nat h
-      have h := LeCoeS.of.Le.nat (R := ℚ) h
+      have h := LeSub.of.Le_Add.left h
+      have h := LeCoeS.of.Le (R := ℚ) h
       have h := LeDivS.of.Le.Gt_0 h h_Gt_0
       simp [Div.eq.One.of.Gt_0 h_Gt_0] at h
       have h := LeCeil.of.Le h
@@ -42,7 +42,7 @@ private lemma main
       rwa [SubCoeS.eq.CoeSub.of.Ge h_Ge]
     ·
       have h := Lt.of.NotGe h_Ge
-      have h := LtCoeS.of.Lt.nat (R := ℚ) h
+      have h := LtCoeS.of.Lt (R := ℚ) h
       have h := Sub.lt.Zero.of.Lt h
       have h := Div.lt.Zero.of.Lt_0.Gt_0 h h_Gt_0
       have h := Le.of.Lt h

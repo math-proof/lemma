@@ -23,14 +23,14 @@ import Lemma.List.AddMul_ProdSet.lt.MulProd_Mul_Prod.of.Lt_Mul_ProdTail.Lt_Get_0
 import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
 import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length
 import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
-import Lemma.Algebra.Eq_Div.Eq_Mod.of.Eq_AddMul
+import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
 import Lemma.Vector.EqGetS
-import Lemma.List.ProdTakeSet__1.eq.Get_0.of.Gt_0.GtLength_0
+import Lemma.List.ProdTakeSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.Gt_Length
 import Lemma.List.ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0
@@ -165,7 +165,7 @@ private lemma main
         rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0]
         repeat assumption
     ·
-      rw [ProdTakeSet__1.eq.Get_0.of.Gt_0.GtLength_0 (by assumption) (by assumption)]
+      rw [ProdTakeSet.eq.Get_0.of.Gt_0.GtLength_0 (by assumption) (by assumption)]
       rw [HeadDSet.eq.Get_0.of.Gt_0.Gt_Length]
       repeat assumption
 

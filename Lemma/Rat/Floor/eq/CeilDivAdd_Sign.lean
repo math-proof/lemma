@@ -1,0 +1,21 @@
+import Lemma.Int.CoeSub.eq.SubCoeS
+import Lemma.Int.Ceil.eq.FloorDivSub_Sign
+import Lemma.Int.CoeAdd.eq.AddCoeS
+open Int
+
+
+@[main]
+private lemma main
+  {n d : ℤ} :
+-- imply
+  ⌊n / (d : ℚ)⌋ = ⌈(n - d + sign d) / (d : ℚ)⌉ := by
+-- proof
+  rw [SubCoeS.eq.CoeSub]
+  rw [AddCoeS.eq.CoeAdd]
+  rw [Ceil.eq.FloorDivSub_Sign]
+  simp
+  ring_nf
+
+
+-- created on 2025-04-04
+-- updated on 2025-05-04

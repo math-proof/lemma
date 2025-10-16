@@ -1,5 +1,5 @@
 import Lemma.Algebra.AddMul.le.Mul
-import Lemma.Algebra.Le_Sub.of.LeAdd
+import Lemma.Nat.Le_Sub.of.LeAdd
 import Lemma.Nat.Add
 import Lemma.Nat.Mul
 import Lemma.Algebra.AddMul.le.Mul.of.Lt
@@ -16,7 +16,7 @@ private lemma left
   m ≤ m * n - m * i := by
 -- proof
   have h := AddMul.le.Mul.of.Lt h m
-  apply Le_Sub.of.LeAdd.nat
+  apply Le_Sub.of.LeAdd
   rwa [Add.comm]
 
 

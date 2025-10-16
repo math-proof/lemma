@@ -3,8 +3,8 @@ import Lemma.Finset.Sum.eq.Sum_Add_Sub.of.In_Range.All_Eq_Ite
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Lt.of.Eq_Add.Lt_0
 import Lemma.Finset.LeSumS.of.All_Le
-import Lemma.Algebra.Lt.of.Le.Lt
-open Algebra Finset
+import Lemma.Nat.Lt.of.Le.Lt
+open Algebra Finset Nat
 
 
 @[main]

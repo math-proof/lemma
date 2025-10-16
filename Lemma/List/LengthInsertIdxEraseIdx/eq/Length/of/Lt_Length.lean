@@ -1,9 +1,9 @@
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
-import Lemma.Algebra.Le_Sub_1.of.Lt
+import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.Ge_1.of.Gt
-open List Algebra Nat
+open List Nat
 
 
 @[main]

@@ -63,9 +63,8 @@ private lemma main'
       ·
         by_cases h_tj : t < j
         ·
-          repeat rw [GetAppend.eq.Get.of.Lt_Length]
+          repeat rw [GetAppend.eq.Get.of.Lt_Length (by grind)]
           rw [GetTake.eq.Get.of.Lt_LengthTake]
-          simp_all
         ·
           linarith
       ·
@@ -83,8 +82,7 @@ private lemma main'
           rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
           rw [GetSlice.eq.Get_Add.of.Lt_LengthSlice]
           ·
-            simp [h_i]
-            simp [h_eq_ti]
+            simp [h_i, h_eq_ti]
           ·
             simp_all
           ·
@@ -109,11 +107,9 @@ private lemma main'
           simp [h_i, h_j]
           simp [h_eq_ij']
           rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
-          rw [GetDrop.eq.Get_Add.of.Add.lt.Length]
-          ·
+          rw [GetDrop.eq.Get_Add.of.Add.lt.Length] <;>
             simp [h_eq_tj]
           ·
-            simp [h_eq_tj]
             assumption
           ·
             simp

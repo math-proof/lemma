@@ -1,8 +1,8 @@
 import sympy.core.relational
 import sympy.core.power
-import Lemma.Algebra.EqDivS.of.Eq
+import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Algebra.SquareDiv.eq.DivSquareS
-import Lemma.Algebra.Le.of.Gt_0.LeMulS
+import Lemma.Nat.Le.of.Gt_0.LeMulS
 import Lemma.Algebra.EqMul_Div.of.Ne_0
 import Lemma.Algebra.Square.le.MulMul4.of.Ge_0.AddAddMul_Square.ge.Zero
 import Lemma.Algebra.Sum_Square.ge.Zero

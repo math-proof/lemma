@@ -1,4 +1,4 @@
-import Lemma.Algebra.GtCoeS.is.Gt
+import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.Cast_0.eq.Zero
 import Lemma.Algebra.Cast_1.eq.One
@@ -16,7 +16,7 @@ private lemma main
   n + 1 > (0 : R) := by
 -- proof
   have h := GtAdd_1'0 n
-  have h := GtCoeS.of.Gt.nat (R := R) h
+  have h := GtCoeS.of.Gt (R := R) h
   rw [CoeAdd.eq.AddCoeS] at h
   rw [One.eq.Cast_1]
   rwa [Zero.eq.Cast_0]

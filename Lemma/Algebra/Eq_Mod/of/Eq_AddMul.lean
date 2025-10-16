@@ -1,4 +1,4 @@
-import Lemma.Algebra.Eq_AddMulDiv___Mod
+import Lemma.Nat.Eq_AddMulDiv___Mod
 import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Algebra.EqModS.of.Eq
 import Lemma.Algebra.EqMod

@@ -2,10 +2,10 @@ import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min_Length
 import Lemma.Nat.LtVal
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Nat.EqMin.of.Le
-import Lemma.Algebra.Le.of.Lt_Add_1
+import Lemma.Nat.Le.of.Lt_Add_1
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Tensor.Eq.is.All_EqGetS
-open Tensor Algebra List Nat
+open Tensor List Nat
 
 
 /--

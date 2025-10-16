@@ -1,8 +1,8 @@
-import Lemma.Algebra.EqSubS.is.Eq
+import Lemma.Int.EqSubS.is.Eq
 import Lemma.Algebra.EqAddS.is.Eq
 import Lemma.Algebra.SubSquareS.eq.MulAdd__Sub
 import Lemma.Algebra.Mul.eq.Zero.is.OrEqS_0
-open Algebra
+open Algebra Int
 
 
 @[main]

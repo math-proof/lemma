@@ -19,20 +19,12 @@ private lemma main
       a.take i ++ a.slice (i + 1) (i + d) ++ a[i] :: a.drop (i + d) := by
 -- proof
   simp [List.permute]
-  split_ifs with h
+  split_ifs
   ·
-    match d with
-    | .ofNat d =>
-      contradiction
-    | .negSucc d =>
-      simp_all
-      rw [NegSucc.eq.NegAdd_1]
-      simp
+    cases d <;>
+      grind
   ·
-    match d with
-    | .ofNat d =>
-      simp_all
-    | .negSucc d =>
+    cases d <;>
       simp_all
 
 

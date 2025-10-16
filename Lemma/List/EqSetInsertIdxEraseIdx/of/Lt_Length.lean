@@ -5,8 +5,8 @@ import Lemma.List.TakeEraseIdx.eq.Take.of.Ge
 import Lemma.List.DropInsertIdx.eq.Drop.of.Lt
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-import Lemma.Algebra.Le_Sub_1.of.Lt
-open List Algebra
+import Lemma.Nat.Le_Sub_1.of.Lt
+open List Nat
 
 
 @[main]

@@ -30,7 +30,7 @@ private lemma main
   have h_s := Gt_0 d
   have h_s₀ : s₀ = s.headD 1 := by
     simp only [s₀]
-    repeat rw [HeadD.eq.Get_0.of.GtLength_0]
+    repeat rw [HeadD.eq.Get_0.of.GtLength_0 (by grind)]
     apply GetSet.eq.Get.of.Gt.Lt_Length h_s h
   have h_head := HeadD.eq.Get_0.of.GtLength_0 h_s 1
   have h_d_1 : d - 1 < s.tail.length := by

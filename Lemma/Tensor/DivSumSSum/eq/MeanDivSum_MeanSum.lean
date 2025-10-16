@@ -2,12 +2,12 @@ import Lemma.Tensor.MeanDiv.eq.DivMean
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Tensor.EqDiv0'0
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Algebra.NeCoeS.of.Ne
+import Lemma.Nat.NeCoeS.of.Ne
 import Lemma.Tensor.Div.eq.DivDivS.of.Ne_0
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Nat.Eq_0
-open Tensor Algebra Vector Bool Nat
+open Tensor Vector Bool Nat
 set_option synthInstance.maxHeartbeats 200000
 set_option maxHeartbeats 1000000
 
@@ -59,7 +59,7 @@ private lemma main
       simp [GetElem.getElem]
     .
       have hb := Ne.of.NotEq hb
-      simpa [NeCoeS.of.Ne.nat hb (R := float)]
+      simpa [NeCoeS.of.Ne hb (Z := float)]
 
 
 -- created on 2025-08-29

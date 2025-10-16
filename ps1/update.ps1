@@ -2,7 +2,7 @@
 # . .\ps1\update.ps1
 # Read the lean-toolchain file
 param(
-    [String]$version = "v4.23.0"
+    [String]$version = "v4.24.0"
 )
 $versionNumber = $version.Substring(1)
 # cd ~/.elan/toolchains
@@ -29,15 +29,27 @@ else {
             throw "Failed to download Lean $version from $url. Error: $_"
         }
     }
-    # mkdir leanprover--lean4---$version
+    # mkdir $targetDir
     New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
     tar --strip-components=1 -xf $tarFile -C $targetDir
+    # delete $tarFile
+    Remove-Item $tarFile -Force
+    Write-Host "✅ Lean $version installed successfully."
+    # copy the entire folder $targetDir to C:\Windows\System32\config\systemprofile\.elan\toolchains
+    # if the destination folder already exists, skip copying
+    if (Test-Path "C:\Windows\System32\config\systemprofile\.elan\toolchains\$targetDir\bin\lean.exe") {
+        Write-Host "Lean $version already exists in systemprofile, skipping copying."
+    }
+    else {
+        Write-Host "Copying Lean $version to systemprofile..."
+        Copy-Item -Path "$targetDir" -Destination "C:\Windows\System32\config\systemprofile\.elan\toolchains\" -Recurse -Force
+    }
 }
 Pop-Location
 elan override set leanprover/lean4:$versionNumber
 
-[System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [Text.Encoding]::UTF8
+$OutputEncoding = [Text.Encoding]::UTF8
 
 $content = Get-Content "lean-toolchain" -Raw
 $versionRegex = "leanprover/lean4:(v[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)?)"
@@ -50,7 +62,7 @@ if ($content -match $versionRegex) {
         # write the text `leanprover/lean4:$version` into file lean-toolchain, without BOM
         $newContent = "leanprover/lean4:$version`n"
         # Write to file without BOM
-        [System.IO.File]::WriteAllText("lean-toolchain", $newContent, [System.Text.UTF8Encoding]::new($false))
+        [IO.File]::WriteAllText("lean-toolchain", $newContent, [Text.UTF8Encoding]::new($false))
         Write-Host "✅ lean-toolchain updated to $newContent"
     }
 }
@@ -159,7 +171,7 @@ foreach ($package in $mathlibManifest.packages) {
 # Save updated manifest
 if ($updated) {
     $jsonString = $currentManifest | ConvertTo-Json -Depth 10
-    [System.IO.File]::WriteAllText("lake-manifest.json", $jsonString, [System.Text.UTF8Encoding]::new($false))
+    [IO.File]::WriteAllText("lake-manifest.json", $jsonString, [Text.UTF8Encoding]::new($false))
     Write-Host "🌟 lake-manifest.json updated successfully."
 }
 
@@ -187,6 +199,11 @@ if ($null -ne $node) {
 }
 
 # Run lake commands
+$start = Get-Date
 lake clean
-lake build -v
+# lake build -v
+lake build
+$end = Get-Date
+$totalTime = ($end - $start).TotalSeconds
+Write-Host "🏁 Build completed in $totalTime seconds." -ForegroundColor Cyan
 . .\ps1\run.ps1

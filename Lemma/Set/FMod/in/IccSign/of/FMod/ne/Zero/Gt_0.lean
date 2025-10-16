@@ -1,17 +1,16 @@
-import Lemma.Algebra.FMod.ge.Zero.of.Gt_0
+import Lemma.Int.FMod.ge.Zero.of.Gt_0
 import Lemma.Algebra.Gt.is.Ge.Ne
-import Lemma.Algebra.Ge_Add_1.of.Gt
+import Lemma.Nat.Ge_Add_1.of.Gt
 import Lemma.Algebra.EqSign_1.of.Gt_0
 import Lemma.Set.In_Icc.of.Le.Le
-import Lemma.Algebra.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.FDiv.eq.FloorDiv
-import Lemma.Algebra.LeSub.is.Le_Add
+import Lemma.Int.FMod.eq.Sub_MulFDiv
+import Lemma.Int.FDiv.eq.FloorDiv
+import Lemma.Int.LeSub.is.Le_Add
 import Lemma.Nat.Add
-import Lemma.Algebra.LeSub.is.Le_Add
 import Lemma.Algebra.Le.of.LeDivS.Gt_0
-import Lemma.Algebra.GtCoeS.is.Gt
-import Lemma.Algebra.LeCoeS.is.Le
-import Lemma.Algebra.CoeSub.eq.SubCoeS
+import Lemma.Int.GtCoeS.is.Gt
+import Lemma.Int.LeCoeS.is.Le
+import Lemma.Int.CoeSub.eq.SubCoeS
 import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Int.CoeMul.eq.MulCoeS
@@ -45,10 +44,10 @@ private lemma main
     apply LeSub.of.Le_Add
     rw [Add.comm]
     apply Le_Add.of.LeSub
-    have h₀ := GtCoeS.of.Gt.int (R := ℚ) h₀
-    apply Le.of.LeCoeS.int (R := ℚ)
+    have h₀ := GtCoeS.of.Gt (R := ℚ) h₀
+    apply Le.of.LeCoeS (R := ℚ)
     apply Le.of.LeDivS.Gt_0 _ h₀
-    rw [CoeSub.eq.SubCoeS.int]
+    rw [CoeSub.eq.SubCoeS]
     rw [DivSub.eq.SubDivS]
     rw [Div.eq.One.of.Gt_0 h₀]
     rw [CoeMul.eq.MulCoeS]

@@ -62,7 +62,7 @@ private lemma main
       .
         rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin h_s h X ⟨i, by simpa⟩]
         have h := congrArg (List.tail) h
-        apply ih h (by simp; omega) (X.get ⟨i, by simpa [Length.eq.Get_0.of.GtLength h_d X]⟩)
+        apply ih h (by grind) (X.get ⟨i, by simpa [Length.eq.Get_0.of.GtLength h_d X]⟩)
       .
         simp [h]
 

@@ -13,7 +13,6 @@ private lemma fin
   unfold Stack Tensor.fromVector
   rw [MapMap.eq.Map_Comp]
   unfold Function.comp
-  simp
   aesop
 
 

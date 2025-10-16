@@ -6,7 +6,7 @@ import Lemma.Nat.Le.of.Lt
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqAdd_Sub.of.Ge
-import Lemma.Algebra.LeAdd_1.of.Lt
+import Lemma.Nat.LeAdd_1.of.Lt
 open Algebra List Nat
 
 

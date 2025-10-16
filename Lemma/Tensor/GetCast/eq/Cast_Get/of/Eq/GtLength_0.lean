@@ -17,7 +17,7 @@ private lemma main
 -- imply
   have h : Tensor α s = Tensor α s' := by rw [h₁]
   have : i < X.length := by
-    rw [Length.eq.Get_0.of.GtLength_0]
+    rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
     apply LtVal i
   have : i < (cast h X).length := by
     rw [Length.eq.Get_0.of.GtLength_0]
@@ -40,7 +40,7 @@ private lemma fin
 -- imply
   have h : Tensor α s = Tensor α s' := by rw [h₁]
   have hi: i < X.length := by
-    rw [Length.eq.Get_0.of.GtLength_0]
+    rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
     apply LtVal i
   have hi_cast : i < (cast h X).length := by
     rw [Length.eq.Get_0.of.GtLength_0]

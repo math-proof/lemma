@@ -3,13 +3,13 @@ import Lemma.Bool.Cond.is.Bool.eq.One
 import Lemma.Bool.Imp.of.Imp.Imp
 import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Bool.Bool.eq.Zero.of.Bool.ne.One
-import Lemma.Algebra.Mul.eq.Zero.of.OrEqS
-import Lemma.Algebra.MulSub.eq.SubMulS
+import Lemma.Nat.Mul.eq.Zero.of.OrEqS
+import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Nat.Mul
 import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Int.Sub.eq.Zero.is.Eq
 import Lemma.Nat.CoeMul.eq.MulCoeS
-import Lemma.Algebra.Sub_Mul.eq.Mul_Sub1
+import Lemma.Int.Sub_Mul.eq.Mul_Sub1
 import Lemma.Algebra.Mul.eq.Zero.is.OrEqS_0
 import Lemma.Algebra.Ne_1.of.Eq_0
 import Lemma.Bool.Ne.is.NotEq
@@ -33,7 +33,7 @@ private lemma main
     have := Imp.of.Imp.Imp h_P this
     have := Or_Not.of.Imp this
     mp [Bool.eq.Zero.of.Bool.ne.One (p := p)] at this
-    have := Mul.eq.Zero.of.OrEqS.nat this
+    have := Mul.eq.Zero.of.OrEqS this
     rw [MulSub.eq.SubMulS] at this
     simp at this
     have := Eq.of.Sub.eq.Zero this

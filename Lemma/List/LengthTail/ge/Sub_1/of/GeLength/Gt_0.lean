@@ -1,9 +1,9 @@
 import Lemma.Algebra.Gt_Sub_1.of.Ge
 import Lemma.Algebra.Gt_Sub_1.of.Ge.Gt_0
 import Lemma.List.LengthTail.gt.Sub_1.of.GtLength.Gt_0
-import Lemma.Algebra.Ge.of.Gt_Sub_1
-import Lemma.Algebra.Sub.gt.Zero.is.Gt
-open Algebra List
+import Lemma.Nat.Ge.of.Gt_Sub_1
+import Lemma.Nat.Sub.gt.Zero.is.Gt
+open Algebra List Nat
 
 
 @[main]
@@ -18,7 +18,7 @@ private lemma main
   apply Ge.of.Gt_Sub_1
   have h₁ := Gt_Sub_1.of.Ge.Gt_0 (show s.length > 0 by linarith) h₁
   apply LengthTail.gt.Sub_1.of.GtLength.Gt_0 _ h₁
-  apply Sub.gt.Zero.of.Gt.nat h₀
+  apply Sub.gt.Zero.of.Gt h₀
 
 
 -- created on 2025-05-05

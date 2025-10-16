@@ -1,7 +1,7 @@
 import Lemma.Algebra.LeMulS.of.Le.Ge_0
-import Lemma.Algebra.LeAdd_1.of.Lt
+import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Algebra.MulAdd.eq.AddMulS
-open Algebra
+open Algebra Nat
 
 
 @[main]

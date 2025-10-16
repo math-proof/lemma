@@ -1,6 +1,6 @@
 import Lemma.Algebra.SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
-import Lemma.Algebra.Mul_Sub.eq.SubMulS
-open Algebra
+import Lemma.Int.Mul_Sub.eq.SubMulS
+open Algebra Int
 
 
 @[main]

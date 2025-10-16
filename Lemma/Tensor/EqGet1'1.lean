@@ -28,32 +28,29 @@ private lemma fin
   simp [Tensor.toVector]
   have h_i := LtVal i
   have h_i := ProdTake_1.eq.Length.of.GtLength h_i
-  rw [GetCast.eq.Get.of.Eq.Lt]
+  rw [GetCast.eq.Get.of.Eq.Lt (by grind)]
   ·
-    rw [GetMap.eq.UFnGet.of.Lt]
-    ·
-      apply Eq.of.EqDataS
-      simp [EqData1'1]
-      apply EqCast.of.SEq
-      have := GetSplitAt_1.eq.Cast_GetUnflatten (1 : List.Vector α s.prod) ⟨i, by simp_all⟩
-      simp at this
-      simp [this]
-      apply SEq.of.All_EqGetS.Eq (by simp)
-      intro j
-      have h_j := LtVal j
-      simp at h_j
-      have := EqGet1'1 ⟨j, h_j⟩ (α := α)
-      simp at this
-      simp [this]
-      have h_eq := Prod.eq.MulProdTake__ProdDrop s 1
-      have := GetUnflatten.eq.Get_AddMul (cast (congrArg (List.Vector α) h_eq) (1 : List.Vector α s.prod)) ⟨i, by simp_all⟩ j
-      simp at this
-      simp [this]
-      simp only [GetElem.getElem]
-      rw [GetCast.eq.Get.of.Eq.fin h_eq]
-      simp [EqGet1'1.fin]
-    ·
-      rwa [h_i]
+    rw [GetMap.eq.UFnGet.of.Lt (by grind)]
+    apply Eq.of.EqDataS
+    simp [EqData1'1]
+    apply EqCast.of.SEq
+    have := GetSplitAt_1.eq.Cast_GetUnflatten (1 : List.Vector α s.prod) ⟨i, by simp_all⟩
+    simp at this
+    simp [this]
+    apply SEq.of.All_EqGetS.Eq (by simp)
+    intro j
+    have h_j := LtVal j
+    simp at h_j
+    have := EqGet1'1 ⟨j, h_j⟩ (α := α)
+    simp at this
+    simp [this]
+    have h_eq := Prod.eq.MulProdTake__ProdDrop s 1
+    have := GetUnflatten.eq.Get_AddMul (cast (congrArg (List.Vector α) h_eq) (1 : List.Vector α s.prod)) ⟨i, by simp_all⟩ j
+    simp at this
+    simp [this]
+    simp only [GetElem.getElem]
+    rw [GetCast.eq.Get.of.Eq.fin h_eq]
+    simp [EqGet1'1.fin]
   ·
     rw [h_i]
     apply Length.eq.HeadD.of.GtLength_0 (by omega)

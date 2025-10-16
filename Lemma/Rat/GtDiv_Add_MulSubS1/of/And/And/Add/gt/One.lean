@@ -3,15 +3,15 @@ import Lemma.Algebra.GtMulS.of.Gt_0.Gt
 import Lemma.Algebra.GtDivS.of.Gt.Gt_0
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
-import Lemma.Algebra.Add.gt.Zero.of.Gt_0.Gt_0
-import Lemma.Algebra.Sub.gt.Zero.is.Lt
+import Lemma.Nat.Add.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Int.Sub.gt.Zero.is.Lt
 import Lemma.Algebra.Gt_Sub.of.GtAdd
-import Lemma.Algebra.Gt_Add.of.GtSub
-import Lemma.Algebra.MulSub.eq.SubMulS
+import Lemma.Int.Gt_Add.of.GtSub
+import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Algebra.EqMul1
 import Lemma.Algebra.EqMul_1
 import Lemma.Nat.Add
-open Algebra Nat
+open Algebra Nat Int
 
 
 -- prerequisite of data sifting using a reward model

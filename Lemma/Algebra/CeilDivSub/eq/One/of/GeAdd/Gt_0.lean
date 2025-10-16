@@ -1,8 +1,8 @@
-import Lemma.Algebra.Ge_Sub.of.GeAdd
+import Lemma.Int.Ge_Sub.of.GeAdd
 import Lemma.Set.CeilDivSub.eq.One.of.In_Ioc0.Gt_0
-import Lemma.Algebra.Sub.gt.Zero.is.Gt
+import Lemma.Int.Sub.gt.Zero.is.Gt
 import Lemma.Set.In_Ioc.of.Gt.Le
-open Algebra Set
+open Set Int
 
 
 @[main]

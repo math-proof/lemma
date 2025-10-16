@@ -13,8 +13,8 @@ import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
 import Lemma.Int.ToNatSubOfNat_NegSucc.eq.AddAdd1
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Algebra.SubMin.eq.MinSubS
-import Lemma.Algebra.Min.eq.Add_1
+import Lemma.Nat.SubMin.eq.MinSubS
+import Lemma.Nat.Min.eq.Add_1
 open Algebra List Bool Int Nat
 
 
@@ -83,7 +83,7 @@ private lemma main
         rw [h]
         apply EqMulS.of.Eq.left
         rw [Min.eq.Add_1]
-        rw [SubMin.eq.MinSubS.nat]
+        rw [SubMin.eq.MinSubS]
         simp
       ·
         rw [ToNatSubOfNat_NegSucc.eq.AddAdd1]

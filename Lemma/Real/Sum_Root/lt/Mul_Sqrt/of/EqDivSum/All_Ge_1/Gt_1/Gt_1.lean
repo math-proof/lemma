@@ -13,7 +13,7 @@ import Lemma.Algebra.Sum.eq.Add_Sum.of.Gt_0
 import Lemma.Finset.EqSumS.of.All_Eq
 import Lemma.Algebra.Sqrt.eq.Root_2
 import Lemma.Algebra.SubAdd.eq.Add_Sub
-import Lemma.Algebra.CoeSub.eq.SubCoeS
+import Lemma.Int.CoeSub.eq.SubCoeS
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Real.Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0
 import Lemma.Algebra.Lt.of.Lt.Le
@@ -23,7 +23,7 @@ import Lemma.Real.SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
 import Lemma.Bool.All_EqUFnS.of.All_Eq
 import Lemma.Algebra.EqAdd0
 import Lemma.Algebra.Cast_0.eq.Zero
-open Algebra Bool Finset Real Nat
+open Algebra Bool Finset Real Nat Int
 
 
 /--
@@ -39,7 +39,7 @@ private lemma main
   {x : ℕ → ℝ}
 -- given
   (h₀ : n > 1)
-  (h₁ : ∀ i ∈ range n, x i ≥ 1)
+  (h₁ : ∀ i ∈ Finset.range n, x i ≥ 1)
   (h₂ : x 0 > 1)
   (h₃ : (∑ i ∈ range n, x i) / n = x n) :
 -- imply
@@ -53,7 +53,7 @@ private lemma main
     rw [Finset.mem_Ico] at h_In
     have h_Gt_0 := Gt.of.Ge.Gt h_In.left (by norm_num : 1 > 0)
     have h := Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0 h_Gt_1 h_Gt_0
-    have h_Any : ∃ i ∈ range n, (x i) ^ (1 / (i + 2) : ℝ) < √(x i) := by
+    have h_Any : ∃ i ∈ Finset.range n, (x i) ^ (1 / (i + 2) : ℝ) < √(x i) := by
       use i
       constructor
       ·
@@ -95,7 +95,7 @@ private lemma main
     rw [h_Eq_Sum'] at h_Eq_Sum
     norm_cast at h_Eq_Sum
     rw [SubNatNat.eq.Sub] at h_Eq_Sum
-    rw [CoeSub.eq.SubCoeS.int] at h_Eq_Sum
+    rw [CoeSub.eq.SubCoeS] at h_Eq_Sum
     simp only [Add_Sub.eq.SubAdd] at h_Eq_Sum
     norm_cast
     norm_cast at h_Eq_Sum

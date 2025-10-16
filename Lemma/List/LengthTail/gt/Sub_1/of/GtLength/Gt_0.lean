@@ -1,8 +1,8 @@
 import stdlib.Slice
-import Lemma.Algebra.Le.of.Lt_Add_1
+import Lemma.Nat.Le.of.Lt_Add_1
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.Algebra.LtSub_1.of.Le.Gt_0
-open Algebra
+open Algebra Nat
 
 
 @[main]

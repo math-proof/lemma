@@ -18,7 +18,7 @@ import Lemma.Nat.EqMin.of.Gt
 import Lemma.Algebra.Sub.eq.Zero.of.Lt
 import Lemma.List.Slice_0.eq.Take
 import Lemma.Algebra.AddSub.eq.Sub_Sub.of.Ge.Ge
-import Lemma.Algebra.LeSubS.of.Le
+import Lemma.Nat.LeSubS.of.Le
 import Lemma.Algebra.LtSubS.of.Lt.Le
 open Algebra List Nat Int
 
@@ -64,7 +64,7 @@ private lemma main
       norm_num
       by_cases h_i : a.length ≥ d + 2
       ·
-        have h_i' := LeSubS.of.Le.nat h_i 1
+        have h_i' := LeSubS.of.Le h_i 1
         simp at h_i'
         rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
         ·

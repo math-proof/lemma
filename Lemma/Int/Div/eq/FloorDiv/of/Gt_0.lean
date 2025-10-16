@@ -1,9 +1,9 @@
-import Lemma.Algebra.Div.eq.AddDiv___Mod
-import Lemma.Algebra.Div.ge.EDiv.of.Gt_0
+import Lemma.Int.Div.eq.AddDiv___Mod
+import Lemma.Int.Div.ge.EDiv.of.Gt_0
 import Lemma.Algebra.Div.lt.One.of.Gt_0
 import Lemma.Algebra.Lt_Add.of.Eq_Add.Lt
 import Lemma.Algebra.EqFloor.is.Le.Lt
-open Algebra
+open Algebra Int
 
 
 @[main]

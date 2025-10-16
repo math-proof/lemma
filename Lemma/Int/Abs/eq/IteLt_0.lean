@@ -1,0 +1,23 @@
+import Lemma.Int.Abs.eq.IteGe_0
+import Lemma.Bool.Ite.eq.IteNot
+open Bool Int
+
+
+@[main]
+private lemma main
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
+-- given
+  (x : α) :
+-- imply
+  |x| = if x < 0 then
+    -x
+  else
+    x := by
+-- proof
+  rw [Ite.eq.IteNot]
+  rw [Abs.eq.IteGe_0]
+  simp
+
+
+-- created on 2025-04-17
+-- updated on 2025-10-01

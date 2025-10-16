@@ -2,7 +2,7 @@ import Lemma.Nat.Ge.of.NotLt
 import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
-import Lemma.Algebra.Lt_Add.of.Gt_0
+import Lemma.Nat.Lt_Add.of.Gt_0
 import Lemma.Algebra.CoeAdd_1.eq.AddCoe_1
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.EqToNatCeil
@@ -38,7 +38,7 @@ private lemma main
         rw [Add.comm (a := 1)]
         simp at h_i
         have h_start' : j + 1 < n + (j + 1) := by
-          apply Lt_Add.of.Gt_0.nat
+          apply Lt_Add.of.Gt_0
           linarith
         have h_stop' : n + (j + 1) ≤ n' + (j + 1) := by
           omega

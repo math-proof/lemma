@@ -1,7 +1,7 @@
 import Lemma.Algebra.LeSubS.is.Le
-import Lemma.Algebra.Sub.eq.Zero
+import Lemma.Int.Sub.eq.Zero
 import Lemma.Algebra.Sub0.eq.Neg
-open Algebra
+open Algebra Int
 
 
 @[main]

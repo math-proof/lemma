@@ -1,7 +1,7 @@
-import Lemma.Algebra.GeSubS.of.Ge
-import Lemma.Algebra.Sub.eq.Zero
+import Lemma.Int.GeSubS.of.Ge
+import Lemma.Int.Sub.eq.Zero
 import Lemma.Algebra.Sub0.eq.Neg
-open Algebra
+open Algebra Int
 
 
 @[main]

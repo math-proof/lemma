@@ -1,6 +1,6 @@
-import Lemma.Algebra.GeAdd.of.Ge_Sub
+import Lemma.Nat.GeAdd.of.Ge_Sub
 import Lemma.Rat.LeToNatCeil_1.of.Le_Add
-open Algebra Rat
+open Rat Nat
 
 
 @[main]
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   ⌈(start - stop : ℚ) / step⌉.toNat ≤ 1 := by
 -- proof
-  have h:= GeAdd.of.Ge_Sub.nat h
+  have h:= GeAdd.of.Ge_Sub h
   apply LeToNatCeil_1.of.Le_Add h
 
 

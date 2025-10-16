@@ -8,9 +8,9 @@ import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Algebra.Ge.of.Gt.Ge
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.Algebra.GeSubS.of.Ge
+import Lemma.Nat.GeSubS.of.Ge
 import Lemma.List.DropTake.eq.TakeDrop
-open Algebra List Bool
+open Algebra List Bool Nat
 
 
 @[main]
@@ -32,7 +32,7 @@ private lemma main
     rw [DropAppend.eq.AppendDrop.of.Le_Length (by simp_all; linarith)] at this
     rw [DropTake.eq.TakeDrop]
     rw [TakeTake.eq.Take.of.Ge]
-    apply GeSubS.of.Ge.nat h
+    apply GeSubS.of.Ge h
   ·
     rw [NotAnd.is.OrNotS] at h_and
     simp at h_and

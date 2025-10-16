@@ -1,8 +1,8 @@
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Algebra.GeSub.of.Ge_Add
-open Algebra Nat
+import Lemma.Nat.GeSub.of.Ge_Add
+open Nat
 
 
 @[main, comm]
@@ -21,7 +21,7 @@ private lemma main
   rw [EqSubAdd]
   rw [Sub_Add.eq.SubSub]
   rw [EqAddSub.of.Ge]
-  apply GeSub.of.Ge_Add.left.nat h₀
+  apply GeSub.of.Ge_Add.left h₀
 
 
 -- created on 2025-06-18

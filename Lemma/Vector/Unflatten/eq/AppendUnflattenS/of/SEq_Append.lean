@@ -10,7 +10,7 @@ import Lemma.Vector.EqGetS.of.Eq.Lt
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
-import Lemma.Algebra.MulSub.eq.SubMulS
+import Lemma.Nat.MulSub.eq.SubMulS
 open Algebra Vector Nat
 
 
@@ -78,7 +78,7 @@ private lemma main
     have hij := LtSub.of.Lt_Add.Ge (by linarith) hij
     have h_eq : i * k + j - m * k = (i - m) * k + j := by
       rw [SubAdd.eq.AddSub.of.Le (by nlinarith)]
-      rw [SubMulS.eq.MulSub.nat]
+      rw [SubMulS.eq.MulSub]
     rw [h_eq] at hij
     have := Get_AddMul.eq.GetUnflatten.of.Lt h_i b
     simp [GetElem.getElem] at this

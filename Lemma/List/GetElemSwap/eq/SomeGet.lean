@@ -5,7 +5,7 @@ import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
-import Lemma.Algebra.Sub.gt.Zero.is.Lt
+import Lemma.Nat.Sub.gt.Zero.is.Lt
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.List.EqSwapS
@@ -49,7 +49,7 @@ private lemma main
       rw [Sub_Add.eq.SubSub] at h_length_slice
       simp [h_length_slice]
     ·
-      apply Sub.gt.Zero.of.Lt.nat h_lt (α := ℕ)
+      apply Sub.gt.Zero.of.Lt h_lt (α := ℕ)
   ·
     have h_i := Ge.of.NotLt h_i
     linarith

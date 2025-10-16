@@ -1,12 +1,12 @@
-import Lemma.Algebra.FMod.eq.Sub_MulFDiv
+import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Nat.Add
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.EqAddS.is.Eq
-import Lemma.Algebra.FDiv.eq.FloorDiv
+import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeAdd.eq.AddCoeS
 import Lemma.Algebra.DivAdd.eq.Add1Div
-import Lemma.Algebra.NeCoeS.of.Ne
+import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Algebra.FloorAdd1.eq.Add1Floor
 import Lemma.Algebra.MulAdd.eq.AddMulS
 open Algebra Int Nat

@@ -1,9 +1,9 @@
-import Lemma.Algebra.LeCoeS.is.Le
+import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Algebra.Sub.le.Zero.of.Le
 import Lemma.Algebra.Div.le.Zero.of.Le_0.Ge_0
 import Lemma.Algebra.LeCeil.is.Le
 import Lemma.Int.EqToNat_0.of.Le_0
-open Algebra Int
+open Algebra Int Nat
 
 
 @[main]
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   ⌈(a - b : ℚ) / d⌉.toNat = 0 := by
 -- proof
-  have h := LeCoeS.of.Le.nat (R := ℚ) h
+  have h := LeCoeS.of.Le (R := ℚ) h
   have h := Sub.le.Zero.of.Le h
   have h_Ge_0 : (d : ℚ) ≥ 0 := by simp
   have h_Le := Div.le.Zero.of.Le_0.Ge_0 h h_Ge_0

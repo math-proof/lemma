@@ -1,17 +1,17 @@
 import Lemma.Int.NegSucc.eq.NegCoeAdd_1
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
 import Lemma.Nat.EqMin.of.Lt
-import Lemma.Algebra.LtAdd.of.Lt_Sub
+import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqAppendS.of.Eq
 import Lemma.Nat.Sub_Add.eq.SubSub
-import Lemma.Algebra.MinAddS.eq.AddMin
-import Lemma.Algebra.Val.lt.Sub_1.of.Val.ne.Sub_1
+import Lemma.Nat.MinAddS.eq.AddMin
+import Lemma.Nat.Val.lt.Sub_1.of.Val.ne.Sub_1
 import Lemma.Nat.Add
 import Lemma.Nat.EqSubAdd
-open Algebra List Bool Nat Int
+open List Bool Nat Int
 
 
 @[main]
@@ -29,7 +29,7 @@ private lemma main
   simp_all
   rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
   simp_all
-  rw [EqMin.of.Lt (LtAdd.of.Lt_Sub.nat h)]
+  rw [EqMin.of.Lt (LtAdd.of.Lt_Sub h)]
   repeat rw [MulProdS.eq.ProdAppend]
   apply EqUFnS.of.Eq _ List.prod
   rw [Append_Append.eq.AppendAppend]

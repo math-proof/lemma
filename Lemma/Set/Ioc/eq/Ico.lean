@@ -1,9 +1,9 @@
 import sympy.sets.sets
-import Lemma.Algebra.LeAdd_1.of.Lt
-import Lemma.Algebra.Lt_Add_1.of.Le
-import Lemma.Algebra.Lt.of.LeAdd_1
-import Lemma.Algebra.Le.of.Lt_Add_1
-open Algebra
+import Lemma.Nat.LeAdd_1.of.Lt
+import Lemma.Nat.Lt_Add_1.of.Le
+import Lemma.Nat.Lt.of.LeAdd_1
+import Lemma.Nat.Le.of.Lt_Add_1
+open Nat
 
 
 @[main]

@@ -13,7 +13,7 @@ private lemma main
 -- imply
   ((s.set 0 a).take 1).prod = a := by
 -- proof
-  rw [ProdTake_1.eq.Get_0.of.GtLength_0]
+  rw [ProdTake_1.eq.Get_0.of.GtLength_0 (by grind)]
   rw [EqGetSet.of.Lt_Length h]
 
 

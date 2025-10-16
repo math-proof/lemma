@@ -26,7 +26,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 import Lemma.Nat.Gt_0
 import Lemma.List.GtProd_0.of.Get_0.gt.Zero.ProdTail.gt.Zero.GtLength_0
 import Lemma.Algebra.MulAdd.eq.AddMulS
-import Lemma.Algebra.ModAddMul.eq.Mod
+import Lemma.Nat.ModAddMul.eq.Mod
 import Lemma.Algebra.EqMod.of.Lt
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.List.EqProdTakeSet__1.of.GtLength_0
@@ -95,7 +95,7 @@ private lemma main
               simp [TailSet_0.eq.Tail]
               simp [(show (j * s[0] + i) * s.tail.prod + k = 0 * (n * s.prod) + (j * s[0] + i) * s.tail.prod + k by simp)]
               simp only [AddAdd.eq.Add_Add]
-              rw [GetFlatten_AddMul.eq.Get.of.Lt.Lt.fin]
+              rw [GetFlatten_AddMul.eq.Get.of.Lt.Lt.fin (by grind)]
               ·
                 rw [GetMap.eq.UFnGet.of.Lt.fin (by simp)]
                 simp only [GetElem.getElem]
@@ -132,7 +132,7 @@ private lemma main
     apply EqProdTakeSet__1.of.GtLength_0 h_s
   ·
     rw [EqProdTakeSet__1.of.GtLength_0 h_s]
-    rw [HeadD.eq.Get_0.of.GtLength_0]
+    rw [HeadD.eq.Get_0.of.GtLength_0 (by grind)]
     rw [EqGetSet.of.Lt_Length h_s]
 
 
@@ -152,6 +152,7 @@ private lemma fin
 -- proof
   apply main
   assumption
+
 
 -- created on 2025-07-10
 -- updated on 2025-07-18

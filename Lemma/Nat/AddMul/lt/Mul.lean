@@ -1,8 +1,8 @@
-import Lemma.Algebra.Le_Sub_1
+import Lemma.Nat.Le_Sub_1
 import Lemma.Algebra.LeMulS.of.Le.Ge_0
 import Lemma.Algebra.LeAddS.of.Le.Le
 import Lemma.Algebra.Lt.of.Le_Sub_1.Gt_0
-import Lemma.Algebra.MulSub.eq.SubMulS
+import Lemma.Nat.MulSub.eq.SubMulS
 import Lemma.Algebra.SubAdd.eq.Add_Sub
 import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.EqAddSub.of.Ge
@@ -21,7 +21,7 @@ private lemma main
   have hin := LeMulS.of.Le.Ge_0 hi (show n ≥ 0 by simp)
   have hj := Le_Sub_1 j
   have h_Le := LeAddS.of.Le.Le hin hj
-  rw [MulSub.eq.SubMulS.nat] at h_Le
+  rw [MulSub.eq.SubMulS] at h_Le
   simp at h_Le
   have hi : i < m := by simp
   have hm : m > 0 := by linarith

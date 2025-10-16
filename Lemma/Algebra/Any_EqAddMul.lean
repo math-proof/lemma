@@ -1,5 +1,5 @@
-import Lemma.Algebra.Eq_AddMulDiv___Mod
-open Algebra
+import Lemma.Nat.Eq_AddMulDiv___Mod
+open Nat
 
 
 @[main]

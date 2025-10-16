@@ -3,12 +3,12 @@ import Lemma.Tensor.DataDiv.eq.DivData
 import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
 import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Broadcast
 import Lemma.Vector.MapMap.eq.Map_Comp
-import Lemma.Algebra.Div.eq.HDiv
+import Lemma.Nat.Div.eq.HDiv
 import Lemma.Tensor.Div.eq.Div_Broadcast
 import Lemma.Vector.GetMap.eq.FunGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Nat.Any_Eq_AddMul
-open Tensor Vector Algebra Nat
+open Tensor Vector Nat
 
 
 @[main]
