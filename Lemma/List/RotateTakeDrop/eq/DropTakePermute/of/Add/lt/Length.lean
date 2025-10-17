@@ -6,6 +6,7 @@ import Lemma.List.GetElem.eq.None.of.Ge_Length
 import Lemma.List.GetElem.eq.SomeGet.of.Lt_Length
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
 import Lemma.List.GetPermute.eq.Ite.of.Lt_Length.Lt_Length
+import Lemma.List.GetRotate.eq.Ite.of.Le_Length.Lt_Length
 open List Bool Nat
 
 
@@ -31,16 +32,21 @@ private lemma main
       rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
       ·
         split_ifs with h_pos h_i_0 h_i_length
-        .
+        ·
           omega
-        .
-          simp at h_i_0
-          sorry
-        .
-          simp at h_i_length h_i_0
-          subst h_i_length
-          sorry
-        .
+        ·
+          rw [GetRotate.eq.Ite.of.Le_Length.Lt_Length (by grind) (by grind)]
+          simp
+          split_ifs <;>
+          .
+            grind
+        ·
+          rw [GetRotate.eq.Ite.of.Le_Length.Lt_Length (by grind) (by grind)]
+          simp
+          split_ifs <;>
+          .
+            grind
+        ·
           omega
       ·
         omega
@@ -71,3 +77,4 @@ private lemma main
 
 
 -- created on 2025-10-15
+-- updated on 2025-10-17
