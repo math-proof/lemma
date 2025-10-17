@@ -15,7 +15,7 @@ import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.Nat.EqSub_Sub.of.Ge
 import Lemma.Nat.SubSub
 import Lemma.Nat.EqMin.of.Gt
-import Lemma.Algebra.Sub.eq.Zero.of.Lt
+import Lemma.Nat.Sub.eq.Zero.of.Lt
 import Lemma.List.Slice_0.eq.Take
 import Lemma.Algebra.AddSub.eq.Sub_Sub.of.Ge.Ge
 import Lemma.Nat.LeSubS.of.Le

@@ -4,11 +4,11 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
 import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
-import Lemma.Algebra.EqMod
+import Lemma.Nat.EqMod
 import Lemma.Nat.LtVal
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Nat.AddMul.lt.Mul
-import Lemma.Tensor.SEq.of.SEqDataS.Eq
+import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.List.TailSet_0.eq.Tail
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
@@ -27,7 +27,7 @@ import Lemma.Nat.Gt_0
 import Lemma.List.GtProd_0.of.Get_0.gt.Zero.ProdTail.gt.Zero.GtLength_0
 import Lemma.Algebra.MulAdd.eq.AddMulS
 import Lemma.Nat.ModAddMul.eq.Mod
-import Lemma.Algebra.EqMod.of.Lt
+import Lemma.Nat.EqMod.of.Lt
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.List.EqProdTakeSet__1.of.GtLength_0
 import Lemma.List.AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.Lt_Get_0.GtLength_0

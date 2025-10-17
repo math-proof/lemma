@@ -9,7 +9,7 @@ private lemma main
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  v.transpose[j, i] = v[i, j] := by
+  v.transpose[j.val, i.val] = v[i.val, j.val] := by
 -- proof
   unfold List.Vector.transpose
   simp [EqGetRange.of.Lt]

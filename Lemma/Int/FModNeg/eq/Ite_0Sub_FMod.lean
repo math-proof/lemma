@@ -20,7 +20,8 @@ import Lemma.Int.EqSubS.is.Eq
 import Lemma.Algebra.DivNeg.eq.NegDiv
 import Lemma.Int.FDivNegFMod.eq.Neg1.of.FMod.ne.Zero.Ne_0
 import Lemma.Algebra.DivInt.eq.Div
-open Algebra Bool Int
+import Lemma.Nat.EqSubS.of.Eq
+open Algebra Bool Int Nat
 
 
 @[main]

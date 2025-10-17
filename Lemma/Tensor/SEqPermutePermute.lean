@@ -12,7 +12,7 @@ import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Int.EqToNat
 import Lemma.Nat.SubSub
-import Lemma.Tensor.SEq.of.SEqDataS.Eq
+import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqMin.of.Le

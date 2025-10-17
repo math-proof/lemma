@@ -1,5 +1,5 @@
 import stdlib.SEq
-import Lemma.Bool.Eq.of.SEq
+import Lemma.Bool.SEq.is.Eq
 open Bool
 
 
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   a = c := by
 -- proof
-  apply Eq.of.SEq.simp
+  apply Eq.of.SEq
   apply SEq.trans h₀ h₁
 
 

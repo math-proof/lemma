@@ -1,3 +1,4 @@
+import sympy.tensor.Basic
 import Lemma.Tensor.EqTFnS.of.Eq.Lt_Length
 open Tensor
 

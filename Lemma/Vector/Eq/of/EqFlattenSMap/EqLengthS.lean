@@ -1,12 +1,12 @@
 import sympy.vector.vector
 import Lemma.List.Eq_Nil.of.EqLength_0
 import Lemma.List.LengthCons.eq.Add1Length
-import Lemma.Algebra.EqAddS.is.Eq
+import Lemma.Nat.EqAddS.is.Eq
 import Lemma.List.MapCons.eq.Cons_Map
 import Lemma.List.FlattenCons.eq.Append_Flatten
 import Lemma.List.Eq.of.EqAppendS.EqLengthS
 import Lemma.Vector.Eq.of.EqToListS
-open Algebra List Vector
+open List Vector Nat
 
 
 @[main]

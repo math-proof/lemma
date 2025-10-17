@@ -3,7 +3,7 @@ import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetUnflatten.as.ArraySlice
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Tensor.GetUnflattenDataStack.eq.Data
-import Lemma.Bool.SEq.of.Eq
+import Lemma.Bool.SEq.is.Eq
 open Tensor Vector List Bool
 
 

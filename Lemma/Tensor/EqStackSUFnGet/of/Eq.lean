@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.EqGetStack
-import Lemma.Bool.SEq.of.Eq
+import Lemma.Bool.SEq.is.Eq
 open Tensor Bool
 
 

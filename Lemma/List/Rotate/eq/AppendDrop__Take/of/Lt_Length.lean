@@ -1,7 +1,7 @@
 import stdlib.List
-import Lemma.Algebra.EqMod.of.Lt
+import Lemma.Nat.EqMod.of.Lt
 import Lemma.List.SplitAt.eq.MkTake__Drop
-open Algebra List
+open List Nat
 
 
 @[main]

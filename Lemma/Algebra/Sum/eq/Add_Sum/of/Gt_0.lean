@@ -2,9 +2,9 @@ import sympy.core.relational
 import sympy.sets.sets
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Add
-import Lemma.Algebra.EqAddS.is.Eq
+import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Nat.EqSubAdd
-open Algebra Nat
+open Nat
 
 
 @[main]

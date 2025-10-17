@@ -3,12 +3,12 @@ import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 import Lemma.Algebra.EqSign_1.of.Gt_0
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Algebra.Sub.eq.AddNeg
-import Lemma.Algebra.EqAddS.is.Eq
+import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Int.FDiv1.eq.Neg1.of.Lt_0
 import Lemma.Algebra.SubNeg
 import Lemma.Int.EqSubS.is.Eq
 import Lemma.Int.FDivNeg1.eq.Neg1.of.Gt_0
-open Algebra Int
+open Algebra Int Nat
 
 
 @[main]

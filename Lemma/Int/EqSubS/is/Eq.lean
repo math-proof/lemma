@@ -1,7 +1,11 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+/--
+mpr is not defined for Int, it is defined in Nat:
+Nat.EqSubS.of.Eq [Sub α]
+-/
+@[main, comm, mp]
 private lemma main
   [AddGroup α]
 -- given

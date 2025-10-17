@@ -2,7 +2,7 @@ import sympy.tensor.tensor
 import Lemma.Algebra.Lt_Add
 import Lemma.Nat.LtVal
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Bool.Eq.of.SEq
+import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.EqGetSUnflatten.of.Eq.Lt.Eq.Eq
 import Lemma.Bool.EqCast.of.Eq
@@ -37,7 +37,7 @@ private lemma main
   repeat rw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp_all) (by simp)]
   unfold List.Vector.splitAt
   simp
-  apply Eq.of.SEq.simp
+  apply Eq.of.SEq
   apply SEq.of.SEq.SEq (c := a.data.unflatten[i])
   ·
     apply SEq.of.SEq.SEq (c := (a.data ++ b.data).array_slice (i * s.prod) s.prod)

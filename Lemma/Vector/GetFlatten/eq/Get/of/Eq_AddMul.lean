@@ -12,7 +12,7 @@ private lemma main
   (v : List.Vector (List.Vector α n) m) :
 -- imply
   have : t < m * n := by convert AddMul.lt.Mul i j
-  v.flatten[t] = v[i, j] := by
+  v.flatten[t] = v[i.val, j.val] := by
 -- proof
   simp [h_t]
   apply GetFlatten_AddMul.eq.Get

@@ -1,6 +1,6 @@
-import Lemma.Algebra.Sub.eq.Zero.of.Le
+import Lemma.Nat.Sub.eq.Zero.of.Le
 import Lemma.List.DropAppend.eq.AppendDropS
-open Algebra List
+open List Nat
 
 
 @[main]

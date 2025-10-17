@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Vector.EqGetMapRange
 import Lemma.Tensor.GetCast.as.Get.of.Eq
-import Lemma.Bool.SEq.of.Eq
+import Lemma.Bool.SEq.is.Eq
 open Tensor Vector Bool
 
 

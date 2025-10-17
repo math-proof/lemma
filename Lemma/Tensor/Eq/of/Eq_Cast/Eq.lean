@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Bool.SEq.of.Eq
+import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEq.of.SEq.SEq
 open Bool

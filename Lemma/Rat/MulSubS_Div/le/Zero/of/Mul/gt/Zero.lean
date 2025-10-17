@@ -4,7 +4,6 @@ import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Nat.EqMulS.of.Eq.Eq
 import Lemma.Algebra.Sub.eq.NegSub
 import Lemma.Algebra.DivMul.eq.Mul_Div
-import Lemma.Int.EqSubS.is.Eq
 import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Algebra.SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
 import Lemma.Algebra.Mul_Neg.eq.NegSquare
@@ -40,7 +39,7 @@ private lemma main
 -- proof
   denote h_A : A = _
   have h_Add_ne_Zero := Add.ne.Zero.of.Mul.gt.Zero h₀
-  have h₁ := EqSubS.of.Eq (TP / P) h_A
+  have h₁ := EqSubS.of.Eq h_A (TP / P)
   have h_together := SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
     h_Add_ne_Zero
     (Ne_0.of.Mul.gt.Zero.left h₀)
@@ -52,7 +51,7 @@ private lemma main
     Mul_Add.eq.AddMulS
   ] at h₁
   simp at h₁
-  have h₂ := EqSubS.of.Eq (TN / N) h_A
+  have h₂ := EqSubS.of.Eq h_A (TN / N)
   have h_together := SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
     h_Add_ne_Zero
     (Ne_0.of.Mul.gt.Zero h₀)

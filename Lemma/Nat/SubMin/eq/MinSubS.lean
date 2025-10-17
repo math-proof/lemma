@@ -2,7 +2,7 @@ import Lemma.Algebra.Min.eq.IteLe
 import Lemma.Algebra.Ite.eq.SubIte
 import Lemma.Algebra.LeSubS.is.Le.of.Le
 import Lemma.Nat.NotLe.is.Gt
-import Lemma.Algebra.Sub.eq.Zero.of.Lt
+import Lemma.Nat.Sub.eq.Zero.of.Lt
 import Lemma.Algebra.Gt_Min.of.Gt
 import Lemma.Algebra.Min
 open Algebra Nat

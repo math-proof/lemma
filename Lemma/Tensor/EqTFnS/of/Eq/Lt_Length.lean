@@ -1,3 +1,4 @@
+import sympy.tensor.Basic
 import Lemma.Vector.HEq.of.EqValS
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.Tensor.EqLengthS.of.SEq

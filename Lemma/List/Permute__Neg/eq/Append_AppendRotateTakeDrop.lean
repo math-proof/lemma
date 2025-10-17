@@ -22,7 +22,7 @@ import Lemma.List.DropTake.eq.ListGet.of.Lt_Length
 import Lemma.List.SliceTake.eq.Slice.of.Ge
 import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Nat.Add
-import Lemma.Algebra.Sub.eq.Zero.of.Lt
+import Lemma.Nat.Sub.eq.Zero.of.Lt
 import Lemma.List.Slice_0.eq.Take
 import Lemma.List.Cons_Append.eq.AppendCons
 import Lemma.Nat.EqMin.of.Gt

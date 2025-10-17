@@ -216,7 +216,7 @@ def String.transformEq (s : String) : String :=
     else
       s
   else
-    panic! s!"Expected the operator to be '([SH]?Eq|Iff|Ne).*', got: {s}"
+    s
 
 -- #eval "%%Hello %%%-10s! %5.2f%%".format "World", -20.666666 + 1
 -- #eval "number: %4.2f".format -1

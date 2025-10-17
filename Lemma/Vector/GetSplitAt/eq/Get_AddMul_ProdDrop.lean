@@ -16,7 +16,7 @@ private lemma main
   (j : Fin (s.drop d).prod) :
 -- imply
   have := AddMul_ProdDrop.lt.Prod i j
-  (v.splitAt d)[i, j] = v[i * (s.drop d).prod + j] := by
+  (v.splitAt d)[i.val, j.val] = v[i * (s.drop d).prod + j] := by
 -- proof
   intro h_lt
   unfold List.Vector.splitAt

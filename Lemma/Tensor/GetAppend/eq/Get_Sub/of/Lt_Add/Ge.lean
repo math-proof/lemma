@@ -7,8 +7,7 @@ import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEq.of.Eq
-import Lemma.Bool.Eq.of.SEq
+import Lemma.Bool.SEq.is.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
 import Lemma.Algebra.Gt_0.of.Lt_Add.Ge
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
@@ -39,7 +38,7 @@ private lemma main
     have h_lt := LtSub.of.Lt_Add.Ge h₀ h₁
     repeat rw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp_all) (by simp_all)]
     simp
-    apply Eq.of.SEq.simp
+    apply Eq.of.SEq
     apply SEq.of.SEq.SEq (c := b.data.unflatten[i - m])
     ·
       have h_prod := AddProdSCons.eq.MulAdd m n s

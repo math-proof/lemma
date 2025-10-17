@@ -10,8 +10,7 @@ private lemma main
   (v : List.Vector α s.prod)
   (d : ℕ) :
 -- imply
-  have h : List.Vector α s.prod = List.Vector α ((s.take d).prod * (s.drop d).prod) := by rw [Prod.eq.MulProdTake__ProdDrop]
-  v.splitAt d = (cast h v).unflatten := by
+  v.splitAt d = (cast (congrArg (List.Vector α) (Prod.eq.MulProdTake__ProdDrop s d)) v).unflatten := by
 -- proof
   simp [List.Vector.splitAt]
 

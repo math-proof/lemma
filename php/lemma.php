@@ -83,6 +83,7 @@ if ($_POST) {
 	$sectionRegex = implode('|', $sections);
 	$sectionRegex = str_replace('List', 'List(?!\.Vector)', $sectionRegex); // avoid List.Vector
 	$sectionRegex = str_replace('Finset', 'Finset(?!\.Nonempty)', $sectionRegex); // avoid Finset.Nonempty
+	$sectionRegex = str_replace('Tensor', 'Tensor(?!\.T\b)', $sectionRegex); // avoid Tensor.T
 	$sectionRegex = "(?:$sectionRegex)(?=\.[A-Z])";
 
 	function detect_lemma(&$line)  {

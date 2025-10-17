@@ -2,7 +2,7 @@ import sympy.tensor.tensor
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEq.of.Eq
+import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.Eq.of.All_EqGetS
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt

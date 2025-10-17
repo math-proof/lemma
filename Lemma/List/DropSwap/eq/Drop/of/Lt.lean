@@ -3,7 +3,7 @@ import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqDropAppend.of.Eq_Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthList.eq.One
-import Lemma.Algebra.EqAddS.is.Eq
+import Lemma.Nat.EqAddS.is.Eq
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Algebra.Lt.of.Lt.Lt
 import Lemma.Nat.Le.of.Lt

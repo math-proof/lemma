@@ -2,7 +2,7 @@ import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length
 import Lemma.Tensor.EqGetS.of.Eq.Lt_Length
 import Lemma.Tensor.GetSum_2.as.SumGet__1
 import Lemma.Nat.LtVal
-import Lemma.Bool.Eq.of.SEq
+import Lemma.Bool.SEq.is.Eq
 open Tensor Bool Nat
 
 
@@ -21,7 +21,7 @@ private lemma main
   have h_Xij := EqGetS.of.Eq.Lt_Length h_j h_Xi
   have h_Xij' := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length (dim := 1) (s := [m, n, l].tail) (by simp) (by simp) h_j X[i]
   have h_eq := h_Xij.trans h_Xij'
-  apply Eq.of.SEq.simp h_eq
+  apply Eq.of.SEq h_eq
 
 
 -- created on 2025-07-12

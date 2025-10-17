@@ -20,7 +20,7 @@ import Lemma.Nat.Add
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.EqSubS.is.Eq
 import Lemma.Nat.Mul
-import Lemma.Algebra.EqAddS.is.Eq
+import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Algebra.AddMul.eq.MulAdd_1
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.Eq_0.of.Mul.eq.Zero.Ne_0

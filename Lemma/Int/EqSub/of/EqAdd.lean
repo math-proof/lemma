@@ -1,4 +1,3 @@
-import Lemma.Int.EqSubS.is.Eq
 import Lemma.Int.EqSubAdd
 import Lemma.Nat.EqSubS.of.Eq
 open Int Nat
@@ -13,7 +12,7 @@ private lemma main
 -- imply
   y - x = d := by
 -- proof
-  have h := EqSubS.of.Eq x h
+  have h := EqSubS.of.Eq h x
   rw [EqSubAdd] at h
   simp_all
 

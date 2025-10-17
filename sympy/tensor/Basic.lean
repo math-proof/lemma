@@ -33,6 +33,7 @@ import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
 import Lemma.List.ProdTake_1.eq.HeadD_1
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.Lt_Length
 open Bool Nat Int List
 
 /--
@@ -293,32 +294,15 @@ def Tensor.rotate (X : Tensor α s) (i : ℕ): Tensor α (s.rotate i) :=
     ⟨data⟩
 
 def Tensor.permuteHead (X : Tensor α s) (size : ℕ) : Tensor α ((s.take size).rotate 1 ++ s.drop size) :=
-  if h : size ≥ s.length then
-    cast
-      (by
-        rw [EqTake.of.Ge_Length (by assumption), Drop.eq.Nil.of.Ge_Length (by assumption)]
-        simp_all
-      )
-      (X.rotate 1)
-  else
-    let X : Tensor _ (s.take size) := ⟨X.data.splitAt size⟩
-    let X := X.rotate 1
-    ⟨cast (by simp_all) X.data.flatten⟩
+  let X : Tensor _ (s.take size) := ⟨X.data.splitAt size⟩
+  let X := X.rotate 1
+  ⟨cast (by simp_all) X.data.flatten⟩
 
 def Tensor.permuteTail (X : Tensor α s) (size : ℕ) : Tensor α (s.take (s.length - size) ++ (s.drop (s.length - size)).rotate (size ⊓ s.length - 1)) :=
-  if h : size ≥ s.length then
-    cast
-      (by
-        rw [Take.eq.Nil.of.Eq_0 (by simp_all), EqDrop.of.Eq_0 (by simp_all)]
-        simp_all
-      )
-    (X.rotate (s.length - 1))
-  else
-    -- size < s.length
-    let data : List.Vector (List.Vector α ((s.drop (s.length - size)).rotate (size ⊓ s.length - 1)).prod) (s.take (s.length - size)).prod := (X.data.splitAt (s.length - size)).map fun data =>
-      let X : Tensor _ (s.drop (s.length - size)) := ⟨data⟩
-      (X.rotate (size ⊓ s.length - 1)).data
-    ⟨cast (by simp_all) data.flatten⟩
+  let data : List.Vector (List.Vector α ((s.drop (s.length - size)).rotate (size ⊓ s.length - 1)).prod) (s.take (s.length - size)).prod := (X.data.splitAt (s.length - size)).map fun data =>
+    let X : Tensor _ (s.drop (s.length - size)) := ⟨data⟩
+    (X.rotate (size ⊓ s.length - 1)).data
+  ⟨cast (by simp_all) data.flatten⟩
 
 /--
 [torch.permute](https://docs.pytorch.org/docs/stable/generated/torch.permute.html)
