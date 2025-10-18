@@ -1,6 +1,5 @@
 import stdlib.SEq
 import sympy.vector.vector
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Vector
 
 
@@ -14,7 +13,7 @@ private lemma main
   (cast (congrArg₂ (fun n m => List.Vector (List.Vector α n) m) h_n h_m) v).flatten ≃ v.flatten := by
 -- proof
   subst h_m h_n
-  aesop
+  rfl
 
 
 -- created on 2025-10-17

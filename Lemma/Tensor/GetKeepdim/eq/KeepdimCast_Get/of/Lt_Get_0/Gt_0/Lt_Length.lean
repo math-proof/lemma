@@ -21,7 +21,7 @@ import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq
-import Lemma.Tensor.Repeat.as.RepeatCast.of.Eq
+import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq.Eq
 open Tensor List Nat Bool
 
@@ -84,8 +84,8 @@ private lemma main
         rw [UnsqueezeCast.eq.CastUnsqueeze.of.Eq h_eq]
         have h_s : (s.eraseIdx dim).tail.insertIdx (dim - 1) 1 = (s.tail.eraseIdx (dim - 1)).insertIdx (dim - 1) 1 := by
           simp_all
-        have := Repeat.as.RepeatCast.of.Eq h_s ((X.get ⟨i, h_i⟩).unsqueeze (dim - 1)) s[dim - 1 + 1] ⟨dim - 1, h_d⟩
-        apply SEq.of.SEq.SEq _ this.symm
+        have := RepeatCast.as.Repeat.of.Eq h_s ((X.get ⟨i, h_i⟩).unsqueeze (dim - 1)) s[dim - 1 + 1] ⟨dim - 1, h_d⟩
+        apply SEq.of.SEq.SEq _ this
         have h_tail_set : ((s.eraseIdx dim).tail.insertIdx (dim - 1) 1).set (dim - 1) s[dim] = (((s.eraseIdx dim).insertIdx dim 1).set dim s[dim]).tail := by
           rw [TailSet.eq.SetTail.of.Gt_0 h_dim]
           rw [TailInsertIdx.eq.InsertIdxTail.of.Gt_0.GtLength_0 h_length_pos h_dim]

@@ -24,10 +24,8 @@ private lemma main
     rwa [← h₁]
   (cast h X)[i] ≃ X[i] := by
 -- proof
-  simp only [GetElem.getElem, Tensor.get]
-  unfold Tensor.toVector
-  constructor <;>
-    aesop
+  subst h₁
+  rfl
 
 
 -- created on 2025-07-04

@@ -4,13 +4,13 @@ import sympy.tensor.Basic
 
 @[main]
 private lemma main
-  {s : List ℕ}
-  {d : ℕ}
 -- given
   (h : s = s')
-  (X : Tensor α s) :
+  (X : Tensor α s)
+  (n : ℕ)
+  (d : Fin s.length) :
 -- imply
-  X.unsqueeze d ≃ (cast (congrArg (Tensor α) h) X).unsqueeze d := by
+  (cast (congrArg (Tensor α) h) X).repeat n ⟨d, by simp [← h]⟩ ≃ X.repeat n d := by
 -- proof
   subst h
   rfl

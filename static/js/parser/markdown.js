@@ -828,8 +828,7 @@ class MarkdownSPAN extends MarkdownArgs {
     }
 
     insert_bar(caret, ...kwargs) {
-        var {args} = this;
-        for (var i of range(args.length - 1, -1, -1)) {
+        for (var i of range(this.args.length - 1, -1, -1)) {
             var $new = this.process_inner_loop(i, ...kwargs);
             if ($new)
                 return $new;
@@ -2714,10 +2713,20 @@ class MarkdownDocument extends MarkdownArgs {
         console.log('bind.kwargs.class = ', bind.kwargs.class);
         return bind;
     }
+
+    insert_bar(caret, ...kwargs) {
+        for (var i of range(this.args.length - 1, -1, -1)) {
+            var $new = this.process_inner_loop(i, ...kwargs);
+            if ($new)
+                return $new;
+        }
+        var $new = new MarkdownCaret(caret.indent, ...kwargs);
+        this.push(new MarkdownArgsBarSeparated([caret, $new], caret.indent));
+        return $new;
+    }
 }
 MarkdownDocument.prototype.insert_asterisk = MarkdownI.prototype.insert_asterisk;
 MarkdownDocument.prototype.insert_underscore = MarkdownI.prototype.insert_underscore;
-MarkdownDocument.prototype.insert_bar = MarkdownSPAN.prototype.insert_bar;
 MarkdownDocument.prototype.insert_backtick = MarkdownH.prototype.insert_backtick;
 MarkdownDocument.prototype.insert_dollar = MarkdownH.prototype.insert_dollar;
 Markdown.MarkdownCODE = MarkdownCODE;

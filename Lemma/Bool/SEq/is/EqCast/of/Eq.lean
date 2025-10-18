@@ -3,7 +3,7 @@ import sympy.Basic
 
 /--
 | attributes | lemma |
-| --- | --- |
+| :---: | :---: |
 | main | Bool.SEq.is.EqCast.of.Eq |
 | comm | Bool.EqCast.is.SEq.of.Eq |
 | mp   | Bool.EqCast.of.SEq.Eq |
