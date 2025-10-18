@@ -2,7 +2,7 @@ import stdlib.Slice
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.Rat.LeToNatCeil_1.of.Le_Add
-import Lemma.Algebra.Lt.of.Lt.Le
+import Lemma.Nat.Lt.of.Lt.Le
 import Lemma.Algebra.Lt_CeilDivSub_Add.of.Add_1.lt.CeilDivSub
 open Algebra List Rat Nat
 

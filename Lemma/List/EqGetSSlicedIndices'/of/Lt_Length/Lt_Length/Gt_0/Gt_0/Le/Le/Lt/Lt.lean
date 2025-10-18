@@ -1,5 +1,5 @@
 import Lemma.Nat.Ge.of.NotLt
-import Lemma.Algebra.Lt.of.Lt.Le
+import Lemma.Nat.Lt.of.Lt.Le
 import Lemma.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt
 import Lemma.Algebra.LeSub.of.Le
 import Lemma.Algebra.Lt_CeilDivSubSub.of.Add_1.lt.CeilDivSub.Gt

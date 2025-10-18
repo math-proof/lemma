@@ -122,7 +122,7 @@ export default {
 			}
 		}
 
-		async function locate_definition(cm, index, module) {
+		async function disambiguate_module(module) {
 			var section = await form_post('php/request/disambiguate.php', {module});
 			if (!section)
 				return null;
@@ -151,23 +151,24 @@ where
 			m = module.match(/^Lemma\.(.+)/);
 			if (m)
 				module = m[1];
-
+			var [table, module] = await get_table_of_module(module, postfix);
+			var url = `?${table}=${module}`;
+			if (refresh)
+				location.href = url;
+			else
+				window.open(url);
+		}
+		
+		async function get_table_of_module(module, postfix) {
 			var symbol = null;
-			var user = axiom_user();
 			var table = 'module';
 			if (module.indexOf('.') < 0) {
 				if (!module.fullmatch(self.regexp_section)) {
 					var symbol = module;
-					module = await locate_definition(cm, cursor.line, symbol);
+					module = await disambiguate_module(symbol);
 					if (module == null){
-						if (await select_mathlib(symbol.replace('.', '\\.'), 'regexp')) {
-							var href = `?mathlib=${symbol}`;
-							if (refresh)
-								location.href = href;
-							else
-								window.open(href);
-							return;
-						}
+						if (await select_mathlib(symbol.replace('.', '\\.'), 'regexp'))
+							return ['mathlib', symbol];
 						module = self.module.split(/[./]/)[0] + '.' + symbol;
 					}
 					m = postfix.match(/\.([\w'!₀-₉]+)/);
@@ -177,12 +178,8 @@ where
 			else {
 				m = module.match(/^([\w'!₀-₉]+)\.(.+)/);
 				if (m[1].fullmatch(self.regexp_section)) {
-					if (!await form_post('php/request/disambiguate.php', {module: m[2]})) {
-						if (await select_mathlib(module))
-							table = 'mathlib';
-						else
-							table = 'module';
-					}
+					if (!await form_post('php/request/disambiguate.php', {module: m[2]}))
+						table = (await select_mathlib(module))? 'mathlib': 'module';
 				}
 				else{
 					if (await select_mathlib(module))
@@ -229,17 +226,11 @@ where
 					}
 				}
 			}
-
-			var href = user? `/${user}/?${table}=${module}`: location.href.replace(self.module.replace(/\./g, '/'), module.replace(/\./g, '/')).replace(/#\w+$/, '');
-
 			if (symbol)
-				href += `#${symbol}`;
-			if (refresh)
-				location.href = href;
-			else
-				window.open(href);
+				module += `#${symbol}`;
+			return [table, module];
 		}
-		
+
 		function open(cm, pair) {
 			cm.replaceSelection(pair[0]);
 
@@ -824,12 +815,61 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
 
 		// Add a capture-phase mousedown listener to intercept events early
 		wrapper.addEventListener('mousedown', function(e) {
-			console.log('Mouse down event:', e);
 			if (e.button === 0) { // Left mouse button
-				console.log('Left mouse button clicked in codeMirror.vue');
 				self.$parent.click_left(e);
+				if (e.ctrlKey) {
+					var title = e.target.title;
+					if (title)
+						window.open(title.replace('Ctrl/Click👉', ''), '_blank');
+				}
 			}
 		}, { capture: true });
+
+		wrapper.addEventListener('mouseover', async function(e) {
+			let target = e.target;
+			if (!target.classList.contains('cm-variable') && !target.classList.contains('cm-property') || target.title)
+				return;
+			var parentElement = target.parentElement;
+			// Build the URL based on the text content
+			let tokens = [];
+			let { children } = parentElement;
+			let index = children.indexOf(target);
+			var siblings = [];
+			// Collect right-side properties
+			for (let i = index + 1; i < children.length; ++i) {
+				let sibling = children[i];
+				if (sibling.classList.contains('cm-property')) {
+					tokens.push(sibling.textContent);
+					siblings.push(sibling);
+				}
+				else
+					break;
+			}
+
+			// Collect left-side properties or variable
+			for (let i = index; i >= 0; --i) {
+				let sibling = children[i];
+				if (sibling.classList.contains('cm-property')) {
+					tokens.unshift(sibling.textContent);
+					siblings.unshift(sibling);
+				}
+				else if (sibling.classList.contains('cm-variable')) {
+					tokens.unshift(sibling.textContent);
+					siblings.unshift(sibling);
+					break;
+				} else
+					return;
+			}
+			var args = await get_table_of_module(tokens.join('.'), '');
+			if (!args)
+				return;
+			var [table, module] = args;
+			var url = "Ctrl/Click👉\n" + location.origin + location.pathname + `?${table}=${module}`;
+			for (let sibling of siblings)
+				sibling.title = url;
+			// the title is not shown up immediately, so we replace the target element to force the browser to refresh the tooltip
+			target.replaceWith(target);
+		});
 
         if (this.hash){
         	var line = null, col = 4;
@@ -861,7 +901,7 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
                 	this.editor.setCursor(index, m[1].length - this.hash.length / 2);
                     break;
                 }
-            }    	
+            }
         }
     },
 }

@@ -3,8 +3,8 @@ import Lemma.Algebra.NegMul.eq.MulNeg
 import Lemma.Algebra.MulNeg.eq.NegSquare
 import Lemma.Algebra.LtNeg_0.of.Gt_0
 import Lemma.Algebra.GeSquare_0
-import Lemma.Algebra.Lt.of.Lt.Le
-open Algebra Int
+import Lemma.Nat.Lt.of.Lt.Le
+open Algebra Int Nat
 
 
 @[main]

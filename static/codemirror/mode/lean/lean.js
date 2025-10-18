@@ -43,7 +43,7 @@ import { tactics } from "./tactics.js"
   CodeMirror.defineMode('lean', function(conf, parserConf) {
     var ERRORCLASS = 'error';
 
-    var delimiters = parserConf.delimiters || parserConf.singleDelimiters || /^[\(\)\[\]\{\}@,:`=;\.\\]/;
+    var delimiters = parserConf.delimiters || parserConf.singleDelimiters || /^[\(\)\[\]\{\}@,:`=;\.\\⟨⟩·]/;
     //               (Backwards-compatibility with old, cumbersome config system)
     var operators = [parserConf.singleOperators, parserConf.doubleOperators, parserConf.doubleDelimiters, parserConf.tripleDelimiters,
                      parserConf.operators || /^([-+*/%\/&|^]=?|[<>=]+|\/\/=?|\*\*=?|!=|[~!@]|\.\.\.)/]
@@ -58,21 +58,11 @@ import { tactics } from "./tactics.js"
     if (parserConf.extra_builtins != undefined)
       myBuiltins = myBuiltins.concat(parserConf.extra_builtins);
 
-    var py3 = !(parserConf.version && Number(parserConf.version) < 3)
-    if (py3) {
-      // since http://legacy.lean.org/dev/peps/pep-0465/ @ is also an operator
-      var identifiers = parserConf.identifiers|| /^[_A-Za-z\u00A1-\uFFFF][_A-Za-z0-9\u00A1-\uFFFF]*/;
-      myKeywords = myKeywords.concat(['nonlocal', 'None', 'aiter', 'anext', 'async', 'await', 'breakpoint', 'match', 'case']);
-      myBuiltins = myBuiltins.concat(['ascii', 'bytes', 'exec', 'print']);
-      var stringPrefixes = new RegExp("^(([rbuf]|(br)|(rb)|(fr)|(rf))?('{3}|\"{3}|[\"]))", 'i');
-    } else {
-      var identifiers = parserConf.identifiers|| /^[_A-Za-z][_A-Za-z0-9]*/;
-      myKeywords = myKeywords.concat(['exec', 'print']);
-      myBuiltins = myBuiltins.concat(['apply', 'basestring', 'buffer', 'cmp', 'coerce', 'execfile',
-                                      'file', 'intern', 'long', 'raw_input', 'reduce', 'reload',
-                                      'unichr', 'unicode', 'xrange', 'None']);
-      var stringPrefixes = new RegExp("^(([rubf]|(ur)|(br))?('{3}|\"{3}|['\"]))", 'i');
-    }
+    var identifiers = parserConf.identifiers || /^[_\p{L}][\p{L}\p{N}_'!?]+/u;
+    myKeywords = myKeywords.concat(['nonlocal', 'None', 'aiter', 'anext', 'async', 'await', 'breakpoint', 'match', 'case']);
+    myBuiltins = myBuiltins.concat(['ascii', 'bytes', 'exec', 'print']);
+    var stringPrefixes = new RegExp("^(([rbuf]|(br)|(rb)|(fr)|(rf))?('{3}|\"{3}|[\"]))", 'i');
+
     var keywords = wordRegexp(myKeywords);
     var builtins = wordRegexp(myBuiltins);
 
@@ -325,7 +315,7 @@ import { tactics } from "./tactics.js"
 
       // Handle decorators
       if (state.beginningOfLine && current == "@")
-        return stream.match(identifiers, false) ? 'meta' : py3 ? 'operator' : ERRORCLASS;
+        return stream.match(identifiers, false) ? 'meta' : 'operator';
 
       if (/\S/.test(current)) state.beginningOfLine = false;
 

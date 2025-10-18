@@ -6,13 +6,13 @@ open Algebra List Nat
 
 @[main]
 private lemma main
-  {a : List α}
-  {d : Fin a.length}
+  {s : List α}
+  {d : Fin s.length}
 -- given
   (h_d : d.val = 0)
   (i : ℕ) :
 -- imply
-  a.permute d i = (a.take (i + 1)).rotate 1 ++ a.drop (i + 1) := by
+  s.permute d i = (s.take (i + 1)).rotate 1 ++ s.drop (i + 1) := by
 -- proof
   have h_length := Gt_0 d
   have := Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0 h_length i

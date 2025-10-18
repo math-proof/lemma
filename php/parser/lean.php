@@ -7622,7 +7622,7 @@ class LeanTacticBlock extends LeanUnary
 
     public function sep()
     {
-        return $this->arg instanceof LeanStatements ? "\n" : ' ';
+        return $this->arg instanceof LeanStatements ? "\n" : ($this->arg instanceof LeanCaret ? '': ' ');
     }
 
     public function strFormat()

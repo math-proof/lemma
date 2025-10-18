@@ -1,6 +1,4 @@
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
-import Lemma.List.LengthRotate.eq.Length
-import Lemma.List.DropAppend.eq.AppendDropS
+import Lemma.List.EqRotate
 import Lemma.Nat.EqAdd_Sub.of.Ge
 open List Nat
 
@@ -13,14 +11,10 @@ private lemma main
 -- imply
   (s.rotate i).rotate (s.length - i) = s := by
 -- proof
-  repeat rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
-  · 
-    simp [DropAppend.eq.AppendDropS _ _ (s.length - i)]
-    rw [EqAdd_Sub.of.Ge h]
-  · 
-    exact h
-  · 
-    simp [LengthRotate.eq.Length s]
+  rw [List.rotate_rotate]
+  rw [EqAdd_Sub.of.Ge (by omega)]
+  apply EqRotate
 
 
 -- created on 2025-10-14
+-- updated on 2025-10-18

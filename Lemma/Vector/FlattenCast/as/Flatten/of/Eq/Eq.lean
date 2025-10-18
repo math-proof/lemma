@@ -1,6 +1,5 @@
 import stdlib.SEq
 import sympy.vector.vector
-open Vector
 
 
 @[main, comm 3]

@@ -1,5 +1,6 @@
 import stdlib.SEq
 import sympy.tensor.Basic
+import sympy.Basic
 
 
 @[main]
@@ -10,10 +11,10 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  X.permuteTail n ≃ (cast (congrArg (Tensor α) h) X).permuteTail n := by
+  (cast (congrArg (Tensor α) h) X).permuteTail n = cast (by rw [h]) (X.permuteTail n) := by
 -- proof
   subst h
   rfl
 
 
--- created on 2025-10-17
+-- created on 2025-10-18

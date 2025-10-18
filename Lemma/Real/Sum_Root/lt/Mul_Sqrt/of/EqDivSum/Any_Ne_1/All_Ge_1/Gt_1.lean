@@ -7,7 +7,7 @@ import Lemma.Real.Sum_Root.lt.Mul_Sqrt.of.EqDivSum.All_Ge_1.Gt_1.Gt_1
 import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
 import Lemma.Real.Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0
-import Lemma.Algebra.Lt.of.Lt.Le
+import Lemma.Nat.Lt.of.Lt.Le
 open Algebra Set Finset Real Nat
 
 

@@ -33,7 +33,7 @@ import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
 import Lemma.List.ProdTake_1.eq.HeadD_1
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Lt_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take
 open Bool Nat Int List
 
 /--
@@ -263,7 +263,7 @@ the following eqaulity holds:
   X[i₀, i₁, i₂, i₃, i₄, i₅, i₆, i₇, i₈, i₉] = t'[i₀, i₁, i₂, i₃, i₄ + s₄ * X, i₅, i₆, i₇, i₈, i₉]
 -/
 def Tensor.repeat (X : Tensor α s) (k : ℕ) (dim : Fin s.length) : Tensor α (s.set dim (k * s[dim])) :=
-  let data : List.Vector α (s.set dim (k * s[dim])).prod := cast
+  ⟨cast
     (by
       congr
       rw [ProdSet__MulGet.eq.Mul_Prod dim k]
@@ -274,24 +274,12 @@ def Tensor.repeat (X : Tensor α s) (k : ℕ) (dim : Fin s.length) : Tensor α (
       simp
     )
     ((X.data.splitAt dim).map (·.repeat k)).flatten
-  ⟨data⟩
+  ⟩
 
 def Tensor.rotate (X : Tensor α s) (i : ℕ): Tensor α (s.rotate i) :=
   let k := i % s.length
-  have h_k : k = i % s.length := rfl
-  if h_s : s.length = 0 then
-    cast (by simp_all) X
-  else
-    let data : List.Vector α (List.drop k s ++ List.take k s).prod := cast (by simp) (X.data.splitAt k).transpose.flatten
-    have h_eq : List.drop k s ++ List.take k s = s.rotate i := by
-      rw [← Rotate_Mod.eq.Rotate]
-      rw [← h_k]
-      rw [Rotate.eq.AppendDrop__Take.of.Lt_Length]
-      simp [k]
-      apply LtMod.of.Gt_0
-      apply Gt_0.of.Ne_0 h_s
-    let data : List.Vector α (s.rotate i).prod := cast (by rw [h_eq]) data
-    ⟨data⟩
+  let data : List.Vector α (List.drop k s ++ List.take k s).prod := cast (by simp) (X.data.splitAt k).transpose.flatten
+  ⟨cast (by rw [AppendDrop__Take.eq.Rotate s i]) data⟩
 
 def Tensor.permuteHead (X : Tensor α s) (size : ℕ) : Tensor α ((s.take size).rotate 1 ++ s.drop size) :=
   let X : Tensor _ (s.take size) := ⟨X.data.splitAt size⟩

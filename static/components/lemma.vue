@@ -508,7 +508,7 @@ select {
 
     -webkit-appearance: none;
     -moz-appearance: none;
-    appearance: none;    
+    appearance: none;
     font-size: inherit;
     font-family: inherit;
     font-weight: inherit;

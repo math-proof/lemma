@@ -1,8 +1,8 @@
 import sympy.vector.vector
 import Lemma.Vector.GetTake.eq.Get.of.Lt_Min
 import Lemma.Vector.GetDrop.eq.Get_Add.of.Lt_Sub
-import Lemma.Algebra.Lt.of.Lt_Min
-open Algebra Vector
+import Lemma.Nat.Lt.of.Lt_Min
+open Vector Nat
 
 
 @[main]

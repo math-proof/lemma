@@ -24,6 +24,11 @@ import Lemma.Nat.Add
 import Lemma.List.ProdDrop.eq.MulProdS
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.List.TakeDrop.eq.RotateDropTakePermute.of.Add.lt.Length
+import Lemma.Tensor.PermuteTailCast.eq.Cast_PermuteTail.of.Eq
+import Lemma.Nat.MulMul.eq.Mul_Mul
+import Lemma.List.Rotate.eq.Permute.of.GtLength_0
+import Lemma.List.EqRotateRotate.of.Le_Length
+import Lemma.Tensor.PermuteTail.as.Rotate.of.Eq_Length
 open List Tensor Bool Nat Int
 
 
@@ -47,48 +52,58 @@ private lemma main
     rw [this]
     rw [EqToNat]
   split_ifs with h_sub h_pos h_j_0 h_j_length
+  repeat omega
+  simp [LengthPermute.eq.Length] at h_j_length
+  subst h_j_length
+  simp
+  apply SEqCast.of.SEq.Eq.Eq
   ·
-    omega
+    rw [EqPermutePermute.of.In_Ioo_Length ⟨h, h_j⟩]
+    simp [LengthPermute.eq.Length]
+    rw [(show (1 + d : ℤ).toNat = s.length - i by omega)]
+    rw [EqSub_Sub.of.Gt (by linarith)]
+    rw [EqMinSub]
+    rw [(show (d : ℤ) = (s.length - i - 1 : ℕ) by omega)]
+    rw [TakePermute.eq.Take ⟨i, by linarith⟩ (s.length - i - 1)]
+    simp [RotateDropPermute.eq.Drop (i := ⟨i, by linarith⟩)]
   ·
-    omega
+    rw [EqPermutePermute.of.In_Ioo_Length ⟨by omega, by omega⟩]
   ·
-    omega
-  ·
-    simp [LengthPermute.eq.Length] at h_j_length
-    subst h_j_length
+    simp at h_sub
+    simp at h_j_length
+    rw [h_toNat]
+    rw [Permute.eq.Ite (d := ⟨i, by linarith⟩) (k := ↑d)]
     simp
-    apply SEqCast.of.SEq.Eq.Eq
+    split_ifs with h_pos? h_i_0 h_i_length
     ·
-      rw [EqPermutePermute.of.In_Ioo_Length ⟨h, h_j⟩]
-      simp [LengthPermute.eq.Length]
-      rw [(show (1 + d : ℤ).toNat = s.length - i by omega)]
-      rw [EqSub_Sub.of.Gt (by linarith)]
-      rw [EqMinSub]
-      rw [(show (d : ℤ) = (s.length - i - 1 : ℕ) by omega)]
-      rw [TakePermute.eq.Take ⟨i, by linarith⟩ (s.length - i - 1)]
-      simp [RotateDropPermute.eq.Drop (i := ⟨i, by linarith⟩)]
-    ·
-      rw [EqPermutePermute.of.In_Ioo_Length ⟨by omega, by omega⟩]
-    ·
-      simp at h_sub
-      simp at h_j_length
-      rw [h_toNat]
-      rw [Permute.eq.Ite (d := ⟨i, by linarith⟩) (k := ↑d)]
+      subst d h_i_0
       simp
-      split_ifs with h_pos? h_i_0 h_i_length
+      rw [EqAdd_Sub.of.Ge (by linarith)]
+      rw [PermuteTailCast.eq.Cast_PermuteTail.of.Eq]
       ·
-        subst d
-        subst h_i_0
+        apply SEqCast.of.SEq.Eq.Eq
+        ·
+          rw [EqAddSub.of.Ge (by linarith)]
+          simp [Permute.eq.Rotate.of.GtLength_0]
+        ·
+          simp [Permute.eq.Rotate.of.GtLength_0]
+          rw [EqRotateRotate.of.Le_Length]
+          linarith
+        ·
+          rw [EqAddSub.of.Ge (by linarith)]
+          have := PermuteTail.as.Rotate.of.Eq_Length (n := s.length) (by simp) (X.permuteHead s.length)
+          apply SEq.trans this
+          sorry
+      ·
+        rw [EqAddSub.of.Ge (by linarith)]
         simp
-        rw [EqAdd_Sub.of.Ge (by linarith)]
-        -- rw [EqAddSub.of.Ge (by linarith)]
-        sorry
-      ·
-        sorry
-      ·
-        omega
-      ·
-        omega
+        apply Rotate.eq.Permute.of.GtLength_0
+    ·
+      sorry
+    ·
+      omega
+    ·
+      omega
   ·
     simp
     apply SEq.of.SEqDataS.Eq
@@ -132,4 +147,4 @@ private lemma main
 
 
 -- created on 2025-10-12
--- updated on 2025-10-15
+-- updated on 2025-10-18

@@ -1,8 +1,8 @@
 import sympy.sets.sets
-import Lemma.Algebra.Lt.of.Lt.Le
+import Lemma.Nat.Lt.of.Lt.Le
 import Lemma.Int.Sub.gt.Zero.is.Lt
 import Lemma.Set.Any_In.is.Ne_Empty
-open Algebra Set Int
+open Set Int Nat
 
 
 @[main]
