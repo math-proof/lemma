@@ -48,7 +48,7 @@ import { tactics } from "./tactics.js"
       parserConf.doubleOperators, 
       parserConf.doubleDelimiters, 
       parserConf.tripleDelimiters,
-      parserConf.operators || /^([-+*/%\/&|^]=?|[<>≤≥=≠↔≡≃≍∣←→↦∈∉∩∪⋂⋃⊓⊔∧∨∀∃×÷⊂⊃⊆⊇∘▸⊙⊕⊖⊗⊘⊚⊛⊜⊝∑∏]+|\/\/=?|\*\*=?|!=|[~!@]|\.\.\.)/
+      parserConf.operators || /^([-+*/%\/&|^]=?|[<>≤≥=≠↔≡≃≍∣←→↦↑⇑∈∉∩∪⋂⋃⊓⊔∧∨∀∃×÷⊂⊃⊆⊇∘▸⊙⊕⊖⊗⊘⊚⊛⊜⊝∑∏]+|\/\/=?|\*\*=?|!=|[~!@]|\.\.\.)/
     ];
     for (var i = 0; i < operators.length; i++) 
       if (!operators[i]) 
