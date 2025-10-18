@@ -820,7 +820,7 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
 				if (e.ctrlKey) {
 					var title = e.target.title;
 					if (title)
-						window.open(title.replace('Ctrl/Click👉', ''), '_blank');
+						window.open(title.slice(title.indexOf('👉') + 1), '_blank');
 				}
 			}
 		}, { capture: true });
@@ -864,7 +864,7 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
 			if (!args)
 				return;
 			var [table, module] = args;
-			var url = "Ctrl/Click👉\n" + location.origin + location.pathname + `?${table}=${module}`;
+			var url = "Ctrl+Click or F3👉\n" + location.origin + location.pathname + `?${table}=${module}`;
 			for (let sibling of siblings)
 				sibling.title = url;
 			// the title is not shown up immediately, so we replace the target element to force the browser to refresh the tooltip
