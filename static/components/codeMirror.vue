@@ -222,6 +222,7 @@ where
 							}
 						}
 						[section] = section;
+						if (!section) return;
 						module = section + '.' + module;
 					}
 				}
