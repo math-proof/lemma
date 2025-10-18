@@ -4,7 +4,7 @@ import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.Vector.EqGetRange
 import Lemma.Algebra.EqDivMul.of.Ne_0
-import Lemma.Algebra.Ne.of.Gt
+import Lemma.Nat.Ne.of.Gt
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Nat.Eq_0.of.Le_0
 import Lemma.Bool.EqCast.of.Eq

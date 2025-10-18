@@ -1,6 +1,6 @@
-import Lemma.Algebra.MulAdd.eq.AddMulS
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Add
-open Algebra Nat
+open Nat
 
 
 @[main]

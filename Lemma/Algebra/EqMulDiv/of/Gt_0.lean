@@ -1,6 +1,6 @@
 import Lemma.Algebra.EqMulDiv.of.Ne_0
-import Lemma.Algebra.Ne.of.Gt
-open Algebra
+import Lemma.Nat.Ne.of.Gt
+open Algebra Nat
 
 
 @[main]

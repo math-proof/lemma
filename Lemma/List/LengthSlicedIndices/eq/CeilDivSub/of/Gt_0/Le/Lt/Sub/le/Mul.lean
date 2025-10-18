@@ -11,7 +11,7 @@ import Lemma.Algebra.CeilSub_1.eq.SubCeil_1
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Algebra.Le.of.Sub.eq.Zero
-import Lemma.Algebra.AddMul.eq.MulAdd_1
+import Lemma.Nat.AddMul.eq.MulAdd_1
 import Lemma.Nat.EqSubAdd
 open Algebra Nat Int
 

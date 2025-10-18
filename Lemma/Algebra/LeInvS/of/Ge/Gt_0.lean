@@ -3,9 +3,9 @@ import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Algebra.Gt.of.Ge.Gt
 import Lemma.Algebra.LeDivS.of.Le.Gt_0
 import Lemma.Algebra.DivDiv.eq.Inv.of.Ne_0
-import Lemma.Algebra.Ne.of.Gt
+import Lemma.Nat.Ne.of.Gt
 import Lemma.Algebra.Div1.eq.Inv
-open Algebra
+open Algebra Nat
 
 
 @[main]

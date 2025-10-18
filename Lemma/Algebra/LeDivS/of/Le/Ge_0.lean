@@ -1,7 +1,7 @@
 import Lemma.Algebra.Div.eq.Mul_Inv
 import Lemma.Algebra.GeInv_0.is.Ge_0
-import Lemma.Algebra.LeMulS.of.Le.Ge_0
-open Algebra
+import Lemma.Nat.LeMulS.of.Le.Ge_0
+open Algebra Nat
 
 
 @[main]

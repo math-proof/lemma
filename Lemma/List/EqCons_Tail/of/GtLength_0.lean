@@ -1,6 +1,6 @@
 import Lemma.List.EqCons_Tail.of.NeLength_0
-import Lemma.Algebra.Ne.of.Gt
-open Algebra List
+import Lemma.Nat.Ne.of.Gt
+open List Nat
 
 
 @[main, comm]

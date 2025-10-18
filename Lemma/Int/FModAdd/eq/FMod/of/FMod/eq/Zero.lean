@@ -6,16 +6,16 @@ import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.DivAdd.eq.AddDivS
+import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Int.CoeMul.eq.MulCoeS
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Int.FloorAdd.eq.AddFloor
-import Lemma.Algebra.MulAdd.eq.AddMulS
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.SubSub.eq.Neg
-open Algebra Bool Int Nat
+open Algebra Bool Int Nat Rat
 
 
 @[main]

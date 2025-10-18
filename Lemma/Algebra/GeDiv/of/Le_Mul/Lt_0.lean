@@ -2,8 +2,8 @@ import Lemma.Algebra.Div.eq.Mul_Inv
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.GeMulS.of.Le.Lt_0
 import Lemma.Algebra.LtInv_0.is.Lt_0
-import Lemma.Algebra.Ne.of.Lt
-open Algebra
+import Lemma.Nat.Ne.of.Lt
+open Algebra Nat
 
 
 @[main]

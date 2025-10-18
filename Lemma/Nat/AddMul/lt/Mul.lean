@@ -1,5 +1,5 @@
 import Lemma.Nat.Le_Sub_1
-import Lemma.Algebra.LeMulS.of.Le.Ge_0
+import Lemma.Nat.LeMulS.of.Le.Ge_0
 import Lemma.Algebra.LeAddS.of.Le.Le
 import Lemma.Algebra.Lt.of.Le_Sub_1.Gt_0
 import Lemma.Nat.MulSub.eq.SubMulS

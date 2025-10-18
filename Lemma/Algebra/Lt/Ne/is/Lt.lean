@@ -1,5 +1,5 @@
-import Lemma.Algebra.Ne.of.Lt
-open Algebra
+import Lemma.Nat.Ne.of.Lt
+open Nat
 
 
 @[main]

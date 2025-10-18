@@ -42,15 +42,18 @@ import { tactics } from "./tactics.js"
 
   CodeMirror.defineMode('lean', function(conf, parserConf) {
     var ERRORCLASS = 'error';
-
     var delimiters = parserConf.delimiters || parserConf.singleDelimiters || /^[\(\)\[\]\{\}@,:`=;\.\\⟨⟩·]/;
-    //               (Backwards-compatibility with old, cumbersome config system)
-    var operators = [parserConf.singleOperators, parserConf.doubleOperators, parserConf.doubleDelimiters, parserConf.tripleDelimiters,
-                     parserConf.operators || /^([-+*/%\/&|^]=?|[<>=]+|\/\/=?|\*\*=?|!=|[~!@]|\.\.\.)/]
-    for (var i = 0; i < operators.length; i++) if (!operators[i]) operators.splice(i--, 1)
-
+    var operators = [
+      parserConf.singleOperators, 
+      parserConf.doubleOperators, 
+      parserConf.doubleDelimiters, 
+      parserConf.tripleDelimiters,
+      parserConf.operators || /^([-+*/%\/&|^]=?|[<>≤≥=≠↔≡≃≍∣←→↦∈∉∩∪⋂⋃⊓⊔∧∨∀∃×÷⊂⊃⊆⊇∘▸⊙⊕⊖⊗⊘⊚⊛⊜⊝∑∏]+|\/\/=?|\*\*=?|!=|[~!@]|\.\.\.)/
+    ];
+    for (var i = 0; i < operators.length; i++) 
+      if (!operators[i]) 
+        operators.splice(i--, 1)
     var hangingIndent = parserConf.hangingIndent || conf.indentUnit;
-
     var myKeywords = commonKeywords, myBuiltins = commonBuiltins;
     if (parserConf.extra_keywords != undefined)
       myKeywords = myKeywords.concat(parserConf.extra_keywords);
@@ -59,7 +62,7 @@ import { tactics } from "./tactics.js"
       myBuiltins = myBuiltins.concat(parserConf.extra_builtins);
 
     var identifiers = parserConf.identifiers || /^[_\p{L}][\p{L}\p{N}_'!?]+/u;
-    myKeywords = myKeywords.concat(['nonlocal', 'None', 'aiter', 'anext', 'async', 'await', 'breakpoint', 'match', 'case']);
+    myKeywords = myKeywords.concat(['nonrec', 'None', 'aiter', 'anext', 'async', 'await', 'match', 'case']);
     myBuiltins = myBuiltins.concat(['ascii', 'bytes', 'exec', 'print']);
     var stringPrefixes = new RegExp("^(([rbuf]|(br)|(rb)|(fr)|(rf))?('{3}|\"{3}|[\"]))", 'i');
 

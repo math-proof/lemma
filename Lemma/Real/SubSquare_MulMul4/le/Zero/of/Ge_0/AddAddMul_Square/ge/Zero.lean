@@ -20,13 +20,6 @@ private lemma main
     norm_num at h₀
     rw [h]
     norm_num
-    -- b * x + c ≥ 0 for all x
-    -- so that b * 1 + c = b + c ≥ 0 b >= -c
-    -- so that b * (-1) + c = -b + c ≥ 0 => b <=c
-    -- so that b * 0 + c = -b + c ≥ 0 => c >= 0
-    -- if b ≠ 0, then b * (-(c + 1) / b) + c = -1 < 0, contrary to b * x + c ≥ 0 for all x
-    -- This implies b = 0 (otherwise, the inequality would fail for large x).
-    -- Then, the discriminant becomes 0² - 4 * 0 * c = 0 ≤ 0.
     by_contra h
     have : ∃ t, b * t + c < 0 := by
       use -(c + 1) / b

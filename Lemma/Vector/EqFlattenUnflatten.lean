@@ -1,12 +1,12 @@
 import Lemma.Vector.AppendValS.eq.Val.of.EqAdd
 import Lemma.Vector.Eq.of.EqValS
 import Lemma.Vector.ValAppend.eq.AppendValS
-import Lemma.Algebra.Add_Mul.eq.MulAdd_1
+import Lemma.Nat.Add_Mul.eq.MulAdd_1
 import Lemma.Vector.ValFlattenCons.eq.ValAppend_Flatten
 import Lemma.Vector.Unflatten.eq.Cons_Unflatten.of.SEq_Append
 import Lemma.Bool.HEq.of.SEq
 import Lemma.Vector.HEq.of.EqValS
-open Algebra Vector Bool
+open Vector Bool Nat
 
 
 @[main, comm]

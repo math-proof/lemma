@@ -1,6 +1,6 @@
-import Lemma.Algebra.Ne.of.Gt
+import Lemma.Nat.Ne.of.Gt
 import Lemma.List.Ne_Nil.of.NeLength_0
-open Algebra List
+open List Nat
 
 
 @[main, comm, mp, mpr]

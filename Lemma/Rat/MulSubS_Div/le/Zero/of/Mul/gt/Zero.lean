@@ -1,5 +1,5 @@
 import sympy.core.relational
-import Lemma.Algebra.MulAdd.eq.AddMulS
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Nat.EqMulS.of.Eq.Eq
 import Lemma.Algebra.Sub.eq.NegSub

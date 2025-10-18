@@ -5,11 +5,11 @@ import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.DivAdd.eq.Add1Div
+import Lemma.Rat.DivAdd.eq.Add1Div
 import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Algebra.FloorAdd1.eq.Add1Floor
-import Lemma.Algebra.MulAdd.eq.AddMulS
-open Algebra Int Nat
+import Lemma.Nat.MulAdd.eq.AddMulS
+open Algebra Int Nat Rat
 
 
 @[main]

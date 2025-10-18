@@ -1,9 +1,9 @@
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Algebra.Div.eq.One.of.Ne_0
+import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Int.Lt_Sub.of.LtAdd
-open Algebra Bool Int
+open Algebra Bool Int Rat
 
 
 @[main]

@@ -10,7 +10,7 @@ import Lemma.Vector.GetUnflatten.as.ArraySliceAppend
 import Lemma.Vector.GetUnflatten.eq.Cast_ArraySlice.of.Lt
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Vector.SEqArraySliceS.of.Eq
-import Lemma.Algebra.MulAdd.eq.AddMulS
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Algebra.Le_SubMulS.of.Lt
 import Lemma.List.Prod.eq.Foldr
 open Algebra Vector List Bool Nat

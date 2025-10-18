@@ -1,7 +1,7 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
-import Lemma.Algebra.Ne.of.Gt
-open Algebra List
+import Lemma.Nat.Ne.of.Gt
+open List Nat
 
 
 @[main]

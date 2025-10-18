@@ -19,7 +19,7 @@ import Lemma.Algebra.AddSub.eq.Add_Sub
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.Mul
-import Lemma.Algebra.MulAdd.eq.AddMulS
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Int.EqSub_Sub
 import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Algebra.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1

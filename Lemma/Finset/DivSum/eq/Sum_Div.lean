@@ -1,6 +1,6 @@
-import Lemma.Algebra.DivAdd.eq.AddDivS
+import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
-open Algebra Finset
+open Finset Rat
 
 
 @[main, comm]

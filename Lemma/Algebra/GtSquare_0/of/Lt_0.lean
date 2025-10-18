@@ -1,7 +1,7 @@
 import sympy.core.power
 import Lemma.Algebra.GtSquare_0.of.Ne_0
-import Lemma.Algebra.Ne.of.Lt
-open Algebra
+import Lemma.Nat.Ne.of.Lt
+open Algebra Nat
 
 
 @[main]

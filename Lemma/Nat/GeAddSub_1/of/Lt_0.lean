@@ -5,8 +5,8 @@ import Lemma.Nat.EqSubAdd
 import Lemma.Nat.LeSub_1
 import Lemma.Nat.Eq.of.Le.Ge
 import Lemma.Nat.LtSub_1.of.Ne_0
-import Lemma.Algebra.Ne.of.Lt
-open Algebra Nat
+import Lemma.Nat.Ne.of.Lt
+open Nat
 
 
 @[main]

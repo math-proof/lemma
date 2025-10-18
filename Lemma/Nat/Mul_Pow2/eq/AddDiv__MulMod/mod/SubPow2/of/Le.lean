@@ -1,5 +1,5 @@
 import Lemma.Nat.EqMulS.of.Eq
-import Lemma.Algebra.MulAdd.eq.AddMulS
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Algebra.Pow_Add.eq.MulPowS
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.ModEq.of.Eq

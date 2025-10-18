@@ -1,6 +1,6 @@
 import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
-import Lemma.Algebra.Ne.of.Lt
-open List Algebra
+import Lemma.Nat.Ne.of.Lt
+open List Nat
 
 
 @[main]

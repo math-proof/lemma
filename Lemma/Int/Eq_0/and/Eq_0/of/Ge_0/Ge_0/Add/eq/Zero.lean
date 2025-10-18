@@ -3,7 +3,7 @@ import Lemma.Bool.Ne.is.NotEq
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Nat.Add.gt.Zero.of.Gt_0.Ge_0
 import Lemma.Nat.Add.gt.Zero.of.Ge_0.Gt_0
-import Lemma.Algebra.Ne.of.Gt
+import Lemma.Nat.Ne.of.Gt
 open Algebra Bool Nat
 
 

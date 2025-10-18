@@ -1,8 +1,8 @@
 import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
 import Lemma.List.LengthSet.eq.Length
-import Lemma.Algebra.Ne.of.Gt
+import Lemma.Nat.Ne.of.Gt
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-open Algebra List
+open List Nat
 
 
 @[main]

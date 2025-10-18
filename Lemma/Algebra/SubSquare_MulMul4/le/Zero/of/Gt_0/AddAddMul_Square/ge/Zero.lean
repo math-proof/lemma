@@ -9,7 +9,7 @@ import Lemma.Algebra.DivMul.eq.Mul_Div
 import Lemma.Nat.Mul
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Algebra.SubDivS.eq.DivMul_Sub.of.Ne_0.Ne_0
-import Lemma.Algebra.Ne.of.Gt
+import Lemma.Nat.Ne.of.Gt
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Algebra.NegMul.eq.MulNeg
 import Lemma.Algebra.DivMulS.eq.Div.of.Ne_0

@@ -1,6 +1,6 @@
-import Lemma.Algebra.Ne.of.Gt
+import Lemma.Nat.Ne.of.Gt
 import Lemma.List.Prod.eq.Mul_ProdTail.of.Ne_0.NeLength_0
-open Algebra List
+open List Nat
 
 
 @[main]

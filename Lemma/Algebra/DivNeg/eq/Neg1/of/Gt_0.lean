@@ -1,6 +1,6 @@
 import Lemma.Algebra.DivNeg.eq.Neg1.of.Ne_0
-import Lemma.Algebra.Ne.of.Gt
-open Algebra
+import Lemma.Nat.Ne.of.Gt
+open Algebra Nat
 
 
 @[main]

@@ -1,7 +1,7 @@
-import Lemma.Algebra.LeMulS.of.Le.Ge_0
+import Lemma.Nat.LeMulS.of.Le.Ge_0
 import Lemma.Nat.LeAdd_1.of.Lt
-import Lemma.Algebra.MulAdd.eq.AddMulS
-open Algebra Nat
+import Lemma.Nat.MulAdd.eq.AddMulS
+open Nat
 
 
 @[main]
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   i * n + n ≤ m * n := by
 -- proof
-  have h := LeMulS.of.Le.Ge_0 (LeAdd_1.of.Lt h) (by simp : n >= 0)
+  have h := LeMulS.of.Le.Ge_0 (LeAdd_1.of.Lt h) (by simp : n ≥ 0)
   rw [MulAdd.eq.AddMulS] at h
   simp at h
   assumption

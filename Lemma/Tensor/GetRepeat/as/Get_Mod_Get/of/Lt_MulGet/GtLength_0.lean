@@ -25,7 +25,7 @@ import Lemma.Vector.EqGetS
 import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 import Lemma.Nat.Gt_0
 import Lemma.List.GtProd_0.of.Get_0.gt.Zero.ProdTail.gt.Zero.GtLength_0
-import Lemma.Algebra.MulAdd.eq.AddMulS
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.ModAddMul.eq.Mod
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
@@ -35,7 +35,7 @@ import Lemma.List.ProdSet__MulGet.eq.Mul_Prod.of.Lt_Length
 import Lemma.List.GtProdTail_0.of.Lt_ProdTailSet_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.List.EqGetSet.of.Lt_Length
-open Tensor Algebra Vector List Bool Nat
+open Tensor Vector List Bool Nat
 
 
 @[main]

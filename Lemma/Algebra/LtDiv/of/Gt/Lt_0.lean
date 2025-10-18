@@ -1,7 +1,7 @@
 import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Algebra.LtDivS.of.Gt.Lt_0
-import Lemma.Algebra.Ne.of.Lt
-open Algebra
+import Lemma.Nat.Ne.of.Lt
+open Algebra Nat
 
 
 @[main]

@@ -1,6 +1,6 @@
-import Lemma.Algebra.DivAdd.eq.AddDivS
-import Lemma.Algebra.Div.eq.One.of.Ne_0
-open Algebra
+import Lemma.Rat.DivAdd.eq.AddDivS
+import Lemma.Rat.Div.eq.One.of.Ne_0
+open Rat
 
 
 @[main]
