@@ -820,7 +820,7 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
 				if (e.ctrlKey) {
 					var title = e.target.title;
 					if (title)
-						window.open(title.slice(title.indexOf('👉') + 1), '_blank');
+						window.open(title.slice(title.indexOf('👉') + 2), '_blank');
 				}
 			}
 		}, { capture: true });
