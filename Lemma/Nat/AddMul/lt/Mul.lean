@@ -3,10 +3,10 @@ import Lemma.Nat.LeMulS.of.Le.Ge_0
 import Lemma.Algebra.LeAddS.of.Le.Le
 import Lemma.Algebra.Lt.of.Le_Sub_1.Gt_0
 import Lemma.Nat.MulSub.eq.SubMulS
-import Lemma.Algebra.SubAdd.eq.Add_Sub
-import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
+import Lemma.Int.SubAdd.eq.Add_Sub
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.EqAddSub.of.Ge
-open Algebra Nat
+open Algebra Nat Int
 
 
 @[main]

@@ -13,7 +13,7 @@ import Lemma.Algebra.Min
 import Lemma.Algebra.EqAddMin__Sub
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Nat.EqAddS.is.Eq
-import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.SubSub
 import Lemma.Nat.EqSubAdd
 open Algebra List Nat Int

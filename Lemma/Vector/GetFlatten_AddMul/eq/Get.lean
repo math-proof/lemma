@@ -5,7 +5,7 @@ import Lemma.Nat.AddMul.lt.Mul
 open Vector Nat
 
 
-@[main, comm]
+@[main]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m)
@@ -13,7 +13,7 @@ private lemma main
   (j : Fin n) :
 -- imply
   have := AddMul.lt.Mul i j
-  v[i, j] = v.flatten[i * n + j] := by
+  v.flatten[i * n + j] = v[i, j] := by
 -- proof
   intro h
   simp [GetElem.getElem]
@@ -34,14 +34,14 @@ private lemma main
   rw [this]
 
 
-@[main, comm]
+@[main]
 private lemma fin
 -- given
   (v : List.Vector (List.Vector α n) m)
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (v.get i).get j = v.flatten.get ⟨i * n + j, AddMul.lt.Mul i j⟩ := by
+  v.flatten.get ⟨i * n + j, AddMul.lt.Mul i j⟩ = (v.get i).get j := by
 -- proof
   apply main
 

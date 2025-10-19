@@ -88,7 +88,7 @@ if ($_POST) {
 
 	function detect_lemma(&$line)  {
 		global $sectionRegex, $term, $open_section, $imports, $sections;
-		while (preg_match("/\b($sectionRegex)((?:\.$term)+)/", $line, $matches)) {
+		while (preg_match("/\b(?<!@)($sectionRegex)((?:\.$term)+)/", $line, $matches)) {
 			if (!in_array($matches[1], $open_section))
 				$open_section[] = $matches[1];
 

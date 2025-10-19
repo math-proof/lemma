@@ -1,6 +1,6 @@
-import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Ge.of.Gt
-open Algebra Nat
+open Nat
 
 
 @[main]

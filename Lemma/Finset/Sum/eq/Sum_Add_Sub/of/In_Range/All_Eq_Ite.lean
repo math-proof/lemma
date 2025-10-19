@@ -1,11 +1,11 @@
 import Lemma.Finset.EqSumS.of.All_Eq
 import Lemma.Set.Lt.of.In_Range
-import Lemma.Algebra.SubAdd.eq.Add_Sub
+import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Nat.Add
 import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Finset.Filter.eq.Singleton.of.In
-open Algebra Set Nat Finset
+open Algebra Set Nat Finset Int
 
 
 @[main]

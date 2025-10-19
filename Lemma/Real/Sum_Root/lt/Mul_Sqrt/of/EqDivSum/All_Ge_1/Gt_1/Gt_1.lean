@@ -12,7 +12,7 @@ import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
 import Lemma.Algebra.Sum.eq.Add_Sum.of.Gt_0
 import Lemma.Finset.EqSumS.of.All_Eq
 import Lemma.Algebra.Sqrt.eq.Root_2
-import Lemma.Algebra.SubAdd.eq.Add_Sub
+import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.CoeSub.eq.SubCoeS
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Real.Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0

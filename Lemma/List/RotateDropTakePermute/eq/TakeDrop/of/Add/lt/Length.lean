@@ -12,7 +12,7 @@ private lemma main
 -- given
   (h : i + d < s.length) :
 -- imply
-  (s.drop i).take (d + 1) = (((s.permute i d).take (d + i + 1)).drop i).rotate d := by
+  (((s.permute i d).take (d + i + 1)).drop i).rotate d = (s.drop i).take (d + 1) := by
 -- proof
   rw [DropTakePermute.eq.RotateTakeDrop.of.Add.lt.Length h]
   rw [EqRotateRotate.of.Add.eq.Length]

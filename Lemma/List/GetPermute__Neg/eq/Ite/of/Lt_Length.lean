@@ -4,7 +4,7 @@ import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
-import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Add
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -29,9 +29,9 @@ import Lemma.Algebra.LeSub.of.Le
 import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Int.Sub_Add.eq.SubSub
-import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Nat.AddAdd
-import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
+import Lemma.Nat.SubAdd.eq.AddSub.of.Le
 import Lemma.Nat.GeSub_1.of.Gt
 import Lemma.Nat.LtSub
 import Lemma.List.LengthPermute.eq.Length

@@ -12,7 +12,7 @@ import Lemma.Algebra.LtValS.of.Lt
 import Lemma.Nat.EqSub_Sub.of.Gt
 import Lemma.Nat.Sub.ge.One.of.Gt
 import Lemma.Nat.Le.of.Lt
-import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.LtSub.of.Lt
 import Lemma.Algebra.Eq_0.of.Eq_Sub_1
 import Lemma.Nat.Ge_Sub_1

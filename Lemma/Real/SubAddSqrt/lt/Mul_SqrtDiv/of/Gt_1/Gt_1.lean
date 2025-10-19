@@ -6,7 +6,7 @@ import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Gt_0
 import Lemma.Algebra.SquareAdd.eq.AddAddSquareS_MulMul2
-import Lemma.Algebra.SubAdd.eq.Add_Sub
+import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Algebra.EqDivSquare
 import Lemma.Algebra.Mul_Add.eq.AddMulS
@@ -15,7 +15,7 @@ import Lemma.Algebra.AddSub.eq.SubAdd
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.SubMul.eq.MulSub_1
 import Lemma.Int.SubSub
-import Lemma.Algebra.AddSub.eq.Add_Sub
+import Lemma.Int.AddSub.eq.Add_Sub
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.Mul

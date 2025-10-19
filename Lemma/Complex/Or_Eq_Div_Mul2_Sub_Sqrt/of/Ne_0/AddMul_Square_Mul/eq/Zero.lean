@@ -3,7 +3,7 @@ import sympy.polys.polyroots
 import Lemma.Algebra.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
-import Lemma.Algebra.SubAdd.eq.Add_Sub
+import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Algebra.DivMul.eq.Mul_Div
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul

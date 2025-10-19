@@ -2,7 +2,7 @@ import Lemma.Algebra.Ceil.eq.Neg.Floor
 import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.Div.eq.One.of.Ne_0
-import Lemma.Algebra.SubAdd.eq.Add_Sub
+import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Algebra.EqSub.is.Eq_Add
 import Lemma.Algebra.EqNegS.is.Eq
 import Lemma.Algebra.Sub.eq.NegSub

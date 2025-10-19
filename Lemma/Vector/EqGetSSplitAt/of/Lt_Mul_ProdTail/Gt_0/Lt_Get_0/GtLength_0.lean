@@ -17,7 +17,7 @@ import Lemma.Algebra.EqDivMul.of.Ne_0
 import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqAddS.is.Eq
-import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Ge_Mod
 import Lemma.Algebra.Dvd_Mul.of.Dvd
 open Algebra Vector List Nat

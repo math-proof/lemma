@@ -1,5 +1,5 @@
 import Lemma.Nat.Any_Eq_AddMul
-import Lemma.Vector.Get.eq.GetFlatten_AddMul
+import Lemma.Vector.GetFlatten_AddMul.eq.Get
 import Lemma.Nat.LtVal
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Nat.Add

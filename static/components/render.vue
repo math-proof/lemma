@@ -486,6 +486,14 @@ where
                 err.col = col;
             }
         }
+        else if (!hash) {
+            var {proof} = this.renderLean.back();
+            var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
+            if (attr)
+                proof = proof[attr];
+            proof = proof[0];
+            proof.editor.focus();
+        }
         if (model) {
             this.model = model;
             var i = this.lemma.findIndex(x => x.name == 'main');

@@ -1,9 +1,9 @@
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Vector.Get.eq.GetFlatten_AddMul
+import Lemma.Vector.GetFlatten_AddMul.eq.Get
 open Vector Nat
 
 
-@[main, comm]
+@[main]
 private lemma main
 -- given
   (h_i : i < m)
@@ -11,12 +11,12 @@ private lemma main
   (v : List.Vector (List.Vector α n) m) :
 -- imply
   have := AddMul.lt.Mul.of.Lt.Lt h_i h_j
-  v[i, j] = v.flatten[i * n + j] :=
+  v.flatten[i * n + j] = v[i, j] :=
 -- proof
-  Get.eq.GetFlatten_AddMul v ⟨i, h_i⟩ ⟨j, h_j⟩
+  GetFlatten_AddMul.eq.Get v ⟨i, h_i⟩ ⟨j, h_j⟩
 
 
-@[main, comm]
+@[main]
 private lemma fin
 -- given
   (h_i : i < m)
@@ -24,7 +24,7 @@ private lemma fin
   (v : List.Vector (List.Vector α n) m) :
 -- imply
   have h_ij := AddMul.lt.Mul.of.Lt.Lt h_i h_j
-  (v.get ⟨i, h_i⟩).get ⟨j, h_j⟩ = v.flatten.get ⟨i * n + j, h_ij⟩ := by
+  v.flatten.get ⟨i * n + j, h_ij⟩ = (v.get ⟨i, h_i⟩).get ⟨j, h_j⟩ := by
 -- proof
   apply main
 

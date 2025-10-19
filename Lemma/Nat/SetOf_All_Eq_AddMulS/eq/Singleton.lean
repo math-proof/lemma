@@ -6,7 +6,7 @@ import Lemma.Nat.Mul2.eq.Add
 import Lemma.Int.EqAdd.is.Eq_Sub
 import Lemma.Algebra.EqAdd.of.Eq_Sub.Le
 import Lemma.Algebra.AddSub.eq.SubAdd
-import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
+import Lemma.Nat.SubAdd.eq.AddSub.of.Le
 import Lemma.Nat.SubMul.eq.MulSub_1
 import Lemma.Algebra.Mul_Add.eq.AddMulS
 import Lemma.Nat.MulSub.eq.SubMulS

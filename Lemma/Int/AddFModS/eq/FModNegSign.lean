@@ -4,7 +4,7 @@ import Lemma.Int.FModNeg.eq.Ite_0Sub_FMod
 import Lemma.Int.FModNeg.eq.Zero.of.FMod.eq.Zero
 import Lemma.Int.FModSub.eq.FModNeg.of.FMod.eq.Zero
 import Lemma.Int.Any_Eq_AddMul.of.EqFMod
-import Lemma.Algebra.SubAdd.eq.Add_Sub
+import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.FModAddMul.eq.FMod
 import Lemma.Int.FModNegSign.eq.Sub_Sign
 import Lemma.Int.AddSub.eq.Sub_Sub

@@ -5,7 +5,7 @@ import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
-import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Add
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.EqMin.of.Le

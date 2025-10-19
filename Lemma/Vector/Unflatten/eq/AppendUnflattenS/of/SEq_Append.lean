@@ -9,7 +9,7 @@ import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.EqGetS.of.Eq.Lt
 import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
 import Lemma.Nat.MulAdd.eq.AddMulS
-import Lemma.Algebra.SubAdd.eq.AddSub.of.Le
+import Lemma.Nat.SubAdd.eq.AddSub.of.Le
 import Lemma.Nat.MulSub.eq.SubMulS
 open Algebra Vector Nat
 

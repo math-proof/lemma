@@ -1,5 +1,5 @@
 import Lemma.Int.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.SubAdd.eq.Add_Sub
+import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Nat.Add
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Nat.EqAddS.is.Eq

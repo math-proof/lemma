@@ -5,7 +5,7 @@ import Lemma.List.Slice.eq.Nil
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.AppendTake_Slice.eq.Take.of.Le
-import Lemma.Algebra.SubAdd.eq.Add_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Ge_1
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.LengthTake.eq.Min_Length
@@ -20,13 +20,13 @@ import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.DropTake.eq.ListGet.of.Lt_Length
 import Lemma.List.SliceTake.eq.Slice.of.Ge
-import Lemma.Algebra.SubAdd.eq.Sub_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Nat.Add
 import Lemma.Nat.Sub.eq.Zero.of.Lt
 import Lemma.List.Slice_0.eq.Take
 import Lemma.List.Cons_Append.eq.AppendCons
 import Lemma.Nat.EqMin.of.Gt
-open Algebra List Nat
+open List Nat
 
 
 @[main]

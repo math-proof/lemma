@@ -11,7 +11,7 @@ import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Int.LtAdd.of.Lt_Sub
 import Lemma.Int.Sub.gt.Zero.is.Lt
 import Lemma.Nat.Add
-import Lemma.Algebra.SubAdd.eq.Add_Sub
+import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Algebra.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Algebra.GtSqrtS.of.Gt.Gt_0
 import Lemma.Algebra.GtSquare_0.of.Gt_0
