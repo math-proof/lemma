@@ -120,7 +120,7 @@ private lemma main
         simp [LengthPermute.eq.Length]
         repeat rw [EqMin.of.Le (by omega)]
         rw [EqSubAdd.left]
-        rw [Sub_Add.eq.SubSub]
+        rw [@Nat.Sub_Add.eq.SubSub]
         rw [EqSubAdd]
         have h_j : j = d + i := by omega
         simp [h_j]

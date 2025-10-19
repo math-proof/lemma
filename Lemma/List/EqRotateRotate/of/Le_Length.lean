@@ -1,4 +1,4 @@
-import Lemma.List.EqRotate
+import Lemma.List.EqRotate_Length
 import Lemma.Nat.EqAdd_Sub.of.Ge
 open List Nat
 
@@ -13,7 +13,7 @@ private lemma main
 -- proof
   rw [List.rotate_rotate]
   rw [EqAdd_Sub.of.Ge (by omega)]
-  apply EqRotate
+  apply EqRotate_Length
 
 
 -- created on 2025-10-14

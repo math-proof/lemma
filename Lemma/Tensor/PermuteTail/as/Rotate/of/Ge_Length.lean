@@ -12,7 +12,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Nat.Sub.eq.Zero.of.Le
 import Lemma.Nat.EqMin.of.Ge
-import Lemma.Nat.Mod.eq.Sub_1
+import Lemma.Nat.Mod.eq.Sub
 import Lemma.List.ProdAppend.eq.MulProdS
 open Vector Nat Tensor Bool List
 
@@ -73,7 +73,7 @@ private lemma main
         simp [h₀, h_min]
       ·
         simp [h₀, h_min]
-        rw [Mod.eq.Sub_1] at h_rotate
+        rw [Mod.eq.Sub] at h_rotate
         simp [h_rotate]
 
 
