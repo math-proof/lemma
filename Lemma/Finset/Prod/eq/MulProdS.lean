@@ -1,8 +1,8 @@
 import Lemma.Algebra.Prod.eq.Prod_Pow_Bool
-import Lemma.Algebra.Prod_Mul.eq.MulProdS
+import Lemma.Finset.Prod_Mul.eq.MulProdS
 import Lemma.Algebra.Pow_Add.eq.MulPowS
 import Lemma.Set.BoolIn.eq.AddBoolSIn
-open Algebra Set
+open Algebra Set Finset
 
 
 @[main]

@@ -18,35 +18,12 @@ private lemma main
 -- proof
   by_cases h_s : s.length = 1
   ·
-    match s with
-    | [] =>
-      contradiction
-    | [n] =>
-      simp
-      have h_head := SEqPermuteHead_1 X
-      apply SEq.symm ∘ SEq.trans h_head.symm
-      let X' : Tensor α [n] := cast (by simp) (X.permuteHead 1)
-      have h_sim_X' : X' ≃ X := by
-        simp [X']
-        apply SEqCast.of.SEq.Eq.Eq
-        ·
-          simp
-        ·
-          rfl
-        ·
-          assumption
-      have h_tail := SEqPermuteTail_1 X'
-      simp [X'] at h_tail
-      have h_tail := SEq.of.SEq_Cast h_tail (h := by simp)
-      apply SEq.trans h_tail.symm
-      rw [PermuteTailCast.eq.Cast_PermuteTail.of.Eq (by simp)]
-      apply SEqCast.of.SEq.Eq.Eq
-      .
-        simp
-      .
-        simp
-      .
-        rfl
+    rw [h_s]
+    have h_head := SEqPermuteHead_1 X
+    apply SEq.symm ∘ SEq.trans h_head.symm
+    have h_tail := SEqPermuteTail_1 (X.permuteHead 1)
+    apply SEq.trans h_tail.symm
+    rfl
   ·
     have h := GeLength_1.of.Ne_Nil h
     apply SEqPermuteTailPermuteHead.of.GtLength_1

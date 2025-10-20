@@ -1,3 +1,4 @@
+import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
@@ -12,7 +13,7 @@ open Tensor Vector Nat Bool
 @[main]
 private lemma main
 -- given
-  (X : Tensor α [n]) :
+  (X : Tensor α s) :
 -- imply
   X.permuteTail 1 ≃ X := by
 -- proof
@@ -31,19 +32,21 @@ private lemma main
       apply SEq.of.All_EqGetS.Eq (by simp)
       intro t
       have h_t := LtVal t
-      simp at h_t
-      have := GetFlatten.eq.Get.of.Eq_AddMul (j := ⟨t, by simpa⟩) (i := ⟨0, by simp_all⟩) (t := t) (by simp) (List.Vector.map (fun data ↦ ((⟨data⟩ : Tensor α _).rotate (1 ⊓ 1 - 1)).data) (X.data.splitAt 0))
-      simp at this
-      simp [this]
+      let ⟨k', k, h_k'k⟩ := Any_EqAddMul.of.Lt_Mul h_t
+      have h_k := LtVal k
+      simp at h_k
+      simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k.symm]
       unfold Tensor.rotate
       simp
       simp only [GetElem.getElem]
       rw [GetCast.eq.Get.of.Eq.Lt.fin]
       .
-        rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨t, by simpa⟩) (t := t) (by simp)]
+        rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨k, by simpa⟩) (t := k) (by simp)]
         rw [GetTranspose.eq.Get.fin]
         repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         simp
+        simp at h_k'k
+        aesop
       .
         simpa
       .
