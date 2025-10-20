@@ -10,7 +10,7 @@ private lemma main
 -- given
   (h : s.length > 0) :
 -- imply
-  s.rotate 1 = s.permute ⟨0, h⟩ (s.length - 1 : ℕ) := by
+  s.permute ⟨0, h⟩ (s.length - 1 : ℕ) = s.rotate 1 := by
 -- proof
   simp [Permute.eq.AppendRotateTake___Drop.of.EqVal_0]
   rw [EqAddSub.of.Ge (by omega)]

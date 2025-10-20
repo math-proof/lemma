@@ -26,7 +26,7 @@ import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.List.RotateDropTakePermute.eq.TakeDrop.of.Add.lt.Length
 import Lemma.Tensor.PermuteTailCast.eq.Cast_PermuteTail.of.Eq
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.List.Rotate.eq.Permute.of.GtLength_0
+import Lemma.List.Permute.eq.Rotate.of.GtLength_0
 import Lemma.List.EqRotateRotate.of.Le_Length
 import Lemma.Tensor.PermuteTail.as.Rotate.of.Eq_Length
 import Lemma.Tensor.SEqRotate.of.SEq_Rotate.Le_Length
@@ -49,6 +49,7 @@ import Lemma.List.ProdRotate.eq.Prod
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.List.ProdPermute.eq.Prod
+import Lemma.Nat.ToNatSub_Neg.eq.Add
 open List Tensor Bool Nat Int Vector
 set_option maxHeartbeats 4000000
 
@@ -73,12 +74,7 @@ private lemma main'
     simp at h_d
     -- have h_d := Gt_0.of.Ne_0 h_d
     rw [Permute.eq.Ite (d := ⟨j, by simpa [LengthPermute.eq.Length]⟩) (k := -d)]
-    have h_toNat : (1 - -(d : ℤ)).toNat = 1 + d := by
-      rw [Sub_Neg.eq.Add]
-      have := AddCoeS.eq.CoeAdd (α := ℤ) 1 d
-      rw [Cast.eq.OfNat] at this
-      rw [this]
-      rw [EqToNat]
+    have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
     split_ifs with h_sub h_pos h_j_0 h_j_length
     repeat omega
     simp [LengthPermute.eq.Length] at h_j_length

@@ -1,4 +1,4 @@
-import Lemma.List.Prod.eq.Mul_ProdTail.of.Ne_0.NeLength_0
+import Lemma.List.Prod.eq.Mul_ProdTail.of.NeLength_0
 import Lemma.Nat.EqDivS.of.Eq
 open List Nat
 
@@ -12,12 +12,9 @@ private lemma main
 -- imply
   s.tail.prod = s.prod / s[0] := by
 -- proof
-  -- Use the product property
-  have h_prod := Prod.eq.Mul_ProdTail.of.Ne_0.NeLength_0 h₀ h₁
-  -- divide both sides by s[0]
+  have h_prod := Prod.eq.Mul_ProdTail.of.NeLength_0 h₀
   have h_div := EqDivS.of.Eq h_prod s[0]
   simp [h₁] at h_div
-  -- h_div : s.prod / s[0] = s.tail.prod
   exact h_div.symm
 
 
