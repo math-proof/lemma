@@ -50,13 +50,11 @@ private lemma main
       apply SEqCast.of.SEq.Eq.Eq
       .
         rw [MulProdS.eq.ProdAppend]
-        apply congrArg
         rw [h_toNat]
         simp [LengthPermute.eq.Length]
         rw [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
         simp [List.Permute__Neg.eq.Append_AppendRotateTakeDrop]
       .
-        apply congrArg
         rw [h_permute]
       .
         rw [h_toNat]
@@ -119,13 +117,7 @@ private lemma main
             .
               rwa [AppendDrop__Take.eq.Rotate]
             .
-              apply congrArg
-              simp [LengthPermute.eq.Length]
-              rw [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
-              simp
-              rw [Rotate.eq.AppendDrop__Take.of.Le_Length (n := d)]
-              simp [LengthPermute.eq.Length]
-              omega
+              rw [Rotate.eq.AppendDrop__Take]
           .
             rwa [MulProdS.eq.ProdAppend]
           .
