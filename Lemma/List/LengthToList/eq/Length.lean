@@ -1,12 +1,12 @@
 import sympy.core.relational
-import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
-import Lemma.Algebra.EqSub.is.Eq_Add
-import Lemma.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt
+import Lemma.Int.EqToNat_0.of.Le_0
+import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Rat.EqToNatCeil_0.of.Le
 import Lemma.Rat.ToNatCeilDivNeg.eq.Zero
 import Lemma.Rat.CoeAdd.eq.AddCoeS
-import Lemma.Int.EqToNat_0.of.Le_0
-open Algebra List Rat Int
+import Lemma.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt
+import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
+open Int Rat List
 
 
 @[main]

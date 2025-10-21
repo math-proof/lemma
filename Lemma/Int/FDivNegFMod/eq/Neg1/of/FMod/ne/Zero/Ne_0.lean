@@ -1,6 +1,6 @@
 import sympy.core.relational
 import Lemma.Int.FDiv.eq.FloorDiv
-import Lemma.Algebra.EqFloor.is.Le.Lt
+import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Algebra.DivNeg.eq.NegDiv
 import Lemma.Algebra.DivInt.eq.Div
 import Lemma.Algebra.CoeNeg.eq.NegCoe

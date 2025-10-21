@@ -1,12 +1,12 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Nat.EqMin.of.Le
-import Lemma.Algebra.Le_SubMulS.of.Lt
+import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
 import Lemma.Vector.EqGetRange.of.Lt
-open Algebra List Vector Bool Nat
+open List Vector Bool Nat
 
 
 @[main, comm]

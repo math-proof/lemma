@@ -1,5 +1,5 @@
 import Lemma.List.Slice.eq.Nil.of.Ge
-import Lemma.Algebra.Gt.of.Ge.Gt
+import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.List.EqAppendTake__Drop
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.DropAppend.eq.AppendDrop.of.Le_Length

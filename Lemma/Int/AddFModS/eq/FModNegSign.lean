@@ -8,7 +8,7 @@ import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.FModAddMul.eq.FMod
 import Lemma.Int.FModNegSign.eq.Sub_Sign
 import Lemma.Int.AddSub.eq.Sub_Sub
-import Lemma.Algebra.EqSub.is.Eq_Add
+import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.Add
 import Lemma.Int.EqFMod.of.Mul_Add_Sign.lt.Zero
 import Lemma.Int.Sub_Add.eq.SubSub

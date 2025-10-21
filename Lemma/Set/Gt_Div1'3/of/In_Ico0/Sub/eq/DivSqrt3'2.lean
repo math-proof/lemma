@@ -1,8 +1,8 @@
-import Lemma.Algebra.LtDivS.of.Lt.Gt_0
+import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Algebra.Gt.of.Lt
 import Lemma.Set.Lt.of.LtUFn.In_Ico.In_Ico
 import Lemma.Algebra.Lt_Sqrt.is.LtSquare.of.Ge_0
-open Algebra Set
+open Algebra Set Rat
 
 
 /--

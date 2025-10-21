@@ -1,6 +1,6 @@
 import Lemma.Algebra.GtMulS.of.Gt_0.Gt
-import Lemma.Algebra.EqMul_1
-open Algebra
+import Lemma.Nat.EqMul_1
+open Algebra Nat
 
 
 @[main]

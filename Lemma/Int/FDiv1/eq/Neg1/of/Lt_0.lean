@@ -1,10 +1,10 @@
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.LtCoeS.is.Lt
-import Lemma.Algebra.EqFloor.is.Le.Lt
+import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Algebra.DivInt.eq.Div
-import Lemma.Algebra.GeDiv.of.Le_Mul.Lt_0
+import Lemma.Rat.GeDiv.of.Le_Mul.Lt_0
 import Lemma.Nat.Le_Sub_1.of.Lt
-open Algebra Int Nat
+open Algebra Int Nat Rat
 
 
 @[main]

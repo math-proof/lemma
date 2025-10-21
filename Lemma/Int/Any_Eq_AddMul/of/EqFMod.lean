@@ -1,7 +1,7 @@
 import Lemma.Int.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.EqSub.is.Eq_Add
+import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.Add
-open Algebra Nat Int
+open Nat Int
 
 
 @[main]

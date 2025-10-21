@@ -3,7 +3,7 @@ import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.LeCoeS.is.Le
-import Lemma.Algebra.LeDivS.of.Le.Gt_0
+import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Algebra.LeCeil.is.Le
 import Lemma.Int.LeToNat.is.Le
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
@@ -13,7 +13,7 @@ import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Div.lt.Zero.of.Lt_0.Gt_0
 import Lemma.Nat.Le.of.Lt
 import Lemma.Int.EqToNat_0.of.Le_0
-open Algebra Bool Int Nat
+open Algebra Bool Int Nat Rat
 
 
 @[main]

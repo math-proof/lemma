@@ -3,11 +3,11 @@ import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Algebra.Div.eq.FloorDiv
 import Lemma.Rat.DivAdd.eq.AddDivS
-import Lemma.Algebra.Ne_0
+import Lemma.Nat.Ne_0
 import Lemma.Nat.NeCoeS.of.Ne
-import Lemma.Algebra.EqDivMul.of.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.FloorAdd.eq.Add_Floor
-import Lemma.Algebra.FloorDiv.eq.Zero
+import Lemma.Rat.FloorDiv.eq.Zero
 import Lemma.Rat.FloorDivMod.eq.Zero
 open Algebra Nat Rat
 

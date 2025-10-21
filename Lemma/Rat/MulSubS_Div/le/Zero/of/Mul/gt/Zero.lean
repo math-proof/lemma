@@ -1,6 +1,6 @@
 import sympy.core.relational
 import Lemma.Nat.MulAdd.eq.AddMulS
-import Lemma.Algebra.Mul_Add.eq.AddMulS
+import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Nat.EqMulS.of.Eq.Eq
 import Lemma.Algebra.Sub.eq.NegSub
 import Lemma.Algebra.DivMul.eq.Mul_Div
@@ -10,12 +10,12 @@ import Lemma.Algebra.Mul_Neg.eq.NegSquare
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.MulMul
-import Lemma.Algebra.GtMulS.of.Gt.Gt_0
+import Lemma.Nat.GtMulS.of.Gt.Gt_0
 import Lemma.Algebra.EqMul0_0
 import Lemma.Algebra.LeNegSquare_0
 import Lemma.Int.Add.ne.Zero.of.Mul.gt.Zero
 import Lemma.Algebra.GtSquare_0.of.Ne_0
-import Lemma.Algebra.LeDivS.of.Le.Gt_0
+import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Algebra.Ne_0.of.Mul.gt.Zero
 import Lemma.Algebra.Square.eq.Mul
 open Algebra Rat Int Nat

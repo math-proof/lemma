@@ -179,43 +179,33 @@ def String.is_relational_operator : String → Bool
   | "et" | "ou" | "to" | "eq" | "ne" | "gt" | "lt" | "ge" | "le" | "in" | "as" | "dvd" | "subset" | "supset" => true
   | _ => false
 
+def List.transformSufix (s : List Char) (c : Char): List Char :=
+  if c == '_' then s else '_' :: c :: s
+
 def String.transformEq (s : String) : String :=
-  if s.startsWith "Eq_" then
-    "Eq" ++ s.drop 3
-  else if s.startsWith "Eq" then
-    if s.length > 2 then
-      "Eq_" ++ s.drop 2
-    else
+  match s with
+  | ⟨s₀ :: s₁ :: sufix⟩ =>
+    match s₀, s₁, sufix with
+    | 'E', 'q', (s₂ :: sufix)
+    | 'N', 'e', (s₂ :: sufix) =>
+      (s₀ :: s₁ :: sufix.transformSufix s₂).asString
+    | 'S', 'E', (s₂@'q' :: s₃ :: sufix)
+    | 'I', 'f', (s₂@'f' :: s₃ :: sufix)
+    | 'H', 'E', (s₂@'q' :: s₃ :: sufix) =>
+      (s₀ :: s₁ :: s₂ :: sufix.transformSufix s₃).asString
+    | 'L', 't', _
+    | 'L', 'e', _
+    | 'G', 't', _
+    | 'G', 'e', _ =>
+      let s₀ := if s₀ == 'L' then 'G' else 'L'
+      match sufix with
+      | s₂ :: sufix =>
+        (s₀ :: s₁ :: sufix.transformSufix s₂).asString
+      | _ =>
+        [s₀, s₁].asString
+    | _, _, _ =>
       s
-  else if s.startsWith "SEq_" then
-    "SEq" ++ s.drop 4
-  else if s.startsWith "SEq" then
-    if s.length > 3 then
-      "SEq_" ++ s.drop 3
-    else
-      s
-  else if s.startsWith "Iff_" then
-    "Iff" ++ s.drop 4
-  else if s.startsWith "Iff"  then
-    if s.length > 3 then
-      "Iff_" ++ s.drop 3
-    else
-      s
-  else if s.startsWith "Ne_" then
-    "Ne" ++ s.drop 3
-  else if s.startsWith "Ne"  then
-    if s.length > 2 then
-      "Ne_" ++ s.drop 2
-    else
-      s
-  else if s.startsWith "HEq_" then
-    "HEq" ++ s.drop 4
-  else if s.startsWith "HEq" then
-    if s.length > 3 then
-      "HEq_" ++ s.drop 3
-    else
-      s
-  else
+  | _ =>
     s
 
 -- #eval "%%Hello %%%-10s! %5.2f%%".format "World", -20.666666 + 1

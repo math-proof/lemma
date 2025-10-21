@@ -1,6 +1,6 @@
 import Lemma.Algebra.GeAddS.is.Ge
 import Lemma.Nat.GtAddS.is.Gt
-import Lemma.Algebra.Gt.of.Ge.Gt
+import Lemma.Nat.Gt.of.Ge.Gt
 open Algebra Nat
 
 

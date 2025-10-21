@@ -1,7 +1,7 @@
 import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.Lt_Length
-import Lemma.Algebra.Dvd_Mul.of.Dvd
-import Lemma.Algebra.Dvd_Mul
-open Algebra List
+import Lemma.Nat.Dvd_Mul.of.Dvd
+import Lemma.Nat.Dvd_Mul
+open List Nat
 
 
 @[main]

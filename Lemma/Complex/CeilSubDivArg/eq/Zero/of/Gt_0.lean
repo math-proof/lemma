@@ -9,7 +9,7 @@ import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
 import Lemma.Algebra.Pi.gt.Zero
-import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Algebra.Pi.ne.Zero
 import Lemma.Set.EqCeil_0.of.In_Ioc
 import Lemma.Set.In.of.In.Subset

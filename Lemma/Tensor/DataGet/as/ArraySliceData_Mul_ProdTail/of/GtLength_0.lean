@@ -4,10 +4,10 @@ import Lemma.Tensor.SEqArraySliceSData.of.Eq
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.Lt_Get_0.GtLength_0
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
-import Lemma.Algebra.Le_SubMulS.of.Lt
+import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Vector.HEq.of.EqValS
 import Lemma.Nat.LtVal
-open Tensor List Algebra Vector Nat
+open Tensor List Vector Nat
 
 
 @[main]

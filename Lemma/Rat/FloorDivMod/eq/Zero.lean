@@ -1,7 +1,7 @@
-import Lemma.Algebra.FloorDiv.eq.Zero.of.Lt
+import Lemma.Rat.FloorDiv.eq.Zero.of.Lt
 import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.LtMod.of.Ne_0
-open Algebra Nat
+open Nat Rat
 
 
 @[main]

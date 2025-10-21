@@ -1,5 +1,5 @@
-import Lemma.Algebra.LtInvS.of.Gt_0.Ge
-open Algebra
+import Lemma.Rat.LtInvS.of.Gt_0.Ge
+open Rat
 
 
 @[main]

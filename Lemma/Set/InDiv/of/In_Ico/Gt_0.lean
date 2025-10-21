@@ -1,9 +1,9 @@
 import Lemma.Set.Ge.of.In_Ico
 import Lemma.Algebra.GeDivS.of.Ge.Gt_0
 import Lemma.Set.Lt.of.In_Ico
-import Lemma.Algebra.LtDivS.of.Lt.Gt_0
+import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Set.In_Ico.of.Le.Lt
-open Set Algebra
+open Set Algebra Rat
 
 
 @[main]

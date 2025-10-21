@@ -5,16 +5,16 @@ import Lemma.Nat.LtVal
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.EqGetS
 import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt
-import Lemma.Algebra.EqDivMul.of.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Vector.EqGetRange.of.Lt
-import Lemma.Algebra.Le_SubMulS.of.Lt
+import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Bool.EqCast.of.HEq
 import Lemma.Bool.HEq.of.All_HEq.Eq
 import Lemma.Bool.HEqMkS.of.Eq.Eq.Lt
-import Lemma.Algebra.EqValCast.of.Lt.Eq
-open Algebra Vector List Bool Nat
+import Lemma.Nat.EqValCast.of.Lt.Eq
+open Vector List Bool Nat
 
 
 @[main]

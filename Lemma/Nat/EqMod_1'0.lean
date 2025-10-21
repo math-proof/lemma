@@ -1,9 +1,9 @@
 import Lemma.Nat.Mod.eq.Sub_MulDiv
 import Lemma.Nat.EqDiv_1
-import Lemma.Algebra.EqMul_1
+import Lemma.Nat.EqMul_1
 import Lemma.Nat.Sub.eq.Zero
 import Lemma.Nat.EqMod0_0
-open Algebra Nat
+open Nat
 
 
 @[main]

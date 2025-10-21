@@ -1,7 +1,7 @@
 import sympy.sets.sets
-import Lemma.Algebra.LtDivS.of.Lt.Gt_0
-import Lemma.Algebra.LeDivS.of.Le.Gt_0
-open Algebra
+import Lemma.Rat.LtDivS.of.Lt.Gt_0
+import Lemma.Rat.LeDivS.of.Le.Gt_0
+open Rat
 
 
 @[main]

@@ -3,11 +3,11 @@ import Lemma.Nat.Add
 import Lemma.Nat.Mul
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Algebra.Mul_Add.eq.AddMulS
+import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Rat.DivDiv.eq.Div_Mul
-import Lemma.Algebra.GtMulS.of.Gt.Gt_0
+import Lemma.Nat.GtMulS.of.Gt.Gt_0
 import Lemma.Rat.DivAdd.eq.AddDivS
-open Algebra Rat Nat
+open Rat Nat
 
 
 @[main]

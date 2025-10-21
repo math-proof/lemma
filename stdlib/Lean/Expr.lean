@@ -260,8 +260,25 @@ def Lean.Expr.comm : Expr → Expr
     (Expr.const `HEq us).mkApp [β, b, α, a]
   | .app (.app (.app (.const `Ne us) α) a) b =>
     (Expr.const `Ne us).mkApp [α, b, a]
+  | .app (.app (.app (.app (.const `LT.lt us) α) I) a) b =>
+    (Expr.const `GT.gt us).mkApp [α, I, b, a]
+  | .app (.app (.app (.app (.const `LE.le us) α) I) a) b =>
+    (Expr.const `GE.ge us).mkApp [α, I, b, a]
+  | .app (.app (.app (.app (.const `GT.gt us) α) I) a) b =>
+    (Expr.const `LT.lt us).mkApp [α, I, b, a]
+  | .app (.app (.app (.app (.const `GE.ge us) α) I) a) b =>
+    (Expr.const `LE.le us).mkApp [α, I, b, a]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, HEq or Ne, but got {e.ctorName} : {e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, but got {e.ctorName} :\n{e}"
+
+@[symm]
+theorem LT.symm [LT α] {a b : α} (h : a < b) : b > a := h
+@[symm]
+theorem LE.symm [LE α] {a b : α} (h : a ≤ b) : b ≥ a := h
+@[symm]
+theorem GT.symm [LT α] {a b : α} (h : a > b) : b < a := h
+@[symm]
+theorem GE.symm [LE α] {a b : α} (h : a ≥ b) : b ≤ a := h
 
 def Lean.Expr.symm : Expr → Expr
   | .app (.app (.app (.const `Eq us) α) a) b =>
@@ -274,8 +291,16 @@ def Lean.Expr.symm : Expr → Expr
     (Expr.const `HEq.symm us).mkApp [α, β, a, b]
   | .app (.app (.app (.const `Ne us) α) a) b =>
     (Expr.const `Ne.symm us).mkApp [α, a, b]
+  | .app (.app (.app (.app (.const `LT.lt us) α) I) a) b =>
+    (Expr.const `LT.symm us).mkApp [α, I, a, b]
+  | .app (.app (.app (.app (.const `LE.le us) α) I) a) b =>
+    (Expr.const `LE.symm us).mkApp [α, I, a, b]
+  | .app (.app (.app (.app (.const `GT.gt us) α) I) a) b =>
+    (Expr.const `GT.symm us).mkApp [α, I, a, b]
+  | .app (.app (.app (.app (.const `GE.ge us) α) I) a) b =>
+    (Expr.const `GE.symm us).mkApp [α, I, a, b]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, HEq or Ne, but got {e.ctorName} : {e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, but got {e.ctorName} :\n{e}"
 
 def Lean.Expr.decomposeType : Expr → Expr × Expr
   | .app (.app (.app (.app (.const `letFun us) α) β) v) (.lam binderName binderType body binderInfo) =>

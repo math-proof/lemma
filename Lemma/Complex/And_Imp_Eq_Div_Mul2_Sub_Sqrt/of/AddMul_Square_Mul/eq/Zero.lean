@@ -1,6 +1,6 @@
-import Lemma.Algebra.And_Imp_Eq_DivNeg.of.Eq0AddMul
+import Lemma.Rat.ImpEq.ImpNe.of.AddMul.eq.Zero
 import Lemma.Complex.Or_Eq_Div_Mul2_Sub_Sqrt.of.Ne_0.AddMul_Square_Mul.eq.Zero
-open Algebra Complex
+open Complex Rat
 
 
 @[main]
@@ -33,7 +33,7 @@ private lemma main
       intro ha
       rw [ha.left] at h
       simp at h
-      exact (And_Imp_Eq_DivNeg.of.Eq0AddMul h).right ha.right
+      exact (ImpEq.ImpNe.of.AddMul.eq.Zero h).right ha.right
     -- case right.right
     ·
       intro ha

@@ -1,7 +1,7 @@
 import sympy.core.relational
-import Lemma.Algebra.EqFloor.is.Le.Lt
+import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Set.In_Ico.of.Le.Lt
-open Algebra Set
+open Set Int
 
 
 @[main]

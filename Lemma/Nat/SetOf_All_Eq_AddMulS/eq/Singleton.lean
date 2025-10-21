@@ -4,16 +4,16 @@ import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.AddAdd
 import Lemma.Nat.Mul2.eq.Add
 import Lemma.Int.EqAdd.is.Eq_Sub
-import Lemma.Algebra.EqAdd.of.Eq_Sub.Le
-import Lemma.Algebra.AddSub.eq.SubAdd
+import Lemma.Nat.EqAdd.of.Eq_Sub.Le
+import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Nat.SubAdd.eq.AddSub.of.Le
 import Lemma.Nat.SubMul.eq.MulSub_1
-import Lemma.Algebra.Mul_Add.eq.AddMulS
+import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Nat.MulSub.eq.SubMulS
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Algebra.Eq_Add.of.EqSub.Le
+import Lemma.Nat.Eq_Add.of.EqSub.Le
 import Lemma.Nat.Fib.eq.AddFibS.of.Ge_2
-open Algebra Nat Int
+open Nat Int
 
 
 private def G (n : ℕ) := fib (3 * n)

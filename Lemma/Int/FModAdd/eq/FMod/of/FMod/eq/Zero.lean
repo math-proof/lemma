@@ -8,7 +8,7 @@ import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeAdd.eq.AddCoeS
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Int.CoeMul.eq.MulCoeS
-import Lemma.Algebra.EqDivMul.of.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Int.FloorAdd.eq.AddFloor

@@ -1,7 +1,7 @@
-import Lemma.Algebra.EqFloor.is.Le.Lt
+import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Set.Le.of.In_Ico
 import Lemma.Set.Lt.of.In_Ico
-open Algebra Set
+open Set Int
 
 
 @[main]

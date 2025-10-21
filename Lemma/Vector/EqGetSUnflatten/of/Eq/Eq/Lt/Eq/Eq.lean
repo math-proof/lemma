@@ -2,8 +2,8 @@ import Lemma.Vector.EqGetMapRange.of.Lt
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Nat.EqMin.of.Le
-import Lemma.Algebra.Le_SubMulS.of.Lt
-open Algebra Vector Bool Nat
+import Lemma.Nat.Le_SubMulS.of.Lt
+open Vector Bool Nat
 
 
 @[main]

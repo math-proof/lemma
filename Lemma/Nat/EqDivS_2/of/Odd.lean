@@ -1,12 +1,12 @@
 import sympy.functions.elementary.integers
 import Lemma.Nat.EqSubAdd
-import Lemma.Algebra.EqDivMul.of.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Eq_AddMulDiv___Mod
 import Lemma.Nat.ModAddMul.eq.Mod
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Nat.EqMod.of.Lt.Ge_0
 import Lemma.Nat.Odd.is.Any_Eq_AddMul2
-open Algebra Nat
+open Nat
 
 
 @[main, comm]

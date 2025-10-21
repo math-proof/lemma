@@ -8,19 +8,19 @@ import Lemma.Vector.EqGetS.of.Eq.Lt
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulDiv.eq.Sub_Mod
-import Lemma.Algebra.Dvd_Mul
+import Lemma.Nat.Dvd_Mul
 import Lemma.Nat.Gt_0.of.GtMul
 import Lemma.List.ProdDrop.dvd.ProdTail.of.Gt_0
 import Lemma.Nat.DivAdd.eq.AddDivS.of.Dvd
 import Lemma.Nat.DivMul.eq.Mul_Div.of.Dvd
-import Lemma.Algebra.EqDivMul.of.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Ge_Mod
-import Lemma.Algebra.Dvd_Mul.of.Dvd
-open Algebra Vector List Nat
+import Lemma.Nat.Dvd_Mul.of.Dvd
+open Vector List Nat
 
 
 @[main]

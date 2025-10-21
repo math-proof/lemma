@@ -1,6 +1,6 @@
 import sympy.core.relational
 import Lemma.Nat.Eq_AddMulDiv___Mod
-import Lemma.Algebra.EqSub.is.Eq_Add
+import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Nat.AddAdd.eq.Add_Add

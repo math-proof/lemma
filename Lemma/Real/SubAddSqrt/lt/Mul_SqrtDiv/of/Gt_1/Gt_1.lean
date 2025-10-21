@@ -8,10 +8,10 @@ import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Gt_0
 import Lemma.Algebra.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Algebra.DivMul.eq.MulDiv
-import Lemma.Algebra.EqDivSquare
-import Lemma.Algebra.Mul_Add.eq.AddMulS
+import Lemma.Rat.EqDivSquare
+import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Int.Sub.gt.Zero.is.Lt
-import Lemma.Algebra.AddSub.eq.SubAdd
+import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.SubMul.eq.MulSub_1
 import Lemma.Int.SubSub
@@ -21,9 +21,9 @@ import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.Mul
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Int.EqSub_Sub
-import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
-import Lemma.Algebra.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
-open Algebra Nat Int
+import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Real.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
+open Algebra Nat Int Real Rat
 
 
 @[main]

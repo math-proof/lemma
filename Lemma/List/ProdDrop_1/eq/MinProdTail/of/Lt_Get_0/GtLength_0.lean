@@ -1,7 +1,7 @@
 import Lemma.Nat.EqMin.of.Le
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
-import Lemma.Algebra.Le_SubMulS.of.Lt
-open Algebra List Nat
+import Lemma.Nat.Le_SubMulS.of.Lt
+open List Nat
 
 
 @[main]

@@ -15,7 +15,7 @@ import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Algebra.Div.eq.One.of.Lt_0
 import Lemma.Int.CoeMul.eq.MulCoeS
 import Lemma.Nat.Ne.of.Lt
-import Lemma.Algebra.EqDivMul.of.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Set.Lt.of.In_Ico
 import Lemma.Set.In_IcoFloor
 open Algebra Set Int Nat

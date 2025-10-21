@@ -3,7 +3,7 @@ import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.Vector.EqGetRange
-import Lemma.Algebra.EqDivMul.of.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne.of.Gt
 import Lemma.Algebra.NotGt.is.Le
 import Lemma.Nat.Eq_0.of.Le_0

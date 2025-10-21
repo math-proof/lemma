@@ -12,7 +12,7 @@ import Lemma.Nat.Mul
 import Lemma.Finset.Sum.ge.Zero.of.All_Ge_0
 import Lemma.Algebra.GeDivS.of.Ge.Gt_0
 import Lemma.Nat.Gt_0.of.Ne_0
-import Lemma.Algebra.EqDivMul.of.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
 import Lemma.Algebra.GeSqrt_0

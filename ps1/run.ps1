@@ -110,22 +110,29 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             $deBruijn = $match.Matches[0].Groups[1].Value
         }
         switch -regex ($tokens[2]) {
-            "^(eq|is|as|ne)$" {
+            "^(eq|is|as|ne|lt|le|gt|ge)$" {
                 $tmp = $tokens[1]
                 $tokens[1] = $tokens[3]
                 $tokens[3] = $tmp
             }
             default {
                 $first = $tokens[1]
-                if ($first -like 'Eq_*') {
-                    $first = "Eq" + $first.Substring(3)
-                } elseif ($first -like 'Eq*') {
-                    $first = "Eq_" + $first.Substring(2)
-                } elseif ($first -like 'SEq_*') {
-                    $first = "SEq" + $first.Substring(4)
-                } elseif ($first -like 'SEq*') {
-                    $first = "SEq_" + $first.Substring(3)
-                } else {
+                if ($first -match '^(?:([SH]?Eq|Iff|Ne)|([LG][te]))(_?)(.*)') {
+                    $prefix = $matches[2]
+                    if ($prefix) {
+                        $prefix = (($prefix[0] -eq 'L')? 'G' : 'L') + $prefix.Substring(1)
+                    }
+                    else {
+                        $prefix = $matches[1]
+                    }
+                    if (-not $matches[3]) {
+                        $first = $prefix + "_" + $matches[4]
+                    }
+                    else {
+                        $first = $prefix + $matches[4]
+                    }
+                }
+                else {
                     Write-Host "panic! Expected the operator to be 'S?Eq.*', got: $first in $module"
                 }
                 $tokens[1] = $first

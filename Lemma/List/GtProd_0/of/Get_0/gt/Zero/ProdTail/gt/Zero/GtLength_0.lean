@@ -1,6 +1,6 @@
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
-import Lemma.Algebra.Mul.gt.Zero.of.Gt_0.Gt_0
-open Algebra List
+import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
+open List Nat
 
 
 @[main]

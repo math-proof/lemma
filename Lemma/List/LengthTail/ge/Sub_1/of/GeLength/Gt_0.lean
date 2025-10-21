@@ -1,9 +1,8 @@
-import Lemma.Algebra.Gt_Sub_1.of.Ge
-import Lemma.Algebra.Gt_Sub_1.of.Ge.Gt_0
-import Lemma.List.LengthTail.gt.Sub_1.of.GtLength.Gt_0
+import Lemma.Nat.LtSub_1.of.Le.Gt_0
 import Lemma.Nat.Ge.of.Gt_Sub_1
 import Lemma.Nat.Sub.gt.Zero.is.Gt
-open Algebra List Nat
+import Lemma.List.LengthTail.gt.Sub_1.of.GtLength.Gt_0
+open List Nat
 
 
 @[main]

@@ -1,7 +1,7 @@
-import Lemma.Algebra.Le_SubMulS.of.Lt
+import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Nat.EqMul_Div.of.Dvd
 import Lemma.List.Get_0.dvd.Prod.of.GtLength_0
-open Algebra List Nat
+open List Nat
 
 
 @[main]

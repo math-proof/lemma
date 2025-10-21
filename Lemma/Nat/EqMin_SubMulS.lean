@@ -1,5 +1,5 @@
-import Lemma.Algebra.Le_SubMulS
-open Algebra
+import Lemma.Nat.Le_SubMulS
+open Nat
 
 
 @[main]

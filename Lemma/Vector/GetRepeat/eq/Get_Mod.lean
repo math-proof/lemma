@@ -1,5 +1,5 @@
 import sympy.vector.Basic
-import Lemma.Algebra.Ne_0
+import Lemma.Nat.Ne_0
 import Lemma.Algebra.Ne_0.of.Mul.ne.Zero
 import Lemma.Nat.LtMod.of.Ne_0
 import Lemma.Nat.Any_Eq_AddMul

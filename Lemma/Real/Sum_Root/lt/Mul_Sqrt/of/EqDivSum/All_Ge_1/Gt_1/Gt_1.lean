@@ -2,7 +2,7 @@ import sympy.sets.sets
 import Lemma.Algebra.Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0
 import Lemma.Bool.NotAny.is.All_Not
 import Lemma.Bool.AndAnd.is.And_And
-import Lemma.Algebra.Gt.of.Ge.Gt
+import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Algebra.AllIco.of.AllRange
 import Lemma.Bool.All_And.of.All.All
 import Lemma.Nat.Eq.of.Le.Ge

@@ -1,8 +1,8 @@
-import Lemma.Algebra.EqFloor.is.Le.Lt
+import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Int.Div.ge.FDiv
 import Lemma.Int.Div.lt.Add1FDiv
 import Lemma.Nat.Add
-open Algebra Nat Int
+open Nat Int
 
 
 @[main, comm]

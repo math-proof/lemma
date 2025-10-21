@@ -10,7 +10,7 @@ import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Algebra.NegAdd.eq.SubNeg
 import Lemma.Int.CoeSub.eq.SubCoeS
 import Lemma.Algebra.DivSub.eq.SubDivS
-import Lemma.Algebra.EqDivMul.of.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Int.FloorAdd.eq.Add_Floor

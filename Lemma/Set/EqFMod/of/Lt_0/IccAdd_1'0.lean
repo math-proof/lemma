@@ -1,9 +1,9 @@
 import Lemma.Int.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.EqSub.is.Eq_Add
+import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.Add
 import Lemma.Int.Sub.eq.Zero
-import Lemma.Set.FDiv.eq.Zero.of.Lt_0.IccAdd_1'0
-open Algebra Set Nat Int
+import Lemma.Int.FDiv.eq.Zero.of.Lt_0.IccAdd_1'0
+open Nat Int
 
 
 @[main]

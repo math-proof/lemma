@@ -1,6 +1,6 @@
 import Lemma.Nat.ModAddSub.eq.Sub.of.Ne_0
-import Lemma.Algebra.Ne_0
-open Algebra Nat
+import Lemma.Nat.Ne_0
+open Nat
 
 
 @[main]

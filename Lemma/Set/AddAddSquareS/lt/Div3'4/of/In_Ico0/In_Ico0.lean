@@ -1,9 +1,9 @@
 import Lemma.Nat.LtAddS.of.Lt.Lt
 import Lemma.Nat.Lt.of.Le.Lt
-import Lemma.Algebra.LeMulS.of.Ge_0.Lt
-import Lemma.Algebra.LtMulS.of.Lt.Gt_0
+import Lemma.Int.LeMulS.of.Ge_0.Lt
+import Lemma.Nat.LtMulS.of.Lt.Gt_0
 import Lemma.Set.LtSquareS.of.In_Ico0
-open Algebra Set Nat
+open Set Nat Int
 
 
 /--

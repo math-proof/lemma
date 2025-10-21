@@ -22,7 +22,7 @@ import Lemma.Nat.GeSub_1.of.Gt
 import Lemma.Nat.Le.of.LtSub_1
 import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.Eq.of.Le.Le
-import Lemma.Algebra.Gt.of.Ge.Gt
+import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Algebra.Le.of.LeSubS.Le
 import Lemma.Algebra.Lt.of.Lt.Lt
 import Lemma.Algebra.Gt.of.Gt.Ge

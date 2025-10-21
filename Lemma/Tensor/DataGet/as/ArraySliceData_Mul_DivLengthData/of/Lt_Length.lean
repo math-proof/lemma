@@ -1,9 +1,9 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthData.eq.Mul_Prod.of.GtLength_0
-import Lemma.Algebra.EqDivMul.of.Ne_0
-import Lemma.Algebra.Ne_0
+import Lemma.Nat.EqDivMul.of.Ne_0
+import Lemma.Nat.Ne_0
 import Lemma.Tensor.DataGet.as.ArraySliceData_Mul_ProdTail.of.GtLength_0
-open Tensor Algebra
+open Tensor Nat
 
 
 @[main]

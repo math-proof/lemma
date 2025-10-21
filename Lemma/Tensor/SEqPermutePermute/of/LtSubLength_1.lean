@@ -1,9 +1,12 @@
+import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
+import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
+import Lemma.Nat.LtAddMul.of.Lt.Lt.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
@@ -14,8 +17,9 @@ import Lemma.Nat.ToNatAdd.eq.Add
 import Lemma.Nat.ToNatSub_Neg.eq.Add
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.Nat.LtAddMulAddMul.of.Lt.Lt.Lt.Eq
 open List Tensor Bool Nat Vector
--- set_option maxHeartbeats 4000000
+set_option maxHeartbeats 4000000
 
 
 @[main]
@@ -71,16 +75,22 @@ private lemma main
           rw [GetCast.eq.Get.of.Eq.Lt]
           .
             simp only [ProdAppend.eq.MulProdS] at h_k'
-            let ⟨i', j', h_i'j'⟩ := Any_EqAddMul.of.Lt_Mul h_k'
-            have h_j' := LtVal j'
-            simp [GetFlatten.eq.Get.of.Eq_AddMul h_i'j'.symm]
+            -- k' = k''
+            let ⟨z, k'', h_zk''⟩ := Any_EqAddMul.of.Lt_Mul h_k'
+            have h_z := LtVal z
+            simp [LengthPermute.eq.Length] at h_z
+            simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_z
+            have h_k'' := LtVal k''
+            rw [GetFlatten.eq.Get.of.Eq_AddMul h_zk''.symm]
+            simp
             unfold Tensor.rotate
             simp only [GetElem.getElem]
             repeat rw [GetCast.eq.Get.of.Eq.Lt.fin]
             .
-              simp only [Rotate.eq.AppendDrop__Take] at h_j'
-              rw [ProdAppend.eq.MulProdS] at h_j'
-              let ⟨i, j, h_ij⟩ := Any_EqAddMul.of.Lt_Mul h_j'
+              simp only [Rotate.eq.AppendDrop__Take] at h_k''
+              rw [ProdAppend.eq.MulProdS] at h_k''
+              let ⟨i, j, h_ij⟩ := Any_EqAddMul.of.Lt_Mul h_k''
+              let ⟨h_i_div, h_j_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_ij.symm
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_ij.symm]
               rw [GetTranspose.eq.Get.fin]
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
@@ -91,20 +101,67 @@ private lemma main
               simp
               rw [Tensor.DataCast.eq.Cast_Data.of.Eq]
               .
-                simp
+                simp [h_z]
+                have h_j := LtVal j
+                have h_i := LtVal i
+                simp [LengthPermute.eq.Length] at h_j h_i
+                rw [EqMin.of.Lt h_lt_add_1] at h_j h_i
+                simp [Add.comm (a := 1)] at h_j h_i
+                have h_permute := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 (s := s) (d := ⟨0, by omega⟩) (by simp) d
                 rw [GetCast.eq.Get.of.Eq.Lt.fin]
                 .
                   unfold Tensor.rotate
-                  simp
                   simp [LengthPermute.eq.Length]
-                  simp [EqMin.of.Lt h_lt_add_1]
-                  simp [Add.comm (a := 1)]
-                  sorry
+                  simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
+                  have h_lt : (j * (((s.permute ⟨0, by grind⟩ d).take (d + 1)).drop d).prod + i) * ((s.permute ⟨0, by grind⟩ d).drop (d + 1)).prod + k < ((s.take (d + 1)).rotate 1).prod * (s.drop (d + 1)).prod :=
+                    Nat.LtAddMulAddMul.of.Lt.Lt.Lt.Eq (by simp [h_permute]) h_j h_i h_k
+                  let ⟨i', j', h_i'j'⟩ := Any_EqAddMul.of.Lt_Mul h_lt
+                  rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j'.symm]
+                  have h_i' := LtVal i'
+                  rw [GetCast.eq.Get.of.Eq.Lt.fin]
+                  .
+                    simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_i'
+                    let ⟨i'', j'', h_i''j''⟩ := Any_EqAddMul.of.Lt_Mul h_i'
+                    let ⟨h_i''_div, h_j''_mod⟩ := Nat.Eq_Div.Eq_Mod.of.Eq_AddMul h_i''j''.symm
+                    rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i''j''.symm]
+                    rw [GetTranspose.eq.Get.fin]
+                    repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+                    simp [EqMin.of.Lt h_lt_add_1] at h_i''j'' ⊢
+                    simp [EqMod.of.Lt (show 1 < d + 1 by omega)] at h_i''j'' ⊢
+                    simp [TakeTake.eq.Take.of.Ge] at h_i''j''
+                    rw [ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)] at h_i''j''
+                    simp [← h_k'k]
+                    simp [h_z] at h_zk''
+                    simp [← h_zk'']
+                    simp [← h_ij]
+                    apply congrArg
+                    simp
+                    have h_i'j' := Eq_Sub.of.EqAdd.left h_i'j'.symm
+                    rw [Nat.SubAdd.eq.AddSub.of.Le] at h_i'j'
+                    .
+                      simp [h_i'j']
+                      -- simp [← h_i''j'']
+                      simp [LengthPermute.eq.Length]
+                      simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
+                      simp [Add_Add.eq.AddAdd]
+                      sorry
+                    .
+                      -- simp [← h_i''j'']
+                      sorry
+                  .
+                    rw [MulProdS.eq.ProdAppend]
+                    convert h_i'
+                    simp [Rotate.eq.AppendDrop__Take]
+                  .
+                    simp [Rotate.eq.AppendDrop__Take]
                 .
                   simp [LengthPermute.eq.Length]
                   rw [EqMin.of.Lt h_lt_add_1]
                   simp [Add.comm (a := 1)]
-                  sorry
+                  apply LtAddMulAddMul.of.Lt.Lt.Lt.Eq _ h_j h_i h_k
+                  repeat rw [MulProdS.eq.ProdAppend]
+                  apply congrArg
+                  simp [h_permute]
                 .
                   simp [List.Permute.eq.Append_AppendRotateTakeDrop]
               .

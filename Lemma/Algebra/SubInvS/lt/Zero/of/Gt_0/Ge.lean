@@ -1,6 +1,6 @@
-import Lemma.Algebra.LtInvS.of.Gt_0.Ge
+import Lemma.Rat.LtInvS.of.Gt_0.Ge
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
-open Algebra
+open Algebra Rat
 
 
 @[main]

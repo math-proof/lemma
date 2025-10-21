@@ -1,7 +1,7 @@
 import Lemma.Nat.LtMod.of.Gt_0
-import Lemma.Algebra.LtDivS.of.Lt.Gt_0
+import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Algebra.Div.eq.One.of.Gt_0
-open Algebra Nat
+open Algebra Nat Rat
 
 
 @[main]
