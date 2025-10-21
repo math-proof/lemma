@@ -1,5 +1,5 @@
 CREATE TABLE `mathlib` (
-  `name` varchar(256) NOT NULL PRIMARY KEY,
+  `name` varchar(256) COLLATE utf8mb4_bin NOT NULL PRIMARY KEY,
   `type` text,
   `instImplicit` text,
   `strictImplicit` text,

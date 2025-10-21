@@ -1,7 +1,7 @@
 # usage: 
 # . ps1/mathlib.ps1
 param(
-    [bool]$refresh = $true
+    [bool]$refresh = $false
 )
 
 # Check if MYSQL_USER is set
