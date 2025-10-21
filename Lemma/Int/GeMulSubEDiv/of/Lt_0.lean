@@ -6,7 +6,7 @@ import Lemma.Algebra.Sub.eq.Add_Neg
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Algebra.LeAddS.is.Le
 import Lemma.Nat.LeAdd_1.of.Lt
-import Lemma.Algebra.Mod.lt.Neg.of.Lt_0
+import Lemma.Int.Mod.lt.Neg.of.Lt_0
 open Algebra Nat Int
 
 

@@ -1,7 +1,7 @@
+import Lemma.Algebra.LeMulS.of.Le.Gt_0
 import Lemma.Nat.Ne.of.Gt
 import Lemma.Rat.EqMulDiv.of.Ne_0
-import Lemma.Nat.LtMulS.of.Lt.Gt_0
-open Nat Rat
+open Algebra Nat Rat
 
 
 @[main]
@@ -9,12 +9,12 @@ private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a b : α}
 -- given
-  (h₀ : a / x < b / x)
+  (h₀ : a / x ≤ b / x)
   (h₁ : x > 0) :
 -- imply
-  a < b := by
+  a ≤ b := by
 -- proof
-  have := LtMulS.of.Lt.Gt_0 h₀ h₁
+  have := LeMulS.of.Le.Gt_0 h₀ h₁
   have h₁ := Ne.of.Gt h₁
   repeat rw [EqMulDiv.of.Ne_0 h₁] at this
   assumption

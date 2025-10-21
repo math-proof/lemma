@@ -1,8 +1,8 @@
 import sympy.core.power
-import Lemma.Algebra.SubSquare_MulMul4.le.Zero.of.Gt_0.AddAddMul_Square.ge.Zero
+import Lemma.Rat.SubSquare_MulMul4.le.Zero.of.Gt_0.AddAddMul_Square.ge.Zero
 import Lemma.Algebra.Gt.is.Ge.Ne
-import Lemma.Algebra.EqMul_Div.of.Ne_0
-open Algebra
+import Lemma.Rat.EqMul_Div.of.Ne_0
+open Algebra Rat
 
 
 @[main]

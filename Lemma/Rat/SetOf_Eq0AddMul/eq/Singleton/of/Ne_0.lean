@@ -1,9 +1,9 @@
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
 import Lemma.Nat.EqMulS.is.Eq.of.Ne_0
-import Lemma.Algebra.EqMul_Div.of.Ne_0
+import Lemma.Rat.EqMul_Div.of.Ne_0
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.Mul
-open Algebra Int Nat
+open Int Nat Rat
 
 
 /--

@@ -2,7 +2,7 @@ import sympy.sets.sets
 import Lemma.Bool.All.of.All.All_Imp
 import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
 import Lemma.Nat.EqMulS.of.Eq
-import Lemma.Algebra.EqMulDiv.of.Ne_0
+import Lemma.Rat.EqMulDiv.of.Ne_0
 import Lemma.Algebra.Mul_Mul
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.Mul
@@ -13,7 +13,7 @@ import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Algebra.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
 import Lemma.Algebra.GeSqrt_0
-open Algebra Bool Nat Finset Real
+open Algebra Bool Nat Finset Real Rat
 
 
 /--

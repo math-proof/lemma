@@ -1,3 +1,6 @@
+import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
+import Lemma.Nat.Dvd_Add.of.Dvd.Dvd
+import Lemma.List.DropPermute.eq.Drop.of.Lt_Length
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
@@ -69,13 +72,13 @@ private lemma main
           intro t
           have h_t := LtVal t
           let ⟨k', k, h_k'k⟩ := Any_EqAddMul.of.Lt_Mul h_t
+          let ⟨h_k'_div, h_k_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_k'k.symm
           have h_k := LtVal k
           have h_k' := LtVal k'
           simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k.symm]
           rw [GetCast.eq.Get.of.Eq.Lt]
           .
             simp only [ProdAppend.eq.MulProdS] at h_k'
-            -- k' = k''
             let ⟨z, k'', h_zk''⟩ := Any_EqAddMul.of.Lt_Mul h_k'
             have h_z := LtVal z
             simp [LengthPermute.eq.Length] at h_z
@@ -116,6 +119,7 @@ private lemma main
                   have h_lt : (j * (((s.permute ⟨0, by grind⟩ d).take (d + 1)).drop d).prod + i) * ((s.permute ⟨0, by grind⟩ d).drop (d + 1)).prod + k < ((s.take (d + 1)).rotate 1).prod * (s.drop (d + 1)).prod :=
                     Nat.LtAddMulAddMul.of.Lt.Lt.Lt.Eq (by simp [h_permute]) h_j h_i h_k
                   let ⟨i', j', h_i'j'⟩ := Any_EqAddMul.of.Lt_Mul h_lt
+                  let ⟨h_i'_div, h_j'_mod⟩ := Nat.Eq_Div.Eq_Mod.of.Eq_AddMul h_i'j'.symm
                   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j'.symm]
                   have h_i' := LtVal i'
                   rw [GetCast.eq.Get.of.Eq.Lt.fin]
@@ -146,8 +150,17 @@ private lemma main
                       simp [Add_Add.eq.AddAdd]
                       sorry
                     .
-                      -- simp [← h_i''j'']
-                      sorry
+                      simp [h_i'_div]
+                      simp [h_k_mod]
+                      simp [DropPermute.eq.Drop.of.Lt_Length (show d < s.length by omega)]
+                      by_cases h_prod : (s.drop (d + 1)).prod = 0
+                      .
+                        simp [h_prod]
+                      .
+                        rw [DivAddMul.eq.Add_Div.of.Ne_0 h_prod]
+                        conv_rhs =>
+                          rw [MulAdd.eq.AddMulS]
+                        omega
                   .
                     rw [MulProdS.eq.ProdAppend]
                     convert h_i'

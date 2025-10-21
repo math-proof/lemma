@@ -1,8 +1,8 @@
 import sympy.tensor.Basic
 import Lemma.Vector.GetDiv.eq.DivGetS
-import Lemma.Algebra.Div.eq.DivDivS.of.Ne_0
+import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
 import Lemma.Nat.Div.eq.HDiv
-open Vector Algebra Nat
+open Vector Nat Rat
 
 
 @[main, comm]

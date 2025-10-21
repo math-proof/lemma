@@ -3,13 +3,13 @@ import sympy.core.power
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Algebra.SquareDiv.eq.DivSquareS
 import Lemma.Nat.Le.of.Gt_0.LeMulS
-import Lemma.Algebra.EqMul_Div.of.Ne_0
+import Lemma.Rat.EqMul_Div.of.Ne_0
 import Lemma.Real.Square.le.MulMul4.of.Ge_0.AddAddMul_Square.ge.Zero
 import Lemma.Algebra.Sum_Square.ge.Zero
 import Lemma.Finset.AddAddMulSquare_Sum.ge.Zero
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-open Algebra Nat Finset Real
+open Algebra Nat Finset Real Rat
 
 
 @[main]
