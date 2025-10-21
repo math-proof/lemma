@@ -1,3 +1,4 @@
+import Lemma.Nat.Ne_0.of.Gt
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Nat.Dvd_Add.of.Dvd.Dvd
 import Lemma.List.DropPermute.eq.Drop.of.Lt_Length
@@ -69,11 +70,15 @@ private lemma main
         simp
         apply SEq.of.All_EqGetS.Eq
         .
+          have h_drop := DropPermute.eq.Drop.of.Lt_Length (show d < s.length by omega)
           intro t
           have h_t := LtVal t
           let ⟨k', k, h_k'k⟩ := Any_EqAddMul.of.Lt_Mul h_t
           let ⟨h_k'_div, h_k_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_k'k.symm
+          simp [h_drop] at h_k'_div h_k_mod
           have h_k := LtVal k
+          have h_prod_ne_0 := Ne_0.of.Gt h_k
+          simp only [h_drop] at h_prod_ne_0
           have h_k' := LtVal k'
           simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k.symm]
           rw [GetCast.eq.Get.of.Eq.Lt]
@@ -81,8 +86,7 @@ private lemma main
             simp only [ProdAppend.eq.MulProdS] at h_k'
             let ⟨z, k'', h_zk''⟩ := Any_EqAddMul.of.Lt_Mul h_k'
             have h_z := LtVal z
-            simp [LengthPermute.eq.Length] at h_z
-            simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_z
+            simp [LengthPermute.eq.Length, EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_z
             have h_k'' := LtVal k''
             rw [GetFlatten.eq.Get.of.Eq_AddMul h_zk''.symm]
             simp
@@ -94,6 +98,7 @@ private lemma main
               rw [ProdAppend.eq.MulProdS] at h_k''
               let ⟨i, j, h_ij⟩ := Any_EqAddMul.of.Lt_Mul h_k''
               let ⟨h_i_div, h_j_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_ij.symm
+              simp [LengthPermute.eq.Length, EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_i_div h_j_mod
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_ij.symm]
               rw [GetTranspose.eq.Get.fin]
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
@@ -120,6 +125,8 @@ private lemma main
                     Nat.LtAddMulAddMul.of.Lt.Lt.Lt.Eq (by simp [h_permute]) h_j h_i h_k
                   let ⟨i', j', h_i'j'⟩ := Any_EqAddMul.of.Lt_Mul h_lt
                   let ⟨h_i'_div, h_j'_mod⟩ := Nat.Eq_Div.Eq_Mod.of.Eq_AddMul h_i'j'.symm
+                  simp [h_drop] at h_i'_div h_j'_mod
+                  rw [DivAddMul.eq.Add_Div.of.Ne_0 h_prod_ne_0] at h_i'_div
                   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j'.symm]
                   have h_i' := LtVal i'
                   rw [GetCast.eq.Get.of.Eq.Lt.fin]
@@ -134,33 +141,19 @@ private lemma main
                     simp [EqMod.of.Lt (show 1 < d + 1 by omega)] at h_i''j'' ⊢
                     simp [TakeTake.eq.Take.of.Ge] at h_i''j''
                     rw [ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)] at h_i''j''
-                    simp [← h_k'k]
-                    simp [h_z] at h_zk''
-                    simp [← h_zk'']
-                    simp [← h_ij]
                     apply congrArg
-                    simp
+                    simp [h_z] at h_zk''
+                    simp [← h_k'k, ← h_zk'', ← h_ij]
                     have h_i'j' := Eq_Sub.of.EqAdd.left h_i'j'.symm
                     rw [Nat.SubAdd.eq.AddSub.of.Le] at h_i'j'
                     .
                       simp [h_i'j']
-                      -- simp [← h_i''j'']
                       simp [LengthPermute.eq.Length]
                       simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
                       simp [Add_Add.eq.AddAdd]
                       sorry
                     .
-                      simp [h_i'_div]
-                      simp [h_k_mod]
-                      simp [DropPermute.eq.Drop.of.Lt_Length (show d < s.length by omega)]
-                      by_cases h_prod : (s.drop (d + 1)).prod = 0
-                      .
-                        simp [h_prod]
-                      .
-                        rw [DivAddMul.eq.Add_Div.of.Ne_0 h_prod]
-                        conv_rhs =>
-                          rw [MulAdd.eq.AddMulS]
-                        omega
+                      simp [h_i'_div, h_k_mod, h_drop]
                   .
                     rw [MulProdS.eq.ProdAppend]
                     convert h_i'
