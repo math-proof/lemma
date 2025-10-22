@@ -1,10 +1,17 @@
-import Lemma.Algebra.LtDiv.of.Lt_Mul
-import Lemma.Nat.Mul
-import Lemma.Nat.Gt_0.of.Gt
-import Lemma.Algebra.Gt_0.of.Mul.gt.Zero
-import Lemma.Nat.LtMod.of.Gt_0
-import Lemma.Nat.Eq_AddMulDiv___Mod
-open Algebra Nat
+import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+open Nat
+
+
+@[main]
+private lemma fin
+  {m n : ℕ}
+-- given
+  (h : t < m * n) :
+-- imply
+  ∃ (i : Fin m) (j : Fin n), t = i * n + j := by
+-- proof
+  have := Any_EqAddMul.of.Lt_Mul h
+  aesop
 
 
 @[main]
@@ -15,20 +22,9 @@ private lemma main
 -- imply
   ∃ i < m, ∃ j < n, t = i * n + j := by
 -- proof
-  use t / n
-  constructor
-  ·
-    apply LtDiv.of.Lt_Mul.left
-    rwa [Mul.comm]
-  ·
-    use t % n
-    constructor
-    ·
-      have := Gt_0.of.Gt h
-      have := Gt_0.of.Mul.gt.Zero this
-      apply LtMod.of.Gt_0 this
-    ·
-      apply Eq_AddMulDiv___Mod
+  have := fin h
+  aesop
 
 
 -- created on 2025-06-13
+-- updated on 2025-10-22

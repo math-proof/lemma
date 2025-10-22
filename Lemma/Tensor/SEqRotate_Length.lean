@@ -1,9 +1,8 @@
-import stdlib.SEq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Nat.LtVal
-import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
@@ -35,8 +34,8 @@ private lemma main
       ·
         intro t
         have h_t := LtVal t
-        let ⟨k, j, h_kj⟩ := Any_EqAddMul.of.Lt_Mul h_t
-        simp [GetFlatten.eq.Get.of.Eq_AddMul h_kj.symm]
+        let ⟨k, j, h_kj⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        simp [GetFlatten.eq.Get.of.Eq_AddMul h_kj]
         have := GetTranspose.eq.Get (X.data.splitAt (s.length % s.length)) ⟨j, by grind⟩ ⟨k, by grind⟩
         simp at this
         rw [this]

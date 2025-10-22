@@ -3,7 +3,7 @@ import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
-import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqMod
 import Lemma.Nat.LtVal
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
@@ -53,9 +53,8 @@ private lemma main
   (X.repeat n ⟨0, h_s⟩)[i] ≃ X[i % s[0]] := by
 -- proof
   intros
-  obtain ⟨j, i, h_ij⟩ := Any_EqAddMul.of.Lt_Mul h_i
-  simp [← h_ij]
-  simp [EqMod]
+  obtain ⟨j, i, h_ij⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_i
+  simp [h_ij, EqMod]
   unfold Tensor.repeat
   simp
   simp only [GetElem.getElem]

@@ -9,7 +9,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
@@ -90,10 +90,18 @@ private lemma main
           intro t
           have h_t := LtVal t
           simp only [ProdAppend.eq.MulProdS] at h_t
-          let ⟨q, r, h_qr⟩ := Any_EqAddMul.of.Lt_Mul h_t
+          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
           have h_q := LtVal q
           have h_r := LtVal r
-          sorry
+          simp
+          rw [GetCast.eq.Get.of.Eq.Lt]
+          .
+            rw [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
+            sorry
+          .
+            assumption
+          .
+            rw [MulProdS.eq.ProdAppend]
         .
           simp [Add.comm (a := 1)]
           rw [MulProdS.eq.ProdAppend]

@@ -1,5 +1,5 @@
 import Lemma.List.Ne_Nil.is.GtLength_0
-import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.List.EqRotate_1.of.LeLength_1
 import Lemma.Vector.GetTranspose.eq.Get
@@ -41,7 +41,7 @@ private lemma main
     simp
   ·
     have h_s := GtLength_0.of.Ne_Nil h_s
-    have h_length : (s.take 1).length = 1 := by 
+    have h_length : (s.take 1).length = 1 := by
       simp
       omega
     unfold Tensor.permuteHead
@@ -62,12 +62,12 @@ private lemma main
         ·
           intro t
           have h_t := LtVal t
-          let ⟨k', k, h_k'k⟩ := Any_EqAddMul.of.Lt_Mul h_t
+          let ⟨k', k, h_k'k⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
           have h_k := LtVal k
           simp at h_k
           have h_k' := LtVal k'
           simp [EqRotate_1.of.LeLength_1] at h_k'
-          simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k.symm]
+          simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k]
           simp at h_t
           unfold Tensor.rotate
           simp

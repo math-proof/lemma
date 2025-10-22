@@ -1,4 +1,4 @@
-import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
@@ -32,10 +32,10 @@ private lemma main
       apply SEq.of.All_EqGetS.Eq (by simp)
       intro t
       have h_t := LtVal t
-      let ⟨k', k, h_k'k⟩ := Any_EqAddMul.of.Lt_Mul h_t
+      let ⟨k', k, h_k'k⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
       have h_k := LtVal k
       simp at h_k
-      simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k.symm]
+      simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k]
       unfold Tensor.rotate
       simp
       simp only [GetElem.getElem]

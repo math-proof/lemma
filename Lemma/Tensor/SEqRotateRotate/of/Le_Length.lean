@@ -1,4 +1,3 @@
-import stdlib.SEq
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -7,7 +6,7 @@ import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Nat.LtVal
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
@@ -65,8 +64,8 @@ private lemma main
         ·
           intro t
           have h_t := LtVal t
-          let ⟨k, j, h_kj⟩ := Any_EqAddMul.of.Lt_Mul h_t
-          simp [GetFlatten.eq.Get.of.Eq_AddMul h_kj.symm]
+          let ⟨k, j, h_kj⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+          simp [GetFlatten.eq.Get.of.Eq_AddMul h_kj]
           rw [GetTranspose.eq.Get]
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
           simp at h_kj ⊢
@@ -95,7 +94,7 @@ private lemma main
               rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
               simp at ⊢ h_kj
               rw [h_take] at h_kj
-              simp [h_kj.symm]
+              simp [h_kj]
               simp [h_mod]
             ·
               simp

@@ -4,7 +4,7 @@ import Lemma.Tensor.All_SEqDataSGet.of.All_SEqGetS.Eq
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.GetElem.eq.None.of.Ge_Length
-import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Tensor.Data.eq.FlattenMapRange
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
@@ -62,9 +62,8 @@ private lemma main
         apply IffEqS.of.Eq
         repeat rw [GetVal.eq.Get.of.Lt (by simp_all)]
         rw [← h₀, ← h₁] at h
-        let ⟨j, i, h_eq⟩ := Any_EqAddMul.of.Lt_Mul h
-        simp [Data.eq.FlattenMapRange]
-        simp [← h_eq]
+        let ⟨j, i, h_eq⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h
+        simp [Data.eq.FlattenMapRange, h_eq]
         let v_n : List.Vector (List.Vector α s₀.prod) n := (List.Vector.range n).map fun i ↦ A[i].data
         have h_a := GetFlatten_AddMul.eq.Get v_n
         simp at h_a

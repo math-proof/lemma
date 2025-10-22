@@ -6,7 +6,7 @@ import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Nat.LtVal
-import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
@@ -53,9 +53,9 @@ private lemma main
       ·
         intro t
         have h_t := LtVal t
-        let ⟨k', k, h_k'k⟩ := Any_EqAddMul.of.Lt_Mul h_t
+        let ⟨k', k, h_k'k⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
         have h_k := LtVal k
-        simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k.symm]
+        simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k]
         unfold Tensor.rotate
         repeat rw [GetCast.eq.Get.of.Eq.Lt]
         ·
@@ -63,17 +63,17 @@ private lemma main
           simp at h_k
           let s₀ := (s.take s.length).rotate 1 ++ s.drop s.length
           let s' := s₀.drop (s₀.length - s.length)
-          have h_rotate : s' = s.rotate 1 := by 
+          have h_rotate : s' = s.rotate 1 := by
             unfold s' s₀
             simp
-          have h_length : (s.length ⊓ s₀.length - 1) % s'.length = s.length - 1 := by 
+          have h_length : (s.length ⊓ s₀.length - 1) % s'.length = s.length - 1 := by
             unfold s' s₀
             simp
           rw [Rotate.eq.AppendDrop__Take.of.Le_Length (n := s.length - 1) (by simp)] at h_k
           rw [← h_rotate, ← h_length] at h_k
           rw [ProdAppend.eq.MulProdS] at h_k
-          let ⟨i, j, h_ij⟩ := Any_EqAddMul.of.Lt_Mul h_k
-          rw [GetFlatten.eq.Get.of.Eq_AddMul h_ij.symm]
+          let ⟨i, j, h_ij⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_k
+          rw [GetFlatten.eq.Get.of.Eq_AddMul h_ij]
           simp [(show s₀.length = s.length by simp [s₀])] at h_ij
           simp [(show s'.length = s.length by simp [s', s₀])] at h_ij
           rw [GetTranspose.eq.Get]
@@ -96,7 +96,7 @@ private lemma main
             simp [s', s₀]
           rw [TakeRotate.eq.Drop.of.Le_Length (by omega)] at h_j
           simp at h_j
-          have h_prod : j * s[0] + i < (s.rotate 1).prod := by 
+          have h_prod : j * s[0] + i < (s.rotate 1).prod := by
             simp [Rotate.eq.AppendDrop__Take.of.Le_Length (v := s) (n := 1) (by omega), ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)]
             apply AddMul.lt.Mul.of.Lt.Lt <;>
             ·
@@ -113,7 +113,7 @@ private lemma main
                 rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]
                 simp [EqMod.of.Lt h]
                 simp [h_k'] at h_k'k
-                simp [← h_k'k]
+                simp [h_k'k]
                 simp [s', s₀] at h_ij
                 rw [TakeRotate.eq.Drop.of.Le_Length (by omega)] at h_ij
                 simp at h_ij
