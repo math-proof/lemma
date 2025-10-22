@@ -13,7 +13,7 @@ if (-not $env:MYSQL_USER) {
 $OutputEncoding = [Text.Encoding]::UTF8
 
 # Generate json/mathlib.jsonl if missing
-if ($refresh || -not (Test-Path "json/mathlib.jsonl")) {
+if ($refresh -or -not (Test-Path "json/mathlib.jsonl")) {
     Write-Host "Building Mathlib..."
     lake build Mathlib
     Write-Host "Generating mathlib.jsonl..."
@@ -24,7 +24,7 @@ if ($refresh || -not (Test-Path "json/mathlib.jsonl")) {
 }
 
 # Generate json/mathlib.tsv if missing
-if ($refresh || -not (Test-Path "json/mathlib.tsv")) {
+if ($refresh -or -not (Test-Path "json/mathlib.tsv")) {
     # Read all lines, parse JSON, produce TSV, write as UTF8
     $tsv = Get-Content -Path "json/mathlib.jsonl" | ForEach-Object {
         try {
@@ -35,11 +35,11 @@ if ($refresh || -not (Test-Path "json/mathlib.tsv")) {
             $type = ConvertTo-Json $obj.type -Compress
             $type = $type.Trim('"')
             # produce a tab-separated string
-            "$name`t$type"
+            "$name`t$type`t"
         } catch {
             # if line isn't valid JSON, skip or log; here we output an empty pair
             Write-Warning "Skipping invalid JSON line: $_"
-            "`t"
+            "`t`t"
         }
     }
     $tsv | Out-File -FilePath "json/mathlib.tsv" -Encoding utf8
