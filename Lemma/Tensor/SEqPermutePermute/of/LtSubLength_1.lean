@@ -80,11 +80,7 @@ private lemma main
           intro t
           have h_t := LtVal t
           let ⟨k', k, h_k'k⟩ := Any_EqAddMul.of.Lt_Mul h_t
-          let ⟨h_k'_div, h_k_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_k'k.symm
-          simp [h_drop] at h_k'_div h_k_mod
           have h_k := LtVal k
-          have h_prod_ne_0 := Ne_0.of.Gt h_k
-          simp only [h_drop] at h_prod_ne_0
           have h_k' := LtVal k'
           simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k.symm]
           rw [GetCast.eq.Get.of.Eq.Lt]
@@ -103,8 +99,6 @@ private lemma main
               simp only [Rotate.eq.AppendDrop__Take] at h_k''
               rw [ProdAppend.eq.MulProdS] at h_k''
               let ⟨i, j, h_ij⟩ := Any_EqAddMul.of.Lt_Mul h_k''
-              let ⟨h_i_div, h_j_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_ij.symm
-              simp [LengthPermute.eq.Length, EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_i_div h_j_mod
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_ij.symm]
               rw [GetTranspose.eq.Get.fin]
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
@@ -119,8 +113,7 @@ private lemma main
                 have h_j := LtVal j
                 have h_i := LtVal i
                 simp [LengthPermute.eq.Length] at h_j h_i
-                rw [EqMin.of.Lt h_lt_add_1] at h_j h_i
-                simp [Add.comm (a := 1)] at h_j h_i
+                simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_j h_i
                 have h_permute := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 (s := s) (i := ⟨0, by omega⟩) (by simp) d
                 rw [GetCast.eq.Get.of.Eq.Lt.fin]
                 .
@@ -131,9 +124,8 @@ private lemma main
                     Nat.LtAddMulAddMul.of.Lt.Lt.Lt.Eq (by simp [h_permute]) h_j h_i h_k
                   let ⟨i', j', h_i'j'⟩ := Any_EqAddMul.of.Lt_Mul h_lt
                   let ⟨h_i'_div, h_j'_mod⟩ := Nat.Eq_Div.Eq_Mod.of.Eq_AddMul h_i'j'.symm
-                  simp [h_drop] at h_i'_div h_j'_mod
+                  simp [h_drop] at h_i'_div
                   rw [EqDivAddMul.of.Lt (by aesop)] at h_i'_div
-                  -- rw [ProdDropTakePermute.eq.Get_0.of.Lt_Length (by omega)] at h_i'_div
                   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j'.symm]
                   have h_i' := LtVal i'
                   rw [GetCast.eq.Get.of.Eq.Lt.fin]
@@ -159,24 +151,10 @@ private lemma main
                       simp [Add_Add.eq.AddAdd, h_drop]
                       simp [h_i'_div]
                       left
-                      simp [h_i''_div, h_j''_mod]
                       rw [ProdDropTakePermute.eq.Get_0.of.Lt_Length (by omega)] at h_i'_div
-                      simp [h_i'_div]
-                      have h_ij := h_ij
-                      simp [LengthPermute.eq.Length, EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_ij
-                      simp [h_ij]
-                      simp [h_zk'']
-                      simp [LengthPermute.eq.Length] at h_k'
-                      simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_k'
-                      simp [ProdRotate.eq.Prod] at h_k'
-                      rw [ProdTakePermute.eq.ProdTake.of.Lt_Length (by omega)] at h_k'
+                      simp [h_i''_div, h_j''_mod, h_i'_div]
                       rw [ProdDropTakePermute.eq.Get_0.of.Lt_Length (by omega)] at h_i
-                      simp [h_zk''] at h_ij h_i_div h_j_mod
-                      simp [EqDivAddMul.of.Lt h_i]
-                      rw [← h_ij]
-                      apply EqAddS.of.Eq
-                      rw [EqMod.of.Lt h_i]
-                      simp
+                      simp [EqDivAddMul.of.Lt h_i, EqMod.of.Lt h_i]
                       left
                       rw [TakeTake.eq.Take.of.Ge (by omega)]
                       rw [List.TakePermute.eq.TailTake.of.Lt_Length (by omega)]
@@ -190,11 +168,9 @@ private lemma main
                     simp [Rotate.eq.AppendDrop__Take]
                 .
                   simp [LengthPermute.eq.Length]
-                  rw [EqMin.of.Lt h_lt_add_1]
-                  simp [Add.comm (a := 1)]
+                  simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
                   apply LtAddMulAddMul.of.Lt.Lt.Lt.Eq _ h_j h_i h_k
                   repeat rw [MulProdS.eq.ProdAppend]
-                  apply congrArg
                   simp [h_permute]
                 .
                   simp [List.Permute.eq.Append_AppendRotateTakeDrop]
