@@ -18,12 +18,14 @@ private lemma main
   intro h_d
   rw [@Tensor.Permute.eq.Ite (i := ⟨i + d, by simp [LengthPermute.eq.Length]; omega⟩) (d := -d)]
   simp
-  split_ifs with h_sub h_pos h_j_0 h_j_length
+  split_ifs with h_sub h_pos h_j_0 h_eq_d
   repeat omega
   .
     sorry
   .
-    sorry
+    simp at h_eq_d
+    rw [LengthPermute.eq.Length] at h_eq_d
+    contradiction
 
 
 -- created on 2025-10-19

@@ -33,7 +33,7 @@ import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 open List Nat Vector Tensor Bool
-set_option maxHeartbeats 300000
+set_option maxHeartbeats 400000
 
 
 @[main]
@@ -64,7 +64,6 @@ private lemma main
       rw [h_permute]
     ·
       have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
-      simp
       apply SEqCast.of.SEq.Eq.Eq
       ·
         rw [MulProdS.eq.ProdAppend]
@@ -77,7 +76,6 @@ private lemma main
       ·
         rw [h_toNat]
         unfold Tensor.permuteTail
-        simp
         apply SEq.of.All_EqGetS.Eq
         ·
           have h_drop := DropPermute.eq.Drop.of.Lt_Length (show d < s.length by omega)
@@ -110,7 +108,6 @@ private lemma main
               simp
               split_ifs
               unfold Tensor.permuteHead
-              simp
               rw [DataCast.eq.Cast_Data.of.Eq]
               ·
                 simp [h_z]
