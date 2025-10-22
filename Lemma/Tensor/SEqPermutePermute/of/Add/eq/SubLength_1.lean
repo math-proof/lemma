@@ -1,3 +1,7 @@
+import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
+import Lemma.List.RotateRotate.eq.Rotate_Add
+import Lemma.List.DropPermute.eq.RotateDrop.of.Add.eq.SubLength_1
+import Lemma.List.TakePermute.eq.Take
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.TakePermute.eq.TailTake.of.Lt_Length
@@ -54,6 +58,7 @@ private lemma main
   (X.permute ⟨i, by omega⟩ d).permute ⟨i + d, by simp [LengthPermute.eq.Length]; omega⟩ (-d) ≃ X := by
 -- proof
   intro h_d
+  have h_i_eq : i = s.length - (1 + d) := by omega
   rw [@Tensor.Permute.eq.Ite (i := ⟨i + d, by simp [LengthPermute.eq.Length]; omega⟩) (d := -d)]
   simp
   split_ifs with h_sub h_pos h_j_0 h_eq_d
@@ -97,7 +102,46 @@ private lemma main
           rw [GetCast.eq.Get.of.Eq.Lt]
           .
             rw [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
-            sorry
+            unfold Tensor.rotate
+            simp
+            rw [GetCast.eq.Get.of.Eq.Lt]
+            .
+              simp [LengthPermute.eq.Length] at h_q
+              rw [← h_i_eq, TakePermute.eq.Take ⟨i, by grind⟩] at h_q
+              -- simp [LengthPermute.eq.Length] at h_r
+              -- simp [EqMin.of.Lt h_lt_add_1] at h_r
+              -- rw [← h_i_eq, DropPermute.eq.RotateDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) h, RotateRotate.eq.Rotate_Add] at h_r
+              let s' := (s.permute ⟨i, by grind⟩ d).drop ((s.permute ⟨i, by grind⟩ d).length - (1 + d))
+              let m := (s'.drop ((min (1 + d) (s.permute ⟨i, by grind⟩ d).length - 1) % s'.length)).prod
+              let n := (s'.take ((min (1 + d) (s.permute ⟨i, by grind⟩ d).length - 1) % s'.length)).prod
+              simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_r
+              let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
+              rw [GetFlatten.eq.Get.of.Eq_AddMul h_qₐrₐ]
+              rw [GetTranspose.eq.Get]
+              rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
+              rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]
+              rw [@Tensor.Permute.eq.Ite (i := ⟨i, by omega⟩) (d := d)]
+              simp
+              split_ifs with h_sub
+              .
+                omega
+              .
+                simp
+                rw [GetCast.eq.Get.of.Eq.Lt]
+                .
+                  sorry
+                .
+                  rw [MulProdS.eq.ProdAppend]
+                  sorry
+                .
+                  rw [MulProdS.eq.ProdAppend]
+                  rw [Permute.eq.Append_AppendRotateTakeDrop]
+            .
+              rw [MulProdS.eq.ProdAppend]
+              rwa [AppendDrop__Take.eq.Rotate]
+            .
+              rw [MulProdS.eq.ProdAppend]
+              rw [AppendDrop__Take.eq.Rotate]
           .
             assumption
           .
