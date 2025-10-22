@@ -1,7 +1,7 @@
 import Lemma.Int.Div.eq.AddDiv___Mod
 import Lemma.Algebra.Mod.ge.Zero.of.Lt_0
 import Lemma.Algebra.LeDivS.of.Ge.Lt_0
-import Lemma.Algebra.Le.of.Eq_Add.Le_0
+import Lemma.Int.Le.of.Eq_Add.Le_0
 open Algebra Int
 
 

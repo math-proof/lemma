@@ -295,26 +295,26 @@ def Tensor.permuteTail (X : Tensor α s) (size : ℕ) : Tensor α (s.take (s.len
 /--
 [torch.permute](https://docs.pytorch.org/docs/stable/generated/torch.permute.html)
 -/
-def Tensor.permute (X : Tensor α s) (dim : Fin s.length) (offset : ℤ) : Tensor α (s.permute dim offset) :=
-  match offset with
-  | .ofNat offset =>
-    match offset with
+def Tensor.permute (X : Tensor α s) (i : Fin s.length) (d : ℤ) : Tensor α (s.permute i d) :=
+  match d with
+  | .ofNat d =>
+    match d with
     | .zero =>
       cast (by simp [EqPermute__0]) X
-    | .succ offset =>
-      if h : dim.val = 0 then
-        have := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 h offset.succ
-        cast (by simp_all) (X.permuteHead (offset + 2))
+    | .succ d =>
+      if h : i.val = 0 then
+        have := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 h d.succ
+        cast (by simp_all) (X.permuteHead (d + 2))
       else
-        have := ProdPermute.eq.MulProd_ProdAppend dim offset.succ
-        ⟨cast (by simp_all) ((X.data.splitAt dim).map fun data => ((⟨data⟩ : Tensor α (s.drop dim)).permuteHead (offset + 2)).data).flatten⟩
-  | .negSucc offset =>
-    if h : dim.val = s.length - 1 then
-      have := Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1 h offset.succ
-      cast (by simp_all [NegSucc.eq.NegAdd_1]) (X.permuteTail (offset + 2))
+        have := ProdPermute.eq.MulProd_ProdAppend i d.succ
+        ⟨cast (by simp_all) ((X.data.splitAt i).map fun data => ((⟨data⟩ : Tensor α (s.drop i)).permuteHead (d + 2)).data).flatten⟩
+  | .negSucc d =>
+    if h : i.val = s.length - 1 then
+      have := Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1 h d.succ
+      cast (by simp_all [NegSucc.eq.NegAdd_1]) (X.permuteTail (d + 2))
     else
-      have := ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1 h offset.succ
-      ⟨cast (by simp_all [NegSucc.eq.NegCoeAdd_1]) ((⟨X.data.splitAt (dim + 1)⟩ : Tensor (List.Vector α (s.drop (dim + 1)).prod) (s.take (dim + 1))).permuteTail (offset + 2)).data.flatten⟩
+      have := ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1 h d.succ
+      ⟨cast (by simp_all [NegSucc.eq.NegCoeAdd_1]) ((⟨X.data.splitAt (i + 1)⟩ : Tensor (List.Vector α (s.drop (i + 1)).prod) (s.take (i + 1))).permuteTail (d + 2)).data.flatten⟩
 
 /--
 [torch.transpose](https://docs.pytorch.org/docs/stable/generated/torch.transpose.html)

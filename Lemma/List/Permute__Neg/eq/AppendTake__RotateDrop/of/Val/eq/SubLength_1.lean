@@ -12,21 +12,21 @@ open Algebra List Nat Int
 @[main]
 private lemma main
   {s : List α}
-  {d : Fin s.length}
+  {i : Fin s.length}
 -- given
-  (h : d.val = s.length - 1)
-  (k : ℕ) :
+  (h : i.val = s.length - 1)
+  (d : ℕ) :
 -- imply
-  s.permute d (-k : ℤ) = s.take (s.length - (k + 1)) ++ (s.drop (s.length - (k + 1))).rotate ((k + 1) ⊓ s.length - 1) := by
+  s.permute i (-d : ℤ) = s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1) := by
 -- proof
-  have h_d := LtVal d
+  have h_i := LtVal i
   simp_all [Eq_Sub_1.of.Val.eq.Sub_1 h]
-  simp_all [Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0 h_d k]
+  simp_all [Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0 h_i d]
   rw [SubSub.eq.Sub_Add]
   rw [Add.comm (a := 1)]
   norm_num
   congr
-  rw [← MinSubS.eq.SubMin.of.Ge.Ge]
+  rw [SubMin.eq.MinSubS.of.Ge.Ge]
   simp
   repeat linarith
 

@@ -9,16 +9,15 @@ private lemma main
   [CommMonoid α]
   {s : List α}
 -- given
-  (d : Fin s.length)
-  (k : ℕ) :
+  (i : Fin s.length)
+  (d : ℕ) :
 -- imply
-  (s.permute d k).prod = s.prod := by
+  (s.permute i d).prod = s.prod := by
 -- proof
   rw [ProdPermute.eq.MulProd_ProdAppend]
   rw [ProdAppend.eq.MulProdS]
   rw [ProdRotate.eq.Prod]
-  rw [MulProdS.eq.ProdAppend]
-  simp
+  simp [MulProdS.eq.ProdAppend]
 
 
 -- created on 2025-10-19

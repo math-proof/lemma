@@ -1,3 +1,8 @@
+import Lemma.List.TakePermute.eq.TailTake.of.Lt_Length
+import Lemma.List.ProdTakePermute.eq.ProdTake.of.Lt_Length
+import Lemma.List.ProdTail.eq.DivProd.of.GtLength_0.Gt_0
+import Lemma.List.ProdDropTakePermute.eq.Get_0.of.Lt_Length
+import Lemma.List.ProdRotate.eq.Prod
 import Lemma.Nat.EqDivAddMul.of.Lt
 import Lemma.Nat.Ne_0.of.Gt
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
@@ -38,7 +43,7 @@ private lemma main
   (X.permute ⟨0, by grind⟩ d).permute ⟨d, by simp [LengthPermute.eq.Length]; omega⟩ (-d) ≃ X := by
 -- proof
   have h_d := NeZero.pos d
-  rw [Permute.eq.Ite (d := ⟨d, by simp [LengthPermute.eq.Length]; omega⟩) (k := -d)]
+  rw [@Tensor.Permute.eq.Ite (i := ⟨d, by simp [LengthPermute.eq.Length]; omega⟩) (d := -d)]
   simp
   split_ifs with h_sub h_pos h_eq_d
   repeat omega
@@ -103,7 +108,7 @@ private lemma main
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_ij.symm]
               rw [GetTranspose.eq.Get.fin]
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-              rw [Permute.eq.Ite (d := ⟨0, by omega⟩) (k := d)]
+              rw [@Tensor.Permute.eq.Ite (i := ⟨0, by omega⟩) (d := d)]
               simp
               split_ifs
               unfold Tensor.permuteHead
@@ -116,7 +121,7 @@ private lemma main
                 simp [LengthPermute.eq.Length] at h_j h_i
                 rw [EqMin.of.Lt h_lt_add_1] at h_j h_i
                 simp [Add.comm (a := 1)] at h_j h_i
-                have h_permute := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 (s := s) (d := ⟨0, by omega⟩) (by simp) d
+                have h_permute := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 (s := s) (i := ⟨0, by omega⟩) (by simp) d
                 rw [GetCast.eq.Get.of.Eq.Lt.fin]
                 .
                   unfold Tensor.rotate
@@ -128,6 +133,7 @@ private lemma main
                   let ⟨h_i'_div, h_j'_mod⟩ := Nat.Eq_Div.Eq_Mod.of.Eq_AddMul h_i'j'.symm
                   simp [h_drop] at h_i'_div h_j'_mod
                   rw [EqDivAddMul.of.Lt (by aesop)] at h_i'_div
+                  -- rw [ProdDropTakePermute.eq.Get_0.of.Lt_Length (by omega)] at h_i'_div
                   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j'.symm]
                   have h_i' := LtVal i'
                   rw [GetCast.eq.Get.of.Eq.Lt.fin]
@@ -150,10 +156,32 @@ private lemma main
                       simp [h_i'j']
                       simp [LengthPermute.eq.Length]
                       simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
-                      simp [Add_Add.eq.AddAdd]
-                      sorry
+                      simp [Add_Add.eq.AddAdd, h_drop]
+                      simp [h_i'_div]
+                      left
+                      simp [h_i''_div, h_j''_mod]
+                      rw [ProdDropTakePermute.eq.Get_0.of.Lt_Length (by omega)] at h_i'_div
+                      simp [h_i'_div]
+                      have h_ij := h_ij
+                      simp [LengthPermute.eq.Length, EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_ij
+                      simp [h_ij]
+                      simp [h_zk'']
+                      simp [LengthPermute.eq.Length] at h_k'
+                      simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_k'
+                      simp [ProdRotate.eq.Prod] at h_k'
+                      rw [ProdTakePermute.eq.ProdTake.of.Lt_Length (by omega)] at h_k'
+                      rw [ProdDropTakePermute.eq.Get_0.of.Lt_Length (by omega)] at h_i
+                      simp [h_zk''] at h_ij h_i_div h_j_mod
+                      simp [EqDivAddMul.of.Lt h_i]
+                      rw [← h_ij]
+                      apply EqAddS.of.Eq
+                      rw [EqMod.of.Lt h_i]
+                      simp
+                      left
+                      rw [TakeTake.eq.Take.of.Ge (by omega)]
+                      rw [List.TakePermute.eq.TailTake.of.Lt_Length (by omega)]
                     .
-                      simp [h_i'_div, h_k_mod, h_drop]
+                      simp [h_i'_div, h_drop]
                   .
                     rw [MulProdS.eq.ProdAppend]
                     convert h_i'
@@ -189,11 +217,9 @@ private lemma main
           rw [MulProdS.eq.ProdAppend]
           apply congrArg
           simp [LengthPermute.eq.Length]
-          rw [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
-          simp
           rw [List.Permute__Neg.eq.Append_AppendRotateTakeDrop] at h_permute
           simp at h_permute
-          assumption
+          simpa [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
 
 
 -- created on 2025-10-19

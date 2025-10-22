@@ -73,7 +73,7 @@ private lemma main'
   .
     simp at h_d
     -- have h_d := Gt_0.of.Ne_0 h_d
-    rw [Permute.eq.Ite (d := ⟨j, by simpa [LengthPermute.eq.Length]⟩) (k := -d)]
+    rw [@Tensor.Permute.eq.Ite (i := ⟨j, by simpa [LengthPermute.eq.Length]⟩) (d := -d)]
     have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
     split_ifs with h_sub h_pos h_j_0 h_j_length
     repeat omega
@@ -96,7 +96,7 @@ private lemma main'
       simp at h_sub
       simp at h_j_length
       rw [h_toNat]
-      rw [Permute.eq.Ite (d := ⟨i, by linarith⟩) (k := d)]
+      rw [@Tensor.Permute.eq.Ite (i := ⟨i, by linarith⟩) (d := d)]
       simp
       split_ifs with h_pos? h_i_0 h_i_length
       ·
@@ -212,7 +212,7 @@ private lemma main'
                 simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_iijj.symm]
                 rw [GetTranspose.eq.Get.fin]
                 repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-                rw [Permute.eq.Ite (d := ⟨i, by linarith⟩) (k := d)]
+                rw [@Tensor.Permute.eq.Ite (i := ⟨i, by linarith⟩) (d := d)]
                 simp
                 split_ifs with h_pos? h_i_0 h_i_length
                 ·

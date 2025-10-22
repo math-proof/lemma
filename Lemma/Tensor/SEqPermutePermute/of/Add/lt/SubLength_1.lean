@@ -16,7 +16,7 @@ private lemma main
   (X.permute ⟨i, by omega⟩ d).permute ⟨i + d, by simp [LengthPermute.eq.Length]; omega⟩ (-d) ≃ X := by
 -- proof
   intro h_d
-  rw [Permute.eq.Ite (d := ⟨i + d, by simp [LengthPermute.eq.Length]; omega⟩) (k := -d)]
+  rw [@Tensor.Permute.eq.Ite (i := ⟨i + d, by simp [LengthPermute.eq.Length]; omega⟩) (d := -d)]
   simp
   split_ifs with h_sub h_pos h_j_0 h_j_length
   repeat omega

@@ -7,7 +7,7 @@ import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Algebra.EqNegS.is.Eq
 import Lemma.Algebra.Sub.eq.NegSub
 import Lemma.Int.Add.eq.Sub_Neg
-import Lemma.Algebra.EqAddS.of.Eq.Eq
+import Lemma.Nat.EqAddS.of.Eq.Eq
 import Lemma.Algebra.FloorAdd1.eq.Add1Floor
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.FDivAdd.eq.Add1FDiv.of.Ne_0

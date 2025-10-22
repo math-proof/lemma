@@ -6,7 +6,7 @@ import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.Algebra.Le_Min.of.Le.Le
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.List.EqAppendS.of.Eq.Eq
-import Lemma.List.Take_1.eq.List.of.Gt_0
+import Lemma.List.Take_1.eq.ListGet_0.of.GtLength_0
 import Lemma.List.TakeTail.eq.TailTake
 open Algebra List
 
@@ -35,7 +35,7 @@ private lemma main
       apply TakeTail.eq.TailTake
     ·
       apply Eq.symm
-      apply Take_1.eq.List.of.Gt_0 h
+      apply Take_1.eq.ListGet_0.of.GtLength_0 h
   ·
     rw [LengthTake.eq.Min_Length]
     apply Le_Min.of.Le.Le

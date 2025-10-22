@@ -3,7 +3,7 @@ import Lemma.Nat.MinAddS.eq.AddMin
 open Nat
 
 
-@[main]
+@[main, comm]
 private lemma main
   {a b c : ℕ}
 -- given

@@ -8,10 +8,10 @@ private lemma main
   [Monoid α]
   {s : List α}
 -- given
-  (d : Fin s.length)
-  (k : ℕ) :
+  (i : Fin s.length)
+  (d : ℕ) :
 -- imply
-  (s.permute d k).prod = (s.take d).prod * (((s.drop d).take (k + 1)).rotate 1 ++ (s.drop d).drop (k + 1)).prod := by
+  (s.permute i d).prod = (s.take i).prod * (((s.drop i).take (d + 1)).rotate 1 ++ (s.drop i).drop (d + 1)).prod := by
 -- proof
   simp_all [Permute.eq.Append_AppendRotateTakeDrop]
 

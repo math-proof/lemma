@@ -9,17 +9,17 @@ open Algebra List Int Nat
 private lemma main
   [Monoid α]
   {s : List α}
-  {d : Fin s.length}
-  {k : ℤ}
+  {i : Fin s.length}
+  {d : ℤ}
 -- given
-  (h_k : k ≤ 0)
-  (h : d.val ≠ s.length - 1) :
+  (h_d : d ≤ 0)
+  (h_i : i.val ≠ s.length - 1) :
 -- imply
-  (s.permute d k).prod = ((s.take (d + 1)).take ((s.take (d + 1)).length - (1 - k).toNat) ++ ((s.take (d + 1)).drop ((s.take (d + 1)).length - (1 - k).toNat)).rotate ((1 - k).toNat ⊓ (s.take (d + 1)).length - 1)).prod * (s.drop (d + 1)).prod := by
+  (s.permute i d).prod = ((s.take (i + 1)).take ((s.take (i + 1)).length - (1 - d).toNat) ++ ((s.take (i + 1)).drop ((s.take (i + 1)).length - (1 - d).toNat)).rotate ((1 - d).toNat ⊓ (s.take (i + 1)).length - 1)).prod * (s.drop (i + 1)).prod := by
 -- proof
-  have := ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1 h (-k).toNat
-  rw [Add_ToNatNeg.eq.ToNatSub.of.Le_0 h_k] at this
-  simp [EqMax.of.Ge (GeNeg_0.of.Le_0 h_k)] at this
+  have := ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1 h_i (-d).toNat
+  rw [Add_ToNatNeg.eq.ToNatSub.of.Le_0 h_d] at this
+  simp [EqMax.of.Ge (GeNeg_0.of.Le_0 h_d)] at this
   simp [← this]
 
 

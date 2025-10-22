@@ -8,16 +8,16 @@ open List Int Nat
 private lemma main
   [Monoid α]
   {s : List α}
-  {k : ℤ}
+  {d : ℤ}
 -- given
-  (h_k : k > 0)
-  (d : Fin s.length) :
+  (h : d > 0)
+  (i : Fin s.length) :
 -- imply
-  (s.permute d k).prod = (s.take d).prod * (((s.drop d).take (k + 1).toNat).rotate 1 ++ (s.drop d).drop (k + 1).toNat).prod := by
+  (s.permute i d).prod = (s.take i).prod * (((s.drop i).take (d + 1).toNat).rotate 1 ++ (s.drop i).drop (d + 1).toNat).prod := by
 -- proof
-  have := ProdPermute.eq.MulProd_ProdAppend d k.toNat
+  have := ProdPermute.eq.MulProd_ProdAppend i d.toNat
   rw [AddToNat.eq.ToNatAdd.of.Gt_0 (by linarith)] at this
-  simp [EqMax.of.Gt h_k] at this
+  simp [EqMax.of.Gt h] at this
   simp [← this]
 
 

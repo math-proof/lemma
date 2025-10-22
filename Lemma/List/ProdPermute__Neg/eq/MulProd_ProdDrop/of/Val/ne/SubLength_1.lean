@@ -18,12 +18,12 @@ open List Bool Nat Int
 private lemma main
   [Monoid α]
   {s : List α}
-  {d : Fin s.length}
+  {i : Fin s.length}
 -- given
-  (h : d.val ≠ s.length - 1)
-  (k : ℕ) :
+  (h : i.val ≠ s.length - 1)
+  (d : ℕ) :
 -- imply
-  (s.permute d (-k : ℤ)).prod = ((s.take (d + 1)).take ((s.take (d + 1)).length - (k + 1)) ++ ((s.take (d + 1)).drop ((s.take (d + 1)).length - (k + 1))).rotate ((k + 1) ⊓ (s.take (d + 1)).length - 1)).prod * (s.drop (d + 1)).prod := by
+  (s.permute i (-d : ℤ)).prod = ((s.take (i + 1)).take ((s.take (i + 1)).length - (d + 1)) ++ ((s.take (i + 1)).drop ((s.take (i + 1)).length - (d + 1))).rotate ((d + 1) ⊓ (s.take (i + 1)).length - 1)).prod * (s.drop (i + 1)).prod := by
 -- proof
   have h := Val.lt.Sub_1.of.Val.ne.Sub_1 h
   simp_all
@@ -34,10 +34,10 @@ private lemma main
   apply EqUFnS.of.Eq _ List.prod
   rw [Append_Append.eq.AppendAppend]
   apply EqAppendS.of.Eq
-  rw [Add.comm (a := k)]
+  rw [Add.comm (a := d)]
   rw [Sub_Add.eq.SubSub]
   congr
-  rw [Add.comm (b := k)]
+  rw [Add.comm (b := d)]
   rw [MinAddS.eq.AddMin]
   simp
 
