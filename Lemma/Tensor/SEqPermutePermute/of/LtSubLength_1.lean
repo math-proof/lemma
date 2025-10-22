@@ -1,3 +1,4 @@
+import Lemma.Nat.EqDivAddMul.of.Lt
 import Lemma.Nat.Ne_0.of.Gt
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Nat.Dvd_Add.of.Dvd.Dvd
@@ -126,7 +127,7 @@ private lemma main
                   let ⟨i', j', h_i'j'⟩ := Any_EqAddMul.of.Lt_Mul h_lt
                   let ⟨h_i'_div, h_j'_mod⟩ := Nat.Eq_Div.Eq_Mod.of.Eq_AddMul h_i'j'.symm
                   simp [h_drop] at h_i'_div h_j'_mod
-                  rw [DivAddMul.eq.Add_Div.of.Ne_0 h_prod_ne_0] at h_i'_div
+                  rw [EqDivAddMul.of.Lt (by aesop)] at h_i'_div
                   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j'.symm]
                   have h_i' := LtVal i'
                   rw [GetCast.eq.Get.of.Eq.Lt.fin]
@@ -134,13 +135,12 @@ private lemma main
                     simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_i'
                     let ⟨i'', j'', h_i''j''⟩ := Any_EqAddMul.of.Lt_Mul h_i'
                     let ⟨h_i''_div, h_j''_mod⟩ := Nat.Eq_Div.Eq_Mod.of.Eq_AddMul h_i''j''.symm
+                    have h_1_lt : 1 < d + 1 := by omega
+                    simp [EqMin.of.Lt h_lt_add_1, EqMod.of.Lt h_1_lt] at h_i''_div h_j''_mod
                     rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i''j''.symm]
                     rw [GetTranspose.eq.Get.fin]
                     repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-                    simp [EqMin.of.Lt h_lt_add_1] at h_i''j'' ⊢
-                    simp [EqMod.of.Lt (show 1 < d + 1 by omega)] at h_i''j'' ⊢
-                    simp [TakeTake.eq.Take.of.Ge] at h_i''j''
-                    rw [ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)] at h_i''j''
+                    simp [EqMin.of.Lt h_lt_add_1, EqMod.of.Lt h_1_lt] at h_i''j'' ⊢
                     apply congrArg
                     simp [h_z] at h_zk''
                     simp [← h_k'k, ← h_zk'', ← h_ij]
