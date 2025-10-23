@@ -4,7 +4,7 @@ import Lemma.Nat.AddAdd.eq.Add_Add
 open List Nat
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List α}
 -- given
@@ -15,9 +15,9 @@ private lemma main
 -- proof
   rw [Permute.eq.Append_AppendRotateTakeDrop]
   rw [EqDropAppend.of.Eq_Length]
-  · 
+  ·
     simp [Add_Add.eq.AddAdd]
-  · 
+  ·
     simp
 
 
