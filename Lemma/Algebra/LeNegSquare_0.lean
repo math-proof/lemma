@@ -1,6 +1,6 @@
-import Lemma.Algebra.GeSquare_0
+import Lemma.Int.GeSquare_0
 import Lemma.Algebra.LeNeg_0.of.Ge_0
-open Algebra
+open Algebra Int
 
 
 @[main]

@@ -1,6 +1,6 @@
 import Lemma.Real.SquareSum_Sqrt.le.Mul_Sum.of.All_Ge_0
-import Lemma.Algebra.Le_Sqrt.of.LeSquare
-open Algebra Real
+import Lemma.Real.Le_Sqrt.of.LeSquare
+open Real
 
 
 @[main]

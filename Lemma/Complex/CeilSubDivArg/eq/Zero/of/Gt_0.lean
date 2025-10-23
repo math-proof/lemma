@@ -3,7 +3,7 @@ import Lemma.Set.InDiv.of.In_Ioc.Gt_0
 import Lemma.Set.InSub.of.In_Ioc
 import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Algebra.Div_Mul.eq.Inv.of.Ne_0
-import Lemma.Algebra.DivNeg.eq.NegDiv
+import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Algebra.Div1.eq.Inv
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul

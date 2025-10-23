@@ -1,8 +1,8 @@
 import Lemma.Nat.EqMin.of.Le
-import Lemma.Algebra.LeAddS.is.Le
+import Lemma.Nat.LeAddS.is.Le
 import Lemma.Nat.EqMin.of.Gt
 import Lemma.Nat.GtAddS.is.Gt
-open Algebra Nat
+open Nat
 
 
 @[main]

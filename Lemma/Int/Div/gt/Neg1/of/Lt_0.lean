@@ -1,7 +1,7 @@
 import Lemma.Int.Mod.lt.Neg.of.Lt_0
 import Lemma.Algebra.GtDivS.of.Lt.Lt_0
-import Lemma.Algebra.DivNeg.eq.Neg1.of.Lt_0
-open Algebra Int
+import Lemma.Rat.DivNeg.eq.Neg1.of.Lt_0
+open Algebra Int Rat
 
 
 @[main]

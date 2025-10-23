@@ -1,5 +1,5 @@
-import Lemma.Algebra.LeAddS.is.Le
-open Algebra
+import Lemma.Nat.LeAddS.is.Le
+open Nat
 
 
 @[main]

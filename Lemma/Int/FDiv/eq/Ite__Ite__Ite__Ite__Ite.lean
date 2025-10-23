@@ -6,7 +6,7 @@ import Lemma.Bool.Eq_Ite.of.Cond.NotAnd.Eq
 import Lemma.Bool.IffAndSAnd
 import Lemma.Algebra.Gt.Lt.is.False
 import Lemma.Bool.Iff_True.of.Cond
-import Lemma.Algebra.Sub.eq.Add_Neg
+import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Algebra.Eq.is.False.of.Lt
 import Lemma.Algebra.Gt.is.False.of.Lt
 import Lemma.Algebra.Sub.eq.AddNeg

@@ -1,3 +1,4 @@
+import Lemma.Nat.Add_AddMul.lt.Mul_Mul.of.Lt.Lt.Lt
 import Lemma.List.DropPermute.eq.RotateTakeDrop.of.Add.eq.SubLength_1
 import Lemma.List.DropPermute.eq.ListGet.of.Add.eq.SubLength_1
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
@@ -136,9 +137,31 @@ private lemma main
                   rw [EqMod.of.Lt (show d < s.length - i by omega)]
                   simp [(show i + (d + 1) = s.length by omega)]
                   rw [DropPermute.eq.ListGet.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) h]
-                  simp
-                  rw [RotateTakeDrop.eq.DropPermute.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) h]
-                  sorry
+                  simp [RotateTakeDrop.eq.DropPermute.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) h]
+                  have h_rₐ := LtVal rₐ
+                  simp [LengthPermute.eq.Length, EqMin.of.Lt h_lt_add_1, EqSub_Sub.of.Gt h_lt_add_1, EqMod.of.Lt (show d < 1 + d by omega)] at h_rₐ
+                  have h_append := List.EqAppendTake__Drop ((s.permute ⟨i, by grind⟩ d).drop i) d
+                  rw [DropDrop.eq.Drop_Add] at h_append
+                  rw [DropPermute.eq.ListGet.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) h] at h_append
+                  have h_append := congrArg List.prod h_append
+                  simp at h_append
+                  rw [← h_i_eq] at h_rₐ
+                  rw [← h_append]
+                  apply Nat.Add_AddMul.lt.Mul_Mul.of.Lt.Lt.Lt
+                  .
+                    have h_q := LtVal q
+                    simp [LengthPermute.eq.Length] at h_q
+                    simp [← h_i_eq] at h_q
+                    rw [List.TakePermute.eq.Take (i := ⟨i, by grind⟩)] at h_q
+                    exact h_q
+                  .
+                    exact h_rₐ
+                  .
+                    have h_qₐ := LtVal qₐ
+                    simp [LengthPermute.eq.Length, EqSub_Sub.of.Gt h_lt_add_1, EqMin.of.Lt h_lt_add_1, EqMod.of.Lt (show d < 1 + d by omega)] at h_qₐ
+                    simp [← h_i_eq] at h_qₐ
+                    simp [DropPermute.eq.ListGet.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) h] at h_qₐ
+                    exact h_qₐ
                 .
                   rw [MulProdS.eq.ProdAppend]
                   rw [Permute.eq.Append_AppendRotateTakeDrop]

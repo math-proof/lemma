@@ -1,7 +1,7 @@
 import Lemma.Int.FMod.eq.Sub_MulFDiv
-import Lemma.Algebra.Sub.le.Zero.of.Le
+import Lemma.Int.Sub.le.Zero.of.Le
 import Lemma.Int.GeMulFDiv.of.Lt_0
-open Algebra Int
+open Int
 
 
 @[main]

@@ -1,10 +1,10 @@
 import Lemma.Algebra.SquareSub.eq.SubAddSquareS_MulMul2
-import Lemma.Algebra.GtSqrtS.of.Gt.Gt_0
+import Lemma.Real.GtSqrtS.of.Gt.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Gt
 import Lemma.Algebra.GtSquare_0.of.Gt_0
-import Lemma.Algebra.EqSquareSqrt.of.Gt_0
+import Lemma.Real.EqSquareSqrt.of.Gt_0
 import Lemma.Int.AddSub.eq.SubAdd
-open Algebra Int
+open Algebra Int Real
 
 
 @[main]

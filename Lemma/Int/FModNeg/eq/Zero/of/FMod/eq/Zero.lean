@@ -1,6 +1,6 @@
 import Lemma.Int.Any_Eq_Mul.of.FMod.eq.Zero
 import Lemma.Algebra.EqNegS.is.Eq
-import Lemma.Algebra.NegMul.eq.MulNeg
+import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Int.FMod.eq.Zero.of.Any_Eq_Mul
 open Algebra Int
 

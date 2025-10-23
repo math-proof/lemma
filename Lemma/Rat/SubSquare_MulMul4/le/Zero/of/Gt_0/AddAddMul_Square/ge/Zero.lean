@@ -1,5 +1,5 @@
 import sympy.core.power
-import Lemma.Algebra.DivNeg.eq.NegDiv
+import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Algebra.SquareNeg.eq.Square
 import Lemma.Algebra.SquareDiv.eq.DivSquareS
 import Lemma.Nat.SquareMul.eq.MulSquareS
@@ -7,11 +7,11 @@ import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Algebra.DivMul.eq.Mul_Div
 import Lemma.Nat.Mul
-import Lemma.Algebra.Sub.eq.Add_Neg
+import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Algebra.SubDivS.eq.DivMul_Sub.of.Ne_0.Ne_0
 import Lemma.Nat.Ne.of.Gt
 import Lemma.Int.MulSub.eq.SubMulS
-import Lemma.Algebra.NegMul.eq.MulNeg
+import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Algebra.DivMulS.eq.Div.of.Ne_0
 import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Algebra.LeMulS.of.Gt_0.Le

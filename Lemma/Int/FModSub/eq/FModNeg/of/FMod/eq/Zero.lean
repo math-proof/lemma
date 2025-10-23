@@ -1,6 +1,6 @@
 import Lemma.Int.FModAdd.eq.FMod.of.FMod.eq.Zero
-import Lemma.Algebra.Sub.eq.Add_Neg
-open Algebra Int
+import Lemma.Int.Sub.eq.Add_Neg
+open Int
 
 
 @[main]

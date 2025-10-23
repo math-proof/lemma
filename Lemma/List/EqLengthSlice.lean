@@ -1,8 +1,8 @@
 import stdlib.Slice
-import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
+import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.EqToNat
-open Algebra Int Nat
+open Int Nat
 
 
 @[main]

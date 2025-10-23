@@ -1,7 +1,7 @@
 import Lemma.Algebra.Min.eq.IteLe
 import Lemma.Algebra.Ite.eq.SubIte
-import Lemma.Algebra.Min
-open Algebra
+import Lemma.Nat.Min
+open Algebra Nat
 
 
 @[main, comm]

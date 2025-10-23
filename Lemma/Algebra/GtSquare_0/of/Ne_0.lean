@@ -1,7 +1,7 @@
-import Lemma.Algebra.GeSquare_0
+import Lemma.Int.GeSquare_0
 import Lemma.Algebra.NeSquare_0.of.Ne_0
 import Lemma.Algebra.Gt.is.Ge.Ne
-open Algebra
+open Algebra Int
 
 
 @[main]

@@ -1,7 +1,7 @@
-import Lemma.Algebra.GeSquare_0
+import Lemma.Int.GeSquare_0
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Algebra.Mul.eq.Zero.is.OrEqS_0
-open Algebra
+open Algebra Int
 
 
 @[main]

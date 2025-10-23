@@ -1,7 +1,7 @@
 import Lemma.Set.In_Ioc.of.Lt.Le
 import Lemma.Nat.LtAddS.is.Lt
-import Lemma.Algebra.LeAddS.is.Le
-open Set Algebra Nat
+import Lemma.Nat.LeAddS.is.Le
+open Set Nat
 
 
 @[main]

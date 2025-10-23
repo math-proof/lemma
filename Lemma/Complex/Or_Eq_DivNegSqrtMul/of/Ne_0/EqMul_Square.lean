@@ -1,7 +1,7 @@
 import Lemma.Nat.EqDivS.of.Eq
-import Lemma.Algebra.Or_Eq_NegSqrt.of.EqSquare
-import Lemma.Algebra.DivNeg.eq.NegDiv
-open Algebra Nat
+import Lemma.Complex.Or_Eq_NegSqrt.of.EqSquare
+import Lemma.Rat.DivNeg.eq.NegDiv
+open Nat Rat Complex
 
 
 @[main]

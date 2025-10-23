@@ -1,18 +1,18 @@
 import sympy.core.relational
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.EqFloor.is.Le.Lt
-import Lemma.Algebra.DivNeg.eq.NegDiv
+import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Algebra.DivInt.eq.Div
 import Lemma.Algebra.CoeNeg.eq.NegCoe
 import Lemma.Algebra.LeNegS.of.Ge
 import Lemma.Int.DivFMod.lt.One
-import Lemma.Algebra.LtNeg_0.of.Gt_0
+import Lemma.Int.LtNeg_0.of.Gt_0
 import Lemma.Int.DivFMod.ge.Zero
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Algebra.Div.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Bool.Ne.is.NotEq
-open Algebra Bool Int
+open Algebra Bool Int Rat
 
 
 @[main]

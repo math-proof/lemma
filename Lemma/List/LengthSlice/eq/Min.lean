@@ -1,9 +1,9 @@
 import stdlib.Slice
-import Lemma.Algebra.EqAdd_Mul_DivSub1Sign_2
+import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Nat.CoeMin.eq.MinCoeS
 import Lemma.Int.EqToNat
 import Lemma.Nat.EqCeilCoe
-open Algebra Int Nat
+open Int Nat
 
 
 @[main]

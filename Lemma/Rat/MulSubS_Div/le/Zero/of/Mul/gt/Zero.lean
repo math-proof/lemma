@@ -2,7 +2,7 @@ import sympy.core.relational
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Nat.EqMulS.of.Eq.Eq
-import Lemma.Algebra.Sub.eq.NegSub
+import Lemma.Int.Sub.eq.NegSub
 import Lemma.Algebra.DivMul.eq.Mul_Div
 import Lemma.Algebra.DivMul.eq.MulDiv
 import Lemma.Algebra.SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0

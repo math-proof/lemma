@@ -1,6 +1,6 @@
 import Lemma.Algebra.SquareAdd.eq.AddAddSquareS_MulMul2
-import Lemma.Algebra.Sub.eq.Add_Neg
-open Algebra
+import Lemma.Int.Sub.eq.Add_Neg
+open Algebra Int
 
 
 @[main]

@@ -1,7 +1,7 @@
 import sympy.core.relational
-import Lemma.Algebra.EqCeil.is.Lt.Le
+import Lemma.Rat.EqCeil.is.Lt.Le
 import Lemma.Set.In_Ioc.of.Lt.Le
-open Algebra Set
+open Set Rat
 
 
 @[main]

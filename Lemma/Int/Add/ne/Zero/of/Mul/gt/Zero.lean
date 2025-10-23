@@ -1,10 +1,10 @@
 import Lemma.Int.EqSub.of.EqAdd
-import Lemma.Algebra.NegMul.eq.MulNeg
-import Lemma.Algebra.MulNeg.eq.NegSquare
-import Lemma.Algebra.LtNeg_0.of.Gt_0
-import Lemma.Algebra.GeSquare_0
+import Lemma.Int.NegMul.eq.MulNeg
+import Lemma.Int.MulNeg.eq.NegSquare
+import Lemma.Int.LtNeg_0.of.Gt_0
+import Lemma.Int.GeSquare_0
 import Lemma.Nat.Lt.of.Lt.Le
-open Algebra Int Nat
+open Int Nat
 
 
 @[main]

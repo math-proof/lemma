@@ -1,6 +1,6 @@
-import Lemma.Algebra.Min
+import Lemma.Nat.Min
 import Lemma.Algebra.Min.eq.IteLe
-open Algebra
+open Algebra Nat
 
 
 @[main]

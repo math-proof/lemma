@@ -1,8 +1,8 @@
 import Lemma.Complex.Norm.eq.SqrtAddSqaureS
-import Lemma.Algebra.AddSquareS.ge.Zero
-import Lemma.Algebra.EqSquareSqrt.of.Ge_0
+import Lemma.Int.AddSquareS.ge.Zero
+import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Bool.EqUFnS.of.Eq
-open Algebra Bool Complex
+open Bool Complex Int Real
 
 
 @[main]

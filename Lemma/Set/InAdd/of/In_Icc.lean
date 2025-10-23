@@ -1,8 +1,8 @@
 import Lemma.Set.Ge.Le.of.In_Icc
-import Lemma.Algebra.GeAddS.is.Ge
-import Lemma.Algebra.LeAddS.is.Le
+import Lemma.Nat.GeAddS.is.Ge
+import Lemma.Nat.LeAddS.is.Le
 import Lemma.Set.In_Icc.of.Le.Ge
-open Set Algebra
+open Set Nat
 
 
 @[main]

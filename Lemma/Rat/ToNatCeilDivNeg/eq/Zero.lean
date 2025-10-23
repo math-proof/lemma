@@ -1,7 +1,7 @@
-import Lemma.Algebra.LeCeil.is.Le
+import Lemma.Rat.LeCeil.is.Le
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Ge_0
-import Lemma.Algebra.DivNeg.eq.NegDiv
-open Algebra
+import Lemma.Rat.DivNeg.eq.NegDiv
+open Algebra Rat
 
 
 @[main]

@@ -1,7 +1,7 @@
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Nat.Add
-import Lemma.Algebra.Sub.eq.Add_Neg
+import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeAdd.eq.AddCoeS

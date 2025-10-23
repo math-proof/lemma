@@ -6,7 +6,7 @@ import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 import Lemma.Int.AddSub.eq.Sub_Sub
 import Lemma.Nat.GeSub_1.of.Gt
 import Lemma.Set.In_Icc.of.MulSubS.le.Zero.Le
-import Lemma.Algebra.Sub.eq.Add_Neg
+import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Nat.Mul

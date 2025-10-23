@@ -1,6 +1,6 @@
-import Lemma.Algebra.LeAddS.is.Le
+import Lemma.Nat.LeAddS.is.Le
 import Lemma.Algebra.Le.of.Le.Le
-open Algebra
+open Algebra Nat
 
 
 @[main]

@@ -3,10 +3,10 @@ import Lemma.Nat.Eq_AddMulDiv___Mod
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.AddAdd
-import Lemma.Algebra.LeAddS.is.Le
+import Lemma.Nat.LeAddS.is.Le
 import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Nat.LtMod.of.Gt_0
-open Algebra Nat Int
+open Nat Int
 
 
 @[main]

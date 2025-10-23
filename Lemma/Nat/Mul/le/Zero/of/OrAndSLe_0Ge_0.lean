@@ -1,6 +1,6 @@
-import Lemma.Algebra.Mul.le.Zero.of.Le_0.Ge_0
-import Lemma.Nat.Le_0.of.Ge_0.Le_0
-open Algebra Nat
+import Lemma.Int.Mul.le.Zero.of.Le_0.Ge_0
+import Lemma.Int.Le_0.of.Ge_0.Le_0
+open Int
 
 
 @[main]

@@ -4,7 +4,7 @@ import Lemma.Algebra.LeSubS.is.Le.of.Le
 import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.Sub.eq.Zero.of.Lt
 import Lemma.Algebra.Gt_Min.of.Gt
-import Lemma.Algebra.Min
+import Lemma.Nat.Min
 open Algebra Nat
 
 

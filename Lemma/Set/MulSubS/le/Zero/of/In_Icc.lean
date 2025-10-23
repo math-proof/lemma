@@ -1,8 +1,8 @@
 import sympy.sets.sets
-import Lemma.Algebra.Sub.ge.Zero.is.Le
-import Lemma.Algebra.Sub.le.Zero.of.Le
-import Lemma.Nat.Le_0.of.Ge_0.Le_0
-open Algebra Nat
+import Lemma.Int.Sub.ge.Zero.is.Le
+import Lemma.Int.Sub.le.Zero.of.Le
+import Lemma.Int.Le_0.of.Ge_0.Le_0
+open Int
 
 
 @[main]

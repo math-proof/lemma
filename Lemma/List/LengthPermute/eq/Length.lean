@@ -7,16 +7,16 @@ import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Algebra.Le_Min.of.Le.Le
+import Lemma.Nat.Le_Min.of.Le.Le
 import Lemma.Nat.LeAdd_1
-import Lemma.Algebra.Min
-import Lemma.Algebra.EqAddMin__Sub
+import Lemma.Nat.Min
+import Lemma.Nat.EqAddMin__Sub
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.SubSub
 import Lemma.Nat.EqSubAdd
-open Algebra List Nat Int
+open List Nat Int
 
 
 @[main]

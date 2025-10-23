@@ -4,8 +4,8 @@ import Lemma.Algebra.LeNeg.of.Ge_Neg
 import Lemma.Algebra.LeNegS.of.Ge
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Ge.of.Gt
-import Lemma.Algebra.NegSub.eq.Add_Neg
-import Lemma.Algebra.GeAddS.is.Ge
+import Lemma.Int.NegSub.eq.Add_Neg
+import Lemma.Nat.GeAddS.is.Ge
 open Algebra Nat Int
 
 

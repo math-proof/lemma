@@ -1,7 +1,7 @@
 import sympy.functions.elementary.exponential
-import Lemma.Algebra.Sub.eq.Add_Neg
+import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Algebra.Div.eq.Mul_Inv
-open Algebra
+open Algebra Int
 
 
 @[main]

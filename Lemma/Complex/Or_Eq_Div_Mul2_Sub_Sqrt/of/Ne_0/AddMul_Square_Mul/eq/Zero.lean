@@ -14,12 +14,12 @@ import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Algebra.Eq_Inv_Div_Square.of.Ne_0
 import Lemma.Algebra.Div.eq.Mul_Inv
 import Lemma.Algebra.Eq_Mul_Div_Mul__Sub__SubDivS.of.Ne_0.Ne_0
-import Lemma.Algebra.DivNeg.eq.NegDiv
+import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Rat.DivAdd.eq.AddDivS
-import Lemma.Algebra.NegMul.eq.MulNeg
+import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Algebra.Mul_Neg.eq.NegMul
-import Lemma.Algebra.Sub.eq.Add_Neg
+import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Algebra.DivMul.eq.Mul_Div
 import Lemma.Rat.DivDiv.eq.Div_Mul

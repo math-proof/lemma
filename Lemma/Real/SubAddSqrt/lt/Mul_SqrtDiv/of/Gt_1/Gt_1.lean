@@ -3,7 +3,7 @@ import Lemma.Algebra.Lt.of.LtSquareS.Ge_0
 import Lemma.Algebra.Mul.ge.Zero.of.Ge_0.Ge_0
 import Lemma.Algebra.GeSqrt_0
 import Lemma.Nat.SquareMul.eq.MulSquareS
-import Lemma.Algebra.EqSquareSqrt.of.Ge_0
+import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Gt_0
 import Lemma.Algebra.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Int.SubAdd.eq.Add_Sub
