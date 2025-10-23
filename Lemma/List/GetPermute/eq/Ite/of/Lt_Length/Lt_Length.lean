@@ -20,7 +20,7 @@ import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.List.GetDrop.eq.Get_Add.of.GtLength_Add
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Sub.gt.Zero.is.Gt
-import Lemma.Algebra.Gt.is.Ge.Ne
+import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Ge_Add_1.of.Gt
 import Lemma.Nat.GeSub.of.Ge_Add
 import Lemma.List.LengthPermute.eq.Length

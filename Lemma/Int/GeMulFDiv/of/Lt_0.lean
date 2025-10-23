@@ -6,7 +6,7 @@ import Lemma.Algebra.Gt.is.False.of.Lt
 import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Int.GeMulSubEDiv.of.Lt_0
 import Lemma.Algebra.GeNeg_0.of.Le_0
-import Lemma.Algebra.NotGt.is.Le
+import Lemma.Nat.NotGt.is.Le
 import Lemma.Algebra.LeMulEDiv.of.Ge_0
 import Lemma.Algebra.GeNeg.of.Le_Neg
 open Algebra Bool Int Nat

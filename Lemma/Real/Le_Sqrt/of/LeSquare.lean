@@ -1,11 +1,11 @@
 import sympy.core.power
-import Lemma.Algebra.GeSqrt_0
+import Lemma.Real.GeSqrt_0
 import Lemma.Int.GeSquare_0
 import Lemma.Algebra.Ge.of.Ge.Ge
 import Lemma.Nat.Eq.of.Le.Ge
 import Lemma.Int.Eq_0.of.LeSquare_0
 import Lemma.Algebra.Le_Sqrt.is.LeSquare.of.Ge_0.Ge_0
-open Algebra Nat Int
+open Algebra Nat Int Real
 
 
 @[main]

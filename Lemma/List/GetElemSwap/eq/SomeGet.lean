@@ -1,6 +1,6 @@
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetElem.eq.SomeGet.of.Lt_Length
-import Lemma.Algebra.NotGt.is.Le
+import Lemma.Nat.NotGt.is.Le
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Nat.Ge.of.NotLt
@@ -9,7 +9,7 @@ import Lemma.Nat.Sub.gt.Zero.is.Lt
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.List.EqSwapS
-open Algebra List Bool Nat
+open List Bool Nat
 
 
 @[main]

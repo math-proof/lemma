@@ -2,11 +2,11 @@ import sympy.functions.elementary.integers
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Ge.of.Gt_Sub_1
 import Lemma.Nat.Sub.eq.Zero
-import Lemma.Algebra.NotGt.is.Le
+import Lemma.Nat.NotGt.is.Le
 import Lemma.Nat.NotOdd.is.Even
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Nat.EqAddSub_1.of.Lt_0
-open Algebra Nat
+open Nat
 
 
 @[main]

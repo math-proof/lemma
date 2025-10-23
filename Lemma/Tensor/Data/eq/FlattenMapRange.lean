@@ -5,13 +5,13 @@ import Lemma.Nat.Ge.of.NotLt
 import Lemma.Vector.EqGetRange
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne.of.Gt
-import Lemma.Algebra.NotGt.is.Le
+import Lemma.Nat.NotGt.is.Le
 import Lemma.Nat.Eq_0.of.Le_0
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.ArraySlice.as.GetSplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Bool.EqCast.of.SEq
-open Algebra Vector Bool Nat
+open Vector Bool Nat
 
 
 @[main]

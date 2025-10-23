@@ -1,9 +1,9 @@
-import Lemma.Algebra.Gt.is.Ge.Ne
+import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Set.In_Ioo.of.Gt.Lt
 import Lemma.Nat.Ne.of.Gt
 import Lemma.Set.In_Ico.of.Lt.Ge
 import Lemma.Nat.Ge.of.Gt
-open Set Algebra Nat
+open Set Nat
 
 
 @[main]

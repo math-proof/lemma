@@ -1,9 +1,9 @@
 import stdlib.List
-import Lemma.Algebra.NotGt.is.Le
+import Lemma.Nat.NotGt.is.Le
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.List.ProdAppend_Cons_Drop.eq.Prod.of.Lt.Lt_Length
-open Algebra List Bool Nat
+open List Bool Nat
 
 
 @[main]

@@ -1,7 +1,7 @@
 import Lemma.Int.MulFMod.ge.Zero.of.Gt_0
 import Lemma.Int.MulFMod.ge.Zero.of.Lt_0
-import Lemma.Algebra.Eq.of.NotLt.NotGt
-open Algebra Int
+import Lemma.Nat.Eq.of.NotLt.NotGt
+open Int Nat
 
 
 @[main]

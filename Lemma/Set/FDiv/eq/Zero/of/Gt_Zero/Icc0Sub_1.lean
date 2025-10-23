@@ -2,12 +2,12 @@ import Lemma.Int.GeCoeS.is.Ge
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Set.Ge.of.In_Icc
-import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Gt_0
+import Lemma.Rat.Div.ge.Zero.of.Ge_0.Gt_0
 import Lemma.Int.GtCoeS.is.Gt
 import Lemma.Set.Le.of.In_Icc
 import Lemma.Nat.Lt_Add_1.of.Le
 import Lemma.Rat.LtDiv.of.Lt.Gt_0
-open Algebra Set Int Nat Rat
+open Set Int Nat Rat
 
 
 @[main]

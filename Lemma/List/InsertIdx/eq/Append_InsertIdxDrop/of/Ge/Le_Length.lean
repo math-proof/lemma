@@ -1,10 +1,10 @@
-import Lemma.Algebra.Gt.is.Ge.Ne
+import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Gt
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Le
-open Algebra List Nat
+open List Nat
 
 
 @[main]

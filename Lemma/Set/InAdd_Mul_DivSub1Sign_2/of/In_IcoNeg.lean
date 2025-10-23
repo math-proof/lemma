@@ -1,9 +1,9 @@
 import stdlib.Slice
 import sympy.sets.sets
-import Lemma.Algebra.DivSub1Sign_2.eq.Zero.of.Ge_0
+import Lemma.Int.DivSub1Sign_2.eq.Zero.of.Ge_0
 import Lemma.Int.DivSub1Sign_2.eq.One.of.Lt_0
 import Lemma.Int.Sub.ge.Zero.of.Ge
-open Algebra Int
+open Int
 
 
 @[main]

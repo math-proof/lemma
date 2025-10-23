@@ -1,6 +1,6 @@
-import Lemma.Algebra.Div.ge.Zero.of.Mul.ge.Zero
+import Lemma.Rat.Div.ge.Zero.of.Mul.ge.Zero
 import Lemma.Int.MulFMod.ge.Zero
-open Algebra Int
+open Int Rat
 
 
 @[main]

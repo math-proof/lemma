@@ -1,6 +1,6 @@
 import sympy.core.relational
 import sympy.polys.polyroots
-import Lemma.Algebra.SquareSub.eq.SubAddSquareS_MulMul2
+import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
 import Lemma.Int.SubAdd.eq.Add_Sub
@@ -8,8 +8,8 @@ import Lemma.Algebra.DivMul.eq.Mul_Div
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
-import Lemma.Algebra.DivMul.eq.MulDiv
-import Lemma.Algebra.SquareDiv.eq.DivSquareS
+import Lemma.Rat.DivMul.eq.MulDiv
+import Lemma.Rat.SquareDiv.eq.DivSquareS
 import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Algebra.Eq_Inv_Div_Square.of.Ne_0
 import Lemma.Algebra.Div.eq.Mul_Inv

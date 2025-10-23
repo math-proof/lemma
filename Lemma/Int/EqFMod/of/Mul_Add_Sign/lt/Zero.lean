@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqSign_1.of.Gt_0
-import Lemma.Algebra.NotGt.is.Le
+import Lemma.Int.EqSign_1.of.Gt_0
+import Lemma.Nat.NotGt.is.Le
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0
@@ -12,7 +12,7 @@ import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Nat.Mul
 import Lemma.Set.EqFMod.of.Gt_Zero.Icc0Sub_1
 import Lemma.Set.EqFMod.of.Lt_0.IccAdd_1'0
-open Algebra Set Bool Nat Int
+open Set Bool Nat Int
 
 
 @[main]

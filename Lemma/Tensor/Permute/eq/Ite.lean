@@ -3,7 +3,7 @@ import Lemma.List.EqPermute__0
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
 import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
-import Lemma.Algebra.NotGt.is.Le
+import Lemma.Nat.NotGt.is.Le
 import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1.Le_0
 import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
@@ -15,7 +15,7 @@ import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.SubMin.eq.MinSubS
 import Lemma.Nat.Min.eq.Add_1
-open Algebra List Bool Int Nat
+open List Bool Int Nat
 
 
 @[main]

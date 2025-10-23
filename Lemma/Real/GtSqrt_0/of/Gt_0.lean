@@ -1,7 +1,7 @@
-import Lemma.Algebra.GeSqrt_0
+import Lemma.Real.GeSqrt_0
 import Lemma.Real.NeSqrt_0.of.Gt_0
-import Lemma.Algebra.Gt.is.Ge.Ne
-open Algebra Real
+import Lemma.Nat.Gt.is.Ge.Ne
+open Real Nat
 
 
 @[main]

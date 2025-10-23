@@ -1,8 +1,8 @@
 import Lemma.Complex.Arg.eq.Ite__Ite_Arcsin
-import Lemma.Algebra.Div.ge.Zero.of.Ge_0.Ge_0
-import Lemma.Algebra.SquareDiv.eq.DivSquareS
-import Lemma.Algebra.GeNorm_0
-open Algebra Complex
+import Lemma.Rat.Div.ge.Zero.of.Ge_0.Ge_0
+import Lemma.Rat.SquareDiv.eq.DivSquareS
+import Lemma.Complex.GeNorm_0
+open Complex Rat
 
 
 @[main]

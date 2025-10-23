@@ -11,11 +11,11 @@ import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
 import Lemma.Nat.Sub_Add.eq.SubSub
-import Lemma.Algebra.Gt.is.Ge.Ne
+import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Add
 import Lemma.List.GetDrop.eq.Get_Add.of.GtLength_Add
 import Lemma.List.LengthSwap.eq.Length
-open Algebra List Nat
+open List Nat
 
 
 @[main]

@@ -16,10 +16,10 @@ import Lemma.Int.LeSign.of.Gt_0
 import Lemma.Set.MulSubS.le.Zero.of.In_Icc
 import Lemma.Nat.Mul
 import Lemma.Nat.Lt.of.Le.Ne
-import Lemma.Algebra.NotGt.is.Le
+import Lemma.Nat.NotGt.is.Le
 import Lemma.Set.FMod.in.IccSign.of.FMod.ne.Zero.Gt_0
 import Lemma.Set.FMod.in.Icc_Sign.of.FMod.ne.Zero.Lt_0
-open Algebra Set Bool Int Nat
+open Set Bool Int Nat
 
 
 @[main]

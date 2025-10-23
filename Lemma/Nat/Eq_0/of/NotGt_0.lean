@@ -1,6 +1,6 @@
 import Lemma.Nat.Eq_0.of.Le_0
-import Lemma.Algebra.NotGt.is.Le
-open Algebra Nat
+import Lemma.Nat.NotGt.is.Le
+open Nat
 
 
 @[main]

@@ -1,7 +1,7 @@
 import Lemma.Int.FMod.ge.Zero.of.Gt_0
-import Lemma.Algebra.Gt.is.Ge.Ne
+import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Ge_Add_1.of.Gt
-import Lemma.Algebra.EqSign_1.of.Gt_0
+import Lemma.Int.EqSign_1.of.Gt_0
 import Lemma.Set.In_Icc.of.Le.Le
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.FDiv.eq.FloorDiv

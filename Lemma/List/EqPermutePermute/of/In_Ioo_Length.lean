@@ -27,7 +27,7 @@ import Lemma.Algebra.Le.of.LeSubS.Le
 import Lemma.Algebra.Lt.of.Lt.Lt
 import Lemma.Algebra.Gt.of.Gt.Ge
 import Lemma.Algebra.Le.of.Le_Sub
-import Lemma.Algebra.Gt.is.Ge.Ne
+import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Ge_1.of.Gt
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Nat.EqAddSub.of.Ge

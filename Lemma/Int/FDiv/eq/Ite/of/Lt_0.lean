@@ -1,7 +1,7 @@
 import Lemma.Int.FDiv.eq.Sub_1.of.Gt_0.Lt_0
 import Lemma.Int.FDiv.eq.NegEDivNeg.of.Le_0.Lt_0
-import Lemma.Algebra.NotGt.is.Le
-open Algebra Int
+import Lemma.Nat.NotGt.is.Le
+open Int Nat
 
 
 @[main]

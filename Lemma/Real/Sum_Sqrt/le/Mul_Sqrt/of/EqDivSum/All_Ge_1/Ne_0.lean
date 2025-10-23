@@ -12,7 +12,7 @@ import Lemma.Algebra.GeDivS.of.Ge.Gt_0
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Algebra.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
-import Lemma.Algebra.GeSqrt_0
+import Lemma.Real.GeSqrt_0
 open Algebra Bool Nat Finset Real Rat
 
 
