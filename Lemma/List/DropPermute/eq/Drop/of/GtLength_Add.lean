@@ -14,7 +14,7 @@ private lemma main
   {s : List α}
   {i : Fin s.length}
 -- given
-  (h : i + d < s.length) :
+  (h : s.length > i + d) :
 -- imply
   (s.permute i d).drop (i + d + 1) = s.drop (i + d + 1) := by
 -- proof

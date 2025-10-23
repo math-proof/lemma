@@ -13,7 +13,7 @@ import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Algebra.Gt.is.Ge.Ne
 import Lemma.Nat.Add
-import Lemma.List.GetDrop.eq.Get_Add.of.Add.lt.Length
+import Lemma.List.GetDrop.eq.Get_Add.of.GtLength_Add
 import Lemma.List.LengthSwap.eq.Length
 open Algebra List Nat
 
@@ -107,7 +107,7 @@ private lemma main'
           simp [h_i, h_j]
           simp [h_eq_ij']
           rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
-          rw [GetDrop.eq.Get_Add.of.Add.lt.Length] <;>
+          rw [GetDrop.eq.Get_Add.of.GtLength_Add] <;>
             simp [h_eq_tj]
           ·
             assumption

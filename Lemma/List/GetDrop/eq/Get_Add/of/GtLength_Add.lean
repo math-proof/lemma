@@ -4,12 +4,12 @@ open Nat
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : n + j < v.length) :
+  (h : s.length > n + j) :
 -- imply
-  have : j < (v.drop n).length := by simp_all [Lt_Sub.of.LtAdd.left]
-  (v.drop n)[j] = v[n + j] := by
+  have : j < (s.drop n).length := by simp_all [Lt_Sub.of.LtAdd.left]
+  (s.drop n)[j] = s[n + j] := by
 -- proof
   simp_all
 

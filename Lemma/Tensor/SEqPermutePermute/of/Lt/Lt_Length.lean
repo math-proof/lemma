@@ -1,6 +1,6 @@
 import Lemma.List.LengthPermute.eq.Length
 import Lemma.Nat.Add
-import Lemma.Tensor.SEqPermutePermute.of.Add.lt.Length
+import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
 open List Nat Tensor
 
@@ -18,7 +18,7 @@ private lemma main
 -- proof
   intro d
   have : NeZero d := ⟨by omega⟩
-  have := SEqPermutePermute.of.Add.lt.Length (s := s) (i := i) (d := d) (by grind) X
+  have := SEqPermutePermute.of.GtLength_Add (s := s) (i := i) (d := d) (by grind) X
   simp [d] at this ⊢
   apply SEq.symm ∘ SEq.trans this.symm
   apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ _ (by rfl) (by rfl)

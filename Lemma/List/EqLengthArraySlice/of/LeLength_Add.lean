@@ -6,11 +6,11 @@ open Nat
 @[main]
 private lemma main
   {s : List α}
-  {i n : Nat}
+  {i d : ℕ}
 -- given
-  (h : i + n ≥ s.length) :
+  (h : s.length ≤ i + d) :
 -- imply
-  (s.array_slice i n).length = s.length - i := by
+  (s.array_slice i d).length = s.length - i := by
 -- proof
   simp [List.array_slice]
   rwa [Add.comm]

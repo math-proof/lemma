@@ -1,3 +1,4 @@
+import Lemma.List.DropPermute.eq.RotateTakeDrop.of.Add.eq.SubLength_1
 import Lemma.List.DropPermute.eq.ListGet.of.Add.eq.SubLength_1
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.List.RotateRotate.eq.Rotate_Add
@@ -135,6 +136,8 @@ private lemma main
                   rw [EqMod.of.Lt (show d < s.length - i by omega)]
                   simp [(show i + (d + 1) = s.length by omega)]
                   rw [DropPermute.eq.ListGet.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) h]
+                  simp
+                  rw [RotateTakeDrop.eq.DropPermute.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) h]
                   sorry
                 .
                   rw [MulProdS.eq.ProdAppend]

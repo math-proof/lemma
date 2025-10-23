@@ -1,4 +1,4 @@
-import Lemma.List.RotateTakeDrop.eq.DropTakePermute.of.Add.lt.Length
+import Lemma.List.DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add
 import Lemma.List.EqRotateRotate.of.Add.eq.Length
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Add
@@ -10,11 +10,11 @@ private lemma main
   {s : List α}
   {i : Fin s.length}
 -- given
-  (h : i + d < s.length) :
+  (h : s.length > i + d) :
 -- imply
-  (((s.permute i d).take (d + i + 1)).drop i).rotate d = (s.drop i).take (d + 1) := by
+  (((s.permute i d).take (i + d + 1)).drop i).rotate d = (s.drop i).take (d + 1) := by
 -- proof
-  rw [DropTakePermute.eq.RotateTakeDrop.of.Add.lt.Length h]
+  rw [DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add h]
   rw [EqRotateRotate.of.Add.eq.Length]
   simp
   rw [EqMin.of.Le]
@@ -25,3 +25,4 @@ private lemma main
 
 
 -- created on 2025-10-15
+-- updated on 2025-10-23

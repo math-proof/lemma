@@ -15,7 +15,7 @@ private lemma main
   [NeZero (d : ℕ)]
   {s : List ℕ}
 -- given
-  (h : i + d < s.length)
+  (h : s.length > i + d)
   (X : Tensor α s) :
 -- imply
   (X.permute ⟨i, by linarith⟩ d).permute ⟨i + d, by simpa [LengthPermute.eq.Length]⟩ (-d) ≃ X := by

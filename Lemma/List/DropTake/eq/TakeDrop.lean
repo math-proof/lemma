@@ -9,7 +9,7 @@ private lemma main
 -- imply
   (l.take j).drop i = (l.drop i).take (j - i) := by
 -- proof
-  apply l.drop_take
+  apply List.drop_take
 
 
 -- created on 2025-06-20

@@ -1,4 +1,3 @@
-import stdlib.List
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
@@ -18,12 +17,13 @@ private lemma main
 -- given
   (i : Fin s.length) :
 -- imply
-  (s.permute i ↑(s.length - i - 1)).drop i = (s.drop i).rotate 1 := by
+  (s.permute i ↑(s.length - 1 - i)).drop i = (s.drop i).rotate 1 := by
 -- proof
   rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
   ·
     rw [DropDrop.eq.Drop_Add]
     rw [DropPermute.eq.AppendRotateTakeDrop]
+    rw [SubSub.comm]
     rw [EqAddSub.of.Ge (by omega)]
     rw [SubSub.comm]
     rw [EqAdd_Sub.of.Ge (by omega)]

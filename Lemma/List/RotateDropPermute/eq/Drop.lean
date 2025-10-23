@@ -10,9 +10,10 @@ private lemma main
 -- given
   (i : Fin s.length) :
 -- imply
-  ((s.permute i ↑(s.length - i - 1)).drop i).rotate (s.length - i - 1) = s.drop i := by
+  ((s.permute i ↑(s.length - 1 - i)).drop i).rotate (s.length - 1 - i) = s.drop i := by
 -- proof
   rw [DropPermute.eq.RotateDrop]
+  rw [SubSub.comm]
   rw [EqRotateRotate.of.Le_Length.Eq_Length] <;>
     simp
   omega

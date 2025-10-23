@@ -17,7 +17,7 @@ import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
-import Lemma.List.GetDrop.eq.Get_Add.of.Add.lt.Length
+import Lemma.List.GetDrop.eq.Get_Add.of.GtLength_Add
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Sub.gt.Zero.is.Gt
 import Lemma.Algebra.Gt.is.Ge.Ne
@@ -105,7 +105,7 @@ private lemma main
       simp [LengthSlice.eq.SubMin]
       simp [h_eq_i]
       rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
-      rw [GetDrop.eq.Get_Add.of.Add.lt.Length]
+      rw [GetDrop.eq.Get_Add.of.GtLength_Add]
       ·
         simp [h_eq_t]
       ·

@@ -1,7 +1,7 @@
-import Lemma.List.EqLengthArraySlice.of.Add.le.Length
+import Lemma.List.EqLengthArraySlice.of.GeLength_Add
 import Lemma.Algebra.Le_Sub.is.LeAdd
 import Lemma.Nat.NotLe.is.Gt
-import Lemma.List.EqLengthArraySlice.of.Add.gt.Length
+import Lemma.List.EqLengthArraySlice.of.LtLength_Add
 import Lemma.Nat.Le.of.Lt
 import Lemma.Nat.Add
 open Algebra List Nat
@@ -16,12 +16,12 @@ private lemma main
 -- proof
   by_cases h : i + n ≤ s.length
   ·
-    rw [EqLengthArraySlice.of.Add.le.Length h]
+    rw [EqLengthArraySlice.of.GeLength_Add h]
     simp
     apply Le_Sub.of.LeAdd.left h
   ·
     have h := Gt.of.NotLe h
-    rw [EqLengthArraySlice.of.Add.gt.Length h]
+    rw [EqLengthArraySlice.of.LtLength_Add h]
     simp
     rw [Add.comm]
     apply Le.of.Lt h
