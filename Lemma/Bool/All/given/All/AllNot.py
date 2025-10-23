@@ -21,7 +21,7 @@ def apply(given, *, cond=None, wrt=None):
     if not domain.is_integer:
         domain = wrt.domain_conditioned(cond)
 
-    from Lemma.Algebra.Sum.eq.AddSumS import split
+    from Lemma.Finset.Sum.eq.AddSumS import split
     given = split(All, given, wrt.domain_conditioned(cond))
     if given.is_And:
         lhs, rhs = given.of(And)

@@ -11,7 +11,7 @@ def apply(el, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool
+    from Lemma import Calculus, Algebra, Set, Bool, Nat, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, given=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq.gt_zero = Set.Gt.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.EqAbs.of.Gt_0.apply(Eq.gt_zero)
+    Eq << Int.EqAbs.of.Gt_0.apply(Eq.gt_zero)
 
     Eq << Eq[-2].subs(Eq[-1])
 
@@ -47,11 +47,11 @@ def prove(Eq):
 
     Eq << Algebra.GeCeil.apply(Eq.Ceiling_el.lhs.arg)
 
-    Eq << Algebra.Gt.of.Ge.relax.apply(Eq[-1], step=1)
+    Eq << Nat.Gt_Sub_1.of.Ge.apply(Eq[-1], step=1)
 
     Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[-1], Eq[-3])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Gt.of.Ge.Gt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Gt.of.Ge.Gt)
 
     Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq.lt_zero, Eq[-1])
 

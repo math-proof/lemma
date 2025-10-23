@@ -16,7 +16,7 @@ def apply(given, a, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Discrete, Tensor, Nat, Nat, Finset, Finset, Finset
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True, given=True)
@@ -29,9 +29,9 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
     k = Eq[-1].lhs.variable
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Tensor.Eq.Sum.Square.of.Eq_Dot.apply(Eq[0], k)
 
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(Eq[-1])
 
-    Eq << -Eq[-1].this.apply(Algebra.EqAddS.Is.Eq) / 2
+    Eq << -Eq[-1].this.apply(Nat.EqAddS.Is.Eq) / 2
 
     Eq << Tensor.EqSum.of.Eq_Dot.apply(Eq[0], i)
 

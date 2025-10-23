@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, *, cond=None, wrt=None, simplify=True):
-    from Lemma.Algebra.Sum.eq.AddSumS import split
+    from Lemma.Finset.Sum.eq.AddSumS import split
     return Equal(self, split(Sup, self, cond, wrt=wrt, simplify=simplify), evaluate=False)
 
 

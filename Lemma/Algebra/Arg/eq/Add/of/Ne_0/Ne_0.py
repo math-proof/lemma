@@ -11,14 +11,14 @@ def apply(is_nonzero_x, is_nonzero_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, y = Symbol(complex=True, given=True)
     Eq << apply(Unequal(x, 0), Unequal(y, 0))
 
-    Eq << Algebra.GtAbs_0.of.Ne_0.apply(Eq[0])
+    Eq << Int.GtAbs_0.of.Ne_0.apply(Eq[0])
 
-    Eq << Algebra.GtAbs_0.of.Ne_0.apply(Eq[1])
+    Eq << Int.GtAbs_0.of.Ne_0.apply(Eq[1])
 
     Eq.abs_is_positive = Eq[-1] * Eq[-2]
 

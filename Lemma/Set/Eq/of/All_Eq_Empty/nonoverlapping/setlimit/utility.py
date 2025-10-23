@@ -22,7 +22,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(domain=Range(2, oo), given=False)
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Eq.induct.rhs.this.apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq << Eq.induct.rhs.this.apply(Finset.Sum.eq.AddSumS, cond={n})
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

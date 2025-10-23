@@ -30,7 +30,7 @@ def apply(eq_max, eq_min, eq_K_quote, eq_V_quote, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool, Rat, Nat
 
     n, k, l, u, d = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq.eq_V_dquote = Eq[-1].this.rhs.subs(Eq.V_quote)
 
-    Eq << Algebra.Ceil.lt.Add_1.apply(Eq.eq_V_dquote.find(Ceil).arg) - 1
+    Eq << Rat.Ceil.lt.Add_1.apply(Eq.eq_V_dquote.find(Ceil).arg) - 1
 
     Eq << Eq[-1] * d + β[i]
 
@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Algebra.Lt.of.Lt.relax.apply(Eq[-1], upper=n)
 
-    Eq.le_ceiling = Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq.le_ceiling = Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq <<= Eq.eq_K_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs), Eq.eq_V_dquote.this.find(Min).args[1].apply(Algebra.Expr.eq.IteGe, upper=Eq.le_ceiling.lhs)
 

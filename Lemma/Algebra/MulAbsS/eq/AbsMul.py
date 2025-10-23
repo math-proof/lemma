@@ -22,14 +22,14 @@ def apply(self, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int, Int
 
     x, y = Symbol(real=True)
     Eq << apply(abs(x) * abs(y))
 
-    Eq << Eq[-1].this.lhs.find(Abs).apply(Algebra.Abs.eq.IteGe_0)
+    Eq << Eq[-1].this.lhs.find(Abs).apply(Int.Abs.eq.IteGe_0)
 
-    Eq << Eq[-1].this.lhs.find(Abs).apply(Algebra.Abs.eq.IteGe_0)
+    Eq << Eq[-1].this.lhs.find(Abs).apply(Int.Abs.eq.IteGe_0)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Ite.eq.Ite_MulS)
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq.equal.this.lhs.subs(Eq[-1])
 
-    Eq.equal = Eq[-1].this.rhs.apply(Algebra.Abs.eq.IteGt_0)
+    Eq.equal = Eq[-1].this.rhs.apply(Int.Abs.eq.IteGt_0)
 
     Eq.equivalent = Iff(Eq.equal.lhs.args[0].cond, Eq.equal.rhs.args[0].cond, plausible=True)
 

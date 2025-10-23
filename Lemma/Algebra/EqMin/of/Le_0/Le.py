@@ -11,7 +11,7 @@ def apply(is_nonpositive, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x <= 0, y <= x)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge_0.of.Le.apply(Eq[-1])
 
-    Eq << Algebra.EqMin.of.Ge.apply(Eq[-1])
+    Eq << Nat.EqMin.of.Ge.apply(Eq[-1])
 
 
 if __name__ == '__main__':

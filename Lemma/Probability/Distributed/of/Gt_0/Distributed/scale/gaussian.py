@@ -10,7 +10,7 @@ def apply(gt_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Probability, Bool
+    from Lemma import Algebra, Calculus, Probability, Bool, Nat, Nat, Nat, Complex, Int
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)
@@ -21,15 +21,15 @@ def prove(Eq):
     y = Symbol(real=True)
     Eq << Probability.Distributed.given.Eq.Pr.apply(Eq[-1], y)
 
-    Eq << Algebra.EqAbs.of.Gt_0.apply(Eq[0])
+    Eq << Int.EqAbs.of.Gt_0.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 
     Eq.eq_prob, *Eq[-2:] = Bool.And_And.given.And.Cond.apply(Eq[-1], None)
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
-    Eq << Algebra.NeAbs_0.of.Ne_0.apply(Eq[-2])
+    Eq << Complex.NeNorm_0.of.Ne_0.apply(Eq[-2])
 
     Eq << Eq.eq_prob.lhs.this.apply(Probability.Pr.eq.Grad)
 

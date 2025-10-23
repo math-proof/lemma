@@ -10,3 +10,5 @@ from . import Real
 from . import Nat
 from . import Int
 from . import Finset
+from . import Rat
+from . import Complex

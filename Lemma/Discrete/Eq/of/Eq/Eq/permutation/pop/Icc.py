@@ -18,7 +18,7 @@ def apply(cup_finiteset_equality, last_element_equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     n = Symbol(integer=True, positive=True, given=True)
     p = Symbol(shape=(oo,), integer=True, nonnegative=True, given=True)
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-2] + Eq[-1]
 
-    Eq << Eq[-1].this.apply(Algebra.LeAddS.Is.Le)
+    Eq << Eq[-1].this.apply(Nat.LeAddS.Is.Le)
 
     Eq << Eq.paradox.this.expr.apply(Set.EqCard.of.Eq)
 

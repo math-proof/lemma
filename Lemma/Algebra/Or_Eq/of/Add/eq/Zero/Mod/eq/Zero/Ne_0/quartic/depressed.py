@@ -48,7 +48,7 @@ def apply(fx, mod_is_zero, is_nonzero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Int, Int
     from Lemma.Algebra.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
     from Lemma.Algebra.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
 
@@ -66,9 +66,9 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq[0]
 
-    Eq << Eq[-1].this.apply(Algebra.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
 
-    Eq.eq = Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=slice(0, 3))
+    Eq.eq = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=slice(0, 3))
 
     Eq << Equal(Eq[-1].rhs, 0).this.apply(Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic, x)
 

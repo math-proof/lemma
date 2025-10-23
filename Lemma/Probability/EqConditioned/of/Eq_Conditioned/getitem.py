@@ -22,7 +22,7 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus
+    from Lemma import Algebra, Probability, Calculus, Nat, Nat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x))
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-4])
 
-    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq.y_nonzero)
+    Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq.y_nonzero)
 
     Eq << Eq[-1].reversed
 

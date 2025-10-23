@@ -17,14 +17,14 @@ def apply(is_positive, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     t, x, a, b = Symbol(real=True)
     Eq << apply(t > 0, Element(x, Interval(a, b, left_open=True)))
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[1])
 
-    Eq <<= Algebra.GtMul.of.Gt_0.Gt.apply(Eq[0], Eq[-2]), Algebra.LeMul.of.Gt_0.Le.apply(Eq[0], Eq[-1])
+    Eq <<= Algebra.GtMul.of.Gt_0.Gt.apply(Eq[0], Eq[-2]), Nat.LeMul.of.Gt_0.Le.apply(Eq[0], Eq[-1])
 
     Eq << Set.In_Ico.of.Le.Gt.apply(Eq[-2], Eq[-1])
 

@@ -7,5 +7,3 @@ from . import Square
 from . import Conj
 from . import Pow
 from . import EqAbs_0
-from . import EqSquare_0
-from . import EqNorm_0

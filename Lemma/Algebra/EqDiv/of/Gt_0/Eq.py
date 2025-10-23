@@ -20,18 +20,18 @@ def apply(is_positive, eq, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat, Nat
 
     x = Symbol(real=True, given=True)
     f, g, h = Function(real=True)
     Eq << apply(f(x) > 0, Equal(g(x) * f(x), h(x) * f(x) + x))
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
-    Eq << Algebra.EqDivS.of.Eq.apply(Eq[-1], Eq[1])
+    Eq << Nat.EqDivS.of.Eq.apply(Eq[-1], Eq[1])
 
-    
-    
+
+
 
 
 if __name__ == '__main__':

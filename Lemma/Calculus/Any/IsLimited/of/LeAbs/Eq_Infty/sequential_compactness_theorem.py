@@ -15,7 +15,7 @@ def apply(sup_lt_oo, is_oo, a=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     x = Symbol(real=True, shape=(oo,))
     n, m = Symbol(integer=True)
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(All[~And]).apply(Bool.Cond.of.And, simplify=0)
 
-    Eq << Eq[-1].this.find(Less).apply(Algebra.Le_Sub_1.of.Lt, simplify=None)
+    Eq << Eq[-1].this.find(Less).apply(Nat.Le_Sub_1.of.Lt, simplify=None)
 
     Eq << Eq[-1].this.find(Or).apply(Bool.Or.Or.of.Or_And, simplify=None)
 

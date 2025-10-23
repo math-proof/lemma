@@ -24,7 +24,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Finset, Int, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -57,11 +57,11 @@ def prove(Eq):
 
     Eq << Algebra.LeAddSDivS.of.LeAbsSSubIndexed_Sub_1DivSum.apply(Eq[-1])
 
-    Eq << Eq[-1].rhs.args[0].args[1].this.apply(Algebra.Sum.eq.AddSumS, cond={m - 1})
+    Eq << Eq[-1].rhs.args[0].args[1].this.apply(Finset.Sum.eq.AddSumS, cond={m - 1})
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.eq.Sub.push)
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0).reversed
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=0).reversed
 
     Eq << Eq[-4].subs(Eq[-1])
 

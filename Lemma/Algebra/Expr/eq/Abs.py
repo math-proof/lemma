@@ -9,12 +9,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int
 
     x = Symbol(real=True, nonnegative=True)
     Eq << apply(x)
 
-    Eq << Eq[0].this.rhs.apply(Algebra.Abs.eq.IteGe_0)
+    Eq << Eq[0].this.rhs.apply(Int.Abs.eq.IteGe_0)
 
 
 

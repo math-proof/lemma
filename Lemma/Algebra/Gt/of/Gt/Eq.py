@@ -9,7 +9,7 @@ def apply(gt, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, x, b = Symbol(real=True)
     # Eq << apply(b > x, Equal(x, a))
@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0] + Eq[1].reversed
 
-    Eq << Eq[-1].this.apply(Algebra.GtAddS.Is.Gt)
+    Eq << Eq[-1].this.apply(Nat.GtAddS.Is.Gt)
 
 
 if __name__ == '__main__':

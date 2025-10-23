@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     d = Symbol(integer=True, zero=False, given=True)
     Eq << apply(Ceil(sign(d) / d))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1].reversed
 
-    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
 
 

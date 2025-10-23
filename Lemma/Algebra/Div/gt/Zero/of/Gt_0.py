@@ -10,7 +10,7 @@ def apply(given, num=1, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x = Symbol(real=True, given=True)
     d = Symbol(real=True, positive=True)
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[0]
 
-    Eq << Eq[-1].apply(Algebra.Mul.le.Zero.of.Le_0.Gt_0)
+    Eq << Eq[-1].apply(Int.Mul.le.Zero.of.Le_0.Gt_0)
 
 
 if __name__ == '__main__':

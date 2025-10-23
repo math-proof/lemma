@@ -12,7 +12,7 @@ def apply(eq, Q_def, V_def, A_def, π_quote=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Probability, Discrete, Algebra
+    from Lemma import Tensor, Probability, Discrete, Algebra, Finset, Finset, Finset
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum[~Expectation]).apply(Probability.Expect.eq.Add)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.find(Expectation[Conditioned[Pow * Function]]).apply(Probability.Expect.eq.Mul)
 

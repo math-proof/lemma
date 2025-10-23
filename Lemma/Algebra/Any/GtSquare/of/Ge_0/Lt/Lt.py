@@ -16,7 +16,7 @@ def apply(m_is_nonnegative, lt_mM, lt, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat, Int
 
     m, M, U = Symbol(real=True, given=True)
     Eq << apply(m >= 0, m < M, U < M ** 2)
@@ -24,7 +24,7 @@ def prove(Eq):
     x = Eq[-1].variable
     Eq.ge, Eq.lt = Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=U >= m ** 2)
 
-    Eq << Algebra.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
+    Eq << Nat.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
 
     Eq << Eq.lt.this.rhs.apply(Algebra.Any.given.Cond.subst, x, (m + M) / 2)
 
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtSqrt.of.Ge_0.Lt)
 
-    Eq << Algebra.EqAbs.of.Gt_0.apply(Eq[4])
+    Eq << Int.EqAbs.of.Gt_0.apply(Eq[4])
 
     Eq << Eq[-2].subs(Eq[-1])
 

@@ -17,14 +17,14 @@ def apply(is_nonzero, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, a, c = Symbol(complex=True)
     Eq << apply(Unequal(a, 0), Equal(a * x ** 2 + c, 0), x=x)
 
     Eq << Eq[1] - c
 
-    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
+    Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     t = Symbol(sqrt(Eq[-1].rhs))
     Eq << t.this.definition

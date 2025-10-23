@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative).apply(Calculus.Grad.Integral.eq.Mul.Grad)
 
-    Eq << Eq[-1].this.find(functions.Bool ** 2).apply(Algebra.SquareBool.eq.Bool)
+    Eq << Eq[-1].this.find(functions.Bool ** 2).apply(Bool.SquareBool.eq.Bool)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 

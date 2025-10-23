@@ -36,7 +36,7 @@ def apply(eq_theta, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Trigonometry, Tensor
+    from Lemma import Discrete, Algebra, Trigonometry, Tensor, Nat, Nat, Nat
 
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -80,16 +80,16 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(*Eq[-3:])
 
-    Eq <<= Eq[-1].find(Mul + Mul).this.apply(Algebra.AddMulS.eq.Mul_Add),\
-        Eq[-1].find(Mul[KroneckerDelta] - Mul).this.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq <<= Eq[-1].find(Mul + Mul).this.apply(Nat.AddMulS.eq.Mul_Add),\
+        Eq[-1].find(Mul[KroneckerDelta] - Mul).this.apply(Nat.AddMulS.eq.Mul_Add)
     Eq << Eq[-3].subs(*Eq[-2:])
     Eq <<= Eq[-1].lhs.find(Sin * Sin + Cos * Cos).this.apply(Trigonometry.Add.eq.Cos), \
         Eq[-1].lhs.find(Sin * Cos - Sin * Cos).this.apply(Trigonometry.Sub.eq.Sin)
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
-    Eq <<= Eq[-1].lhs.find(Add).this.apply(Algebra.AddMulS.eq.Mul_Add),\
-        Eq[-1].find(Sin[~Add]).this.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq <<= Eq[-1].lhs.find(Add).this.apply(Nat.AddMulS.eq.Mul_Add),\
+        Eq[-1].find(Sin[~Add]).this.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-3].subs(*Eq[-2:])
 

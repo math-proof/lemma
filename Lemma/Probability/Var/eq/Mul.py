@@ -22,7 +22,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Nat, Nat, Nat, Nat
 
     n = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(n, n))
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find((~Expectation) ** 2).apply(Probability.Expect.eq.Mul)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 
 
 if __name__ == '__main__':

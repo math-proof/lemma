@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(complex=True, shape=(n, n))
@@ -18,11 +18,11 @@ def prove(Eq):
 
     Eq << Tensor.Dot.eq.Mul.adjugate.apply(A)
 
-    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
+    Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     Eq << Discrete.EqInv.of.Eq.apply(Eq[-1])
 
-    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
+    Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].lhs.args[0].base @ Eq[-1]
 

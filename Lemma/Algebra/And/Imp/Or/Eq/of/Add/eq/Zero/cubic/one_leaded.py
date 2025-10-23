@@ -30,7 +30,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + a * x ** 2 + b * x + c, 0), x=x)
@@ -38,7 +38,7 @@ def prove(Eq):
     x = Symbol(x + a / 3)
     Eq.x_def = x.this.definition
 
-    Eq << Eq.x_def.this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=1).reversed
+    Eq << Eq.x_def.this.apply(Int.EqAdd.Is.Eq_Sub, rhs=1).reversed
 
     Eq << Eq[0].subs(Eq[-1])
 
@@ -54,11 +54,11 @@ def prove(Eq):
 
     Eq <<= Eq[-3].subs(Eq.x_def), Eq[-2].subs(Eq.x_def), Eq[-1].subs(Eq.x_def)
 
-    Eq <<= Eq[-3].this.find(Equal[Add, Add]).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-2].this.find(Equal[Add, Add]).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-1].this.find(Equal[Add, Add]).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1)
+    Eq <<= Eq[-3].this.find(Equal[Add, Add]).apply(Int.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-2].this.find(Equal[Add, Add]).apply(Int.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-1].this.find(Equal[Add, Add]).apply(Int.EqAdd.Is.Eq_Sub, lhs=-1)
 
-    Eq <<= Eq[-3].this.find(Equal[Add, Add]).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-2].this.find(Equal[Add, Add]).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-1].this.find(Equal[Add, Add]).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1)
+    Eq <<= Eq[-3].this.find(Equal[Add, Add]).apply(Int.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-2].this.find(Equal[Add, Add]).apply(Int.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-1].this.find(Equal[Add, Add]).apply(Int.EqAdd.Is.Eq_Sub, lhs=-1)
 
-    Eq <<= Eq[-3].this.find(Equal[Add, Add]).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-2].this.find(Equal[Add, Add]).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-1].this.find(Equal[Add, Add]).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1)
+    Eq <<= Eq[-3].this.find(Equal[Add, Add]).apply(Int.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-2].this.find(Equal[Add, Add]).apply(Int.EqAdd.Is.Eq_Sub, lhs=-1), Eq[-1].this.find(Equal[Add, Add]).apply(Int.EqAdd.Is.Eq_Sub, lhs=-1)
 
 
 

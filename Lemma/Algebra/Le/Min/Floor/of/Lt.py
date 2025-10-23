@@ -33,7 +33,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     di = Symbol('d_i', integer=True)
     i0 = Symbol(integer=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Min)
 
-    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Min)
 

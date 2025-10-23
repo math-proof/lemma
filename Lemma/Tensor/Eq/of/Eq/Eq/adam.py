@@ -33,7 +33,7 @@ def apply(initial_condition, recurrence, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset, Finset, Nat, Nat, Nat
 
     m, g = Symbol(shape=(oo,), real=True)
     t, k = Symbol(integer=True)
@@ -51,7 +51,7 @@ def prove(Eq):
     k = Eq[2].lhs.indices[0]
     Eq << Eq[-1].apply(Algebra.EqSumS.of.Eq, (t, 1, k + 1))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1] - Eq[-1].rhs.args[1]
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Mul.split.exponent)
 
-    Eq << Eq[-1].this.find(Add).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 
     # https://arxiv.org/abs/1412.6980
 

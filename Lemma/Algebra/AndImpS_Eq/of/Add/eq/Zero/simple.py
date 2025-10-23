@@ -19,18 +19,18 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat, Int
 
     x, a, b = Symbol(real=True)
     Eq << apply(Equal(a * x + b, 0), x=x)
 
     Eq << Bool.And.Imp.of.Cond.split.apply(Eq[0], cond=Equal(a, 0))
 
-    Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Eq[-1].this.rhs.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq <<= Eq[-2].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.EqDivS.of.Eq)
+    Eq << Eq[-1].this.rhs.apply(Nat.EqDivS.of.Eq)
 
 
 if __name__ == '__main__':

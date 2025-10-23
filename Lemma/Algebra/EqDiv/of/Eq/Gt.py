@@ -15,7 +15,7 @@ def apply(eq, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x = Symbol(real=True, given=True)
     f, g, h = Function(real=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
 
 

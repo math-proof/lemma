@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Discrete.Diff.eq.Add)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={0})
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={n + 1})
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.AddSumS, cond={n + 1})
 
     Eq.hypothesis = Algebra.Cond.of.Cond.subst.apply(Eq[0], x, x + 1)
 
@@ -43,11 +43,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(-Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.eq.AddSumS, cond={n + 1})
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum.eq.AddSumS, cond={n + 1})
 
-    Eq.split = Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={0})
+    Eq.split = Eq[-1].this.find(Sum).apply(Finset.Sum.eq.AddSumS, cond={0})
 
-    Eq << Add(*Eq.split.rhs.args[2:]).this.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Add(*Eq.split.rhs.args[2:]).this.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq << Eq[-1].this.rhs.expr.collect(Mul(*Eq[-1].rhs.expr.args[0].args[::2]))
 

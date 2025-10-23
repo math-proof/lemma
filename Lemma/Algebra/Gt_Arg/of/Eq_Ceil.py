@@ -9,7 +9,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Equal(Ceil((Arg(A) + Arg(B)) / (S.Pi * 2) - S.One / 2), 1))
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Ceil.gt.Zero.apply(Eq[-1])
 
-    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
+    Eq << Int.Gt.of.Sub.gt.Zero.apply(Eq[-1])
     Eq << Eq[-1] * S.Pi * 2
 
 

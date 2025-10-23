@@ -18,7 +18,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     x, a, b = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 
-    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq <<= Eq[-3] / d, Eq[-1] / d
 

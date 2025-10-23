@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool
+    from Lemma import Calculus, Algebra, Bool, Nat, Nat, Nat
 
     x, x0 = Symbol(real=True)
     y = Symbol(real=True, zero=False)
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq.lhs.this.apply(Calculus.Eq.Is.Any_All.limit_definition, epsilon=epsilon, delta=delta)
 
-    Eq << Eq[-1].this.expr.expr.find(Add).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.expr.expr.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Abs[Mul]).apply(Algebra.Abs.eq.Mul)
 

@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Finset, Finset
 
     m, d = Symbol(integer=True, positive=True)
     i, j = Symbol(integer=True)
@@ -24,7 +24,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
 
     k = Eq[-1].find(Sum).variable
-    Eq << Eq[-1].this.expr.rhs.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond=k<=i)
+    Eq << Eq[-1].this.expr.rhs.find(Sum).apply(Finset.Sum.eq.AddSumS, cond=k<=i)
 
     Eq << Eq[-1].this().find(Min).simplify()
 

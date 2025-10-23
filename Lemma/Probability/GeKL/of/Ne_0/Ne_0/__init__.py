@@ -11,7 +11,7 @@ def apply(ne_zero_lhs, ne_zero_rhs, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real
+    from Lemma import Probability, Algebra, Real, Finset, Finset, Finset
 
     D, m, n = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.limits.swap)
 

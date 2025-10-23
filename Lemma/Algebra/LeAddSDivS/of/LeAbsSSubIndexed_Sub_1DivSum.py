@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.limits.domain_defined)
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq.variance.rhs.args[0]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq << Eq[-1].this.rhs.expr.factor()
 
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq.le_given = Eq.le_given.subs(Eq[-1])
 
-    Eq << Eq.le_given.find(- ~Sum).this.apply(Algebra.Sum.eq.AddSumS, cond={m - 1})
+    Eq << Eq.le_given.find(- ~Sum).this.apply(Finset.Sum.eq.AddSumS, cond={m - 1})
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.eq.Sub.push)
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={m - 1})
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={m - 1})
 
     Eq << Eq[-1] - Eq[-1].rhs.args[-1]
 
@@ -134,7 +134,7 @@ def prove(Eq):
     assert Eq[-1].rhs == Eq.le_given.rhs
     Eq.le_plausible = LessEqual(Eq[-1].lhs, Eq.le_given.lhs, plausible=True)
 
-    Eq << Eq.le_plausible.this.apply(Algebra.LeAddS.Is.Le)
+    Eq << Eq.le_plausible.this.apply(Nat.LeAddS.Is.Le)
 
     Eq << Eq[-1] / m
 
@@ -159,7 +159,7 @@ def prove(Eq):
 
     Eq << Eq.is_nonnegative.lhs.args[0].find(Sum).this.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.limits.domain_defined)
 
@@ -173,7 +173,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.eq.Sub.unshift)
 
-    Eq << Add(*Eq[-1].rhs.args[:2]).this.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Add(*Eq[-1].rhs.args[:2]).this.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq << Eq[-1].this.rhs.limits_subs(j, i)
 

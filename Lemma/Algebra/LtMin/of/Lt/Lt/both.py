@@ -11,7 +11,7 @@ def apply(x_less_than_y, a_less_than_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, y, a, b = Symbol(real=True)
 
 
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << LessEqual(Min(x, a), x, plausible=True)
 
-    Eq << Algebra.Lt.of.Le.Lt.apply(Eq[-1], Eq[0])
+    Eq << Nat.Lt.of.Le.Lt.apply(Eq[-1], Eq[0])
 
     Eq << LessEqual(Min(x, a), a, plausible=True)
 

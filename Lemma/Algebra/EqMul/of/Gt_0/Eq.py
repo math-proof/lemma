@@ -20,7 +20,7 @@ def prove(Eq):
     f, g, h = Function(real=True)
     Eq << apply(f(x) > 0, Equal(g(x) * f(x), h(x) * f(x) + x))
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
     Eq << Nat.EqMulS.of.Eq.apply(Eq[-1], Eq[1])
 

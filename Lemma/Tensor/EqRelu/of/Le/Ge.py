@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Algebra.EqMin.of.Ge.apply(Eq[1]).reversed
+    Eq << Nat.EqMin.of.Ge.apply(Eq[1]).reversed
 
 
 

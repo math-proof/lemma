@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.And, slice(0, 3, 2))
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Gt.of.Ge.relax, step=1, ret=0)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Gt_Sub_1.of.Ge, step=1, ret=0)
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.EqMin.of.Gt)
 

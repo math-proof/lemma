@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Int
 
     x, a = Symbol(real=True)
     Eq << apply(x ** 2 < a ** 2)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.And.Lt.of.LtSquare)
+    Eq << Eq[-2].this.lhs.apply(Int.And.Lt.of.LtSquare)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtSquare.given.And.Lt)
 

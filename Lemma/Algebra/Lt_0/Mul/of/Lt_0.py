@@ -11,7 +11,7 @@ def apply(given, factor):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Greater(a, 0, plausible=True)
 
-    Eq << Algebra.Lt_0.of.Gt_0.Lt_0.apply(Eq[-1], Eq[0])
+    Eq << Int.Lt_0.of.Gt_0.Lt_0.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Set.Eq_Empty.Ico.of.Ge.apply(Eq[-2] + 1)
 
-    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Set.Eq_Empty.Ico.of.Le.apply(Eq[-1])
 

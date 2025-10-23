@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x <= y)
 
     Eq << ~Eq[1]
 
-    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1]) - 1
+    Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1]) - 1
 
     Eq << Algebra.Gt_Sub_.Ceil.One.apply(x)
 

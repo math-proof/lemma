@@ -179,8 +179,8 @@ where
 limit 1`;
 			console.log(sql);
 			var data = await form_post('php/request/execute.php', {sql, resultType: 1});
-			var caller = 'Tensor.LogSoftmax.eq.Sub_LogSumExpSub_Max';
-			// var caller = 'Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate';
+			// var caller = 'Tensor.LogSoftmax.eq.Sub_LogSumExpSub_Max';
+			var caller = 'Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate';
 			data = [{caller}];
 			console.log(data);
 			data = data.map(row => row.caller);

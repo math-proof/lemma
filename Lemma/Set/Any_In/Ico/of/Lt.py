@@ -12,12 +12,12 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Nat
 
     a, b = Symbol(integer=True, given=True)
     Eq << apply(a < b)
 
-    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[0]) + 1
+    Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[0]) + 1
 
     x = Eq[1].variable
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], x, b - 1)

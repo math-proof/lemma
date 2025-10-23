@@ -11,11 +11,11 @@ def apply(unequality, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Rat
     x, a, b = Symbol(real=True)
     Eq << apply(Unequal(x, 0), Unequal(x * a, b))
 
-    Eq << Algebra.Eq_0.ou.NeDivS.of.Ne.apply(Eq[1], x)
+    Eq << Rat.Eq_0.ou.NeDivS.of.Ne.apply(Eq[1], x)
 
     Eq <<= Eq[-1] & Eq[0]
 

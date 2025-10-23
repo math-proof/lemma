@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     n = Symbol(integer=True, positive=True, given=True)
     x = Symbol(complex=True, shape=(n,), given=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.Gt_0.of.Ne_Empty.apply(Eq[-1])
 
-    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Sum[Add]).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.find(Sum[Add]).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 

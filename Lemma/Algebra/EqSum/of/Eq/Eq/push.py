@@ -26,7 +26,7 @@ def apply(*imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     k, a = Symbol(integer=True)
     b = Symbol(domain=Range(a + 1, oo))
@@ -35,9 +35,9 @@ def prove(Eq):
 
     Eq << Algebra.EqAdd.of.Eq.Eq.apply(Eq[0], Eq[1])
 
-    Eq << Eq[2].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={b})
+    Eq << Eq[2].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={b})
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={b})
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={b})
 
 
 if __name__ == '__main__':

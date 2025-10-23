@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Nat
 
     n, a = Symbol(integer=True, given=True)
     Eq << apply(NotElement(n, Range(a, n + 1)))
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
 
     Eq << Set.In.Ico.of.Ge.apply(Eq[-1])
 

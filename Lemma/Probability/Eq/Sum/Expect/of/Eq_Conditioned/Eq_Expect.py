@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Covariance).apply(Probability.Cov.eq.Sub.Expect)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].subs(Eq[1])
 

@@ -17,7 +17,7 @@ def prove(Eq):
     Eq << apply(Unequal(x, a), x >= a - 1)
 
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[2])
+    Eq << Nat.Ne.of.Gt.apply(Eq[2])
     Eq << Nat.Ge.of.Gt.apply(Eq[2])
     Eq << Algebra.Ge.of.Ge.relax.apply(Eq[-1], a - 1)
 

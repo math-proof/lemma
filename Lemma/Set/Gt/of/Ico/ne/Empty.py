@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     a, b = Symbol(integer=True, given=True)
     Eq << apply(Unequal(Range(a, b), a.emptySet))
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Ge.Lt)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt.of.Ge.Lt)
 
 
 if __name__ == '__main__':

@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Finset
 
     n, a = Symbol(integer=True)
     f = Function(complex=True)
@@ -37,7 +37,7 @@ def prove(Eq):
     _n = Symbol("n", domain=Range(a, oo))
     Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], Range(a, _n))
 
-    Eq << Algebra.EqSumS.of.All_Eq.apply(Eq[-1])
+    Eq << Finset.EqSumS.of.All_Eq.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.doit()
 

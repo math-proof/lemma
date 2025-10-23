@@ -19,7 +19,7 @@ def apply(all_ne, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(All).apply(Algebra.EqSum.of.All_Ne, Eq.hypothesis.rhs.lhs)
 
-    Eq << Eq[-1].this.lhs.find(Equal).apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0)
+    Eq << Eq[-1].this.lhs.find(Equal).apply(Int.EqAdd.Is.Eq_Sub, rhs=0)
 
     Eq << Eq[-1].this.lhs.find(Equal).reversed
 

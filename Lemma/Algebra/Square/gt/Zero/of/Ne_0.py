@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     a = Symbol(real=True)
     Eq << apply(Unequal(a, 0))
 
-    Eq << Algebra.GtAbs_0.of.Ne_0.apply(Eq[0])
+    Eq << Int.GtAbs_0.of.Ne_0.apply(Eq[0])
 
     Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq[-1])
 

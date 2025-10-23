@@ -14,14 +14,14 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(Equal(x * x + y * y + z * z, 0))
 
     Eq << ~Eq[1]
 
-    Eq << Algebra.GtAbs_0.of.Ne_0.apply(Eq[-1])
+    Eq << Int.GtAbs_0.of.Ne_0.apply(Eq[-1])
 
     Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq[-1])
 

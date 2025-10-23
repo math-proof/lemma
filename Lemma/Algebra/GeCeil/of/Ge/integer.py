@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x = Symbol(integer=True, given=True)
     y = Symbol(real=True, given=True)
 
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Algebra.Le.of.Ge.Le.apply(Eq[0], Eq[-1])
 

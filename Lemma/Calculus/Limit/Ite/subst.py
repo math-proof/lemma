@@ -39,7 +39,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool
+    from Lemma import Calculus, Algebra, Set, Bool, Nat, Nat
 
     n = Symbol(integer=True)
     a = Symbol(integer=True, given=True)
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Gt.of.Ge.relax)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Gt_Sub_1.of.Ge)
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.Gt.of.Gt_Max, 1)
 

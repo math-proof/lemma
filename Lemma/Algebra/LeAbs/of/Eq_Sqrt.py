@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Algebra.Le_1.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2]), Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-1]) * Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-2])
 
-    Eq << Algebra.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-2])
 
     Eq << Algebra.And.of.LeAbs.apply(Eq[-1])
 

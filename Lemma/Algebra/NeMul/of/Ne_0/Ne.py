@@ -11,13 +11,13 @@ def apply(unequality, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat, Nat
     x, a, b = Symbol(real=True, given=True)
     Eq << apply(Unequal(x, 0), Unequal(a, b))
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.EqDivS.of.Eq.apply(Eq[0], Eq[-1])
+    Eq << Nat.EqDivS.of.Eq.apply(Eq[0], Eq[-1])
 
     Eq <<= Eq[-1] & Eq[1]
 

@@ -9,16 +9,16 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool
+    from Lemma import Algebra, Discrete, Bool, Nat, Nat, Nat, Int
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
     x_bar = Symbol(r"\bar {x}", real=True, shape=(oo,))
     Eq << apply(Equal(x_bar[n], ReducedSum(x[:n]) / n))
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=1)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=1)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.Square.Neg)
 

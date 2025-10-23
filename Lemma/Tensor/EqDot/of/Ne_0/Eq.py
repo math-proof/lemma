@@ -10,7 +10,7 @@ def apply(unequality, equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Nat
     n = Symbol(integer=True)
     A = Symbol(real=True, shape=(n, n))
     a, b = Symbol(real=True, shape=(n,))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
+    Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     Eq << Discrete.EqDet.of.Ne_0.apply(Eq[0]) * Determinant(A)
 

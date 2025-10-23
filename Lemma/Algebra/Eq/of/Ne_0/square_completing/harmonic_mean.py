@@ -10,7 +10,7 @@ def apply(ne_zero, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat, Nat
 
     a, b, x, y, z = Symbol(complex=True)
     Eq << apply(Unequal(a + b, 0), a * (x - y) ** 2 + b * (x - z) ** 2)
@@ -23,9 +23,9 @@ def prove(Eq):
 
     Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], rhs=2)
 
-    Eq << Eq[-1].this.rhs.find(Add[Mul, Mul, Mul]).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.find(Add[Mul, Mul, Mul]).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Mul[Add[-Pow, -Pow]]).apply(Algebra.Mul.Neg)
 
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Add[Pow]).apply(Algebra.Add.eq.Mul.together)
 
-    Eq << Eq[-1].this.rhs.find(Add[Add * Pow]).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.find(Add[Add * Pow]).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], lhs=2)
 

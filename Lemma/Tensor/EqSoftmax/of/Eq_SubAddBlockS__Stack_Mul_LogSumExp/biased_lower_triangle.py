@@ -24,7 +24,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Int, Int
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Block)
 
-    Eq.matmul_subs = Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0).reversed
+    Eq.matmul_subs = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=0).reversed
 
     Eq << Eq.z_def.rhs.find(Add).this.args[0].apply(Tensor.Expr.eq.Stack, i)
 

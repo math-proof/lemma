@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(abs(x), 0))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Abs.eq.IteGe_0)
+    Eq << Eq[0].this.lhs.apply(Int.Abs.eq.IteGe_0)
 
     Eq << Bool.OrAndS.of.BFn_Ite.apply(Eq[-1])
     Eq << Eq[-1].reversed

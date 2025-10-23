@@ -11,13 +11,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat, Finset
 
     i, n = Symbol(integer=True)
     f = Function(real=True)
     Eq << apply(Sum[i:1:n](f(i)))
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={0})
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.AddSumS, cond={0})
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=n >= 1)
 
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Less).reversed
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Gt.of.Ge.relax, lower=0)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Gt_Sub_1.of.Ge, lower=0)
 
     Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1])
 

@@ -11,7 +11,7 @@ def apply(le, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat, Nat
 
     M, M0, x, a, b = Symbol(real=True)
     f = Function(real=True)
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Algebra.Cond.of.All.subst.apply(Eq[-1], x, (a + b) / 2)
 
-    Eq << Algebra.Gt.of.Ge.relax.apply(Eq[-1], -oo)
+    Eq << Nat.Gt_Sub_1.of.Ge.apply(Eq[-1], -oo)
 
     Eq << Eq.all.this.expr.apply(Algebra.Lt.of.Lt.Le, ret=1)
 

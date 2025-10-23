@@ -11,7 +11,7 @@ def apply(eq_sum, all_is_nonnegative):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set
+    from Lemma import Algebra, Bool, Set, Finset
 
     x = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True, given=True, negative=False)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.limits_subs(i, j)
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
+    Eq << Eq[0].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={i})
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 

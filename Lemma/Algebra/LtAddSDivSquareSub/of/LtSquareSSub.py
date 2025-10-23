@@ -20,7 +20,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x0, x1, y0, y1, y2 = Symbol(real=True)
     Eq << apply((y2 - (x0 + x1) / 2) ** 2 < (y2 - (y0 + y1 + y2) / 3) ** 2)
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq.le = LessEqual(Eq[-1].lhs, Eq.lt.lhs, plausible=True)
 
-    Eq << Eq.le.this.apply(Algebra.LeAddS.Is.Le)
+    Eq << Eq.le.this.apply(Nat.LeAddS.Is.Le)
 
     Eq << Eq[-1].subs(Eq.x0_defintion, Eq.x1_defintion)
 

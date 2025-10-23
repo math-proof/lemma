@@ -9,7 +9,7 @@ def apply(le, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, x, b = Symbol(real=True)
     # Eq << apply(a <= x, Equal(b, a))
@@ -19,7 +19,7 @@ def prove(Eq):
     # Eq << apply(a <= x, Equal(b, x))
     Eq << Eq[0] + Eq[1]
 
-    Eq << Eq[-1].this.apply(Algebra.LeAddS.Is.Le)
+    Eq << Eq[-1].this.apply(Nat.LeAddS.Is.Le)
 
 
 if __name__ == '__main__':

@@ -10,12 +10,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x = Symbol(real=True)
     Eq << apply(abs(x))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Abs.eq.IteGe_0)
+    Eq << Eq[0].this.lhs.apply(Int.Abs.eq.IteGe_0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Max.eq.IteGe)
 

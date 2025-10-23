@@ -11,7 +11,7 @@ def apply(eq, Q_def, V_def, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Calculus, Probability, Algebra, Discrete, Bool
+    from Lemma import Tensor, Calculus, Probability, Algebra, Discrete, Bool, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Algebra.LeSup.of.All_Le.apply(Eq[-1])
 
-    Eq << Algebra.Lt.of.Le.Lt.apply(Eq[3], Eq[-1])
+    Eq << Nat.Lt.of.Le.Lt.apply(Eq[3], Eq[-1])
 
     Eq << Eq[-1].this.lhs.limits_subs(t, n)
 

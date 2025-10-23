@@ -25,7 +25,7 @@ def apply(eq_cup, eq_cup_union, notcontains, sgm, *, assumptions=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Finset
 
     i = Symbol(integer=True)
     X = Symbol(etype=dtype.real)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq.plausible.subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={y})
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={y})
 
     Eq << Set.EqSDiff.of.NotIn.apply(Eq[2])
 

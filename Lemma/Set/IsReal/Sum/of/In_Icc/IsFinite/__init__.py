@@ -17,7 +17,7 @@ def apply(el, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus
+    from Lemma import Algebra, Set, Calculus, Nat, Int
 
     r = Symbol(shape=(oo,), real=True)
     γ = Symbol(real=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.Abs.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-3])
+    Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-3])
 
     n = Symbol(integer=True, positive=True)
     Eq << Algebra.LeSum.of.Le.apply(Eq[-1], (k, 0, n))
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Algebra.Le.of.Le.Le.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.EqAbs.of.Gt_0.apply(Eq.gt_zero)
+    Eq << Int.EqAbs.of.Gt_0.apply(Eq.gt_zero)
 
     Eq << Eq[-2].subs(Eq[-1])
 
@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << -Eq[-1]
 
-    Eq <<= Algebra.Lt.of.Le.Lt.apply(Eq.upper_bound, Eq[-2]), Algebra.Gt.of.Ge.Gt.apply(Eq.lower_bound, Eq[-1])
+    Eq <<= Nat.Lt.of.Le.Lt.apply(Eq.upper_bound, Eq[-2]), Nat.Gt.of.Ge.Gt.apply(Eq.lower_bound, Eq[-1])
 
     Eq << Algebra.LtAbs.of.Lt.Gt.apply(Eq[-2], Eq[-1])
 

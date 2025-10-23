@@ -15,7 +15,7 @@ def apply(eq_theta_r, eq_theta_c, eq_R, Q, K, V, r, c, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Discrete, Algebra, Trigonometry
+    from Lemma import Tensor, Discrete, Algebra, Trigonometry, Finset, Nat
     from Lemma.Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane import rotary_matrix
     # n denotes sequence length (seq_length)
     # b_r, b_c denotes 10000
@@ -73,9 +73,9 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.theta_r[j].reversed, Eq.theta_c[j].reversed)
 
-    Eq << Eq[-1].this.rhs.args[::2].apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.rhs.args[::2].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.rhs.args[:2].apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.rhs.args[:2].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq <<= Eq[-1].find(Mul[Add]).this.apply(Algebra.Mul_Add.eq.AddMulS), \
         Eq[-1].find(Mul[2][Add]).this.apply(Algebra.Mul_Add.eq.AddMulS), \
@@ -84,10 +84,10 @@ def prove(Eq):
 
     Eq << Eq[-5].subs(*Eq[-4:])
 
-    Eq <<= Add(*Eq[-1].find(Sum).expr.args[1:3]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
-        Add(*Eq[-1].find(Sum).expr.args[::3]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
-        Add(*Eq[-1].find(Sum[2]).expr.args[1:3]).this.apply(Algebra.AddMulS.eq.Mul_Add),\
-        Add(*Eq[-1].find(Sum[2]).expr.args[::3]).this.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq <<= Add(*Eq[-1].find(Sum).expr.args[1:3]).this.apply(Nat.AddMulS.eq.Mul_Add), \
+        Add(*Eq[-1].find(Sum).expr.args[::3]).this.apply(Nat.AddMulS.eq.Mul_Add), \
+        Add(*Eq[-1].find(Sum[2]).expr.args[1:3]).this.apply(Nat.AddMulS.eq.Mul_Add),\
+        Add(*Eq[-1].find(Sum[2]).expr.args[::3]).this.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 

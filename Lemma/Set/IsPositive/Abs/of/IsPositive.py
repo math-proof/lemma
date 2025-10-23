@@ -14,14 +14,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     x = Symbol(super_complex=True)
     Eq << apply(Element(x, Interval.open(0, oo)))
 
     Eq << Set.Gt_0.of.IsPositive.apply(Eq[0])
 
-    Eq << Algebra.EqAbs.of.Gt_0.apply(Eq[-1])
+    Eq << Int.EqAbs.of.Gt_0.apply(Eq[-1])
 
     Eq << Eq[1].subs(Eq[-1])
 

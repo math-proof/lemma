@@ -18,7 +18,7 @@ def prove(Eq):
     a, x, b = Symbol(real=True)
     Eq << apply(b >= x, a < x)
 
-    Eq << Algebra.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
+    Eq << Nat.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
     Eq << Nat.Ge.of.Gt.apply(Eq[-1])
 
 

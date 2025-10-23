@@ -31,7 +31,7 @@ def apply(eq_h_embed, eq_h_global_in, eq_h_global_out, eq_h_local_in, eq_h_local
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Nat, Nat, Nat
 
     # T is the byte sequence length
     # P is the patch size which is normally set to 4
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(k, l)
 
-    Eq << Eq[-1].this.find(Add).args[:2].apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Add).args[:2].apply(Nat.AddMulS.eq.Mul_Add)
 
     l = Symbol(domain=Range(P))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq.h_local_in, l)

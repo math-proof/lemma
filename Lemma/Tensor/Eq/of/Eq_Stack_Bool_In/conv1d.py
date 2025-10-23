@@ -22,7 +22,7 @@ def apply(eq_M, x, w, r):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Tensor
+    from Lemma import Set, Algebra, Bool, Tensor, Int, Int
 
     m, n, d, d_quote, l, r = Symbol(integer=True, positive=True)
     # r is the dilation rate
@@ -39,7 +39,7 @@ def prove(Eq):
     Eq << Eq[-1].rhs.expr.args[1].this.defun()
 
     d0 = Symbol((l - 1) // 2 * r + (r // 2) * (1 - l % 2))
-    Eq.mul_floor = d0.this.definition.reversed.this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq.mul_floor = d0.this.definition.reversed.this.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq.conv1d = Eq[-1].subs(Eq.mul_floor)
 

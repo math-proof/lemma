@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.limits.swap.intlimit)
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].expr.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << -Eq[-1].this.lhs.args[1].apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << -Eq[-1].this.lhs.args[1].apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.find(2 * ~Sum).apply(Algebra.Sum_Mul.eq.Sub_DivSumSquare)
 

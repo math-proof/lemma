@@ -10,7 +10,7 @@ def apply(x_less_than_y, neg_x_less_than_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x, y = Symbol(real=True)
 
     Eq << apply(x < y, -x < y)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << (Eq[-1] + y) / 2
 
-    Eq << Algebra.EqAbs.of.Gt_0.apply(Eq[-1])
+    Eq << Int.EqAbs.of.Gt_0.apply(Eq[-1])
 
     Eq << Eq.lt.subs(Eq[-1])
 

@@ -10,7 +10,7 @@ def apply(gt_zero, given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x = Symbol(real=True)
     n = Symbol(integer=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2].variable, n)
 
-    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[0])
+    Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[0])
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
 

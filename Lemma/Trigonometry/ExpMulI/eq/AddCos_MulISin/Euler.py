@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Trigonometry, Bool
+    from Lemma import Calculus, Algebra, Trigonometry, Bool, Finset, Finset
 
     x = Symbol(real=True)
     Eq << apply(exp(S.ImaginaryUnit * x))
@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << Calculus.Exp.eq.Sum.maclaurin.apply(i * x)
 
     n = Eq[-1].rhs.variable
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond=Equal(n % 2, 0))
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond=Equal(n % 2, 0))
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.halve)
 

@@ -8,7 +8,7 @@ def apply(ge_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Set, Bool
+    from Lemma import Algebra, Trigonometry, Set, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq.eq_identity = Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq.eq_identity = Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-4].subs(Eq.eq_identity)
 

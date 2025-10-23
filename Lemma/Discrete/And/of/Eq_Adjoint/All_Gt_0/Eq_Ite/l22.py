@@ -11,7 +11,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Set, Algebra, Tensor
+    from Lemma import Discrete, Set, Algebra, Tensor, Nat, Nat, Nat
 
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(10, oo))
@@ -78,9 +78,9 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Add * ~Add).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Add * ~Add).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.find(Add * ~Add).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Add * ~Add).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].find(Norm ** 2).this.base.apply(Algebra.Norm.eq.Sqrt).this.rhs.apply(Algebra.Sum.eq.Add.doit)
 

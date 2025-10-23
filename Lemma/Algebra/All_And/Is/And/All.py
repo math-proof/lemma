@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, simplify=True):
-    from Lemma.Algebra.Sum_Add.eq.AddSumS import associate
+    from Lemma.Finset.Sum_Add.eq.AddSumS import associate
     return associate(All, self, simplify=simplify)
 
 

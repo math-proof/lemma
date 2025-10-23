@@ -10,14 +10,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     x = Symbol(integer=True)
     f = Function(real=True)
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(Sum[x:A - B](f(x)))
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.eq.AddSumS, cond=B)
+    Eq << Eq[-1].this.rhs.args[0].apply(Finset.Sum.eq.AddSumS, cond=B)
 
 
 

@@ -12,7 +12,7 @@ def apply(gt, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     a, b, c, x, y = Symbol(integer=True)
     Eq << apply(x > c, Element(x, Range(a, b)))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[1])
 
-    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[0])
+    Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[0])
 
     Eq << Algebra.GeMax.of.Ge.Ge.apply(Eq[-1], Eq[-2])
 

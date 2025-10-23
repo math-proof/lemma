@@ -25,14 +25,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     f, h = Function(real=True)
     Eq << apply(Sum[i:n + 1](f(i) + h(i)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={0})
 
 
 

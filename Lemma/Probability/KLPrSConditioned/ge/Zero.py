@@ -10,7 +10,7 @@ def apply(prob_lhs, prob_rhs):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Finset, Finset, Finset
 
     D, m, n = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Probability.Sum.eq.One.Conditioned)
 

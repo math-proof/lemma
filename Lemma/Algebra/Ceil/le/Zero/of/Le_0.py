@@ -9,7 +9,7 @@ def apply(is_nonpositive):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(x <= 0)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.Lt.of.Gt.Le, ret=0)
 
-    Eq << Eq[-1].this.expr.args[0].apply(Algebra.Le_Sub_1.of.Lt)
+    Eq << Eq[-1].this.expr.args[0].apply(Nat.Le_Sub_1.of.Lt)
 
     Eq << Eq[-1].this.find(Expr <= -1) + 1
 

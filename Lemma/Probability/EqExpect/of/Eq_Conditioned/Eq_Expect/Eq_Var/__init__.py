@@ -14,7 +14,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Finset, Int
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Add)
 
@@ -39,13 +39,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[2].this.lhs.apply(Probability.Var.eq.Sub.Expect)
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-4].subs(Eq[-1])
 

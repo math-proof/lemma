@@ -18,7 +18,7 @@ def apply(le, is_positive, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool
+    from Lemma import Calculus, Algebra, Set, Bool, Nat
 
     a, b = Symbol(real=True, given=True)
     domain = Interval(a, b, left_open=True, right_open=True)
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Algebra.Add.collect), Eq[-1].this.expr.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Algebra.Add.collect, factor=1 - w), Eq[-1].this.expr.rhs.find(Add[Mul]).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Algebra.Add.collect, factor=1 - w), Eq[-1].this.expr.rhs.find(Add[Mul]).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq <<= Eq[-2].this.expr * w, Eq[-1].this.expr * (1 - w)
 

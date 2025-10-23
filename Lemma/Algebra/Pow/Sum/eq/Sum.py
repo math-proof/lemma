@@ -11,7 +11,7 @@ def apply(self, var='k'):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Set, Bool, Finset
+    from Lemma import Algebra, Discrete, Set, Bool, Finset, Int
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(complex=True, shape=(oo,))
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Equal[~ReducedSum]).apply(Algebra.ReducedSum.eq.Add.pop)
 
-    Eq << Eq[-1].this.rhs.find(Equal).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq << Eq[-1].this.rhs.find(Equal).apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.pop.CartesianSpace.Cond)
 
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.rhs.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum, simplify=1)
 
-    Eq << Algebra.EqSumS.of.All_Eq.apply(Eq[-1])
+    Eq << Finset.EqSumS.of.All_Eq.apply(Eq[-1])
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

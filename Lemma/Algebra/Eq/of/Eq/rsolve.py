@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (k, 0, n))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, -1)
 

@@ -12,7 +12,7 @@ def apply(S):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     S = Symbol(etype=dtype.real)
     Eq << apply(S)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.All.limits_assert.apply(Eq.lt.limits)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Le_Sub_1.of.Lt)
+    Eq << Eq[-1].this.expr.apply(Nat.Le_Sub_1.of.Lt)
 
     Eq << Algebra.All_Or.given.All.apply(Eq.lt)
 

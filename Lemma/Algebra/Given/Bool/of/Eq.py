@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
     n = Symbol(integer=True, nonnegative=True)
     f, g = Symbol(integer=True, shape=(oo,))
 
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Bool.Bool.eq.Zero.of.Bool.ne.One)
 
-    Eq << Algebra.Mul.eq.Zero.of.OrEqS.apply(Eq[-1])
+    Eq << Nat.Mul.eq.Zero.of.OrEqS.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.expand()
 

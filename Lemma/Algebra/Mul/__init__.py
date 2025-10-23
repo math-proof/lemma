@@ -10,4 +10,3 @@ from . import Delta
 from . import eq
 from . import gt
 from . import ne
-from . import le

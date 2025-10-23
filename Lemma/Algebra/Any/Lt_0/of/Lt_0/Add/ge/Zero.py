@@ -12,7 +12,7 @@ def apply(lt_zero, add_ge_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[0] * epsilon
 
-    Eq << Algebra.Add.gt.Zero.of.Gt_0.Ge_0.apply(Eq[-1], Eq.delta_is_nonnegative)
+    Eq << Nat.Add.gt.Zero.of.Gt_0.Ge_0.apply(Eq[-1], Eq.delta_is_nonnegative)
 
 
 

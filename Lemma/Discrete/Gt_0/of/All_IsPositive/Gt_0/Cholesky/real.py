@@ -13,7 +13,7 @@ def apply(all_is_positive, eq_initial):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Bool, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor, Int
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq.induct.subs(k, t - 1)
 
-    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
+    Eq << Int.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
 
 

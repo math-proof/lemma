@@ -44,7 +44,7 @@ def apply(given, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + a * x ** 2 + b * x + c, 0), x=x, d=1)
@@ -52,7 +52,7 @@ def prove(Eq):
     x = Symbol(x + a / 3)
     Eq.x_def = x.this.definition
 
-    Eq << Eq.x_def.this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=1).reversed
+    Eq << Eq.x_def.this.apply(Int.EqAdd.Is.Eq_Sub, rhs=1).reversed
 
     Eq << Eq[0].subs(Eq[-1])
 
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.x_def)
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=1)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=1)
 
 
 

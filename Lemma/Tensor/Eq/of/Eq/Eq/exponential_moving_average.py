@@ -16,7 +16,7 @@ def apply(initial_condition, recurrence, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor, Algebra, Finset
+    from Lemma import Discrete, Tensor, Algebra, Finset, Nat
 
     v, θ = Symbol(shape=(oo,), real=True)
     t, n = Symbol(integer=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, i=-1)
 
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).expr.args[:2].apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Mul - Pow * Pow).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Mul - Pow * Pow).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow * Pow).args[1:].apply(Algebra.Mul.eq.Pow.Add.exponent)
 
-    Eq << Eq[-1].this.rhs.args[:-1].apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.args[:-1].apply(Nat.AddMulS.eq.Mul_Add)
 
     # https://arxiv.org/abs/2307.13813
 

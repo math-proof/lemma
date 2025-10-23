@@ -14,7 +14,7 @@ def apply(is_nonzero, eq, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Bool
+    from Lemma import Algebra, Calculus, Bool, Int
 
     x, x0, A = Symbol(real=True)
     f = Function(real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Any.All.Gt.of.Gt_0.Eq_Limit)
 
-    Eq << (A > 0).this.apply(Algebra.EqAbs.of.Gt_0)
+    Eq << (A > 0).this.apply(Int.EqAbs.of.Gt_0)
 
     Eq <<= Eq[-1] & Eq[-2]
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.expr.apply(Algebra.Gt_0.of.Gt.trans, ret=0)
 
-    Eq << Eq[-1].this.rhs.expr.expr.args[0].apply(Algebra.EqAbs.of.Gt_0)
+    Eq << Eq[-1].this.rhs.expr.expr.args[0].apply(Int.EqAbs.of.Gt_0)
 
     Eq << Eq[-1].this.rhs.expr.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 

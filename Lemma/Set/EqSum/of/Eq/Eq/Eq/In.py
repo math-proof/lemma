@@ -23,7 +23,7 @@ def apply(eq_cup, eq_cup_complement, eq, contains, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic, Bool
+    from Lemma import Set, Algebra, Logic, Bool, Finset, Finset, Int
 
     i = Symbol(integer=True, given=True)
     j = Symbol(integer=True)
@@ -46,17 +46,17 @@ def prove(Eq):
 
     Eq << Set.EqSum.of.Eq_Cup.apply(Eq[0], Sum[x:X](f(x)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={y})
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={y})
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.contains, Eq[-1])
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-1].this.rhs.subs(Eq[2])
 
     Eq << Eq.eq.subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.eq.AddSumS, cond={i})
+    Eq << Eq[-1].this.lhs.args[1].apply(Finset.Sum.eq.AddSumS, cond={i})
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[3], Eq[-1])
 

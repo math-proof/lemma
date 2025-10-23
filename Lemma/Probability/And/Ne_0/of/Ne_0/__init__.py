@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].subs(Eq.y_marginal_probability), Eq[-1].subs(Eq.x_marginal_probability)
 
-    Eq <<= Algebra.Ne.of.Gt.apply(Eq[-1]), Algebra.Ne.of.Gt.apply(Eq[-2])
+    Eq <<= Nat.Ne.of.Gt.apply(Eq[-1]), Nat.Ne.of.Gt.apply(Eq[-2])
 
 
 

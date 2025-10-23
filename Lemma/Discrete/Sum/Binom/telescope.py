@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool
+    from Lemma import Discrete, Algebra, Bool, Nat, Nat, Finset, Finset, Nat
 
     f = Function(real=True)
     x = Symbol(real=True)
@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq << Eq.diff_1 - Eq.diff
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-4])
 

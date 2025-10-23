@@ -11,7 +11,7 @@ def apply(lt_zero, x=None, b=None, c=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Rat
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.Any.Lt_0.of.Lt_0.Add.ge.Zero, x=x), Eq[-1].this.rhs.apply(Algebra.Lt_0.of.Lt_0.Add.lt.Zero, x=x)
+    Eq <<= Eq[-2].this.rhs.apply(Algebra.Any.Lt_0.of.Lt_0.Add.ge.Zero, x=x), Eq[-1].this.rhs.apply(Rat.Lt_0.of.Lt_0.Add.lt.Zero, x=x)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.of.Cond, wrt=x)
 

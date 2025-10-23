@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.EqDivS.of.Eq)
+    Eq << Eq[-2].this.lhs.apply(Nat.EqDivS.of.Eq)
 
     Eq << Eq[-1].this.lhs.apply(Nat.EqMulS.of.Eq)
 

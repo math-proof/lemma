@@ -11,7 +11,7 @@ def apply(is_positive, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat, Nat
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(a < 0, x < a)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Lt_0.Lt_0.apply(Eq[0], Eq.x_is_negative)
 
-    Eq << ~Algebra.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-2]).reversed
+    Eq << ~Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-2]).reversed
 
 
 

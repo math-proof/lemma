@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete, Algebra, Int, Int
 
     x = Symbol(complex=True)
     k = Symbol(integer=True, nonnegative=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=-1)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=-1)
 
     Eq << Eq[-1].reversed
 

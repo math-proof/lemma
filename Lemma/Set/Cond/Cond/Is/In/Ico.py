@@ -49,7 +49,7 @@ def apply(cond0, cond1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat, Nat
 
     x, a, b = Symbol(integer=True)
     Eq << apply(a < x, x < b)
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Ge.Le_Sub_1.of.In_Ico)
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Gt.of.Ge.relax)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Gt_Sub_1.of.Ge)
 
     Eq << Eq[-1].this.find(Greater).reversed
 

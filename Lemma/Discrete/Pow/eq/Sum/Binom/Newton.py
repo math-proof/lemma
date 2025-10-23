@@ -35,7 +35,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.expr.powsimp()
 
     (k, *_), *_ = Eq[-1].rhs.limits
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Sum.limits.subst.offset, -1)
 

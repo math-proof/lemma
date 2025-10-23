@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete, Algebra, Finset, Nat
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (k, 0, n), simplify=None)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Mul.series.arithmetic)
 
@@ -54,11 +54,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Add[Mul]).expand()
 
-    Eq << Eq[-1].this.find(Add[Mul]).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Add[Mul]).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[0].this.rhs.find(Sum).apply(Algebra.Sum.eq.Mul.series.arithmetic)
 

@@ -17,7 +17,7 @@ def apply(is_nonzero, delta_is_zero, fx):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Unequal(a, 0), Equal(b ** 2 - 4 * a * c, 0), a * x ** 2 + b * x + c)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq << Eq[1].this.apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[1].this.apply(Int.EqAdd.Is.Eq_Sub)
 
     Eq << Eq[-2].subs(Eq[-1])
 

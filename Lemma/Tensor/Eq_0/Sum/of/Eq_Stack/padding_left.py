@@ -10,7 +10,7 @@ def apply(eq_A):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Int, Nat
+    from Lemma import Algebra, Int, Int, Nat, Finset
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -30,12 +30,12 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Gt.relax, upper=1)
     Eq << Eq[0][k]
     Eq << Eq[-2].subs(Eq[-1])
-    Eq << Eq[-1].this.expr.apply(Algebra.Le_Sub_1.of.Lt)
+    Eq << Eq[-1].this.expr.apply(Nat.Le_Sub_1.of.Lt)
     Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.of.Eq_0.invert)
     Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
     Eq << Eq[-1].subs(Eq.m_def)
-    Eq << Algebra.EqSumS.of.All_Eq.apply(Eq[-1])
+    Eq << Finset.EqSumS.of.All_Eq.apply(Eq[-1])
 
 
 

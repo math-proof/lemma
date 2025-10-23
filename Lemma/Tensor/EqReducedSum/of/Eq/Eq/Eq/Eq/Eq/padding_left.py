@@ -16,7 +16,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote, eq_I_dquote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool, Finset
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, -Eq[-1].find(ReducedArgMax) - 1 + n)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond=k <= Eq[-1].find(ReducedArgMax))
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond=k <= Eq[-1].find(ReducedArgMax))
 
     Eq << Tensor.Eq_0.Sum.of.Eq_Stack.padding_right.apply(Eq[0])
 

@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     x = Symbol(complex=True)
     Eq << apply(Element(x, Reals - {0}))
 
     Eq << Set.Gt_0.Abs.of.IsNotZero.apply(Eq[0])
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ne.of.Gt.apply(Eq[-1])
 
     Eq << Algebra.Ne_0.of.NeAbs_0.apply(Eq[-1])
 

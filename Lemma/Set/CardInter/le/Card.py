@@ -8,7 +8,7 @@ def apply(A, B):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(A, B)
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].reversed
 
-    Eq << Eq[-1].this.apply(Algebra.LeAddS.Is.Le)
+    Eq << Eq[-1].this.apply(Nat.LeAddS.Is.Le)
 
     Eq << Eq[-1].this.apply(Algebra.Le.of.Ge_0)
 

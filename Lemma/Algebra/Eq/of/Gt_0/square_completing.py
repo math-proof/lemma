@@ -23,12 +23,12 @@ def apply(gt_zero, self, z=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Nat
 
     z, a, b, c = Symbol(complex=True)
     Eq << apply(a > 0, a * z * ~z + b * z + ~b * ~z + c)
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
     Eq << Set.IsReal.of.Gt_0.apply(Eq[0], simplify=None)
 

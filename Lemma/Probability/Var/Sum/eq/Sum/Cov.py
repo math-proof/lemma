@@ -15,7 +15,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Algebra, Probability, Bool, Finset, Finset, Finset
 
     x = Symbol(real=True, shape=(oo,), random=True)
     i, j = Symbol(integer=True)
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[~Sum]).apply(Algebra.Sum.eq.Add.pop)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.find(Covariance).apply(Probability.Cov.Sum.eq.Sum.Cov)
 

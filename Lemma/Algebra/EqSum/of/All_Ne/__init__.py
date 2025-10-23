@@ -13,7 +13,7 @@ def apply(given, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     x = Symbol(complex=True, shape=(oo,))
     y, t = Symbol(complex=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.EqSum.of.Inter.eq.Empty.apply(Eq[-1], Eq[1].rhs.args[1])
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=0)
     Eq << Eq[-1].reversed
 
 

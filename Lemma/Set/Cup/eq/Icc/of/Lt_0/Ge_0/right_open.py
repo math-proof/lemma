@@ -14,14 +14,14 @@ def apply(is_negative, is_nonnegative, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     a, b, k = Symbol(integer=True)
     Eq << apply(a < 0, b >= 0, k)
 
     Eq << Set.Cup.eq.UnionCupS.apply(Cup[k:a:b](Eq[-1].lhs.expr), cond=Range(a, 0))
 
-    Eq <<= Algebra.EqMax.of.Lt.apply(Eq[0]), Algebra.EqMin.of.Ge.apply(Eq[1])
+    Eq <<= Nat.EqMax.of.Lt.apply(Eq[0]), Nat.EqMin.of.Ge.apply(Eq[1])
 
     Eq <<= Eq[-3].rhs.args[1].this.subs(Eq[-2]), Eq[-3].rhs.args[0].this.subs(Eq[-1])
 

@@ -13,7 +13,7 @@ def apply(given, negate=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) < a)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << -Eq[0]
 
-    Eq << Algebra.Gt.of.Ge.Gt.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Gt.of.Ge.Gt.apply(Eq[-2], Eq[-1])
 
 
 

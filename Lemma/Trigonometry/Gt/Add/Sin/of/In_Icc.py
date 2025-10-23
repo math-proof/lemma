@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Trigonometry, Algebra, Set, Bool
+    from Lemma import Calculus, Trigonometry, Algebra, Set, Bool, Int
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval.open(0, S.Pi)))
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
+    Eq << Int.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
 
 

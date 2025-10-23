@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat, Finset
 
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(Equal(Intersection(A, B), A.etype.emptySet))
@@ -20,15 +20,15 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq.as_Plus = Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq.as_Plus = Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq <<= Eq.as_Plus.rhs.args[0].this.apply(Algebra.Sum.eq.AddSumS, cond=A), Eq.as_Plus.rhs.args[1].this.apply(Algebra.Sum.eq.AddSumS, cond=B)
+    Eq <<= Eq.as_Plus.rhs.args[0].this.apply(Finset.Sum.eq.AddSumS, cond=A), Eq.as_Plus.rhs.args[1].this.apply(Finset.Sum.eq.AddSumS, cond=B)
 
     Eq << Eq[-1] + Eq[-2]
 
     Eq << Eq[-1] + Eq.as_Plus
 
-    Eq << Eq[-1].this.apply(Algebra.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
 
     Eq << Set.Sum_BoolIn.eq.Card.apply(A)
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq[-2] + Eq[-3]
 
-    Eq << Eq[-1].this.apply(Algebra.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
 
 
 if __name__ == '__main__':

@@ -81,9 +81,9 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.theta_r[j].reversed, Eq.theta_c[j].reversed, Eq.theta_z[j].reversed)
 
-    Eq <<= Add(*Eq[-1].rhs.args[::3]).this.apply(Algebra.AddSumS.eq.Sum_Add_Sum),\
-        Add(*Eq[-1].rhs.args[1::3]).this.apply(Algebra.AddSumS.eq.Sum_Add_Sum),\
-        Add(*Eq[-1].rhs.args[2::3]).this.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq <<= Add(*Eq[-1].rhs.args[::3]).this.apply(Finset.AddSumS.eq.Sum_Add_Sum),\
+        Add(*Eq[-1].rhs.args[1::3]).this.apply(Finset.AddSumS.eq.Sum_Add_Sum),\
+        Add(*Eq[-1].rhs.args[2::3]).this.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq << Eq[-4].subs(*Eq[-3:])
 
@@ -96,12 +96,12 @@ def prove(Eq):
 
     Eq << Eq[-7].subs(*Eq[-6:])
 
-    Eq <<= Add(*Eq[-1].find(Sum).expr.args[1:3]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
-        Add(*Eq[-1].find(Sum).expr.args[::3]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
-        Add(*Eq[-1].find(Sum[2]).expr.args[1:3]).this.apply(Algebra.AddMulS.eq.Mul_Add),\
-        Add(*Eq[-1].find(Sum[2]).expr.args[::3]).this.apply(Algebra.AddMulS.eq.Mul_Add),\
-        Add(*Eq[-1].find(Sum[3]).expr.args[1:3]).this.apply(Algebra.AddMulS.eq.Mul_Add),\
-        Add(*Eq[-1].find(Sum[3]).expr.args[::3]).this.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq <<= Add(*Eq[-1].find(Sum).expr.args[1:3]).this.apply(Nat.AddMulS.eq.Mul_Add), \
+        Add(*Eq[-1].find(Sum).expr.args[::3]).this.apply(Nat.AddMulS.eq.Mul_Add), \
+        Add(*Eq[-1].find(Sum[2]).expr.args[1:3]).this.apply(Nat.AddMulS.eq.Mul_Add),\
+        Add(*Eq[-1].find(Sum[2]).expr.args[::3]).this.apply(Nat.AddMulS.eq.Mul_Add),\
+        Add(*Eq[-1].find(Sum[3]).expr.args[1:3]).this.apply(Nat.AddMulS.eq.Mul_Add),\
+        Add(*Eq[-1].find(Sum[3]).expr.args[::3]).this.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-7].subs(*Eq[-6:])
 

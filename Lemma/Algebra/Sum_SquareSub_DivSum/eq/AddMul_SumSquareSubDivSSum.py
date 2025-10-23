@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset
 
     i, j = Symbol(integer=True)
     m, n = Symbol(integer=True, positive=True)
@@ -38,13 +38,13 @@ def prove(Eq):
 
     Eq << Sum[j:n, i:m]((x[i, j] - x_bar) ** 2).this.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq.St = Eq[-1].subs(Eq.eq_sum)
 
     Eq << Sum[i:m]((_x_bar[i] - x_bar) ** 2).this.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2, simplify=None)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].subs(Eq.eq_sum_quote)
 
@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Sum[j:n, i:m]((x[i, j] - _x_bar[i]) ** 2).this.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.find(Sum[Mul]).apply(Algebra.Sum.limits.separate)
 

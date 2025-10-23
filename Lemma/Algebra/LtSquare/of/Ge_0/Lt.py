@@ -11,16 +11,16 @@ def apply(is_nonnegative, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, M = Symbol(real=True)
     Eq << apply(x >= 0, x < M)
 
-    Eq << Algebra.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
+    Eq << Nat.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
 
     Eq << -Eq[-1]
 
-    Eq << Algebra.Gt.of.Ge.Lt.apply(Eq[0], Eq[-1])
+    Eq << Nat.Gt.of.Ge.Lt.apply(Eq[0], Eq[-1])
 
     Eq << Algebra.Lt_0.of.Lt.Gt.apply(Eq[1], Eq[-1])
 

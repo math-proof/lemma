@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq << Eq.lt.this.apply(Bool.Imp.flatten)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.AddSumS, cond={n})
 
     Eq << Eq[-1].this.find(Equal) - w[n]
 

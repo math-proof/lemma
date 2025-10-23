@@ -16,7 +16,7 @@ def apply(given, t, alpha, beta):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, shape=(n,))
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq.less_than + Eq[-1]
 
-    Eq << Eq[-1].this.apply(Algebra.LeAddS.Is.Le)
+    Eq << Eq[-1].this.apply(Nat.LeAddS.Is.Le)
 
     Eq.less_than = Eq[-1].this.rhs.collect(abs(x - y))
 
@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Algebra.LtMul.of.Gt_0.Lt.apply(Eq[0], Eq.lt)
 
-    Eq << Algebra.Lt.of.Le.Lt.apply(Eq.less_than, Eq[-1])
+    Eq << Nat.Lt.of.Le.Lt.apply(Eq.less_than, Eq[-1])
 
 
 if __name__ == '__main__':

@@ -18,7 +18,7 @@ def apply(f0, suffice, n=None, start=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat, Nat, Nat
     n = Symbol(integer=True, nonnegative=True)
     f = Symbol(integer=True, shape=(oo,))
     g = Symbol(etype=dtype.integer, shape=(oo,))
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq[-2]
 
-    Eq.equality = Eq[-1].this.apply(Algebra.EqAddS.Is.Eq)
+    Eq.equality = Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
 
     Eq.suffice = Imply(Equal(h[n], 1), Equal(h[n + 1], 1), plausible=True)
 

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     k = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Product[2]).apply(Algebra.Prod.eq.Prod_Pow_Bool)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.MulProdS.eq.Prod_Mul)
+    Eq << Eq[-1].this.lhs.apply(Finset.MulProdS.eq.Prod_Mul)
 
     Eq << Eq[-1].this.lhs.expr.apply(Algebra.Mul.eq.Pow.Add.exponent)
 

@@ -12,7 +12,7 @@ def apply(fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int
 
     x, alpha, gamma = Symbol(complex=True, given=True)
     fx = x ** 4 + alpha * x ** 2 + gamma
@@ -31,13 +31,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[-1].apply(Algebra.OrEqS_0.of.Eq_Square)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[-1].this.args[-1].apply(Int.EqAdd.Is.Eq_Sub)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[-1].this.args[-1].apply(Int.EqAdd.Is.Eq_Sub)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[-1].this.args[-1].apply(Int.EqAdd.Is.Eq_Sub)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[-1].this.args[-1].apply(Int.EqAdd.Is.Eq_Sub)
 
 
 

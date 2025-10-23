@@ -10,7 +10,7 @@ def apply(ge, Any_All_Le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Bool
+    from Lemma import Algebra, Set, Calculus, Bool, Nat, Nat
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq.ge_sup = Algebra.All_GeSup.apply(Eq[-1].lhs)
 
-    Eq << Algebra.Gt.of.Ge.relax.apply(Eq.ge_sup, lower=-oo)
+    Eq << Nat.Gt_Sub_1.of.Ge.apply(Eq.ge_sup, lower=-oo)
 
     Eq.sup_is_real = Set.In.Icc.of.Lt.Gt.apply(Eq[-2], Eq[-1], simplify=None)
 

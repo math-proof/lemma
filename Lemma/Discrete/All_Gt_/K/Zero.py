@@ -9,7 +9,7 @@ def apply(x, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat, Nat
 
     x = Symbol(integer=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1].apply(Set.Ge.of.In_Ico)
 
-    Eq << Eq[-1].this.expr.args[1].apply(Algebra.Gt.of.Ge.relax, 0)
+    Eq << Eq[-1].this.expr.args[1].apply(Nat.Gt_Sub_1.of.Ge, 0)
 
     Eq << Eq[-1].this.expr.apply(Algebra.Gt_0.of.Gt_0.Gt_0)
 

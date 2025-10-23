@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq <<= Bool.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq <<= Bool.And.Imp.of.Imp.apply(Eq[-2].this.rhs.apply(Algebra.And_Imp_Or_EqS.of.Add.eq.Zero.cubic), None), Eq[-1].this.rhs.apply(Algebra.EqDivS.of.Eq)
+    Eq <<= Bool.And.Imp.of.Imp.apply(Eq[-2].this.rhs.apply(Algebra.And_Imp_Or_EqS.of.Add.eq.Zero.cubic), None), Eq[-1].this.rhs.apply(Nat.EqDivS.of.Eq)
 
     Eq << Bool.And.Imp.of.Imp.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.of.Add.eq.Zero.quartic.one_leaded).subs(Eq[1].reversed, Eq[2].reversed, Eq[3].reversed), None)
 

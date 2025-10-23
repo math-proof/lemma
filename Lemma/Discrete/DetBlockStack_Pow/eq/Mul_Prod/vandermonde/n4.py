@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Finset
+    from Lemma import Discrete, Algebra, Tensor, Finset, Nat
 
     r = Symbol(real=True)
     n = Symbol(integer=True, positive=True)
@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find((1 - Symbol) ** Add).apply(Algebra.Pow.eq.Mul.Neg)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq.eq_block.subs(Eq[-1])
 

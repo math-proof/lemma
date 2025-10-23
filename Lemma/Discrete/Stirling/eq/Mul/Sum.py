@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Finset
+    from Lemma import Discrete, Algebra, Bool, Finset, Nat
 
     k = Symbol(integer=True, nonnegative=True, given=False)
     n = Symbol(integer=True, nonnegative=True)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).expr.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.factor2mul.reversed)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
 

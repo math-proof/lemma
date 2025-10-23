@@ -1,7 +1,6 @@
 from . import Eq
 from . import Gt
 from . import Or
-from . import Ge
 from . import Lt
 from . import Gt_Max
 from . import Le
@@ -9,4 +8,3 @@ from . import Lt_0
 from . import LtAbs
 from . import Ne
 from . import Gt_Min
-from . import Sub

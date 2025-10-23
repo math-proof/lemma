@@ -10,7 +10,7 @@ def apply(x_less_than_y, x_greater_than_y_minus):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     y, x = Symbol(real=True)
 
     Eq << apply(x <= y, x >= -y)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq[-2].reversed
 
-    Eq << Eq[-1].this.apply(Algebra.LeAddS.Is.Le)
+    Eq << Eq[-1].this.apply(Nat.LeAddS.Is.Le)
 
 
 if __name__ == '__main__':

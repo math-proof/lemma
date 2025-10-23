@@ -19,7 +19,7 @@ def apply(self, pivot=-1, i=None, d=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool
+    from Lemma import Algebra, Discrete, Bool, Nat, Nat, Finset, Finset
 
     d = Symbol(integer=True, positive=True, given=False)
     n = Symbol(domain=Range(d, oo))
@@ -39,9 +39,9 @@ def prove(Eq):
 
     Eq.abel = Eq[0].rhs.args[1].this.apply(Algebra.Sum.eq.Add.Abel, slice(1, None), i=i)
 
-    Eq << Eq.abel.find(Sum - Sum).this.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq.abel.find(Sum - Sum).this.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.rhs.apply(Discrete.Sum.Binom.telescope)
 

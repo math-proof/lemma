@@ -19,7 +19,7 @@ def apply(is_negative, lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Int
 
     m, M, x, a, b, c = Symbol(real=True, given=True)
     Eq << apply(a < 0, m < M, a * x ** 2 + b * x + c, x)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Sup).expr.expand(), Eq[-1].this.find(Sup).expr.expand()
 
-    Eq <<= Eq[-2].this.find(Equal).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0), Eq[-1].this.find(Equal).apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq <<= Eq[-2].this.find(Equal).apply(Int.EqAdd.Is.Eq_Sub, lhs=0), Eq[-1].this.find(Equal).apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge_0.of.Le), Eq[-1].this.lhs.apply(Algebra.Le_0.of.Ge)
 

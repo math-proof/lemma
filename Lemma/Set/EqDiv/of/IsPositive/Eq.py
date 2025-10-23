@@ -13,7 +13,7 @@ def apply(is_positive, equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat, Nat, Nat
 
     x = Symbol(real=True, given=True)
     g, h = Function(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Ne_0.of.IsPositive.apply(Eq[0])
 
-    Eq << Algebra.EqDivS.of.Eq.apply(Eq[-1], Eq[1], simplify=None)
+    Eq << Nat.EqDivS.of.Eq.apply(Eq[-1], Eq[1], simplify=None)
 
 
 if __name__ == '__main__':

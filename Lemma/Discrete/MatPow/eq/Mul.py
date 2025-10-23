@@ -5,7 +5,7 @@ from util import *
 def apply(self, i=None):
     base, e = self.of(MatPow)
 
-    from Lemma.Algebra.AddMulS.eq.Mul_Add import rewrite
+    from Lemma.Nat.AddMulS.eq.Mul_Add import rewrite
 
     base, factor = rewrite(base)
     assert not factor.shape

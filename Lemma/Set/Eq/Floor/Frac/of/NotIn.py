@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat, Rat
 
     x = Symbol(real=True)
     Eq << apply(NotElement(x, Integers))
@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
 
-    Eq <<= Algebra.LtFloor.of.Lt.apply(Eq[-1]), Algebra.GeFloor.of.Gt.apply(Eq[-2])
+    Eq <<= Rat.LtFloor.of.Lt.apply(Eq[-1]), Algebra.GeFloor.of.Gt.apply(Eq[-2])
 
-    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-2])
+    Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-2])
 
     Eq <<= Eq[-2] & Eq[-1]
 

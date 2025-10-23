@@ -15,7 +15,7 @@ def apply(eq_PE, eq_PE_quote, eq_Z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Tensor, Bool, Real
+    from Lemma import Algebra, Trigonometry, Tensor, Bool, Real, Nat
 
     n, b = Symbol(positive=True, integer=True)
     d = Symbol(integer=True, positive=True, even=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Cos[Piecewise]).apply(Trigonometry.Cos.eq.Ite), Eq[-1].this.find(Sin[Piecewise]).apply(Trigonometry.Sin.eq.Ite)
 
-    Eq <<= Eq[-2].this.find(Add).apply(Algebra.AddMulS.eq.Mul_Add, simplify=None), Eq[-1].this.find(Add).apply(Algebra.AddMulS.eq.Mul_Add, simplify=None)
+    Eq <<= Eq[-2].this.find(Add).apply(Nat.AddMulS.eq.Mul_Add, simplify=None), Eq[-1].this.find(Add).apply(Nat.AddMulS.eq.Mul_Add, simplify=None)
 
     Eq.F_def = Eq[-2].this.find(Mul[Add]).apply(Algebra.Mul.Neg, simplify=None)
 

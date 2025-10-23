@@ -35,7 +35,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Tensor
+    from Lemma import Algebra, Probability, Bool, Tensor, Nat
 
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True)
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.xy_joint_probability.reversed)
 
-    Eq.recursion = Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
+    Eq.recursion = Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[0], Eq[-1])
 
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq.xy_nonzero_assumption, [k, k])
 

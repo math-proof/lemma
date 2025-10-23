@@ -12,7 +12,7 @@ def apply(given, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     x = Symbol(integer=True, given=True)
     a, b = Symbol(integer=True, given=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.of.And.apply(Eq[-1], None)
 
-    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

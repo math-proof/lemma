@@ -15,7 +15,7 @@ def apply(self, i=None, factor=None):
         assert arg.is_Add
 
     if factor is None:
-        from Lemma.Algebra.AddMulS.eq.Mul_Add import rewrite
+        from Lemma.Nat.AddMulS.eq.Mul_Add import rewrite
         arg, factor = rewrite(arg)
     else:
         factor = sympify(factor)

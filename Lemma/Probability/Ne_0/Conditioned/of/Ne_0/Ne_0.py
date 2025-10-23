@@ -26,7 +26,7 @@ def apply(ne_zero_given, ne_zero_joint):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Nat, Nat, Nat
 
     x, y = Symbol(random=True, integer=True)
     Eq << apply(Unequal(Pr(y), 0),
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[0], x)
 
-    Eq << Algebra.EqDivS.of.Eq.apply(Eq[0], Eq[-1])
+    Eq << Nat.EqDivS.of.Eq.apply(Eq[0], Eq[-1])
 
     Eq << Algebra.Ne_0.Div.of.Ne_0.Ne_0.apply(Eq[1], Eq[0])
 

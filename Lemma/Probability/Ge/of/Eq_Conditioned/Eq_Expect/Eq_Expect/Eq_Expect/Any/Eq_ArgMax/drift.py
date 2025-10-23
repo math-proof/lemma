@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, any, eq_argmax):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Set, Bool, Nat, Nat
+    from Lemma import Algebra, Probability, Set, Bool, Nat, Nat, Finset
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Sum)
 
-    Eq.ge_sum = Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={s[t].var})
+    Eq.ge_sum = Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={s[t].var})
 
     Eq.infer = Imply(
         And(Equal(Pr[a:π_hat](a[0] | s[0]), Pr[a:π_tilde](a[0] | s[0])), Equal(Pr[π, π_hat](s[0]), Pr[π, π_tilde](s[0]))),

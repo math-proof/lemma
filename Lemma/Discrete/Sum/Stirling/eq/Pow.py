@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.subst.offset, 1)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Imply(Eq[0], Eq[1], plausible=True)
 

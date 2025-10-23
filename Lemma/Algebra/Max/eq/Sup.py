@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Algebra.AddSumS.eq.Sum_Add_Sum import piece_together
+    from Lemma.Finset.AddSumS.eq.Sum_Add_Sum import piece_together
     return Equal(self, piece_together(Sup, self))
 
 

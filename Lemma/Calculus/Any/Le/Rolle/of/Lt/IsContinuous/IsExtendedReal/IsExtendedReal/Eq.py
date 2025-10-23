@@ -22,7 +22,7 @@ def apply(lt, is_continuous, left_is_real, right_is_real, equal):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Bool
+    from Lemma import Calculus, Set, Algebra, Bool, Int, Int
 
     a, b, x = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -101,7 +101,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.le.Zero.of.Le_0.Ge_0)
+    Eq << Eq[-1].this.rhs.apply(Int.Mul.le.Zero.of.Le_0.Ge_0)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], 0)
 
@@ -120,7 +120,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.le.Zero.of.Le_0.Ge_0)
+    Eq << Eq[-1].this.rhs.apply(Int.Mul.le.Zero.of.Le_0.Ge_0)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], 0)
 

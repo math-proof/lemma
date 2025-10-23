@@ -19,7 +19,7 @@ def apply(eq_x_given_yz, z_given_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Logic, Bool
+    from Lemma import Algebra, Probability, Calculus, Logic, Bool, Nat, Nat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x | y), Equal(z | y, z))
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Probability.Integral.eq.Pr.marginal)
 
-    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq.z_nonzero)
+    Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq.z_nonzero)
 
 
 

@@ -18,7 +18,7 @@ def prove(Eq):
     a, x, b = Symbol(real=True, given=True)
     Eq << apply(a <= x, x < b)
 
-    Eq << Algebra.Lt.of.Le.Lt.apply(Eq[0], Eq[1])
+    Eq << Nat.Lt.of.Le.Lt.apply(Eq[0], Eq[1])
 
     Eq << Nat.Le.of.Lt.apply(Eq[-1])
 

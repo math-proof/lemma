@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     x = Symbol(real=True)
     Eq << apply(Sign(x))
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq.gt_zero)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Gt_0)
+    Eq << Eq[-1].this.lhs.apply(Int.EqAbs.of.Gt_0)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

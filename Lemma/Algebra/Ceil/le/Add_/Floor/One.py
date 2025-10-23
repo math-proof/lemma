@@ -8,12 +8,12 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x = Symbol(real=True, given=True)
     Eq << apply(x)
 
-    Eq << Algebra.Ceil.lt.Add_1.apply(x)
+    Eq << Rat.Ceil.lt.Add_1.apply(x)
 
     Eq << Algebra.LeFloor.of.Lt.apply(Eq[-1])
 

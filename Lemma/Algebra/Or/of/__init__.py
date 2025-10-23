@@ -9,4 +9,3 @@ from . import Le_0
 from . import Ne
 from . import GeAbs
 from . import GtAbs
-from . import Lt_0

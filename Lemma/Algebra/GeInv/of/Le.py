@@ -11,7 +11,7 @@ def apply(ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat
 
     x = Symbol(real=True, positive=True)
     a = Symbol(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[0])
+    Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[0])
 
     Eq << Eq[1] * x
     Eq << Eq[-1].reversed

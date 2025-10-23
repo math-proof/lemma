@@ -9,7 +9,7 @@ def apply(is_zero, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Trigonometry, Algebra
+    from Lemma import Set, Trigonometry, Algebra, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(cos(x), 0))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Trigonometry.Eq.of.Cos.eq.Zero.In.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub)
 
     # https://en.wikipedia.org/wiki/Argument_(complex_analysis)
 

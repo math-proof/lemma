@@ -11,7 +11,7 @@ def apply(a_less_than_x, b_eq_x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     a, x, b = Symbol(real=True)
 
     Eq << apply(a < x, Equal(b, x))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].reversed
 
-    Eq << Eq[-1].this.apply(Algebra.GtAddS.Is.Gt)
+    Eq << Eq[-1].this.apply(Nat.GtAddS.Is.Gt)
 
 
 if __name__ == '__main__':

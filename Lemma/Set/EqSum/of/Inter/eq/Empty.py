@@ -12,14 +12,14 @@ def apply(given, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Finset
 
     A, B = Symbol(etype=dtype.integer)
     x = Symbol(integer=True)
     f = Function(integer=True)
     Eq << apply(Equal(Intersection(A, B), A.etype.emptySet), Sum[x:A | B](f(x)))
 
-    Eq << Algebra.Sum.eq.AddSumS.apply(Eq[1].lhs, cond=B)
+    Eq << Finset.Sum.eq.AddSumS.apply(Eq[1].lhs, cond=B)
 
     Eq << Set.EqSDiff.of.Inter.eq.Empty.apply(Eq[0])
 

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(given, lhs=-1, rhs=None):
-    from Lemma.Algebra.EqAdd.Is.Eq_Sub import transport
+    from Lemma.Int.EqAdd.Is.Eq_Sub import transport
     return transport(Equal, given, lhs=lhs, rhs=rhs)
 
 

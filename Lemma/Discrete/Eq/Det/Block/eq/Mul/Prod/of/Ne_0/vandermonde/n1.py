@@ -11,7 +11,7 @@ def apply(is_nonzero, n, x2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Discrete, Tensor, Nat, Nat, Nat
 
     n = Symbol(integer=True, positive=True)
     x1, x2 = Symbol(complex=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq.eq = Eq[1].subs(Eq[-1])
 
-    Eq << Eq.eq.rhs.this.find(Add).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq.eq.rhs.this.find(Add).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Pow[Mul]).apply(Algebra.Pow.eq.Mul.split.base)
 

@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset, Finset
 
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.Add.split.limits)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap.subst)
 

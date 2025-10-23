@@ -85,9 +85,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Limit.eq.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={0})
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={0})
 
     Eq << Eq[-1].this.lhs.args[1]().expr.doit()
 

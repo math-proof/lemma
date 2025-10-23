@@ -15,7 +15,7 @@ def apply(eq, V_def, lt_dV, lt_V):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Calculus, Probability, Tensor, Bool
+    from Lemma import Discrete, Algebra, Calculus, Probability, Tensor, Bool, Finset, Finset, Finset, Nat, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Symbol * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs(t).find(Max).simplify()
 
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Algebra.LeSup.of.All_Le.apply(Eq[-1])
 
-    Eq << Algebra.Lt.of.Le.Lt.apply(Eq[-1], Eq[3])
+    Eq << Nat.Lt.of.Le.Lt.apply(Eq[-1], Eq[3])
 
     Eq << Less(Abs(γ, evaluate=False), 1, plausible=True)
 

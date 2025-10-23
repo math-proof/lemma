@@ -24,14 +24,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, y = Symbol(real=True)
     Eq << apply(abs(x - y))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Abs.eq.IteGe_0)
+    Eq << Eq[0].this.lhs.apply(Int.Abs.eq.IteGe_0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Abs.eq.Ite.Le_0)
+    Eq << Eq[-1].this.rhs.apply(Int.Abs.eq.Ite.Le_0)
 
     Eq << -Eq[-1].this.find(LessEqual)
 

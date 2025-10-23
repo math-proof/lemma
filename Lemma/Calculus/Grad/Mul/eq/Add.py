@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra
+    from Lemma import Calculus, Algebra, Nat
 
     x = Symbol(real=True)
     f, g = Function(real=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Calculus.Eq_Limit.Add.of.Eq_Limit.Eq_Limit.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.lhs.expr.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.lhs.apply(Calculus.Limit.eq.Grad)
 

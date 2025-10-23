@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(-Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.lhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
 
 if __name__ == '__main__':

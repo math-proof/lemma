@@ -12,7 +12,7 @@ def apply(given, G, x, s):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real
+    from Lemma import Algebra, Set, Bool, Real, Finset, Finset, Int
 
     # d is the number of output labels
     # oo is the length of the sequence
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Log[Mul]).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Bool.Cond.of.Eq.Cond.subst.apply(Eq.x_definition.reversed, Eq[-1])
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.rhs.simplify()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=-1)
+    Eq << Eq[-1].this.rhs.apply(Int.EqAdd.Is.Eq_Sub, lhs=-1)
 
     Eq << Eq[-1].subs(t, t - 1)
 

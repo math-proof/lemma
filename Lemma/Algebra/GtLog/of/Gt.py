@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Bool
+    from Lemma import Algebra, Logic, Bool, Nat
 
     x = Symbol(real=True, given=True)
     y = Symbol(positive=True, given=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[0], Eq[-1])
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ne.of.Gt.apply(Eq[-1])
 
     Eq <<= ~Eq[1] & Eq[-1]
 

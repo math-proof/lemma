@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Tensor
+    from Lemma import Discrete, Algebra, Set, Tensor, Finset
 
     r = Symbol(real=True)
     n = Symbol(domain=Range(2, oo))
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
 

@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor
+    from Lemma import Algebra, Bool, Tensor, Nat, Nat, Nat
 
     n, m = Symbol(integer=True, positive=True)
     Eq << apply(BlockMatrix([[Identity(n), Zeros(n, m)], [Zeros(m, n), Identity(m)]]))
@@ -34,11 +34,11 @@ def prove(Eq):
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Lt.of.Lt.Ge), Eq[-1].this.lhs.apply(Algebra.Gt.of.Ge.Lt)
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.Lt.of.Lt.Ge), Eq[-1].this.lhs.apply(Nat.Gt.of.Ge.Lt)
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Ne.of.Lt)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ne.of.Gt)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ne.of.Gt)
 
 
 

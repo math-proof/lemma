@@ -13,10 +13,9 @@ def apply(self):
 
 
 
-
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Finset
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(oo,))
     k = Symbol(domain=Range(2, n + 1))
@@ -30,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(sigma).defun()
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond=CartesianSpace(Range(n), k))
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond=CartesianSpace(Range(n), k))
 
     Eq << Eq[-1].this.find(Complement).apply(Set.SDiff.eq.Conditionset)
 

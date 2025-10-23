@@ -28,7 +28,7 @@ def apply(a_size, xa_equality, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Bool, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor, Finset, Finset
 
     n = Symbol(domain=Range(2, oo), given=True)
     x, a = Symbol(shape=(n,), integer=True, given=True)
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Sum[k:s_j](k).this.limits[0][1].definition
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={0})
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={0})
 
     Eq.crossproduct = Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 

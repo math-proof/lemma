@@ -3,13 +3,13 @@ from util import *
 
 @apply
 def apply(self, *, cond=None, wrt=None, simplify=True):
-    from Lemma.Algebra.Sum.eq.AddSumS import split
+    from Lemma.Finset.Sum.eq.AddSumS import split
     return Equal(self, split(Product, self, cond, wrt=wrt, simplify=simplify), evaluate=False)
 
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Finset
 
     x = Symbol(integer=True)
     f = Function(real=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Product[2]).apply(Algebra.Prod.eq.Prod_Pow_Bool)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.MulProdS.eq.Prod_Mul)
+    Eq << Eq[-1].this.rhs.apply(Finset.MulProdS.eq.Prod_Mul)
 
     Eq << Eq[-1].this.rhs.expr.powsimp()
 

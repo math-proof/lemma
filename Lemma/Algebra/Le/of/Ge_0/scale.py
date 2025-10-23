@@ -10,7 +10,7 @@ def apply(given, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int
 
     a = Symbol(real=True, given=True)
     t = Symbol(domain=Interval(-oo, 1))
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << LessEqual(t - 1, 0, plausible=True)
 
-    Eq << Algebra.Mul.le.Zero.of.Le_0.Ge_0.apply(Eq[-1], Eq[0])
+    Eq << Int.Mul.le.Zero.of.Le_0.Ge_0.apply(Eq[-1], Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
 

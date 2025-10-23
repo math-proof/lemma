@@ -9,7 +9,7 @@ def apply(x, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Algebra
+    from Lemma import Probability, Calculus, Algebra, Int, Int, Nat
 
     x = Symbol(real=True, random=True)
     a = Symbol(positive=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge.of.Eq.relax.apply(Eq[-1], Eq[-1].find(Integral[2]))
 
-    Eq << Eq[-1].this.rhs.find(Abs).apply(Algebra.Abs.eq.IteGe_0)
+    Eq << Eq[-1].this.rhs.find(Abs).apply(Int.Abs.eq.IteGe_0)
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.offset, a)
 
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge.of.Eq.relax.apply(Eq[-1], Eq[-1].rhs.find(Integral))
 
-    Eq << Eq[-1].this.rhs.find(Abs).apply(Algebra.Abs.eq.IteGe_0)
+    Eq << Eq[-1].this.rhs.find(Abs).apply(Int.Abs.eq.IteGe_0)
 
     Eq << Eq[-1].this.rhs.find(Integral).apply(Calculus.Integral.limits.offset, -a)
 
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq.ge
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Algebra.Ge.of.Eq.Ge.subst.apply(Eq.eq, Eq[-1])
 

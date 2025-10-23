@@ -18,7 +18,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Nat
 
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y), 0))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq <<= Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-2], y), Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-1], x)
 
-    Eq << Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq[-3]).reversed
+    Eq << Nat.Eq_Div.of.Eq.Ne_0.apply(Eq[-1], Eq[-3]).reversed
 
     Eq << Eq[-1].subs(Eq[-3])
 

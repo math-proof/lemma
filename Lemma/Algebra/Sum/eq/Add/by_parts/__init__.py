@@ -16,7 +16,7 @@ def apply(self, pivot=-1, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset, Finset, Finset, Nat, Nat, Nat
 
     n = Symbol(integer=True, nonnegative=True)
     i, k = Symbol(integer=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.find(Sum[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Sum[Add]).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.find(Sum[Add]).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.find(-~Sum).apply(Algebra.Sum.limits.subst.offset, -1)
 
@@ -33,9 +33,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(-~Sum).apply(Algebra.Sum.eq.Add.pop)
 
-    Eq << Eq[-1].this.rhs.args[1:].apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.rhs.args[1:].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.find(Mul - Mul).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Mul - Mul).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.rhs.find(Sum)().find(~Sum - Sum).apply(Algebra.Sum.eq.Add.pop)
 

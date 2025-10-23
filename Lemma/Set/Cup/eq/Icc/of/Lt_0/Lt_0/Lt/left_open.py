@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq.min_b0 = Nat.EqMin.of.Lt.apply(Eq[1])
 
-    Eq << Algebra.EqMax.of.Lt.apply(Eq[2])
+    Eq << Nat.EqMax.of.Lt.apply(Eq[2])
 
     Eq <<= Eq[-2].rhs.args[0].this.subs(Eq.min_b0), Eq[-2].rhs.args[1].this.subs(Eq[-1])
 
@@ -41,7 +41,7 @@ def prove(Eq):
     interval_b = Eq[-1].lhs.args[0]
     Eq << Set.EqSDiffS.of.Eq.apply(Eq[-1], interval_b)
 
-    Eq << Algebra.EqMax.of.Lt.apply(Eq[0])
+    Eq << Nat.EqMax.of.Lt.apply(Eq[0])
 
     Eq.eq_complement = Eq[-2].subs(Eq[-1], Eq.min_b0)
 
@@ -63,19 +63,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1:].apply(Algebra.Lt.of.Lt.Lt, ret=1)
 
-    Eq << Eq[-1].this.expr.args[1].apply(Algebra.LeAdd_1.of.Lt)
+    Eq << Eq[-1].this.expr.args[1].apply(Nat.LeAdd_1.of.Lt)
 
     Eq << Eq[-1].this.expr.find(LessEqual).apply(Nat.EqMin.of.Le)
 
     Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 
-    Eq << Eq[-1].this.expr.args[1].apply(Algebra.EqMax.of.Lt, ret=0)
+    Eq << Eq[-1].this.expr.args[1].apply(Nat.EqMax.of.Lt, ret=0)
 
     Eq << Eq[-1].this.expr.args[:2].apply(Bool.Cond.of.Eq.Cond.subst)
 
     Eq << Eq[-1].this.expr.args[0].apply(Set.Lt.of.Ioc.ne.Empty)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Ge_Add_1.of.Gt)
+    Eq << Eq[-1].this.find(Greater).apply(Nat.Ge_Add_1.of.Gt)
 
     Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq.eq_complement, Eq.is_empty)
 

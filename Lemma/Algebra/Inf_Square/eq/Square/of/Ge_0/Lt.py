@@ -14,7 +14,7 @@ def apply(is_nonnegative, lt, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Algebra, Bool, Nat, Int
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -28,9 +28,9 @@ def prove(Eq):
 
     Eq.eq_max = Algebra.EqMax.of.Ge_0.Lt.apply(Eq[0], Eq[1])
 
-    Eq << Algebra.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
+    Eq << Nat.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
 
-    Eq.eq_abs_M = Algebra.EqAbs.of.Gt_0.apply(Eq[-1])
+    Eq.eq_abs_M = Int.EqAbs.of.Gt_0.apply(Eq[-1])
 
     Eq.eq_abs_m = Algebra.EqAbs.of.Ge_0.apply(Eq[0])
 

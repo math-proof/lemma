@@ -16,7 +16,7 @@ def apply(le, contains, notcontains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     y_quote = Symbol(integer=True, given=True)
     x, y = Symbol(integer=True)
@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[-1], cond=Eq.ne.lhs)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ge_Add_1.of.Gt)
+    Eq << Eq[-1].this.rhs.apply(Nat.Ge_Add_1.of.Gt)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[0] & Eq[1] & Eq[2], cond=Eq.ne.lhs)
 

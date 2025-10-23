@@ -13,12 +13,12 @@ def apply(given, scale, div=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(LessEqual(x, y), z, div=True)
 
-    Eq << Algebra.LeMul.of.Gt_0.Le.apply(Eq[2], Eq[1])
+    Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[2], Eq[1])
 
 
 if __name__ == '__main__':

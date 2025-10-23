@@ -11,12 +11,12 @@ def apply(ne, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, x = Symbol(real=True)
     Eq << apply(Unequal(x, a), x > a - 1)
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[2])
+    Eq << Nat.Ne.of.Gt.apply(Eq[2])
 
     Eq << Algebra.Gt.of.Gt.relax.apply(Eq[2], a - 1)
 

@@ -10,7 +10,7 @@ def apply(ne, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Finset
 
     k, n = Symbol(integer=True)
     λ = Symbol(real=True)
@@ -22,15 +22,15 @@ def prove(Eq):
 
     Eq << -Eq[-1].reversed
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << -Algebra.Ne_0.of.Ne.apply(Eq[0])
 
-    Eq << Algebra.EqDivS.of.Eq.apply(Eq[-1], Eq[-2])
+    Eq << Nat.EqDivS.of.Eq.apply(Eq[-1], Eq[-2])
 
     Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (k, 0, n))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.find(Sum[Pow[Add]]).apply(Algebra.Sum.limits.subst.offset, -1)
 

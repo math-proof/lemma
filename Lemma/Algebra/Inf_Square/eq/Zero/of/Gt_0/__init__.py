@@ -13,13 +13,13 @@ def apply(is_positive, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat, Int
 
     M = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(M > 0, x=x)
 
-    Eq << Algebra.EqAbs.of.Gt_0.apply(Eq[0])
+    Eq << Int.EqAbs.of.Gt_0.apply(Eq[0])
 
     Eq << Algebra.Eq.given.And.squeeze.apply(Eq[1])
 
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.args[0].apply(Algebra.Lt.of.Gt_0.scale, S.One / 2), Bool.Imp_And.given.Imp.delete.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Lt.of.Le.Lt)
+    Eq <<= Eq[-2].this.lhs.apply(Nat.Lt.of.Le.Lt)
 
     Eq <<= Eq[-1].this.lhs / 2
 

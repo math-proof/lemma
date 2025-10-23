@@ -16,7 +16,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     A, B = Symbol(etype=dtype.integer, given=True)
     Eq << apply(Equal(Card(A | B), Card(A) + Card(B)))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.apply(Algebra.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
 
     Eq << -Eq[-1]
 

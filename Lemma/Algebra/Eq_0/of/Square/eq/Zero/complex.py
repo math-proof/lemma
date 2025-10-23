@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex, Int
 
     x = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 2, 0))
@@ -18,8 +18,8 @@ def prove(Eq):
 
     Eq << Algebra.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
 
-    Eq << Algebra.Eq_0.of.EqSquare_0.apply(Eq[-1])
-    Eq << Algebra.Eq_0.of.EqNorm_0.apply(Eq[-1])
+    Eq << Int.Eq_0.of.EqSquare_0.apply(Eq[-1])
+    Eq << Complex.Eq_0.of.EqNorm_0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

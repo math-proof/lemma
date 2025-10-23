@@ -10,15 +10,15 @@ def apply(gt_zero_a, gt_zero_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat, Nat, Nat
 
     n = Symbol(domain=Range(2, oo))
     a, b = Symbol(shape=(n,), real=True, given=True)
     Eq << apply(ReducedSum(a ** 2) > 0, ReducedSum(b ** 2) > 0)
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[1])
+    Eq << Nat.Ne.of.Gt.apply(Eq[1])
 
     Eq << ~Eq[2]
 

@@ -15,7 +15,7 @@ def prove(Eq):
     x, y, z = Symbol(integer=True)
     Eq << apply(x > 0, Equal(x + y, z))
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
     Eq << Nat.EqMulS.of.Eq.apply(Eq[-1], Eq[2])
 

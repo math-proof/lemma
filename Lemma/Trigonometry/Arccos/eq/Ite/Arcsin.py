@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Bool
+    from Lemma import Trigonometry, Algebra, Bool, Int
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(acos(x))
@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub), Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq <<= Eq[-2].this.rhs.apply(Int.EqAdd.Is.Eq_Sub), Eq[-1].this.rhs.apply(Int.EqAdd.Is.Eq_Sub)
 
-    Eq.is_nonnegative, Eq.is_negative = Eq[-2].this.rhs.reversed, Eq[-1].this.rhs.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0)
+    Eq.is_nonnegative, Eq.is_negative = Eq[-2].this.rhs.reversed, Eq[-1].this.rhs.apply(Int.EqAdd.Is.Eq_Sub, rhs=0)
 
     Eq << Eq.is_negative.this.rhs.reversed
 

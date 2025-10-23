@@ -13,14 +13,14 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(0, 1, right_open=True)), Element(y, Interval(0, 1, right_open=True)))
 
     Eq << Set.Ge.of.In_Icc.apply(Eq[1])
 
-    Eq << Algebra.Gt.of.Ge.Lt.apply(Eq[-1], Eq[0])
+    Eq << Nat.Gt.of.Ge.Lt.apply(Eq[-1], Eq[0])
 
     Eq.y_contains = Set.In.Icc.Inter.of.Gt.In_Icc.apply(Eq[-1], Eq[2])
 

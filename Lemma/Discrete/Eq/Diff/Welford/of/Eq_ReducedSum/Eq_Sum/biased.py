@@ -12,7 +12,7 @@ def apply(eq_x_bar, eq_σ2):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool
+    from Lemma import Discrete, Algebra, Bool, Nat, Nat
 
     x, σ = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Eq[-1] - Eq[1].lhs
 
-    Eq << Eq[-1].this.lhs.args[:3:2].apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.lhs.args[:3:2].apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
@@ -42,7 +42,7 @@ def prove(Eq):
     Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq[-1], Eq[-4])
 
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
 
 if __name__ == '__main__':

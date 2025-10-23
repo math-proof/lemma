@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[0] * functions.Bool(x > y)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.SquareBool.eq.Bool)
+    Eq << Eq[-1].this.lhs.apply(Bool.SquareBool.eq.Bool)
 
     Eq << Eq[-1].this.rhs.powsimp()
 

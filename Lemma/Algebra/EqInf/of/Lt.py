@@ -9,13 +9,13 @@ def apply(lt, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     m, M, a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(m < M, x)
 
-    Eq.eq_max = Algebra.EqMax.of.Lt.apply(Eq[0])
+    Eq.eq_max = Nat.EqMax.of.Lt.apply(Eq[0])
 
     Eq << Algebra.Eq.given.And.squeeze.apply(Eq[-1])
 

@@ -10,7 +10,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete, Algebra, Nat
 
     x = Symbol(real=True, positive=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)
@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Discrete.K.gt.Zero.apply(x[:n])
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ne.of.Gt.apply(Eq[-1])
 
-    
+
 
 
 if __name__ == '__main__':

@@ -20,7 +20,7 @@ def apply(is_negative, eq, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat, Nat
 
     x = Symbol(real=True, given=True)
     f, g, h = Function(real=True)
@@ -28,10 +28,10 @@ def prove(Eq):
 
     Eq << Algebra.Ne.of.Lt.apply(Eq[0])
 
-    Eq << Algebra.EqDivS.of.Eq.apply(Eq[-1], Eq[1])
+    Eq << Nat.EqDivS.of.Eq.apply(Eq[-1], Eq[1])
 
-    
-    
+
+
 
 
 if __name__ == '__main__':

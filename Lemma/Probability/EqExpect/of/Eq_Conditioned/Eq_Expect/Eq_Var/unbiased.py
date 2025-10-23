@@ -14,7 +14,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Discrete
+    from Lemma import Algebra, Probability, Discrete, Int, Nat
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -41,11 +41,11 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq.eq_expect_square = Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq.eq_expect_square = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-3].subs(Eq.eq_expect_square, Eq[1])
 
-    Eq << -Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0) * n
+    Eq << -Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=0) * n
 
     Eq << Eq[-1].this.rhs.expand()
 
@@ -59,11 +59,11 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.eq_expect_square)
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-1] / 2
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.Sum.eq.Sum.Expect)
 

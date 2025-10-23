@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Set
+    from Lemma import Discrete, Algebra, Bool, Set, Finset
 
     x = Symbol(real=True)
     k = Symbol(integer=True, nonnegative=True)
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Discrete.Diff.eq.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond=n.set)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond=n.set)
 
     Eq << Eq[-1].this.find(Factorial).apply(Discrete.Factorial.eq.Mul)
 

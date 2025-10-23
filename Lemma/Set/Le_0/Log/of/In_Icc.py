@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     x = Symbol(real=True)
     f = Function(real=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.Gt.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ne.of.Gt.apply(Eq[-1])
 
 
 

@@ -14,12 +14,12 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Bool
+    from Lemma import Algebra, Logic, Bool, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(x > 0)
 
-    Eq << Algebra.EqAbs.of.Gt_0.apply(Eq[0])
+    Eq << Int.EqAbs.of.Gt_0.apply(Eq[0])
 
     Eq << Eq[0].subs(Eq[-1].reversed)
 

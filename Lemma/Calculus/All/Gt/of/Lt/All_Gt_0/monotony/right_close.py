@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Imp.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Sub.gt.Zero)
+    Eq << Eq[-1].this.expr.apply(Int.Gt.of.Sub.gt.Zero)
 
 
 

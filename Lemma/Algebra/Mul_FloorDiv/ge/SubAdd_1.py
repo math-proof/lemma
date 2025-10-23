@@ -11,7 +11,7 @@ def apply(x, d=1, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)
 
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expand()
 
-    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

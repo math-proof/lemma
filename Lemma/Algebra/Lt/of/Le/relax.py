@@ -20,14 +20,14 @@ def apply(given, upper=None, lower=None, step=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, a = Symbol(real=True)
     Eq << apply(x <= a, step=1)
 
     Eq << Less(a, a + 1, plausible=True)
 
-    Eq << Algebra.Lt.of.Le.Lt.apply(Eq[0], Eq[-1])
+    Eq << Nat.Lt.of.Le.Lt.apply(Eq[0], Eq[-1])
 
 
 

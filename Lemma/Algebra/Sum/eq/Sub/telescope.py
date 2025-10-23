@@ -22,14 +22,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     x = Function(real=True)
     i, k = Symbol(integer=True)
     n = Symbol(integer=True)
     Eq << apply(Sum[k:i:n + 1](x(k + 1) - x(k)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
 
 

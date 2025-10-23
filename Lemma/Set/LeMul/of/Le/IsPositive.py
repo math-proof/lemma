@@ -11,7 +11,7 @@ def apply(lt, is_positive):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     a, b = Symbol(real=True)
     x = Symbol(hyper_real=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.args[1:].apply(Algebra.LeMul.of.Gt_0.Le)
+    Eq << Eq[-1].this.expr.args[1:].apply(Nat.LeMul.of.Gt_0.Le)
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, reverse=True)
 

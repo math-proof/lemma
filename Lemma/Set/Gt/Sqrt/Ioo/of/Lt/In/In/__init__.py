@@ -13,7 +13,7 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Algebra, Set, Bool, Nat, Int
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(-1, 1, left_open=True, right_open=True)), Element(y, Interval(-1, 1, left_open=True, right_open=True)))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[-1], cond=x <= 0)
 
-    Eq.x_is_nonpositive = Eq[-1].this.rhs.apply(Algebra.Mul.le.Zero.of.Le_0.Gt_0)
+    Eq.x_is_nonpositive = Eq[-1].this.rhs.apply(Int.Mul.le.Zero.of.Le_0.Gt_0)
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[1])
 

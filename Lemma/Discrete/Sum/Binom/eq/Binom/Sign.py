@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool
+    from Lemma import Algebra, Discrete, Bool, Finset
 
     i, j = Symbol(integer=True)
     n, t = Symbol(integer=True, nonnegative=True)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.Sum.eq.Sub.telescope)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.find(Sum).expr.apply(Discrete.Binom.eq.Sub.Pascal)
 

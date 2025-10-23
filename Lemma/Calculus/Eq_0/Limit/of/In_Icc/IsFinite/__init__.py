@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.Abs.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-3])
+    Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-3])
 
     Eq <<  Calculus.LeLimit.of.Le.apply(Eq[-1], (n, oo))
 

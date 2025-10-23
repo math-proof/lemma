@@ -27,7 +27,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Nat
     k = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)
     f = Function(integer=True)
@@ -39,9 +39,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum + ~Sum).apply(Algebra.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.lhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.lhs.expr.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Add).apply(Algebra.Add.principle.inclusive_exclusive)
 

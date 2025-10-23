@@ -15,7 +15,7 @@ def apply(is_nonzero, q):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Set, Bool
+    from Lemma import Algebra, Trigonometry, Set, Bool, Nat, Int
 
     p, q = Symbol(complex=True, given=True)
     Eq << apply(Unequal(p, 0), q)
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq.eq = Eq[-1].this.find(Ceil[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Or(*Eq[-1].find(Or).args[:2]).this.apply(Algebra.Mul.eq.Zero.of.OrEqS)
+    Eq << Or(*Eq[-1].find(Or).args[:2]).this.apply(Nat.Mul.eq.Zero.of.OrEqS)
 
     Eq << Eq[-1].subs(Eq.UV)
 
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq.p_cubic = Eq[-1].find(Pow[Mul]).this.apply(Algebra.Root.eq.Mul.ExpI.Arg)
 
-    Eq.p_is_positive = Algebra.GtAbs_0.of.Ne_0.apply(Eq[0])
+    Eq.p_is_positive = Int.GtAbs_0.of.Ne_0.apply(Eq[0])
 
     Eq << Algebra.EqArg.of.Gt_0.apply(Eq.p_is_positive, Eq.p_cubic.find(Exp))
 

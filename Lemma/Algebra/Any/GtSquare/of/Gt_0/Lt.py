@@ -14,7 +14,7 @@ def apply(M_is_positive, lt, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Int
 
     M, U = Symbol(real=True, given=True)
     Eq << apply(M > 0, U < M ** 2)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.LtSqrt.of.Ge_0.Lt)
 
-    Eq << Algebra.EqAbs.of.Gt_0.apply(Eq[0])
+    Eq << Int.EqAbs.of.Gt_0.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 

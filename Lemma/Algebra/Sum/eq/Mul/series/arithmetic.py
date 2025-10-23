@@ -12,19 +12,19 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete
+    from Lemma import Algebra, Discrete, Finset, Int
 
     k, h = Symbol(complex=True)
     a, b, i = Symbol(integer=True)
     Eq << apply(Sum[i:a:b](k * i + h))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq.eq = Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, 2)
 
     Eq << Discrete.Binom.eq.Add.Pascal.apply(Binomial(i + 1, 2))
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=1)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=1)
 
     Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (i, a, b)).reversed
 

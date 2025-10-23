@@ -14,7 +14,7 @@ def apply(eq, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Nat
+    from Lemma import Algebra, Bool, Nat, Nat, Finset
 
     x = Symbol(real=True, negative=False, shape=(oo,), given=True)
     n = Symbol(integer=True, negative=False, given=True)
@@ -22,7 +22,7 @@ def prove(Eq):
     a = Symbol(real=True, negative=False)
     Eq << apply(Equal(Sum[i:n + 1](x[i]), a), x[n] >= a)
 
-    Eq.eq = Eq[0].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq.eq = Eq[0].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 
     Eq << GreaterEqual(Eq.eq.find(Sum), 0, plausible=True)
 
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Nat.Eq.of.Ge.Le.apply(Eq[1], Eq[-1])
 
-    Eq << Eq.eq.subs(Eq[2]).this.apply(Algebra.EqAddS.Is.Eq)
+    Eq << Eq.eq.subs(Eq[2]).this.apply(Nat.EqAddS.Is.Eq)
 
     Eq << Eq[-1].this.lhs.limits_subs(i, j)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Nat.Gt_0.of.Ne_0)
 
-    Eq << Eq[-3].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
+    Eq << Eq[-3].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={i})
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-2])
 

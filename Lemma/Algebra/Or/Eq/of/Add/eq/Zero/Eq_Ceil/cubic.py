@@ -32,7 +32,7 @@ def apply(is_zero, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, p = Symbol(complex=True, given=True)
     q = Symbol(real=True, given=True)
@@ -52,7 +52,7 @@ def prove(Eq):
     Eq.w, Eq.w_conj, Eq.add_ww, Eq.mul_ww, Eq.w_square, Eq.w_conj_square, Eq.w3 = Algebra.AndEqS.omega.apply('omega')
 
     w = Eq.w.lhs
-    Eq.w_sub = Eq.add_ww.this.apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq.w_sub = Eq.add_ww.this.apply(Int.EqAdd.Is.Eq_Sub)
 
     Eq.w3_conj = Algebra.EqConj.of.Eq.apply(Eq.w3)
 

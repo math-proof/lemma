@@ -11,7 +11,7 @@ def apply(eq_x_bar, t, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset, Finset, Int, Int, Nat
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -19,13 +19,13 @@ def prove(Eq):
     x_bar = Symbol(r"{\bar {x}}", real=True)
     Eq << apply(Equal(x_bar, ReducedSum(x[:n]) / n), t, k)
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=-1)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=-1)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.lhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq << Eq[-1].this.lhs.expr.apply(Algebra.Sub.Square.eq.Mul)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[0] * n
 
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.find(Mul - Mul).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Mul - Mul).apply(Nat.AddMulS.eq.Mul_Add)
 
 
 

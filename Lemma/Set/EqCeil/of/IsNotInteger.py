@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Nat, Nat
+    from Lemma import Algebra, Set, Nat, Nat, Int, Rat
 
     x = Symbol(real=True)
     Eq << apply(NotElement(x, Integers))
@@ -20,21 +20,21 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Frac.eq.Sub_Floor)
 
-    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
+    Eq << Int.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
     Eq.lt_floor = Eq[-1].reversed
 
-    Eq << Algebra.Gt.of.Ge.Gt.apply(Eq[2], Eq[-1])
+    Eq << Nat.Gt.of.Ge.Gt.apply(Eq[2], Eq[-1])
 
-    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
 
     Eq.gt_floor = Algebra.Floor.gt.Sub_1.apply(x)
 
     Eq << Eq.gt_floor + 1
 
-    Eq << Algebra.Gt.of.Ge.Gt.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Gt.of.Ge.Gt.apply(Eq[-2], Eq[-1])
 
-    Eq << Algebra.Ceil.lt.Add_1.apply(x)
+    Eq << Rat.Ceil.lt.Add_1.apply(x)
 
     Eq << Set.In_Ioo.of.Gt.Lt.apply(Eq[-1], Eq[-2])
 
@@ -44,10 +44,10 @@ def prove(Eq):
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
 
-    Eq <<= Algebra.Ge_Add_1.of.Gt.apply(Eq[-2]), Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq <<= Nat.Ge_Add_1.of.Gt.apply(Eq[-2]), Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
     Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[-2])
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub)
 
 
 if __name__ == '__main__':

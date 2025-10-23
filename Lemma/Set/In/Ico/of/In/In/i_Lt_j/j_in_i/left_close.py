@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq <<= Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0]), Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[4])
 
-    Eq << Algebra.Gt.of.Ge.relax.apply(Eq[-2])
+    Eq << Nat.Gt_Sub_1.of.Ge.apply(Eq[-2])
 
     Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[-1], Eq[6])
 

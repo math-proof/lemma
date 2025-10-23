@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x + y)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - Eq[-1].lhs.args[1]
 
-    Eq << Eq[-1].this.apply(Algebra.LeAddS.Is.Le)
+    Eq << Eq[-1].this.apply(Nat.LeAddS.Is.Le)
 
     Eq << -Eq[-1]
 

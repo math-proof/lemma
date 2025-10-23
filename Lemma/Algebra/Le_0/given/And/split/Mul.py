@@ -12,12 +12,12 @@ def apply(given, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x * y <= 0)
 
-    Eq << Algebra.Le_0.of.Ge_0.Le_0.apply(*Eq[1:])
+    Eq << Int.Le_0.of.Ge_0.Le_0.apply(*Eq[1:])
 
 
 

@@ -13,7 +13,7 @@ def apply(a_less_than_b, x_less_than_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int
     a, x = Symbol(real=True, nonnegative=True)
     b, y = Symbol(real=True)
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(x, 0, plausible=True)
 
-    Eq << Algebra.Le_0.of.Lt_0.Ge_0.apply(Eq[-2], Eq[-1])
+    Eq << Int.Le_0.of.Lt_0.Ge_0.apply(Eq[-2], Eq[-1])
 
     Eq << Algebra.Lt.of.Gt.Le.apply(Eq.is_positive, Eq[-1])
 

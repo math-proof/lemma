@@ -57,7 +57,7 @@ def apply(s_independence_assumption, a_independence_assumption, r_independence_a
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Tensor
+    from Lemma import Probability, Algebra, Tensor, Nat
 
     b, d, L = Symbol(domain=Range(2, oo))
     s = Symbol(shape=(L + 1, b), real=True, random=True)
@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.arg.apply(Tensor.EqStackS.Is.EqStackS.Eq, i=3, j=0)
 
-    Eq.recursion = Algebra.Eq_Div.of.Eq.Ne_0.apply(Eq.ne_zero, Eq[-1])
+    Eq.recursion = Nat.Eq_Div.of.Eq.Ne_0.apply(Eq.ne_zero, Eq[-1])
 
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[3], [slice(0, k + 1), slice(0, k), slice(0, k + 1)])
 

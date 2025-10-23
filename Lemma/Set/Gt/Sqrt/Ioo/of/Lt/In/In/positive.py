@@ -13,7 +13,7 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Int
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(0, 1, left_open=True, right_open=True)), Element(y, Interval(0, 1, left_open=True, right_open=True)))
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Algebra.Gt.of.Sub.gt.Zero.apply(Eq[-1])
+    Eq << Int.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[2])
 
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Algebra.GtSqrt.of.Ge_0.Gt.apply(Eq[-1], Eq[4])
 
-    Eq <<= Algebra.EqAbs.of.Gt_0.apply(Eq.x_is_positive), Algebra.EqAbs.of.Gt_0.apply(Eq.y_is_positive)
+    Eq <<= Int.EqAbs.of.Gt_0.apply(Eq.x_is_positive), Int.EqAbs.of.Gt_0.apply(Eq.y_is_positive)
     Eq << Eq[-3].subs(Eq[-1], Eq[-2])
 
 

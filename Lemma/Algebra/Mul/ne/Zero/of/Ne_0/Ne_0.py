@@ -10,20 +10,20 @@ def apply(is_nonzero_x, is_nonzero_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Int, Nat, Nat, Nat
 
     x, y = Symbol(complex=True)
     Eq << apply(Unequal(x, 0), Unequal(y, 0))
 
-    Eq << Algebra.GtAbs_0.of.Ne_0.apply(Eq[0])
+    Eq << Int.GtAbs_0.of.Ne_0.apply(Eq[0])
 
-    Eq << Algebra.GtAbs_0.of.Ne_0.apply(Eq[1])
+    Eq << Int.GtAbs_0.of.Ne_0.apply(Eq[1])
 
     Eq << Algebra.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.MulAbsS.eq.AbsMul)
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ne.of.Gt.apply(Eq[-1])
 
     Eq << Algebra.Ne_0.of.NeAbs_0.apply(Eq[-1])
 

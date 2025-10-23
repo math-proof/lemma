@@ -11,7 +11,7 @@ def apply(le, Any_All_Ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Bool
+    from Lemma import Algebra, Set, Calculus, Bool, Nat, Nat
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.expr.apply(Algebra.GeInf.of.All_Ge)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Ge.relax, lower=-oo)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt_Sub_1.of.Ge, lower=-oo)
 
     Eq.le_inf = Algebra.All_LeInf.apply(Eq[-1].lhs)
 

@@ -14,7 +14,7 @@ def apply(eq_theta, eq_R, Q, K, V, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Discrete, Bool
+    from Lemma import Tensor, Algebra, Discrete, Bool, Finset, Nat
     from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -52,15 +52,15 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.limits.subst.offset, d / 2)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.expr.args[1:3].apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.expr.args[1:3].apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq.matmul_QRK = Eq[-1].this.rhs.expr.args[1:].apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq.matmul_QRK = Eq[-1].this.rhs.expr.args[1:].apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[2].find(BlockMatrix @ BlockMatrix).this.apply(Tensor.Dot.eq.Block)
 
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0].subs(k, k - i)[j])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq.matmul_QRK)
 

@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Finset
+    from Lemma import Discrete, Algebra, Tensor, Finset, Nat, Nat
 
     r = Symbol(real=True)
     n = Symbol(integer=True, positive=True)
@@ -83,7 +83,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add ** Add]).powsimp()
 
-    Eq << Eq[-1].this.find(Add[Mul]).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Add[Mul]).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Add ** Mul).apply(Algebra.Pow.Neg)
 

@@ -11,7 +11,7 @@ def apply(ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset, Finset
 
     n = Symbol(integer=True, positive=True, given=True)
     x = Symbol(real=True, shape=(n,), given=True)
@@ -22,7 +22,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
 
     i = Eq[-1].lhs.index
-    Eq << Eq[-1].find(Sum).this.apply(Algebra.Sum.eq.AddSumS, cond={i})
+    Eq << Eq[-1].find(Sum).this.apply(Finset.Sum.eq.AddSumS, cond={i})
 
     Eq << Algebra.All.Ge.of.Ge.apply(Eq[0], i)
 

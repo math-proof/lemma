@@ -11,12 +11,12 @@ def apply(is_nonpositive, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat
 
     x, M = Symbol(real=True)
     Eq << apply(x <= 0, M < x)
 
-    Eq << Algebra.Lt.of.Le.Lt.apply(Eq[0], Eq[1])
+    Eq << Nat.Lt.of.Le.Lt.apply(Eq[0], Eq[1])
 
     Eq << -Eq[-1]
 

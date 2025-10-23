@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Prod_Mul.eq.MulProdS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Prod_Mul.eq.MulProdS)
 
     Eq << Eq[2].subs(Eq[-1].reversed)
 

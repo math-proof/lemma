@@ -10,7 +10,7 @@ def apply(gt_0, gt_1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     a, b, x, y = Symbol(real=True, given=True)
     Eq << apply(x > a, y > b)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge_Min.apply(a, b)
 
-    Eq << Algebra.Gt.of.Ge.Gt.apply(Eq[0], Eq[-1])
+    Eq << Nat.Gt.of.Ge.Gt.apply(Eq[0], Eq[-1])
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[-1], Eq[-3], invert=True)
 

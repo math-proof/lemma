@@ -13,14 +13,14 @@ def apply(ge, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat
 
     a, x, b = Symbol(real=True)
     Eq << apply(x >= b, x < a)
 
     Eq << Eq[1].reversed
 
-    Eq << Algebra.Gt.of.Ge.Gt.apply(Eq[0], Eq[-1])
+    Eq << Nat.Gt.of.Ge.Gt.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].reversed
 

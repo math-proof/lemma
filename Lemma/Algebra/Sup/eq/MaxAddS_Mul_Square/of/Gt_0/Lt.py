@@ -17,7 +17,7 @@ def apply(is_positive, lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     m, M, x, a, b, c = Symbol(real=True, given=True)
     Eq << apply(a > 0, m < M, a * x ** 2 + b * x + c, x)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq.eq.subs(Eq[-1].reversed)
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-2])
 

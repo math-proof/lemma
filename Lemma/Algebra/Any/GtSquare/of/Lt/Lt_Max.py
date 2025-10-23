@@ -14,7 +14,7 @@ def apply(lt, lt_max, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Int, Int
 
     m, M, U = Symbol(real=True, given=True)
     Eq << apply(m < M, U < Max(M ** 2, m ** 2))
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq.is_negative = Eq[-2].this.rhs.rhs.apply(Algebra.Any.GtSquare.of.Ge_0.Lt_0.Lt)
 
-    Eq << Eq[-1].this.rhs.rhs.args[0].apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq << Eq[-1].this.rhs.rhs.args[0].apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     Eq << Eq[-1].this.rhs.rhs.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 

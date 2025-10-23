@@ -23,7 +23,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra
+    from Lemma import Tensor, Algebra, Int
 
     n = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -78,7 +78,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=0)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 
     j = Symbol(integer=True)
     Eq << Eq[0][i + n - Min(n, u), j - i]
@@ -103,7 +103,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.Block.eq.Stack.Ite)
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=0)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=0)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.ReducedArgMax)
 

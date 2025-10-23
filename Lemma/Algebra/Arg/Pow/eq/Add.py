@@ -10,7 +10,7 @@ def apply(pow):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     z = Symbol(complex=True, given=True)
     n = Symbol(integer=True, given=True, positive=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.GtAbs_0.of.Ne_0)
+    Eq << Eq[-2].this.lhs.apply(Int.GtAbs_0.of.Ne_0)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Gt_0.Pow.of.Gt_0, n)
 

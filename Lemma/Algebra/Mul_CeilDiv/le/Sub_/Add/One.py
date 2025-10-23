@@ -11,19 +11,19 @@ def apply(x, d=1, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Rat
     x = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)
 
     Eq << apply(x, d)
 
-    Eq << Algebra.Ceil.lt.Add_1.apply(x / d)
+    Eq << Rat.Ceil.lt.Add_1.apply(x / d)
 
     Eq << Eq[-1] * d
 
     Eq << Eq[-1].this.rhs.expand()
 
-    Eq << Algebra.Le_Sub_1.of.Lt.apply(Eq[-1])
+    Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
 if __name__ == '__main__':
     run()

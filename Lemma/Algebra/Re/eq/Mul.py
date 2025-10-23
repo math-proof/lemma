@@ -5,7 +5,7 @@ from util import *
 def apply(self):
     arg = self.of(Re)
     if arg.is_Add:
-        from Lemma.Algebra.AddMulS.eq.Mul_Add import rewrite
+        from Lemma.Nat.AddMulS.eq.Mul_Add import rewrite
         [*factors] = rewrite(arg)
     else:
         factors = arg.of(Mul)

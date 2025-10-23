@@ -18,7 +18,7 @@ def apply(eq_cosine_similarity, eq_rotary_ABF):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Trigonometry, Bool, Tensor
+    from Lemma import Discrete, Algebra, Set, Trigonometry, Bool, Tensor, Nat, Nat, Finset, Finset, Finset
 
     # N denotes sequence length (seq_length)
     # b denotes 10000 adjusted to 500000
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().find(Min).simplify()
 
-    Eq.def_RoPE = Eq[-1].this.rhs.expr.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq.def_RoPE = Eq[-1].this.rhs.expr.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq.def_RoPE.subs(t, t + 1)
 
@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Exp * Exp).args[-2:].apply(Algebra.Mul.eq.Exp)
 
-    Eq << Eq[-1].this.find(Exp).arg.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Exp).arg.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Algebra.EqIm.of.Eq.apply(Eq[-1])
 
@@ -96,13 +96,13 @@ def prove(Eq):
 
     Eq << (Norm(x) ** 2).this.base.apply(Algebra.Norm.eq.Sqrt, simplify=None)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond=Equal(Eq[-1].rhs.variable % 2, 0))
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond=Equal(Eq[-1].rhs.variable % 2, 0))
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.halve)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Sum.halve)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq.eq_cos = Eq.eq_cos.subs(Eq[-1].reversed)
 
@@ -139,7 +139,7 @@ def prove(Eq):
 
     Eq <<= Eq.gt_zero & Eq[-1]
 
-    Eq << Eq[-1].this.expr.apply(Algebra.LeMul.of.Gt_0.Le)
+    Eq << Eq[-1].this.expr.apply(Nat.LeMul.of.Gt_0.Le)
 
     Eq.Sum_le = Algebra.LeSum.of.All_Le.apply(Eq[-1])
 
@@ -163,7 +163,7 @@ def prove(Eq):
 
     Eq << Algebra.GeSum.of.All_Ge.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Mul.series.geometric)
 
@@ -198,7 +198,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].find(1 - Mul ** Mul).apply(Algebra.Sub.Square.eq.Mul)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1] * (2 * ReducedMin(x ** 2))
 

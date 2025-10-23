@@ -12,7 +12,7 @@ def apply(is_positive, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat, Nat, Nat
 
     x = Symbol(real=True)
     f, g = Function(shape=(), real=True)
@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[1])
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ne.of.Gt.apply(Eq[-1])
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
 
 

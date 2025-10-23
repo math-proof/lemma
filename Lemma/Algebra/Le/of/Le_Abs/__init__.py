@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(n, n + 1)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.AddSumS, cond={n})
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.pop)
 

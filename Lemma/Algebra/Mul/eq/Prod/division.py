@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     f, g = Function(integer=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(1 / Product).apply(Algebra.Pow.eq.Prod)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.MulProdS.eq.Prod_Mul)
+    Eq << Eq[-1].this.lhs.apply(Finset.MulProdS.eq.Prod_Mul)
 
 
 if __name__ == '__main__':

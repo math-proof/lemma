@@ -30,7 +30,7 @@ def apply(self, pivot=-1, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Finset, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.simplify()
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
 
 if __name__ == '__main__':

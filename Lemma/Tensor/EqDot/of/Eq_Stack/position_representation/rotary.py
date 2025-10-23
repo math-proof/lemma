@@ -121,9 +121,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].find(Piecewise).apply(Bool.Ite.subst, [0, 1], reverse=True)
 
-    Eq <<= Eq[-1].find(Cos[~Add]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
-        Eq[-1].rhs.args[1].find(Cos[~Add]).this.apply(Algebra.AddMulS.eq.Mul_Add), \
-        Eq[-1].rhs.args[1].find(Sin[~Add]).this.apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq <<= Eq[-1].find(Cos[~Add]).this.apply(Nat.AddMulS.eq.Mul_Add), \
+        Eq[-1].rhs.args[1].find(Cos[~Add]).this.apply(Nat.AddMulS.eq.Mul_Add), \
+        Eq[-1].rhs.args[1].find(Sin[~Add]).this.apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-4].this.rhs.subs(*Eq[-3:])
 

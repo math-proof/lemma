@@ -11,7 +11,7 @@ def apply(eq_x_bar, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset, Finset
 
     x = Symbol(real=True, shape=(oo,))
     σ2 = Symbol("σ^2", shape=(oo,))
@@ -20,7 +20,7 @@ def prove(Eq):
     x_bar = Symbol(r"\bar {x}", real=True, shape=(oo,))
     Eq << apply(Equal(x_bar[n], ReducedSum(x[:n]) / n), k)
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[0] * n
 

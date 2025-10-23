@@ -104,7 +104,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp.And.of.Imp.apply(Eq.lt_infer), Bool.Imp.And.of.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.find(Less).apply(Nat.EqMin.of.Lt, reverse=True), Eq[-1].this.rhs.find(GreaterEqual).apply(Algebra.EqMin.of.Ge, reverse=True)
+    Eq <<= Eq[-2].this.rhs.find(Less).apply(Nat.EqMin.of.Lt, reverse=True), Eq[-1].this.rhs.find(GreaterEqual).apply(Nat.EqMin.of.Ge, reverse=True)
 
     Eq <<= Eq[-2].this.rhs.args[0] + 1, Eq[-1].this.rhs.args[0] + 1
 

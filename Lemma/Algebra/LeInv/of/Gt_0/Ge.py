@@ -11,20 +11,20 @@ def apply(is_positive, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(a > 0, x >= a)
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 
     Eq.x_is_positive = Algebra.Gt.of.Gt.Ge.apply(Eq[0], Eq[1])
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq.x_is_positive)
+    Eq << Nat.Ne.of.Gt.apply(Eq.x_is_positive)
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 

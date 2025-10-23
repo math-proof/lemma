@@ -48,7 +48,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat, Nat, Nat
 
     x, a, b, c, d = Symbol(complex=True, given=True)
     Eq << apply(Equal(a * x ** 3 + b * x ** 2 + c * x + d, 0), x=x)
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq <<= Bool.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic, x=x), Eq[-1].this.rhs.apply(Algebra.EqDivS.of.Eq)
+    Eq <<= Eq[-2].this.rhs.apply(Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic, x=x), Eq[-1].this.rhs.apply(Nat.EqDivS.of.Eq)
 
     Eq <<= Bool.And.Imp.of.Imp.apply(Eq[-2], None), Bool.And.Imp.of.Imp.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.Or.Eq.of.Add.eq.Zero.cubic.one_leaded, x), None)
 

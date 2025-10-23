@@ -23,7 +23,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo, k))
     i, j = Symbol(integer=True)
@@ -35,16 +35,16 @@ def prove(Eq):
     Eq << apply(Sum[i:finiteset](x[i]))
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 
 
 if __name__ == '__main__':

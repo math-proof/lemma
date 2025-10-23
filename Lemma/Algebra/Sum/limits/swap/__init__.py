@@ -22,7 +22,7 @@ def apply(self, i=0, j=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Algebra, Bool, Finset, Nat, Nat, Nat
 
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)
@@ -33,24 +33,24 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq << Eq.induct.this.lhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 
     s = Symbol(Sum[j:n + 1](f[i] * g[i, j]))
     Eq << s.this.definition
 
     Eq << Eq[-1].apply(Algebra.EqSumS.of.Eq, (i, 0, m))
 
-    Eq << Eq[-2].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={n})
+    Eq << Eq[-2].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 
     Eq << Eq[-1].this.rhs.args[1].apply(Finset.Mul_Sum.eq.Sum_Mul)
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[1].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.apply(Algebra.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

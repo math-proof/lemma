@@ -25,7 +25,7 @@ def apply(self, offset):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Int, Finset
 
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo, k))
@@ -33,9 +33,9 @@ def prove(Eq):
     n = Symbol(integer=True, nonnegative=True)
     Eq << apply(Sum[i:n + 1](x[i + 2] - x[i]), 2)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sub.unshift)
 

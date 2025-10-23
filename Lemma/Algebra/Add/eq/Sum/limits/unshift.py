@@ -14,13 +14,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
     k, n = Symbol(integer=True)
     i = Symbol(domain=Range(n))
     f = Function(integer=True)
     Eq << apply(Add(Sum[k:1 + i:n](f(k)), f(i)))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond={i})
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={i})
 
 
 if __name__ == '__main__':

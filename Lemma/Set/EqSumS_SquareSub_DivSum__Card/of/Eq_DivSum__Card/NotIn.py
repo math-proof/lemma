@@ -13,7 +13,7 @@ def apply(notcontains, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     y = Symbol(integer=True, given=True)
     x = Symbol(integer=True)
@@ -37,9 +37,9 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.find(Add[Mul[Card]]).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Add[Mul[Card]]).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.find(Add[Mul[Card]]).apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Add[Mul[Card]]).apply(Nat.AddMulS.eq.Mul_Add)
 
 
 if __name__ == '__main__':

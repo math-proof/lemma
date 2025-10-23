@@ -12,7 +12,7 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y = Symbol(real=True)
     r = Symbol(real=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Algebra.Given.given.Given_And.apply(Eq[-1], cond=Eq[0])
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.LeDiv.of.Gt_0.Le), Eq[-1].this.rhs.apply(Algebra.LeMul.of.Gt_0.Le)
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.LeDiv.of.Gt_0.Le), Eq[-1].this.rhs.apply(Nat.LeMul.of.Gt_0.Le)
 
     Eq << Algebra.Cond.given.Cond.subst.Cond.apply(Eq.eq, old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
 

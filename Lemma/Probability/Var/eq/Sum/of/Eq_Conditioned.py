@@ -11,7 +11,7 @@ def apply(eq_conditioned, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Algebra, Probability, Bool, Finset, Finset, Finset
 
     x = Symbol(real=True, shape=(oo,), random=True)
     n = Symbol(integer=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Probability.Var.Sum.eq.Add.Sum)
 
-    Eq.eq_var = Eq[-1].this.find(Sum[2]).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq.eq_var = Eq[-1].this.find(Sum[2]).apply(Finset.Sum_Add.eq.AddSumS)
 
     j, i = Eq.eq_var.find(Sum[2]).variables
     Eq << Probability.Imp.Eq_0.Cov.of.Eq_Conditioned.apply(Eq[0], j)

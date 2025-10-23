@@ -9,7 +9,7 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool
+    from Lemma import Algebra, Discrete, Bool, Nat, Int
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.Eq.given.And.Mul.apply(Eq[-1], Eq[1], simplify=None)
 
-    Eq << Eq[-1].this.lhs.args[:3:2].apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.lhs.args[:3:2].apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.lhs.args[::2].apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.lhs.args[::2].apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Discrete.EqDiff.of.Eq_ReducedSum.apply(Eq[0])
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, 1)
 
-    Eq << Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, lhs=1)
+    Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=1)
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
@@ -45,7 +45,7 @@ def prove(Eq):
     Eq << -Eq[-1]
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
-    # Eq << Eq[-1].this.lhs.apply(Algebra.AddMulS.eq.Mul_Add)
+    # Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 
 
 

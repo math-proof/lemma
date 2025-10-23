@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int
+    from Lemma import Algebra, Bool, Int, Nat
     a, b = Symbol(integer=True)
     f = Function(shape=())
 
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0] * Eq[0].lhs
 
-    Eq << Algebra.SquareBool.eq.Bool.apply(Eq[-1].lhs)
+    Eq << Bool.SquareBool.eq.Bool.apply(Eq[-1].lhs)
 
     Eq << Eq[-2] - Eq[-1]
 
@@ -29,11 +29,11 @@ def prove(Eq):
 
     Eq << Eq[0] * Eq[0].rhs
 
-    Eq << Algebra.SquareBool.eq.Bool.apply(Eq[0].rhs ** 2)
+    Eq << Bool.SquareBool.eq.Bool.apply(Eq[0].rhs ** 2)
 
     Eq << Eq[-2] + Eq[-1]
 
-    Eq << Eq[-1].this.apply(Algebra.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
 
     Eq << Bool.Imp.of.Bool.eq.MulBoolS.apply(Eq[-1])
 

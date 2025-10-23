@@ -10,17 +10,17 @@ def apply(gt, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, z = Symbol(integer=True)
     Eq << apply(x > 0, Equal(1 / x + y, z))
 
-    Eq << Algebra.Ne.of.Gt.apply(Eq[0])
+    Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
-    Eq << Algebra.EqDivS.of.Eq.apply(Eq[-1], Eq[2])
+    Eq << Nat.EqDivS.of.Eq.apply(Eq[-1], Eq[2])
 
-    
-    
+
+
 
 
 if __name__ == '__main__':

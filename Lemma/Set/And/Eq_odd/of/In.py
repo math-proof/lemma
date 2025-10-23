@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat, Nat
 
     a, b, i, j, n, d = Symbol(integer=True)
     Eq << apply(Element(n, imageset(n, 2 * n + 1, Range(a // 2, (b - 1) // 2 + 1))))
@@ -34,11 +34,11 @@ def prove(Eq):
 
     Eq.greater_than, Eq.less_than = Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[-1], right_open=False)
 
-    Eq.strict_greater_than = Algebra.Gt.of.Ge.relax.apply(Eq.greater_than)
+    Eq.strict_greater_than = Nat.Gt_Sub_1.of.Ge.apply(Eq.greater_than)
 
     Eq << Algebra.Gt.of.Gt.Ge.apply(Eq.strict_greater_than, Algebra.Mul_FloorDiv.ge.SubAdd_1.apply(a, 2))
 
-    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
 
     Eq << Algebra.LeFloor.apply((b - 1) / 2) * 2 + 1
 

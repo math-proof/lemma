@@ -64,7 +64,7 @@ def prove(Eq):
     x = Symbol(x + a / 4)
     Eq.x_def = x.this.definition
 
-    Eq << Eq.x_def.this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=1).reversed
+    Eq << Eq.x_def.this.apply(Int.EqAdd.Is.Eq_Sub, rhs=1).reversed
 
     Eq << Eq[0].subs(Eq[-1])
 

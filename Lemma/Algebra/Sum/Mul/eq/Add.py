@@ -7,7 +7,7 @@ def apply(self):
     from Lemma.Algebra.Mul_Add.eq.AddMulS import convert
     add = convert(mul)
 
-    from Lemma.Algebra.Sum_Add.eq.AddSumS import associate
+    from Lemma.Finset.Sum_Add.eq.AddSumS import associate
     rhs = associate(Sum, Sum(add, *limits))
 
     return Equal(self, rhs, evaluate=False)
@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset, Finset, Finset, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -23,7 +23,7 @@ def prove(Eq):
     Eq << apply(Sum[i:n]((f(i) + h(i)) * g(i)))
 
     Eq << Eq[-1].this.lhs.expr.apply(Algebra.Mul_Add.eq.AddMulS)
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
 
 if __name__ == '__main__':

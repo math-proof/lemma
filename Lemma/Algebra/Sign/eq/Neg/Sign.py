@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int
 
     x, y = Symbol(complex=True)
     Eq << apply(Sign(x - y))
@@ -18,9 +18,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sign).apply(Algebra.Sign.eq.Ite.Abs)
 
-    Eq << Eq[-1].this.find(Equal[0]).apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[-1].this.find(Equal[0]).apply(Int.EqAdd.Is.Eq_Sub)
 
-    Eq << Eq[-1].this.find(Equal[0]).apply(Algebra.EqAdd.Is.Eq_Sub)
+    Eq << Eq[-1].this.find(Equal[0]).apply(Int.EqAdd.Is.Eq_Sub)
 
     Eq << Eq[-1].this.find(Equal).reversed
 

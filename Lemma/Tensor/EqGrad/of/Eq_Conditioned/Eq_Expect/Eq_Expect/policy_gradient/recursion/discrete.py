@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
     Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.eq.Add)
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
     Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
     Eq << Eq[-1].this.find(Derivative[Sum]).apply(Calculus.Grad.eq.Sum)
     Eq << Eq[-1].this.find(Derivative[Integral]).apply(Calculus.Grad.eq.Integral)
@@ -62,7 +62,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Sum)
     Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Sum)
     Eq << Eq[-1].subs(Eq[-4])
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
     Eq << Eq[-1].this.find(Pr * Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)
     Eq << Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.swap)
     Eq.eq_grad = Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.separate)

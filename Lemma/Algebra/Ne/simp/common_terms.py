@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(given):
-    from Lemma.Algebra.EqAddS.Is.Eq import simplify_common_terms
+    from Lemma.Nat.EqAddS.Is.Eq import simplify_common_terms
     return simplify_common_terms(Unequal, given)
 
 

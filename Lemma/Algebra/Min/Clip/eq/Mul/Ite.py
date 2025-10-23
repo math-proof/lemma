@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     ε = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
     # 0 < ε < 1
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Lt_0.Eq.given.And.Div), Eq[-1].this.rhs.apply(Algebra.Gt_0.Eq.given.And.Div)
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.EqAbs.of.Lt_0), Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Gt_0)
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.EqAbs.of.Lt_0), Eq[-1].this.lhs.apply(Int.EqAbs.of.Gt_0)
 
     Eq <<= -Eq[-2].this.lhs, Eq[-1].this.lhs.reversed
 

@@ -16,7 +16,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote, eq_I_dquote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool, Int, Int, Nat, Finset
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -48,13 +48,13 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1], simplify=None)
 
-    Eq << Eq[-1].this.find(Add < Add).apply(Algebra.LtAddS.Is.Lt, simplify=None)
+    Eq << Eq[-1].this.find(Add < Add).apply(Nat.LtAddS.Is.Lt, simplify=None)
 
-    Eq << Eq[-1].this.find(Add < Add).apply(Algebra.LtAddS.Is.Lt, simplify=None)
+    Eq << Eq[-1].this.find(Add < Add).apply(Nat.LtAddS.Is.Lt, simplify=None)
 
     Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, simplify=None)
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge.Is.Gt.relax, simplify=None)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Int.Ge.Is.Gt_Sub_1, simplify=None)
 
     Eq << Eq[-1].this.lhs().find(Greater).apply(Algebra.Mul.gt.Zero.Is.Gt_0, simplify=None)
 
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs().find(functions.Bool).simplify()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.AddSumS, cond=k < Eq[-1].find(ReducedArgMax))
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond=k < Eq[-1].find(ReducedArgMax))
 
     Eq << Tensor.Eq_0.Sum.of.Eq_Stack.padding_left.apply(Eq[0])
 

@@ -17,7 +17,7 @@ def apply(f0, suffice, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Set, Bool, Tensor, Finset
+    from Lemma import Algebra, Set, Bool, Tensor, Finset, Nat
 
     n = Symbol(integer=True, nonnegative=True, given=False)
     f = Symbol(integer=True, shape=(oo,))
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[1].apply(Bool.Or.of.ImpNot)
 
-    Eq.is_multiplication_zero = Algebra.Mul.eq.Zero.of.OrEqS.apply(Eq.or_statement)
+    Eq.is_multiplication_zero = Nat.Mul.eq.Zero.of.OrEqS.apply(Eq.or_statement)
 
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)

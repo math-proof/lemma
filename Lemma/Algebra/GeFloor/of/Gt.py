@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x = Symbol(real=True, given=True)
     y = Symbol(integer=True, given=True)
     Eq << apply(x > y)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Gt.Gt.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Ge_Add_1.of.Gt.apply(Eq[-1])
+    Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
 
 
 if __name__ == '__main__':

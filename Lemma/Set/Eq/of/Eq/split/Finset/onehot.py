@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Int, Int
+    from Lemma import Algebra, Set, Int, Int, Nat
 
     x, y = Symbol(integer=True)
     Eq << apply(Equal({x, y}, {0, 1}))
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq.x_equality
 
-    Eq << Eq[-1].this.apply(Algebra.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
 
     Eq << Int.Eq.of.Sub.eq.Zero.apply(Eq[-1])
 

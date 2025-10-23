@@ -15,14 +15,14 @@ def apply(gt, step=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, a = Symbol(integer=True)
     Eq << apply(x > a)
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge_Add_1.of.Gt), Eq[-1].this.rhs.apply(Algebra.Gt.given.Ge.strengthen)
+    Eq <<= Eq[-2].this.lhs.apply(Nat.Ge_Add_1.of.Gt), Eq[-1].this.rhs.apply(Algebra.Gt.given.Ge.strengthen)
 
     Eq <<= Eq[-2].this.lhs.reversed, Eq[-1].this.rhs.reversed
 

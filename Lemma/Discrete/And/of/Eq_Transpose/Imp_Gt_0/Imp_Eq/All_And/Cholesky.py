@@ -17,7 +17,7 @@ def apply(eq, infer, eq_piece, All_And):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Tensor, Finset
+    from Lemma import Algebra, Discrete, Bool, Tensor, Finset, Nat, Nat
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -63,11 +63,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.find(Sum[2]).limits_subs(j, i)
 
-    Eq << Eq[-1].this.find(Sum + Sum).args[1:3].apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.find(Sum + Sum).args[1:3].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq << Eq[-1].subs(Eq[0][i, t].reversed)
 
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add[~Sum]).apply(Algebra.Sum.eq.Add.split.limits)
 
-    Eq << Eq[-1].this.lhs.args[1:4:2].apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.lhs.args[1:4:2].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     # converting A[j, i] to ~A[i, j] if j < i
     Eq << Eq[-1].subs(Eq[0][j, i].reversed)
@@ -99,9 +99,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Sum[Mul]).limits_subs(j, i, simplify=None)
 
-    Eq << Eq[-1].this.lhs.args[1:].apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.lhs.args[1:].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.find(Sum).expr.args[1:].apply(Algebra.AddMulS.eq.Mul_Add)
+    Eq << Eq[-1].this.find(Sum).expr.args[1:].apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(MatMul + MatMul).apply(Tensor.Add.eq.Dot)
 

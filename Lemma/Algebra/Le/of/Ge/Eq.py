@@ -11,7 +11,7 @@ def apply(b_greater_than_x, x_eq_a):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     a, x, b = Symbol(real=True)
 
     Eq << apply(b >= x, Equal(x, a))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].reversed
 
-    Eq << Eq[-1].this.apply(Algebra.LeAddS.Is.Le)
+    Eq << Eq[-1].this.apply(Nat.LeAddS.Is.Le)
 
 
 if __name__ == '__main__':

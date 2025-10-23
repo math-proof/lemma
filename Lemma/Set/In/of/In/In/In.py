@@ -18,7 +18,7 @@ def apply(contains_x, contains_y, contains_z):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat, Nat
 
     a, b, c, d, x, y, z = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True)), Element(y, Interval(c, d, right_open=True)), Element(z, Interval(x, y, left_open=True)))
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt.of.Gt.Gt.apply(Eq[-4], Eq[-2])
 
-    Eq << Algebra.Lt.of.Le.Lt.apply(Eq[-3], Eq[-1])
+    Eq << Nat.Lt.of.Le.Lt.apply(Eq[-3], Eq[-1])
 
 
 if __name__ == '__main__':

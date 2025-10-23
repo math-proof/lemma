@@ -10,7 +10,7 @@ def apply(is_positive_x, less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, a, b = Symbol(real=True)
 
     Eq << apply(x > 0, a <= b)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[0])
 
-    Eq << Algebra.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[1])
+    Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[1])
 
 
 

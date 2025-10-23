@@ -11,12 +11,12 @@ def apply(ne_zero, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat, Nat
 
     x, y, z = Symbol(integer=True)
     Eq << apply(Unequal(x, 0), Equal(1 / x + y, z))
 
-    Eq << Algebra.EqDivS.of.Eq.apply(Eq[0], Eq[2])
+    Eq << Nat.EqDivS.of.Eq.apply(Eq[0], Eq[2])
 
     Eq << Eq[-1].this.lhs.ratsimp()
 

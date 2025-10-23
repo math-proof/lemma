@@ -40,7 +40,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.expand()
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.find(Pow, Sum).limits_subs(j, i)
 
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum, Pow).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
@@ -81,11 +81,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Sum.eq.Sub.unshift)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddSumS.eq.Sum_Add_Sum)
+    Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
     Eq << Eq[-1].this.rhs.expr.expand()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum_Add.eq.AddSumS)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
 
 

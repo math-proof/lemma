@@ -16,7 +16,7 @@ def apply(eq_pow):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Algebra, Real, Int, Int
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Equal(A ** 3, B ** 3))
@@ -24,7 +24,7 @@ def prove(Eq):
     d = Symbol(Eq[1].find(Ceil - Ceil))
     Eq << d.this.definition
 
-    Eq.difference = Eq[-1].this.apply(Algebra.EqAdd.Is.Eq_Sub, rhs=-1).reversed
+    Eq.difference = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=-1).reversed
 
     Eq << Eq[1].this.lhs.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)
 
