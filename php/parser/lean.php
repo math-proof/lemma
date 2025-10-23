@@ -6188,9 +6188,11 @@ class LeanArgsNewLineSeparated extends LeanArgs
 
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
-        if ($this->indent > $indent)
+        if ($this->indent > $indent) {
+            if ($caret instanceof LeanParenthesis && $next == ':')
+                return $caret;
             return parent::insert_newline($caret, $newline_count, $indent, $next);
-
+        }
         if ($this->indent < $indent) {
             if ($caret = $this->push_args_indented($indent, $newline_count))
                 return $caret;
@@ -6300,8 +6302,8 @@ class LeanArgsIndented extends LeanBinary
             return parent::insert_newline($caret, $newline_count, $indent, $next);
 
         if ($this->indent < $indent) {
-            if ($caret = $this->push_args_indented($indent, $newline_count))
-                return $caret;
+            if ($new = $this->push_args_indented($indent, $newline_count))
+                return $new;
             throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
         }
         if ($this->parent instanceof LeanAssign)

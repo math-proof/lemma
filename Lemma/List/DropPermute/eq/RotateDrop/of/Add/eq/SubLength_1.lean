@@ -1,7 +1,6 @@
-import stdlib.List
-import Lemma.Nat.EqSub.of.EqAdd
-import Lemma.List.DropPermute.eq.RotateDrop
-open Nat List
+import Lemma.List.DropPermute.eq.RotateTakeDrop.of.Add.eq.SubLength_1
+import Lemma.List.EqTake.of.Ge_Length
+open List
 
 
 @[main]
@@ -13,9 +12,12 @@ private lemma main
 -- imply
   (s.permute i ↑(d)).drop i = (s.drop i).rotate 1 := by
 -- proof
-  have h_d := Eq_Sub.of.EqAdd.left h
-  subst h_d
-  apply DropPermute.eq.RotateDrop
+  rw [DropPermute.eq.RotateTakeDrop.of.Add.eq.SubLength_1 h]
+  congr
+  apply EqTake.of.Ge_Length
+  simp
+  omega
 
 
 -- created on 2025-10-22
+-- updated on 2025-10-23
