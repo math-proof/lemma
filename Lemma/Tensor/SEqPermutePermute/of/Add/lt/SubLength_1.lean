@@ -226,6 +226,7 @@ private lemma main
                   rw [GetTranspose.eq.Get.fin]
                   repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                   apply congrArg
+                  simp
                   sorry
                 .
                   exact h_qₑ
