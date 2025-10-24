@@ -62,7 +62,7 @@ set_option maxHeartbeats 800000
 
 
 @[main]
-private lemma main
+private lemma main'
   [NeZero (d : ℕ)]
   [NeZero (i : ℕ)]
   {s : List ℕ}
@@ -111,6 +111,7 @@ private lemma main
         intro t
         have h_t := LtVal t
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
         have h_q := LtVal q
         have h_r := LtVal r
         -- have h_i : i < s.length := by omega
@@ -205,7 +206,7 @@ private lemma main
             rw [GetCast.eq.Get.of.Eq.Lt.fin]
             .
               let ⟨qₜ, rₜ, h_qₜrₜ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
-              let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₜrₜ
+              let ⟨h_qₜ_div, h_rₜ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₜrₜ
               rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₜrₜ]
               unfold Tensor.permuteHead
               simp
@@ -214,6 +215,7 @@ private lemma main
               rw [GetCast.eq.Get.of.Eq.Lt.fin]
               .
                 let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_rₜ
+                let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
                 rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₑrₑ]
                 unfold Tensor.rotate
                 simp
@@ -231,29 +233,47 @@ private lemma main
                   simp [TakeDrop.eq.DropTake s]
                   simp [h_qr]
                   simp [DropPermute.eq.Drop.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)]
-                  simp [h_length_permute, h_toNat] at h_qₑ_div
-                  simp [EqMin.of.Le (show i + d + 1 ≤ s.length by omega)] at h_qₑ_div
-                  simp [AddAdd.eq.Add_Add (c := 1)] at h_qₑ_div
-                  simp [Add_Add.eq.AddAdd (a := i)] at h_qₑ_div
-                  simp [DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_qₑ_div
-                  rw [ProdRotate.eq.Prod] at h_qₑ_div
-                  simp [DropTakePermute.eq.ListGet.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_qₑ_div
-                  simp [DropPermute.eq.Drop.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_qₑ_div
-                  rw [Div_Mul.eq.DivDiv.comm] at h_qₑ_div
-                  rw [DivAddMul.eq.Add_Div.of.Gt_0] at h_qₑ_div
+                  simp [h_length_permute, h_toNat] at h_qₜ_div
+                  simp [EqMin.of.Le (show i + d + 1 ≤ s.length by omega)] at h_qₜ_div
+                  simp [AddAdd.eq.Add_Add (c := 1)] at h_qₜ_div
+                  simp [Add_Add.eq.AddAdd (a := i)] at h_qₜ_div
+                  simp [DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_qₜ_div
+                  rw [ProdRotate.eq.Prod] at h_qₜ_div
+                  simp [DropTakePermute.eq.ListGet.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_qₜ_div
+                  simp [DropPermute.eq.Drop.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_qₜ_div
+                  rw [Div_Mul.eq.DivDiv.comm] at h_qₜ_div
+                  rw [DivAddMul.eq.Add_Div.of.Gt_0] at h_qₜ_div
                   .
-                    simp [Div.eq.Zero.of.Lt h_r] at h_qₑ_div
-                    rw [DivAddMul.eq.Add_Div.of.Gt_0] at h_qₑ_div
+                    simp [Div.eq.Zero.of.Lt h_r] at h_qₜ_div
+                    rw [DivAddMul.eq.Add_Div.of.Gt_0] at h_qₜ_div
                     .
                       have h_lt := Nat.AddMul.lt.Mul.of.Lt.Lt h_rₐ h_qₐ
                       rw [MulProdTakeDrop.eq.ProdTakeDrop.of.Lt_Length (by omega)] at h_lt
-                      simp [Div.eq.Zero.of.Lt h_lt] at h_qₑ_div
-                      simp [h_qₑ_div]
+                      simp [Div.eq.Zero.of.Lt h_lt] at h_qₜ_div
+                      simp [h_qₜ_div]
                       simp [h_length_permute, h_toNat] at h_q'_div
                       simp [EqMin.of.Le (show i + d + 1 ≤ s.length by omega)] at h_q'_div
                       simp [List.DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_q'_div
                       repeat rw [ProdRotate.eq.Prod] at h_q'_div
+                      simp [Add.comm (a := d), Add_Add.eq.AddAdd]
+                      simp [DropTake.eq.TakeDrop]
+                      simp [h_rₑ_mod]
+                      simp [h_length_permute, h_toNat] at h_rₜ_mod
+                      simp [EqMin.of.Le (show i + d + 1 ≤ s.length by omega)] at h_rₜ_mod
+                      simp [List.DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_rₜ_mod
+                      simp [AddAdd.eq.Add_Add (c := 1)] at h_rₜ_mod
+                      simp [Add_Add.eq.AddAdd (a := i)] at h_rₜ_mod
+                      -- rw [MulProdS.eq.ProdAppend] at h_rₜ_mod
+                      -- simp [AppendRotateTakeDrop.eq.DropPermute (s := s) (i := ⟨i, by omega⟩)] at h_rₜ_mod
+                      simp [ProdRotate.eq.Prod] at h_rₜ_mod
+                      simp [DropTakePermute.eq.ListGet.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_rₜ_mod
+                      simp [DropPermute.eq.Drop.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)] at h_rₜ_mod
+                      rw [MulAdd.eq.AddMulS] at h_rₜ_mod
+                      simp [MulMul.eq.Mul_Mul, AddAdd.eq.Add_Add] at h_rₜ_mod
+                      simp [h_rₜ_mod]
                       simp [h_q'_div]
+                      simp [h_q_div]
+                      simp [DropPermute.eq.Drop.of.GtLength_Add (i := ⟨i, by omega⟩) (show i + d < s.length by omega)]
                       sorry
                     .
                       have h_qₑ := LtVal qₑ
