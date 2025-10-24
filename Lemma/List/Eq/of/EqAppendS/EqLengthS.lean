@@ -1,5 +1,5 @@
 import Lemma.List.EqTakeAppend
-import Lemma.List.EqDropAppend__Length
+import Lemma.List.EqDropAppend
 open List
 
 
@@ -12,8 +12,8 @@ private lemma drop
 -- imply
   a' = b' := by
 -- proof
-  have ha := EqDropAppend__Length a a'
-  have hb := EqDropAppend__Length b b'
+  have ha := EqDropAppend a a'
+  have hb := EqDropAppend b b'
   aesop
 
 

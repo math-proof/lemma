@@ -1,4 +1,5 @@
 import stdlib.Slice
+open Lean
 
 /--
 mimic the PHP Array API
@@ -129,8 +130,38 @@ Arguments:
 - `items`: The elements to insert at the start position
 
 Examples:
-- `List.array_splice [1, 2, 3, 4] 1 2 [9, 10]` => `[1, 9, 10, 4]`
+- `[1, 2, 3, 4].array_splice 1 2 [9, 10]` => `[1, 9, 10, 4]`
 -/
 def List.splice (list : List α) (start : Nat) (deleteCount : Nat) (items : List α) : List α :=
   let (front, back) := list.splitAt start
   front ++ items ++ (back.drop deleteCount)
+
+@[app_unexpander List.take]
+def unexpandTake : Lean.PrettyPrinter.Unexpander
+  | `($_ $n:term $xs:term) =>
+    `($xs.$(mkIdent `take) $n)
+  | _ =>
+    throw ()
+
+@[app_unexpander List.drop]
+def unexpandDrop : Lean.PrettyPrinter.Unexpander
+  | `($_ $n:term $xs:term) =>
+    `($xs.$(mkIdent `drop) $n)
+  | _ =>
+    throw ()
+
+
+@[app_unexpander Min.min]
+def unexpandMin : Lean.PrettyPrinter.Unexpander
+  | `($_ $m:term $n:term) =>
+    `($m ⊓ $n)
+  | _ =>
+    throw ()
+
+
+@[app_unexpander Max.max]
+def unexpandMax : Lean.PrettyPrinter.Unexpander
+  | `($_ $m:term $n:term) =>
+    `($m ⊔ $n)
+  | _ =>
+    throw ()

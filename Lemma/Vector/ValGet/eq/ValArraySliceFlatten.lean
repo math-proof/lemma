@@ -2,7 +2,7 @@ import Lemma.Vector.Eq_Cons_Tail
 import Lemma.Vector.FlattenMapToListCons.eq.Append_FlattenMapToList
 import Lemma.Nat.Add_Mul.eq.MulAdd_1
 import Lemma.List.DropDrop.eq.Drop_Add
-import Lemma.List.EqDropAppend__Length
+import Lemma.List.EqDropAppend
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Vector.GetCons__Add_1.eq.Get.of.Lt_Mul
 open Vector List Bool Nat
@@ -69,7 +69,7 @@ private lemma main
       have : (List.drop n (v.head.toList ++ (List.map List.Vector.toList v.tail.toList).flatten)) = (List.drop v.head.toList.length (v.head.toList ++ (List.map List.Vector.toList v.tail.toList).flatten)) := by
         simp
       rw [this]
-      rw [EqDropAppend__Length]
+      rw [EqDropAppend]
 
 
 -- created on 2025-05-08

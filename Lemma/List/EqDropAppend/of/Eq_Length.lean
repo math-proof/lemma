@@ -1,5 +1,5 @@
 import stdlib.List
-import Lemma.List.EqDropAppend__Length
+import Lemma.List.EqDropAppend
 open List
 
 
@@ -13,7 +13,7 @@ private lemma main
   (a ++ b).drop n = b := by
 -- proof
   rw [← h]
-  apply EqDropAppend__Length
+  apply EqDropAppend
 
 
 -- created on 2025-05-17

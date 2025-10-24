@@ -1,6 +1,5 @@
 import stdlib.List
-import Lemma.Int.NegSucc.eq.NegAdd_1
-open Int
+import sympy.Basic
 
 
 @[main]
@@ -18,14 +17,8 @@ private lemma main
       let d := (d + 1).toNat
       a.take i ++ a.slice (i + 1) (i + d) ++ a[i] :: a.drop (i + d) := by
 -- proof
-  simp [List.permute]
-  split_ifs
-  ·
-    cases d <;>
-      grind
-  ·
-    cases d <;>
-      simp_all
+  unfold List.permute
+  aesop
 
 
 -- created on 2025-06-07
