@@ -1,4 +1,4 @@
-import Lemma.Algebra.DivMul.eq.Mul_Div
+import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Algebra.GtMulS.of.Gt_0.Gt
 import Lemma.Rat.GtDivS.of.Gt.Gt_0
 import Lemma.Algebra.Div.eq.One.of.Gt_0

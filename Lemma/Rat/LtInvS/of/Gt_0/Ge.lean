@@ -1,5 +1,5 @@
 import Lemma.Algebra.Div.eq.One.of.Gt_0
-import Lemma.Algebra.DivDiv.eq.Inv.of.Ne_0
+import Lemma.Rat.DivDiv.eq.Inv.of.Ne_0
 import Lemma.Nat.Ne.of.Gt
 import Lemma.Algebra.Div1.eq.Inv
 import Lemma.Rat.GtDivS.of.Gt.Gt_0

@@ -90,12 +90,8 @@ export function fetch_lemma(lemma, lemmaType, using_latex=true, using_given=fals
 			proof = proof[by];
 		// proof = proof.map(line => line.lean);
 	}
-	if (comment && using_comment) {
-		var open_namespace = comment.match(/^open namespace in$/m);
+	if (comment && using_comment)
 		comment = `/--\n${comment}\n-/\n`;
-		if (open_namespace)
-			comment = `open ${name} in\n` + comment;
-	}
 	else
 		comment = '';
 	if (attribute && attribute.length) {

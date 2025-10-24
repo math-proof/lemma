@@ -1,10 +1,10 @@
 import sympy.functions.elementary.complexes
 import sympy.functions.elementary.trigonometric
-import Lemma.Algebra.DivMul.eq.Mul_Div
+import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Nat.Mul
-open Algebra Nat Rat
+open Nat Rat
 
 
 @[main]
