@@ -81,5 +81,26 @@ private lemma main
     contradiction
 
 
+@[main]
+private lemma reverse
+  [NeZero (d : ℕ)]
+  {s : List ℕ}
+-- given
+  (h : d = s.length - 1)
+  (X : Tensor α s) :
+-- imply
+  have h_d := NeZero.pos d
+  (X.permute ⟨d, by omega⟩ (-d)).permute ⟨0, by simp [LengthPermute.eq.Length]; omega⟩ d ≃ X := by
+-- proof
+  intro h_d
+  rw [@Tensor.Permute.eq.Ite (i := ⟨0, by simp [LengthPermute.eq.Length]; omega⟩) (d := d)]
+  simp
+  split_ifs with h_sub
+  ·
+    sorry
+  ·
+    sorry
+
+
 -- created on 2025-10-19
 -- updated on 2025-10-20

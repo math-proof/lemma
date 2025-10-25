@@ -137,7 +137,7 @@ private lemma main
               ·
                 simp
                 let s' := s.permute ⟨i, by grind⟩ d
-                have h_lt : q * (s'.drop (s'.length - (1 + d))).prod + (rₐ * (s'.drop (s'.length - (1 + d) + (min (1 + d) s'.length - 1) % (s'.length - (s'.length - (1 + d))))).prod + qₐ) < (s.take i).prod * (((s.drop i).take (d + 1)).rotate 1 ++ (s.drop i).drop (d + 1)).prod := by 
+                have h_lt : q * (s'.drop (s'.length - (1 + d))).prod + (rₐ * (s'.drop (s'.length - (1 + d) + (min (1 + d) s'.length - 1) % (s'.length - (s'.length - (1 + d))))).prod + qₐ) < (s.take i).prod * (((s.drop i).take (d + 1)).rotate 1 ++ (s.drop i).drop (d + 1)).prod := by
                   simp [s', LengthPermute.eq.Length, EqSub_Sub.of.Gt h_Lt1d]
                   simp [← h_i_eq]
                   simp [EqMin.of.Lt h_Lt1d, EqMod.of.Lt h_d_lt_1d]
@@ -277,6 +277,31 @@ private lemma main
     simp at h_eq_d
     rw [LengthPermute.eq.Length] at h_eq_d
     contradiction
+
+
+@[main]
+private lemma reverse
+  [NeZero (d : ℕ)]
+  [NeZero (i : ℕ)]
+  {s : List ℕ}
+-- given
+  (h : i + d = s.length - 1)
+  (X : Tensor α s) :
+-- imply
+  have h_d := NeZero.pos d
+  (X.permute ⟨i + d, by omega⟩ (-d)).permute ⟨i, by simp [LengthPermute.eq.Length]; omega⟩ d ≃ X := by
+-- proof
+  intro h_d
+  have h_i_eq : i = s.length - (1 + d) := by omega
+  rw [@Tensor.Permute.eq.Ite (i := ⟨i, by simp [LengthPermute.eq.Length]; omega⟩) (d := d)]
+  simp
+  split_ifs with h_sub h_pos
+  .
+    omega
+  ·
+    sorry
+  ·
+    sorry
 
 
 -- created on 2025-10-19

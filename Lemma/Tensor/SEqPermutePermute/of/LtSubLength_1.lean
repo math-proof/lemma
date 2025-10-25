@@ -199,5 +199,24 @@ private lemma main
           simpa [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
 
 
+@[main]
+private lemma reverse
+  [NeZero (d : ℕ)]
+  {s : List ℕ}
+-- given
+  (h : d < s.length - 1)
+  (X : Tensor α s) :
+-- imply
+  (X.permute ⟨d, by grind⟩ (-d)).permute ⟨0, by simp [LengthPermute.eq.Length]; omega⟩ d ≃ X := by
+-- proof
+  have h_d := NeZero.pos d
+  rw [@Tensor.Permute.eq.Ite (i := ⟨0, by simp [LengthPermute.eq.Length]; omega⟩) (d := d)]
+  simp
+  split_ifs with h_sub
+  ·
+    omega
+  ·
+    sorry
+
 -- created on 2025-10-19
 -- updated on 2025-10-22
