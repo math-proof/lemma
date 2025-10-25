@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma MAIN
+private lemma main
   [PartialOrder α]
   {a b : α}
 -- given
@@ -19,8 +19,7 @@ private lemma MAIN
     rcases hx with ⟨hxa, hxb⟩
     by_cases h : x = b
     ·
-      right
-      exact h
+      grind
     ·
       left
       exact ⟨hxa, lt_of_le_of_ne hxb h⟩

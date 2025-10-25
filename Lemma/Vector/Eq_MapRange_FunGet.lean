@@ -1,11 +1,9 @@
 import sympy.vector.vector
-import Lemma.List.GetElemRange.eq.Some.is.Lt.Eq
-import Lemma.List.GetElem.eq.Some.is.Any_Eq
-open List
+import sympy.Basic
 
 
 @[main]
-private lemma Main'
+private lemma main
 -- given
   (v : List.Vector α m) :
 -- imply
@@ -19,10 +17,8 @@ private lemma Main'
   let ⟨v, h_length⟩ := v
   congr
   ext i a
-  simp [GetElemRange.eq.Some.is.Lt.Eq]
-  simp only [GetElem.eq.Some.is.Any_Eq]
-  simp only [h_length]
-  simp only [Eq.comm]
+  grind
 
 
 -- created on 2025-05-10
+-- updated on 2025-10-25

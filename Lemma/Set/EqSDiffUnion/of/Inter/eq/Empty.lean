@@ -3,7 +3,7 @@ open Set
 
 
 @[main]
-private lemma main''
+private lemma main
   {A B : Set α}
 -- given
   (h : A ∩ B = ∅) :
@@ -11,25 +11,18 @@ private lemma main''
   (A ∪ B) \ A = B := by
 -- proof
   ext x
-  simp only [Set.mem_diff, Set.mem_union]
   constructor
   ·
-    rintro ⟨haB | hB, hA⟩
-    ·
-      exfalso
-      apply hA haB
-    ·
-      exact hB
+    grind
   ·
     intro hB
     constructor
     ·
-      right
-      assumption
+      tauto
     ·
       intro hA
       have := In_Inter.of.In.In hA hB
-      rwa [h] at this
+      grind
 
 
 -- created on 2025-07-20

@@ -66,7 +66,7 @@ set_option maxHeartbeats 800000
 
 
 @[main]
-private lemma main'
+private lemma main
   [NeZero (d : ℕ)]
   [NeZero (i : ℕ)]
   {s : List ℕ}
@@ -77,7 +77,7 @@ private lemma main'
   have h_d := NeZero.pos d
   have h_i : i < s.length := by omega
   have h_length_permute := LengthPermute.eq.Length s (i := ⟨i, h_i⟩) (d := d)
-  (X.permute ⟨i, h_i⟩ d).permute ⟨i + d, by rw [h_length_permute]; omega⟩ (-d) ≃ X := by
+  (X.permute ⟨i, h_i⟩ d).permute ⟨i + d, by grind⟩ (-d) ≃ X := by
 -- proof
   intro h_d h_i h_length_permute
   have h_i_pos := NeZero.pos i
@@ -103,8 +103,7 @@ private lemma main'
       repeat rw [EqSubAdd]
       rw [Add_Add.eq.AddAdd]
       have := Permute__Neg.eq.Append_AppendRotateTakeDrop (s := (s.permute ⟨i, by grind⟩ d)) (i := ⟨i + d, by simp_all; grind⟩) (d := d)
-      simp at this
-      rwa [← this]
+      simp_all
     apply SEqCast.of.SEq.Eq.Eq
     .
       rw [h_permute_simp, h_permute]
@@ -201,8 +200,7 @@ private lemma main'
                   .
                     simp [Add.comm (b := 1), Add_Add.eq.AddAdd]
                     simp [← TakeDrop.eq.DropTake]
-                    rw [Add.comm (a := 1)]
-                    exact h_rₐ
+                    grind
                   .
                     exact h_qₐ
               .
@@ -312,8 +310,6 @@ private lemma main'
                       simp [ProdRotate.eq.Prod] at h_qₑ
                       grind
                   .
-                    have h_rₑ := LtVal rₑ
-                    simp at h_rₑ
                     grind
                 .
                   exact h_qₑ
@@ -339,7 +335,7 @@ private lemma main'
         .
           rw [MulProdS.eq.ProdAppend]
       .
-        rw [h_permute_simp]
+        grind
 
 
 @[main]

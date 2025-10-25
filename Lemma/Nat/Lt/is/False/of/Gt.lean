@@ -1,5 +1,5 @@
-import Lemma.Algebra.Gt.is.False.of.Lt
-open Algebra
+import Lemma.Nat.Gt.is.False.of.Lt
+open Nat
 
 
 @[main]

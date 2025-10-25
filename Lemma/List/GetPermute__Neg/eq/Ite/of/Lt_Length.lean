@@ -1,45 +1,23 @@
 import Lemma.List.Permute.eq.Ite
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
-import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
-import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
-import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
-import Lemma.Nat.Add
 import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.EqSubAdd
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.Slice.eq.Nil
-import Lemma.List.LengthDrop.eq.SubLength
-import Lemma.Nat.LeAdd_1
-import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
-import Lemma.Nat.SubSub
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
 import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Nat.Sub.ge.One.of.Gt
-import Lemma.Nat.LtSubS.of.Lt.Le
-import Lemma.Nat.LtSub_1.of.Le.Gt_0
-import Lemma.Nat.Le_Sub_1.of.Lt
-import Lemma.Nat.Lt.of.Le.Lt
-import Lemma.Nat.LeSub.of.Le
-import Lemma.Nat.Eq.of.Le.Le
-import Lemma.Nat.EqAdd_Sub.of.Ge
-import Lemma.Int.Sub_Add.eq.SubSub
-import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
-import Lemma.Nat.AddAdd
-import Lemma.Nat.SubAdd.eq.AddSub.of.Le
-import Lemma.Nat.GeSub_1.of.Gt
 import Lemma.Nat.LtSub
 import Lemma.List.LengthPermute.eq.Length
-open List Nat Int
+open List Nat
 
 
 @[main]
-private lemma MAIN
+private lemma main
   {a : List α}
   {i : Fin a.length}
   {d t : ℕ}
@@ -64,26 +42,14 @@ private lemma MAIN
     have h_t : t < (a.take (i - d)).length + (a[(i : ℕ)] :: (a.slice (i - d) i ++ a.drop (i + 1))).length := by
       rw [LengthCons.eq.Add1Length]
       rw [LengthAppend.eq.AddLengthS]
-      rw [LengthDrop.eq.SubLength]
       rw [LengthSlice.eq.SubMin]
-      rw [LengthTake.eq.Min_Length]
-      repeat rw [EqMin.of.Lt (by simp_all)]
-      repeat rw [Add_Add.eq.AddAdd]
-      rw [Add.comm]
-      rw [Add_Sub.eq.SubAdd.of.Ge (by simp_all)]
-      rw [AddAdd.eq.Add_Add]
-      rw [Add.comm (a := 1)]
-      rw [EqSubAdd.left]
-      rwa [EqAddSub.of.Ge (LeAdd_1 i)]
+      grind
     apply Eq.symm
     split_ifs with h_i h_eq h_1
     ·
-      rw [GetAppend.eq.Get.of.Lt_Length]
-      rw [GetTake.eq.Get.of.Lt_LengthTake]
-      simp_all [EqMin.of.Lt]
+      grind
     ·
-      rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp_all) (by simp_all)]
-      simp_all [EqMin.of.Lt]
+      grind
     ·
       simp at h_i
       have h_i := LeSub.of.Le_Add h_i
@@ -95,16 +61,10 @@ private lemma MAIN
       rw [GetAppend.eq.Get.of.Lt_Length]
       rw [GetSlice.eq.Get_Add.of.Lt_LengthSlice]
       ·
-        simp [Add_Sub.eq.SubAdd.of.Ge h_i'']
-        simp [Add_Sub.eq.SubAdd.of.Ge h_i]
+        grind
       ·
         rw [LengthSlice.eq.SubMin]
-        rw [SubSub.comm]
-        apply LtSubS.of.Lt.Le
-        ·
-          apply Le_Sub_1.of.Lt h_i'
-        ·
-          apply LtSub_1.of.Le.Gt_0.left (by linarith) (by simp_all)
+        grind
     ·
       simp at h_i h_1 h_eq
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
@@ -115,37 +75,10 @@ private lemma MAIN
         simp [EqMin.of.Lt h_sub]
         rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
         ·
-          rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+          rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength] <;>
           ·
             simp [LengthSlice.eq.SubMin]
-            congr
-            rw [Sub_Sub.eq.SubAdd.of.Ge]
-            ·
-              rw [Add.comm]
-              rw [Add_Add.eq.AddAdd]
-              rw [EqAddSub.of.Ge]
-              ·
-                rw [AddAdd.comm]
-                repeat rw [EqAddSub.of.Ge (by assumption)]
-              ·
-                rw [AddSub.eq.SubAdd.of.Le]
-                ·
-                  rw [EqAddSub.of.Ge]
-                  ·
-                    apply GeSub_1.of.Gt
-                    assumption
-                  ·
-                    assumption
-                ·
-                  assumption
-            ·
-              simp_all
-          ·
-            rw [LengthSlice.eq.SubMin]
-            simp [Add.comm]
-            rw [Add_Sub.eq.SubAdd.of.Ge (by simp_all)]
-            rw [EqAdd_Sub.of.Ge (by simp_all)]
-            apply Le_Sub_1.of.Lt h_1
+            grind
         ·
           linarith
       ·
@@ -154,15 +87,8 @@ private lemma MAIN
     simp at h_d
     subst h_d
     simp [Slice.eq.Nil]
-    intro h_it
-    apply Eq.symm
-    split_ifs
-    .
-      aesop
-    .
-      omega
-    .
-      rfl
+    grind
 
 
 -- created on 2025-06-21
+-- updated on 2025-10-25

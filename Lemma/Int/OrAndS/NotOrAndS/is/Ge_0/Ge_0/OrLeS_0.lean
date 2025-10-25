@@ -1,10 +1,10 @@
 import Lemma.Bool.NotOr.is.AndNotS
 import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Nat.NotGt.is.Le
-import Lemma.Algebra.NotLt.is.Ge
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Int.Ge_0.Ge_0.is.OrGeS_0.OrAndS
 import Lemma.Bool.AndAnd.is.And_And
-open Algebra Bool Nat Int
+open Bool Nat Int
 
 
 @[main, mp, mpr]

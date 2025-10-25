@@ -11,6 +11,7 @@ import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Tensor.PermuteTailCast.eq.Cast_PermuteTail.of.Eq
 import Lemma.Tensor.SEqPermuteTailPermuteHead
+import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length
 open Bool List Tensor Nat
 
 
@@ -99,7 +100,15 @@ private lemma reverse
   ·
     sorry
   ·
-    sorry
+    have h_permute := EqPermutePermute__Neg.of.In_Ioo_Length (s := s) (i := d) (j := 0) ⟨by omega, by omega⟩
+    simp at h_permute
+    apply SEqCast.of.SEq.Eq.Eq
+    .
+      sorry
+    .
+      sorry
+    .
+      sorry
 
 
 -- created on 2025-10-19

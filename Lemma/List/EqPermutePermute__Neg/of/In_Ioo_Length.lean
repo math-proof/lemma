@@ -11,26 +11,27 @@ open Bool List
 private lemma main
   {s : List α}
 -- given
-  (h : j ∈ Ioo i s.length) :
+  (h : i ∈ Ioo j s.length) :
 -- imply
-  let d := j - i
-  (s.permute ⟨i, h.left.trans h.right⟩ d).permute ⟨j, by simp [LengthPermute.eq.Length, h.right]⟩ (-d) = s := by
+  let d := i - j
+  have h_Ltj := h.left.trans h.right
+  (s.permute ⟨i, h.right⟩ (-d)).permute ⟨j, by simp [LengthPermute.eq.Length, h_Ltj]⟩ d = s := by
 -- proof
   let ⟨h_ij, h_j⟩ := h
-  intro d
+  intro d h_Ltj
   ext k x
   by_cases h_k_length : k < s.length
   ·
     simp [h_k_length]
-    have h_k : k < ((s.permute ⟨i, by linarith⟩ d).permute ⟨j, by simpa [LengthPermute.eq.Length]⟩ (-d)).length := by 
+    have h_k : k < ((s.permute ⟨i, by linarith⟩ (-d)).permute ⟨j, by simp [LengthPermute.eq.Length, h_Ltj]⟩ d).length := by 
       simpa [LengthPermute.eq.Length]
     simp [h_k]
     apply IffEqS.of.Eq
-    rw [GetPermute__Neg.eq.Ite.of.Lt_Length (by simpa [LengthPermute.eq.Length])]
+    rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length (by simp [LengthPermute.eq.Length]; omega) (by simp [LengthPermute.eq.Length]; grind)]
     split_ifs <;>
     ·
       try simp
-      rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
+      rw [GetPermute__Neg.eq.Ite.of.Lt_Length]
       repeat grind
   ·
     simp at h_k_length
@@ -38,5 +39,4 @@ private lemma main
     repeat simpa [LengthPermute.eq.Length]
 
 
--- created on 2025-10-12
--- updated on 2025-10-25
+-- created on 2025-10-25

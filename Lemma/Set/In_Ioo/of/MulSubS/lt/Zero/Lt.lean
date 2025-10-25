@@ -2,9 +2,9 @@ import Lemma.Int.Mul.lt.Zero.is.OrAndSLt_0Gt_0
 import Lemma.Int.Lt.of.Sub.lt.Zero
 import Lemma.Int.Sub.gt.Zero.is.Gt
 import Lemma.Nat.Gt.of.Gt.Gt
-import Lemma.Algebra.NotLt.of.Gt
+import Lemma.Nat.NotLt.of.Gt
 import Lemma.Set.In_Ioo.of.Gt.Lt
-open Algebra Set Int Nat
+open Set Int Nat
 
 
 @[main]

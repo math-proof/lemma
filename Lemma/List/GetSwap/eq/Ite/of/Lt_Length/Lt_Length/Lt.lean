@@ -1,25 +1,20 @@
 import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.Lt_Length
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.List.LengthAppend.eq.AddLengthS
-import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.Le.of.Lt
-import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.List.LengthCons.eq.Add1Length
-import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
-import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Gt.is.Ge.Ne
-import Lemma.Nat.Add
 import Lemma.List.GetDrop.eq.Get_Add.of.GtLength_Add
 import Lemma.List.LengthSwap.eq.Length
 open List Nat
 
 
 @[main]
-private lemma main'
+private lemma main
   {a : List α}
   {i j t : ℕ}
 -- given
@@ -40,18 +35,14 @@ private lemma main'
   have h_i := h₀.trans h₁
   let h_i := Le.of.Lt h_i
   let h_j := Le.of.Lt h₁
-  have h_eq_ij : i + (1 + (j - (i + 1))) = j := by
-    ring_nf
-    rw [EqAdd_Sub.of.Ge]
-    linarith
-  have h_eq_ij' : i + ((j - (i + 1)) + 1) = j := by
-    rwa [Add.comm (a := 1)] at h_eq_ij
+  have h_eq_ij : i + (1 + (j - (i + 1))) = j := by 
+    grind
+  have h_eq_ij' : i + ((j - (i + 1)) + 1) = j := by 
+    grind
   split_ifs with h_ti h_tj
   ·
-    simp [h_ti]
     simp_all [GetSwap.eq.Get.of.Lt_LengthSwap.Lt_Length]
   ·
-    simp [h_tj]
     simp_all [GetSwap.eq.Get.of.Lt_LengthSwap.Lt_Length.left]
   ·
     unfold List.swap
@@ -61,19 +52,11 @@ private lemma main'
     ·
       by_cases h_ti : t < i
       ·
-        by_cases h_tj : t < j
-        ·
-          repeat rw [GetAppend.eq.Get.of.Lt_Length (by grind)]
-          rw [GetTake.eq.Get.of.Lt_LengthTake]
-        ·
-          linarith
+        grind
       ·
         simp at h_ti
-        have h_eq_ti : i + 1 + (t - i - 1) = t := by
-          simp [SubSub.eq.Sub_Add]
-          have := Gt.of.Ge.Ne h_ti (by assumption)
-          apply EqAdd_Sub.of.Ge
-          linarith
+        have h_eq_ti : i + 1 + (t - i - 1) = t := by 
+          grind
         have h_lt := Gt.of.Ge.Ne h_ti (by assumption)
         by_cases h_tj : t < j
         ·
@@ -81,48 +64,31 @@ private lemma main'
           rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
           rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
           rw [GetSlice.eq.Get_Add.of.Lt_LengthSlice]
-          ·
-            simp [h_i, h_eq_ti]
-          ·
-            simp_all
-          ·
-            simp_all
-          ·
-            rw [LengthAppend.eq.AddLengthS]
-            rw [LengthTake.eq.Min_Length]
-            rw [LengthCons.eq.Add1Length]
-            rw [LengthSlice.eq.SubMin]
-            simp [h_i, h_j]
-            rwa [h_eq_ij]
+          repeat grind
+          rw [LengthAppend.eq.AddLengthS]
+          rw [LengthCons.eq.Add1Length]
+          rw [LengthSlice.eq.SubMin]
+          grind
         ·
           simp at h_tj
           have h_gt : t > j := Gt.of.Ge.Ne h_tj (by assumption)
-          have h_eq_tj : j + 1 + (t - j - 1) = t := by
-            simp [SubSub.eq.Sub_Add]
-            have := Gt.of.Ge.Ne h_tj (by assumption)
-            apply EqAdd_Sub.of.Ge
-            linarith
+          have h_eq_tj : j + 1 + (t - j - 1) = t := by 
+            grind
           rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
           simp [LengthSlice.eq.SubMin]
           simp [h_i, h_j]
           simp [h_eq_ij']
           rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
-          rw [GetDrop.eq.Get_Add.of.GtLength_Add] <;>
+          rw [GetDrop.eq.Get_Add.of.GtLength_Add] <;> 
             simp [h_eq_tj]
           ·
             assumption
           ·
-            simp
-            apply Gt.of.Ge.Ne h_tj (by assumption)
+            grind
           ·
-            rw [LengthAppend.eq.AddLengthS]
-            rw [LengthTake.eq.Min_Length]
             simp [LengthSlice.eq.SubMin]
-            simp [h_i, h_j]
-            rw [Add.comm (b := 1)]
-            rw [h_eq_ij]
-            linarith
+            grind
 
 
 -- created on 2025-06-07
--- updated on 2025-06-28
+-- updated on 2025-10-25

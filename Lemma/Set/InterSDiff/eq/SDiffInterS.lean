@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma MAIN'
+private lemma main
 -- given
   (s t u : Set α) :
 -- imply

@@ -1,7 +1,7 @@
 import Lemma.List.EqEraseIdx.of.Ge_Length
 import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
-import Lemma.Algebra.NotLt.of.Ge
-open List Tensor Algebra
+import Lemma.Nat.NotLt.of.Ge
+open List Tensor Nat
 
 
 @[main]
