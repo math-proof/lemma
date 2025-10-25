@@ -1,6 +1,6 @@
 import Lemma.Algebra.GtSubS.of.Gt
 import Lemma.Int.Sub.eq.Zero
-import Lemma.Algebra.Sub0.eq.Neg
+import Lemma.Int.Sub0.eq.Neg
 open Algebra Int
 
 

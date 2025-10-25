@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Algebra.LeNegS.of.Ge
-import Lemma.Algebra.LtNegS.of.Gt
-open Algebra
+import Lemma.Int.LtNegS.of.Gt
+open Algebra Int
 
 
 @[main]

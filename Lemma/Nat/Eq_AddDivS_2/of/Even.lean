@@ -1,5 +1,5 @@
 import sympy.functions.elementary.integers
-import Lemma.Algebra.Mul_2.eq.Add
+import Lemma.Nat.Mul_2.eq.Add
 import Lemma.Nat.EqMulDiv.of.Dvd
 import Lemma.Algebra.Even.is.Dvd2
 open Algebra Nat

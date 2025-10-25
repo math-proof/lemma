@@ -1,10 +1,10 @@
-import Lemma.Algebra.GeDivS.of.Ge.Gt_0
+import Lemma.Rat.GeDivS.of.Ge.Gt_0
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Rat.DivDiv.eq.Inv.of.Ne_0
 import Lemma.Nat.Ne.of.Gt
-import Lemma.Algebra.Div1.eq.Inv
+import Lemma.Rat.Div1.eq.Inv
 open Algebra Nat Rat
 
 

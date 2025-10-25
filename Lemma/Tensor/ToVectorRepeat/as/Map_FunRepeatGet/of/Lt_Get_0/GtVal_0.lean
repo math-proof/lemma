@@ -1,5 +1,5 @@
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
-import Lemma.Algebra.LtSubS.of.Lt.Le
+import Lemma.Nat.LtSubS.of.Lt.Le
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.GetSet.eq.Get.of.Gt.Lt_Length
@@ -15,7 +15,7 @@ import Lemma.Bool.SEqCast.of.Eq.Eq
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Vector.EqGetRange
-open Tensor Algebra List Vector Bool Nat
+open Tensor List Vector Bool Nat
 
 
 @[main]

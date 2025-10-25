@@ -1,9 +1,9 @@
 import sympy.core.power
-import Lemma.Algebra.Bool.eq.Zero.ou.Bool.eq.One
+import Lemma.Bool.Bool.eq.Zero.ou.Bool.eq.One
 import Lemma.Nat.Mul.eq.Zero.of.OrEqS
 import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Int.Sub.eq.Zero.is.Eq
-open Algebra Int Nat
+open Algebra Int Nat Bool
 
 
 @[main, comm]

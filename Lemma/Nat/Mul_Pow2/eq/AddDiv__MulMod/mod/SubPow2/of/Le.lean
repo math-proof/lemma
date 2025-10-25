@@ -5,7 +5,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.ModEq.of.Eq
 import Lemma.Nat.Pow2.eq.One.mod.SubPow2
 import Lemma.Nat.EqMul1
-import Lemma.Algebra.ModEq.of.ModEq.ModEq__AddMul
+import Lemma.Nat.ModEq.of.ModEq.ModEq__AddMul
 import Lemma.Nat.Eq_AddMulDiv___Mod
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul

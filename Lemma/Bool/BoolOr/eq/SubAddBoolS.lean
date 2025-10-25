@@ -1,10 +1,10 @@
 import Lemma.Bool.Bool.eq.Ite
-import Lemma.Algebra.AddIteS.eq.IteAnd
+import Lemma.Nat.AddIteS.eq.IteAnd
 import Lemma.Bool.IteOr.eq.Ite__Ite
-import Lemma.Algebra.SubIteS.eq.IteAnd
+import Lemma.Nat.SubIteS.eq.IteAnd
 import Lemma.Bool.Ite__Ite.eq.Ite
 import Lemma.Bool.Or.is.OrAnd
-open Algebra Bool
+open Bool Nat
 
 
 @[main]

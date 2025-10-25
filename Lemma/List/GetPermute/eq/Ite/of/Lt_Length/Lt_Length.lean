@@ -11,7 +11,7 @@ import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqSubAdd
-import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
+import Lemma.Nat.LtSub.is.Lt_Add.of.Ge
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.LengthDrop.eq.SubLength
@@ -24,7 +24,7 @@ import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Ge_Add_1.of.Gt
 import Lemma.Nat.GeSub.of.Ge_Add
 import Lemma.List.LengthPermute.eq.Length
-open Algebra List Nat
+open List Nat
 
 
 @[main]

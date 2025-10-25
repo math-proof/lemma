@@ -11,7 +11,7 @@ import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
 import Lemma.Algebra.Sum.eq.Add_Sum.of.Gt_0
 import Lemma.Finset.EqSumS.of.All_Eq
-import Lemma.Algebra.Sqrt.eq.Root_2
+import Lemma.Real.Sqrt.eq.Root_2
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.CoeSub.eq.SubCoeS
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
@@ -21,7 +21,7 @@ import Lemma.Algebra.Pow1.eq.One
 import Lemma.Algebra.SubNatNat.eq.Sub
 import Lemma.Real.SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
 import Lemma.Bool.All_EqUFnS.of.All_Eq
-import Lemma.Algebra.EqAdd0
+import Lemma.Nat.EqAdd0
 import Lemma.Algebra.Cast_0.eq.Zero
 open Algebra Bool Finset Real Nat Int
 

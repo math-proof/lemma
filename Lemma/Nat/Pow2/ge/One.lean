@@ -1,7 +1,7 @@
-import Lemma.Algebra.Pow2.gt.Zero
+import Lemma.Nat.Pow2.gt.Zero
 import Lemma.Nat.Ge_Add_1.of.Gt
-import Lemma.Algebra.EqAdd0
-open Algebra Nat
+import Lemma.Nat.EqAdd0
+open Nat
 
 
 @[main]

@@ -6,11 +6,11 @@ import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
 import Lemma.Algebra.Le.of.Le.Le
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Rat.EqMulDiv.of.Ne_0
-import Lemma.Algebra.Mul_Mul
+import Lemma.Nat.Mul_Mul
 import Lemma.Algebra.Square.eq.Mul
 import Lemma.Nat.Mul
 import Lemma.Finset.Sum.ge.Zero.of.All_Ge_0
-import Lemma.Algebra.GeDivS.of.Ge.Gt_0
+import Lemma.Rat.GeDivS.of.Ge.Gt_0
 import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Real.EqSquareSqrt.of.Ge_0

@@ -1,7 +1,7 @@
-import Lemma.Algebra.LeMulS.of.Le.Gt_0
+import Lemma.Nat.LeMulS.of.Le.Gt_0
 import Lemma.Nat.Ne.of.Gt
 import Lemma.Rat.EqMulDiv.of.Ne_0
-open Algebra Nat Rat
+open Nat Rat
 
 
 @[main]

@@ -1,7 +1,7 @@
 import Lemma.Int.FMod.ge.Zero.of.Gt_0
-import Lemma.Algebra.GeMulS.of.Ge.Gt_0
+import Lemma.Nat.GeMulS.of.Ge.Gt_0
 import Lemma.Algebra.EqMul0_0
-open Algebra Int
+open Algebra Int Nat
 
 
 @[main]

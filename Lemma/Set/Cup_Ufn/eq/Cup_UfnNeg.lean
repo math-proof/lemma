@@ -1,7 +1,7 @@
 import Lemma.Set.Eq.of.All_Imp.All_Imp
 import Lemma.Set.In_Cup.is.Any_In
-import Lemma.Algebra.Any_UfnNeg.of.Any
-open Set Algebra
+import Lemma.Int.Any_UfnNeg.of.Any
+open Set Int
 
 
 @[main]

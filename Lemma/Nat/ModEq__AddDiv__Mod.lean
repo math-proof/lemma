@@ -1,10 +1,10 @@
 import sympy.core.relational
 import Lemma.Nat.Pow2.eq.One.mod.SubPow2
 import Lemma.Nat.ModEq.of.Eq
-import Lemma.Algebra.ModEq.of.ModEq.ModEq__AddMul
+import Lemma.Nat.ModEq.of.ModEq.ModEq__AddMul
 import Lemma.Nat.Eq_AddMulDiv___Mod
 import Lemma.Nat.Mul
-open Algebra Nat
+open Nat
 
 
 @[main]

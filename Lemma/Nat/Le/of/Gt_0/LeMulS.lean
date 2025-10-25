@@ -1,7 +1,7 @@
 import Lemma.Nat.NotLe.is.Gt
-import Lemma.Algebra.GtMulS.of.Gt_0.Gt
+import Lemma.Nat.GtMulS.of.Gt_0.Gt
 import Lemma.Nat.NotLe.of.Gt
-open Algebra Nat
+open Nat
 
 
 @[main]

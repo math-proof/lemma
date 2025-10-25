@@ -1,7 +1,7 @@
 import Lemma.Set.In_Ico.of.Ge.Lt
 import Lemma.Set.In_Ioc.of.Gt.Le
-import Lemma.Algebra.LeSubS.is.Ge
-open Set Algebra
+import Lemma.Int.LeSubS.is.Ge
+open Set Int
 
 
 @[main]

@@ -1,16 +1,16 @@
 import Lemma.Int.FDiv.eq.Ite__Ite__Ite__Ite__Ite
 import Lemma.Bool.Iff_True.of.Cond
 import Lemma.Algebra.Lt.is.False.of.Gt
-import Lemma.Algebra.Ge.is.True.of.Gt
-import Lemma.Algebra.Eq.is.False.of.Gt
+import Lemma.Nat.Ge.is.True.of.Gt
+import Lemma.Nat.Eq.is.False.of.Gt
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Algebra.LeMulEDiv.of.Ge_0
 import Lemma.Algebra.NegAdd.eq.SubNeg
 import Lemma.Int.NegMul.eq.MulNeg
-import Lemma.Algebra.LeNeg.of.Ge_Neg
-import Lemma.Algebra.GtNeg_0.of.Lt_0
+import Lemma.Int.LeNeg.of.Ge_Neg
+import Lemma.Int.GtNeg_0.of.Lt_0
 import Lemma.Int.GeMulAdd1EDiv.of.Gt_0
-open Algebra Bool Int
+open Algebra Bool Int Nat
 
 
 @[main]

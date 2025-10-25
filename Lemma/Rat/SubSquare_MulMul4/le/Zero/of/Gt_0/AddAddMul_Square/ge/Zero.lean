@@ -14,7 +14,7 @@ import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Algebra.DivMulS.eq.Div.of.Ne_0
 import Lemma.Algebra.Sub.eq.AddNeg
-import Lemma.Algebra.LeMulS.of.Gt_0.Le
+import Lemma.Nat.LeMulS.of.Gt_0.Le
 import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Rat.EqMul_Div.of.Ne_0
 open Algebra Nat Int Rat

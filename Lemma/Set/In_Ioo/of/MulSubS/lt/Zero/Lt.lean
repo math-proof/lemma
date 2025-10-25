@@ -1,4 +1,4 @@
-import Lemma.Algebra.Mul.lt.Zero.is.OrAndSLt_0Gt_0
+import Lemma.Int.Mul.lt.Zero.is.OrAndSLt_0Gt_0
 import Lemma.Int.Lt.of.Sub.lt.Zero
 import Lemma.Int.Sub.gt.Zero.is.Gt
 import Lemma.Algebra.Gt.of.Gt.Gt

@@ -1,5 +1,5 @@
 import Lemma.Algebra.GeCeil
-import Lemma.Algebra.LeMulS.of.Le.Gt_0
+import Lemma.Nat.LeMulS.of.Le.Gt_0
 import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Rat.EqMulDiv.of.Gt_0
 import Lemma.Nat.Sub.gt.Zero.is.Gt

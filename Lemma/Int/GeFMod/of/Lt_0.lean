@@ -1,6 +1,6 @@
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.SubNatNat.eq.Sub
-import Lemma.Algebra.LeNeg.of.Ge_Neg
+import Lemma.Int.LeNeg.of.Ge_Neg
 import Lemma.Algebra.LeNegS.of.Ge
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Ge.of.Gt

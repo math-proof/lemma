@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Set.In_Icc.of.Ge.Le
-import Lemma.Algebra.LeSubS.is.Ge
-open Set Algebra
+import Lemma.Int.LeSubS.is.Ge
+open Set Int
 
 
 @[main]

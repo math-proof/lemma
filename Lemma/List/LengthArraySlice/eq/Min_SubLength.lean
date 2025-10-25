@@ -1,10 +1,10 @@
 import Lemma.List.EqLengthArraySlice.of.GeLength_Add
-import Lemma.Algebra.Le_Sub.is.LeAdd
+import Lemma.Int.Le_Sub.is.LeAdd
 import Lemma.Nat.NotLe.is.Gt
 import Lemma.List.EqLengthArraySlice.of.LtLength_Add
 import Lemma.Nat.Le.of.Lt
 import Lemma.Nat.Add
-open Algebra List Nat
+open List Nat Int
 
 
 @[main]

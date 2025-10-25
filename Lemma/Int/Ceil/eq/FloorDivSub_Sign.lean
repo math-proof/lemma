@@ -23,7 +23,7 @@ import Lemma.Nat.Mul
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Nat.AddMul.eq.MulAdd_1
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Algebra.Eq_0.of.Mul.eq.Zero.Ne_0
+import Lemma.Int.Eq_0.of.Mul.eq.Zero.Ne_0
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Algebra.CoeNeg.eq.NegCoe

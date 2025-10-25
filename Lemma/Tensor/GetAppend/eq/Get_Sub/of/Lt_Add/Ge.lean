@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Algebra.LtSub.is.Lt_Add.of.Ge
+import Lemma.Nat.LtSub.is.Lt_Add.of.Ge
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.List.AddProdSCons.eq.MulAdd
 import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
@@ -9,12 +9,12 @@ import Lemma.Bool.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
-import Lemma.Algebra.Gt_0.of.Lt_Add.Ge
+import Lemma.Nat.Gt_0.of.Lt_Add.Ge
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
 import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
-open Algebra Vector List Bool
+open Vector List Bool Nat
 
 
 @[main]

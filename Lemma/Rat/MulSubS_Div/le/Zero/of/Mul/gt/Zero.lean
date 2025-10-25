@@ -9,10 +9,10 @@ import Lemma.Rat.SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
 import Lemma.Algebra.Mul_Neg.eq.NegSquare
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Algebra.MulMul
+import Lemma.Nat.MulMul
 import Lemma.Nat.GtMulS.of.Gt.Gt_0
 import Lemma.Algebra.EqMul0_0
-import Lemma.Algebra.LeNegSquare_0
+import Lemma.Int.LeNegSquare_0
 import Lemma.Int.Add.ne.Zero.of.Mul.gt.Zero
 import Lemma.Int.GtSquare_0.of.Ne_0
 import Lemma.Rat.LeDivS.of.Le.Gt_0

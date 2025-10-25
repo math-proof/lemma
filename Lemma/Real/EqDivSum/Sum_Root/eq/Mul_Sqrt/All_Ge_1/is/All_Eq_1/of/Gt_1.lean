@@ -5,7 +5,7 @@ import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Algebra.Div.eq.One.of.Gt_0
 import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Algebra.Gt.of.Gt.Gt
-import Lemma.Algebra.All_Eq.of.All_Eq.Eq
+import Lemma.Nat.All_Eq.of.All_Eq.Eq
 import Lemma.Algebra.All_Eq.of.All_Eq.Lt
 import Lemma.Algebra.Eq.of.All_Eq.Lt
 import Lemma.Bool.All_EqUFnS.of.All_Eq

@@ -1,8 +1,8 @@
 import Lemma.Algebra.Mod.ge.Zero.of.Gt_0
 import Lemma.Int.Div.eq.AddDiv___Mod
-import Lemma.Algebra.GeDivS.of.Ge.Gt_0
+import Lemma.Rat.GeDivS.of.Ge.Gt_0
 import Lemma.Algebra.Ge.of.Eq_Add.Ge_0
-open Algebra Int
+open Algebra Int Rat
 
 
 @[main]

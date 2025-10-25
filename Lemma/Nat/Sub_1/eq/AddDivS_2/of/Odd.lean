@@ -1,10 +1,10 @@
 import sympy.functions.elementary.integers
-import Lemma.Algebra.Mul_2.eq.Add
+import Lemma.Nat.Mul_2.eq.Add
 import Lemma.Nat.EvenSub_1.of.Odd
 import Lemma.Nat.Eq_AddDivS_2.of.Even
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.EqDivS_2.of.Odd
-open Algebra Nat
+open Nat
 
 
 @[main, comm]

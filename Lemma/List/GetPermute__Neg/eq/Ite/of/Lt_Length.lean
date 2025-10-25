@@ -21,7 +21,7 @@ import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
 import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Nat.Sub.ge.One.of.Gt
-import Lemma.Algebra.LtSubS.of.Lt.Le
+import Lemma.Nat.LtSubS.of.Lt.Le
 import Lemma.Nat.LtSub_1.of.Le.Gt_0
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.Nat.Lt.of.Le.Lt

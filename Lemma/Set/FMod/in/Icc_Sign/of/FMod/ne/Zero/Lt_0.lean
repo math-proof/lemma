@@ -5,7 +5,7 @@ import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 import Lemma.Set.In_Icc.of.Le.Le
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.FDiv.eq.FloorDiv
-import Lemma.Algebra.Le_Sub.is.LeAdd
+import Lemma.Int.Le_Sub.is.LeAdd
 import Lemma.Nat.Add
 import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Int.LeCoeS.is.Le

@@ -5,10 +5,10 @@ import Lemma.Algebra.Eq.is.False.of.Lt
 import Lemma.Algebra.Gt.is.False.of.Lt
 import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Int.GeMulSubEDiv.of.Lt_0
-import Lemma.Algebra.GeNeg_0.of.Le_0
+import Lemma.Int.GeNeg_0.of.Le_0
 import Lemma.Nat.NotGt.is.Le
 import Lemma.Algebra.LeMulEDiv.of.Ge_0
-import Lemma.Algebra.GeNeg.of.Le_Neg
+import Lemma.Int.GeNeg.of.Le_Neg
 open Algebra Bool Int Nat
 
 

@@ -1,5 +1,5 @@
-import Lemma.Algebra.EqAbs_0.is.Eq_0
-open Algebra
+import Lemma.Int.EqAbs_0.is.Eq_0
+open Int
 
 
 @[main]

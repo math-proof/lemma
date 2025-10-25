@@ -4,7 +4,7 @@ import Lemma.Set.InSub.of.In_Ioc
 import Lemma.Algebra.DivSub.eq.SubDivS
 import Lemma.Rat.Div_Mul.eq.Inv.of.Ne_0
 import Lemma.Rat.DivNeg.eq.NegDiv
-import Lemma.Algebra.Div1.eq.Inv
+import Lemma.Rat.Div1.eq.Inv
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
@@ -14,7 +14,7 @@ import Lemma.Algebra.Pi.ne.Zero
 import Lemma.Set.EqCeil_0.of.In_Ioc
 import Lemma.Set.In.of.In.Subset
 import Lemma.Set.SubsetIocS.of.Le.Ge
-import Lemma.Algebra.Le_Sub.is.LeAdd
+import Lemma.Int.Le_Sub.is.LeAdd
 import Lemma.Nat.LeInv_1.of.Gt_0
 import Lemma.Int.Ge_Sub.of.GeAdd
 import Lemma.Algebra.GtCoe_0.is.Gt_0

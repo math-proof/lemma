@@ -1,7 +1,7 @@
 import Lemma.Complex.Arg.eq.Ite__Ite_Arccos
-import Lemma.Algebra.AbsAdd_MulI.eq.SqrtAddSquareS
-import Lemma.Algebra.EqAdd_MulI_0.eq.AndEqS_0
-open Algebra Complex
+import Lemma.Real.AbsAdd_MulI.eq.SqrtAddSquareS
+import Lemma.Real.EqAdd_MulI_0.eq.AndEqS_0
+open Complex Real
 
 
 @[main]

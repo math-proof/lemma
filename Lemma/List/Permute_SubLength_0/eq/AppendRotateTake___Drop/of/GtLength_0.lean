@@ -19,7 +19,7 @@ import Lemma.Nat.Sub.eq.Zero.of.Lt
 import Lemma.List.Slice_0.eq.Take
 import Lemma.Algebra.AddSub.eq.Sub_Sub.of.Ge.Ge
 import Lemma.Nat.LeSubS.of.Le
-import Lemma.Algebra.LtSubS.of.Lt.Le
+import Lemma.Nat.LtSubS.of.Lt.Le
 open Algebra List Nat Int
 
 

@@ -1,4 +1,4 @@
-import Lemma.Algebra.MulMul
+import Lemma.Nat.MulMul
 import Lemma.Int.Lt.of.LtSquareS.Ge_0
 import Lemma.Int.Mul.ge.Zero.of.Ge_0.Ge_0
 import Lemma.Real.GeSqrt_0

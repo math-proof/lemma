@@ -1,8 +1,8 @@
 import Lemma.Algebra.LtDiv.of.Lt_Mul
 import Lemma.List.Drop.eq.DropDrop__Sub.of.Ge
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
-import Lemma.Algebra.Mul_Mul
-open Algebra List
+import Lemma.Nat.Mul_Mul
+open Algebra List Nat
 
 
 @[main]

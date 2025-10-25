@@ -1,5 +1,5 @@
-import Lemma.Algebra.Sqrt.eq.Root_2
-open Algebra
+import Lemma.Real.Sqrt.eq.Root_2
+open Real
 
 
 @[main]
