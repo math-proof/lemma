@@ -1,7 +1,7 @@
 import Lemma.Int.NegMul.eq.MulNeg
-import Lemma.Algebra.Mul_Neg.eq.NegMul
+import Lemma.Int.Mul_Neg.eq.NegMul
 import Lemma.Int.EqNegNeg
-open Algebra Int
+open Int
 
 
 @[main]

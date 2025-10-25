@@ -1,7 +1,7 @@
 import Lemma.Nat.Eq_AddMulDiv___Mod
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Nat.EqCoeS.is.Eq
-import Lemma.Algebra.Div.eq.FloorDiv
+import Lemma.Nat.Div.eq.FloorDiv
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Nat.Ne_0
 import Lemma.Nat.NeCoeS.of.Ne
@@ -9,7 +9,7 @@ import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.FloorAdd.eq.Add_Floor
 import Lemma.Rat.FloorDiv.eq.Zero
 import Lemma.Rat.FloorDivMod.eq.Zero
-open Algebra Nat Rat
+open Nat Rat
 
 
 @[main]

@@ -1,6 +1,6 @@
 import Lemma.Algebra.Div.eq.Mul_Inv
-import Lemma.Algebra.Mul.ge.Zero.is.AndGeS_0.ou.AndLeS_0
-open Algebra
+import Lemma.Int.Mul.ge.Zero.is.AndGeS_0.ou.AndLeS_0
+open Algebra Int
 
 
 @[main]

@@ -1,6 +1,6 @@
-import Lemma.Algebra.Ge_0.of.Le_0.Lt_0
+import Lemma.Int.Ge_0.of.Le_0.Lt_0
 import Lemma.Int.FMod.le.Zero.of.Lt_0
-open Algebra Int
+open Int
 
 
 @[main]

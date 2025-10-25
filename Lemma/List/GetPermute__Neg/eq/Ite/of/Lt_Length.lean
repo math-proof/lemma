@@ -25,7 +25,7 @@ import Lemma.Nat.LtSubS.of.Lt.Le
 import Lemma.Nat.LtSub_1.of.Le.Gt_0
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.Nat.Lt.of.Le.Lt
-import Lemma.Algebra.LeSub.of.Le
+import Lemma.Nat.LeSub.of.Le
 import Lemma.Nat.Eq.of.Le.Le
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Int.Sub_Add.eq.SubSub
@@ -35,7 +35,7 @@ import Lemma.Nat.SubAdd.eq.AddSub.of.Le
 import Lemma.Nat.GeSub_1.of.Gt
 import Lemma.Nat.LtSub
 import Lemma.List.LengthPermute.eq.Length
-open Algebra List Nat Int
+open List Nat Int
 
 
 @[main]

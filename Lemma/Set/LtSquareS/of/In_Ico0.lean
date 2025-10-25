@@ -1,6 +1,6 @@
 import sympy.sets.sets
-import Lemma.Algebra.Square.eq.Mul
-open Algebra
+import Lemma.Nat.Square.eq.Mul
+open Nat
 
 
 /--

@@ -5,7 +5,7 @@ import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.DropAppend.eq.AppendDrop.of.Le_Length
 import Lemma.Algebra.Le.of.Le.Lt
 import Lemma.Bool.NotAnd.is.OrNotS
-import Lemma.Algebra.Ge.of.Gt.Ge
+import Lemma.Nat.Ge.of.Gt.Ge
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.GeSubS.of.Ge

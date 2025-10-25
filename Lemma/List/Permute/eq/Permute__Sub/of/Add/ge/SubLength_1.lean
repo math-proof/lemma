@@ -7,7 +7,7 @@ import Lemma.Nat.Ge_1
 import Lemma.Int.Lt.of.Sub.lt.Zero
 import Lemma.Algebra.CoeSub_1.eq.SubCoe_1.of.Ge_1
 import Lemma.Int.AddSub.eq.SubAdd
-import Lemma.Algebra.EqAddSub
+import Lemma.Int.EqAddSub
 import Lemma.Nat.EqMax.of.Gt
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.CoeAdd.eq.AddCoeS

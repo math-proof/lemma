@@ -1,8 +1,8 @@
 import Lemma.Nat.Eq_AddMulDiv___Mod
 import Lemma.Nat.EqCoeS.is.Eq
-import Lemma.Algebra.EqModS.of.Eq
+import Lemma.Nat.EqModS.of.Eq
 import Lemma.Nat.EqMod
-open Algebra Nat
+open Nat
 
 
 @[main]

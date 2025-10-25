@@ -1,7 +1,7 @@
 import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Nat.GtMulS.of.Gt_0.Gt
 import Lemma.Rat.GtDivS.of.Gt.Gt_0
-import Lemma.Algebra.Div.eq.One.of.Gt_0
+import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Nat.Add.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Lt
@@ -11,7 +11,7 @@ import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Nat.EqMul1
 import Lemma.Nat.EqMul_1
 import Lemma.Nat.Add
-open Algebra Nat Int Rat
+open Nat Int Rat
 
 
 -- prerequisite of data sifting using a reward model

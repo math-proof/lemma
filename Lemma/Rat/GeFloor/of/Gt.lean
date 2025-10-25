@@ -1,6 +1,6 @@
 import Lemma.Algebra.Floor.gt.Sub_1
 import Lemma.Algebra.GtSubS.of.Gt
-import Lemma.Algebra.Gt.of.Gt.Gt
+import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Nat.Ge_Add_1.of.Gt
 open Algebra Nat
 

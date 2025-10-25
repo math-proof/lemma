@@ -4,7 +4,7 @@ import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Rat.EqMulDiv.of.Ne_0
 import Lemma.Nat.Mul_Mul
-import Lemma.Algebra.Square.eq.Mul
+import Lemma.Nat.Square.eq.Mul
 import Lemma.Nat.Mul
 import Lemma.Finset.Sum.ge.Zero.of.All_Ge_0
 import Lemma.Nat.Gt_0.of.Ne_0

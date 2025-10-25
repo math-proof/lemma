@@ -1,8 +1,8 @@
 import sympy.vector.functions
 import Lemma.Vector.SumDiv.eq.DivSum
-import Lemma.Algebra.Div.eq.One.of.Gt_0
+import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Vector.GtSumExp_0
-open Vector Algebra
+open Vector Rat
 
 
 @[main]

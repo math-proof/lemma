@@ -1,10 +1,10 @@
 import Lemma.Complex.Norm.eq.SqrtAddSqaureS
-import Lemma.Algebra.EqSqrt_0.is.Le_0
+import Lemma.Real.EqSqrt_0.is.Le_0
 import Lemma.Int.AddSquareS.ge.Zero
 import Lemma.Nat.Eq.of.Ge.Le
-import Lemma.Algebra.Eq.of.EqReS.EqImS
+import Lemma.Complex.Eq.of.EqReS.EqImS
 import Lemma.Int.Eq_0.and.Eq_0.of.AddSquareS.eq.Zero
-open Algebra Nat Complex Int
+open Nat Complex Int Real
 
 
 @[main]

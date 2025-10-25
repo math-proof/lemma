@@ -1,6 +1,6 @@
 import Lemma.Nat.LeSub
-import Lemma.Algebra.Le.of.Le.Le
-open Algebra Nat
+import Lemma.Nat.Le.of.Le.Le
+open Nat
 
 
 @[main]

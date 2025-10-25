@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Nat.LtAddS.of.Lt.Lt
-import Lemma.Algebra.LeAddS.of.Le.Le
-open Algebra Nat
+import Lemma.Nat.LeAddS.of.Le.Le
+open Nat
 
 
 @[main]

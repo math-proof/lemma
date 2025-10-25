@@ -1,8 +1,8 @@
 import Lemma.Nat.EqAddS.is.Eq
-import Lemma.Algebra.SubSquareS.eq.MulAdd__Sub
+import Lemma.Int.SubSquareS.eq.MulAdd__Sub
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
 import Lemma.Nat.EqSubS.of.Eq
-open Algebra Nat
+open Nat Int
 
 
 @[main]

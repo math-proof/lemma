@@ -1,6 +1,6 @@
 import Lemma.Set.InAdd.of.In_Icc
-import Lemma.Algebra.EqAddSub
-open Set Algebra
+import Lemma.Int.EqAddSub
+open Set Int
 
 
 @[main]

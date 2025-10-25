@@ -1,7 +1,7 @@
-import Lemma.Algebra.Square.eq.Mul
+import Lemma.Nat.Square.eq.Mul
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-open Algebra Nat
+open Nat
 
 
 @[main]

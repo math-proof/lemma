@@ -1,11 +1,11 @@
 import Lemma.Complex.ExpMulI.eq.AddCos_MulISin
-import Lemma.Algebra.Expr.eq.AddRe_MulIIm
+import Lemma.Complex.Expr.eq.AddRe_MulIIm
 import Lemma.Bool.Eq.of.Eq.Eq
 import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Complex.Re.eq.MulAbs_CosArg
 import Lemma.Complex.Im.eq.MulAbs_SinArg
-import Lemma.Algebra.Eq.of.EqReS.EqImS
-open Algebra Bool Complex Nat
+import Lemma.Complex.Eq.of.EqReS.EqImS
+open Bool Complex Nat
 
 
 @[main]

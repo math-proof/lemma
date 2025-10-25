@@ -3,11 +3,11 @@ import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.DropAppend.eq.Drop_Sub_Length.of.Ge_Length
 import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Algebra.Ge_Min.of.Ge
+import Lemma.Nat.Ge_Min.of.Ge
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.Nat.AddAdd
 import Lemma.Nat.EqAdd_Sub.of.Ge
-open List Algebra Nat
+open List Nat
 
 
 @[main]

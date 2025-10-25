@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Set.In_IocDivS.of.In_Ioc.Gt_0
 import Lemma.Algebra.EqDiv0'0
-import Lemma.Algebra.Div.eq.One.of.Gt_0
+import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Rat.EqCeil_1.of.In_Ioc0'1
 open Set Algebra Rat
 

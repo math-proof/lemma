@@ -1,7 +1,7 @@
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Algebra.SubNatNat.eq.Sub
 import Lemma.Int.LtNegS.of.Gt
-import Lemma.Algebra.LtNeg.of.Gt_Neg
+import Lemma.Int.LtNeg.of.Gt_Neg
 import Lemma.Int.Sub.eq.NegSub
 import Lemma.Nat.LtMod.of.Gt_0
 open Algebra Nat Int

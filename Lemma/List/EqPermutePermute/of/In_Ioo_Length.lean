@@ -8,7 +8,7 @@ import Lemma.List.GetPermute.eq.Ite.of.Lt_Length.Lt_Length
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.ValSub.eq.SubValS.of.Gt
 import Lemma.Nat.Sub.ge.One.of.Lt
-import Lemma.Algebra.LtValS.of.Lt
+import Lemma.Nat.LtValS.of.Lt
 import Lemma.Nat.EqSub_Sub.of.Gt
 import Lemma.Nat.Sub.ge.One.of.Gt
 import Lemma.Nat.Le.of.Lt

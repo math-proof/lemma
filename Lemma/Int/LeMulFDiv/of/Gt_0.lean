@@ -1,6 +1,6 @@
 import Lemma.Int.FDiv.eq.Ite__Ite__Ite__Ite__Ite
 import Lemma.Bool.Iff_True.of.Cond
-import Lemma.Algebra.Lt.is.False.of.Gt
+import Lemma.Nat.Lt.is.False.of.Gt
 import Lemma.Nat.Ge.is.True.of.Gt
 import Lemma.Nat.Eq.is.False.of.Gt
 import Lemma.Int.Sub.eq.Add_Neg

@@ -2,8 +2,8 @@ import sympy.core.relational
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Rat.DivNeg.eq.NegDiv
-import Lemma.Algebra.DivInt.eq.Div
-import Lemma.Algebra.CoeNeg.eq.NegCoe
+import Lemma.Int.DivInt.eq.Div
+import Lemma.Int.CoeNeg.eq.NegCoe
 import Lemma.Algebra.LeNegS.of.Ge
 import Lemma.Int.DivFMod.lt.One
 import Lemma.Int.LtNeg_0.of.Gt_0

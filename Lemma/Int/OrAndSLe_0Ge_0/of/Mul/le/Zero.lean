@@ -6,7 +6,7 @@ import Lemma.Bool.Or.is.NotAndNotS
 import Lemma.Bool.NotAnd.is.Imp_Not
 import Lemma.Nat.NotLe.is.Gt
 import Lemma.Algebra.NotLt.of.Ge
-import Lemma.Algebra.Lt.ou.Eq.ou.Gt
+import Lemma.Nat.Lt.ou.Eq.ou.Gt
 import Lemma.Algebra.NotGt.of.Lt
 import Lemma.Nat.Ge.of.Gt
 import Lemma.Nat.Le.of.Lt

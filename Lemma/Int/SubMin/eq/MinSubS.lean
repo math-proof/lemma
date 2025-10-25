@@ -1,4 +1,4 @@
-import Lemma.Algebra.Min.eq.IteLe
+import Lemma.Nat.Min.eq.IteLe
 import Lemma.Algebra.Ite.eq.SubIte
 import Lemma.Nat.Min
 open Algebra Nat

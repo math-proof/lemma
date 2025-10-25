@@ -1,5 +1,5 @@
 import stdlib.List
-import Lemma.Algebra.CeilDivSub.eq.One.of.GeAdd.Gt_0
+import Lemma.Rat.CeilDivSub.eq.One.of.GeAdd.Gt_0
 import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Algebra.Le.of.Sub.eq.Zero
@@ -12,12 +12,12 @@ import Lemma.Int.SubSub
 import Lemma.Nat.SubSub
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Nat.Gt.of.GtSub
-import Lemma.Algebra.DivSub.eq.SubDivS
-import Lemma.Algebra.Div.eq.One.of.Gt_0
-import Lemma.Algebra.CeilSub_1.eq.SubCeil_1
+import Lemma.Rat.DivSub.eq.SubDivS
+import Lemma.Rat.Div.eq.One.of.Gt_0
+import Lemma.Rat.CeilSub_1.eq.SubCeil_1
 import Lemma.Nat.GeAdd.of.Ge_Sub
 import Lemma.Nat.CoeAdd.eq.AddCoeS
-open Algebra Nat Int
+open Algebra Nat Int Rat
 
 
 @[main]

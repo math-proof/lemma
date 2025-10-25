@@ -1,15 +1,15 @@
 import sympy.functions.elementary.trigonometric
-import Lemma.Algebra.Expr.eq.AddRe_MulIIm
+import Lemma.Complex.Expr.eq.AddRe_MulIIm
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.Mul
-open Algebra Nat
+open Nat Complex
 
 
 @[main]
 private lemma main
   {z : ℂ} :
 -- imply
-  re z = ‖z‖ * cos (arg z) := by
+  re z = ‖z‖ * (arg z).cos := by
 -- proof
   by_cases h_Ne_0 : z ≠ 0
   have h := Complex.cos_arg h_Ne_0

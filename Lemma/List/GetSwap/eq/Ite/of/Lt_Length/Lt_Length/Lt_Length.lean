@@ -1,9 +1,9 @@
-import Lemma.Algebra.Lt.ou.Eq.ou.Gt
+import Lemma.Nat.Lt.ou.Eq.ou.Gt
 import Lemma.List.GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt
 import Lemma.List.EqSwapS
 import Lemma.List.EqSwap
 import Lemma.List.LengthSwap.eq.Length
-open Algebra List
+open List Nat
 
 
 @[main]

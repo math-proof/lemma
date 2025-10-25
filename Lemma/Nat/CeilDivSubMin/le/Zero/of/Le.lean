@@ -1,11 +1,11 @@
 import Lemma.Nat.LeCoeS.is.Le
-import Lemma.Algebra.LeMin.of.Le
+import Lemma.Nat.LeMin.of.Le
 import Lemma.Int.Sub.le.Zero.of.Le
 import Lemma.Int.GtAdd_1'0
 import Lemma.Rat.Div.le.Zero.of.Le_0.Gt_0
 import Lemma.Rat.LeCeil.is.Le
 import Lemma.Nat.Min
-open Algebra Int Nat Rat
+open Int Nat Rat
 
 
 @[main]

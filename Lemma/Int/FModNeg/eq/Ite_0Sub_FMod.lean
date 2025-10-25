@@ -1,6 +1,6 @@
 import sympy.core.relational
 import Lemma.Int.Any_Eq_Mul.of.FMod.eq.Zero
-import Lemma.Algebra.EqNegS.is.Eq
+import Lemma.Int.EqNegS.is.Eq
 import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Int.FMod.eq.Zero.of.Any_Eq_Mul
 import Lemma.Int.Any_Eq_AddMul.of.EqFMod
@@ -9,7 +9,7 @@ import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Algebra.NegAdd.eq.SubNeg
 import Lemma.Int.CoeSub.eq.SubCoeS
-import Lemma.Algebra.DivSub.eq.SubDivS
+import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Int.Sub.eq.Add_Neg
@@ -19,7 +19,7 @@ import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.EqSubS.is.Eq
 import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Int.FDivNegFMod.eq.Neg1.of.FMod.ne.Zero.Ne_0
-import Lemma.Algebra.DivInt.eq.Div
+import Lemma.Int.DivInt.eq.Div
 import Lemma.Nat.EqSubS.of.Eq
 open Algebra Bool Int Nat Rat
 

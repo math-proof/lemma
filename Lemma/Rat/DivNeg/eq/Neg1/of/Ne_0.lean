@@ -1,7 +1,7 @@
 import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.DivNeg.eq.NegDiv
-import Lemma.Algebra.EqNegS.is.Eq
-open Algebra Rat
+import Lemma.Int.EqNegS.is.Eq
+open Rat Int
 
 
 @[main]

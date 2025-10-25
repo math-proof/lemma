@@ -1,6 +1,6 @@
 import Lemma.Int.OrAndSLe_0Ge_0.of.Mul.le.Zero
 import Lemma.Algebra.Le.of.Sub.le.Zero
-import Lemma.Algebra.Ge.of.Sub.ge.Zero
+import Lemma.Int.Ge.of.Sub.ge.Zero
 import Lemma.Set.In_Icc.of.Le.Ge
 import Lemma.Algebra.Ge.of.Ge.Ge
 import Lemma.Nat.Eq.of.Ge.Le

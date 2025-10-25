@@ -1,4 +1,4 @@
-import Lemma.Algebra.Lt.ou.Eq.ou.Gt
+import Lemma.Nat.Lt.ou.Eq.ou.Gt
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 import Lemma.Int.EqSign_1.of.Gt_0
 import Lemma.Int.FMod.eq.Sub_MulFDiv

@@ -11,14 +11,14 @@ import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Int.LeCoeS.is.Le
 import Lemma.Rat.Le.of.GeDivS.Lt_0
 import Lemma.Int.CoeSub.eq.SubCoeS
-import Lemma.Algebra.DivSub.eq.SubDivS
-import Lemma.Algebra.Div.eq.One.of.Lt_0
+import Lemma.Rat.DivSub.eq.SubDivS
+import Lemma.Rat.Div.eq.One.of.Lt_0
 import Lemma.Int.CoeMul.eq.MulCoeS
 import Lemma.Nat.Ne.of.Lt
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Set.Lt.of.In_Ico
 import Lemma.Set.In_IcoFloor
-open Algebra Set Int Nat Rat
+open Set Int Nat Rat
 
 
 @[main]

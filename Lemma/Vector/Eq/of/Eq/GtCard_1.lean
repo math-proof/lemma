@@ -1,6 +1,6 @@
 import Lemma.Vector.Card.eq.PowCard
-import Lemma.Algebra.Eq.of.EqPowS.Gt_1
-open Algebra Vector
+import Lemma.Nat.Eq.of.EqPowS.Gt_1
+open Vector Nat
 
 
 @[main]

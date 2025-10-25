@@ -1,8 +1,8 @@
-import Lemma.Algebra.GeMulS.of.Ge.Ge_0
+import Lemma.Int.GeMulS.of.Ge.Ge_0
 import Lemma.Int.GeNeg_0.of.Le_0
-import Lemma.Algebra.Mul_Neg.eq.NegMul
+import Lemma.Int.Mul_Neg.eq.NegMul
 import Lemma.Int.Le.of.GeNegS
-open Algebra Int
+open Int
 
 
 @[main]

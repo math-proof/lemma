@@ -1,5 +1,5 @@
 import Lemma.Algebra.Div.eq.Mul_Inv
-import Lemma.Algebra.DivSub.eq.SubDivS
+import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Rat.Div_Mul.eq.Inv.of.Ne_0
 open Algebra Rat

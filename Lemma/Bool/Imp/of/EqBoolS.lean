@@ -1,8 +1,8 @@
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Bool.Bool.eq.SquareBool
-import Lemma.Algebra.Square.eq.Mul
+import Lemma.Nat.Square.eq.Mul
 import Lemma.Bool.Imp.is.Bool.eq.MulBoolS
-open Algebra Bool Nat
+open Bool Nat
 
 
 @[main]

@@ -2,18 +2,18 @@ import stdlib.Slice
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.Nat.GeCoeS.is.Ge
 import Lemma.Nat.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.CeilDivSub.eq.One.of.GeAdd.Gt_0
+import Lemma.Rat.CeilDivSub.eq.One.of.GeAdd.Gt_0
 import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Nat.LeSubS.of.Le
-import Lemma.Algebra.DivSub.eq.SubDivS
-import Lemma.Algebra.Div.eq.One.of.Gt_0
-import Lemma.Algebra.CeilSub_1.eq.SubCeil_1
+import Lemma.Rat.DivSub.eq.SubDivS
+import Lemma.Rat.Div.eq.One.of.Gt_0
+import Lemma.Rat.CeilSub_1.eq.SubCeil_1
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Algebra.Le.of.Sub.eq.Zero
 import Lemma.Nat.AddMul.eq.MulAdd_1
 import Lemma.Nat.EqSubAdd
-open Algebra Nat Int
+open Algebra Nat Int Rat
 
 
 @[main]

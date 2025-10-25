@@ -1,7 +1,7 @@
 import Lemma.Nat.Ge.of.NotLt
-import Lemma.Algebra.GeMulS.of.Ge.Ge_0
+import Lemma.Int.GeMulS.of.Ge.Ge_0
 import Lemma.Nat.GeAddS.is.Ge
-open Algebra Nat
+open Nat Int
 
 
 @[main]

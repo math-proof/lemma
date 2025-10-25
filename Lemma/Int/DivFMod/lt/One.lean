@@ -2,13 +2,13 @@ import Lemma.Int.LtFMod.of.Gt_0
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Int.GtCoeS.is.Gt
-import Lemma.Algebra.Div.eq.One.of.Gt_0
+import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Int.GtFMod.of.Lt_0
 import Lemma.Nat.NotGt.is.Le
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Rat.LtDivS.of.Gt.Lt_0
-import Lemma.Algebra.Div.eq.One.of.Lt_0
-open Algebra Nat Int Rat
+import Lemma.Rat.Div.eq.One.of.Lt_0
+open Nat Int Rat
 
 
 @[main]

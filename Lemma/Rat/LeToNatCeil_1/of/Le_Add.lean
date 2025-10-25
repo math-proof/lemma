@@ -1,4 +1,4 @@
-import Lemma.Algebra.Div.eq.One.of.Gt_0
+import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Nat.LeSub.is.Le_Add

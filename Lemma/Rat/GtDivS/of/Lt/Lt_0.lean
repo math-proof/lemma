@@ -1,8 +1,8 @@
 import Lemma.Int.GtNeg_0.of.Lt_0
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
-import Lemma.Algebra.Div_Neg.eq.NegDiv
+import Lemma.Rat.Div_Neg.eq.NegDiv
 import Lemma.Int.Gt.of.LtNegS
-open Algebra Rat Int
+open Rat Int
 
 
 @[main]

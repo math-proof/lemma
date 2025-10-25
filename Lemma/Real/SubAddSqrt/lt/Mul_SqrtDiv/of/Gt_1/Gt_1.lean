@@ -17,13 +17,13 @@ import Lemma.Int.SubMul.eq.MulSub_1
 import Lemma.Int.SubSub
 import Lemma.Int.AddSub.eq.Add_Sub
 import Lemma.Int.MulSub.eq.SubMulS
-import Lemma.Algebra.Square.eq.Mul
+import Lemma.Nat.Square.eq.Mul
 import Lemma.Nat.Mul
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Int.EqSub_Sub
 import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Real.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
-open Algebra Nat Int Real Rat
+open Nat Int Real Rat
 
 
 @[main]

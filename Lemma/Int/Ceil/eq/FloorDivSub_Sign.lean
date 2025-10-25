@@ -1,10 +1,10 @@
 import Lemma.Algebra.Ceil.eq.Neg.Floor
-import Lemma.Algebra.DivSub.eq.SubDivS
+import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.EqSub.is.Eq_Add
-import Lemma.Algebra.EqNegS.is.Eq
+import Lemma.Int.EqNegS.is.Eq
 import Lemma.Int.Sub.eq.NegSub
 import Lemma.Int.Add.eq.Sub_Neg
 import Lemma.Nat.EqAddS.of.Eq.Eq
@@ -26,7 +26,7 @@ import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.Eq_0.of.Mul.eq.Zero.Ne_0
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
 import Lemma.Int.FDiv.eq.FloorDiv
-import Lemma.Algebra.CoeNeg.eq.NegCoe
+import Lemma.Int.CoeNeg.eq.NegCoe
 import Lemma.Rat.DivNeg.eq.NegDiv
 open Algebra Bool Int Nat Rat
 

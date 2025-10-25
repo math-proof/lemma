@@ -1,4 +1,4 @@
-import Lemma.Algebra.GeCeil
+import Lemma.Rat.GeCeil
 import Lemma.Nat.LeMulS.of.Le.Gt_0
 import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Rat.EqMulDiv.of.Gt_0
@@ -7,11 +7,11 @@ import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Rat.GtDivS.of.Gt.Gt_0
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Int.GtCoeS.is.Gt
-import Lemma.Int.Eq_ToNat.of.Gt_0
+import Lemma.Int.EqToNat.of.Gt_0
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.List.LengthSlicedIndices.eq.CeilDivSub.of.Gt_0.Le.Lt.Sub.le.Mul
 import Lemma.Nat.EqCoeS.is.Eq
-open Algebra List Int Nat Rat
+open List Int Nat Rat
 
 
 @[main]
@@ -32,12 +32,12 @@ private lemma main
   have h_Le := GeCeil (x := (stop - start : ℚ) / step)
   have h_Gt_0 := Gt.of.Ge.Gt h_Le h_Gt_0
   have h_Gt_0 := Gt.of.GtCoeS h_Gt_0
-  have h_Eq := Eq_ToNat.of.Gt_0 h_Gt_0
+  have h_Eq := EqToNat.of.Gt_0 h_Gt_0
   apply Eq.of.EqCoeS (R := ℤ)
-  rw [← h_Eq]
+  rw [h_Eq]
   have h_Le := LeMulS.of.Le.Gt_0 h_Le h_step'
   rw [EqMulDiv.of.Gt_0 h_step'] at h_Le
-  rw [h_Eq] at h_Le
+  rw [← h_Eq] at h_Le
   rw [SubCoeS.eq.CoeSub.of.Gt h_start] at h_Le
   have h_Le : stop - start ≤ ⌈((stop - start : ℕ) : ℚ) / step⌉.toNat * step := by
     norm_cast at ⊢ h_Le

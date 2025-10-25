@@ -1,6 +1,6 @@
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
-import Lemma.Algebra.Square.eq.Mul
-open Algebra Nat
+import Lemma.Nat.Square.eq.Mul
+open Nat
 
 
 @[main]

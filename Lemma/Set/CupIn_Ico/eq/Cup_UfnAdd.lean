@@ -1,8 +1,8 @@
 import sympy.sets.sets
 import Lemma.Set.Eq.of.All_Imp.All_Imp
 import Lemma.Set.In_Cup.is.Any_In
-import Lemma.Algebra.AnyIn_Ico.of.AnyIn_Ico
-open Set Algebra
+import Lemma.Int.AnyIn_Ico.of.AnyIn_Ico
+open Set Int
 
 
 @[main]

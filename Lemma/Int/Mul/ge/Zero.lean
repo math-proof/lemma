@@ -1,6 +1,6 @@
-import Lemma.Algebra.Square.eq.Mul
+import Lemma.Nat.Square.eq.Mul
 import Lemma.Int.GeSquare_0
-open Algebra Int
+open Int Nat
 
 
 @[main]

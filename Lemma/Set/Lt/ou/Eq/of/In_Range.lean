@@ -1,8 +1,8 @@
 import sympy.sets.sets
-import Lemma.Algebra.Le.is.Lt.ou.Eq
+import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Nat.Le.of.Lt_Add_1
 import Lemma.Set.Lt.of.In_Range
-open Algebra Set Nat
+open Set Nat
 
 
 @[main]
