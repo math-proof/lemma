@@ -3,14 +3,14 @@ import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.List.EqAppendTake__Drop
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.DropAppend.eq.AppendDrop.of.Le_Length
-import Lemma.Algebra.Le.of.Le.Lt
+import Lemma.Nat.Le.of.Le.Lt
 import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Nat.Ge.of.Gt.Ge
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.GeSubS.of.Ge
 import Lemma.List.DropTake.eq.TakeDrop
-open Algebra List Bool Nat
+open List Bool Nat
 
 
 @[main]

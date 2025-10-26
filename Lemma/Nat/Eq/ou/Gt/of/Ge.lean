@@ -1,5 +1,5 @@
-import Lemma.Algebra.Eq.ou.Lt.of.Le
-open Algebra
+import Lemma.Nat.Eq.ou.Lt.of.Le
+open Nat
 
 
 @[main]

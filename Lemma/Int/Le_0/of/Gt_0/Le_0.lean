@@ -1,7 +1,7 @@
-import Lemma.Algebra.Eq.ou.Lt.of.Le
+import Lemma.Nat.Eq.ou.Lt.of.Le
 import Lemma.Nat.Le.of.Lt
 import Lemma.Int.Lt_0.of.Gt_0.Lt_0
-open Algebra Nat Int
+open Nat Int
 
 
 @[main]

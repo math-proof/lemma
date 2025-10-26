@@ -24,7 +24,6 @@ import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.List.Take.eq.Nil.of.Eq_0
 import Lemma.List.EqDrop.of.Eq_0
 import Lemma.List.LengthDrop.eq.SubLength
-import Lemma.List.LengthPermute.eq.Length
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.Lt_Length
 import Lemma.List.EqSwapS.of.Mk.eq.IteGt
 import Lemma.List.EqEraseIdx.of.Ge_Length
@@ -347,7 +346,7 @@ def Tensor.transpose (X : Tensor α s) (i : ℕ) (j : ℕ): Tensor α (s.swap i 
       simp_all
     let d := j - i
     have h_j' : j < (s.permute ⟨i, h_i⟩ (d - 1)).length := by
-      simp_all [LengthPermute.eq.Length]
+      simpa
     cast
       (by
         apply EqUFnS.of.Eq (f := Tensor α)

@@ -1,7 +1,7 @@
 import Lemma.Int.FDiv.eq.Ite__Ite__Ite__Ite__Ite
 import Lemma.Bool.Iff_True.of.Cond
 import Lemma.Nat.Ge.is.False.of.Lt
-import Lemma.Algebra.Eq.is.False.of.Lt
+import Lemma.Nat.Eq.is.False.of.Lt
 import Lemma.Nat.Gt.is.False.of.Lt
 import Lemma.Algebra.Sub.eq.AddNeg
 import Lemma.Int.GeMulSubEDiv.of.Lt_0

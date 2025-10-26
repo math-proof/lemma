@@ -1,11 +1,10 @@
 import Lemma.Tensor.SEqPermute__0
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
-import Lemma.List.LengthPermute.eq.Length
 import Lemma.Tensor.EqLengthS.of.SEq
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 import Lemma.Int.EqToNat.of.Gt_0
 import Lemma.Int.ToNatNeg.eq.Neg.of.Lt_0
-open Tensor List Int
+open Tensor Int
 
 
 @[main]
@@ -30,21 +29,21 @@ private lemma main
     have h_length := EqLengthS.of.SEq.shape h
     by_cases h_pos : d > 0
     .
-      simp [LengthPermute.eq.Length] at h_length
+      simp at h_length
       by_cases h_d : i + d.toNat < s.length
       .
-        have h : (A.permute ⟨i, h_i⟩ d).permute ⟨i + d.toNat, by simp [LengthPermute.eq.Length]; omega⟩ (-d) ≃ (B.permute ⟨i', h_i'⟩ d).permute ⟨i' + d.toNat, by simp [LengthPermute.eq.Length, ← h_eq]; omega⟩ (-d) := by
+        have h : (A.permute ⟨i, h_i⟩ d).permute ⟨i + d.toNat, by simp; omega⟩ (-d) ≃ (B.permute ⟨i', h_i'⟩ d).permute ⟨i' + d.toNat, by simp [← h_eq]; omega⟩ (-d) := by
           apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ _ rfl h.symm
           simp [← h_eq]
         have : NeZero d.toNat := ⟨by omega⟩
         have h_toNat := Int.EqToNat.of.Gt_0 h_pos
         have h_A := SEqPermutePermute.of.GtLength_Add h_d A
-        have : (A.permute ⟨i, by omega⟩ d.toNat).permute ⟨i + d.toNat, by simp [LengthPermute.eq.Length]; omega⟩ (-d.toNat) ≃ (A.permute ⟨i, by omega⟩ d).permute ⟨i + d.toNat, by simp [LengthPermute.eq.Length]; omega⟩ (-d) := by
+        have : (A.permute ⟨i, by omega⟩ d.toNat).permute ⟨i + d.toNat, by simp; omega⟩ (-d.toNat) ≃ (A.permute ⟨i, by omega⟩ d).permute ⟨i + d.toNat, by simp; omega⟩ (-d) := by
           apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ (by rfl)
           repeat rw [h_toNat]
         have h_A := h_A.symm.trans this
         have h_B := SEqPermutePermute.of.GtLength_Add (show i' + d.toNat < s'.length by omega) B
-        have : (B.permute ⟨i', by omega⟩ d.toNat).permute ⟨i' + d.toNat, by simp [LengthPermute.eq.Length]; omega⟩ (-d.toNat) ≃ (B.permute ⟨i', by omega⟩ d).permute ⟨i' + d.toNat, by simp [LengthPermute.eq.Length]; omega⟩ (-d) := by
+        have : (B.permute ⟨i', by omega⟩ d.toNat).permute ⟨i' + d.toNat, by simp; omega⟩ (-d.toNat) ≃ (B.permute ⟨i', by omega⟩ d).permute ⟨i' + d.toNat, by simp; omega⟩ (-d) := by
           apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ (by rfl)
           repeat rw [h_toNat]
         have h_B := h_B.symm.trans this
@@ -55,7 +54,7 @@ private lemma main
       have h_neg : d < 0 := by omega
       by_cases h_d : i ≥ (-d).toNat
       .
-        have h : (A.permute ⟨i, h_i⟩ d).permute ⟨i - (-d).toNat, by simp [LengthPermute.eq.Length]; omega⟩ (-d) ≃ (B.permute ⟨i', h_i'⟩ d).permute ⟨i' - (-d).toNat, by simp [LengthPermute.eq.Length, ← h_eq]; omega⟩ (-d) := by
+        have h : (A.permute ⟨i, h_i⟩ d).permute ⟨i - (-d).toNat, by simp; omega⟩ (-d) ≃ (B.permute ⟨i', h_i'⟩ d).permute ⟨i' - (-d).toNat, by simp [← h_eq]; omega⟩ (-d) := by
           apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ _ rfl h.symm
           simp [← h_eq]
         have h_toNat := ToNatNeg.eq.Neg.of.Lt_0 h_neg

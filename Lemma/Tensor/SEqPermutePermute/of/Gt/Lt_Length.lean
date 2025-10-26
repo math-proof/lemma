@@ -1,7 +1,6 @@
-import Lemma.List.LengthPermute.eq.Length
-import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
-import Lemma.Tensor.SEqPermutePermute.of.Lt.Lt_Length
-open List Tensor
+import Lemma.Tensor.SEqPermutePermute__Neg.of.GtLength_Add
+import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+open Tensor
 
 
 @[main]
@@ -13,16 +12,20 @@ private lemma main
   (X : Tensor α s) :
 -- imply
   let d := i - j
-  have h_length_permute := LengthPermute.eq.Length s (i := ⟨i, by grind⟩) (d := -d)
-  (X.permute ⟨i, by linarith⟩ (-d)).permute ⟨j, by simp [h_length_permute]; omega⟩ d ≃ X := by
+  (X.permute ⟨i, by linarith⟩ (-d)).permute ⟨j, by simp; omega⟩ d ≃ X := by
 -- proof
-  intro d h_length_permute
+  intro d
   have : NeZero d := ⟨by omega⟩
-  have := SEqPermutePermute.of.Lt.Lt_Length (i := j) (j := i) (by simp [h_length_permute]; omega) h (X.permute ⟨i, by linarith⟩ (-d))
-  simp at this
-  subst d
-  have := Tensor.SEqPermuteS.of.SEq.Lt_Length (dim := j) (by simp [LengthPermute.eq.Length]; omega) this (i - j : ℕ)
-  sorry
+  have := SEqPermutePermute__Neg.of.GtLength_Add (s := s) (i := j) (d := d) (by omega) X
+  simp [d] at this ⊢
+  apply SEq.symm ∘ SEq.trans this.symm
+  apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ rfl rfl
+  apply Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ _ rfl
+  .
+    rfl
+  .
+    grind
 
 
 -- created on 2025-10-25
+-- updated on 2025-10-26

@@ -12,7 +12,6 @@ import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Nat.Sub.ge.One.of.Gt
 import Lemma.Nat.LtSub
-import Lemma.List.LengthPermute.eq.Length
 open List Nat
 
 
@@ -24,7 +23,7 @@ private lemma main
 -- given
   (h : t < a.length) :
 -- imply
-  have : t < (a.permute i (-d)).length := by rwa [LengthPermute.eq.Length]
+  have : t < (a.permute i (-d)).length := by simpa
   (a.permute i (-d))[t] =
     if t < i - d then
       a[t]

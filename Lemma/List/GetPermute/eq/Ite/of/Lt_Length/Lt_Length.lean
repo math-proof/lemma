@@ -23,7 +23,6 @@ import Lemma.Nat.Sub.gt.Zero.is.Gt
 import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Ge_Add_1.of.Gt
 import Lemma.Nat.GeSub.of.Ge_Add
-import Lemma.List.LengthPermute.eq.Length
 open List Nat
 
 
@@ -36,7 +35,7 @@ private lemma main
   (h₀ : i + d < a.length)
   (h₁ : t < a.length) :
 -- imply
-  have : t < (a.permute i d).length := by simp_all [LengthPermute.eq.Length]
+  have : t < (a.permute i d).length := by simp_all
   (a.permute i d)[t] =
     if t < i then
       a[t]

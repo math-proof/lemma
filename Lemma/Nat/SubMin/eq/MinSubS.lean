@@ -1,11 +1,11 @@
 import Lemma.Nat.Min.eq.IteLe
-import Lemma.Algebra.Ite.eq.SubIte
-import Lemma.Algebra.LeSubS.is.Le.of.Le
+import Lemma.Nat.Ite.eq.SubIte
+import Lemma.Nat.LeSubS.is.Le.of.Le
 import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.Sub.eq.Zero.of.Lt
-import Lemma.Algebra.Gt_Min.of.Gt
+import Lemma.Nat.Gt_Min.of.Gt
 import Lemma.Nat.Min
-open Algebra Nat
+open Nat
 
 
 @[main, comm]

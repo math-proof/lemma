@@ -1,7 +1,7 @@
 import Lemma.Nat.Gt_0.of.Gt
-import Lemma.Algebra.Gt_0.of.Mul.gt.Zero
+import Lemma.Nat.Gt_0.of.Mul.gt.Zero
 import Lemma.Nat.Mul
-open Algebra Nat
+open Nat
 
 
 @[main]

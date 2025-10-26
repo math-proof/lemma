@@ -4,7 +4,7 @@ import Lemma.List.LengthSlice.eq.SubMin
 open List
 
 
-@[main]
+@[main, simp]
 private lemma main
 -- given
   (a : List α)

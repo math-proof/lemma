@@ -1,6 +1,6 @@
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Algebra.Mul.ne.Zero.of.Ne_0.Ne_0
-open Algebra Bool
+import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
+open Bool Nat
 
 
 @[main]

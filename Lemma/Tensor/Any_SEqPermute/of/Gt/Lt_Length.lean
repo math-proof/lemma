@@ -1,6 +1,5 @@
-import Lemma.List.LengthPermute.eq.Length
 import Lemma.Tensor.SEqPermutePermute.of.Gt.Lt_Length
-open List Tensor
+open Tensor
 
 
 @[main]
@@ -12,7 +11,7 @@ private lemma main
   (X : Tensor α s) :
 -- imply
   let d := i - j
-  ∃ Y : Tensor α (s.permute ⟨i, by grind⟩ (-d)), Y.permute ⟨j, by simp [LengthPermute.eq.Length]; omega⟩ d ≃ X := by
+  ∃ Y : Tensor α (s.permute ⟨i, by grind⟩ (-d)), Y.permute ⟨j, by simp; omega⟩ d ≃ X := by
 -- proof
   intro d
   use X.permute ⟨i, by linarith⟩ (-d)

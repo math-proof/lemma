@@ -312,6 +312,8 @@ EOT;
 			$carry[$module[1]] = true;
 		return $carry;
 	}, []);
+	$imports = array_unique($imports);
+	sort($imports);
 	$imports = array_map(fn($import) => "import $import", $imports);
 	// find Lemma -name "*.lean" -exec perl -i -0777 -pe 's/(\S+)(?=\n\n@\[\w+)/$1\n/g' {} +
 	// find Lemma -name "*.lean" -exec perl -i -0777 -pe 's/((\S+)\n+)(?=\n\n\n-- created)/$2/g' {} +

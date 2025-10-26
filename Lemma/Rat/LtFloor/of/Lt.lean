@@ -1,6 +1,6 @@
-import Lemma.Algebra.LeFloor
+import Lemma.Rat.LeFloor
 import Lemma.Nat.Lt.of.Le.Lt
-open Algebra Nat
+open Nat Rat
 
 
 @[main]

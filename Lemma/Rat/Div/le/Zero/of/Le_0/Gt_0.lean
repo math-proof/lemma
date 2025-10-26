@@ -1,7 +1,7 @@
-import Lemma.Algebra.Eq.ou.Lt.of.Le
+import Lemma.Nat.Eq.ou.Lt.of.Le
 import Lemma.Nat.Le.of.Lt
 import Lemma.Rat.Div.lt.Zero.of.Lt_0.Gt_0
-open Algebra Nat Rat
+open Nat Rat
 
 
 @[main]

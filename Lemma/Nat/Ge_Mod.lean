@@ -1,7 +1,7 @@
 import Lemma.Nat.LtMod.of.Ne_0
-import Lemma.Algebra.Le.of.Lt.Le
+import Lemma.Nat.Le.of.Lt.Le
 import Lemma.Nat.Mod.eq.Sub_MulDiv
-open Algebra Nat
+open Nat
 
 
 @[main]

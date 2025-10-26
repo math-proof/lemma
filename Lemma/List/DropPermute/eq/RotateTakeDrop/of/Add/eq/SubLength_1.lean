@@ -1,6 +1,5 @@
 import Lemma.List.DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add
 import Lemma.List.EqTake.of.Ge_Length
-import Lemma.List.LengthPermute.eq.Length
 open List
 
 
@@ -15,10 +14,9 @@ private lemma main
   (s.permute i d).drop i = ((s.drop i).take (d + 1)).rotate 1 := by
 -- proof
   rw [← DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add (by omega)]
-
   apply congrArg
   apply Eq_Take.of.Ge_Length
-  simp [LengthPermute.eq.Length]
+  simp
   omega
 
 

@@ -1,7 +1,5 @@
 import stdlib.SEq
 import sympy.tensor.functions
-import Lemma.List.LengthPermute.eq.Length
-open List
 
 
 @[main]
@@ -12,7 +10,7 @@ private lemma main
   (X : Tensor α s) :
 -- imply
   let d := s.length - 1 - dim
-  X.softmax dim ≃ (X.permute ⟨dim, by omega⟩ d).softmax.permute ⟨s.length - 1, by simp [LengthPermute.eq.Length]; omega⟩ (-d) := by
+  X.softmax dim ≃ (X.permute ⟨dim, by omega⟩ d).softmax.permute ⟨s.length - 1, by simp; omega⟩ (-d) := by
 -- proof
   sorry
 

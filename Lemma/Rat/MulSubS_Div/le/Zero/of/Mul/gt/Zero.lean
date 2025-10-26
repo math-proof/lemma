@@ -16,7 +16,7 @@ import Lemma.Int.LeNegSquare_0
 import Lemma.Int.Add.ne.Zero.of.Mul.gt.Zero
 import Lemma.Int.GtSquare_0.of.Ne_0
 import Lemma.Rat.LeDivS.of.Le.Gt_0
-import Lemma.Algebra.Ne_0.of.Mul.gt.Zero
+import Lemma.Nat.Ne_0.of.Mul.gt.Zero
 import Lemma.Nat.Square.eq.Mul
 open Algebra Rat Int Nat
 

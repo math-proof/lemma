@@ -1,6 +1,4 @@
-import stdlib.List
-import Lemma.Nat.Le_Sub.of.LeAdd
-open Nat
+import stdlib.List.Basic
 
 
 @[main]
@@ -13,7 +11,7 @@ private lemma main
   (s.array_slice i d |>.length) = d := by
 -- proof
   simp [List.array_slice]
-  apply Le_Sub.of.LeAdd.left h
+  grind
 
 
 -- created on 2024-07-01

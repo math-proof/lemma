@@ -1,9 +1,9 @@
 import Lemma.Nat.Eq_AddMulDiv___Mod
-import Lemma.Algebra.LtDiv.of.Lt_Mul
+import Lemma.Nat.LtDiv.of.Lt_Mul
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
 import Lemma.Nat.Mul
-open Algebra Nat
+open Nat
 
 
 @[main]

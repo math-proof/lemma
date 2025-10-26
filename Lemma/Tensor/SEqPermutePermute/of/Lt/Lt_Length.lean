@@ -1,8 +1,7 @@
-import Lemma.List.LengthPermute.eq.Length
 import Lemma.Nat.Add
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
-open List Nat Tensor
+open Nat Tensor
 
 
 @[main]
@@ -14,7 +13,7 @@ private lemma main
   (X : Tensor α s) :
 -- imply
   let d := j - i
-  (X.permute ⟨i, by linarith⟩ d).permute ⟨j, by simpa [LengthPermute.eq.Length]⟩ (-d) ≃ X := by
+  (X.permute ⟨i, by linarith⟩ d).permute ⟨j, by simpa⟩ (-d) ≃ X := by
 -- proof
   intro d
   have : NeZero d := ⟨by omega⟩

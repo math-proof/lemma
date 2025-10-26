@@ -1,4 +1,4 @@
-import Lemma.Algebra.All_Le.of.All_Le.All_Eq_Ite
+import Lemma.Finset.All_Le.of.All_Le.All_Eq_Ite
 import Lemma.Finset.Sum.eq.Sum_Add_Sub.of.In_Range.All_Eq_Ite
 import Lemma.Algebra.Sub.lt.Zero.of.Lt
 import Lemma.Algebra.Lt.of.Eq_Add.Lt_0

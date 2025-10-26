@@ -1,9 +1,9 @@
 import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.GtAddS.is.Gt
-import Lemma.Algebra.Gt.of.Gt.Ge
-import Lemma.Algebra.NotGt
-open Algebra Nat
+import Lemma.Nat.Gt.of.Gt.Ge
+import Lemma.Nat.NotGt
+open Nat
 
 
 @[main]

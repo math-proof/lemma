@@ -1,4 +1,4 @@
-import stdlib.List
+import stdlib.List.Basic
 import Lemma.Nat.Add
 open Nat
 

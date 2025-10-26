@@ -1,7 +1,7 @@
 import Lemma.Nat.EqSquare_0.of.Eq_0
 import Lemma.Real.EqSquareSqrt.of.Gt_0
-import Lemma.Algebra.NotGt.of.Eq
-open Algebra Real Nat
+import Lemma.Nat.NotGt.of.Eq
+open Real Nat
 
 
 @[main]
