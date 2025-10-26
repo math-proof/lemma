@@ -7,6 +7,9 @@ import Lemma.Nat.Eq_Mk.of.EqVal
 open Tensor Nat
 
 
+/--
+http://myhz0606.com/article/flash_attn
+-/
 @[main]
 private lemma main
   [ExpPos α] [IsOrderedCancelAddMonoid α]
