@@ -7,8 +7,8 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.EqGetIndices.of.Lt_Min
-import Lemma.Algebra.Eq.of.EqValS
-open Tensor Vector List Algebra
+import Lemma.Nat.Eq.of.EqValS
+open Tensor Vector List Nat
 
 
 @[main]

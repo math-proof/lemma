@@ -2,9 +2,9 @@ import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Int.EqToNat.of.Ge_0
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.ToNatNeg.eq.Neg.of.Le_0
-import Lemma.Algebra.Sub.eq.AddNeg
+import Lemma.Nat.Sub.eq.AddNeg
 import Lemma.Int.Sub.ge.Zero.of.Ge
-open Algebra Int Nat
+open Int Nat
 
 
 @[main]

@@ -1,13 +1,13 @@
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Algebra.Lt.of.Lt.Lt
+import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.Nat.Le.of.Lt
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.LeAdd_1.of.Lt
-open Algebra List Nat
+open List Nat
 
 
 @[main]

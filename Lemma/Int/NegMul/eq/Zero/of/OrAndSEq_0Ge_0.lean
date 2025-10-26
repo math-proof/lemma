@@ -1,6 +1,6 @@
-import Lemma.Algebra.Mul.eq.Zero.of.OrAndSEq_0Ge_0
+import Lemma.Int.Mul.eq.Zero.of.OrAndSEq_0Ge_0
 import Lemma.Int.EqNeg_0.of.Eq_0
-open Algebra Int
+open Int
 
 
 @[main]

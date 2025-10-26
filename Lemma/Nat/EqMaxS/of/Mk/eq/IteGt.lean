@@ -1,5 +1,5 @@
-import Lemma.Algebra.Max
-open Algebra
+import Lemma.Nat.Max
+open Nat
 
 
 @[main]

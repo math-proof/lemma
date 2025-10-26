@@ -12,10 +12,10 @@ import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.EqGetRange
 import Lemma.List.EqGetS.of.Eq.Lt_Length
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
-import Lemma.Algebra.Eq.of.EqValS
+import Lemma.Nat.Eq.of.EqValS
 import Lemma.Vector.EqValS.of.SEq
 import Lemma.Vector.SEq.of.EqValS
-open Algebra Tensor Vector List Bool Nat
+open Tensor Vector List Bool Nat
 
 
 @[main]

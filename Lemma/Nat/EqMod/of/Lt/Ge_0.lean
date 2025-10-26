@@ -1,8 +1,8 @@
 import sympy.functions.elementary.integers
 import Lemma.Nat.Eq_AddMulDiv___Mod
-import Lemma.Algebra.Mul.eq.Zero.of.OrAndSEq_0Ge_0
-import Lemma.Algebra.Ge.of.Ge.Gt
-open Algebra Nat
+import Lemma.Int.Mul.eq.Zero.of.OrAndSEq_0Ge_0
+import Lemma.Nat.Ge.of.Ge.Gt
+open Nat Int
 
 
 @[main]

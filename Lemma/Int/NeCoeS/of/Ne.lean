@@ -1,8 +1,8 @@
 import Lemma.Int.Sub.ne.Zero.of.Ne
 import Lemma.Int.CoeSub.eq.SubCoeS
-import Lemma.Algebra.Ne.of.Sub.ne.Zero
+import Lemma.Int.Ne.of.Sub.ne.Zero
 import Lemma.Int.NeCoe_0.is.Ne_0
-open Algebra Int
+open Int
 
 
 @[main]

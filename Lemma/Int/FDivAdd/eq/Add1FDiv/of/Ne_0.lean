@@ -1,8 +1,8 @@
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Rat.DivAdd.eq.Add1Div
 import Lemma.Int.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.FloorAdd1.eq.Add1Floor
-open Algebra Int Rat
+import Lemma.Rat.FloorAdd1.eq.Add1Floor
+open Int Rat
 
 
 @[main]

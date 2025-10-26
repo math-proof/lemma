@@ -1,9 +1,9 @@
 import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Nat.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.Cast_0.eq.Zero
+import Lemma.Nat.Cast_0.eq.Zero
 import Lemma.Nat.Cast_1.eq.One
 import Lemma.Nat.GtAdd_1'0
-open Algebra Nat
+open Nat
 
 
 @[main]

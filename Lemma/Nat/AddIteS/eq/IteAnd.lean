@@ -1,7 +1,7 @@
-import Lemma.Algebra.BFnIteS.eq.IteAnd
+import Lemma.Bool.BFnIteS.eq.IteAnd
 import Lemma.Bool.BFnIteS.eq.IteAnd.of.All_Eq
 import Lemma.Nat.Add
-open Algebra Nat Bool
+open Nat Bool
 
 
 @[main]

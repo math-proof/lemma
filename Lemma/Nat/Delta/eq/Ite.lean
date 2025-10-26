@@ -1,6 +1,6 @@
 import sympy.functions.special.tensor_functions
-import Lemma.Algebra.Delta.eq.Bool
-open Algebra
+import Lemma.Bool.Delta.eq.Bool
+open Bool
 
 
 @[main]

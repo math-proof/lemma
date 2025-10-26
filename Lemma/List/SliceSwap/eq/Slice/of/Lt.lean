@@ -5,10 +5,10 @@ import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.EqTakeAppend.of.Eq_Length
-import Lemma.Algebra.Le.of.Lt.Lt
+import Lemma.Nat.Le.of.Lt.Lt
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.EqMin.of.Lt
-open Algebra List Nat
+open List Nat
 
 
 @[main]

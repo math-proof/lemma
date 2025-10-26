@@ -1,6 +1,6 @@
-import Lemma.Algebra.Delta.eq.Bool
+import Lemma.Bool.Delta.eq.Bool
 import Lemma.Set.Bool.in.Finset
-open Algebra Set
+open Set Bool
 
 
 @[main]

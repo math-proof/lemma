@@ -1,7 +1,7 @@
-import Lemma.Algebra.EqRe_0.of.Eq_0
+import Lemma.Complex.EqRe_0.of.Eq_0
 import Lemma.Complex.EqIm_0.of.Eq_0
 import Lemma.Complex.Eq_0.of.EqRe_0.EqIm_0
-open Algebra Complex
+open Complex
 
 
 @[main]

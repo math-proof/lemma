@@ -4,15 +4,15 @@ import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Int.DivInt.eq.Div
 import Lemma.Int.CoeNeg.eq.NegCoe
-import Lemma.Algebra.LeNegS.of.Ge
+import Lemma.Int.LeNegS.of.Ge
 import Lemma.Int.DivFMod.lt.One
 import Lemma.Int.LtNeg_0.of.Gt_0
 import Lemma.Int.DivFMod.ge.Zero
 import Lemma.Nat.Gt.is.Ge.Ne
-import Lemma.Algebra.Div.ne.Zero.of.Ne_0.Ne_0
+import Lemma.Rat.Div.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Bool.Ne.is.NotEq
-open Algebra Bool Int Rat Nat
+open Bool Int Rat Nat
 
 
 @[main]

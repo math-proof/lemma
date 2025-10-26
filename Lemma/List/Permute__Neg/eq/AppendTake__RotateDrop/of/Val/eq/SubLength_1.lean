@@ -1,12 +1,12 @@
 import Lemma.Nat.LtVal
-import Lemma.Algebra.Eq_Sub_1.of.Val.eq.Sub_1
+import Lemma.Nat.Eq_Sub_1.of.Val.eq.Sub_1
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.MinSubS.eq.SubMin.of.Ge.Ge
-open Algebra List Nat Int
+open List Nat Int
 
 
 @[main]

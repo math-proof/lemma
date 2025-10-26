@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Set.Any_In.is.Ne_Empty
-import Lemma.Algebra.Lt.of.Lt.Lt
-open Set Algebra
+import Lemma.Nat.Lt.of.Lt.Lt
+open Set Nat
 
 
 @[main]

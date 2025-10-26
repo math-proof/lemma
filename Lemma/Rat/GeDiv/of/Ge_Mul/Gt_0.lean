@@ -1,9 +1,9 @@
 import Lemma.Nat.GeMulS.of.Ge.Gt_0
-import Lemma.Algebra.Div.eq.Mul_Inv
+import Lemma.Rat.Div.eq.Mul_Inv
 import Lemma.Rat.GtInv_0.is.Gt_0
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne.of.Gt
-open Algebra Nat Rat
+open Nat Rat
 
 
 @[main]

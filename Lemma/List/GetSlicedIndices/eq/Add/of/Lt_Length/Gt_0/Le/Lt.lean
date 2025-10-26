@@ -3,12 +3,12 @@ import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.Nat.Lt_Add.of.Gt_0
-import Lemma.Algebra.CoeAdd_1.eq.AddCoe_1
+import Lemma.Nat.CoeAdd_1.eq.AddCoe_1
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.EqToNatCeil
 import Lemma.List.EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
-import Lemma.Algebra.Eq_0.of.LeAdd
-open Algebra List Int Nat
+import Lemma.Nat.Eq_0.of.LeAdd
+open List Int Nat
 
 
 @[main]

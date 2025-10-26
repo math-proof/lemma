@@ -1,6 +1,6 @@
 import sympy.sets.sets
-import Lemma.Algebra.LeNegS.of.Ge
-open Algebra
+import Lemma.Int.LeNegS.of.Ge
+open Int
 
 
 @[main]

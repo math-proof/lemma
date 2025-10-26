@@ -1,7 +1,7 @@
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
-import Lemma.Algebra.Gt.of.Lt
+import Lemma.Nat.Gt.of.Lt
 import Lemma.Set.Lt.of.LtUFn.In_Ico.In_Ico
-open Algebra Set Rat
+open Set Rat Nat
 
 
 /--

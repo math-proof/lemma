@@ -5,8 +5,8 @@ import Lemma.Set.InterRange.eq.Singleton
 import Lemma.Set.CupIn_Singleton.eq.Ufn
 import Lemma.Set.UnionIocS.eq.Ioc.of.Le.Le
 import Lemma.Nat.CoeAdd.eq.AddCoeS
-import Lemma.Algebra.NegAdd.eq.SubNeg
-open Set Algebra Nat
+import Lemma.Int.NegAdd.eq.SubNeg
+open Set Nat Int
 
 
 @[main]
@@ -15,7 +15,7 @@ private lemma main
 -- given
   (n : ℕ) :
 -- imply
-  ⋃ k ∈ range n, Ioc (k : R) (k + 1 : R) = Ioc (0 : R) (n : R) := by
+  ⋃ k ∈ Finset.range n, Ioc (k : R) (k + 1 : R) = Ioc (0 : R) (n : R) := by
 -- proof
   induction n with
   | zero =>

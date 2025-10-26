@@ -25,13 +25,13 @@ open List Nat Int
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length > 0)
+  (h : s.length > 0)
   (d : ℕ) :
 -- imply
-  let d' := a.length - 1 - d
-  a.permute ⟨a.length - 1, by simp_all⟩ (-(d : ℕ)) = a.take d' ++ (a.drop d').rotate (d ⊓ (a.length - 1)) := by
+  let d' := s.length - 1 - d
+  s.permute ⟨s.length - 1, by simp_all⟩ (-(d : ℕ)) = s.take d' ++ (s.drop d').rotate (d ⊓ (s.length - 1)) := by
 -- proof
   intro d'
   simp [d']
@@ -62,7 +62,7 @@ private lemma main
       simp
       rw [AddAdd.eq.Add_Add]
       norm_num
-      by_cases h_i : a.length ≥ d + 2
+      by_cases h_i : s.length ≥ d + 2
       ·
         have h_i' := LeSubS.of.Le h_i 1
         simp at h_i'

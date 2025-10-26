@@ -1,9 +1,9 @@
 import stdlib.List
-import Lemma.Algebra.Lt.of.Lt.Lt
+import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.List.EqTakeAppend.of.Eq_Length
-open Algebra List Nat
+open List Nat
 
 
 @[main]

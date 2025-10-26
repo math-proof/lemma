@@ -1,13 +1,13 @@
 import Lemma.Set.CupIn_Ico.eq.Cup_UfnSub
 import Lemma.Set.Cup_Ioc.eq.IocNeg_0
-import Lemma.Algebra.AddSubNeg.eq.Neg
-import Lemma.Algebra.SubNeg
+import Lemma.Int.AddSubNeg.eq.Neg
+import Lemma.Int.SubNeg
 import Lemma.Set.CupIco.eq.CupAnd
 import Lemma.Set.CupRange.eq.CupIco
 import Lemma.Int.EqToNat.of.Ge_0
 import Lemma.Set.EqCupS.of.All_Eq
 import Lemma.Int.CoeCoe.eq.Coe
-open Set Algebra Int
+open Set Int
 
 
 @[main]

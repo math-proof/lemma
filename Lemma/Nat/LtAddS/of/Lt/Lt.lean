@@ -1,6 +1,6 @@
 import Lemma.Nat.LtAddS.is.Lt
-import Lemma.Algebra.Lt.of.Lt.Lt
-open Algebra Nat
+import Lemma.Nat.Lt.of.Lt.Lt
+open Nat
 
 
 /--

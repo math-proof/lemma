@@ -1,11 +1,11 @@
 import Lemma.List.Permute.eq.Ite
 import Lemma.Nat.Le_Sub_1
-import Lemma.Algebra.Ge.of.Ge.Ge
+import Lemma.Nat.Ge.of.Ge.Ge
 import Lemma.Nat.GeCoeS.is.Ge
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.Ge_1
 import Lemma.Int.Lt.of.Sub.lt.Zero
-import Lemma.Algebra.CoeSub_1.eq.SubCoe_1.of.Ge_1
+import Lemma.Int.CoeSub_1.eq.SubCoe_1.of.Ge_1
 import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Int.EqAddSub
 import Lemma.Nat.EqMax.of.Gt
@@ -15,7 +15,7 @@ import Lemma.Int.EqToNat
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.List.Drop.eq.Nil
 import Lemma.List.Slice.eq.Slice__Length.of.Ge_Length
-open Algebra List Int Nat
+open List Int Nat
 
 
 @[main]

@@ -1,5 +1,5 @@
-import Lemma.Algebra.ModMod.eq.Mod
-open Algebra
+import Lemma.Nat.ModMod.eq.Mod
+open Nat
 
 
 @[main]

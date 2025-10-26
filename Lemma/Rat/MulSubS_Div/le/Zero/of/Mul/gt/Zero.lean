@@ -11,14 +11,14 @@ import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.MulMul
 import Lemma.Nat.GtMulS.of.Gt.Gt_0
-import Lemma.Algebra.EqMul0_0
+import Lemma.Nat.EqMul0_0
 import Lemma.Int.LeNegSquare_0
 import Lemma.Int.Add.ne.Zero.of.Mul.gt.Zero
 import Lemma.Int.GtSquare_0.of.Ne_0
 import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Nat.Ne_0.of.Mul.gt.Zero
 import Lemma.Nat.Square.eq.Mul
-open Algebra Rat Int Nat
+open Rat Int Nat
 
 
 @[main]

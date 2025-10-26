@@ -11,10 +11,10 @@ import Lemma.Int.Sub.eq.Zero.is.Eq
 import Lemma.Nat.CoeMul.eq.MulCoeS
 import Lemma.Int.Sub_Mul.eq.Mul_Sub1
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
-import Lemma.Algebra.Ne_1.of.Eq_0
+import Lemma.Nat.Ne_1.of.Eq_0
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Bool.Imp.is.OrNot
-open Algebra Bool Nat Int
+open Bool Nat Int
 
 
 @[main, comm, mp, mpr]

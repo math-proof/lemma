@@ -1,11 +1,11 @@
-import Lemma.Algebra.CeilAdd.eq.AddCeil
+import Lemma.Rat.CeilAdd.eq.AddCeil
 import Lemma.Int.AddSub.eq.Add_Sub
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Nat.Odd.is.Any_Eq_AddMul2
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Bool.EqUFnS.of.Eq
-open Algebra Bool Nat Rat Int
+open Bool Nat Rat Int
 
 
 @[main]

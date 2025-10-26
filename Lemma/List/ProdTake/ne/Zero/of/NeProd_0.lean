@@ -1,6 +1,6 @@
-import Lemma.Algebra.Ne_0.of.Mul.ne.Zero
+import Lemma.Nat.Ne_0.of.Mul.ne.Zero
 import Lemma.List.Prod.eq.MulProdDrop__ProdTake
-open Algebra List
+open List Nat
 
 
 @[main]

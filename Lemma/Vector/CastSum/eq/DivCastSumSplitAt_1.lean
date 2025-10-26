@@ -10,8 +10,8 @@ import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.InvReplicate.eq.ReplicateInv
-import Lemma.Algebra.Div.eq.Mul_Inv
-open Vector List Algebra Bool
+import Lemma.Rat.Div.eq.Mul_Inv
+open Vector List Bool Rat
 
 
 @[main]

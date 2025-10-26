@@ -2,8 +2,8 @@ import sympy.functions.elementary.integers
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Int.EqNegNeg
 import Lemma.Nat.EqSubAdd
-import Lemma.Algebra.NegAdd.eq.SubNeg
-open Algebra Int Nat
+import Lemma.Int.NegAdd.eq.SubNeg
+open Int Nat
 
 
 @[main]

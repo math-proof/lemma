@@ -1,5 +1,5 @@
-import Lemma.Algebra.LtSubS.of.Lt
-open Algebra
+import Lemma.Int.LtSubS.of.Lt
+open Int
 
 
 @[main]

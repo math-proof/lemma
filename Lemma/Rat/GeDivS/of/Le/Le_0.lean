@@ -1,7 +1,7 @@
-import Lemma.Algebra.Div.eq.Mul_Inv
+import Lemma.Rat.Div.eq.Mul_Inv
 import Lemma.Rat.LeInv_0.is.Le_0
 import Lemma.Int.GeMulS.of.Le.Le_0
-open Algebra Int Rat
+open Int Rat
 
 
 @[main]

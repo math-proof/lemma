@@ -1,5 +1,5 @@
-import Lemma.Algebra.Ne_0.of.Mul.ne.Zero
-open Algebra
+import Lemma.Nat.Ne_0.of.Mul.ne.Zero
+open Nat
 
 
 @[main]

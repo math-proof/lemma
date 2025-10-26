@@ -1,4 +1,4 @@
-import Lemma.Algebra.Ceil.eq.Neg.Floor
+import Lemma.Rat.Ceil.eq.Neg.Floor
 import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.Div.eq.One.of.Ne_0
@@ -8,14 +8,14 @@ import Lemma.Int.EqNegS.is.Eq
 import Lemma.Int.Sub.eq.NegSub
 import Lemma.Int.Add.eq.Sub_Neg
 import Lemma.Nat.EqAddS.of.Eq.Eq
-import Lemma.Algebra.FloorAdd1.eq.Add1Floor
+import Lemma.Rat.FloorAdd1.eq.Add1Floor
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.FDivAdd.eq.Add1FDiv.of.Ne_0
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Int.AddFModS.eq.FModNegSign
 import Lemma.Int.FModNegSign.eq.Sub_Sign
-import Lemma.Algebra.SubNeg
+import Lemma.Int.SubNeg
 import Lemma.Nat.Add
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.EqSubS.is.Eq
@@ -28,7 +28,7 @@ import Lemma.Int.Eq_Neg.of.Add.eq.Zero
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeNeg.eq.NegCoe
 import Lemma.Rat.DivNeg.eq.NegDiv
-open Algebra Bool Int Nat Rat
+open Bool Int Nat Rat
 
 
 /--

@@ -1,5 +1,5 @@
 import sympy.vector.Basic
-import Lemma.Algebra.CoeAdd_1.eq.AddCoe_1
+import Lemma.Nat.CoeAdd_1.eq.AddCoe_1
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Int.LeToNatS.of.Le
 import Lemma.Nat.Lt.of.Lt.Le
@@ -10,7 +10,7 @@ import Lemma.Nat.LeAddS.is.Le
 import Lemma.Nat.NotLe.of.Gt
 import Lemma.List.EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
 import Lemma.List.EqGetSSlicedIndices'.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
-open Algebra List Bool Int Nat
+open List Bool Int Nat
 
 
 @[main]

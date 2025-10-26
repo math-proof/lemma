@@ -1,4 +1,4 @@
-import Lemma.Algebra.Sub.lt.Zero.of.Lt
+import Lemma.Int.Sub.lt.Zero.of.Lt
 import Lemma.Int.AddSub.eq.Sub_Sub
 import Lemma.Int.SubSub
 import Lemma.Int.Mul_Sub.eq.SubMulS
@@ -8,7 +8,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Int.Lt.of.Sub.lt.Zero
 import Lemma.Int.Lt_0.of.Mul.lt.Zero.Gt_0
 import Lemma.Set.AddAddSquareS.lt.Div3'4.of.In_Ico0.In_Ico0
-import Lemma.Algebra.LtMulS.of.Gt_0.Lt
+import Lemma.Int.LtMulS.of.Gt_0.Lt
 import Lemma.Int.Sub.gt.Zero.is.Lt
 open Algebra Set Nat Int
 

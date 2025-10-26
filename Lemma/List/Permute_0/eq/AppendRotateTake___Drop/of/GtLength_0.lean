@@ -13,12 +13,12 @@ open List Nat
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length > 0)
-  (i : ℕ) :
+  (h : s.length > 0)
+  (d : ℕ) :
 -- imply
-  a.permute ⟨0, h⟩ i = (a.take (i + 1)).rotate 1 ++ a.drop (i + 1) := by
+  s.permute ⟨0, h⟩ d = (s.take (d + 1)).rotate 1 ++ s.drop (d + 1) := by
 -- proof
   unfold List.permute
   simp
@@ -30,7 +30,7 @@ private lemma main
     rw [TakeTake.eq.Take.of.Ge (by linarith)]
     apply EqAppendS.of.Eq.Eq
     ·
-      unfold List.slice List.array_slice Function.comp
+      unfold List.slice List.array_slice
       simp
       apply TakeTail.eq.TailTake
     ·
@@ -38,11 +38,7 @@ private lemma main
       apply Take_1.eq.ListGet_0.of.GtLength_0 h
   ·
     rw [LengthTake.eq.Min_Length]
-    apply Le_Min.of.Le.Le
-    ·
-      simp_all
-    ·
-      linarith
+    grind
 
 
 -- created on 2025-06-17

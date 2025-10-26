@@ -3,9 +3,9 @@ import Lemma.Nat.LtAddS.is.Lt
 import Lemma.List.Eq.of.GetElemRange.eq.Some
 import Lemma.List.GetElemEnumerate.eq.Some.of.Lt_length
 import Lemma.Nat.EqMod.of.Lt
-import Lemma.Algebra.Eq.of.EqValS
+import Lemma.Nat.Eq.of.EqValS
 import Lemma.Nat.Cast_1.eq.One
-open Algebra List Nat
+open List Nat
 
 
 @[main]

@@ -1,6 +1,6 @@
 import Lemma.Nat.GeAddS.is.Ge
-import Lemma.Algebra.Ge.of.Ge.Ge
-open Algebra Nat
+import Lemma.Nat.Ge.of.Ge.Ge
+open Nat
 
 
 @[main]

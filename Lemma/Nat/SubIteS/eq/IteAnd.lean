@@ -1,5 +1,5 @@
-import Lemma.Algebra.BFnIteS.eq.IteAnd
-open Algebra
+import Lemma.Bool.BFnIteS.eq.IteAnd
+open Bool
 
 
 @[main]

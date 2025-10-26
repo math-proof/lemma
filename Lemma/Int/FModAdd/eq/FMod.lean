@@ -7,9 +7,9 @@ import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeAdd.eq.AddCoeS
 import Lemma.Rat.DivAdd.eq.Add1Div
 import Lemma.Int.NeCoeS.of.Ne
-import Lemma.Algebra.FloorAdd1.eq.Add1Floor
+import Lemma.Rat.FloorAdd1.eq.Add1Floor
 import Lemma.Nat.MulAdd.eq.AddMulS
-open Algebra Int Nat Rat
+open Int Nat Rat
 
 
 @[main]

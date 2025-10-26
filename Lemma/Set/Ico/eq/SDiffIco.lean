@@ -1,14 +1,14 @@
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.LeAdd_1.of.Lt
-import Lemma.Algebra.Ge.of.Ge.Ge
+import Lemma.Nat.Ge.of.Ge.Ge
 import Lemma.Set.Le.of.In_Ico
 import Lemma.Set.Lt.of.In_Ico
 import Lemma.Set.In_SDiff.is.In.NotIn
 import Lemma.Set.In_Ico.of.Le.Lt
 import Lemma.Set.NotIn.of.In_SDiff
 import Lemma.Set.In.of.In_SDiff
-open Algebra Set Bool Nat
+open Set Bool Nat
 
 
 @[main]

@@ -8,7 +8,7 @@ import Lemma.Rat.Div1.eq.Inv
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
-import Lemma.Algebra.Pi.gt.Zero
+import Lemma.Real.Pi.gt.Zero
 import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Real.Pi.ne.Zero
 import Lemma.Set.EqCeil_0.of.In_Ioc
@@ -17,8 +17,8 @@ import Lemma.Set.SubsetIocS.of.Le.Ge
 import Lemma.Int.Le_Sub.is.LeAdd
 import Lemma.Nat.LeInv_1.of.Gt_0
 import Lemma.Int.Ge_Sub.of.GeAdd
-import Lemma.Algebra.GtCoe_0.is.Gt_0
-open Set Algebra Complex Rat Nat Int Real
+import Lemma.Nat.GtCoe_0.is.Gt_0
+open Set Complex Rat Nat Int Real
 
 
 @[main]

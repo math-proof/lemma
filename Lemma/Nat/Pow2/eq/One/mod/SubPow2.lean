@@ -1,8 +1,8 @@
 import sympy.core.relational
 import Lemma.Nat.Pow2.ge.One
-import Lemma.Algebra.ModEq_Add
+import Lemma.Nat.ModEq_Add
 import Lemma.Nat.EqAddSub.of.Ge
-open Algebra Nat
+open Nat
 
 
 @[main]

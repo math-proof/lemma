@@ -5,7 +5,7 @@ import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthList.eq.One
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.List.LengthSlice.eq.SubMin
-import Lemma.Algebra.Lt.of.Lt.Lt
+import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.Nat.Le.of.Lt
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.EqAddSub.of.Ge

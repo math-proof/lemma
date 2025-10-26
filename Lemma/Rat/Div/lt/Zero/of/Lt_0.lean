@@ -1,6 +1,6 @@
 import Lemma.Rat.Div.lt.Zero.of.Gt_0.Lt_0
-import Lemma.Algebra.GtCoe_0.is.Gt_0
-open Algebra Rat
+import Lemma.Nat.GtCoe_0.is.Gt_0
+open Rat Nat
 
 
 @[main]

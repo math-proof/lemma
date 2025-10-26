@@ -1,7 +1,7 @@
-import Lemma.Algebra.Le.of.Mk.eq.IteGt
+import Lemma.Nat.Le.of.Mk.eq.IteGt
 import Lemma.Nat.Lt.of.Le.Ne
 import Lemma.Bool.EqUFnS.of.Eq
-open Algebra Bool Nat
+open Bool Nat
 
 
 @[main]

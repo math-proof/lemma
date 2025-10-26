@@ -9,11 +9,11 @@ import Lemma.Int.LeToNat.is.Le
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.NotGe.is.Lt
 import Lemma.Nat.LtCoeS.is.Lt
-import Lemma.Algebra.Sub.lt.Zero.of.Lt
+import Lemma.Int.Sub.lt.Zero.of.Lt
 import Lemma.Rat.Div.lt.Zero.of.Lt_0.Gt_0
 import Lemma.Nat.Le.of.Lt
 import Lemma.Int.EqToNat_0.of.Le_0
-open Algebra Bool Int Nat Rat
+open Bool Int Nat Rat
 
 
 @[main]

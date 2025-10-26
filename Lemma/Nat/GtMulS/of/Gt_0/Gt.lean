@@ -1,5 +1,5 @@
-import Lemma.Algebra.LtMulS.of.Gt_0.Lt
-open Algebra
+import Lemma.Int.LtMulS.of.Gt_0.Lt
+open Int
 
 
 @[main]

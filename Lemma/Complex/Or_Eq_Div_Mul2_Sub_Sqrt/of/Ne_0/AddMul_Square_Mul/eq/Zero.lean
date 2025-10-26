@@ -12,7 +12,7 @@ import Lemma.Rat.DivMul.eq.MulDiv
 import Lemma.Rat.SquareDiv.eq.DivSquareS
 import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Rat.Eq_Inv_Div_Square.of.Ne_0
-import Lemma.Algebra.Div.eq.Mul_Inv
+import Lemma.Rat.Div.eq.Mul_Inv
 import Lemma.Rat.Eq_Mul_Div_Mul__Sub__SubDivS.of.Ne_0.Ne_0
 import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Int.EqSub.is.Eq_Add
@@ -25,7 +25,7 @@ import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Rat.Div_Mul.eq.Inv.of.Ne_0
-open Algebra Rat Int Nat
+open Rat Int Nat
 
 
 @[main]

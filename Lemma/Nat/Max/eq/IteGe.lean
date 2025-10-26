@@ -1,6 +1,6 @@
-import Lemma.Algebra.Max
+import Lemma.Nat.Max
 import Lemma.Nat.Max.eq.IteLe
-open Algebra Nat
+open Nat
 
 
 @[main]

@@ -3,7 +3,7 @@ import Lemma.Bool.Iff_True.of.Cond
 import Lemma.Nat.Ge.is.False.of.Lt
 import Lemma.Nat.Eq.is.False.of.Lt
 import Lemma.Nat.Gt.is.False.of.Lt
-import Lemma.Algebra.Sub.eq.AddNeg
+import Lemma.Nat.Sub.eq.AddNeg
 import Lemma.Int.GeMulSubEDiv.of.Lt_0
 import Lemma.Int.GeNeg_0.of.Le_0
 import Lemma.Nat.NotGt.is.Le

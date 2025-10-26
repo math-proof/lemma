@@ -14,8 +14,8 @@ import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Int.FloorAdd.eq.AddFloor
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Int.Sub_Add.eq.SubSub
-import Lemma.Algebra.SubSub.eq.Neg
-open Algebra Bool Int Nat Rat
+import Lemma.Int.SubSub.eq.Neg
+open Bool Int Nat Rat
 
 
 @[main]

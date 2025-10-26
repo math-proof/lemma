@@ -1,7 +1,7 @@
 import Lemma.Rat.GtInv_0.is.Gt_0
 import Lemma.Int.Mul.lt.Zero.of.Lt_0.Gt_0
-import Lemma.Algebra.Div.eq.Mul_Inv
-open Algebra Int Rat
+import Lemma.Rat.Div.eq.Mul_Inv
+open Int Rat
 
 
 @[main]

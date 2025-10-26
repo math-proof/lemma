@@ -1,6 +1,6 @@
 import Lemma.Int.EqNegNeg
-import Lemma.Algebra.Lt.of.GtNegS
-open Algebra Int
+import Lemma.Int.Lt.of.GtNegS
+open Int
 
 
 @[main]

@@ -1,6 +1,6 @@
-import Lemma.Algebra.DivMulS.eq.Div.of.Ne_0
+import Lemma.Rat.DivMulS.eq.Div.of.Ne_0
 import Lemma.Nat.Ne.of.Gt
-open Algebra Nat
+open Nat Rat
 
 
 @[main]

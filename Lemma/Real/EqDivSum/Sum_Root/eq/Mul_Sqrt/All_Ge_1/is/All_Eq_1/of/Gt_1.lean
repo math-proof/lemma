@@ -6,13 +6,13 @@ import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Nat.All_Eq.of.All_Eq.Eq
-import Lemma.Algebra.All_Eq.of.All_Eq.Lt
-import Lemma.Algebra.Eq.of.All_Eq.Lt
+import Lemma.Nat.All_Eq.of.All_Eq.Lt
+import Lemma.Nat.Eq.of.All_Eq.Lt
 import Lemma.Bool.All_EqUFnS.of.All_Eq
-import Lemma.Algebra.Pow1.eq.One
-import Lemma.Algebra.Ge.of.Eq
+import Lemma.Nat.Pow1.eq.One
+import Lemma.Nat.Ge.of.Eq
 import Lemma.Bool.All.of.All.All_Imp
-open Algebra Bool Real Finset Nat Rat
+open Bool Real Finset Nat Rat
 
 
 /--

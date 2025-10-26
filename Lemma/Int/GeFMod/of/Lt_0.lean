@@ -1,12 +1,12 @@
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Nat.SubNatNat.eq.Sub
 import Lemma.Int.LeNeg.of.Ge_Neg
-import Lemma.Algebra.LeNegS.of.Ge
+import Lemma.Int.LeNegS.of.Ge
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Ge.of.Gt
 import Lemma.Int.NegSub.eq.Add_Neg
 import Lemma.Nat.GeAddS.is.Ge
-open Algebra Nat Int
+open Nat Int
 
 
 @[main]
