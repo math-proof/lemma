@@ -1,4 +1,4 @@
-import Lemma.List.DropPermute.eq.Drop.of.GtLength_Add
+import Lemma.List.DropPermute.eq.Drop
 open List
 
 
@@ -6,11 +6,12 @@ open List
 private lemma main
   {s : List α}
 -- given
-  (h : d < s.length) :
+  (h : s.length > 0)
+  (d : ℕ) :
 -- imply
   (s.permute ⟨0, by omega⟩ d).drop (d + 1) = s.drop (d + 1) := by
 -- proof
-  have := DropPermute.eq.Drop.of.GtLength_Add (s := s) (i := ⟨0, by omega⟩) (d := d) (by simpa)
+  have := DropPermute.eq.Drop (s := s) (i := ⟨0, by omega⟩) (d := d)
   simp at this
   assumption
 

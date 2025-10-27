@@ -1,4 +1,4 @@
-import Lemma.List.DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add
+import Lemma.List.DropTakePermute.eq.RotateTakeDrop
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.EqDropAppend.of.Eq_Length
 import Lemma.Nat.EqMin.of.Le
@@ -17,7 +17,7 @@ private lemma main
 -- imply
   ((s.permute i d).take (i + d + 1)).drop (i + d) = [s[i]] := by
 -- proof
-  have h := DropTakePermute.eq.RotateTakeDrop.of.GtLength_Add h
+  have h := DropTakePermute.eq.RotateTakeDrop i d
   have h := congrArg (·.drop d) h
   simp at h
   rw [Rotate.eq.AppendDrop__Take.of.Le_Length] at h

@@ -12,7 +12,7 @@ private lemma main
 -- imply
   ((s.permute i d).drop i).take d = s.drop (i + 1) := by
 -- proof
-  rw [DropPermute.eq.RotateDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) h]
+  rw [DropPermute.eq.RotateDrop.of.Add.eq.SubLength_1 (by simp [h])]
   rw [← TakeRotateDrop.eq.Drop i]
   grind
 

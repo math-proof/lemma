@@ -1,14 +1,16 @@
 <template>
-	<searchForm ref=searchForm :q=q :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :fullText=fullText :replacement=replacement :limit=limit @keydown=keydown></searchForm>
-	<a :href=href>search</a> results:
-	<br>
-	in all, there are {{data.length}} hits:
-	<br>
-	<ul>
-    	<li v-for="data, i of data">
-    		<searchLink :data=data :ref="el => searchLink[i] = el"></searchLink>
-    	</li>
-	</ul>
+	<div @keydown=keydown>
+		<searchForm ref=searchForm :q=q :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :fullText=fullText :replacement=replacement :limit=limit></searchForm>
+		<a :href=href>search</a> results:
+		<br>
+		in all, there are {{data.length}} hits:
+		<br>
+		<ul>
+			<li v-for="data, i of data">
+				<searchLink :data=data :ref="el => searchLink[i] = el"></searchLink>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script>
@@ -58,9 +60,15 @@ export default {
 			case 'h':
 				if (!event.ctrlKey)
 					break;
-				
 				console.log('ctrl+H for replacement');
 				setAttribute(this, 'replacement', this.replacement == null? '' : null);
+				event.preventDefault();
+				break;
+			case 'f':
+				if (!event.ctrlKey)
+					break;
+				console.log('ctrl+F for search');
+				this.$refs.searchForm.focus();
 				event.preventDefault();
 				break;
 			}

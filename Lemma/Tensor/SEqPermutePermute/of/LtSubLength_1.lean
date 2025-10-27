@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
-import Lemma.List.DropPermute.eq.Drop.of.Lt_Length
+import Lemma.List.DropPermute.eq.Drop.of.GtLength_0
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
@@ -72,7 +72,7 @@ private lemma main
       unfold Tensor.permuteTail
       apply SEq.of.All_EqGetS.Eq
       ·
-        have h_drop := DropPermute.eq.Drop.of.Lt_Length (show d < s.length by omega)
+        have h_drop := DropPermute.eq.Drop.of.GtLength_0 (s := s) (by omega)
         intro t
         have h_t := LtVal t
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t

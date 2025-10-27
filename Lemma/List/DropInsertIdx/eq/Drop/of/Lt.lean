@@ -2,7 +2,7 @@ import Lemma.List.EqInsertIdx.of.Gt_Length
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.Nat.GeSub_1.of.Gt
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length
-import Lemma.List.DropAppend.eq.Drop_Sub_Length.of.Ge_Length
+import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.Ge_Min.of.Ge
 import Lemma.Nat.Ge.of.Gt
@@ -26,7 +26,7 @@ private lemma main
   ·
     rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length h_i (by rfl) (j := i)]
     simp
-    rw [DropAppend.eq.Drop_Sub_Length.of.Ge_Length] <;>
+    rw [DropAppend.eq.Drop.of.Ge_Length] <;>
       rw [LengthTake.eq.Min_Length]
     ·
       rw [EqMin.of.Le h_i]

@@ -1,7 +1,7 @@
 import Lemma.List.EqEraseIdx.of.Ge_Length
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.DropAppend.eq.Drop_Sub_Length.of.Ge_Length
+import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.Ge_Min.of.Ge
 import Lemma.Nat.EqMin.of.Lt
@@ -21,7 +21,7 @@ private lemma main
   by_cases h_i : i < a.length
   ·
     rw [EraseIdx.eq.Append_Drop_Add_1]
-    rw [DropAppend.eq.Drop_Sub_Length.of.Ge_Length] <;>
+    rw [DropAppend.eq.Drop.of.Ge_Length] <;>
       rw [LengthTake.eq.Min_Length]
     ·
       rw [EqMin.of.Lt h_i]

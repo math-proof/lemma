@@ -79,6 +79,10 @@ export default {
 			this.$parent.replaceAll(event);
 			event.preventDefault();
 		},
+
+		focus() {
+			this.$el.querySelector('input[name=q]').focus();
+		},
 	},	
 	
 	directives: {

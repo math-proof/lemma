@@ -131,7 +131,7 @@ private lemma main
                 omega
               ·
                 simp
-                have h_lt : q * ((s.permute ⟨i, by grind⟩ d).drop (s.length - (1 + d))).prod + (rₐ * ((s.permute ⟨i, by grind⟩ d).drop (s.length - (1 + d) + ((1 + d) ⊓ s.length - 1) % (s.length - (s.length - (1 + d))))).prod + qₐ) < (s.take i).prod * (((s.drop i).take (d + 1)).rotate 1 ++ (s.drop i).drop (d + 1)).prod := by 
+                have h_lt : q * ((s.permute ⟨i, by grind⟩ d).drop (s.length - (1 + d))).prod + (rₐ * ((s.permute ⟨i, by grind⟩ d).drop (s.length - (1 + d) + ((1 + d) ⊓ s.length - 1) % (s.length - (s.length - (1 + d))))).prod + qₐ) < (s.take i).prod * (((s.drop i).take (d + 1)).rotate 1 ++ (s.drop i).drop (d + 1)).prod := by
                   simp [EqSub_Sub.of.Gt h_Lt1d]
                   simp [← h_i_eq]
                   simp [EqMin.of.Lt h_Lt1d, EqMod.of.Lt h_d_lt_1d]

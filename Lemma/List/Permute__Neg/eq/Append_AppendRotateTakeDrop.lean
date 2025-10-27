@@ -1,31 +1,29 @@
-import Lemma.List.LengthDrop.eq.SubLength
-import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.Nat.LeAdd_1
-import Lemma.List.Slice.eq.Nil
-import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.AppendTake_Slice.eq.Take.of.Le
-import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
-import Lemma.Nat.Ge_1
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
-import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.Nat.EqMin.of.Le
-import Lemma.Nat.Gt_0
-import Lemma.Nat.EqSub.of.EqAdd
-import Lemma.Nat.Eq_Mk.of.EqVal
 import Lemma.List.Cons.eq.Append
+import Lemma.List.Cons_Append.eq.AppendCons
+import Lemma.List.DropTake.eq.ListGet
 import Lemma.List.EqAppendS.of.Eq
+import Lemma.List.LengthDrop.eq.SubLength
+import Lemma.List.LengthTake.eq.Min_Length
+import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Slice.eq.Nil
+import Lemma.List.SliceTake.eq.Slice.of.Ge
+import Lemma.List.Slice_0.eq.Take
 import Lemma.List.TakeDrop.eq.Slice
 import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.DropTake.eq.ListGet.of.Lt_Length
-import Lemma.List.SliceTake.eq.Slice.of.Ge
-import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
 import Lemma.Nat.Add
-import Lemma.Nat.Sub.eq.Zero.of.Lt
-import Lemma.List.Slice_0.eq.Take
-import Lemma.List.Cons_Append.eq.AppendCons
+import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqMin.of.Gt
+import Lemma.Nat.EqMin.of.Le
+import Lemma.Nat.EqSub.of.EqAdd
+import Lemma.Nat.Eq_Mk.of.EqVal
+import Lemma.Nat.Ge_1
+import Lemma.Nat.Gt_0
+import Lemma.Nat.LeAdd_1
+import Lemma.Nat.Sub.eq.Zero.of.Lt
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
+import Lemma.Nat.SubAdd.eq.Sub_Sub.of.Ge
 open List Nat
 
 
@@ -74,7 +72,7 @@ private lemma main
           rw [TakeTake.eq.Take.of.Ge (by simp_all; linarith)]
           repeat rw [AppendAppend.eq.Append_Append]
           apply EqAppendS.of.Eq.left
-          rw [DropTake.eq.ListGet.of.Lt_Length (by simp_all)]
+          rw [DropTake.eq.ListGet]
           apply EqAppendS.of.Eq.left
           rw [SliceTake.eq.Slice.of.Ge]
           linarith
@@ -100,10 +98,10 @@ private lemma main
           rw [TakeTake.eq.Take.of.Ge (by linarith)]
           rw [Cons.eq.Append]
           apply EqAppendS.of.Eq
-          rw [DropTake.eq.ListGet.of.Lt_Length]
+          simp [DropTake.eq.ListGet]
         ·
           simp_all
 
 
 -- created on 2025-06-18
--- updated on 2025-06-20
+-- updated on 2025-10-27

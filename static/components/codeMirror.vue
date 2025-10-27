@@ -247,6 +247,7 @@ where
 			};
 			// scan for unmatch right parenthesis/bracket/brace and replace it with the current closing punctuation
 			var hit = null;
+			var left, right;
 			for (var selectionStart of range(cursor.ch, text.length)) {
 				var char = text[selectionStart];
 				switch (char) {
@@ -258,24 +259,45 @@ where
 					case ')':
 						if (group_count['('])
 							--group_count['('];
-						else
+						else {
 							hit = selectionStart;
+							left = '(';
+							right = char;
+						}
 						break;
 					case ']':
 						if (group_count['['])
 							--group_count['[']
-						else
+						else {
 							hit = selectionStart;
+							left = '[';
+							right = char;
+						}
 						break;
 					case '}':
 						if (group_count['}']) 
 							--group_count['}'];
-						else
+						else {
 							hit = selectionStart;
+							left = '{';
+							right = char;
+						}
 						break;
 				}
 				if (hit) {
 					// replace the unmatch right parenthesis/bracket/brace with the current closing punctuation
+					var group_count_start = 0;
+					for (var i = 0; i < hit; ++i) {
+						var char = text[i];
+						if (char == left)
+							++group_count_start;
+						else if (char == right)
+							--group_count_start;
+					}
+					let min = left == pair[0]? 2 : 1;
+					if (group_count_start >= min)
+						break;
+
 					var {line} = cursor;
 					cm.replaceRange(
 						pair[1],
