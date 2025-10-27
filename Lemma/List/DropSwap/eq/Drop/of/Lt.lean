@@ -9,9 +9,9 @@ import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.Nat.Le.of.Lt
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Algebra.EqAdd_Sub.of.Lt
+import Lemma.Nat.EqAdd_Sub.of.Lt
 import Lemma.Nat.Sub.ge.One.of.Lt
-open Algebra List Nat
+open List Nat
 
 
 @[main]

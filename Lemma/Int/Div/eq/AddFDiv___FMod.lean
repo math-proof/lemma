@@ -1,8 +1,8 @@
 import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Algebra.EqAdd_Sub
+import Lemma.Int.EqAdd_Sub
 import Lemma.Int.FMod.eq.Sub_MulFDiv
-open Algebra Int Nat Rat
+open Int Nat Rat
 
 
 @[main]

@@ -1,5 +1,5 @@
-import Lemma.Algebra.Sum.eq.MulCard
-open Algebra
+import Lemma.Finset.Sum.eq.MulCard
+open Finset
 
 
 @[main]

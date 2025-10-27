@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqSquareSqrt
+import Lemma.Complex.EqSquareSqrt
 import Lemma.Real.OrEqS.of.EqSquareS
-open Algebra Real
+open Real Complex
 
 
 @[main]

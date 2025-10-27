@@ -10,10 +10,10 @@ import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Rat.CeilSub_1.eq.SubCeil_1
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Nat.Sub_Add.eq.SubSub
-import Lemma.Algebra.Le.of.Sub.eq.Zero
+import Lemma.Nat.Le.of.Sub.eq.Zero
 import Lemma.Nat.AddMul.eq.MulAdd_1
 import Lemma.Nat.EqSubAdd
-open Algebra Nat Int Rat
+open Nat Int Rat
 
 
 @[main]

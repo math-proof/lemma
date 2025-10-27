@@ -12,4 +12,15 @@ private lemma main
   exists a
 
 
+@[main]
+private lemma ufn
+  {p : α → Prop}
+-- given
+  (h : p e) :
+-- imply
+  ∃ e, p e := by
+-- proof
+  use e
+
+
 -- created on 2024-07-01

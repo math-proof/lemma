@@ -1,8 +1,8 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Vector.EqDiv0'0
-import Lemma.Algebra.EqDiv0'0
-open Tensor Vector Algebra
+import Lemma.Rat.EqDiv0'0
+open Tensor Vector Rat
 
 
 @[main]

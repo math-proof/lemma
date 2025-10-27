@@ -2,7 +2,7 @@ import stdlib.List
 import Lemma.Rat.CeilDivSub.eq.One.of.GeAdd.Gt_0
 import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Nat.LtCoeS.is.Lt
-import Lemma.Algebra.Le.of.Sub.eq.Zero
+import Lemma.Nat.Le.of.Sub.eq.Zero
 import Lemma.Nat.LeSubS.of.Le
 import Lemma.Nat.AddMul.eq.MulAdd_1
 import Lemma.Nat.Ge.of.NotLt
@@ -17,7 +17,7 @@ import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Rat.CeilSub_1.eq.SubCeil_1
 import Lemma.Nat.GeAdd.of.Ge_Sub
 import Lemma.Nat.CoeAdd.eq.AddCoeS
-open Algebra Nat Int Rat
+open Nat Int Rat
 
 
 @[main]

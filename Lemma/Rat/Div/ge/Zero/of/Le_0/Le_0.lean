@@ -1,6 +1,6 @@
-import Lemma.Algebra.EqDiv0'0
+import Lemma.Rat.EqDiv0'0
 import Lemma.Rat.GeDivS.of.Le.Le_0
-open Algebra Rat
+open Rat
 
 
 @[main]

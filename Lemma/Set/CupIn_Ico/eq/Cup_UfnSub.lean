@@ -1,12 +1,12 @@
 import sympy.sets.sets
 import Lemma.Set.Cup.eq.Cup_Ite
 import Lemma.Set.IffInS_Ico
-import Lemma.Set.Cup_Ufn.eq.Cup_UfnNeg
+import Lemma.Set.Cup_UFn.eq.Cup_UFnNeg
 import Lemma.Int.Add.eq.Sub_Neg
 import Lemma.Set.In_Ico.is.InNeg_Ioc
 import Lemma.Set.Ioc.eq.Ico
 import Lemma.Int.EqNegNeg
-import Lemma.Set.CupIn_Ico.eq.Cup_UfnAdd
+import Lemma.Set.CupIn_Ico.eq.Cup_UnaryFnAdd
 open Set Int
 
 
@@ -23,13 +23,13 @@ private lemma main
   -- rw [Cup.eq.Cup_Ite (fun x => decidable_of_iff (h (c - x)).decide (h_iff x))]
   conv_rhs =>
     simp only [Cup.eq.Cup_Ite]
-    rw [Cup_Ufn.eq.Cup_UfnNeg]
+    rw [Cup_UFn.eq.Cup_UFnNeg]
     simp only [Sub_Neg.eq.Add]
     simp only [In_Ico.is.InNeg_Ioc]
     simp only [EqNegNeg]
     simp only [Ioc.eq.Ico]
     simp only [Set.Cup_Ite.eq.Cup]
-    rw [CupIn_Ico.eq.Cup_UfnAdd (-c)]
+    rw [CupIn_Ico.eq.Cup_UnaryFnAdd (-c)]
     simp
   aesop
 

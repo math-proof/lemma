@@ -1,6 +1,6 @@
-import Lemma.Algebra.Mod.ge.Zero.of.Ne_0
+import Lemma.Int.Mod.ge.Zero.of.Ne_0
 import Lemma.Nat.Ne.of.Lt
-open Algebra Nat
+open Nat Int
 
 
 @[main]

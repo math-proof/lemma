@@ -1,6 +1,6 @@
 import sympy.sets.sets
 import Lemma.Bool.All.of.All.All_Imp
-import Lemma.Algebra.Root_Add_2.le.Sqrt.of.Ge_1
+import Lemma.Real.Root_Add_2.le.Sqrt.of.Ge_1
 import Lemma.Finset.LeSumS.of.All_Le
 import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
 import Lemma.Nat.Le.of.Le.Le
@@ -16,7 +16,7 @@ import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Real.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
 import Lemma.Real.GeSqrt_0
-open Algebra Finset Bool Nat Real Rat
+open Finset Bool Nat Real Rat
 
 
 @[main]

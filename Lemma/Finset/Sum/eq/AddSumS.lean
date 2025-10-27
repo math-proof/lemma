@@ -1,11 +1,11 @@
-import Lemma.Algebra.Sum.eq.Sum_MulBool
+import Lemma.Finset.Sum.eq.Sum_MulBool
 import Lemma.Finset.Sum_Add.eq.AddSumS
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Set.In.is.In_Inter.ou.In_SDiff
 import Lemma.Bool.BoolOr.eq.SubAddBoolS
 import Lemma.Bool.ToNatDecide.eq.Bool
 import Lemma.Set.In_Inter.In_SDiff.is.False
-open Algebra Set Bool Finset Nat
+open Set Bool Finset Nat
 
 
 @[main]

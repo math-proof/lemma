@@ -1,10 +1,10 @@
 import Lemma.Finset.All_Le.of.All_Le.All_Eq_Ite
 import Lemma.Finset.Sum.eq.Sum_Add_Sub.of.In_Range.All_Eq_Ite
 import Lemma.Int.Sub.lt.Zero.of.Lt
-import Lemma.Algebra.Lt.of.Eq_Add.Lt_0
+import Lemma.Int.Lt.of.Eq_Add.Lt_0
 import Lemma.Finset.LeSumS.of.All_Le
 import Lemma.Nat.Lt.of.Le.Lt
-open Algebra Finset Nat Int
+open Finset Nat Int
 
 
 @[main]

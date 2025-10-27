@@ -1,6 +1,6 @@
 import Lemma.Set.Eq.of.All_Imp.All_Imp
 import Lemma.Set.In_Cup.is.Any_In
-import Lemma.Int.Any_UfnNeg.of.Any
+import Lemma.Int.Any_UnaryFnNeg.of.Any
 open Set Int
 
 
@@ -15,7 +15,7 @@ private lemma main
   · 
     intro x h
     have h := Any_In.of.In_Cup h
-    have := Any_UfnNeg.of.Any h
+    have := Any_UnaryFnNeg.of.Any h
     apply In_Cup.of.Any_In
     simp_all
 

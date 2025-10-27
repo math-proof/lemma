@@ -1,6 +1,6 @@
 import sympy.core.power
 import Lemma.Rat.DivNeg.eq.NegDiv
-import Lemma.Algebra.SquareNeg.eq.Square
+import Lemma.Int.SquareNeg.eq.Square
 import Lemma.Rat.SquareDiv.eq.DivSquareS
 import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Nat.Square.eq.Mul
@@ -17,7 +17,7 @@ import Lemma.Nat.Sub.eq.AddNeg
 import Lemma.Nat.LeMulS.of.Gt_0.Le
 import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Rat.EqMul_Div.of.Ne_0
-open Algebra Nat Int Rat
+open Nat Int Rat
 
 
 @[main]

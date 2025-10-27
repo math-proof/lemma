@@ -7,9 +7,9 @@ import Lemma.Nat.Sub.eq.AddNeg
 import Lemma.Int.GeMulSubEDiv.of.Lt_0
 import Lemma.Int.GeNeg_0.of.Le_0
 import Lemma.Nat.NotGt.is.Le
-import Lemma.Algebra.LeMulEDiv.of.Ge_0
+import Lemma.Int.LeMulEDiv.of.Ge_0
 import Lemma.Int.GeNeg.of.Le_Neg
-open Algebra Bool Int Nat
+open Bool Int Nat
 
 
 @[main]

@@ -1,5 +1,5 @@
-import Lemma.Algebra.NeAddS.of.Ne
-open Algebra
+import Lemma.Int.NeAddS.of.Ne
+open Int
 
 
 @[main]

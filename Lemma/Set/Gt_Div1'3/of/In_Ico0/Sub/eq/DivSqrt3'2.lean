@@ -1,8 +1,8 @@
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Nat.Gt.of.Lt
 import Lemma.Set.Lt.of.LtUFn.In_Ico.In_Ico
-import Lemma.Algebra.Lt_Sqrt.is.LtSquare.of.Ge_0
-open Algebra Set Rat Nat
+import Lemma.Real.Lt_Sqrt.is.LtSquare.of.Ge_0
+open Set Rat Nat Real
 
 
 /--

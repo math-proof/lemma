@@ -9,8 +9,8 @@ import Lemma.Nat.Ge.of.Gt
 import Lemma.Nat.EqMin.of.Le
 import Lemma.List.DropCons.eq.Drop_Sub_1.of.Gt_0
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
-import Lemma.Algebra.EqAdd_Sub.of.Gt
-open List Algebra Nat
+import Lemma.Nat.EqAdd_Sub.of.Gt
+open List Nat
 
 
 @[main]

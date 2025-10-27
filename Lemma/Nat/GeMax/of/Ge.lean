@@ -1,6 +1,6 @@
-import Lemma.Algebra.GeMax
+import Lemma.Nat.GeMax
 import Lemma.Nat.Ge.of.Ge.Ge
-open Algebra Nat
+open Nat
 
 
 @[main]
