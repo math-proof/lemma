@@ -9,7 +9,7 @@ def apply(is_positive, z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     z = Symbol(complex=True, given=True)
     r = Symbol(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
 
 

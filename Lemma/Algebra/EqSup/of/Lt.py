@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Set.Gt.of.In_Icc)
 
-    Eq <<= Eq[-3].this.lhs.apply(Algebra.Lt.of.Lt.Lt, ret=1), Eq[-1].this.rhs.apply(Set.In.given.And.strengthen, upper=m, strict=True)
+    Eq <<= Eq[-3].this.lhs.apply(Nat.Lt.of.Lt.Lt, ret=1), Eq[-1].this.rhs.apply(Set.In.given.And.strengthen, upper=m, strict=True)
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.LtAdd.of.Lt.Lt), Bool.Imp.given.Cond.apply(Eq[-1])
 

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real
+    from Lemma import Algebra, Bool, Real, Nat
 
     t = Symbol(real=True)
     x = Symbol(real=True, positive=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] * t, Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
 
-    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=t)
+    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Nat.EqPowS.of.Eq.apply(Eq[-1], exp=t)
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
 

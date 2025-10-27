@@ -16,7 +16,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Discrete, Bool, Tensor
+    from Lemma import Algebra, Set, Discrete, Bool, Tensor, Nat, Int
 
     n = Symbol(domain=Range(2, oo), given=False)
     Eq << apply(n)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq <<= Eq.equation & Eq.p1_equality
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 
@@ -100,7 +100,7 @@ def prove(Eq):
 
     Eq << Eq.p_quote_definition.lhs[n].this.definition
 
-    Eq << Eq[-1].this.rhs.args[1].expr.apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.args[1].expr.apply(Int.Ite.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
 

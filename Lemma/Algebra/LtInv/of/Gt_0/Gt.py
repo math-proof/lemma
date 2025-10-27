@@ -25,13 +25,13 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 
-    Eq.x_is_positive = Algebra.Gt.of.Gt.Gt.apply(Eq[0], Eq[1])
+    Eq.x_is_positive = Nat.Gt.of.Gt.Gt.apply(Eq[0], Eq[1])
 
     Eq << Nat.Ne.of.Gt.apply(Eq.x_is_positive)
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Gt_0.of.Gt_0.Gt_0.apply(Eq[0], Eq.x_is_positive)
+    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[0], Eq.x_is_positive)
 
     Eq << ~Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[-2]).reversed
 

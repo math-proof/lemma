@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Trigonometry, Algebra, Set, Bool, Int
+    from Lemma import Calculus, Trigonometry, Algebra, Set, Bool, Int, Rat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval.open(0, S.Pi)))
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq.eq_grad = Bool.Eq.of.Eq.Eq.apply(Eq.eq_grad, Eq[-1])
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq.eq_grad)
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq.eq_grad)
 
     Eq << Algebra.Square.gt.Zero.of.Ne_0.apply(Eq[-1])
 

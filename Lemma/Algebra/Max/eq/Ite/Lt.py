@@ -12,14 +12,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y, z = Symbol(real=True)
     Eq << apply(Max(x, y))
 
     Eq << Eq[0].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].lhs.this.apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[-1].lhs.this.apply(Nat.Max.eq.IteGe)
 
     Eq << Eq[-1].subs(x, z)
 

@@ -12,7 +12,7 @@ def apply(self, pivot=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     k = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, shape=(k,), given=True)
@@ -20,7 +20,7 @@ def prove(Eq):
     g, f, h = Function(shape=(), real=True)
     Eq << apply(Piecewise((g(x) + g(y), Equal(x, y)), (f(x) + f(y), Element(y, A)), (h(x) + h(y), True)))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[0].this.rhs.apply(Nat.AddIteS.eq.IteAnd)
 
 
 

@@ -18,7 +18,7 @@ def apply(x, lamda, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Int
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), real=True)
@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack)().find(Element[Complement]).simplify()
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Add_Stack.eq.Stack_Add)
 
@@ -52,9 +52,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack)().find(Element[Complement]).simplify()
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Mul[Add]).expand()
 

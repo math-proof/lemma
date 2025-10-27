@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
 
-    Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[-2], Eq[0])
+    Eq << Nat.Gt.of.Gt.Ge.apply(Eq[-2], Eq[0])
 
     Eq.eq_max = Algebra.EqMax.of.Ge_0.Lt.apply(Eq[0], Eq[1])
 
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq.eq_abs_M = Int.EqAbs.of.Gt_0.apply(Eq[-1])
 
-    Eq.eq_abs_m = Algebra.EqAbs.of.Ge_0.apply(Eq[0])
+    Eq.eq_abs_m = Int.EqAbs.of.Ge_0.apply(Eq[0])
 
     Eq << Algebra.Eq.given.And.squeeze.apply(Eq[2])
 

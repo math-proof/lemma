@@ -207,7 +207,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq.le_plausible, Eq.le_given)
+    Eq << Nat.Le.of.Le.Le.apply(Eq.le_plausible, Eq.le_given)
 
 
 

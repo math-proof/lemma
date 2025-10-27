@@ -10,14 +10,14 @@ def apply(Any_All_et_ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Bool
+    from Lemma import Algebra, Calculus, Bool, Nat
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)
     M = Symbol(real=True)
     Eq << apply(Exists[M](ForAll[n:oo]((M <= a[n + 1]) & (a[n + 1] <= a[n]))))
 
-    Eq << Eq[0].this.find(And).apply(Algebra.Le.of.Le.Le, ret=1)
+    Eq << Eq[0].this.find(And).apply(Nat.Le.of.Le.Le, ret=1)
 
     Eq << Eq[-1].this.expr.apply(Bool.All.All.of.All_And)
 

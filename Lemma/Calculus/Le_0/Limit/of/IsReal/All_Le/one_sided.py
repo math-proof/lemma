@@ -23,7 +23,7 @@ def apply(el, all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool, Set
+    from Lemma import Calculus, Algebra, Bool, Set, Nat
 
     x = Symbol(real=True)
     x0 = Symbol(real=True, given=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.All.And.of.Cond.Any_All.apply(Eq[-2] / 2, Eq[-1])
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Gt.of.Gt.Gt)
+    Eq << Eq[-1].this.find(And).apply(Nat.Gt.of.Gt.Gt)
 
     Eq << Eq[-1].this.find(All).apply(Set.AllIn_SDiff.of.All, domain=Interval.open(x0, x0 + Min(δ_quote, delta)))
 

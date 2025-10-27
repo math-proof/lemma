@@ -25,15 +25,15 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     r = Symbol(real=True, positive=True)
     Eq << apply(Max(x * r, y * r))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[0].this.lhs.apply(Nat.Max.eq.IteGe)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[-1].this.rhs.args[1].apply(Nat.Max.eq.IteGe)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.Mul)
 

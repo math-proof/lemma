@@ -18,7 +18,7 @@ def apply(eq_Ah, eq_Al, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool
+    from Lemma import Tensor, Algebra, Bool, Nat
 
     n, d_z = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))
@@ -106,7 +106,7 @@ def prove(Eq):
 
     Eq << Eq.zi_definition.this.rhs.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i,))
 

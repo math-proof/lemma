@@ -9,14 +9,14 @@ def apply(x, y, a, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, y, a, b = Symbol(real=True)
     Eq << apply(x, y, a, b)
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.MulAbsS.eq.AbsMul)
+    Eq << Eq[-1].this.rhs.args[0].apply(Int.MulAbsS.eq.AbsMul)
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.MulAbsS.eq.AbsMul)
+    Eq << Eq[-1].this.rhs.args[0].apply(Int.MulAbsS.eq.AbsMul)
 
     Eq << Eq[-1].this.rhs.args[0].arg.expand()
 

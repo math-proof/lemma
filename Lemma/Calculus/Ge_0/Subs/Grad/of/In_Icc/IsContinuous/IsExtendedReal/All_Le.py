@@ -17,7 +17,7 @@ def apply(el_Interval, is_continuous, is_extended_real, all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool
+    from Lemma import Calculus, Algebra, Set, Bool, Int
 
     a, b, x, c = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
         All[x:a:b](Element(Derivative[x - S.Infinitesimal](f(x)), ExtendedReals)),
         All[x:a:b](f(x) <= f(c)))
 
-    Eq <<= Eq[-1].this.find(Derivative).apply(Calculus.Grad.eq.Limit.one_sided), Algebra.AllIn_Ico.of.AllIn_Ico.offset.apply(Eq[-2], c)
+    Eq <<= Eq[-1].this.find(Derivative).apply(Calculus.Grad.eq.Limit.one_sided), Int.AllIn_Ico.of.AllIn_Ico.offset.apply(Eq[-2], c)
 
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[-1])
 

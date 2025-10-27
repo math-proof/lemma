@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Finset
+    from Lemma import Algebra, Set, Bool, Finset, Nat
 
     i, n = Symbol(integer=True)
     f = Function(real=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 

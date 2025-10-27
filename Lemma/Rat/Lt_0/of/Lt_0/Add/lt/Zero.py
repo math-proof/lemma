@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Algebra.Gt_0.of.Lt_0.Lt_0.apply(Eq.a_reciprocal_is_negative, Eq[1])
+    Eq << Int.Gt_0.of.Lt_0.Lt_0.apply(Eq.a_reciprocal_is_negative, Eq[1])
 
     Eq << -Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS) / 4
 

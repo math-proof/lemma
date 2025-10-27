@@ -9,7 +9,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     y, m, M, x = Symbol(real=True)
     f = Function(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
     Eq <<= Algebra.All.Ge.of.Eq_Inf.apply(Eq[-1]), Eq[0].subs(Eq[-1].reversed)
 
     Eq <<= Algebra.All.And.of.Cond.All.apply(Eq[-2], Eq[-1], simplify=None)
-    Eq <<= Eq[-1].this.expr.apply(Algebra.Ge.of.Ge.Ge)
+    Eq <<= Eq[-1].this.expr.apply(Nat.Ge.of.Ge.Ge)
 
 
 if __name__ == '__main__':

@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x >= y)
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq <<= Eq[3] & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
 
 

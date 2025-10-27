@@ -42,11 +42,11 @@ def prove(Eq):
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq[-1], Eq[-2], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt_0.of.Gt_0.Gt_0)
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Gt.Eq)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt.of.Gt.Eq)
 
     Eq << Bool.And_And.of.And.apply(Eq[-1])
 

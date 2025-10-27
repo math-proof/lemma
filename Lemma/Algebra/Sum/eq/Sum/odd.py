@@ -9,18 +9,18 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Finset
 
     i, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
     Eq << apply(Sum[i:Equal(i % 2, 1):Range(a, b)](f[i]))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     S = Symbol(imageset(i, 2 * i + 1, Eq[-1].rhs.limits_cond))
     Eq << S.this.definition
 
-    Eq << Algebra.Sum.eq.Sum_MulBool.apply(Sum[i:S](f[i]))
+    Eq << Finset.Sum.eq.Sum_MulBool.apply(Sum[i:S](f[i]))
 
     Eq << Eq[-1].this.lhs.limits[0][1].definition
 

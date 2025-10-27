@@ -35,7 +35,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Tensor, Nat
+    from Lemma import Algebra, Probability, Bool, Tensor, Nat, Rat
 
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     x = Eq.x_independence.rhs.base
     y, k = Eq.first_order_markov_assumption.rhs.lhs.of(Indexed)
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq.x_independence)
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq.x_independence)
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

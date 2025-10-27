@@ -12,12 +12,12 @@ def apply(eq, *vars):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Nat, Nat, Nat, Nat
+    from Lemma import Algebra, Probability, Nat, Nat, Nat, Nat, Rat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(y | z), 0), x)
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq[-1], x, y)
 

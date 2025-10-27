@@ -32,7 +32,7 @@ def apply(is_zero, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat, Complex
 
     x, p = Symbol(complex=True, given=True)
     q = Symbol(real=True, given=True)
@@ -103,9 +103,9 @@ def prove(Eq):
 
     Eq.expand = Eq.expand.subs(Eq[-1])
 
-    Eq.A3_def = Algebra.EqPowS.of.Eq.apply(Eq.A_def, exp=3)
+    Eq.A3_def = Nat.EqPowS.of.Eq.apply(Eq.A_def, exp=3)
 
-    Eq.B3_def = Algebra.EqPowS.of.Eq.apply(Eq.B_def, exp=3)
+    Eq.B3_def = Nat.EqPowS.of.Eq.apply(Eq.B_def, exp=3)
 
     Eq << Eq.A3_def + Eq.B3_def
 
@@ -131,7 +131,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.w)
 
-    Eq << Eq[-1].this.find(Exp).apply(Algebra.Expr.eq.AddRe_MulIIm)
+    Eq << Eq[-1].this.find(Exp).apply(Complex.Expr.eq.AddRe_MulIIm)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
 
@@ -139,7 +139,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Algebra.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
+    Eq << Nat.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
 
     Eq << Eq[-1].this.args[0].reversed
 

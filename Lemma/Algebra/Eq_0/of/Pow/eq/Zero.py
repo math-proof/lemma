@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, given=True)
@@ -23,7 +23,7 @@ def prove(Eq):
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
     Eq << Eq.induct.this.lhs.lhs.apply(Algebra.Pow.eq.Mul.split.exponent)
-    Eq << Eq[-1].this.lhs.apply(Algebra.OrEqS_0.of.Mul.eq.Zero)
+    Eq << Eq[-1].this.lhs.apply(Nat.OrEqS_0.of.Mul.eq.Zero)
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 

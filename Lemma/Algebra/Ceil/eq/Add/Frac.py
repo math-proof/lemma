@@ -10,11 +10,11 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
     x = Symbol(real=True)
     Eq << apply(ceil(x))
 
-    Eq << Eq[0].this.rhs.args[1].apply(Algebra.Frac.eq.Sub_Floor)
+    Eq << Eq[0].this.rhs.args[1].apply(Rat.Frac.eq.Sub_Floor)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ceil.eq.Neg.Floor)
 

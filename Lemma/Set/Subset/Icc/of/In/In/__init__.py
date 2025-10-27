@@ -11,7 +11,7 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     a, b, x, y = Symbol(real=True, given=True)
     S = Interval(a, b, left_open=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].expr.apply(Algebra.And.of.And.delete, index=1)
 
-    Eq << Eq[-1].this.args[1].expr.apply(Algebra.Le.of.Le.Ge)
+    Eq << Eq[-1].this.args[1].expr.apply(Nat.Le.of.Le.Ge)
 
     Eq << ~Eq[-1]
 

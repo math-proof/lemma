@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     n, m = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Set.Any.Eq.of.In.split.Imageset)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Eq.Ufn.given.Eq.Ufn, reverse=True)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn, reverse=True)
 
     Eq.necessary = Given(Element(y, B), Element(y, B_quote), plausible=True)
 

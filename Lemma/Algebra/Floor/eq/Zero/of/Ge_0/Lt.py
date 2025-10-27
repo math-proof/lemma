@@ -14,20 +14,20 @@ def apply(is_nonnegative, less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Rat
 
     x = Symbol(real=True)
     Eq << apply(x >= 0, x < 1)
 
-    Eq << Algebra.LeFloor.apply(x)
+    Eq << Rat.LeFloor.apply(x)
 
     Eq << Nat.Lt.of.Le.Lt.apply(Eq[-1], Eq[1])
 
     Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
-    Eq << Algebra.Floor.gt.Sub_1.apply(x)
+    Eq << Rat.Floor.gt.Sub_1.apply(x)
 
-    Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[-1], Eq[0] - 1)
+    Eq << Nat.Gt.of.Gt.Ge.apply(Eq[-1], Eq[0] - 1)
 
     Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
     Eq <<= Eq[-4] & Eq[-1]

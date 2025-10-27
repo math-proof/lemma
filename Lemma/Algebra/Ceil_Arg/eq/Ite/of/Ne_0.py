@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite)
 
-    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.find(Ceil[Piecewise]).apply(Algebra.Ceil.Ite.eq.Ite)
 
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq.suffice = Eq[-1].this.rhs.apply(Algebra.Eq_0.of.Pow.eq.Zero)
 
-    Eq << Equal(U * V, 0).this.apply(Algebra.OrEqS_0.of.Mul.eq.Zero)
+    Eq << Equal(U * V, 0).this.apply(Nat.OrEqS_0.of.Mul.eq.Zero)
 
     Eq << Eq[-1].subs(Eq.UV)
 

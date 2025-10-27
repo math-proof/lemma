@@ -8,7 +8,7 @@ def apply(a, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x, y)
@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.find(And).apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
 
 

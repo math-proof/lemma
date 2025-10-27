@@ -36,17 +36,17 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, y = Symbol(real=True)
     r = Symbol(real=True, positive=True)
 
     Eq << apply(Max(x * r + 1, y * r + 1))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[-1].this.lhs.apply(Nat.Max.eq.IteGe)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.SubIte)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ite.eq.SubIte)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[-1].this.rhs.apply(Nat.Max.eq.IteGe)
 
 if __name__ == '__main__':
     run()

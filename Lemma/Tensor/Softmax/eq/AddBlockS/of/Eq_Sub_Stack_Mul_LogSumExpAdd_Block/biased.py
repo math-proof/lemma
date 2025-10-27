@@ -39,7 +39,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Int
+    from Lemma import Algebra, Tensor, Bool, Int, Nat
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -102,13 +102,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(-Piecewise).apply(Algebra.Mul.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[-1].this.rhs.find(Add).apply(Nat.AddIteS.eq.IteAnd)
 
     Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
-    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs.find(Piecewise).apply(Bool.Ite_Ite.eq.Ite__Ite)
 

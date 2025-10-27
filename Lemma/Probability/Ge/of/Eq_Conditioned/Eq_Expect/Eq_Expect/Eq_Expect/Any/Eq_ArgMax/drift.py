@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, any, eq_argmax):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Set, Bool, Nat, Nat, Finset
+    from Lemma import Algebra, Probability, Set, Bool, Nat, Nat, Finset, Rat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -37,7 +37,7 @@ def prove(Eq):
                     Equal(Pr[π, π_hat](s[0]), Piecewise((Pr[π, π](s[0]), Equal(s[0].var, s[t].var)), (Pr[π, π_quote](s[0]), True))))),
                 Equal(π_tilde, ArgMax[π_quote](Expectation[s:π]((MDV[π, π_quote] ^ γ)(s[0])))))
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[3])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[3])
 
     Eq.ne_zero = Eq[-1].subs(t, 0)
 
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Eq[4].this.find(Equal[Piecewise]).apply(Bool.And.Imp.of.Cond_Ite)
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq.any = Eq[-1].this.expr.args[1:].apply(Bool.Imp.of.Imp.Imp)
 
-    Eq << Eq.ge_sum.this.find(Sum).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq.ge_sum.this.find(Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_SDiff.Is.And)
 

@@ -10,7 +10,7 @@ def apply(is_nonpositive):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Set, Bool
+    from Lemma import Trigonometry, Algebra, Set, Bool, Int
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(x <= 0)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Algebra.Any.limits.Neg.Infty)
 
-    Eq << Algebra.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], 1)
+    Eq << Int.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], 1)
 
     Eq.any_eq = Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 

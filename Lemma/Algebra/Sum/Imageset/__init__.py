@@ -14,16 +14,16 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Finset
 
     n, a, b, m = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
     h = Function(real=True)
     Eq << apply(Sum[n:imageset(n, a * n + b, h(n) > 0)](f[n]))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[0].this.lhs.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.lhs.limits_subs(n, m)
 

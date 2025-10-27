@@ -11,7 +11,7 @@ def apply(gt_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Nat, Nat
+    from Lemma import Algebra, Bool, Nat, Nat, Nat, Int
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sqrt.ne.Zero.of.Ne_0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ne_0.of.NeAbs_0)
+    Eq << Eq[-1].this.rhs.apply(Int.Ne_0.of.NeAbs_0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.Lt_0.of.Ne_0, x=x, b=c)
 

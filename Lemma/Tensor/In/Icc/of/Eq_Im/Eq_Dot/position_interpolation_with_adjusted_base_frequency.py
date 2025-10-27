@@ -202,7 +202,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * (2 * ReducedMin(x ** 2))
 
-    Eq.Sum_ge = Algebra.Ge.of.Ge.Ge.apply(Eq.Sum_ge, Eq[-1])
+    Eq.Sum_ge = Nat.Ge.of.Ge.Ge.apply(Eq.Sum_ge, Eq[-1])
 
     Eq << Trigonometry.LeSin.of.Gt_0.apply(Eq.gt_zero_eta)
 
@@ -218,7 +218,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * (2 * ReducedMax(x ** 2))
 
-    Eq.Sum_le = Algebra.Le.of.Le.Le.apply(Eq.Sum_le, Eq[-1])
+    Eq.Sum_le = Nat.Le.of.Le.Le.apply(Eq.Sum_le, Eq[-1])
 
     Eq << Set.In.Icc.of.Ge.Le.apply(Eq.Sum_ge, Eq.Sum_le)
 

@@ -9,7 +9,7 @@ def apply(eq_C):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Nat
+    from Lemma import Algebra, Discrete, Tensor, Nat, Rat
 
     n, d = Symbol(domain=Range(2, oo))
     C, C_quote = Symbol(shape=(n, d), real=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[0][i]
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[-1])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[-1])
 
     Eq << Nat.Gt_0.of.Ne_0.apply(Eq[-1])
 

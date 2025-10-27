@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 
-    Eq << Algebra.Le.of.Ge.Le.apply(Eq[0], Eq[-1])
+    Eq << Nat.Le.of.Ge.Le.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].reversed - (y - 1)
 

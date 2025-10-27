@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(n, 1)
 
-    Eq << Eq[1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Algebra.Bool.eq.Delta)
 
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.rhs().find(And).apply(Set.Eq_Sum.In_CartesianSpace.Is.And)
 

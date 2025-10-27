@@ -36,7 +36,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     i, k = Symbol(integer=True)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.of.Any.limits.swap.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[0].this.expr.apply(Algebra.Eq.Ufn.given.Eq.Ufn, simplify=None)
+    Eq << Eq[0].this.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn, simplify=None)
 
 
 

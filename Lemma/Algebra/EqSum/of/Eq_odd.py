@@ -12,13 +12,13 @@ def apply(given, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Finset
 
     i, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
     Eq << apply(Equal(a % 2, 1), Sum[i:Range(a, b, 2)](f[i]))
 
-    Eq << Eq[1].lhs.this.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[1].lhs.this.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And.split.Ico)
 

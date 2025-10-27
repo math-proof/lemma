@@ -18,7 +18,7 @@ def apply(is_zero, self, pivot=-1, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     n = Symbol(integer=True, nonnegative=True)
     i, k = Symbol(integer=True)
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Algebra.LeSum.of.All_Le.apply(Eq[-1])
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq[-4], Eq[-1])
+    Eq << Nat.Le.of.Le.Le.apply(Eq[-4], Eq[-1])
 
 
 if __name__ == '__main__':

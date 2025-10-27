@@ -23,7 +23,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Int
+    from Lemma import Tensor, Algebra, Int, Nat
 
     n = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(BlockMatrix).apply(Tensor.Block.eq.Stack.Ite)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.SubIte)
+    Eq << Eq[-1].this.find(Piecewise).apply(Nat.Ite.eq.SubIte)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Add)
 

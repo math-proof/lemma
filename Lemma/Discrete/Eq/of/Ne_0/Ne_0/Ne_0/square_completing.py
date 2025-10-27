@@ -15,7 +15,7 @@ def apply(ne_zero_A, ne_zero_B, ne_zero, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Bool
+    from Lemma import Discrete, Algebra, Tensor, Bool, Rat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(r"\vec x", real=True, shape=(n,))
@@ -131,7 +131,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[-1])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[-1])
 
     Eq << Discrete.Eq.of.Ne_0.square_completing.apply(Eq[-1], Eq[-2].rhs)
 

@@ -9,13 +9,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, y = Symbol(real=True)
     Eq << apply(x >= y)
 
     Eq << Algebra.Ge_0.of.Ge.apply(Eq[0])
-    Eq << Algebra.EqAbs.of.Ge_0.apply(Eq[-1])
+    Eq << Int.EqAbs.of.Ge_0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

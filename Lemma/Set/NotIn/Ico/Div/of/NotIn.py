@@ -21,7 +21,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Rat
 
     x, a, b = Symbol(integer=True, given=True)
     d = Symbol(integer=True, positive=True, given=True)
@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq.contains = Set.In.Mul.Ico.of.In.apply(Eq[-1], d)
 
-    Eq << Algebra.LeFloor.apply(b / d) * d
+    Eq << Rat.LeFloor.apply(b / d) * d
 
-    Eq << Algebra.GeCeil.apply(a / d) * d
+    Eq << Rat.GeCeil.apply(a / d) * d
 
     Eq << Set.Subset.Ico.of.Le.Ge.apply(Eq[-2], Eq[-1])
 

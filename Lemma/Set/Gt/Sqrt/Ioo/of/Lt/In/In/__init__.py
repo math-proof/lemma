@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[-1], cond=y > 0)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.rhs.apply(Nat.Gt_0.of.Gt_0.Gt_0)
 
     Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq.x_is_nonpositive, Eq[-1])
 

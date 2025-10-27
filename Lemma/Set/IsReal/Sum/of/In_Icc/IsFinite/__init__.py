@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Algebra.AbsSum.le.Sum_Abs.apply(Eq[2].find(Sum)._subs(oo, n))
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Le.of.Le.Le.apply(Eq[-1], Eq[-2])
 
     Eq << Int.EqAbs.of.Gt_0.apply(Eq.gt_zero)
 

@@ -9,7 +9,7 @@ def apply(self, index=0, offset=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     n = Symbol(integer=True)
     m, d = Symbol(integer=True, given=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
 
 
-    Eq << Algebra.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], -d)
+    Eq << Int.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], -d)
 
 
 

@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Bool
+    from Lemma import Trigonometry, Algebra, Bool, Int
 
     x, y = Symbol(real=True)
     Eq << apply(Arg(x + y * S.ImaginaryUnit))
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq.suffice.this.find(Pow).base.apply(Algebra.Add.eq.Mul.together)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Ge_0)
+    Eq << Eq[-1].this.lhs.apply(Int.EqAbs.of.Ge_0)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

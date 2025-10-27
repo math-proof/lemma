@@ -10,7 +10,7 @@ def apply(eq, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Bool, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor, Nat
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().find(Element[Symbol, Range[0]]).simplify()
 
-    Eq << Eq[-1].this.rhs.expr.args[1].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.expr.args[1].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs().expr.args[1]().expr.simplify(wrt=Eq[-1].rhs.variable)
 
@@ -53,11 +53,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().find(Element).simplify()
 
-    Eq << Eq[-1].this.rhs.expr.args[-1].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.expr.args[-1].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.expr.args[1].expr.args[1].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.expr.args[1].expr.args[1].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.expr.args[1].expr.args[2].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.expr.args[1].expr.args[2].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs().expr.args[1]().expr.simplify(wrt=Eq[-1].rhs.variable)
 

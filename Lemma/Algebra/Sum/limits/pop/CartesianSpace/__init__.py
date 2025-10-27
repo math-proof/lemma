@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Finset
 
     a, b = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -26,9 +26,9 @@ def prove(Eq):
     f = Function(real=True, shape=())
     Eq << apply(Sum[x[i:n]:CartesianSpace(Range(a, b + 1), n - i)](f(x[i:n])))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[0].this.lhs.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.rhs.find(Element[2]).apply(Set.In_CartesianSpace.Is.All.In)
 

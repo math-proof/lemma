@@ -24,7 +24,7 @@ def apply(given, peicewise_A, peicewise_B):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     A, B = Symbol(etype=dtype.integer)
     x = Symbol(integer=True)
@@ -35,7 +35,7 @@ def prove(Eq):
         Piecewise((f(x), Element(x, A)), (f_quote(x), True)),
         Piecewise((g(x), Element(x, B)), (g_quote(x), True)))
 
-    Eq << Eq[1].this.lhs.apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[1].this.lhs.apply(Nat.AddIteS.eq.IteAnd)
 
     Eq << Eq[-1].apply(Bool.All.given.All.AllNot, cond=Element(x, A))
 

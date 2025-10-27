@@ -15,7 +15,7 @@ def apply(eq_R, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor
+    from Lemma import Algebra, Set, Bool, Tensor, Nat
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -60,11 +60,11 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.expr.args[1:3].apply(Algebra.AddIteS.eq.IteAnd, simplify=None)
+    Eq << Eq[-1].this.rhs.expr.args[1:3].apply(Nat.AddIteS.eq.IteAnd, simplify=None)
 
-    Eq << Eq[-1].this.rhs.expr.args[::2].apply(Algebra.AddIteS.eq.IteAnd, simplify=None)
+    Eq << Eq[-1].this.rhs.expr.args[::2].apply(Nat.AddIteS.eq.IteAnd, simplify=None)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.AddIteS.eq.IteAnd, simplify=None)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.AddIteS.eq.IteAnd, simplify=None)
 
     Eq << Eq[-1].this.rhs().expr.args[0]().find(Element).simplify()
 

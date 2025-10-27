@@ -11,7 +11,7 @@ def apply(self, offset):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool
+    from Lemma import Calculus, Algebra, Bool, Int
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Calculus.Any.All.of.Eq_Limit.limit_definition.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.AllIn_Ico.of.AllIn_Ico.offset, -x0)
+    Eq << Eq[-1].this.expr.apply(Int.AllIn_Ico.of.AllIn_Ico.offset, -x0)
 
     Eq << Calculus.Eq.of.Any_All.limit_definition.apply(Eq[-1])
 

@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool
+    from Lemma import Algebra, Discrete, Bool, Nat
     from Lemma.Discrete.Alpha.gt.Zero import alpha
     from Lemma.Discrete.H.eq.Add.definition import H
     from Lemma.Discrete.K.eq.Add.definition import K
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(K).defun()
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.lhs.apply(Nat.Gt_0.of.Gt_0.Gt_0)
 
     Eq << Eq[-1].this.lhs + 1
 

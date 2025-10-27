@@ -15,7 +15,7 @@ def apply(given, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     M0, a, b = Symbol(real=True, given=True)
     M, x = Symbol(real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Le.of.Le.Ge)
+    Eq << Eq[-1].this.expr.apply(Nat.Le.of.Le.Ge)
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
 

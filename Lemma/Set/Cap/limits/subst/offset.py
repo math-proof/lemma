@@ -9,7 +9,7 @@ def apply(self, index=0, offset=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     a, b, n, d = Symbol(integer=True)
     f = Function(etype=dtype.integer)
@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In_Cap.given.All_In), Eq[-1].this.rhs.apply(Set.In_Cap.given.All_In)
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.AllIn_Ico.of.AllIn_Ico.offset, d)
+    Eq <<= Eq[-2].this.lhs.apply(Int.AllIn_Ico.of.AllIn_Ico.offset, d)
 
-    Eq <<= Eq[-1].this.lhs.apply(Algebra.AllIn_Ico.of.AllIn_Ico.offset, -d)
+    Eq <<= Eq[-1].this.lhs.apply(Int.AllIn_Ico.of.AllIn_Ico.offset, -d)
 
 
 if __name__ == '__main__':

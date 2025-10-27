@@ -33,7 +33,7 @@ def apply(is_zero, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry
+    from Lemma import Algebra, Trigonometry, Nat
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x, d=1)
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.w3, Eq.w_square)
 
-    Eq <<= Algebra.EqPowS.of.Eq.apply(Eq.A, exp=3), Algebra.EqPowS.of.Eq.apply(Eq.B, exp=3)
+    Eq <<= Nat.EqPowS.of.Eq.apply(Eq.A, exp=3), Nat.EqPowS.of.Eq.apply(Eq.B, exp=3)
 
     Eq << Eq[-1] + Eq[-2]
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq.A * Eq.B
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=3)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=3)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
 

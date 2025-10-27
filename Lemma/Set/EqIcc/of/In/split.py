@@ -10,7 +10,7 @@ def apply(given, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     x, a, b, t = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True)), right_open=False)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.of.ImpAnd.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.Gt.of.Gt.Gt), Eq[-1].this.rhs.apply(Algebra.Le.of.Le.Le)
+    Eq <<= Eq[-2].this.rhs.apply(Nat.Gt.of.Gt.Gt), Eq[-1].this.rhs.apply(Nat.Le.of.Le.Le)
 
 
 if __name__ == '__main__':

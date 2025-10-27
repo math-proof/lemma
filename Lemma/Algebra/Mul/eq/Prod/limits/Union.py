@@ -18,11 +18,11 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(Mul(Product[k:A - B](f(k)), Product[k:A & B](f(k))))
 
-    Eq << Eq[0].this.find(Product).apply(Algebra.Prod.eq.Prod_Pow_Bool)
+    Eq << Eq[0].this.find(Product).apply(Finset.Prod.eq.Prod_Pow_Bool)
 
-    Eq << Eq[-1].this.lhs.find(Product).apply(Algebra.Prod.eq.Prod_Pow_Bool)
+    Eq << Eq[-1].this.lhs.find(Product).apply(Finset.Prod.eq.Prod_Pow_Bool)
 
-    Eq << Eq[-1].this.find(Product[2]).apply(Algebra.Prod.eq.Prod_Pow_Bool)
+    Eq << Eq[-1].this.find(Product[2]).apply(Finset.Prod.eq.Prod_Pow_Bool)
 
     Eq << Eq[-1].this.lhs.apply(Finset.MulProdS.eq.Prod_Mul)
 

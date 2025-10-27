@@ -36,7 +36,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor
+    from Lemma import Algebra, Bool, Tensor, Nat
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -70,7 +70,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.z_ij_def)
 
-    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Ite.eq.SubIte, Eq[-1].find(Log[ReducedSum[Exp]]))
+    Eq << Eq[-1].this.expr.rhs.apply(Nat.Ite.eq.SubIte, Eq[-1].find(Log[ReducedSum[Exp]]))
 
     Eq << Eq[-1].this(i).expr.lhs.find(Symbol < Min).simplify()
 
@@ -94,7 +94,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.z_ij_def)
 
-    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Ite.eq.SubIte, Eq[-1].find(Log[ReducedSum[Exp]]))
+    Eq << Eq[-1].this.expr.rhs.apply(Nat.Ite.eq.SubIte, Eq[-1].find(Log[ReducedSum[Exp]]))
 
     Eq << Eq[-1].this(i).expr.lhs.find(Symbol < Min).simplify()
 
@@ -124,7 +124,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.z_ij_def)
 
-    Eq << Eq[-1].this.expr.rhs.apply(Algebra.Ite.eq.SubIte, Eq[-1].find(Log[ReducedSum[Exp]]))
+    Eq << Eq[-1].this.expr.rhs.apply(Nat.Ite.eq.SubIte, Eq[-1].find(Log[ReducedSum[Exp]]))
 
     Eq << Eq[-1].this(i).expr.lhs.find(Symbol < Min).simplify()
 

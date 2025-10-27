@@ -11,13 +11,13 @@ def apply(x, d=1, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Rat
     x = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)
 
     Eq << apply(x, d)
 
-    Eq << Algebra.Floor.gt.Sub_1.apply(x / d)
+    Eq << Rat.Floor.gt.Sub_1.apply(x / d)
 
     Eq << Eq[-1] * d
 

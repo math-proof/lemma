@@ -10,7 +10,7 @@ def apply(is_nonpositive, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, a, y = Symbol(real=True)
     Eq << apply(x <= 0, y < x)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.Lt_0.of.Lt.apply(Eq[1])
 
-    Eq << Algebra.Gt_0.of.Lt_0.Lt_0.apply(Eq[-1], Eq[-2])
+    Eq << Int.Gt_0.of.Lt_0.Lt_0.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
 

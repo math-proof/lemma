@@ -10,14 +10,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     n = Symbol(integer=True)
     Eq << apply(n // 2)
 
     Eq << Eq[0].this.lhs.apply(Algebra.Floor.eq.Mul.Div)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ite.eq.SubIte)
+    Eq << Eq[-1].this.rhs.apply(Nat.Ite.eq.SubIte)
 
     Eq << Eq[-1] * -2
 

@@ -10,7 +10,7 @@ def apply(is_nonnegative, strict_greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, a, y = Symbol(real=True)
     Eq << apply(x >= 0, y > x)
@@ -19,11 +19,11 @@ def prove(Eq):
 
     Eq << Eq[0] * 2
 
-    Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Gt.of.Gt.Ge.apply(Eq[-1], Eq[-2])
 
     Eq << Algebra.Gt_0.of.Gt.apply(Eq[1])
 
-    Eq << Algebra.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
 

@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(etype=dtype.integer[n])
@@ -18,9 +18,9 @@ def prove(Eq):
     f, g = Function(real=True, shape=())
     Eq << apply(Sum[x[:n]:g(x[:n]) > 0:A](f(x[:n])))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[0].this.lhs.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
 
 

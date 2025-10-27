@@ -10,14 +10,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Complex
 
     x = Symbol(complex=True)
     Eq << apply(x * ~x)
 
-    Eq << Algebra.Expr.eq.AddRe_MulIIm.apply(x)
+    Eq << Complex.Expr.eq.AddRe_MulIIm.apply(x)
 
-    Eq << Algebra.Expr.eq.AddRe_MulIIm.apply(~x)
+    Eq << Complex.Expr.eq.AddRe_MulIIm.apply(~x)
 
     Eq << Eq[-1] * Eq[-2]
 

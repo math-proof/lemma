@@ -11,7 +11,7 @@ def apply(eq_x_bar, t, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Rat
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(Eq[-1].rhs.find(Add ** 2), 0, plausible=True)
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Bool.Cond.of.And.apply(Eq[-1], 1).reversed
 

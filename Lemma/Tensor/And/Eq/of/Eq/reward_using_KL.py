@@ -10,7 +10,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     n, b, D = Symbol(integer=True, positive=True)
     # n is the sequence length
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Bool.And.Imp.of.Cond_Ite.apply(Eq[-1])
 

@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[1], Eq[-1])
 
-    Eq << Eq[-1].this.expr.args[1:].apply(Algebra.Lt.of.Lt.Lt, ret=1)
+    Eq << Eq[-1].this.expr.args[1:].apply(Nat.Lt.of.Lt.Lt, ret=1)
 
     Eq << Eq[-1].this.expr.args[1].apply(Nat.LeAdd_1.of.Lt)
 

@@ -33,7 +33,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Int
+    from Lemma import Tensor, Algebra, Set, Bool, Int, Nat
 
     n, l, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq.four_blocks = Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd)
+    Eq.four_blocks = Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd)
 
     j = Symbol(integer=True)
     Eq << Eq.four_blocks.find(Add[BlockMatrix]).this.apply(Tensor.Expr.eq.Stack, j)
@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise[ExprCondPair[3]]).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
-    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.AddIteS.eq.IteAnd)
 
     Eq.block3 = Eq[-1].this.find(Stack).apply(Tensor.Stack.Ite.eq.Block)
 

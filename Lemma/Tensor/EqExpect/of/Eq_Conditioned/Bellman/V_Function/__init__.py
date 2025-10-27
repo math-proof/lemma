@@ -28,7 +28,7 @@ def apply(eq, γ=None, k=None, weights=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Tensor, Algebra
+    from Lemma import Probability, Calculus, Tensor, Algebra, Rat
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq.eq_expect = Eq[-1].this.rhs.apply(Calculus.Integral.limits.separate)
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
     Eq << Probability.Ne_0.Slice.of.Ne_0.apply(Eq[-1], slice(t, t + 2))
     Eq << Eq[-1].this.find(Equal[Sliced]).apply(Algebra.Eq.Is.And.Eq.split)
     Eq << Probability.EqConditioned.of.Eq_Conditioned.independence_assumption.future.apply(Eq[0])

@@ -14,7 +14,7 @@ def apply(less_than_f, less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     y, b, x, t = Symbol(real=True)
     k = Symbol(real=True, positive=True)
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[1] * k + b
 
-    Eq << Algebra.Lt.of.Lt.Lt.apply(Eq[-1], Eq[0])
+    Eq << Nat.Lt.of.Lt.Lt.apply(Eq[-1], Eq[0])
 
 if __name__ == '__main__':
     run()

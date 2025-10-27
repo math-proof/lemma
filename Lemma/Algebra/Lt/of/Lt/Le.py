@@ -12,18 +12,18 @@ def apply(lt, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, x, b = Symbol(real=True, given=True)
     Eq << apply(a < x, x <= b)
 
     Eq << ~Eq[2]
 
-    Eq << Algebra.Ge.of.Ge.Ge.apply(Eq[-1], Eq[1])
+    Eq << Nat.Ge.of.Ge.Ge.apply(Eq[-1], Eq[1])
 
     Eq <<= Eq[0] & Eq[-1]
 
-    
+
 
 
 if __name__ == '__main__':

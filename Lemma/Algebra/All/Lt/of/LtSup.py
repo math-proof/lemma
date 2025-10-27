@@ -9,7 +9,7 @@ def apply(le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     y, m, M, x = Symbol(real=True)
     f = Function(real=True)
@@ -23,7 +23,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.args[0].simplify()
 
     Eq << Eq[-1].this.expr.apply(Algebra.All.And.of.Cond.All, simplify=None)
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Lt.of.Lt.Lt)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.Lt.of.Lt.Lt)
 
 
 if __name__ == '__main__':

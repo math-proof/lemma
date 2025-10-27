@@ -14,7 +14,7 @@ def apply(x_less_than_a, y_less_than_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x, y, a, b = Symbol(real=True)
 
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Algebra.LeMul.of.Le.Le.apply(Eq[0], Eq[1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.MulAbsS.eq.AbsMul)
+    Eq << Eq[-1].this.lhs.apply(Int.MulAbsS.eq.AbsMul)
 
 
 if __name__ == '__main__':

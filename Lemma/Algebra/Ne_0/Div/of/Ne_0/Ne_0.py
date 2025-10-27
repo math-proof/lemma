@@ -10,7 +10,7 @@ def apply(is_nonzero_x, is_nonzero_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(complex=True)
     Eq << apply(Unequal(x, 0), Unequal(y, 0))
@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << Algebra.Inv.ne.Zero.of.Ne_0.apply(Eq[1])
 
 
-    Eq << Algebra.Mul.ne.Zero.of.Ne_0.Ne_0.apply(Eq[-1], Eq[0])
+    Eq << Nat.Mul.ne.Zero.of.Ne_0.Ne_0.apply(Eq[-1], Eq[0])
 
 
 

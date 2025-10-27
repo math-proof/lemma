@@ -13,7 +13,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Int
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.simplify()
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)
 
 
 if __name__ == '__main__':

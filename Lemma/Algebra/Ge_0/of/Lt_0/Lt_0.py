@@ -10,12 +10,12 @@ def apply(is_negative_x, is_negative_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x, y = Symbol(real=True)
 
     Eq << apply(x < 0, y < 0)
 
-    Eq << Algebra.Gt_0.of.Lt_0.Lt_0.apply(Eq[0], Eq[1])
+    Eq << Int.Gt_0.of.Lt_0.Lt_0.apply(Eq[0], Eq[1])
 
     Eq << Algebra.Ge_0.of.Gt_0.apply(Eq[-1])
 

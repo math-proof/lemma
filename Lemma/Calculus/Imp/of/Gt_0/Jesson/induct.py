@@ -25,7 +25,7 @@ def apply(is_positive, x=None, w=None, i=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Bool, Finset
+    from Lemma import Algebra, Set, Calculus, Bool, Finset, Nat
 
     n = Symbol(integer=True, positive=True, given=False)
     a, b = Symbol(real=True)
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Eq.lt.this.apply(Bool.Imp.flatten)
 
@@ -175,7 +175,7 @@ def prove(Eq):
 
     Eq <<= Eq.hypothesis & Eq[-1]
 
-    Eq << Eq[-1].this.find(GreaterEqual & GreaterEqual).apply(Algebra.Ge.of.Ge.Ge)
+    Eq << Eq[-1].this.find(GreaterEqual & GreaterEqual).apply(Nat.Ge.of.Ge.Ge)
 
     Eq << Imply(Eq[1], Eq.induct, plausible=True)
 

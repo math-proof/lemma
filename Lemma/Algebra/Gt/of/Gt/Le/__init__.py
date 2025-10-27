@@ -13,14 +13,14 @@ def apply(b_greater_than_x, a_less_than_x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     a, x, b = Symbol(real=True)
 
     Eq << apply(b > x, a <= x)
 
     Eq << Eq[1].reversed
 
-    Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[0], Eq[-1])
+    Eq << Nat.Gt.of.Gt.Ge.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

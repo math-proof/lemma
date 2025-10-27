@@ -13,11 +13,11 @@ def apply(sub):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
     x = Symbol(real=True)
     Eq << apply(ceil(x) - x)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Frac.eq.Sub_Floor)
+    Eq << Eq[-1].this.rhs.apply(Rat.Frac.eq.Sub_Floor)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ceil.eq.Neg.Floor)
 

@@ -2,3 +2,9 @@ from . import Lt_0
 from . import Eq_0
 from . import Ceil
 from . import LtFloor
+from . import Frac
+from . import LeFloor
+from . import Floor
+from . import Ne_0
+from . import GeFloor
+from . import GeCeil

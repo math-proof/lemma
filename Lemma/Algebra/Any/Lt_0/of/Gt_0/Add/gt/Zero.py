@@ -12,7 +12,7 @@ def apply(gt_zero, Add_Gt_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[2], x, -Eq[-1].lhs * b / 2)
 
-    Eq << Algebra.Gt_0.of.Gt_0.Gt_0.apply(Eq[-2], Eq[1])
+    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-2], Eq[1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
 

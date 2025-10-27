@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Trigonometry, Algebra, Set, Bool
+    from Lemma import Calculus, Trigonometry, Algebra, Set, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi / 2)))
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq <<= Trigonometry.Ge_0.Sin.of.In_Icc.apply(Eq[-1]), Trigonometry.LeSin.Sqrt.of.In_Icc.apply(Eq[-1])
 
-    Eq << Algebra.Ge.of.Ge.Ge.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Ge.of.Ge.Ge.apply(Eq[-2], Eq[-1])
 
     Eq <<= Algebra.Ge_0.Add.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-3]), Algebra.Ge_0.of.Le.apply(Eq[-2])
 

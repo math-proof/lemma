@@ -17,7 +17,7 @@ def apply(f0, suffice, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Finset, Nat
+    from Lemma import Algebra, Set, Bool, Tensor, Finset, Nat, Int
 
     n = Symbol(integer=True, nonnegative=True, given=False)
     f = Symbol(integer=True, shape=(oo,))
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Add_Stack.eq.Stack_Add)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs.expr.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
@@ -93,7 +93,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs().expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs().expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs().expr.simplify(wrt=True)
 
@@ -103,7 +103,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().expr.simplify()
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Eye)
 

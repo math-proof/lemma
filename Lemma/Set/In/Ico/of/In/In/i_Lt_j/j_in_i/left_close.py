@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_Sub_1.of.Ge.apply(Eq[-2])
 
-    Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[-1], Eq[6])
+    Eq << Nat.Gt.of.Gt.Ge.apply(Eq[-1], Eq[6])
 
     Eq << Nat.Ge.of.Gt.apply(Eq[-1])
 

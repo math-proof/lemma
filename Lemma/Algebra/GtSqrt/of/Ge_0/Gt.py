@@ -10,12 +10,12 @@ def apply(is_nonnegative, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x >= 0, y > x)
 
-    Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[1], Eq[0])
+    Eq << Nat.Gt.of.Gt.Ge.apply(Eq[1], Eq[0])
 
     Eq << Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-1])
 

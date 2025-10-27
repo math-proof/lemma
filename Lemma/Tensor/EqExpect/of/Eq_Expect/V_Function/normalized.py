@@ -16,7 +16,7 @@ def apply(Q_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Bool
+    from Lemma import Algebra, Probability, Calculus, Bool, Rat
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -27,7 +27,7 @@ def prove(Eq):
     γ = Symbol(domain=Interval(0, 1, left_open=True)) # Discount factor: penalty to uncertainty of future rewards; myopic for γ = 0; and far-sighted for γ = 1
     Eq << apply(Equal((Q ^ γ)(s[t].var, a[t].var), (1 - γ) * γ ** Stack[k](k) @ Expectation(r[t:] | s[t] & a[t])))
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Probability.Ne_0.of.Ne_0.delete.apply(Eq[-1], 0)
 

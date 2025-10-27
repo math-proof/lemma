@@ -10,14 +10,14 @@ def apply(ge, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Finset
 
     a, b = Symbol(integer=True, given=True)
     n = Symbol(integer=True)
     f = Function(integer=True)
     Eq << apply(a >= b, Sum[n:a:b](f(n)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Set.Eq_Empty.Ico.of.Ge.apply(Eq[0])
 

@@ -13,7 +13,7 @@ def apply(contains1, contains2, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     a, b, x0, x1 = Symbol(real=True)
     domain = Interval(a, b, left_open=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq.ge
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 

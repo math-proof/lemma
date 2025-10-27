@@ -33,7 +33,7 @@ def apply(forall, exists):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
     y, x = Symbol(real=True)
     f, g = Function(integer=True)
 
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.of.AllSetOf.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Gt.given.Gt_Add, 1)
+    Eq << Eq[-1].this.lhs.apply(Int.Gt.given.Gt_Add, 1)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 

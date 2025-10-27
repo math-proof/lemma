@@ -63,7 +63,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Finset
 
     i, j, d, a = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -71,11 +71,11 @@ def prove(Eq):
     g = Symbol(shape=(oo, oo), real=True)
     Eq << apply(Sum[i:j + d:n, j:a:n - d](f[i] * g[i, j]))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[0].this.lhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.lhs.expr.args[-1].arg.apply(Set.In.In.transform.i_Ge_j)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap)
 

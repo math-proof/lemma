@@ -10,12 +10,12 @@ def apply(ge_0, ge_1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     a, x, y, b = Symbol(real=True, given=True)
     Eq << apply(x >= a, y >= b)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.lhs.apply(Nat.Min.eq.IteLe)
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
@@ -23,13 +23,13 @@ def prove(Eq):
 
     Eq << Algebra.Ge_Min.apply(a, b)
 
-    Eq << Algebra.Ge.of.Ge.Ge.apply(Eq[0], Eq[-1])
+    Eq << Nat.Ge.of.Ge.Ge.apply(Eq[0], Eq[-1])
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[-1], Eq[-3], invert=True)
 
     Eq << Algebra.Ge_Min.apply(b, a)
 
-    Eq << Algebra.Ge.of.Ge.Ge.apply(Eq[1], Eq[-1])
+    Eq << Nat.Ge.of.Ge.Ge.apply(Eq[1], Eq[-1])
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[-1], Eq[-3], invert=True)
 

@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x = Symbol(real=True)
     S = Symbol(etype=dtype.real, given=True, empty=False)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Bool.All_And.of.All.All.apply(Eq[0], Eq[2])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Ge.Ge)
+    Eq << Eq[-1].this.expr.apply(Nat.Ge.of.Ge.Ge)
 
 
 

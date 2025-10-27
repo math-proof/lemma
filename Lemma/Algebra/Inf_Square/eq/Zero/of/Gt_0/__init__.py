@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.args[0].apply(Algebra.Gt_0.Sqrt.of.Gt_0), Eq[-1].this.lhs.args[0].apply(Algebra.GtMul.of.Gt_0.Gt_1, 4)
 
-    Eq <<= Eq[-1].this.lhs.apply(Algebra.Gt.of.Gt.Gt)
+    Eq <<= Eq[-1].this.lhs.apply(Nat.Gt.of.Gt.Gt)
 
     Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-2])
 

@@ -11,7 +11,7 @@ def apply(is_nonnegative, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x >= 0, LessEqual(x, y))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq.ou = Eq[-1].subs(t, sqrt(y))
 
-    Eq << Algebra.Ge.of.Le.Ge.apply(Eq[1], Eq[0])
+    Eq << Nat.Ge.of.Le.Ge.apply(Eq[1], Eq[0])
 
     Eq << Algebra.GeSqrt_0.of.Ge_0.apply(Eq[-1])
 

@@ -10,7 +10,7 @@ def apply(eq_conditioned, dist):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Set, Trigonometry, Bool
+    from Lemma import Probability, Algebra, Calculus, Set, Trigonometry, Bool, Nat
 
     i = Symbol(integer=True)
     x = Symbol(shape=(oo,), real=True, random=True)
@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.Y_def.reversed)
 
-    Eq << Algebra.Eq.Ufn.given.Eq.Ufn.apply(Eq[-1], Eq[-3])
+    Eq << Nat.Eq.UnaryFn.given.Eq.UnaryFn.apply(Eq[-1], Eq[-3])
 
     Eq << Eq[-1].this.lhs.apply(Calculus.Grad.eq.Integral)
 

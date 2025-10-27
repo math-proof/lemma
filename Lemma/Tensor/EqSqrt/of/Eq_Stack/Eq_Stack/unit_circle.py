@@ -13,7 +13,7 @@ def apply(eq_F, eq_F_quote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Tensor
+    from Lemma import Algebra, Trigonometry, Tensor, Nat
 
     n, b = Symbol(positive=True, integer=True)
     d = Symbol(integer=True, positive=True, even=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add).apply(Tensor.Add_Stack.eq.Stack_Add)
 
-    Eq << Eq[-1].this.find(Add).apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[-1].this.find(Add).apply(Nat.AddIteS.eq.IteAnd)
 
     Eq << Eq[-1].this.find(Cos ** 2).apply(Trigonometry.Square.Cos.eq.Sub.Square.Sin, simplify=None)
 

@@ -5,6 +5,3 @@ from . import Minima
 from . import Add
 from . import Ite
 from . import Square
-from . import IteLe
-from . import IteGt
-from . import IteLt

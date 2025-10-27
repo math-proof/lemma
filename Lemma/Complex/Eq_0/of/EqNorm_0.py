@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Int, Nat
+    from Lemma import Algebra, Int, Int, Nat, Complex
 
     x = Symbol(complex=True, given=True)
     Eq << apply(Equal(abs(x), 0))
 
-    Eq << Eq[0].this.lhs.arg.apply(Algebra.Expr.eq.AddRe_MulIIm)
+    Eq << Eq[0].this.lhs.arg.apply(Complex.Expr.eq.AddRe_MulIIm)
 
-    Eq.Square_is_zero = Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=2)
+    Eq.Square_is_zero = Nat.EqPowS.of.Eq.apply(Eq[-1], exp=2)
 
     Eq.Im_is_positive = Greater(Im(x) ** 2, 0, plausible=True)
 
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq.Re_is_zero = Int.Eq_0.of.EqSquare_0.apply(Eq[-1])
 
-    Eq << Algebra.Expr.eq.AddRe_MulIIm.apply(x)
+    Eq << Complex.Expr.eq.AddRe_MulIIm.apply(x)
 
     Eq << Eq[-1].subs(Eq.Im_is_zero, Eq.Re_is_zero)
 

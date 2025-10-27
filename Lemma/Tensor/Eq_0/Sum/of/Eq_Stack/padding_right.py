@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq[-1], Eq[-3], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Le.Ge)
+    Eq << Eq[-1].this.expr.apply(Nat.Ge.of.Le.Ge)
 
     Eq << Eq[0][k] * k
     Eq << Eq[-2].subs(Eq[-1])

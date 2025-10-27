@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Tensor, Int
+    from Lemma import Discrete, Algebra, Set, Tensor, Int, Finset
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
     k0, k1, k2 = Eq[-1].rhs.variables
     Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Cond.Is.And.subst)

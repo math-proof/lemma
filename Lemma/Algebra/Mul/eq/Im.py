@@ -11,13 +11,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex
 
     c = Symbol(real=True)
     z = Symbol(complex=True)
     Eq << apply(Im(z) * c)
 
-    Eq << Algebra.Expr.eq.AddRe_MulIIm.apply(z)
+    Eq << Complex.Expr.eq.AddRe_MulIIm.apply(z)
 
     Eq << Eq[0].subs(Eq[-1])
 

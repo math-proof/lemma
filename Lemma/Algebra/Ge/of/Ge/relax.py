@@ -16,7 +16,7 @@ def apply(given, lower=None, upper=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True, given=True)
     z = Symbol(domain=Interval(-oo, y))
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(y, z, plausible=True)
 
-    Eq << Algebra.Ge.of.Ge.Ge.apply(Eq[0], Eq[-1])
+    Eq << Nat.Ge.of.Ge.Ge.apply(Eq[0], Eq[-1])
 
 
 if __name__ == '__main__':

@@ -10,12 +10,12 @@ def apply(b_greater_than_x, x_eq_a):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     a, x, b = Symbol(real=True)
 
     Eq << apply(b > x, Equal(x, a))
 
-    Eq << Algebra.Gt.of.Gt.Eq.apply(Eq[0], Eq[1])
+    Eq << Nat.Gt.of.Gt.Eq.apply(Eq[0], Eq[1])
 
     Eq << Eq[-1].reversed
 

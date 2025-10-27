@@ -23,7 +23,7 @@ def apply(eq_D, eq_Ah, eq_Al, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Discrete, Algebra, Bool
+    from Lemma import Tensor, Discrete, Algebra, Bool, Nat
 
     n, d_z = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(ExprCondPair)().expr.args[0].simplify()
 
-    Eq << Eq[-1].this.find(ExprCondPair[2]).expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.find(ExprCondPair[2]).expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.find(ExprCondPair)().find(Sum)().expr.simplify()
 
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.simplify(wrt=True)
 
-    Eq.divisor_definition = Eq[-1].this.rhs.apply(Algebra.Ite.eq.SubIte)
+    Eq.divisor_definition = Eq[-1].this.rhs.apply(Nat.Ite.eq.SubIte)
 
     Eq << Eq.divisor_definition.find(ExprCondPair[2]).find(Sum).this.apply(Algebra.Sum.eq.ReducedSum)
 
@@ -122,13 +122,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this(i).find(ExprCondPair)().expr.simplify()
 
-    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs.expr.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
     Eq << Eq[-1].this.rhs.expr.simplify(wrt=i)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Ite.eq.SubIte)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.Ite.eq.SubIte)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Add)
 
@@ -160,11 +160,11 @@ def prove(Eq):
 
     Eq << Eq.zi_definition.this.rhs.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i,))
 

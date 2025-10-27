@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
 
-    Eq <<= Rat.LtFloor.of.Lt.apply(Eq[-1]), Algebra.GeFloor.of.Gt.apply(Eq[-2])
+    Eq <<= Rat.LtFloor.of.Lt.apply(Eq[-1]), Rat.GeFloor.of.Gt.apply(Eq[-2])
 
     Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-2])
 

@@ -22,12 +22,12 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Nat, Nat
+    from Lemma import Algebra, Probability, Calculus, Nat, Nat, Rat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x))
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq.y_nonzero, Eq.z_nonzero = Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

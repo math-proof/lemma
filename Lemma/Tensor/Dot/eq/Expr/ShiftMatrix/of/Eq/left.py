@@ -10,7 +10,7 @@ def apply(eq, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Nat
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), real=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.expr.args[-1].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.expr.args[-1].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs().expr.args[2]().expr.simplify(wrt=Eq[-1].rhs.variable)
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.expr.args[2].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.expr.args[2].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs().expr.args[1]().expr.simplify(wrt=Eq[-1].rhs.variable)
 

@@ -12,7 +12,7 @@ def apply(fraction):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     n = Symbol(integer=True)
     Eq << apply(frac(-n / 2))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Cond.Any.given.Any.And, simplify=None), Eq[-1].this.rhs.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
 
-    Eq <<= Eq[-2].this.find(And).apply(Algebra.Eq.Ufn.given.Eq.Ufn), Eq[-1].this.find(And).apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq <<= Eq[-2].this.find(And).apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn), Eq[-1].this.find(And).apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Any.of.Eq_even)
 

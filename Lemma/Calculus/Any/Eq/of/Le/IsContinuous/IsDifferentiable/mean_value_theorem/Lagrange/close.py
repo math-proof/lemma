@@ -16,7 +16,7 @@ def apply(le, is_continuous, is_differentiable):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool, Set
+    from Lemma import Calculus, Algebra, Bool, Set, Nat
 
     from Lemma.Calculus.Any.Eq.Rolle.of.Lt.IsContinuous.IsDifferentiable.Eq import is_differentiable
     from Lemma.Calculus.All.Any.Eq.of.All_Eq.intermediate_value_theorem import is_continuous
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Set.AllIn_SDiff.of.All.apply(Eq[2], Interval(a, b, left_open=True, right_open=True))
 

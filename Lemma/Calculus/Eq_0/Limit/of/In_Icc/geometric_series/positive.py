@@ -11,7 +11,7 @@ def apply(el, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Nat, Int
+    from Lemma import Calculus, Algebra, Set, Bool, Nat, Int, Rat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, given=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Bool.All.given.Imp.apply(Eq[-1])
 
-    Eq << Algebra.GeCeil.apply(Eq.Ceiling_el.lhs.arg)
+    Eq << Rat.GeCeil.apply(Eq.Ceiling_el.lhs.arg)
 
     Eq << Nat.Gt_Sub_1.of.Ge.apply(Eq[-1], step=1)
 

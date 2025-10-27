@@ -11,22 +11,22 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Complex, Nat
 
     z = Symbol(complex=True, given=True)
     Eq << apply(Equal(z, 0))
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.lhs.apply(Algebra.Expr.eq.AddRe_MulIIm)
+    Eq << Eq[-2].this.lhs.lhs.apply(Complex.Expr.eq.AddRe_MulIIm)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqPowS.of.Eq, exp=2)
+    Eq << Eq[-1].this.lhs.apply(Nat.EqPowS.of.Eq, exp=2)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.And.Eq_0.of.Add.eq.Zero)
 
-    Eq << Eq[2].this.rhs.lhs.apply(Algebra.Expr.eq.AddRe_MulIIm)
+    Eq << Eq[2].this.rhs.lhs.apply(Complex.Expr.eq.AddRe_MulIIm)
 
     Eq << Bool.Imp_And.given.Imp.And.subst.apply(Eq[-1], 1)
 

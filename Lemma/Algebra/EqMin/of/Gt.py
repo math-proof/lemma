@@ -11,12 +11,12 @@ def apply(given, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x > y)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.lhs.apply(Nat.Min.eq.IteLe)
 
     Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 

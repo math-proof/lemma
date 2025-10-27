@@ -14,11 +14,11 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(NotElement(x, Integers))
 
-    Eq << Algebra.GeCeil.apply(x)
+    Eq << Rat.GeCeil.apply(x)
 
     Eq << Set.GtFrac_0.of.NotIn_Range.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Frac.eq.Sub_Floor)
+    Eq << Eq[-1].this.lhs.apply(Rat.Frac.eq.Sub_Floor)
 
     Eq << Int.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
 
-    Eq.gt_floor = Algebra.Floor.gt.Sub_1.apply(x)
+    Eq.gt_floor = Rat.Floor.gt.Sub_1.apply(x)
 
     Eq << Eq.gt_floor + 1
 

@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0].reversed)
 
-    Eq << Algebra.Ne_0.Ne_0.of.Mul.ne.Zero.apply(Eq[-1])
+    Eq << Nat.Ne_0.Ne_0.of.Mul.ne.Zero.apply(Eq[-1])
 
     Eq << Algebra.Inv.ne.Zero.of.Ne_0.apply(Eq[-2])
 

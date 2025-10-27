@@ -24,7 +24,7 @@ def apply(pow):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     z, y = Symbol(complex=True, given=True)
     n = Symbol(integer=True, given=True, positive=True)
@@ -33,7 +33,7 @@ def prove(Eq):
     x = Symbol(y * z)
     Eq << x.this.definition
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=n)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=n)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Pow.eq.Mul.split.base)
 

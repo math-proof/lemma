@@ -16,11 +16,11 @@ def prove(Eq):
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(Product[x:A](f(x)), cond=B)
 
-    Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Prod_Pow_Bool)
+    Eq << Eq[-1].this.find(Product).apply(Finset.Prod.eq.Prod_Pow_Bool)
 
-    Eq << Eq[-1].this.rhs.find(Product).apply(Algebra.Prod.eq.Prod_Pow_Bool)
+    Eq << Eq[-1].this.rhs.find(Product).apply(Finset.Prod.eq.Prod_Pow_Bool)
 
-    Eq << Eq[-1].this.find(Product[2]).apply(Algebra.Prod.eq.Prod_Pow_Bool)
+    Eq << Eq[-1].this.find(Product[2]).apply(Finset.Prod.eq.Prod_Pow_Bool)
 
     Eq << Eq[-1].this.rhs.apply(Finset.MulProdS.eq.Prod_Mul)
 

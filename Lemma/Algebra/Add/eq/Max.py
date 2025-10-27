@@ -13,15 +13,15 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, y, z = Symbol(real=True)
     Eq << apply(Max(x, y) - z)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[-1].this.rhs.apply(Nat.Max.eq.IteGe)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ite.eq.SubIte)
+    Eq << Eq[-1].this.rhs.apply(Nat.Ite.eq.SubIte)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[-1].this.lhs.apply(Nat.Max.eq.IteGe)
 
 
 if __name__ == '__main__':

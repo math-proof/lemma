@@ -39,7 +39,7 @@ def apply(self, coeff=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -49,7 +49,7 @@ def prove(Eq):
     i = Symbol(domain=Range(n * 3))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[-1], i)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.SubIte)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ite.eq.SubIte)
 
 
 

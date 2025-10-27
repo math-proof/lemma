@@ -16,4 +16,3 @@ from . import Ite
 from . import Sup
 from . import Inf
 from . import Ceil
-from . import IteAndNeS_0

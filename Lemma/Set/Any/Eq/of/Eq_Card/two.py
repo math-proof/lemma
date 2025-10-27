@@ -14,13 +14,13 @@ def apply(given, x=None, y=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int, Int
+    from Lemma import Algebra, Set, Bool, Int, Int, Nat
 
     k = Symbol(integer=True, positive=True)
     S = Symbol(etype=dtype.integer[k])
     Eq << apply(Equal(Card(S), 2))
 
-    Eq << Algebra.Ge.of.Eq.apply(Eq[0])
+    Eq << Nat.Ge.of.Eq.apply(Eq[0])
 
     Eq << Set.Any.Ne.of.Ge.apply(Eq[-1], *Eq[1].variables)
 
@@ -37,7 +37,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Card).apply(Set.Card.eq.Add)
 
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)
     Eq << Eq[-1].subs(Eq[0])
     Eq << Eq[-1].this.expr - 2
     Eq << Eq[-1].this.expr.apply(Int.Eq.of.Sub.eq.Zero)

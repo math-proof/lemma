@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x = Symbol(real=True, given=True)
     Eq << apply(Unequal(x, 0))
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=2)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=2)
     Eq << ~Eq[-1]
 
 

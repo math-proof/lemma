@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1].apply(Nat.Gt_Sub_1.of.Ge, 0)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt_0.of.Gt_0.Gt_0)
 
     Eq <<= Eq.is_positive & Eq[-1]
 

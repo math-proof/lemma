@@ -33,11 +33,11 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(Add(Sum[k:A - B](f(k)), Sum[k:A & B](f(k))))
 
-    Eq << Eq[0].this.find(Sum).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[0].this.find(Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.find(Sum + ~Sum).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.find(Sum + ~Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.lhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 

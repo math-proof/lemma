@@ -12,12 +12,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry
+    from Lemma import Algebra, Trigonometry, Complex
 
     z = Symbol(complex=True, given=True)
     Eq << apply(cos(Arg(z)))
 
-    Eq << Algebra.Expr.eq.AddRe_MulIIm.apply(z)
+    Eq << Complex.Expr.eq.AddRe_MulIIm.apply(z)
 
     Eq << Algebra.EqArg.of.Eq.apply(Eq[1])
 

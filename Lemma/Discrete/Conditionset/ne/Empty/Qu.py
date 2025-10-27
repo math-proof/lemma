@@ -12,7 +12,7 @@ def apply(n, u=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Set, Algebra, Tensor, Bool
+    from Lemma import Discrete, Set, Algebra, Tensor, Bool, Nat
 
     n = Symbol(integer=True, positive=True, given=True)
     Eq << apply(n)
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In.given.Subset.Cup.Finset)
 
-    Eq << Eq[-1].this.args[1:].apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.args[1:].apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Set.Ne_Empty.of.Any_In.apply(Eq.plausible)
 

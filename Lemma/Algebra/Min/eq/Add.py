@@ -39,17 +39,17 @@ def apply(self, common_term=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, y = Symbol(real=True)
     r = Symbol(real=True, positive=True)
 
     Eq << apply(Min(x * r + 1, y * r + 1))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.lhs.apply(Nat.Min.eq.IteLe)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.SubIte)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ite.eq.SubIte)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.rhs.apply(Nat.Min.eq.IteLe)
 
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@ def apply(Q_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Bool
+    from Lemma import Algebra, Probability, Calculus, Bool, Rat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -29,7 +29,7 @@ def prove(Eq):
     # V Function : State-Value Function, aka expected cumulative reward
     Eq << apply(Equal((Q[π] ^ γ)(s[t].var, a[t].var), γ ** Stack[k](k) @ Expectation[r[t:], a:π](r[t:] | s[t] & a[t])))
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

@@ -9,12 +9,12 @@ def apply(x, y, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x, y)
 
-    Eq << Eq[0].this.rhs.apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[0].this.rhs.apply(Nat.Max.eq.IteGe)
 
 
 if __name__ == '__main__':

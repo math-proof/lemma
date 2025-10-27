@@ -9,7 +9,7 @@ def apply(eq_R):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Discrete
+    from Lemma import Tensor, Algebra, Discrete, Int
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # b denotes 10000
     b = Symbol(integer=True, positive=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(i, 0)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.find(Piecewise).apply(Int.Ite.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Delta.eq.Eye)
 

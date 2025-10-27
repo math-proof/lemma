@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
     x = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
     Eq << apply(functions.Bool(Or(Element(x, A), Element(x, B))))
@@ -22,13 +22,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd)
 
     Eq << functions.Bool(Element(x, A & B)).this.apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-2] - Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd)
 
     Eq << Eq[1].subs(Eq[-1])
 

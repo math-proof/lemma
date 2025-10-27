@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.definition
 
-    Eq << Eq[-2].this.expr.apply(Algebra.Le.of.Ge.Le, Eq[-1])
+    Eq << Eq[-2].this.expr.apply(Nat.Le.of.Ge.Le, Eq[-1])
 
     Eq.any = Algebra.Any.All.of.Any_All.All.apply(Eq.less_than, Eq[-1])
 

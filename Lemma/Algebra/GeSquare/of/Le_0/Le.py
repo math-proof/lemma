@@ -10,7 +10,7 @@ def apply(is_nonpositive, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x <= 0, y <= x)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0] * 2
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Le.of.Le.Le.apply(Eq[-2], Eq[-1])
 
     Eq << Algebra.Le_0.of.Le.apply(Eq[1])
 

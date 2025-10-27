@@ -16,7 +16,7 @@ def apply(x_less_than_1, y_less_than_1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True, nonnegative=True)
     Eq << apply(x <= 1, y <= 1)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Algebra.LeMax.of.Le.Le.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq[-1], Eq.le)
+    Eq << Nat.Le.of.Le.Le.apply(Eq[-1], Eq.le)
 
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@ def apply(given, left_open=False, right_open=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x > y)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Ge.Le.of.In_Icc)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Le.of.Le.Ge)
+    Eq << Eq[-1].this.expr.apply(Nat.Le.of.Le.Ge)
 
     Eq << ~Eq[-1]
 

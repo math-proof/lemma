@@ -18,9 +18,9 @@ def prove(Eq):
     r = Symbol(real=True)
     Eq << apply(r > 0, Min(x, y))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.lhs.apply(Nat.Min.eq.IteLe)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.rhs.args[1].apply(Nat.Min.eq.IteLe)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.Mul)
 

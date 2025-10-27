@@ -12,13 +12,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(Min(x, y))
 
     Eq << Eq[-1].this.find(GreaterEqual).reversed
-    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.lhs.apply(Nat.Min.eq.IteLe)
 
 
 if __name__ == '__main__':

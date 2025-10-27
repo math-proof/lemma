@@ -17,7 +17,7 @@ def apply(equality, inequality):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool
+    from Lemma import Probability, Algebra, Bool, Nat
 
     x, y = Symbol(real=True, random=True)
     given = Equal(Pr(x, y), Pr(x) * Pr(y))
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.collect(Pr(x))
 
-    Eq << Algebra.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
+    Eq << Nat.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[1]
 

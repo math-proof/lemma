@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= Eq.eq & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq <<= Eq.suffice_eq & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 

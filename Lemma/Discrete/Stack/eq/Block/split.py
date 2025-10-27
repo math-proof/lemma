@@ -12,7 +12,7 @@ def apply(self, pivot):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Int
 
     n = Symbol(positive=True, integer=True, given=False)
     m = Symbol(domain=Range(2, oo))
@@ -26,7 +26,7 @@ def prove(Eq):
     j = Symbol(domain=Range(n))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[-1], j)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Int.Ite.eq.AddMulS)
 
 
 

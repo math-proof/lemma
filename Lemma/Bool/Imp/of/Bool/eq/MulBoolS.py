@@ -19,7 +19,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     n = Symbol(integer=True, nonnegative=True)
     f, h, g = Symbol(integer=True, shape=(oo,))
@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.collect(Eq[0].lhs)
 
-    Eq << Algebra.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
+    Eq << Nat.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(Equal[0]).apply(Algebra.Ne_1.of.Eq_0, One())
+    Eq << Eq[-1].this.find(Equal[0]).apply(Nat.Ne_1.of.Eq_0, One())
 
     Eq << Bool.ImpNot.of.Or.apply(Eq[-1], pivot=1)
 

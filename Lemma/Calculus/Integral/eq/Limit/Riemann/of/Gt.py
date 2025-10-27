@@ -17,13 +17,13 @@ def apply(gt, self, n=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus
+    from Lemma import Algebra, Calculus, Nat
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)
     Eq << apply(a > b, Integral[x:a:b](f(x)))
 
-    Eq << Algebra.Lt.of.Gt.reverse.apply(Eq[0])
+    Eq << Nat.Lt.of.Gt.apply(Eq[0])
 
     Eq << Calculus.Integral.eq.Mul.Limit.Riemann.of.Lt.apply(Eq[-1], Integral[x:b:a](f(x)))
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(LessEqual).reversed
 
-    Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.find(Add).apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq.eq_integral.subs(Eq[-1])
 

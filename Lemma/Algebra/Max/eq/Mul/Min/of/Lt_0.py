@@ -18,15 +18,15 @@ def apply(is_negative, self, div=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y = Symbol(real=True)
     r = Symbol(real=True)
     Eq << apply(r < 0, Max(r * x, r * y))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[-1].this.lhs.apply(Nat.Max.eq.IteGe)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.rhs.args[1].apply(Nat.Min.eq.IteLe)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.Mul)
 

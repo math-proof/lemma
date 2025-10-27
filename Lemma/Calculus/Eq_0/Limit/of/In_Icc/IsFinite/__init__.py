@@ -16,7 +16,7 @@ def apply(el, is_finite):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Nat
+    from Lemma import Algebra, Set, Calculus, Nat, Int
 
     x = Symbol(real=True, shape=(oo,))
     γ = Symbol(real=True)
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq.le.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.MulAbsS.eq.AbsMul)
+    Eq << Eq[-1].this.find(Mul).apply(Int.MulAbsS.eq.AbsMul)
 
     Eq << GreaterEqual(Eq[-1].lhs.expr, 0, plausible=True)
 

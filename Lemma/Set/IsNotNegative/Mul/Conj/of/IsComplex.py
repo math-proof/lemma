@@ -10,14 +10,14 @@ def apply(is_complex):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Complex
 
     x = Symbol(super_complex=True)
     Eq << apply(Element(x, S.Complexes))
 
     Eq << Set.Eq.of.In.definition.apply(Eq[0])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Expr.eq.AddRe_MulIIm)
+    Eq << Eq[-1].this.lhs.apply(Complex.Expr.eq.AddRe_MulIIm)
 
     Eq << Eq[1].subs(Eq[-1].reversed)
 

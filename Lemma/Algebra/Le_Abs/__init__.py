@@ -10,7 +10,7 @@ def apply(x, negate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat
 
     x = Symbol(real=True, given=True)
     Eq << apply(x)
@@ -21,11 +21,11 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.apply(Algebra.Gt.of.Gt.Ge, ret=0, simplify=None)
+    Eq << Eq[-1].this.apply(Nat.Gt.of.Gt.Ge, ret=0, simplify=None)
 
     Eq << Eq[-1].this.args[0].apply(Int.EqAbs.of.Gt_0, simplify=None)
 
-    Eq << Eq[-1].this.apply(Algebra.Gt.of.Gt.Eq)
+    Eq << Eq[-1].this.apply(Nat.Gt.of.Gt.Eq)
 
 
 

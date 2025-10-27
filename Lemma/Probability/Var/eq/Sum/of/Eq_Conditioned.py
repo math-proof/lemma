@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq.infer = Eq[-1].subs(n, i)
 
-    Eq << Eq.eq_var.this.find(Sum[2]).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq.eq_var.this.find(Sum[2]).apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
@@ -39,7 +39,7 @@ def prove(Eq):
     t = Symbol(integer=True)
     Eq.infer = Eq.infer.subs(i, t).subs(j, i).subs(t, j)
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 

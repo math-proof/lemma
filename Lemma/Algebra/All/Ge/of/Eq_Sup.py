@@ -9,13 +9,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     M, x, a, b = Symbol(real=True)
     f = Function(real=True)
     Eq << apply(Equal(M, Sup[x:a:b](f(x))))
 
-    Eq << Algebra.Ge.of.Eq.apply(Eq[0]).reversed
+    Eq << Nat.Ge.of.Eq.apply(Eq[0]).reversed
 
     Eq << Algebra.All.Le.of.LeSup.apply(Eq[-1])
     Eq << Eq[-1].this.expr.reversed

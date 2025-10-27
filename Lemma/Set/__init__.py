@@ -205,7 +205,6 @@ from . import NotInSub
 from . import InterSingletonS
 from . import IteAnd
 from . import CupIn_Ico
-from . import Cup_Ufn
 from . import NeFrac_0
 from . import Cup_Ioc
 from . import Add
@@ -224,3 +223,4 @@ from . import In_Range
 from . import GtFrac_0
 from . import In_Ioo
 from . import EqSDiffS
+from . import Cup_UnaryFn

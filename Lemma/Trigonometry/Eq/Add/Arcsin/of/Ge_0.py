@@ -10,14 +10,14 @@ def apply(is_nonnegative):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Set, Bool
+    from Lemma import Trigonometry, Algebra, Set, Bool, Int
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(x >= 0)
 
     Eq << Trigonometry.Cos.eq.Sub.apply(cos(Eq[1].lhs))
 
-    Eq << Algebra.EqAbs.of.Ge_0.apply(Eq[0])
+    Eq << Int.EqAbs.of.Ge_0.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 

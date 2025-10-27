@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq.back_subs1 = Eq.back_subs1.this.find(MatPow).apply(Discrete.Inv.eq.Block)
 
-    Eq.back_subs1 = Eq.back_subs1.this.find(-Piecewise).apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq.back_subs1 = Eq.back_subs1.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq.back_subs1 = Eq.back_subs0.subs(Eq.back_subs1)
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq.back_subs2 = Eq.back_subs2.this.find(MatPow).apply(Discrete.Inv.eq.Block)
 
-    Eq.back_subs2 = Eq.back_subs2.this.find(-Piecewise).apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq.back_subs2 = Eq.back_subs2.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq.back_subs2 = Eq.back_subs1.subs(Eq.back_subs2)
 
@@ -112,7 +112,7 @@ def prove(Eq):
 
     Eq.back_subs3 = Eq.back_subs3.this.find(MatPow).apply(Discrete.Inv.eq.Block)
 
-    Eq.back_subs3 = Eq.back_subs3.this.find(-Piecewise).apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq.back_subs3 = Eq.back_subs3.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq.back_subs3 = Eq.back_subs2.subs(Eq.back_subs3)
 
@@ -134,7 +134,7 @@ def prove(Eq):
 
     Eq.back_subs4 = Eq.back_subs4.this.find(MatPow).apply(Discrete.Inv.eq.Block)
 
-    Eq.back_subs4 = Eq.back_subs4.this.find(-Piecewise).apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq.back_subs4 = Eq.back_subs4.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq.back_subs4 = Eq.back_subs3.subs(Eq.back_subs4)
 
@@ -156,7 +156,7 @@ def prove(Eq):
 
     Eq.back_subs5 = Eq.back_subs5.this.find(MatPow).apply(Discrete.Inv.eq.Block)
 
-    Eq.back_subs5 = Eq.back_subs5.this.find(-Piecewise).apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq.back_subs5 = Eq.back_subs5.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq.back_subs5 = Eq.back_subs4.subs(Eq.back_subs5)
 
@@ -178,7 +178,7 @@ def prove(Eq):
 
     Eq.back_subs6 = Eq.back_subs6.this.find(MatPow).apply(Discrete.Inv.eq.Block)
 
-    Eq.back_subs6 = Eq.back_subs6.this.find(-Piecewise).apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq.back_subs6 = Eq.back_subs6.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq.back_subs6 = Eq.back_subs5.subs(Eq.back_subs6)
 

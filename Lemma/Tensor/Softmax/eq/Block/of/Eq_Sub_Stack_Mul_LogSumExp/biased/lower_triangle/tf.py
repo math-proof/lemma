@@ -26,7 +26,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Int
+    from Lemma import Algebra, Tensor, Int, Nat
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -73,11 +73,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(-Piecewise).apply(Algebra.Mul.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.AddIteS.eq.IteAnd, swap=True)
+    Eq << Eq[-1].this.rhs.find(Add).apply(Nat.AddIteS.eq.IteAnd, swap=True)
 
-    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq.upper_part = Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Stack.Block)
 

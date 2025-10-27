@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     a = Symbol(integer=True)
     b = Symbol(integer=True, given=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Eq.of.Ge.squeeze)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ge.of.Eq)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ge.of.Eq)
 
 
 

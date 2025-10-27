@@ -92,7 +92,7 @@ def prove(Eq):
 
     Eq << Set.CardUnion.ge.Card.apply(*Eq[-2].rhs.arg.args[::-1])
 
-    Eq << Eq.x_abs_positive_s1.limits_subs(i, j).this.expr.apply(Algebra.Gt.of.Gt.Ge, Eq[-1])
+    Eq << Eq.x_abs_positive_s1.limits_subs(i, j).this.expr.apply(Nat.Gt.of.Gt.Ge, Eq[-1])
 
     Eq.xj_is_positive = Eq[-1].subs(Eq[-4].reversed)
 

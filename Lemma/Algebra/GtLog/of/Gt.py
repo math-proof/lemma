@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(y, 0, plausible=True)
 
-    Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[0], Eq[-1])
+    Eq << Nat.Gt.of.Gt.Ge.apply(Eq[0], Eq[-1])
 
     Eq << Nat.Ne.of.Gt.apply(Eq[-1])
 

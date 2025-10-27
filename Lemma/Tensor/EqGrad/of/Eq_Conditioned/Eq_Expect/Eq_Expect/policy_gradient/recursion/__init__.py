@@ -12,7 +12,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Calculus, Probability, Algebra, Finset
+    from Lemma import Tensor, Calculus, Probability, Algebra, Finset, Rat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -62,7 +62,7 @@ def prove(Eq):
 
     Eq.eq_grad = Eq[-1].this.find(Sum[Integral]).apply(Calculus.Sum.eq.Integral)
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
 
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [-1, -1])
 

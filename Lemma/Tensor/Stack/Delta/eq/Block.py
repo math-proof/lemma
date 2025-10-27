@@ -27,7 +27,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Int
 
     j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -36,7 +36,7 @@ def prove(Eq):
     i = Symbol(domain=Range(n))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], i)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Int.Ite.eq.AddMulS)
 
 
 

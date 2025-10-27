@@ -11,7 +11,7 @@ def apply(is_limited):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Bool
+    from Lemma import Calculus, Set, Algebra, Bool, Int
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Algebra.LtMul.of.Lt.Lt)
 
-    Eq << Eq[-1].this.find(Mul[Abs]).apply(Algebra.MulAbsS.eq.AbsMul)
+    Eq << Eq[-1].this.find(Mul[Abs]).apply(Int.MulAbsS.eq.AbsMul)
 
     Eq << Eq[-1].this.find(Abs[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
 

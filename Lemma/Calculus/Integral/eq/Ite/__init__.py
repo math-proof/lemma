@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool
+    from Lemma import Calculus, Algebra, Bool, Nat
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, integrable=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.find(And).apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
 
 

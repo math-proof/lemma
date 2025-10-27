@@ -9,12 +9,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
     x = Symbol(real=True, given=True)
 
     Eq << apply(Equal(frac(x), 0))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Frac.eq.Sub_Floor)
+    Eq << Eq[0].this.lhs.apply(Rat.Frac.eq.Sub_Floor)
 
     Eq << Eq[1].subs(Eq[-1].reversed)
 

@@ -141,11 +141,11 @@ def prove(Eq):
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(Sum[x:A](f(x)), cond=B)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 

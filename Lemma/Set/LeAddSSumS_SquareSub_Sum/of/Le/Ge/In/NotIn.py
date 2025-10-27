@@ -16,7 +16,7 @@ def apply(le, ge, contains, notcontains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Rat
 
     y_quote = Symbol(integer=True, given=True)
     x, y = Symbol(integer=True)
@@ -24,7 +24,7 @@ def prove(Eq):
     X, Y = Symbol(etype=dtype.integer, finiteset=True, given=True)
     Eq << apply(abs(t[y_quote] - Sum[x:X](t[x]) / Card(X)) <= abs(t[y_quote] - Sum[y:Y](t[y]) / Card(Y)), Card(Y) >= 2, Element(y_quote, Y), NotElement(y_quote, X))
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Bool.Cond.of.And.apply(Eq[-1], 0)
 

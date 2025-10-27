@@ -19,12 +19,12 @@ def apply(eq_x_given_yz, z_given_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Logic, Bool, Nat, Nat
+    from Lemma import Algebra, Probability, Calculus, Logic, Bool, Nat, Nat, Rat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x | y), Equal(z | y, z))
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq.y_nonzero, Eq.yz_nonzero = Bool.And_And.of.And.apply(Eq[-1])
 

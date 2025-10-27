@@ -14,7 +14,7 @@ def apply(le, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     t, x, y, b = Symbol(real=True)
     k = Symbol(real=True, nonnegative=True)
 
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + b
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq[-1], Eq[0])
+    Eq << Nat.Le.of.Le.Le.apply(Eq[-1], Eq[0])
 
 if __name__ == '__main__':
     run()

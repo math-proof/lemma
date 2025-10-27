@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry
+    from Lemma import Algebra, Trigonometry, Nat
 
     n, b = Symbol(positive=True, integer=True)
     d = Symbol(integer=True, positive=True, even=True)
@@ -29,12 +29,12 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul.distribute, simplify=None)
 
-    Eq << Eq[-1].this.find(Pow[Piecewise]).apply(Algebra.Pow_Ite.eq.Ite_PowS, simplify=None)
+    Eq << Eq[-1].this.find(Pow[Piecewise]).apply(Nat.Pow_Ite.eq.Ite_PowS, simplify=None)
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None)
 
 
-    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Algebra.AddIteS.eq.IteAnd, simplify=None)
+    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.AddIteS.eq.IteAnd, simplify=None)
     Eq << Eq[-1].this.rhs.apply(Trigonometry.Sin.eq.Ite, simplify=None)
 
 

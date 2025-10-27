@@ -9,11 +9,11 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
     x = Symbol(real=True)
     Eq << apply(floor(x))
 
-    Eq << Eq[-1].this.find(frac).apply(Algebra.Frac.eq.Sub_Floor)
+    Eq << Eq[-1].this.find(frac).apply(Rat.Frac.eq.Sub_Floor)
 
 if __name__ == '__main__':
     run()

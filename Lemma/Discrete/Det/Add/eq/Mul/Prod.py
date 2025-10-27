@@ -9,7 +9,7 @@ def apply(n, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Tensor, Finset
+    from Lemma import Discrete, Algebra, Bool, Tensor, Finset, Nat
 
     n = Symbol(integer=True, positive=True, given=False)
     a = Symbol(shape=(oo,), complex=True, zero=False)
@@ -69,11 +69,11 @@ def prove(Eq):
 
     Eq << Eq[-2] + Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd, swap=True)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd, swap=True)
 
     Eq << Eq.split.this.rhs.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Stack[~Add]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.find(Stack[~Add]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.find(Add, Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
@@ -97,11 +97,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Add[Stack]).apply(Tensor.Add_Stack.eq.Stack_Add)
 
-    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs.find(Add[Stack]).apply(Tensor.Add_Stack.eq.Stack_Add)
 
-    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.find(ExprCondPair[~Stack])().find(Equal).simplify()
 

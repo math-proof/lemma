@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1])
 
-    Eq << Eq[-1].this.expr.args[1:].apply(Algebra.Ge.of.Ge.Ge, ret=1)
+    Eq << Eq[-1].this.expr.args[1:].apply(Nat.Ge.of.Ge.Ge, ret=1)
 
     Eq << Eq[-1].this.expr.args[1].apply(Algebra.EqMax.of.Ge)
 

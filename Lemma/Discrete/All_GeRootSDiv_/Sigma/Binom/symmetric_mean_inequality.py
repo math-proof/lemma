@@ -16,7 +16,7 @@ def apply(x, k=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     from Lemma.Discrete.Sigma.eq.Add.recurrent import sigma
     n = Symbol(domain=Range(2, oo), given=False)
     x = Symbol(real=True, positive=True, shape=(oo,))
@@ -55,7 +55,7 @@ def prove(Eq):
     k_ = Symbol("k", domain=Range(2, n))
     Eq << t(k_).this.defun()
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=k_)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=k_)
 
     Eq << Eq[-1] * binomial(n, k_)
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << t(k_ + 1).this.defun()
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=k_ + 1)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=k_ + 1)
 
     Eq << Eq[-1] * binomial(n, k_ + 1)
 
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << t(k_ - 1).this.defun()
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=k_ - 1)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=k_ - 1)
 
     Eq << Eq[-1] * binomial(n, k_ - 1)
 

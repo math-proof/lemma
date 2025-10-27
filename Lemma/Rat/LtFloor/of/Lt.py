@@ -9,12 +9,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Rat
     x, y = Symbol(real=True, given=True)
 
     Eq << apply(Less(x, y))
 
-    Eq << Algebra.LeFloor.apply(x)
+    Eq << Rat.LeFloor.apply(x)
 
     Eq << Nat.Lt.of.Le.Lt.apply(Eq[-1], Eq[0])
 

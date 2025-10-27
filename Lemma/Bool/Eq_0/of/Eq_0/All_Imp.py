@@ -18,7 +18,7 @@ def apply(f0, suffice, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
     n = Symbol(integer=True, nonnegative=True, given=False)
     f = Symbol(integer=True, shape=(oo,))
     Eq << apply(Equal(f[0], 0), Imply(Equal(f[n], 0), Equal(f[n + 1], 0)), n=n)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq[0])
 
-    Eq.is_nonzero = Algebra.Ne_0.of.Eq.apply(Eq[-1])
+    Eq.is_nonzero = Nat.Ne_0.of.Eq.apply(Eq[-1])
 
     Eq.suffice = Imply(Unequal(g[n], 0), Unequal(g[n + 1], 0), plausible=True)
 

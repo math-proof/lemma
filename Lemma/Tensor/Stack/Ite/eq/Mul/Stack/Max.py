@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor
+    from Lemma import Algebra, Bool, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     i, j = Symbol(integer=True)
@@ -26,7 +26,7 @@ def prove(Eq):
     i, j = Symbol(domain=Range(n))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], (i, j))
 
-    Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[-1].this.find(Max).apply(Nat.Max.eq.IteGe)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=False)
 
-    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Algebra.Add_Ite.eq.Ite_AddS, simplify=False)
+    Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS, simplify=False)
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=False)
 

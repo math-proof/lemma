@@ -22,7 +22,7 @@ def apply(contains_i, contains_j):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     a, i, j, n, d = Symbol(integer=True)
     Eq << apply(Element(i, Range(a + d, j + d)), Element(j, Range(a, n)))
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge.given.Gt.relax.apply(Eq[6])
 
-    Eq << Algebra.Lt.of.Lt.Lt.apply(Eq[-3], Eq[7])
+    Eq << Nat.Lt.of.Lt.Lt.apply(Eq[-3], Eq[7])
 
 
 if __name__ == '__main__':

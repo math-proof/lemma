@@ -26,7 +26,7 @@ def apply(given, function):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
     i, j = Symbol(integer=True)
 
     A, B = Symbol(etype=dtype.integer)
@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << apply(Iff(Element(i, A) & Element(j, f(i)), Element(j, B) & Element(i, g(j))), h(i, j))
 
-    Eq << Eq[1].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[1].this.lhs.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap)
 

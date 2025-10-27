@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor
+    from Lemma import Algebra, Bool, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     p = Function(bool=True)
@@ -31,11 +31,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite, simplify=None)
 
-    Eq << Eq[-1].this.find(1 - Piecewise).apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.find(1 - Piecewise).apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
 

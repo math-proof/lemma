@@ -16,7 +16,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(Equal(y, x) | Equal(y, -x))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.factor()
 
-    Eq << Algebra.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
+    Eq << Nat.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
 
     Eq << Eq[-1].this.args[1] - x
 

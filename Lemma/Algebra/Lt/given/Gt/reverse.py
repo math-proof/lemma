@@ -9,12 +9,12 @@ def apply(lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(x < a)
 
-    Eq << Algebra.Lt.of.Gt.reverse.apply(Eq[1])
+    Eq << Nat.Lt.of.Gt.apply(Eq[1])
 
 
 

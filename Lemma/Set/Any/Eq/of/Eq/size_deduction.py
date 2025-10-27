@@ -13,13 +13,13 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Nat
 
     S = Symbol(etype=dtype.integer)
     n = Symbol(integer=True, positive=True)
     Eq << apply(Equal(Card(S), n))
 
-    Eq << Algebra.Ge.of.Eq.apply(Eq[0])
+    Eq << Nat.Ge.of.Eq.apply(Eq[0])
 
     Eq << Set.Any_In.of.Ge.apply(Eq[-1], simplify=False)
 

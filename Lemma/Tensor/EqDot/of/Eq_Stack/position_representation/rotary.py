@@ -106,7 +106,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq.A_def_simplified
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd, deep=True, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd, deep=True, simplify=None)
 
     Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Trigonometry.Add.eq.Cos), \
         Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Trigonometry.Sub.eq.Sin), \

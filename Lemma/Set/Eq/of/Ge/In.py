@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[1])
 
-    Eq << Algebra.Le.of.Ge.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Le.of.Ge.Le.apply(Eq[-1], Eq[-2])
 
     Eq << Nat.Eq.of.Ge.Le.apply(Eq[-1], Eq[0])
 

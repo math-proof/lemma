@@ -8,11 +8,11 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
     x = Symbol(real=True)
     Eq << apply(x)
 
-    Eq << Algebra.Floor.gt.Sub_1.apply(x)
+    Eq << Rat.Floor.gt.Sub_1.apply(x)
 
     Eq << Eq[-1] + 1
 

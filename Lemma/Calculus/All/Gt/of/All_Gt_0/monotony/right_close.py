@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Bool
+    from Lemma import Algebra, Set, Calculus, Bool, Nat
 
     a, b, x = Symbol(real=True)
     domain = Interval(a, b)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=a < b)
 

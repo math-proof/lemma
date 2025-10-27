@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Bool.EqUFnS.of.Eq.apply(Eq.x_def, exp)
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[-1], exp=z)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=z)
 
     Eq << Eq[-4].subs(Eq[-1].reversed)
 

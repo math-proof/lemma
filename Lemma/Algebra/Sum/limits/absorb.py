@@ -104,7 +104,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
 
     A, C = Symbol(etype=dtype.integer)
     B = Function(etype=dtype.integer)
@@ -112,9 +112,9 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Sum[x, y, z:C](f(x, y) * functions.Bool(Element(x, A) & Element(y, B(x)))))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[0].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.rhs.find(functions.Bool).apply(Bool.BoolAnd.eq.MulBoolS)
 

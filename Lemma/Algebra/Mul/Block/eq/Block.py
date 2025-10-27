@@ -32,7 +32,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Bool, Algebra
+    from Lemma import Tensor, Bool, Algebra, Nat
 
     n, m = Symbol(integer=True, positive=True)
     A, B, C, D = Symbol(real=True, shape=(m, n))
@@ -41,7 +41,7 @@ def prove(Eq):
     i = Symbol(domain=Range(m * 2))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], i)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
 
 if __name__ == '__main__':

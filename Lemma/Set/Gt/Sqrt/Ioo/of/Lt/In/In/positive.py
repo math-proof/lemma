@@ -13,7 +13,7 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Int
+    from Lemma import Algebra, Set, Int, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(0, 1, left_open=True, right_open=True)), Element(y, Interval(0, 1, left_open=True, right_open=True)))
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq.x_is_positive)
 
-    Eq << Algebra.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
 
     Eq << Algebra.Ge_0.of.Gt_0.apply(Eq[-1])
 

@@ -18,7 +18,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete
+    from Lemma import Algebra, Discrete, Nat
 
     n, a = Symbol(integer=True)
     Eq << apply((-1) ** (n ** 2 + n * (2 * a + 1) + a ** 2 + a))
@@ -26,7 +26,7 @@ def prove(Eq):
     t = Symbol(2 * binomial(n + a + 1, 2))
     Eq << t.this.definition
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[1], base=-1)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[1], base=-1)
 
     Eq << Eq[1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
 

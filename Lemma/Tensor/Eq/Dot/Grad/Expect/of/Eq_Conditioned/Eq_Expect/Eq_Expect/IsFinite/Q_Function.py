@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Probability.Expect.le.Sup.apply(Eq[-1].rhs)
 
-    Eq.le_sup = Algebra.Le.of.Le.Le.apply(Eq[-2], Eq[-1])
+    Eq.le_sup = Nat.Le.of.Le.Le.apply(Eq[-2], Eq[-1])
 
     Eq << Algebra.All_Le_Sup.apply(Eq[3].lhs)
 
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Algebra.LeSup.of.All_Le.apply(Eq[-1])
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq[-1], Eq.le_sup)
+    Eq << Nat.Le.of.Le.Le.apply(Eq[-1], Eq.le_sup)
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], t, simplify=None)
 

@@ -9,7 +9,7 @@ def apply(self, index=0, offset=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     n = Symbol(integer=True)
     m, d = Symbol(integer=True, given=True)
@@ -18,8 +18,8 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.AnyIn_Ico.of.AnyIn_Ico.offset, d)
-    Eq << Eq[-1].this.lhs.apply(Algebra.AnyIn_Ico.of.AnyIn_Ico.offset, -d)
+    Eq << Eq[-2].this.lhs.apply(Int.AnyIn_Ico.of.AnyIn_Ico.offset, d)
+    Eq << Eq[-1].this.lhs.apply(Int.AnyIn_Ico.of.AnyIn_Ico.offset, -d)
 
 
 if __name__ == '__main__':

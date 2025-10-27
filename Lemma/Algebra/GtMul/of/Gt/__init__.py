@@ -12,7 +12,7 @@ def apply(given, factor):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat
     x, y = Symbol(real=True, given=True)
     k = Symbol(real=True, given=True, positive=True)
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[0] - y
 
-    Eq << Algebra.Gt_0.of.Gt_0.Gt_0.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].this.lhs.expand()
 

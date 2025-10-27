@@ -13,7 +13,7 @@ def apply(le, ge, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     a, b, a_quote, b_quote, x = Symbol(real=True, given=True)
     Eq << apply(a_quote <= a, b_quote >= b, Element(x, Interval(a, b, right_open=True)))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le.of.In_Icc.apply(Eq[2])
 
-    Eq << Algebra.Ge.of.Ge.Ge.apply(Eq[-2], Eq[0])
+    Eq << Nat.Ge.of.Ge.Ge.apply(Eq[-2], Eq[0])
 
     Eq << Algebra.Lt.of.Lt.Ge.apply(Eq[-1], Eq[1])
 

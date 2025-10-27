@@ -11,12 +11,12 @@ def apply(given, upper, strict=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(Greater(x, y), z, strict=True)
 
-    Eq << Algebra.Gt.of.Gt.Ge.apply(Eq[1], Eq[2])
+    Eq << Nat.Gt.of.Gt.Ge.apply(Eq[1], Eq[2])
 
 
 if __name__ == '__main__':

@@ -13,14 +13,14 @@ def apply(given, negate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     M, a = Symbol(real=True)
     Eq << apply(LessEqual(abs(a), M), negate=True)
 
     Eq << Algebra.Le_Abs.apply(a, negate=True)
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq[-1], Eq[0])
+    Eq << Nat.Le.of.Le.Le.apply(Eq[-1], Eq[0])
 
 
 

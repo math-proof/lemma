@@ -13,12 +13,12 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, b = Symbol(complex=True, given=True)
     Eq << apply(Equal(a ** 2, b ** 2))
 
-    Eq << Algebra.OrEqS_0.given.Mul.eq.Zero.apply(Eq[-1])
+    Eq << Nat.OrEqS_0.given.Mul.eq.Zero.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True).reversed
 

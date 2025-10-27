@@ -30,7 +30,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Finset
     i, j = Symbol(integer=True)
     A, B, C, D = Symbol(etype=dtype.integer)
 
@@ -38,13 +38,13 @@ def prove(Eq):
 
     Eq << apply(Sum[j:D, i:C](Piecewise((f(i, j), Element(i, A)), (g(i, j), Element(i, B)), (h(i, j), True))))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[0].this.lhs.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.expr.args[0].expr.apply(Algebra.Sum.eq.Sum_MulBool)
-    Eq << Eq[-1].this.rhs.expr.args[1].expr.apply(Algebra.Sum.eq.Sum_MulBool)
-    Eq << Eq[-1].this.rhs.expr.args[2].expr.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.expr.args[0].expr.apply(Finset.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.expr.args[1].expr.apply(Finset.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.expr.args[2].expr.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum_MulBool)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
     Eq << Eq[-1].this.find(functions.Bool[And]).apply(Bool.BoolAnd.eq.MulBoolS)
 

@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1] / alpha
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Le.of.Le.Le.apply(Eq[-2], Eq[-1])
 
     Eq << Less(0, alpha * beta, plausible=True)
 

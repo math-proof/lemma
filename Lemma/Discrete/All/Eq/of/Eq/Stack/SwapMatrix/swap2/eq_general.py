@@ -13,7 +13,7 @@ def apply(eq_w):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Bool, Tensor
+    from Lemma import Discrete, Algebra, Set, Bool, Tensor, Nat, Int
 
     n = Symbol(domain=Range(2, oo))
     w = Symbol(integer=True, shape=(n, n, n, n))
@@ -33,9 +33,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.rhs.expr.args[-1].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.expr.args[-1].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.expr.args[1].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.expr.args[1].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs().expr.simplify(wrt=True)
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this().expr.rhs().expr.args[-1].expr.args[1].apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-1].this.expr.rhs.expr.apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.expr.rhs.expr.apply(Int.Ite.eq.AddMulS)
 
     Eq.www_expansion = Eq[-1].this().expr.rhs.expr.simplify()
 
@@ -78,7 +78,7 @@ def prove(Eq):
     j = j.unbounded
     Eq << (w[i, j] @ x).this.subs(Eq[-1]).this.rhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
     Eq << Eq[-1].this(j).rhs().expr.simplify(wrt=True)
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.expr.apply(Int.Ite.eq.AddMulS)
     Eq << Eq.www_expansion.subs(Eq[-1].reversed)
     Eq << Eq[-1].this.expr.apply(Tensor.Eq.of.EqDotS_Stack_Pow.independence.matrix)
 

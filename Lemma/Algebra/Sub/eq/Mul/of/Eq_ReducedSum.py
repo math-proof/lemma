@@ -9,14 +9,14 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Nat, Int
+    from Lemma import Algebra, Discrete, Bool, Nat, Int, Rat
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
     x_bar = Symbol(r"\bar {x}", real=True, shape=(oo,))
     Eq << apply(Equal(x_bar[n], ReducedSum(x[:n]) / n))
 
-    Eq << Algebra.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
+    Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0])
 
     Eq << Bool.Cond.of.And.apply(Eq[-1], 1).reversed + 1
 

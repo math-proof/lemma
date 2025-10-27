@@ -12,14 +12,14 @@ def apply(le, lt, evaluate=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, x, b = Symbol(real=True, given=True)
     Eq << apply(x <= a, b < x)
 
     Eq << ~Eq[-1]
 
-    Eq << Algebra.Ge.of.Le.Ge.apply(Eq[0], Eq[-1])
+    Eq << Nat.Ge.of.Le.Ge.apply(Eq[0], Eq[-1])
 
     Eq <<= Eq[1] & Eq[-1]
 

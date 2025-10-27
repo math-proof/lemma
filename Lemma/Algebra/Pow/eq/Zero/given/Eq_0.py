@@ -10,13 +10,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** n, 0))
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[1], exp=n)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[1], exp=n)
 
 
 

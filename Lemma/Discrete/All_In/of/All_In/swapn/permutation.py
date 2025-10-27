@@ -20,7 +20,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Bool, Set
+    from Lemma import Discrete, Algebra, Tensor, Bool, Set, Nat
 
     n = Symbol(domain=Range(2, oo))
     S = Symbol(etype=dtype.integer[n], given=True)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
 
-    Eq << Eq[-1].this.expr.expr.apply(Algebra.Eq.Ufn.given.Eq.Ufn)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
 
     Eq << Eq[-1].this.expr.apply(Bool.Any_And.given.Any.All, index=-1)
 

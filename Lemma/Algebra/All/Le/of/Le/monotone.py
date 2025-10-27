@@ -12,7 +12,7 @@ def apply(le, n, N=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat, Int
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n, N = Symbol(integer=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(n, m + n)
 
-    Eq << Algebra.Le.of.Le.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Le.of.Le.Le.apply(Eq[-1], Eq[-2])
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
 
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].limits_subs(Eq[-1].variable, n)
 
-    Eq << Algebra.AllIn_Ico.of.AllIn_Ico.offset.apply(Eq[-1], -N)
+    Eq << Int.AllIn_Ico.of.AllIn_Ico.offset.apply(Eq[-1], -N)
 
 
 if __name__ == '__main__':

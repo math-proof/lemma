@@ -15,7 +15,7 @@ def prove(Eq):
 
     Eq << apply(x < y, x > -y)
 
-    Eq << Algebra.Gt.of.Lt.Gt.apply(Eq[0], Eq[1])
+    Eq << Nat.Gt.of.Lt.Gt.apply(Eq[0], Eq[1])
 
     Eq << Eq[-1] + y
 

@@ -8,7 +8,7 @@ def apply(x, y, z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x, y, z)
@@ -16,9 +16,9 @@ def prove(Eq):
     Eq << Eq[0].this.find(relu).defun()
 
 
-    Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Max.eq.IteGe)
+    Eq << Eq[-1].this.lhs.args[0].apply(Nat.Max.eq.IteGe)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.lhs.args[1].expr.apply(Algebra.Add.eq.Min)
 

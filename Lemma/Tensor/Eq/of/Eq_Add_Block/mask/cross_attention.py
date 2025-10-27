@@ -9,7 +9,7 @@ def apply(eq, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool, Nat
 
     n = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))
@@ -26,11 +26,11 @@ def prove(Eq):
 
     Eq << Eq[0][i, j]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.args[0].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.args[0].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Eq[-1].this.rhs.args[1].expr.apply(Algebra.Add_Ite.eq.Ite_AddS)
+    Eq << Eq[-1].this.rhs.args[1].expr.apply(Nat.Add_Ite.eq.Ite_AddS)
 
     Eq << Eq[-1].this.rhs.args[0]().expr.args[1]().expr.simplify()
 

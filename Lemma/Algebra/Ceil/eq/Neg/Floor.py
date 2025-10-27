@@ -10,7 +10,7 @@ def apply(ceil):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Rat
 
     x = Symbol(real=True)
     Eq << apply(ceil(x))
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.Eq.Floor.Frac.of.NotIn)
 
-    Eq << Eq[-1].this.find(frac).apply(Algebra.Frac.eq.Sub_Floor)
+    Eq << Eq[-1].this.find(frac).apply(Rat.Frac.eq.Sub_Floor)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAdd.of.Eq.Eq)
 

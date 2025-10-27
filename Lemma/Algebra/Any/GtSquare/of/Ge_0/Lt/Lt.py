@@ -84,7 +84,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.GeSqrt.of.Ge)
 
-    Eq << Algebra.EqAbs.of.Ge_0.apply(Eq[0])
+    Eq << Int.EqAbs.of.Ge_0.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 

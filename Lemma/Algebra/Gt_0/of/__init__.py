@@ -5,6 +5,4 @@ from . import Ge
 from . import Gt
 from . import Lt
 from . import Eq
-from . import Gt_0
-from . import Lt_0
 from . import Ceil

@@ -13,16 +13,16 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, z = Symbol(real=True)
     Eq << apply(Min(x, y) - z)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.rhs.apply(Nat.Min.eq.IteLe)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ite.eq.SubIte)
+    Eq << Eq[-1].this.rhs.apply(Nat.Ite.eq.SubIte)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-1].this.lhs.apply(Nat.Min.eq.IteLe)
 
 
 if __name__ == '__main__':

@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq <<= Set.Gt.of.In_Icc.apply(Eq[0]), Set.Lt.of.In_Icc.apply(Eq[1])
 
-    Eq << Algebra.Gt.of.Gt.Gt.apply(Eq[-4], Eq[-2])
+    Eq << Nat.Gt.of.Gt.Gt.apply(Eq[-4], Eq[-2])
 
     Eq << Nat.Lt.of.Le.Lt.apply(Eq[-3], Eq[-1])
 

@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     n = Symbol(integer=True)
     Eq << apply(Unequal(n % 2, 0))
 
-    Eq << Algebra.Ne_0.of.Eq.apply(Eq[1])
+    Eq << Nat.Ne_0.of.Eq.apply(Eq[1])
 
 
 

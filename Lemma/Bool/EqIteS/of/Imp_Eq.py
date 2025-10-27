@@ -29,7 +29,7 @@ def apply(given, piecewise, index=None, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Algebra, Set, Bool, Nat
 
     x = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)
@@ -38,9 +38,9 @@ def prove(Eq):
 
     Eq << Eq[1] - Eq[1].rhs
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[-1].this.lhs.apply(Nat.AddIteS.eq.IteAnd)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd)
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 

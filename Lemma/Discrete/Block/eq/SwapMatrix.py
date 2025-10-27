@@ -10,7 +10,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor
+    from Lemma import Algebra, Bool, Tensor, Int
 
     n = Symbol(domain=Range(2, oo))
     Eq << apply(n)
@@ -27,7 +27,7 @@ def prove(Eq):
     h, k = Symbol(domain=Range(n + 1))
     Eq << (V[h, k].this.definition, W[h, k].this.definition)
 
-    Eq <<= Eq[-1].this.rhs.apply(Algebra.Ite.eq.AddMulS), Eq[-2].this.rhs.apply(Algebra.Ite.eq.AddMulS)
+    Eq <<= Eq[-1].this.rhs.apply(Int.Ite.eq.AddMulS), Eq[-2].this.rhs.apply(Int.Ite.eq.AddMulS)
 
     Eq << Eq[-2] - Eq[-1]
 

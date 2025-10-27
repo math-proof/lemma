@@ -12,7 +12,7 @@ def apply(a_less_than_x, x_less_than_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     a, x, b, y = Symbol(real=True)
 
     Eq << apply(a >= x, y >= b)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[1] + x
 
-    Eq << Algebra.Ge.of.Ge.Ge.apply(Eq[-2], Eq[-1])
+    Eq << Nat.Ge.of.Ge.Ge.apply(Eq[-2], Eq[-1])
 
 
 

@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << U[i].this.definition
 
-    Eq << Eq[-2].this.rhs.apply(Algebra.Ite.eq.AddMulS)
+    Eq << Eq[-2].this.rhs.apply(Int.Ite.eq.AddMulS)
 
     Eq << Eq[-2] - Eq[-1]
 

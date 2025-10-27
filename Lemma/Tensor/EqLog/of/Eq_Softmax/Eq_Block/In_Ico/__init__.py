@@ -38,7 +38,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool
+    from Lemma import Tensor, Algebra, Set, Bool, Nat
 
     n, l, u = Symbol(domain=Range(2, oo))
     h = Symbol(integer=True, shape=(n,))
@@ -83,7 +83,7 @@ def prove(Eq):
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.lt, Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.AddIteS.eq.IteAnd)
+    Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd)
 
     Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
 

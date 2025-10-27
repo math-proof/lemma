@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     n = Symbol(real=True)
     b = Symbol(real=True, positive=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Greater(b, 0, plausible=True)
 
-    Eq << Algebra.Gt.of.Gt.Gt.apply(Eq[0], Eq[-1])
+    Eq << Nat.Gt.of.Gt.Gt.apply(Eq[0], Eq[-1])
 
     Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[-1])
 

@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat, Int
     x, y = Symbol(real=True, given=True)
 
     Eq << apply(x * y <= 0)
@@ -24,13 +24,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Bool.OrAndS.of.And_Or)
 
-    Eq << Eq[-1].this.args[-1].apply(Algebra.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.args[-1].apply(Nat.Gt_0.of.Gt_0.Gt_0)
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
 
     Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 
-    Eq << Eq[-1].apply(Algebra.Gt_0.of.Lt_0.Lt_0)
+    Eq << Eq[-1].apply(Int.Gt_0.of.Lt_0.Lt_0)
 
     Eq <<= Eq[-1] & Eq[0]
 

@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int
+    from Lemma import Algebra, Bool, Int, Nat
 
     ε = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
     # 0 < ε < 1
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite), Eq[-1].this.find(Piecewise).apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Eq[-2].this.find(Min).apply(Algebra.Min.eq.IteLe)
+    Eq << Eq[-2].this.find(Min).apply(Nat.Min.eq.IteLe)
 
     Eq << Eq[-1].this.find(Max).apply(Algebra.Max.eq.Ite.Gt)
 

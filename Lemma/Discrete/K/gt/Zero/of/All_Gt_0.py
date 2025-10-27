@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set
+    from Lemma import Algebra, Bool, Set, Nat
     from Lemma.Discrete.K.eq.Add.definition import K
     x = Symbol(real=True, shape=(oo,))
     i = Symbol(integer=True)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And, All).apply(Algebra.Cond.of.All.subst, Eq[-1].lhs.variable, n + 1)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.Gt_0.of.Gt_0.Gt_0)
+    Eq << Eq[-1].this.find(And).apply(Nat.Gt_0.of.Gt_0.Gt_0)
 
     Eq << Eq.hypothesis.this.lhs.apply(Set.AllIn.given.AllIn_Union, Range(1, n + 2))
 

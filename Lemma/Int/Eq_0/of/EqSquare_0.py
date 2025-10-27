@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(x ** 2, 0))
 
-    Eq << Algebra.EqPowS.of.Eq.apply(Eq[0], exp=S.One / 2)
+    Eq << Nat.EqPowS.of.Eq.apply(Eq[0], exp=S.One / 2)
 
-    Eq << Algebra.Eq_0.of.EqAbs_0.apply(Eq[-1])
+    Eq << Int.Eq_0.of.EqAbs_0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

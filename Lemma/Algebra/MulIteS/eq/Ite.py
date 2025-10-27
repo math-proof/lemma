@@ -33,14 +33,14 @@ def mul(self, other):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
     f, g, h, p = Function(real=True)
     Eq << apply(Piecewise((f(x), Element(x, A)), (g(x), True)) * Piecewise((h(x), Element(x, B)), (p(x), True)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Ite.eq.Ite_MulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
 
 
