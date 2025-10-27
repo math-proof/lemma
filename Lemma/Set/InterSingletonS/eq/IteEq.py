@@ -15,7 +15,7 @@ def prove(Eq):
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
-    Eq << Eq[-1].this.find(And).apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
+    Eq << Eq[-1].this.find(And).apply(Nat.Eq.UFn.given.Eq.UFn)
 
 
 

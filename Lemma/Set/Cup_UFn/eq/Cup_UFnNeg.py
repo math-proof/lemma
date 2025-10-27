@@ -21,9 +21,9 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In_Cup.given.Any_In), Eq[-1].this.lhs.apply(Set.Any_In.of.In_Cup)
 
-    Eq <<= Eq[-2].this.lhs.apply(Int.Any_UnaryFnNeg.of.Any)
+    Eq <<= Eq[-2].this.lhs.apply(Int.Any_UFnNeg.of.Any)
 
-    Eq <<= Eq[-1].this.lhs.apply(Int.Any_UnaryFnNeg.of.Any)
+    Eq <<= Eq[-1].this.lhs.apply(Int.Any_UFnNeg.of.Any)
 
 
 if __name__ == '__main__':

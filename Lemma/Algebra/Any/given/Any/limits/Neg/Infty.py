@@ -15,7 +15,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Any[i](f(i) >= 0))
 
-    Eq << Int.Any_UnaryFnNeg.of.Any.apply(Eq[-1])
+    Eq << Int.Any_UFnNeg.of.Any.apply(Eq[-1])
 
 
 

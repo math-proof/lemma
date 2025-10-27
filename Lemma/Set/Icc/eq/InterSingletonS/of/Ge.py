@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq <<= Eq[3] & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UFn.given.Eq.UFn)
 
 
 

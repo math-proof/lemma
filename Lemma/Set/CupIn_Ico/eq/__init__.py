@@ -1,2 +1,2 @@
-from . import Cup_UnaryFnAdd
-from . import Cup_UnaryFnSub
+from . import Cup_UFnAdd
+from . import Cup_UFnSub

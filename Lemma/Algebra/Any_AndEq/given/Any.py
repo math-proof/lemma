@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.of.Any.limits.swap.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[0].this.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn, simplify=None)
+    Eq << Eq[0].this.expr.apply(Nat.Eq.UFn.given.Eq.UFn, simplify=None)
 
 
 

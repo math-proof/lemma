@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Set.Cup.eq.UnionCupS, cond=k >= 0)
 
-    Eq << Eq[-1].this.find(Cup | ~Cup).apply(Set.CupIn_Ico.eq.Cup_UnaryFnSub, k, -k - 1)
+    Eq << Eq[-1].this.find(Cup | ~Cup).apply(Set.CupIn_Ico.eq.Cup_UFnSub, k, -k - 1)
 
     Eq << Eq[-1].this.find(Cup).apply(Set.Cup.eq.Icc.Infty.right_open)
 

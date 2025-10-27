@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Cup).expr.apply(Set.Finset.eq.Ite)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Set.CupIn_Ico.eq.Cup_UnaryFnAdd, -1)
+    Eq << Eq[-1].this.lhs.args[1].apply(Set.CupIn_Ico.eq.Cup_UFnAdd, -1)
 
     Eq << Eq.all_gt.this.expr.apply(Algebra.Gt.given.And)
 

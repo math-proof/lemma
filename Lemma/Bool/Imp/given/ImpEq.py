@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.Imp_And.apply(Eq[0])
 
-    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn, swap=True)
+    Eq << Eq[-1].this.rhs.apply(Nat.Eq.UFn.given.Eq.UFn, swap=True)
 
 
 

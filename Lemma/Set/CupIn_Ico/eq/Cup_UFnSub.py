@@ -17,11 +17,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.Cup.eq.Cup_Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Cup_UnaryFn.eq.Cup_UnaryFnNeg)
+    Eq << Eq[-1].this.rhs.apply(Set.Cup_UFn.eq.Cup_UFnNeg)
 
     Eq << Eq[-1].this.rhs.find(Element).apply(Set.In_Icc.Is.InNeg)
 
-    Eq << Eq[-1].this.rhs.apply(Set.CupIn_Ico.eq.Cup_UnaryFnAdd, -c)
+    Eq << Eq[-1].this.rhs.apply(Set.CupIn_Ico.eq.Cup_UFnAdd, -c)
 
 
 if __name__ == '__main__':

@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In.given.Subset.Cup.Finset)
 
-    Eq << Eq[-1].this.args[1:].apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
+    Eq << Eq[-1].this.args[1:].apply(Nat.Eq.UFn.given.Eq.UFn)
 
     Eq << Set.Ne_Empty.of.Any_In.apply(Eq.plausible)
 

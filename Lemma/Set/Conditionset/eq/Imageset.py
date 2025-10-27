@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].apply(Set.Any.Eq.of.In.split.Imageset)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn, reverse=True)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.Eq.UFn.given.Eq.UFn, reverse=True)
 
     Eq.necessary = Given(Element(y, B), Element(y, B_quote), plausible=True)
 

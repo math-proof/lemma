@@ -20,4 +20,4 @@ from . import Ne_0
 from . import Ite
 from . import AllIn_Ico
 from . import AnyIn_Ico
-from . import Any_UnaryFnNeg
+from . import Any_UFnNeg

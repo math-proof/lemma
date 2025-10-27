@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
+    Eq << Eq[-1].this.expr.apply(Nat.Eq.UFn.given.Eq.UFn)
 
 
 

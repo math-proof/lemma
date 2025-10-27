@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.Any.given.Any.And, simplify=None)
 
-    Eq << Eq[-1].this.expr.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn)
+    Eq << Eq[-1].this.expr.expr.apply(Nat.Eq.UFn.given.Eq.UFn)
 
     Eq << Eq[-1].this.expr.apply(Bool.Any_And.given.Any.All, index=-1)
 

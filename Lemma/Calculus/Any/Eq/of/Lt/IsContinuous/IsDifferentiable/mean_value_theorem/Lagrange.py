@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq <<= Eq[1] & Eq[-1]
 
-    Eq << Eq[-1].this.expr.apply(Nat.Eq.UnaryFn.given.Eq.UnaryFn, swap=True)
+    Eq << Eq[-1].this.expr.apply(Nat.Eq.UFn.given.Eq.UFn, swap=True)
 
     Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 

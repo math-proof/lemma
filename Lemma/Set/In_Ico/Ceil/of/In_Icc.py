@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Set.In.Cup.of.Any_In.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Set.CupIn_Ico.eq.Cup_UnaryFnAdd, -1)
+    Eq << Eq[-1].this.rhs.apply(Set.CupIn_Ico.eq.Cup_UFnAdd, -1)
 
 
 

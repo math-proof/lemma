@@ -19,7 +19,7 @@ def prove(Eq):
     k = Symbol(integer=True)
     Eq << apply(Cup[k:-n:0](Interval(k, k + 1, right_open=True)))
 
-    Eq << Eq[-1].this.lhs.apply(Set.CupIn_Ico.eq.Cup_UnaryFnSub, k, -1 - k)
+    Eq << Eq[-1].this.lhs.apply(Set.CupIn_Ico.eq.Cup_UFnSub, k, -1 - k)
 
     Eq << Eq[-1].this.lhs.apply(Set.Cup.eq.Icc.induct.negative.right_open)
 

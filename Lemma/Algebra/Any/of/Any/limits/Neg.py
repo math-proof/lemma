@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[0], simplify=False)
 
-    Eq << Int.Any_UnaryFnNeg.of.Any.apply(Eq[-1])
+    Eq << Int.Any_UFnNeg.of.Any.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Element).apply(Set.Neg.In.Icc.of.In_Icc)
 

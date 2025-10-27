@@ -223,4 +223,4 @@ from . import In_Range
 from . import GtFrac_0
 from . import In_Ioo
 from . import EqSDiffS
-from . import Cup_UnaryFn
+from . import Cup_UFn
