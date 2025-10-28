@@ -3,11 +3,11 @@ import sympy.Basic
 
 @[main, comm]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : n ≥ a.length):
+  (h : n ≥ s.length):
 -- imply
-  a.take n = a := by
+  s.take n = s := by
 -- proof
   aesop
 

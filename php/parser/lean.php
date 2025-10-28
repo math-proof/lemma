@@ -653,6 +653,12 @@ abstract class Lean extends IndentedNode
             case '=':
                 if ($tokens[$i + 1] == '>') {
                     ++$i;
+                    if ($this->parent instanceof LeanAt && $this->parent->parent instanceof LeanTactic) {
+                        // conv_lhs at h => ...
+                        $new = new LeanCaret($this->indent, $this->level);
+                        $this->parent->parent->push($new);
+                        return $new->push_binary('LeanRightarrow');
+                    }
                     return $this->push_binary('LeanRightarrow');
                 }
                 elseif ($tokens[$i + 1] == '=') {
@@ -6657,6 +6663,13 @@ class LeanTactic extends LeanSyntax
                 $args = &$this->args;
                 for ($index = count($args) - 1; $index >= 0; --$index) {
                     if ($args[$index] instanceof LeanBy)
+                        return $args[$index];
+                }
+                return;
+            case 'arrow':
+                $args = &$this->args;
+                for ($index = count($args) - 1; $index >= 0; --$index) {
+                    if ($args[$index] instanceof LeanRightarrow)
                         return $args[$index];
                 }
                 return;

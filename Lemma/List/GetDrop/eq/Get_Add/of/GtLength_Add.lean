@@ -2,14 +2,14 @@ import Lemma.Nat.Lt_Sub.of.LtAdd
 open Nat
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List α}
 -- given
-  (h : s.length > n + j) :
+  (h : s.length > i + j) :
 -- imply
-  have : j < (s.drop n).length := by simp_all [Lt_Sub.of.LtAdd.left]
-  (s.drop n)[j] = s[n + j] := by
+  have : j < (s.drop i).length := by simp_all [Lt_Sub.of.LtAdd.left]
+  (s.drop i)[j] = s[i + j] := by
 -- proof
   simp_all
 
