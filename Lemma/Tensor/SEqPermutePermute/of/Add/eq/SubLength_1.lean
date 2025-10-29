@@ -65,7 +65,7 @@ private lemma main
   have h_i_eq : i = s.length - (1 + d) := by omega
   rw [@Tensor.Permute.eq.Ite (i := ⟨i + d, by simp; omega⟩) (d := -d)]
   simp
-  split_ifs with h_sub h_pos h_j_0
+  split_ifs
   repeat omega
   have h_permute := EqPermutePermute.of.In_Ioo_Length (s := s) (i := i) (j := i + d) ⟨by omega, by omega⟩
   simp at h_permute
@@ -125,7 +125,7 @@ private lemma main
             rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]
             rw [@Tensor.Permute.eq.Ite (i := ⟨i, by omega⟩) (d := d)]
             simp
-            split_ifs with h_sub
+            split_ifs
             ·
               omega
             ·

@@ -49,7 +49,7 @@ private lemma main
   have h_d := NeZero.pos d
   rw [@Tensor.Permute.eq.Ite (i := ⟨0, by simp; omega⟩) (d := d)]
   simp
-  split_ifs with h_sub
+  split_ifs
   ·
     omega
   ·
@@ -104,7 +104,7 @@ private lemma main
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
               rw [@Tensor.Permute.eq.Ite (i := ⟨d, by omega⟩) (d := -d)]
               simp
-              split_ifs with h_sub' h_pos'
+              split_ifs
               repeat omega
               simp
               have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
@@ -113,7 +113,7 @@ private lemma main
               simp [EqMod.of.Lt h_1_lt]
               simp [DropPermute__Neg.eq.Drop (s := s) (i := ⟨d, by grind⟩)]
               simp [TailTakePermute__Neg.eq.Take (s := s) (i := ⟨d, by grind⟩)]
-              have h_lt : (r' * (s.take d).prod + q') * (s.drop (d + 1)).prod + r < ((s.take (d + 1)).take ((s.take (d + 1)).length - (1 - -(d : ℤ)).toNat) ++ ((s.take (d + 1)).drop ((s.take (d + 1)).length - (1 - -(d : ℤ)).toNat)).rotate ((1 - -(d : ℤ)).toNat ⊓ (s.take (d + 1)).length - 1)).prod * (s.drop (d + 1)).prod := by 
+              have h_lt : (r' * (s.take d).prod + q') * (s.drop (d + 1)).prod + r < ((s.take (d + 1)).take ((s.take (d + 1)).length - (1 - -(d : ℤ)).toNat) ++ ((s.take (d + 1)).drop ((s.take (d + 1)).length - (1 - -(d : ℤ)).toNat)).rotate ((1 - -(d : ℤ)).toNat ⊓ (s.take (d + 1)).length - 1)).prod * (s.drop (d + 1)).prod := by
                 rw [h_toNat]
                 simp [EqMin.of.Lt h_lt_add_1]
                 apply AddMul.lt.Mul.of.Lt.Lt

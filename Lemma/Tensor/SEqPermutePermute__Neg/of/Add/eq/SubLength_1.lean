@@ -71,7 +71,7 @@ private lemma main
   rw [@Tensor.Permute.eq.Ite (i := ⟨i, by simp; omega⟩) (d := d)]
   simp
   have h_i := NeZero.pos i
-  split_ifs with h_sub h_pos
+  split_ifs
   repeat omega
   have h_permute := EqPermutePermute__Neg.of.In_Ioo_Length (s := s) (i := i + d) (j := i) ⟨by omega, by omega⟩
   simp at h_permute
@@ -115,11 +115,13 @@ private lemma main
             have h_qₐ := LtVal qₐ
             have h_rₐ := LtVal rₐ
             simp at h_qₐ h_rₐ
-            rw [EqMin.of.Le (by omega), EqMod.of.Lt (show 1 < d + 1 by omega)] at h_qₐ h_rₐ
+            have h_1_lt_d1 : 1 < d + 1 := by omega
+            rw [EqMin.of.Le (by omega), EqMod.of.Lt h_1_lt_d1] at h_qₐ h_rₐ
             rw [DropTakeDrop.eq.DropTake] at h_qₐ
             have h_length_eq_add_1 : s.length = i + d + 1 := by omega
             simp [Add.comm (a := d), ← h_length_eq_add_1] at h_qₐ
             rw [EqTake.of.Ge_Length (n := s.length) (by simp)] at h_qₐ
+            rw [DropPermute__Neg.eq.TakeDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)] at h_qₐ
             rw [TakeTake.eq.Take.of.Gt (show d + 1 > 1 by omega)] at h_rₐ
             let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
             rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
@@ -127,7 +129,7 @@ private lemma main
             repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
             rw [@Tensor.Permute.eq.Ite (i := ⟨i + d, by omega⟩) (d := -d)]
             simp
-            split_ifs with h_sub' h_neg
+            split_ifs
             repeat omega
             have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
             rw [Add.comm] at h_toNat
@@ -140,15 +142,15 @@ private lemma main
               rw [Drop.eq.Nil.of.Ge_Length (i := s.length) (by simp)] at h_r'
               simp at h_r'
               simp [h_r']
-              have h_Ltqₐrₐ : rₐ * ((s.drop i).take d).prod + qₐ < ((s.permute ⟨i + d, by grind⟩ (-d)).drop i).prod := by 
+              have h_Ltqₐrₐ : rₐ * ((s.drop i).take d).prod + qₐ < ((s.permute ⟨i + d, by grind⟩ (-d)).drop i).prod := by
                 rw [Prod.eq.MulProdTake__ProdDrop ((s.permute ⟨i + d, by grind⟩ (-d)).drop i) 1]
                 simp
-                rw [DropPermute__Neg.eq.TakeDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)] at h_qₐ ⊢
+                rw [DropPermute__Neg.eq.TakeDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)]
                 apply AddMul.lt.Mul.of.Lt.Lt h_rₐ h_qₐ
-              have h_lt : q * ((s.permute ⟨i + d, by grind⟩ (-(d : ℤ))).drop i).prod + (rₐ * ((((s.permute ⟨i + d, by grind⟩ (-(d : ℤ))).drop i).take (d + 1)).drop (1 % ((d + 1) ⊓ (s.length - i)))).prod + qₐ) * ((s.permute ⟨i + d, by grind⟩ (-(d : ℤ))).drop (i + (d + 1))).prod < (s.take (s.length - (1 - -(d : ℤ)).toNat)).prod * ((s.drop (s.length - (1 - -(d : ℤ)).toNat)).rotate ((1 - -(d : ℤ)).toNat ⊓ s.length - 1)).prod := by 
+              have h_lt : q * ((s.permute ⟨i + d, by grind⟩ (-(d : ℤ))).drop i).prod + (rₐ * ((((s.permute ⟨i + d, by grind⟩ (-(d : ℤ))).drop i).take (d + 1)).drop (1 % ((d + 1) ⊓ (s.length - i)))).prod + qₐ) * ((s.permute ⟨i + d, by grind⟩ (-(d : ℤ))).drop (i + (d + 1))).prod < (s.take (s.length - (1 - -(d : ℤ)).toNat)).prod * ((s.drop (s.length - (1 - -(d : ℤ)).toNat)).rotate ((1 - -(d : ℤ)).toNat ⊓ s.length - 1)).prod := by
                 rw [h_toNat]
                 simp [← h_i_eq]
-                rw [EqMin.of.Le (by omega), EqMod.of.Lt (show 1 < d + 1 by omega)]
+                rw [EqMin.of.Le (by omega), EqMod.of.Lt h_1_lt_d1]
                 rw [EqMin.of.Lt (by omega), EqSubAdd]
                 rw [Add_Add.eq.AddAdd (a := i)]
                 rw [DropPermute__Neg.eq.Drop ⟨i + d, by grind⟩]
@@ -181,9 +183,10 @@ private lemma main
                   repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                   apply congrArg
                   simp only [h_toNat]
-                  simp [EqMin.of.Le (show d + 1 ≤ s.length by omega)]
+                  have h_d1_le_length :  d + 1 ≤ s.length := by omega
+                  simp [EqMin.of.Le h_d1_le_length]
                   rw [Sub_Sub.eq.Min]
-                  simp [EqMin.of.Ge (show d + 1 ≤ s.length by omega)]
+                  simp [EqMin.of.Ge h_d1_le_length]
                   simp [← h_i_eq]
                   rw [ProdDrop.eq.Get.of.EqLength_Add_1 (n := i + d) (by omega)]
                   simp only [h_toNat] at h_qₑ_div
@@ -211,41 +214,32 @@ private lemma main
                   rw [DivAddMul.eq.Add_Div.of.Gt_0]
                   ·
                     simp [MulAdd.eq.AddMulS, AddAdd.eq.Add_Add]
-                    simp [EqMin.of.Le (show d + 1 ≤ s.length - i by omega), EqMod.of.Lt (show 1 < d + 1 by omega)] at h_qₐ_div h_rₐ_mod
-                    rw [GetPermute__Neg.eq.Get_Add.of.GtLength_Add (by omega)] at h_qₐ_div h_rₐ_mod
                     rw [ProdDropPermute__Neg.eq.ProdDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)] at h_Ltqₐrₐ
                     simp at h_Ltqₐrₐ
                     simp [Div.eq.Zero.of.Lt h_Ltqₐrₐ]
                     simp [h_q'r', h_r']
                     rw [Drop.eq.Nil.of.Ge_Length (i := i + (d + 1)) (by simp; omega)]
                     simp
-                    rw [MulProdS.eq.ProdAppend, AppendDrop__Take.eq.Rotate] at h_q'
-                    simp [ProdRotate.eq.Prod, TakeDrop.eq.DropTake] at h_q'
-                    rw [EqTake.of.Ge_Length (n := i + (d + 1)) (by simp; omega)] at h_q'
-                    rw [ProdDropPermute__Neg.eq.ProdDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)] at h_q'
-                    have h_qₑrₑ := h_qₑrₑ
                     simp only [h_toNat] at h_qₕ_div h_rₕ_mod
-                    simp [Sub_Sub.eq.Min, EqMin.of.Ge (show d + 1 ≤ s.length by omega)] at h_qₕ_div h_rₕ_mod
-                    simp [EqMin.of.Le (show d + 1 ≤ s.length by omega)] at h_qₕ_div h_rₕ_mod
+                    simp [Sub_Sub.eq.Min, EqMin.of.Ge h_d1_le_length] at h_qₕ_div h_rₕ_mod
+                    simp [EqMin.of.Le h_d1_le_length] at h_qₕ_div h_rₕ_mod
                     simp [← h_i_eq] at h_qₕ_div h_rₕ_mod
                     simp [h_qₕ_div, h_rₕ_mod]
                     simp [h_qₐrₐ]
-                    have h_qₑ := LtVal qₑ
-                    simp only [h_toNat, ← h_i_eq] at h_qₑ
                     simp only [h_toNat, ← h_i_eq] at h_rₑ
                     simp at h_rₑ
-                    simp [EqMin.of.Le (show d + 1 ≤ s.length by omega)] at h_rₑ
+                    simp [EqMin.of.Le h_d1_le_length] at h_rₑ
                     rw [EqMod.of.Lt (by omega), Mul.comm, MulProdS.eq.ProdAppend] at h_rₑ
                     rw [← Drop.eq.AppendTakeDrop] at h_rₑ
                     simp only [h_toNat, ← h_i_eq] at h_rₑ_mod
-                    simp [EqMin.of.Le (show d + 1 ≤ s.length by omega)] at h_rₑ_mod
+                    simp [EqMin.of.Le h_d1_le_length] at h_rₑ_mod
                     simp [ProdRotate.eq.Prod] at h_rₑ_mod
                     rw [Add_Add.eq.AddAdd (a := i)] at h_rₑ_mod
                     rw [DropPermute__Neg.eq.Drop ⟨i + d, by grind⟩] at h_rₑ_mod
                     rw [Drop.eq.Nil.of.Ge_Length (i := i + d + 1) (by omega)] at h_rₑ_mod
                     simp at h_rₑ_mod
-                    simp [EqMin.of.Le (show d + 1 ≤ s.length - i by omega)] at h_rₑ_mod
-                    rw [EqMod.of.Lt (show 1 < d + 1 by omega)] at h_rₑ_mod
+                    rw [EqMin.of.Le (show d + 1 ≤ s.length - i by omega)] at h_rₑ_mod
+                    rw [EqMod.of.Lt h_1_lt_d1] at h_rₑ_mod
                     simp [TakeDrop.eq.DropTake] at h_rₑ_mod
                     rw [EqTake.of.Ge_Length (n := i + (d + 1)) (by simp; omega)] at h_rₑ_mod
                     rw [DropPermute__Neg.eq.TakeDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)] at h_rₑ_mod
@@ -254,22 +248,18 @@ private lemma main
                     simp at h_rₑ_mod
                     rw [EqMod.of.Lt h_Ltqₐrₐ] at h_rₑ_mod
                     simp [h_rₑ_mod]
-                    rw [DropPermute__Neg.eq.TakeDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)] at h_qₐ
-                    simp at h_qₐ
                     rw [DivAddMul.eq.Add_Div.of.Gt_0]
                     ·
-                      rw [EqMin.of.Le (show d + 1 ≤ s.length - i by omega)]
-                      rw [EqMod.of.Lt (show 1 < d + 1 by omega)]
+                      rw [EqMin.of.Le (by omega)]
+                      rw [EqMod.of.Lt h_1_lt_d1]
+                      rw [EqMod.of.Lt h_qₐ]
+                      simp [Div.eq.Zero.of.Lt h_qₐ]
+                      left
                       simp [TakeDrop.eq.DropTake]
                       rw [EqTake.of.Ge_Length (n := i + (d + 1)) (by simp; omega)]
                       simp [DropTake.eq.TakeDrop]
                       rw [ProdTakeDrop.eq.Get.of.Lt_Length (i := i) (s := s.permute ⟨i + d, by grind⟩ (-d)) (by simp; omega)]
                       simp [GetPermute__Neg.eq.Get_Add.of.GtLength_Add]
-                      rw [Add_Add.eq.AddAdd]
-                      rw [AddAdd.comm]
-                      simp
-                      rw [EqMod.of.Lt h_qₐ]
-                      simp [Div.eq.Zero.of.Lt h_qₐ]
                     ·
                       grind
                   ·
