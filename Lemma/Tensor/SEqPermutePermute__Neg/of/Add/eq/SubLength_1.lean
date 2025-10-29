@@ -243,7 +243,6 @@ private lemma main
                     simp [TakeDrop.eq.DropTake] at h_rₑ_mod
                     rw [EqTake.of.Ge_Length (n := i + (d + 1)) (by simp; omega)] at h_rₑ_mod
                     rw [DropPermute__Neg.eq.TakeDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)] at h_rₑ_mod
-                    simp at h_rₑ_mod
                     rw [ProdDropPermute__Neg.eq.ProdDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)] at h_rₑ_mod
                     simp at h_rₑ_mod
                     rw [EqMod.of.Lt h_Ltqₐrₐ] at h_rₑ_mod
