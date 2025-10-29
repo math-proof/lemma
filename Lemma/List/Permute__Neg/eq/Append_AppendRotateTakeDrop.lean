@@ -34,7 +34,7 @@ private lemma main
   (i : Fin s.length)
   (d : ℕ) :
 -- imply
-  s.permute i (-d : ℤ) = (s.take (i + 1)).take (i - d) ++ ((s.take (i + 1)).drop (i - d)).rotate (d ⊓ i) ++ s.drop (i + 1) := by
+  s.permute i (-d) = (s.take (i + 1)).take (i - d) ++ ((s.take (i + 1)).drop (i - d)).rotate (d ⊓ i) ++ s.drop (i + 1) := by
 -- proof
   have h_i := LeAdd_1 i
   by_cases h_i' : i + 1 = s.length

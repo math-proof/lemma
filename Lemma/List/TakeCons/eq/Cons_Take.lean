@@ -7,7 +7,7 @@ private lemma main
   (a : α)
   (b : List α) :
 -- imply
-  (a :: b).take (i + 1) = [a] ++ b.take i := by
+  (a :: b).take (i + 1) = a :: b.take i := by
 -- proof
   simp_all
 

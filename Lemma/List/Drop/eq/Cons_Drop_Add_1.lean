@@ -3,11 +3,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (i : Fin v.length) :
+  (i : Fin s.length) :
 -- imply
-  v.drop i = v[i] :: v.drop (i + 1) := by
+  s.drop i = s[i] :: s.drop (i + 1) := by
 -- proof
   simp
 

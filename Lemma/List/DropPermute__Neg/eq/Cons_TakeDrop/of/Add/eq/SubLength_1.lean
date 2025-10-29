@@ -14,7 +14,7 @@ private lemma main
 -- imply
   (s.permute ⟨i + d, by grind⟩ (-d)).drop i = s[i + d] :: (s.drop i).take d := by
 -- proof
-  rw [Drop.eq.Cons_Drop_Add_1 (v := s.permute ⟨i + d, by grind⟩ (-d)) (i := ⟨i, by simp⟩)]
+  rw [Drop.eq.Cons_Drop_Add_1 (s := s.permute ⟨i + d, by grind⟩ (-d)) (i := ⟨i, by simp⟩)]
   simp [DropPermute__Neg.eq.TakeDrop.of.Add.eq.SubLength_1 h]
   rw [GetPermute__Neg.eq.Get_Add.of.GtLength_Add]
 

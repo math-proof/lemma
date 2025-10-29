@@ -1,13 +1,13 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
-  (v : List α)
+  (s : List α)
   (i d : ℕ):
 -- imply
-  v.drop i = (v.drop i).take d ++ v.drop (i + d) := by
+  s.drop i = (s.drop i).take d ++ s.drop (i + d) := by
 -- proof
   simp
 

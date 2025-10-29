@@ -4,10 +4,10 @@ import sympy.Basic
 @[main]
 private lemma main
 -- given
-  (v : List α)
-  (n : ℕ) :
+  (s : List α)
+  (i : ℕ) :
 -- imply
-  v.take n ++ v.drop n = v := by
+  s.take i ++ s.drop i = s := by
 -- proof
   simp
 
