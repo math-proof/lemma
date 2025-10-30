@@ -84,8 +84,8 @@ private lemma main
     ·
       apply SEq.of.SEqDataS.Eq
       ·
-        rw [EqPermuteS.of.Add.ge.SubLength_1 (s := s) (i := i) (d := d) (by omega)]
-        rw [EqPermuteS.of.Add.ge.SubLength_1 (s := s) (i := i) (d := s.length - i) (by omega)]
+        rw [EqPermuteS.of.Add.ge.SubLength_1 (by omega)]
+        rw [EqPermuteS.of.Add.ge.SubLength_1 (d := s.length - i) (by omega)]
       ·
         simp
         apply SEqCast.of.SEq.Eq
