@@ -52,8 +52,16 @@ private lemma main
         exact (h_A.trans h).trans h_B.symm
       .
         simp at h_d
-        have := List.EqPermuteS.of.Add.ge.SubLength_1 (s := s) (i := ⟨i, by grind⟩) (d := d.toNat) (by simp; omega)
-        have h_A := Tensor.SEqPermuteS.of.Add.ge.SubLength_1 (i := ⟨i, by grind⟩) h_d A
+        have h_A := Tensor.SEqPermuteS.of.Add.ge.SubLength_1 (i := ⟨i, by grind⟩) (d := d.toNat) (by simp; omega) A
+        have h_d := Int.EqToNat.of.Gt_0 h_pos
+        rw [h_d] at h_A
+        have h := h.symm.trans h_A
+        have h_B := Tensor.SEqPermuteS.of.Add.ge.SubLength_1 (i := ⟨i, by grind⟩) (d := d.toNat) (by simp; omega) B
+        rw [h_d] at h_B
+        have := Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length (dim := i) (dim' := i') (s := s') (s' := s') (k' := d) (k := d) (A := B) (B := B) (by omega) (by omega) (by rfl) (by rfl)
+        have h_B := this.trans h_B
+        have h := h.symm.trans h_B
+        simp at h
         sorry
     .
       have h_neg : d < 0 := by omega
