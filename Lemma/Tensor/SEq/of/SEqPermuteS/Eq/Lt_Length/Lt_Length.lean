@@ -1,3 +1,4 @@
+import Lemma.Tensor.SEqPermuteS.of.Add.ge.SubLength_1
 import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
 import Lemma.Tensor.SEqPermute__0
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
@@ -52,6 +53,7 @@ private lemma main
       .
         simp at h_d
         have := List.EqPermuteS.of.Add.ge.SubLength_1 (s := s) (i := ⟨i, by grind⟩) (d := d.toNat) (by simp; omega)
+        have h_A := Tensor.SEqPermuteS.of.Add.ge.SubLength_1 (i := ⟨i, by grind⟩) h_d A
         sorry
     .
       have h_neg : d < 0 := by omega
