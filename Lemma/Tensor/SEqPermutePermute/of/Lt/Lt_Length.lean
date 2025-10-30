@@ -16,7 +16,6 @@ private lemma main
   (X.permute ⟨i, by linarith⟩ d).permute ⟨j, by simpa⟩ (-d) ≃ X := by
 -- proof
   intro d
-  have : NeZero d := ⟨by omega⟩
   have := SEqPermutePermute.of.GtLength_Add (s := s) (i := i) (d := d) (by grind) X
   simp [d] at this ⊢
   apply SEq.symm ∘ SEq.trans this.symm
