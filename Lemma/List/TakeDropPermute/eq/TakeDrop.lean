@@ -2,7 +2,7 @@ import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EqTake.of.Ge_Length
-import Lemma.List.Permute.eq.Permute__Sub.of.Add.ge.SubLength_1
+import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.TakeAppend.eq.Take.of.Le_Length
 import Lemma.List.TakeDrop.eq.DropTake
@@ -56,7 +56,7 @@ private lemma main
     simp at h
     have := congrArg (·.take (s.length - i)) this
     simp at this
-    rw [Permute.eq.Permute__Sub.of.Add.ge.SubLength_1 (by omega)] at this ⊢
+    rw [EqPermuteS.of.Add.ge.SubLength_1 (by omega)] at this ⊢
     rw [EqTake.of.Ge_Length (by simp)] at this
     rw [this]
     rw [Drop.eq.Nil.of.Ge_Length (i := i + d + 1) (by simp; omega)]

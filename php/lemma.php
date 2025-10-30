@@ -476,6 +476,9 @@ EOF;
 		case 'eye':
 			$modify |= $import_syntax('sympy.matrices.expressions.special');
 			break;
+		case '≃':
+			$modify |= $import_syntax('stdlib.SEq');
+			break;
 		}
 	}
 	if ($modify) {

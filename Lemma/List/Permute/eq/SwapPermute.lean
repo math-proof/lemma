@@ -2,7 +2,7 @@ import Lemma.List.LengthSwap.eq.Length
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.List.GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt_Length
 import Lemma.List.EqSwap.of.Ge_Length
-import Lemma.List.Permute.eq.Permute__Sub.of.Add.ge.SubLength_1
+import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
 import Lemma.List.GetPermute.eq.Ite.of.Lt_Length.Lt_Length
 open List Bool
 
@@ -20,8 +20,8 @@ private lemma main
   by_cases h : i + d + 1 ≥ a.length
   ·
     rw [EqSwap.of.Ge_Length (by simpa)]
-    rw [Permute.eq.Permute__Sub.of.Add.ge.SubLength_1]
-    rw [Permute.eq.Permute__Sub.of.Add.ge.SubLength_1 (d := d)]
+    rw [EqPermuteS.of.Add.ge.SubLength_1]
+    rw [EqPermuteS.of.Add.ge.SubLength_1.int]
     repeat grind
   ·
     simp at h

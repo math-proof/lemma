@@ -2670,6 +2670,13 @@ class Lean_simeq extends LeanRelational
                 return parent::__get($vname);
         }
     }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $syntax['≃'] = true;
+        return parent::latexArgs($syntax);
+    }
+
 }
 
 class Lean_asymp extends LeanRelational

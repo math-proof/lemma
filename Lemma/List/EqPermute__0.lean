@@ -1,4 +1,3 @@
-import stdlib.List
 import Lemma.List.Permute.eq.Ite
 import Lemma.List.Slice.eq.Nil
 open List
@@ -6,11 +5,11 @@ open List
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (i : Fin a.length) :
+  (i : Fin s.length) :
 -- imply
-  a.permute i 0 = a := by
+  s.permute i 0 = s := by
 -- proof
   rw [Permute.eq.Ite]
   simp

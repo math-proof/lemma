@@ -7,13 +7,13 @@ open Nat
 private lemma main
   {a b : ℕ}
 -- given
-  (h₀ : a - b = 0)
-  (h₁ : a ≥ b) :
+  (h_ge : a ≥ b)
+  (h_eq : a - b = 0) :
 -- imply
   a = b := by
 -- proof
-  have := Le.of.Sub.eq.Zero h₀
-  apply Eq.of.Le.Ge this h₁
+  have := Le.of.Sub.eq.Zero h_eq
+  apply Eq.of.Le.Ge this h_ge
 
 
 -- created on 2025-04-11
