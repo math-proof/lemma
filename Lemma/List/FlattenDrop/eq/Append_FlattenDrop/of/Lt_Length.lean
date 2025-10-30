@@ -5,11 +5,11 @@ open List
 @[main]
 private lemma main
   {i : ℕ}
-  {v : List (List α)}
+  {s : List (List α)}
 -- given
-  (h : i < v.length) :
+  (h : i < s.length) :
 -- imply
-  (v.drop i).flatten = v[i] ++ (v.drop (i + 1)).flatten := by
+  (s.drop i).flatten = s[i] ++ (s.drop (i + 1)).flatten := by
 -- proof
   rw [Drop.eq.Cons_Drop_Add_1.of.Lt_Length h]
   rw [List.flatten]

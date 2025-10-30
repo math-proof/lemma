@@ -5,11 +5,11 @@ open List Nat
 
 @[main, comm]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v.length > 0) :
+  (h : s.length > 0) :
 -- imply
-  v[0] :: v.tail = v := by
+  s[0] :: s.tail = s := by
 -- proof
   have h := Ne.of.Gt h
   apply EqCons_Tail.of.NeLength_0 h

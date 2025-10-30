@@ -3,14 +3,14 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.tail.length)
+  (h : i < s.tail.length)
   (default : α):
 -- imply
-  v.eraseIdx i.succ = v.headD default :: v.tail.eraseIdx i := by
+  s.eraseIdx i.succ = s.headD default :: s.tail.eraseIdx i := by
 -- proof
-  cases v
+  cases s
   ·
     contradiction
   ·

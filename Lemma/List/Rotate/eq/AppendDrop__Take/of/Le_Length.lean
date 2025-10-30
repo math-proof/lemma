@@ -4,12 +4,12 @@ import sympy.Basic
 
 @[main, comm]
 private lemma main
-  {v : List α}
+  {s : List α}
   {n : ℕ}
 -- given
-  (h : n ≤ v.length) :
+  (h : n ≤ s.length) :
 -- imply
-  v.rotate n = v.drop n ++ v.take n := by
+  s.rotate n = s.drop n ++ s.take n := by
 -- proof
   apply List.rotate_eq_drop_append_take h
 

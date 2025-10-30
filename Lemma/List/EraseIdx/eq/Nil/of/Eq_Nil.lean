@@ -3,11 +3,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v = []) :
+  (h : s = []) :
 -- imply
-  v.eraseIdx i = [] := by
+  s.eraseIdx i = [] := by
 -- proof
   simp_all
 

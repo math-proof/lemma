@@ -5,11 +5,11 @@ open Nat List
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (i : Fin v.length) :
+  (i : Fin s.length) :
 -- imply
-  v ≠ [] := by
+  s ≠ [] := by
 -- proof
   have h_i := LtVal i
   apply Ne_Nil.of.GtLength_0

@@ -6,11 +6,11 @@ open List Nat
 @[main]
 private lemma main
   [Monoid α]
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v.length > 0) :
+  (h : s.length > 0) :
 -- imply
-  v[0] ∣ v.prod := by
+  s[0] ∣ s.prod := by
 -- proof
   rw [Prod.eq.Mul_ProdTail.of.GtLength_0 h]
   apply Dvd_Mul.left

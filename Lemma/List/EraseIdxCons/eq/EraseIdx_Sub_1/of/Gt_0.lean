@@ -8,11 +8,11 @@ open List Nat
 private lemma main
 -- given
   (h : i > 0)
-  (v : List α) :
+  (s : List α) :
 -- imply
-  (v₀ :: v).eraseIdx i = v₀ :: v.eraseIdx (i - 1) := by
+  (s₀ :: s).eraseIdx i = s₀ :: s.eraseIdx (i - 1) := by
 -- proof
-  have h := EraseIdx_Succ.eq.Cons_EraseIdxTail.of.GtLength_0 (by simp) (i - 1) (v := v₀ :: v)
+  have h := EraseIdx_Succ.eq.Cons_EraseIdxTail.of.GtLength_0 (by simp) (i - 1) (s := s₀ :: s)
   rw [Succ.eq.Add_1] at h
   rw [EqAddSub.of.Ge (by omega)] at h
   simp [h]

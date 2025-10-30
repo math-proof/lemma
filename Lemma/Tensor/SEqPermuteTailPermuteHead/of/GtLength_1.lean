@@ -97,7 +97,7 @@ private lemma main
           rw [TakeRotate.eq.Drop.of.Le_Length (by omega)] at h_r'
           simp at h_r'
           have h_prod : r' * s[0] + q' < (s.rotate 1).prod := by
-            simp [Rotate.eq.AppendDrop__Take.of.Le_Length (v := s) (n := 1) (by omega), ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)]
+            simp [Rotate.eq.AppendDrop__Take.of.Le_Length (s := s) (n := 1) (by omega), ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)]
             apply AddMul.lt.Mul.of.Lt.Lt <;>
             ·
               assumption

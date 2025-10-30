@@ -4,11 +4,11 @@ open List
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (i : Fin v.length) :
+  (i : Fin s.length) :
 -- imply
-  (v.take (i + 1)).drop i = [v[i]] := by
+  (s.take (i + 1)).drop i = [s[i]] := by
 -- proof
   apply DropTake.eq.ListGet.of.Lt_Length
 

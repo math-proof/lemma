@@ -6,11 +6,11 @@ open List
 @[main]
 private lemma main
   [Mul α] [One α]
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v.length > 0) :
+  (h : s.length > 0) :
 -- imply
-  v.prod = v[0] * v.tail.prod := by
+  s.prod = s[0] * s.tail.prod := by
 -- proof
   conv_lhs =>
     rw [Eq_Cons_Tail.of.GtLength_0 h]

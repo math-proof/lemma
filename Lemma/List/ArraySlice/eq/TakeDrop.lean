@@ -5,9 +5,9 @@ import sympy.Basic
 @[main, comm]
 private lemma main
 -- given
-  (v : List α) :
+  (s : List α) :
 -- imply
-  v.array_slice i d = (v.drop i).take d := by
+  s.array_slice i d = (s.drop i).take d := by
 -- proof
   simp [List.array_slice]
 

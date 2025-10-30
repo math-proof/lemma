@@ -7,14 +7,14 @@ open List Nat
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : j < (v.slice i n).length) :
+  (h : j < (s.slice i n).length) :
 -- imply
-  have : i + j < v.length := by
+  have : i + j < s.length := by
     rw [LengthSlice.eq.SubMin] at h
     apply Lt.of.Lt_Min (LtAdd.of.Lt_Sub.left h)
-  (v.slice i n)[j] = v[i + j] := by
+  (s.slice i n)[j] = s[i + j] := by
 -- proof
   unfold List.slice
   rw [GetArraySlice.eq.Get_Add.of.Lt_Length]

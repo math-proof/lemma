@@ -6,12 +6,12 @@ open List Nat
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (i : Fin v.length)
+  (i : Fin s.length)
   (a : α) :
 -- imply
-  i < (v.insertIdx i a).length := by
+  i < (s.insertIdx i a).length := by
 -- proof
   have h_i := LtVal i
   rw [LengthInsertIdx.eq.Add1Length.of.Le_Length]

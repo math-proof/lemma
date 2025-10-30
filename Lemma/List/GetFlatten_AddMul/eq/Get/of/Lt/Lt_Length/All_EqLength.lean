@@ -12,21 +12,21 @@ open List Nat
 @[main]
 private lemma main
   {i j n : ℕ}
-  {v : List (List α)}
+  {s : List (List α)}
 -- given
-  (h₀ : ∀ l ∈ v, l.length = n)
-  (h₁ : i < v.length)
+  (h₀ : ∀ l ∈ s, l.length = n)
+  (h₁ : i < s.length)
   (h₂ : j < n) :
 -- imply
-  have : j < v[i].length := by
-    specialize h₀ v[i]
+  have : j < s[i].length := by
+    specialize h₀ s[i]
     simp at h₀
     simp_all
   have := AddMul.lt.LengthFlatten.of.Lt.Lt_Length.All_EqLength h₀ h₁ h₂
-  v.flatten[i * n + j] = v[i][j] := by
+  s.flatten[i * n + j] = s[i][j] := by
 -- proof
   intro h₂ h₃
-  have := AppendFlattenS.eq.Flatten v i
+  have := AppendFlattenS.eq.Flatten s i
   rw [← this] at h₃
   simp [← this]
   rw [LengthAppend.eq.AddLengthS] at h₃

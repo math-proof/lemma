@@ -6,11 +6,11 @@ open List
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.length) :
+  (h : i < s.length) :
 -- imply
-  (v.take (i + 1)).drop i = [v[i]] := by
+  (s.take (i + 1)).drop i = [s[i]] := by
 -- proof
   rw [DropTake.eq.TakeDrop]
   simp

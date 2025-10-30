@@ -7,12 +7,12 @@ open Nat
 private lemma main
 -- given
   (h : i ≤ j)
-  (v : List α) :
+  (s : List α) :
 -- imply
-  v.take i ++ v.slice i j = v.take j := by
+  s.take i ++ s.slice i j = s.take j := by
 -- proof
   unfold List.slice List.array_slice Function.comp
-  have := v.take_add (i := i) (j := j - i)
+  have := s.take_add (i := i) (j := j - i)
   rw [EqAdd_Sub.of.Ge h] at this
   rw [this]
 

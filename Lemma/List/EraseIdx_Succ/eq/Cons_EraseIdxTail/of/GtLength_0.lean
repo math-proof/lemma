@@ -7,16 +7,16 @@ open List
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v.length > 0)
+  (h : s.length > 0)
   (i : ℕ) :
 -- imply
-  v.eraseIdx i.succ = v[0] :: v.tail.eraseIdx i := by
+  s.eraseIdx i.succ = s[0] :: s.tail.eraseIdx i := by
 -- proof
-  by_cases h_i : i < v.tail.length
+  by_cases h_i : i < s.tail.length
   ·
-    rw [EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_i v[0]]
+    rw [EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_i s[0]]
     rw [HeadD.eq.Get_0.of.GtLength_0 h]
   ·
     simp at h_i

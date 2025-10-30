@@ -6,13 +6,13 @@ open List Nat
 @[main]
 private lemma main
 -- given
-  (v : List α)
+  (s : List α)
   (a : α)
   (i : ℕ) :
 -- imply
-  v[i]? = some a ↔ ∃ h : i < v.length, v[i] = a := by
+  s[i]? = some a ↔ ∃ h : i < s.length, s[i] = a := by
 -- proof
-  by_cases hi : i < v.length <;>
+  by_cases hi : i < s.length <;>
     simp [hi]
 
 

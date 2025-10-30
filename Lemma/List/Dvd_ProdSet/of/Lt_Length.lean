@@ -7,12 +7,12 @@ open List Nat
 @[main]
 private lemma main
   [CommMonoid α]
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.length)
+  (h : i < s.length)
   (a : α) :
 -- imply
-  a ∣ (v.set i a).prod := by
+  a ∣ (s.set i a).prod := by
 -- proof
   rw [ProdSet.eq.MulProd_Mul_Prod.of.Lt_Length h]
   apply Dvd_Mul.of.Dvd

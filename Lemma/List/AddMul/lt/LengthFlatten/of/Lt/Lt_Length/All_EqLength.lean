@@ -6,13 +6,13 @@ open List Nat
 @[main]
 private lemma main
   {i j n : ℕ}
-  {v : List (List α)}
+  {s : List (List α)}
 -- given
-  (h₀ : ∀ l ∈ v, l.length = n)
-  (h₁ : i < v.length)
+  (h₀ : ∀ l ∈ s, l.length = n)
+  (h₁ : i < s.length)
   (h₂ : j < n) :
 -- imply
-  i * n + j < v.flatten.length := by
+  i * n + j < s.flatten.length := by
 -- proof
   rw [LengthFlatten.eq.MulLength.of.All_EqLength h₀]
   apply AddMul.lt.Mul.of.Lt.Lt <;>

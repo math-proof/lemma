@@ -3,11 +3,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i ≥ v.length) :
+  (h : i ≥ s.length) :
 -- imply
-  v[i]? = none := by
+  s[i]? = none := by
 -- proof
   simp [h]
 

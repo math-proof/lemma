@@ -6,10 +6,10 @@ open List
 @[main, comm]
 private lemma main
 -- given
-  (v : List α)
+  (s : List α)
   (n : ℕ) :
 -- imply
-  (v.rotate n).drop (v.length - n % v.length) = v.take (n % v.length) := by
+  (s.rotate n).drop (s.length - n % s.length) = s.take (n % s.length) := by
 -- proof
   simp [Rotate.eq.AppendDrop__Take]
 

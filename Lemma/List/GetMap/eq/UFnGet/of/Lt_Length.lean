@@ -4,13 +4,13 @@ import sympy.Basic
 @[main]
 private lemma main
   {β : Type*}
-  {v : List α}
+  {s : List α}
   {f : α → β}
 -- given
-  (h : i < v.length) :
+  (h : i < s.length) :
 -- imply
-  have : i < (v.map f).length := by rwa [List.length_map]
-  (v.map f)[i] = f v[i] := by
+  have : i < (s.map f).length := by rwa [List.length_map]
+  (s.map f)[i] = f s[i] := by
 -- proof
   simp
 

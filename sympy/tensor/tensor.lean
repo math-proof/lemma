@@ -77,11 +77,7 @@ def Tensor.getEllipsis (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offs
         rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 (by assumption)]
         simp only [EqAddSub.of.Ge h_1]
         conv_rhs =>
-          rw [Eq_Cons_Tail.of.GtLength_0 (v := s.eraseIdx offset) (show (s.eraseIdx offset).length > 0 by
-            rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length]
-            · linarith
-            · simp
-          )]
+          rw [Eq_Cons_Tail.of.GtLength_0 (show (s.eraseIdx offset).length > 0 by grind)]
         congr
         rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length]
         · apply List.HeadD.eq.Get_0.of.GtLength_0

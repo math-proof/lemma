@@ -5,12 +5,12 @@ open List
 @[main]
 private lemma main
 -- given
-  (v : List (List α))
+  (s : List (List α))
   (n : ℕ) :
 -- imply
-  (v.take n).flatten ++ (v.drop n).flatten = v.flatten := by
+  (s.take n).flatten ++ (s.drop n).flatten = s.flatten := by
 -- proof
-  rw [← EqAppendTake__Drop v n, List.flatten_append]
+  rw [← EqAppendTake__Drop s n, List.flatten_append]
   simp
 
 

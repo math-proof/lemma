@@ -4,12 +4,12 @@ open List
 
 @[main, comm]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v.length > 0)
-  (h_a : a = v[0]) :
+  (h : s.length > 0)
+  (h_a : a = s[0]) :
 -- imply
-  a :: v.tail = v := 
+  a :: s.tail = s :=
 -- proof
   h_a ▸ EqCons_Tail.of.GtLength_0 h
 

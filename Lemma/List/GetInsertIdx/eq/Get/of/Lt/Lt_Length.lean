@@ -4,13 +4,13 @@ open List
 
 @[main]
 private lemma fin
-  {v : List α}
+  {s : List α}
 -- given
-  (h : j < v.length)
+  (h : j < s.length)
   (h_ij : j < i)
   (a : α) :
 -- imply
-  (v.insertIdx i a).get ⟨j, h.trans_le List.length_le_length_insertIdx⟩ = v.get ⟨j, h⟩ := by
+  (s.insertIdx i a).get ⟨j, h.trans_le List.length_le_length_insertIdx⟩ = s.get ⟨j, h⟩ := by
 -- proof
   apply List.get_insertIdx_of_lt
   assumption
@@ -18,14 +18,14 @@ private lemma fin
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : j < v.length)
+  (h : j < s.length)
   (h_ij : j < i)
   (a : α) :
 -- imply
   have := h.trans_le List.length_le_length_insertIdx
-  (v.insertIdx i a)[j] = v[j] := by
+  (s.insertIdx i a)[j] = s[j] := by
 -- proof
   apply fin h h_ij
 

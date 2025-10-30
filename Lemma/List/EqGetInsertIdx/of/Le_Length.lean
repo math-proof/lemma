@@ -5,30 +5,30 @@ open List
 
 @[main]
 private lemma fin
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i ≤ v.length)
+  (h : i ≤ s.length)
   (a : α) :
 -- imply
-  have h_i : i < (v.insertIdx i a).length := by
+  have h_i : i < (s.insertIdx i a).length := by
     rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h]
     linarith
-  (v.insertIdx i a).get ⟨i, h_i⟩ = a := by
+  (s.insertIdx i a).get ⟨i, h_i⟩ = a := by
 -- proof
   simp
 
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i ≤ v.length)
+  (h : i ≤ s.length)
   (a : α) :
 -- imply
-  have : i < (v.insertIdx i a).length := by
+  have : i < (s.insertIdx i a).length := by
     rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h]
     linarith
-  (v.insertIdx i a)[i] = a := by
+  (s.insertIdx i a)[i] = a := by
 -- proof
   apply fin h
 

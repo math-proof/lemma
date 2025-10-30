@@ -31,7 +31,7 @@ private lemma main
   apply EqMulS.of.Eq
   rw [MulProdS.eq.ProdAppend]
   simp
-  rw [Prod.eq.Mul_ProdTail.of.GtLength_0 (v := s)]
+  rw [Prod.eq.Mul_ProdTail.of.GtLength_0 (s := s)]
 
 
 -- created on 2025-07-17

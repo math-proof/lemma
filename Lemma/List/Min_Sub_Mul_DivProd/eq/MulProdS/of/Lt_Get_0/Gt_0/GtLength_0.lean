@@ -25,7 +25,7 @@ private lemma main
   rw [← Tail.eq.AppendTakeTail__Drop.of.Gt_0]
   rwa [DivProd.eq.ProdTail.of.GtLength_0.Gt_0 (by assumption) (by assumption)]
   rw [DivProd.eq.ProdTail.of.GtLength_0.Gt_0]
-  rw [Prod.eq.Mul_ProdTail.of.GtLength_0 (v := s) (by linarith)]
+  rw [Prod.eq.Mul_ProdTail.of.GtLength_0 (s := s) (by linarith)]
   apply Le_SubMulS.of.Lt
   repeat assumption
 

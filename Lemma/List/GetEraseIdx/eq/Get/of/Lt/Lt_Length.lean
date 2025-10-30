@@ -5,16 +5,16 @@ open List Nat
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h₀ : i < v.length)
+  (h₀ : i < s.length)
   (h₁ : j < i) :
 -- imply
-  let h_length : (v.eraseIdx i).length = v.length - 1 := LengthEraseIdx.eq.SubLength_1.of.Lt_Length h₀
-  (v.eraseIdx i)[j] = v[j] := by
+  let h_length : (s.eraseIdx i).length = s.length - 1 := LengthEraseIdx.eq.SubLength_1.of.Lt_Length h₀
+  (s.eraseIdx i)[j] = s[j] := by
 -- proof
   intro h_length
-  induction v generalizing i j with
+  induction s generalizing i j with
   | nil =>
     simp
   | cons a as ih =>

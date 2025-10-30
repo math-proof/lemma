@@ -3,11 +3,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.length) :
+  (h : i < s.length) :
 -- imply
-  v.drop i = v[i] :: v.drop (i + 1) :=
+  s.drop i = s[i] :: s.drop (i + 1) :=
 -- proof
   List.drop_eq_getElem_cons h
 

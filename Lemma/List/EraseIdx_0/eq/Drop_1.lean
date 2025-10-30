@@ -4,9 +4,9 @@ import sympy.Basic
 @[main, comm]
 private lemma main
 -- given
-  (v : List α) :
+  (s : List α) :
 -- imply
-  v.eraseIdx 0 = v.drop 1 := by
+  s.eraseIdx 0 = s.drop 1 := by
 -- proof
   simp
 
