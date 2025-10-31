@@ -88,15 +88,18 @@ if ($_POST) {
 
 	function detect_lemma(&$line)  {
 		global $sectionRegex, $term, $open_section, $imports, $sections;
-		while (preg_match("/\b(?<!@)($sectionRegex)((?:\.$term)+)/", $line, $matches)) {
-			if (!in_array($matches[1], $open_section))
-				$open_section[] = $matches[1];
+		$offset = 0;
+		while (preg_match("/\b($sectionRegex)((?:\.$term)+)/", $line, $matches, PREG_OFFSET_CAPTURE, $offset)) {
+			if (!in_array($matches[1][0], $open_section))
+				$open_section[] = $matches[1][0];
 
-			$module = module_exists($matches[0]);
+			$module = module_exists($matches[0][0]);
 			if ($module && !in_array($module = "Lemma." . $module, $imports))
 				$imports[] = $module;
 
-			$line = preg_replace("/\b($sectionRegex)\.(?=$term)/", '', $line);
+			$line_ = preg_replace("/\b(?<!@)($sectionRegex)\.(?=$term)/", '', $line);
+			$offset = $matches[0][1] + strlen($matches[0][0]) - (strlen($line) - strlen($line_));
+			$line = $line_;
 		}
 
 		if ($matches = std\matchAll("/\b(?!$sectionRegex)($term(?:\.$term)*)((?:\.[a-z_]+)*)(?=\b[^.]|$)/", $line)) {

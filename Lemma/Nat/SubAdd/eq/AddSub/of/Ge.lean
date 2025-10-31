@@ -6,7 +6,7 @@ open Nat
 private lemma main
   {a b c : ℕ}
 -- given
-  (h : c ≤ a) :
+  (h : a ≥ c) :
 -- imply
   a + b - c = a - c + b := by
 -- proof

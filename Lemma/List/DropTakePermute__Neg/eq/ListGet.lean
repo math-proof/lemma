@@ -11,7 +11,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.Sub.eq.Zero.of.Lt
-import Lemma.Nat.SubAdd.eq.AddSub.of.Le
+import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 import Lemma.Nat.Sub_Sub.eq.Min
 open List Nat
 
@@ -29,7 +29,7 @@ private lemma main
   ·
     have h := DropTakePermute__Neg.eq.RotateDropTake i d
     rw [DropTake.eq.TakeDrop] at h ⊢
-    rw [SubAdd.eq.AddSub.of.Le (by omega)] at h
+    rw [SubAdd.eq.AddSub.of.Ge (by omega)] at h
     rw [Sub_Sub.eq.Min] at h
     rw [EqSubAdd.left]
     have h := congrArg (·.take 1) h

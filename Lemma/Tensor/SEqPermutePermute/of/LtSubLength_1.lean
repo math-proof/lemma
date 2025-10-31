@@ -21,7 +21,7 @@ import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.Nat.LtAddMulAddMul.of.Lt.Lt.Lt.Eq
 import Lemma.Nat.LtVal
 import Lemma.Nat.OfNat.eq.Cast
-import Lemma.Nat.SubAdd.eq.AddSub.of.Le
+import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 import Lemma.Nat.ToNatSub_Neg.eq.Add
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.Permute.eq.Ite
@@ -137,7 +137,7 @@ private lemma main
                   simp [h_z] at h_zq₀
                   simp [h_qr, h_zq₀, h_q'r']
                   have h_qₚrₚ := Eq_Sub.of.EqAdd.left h_qₚrₚ
-                  rw [SubAdd.eq.AddSub.of.Le] at h_qₚrₚ
+                  rw [SubAdd.eq.AddSub.of.Ge] at h_qₚrₚ
                   ·
                     simp [h_qₚrₚ]
                     simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]

@@ -6,7 +6,7 @@ import Lemma.Nat.Mul2.eq.Add
 import Lemma.Int.EqAdd.is.Eq_Sub
 import Lemma.Nat.EqAdd.of.Eq_Sub.Le
 import Lemma.Int.AddSub.eq.SubAdd
-import Lemma.Nat.SubAdd.eq.AddSub.of.Le
+import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 import Lemma.Nat.SubMul.eq.MulSub_1
 import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Nat.MulSub.eq.SubMulS
@@ -58,7 +58,7 @@ private lemma mpr
       rw [Add.eq.Mul2]
       rw [EqAdd.of.Eq_Sub.Le]
       ·
-        rw [SubAdd.eq.AddSub.of.Le]
+        rw [SubAdd.eq.AddSub.of.Ge]
         ·
           rw [SubMul.eq.MulSub_1]
           norm_num
@@ -70,7 +70,7 @@ private lemma mpr
             rw [Mul_Add.eq.AddMulS]
             rw [EqAdd.of.Eq_Sub.Le.left]
             ·
-              rw [SubAdd.eq.AddSub.of.Le]
+              rw [SubAdd.eq.AddSub.of.Ge]
               ·
                 rw [SubMulS.eq.MulSub]
                 norm_num

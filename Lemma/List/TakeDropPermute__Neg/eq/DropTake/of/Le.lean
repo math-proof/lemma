@@ -1,7 +1,7 @@
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.TakeDropPermute__Neg.eq.DropTake
 import Lemma.Nat.EqSub_Sub.of.Ge
-import Lemma.Nat.SubAdd.eq.AddSub.of.Le
+import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 open List Nat
 
 
@@ -30,7 +30,7 @@ private lemma sub
 -- imply
   ((s.permute i (-d)).drop (i + 1 - d)).take d = (s.take i).drop (i - d) := by
 -- proof
-  rw [SubAdd.eq.AddSub.of.Le h]
+  rw [SubAdd.eq.AddSub.of.Ge h]
   apply main h
 
 
