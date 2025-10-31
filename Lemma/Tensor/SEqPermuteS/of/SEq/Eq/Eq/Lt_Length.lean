@@ -7,14 +7,14 @@ private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}
 -- given
-  (h_s : dim < s.length)
-  (h_dim : dim' = dim)
-  (h_k : k' = k)
+  (h_s : i < s.length)
+  (h_i : i' = i)
+  (h_d : d' = d)
   (h : A ≃ B) :
 -- imply
-  B.permute ⟨dim', by rwa [← h.left, h_dim]⟩ k' ≃ A.permute ⟨dim, h_s⟩ k:= by
+  B.permute ⟨i', by rwa [← h.left, h_i]⟩ d' ≃ A.permute ⟨i, h_s⟩ d:= by
 -- proof
-  subst h_k h_dim
+  subst h_d h_i
   apply SEq.symm
   apply SEqPermuteS.of.SEq.Lt_Length h_s h
 

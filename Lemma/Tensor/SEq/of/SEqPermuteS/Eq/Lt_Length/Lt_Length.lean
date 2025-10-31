@@ -37,13 +37,13 @@ private lemma main
       have h := h.symm.trans h_A
       have h_B := SEqPermuteS.of.Add.ge.SubLength_1 (i := ⟨i, by grind⟩) (d := d.toNat) (by simp; omega) B
       rw [h_toNat] at h_B
-      have := SEqPermuteS.of.SEq.Eq.Eq.Lt_Length (dim := i) (dim' := i') (k' := d) (k := d) (A := B) (B := B) (by omega) (by omega) (by rfl) (by rfl)
+      have := SEqPermuteS.of.SEq.Eq.Eq.Lt_Length (i := i) (i' := i') (d := d) (d' := d) (A := B) (B := B) (by omega) (by omega) (by rfl) (by rfl)
       have h_B := this.trans h_B
       have h := h.symm.trans h_B
       simp at h
       apply SEq.of.SEqPermuteS.Eq.Lt_Length.Lt_Length.GtLength_Add (d := s.length - 1 - i) _ h_i h_i' h_eq
       ·
-        have := SEqPermuteS.of.SEq.Eq.Eq.Lt_Length (dim := i') (dim' := i) (k' := (s'.length - 1 - i : ℕ)) (k := (s.length - 1 - i : ℕ)) (A := B) (B := B) (by omega) (by omega) (by simp; grind) (by rfl)
+        have := SEqPermuteS.of.SEq.Eq.Eq.Lt_Length (i := i') (i' := i) (d := (s.length - 1 - i : ℕ)) (d' := (s'.length - 1 - i : ℕ)) (A := B) (B := B) (by omega) (by omega) (by simp; grind) (by rfl)
         have h := h.trans this
         apply SEq.symm ∘ SEq.trans h.symm
         rfl
@@ -68,7 +68,7 @@ private lemma main
       have h := h.symm.trans this
       apply SEq.of.SEqPermuteS.Eq.Lt_Length.Lt_Length.Ge (d := i) _ (by omega) (by omega) h_eq
       ·
-        have := SEqPermuteS.of.SEq.Eq.Eq.Lt_Length (dim := i') (dim' := i') (k' := -i') (k := -i) (A := B) (B := B) (by omega) (by omega) (by simp; omega) (by rfl)
+        have := SEqPermuteS.of.SEq.Eq.Eq.Lt_Length (i := i') (i' := i') (d' := -i') (d := -i) (A := B) (B := B) (by omega) (by omega) (by simp; omega) (by rfl)
         exact h.trans this
       ·
         simp
