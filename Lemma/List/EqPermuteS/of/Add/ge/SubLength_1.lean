@@ -1,18 +1,9 @@
-import Lemma.Int.AddSub.eq.SubAdd
-import Lemma.Int.CoeSub_1.eq.SubCoe_1.of.Ge_1
-import Lemma.Int.EqAddSub
-import Lemma.Int.Lt.of.Sub.lt.Zero
 import Lemma.Int.NegSucc.eq.NegAdd_1
-import Lemma.List.Drop.eq.Nil
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
-import Lemma.List.Permute.eq.Ite
-import Lemma.List.Slice.eq.Slice__Length.of.Ge_Length
+import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
-import Lemma.Nat.Ge.of.Ge.Ge
-import Lemma.Nat.Ge_1
-import Lemma.Nat.Le_Sub_1
 import Lemma.Nat.LtVal
-open Int List Nat
+open List Int Nat
 
 
 @[main]
@@ -25,24 +16,11 @@ private lemma main
 -- imply
   s.permute i d = s.permute i (s.length - 1 - i : ℕ) := by
 -- proof
-  have hi := Le_Sub_1 i
-  have h_length := Ge_1 i
-  rw [Permute.eq.Ite]
-  split_ifs with h_d
-  ·
-    have h_ge := Ge.of.Ge.Ge h hi
-    linarith
-  ·
-    simp at h_d
-    rw [Permute.eq.Ite]
-    split_ifs with h_i
-    ·
-      linarith
-    ·
-      simp
-      rw [Drop.eq.Nil.of.Ge_Length (by omega)]
-      rw [Slice.eq.Slice__Length.of.Ge_Length (by omega)]
-      grind
+  repeat rw [Permute.eq.Append_AppendRotateTakeDrop]
+  simp_all [show (s.length - 1 - i + 1) = s.length - i by omega]
+  rw [Drop.eq.Nil.of.Ge_Length (i := i + (d + 1)) (by simp; omega)]
+  simp
+  omega
 
 
 @[main]
@@ -59,7 +37,7 @@ private lemma int
   | Int.ofNat d =>
     have := main (i := i) (d := d) (by simp_all; omega)
     simp_all
-    rw [Nat.CoeSub.eq.SubCoeS.of.Ge]
+    rw [CoeSub.eq.SubCoeS.of.Ge]
     repeat grind
   | Int.negSucc d =>
     have h_i := LtVal i
@@ -69,4 +47,4 @@ private lemma int
 
 
 -- created on 2025-06-07
--- updated on 2025-10-29
+-- updated on 2025-10-31

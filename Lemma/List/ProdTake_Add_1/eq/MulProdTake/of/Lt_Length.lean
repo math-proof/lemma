@@ -8,13 +8,13 @@ open List Nat
 @[main]
 private lemma main
   [Monoid α]
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.length) :
+  (h : i < s.length) :
 -- imply
-  (v.take (i + 1)).prod = (v.take i).prod * v[i] := by
+  (s.take (i + 1)).prod = (s.take i).prod * s[i] := by
 -- proof
-  have := Prod.eq.MulProdTake__ProdDrop (v.take (i + 1)) i
+  have := Prod.eq.MulProdTake__ProdDrop (s.take (i + 1)) i
   rw [this]
   rw [TakeTake.eq.Take.of.Ge (by linarith)]
   apply EqMulS.of.Eq.left

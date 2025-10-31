@@ -7,11 +7,11 @@ open List
 @[main, simp]
 private lemma main
 -- given
-  (a : List α)
-  (i : Fin a.length)
+  (s : List α)
+  (i : Fin s.length)
   (d : ℤ) :
 -- imply
-  (a.permute i d).length = a.length := by
+  (s.permute i d).length = s.length := by
 -- proof
   unfold List.permute
   split <;>

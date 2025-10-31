@@ -8,13 +8,13 @@ open List
 private lemma main
   [CommMonoid α]
 -- given
-  (a : List α)
+  (s : List α)
   (i : ℕ) :
 -- imply
-  (a.rotate i).prod = a.prod := by
+  (s.rotate i).prod = s.prod := by
 -- proof
   rw [Rotate.eq.AppendDrop__Take]
-  rw [Prod.eq.MulProdDrop__ProdTake a (i % a.length)]
+  rw [Prod.eq.MulProdDrop__ProdTake s (i % s.length)]
   simp
 
 

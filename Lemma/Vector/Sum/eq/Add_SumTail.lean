@@ -13,9 +13,9 @@ private lemma main
   l.sum = (l.headD 0) + l.tail.sum := by
 -- proof
   match n with
-  | .zero =>
+  | 0 =>
     simp [EqHeadD, Sum.eq.Zero]
-  | .succ n =>
+  | n + 1 =>
     have h : l = l.head ::ᵥ l.tail := by simp
     rw [h]
     rw [

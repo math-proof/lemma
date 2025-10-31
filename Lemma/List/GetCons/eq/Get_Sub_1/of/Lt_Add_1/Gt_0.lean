@@ -12,11 +12,7 @@ private lemma main
 -- imply
   (head :: tail)[i] = tail[i - 1] := by
 -- proof
-  match i with
-  | .zero =>
-    contradiction
-  | .succ i =>
-    simp
+  grind
 
 
 -- created on 2025-05-15

@@ -3,15 +3,15 @@ import sympy.Basic
 
 @[main, comm]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v ≠ [])
+  (h : s ≠ [])
   (n : ℕ)
   (x : α) :
 -- imply
-  (v.insertIdx (n + 1) x).tail = v.tail.insertIdx n x := by
+  (s.insertIdx (n + 1) x).tail = s.tail.insertIdx n x := by
 -- proof
-  cases v <;>
+  cases s <;>
     simp_all
 
 

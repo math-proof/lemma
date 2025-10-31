@@ -5,12 +5,12 @@ import sympy.Basic
 private lemma main
   [MulOneClass α]
 -- given
-  (v : List α)
+  (s : List α)
   (i : ℕ) :
 -- imply
-  (v.insertIdx i 1).prod = v.prod := by
+  (s.insertIdx i 1).prod = s.prod := by
 -- proof
-  induction v generalizing i <;>
+  induction s generalizing i <;>
     cases i <;>
       simp_all
 

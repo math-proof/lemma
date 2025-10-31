@@ -6,11 +6,11 @@ open List Nat
 @[main, comm]
 private lemma main
   [One α] [CommMagma α]
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.length) :
+  (h : i < s.length) :
 -- imply
-  (v.drop i).prod = (v.drop (i + 1)).prod * v[i] := by
+  (s.drop i).prod = (s.drop (i + 1)).prod * s[i] := by
 -- proof
   rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length h]
   rw [Mul.comm]

@@ -6,11 +6,11 @@ open List Nat
 @[main]
 private lemma main
   [One α] [CommMagma α]
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v.length > 0) :
+  (h : s.length > 0) :
 -- imply
-  v.prod = v.tail.prod * v[0] := by
+  s.prod = s.tail.prod * s[0] := by
 -- proof
   rw [Prod.eq.Mul_ProdTail.of.GtLength_0 h]
   apply Mul.comm

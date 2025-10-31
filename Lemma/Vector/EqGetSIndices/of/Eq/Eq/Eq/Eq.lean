@@ -33,19 +33,19 @@ private lemma main
     | .ofNat step' =>
       simp at h_step
       match step with
-      | .zero =>
+      | 0 =>
         simp
         match step' with
-        | .zero =>
+        | 0 =>
           unfold Slice.length at h_i
           simp at h_i
-        | .succ step' =>
+        | step' + 1 =>
           contradiction
-      | .succ step =>
+      | step + 1 =>
         match step' with
-        | .zero =>
+        | 0 =>
           contradiction
-        | .succ step' =>
+        | step' + 1 =>
           simp
           split_ifs with h
           ·

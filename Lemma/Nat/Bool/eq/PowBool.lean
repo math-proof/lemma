@@ -10,10 +10,10 @@ private lemma main
   Bool.toNat p = (Bool.toNat p) ^ n := by
 -- proof
   match h : n with
-  | .zero =>
+  | 0 =>
     have h := NeZero.ne n
     contradiction
-  | .succ n =>
+  | n + 1 =>
     by_cases h : p <;>
       simp_all [pow_succ]
 

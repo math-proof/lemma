@@ -3,12 +3,12 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : j < (v.take n).length) :
+  (h : j < (s.take n).length) :
 -- imply
-  have : j < v.length := by simp_all
-  (v.take n)[j] = v[j] := by
+  have : j < s.length := by simp_all
+  (s.take n)[j] = s[j] := by
 -- proof
   simp
 

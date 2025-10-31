@@ -30,13 +30,12 @@ private lemma main
     split_ifs with h_start?
     ·
       match i with
-      | .zero =>
+      | 0 =>
         simp
-      | .succ i =>
+      | i + 1 =>
         simp
         rw [AddAdd.eq.Add_Add (a := i)]
         rw [Add.comm (a := 1)]
-        simp at h_i
         have h_start' : j + 1 < n + (j + 1) := by
           apply Lt_Add.of.Gt_0
           linarith
@@ -57,9 +56,7 @@ private lemma main
           rw [AddCoe_1.eq.CoeAdd_1] at h_i
           rw [AddCoeS.eq.CoeAdd] at h_i
           rw [EqToNatCeil] at h_i
-          ring_nf at h_i
-          simp at h_i
-          assumption
+          grind
         apply EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt h_start? h_start' h_stop h_stop' h_step h_step rfl (by ring_nf) rfl h_i? h_i'
     ·
       have h_length := LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step

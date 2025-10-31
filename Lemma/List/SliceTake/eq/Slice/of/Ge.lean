@@ -17,18 +17,18 @@ open List Bool Nat
 private lemma main
 -- given
   (h : j' ≥ j)
-  (v : List α) :
+  (s : List α) :
 -- imply
-  (v.take j').slice i j = v.slice i j := by
+  (s.take j').slice i j = s.slice i j := by
 -- proof
-  by_cases h_and : i < j ∧ j ≤ v.length
+  by_cases h_and : i < j ∧ j ≤ s.length
   ·
     let ⟨h_ij, h_j⟩ := h_and
     have h_i := Le.of.Le.Lt h_ij h_j
     unfold List.slice List.array_slice Function.comp
     have h_j' := Gt.of.Ge.Gt h h_ij
-    have := EqAppendTake__Drop v j'
-    have := EqUFnS.of.Eq this (fun v => v.drop i)
+    have := EqAppendTake__Drop s j'
+    have := EqUFnS.of.Eq this (fun s => s.drop i)
     rw [DropAppend.eq.AppendDrop.of.Le_Length (by simp_all; linarith)] at this
     rw [DropTake.eq.TakeDrop]
     rw [TakeTake.eq.Take.of.Ge]

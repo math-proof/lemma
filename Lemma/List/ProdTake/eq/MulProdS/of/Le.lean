@@ -9,15 +9,15 @@ open List Nat
 @[main]
 private lemma main
   [Monoid α]
-  {v : List α}
+  {s : List α}
 -- given
   (h : i ≤ j) :
 -- imply
-  (v.take j).prod = (v.take i).prod * (v.slice i j).prod := by
+  (s.take j).prod = (s.take i).prod * (s.slice i j).prod := by
 -- proof
   unfold List.slice List.array_slice
   unfold Function.comp
-  rw [Prod.eq.MulProdTake__ProdDrop (v.take j) i]
+  rw [Prod.eq.MulProdTake__ProdDrop (s.take j) i]
   rw [TakeTake.eq.Take.of.Ge (by assumption)]
   apply EqMulS.of.Eq.left
   rw [DropTake.eq.TakeDrop]

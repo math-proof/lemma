@@ -3,11 +3,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v.length ≠ 0) :
+  (h : s.length ≠ 0) :
 -- imply
-  v ≠ [] := by
+  s ≠ [] := by
 -- proof
   by_contra h'
   rw [h'] at h

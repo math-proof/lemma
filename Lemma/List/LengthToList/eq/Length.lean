@@ -20,9 +20,9 @@ private lemma main
   | .ofNat step =>
     simp
     match step with
-    | .zero =>
+    | 0 =>
       simp
-    | .succ step =>
+    | step + 1 =>
       simp
       denote h_stop_def : stop = Slice.Add_Mul_DivSub1Sign_2 n s.stop
       denote h_start_def : start = Slice.Add_Mul_DivSub1Sign_2 n s.start

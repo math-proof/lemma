@@ -5,12 +5,12 @@ open Nat
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i ≤ v.length)
+  (h : i ≤ s.length)
   (a : α) :
 -- imply
-  (v.insertIdx i a).length = 1 + v.length := by
+  (s.insertIdx i a).length = 1 + s.length := by
 -- proof
   rw [List.length_insertIdx_of_le_length h]
   rw [Add.comm]

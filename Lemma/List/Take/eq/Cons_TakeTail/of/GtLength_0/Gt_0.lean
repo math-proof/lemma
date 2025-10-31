@@ -15,11 +15,8 @@ private lemma main
   | [] =>
     contradiction
   | s₀ :: s =>
-    match i with
-    | .zero =>
-      contradiction
-    | .succ i =>
-      simp
+    cases i <;>
+      grind
 
 
 -- created on 2025-07-05

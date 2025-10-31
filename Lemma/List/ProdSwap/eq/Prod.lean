@@ -10,10 +10,10 @@ open List Bool Nat
 private lemma main
   [CommMonoid α]
 -- given
-  (a : List α)
+  (s : List α)
   (i j : ℕ) :
 -- imply
-  (a.swap i j).prod = a.prod := by
+  (s.swap i j).prod = s.prod := by
 -- proof
   unfold List.swap
   split_ifs with h_eq h_lt? h_j h_i

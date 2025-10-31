@@ -6,12 +6,12 @@ open List Nat
 @[main]
 private lemma main
   [CommMonoid α]
-  {v : List α}
+  {s : List α}
 -- given
-  (i : Fin v.length)
+  (i : Fin s.length)
   (t : α) :
 -- imply
-  (v.set i (t * v[i])).prod = t * v.prod := by
+  (s.set i (t * s[i])).prod = t * s.prod := by
 -- proof
   repeat rw [Mul.comm (a := t)]
   apply ProdSet__MulGet.eq.MulProd

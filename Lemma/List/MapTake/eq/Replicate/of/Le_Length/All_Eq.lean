@@ -5,12 +5,12 @@ open List
 @[main]
 private lemma main
   {n : ℕ}
-  {v : List (List α)}
+  {s : List (List α)}
 -- given
-  (h₀ : ∀ l ∈ v, l.length = n)
-  (h₁ : i ≤ v.length) :
+  (h₀ : ∀ l ∈ s, l.length = n)
+  (h₁ : i ≤ s.length) :
 -- imply
-  (v.take i).map List.length = List.replicate i n := by
+  (s.take i).map List.length = List.replicate i n := by
 -- proof
   refine Eq_Replicate.of.EqLength.All_Eq ?_ ?_
   ·

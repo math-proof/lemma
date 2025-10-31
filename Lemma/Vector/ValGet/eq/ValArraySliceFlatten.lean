@@ -29,7 +29,7 @@ private lemma main
   | succ m ih =>
     let ⟨i, hi⟩ := i
     match i with
-    | .zero =>
+    | 0 =>
       simp
       unfold List.flatten
       match h_v : v.toList with
@@ -43,7 +43,7 @@ private lemma main
         simp [← h_Eq]
         simp [h_v]
         simp [List.Vector.toList]
-    | .succ i =>
+    | i + 1 =>
       simp at hi
       let i' : Fin m := ⟨i, hi⟩
       have ih := ih v.tail i' (by simp)

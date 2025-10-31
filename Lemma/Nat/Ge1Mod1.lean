@@ -9,11 +9,11 @@ private lemma main
   1 ≥ 1 % n := by
 -- proof
   match n with
-  | .zero =>
+  | 0 =>
     simp
-  | .succ n =>
+  | n + 1 =>
     simp
-    cases n <;> 
+    cases n <;>
       simp
 
 

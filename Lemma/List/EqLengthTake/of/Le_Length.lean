@@ -8,21 +8,21 @@ private lemma main
 -- given
   (h : n ≤ s.length) :
 -- imply
-  (s.take n |>.length) = n := by
+  (s.take n).length = n := by
 -- proof
   induction s with
   | nil =>
     match n with
-    | .zero =>
+    | 0 =>
       simp [List.take]
-    | .succ n =>
+    | n + 1 =>
       have : n.succ ≤ 0 := h
       contradiction
   | cons =>
     match n with
-    | .zero =>
+    | 0 =>
       simp [List.take]
-    | .succ n =>
+    | n + 1 =>
       simp [List.take]
       apply Nat.le_of_succ_le_succ
       assumption

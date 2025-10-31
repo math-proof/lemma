@@ -7,11 +7,7 @@ private lemma main
 -- imply
   2 ^ n > 0 := by
 -- proof
-  match n with
-  | .zero =>
-    simp
-  | .succ n =>
-    simp [Nat.pow_succ]
+  aesop
 
 
 -- created on 2025-03-15

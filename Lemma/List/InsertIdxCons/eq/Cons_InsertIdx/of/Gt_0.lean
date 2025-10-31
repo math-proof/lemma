@@ -7,12 +7,12 @@ open List Nat
 private lemma main
 -- given
   (h : n > 0)
-  (v : List α)
-  (x v₀ : α) :
+  (s : List α)
+  (x s₀ : α) :
 -- imply
-  (v₀ :: v).insertIdx n x = v₀ :: v.insertIdx (n - 1) x := by
+  (s₀ :: s).insertIdx n x = s₀ :: s.insertIdx (n - 1) x := by
 -- proof
-  have := InsertIdxCons.eq.Cons_InsertIdx v x v₀ (n - 1)
+  have := InsertIdxCons.eq.Cons_InsertIdx s x s₀ (n - 1)
   rwa [EqAddSub.of.Ge (by linarith)] at this
 
 

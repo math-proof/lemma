@@ -163,12 +163,11 @@ use (X.sum dim).keepdim to keep the dimension
 def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α (s.eraseIdx dim) :=
   if h_dim : dim < s.length then
     match h : dim with
-    | .zero =>
+    | 0 =>
       ⟨cast (by simp) (X.data.splitAt 1).sum⟩
-    | .succ dim =>
+    | dim + 1 =>
       have h_lt : dim < s.tail.length := by
         simp
-        simp at h_dim
         apply Lt_Sub.of.LtAdd h_dim
       cast
         (by simp_all [EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_lt 1])
@@ -298,9 +297,9 @@ def Tensor.permute (X : Tensor α s) (i : Fin s.length) (d : ℤ) : Tensor α (s
   match d with
   | .ofNat d =>
     match d with
-    | .zero =>
+    | 0 =>
       cast (by simp [EqPermute__0]) X
-    | .succ d =>
+    | d + 1 =>
       if h : i.val = 0 then
         have := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 h d.succ
         cast (by simp_all) (X.permuteHead (d + 2))

@@ -6,16 +6,16 @@ open List Nat
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
   {n : ℕ}
 -- given
-  (h : n < v.length) :
+  (h : n < s.length) :
 -- imply
-  v.rotate n = v.drop n ++ v.take n := by
+  s.rotate n = s.drop n ++ s.take n := by
 -- proof
   unfold List.rotate
   rw [EqMod.of.Lt h]
-  match h_v : v.splitAt n with
+  match h_v : s.splitAt n with
   | ⟨l₁, l₂⟩ =>
     simp
     rw [SplitAt.eq.MkTake__Drop] at h_v

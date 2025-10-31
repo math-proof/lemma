@@ -6,11 +6,11 @@ open List
 @[main, comm]
 private lemma main
   [Mul α] [One α]
-  {v : List α}
+  {s : List α}
 -- given
-  (i : Fin v.length) :
+  (i : Fin s.length) :
 -- imply
-  (v.drop i).prod = v[i] * (v.drop (i + 1)).prod := by
+  (s.drop i).prod = s[i] * (s.drop (i + 1)).prod := by
 -- proof
   rw [Drop.eq.Cons_Drop_Add_1]
   rw [ProdCons.eq.Mul_Prod]
@@ -19,11 +19,11 @@ private lemma main
 @[main, comm]
 private lemma val
   [Mul α] [One α]
-  {v : List α}
+  {s : List α}
 -- given
-  (i : Fin v.length) :
+  (i : Fin s.length) :
 -- imply
-  (v.drop i).prod = v[i.val] * (v.drop (i + 1)).prod :=
+  (s.drop i).prod = s[i.val] * (s.drop (i + 1)).prod :=
 -- proof
   main i
 

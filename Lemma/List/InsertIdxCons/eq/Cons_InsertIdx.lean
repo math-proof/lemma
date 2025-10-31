@@ -4,11 +4,11 @@ import sympy.Basic
 @[main]
 private lemma main
 -- given
-  (v : List α)
-  (x v₀ : α)
+  (s : List α)
+  (x s₀ : α)
   (n : ℕ) :
 -- imply
-  (v₀ :: v).insertIdx (n + 1) x = v₀ :: v.insertIdx n x := by
+  (s₀ :: s).insertIdx (n + 1) x = s₀ :: s.insertIdx n x := by
 -- proof
   cases n <;> rfl
 

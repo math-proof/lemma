@@ -5,11 +5,11 @@ open List
 @[main]
 private lemma main
   [MulOneClass α]
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.length) :
+  (h : i < s.length) :
 -- imply
-  ((v.take (i + 1)).drop i).prod = v[i] := by
+  ((s.take (i + 1)).drop i).prod = s[i] := by
 -- proof
   simp [DropTake.eq.ListGet.of.Lt_Length h]
 

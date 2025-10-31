@@ -5,17 +5,17 @@ import sympy.Basic
 @[main]
 private lemma main
 -- given
-  (a : List α)
-  (i : Fin a.length)
+  (s : List α)
+  (i : Fin s.length)
   (d : ℤ) :
 -- imply
-  a.permute i d =
+  s.permute i d =
     if d < 0 then
       let d := (-d).toNat
-      a.take (i - d) ++ a[i] :: a.slice (i - d) i ++ a.drop (i + 1)
+      s.take (i - d) ++ s[i] :: s.slice (i - d) i ++ s.drop (i + 1)
     else
       let d := (d + 1).toNat
-      a.take i ++ a.slice (i + 1) (i + d) ++ a[i] :: a.drop (i + d) := by
+      s.take i ++ s.slice (i + 1) (i + d) ++ s[i] :: s.drop (i + d) := by
 -- proof
   unfold List.permute
   aesop

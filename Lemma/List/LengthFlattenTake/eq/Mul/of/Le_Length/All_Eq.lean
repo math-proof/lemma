@@ -5,12 +5,12 @@ open List
 @[main]
 private lemma main
   {i n : ℕ}
-  {v : List (List α)}
+  {s : List (List α)}
 -- given
-  (h₀ : ∀ l ∈ v, l.length = n)
-  (h₁ : i ≤ v.length) :
+  (h₀ : ∀ l ∈ s, l.length = n)
+  (h₁ : i ≤ s.length) :
 -- imply
-  (v.take i).flatten.length = i * n := by
+  (s.take i).flatten.length = i * n := by
 -- proof
   rw [List.length_flatten]
   rw [MapTake.eq.Replicate.of.Le_Length.All_Eq (by assumption) (by assumption), List.sum_replicate]

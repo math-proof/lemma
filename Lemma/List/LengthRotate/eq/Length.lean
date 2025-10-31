@@ -4,12 +4,12 @@ import sympy.Basic
 @[main]
 private lemma main
 -- given
-  (v : List α)
+  (s : List α)
   (i : ℕ) :
 -- imply
-  (v.rotate i).length = v.length :=
+  (s.rotate i).length = s.length :=
 -- proof
-  List.length_rotate v i
+  List.length_rotate s i
 
 
 -- created on 2025-10-14

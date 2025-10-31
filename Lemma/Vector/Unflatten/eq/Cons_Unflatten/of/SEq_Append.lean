@@ -34,14 +34,14 @@ private lemma main
     rfl
   simp [← h_eq_i]
   match hi : i' with
-  | .zero =>
+  | 0 =>
     simp
     have hj : j < (m + 1) * n := by
       nlinarith
     have hj' := LtVal j
     have := EqGetS.of.SEq_Append.of.Lt.Lt hj hj' h
     assumption
-  | .succ i =>
+  | i + 1 =>
     simp [MulAdd_1.eq.Add_Mul]
     simp [AddAdd.eq.Add_Add]
     simp [← h_eq_i] at hij

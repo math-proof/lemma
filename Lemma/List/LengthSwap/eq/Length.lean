@@ -8,10 +8,10 @@ open List Bool Nat
 @[main]
 private lemma main
 -- given
-  (a : List α)
+  (s : List α)
   (i j : ℕ) :
 -- imply
-  (a.swap i j).length = a.length := by
+  (s.swap i j).length = s.length := by
 -- proof
   unfold List.swap
   split_ifs with h_eq h_lt? h_j h_i

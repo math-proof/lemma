@@ -4,10 +4,10 @@ import sympy.Basic
 @[main]
 private lemma main
 -- given
-  (v : List α)
+  (s : List α)
   (n : ℕ) :
 -- imply
-  v.splitAt n = ⟨v.take n, v.drop n⟩ := by
+  s.splitAt n = ⟨s.take n, s.drop n⟩ := by
 -- proof
   apply List.splitAt_eq
 

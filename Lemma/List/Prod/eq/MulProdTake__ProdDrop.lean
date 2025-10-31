@@ -5,10 +5,10 @@ import sympy.Basic
 private lemma main
   [Monoid α]
 -- given
-  (v : List α)
+  (s : List α)
   (i : ℕ) :
 -- imply
-  v.prod = (v.take i).prod * (v.drop i).prod := by
+  s.prod = (s.take i).prod * (s.drop i).prod := by
 -- proof
   simp
 

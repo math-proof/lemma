@@ -7,13 +7,12 @@ open List Nat
 private lemma main
   [CommMonoid α]
 -- given
-  (v : List α)
+  (s : List α)
   (i : ℕ) :
 -- imply
-  v.prod = (v.drop i).prod * (v.take i).prod := by
+  s.prod = (s.drop i).prod * (s.take i).prod := by
 -- proof
-  
-  rw [Prod.eq.MulProdTake__ProdDrop v i]
+  rw [Prod.eq.MulProdTake__ProdDrop s i]
   apply Mul.comm
 
 

@@ -5,9 +5,9 @@ import sympy.Basic
 @[main]
 private lemma main
 -- given
-  (a : List α) :
+  (s : List α) :
 -- imply
-  a.enumerate.length = a.length := by
+  s.enumerate.length = s.length := by
 -- proof
   simp [List.enumerate]
 

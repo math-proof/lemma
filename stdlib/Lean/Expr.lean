@@ -208,9 +208,9 @@ def Lean.Expr.isIntDiv (e : Expr) : Bool :=
 
 def Lean.Expr.extract_conditions (e : Expr) (n : Nat) (list : List Expr) : List Expr :=
   match n with
-  | .zero =>
+  | 0 =>
     list
-  | .succ n =>
+  | n + 1 =>
     if let .app fn arg := e then
       fn.extract_conditions n (arg :: list)
     else

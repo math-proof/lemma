@@ -32,9 +32,9 @@ def Slice.toList (s : Slice) (n : ℕ) : List (Fin n) :=
   match s.step with
   | .ofNat step =>
     match step with
-    | .zero =>
+    | 0 =>
       []
-    | .succ step =>
+    | step + 1 =>
       -- step is positive
       let start := (Add_Mul_DivSub1Sign_2 n s.start).toNat
       let stop := (Add_Mul_DivSub1Sign_2 n s.stop).toNat.min n

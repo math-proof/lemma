@@ -5,12 +5,12 @@ open List Nat
 
 @[main, comm]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : v ≠ [])
+  (h : s ≠ [])
   (h_n : n > 0) :
 -- imply
-  (v.insertIdx n x).tail = v.tail.insertIdx (n - 1) x := by
+  (s.insertIdx n x).tail = s.tail.insertIdx (n - 1) x := by
 -- proof
   have := TailInsertIdx.eq.InsertIdxTail.of.Ne_Nil h (n - 1) x
   rwa [EqAddSub.of.Ge (by linarith)] at this

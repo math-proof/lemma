@@ -7,13 +7,13 @@ open List Int Nat
 
 @[main]
 private lemma main
-  {a : List α}
-  {i : Fin a.length}
+  {s : List α}
+  {i : Fin s.length}
 -- given
   (h_i : i.val = 0)
   (h_d : d > 0) :
 -- imply
-  a.permute i d = (a.take (d + 1).toNat).rotate 1 ++ a.drop (d + 1).toNat := by
+  s.permute i d = (s.take (d + 1).toNat).rotate 1 ++ s.drop (d + 1).toNat := by
 -- proof
   have := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 h_i d.toNat
   rw [AddToNat.eq.ToNatAdd.of.Gt_0 (by linarith)] at this

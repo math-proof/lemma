@@ -5,12 +5,12 @@ import sympy.Basic
 private lemma main
   [AddCommMonoid α]
 -- given
-  (v : List α) :
+  (s : List α) :
 -- imply
-  v.sum = ∑ i : Fin v.length, v[i] := by
+  s.sum = ∑ i : Fin s.length, s[i] := by
 -- proof
-  conv in v.sum =>
-    rw [← List.ofFn_get v]
+  conv in s.sum =>
+    rw [← List.ofFn_get s]
   rw [List.sum_ofFn]
   congr
 

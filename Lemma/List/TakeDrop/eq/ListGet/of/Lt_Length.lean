@@ -5,11 +5,11 @@ open List
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.length) :
+  (h : i < s.length) :
 -- imply
-  (v.drop i).take 1 = [v[i]] := by
+  (s.drop i).take 1 = [s[i]] := by
 -- proof
   rw [Drop.eq.Cons_Drop_Add_1.of.Lt_Length (by assumption)]
   rw [TakeCons.eq.List]

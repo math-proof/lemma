@@ -3,11 +3,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.length) :
+  (h : i < s.length) :
 -- imply
-  (v.eraseIdx i).length = v.length - 1 :=
+  (s.eraseIdx i).length = s.length - 1 :=
 -- proof
   List.length_eraseIdx_of_lt h
 

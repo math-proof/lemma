@@ -5,9 +5,9 @@ open List
 @[main, comm, mp, mpr]
 private lemma main
 -- given
-  (v : List α) :
+  (s : List α) :
 -- imply
-  v ≠ [] ↔ v.length ≥ 1 := by
+  s ≠ [] ↔ s.length ≥ 1 := by
 -- proof
   rw [Ne_Nil.is.GtLength_0]
   aesop

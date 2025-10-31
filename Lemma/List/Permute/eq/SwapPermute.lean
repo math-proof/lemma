@@ -9,15 +9,15 @@ open List Bool
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (i : Fin a.length)
+  (i : Fin s.length)
   (d : ℕ) :
 -- imply
-  a.permute i (d + 1) = (a.permute i d).swap (i + d) (i + d + 1) := by
+  s.permute i (d + 1) = (s.permute i d).swap (i + d) (i + d + 1) := by
 -- proof
-  have h_length := LengthSwap.eq.Length (a.permute i d) (i + d) (i + d + 1)
-  by_cases h : i + d + 1 ≥ a.length
+  have h_length := LengthSwap.eq.Length (s.permute i d) (i + d) (i + d + 1)
+  by_cases h : i + d + 1 ≥ s.length
   ·
     rw [EqSwap.of.Ge_Length (by simpa)]
     rw [EqPermuteS.of.Add.ge.SubLength_1]
@@ -26,7 +26,7 @@ private lemma main
   ·
     simp at h
     ext j t
-    by_cases h_j : j < a.length
+    by_cases h_j : j < s.length
     ·
       simp_all
       apply IffEqS.of.Eq
@@ -35,7 +35,7 @@ private lemma main
       ·
         try simp_all
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
-        simp [(show a.permute i (↑d + 1) = a.permute i ↑(d + 1) by simp)]
+        simp [(show s.permute i (↑d + 1) = s.permute i ↑(d + 1) by simp)]
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
         repeat grind
     ·

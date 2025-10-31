@@ -5,14 +5,14 @@ open List
 @[main]
 private lemma main
   [CommMonoid α]
-  {v : List α}
+  {s : List α}
 -- given
-  (h : i < v.length)
+  (h : i < s.length)
   (t : α) :
 -- imply
-  (v.set i (v[i] * t)).prod = v.prod * t := by
+  (s.set i (s[i] * t)).prod = s.prod * t := by
 -- proof
-  let i' : Fin v.length := ⟨i, h⟩
+  let i' : Fin s.length := ⟨i, h⟩
   have := ProdSet__MulGet.eq.MulProd i' t
   rw [← this]
   simp [i']

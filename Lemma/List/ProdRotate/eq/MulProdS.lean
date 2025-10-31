@@ -7,10 +7,10 @@ open List
 private lemma main
   [Monoid α]
 -- given
-  (v : List α)
+  (s : List α)
   (n : ℕ) :
 -- imply
-  (v.rotate n).prod = (v.drop (n % v.length)).prod * (v.take (n % v.length)).prod := by
+  (s.rotate n).prod = (s.drop (n % s.length)).prod * (s.take (n % s.length)).prod := by
 -- proof
   rw [Rotate.eq.AppendDrop__Take]
   rw [ProdAppend.eq.MulProdS]

@@ -11,21 +11,21 @@ open List Nat
 @[main]
 private lemma main
   [CommMonoid α]
-  {a : List α}
+  {s : List α}
   {i j : ℕ}
 -- given
   (h₀ : i < j)
-  (h₁ : j < a.length) :
+  (h₁ : j < s.length) :
 -- imply
-  (a.take i ++ a[j] :: a.slice (i + 1) j ++ a[i] :: a.drop (j + 1)).prod = a.prod := by
+  (s.take i ++ s[j] :: s.slice (i + 1) j ++ s[i] :: s.drop (j + 1)).prod = s.prod := by
 -- proof
   repeat rw [ProdAppend.eq.MulProdS]
   repeat rw [ProdCons.eq.Mul_Length]
   rw [Mul_Mul.eq.MulMul]
-  rw [MulMul.comm (c := a[i])]
+  rw [MulMul.comm (c := s[i])]
   rw [← ProdTake_Add_1.eq.MulProdTake.of.Lt_Length (by linarith)]
   rw [Mul_Mul.eq.MulMul]
-  rw [MulMul.comm (b := a[j])]
+  rw [MulMul.comm (b := s[j])]
   rw [MulMul.eq.Mul_Mul]
   rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.Lt_Length (by assumption)]
   rw [← ProdTake.eq.MulProdS.of.Le (by assumption)]

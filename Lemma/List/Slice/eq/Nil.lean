@@ -6,10 +6,10 @@ open List
 @[main]
 private lemma main
 -- given
-  (a : List α)
+  (s : List α)
   (i : ℕ) :
 -- imply
-  a.slice i i = .nil := by
+  s.slice i i = .nil := by
 -- proof
   apply Slice.eq.Nil.of.Ge
   simp

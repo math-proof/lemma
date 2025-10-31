@@ -3,11 +3,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : List α}
+  {s : List α}
 -- given
   (h : i ≥ j) :
 -- imply
-  (v.take i).take j = v.take j := by
+  (s.take i).take j = s.take j := by
 -- proof
   rw [List.take_take]
   simp [h]

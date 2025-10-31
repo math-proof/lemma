@@ -36,16 +36,15 @@ private lemma main
   intro d'
   simp [d']
   match d with
-  | .zero =>
+  | 0 =>
     simp
     rw [EqPermute__0]
-  | .succ d =>
+  | d + 1 =>
     unfold List.permute
     simp
     match h : -1 + -(d : ℤ) with
     | Int.ofNat d =>
-      simp_all
-      linarith
+      grind
     | Int.negSucc d =>
       simp_all
       rw [Cons.eq.Append]

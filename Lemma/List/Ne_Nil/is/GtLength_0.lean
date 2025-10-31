@@ -6,9 +6,9 @@ open List Nat
 @[main, comm, mp, mpr]
 private lemma main
 -- given
-  (v : List α) :
+  (s : List α) :
 -- imply
-  v ≠ [] ↔ v.length > 0 := by
+  s ≠ [] ↔ s.length > 0 := by
 -- proof
   constructor <;>
     intro h

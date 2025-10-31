@@ -5,10 +5,10 @@ open Nat
 @[main]
 private lemma main
 -- given
-  (v : List α)
+  (s : List α)
   (n : ℕ) :
 -- imply
-  v.rotate (n % v.length) = v.rotate n:= by
+  s.rotate (n % s.length) = s.rotate n:= by
 -- proof
   unfold List.rotate
   rw [ModMod.eq.Mod]

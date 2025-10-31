@@ -5,10 +5,10 @@ open List
 @[main]
 private lemma main
 -- given
-  (h : i > j) 
-  (v : List α):
+  (h : i > j)
+  (s : List α):
 -- imply
-  (v.take i).take j = v.take j := by
+  (s.take i).take j = s.take j := by
 -- proof
   apply TakeTake.eq.Take.of.Ge
   omega
