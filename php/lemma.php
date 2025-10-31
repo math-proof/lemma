@@ -479,6 +479,9 @@ EOF;
 		case '≃':
 			$modify |= $import_syntax('stdlib.SEq');
 			break;
+		case 'softmax':
+			$modify |= $import_syntax('sympy.tensor.functions');
+			break;
 		}
 	}
 	if ($modify) {

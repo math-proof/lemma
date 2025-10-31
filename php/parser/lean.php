@@ -2198,6 +2198,9 @@ class LeanProperty extends LeanBinary
                 case 'card':
                     if (!($this->lhs instanceof LeanToken && $this->parent instanceof LeanArgsSpaceSeparated && $this->parent->args[0] === $this))
                         return [$this->lhs->toLatex($syntax)];
+                case 'softmax':
+                    $syntax['softmax'] = true;
+                    break;
             }
         }
         return parent::latexArgs($syntax);
