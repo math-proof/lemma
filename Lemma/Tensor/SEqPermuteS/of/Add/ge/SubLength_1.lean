@@ -245,7 +245,7 @@ private lemma main
                   repeat rw [GetFlatten.eq.Get.of.Eq_AddMul (by assumption)]
                   unfold Tensor.rotate
                   simp [GetElem.getElem]
-                  repeat rw [GetCast.eq.Get.of.Eq.Lt.fin]
+                  repeat rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
                   ·
                     let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_qₐ
                     let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
@@ -264,12 +264,8 @@ private lemma main
                     simp [Drop.eq.Nil.of.Ge_Length (show i + (d + 1) ≥ s.length by simp; omega)]
                     simp [h_qₕᵢ_eq, h_rₕᵢ_eq]
                   ·
-                    exact h_qₑ
-                  ·
                     rw [MulProdS.eq.ProdAppend]
                     rw [Rotate.eq.AppendDrop__Take]
-                  ·
-                    exact h_qₐ
                   ·
                     rw [MulProdS.eq.ProdAppend]
                     rw [Rotate.eq.AppendDrop__Take]

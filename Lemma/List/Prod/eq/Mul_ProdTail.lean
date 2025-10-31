@@ -4,11 +4,13 @@ import sympy.Basic
 @[main]
 private lemma main
   [Monoid α]
-  {l : List α} :
+  -- given
+  (s : List α) :
 -- imply
-  l.prod = l.headD 1 * l.tail.prod := by
+  s.prod = s.headD 1 * s.tail.prod := by
 -- proof
-  induction l <;> simp
+  induction s <;>
+    simp
 
 
 -- created on 2024-07-01

@@ -81,12 +81,14 @@ private lemma main
             have h_t := LtVal t
             let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
             have h_q := LtVal q
-            simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_q
+            simp only [Rotate.eq.AppendDrop__Take] at h_q
+            have := h_q
+            simp only [ProdAppend.eq.MulProdS] at h_q
             have h_r := LtVal r
             simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
             unfold Tensor.rotate
             simp only [GetElem.getElem]
-            repeat rw [GetCast.eq.Get.of.Eq.Lt.fin]
+            repeat rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
             ·
               let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
               have h_q' := LtVal q'
@@ -191,11 +193,7 @@ private lemma main
                 rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
                 simp [EqMin.of.Lt h_lt_add_1]
             ·
-              exact h_q
-            ·
               rw [MulProdS.eq.ProdAppend]
-            ·
-              rwa [ProdAppend.eq.MulProdS]
             ·
               rw [Rotate.eq.AppendDrop__Take]
           ·

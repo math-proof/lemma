@@ -72,7 +72,7 @@ private lemma main
           unfold Tensor.rotate
           simp
           simp only [GetElem.getElem]
-          repeat rw [GetCast.eq.Get.of.Eq.Lt.fin]
+          rw [GetCast.eq.Get.of.Eq.Lt.fin]
           ·
             rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp [h_length]⟩) (i := ⟨k', by simpa [h_length]⟩) (t := k') (by simp [h_length])]
             rw [GetTranspose.eq.Get.fin]

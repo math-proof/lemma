@@ -48,7 +48,7 @@ private lemma main
         simp [Sub.eq.Zero.of.Le h] at h_q
         have h_r := LtVal r
         simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
-        have h_t : t < (s.take (s.length - s.length)).prod * ((s.drop (s.length - s.length)).rotate (s.length ⊓ s.length - 1)).prod := by 
+        have h_t : t < (s.take (s.length - s.length)).prod * ((s.drop (s.length - s.length)).rotate (s.length ⊓ s.length - 1)).prod := by
           simp [ProdRotate.eq.Prod] at h_t ⊢
           assumption
         let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
@@ -63,7 +63,7 @@ private lemma main
         rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
         unfold Tensor.rotate
         simp [GetElem.getElem]
-        repeat rw [GetCast.eq.Get.of.Eq.Lt.fin]
+        repeat rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
         ·
           let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
           let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r'
@@ -83,12 +83,8 @@ private lemma main
           simp [h_eq_r']
           grind
         ·
-          exact h_r'
-        ·
           rw [MulProdS.eq.ProdAppend]
           rw [Rotate.eq.AppendDrop__Take]
-        ·
-          exact h_r
         ·
           rw [MulProdS.eq.ProdAppend]
           rw [Rotate.eq.AppendDrop__Take]

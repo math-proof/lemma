@@ -65,7 +65,7 @@ private lemma main
         rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
         unfold Tensor.rotate
         simp [GetElem.getElem]
-        repeat rw [GetCast.eq.Get.of.Eq.Lt.fin]
+        repeat rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
         ·
           let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
           let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q'
@@ -88,12 +88,8 @@ private lemma main
           left
           grind
         ·
-          exact h_q'
-        ·
           rw [MulProdS.eq.ProdAppend]
           rw [Rotate.eq.AppendDrop__Take]
-        ·
-          exact h_q
         ·
           rw [MulProdS.eq.ProdAppend]
           rw [Rotate.eq.AppendDrop__Take]

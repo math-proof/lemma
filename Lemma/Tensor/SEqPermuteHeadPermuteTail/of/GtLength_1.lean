@@ -55,17 +55,17 @@ private lemma main
       ·
         intro t
         have h_t := LtVal t
-        have := Drop.eq.Nil.of.Ge_Length (show (s.rotate (s.length - 1)).length ≤ s.length by simp)
-        simp [this] at h_t
+        have h_drop := Drop.eq.Nil.of.Ge_Length (show (s.rotate (s.length - 1)).length ≤ s.length by simp)
+        simp [h_drop] at h_t
         simp
-        rw [GetFlatten.eq.Get.of.Eq_AddMul (i := ⟨t, by simpa⟩) (j := ⟨0, by simp [this]⟩) (by simp [this])]
+        rw [GetFlatten.eq.Get.of.Eq_AddMul (i := ⟨t, by simpa⟩) (j := ⟨0, by simp [h_drop]⟩) (by simp [h_drop])]
         unfold Tensor.rotate
-        repeat rw [GetCast.eq.Get.of.Eq.Lt]
+        repeat rw [GetCast.eq.Get.of.Eq.Lt (by convert h_t; simp [Rotate.eq.AppendDrop__Take])]
         ·
           simp
           have h_t := LtVal t
-          have : ((s.take (s.length - s.length) ++ (s.drop (s.length - s.length)).rotate (s.length ⊓ s.length - 1)).drop s.length).prod = 1 := by 
-            simp [this]
+          have : ((s.take (s.length - s.length) ++ (s.drop (s.length - s.length)).rotate (s.length ⊓ s.length - 1)).drop s.length).prod = 1 := by
+            simp [h_drop]
           simp only [EqMul_1.of.Eq_1 this] at h_t
           simp only [Rotate.eq.AppendDrop__Take (n := 1), ProdAppend.eq.MulProdS] at h_t
           let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
@@ -80,7 +80,7 @@ private lemma main
           rw [TailRotate.eq.Take.of.GtLength_0 (by omega)] at h_q
           rw [TakeRotate.eq.Drop.of.EqLength_Add (by omega)] at h_r
           let s' := s.drop (s.length - s.length)
-          have h_lt : r * (s.take (s.length - 1)).prod + q < (s'.drop ((s.length ⊓ s.length - 1) % s'.length)).prod * (s'.take ((s.length ⊓ s.length - 1) % s'.length)).prod := by 
+          have h_lt : r * (s.take (s.length - 1)).prod + q < (s'.drop ((s.length ⊓ s.length - 1) % s'.length)).prod * (s'.take ((s.length ⊓ s.length - 1) % s'.length)).prod := by
             simp [s']
             apply AddMul.lt.Mul.of.Lt.Lt h_r h_q
           simp [EqMod.of.Lt h]
@@ -118,13 +118,7 @@ private lemma main
           ·
             rw [MulProdS.eq.ProdAppend]
         ·
-          convert h_t
-          simp [Rotate.eq.AppendDrop__Take]
-        ·
           rw [MulProdS.eq.ProdAppend]
-        ·
-          convert h_t
-          simp [Rotate.eq.AppendDrop__Take]
         ·
           simp [Rotate.eq.AppendDrop__Take]
       ·

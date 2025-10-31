@@ -55,12 +55,14 @@ private lemma main
         have h_t := LtVal t
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
         have h_r := LtVal r
+        simp at h_r
+        rw [Rotate.eq.AppendDrop__Take.of.Le_Length (n := s.length - 1) (by simp)] at h_r
+        rw [ProdAppend.eq.MulProdS] at h_r
         simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
         unfold Tensor.rotate
-        repeat rw [GetCast.eq.Get.of.Eq.Lt]
+        repeat rw [GetCast.eq.Get.of.Eq.Lt (by simpa)]
         ·
           simp
-          simp at h_r
           let s₀ := (s.take s.length).rotate 1 ++ s.drop s.length
           let s' := s₀.drop (s₀.length - s.length)
           have h_rotate : s' = s.rotate 1 := by
@@ -69,9 +71,7 @@ private lemma main
           have h_length : (s.length ⊓ s₀.length - 1) % s'.length = s.length - 1 := by
             unfold s' s₀
             simp
-          rw [Rotate.eq.AppendDrop__Take.of.Le_Length (n := s.length - 1) (by simp)] at h_r
           rw [← h_rotate, ← h_length] at h_r
-          rw [ProdAppend.eq.MulProdS] at h_r
           let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
           rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
           simp [(show s₀.length = s.length by simp [s₀])] at h_q'r'
@@ -137,17 +137,6 @@ private lemma main
             simp
         ·
           rw [MulProdS.eq.ProdAppend]
-          convert h_r
-          simp
-          apply AppendDrop__Take.eq.Rotate.of.Le_Length
-          simp
-        ·
-          rw [MulProdS.eq.ProdAppend]
-        ·
-          convert h_r
-          simp
-          apply AppendDrop__Take.eq.Rotate.of.Le_Length
-          simp
         ·
           apply congrArg
           simp
