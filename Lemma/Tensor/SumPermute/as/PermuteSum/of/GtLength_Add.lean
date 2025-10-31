@@ -30,7 +30,7 @@ private lemma main
     rw [EqAdd0]
     rw [@Tensor.Permute.eq.Ite]
     simp
-    split_ifs with h_d0 h_pos? h_i0
+    split_ifs with h_d0 h_pos h_s
     .
       subst h_d0
       apply Tensor.SEqSumS.of.SEq
