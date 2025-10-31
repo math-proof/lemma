@@ -35,7 +35,7 @@ private lemma main
       ·
         try simp_all
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
-        simp [(show s.permute i (↑d + 1) = s.permute i ↑(d + 1) by simp)]
+        simp [show s.permute i (d + 1) = s.permute i ↑(d + 1) by simp]
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
         repeat grind
     ·

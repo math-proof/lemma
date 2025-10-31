@@ -144,7 +144,7 @@ private lemma main
             .
               unfold Tensor.permuteTail
               simp
-              have h_permute: s = (s.permute i (-↑↑i)) := by
+              have h_permute: s = (s.permute i (-i)) := by
                 simp [h_i0, List.EqPermute__0]
               simp [DataCast.eq.Cast_Data.of.Eq h_permute]
               simp [h_i0, List.ProdTake_1.eq.Get_0.of.GtLength_0 (Gt_0 i), ← List.Prod.eq.Mul_ProdTail.of.GtLength_0] at h_t
@@ -191,7 +191,7 @@ private lemma main
               simp
               have h_t : t < ((s.take (i + 1)).take ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat) ++ ((s.take (i + 1)).drop ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat)).rotate ((1 - -(i : ℤ)).toNat ⊓ (s.take (i + 1)).length - 1)).prod * (s.drop (i + 1)).prod := by
                 rw [h_toNat_i]
-                rw [show (↑i + 1) ⊓ (s.take (↑i + 1)).length = ↑i + 1 by simp; omega]
+                rw [show (↑i + 1) ⊓ (s.take (i + 1)).length = i + 1 by simp; omega]
                 simp [ProdRotate.eq.Prod]
                 simp [ProdRotate.eq.Prod] at h_t
                 assumption
@@ -202,6 +202,7 @@ private lemma main
                 simp only [ProdAppend.eq.MulProdS] at h_q'
                 let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
                 have h_r' := LtVal r'
+                have h_r_eq : r.val = r'.val := by grind
                 rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
                 unfold Tensor.permuteTail
                 simp
@@ -219,7 +220,25 @@ private lemma main
                   simp [GetElem.getElem]
                   repeat rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
                   .
-                    sorry
+                    let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_rₐ
+                    let ⟨qᵢ, rᵢ, h_qᵢrᵢ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_rₑ
+                    let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
+                    let ⟨h_qᵢ_div, h_rᵢ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qᵢrᵢ
+                    repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
+                    repeat rw [GetTranspose.eq.Get.fin]
+                    repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+                    apply congrArg
+                    simp only [h_toNat_i] at h_qₑ_div h_rₐ_mod h_rₑ_mod h_qᵢ_div h_rᵢ_mod ⊢
+                    simp [ProdRotate.eq.Prod] at h_qₐ_div h_qₑ_div h_rₐ_mod h_rₑ_mod
+                    simp [show (↑i + 1) ⊓ s.length = i + 1 by omega] at h_qₐ_div h_rₐ_mod h_rₑ_mod h_qₕ_div h_qᵢ_div h_rₕ_mod h_rᵢ_mod ⊢
+                    simp [show i + 1 - (1 + d) = i - d by omega] at h_qₐ_div h_rₐ_mod h_qₕ_div h_rₕ_mod ⊢
+                    simp [show i - d = 0 by omega] at h_qₐ_div h_rₐ_mod h_qₕ_div h_rₕ_mod ⊢
+                    simp [show (1 + d) ⊓ (i + 1) = i + 1 by omega] at h_qₕ_div h_rₕ_mod ⊢
+                    have h_qₐₑ_eq : qₐ.val = qₑ.val := by grind
+                    have h_rₐₑ_eq : rₐ.val = rₑ.val := by grind
+                    have h_qₕᵢ_eq : qₕ.val = qᵢ.val := by grind
+                    have h_rₕᵢ_eq : rₕ.val = rᵢ.val := by grind
+                    simp [h_qₐₑ_eq, h_r_eq, h_rₕᵢ_eq, h_qₕᵢ_eq]
                   .
                     rw [MulProdS.eq.ProdAppend]
                     rw [Rotate.eq.AppendDrop__Take]
@@ -232,13 +251,13 @@ private lemma main
                   rw [MulProdS.eq.ProdAppend]
               .
                 rw [h_toNat_i]
-                rw [show (↑i + 1) ⊓ (s.take (↑i + 1)).length = ↑i + 1 by simp; omega]
+                rw [show (↑i + 1) ⊓ (s.take (i + 1)).length = i + 1 by simp; omega]
                 simp [List.Permute__Neg.eq.Append_AppendRotateTakeDrop]
           .
-            simp [show (↑i + 1) ⊓ s.length = ↑i + 1 by omega]
-            simp [show (↑i + 1 - (1 + d)) = ↑i - d by omega]
-            simp [show (1 + d) ⊓ (↑i + 1) = i + 1 by omega]
-            simp [show (↑i - d) = 0 by omega]
+            simp [show (↑i + 1) ⊓ s.length = i + 1 by omega]
+            simp [show i + 1 - (1 + d) = i - d by omega]
+            simp [show (1 + d) ⊓ (i + 1) = i + 1 by omega]
+            simp [show i - d = 0 by omega]
             simp [List.Permute__Neg.eq.Append_AppendRotateTakeDrop]
 
 

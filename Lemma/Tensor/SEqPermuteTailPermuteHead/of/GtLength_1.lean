@@ -74,8 +74,7 @@ private lemma main
           rw [← h_rotate, ← h_length] at h_r
           let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
           rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
-          simp [(show s₀.length = s.length by simp [s₀])] at h_q'r'
-          simp [(show s'.length = s.length by simp [s', s₀])] at h_q'r'
+          simp [show s₀.length = s.length by simp [s₀], show s'.length = s.length by simp [s', s₀]] at h_q'r'
           rw [GetTranspose.eq.Get]
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]

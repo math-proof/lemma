@@ -92,7 +92,7 @@ private lemma main
             rw [GetCast.eq.Get.of.Eq.Lt.fin]
             ·
               simp [TailSet_0.eq.Tail]
-              simp [(show (j * s[0] + i) * s.tail.prod + k = 0 * (n * s.prod) + (j * s[0] + i) * s.tail.prod + k by simp)]
+              simp [show (j * s[0] + i) * s.tail.prod + k = 0 * (n * s.prod) + (j * s[0] + i) * s.tail.prod + k by simp]
               simp only [AddAdd.eq.Add_Add]
               rw [GetFlatten_AddMul.eq.Get.of.Lt.Lt.fin (by grind)]
               ·
