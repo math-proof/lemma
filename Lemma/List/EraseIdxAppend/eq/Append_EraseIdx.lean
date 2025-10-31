@@ -10,13 +10,7 @@ private lemma main
 -- imply
   (a ++ b).eraseIdx (a.length + i) = a ++ b.eraseIdx i := by
 -- proof
-  induction a with
-  | nil =>
-    simp_all
-  | cons head tail ih =>
-    simp
-    rw [AddAdd.comm]
-    simp_all
+  grind
 
 
 -- created on 2025-06-09

@@ -2,7 +2,7 @@ import Lemma.List.Permute.eq.Ite
 open List
 
 
-@[main, comm]
+@[main]
 private lemma main
   {s : List α}
 -- given
