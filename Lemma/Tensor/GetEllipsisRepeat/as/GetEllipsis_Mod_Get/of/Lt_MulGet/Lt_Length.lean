@@ -1,6 +1,6 @@
 import stdlib.SEq
 import Lemma.Nat.LtMod.of.Lt_Mul
-import Lemma.Tensor.GetEllipsis_0.as.Get.of.Gt_Length_0.Lt_Get_0
+import Lemma.Tensor.GetEllipsis_0.as.Get.of.GtLength_0.Lt_Get_0
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0
 import Lemma.Tensor.ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0
@@ -42,9 +42,9 @@ private lemma main
   have h_s := Gt_0.of.Gt h_dim
   induction dim generalizing X s with
   | zero =>
-    have h := GetEllipsis_0.as.Get.of.Gt_Length_0.Lt_Get_0 (by simpa) (by simpa) (X.repeat n ⟨0, h_s⟩)
+    have h := GetEllipsis_0.as.Get.of.GtLength_0.Lt_Get_0 (by simpa) (by simpa) (X.repeat n ⟨0, h_s⟩)
     apply SEq.of.SEq.SEq h
-    have h := GetEllipsis_0.as.Get.of.Gt_Length_0.Lt_Get_0 (by simpa) (by simp [LtMod.of.Lt_Mul h_i]) X (i := i % s[0])
+    have h := GetEllipsis_0.as.Get.of.GtLength_0.Lt_Get_0 (by simpa) (by simp [LtMod.of.Lt_Mul h_i]) X (i := i % s[0])
     apply SEq.of.SEq.SEq h
     apply GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0.fin
     assumption

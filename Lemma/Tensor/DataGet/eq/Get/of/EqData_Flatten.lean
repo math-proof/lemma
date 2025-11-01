@@ -10,21 +10,20 @@ open Tensor Vector Nat
 
 @[main]
 private lemma main
-  {v : List.Vector (List.Vector α s.prod) s₀}
-  {t : Tensor α (s₀ :: s)}
+  {v : List.Vector (List.Vector α s.prod) n}
+  {X : Tensor α (n :: s)}
 -- given
-  (h : v.flatten = t.data)
-  (i : Fin s₀) :
+  (h : X.data = v.flatten)
+  (i : Fin n) :
 -- imply
-  v[i] = t[i].data := by
+  X[i].data = v[i] := by
 -- proof
   simp [GetElem.getElem]
   simp [Tensor.get]
   have h_i := LtVal i
   simp [Tensor.toVector]
   simp [GetElem.getElem]
-  simp_all
-  rw [← h]
+  rw [h]
   unfold List.Vector.flatten
   simp [List.Vector.get]
   simp [GetVal.eq.Get.of.Lt (show i.val < v.length by simp)]
@@ -32,7 +31,7 @@ private lemma main
   simp [GetElem.getElem]
   rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin (by grind)]
   congr
-  conv in v => rw [Eq_UnflattenFlatten v]
+  conv_rhs => rw [Eq_UnflattenFlatten v]
   congr
 
 

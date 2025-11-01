@@ -18,4 +18,18 @@ private lemma main
   assumption
 
 
+@[main]
+private lemma fin
+  {m : ℕ}
+  {X Y : Tensor α (m :: s)}
+-- given
+  (h₀ : n < m)
+  (h₁ : X = Y) :
+-- imply
+  X.get ⟨n, by aesop⟩ = Y.get ⟨n, by aesop⟩ := by
+-- proof
+  apply main
+  assumption
+
+
 -- created on 2025-09-29

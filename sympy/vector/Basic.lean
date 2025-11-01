@@ -2,7 +2,7 @@ import Mathlib.Data.Vector.MapLemmas
 import Lemma.Nat.EqMin_SubMulS
 import Lemma.List.LengthToList.eq.Length
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
-open Nat
+open Nat Lean
 
 
 class Dot (α : Type u) (β : Type v) (γ : outParam (Type w)) where
@@ -121,6 +121,13 @@ def transpose (xs : Vector (Vector α n) m) : Vector (Vector α m) n :=
 def splitAt {s : List ℕ} (v : Vector α s.prod) (d : ℕ) : Vector (Vector α (s.drop d).prod) (s.take d).prod :=
   let v : Vector α ((s.take d).prod * (s.drop d).prod) := cast (by rw [Prod.eq.MulProdTake__ProdDrop]) v
   v.unflatten
+
+@[app_unexpander map]
+def map.unexpand : PrettyPrinter.Unexpander
+  | `($_ $f:term $s:term) =>
+    `($s.$(mkIdent `map) $f)
+  | _ =>
+    throw ()
 
 end List.Vector
 

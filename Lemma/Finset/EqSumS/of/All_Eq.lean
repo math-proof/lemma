@@ -17,5 +17,18 @@ private lemma main
   rw [Finset.sum_congr rfl fun i hi => h i hi]
 
 
+@[main]
+private lemma fin
+  [AddCommMonoid β]
+  {x y : Fin n → β}
+-- given
+  (h : ∀ i : Fin n, x i = y i) :
+-- imply
+  ∑ i : Fin n, x i = ∑ i : Fin n, y i := by
+-- proof
+  apply main
+  aesop
+
+
 -- created on 2025-04-06
 -- updated on 2025-04-26

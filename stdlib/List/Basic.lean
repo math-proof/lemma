@@ -137,31 +137,15 @@ def List.splice (list : List α) (start : Nat) (deleteCount : Nat) (items : List
   front ++ items ++ (back.drop deleteCount)
 
 @[app_unexpander List.take]
-def unexpandTake : Lean.PrettyPrinter.Unexpander
+def List.take.unexpand : PrettyPrinter.Unexpander
   | `($_ $n:term $xs:term) =>
     `($xs.$(mkIdent `take) $n)
   | _ =>
     throw ()
 
 @[app_unexpander List.drop]
-def unexpandDrop : Lean.PrettyPrinter.Unexpander
+def List.drop.unexpand : PrettyPrinter.Unexpander
   | `($_ $n:term $xs:term) =>
     `($xs.$(mkIdent `drop) $n)
-  | _ =>
-    throw ()
-
-
-@[app_unexpander Min.min]
-def unexpandMin : Lean.PrettyPrinter.Unexpander
-  | `($_ $m:term $n:term) =>
-    `($m ⊓ $n)
-  | _ =>
-    throw ()
-
-
-@[app_unexpander Max.max]
-def unexpandMax : Lean.PrettyPrinter.Unexpander
-  | `($_ $m:term $n:term) =>
-    `($m ⊔ $n)
   | _ =>
     throw ()

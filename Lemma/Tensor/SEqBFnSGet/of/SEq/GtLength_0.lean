@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqGetS.of.Eq.Lt_Length
+import Lemma.Tensor.SEqGetS.of.SEq.Lt_Length
 import Lemma.Nat.LtVal
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEqBFnS.of.SEq
@@ -31,7 +31,7 @@ private lemma main
   have h_X' := h_X.symm
   have h_i := LtVal i
   simp [← h_s0] at h_i
-  have h_get := EqGetS.of.Eq.Lt_Length h_i h_X
+  have h_get := SEqGetS.of.SEq.Lt_Length h_i h_X
   apply SEqBFnS.of.SEq h_get
 
 

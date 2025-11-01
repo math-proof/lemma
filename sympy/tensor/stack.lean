@@ -1,4 +1,5 @@
 import sympy.tensor.tensor
+open Lean
 
 /--
 [stack](https://docs.pytorch.org/docs/stable/generated/torch.stack.html)
@@ -14,7 +15,7 @@ macro_rules
 
 -- Unexpander to convert Stack expressions back to custom syntax
 @[app_unexpander Stack]
-def unexpandStack : Lean.PrettyPrinter.Unexpander
+def Stack.unexpand : PrettyPrinter.Unexpander
   | `($_ $n:term fun $x:ident => $body) =>
     -- Reconstruct the custom syntax [x < n] body
     `([$x < $n] $body)
