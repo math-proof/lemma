@@ -8,7 +8,7 @@ import Lemma.Nat.Gt_0
 import Lemma.Nat.Le_Sub_1
 import Lemma.Tensor.SEq1S.of.Eq
 import Lemma.Tensor.SEqSumS.of.SEq
-import Lemma.Tensor.Softmax.as.PermuteSoftmaxPermute.of.GtLength_Add_1
+import Lemma.Tensor.Softmax.as.PermuteSoftmaxPermute.of.LtAdd_1Length
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge
 import Lemma.Tensor.SumSoftmax.eq.One.of.Get_SubLength_1.gt.Zero.GtLength_0
 open Bool List Nat Tensor
@@ -32,7 +32,7 @@ private lemma main
     simp
     apply SumSoftmax.eq.One.of.Get_SubLength_1.gt.Zero.GtLength_0 h_pos h
   ·
-    have := Softmax.as.PermuteSoftmaxPermute.of.GtLength_Add_1 (i := i) (by omega) X
+    have := Softmax.as.PermuteSoftmaxPermute.of.LtAdd_1Length (i := i) (by omega) X
     have := SEqSumS.of.SEq this i
     apply Eq.of.SEq.SEq this
     simp

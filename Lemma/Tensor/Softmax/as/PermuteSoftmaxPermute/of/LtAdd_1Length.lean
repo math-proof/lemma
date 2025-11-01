@@ -9,7 +9,7 @@ open Tensor
 private lemma main
   [ExpPos α]
 -- given
-  (h : s.length > i + 1)
+  (h : i + 1 < s.length)
   (X : Tensor α s) :
 -- imply
   let d := s.length - 1 - i

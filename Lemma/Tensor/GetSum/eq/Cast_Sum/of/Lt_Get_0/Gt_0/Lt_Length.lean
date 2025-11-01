@@ -31,5 +31,27 @@ private lemma main
   apply Eq_Cast.of.SEq this
 
 
+@[main]
+private lemma fin
+  [Add α] [Zero α]
+  {dim i : ℕ}
+-- given
+  (h₀ : dim < s.length)
+  (h₁ : dim > 0)
+  (h₂ : i < s[0])
+  (X : Tensor α s) :
+-- imply
+  have h_shape := LengthSum.eq.Length.of.Gt_0 h₁ X
+  have h_i : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
+  (X.sum dim).get ⟨i, by grind⟩ = cast (by
+    let h_dim := Sub_1.lt.LengthTail.of.In_Ioo0Length ⟨h₁, h₀⟩
+    rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_LengthTail h_dim]
+    congr
+    rw [EqAddSub.of.Ge (by assumption)]
+  ) ((X.get ⟨i, by grind⟩).sum (dim - 1)) := by
+-- proof
+  apply main h₀ h₁ h₂
+
+
 -- created on 2025-06-22
 -- updated on 2025-07-13
