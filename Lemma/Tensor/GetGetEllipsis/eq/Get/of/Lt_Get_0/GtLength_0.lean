@@ -1,4 +1,6 @@
-import Lemma.Tensor.DataGet.eq.GetUnflattenData
+import Lemma.Tensor.GetToVector.eq.Get
+import Lemma.Vector.EqGetS.of.Eq.Lt
+import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
 import Lemma.Tensor.GetEllipsis_0.eq.Cast_Get.of.GtLength_0.Lt_Get_0
@@ -29,7 +31,7 @@ private lemma main
 -- proof
   unfold Tensor.get
   simp
-  unfold Tensor.toVector
+  unfold toVector
   simp
   repeat rw [@Vector.GetCast.eq.Get.of.Eq.Lt]
   ·
@@ -41,22 +43,35 @@ private lemma main
       simp
     ·
       simp only [GetElem.getElem]
-      -- have h_prod : i < (s.take 1).prod := by
-        -- rwa [ProdTake_1.eq.Get_0.of.GtLength_0]
       rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin h_j]
-      -- unfold List.Vector.splitAt
-      unfold Tensor.getEllipsis
+      unfold getEllipsis
       simp [DataFromVector.eq.FlattenMapData]
-      -- rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin h_j]
       simp [EqUnflattenFlatten]
       rw [GetEllipsis_0.eq.Cast_Get.of.GtLength_0.Lt_Get_0]
-      rw [Tensor.DataCast.eq.Cast_Data.of.Eq (by simp)]
+      rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
       apply SEqCast.of.SEq.Eq
       .
         simp
       .
-        -- simp [DataGet.eq.GetUnflattenData.fin]
-        sorry
+        rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (by grind) (X.toVector.get ⟨j, by grind⟩) ⟨i, by grind⟩]
+        apply SEqCast.of.SEq.Eq
+        .
+          simp
+        .
+          simp
+          apply SEq.of.Eq
+          apply EqGetS.of.Eq.Lt
+          congr
+          simp
+          rw [GetToVector.eq.Get.fin (i := ⟨j, by simpa [Length.eq.Get_0.of.Ne_Nil]⟩)]
+          rw [GetVal.eq.Get.of.Lt (by simp; grind)]
+          apply Eq.of.EqDataS
+          simp
+          rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨j, by grind⟩) (by simp)]
+          apply EqCast.of.SEq
+          simp
+          apply SEq.of.Eq
+          simp [GetElem.getElem]
   ·
     simpa
   ·
