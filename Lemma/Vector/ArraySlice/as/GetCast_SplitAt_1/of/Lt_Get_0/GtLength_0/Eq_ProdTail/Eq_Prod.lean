@@ -16,7 +16,7 @@ private lemma main
   (h_i : i < s[0])
   (v : List.Vector α m) :
 -- imply
-  let h : List.Vector α m = List.Vector α s.prod := by rw [h_m]
+  let h := congrArg (List.Vector α) h_m
   have : i < (s.take 1).prod := by rwa [ProdTake_1.eq.Get_0.of.GtLength_0 h_s]
   v.array_slice (i * n) n ≃ ((cast h v).splitAt 1)[i] := by
 -- proof

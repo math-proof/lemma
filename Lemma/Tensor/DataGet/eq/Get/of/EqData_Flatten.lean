@@ -2,10 +2,10 @@ import sympy.tensor.tensor
 import Lemma.Nat.LtVal
 import Lemma.Vector.GetMap.eq.FunGet
 import Lemma.Vector.GetVal.eq.Get.of.Lt
-import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
-open Tensor Vector Nat
+open Vector Nat
 
 
 @[main]

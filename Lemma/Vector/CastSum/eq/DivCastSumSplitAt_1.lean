@@ -22,7 +22,7 @@ private lemma main
   (x : List.Vector α s.prod)
   (n : α) :
 -- imply
-  have h : List.Vector α (s.drop 1).prod = List.Vector α (s.eraseIdx 0).prod := by simp
+  have h := congrArg (fun s ↦ List.Vector α s.prod) (List.Drop_1.eq.EraseIdx_0 s)
   cast h ((x / n).splitAt 1).sum = cast h (x.splitAt 1).sum / n := by
 -- proof
   unfold List.Vector.splitAt

@@ -9,8 +9,7 @@ private lemma main
   (h₁ : s = s')
   (f : Fin n → Tensor α s) :
 -- imply
-  have h : List.Vector (Tensor α s) n = List.Vector (Tensor α s') n := by rw [h₁]
-  (cast h ((List.Vector.range n).map f))[i] ≃ f ⟨i, h₀⟩ := by
+  (cast (congrArg (fun s ↦ List.Vector (Tensor α s) n) h₁) ((List.Vector.range n).map f))[i] ≃ f ⟨i, h₀⟩ := by
 -- proof
   have := EqGetCast_MapRange.of.Eq h₁ f ⟨i, h₀⟩
   simp_all

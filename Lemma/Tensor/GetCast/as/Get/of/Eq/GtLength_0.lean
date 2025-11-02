@@ -15,7 +15,7 @@ private lemma main
   (X : Tensor α s)
   (i : Fin s[0]) :
 -- imply
-  have h : Tensor α s = Tensor α s' := by rw [h₁]
+  have h := congrArg (Tensor α) h₁
   have := Lt_Length.of.GtLength_0 h₀ X i
   have := Lt_Length.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
   (cast h X)[i] ≃ X[i] := by

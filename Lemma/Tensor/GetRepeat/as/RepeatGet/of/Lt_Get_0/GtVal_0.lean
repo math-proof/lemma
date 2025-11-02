@@ -6,7 +6,6 @@ import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
 import Lemma.Nat.Gt_0
-import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
@@ -81,7 +80,7 @@ private lemma main
     have h_d := Ge_1.of.Gt_0 h
     simp
     -- /(?<!Lemma\.)(Tensor|Algebra)\.(?![a-z]|T\b)/i
-    rw [GetCast.eq.Get.of.Eq.Lt (m' := (s.set d (n * s[d.val])).headD 1)]
+    rw [GetCast.eq.Get.of.Eq.Lt (n' := (s.set d (n * s[d.val])).headD 1)]
     ·
       rw [GetMap.eq.UFnGet.of.Lt]
       apply HEq.of.SEqDataS.Eq (by simp_all)

@@ -8,10 +8,8 @@ private lemma main
   (v : List.Vector α n)
   (i : Fin n) :
 -- imply
-  have h : List.Vector α n = List.Vector α n' := by rw [h]
-  (cast h v)[i.val] = v[i.val] := by
+  (cast (congrArg (List.Vector α) h) v)[i.val] = v[i.val] := by
 -- proof
-  intro h
   simp [GetElem.getElem]
   simp [List.Vector.get]
   aesop
@@ -28,10 +26,8 @@ private lemma fin
   have hi : i < n := by
     simp [h.symm] at hi
     assumption
-  have h : List.Vector α n = List.Vector α n' := by rw [h]
-  (cast h v).get i = v.get ⟨i, hi⟩ := by
+  (cast (congrArg (List.Vector α) h) v).get i = v.get ⟨i, hi⟩ := by
 -- proof
-  intro h
   simp_all
   simp [List.Vector.get]
   aesop

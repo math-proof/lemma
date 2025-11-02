@@ -3915,7 +3915,7 @@ class LeanGetElemQuote extends LeanArgs
     }
     public function latexFormat()
     {
-        return "{%s}_{%s'%s}";
+        return "{%s}_{%s{\\color{red}\\text{'}}%s}";
     }
 }
 
@@ -6513,7 +6513,7 @@ class LeanArgsSemicolonSeparated extends LeanArgs
     public function insert_tactic($caret, $type)
     {
         if ($caret instanceof LeanCaret) {
-            if (($this->parent instanceof LeanTactic) && $this->parent->is_inline_tactic_block()) {
+            if (($this->parent instanceof LeanTactic) && $this->parent->is_inline_tactic_block() || $this->parent instanceof LeanBy) {
                 $this->replace($caret, new LeanTactic($type, $caret, $this->indent, $caret->level));
                 return $caret;
             }
@@ -7101,6 +7101,14 @@ class LeanTactic extends LeanSyntax
                     $caret->push($new);
                 else
                     $this->replace($caret, new LeanArgsSemicolonSeparated([$caret, $new], $this->indent, $caret->level));
+                return $new;
+            }
+            if ($this->parent instanceof LeanBy) {
+                $new = new LeanCaret($this->indent, $caret->level);
+                if ($caret instanceof LeanArgsSemicolonSeparated)
+                    $caret->push($new);
+                else
+                    $this->parent->replace($this, new LeanArgsSemicolonSeparated([$this, $new], $this->indent, $caret->level));
                 return $new;
             }
         }

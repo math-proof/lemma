@@ -10,8 +10,7 @@ private lemma main
 -- given
   (h : j ≥ i) :
 -- imply
-  have : j < (s.permute ⟨i, by omega⟩ (j - i : ℕ)).length := by simp
-  (s.permute ⟨i, by omega⟩ (j - i : ℕ))[j] = s[i] := by
+  (s.permute i (j - i : ℕ))[j]'(by simp) = s[i] := by
 -- proof
   have := GetPermute.eq.Get.of.GtLength_Add (s := s) (i := i) (d := j - i) (by omega)
   simp [EqAdd_Sub.of.Ge h] at this

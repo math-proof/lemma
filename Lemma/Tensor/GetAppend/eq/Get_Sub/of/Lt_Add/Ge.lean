@@ -1,6 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Nat.LtSub.is.Lt_Add.of.Ge
 import Lemma.Bool.SEq.of.SEq.SEq
+import Lemma.List.ProdConsAdd.eq.AddProdSCons
 import Lemma.List.AddProdSCons.eq.MulAdd
 import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Vector.Unflatten.eq.AppendUnflattenS.of.SEq_Append
@@ -44,9 +45,7 @@ private lemma main
       have h_prod := AddProdSCons.eq.MulAdd m n s
       apply SEq.of.SEq.SEq (c := (a.data ++ b.data).array_slice (i * s.prod) s.prod)
       ·
-        have h : List.Vector α ((m :: s).prod + (n :: s).prod) = List.Vector α ((m + n) :: s).prod := by
-          simp_all
-        have := GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0 (s := (m + n) :: s) (by simp) h₁ (cast h (a.data ++ b.data))
+        have := GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0 (s := (m + n) :: s) (by simp) h₁ (cast (congrArg (List.Vector α) (AddProdSCons.eq.ProdConsAdd s m n)) (a.data ++ b.data))
         apply SEq.of.SEq.SEq this
         apply SEq.symm
         apply this.symm.trans

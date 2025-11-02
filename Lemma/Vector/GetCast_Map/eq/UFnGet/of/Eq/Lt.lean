@@ -11,8 +11,7 @@ private lemma main
   (v : List.Vector α n)
   (f : α → β) :
 -- imply
-  have h : List.Vector β n = List.Vector β n' := by rw [h]
-  (cast h (v.map f))[i] = f v[i] := by
+  (cast (congrArg (List.Vector β) h) (v.map f))[i] = f v[i] := by
 -- proof
   simp [GetCast.eq.Get.of.Eq.Lt h_i h]
 
@@ -25,8 +24,7 @@ private lemma fin
   (v : List.Vector α n)
   (f : α → β) :
 -- imply
-  have h : List.Vector β n = List.Vector β n' := by rw [h]
-  (cast h (v.map f)).get ⟨i, by simp_all⟩ = f (v.get ⟨i, h_i⟩) := by
+  (cast (congrArg (List.Vector β) h) (v.map f)).get ⟨i, by simp_all⟩ = f (v.get ⟨i, h_i⟩) := by
 -- proof
   apply main h_i h
 

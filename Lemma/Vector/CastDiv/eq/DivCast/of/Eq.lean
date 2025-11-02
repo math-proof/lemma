@@ -9,7 +9,7 @@ private lemma main
   (h : n = n')
   (a b : List.Vector α n) :
 -- imply
-  have h : List.Vector α n = List.Vector α n' := by rw [h]
+  have h := congrArg (List.Vector α) h
   cast h (a / b) = cast h a / cast h b := by
 -- proof
   aesop
@@ -23,7 +23,7 @@ private lemma scalar
   (a : List.Vector α n)
   (c : α) :
 -- imply
-  have h : List.Vector α n = List.Vector α n' := by rw [h]
+  have h := congrArg (List.Vector α) h
   cast h (a / c) = cast h a / c := by
 -- proof
   aesop

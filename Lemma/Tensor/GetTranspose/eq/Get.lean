@@ -1,10 +1,11 @@
 import sympy.tensor.tensor
+import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Tensor.Permute__0.eq.Cast
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Vector.Eq.of.Eq_Cast.Eq
 import Lemma.Tensor.EqGetS.of.Data.as.FlattenTransposeSplitAt_1
 import Lemma.Tensor.PermuteTail.eq.CastRotate.of.Ge_Length
-open Tensor Vector
+open Tensor Vector List
 
 
 @[main]
@@ -30,8 +31,7 @@ private lemma main
     simp at h
   ·
     simp
-    have h_cast : List.Vector α (([m, n].drop (1 % [m, n].length)).prod * ([m, n].take (1 % [m, n].length)).prod) = List.Vector α ([m, n].drop (1 % [m, n].length) ++ [m, n].take (1 % [m, n].length)).prod := by
-      simp
+    have h_cast := congrArg (List.Vector α) (MulProdS.eq.ProdAppend ([m, n].drop (1 % [m, n].length)) ([m, n].take (1 % [m, n].length)))
     let data := cast h_cast (X.data.splitAt 1).transpose.flatten
     have h_data : data = cast h_cast (X.data.splitAt 1).transpose.flatten := rfl
     simp [← h_data]

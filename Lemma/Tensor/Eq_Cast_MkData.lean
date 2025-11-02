@@ -1,5 +1,4 @@
 import sympy.tensor.Basic
-import sympy.Basic
 
 
 @[main]
@@ -7,8 +6,7 @@ private lemma main
 -- given
   (X : Tensor α [m, n].tail.tail) :
 -- imply
-  have h : Tensor α [m, n].tail.tail = Tensor α [] := by simp
-  X = cast h ⟨X.data⟩ := by
+  X = cast (congrArg (Tensor α) (by simp)) ⟨X.data⟩ := by
 -- proof
   aesop
 

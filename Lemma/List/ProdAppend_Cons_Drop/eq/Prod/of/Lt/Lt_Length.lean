@@ -1,5 +1,5 @@
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.List.ProdCons.eq.Mul_Length
+import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.Nat.MulMul
 import Lemma.List.ProdTake_Add_1.eq.MulProdTake.of.Lt_Length
 import Lemma.Nat.MulMul.eq.Mul_Mul
@@ -20,7 +20,7 @@ private lemma main
   (s.take i ++ s[j] :: s.slice (i + 1) j ++ s[i] :: s.drop (j + 1)).prod = s.prod := by
 -- proof
   repeat rw [ProdAppend.eq.MulProdS]
-  repeat rw [ProdCons.eq.Mul_Length]
+  repeat rw [ProdCons.eq.Mul_Prod]
   rw [Mul_Mul.eq.MulMul]
   rw [MulMul.comm (c := s[i])]
   rw [← ProdTake_Add_1.eq.MulProdTake.of.Lt_Length (by linarith)]

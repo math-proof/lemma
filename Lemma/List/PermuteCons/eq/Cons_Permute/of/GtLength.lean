@@ -5,9 +5,11 @@ open List
 @[main]
 private lemma main
   {s : List α}
-  {i d : ℕ}
+  {i : ℕ}
 -- given
-  (h : s.length > i) :
+  (h : s.length > i)
+  (s₀ : α)
+  (d : ℕ) :
 -- imply
   (s₀ :: s).permute ⟨i + 1, by simp; grind⟩ d = s₀ :: s.permute ⟨i, h⟩ d := by
 -- proof

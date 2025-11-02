@@ -9,8 +9,7 @@ private lemma main
   (h : n = n')
   (v : List.Vector α n) :
 -- imply
-  have h : List.Vector α n = List.Vector α n' := by rw [h]
-  (cast h v)[i] = v[i] := by
+  (cast (congrArg (List.Vector α) h) v)[i] = v[i] := by
 -- proof
   let i : Fin n := ⟨i, h_i⟩
   have := GetCast.eq.Get.of.Eq h v i
@@ -25,8 +24,7 @@ private lemma fin
   (h : n = n')
   (v : List.Vector α n) :
 -- imply
-  have h : List.Vector α n = List.Vector α n' := by rw [h]
-  (cast h v).get ⟨i, by simp_all⟩ = v.get ⟨i, h_i⟩ := by
+  (cast (congrArg (List.Vector α) h) v).get ⟨i, by simp_all⟩ = v.get ⟨i, h_i⟩ := by
 -- proof
   apply main
   assumption

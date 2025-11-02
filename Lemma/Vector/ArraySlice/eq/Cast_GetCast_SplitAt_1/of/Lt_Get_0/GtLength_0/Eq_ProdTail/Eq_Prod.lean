@@ -15,7 +15,7 @@ private lemma main
   (h_i : i < s[0])
   (v : List.Vector α m) :
 -- imply
-  have h : List.Vector α m = List.Vector α s.prod := by rw [h_m]
+  have h := congrArg (List.Vector α) h_m
   have : i < (s.take 1).prod := by rwa [ProdTake_1.eq.Get_0.of.GtLength_0 h_s]
   have h_prod : (s.drop 1).prod = n ⊓ (m - i * n) := by
     rw [h_n, h_m]

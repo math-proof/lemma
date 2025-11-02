@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Tensor.Eq.is.EqDataS

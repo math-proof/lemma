@@ -1,4 +1,5 @@
 import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Vector.Eq.of.EqValS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Vector Bool
 
@@ -10,13 +11,8 @@ private lemma main
 -- given
   (h_eq : a.val = b.val) :
 -- imply
-  have h : List.Vector α n = List.Vector α m := by
-    have := EqUFnS.of.Eq h_eq List.length
-    simp at this
-    rw [this]
-  cast h a = b := by
+  cast (congrArg (List.Vector α ) (Eq.of.EqValS.nat h_eq)) a = b := by
 -- proof
-  intro h
   let ⟨a, ha⟩ := a
   let ⟨b, hb⟩ := b
   simp at h_eq

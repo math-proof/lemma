@@ -12,8 +12,7 @@ private lemma main
   (f : Fin n → Tensor α s)
   (i : Fin n) :
 -- imply
-  have h : List.Vector (Tensor α s) n = List.Vector (Tensor α s') n := by rw [h]
-  (cast h ((List.Vector.range n).map f))[i] ≃ f i := by
+  (cast (congrArg (fun s ↦ List.Vector (Tensor α s) n) h) ((List.Vector.range n).map f))[i] ≃ f i := by
 -- proof
   let v := (List.Vector.range n).map f
   have h_v : v = (List.Vector.range n).map f := rfl

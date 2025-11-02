@@ -1,3 +1,7 @@
+import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
+import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import Lemma.Nat.Lt.of.LtAdd
+import Lemma.List.PermuteCons.eq.Cons_Permute.of.GtLength
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
@@ -58,11 +62,51 @@ private lemma main
     | [] =>
       simp at h
     | s₀ :: s =>
-      -- apply SEq.of.All_SEqGetS.Eq
       simp at h
       rw [AddAdd.comm] at h
       simp at h
-      sorry
+      have h_length_gt : (s₀ :: s).length > i + 1 + d := by omega
+      have h_length_gt_i := Lt.of.LtAdd.left h
+      apply Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
+      .
+        intro t
+        have h_t := LtVal t
+        simp [EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt] at h_t
+        repeat rw [GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length.fin]
+        .
+          apply SEqCastS.of.SEq.Eq.Eq
+          .
+            simp
+            rw [PermuteCons.eq.Cons_Permute.of.GtLength h_length_gt_i s₀ d]
+            simp
+            rw [EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0 (by simp)]
+            simp
+          .
+            simp
+          .
+            rw [show (i + 1 + d - 1) = i + d by simp]
+            simp
+            sorry
+        .
+          simpa
+        .
+          simp
+        .
+          simpa
+        .
+          simpa [PermuteCons.eq.Cons_Permute.of.GtLength _ s₀ d]
+        .
+          simp
+        .
+          simpa [PermuteCons.eq.Cons_Permute.of.GtLength _ s₀ d]
+      .
+        rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simp; omega)]
+        simp
+        omega
+      .
+        simp
+        rw [List.EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt]
+        simp
 
 
 -- created on 2025-10-31

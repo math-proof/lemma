@@ -10,8 +10,7 @@ private lemma main
   (f : Fin n → α)
   (i : Fin n) :
 -- imply
-  have h : List.Vector α n = List.Vector α n' := by rw [h]
-  (cast h ((List.Vector.range n).map f))[i] = f i := by
+  (cast (congrArg (List.Vector α) h) ((List.Vector.range n).map f))[i] = f i := by
 -- proof
   let v := (List.Vector.range n).map f
   have h_v : v = (List.Vector.range n).map f := rfl

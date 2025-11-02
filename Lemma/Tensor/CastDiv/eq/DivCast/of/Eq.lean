@@ -9,7 +9,7 @@ private lemma main
   (h : s = s')
   (X Y : Tensor α s) :
 -- imply
-  have h : Tensor α s = Tensor α s' := by rw [h]
+  have h := congrArg (Tensor α) h
   cast h (X / Y) = cast h X / cast h Y := by
 -- proof
   aesop
@@ -23,7 +23,7 @@ private lemma scalar
   (X : Tensor α s)
   (n : Tensor α []) :
 -- imply
-  have h : Tensor α s = Tensor α s' := by rw [h]
+  have h := congrArg (Tensor α) h
   cast h (X / n) = cast h X / n := by
 -- proof
   aesop
