@@ -3,7 +3,7 @@ import Lemma.List.ProdAppend.eq.MulProdS
 open List
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Monoid α]
 -- given
