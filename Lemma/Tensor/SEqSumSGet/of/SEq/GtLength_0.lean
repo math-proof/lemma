@@ -1,4 +1,4 @@
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.Tensor.SEqBFnSGet.of.SEq.GtLength_0
 open Tensor
 
@@ -14,14 +14,9 @@ private lemma main
   (i : Fin s[0])
   (dim : ℕ) :
 -- imply
-  have : i < X.length := by
-    rw [Length.eq.Get_0.of.GtLength_0 h]
-    simp
   have h_s := h_X.left
-  have : i < X'.length := by
-    rw [h_s] at h
-    rw [Length.eq.Get_0.of.GtLength_0 h]
-    simp [← h_s]
+  have := Lt_Length.of.GtLength_0 h X i
+  have := Lt_Length.of.GtLength_0 (by grind) X' ⟨i, by grind⟩
   X[i].sum dim ≃ X'[i].sum dim := by
 -- proof
   apply SEqBFnSGet.of.SEq.GtLength_0 h h_X i _ (fun s X => X.sum dim)

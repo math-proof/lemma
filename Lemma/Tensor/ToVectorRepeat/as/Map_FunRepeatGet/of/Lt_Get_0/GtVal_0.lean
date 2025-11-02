@@ -1,6 +1,6 @@
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
 import Lemma.Nat.LtSubS.of.Lt.Le
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.GetSet.eq.Get.of.Gt.Lt_Length
 import Lemma.Nat.Gt_0
@@ -37,21 +37,16 @@ private lemma main
     simp
     apply LtSubS.of.Lt.Le (by linarith) (by simp)
   (X.repeat n d).toVector = (List.Vector.range s₀).map fun i =>
-    have h_i := LtVal i
-    have : i < (X.repeat n d).length := by
-      simp_all [LengthRepeat.eq.Get_0.of.GtVal_0 h]
-    have h_i : i < X.length := by
-      rw [Length.eq.Get_0.of.GtLength_0]
-      simp_all
-      assumption
-  cast
-      (by
-        congr
-        simp
-        congr
-        repeat apply EqAddSub.of.Ge (by linarith)
-      )
-      ((X.get ⟨i, h_i⟩).repeat n ⟨d - 1, h_d_1⟩) := by
+    have := LtVal i
+    have : i < (X.repeat n d).length := by simp_all [LengthRepeat.eq.Get_0.of.GtVal_0 h]
+    cast
+        (by
+          congr
+          simp
+          congr
+          repeat apply EqAddSub.of.Ge (by linarith)
+        )
+        ((X.get ⟨i, Lt_Length.of.GtLength_0 (by grind) X ⟨i, by grind⟩⟩).repeat n ⟨d - 1, h_d_1⟩) := by
 -- proof
   intro s₀ h_s h_s₀ h_head h_d_1
   ext i

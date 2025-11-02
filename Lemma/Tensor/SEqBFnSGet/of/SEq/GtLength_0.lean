@@ -1,6 +1,5 @@
 import Lemma.Tensor.SEqGetS.of.SEq.Lt_Length
-import Lemma.Nat.LtVal
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.Tensor.SEqBFnS.of.SEq
 import Lemma.Bool.SEq.is.Eq
 open Tensor Bool Nat
@@ -17,22 +16,14 @@ private lemma main
   (g : List ℕ → List ℕ)
   (f : (s : List ℕ) → Tensor α s → Tensor α (g s)) :
 -- imply
-  have : i < X.length := by
-    rw [Length.eq.Get_0.of.GtLength_0 h]
-    simp
   have h_s := h_X.left
-  have : i < X'.length := by
-    rw [h_s] at h
-    rw [Length.eq.Get_0.of.GtLength_0 h]
-    simp [← h_s]
+  have := Lt_Length.of.GtLength_0 h X i
+  have := Lt_Length.of.GtLength_0 (by grind) X' ⟨i, by grind⟩
   f s.tail X[i] ≃ f s'.tail X'[i] := by
 -- proof
-  have h_s0 := Length.eq.Get_0.of.GtLength_0 h X
-  have h_X' := h_X.symm
-  have h_i := LtVal i
-  simp [← h_s0] at h_i
-  have h_get := SEqGetS.of.SEq.Lt_Length h_i h_X
-  apply SEqBFnS.of.SEq h_get
+  intro _ h_i _
+  apply SEqBFnS.of.SEq
+  apply SEqGetS.of.SEq.Lt_Length h_i h_X
 
 
 -- created on 2025-07-13

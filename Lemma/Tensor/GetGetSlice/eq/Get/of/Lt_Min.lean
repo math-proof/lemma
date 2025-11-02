@@ -17,11 +17,9 @@ private lemma main
   (X : Tensor α (s₀ :: s))
   (h : i < n ⊓ s₀) :
 -- imply
-  have : i < X.length := by aesop
   have : i < (⟨0, n, 1⟩ : Slice).length s₀ := by simp_all [LengthSlice.eq.Min]
-  X[:n][i] = X[i] := by
+  X[:n][i] = X[i]'(by aesop) := by
 -- proof
-  intro hi
   unfold Tensor.getSlice
   simp
   simp [GetElem.getElem]
@@ -40,7 +38,7 @@ private lemma main
     rw [EqUnflattenFlatten]
     rw [GetMap.eq.UFnGet.of.Lt.fin]
     congr
-    apply Eq.of.EqValS (b := ⟨i, hi⟩)
+    apply Eq.of.EqValS (b := ⟨i, by aesop⟩)
     simp
     rw [EqGetIndices.of.Lt_Min.fin]
     .
@@ -59,9 +57,8 @@ private lemma fin
   (X : Tensor α (s₀ :: s))
   (h : i < n ⊓ s₀) :
 -- imply
-  have h_i : i < X.length := by aesop
-  have h_i' : i < (⟨0, n, 1⟩ : Slice).length s₀ := by simp_all [LengthSlice.eq.Min]
-  X[:n].get ⟨i, h_i'⟩ = X.get ⟨i, h_i⟩ := by
+  have h_i : i < (⟨0, n, 1⟩ : Slice).length s₀ := by simp_all [LengthSlice.eq.Min]
+  X[:n].get ⟨i, h_i⟩ = X.get ⟨i, by aesop⟩ := by
 -- proof
   apply main
   assumption

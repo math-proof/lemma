@@ -13,7 +13,7 @@ private lemma fin
   (h_i : i < n)
   (X : Tensor α [n]) :
 -- imply
-  X.data.get ⟨i, by simpa⟩ = (X.get ⟨i, Lt_Length.of.GtLength_0 (s := [n]) (by grind) X ⟨i, by grind⟩⟩).data[0] := by
+  X.data.get ⟨i, by simpa⟩ = (X.get ⟨i, Lt_Length.of.GtLength_0 (by grind) X ⟨i, by grind⟩⟩).data[0] := by
 -- proof
   intros
   simp [Tensor.get]
@@ -36,7 +36,7 @@ private lemma main
   (h_i : i < n)
   (X : Tensor α [n]) :
 -- imply
-  have := Lt_Length.of.GtLength_0 (s := [n]) (by grind) X ⟨i, by grind⟩
+  have := Lt_Length.of.GtLength_0 (by grind) X ⟨i, by grind⟩
   X.data[i]'(by simpa) = X[i].data[0] := by
 -- proof
   apply fin h_i

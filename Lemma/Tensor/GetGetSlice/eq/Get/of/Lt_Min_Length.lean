@@ -10,8 +10,7 @@ private lemma main
   (i : Fin ((⟨0, n, 1⟩ : Slice).length X.length))
   (h : i.val < n ⊓ X.length) :
 -- imply
-  have : i < X.length := by aesop
-  X[:n][i] = X[i] := by
+  X[:n][i] = X[i]'(by aesop) := by
 -- proof
   match s with
   | [] =>
@@ -29,8 +28,7 @@ private lemma fin
   (i : Fin ((⟨0, n, 1⟩ : Slice).length X.length))
   (h : i.val < n ⊓ X.length) :
 -- imply
-  have h_i : i < X.length := by aesop
-  X[:n].get i = X.get ⟨i, h_i⟩ := by
+  X[:n].get i = X.get ⟨i, by aesop⟩ := by
 -- proof
   apply main
   assumption
