@@ -2,7 +2,7 @@ import Lemma.Tensor.SEqGetS.of.SEq.Lt_Length
 import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.Tensor.SEqBFnS.of.SEq
 import Lemma.Bool.SEq.is.Eq
-open Tensor Bool Nat
+open Tensor Bool
 
 
 @[main]
