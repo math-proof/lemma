@@ -7,10 +7,10 @@ open Tensor List
 private lemma main
 -- given
   (h : s ≠ [])
-  (t : Tensor α s) :
+  (X : Tensor α s) :
 -- imply
   have := GtLength_0.of.Ne_Nil h
-  s[0] = t.length := by
+  s[0] = X.length := by
 -- proof
   intro h_length
   apply Get_0.eq.Length.of.GtLength_0 h_length

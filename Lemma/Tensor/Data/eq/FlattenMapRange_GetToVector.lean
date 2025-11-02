@@ -6,11 +6,11 @@ open Tensor
 @[main]
 private lemma main
 -- given
-  (v : Tensor α (s₀ :: s)) :
+  (X : Tensor α (s₀ :: s)) :
 -- imply
-  v.data = ((List.Vector.range s₀).map fun i => v.toVector[i].data).flatten := by
+  X.data = ((List.Vector.range s₀).map fun i => X.toVector[i].data).flatten := by
 -- proof
-  have := Data.eq.FlattenMapRange v
+  have := Data.eq.FlattenMapRange X
   simp [GetElem.getElem] at this
   simp [Tensor.get] at this
   rw [this]

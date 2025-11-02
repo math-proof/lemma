@@ -14,16 +14,16 @@ private lemma main
 -- imply
   let head_dimension := shape.headD 1 * s.length
   let tail_dimension := s[0].shape.tail
-  (head_dimension :: tail_dimension).prod = ((s.map fun t => t.data.val).flatten).length := by
+  (head_dimension :: tail_dimension).prod = ((s.map fun X => X.data.val).flatten).length := by
 -- proof
   intro head_dimension tail_dimension
-  let data := (s.map fun t => t.data.val).flatten
-  have h : data.length = ((s.map fun t => t.data.val).map fun t => t.length).sum :=
+  let data := (s.map fun X => X.data.val).flatten
+  have h : data.length = ((s.map fun X => X.data.val).map fun X => X.length).sum :=
     LengthJoin.eq.SumMap_FunLength
   have h_eq_prod := ProdCons.eq.Mul_Prod head_dimension tail_dimension
   rw [h, h_eq_prod]
   simp
-  have h_Eq_Fun : ((fun t => t.length) ∘ fun t : Tensor α shape => t.data.val) = fun t => t.data.val.length := by
+  have h_Eq_Fun : ((fun X => X.length) ∘ fun X : Tensor α shape => X.data.val) = fun X => X.data.val.length := by
     congr
   simp [h_Eq_Fun]
   simp [head_dimension]

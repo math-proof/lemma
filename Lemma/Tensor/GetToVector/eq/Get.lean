@@ -7,10 +7,10 @@ open Tensor
 @[main]
 private lemma cons
 -- given
-  (v : Tensor α (n :: s))
+  (X : Tensor α (n :: s))
   (i : Fin n) :
 -- imply
-  v.toVector[i] = v[i] := by
+  X.toVector[i] = X[i] := by
 -- proof
   simp [GetElem.getElem]
   simp [Tensor.get]
@@ -20,12 +20,12 @@ private lemma cons
 @[main]
 private lemma cons.fin
 -- given
-  (v : Tensor α (n :: s))
+  (X : Tensor α (n :: s))
   (i : Fin n) :
 -- imply
-  v.toVector.get i = v[i] := by
+  X.toVector.get i = X[i] := by
 -- proof
-  have := cons v i
+  have := cons X i
   simp [GetElem.getElem] at *
   assumption
 

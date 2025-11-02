@@ -13,8 +13,8 @@ private lemma main
 -- imply
   (⟨v.flatten⟩ : Tensor α (n :: s))[i] = ⟨v[i]⟩ := by
 -- proof
-  let t : Tensor α (n :: s) := ⟨v.flatten⟩
-  have h_t : t = ⟨v.flatten⟩ := rfl
+  let X : Tensor α (n :: s) := ⟨v.flatten⟩
+  have h_t : X = ⟨v.flatten⟩ := rfl
   rw [← h_t]
   apply Eq.of.EqDataS
   simp

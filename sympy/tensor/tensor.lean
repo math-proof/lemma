@@ -86,29 +86,29 @@ def Tensor.getEllipsis (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offs
       )
       X
 
-instance : GetElem (Tensor α s) ℕ (Tensor α s.tail) fun t i => i < t.length where
-  getElem t i h := t.get ⟨i, h⟩
+instance : GetElem (Tensor α s) ℕ (Tensor α s.tail) fun X i => i < X.length where
+  getElem X i h := X.get ⟨i, h⟩
 
-instance : GetElem (Tensor α s) ℤ (Tensor α s.tail) fun t i => i ∈ Ico (-t.length : ℤ) t.length where
-  getElem t i h :=
+instance : GetElem (Tensor α s) ℤ (Tensor α s.tail) fun X i => i ∈ Ico (-X.length : ℤ) X.length where
+  getElem X i h :=
     have := LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg h
-    let i := Slice.Add_Mul_DivSub1Sign_2 t.length i
-    t[i.toNat]
+    let i := Slice.Add_Mul_DivSub1Sign_2 X.length i
+    X[i.toNat]
 
-instance : GetElem (Tensor α s) (Tensor ℕ []) (Tensor α s.tail) fun t i => i.data[0] < t.length where
-  getElem t i h := t[i.data[0]]
+instance : GetElem (Tensor α s) (Tensor ℕ []) (Tensor α s.tail) fun X i => i.data[0] < X.length where
+  getElem X i h := X[i.data[0]]
 
-instance : GetElem (Tensor α s) (Tensor ℤ []) (Tensor α s.tail) fun t i => i.data[0] ∈ Ico (-t.length : ℤ) t.length where
-  getElem t i _ := t[i.data[0]]
+instance : GetElem (Tensor α s) (Tensor ℤ []) (Tensor α s.tail) fun X i => i.data[0] ∈ Ico (-X.length : ℤ) X.length where
+  getElem X i _ := X[i.data[0]]
 
-instance : GetElem (Tensor α s) (Tensor ℕ [n].tail) (Tensor α s.tail) fun t i => i.data[0] < t.length where
-  getElem t i _ := t[i.data[0]]
+instance : GetElem (Tensor α s) (Tensor ℕ [n].tail) (Tensor α s.tail) fun X i => i.data[0] < X.length where
+  getElem X i _ := X[i.data[0]]
 
-instance : GetElem (Tensor α s) (Tensor ℤ [n].tail) (Tensor α s.tail) fun t i => i.data[0] ∈ Ico (-t.length : ℤ) t.length where
-  getElem t i _ := t[i.data[0]]
+instance : GetElem (Tensor α s) (Tensor ℤ [n].tail) (Tensor α s.tail) fun X i => i.data[0] ∈ Ico (-X.length : ℤ) X.length where
+  getElem X i _ := X[i.data[0]]
 
 instance : GetElem (Tensor α (m :: s)) (Tensor (Fin k) [n].tail) (Tensor α s) fun _ _ => k ≤ m where
-  getElem t i h := t[i.data[0]]
+  getElem X i h := X[i.data[0]]
 
 /--
 Represents a mathematical object with indices.
@@ -128,28 +128,28 @@ def Tensor.getElem (base : Tensor α s) (indices : List ℕ) (h : indices ∈ (s
     cast (by simp) (getElem (base.get ⟨index, by rwa [h_eq]⟩) indices h)
 
 def Tensor.getSlice
-  (t : Tensor α s)
+  (X : Tensor α s)
   (slice : Slice) :
-  Tensor α (slice.length t.length :: s.tail) :=
-  let tensors := (List.Vector.indices slice t.length).map fun i =>
-    t[i].data
+  Tensor α (slice.length X.length :: s.tail) :=
+  let tensors := (List.Vector.indices slice X.length).map fun i =>
+    X[i].data
   ⟨cast (by simp) tensors.flatten⟩
 
 def Tensor.getSlices
-  (t : Tensor α s)
+  (X : Tensor α s)
   (slices : List Slice)
   {h_shape : slices.length ≤ s.length} :
   Tensor α ((slices.enumerate.map fun ⟨i, index⟩ => index.length s[i]) ++ s.drop slices.length) :=
   match h_slice : slices with
   | .nil =>
-    t
+    X
   | index :: slices =>
     match h_slices : slices with
     | .nil =>
-      have := Length.eq.Get_0.of.GtLength_0 (s := s) (by simpa [h_shape]) t
-      have : (index.length t.length :: s.tail).prod = (index.length s[0] :: List.drop 1 s).prod := by
+      have := Length.eq.Get_0.of.GtLength_0 (s := s) (by simpa [h_shape]) X
+      have : (index.length X.length :: s.tail).prod = (index.length s[0] :: List.drop 1 s).prod := by
         simp_all
-      (⟨cast (by rw [this]) (t.getSlice index).data⟩ : Tensor α (index.length s[0] :: s.drop 1))
+      (⟨cast (by rw [this]) (X.getSlice index).data⟩ : Tensor α (index.length s[0] :: s.drop 1))
     | slices'h :: slices't =>
       have h_shape : s.length ≥ (index :: slices).length:= by
         simp_all
@@ -168,9 +168,9 @@ def Tensor.getSlices
       let tensors :
         List.Vector (List.Vector α (shape.prod * s_rest.prod)) (index.length s[0]) :=
         indices.map fun i : Fin s[0] =>
-          have : i < t.length := by
-            simp_all [Length.eq.Get_0.of.GtLength (by assumption) t]
-          let ti : Tensor α (s.drop 1) := ⟨t[i].data.val, by simp⟩
+          have : i < X.length := by
+            simp_all [Length.eq.Get_0.of.GtLength (by assumption) X]
+          let ti : Tensor α (s.drop 1) := ⟨X[i].data.val, by simp⟩
           have h_shape : slices.length ≤ (s.drop 1).length := LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1 (by simp_all) h_shape
           let sliced : Tensor α (shape ++ s_rest) := getSlices ti slices (h_shape := h_shape)
           have h_eq : (shape ++ s_rest).prod = shape.prod * s_rest.prod := by

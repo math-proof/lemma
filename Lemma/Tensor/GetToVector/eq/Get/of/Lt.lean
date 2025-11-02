@@ -5,15 +5,15 @@ open Tensor
 
 @[main]
 private lemma main
-  {v : Tensor α (n :: s)}
+  {X : Tensor α (n :: s)}
 -- given
-  (h : i < v.length) :
+  (h : i < X.length) :
 -- imply
-  v.toVector[i] = v[i] := by
+  X.toVector[i] = X[i] := by
 -- proof
   simp [Tensor.length] at h
   let i : Fin n := ⟨i, h⟩
-  have := GetToVector.eq.Get.cons v i
+  have := GetToVector.eq.Get.cons X i
   simp_all
   assumption
 

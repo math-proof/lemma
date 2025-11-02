@@ -1,3 +1,4 @@
+import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthData.eq.Mul_Prod.of.GtLength_0
 import Lemma.Nat.EqDivMul.of.Ne_0
@@ -13,7 +14,7 @@ private lemma main
   (X : Tensor α s)
   (i : Fin s[0]) :
 -- imply
-  have : i < X.length := by simp [Length.eq.Get_0.of.GtLength_0 h]
+  have := Lt_Length.of.GtLength_0 h X i
   X[i].data ≃ X.data.array_slice (i * (X.data.length / s[0])) (X.data.length / s[0]) := by
 -- proof
   have h_length := LengthData.eq.Mul_Prod.of.GtLength_0 h X

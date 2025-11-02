@@ -17,12 +17,12 @@ open Vector Bool Nat
 @[main]
 private lemma main
 -- given
-  (t : Tensor α (s₀ :: s)) :
+  (X : Tensor α (s₀ :: s)) :
 -- imply
-  t.data = ((List.Vector.range s₀).map fun i => t[i].data).flatten := by
+  X.data = ((List.Vector.range s₀).map fun i => X[i].data).flatten := by
 -- proof
-  let data : List.Vector α (s₀ * s.prod) := t.data
-  have h_data : t.data = data := rfl
+  let data : List.Vector α (s₀ * s.prod) := X.data
+  have h_data : X.data = data := rfl
   rw [h_data, Eq_FlattenUnflatten data]
   apply EqUFnS.of.Eq _ List.Vector.flatten
   rw [List.Vector.unflatten]

@@ -3,6 +3,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Nat.LtVal
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
+import Lemma.Tensor.Lt_Length.of.GtLength_0
 open Tensor Bool Nat
 
 
@@ -15,14 +16,9 @@ private lemma main
   (X : Tensor α s)
   (i : Fin s[0]) :
 -- imply
-  have h : Tensor α s = Tensor α s' := by rw [h₁]
-  have : i < X.length := by
-    rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
-    apply LtVal i
-  have : i < (cast h X).length := by
-    rw [Length.eq.Get_0.of.GtLength_0]
-    simp [← h₁]
-    rwa [← h₁]
+  have h := congrArg (Tensor α) h₁
+  have := Lt_Length.of.GtLength_0 h₀ X i
+  have := Lt_Length.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
   (cast h X)[i] = cast (by rw [h₁]) X[i] := by
 -- proof
   apply Eq_Cast.of.SEq
@@ -38,15 +34,8 @@ private lemma fin
   (X : Tensor α s)
   (i : Fin s[0]) :
 -- imply
-  have h : Tensor α s = Tensor α s' := by rw [h₁]
-  have hi: i < X.length := by
-    rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
-    apply LtVal i
-  have hi_cast : i < (cast h X).length := by
-    rw [Length.eq.Get_0.of.GtLength_0]
-    simp [← h₁]
-    rwa [← h₁]
-  (cast h X).get ⟨i, hi_cast⟩ = cast (by rw [h₁]) (X.get ⟨i, hi⟩) := by
+  have h := congrArg (Tensor α) h₁
+  (cast h X).get ⟨i, Lt_Length.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩⟩ = cast (by rw [h₁]) (X.get ⟨i, Lt_Length.of.GtLength_0 h₀ X i⟩) := by
 -- proof
   apply main h₀ h₁ X i
 

@@ -6,9 +6,9 @@ open Tensor List
 
 @[main]
 private lemma main
-  {t : Tensor α s}
+  {X : Tensor α s}
 -- given
-  (h : t.length > i) :
+  (h : X.length > i) :
 -- imply
   s ≠ [] := by
 -- proof

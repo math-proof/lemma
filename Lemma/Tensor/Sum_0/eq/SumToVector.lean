@@ -16,7 +16,7 @@ private lemma main
 -- proof
   rw [Sum.eq.Sum_Get]
   simp [GetElem.getElem]
-  have h_all := GetToVector.eq.Get.cons.fin (v := X)
+  have h_all := GetToVector.eq.Get.cons.fin X
   rw [EqSumS.of.All_Eq.fin h_all]
   rw [Sum_0.eq.Sum_Get]
 

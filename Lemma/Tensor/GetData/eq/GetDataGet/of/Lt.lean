@@ -1,6 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
 import Lemma.Tensor.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.Vector.GetSplitAt_1.eq.Cast_GetUnflatten
 import Lemma.Vector.Head.eq.Get_0
 open Tensor Vector
@@ -12,12 +13,7 @@ private lemma fin
   (h_i : i < n)
   (X : Tensor α [n]) :
 -- imply
-  have h_i : i < X.data.length := by
-    simpa
-  have h_i' : i < X.length := by
-    rw [Length.eq.Get_0.of.Ne_Nil (by simp)]
-    simpa
-  X.data.get ⟨i, h_i⟩ = (X.get ⟨i, h_i'⟩).data[0] := by
+  X.data.get ⟨i, by simpa⟩ = (X.get ⟨i, Lt_Length.of.GtLength_0 (s := [n]) (by grind) X ⟨i, by grind⟩⟩).data[0] := by
 -- proof
   intros
   simp [Tensor.get]
@@ -34,17 +30,14 @@ private lemma fin
   simp
 
 
+@[main]
 private lemma main
 -- given
   (h_i : i < n)
   (X : Tensor α [n]) :
 -- imply
-  have : i < X.data.length := by
-    simpa
-  have : i < X.length := by
-    rw [Length.eq.Get_0.of.Ne_Nil (by simp)]
-    simpa
-  X.data[i] = X[i].data[0] := by
+  have := Lt_Length.of.GtLength_0 (s := [n]) (by grind) X ⟨i, by grind⟩
+  X.data[i]'(by simpa) = X[i].data[0] := by
 -- proof
   apply fin h_i
 

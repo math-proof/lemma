@@ -4,12 +4,12 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {v : Tensor α s}
+  {X : Tensor α s}
   {i : ℕ}
 -- given
-  (h : i < v.length) :
+  (h : i < X.length) :
 -- imply
-  v[i] = v.get ⟨i, h⟩ := by
+  X[i] = X.get ⟨i, h⟩ := by
 -- proof
   simp [GetElem.getElem]
 

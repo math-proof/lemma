@@ -353,7 +353,7 @@ abstract class Lean extends IndentedNode
                     else if (
                         $this instanceof LeanToken || 
                         $this instanceof LeanProperty || 
-                        $this instanceof LeanGetElemBase || 
+                        $this instanceof LeanGetElem || $this instanceof LeanGetElemQue || $this instanceof LeanGetElemQuote || 
                         $this instanceof LeanInv || 
                         $this instanceof LeanPairedGroup && $this->is_Expr()
                     ) {
@@ -739,6 +739,12 @@ abstract class Lean extends IndentedNode
                 }
                 return $this->push_arithmetic($token);
             case "'":
+                if ($this instanceof LeanGetElem && $tokens[$i - 1] == ']') {
+                    [$lhs, $rhs] = $this->args;
+                    $caret = new LeanCaret($this->indent, $this->level);
+                    $this->parent->replace($this, new LeanGetElemQuote([$lhs, $rhs, $caret], $this->indent, $this->level));
+                    return $caret;
+                }
                 while (preg_match("/[\w'!?₀-₉]/u", $tokens[$i + 1]))
                     $token .= $tokens[++$i];
                 return $this->push_quote($token);
@@ -3834,24 +3840,8 @@ class LeanMethodChaining extends LeanBinary
     }
 }
 
-abstract class LeanGetElemBase extends LeanBinary
+trait LeanGetElemBase
 {
-    public static $input_priority = 67;
-    public function sep()
-    {
-        return '';
-    }
-
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'stack_priority':
-                return 18;
-            default:
-                return parent::__get($vname);
-        }
-    }
-
     public function push_right($func)
     {
         if ($func == 'LeanBracket')
@@ -3867,8 +3857,30 @@ abstract class LeanGetElemBase extends LeanBinary
     }
 }
 
-class LeanGetElem extends LeanGetElemBase
+trait LeanGetElemBaseBinary 
 {
+    use LeanGetElemBase;
+    public function sep()
+    {
+        return '';
+    }
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'stack_priority':
+                return 18;
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
+
+class LeanGetElem extends LeanBinary
+{
+    public static $input_priority = 67;
+    use LeanGetElemBaseBinary;
     public function strFormat()
     {
         return '%s[%s]';
@@ -3879,8 +3891,10 @@ class LeanGetElem extends LeanGetElemBase
     }
 }
 
-class LeanGetElemQue extends LeanGetElemBase
+class LeanGetElemQue extends LeanBinary
 {
+    public static $input_priority = 67;
+    use LeanGetElemBaseBinary;
     public function strFormat()
     {
         return '%s[%s]?';
@@ -3891,6 +3905,19 @@ class LeanGetElemQue extends LeanGetElemBase
     }
 }
 
+class LeanGetElemQuote extends LeanArgs
+{
+    public static $input_priority = 67;
+    use LeanGetElemBase;
+    public function strFormat()
+    {
+        return "%s[%s]'%s";
+    }
+    public function latexFormat()
+    {
+        return "{%s}_{%s'%s}";
+    }
+}
 
 class Lean_is extends LeanBinary
 {

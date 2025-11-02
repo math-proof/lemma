@@ -1,6 +1,7 @@
 import stdlib.SEq
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.Nat.LtVal
 open Tensor Nat
 
@@ -15,13 +16,8 @@ private lemma main
   (i : Fin s[0]) :
 -- imply
   have h : Tensor α s = Tensor α s' := by rw [h₁]
-  have : i < X.length := by
-    rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
-    apply LtVal i
-  have : i < (cast h X).length := by
-    rw [Length.eq.Get_0.of.GtLength_0]
-    simp [← h₁]
-    rwa [← h₁]
+  have := Lt_Length.of.GtLength_0 h₀ X i
+  have := Lt_Length.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
   (cast h X)[i] ≃ X[i] := by
 -- proof
   subst h₁
