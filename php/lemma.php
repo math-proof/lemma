@@ -26,7 +26,7 @@ if ($_POST) {
 				$index = 2;
 				$tokens[$index] = 'is';
 				if ($index + 2 < count($tokens))
-					// move of to the next position
+					// move 'of' to the next position
 					array_insert($tokens, $index + 2, 'of');
 				$module = implode('.', $tokens);
 				$path = module_to_lean($module);
@@ -35,8 +35,14 @@ if ($_POST) {
 						[$tokens[$index - 1], $tokens[$index + 1]] = [$tokens[$index + 1], $tokens[$index - 1]]; // swap
 						$module = implode('.', $tokens);
 						$path = module_to_lean($module);
-						if (!file_exists($path))
-							return;
+						if (!file_exists($path)) {
+							if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[3], $matches))
+								$tokens[3] = $matches[1] . $matches[2];
+							$module = implode('.', $tokens);
+							$path = module_to_lean($module);
+							if (!file_exists($path))
+								return;
+						}
 					}
 					else {
 						$section = $tokens[0];
@@ -50,13 +56,11 @@ if ($_POST) {
 								$tokens[$index] = 'of';
 								$module = implode('.', $tokens);
 								$path = module_to_lean($module);
-								if (!file_exists($path)) {
+								if (!file_exists($path))
 									return;
-								}
 							}
-							else {
+							else
 								return;
-							}
 						}
 					}
 				}
@@ -267,6 +271,14 @@ EOT;
 				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
 				if (preg_match("/\b$import\b/", $lemmaCode))
 					return true;
+				# try comm:
+				if (preg_match("/^([SH]?Eq|Iff)(?!_)(.+)/", $tokens[0], $matches)) {
+					$tokens[0] = $matches[1] . "_" . $matches[2];
+					$import = implode('.', $tokens);
+					$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
+					if (preg_match("/\b$import\b/", $lemmaCode))
+						return true;
+				}
 			}
 			else {
 				# try mp:

@@ -101,8 +101,11 @@ if (! str_ends_with($path_info, '/')) {
                     $index = array_search('of', $tokens);
                     if ($index === false)
                         $tokens = array_merge([$tokens[0]], array_slice($tokens, 3), ['is'], [$tokens[1]]);
-                    else
+                    else {
+                        if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches))
+                            $tokens[1] = $matches[1] . $matches[2];
                         $tokens = array_merge([$tokens[0]], array_slice($tokens, 3, $index - 3), ['is'], [$tokens[1]], array_slice($tokens, $index));
+                    }
                     break;
                 case 'eq':
                 case 'as':
@@ -120,6 +123,8 @@ if (! str_ends_with($path_info, '/')) {
                         if (!file_exists($path)) {
                             $tokens[1] = $first;
                             $tokens[2] = 'is';
+                            if (count($tokens) > 4)
+                                std\array_insert($tokens, 4, 'of');
                         }
                     }
                     else
