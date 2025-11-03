@@ -1,3 +1,5 @@
+import Lemma.Tensor.GetSum_0.as.SumGetEllipsis.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.GetPermuteHead.as.PermuteHeadGet.of.Lt_Get_1.GtLength_1
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
@@ -15,7 +17,7 @@ open Bool List Nat Tensor
 
 @[main]
 private lemma main
-  [Add α] [Zero α]
+  [AddCommMonoid α]
   {d : ℕ}
 -- given
   (h : s.length > d)
@@ -58,7 +60,26 @@ private lemma main
             simp [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length h_d1]
             simp [EqMin.of.Le h_d]
           ·
-            sorry
+            have := Tensor.GetPermuteHead.as.PermuteHeadGet.of.Lt_Get_1.GtLength_1 (by simpa) (by simpa) X (d := d + 1) (k := t)
+            have := Tensor.SEqSumS.of.SEq this d
+            apply SEq.trans this
+            .
+              have h_length : ((s₀ :: s).eraseIdx 1).length > d := by
+                simp
+                rwa [EqAddSub.of.Ge (Nat.Ge_1.of.Gt_0 h_s)]
+              have ih := ih h_length (X.getEllipsis ⟨1, by simpa⟩ ⟨t, by simpa⟩)
+              apply SEq.trans ih
+              .
+                apply Tensor.SumGetEllipsis.as.GetSum_0.of.Lt_Get_0.GtLength_0 _ h_t
+                simp
+                rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simp; omega)]
+                simp
+                left
+                exact h_s
+              .
+                simp
+                rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length (by omega)]
+                simp [EqMin.of.Le h_d]
         ·
           simp [EqMin.of.Le h_d]
         ·
@@ -67,15 +88,6 @@ private lemma main
           simp
           rw [GetAppend.eq.Get.of.Lt_Length (by simpa)]
           rwa [GetTake.eq.Get.of.Lt_LengthTake (by simpa)]
-      ·
-        simp
-        grind
-      ·
-        simp
-        rw [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length (by simp)]
-        simp
-        rw [EqMin.of.Le (by omega)]
-        simp
 
 
 -- created on 2025-10-31

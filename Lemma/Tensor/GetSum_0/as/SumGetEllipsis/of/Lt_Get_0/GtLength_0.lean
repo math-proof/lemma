@@ -5,7 +5,7 @@ import stdlib.SEq
 open Tensor
 
 
-@[main]
+@[main, comm]
 private lemma main
   [AddCommMonoid α]
 -- given

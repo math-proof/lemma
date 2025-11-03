@@ -21,7 +21,7 @@ open Bool List Nat Tensor
 
 @[main]
 private lemma main
-  [Add α] [Zero α]
+  [AddCommMonoid α]
   {i d : ℕ}
 -- given
   (h : s.length > i + d)
@@ -87,11 +87,11 @@ private lemma main
           .
             rw [show (i + 1 + d - 1) = i + d by simp]
             simp
-            have := Tensor.GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
-            have := Tensor.SEqSumS.of.SEq this (i + d)
+            have := GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
+            have := SEqSumS.of.SEq this (i + d)
             apply SEq.trans this
             .
-              apply ih h (X.get ⟨t, Tensor.Lt_Length.of.GtLength_0 (s := s₀ :: s) (by simp) X ⟨t, by simpa⟩⟩)
+              apply ih h (X.get ⟨t, Lt_Length.of.GtLength_0 (s := s₀ :: s) (by simp) X ⟨t, by simpa⟩⟩)
               rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simp; omega)]
               simp
               omega
@@ -109,7 +109,7 @@ private lemma main
           simpa
       .
         simp
-        rw [List.EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt]
+        rw [EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt]
         simp
 
 
