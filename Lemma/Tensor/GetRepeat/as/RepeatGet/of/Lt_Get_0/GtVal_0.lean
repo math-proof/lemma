@@ -6,7 +6,7 @@ import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
 import Lemma.Nat.Gt_0
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Nat.Ge_1.of.Gt_0
@@ -79,19 +79,20 @@ private lemma main
     have h_s := Gt_0 d
     have h_d := Ge_1.of.Gt_0 h
     simp
+    simp only [GetElem.getElem]
     -- /(?<!Lemma\.)(Tensor|Algebra)\.(?![a-z]|T\b)/i
-    rw [GetCast.eq.Get.of.Eq.Lt (n' := (s.set d (n * s[d.val])).headD 1)]
+    rw [GetCast.eq.Get.of.Eq.fin (n' := (s.set d (n * s[d.val])).headD 1)]
     ·
-      rw [GetMap.eq.UFnGet.of.Lt]
+      rw [GetMap.eq.UFnGet.of.Lt.fin]
       apply HEq.of.SEqDataS.Eq (by simp_all)
       apply SEqCastS.of.SEq.Eq.Eq
       ·
         simp
       ·
         rw [MulProd_Mul_Prod.eq.Mul_Prod]
-        rw [ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length]
+        rw [ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length.fin]
       ·
-        rw [GetCast_Map.eq.UFnGet.of.Eq.Lt]
+        rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin]
         ·
           simp
           apply SEq.of.All_EqGetS.Eq
@@ -111,7 +112,7 @@ private lemma main
               ((cast h_eq (List.Vector.map (·.repeat n) (data.splitAt d)).flatten))
             simp at this
             simp [this]
-            rw [GetCast.eq.Get.of.Eq.Lt.fin (n' := (s.set d (n * s[d])).prod)]
+            rw [GetCast.eq.Get.of.Eq.fin (n' := (s.set d (n * s[d])).prod)]
             ·
               have h_t' : t < (s.tail.take (d - 1)).prod * (n * (s.tail.drop (d - 1)).prod) := by
                 rwa [MulProd_Mul_Prod.eq.Mul_Prod s.tail n (d - 1)]
@@ -149,9 +150,6 @@ private lemma main
               .
                 simp_all
             ·
-              apply AddMul_ProdSet.lt.MulProd_Mul_Prod.of.Lt_Mul_ProdTail.Lt_Get_0.GtVal_0.GtLength_0
-              repeat assumption
-            ·
               apply MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.Lt_Length
           ·
             simp
@@ -160,13 +158,11 @@ private lemma main
         ·
           rw [ProdTake_1.eq.HeadD_1]
       ·
-        simp [h_s]
-        rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0]
-        repeat assumption
-    ·
-      rw [ProdTakeSet.eq.Get_0.of.Gt_0.GtLength_0 (by assumption) (by assumption)]
-      rw [HeadDSet.eq.Get_0.of.Gt_0.Gt_Length]
-      repeat assumption
+        rw [List.HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
+        rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 h_s h_d]
+        rw [List.ProdTake_1.eq.Get_0.of.GtLength_0 (by simpa)]
+        simp
+        rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 h_s h_d]
 
 
 @[main]

@@ -5,7 +5,7 @@ import Lemma.Nat.EqMin.of.Le
 import Lemma.Vector.EqGetRange.of.Lt
 import Lemma.Vector.GetTake.eq.Get.of.Lt_Min
 import Lemma.Vector.GetDrop.eq.Get_Add.of.Lt_Sub
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Bool.EqCast.of.SEq
 open Vector Bool Nat
 
@@ -30,8 +30,8 @@ private lemma main
     intro i
     simp [GetTake.eq.Get.of.Lt_Min]
     rw [GetDrop.eq.Get_Add.of.Lt_Sub]
-    simp
-    rw [GetCast.eq.Get.of.Eq.Lt]
+    simp [GetElem.getElem]
+    rw [GetCast.eq.Get.of.Eq.fin]
     simp
   ·
     rw [EqMin.of.Le]

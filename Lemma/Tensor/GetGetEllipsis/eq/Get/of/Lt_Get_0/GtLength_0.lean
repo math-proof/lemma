@@ -11,7 +11,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthGet.eq.Get_0.of.Lt_Get_0.GtLength_1
 import Lemma.Tensor.LengthGetEllipsis.eq.Get_0.of.Lt_Get.GtLength.Gt_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
@@ -33,7 +33,8 @@ private lemma main
   simp
   unfold toVector
   simp
-  repeat rw [@Vector.GetCast.eq.Get.of.Eq.Lt]
+  simp only [GetElem.getElem]
+  repeat rw [GetCast.eq.Get.of.Eq.fin]
   ·
     repeat rw [GetMap.eq.UFnGet.of.Lt]
     apply SEq.of.SEqDataS.Eq <;>
@@ -73,15 +74,9 @@ private lemma main
           apply SEq.of.Eq
           simp [GetElem.getElem]
   ·
-    simpa
-  ·
     simp
   ·
-    rwa [ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)]
-  ·
     apply ProdTake_1.eq.HeadD_1
-  ·
-    simpa
   ·
     simp
 

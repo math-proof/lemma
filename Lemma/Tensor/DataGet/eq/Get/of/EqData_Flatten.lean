@@ -2,7 +2,7 @@ import sympy.tensor.tensor
 import Lemma.Nat.LtVal
 import Lemma.Vector.GetMap.eq.FunGet
 import Lemma.Vector.GetVal.eq.Get.of.Lt
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
 open Vector Nat
@@ -27,8 +27,8 @@ private lemma main
   unfold List.Vector.flatten
   simp [List.Vector.get]
   simp [GetVal.eq.Get.of.Lt (show i.val < v.length by simp)]
-  rw [GetCast.eq.Get.of.Eq.Lt (by simp) (by simp)]
   simp [GetElem.getElem]
+  simp [GetCast.eq.Get.of.Eq.fin]
   rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin (by grind)]
   congr
   conv_rhs => rw [Eq_UnflattenFlatten v]

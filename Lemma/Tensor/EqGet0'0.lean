@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Nat.LtVal
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
@@ -11,7 +11,6 @@ import Lemma.Vector.GetSplitAt_1.eq.Cast_GetUnflatten
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.List.Prod.eq.MulProdTake__ProdDrop
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.EqGet0'0
 open Tensor Nat Vector Bool List
 
@@ -28,27 +27,21 @@ private lemma fin
   simp [Tensor.toVector]
   have h_i := LtVal i
   have h_i := ProdTake_1.eq.Length.of.GtLength h_i
-  rw [GetCast.eq.Get.of.Eq.Lt (by grind)]
+  simp [GetElem.getElem]
+  rw [GetCast.eq.Get.of.Eq.fin]
   ·
-    rw [GetMap.eq.UFnGet.of.Lt]
+    rw [GetMap.eq.UFnGet.of.Lt.fin]
     apply Eq.of.EqDataS
     simp [EqData0'0]
     apply EqCast.of.SEq
-    have := GetSplitAt_1.eq.Cast_GetUnflatten (0 : List.Vector α s.prod) ⟨i, by simp_all⟩
-    simp at this
-    simp [this]
-    apply SEq.of.All_EqGetS.Eq (by simp)
+    rw [GetSplitAt_1.eq.Cast_GetUnflatten.fin (0 : List.Vector α s.prod) ⟨i, by simp_all⟩]
+    apply SEq.of.All_EqGetS.Eq.fin (by simp)
     intro j
     have h_j := LtVal j
     simp at h_j
-    have := EqGet0'0 ⟨j, h_j⟩ (α := α)
-    simp at this
-    simp [this]
+    simp [EqGet0'0.fin ⟨j, h_j⟩ (α := α)]
     have h_eq := Prod.eq.MulProdTake__ProdDrop s 1
-    have := GetUnflatten.eq.Get_AddMul (cast (congrArg (List.Vector α) h_eq) (0 : List.Vector α s.prod)) ⟨i, by simp_all⟩ j
-    simp at this
-    simp [this]
-    simp only [GetElem.getElem]
+    rw [GetUnflatten.eq.Get_AddMul.fin (cast (congrArg (List.Vector α) h_eq) (0 : List.Vector α s.prod)) ⟨i, by simp_all⟩ j]
     rw [GetCast.eq.Get.of.Eq.fin h_eq]
     simp [EqGet0'0.fin]
   ·

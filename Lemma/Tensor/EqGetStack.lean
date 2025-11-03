@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Tensor.GetUnflattenDataStack.eq.Data
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Tensor Vector
 
 
@@ -17,13 +17,7 @@ private lemma fin.fin
   simp [GetElem.getElem]
   unfold Tensor.toVector
   simp
-  have h_i : i < ((n :: s).take 1).prod := by
-    simp_all
-  have h_n : ((n :: s).take 1).prod = (n :: s).headD 1 := by
-    simp_all
-  have := GetCast.eq.Get.of.Eq.Lt.fin h_i h_n ((([i < n] f i).data.splitAt 1).map (fun data ↦ (⟨data⟩ : Tensor α s)))
-  simp at this
-  rw [this]
+  rw [GetCast.eq.Get.of.Eq.fin (by simp_all) ((([i < n] f i).data.splitAt 1).map (fun data ↦ (⟨data⟩ : Tensor α s)))]
   apply Eq.of.EqDataS
   simp
   have := GetUnflattenDataStack.eq.Data.fin f i

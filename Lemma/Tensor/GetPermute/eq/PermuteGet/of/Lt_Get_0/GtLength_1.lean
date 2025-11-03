@@ -24,7 +24,6 @@ import Lemma.Tensor.LengthPermute.eq.Get_0.of.GtVal_0
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
@@ -110,7 +109,7 @@ private lemma main
                 ·
                   simp
                   omega
-            rw [GetCast.eq.Get.of.Eq.Lt.fin h_lt]
+            rw [GetCast.eq.Get.of.Eq.fin]
             ·
               let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
               let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
@@ -119,7 +118,7 @@ private lemma main
               rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
               unfold Tensor.permuteHead Tensor.rotate
               simp [GetCast.eq.Get.of.Eq.fin]
-              rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
+              rw [GetCast.eq.Get.of.Eq.fin]
               ·
                 let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r'
                 let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
@@ -132,7 +131,7 @@ private lemma main
                 repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                 rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨k, by grind⟩) (by omega)]
                 simp
-                repeat rw [GetCast.eq.Get.of.Eq.Lt.fin]
+                repeat rw [GetCast.eq.Get.of.Eq.fin]
                 ·
                   let ⟨qᵢ, rᵢ, h_qᵢrᵢ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_qₑ
                   let ⟨h_qᵢ_div, h_rᵢ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qᵢrᵢ
@@ -156,27 +155,7 @@ private lemma main
                   have h_qₕᵢ_eq : qₕ.val = qᵢ.val := by grind
                   simp [h_q'_div, h_r_eq, h_rₕᵢ_eq, h_qₕᵢ_eq]
                 ·
-                  rw [ProdDrop.eq.MulProdS s 1 (d + 1)]
-                  simp [Add.comm (a := 1)]
-                  apply AddMul.lt.Mul.of.Lt.Lt
-                  .
-                    rw [Prod.eq.MulProdTake__ProdDrop (s.tail.take (d + 1)) (1 % ((d + 1) ⊓ (s.length - 1)))]
-                    apply AddMul.lt.Mul.of.Lt.Lt
-                    .
-                      have h_rₕ := LtVal rₕ
-                      simp at h_rₕ
-                      exact h_rₕ
-                    .
-                      have h_qₕ := LtVal qₕ
-                      simp at h_qₕ
-                      exact h_qₕ
-                  .
-                    simp at h_r
-                    exact h_r
-                ·
                   simp
-                ·
-                  exact h_qₑ
                 ·
                   rw [MulProdS.eq.ProdAppend]
                   rw [Rotate.eq.AppendDrop__Take]

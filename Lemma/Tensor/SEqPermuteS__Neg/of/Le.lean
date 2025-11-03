@@ -37,13 +37,13 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqPermuteHeadS.of.Ge_Length
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqPermuteTail_1
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat Tensor Bool List Vector
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 800000
 
 
 @[main]
@@ -148,17 +148,18 @@ private lemma main
                 simp [h_i0, List.EqPermute__0]
               simp [DataCast.eq.Cast_Data.of.Eq h_permute]
               simp [h_i0, List.ProdTake_1.eq.Get_0.of.GtLength_0 (Gt_0 i), ← List.Prod.eq.Mul_ProdTail.of.GtLength_0] at h_t
-              repeat rw [GetCast.eq.Get.of.Eq.Lt (by assumption)]
+              simp [GetElem.getElem]
+              repeat rw [GetCast.eq.Get.of.Eq.fin]
               .
                 let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
                 have h_q' := LtVal q'
                 let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
                 have h_r' := LtVal r'
                 simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_r'
-                rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
+                rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
                 unfold Tensor.rotate
-                simp [GetElem.getElem]
-                rw [GetCast.eq.Get.of.Eq.Lt.fin h_r']
+                simp
+                rw [GetCast.eq.Get.of.Eq.fin]
                 .
                   let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r'
                   have h_qₐ := LtVal qₐ
@@ -188,14 +189,14 @@ private lemma main
             .
               omega
             .
-              simp
+              simp [GetElem.getElem]
               have h_t : t < ((s.take (i + 1)).take ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat) ++ ((s.take (i + 1)).drop ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat)).rotate ((1 - -(i : ℤ)).toNat ⊓ (s.take (i + 1)).length - 1)).prod * (s.drop (i + 1)).prod := by
                 rw [h_toNat_i]
                 rw [show (↑i + 1) ⊓ (s.take (i + 1)).length = i + 1 by simp; omega]
                 simp [ProdRotate.eq.Prod]
                 simp [ProdRotate.eq.Prod] at h_t
                 assumption
-              rw [GetCast.eq.Get.of.Eq.Lt h_t]
+              rw [GetCast.eq.Get.of.Eq.fin]
               .
                 let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
                 have h_q' := LtVal q'
@@ -203,10 +204,10 @@ private lemma main
                 let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
                 have h_r' := LtVal r'
                 have h_r_eq : r.val = r'.val := by grind
-                rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
+                rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
                 unfold Tensor.permuteTail
                 simp
-                repeat rw [GetCast.eq.Get.of.Eq.Lt (by assumption)]
+                repeat rw [GetCast.eq.Get.of.Eq.fin]
                 .
                   let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
                   have h_rₐ := LtVal rₐ
@@ -215,10 +216,10 @@ private lemma main
                   have h_rₑ := LtVal rₑ
                   simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_rₐ h_rₑ
                   let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
-                  repeat rw [GetFlatten.eq.Get.of.Eq_AddMul (by assumption)]
+                  repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
                   unfold Tensor.rotate
-                  simp [GetElem.getElem]
-                  repeat rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
+                  simp
+                  repeat rw [GetCast.eq.Get.of.Eq.fin]
                   .
                     let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_rₐ
                     let ⟨qᵢ, rᵢ, h_qᵢrᵢ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_rₑ

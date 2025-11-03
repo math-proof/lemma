@@ -22,5 +22,16 @@ private lemma main
   assumption
 
 
+@[main]
+private lemma fin
+-- given
+  (h : j < n ⊓ (N - i))
+  (v : List.Vector α N) :
+-- imply
+  (v.array_slice i n).get ⟨j, h⟩ = v.get ⟨i + j, by omega⟩ := by
+-- proof
+  apply main h
+
+
 -- created on 2025-05-31
 -- updated on 2025-07-11

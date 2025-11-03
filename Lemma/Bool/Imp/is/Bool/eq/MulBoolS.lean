@@ -47,7 +47,7 @@ private lemma main
     have := Sub.eq.Zero.of.Eq this
     rw [Sub_Mul.eq.Mul_Sub1] at this
     have := OrEqS_0.of.Mul.eq.Zero this
-    mp [Eq.of.Sub.eq.Zero (a := (1 : ℤ)) (b := (Bool.toNat q : ℤ))] at this
+    mp [Eq.of.Sub.eq.Zero (a := 1) (b := (Bool.toNat q : ℤ))] at this
     -- mp [Eq.of.Sub.eq.Zero] at this
     mp [Ne_1.of.Eq_0 (a := (Bool.toNat p : ℤ))] at this
     rw [Ne.is.NotEq] at this

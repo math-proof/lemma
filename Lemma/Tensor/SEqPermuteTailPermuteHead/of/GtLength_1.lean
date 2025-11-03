@@ -8,7 +8,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Nat.LtVal
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.List.DropRotate.eq.Take.of.Le_Length
@@ -60,9 +60,9 @@ private lemma main
         rw [ProdAppend.eq.MulProdS] at h_r
         simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
         unfold Tensor.rotate
-        repeat rw [GetCast.eq.Get.of.Eq.Lt (by simpa)]
+        simp [GetElem.getElem]
+        repeat rw [GetCast.eq.Get.of.Eq.fin]
         ·
-          simp
           let s₀ := (s.take s.length).rotate 1 ++ s.drop s.length
           let s' := s₀.drop (s₀.length - s.length)
           have h_rotate : s' = s.rotate 1 := by
@@ -73,11 +73,11 @@ private lemma main
             simp
           rw [← h_rotate, ← h_length] at h_r
           let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
-          rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
+          rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
           simp [show s₀.length = s.length by simp [s₀], show s'.length = s.length by simp [s', s₀]] at h_q'r'
-          rw [GetTranspose.eq.Get]
-          rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
-          rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]
+          rw [GetTranspose.eq.Get.fin]
+          rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin]
           simp [DropRotate.eq.Take.of.Le_Length (s := s) (n := 1) (by omega)]
           simp [ProdRotate.eq.Prod]
           simp [ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)]
@@ -100,16 +100,16 @@ private lemma main
             apply AddMul.lt.Mul.of.Lt.Lt <;>
             ·
               assumption
-          rw [GetCast.eq.Get.of.Eq.Lt]
+          rw [GetCast.eq.Get.of.Eq.fin]
           ·
-            rw [GetFlatten.eq.Get.of.Eq_AddMul (j := ⟨0, by simp⟩) (i := ⟨r' * s[0] + q', by simp_all⟩) (by simp)]
-            rw [GetCast.eq.Get.of.Eq.Lt]
+            rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨r' * s[0] + q', by simp_all⟩) (by simp)]
+            rw [GetCast.eq.Get.of.Eq.fin]
             ·
-              rw [GetFlatten.eq.Get.of.Eq_AddMul (j := ⟨q', by simpa [EqMod.of.Lt h]⟩) (i := ⟨r', by simpa [EqMod.of.Lt h]⟩)]
+              rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨q', by simpa [EqMod.of.Lt h]⟩) (i := ⟨r', by simpa [EqMod.of.Lt h]⟩)]
               ·
-                rw [GetTranspose.eq.Get]
-                rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
-                rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]
+                rw [GetTranspose.eq.Get.fin]
+                rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+                rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin]
                 simp [EqMod.of.Lt h]
                 simp [h_q] at h_qr
                 simp [h_qr]
@@ -123,24 +123,14 @@ private lemma main
                 rw [ProdTake_1.eq.Get_0.of.GtLength_0]
             ·
               rw [MulProdS.eq.ProdAppend]
-              rw [AppendDrop__Take.eq.Rotate]
-              simpa
-            ·
-              rw [MulProdS.eq.ProdAppend]
               apply congrArg
               simp
               rw [Rotate.eq.AppendDrop__Take]
           ·
-            simp_all
-          ·
             simp
         ·
           rw [MulProdS.eq.ProdAppend]
-        ·
-          apply congrArg
-          simp
-          apply AppendDrop__Take.eq.Rotate.of.Le_Length
-          simp
+          rw [← Rotate.eq.AppendDrop__Take]
       ·
         simp
         rw [EqRotateRotate.of.Le_Length]

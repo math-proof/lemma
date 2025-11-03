@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Tensor.Eq.is.EqDataS
@@ -26,29 +26,24 @@ private lemma main
   rw [Tensor.get]
   rw [Tensor.toVector]
   simp [GetElem.getElem]
-  rw [GetCast.eq.Get.of.Eq.Lt.fin _ (by simp)]
-  ·
-    have h_s₀ : s₀ = X.length := by
-      rw [Length.eq.Get_0.of.GtLength_0 (by simp)]
-      simp
-    simp
-    apply Eq.of.EqDataS
-    simp
-    rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]
-    rw [EqUnflattenFlatten]
-    rw [GetMap.eq.UFnGet.of.Lt.fin]
-    congr
-    apply Eq.of.EqValS (b := ⟨i, by aesop⟩)
-    simp
-    rw [EqGetIndices.of.Lt_Min.fin]
-    .
-      rwa [← h_s₀]
-    .
-      simp only [LengthSlice.eq.Min]
-      rwa [← h_s₀]
-  ·
+  simp [GetCast.eq.Get.of.Eq.fin]
+  have h_s₀ : s₀ = X.length := by
     rw [Length.eq.Get_0.of.GtLength_0 (by simp)]
-    simp_all [LengthSlice.eq.Min]
+    simp
+  apply Eq.of.EqDataS
+  simp
+  rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]
+  rw [EqUnflattenFlatten]
+  rw [GetMap.eq.UFnGet.of.Lt.fin]
+  congr
+  apply Eq.of.EqValS (b := ⟨i, by aesop⟩)
+  simp
+  rw [EqGetIndices.of.Lt_Min.fin]
+  .
+    rwa [← h_s₀]
+  .
+    simp only [LengthSlice.eq.Min]
+    rwa [← h_s₀]
 
 
 @[main]

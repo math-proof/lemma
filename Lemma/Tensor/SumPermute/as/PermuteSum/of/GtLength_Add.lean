@@ -1,3 +1,4 @@
+import Lemma.Tensor.GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Nat.Lt.of.LtAdd
@@ -86,23 +87,26 @@ private lemma main
           .
             rw [show (i + 1 + d - 1) = i + d by simp]
             simp
-            sorry
+            have := Tensor.GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
+            have := Tensor.SEqSumS.of.SEq this (i + d)
+            apply SEq.trans this
+            .
+              apply ih h (X.get ⟨t, Tensor.Lt_Length.of.GtLength_0 (s := s₀ :: s) (by simp) X ⟨t, by simpa⟩⟩)
+              rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simp; omega)]
+              simp
+              omega
+            .
+              simpa
+            .
+              simp
+            .
+              simpa
         .
           simpa
         .
           simp
         .
           simpa
-        .
-          simpa [PermuteCons.eq.Cons_Permute.of.GtLength _ s₀ d]
-        .
-          simp
-        .
-          simpa [PermuteCons.eq.Cons_Permute.of.GtLength _ s₀ d]
-      .
-        rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simp; omega)]
-        simp
-        omega
       .
         simp
         rw [List.EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt]

@@ -11,7 +11,7 @@ private lemma main
 -- given
   (h : n ≤ s.length) :
 -- imply
-  (s.rotate n).drop (s.length - n) = s.take (n) := by
+  (s.rotate n).drop (s.length - n) = s.take n := by
 -- proof
   rw [Rotate.eq.AppendDrop__Take.of.Le_Length h]
   rw [EqDropAppend.of.Eq_Length]

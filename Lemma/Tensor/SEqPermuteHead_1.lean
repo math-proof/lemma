@@ -3,7 +3,7 @@ import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.List.EqRotate_1.of.LeLength_1
 import Lemma.Vector.GetTranspose.eq.Get
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -70,9 +70,8 @@ private lemma main
           simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k]
           simp at h_t
           unfold Tensor.rotate
-          simp
-          simp only [GetElem.getElem]
-          rw [GetCast.eq.Get.of.Eq.Lt.fin]
+          simp [GetElem.getElem]
+          rw [GetCast.eq.Get.of.Eq.fin]
           ·
             rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp [h_length]⟩) (i := ⟨k', by simpa [h_length]⟩) (t := k') (by simp [h_length])]
             rw [GetTranspose.eq.Get.fin]
@@ -80,8 +79,6 @@ private lemma main
             simp at h_k'k
             simp
             simp [h_k'k]
-          ·
-            simpa [h_length]
           ·
             simp [h_length]
             simp [EqRotate_1.of.LeLength_1]

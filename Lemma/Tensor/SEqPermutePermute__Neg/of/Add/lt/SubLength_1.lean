@@ -46,7 +46,7 @@ import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Nat.ToNatSub_Neg.eq.Add
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
@@ -96,21 +96,20 @@ private lemma main
       let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
       simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
       unfold Tensor.permuteHead
-      simp
       have h_r := LtVal r
       simp only [ProdAppend.eq.MulProdS] at h_r
-      rw [GetCast.eq.Get.of.Eq.Lt h_r]
+      simp [GetElem.getElem]
+      rw [GetCast.eq.Get.of.Eq.fin]
       ·
         let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
         let ⟨h_q'_div, _⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
-        rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
+        rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
         unfold Tensor.rotate
-        simp [GetElem.getElem]
         have h_q' := LtVal q'
         have h_r' := LtVal r'
         simp at h_r'
         simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_q'
-        rw [GetCast.eq.Get.of.Eq.Lt.fin h_q']
+        repeat rw [GetCast.eq.Get.of.Eq.fin]
         ·
           let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q'
           have h_qₐ := LtVal qₐ
@@ -145,7 +144,7 @@ private lemma main
           rw [GetPermute__Neg.eq.Get_Add.of.GtLength_Add (by omega)] at h_rₐ
           rw [Add_Add.eq.AddAdd] at h_r'
           rw [DropPermute__Neg.eq.Drop ⟨i + d, by grind⟩] at h_r'
-          have h_lt : q * (s[i + d] * (((s.drop i).take d).prod * (s.drop (i + d + 1)).prod)) + ((rₐ * ((s.drop i).take d).prod + qₐ) * (s.drop (i + d + 1)).prod + r') < ((s.take (i + d + 1)).take ((s.take (i + d + 1)).length - (1 - -(d : ℤ)).toNat) ++ ((s.take (i + d + 1)).drop ((s.take (i + d + 1)).length - (1 - -(d : ℤ)).toNat)).rotate ((1 - -(d : ℤ)).toNat ⊓ (s.take (i + d + 1)).length - 1)).prod * (s.drop (i + d + 1)).prod := by 
+          have h_lt : q * (s[i + d] * (((s.drop i).take d).prod * (s.drop (i + d + 1)).prod)) + ((rₐ * ((s.drop i).take d).prod + qₐ) * (s.drop (i + d + 1)).prod + r') < ((s.take (i + d + 1)).take ((s.take (i + d + 1)).length - (1 - -(d : ℤ)).toNat) ++ ((s.take (i + d + 1)).drop ((s.take (i + d + 1)).length - (1 - -(d : ℤ)).toNat)).rotate ((1 - -(d : ℤ)).toNat ⊓ (s.take (i + d + 1)).length - 1)).prod * (s.drop (i + d + 1)).prod := by
             rw [h_toNat]
             simp
             repeat rw [EqMin.of.Le (by omega)]
@@ -168,14 +167,14 @@ private lemma main
             ·
               rw [Mul_Mul.eq.MulMul (a := s[i + d])]
               apply AddMulAddMul.lt.MulMul.of.Lt.Lt.Lt h_rₐ h_qₐ h_r'
-          rw [GetCast.eq.Get.of.Eq.Lt.fin h_lt]
+          rw [GetCast.eq.Get.of.Eq.fin]
           ·
             let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
             let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
             have h_qₑ := LtVal qₑ
             simp only [ProdAppend.eq.MulProdS] at h_qₑ
             rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₑrₑ]
-            rw [GetCast.eq.Get.of.Eq.Lt.fin h_qₑ]
+            rw [GetCast.eq.Get.of.Eq.fin]
             ·
               let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_qₑ
               let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
@@ -184,7 +183,7 @@ private lemma main
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₕrₕ]
               unfold Tensor.rotate
               simp
-              rw [GetCast.eq.Get.of.Eq.Lt.fin h_rₕ]
+              rw [GetCast.eq.Get.of.Eq.fin]
               ·
                 let ⟨qᵢ, rᵢ, h_qᵢrᵢ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_rₕ
                 let ⟨h_qᵢ_div, h_rᵢ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qᵢrᵢ
@@ -306,7 +305,9 @@ private lemma main
             rw [← TakeDrop.eq.DropTake]
             rw [AddAdd.eq.Add_Add]
         ·
-          simp [Rotate.eq.AppendDrop__Take]
+          rw [MulProdS.eq.ProdAppend]
+        .
+          rw [Rotate.eq.AppendDrop__Take]
       ·
         rw [MulProdS.eq.ProdAppend]
     ·

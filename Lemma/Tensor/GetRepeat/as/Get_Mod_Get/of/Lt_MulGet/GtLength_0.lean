@@ -13,7 +13,7 @@ import Lemma.List.TailSet_0.eq.Tail
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
@@ -89,7 +89,7 @@ private lemma main
               (s := s) (d := 1) (i := i) (j := k)
               (by simp_all) (by simp_all [TailSet_0.eq.Tail]) data
             simp [this]
-            rw [GetCast.eq.Get.of.Eq.Lt.fin]
+            rw [GetCast.eq.Get.of.Eq.fin]
             ·
               simp [TailSet_0.eq.Tail]
               simp [show (j * s[0] + i) * s.tail.prod + k = 0 * (n * s.prod) + (j * s[0] + i) * s.tail.prod + k by simp]
@@ -116,8 +116,6 @@ private lemma main
                 convert this
               ·
                 assumption
-            ·
-              simpa [TailSet_0.eq.Tail]
             ·
               simp [ProdSet__MulGet.eq.Mul_Prod.of.Lt_Length h_s n]
           ·

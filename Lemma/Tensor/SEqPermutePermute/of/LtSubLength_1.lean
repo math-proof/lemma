@@ -26,7 +26,7 @@ import Lemma.Nat.ToNatSub_Neg.eq.Add
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
@@ -79,7 +79,8 @@ private lemma main
         have h_q := LtVal q
         have h_r := LtVal r
         simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
-        rw [GetCast.eq.Get.of.Eq.Lt]
+        simp [GetElem.getElem]
+        rw [GetCast.eq.Get.of.Eq.fin]
         ·
           simp only [ProdAppend.eq.MulProdS] at h_q
           let ⟨z, q₀, h_zq₀⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
@@ -89,11 +90,10 @@ private lemma main
           simp only [Rotate.eq.AppendDrop__Take] at h_q₀
           have := h_q₀
           simp only [ProdAppend.eq.MulProdS] at h_q₀
-          rw [GetFlatten.eq.Get.of.Eq_AddMul h_zq₀]
+          rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_zq₀]
           simp
           unfold Tensor.rotate
-          simp only [GetElem.getElem]
-          repeat rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
+          repeat rw [GetCast.eq.Get.of.Eq.fin]
           ·
             let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q₀
             simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
@@ -110,7 +110,7 @@ private lemma main
               have h_r' := LtVal r'
               simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_q' h_r'
               have h_permute := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 (s := s) (i := ⟨0, by omega⟩) (by simp) d
-              rw [GetCast.eq.Get.of.Eq.Lt.fin]
+              rw [GetCast.eq.Get.of.Eq.fin]
               ·
                 unfold Tensor.rotate
                 simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
@@ -122,7 +122,7 @@ private lemma main
                 rw [EqDivAddMul.of.Lt (by grind)] at h_qₚ_div
                 rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₚrₚ]
                 have h_qₚ := LtVal qₚ
-                rw [GetCast.eq.Get.of.Eq.Lt.fin]
+                rw [GetCast.eq.Get.of.Eq.fin]
                 ·
                   simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_qₚ
                   let ⟨qₜ, rₜ, h_qₜrₜ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_qₚ
@@ -154,16 +154,7 @@ private lemma main
                   ·
                     simp [h_qₚ_div, h_drop]
                 ·
-                  rw [MulProdS.eq.ProdAppend]
-                  convert h_qₚ
                   simp [Rotate.eq.AppendDrop__Take]
-                ·
-                  simp [Rotate.eq.AppendDrop__Take]
-              ·
-                simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
-                apply LtAddMulAddMul.of.Lt.Lt.Lt.Eq _ h_r' h_q' h_r
-                repeat rw [MulProdS.eq.ProdAppend]
-                simp [h_permute]
               ·
                 simp [Permute.eq.Append_AppendRotateTakeDrop]
             ·
@@ -172,8 +163,6 @@ private lemma main
             rw [MulProdS.eq.ProdAppend]
           ·
             rw [Rotate.eq.AppendDrop__Take]
-        ·
-          rwa [MulProdS.eq.ProdAppend]
         ·
           rw [MulProdS.eq.ProdAppend]
       ·

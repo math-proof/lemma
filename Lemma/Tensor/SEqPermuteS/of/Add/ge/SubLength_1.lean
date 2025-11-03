@@ -28,7 +28,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqPermuteHeadS.of.Ge_Length
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqPermuteTail_1
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
@@ -140,18 +140,18 @@ private lemma main
                   simp only [ProdAppend.eq.MulProdS] at h_r
                   simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
                   unfold Tensor.permuteHead
-                  simp
-                  rw [GetCast.eq.Get.of.Eq.Lt h_r]
+                  simp [GetElem.getElem]
+                  rw [GetCast.eq.Get.of.Eq.fin]
                   ·
                     let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
                     let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
                     have h_qₐ := LtVal qₐ
                     have h_rₐ := LtVal rₐ
                     simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_qₐ
-                    simp [GetFlatten.eq.Get.of.Eq_AddMul h_qₐrₐ]
+                    simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
                     unfold Tensor.rotate
-                    simp [GetElem.getElem]
-                    rw [GetCast.eq.Get.of.Eq.Lt.fin h_qₐ]
+                    simp
+                    rw [GetCast.eq.Get.of.Eq.fin]
                     ·
                       let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_qₐ
                       let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
@@ -221,7 +221,8 @@ private lemma main
                 simp [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
                 have h_r' := LtVal r'
                 simp only [ProdAppend.eq.MulProdS] at h_r'
-                repeat rw [GetCast.eq.Get.of.Eq.Lt (by assumption)]
+                simp [GetElem.getElem]
+                repeat rw [GetCast.eq.Get.of.Eq.fin]
                 ·
                   let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
                   let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
@@ -241,10 +242,9 @@ private lemma main
                   simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_qₑ
                   simp at h_rₑ h_qₑ_div
                   have h_qₐₑ_eq : qₐ.val = qₑ.val := by grind
-                  repeat rw [GetFlatten.eq.Get.of.Eq_AddMul (by assumption)]
+                  repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
                   unfold Tensor.rotate
-                  simp [GetElem.getElem]
-                  repeat rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
+                  repeat rw [GetCast.eq.Get.of.Eq.fin]
                   ·
                     let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_qₐ
                     let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
@@ -264,9 +264,11 @@ private lemma main
                     simp [h_qₕᵢ_eq, h_rₕᵢ_eq]
                   ·
                     rw [MulProdS.eq.ProdAppend]
+                  .
                     rw [Rotate.eq.AppendDrop__Take]
                   ·
                     rw [MulProdS.eq.ProdAppend]
+                  .
                     rw [Rotate.eq.AppendDrop__Take]
                 repeat rw [MulProdS.eq.ProdAppend]
               ·

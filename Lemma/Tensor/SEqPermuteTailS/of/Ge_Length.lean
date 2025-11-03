@@ -8,7 +8,7 @@ import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtVal
 import Lemma.Nat.Sub.eq.Zero.of.Le
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
@@ -63,7 +63,7 @@ private lemma main
         rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']
         unfold Tensor.rotate
         simp [GetElem.getElem]
-        repeat rw [GetCast.eq.Get.of.Eq.Lt.fin (by assumption)]
+        repeat rw [GetCast.eq.Get.of.Eq.fin]
         ·
           let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
           let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r'

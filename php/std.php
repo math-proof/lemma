@@ -3612,8 +3612,11 @@ function eval_prefix($expressions, $operand_count) {
     $stack = array();
     foreach (array_reverse($expressions) as $token) {
         $operand = [];
-        foreach (range($operand_count($token)) as $i)
+        foreach (range($operand_count($token)) as $i) {
+            if (!$stack)
+                break;
             $operand[$i] = array_pop($stack);
+        }
         array_push($stack, new Expr($token, $operand));
     }
     return array_reverse($stack);

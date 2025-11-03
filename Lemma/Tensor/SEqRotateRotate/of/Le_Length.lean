@@ -9,7 +9,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Nat.LtVal
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.List.EqAppendTake__Drop
@@ -69,7 +69,8 @@ private lemma main
           rw [GetTranspose.eq.Get]
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
           simp at h_kj ⊢
-          rw [GetCast.eq.Get.of.Eq.Lt]
+          simp [GetElem.getElem]
+          rw [GetCast.eq.Get.of.Eq.fin]
           ·
             simp at h_i
             have : NeZero i := ⟨by omega⟩
@@ -88,10 +89,10 @@ private lemma main
             have h_drop := DropRotate.eq.Take s i
             rw [h_mod] at h_drop
             rw [h_drop] at h_k
-            rw [GetFlatten.eq.Get.of.Eq_AddMul (i := ⟨j, by simp [h_mod, h_j]⟩) (j := ⟨k, by simpa [h_mod]⟩)]
+            rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨j, by simp [h_mod, h_j]⟩) (j := ⟨k, by simpa [h_mod]⟩)]
             ·
-              rw [GetTranspose.eq.Get]
-              rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
+              rw [GetTranspose.eq.Get.fin]
+              rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
               simp at ⊢ h_kj
               rw [h_take] at h_kj
               simp [h_kj]
@@ -101,20 +102,6 @@ private lemma main
               left
               rw [h_drop]
               rw [h_mod]
-          ·
-            rw [MulProdS.eq.ProdAppend]
-            rw [AppendDrop__Take.eq.Rotate]
-            rw [ProdRotate.eq.Prod]
-            simp only [MulProdS.eq.ProdAppend] at h_t
-            rw [AppendDrop__Take.eq.Rotate] at h_t
-            rw [EqRotateRotate.of.Le_Length h] at h_t
-            have h_k := LtVal k
-            have h_j := LtVal j
-            have h_lt := AddMul.lt.Mul.of.Lt.Lt h_j h_k
-            simp only [MulProdS.eq.ProdAppend] at h_lt
-            rw [EqAppendTake__Drop] at h_lt
-            simp [ProdRotate.eq.Prod] at h_lt
-            assumption
           ·
             rw [MulProdS.eq.ProdAppend]
             rw [AppendDrop__Take.eq.Rotate]

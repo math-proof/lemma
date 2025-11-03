@@ -5,9 +5,9 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.Eq.of.All_EqGetS
-import Lemma.Vector.GetCast.eq.Get.of.Eq.Lt
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
-import Lemma.Vector.EqGetMapRange.of.Lt
+import Lemma.Vector.EqGetMapRange
 open Vector Bool
 
 
@@ -38,9 +38,10 @@ private lemma main
     intro i
     unfold List.Vector.unflatten
     simp [List.Vector.get]
-    rw [GetCast.eq.Get.of.Eq.Lt (by grind) (by simp)]
-    rw [GetArraySlice.eq.Get_Add.of.Lt_Min_Sub (by simp)]
-    rw [EqGetMapRange.of.Lt]
+    simp only [GetElem.getElem]
+    simp [GetCast.eq.Get.of.Eq.fin]
+    rw [GetArraySlice.eq.Get_Add.of.Lt_Min_Sub.fin (by simp)]
+    rw [EqGetMapRange.fin]
     simp only [GetElem.getElem]
     simp [List.Vector.get]
     congr
