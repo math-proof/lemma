@@ -1,5 +1,7 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
+import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxTail.eq.Drop_2
 import Lemma.List.EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
@@ -9,22 +11,35 @@ import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.Prod.eq.Mul_ProdEraseIdx.of.GtLength
 import Lemma.List.ProdAppend.eq.MulProdS
+import Lemma.List.ProdEraseIdx.eq.MulProdS.of.Lt
 import Lemma.List.ProdEraseIdx.eq.Mul_ProdDrop_2
 import Lemma.List.ProdProd.dvd.ProdEraseIdx.of.Gt
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.List.Rotate.eq.AppendDrop__Take
+import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.List.TailPermute.eq.PermuteEraseIdx.of.GtLength_1
 import Lemma.List.TailRotateTake.eq.RotateTakeEraseIdx.of.GtLength_1
 import Lemma.List.TailTail.eq.Drop_2
+import Lemma.List.TakeEraseIdx.eq.EraseIdxTake.of.Ge
+import Lemma.List.TakeTake.eq.Take.of.Ge
+import Lemma.Nat.Add
+import Lemma.Nat.AddAdd
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.Dvd_Mul.of.Dvd
+import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Nat.EqAddSub.of.Ge
+import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtVal
+import Lemma.Nat.Mod.le.Max
 import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
+import Lemma.Nat.MulAdd.eq.AddMulS
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
@@ -156,7 +171,8 @@ private lemma main
                     ·
                       have h_r_eq : r' = r.val := by grind
                       simp [h_r_eq]
-                      rw [EqMod.of.Lt (show (1 < ((d + 1) ⊓ s.length)) by omega)]
+                      have h_1_lt_min : 1 < ((d + 1) ⊓ s.length) := by omega
+                      rw [EqMod.of.Lt h_1_lt_min]
                       rw [DropTake.eq.TakeDrop]
                       simp [Add.comm (a := d) (b := 1)]
                       rw [Drop_Add.eq.DropDrop, Drop_1.eq.Tail]
@@ -164,7 +180,7 @@ private lemma main
                       rw [MulMul.eq.Mul_Mul]
                       rw [MulProdS.eq.Prod]
                       simp
-                      apply Nat.Eq.of.EqAddS (a := ↑qₕ * s.tail.tail.prod)
+                      apply Eq.of.EqAddS (a := ↑qₕ * s.tail.tail.prod)
                       rw [Add_Add.eq.AddAdd]
                       conv_rhs =>
                         rw [AddAdd.eq.Add_Add]
@@ -174,14 +190,24 @@ private lemma main
                       rw [Add_Add.eq.AddAdd]
                       rw [AddAdd.comm]
                       simp
+                      rw [ProdEraseIdx.eq.MulProdS.of.Lt (d := d + 1) (by omega)] at h_q'_div
+                      rw [Mul_Mul.eq.MulMul] at h_q'_div
+                      rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_q'_div
+                      rw [DropEraseIdx.eq.Drop.of.Le (by omega)] at h_q_div
+                      simp [← h_q_div] at h_q'_div
+                      rw [← TakeEraseIdx.eq.EraseIdxTake.of.Ge (by omega)] at h_q'_div
+                      simp [h_q'_div] at h_qₑ_div h_rₑ_mod
+                      simp [EqMod.of.Lt h_1_lt_min] at h_qₑ_div h_rₑ_mod
+                      simp at h_qₐ_div h_rₐ_mod
+                      rw [TakeTake.eq.Take.of.Ge (show d + 1 ≥ 1 by simp)] at h_qₑ_div h_rₑ_mod
+                      have := Mod.le.Max 1 (d ⊓ (s.eraseIdx 1).length)
+                      rw [TakeTake.eq.Take.of.Ge (show d ≥ (1 % (d ⊓ (s.eraseIdx 1).length)) by omega)] at h_qₐ_div h_rₐ_mod
                       have h_qₕ_div := h_qₕ_div
-                      have h_rₑ_mod := h_rₑ_mod
-                      have h_qₑ_div := h_qₑ_div
-                      have h_qₐ_div := h_qₐ_div
-                      have h_rₐ_mod := h_rₐ_mod
-                      have h_q_div := h_q_div
-                      have h_q'_div := h_q'_div
-                      sorry
+                      by_cases h : d = 1 ∨ s.length = 2
+                      .
+                        sorry
+                      .
+                        sorry
                     ·
                       apply Dvd_Mul.of.Dvd
                       apply ProdProd.dvd.ProdEraseIdx.of.Gt
