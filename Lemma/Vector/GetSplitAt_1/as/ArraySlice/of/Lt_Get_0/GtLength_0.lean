@@ -4,7 +4,7 @@ import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Vector.SEqArraySliceS.of.SEq.Eq.Eq
 import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.Vector.EqGetRange.of.Lt
 open List Vector Bool Nat
 
@@ -38,7 +38,7 @@ private lemma main
       simp
     ·
       apply SEqCast.of.Eq
-      apply Prod.eq.MulProdTake__ProdDrop
+      apply Prod.eq.MulProdS
 
 
 -- created on 2025-07-08

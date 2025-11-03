@@ -1,7 +1,7 @@
 import Mathlib.Data.Vector.MapLemmas
 import Lemma.Nat.EqMin_SubMulS
 import Lemma.List.LengthToList.eq.Length
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 open Nat Lean
 
 
@@ -119,7 +119,7 @@ def transpose (xs : Vector (Vector α n) m) : Vector (Vector α m) n :=
   (range n).map fun j => (range m).map fun i => xs[i][j]
 
 def splitAt {s : List ℕ} (v : Vector α s.prod) (d : ℕ) : Vector (Vector α (s.drop d).prod) (s.take d).prod :=
-  let v : Vector α ((s.take d).prod * (s.drop d).prod) := cast (by rw [Prod.eq.MulProdTake__ProdDrop]) v
+  let v : Vector α ((s.take d).prod * (s.drop d).prod) := cast (by rw [Prod.eq.MulProdS]) v
   v.unflatten
 
 @[app_unexpander map]

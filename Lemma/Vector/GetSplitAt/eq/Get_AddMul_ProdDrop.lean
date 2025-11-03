@@ -1,5 +1,5 @@
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.AddMul_ProdDrop.lt.Prod
 import Lemma.Bool.HEq.of.SEq
 import Lemma.Vector.Eq.of.Eq_Cast.Eq
@@ -21,8 +21,8 @@ private lemma main
   intro h_lt
   unfold List.Vector.splitAt
   simp
-  have h := Prod.eq.MulProdTake__ProdDrop s d
-  rw [Prod.eq.MulProdTake__ProdDrop s d] at h_lt
+  have h := Prod.eq.MulProdS s d
+  rw [Prod.eq.MulProdS s d] at h_lt
   let v' := cast (by rw [h]) v
   have h_v : v' = cast (by rw [h]) v := rfl
   simp [← h_v]

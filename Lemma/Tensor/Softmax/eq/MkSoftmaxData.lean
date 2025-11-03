@@ -12,7 +12,7 @@ import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetUnsqueeze
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 open Tensor Vector Bool Nat List
 
 
@@ -49,7 +49,7 @@ private lemma main
   unfold Tensor.sum
   simp [DataExp.eq.ExpData]
   unfold List.Vector.splitAt
-  have h_eq := Prod.eq.MulProdTake__ProdDrop [n] 1
+  have h_eq := Prod.eq.MulProdS [n] 1
   have := GetSum.eq.SumMapGet (cast (congrArg (List.Vector α) h_eq) (exp X)).unflatten ⟨0, by simp⟩
   simp at this
   simp [this]

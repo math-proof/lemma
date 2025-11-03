@@ -85,7 +85,7 @@ private lemma main
           .
             simp
           .
-            rw [show (i + 1 + d - 1) = i + d by simp]
+            rw [show i + 1 + d - 1 = i + d by simp]
             simp
             have := GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
             have := SEqSumS.of.SEq this (i + d)

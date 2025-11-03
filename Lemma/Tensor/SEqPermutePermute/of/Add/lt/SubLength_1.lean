@@ -6,8 +6,7 @@ import Lemma.List.DropTakePermute.eq.RotateTakeDrop
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
-import Lemma.List.Prod.eq.MulProdDrop__ProdTake
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.eq.MulProdS
 import Lemma.List.ProdPermute.eq.Prod
@@ -158,10 +157,10 @@ private lemma main
               rw [DropTakePermute.eq.RotateTakeDrop (i := ⟨i, h_i⟩)]
               rw [ProdRotate.eq.Prod]
               simp [DropTakePermute.eq.ListGet.of.GtLength_Add (i := ⟨i, h_i⟩) h_Ltid]
-              rw [Prod.eq.MulProdTake__ProdDrop s (i + d + 1)]
+              rw [Prod.eq.MulProdS s (i + d + 1)]
               apply AddMul.lt.Mul.of.Lt.Lt
               ·
-                rw [Prod.eq.MulProdTake__ProdDrop (s.take (i + d + 1)) i]
+                rw [Prod.eq.MulProdS (s.take (i + d + 1)) i]
                 rw [TakeTake.eq.Take.of.Ge (show i + d + 1 ≥ i by omega)]
                 simp [AddAdd.eq.Add_Add (c := 1), ← TakeDrop.eq.DropTake]
                 apply AddMul.lt.Mul.of.Lt.Lt
@@ -174,7 +173,7 @@ private lemma main
                   rw [TakePermute.eq.Take (i := ⟨i, h_i⟩) (d := d)] at h_q'
                   exact h_q'
                 ·
-                  rw [Prod.eq.MulProdDrop__ProdTake ((s.drop i).take (d + 1)) 1]
+                  rw [Prod.eq.MulProdS.comm ((s.drop i).take (d + 1)) 1]
                   rw [TakeTake.eq.Take.of.Ge (by omega)]
                   rw [TakeDrop.eq.ListGet.of.Lt_Length (by omega)]
                   rw [TakeDrop.eq.DropTake s]

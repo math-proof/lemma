@@ -3,7 +3,7 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.GetPermute.eq.Get.of.Lt
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.eq.MulProdS
@@ -142,11 +142,11 @@ private lemma main
                   simp
                   rw [TailPermute.eq.PermuteTail.of.GtLength_Add_1 (by omega)] at h_q'_div h_r'_mod
                   simp only [ProdAppend.eq.MulProdS] at h_q'_div h_r'_mod
-                  simp only [ProdRotate.eq.Prod, MulProdTake__ProdDrop.eq.Prod] at h_q'_div h_r' h_r'_mod
+                  simp only [ProdRotate.eq.Prod, MulProdS.eq.Prod] at h_q'_div h_r' h_r'_mod
                   simp [ProdPermute.eq.Prod] at h_q'_div h_r'_mod
                   simp at h_r'
                   rw [DivAddMul.eq.Add_Div.of.Gt_0 (by omega)] at h_q'_div
-                  rw [ProdRotate.eq.Prod, MulProdTake__ProdDrop.eq.Prod] at h_t
+                  rw [ProdRotate.eq.Prod, MulProdS.eq.Prod] at h_t
                   simp [Div.eq.Zero.of.Lt h_t] at h_q'_div
                   simp [EqMod.of.Lt h_t] at h_r'_mod
                   simp at h_rₑ_mod h_r_mod h_q_div h_qₑ_div h_rₕ_mod h_rᵢ_mod h_qᵢ_div

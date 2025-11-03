@@ -1,25 +1,30 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
+import Lemma.List.EraseIdxTail.eq.Drop_2
 import Lemma.List.EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.List.GetRotate.eq.Ite.of.Le_Length.Lt_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.Prod.eq.Mul_ProdEraseIdx.of.GtLength
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.List.ProdPermute.eq.Prod
+import Lemma.List.ProdEraseIdx.eq.Mul_ProdDrop_2
+import Lemma.List.ProdProd.dvd.ProdEraseIdx.of.Gt
 import Lemma.List.ProdRotate.eq.Prod
+import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.List.TailPermute.eq.PermuteEraseIdx.of.GtLength_1
 import Lemma.List.TailRotateTake.eq.RotateTakeEraseIdx.of.GtLength_1
+import Lemma.List.TailTail.eq.Drop_2
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.Dvd_Mul.of.Dvd
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.LtAddMul.of.Lt.Lt.Eq
 import Lemma.Nat.LtVal
+import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
@@ -101,10 +106,12 @@ private lemma main
           simp
           repeat rw [GetCast.eq.Get.of.Eq.fin]
           let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
+          let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
           have h_qₐ := LtVal qₐ
           have h_rₐ := LtVal rₐ
           simp at h_qₐ h_rₐ
           let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q'
+          let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
           have h_qₑ := LtVal qₑ
           repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
           repeat rw [GetTranspose.eq.Get.fin]
@@ -116,14 +123,77 @@ private lemma main
             rw [GetCast.eq.Get.of.Eq.fin]
             ·
               rw [DataFromVector.eq.FlattenMapData]
-              have h_lt : (↑rₐ * (((s.eraseIdx 1).take d).drop (1 % (d ⊓ (s.eraseIdx 1).length))).prod + ↑qₐ) * ((s.eraseIdx 1).drop d).prod + ↑r < (s.headD 1) * (s.tail.eraseIdx 0).prod := by
-                sorry
+              have h_lt : (↑rₐ * (((s.eraseIdx 1).take d).drop (1 % (d ⊓ (s.eraseIdx 1).length))).prod + ↑qₐ) * ((s.eraseIdx 1).drop d).prod + ↑r < s.headD 1 * (s.tail.eraseIdx 0).prod := by
+                rw [EraseIdxTail.eq.Drop_2]
+                rw [← ProdEraseIdx.eq.Mul_ProdDrop_2]
+                rw [Prod.eq.MulProdS (s.eraseIdx 1) d]
+                apply AddMul.lt.Mul.of.Lt.Lt _ h_r
+                rw [Prod.eq.MulProdS ((s.eraseIdx 1).take d) (1 % (d ⊓ (s.eraseIdx 1).length))]
+                apply AddMul.lt.Mul.of.Lt.Lt h_rₐ h_qₐ
               let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+              let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₕrₕ]
               rw [GetEllipsis_0.eq.Cast_Get.of.GtLength_0.Lt_Get_0]
               rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
               simp [GetCast.eq.Get.of.Eq.fin]
-              sorry
+              rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨k, ?_⟩)]
+              ·
+                simp
+                rw [GetCast.eq.Get.of.Eq.fin]
+                ·
+                  simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+                  unfold Tensor.toVector
+                  rw [GetCast.eq.Get.of.Eq.fin]
+                  ·
+                    simp [GetCast.eq.Get.of.Eq.fin]
+                    simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+                    apply congrArg
+                    simp
+                    simp [DropEraseIdx.eq.Drop.of.Le (show d ≥ 1 by omega)] at h_qₕrₕ
+                    simp only [EraseIdxTail.eq.Drop_2] at h_rₕ_mod
+                    simp [DropEraseIdx.eq.Drop.of.Le (show d ≥ 1 by omega)] at h_rₕ_mod h_r h_r_mod
+                    rw [ModAdd.eq.Mod.of.Dvd.left] at h_r'_mod
+                    ·
+                      have h_r_eq : r' = r.val := by grind
+                      simp [h_r_eq]
+                      rw [EqMod.of.Lt (show (1 < ((d + 1) ⊓ s.length)) by omega)]
+                      rw [DropTake.eq.TakeDrop]
+                      simp [Add.comm (a := d) (b := 1)]
+                      rw [Drop_Add.eq.DropDrop, Drop_1.eq.Tail]
+                      rw [MulAdd.eq.AddMulS]
+                      rw [MulMul.eq.Mul_Mul]
+                      rw [MulProdS.eq.Prod]
+                      simp
+                      apply Nat.Eq.of.EqAddS (a := ↑qₕ * s.tail.tail.prod)
+                      rw [Add_Add.eq.AddAdd]
+                      conv_rhs =>
+                        rw [AddAdd.eq.Add_Add]
+                      conv_rhs at h_qₕrₕ =>
+                        rw [Add.comm]
+                      rw [← h_qₕrₕ]
+                      rw [Add_Add.eq.AddAdd]
+                      rw [AddAdd.comm]
+                      simp
+                      have h_qₕ_div := h_qₕ_div
+                      have h_rₑ_mod := h_rₑ_mod
+                      have h_qₑ_div := h_qₑ_div
+                      have h_qₐ_div := h_qₐ_div
+                      have h_rₐ_mod := h_rₐ_mod
+                      have h_q_div := h_q_div
+                      have h_q'_div := h_q'_div
+                      sorry
+                    ·
+                      apply Dvd_Mul.of.Dvd
+                      apply ProdProd.dvd.ProdEraseIdx.of.Gt
+                      omega
+                  ·
+                    apply ProdTake_1.eq.HeadD_1
+                ·
+                  simp [TailTail.eq.Drop_2]
+              ·
+                simpa
+              ·
+                simpa
             ·
               rw [EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail]
               simp

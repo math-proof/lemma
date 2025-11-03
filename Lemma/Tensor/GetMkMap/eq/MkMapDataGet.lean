@@ -9,7 +9,7 @@ import Lemma.Vector.GetSplitAt_1.eq.Cast_GetUnflatten
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Tensor List Nat Vector Bool
 
@@ -36,7 +36,7 @@ private lemma main
   intro j
   simp only [GetElem.getElem]
   simp [GetUnflatten.eq.Get_AddMul.fin]
-  have h_s := Prod.eq.MulProdTake__ProdDrop s 1
+  have h_s := Prod.eq.MulProdS s 1
   rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin _ h_s]
   apply congrArg
   rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by simp [h_length]) h_take_1]

@@ -1,4 +1,4 @@
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Nat.LtVal
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
@@ -14,7 +14,7 @@ private lemma fin
   (v : List.Vector α s.prod)
   (i : Fin (s.take 1).prod) :
 -- imply
-  (v.splitAt 1).get i = (cast (congrArg (List.Vector α) (Prod.eq.MulProdTake__ProdDrop s 1)) v).unflatten.get i := by
+  (v.splitAt 1).get i = (cast (congrArg (List.Vector α) (Prod.eq.MulProdS s 1)) v).unflatten.get i := by
 -- proof
   match s with
   | [] =>
@@ -35,7 +35,7 @@ private lemma main
   (v : List.Vector α s.prod)
   (i : Fin (s.take 1).prod) :
 -- imply
-  (v.splitAt 1)[i] = (cast (congrArg (List.Vector α) (Prod.eq.MulProdTake__ProdDrop s 1)) v).unflatten[i] := by
+  (v.splitAt 1)[i] = (cast (congrArg (List.Vector α) (Prod.eq.MulProdS s 1)) v).unflatten[i] := by
 -- proof
   apply fin
 

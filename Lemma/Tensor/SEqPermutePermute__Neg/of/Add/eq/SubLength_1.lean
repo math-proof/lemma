@@ -11,7 +11,7 @@ import Lemma.List.GetPermute__Neg.eq.Get_Add.of.GtLength_Add
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute__Neg.eq.Append_RotateDropTake.of.EqLength_Add_1
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.eq.Get.of.EqLength_Add_1
 import Lemma.List.ProdDropPermute__Neg.eq.ProdDrop.of.Add.eq.SubLength_1
@@ -138,7 +138,7 @@ private lemma main
             simp at h_r'
             simp [h_r']
             have h_Ltqₐrₐ : rₐ * ((s.drop i).take d).prod + qₐ < ((s.permute ⟨i + d, by grind⟩ (-d)).drop i).prod := by
-              rw [Prod.eq.MulProdTake__ProdDrop ((s.permute ⟨i + d, by grind⟩ (-d)).drop i) 1]
+              rw [Prod.eq.MulProdS ((s.permute ⟨i + d, by grind⟩ (-d)).drop i) 1]
               simp
               rw [DropPermute__Neg.eq.TakeDrop.of.Add.eq.SubLength_1 (i := ⟨i, by grind⟩) (by omega)]
               apply AddMul.lt.Mul.of.Lt.Lt h_rₐ h_qₐ
@@ -154,7 +154,7 @@ private lemma main
               rw [TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add (by omega)]
               simp [ProdRotate.eq.Prod]
               rw [← ProdPermute.eq.Prod (s := s) ⟨i + d, by omega⟩ (-d)]
-              rw [Prod.eq.MulProdTake__ProdDrop (s.permute ⟨i + d, by omega⟩ (-d)) i]
+              rw [Prod.eq.MulProdS (s.permute ⟨i + d, by omega⟩ (-d)) i]
               apply AddMul.lt.Mul.of.Lt.Lt
               ·
                 grind

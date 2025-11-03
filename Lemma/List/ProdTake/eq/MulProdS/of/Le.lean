@@ -1,5 +1,5 @@
 import stdlib.List
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.List.DropTake.eq.TakeDrop
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   unfold List.slice List.array_slice
   unfold Function.comp
-  rw [Prod.eq.MulProdTake__ProdDrop (s.take j) i]
+  rw [Prod.eq.MulProdS (s.take j) i]
   rw [TakeTake.eq.Take.of.Ge (by assumption)]
   apply EqMulS.of.Eq.left
   rw [DropTake.eq.TakeDrop]

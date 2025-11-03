@@ -1,5 +1,5 @@
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 open List Nat
 
 
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   have := AddMul.lt.Mul.of.Lt.Lt h_i h_j
   convert this
-  apply Prod.eq.MulProdTake__ProdDrop
+  apply Prod.eq.MulProdS
 
 
 -- created on 2025-07-08

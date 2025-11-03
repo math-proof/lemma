@@ -1,4 +1,4 @@
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.Nat.Ne_0.of.Mul.ne.Zero
 open List Nat
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   (s.drop i).prod ≠ 0 := by
 -- proof
-  rw [Prod.eq.MulProdTake__ProdDrop s i] at h
+  rw [Prod.eq.MulProdS s i] at h
   apply Ne_0.of.Mul.ne.Zero h
 
 

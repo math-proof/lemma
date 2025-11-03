@@ -1,9 +1,8 @@
-import Lemma.List.EqAppendTake__Drop
-import Lemma.List.ProdAppend.eq.MulProdS
-open List
+import Lemma.Nat.Mul
+open Nat
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Monoid α]
 -- given
@@ -12,8 +11,20 @@ private lemma main
 -- imply
   s.prod = (s.take i).prod * (s.drop i).prod := by
 -- proof
-  rw [MulProdS.eq.ProdAppend]
-  rw [EqAppendTake__Drop]
+  simp
 
 
--- created on 2025-10-29
+@[main]
+private lemma Comm
+  [CommMonoid α]
+-- given
+  (s : List α)
+  (i : ℕ) :
+-- imply
+  s.prod = (s.drop i).prod * (s.take i).prod := by
+-- proof
+  rw [main s i]
+  apply Mul.comm
+
+
+-- created on 2025-06-08

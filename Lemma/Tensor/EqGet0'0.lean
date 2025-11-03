@@ -10,7 +10,7 @@ import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.GetSplitAt_1.eq.Cast_GetUnflatten
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.Vector.EqGet0'0
 open Tensor Nat Vector Bool List
 
@@ -40,7 +40,7 @@ private lemma fin
     have h_j := LtVal j
     simp at h_j
     simp [EqGet0'0.fin ⟨j, h_j⟩ (α := α)]
-    have h_eq := Prod.eq.MulProdTake__ProdDrop s 1
+    have h_eq := Prod.eq.MulProdS s 1
     rw [GetUnflatten.eq.Get_AddMul.fin (cast (congrArg (List.Vector α) h_eq) (0 : List.Vector α s.prod)) ⟨i, by simp_all⟩ j]
     rw [GetCast.eq.Get.of.Eq.fin h_eq]
     simp [EqGet0'0.fin]

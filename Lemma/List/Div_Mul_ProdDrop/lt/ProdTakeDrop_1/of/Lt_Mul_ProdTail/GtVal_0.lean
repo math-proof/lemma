@@ -1,6 +1,6 @@
 import Lemma.Nat.LtDiv.of.Lt_Mul
 import Lemma.List.Drop.eq.DropDrop__Sub.of.Ge
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.Nat.Mul_Mul
 open List Nat
 
@@ -17,7 +17,7 @@ private lemma main
   apply LtDiv.of.Lt_Mul
   rw [Mul_Mul.comm]
   rw [Drop.eq.DropDrop__Sub.of.Ge (k := d) (i := 1) (by linarith)]
-  rw [← Prod.eq.MulProdTake__ProdDrop]
+  rw [← Prod.eq.MulProdS]
   simpa
 
 

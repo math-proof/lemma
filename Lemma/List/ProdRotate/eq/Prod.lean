@@ -1,6 +1,5 @@
-import stdlib.List
 import Lemma.List.Rotate.eq.AppendDrop__Take
-import Lemma.List.Prod.eq.MulProdDrop__ProdTake
+import Lemma.List.Prod.eq.MulProdS
 open List
 
 
@@ -14,7 +13,7 @@ private lemma main
   (s.rotate i).prod = s.prod := by
 -- proof
   rw [Rotate.eq.AppendDrop__Take]
-  rw [Prod.eq.MulProdDrop__ProdTake s (i % s.length)]
+  rw [Prod.eq.MulProdS.comm s (i % s.length)]
   simp
 
 

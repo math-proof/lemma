@@ -1,5 +1,5 @@
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdTake.eq.Mul_ProdTake.of.Lt_Length
 import Lemma.Nat.MulMul.eq.Mul_Mul
@@ -19,7 +19,7 @@ private lemma main
   rw [ProdAppend.eq.MulProdS]
   rw [Mul_Mul.eq.MulMul]
   rw [Mul_ProdTake.eq.ProdTake.of.Lt_Length]
-  apply Prod.eq.MulProdTake__ProdDrop
+  apply Prod.eq.MulProdS
 
 
 -- created on 2025-11-03

@@ -185,7 +185,7 @@ https://github.com/leanprover-community/lean4web
 # Lemma Naming Convention
 ## CamelCase
 CamelCase is used for unary function, eg:  
-LogExpSum  
+LogSumExp denotes the expression: (exp x).sum.log
 generally, if F is a unary function, and X is its argument, then
 FX denote the expression: F X
 
@@ -206,19 +206,24 @@ DivOneTwo, etc.
 
 ## Infix Operators
 small-letter binary infix operators are short name for Capital-letter operator name, eg:
-| infix operators  | prefix operators |
-| :--: |  :--: | 
-| X.eq.Y | EqXY | 
-| X.ne.Y | NeXY | 
-| X.gt.Y | GtXY | 
-| X.lt.Y | LtXY | 
-| X.ge.Y | GeXY | 
-| X.le.Y | LeXY | 
-| X.in.Y | InXY | 
-| X.is.Y | IffXY | 
-| X.as.Y | SEqXY | 
-| X.ou.Y | OrXY | 
-| X.et.Y | AndXY | 
-| X.dvd.Y | DvdXY | 
-| X.sub.Y | SubsetXY | 
-| X.sup.Y | SupsetXY | 
+| infix operators  | prefix operators | sympy equivalent |
+| :--: |  :--: |  :--: | 
+| X.eq.Y | EqXY | Equal | 
+| X.ne.Y | NeXY | Unequal | 
+| X.gt.Y | GtXY | Greater |
+| X.lt.Y | LtXY | Less |
+| X.ge.Y | GeXY | GreaterThan |
+| X.le.Y | LeXY | LessThan
+| X.in.Y | InXY | Contains | 
+| X.is.Y | IffXY | Equivalent | 
+| X.as.Y | SEqXY | -- | 
+| X.ou.Y | OrXY | Or | 
+| X.et.Y | AndXY | And | 
+| X.dvd.Y | DvdXY | -- | 
+| X.sub.Y | SubsetXY | Subset | 
+| X.sup.Y | SupsetXY | Supset | 
+
+## Plural S
+The English Plural Letter S is used to denote double occurrence of types:
+- EqSumS is short for : Sum.eq.Sum
+- SEqSumSGet is short for : SumGet.as.SumGet

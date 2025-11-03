@@ -1,5 +1,5 @@
 import sympy.vector.vector
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 open List
 
 
@@ -10,7 +10,7 @@ private lemma main
   (v : List.Vector α s.prod)
   (d : ℕ) :
 -- imply
-  v.splitAt d = (cast (congrArg (List.Vector α) (Prod.eq.MulProdTake__ProdDrop s d)) v).unflatten := by
+  v.splitAt d = (cast (congrArg (List.Vector α) (Prod.eq.MulProdS s d)) v).unflatten := by
 -- proof
   simp [List.Vector.splitAt]
 

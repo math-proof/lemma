@@ -1,4 +1,4 @@
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.Nat.Dvd_Mul
 open List Nat
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   (s.drop d).prod ∣ s.prod := by
 -- proof
-  rw [Prod.eq.MulProdTake__ProdDrop s d]
+  rw [Prod.eq.MulProdS s d]
   apply Dvd_Mul
 
 

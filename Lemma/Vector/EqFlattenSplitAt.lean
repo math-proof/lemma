@@ -1,6 +1,6 @@
 import Lemma.Vector.EqFlattenUnflatten
 import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 open List Vector Bool
 
 
@@ -16,7 +16,7 @@ private lemma main
   unfold List.Vector.splitAt
   simp [EqFlattenUnflatten]
   apply SEqCast.of.Eq
-  apply Prod.eq.MulProdTake__ProdDrop
+  apply Prod.eq.MulProdS
 
 
 -- created on 2025-07-08

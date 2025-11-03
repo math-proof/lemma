@@ -1,5 +1,5 @@
 import Lemma.Vector.CastDiv.eq.DivCast.of.Eq
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.Vector.Div.eq.Mul_Inv
 import Lemma.Vector.UnflattenDiv.eq.DivUnflatten_Replicate
 import Lemma.Vector.SumMul.eq.MulSum
@@ -27,7 +27,7 @@ private lemma main
 -- proof
   unfold List.Vector.splitAt
   simp
-  have h_prod := Prod.eq.MulProdTake__ProdDrop s 1
+  have h_prod := Prod.eq.MulProdS s 1
   rw [CastDiv.eq.DivCast.of.Eq.scalar h_prod]
   rw [UnflattenDiv.eq.DivUnflatten_Replicate]
   rw [Div.eq.Mul_Inv (A := List.Vector.replicate (List.drop 1 s).prod n)]

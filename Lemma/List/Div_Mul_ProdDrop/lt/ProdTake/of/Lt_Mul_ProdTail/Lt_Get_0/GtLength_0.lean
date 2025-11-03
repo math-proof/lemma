@@ -1,5 +1,5 @@
 import Lemma.Nat.LtDiv.of.Lt_Mul
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 import Lemma.Nat.Mul_Mul
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
@@ -19,7 +19,7 @@ private lemma main
 -- proof
   apply LtDiv.of.Lt_Mul
   rw [Mul_Mul.comm (a := (s.take d).prod)]
-  rw [← Prod.eq.MulProdTake__ProdDrop]
+  rw [← Prod.eq.MulProdS]
   rw [Prod.eq.Mul_ProdTail.of.GtLength_0 h_s]
   rw [Mul_Mul.comm (a := n)]
   apply AddMul.lt.Mul.of.Lt.Lt <;>

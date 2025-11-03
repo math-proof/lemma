@@ -2,7 +2,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.MulMul
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length
-import Lemma.List.Prod.eq.MulProdTake__ProdDrop
+import Lemma.List.Prod.eq.MulProdS
 open List Nat
 
 
@@ -23,7 +23,7 @@ private lemma main
   rw [Mul_Mul.eq.MulMul]
   apply EqMulS.of.Eq
   rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.Lt_Length]
-  rw [← Prod.eq.MulProdTake__ProdDrop]
+  rw [← Prod.eq.MulProdS]
 
 
 -- created on 2025-06-08
