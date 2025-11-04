@@ -4,6 +4,7 @@ CREATE TABLE `mathlib` (
   `instImplicit` text,
   `strictImplicit` text,
   `implicit` text,
+  `explicit` text,
   `given` json,
   `default` text,
   `imply` json NOT NULL

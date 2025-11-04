@@ -16,13 +16,12 @@ private lemma main
   ∀ i ∈ s, x i ≤ y' i := by
 -- proof
   intro i h_In
-  by_cases h : i = i'
-  ·
+  if h : i = i' then
     rw [h]
     have := h₂ i' h₀
     simp at this
     linarith
-  ·
+  else
     have h := Ne.of.NotEq h
     have := h₂ i h_In
     simp [h] at this

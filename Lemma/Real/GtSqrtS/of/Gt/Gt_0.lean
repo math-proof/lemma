@@ -14,13 +14,11 @@ private lemma main
 -- imply
   √x > √y := by
 -- proof
-  by_cases h : y < 0
-  ·
+  if h : y < 0 then
     rw [EqSqrt_0.of.Lt_0 h]
     apply GtSqrt_0.of.Gt_0 h₁
-  ·
+  else
     have h := Ge.of.NotLt h
-    -- Use the fact that the square root function is increasing on the positive real numbers.
     apply Real.lt_sqrt_of_sq_lt
     rwa [EqSquareSqrt.of.Ge_0 h]
 

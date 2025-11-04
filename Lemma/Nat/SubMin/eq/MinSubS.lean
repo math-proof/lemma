@@ -15,12 +15,11 @@ private lemma main
 -- imply
   a ⊓ b - d = (a - d) ⊓ (b - d) := by
 -- proof
-  by_cases h : d ≤ b
-  · 
+  if h : d ≤ b then
     repeat rw [Min.eq.IteLe]
     rw [SubIte.eq.Ite]
     simp [LeSubS.is.Le.of.Le h]
-  · 
+  else
     have h := Gt.of.NotLe h
     have h_eq := Sub.eq.Zero.of.Lt h
     rw [h_eq]

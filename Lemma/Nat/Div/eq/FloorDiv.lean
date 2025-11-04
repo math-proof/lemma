@@ -9,11 +9,10 @@ private lemma main
 -- imply
   (n / d :ℕ) = ⌊n / (d : ℚ)⌋ := by
 -- proof
-  by_cases h_d : d = 0
-  ·
+  if h_d : d = 0 then
     rw [h_d]
     norm_num
-  ·
+  else
     have := Gt_0.of.Ne_0 h_d
     apply Nat.Div.eq.FloorDiv.of.Gt_0 this
 

@@ -19,8 +19,7 @@ private lemma main
 -- imply
   (s.permute i d).drop (i + d + 1) = s.drop (i + d + 1) := by
 -- proof
-  by_cases h : s.length > i + d
-  ·
+  if h : s.length > i + d then
     conv_lhs =>
       rw [AddAdd.eq.Add_Add]
     rw [Drop_Add.eq.DropDrop]
@@ -31,13 +30,12 @@ private lemma main
     rw [LengthDrop.eq.SubLength]
     rw [EqMin.of.Le]
     omega
-  ·
+  else
     repeat rw [Drop.eq.Nil.of.Ge_Length]
-    .
-      omega
-    .
+    repeat {
       simp
       omega
+    }
 
 
 -- created on 2025-10-14

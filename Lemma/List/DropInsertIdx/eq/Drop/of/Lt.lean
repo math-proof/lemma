@@ -22,8 +22,7 @@ private lemma main
 -- imply
   (a.insertIdx i x).drop j = a.drop (j - 1) := by
 -- proof
-  by_cases h_i : i ≤ a.length
-  ·
+  if h_i : i ≤ a.length then
     rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length h_i (by rfl) (j := i)]
     simp
     rw [DropAppend.eq.Drop.of.Ge_Length] <;>
@@ -38,7 +37,7 @@ private lemma main
     ·
       apply Ge_Min.of.Ge ∘ Ge.of.Gt
       assumption
-  ·
+  else
     simp at h_i
     rw [EqInsertIdx.of.Gt_Length h_i]
     repeat rw [Drop.eq.Nil.of.Ge_Length]

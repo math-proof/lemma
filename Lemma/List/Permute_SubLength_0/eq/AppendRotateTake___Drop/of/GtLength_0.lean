@@ -61,8 +61,7 @@ private lemma main
       simp
       rw [AddAdd.eq.Add_Add]
       norm_num
-      by_cases h_i : s.length ≥ d + 2
-      ·
+      if h_i : s.length ≥ d + 2 then
         have h_i' := LeSubS.of.Le h_i 1
         simp at h_i'
         rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
@@ -83,7 +82,7 @@ private lemma main
           rw [EqSub_Sub.of.Ge (by assumption)]
           rw [EqMin.of.Le (by assumption)]
           simp
-      ·
+      else
         simp at h_i
         have h_i' := LtSubS.of.Lt.Le (c := 1) (by assumption) h_i
         simp at h_i'

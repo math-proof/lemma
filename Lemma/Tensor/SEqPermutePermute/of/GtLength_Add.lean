@@ -27,30 +27,27 @@ private lemma main
     apply SEqPermute__0
   .
     have : NeZero d := ⟨h_d⟩
-    by_cases h_i : i = 0
-    ·
+    if h_i : i = 0 then
       subst h_i
       simp at h
-      by_cases h_d : d = s.length - 1
-      ·
+      if h_d : d = s.length - 1 then
         have := SEqPermutePermute.of.EqSubLength_1 h_d X
         simp at this
         apply SEq.symm ∘ SEq.trans this.symm
         apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
         repeat aesop
-      ·
+      else
         have h := Le_Sub_1.of.Lt h
         have h := Lt.of.Le.Ne h_d h
         have := SEqPermutePermute.of.LtSubLength_1 h X
         apply SEq.symm ∘ SEq.trans this.symm
         apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
         repeat aesop
-    ·
+    else
       have : NeZero i := ⟨h_i⟩
-      by_cases h_d : i + d = s.length - 1
-      ·
+      if h_d : i + d = s.length - 1 then
         apply SEqPermutePermute.of.Add.eq.SubLength_1 h_d
-      ·
+      else
         simp at h_i
         apply SEqPermutePermute.of.Add.lt.SubLength_1
         apply Lt.of.Le.Ne h_d

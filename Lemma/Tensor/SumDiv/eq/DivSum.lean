@@ -13,11 +13,9 @@ private lemma main
 -- imply
   (X / n).sum dim = X.sum dim / n := by
 -- proof
-  by_cases h : dim < s.length
-  · 
+  if h : dim < s.length then
     apply SumDiv.eq.DivSum.of.Lt_Length h
-
-  · 
+  else
     simp at h
     apply SumDiv.eq.DivSum.of.Ge_Length h
 

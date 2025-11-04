@@ -15,8 +15,7 @@ private lemma main
 -- imply
   (X.permuteTail s.length).permuteHead s.length ≃ X := by
 -- proof
-  by_cases h_s : s.length = 1
-  ·
+  if h_s : s.length = 1 then
     have h_tail := SEqPermuteTail_1 X
     apply SEq.symm ∘ SEq.trans h_tail.symm
     have h_head := SEqPermuteHead_1 (X.permuteTail 1)
@@ -30,7 +29,7 @@ private lemma main
         aesop
       ·
         rfl
-  ·
+  else
     have h := GeLength_1.of.Ne_Nil h
     apply SEqPermuteHeadPermuteTail.of.GtLength_1
     omega

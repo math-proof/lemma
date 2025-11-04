@@ -25,8 +25,7 @@ private lemma main
 -- imply
   ((s.permute i (-d)).take (i - d + 1)).drop (i - d) = [s[i]] := by
 -- proof
-  by_cases h_d : d ≤ i
-  ·
+  if h_d : d ≤ i then
     have h := DropTakePermute__Neg.eq.RotateDropTake i d
     rw [DropTake.eq.TakeDrop] at h ⊢
     rw [SubAdd.eq.AddSub.of.Ge (by omega)] at h
@@ -37,17 +36,16 @@ private lemma main
     rw [TakeTake.eq.Take.of.Ge (by omega)] at h
     rw [h]
     rw [EqMin.of.Le h_d]
-    rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
-    ·
+    rw [Rotate.eq.AppendDrop__Take.of.Le_Length] <;>
       simp
+    ·
       rw [EqAddSub.of.Ge h_d]
       rw [DropTake.eq.ListGet]
       rw [TakeAppend.eq.Take.of.Le_Length (by simp)]
       simp
     ·
-      simp
       omega
-  ·
+  else
     simp at h_d
     rw [EqPermuteS__Neg.of.Ge (by omega)]
     simp [Sub.eq.Zero.of.Lt h_d]

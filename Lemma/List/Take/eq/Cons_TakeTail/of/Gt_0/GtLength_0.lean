@@ -6,8 +6,8 @@ private lemma main
   {s : List α}
   {i : ℕ}
 -- given
-  (h_i : i > 0)
-  (h : s.length > 0) :
+  (h : s.length > 0)
+  (h_i : i > 0) :
 -- imply
   s.take i = s[0] :: s.tail.take (i - 1) := by
 -- proof

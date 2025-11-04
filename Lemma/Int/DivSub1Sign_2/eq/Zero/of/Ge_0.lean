@@ -12,11 +12,10 @@ private lemma main
 -- imply
   (1 - sign n) / 2 = 0 := by
 -- proof
-  by_cases h_n : n = 0
-  ·
+  if h_n : n = 0 then
     subst n
     simp
-  ·
+  else
     have h_n := Gt.of.Ge.Ne h h_n
     have := EqSign_1.of.Gt_0 h_n
     rw [this]

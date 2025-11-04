@@ -17,8 +17,7 @@ private lemma main
 -- imply
   (a.eraseIdx i).take j = (a.take (j + 1)).eraseIdx i := by
 -- proof
-  by_cases h_i : i < a.length
-  ·
+  if h_i : i < a.length then
     repeat rw [EraseIdx.eq.Append_Drop_Add_1]
     rw [TakeAppend.eq.Append_Take.of.Ge_Length (by simp; omega)]
     simp
@@ -29,7 +28,7 @@ private lemma main
     rw [AddAdd.comm]
     congr
     omega
-  ·
+  else
     simp at h_i
     repeat rw [EqEraseIdx.of.Ge_Length (by simp; omega)]
     repeat rw [EqTake.of.Ge_Length (by omega)]

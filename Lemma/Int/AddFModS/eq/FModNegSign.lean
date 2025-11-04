@@ -28,22 +28,20 @@ private lemma main
 -- imply
   (-n).fmod d + (n - sign d).fmod d = (-sign d).fmod d := by
 -- proof
-  by_cases h_d : d = 0
-  ·
+  if h_d : d = 0 then
     rw [h_d]
     norm_num
-  ·
+  else
     have h_d := Ne.of.NotEq h_d
     have h_Ite := FModNeg.eq.Ite_0Sub_FMod (n := n) (d := d)
-    by_cases h_nd : n.fmod d = 0
-    ·
+    if h_nd : n.fmod d = 0 then
       simp [h_nd] at h_Ite
       rw [h_Ite]
       simp
       have := FModNeg.eq.Zero.of.FMod.eq.Zero h_Ite
       rw [EqNegNeg] at this
       apply FModSub.eq.FModNeg.of.FMod.eq.Zero this
-    ·
+    else
       simp [h_nd] at h_Ite
       have h_nd := Ne.of.NotEq h_nd
       rw [h_Ite]
@@ -64,11 +62,10 @@ private lemma main
       rw [SubSub.eq.Sub_Add]
       rw [AddSub.eq.Sub_Sub]
       rw [EqSubAdd.left]
-      by_cases h_d' : d > 0
-      ·
+      if h_d' : d > 0 then
         apply MulSubS.le.Zero.of.In_Icc
         apply FMod.in.IccSign.of.FMod.ne.Zero.Gt_0 h_d' h_nd
-      ·
+      else
         have h_d' := Le.of.NotGt h_d'
         have h_d' := Lt.of.Le.Ne h_d h_d'
         rw [Mul.comm]

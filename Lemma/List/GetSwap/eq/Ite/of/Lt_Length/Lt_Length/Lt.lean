@@ -35,9 +35,9 @@ private lemma main
   have h_i := h₀.trans h₁
   let h_i := Le.of.Lt h_i
   let h_j := Le.of.Lt h₁
-  have h_eq_ij : i + (1 + (j - (i + 1))) = j := by 
+  have h_eq_ij : i + (1 + (j - (i + 1))) = j := by
     grind
-  have h_eq_ij' : i + ((j - (i + 1)) + 1) = j := by 
+  have h_eq_ij' : i + ((j - (i + 1)) + 1) = j := by
     grind
   split_ifs with h_ti h_tj
   ·
@@ -50,16 +50,14 @@ private lemma main
     ·
       rfl
     ·
-      by_cases h_ti : t < i
-      ·
+      if h_ti : t < i then
         grind
-      ·
+      else
         simp at h_ti
-        have h_eq_ti : i + 1 + (t - i - 1) = t := by 
+        have h_eq_ti : i + 1 + (t - i - 1) = t := by
           grind
         have h_lt := Gt.of.Ge.Ne h_ti (by assumption)
-        by_cases h_tj : t < j
-        ·
+        if h_tj : t < j then
           rw [GetAppend.eq.Get.of.Lt_Length]
           rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
           rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
@@ -69,17 +67,17 @@ private lemma main
           rw [LengthCons.eq.Add1Length]
           rw [LengthSlice.eq.SubMin]
           grind
-        ·
+        else
           simp at h_tj
           have h_gt : t > j := Gt.of.Ge.Ne h_tj (by assumption)
-          have h_eq_tj : j + 1 + (t - j - 1) = t := by 
+          have h_eq_tj : j + 1 + (t - j - 1) = t := by
             grind
           rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
           simp [LengthSlice.eq.SubMin]
           simp [h_i, h_j]
           simp [h_eq_ij']
           rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
-          rw [GetDrop.eq.Get_Add.of.GtLength_Add] <;> 
+          rw [GetDrop.eq.Get_Add.of.GtLength_Add] <;>
             simp [h_eq_tj]
           ·
             assumption

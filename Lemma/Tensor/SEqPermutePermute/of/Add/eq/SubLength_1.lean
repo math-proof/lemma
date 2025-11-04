@@ -19,7 +19,7 @@ import Lemma.List.TakeDrop.eq.ListGet.of.Lt_Length
 import Lemma.List.TakeDropPermute.eq.Drop.of.Add.eq.SubLength_1
 import Lemma.List.TakePermute.eq.Take
 import Lemma.List.TakeRotate.eq.Drop.of.EqLength_Add
-import Lemma.List.TakeTail.eq.TailTake
+import Lemma.List.TailTake.eq.TakeTail
 import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt

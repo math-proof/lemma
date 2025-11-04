@@ -18,8 +18,7 @@ private lemma main
 -- imply
   (a.eraseIdx i).drop j = a.drop (j + 1) := by
 -- proof
-  by_cases h_i : i < a.length
-  ·
+  if h_i : i < a.length then
     rw [EraseIdx.eq.Append_Drop_Add_1]
     rw [DropAppend.eq.Drop.of.Ge_Length] <;>
       rw [LengthTake.eq.Min_Length]
@@ -30,7 +29,7 @@ private lemma main
       rw [EqAdd_Sub.of.Ge h]
     ·
       apply Ge_Min.of.Ge h
-  ·
+  else
     simp at h_i
     rw [EqEraseIdx.of.Ge_Length h_i]
     repeat rw [Drop.eq.Nil.of.Ge_Length (by linarith)]

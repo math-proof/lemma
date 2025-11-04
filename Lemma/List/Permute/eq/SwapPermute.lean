@@ -17,17 +17,15 @@ private lemma main
   s.permute i (d + 1) = (s.permute i d).swap (i + d) (i + d + 1) := by
 -- proof
   have h_length := LengthSwap.eq.Length (s.permute i d) (i + d) (i + d + 1)
-  by_cases h : i + d + 1 ≥ s.length
-  ·
+  if h : i + d + 1 ≥ s.length then
     rw [EqSwap.of.Ge_Length (by simpa)]
     rw [EqPermuteS.of.Add.ge.SubLength_1]
     rw [EqPermuteS.of.Add.ge.SubLength_1.int]
     repeat grind
-  ·
+  else
     simp at h
     ext j t
-    by_cases h_j : j < s.length
-    ·
+    if h_j : j < s.length then
       simp_all
       apply IffEqS.of.Eq
       rw [GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt_Length (by simp; linarith) (by simp_all) (by simp_all)]
@@ -38,7 +36,7 @@ private lemma main
         simp [show s.permute i (d + 1) = s.permute i ↑(d + 1) by simp]
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
         repeat grind
-    ·
+    else
       simp_all
 
 

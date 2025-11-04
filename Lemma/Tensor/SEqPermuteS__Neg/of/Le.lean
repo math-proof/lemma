@@ -43,11 +43,10 @@ private lemma main
 -- imply
   X.permute i (-d) ≃ X.permute i (-i) := by
 -- proof
-  by_cases h_d : i = d
-  ·
+  if h_d : i = d then
     subst h_d
     rfl
-  ·
+  else
     have h_d := Gt.of.Ge.Ne h (by omega)
     rw [@Tensor.Permute.eq.Ite]
     simp
@@ -131,7 +130,7 @@ private lemma main
             ·
               unfold Tensor.permuteTail
               simp
-              have h_permute : s = (s.permute i (-i)) := by 
+              have h_permute : s = (s.permute i (-i)) := by
                 simp [h_i0, EqPermute__0]
               simp [DataCast.eq.Cast_Data.of.Eq h_permute]
               simp [h_i0, ProdTake_1.eq.Get_0.of.GtLength_0 (Gt_0 i), ← Prod.eq.Mul_ProdTail.of.GtLength_0] at h_t
@@ -177,7 +176,7 @@ private lemma main
               omega
             ·
               simp [GetElem.getElem]
-              have h_t : t < ((s.take (i + 1)).take ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat) ++ ((s.take (i + 1)).drop ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat)).rotate ((1 - -(i : ℤ)).toNat ⊓ (s.take (i + 1)).length - 1)).prod * (s.drop (i + 1)).prod := by 
+              have h_t : t < ((s.take (i + 1)).take ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat) ++ ((s.take (i + 1)).drop ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat)).rotate ((1 - -(i : ℤ)).toNat ⊓ (s.take (i + 1)).length - 1)).prod * (s.drop (i + 1)).prod := by
                 rw [h_toNat_i]
                 rw [show (↑i + 1) ⊓ (s.take (i + 1)).length = i + 1 by simp; omega]
                 simp [ProdRotate.eq.Prod]

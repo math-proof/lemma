@@ -27,14 +27,13 @@ private lemma main
 -- imply
   (n + m).fmod d = m.fmod d := by
 -- proof
-  by_cases h_d : d = 0
-  ·
+  if h_d : d = 0 then
     rw [h_d]
     norm_num
     rw [h_d] at h
     norm_num at h
     assumption
-  ·
+  else
     have h_d := Ne.of.NotEq h_d
     have := Any_Eq_Mul.of.FMod.eq.Zero h
     let ⟨k, h_n⟩ := this

@@ -32,8 +32,7 @@ private lemma main
 -- imply
   (X.rotate i).rotate (s.length - i) ≃ X := by
 -- proof
-  by_cases h_i : i = s.length ∨ i = 0
-  ·
+  if h_i : i = s.length ∨ i = 0 then
     obtain h_i | h_i := h_i <;>
       subst h_i
     ·
@@ -46,7 +45,7 @@ private lemma main
       rw [← LengthRotate.eq.Length s 0]
       apply SEq.trans this
       apply SEqRotate_0
-  ·
+  else
     unfold Tensor.rotate
     apply SEq.of.SEqDataS.Eq
     ·

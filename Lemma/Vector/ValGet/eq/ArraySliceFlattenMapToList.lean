@@ -20,8 +20,7 @@ private lemma main
 -- proof
   have h := ValGet.eq.ValArraySliceFlatten v i
   ext j t
-  by_cases h_j : j < v[i].val.length
-  ·
+  if h_j : j < v[i].val.length then
     let h_lt := h_j
     simp at h_lt
     by_cases h_j' : j < (v.flatten.array_slice (i * n) n).val.length
@@ -56,7 +55,7 @@ private lemma main
     ·
       have h_j := Ge.of.NotLt h_j'
       simp_all
-  ·
+  else
     have h_j := Ge.of.NotLt h_j
     simp at h_j
     have h_ge : j ≥ v[i.val].val.length := by

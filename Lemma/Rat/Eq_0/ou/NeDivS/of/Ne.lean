@@ -13,11 +13,10 @@ private lemma main
 -- imply
   d = 0 ∨ x / d ≠ y / d := by
 -- proof
-  by_cases h_d : d = 0
-  · 
+  if h_d : d = 0 then
     left
     assumption
-  · 
+  else
     simp [h_d]
     apply NotEq.of.Ne
     have h_d := Ne.of.NotEq h_d

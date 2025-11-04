@@ -46,8 +46,7 @@ private lemma main
   ∑ i ∈ range n, (x i) ^ (1 / (i + 2) : ℝ) < n * √(x n) := by
 -- proof
   have h_All := All_LeRoot_Sqrt.of.All_Ge_1 h₁
-  by_cases h : ∃ i ∈ Finset.Ico 1 n, x i > 1
-  ·
+  if h : ∃ i ∈ Finset.Ico 1 n, x i > 1 then
     let ⟨i, hi⟩ := h
     let ⟨h_In, h_Gt_1⟩ := hi
     rw [Finset.mem_Ico] at h_In
@@ -64,7 +63,7 @@ private lemma main
     have h_Lt := LtSumS.of.All_Le.Any_Lt h_All h_Any
     have := Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0 (by linarith [h₀]) h₁ h₃
     exact Lt.of.Lt.Le h_Lt this
-  ·
+  else
     have := All_Not.of.NotAny h
     simp at this
     have h_All_Le_1 : ∀ i ∈ Finset.Ico 1 n, x i ≤ 1 := by

@@ -19,12 +19,11 @@ private lemma main
   constructor <;>
   ·
     unfold Slice.Add_Mul_DivSub1Sign_2
-    by_cases h_i : i ≥ 0
-    ·
+    if h_i : i ≥ 0 then
       have := DivSub1Sign_2.eq.Zero.of.Ge_0 h_i
       rw [this]
       simp_all
-    ·
+    else
       simp at h_i
       have := DivSub1Sign_2.eq.One.of.Lt_0 h_i
       rw [this]

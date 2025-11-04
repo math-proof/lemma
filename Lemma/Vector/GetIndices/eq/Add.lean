@@ -23,8 +23,7 @@ private lemma main
   split_ifs with h
   ·
     rw [AddCoeS.eq.CoeAdd] at h
-    rw [EqAdd_Mul_DivSub1Sign_2] at h
-    rw [EqAdd_Mul_DivSub1Sign_2] at h
+    repeat rw [EqAdd_Mul_DivSub1Sign_2] at h
     simp at h
     rw [OrOr.is.Or_Or] at h
     have hi := LtVal i

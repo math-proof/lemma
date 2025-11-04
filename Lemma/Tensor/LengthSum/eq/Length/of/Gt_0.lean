@@ -17,17 +17,15 @@ private lemma main
 -- imply
   (X.sum dim).length = X.length := by
 -- proof
-  by_cases h : s.length > 0
-  ·
+  if h : s.length > 0 then
     repeat rw [Length.eq.Get_0.of.GtLength_0 (by assumption)]
-    by_cases h : dim < s.length
-    ·
+    if h : dim < s.length then
       repeat rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
       rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by assumption) (by assumption)]
-    ·
+    else
       simp at h
       apply LengthSum.eq.Length.of.Ge_Length h
-  ·
+  else
     simp at h
     repeat rw [EqLength_0.of.Eq_Nil]
     ·

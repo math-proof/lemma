@@ -17,8 +17,7 @@ private lemma main
 -- imply
   a.insertIdx i x = a.take j ++ (a.drop j).insertIdx (i - j) x := by
 -- proof
-  by_cases h_j : i = j
-  ·
+  if h_j : i = j then
     subst h_j
     simp
     conv_lhs =>
@@ -27,7 +26,7 @@ private lemma main
     <;> rw [LengthTake.eq.Min_Length]
     <;> rw [EqMin.of.Le h_i]
     simp
-  ·
+  else
     apply InsertIdx.eq.Append_InsertIdxDrop.of.Gt ∘ Gt.of.Ge.Ne h
     assumption
 

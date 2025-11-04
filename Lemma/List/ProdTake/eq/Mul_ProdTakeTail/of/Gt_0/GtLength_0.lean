@@ -1,4 +1,4 @@
-import Lemma.List.Take.eq.Cons_TakeTail.of.GtLength_0.Gt_0
+import Lemma.List.Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0
 open List
 
 
@@ -13,8 +13,7 @@ private lemma main
 -- imply
   (s.take i).prod = s[0] * (s.tail.take (i - 1)).prod := by
 -- proof
-  rw [Take.eq.Cons_TakeTail.of.GtLength_0.Gt_0 h_i h]
-  simp
+  simp [Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0 h h_i]
 
 
 -- created on 2025-07-05

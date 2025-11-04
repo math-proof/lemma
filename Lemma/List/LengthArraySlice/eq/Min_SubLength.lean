@@ -10,11 +10,10 @@ private lemma main
 -- imply
   (s.array_slice i n).length = n ⊓ (s.length - i) := by
 -- proof
-  by_cases h : i + n ≤ s.length
-  ·
+  if h : i + n ≤ s.length then
     rw [EqLengthArraySlice.of.GeLength_Add]
     repeat grind
-  ·
+  else
     rw [EqLengthArraySlice.of.LtLength_Add]
     repeat grind
 

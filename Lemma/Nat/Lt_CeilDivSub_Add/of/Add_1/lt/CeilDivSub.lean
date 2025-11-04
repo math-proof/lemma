@@ -14,12 +14,11 @@ private lemma main
 -- imply
   i < ⌈(stop - (start + step) : ℚ) / step⌉ := by
 -- proof
-  by_cases h_step : step = 0
-  ·
+  if h_step : step = 0 then
     rw [h_step] at h
     simp_all
     contradiction
-  ·
+  else
     have h_step := Ne.of.NotEq h_step
     have h_step : (step : ℚ) ≠ 0 := by
       simp_all

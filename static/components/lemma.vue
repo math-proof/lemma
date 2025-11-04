@@ -21,11 +21,11 @@
         <renderLean v-if=instImplicit :text="given || explicit || strictImplicit || implicit? instImplicit: instImplicit + ' :'" :index="[index, 'instImplicit']"></renderLean>
         <renderLean v-if=strictImplicit :text="given || explicit || implicit? strictImplicit: strictImplicit + ' :'" :index="[index, 'strictImplicit']"></renderLean>
         <renderLean v-if=implicit :text="given || explicit? implicit: implicit + ' :'" :index="[index, 'implicit']"></renderLean>
-
-        <div v-if=given>
+        <div v-if="explicit || given || this.default">
             <hr>
             <span v-clipboard class=green :data-clipboard-text=lemmaName :index=index><b>-- given</b></span>
-            <div v-for="given, i of given" @keydown=keydown_div @click.left.stop=click_select :index=i :class="class_given(i)" tabindex="1000">
+            <renderLean v-if=explicit :text=explicit :index="[index, 'explicit']"></renderLean>
+            <div v-if=given v-for="given, i of given" @keydown=keydown_div @click.left.stop=click_select :index=i :class="class_given(i)" tabindex="1000">
                 <renderLean v-if=given.insert :text=given.lean :index="[index, 'given', i]"></renderLean>
                 <template v-else>
                     <p v-latex.block=given.latex></p>
@@ -33,9 +33,8 @@
                 </template>
                 <markdown v-if=given.think :root=given.think.root v-clipboard :data-clipboard-text=given.prompt />
             </div>
+            <renderLean v-if=default :text=default :index="[index, 'default']"></renderLean>
         </div>
-
-        <renderLean v-if=explicit :text=explicit :index="[index, 'explicit']"></renderLean>
         <hr>
         <a style='font-size: inherit' :href="module? `?callee=${module}`: `?mathlib=${name}`" title='callee hierarchy'>
             <span v-clipboard class=green :data-clipboard-text=lemmaName><b>-- imply</b></span>
@@ -72,7 +71,7 @@ const accessibilities = ['public', 'protected', 'private', 'public nonrec', 'pro
 
 export default {
     components: { renderLean, markdown },
-    props : [ 'comment', 'attribute', 'accessibility', 'name', 'instImplicit', 'strictImplicit', 'implicit', 'given', 'explicit', 'imply', 'proof', 'index'],
+    props : [ 'comment', 'attribute', 'accessibility', 'name', 'instImplicit', 'strictImplicit', 'implicit', 'explicit', 'given', 'default', 'imply', 'proof', 'index'],
     
     created() {
     },

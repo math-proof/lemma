@@ -21,8 +21,7 @@ private lemma main
 -- imply
   (s.take j').slice i j = s.slice i j := by
 -- proof
-  by_cases h_and : i < j ∧ j ≤ s.length
-  ·
+  if h_and : i < j ∧ j ≤ s.length then
     let ⟨h_ij, h_j⟩ := h_and
     have h_i := Le.of.Le.Lt h_ij h_j
     unfold List.slice List.array_slice Function.comp
@@ -33,7 +32,7 @@ private lemma main
     rw [DropTake.eq.TakeDrop]
     rw [TakeTake.eq.Take.of.Ge]
     apply GeSubS.of.Ge h
-  ·
+  else
     rw [NotAnd.is.OrNotS] at h_and
     simp at h_and
     obtain h_le | h_lt := h_and

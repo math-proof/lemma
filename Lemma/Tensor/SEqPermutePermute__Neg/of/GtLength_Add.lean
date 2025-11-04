@@ -26,12 +26,10 @@ private lemma main
     apply SEqPermute__0
   .
     have : NeZero d := ⟨h_d⟩
-    by_cases h_i : i = 0
-    ·
+    if h_i : i = 0 then
       subst h_i
       simp at h
-      by_cases h_d : d = s.length - 1
-      ·
+      if h_d : d = s.length - 1 then
         have := SEqPermutePermute__Neg.of.EqSubLength_1 h_d X
         simp at this
         apply SEq.symm ∘ SEq.trans this.symm
@@ -39,7 +37,7 @@ private lemma main
         repeat omega
         apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ _ (by rfl) (by rfl)
         simp
-      ·
+      else
         have h := Le_Sub_1.of.Lt h
         have h := Lt.of.Le.Ne h_d h
         have := SEqPermutePermute__Neg.of.LtSubLength_1 h X
@@ -48,12 +46,11 @@ private lemma main
         repeat rfl
         apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ _ (by rfl) (by rfl)
         simp
-    ·
+    else
       have : NeZero i := ⟨h_i⟩
-      by_cases h_d : i + d = s.length - 1
-      ·
+      if h_d : i + d = s.length - 1 then
         apply SEqPermutePermute__Neg.of.Add.eq.SubLength_1 h_d
-      ·
+      else
         simp at h_i
         apply SEqPermutePermute__Neg.of.Add.lt.SubLength_1
         apply Lt.of.Le.Ne h_d

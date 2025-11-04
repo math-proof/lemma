@@ -11,11 +11,10 @@ private lemma main
 -- imply
   ⌊(k % n : ℕ) / (n : ℚ)⌋ = 0 := by
 -- proof
-  by_cases h : n = 0
-  ·
+  if h : n = 0 then
     subst h
     simp
-  ·
+  else
     apply FloorDiv.eq.Zero.of.Lt
     apply LtCoeS.of.Lt
     apply LtMod.of.Ne_0 h

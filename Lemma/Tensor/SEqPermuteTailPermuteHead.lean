@@ -11,14 +11,13 @@ private lemma main
 -- imply
   (X.permuteHead s.length).permuteTail s.length ≃ X := by
 -- proof
-  by_cases h_s : s = []
-  ·
+  if h_s : s = [] then
     subst h_s
     simp
     have := SEqPermuteTail_0 (X.permuteHead 0)
     apply SEq.trans this
     apply SEqPermuteHead_0
-  ·
+  else
     apply SEqPermuteTailPermuteHead.of.Ne_Nil h_s
 
 

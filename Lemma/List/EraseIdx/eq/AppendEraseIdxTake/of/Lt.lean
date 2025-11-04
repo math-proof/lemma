@@ -1,5 +1,5 @@
 import Lemma.List.EraseIdx.eq.AppendTakeEraseIdx.of.Le
-import Lemma.List.TakeEraseIdx.eq.EraseIdxTake.of.Ge
+import Lemma.List.TakeEraseIdx.eq.EraseIdxTake.of.Le
 import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
@@ -14,7 +14,7 @@ private lemma main
 -- proof
   rw [EraseIdx.eq.AppendTakeEraseIdx.of.Le (by omega) (d := d - 1)]
   rw [EqAddSub.of.Ge (by omega)]
-  rw [TakeEraseIdx.eq.EraseIdxTake.of.Ge (by omega)]
+  rw [TakeEraseIdx.eq.EraseIdxTake.of.Le (by omega)]
   rw [EqAddSub.of.Ge (by omega)]
 
 

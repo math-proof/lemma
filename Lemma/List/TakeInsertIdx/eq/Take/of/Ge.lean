@@ -16,14 +16,13 @@ private lemma main
 -- imply
   (a.insertIdx i x).take j = a.take j := by
 -- proof
-  by_cases h_i : i ≤ a.length
-  ·
+  if h_i : i ≤ a.length then
     rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length h_i h]
     apply EqTakeAppend.of.Eq_Length
     rw [LengthTake.eq.Min_Length]
     apply EqMin.of.Le ∘ Le.of.Le.Le h
     assumption
-  ·
+  else
     rw [EqInsertIdx.of.Gt_Length]
     linarith
 

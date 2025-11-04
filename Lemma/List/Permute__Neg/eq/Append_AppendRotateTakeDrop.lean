@@ -56,8 +56,7 @@ private lemma main
       simp [Append_Append.eq.AppendAppend]
     | .negSucc d =>
       simp_all
-      by_cases h_d : d + 1 ≤ i
-      ·
+      if h_d : d + 1 ≤ i then
         simp [h_d]
         rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
         ·
@@ -84,7 +83,7 @@ private lemma main
           rw [Add.comm (b := d + 1)]
           rw [SubAdd.eq.Add_Sub.of.Ge (by linarith)]
           linarith
-      ·
+      else
         simp at h_d
         have h_d := Sub.eq.Zero.of.Lt h_d
         rw [h_d]

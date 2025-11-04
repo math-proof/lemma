@@ -10,17 +10,14 @@ private lemma main
 -- imply
   n ≥ n % d := by
 -- proof
-  by_cases h_d : d = 0
-  ·
+  if h_d : d = 0 then
     subst h_d
     simp
-  ·
-    by_cases h_n : n ≥ d
-    ·
-      apply Le.of.Lt.Le h_n
-      apply LtMod.of.Ne_0 h_d n
-    ·
-      simp [Mod.eq.Sub_MulDiv]
+  else if h_n : n ≥ d then
+    apply Le.of.Lt.Le h_n
+    apply LtMod.of.Ne_0 h_d n
+  else
+    simp [Mod.eq.Sub_MulDiv]
 
 
 -- created on 2025-07-09

@@ -15,14 +15,13 @@ private lemma main
   ((s.permute i d).drop i).take (d + 1) = ((s.drop i).take (d + 1)).rotate 1 := by
 -- proof
   have h_permute := DropPermute.eq.AppendRotateTakeDrop i d
-  by_cases h : s.length > i + d
-  ·
+  if h : s.length > i + d then
     have h_permute := congrArg (·.take (d + 1)) h_permute
     simp at h_permute
     rwa [EqTakeAppend.of.Eq_Length] at h_permute
     simp
     omega
-  ·
+  else
     have h_permute := congrArg (·.take (s.length - i)) h_permute
     simp at h_permute
     rw [EqTakeAppend.of.Eq_Length] at h_permute

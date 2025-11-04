@@ -18,12 +18,11 @@ private lemma main
 -- imply
   (c + a) ⊔ (c + b) = c + a ⊔ b := by
 -- proof
-  by_cases h : a ≤ b
-  ·
+  if h : a ≤ b then
     rw [EqMax.of.Le h]
     have h' := LeAddS.of.Le.left c h
     rw [EqMax.of.Le h']
-  ·
+  else
     simp at h
     rw [EqMax.of.Gt h]
     have h' := GtAddS.of.Gt.left c h

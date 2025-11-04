@@ -16,11 +16,10 @@ private lemma main
   constructor
   ·
     intro hx
-    rcases hx with ⟨hxa, hxb⟩
-    by_cases h : x = b
-    ·
+    let ⟨hxa, hxb⟩ := hx
+    if h : x = b then
       grind
-    ·
+    else
       left
       exact ⟨hxa, lt_of_le_of_ne hxb h⟩
   ·

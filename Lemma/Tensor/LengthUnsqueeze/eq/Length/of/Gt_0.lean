@@ -38,11 +38,10 @@ private lemma main
       rw [Length.eq.Get_0.of.GtLength_0 (by simp)]
       simp_all [InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0]
     ·
-      by_cases h : d ≤ (s₀ :: s).length
-      ·
+      if h : d ≤ (s₀ :: s).length then
         rw [LengthInsertIdx.eq.Add1Length.of.Le_Length (by simpa)]
         simp
-      ·
+      else
         simp at h
         rw [LengthInsertIdx.eq.Length.of.Gt_Length (by assumption)]
         simp

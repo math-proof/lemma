@@ -14,13 +14,12 @@ private lemma main
 -- imply
   s.eraseIdx i = (s.eraseIdx i).take d ++ s.drop (d + 1) := by
 -- proof
-  by_cases h_d : d ≤ (s.eraseIdx i).length
-  ·
+  if h_d : d ≤ (s.eraseIdx i).length then
     rw [← EqAppendTake__Drop (s.eraseIdx i) d]
     simp [DropEraseIdx.eq.Drop.of.Le h]
     rw [TakeAppend.eq.Take.of.Le_Length (by simpa)]
     rw [TakeTake.eq.Take.of.Ge (by simp)]
-  ·
+  else
     simp at h_d
     rw [EqTake.of.Ge_Length (by omega)]
     simp

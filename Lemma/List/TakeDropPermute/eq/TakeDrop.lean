@@ -25,8 +25,7 @@ private lemma main
   ((s.permute i d).drop i).take (d ⊓ (s.length - i - 1)) = (s.drop (i + 1)).take d := by
 -- proof
   have := DropPermute.eq.AppendRotateTakeDrop i d
-  by_cases h : s.length > i + d
-  ·
+  if h : s.length > i + d then
     rw [EqMin.of.Le (by omega)]
     have := congrArg (·.take d) this
     simp at this
@@ -52,7 +51,7 @@ private lemma main
     ·
       simp
       omega
-  ·
+  else
     simp at h
     have := congrArg (·.take (s.length - i)) this
     simp at this

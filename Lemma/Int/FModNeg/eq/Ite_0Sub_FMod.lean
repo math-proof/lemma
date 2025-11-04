@@ -57,10 +57,9 @@ private lemma main
     rw [CoeSub.eq.SubCoeS]
     rw [DivSub.eq.SubDivS]
     simp
-    by_cases h_d : d = 0
-    ·
+    if h_d : d = 0 then
       simp_all
-    ·
+    else
       have h_d := Ne.of.NotEq h_d
       rw [NegMul.eq.MulNeg (b := (d : ℚ))]
       rw [EqDivMul.of.Ne_0 (NeCoeS.of.Ne h_d)]

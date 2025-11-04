@@ -47,12 +47,11 @@ private lemma main
 -- imply
   X.permute i d ≃ X.permute i (s.length - 1 - i : ℕ) := by
 -- proof
-  by_cases h_d : i + d = s.length - 1
-  ·
+  if h_d : i + d = s.length - 1 then
     have h_d := Eq_Sub.of.EqAdd.left h_d
     subst h_d
     rfl
-  ·
+  else
     have h_d := Gt.of.Ge.Ne h h_d
     rw [@Tensor.Permute.eq.Ite]
     simp

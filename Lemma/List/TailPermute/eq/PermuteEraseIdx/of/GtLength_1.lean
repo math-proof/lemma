@@ -7,7 +7,7 @@ import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.List.TakeAppend.eq.Take.of.Le_Length
-import Lemma.List.TakeTail.eq.TailTake
+import Lemma.List.TailTake.eq.TakeTail
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.EqMin.of.Lt
 open List Nat

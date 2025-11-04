@@ -10,11 +10,10 @@ private lemma main
 -- imply
   n % d ≤ n ⊔ d := by
 -- proof
-  by_cases h_d : d = 0
-  ·
+  if h_d : d = 0 then
     subst h_d
     simp
-  ·
+  else
     have h_d := Gt_0.of.Ne_0 h_d
     have := LtMod.of.Gt_0 h_d n
     grind

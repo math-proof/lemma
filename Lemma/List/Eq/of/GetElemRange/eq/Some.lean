@@ -11,11 +11,10 @@ private lemma main
 -- imply
   i = j := by
 -- proof
-  by_cases hi : i < n
-  ·
+  if hi : i < n then
     rw [List.getElem?_range hi] at h
     simp_all
-  ·
+  else
     have hi := Ge.of.NotLt hi
     have := GetElemRange.eq.None.of.Ge hi
     rw [this] at h

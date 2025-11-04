@@ -24,27 +24,25 @@ private lemma main
 -- imply
   ⌈(stop - start : ℚ) / step⌉.toNat ≤ 1 := by
 -- proof
-  by_cases h_step : step = 0
-  ·
+  if h_step : step = 0 then
     simp [h_step]
-  ·
+  else
     have h_step := Ne.of.NotEq h_step
     have h_step := Gt_0.of.Ne_0 h_step
-    have h_Gt_0 : (step : ℚ) > 0 := by simp_all
-    by_cases h_Ge : stop ≥ start
-    ·
+    have h_pos : (step : ℚ) > 0 := by simp_all
+    if h_ge : stop ≥ start then
       have h := LeSub.of.Le_Add.left h
       have h := LeCoeS.of.Le (R := ℚ) h
-      have h := LeDivS.of.Le.Gt_0 h h_Gt_0
-      simp [Div.eq.One.of.Gt_0 h_Gt_0] at h
+      have h := LeDivS.of.Le.Gt_0 h h_pos
+      simp [Div.eq.One.of.Gt_0 h_pos] at h
       have h := LeCeil.of.Le h
       have h := LeToNat.of.Le h
-      rwa [SubCoeS.eq.CoeSub.of.Ge h_Ge]
-    ·
-      have h := Lt.of.NotGe h_Ge
+      rwa [SubCoeS.eq.CoeSub.of.Ge h_ge]
+    else
+      have h := Lt.of.NotGe h_ge
       have h := LtCoeS.of.Lt (R := ℚ) h
       have h := Sub.lt.Zero.of.Lt h
-      have h := Div.lt.Zero.of.Lt_0.Gt_0 h h_Gt_0
+      have h := Div.lt.Zero.of.Lt_0.Gt_0 h h_pos
       have h := Le.of.Lt h
       have h := LeCeil.of.Le h
       have h := EqToNat_0.of.Le_0 h

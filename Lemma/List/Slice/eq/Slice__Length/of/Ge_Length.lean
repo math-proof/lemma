@@ -11,11 +11,10 @@ private lemma main
 -- imply
   a.slice start stop = a.slice start a.length := by
 -- proof
-  by_cases h : start ≤ stop
-  ·
+  if h : start ≤ stop then
     unfold List.slice List.array_slice
     simp_all
-  ·
+  else
     simp at h
     rw [Slice.eq.Nil.of.Gt h]
     rw [Slice.eq.Nil.of.Gt]

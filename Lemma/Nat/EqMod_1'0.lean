@@ -14,11 +14,10 @@ private lemma main
 -- imply
   n % 1 = 0 := by
 -- proof
-  by_cases h : n = 0
-  ·
+  if h : n = 0 then
     subst h
     apply EqMod0_0
-  ·
+  else
     rw [Mod.eq.Sub_MulDiv]
     rw [EqDiv_1]
     rw [EqMul_1]

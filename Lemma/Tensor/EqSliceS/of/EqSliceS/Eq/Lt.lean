@@ -24,12 +24,11 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS
   intro i
-  by_cases h : i.val = n
-  ·
+  if h : i.val = n then
     simp only [GetElem.getElem]
     repeat rw [GetGetSlice.eq.Get.of.Lt_Min_Length.fin]
     aesop
-  ·
+  else
     have h_i := LtVal i
     simp only [LengthSlice.eq.Min] at h_i
     simp only [Tensor.length] at h_i

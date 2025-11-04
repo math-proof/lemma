@@ -23,10 +23,9 @@ private lemma main
   let y' := fun i => if i = i' then x i else y i
   have h_y' : ∀ i ∈ s, y' i = if i = i' then x i else y i := by
     intro i hj
-    by_cases h : i = i'
-    ·
+    if h : i = i' then
       rw [h]
-    ·
+    else
       unfold y'
       simp [h]
   have := All_Le.of.All_Le.All_Eq_Ite h_In h₀ h_y'

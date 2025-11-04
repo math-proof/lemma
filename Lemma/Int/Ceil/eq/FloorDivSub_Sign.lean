@@ -43,11 +43,10 @@ private lemma main
 -- imply
   ⌈n / (d : ℚ)⌉ = ⌊(d + n - sign d) / (d : ℚ)⌋ := by
 -- proof
-  by_cases h : (d : ℚ) = 0
-  ·
+  if h : (d : ℚ) = 0 then
     rw [h]
     norm_num
-  ·
+  else
     rw [Ceil.eq.Neg.Floor]
     rw [DivSub.eq.SubDivS]
     rw [DivAdd.eq.AddDivS]

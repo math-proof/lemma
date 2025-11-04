@@ -40,10 +40,9 @@ private lemma main
     have h_v : ∀ l ∈ v, l.length = s.cartesianProduct.length := by
       simp [v]
     simp [GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength h_v h_k h_t]
-    by_cases h : j = 0
-    ·
+    if h : j = 0 then
       simp_all
-    ·
+    else
       have h := Gt_0.of.Ne_0 h
       rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0 (by assumption)]
       simp [v]

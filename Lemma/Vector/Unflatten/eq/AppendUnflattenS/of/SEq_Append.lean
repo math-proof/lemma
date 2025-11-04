@@ -34,8 +34,7 @@ private lemma main
   simp_all
   simp [List.Vector.get] at h_v
   repeat rw [GetVal.eq.Get.of.Lt (by simp_all)]
-  by_cases hi : i < m
-  ·
+  if hi : i < m then
     have := GetAppend.eq.Get.of.Lt hi a.unflatten b.unflatten
     simp [GetElem.getElem] at this
     simp [List.Vector.get] at this
@@ -55,7 +54,7 @@ private lemma main
     simp [GetElem.getElem] at this
     simp [List.Vector.get] at this
     rw [this]
-  ·
+  else
     have hi := Ge.of.NotLt hi
     have := GetAppend.eq.Get_Sub.of.Lt_Add.Ge hi h_i a.unflatten b.unflatten
     simp [GetElem.getElem] at this

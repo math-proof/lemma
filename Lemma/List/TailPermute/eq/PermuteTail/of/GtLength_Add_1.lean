@@ -1,6 +1,6 @@
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
-import Lemma.List.TakeTail.eq.TailTake
+import Lemma.List.TailTake.eq.TakeTail
 open List
 
 

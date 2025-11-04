@@ -22,8 +22,7 @@ private lemma main
 -- imply
   X.permuteHead 1 ≃ X := by
 -- proof
-  by_cases h_s : s = []
-  ·
+  if h_s : s = [] then
     subst h_s
     unfold Tensor.permuteHead
     apply SEq.of.SEqDataS.Eq (by simp)
@@ -39,7 +38,7 @@ private lemma main
     rw [GetTranspose.eq.Get.fin]
     repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
     simp
-  ·
+  else
     have h_s := GtLength_0.of.Ne_Nil h_s
     have h_length : (s.take 1).length = 1 := by
       simp

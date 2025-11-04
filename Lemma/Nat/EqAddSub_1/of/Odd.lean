@@ -18,21 +18,19 @@ private lemma main
 -- imply
   n = n - 1 + 1 := by
 -- proof
-  by_cases h_n : n > 0
-  ·
+  if h_n : n > 0 then
     rw [EqAddSub.of.Ge]
     apply Ge.of.Gt_Sub_1
     rwa [Sub.eq.Zero]
-  ·
+  else
     have h_n := Le.of.NotGt h_n
-    by_cases h_0 : n = 0
-    ·
+    if h_0 : n = 0 then
       rw [h_0] at h
       have h_0 : (0 : Z) is even := by
         simp
       rw [Even.is.NotOdd] at h_0
       contradiction
-    ·
+    else
       have h_n := Lt.of.Le.Ne h_0 h_n
       apply EqAddSub_1.of.Lt_0 h_n
 

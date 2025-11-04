@@ -19,8 +19,7 @@ private lemma main
   let ⟨h_ij, h_j⟩ := h
   intro d h_Ltj
   ext k x
-  by_cases h_k_length : k < s.length
-  ·
+  if h_k_length : k < s.length then
     simp [h_k_length]
     apply IffEqS.of.Eq
     rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length (by simp; omega) (by simp; grind)]
@@ -29,7 +28,7 @@ private lemma main
       try simp
       rw [GetPermute__Neg.eq.Ite.of.Lt_Length]
       repeat grind
-  ·
+  else
     simp at h_k_length
     repeat rw [GetElem.eq.None.of.Ge_Length]
     repeat simpa

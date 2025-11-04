@@ -22,11 +22,9 @@ private lemma main
 -- imply
   (a ++ b).swap (a.length + i) (a.length + j) = a ++ b.swap i j := by
 -- proof
-  by_cases h : i < b.length ∧ j < b.length
-  ·
+  if h : i < b.length ∧ j < b.length then
     ext k x
-    by_cases h : k < a.length + b.length
-    ·
+    if h : k < a.length + b.length then
       let h' := h
       rw [← LengthSwap.eq.Length b i j] at h
       rw [AddLengthS.eq.LengthAppend] at h
@@ -37,8 +35,7 @@ private lemma main
       apply IffEqS.of.Eq
       rw [GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt_Length (by simp_all) (by simp_all) (by simp_all)]
       repeat rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by linarith) (by simp_all)]
-      by_cases h_k : k < a.length
-      ·
+      if h_k : k < a.length then
         repeat rw [GetAppend.eq.Get.of.Lt_Length (by simp_all)]
         split_ifs with h_ki h_kj
         ·
@@ -47,7 +44,7 @@ private lemma main
           linarith
         ·
           rfl
-      ·
+      else
         simp at h_k
         split_ifs with h_ki h_kj
         ·
@@ -65,7 +62,7 @@ private lemma main
             simp_all
           ·
             apply LtSub.of.Lt_Add.Ge (by assumption) (by assumption)
-    ·
+    else
       simp at h
       repeat rw [GetElem.eq.None.of.Ge_Length]
       ·
@@ -74,7 +71,7 @@ private lemma main
       ·
         rw [LengthSwap.eq.Length]
         rwa [LengthAppend.eq.AddLengthS]
-  ·
+  else
     rw [NotAnd.is.OrNotS] at h
     simp at h
     obtain h | h := h

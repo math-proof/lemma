@@ -1,6 +1,6 @@
 <template>
 	<div @keydown=keydown>
-		<lemma v-for="lemma, index of lemma" :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :given=lemma.given :explicit=lemma.explicit :imply=lemma.imply :index=index></lemma>
+		<lemma v-for="lemma, index of lemma" :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :explicit=lemma.explicit :given=lemma.given :default=lemma.default :imply=lemma.imply :index=index></lemma>
 	</div>
 </template>
 

@@ -11,11 +11,10 @@ private lemma main
   x² / x = x := by
 -- proof
   rw [Square.eq.Mul]
-  by_cases h : x = 0
-  ·
+  if h : x = 0 then
     rw [h]
     norm_num
-  ·
+  else
     rw [EqDivMul.of.Ne_0 h]
 
 

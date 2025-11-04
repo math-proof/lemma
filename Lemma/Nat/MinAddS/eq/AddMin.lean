@@ -18,12 +18,11 @@ private lemma main
 -- imply
   (a + c) ⊓ (b + c) = a ⊓ b + c := by
 -- proof
-  by_cases h : a ≤ b
-  ·
+  if h : a ≤ b then
     rw [EqMin.of.Le h]
     have h' := LeAddS.of.Le c h
     rw [EqMin.of.Le h']
-  ·
+  else
     simp at h
     rw [EqMin.of.Gt h]
     have h' := GtAddS.of.Gt c h

@@ -21,8 +21,7 @@ private lemma main
 -- imply
   a.insertIdx i x = a.take j ++ (a.drop j).insertIdx (i - j) x := by
 -- proof
-  by_cases h_j : j ≤ a.length
-  ·
+  if h_j : j ≤ a.length then
     conv_lhs =>
       rw [← EqAppendTake__Drop a j]
     rw [InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length] <;>
@@ -32,7 +31,7 @@ private lemma main
     ·
       apply Ge_Min.of.Ge ∘ Ge.of.Gt
       assumption
-  ·
+  else
     simp at h_j
     have h_i := Gt.of.Gt.Gt h h_j
     rw [EqInsertIdx.of.Gt_Length h_i]

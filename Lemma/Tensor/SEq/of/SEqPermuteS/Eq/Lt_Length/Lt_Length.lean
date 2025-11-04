@@ -22,15 +22,13 @@ private lemma main
   A ≃ B := by
 -- proof
   have h_length := EqLengthS.of.SEq.shape h
-  by_cases h_d : d ≥ 0
-  ·
+  if h_d : d ≥ 0 then
     simp at h_length
     have h_toNat := EqToNat.of.Ge_0 h_d
-    by_cases h_d : i + d.toNat < s.length
-    ·
+    if h_d : i + d.toNat < s.length then
       have h := h_toNat.symm ▸ h
       apply SEq.of.SEqPermuteS.Eq.Lt_Length.Lt_Length.GtLength_Add h_d h_i h_i' h_eq h
-    ·
+    else
       simp at h_d
       have h_A := SEqPermuteS.of.Add.ge.SubLength_1 (i := ⟨i, by grind⟩) (d := d.toNat) (by simp; omega) A
       rw [h_toNat] at h_A
@@ -49,14 +47,13 @@ private lemma main
         rfl
       ·
         omega
-  ·
+  else
     have h_neg : d < 0 := by omega
     have h_toNat := EqNegToNatNeg.of.Lt_0 h_neg
-    by_cases h_d : i ≥ (-d).toNat
-    ·
+    if h_d : i ≥ (-d).toNat then
       apply SEq.of.SEqPermuteS.Eq.Lt_Length.Lt_Length.Ge h_d h_i h_i' h_eq
       rwa [h_toNat]
-    ·
+    else
       simp at h_d
       have := SEqPermuteS__Neg.of.Le (i := ⟨i, by grind⟩) (d := (-d).toNat) (by simp; omega) A
       rw [h_toNat] at this

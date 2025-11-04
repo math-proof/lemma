@@ -14,8 +14,7 @@ private lemma main
 -- imply
   b² - 4 * a * c ≤ 0 := by
 -- proof
-  by_cases h : a = 0
-  ·
+  if h : a = 0 then
     rw [h] at h₀
     norm_num at h₀
     rw [h]
@@ -28,7 +27,7 @@ private lemma main
     let ⟨t, h_t⟩ := this
     have := h₀ t
     linarith
-  ·
+  else
     have := Gt.of.Ge.Ne h₁ h
     apply SubSquare_MulMul4.le.Zero.of.Gt_0.AddAddMul_Square.ge.Zero this h₀
 

@@ -39,14 +39,13 @@ private lemma main
   rw [MeanDiv.eq.DivMean]
   simp [mask_sum_mean]
   simp [Tensor.mean]
-  by_cases hb : batch_size = 0
-  ·
+  if hb : batch_size = 0 then
     subst hb
     rw [Sum.eq.Zero (X := loss_sum)]
     rw [Sum.eq.Zero (X := mask_sum)]
     rw [EqDiv0'0.scalar]
     rfl
-  ·
+  else
     rw [Div.eq.DivDivS.of.Ne_0 (A := ↑batch_size)]
     .
       simp [HDiv.hDiv]

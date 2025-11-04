@@ -14,11 +14,10 @@ private lemma main
 -- imply
   s.eraseIdx i.succ = s[0] :: s.tail.eraseIdx i := by
 -- proof
-  by_cases h_i : i < s.tail.length
-  ·
+  if h_i : i < s.tail.length then
     rw [EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_i s[0]]
     rw [HeadD.eq.Get_0.of.GtLength_0 h]
-  ·
+  else
     simp at h_i
     repeat rw [EqEraseIdx.of.Ge_Length (by simpa using h_i)]
     rw [EqCons_Tail.of.GtLength_0]

@@ -1,16 +1,15 @@
 import Lemma.List.EqAppendTake__Drop
+import Lemma.List.TakeTail.eq.TailTake.of.Gt_0
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.List.TakeTail.eq.TailTake
 open List Nat
 
 
 @[main]
 private lemma main
-  
   {d : ℕ}
 -- given
-  (h : d > 0) 
-  (s : List α):
+  (s : List α)
+  (h : d > 0) :
 -- imply
   s.tail = (s.take d).tail ++ s.drop d := by
 -- proof
@@ -18,8 +17,8 @@ private lemma main
   simp
   rw [EqAddSub.of.Ge (by assumption)]
   congr
-  rw [TakeTail.eq.TailTake]
-  rwa [EqAddSub.of.Ge]
+  rwa [TakeTail.eq.TailTake.of.Gt_0]
 
 
 -- created on 2025-07-06
+-- updated on 2025-11-04

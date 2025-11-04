@@ -29,8 +29,7 @@ private lemma main
 -- imply
   A ≃ B := by
 -- proof
-  by_cases h_n : n = 0
-  ·
+  if h_n : n = 0 then
     constructor
     ·
       rw [h_n]
@@ -44,7 +43,7 @@ private lemma main
       ·
         simp [List.Vector.length]
         simp_all
-  ·
+  else
     constructor
     ·
       rw [h₀]
@@ -56,8 +55,7 @@ private lemma main
       apply HEq.of.SEqDataS.Eq (by simp_all)
       apply SEq.of.EqValS
       ext k x
-      by_cases h : k < A.data.val.length
-      ·
+      if h : k < A.data.val.length then
         simp_all
         apply IffEqS.of.Eq
         repeat rw [GetVal.eq.Get.of.Lt (by simp_all)]
@@ -87,7 +85,7 @@ private lemma main
         have hj := h₂ j
         have hj := EqValS.of.SEq hj
         apply EqGetS.of.Eq.Lt_Length (show i < A[j].data.val.length by simp_all) hj
-      ·
+      else
         apply IffEqS.of.Eq
         have h := Ge.of.NotLt h
         rw [GetElem.eq.None.of.Ge_Length h]

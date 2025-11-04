@@ -18,13 +18,12 @@ private lemma main
   apply Eq.of.All_EqGetS
   intro i
   rw [EqGetStack]
-  by_cases h : i < n
-  ·
+  if h : i < n then
     simp
     rw [GetAppend.eq.Get.of.Lt h]
     simp [GetElem.getElem]
     rw [EqGetStack.fin]
-  ·
+  else
     simp at h
     simp
     rw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge (by simp_all) (by simp_all)]

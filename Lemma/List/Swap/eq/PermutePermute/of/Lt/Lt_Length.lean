@@ -24,8 +24,7 @@ private lemma main
     grind
   have h_id : i + (d - 1) < s.length := by omega
   ext k x
-  by_cases h_k_length : k < s.length
-  ·
+  if h_k_length : k < s.length then
     have h_k : k < (s.swap i j).length := by
       simpa [LengthSwap.eq.Length]
     apply IffEqS.of.Eq
@@ -62,7 +61,7 @@ private lemma main
         try simp
         rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
         repeat grind
-  ·
+  else
     simp at h_k_length
     repeat rw [GetElem.eq.None.of.Ge_Length]
     ·

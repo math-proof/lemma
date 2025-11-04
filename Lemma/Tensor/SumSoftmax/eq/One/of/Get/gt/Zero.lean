@@ -24,14 +24,13 @@ private lemma main
 -- imply
   (X.softmax i).sum i = 1 := by
 -- proof
-  by_cases h_i : i = s.length - 1
-  ·
+  if h_i : i = s.length - 1 then
     have h_pos := Gt_0 i
     have h_i : i = ⟨s.length - 1, by simp [h_pos]⟩ := Eq_Mk.of.EqVal h_i
     subst h_i
     simp
     apply SumSoftmax.eq.One.of.Get_SubLength_1.gt.Zero.GtLength_0 h_pos h
-  ·
+  else
     have := Softmax.as.PermuteSoftmaxPermute.of.LtAdd_1Length (i := i) (by omega) X
     have := SEqSumS.of.SEq this i
     apply Eq.of.SEq.SEq this

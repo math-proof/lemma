@@ -33,11 +33,10 @@ private lemma main
   have := Lt.of.In_Range h_In
   have h_n : n > 0 := by
     linarith [this]
-  by_cases h : i = 0
-  ·
+  if h : i = 0 then
     rw [h] at h_Gt
     exact Sum_Root.lt.Mul_Sqrt.of.EqDivSum.All_Ge_1.Gt_1.Gt_1 h₀ h₁ h_Gt h₃
-  ·
+  else
     have h_All := All_LeRoot_Sqrt.of.All_Ge_1 h₁
     have h := Gt_0.of.Ne_0 h
     have h := Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0 h_Gt h

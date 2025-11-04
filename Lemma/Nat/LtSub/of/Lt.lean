@@ -7,18 +7,17 @@ open Nat
 private lemma main
   {j n : ℕ}
 -- given
-  (h : j < n) 
+  (h : j < n)
   (i : ℕ):
 -- imply
   j - i < n := by
 -- proof
-  by_cases h_le : j ≥ i
-  ·
+  if h_le : j ≥ i then
     by_contra h
     simp at h
     have := Ge_Add.of.GeSub.Ge h_le h
     linarith
-  ·
+  else
     simp at h_le
     have h := Sub.eq.Zero.of.Lt h_le
     rw [h]

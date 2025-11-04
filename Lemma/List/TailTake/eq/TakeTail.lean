@@ -1,15 +1,15 @@
 import sympy.Basic
 
 
-@[main, comm]
+@[main]
 private lemma main
 -- given
-  (a : List α)
+  (s : List α)
   (i : ℕ):
 -- imply
-  a.tail.take i = (a.take (i + 1)).tail := by
+  (s.take (i + 1)).tail = s.tail.take i := by
 -- proof
-  cases a <;>
+  cases s <;>
     cases i <;>
       simp [List.take, List.tail]
 
