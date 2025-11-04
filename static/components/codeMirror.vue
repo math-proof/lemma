@@ -111,7 +111,7 @@ export default {
 		function preppend(prefix) {
 			if (prefix == '.')
 				return prefix;
-			var section = self.open_lemma_sections;
+			var section = self.$parent.sections;
 			switch (section.length) {
 			case 0:
 				section = [self.module.split(/[\/.]/)[0]];

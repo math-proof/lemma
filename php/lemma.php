@@ -182,18 +182,25 @@ if ($_POST) {
 		if ($implicit)
 			$declspec[] = preg_replace("/^/m", '  ', $implicit);
 
+		$explicit = $lemma["explicit"] ?? '';
+		if ($explicit) {
+			$declspec[] = "-- given";
+			$declspec[] = preg_replace("/^/m", '  ', $explicit);
+		}
+		
 		$given = $lemma["given"] ?? '';
 		if ($given) {
-			$declspec[] = "-- given";
+			if (!$explicit)
+				$declspec[] = "-- given";
 			$given = array_map(fn($line) => preg_replace("/^/m", '  ', $line), $given);
 			array_push($declspec, ...$given);
 		}
 
-		$explicit = $lemma["explicit"] ?? '';
-		if ($explicit) {
-			if (!$given)
+		$default = $lemma["default"] ?? '';
+		if ($default) {
+			if (!$explicit && !$given)
 				$declspec[] = "-- given";
-			$declspec[] = preg_replace("/^/m", '  ', $explicit);
+			$declspec[] = preg_replace("/^/m", '  ', $default);
 		}
 
 		$declspec = implode("\n", $declspec);
