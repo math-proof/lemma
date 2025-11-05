@@ -1,8 +1,9 @@
-import Lemma.Tensor.EqGetS.of.Eq.Lt
+import Lemma.Tensor.GetGetEllipsis.as.Get.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.LengthSum.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import stdlib.SEq
 open Tensor
+set_option maxHeartbeats 1000000
 
 
 @[main, comm]
@@ -24,7 +25,12 @@ private lemma main
     aesop
   simp [Sum_0.eq.Sum_Get.fin]
   simp [h_sum]
+  have h_all : ∀ k : Fin s₀, (X.getEllipsis ⟨1, by grind⟩ ⟨i, by grind⟩).get k ≃ (X.get ⟨k, by rw [Length.eq.Get_0.of.GtLength_0 (by simp)]; simp⟩).get ⟨i, by rw [Length.eq.Get_0.of.GtLength_0 (by simpa)]; simpa⟩ := by
+    intro k
+    apply GetGetEllipsis.as.Get.of.Lt_Get_0.GtLength_0 h_s h_i
+    simp
   sorry
 
 
 -- created on 2025-11-01
+-- updated on 2025-11-05
