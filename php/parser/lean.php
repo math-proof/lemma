@@ -2445,8 +2445,7 @@ class LeanAssign extends LeanBinary
             $self = clone $this;
             $self->rhs->arg = new LeanCaret($by->indent, $by->level);
             $statements[] = $self;
-            foreach ($stmts->args as $stmt)
-                array_push($statements, ...$stmt->split($syntax));
+            $stmts->swap_echo_star($syntax, $statements);
             return $statements;
         }
         return [$this];
@@ -4472,6 +4471,19 @@ class LeanStatements extends LeanArgs
             $tactic->echo();
     }
 
+    public function swap_echo_star(&$syntax, &$statements) {
+        $args = &$this->args;
+        for ($i = 0; $i < count($args); ++$i) {
+            if (($echo = $args[$i]) instanceof LeanTactic && $echo->func == 'echo' && ($token = $echo->arg) instanceof LeanToken && $token->text == '*') {
+                # convert `echo * simp at *` =>  `simp at * echo *`
+                [$args[$i], $args[$i + 1]] = [$args[$i + 1], $args[$i]];
+                ++$i;
+            }
+        }
+        foreach ($this->args as $stmt)
+            array_push($statements, ...$stmt->split($syntax));
+    }
+
     public function isProp($vars)
     {
         $args = &$this->args;
@@ -5238,10 +5250,8 @@ class LeanBar extends LeanUnary
             $stmts = $arrow->rhs;
             if ($stmts instanceof LeanStatements) {
                 $arrow->rhs = new LeanCaret($arrow->indent, $arrow->level);
-                foreach ($stmts->args as $stmt)
-                    array_push($statements, ...$stmt->split($syntax));
+                $stmts->swap_echo_star($syntax, $statements);
             }
-
             return $statements;
         }
         return [$this];
@@ -5972,10 +5982,9 @@ class LeanIte extends LeanArgs
             [$if, $then, $else] = $self->args;
             $self->args = [$if];
             $statements[] = $self;
-            if ($then instanceof LeanStatements) {
-                foreach ($then->args as $stmt)
-                    array_push($statements, ...$stmt->split($syntax));
-            } else
+            if ($then instanceof LeanStatements)
+                $then->swap_echo_star($syntax, $statements);
+            else
                 $statements[] = $then;
             if ($else instanceof LeanIte) {
                 $else = $else->split($syntax);
@@ -5984,10 +5993,8 @@ class LeanIte extends LeanArgs
             }
             else {
                 $statements[] = new LeanIte([], $this->indent, $else->level); // for else statement only;
-                if ($else instanceof LeanStatements) {
-                    foreach ($else->args as $stmt)
-                        array_push($statements, ...$stmt->split($syntax));
-                }
+                if ($else instanceof LeanStatements)
+                    $else->swap_echo_star($syntax, $statements);
                 else
                     $statements[] = $else;
             }
@@ -7079,13 +7086,13 @@ class LeanTactic extends LeanSyntax
     {
         $token = $this->get_echo_token();
         if ($token) {
+            $echo = new LeanTactic('echo', $token, $this->indent, $this->level);
+            if ($token instanceof LeanToken && $token->text == '*')
+                // echo * simp at *
+                return [1, $echo, $this];
             if (($by = $this->by) && $by->arg instanceof LeanStatements)
                 $by->echo();
-            return [
-                1,
-                $this,
-                new LeanTactic('echo', $token, $this->indent, $this->level)
-            ];
+            return [1, $this, $echo];
         }
         if (($sequential_tactic_combinator = $this->sequential_tactic_combinator) && $sequential_tactic_combinator->arg->indent)
             $sequential_tactic_combinator->echo();
@@ -7108,12 +7115,11 @@ class LeanTactic extends LeanSyntax
                 if ($block->arg instanceof LeanStatements) {
                     $self = clone $this;
                     $block = $self->sequential_tactic_combinator->arg;
-                    $statements = $block->arg->args;
+                    $stmts = $block->arg;
                     $block->arg = new LeanCaret(0, 0);
-                    $array = [$self];
-                    foreach ($statements as $stmt)
-                        array_push($array, ...$stmt->split($syntax));
-                    return $array;
+                    $statements = [$self];
+                    $stmts->swap_echo_star($syntax, $statements);
+                    return $statements;
                 }
             }
             elseif ($block instanceof LeanTactic && $block->indent >= $this->indent) {
@@ -7136,8 +7142,7 @@ class LeanTactic extends LeanSyntax
             $self = clone $this;
             $self->by->arg = new LeanCaret($by->indent, $by->level);
             $statements[] = $self;
-            foreach ($stmts->args as $stmt)
-                array_push($statements, ...$stmt->split($syntax));
+            $stmts->swap_echo_star($syntax, $statements);
             return $statements;
         }
         return [$this];
@@ -8129,13 +8134,12 @@ class LeanTacticBlock extends LeanUnary
     public function split(&$syntax = null)
     {
         if ($this->arg instanceof LeanStatements) {
-            $statements = $this->arg->args;
             $self = clone $this;
+            $stmts = $self->arg;
             $self->arg = new LeanCaret($this->indent, $self->arg->level);
-            $array = [$self];
-            foreach ($statements as $stmt)
-                array_push($array, ...$stmt->split($syntax));
-            return $array;
+            $statements = [$self];
+            $stmts->swap_echo_star($syntax, $statements);
+            return $statements;
         }
         return [$this];
     }
