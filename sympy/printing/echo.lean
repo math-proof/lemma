@@ -10,6 +10,14 @@ def logInfo (hypId : Name) (hypType : TacticM Lean.Expr) (goal : Bool := false) 
   Lean.logInfo m!"{Json.compress (Json.mkObj [(toString ((← getFileMap).toPosition ((← getRef).getPos?.getD 0)).line, latex)])}"
 
 
+/--
+A tactic `echo` that prints the types of specified hypotheses or the main goal.
+usage:
+- `echo h₁, h₂` prints the types of hypotheses `h₁` and `h₂`.
+- `echo _` prints the type of the first wildcard hypothesis.
+- `echo ⊢` prints the type of the main goal.
+- `echo *` prints the types of all local hypotheses and the main goal.
+-/
 syntax (name := echo) "echo" ((ident <|> "_" <|> "⊢"),+ <|> "*") : tactic
 
 @[tactic echo]
@@ -62,3 +70,39 @@ def evalEcho : Tactic := fun stx => do
           logInfo hypId (inferType (← getLocalDeclFromUserName hypId).toExpr)
         catch e =>
           Lean.logInfo m!"{e.toMessageData}"
+
+syntax "with_echo" tactic : tactic
+elab_rules : tactic
+  | `(tactic| with_echo $t) => do
+    withMainContext do
+      let history : Std.HashSet FVarId × Std.HashMap Name Lean.Expr ← (← getLCtx).decls.foldlM
+        (fun ⟨set, map⟩ decl =>
+          return if let some decl := decl then ⟨set.insert decl.fvarId, map.insert decl.userName decl.type⟩ else ⟨set, map⟩)
+        ⟨{}, {}⟩
+      let ⟨historySet, historyMap⟩ := history
+      let goal ← getMainTarget
+      evalTactic t
+      withMainContext do
+        let mut vars : Array Name := #[]
+        let goal' ← getMainTarget
+        -- isDefEq doesn't necessarily work for tactics : subst, unfold, rw, simp
+        try
+          if !(← isDefEq goal goal') then
+            vars := vars.push `«⊢»
+        catch e =>
+            pure ()
+        -- in case of duplicate hypothesis names, the current context map is needed, keeping only the most recent names
+        let contextMap : Std.HashMap Name (FVarId × Lean.Expr) ← (← getLCtx).decls.foldlM
+          (fun map decl =>
+            return if let some decl := decl then map.insert decl.userName ⟨decl.fvarId, decl.type⟩ else map)
+          {}
+        for ⟨userName, fvarId, type'⟩ in contextMap do
+          -- the newly created fvarId doesn't exist in history Set after the tactic application
+          if !historySet.contains fvarId then
+            if let some type := historyMap[userName]? then
+              try
+                if !(← isDefEq type type') then
+                  vars := vars.push userName
+              catch e =>
+                  pure ()
+        println! ("modified: " ++ " ".intercalate (vars.toList.map Name.toString))
