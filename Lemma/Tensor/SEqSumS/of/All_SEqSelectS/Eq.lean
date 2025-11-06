@@ -1,7 +1,8 @@
+import Lemma.Nat.LtVal
+import Lemma.Nat.LtVal.of.Eq
 import stdlib.SEq
 import sympy.tensor.tensor
-import Lemma.Tensor.Lt_Length.of.GtLength
-open Tensor
+open Nat
 
 
 @[main]
@@ -16,6 +17,8 @@ private lemma main
 -- imply
   X.sum i ≃ Y.sum i := by
 -- proof
+  have h_i := LtVal i
+  have h_i' := LtVal.of.Eq (congrArg List.length h_s) i
   sorry
 
 
