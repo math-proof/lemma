@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
 import Lemma.Tensor.Lt_Length.of.GtLength_0

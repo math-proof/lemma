@@ -1,7 +1,5 @@
 import Lemma.Finset.NeUnivEmpty.of.Gt_0
 import Lemma.Vector.SEqSumS.of.All_SEq.Ne_Empty
-import stdlib.SEq
-import sympy.vector.vector
 open Finset Vector
 
 
@@ -16,7 +14,7 @@ private lemma main
 -- imply
   ∑ i : Fin m, x i ≃ ∑ i : Fin m, y i := by
 -- proof
-  apply SEqSumS.of.All_SEq.Ne_Empty (s := Finset.univ)
+  apply SEqSumS.of.All_SEq.Ne_Empty
   ·
     apply NeUnivEmpty.of.Gt_0 h_m
   ·

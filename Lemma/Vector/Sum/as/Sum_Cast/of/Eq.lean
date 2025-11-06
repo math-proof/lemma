@@ -23,9 +23,7 @@ private lemma main
   simp [h] at h_i
   let x' : ι → List.Vector α n' := fun j => cast (congrArg (List.Vector α) h) (x j)
   have := GetSum.eq.Sum_Get s x' ⟨i, h_i⟩
-  simp [x'] at this
-  simp [this]
-  simp [GetCast.eq.Get.of.Eq h]
+  aesop
 
 
 -- created on 2025-11-06

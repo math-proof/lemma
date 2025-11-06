@@ -1,8 +1,9 @@
+import Lemma.List.Ne_Nil.is.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
-import stdlib.SEq
+import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
 import sympy.tensor.tensor
-open Tensor
+open Tensor List
 
 
 @[main]
@@ -16,19 +17,14 @@ private lemma main
 -- imply
   A ≃ B := by
 -- proof
-  match s with
-  | [] =>
-    contradiction
-  | s₀ :: s =>
-    match s' with
-    | [] =>
-      contradiction
-    | s'₀ :: s' =>
-      injection h with h₀ h_s
-      subst h₀
-      apply SEq.of.All_SEqGetS.Eq h_s
-      intro i
-      exact h_all i
+  have h_length := Length.eq.Get_0.of.GtLength_0 h_s A
+  have h_s := Ne_Nil.of.GtLength_0 h_s
+  apply SEq.of.All_SEqGetS.Eq.Ne_Nil h_s h
+  intro i
+  simp at i
+  exact h_all ⟨i.val, by simp [← h_length]⟩
+
 
 
 -- created on 2025-11-01
+-- updated on 2025-11-06
