@@ -153,7 +153,7 @@ instance [Mul α] : HMul (Tensor α (n :: s).tail) (Tensor α s) (Tensor α s) w
 instance [Mul α] : HMul (Tensor α s) (Tensor α []) (Tensor α s) where
   hMul A b := ⟨A.data * b.data[0]⟩
 
-/-- Append two vectors. -/
+/-- Append two tensors. -/
 def Tensor.append (xs : Tensor α (n :: s)) (ys : Tensor α (m :: s)) : Tensor α ((n + m) :: s) :=
   ⟨cast (by simp; rw [right_distrib]) (xs.data ++ ys.data)⟩
 

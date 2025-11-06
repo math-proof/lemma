@@ -16,11 +16,11 @@ private lemma main
   (h_dim : dim ≤ s.length)
   (X : Tensor α s) :
 -- imply
-  (X.unsqueeze dim).getEllipsis ⟨dim, by rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by
+  (X.unsqueeze dim).select ⟨dim, by rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by
 -- proof
   induction dim generalizing s X with
   | zero =>
-    unfold Tensor.getEllipsis
+    unfold Tensor.select
     have := EqGetUnsqueeze.fin X
     simp at this ⊢
     rw [this]
@@ -29,7 +29,7 @@ private lemma main
     | [] =>
       contradiction
     | s₀ :: s =>
-      unfold Tensor.getEllipsis
+      unfold Tensor.select
       simp
       rw [ToVector.eq.MapRange_Get.of.GtLength_0]
       ·

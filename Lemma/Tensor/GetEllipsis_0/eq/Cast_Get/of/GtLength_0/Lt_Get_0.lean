@@ -12,7 +12,7 @@ private lemma main
   (h_i : i < s[0])
   (X : Tensor α s) :
 -- imply
-  X.getEllipsis ⟨0, h_s⟩ ⟨i, by simp_all⟩ = cast (by simp) (X.get ⟨i, by simpa [Length.eq.Get_0.of.GtLength_0 h_s]⟩) := by
+  X.select ⟨0, h_s⟩ ⟨i, by simp_all⟩ = cast (by simp) (X.get ⟨i, by simpa [Length.eq.Get_0.of.GtLength_0 h_s]⟩) := by
 -- proof
   apply Eq_Cast.of.SEq
   apply GetEllipsis_0.as.Get.of.GtLength_0.Lt_Get_0 h_s h_i

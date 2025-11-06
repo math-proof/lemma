@@ -13,7 +13,7 @@ private lemma main
   (h_i : i < n * s[dim])
   (X : Tensor α s) :
 -- imply
-  (X.repeat n dim).getEllipsis ⟨dim, by simp⟩ ⟨i, by simp_all⟩ ≃ X.getEllipsis dim ⟨i % s[dim], LtMod.of.Lt_Mul h_i⟩ := by
+  (X.repeat n dim).select ⟨dim, by simp⟩ ⟨i, by simp_all⟩ ≃ X.select dim ⟨i % s[dim], LtMod.of.Lt_Mul h_i⟩ := by
 -- proof
   apply GetEllipsisRepeat.as.GetEllipsis_Mod_Get.of.Lt_MulGet.Lt_Length _ h_i
 

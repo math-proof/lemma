@@ -27,7 +27,7 @@ private lemma main
   (h_j : j < n)
   (X : Tensor α (n :: s)) :
 -- imply
-  (X.getEllipsis ⟨1, by grind⟩ ⟨i, by grind⟩).get ⟨j, by simp [LengthGetEllipsis.eq.Get_0.of.Lt_Get.GtLength.Gt_0]; grind⟩ ≃ (X.get ⟨j, by simpa [Length.eq.Get_0.of.GtLength_0]⟩).get ⟨i, by simp_all [LengthGet.eq.Get_0.of.Lt_Get_0.GtLength_1]⟩ := by
+  (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get ⟨j, by simp [LengthGetEllipsis.eq.Get_0.of.Lt_Get.GtLength.Gt_0]; grind⟩ ≃ (X.get ⟨j, by simpa [Length.eq.Get_0.of.GtLength_0]⟩).get ⟨i, by simp_all [LengthGet.eq.Get_0.of.Lt_Get_0.GtLength_1]⟩ := by
 -- proof
   unfold Tensor.get
   simp
@@ -45,7 +45,7 @@ private lemma main
     ·
       simp only [GetElem.getElem]
       rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin h_j]
-      unfold getEllipsis
+      unfold select
       simp [DataFromVector.eq.FlattenMapData]
       simp [EqUnflattenFlatten]
       rw [GetEllipsis_0.eq.Cast_Get.of.GtLength_0.Lt_Get_0]

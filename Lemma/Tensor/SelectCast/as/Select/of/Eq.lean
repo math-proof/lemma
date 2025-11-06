@@ -11,7 +11,7 @@ private lemma main
   (dim : Fin s.length)
   (i : Fin s[dim]) :
 -- imply
-  (cast (congrArg (Tensor α) h_s) X).getEllipsis ⟨dim, by grind⟩ ⟨i, by aesop⟩ ≃ X.getEllipsis dim i := by
+  (cast (congrArg (Tensor α) h_s) X).select ⟨dim, by grind⟩ ⟨i, by aesop⟩ ≃ X.select dim i := by
 -- proof
   aesop
 

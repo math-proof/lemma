@@ -37,7 +37,7 @@ private lemma main
   (h_i : i < n * s[dim])
   (X : Tensor α s) :
 -- imply
-  (X.repeat n ⟨dim, h_dim⟩).getEllipsis ⟨dim, by simp_all⟩ ⟨i, by aesop⟩ ≃ X.getEllipsis ⟨dim, h_dim⟩ ⟨i % s[dim], LtMod.of.Lt_Mul h_i⟩ := by
+  (X.repeat n ⟨dim, h_dim⟩).select ⟨dim, by simp_all⟩ ⟨i, by aesop⟩ ≃ X.select ⟨dim, h_dim⟩ ⟨i % s[dim], LtMod.of.Lt_Mul h_i⟩ := by
 -- proof
   have h_s := Gt_0.of.Gt h_dim
   induction dim generalizing X s with
@@ -49,7 +49,7 @@ private lemma main
     apply GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0.fin
     assumption
   | succ dim ih =>
-    unfold Tensor.getEllipsis
+    unfold Tensor.select
     simp
     rw [ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0 (by simp)]
     simp

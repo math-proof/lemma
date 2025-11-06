@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Tensor.GetEllipsisCast.as.GetEllipsis.of.Eq
+import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Bool.EqCast.of.SEq
 open Tensor Bool
 
@@ -12,10 +12,10 @@ private lemma main
   (dim : Fin s.length)
   (i : Fin s[dim]) :
 -- imply
-  (cast (congrArg (Tensor α) h_s) X).getEllipsis ⟨dim, by grind⟩ ⟨i, by aesop⟩ = cast (by simp_all) (X.getEllipsis dim i) := by
+  (cast (congrArg (Tensor α) h_s) X).select ⟨dim, by grind⟩ ⟨i, by aesop⟩ = cast (by simp_all) (X.select dim i) := by
 -- proof
   apply Eq_Cast.of.SEq
-  apply GetEllipsisCast.as.GetEllipsis.of.Eq h_s
+  apply SelectCast.as.Select.of.Eq h_s
 
 
 -- created on 2025-10-05

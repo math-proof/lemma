@@ -18,7 +18,7 @@ private lemma main
   have h_dim : dim < (s.insertIdx dim 1).length := by
     rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]
     omega
-  ((X.unsqueeze dim).repeat n ⟨dim, h_dim⟩).getEllipsis ⟨dim, by simpa⟩ ⟨i, by simp_all⟩ ≃ X := by
+  ((X.unsqueeze dim).repeat n ⟨dim, h_dim⟩).select ⟨dim, by simpa⟩ ⟨i, by simp_all⟩ ≃ X := by
 -- proof
   intros
   let s' := s.insertIdx dim 1

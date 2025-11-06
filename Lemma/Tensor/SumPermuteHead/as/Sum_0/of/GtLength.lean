@@ -67,7 +67,7 @@ private lemma main
               have h_length : ((s₀ :: s).eraseIdx 1).length > d := by
                 simp
                 rwa [EqAddSub.of.Ge (Nat.Ge_1.of.Gt_0 h_s)]
-              have ih := ih h_length (X.getEllipsis ⟨1, by simpa⟩ ⟨t, by simpa⟩)
+              have ih := ih h_length (X.select ⟨1, by simpa⟩ ⟨t, by simpa⟩)
               apply SEq.trans ih
               .
                 apply Tensor.SumGetEllipsis.as.GetSum_0.of.Lt_Get_0.GtLength_0 _ h_t

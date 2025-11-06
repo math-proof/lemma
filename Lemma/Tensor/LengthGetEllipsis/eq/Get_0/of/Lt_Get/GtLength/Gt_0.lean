@@ -11,7 +11,7 @@ private lemma main
   (h_i : i < s[d])
   (X : Tensor α s) :
 -- imply
-  (X.getEllipsis ⟨d, h_d⟩ ⟨i, h_i⟩).length = s[0] := by
+  (X.select ⟨d, h_d⟩ ⟨i, h_i⟩).length = s[0] := by
 -- proof
   rw [Length.eq.Get_0.of.GtLength_0]
   ·

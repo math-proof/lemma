@@ -12,9 +12,9 @@ private lemma main
   (h_i : i < s[0])
   (X : Tensor α s) :
 -- imply
-  X.getEllipsis ⟨0, h_s⟩ ⟨i, by simp_all⟩ ≃ X.get ⟨i, by simpa [Length.eq.Get_0.of.GtLength_0 h_s]⟩ := by
+  X.select ⟨0, h_s⟩ ⟨i, by simp_all⟩ ≃ X.get ⟨i, by simpa [Length.eq.Get_0.of.GtLength_0 h_s]⟩ := by
 -- proof
-  unfold Tensor.getEllipsis
+  unfold Tensor.select
   apply SEqCast.of.Eq
   simp
 

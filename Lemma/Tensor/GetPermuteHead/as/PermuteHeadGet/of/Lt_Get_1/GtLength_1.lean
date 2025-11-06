@@ -79,7 +79,7 @@ private lemma main
   (h_k : k < s[1])
   (X : Tensor α s) :
 -- imply
-  (X.permuteHead (d + 1)).get ⟨k, by rwa [LengthPermuteHead.eq.Get_1.of.GtLength_1.Gt_1 (by linarith [NeZero.pos d]) h]⟩ ≃ (X.getEllipsis ⟨1, by grind⟩ ⟨k, h_k⟩).permuteHead d := by
+  (X.permuteHead (d + 1)).get ⟨k, by rwa [LengthPermuteHead.eq.Get_1.of.GtLength_1.Gt_1 (by linarith [NeZero.pos d]) h]⟩ ≃ (X.select ⟨1, by grind⟩ ⟨k, h_k⟩).permuteHead d := by
 -- proof
   have h_d := NeZero.pos d
   unfold permuteHead
@@ -147,7 +147,7 @@ private lemma main
           repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
           repeat rw [GetTranspose.eq.Get.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-          unfold getEllipsis
+          unfold select
           simp
           rw [DataCast.eq.Cast_Data.of.Eq]
           ·

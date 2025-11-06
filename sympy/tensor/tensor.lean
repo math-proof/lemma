@@ -41,9 +41,9 @@ def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
   X.toVector[i]
 
 /--
-x[..., i] where ... means all indices before i
+[torch.select](https://docs.pytorch.org/docs/stable/generated/torch.select.html)
 -/
-def Tensor.getEllipsis (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset])  : Tensor α (s.eraseIdx offset) :=
+def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset])  : Tensor α (s.eraseIdx offset) :=
   have h_s_length := Gt_0 offset
   if h : offset = ⟨0, h_s_length⟩ then
     cast
@@ -62,7 +62,7 @@ def Tensor.getEllipsis (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offs
     have h_1 := Ge_1.of.Gt_0 h
     have X : Tensor α (s.headD 1 :: s.tail.eraseIdx (offset - 1)) := Tensor.fromVector (
       X.toVector.map (
-        ·.getEllipsis
+        ·.select
           ⟨offset - 1, Sub_1.lt.LengthTail.of.In_Ioo0Length ⟨h, by simp⟩⟩
           ⟨i, by
             simp only [GetElem.getElem]

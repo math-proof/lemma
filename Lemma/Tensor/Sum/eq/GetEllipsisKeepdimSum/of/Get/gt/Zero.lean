@@ -19,7 +19,7 @@ private lemma main
   (h : s[dim] > 0)
   (X : Tensor α s) :
 -- imply
-  X.sum dim = (X.sum dim).keepdim.getEllipsis dim ⟨0, h⟩ := by
+  X.sum dim = (X.sum dim).keepdim.select dim ⟨0, h⟩ := by
 -- proof
   unfold Tensor.keepdim
   simp
