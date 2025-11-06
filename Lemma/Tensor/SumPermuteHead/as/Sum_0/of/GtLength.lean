@@ -1,4 +1,4 @@
-import Lemma.Tensor.GetSum_0.as.SumGetEllipsis.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.GetSum_0.as.SumSelect.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GetPermuteHead.as.PermuteHeadGet.of.Lt_Get_1.GtLength_1
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
@@ -70,7 +70,7 @@ private lemma main
               have ih := ih h_length (X.select ⟨1, by simpa⟩ ⟨t, by simpa⟩)
               apply SEq.trans ih
               .
-                apply Tensor.SumGetEllipsis.as.GetSum_0.of.Lt_Get_0.GtLength_0 _ h_t
+                apply Tensor.SumSelect.as.GetSum_0.of.Lt_Get_0.GtLength_0 _ h_t
                 simp
                 rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simp; omega)]
                 simp

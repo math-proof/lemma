@@ -57,7 +57,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
-import Lemma.Tensor.GetEllipsis_0.eq.Cast_Get.of.GtLength_0.Lt_Get_0
+import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0.Lt_Get_0
 import Lemma.Tensor.LengthPermuteHead.eq.Get_1.of.GtLength_1.Gt_1
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -164,7 +164,7 @@ private lemma main
               let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
               let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₕrₕ]
-              rw [GetEllipsis_0.eq.Cast_Get.of.GtLength_0.Lt_Get_0]
+              rw [Select_0.eq.Cast_Get.of.GtLength_0.Lt_Get_0]
               rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
               simp [GetCast.eq.Get.of.Eq.fin]
               rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨k, ?_⟩)]
