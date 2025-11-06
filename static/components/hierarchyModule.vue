@@ -57,6 +57,7 @@ export default {
 				var {module} = this.$parent;
 				data.line = module.slice(module.indexOf('.') + 1);
 			}
+			data.target = '';
 			return data;
 		},
 

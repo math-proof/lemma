@@ -1,5 +1,5 @@
 <template>
-	<a v-if="mode == 'a'" v-focus v-clipboard tabindex=2 :data-clipboard-text=module :href=href @contextmenu.prevent=contextmenu @keydown=keydown_a target="_blank">
+	<a v-if="mode == 'a'" v-focus v-clipboard tabindex=2 :data-clipboard-text=module :href=href @contextmenu.prevent=contextmenu @keydown=keydown_a :target="data.target?? '_blank'">
         {{data.replacement ?? data.text?? module}}
     </a>
 	<span v-else-if="mode == 'span'">
