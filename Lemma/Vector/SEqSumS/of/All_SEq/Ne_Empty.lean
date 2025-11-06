@@ -2,7 +2,6 @@ import Lemma.Finset.All_EqCast.of.All_SEq.Ne_Empty
 import Lemma.Finset.Any_In.is.Ne_Empty
 import Lemma.Finset.EqSumS.of.All_Eq
 import Lemma.Vector.Sum.as.Sum_Cast.of.Eq
-import sympy.vector.vector
 open Finset Vector
 
 
