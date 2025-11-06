@@ -349,8 +349,7 @@ abstract class Lean extends IndentedNode
                             $self = $parent;
                             $parent = $parent->parent;
                         }
-                    }
-                    else if (
+                    } elseif (
                         $this instanceof LeanToken || 
                         $this instanceof LeanProperty || 
                         $this instanceof LeanGetElem || $this instanceof LeanGetElemQue || $this instanceof LeanGetElemQuote || 
@@ -606,8 +605,7 @@ abstract class Lean extends IndentedNode
                     $new = new LeanGetElemQue($lhs, $rhs, $this->indent, $this->level);
                     $parent->replace($this, $new);
                     return $new;
-                }
-                else {
+                } else {
                     if ($tokens[$i + 1] == '_') {
                         ++$i;
                         $token .= '_';
@@ -636,8 +634,7 @@ abstract class Lean extends IndentedNode
                 if ($tokens[$i + 1] == '=') {
                     ++$i;
                     $token .= '=';
-                }
-                elseif ($tokens[$i + 1] == '>') {
+                } elseif ($tokens[$i + 1] == '>') {
                     ++$i;
                     $token .= '>';
                     if ($tokens[$i + 1] == '>') {
@@ -660,8 +657,7 @@ abstract class Lean extends IndentedNode
                         return $new->push_binary('LeanRightarrow');
                     }
                     return $this->push_binary('LeanRightarrow');
-                }
-                elseif ($tokens[$i + 1] == '=') {
+                } elseif ($tokens[$i + 1] == '=') {
                     ++$i;
                     return $this->push_binary('LeanBEq');
                 } else
@@ -1448,7 +1444,7 @@ abstract class LeanArgs extends Lean
 
     public function strip_parenthesis()
     {
-        return array_map(fn($arg) => $arg instanceof LeanParenthesis && !($arg->arg instanceof LeanMethodChaining || $arg->arg instanceof Lean_rightarrow) ? $arg->arg : $arg, $this->args);
+        return array_map(fn($arg) => $arg instanceof LeanParenthesis && !($arg->arg instanceof LeanMethodChaining || $arg->arg instanceof Lean_rightarrow || $arg->arg instanceof LeanColon) ? $arg->arg : $arg, $this->args);
     }
 
     public function insert_tactic($caret, $func)
@@ -1666,8 +1662,7 @@ class LeanParenthesis extends LeanPairedGroup
         if ($arg instanceof LeanBy && ($stmt = $arg->arg) instanceof LeanStatements && end($stmt->args) instanceof LeanCaret) {
             $indent = str_repeat(' ', $this->indent);
             return "%s$indent";
-        }
-        else
+        } else
             return '%s';
     }
 
@@ -2273,7 +2268,7 @@ class LeanProperty extends LeanBinary
             if ($caret instanceof LeanCaret) {
                 if (str_starts_with($func, 'Lean_'))
                     $caret = $this->insert_word($caret, substr($func, 5));
-            } else if ($type == 'modifier') {
+            } elseif ($type == 'modifier') {
                 return $this->parent->insert($this, $func, $type);
             } else {
                 $caret = new LeanCaret($this->indent, $caret->level);
@@ -2410,7 +2405,7 @@ class LeanAssign extends LeanBinary
                     $caret->indent = $indent;
                     $this->rhs = new LeanArgsNewLineSeparated([$caret], $indent, $caret->level);
                     $caret = $this->rhs->push_newlines($newline_count - 1);
-                } else if ($caret instanceof LeanArgsNewLineSeparated) {
+                } elseif ($caret instanceof LeanArgsNewLineSeparated) {
                     if ($this->parent)
                         return $this->parent->insert_newline($this, $newline_count, $indent, $next);
                 } else {
@@ -2887,8 +2882,7 @@ class LeanMul extends LeanArithmetic
         } elseif ($rhs instanceof LeanNeg) {
             $rhs = new LeanParenthesis($rhs, $this->indent, $level);
             $rhs->is_closed = true;
-        }
-        elseif ($lhs instanceof LeanNeg) {
+        } elseif ($lhs instanceof LeanNeg) {
             $lhs = new LeanParenthesis($lhs, $this->indent, $level);
             $lhs->is_closed = true;
         }
@@ -4913,8 +4907,7 @@ class LeanModule extends LeanStatements
                                     $default = array_slice($given, $givenStop);
                                     $default[count($default) - 1] .= ' :';
                                     $given = array_slice($given, $givenStart, $givenStop);
-                                }
-                                else {
+                                } else {
                                     $explicit = array_slice($given, 0, $givenStart);
                                     $given = array_slice($given, $givenStart);
                                     $latex[count($latex) - 1][1] .= ' :';
@@ -4990,8 +4983,7 @@ class LeanModule extends LeanStatements
                         $open[] = array_map(fn($arg) => "$arg", $stmt->args);
                 } else
                     $open[] = ["$stmt->text"];
-            }
-            elseif ($stmt instanceof Lean_set_option) {
+            } elseif ($stmt instanceof Lean_set_option) {
                 $stmt = $stmt->arg;
                 if ($stmt instanceof LeanArgsSpaceSeparated)
                     $set_option[] = array_map(fn($arg) => "$arg", $stmt->args);
@@ -5342,7 +5334,7 @@ class LeanRightarrow extends LeanBinary
                     if ($sujet instanceof LeanColon)
                         $token[] = $sujet->lhs;
                 }
-            } else if ($subject instanceof LeanColon)
+            } elseif ($subject instanceof LeanColon)
                 $token[] = $subject->lhs;
         }
         $expr = $this->lhs;
@@ -5990,8 +5982,7 @@ class LeanIte extends LeanArgs
                 $else = $else->split($syntax);
                 $else[0]->args[2] = 0;
                 array_push($statements, ...$else);
-            }
-            else {
+            } else {
                 $statements[] = new LeanIte([], $this->indent, $else->level); // for else statement only;
                 if ($else instanceof LeanStatements)
                     $else->swap_echo_star($syntax, $statements);
@@ -6049,8 +6040,7 @@ class LeanArgsSpaceSeparated extends LeanArgs
                         if ($args[$j]->cache['physic_index'] + $size == $physic_index)
                             $logic_index = max($logic_index, $args[$j]->func->cache['index'] + $size);
                     }
-                }
-                elseif ($parent && $parent->func->is_parallel_operator())
+                } elseif ($parent && $parent->func->is_parallel_operator())
                     ++$logic_index;
                 $node->func->cache['index'] = $logic_index;
                 $node->func->cache['size'] = $node->size();
@@ -6335,7 +6325,7 @@ class LeanArgsSpaceSeparated extends LeanArgs
             $caret = new LeanCaret($this->indent, $caret->level);
             $this->push(new $func($caret, $caret->indent, $caret->level));
             return $caret;
-        } else if ($this->parent)
+        } elseif ($this->parent)
             return $this->parent->insert($this, $func, $type);
     }
 }
@@ -6389,8 +6379,16 @@ class LeanArgsNewLineSeparated extends LeanArgs
     {
         switch ($vname) {
             case 'stack_priority':
-                if ($this->parent instanceof LeanCalc)
+                if (($parent = $this->parent) instanceof LeanCalc)
                     return 17;
+                if ($parent instanceof LeanArgsIndented) {
+                    if ($parent->parent instanceof LeanQuantifier)
+                        // consider the following case of
+                        // ∀ i ∈ s, cast 
+                        //   (by sorry)
+                        //   (x i) = y i
+                        return LeanRelational::$input_priority + 1;
+                }
                 return 47;
             default:
                 return parent::__get($vname);
@@ -6496,6 +6494,12 @@ class LeanArgsIndented extends LeanBinary
             case 'stack_priority':
                 if ($this->parent instanceof LeanCalc)
                     return 17;
+                if ($this->parent instanceof LeanQuantifier)
+                    // consider the following case of
+                    // ∀ i ∈ s, cast 
+                    //   (by sorry)
+                    //   (x i) = y i
+                    return LeanRelational::$input_priority + 1;
                 return 47;
             default:
                 return parent::__get($vname);
@@ -6923,8 +6927,7 @@ class LeanTactic extends LeanSyntax
             if ($this->func == 'split') {
                 if ($this->has_tactic_block_followed())
                     return;
-            }
-            else {
+            } else {
                 if ($token instanceof LeanArgsSpaceSeparated)
                     $token = new LeanArgsCommaSeparated(
                         array_map(fn($arg) => clone $arg, $token->args),
@@ -6941,21 +6944,20 @@ class LeanTactic extends LeanSyntax
                     $arg = $this->arg;
                     if ($arg instanceof LeanToken)
                         $token[] = clone $arg;
-                    else if ($arg instanceof LeanArgsSpaceSeparated) {
+                    elseif ($arg instanceof LeanArgsSpaceSeparated) {
                         foreach ($arg->tokens_space_separated() as $arg) {
                             if ($arg instanceof LeanToken)
                                 $token[] = clone $arg;
-                            else if (is_array($arg)) {
+                            elseif (is_array($arg)) {
                                 foreach ($arg as $a)
                                     $token[] = clone $a;
                             }
                         }
-                    }
-                    else if ($arg instanceof LeanAngleBracket) {
+                    } elseif ($arg instanceof LeanAngleBracket) {
                         $arg = $arg->arg;
                         if ($arg instanceof LeanToken)
                             $token[] = clone $arg;
-                        else if ($arg instanceof LeanArgsCommaSeparated)
+                        elseif ($arg instanceof LeanArgsCommaSeparated)
                             $token = array_map(fn($arg) => clone $arg, $arg->args);
                     }
                     break;
@@ -7015,7 +7017,7 @@ class LeanTactic extends LeanSyntax
                         foreach ($tokens as $arg) {
                             if (is_array($arg))
                                 array_push($token, ...array_filter($arg, fn($token) => $token->text != 'rfl'));
-                            else if ($arg->text != 'rfl')
+                            elseif ($arg->text != 'rfl')
                                 $token[] = $arg;
                             break;
                         }
@@ -7030,14 +7032,13 @@ class LeanTactic extends LeanSyntax
                                 if ($t->text != 'rfl')
                                     $token[] = $t;
                             }
-                        }
-                        else if ($arg instanceof LeanBitOr) {
+                        } elseif ($arg instanceof LeanBitOr) {
                             if ($this->has_tactic_block_followed())
                                 return;
                             foreach ($arg->tokens_bar_separated() as $arg) {
                                 if (is_array($arg))
                                     array_push($token, ...array_filter($arg, fn($t) => $t->text != 'rfl'));
-                                else if ($arg->text != 'rfl')
+                                elseif ($arg->text != 'rfl')
                                     $token[] = $arg;
                                 break;
                             }
@@ -7064,7 +7065,7 @@ class LeanTactic extends LeanSyntax
                         return;
             }
             if ($this->has_tactic_block_followed() || $this->parent instanceof LeanSequentialTacticCombinator);
-            else if ($⊢)
+            elseif ($⊢)
                 $token[] = new LeanToken($⊢, $this->indent, $this->level);
             switch (count($token)) {
                 case 0:
@@ -7121,15 +7122,13 @@ class LeanTactic extends LeanSyntax
                     $stmts->swap_echo_star($syntax, $statements);
                     return $statements;
                 }
-            }
-            elseif ($block instanceof LeanTactic && $block->indent >= $this->indent) {
+            } elseif ($block instanceof LeanTactic && $block->indent >= $this->indent) {
                 $self = clone $this;
                 if ($sequential_tactic_combinator->newline) {
                     $block = $self->sequential_tactic_combinator;
                     assert(end($self->args) instanceof LeanSequentialTacticCombinator);
                     array_pop($self->args);
-                }
-                else {
+                } else {
                     $block = $self->sequential_tactic_combinator->arg;
                     $self->sequential_tactic_combinator->arg = new LeanCaret(0, 0);
                 }
@@ -7754,7 +7753,7 @@ class LeanSequentialTacticCombinator extends LeanUnary
     {
         if (($arg = $this->arg) instanceof LeanTacticBlock)
             $arg->echo();
-        else if ($arg->indent > 0) {
+        elseif ($arg->indent > 0) {
             $indent = $arg->indent;
             $level = $arg->level;
             $echo = new LeanTactic('echo', new LeanToken('⊢', $indent, $level), $indent, $level);
@@ -7762,8 +7761,7 @@ class LeanSequentialTacticCombinator extends LeanUnary
                 while (($sequential_tactic_combinator = $arg->sequential_tactic_combinator) && $sequential_tactic_combinator->arg->indent)
                     $arg = $sequential_tactic_combinator;
                 $arg->push(new LeanSequentialTacticCombinator($echo, $indent, $level, true));
-            }
-            else {
+            } else {
                 $echo->push(new LeanSequentialTacticCombinator($arg, $indent, $level));
                 $this->arg = $echo;
                 $arg->echo();
@@ -7849,7 +7847,7 @@ class LeanTacticBlock extends LeanUnary
                     }
                     return $caret;
                 }
-            } else if ($this->indent < $indent) {
+            } elseif ($this->indent < $indent) {
                 $caret = new LeanCaret($indent, $caret->level);
                 $this->arg->indent = $indent;
                 $this->arg = new LeanStatements([$this->arg, $caret], $indent, $caret->level);
@@ -8001,8 +7999,7 @@ class LeanTacticBlock extends LeanUnary
                                                     $first->arg = new LeanArgsCommaSeparated([$token, $first->arg], $this->indent, $token->level);
                                                 else
                                                     $first->arg->unshift($token);
-                                            }
-                                            else
+                                            } else
                                                 array_unshift($new_list, new LeanTactic(
                                                     'echo',
                                                     $token,
@@ -8015,8 +8012,7 @@ class LeanTacticBlock extends LeanUnary
                                                     $last->arg = new LeanArgsCommaSeparated([$last->arg, $token], $this->indent, $token->level);
                                                 else
                                                     $last->arg->push($token);
-                                            }
-                                            else
+                                            } else
                                                 array_push($new_list, new LeanTactic(
                                                     'echo',
                                                     $token,
@@ -8034,8 +8030,7 @@ class LeanTacticBlock extends LeanUnary
                                                         $prev->arg = new LeanArgsCommaSeparated([$prev->arg, $first->arg], $this->indent, $prev->arg->level);
                                                     else
                                                         $prev->arg = new LeanArgsCommaSeparated([$prev->arg, ...$first->arg->args], $this->indent, $prev->arg->level);
-                                                }
-                                                else {
+                                                } else {
                                                     if ($first->arg instanceof LeanToken)
                                                         $prev->arg->push($first->arg);
                                                     else {
@@ -8822,6 +8817,16 @@ class LbigOperator extends LeanArgs
             }
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($caret === $this->scope) {
+            if ($indent <= $this->indent)
+                $indent = $this->indent + 2;
+            return $this->push_args_indented($indent, $newline_count);
+        }
+        return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
 }
 

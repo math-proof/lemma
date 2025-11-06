@@ -1,4 +1,3 @@
-import stdlib.SEq
 import sympy.Basic
 import sympy.tensor.Basic
 

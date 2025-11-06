@@ -1,12 +1,13 @@
 # rules: delete the import line if the file does not contain any of the specified patterns
 $modules = @(
+    'stdlib.Slice:Slice'
+    'stdlib.List:\b(List|substr|slice|enumerate|is constant|swap)\b'
+    'stdlib.SEq:≃'
     'sympy.core.relational:\n +denote '
     'sympy.core.logic:\n +mpr? \['
     'sympy.functions.elementary.integers:\b(is even|is odd|fract|sign|IntegerRing)\b|//'
     'sympy.tensor.tensor:\b(Tensor|Zeros|Ones|Indexed|Sliced)\b'
     'sympy.sets.sets:\b(Ioo|Ico|Iio|Icc|Iic|Ioc|Ici|Ioi|range)\b'
-    'stdlib.Slice:Slice'
-    'stdlib.List:\b(List|substr|slice|enumerate|is constant|swap)\b'
     'sympy.Basic:^([\s\S](?!\nimport Lemma))*$'
 )
 
@@ -36,7 +37,7 @@ foreach ($entry in $modules) {
         if ($matchingLines.Count -gt 0) {
             Write-Host "The following line(s) will be removed:"
             $matchingLines | ForEach-Object {
-                Write-Host "$($file.Name): $($_.Value)"
+                Write-Host "$($file.FullName): $($_.Value)"
             }
 
             # Remove the import lines and save the file without BOM

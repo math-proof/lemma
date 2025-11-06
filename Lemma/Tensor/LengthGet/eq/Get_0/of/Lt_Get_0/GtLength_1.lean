@@ -2,7 +2,6 @@ import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import stdlib.SEq
 import sympy.tensor.tensor
 open List Tensor
 

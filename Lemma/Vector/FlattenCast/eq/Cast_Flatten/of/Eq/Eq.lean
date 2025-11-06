@@ -1,5 +1,3 @@
-import stdlib.SEq
-import sympy.vector.vector
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.FlattenCast.as.Flatten.of.Eq.Eq
 import Lemma.Nat.EqMulS.of.Eq.Eq

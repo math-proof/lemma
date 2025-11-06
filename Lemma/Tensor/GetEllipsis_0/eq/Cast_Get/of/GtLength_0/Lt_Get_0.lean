@@ -1,7 +1,6 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.GetEllipsis_0.as.Get.of.GtLength_0.Lt_Get_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import stdlib.SEq
 import sympy.tensor.tensor
 open Bool Tensor
 

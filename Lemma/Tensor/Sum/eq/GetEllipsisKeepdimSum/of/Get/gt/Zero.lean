@@ -1,4 +1,3 @@
-import stdlib.SEq
 import sympy.tensor.functions
 import Lemma.Tensor.GetEllipsisCast.eq.Cast_GetEllipsis.of.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
