@@ -22,7 +22,7 @@ private lemma main
     intro a b
     simp [f]
     apply GetAdd.eq.AddGetS
-  have := UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0 (f := f) h_f0 h_add (Finset.univ : Finset (Fin m)) (fun j => x[j])
+  have := UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0 h_f0 h_add (Finset.univ : Finset (Fin m)) (fun j => x[j])
   simp [f] at this
   assumption
 

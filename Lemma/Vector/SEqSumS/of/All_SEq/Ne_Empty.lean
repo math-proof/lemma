@@ -2,7 +2,6 @@ import Lemma.Finset.All_EqCast.of.All_SEq.Ne_Empty
 import Lemma.Finset.Any_In.is.Ne_Empty
 import Lemma.Finset.EqSumS.of.All_Eq
 import Lemma.Vector.Sum.as.Sum_Cast.of.Eq
-import stdlib.SEq
 import sympy.vector.vector
 open Finset Vector
 
@@ -10,6 +9,7 @@ open Finset Vector
 @[main]
 private lemma main
   [AddCommMonoid α]
+  [DecidableEq ι]
   {s : Finset ι}
   {x : ι → List.Vector α n}
   {y : ι → List.Vector α n'}
