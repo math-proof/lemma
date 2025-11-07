@@ -1,5 +1,5 @@
 import Lemma.Int.Div.eq.AddDiv___Mod
-import Lemma.Int.Div.ge.EDiv.of.Gt_0
+import Lemma.Int.GeDivS.of.Gt_0
 import Lemma.Int.Div.lt.One.of.Gt_0
 import Lemma.Int.Lt_Add.of.Eq_Add.Lt
 import Lemma.Int.EqFloor.is.Le.Lt
@@ -18,7 +18,7 @@ private lemma main
   rw [EqFloor.is.Le.Lt]
   constructor
   · 
-    exact Div.ge.EDiv.of.Gt_0 h
+    exact GeDivS.of.Gt_0 h
   · 
     have h_Eq := Div.eq.AddDiv___Mod (n := n) (d := d)
     have := Div.lt.One.of.Gt_0 (n := n) h

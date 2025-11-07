@@ -1,7 +1,7 @@
 import sympy.functions.elementary.integers
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Int.EqNegNeg
-import Lemma.Int.EDiv_Neg.eq.NegEDiv
+import Lemma.Int.Div_Neg.eq.NegDiv
 open Int
 
 
@@ -29,7 +29,7 @@ private lemma main
   | .negSucc m, .negSucc n =>
     simp
     rw [NegSucc.eq.NegAdd_1]
-    rw [EDiv_Neg.eq.NegEDiv]
+    rw [Div_Neg.eq.NegDiv]
     rw [EqNegNeg]
 
 

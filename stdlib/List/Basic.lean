@@ -49,6 +49,14 @@ syntax:max term noWs "[" withoutPosition(term:60) ":" withoutPosition(term:60) "
 macro_rules
   | `($x[$start :$stop :$step]) => `(($x).getSlice ⟨($start : ℤ), ($stop : ℤ), ($step : ℤ)⟩)
 
+syntax:max term noWs "[" withoutPosition(term:60) "::" withoutPosition(term:60) "]" : term
+macro_rules
+  | `($x[$start ::$step]) => `(($x).getSlice ⟨($start : ℤ), (if $step < 0 then -($x).length.succ else ($x).length : ℤ), ($step : ℤ)⟩)
+
+syntax:max term noWs "[::" withoutPosition(term:60) "]" : term
+macro_rules
+  | `($x[::$step]) => `(($x).getSlice ⟨(if $step < 0 then -1 else 0 : ℤ), (if $step < 0 then -($x).length.succ else ($x).length : ℤ), ($step : ℤ)⟩)
+
 syntax:max term noWs "[" withoutPosition(term:60) "," (withoutPosition(term:60)),+ "]" : term
 macro_rules
   | `($x[ $first, $rest,* ]) => do

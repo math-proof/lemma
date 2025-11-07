@@ -1,5 +1,5 @@
 import Lemma.Int.FDiv.eq.Sub_1.of.Gt_0.Lt_0
-import Lemma.Int.FDiv.eq.NegEDivNeg.of.Le_0.Lt_0
+import Lemma.Int.FDiv.eq.NegDivNeg.of.Le_0.Lt_0
 import Lemma.Nat.NotGt.is.Le
 open Int Nat
 
@@ -23,7 +23,7 @@ private lemma main
     apply FDiv.eq.Sub_1.of.Gt_0.Lt_0 h₀ h
   ·
     have := Le.of.NotGt h₀
-    apply FDiv.eq.NegEDivNeg.of.Le_0.Lt_0 this h
+    apply FDiv.eq.NegDivNeg.of.Le_0.Lt_0 this h
 
 
 -- created on 2025-03-27

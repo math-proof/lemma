@@ -4,10 +4,10 @@ import Lemma.Nat.Ge.is.False.of.Lt
 import Lemma.Nat.Eq.is.False.of.Lt
 import Lemma.Nat.Gt.is.False.of.Lt
 import Lemma.Nat.Sub.eq.AddNeg
-import Lemma.Int.GeMulSubEDiv.of.Lt_0
+import Lemma.Int.GeMulSubDiv.of.Lt_0
 import Lemma.Int.GeNeg_0.of.Le_0
 import Lemma.Nat.NotGt.is.Le
-import Lemma.Int.LeMulEDiv.of.Ge_0
+import Lemma.Int.LeMulDiv.of.Ge_0
 import Lemma.Int.GeNeg.of.Le_Neg
 open Bool Int Nat
 
@@ -33,12 +33,12 @@ private lemma main
   split_ifs with h'
   ·
     rw [AddNeg.eq.Sub]
-    apply GeMulSubEDiv.of.Lt_0 h
+    apply GeMulSubDiv.of.Lt_0 h
   ·
     have h := Le.of.NotGt h'
     have := GeNeg_0.of.Le_0 h
     apply GeNeg.of.Le_Neg
-    apply LeMulEDiv.of.Ge_0 this d
+    apply LeMulDiv.of.Ge_0 this d
 
 
 -- created on 2025-03-21

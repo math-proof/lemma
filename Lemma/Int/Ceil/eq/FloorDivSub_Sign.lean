@@ -1,4 +1,4 @@
-import Lemma.Rat.Ceil.eq.Neg.Floor
+import Lemma.Int.Ceil.eq.NegFloorNeg
 import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.Div.eq.One.of.Ne_0
@@ -47,7 +47,7 @@ private lemma main
     rw [h]
     norm_num
   else
-    rw [Ceil.eq.Neg.Floor]
+    rw [Ceil.eq.NegFloorNeg]
     rw [DivSub.eq.SubDivS]
     rw [DivAdd.eq.AddDivS]
     rw [Div.eq.One.of.Ne_0 h]

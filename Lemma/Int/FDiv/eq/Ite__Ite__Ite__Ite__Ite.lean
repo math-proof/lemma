@@ -1,5 +1,5 @@
 import Lemma.Bool.BFn_Ite.is.Imp.Imp
-import Lemma.Int.FDiv.eq.EDiv.of.Ge_0
+import Lemma.Int.FDiv.eq.Div.of.Ge_0
 import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Nat.NotGe.is.Lt
 import Lemma.Bool.Eq_Ite.of.Cond.NotAnd.Eq
@@ -34,7 +34,7 @@ private lemma main
 -- proof
   apply BFn_Ite.of.Imp.Imp
   intro ⟨_, h⟩
-  apply FDiv.eq.EDiv.of.Ge_0 (n := n) h
+  apply FDiv.eq.Div.of.Ge_0 (n := n) h
   rw [NotAnd.is.OrNotS]
   rw [NotGe.is.Lt, NotGe.is.Lt]
   intro h_Or

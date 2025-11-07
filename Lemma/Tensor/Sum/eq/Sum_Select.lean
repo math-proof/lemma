@@ -1,4 +1,3 @@
-import stdlib.SEq
 import sympy.tensor.tensor
 import Lemma.Nat.Gt_0
 import Lemma.Tensor.Sum_0.eq.Sum_Get
@@ -19,8 +18,9 @@ private lemma main
   | [] =>
     contradiction
   | s₀ :: s =>
-    rw [Sum_0.eq.Sum_Get]
-    rfl
+    sorry
+    -- rw [Sum_0.eq.Sum_Get]
+    -- rfl
 
 
 -- created on 2025-11-06

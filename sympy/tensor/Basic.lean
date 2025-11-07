@@ -10,7 +10,7 @@ import Lemma.Nat.EqMulDiv.of.Dvd
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.ProdSet__MulGet.eq.Mul_Prod
-import Lemma.List.EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail
+import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
@@ -177,7 +177,7 @@ def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) 
         simp
         apply Lt_Sub.of.LtAdd h_dim
       cast
-        (by simp_all [EraseIdx_Succ.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_lt 1])
+        (by simp_all [EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_lt 1])
         (Tensor.fromVector (X.toVector.map (·.sum dim)))
   else
     cast (by

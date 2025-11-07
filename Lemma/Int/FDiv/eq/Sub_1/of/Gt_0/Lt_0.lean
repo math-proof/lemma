@@ -1,7 +1,7 @@
 import sympy.functions.elementary.integers
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.Int.NegAdd.eq.SubNeg
-import Lemma.Int.EDiv_Neg.eq.NegEDiv
+import Lemma.Int.Div_Neg.eq.NegDiv
 import Lemma.Int.Sub.eq.Add_Neg
 open Int
 
@@ -26,7 +26,7 @@ private lemma main
     repeat rw [NegSucc.eq.NegAdd_1]
     ring_nf
     rw [SubNeg.eq.NegAdd (b := (d : ℤ))]
-    rw [EDiv_Neg.eq.NegEDiv]
+    rw [Div_Neg.eq.NegDiv]
     rw [Add_Neg.eq.Sub]
     norm_cast
   | Int.negSucc a, 0 =>

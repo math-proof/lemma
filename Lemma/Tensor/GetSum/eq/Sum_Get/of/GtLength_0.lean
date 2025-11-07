@@ -31,4 +31,18 @@ private lemma main
   assumption
 
 
+@[main]
+private lemma fin
+  [AddCommMonoid α]
+  {s : List ℕ}
+-- given
+  (h_s : s.length > 0)
+  (X : Fin n → Tensor α s)
+  (k : Fin s[0]) :
+-- imply
+  (∑ i : Fin n, X i).get ⟨k, by apply Lt_Length.of.GtLength_0 h_s⟩ = ∑ i : Fin n, (X i).get ⟨k, by apply Lt_Length.of.GtLength_0 h_s⟩ := by
+-- proof
+  apply main h_s
+
+
 -- created on 2025-11-06

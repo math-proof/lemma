@@ -18,4 +18,15 @@ private lemma main
   simp_all
 
 
+@[main]
+private lemma fin
+-- given
+  (h : i < n)
+  (f : Fin n → Tensor α s) :
+-- imply
+  ([i < n] f i).get ⟨i, by simpa⟩ = f ⟨i, h⟩ := by
+-- proof
+  apply main h
+
+
 -- created on 2025-06-30

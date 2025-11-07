@@ -71,6 +71,12 @@ def Slice.length (s : Slice) (n : ℕ) : ℕ :=
     ⌈((Add_Mul_DivSub1Sign_2 n s.start + 1).toNat.min n - (Add_Mul_DivSub1Sign_2 n s.stop + 1).toNat : ℚ) / step.succ⌉.toNat
 
 
+@[app_unexpander Slice.mk]
+def Slice.mk.unexpand : PrettyPrinter.Unexpander
+  | `($_ $start $stop $step) => `(⟨$start, $stop, $step⟩)
+  | _  =>
+    throw ()
+
 @[app_unexpander Min.min]
 def Min.min.unexpand : PrettyPrinter.Unexpander
   | `($_ $m:term $n:term) =>

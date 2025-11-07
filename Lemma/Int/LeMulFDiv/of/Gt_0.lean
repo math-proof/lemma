@@ -4,12 +4,12 @@ import Lemma.Nat.Lt.is.False.of.Gt
 import Lemma.Nat.Ge.is.True.of.Gt
 import Lemma.Nat.Eq.is.False.of.Gt
 import Lemma.Int.Sub.eq.Add_Neg
-import Lemma.Int.LeMulEDiv.of.Ge_0
+import Lemma.Int.LeMulDiv.of.Ge_0
 import Lemma.Int.NegAdd.eq.SubNeg
 import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Int.LeNeg.of.Ge_Neg
 import Lemma.Int.GtNeg_0.of.Lt_0
-import Lemma.Int.GeMulAdd1EDiv.of.Gt_0
+import Lemma.Int.GeMulAdd1Div.of.Gt_0
 open Bool Int Nat
 
 
@@ -34,12 +34,12 @@ private lemma main
   rw [Add_Neg.eq.Sub]
   split_ifs with h' h''
   ·
-    apply LeMulEDiv.of.Ge_0 h' d
+    apply LeMulDiv.of.Ge_0 h' d
   ·
     rw [SubNeg.eq.NegAdd]
     rw [MulNeg.eq.NegMul]
     apply LeNeg.of.Ge_Neg
-    apply GeMulAdd1EDiv.of.Gt_0 h
+    apply GeMulAdd1Div.of.Gt_0 h
   ·
     linarith [h', h'']
 

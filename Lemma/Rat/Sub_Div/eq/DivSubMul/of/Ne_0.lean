@@ -3,7 +3,7 @@ import Lemma.Int.MulSub.eq.SubMulS
 open Int Rat
 
 
-@[main]
+@[main, comm]
 private lemma main
   [DivisionRing α]
   {a b x : α}
