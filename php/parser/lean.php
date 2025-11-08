@@ -3015,9 +3015,9 @@ class LeanDiv extends LeanArithmetic
         $rhs = $this->rhs;
         if ($lhs instanceof LeanDiv) {
         } else {
-            if ($lhs instanceof LeanParenthesis)
+            if ($lhs instanceof LeanParenthesis && !($lhs->arg instanceof LeanColon))
                 $lhs = $lhs->arg;
-            if ($rhs instanceof LeanParenthesis)
+            if ($rhs instanceof LeanParenthesis && !($rhs->arg instanceof LeanColon))
                 $rhs = $rhs->arg;
         }
         $lhs = $lhs->toLatex($syntax);
@@ -8305,6 +8305,8 @@ class LeanAttribute extends LeanUnary
 
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
+        if ($this->parent instanceof LeanTactic)
+            return parent::insert_newline($caret, $newline_count, $indent, $next);
         return $caret;
     }
 

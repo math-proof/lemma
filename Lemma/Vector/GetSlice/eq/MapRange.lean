@@ -14,7 +14,6 @@ import Lemma.Nat.LtVal
 import Lemma.Nat.Ne_0
 import Lemma.Rat.Div.le.Zero.of.Le_0
 import Lemma.Nat.LeCeil.is.Le
-import Lemma.Rat.Sub_Div.eq.DivSubMul.of.Ne_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SEq.of.Eq_0.Eq_0
 import sympy.vector.vector

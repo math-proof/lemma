@@ -9,7 +9,7 @@ private lemma main
 -- imply
   ⌈(n : α)⌉.toNat = n := by
 -- proof
-  simp_all
+  simp
 
 
 -- created on 2025-05-24
