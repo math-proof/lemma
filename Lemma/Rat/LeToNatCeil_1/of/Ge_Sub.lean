@@ -5,11 +5,12 @@ open Rat Nat
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop step : ℕ}
 -- given
   (h : stop ≥ start - step) :
 -- imply
-  ⌈(start - stop : ℚ) / step⌉.toNat ≤ 1 := by
+  ⌈(start - stop : α) / step⌉.toNat ≤ 1 := by
 -- proof
   have h:= GeAdd.of.Ge_Sub h
   apply LeToNatCeil_1.of.Le_Add h

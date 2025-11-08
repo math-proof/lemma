@@ -5,17 +5,19 @@ open Nat Int
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℤ}
 -- given
   (h : d ≤ 0) :
 -- imply
-  n / d = ⌈n / (d : ℚ)⌉ := by
+  n / d = ⌈n / (d : α)⌉ := by
 -- proof
-  by_cases h_eq : d = 0
-  rw [h_eq]
-  norm_num
-  have := Lt.of.Le.Ne h_eq h
-  apply Div.eq.CeilDiv.of.Lt_0 this
+  if h_eq : d = 0 then
+    rw [h_eq]
+    norm_num
+  else
+    have := Lt.of.Le.Ne h_eq h
+    apply Div.eq.CeilDiv.of.Lt_0 this
 
 
 -- created on 2025-03-20

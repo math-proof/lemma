@@ -38,13 +38,12 @@ private lemma main
     have := Any_Eq_Mul.of.FMod.eq.Zero h
     let ⟨k, h_n⟩ := this
     rw [h_n]
-    rw [FMod.eq.Sub_MulFDiv]
-    rw [FMod.eq.Sub_MulFDiv]
+    repeat rw [FMod.eq.Sub_MulFDiv]
     rw [Add.comm]
     rw [SubAdd.eq.Add_Sub]
     rw [Sub.eq.Add_Neg (a := m)]
     apply EqAddS.of.Eq.left
-    rw [FDiv.eq.FloorDiv]
+    rw [FDiv.eq.FloorDiv (α := ℚ)]
     rw [CoeAdd.eq.AddCoeS]
     rw [DivAdd.eq.AddDivS]
     rw [CoeMul.eq.MulCoeS]
@@ -54,7 +53,7 @@ private lemma main
     rw [MulAdd.eq.AddMulS]
     rw [Sub_Add.eq.SubSub]
     rw [SubSub.eq.Neg]
-    rw [FDiv.eq.FloorDiv]
+    rw [FDiv.eq.FloorDiv (α := ℚ)]
 
 
 -- created on 2025-03-30

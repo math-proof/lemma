@@ -19,7 +19,7 @@ private lemma main
 -- imply
   n // d = 0 := by
 -- proof
-  rw [FDiv.eq.FloorDiv]
+  rw [FDiv.eq.FloorDiv (α := ℚ)]
   rw [EqFloor.is.Le.Lt]
   constructor
   ·

@@ -24,9 +24,9 @@ private lemma main
 -- imply
   (-(n.fmod d)) // d = -1 := by
 -- proof
-  denote h_r : r = n.fmod d
-  rw [← h_r]
-  rw [FDiv.eq.FloorDiv]
+  denote h_r : n.fmod d = r
+  rw [h_r]
+  rw [FDiv.eq.FloorDiv (α := ℚ)]
   norm_cast
   simp
   rw [EqFloor.is.Le.Lt]
@@ -38,8 +38,8 @@ private lemma main
     rw [CoeNeg.eq.NegCoe]
     rw [DivNeg.eq.NegDiv]
     apply LeNegS.of.Ge
-    have := DivFMod.lt.One (n := n) (d := d)
-    rw [← h_r] at this
+    have := DivFMod.lt.One n d (α := ℚ)
+    rw [h_r] at this
     linarith
   ·
     norm_cast
@@ -48,10 +48,10 @@ private lemma main
     rw [CoeNeg.eq.NegCoe]
     rw [DivNeg.eq.NegDiv]
     apply LtNeg_0.of.Gt_0
-    have := DivFMod.ge.Zero (n := n) (d := d)
-    rw [← h_r] at this
+    have := DivFMod.ge.Zero n d (α := ℚ)
+    rw [h_r] at this
     apply Gt.of.Ge.Ne this
-    rw [← h_r] at h
+    rw [h_r] at h
     apply Div.ne.Zero.of.Ne_0.Ne_0
     exact NeCoeS.of.Ne h
     have := Ne.of.NotEq h_d

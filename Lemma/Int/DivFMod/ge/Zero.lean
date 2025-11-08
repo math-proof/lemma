@@ -5,9 +5,10 @@ open Int Rat
 
 @[main]
 private lemma main
-  {n d : ℤ} :
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
+  (n d : ℤ) :
 -- imply
-  n.fmod d / (d : ℚ) ≥ 0 := by
+  n.fmod d / (d : α) ≥ 0 := by
 -- proof
   apply Div.ge.Zero.of.Mul.ge.Zero
   norm_cast

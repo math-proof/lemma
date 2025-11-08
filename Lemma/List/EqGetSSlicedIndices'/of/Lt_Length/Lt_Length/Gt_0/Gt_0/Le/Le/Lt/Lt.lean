@@ -60,7 +60,7 @@ private lemma main
       rw [h_Eq_start, h_Eq_step]
     ·
       have h := Ge.of.NotLt h
-      have h := LeToNatCeil_1.of.Ge_Sub h
+      have h := LeToNatCeil_1.of.Ge_Sub h (α := ℚ)
       rw [← LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt h_stop h_start h_step] at h
       have := Lt.of.Lt.Le h_i h
       contradiction

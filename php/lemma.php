@@ -135,6 +135,8 @@ if ($_POST) {
 						continue;
 					foreach ($exists as [, $section, $module]) {
 						$imports[] = $module;
+						if (!in_array($section, $open_section))
+							$open_section[] = $section;
 						break;
 					}
 				}

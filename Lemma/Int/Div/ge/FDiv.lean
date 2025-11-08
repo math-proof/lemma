@@ -6,13 +6,16 @@ open Int
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {n d : ℤ} :
 -- imply
-  n / (d : ℚ) ≥ (n // d : ℤ) := by
+  n / (d : α) ≥ (n // d : ℤ) := by
 -- proof
-  have h_Eq := Div.eq.AddFDiv___FMod (n := n) (d := d)
-  have := DivFMod.ge.Zero (n := n) (d := d)
-  apply Ge.of.Eq_Add.Ge_0 h_Eq this
+  apply Ge.of.Eq_Add.Ge_0
+  .
+    apply Div.eq.AddFDiv___FMod
+  .
+    apply DivFMod.ge.Zero
 
 
 -- created on 2025-03-21

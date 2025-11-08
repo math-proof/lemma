@@ -26,7 +26,7 @@ private lemma main
   have := h_eq.symm.trans this
   have h_div := EqDivS.of.Eq this n
   have h_div := EqCoeS.of.Eq (R := ℤ) h_div
-  repeat rw [Div.eq.FloorDiv] at h_div
+  repeat rw [Div.eq.FloorDiv (α := ℚ)] at h_div
   simp at h_div
   rw [DivAdd.eq.AddDivS] at h_div
   have h_n := Ne_0 j

@@ -16,7 +16,7 @@ private lemma main
   1 // d = -1 := by
 -- proof
   have := LtCoeS.of.Lt (R := ℚ) h
-  rw [FDiv.eq.FloorDiv]
+  rw [FDiv.eq.FloorDiv (α := ℚ)]
   apply EqFloor.of.Le.Lt
   ·
     norm_cast

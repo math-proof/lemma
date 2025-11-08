@@ -8,11 +8,12 @@ open Bool Int Rat
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop step i : ℕ}
 -- given
-  (h : i + 1 < ⌈(stop - start : ℚ) / step⌉) :
+  (h : i + 1 < ⌈(stop - start : α) / step⌉) :
 -- imply
-  i < ⌈(stop - (start + step) : ℚ) / step⌉ := by
+  i < ⌈(stop - (start + step) : α) / step⌉ := by
 -- proof
   if h_step : step = 0 then
     rw [h_step] at h
@@ -20,7 +21,7 @@ private lemma main
     contradiction
   else
     have h_step := Ne.of.NotEq h_step
-    have h_step : (step : ℚ) ≠ 0 := by
+    have h_step : (step : α) ≠ 0 := by
       simp_all
     rw [Sub_Add.eq.SubSub]
     rw [DivSub.eq.SubDivS]

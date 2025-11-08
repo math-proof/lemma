@@ -31,19 +31,14 @@ import Lemma.Rat.DivNeg.eq.NegDiv
 open Bool Int Nat Rat
 
 
-/--
-This lemma establishes an equivalence between the ceiling of the division of two integers and the floor of an adjusted division expression.
-Specifically, for integers `n` and `d`, the ceiling of `n / d` is equal to the floor of `(d + n - sign(d)) / d`.
-This relationship leverages properties of the ceiling and floor functions, along with the sign of the divisor `d`, to transform the ceiling operation into a floor operation with a modified numerator.
-The proof involves case analysis on whether `d` is zero and utilizes algebraic manipulations and properties of integer division to achieve the equivalence.
--/
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℤ} :
 -- imply
-  ⌈n / (d : ℚ)⌉ = ⌊(d + n - sign d) / (d : ℚ)⌋ := by
+  ⌈n / (d : α)⌉ = ⌊(d + n - sign d) / (d : α)⌋ := by
 -- proof
-  if h : (d : ℚ) = 0 then
+  if h : (d : α) = 0 then
     rw [h]
     norm_num
   else
@@ -89,8 +84,7 @@ private lemma main
     rw [AddMul.eq.MulAdd_1] at this
     have := Eq_0.of.Mul.eq.Zero.Ne_0 this h
     have := Eq_Neg.of.Add.eq.Zero this
-    rw [FDiv.eq.FloorDiv] at this
-    rw [FDiv.eq.FloorDiv] at this
+    repeat rw [FDiv.eq.FloorDiv (α := α)] at this
     rw [CoeNeg.eq.NegCoe] at this
     rw [DivNeg.eq.NegDiv] at this
     norm_cast at this

@@ -3,36 +3,41 @@ import Lemma.Nat.LeMin.of.Le
 import Lemma.Int.Sub.le.Zero.of.Le
 import Lemma.Int.GtAdd_1'0
 import Lemma.Rat.Div.le.Zero.of.Le_0.Gt_0
-import Lemma.Rat.LeCeil.is.Le
+import Lemma.Int.LeCeil.is.Le
 import Lemma.Nat.Min
 open Int Nat Rat
 
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop : ℕ}
 -- given
   (h : stop ≤ start)
   (step n : ℕ) :
 -- imply
-  ⌈((stop : ℚ) ⊓ (n : ℚ) - start) / (step + 1)⌉ ≤ 0 := by
+  ⌈((stop : α) ⊓ (n : α) - start) / (step + 1)⌉ ≤ 0 := by
 -- proof
-  have h := LeCoeS.of.Le (R := ℚ) h
-  have h := LeMin.of.Le h (n : ℚ)
-  have h := Sub.le.Zero.of.Le h
-  have h_gt_0 := GtAdd_1'0 (R := ℚ) step
-  have h := Div.le.Zero.of.Le_0.Gt_0 h h_gt_0
-  apply LeCeil.of.Le h
+  apply LeCeil.of.Le
+  simp
+  apply Div.le.Zero.of.Le_0.Gt_0
+  .
+    apply Sub.le.Zero.of.Le
+    apply LeMin.of.Le
+    apply LeCoeS.of.Le h
+  .
+    apply GtAdd_1'0 (R := α) step
 
 
 @[main]
 private lemma left
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop : ℕ}
 -- given
   (h : stop ≤ start)
   (step n : ℕ) :
 -- imply
-  ⌈((n : ℚ) ⊓ (stop : ℚ) - start) / (step + 1)⌉ ≤ 0 := by
+  ⌈((n : α) ⊓ (stop : α) - start) / (step + 1)⌉ ≤ 0 := by
 -- proof
   rw [Min.comm]
   apply main h

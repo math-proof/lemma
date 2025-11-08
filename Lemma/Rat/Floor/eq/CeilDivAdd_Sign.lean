@@ -6,9 +6,10 @@ open Int
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℤ} :
 -- imply
-  ⌊n / (d : ℚ)⌋ = ⌈(n - d + sign d) / (d : ℚ)⌉ := by
+  ⌊n / (d : α)⌋ = ⌈(n - d + sign d) / (d : α)⌉ := by
 -- proof
   rw [SubCoeS.eq.CoeSub]
   rw [AddCoeS.eq.CoeAdd]

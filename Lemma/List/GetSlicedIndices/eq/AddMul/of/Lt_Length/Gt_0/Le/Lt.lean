@@ -14,14 +14,14 @@ open Nat List Int
 @[main]
 private lemma main
 -- given
-  (h_start : j < n + j)
-  (h_stop : n + j ≤ n' + j)
-  (h_step : d > 0)
+  (h_start : j < m * n)
+  (h_stop : m * n ≤ m * n)
+  (h_step : n > 0)
   (h_i : i < (Nat.sliced_indices h_start h_stop h_step).length) :
 -- imply
   (Nat.sliced_indices h_start h_stop h_step)[i] = i * n + j := by
 -- proof
-  induction n generalizing i j d with
+  induction n generalizing i j with
   | zero =>
     simp
     linarith

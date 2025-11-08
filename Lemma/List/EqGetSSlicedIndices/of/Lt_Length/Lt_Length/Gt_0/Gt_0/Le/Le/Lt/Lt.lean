@@ -55,7 +55,7 @@ private lemma main
       apply ih (start := start + step) (start' := start' + step') h_start h_start' (by simp_all) h_i h_i'
     ·
       have h := Ge.of.NotLt h
-      have h := LeToNatCeil_1.of.Le_Add h
+      have h := LeToNatCeil_1.of.Le_Add h (α := ℚ)
       rw [← LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step] at h
       have := Lt.of.Lt.Le h_i h
       contradiction

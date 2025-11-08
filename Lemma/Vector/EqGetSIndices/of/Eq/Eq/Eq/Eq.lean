@@ -57,18 +57,18 @@ private lemma main
             rcases h with h | h | h
             ·
               have h := LeToNatS.of.Le h
-              have h := CeilDivSubMin.le.Zero.of.Le h step n
+              have h := CeilDivSubMin.le.Zero.of.Le h step n (α := ℚ)
               have h_i := Lt.of.Lt.Le h_i h
               contradiction
             ·
               have h := EqToNat_0.of.Le_0 h
               have h_ge : (Slice.Add_Mul_DivSub1Sign_2 n start).toNat ≥ 0 := by simp
               rw [← h] at h_ge
-              have h := CeilDivSubMin.le.Zero.of.Le h_ge step n
+              have h := CeilDivSubMin.le.Zero.of.Le h_ge step n (α := ℚ)
               have h_i := Lt.of.Lt.Le h_i h
               contradiction
             ·
-              have h := CeilDivSubMin.le.Zero.of.Le h step (Slice.Add_Mul_DivSub1Sign_2 n stop).toNat
+              have h := CeilDivSubMin.le.Zero.of.Le h step (Slice.Add_Mul_DivSub1Sign_2 n stop).toNat (α := ℚ)
               rw [Min.comm] at h
               have h_i := Lt.of.Lt.Le h_i h
               contradiction
@@ -107,18 +107,18 @@ private lemma main
         ·
           have h := LeAddS.of.Le 1 h
           have h := LeToNatS.of.Le h
-          have h := CeilDivSubMin.le.Zero.of.Le h step n
+          have h := CeilDivSubMin.le.Zero.of.Le h step n (α := ℚ)
           have h_i := Lt.of.Lt.Le h_i h
           contradiction
         ·
           have h := EqToNat_0.of.Le_0 h
           have h_ge : (Slice.Add_Mul_DivSub1Sign_2 n stop + 1).toNat ≥ 0 := by simp
           rw [← h] at h_ge
-          have h := CeilDivSubMin.le.Zero.of.Le h_ge step n
+          have h := CeilDivSubMin.le.Zero.of.Le h_ge step n (α := ℚ)
           have h_i := Lt.of.Lt.Le h_i h
           contradiction
         ·
-          have h := CeilDivSubMin.le.Zero.of.Le h step (Slice.Add_Mul_DivSub1Sign_2 n start + 1).toNat
+          have h := CeilDivSubMin.le.Zero.of.Le h step (Slice.Add_Mul_DivSub1Sign_2 n start + 1).toNat (α := ℚ)
           rw [Min.comm] at h
           have h_i := Lt.of.Lt.Le h_i h
           contradiction

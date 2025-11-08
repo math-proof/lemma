@@ -13,10 +13,9 @@ private lemma main
 -- imply
   (d + n) // d = 1 + n // d := by
 -- proof
-  repeat rw [FDiv.eq.FloorDiv]
+  repeat rw [FDiv.eq.FloorDiv (α := ℚ)]
   rw [CoeAdd.eq.AddCoeS]
   rw [DivAdd.eq.Add1Div (by simp [h] : (d : ℚ) ≠ 0)]
-  -- Apply the property of the floor function for adding an integer
   rw [FloorAdd1.eq.Add1Floor]
 
 

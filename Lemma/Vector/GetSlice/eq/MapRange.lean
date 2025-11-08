@@ -13,7 +13,7 @@ import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Nat.LtVal
 import Lemma.Nat.Ne_0
 import Lemma.Rat.Div.le.Zero.of.Le_0
-import Lemma.Rat.LeCeil.is.Le
+import Lemma.Nat.LeCeil.is.Le
 import Lemma.Rat.Sub_Div.eq.DivSubMul.of.Ne_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SEq.of.Eq_0.Eq_0
@@ -37,7 +37,7 @@ private lemma main
       simp [Slice.length]
       rw [EqAdd_Mul_DivSub1Sign_2]
       rw [EqToNat]
-      apply LeCeil.of.Le
+      apply @Nat.LeCeil.of.Le
       simp
       apply Div.le.Zero.of.Le_0
       simp

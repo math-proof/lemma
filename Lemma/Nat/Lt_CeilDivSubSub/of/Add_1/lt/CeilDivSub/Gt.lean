@@ -7,12 +7,13 @@ open Nat Int
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {start stop step i : ℕ}
 -- given
   (h₀ : start > step)
-  (h₁ : i + 1 < ⌈(start - stop : ℚ) / step⌉) :
+  (h₁ : i + 1 < ⌈(start - stop : α) / step⌉) :
 -- imply
-  i < ⌈((start - step : ℕ) - stop : ℚ) / step⌉ := by
+  i < ⌈((start - step : ℕ) - stop : α) / step⌉ := by
 -- proof
   rw [CoeSub.eq.SubCoeS.of.Gt]
   rw [SubSub.eq.Sub_Add]

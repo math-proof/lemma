@@ -5,9 +5,10 @@ open Nat
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℕ} :
 -- imply
-  (n / d :ℕ) = ⌊n / (d : ℚ)⌋ := by
+  (n / d :ℕ) = ⌊n / (d : α)⌋ := by
 -- proof
   if h_d : d = 0 then
     rw [h_d]

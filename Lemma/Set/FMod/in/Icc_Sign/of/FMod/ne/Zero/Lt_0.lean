@@ -33,7 +33,7 @@ private lemma main
   apply In_Icc.of.Le.Le
   ·
     rw [FMod.eq.Sub_MulFDiv]
-    rw [FDiv.eq.FloorDiv]
+    rw [FDiv.eq.FloorDiv (α := ℚ)]
     apply Le_Sub.of.LeAdd
     rw [Add.comm]
     apply LeAdd.of.Le_Sub

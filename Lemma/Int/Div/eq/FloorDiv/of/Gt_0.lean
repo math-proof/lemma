@@ -8,21 +8,24 @@ open Int
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α] [FloorRing α]
   {n d : ℤ}
 -- given
   (h : d > 0) :
 -- imply
-  n / d = ⌊n / (d : ℚ)⌋ := by
+  n / d = ⌊n / (d : α)⌋ := by
 -- proof
   apply Eq.symm
   rw [EqFloor.is.Le.Lt]
   constructor
-  · 
+  ·
     exact GeDivS.of.Gt_0 h
-  · 
-    have h_Eq := Div.eq.AddDiv___Mod (n := n) (d := d)
-    have := Div.lt.One.of.Gt_0 (n := n) h
-    exact Lt_Add.of.Eq_Add.Lt h_Eq this
+  ·
+    apply Lt_Add.of.Eq_Add.Lt
+    .
+      apply Div.eq.AddDiv___Mod n d
+    .
+      apply Div.lt.One.of.Gt_0 (n := n) h
 
 
 -- created on 2025-10-08

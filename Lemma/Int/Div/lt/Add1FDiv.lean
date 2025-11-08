@@ -7,15 +7,14 @@ open Nat Int
 
 @[main]
 private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {n d : ℤ} :
 -- imply
-  n / (d : ℚ) < 1 + n // d := by
+  n / (d : α) < 1 + n // d := by
 -- proof
-  -- Use the fact that the floor of n/d is less than or equal to n/d
-  have h_Eq := Div.eq.AddFDiv___FMod (n := n) (d := d)
-  rw [h_Eq]
+  rw [Div.eq.AddFDiv___FMod n d]
   rw [Add.comm]
-  apply LtAddS.of.Lt (a := (n // d : ℚ))
+  apply LtAddS.of.Lt (a := (n // d : α))
   apply DivFMod.lt.One
 
 

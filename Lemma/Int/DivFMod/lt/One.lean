@@ -13,26 +13,28 @@ open Nat Int Rat
 
 @[main]
 private lemma main
-  {n d : ℤ} :
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
+  (n d : ℤ) :
 -- imply
-  (n.fmod d) / (d : ℚ) < 1 := by
+  (n.fmod d) / (d : α) < 1 := by
 -- proof
   by_cases h : d > 0
   have := LtFMod.of.Gt_0 (n := n) h
-  have := LtCoeS.of.Lt (R := ℚ) this
-  have h' := GtCoeS.of.Gt (R := ℚ) h
-  have := LtDivS.of.Lt.Gt_0 this h'
-  rwa [Div.eq.One.of.Gt_0 h'] at this
-  by_cases h' : d = 0
-  rw [h']
-  norm_num
-  have h := Le.of.NotGt h
-  have h := Lt.of.Le.Ne h' h
-  have := GtFMod.of.Lt_0 (n := n) h
-  have := GtCoeS.of.Gt (R := ℚ) this
-  have h' := LtCoeS.of.Lt (R := ℚ) h
-  have := LtDivS.of.Gt.Lt_0 this h'
-  rwa [Div.eq.One.of.Lt_0 h'] at this
+  have := LtCoeS.of.Lt (R := α) this
+  have h' := GtCoeS.of.Gt (R := α) h
+  have := LtDivS.of.Lt.Gt_0 this (by simpa) (x := ↑d)
+  rwa [Div.eq.One.of.Gt_0 (by simpa)] at this
+  if h_d : d = 0 then
+    rw [h_d]
+    norm_num
+  else
+    have h := Le.of.NotGt h
+    have h := Lt.of.Le.Ne h_d h
+    have := GtFMod.of.Lt_0 (n := n) h
+    have := GtCoeS.of.Gt (R := α) this
+    have h' := LtCoeS.of.Lt (R := α) h
+    have := LtDivS.of.Gt.Lt_0 this (by simpa) (x := ↑d)
+    rwa [Div.eq.One.of.Lt_0 (by simpa)] at this
 
 
 -- created on 2025-03-28

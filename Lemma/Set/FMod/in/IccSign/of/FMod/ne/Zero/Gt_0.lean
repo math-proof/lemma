@@ -40,7 +40,7 @@ private lemma main
     rwa [← h_Eq] at this
   ·
     rw [FMod.eq.Sub_MulFDiv]
-    rw [FDiv.eq.FloorDiv]
+    rw [FDiv.eq.FloorDiv (α := ℚ)]
     apply LeSub.of.Le_Add
     rw [Add.comm]
     apply Le_Add.of.LeSub

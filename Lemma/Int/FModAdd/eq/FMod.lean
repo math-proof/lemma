@@ -28,8 +28,7 @@ private lemma main
     rw [SubAdd.eq.Add_Sub]
     rw [Sub.eq.Add_Neg (a := n)]
     apply EqAddS.of.Eq.left
-    rw [FDiv.eq.FloorDiv]
-    rw [FDiv.eq.FloorDiv]
+    repeat rw [FDiv.eq.FloorDiv (α := ℚ)]
     rw [CoeAdd.eq.AddCoeS]
     rw [Add.comm]
     have h := NeCoeS.of.Ne (R := ℚ) h
