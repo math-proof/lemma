@@ -113,14 +113,28 @@ if ($_POST) {
 				$lemmaNameReg = str_replace('.','\.', $lemmaName);
 				if (array_filter($imports, fn ($import) => preg_match("/^Lemma\.(\w+)\.$lemmaNameReg$/", $import)))
 					continue;
-				foreach ([...$open_section, ...$sections] as $section) {
+				$exists = [];
+				foreach ($sections as $section) {
 					$module = $section . '.' . $lemmaName;
 					if ($module = module_exists($module)) {
 						$module = 'Lemma.' . $module;
-						if (!in_array($module, $imports))
-							$imports[] = $module;
-						if (!in_array($section, $open_section))
-							$open_section[] = $section;
+						$exists[] = [in_array($module, $imports), $section, $module];
+					}
+				}
+				if ($exists) {
+					$break = false;
+					foreach ($exists as [$hit, $section, $module]) {
+						if ($hit) {
+							if (!in_array($section, $open_section))
+								$open_section[] = $section;
+							$break = true;
+							break;
+						}
+					}
+					if ($break)
+						continue;
+					foreach ($exists as [, $section, $module]) {
+						$imports[] = $module;
 						break;
 					}
 				}

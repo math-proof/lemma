@@ -6,11 +6,14 @@ def Eq.left {a b : α} (_ : a = b) : α := a
 def Eq.right {a b : α} (_ : a = b) : α := b
 
 
+def evalLet (t : Ident) (e : Expr) : TacticM Unit := do
+  let e ← PrettyPrinter.delab e
+  evalTactic (← `(tactic| let $t := $e))
+
 def evalHave (h_t : Ident) (t : Ident) (e : Expr) (reverse : Bool) : TacticM Unit := do
   let e ← PrettyPrinter.delab e
   let eq ← if reverse then `($e = $t) else `($t = $e)
   evalTactic (← `(tactic| have $h_t : $eq := rfl))
-
 
 def letAssignment (h_t : Ident) (t : Ident) (reverse : Bool) : TacticM Unit := do
   let mainGoal ← getMainGoal
@@ -28,10 +31,7 @@ def haveDeclaration (h_t : Ident) (t : Ident) (e : Expr) (reverse : Bool) : Tact
     | .app (.app (.app (.app (.const ``Eq.right _) _) _) rhs) _ => rhs
     | .app (.app (.app (.app (.const ``Eq.left _) _) lhs) _) _ => lhs
     | e => e
-  let mainGoal ← getMainGoal
-  let mainGoal ← mainGoal.define t.getId (← inferType e) e
-  let (_, mainGoal) ← mainGoal.intro t.getId
-  replaceMainGoal [mainGoal]
+  evalLet t e
   evalHave h_t t e reverse
 
 
