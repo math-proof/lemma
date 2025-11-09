@@ -1,6 +1,6 @@
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Int.EqToNat
-import Lemma.List.GetSlicedIndices.eq.AddMul.of.Lt_Length.Gt_0.Le.Lt
+import Lemma.List.GetSlicedIndices.eq.AddMul.of.Gt_0.Gt_0.Lt.Lt
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Nat.CoeAdd_1.eq.AddCoe_1
@@ -61,7 +61,7 @@ private lemma main
     | 0 =>
       contradiction
     | n + 1 =>
-      denote h_start_eq : start = (Slice.Add_Mul_DivSub1Sign_2 (m * (n + 1)) ↑↑j).toNat
+      denote h_start_eq : start = (Slice.Add_Mul_DivSub1Sign_2 (m * (n + 1)) j).toNat
       denote h_stop_eq : stop = (Slice.Add_Mul_DivSub1Sign_2 (m * (n + 1)) (↑m * (↑n + 1))).toNat.min (m * (n + 1))
       simp [← h_start_eq, ← h_stop_eq]
       rw [EqAdd_Mul_DivSub1Sign_2, EqToNat] at h_start_eq
@@ -70,7 +70,8 @@ private lemma main
       denote h_step_eq : step = n.succ
       simp [h_start_eq, h_stop_eq]
       simp [EqGetS]
-      apply GetSlicedIndices.eq.AddMul.of.Lt_Length.Gt_0.Le.Lt h_j h.left (by simp) (j := j) (n := m) (d := n + 1) (i := i)
+      apply GetSlicedIndices.eq.AddMul.of.Gt_0.Gt_0.Lt.Lt _ h_j
+      repeat linarith
 
 
 -- created on 2025-11-07
