@@ -40,9 +40,6 @@ private lemma main
         have h_stop' : n * d ≤ n * d := by
           omega
         have h_length := LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step
-        -- have h_i' : i < (Nat.sliced_indices h_start' h_stop' h_step).length := by
-          -- rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start' h_stop' h_step]
-          -- simp_all
         sorry
     ·
       have h_length := LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step

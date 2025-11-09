@@ -12,4 +12,15 @@ private lemma main
   aesop
 
 
+@[main]
+private lemma bfn
+  {f g : α → β → γ}
+-- given
+  (h : f = g) :
+-- imply
+  HEq f g := by
+-- proof
+  aesop
+
+
 -- created on 2025-07-15

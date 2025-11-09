@@ -1,14 +1,6 @@
-import Lemma.Nat.Ge.of.NotLt
-import Lemma.Nat.Add
-import Lemma.Nat.AddAdd.eq.Add_Add
+import Lemma.List.GetSlicedIndices.eq.AddMul.of.Lt_Length.Gt_0.LeAddSMul.Lt_AddMul
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
-import Lemma.Nat.Lt_Add.of.Gt_0
-import Lemma.Nat.CoeAdd_1.eq.AddCoe_1
-import Lemma.Nat.CoeAdd.eq.AddCoeS
-import Lemma.Int.EqToNatCeil
-import Lemma.List.EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
-import Lemma.Nat.Eq_0.of.LeAdd
-open List Int Nat
+open List
 
 
 @[main]
@@ -20,52 +12,38 @@ private lemma main
 -- imply
   (Nat.sliced_indices (step := 1) h_start h_stop (by simp))[i] = i + j := by
 -- proof
-  induction n generalizing i j with
-  | zero =>
+  have h_start : j < n * 1 + j := by 
     simp
     linarith
-  | succ n ih =>
-    unfold Nat.sliced_indices
-    split_ifs with h_start?
-    ·
-      match i with
-      | 0 =>
-        simp
-      | i + 1 =>
-        simp
-        rw [AddAdd.eq.Add_Add (a := i)]
-        rw [Add.comm (a := 1)]
-        have h_start' : j + 1 < n + (j + 1) := by
-          apply Lt_Add.of.Gt_0
-          linarith
-        have h_stop' : n + (j + 1) ≤ n' + (j + 1) := by
-          omega
-        have h_length := LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt (step := 1) h_start h_stop (by simp)
-        have h_i' : i < (Nat.sliced_indices (step := 1) h_start' h_stop' (by simp)).length := by
-          rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt (step := 1) h_start' h_stop' (by simp)]
-          simp_all
-        have ih := ih h_start' h_stop' h_i'
-        have h_nj : n + 1 + j = n + (j + 1) := by
-          rw [AddAdd.eq.Add_Add]
-          rw [Add.comm (a := 1)]
-        rw [← ih]
-        have h_i? : i < (Nat.sliced_indices (step := 1) h_start? h_stop (by simp)).length := by
-          rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt (step := 1) h_start? h_stop (by simp)]
-          simp_all
-          rw [AddCoe_1.eq.CoeAdd_1] at h_i
-          rw [AddCoeS.eq.CoeAdd] at h_i
-          rw [EqToNatCeil] at h_i
-          grind
-        apply EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt h_start? h_start' h_stop h_stop' (by simp) (by simp) rfl (by ring_nf) rfl h_i? h_i'
-    ·
-      have h_length := LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt (step := 1) h_start h_stop (by simp)
-      have h := Ge.of.NotLt h_start?
-      rw [Add.comm] at h
-      rw [AddAdd.eq.Add_Add] at h
-      have h := Eq_0.of.LeAdd h
-      subst h
-      simp_all
-      linarith
+  have h_stop : n * 1 + j ≤ n' * 1 + j := by 
+    simp
+    linarith
+  have h_step : 1 > 0 := by 
+    simp
+  have h_i : i < (Nat.sliced_indices h_start h_stop h_step).length := by 
+    rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt] at ⊢ h_i
+    simp_all
+  have := GetSlicedIndices.eq.AddMul.of.Lt_Length.Gt_0.LeAddSMul.Lt_AddMul h_start h_stop h_step h_i
+  simp at this
+  simp [← this]
+  congr
+  ·
+    grind
+  ·
+    grind
+  ·
+    grind
+  ·
+    rw [show n' * 1 = n' by simp]
+  ·
+    grind
+  ·
+    grind
+  ·
+    grind
+  ·
+    grind
 
 
 -- created on 2025-05-24
+-- updated on 2025-11-09

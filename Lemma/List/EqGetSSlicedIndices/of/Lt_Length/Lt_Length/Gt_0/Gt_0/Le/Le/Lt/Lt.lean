@@ -35,19 +35,19 @@ private lemma main
     -- Split the cases based on whether the next index is within bounds
     split_ifs with h
     ·
-      rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step] at h_i
+      rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt] at h_i
       have h_start : start + step < stop := by
         linarith
       have h_i : i < (Nat.sliced_indices h_start h_stop h_step).length := by
-        rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step]
+        rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt]
         simp_all
         apply Lt_CeilDivSub_Add.of.Add_1.lt.CeilDivSub
         assumption
-      rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start' h_stop' h_step'] at h_i'
+      rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt] at h_i'
       have h_start' : start' + step' < stop' := by
         linarith
       have h_i' : i < (Nat.sliced_indices h_start' h_stop' h_step').length := by
-        rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start' h_stop' h_step']
+        rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt]
         simp_all
         apply Lt_CeilDivSub_Add.of.Add_1.lt.CeilDivSub
         assumption

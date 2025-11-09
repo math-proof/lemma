@@ -14,11 +14,11 @@ private lemma main
 -- imply
   (Nat.sliced_indices (step := 1) h_start h_stop (by simp))[i] = i + j := by
 -- proof
-  rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop (by simp)] at h_i
+  rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt] at h_i
   rw [h_j] at h_start
   rw [h_n] at h_stop h_start
   have h_i : i < (Nat.sliced_indices (step := 1) h_start h_stop (by simp)).length := by
-    rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop (by simp)]
+    rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt]
     simp_all
   have := GetSlicedIndices.eq.Add.of.Lt_Length.Le.Lt h_start h_stop h_i
   simp_all
