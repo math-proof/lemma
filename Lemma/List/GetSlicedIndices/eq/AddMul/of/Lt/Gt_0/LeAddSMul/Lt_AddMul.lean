@@ -1,5 +1,6 @@
 import Lemma.List.EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
+import Lemma.List.EqLengthGetSlicedIndices.of.Gt_0.LeAddSMul.Lt_AddMul
 import Lemma.Nat.Add
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -16,9 +17,10 @@ private lemma main
   (h_start : j < n * d + j)
   (h_stop : n * d + j ≤ n' * d + j)
   (h_step : d > 0)
-  (h_i : i < (Nat.sliced_indices h_start h_stop h_step).length) :
+  (h_i : i < n) :
 -- imply
-  (Nat.sliced_indices h_start h_stop h_step)[i] = i * d + j := by
+  have := List.EqLengthGetSlicedIndices.of.Gt_0.LeAddSMul.Lt_AddMul h_start h_stop h_step
+  (Nat.sliced_indices h_start h_stop h_step)[i]'(by rwa [this]) = i * d + j := by
 -- proof
   induction n generalizing i j with
   | zero =>
@@ -42,9 +44,7 @@ private lemma main
         have h_stop' : n * d + (j + d) ≤ n' * d + (j + d) := by
           linarith [h_step]
         have h_length := LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step
-        have h_i' : i < (Nat.sliced_indices h_start' h_stop' h_step).length := by
-          rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt]
-          simp_all
+        have h_i' : i < n := by simp_all
         have ih := ih h_start' h_stop' h_i'
         rw [← ih]
         have h_i? : i < (Nat.sliced_indices h_start? h_stop h_step).length := by
@@ -53,7 +53,7 @@ private lemma main
           rw [AddAdd.comm]
           rw [AddAdd.eq.Add_Add]
           simp_all
-        apply EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt h_start? h_start' h_stop h_stop' h_step h_step rfl (by ring_nf) rfl h_i? h_i'
+        apply EqGetSSlicedIndices.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt h_start? h_start' h_stop h_stop' h_step h_step rfl (by ring_nf) rfl h_i?
     ·
       have h_length := LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step
       have h := Ge.of.NotLt h_start?
@@ -62,7 +62,7 @@ private lemma main
       simp [AddAdd.eq.Add_Add] at h
       simp [h_d] at h
       subst h
-      rw [h_length] at h_i
+      simp at h_i
       simp_all
 
 

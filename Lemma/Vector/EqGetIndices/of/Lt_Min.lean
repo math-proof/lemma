@@ -1,7 +1,7 @@
 import sympy.vector.vector
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
-import Lemma.List.GetSlicedIndices.eq.Add.of.Lt_Length.Le.Lt.Eq_0
+import Lemma.List.EqGetSlicedIndices.of.Lt.Le.Gt_0
 open List Nat
 
 
@@ -24,8 +24,8 @@ private lemma main
     simp [EqAdd_Mul_DivSub1Sign_2.zero] at h
     omega
   ·
-    apply GetSlicedIndices.eq.Add.of.Lt_Length.Le.Lt.Eq_0
-    simp [EqAdd_Mul_DivSub1Sign_2.zero]
+    apply EqGetSlicedIndices.of.Lt.Le.Gt_0
+    simp_all [EqAdd_Mul_DivSub1Sign_2]
 
 
 @[main]

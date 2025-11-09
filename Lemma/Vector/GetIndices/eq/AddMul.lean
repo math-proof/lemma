@@ -70,7 +70,7 @@ private lemma main
       denote h_step_eq : step = n.succ
       simp [h_start_eq, h_stop_eq]
       simp [EqGetS]
-      apply GetSlicedIndices.eq.AddMul.of.Lt_Length.Gt_0.Le.Lt h_j h.left (by simp) (by simp) (j := j) (n := m) (d := n + 1) (i := i)
+      apply GetSlicedIndices.eq.AddMul.of.Lt_Length.Gt_0.Le.Lt h_j h.left (by simp) (j := j) (n := m) (d := n + 1) (i := i)
 
 
 -- created on 2025-11-07

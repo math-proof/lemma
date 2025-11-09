@@ -4,7 +4,7 @@ import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Bool.OrOr.is.Or_Or
 import Lemma.Nat.LtVal
 import Lemma.List.EqLengthSlice
-import Lemma.List.GetSlicedIndices.eq.Add.of.Lt_Length.Le.Lt.Eq_Add.Eq
+import Lemma.List.GetSlicedIndices.eq.Add.of.Lt.LeAddS.Lt_Add
 import Lemma.Int.EqToNat
 open List Bool Int Nat
 
@@ -20,23 +20,23 @@ private lemma main
   unfold List.Vector.indices
   unfold Slice.toList
   simp
+  have hi := LtVal i
+  simp [EqLengthSlice] at hi
   split_ifs with h
   ·
     rw [AddCoeS.eq.CoeAdd] at h
     repeat rw [EqAdd_Mul_DivSub1Sign_2] at h
     simp at h
     rw [OrOr.is.Or_Or] at h
-    have hi := LtVal i
-    simp [EqLengthSlice] at hi
     rcases h with h | h | h <;> linarith
   ·
     simp [GetElem.getElem]
     simp [List.Vector.get]
-    apply GetSlicedIndices.eq.Add.of.Lt_Length.Le.Lt.Eq_Add.Eq (n' := n)
-    ·
-      rw [EqAdd_Mul_DivSub1Sign_2]
-      simp
-    ·
+    rw [← GetSlicedIndices.eq.Add.of.Lt.LeAddS.Lt_Add (show j < n + j by omega) (show n + j ≤ n + j by simp_all) (show i < n by simp_all)]
+    congr
+    .
+      simp [EqAdd_Mul_DivSub1Sign_2]
+    .
       rw [AddCoeS.eq.CoeAdd]
       rw [EqAdd_Mul_DivSub1Sign_2]
       simp only [EqToNat]
