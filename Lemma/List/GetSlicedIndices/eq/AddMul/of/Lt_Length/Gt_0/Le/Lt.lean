@@ -14,18 +14,19 @@ open Nat List Int
 @[main]
 private lemma main
 -- given
-  (h_start : j < m * n)
-  (h_stop : m * n ≤ m * n)
-  (h_step : n > 0)
+  (h_j : j < d)
+  (h_start : j < n * d)
+  (h_stop : n * d ≤ n * d)
+  (h_step : d > 0)
   (h_i : i < (Nat.sliced_indices h_start h_stop h_step).length) :
 -- imply
-  (Nat.sliced_indices h_start h_stop h_step)[i] = i * n + j := by
+  (Nat.sliced_indices h_start h_stop h_step)[i] = i * d + j := by
 -- proof
-  induction n generalizing i j with
+  induction d generalizing i j with
   | zero =>
     simp
     linarith
-  | succ n ih =>
+  | succ d ih =>
     unfold Nat.sliced_indices
     split_ifs with h_start?
     ·
@@ -34,6 +35,14 @@ private lemma main
         simp
       | i + 1 =>
         simp
+        have h_start' : j + (d + 1) < n * (d + 1) := by
+          linarith
+        have h_stop' : n * d ≤ n * d := by
+          omega
+        have h_length := LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step
+        -- have h_i' : i < (Nat.sliced_indices h_start' h_stop' h_step).length := by
+          -- rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start' h_stop' h_step]
+          -- simp_all
         sorry
     ·
       have h_length := LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt h_start h_stop h_step
