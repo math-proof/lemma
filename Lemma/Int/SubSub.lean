@@ -1,18 +1,17 @@
-import sympy.Basic
+import Lemma.Int.Sub_Add.eq.SubSub
+import Lemma.Nat.Add
+open Int Nat
 
 
-/--
-This lemma demonstrates that in an additive commutative group, the order of subtraction of two elements does not affect the result.
-Specifically, it shows that subtracting `b` and then `c` from `a` yields the same value as subtracting `c` and then `b`, leveraging the commutativity of the group operation.
--/
 @[main]
 private lemma Comm
-  [AddCommGroup α]
+  [SubtractionCommMonoid α]
   {a b c : α} :
 -- imply
   a - b - c = a - c - b := by
 -- proof
-  abel
+  repeat rw [SubSub.eq.Sub_Add]
+  rw [Add.comm]
 
 
 -- created on 2025-06-06

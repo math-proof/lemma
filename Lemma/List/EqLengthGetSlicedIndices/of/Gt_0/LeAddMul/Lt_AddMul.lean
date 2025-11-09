@@ -7,7 +7,7 @@ open List Nat
 private lemma main
 -- given
   (h_start : j < n * d + j)
-  (h_stop : n * d + j ≤ n' * d + j)
+  (h_stop : n * d + j ≤ N)
   (h_step : d > 0) :
 -- imply
   (Nat.sliced_indices h_start h_stop h_step).length = n := by

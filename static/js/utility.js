@@ -7,24 +7,11 @@ function axiom_user() {
 }
 
 function textFocused(text, selectionStart) {
-	console.log("selectionStart = " + selectionStart);
-
-	for (; selectionStart < text.length; ++selectionStart) {
-		var char = text[selectionStart];
-		if (char >= 'a' && char <= 'z' ||
-			char >= 'A' && char <= 'Z' ||
-			char == '_' ||
-			char >= '0' && char <= '9') {
-			continue;
-		}
-		else {
-			break;
-		}
-	}
-
+	var m = text.slice(selectionStart).match(/^[\w'!₀-₉]*/);
+	if (m)
+		selectionStart += m[0].length;
 	var textForFocus = text.slice(0, selectionStart);
-	var m = textForFocus.match(/(\w+)(?:\.\w+)*$/);
-	return m[0];
+	return textForFocus.match(/(\w+)(?:\.[\w'!₀-₉]+)*$/)[0];
 }
 
 function find_and_jump(event, sections) {

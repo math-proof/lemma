@@ -25,15 +25,16 @@ private lemma main
 -- imply
   (Nat.sliced_indices' h_stop h_start h_step)[i].val = (Nat.sliced_indices' h_stop' h_start' h_step')[i].val := by
 -- proof
-  induction i generalizing start start' with
+  have h_Eq_start := h_Eq_start.symm
+  have h_Eq_stop := h_Eq_stop.symm
+  have h_Eq_step := h_Eq_step.symm
+  subst h_Eq_start h_Eq_stop h_Eq_step
+  induction i generalizing start with
   | zero =>
-    -- Base case: The first elements of both slices are the same
     unfold Nat.sliced_indices'
     split_ifs <;> simp_all
   | succ i ih =>
-    -- Inductive step: Use the inductive hypothesis to show the next elements are the same
     unfold Nat.sliced_indices'
-    -- Split the cases based on whether the next index is within bounds
     split_ifs with h
     ·
       rw [LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt h_stop h_start h_step] at h_i
@@ -47,16 +48,14 @@ private lemma main
         apply Lt_CeilDivSubSub.of.Add_1.lt.CeilDivSub.Gt h_gt
         assumption
       rw [LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt h_stop' h_start' h_step'] at h_i'
-      have h_stop' : start' - step' > stop' := by
-        simp_all
-      have h_start' : start' - step' ≤ n' := LeSub.of.Le h_start' step'
-      have h_i' : i < (Nat.sliced_indices' h_stop' h_start' h_step').length := by
-        rw [LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt h_stop' h_start' h_step']
+      have h_start' : start - step ≤ n' := LeSub.of.Le h_start' step
+      have h_i' : i < (Nat.sliced_indices' h_stop h_start' h_step').length := by
+        rw [LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt h_stop h_start' h_step']
         simp_all
         apply Lt_CeilDivSubSub.of.Add_1.lt.CeilDivSub.Gt h_gt
         assumption
-      simp [h_stop']
-      apply ih (start := start - step) (start' := start' - step') h_stop h_stop' (by simp_all)
+      simp
+      apply ih (start := start - step) h_stop
       rw [h_Eq_start, h_Eq_step]
     ·
       have h := Ge.of.NotLt h
