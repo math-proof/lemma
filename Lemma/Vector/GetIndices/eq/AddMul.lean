@@ -13,7 +13,7 @@ import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Rat.EqCeilDivSubMul.of.Lt
 import Lemma.Vector.EqGetS
-import Lemma.Vector.EqLengthSlice_Mul.of.Lt
+import Lemma.List.EqLengthSlice_Mul.of.Lt
 import sympy.core.relational
 import sympy.vector.vector
 open Bool Int List Nat Rat Vector
@@ -25,7 +25,7 @@ private lemma main
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (List.Vector.indices ⟨j, m * n, n⟩ (m * n)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt m (LtVal j)]⟩ = ↑i * n + j := by
+  (List.Vector.indices ⟨j, m * n, n⟩ (m * n)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt (LtVal j)]⟩ = ↑i * n + j := by
 -- proof
   unfold List.Vector.indices Slice.toList
   simp
@@ -71,6 +71,61 @@ private lemma main
       simp [h_start_eq, h_stop_eq]
       simp [EqGetS]
       apply GetSlicedIndices.eq.AddMul.of.Gt_0.Gt_0.Lt.Lt _ h_j
+      repeat linarith
+
+
+@[main]
+private lemma Comm
+-- given
+  (i : Fin m)
+  (j : Fin n) :
+-- imply
+  (List.Vector.indices ⟨j, n * m, n⟩ (n * m)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt.comm (LtVal j)]⟩ = ↑i * n + j := by
+-- proof
+  unfold List.Vector.indices Slice.toList
+  simp
+  have h_j := LtVal j
+  have h_i := LtVal i
+  have h_n := Gt_0 j
+  have h_m := Gt_0 i
+  split_ifs with h
+  ·
+    rw [MulCoeS.eq.CoeMul] at h
+    repeat rw [EqAdd_Mul_DivSub1Sign_2] at h
+    rw [EqToNat] at h
+    rw [LeCoeS.is.Le] at h
+    rw [Or.comm] at h
+    rw [Or_Or.is.OrOr] at h
+    simp at h
+    contrapose! h
+    constructor
+    ·
+      nlinarith
+    ·
+      apply Mul.gt.Zero.of.Gt_0.Gt_0
+      repeat omega
+  ·
+    rw [MulCoeS.eq.CoeMul] at h
+    repeat rw [EqAdd_Mul_DivSub1Sign_2] at h
+    rw [EqToNat] at h
+    rw [LeCoeS.is.Le] at h
+    rw [Or.comm] at h
+    rw [Or_Or.is.OrOr] at h
+    simp at h
+    match n with
+    | 0 =>
+      contradiction
+    | n + 1 =>
+      denote h_start_eq : start = (Slice.Add_Mul_DivSub1Sign_2 ((n + 1) * m) j).toNat
+      denote h_stop_eq : stop = (Slice.Add_Mul_DivSub1Sign_2 ((n + 1) * m) ((↑n + 1) * ↑m)).toNat.min ((n + 1) * m)
+      simp [← h_start_eq, ← h_stop_eq]
+      rw [EqAdd_Mul_DivSub1Sign_2, EqToNat] at h_start_eq
+      rw [OfNat.eq.Cast (α := ℤ), @Nat.AddCoeS.eq.CoeAdd, MulCoeS.eq.CoeMul, EqAdd_Mul_DivSub1Sign_2, EqToNat] at h_stop_eq
+      simp at h_stop_eq
+      denote h_step_eq : step = n.succ
+      simp [h_start_eq, h_stop_eq]
+      simp [EqGetS]
+      apply GetSlicedIndices.eq.AddMul.of.Gt_0.Gt_0.Lt.Lt.comm _ h_j
       repeat linarith
 
 

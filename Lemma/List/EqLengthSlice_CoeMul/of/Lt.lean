@@ -14,4 +14,16 @@ private lemma main
   apply EqLengthSlice_Mul.of.Lt h m
 
 
+@[main]
+private lemma Comm
+  {i : ℕ}
+-- given
+  (h : i < n)
+  (m : ℕ) :
+-- imply
+  (⟨i, (n * m : ℕ), n⟩ : Slice).length (n * m) = m := by
+-- proof
+  apply EqLengthSlice_Mul.of.Lt.comm h m
+
+
 -- created on 2025-11-09

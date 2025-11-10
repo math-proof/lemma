@@ -6,9 +6,9 @@ private lemma main
 -- given
   (i : Fin n) :
 -- imply
-  i < n := by
+  i < n :=
 -- proof
-  simp
+  i.isLt
 
 
 -- created on 2025-05-18

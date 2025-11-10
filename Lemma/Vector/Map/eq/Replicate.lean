@@ -1,4 +1,4 @@
-import Lemma.Vector.GetMap.eq.FunGet
+import Lemma.Vector.GetMap.eq.UFnGet
 open Vector
 
 

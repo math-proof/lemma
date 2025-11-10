@@ -4,7 +4,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.EqGetS
-import Lemma.Vector.GetMap.eq.FunGet
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.Head.eq.Get_0

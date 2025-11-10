@@ -5,7 +5,7 @@ import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Broadcast
 import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Nat.Div.eq.HDiv
 import Lemma.Tensor.Div.eq.Div_Broadcast
-import Lemma.Vector.GetMap.eq.FunGet
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Nat.Any_Eq_AddMul
 open Tensor Vector Nat
@@ -62,7 +62,7 @@ private lemma main
         simp
       simp only [h_fun]
       ext k
-      rw [GetMap.eq.FunGet]
+      rw [GetMap.eq.UFnGet]
       let ⟨i, j, h_k⟩ := Any_Eq_AddMul k
       repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
       simp

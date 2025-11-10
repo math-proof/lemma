@@ -6,6 +6,7 @@ import Lemma.Nat.MulSub.eq.SubMulS
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.EqAddSub.of.Ge
+import Lemma.Nat.Mul
 open Nat Int
 
 
@@ -30,6 +31,19 @@ private lemma main
   rw [Add_Sub.eq.SubAdd.of.Ge (by linarith)] at h_Le
   rw [EqAddSub.of.Ge (by nlinarith)] at h_Le
   apply Lt.of.Le_Sub_1.Gt_0 (by nlinarith)
+  assumption
+
+
+@[main]
+private lemma Comm
+-- given
+  (i : Fin m)
+  (j : Fin n) :
+-- imply
+  i * n + j < n * m := by
+-- proof
+  have := main i j
+  conv_rhs at this=> rw [Mul.comm]
   assumption
 
 
