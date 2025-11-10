@@ -8,6 +8,7 @@ open Nat Rat Int
 @[main]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
+-- given
   (n d : ℤ) :
 -- imply
   n / (d : α) = (n / d : ℤ) + (n % d : ℤ) / (d : α) := by

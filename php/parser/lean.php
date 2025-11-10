@@ -2496,10 +2496,13 @@ abstract class LeanBinaryBoolean extends LeanBinary
 
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
-        if ($this->rhs === $caret && $caret instanceof LeanCaret && $indent > $this->indent) {
-            $caret->indent = $indent;
-            $this->rhs = new LeanStatements([$caret], $indent, $caret->level);
-            return $caret;
+        if ($this->rhs === $caret && $indent > $this->indent) {
+            if ($caret instanceof LeanCaret) {
+                $caret->indent = $indent;
+                $this->rhs = new LeanStatements([$caret], $indent, $caret->level);
+                return $caret;
+            }
+            return $this->parent->push_args_indented($indent, $newline_count, false);
         }
         return parent::insert_newline($caret, $newline_count, $indent, $next);
     }

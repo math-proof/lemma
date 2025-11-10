@@ -1,4 +1,4 @@
-import Lemma.Vector.EqLengthSlice.of.Lt
+import Lemma.Vector.EqLengthSlice_Mul.of.Lt
 import Lemma.Nat.Eq_Mk.of.EqVal
 import Lemma.Vector.GetIndices.eq.AddMul
 import Lemma.Vector.EqGetMapRange.of.Lt
@@ -52,7 +52,7 @@ private lemma main
     ·
       intro t
       have h_t := LtVal t
-      simp [EqLengthSlice.of.Lt m h_j] at h_t
+      simp [EqLengthSlice_Mul.of.Lt m h_j] at h_t
       simp only [GetElem.getElem]
       simp [Vector.EqGetRange.fin]
       unfold List.Vector.getSlice
@@ -62,7 +62,7 @@ private lemma main
       apply Eq_Mk.of.EqVal
       apply GetIndices.eq.AddMul ⟨t, h_t⟩
     ·
-      simp [EqLengthSlice.of.Lt m h_j]
+      simp [EqLengthSlice_Mul.of.Lt m h_j]
 
 
 -- created on 2025-11-07

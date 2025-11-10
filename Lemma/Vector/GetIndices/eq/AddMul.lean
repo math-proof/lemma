@@ -13,7 +13,7 @@ import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Rat.EqCeilDivSubMul.of.Lt
 import Lemma.Vector.EqGetS
-import Lemma.Vector.EqLengthSlice.of.Lt
+import Lemma.Vector.EqLengthSlice_Mul.of.Lt
 import sympy.core.relational
 import sympy.vector.vector
 open Bool Int List Nat Rat Vector
@@ -25,7 +25,7 @@ private lemma main
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (List.Vector.indices ⟨j, m * n, n⟩ (m * n)).get ⟨i, by simp [EqLengthSlice.of.Lt m (LtVal j)]⟩ = ↑i * n + j := by
+  (List.Vector.indices ⟨j, m * n, n⟩ (m * n)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt m (LtVal j)]⟩ = ↑i * n + j := by
 -- proof
   unfold List.Vector.indices Slice.toList
   simp

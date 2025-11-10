@@ -7,6 +7,7 @@ import Lemma.Nat.LtSubS_1.of.Lt.Ne_0
 import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Nat.LtVal
 import Lemma.Nat.EqAddSub.of.Ge
+import Lemma.Int.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
 import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
@@ -20,7 +21,6 @@ import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
 import Lemma.List.In_CartesianProduct.of.In_CartesianProductCons
 import Lemma.List.Lt.of.In_CartesianProductCons
-import Lemma.Set.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
@@ -31,7 +31,7 @@ import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DataInv.eq.InvData
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
-open Bool Set List Tensor Nat
+open Bool Nat Int List Tensor
 
 def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
   have h_i := LtVal i
