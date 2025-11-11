@@ -1,4 +1,4 @@
-import Lemma.Vector.Eq.of.All_EqGetS
+import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqGet0'0
 open Vector
 

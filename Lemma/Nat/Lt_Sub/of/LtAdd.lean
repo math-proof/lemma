@@ -2,7 +2,7 @@ import Lemma.Nat.Add
 open Nat
 
 
-@[main]
+@[main, comm 1]
 private lemma main
   {a b c : ℕ}
 -- given
@@ -13,7 +13,7 @@ private lemma main
   Nat.lt_sub_of_add_lt h
 
 
-@[main]
+@[main, comm 1]
 private lemma left
   {a b c : ℕ}
 -- given

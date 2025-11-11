@@ -127,6 +127,9 @@ def Tensor.getElem (base : Tensor α s) (indices : List ℕ) (h : indices ∈ (s
     have h_eq := Length.eq.Get_0.of.GtLength_0 h_Gt_0 base
     cast (by simp) (getElem (base.get ⟨index, by rwa [h_eq]⟩) indices h)
 
+/--
+mimics tensor slicing in libraries like PyTorch: X[start:stop:step]
+-/
 def Tensor.getSlice
   (X : Tensor α s)
   (slice : Slice) :

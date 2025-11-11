@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Vector.Eq.of.All_EqGetS
+import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.EqGetS
 import Lemma.Vector.EqFlattenUnflatten

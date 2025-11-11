@@ -3,7 +3,7 @@ import Lemma.Nat.Eq_0
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqSliceS.Eq.of.Eq
-import Lemma.Tensor.GetSliceStack.as.StackUFn
+import Lemma.Tensor.GetSliceStack.as.Stack_UFn
 import Lemma.Bool.SEq.is.Eq
 open Tensor Nat Bool
 
@@ -23,10 +23,10 @@ private lemma main
     constructor
     ·
       apply Eq.of.SEq
-      have h_f := Tensor.GetSliceStack.as.StackUFn f n 1
+      have h_f := Tensor.GetSliceStack.as.Stack_UFn f n 1
       rw [h_slice] at h_f
       apply h_f.symm.trans
-      apply Tensor.GetSliceStack.as.StackUFn g n 1
+      apply Tensor.GetSliceStack.as.Stack_UFn g n 1
     ·
       simp only [GetElem.getElem] at h_n
       simp [Tensor.EqGetStack.fin] at h_n

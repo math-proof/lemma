@@ -1,11 +1,9 @@
-import sympy.tensor.tensor
-import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.Data.eq.FlattenMapRange_GetToVector
-import Lemma.Vector.Eq_FlattenMapRange.of.All_EqValS
-import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
-import Lemma.Vector.EqValS.of.SEq
-open Tensor Vector Bool
+import Lemma.Tensor.Eq.is.EqDataS
+import Lemma.Vector.EqFlattenMapRange.of.All_SEqArraySlice
+import sympy.tensor.tensor
+open Tensor Vector
 
 
 @[main]
@@ -21,14 +19,13 @@ private lemma main
   let data : List.Vector α (s₀ * s.prod) := a.data
   have h_data : data = a.data := rfl
   rw [← h_data]
-  apply Eq_FlattenMapRange.of.All_EqValS
+  apply Eq_FlattenMapRange.of.All_SEqArraySlice
   rw [h_data]
   intro i
-  have h_eq := DataGetToVector.as.ArraySliceData a i
-  rw [← EqValS.of.SEq h_eq]
-  have hi := h i
-  apply EqUFnS.of.Eq hi (·.val)
+  have h_eq := ArraySliceData.as.DataGetToVector a i
+  apply SEq.trans h_eq
+  rw [h i]
 
 
 -- created on 2025-05-18
--- updated on 2025-05-23
+-- updated on 2025-11-11

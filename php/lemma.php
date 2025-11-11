@@ -66,7 +66,16 @@ if ($_POST) {
 				}
 				break;
 			default:
-				return;
+				if ($tokens[2] === null) {
+					if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches))
+						$tokens[1] = $matches[1] . $matches[2];
+					$module = implode('.', $tokens);
+					$path = module_to_lean($module);
+					if (!file_exists($path))
+						return;
+				}
+				else
+					return;
 			}
 		}
 	
@@ -338,7 +347,21 @@ EOT;
 				return true;
 			break;
 		default:
-			return;
+			if ($tokens[1] === null) {
+				# try comm:
+				if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[0], $matches))
+					$tokens[0] = $matches[1] . $matches[2];
+				elseif (preg_match("/^([SH]?Eq|Iff)(.+)/", $tokens[0], $matches))
+					$tokens[0] = $matches[1] . "_" . $matches[2];
+				else
+					break;
+				$import = implode('.', $tokens);
+				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
+				if (preg_match("/\b$import\b/", $lemmaCode))
+					return true;
+			}
+			else
+				return;
 		}
 	});
 	if (!array_filter($imports, fn($import) => str_starts_with($import, 'Lemma.')) && array_search('sympy.Basic', $imports) === false)

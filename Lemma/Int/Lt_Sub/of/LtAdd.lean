@@ -2,7 +2,7 @@ import Lemma.Int.LtSubS.of.Lt
 open Int
 
 
-@[main]
+@[main, comm 1]
 private lemma left
   [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {a b c : α}
@@ -16,7 +16,7 @@ private lemma left
   exact h
 
 
-@[main]
+@[main, comm 1]
 private lemma main
   [AddCommGroup α] [PartialOrder α] [IsOrderedAddMonoid α]
   {a b c : α}
