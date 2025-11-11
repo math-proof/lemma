@@ -14,7 +14,7 @@ private lemma main
 
 
 @[main, comm]
-private lemma Comm
+private lemma comm'
   [AddCommSemigroup α]
 -- given
   (a b c : α) :

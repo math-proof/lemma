@@ -51,7 +51,7 @@ private lemma main
   intro s₀ h_s h_s₀ h_head h_d_1
   ext i
   simp
-  rw [GetToVector.eq.Get.of.GtLength_0.headd (by simpa)]
+  rw [GetToVector.eq.Get.of.GtLength_0.headD (by simpa)]
   apply Eq_Cast.of.SEq
   simp
   have hi := LtVal i

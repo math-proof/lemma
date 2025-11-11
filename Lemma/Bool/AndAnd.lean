@@ -3,7 +3,7 @@ open Bool
 
 
 @[main]
-private lemma Comm :
+private lemma comm' :
 -- imply
   (p ∧ q) ∧ r ↔ (p ∧ r) ∧ q := by
 -- proof

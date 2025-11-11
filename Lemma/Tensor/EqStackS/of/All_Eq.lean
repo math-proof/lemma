@@ -15,7 +15,7 @@ private lemma fin
   apply Eq.of.All_EqGetS
   intro i
   simp [GetElem.getElem]
-  repeat rw [EqGetStack.fin.fin]
+  repeat rw [EqGetStack.fn.fin]
   apply h i
 
 

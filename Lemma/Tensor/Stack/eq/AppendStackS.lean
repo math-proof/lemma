@@ -28,8 +28,7 @@ private lemma main
     simp
     rw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge (by simp_all) (by simp_all)]
     simp [GetElem.getElem]
-    rw [EqGetStack.fin.fin]
-    simp_all
+    simp_all [EqGetStack.fn.fin]
 
 
 -- created on 2024-12-22

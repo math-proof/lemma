@@ -1196,6 +1196,11 @@ class LeanToken extends Lean
                 return true;
         }
     }
+
+    public function equals($other) {
+        if ($other instanceof LeanToken)
+            return $this->text == $other->text;
+    }
 }
 
 LeanToken::$subscript_keys = '/[' . implode('', array_keys(LeanToken::$subscript)) . ']+/u';
@@ -2293,6 +2298,11 @@ class LeanProperty extends LeanBinary
         if ($this->parent instanceof LeanTactic && $indent > $this->indent)
             return $this->parent->push_args_indented($indent, $newline_count, false);
         return $this->parent->insert_newline($this, $newline_count, $indent, $next);
+    }
+
+    public function equals($other) {
+        if ($other instanceof LeanProperty)
+            return $this->lhs->equals($other->lhs) && $this->rhs->equals($other->rhs);
     }
 }
 
@@ -4798,7 +4808,7 @@ class LeanModule extends LeanStatements
                         $imply = ['lean' => $implyLean, 'latex' => $implyLatex];
 
                         $declspec = $declspec->lhs;
-                        if ($declspec instanceof LeanToken) {
+                        if ($declspec instanceof LeanToken || $declspec instanceof LeanProperty) {
                             $name = $declspec;
                             $declspec = [];
                         } else {
@@ -5010,18 +5020,18 @@ class LeanModule extends LeanStatements
         ];
     }
 
+    public function create_property($module) {
+        return array_reduce(
+            explode('.', $module),
+            function ($carry, $token) {
+                $token = new LeanToken($token, 0, 0);
+                return $carry ? new LeanProperty($carry, $token, 0, 0) : $token;
+            },
+        );
+    }
     public function import($module)
     {
-        $this->unshift(new Lean_import(
-            array_reduce(
-                preg_split('/\./', $module),
-                function ($carry, $token) {
-                    $token = new LeanToken($token, 0, 0);
-                    return $carry ? new LeanProperty($carry, $token, 0, 0) : $token;
-                },
-            ),
-            0, 0
-        ));
+        $this->unshift(new Lean_import($this->create_property($module), 0, 0));
     }
 
     public function echo()

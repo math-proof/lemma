@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma FIN
+private lemma fin
   [DecidableEq ι]
   {A B : Finset ι}
   {x : ι}
@@ -11,7 +11,6 @@ private lemma FIN
 -- imply
   x ∉ A ∧ x ∉ B := by
 -- proof
-  -- Split the goal into two subgoals: x ∉ A and x ∉ B.
   constructor <;>
     simp_all [Finset.mem_union]
 

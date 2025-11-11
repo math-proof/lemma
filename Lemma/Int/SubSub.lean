@@ -4,7 +4,7 @@ open Int Nat
 
 
 @[main]
-private lemma Comm
+private lemma comm'
   [SubtractionCommMonoid α]
   {a b c : α} :
 -- imply

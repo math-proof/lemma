@@ -7,7 +7,7 @@ open Set Bool
 
 
 @[main, comm]
-private lemma FIN
+private lemma fin
   [DecidableEq α]
   {A B : Finset α}
   {x : α} :

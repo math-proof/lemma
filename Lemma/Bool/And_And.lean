@@ -2,11 +2,10 @@ import sympy.Basic
 
 
 @[main]
-private lemma Comm :
+private lemma comm' :
 -- imply
   p ∧ q ∧ r ↔ p ∧ r ∧ q := by
 -- proof
-  -- Use the constructor tactic to split the equivalence into two implications.
   constructor <;>
     intro h
   ·

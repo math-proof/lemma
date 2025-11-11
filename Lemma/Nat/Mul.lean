@@ -6,7 +6,7 @@ This lemma asserts the commutativity of the multiplication operation in a commut
 Specifically, for any elements `a` and `b` in the magma, the product `a * b` is equal to `b * a`, as established by the underlying commutative property of the magma's binary operation.
 -/
 @[main]
-private lemma Comm
+private lemma comm'
   [CommMagma α]
 -- given
   (a b : α) :

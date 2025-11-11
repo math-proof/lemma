@@ -15,7 +15,7 @@ private lemma main
 
 
 @[main]
-private lemma Comm
+private lemma comm'
   [CommMonoid α]
 -- given
   (s : List α)

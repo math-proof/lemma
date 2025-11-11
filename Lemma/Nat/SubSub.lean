@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma Comm
+private lemma comm'
   {a b c : ℕ} :
 -- imply
   a - b - c = a - c - b := by

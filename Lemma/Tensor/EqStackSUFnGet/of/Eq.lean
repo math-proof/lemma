@@ -19,7 +19,7 @@ private lemma main
   simp_all
   intro i
   simp [GetElem.getElem]
-  repeat rw [EqGetStack.fin.fin]
+  repeat rw [EqGetStack.fn.fin]
   simp
   apply SEq.of.Eq
   rfl

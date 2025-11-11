@@ -7,6 +7,17 @@ $module = $_GET['new'];
 
 $module = str_replace("/", ".", $module);
 
+function fetch_codes($module)
+{
+    $leanFile = module_to_lean($module);
+    if (file_exists($leanFile)) {
+        $code = compile(file_get_contents($leanFile))->render2vue(false);
+        $code['date']['created'] = date('Y-m-d');
+        unset($code['date']['updated']);
+        return $code;
+    }
+}
+
 $code = fetch_codes($module);
 if (!$code) {
     require_once 'init.php';

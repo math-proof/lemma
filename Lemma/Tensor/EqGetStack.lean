@@ -6,7 +6,7 @@ open Tensor Vector
 
 
 @[main]
-private lemma fin.fin
+private lemma fn.fin
 -- given
   (f : Fin n → Tensor α s)
   (i : Fin n) :
@@ -33,7 +33,7 @@ private lemma fin
 -- imply
   ([i < n] f i).get i = f i := by
 -- proof
-  apply fin.fin
+  apply fn.fin
 
 
 @[main]
@@ -55,7 +55,7 @@ private lemma fn
 -- imply
   ([i < n] f i)[i] = f i :=
 -- proof
-  fin.fin f i
+  fn.fin f i
 
 
 -- created on 2025-05-23

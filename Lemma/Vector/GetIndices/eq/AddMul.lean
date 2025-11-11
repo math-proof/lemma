@@ -75,7 +75,7 @@ private lemma main
 
 
 @[main]
-private lemma Comm
+private lemma comm'
 -- given
   (i : Fin m)
   (j : Fin n) :

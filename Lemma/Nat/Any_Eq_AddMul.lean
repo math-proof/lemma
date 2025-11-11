@@ -20,7 +20,7 @@ private lemma main
 
 
 @[main]
-private lemma Comm
+private lemma comm'
   {m n : ℕ}
 -- given
   (t : Fin (m * n)) :

@@ -13,8 +13,8 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS
   intro i
-  simp [GetElem.getElem]
-  rw [EqGetStack.fin.fin]
+  rw [EqGetStack.fn]
+  rfl
 
 
 -- created on 2025-11-11

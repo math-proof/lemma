@@ -87,28 +87,6 @@ function read_all_lemma($dir)
     }
 }
 
-function retrieve_all_dependency()
-{
-    foreach (read_all_lemma(dirname(__file__)) as $lean) {
-        $from = lean_to_module($lean);
-
-        $count = [];
-        foreach (detect_dependency_from_py($lean) as $to) {
-            if (! array_key_exists($to, $count)) {
-                $count[$to] = 0;
-            }
-
-            ++$count[$to];
-        }
-
-        yield [
-            $from,
-            $count
-        ];
-    }
-}
-
-
 function detect_axiom(&$statement)
 {
     // Eq << Eq.x_j_subset.apply(Discrete.Set.subset.nonempty, Eq.x_j_inequality, evaluate=False)
@@ -343,80 +321,6 @@ function look_for_executable_python()
     }
 
     return "python";
-}
-
-function run($lean)
-{
-    $module = lean_to_module($lean);
-    $logs[] = "module = " . str_replace(".", "/", $module);
-    $user = basename(dirname(dirname(__file__)));
-    if (std\is_linux()) {
-        $array = file_get_contents("http://localhost:8000/$user/run.lean?module=$module", 0, stream_context_create([
-            'http' => [
-                'timeout' => 3000
-            ]
-        ]));
-        $array = explode("\n", $array);
-    } else {
-        $array = file_get_contents("http://localhost/$user/run.lean?module=$module", 0, stream_context_create([
-            'http' => [
-                'timeout' => 3000
-            ]
-        ]));
-        $array = explode("\r\n", $array);
-    }
-
-    $data = null;
-    foreach ($array as &$line) {
-        //         error_log("line = " . $line);
-        if (preg_match('/^b([\'"])(.+)\1$/', $line, $m)) {
-            $line = $m[2];
-            if ($m[1] == "'") {
-                $line = str_replace('"', '\\"', $line);
-                $data = explode("\v", eval("return \"$line\";"));
-                $index = count($data) - 1;
-                $data[$index] = str_replace("\\'", "'", $data[$index]);
-            } else {
-                $data = explode("\v", eval("return \"$line\";"));
-            }
-            break;
-        } else {
-            $logs[] = $line;
-        }
-    }
-
-    return [
-        $logs,
-        $data
-    ];
-}
-
-function compile_python_file($lean)
-{
-    $text = new std\Text($lean);
-    foreach ($text as $line) {
-        error_log($line);
-    }
-    // $user = basename(dirname(dirname(__file__)));
-    // if (std\is_linux()) {
-    // $url = "https://www.lemma.cn:5000/compile";
-    // } else {
-    // $url = "http://localhost:5000/compile";
-    // }
-
-    // $data = ["lean"=> $lean];
-    return "error detected!";
-}
-
-function fetch_codes($module)
-{
-    $leanFile = module_to_lean($module);
-    if (file_exists($leanFile)) {
-        $code = compile(file_get_contents($leanFile))->render2vue(false);
-        $code['date']['created'] = date('Y-m-d');
-        unset($code['date']['updated']);
-        return $code;
-    }
 }
 
 function axiom_directory()

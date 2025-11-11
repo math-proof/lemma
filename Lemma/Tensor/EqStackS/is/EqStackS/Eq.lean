@@ -41,10 +41,8 @@ private lemma main
           apply Eq.of.All_EqGetS
           intro i
           rw [Eq_0 i]
-          simp [GetElem.getElem]
-          repeat rw [EqGetStack.fin.fin]
-          simp
-          assumption
+          repeat rw [EqGetStack.fn]
+          simpa
         rw [this]
       _ = [i < n + 1] g i := (Stack.eq.AppendStackS g).symm
 

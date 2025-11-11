@@ -49,7 +49,7 @@ private lemma main
     simp [DataFromVector.eq.FlattenMapData]
     simp [EqUnflattenFlatten]
     simp [h_d]
-    have h_cons := Cons_EraseIdxTail.eq.EraseIdx.of.GtLength_0.headd (by omega) (by omega) (s := s) (i := d) 1
+    have h_cons := Cons_EraseIdxTail.eq.EraseIdx.of.GtLength_0.headD (by omega) (by omega) (s := s) (i := d) 1
     rw [DataCast.eq.Cast_Data.of.Eq h_cons]
     apply SEq_Cast.of.SEq.Eq
     ·

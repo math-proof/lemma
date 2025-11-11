@@ -11,12 +11,12 @@ private lemma main
 -- imply
   ⋃ i, f i = ⋃ i, f (-i) := by
 -- proof
-  apply Eq.of.All_Imp.All_Imp <;> 
-  · 
+  apply Eq.of.All_Imp.All_Imp <;>
+  ·
     intro x h
+    apply In_Cup.of.Any_In
     have h := Any_In.of.In_Cup h
     have := Any_UFnNeg.of.Any h
-    apply In_Cup.of.Any_In
     simp_all
 
 

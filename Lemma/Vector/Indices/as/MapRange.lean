@@ -33,7 +33,7 @@ private lemma main
 
 
 @[main]
-private lemma Comm
+private lemma comm'
   {n : ℕ}
 -- given
   (j : Fin n)

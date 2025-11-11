@@ -3,7 +3,7 @@ import Lemma.List.ProdCons.eq.Mul_Prod
 open List
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Mul α] [One α]
   {s : List α}

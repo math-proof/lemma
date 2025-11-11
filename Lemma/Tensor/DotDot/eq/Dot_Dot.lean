@@ -3,7 +3,7 @@ import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Finset.MulSum.eq.Sum_Mul
 import Lemma.Finset.Mul_Sum.eq.Sum_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Finset.EqSumS
+import Lemma.Finset.Sum_Sum
 open Tensor Nat Finset
 set_option maxHeartbeats 1000000
 
@@ -41,7 +41,7 @@ private lemma main
   have : ∀ k : Fin m, ∑ ι : Fin n, L[i][k] * (M[k][ι] * N[ι][j]) = ∑ ι : Fin n, L[i][k] * M[k][ι] * N[ι][j] := by
     simp [MulMul.eq.Mul_Mul]
   simp_all
-  apply EqSumS.comm
+  apply Sum_Sum.comm
 
 
 -- created on 2025-05-03

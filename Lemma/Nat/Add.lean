@@ -1,18 +1,15 @@
 import sympy.Basic
 
 
-/--
-This lemma asserts the commutativity of the addition operation in an additive commutative magma (`AddCommMagma`).
-It demonstrates that for any two elements `a` and `b` in the magma, the sum `a + b` is equal to `b + a`, a property inherent to the structure's algebraic definition.
--/
 @[main]
-private lemma Comm
+private lemma comm'
   [AddCommMagma α]
-  {a b : α} :
+-- given
+  (a b : α) :
 -- imply
-  a + b = b + a := by
+  a + b = b + a :=
 -- proof
-  apply add_comm
+  add_comm a b
 
 
 -- created on 2024-07-01
