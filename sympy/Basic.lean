@@ -176,7 +176,7 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.mp (type proof : Expr) (parity : ℕ := 0) (reverse : Bool := false) : Expr × Expr :=
+def Expr.mp (type proof : Expr) (parity : ℕ := 0) (reverse : Bool := false) : ℕ × Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
   let deBruijn := (binders.zipParity parity .instImplicit).zipIdx.filterMap fun ⟨⟨bit, _⟩, deBruijn⟩ => if bit then some deBruijn else none
   let decDeBruijnIndex := fun type => deBruijn.foldr (fun deBruijn type => type.decDeBruijnIndex 1 deBruijn) type
@@ -190,10 +190,12 @@ def Expr.mp (type proof : Expr) (parity : ℕ := 0) (reverse : Bool := false) : 
     binders
   let ⟨us, lhs, rhs⟩ := type.decomposeIff
   let ⟨given, imply, mp⟩ := if reverse then (rhs, lhs.incDeBruijnIndex 1, `Iff.mpr) else (lhs, rhs.incDeBruijnIndex 1, `Iff.mp)
+  let binders : List (Name × Expr × BinderInfo) := binders.zipIdx.map fun ⟨⟨binderName, binderType, binderInfo⟩, deBruijn⟩ =>
+    (binderName, binderType, (if binderInfo == .default && given.containsBVar deBruijn then .implicit else binderInfo))
   let telescope := fun lam body =>
-    binders.zipIdx.foldl
-      (fun body ⟨⟨binderName, binderType, binderInfo⟩, deBruijn⟩ =>
-        lam binderName binderType body (if binderInfo == .default && given.containsBVar deBruijn then .implicit else binderInfo)
+    binders.foldl
+      (fun body ⟨binderName, binderType, binderInfo⟩ =>
+        lam binderName binderType body binderInfo
       )
       body
   let proof :=
@@ -224,10 +226,13 @@ def Expr.mp (type proof : Expr) (parity : ℕ := 0) (reverse : Bool := false) : 
   let imply := pNameType.foldr (fun ⟨name, type⟩ imply => (Expr.forallE name type imply .default).incDeBruijnIndex 1) imply
   let proof := Expr.app (proof.incDeBruijnIndex size) bvar
   let proof := (deBruijn.zip pNameType).foldr (fun ⟨deBruijn, name, type⟩ proof => (.lam name (type.incDeBruijnIndex deBruijn) proof .default)) proof
-  (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type proof .default).map (telescope Expr.forallE) (telescope .lam)
+  (
+    binders.countP (·.snd.snd == .default),
+    (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type proof .default).map (telescope Expr.forallE) (telescope .lam)
+  )
 
 def List.mp (list : List String) : List String := list.decomposeOf [] (fun list => list.commutateIs "of") 1
-def List.comm.mp (list : List String) (parity : List Bool) : List String :=
+def List.comm.is (list : List String) (parity : List Bool) : List String :=
   list.decomposeOf parity fun list =>
     let i := list.idxOf "is"
     let ⟨lhs, rhs⟩ := list.splitAt i
@@ -260,7 +265,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.parity
-    let ⟨type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity
+    let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity
     addAndCompile <| .thmDecl {
       name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
       levelParams := levelParams
@@ -269,7 +274,7 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.mpr (type proof : Expr) (parity : ℕ := 0) : Expr × Expr := Expr.mp type proof parity true
+def Expr.mpr (type proof : Expr) (parity : ℕ := 0) : ℕ × Expr × Expr := Expr.mp type proof parity true
 def List.mpr (list : List String) : List String :=
   list.decomposeOf []
     (fun list =>
@@ -296,7 +301,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.parity
-    let ⟨type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity
+    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity
     addAndCompile <| .thmDecl {
       name := ((← getEnv).moduleTokens.mpr.foldl Name.str default).lemmaName declName
       levelParams := levelParams
@@ -322,8 +327,9 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ := Expr.mp decl.type (.const declName (levelParams.map .param))
-    let ⟨parity, type, value⟩ := Expr.comm type value stx.parity
+    let ⟨n, type, value⟩ := Expr.mp decl.type (.const declName (levelParams.map .param))
+    -- 2ⁿ, where n is the number of default binders
+    let ⟨parity, type, value⟩ := Expr.comm type value (1 <<< n)
     addAndCompile <| .thmDecl {
       name := (((← getEnv).moduleTokens.mp.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
@@ -349,10 +355,71 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ := Expr.mpr decl.type (.const declName (levelParams.map .param))
-    let ⟨parity, type, value⟩ := Expr.comm type value stx.parity
+    let ⟨n, type, value⟩ := Expr.mpr decl.type (.const declName (levelParams.map .param))
+    let ⟨parity, type, value⟩ := Expr.comm type value (1 <<< n)
     addAndCompile <| .thmDecl {
       name := (((← getEnv).moduleTokens.mpr.comm parity).foldl Name.str default).lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+def Expr.comm.is (type mp mpr : Lean.Expr) (parity : ℕ := 0) : List Bool × Expr × Expr :=
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let args := ((List.range binders.length).map fun i => .bvar i).reverse
+  let binders := binders.zipParity parity
+  let mp := mp.mkApp args
+  let mpr := mpr.mkApp args
+  let ⟨us, lhs, rhs⟩ := type.decomposeIff
+  let lhs := lhs.comm
+  let rhs := rhs.comm
+  let telescope := fun localBinders lam body =>
+    binders.foldl
+      (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo)
+      (localBinders.foldl
+        (fun body ⟨declName, type, deBruijn⟩ =>
+          let type := type.incDeBruijnIndex (deBruijn + 1)
+          .letE declName type (.app type.comm.symm (.bvar deBruijn)) ((body.incDeBruijnIndex 1).setDeBruijnIndex (deBruijn + 1) 0) false
+        )
+        body
+      )
+  let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
+  (
+    binders.filterMap fun ⟨comm, _, _, binderInfo⟩ => if binderInfo == .default then some comm else none,
+    ((Expr.const `Iff us).mkApp [lhs, rhs], (Expr.const `Iff.intro us).mkApp [lhs, rhs, mp, mpr]).map
+      (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE)
+      (telescope valueBinders .lam)
+  )
+
+/--
+`@[comm.is]` attribute automatically generates the commutative version of an equivalence (Iff) theorem.
+Usage:
+```lean
+@[mpr]
+theorem Section.LHS.is.RHS (a : α) (b : β) : a ≃ b ↔ a' = b':= by proof
+-- Generates:
+theorem Section.LHS'.is.RHS' {a : α} {b : β} : b ≃ a ↔ b' = a':= ⟨mr.comm, mpr.comm⟩
+```
+-/
+initialize registerBuiltinAttribute {
+  name := `comm.is
+  descr := "Automatically generate the two implications of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+
+    let proof := .const declName (levelParams.map .param)
+    let ⟨n, type, value⟩ := Expr.mpr decl.type proof
+    let ⟨_, type, mpr⟩ := Expr.comm type value (1 <<< n)
+
+    let ⟨n, type, value⟩ := Expr.mp decl.type proof
+    let ⟨_, type, mp⟩ := Expr.comm type value (1 <<< n)
+
+    let ⟨parity, type, value⟩ := Expr.comm.is decl.type mp mpr stx.parity
+    addAndCompile <| .thmDecl {
+      name := ((List.comm.is (← getEnv).moduleTokens parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value

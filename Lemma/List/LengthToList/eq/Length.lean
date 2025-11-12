@@ -1,4 +1,3 @@
-import sympy.core.relational
 import Lemma.Int.EqToNat_0.of.Le_0
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Rat.EqToNatCeil_0.of.Le
@@ -74,7 +73,7 @@ private lemma main
         (show (start.toNat : ℚ) ⊓ (n : ℚ) = start.toNat.min n by simp),
         (show (step : ℚ) + 1 = step.succ by simp)
       ]
-      rw [Eq_Sub.of.Eq_Add h_start_def] at h_Le
+      rw [Eq_Sub.of.EqAdd h_start_def] at h_Le
       let start := start.toNat.min n
       let stop := stop.toNat
       let step := step.succ

@@ -1,10 +1,7 @@
-import Lemma.Nat.EqSub.of.EqAdd
-import Lemma.Nat.EqSubAdd
-import Lemma.Nat.EqAddS.is.Eq
-open Nat
+import sympy.Basic
 
 
-@[main, comm, mp, mpr, mp.comm, mpr.comm]
+@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma left
   [AddCommGroup α]
 -- given
@@ -15,7 +12,18 @@ private lemma left
   aesop
 
 
-@[main, comm, mp, mpr, mp.comm, mpr.comm]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Int.EqSub.is.Eq_Add |
+| comm | Int.Eq_Add.is.EqSub |
+| mp   | Int.Eq_Add.of.EqSub |
+| mpr  | Int.EqSub.of.Eq_Add |
+| mp.comm | Int.EqAdd.of.Eq_Sub |
+| mpr.comm | Int.Eq_Sub.of.EqAdd |
+| comm.is | Int.Eq_Sub.is.EqAdd |
+-/
+@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [AddGroup α]
 -- given
@@ -24,5 +32,6 @@ private lemma main
   y - x = d ↔ y = d + x := by
 -- proof
   aesop
+
 
 -- created on 2025-04-26

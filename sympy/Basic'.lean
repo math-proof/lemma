@@ -128,39 +128,6 @@ def Expr.mp' (type proof : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := fal
   let proof := (deBruijn.zip pNameType).foldr (fun ⟨deBruijn, name, type⟩ proof => (.lam name (type.incDeBruijnIndex deBruijn) proof .default)) proof
   (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type proof .default).mapM (telescope Expr.forallE "type") (telescope .lam "value")
 
-def Expr.comm.mp' (type mp mpr value! : Lean.Expr) (parity : ℕ := 0) : CoreM (List Bool × Lean.Expr × Lean.Expr) := do
-  -- logInfo m!"parity = {parity}"
-  logInfo m!"type = {type}"
-  let ⟨binders, type⟩ := type.decompose_forallE
-  logInfo m!"binders = {binders}"
-  -- let args := (binders.map fun ⟨_, binderType, _⟩ => binderType).reverse
-  let args := ((List.range binders.length).map fun i => .bvar i).reverse
-  let mut context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
-  let binders := binders.zipParity parity
-  -- logInfo m!"args = {args}"
-  -- logInfo m!"mp = {mp}"
-  -- logInfo m!"mpr = {mpr}"
-  let mp := mp.mkApp args
-  let mpr := mpr.mkApp args
-
-  -- type.println context "original type"
-  let ⟨us, lhs, rhs⟩ := type.decomposeIff
-  let lhs := lhs.comm
-  let rhs := rhs.comm
-  let type := (Lean.Expr.const `Iff us).mkApp [lhs, rhs]
-  type.println context "type"
-  -- mp.println context "mp"
-  -- mpr.println context "mpr"
-  let proof : Lean.Expr := (Lean.Expr.const `Iff.intro us).mkApp [lhs, rhs, mp, mpr]
-  let proof := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => .lam binderName binderType body binderInfo) proof
-  proof.println context "proof"
-  value!.println context "value!"
-  return (
-    binders.filterMap fun ⟨comm, _, _, binderInfo⟩ => if binderInfo == .default then some comm else none,
-    type, proof
-  )
-
-
 initialize registerBuiltinAttribute {
   name := `mp'
   descr := "Automatically generate the mp implication of an equivalence theorem"
@@ -232,32 +199,64 @@ initialize registerBuiltinAttribute {
     }
 }
 
+def Expr.comm.is' (type mp mpr : Lean.Expr) (parity : ℕ := 0) : CoreM (List Bool × Lean.Expr × Lean.Expr) := do
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let args := ((List.range binders.length).map fun i => .bvar i).reverse
+  let binders := binders.zipParity parity
+  let mp := mp.mkApp args
+  let mpr := mpr.mkApp args
+  let ⟨us, lhs, rhs⟩ := type.decomposeIff
+  let lhs := lhs.comm
+  let rhs := rhs.comm
+  let telescope := fun localBinders lam hint body => do
+      let mut body := body
+      let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
+      body.println context s!"original {hint}"
+      for ⟨declName, type, deBruijn⟩ in localBinders do
+          let type := type.incDeBruijnIndex (deBruijn + 1)
+          let declName :=
+            match declName with
+            | .str pre name => Name.str pre (name ++ "'")
+            | _ => declName
+          body := body.incDeBruijnIndex 1
+          body := body.setDeBruijnIndex (deBruijn + 1) 0
+          context := ⟨declName, type⟩ :: context
+          body := .letE declName type (.app type.comm.symm (.bvar deBruijn)) body false
+          body.println context hint
+      body := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo) body
+      body.println [] s!"final {hint}"
+      return body
+  let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
+  let (type, value) ← ((Lean.Expr.const `Iff us).mkApp [lhs, rhs], (Lean.Expr.const `Iff.intro us).mkApp [lhs, rhs, mp, mpr]).mapM
+    (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE "type")
+    (telescope valueBinders .lam "proof")
+  return (
+    binders.filterMap fun ⟨comm, _, _, binderInfo⟩ => if binderInfo == .default then some comm else none,
+    type, value
+  )
+
 initialize registerBuiltinAttribute {
-  name := `comm.mp'
+  name := `comm.is'
   descr := "Automatically generate the two implications of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
-    -- proof : a = b ↔ a' = b'
-    -- proof' : b' = a' ↔ b = a := ⟨mpr.comm, mp.comm⟩
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
 
     let proof : Lean.Expr := .const declName (levelParams.map .param)
-    let ⟨type, value⟩ := Expr.mpr decl.type proof
-    let ⟨_, type, mpr⟩ := Expr.comm type value 1
+    let ⟨n, type, value⟩ := Expr.mpr decl.type proof
+    let ⟨_, type, mpr⟩ := Expr.comm type value (1 <<< n)
 
-    let ⟨type, value⟩ := Expr.mp decl.type proof
-    let ⟨_, type, mp⟩ := Expr.comm type value 2
+    let ⟨n, type, value⟩ := Expr.mp decl.type proof
+    let ⟨_, type, mp⟩ := Expr.comm type value (1 <<< n)
 
-    let ⟨parity, type, value⟩ ← Expr.comm.mp' decl.type mp mpr decl.value! stx.parity
-    let name := List.comm.mp (← getEnv).moduleTokens parity
-    println! s!"name = {name}"
+    let ⟨parity, type, value⟩ ← Expr.comm.is' decl.type mp mpr stx.parity
+    let name := List.comm.is (← getEnv).moduleTokens parity
+    -- println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := (name.foldl Name.str default).lemmaName declName
       levelParams := levelParams
-      -- type := decl.type
       type := type
-      -- value := decl.value!
       value := value
     }
 }
@@ -268,6 +267,6 @@ initialize registerBuiltinAttribute {
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
-    -- Lean.logInfo "decl.type = \n{decl.type.format}"
-    Lean.logInfo "decl.value! = \n{decl.value!.format}"
+    -- Lean.logInfo s!"decl.type = \n{decl.type.format}"
+    Lean.logInfo s!"decl.value! = \n{decl.value!.format}"
 }

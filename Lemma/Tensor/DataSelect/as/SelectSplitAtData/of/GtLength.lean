@@ -24,8 +24,6 @@ import Lemma.Vector.FlattenMapRange.eq.Cast_UFn_0
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.Indices.eq.Cast_MapRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import stdlib.SEq
-import sympy.tensor.tensor
 open Bool List Nat Tensor Vector
 
 
@@ -115,7 +113,7 @@ private lemma main
         rw [SelectStack.eq.Stack_Select.of.GtLength]
         have ih := ih (s := s.tail) (by simpa) (i := ⟨i, by simp⟩)
         simp at ih
-        rw [SEq.is.EqCast.of.Eq] at ih
+        -- simp_rw [SEq.is.Eq_Cast.of.Eq] at ih
         sorry
       ·
         simp

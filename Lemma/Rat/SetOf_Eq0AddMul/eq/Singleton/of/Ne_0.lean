@@ -6,14 +6,6 @@ import Lemma.Nat.Mul
 open Int Nat Rat
 
 
-/--
-In a field `α`, the equation `0 = a * x + b` with `a ≠ 0` has exactly one solution, `x = -b / a`,
-hence the solution set `{x | 0 = a * x + b}` equals `{-b / a}`.
-- given
-  - h : a ≠ 0
-- imply
-  - {x | 0 = a * x + b} = {-b / a}
--/
 @[main]
 private lemma main
   [Field α]
@@ -27,7 +19,6 @@ private lemma main
   constructor <;>
     intro h_In
   ·
-    -- Given 0 = a * x + b, solve for x and show x ∈ {-b / a}
     field_simp [h] at h_In
     simp
     apply Eq.of.EqMulS.Ne_0 h
@@ -35,7 +26,6 @@ private lemma main
     apply Eq_Neg.of.Add.eq.Zero
     exact h_In.symm
   ·
-    -- Given x = -b / a, substitute and verify 0 = a * x + b
     simp at h_In
     field_simp [h] at h_In
     apply Eq_Add.of.EqSub

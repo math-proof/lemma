@@ -1,4 +1,4 @@
-import Lemma.Int.EqSub.of.EqAdd
+import Lemma.Int.EqSub.is.Eq_Add
 open Int
 
 

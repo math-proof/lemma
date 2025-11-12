@@ -3,7 +3,6 @@ import Lemma.Nat.GeSubSMul.of.Ge
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.AddAdd
 import Lemma.Nat.Mul2.eq.Add
-import Lemma.Int.EqAdd.is.Eq_Sub
 import Lemma.Nat.EqAdd.of.Eq_Sub.Le
 import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
