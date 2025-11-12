@@ -120,7 +120,7 @@ def List.zipParity (binders : List (Name × Expr × BinderInfo)) (parity : ℕ) 
     ([], parity)
   |> Prod.fst
 
-def Expr.comm (type proof : Expr) (parity : ℕ) : List Bool × Expr × Expr :=
+def Expr.comm (type proof : Expr) (parity : ℕ := 0) : List Bool × Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
   let ⟨type, symm⟩ := type.decomposeType
@@ -227,6 +227,13 @@ def Expr.mp (type proof : Expr) (parity : ℕ := 0) (reverse : Bool := false) : 
   (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type proof .default).map (telescope Expr.forallE) (telescope .lam)
 
 def List.mp (list : List String) : List String := list.decomposeOf [] (fun list => list.commutateIs "of") 1
+def List.comm.mp (list : List String) (parity : List Bool) : List String :=
+  list.decomposeOf parity fun list =>
+    let i := list.idxOf "is"
+    let ⟨lhs, rhs⟩ := list.splitAt i
+    let lhs := lhs.transformEq
+    let rhs := rhs.tail.transformEq
+    lhs ++ "is" :: rhs
 
 /--
 `@[mp]` (abbreviated from `modus ponens`) attribute automatically generates the mp implication of a equivalence theorem.

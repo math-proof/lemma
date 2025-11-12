@@ -30,19 +30,19 @@ private lemma main
   (mask : Tensor Bool [batch_size, seq_length]) :
 -- imply
   let mask : Tensor float [batch_size, seq_length] := mask
-  let mask_sum : Tensor float [batch_size] := mask.sum
-  let loss_sum : Tensor float [batch_size] := loss.sum
-  let mask_sum_mean : Tensor float [] := mask_sum.mean
-  loss_sum.sum / mask_sum.sum = (loss_sum / mask_sum_mean).mean := by
+  let mask.sum : Tensor float [batch_size] := mask.sum
+  let loss.sum : Tensor float [batch_size] := loss.sum
+  let mask.sum.mean : Tensor float [] := mask.sum.mean
+  loss.sum.sum / mask.sum.sum = (loss.sum / mask.sum.mean).mean := by
 -- proof
-  intro mask mask_sum loss_sum mask_sum_mean
+  intro mask mask.sum loss.sum mask.sum.mean
   rw [MeanDiv.eq.DivMean]
-  simp [mask_sum_mean]
+  simp [mask.sum.mean]
   simp [Tensor.mean]
   if hb : batch_size = 0 then
     subst hb
-    rw [Sum.eq.Zero (X := loss_sum)]
-    rw [Sum.eq.Zero (X := mask_sum)]
+    rw [Sum.eq.Zero (X := loss.sum)]
+    rw [Sum.eq.Zero (X := mask.sum)]
     rw [EqDiv0'0.scalar]
     rfl
   else

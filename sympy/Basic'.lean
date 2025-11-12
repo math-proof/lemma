@@ -3,7 +3,7 @@ import stdlib.Prod
 import sympy.parsing.parser
 open Lean Lean.Meta
 
-def Expr.comm' (type proof : Lean.Expr) (parity : ℕ) : CoreM (List Bool × Lean.Expr × Lean.Expr) := do
+def Expr.comm' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (List Bool × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
   let ⟨type, symm⟩ := type.decomposeType
@@ -128,6 +128,39 @@ def Expr.mp' (type proof : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := fal
   let proof := (deBruijn.zip pNameType).foldr (fun ⟨deBruijn, name, type⟩ proof => (.lam name (type.incDeBruijnIndex deBruijn) proof .default)) proof
   (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type proof .default).mapM (telescope Expr.forallE "type") (telescope .lam "value")
 
+def Expr.comm.mp' (type mp mpr value! : Lean.Expr) (parity : ℕ := 0) : CoreM (List Bool × Lean.Expr × Lean.Expr) := do
+  -- logInfo m!"parity = {parity}"
+  logInfo m!"type = {type}"
+  let ⟨binders, type⟩ := type.decompose_forallE
+  logInfo m!"binders = {binders}"
+  -- let args := (binders.map fun ⟨_, binderType, _⟩ => binderType).reverse
+  let args := ((List.range binders.length).map fun i => .bvar i).reverse
+  let mut context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
+  let binders := binders.zipParity parity
+  -- logInfo m!"args = {args}"
+  -- logInfo m!"mp = {mp}"
+  -- logInfo m!"mpr = {mpr}"
+  let mp := mp.mkApp args
+  let mpr := mpr.mkApp args
+
+  -- type.println context "original type"
+  let ⟨us, lhs, rhs⟩ := type.decomposeIff
+  let lhs := lhs.comm
+  let rhs := rhs.comm
+  let type := (Lean.Expr.const `Iff us).mkApp [lhs, rhs]
+  type.println context "type"
+  -- mp.println context "mp"
+  -- mpr.println context "mpr"
+  let proof : Lean.Expr := (Lean.Expr.const `Iff.intro us).mkApp [lhs, rhs, mp, mpr]
+  let proof := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => .lam binderName binderType body binderInfo) proof
+  proof.println context "proof"
+  value!.println context "value!"
+  return (
+    binders.filterMap fun ⟨comm, _, _, binderInfo⟩ => if binderInfo == .default then some comm else none,
+    type, proof
+  )
+
+
 initialize registerBuiltinAttribute {
   name := `mp'
   descr := "Automatically generate the mp implication of an equivalence theorem"
@@ -189,13 +222,42 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    -- let ⟨type, value⟩ ← Expr.mpr' decl.type (.const declName (levelParams.map .param))
-    let ⟨type, value⟩ := Expr.mpr decl.type (.const declName (levelParams.map .param))
-    let ⟨parity, type, value⟩ := Expr.comm type value stx.parity
+    let ⟨type, value⟩ ← Expr.mpr' decl.type (.const declName (levelParams.map .param))
+    let ⟨parity, type, value⟩ ← Expr.comm' type value
     addAndCompile <| .thmDecl {
       name := (((← getEnv).moduleTokens.mpr.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `comm.mp'
+  descr := "Automatically generate the two implications of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    -- proof : a = b ↔ a' = b'
+    -- proof' : b' = a' ↔ b = a := ⟨mpr.comm, mp.comm⟩
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+
+    let proof : Lean.Expr := .const declName (levelParams.map .param)
+    let ⟨type, value⟩ := Expr.mpr decl.type proof
+    let ⟨_, type, mpr⟩ := Expr.comm type value 1
+
+    let ⟨type, value⟩ := Expr.mp decl.type proof
+    let ⟨_, type, mp⟩ := Expr.comm type value 2
+
+    let ⟨parity, type, value⟩ ← Expr.comm.mp' decl.type mp mpr decl.value! stx.parity
+    let name := List.comm.mp (← getEnv).moduleTokens parity
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := (name.foldl Name.str default).lemmaName declName
+      levelParams := levelParams
+      -- type := decl.type
+      type := type
+      -- value := decl.value!
       value := value
     }
 }
