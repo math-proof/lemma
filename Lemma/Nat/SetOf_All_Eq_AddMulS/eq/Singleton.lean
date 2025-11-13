@@ -1,5 +1,5 @@
 import Lemma.Nat.Mul_Sub.eq.SubMulS
-import Lemma.Nat.GeSubSMul.of.Ge
+import Lemma.Nat.LeSubSMul.of.Le
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.AddAdd
 import Lemma.Nat.Mul2.eq.Add
@@ -86,12 +86,12 @@ private lemma mpr
                     ·
                       repeat rw [SubSub.eq.Sub_Add]
                     ·
-                      have := GeSubSMul.of.Ge hn 3 4
+                      have := LeSubSMul.of.Le hn 3 4
                       linarith
                   ·
                     linarith
                 ·
-                  have := GeSubSMul.of.Ge hn 3 3
+                  have := LeSubSMul.of.Le hn 3 3
                   linarith
               ·
                 linarith
@@ -103,7 +103,7 @@ private lemma mpr
       ·
         linarith
     ·
-      have := GeSubSMul.of.Ge hn 3 1
+      have := LeSubSMul.of.Le hn 3 1
       linarith
   ·
     linarith

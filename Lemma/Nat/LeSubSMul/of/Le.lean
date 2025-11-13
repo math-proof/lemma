@@ -3,16 +3,16 @@ import Lemma.Nat.LeSubS.of.Le
 open Nat
 
 
-@[main]
+@[main, comm 1]
 private lemma main
   {x y : ℕ}
 -- given
-  (h : x ≥ y)
+  (h : x ≤ y)
   (k t : ℕ) :
 -- imply
-  k * x - t ≥ k * y - t := by
+  k * x - t ≤ k * y - t := by
 -- proof
-  have := GeMulS.of.Ge.left h k
+  have := LeMulS.of.Le.left h k
   apply LeSubS.of.Le this
 
 
