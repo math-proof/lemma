@@ -1,6 +1,6 @@
 import Lemma.Rat.Div.eq.Mul_Inv
 import Lemma.Rat.GeInv_0.is.Ge_0
-import Lemma.Int.GeMulS.of.Ge.Ge_0
+import Lemma.Int.LeMulS.of.Le.Ge_0
 open Rat Int
 
 

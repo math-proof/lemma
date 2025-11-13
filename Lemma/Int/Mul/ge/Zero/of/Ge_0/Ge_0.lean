@@ -1,4 +1,4 @@
-import Lemma.Int.GeMulS.of.Ge_0.Ge
+import Lemma.Int.LeMulS.of.Ge_0.Le
 import Lemma.Nat.EqMul_0'0
 open Int Nat
 

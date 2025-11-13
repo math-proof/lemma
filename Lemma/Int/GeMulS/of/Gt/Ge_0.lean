@@ -1,5 +1,5 @@
 import Lemma.Nat.Ge.of.Gt
-import Lemma.Int.GeMulS.of.Ge.Ge_0
+import Lemma.Int.LeMulS.of.Le.Ge_0
 open Nat Int
 
 

@@ -1,12 +1,7 @@
 import sympy.Basic
 
 
-/--
-This lemma states that multiplying both sides of an inequality by a non-negative element preserves the inequality.
-Specifically, if `x ≥ 0` and `a ≤ b`, then `x * a ≤ x * b`.
-This holds in a preordered algebraic structure where multiplication by non-negative elements is monotonic.
--/
-@[main]
+@[main, comm 1]
 private lemma main
   [Mul α] [Zero α] [Preorder α] [PosMulMono α]
   {x a b : α}

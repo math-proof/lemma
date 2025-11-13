@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm 2]
 private lemma main
   [Mul α] [Zero α] [Preorder α] [MulPosMono α]
   {x a b : α}
