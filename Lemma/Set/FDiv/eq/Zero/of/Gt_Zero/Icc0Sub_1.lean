@@ -3,7 +3,7 @@ import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Set.Ge.of.In_Icc
 import Lemma.Rat.Div.ge.Zero.of.Ge_0.Gt_0
-import Lemma.Int.GtCoeS.is.Gt
+import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Set.Le.of.In_Icc
 import Lemma.Nat.Lt_Add_1.of.Le
 import Lemma.Rat.LtDiv.of.Lt.Gt_0

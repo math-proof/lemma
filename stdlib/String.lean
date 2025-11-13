@@ -179,28 +179,25 @@ def String.is_relational_operator : String → Bool
   | "et" | "ou" | "to" | "eq" | "ne" | "gt" | "lt" | "ge" | "le" | "in" | "as" | "dvd" | "subset" | "supset" => true
   | _ => false
 
-def List.transformSufix (s : List Char) (c : Char): List Char :=
-  if c == '_' then s else '_' :: c :: s
-
-def String.transformEq (s : String) : String :=
+def String.transformPrefix (s : String) : String :=
   match s with
-  | ⟨s₀ :: s₁ :: sufix⟩ =>
-    match s₀, s₁, sufix with
-    | 'E', 'q', (s₂ :: sufix)
-    | 'N', 'e', (s₂ :: sufix) =>
-      (s₀ :: s₁ :: sufix.transformSufix s₂).asString
-    | 'S', 'E', (s₂@'q' :: s₃ :: sufix)
-    | 'I', 'f', (s₂@'f' :: s₃ :: sufix)
-    | 'H', 'E', (s₂@'q' :: s₃ :: sufix) =>
-      (s₀ :: s₁ :: s₂ :: sufix.transformSufix s₃).asString
+  | ⟨s₀ :: s₁ :: expr⟩ =>
+    match s₀, s₁, expr with
+    | 'E', 'q', s₂ :: expr
+    | 'N', 'e', s₂ :: expr =>
+      (s₀ :: s₁ :: s₂.transformExpr expr).asString
+    | 'S', 'E', s₂@'q' :: s₃ :: expr
+    | 'I', 'f', s₂@'f' :: s₃ :: expr
+    | 'H', 'E', s₂@'q' :: s₃ :: expr =>
+      (s₀ :: s₁ :: s₂ :: s₃.transformExpr expr).asString
     | 'L', 't', _
     | 'L', 'e', _
     | 'G', 't', _
     | 'G', 'e', _ =>
       let s₀ := if s₀ == 'L' then 'G' else 'L'
-      match sufix with
-      | s₂ :: sufix =>
-        (s₀ :: s₁ :: sufix.transformSufix s₂).asString
+      match expr with
+      | s₂ :: expr =>
+        (s₀ :: s₁ :: s₂.transformExpr expr).asString
       | _ =>
         [s₀, s₁].asString
     | _, _, _ =>

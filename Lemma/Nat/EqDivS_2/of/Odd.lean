@@ -9,7 +9,7 @@ import Lemma.Nat.Odd.is.Any_Eq_AddMul2
 open Nat
 
 
-@[main, comm]
+@[main]
 private lemma main
   [IntegerRing Z]
   {n : Z}

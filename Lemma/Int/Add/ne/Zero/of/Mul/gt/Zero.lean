@@ -1,7 +1,7 @@
 import Lemma.Int.GeSquare_0
 import Lemma.Int.LtNeg_0.of.Gt_0
 import Lemma.Int.MulNeg.eq.NegSquare
-import Lemma.INt.EqSub.is.Eq_Add
+import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.Lt.of.Lt.Le
 open Int Nat
 

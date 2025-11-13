@@ -50,7 +50,7 @@ initialize registerBuiltinAttribute {
       let ⟨first, ofPart⟩ := moduleTokens.splitAt i
       println! s!"first = {first}"
       println! s!"ofPart = {ofPart}"
-      let names := ofPart.tail.parseInfixSegments.zipWith (fun s b => if b then s.transformEq else s) parity
+      let names := ofPart.tail.parseInfixSegments.zipWith (fun s b => if b then s.transformPrefix else s) parity
       println! s!"names = {names}"
     let name := ((moduleTokens.comm parity).foldl Name.str default).lemmaName declName
     println! s!"name = {name}"
@@ -252,7 +252,7 @@ initialize registerBuiltinAttribute {
 
     let ⟨parity, type, value⟩ ← Expr.comm.is' decl.type mp mpr stx.parity
     let name := List.comm.is (← getEnv).moduleTokens parity
-    -- println! s!"name = {name}"
+    println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := (name.foldl Name.str default).lemmaName declName
       levelParams := levelParams

@@ -8,7 +8,7 @@ import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.LeSub.is.Le_Add
 import Lemma.Nat.Add
 import Lemma.Rat.Le.of.LeDivS.Gt_0
-import Lemma.Int.GtCoeS.is.Gt
+import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Int.LeCoeS.is.Le
 import Lemma.Int.CoeSub.eq.SubCoeS
 import Lemma.Rat.DivSub.eq.SubDivS

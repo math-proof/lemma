@@ -1,12 +1,11 @@
 import Lemma.Rat.GeCeil
 import Lemma.Nat.LeMulS.of.Le.Gt_0
-import Lemma.Nat.GtCoeS.is.Gt
 import Lemma.Rat.EqMulDiv.of.Gt_0
 import Lemma.Nat.Sub.gt.Zero.is.Gt
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.Rat.GtDivS.of.Gt.Gt_0
 import Lemma.Nat.Gt.of.Ge.Gt
-import Lemma.Int.GtCoeS.is.Gt
+import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Int.EqToNat.of.Gt_0
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Gt
 import Lemma.List.LengthSlicedIndices.eq.CeilDivSub.of.Gt_0.Le.Lt.Sub.le.Mul

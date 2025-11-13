@@ -60,9 +60,9 @@ def List.parseInfixSegments (list : List String) : List (List String) :=
       [x] :: [op] :: parseInfixSegments y
 termination_by list.length
 
-def List.transformEq (list : List String) : List String :=
+def List.transformPrefix (list : List String) : List String :=
   if list.length == 1 then
-    [list.head!.transformEq]
+    [list.head!.transformPrefix]
   else
     match list[1]! with
     | "eq" | "is" | "as" | "ne" =>
@@ -75,7 +75,7 @@ def List.decomposeOf (list : List String) (parity : List Bool) (map : List Strin
     let ⟨first, ofPart⟩ := list.splitAt i
     let ofPart :=
       if offset == 0 then
-        ofPart[0]! :: (ofPart.tail.parseInfixSegments.zipWith (fun s b => if b then s.transformEq else s) parity).flatten
+        ofPart[0]! :: (ofPart.tail.parseInfixSegments.zipWith (fun s b => if b then s.transformPrefix else s) parity).flatten
       else
         ofPart.drop offset
     first.head! :: map first.tail ++ ofPart
@@ -101,7 +101,7 @@ def List.comm (list : List String) (parity : List Bool) : List String :=
           | _ =>
             panic! s!"Expected the operator 'eq', 'as or 'ne', got: {op}"
         else
-          [first.transformEq] ++ rest
+          [first.transformPrefix] ++ rest
       else
         panic! s!"Declaration does not have the form `... eq/is/as/ne ...`, got: {list}"
     else
@@ -236,8 +236,8 @@ def List.comm.is (list : List String) (parity : List Bool) : List String :=
   list.decomposeOf parity fun list =>
     let i := list.idxOf "is"
     let ⟨lhs, rhs⟩ := list.splitAt i
-    let lhs := lhs.transformEq
-    let rhs := rhs.tail.transformEq
+    let lhs := lhs.transformPrefix
+    let rhs := rhs.tail.transformPrefix
     lhs ++ "is" :: rhs
 
 /--
