@@ -3,7 +3,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Pow_Add.eq.MulPowS
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.ModEq.of.Eq
-import Lemma.Nat.Pow2.eq.One.mod.SubPow2
+import Lemma.Nat.ModEq_Pow2_1
 import Lemma.Nat.EqMul1
 import Lemma.Nat.ModEq.of.ModEq.ModEq__AddMul
 import Lemma.Nat.Eq_AddMulDiv___Mod
@@ -27,7 +27,7 @@ private lemma main
   rw [MulPowS.eq.Pow_Add] at this
   rw [EqAddSub.of.Ge h] at this
   have := ModEq.of.Eq this (2 ^ m - 1)
-  have h_ModEq := Pow2.eq.One.mod.SubPow2 (n := m)
+  have h_ModEq := ModEq_Pow2_1 (n := m)
   have := ModEq.of.ModEq.ModEq__AddMul h_ModEq this
   simp at this
   assumption

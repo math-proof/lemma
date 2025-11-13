@@ -1,7 +1,7 @@
 import Lemma.Rat.Floor.gt.Sub_1
 import Lemma.Int.GtSubS.of.Gt
 import Lemma.Nat.Gt.of.Gt.Gt
-import Lemma.Nat.Ge_Add_1.of.Gt
+import Lemma.Nat.LeAdd_1.of.Lt
 open Nat Int Rat
 
 

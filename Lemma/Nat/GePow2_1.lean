@@ -1,5 +1,5 @@
 import Lemma.Nat.Pow2.gt.Zero
-import Lemma.Nat.Ge_Add_1.of.Gt
+import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Nat.EqAdd0
 open Nat
 

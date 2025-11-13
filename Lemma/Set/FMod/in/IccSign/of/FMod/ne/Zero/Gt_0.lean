@@ -1,6 +1,6 @@
 import Lemma.Int.FMod.ge.Zero.of.Gt_0
 import Lemma.Nat.Gt.is.Ge.Ne
-import Lemma.Nat.Ge_Add_1.of.Gt
+import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Int.EqSign_1.of.Gt_0
 import Lemma.Set.In_Icc.of.Le.Le
 import Lemma.Int.FMod.eq.Sub_MulFDiv
@@ -36,8 +36,7 @@ private lemma main
     have := Gt.of.Ge.Ne this h₁
     have := Ge_Add_1.of.Gt this
     simp at this
-    have h_Eq := EqSign_1.of.Gt_0 h₀
-    rwa [← h_Eq] at this
+    rwa [← EqSign_1.of.Gt_0 h₀] at this
   ·
     rw [FMod.eq.Sub_MulFDiv]
     rw [FDiv.eq.FloorDiv (α := ℚ)]

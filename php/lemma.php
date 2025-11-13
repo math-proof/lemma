@@ -91,7 +91,7 @@ if ($_POST) {
 		return $module;
 	}
 
-	$term = "(?:[A-Z][\w'!₀-₉]*|(?:of|is|et|ou|to|eq|ne|gt|lt|ge|le|in|as|dvd|sub|sup|subset|supset|mod)(?=\.))";
+	$term = "(?:[A-Z][\w'!₀-₉]*|(?:of|is|et|ou|to|eq|ne|gt|lt|ge|le|in|as|dvd|sub|sup)(?=\.))";
 	$sections = std\listdir($root = dirname(dirname(__FILE__)) . "/Lemma/");
 	$sectionRegex = implode('|', $sections);
 	$sectionRegex = str_replace('List', 'List(?!\.Vector)', $sectionRegex); // avoid List.Vector

@@ -21,7 +21,7 @@ import Lemma.List.GetDrop.eq.Get_Add.of.GtLength_Add
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.Sub.gt.Zero.is.Gt
 import Lemma.Nat.Gt.is.Ge.Ne
-import Lemma.Nat.Ge_Add_1.of.Gt
+import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Nat.GeSub.of.Ge_Add
 open List Nat
 

@@ -1,5 +1,5 @@
 import Lemma.Rat.LeInvS.of.Ge.Gt_0
-import Lemma.Nat.Ge_Add_1.of.Gt
+import Lemma.Nat.LeAdd_1.of.Lt
 open Nat Rat
 
 
