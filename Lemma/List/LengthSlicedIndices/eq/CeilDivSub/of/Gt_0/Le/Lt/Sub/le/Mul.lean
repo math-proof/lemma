@@ -1,9 +1,9 @@
 import stdlib.Slice
 import Lemma.Nat.Ge.of.NotLt
-import Lemma.Nat.GeCoeS.is.Ge
+import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Rat.CeilDivSub.eq.One.of.GeAdd.Gt_0
-import Lemma.Nat.GtCoeS.is.Gt
+import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.LeSubS.of.Le
 import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Rat.Div.eq.One.of.Gt_0

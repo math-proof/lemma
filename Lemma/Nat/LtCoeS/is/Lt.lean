@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [AddMonoidWithOne R] [PartialOrder R] [AddLeftMono R] [ZeroLEOneClass R]
   [CharZero R]

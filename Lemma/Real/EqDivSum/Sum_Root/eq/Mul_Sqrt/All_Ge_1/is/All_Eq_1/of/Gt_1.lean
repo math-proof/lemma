@@ -3,7 +3,7 @@ import Lemma.Real.All_Eq_1.of.All_Ge_1.Sum_Root.eq.Mul_Root_2.EqDivSum.Gt_1
 import Lemma.Finset.Sum.eq.Mul.of.All_Eq
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Rat.Div.eq.One.of.Gt_0
-import Lemma.Nat.GtCoeS.is.Gt
+import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Nat.All_Eq.of.All_Eq.Eq
 import Lemma.Nat.All_Eq.of.All_Eq.Lt

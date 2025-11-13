@@ -1,4 +1,4 @@
-import Lemma.Nat.GtCoeS.is.Gt
+import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Nat.Cast_0.eq.Zero
 import Lemma.Nat.Cast_1.eq.One

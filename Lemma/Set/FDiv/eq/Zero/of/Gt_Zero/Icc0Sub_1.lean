@@ -1,4 +1,4 @@
-import Lemma.Int.GeCoeS.is.Ge
+import Lemma.Int.LeCoeS.is.Le
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Set.Ge.of.In_Icc
