@@ -1,5 +1,5 @@
 import Lemma.Nat.Le_Sub_1
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 open Nat
 
 
@@ -12,7 +12,7 @@ private lemma main
   i.val < n - 1 := by
 -- proof
   have := Le_Sub_1 i
-  apply Lt.of.Le.Ne h this
+  apply Lt.of.Le.Ne this h
 
 
 -- created on 2025-06-18

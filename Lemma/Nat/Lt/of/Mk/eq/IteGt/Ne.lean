@@ -1,5 +1,5 @@
 import Lemma.Nat.Le.of.Mk.eq.IteGt
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.EqUFnS.of.Eq
 open Bool Nat
 
@@ -18,7 +18,7 @@ private lemma main
   a' < b' := by
 -- proof
   have := Le.of.Mk.eq.IteGt h₁
-  apply Lt.of.Le.Ne _ this
+  apply Lt.of.Le.Ne this
   by_contra h
   split at h₁ <;>
   ·

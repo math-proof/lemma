@@ -1,4 +1,4 @@
-import Lemma.Int.LtSubS.of.Lt
+import Lemma.Int.LtSubS.is.Lt
 import Lemma.Int.Sub.eq.Zero
 import Lemma.Int.Sub0.eq.Neg
 open Int
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   -a > 0 := by
 -- proof
-  have h := LtSubS.of.Lt h a
+  have h := LtSubS.of.Lt a h
   simp only [Sub.eq.Zero, Sub0.eq.Neg] at h
   exact h
 

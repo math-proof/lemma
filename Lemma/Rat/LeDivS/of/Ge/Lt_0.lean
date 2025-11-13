@@ -1,5 +1,5 @@
 import Lemma.Int.GtNeg_0.of.Lt_0
-import Lemma.Rat.GeDivS.of.Ge.Gt_0
+import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Rat.Div_Neg.eq.NegDiv
 import Lemma.Int.Le.of.GeNegS
 open Rat Int
@@ -17,8 +17,7 @@ private lemma main
 -- proof
   have := GtNeg_0.of.Lt_0 h₁
   have := GeDivS.of.Ge.Gt_0 h₀ this
-  rw [Div_Neg.eq.NegDiv] at this
-  rw [Div_Neg.eq.NegDiv] at this
+  repeat rw [Div_Neg.eq.NegDiv] at this
   apply Le.of.GeNegS this
 
 

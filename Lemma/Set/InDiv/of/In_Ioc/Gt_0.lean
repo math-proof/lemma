@@ -1,5 +1,5 @@
 import Lemma.Set.Gt.of.In_Ioc
-import Lemma.Rat.GtDivS.of.Gt.Gt_0
+import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Set.Le.of.In_Ioc
 import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Set.In_Ioc.of.Lt.Le

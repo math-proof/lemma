@@ -1,6 +1,6 @@
 import Lemma.Int.FDiv.eq.SubNegDiv.of.Lt_0.Gt_0
 import Lemma.Nat.NotGt.is.Le
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Int.FDiv.eq.NegDivNeg.of.Lt_0.Lt_0
 open Nat Int
 
@@ -27,7 +27,7 @@ private lemma main
     apply FDiv.eq.SubNegDiv.of.Lt_0.Gt_0 h h₁
   ·
     have h₁ := Le.of.NotGt h₁
-    have h_Lt := Lt.of.Le.Ne h₀ h₁
+    have h_Lt := Lt.of.Le.Ne h₁ h₀
     apply FDiv.eq.NegDivNeg.of.Lt_0.Lt_0 h h_Lt
 
 

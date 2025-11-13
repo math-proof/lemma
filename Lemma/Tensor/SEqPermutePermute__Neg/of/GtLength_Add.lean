@@ -1,6 +1,6 @@
 import Lemma.Nat.Add
 import Lemma.Nat.Le_Sub_1.of.Lt
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Tensor.SEqPermutePermute__Neg.of.Add.eq.SubLength_1
 import Lemma.Tensor.SEqPermutePermute__Neg.of.Add.lt.SubLength_1
 import Lemma.Tensor.SEqPermutePermute__Neg.of.EqSubLength_1
@@ -39,7 +39,7 @@ private lemma main
         simp
       else
         have h := Le_Sub_1.of.Lt h
-        have h := Lt.of.Le.Ne h_d h
+        have h := Lt.of.Le.Ne h h_d
         have := SEqPermutePermute__Neg.of.LtSubLength_1 h X
         apply SEq.symm ∘ SEq.trans this.symm
         apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
@@ -53,7 +53,7 @@ private lemma main
       else
         simp at h_i
         apply SEqPermutePermute__Neg.of.Add.lt.SubLength_1
-        apply Lt.of.Le.Ne h_d
+        apply Lt.of.Le.Ne _ h_d
         apply Le_Sub_1.of.Lt h
 
 

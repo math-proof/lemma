@@ -4,7 +4,7 @@ import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Int.GtFMod.of.Lt_0
 import Lemma.Nat.NotGt.is.Le
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Rat.LtDivS.of.Gt.Lt_0
 import Lemma.Rat.Div.eq.One.of.Lt_0
 open Nat Int Rat
@@ -28,7 +28,7 @@ private lemma main
     norm_num
   else
     have h := Le.of.NotGt h
-    have h := Lt.of.Le.Ne h_d h
+    have h := Lt.of.Le.Ne h h_d
     have := GtFMod.of.Lt_0 (n := n) h
     have := GtCoeS.of.Gt (R := α) this
     have h' := LtCoeS.of.Lt (R := α) h

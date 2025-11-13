@@ -15,7 +15,7 @@ import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.LeSign.of.Gt_0
 import Lemma.Set.MulSubS.le.Zero.of.In_Icc
 import Lemma.Nat.Mul
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Nat.NotGt.is.Le
 import Lemma.Set.FMod.in.IccSign.of.FMod.ne.Zero.Gt_0
 import Lemma.Set.FMod.in.Icc_Sign.of.FMod.ne.Zero.Lt_0
@@ -67,7 +67,7 @@ private lemma main
         apply FMod.in.IccSign.of.FMod.ne.Zero.Gt_0 h_d' h_nd
       else
         have h_d' := Le.of.NotGt h_d'
-        have h_d' := Lt.of.Le.Ne h_d h_d'
+        have h_d' := Lt.of.Le.Ne h_d' h_d
         rw [Mul.comm]
         apply MulSubS.le.Zero.of.In_Icc
         apply FMod.in.Icc_Sign.of.FMod.ne.Zero.Lt_0 h_nd h_d'

@@ -1,5 +1,5 @@
 import Lemma.Rat.Floor.gt.Sub_1
-import Lemma.Int.GtSubS.of.Gt
+import Lemma.Int.LtSubS.is.Lt
 import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Nat.LeAdd_1.of.Lt
 open Nat Int Rat
@@ -17,7 +17,7 @@ private lemma main
   ⌊x⌋ ≥ y := by
 -- proof
   have := Floor.gt.Sub_1 x
-  have h := GtSubS.of.Gt h 1
+  have h := GtSubS.of.Gt 1 h
   have h := Gt.of.Gt.Gt this h
   norm_cast at h
   have h := Ge_Add_1.of.Gt h

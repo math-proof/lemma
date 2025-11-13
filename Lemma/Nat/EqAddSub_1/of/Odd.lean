@@ -3,7 +3,7 @@ import Lemma.Nat.Le.of.LtSub_1
 import Lemma.Nat.Sub.eq.Zero
 import Lemma.Nat.NotGt.is.Le
 import Lemma.Nat.NotOdd.is.Even
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Nat.EqAddSub_1.of.Lt_0
 open Nat
 
@@ -30,7 +30,7 @@ private lemma main
       rw [Even.is.NotOdd] at h_0
       contradiction
     else
-      have h_n := Lt.of.Le.Ne h_0 h_n
+      have h_n := Lt.of.Le.Ne h_n h_0
       apply EqAddSub_1.of.Lt_0 h_n
 
 

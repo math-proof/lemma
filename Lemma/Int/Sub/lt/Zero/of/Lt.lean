@@ -1,4 +1,4 @@
-import Lemma.Int.LtSubS.of.Lt
+import Lemma.Int.LtSubS.is.Lt
 import Lemma.Int.Sub.eq.Zero
 open Int
 
@@ -16,7 +16,7 @@ private lemma main
 -- imply
   x - y < 0 := by
 -- proof
-  have := LtSubS.of.Lt h y
+  have := LtSubS.of.Lt y h
   rwa [Sub.eq.Zero] at this
 
 

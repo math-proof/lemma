@@ -1,4 +1,4 @@
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Nat.Ge.of.Ge.Ge
@@ -40,7 +40,7 @@ private lemma main
     let ⟨⟨h_i, h_n⟩, h_ne⟩ := ht
     simp at h_ne
     have h_ne := Ne.of.NotEq h_ne
-    have h_i := Lt.of.Le.Ne h_ne.symm h_i
+    have h_i := Lt.of.Le.Ne h_i h_ne.symm
     constructor
     ·
       apply LeAdd_1.of.Lt h_i
@@ -81,7 +81,7 @@ private lemma fin
     have h_n := Lt.of.In_Ico.fin h_in
     simp at h_ne
     have h_ne := Ne.of.NotEq h_ne
-    have h_i := Lt.of.Le.Ne h_ne.symm h_i
+    have h_i := Lt.of.Le.Ne h_i h_ne.symm
     apply In_Ico.of.Le.Lt.fin
     ·
       apply LeAdd_1.of.Lt h_i

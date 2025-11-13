@@ -2,7 +2,7 @@ import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetElem.eq.SomeGet.of.Lt_Length
 import Lemma.Nat.NotGt.is.Le
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Nat.Sub.gt.Zero.is.Lt
@@ -41,7 +41,7 @@ private lemma main
     have h_le := Le.of.NotGt h_lt?
     simp at h_eq
     have h_ne := Ne.of.NotEq h_eq
-    have h_lt := Lt.of.Le.Ne h_ne.symm h_le
+    have h_lt := Lt.of.Le.Ne h_le h_ne.symm
     simp_all
     rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
     ·

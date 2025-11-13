@@ -1,6 +1,6 @@
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Set.Gt.of.In_Ioo
-import Lemma.Rat.GtDivS.of.Gt.Gt_0
+import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Set.Lt.of.In_Ioo
 import Lemma.Set.In_Ioo.of.Lt.Lt
 open Set Rat

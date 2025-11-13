@@ -1,6 +1,6 @@
 import Lemma.Int.EqSign_1.of.Gt_0
 import Lemma.Nat.NotGt.is.Le
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 import Lemma.Int.AddSub.eq.Sub_Sub
@@ -40,7 +40,7 @@ private lemma main
   else
     have := Le.of.NotGt h_d'
     have h_d := Ne.of.NotEq h_d
-    have h_d := Lt.of.Le.Ne h_d this
+    have h_d := Lt.of.Le.Ne this h_d
     have := Sign.eq.Neg1.of.Lt_0 h_d
     rw [this] at h
     rw [Add_Neg.eq.Sub] at h

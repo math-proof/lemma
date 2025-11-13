@@ -1,4 +1,4 @@
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Int.Div.eq.CeilDiv.of.Lt_0
 open Nat Int
 
@@ -16,7 +16,7 @@ private lemma main
     rw [h_eq]
     norm_num
   else
-    have := Lt.of.Le.Ne h_eq h
+    have := Lt.of.Le.Ne h h_eq
     apply Div.eq.CeilDiv.of.Lt_0 this
 
 

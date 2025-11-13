@@ -4,11 +4,7 @@ import Lemma.Rat.GtInv_0.is.Gt_0
 open Nat Rat
 
 
-/--
-Given elements `a`, `b`, and `x` in a partially ordered group with zero, if `a < b` and `x > 0`, then dividing both `a` and `b` by `x` preserves the strict inequality, i.e., `a / x < b / x`.
-This result follows from the positivity of the inverse `x⁻¹` and the strict monotonicity of multiplication by positive elements.
--/
-@[main]
+@[main, comm 2]
 private lemma main
   [GroupWithZero α]
   [PartialOrder α]

@@ -1,7 +1,6 @@
 import Lemma.Set.In_Icc.of.Le.Le
 import Lemma.Set.Ge.of.In_Icc
 import Lemma.Set.Le.of.In_Icc
-import Lemma.Rat.GeDivS.of.Ge.Ge_0
 import Lemma.Rat.LeDivS.of.Le.Ge_0
 open Set Rat
 

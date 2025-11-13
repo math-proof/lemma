@@ -2,7 +2,7 @@ import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Rat.Div.eq.One.of.Ne_0
-import Lemma.Int.Lt_Sub.of.LtAdd
+import Lemma.Int.Lt_Sub.is.LtAdd
 open Bool Int Rat
 
 

@@ -3,7 +3,7 @@ import Lemma.Nat.LtVal
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Le.of.Lt_Add_1
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Tensor.Eq.is.All_EqGetS
 open Tensor List Nat
 
@@ -34,7 +34,7 @@ private lemma main
     simp only [Tensor.length] at h_i
     rw [EqMin.of.Le (by omega)] at h_i
     have h_i := Le.of.Lt_Add_1 h_i
-    have h := Lt.of.Le.Ne h h_i
+    have h := Lt.of.Le.Ne h_i h
     simp only [GetElem.getElem]
     repeat rw [GetGetSlice.eq.Get.of.Lt_Min_Length.fin]
     ·

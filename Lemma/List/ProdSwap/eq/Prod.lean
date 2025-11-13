@@ -1,6 +1,6 @@
 import stdlib.List
 import Lemma.Nat.NotGt.is.Le
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.List.ProdAppend_Cons_Drop.eq.Prod.of.Lt.Lt_Length
 open List Bool Nat
@@ -27,7 +27,7 @@ private lemma main
     have h_le := Le.of.NotGt h_lt?
     simp at h_eq
     have h_ne := Ne.of.NotEq h_eq
-    have h_lt := Lt.of.Le.Ne h_ne.symm h_le
+    have h_lt := Lt.of.Le.Ne h_le h_ne.symm
     apply ProdAppend_Cons_Drop.eq.Prod.of.Lt.Lt_Length h_lt h_i
   ·
     rfl

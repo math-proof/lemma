@@ -9,7 +9,7 @@ import Lemma.List.Slice.eq.Nil
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
 import Lemma.Nat.LeSub.is.Le_Add
-import Lemma.Nat.Lt.of.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Nat.Sub.ge.One.of.Gt
 import Lemma.Nat.LtSub
 open List Nat
@@ -52,7 +52,7 @@ private lemma main
     ·
       simp at h_i
       have h_i := LeSub.of.Le_Add h_i
-      have h_i' := Lt.of.Le.Ne (by simp_all [Ne.symm]) h_i
+      have h_i' := Lt.of.Le.Ne h_i (by simp_all [Ne.symm])
       have h_i'' := Sub.ge.One.of.Gt h_i'
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp_all) (by simp_all)]
       simp [EqMin.of.Lt h_sub]
@@ -69,7 +69,7 @@ private lemma main
       rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
       ·
         have h_i := LeSub.of.Le_Add h_i
-        have h_i' := Lt.of.Le.Ne (by simp_all [Ne.symm]) h_i
+        have h_i' := Lt.of.Le.Ne h_i (by simp_all [Ne.symm])
         have h_i'' := Sub.ge.One.of.Gt h_i'
         simp [EqMin.of.Lt h_sub]
         rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]

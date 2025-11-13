@@ -1,4 +1,4 @@
-import Lemma.Rat.GeDivS.of.Ge.Gt_0
+import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Rat.LeDivS.of.Le.Gt_0

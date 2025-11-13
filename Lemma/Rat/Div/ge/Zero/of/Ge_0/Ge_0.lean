@@ -1,4 +1,4 @@
-import Lemma.Rat.GeDivS.of.Ge.Ge_0
+import Lemma.Rat.LeDivS.of.Le.Ge_0
 import Lemma.Rat.EqDiv0'0
 open Rat
 

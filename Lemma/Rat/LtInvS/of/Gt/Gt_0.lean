@@ -2,13 +2,12 @@ import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Rat.DivDiv.eq.Inv.of.Ne_0
 import Lemma.Nat.Ne.of.Gt
 import Lemma.Rat.Div1.eq.Inv
-import Lemma.Rat.GtDivS.of.Gt.Gt_0
 import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
 open Nat Rat
 
 
-@[main]
+@[main, comm 2]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a : α}
