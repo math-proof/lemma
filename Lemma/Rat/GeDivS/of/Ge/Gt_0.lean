@@ -1,4 +1,4 @@
-import Lemma.Nat.GeMulS.of.Ge.Gt_0
+import Lemma.Nat.LeMulS.of.Le.Gt_0
 import Lemma.Rat.Div.eq.Mul_Inv
 import Lemma.Rat.GtInv_0.is.Gt_0
 open Nat Rat

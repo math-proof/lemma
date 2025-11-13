@@ -11,7 +11,7 @@ import Lemma.Int.Mul_Neg.eq.NegSquare
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.MulMul
-import Lemma.Nat.GtMulS.of.Gt.Gt_0
+import Lemma.Nat.LtMulS.of.Lt.Gt_0
 import Lemma.Nat.EqMul0_0
 import Lemma.Int.LeNegSquare_0
 import Lemma.Int.Add.ne.Zero.of.Mul.gt.Zero

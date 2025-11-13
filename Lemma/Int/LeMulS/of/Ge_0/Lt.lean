@@ -3,11 +3,7 @@ import Lemma.Int.LeMulS.of.Ge_0.Le
 open Nat Int
 
 
-/--
-This lemma asserts that in a preordered algebraic structure with monotonic multiplication by non-negative elements, multiplying both sides of a strict inequality by a non-negative element preserves the inequality.
-Specifically, if `x ≥ 0` and `a < b`, then `x * a ≤ x * b`.
--/
-@[main]
+@[main, comm 1]
 private lemma main
   [Mul α] [Zero α] [Preorder α] [PosMulMono α]
   {x a b : α}

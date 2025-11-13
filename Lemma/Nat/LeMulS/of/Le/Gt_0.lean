@@ -3,7 +3,7 @@ import Lemma.Nat.LeMulS.of.Le.Ge_0
 open Nat
 
 
-@[main]
+@[main, comm 2]
 private lemma main
   [Mul α] [Zero α] [Preorder α] [MulPosMono α]
   {x a b : α}
