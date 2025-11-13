@@ -1,6 +1,17 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Int.LeSubS.is.Le |
+| comm | Int.Le.is.LeSubS |
+| mp   | Int.Le.of.LeSubS |
+| mpr  | Int.LeSubS.of.Le |
+| mp.comm | Int.Ge.of.GeSubS |
+| mpr.comm | Int.GeSubS.of.Ge |
+| comm.is | Int.GeSubS.is.Ge |
+-/
 @[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [AddGroup α]

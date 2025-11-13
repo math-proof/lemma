@@ -5,8 +5,8 @@ import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Nat.Add.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Lt
-import Lemma.Int.Gt_Sub.of.GtAdd
-import Lemma.Int.Gt_Add.of.GtSub
+import Lemma.Int.LtSub.is.Lt_Add
+import Lemma.Int.Lt_Sub.is.LtAdd
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Nat.EqMul1
 import Lemma.Nat.EqMul_1

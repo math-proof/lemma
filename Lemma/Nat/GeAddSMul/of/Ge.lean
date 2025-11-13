@@ -1,5 +1,5 @@
 import Lemma.Nat.LeMulS.of.Le
-import Lemma.Nat.GeAddS.is.Ge
+import Lemma.Nat.LeAddS.is.Le
 open Nat
 
 

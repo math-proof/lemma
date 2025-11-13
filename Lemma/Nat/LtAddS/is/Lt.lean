@@ -1,7 +1,18 @@
 import sympy.Basic
 
 
-@[main, comm, mp 4, mpr 8]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.LtAddS.is.Lt |
+| comm | Nat.Lt.is.LtAddS |
+| mp   | Nat.Lt.of.LtAddS |
+| mpr  | Nat.LtAddS.of.Lt |
+| mp.comm | Nat.Gt.of.GtAddS |
+| mpr.comm | Nat.GtAddS.of.Gt |
+| comm.is | Nat.GtAddS.is.Gt |
+-/
+@[main, comm, mp 4, mpr 8, mp.comm 4, mpr.comm 8, comm.is]
 private lemma main
   [Add α]
   [LT α]
@@ -16,7 +27,7 @@ private lemma main
   ⟨lt_of_add_lt_add_right, (add_lt_add_right · a)⟩
 
 
-@[main, comm, mp 4, mpr 8]
+@[main, comm, mp 4, mpr 8, mp.comm 4, mpr.comm 8, comm.is]
 private lemma left
   [Add α]
   [LT α]

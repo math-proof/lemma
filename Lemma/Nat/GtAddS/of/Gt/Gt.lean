@@ -1,4 +1,4 @@
-import Lemma.Nat.GtAddS.is.Gt
+import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.Gt.of.Gt.Gt
 open Nat
 
@@ -7,8 +7,7 @@ open Nat
 private lemma main
   [Add α]
   [Preorder α]
-  [AddRightStrictMono α]
-  [AddLeftStrictMono α]
+  [AddRightStrictMono α] [AddLeftStrictMono α]
   {a b x y : α}
 -- given
   (h₀ : a > b)

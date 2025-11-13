@@ -1,5 +1,5 @@
 import Lemma.Set.In_IocCeil
-import Lemma.Int.Lt_Add.of.LtSub
+import Lemma.Int.LtSub.is.Lt_Add
 open Set Int
 
 

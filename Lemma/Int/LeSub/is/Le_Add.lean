@@ -11,7 +11,17 @@ private lemma left
 -- proof
   sub_le_iff_le_add'
 
-
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Int.LeSub.is.Le_Add |
+| comm | Int.Le_Add.is.LeSub |
+| mp   | Int.Le_Add.of.LeSub |
+| mpr  | Int.LeSub.of.Le_Add |
+| mp.comm | Int.GeAdd.of.Ge_Sub |
+| mpr.comm | Int.Ge_Sub.of.GeAdd |
+| comm.is | Int.Ge_Sub.is.GeAdd |
+-/
 @[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [AddGroup α] [LE α] [AddRightMono α]

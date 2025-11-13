@@ -11,7 +11,7 @@ import sympy.Basic
 | mpr  | Bool.SEq.of.EqCast.Eq |
 | mp.comm | Bool.Eq_Cast.of.SEq.Eq |
 | mpr.comm | Bool.SEq.of.Eq_Cast |
-| comm.mp 1 | Bool.SEq.is.Eq_Cast.of.Eq |
+| comm.is 1 | Bool.SEq.is.Eq_Cast.of.Eq |
 -/
 @[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is 1]
 private lemma main

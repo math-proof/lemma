@@ -1,4 +1,4 @@
-import Lemma.Nat.GtAddS.is.Gt
+import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.EqAdd0
 open Nat
 

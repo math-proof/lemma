@@ -1,5 +1,5 @@
 import Lemma.Set.In_IcoFloor
-import Lemma.Int.LtSub.of.Lt_Add
+import Lemma.Int.LtSub.is.Lt_Add
 open Set Int
 
 

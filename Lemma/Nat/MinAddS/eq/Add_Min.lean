@@ -1,7 +1,7 @@
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.LeAddS.is.Le
 import Lemma.Nat.EqMin.of.Gt
-import Lemma.Nat.GtAddS.is.Gt
+import Lemma.Nat.LtAddS.is.Lt
 open Nat
 
 
@@ -9,10 +9,8 @@ open Nat
 private lemma main
   [LinearOrder α]
   [Add α]
-  [AddLeftMono α]
-  [AddRightMono α]
-  [AddLeftStrictMono α]
-  [AddRightStrictMono α]
+  [AddLeftMono α] [AddRightMono α]
+  [AddLeftStrictMono α] [AddRightStrictMono α]
 -- given
   (a b c : α) :
 -- imply

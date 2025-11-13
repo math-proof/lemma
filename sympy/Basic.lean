@@ -346,7 +346,8 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨n, type, value⟩ := Expr.mp decl.type (.const declName (levelParams.map .param))
+    let parity := stx.parity
+    let ⟨n, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity
     -- 2ⁿ, where n is the number of default binders
     let ⟨parity, type, value⟩ := Expr.comm type value (1 <<< n)
     let ⟨moduleTokens, parity⟩ ← parity.extractParity
@@ -375,7 +376,8 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨n, type, value⟩ := Expr.mpr decl.type (.const declName (levelParams.map .param))
+    let parity := stx.parity
+    let ⟨n, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity
     let ⟨parity, type, value⟩ := Expr.comm type value (1 <<< n)
     let ⟨moduleTokens, parity⟩ ← parity.extractParity
     addAndCompile <| .thmDecl {

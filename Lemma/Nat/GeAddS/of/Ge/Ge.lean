@@ -1,4 +1,4 @@
-import Lemma.Nat.GeAddS.is.Ge
+import Lemma.Nat.LeAddS.is.Le
 import Lemma.Nat.Ge.of.Ge.Ge
 open Nat
 

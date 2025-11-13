@@ -1,4 +1,4 @@
-import Lemma.Nat.GtAddS.is.Gt
+import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Set.In_Ioo.of.Lt.Gt
 open Set Nat
@@ -8,8 +8,7 @@ open Set Nat
 private lemma main
   [Preorder α]
   [Add α]
-  [AddLeftStrictMono α]
-  [AddRightStrictMono α]
+  [AddLeftStrictMono α] [AddRightStrictMono α]
   {x a b : α}
 -- given
   (h : x ∈ Ioo a b)

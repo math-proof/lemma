@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Nat.GeAddS.is.Ge
+import Lemma.Nat.LeAddS.is.Le
 import Lemma.Nat.LtAddS.is.Lt
 open Nat
 
