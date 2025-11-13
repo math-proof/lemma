@@ -1,5 +1,5 @@
 import Lemma.Nat.NotLe.is.Gt
-import Lemma.Nat.GtMulS.of.Gt_0.Gt
+import Lemma.Nat.LtMulS.of.Gt_0.Lt
 import Lemma.Nat.NotLe.of.Gt
 open Nat
 

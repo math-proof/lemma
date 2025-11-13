@@ -1,4 +1,4 @@
-import Lemma.Nat.GtMulS.of.Gt_0.Gt
+import Lemma.Nat.LtMulS.of.Gt_0.Lt
 import Lemma.Nat.EqMul_0'0
 open Nat
 

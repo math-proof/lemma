@@ -1,4 +1,4 @@
-import Lemma.Nat.GtMulS.of.Gt_0.Gt
+import Lemma.Nat.LtMulS.of.Gt_0.Lt
 import Lemma.Nat.EqMul_1
 open Nat
 
@@ -8,7 +8,6 @@ private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   {a t : α}
 -- given
-
   (h₀ : a > 0)
   (h₁ : t > 1):
 -- imply

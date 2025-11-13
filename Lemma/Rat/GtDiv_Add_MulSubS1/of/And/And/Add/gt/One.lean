@@ -1,5 +1,5 @@
 import Lemma.Rat.DivMul.eq.Mul_Div
-import Lemma.Nat.GtMulS.of.Gt_0.Gt
+import Lemma.Nat.LtMulS.of.Gt_0.Lt
 import Lemma.Rat.GtDivS.of.Gt.Gt_0
 import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0

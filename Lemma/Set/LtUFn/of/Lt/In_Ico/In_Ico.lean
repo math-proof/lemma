@@ -9,7 +9,7 @@ import Lemma.Int.Sub.lt.Zero.of.Lt
 import Lemma.Int.Mul.lt.Zero.of.Lt_0.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Lt
 import Lemma.Set.AddAddSquareS.lt.Div3'4.of.In_Ico0.In_Ico0
-import Lemma.Int.LtMulS.of.Gt_0.Lt
+import Lemma.Nat.LtMulS.of.Gt_0.Lt
 open Set Nat Int
 
 
