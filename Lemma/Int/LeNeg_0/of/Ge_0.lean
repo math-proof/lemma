@@ -1,4 +1,4 @@
-import Lemma.Int.GeSubS.of.Ge
+import Lemma.Int.LeSubS.is.Le
 import Lemma.Int.Sub.eq.Zero
 import Lemma.Int.Sub0.eq.Neg
 open Int
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   -a ≤ 0 := by
 -- proof
-  have h := GeSubS.of.Ge h a
+  have h := GeSubS.of.Ge a h
   simp only [Sub.eq.Zero, Sub0.eq.Neg] at h
   exact h
 

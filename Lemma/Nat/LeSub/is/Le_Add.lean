@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
 -- given
   (a b c : ℕ) :
@@ -11,7 +11,7 @@ private lemma main
   Nat.sub_le_iff_le_add
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma left
 -- given
   (a b c : ℕ) :

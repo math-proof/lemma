@@ -1,5 +1,5 @@
 import Lemma.Int.Sub.eq.Zero
-import Lemma.Int.GeSubS.of.Ge
+import Lemma.Int.LeSubS.is.Le
 open Int
 
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   x - y ≥ 0 := by
 -- proof
-  have := GeSubS.of.Ge h y
+  have := GeSubS.of.Ge y h
   rwa [Sub.eq.Zero] at this
 
 

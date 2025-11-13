@@ -1,4 +1,4 @@
-import Lemma.Int.Ge_Sub.of.GeAdd
+import Lemma.Int.LeSub.is.Le_Add
 import Lemma.Set.CeilDivSub.eq.One.of.In_Ioc0.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Gt
 import Lemma.Set.In_Ioc.of.Gt.Le

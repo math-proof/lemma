@@ -1,5 +1,5 @@
 import Lemma.Nat.LtSub_1.of.Le.Gt_0
-import Lemma.Nat.Ge.of.Gt_Sub_1
+import Lemma.Nat.Le.of.LtSub_1
 import Lemma.Nat.Sub.gt.Zero.is.Gt
 import Lemma.List.LengthTail.gt.Sub_1.of.GtLength.Gt_0
 open List Nat

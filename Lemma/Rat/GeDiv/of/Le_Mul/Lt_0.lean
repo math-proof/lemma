@@ -1,6 +1,6 @@
 import Lemma.Rat.Div.eq.Mul_Inv
 import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Int.GeMulS.of.Le.Lt_0
+import Lemma.Int.LeMulS.of.Ge.Lt_0
 import Lemma.Rat.LtInv_0.is.Lt_0
 import Lemma.Nat.Ne.of.Lt
 open Nat Int Rat
@@ -18,10 +18,7 @@ private lemma main
 -- proof
   have : x⁻¹ < 0 := LtInv_0.of.Lt_0 h₁
   have := GeMulS.of.Le.Lt_0 h₀ this
-  rw [
-    Mul_Inv.eq.Div,
-    Mul_Inv.eq.Div
-  ] at this
+  repeat rw [Mul_Inv.eq.Div] at this
   have h_Ne := Ne.of.Lt h₁
   rwa [EqDivMul.of.Ne_0 h_Ne] at this
 

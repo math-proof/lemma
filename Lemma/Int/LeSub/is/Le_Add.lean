@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma left
   [AddCommGroup α] [LE α] [AddLeftMono α]
 -- given
@@ -12,7 +12,7 @@ private lemma left
   sub_le_iff_le_add'
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main
   [AddGroup α] [LE α] [AddRightMono α]
 -- given

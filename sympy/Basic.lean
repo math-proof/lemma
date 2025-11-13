@@ -120,7 +120,25 @@ def List.zipParity (binders : List (Name × Expr × BinderInfo)) (parity : ℕ) 
     ([], parity)
   |> Prod.fst
 
-def Expr.comm (type proof : Expr) (parity : ℕ := 0) : List Bool × Expr × Expr :=
+def List.extractParity (parity : List (Bool × Expr)) : CoreM (List String × List Bool) := do
+  let moduleTokens := (← getEnv).moduleTokens
+  let i := moduleTokens.idxOf "of"
+  let ofPart := (moduleTokens.splitAt i).snd.tail
+  let parity ←
+    if parity.length > ofPart.length && ofPart.length > 0 then
+      parity.filterMapM fun ⟨comm, type⟩ => do
+        try
+          if ← MetaM.run' type.is_Prop then
+            return some comm
+          else
+            return none
+        catch _ =>
+          return none
+    else
+      pure (parity.map fun ⟨comm, _⟩ => comm)
+  return ⟨moduleTokens, parity⟩
+
+def Expr.comm (type proof : Expr) (parity : ℕ := 0) : List (Bool × Expr) × Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
   let ⟨type, symm⟩ := type.decomposeType
@@ -136,7 +154,7 @@ def Expr.comm (type proof : Expr) (parity : ℕ := 0) : List Bool × Expr × Exp
       )
   let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
   (
-    binders.filterMap fun ⟨comm, _, _, binderInfo⟩ => if binderInfo == .default then some comm else none,
+    binders.filterMap fun ⟨comm, _, binderType, binderInfo⟩ => if binderInfo == .default then some ⟨comm, binderType⟩ else none,
     (type, .app symm (proof.mkApp ((List.range binders.length).map fun i => .bvar i).reverse)).map
       (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE)
       (telescope valueBinders .lam)
@@ -168,8 +186,9 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨parity, type, value⟩ := Expr.comm decl.type (.const declName (levelParams.map .param)) stx.parity
+    let ⟨moduleTokens, parity⟩ ← parity.extractParity
     addAndCompile <| .thmDecl {
-      name := (((← getEnv).moduleTokens.comm parity).foldl Name.str default).lemmaName declName
+      name := ((moduleTokens.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value
@@ -330,8 +349,9 @@ initialize registerBuiltinAttribute {
     let ⟨n, type, value⟩ := Expr.mp decl.type (.const declName (levelParams.map .param))
     -- 2ⁿ, where n is the number of default binders
     let ⟨parity, type, value⟩ := Expr.comm type value (1 <<< n)
+    let ⟨moduleTokens, parity⟩ ← parity.extractParity
     addAndCompile <| .thmDecl {
-      name := (((← getEnv).moduleTokens.mp.comm parity).foldl Name.str default).lemmaName declName
+      name := ((moduleTokens.mp.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value
@@ -357,15 +377,16 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let ⟨n, type, value⟩ := Expr.mpr decl.type (.const declName (levelParams.map .param))
     let ⟨parity, type, value⟩ := Expr.comm type value (1 <<< n)
+    let ⟨moduleTokens, parity⟩ ← parity.extractParity
     addAndCompile <| .thmDecl {
-      name := (((← getEnv).moduleTokens.mpr.comm parity).foldl Name.str default).lemmaName declName
+      name := ((moduleTokens.mpr.comm parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value
     }
 }
 
-def Expr.comm.is (type mp mpr : Lean.Expr) (parity : ℕ := 0) : List Bool × Expr × Expr :=
+def Expr.comm.is (type mp mpr : Lean.Expr) (parity : ℕ := 0) : List (Bool × Expr) × Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
   let args := ((List.range binders.length).map fun i => .bvar i).reverse
   let binders := binders.zipParity parity
@@ -386,7 +407,7 @@ def Expr.comm.is (type mp mpr : Lean.Expr) (parity : ℕ := 0) : List Bool × Ex
       )
   let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
   (
-    binders.filterMap fun ⟨comm, _, _, binderInfo⟩ => if binderInfo == .default then some comm else none,
+    binders.filterMap fun ⟨comm, _, binderType, binderInfo⟩ => if binderInfo == .default then some ⟨comm, binderType⟩ else none,
     ((Expr.const `Iff us).mkApp [lhs, rhs], (Expr.const `Iff.intro us).mkApp [lhs, rhs, mp, mpr]).map
       (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE)
       (telescope valueBinders .lam)
@@ -418,8 +439,9 @@ initialize registerBuiltinAttribute {
     let ⟨_, type, mp⟩ := Expr.comm type value (1 <<< n)
 
     let ⟨parity, type, value⟩ := Expr.comm.is decl.type mp mpr stx.parity
+    let ⟨moduleTokens, parity⟩ ← parity.extractParity
     addAndCompile <| .thmDecl {
-      name := ((List.comm.is (← getEnv).moduleTokens parity).foldl Name.str default).lemmaName declName
+      name := ((List.comm.is moduleTokens parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value

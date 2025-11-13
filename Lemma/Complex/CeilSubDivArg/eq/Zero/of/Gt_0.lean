@@ -16,7 +16,7 @@ import Lemma.Set.In.of.In.Subset
 import Lemma.Set.SubsetIocS.of.Le.Ge
 import Lemma.Int.Le_Sub.is.LeAdd
 import Lemma.Nat.LeInv_1.of.Gt_0
-import Lemma.Int.Ge_Sub.of.GeAdd
+import Lemma.Int.LeSub.is.Le_Add
 import Lemma.Nat.GtCoe_0.is.Gt_0
 open Set Complex Rat Nat Int Real
 
