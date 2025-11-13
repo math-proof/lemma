@@ -1,4 +1,4 @@
-import Lemma.Nat.GeMulS.of.Ge
+import Lemma.Nat.LeMulS.of.Le
 import Lemma.Nat.GeAddS.is.Ge
 open Nat
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   k * x + t ≥ k * y + t := by
 -- proof
-  have := GeMulS.of.Ge h k
+  have := GeMulS.of.Ge.left h k
   apply GeAddS.of.Ge _ this
 
 
