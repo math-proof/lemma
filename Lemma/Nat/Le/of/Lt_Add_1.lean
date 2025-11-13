@@ -6,7 +6,7 @@ import Lemma.Nat.NotGt
 open Nat
 
 
-@[main]
+@[main, comm 1]
 private lemma main
   [IntegerRing Z]
   {x y : Z}
