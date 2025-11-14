@@ -1,39 +1,41 @@
 import Lemma.Int.EqToNat
-import Lemma.List.EqLengthSlice_Mul
 import Lemma.Nat.CoeMul.eq.MulCoeS
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Nat.Mul
 import Lemma.Rat.EqToNatCeilDivSubMul.of.Lt
-open Int Nat Rat List
+open Int Nat Rat
 
 
 @[main]
 private lemma main
-  {i : ℕ}
 -- given
-  (h : i < n)
+  (i : Fin n)
   (m : ℕ) :
 -- imply
   (⟨i, m * n, n⟩ : Slice).length (m * n) = m := by
 -- proof
-  have := EqLengthSlice_Mul ⟨i, h⟩ m
-  simp at this
-  assumption
+  unfold Slice.length
+  simp [EqAdd_Mul_DivSub1Sign_2]
+  repeat rw [MulCoeS.eq.CoeMul]
+  rw [EqAdd_Mul_DivSub1Sign_2]
+  rw [EqToNat]
+  simp
+  rw [EqToNatCeilDivSubMul.of.Lt]
+  simp
 
 
 @[main]
 private lemma comm'
-  {i : ℕ}
 -- given
-  (h : i < n)
+  (i : Fin n)
   (m : ℕ) :
 -- imply
   (⟨i, n * m, n⟩ : Slice).length (n * m) = m := by
 -- proof
-  have := EqLengthSlice_Mul.comm ⟨i, h⟩ m
-  simp at this
-  assumption
+  have := main i m
+  rw [Mul.comm m n] at this
+  rw [Mul.comm] at this
+  exact this
 
 
--- created on 2025-11-09
--- updated on 2025-11-14
+-- created on 2025-11-14

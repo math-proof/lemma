@@ -1,10 +1,10 @@
-import Lemma.List.ProdEraseIdx.eq.Mul_ProdEraseIdxTail.of.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.Int.EqSubAdd
 import Lemma.List.DropTail.eq.Drop
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.EqLengthSlice_CoeMul.of.Lt
+import Lemma.List.EqLengthSlice_Mul.of.Lt
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.List.LengthSlice.eq.One.of.Lt
@@ -12,11 +12,14 @@ import Lemma.List.MapCast.eq.Cast_Map.of.Eq
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.List.ProdEraseIdx.eq.MulProdS
+import Lemma.List.ProdEraseIdx.eq.Mul_ProdEraseIdxTail.of.GtLength_0
 import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
 import Lemma.List.ProdTakeMapCast.eq.CastProdTake
 import Lemma.List.ProdTakeTailMapCast.eq.CastProdTakeTail
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.EqDivMul.of.Ne_0
+import Lemma.Nat.EqSubAdd
 import Lemma.Nat.LtVal
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
@@ -27,13 +30,17 @@ import Lemma.Tensor.SEqStack_Get.of.GtLength_0
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
 import Lemma.Tensor.SelectStack.eq.Stack_Select.of.GtLength
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
+import Lemma.Vector.EqGetRange
 import Lemma.Vector.FlattenCast.eq.Cast_Flatten.of.Eq.Eq
 import Lemma.Vector.FlattenMapRange.eq.Cast_UFn_0
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
+import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
+import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.Indices.eq.Cast_MapRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open List Bool Nat Tensor Vector Int
+open Bool Int List Nat Tensor Vector
 set_option maxHeartbeats 2000000
 
 
@@ -115,7 +122,7 @@ private lemma main
       rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
       rw [ProdEraseIdx.eq.MulProdS]
     ·
-      have h := GtSub.of.Gt_Add h
+      have h_d_lt_sub := GtSub.of.Gt_Add h
       apply SEq.of.All_EqGetS.Eq
       ·
         intro t
@@ -123,7 +130,7 @@ private lemma main
         rw [SelectStack.eq.Stack_Select.of.GtLength]
         have ih := ih (s := s.tail) (by simpa) (i := ⟨i, by simp⟩)
         simp at ih
-        have h_eq : (⟨↑↑i, ((List.map Nat.cast s).tail.take (d + 1)).prod, ↑s[d + 1]⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.drop (d + 1 + 1)).prod = (s.tail.eraseIdx d).prod := by
+        have h_eq : (⟨i, ((List.map Nat.cast s).tail.take (d + 1)).prod, s[d + 1]⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.drop (d + 1 + 1)).prod = (s.tail.eraseIdx d).prod := by
           rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
           rw [ProdTake.eq.MulProdTake.of.Lt_Length (by grind)]
           rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)]
@@ -136,7 +143,7 @@ private lemma main
             rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)]
             simp only [h_eq]
           )
-          ((X.data.splitAt (d + 1)).getSlice ⟨i, (X.data.splitAt (d + 1)).length, (s.tail[d]'(by grind))⟩).flatten := by
+          ((X.data.splitAt (d + 1)).getSlice ⟨i, (X.data.splitAt (d + 1)).length, s.tail[d]'(by simpa)⟩).flatten := by
             intro X
             apply Eq_Cast.of.SEq
             apply ih
@@ -146,9 +153,9 @@ private lemma main
         rw [@Nat.EqSubAdd] at h_t
         rw [ProdCons.eq.Mul_Prod] at h_t
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-        rw [List.Mul_ProdEraseIdxTail.eq.ProdEraseIdx.of.GtLength_0] at h_t
-        simp [List.ProdEraseIdx.eq.MulProdS] at h_t
-        have h_t : t < (⟨↑↑i, ↑(X.data.splitAt (d + 1 + 1)).length, ↑s[d + 1]⟩ : Slice).length (s.take (d + 1 + 1)).prod * (s.drop (d + 1 + 1)).prod := by
+        rw [Mul_ProdEraseIdxTail.eq.ProdEraseIdx.of.GtLength_0] at h_t
+        simp [ProdEraseIdx.eq.MulProdS] at h_t
+        have h_t : t < (⟨i, (X.data.splitAt (d + 1 + 1)).length, s[d + 1]⟩ : Slice).length (s.take (d + 1 + 1)).prod * (s.drop (d + 1 + 1)).prod := by
           simp
           rw [ProdTakeMapCast.eq.CastProdTake]
           rw [ProdTake.eq.MulProdTake.of.Lt_Length (by omega)]
@@ -160,7 +167,54 @@ private lemma main
         rw [GetCast.eq.Get.of.Eq.fin (by simp [h_eq])]
         rw [EqGetRange.fin]
         simp [List.Vector.length]
-        sorry
+        have h_d_lt : d < s.tail.length := by grind
+        have h_r := LtVal r
+        have h_r : r < (⟨i, (s.tail.take (d + 1)).prod, s.tail[d]'(by simpa)⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.tail.drop (d + 1)).prod := by
+          simp
+          rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
+          rw [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
+          rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
+          rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
+          rw [Drop.eq.DropTail]
+          rwa [MulProdS.eq.ProdEraseIdx]
+        let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
+        rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
+        repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
+        ·
+          repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin]
+          rw [GetCast.eq.Get.of.Eq.fin (by simp)]
+          rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          apply congrArg
+          simp
+          sorry
+        ·
+          simp [ProdTake.eq.MulProdTake.of.Lt_Length h]
+        ·
+          simp [ProdTake.eq.MulProdTake.of.Lt_Length h]
+          rw [EqDivMul.of.Ne_0 (by grind)]
+          have h_q' := LtVal q'
+          simp at h_q'
+          simp [ProdTake.eq.MulProdTake.of.Lt_Length h] at h_q'
+          rw [ProdTakeMapCast.eq.CastProdTake] at h_q'
+          simp [ProdTake.eq.MulProdTake.of.Lt_Length h] at h_q'
+          rw [ProdTakeMapCast.eq.CastProdTake] at h_q'
+          rwa [EqLengthSlice_Mul.of.Lt (by omega)] at h_q'
+        ·
+          grind
+        ·
+          simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
+        ·
+          simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
+          rw [EqDivMul.of.Ne_0 (by grind)]
+          convert (LtVal qₐ)
+          simp
+          rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
+          rw [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
+          rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
+          rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
+        ·
+          grind
       ·
         simp
         rw [ProdTakeMapCast.eq.CastProdTake]

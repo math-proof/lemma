@@ -1,7 +1,7 @@
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min_Length
+import Lemma.Tensor.GetGetSlice.eq.Get
 import Lemma.Nat.LtVal
 open Tensor List Nat
 
@@ -21,15 +21,8 @@ private lemma main
     intro j
     simp only [GetElem.getElem]
     simp [EqGetStack.fin]
-    rw [GetGetSlice.eq.Get.of.Lt_Min_Length.fin]
-    .
-      rw [EqGetStack.fin]
-    .
-      simp [Tensor.length]
-      have h_j := LtVal j
-      simp only [Tensor.length] at h_j
-      simp [LengthSlice.eq.Min] at h_j
-      assumption
+    rw [GetGetSlice.eq.Get.fin]
+    rw [EqGetStack.fin]
   .
     simp [Tensor.length]
     rw [LengthSlice.eq.Min]

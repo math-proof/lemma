@@ -1,4 +1,4 @@
-import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min_Length
+import Lemma.Tensor.GetGetSlice.eq.Get
 import Lemma.Nat.LtVal
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Nat.EqMin.of.Le
@@ -26,7 +26,7 @@ private lemma main
   intro i
   if h : i.val = n then
     simp only [GetElem.getElem]
-    repeat rw [GetGetSlice.eq.Get.of.Lt_Min_Length.fin]
+    repeat rw [GetGetSlice.eq.Get.fin]
     aesop
   else
     have h_i := LtVal i
@@ -36,19 +36,17 @@ private lemma main
     have h_i := Le.of.Lt_Add_1 h_i
     have h := Lt.of.Le.Ne h_i h
     simp only [GetElem.getElem]
-    repeat rw [GetGetSlice.eq.Get.of.Lt_Min_Length.fin]
-    ·
-      have h₀ := All_EqGetS.of.Eq h₀
-      simp only [GetElem.getElem] at h₀
-      have h_i : i < (⟨0, n, 1⟩ : Slice).length X.length := by
-        simp_all [LengthSlice.eq.Min]
-        simp [Tensor.length]
-        linarith
-      specialize h₀ ⟨i, h_i⟩
-      repeat rw [GetGetSlice.eq.Get.of.Lt_Min.fin] at h₀
-      assumption
-      repeat simp_all; linarith
-    repeat simp only [Tensor.length]; omega
+    repeat rw [GetGetSlice.eq.Get.fin]
+    have h₀ := All_EqGetS.of.Eq h₀
+    simp only [GetElem.getElem] at h₀
+    have h_i : i < (⟨0, n, 1⟩ : Slice).length X.length := by
+      simp_all [LengthSlice.eq.Min]
+      simp [Tensor.length]
+      linarith
+    specialize h₀ ⟨i, h_i⟩
+    repeat rw [GetGetSlice.eq.Get.of.Lt_Min.fin] at h₀
+    assumption
+    repeat simp_all; linarith
 
 
 -- created on 2025-08-04
