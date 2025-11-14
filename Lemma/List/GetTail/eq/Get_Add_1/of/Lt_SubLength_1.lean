@@ -8,14 +8,9 @@ private lemma main
 -- given
   (h : i < s.length - 1) :
 -- imply
-  have : i < s.tail.length := by simp_all
-  s.tail[i] = s[i + 1] := by
+  s.tail[i]'(by simpa) = s[i + 1] := by
 -- proof
-  induction s with
-  | nil =>
-    contradiction
-  | cons =>
-    simp_all
+  grind
 
 
 @[main]
@@ -24,8 +19,7 @@ private lemma fin
 -- given
   (h : i < s.length - 1) :
 -- imply
-  have hi : i < s.tail.length := by simp_all
-  s.tail.get ⟨i, hi⟩ = s.get ⟨i + 1, LtAdd.of.Lt_Sub h⟩ := by
+  s.tail.get ⟨i, by simpa⟩ = s.get ⟨i + 1, LtAdd.of.Lt_Sub h⟩ := by
 -- proof
   apply main h
 

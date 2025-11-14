@@ -1,19 +1,22 @@
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.List.DropTail.eq.Drop
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.EqLengthSlice_CoeMul.of.Lt
+import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.List.LengthSlice.eq.One.of.Lt
 import Lemma.List.MapCast.eq.Cast_Map.of.Eq
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
 import Lemma.List.ProdTakeMapCast.eq.CastProdTake
+import Lemma.List.ProdTakeTailMapCast.eq.CastProdTakeTail
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.Nat.LtVal
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataStack.eq.FlattenMap_FunData
 import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.Tensor.SEqStack_Get.of.GtLength_0
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
@@ -24,7 +27,8 @@ import Lemma.Vector.FlattenMapRange.eq.Cast_UFn_0
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.Indices.eq.Cast_MapRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool List Nat Tensor Vector
+open Tensor Bool List Nat Vector
+set_option maxHeartbeats 2000000
 
 
 @[main]
@@ -113,7 +117,22 @@ private lemma main
         rw [SelectStack.eq.Stack_Select.of.GtLength]
         have ih := ih (s := s.tail) (by simpa) (i := ⟨i, by simp⟩)
         simp at ih
-        -- simp_rw [SEq.is.Eq_Cast.of.Eq] at ih
+        have h_all : ∀ (X : Tensor α s.tail), (X.select ⟨d, by grind⟩ ⟨i, by grind⟩).data = cast
+          (by
+            simp
+            rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
+            rw [ProdTake.eq.MulProdTake.of.Lt_Length (by grind)]
+            rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)]
+            rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
+            rw [Drop.eq.DropTail]
+            rw [ProdEraseIdx.eq.MulProdS]
+          )
+          ((X.data.splitAt (d + 1)).getSlice ⟨i, (X.data.splitAt (d + 1)).length, (s.tail[d]'(by grind))⟩).flatten := by 
+            intro X
+            apply Eq_Cast.of.SEq
+            apply ih
+        rw [DataStack.eq.FlattenMap_FunData.fin]
+        simp [h_all]
         sorry
       ·
         simp
@@ -129,4 +148,4 @@ private lemma main
 
 
 -- created on 2025-11-10
--- updated on 2025-11-11
+-- updated on 2025-11-14

@@ -1,5 +1,5 @@
 import Lemma.List.IsConstantTail.of.IsConstant
-import Lemma.List.FunGet_0.of.NeLength_0.All_Fun
+import Lemma.List.UFnGet_0.of.NeLength_0.All_UFn
 open List
 
 
@@ -27,7 +27,7 @@ private lemma main
         simp
       | .cons y ys =>
         simp
-        apply FunGet_0.of.NeLength_0.All_Fun (h_all := h)
+        apply UFnGet_0.of.NeLength_0.All_UFn (h_all := h)
         simp
     rw [h_eq'.symm, h_eq.symm]
 

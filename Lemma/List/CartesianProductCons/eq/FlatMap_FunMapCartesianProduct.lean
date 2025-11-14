@@ -1,4 +1,4 @@
-import Lemma.List.ProductCons.eq.FlatMapFunMapProduct
+import Lemma.List.ProductCons.eq.FlatMap_FunMapProduct
 open List
 
 
@@ -11,7 +11,7 @@ private lemma main
   (head :: tail).cartesianProduct = (List.range head).flatMap (fun h => tail.cartesianProduct.map (fun t => h :: t)) := by
 -- proof
   unfold List.cartesianProduct
-  apply ProductCons.eq.FlatMapFunMapProduct
+  apply ProductCons.eq.FlatMap_FunMapProduct
 
 
 -- created on 2025-06-14

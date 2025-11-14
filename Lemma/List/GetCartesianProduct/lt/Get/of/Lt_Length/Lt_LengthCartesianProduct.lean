@@ -1,4 +1,4 @@
-import Lemma.List.CartesianProductCons.eq.FlatMapFunMapCartesianProduct
+import Lemma.List.CartesianProductCons.eq.FlatMap_FunMapCartesianProduct
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
@@ -24,10 +24,10 @@ private lemma main
     unfold List.cartesianProduct at *
     contradiction
   | cons s₀ s ih =>
-    simp [CartesianProductCons.eq.FlatMapFunMapCartesianProduct] at h₀ h₁
+    simp [CartesianProductCons.eq.FlatMap_FunMapCartesianProduct] at h₀ h₁
     let ⟨k, hk, t, ht, h_eq⟩ := Any_Eq_AddMul.of.Lt_Mul h₀
     simp at h₂
-    simp [CartesianProductCons.eq.FlatMapFunMapCartesianProduct]
+    simp [CartesianProductCons.eq.FlatMap_FunMapCartesianProduct]
     unfold List.flatMap
     simp [h_eq]
     let v := (List.range s₀).map (fun h ↦ s.cartesianProduct.map (fun t ↦ h :: t))

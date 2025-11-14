@@ -1,5 +1,5 @@
 import stdlib.List
-import Lemma.List.ProductCons.eq.FlatMapFunMapProduct
+import Lemma.List.ProductCons.eq.FlatMap_FunMapProduct
 import Lemma.List.LengthProductCons.eq.MulLengthS
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength
@@ -21,7 +21,7 @@ private lemma main
   | cons x xs ih =>
     rw [LengthProductCons.eq.MulLengthS] at h
     let ⟨i, hi, j, hj, h_ij⟩ := Any_Eq_AddMul.of.Lt_Mul h
-    simp [ProductCons.eq.FlatMapFunMapProduct]
+    simp [ProductCons.eq.FlatMap_FunMapProduct]
     simp [List.flatMap]
     simp [h_ij]
     rw [GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength] <;>

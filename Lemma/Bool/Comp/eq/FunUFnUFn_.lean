@@ -9,8 +9,6 @@ private lemma main
 -- imply
   g ∘ f = fun x => g (f x) := by
 -- proof
-  -- unfold Function.comp
-  -- rfl
   aesop
 
 

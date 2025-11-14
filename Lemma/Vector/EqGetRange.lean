@@ -20,7 +20,7 @@ private lemma main
 -- given
   (i : Fin n) :
 -- imply
-  (List.Vector.range n)[i] = i :=
+  (List.Vector.range n)[i.val] = i :=
 -- proof
   fin i
 
