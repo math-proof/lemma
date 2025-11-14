@@ -13,17 +13,26 @@ import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdEraseIdx.eq.Mul_ProdEraseIdxTail.of.GtLength_0
+import Lemma.List.ProdTail.eq.MulProdS
 import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.Mul_ProdTake.of.Lt_Length
 import Lemma.List.ProdTakeMapCast.eq.CastProdTake
 import Lemma.List.ProdTakeTailMapCast.eq.CastProdTakeTail
 import Lemma.List.TailTake.eq.TakeTail
+import Lemma.Nat.AddAdd
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqSubAdd
+import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtVal
+import Lemma.Nat.MulAdd.eq.AddMulS
+import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataStack.eq.FlattenMap_FunData
 import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.Tensor.SEqStack_Get.of.GtLength_0
@@ -40,7 +49,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.Indices.eq.Cast_MapRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool Int List Nat Tensor Vector
+open Nat Bool Int List Tensor Vector
 set_option maxHeartbeats 2000000
 
 
@@ -130,7 +139,7 @@ private lemma main
         rw [SelectStack.eq.Stack_Select.of.GtLength]
         have ih := ih (s := s.tail) (by simpa) (i := ⟨i, by simp⟩)
         simp at ih
-        have h_eq : (⟨i, ((List.map Nat.cast s).tail.take (d + 1)).prod, s[d + 1]⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.drop (d + 1 + 1)).prod = (s.tail.eraseIdx d).prod := by
+        have h_eq : (⟨i, ((List.map Nat.cast s).tail.take (d + 1)).prod, s[d + 1]⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.drop (d + 1 + 1)).prod = (s.tail.eraseIdx d).prod := by 
           rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
           rw [ProdTake.eq.MulProdTake.of.Lt_Length (by grind)]
           rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)]
@@ -143,7 +152,7 @@ private lemma main
             rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)]
             simp only [h_eq]
           )
-          ((X.data.splitAt (d + 1)).getSlice ⟨i, (X.data.splitAt (d + 1)).length, s.tail[d]'(by simpa)⟩).flatten := by
+          ((X.data.splitAt (d + 1)).getSlice ⟨i, (X.data.splitAt (d + 1)).length, s.tail[d]'(by simpa)⟩).flatten := by 
             intro X
             apply Eq_Cast.of.SEq
             apply ih
@@ -153,15 +162,17 @@ private lemma main
         rw [@Nat.EqSubAdd] at h_t
         rw [ProdCons.eq.Mul_Prod] at h_t
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
         rw [Mul_ProdEraseIdxTail.eq.ProdEraseIdx.of.GtLength_0] at h_t
         simp [ProdEraseIdx.eq.MulProdS] at h_t
-        have h_t : t < (⟨i, (X.data.splitAt (d + 1 + 1)).length, s[d + 1]⟩ : Slice).length (s.take (d + 1 + 1)).prod * (s.drop (d + 1 + 1)).prod := by
+        have h_t : t < (⟨i, (X.data.splitAt (d + 1 + 1)).length, s[d + 1]⟩ : Slice).length (s.take (d + 1 + 1)).prod * (s.drop (d + 1 + 1)).prod := by 
           simp
           rw [ProdTakeMapCast.eq.CastProdTake]
           rw [ProdTake.eq.MulProdTake.of.Lt_Length (by omega)]
           rwa [EqLengthSlice_CoeMul.of.Lt (by omega)]
         simp only [GetElem.getElem]
         let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
         repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
         simp
         rw [GetCast.eq.Get.of.Eq.fin (by simp [h_eq])]
@@ -169,7 +180,7 @@ private lemma main
         simp [List.Vector.length]
         have h_d_lt : d < s.tail.length := by grind
         have h_r := LtVal r
-        have h_r : r < (⟨i, (s.tail.take (d + 1)).prod, s.tail[d]'(by simpa)⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.tail.drop (d + 1)).prod := by
+        have h_lt : r < (⟨i, (s.tail.take (d + 1)).prod, s.tail[d]'(by simpa)⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.tail.drop (d + 1)).prod := by 
           simp
           rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
           rw [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
@@ -177,7 +188,8 @@ private lemma main
           rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
           rw [Drop.eq.DropTail]
           rwa [MulProdS.eq.ProdEraseIdx]
-        let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
+        let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+        let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
         repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
         ·
@@ -187,7 +199,32 @@ private lemma main
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           apply congrArg
           simp
-          sorry
+          repeat rw [MulAdd.eq.AddMulS]
+          conv_lhs => rw [AddAdd.comm]
+          conv_rhs => rw [AddAdd.comm]
+          simp [Add_Add.eq.AddAdd]
+          simp at h_qₐ_div h_rₐ_mod h_r'_mod
+          simp [h_qₐ_div, h_rₐ_mod]
+          simp [ProdEraseIdx.eq.MulProdS] at h_r_mod
+          conv_lhs =>
+            arg 2
+            simp [h_r_mod]
+          simp [← h_r'_mod]
+          rw [ProdTail.eq.MulProdS s (d + 1)]
+          rw [Mul_Mul.eq.MulMul]
+          simp [AddMulS.eq.MulAdd]
+          left
+          rw [ProdTake.eq.Mul_ProdTake.of.Lt_Length (by omega)]
+          rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
+          rw [Mul_Mul.eq.MulMul]
+          rw [MulMul.comm]
+          simp [AddMulS.eq.MulAdd]
+          left
+          simp [h_q'_div, h_qr]
+          simp [ProdEraseIdx.eq.MulProdS]
+          rw [Mul_Mul.eq.MulMul]
+          rw [DivAddMul.eq.Add_Div.of.Gt_0]
+          grind
         ·
           simp [ProdTake.eq.MulProdTake.of.Lt_Length h]
         ·

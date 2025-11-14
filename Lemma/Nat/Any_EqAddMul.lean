@@ -4,8 +4,9 @@ open Nat
 
 @[main]
 private lemma main
+  [IntegerRing Z]
 -- given
-  (m n : ℕ) :
+  (m n : Z) :
 -- imply
   ∃ i j, i * n + j = m := by
 -- proof
