@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
 import sympy.tensor.stack
 open Tensor Bool
 
@@ -19,7 +19,7 @@ private lemma main
   intro k
   rw [EqGetStack.fn]
   apply Eq.of.SEq
-  have := GetSelect.as.SelectGet.of.Lt_Get_0.GtLength_0 (i := i) (j := k) h (by simp) (by simp) ([k < n] f k)
+  have := GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length (i := i) (j := k) (d := d) (by grind) (by simp) (by simp) ([k < n] f k)
   apply SEq.trans this
   rw [EqGetStack.fn.fin]
   rfl
