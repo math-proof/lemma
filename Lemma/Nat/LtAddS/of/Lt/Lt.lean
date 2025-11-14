@@ -3,16 +3,11 @@ import Lemma.Nat.Lt.of.Lt.Lt
 open Nat
 
 
-/--
-Given elements `a`, `b`, `x`, and `y` in a preordered additive structure where addition is strictly monotonic on both sides, this lemma proves that if `a < b` and `x < y`, then `a + x < b + y`.
-The proof leverages the strict monotonicity properties of addition to preserve the inequalities through left and right additions, then applies transitivity of the order to combine the intermediate results.
--/
-@[main]
+@[main, comm 3]
 private lemma main
   [Add α]
   [Preorder α]
-  [AddRightStrictMono α]
-  [AddLeftStrictMono α]
+  [AddRightStrictMono α] [AddLeftStrictMono α]
   {a b x y : α}
 -- given
   (h₀ : a < b)

@@ -1,5 +1,5 @@
 import Lemma.Nat.EqAdd_0
-import Lemma.Nat.GtAddS.of.Ge.Gt
+import Lemma.Nat.LtAddS.of.Le.Lt
 open Nat
 
 
@@ -16,7 +16,7 @@ private lemma main
 -- imply
   a + b > 0 := by
 -- proof
-  have h₂ := GtAddS.of.Ge.Gt h₀ h₁
+  have h₂ := LtAddS.of.Le.Lt h₀ h₁
   simp only [EqAdd_0] at h₂
   assumption
 

@@ -1,5 +1,5 @@
 import Lemma.Nat.EqAdd_0
-import Lemma.Nat.GtAddS.of.Gt.Gt
+import Lemma.Nat.LtAddS.of.Lt.Lt
 open Nat
 
 
@@ -7,8 +7,7 @@ open Nat
 private lemma main
   [AddZeroClass α]
   [Preorder α]
-  [AddRightStrictMono α]
-  [AddLeftStrictMono α]
+  [AddRightStrictMono α] [AddLeftStrictMono α]
   {a b : α}
 -- given
   (h₀ : a > 0)

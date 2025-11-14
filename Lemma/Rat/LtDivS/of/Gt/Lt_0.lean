@@ -5,7 +5,7 @@ import Lemma.Int.Lt.of.GtNegS
 open Rat Int
 
 
-@[main]
+@[main, comm 2]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a b : α}

@@ -2,7 +2,7 @@ import Lemma.Nat.Le_Sub.is.LeAdd.of.Le
 open Nat
 
 
-@[main]
+@[main, comm 1]
 private lemma main
   {a b c : ℕ}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   linarith
 
 
-@[main]
+@[main, comm 1]
 private lemma left
   {a b c : ℕ}
 -- given

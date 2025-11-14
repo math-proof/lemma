@@ -217,7 +217,8 @@ class MarkdownText extends Markdown {
     }
 
     htmlFormat() {
-        return this.text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        let html = this.text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return html.replace(/\\_/g, '&#95;');
     }
 
     strFormat() {

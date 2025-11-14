@@ -1,5 +1,5 @@
 <template>
-    {{kwargs.text}}
+    {{self.text}}
 </template>
 
 <script setup>
@@ -17,6 +17,10 @@ const self = new Vue({
     },
 
     computed: {
+        text() {
+            let {text} = props.kwargs;
+            return text.replace(/\\_/g, '_');
+        },
     },
 
     mounted() {

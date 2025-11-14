@@ -1,6 +1,6 @@
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.EqFloor.is.Le.Lt
-import Lemma.Rat.GeDiv.of.Ge_Mul.Gt_0
+import Lemma.Rat.Le_Div.of.LeMul.Gt_0
 import Lemma.Int.DivInt.eq.Div
 import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Rat.Div.lt.Zero.of.Lt_0.Gt_0
@@ -22,7 +22,7 @@ private lemma main
     norm_cast
     simp
     rw [DivInt.eq.Div]
-    apply GeDiv.of.Ge_Mul.Gt_0
+    apply Le_Div.of.LeMul.Gt_0
     ·
       simp
       norm_cast

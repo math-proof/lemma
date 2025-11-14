@@ -1,5 +1,5 @@
 import Lemma.Rat.EqDiv0'0
-import Lemma.Rat.GeDivS.of.Le.Le_0
+import Lemma.Rat.LeDivS.of.Ge.Le_0
 open Rat
 
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   a / b ≥ 0 := by
 -- proof
-  have h := GeDivS.of.Le.Le_0 h₀ h₁
+  have h := LeDivS.of.Ge.Le_0 h₀ h₁
   simp only [EqDiv0'0] at h
   exact h
 

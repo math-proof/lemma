@@ -1,7 +1,7 @@
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.GeSub.of.Ge_Add
+import Lemma.Nat.Le_Sub.of.LeAdd
 open Nat
 
 

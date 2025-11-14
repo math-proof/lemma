@@ -1,0 +1,26 @@
+import Lemma.Rat.Div.eq.Mul_Inv
+import Lemma.Nat.EqDivMul.of.Ne_0
+import Lemma.Int.LeMulS.of.Ge.Lt_0
+import Lemma.Rat.LtInv_0.is.Lt_0
+import Lemma.Nat.Ne.of.Lt
+open Nat Int Rat
+
+
+@[main, comm 2]
+private lemma main
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
+  {x y t : α}
+-- given
+  (h₀ : t * x ≥ y)
+  (h₁ : x < 0) :
+-- imply
+  t ≤ y / x := by
+-- proof
+  have : x⁻¹ < 0 := LtInv_0.of.Lt_0 h₁
+  have := LeMulS.of.Ge.Lt_0 h₀ this
+  repeat rw [Mul_Inv.eq.Div] at this
+  have h_Ne := Ne.of.Lt h₁
+  rwa [EqDivMul.of.Ne_0 h_Ne] at this
+
+
+-- created on 2025-03-30

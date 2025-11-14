@@ -1,6 +1,5 @@
-import stdlib.List
 import Lemma.List.DropRotate.eq.Take.of.Le_Length
-import Lemma.Nat.Ge.of.Eq_Add
+import Lemma.Nat.Le.of.EqAdd
 open List Nat
 
 
@@ -12,7 +11,8 @@ private lemma main
 -- imply
   (s.rotate n).drop m = s.take n := by
 -- proof
-  convert DropRotate.eq.Take.of.Le_Length (Ge.of.Eq_Add h)
+  have := Ge.of.Eq_Add h
+  convert DropRotate.eq.Take.of.Le_Length this
   simp [h]
 
 

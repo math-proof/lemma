@@ -1,4 +1,4 @@
-import Lemma.Nat.Ge_Add.of.GeSub.Ge
+import Lemma.Nat.Le_Sub.is.LeAdd.of.Le
 import Lemma.Nat.Sub.eq.Zero.of.Lt
 open Nat
 
@@ -15,7 +15,7 @@ private lemma main
   if h_le : j ≥ i then
     by_contra h
     simp at h
-    have := Ge_Add.of.GeSub.Ge h_le h
+    have := Ge_Add.of.GeSub.Le h_le h
     linarith
   else
     simp at h_le

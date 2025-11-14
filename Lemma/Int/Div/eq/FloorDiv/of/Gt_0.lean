@@ -1,8 +1,7 @@
 import Lemma.Int.Div.eq.AddDiv___Mod
-import Lemma.Int.GeDivS.of.Gt_0
 import Lemma.Int.Div.lt.One.of.Gt_0
-import Lemma.Int.Lt_Add.of.Eq_Add.Lt
 import Lemma.Int.EqFloor.is.Le.Lt
+import Lemma.Int.GeDivS.of.Gt_0
 open Int
 
 
@@ -21,11 +20,9 @@ private lemma main
   ·
     exact GeDivS.of.Gt_0 h
   ·
-    apply Lt_Add.of.Eq_Add.Lt
-    .
-      apply Div.eq.AddDiv___Mod n d
-    .
-      apply Div.lt.One.of.Gt_0 (n := n) h
+    simp [Div.eq.AddDiv___Mod n]
+    exact Div.lt.One.of.Gt_0 h
 
 
 -- created on 2025-10-08
+-- updated on 2025-11-14

@@ -5,7 +5,7 @@ import Lemma.Int.Le.of.GeNegS
 open Rat Int
 
 
-@[main]
+@[main, comm 2]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {x a b : α}
