@@ -51,22 +51,22 @@ private lemma main
         simp [h_z] at ⊢ h_zt
         simp [h₀, h_min] at h_t
         rw [h_rotate, ProdAppend.eq.MulProdS] at h_t
-        let ⟨i, j, h_ij⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-        rw [GetFlatten.eq.Get.of.Eq_AddMul h_ij]
+        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        rw [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
         simp only [GetElem.getElem]
         rw [GetCast.eq.Get.of.Eq.fin (by simp_all)]
         have h_t' := LtVal t'
         simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_t'
-        let ⟨i', j', h_ij'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t'
-        rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_ij']
+        let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t'
+        rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
         repeat rw [GetTranspose.eq.Get.fin]
-        have h_eq := (h_zt.trans h_ij').symm.trans h_ij
+        have h_eq := (h_zt.trans h_q'r').symm.trans h_qr
         simp [h_min, h₀] at h_eq
-        have h_j' := LtVal j'
-        simp [h_min, h₀] at h_j'
-        have h_j := LtVal j
-        simp at h_j
-        let ⟨h_i, h_j⟩ := Eq.Eq.of.EqAddSMul.Lt.Lt h_j h_j' h_eq
+        have h_r' := LtVal r'
+        simp [h_min, h₀] at h_r'
+        have h_r := LtVal r
+        simp at h_r
+        let ⟨h_i, h_j⟩ := Eq.Eq.of.EqAddSMul.Lt.Lt h_r h_r' h_eq
         repeat rw [EqGetS]
         simp [h_i, h_j]
         repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]

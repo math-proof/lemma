@@ -34,15 +34,14 @@ private lemma main
       ·
         intro t
         have h_t := LtVal t
-        let ⟨k, j, h_kj⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-        simp [GetFlatten.eq.Get.of.Eq_AddMul h_kj]
-        have := GetTranspose.eq.Get (X.data.splitAt 0) ⟨0, by simp⟩ ⟨k, by simp⟩
+        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
+        have := GetTranspose.eq.Get (X.data.splitAt 0) ⟨0, by simp⟩ ⟨q, by simp⟩
         simp at this
         rw [this]
-        have := GetSplitAt.eq.Get_AddMul_ProdDrop (d := 0) X.data ⟨0, by simp⟩ ⟨k, by simp⟩
+        have := GetSplitAt.eq.Get_AddMul_ProdDrop (d := 0) X.data ⟨0, by simp⟩ ⟨q, by simp⟩
         simp at this
         rw [this]
-        have h_j := EqVal_0 j
         grind
       ·
         simp

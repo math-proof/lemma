@@ -63,11 +63,11 @@ private lemma main
         ·
           intro t
           have h_t := LtVal t
-          let ⟨k, j, h_kj⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-          simp [GetFlatten.eq.Get.of.Eq_AddMul h_kj]
+          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+          simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
           rw [GetTranspose.eq.Get]
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
-          simp at h_kj ⊢
+          simp at h_qr ⊢
           simp [GetElem.getElem]
           rw [GetCast.eq.Get.of.Eq.fin]
           ·
@@ -77,24 +77,24 @@ private lemma main
             have := Sub_Mod.eq.ModSub (m := s.length) (n := i) h_i
             let n := (List.take (i % s.length) s).prod
             let m := (List.drop (i % s.length) s).prod
-            have h_j := LtVal j
-            simp at h_j
+            have h_r := LtVal r
+            simp at h_r
             have h_take := TakeRotate.eq.Drop s i
             have h_mod := EqMod.of.Lt h_i
             rw [h_mod] at h_take
-            rw [h_take] at h_j
-            have h_k := LtVal k
-            simp at h_k
+            rw [h_take] at h_r
+            have h_q := LtVal q
+            simp at h_q
             have h_drop := DropRotate.eq.Take s i
             rw [h_mod] at h_drop
-            rw [h_drop] at h_k
-            rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨j, by simp [h_mod, h_j]⟩) (j := ⟨k, by simpa [h_mod]⟩)]
+            rw [h_drop] at h_q
+            rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨r, by simp [h_mod, h_r]⟩) (j := ⟨q, by simpa [h_mod]⟩)]
             ·
               rw [GetTranspose.eq.Get.fin]
               rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-              simp at ⊢ h_kj
-              rw [h_take] at h_kj
-              simp [h_kj]
+              simp at ⊢ h_qr
+              rw [h_take] at h_qr
+              simp [h_qr]
               simp [h_mod]
             ·
               simp

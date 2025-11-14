@@ -61,23 +61,23 @@ private lemma main
         ·
           intro t
           have h_t := LtVal t
-          let ⟨k', k, h_k'k⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-          have h_k := LtVal k
-          simp at h_k
-          have h_k' := LtVal k'
-          simp [EqRotate_1.of.LeLength_1] at h_k'
-          simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k]
+          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+          have h_r := LtVal r
+          simp at h_r
+          have h_q := LtVal q
+          simp [EqRotate_1.of.LeLength_1] at h_q
+          simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
           simp at h_t
           unfold Tensor.rotate
           simp [GetElem.getElem]
           rw [GetCast.eq.Get.of.Eq.fin]
           ·
-            rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp [h_length]⟩) (i := ⟨k', by simpa [h_length]⟩) (t := k') (by simp [h_length])]
+            rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp [h_length]⟩) (i := ⟨q, by simpa [h_length]⟩) (t := q) (by simp [h_length])]
             rw [GetTranspose.eq.Get.fin]
             repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            simp at h_k'k
+            simp at h_qr
             simp
-            simp [h_k'k]
+            simp [h_qr]
           ·
             simp [h_length]
             simp [EqRotate_1.of.LeLength_1]

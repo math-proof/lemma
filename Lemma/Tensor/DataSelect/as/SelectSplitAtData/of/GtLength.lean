@@ -1,17 +1,22 @@
+import Lemma.List.ProdEraseIdx.eq.Mul_ProdEraseIdxTail.of.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Int.EqSubAdd
 import Lemma.List.DropTail.eq.Drop
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.EqLengthSlice_CoeMul.of.Lt
+import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.List.LengthSlice.eq.One.of.Lt
 import Lemma.List.MapCast.eq.Cast_Map.of.Eq
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
+import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
 import Lemma.List.ProdTakeMapCast.eq.CastProdTake
 import Lemma.List.ProdTakeTailMapCast.eq.CastProdTakeTail
 import Lemma.List.TailTake.eq.TakeTail
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.LtVal
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
@@ -24,10 +29,11 @@ import Lemma.Tensor.SelectStack.eq.Stack_Select.of.GtLength
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Vector.FlattenCast.eq.Cast_Flatten.of.Eq.Eq
 import Lemma.Vector.FlattenMapRange.eq.Cast_UFn_0
+import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.Indices.eq.Cast_MapRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Tensor Bool List Nat Vector
+open List Bool Nat Tensor Vector Int
 set_option maxHeartbeats 2000000
 
 
@@ -117,22 +123,43 @@ private lemma main
         rw [SelectStack.eq.Stack_Select.of.GtLength]
         have ih := ih (s := s.tail) (by simpa) (i := ⟨i, by simp⟩)
         simp at ih
+        have h_eq : (⟨↑↑i, ((List.map Nat.cast s).tail.take (d + 1)).prod, ↑s[d + 1]⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.drop (d + 1 + 1)).prod = (s.tail.eraseIdx d).prod := by
+          rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
+          rw [ProdTake.eq.MulProdTake.of.Lt_Length (by grind)]
+          rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)]
+          rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
+          rw [Drop.eq.DropTail]
+          rw [ProdEraseIdx.eq.MulProdS]
         have h_all : ∀ (X : Tensor α s.tail), (X.select ⟨d, by grind⟩ ⟨i, by grind⟩).data = cast
           (by
             simp
-            rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
-            rw [ProdTake.eq.MulProdTake.of.Lt_Length (by grind)]
             rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)]
-            rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
-            rw [Drop.eq.DropTail]
-            rw [ProdEraseIdx.eq.MulProdS]
+            simp only [h_eq]
           )
-          ((X.data.splitAt (d + 1)).getSlice ⟨i, (X.data.splitAt (d + 1)).length, (s.tail[d]'(by grind))⟩).flatten := by 
+          ((X.data.splitAt (d + 1)).getSlice ⟨i, (X.data.splitAt (d + 1)).length, (s.tail[d]'(by grind))⟩).flatten := by
             intro X
             apply Eq_Cast.of.SEq
             apply ih
         rw [DataStack.eq.FlattenMap_FunData.fin]
         simp [h_all]
+        simp only [EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0 (show d + 1 > 0 by omega)] at h_t
+        rw [@Nat.EqSubAdd] at h_t
+        rw [ProdCons.eq.Mul_Prod] at h_t
+        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        rw [List.Mul_ProdEraseIdxTail.eq.ProdEraseIdx.of.GtLength_0] at h_t
+        simp [List.ProdEraseIdx.eq.MulProdS] at h_t
+        have h_t : t < (⟨↑↑i, ↑(X.data.splitAt (d + 1 + 1)).length, ↑s[d + 1]⟩ : Slice).length (s.take (d + 1 + 1)).prod * (s.drop (d + 1 + 1)).prod := by
+          simp
+          rw [ProdTakeMapCast.eq.CastProdTake]
+          rw [ProdTake.eq.MulProdTake.of.Lt_Length (by omega)]
+          rwa [EqLengthSlice_CoeMul.of.Lt (by omega)]
+        simp only [GetElem.getElem]
+        let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
+        simp
+        rw [GetCast.eq.Get.of.Eq.fin (by simp [h_eq])]
+        rw [EqGetRange.fin]
+        simp [List.Vector.length]
         sorry
       ·
         simp

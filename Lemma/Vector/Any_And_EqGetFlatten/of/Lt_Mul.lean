@@ -11,8 +11,8 @@ private lemma main
 -- imply
   ∃ (i : Fin m) (j : Fin n), t = i * n + j ∧ v.flatten[t] = v[i.val, j.val] := by
 -- proof
-  let ⟨i, j, h⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h
-  use i, j
+  let ⟨q, r, h⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h
+  use q, r
   constructor
   .
     exact h

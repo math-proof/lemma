@@ -60,19 +60,19 @@ private lemma main
         apply IffEqS.of.Eq
         repeat rw [GetVal.eq.Get.of.Lt (by simp_all)]
         rw [← h₀, ← h₁] at h
-        let ⟨j, i, h_eq⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h
+        let ⟨q, r, h_eq⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h
         simp [Data.eq.FlattenMapRange, h_eq]
         let v_n : List.Vector (List.Vector α s₀.prod) n := (List.Vector.range n).map fun i ↦ A[i].data
         have h_a := GetFlatten_AddMul.eq.Get v_n
         simp at h_a
-        have h_i : i.val < s₁.prod := by
+        have h_r : r.val < s₁.prod := by
           rw [← h₁]
           simp
-        have h_j : j < m := by
+        have h_q : q < m := by
           rw [← h₀]
           simp
         let v_m : List.Vector (List.Vector α s₁.prod) m := (List.Vector.range m).map fun i ↦ B[i].data
-        have h_b := GetFlatten_AddMul.eq.Get v_m ⟨j, h_j⟩ ⟨i, h_i⟩
+        have h_b := GetFlatten_AddMul.eq.Get v_m ⟨q, h_q⟩ ⟨r, h_r⟩
         simp [← h₁] at h_b
         simp [v_n] at h_a
         rw [h_a]
@@ -82,9 +82,9 @@ private lemma main
         repeat rw [EqGetRange.fin]
         simp [List.Vector.get]
         repeat rw [GetVal.eq.Get.of.Lt (by simp_all)]
-        have hj := h₂ j
-        have hj := EqValS.of.SEq hj
-        apply EqGetS.of.Eq.Lt_Length (show i < A[j].data.val.length by simp_all) hj
+        have hq := h₂ q
+        have hq := EqValS.of.SEq hq
+        apply EqGetS.of.Eq.Lt_Length (show r < A[q].data.val.length by simp_all) hq
       else
         apply IffEqS.of.Eq
         have h := Ge.of.NotLt h

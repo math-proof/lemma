@@ -32,19 +32,19 @@ private lemma main
       apply SEq.of.All_EqGetS.Eq (by simp)
       intro t
       have h_t := LtVal t
-      let ⟨k', k, h_k'k⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-      have h_k := LtVal k
-      simp at h_k
-      simp [GetFlatten.eq.Get.of.Eq_AddMul h_k'k]
+      let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+      have h_r := LtVal r
+      simp at h_r
+      simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
       unfold Tensor.rotate
       simp [GetElem.getElem]
       rw [GetCast.eq.Get.of.Eq.fin]
       .
-        rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨k, by simpa⟩) (t := k) (by simp)]
+        rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨r, by simpa⟩) (t := r) (by simp)]
         rw [GetTranspose.eq.Get.fin]
         repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         simp
-        simp at h_k'k
+        simp at h_qr
         aesop
       .
         simp

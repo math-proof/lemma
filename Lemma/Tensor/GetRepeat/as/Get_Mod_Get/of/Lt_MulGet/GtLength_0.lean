@@ -53,8 +53,8 @@ private lemma main
   (X.repeat n ⟨0, h_s⟩)[i] ≃ X[i % s[0]] := by
 -- proof
   intros
-  obtain ⟨j, i, h_ij⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_i
-  simp [h_ij, EqMod]
+  obtain ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_i
+  simp [h_qr, EqMod]
   unfold Tensor.repeat
   simp
   simp only [GetElem.getElem]
@@ -82,17 +82,17 @@ private lemma main
             intro k
             have h_k := LtVal k
             simp at h_k
-            have h_lt_add := AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.Lt_Get_0.GtLength_0 h_s (LtVal i) (LtVal j) h_k
+            have h_lt_add := AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.Lt_Get_0.GtLength_0 h_s (LtVal r) (LtVal q) h_k
             simp only [GetElem.getElem]
             rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin]
             have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin
-              (s := s) (d := 1) (i := i) (j := k)
+              (s := s) (d := 1) (i := r) (j := k)
               (by simp_all) (by simp_all [TailSet_0.eq.Tail]) data
             simp [this]
             rw [GetCast.eq.Get.of.Eq.fin]
             ·
               simp [TailSet_0.eq.Tail]
-              simp [show (j * s[0] + i) * s.tail.prod + k = 0 * (n * s.prod) + (j * s[0] + i) * s.tail.prod + k by simp]
+              simp [show (q * s[0] + r) * s.tail.prod + k = 0 * (n * s.prod) + (q * s[0] + r) * s.tail.prod + k by simp]
               simp only [AddAdd.eq.Add_Add]
               rw [GetFlatten_AddMul.eq.Get.of.Lt.Lt.fin (by grind)]
               ·
@@ -110,7 +110,7 @@ private lemma main
                 rw [AddAdd.eq.Add_Add]
                 rw [ModAddMul.eq.Mod]
                 apply EqMod.of.Lt
-                have := AddMul.lt.Mul.of.Lt.Lt (LtVal i) h_k
+                have := AddMul.lt.Mul.of.Lt.Lt (LtVal r) h_k
                 simp at this
                 rw [TailSet_0.eq.Tail] at this
                 convert this
@@ -125,7 +125,7 @@ private lemma main
   ·
     apply ProdTake_1.eq.HeadD_1
   ·
-    convert AddMul.lt.Mul j i
+    convert AddMul.lt.Mul q r
     apply EqProdTakeSet__1.of.GtLength_0 h_s
   ·
     rw [EqProdTakeSet__1.of.GtLength_0 h_s]
@@ -147,8 +147,7 @@ private lemma fin
     assumption
   (X.repeat n ⟨0, h_s⟩).get ⟨i, h_i⟩ ≃ X.get ⟨i % s[0], h_mod⟩ := by
 -- proof
-  apply main
-  assumption
+  apply main _ h_i
 
 
 -- created on 2025-07-10

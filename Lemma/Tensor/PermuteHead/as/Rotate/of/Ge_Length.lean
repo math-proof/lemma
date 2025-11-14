@@ -50,8 +50,8 @@ private lemma main
             intro t
             have h_t := LtVal t
             simp [h_take, h_drop] at h_t
-            let ⟨i, j, h_ij⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-            simp [GetFlatten.eq.Get.of.Eq_AddMul h_ij]
+            let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+            simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
             have h_t : t < ((s.take n).drop (1 % (s.take n).length)).prod * ((s.take n).take (1 % (s.take n).length)).prod * (s.drop n).prod := by
               simpa [h_take, h_drop]
             let ⟨t', z, h_tz⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
@@ -61,15 +61,15 @@ private lemma main
             simp [h_z] at ⊢ h_tz
             simp [h_drop] at h_tz
             have h_t' := LtVal t'
-            let ⟨i'', j'', h_ij''⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t'
-            rw [GetFlatten.eq.Get.of.Eq_AddMul h_ij'']
+            let ⟨q', r', h_qr'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t'
+            rw [GetFlatten.eq.Get.of.Eq_AddMul h_qr']
             repeat rw [GetTranspose.eq.Get, GetSplitAt.eq.Get_AddMul_ProdDrop]
-            have h_eq := (h_tz.trans h_ij'').symm.trans h_ij
+            have h_eq := (h_tz.trans h_qr').symm.trans h_qr
             simp [h_take] at h_eq
-            have h_j'' := LtVal j''
-            simp [h_take] at h_j''
-            have h_j := LtVal j
-            let ⟨h_i, h_j⟩ := Eq.Eq.of.EqAddSMul.Lt.Lt h_j h_j'' h_eq
+            have h_r' := LtVal r'
+            simp [h_take] at h_r'
+            have h_r := LtVal r
+            let ⟨h_i, h_j⟩ := Eq.Eq.of.EqAddSMul.Lt.Lt h_r h_r' h_eq
             simp [h_i, h_j, h_take]
             rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]
             simp [h_drop]
