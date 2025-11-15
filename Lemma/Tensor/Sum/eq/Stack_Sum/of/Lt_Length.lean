@@ -1,20 +1,20 @@
-import Lemma.Tensor.Sum.eq.FromVectorToVectorMap.of.Lt_Length
-import Lemma.Tensor.FromVectorToVectorMap.eq.Stack
+import Lemma.Tensor.Sum.eq.FromVectorMap_FunSum.of.Lt_Length
+import Lemma.Tensor.FromVectorMapToVector.eq.Stack
 open Tensor
 
 
 @[main]
 private lemma main
   [Add α] [Zero α]
-  {dim : ℕ}
+  {d : ℕ}
 -- given
-  (h : dim < s.length)
+  (h : d < s.length)
   (X : Tensor α (n :: s)) :
 -- imply
-  X.sum (dim + 1) = [i < n] (X[i].sum dim) := by
+  X.sum (d + 1) = [i < n] (X[i].sum d) := by
 -- proof
-  rw [Sum.eq.FromVectorToVectorMap.of.Lt_Length h]
-  apply FromVectorToVectorMap.eq.Stack (fun s => s.eraseIdx dim)
+  rw [Sum.eq.FromVectorMap_FunSum.of.Lt_Length h]
+  apply FromVectorMapToVector.eq.Stack (fun s => s.eraseIdx d)
 
 
 -- created on 2025-06-24

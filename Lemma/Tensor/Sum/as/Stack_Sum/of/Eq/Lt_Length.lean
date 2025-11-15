@@ -6,17 +6,17 @@ open Tensor
 @[main]
 private lemma main
   [Add α] [Zero α]
-  {dim : ℕ}
+  {d : ℕ}
 -- given
   (h₀ : n = m)
-  (h₁ : dim < s.length)
+  (h₁ : d < s.length)
   (X : Tensor α (n :: s)) :
 -- imply
   have : X.length = m := by aesop
-  X.sum (dim + 1) ≃ [i < m] (X[i].sum dim) := by
+  X.sum (d + 1) ≃ [i < m] (X[i].sum d) := by
 -- proof
   rw [Sum.eq.Stack_Sum.of.Lt_Length h₁]
-  apply EqStackSUFnGet.of.Eq h₀ (fun s => s.eraseIdx dim) (fun X => X.sum dim)
+  apply EqStackSUFnGet.of.Eq h₀ (fun s => s.eraseIdx d) (fun X => X.sum d)
 
 
 -- created on 2025-06-27

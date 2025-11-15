@@ -12,10 +12,23 @@ private lemma main
   (h₀ : i < A.length)
   (h₁ : A ≃ B) :
 -- imply
-  have : i < B.length := by rwa [EqLengthS.of.SEq h₁] at h₀
-  A[i] ≃ B[i] := by
+  A[i] ≃ B[i]'(by rwa [EqLengthS.of.SEq h₁] at h₀) := by
 -- proof
   apply EqTFnS.of.Eq.Lt_Length.tensor h₀ h₁ _ (fun s X i => X.get i)
+
+
+@[main]
+private lemma fin
+  {A : Tensor α s}
+  {B : Tensor α s'}
+  {i : ℕ}
+-- given
+  (h₀ : i < A.length)
+  (h₁ : A ≃ B) :
+-- imply
+  A.get ⟨i, h₀⟩ ≃ B.get ⟨i, by rwa [EqLengthS.of.SEq h₁] at h₀⟩ :=
+-- proof
+  main h₀ h₁
 
 
 -- created on 2025-06-29

@@ -5,12 +5,12 @@ import sympy.Basic
 @[main]
 private lemma main
   [Add α] [Zero α]
-  {dim : ℕ}
+  {d : ℕ}
 -- given
-  (h : dim < s.length)
+  (h : d < s.length)
   (X : Tensor α (n :: s)) :
 -- imply
-  X.sum (dim + 1) = Tensor.fromVector (X.toVector.map (·.sum dim)) := by
+  X.sum (d + 1) = Tensor.fromVector (X.toVector.map (·.sum d)) := by
 -- proof
   rw [Tensor.sum]
   simp [h]
