@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqGet0'0
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
-import Lemma.Tensor.GetSelect.as.Get.of.Lt.Lt_Get_0.GtLength_0
+import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSum.eq.Get_0.of.GtLength_0
@@ -42,7 +42,7 @@ private lemma main
     simp [h_sum]
     have h_all : ∀ k : Fin s₀, (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get k ≃ (X.get ⟨k, by rw [Length.eq.Get_0.of.GtLength_0 (by simp)]; simp⟩).get ⟨i, by rw [Length.eq.Get_0.of.GtLength_0 (by simpa)]; simpa⟩ := by
       intro k
-      apply GetSelect.as.Get.of.Lt.Lt_Get_0.GtLength_0 h_s h_i
+      apply GetSelect_1.as.Get.of.Lt.Lt_Get_0.GtLength_0 h_s h_i
       simp
     have := SEqSumS.of.All_SEq.Gt_0 (by omega) h_all
     simp at this

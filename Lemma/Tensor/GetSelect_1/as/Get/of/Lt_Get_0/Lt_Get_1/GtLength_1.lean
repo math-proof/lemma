@@ -1,4 +1,4 @@
-import Lemma.Tensor.GetSelect.as.Get.of.Lt.Lt_Get_0.GtLength_0
+import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.Lt_Get_0.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthGet.eq.Get_0.of.Lt_Get_0.GtLength_1
 import Lemma.Tensor.LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0
@@ -21,7 +21,7 @@ private lemma main
   | [] =>
     contradiction
   | n :: s =>
-    apply GetSelect.as.Get.of.Lt.Lt_Get_0.GtLength_0
+    apply GetSelect_1.as.Get.of.Lt.Lt_Get_0.GtLength_0
     repeat grind
 
 

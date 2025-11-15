@@ -15,7 +15,7 @@ import Lemma.Nat.EqSubAdd
 import Lemma.Nat.LtVal
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
-import Lemma.Tensor.GetSelect.as.Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
+import Lemma.Tensor.GetSelect_1.as.Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0
 import Lemma.Tensor.Lt_Length.of.GtLength_0
@@ -50,7 +50,7 @@ private lemma main
     simp
     rw [Select_0.eq.Cast_Get.of.Lt_Get_0.GtLength_0 (by grind) (by grind)]
     apply SEq_Cast.of.SEq.Eq (by simp)
-    apply GetSelect.as.Get.of.Lt_Get_0.Lt_Get_1.GtLength_1 (by grind) h_i h_j
+    apply GetSelect_1.as.Get.of.Lt_Get_0.Lt_Get_1.GtLength_1 (by grind) h_i h_j
   | succ d ih =>
     unfold Tensor.get
     simp
