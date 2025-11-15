@@ -7,7 +7,7 @@ import sympy.tensor.tensor
 open Tensor
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (h_d : d + 1 < s.length)

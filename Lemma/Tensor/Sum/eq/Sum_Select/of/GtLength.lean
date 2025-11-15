@@ -1,3 +1,6 @@
+import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Eq
+import Lemma.List.Lt_Get.of.Lt_GetTail.Lt_LengthTail
+import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.EqGetCons
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
@@ -39,33 +42,46 @@ private lemma main
     have h_lt_length_tail : i < s.tail.length := by simpa
     rw [Sum.eq.Cast_Stack_Sum.of.LtAdd_1Length h]
     apply EqCast.of.SEq
-    have h_all : ∀ j : Fin s[0], (X[j]'(Lt_Length.of.GtLength h X j)).sum i = ∑ k, (X[j]'(Lt_Length.of.GtLength h X j)).select ⟨i, h_lt_length_tail⟩ k := by 
+    rw [EqStackS.of.All_Eq.fin]
+    .
+      apply SEq.of.All_SEqGetS.Eq.GtLength_0
+      ·
+        intro t
+        have h_t := LtVal t
+        simp
+        have h_s := Gt_0.of.Gt h
+        simp only [EqGetCons] at h_t
+        have := EqGetStack.of.Lt.fin h_t (fun j : Fin s[0] => ∑ k, (X[j]'(Lt_Length.of.GtLength h X j)).select ⟨i, h_lt_length_tail⟩ k)
+        simp at this
+        rw [this]
+        rw [GetSum.eq.Sum_Get.of.GtLength_0.fin _ (fun k : Fin s[i + 1] => X.select ⟨i + 1, h⟩ k) ⟨t, _⟩]
+        ·
+          simp only [GetElem.getElem]
+          simp
+          apply Tensor.SEqSumS.of.All_SEq.Eq.Eq
+          .
+            apply EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 h_i
+          .
+            intro l
+            apply Tensor.SelectGet.as.GetSelect.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length h _ h_t
+            .
+              simp
+            .
+              apply List.Lt_Get.of.Lt_GetTail.Lt_LengthTail
+              simp
+              grind
+          .
+            simp
+        ·
+          rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simpa)]
+          apply Gt_0.of.Gt h_i
+        ·
+          rwa [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
+      .
+        rw [EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0]
+    .
       intro j
       apply ih
-    rw [EqStackS.of.All_Eq.fin h_all]
-    apply SEq.of.All_SEqGetS.Eq.GtLength_0
-    ·
-      intro t
-      have h_t := LtVal t
-      simp
-      have h_s := Gt_0.of.Gt h
-      simp only [EqGetCons] at h_t
-      have := EqGetStack.of.Lt.fin h_t (fun j : Fin s[0] => ∑ k, (X[j]'(Lt_Length.of.GtLength h X j)).select ⟨i, h_lt_length_tail⟩ k)
-      simp at this
-      rw [this]
-      rw [GetSum.eq.Sum_Get.of.GtLength_0.fin _ (fun k : Fin s[i + 1] => X.select ⟨i + 1, h⟩ k) ⟨t, _⟩]
-      ·
-        simp
-        sorry
-      ·
-        rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simpa)]
-        apply Gt_0.of.Gt h_i
-      ·
-        rwa [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
-    ·
-      simp
-    ·
-      rw [EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0]
 
 
 -- created on 2025-11-07
