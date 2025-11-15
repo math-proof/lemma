@@ -15,8 +15,7 @@ private lemma main
   (Nat.sliced_indices (n := n * d) (start := j) (stop := n * d) (by nlinarith) (by nlinarith) h_d)[i]'(by rwa [this]) = i * d + j := by
 -- proof
   have := GetSlicedIndices.eq.AddMul.of.Lt.LeSubAddMul.Lt_SubAddMul (i := i) (j := j) (j' := ⟨j, h_j⟩) (n := n) (d := d) (N := n * d) (by simp; nlinarith) (by simp) h_i
-  simp at this
-  assumption
+  simp_all
 
 
 @[main]
@@ -31,7 +30,6 @@ private lemma comm'
   (Nat.sliced_indices (n := d * n) (start := j) (stop := d * n) (by nlinarith) (by nlinarith) h_d)[i]'(by rwa [this]) = i * d + j := by
 -- proof
   have := GetSlicedIndices.eq.AddMul.of.Lt.LeSubAddMul.Lt_SubAddMul (i := i) (j := j) (j' := ⟨j, h_j⟩) (n := n) (d := d) (N := d * n) (by simp; nlinarith) (by grind) h_i
-  simp at this
   grind
 
 

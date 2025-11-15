@@ -12,8 +12,7 @@ private lemma main
   (s.permute ⟨0, by grind⟩ d).eraseIdx d = s.tail := by
 -- proof
   have := EraseIdxPermute.eq.EraseIdx.of.GtLength_Add (s := s) (i := 0) (d := d) (by omega)
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-10-31

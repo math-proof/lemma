@@ -17,8 +17,7 @@ private lemma main
   (⟨i, m * n, n⟩ : Slice).length (m * n) = m := by
 -- proof
   have := EqLengthSlice_Mul ⟨i, h⟩ m
-  simp at this
-  assumption
+  simp_all
 
 
 @[main]
@@ -31,8 +30,7 @@ private lemma comm'
   (⟨i, n * m, n⟩ : Slice).length (n * m) = m := by
 -- proof
   have := EqLengthSlice_Mul.comm ⟨i, h⟩ m
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-11-09

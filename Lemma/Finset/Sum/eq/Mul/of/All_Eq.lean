@@ -15,8 +15,7 @@ private lemma main
   ∑ i ∈ s, x i = s.card * a := by
 -- proof
   have := Sum.eq.SMulCard.of.All_Eq h
-  simp at this
-  assumption
+  simp_all
 
 
 @[main]

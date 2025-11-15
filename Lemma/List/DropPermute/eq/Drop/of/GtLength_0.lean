@@ -12,8 +12,7 @@ private lemma main
   (s.permute ⟨0, by omega⟩ d).drop (d + 1) = s.drop (d + 1) := by
 -- proof
   have := DropPermute.eq.Drop (s := s) (i := ⟨0, by omega⟩) (d := d)
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-10-21

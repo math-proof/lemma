@@ -26,11 +26,9 @@ private lemma main
     | [] =>
       contradiction
     | s₀ :: s =>
-      simp at h₀
       aesop
   else
     have := SEqSumS.of.All_SEq.Gt_0 (by omega) h
-    simp at this
     aesop
 
 

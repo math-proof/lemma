@@ -19,7 +19,7 @@ private lemma main
   have h_j := LtVal j
   have h_Xi := GetSum_2.as.SumGet__1 X i
   have h_Xij := SEqGetS.of.SEq.Lt_Length h_j h_Xi
-  have h_Xij' := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length (dim := 1) (s := [m, n, l].tail) (by simp) (by simp) h_j X[i]
+  have h_Xij' := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length (d := 1) (s := [m, n, l].tail) (by simp) (by simp) h_j X[i]
   have h_eq := h_Xij.trans h_Xij'
   apply Eq.of.SEq h_eq
 

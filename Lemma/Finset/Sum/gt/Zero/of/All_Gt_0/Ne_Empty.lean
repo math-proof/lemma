@@ -14,8 +14,7 @@ private lemma main
   ∑ i ∈ s, (x i) > 0 := by
 -- proof
   have := GtSumS.of.All_Gt.Ne_Empty (x := x) (y := fun _ => 0) h_s h
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-10-08

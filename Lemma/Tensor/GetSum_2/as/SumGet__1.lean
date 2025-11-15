@@ -13,9 +13,8 @@ private lemma main
   (X.sum 2)[i] ≃ X[i].sum 1 := by
 -- proof
   have h_i := LtVal i
-  have := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length (dim := 2) (s := [m, n, l]) (by simp) (by simp) h_i X
-  simp at this
-  assumption
+  have := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length (d := 2) (s := [m, n, l]) (by simp) (by simp) h_i X
+  simp_all
 
 
 -- created on 2025-07-12

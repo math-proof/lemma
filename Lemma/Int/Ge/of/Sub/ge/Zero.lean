@@ -12,8 +12,7 @@ private lemma main
   x ≥ y := by
 -- proof
   have := LeAddS.of.Le y h
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-03-30

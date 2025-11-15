@@ -11,8 +11,7 @@ private lemma main
   (s.permute ⟨i + d, h⟩ (-d)).take i = s.take i := by
 -- proof
   have := TakePermute__Neg.eq.Take ⟨i + d, h⟩ d
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-10-29

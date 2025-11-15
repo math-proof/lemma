@@ -12,8 +12,7 @@ private lemma main
   x ≥ 1 := by
 -- proof
   have := Ge_Add_1.of.Gt h
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-05-24

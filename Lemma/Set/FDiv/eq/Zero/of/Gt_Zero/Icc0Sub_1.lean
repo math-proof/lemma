@@ -24,18 +24,18 @@ private lemma main
   constructor
   ·
     apply Div.ge.Zero.of.Ge_0.Gt_0
-    have := Ge.of.In_Icc h₁
-    exact GeCoeS.of.Ge this
-    exact GtCoeS.of.Gt h₀
+    .
+      have := Ge.of.In_Icc h₁
+      exact GeCoeS.of.Ge this
+    .
+      exact GtCoeS.of.Gt h₀
   ·
     norm_num
     apply LtDiv.of.Lt.Gt_0
     ·
-      norm_num
       have := Le.of.In_Icc h₁
       have := Lt_Add_1.of.Le this
-      simp at this
-      assumption
+      simp_all
     ·
       exact GtCoeS.of.Gt h₀
 

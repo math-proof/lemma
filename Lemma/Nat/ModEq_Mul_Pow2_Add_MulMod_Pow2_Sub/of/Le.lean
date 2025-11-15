@@ -29,8 +29,7 @@ private lemma main
   have := ModEq.of.Eq this (2 ^ m - 1)
   have h_ModEq := ModEq_Pow2_1 (n := m)
   have := ModEq.of.ModEq.ModEq__AddMul h_ModEq this
-  simp at this
-  assumption
+  grind
 
 
 -- created on 2025-03-15

@@ -11,8 +11,7 @@ private lemma main
   ((s.permute i (-i)).take (i + 1)).tail = s.take i := by
 -- proof
   have := DropTakePermute__Neg.eq.DropTake i i
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-10-27

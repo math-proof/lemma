@@ -13,8 +13,7 @@ private lemma main
   ∑ i ∈ s, (x i) ≥ 0 := by
 -- proof
   have := GeSumS.of.All_Ge (x := x) (y := fun _ => 0) h
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-04-06
