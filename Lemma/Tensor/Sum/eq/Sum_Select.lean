@@ -1,7 +1,5 @@
-import sympy.tensor.tensor
-import Lemma.Nat.Gt_0
-import Lemma.Tensor.Sum_0.eq.Sum_Get
-open Tensor Nat
+import Lemma.Tensor.Sum.eq.Sum_Select.of.GtLength
+open Tensor
 
 
 @[main]
@@ -13,14 +11,8 @@ private lemma main
 -- imply
   X.sum i = ∑ k : Fin s[i], X.select i k := by
 -- proof
-  have h_length := Gt_0 i
-  match s with
-  | [] =>
-    contradiction
-  | s₀ :: s =>
-    sorry
-    -- rw [Sum_0.eq.Sum_Get]
-    -- rfl
+  apply Sum.eq.Sum_Select.of.GtLength
 
 
 -- created on 2025-11-06
+-- updated on 2025-11-15

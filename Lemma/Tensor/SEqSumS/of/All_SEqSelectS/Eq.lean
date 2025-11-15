@@ -1,8 +1,7 @@
-import Lemma.Nat.LtVal
-import Lemma.Nat.LtVal.of.Eq
-import stdlib.SEq
-import sympy.tensor.tensor
-open Nat
+import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Eq
+import Lemma.Tensor.Sum.eq.Sum_Select
+import Lemma.Tensor.Sum.eq.Sum_Select.of.GtLength
+open Tensor
 
 
 @[main]
@@ -17,9 +16,11 @@ private lemma main
 -- imply
   X.sum i ≃ Y.sum i := by
 -- proof
-  have h_i := LtVal i
-  have h_i' := LtVal.of.Eq (congrArg List.length h_s) i
-  sorry
+  rw [Sum.eq.Sum_Select]
+  rw [Sum.eq.Sum_Select.of.GtLength]
+  apply SEqSumS.of.All_SEq.Eq.Eq _ _ h
+  repeat aesop
 
 
 -- created on 2025-11-06
+-- updated on 2025-11-15
