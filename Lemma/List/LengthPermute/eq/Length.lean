@@ -3,7 +3,9 @@ import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.LengthSlice.eq.SubMin
 open List
 
-
+/--
+you're supposed to use the tactic `simp` instead of calling this lemma directly
+-/
 @[main, simp]
 private lemma main
 -- given

@@ -2,7 +2,6 @@ import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.EqLengthSlice_CoeMul.of.Lt
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
-import Lemma.List.ProdTakeMapCast.eq.CastProdTake
 import Lemma.Tensor.DataSelect.as.SelectSplitAtData.of.GtLength
 import sympy.tensor.tensor
 open Bool List Tensor
@@ -19,10 +18,8 @@ private lemma main
   (X.select ⟨d, h_d⟩ i).data = cast
     (by
       simp
-      repeat rw [ProdTakeMapCast.eq.CastProdTake]
-      rw [ProdTake.eq.MulProdTake.of.Lt_Length (by omega)]
-      rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
-      rw [MulProdS.eq.ProdEraseIdx]
+      rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+      simp
     )
     (X.data.splitAt (d + 1))[i :: s[d]].flatten := by
 -- proof

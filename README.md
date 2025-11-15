@@ -170,7 +170,14 @@ https://arxiv.org/abs/2505.23754
 https://www.arxiv.org/abs/2507.15855
 https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning
 https://arxiv.org/abs/2310.05328
+[LEAN-GitHub: Compiling GitHub LEAN repositories for a versatile LEAN prover](https://arxiv.org/abs/2407.17227)
 ```
+## formal neural network
+https://github.com/or4nge19/NeuralNetworks  
+https://github.com/mkaratarakis/HopfieldNet  
+https://github.com/pitmonticone/LeanProject  
+https://github.com/stanford-centaur/pypantograph  
+
 cd repl
 lake update -R && lake build
 lake exe repl

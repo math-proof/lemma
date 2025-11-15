@@ -17,7 +17,7 @@ private lemma main
   (h : i.val = s.length - 1)
   (d : ℕ) :
 -- imply
-  s.permute i (-d : ℤ) = s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1) := by
+  s.permute i (-d) = s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1) := by
 -- proof
   have h_i := LtVal i
   simp_all [Eq_Sub_1.of.Val.eq.Sub_1 h]

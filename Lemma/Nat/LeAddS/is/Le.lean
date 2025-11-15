@@ -19,13 +19,13 @@ private lemma left
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Int.LeAddS.is.Le |
-| comm | Int.Le.is.LeAddS |
-| mp   | Int.Le.of.LeAddS |
-| mpr  | Int.LeAddS.of.Le |
-| mp.comm | Int.Ge.of.GeAddS |
-| mpr.comm | Int.GeAddS.of.Ge |
-| comm.is | Int.GeAddS.is.Ge |
+| main | Nat.LeAddS.is.Le |
+| comm | Nat.Le.is.LeAddS |
+| mp   | Nat.Le.of.LeAddS |
+| mpr  | Nat.LeAddS.of.Le |
+| mp.comm | Nat.Ge.of.GeAddS |
+| mpr.comm | Nat.GeAddS.of.Ge |
+| comm.is | Nat.GeAddS.is.Ge |
 -/
 @[main, comm, mp 8, mpr 4, mp.comm 8, mpr.comm 4, comm.is]
 private lemma main
