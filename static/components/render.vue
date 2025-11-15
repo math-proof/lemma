@@ -550,7 +550,7 @@ where
             var {name} = this.lemma[index];
             var {module} = this;
             if (name != 'main')
-                module += '.' + name.toLowerCase();
+                module += '.' + name.replace(/'+$/, '');
             return module;
         },
 
