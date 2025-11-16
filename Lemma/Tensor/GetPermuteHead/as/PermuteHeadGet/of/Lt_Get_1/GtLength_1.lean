@@ -49,7 +49,6 @@ import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.LtVal
 import Lemma.Nat.Mod.le.Max
 import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
 import Lemma.Nat.MulAdd.eq.AddMulS
@@ -108,7 +107,7 @@ private lemma main
         apply SEq.of.All_EqGetS.Eq
         ·
           intro t
-          have h_t := LtVal t
+          have h_t := t.isLt
           simp only [GetElem.getElem]
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           simp [GetCast.eq.Get.of.Eq.fin]
@@ -119,8 +118,8 @@ private lemma main
           simp only [← DropEraseIdx.eq.Drop.of.Le (i := 1) (j := d) (by omega)] at h_t ⊢
           simp
           let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-          have h_q := LtVal q
-          have h_r := LtVal r
+          have h_q := q.isLt
+          have h_r := r.isLt
           simp [ProdRotate.eq.Prod] at h_t
           let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
           have h_lt : k * (s.eraseIdx 1).prod + ↑t < ((s.take (d + 1)).rotate 1).prod * (s.drop (d + 1)).prod := by
@@ -128,7 +127,7 @@ private lemma main
             rw [Prod.eq.Mul_ProdEraseIdx.of.GtLength h]
             exact AddMul.lt.Mul.of.Lt.Lt h_k h_t
           let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
-          have h_q' := LtVal q'
+          have h_q' := q'.isLt
           simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_q' h_q
           let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
           repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
@@ -137,13 +136,13 @@ private lemma main
           repeat rw [GetCast.eq.Get.of.Eq.fin]
           let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
           let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
-          have h_qₐ := LtVal qₐ
-          have h_rₐ := LtVal rₐ
+          have h_qₐ := qₐ.isLt
+          have h_rₐ := rₐ.isLt
           simp at h_qₐ h_rₐ
           let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q'
           let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
-          have h_qₑ := LtVal qₑ
-          have h_rₑ := LtVal rₑ
+          have h_qₑ := qₑ.isLt
+          have h_rₑ := rₑ.isLt
           repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
           repeat rw [GetTranspose.eq.Get.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
@@ -221,7 +220,7 @@ private lemma main
                       if h_d : d = 1 then
                         subst h_d
                         simp
-                        have h_q := LtVal q
+                        have h_q := q.isLt
                         simp [ProdRotate.eq.Prod] at h_q
                         have h_s_len : (s.eraseIdx 1).length ≥ 1 := by simp; omega
                         have h_mod_eq_0 : 1 % (1 ⊓ (s.eraseIdx 1).length) = 0 := by
@@ -243,7 +242,7 @@ private lemma main
                         simp [h_rₑ_mod]
                         grind
                       else if h : s.length = 2 then
-                        have h_q := LtVal q
+                        have h_q := q.isLt
                         simp [ProdRotate.eq.Prod] at h_q
                         have h_length_eq_1 := LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)
                         have h_mod_eq_0 : 1 % (d ⊓ (s.eraseIdx 1).length) = 0 := by

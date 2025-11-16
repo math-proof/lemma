@@ -1,6 +1,5 @@
 import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length
-import Lemma.Nat.LtVal
-open Tensor Nat
+open Tensor
 
 
 @[main]
@@ -12,7 +11,7 @@ private lemma main
 -- imply
   (X.sum 2)[i] ≃ X[i].sum 1 := by
 -- proof
-  have h_i := LtVal i
+  have h_i := i.isLt
   have := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length (d := 2) (s := [m, n, l]) (by simp) (by simp) h_i X
   simp_all
 

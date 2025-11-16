@@ -1,4 +1,3 @@
-import Lemma.Nat.LtVal
 import Lemma.Nat.Eq_Sub_1.of.Val.eq.Sub_1
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
@@ -19,7 +18,7 @@ private lemma main
 -- imply
   s.permute i (-d) = s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1) := by
 -- proof
-  have h_i := LtVal i
+  have h_i := i.isLt
   simp_all [Eq_Sub_1.of.Val.eq.Sub_1 h]
   simp_all [Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0 h_i d]
   rw [SubSub.eq.Sub_Add]

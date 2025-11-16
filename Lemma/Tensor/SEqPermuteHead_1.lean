@@ -8,7 +8,6 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.LtVal
 import Lemma.Vector.EqGetS
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.ProdAppend.eq.MulProdS
@@ -60,11 +59,11 @@ private lemma main
         apply SEq.of.All_EqGetS.Eq
         ·
           intro t
-          have h_t := LtVal t
+          have h_t := t.isLt
           let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-          have h_r := LtVal r
+          have h_r := r.isLt
           simp at h_r
-          have h_q := LtVal q
+          have h_q := q.isLt
           simp [EqRotate_1.of.LeLength_1] at h_q
           simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
           simp at h_t

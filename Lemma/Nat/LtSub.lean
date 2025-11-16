@@ -1,5 +1,4 @@
 import Lemma.Nat.LtSub.of.Lt
-import Lemma.Nat.LtVal
 open Nat
 
 
@@ -12,7 +11,7 @@ private lemma main
   j - i < n := by
 -- proof
   apply LtSub.of.Lt
-  apply LtVal j
+  apply j.isLt
 
 
 -- created on 2025-06-21

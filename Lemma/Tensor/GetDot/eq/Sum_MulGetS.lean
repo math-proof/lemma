@@ -1,4 +1,3 @@
-import Lemma.Nat.LtVal
 import Lemma.Tensor.GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GetCast.eq.Cast_Get.of.Lt_Get_0.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
@@ -38,7 +37,7 @@ private lemma main
   simp_all [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0 (s := [n, l])]
   repeat rw [GetCast.eq.Cast_Get.of.Lt_Get_0.Eq.GtLength_0 (by simp) (by simp) (by simp)]
   simp
-  have h_i := LtVal i
+  have h_i := i.isLt
   have := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0 (show (⟨1, by simp⟩ : Fin 3) > 0 by simp) h_i (A.unsqueeze 1) n
   simp at this
   simp [this]

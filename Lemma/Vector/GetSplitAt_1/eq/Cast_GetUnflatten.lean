@@ -1,10 +1,9 @@
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
-import Lemma.Nat.LtVal
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.Prod.eq.Foldr
-open List Vector Nat
+open List Vector
 
 
 @[main, comm]
@@ -20,7 +19,7 @@ private lemma fin
   | [] =>
     simp [List.Vector.splitAt]
   | s₀ :: s =>
-    have hi := LtVal i
+    have hi := i.isLt
     rw [GetSplitAt_1.eq.GetUnflatten.fin v ⟨i, by simp_all⟩]
     ext j
     simp [GetUnflatten.eq.Get_AddMul.fin]

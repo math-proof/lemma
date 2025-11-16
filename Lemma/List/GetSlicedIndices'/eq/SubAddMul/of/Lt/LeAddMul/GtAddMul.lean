@@ -11,7 +11,6 @@ import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.Nat.Gt_0
 import Lemma.Nat.Gt_0.of.Ne_0
-import Lemma.Nat.LtVal
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Ne_0
 import Lemma.Rat.EqCeilDivSubMul.of.Lt
@@ -43,13 +42,13 @@ private lemma main
         simp
       | i + 1 =>
         simp
-        rw [← ih (i := i) (j := j) (by nlinarith [LtVal j']) (by grind) (by simp_all)]
+        rw [← ih (i := i) (j := j) (by nlinarith [j'.isLt]) (by grind) (by simp_all)]
         apply EqGetSSlicedIndices'.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
         repeat grind
     ·
       have h := Ge.of.NotLt h_start?
       simp [MulAdd.eq.AddMulS, Add.comm] at h
-      have h_j := LtVal j'
+      have h_j := j'.isLt
       have h_n : n = 0 := by
         by_contra h_n
         have h_n := Gt_0.of.Ne_0 h_n

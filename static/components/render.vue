@@ -30,11 +30,11 @@
                 <span v-if=date.updated class=date>Updated on {{date.updated}}</span>
             </p>
             <p class="left">
-                <button type=button class=transparent @click=click_download :title="`download into a single ${ext} file`"><u>download</u></button> into a
+                <!-- <button type=button class=transparent @click=click_download :title="`download into a single ${ext} file`"><u>download</u></button> into a
 			    <select v-model=ext>
 				    <option v-for="value of ['lean', 'json']" :value=value>{{value}}</option>
 			    </select> file, or view via 
-                <button type=button class=transparent @click=click_lean4web title="view this lean file via lean4web"><u>lean4web</u></button>
+                <button type=button class=transparent @click=click_lean4web title="view this lean file via lean4web"><u>lean4web</u></button> -->
             </p>
         </div>
     </div>

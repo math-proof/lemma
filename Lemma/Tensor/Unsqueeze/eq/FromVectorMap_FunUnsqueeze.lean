@@ -1,7 +1,6 @@
 import sympy.tensor.Basic
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Vector.EqGetRange
-import Lemma.Nat.LtVal
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.EqGetS
 import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt
@@ -30,7 +29,7 @@ private lemma main
   simp
   ext k
   simp [EqGetRange.fin]
-  have h_k := LtVal k
+  have h_k := k.isLt
   have h_prod_insert := ProdInsertIdx.eq.Prod s dim
   obtain ⟨i, h_i, j, h_j, h_ij⟩ := Any_Eq_AddMul.of.Lt_Mul h_k
   obtain ⟨k, hk⟩ := k

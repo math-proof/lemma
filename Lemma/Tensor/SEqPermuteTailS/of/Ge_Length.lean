@@ -5,7 +5,6 @@ import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.LtVal
 import Lemma.Nat.Sub.eq.Zero.of.Le
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -41,12 +40,12 @@ private lemma main
       apply SEq.of.All_EqGetS.Eq
       ·
         intro t
-        have h_t := LtVal t
+        have h_t := t.isLt
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
         let ⟨h_q_div, _⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
-        have h_q := LtVal q
+        have h_q := q.isLt
         simp [Sub.eq.Zero.of.Le h] at h_q
-        have h_r := LtVal r
+        have h_r := r.isLt
         simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
         have h_t : t < (s.take (s.length - s.length)).prod * ((s.drop (s.length - s.length)).rotate (s.length ⊓ s.length - 1)).prod := by
           simp [ProdRotate.eq.Prod] at h_t ⊢
@@ -56,8 +55,8 @@ private lemma main
         simp [ProdRotate.eq.Prod] at h_q_div h_q'_div
         simp [Sub.eq.Zero.of.Le h] at h_q_div
         have h_eq_r : r.val = r'.val := by grind
-        have h_q' := LtVal q'
-        have h_r' := LtVal r'
+        have h_q' := q'.isLt
+        have h_r' := r'.isLt
         simp at h_q'
         simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_r h_r'
         rw [GetFlatten.eq.Get.of.Eq_AddMul h_q'r']

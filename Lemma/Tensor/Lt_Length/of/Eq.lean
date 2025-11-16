@@ -1,9 +1,8 @@
 import stdlib.SEq
 import sympy.tensor.tensor
-import Lemma.Nat.LtVal
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthCons.gt.Zero
-open Tensor List Nat
+open Tensor List
 
 
 @[main]
@@ -16,7 +15,7 @@ private lemma main
 -- imply
   i < B.length := by
 -- proof
-  have h_i := LtVal i
+  have h_i := i.isLt
   match s with
   | [] =>
     contradiction

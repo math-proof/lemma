@@ -1,5 +1,4 @@
 import Lemma.Nat.Le_Sub_1.of.Lt
-import Lemma.Nat.LtVal
 open Nat
 
 
@@ -10,7 +9,7 @@ private lemma main
 -- imply
   i ≤ n - 1 := by
 -- proof
-  have := LtVal i
+  have := i.isLt
   apply Le_Sub_1.of.Lt this
 
 

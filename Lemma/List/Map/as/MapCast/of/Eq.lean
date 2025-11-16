@@ -1,7 +1,6 @@
-import Lemma.Nat.LtVal
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Nat Vector
+open Vector
 
 
 @[main, comm 1]

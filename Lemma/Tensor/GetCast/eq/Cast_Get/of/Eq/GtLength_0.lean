@@ -1,10 +1,9 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Nat.LtVal
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.Lt_Length.of.GtLength_0
-open Tensor Bool Nat
+open Tensor Bool
 
 
 @[main]

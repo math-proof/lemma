@@ -1,5 +1,4 @@
 import Lemma.Nat.EqMod.of.Lt
-import Lemma.Nat.LtVal
 open Nat
 
 
@@ -11,7 +10,7 @@ private lemma main
   j % n = j := by
 -- proof
   apply EqMod.of.Lt
-  apply LtVal
+  simp
 
 
 -- created on 2025-07-07

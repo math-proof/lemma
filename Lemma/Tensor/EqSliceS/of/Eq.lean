@@ -1,4 +1,3 @@
-import Lemma.Nat.LtVal
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetGetSlice.eq.Get.of.Lt_Min
 import Lemma.List.LengthSlice.eq.Min
@@ -18,7 +17,7 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS
   intro i
-  have h_i := LtVal i
+  have h_i := i.isLt
   simp [LengthSlice.eq.Min] at h_i
   simp [Tensor.length] at h_i
   have h_i := Lt_Min.of.Lt.Lt h_i.left h_i.right

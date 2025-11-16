@@ -7,7 +7,6 @@ import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.Lt_Get_0.GtLength
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Vector.HEq.of.EqValS
-import Lemma.Nat.LtVal
 open Tensor List Vector Nat
 
 
@@ -32,7 +31,7 @@ private lemma main
   .
     apply HEq.of.EqValS
     rw [ValDataGetToVector.eq.ValArraySliceData.of.Lt_Get_0.GtLength_0 (by assumption)]
-    apply LtVal i
+    apply i.isLt
 
 
 -- created on 2025-06-29

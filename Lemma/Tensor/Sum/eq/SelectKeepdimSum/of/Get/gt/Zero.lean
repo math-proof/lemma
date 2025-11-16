@@ -2,12 +2,11 @@ import sympy.tensor.functions
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
-import Lemma.Nat.LtVal
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqSelectUnsqueeze.of.Le_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-open Tensor List Bool Nat
+open Tensor List Bool
 
 
 @[main]
@@ -23,7 +22,7 @@ private lemma main
 -- proof
   unfold Tensor.keepdim
   simp
-  have h_lt := LtVal dim
+  have h_lt := dim.isLt
   have h_dim := Lt_LengthInsertIdxEraseIdx.of.Lt_Length h_lt 1
   have h_cast := SelectCast.eq.Cast_Select.of.Eq
     (by simp [EqSetInsertIdxEraseIdx.of.Lt_Length])

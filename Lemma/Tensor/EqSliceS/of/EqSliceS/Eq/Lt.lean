@@ -1,5 +1,4 @@
 import Lemma.Tensor.GetGetSlice.eq.Get
-import Lemma.Nat.LtVal
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Le.of.Lt_Add_1
@@ -29,7 +28,7 @@ private lemma main
     repeat rw [GetGetSlice.eq.Get.fin]
     aesop
   else
-    have h_i := LtVal i
+    have h_i := i.isLt
     simp only [LengthSlice.eq.Min] at h_i
     simp only [Tensor.length] at h_i
     rw [EqMin.of.Le (by omega)] at h_i

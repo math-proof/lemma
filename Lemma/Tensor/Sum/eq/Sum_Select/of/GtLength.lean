@@ -7,7 +7,6 @@ import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.Nat.Gt_0.of.Gt
-import Lemma.Nat.LtVal
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Tensor.Cast_Sum.eq.Sum_Cast.of.Eq
 import Lemma.Tensor.EqGetStack.of.Lt
@@ -47,7 +46,7 @@ private lemma main
       apply SEq.of.All_SEqGetS.Eq.GtLength_0
       ·
         intro t
-        have h_t := LtVal t
+        have h_t := t.isLt
         simp
         have h_s := Gt_0.of.Gt h
         simp only [EqGetCons] at h_t

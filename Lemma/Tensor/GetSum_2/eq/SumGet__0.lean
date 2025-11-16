@@ -1,9 +1,8 @@
 import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length
 import Lemma.Tensor.SEqGetS.of.SEq.Lt_Length
 import Lemma.Tensor.GetSum_2.as.SumGet__1
-import Lemma.Nat.LtVal
 import Lemma.Bool.SEq.is.Eq
-open Tensor Bool Nat
+open Tensor Bool
 
 
 @[main]
@@ -16,7 +15,7 @@ private lemma main
 -- imply
   (X.sum 2)[i][j] = X[i][j].sum 0 := by
 -- proof
-  have h_j := LtVal j
+  have h_j := j.isLt
   have h_Xi := GetSum_2.as.SumGet__1 X i
   have h_Xij := SEqGetS.of.SEq.Lt_Length h_j h_Xi
   have h_Xij' := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length (d := 1) (s := [m, n, l].tail) (by simp) (by simp) h_j X[i]

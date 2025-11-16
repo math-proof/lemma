@@ -1,6 +1,5 @@
 import sympy.tensor.tensor
 import Lemma.Nat.Lt_Add
-import Lemma.Nat.LtVal
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.of.SEq.SEq
@@ -23,13 +22,13 @@ private lemma main
   (b : Tensor α (n :: s))
   (i : Fin m) :
 -- imply
-  have : i < m + n := by linarith [LtVal i]
+  have : i < m + n := by linarith [i.isLt]
   (a ++ b)[i] = a[i] := by
 -- proof
   simp [GetElem.getElem]
   simp [Tensor.get]
   have h_lt := Lt_Add i n
-  have hi := LtVal i
+  have hi := i.isLt
   simp [Tensor.length]
   simp [HAppend.hAppend]
   simp [Tensor.append]

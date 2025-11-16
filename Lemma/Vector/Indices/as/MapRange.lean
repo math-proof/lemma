@@ -2,7 +2,6 @@ import Lemma.List.EqLengthSlice_CoeMul.of.Lt
 import Lemma.List.EqLengthSlice_Mul.of.Lt
 import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Nat.Eq_Mk.of.EqVal
-import Lemma.Nat.LtVal
 import Lemma.Vector.EqGetRange.of.Lt
 import Lemma.Vector.GetIndices.eq.AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
@@ -21,7 +20,7 @@ private lemma main
   apply SEq.of.All_EqGetS.Eq
   ·
     intro t
-    have h_t := LtVal t
+    have h_t := t.isLt
     simp [EqLengthSlice_Mul.of.Lt] at h_t
     simp [EqGetRange.of.Lt]
     apply Eq_Mk.of.EqVal
@@ -44,7 +43,7 @@ private lemma comm'
   apply SEq.of.All_EqGetS.Eq
   ·
     intro t
-    have h_t := LtVal t
+    have h_t := t.isLt
     simp [EqLengthSlice_Mul.of.Lt.comm] at h_t
     simp [EqGetRange.of.Lt]
     apply Eq_Mk.of.EqVal

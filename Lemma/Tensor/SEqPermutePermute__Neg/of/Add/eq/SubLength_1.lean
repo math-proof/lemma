@@ -36,7 +36,6 @@ import Lemma.Nat.EqMin.of.Lt
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.LtVal
 import Lemma.Nat.Mul
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.OfNat.eq.Cast
@@ -87,11 +86,11 @@ private lemma main
     apply SEq.of.All_EqGetS.Eq
     ·
       intro t
-      have h_t := LtVal t
+      have h_t := t.isLt
       let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
       simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
       unfold Tensor.permuteHead
-      have h_r := LtVal r
+      have h_r := r.isLt
       simp only [ProdAppend.eq.MulProdS] at h_r
       simp [GetElem.getElem]
       rw [GetCast.eq.Get.of.Eq.fin]
@@ -100,15 +99,15 @@ private lemma main
         let ⟨h_q'_div, _⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
         unfold Tensor.rotate
-        have h_q' := LtVal q'
-        have h_r' := LtVal r'
+        have h_q' := q'.isLt
+        have h_r' := r'.isLt
         simp at h_r'
         simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_q'
         repeat rw [GetCast.eq.Get.of.Eq.fin]
         ·
           let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q'
-          have h_qₐ := LtVal qₐ
-          have h_rₐ := LtVal rₐ
+          have h_qₐ := qₐ.isLt
+          have h_rₐ := rₐ.isLt
           simp at h_qₐ h_rₐ
           have h_1_lt_d1 : 1 < d + 1 := by omega
           rw [EqMin.of.Le (by omega), EqMod.of.Lt h_1_lt_d1] at h_qₐ h_rₐ
@@ -167,7 +166,7 @@ private lemma main
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₑrₑ]
               unfold Tensor.rotate
               simp
-              have h_rₑ := LtVal rₑ
+              have h_rₑ := rₑ.isLt
               simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_rₑ
               rw [GetCast.eq.Get.of.Eq.fin]
               ·

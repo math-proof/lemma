@@ -1,8 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.EqLengthS
 import Lemma.Tensor.LengthIte.eq.Length
-import Lemma.Nat.LtVal
-open Tensor Nat
+open Tensor
 
 
 @[main]
@@ -61,7 +60,7 @@ private lemma main
   else
     B).length) :
 -- imply
-  have h_i := LtVal i
+  have h_i := i.isLt
   have : i < A.length := by
     simp [LengthIte.eq.Length.left] at h_i
     assumption
@@ -124,7 +123,7 @@ private nonrec lemma fin
     A
   else
     B).length)
-  (h_i := LtVal i) :
+  (h_i := i.isLt) :
 -- imply
   (if p then
     A

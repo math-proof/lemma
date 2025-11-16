@@ -1,7 +1,6 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.LtVal
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetTranspose.eq.Get
@@ -33,7 +32,7 @@ private lemma main
       apply SEq.of.All_EqGetS.Eq
       ·
         intro t
-        have h_t := LtVal t
+        have h_t := t.isLt
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
         simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
         have := GetTranspose.eq.Get (X.data.splitAt (s.length % s.length)) ⟨r, by grind⟩ ⟨q, by grind⟩
@@ -42,7 +41,7 @@ private lemma main
         have := GetSplitAt.eq.Get_AddMul_ProdDrop (d := s.length % s.length) X.data ⟨r, by grind⟩ ⟨q, by grind⟩
         simp at this
         rw [this]
-        have h_r := LtVal r
+        have h_r := r.isLt
         simp at h_r
         simp [h_r] at h_qr ⊢
         grind

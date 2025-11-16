@@ -5,7 +5,6 @@ import Lemma.List.EqRotateRotate.of.Le_Length
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.LtVal
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -52,9 +51,9 @@ private lemma main
       apply SEq.of.All_EqGetS.Eq
       ·
         intro t
-        have h_t := LtVal t
+        have h_t := t.isLt
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-        have h_r := LtVal r
+        have h_r := r.isLt
         simp at h_r
         rw [Rotate.eq.AppendDrop__Take.of.Le_Length (n := s.length - 1) (by simp)] at h_r
         rw [ProdAppend.eq.MulProdS] at h_r
@@ -81,16 +80,16 @@ private lemma main
           simp [DropRotate.eq.Take.of.Le_Length (s := s) (n := 1) (by omega)]
           simp [ProdRotate.eq.Prod]
           simp [ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)]
-          have h_q := LtVal q
+          have h_q := q.isLt
           simp at h_q
           simp [h_q]
-          have h_q' := LtVal q'
+          have h_q' := q'.isLt
           conv_rhs at h_q' =>
             simp [s', s₀]
           rw [DropRotate.eq.Take.of.Le_Length (by omega)] at h_q'
           have := h_q'
           rw [ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)] at h_q'
-          have h_r' := LtVal r'
+          have h_r' := r'.isLt
           conv_rhs at h_r' =>
             simp [s', s₀]
           rw [TakeRotate.eq.Drop.of.Le_Length (by omega)] at h_r'

@@ -1,5 +1,4 @@
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.LtVal
 open Nat
 
 
@@ -15,7 +14,7 @@ private lemma main
 -- proof
   subst h₀
   apply AddMul.lt.Mul.of.Lt.Lt _ h₁
-  apply LtVal i
+  apply i.isLt
 
 
 -- created on 2025-11-02

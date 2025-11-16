@@ -7,7 +7,6 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.EqGetS
-import Lemma.Nat.LtVal
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Nat.Sub.eq.Zero.of.Le
@@ -43,10 +42,10 @@ private lemma main
       apply SEq.of.All_EqGetS.Eq
       ·
         intro t
-        have h_t := LtVal t
+        have h_t := t.isLt
         let ⟨z, t', h_zt⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
         simp [GetFlatten.eq.Get.of.Eq_AddMul h_zt]
-        have h_z := LtVal z
+        have h_z := z.isLt
         simp [h₀] at h_z
         simp [h_z] at ⊢ h_zt
         simp [h₀, h_min] at h_t
@@ -55,16 +54,16 @@ private lemma main
         rw [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
         simp only [GetElem.getElem]
         rw [GetCast.eq.Get.of.Eq.fin (by simp_all)]
-        have h_t' := LtVal t'
+        have h_t' := t'.isLt
         simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_t'
         let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t'
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
         repeat rw [GetTranspose.eq.Get.fin]
         have h_eq := (h_zt.trans h_q'r').symm.trans h_qr
         simp [h_min, h₀] at h_eq
-        have h_r' := LtVal r'
+        have h_r' := r'.isLt
         simp [h_min, h₀] at h_r'
-        have h_r := LtVal r
+        have h_r := r.isLt
         simp at h_r
         let ⟨h_i, h_j⟩ := Eq.Eq.of.EqAddSMul.Lt.Lt h_r h_r' h_eq
         repeat rw [EqGetS]

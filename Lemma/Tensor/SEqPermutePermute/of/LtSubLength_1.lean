@@ -19,7 +19,6 @@ import Lemma.Nat.EqSub.of.EqAdd
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.Nat.LtAddMulAddMul.of.Lt.Lt.Lt.Eq
-import Lemma.Nat.LtVal
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 import Lemma.Nat.ToNatSub_Neg.eq.Add
@@ -74,19 +73,19 @@ private lemma main
       ·
         have h_drop := DropPermute.eq.Drop.of.GtLength_0 (s := s) (by omega)
         intro t
-        have h_t := LtVal t
+        have h_t := t.isLt
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-        have h_q := LtVal q
-        have h_r := LtVal r
+        have h_q := q.isLt
+        have h_r := r.isLt
         simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
         simp [GetElem.getElem]
         rw [GetCast.eq.Get.of.Eq.fin]
         ·
           simp only [ProdAppend.eq.MulProdS] at h_q
           let ⟨z, q₀, h_zq₀⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
-          have h_z := LtVal z
+          have h_z := z.isLt
           simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_z
-          have h_q₀ := LtVal q₀
+          have h_q₀ := q₀.isLt
           simp only [Rotate.eq.AppendDrop__Take] at h_q₀
           have := h_q₀
           simp only [ProdAppend.eq.MulProdS] at h_q₀
@@ -106,8 +105,8 @@ private lemma main
             rw [DataCast.eq.Cast_Data.of.Eq]
             ·
               simp [h_z]
-              have h_q' := LtVal q'
-              have h_r' := LtVal r'
+              have h_q' := q'.isLt
+              have h_r' := r'.isLt
               simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)] at h_q' h_r'
               have h_permute := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 (s := s) (i := ⟨0, by omega⟩) (by simp) d
               rw [GetCast.eq.Get.of.Eq.fin]
@@ -121,7 +120,7 @@ private lemma main
                 simp [h_drop] at h_qₚ_div
                 rw [EqDivAddMul.of.Lt (by grind)] at h_qₚ_div
                 rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₚrₚ]
-                have h_qₚ := LtVal qₚ
+                have h_qₚ := qₚ.isLt
                 rw [GetCast.eq.Get.of.Eq.fin]
                 ·
                   simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_qₚ

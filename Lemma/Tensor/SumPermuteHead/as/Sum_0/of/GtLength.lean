@@ -7,7 +7,6 @@ import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.EqMin.of.Le
-import Lemma.Nat.LtVal
 import Lemma.Tensor.GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermuteHead_1
@@ -42,7 +41,7 @@ private lemma main
       apply SEq.of.All_SEqGetS.Eq.GtLength_0
       ·
         intro t
-        have h_t := LtVal t
+        have h_t := t.isLt
         simp [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length h_d1] at h_t
         rw [GetAppend.eq.Get.of.Lt_Length (by simpa)] at h_t
         rw [GetTake.eq.Get.of.Lt_LengthTake (by simpa)] at h_t

@@ -1,11 +1,10 @@
 import sympy.tensor.tensor
-import Lemma.Nat.LtVal
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
-open Vector Nat
+open Vector
 
 
 @[main]
@@ -20,7 +19,7 @@ private lemma main
 -- proof
   simp [GetElem.getElem]
   simp [Tensor.get]
-  have h_i := LtVal i
+  have h_i := i.isLt
   simp [Tensor.toVector]
   simp [GetElem.getElem]
   rw [h]

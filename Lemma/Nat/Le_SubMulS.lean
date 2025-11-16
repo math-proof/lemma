@@ -1,5 +1,4 @@
 import Lemma.Nat.Le_SubMulS.of.Lt
-import Lemma.Nat.LtVal
 open Nat
 
 
@@ -10,7 +9,7 @@ private lemma left
 -- imply
   m ≤ m * n - m * i := by
 -- proof
-  have hi := LtVal i
+  have hi := i.isLt
   apply Le_SubMulS.of.Lt.left hi
 
 
@@ -21,7 +20,7 @@ private lemma main
 -- imply
   m ≤ n * m - i * m := by
 -- proof
-  have hi := LtVal i
+  have hi := i.isLt
   apply Le_SubMulS.of.Lt hi
 
 

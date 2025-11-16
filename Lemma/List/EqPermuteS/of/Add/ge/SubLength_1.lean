@@ -2,7 +2,6 @@ import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
-import Lemma.Nat.LtVal
 open List Int Nat
 
 
@@ -40,7 +39,7 @@ private lemma int
     rw [CoeSub.eq.SubCoeS.of.Ge]
     repeat grind
   | Int.negSucc d =>
-    have h_i := LtVal i
+    have h_i := i.isLt
     rw [NegSucc.eq.NegAdd_1] at h
     simp at h
     linarith

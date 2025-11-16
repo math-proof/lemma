@@ -5,7 +5,6 @@ import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.GtVal_0.of.Ne_0
 import Lemma.Nat.LtSubS_1.of.Lt.Ne_0
 import Lemma.Nat.Ge_1.of.Gt_0
-import Lemma.Nat.LtVal
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Int.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
 import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
@@ -34,7 +33,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength
 open Bool Nat Int List Tensor
 
 def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
-  have h_i := LtVal i
+  have h_i := i.isLt
   have h_GtLength_0 := GtLength_0.of.GtLength_0 (X := X) (by linarith)
   have h_EqHeadD := HeadD.eq.Get_0.of.GtLength_0 h_GtLength_0 1
   have := Get_0.eq.Length.of.GtLength_0 h_GtLength_0 X
@@ -52,7 +51,7 @@ def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) 
         simp
       )
       (X.get ⟨i, by
-        have h_i := LtVal i
+        have h_i := i.isLt
         simp [h] at h_i
         rwa [Length.eq.Get_0.of.GtLength_0 h_s_length]
       ⟩)

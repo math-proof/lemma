@@ -1,6 +1,5 @@
 import Lemma.List.AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.Nat.LtVal
-open List Nat
+open List
 
 
 @[main]
@@ -14,7 +13,7 @@ private lemma main
   i * (s.drop d).prod + j < s.prod := by
 -- proof
   apply AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop <;>
-    apply LtVal
+    simp
 
 
 -- created on 2025-07-08

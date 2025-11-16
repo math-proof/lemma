@@ -4,7 +4,6 @@ import Lemma.Nat.Ne_0
 import Lemma.Nat.EqMin.of.Le
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Nat.Le_SubMulS.of.Lt
-import Lemma.Nat.LtVal
 open Tensor List Nat
 
 
@@ -23,7 +22,7 @@ private lemma main
     apply EqMin.of.Le
     rw [Prod.eq.Mul_ProdTail.of.GtLength_0 h]
     apply Le_SubMulS.of.Lt
-    apply LtVal i
+    apply i.isLt
   ·
     apply Ne_0 i
 

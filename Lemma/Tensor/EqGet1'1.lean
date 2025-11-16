@@ -1,5 +1,4 @@
 import sympy.tensor.tensor
-import Lemma.Nat.LtVal
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Tensor.Length.eq.HeadD.of.GtLength_0
@@ -12,7 +11,7 @@ import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.EqGet1'1
-open Tensor Nat Vector Bool List
+open Tensor Vector Bool List
 
 
 @[main]
@@ -25,7 +24,7 @@ private lemma fin
 -- proof
   simp [Tensor.get]
   simp [Tensor.toVector]
-  have h_i := LtVal i
+  have h_i := i.isLt
   have h_i := ProdTake_1.eq.Length.of.GtLength h_i
   simp [GetElem.getElem]
   rw [GetCast.eq.Get.of.Eq.fin]
@@ -37,7 +36,7 @@ private lemma fin
     simp [GetSplitAt_1.eq.Cast_GetUnflatten.fin (1 : List.Vector α s.prod) ⟨i, by simp_all⟩]
     apply SEq.of.All_EqGetS.Eq.fin (by simp)
     intro j
-    have h_j := LtVal j
+    have h_j := j.isLt
     simp at h_j
     simp [EqGet1'1.fin ⟨j, h_j⟩ (α := α)]
     have h_eq := Prod.eq.MulProdS s 1

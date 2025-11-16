@@ -4,7 +4,6 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
 import Lemma.List.EqInsertIdx.of.Gt_Length
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.LtVal
 import Lemma.List.InsertIdx.ne.Nil.of.Ne_Nil
 import Lemma.List.Ne_Nil.is.GtLength_0
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
@@ -39,7 +38,7 @@ private lemma main
         apply SEq.of.All_EqGetS.Eq
         ·
           intro i
-          have h_i := LtVal i
+          have h_i := i.isLt
           simp [h_nil] at h_i
           unfold Tensor.unsqueeze
           simp [h_i]
@@ -52,7 +51,7 @@ private lemma main
     ·
       intro i
       have h_d_pos := Gt_0.of.Gt h_d
-      have h_i := LtVal i
+      have h_i := i.isLt
       simp [LengthUnsqueeze.eq.Length.of.Gt_0 h_d_pos] at h_i
       simp [Length.eq.Get_0.of.Ne_Nil] at h_i
       have := GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by simp) h_d_pos h_i X

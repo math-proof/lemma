@@ -1,8 +1,7 @@
 import Lemma.Set.In.is.Any_Eq_Get
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.Nat.LtVal
 import Lemma.List.LengthGetProduct.eq.Length.of.Lt_LengthProduct
-open Set List Bool Nat
+open Set List Bool
 
 
 @[main]
@@ -17,7 +16,7 @@ private lemma main
   let ⟨i, h⟩ := Any_Eq_Get.of.In h
   have h := EqUFnS.of.Eq h List.length
   rw [h]
-  have hi := LtVal i
+  have hi := i.isLt
   have := LengthGetProduct.eq.Length.of.Lt_LengthProduct hi
   simp at this
   rw [← this]

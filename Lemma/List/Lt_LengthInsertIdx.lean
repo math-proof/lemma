@@ -1,7 +1,6 @@
 import stdlib.List
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
-import Lemma.Nat.LtVal
-open List Nat
+open List
 
 
 @[main]
@@ -13,7 +12,7 @@ private lemma main
 -- imply
   i < (s.insertIdx i a).length := by
 -- proof
-  have h_i := LtVal i
+  have h_i := i.isLt
   rw [LengthInsertIdx.eq.Add1Length.of.Le_Length]
   repeat linarith
 

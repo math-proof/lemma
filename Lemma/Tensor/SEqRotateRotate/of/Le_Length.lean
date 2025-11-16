@@ -8,7 +8,6 @@ import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Nat.LtVal
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
@@ -62,7 +61,7 @@ private lemma main
         apply SEq.of.All_EqGetS.Eq
         ·
           intro t
-          have h_t := LtVal t
+          have h_t := t.isLt
           let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
           simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
           rw [GetTranspose.eq.Get]
@@ -77,13 +76,13 @@ private lemma main
             have := Sub_Mod.eq.ModSub (m := s.length) (n := i) h_i
             let n := (List.take (i % s.length) s).prod
             let m := (List.drop (i % s.length) s).prod
-            have h_r := LtVal r
+            have h_r := r.isLt
             simp at h_r
             have h_take := TakeRotate.eq.Drop s i
             have h_mod := EqMod.of.Lt h_i
             rw [h_mod] at h_take
             rw [h_take] at h_r
-            have h_q := LtVal q
+            have h_q := q.isLt
             simp at h_q
             have h_drop := DropRotate.eq.Take s i
             rw [h_mod] at h_drop

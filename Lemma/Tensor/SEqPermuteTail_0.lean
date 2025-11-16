@@ -32,7 +32,7 @@ private lemma main
     ·
       apply SEq.of.All_EqGetS.Eq (by simp)
       intro t
-      have h_t := Nat.LtVal t
+      have h_t := t.isLt
       simp at h_t
       simp only [GetElem.getElem]
       rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨t, by simpa⟩) (j := ⟨0, by simp⟩) (by simp)]

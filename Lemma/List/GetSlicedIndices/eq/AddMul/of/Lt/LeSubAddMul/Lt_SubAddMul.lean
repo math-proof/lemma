@@ -7,7 +7,6 @@ import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.Ge.of.NotLt
-import Lemma.Nat.LtVal
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Gt_0
 import Lemma.Nat.Ne_0.of.Gt
@@ -47,7 +46,7 @@ private lemma main
     ·
       have h := Ge.of.NotLt h_start?
       simp [Add.comm, MulAdd.eq.AddMulS] at h
-      have h_j := LtVal j'
+      have h_j := j'.isLt
       have h_n : n = 0 := by
         by_contra h_n
         have h_n := Gt_0.of.Ne_0 h_n

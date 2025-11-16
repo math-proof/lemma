@@ -1,6 +1,5 @@
-import Lemma.Nat.LtVal
 import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
-open List Nat
+open List
 
 
 @[main]
@@ -17,7 +16,7 @@ private lemma main
   t < ((s.set d (n * s[d])).drop 1).prod := by
 -- proof
   simp
-  rwa [ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0 h_d (LtVal d) n]
+  rwa [ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0 h_d (d.isLt) n]
 
 
 -- created on 2025-07-17

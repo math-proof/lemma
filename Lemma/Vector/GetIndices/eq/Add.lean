@@ -2,7 +2,6 @@ import sympy.vector.vector
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Bool.OrOr.is.Or_Or
-import Lemma.Nat.LtVal
 import Lemma.List.EqLengthSlice
 import Lemma.List.GetSlicedIndices.eq.Add.of.Lt.LeAddS.Lt_Add
 import Lemma.Int.EqToNat
@@ -20,7 +19,7 @@ private lemma main
   unfold List.Vector.indices
   unfold Slice.toList
   simp
-  have hi := LtVal i
+  have hi := i.isLt
   simp [EqLengthSlice] at hi
   split_ifs with h
   ·

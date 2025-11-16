@@ -1,7 +1,6 @@
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add
-import Lemma.Nat.LtVal
-open List Nat
+open List
 
 
 @[main, comm]

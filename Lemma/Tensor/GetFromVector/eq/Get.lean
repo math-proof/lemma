@@ -3,9 +3,8 @@ import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
-import Lemma.Nat.LtVal
 import Lemma.Vector.EqUnflattenFlatten
-open Vector Tensor Bool Nat
+open Vector Tensor Bool
 
 
 @[main]
@@ -28,7 +27,7 @@ private lemma main
   intro i
   simp
   apply Eq.of.EqDataS
-  have hi := LtVal i
+  have hi := i.isLt
   have hi : i < n := by
     simp_all
   have h := GetSplitAt_1.eq.GetUnflatten.of.Lt hi (List.Vector.map data v).flatten

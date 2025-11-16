@@ -10,7 +10,6 @@ import Lemma.Nat.CoeMul.eq.MulCoeS
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Nat.Gt_0.of.Ne_0
-import Lemma.Nat.LtVal
 import Lemma.Nat.Ne_0
 import Lemma.Rat.Div.le.Zero.of.Le_0
 import Lemma.Nat.LeCeil.is.Le
@@ -47,11 +46,11 @@ private lemma main
     simp [h_n]
     rw [MulCoeS.eq.CoeMul]
     have := Ne_0 j
-    have h_j := LtVal j
+    have h_j := j.isLt
     apply SEq.of.All_EqGetS.Eq
     ·
       intro t
-      have h_t := LtVal t
+      have h_t := t.isLt
       simp [EqLengthSlice_Mul.of.Lt h_j] at h_t
       simp only [GetElem.getElem]
       simp [Vector.EqGetRange.fin]

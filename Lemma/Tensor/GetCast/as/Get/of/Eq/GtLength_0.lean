@@ -2,8 +2,7 @@ import stdlib.SEq
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Lt_Length.of.GtLength_0
-import Lemma.Nat.LtVal
-open Tensor Nat
+open Tensor
 
 
 @[main]

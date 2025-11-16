@@ -1,10 +1,9 @@
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataSum.eq.Sum_Data
-import Lemma.Nat.LtVal
 import Lemma.Bool.HEq.of.All_Eq.Eq
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-open Tensor Vector Bool Nat
+open Tensor Vector Bool
 
 
 @[main]
@@ -26,7 +25,7 @@ private lemma main
   simp [GetElem.getElem]
   obtain ⟨data⟩ := X
   unfold Tensor.get Tensor.toVector
-  have := LtVal i
+  have := i.isLt
   simp
   rw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp_all) (by simp)]
   simp [GetElem.getElem]

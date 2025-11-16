@@ -26,7 +26,6 @@ import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.LtVal
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
@@ -84,7 +83,7 @@ private lemma main
         simp [List.Vector.length]
         simp [GetElem.getElem]
         rw [GetSplitAt_1.eq.GetUnflatten.fin]
-        have h_i := LtVal i
+        have h_i := i.isLt
         conv_rhs at h_i => simp
         have := Indices.eq.Cast_MapRange.comm ⟨i, h_i⟩ 1
         simp at this
@@ -131,7 +130,7 @@ private lemma main
       apply SEq.of.All_EqGetS.Eq
       ·
         intro t
-        have h_t := LtVal t
+        have h_t := t.isLt
         rw [SelectStack.eq.Stack_Select.of.GtLength]
         have ih := ih (s := s.tail) (by simpa) (i := ⟨i, by simp⟩)
         simp at ih
@@ -171,7 +170,7 @@ private lemma main
         rw [EqGetRange.fin]
         simp [List.Vector.length]
         have h_d_lt : d < s.tail.length := by grind
-        have h_r := LtVal r
+        have h_r := r.isLt
         have h_lt : r < (⟨i, (s.tail.take (d + 1)).prod, s.tail[d]'(by simpa)⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.tail.drop (d + 1)).prod := by
           simp
           rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
@@ -216,7 +215,7 @@ private lemma main
           simp [ProdEraseIdx.eq.MulProdS]
           rw [Mul_Mul.eq.MulMul]
           rw [DivAddMul.eq.Add_Div.of.Gt_0]
-          have h_rₐ := LtVal rₐ
+          have h_rₐ := rₐ.isLt
           simp at h_rₐ
           omega
         ·
@@ -224,7 +223,7 @@ private lemma main
         ·
           simp [ProdTake.eq.MulProdTake.of.Lt_Length h]
           rw [EqDivMul.of.Ne_0 (by grind)]
-          have h_q' := LtVal q'
+          have h_q' := q'.isLt
           simp at h_q'
           rwa [List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength h (by omega)] at h_q'
         ·
@@ -234,7 +233,7 @@ private lemma main
         ·
           simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
           rw [EqDivMul.of.Ne_0 (by grind)]
-          convert (LtVal qₐ)
+          convert (qₐ.isLt)
           simp
           rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
           rw [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]

@@ -1,5 +1,4 @@
-import Lemma.Nat.LtVal
-open Nat
+import sympy.Basic
 
 
 @[main]
@@ -10,7 +9,7 @@ private lemma main
 -- imply
   i < n + m := by
 -- proof
-  have := LtVal i
+  have := i.isLt
   linarith
 
 

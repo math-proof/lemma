@@ -17,7 +17,6 @@ import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtAddMul.of.Lt.Lt.Eq
-import Lemma.Nat.LtVal
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthPermute.eq.Get_0.of.GtVal_0
@@ -75,15 +74,15 @@ private lemma main
             simp [Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0]
           apply SEq.of.All_EqGetS.Eq.fin h_prod
           intro t
-          have h_t := LtVal t
+          have h_t := t.isLt
           simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           have := h_t
           simp only [h_prod] at h_t
           let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-          have h_q := LtVal q
+          have h_q := q.isLt
           simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_q
           let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
-          have h_r := LtVal r
+          have h_r := r.isLt
           simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
           rw [@Tensor.Permute.eq.Ite (i := ⟨1, by omega⟩) (d := d)]
           simp
@@ -113,7 +112,7 @@ private lemma main
             ·
               let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
               let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
-              have h_r' := LtVal r'
+              have h_r' := r'.isLt
               simp only [ProdAppend.eq.MulProdS] at h_r'
               rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
               unfold Tensor.permuteHead Tensor.rotate
@@ -122,7 +121,7 @@ private lemma main
               ·
                 let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r'
                 let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
-                have h_qₑ := LtVal qₑ
+                have h_qₑ := qₑ.isLt
                 simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_qₑ
                 let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
                 let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ

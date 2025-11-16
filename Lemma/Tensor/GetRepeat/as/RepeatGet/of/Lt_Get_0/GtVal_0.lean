@@ -1,5 +1,4 @@
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
-import Lemma.Nat.LtVal
 import Lemma.Nat.LtSubS.of.Lt.Le
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
@@ -99,11 +98,11 @@ private lemma main
           ·
             intro t
             have h_t : t < n * s.tail.prod := by
-              convert LtVal t
+              convert t.isLt
               simp
               rwa [ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0]
             simp only [GetElem.getElem]
-            have h_eq := MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.Lt_Length (LtVal d) n
+            have h_eq := MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.Lt_Length (d.isLt) n
             have h_eq := EqUFnS.of.Eq h_eq (List.Vector α)
             have h_i_prod := Lt_ProdTakeSet.of.Gt_0.Lt_Get_0.GtLength_0 (by assumption) h_i h (n * s[d])
             have h_t_prod := Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0 h h_t
@@ -129,11 +128,11 @@ private lemma main
               obtain ⟨i'', j'', h_eq⟩ := Any_EqAddMul.of.Lt_Mul h_it
               obtain ⟨h_i''_eq, h_j''_eq⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_eq.symm
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_eq.symm]
-              have h_j' := LtVal j'
+              have h_j' := j'.isLt
               obtain ⟨j_i', j_j', h_eq⟩ := Any_EqAddMul.of.Lt_Mul h_j'
               obtain ⟨h_j_i'_eq, h_j_j'_eq⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_eq.symm
               simp [GetRepeat_AddMul.eq.Get.of.Eq_AddMul.fin h_eq.symm]
-              have h_j'' := LtVal j''
+              have h_j'' := j''.isLt
               obtain ⟨j_i'', j_j'', h_eq⟩ := Any_EqAddMul.of.Lt_Mul h_j''
               obtain ⟨h_j_i''_eq, h_j_j''_eq⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_eq.symm
               simp [GetRepeat_AddMul.eq.Get.of.Eq_AddMul.fin h_eq.symm]

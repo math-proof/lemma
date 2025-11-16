@@ -29,7 +29,7 @@ private lemma main
     ·
       apply SEq.of.All_EqGetS.Eq (by simp)
       intro t
-      have h_t := Nat.LtVal t
+      have h_t := t.isLt
       simp at h_t
       simp [GetFlatten.eq.Get.of.Eq_AddMul (n := s.prod) (m := ([].rotate 1).prod) (i := ⟨0, by simp⟩) (j := ⟨t, by simpa⟩) (t := t) (by simp)]
       unfold Tensor.rotate

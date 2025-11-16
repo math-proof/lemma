@@ -1,5 +1,4 @@
 import Lemma.Nat.AddMul.le.Mul.of.Lt
-import Lemma.Nat.LtVal
 open Nat
 
 
@@ -10,7 +9,7 @@ private lemma main
 -- imply
   m * i + m ≤ m * n := by
 -- proof
-  have hi := LtVal i
+  have hi := i.isLt
   apply AddMul.le.Mul.of.Lt hi
 
 

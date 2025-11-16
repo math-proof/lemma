@@ -1,6 +1,5 @@
 import Lemma.Nat.Any_Eq_AddMul
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
-import Lemma.Nat.LtVal
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Nat.Add
 import Lemma.Vector.GetAdd.eq.AddGetS.of.Lt_Length
@@ -17,7 +16,7 @@ private lemma main
 -- proof
   ext k
   obtain ⟨i, j, h_eq⟩ := Any_Eq_AddMul k
-  have hk := LtVal k
+  have hk := k.isLt
   simp [List.Vector.get]
   rw [GetVal.eq.Get.of.Lt hk]
   rw [GetVal.eq.Get.of.Lt hk]

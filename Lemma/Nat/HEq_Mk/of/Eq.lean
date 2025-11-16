@@ -1,5 +1,4 @@
-import Lemma.Nat.LtVal
-open Nat
+import sympy.Basic
 
 
 @[main]
@@ -8,7 +7,7 @@ private lemma main
   (h : n = m)
   (i : Fin n) :
 -- imply
-  have h_i := LtVal i
+  have h_i := i.isLt
   have h_i' : i < m := by
     simp [h] at h_i
     assumption

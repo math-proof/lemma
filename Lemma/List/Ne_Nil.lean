@@ -1,6 +1,5 @@
-import Lemma.Nat.LtVal
 import Lemma.List.Ne_Nil.is.GtLength_0
-open Nat List
+open List
 
 
 @[main]
@@ -11,7 +10,7 @@ private lemma main
 -- imply
   s ≠ [] := by
 -- proof
-  have h_i := LtVal i
+  have h_i := i.isLt
   apply Ne_Nil.of.GtLength_0
   omega
 

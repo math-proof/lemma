@@ -14,7 +14,6 @@ import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.EqMul_1.of.Eq_1
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Gt_0.of.Gt
-import Lemma.Nat.LtVal
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -54,7 +53,7 @@ private lemma main
       apply SEq.of.All_EqGetS.Eq
       ·
         intro t
-        have h_t := LtVal t
+        have h_t := t.isLt
         have h_drop := Drop.eq.Nil.of.Ge_Length (show (s.rotate (s.length - 1)).length ≤ s.length by simp)
         simp
         rw [GetFlatten.eq.Get.of.Eq_AddMul (i := ⟨t, by simp [h_drop] at h_t; simpa⟩) (j := ⟨0, by simp [h_drop]⟩) (by simp [h_drop])]
@@ -68,8 +67,8 @@ private lemma main
           simp only [EqMul_1.of.Eq_1 this] at h_t
           simp only [Rotate.eq.AppendDrop__Take (n := 1), ProdAppend.eq.MulProdS] at h_t
           let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-          have h_q := LtVal q
-          have h_r := LtVal r
+          have h_q := q.isLt
+          have h_r := r.isLt
           rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
           rw [GetTranspose.eq.Get.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]

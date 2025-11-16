@@ -5,7 +5,6 @@ import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqMod
-import Lemma.Nat.LtVal
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -80,9 +79,9 @@ private lemma main
           apply SEq.of.All_EqGetS.Eq
           ·
             intro k
-            have h_k := LtVal k
+            have h_k := k.isLt
             simp at h_k
-            have h_lt_add := AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.Lt_Get_0.GtLength_0 h_s (LtVal r) (LtVal q) h_k
+            have h_lt_add := AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.Lt_Get_0.GtLength_0 h_s (r.isLt) (q.isLt) h_k
             simp only [GetElem.getElem]
             rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin]
             have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin
@@ -110,7 +109,7 @@ private lemma main
                 rw [AddAdd.eq.Add_Add]
                 rw [ModAddMul.eq.Mod]
                 apply EqMod.of.Lt
-                have := AddMul.lt.Mul.of.Lt.Lt (LtVal r) h_k
+                have := AddMul.lt.Mul.of.Lt.Lt (r.isLt) h_k
                 simp at this
                 rw [TailSet_0.eq.Tail] at this
                 convert this

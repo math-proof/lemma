@@ -20,7 +20,6 @@ import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Nat.EqSubAdd
 import Lemma.List.EraseIdxSet.eq.EraseIdx
 import Lemma.Tensor.GetFromVector.eq.Get
-import Lemma.Nat.LtVal
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Vector.EqGetRange
@@ -85,7 +84,7 @@ private lemma main
         intro t
         repeat rw [GetFromVector.eq.Get]
         simp
-        have h_t := LtVal t
+        have h_t := t.isLt
         have h_fin := EqGetRange.fin (⟨t, by simp_all⟩ : Fin ((s.set (dim + 1) (n * s.get ⟨dim + 1, by simpa⟩)).headD 1))
         simp only [HeadD.eq.Get_0.of.GtLength_0 (show (s.set (dim + 1) (n * s[dim + 1])).length > 0 by rwa [LengthSet.eq.Length])] at h_t
         rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)] at h_t

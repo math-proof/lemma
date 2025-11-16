@@ -8,7 +8,6 @@ import Lemma.Nat.CoeMul.eq.MulCoeS
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Nat.Gt_0
 import Lemma.Nat.LeCoeS.is.Le
-import Lemma.Nat.LtVal
 import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Rat.EqCeilDivSubMul.of.Lt
@@ -25,12 +24,12 @@ private lemma main
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (List.Vector.indices ⟨j, m * n, n⟩ (m * n)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt (LtVal j)]⟩ = ↑i * n + j := by
+  (List.Vector.indices ⟨j, m * n, n⟩ (m * n)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt (j.isLt)]⟩ = ↑i * n + j := by
 -- proof
   unfold List.Vector.indices Slice.toList
   simp
-  have h_j := LtVal j
-  have h_i := LtVal i
+  have h_j := j.isLt
+  have h_i := i.isLt
   have h_n := Gt_0 j
   have h_m := Gt_0 i
   split_ifs with h
@@ -80,12 +79,12 @@ private lemma comm'
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  (List.Vector.indices ⟨j, n * m, n⟩ (n * m)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt.comm (LtVal j)]⟩ = ↑i * n + j := by
+  (List.Vector.indices ⟨j, n * m, n⟩ (n * m)).get ⟨i, by simp [EqLengthSlice_Mul.of.Lt.comm (j.isLt)]⟩ = ↑i * n + j := by
 -- proof
   unfold List.Vector.indices Slice.toList
   simp
-  have h_j := LtVal j
-  have h_i := LtVal i
+  have h_j := j.isLt
+  have h_i := i.isLt
   have h_n := Gt_0 j
   have h_m := Gt_0 i
   split_ifs with h

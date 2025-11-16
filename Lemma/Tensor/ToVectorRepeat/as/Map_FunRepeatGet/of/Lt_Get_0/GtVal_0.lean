@@ -1,10 +1,10 @@
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
+import Lemma.Nat.LtVal
 import Lemma.Nat.LtSubS.of.Lt.Le
 import Lemma.Tensor.Lt_Length.of.GtLength_0
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.GetSet.eq.Get.of.Gt.Lt_Length
 import Lemma.Nat.Gt_0
-import Lemma.Nat.LtVal
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
@@ -40,13 +40,13 @@ private lemma main
     have := LtVal i
     have : i < (X.repeat n d).length := by simp_all [LengthRepeat.eq.Get_0.of.GtVal_0 h]
     cast
-        (by
-          congr
-          simp
-          congr
-          repeat apply EqAddSub.of.Ge (by linarith)
-        )
-        ((X.get ⟨i, Lt_Length.of.GtLength_0 (by grind) X ⟨i, by grind⟩⟩).repeat n ⟨d - 1, h_d_1⟩) := by
+      (by
+        congr
+        simp
+        congr
+        repeat apply EqAddSub.of.Ge (by linarith)
+      )
+      ((X.get ⟨i, Lt_Length.of.GtLength_0 (by grind) X ⟨i, by grind⟩⟩).repeat n ⟨d - 1, h_d_1⟩) := by
 -- proof
   intro s₀ h_s h_s₀ h_head h_d_1
   ext i
@@ -54,7 +54,7 @@ private lemma main
   rw [GetToVector.eq.Get.of.GtLength_0.headD (by simpa)]
   apply Eq_Cast.of.SEq
   simp
-  have hi := LtVal i
+  have hi := i.isLt
   simp only [HeadD.eq.Get_0.of.GtLength_0 (by simp_all) (s := s.set d (n * s[d]))] at hi
   rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by assumption) (by assumption)] at hi
   have h_eq := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0 h hi X n

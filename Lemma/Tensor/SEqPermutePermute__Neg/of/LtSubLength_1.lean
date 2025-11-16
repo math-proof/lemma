@@ -22,7 +22,6 @@ import Lemma.Nat.EqMin.of.Lt
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtAdd.of.Lt_Sub
-import Lemma.Nat.LtVal
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Nat.ToNatSub_Neg.eq.Add
 import Lemma.Tensor.Permute.eq.Ite
@@ -78,21 +77,21 @@ private lemma main
           apply SEq.of.All_EqGetS.Eq
           ·
             intro t
-            have h_t := LtVal t
+            have h_t := t.isLt
             let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-            have h_q := LtVal q
+            have h_q := q.isLt
             simp only [Rotate.eq.AppendDrop__Take] at h_q
             have := h_q
             simp only [ProdAppend.eq.MulProdS] at h_q
-            have h_r := LtVal r
+            have h_r := r.isLt
             simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
             unfold Tensor.rotate
             simp only [GetElem.getElem]
             repeat rw [GetCast.eq.Get.of.Eq.fin]
             ·
               let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
-              have h_q' := LtVal q'
-              have h_r' := LtVal r'
+              have h_q' := q'.isLt
+              have h_r' := r'.isLt
               simp at h_q' h_r'
               rw [EqMin.of.Lt h_lt_add_1] at h_q' h_r'
               have h_1_lt : 1 < d + 1 := by omega
@@ -131,7 +130,7 @@ private lemma main
               ·
                 let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
                 let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
-                have h_qₐ := LtVal qₐ
+                have h_qₐ := qₐ.isLt
                 simp only [ProdAppend.eq.MulProdS] at h_qₐ
                 rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
                 unfold Tensor.permuteTail
@@ -143,7 +142,7 @@ private lemma main
                   simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₑrₑ]
                   unfold Tensor.rotate
                   simp
-                  have h_rₑ := LtVal rₑ
+                  have h_rₑ := rₑ.isLt
                   simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_rₑ
                   rw [GetCast.eq.Get.of.Eq.fin]
                   ·

@@ -1,7 +1,6 @@
 import Lemma.Set.In.is.Any_Eq_Get
-import Lemma.Nat.LtVal
 import Lemma.List.GetCartesianProduct.lt.Get.of.Lt_Length.Lt_LengthCartesianProduct
-open Set List Nat
+open Set List
 
 
 @[main]
@@ -14,7 +13,7 @@ private lemma main
 -- proof
   intro i h_x h_s
   let ⟨j, h⟩ := Any_Eq_Get.of.In h
-  have h_j := LtVal j
+  have h_j := j.isLt
   have h_i : i < s.cartesianProduct[j].length := by rwa [← h]
   simp_all [GetCartesianProduct.lt.Get.of.Lt_Length.Lt_LengthCartesianProduct h_j h_s]
 
