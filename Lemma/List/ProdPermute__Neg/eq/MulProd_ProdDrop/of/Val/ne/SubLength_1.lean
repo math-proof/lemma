@@ -1,5 +1,5 @@
 import Lemma.Int.NegSucc.eq.NegCoeAdd_1
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.List.ProdAppend.eq.MulProdS
@@ -27,7 +27,7 @@ private lemma main
 -- proof
   have h := Val.lt.Sub_1.of.Val.ne.Sub_1 h
   simp_all
-  rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+  rw [Permute__Neg.eq.Append_AppendRotateDropTake]
   simp_all
   rw [EqMin.of.Lt (LtAdd.of.Lt_Sub h)]
   repeat rw [MulProdS.eq.ProdAppend]

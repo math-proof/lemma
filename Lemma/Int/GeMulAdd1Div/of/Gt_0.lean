@@ -1,5 +1,5 @@
 import sympy.core.relational
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.AddAdd
@@ -19,12 +19,12 @@ private lemma main
 -- proof
   -- notice that n / d means the Euclidian division, not rational division
   -- Use the Euclidean division theorem to express n - 1 as d * q + r
-  have h₀ := Eq_AddMulDiv___Mod (n := n - 1) (d := d)
+  have h₀ := EqAddMulDiv (n := n - 1) (d := d)
   denote h_q : q = (n - 1) / d
   denote h_r : r = (n - 1) % d
   rw [← h_q]
   rw [← h_q, ← h_r] at h₀
-  rw [Eq_Add.of.EqSub h₀]
+  rw [Eq_Add.of.EqSub h₀.symm]
   rw [MulAdd.eq.AddMulS]
   norm_num
   rw [AddAdd.permute]

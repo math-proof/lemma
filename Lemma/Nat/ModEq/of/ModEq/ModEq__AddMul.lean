@@ -10,9 +10,9 @@ private lemma main
 -- imply
   y ≡ a * x₀ + b [MOD n] := by
 -- proof
+  apply h₁.trans
   have := h₀.mul_left a
-  have := this.add_right b
-  exact h₁.trans this
+  apply this.add_right b
 
 
 -- created on 2025-03-15

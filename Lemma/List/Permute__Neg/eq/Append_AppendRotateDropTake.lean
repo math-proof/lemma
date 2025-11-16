@@ -102,5 +102,18 @@ private lemma main
           simp_all
 
 
+@[main]
+private lemma simp
+  {s : List α}
+-- given
+  (i : Fin s.length)
+  (d : ℕ) :
+-- imply
+  s.permute i (-d) = s.take (i - d) ++ ((s.take (i + 1)).drop (i - d)).rotate (d ⊓ i) ++ s.drop (i + 1) := by
+-- proof
+  rw [main i d]
+  rw [TakeTake.eq.Take.of.Ge (by simp_all; linarith)]
+
+
 -- created on 2025-06-18
 -- updated on 2025-10-27

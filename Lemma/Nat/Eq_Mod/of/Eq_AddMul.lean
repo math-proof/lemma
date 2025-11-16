@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Nat.EqModS.of.Eq
 import Lemma.Nat.EqMod
@@ -15,8 +15,8 @@ private lemma main
 -- imply
   j = k % n := by
 -- proof
-  have := Eq_AddMulDiv___Mod k n
-  have := h_eq.symm.trans this
+  have := EqAddMulDiv k n
+  have := h_eq.symm.trans this.symm
   have h_mod := EqModS.of.Eq this n
   have h_mod := EqCoeS.of.Eq (R := ℤ) h_mod
   simp at h_mod

@@ -4,7 +4,7 @@ import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length
 import Lemma.List.GetTakePermute__Neg.eq.Get
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDropTake.eq.Get.of.Lt_Length
 import Lemma.List.ProdRotate.eq.Prod
@@ -190,7 +190,7 @@ private lemma main
                   rw [MulProdS.eq.ProdAppend]
               ·
                 rw [h_toNat]
-                rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+                rw [Permute__Neg.eq.Append_AppendRotateDropTake]
                 simp [EqMin.of.Lt h_lt_add_1]
             ·
               rw [MulProdS.eq.ProdAppend]

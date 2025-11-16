@@ -1,5 +1,5 @@
 import Lemma.List.DropTake.eq.ListGet
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
 import Lemma.List.TakeAppend.eq.Take.of.Le_Length
 import Lemma.Nat.Ge_1
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   (s.permute i (-i)).take 1 = [s[i]] := by
 -- proof
-  simp [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+  simp [Permute__Neg.eq.Append_AppendRotateDropTake.simp]
   rw [TakeAppend.eq.Take.of.Le_Length]
   ·
     rw [Rotate.eq.AppendDrop__Take.of.Le_Length (by simp)]

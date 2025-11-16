@@ -1,5 +1,5 @@
 import sympy.functions.elementary.integers
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.EqSubS.of.Eq
 import Lemma.Nat.EqSubAdd
 open Nat
@@ -13,11 +13,9 @@ private lemma main
 -- imply
   n / d * d = n - n % d := by
 -- proof
-  have h := Eq_AddMulDiv___Mod n d
+  have h := EqAddMulDiv n d
   have h := EqSubS.of.Eq h (n % d)
-  rw [EqSubAdd] at h
-  apply Eq.symm
-  assumption
+  rwa [EqSubAdd] at h
 
 
 -- created on 2025-07-08

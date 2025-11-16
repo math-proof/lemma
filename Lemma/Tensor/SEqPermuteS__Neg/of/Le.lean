@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqPermuteS.of.Le
 import Lemma.List.EqPermute__0
 import Lemma.List.Permute.eq.Ite
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdRotate.eq.Prod
@@ -13,7 +13,7 @@ import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.EqMod_1'0
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Gt_0
 import Lemma.Nat.LtVal
@@ -58,7 +58,7 @@ private lemma main
     apply SEqCast.of.SEq.Eq
     ·
       rw [h_toNat]
-      rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+      rw [Permute__Neg.eq.Append_AppendRotateDropTake]
       simp [h_length]
       simp [show (s.length - (1 + d)) = 0 by omega]
       simp [show (s.length - 1 + 1) = s.length by omega]
@@ -85,7 +85,7 @@ private lemma main
         apply SEq_Cast.of.SEq.Eq
         ·
           rw [h_toNat_i]
-          rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+          rw [Permute__Neg.eq.Append_AppendRotateDropTake]
           simp [h_length]
           simp [show (s.length - (s.length - 1 + 1)) = 0 by omega]
           simp [show (s.length - 1 + 1) = s.length by omega]
@@ -106,7 +106,7 @@ private lemma main
         ·
           rw [h_toNat]
           rw [MulProdS.eq.ProdAppend]
-          rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+          rw [Permute__Neg.eq.Append_AppendRotateDropTake]
           rw [EqMin.of.Ge (by simp; omega)]
           simp [EqMin.of.Le (show i + 1 ≤ s.length by omega)]
           simp [show i + 1 - (1 + d) = i - d by omega]
@@ -164,7 +164,7 @@ private lemma main
                   simp [EqMod_1'0]
                   simp [h_r'_mod]
                   simp [h_q_div]
-                  simp [← Eq_AddMulDiv___Mod]
+                  simp [EqAddMulDiv]
                 ·
                   rw [MulProdS.eq.ProdAppend]
                   rw [Rotate.eq.AppendDrop__Take]
@@ -239,13 +239,13 @@ private lemma main
               ·
                 rw [h_toNat_i]
                 rw [show (↑i + 1) ⊓ (s.take (i + 1)).length = i + 1 by simp; omega]
-                simp [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+                simp [Permute__Neg.eq.Append_AppendRotateDropTake]
           ·
             simp [show (↑i + 1) ⊓ s.length = i + 1 by omega]
             simp [show i + 1 - (1 + d) = i - d by omega]
             simp [show (1 + d) ⊓ (i + 1) = i + 1 by omega]
             simp [show i - d = 0 by omega]
-            simp [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+            simp [Permute__Neg.eq.Append_AppendRotateDropTake]
 
 
 -- created on 2025-10-30

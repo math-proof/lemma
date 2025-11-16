@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Nat.Div.eq.FloorDiv
@@ -22,8 +22,8 @@ private lemma main
 -- imply
   i = k / n := by
 -- proof
-  have := Eq_AddMulDiv___Mod k n
-  have := h_eq.symm.trans this
+  have := EqAddMulDiv k n
+  have := h_eq.symm.trans this.symm
   have h_div := EqDivS.of.Eq this n
   have h_div := EqCoeS.of.Eq (R := ℤ) h_div
   repeat rw [Div.eq.FloorDiv (α := ℚ)] at h_div

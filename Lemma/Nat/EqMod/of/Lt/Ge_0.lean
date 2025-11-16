@@ -1,5 +1,5 @@
 import sympy.functions.elementary.integers
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Int.Mul.eq.Zero.of.OrAndSEq_0Ge_0
 import Lemma.Nat.Ge.of.Ge.Gt
 open Nat Int
@@ -15,9 +15,9 @@ private lemma main
 -- imply
   k % n = k := by
 -- proof
-  have h := Eq_AddMulDiv___Mod (k : Z) n
+  have h := EqAddMulDiv (k : Z) n
   apply Eq.symm
-  apply h.trans
+  apply h.symm.trans
   suffices k / n * n = 0 by
     rw [this]
     simp

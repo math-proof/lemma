@@ -5,7 +5,7 @@ import Lemma.List.DropTakePermute.eq.ListGet.of.GtLength_Add
 import Lemma.List.DropTakePermute.eq.RotateTakeDrop
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.eq.MulProdS
@@ -88,7 +88,7 @@ private lemma main
       rw [Add.comm (a := 1), AddAdd.eq.Add_Add]
       repeat rw [EqSubAdd]
       rw [Add_Add.eq.AddAdd]
-      have := Permute__Neg.eq.Append_AppendRotateTakeDrop (s := (s.permute ⟨i, by grind⟩ d)) (i := ⟨i + d, by simp_all; grind⟩) (d := d)
+      have := Permute__Neg.eq.Append_AppendRotateDropTake (s := (s.permute ⟨i, by grind⟩ d)) (i := ⟨i + d, by simp_all; grind⟩) (d := d)
       simp_all
     apply SEqCast.of.SEq.Eq.Eq
     ·

@@ -3,7 +3,7 @@ import Lemma.List.DropPermute.eq.Drop.of.GtLength_0
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDropTakePermute.eq.Get_0.of.Lt_Length
 import Lemma.List.Rotate.eq.AppendDrop__Take
@@ -64,7 +64,7 @@ private lemma main
       rw [h_toNat]
       simp
       rw [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
-      simp [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+      simp [Permute__Neg.eq.Append_AppendRotateDropTake]
     ·
       rw [h_permute]
     ·
@@ -168,7 +168,7 @@ private lemma main
       ·
         rw [MulProdS.eq.ProdAppend]
         apply congrArg
-        rw [Permute__Neg.eq.Append_AppendRotateTakeDrop] at h_permute
+        rw [Permute__Neg.eq.Append_AppendRotateDropTake] at h_permute
         simp at h_permute
         simpa [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
 

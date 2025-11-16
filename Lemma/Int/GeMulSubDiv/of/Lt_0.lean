@@ -1,5 +1,5 @@
 import sympy.core.relational
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Int.Sub.eq.Add_Neg
@@ -18,12 +18,12 @@ private lemma main
 -- imply
   ((n - 1) / d - 1) * d ≥ n := by
 -- proof
-  have h₀ := Eq_AddMulDiv___Mod (n := n - 1) (d := d)
+  have h₀ := EqAddMulDiv (n := n - 1) (d := d)
   denote h_q : q = (n - 1) / d
   denote h_r : r = (n - 1) % d
   rw [← h_q]
   rw [← h_q, ← h_r] at h₀
-  have := Eq_Add.of.EqSub h₀
+  have := Eq_Add.of.EqSub h₀.symm
   rw [this]
   rw [MulSub.eq.SubMulS]
   norm_num

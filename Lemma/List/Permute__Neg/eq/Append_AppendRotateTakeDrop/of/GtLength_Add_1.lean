@@ -1,5 +1,5 @@
 import Lemma.List.DropTake.eq.TakeDrop
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeTake.eq.Take.of.Gt
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   s.permute ⟨i + d, by grind⟩ (-d) = s.take i ++ (((s.drop i).take (d + 1)).rotate d ++ s.drop (i + d + 1)) := by
 -- proof
-  rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+  rw [Permute__Neg.eq.Append_AppendRotateDropTake]
   simp
   rw [TakeTake.eq.Take.of.Gt (by omega)]
   rw [AddAdd.eq.Add_Add]

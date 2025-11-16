@@ -1,4 +1,4 @@
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 open List
 
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   s.permute i (-d) = s.permute i (-i) := by
 -- proof
-  repeat rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+  repeat rw [Permute__Neg.eq.Append_AppendRotateDropTake]
   simp_all
 
 

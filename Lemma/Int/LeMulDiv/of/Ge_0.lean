@@ -1,5 +1,5 @@
 import Lemma.Int.Mod.ge.Zero.of.Ne_0
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 open Nat Int
 
 
@@ -17,7 +17,7 @@ private lemma main
     assumption
   else
     have h₁ := Mod.ge.Zero.of.Ne_0 h_d n
-    have h₀ := Eq_AddMulDiv___Mod (n := n) (d := d)
+    have h₀ := EqAddMulDiv (n := n) (d := d)
     linarith
 
 

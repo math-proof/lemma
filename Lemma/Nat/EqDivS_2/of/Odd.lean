@@ -1,7 +1,6 @@
-import sympy.functions.elementary.integers
 import Lemma.Nat.EqSubAdd
 import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.ModAddMul.eq.Mod
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Nat.EqMod.of.Lt.Ge_0
@@ -22,13 +21,14 @@ private lemma main
   rw [hk]
   rw [EqSubAdd]
   rw [EqDivMul.of.Ne_0.left (by norm_num)]
-  have h := Eq_AddMulDiv___Mod (2 * k + 1) 2
+  have h := EqAddMulDiv (2 * k + 1) 2
   rw [ModAddMul.eq.Mod.left] at h
   rw [EqMod.of.Lt.Ge_0 (by simp) (by simp)] at h
   simp at h
   have h := EqDivS.of.Eq h 2
   rw [EqDivMul.of.Ne_0.left (by norm_num)] at h
-  rwa [EqDivMul.of.Ne_0 (by norm_num)] at h
+  rw [EqDivMul.of.Ne_0 (by norm_num)] at h
+  aesop
 
 
 -- created on 2025-08-12

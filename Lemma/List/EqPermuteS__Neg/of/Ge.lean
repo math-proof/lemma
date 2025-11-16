@@ -1,4 +1,4 @@
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.TakeTake.eq.Take.of.Gt
 import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.Sub.eq.Zero.of.Le
@@ -15,11 +15,11 @@ private lemma main
 -- imply
   a.permute i (-d) = a.permute i (-i) := by
 -- proof
-  rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+  rw [Permute__Neg.eq.Append_AppendRotateDropTake]
   rw [EqMin.of.Ge h]
   rw [TakeTake.eq.Take.of.Gt (by omega)]
   simp [Sub.eq.Zero.of.Le h]
-  rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+  rw [Permute__Neg.eq.Append_AppendRotateDropTake]
   simp
 
 

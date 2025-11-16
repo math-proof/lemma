@@ -14,7 +14,7 @@ class IntegerRing (Z : Type) extends Semiring Z, LinearOrder Z, IsStrictOrderedR
   le_pred_of_lt {a b : Z} : a < b → a ≤ b - 1
   add_sub_cancel (a b : Z) : a + b - b = a
   sub_add_cancel {a b : Z} : a ≤ b → b - a + a = b
-  div_add_mod (n d : Z) : n = n / d * d + n % d
+  div_add_mod (n d : Z) : d * (n / d) + n % d = n
   mod_lt {d : Z} (h : d > 0) (n : Z) : n % d < d
   pred_le (n : Z) : n - 1 ≤ n
   pred_lt {n : Z} : n ≠ 0 → n - 1 < n
@@ -29,6 +29,7 @@ class IntegerRing (Z : Type) extends Semiring Z, LinearOrder Z, IsStrictOrderedR
   div_eq_zero_of_lt {a b : Z} : (a ≥ 0) → (a < b) → a / b = 0
   sub_self (n : Z) : n - n = 0
   zero_mod (n : Z) : 0 % n = 0
+  div_zero (n : Z) : n / 0 = 0
   even_iff {n : Z} : Even n ↔ n % 2 = 0
   odd_iff {n : Z} : Odd n ↔ n % 2 = 1
   mod_two_ne_one {n : Z} : n % 2 ≠ 1 ↔ n % 2 = 0
@@ -45,8 +46,6 @@ instance : IntegerRing ℕ where
     apply Nat.sub_add_cancel
   div_add_mod := by
     intro n d
-    rw [Nat.mul_comm]
-    apply Eq.symm
     apply Nat.div_add_mod n d
   mod_lt {d : ℕ} (h : d > 0) (n : ℕ) := Nat.mod_lt n h
   pred_le := Nat.pred_le
@@ -63,6 +62,7 @@ instance : IntegerRing ℕ where
   div_eq_zero_of_lt := by simp_all
   sub_self := Nat.sub_self
   zero_mod := Nat.zero_mod
+  div_zero := Nat.div_zero
   even_iff := Nat.even_iff
   odd_iff := Nat.odd_iff
   mod_two_ne_one := Nat.mod_two_not_eq_one
@@ -79,9 +79,7 @@ instance : IntegerRing ℤ where
     apply Int.sub_add_cancel
   div_add_mod := by
     intro n d
-    apply Eq.symm
     rw [Int.add_comm]
-    rw [Int.mul_comm]
     apply Int.emod_add_mul_ediv
   mod_lt {d : ℤ} (h : d > 0) (n : ℤ) := Int.emod_lt_of_pos n h
   pred_le := by simp
@@ -109,6 +107,7 @@ instance : IntegerRing ℤ where
   div_eq_zero_of_lt := Int.ediv_eq_zero_of_lt
   sub_self := Int.sub_self
   zero_mod := Int.zero_emod
+  div_zero := Int.ediv_zero
   even_iff := Int.even_iff
   odd_iff := Int.odd_iff
   mod_two_ne_one := Int.emod_two_ne_one

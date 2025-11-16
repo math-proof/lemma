@@ -3,7 +3,7 @@ import Lemma.List.Append_DropTake.eq.Take
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.Lt_Length
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.TailRotate.eq.Take.of.EqLength_Add_1
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeTake.eq.Take.of.Ge
@@ -22,7 +22,7 @@ private lemma main
 -- imply
   (s.permute i (-d)).eraseIdx (i - d) = s.eraseIdx i := by
 -- proof
-  rw [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+  rw [Permute__Neg.eq.Append_AppendRotateDropTake]
   rw [EraseIdxAppend.eq.AppendEraseIdx.of.Lt_Length (by simp; omega)]
   rw [EqMin.of.Le (by omega)]
   rw [TakeTake.eq.Take.of.Ge (by omega)]

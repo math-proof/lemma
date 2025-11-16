@@ -6,7 +6,7 @@ import Lemma.Nat.ModEq.of.Eq
 import Lemma.Nat.ModEq_Pow2_1
 import Lemma.Nat.EqMul1
 import Lemma.Nat.ModEq.of.ModEq.ModEq__AddMul
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 open Nat
@@ -20,7 +20,7 @@ private lemma main
 -- imply
   n * 2 ^ b ≡ n / 2 ^ (m - b) + n % 2 ^ (m - b) * 2 ^ b [MOD 2 ^ m - 1] := by
 -- proof
-  have h_Eq_Add := Eq_AddMulDiv___Mod (n := n) (d := 2 ^ (m - b))
+  have h_Eq_Add := EqAddMulDiv (n := n) (d := 2 ^ (m - b))
   have := EqMulS.of.Eq h_Eq_Add (2 ^ b)
   rw [MulAdd.eq.AddMulS] at this
   rw [MulMul.eq.Mul_Mul] at this
@@ -28,7 +28,7 @@ private lemma main
   rw [EqAddSub.of.Ge h] at this
   have := ModEq.of.Eq this (2 ^ m - 1)
   have h_ModEq := ModEq_Pow2_1 (n := m)
-  have := ModEq.of.ModEq.ModEq__AddMul h_ModEq this
+  have := ModEq.of.ModEq.ModEq__AddMul h_ModEq this.symm
   grind
 
 

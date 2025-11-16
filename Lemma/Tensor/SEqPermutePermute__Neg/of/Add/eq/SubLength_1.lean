@@ -9,7 +9,7 @@ import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.GetPermute__Neg.eq.Get_Add.of.GtLength_Add
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
-import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.Permute__Neg.eq.Append_RotateDropTake.of.EqLength_Add_1
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdAppend.eq.MulProdS
@@ -274,7 +274,7 @@ private lemma main
               rw [Permute__Neg.eq.Append_RotateDropTake.of.EqLength_Add_1 h_length_eq_add_1]
           ·
             rw [h_toNat]
-            simp [Permute__Neg.eq.Append_AppendRotateTakeDrop]
+            simp [Permute__Neg.eq.Append_AppendRotateDropTake]
             rw [TakeTake.eq.Take.of.Gt (by omega)]
             simp [← h_i_eq]
             rw [EqMin.of.Lt (by omega), EqSubAdd]

@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 open Nat
 
 
@@ -11,8 +11,7 @@ private lemma main
   ∃ i j, i * n + j = m := by
 -- proof
   use m / n, m % n
-  apply Eq.symm
-  apply Eq_AddMulDiv___Mod
+  apply EqAddMulDiv
 
 
 -- created on 2025-05-29

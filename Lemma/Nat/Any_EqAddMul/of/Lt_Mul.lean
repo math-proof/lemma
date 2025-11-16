@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq_AddMulDiv___Mod
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.LtDiv.of.Lt_Mul
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
@@ -17,9 +17,7 @@ private lemma left
   have hn := Gt_0.of.GtMul.left h
   have h_lt := LtMod.of.Gt_0 hn k
   use ⟨k / n, LtDiv.of.Lt_Mul.left h⟩, ⟨k % n, h_lt⟩
-  simp
-  apply Eq.symm
-  apply Eq_AddMulDiv___Mod
+  apply EqAddMulDiv
 
 
 @[main]
