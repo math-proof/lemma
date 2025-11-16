@@ -6,7 +6,10 @@ import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
 import Lemma.List.EraseIdxPermute__Neg.eq.EraseIdx.of.Ge
 import Lemma.List.EraseIdxRotate.eq.AppendEraseIdxDrop.of.GtLength_Add
-import Lemma.List.GetPermute__Neg.eq.Get.of.Ge.GtLength
+import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
+import Lemma.List.GetRotate.eq.Ite.of.Le_Length.Lt_Length
+import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -22,7 +25,7 @@ import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Eq
 import Lemma.Tensor.Sum.eq.Sum_Select
 import Lemma.Tensor.Sum.eq.Sum_Select.of.GtLength
 import Lemma.Tensor.SumCast.eq.Cast_Sum.of.Eq
-open Bool Int List Nat Tensor
+open List Bool Int Nat Tensor
 
 
 @[main]
@@ -60,8 +63,6 @@ private lemma main
       simp
       rw [Sum.eq.Sum_Select]
       rw [Sum.eq.Sum_Select.of.GtLength (by simp; omega)]
-      have h_eraseIdx := EraseIdxPermute__Neg.eq.EraseIdx.of.Ge h_d
-      have h_get := GetPermute__Neg.eq.Get.of.Ge.GtLength (d := d) i.isLt h_d
       have h_eraseIdx : (s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1)).eraseIdx (↑i - d) = s.eraseIdx ↑i := by 
         rw [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length (by simp; omega)]
         simp
@@ -80,7 +81,20 @@ private lemma main
         have := Append_TakeDrop.eq.Take.of.Ge (s := s) (i := s.length - 1) (d := d) (by omega)
         rw [@Nat.SubSub.eq.Sub_Add (b := 1)] at this
         rwa [Add.comm (a := 1)] at this
-      apply SEqSumS.of.All_SEq.Eq.Eq h_eraseIdx
+      have h_get : (s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1))[↑i - d]'(by simp; omega) = s[i] := by 
+        rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp; omega)]
+        rw [GetRotate.eq.Ite.of.Le_Length.Lt_Length (by simp; omega) (by simp; omega)]
+        simp_all
+        split_ifs with h_lt
+        ·
+          simp [EqMin.of.Le (show (d + 1) ≤ s.length by omega)]
+          simp only [GetElem.getElem]
+          apply congrArg
+          simp
+          omega
+        ·
+          omega
+      apply SEqSumS.of.All_SEq.Eq.Eq h_eraseIdx h_get
       ·
         intro t
         have h_t := t.isLt
@@ -90,13 +104,15 @@ private lemma main
           simp
           apply SEqCastS.of.SEq.Eq.Eq
           ·
-            sorry
+            simp [List.Vector.length]
+            have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := (s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1))) (d := ↑i - d) (i := t) (by simp; omega) (by simp)
+            simp_all
+          ·
+            simp [List.Vector.length]
+            rw [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+            simp_all
           ·
             sorry
-          ·
-            sorry
-        ·
-          sorry
   ·
     rw [h_toNat]
     rw [Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1 h_i]
