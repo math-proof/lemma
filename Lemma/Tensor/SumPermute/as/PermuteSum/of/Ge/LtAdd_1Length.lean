@@ -196,7 +196,6 @@ private lemma main
                 simp only [ProdRotate.eq.MulProdS] at h_rₑ
                 let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_rₑ
                 let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
-                have h_rₕ := rₕ.isLt
                 rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₕrₕ]
                 rw [GetTranspose.eq.Get.fin]
                 repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
@@ -247,9 +246,6 @@ private lemma main
                   rw [MulMul.eq.Mul_Mul]
                 simp [AddMulS.eq.MulAdd]
                 left
-                have h_q'_div := h_q'_div
-                have h_rₕ_mod := h_rₕ_mod
-                have h_qₑ_div := h_qₑ_div
                 rw [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul, AddAdd.eq.Add_Add] at h_qₐ_div
                 simp [h_rₕ_mod, h_qₑ_div, h_r_mod, h_qₐ_div]
                 rw [DivAddMul.eq.Add_Div.of.Gt_0]
