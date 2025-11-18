@@ -73,7 +73,7 @@ private lemma main
         intro t
         have h_t := t.isLt
         simp [EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt] at h_t
-        repeat rw [GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length.fin]
+        repeat rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.Lt_Length.fin]
         .
           apply SEqCastS.of.SEq.Eq.Eq
           .

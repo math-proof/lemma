@@ -6,10 +6,10 @@ import sympy.Basic
 private lemma main
   [Exp α]
 -- given
-  (x : Tensor α s)
-  (dim : ℕ) :
+  (X : Tensor α s)
+  (d : ℕ) :
 -- imply
-  x.softmax dim = exp x / ((exp x).sum dim).keepdim := by
+  X.softmax d = exp X / ((exp X).sum d).keepdim := by
 -- proof
   unfold Tensor.softmax
   simp

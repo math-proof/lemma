@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.List.Lt_LengthInsertIdx
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
@@ -11,25 +10,25 @@ open List Tensor Nat
 private lemma main
   {s : List ℕ}
 -- given
-  (h_dim : dim ≤ s.length)
+  (h_d : d ≤ s.length)
   (h_i : i < n)
   (X : Tensor α s) :
 -- imply
-  have h_dim : dim < (s.insertIdx dim 1).length := by
-    rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]
+  have h_d : d < (s.insertIdx d 1).length := by
+    rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_d]
     omega
-  ((X.unsqueeze dim).repeat n ⟨dim, h_dim⟩).select ⟨dim, by simpa⟩ ⟨i, by simp_all⟩ ≃ X := by
+  ((X.unsqueeze d).repeat n ⟨d, h_d⟩).select ⟨d, by simpa⟩ ⟨i, by simp_all⟩ ≃ X := by
 -- proof
   intros
-  let s' := s.insertIdx dim 1
-  let dim' : Fin s'.length := ⟨dim, by simpa⟩
-  have h_i : i < n * s'[dim'] := by
-    simpa [s', dim']
-  have h := SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet h_i (X.unsqueeze dim)
-  simp [dim', s'] at h
+  let s' := s.insertIdx d 1
+  let d' : Fin s'.length := ⟨d, by simpa⟩
+  have h_i : i < n * s'[d'] := by
+    simpa [s', d']
+  have h := SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet h_i (X.unsqueeze d)
+  simp [d', s'] at h
   apply h.trans
   simp [EqMod_1'0]
-  apply SEqSelectUnsqueeze.of.Le_Length h_dim
+  apply SEqSelectUnsqueeze.of.Le_Length h_d
 
 
 -- created on 2025-10-05

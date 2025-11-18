@@ -53,7 +53,7 @@ import Lemma.Nat.Ne_0.of.Gt
 import Lemma.Nat.SubAddS.eq.Sub
 import Lemma.Nat.Sub_Sub.eq.Add.of.Ge
 import Lemma.Nat.ToNatSub_Neg.eq.Add
-import Lemma.Tensor.DataSelect.eq.Cast_SelectSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -100,7 +100,7 @@ private lemma main
     have h_t := t.isLt
     apply SEq.of.SEqDataS.Eq h_eraseIdx
     simp
-    repeat rw [DataSelect.eq.Cast_SelectSplitAtData.of.GtLength_0]
+    repeat rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
     simp
     simp [h_get] at h_t
     apply SEqCastS.of.SEq.Eq.Eq

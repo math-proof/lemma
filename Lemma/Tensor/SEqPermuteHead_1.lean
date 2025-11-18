@@ -14,7 +14,7 @@ import Lemma.List.ProdAppend.eq.MulProdS
 open List Nat Vector Bool Tensor
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (X : Tensor α s) :

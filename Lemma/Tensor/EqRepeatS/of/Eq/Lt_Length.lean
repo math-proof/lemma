@@ -10,11 +10,11 @@ private lemma main
 -- given
   (h : A ≃ B)
   (h_d : d < s.length)
-  (k : ℕ) :
+  (n : ℕ) :
 -- imply
-  A.repeat k ⟨d, h_d⟩ ≃ B.repeat k ⟨d, by rwa [← h.left]⟩ := by
+  A.repeat n ⟨d, h_d⟩ ≃ B.repeat n ⟨d, by rwa [← h.left]⟩ := by
 -- proof
-  apply EqTFnS.of.Eq.Lt_Length h_d h _ (fun (s : List ℕ) (d : Fin s.length) (X : Tensor α s) => X.repeat k d)
+  apply EqTFnS.of.Eq.Lt_Length h_d h _ (fun (s : List ℕ) (d : Fin s.length) (X : Tensor α s) => X.repeat n d)
 
 
 -- created on 2025-07-13

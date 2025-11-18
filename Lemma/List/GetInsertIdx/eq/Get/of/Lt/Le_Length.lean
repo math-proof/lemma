@@ -1,39 +1,32 @@
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
-import Lemma.List.GetInsertIdx.eq.Get.of.Lt.Lt_Length
-open List
+import sympy.Basic
 
 
 @[main]
 private lemma fin
   {s : List α}
 -- given
-  (h : i ≤ s.length)
-  (h_ij : j < i)
+  (h_j : j ≤ s.length)
+  (h_i : i < j)
   (a : α) :
 -- imply
-  have h_i : j < (s.insertIdx i a).length := by
-    rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h]
-    linarith
-  (s.insertIdx i a).get ⟨j, h_i⟩ = s.get ⟨j, by linarith⟩ := by
+  (s.insertIdx i a).get ⟨j, by grind⟩ = s.get ⟨j - 1, by grind⟩ := by
 -- proof
-  apply GetInsertIdx.eq.Get.of.Lt.Lt_Length.fin
-  assumption
+  have := List.get_insertIdx_add_succ s a i (j - i - 1) (by grind)
+  simp_all
+  grind
 
 
 @[main]
 private lemma main
   {s : List α}
 -- given
-  (h : i ≤ s.length)
-  (h_ij : j < i)
+  (h_j : j ≤ s.length)
+  (h_i : i < j)
   (a : α) :
 -- imply
-  have : i < (s.insertIdx i a).length := by
-    rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h]
-    linarith
-  (s.insertIdx i a)[j] = s[j] := by
+  (s.insertIdx i a)[j]'(by grind) = s[j - 1] := by
 -- proof
-  apply fin h h_ij
+  apply fin h_j h_i
 
 
--- created on 2025-10-09
+-- created on 2025-11-17

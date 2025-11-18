@@ -1,4 +1,3 @@
-import stdlib.SEq
 import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
 import Lemma.Bool.SEq.of.SEq.SEq
@@ -32,14 +31,14 @@ open Tensor List Vector Bool Nat
 @[main]
 private lemma main
 -- given
-  (h_dim : dim < s.length)
-  (h_i : i < n * s[dim])
+  (h_d : d < s.length)
+  (h_i : i < n * s[d])
   (X : Tensor α s) :
 -- imply
-  (X.repeat n ⟨dim, h_dim⟩).select ⟨dim, by simp_all⟩ ⟨i, by aesop⟩ ≃ X.select ⟨dim, h_dim⟩ ⟨i % s[dim], LtMod.of.Lt_Mul h_i⟩ := by
+  (X.repeat n ⟨d, h_d⟩).select ⟨d, by simp_all⟩ ⟨i, by aesop⟩ ≃ X.select ⟨d, h_d⟩ ⟨i % s[d], LtMod.of.Lt_Mul h_i⟩ := by
 -- proof
-  have h_s := Gt_0.of.Gt h_dim
-  induction dim generalizing X s with
+  have h_s := Gt_0.of.Gt h_d
+  induction d generalizing X s with
   | zero =>
     have h := Select_0.as.Get.of.Lt_Get_0.GtLength_0 (by simpa) (by simpa) (X.repeat n ⟨0, h_s⟩)
     apply SEq.of.SEq.SEq h
@@ -47,7 +46,7 @@ private lemma main
     apply SEq.of.SEq.SEq h
     apply GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0.fin
     assumption
-  | succ dim ih =>
+  | succ d ih =>
     unfold Tensor.select
     simp
     rw [ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0 (by simp)]
@@ -55,8 +54,8 @@ private lemma main
     have h_tail : s.tail.length > 0 := by
       simp
       linarith
-    have h_dim := Lt_Sub.of.LtAdd h_dim
-    have ih := ih (s := s.tail) (by simp [h_dim]) (by rwa [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)])
+    have h_d := Lt_Sub.of.LtAdd h_d
+    have ih := ih (s := s.tail) (by simp [h_d]) (by rwa [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)])
     simp only [h_tail] at ih
     simp at ih
     apply SEqCastS.of.SEq.Eq.Eq
@@ -85,8 +84,8 @@ private lemma main
         repeat rw [GetFromVector.eq.Get]
         simp
         have h_t := t.isLt
-        have h_fin := EqGetRange.fin (⟨t, by simp_all⟩ : Fin ((s.set (dim + 1) (n * s.get ⟨dim + 1, by simpa⟩)).headD 1))
-        simp only [HeadD.eq.Get_0.of.GtLength_0 (show (s.set (dim + 1) (n * s[dim + 1])).length > 0 by rwa [LengthSet.eq.Length])] at h_t
+        have h_fin := EqGetRange.fin (⟨t, by simp_all⟩ : Fin ((s.set (d + 1) (n * s.get ⟨d + 1, by simpa⟩)).headD 1))
+        simp only [HeadD.eq.Get_0.of.GtLength_0 (show (s.set (d + 1) (n * s[d + 1])).length > 0 by rwa [LengthSet.eq.Length])] at h_t
         rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)] at h_t
         have h_fin' := EqGetRange.fin (⟨t, by simp only [HeadD.eq.Get_0.of.GtLength_0 h_s]; assumption⟩ : Fin (s.headD 1))
         rw [← Length.eq.Get_0.of.GtLength_0 h_s X] at h_t
@@ -94,7 +93,7 @@ private lemma main
         simp only [GetElem.getElem] at ih ⊢
         simp only [h_fin', h_fin]
         apply SEq.symm ∘ SEq.of.SEq.SEq ih.symm
-        rw [SelectCast.eq.Cast_Select.of.Eq (by simp) ((X.get ⟨t, by assumption⟩).repeat n ⟨dim, by simpa⟩) ⟨dim, by simpa⟩ ⟨i, by simpa⟩]
+        rw [SelectCast.eq.Cast_Select.of.Eq (by simp) ((X.get ⟨t, by assumption⟩).repeat n ⟨d, by simpa⟩) ⟨d, by simpa⟩ ⟨i, by simpa⟩]
         apply SEqCast.of.Eq
         simp
       ·

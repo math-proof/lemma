@@ -13,18 +13,18 @@ open List Tensor Vector
 @[main]
 private lemma main
 -- given
-  (h_dim : dim ≤ s.length)
+  (h_dim : d ≤ s.length)
   (X : Tensor α s) :
 -- imply
-  (X.unsqueeze dim).select ⟨dim, by rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by
+  (X.unsqueeze d).select ⟨d, by rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by
 -- proof
-  induction dim generalizing s X with
+  induction d generalizing s X with
   | zero =>
     unfold Tensor.select
     have := EqGetUnsqueeze.fin X
     simp at this ⊢
     rw [this]
-  | succ dim ih =>
+  | succ d ih =>
     match s with
     | [] =>
       contradiction
@@ -41,7 +41,7 @@ private lemma main
           intro i
           rw [GetFromVector.eq.Get]
           simp
-          have h := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by simp) (by simp) (by simp) X (s := s₀ :: s) (d := dim + 1) (i := (List.Vector.range s₀)[i])
+          have h := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by simp) (by simp) (by simp) X (s := s₀ :: s) (d := d + 1) (i := (List.Vector.range s₀)[i])
           simp at h
           rw [h]
           simp at h_dim

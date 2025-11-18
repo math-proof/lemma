@@ -2,7 +2,7 @@ import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.EqLengthSlice_CoeMul.of.Lt
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
-import Lemma.Tensor.DataSelect.as.SelectSplitAtData.of.GtLength
+import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData.of.GtLength
 import sympy.tensor.tensor
 open Bool List Tensor
 
@@ -24,7 +24,7 @@ private lemma main
     (X.data.splitAt (d + 1))[i :: s[d]].flatten := by
 -- proof
   apply Eq_Cast.of.SEq
-  apply DataSelect.as.SelectSplitAtData.of.GtLength h_d
+  apply DataSelect.as.FlattenGetSliceSplitAtData.of.GtLength h_d
 
 
 -- created on 2025-11-07

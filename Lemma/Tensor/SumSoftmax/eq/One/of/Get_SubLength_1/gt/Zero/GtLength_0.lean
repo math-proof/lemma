@@ -6,7 +6,7 @@ import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Nat.Eq_0
 import Lemma.Vector.EqGet1'1
 import Lemma.Tensor.EqGet1'1
-import Lemma.Tensor.GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length
+import Lemma.Tensor.GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.Lt_Length
 import Lemma.Tensor.EqData1'1
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.Lt_Length
 open Tensor Vector Nat
@@ -48,7 +48,7 @@ private lemma main
     | .cons s₁ s =>
       apply Eq.of.All_EqGetS (m := s₀)
       intro i
-      have := GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length (by simp) (by simp) (by simp) X.softmax (dim := (s₀ :: s₁ :: s).length - 1) (i := i)
+      have := GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.Lt_Length (by simp) (by simp) (by simp) X.softmax (dim := (s₀ :: s₁ :: s).length - 1) (i := i)
       simp at this
       simp [this]
       have := EqGet1'1 (s := (s₀ :: s₁ :: s).eraseIdx ((s₀ :: s₁ :: s).length - 1)) (i := i) (α := α)

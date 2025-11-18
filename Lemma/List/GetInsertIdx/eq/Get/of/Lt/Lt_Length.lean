@@ -1,4 +1,4 @@
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.GetInsertIdx.eq.Get.of.Lt.Le_Length
 open List
 
 
@@ -6,28 +6,26 @@ open List
 private lemma fin
   {s : List α}
 -- given
-  (h : j < s.length)
-  (h_ij : j < i)
+  (h_j : j < s.length)
+  (h_i : i < j)
   (a : α) :
 -- imply
-  (s.insertIdx i a).get ⟨j, h.trans_le List.length_le_length_insertIdx⟩ = s.get ⟨j, h⟩ := by
+  (s.insertIdx i a).get ⟨j, by grind⟩ = s.get ⟨j - 1, by grind⟩ := by
 -- proof
-  apply List.get_insertIdx_of_lt
-  assumption
+  apply GetInsertIdx.eq.Get.of.Lt.Le_Length.fin (by grind) h_i
 
 
 @[main]
 private lemma main
   {s : List α}
 -- given
-  (h : j < s.length)
-  (h_ij : j < i)
+  (h_j : j < s.length)
+  (h_i : i < j)
   (a : α) :
 -- imply
-  have := h.trans_le List.length_le_length_insertIdx
-  (s.insertIdx i a)[j] = s[j] := by
+  (s.insertIdx i a)[j]'(by grind) = s[j - 1] := by
 -- proof
-  apply fin h h_ij
+  apply fin h_j h_i
 
 
--- created on 2025-10-09
+-- created on 2025-11-17

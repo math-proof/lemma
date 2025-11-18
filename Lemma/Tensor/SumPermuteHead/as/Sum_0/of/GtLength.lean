@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetSum_0.as.SumSelect.of.Lt_Get_0.GtLength_0
-import Lemma.Tensor.GetPermuteHead.as.PermuteHeadGet.of.Lt_Get_1.GtLength_1
+import Lemma.Tensor.GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
@@ -7,7 +7,7 @@ import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.EqMin.of.Le
-import Lemma.Tensor.GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length
+import Lemma.Tensor.GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.Lt_Length
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqSumS.of.SEq
@@ -45,7 +45,7 @@ private lemma main
         simp [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length h_d1] at h_t
         rw [GetAppend.eq.Get.of.Lt_Length (by simpa)] at h_t
         rw [GetTake.eq.Get.of.Lt_LengthTake (by simpa)] at h_t
-        rw [GetSum.eq.Cast_Sum.of.Lt_Get_0.Gt_0.Lt_Length.fin]
+        rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.Lt_Length.fin]
         ·
           simp
           apply SEqCast.of.SEq.Eq.Eq
@@ -59,26 +59,25 @@ private lemma main
             simp [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length h_d1]
             simp [EqMin.of.Le h_d]
           ·
-            have := Tensor.GetPermuteHead.as.PermuteHeadGet.of.Lt_Get_1.GtLength_1 (by simpa) (by simpa) X (d := d + 1) (k := t)
+            have := Tensor.GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1 (by simpa) (by simpa) X (d := d + 1) (k := t)
             have := Tensor.SEqSumS.of.SEq this d
             apply SEq.trans this
+            have h_length : ((s₀ :: s).eraseIdx 1).length > d := by
+              simp
+              rwa [EqAddSub.of.Ge (Nat.Ge_1.of.Gt_0 h_s)]
+            have ih := ih h_length (X.select ⟨1, by simpa⟩ ⟨t, by simpa⟩)
+            apply SEq.trans ih
             .
-              have h_length : ((s₀ :: s).eraseIdx 1).length > d := by
-                simp
-                rwa [EqAddSub.of.Ge (Nat.Ge_1.of.Gt_0 h_s)]
-              have ih := ih h_length (X.select ⟨1, by simpa⟩ ⟨t, by simpa⟩)
-              apply SEq.trans ih
-              .
-                apply Tensor.SumSelect.as.GetSum_0.of.Lt_Get_0.GtLength_0 _ h_t
-                simp
-                rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simp; omega)]
-                simp
-                left
-                exact h_s
-              .
-                simp
-                rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length (by omega)]
-                simp [EqMin.of.Le h_d]
+              apply Tensor.SumSelect.as.GetSum_0.of.Lt_Get_0.GtLength_0 _ h_t
+              simp
+              rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simp; omega)]
+              simp
+              left
+              exact h_s
+            .
+              simp
+              rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length (by omega)]
+              simp [EqMin.of.Le h_d]
         ·
           simp [EqMin.of.Le h_d]
         ·
