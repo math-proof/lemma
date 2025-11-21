@@ -4,9 +4,10 @@ import sympy.Basic
 @[main]
 private lemma main
   [CommSemigroup α]
-  {x y a : α}
+  {y a : α}
 -- given
-  (h : a ∣ y) :
+  (h : a ∣ y)
+  (x : α):
 -- imply
   a ∣ x * y := by
 -- proof
@@ -16,9 +17,10 @@ private lemma main
 @[main]
 private lemma left
   [Semigroup α]
-  {x y a : α}
+  {x a : α}
 -- given
-  (h : a ∣ x) :
+  (h : a ∣ x)
+  (y : α) :
 -- imply
   a ∣ x * y := by
 -- proof

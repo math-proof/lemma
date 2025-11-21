@@ -11,9 +11,9 @@ open List Nat
 
 @[main]
 private lemma main
-  {s : List α}
 -- given
   (h : i < j)
+  (s : List α)
   (a : α) :
 -- imply
   (s.set i a).drop j = s.drop j := by

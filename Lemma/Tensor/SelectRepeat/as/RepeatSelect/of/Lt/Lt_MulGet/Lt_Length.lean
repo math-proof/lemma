@@ -1,3 +1,7 @@
+import Lemma.Nat.Mod_Mul.eq.AddMul_Mod.of.Lt
+import Lemma.Nat.Mod_Mul.eq.AddMul_Mod.of.Ne_0
+import Lemma.Nat.MulDiv.eq.Sub_Mod
+import Lemma.List.ProdTakeSet.eq.Mul_ProdTake.of.Lt.Lt_Length
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
@@ -8,16 +12,30 @@ import Lemma.List.LengthSet.eq.Length
 import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.List.Prod.eq.MulProdS
+import Lemma.List.ProdDrop.dvd.ProdDropEraseIdx.of.Gt
+import Lemma.List.ProdDrop.eq.MulProdSDrop.of.Le
+import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length
+import Lemma.List.ProdDropEraseIdx.eq.ProdAppendDropTake.of.Gt
 import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length
 import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length
 import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
+import Lemma.List.TakeEraseIdx.eq.Take.of.Ge
 import Lemma.List.TakeSet.eq.SetTake.of.Lt
+import Lemma.Nat.AddAdd
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.Div.eq.Zero.of.Lt
+import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
+import Lemma.Nat.DivDiv.eq.Div_Mul
+import Lemma.Nat.Dvd_Mul.of.Dvd
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Lt.of.Lt.Lt
+import Lemma.Nat.LtMod.of.Gt_0
+import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
 import Lemma.Nat.Mul
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataRepeat.eq.Cast_FlattenMapSplitAtData
@@ -29,7 +47,7 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool List Nat Tensor Vector
+open Nat List Bool Tensor Vector
 
 
 @[main]
@@ -131,7 +149,56 @@ private lemma main
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
               apply congrArg
               simp
-              sorry
+              rw [ModAdd.eq.Mod.of.Dvd.left (Dvd_Mul.of.Dvd (ProdDrop.dvd.ProdDropEraseIdx.of.Gt h_k s) q')] at h_rₑ_mod
+              simp [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Gt h_k] at h_qₑ_div h_rₑ_mod h_q'_div h_r'_mod h_t
+              rw [Mul_Mul.eq.MulMul] at h_qₑ_div
+              rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_qₑ_div
+              simp [h_rₑ_mod]
+              simp [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at h_qₐ_div h_rₐ_mod h_q_div h_r_mod h_r
+              rw [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul] at h_qₐ_div h_rₐ_mod ⊢
+              rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.Lt_Length] at h_qₐ_div h_rₐ_mod ⊢
+              -- rw [AddAdd.comm]
+              have h_prod_drop := ProdDrop.eq.MulProdSDrop.of.Le (i := k) (j := d) (by omega) s
+              simp [h_prod_drop] at h_qₐ_div -- h_rₐ_mod
+              simp [Mul_Mul.eq.MulMul] at h_qₐ_div -- h_rₐ_mod
+              simp [Div_Mul.eq.DivDiv.comm] at h_qₐ_div
+              rw [AddAdd.eq.Add_Add] at h_qₐ_div
+              rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_qₐ_div
+              rw [Div.eq.Zero.of.Lt (n := (s.drop d).prod)] at h_qₐ_div
+              .
+                simp [DivDiv.eq.Div_Mul.comm] at h_qₐ_div
+                have h_q := h_q
+                simp [h_qₐ_div, h_rₐ_mod]
+                simp [h_qₑ_div]
+                rw [MulAdd.eq.AddMulS]
+                simp [h_r'_mod]
+                simp [Mul_Mul.eq.MulMul]
+                simp [h_q'_div]
+                simp [h_q_div, h_r_mod]
+                rw [TakeEraseIdx.eq.Take.of.Ge (by omega)] at h_t
+                simp [Mul_Mul.eq.MulMul] at h_t
+                have h_i := h_i
+                have h_k := h_k
+                rw [h_prod_drop]
+                rw [ProdTakeSet.eq.Mul_ProdTake.of.Lt.Lt_Length (by omega) h_k] at h_q
+                simp [Div_Mul.eq.DivDiv.comm]
+                simp [AddAdd.eq.Add_Add]
+                simp [Mul_Mul.eq.MulMul]
+                rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length h_d]
+                rw [Mul_Mul.eq.MulMul]
+                rw [Add_Add.eq.AddAdd]
+                rw [AddMulS.eq.MulAdd]
+                rw [Mul_Mul.eq.MulMul]
+                rw [Nat.Mod_Mul.eq.AddMul_Mod.of.Ne_0 (by grind)]
+                rw [Nat.Mod_Mul.eq.AddMul_Mod.of.Lt h_i]
+                rw [MulAdd.eq.AddMulS]
+                simp [Add_Add.eq.AddAdd]
+                simp [Mul_Mul.eq.MulMul]
+                repeat left
+                sorry
+              .
+                rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length h_d]
+                apply AddMul.lt.Mul.of.Lt.Lt h_i h_r
             ·
               simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d]
             ·
@@ -156,3 +223,4 @@ private lemma main
 
 
 -- created on 2025-11-18
+-- updated on 2025-11-21
