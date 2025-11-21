@@ -1,5 +1,4 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.Finset.Prod.eq.MulProdS
 import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
@@ -30,7 +29,7 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool Finset List Nat Tensor Vector
+open Bool List Nat Tensor Vector
 
 
 @[main]
@@ -90,6 +89,7 @@ private lemma main
           simp [GetSet.eq.Get.of.Lt.Lt_Length h_d h_k]
           simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
           simp [DataRepeat.eq.Cast_FlattenMapSplitAtData]
+          have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
           repeat rw [GetCast.eq.Get.of.Eq.fin]
           ·
             simp [List.Vector.length]
@@ -112,7 +112,11 @@ private lemma main
             let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
             let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
             have h_lt : ↑q' * ((s.eraseIdx d).drop k).prod + ↑r' % ((s.eraseIdx d).drop k).prod < (⟨↑i, ↑(s.take (d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
-              sorry
+              simp [h_length_slice]
+              rw [Prod.eq.MulProdS (s.eraseIdx d) k]
+              apply AddMul.lt.Mul.of.Lt.Lt q'.isLt
+              apply LtMod.of.Gt_0
+              grind
             let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
             have h_qₑ := qₑ.isLt
             have := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
@@ -134,7 +138,7 @@ private lemma main
               simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d]
               rwa [EqDivMul.of.Ne_0 (by grind)]
           ·
-            simp [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)]
+            simp [h_length_slice]
           ·
             simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length (Lt.of.Lt.Lt h_k h_d)]
         ·

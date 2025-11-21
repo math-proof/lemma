@@ -27,7 +27,7 @@ function echo_import {
     Add-Content -Path test.lean -Value "import $module"
     
     $module = $module -creplace '^Lemma\.', ''
-    $lines = @(Get-Content -Path $file | Where-Object { $_ -match '^import\s+' } | ForEach-Object { $_ -replace '^import\s+', '' })
+    $lines = @(Get-Content -Path $file | Where-Object { $_ -cmatch '^import\s+' } | ForEach-Object { $_ -replace '^import\s+', '' })
     # $lines is guaranteed to be an array!
     if ($lines.Count -eq 0) {
         $imports_dict[$module] = "[]"
@@ -93,6 +93,69 @@ foreach ($module in $imports) {
     "  ('$user', `"$module`", '$submodules', '[]', '[]', '[]', '[]', '[]')," | Add-Content -Path test.sql
 }
 
+function transformExpr {
+    param(
+        [char]$s0,
+        [String]$s
+    )
+    if ($s0 -eq '_') {
+        return $s
+    }
+    # Check if matches pattern: ^[A-Z][a-zA-Z0-9'!₀-₉]+?S
+    if ($s0 -cmatch '[A-Z]') {
+        if ($s -cmatch "^[a-zA-Z0-9'!₀-₉]+?S") {
+            return $s0 + $s
+        }
+    }
+    return '_' + $s0 + $s
+}
+
+function transformPrefix {
+    param([string]$s)
+    
+    # Pattern 1: EqX or NeX
+    if ($s -cmatch '^(Eq|Ne)(.)(.*)$') {
+        $prefix = $matches[1]
+        $s2 = $matches[2]
+        $rest = $matches[3]
+        $transformed = transformExpr $s2 $rest
+        return $prefix + $transformed
+    }
+    
+    # Pattern 2: SEqX, HEqX, or IffX
+    if ($s -cmatch '^([SH]Eq)(.)(.*)$' -or $s -cmatch '^(Iff)(.)(.*)$') {
+        $prefix = $matches[1]
+        $s3 = $matches[2]
+        $rest = $matches[3]
+        $transformed = transformExpr $s3 $rest
+        return $prefix + $transformed
+    }
+    
+    # Pattern 3: LtX, LeX, GtX, GeX
+    if ($s -cmatch '^(L|G)(t|e)(.)(.*)$') {
+        $s0 = $matches[1]
+        $s1 = $matches[2]
+        $s2 = $matches[3]
+        $rest = $matches[4]
+        
+        # Flip the first character
+        $newS0 = if ($s0 -eq 'L') { 'G' } else { 'L' }
+        $transformed = transformExpr $s2 $rest
+        return $newS0 + $s1 + $transformed
+    }
+    
+    # Pattern 3 (short version): Lt, Le, Gt, Ge (no additional characters)
+    if ($s -cmatch '^(L|G)(t|e)$') {
+        $s0 = $matches[1]
+        $s1 = $matches[2]
+        $newS0 = if ($s0 -eq 'L') { 'G' } else { 'L' }
+        return $newS0 + $s1
+    }
+    
+    # If no patterns matched, return original string
+    return $s
+}
+
 # Get all .lean files except *.echo.lean under Lemma/
 Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForEach-Object {
     $file = $_.FullName
@@ -101,14 +164,11 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
     $module = $file -creplace '^\.\\Lemma\\', ''
     $module = $module -replace '\\', '.'
     $module = $module -replace '\.lean$', ''
-
-    if (Select-String -Path $file -Pattern '^@\[main, .*\b(?<!mpr?\.)comm( [0-9]+)?\b' -Quiet) {
+    $content = Get-Content $file -Raw
+    $match = $content -cmatch '(?:\n/--\n([\s\S]*)\n-/)?\n@\[main, .*\b(?<!mpr?\.)comm(?: ([0-9]+))?\b'
+    if ($match) {
         $tokens = $module -split '\.'
-        $match = Select-String -Path $file -Pattern '^@\[main, .*\b(?<!mpr?\.)comm( [0-9]+)?\b' -AllMatches
-        if ($match) {
-            # Take the first match's first group
-            $deBruijn = $match.Matches[0].Groups[1].Value
-        }
+        $deBruijn = $matches[2]
         switch -regex ($tokens[2]) {
             "^(eq|is|as|ne|lt|le|gt|ge)$" {
                 $tmp = $tokens[1]
@@ -116,39 +176,42 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
                 $tokens[3] = $tmp
             }
             default {
-                $first = $tokens[1]
-                if ($first -match '^(?:([SH]?Eq|Iff|Ne)|([LG][te]))(_?)(.*)') {
-                    $prefix = $matches[2]
-                    if ($prefix) {
-                        $prefix = (($prefix[0] -eq 'L')? 'G' : 'L') + $prefix.Substring(1)
-                    }
-                    else {
-                        $prefix = $matches[1]
-                    }
-                    if (-not $matches[3]) {
-                        $first = $prefix + "_" + $matches[4]
-                    }
-                    else {
-                        $first = $prefix + $matches[4]
-                    }
+                $deBruijn = [int]$deBruijn
+                if ($matches[1] -and $matches[1].Contains("constructor order")) {
+                    $index = $tokens.length - 1
+                    $increment = -1
                 }
                 else {
-                    Write-Host "panic! Expected the operator to be 'S?Eq.*', got: $first in $module"
+                    $index = $tokens.length - 1
+                    $increment = -1
+                    # $indices = $tokens | Select-String "of"
+                    # if ($indices.Count -eq 0) {
+                    #     throw "No 'of' found in module $module"
+                    # }
+                    # $index = $indices[0].LineNumber
+                    # $increment = 1
                 }
-                $tokens[1] = $first
+                while ($deBruijn) {
+                    if ($deBruijn -band 1) {
+                        $tokens[$index] = transformPrefix $tokens[$index]
+                    }
+                    $deBruijn = $deBruijn -shr 1
+                    $index += $increment
+                }
+                $tokens[1] = transformPrefix $tokens[1]
             }
         }
         $new_module = $tokens -join "."
         Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
     }
     if (Select-String -Path $file -Pattern '^@\[main, .*\bmp\b' -Quiet) {
-        if ($module -match '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$') {
             $new_module = "$($matches[1]).$($matches[3]).of.$($matches[2])$($matches[4])"
             Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
         }
     }
     if (Select-String -Path $file -Pattern '^@\[main, .*\bmpr\b' -Quiet) {
-        if ($module -match '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$') {
             $new_module = "$($matches[1]).$($matches[2]).of.$($matches[3])$($matches[4])"
             Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
         }
@@ -160,6 +223,18 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
     if (Select-String -Path $file -Pattern '^@\[main, .*\bmpr\.comm\b' -Quiet) {
         $tokens = $module -split '\.'
         Write-Host "@[mpr.comm] at $file"
+    }
+    if (Select-String -Path $file -Pattern '^@\[main, .*\bcomm\.is\b' -Quiet) {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(\.of\..+)?$') {
+            $section = $matches[1]
+            $given = $matches[2]
+            $imply = $matches[3]
+            $arguments = $matches[4]
+            $given = transformPrefix $given
+            $imply = transformPrefix $imply
+            $new_module = "$section.$given.is.$imply$arguments"
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
     }
 }
 
@@ -191,7 +266,7 @@ foreach ($module in $sorryModules) {
     $module = $module -creplace '^Lemma\.', ''
 
     # Skip modules starting with 'sympy'
-    if ($module -match '^sympy') {
+    if ($module -cmatch '^sympy') {
         continue
     }
     
@@ -209,7 +284,7 @@ $content = Get-Content test.log
 $flag = $false
 $failingModules = @()
 foreach ($line in $content) {
-    if ($line -match 'Some required targets logged failures:') {
+    if ($line -cmatch 'Some required targets logged failures:') {
         $flag = $true
         continue
     }

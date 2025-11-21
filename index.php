@@ -127,8 +127,21 @@ if (! str_ends_with($path_info, '/')) {
                                 std\array_insert($tokens, 4, 'of');
                         }
                     }
-                    else
+                    else {
+                        if (count($tokens) == 5) {
+                            $tokens_ = [...$tokens];
+                            $tokens_[1] = transformPrefix($tokens_[1]);
+                            $tokens_[3] = transformPrefix($tokens_[3]);
+                            $tokens_[4] = transformPrefix($tokens_[4]);
+                            $module = implode('.', $tokens_);
+                            $path = module_to_lean($module);
+                            if (file_exists($path)) {
+                                header("location:?module=$module");
+                                exit();
+                            }
+                        }
                         $tokens[2] = 'is';
+                    }
                     break;
                 default:
                     $first = $tokens[1];

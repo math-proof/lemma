@@ -6,7 +6,7 @@ import sympy.Basic'
 open Int
 
 /--
-using comm 2 instead of comm 1 since conditions of the lemma is arranged according to the constructor of multiplication
+using comm 2 instead of comm 1 since conditions of the lemma is arranged according to the constructor order of multiplication
 | attributes | lemma |
 | :---: | :---: |
 | main | Int.LeMulS.of.Ge.Le_0 |

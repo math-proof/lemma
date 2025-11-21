@@ -9073,3 +9073,62 @@ function get_lean_env()
     }
     return $env;
 }
+
+function transformExpr(string $s0, string $s): string {
+    if ($s0 === '_') {
+        return $s;
+    }
+    
+    // Check if matches pattern: ^[A-Z][a-zA-Z0-9'!₀-₉]+?S
+    if (preg_match('/^[A-Z]$/', $s0)) {
+        if (preg_match('/^[a-zA-Z0-9\'!₀-₉]+?S/', $s)) {
+            return $s0 . $s;
+        }
+    }
+    
+    return '_' . $s0 . $s;
+}
+
+function transformPrefix(string $s): string {
+    // Pattern 1: EqX or NeX
+    if (preg_match('/^(Eq|Ne)(.)(.*)$/', $s, $matches)) {
+        $prefix = $matches[1];
+        $s2 = $matches[2];
+        $rest = $matches[3];
+        $transformed = transformExpr($s2, $rest);
+        return $prefix . $transformed;
+    }
+    
+    // Pattern 2: SEqX, HEqX, or IffX
+    if (preg_match('/^([SH]Eq)(.)(.*)$/', $s, $matches) || preg_match('/^(Iff)(.)(.*)$/', $s, $matches)) {
+        $prefix = $matches[1];
+        $s3 = $matches[2];
+        $rest = $matches[3];
+        $transformed = transformExpr($s3, $rest);
+        return $prefix . $transformed;
+    }
+    
+    // Pattern 3: LtX, LeX, GtX, GeX (with additional characters)
+    if (preg_match('/^(L|G)(t|e)(.)(.*)$/', $s, $matches)) {
+        $s0 = $matches[1];
+        $s1 = $matches[2];
+        $s2 = $matches[3];
+        $rest = $matches[4];
+        
+        // Flip the first character
+        $newS0 = ($s0 === 'L') ? 'G' : 'L';
+        $transformed = transformExpr($s2, $rest);
+        return $newS0 . $s1 . $transformed;
+    }
+    
+    // Pattern 3 (short version): Lt, Le, Gt, Ge (no additional characters)
+    if (preg_match('/^(L|G)(t|e)$/', $s, $matches)) {
+        $s0 = $matches[1];
+        $s1 = $matches[2];
+        $newS0 = ($s0 === 'L') ? 'G' : 'L';
+        return $newS0 . $s1;
+    }
+    
+    // If no patterns matched, return original string
+    return $s;
+}

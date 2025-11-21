@@ -3,7 +3,9 @@ import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.Lt.of.Lt.Le
 open Nat
 
-
+/--
+arguments are arranged in the constructor order of Lt
+-/
 @[main, comm 3]
 private lemma main
   [Add α]
