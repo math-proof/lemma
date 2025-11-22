@@ -54,12 +54,12 @@ open Nat List Bool Tensor Vector
 private lemma main
 -- given
   (h_d : d < s.length)
-  (h_i : i < s[d])
   (h_k : k < d)
+  (h_i : i < s[d])
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  (X.repeat n ⟨k, by grind⟩).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select ⟨d, by grind⟩ ⟨i, by grind⟩).repeat n ⟨k, by grind⟩ := by
+  (X.repeat n ⟨k, by grind⟩).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select ⟨d, h_d⟩ ⟨i, h_i⟩).repeat n ⟨k, by grind⟩ := by
 -- proof
   apply SEq.of.SEqDataS.Eq
   ·
