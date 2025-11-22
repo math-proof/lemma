@@ -110,6 +110,7 @@ private lemma main
           repeat rw [GetCast.eq.Get.of.Eq.fin]
           ·
             simp [List.Vector.length]
+            have h_prod_take := ProdTake.eq.MulProdTake.of.Lt_Length h_d
             have h_lt : (↑q * s[d] + i) * ((s.set k (n * s[k])).drop (d + 1)).prod + ↑r < (s.take k).prod * (n * (s.drop k).prod) := by
               simp [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at ⊢ h_r
               rw [Mul_Mul.eq.MulMul]
@@ -119,7 +120,7 @@ private lemma main
               simp only [Prod.eq.MulProdS s (d + 1)]
               rw [Mul_Mul.eq.MulMul]
               apply AddMul.lt.Mul.of.Lt.Lt _ h_r
-              rw [ProdTake.eq.MulProdTake.of.Lt_Length h_d]
+              rw [h_prod_take]
               rw [Mul_Mul.eq.MulMul]
               apply AddMul.lt.Mul.of.Lt.Lt _ h_i
               rw [TakeSet.eq.SetTake.of.Lt h_k] at h_q
@@ -140,8 +141,7 @@ private lemma main
             repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
             rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ h_i]
             ·
-              simp
-              rw [GetRepeat.eq.Get_Mod.fin]
+              simp [GetRepeat.eq.Get_Mod.fin]
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
               apply congrArg
               simp
@@ -193,12 +193,12 @@ private lemma main
                 rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length h_d]
                 apply AddMul.lt.Mul.of.Lt.Lt h_i h_r
             ·
-              simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d]
+              simp [h_prod_take]
             ·
               have h_length_slice := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
               simp at h_length_slice
               simp [h_length_slice] at h_qₑ
-              simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d]
+              simp [h_prod_take]
               rwa [EqDivMul.of.Ne_0 (by grind)]
           ·
             simp [h_length_slice]
