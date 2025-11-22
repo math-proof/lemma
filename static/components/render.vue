@@ -1436,7 +1436,7 @@ ${task}`;
                 ++line; // private lemma main
                 if (find < line)
                     return [index, 'name', null];
-                var {instImplicit, strictImplicit, implicit, given, explicit} = lemma;
+                var {instImplicit, strictImplicit, implicit, explicit, given, default: Default} = lemma;
                 if (instImplicit) {
                     // instImplicit: [Field α]
                     var line_instImplicit = line;
@@ -1460,10 +1460,17 @@ ${task}`;
                     if (find < line)
                         return [index, 'implicit', find - line_implicit];
                 }
-                if (given) {
+                if (given || explicit || Default) {
                     ++line; // --given
                     if (find < line)
                         return [index, 'given', null];
+                    if (explicit) {
+                        // explicit: (left : Bool)
+                        var line_explicit = line;
+                        line += explicit.split("\n").length;
+                        if (find < line)
+                            return [index, 'explicit', find - line_explicit];
+                    }
                     // given: (h : a = b)
                     for (var i of range(given.length)) {
                         var line_given = line; 
@@ -1471,15 +1478,14 @@ ${task}`;
                         if (find < line)
                             return [index, 'given', i, find - line_given];
                     }
+                    if (Default) {
+                        // default: (left : Bool := false)
+                        var line_default = line;
+                        line += Default.split("\n").length;
+                        if (find < line)
+                            return [index, 'default', find - line_default];
+                    }
                 }
-                if (explicit) {
-                    // explicit: (left : Bool := false)
-                    var line_explicit = line;
-                    line += explicit.split("\n").length;
-                    if (find < line)
-                        return [index, 'explicit', find - line_explicit];
-                }
-
                 ++line; // -- imply
                 if (find < line)
                     return [index, 'imply', null];
@@ -1543,7 +1549,7 @@ ${task}`;
                 if (index == i && attr == 'name')
                     return line;
                 ++line; // private lemma main
-                var {instImplicit, strictImplicit, implicit, given, explicit} = lemma;
+                var {instImplicit, strictImplicit, implicit, explicit, given, default : Default} = lemma;
                 if (instImplicit) {
                     if (index == i && attr == 'instImplicit')
                         return line;
@@ -1564,22 +1570,28 @@ ${task}`;
                     // implicit: {x : α}
                     line += implicit.split("\n").length;
                 }
-                if (given) {
+                if (given || explicit || Default) {
                     if (index == i && attr == 'given' && indices[2] == null)
                         return line;
                     ++line; // --given
+                    if (explicit) {
+                        // explicit: (left : Bool)
+                        line += explicit.split("\n").length;
+                        if (index == i && attr == 'explicit')
+                            return line;
+                    }
                     // given: (h : a = b)
                     for (var j of range(given.length)) {
                         if (index == i && attr == 'given' && j == indices[2])
                             return line;
                         line += given[j].lean.split("\n").length;
                     }
-                }
-                if (explicit) {
-                    // explicit: (left : Bool := false)
-                    line += explicit.split("\n").length;
-                    if (index == i && attr == 'explicit')
-                        return line;
+                    if (Default) {
+                        // default: (left : Bool := false)
+                        line += Default.split("\n").length;
+                        if (index == i && attr == 'default')
+                            return line;
+                    }
                 }
 
                 if (index == i && attr == 'imply' && indices.length == 3 && indices[2] == null)

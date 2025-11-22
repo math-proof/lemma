@@ -38,11 +38,7 @@ private lemma main
       omega
   else
     repeat rw [Drop.eq.Nil.of.Ge_Length]
-    ·
-      omega
-    ·
-      rw [LengthSet.eq.Length]
-      omega
+    repeat grind
 
 
 -- created on 2025-11-18

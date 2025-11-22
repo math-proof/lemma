@@ -61,25 +61,24 @@ private lemma main
 -- imply
   (X.repeat n ⟨k, by grind⟩).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select ⟨d, h_d⟩ ⟨i, h_i⟩).repeat n ⟨k, by grind⟩ := by
 -- proof
+  have h_get_eraseIdx := GetEraseIdx.eq.Get.of.Lt.Lt_Length h_d h_k
   apply SEq.of.SEqDataS.Eq
   ·
-    simp
-    rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length h_d h_k]
+    simp [h_get_eraseIdx]
     grind
   ·
     rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
     conv_rhs => rw [DataRepeat.eq.Cast_FlattenMapSplitAtData]
-    have h_k_length : k < (s.eraseIdx d).length := by grind
     have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s.set k (n * s[k])) (d := d) (i := i) (by grind) (by grind)
     simp at h_length_slice
-    have h_prod_set := ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length h_k_length n
+    have h_prod_set := ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length (s := s.eraseIdx d) (i := k) (by grind) n
     apply SEqCastS.of.SEq.Eq.Eq
     ·
       simp [← h_length_slice]
     ·
       simp [h_prod_set]
     ·
-      rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length h_d h_k] at h_prod_set
+      rw [h_get_eraseIdx] at h_prod_set
       simp [List.Vector.length]
       apply SEq.of.All_EqGetS.Eq.fin
       ·
@@ -137,9 +136,6 @@ private lemma main
               grind
             let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
             have h_qₑ := qₑ.isLt
-            have := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
-            simp at this
-            simp [this] at h_qₑ
             let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
             repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
             rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ h_i]
@@ -199,6 +195,9 @@ private lemma main
             ·
               simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d]
             ·
+              have h_length_slice := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
+              simp at h_length_slice
+              simp [h_length_slice] at h_qₑ
               simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d]
               rwa [EqDivMul.of.Ne_0 (by grind)]
           ·
