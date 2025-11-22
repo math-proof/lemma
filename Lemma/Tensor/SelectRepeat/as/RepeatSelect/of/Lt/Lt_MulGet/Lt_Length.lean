@@ -157,17 +157,15 @@ private lemma main
               simp [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at h_qₐ_div h_rₐ_mod h_q_div h_r_mod h_r
               rw [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul] at h_qₐ_div h_rₐ_mod ⊢
               rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.Lt_Length] at h_qₐ_div h_rₐ_mod ⊢
-              -- rw [AddAdd.comm]
               have h_prod_drop := ProdDrop.eq.MulProdSDrop.of.Le (i := k) (j := d) (by omega) s
-              simp [h_prod_drop] at h_qₐ_div -- h_rₐ_mod
-              simp [Mul_Mul.eq.MulMul] at h_qₐ_div -- h_rₐ_mod
+              simp [h_prod_drop] at h_qₐ_div
+              simp [Mul_Mul.eq.MulMul] at h_qₐ_div
               simp [Div_Mul.eq.DivDiv.comm] at h_qₐ_div
               rw [AddAdd.eq.Add_Add] at h_qₐ_div
               rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_qₐ_div
               rw [Div.eq.Zero.of.Lt (n := (s.drop d).prod)] at h_qₐ_div
               ·
                 simp [DivDiv.eq.Div_Mul.comm] at h_qₐ_div
-                have h_q := h_q
                 simp [h_qₐ_div, h_rₐ_mod]
                 simp [h_qₑ_div]
                 rw [MulAdd.eq.AddMulS]
@@ -177,8 +175,6 @@ private lemma main
                 simp [h_q_div, h_r_mod]
                 rw [TakeEraseIdx.eq.Take.of.Ge (by omega)] at h_t
                 simp [Mul_Mul.eq.MulMul] at h_t
-                have h_i := h_i
-                have h_k := h_k
                 rw [h_prod_drop]
                 rw [ProdTakeSet.eq.Mul_ProdTake.of.Lt.Lt_Length (by omega) h_k] at h_q
                 simp [Div_Mul.eq.DivDiv.comm]
