@@ -1,3 +1,4 @@
+import Lemma.Tensor.LengthPermute.eq.Get
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
@@ -57,7 +58,7 @@ private lemma main
   (i : Fin s[d])
   (X : Tensor α s) :
 -- imply
-  X.select d i ≃ (X.permute d (-d)).get ⟨i, by simp; grind⟩ := by
+  X.select d i ≃ (X.permute d (-d)).get ⟨i, by simp [LengthPermute.eq.Get]⟩ := by
 -- proof
   sorry
 
