@@ -114,7 +114,7 @@ private lemma main
             omega
           ·
             have h_d_succ : d + 1 = s.length := by omega
-            have h_s : s.take (s.length - (1 - (-d : ℤ)).toNat) ++ (s.drop (s.length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ s.length - 1) = s.permute d (-d) := by 
+            have h_s : s.take (s.length - (1 - (-d : ℤ)).toNat) ++ (s.drop (s.length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ s.length - 1) = s.permute d (-d) := by
               simp only [h_toNat]
               simp [h_d_succ]
               simp [h_end]
@@ -128,10 +128,9 @@ private lemma main
             repeat rw [GetCast.eq.Get.of.Eq.fin]
             ·
               simp
-              have h_i := i.isLt
               simp [h_end] at h_t
               rw [DropLast.eq.Take_SubLength_1] at h_t
-              have h_lt : ↑i * (s.eraseIdx ↑d).prod + ↑t < (s.take (s.length - (1 - (-d : ℤ)).toNat)).prod * ((s.drop (s.length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ s.length - 1)).prod := by 
+              have h_lt : ↑i * (s.eraseIdx ↑d).prod + ↑t < (s.take (s.length - (1 - (-d : ℤ)).toNat)).prod * ((s.drop (s.length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ s.length - 1)).prod := by
                 simp only [h_toNat]
                 simp [h_d_succ]
                 simp [h_end]
@@ -139,8 +138,7 @@ private lemma main
                 rw [DropLast.eq.Take_SubLength_1]
                 apply AddMul.lt.Mul.of.Lt.Lt _ h_t
                 rw [ProdDrop.eq.Get.of.GtLength_0 (by omega)]
-                simp [h_end] at h_i
-                assumption
+                grind
               let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
               have h_q' := q'.isLt
               have h_r' := r'.isLt
@@ -156,9 +154,9 @@ private lemma main
                 rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
                 rw [GetTranspose.eq.Get.fin]
                 repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-                simp only [h_toNat] at ⊢ h_qₐ_div h_rₐ_mod h_q'_div h_r'_mod
+                simp only [h_toNat] at *
                 apply congrArg
-                simp [h_d_succ] at ⊢ h_qₐ_div h_rₐ_mod h_q'_div h_r'_mod h_q_div h_r_mod
+                simp [h_d_succ] at *
                 simp [EqMod_1'0] at h_r_mod
                 simp [h_q_div, h_r_mod]
                 simp [h_end] at ⊢ h_q'_div h_r'_mod
@@ -166,10 +164,9 @@ private lemma main
                 simp [h_rₐ_mod]
                 simp [ProdRotate.eq.Prod] at h_q'_div h_r'_mod
                 rw [Take_SubLength_1.eq.DropLast] at ⊢ h_t h_qₐ_div
-                simp [h_end] at h_i
-                have h_lt : ↑i * s.dropLast.prod + ↑t < s.prod := by 
+                have h_lt : ↑i * s.dropLast.prod + ↑t < s.prod := by
                   rw [Prod.eq.Mul_ProdDropLast.of.GtLength_0 (s := s) (by omega)]
-                  apply AddMul.lt.Mul.of.Lt.Lt h_i h_t
+                  apply AddMul.lt.Mul.of.Lt.Lt (by grind) h_t
                 rw [EqMod.of.Lt h_lt] at h_r'_mod
                 simp [h_q'_div, h_r'_mod]
                 simp [h_r'_mod] at h_qₐ_div
@@ -191,7 +188,7 @@ private lemma main
             rw [GetCast.eq.Get.of.Eq.fin]
             ·
               simp
-              have h_lt : ↑i * (s.eraseIdx ↑d).prod + ↑t < ((s.take (↑d + 1)).take ((s.take (↑d + 1)).length - (1 - (-d : ℤ)).toNat) ++ ((s.take (↑d + 1)).drop ((s.take (↑d + 1)).length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ (s.take (↑d + 1)).length - 1)).prod * (s.drop (↑d + 1)).prod := by 
+              have h_lt : ↑i * (s.eraseIdx ↑d).prod + ↑t < ((s.take (↑d + 1)).take ((s.take (↑d + 1)).length - (1 - (-d : ℤ)).toNat) ++ ((s.take (↑d + 1)).drop ((s.take (↑d + 1)).length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ (s.take (↑d + 1)).length - 1)).prod * (s.drop (↑d + 1)).prod := by
                 simp only [h_toNat]
                 simp [EqMin.of.Le h_d_succ]
                 simp [ProdRotate.eq.Prod]
