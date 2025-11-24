@@ -5,16 +5,15 @@ open List Nat
 
 @[main]
 private lemma main
-  [CommMonoid α]
+  [Monoid α]
 -- given
   (s : List α)
   (d : ℕ) :
 -- imply
-  (s.drop d).prod ∣ s.prod := by
+  (s.take d).prod ∣ s.prod := by
 -- proof
   rw [Prod.eq.MulProdS s d]
-  apply Dvd_Mul
+  apply Dvd_Mul.left
 
 
--- created on 2025-07-09
--- updated on 2025-11-24
+-- created on 2025-11-24

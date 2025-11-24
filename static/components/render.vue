@@ -1471,12 +1471,14 @@ ${task}`;
                         if (find < line)
                             return [index, 'explicit', find - line_explicit];
                     }
-                    // given: (h : a = b)
-                    for (var i of range(given.length)) {
-                        var line_given = line; 
-                        line += given[i].lean.split("\n").length;
-                        if (find < line)
-                            return [index, 'given', i, find - line_given];
+                    if (given) {
+                        // given: (h : a = b)
+                        for (var i of range(given.length)) {
+                            var line_given = line; 
+                            line += given[i].lean.split("\n").length;
+                            if (find < line)
+                                return [index, 'given', i, find - line_given];
+                        }
                     }
                     if (Default) {
                         // default: (left : Bool := false)
@@ -1580,11 +1582,13 @@ ${task}`;
                         if (index == i && attr == 'explicit')
                             return line;
                     }
-                    // given: (h : a = b)
-                    for (var j of range(given.length)) {
-                        if (index == i && attr == 'given' && j == indices[2])
-                            return line;
-                        line += given[j].lean.split("\n").length;
+                    if (given) {
+                        // given: (h : a = b)
+                        for (var j of range(given.length)) {
+                            if (index == i && attr == 'given' && j == indices[2])
+                                return line;
+                            line += given[j].lean.split("\n").length;
+                        }
                     }
                     if (Default) {
                         // default: (left : Bool := false)
@@ -1629,7 +1633,7 @@ ${task}`;
             for (let index of range(this.lemma.length)) {
                 var lemma = this.lemma[index];
 
-                var {instImplicit, strictImplicit, implicit, given, explicit} = lemma;
+                var {instImplicit, strictImplicit, implicit, explicit, given, default: Default} = lemma;
                 if (instImplicit) {
                     // instImplicit: [Field α]
                     for (var [offset, line] of enumerate(instImplicit.split("\n"))) {
@@ -1653,6 +1657,13 @@ ${task}`;
                             yield [index, 'implicit', offset];
                     }
                 }
+                if (explicit) {
+                    // explicit: (left : Bool)
+                    for (var [offset, line] of enumerate(explicit.split("\n"))) {
+                        if (line.match(regexp))
+                            yield [index, 'explicit', offset];
+                    }
+                }
                 if (given) {
                     // given: (h : a = b)
                     for (var i of range(given.length)) {
@@ -1662,19 +1673,17 @@ ${task}`;
                         }
                     }
                 }
-                if (explicit) {
-                    // explicit: (left : Bool := false)
+                if (Default) {
+                    // default: (left : Bool := false)
                     for (var [offset, line] of enumerate(explicit.split("\n"))) {
                         if (line.match(regexp))
-                            yield [index, 'explicit', offset];
+                            yield [index, 'default', offset];
                     }
                 }
-
                 for (var [offset, line] of enumerate(lemma.imply.lean.split("\n"))) {
                     if (line.match(regexp))
                         yield [index, 'imply', offset];
                 }
-
                 var {proof} = this.lemma[index];
                 var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
                 proof = proof.by?? proof.calc?? proof;

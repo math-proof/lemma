@@ -1,15 +1,16 @@
 import Lemma.List.Drop.eq.DropDrop__Sub.of.Ge
-import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.ProdDrop.dvd.Prod
+import Lemma.List.Tail.eq.Drop_1
 open List
 
 
 @[main]
 private lemma main
+  [CommMonoid α]
   {d : ℕ}
 -- given
   (h_d : d > 0)
-  (s : List ℕ):
+  (s : List α) :
 -- imply
   (s.drop d).prod ∣ s.tail.prod := by
 -- proof
@@ -19,4 +20,4 @@ private lemma main
 
 
 -- created on 2025-07-08
--- updated on 2025-07-09
+-- updated on 2025-11-24

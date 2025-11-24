@@ -5,7 +5,7 @@ import Lemma.List.EqPermute__0
 import Lemma.List.EqRotate_Length
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
-import Lemma.List.Permute.eq.Rotate_SubLength_1.of.GtLength_0
+import Lemma.List.Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0
 import Lemma.List.RotateRotate.eq.Rotate_Add
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqAdd_Sub.of.Ge
@@ -71,13 +71,13 @@ private lemma main
             repeat rw [Drop.eq.Nil.of.Ge_Length (by simp)]
             simp
             repeat rw [EqTake.of.Ge_Length (by simp)]
-            rw [Permute.eq.Rotate_SubLength_1.of.GtLength_0]
+            rw [Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0]
             omega
           ·
             rw [Drop.eq.Nil.of.Ge_Length (by simp)]
             simp
             rw [EqTake.of.Ge_Length (by simp)]
-            rw [Permute.eq.Rotate_SubLength_1.of.GtLength_0 (by omega)]
+            rw [Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0 (by omega)]
             rw [RotateRotate.eq.Rotate_Add]
             rw [EqAddSub.of.Ge (by omega)]
             rw [EqRotate_Length]
@@ -88,7 +88,7 @@ private lemma main
         ·
           rw [h_toNat]
           simp
-          rw [Permute.eq.Rotate_SubLength_1.of.GtLength_0]
+          rw [Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0]
           omega
 
 

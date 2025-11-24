@@ -63,7 +63,7 @@ private lemma pos
 -- imply
   (s.permute ⟨0, by omega⟩ d).tail = (s.eraseIdx 1).permute ⟨0, by rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]; omega⟩ ↑(d - 1) := by
 -- proof
-  rw [← TailPermute.eq.PermuteEraseIdx.of.GtLength_1 (s := s) (d := d - 1) (by omega)]
+  rw [← main (s := s) (d := d - 1) (by omega)]
   congr
   have h_d := NeZero.pos d
   omega

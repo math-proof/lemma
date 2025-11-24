@@ -1,4 +1,4 @@
-import Lemma.Nat.Mod_Mul.eq.Mod
+import Lemma.Nat.ModMod_Mul.eq.Mod
 open Nat
 
 
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   n % d % d = n % d := by
 -- proof
-  have := Mod_Mul.eq.Mod n 1 d
+  have := ModMod_Mul.eq.Mod n 1 d
   simp_all
 
 

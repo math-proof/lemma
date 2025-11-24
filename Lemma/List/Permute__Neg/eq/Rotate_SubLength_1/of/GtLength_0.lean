@@ -1,5 +1,4 @@
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import stdlib.List
 open List
 
 

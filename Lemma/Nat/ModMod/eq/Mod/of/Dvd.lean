@@ -1,5 +1,5 @@
 import Lemma.Nat.Any_Eq_Mul.of.Dvd
-import Lemma.Nat.Mod_Mul.eq.Mod
+import Lemma.Nat.ModMod_Mul.eq.Mod
 open Nat
 
 
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   let ⟨d, h_m⟩ := Any_Eq_Mul.of.Dvd.left h
   subst h_m
-  apply Mod_Mul.eq.Mod
+  apply ModMod_Mul.eq.Mod
 
 
 -- created on 2025-11-14
