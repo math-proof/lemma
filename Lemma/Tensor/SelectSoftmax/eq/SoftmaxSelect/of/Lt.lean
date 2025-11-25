@@ -1,10 +1,11 @@
+import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
+import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Lt.GtLength
 import Lemma.Tensor.Softmax.eq.Div_SumExp
-import Lemma.Tensor.Sum.eq.SelectKeepdimSum
 import sympy.tensor.functions
-open Nat Tensor
+open Tensor Nat Bool
 
 
 @[main, comm]
@@ -23,9 +24,14 @@ private lemma main
   rw [SelectDiv.eq.DivSelectS]
   rw [SelectExp.eq.ExpSelect]
   apply EqDivS.of.Eq.left
-  have := SelectKeepdimSum.eq.Sum (exp X) i
-  -- rw [SelectKeepdimSum.eq.Sum]
-  sorry
+  rw [SelectKeepdim.eq.KeepdimCast_Select.of.Lt.GtLength (by omega) (by omega)]
+  apply congrArg
+  apply EqCast.of.SEq.Eq
+  .
+    sorry
+  .
+    sorry
 
 
 -- created on 2025-11-17
+-- updated on 2025-11-24

@@ -232,5 +232,9 @@ small-letter binary infix operators are short name for Capital-letter operator n
 
 ## Plural S
 The English Plural Letter S is used to denote double occurrence of types:
-- EqSumS is short for : Sum.eq.Sum
 - SEqSumSGet is short for : SumGet.as.SumGet
+
+## Identity
+The Identity is a simplified version of an Equality/Equivalence of the same type:
+- Sum is short for : EqSumS (which as rule of `Plural S`, is defined as Sum.eq.Sum)
+- And is abbreviated from : IffAndS (which as rule of `Plural S`, is defined as And.is.And)

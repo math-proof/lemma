@@ -39,7 +39,7 @@ if (array_key_exists('section', $_GET)) {
 
 switch ($lang) {
     case 'zh':
-        $title = '公理化定理库';
+        $title = '算法形式化定理库';
         $home = '网站主页';
         $faq = '常见问题';
         $bugReport = '故障报告';
@@ -62,8 +62,7 @@ switch ($lang) {
         break;
     default:
     case 'en':
-        
-        $title = 'Axiomatized Mathematics Analysis System';
+        $title = 'Formalized Algorithmic Theorem Library';
         $home = 'Home';
         $faq = 'Frequently Asked Questions';
         $bugReport = 'Bug Report';

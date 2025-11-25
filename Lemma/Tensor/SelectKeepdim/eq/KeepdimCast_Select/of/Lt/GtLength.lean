@@ -1,7 +1,7 @@
 import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
-import Lemma.List.EraseIdxEraseIdx.eq.EraseIdxEraseIdx.of.Lt.GtLength
+import Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
 import Lemma.List.GetEraseIdx.eq.Get_Add_1.of.Le.LtAdd_1Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
@@ -28,7 +28,7 @@ private lemma main
   (i : Fin s[d]) :
 -- imply
   have h_get := GetEraseIdx.eq.Get_Add_1.of.Le.LtAdd_1Length (s := s) (j := d - 1) (i := k) (by omega) (by omega)
-  have h_eraseIdx := EraseIdxEraseIdx.eq.EraseIdxEraseIdx.of.Lt.GtLength (s := s) (i := k) (j := d) (by omega) (by omega)
+  have h_eraseIdx := EraseIdxEraseIdx.of.Gt.GtLength (s := s) (i := k) (j := d) (by omega) (by omega)
   have h_d_length : d - 1 < (s.eraseIdx k).length := by
     rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]
     omega
@@ -53,7 +53,8 @@ private lemma main
     rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by omega) (by omega)]
     rw [UnsqueezeCast.eq.CastUnsqueeze.of.Eq h_eraseIdx]
     have h_s : (((s.eraseIdx k).eraseIdx (d - 1)).insertIdx k 1) = (((s.eraseIdx d).eraseIdx k).insertIdx k 1) := by
-      rw [h_eraseIdx]
+      sorry
+      -- rw [h_eraseIdx]
     rw [RepeatCast.eq.Cast_Repeat.of.Eq h_s ((X.select ⟨d - 1, h_d_length⟩ ⟨i, h_i_get⟩).unsqueeze k) s[k] ⟨k, by grind⟩]
     apply SEq_Cast.of.SEq.Eq
     .

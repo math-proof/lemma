@@ -7,13 +7,14 @@ open List Nat
 private lemma main
   {s : List α}
 -- given
-  (h_i : i < s.length)
-  (h₁ : i < j) :
+  (h_j : s.length > j)
+  (h_i : i > j) :
 -- imply
-  (s.eraseIdx i).eraseIdx (j - 1) = (s.eraseIdx j).eraseIdx i := by
+  (s.eraseIdx i).eraseIdx j = (s.eraseIdx j).eraseIdx (i - 1) := by
 -- proof
-  rw [EraseIdxEraseIdx.eq.EraseIdxEraseIdx.of.Le.GtLength h_i (by omega)]
+  rw [EraseIdxEraseIdx.eq.EraseIdxEraseIdx.of.Le.GtLength h_j (by omega)]
   rw [EqAddSub.of.Ge (by omega)]
 
 
 -- created on 2025-11-17
+-- updated on 2025-11-24
