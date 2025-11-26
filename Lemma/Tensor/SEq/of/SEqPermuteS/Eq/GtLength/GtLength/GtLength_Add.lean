@@ -1,6 +1,6 @@
 import Lemma.Int.EqToNat.of.Gt_0
 import Lemma.Int.ToNatNeg.eq.Neg.of.Lt_0
-import Lemma.Tensor.EqLengthS.of.SEq
+import Lemma.Tensor.Length.of.SEq
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 import Lemma.Tensor.SEqPermuteS.of.Add.ge.SubLength_1
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
@@ -21,7 +21,7 @@ private lemma main
 -- imply
   A ≃ B := by
 -- proof
-  have h_length := EqLengthS.of.SEq.shape h
+  have h_length := Length.of.SEq.shape h
   simp at h_length
   have h : (A.permute ⟨i, h_i⟩ d).permute ⟨i + d, by simp; omega⟩ (-d) ≃ (B.permute ⟨i', h_i'⟩ d).permute ⟨i' + d, by simp [← h_eq]; omega⟩ (-d) := by
     apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ _ rfl h.symm

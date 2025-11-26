@@ -1,5 +1,5 @@
 import sympy.vector.vector
-import Lemma.Vector.EqLengthS.of.EqFlattenSMap.Gt_0
+import Lemma.Vector.Length.of.EqFlattenSMap.Gt_0
 import Lemma.Vector.Eq.of.EqFlattenSMap.EqLengthS
 open Vector
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   a = b := by
 -- proof
-  have h_Eq := EqLengthS.of.EqFlattenSMap.Gt_0 h₀ h₁
+  have h_Eq := Length.of.EqFlattenSMap.Gt_0 h₀ h₁
   apply Eq.of.EqFlattenSMap.EqLengthS h_Eq h₁
 
 

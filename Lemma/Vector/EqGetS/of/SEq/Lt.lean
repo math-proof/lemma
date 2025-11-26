@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Vector.EqLengthS.of.SEq
+import Lemma.Vector.Length.of.SEq
 import Lemma.Vector.All_EqGetS.of.SEq
 open Vector Bool
 
@@ -13,7 +13,7 @@ private lemma main
   (h_i : i < n)
   (h : a ≃ b) :
 -- imply
-  have h_length := EqLengthS.of.SEq h
+  have h_length := Length.of.SEq h
   have h_length : n = m := by
     simp [List.Vector.length] at h_length
     assumption

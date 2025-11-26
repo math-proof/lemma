@@ -1,5 +1,5 @@
 import stdlib.List
-import Lemma.Set.EqLengthS.of.In_Product
+import Lemma.Set.Length.of.In_Product
 import Lemma.List.LengthMap.eq.Length
 open Set List
 
@@ -13,7 +13,7 @@ private lemma main
   v.length = s.length := by
 -- proof
   unfold List.cartesianProduct at h
-  have h := EqLengthS.of.In_Product h
+  have h := Length.of.In_Product h
   rwa [LengthMap.eq.Length] at h
 
 

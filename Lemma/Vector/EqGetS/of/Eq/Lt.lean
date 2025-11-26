@@ -1,4 +1,4 @@
-import Lemma.Vector.EqLengthS.of.SEq
+import Lemma.Vector.Length.of.SEq
 import Lemma.Vector.All_EqGetS.of.SEq
 open Vector
 

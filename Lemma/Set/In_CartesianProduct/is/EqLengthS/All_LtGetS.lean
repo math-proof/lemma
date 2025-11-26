@@ -1,6 +1,6 @@
 import Lemma.Set.In.is.Any_Eq_Get
 import Lemma.List.Any_Eq_GetCartesianProduct.of.All_LtGetS.EqLengthS
-import Lemma.List.EqLengthS.of.In_CartesianProduct
+import Lemma.List.Length.of.In_CartesianProduct
 import Lemma.Set.All_LtGetS.of.In_CartesianProduct
 open Set List
 
@@ -17,7 +17,7 @@ private lemma main
     intro h
     constructor
     ·
-      apply EqLengthS.of.In_CartesianProduct h
+      apply Length.of.In_CartesianProduct h
     ·
       apply All_LtGetS.of.In_CartesianProduct h
   ·

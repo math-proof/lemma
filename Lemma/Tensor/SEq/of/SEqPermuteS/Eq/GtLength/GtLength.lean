@@ -1,6 +1,6 @@
 import Lemma.Int.EqNegToNatNeg.of.Lt_0
 import Lemma.Int.EqToNat.of.Ge_0
-import Lemma.Tensor.EqLengthS.of.SEq
+import Lemma.Tensor.Length.of.SEq
 import Lemma.Tensor.SEq.of.SEqPermuteS.Eq.GtLength.GtLength.Ge
 import Lemma.Tensor.SEq.of.SEqPermuteS.Eq.GtLength.GtLength.GtLength_Add
 import Lemma.Tensor.SEqPermuteS.of.Add.ge.SubLength_1
@@ -21,7 +21,7 @@ private lemma main
 -- imply
   A ≃ B := by
 -- proof
-  have h_length := EqLengthS.of.SEq.shape h
+  have h_length := Length.of.SEq.shape h
   if h_d : d ≥ 0 then
     simp at h_length
     have h_toNat := EqToNat.of.Ge_0 h_d

@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqLengthS.of.SEq
+import Lemma.Tensor.Length.of.SEq
 import Lemma.Tensor.EqTFnS.of.Eq.GtLength
 open Tensor
 
@@ -12,7 +12,7 @@ private lemma main
   (h₀ : i < A.length)
   (h₁ : A ≃ B) :
 -- imply
-  A[i] ≃ B[i]'(by rwa [EqLengthS.of.SEq h₁] at h₀) := by
+  A[i] ≃ B[i]'(by rwa [Length.of.SEq h₁] at h₀) := by
 -- proof
   apply EqTFnS.of.Eq.GtLength.tensor h₀ h₁ _ (fun s X i => X.get i)
 
@@ -26,7 +26,7 @@ private lemma fin
   (h₀ : i < A.length)
   (h₁ : A ≃ B) :
 -- imply
-  A.get ⟨i, h₀⟩ ≃ B.get ⟨i, by rwa [EqLengthS.of.SEq h₁] at h₀⟩ :=
+  A.get ⟨i, h₀⟩ ≃ B.get ⟨i, by rwa [Length.of.SEq h₁] at h₀⟩ :=
 -- proof
   main h₀ h₁
 

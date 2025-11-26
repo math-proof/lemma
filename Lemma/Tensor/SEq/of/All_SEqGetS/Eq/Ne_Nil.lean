@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
-import Lemma.Tensor.EqLengthS.of.Eq
+import Lemma.Tensor.Length.of.Eq
 import Lemma.List.Eq.Eq.of.EqConsS
 open Tensor List
 
@@ -12,7 +12,7 @@ private lemma main
 -- given
   (h : s_A ≠ [])
   (h₀ : s_A = s_B)
-  (h₁ : ∀ i : Fin A.length, A.get i ≃ B.get ⟨i, by simp [EqLengthS.of.Eq h₀.symm B A]⟩) :
+  (h₁ : ∀ i : Fin A.length, A.get i ≃ B.get ⟨i, by simp [Length.of.Eq h₀.symm B A]⟩) :
 -- imply
   A ≃ B := by
 -- proof

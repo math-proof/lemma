@@ -1,7 +1,7 @@
 import sympy.tensor.Basic
 import Lemma.Vector.HEq.of.EqValS
 import Lemma.Bool.IffEqS.of.Eq
-import Lemma.Tensor.EqLengthS.of.SEq
+import Lemma.Tensor.Length.of.SEq
 import Lemma.Bool.HEq.of.Cond.Cond
 open Tensor Vector Bool
 
@@ -42,7 +42,7 @@ private lemma tensor
   (g : List ℕ → List ℕ)
   (f : (s : List ℕ) → (X : Tensor α s) → (i : Fin X.length) → Tensor α (g s)) :
 -- imply
-  f s A ⟨i, h_i⟩ ≃ f s' B ⟨i, by rwa [← Tensor.EqLengthS.of.SEq h]⟩ := by
+  f s A ⟨i, h_i⟩ ≃ f s' B ⟨i, by rwa [← Tensor.Length.of.SEq h]⟩ := by
 -- proof
   simp [SEq] at h ⊢
   let ⟨h_s, h⟩ := h
