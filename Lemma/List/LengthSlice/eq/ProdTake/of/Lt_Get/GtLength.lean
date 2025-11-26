@@ -1,5 +1,5 @@
 import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 open List
 
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   (⟨i, ((List.map Nat.cast s).take (d + 1)).prod, s[d]⟩ : Slice).length (s.take (d + 1)).prod = (s.take d).prod := by
 -- proof
-  repeat rw [ProdTake.eq.MulProdTake.of.Lt_Length]
+  repeat rw [ProdTake.eq.MulProdTake.of.GtLength]
   .
     simp_all [LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength h_d h_i]
   .

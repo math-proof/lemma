@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.DivProdTake.eq.ProdTake.of.Gt_0.GtLength_0.Ne_0
 import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
-import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne_0

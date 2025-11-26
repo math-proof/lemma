@@ -19,7 +19,7 @@ private lemma main
     rwa [List.GetEraseIdx.eq.Get.of.Gt.GtLength h_d]
   ·
     simp
-    rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_d]
+    rw [List.LengthEraseIdx.eq.SubLength_1.of.GtLength h_d]
     omega
 
 

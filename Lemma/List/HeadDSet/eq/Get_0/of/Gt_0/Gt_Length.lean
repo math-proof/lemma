@@ -1,4 +1,4 @@
-import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
+import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Nat.Ne.of.Gt
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
@@ -19,7 +19,7 @@ private lemma main
 -- proof
   intro h_length
   rw [HeadD.eq.Get_0.of.GtLength_0 h_length]
-  apply GetSet.eq.Get.of.Ne.Lt_Length
+  apply GetSet.eq.Get.of.Ne.GtLength
   apply Ne.of.Gt h
 
 

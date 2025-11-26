@@ -1,4 +1,4 @@
-import Lemma.List.DropTake.eq.ListGet.of.Lt_Length
+import Lemma.List.DropTake.eq.ListGet.of.GtLength
 open List
 
 
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   (s.take (i + 1)).drop i = [s[i]] := by
 -- proof
-  apply DropTake.eq.ListGet.of.Lt_Length
+  apply DropTake.eq.ListGet.of.GtLength
 
 
 -- created on 2025-10-27

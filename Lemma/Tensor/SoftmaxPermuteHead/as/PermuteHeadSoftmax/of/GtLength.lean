@@ -3,9 +3,9 @@ import Lemma.Tensor.SEqPermuteHeadS.of.SEq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
-import Lemma.List.GetAppend.eq.Get.of.Lt_Length
+import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.EqMin.of.Le
@@ -53,7 +53,7 @@ private lemma main
         intro t
         have h_t := t.isLt
         simp at h_t
-        rw [GetAppend.eq.Get.of.Lt_Length (by simpa)] at h_t
+        rw [GetAppend.eq.Get.of.GtLength (by simpa)] at h_t
         rw [GetTake.eq.Get.of.Lt_LengthTake (by simpa)] at h_t
         rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength.fin]
         ·
@@ -84,7 +84,7 @@ private lemma main
           simp
         ·
           simp
-          rw [GetAppend.eq.Get.of.Lt_Length (show 0 < (s.take (d + 1)).length by simpa)]
+          rw [GetAppend.eq.Get.of.GtLength (show 0 < (s.take (d + 1)).length by simpa)]
           rwa [GetTake.eq.Get.of.Lt_LengthTake (by simpa)]
 
 

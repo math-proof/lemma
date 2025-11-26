@@ -5,7 +5,7 @@ import Lemma.Tensor.SEqPermutePermute__Neg.of.Add.eq.SubLength_1
 import Lemma.Tensor.SEqPermutePermute__Neg.of.Add.lt.SubLength_1
 import Lemma.Tensor.SEqPermutePermute__Neg.of.EqSubLength_1
 import Lemma.Tensor.SEqPermutePermute__Neg.of.LtSubLength_1
-import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 open Nat Tensor
 
 
@@ -33,18 +33,18 @@ private lemma main
         have := SEqPermutePermute__Neg.of.EqSubLength_1 h_d X
         simp at this
         apply SEq.symm ∘ SEq.trans this.symm
-        apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+        apply SEqPermuteS.of.SEq.Eq.Eq.GtLength
         repeat omega
-        apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ _ (by rfl) (by rfl)
+        apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ _ (by rfl) (by rfl)
         simp
       else
         have h := Le_Sub_1.of.Lt h
         have h := Lt.of.Le.Ne h h_d
         have := SEqPermutePermute__Neg.of.LtSubLength_1 h X
         apply SEq.symm ∘ SEq.trans this.symm
-        apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+        apply SEqPermuteS.of.SEq.Eq.Eq.GtLength
         repeat rfl
-        apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ _ (by rfl) (by rfl)
+        apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ _ (by rfl) (by rfl)
         simp
     else
       have : NeZero i := ⟨h_i⟩

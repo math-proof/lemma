@@ -1,4 +1,4 @@
-import Lemma.Tensor.SumDiv.eq.DivSum.of.Lt_Length
+import Lemma.Tensor.SumDiv.eq.DivSum.of.GtLength
 import Lemma.Tensor.SumDiv.eq.DivSum.of.Ge_Length
 open Tensor
 
@@ -14,7 +14,7 @@ private lemma main
   (X / n).sum dim = X.sum dim / n := by
 -- proof
   if h : dim < s.length then
-    apply SumDiv.eq.DivSum.of.Lt_Length h
+    apply SumDiv.eq.DivSum.of.GtLength h
   else
     simp at h
     apply SumDiv.eq.DivSum.of.Ge_Length h

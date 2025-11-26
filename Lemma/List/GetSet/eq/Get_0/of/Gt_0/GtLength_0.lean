@@ -1,4 +1,4 @@
-import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
+import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Nat.Ne.of.Gt
 open List Nat
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   (x.set d a)[0]'(by rwa [LengthSet.eq.Length]) = x[0] := by
 -- proof
-  apply GetSet.eq.Get.of.Ne.Lt_Length
+  apply GetSet.eq.Get.of.Ne.GtLength
   apply Ne.of.Gt h
 
 

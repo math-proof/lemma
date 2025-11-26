@@ -2,7 +2,7 @@ import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
 import Lemma.List.DropCons.eq.Drop_Sub_1.of.Gt_0
 import Lemma.List.LengthSet.eq.Length
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
+import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Sub_Add.eq.SubSub
@@ -19,7 +19,7 @@ private lemma main
   (s.set i a).drop j = s.drop j := by
 -- proof
   if h_j : j ≤ s.length then
-    rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length (by omega)]
+    rw [Set.eq.AppendTake__Cons_Drop.of.GtLength (by omega)]
     rw [DropAppend.eq.Drop.of.Ge_Length]
     ·
       rw [DropCons.eq.Drop_Sub_1.of.Gt_0]

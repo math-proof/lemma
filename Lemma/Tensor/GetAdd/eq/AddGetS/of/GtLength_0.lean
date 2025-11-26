@@ -1,5 +1,5 @@
 import Lemma.Tensor.GetAdd.eq.AddGetS
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 
@@ -12,7 +12,7 @@ private lemma main
   (A B : Tensor α s)
   (i : Fin s[0]) :
 -- imply
-  (A + B).get ⟨i, by apply Lt_Length.of.GtLength_0 h⟩ = A.get ⟨i, by apply Lt_Length.of.GtLength_0 h⟩ + B.get ⟨i, by apply Lt_Length.of.GtLength_0 h⟩ := by
+  (A + B).get ⟨i, by apply GtLength.of.GtLength_0 h⟩ = A.get ⟨i, by apply GtLength.of.GtLength_0 h⟩ + B.get ⟨i, by apply GtLength.of.GtLength_0 h⟩ := by
 -- proof
   match s with
   | [] =>

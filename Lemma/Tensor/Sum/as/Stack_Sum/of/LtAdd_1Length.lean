@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.Sum.as.Stack_Sum.of.Eq.Lt_Length
+import Lemma.Tensor.Sum.as.Stack_Sum.of.Eq.GtLength
 import Lemma.Nat.Lt_Sub.of.LtAdd
 open Tensor Nat
 
@@ -20,7 +20,7 @@ private lemma main
   | [] =>
     contradiction
   | s₀ :: s =>
-    apply Sum.as.Stack_Sum.of.Eq.Lt_Length rfl
+    apply Sum.as.Stack_Sum.of.Eq.GtLength rfl
     apply Lt_Sub.of.LtAdd h
 
 

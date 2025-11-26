@@ -1,4 +1,4 @@
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
+import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.Nat.EqMulS.of.Eq
@@ -16,7 +16,7 @@ private lemma main
 -- imply
   (s.set i a).prod = (s.take i).prod * (a * (s.drop (i + 1)).prod) := by
 -- proof
-  rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length h]
+  rw [Set.eq.AppendTake__Cons_Drop.of.GtLength h]
   rw [ProdAppend.eq.MulProdS]
   apply EqMulS.of.Eq.left
   rw [ProdCons.eq.Mul_Prod]

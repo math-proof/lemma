@@ -11,7 +11,7 @@ import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateTakeDrop.of.GtLength_Add_1
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTakeDrop.eq.Get.of.Lt_Length
+import Lemma.List.ProdTakeDrop.eq.Get.of.GtLength
 import Lemma.List.ProdTakeDrop.eq.MulProdTakeDrop.of.GtLength_Add
 import Lemma.List.ProdTakeDrop.eq.Mul_ProdTakeDrop.of.GtLength_Add
 import Lemma.List.ProdTakeDropPermute__Neg.eq.ProdTakeDrop.of.GtLength_Add
@@ -139,7 +139,7 @@ private lemma main
           simp [DropPermute__Neg.eq.Cons_TakeDrop.of.GtLength_Add h_id]
           simp [TakeAppend.eq.Take.of.GeLength (show d ≤ ((s.drop i).take d).length by simp; omega)]
           simp [TakeTake.eq.Take]
-          rw [ProdTakeDrop.eq.Get.of.Lt_Length (by simp; omega)] at h_rₐ
+          rw [ProdTakeDrop.eq.Get.of.GtLength (by simp; omega)] at h_rₐ
           rw [GetPermute__Neg.eq.Get_Add.of.GtLength_Add (by omega)] at h_rₐ
           rw [Add_Add.eq.AddAdd] at h_r'
           rw [DropPermute__Neg.eq.Drop ⟨i + d, by grind⟩] at h_r'
@@ -198,7 +198,7 @@ private lemma main
                 rw [← TakeDrop.eq.DropTake]
                 rw [Add_Add.eq.AddAdd (a := i)]
                 rw [← TakeDrop.eq.DropTake]
-                rw [ProdTakeDrop.eq.Get.of.Lt_Length (by omega)]
+                rw [ProdTakeDrop.eq.Get.of.GtLength (by omega)]
                 simp [h_qr]
                 rw [ProdRotate.eq.Prod]
                 rw [Add_Add.eq.AddAdd (a := i)]
@@ -248,7 +248,7 @@ private lemma main
                 rw [EqMin.of.Le h_d1_le_length]
                 rw [EqMod.of.Lt h_1_lt_d1]
                 rw [TakeTake.eq.Take.of.Gt h_1_lt_d1]
-                rw [ProdTakeDrop.eq.Get.of.Lt_Length (by simp; omega)]
+                rw [ProdTakeDrop.eq.Get.of.GtLength (by simp; omega)]
                 rw [GetPermute__Neg.eq.Get_Add.of.GtLength_Add (by omega)]
                 simp only [h_toNat] at h_qᵢ_div h_rᵢ_mod h_rₕ_mod
                 simp [EqMin.of.Le h_id1_le_length] at h_qᵢ_div h_rᵢ_mod h_rₕ_mod

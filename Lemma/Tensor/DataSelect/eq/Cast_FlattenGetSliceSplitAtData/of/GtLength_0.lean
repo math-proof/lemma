@@ -1,7 +1,7 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.EqLengthSlice_CoeMul.of.Lt
 import Lemma.List.ProdEraseIdx.eq.MulProdS
-import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData.of.GtLength
 import sympy.tensor.tensor
 open Bool List Tensor

@@ -1,6 +1,6 @@
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.Select.as.Stack_Select.of.Eq.Lt_Length
+import Lemma.Tensor.Select.as.Stack_Select.of.Eq.GtLength
 open Tensor Nat
 
 
@@ -20,7 +20,7 @@ private lemma main
   | [] =>
     contradiction
   | s₀ :: s =>
-    apply Select.as.Stack_Select.of.Eq.Lt_Length rfl
+    apply Select.as.Stack_Select.of.Eq.GtLength rfl
 
 
 -- created on 2025-11-15

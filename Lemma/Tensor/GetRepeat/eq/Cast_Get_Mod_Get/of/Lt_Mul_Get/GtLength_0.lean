@@ -2,7 +2,7 @@ import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
+import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
@@ -23,7 +23,7 @@ private lemma main
     apply LtMod.of.Gt_0
     assumption
   have : s.tail = (s.set 0 (n * s[(⟨0, h_s⟩ : Fin s.length)])).tail := by
-    rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length h_s]
+    rw [Set.eq.AppendTake__Cons_Drop.of.GtLength h_s]
     simp
   (X.repeat n ⟨0, h_s⟩)[i] = cast (by rw [this]) X[i % s[0]] := by
 -- proof
@@ -46,7 +46,7 @@ private lemma fin
     apply LtMod.of.Gt_0
     assumption
   have : s.tail = (s.set 0 (n * s[(⟨0, h_s⟩ : Fin s.length)])).tail := by
-    rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length h_s]
+    rw [Set.eq.AppendTake__Cons_Drop.of.GtLength h_s]
     simp
   (X.repeat n ⟨0, h_s⟩).get ⟨i, by assumption⟩ = cast (by rw [this]) (X.get ⟨i % s[0], by assumption⟩) := by
 -- proof

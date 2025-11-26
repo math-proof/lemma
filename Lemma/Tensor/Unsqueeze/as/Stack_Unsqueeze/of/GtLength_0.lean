@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.Unsqueeze.as.Stack_Unsqueeze.of.Lt_Length.Eq
+import Lemma.Tensor.Unsqueeze.as.Stack_Unsqueeze.of.GtLength.Eq
 open Tensor
 
 
@@ -17,7 +17,7 @@ private lemma main
   | []  =>
     contradiction
   | s₀ :: s =>
-    apply Unsqueeze.as.Stack_Unsqueeze.of.Lt_Length.Eq rfl
+    apply Unsqueeze.as.Stack_Unsqueeze.of.GtLength.Eq rfl
 
 
 -- created on 2025-07-13

@@ -1,7 +1,7 @@
 import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
 import Lemma.Tensor.EqGet0'0
 import Lemma.Tensor.GetAdd.eq.AddGetS.of.GtLength_0
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 import sympy.tensor.tensor
 open Finset Tensor
 
@@ -17,9 +17,9 @@ private lemma main
   (k : Fin s[0])
   (S : Finset ι) :
 -- imply
-  (∑ i ∈ S, X i).get ⟨k, by apply Lt_Length.of.GtLength_0 h_s⟩ = ∑ i ∈ S, (X i).get ⟨k, by apply Lt_Length.of.GtLength_0 h_s⟩ := by
+  (∑ i ∈ S, X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ = ∑ i ∈ S, (X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ := by
 -- proof
-  let f := fun X : Tensor α s => X.get ⟨k, by apply Lt_Length.of.GtLength_0 h_s⟩
+  let f := fun X : Tensor α s => X.get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩
   have h_f0 : f 0 = 0 := by
     apply EqGet0'0.fin
   have h_add : ∀ (a b : Tensor α s), f (a + b) = f a + f b := by
@@ -40,7 +40,7 @@ private lemma fin
   (X : Fin n → Tensor α s)
   (k : Fin s[0]) :
 -- imply
-  (∑ i : Fin n, X i).get ⟨k, by apply Lt_Length.of.GtLength_0 h_s⟩ = ∑ i : Fin n, (X i).get ⟨k, by apply Lt_Length.of.GtLength_0 h_s⟩ := by
+  (∑ i : Fin n, X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ = ∑ i : Fin n, (X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ := by
 -- proof
   apply main h_s
 

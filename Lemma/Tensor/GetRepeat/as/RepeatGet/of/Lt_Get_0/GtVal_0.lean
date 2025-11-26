@@ -3,7 +3,7 @@ import Lemma.Nat.LtSubS.of.Lt.Le
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
+import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
 import Lemma.Nat.Gt_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq

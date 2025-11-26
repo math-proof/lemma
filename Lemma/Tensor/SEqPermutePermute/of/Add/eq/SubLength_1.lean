@@ -8,14 +8,14 @@ import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.List.ProdDrop.eq.MulProdDrop_Add_1.of.Lt_Length
+import Lemma.List.ProdDrop.eq.MulProdDrop_Add_1.of.GtLength
 import Lemma.List.ProdRotate.eq.MulProdS
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.RotateRotate.eq.Rotate_Add
 import Lemma.List.TailDrop.eq.Drop_Add_1
 import Lemma.List.TakeDrop.eq.Drop.of.LeLength_Add
-import Lemma.List.TakeDrop.eq.ListGet.of.Lt_Length
+import Lemma.List.TakeDrop.eq.ListGet.of.GtLength
 import Lemma.List.TakeDropPermute.eq.Drop.of.Add.eq.SubLength_1
 import Lemma.List.TakePermute.eq.Take
 import Lemma.List.TakeRotate.eq.Drop.of.EqLength_Add
@@ -204,12 +204,12 @@ private lemma main
                       have h_lt := AddMul.lt.Mul.of.Lt.Lt h_rₐ h_qₐ
                       rw [TakeRotate.eq.Drop.of.EqLength_Add (by grind)] at h_lt
                       simp at h_lt
-                      rw [MulProdDrop_Add_1.eq.ProdDrop.of.Lt_Length (by grind)] at h_lt
+                      rw [MulProdDrop_Add_1.eq.ProdDrop.of.GtLength (by grind)] at h_lt
                       simp [Div.eq.Zero.of.Lt h_lt]
                       simp [EqMin.of.Le h_Led1] at h_qₑ_div h_rₑ_mod
                       simp [EqMod.of.Lt h_Lt1'd1] at h_qₑ_div h_rₑ_mod
                       simp only [TakeDrop.eq.Drop.of.LeLength_Add h_Gei_d1] at h_qₑ_div h_rₑ_mod
-                      simp [TakeDrop.eq.ListGet.of.Lt_Length (show i < s.length by omega)] at h_qₑ_div h_rₑ_mod
+                      simp [TakeDrop.eq.ListGet.of.GtLength (show i < s.length by omega)] at h_qₑ_div h_rₑ_mod
                       simp [h_qₑ_div, h_rₑ_mod]
                       simp [EqMin.of.Lt h_Lt1d, EqSub_Sub.of.Gt h_Lt1d, EqMod.of.Lt h_d_lt_1d] at h_r'_mod
                       rw [← h_i_eq] at h_r'_mod

@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqSoftmaxS.of.SEq.Eq
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
-import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 import Lemma.Tensor.SoftmaxPermute.as.PermuteSoftmax.of.GtLength_Add
 open Tensor
 
@@ -18,10 +18,10 @@ private lemma main
   intro d
   have := SoftmaxPermute.as.PermuteSoftmax.of.GtLength_Add (i := i) (d := d) (by omega) X
   have h_id : i + d = s.length - 1 := by omega
-  have := Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length (i := i + d) (i' := i + d) (d := -d) (d' := -d) (by simp; omega) (by omega) (by omega) this
+  have := Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength (i := i + d) (i' := i + d) (d := -d) (d' := -d) (by simp; omega) (by omega) (by omega) this
   simp [h_id] at this
   have h_sim: ((X.permute ⟨i, by omega⟩ d).softmax (s.length - 1)).permute ⟨i + d, by simp; grind⟩ (-d) ≃ (X.permute ⟨i, by omega⟩ d).softmax.permute ⟨s.length - 1, by simp; grind⟩ (-d) := by
-    apply Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+    apply Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
     .
       omega
     .

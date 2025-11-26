@@ -1,6 +1,6 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 
@@ -14,8 +14,8 @@ private lemma main
   (X : Tensor α s) :
 -- imply
   have h := congrArg (Tensor α) h₁
-  have := Lt_Length.of.GtLength_0 h₀ X ⟨i, by grind⟩
-  have := Lt_Length.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
+  have := GtLength.of.GtLength_0 h₀ X ⟨i, by grind⟩
+  have := GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
   (cast h X)[i] = cast (by rw [h₁]) X[i] := by
 -- proof
   let i' : Fin s[0] := ⟨i, h_i⟩
@@ -34,7 +34,7 @@ private lemma fin
   (X : Tensor α s) :
 -- imply
   have h := congrArg (Tensor α) h₁
-  (cast h X).get ⟨i, Lt_Length.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩⟩ = cast (by rw [h₁]) (X.get ⟨i, Lt_Length.of.GtLength_0 h₀ X ⟨i, by grind⟩⟩) := by
+  (cast h X).get ⟨i, GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩⟩ = cast (by rw [h₁]) (X.get ⟨i, GtLength.of.GtLength_0 h₀ X ⟨i, by grind⟩⟩) := by
 -- proof
   apply main
   repeat assumption

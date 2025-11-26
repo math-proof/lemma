@@ -1,4 +1,4 @@
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Lt_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GtLength
 open List
 
 
@@ -9,7 +9,7 @@ private lemma main
 -- imply
   [a, b].rotate 1 = [b, a] := by
 -- proof
-  rw [Rotate.eq.AppendDrop__Take.of.Lt_Length]
+  rw [Rotate.eq.AppendDrop__Take.of.GtLength]
   repeat simp
 
 

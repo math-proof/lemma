@@ -6,9 +6,9 @@ import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.List.ProdDropTake.eq.Get.of.Lt_Length
+import Lemma.List.ProdDropTake.eq.Get.of.GtLength
 import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTake.eq.Mul_ProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailTakePermute__Neg.eq.Take
 import Lemma.List.TakePermute__Neg.eq.ListGet
@@ -120,7 +120,7 @@ private lemma main
                 apply AddMul.lt.Mul.of.Lt.Lt
                 ·
                   rw [ProdRotate.eq.Prod]
-                  rw [ProdTake.eq.Mul_ProdTake.of.Lt_Length]
+                  rw [ProdTake.eq.Mul_ProdTake.of.GtLength]
                   apply AddMul.lt.Mul.of.Lt.Lt h_r' h_q'
                   omega
                 ·
@@ -154,7 +154,7 @@ private lemma main
                     apply congrArg
                     simp only [h_toNat]
                     simp [EqMin.of.Lt h_lt_add_1]
-                    simp [ProdDropTake.eq.Get.of.Lt_Length (show d < s.length by omega)]
+                    simp [ProdDropTake.eq.Get.of.GtLength (show d < s.length by omega)]
                     simp [h_qr]
                     simp [DropPermute__Neg.eq.Drop (s := s) (i := ⟨d, by grind⟩)]
                     simp only [h_toNat] at h_qₑ_div

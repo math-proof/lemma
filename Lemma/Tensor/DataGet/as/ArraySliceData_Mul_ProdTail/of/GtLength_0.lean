@@ -1,4 +1,4 @@
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
 import Lemma.Tensor.SEqArraySliceSData.of.Eq
@@ -17,7 +17,7 @@ private lemma main
   (X : Tensor α s)
   (i : Fin s[0]) :
 -- imply
-  have := Lt_Length.of.GtLength_0 h X i
+  have := GtLength.of.GtLength_0 h X i
   X[i].data ≃ X.data.array_slice (i * s.tail.prod) s.tail.prod := by
 -- proof
   intro h_length

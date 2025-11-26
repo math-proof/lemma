@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Tensor.Lt_Length.of.Eq
+import Lemma.Tensor.GtLength.of.Eq
 open Tensor
 
 
@@ -10,7 +10,7 @@ private lemma main
 -- given
   (h : A ≃ B) :
 -- imply
-  ∀ i : Fin A.length, A.get i ≃ B.get ⟨i, Lt_Length.of.Eq h i⟩ := by
+  ∀ i : Fin A.length, A.get i ≃ B.get ⟨i, GtLength.of.Eq h i⟩ := by
 -- proof
   let ⟨h_s, h⟩ := h
   intro i

@@ -6,7 +6,7 @@ import Lemma.Tensor.SEqPermutePermute.of.Add.eq.SubLength_1
 import Lemma.Tensor.SEqPermutePermute.of.Add.lt.SubLength_1
 import Lemma.Tensor.SEqPermutePermute.of.EqSubLength_1
 import Lemma.Tensor.SEqPermutePermute.of.LtSubLength_1
-import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 open Nat Tensor
 
 
@@ -34,14 +34,14 @@ private lemma main
         have := SEqPermutePermute.of.EqSubLength_1 h_d X
         simp at this
         apply SEq.symm ∘ SEq.trans this.symm
-        apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+        apply SEqPermuteS.of.SEq.Eq.Eq.GtLength
         repeat aesop
       else
         have h := Le_Sub_1.of.Lt h
         have h := Lt.of.Le.Ne h h_d
         have := SEqPermutePermute.of.LtSubLength_1 h X
         apply SEq.symm ∘ SEq.trans this.symm
-        apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+        apply SEqPermuteS.of.SEq.Eq.Eq.GtLength
         repeat aesop
     else
       have : NeZero i := ⟨h_i⟩

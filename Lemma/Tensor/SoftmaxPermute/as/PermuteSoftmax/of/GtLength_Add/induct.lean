@@ -6,14 +6,14 @@ import Lemma.Int.Lt.of.LtAdd
 import Lemma.List.EqPermute__0
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.List.EraseIdxPermute.eq.EraseIdx.of.GtLength_Add
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.PermuteCons.eq.Cons_Permute.of.GtLength
 import Lemma.Nat.AddAdd
 import Lemma.Nat.EqAdd0
 import Lemma.Tensor.GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length
-import Lemma.Tensor.GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.Lt_Length
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength
+import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermute__0

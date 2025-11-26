@@ -1,5 +1,5 @@
 import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
-import Lemma.List.GetPermute.eq.Ite.of.Lt_Length.Lt_Length
+import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
 open List
 
 
@@ -16,14 +16,14 @@ private lemma main
 -- proof
   by_cases h_d : i + d < s.length
   .
-    rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length h_d (by omega)]
+    rw [GetPermute.eq.Ite.of.GtLength.GtLength h_d (by omega)]
     split_ifs
     rfl
   .
     simp at h_d
     have h_d : i + d ≥ s.length - 1 := by omega
     simp [EqPermuteS.of.Add.ge.SubLength_1 h_d]
-    rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length (by omega) (by omega)]
+    rw [GetPermute.eq.Ite.of.GtLength.GtLength (by omega) (by omega)]
     split_ifs
     rfl
 

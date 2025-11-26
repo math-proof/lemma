@@ -1,7 +1,7 @@
 import stdlib.SEq
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 
@@ -15,8 +15,8 @@ private lemma main
   (i : Fin s[0]) :
 -- imply
   have h := congrArg (Tensor α) h₁
-  have := Lt_Length.of.GtLength_0 h₀ X i
-  have := Lt_Length.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
+  have := GtLength.of.GtLength_0 h₀ X i
+  have := GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
   (cast h X)[i] ≃ X[i] := by
 -- proof
   subst h₁

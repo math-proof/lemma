@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Nat.Gt_0
-import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
+import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
 open Tensor List Nat
 
 
@@ -18,7 +18,7 @@ private lemma main
   rw [Length.eq.Get_0.of.GtLength_0] <;>
     simp
   ·
-    rw [GetSet.eq.Get.of.Ne.Lt_Length]
+    rw [GetSet.eq.Get.of.Ne.GtLength]
     linarith
   ·
     apply Gt_0

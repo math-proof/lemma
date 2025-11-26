@@ -1,6 +1,6 @@
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.LengthSet.eq.Length
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
+import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.TakeAppend.eq.Append_Take.of.Ge_Length
 import Lemma.List.TakeCons.eq.Cons_Take.of.Gt_0
 import Lemma.List.TakeDrop.eq.DropTake
@@ -21,10 +21,10 @@ private lemma main
   (s.set i a).take j = (s.take j).set i a := by
 -- proof
   if h_j : j ≤ s.length then
-    rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length (by omega)]
+    rw [Set.eq.AppendTake__Cons_Drop.of.GtLength (by omega)]
     rw [TakeAppend.eq.Append_Take.of.Ge_Length]
     ·
-      rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length (by simp; omega)]
+      rw [Set.eq.AppendTake__Cons_Drop.of.GtLength (by simp; omega)]
       rw [TakeTake.eq.Take.of.Ge (by omega)]
       simp
       rw [EqMin.of.Le (by omega)]

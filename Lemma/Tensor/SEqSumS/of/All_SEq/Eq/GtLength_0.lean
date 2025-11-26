@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.SEqSumS.of.All_SEq.Gt_0
 import Lemma.Tensor.Sum_0.eq.Cast_Sum_Get.of.GtLength_0
 open Bool Tensor
@@ -13,7 +13,7 @@ private lemma main
 -- given
   (h_length : s.length > 0)
   (h_s : s = s')
-  (h : ∀ i : Fin s[0], X.get ⟨i, by apply Lt_Length.of.GtLength_0 h_length⟩ ≃ Y.get ⟨i, by apply Lt_Length.of.GtLength_0 (h_s ▸ h_length) Y ⟨i, by grind⟩⟩) :
+  (h : ∀ i : Fin s[0], X.get ⟨i, by apply GtLength.of.GtLength_0 h_length⟩ ≃ Y.get ⟨i, by apply GtLength.of.GtLength_0 (h_s ▸ h_length) Y ⟨i, by grind⟩⟩) :
 -- imply
   X.sum 0 ≃ Y.sum 0 := by
 -- proof

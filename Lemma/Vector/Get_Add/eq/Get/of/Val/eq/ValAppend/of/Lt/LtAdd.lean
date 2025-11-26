@@ -1,7 +1,7 @@
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Vector.ValAppend.eq.AppendValS
 import Lemma.List.LengthAppend.eq.AddLengthS
-import Lemma.List.EqGetS.of.Eq.Lt_Length
+import Lemma.List.EqGetS.of.Eq.GtLength
 open List Vector Bool
 
 

@@ -5,9 +5,9 @@ import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.List.ProdDropTakePermute.eq.Get_0.of.Lt_Length
+import Lemma.List.ProdDropTakePermute.eq.Get_0.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take
-import Lemma.List.TakePermute.eq.TailTake.of.Lt_Length
+import Lemma.List.TakePermute.eq.TailTake.of.GtLength
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -143,13 +143,13 @@ private lemma main
                     simp [Add_Add.eq.AddAdd, h_drop]
                     simp [h_qₚ_div]
                     left
-                    rw [ProdDropTakePermute.eq.Get_0.of.Lt_Length (by omega)] at h_qₚ_div
+                    rw [ProdDropTakePermute.eq.Get_0.of.GtLength (by omega)] at h_qₚ_div
                     simp [h_qₜ_div, h_rₜ_mod, h_qₚ_div]
-                    rw [ProdDropTakePermute.eq.Get_0.of.Lt_Length (by omega)] at h_q'
+                    rw [ProdDropTakePermute.eq.Get_0.of.GtLength (by omega)] at h_q'
                     simp [EqDivAddMul.of.Lt h_q', EqMod.of.Lt h_q']
                     left
                     rw [TakeTake.eq.Take.of.Ge (by omega)]
-                    rw [TakePermute.eq.TailTake.of.Lt_Length (by omega)]
+                    rw [TakePermute.eq.TailTake.of.GtLength (by omega)]
                   ·
                     simp [h_qₚ_div, h_drop]
                 ·

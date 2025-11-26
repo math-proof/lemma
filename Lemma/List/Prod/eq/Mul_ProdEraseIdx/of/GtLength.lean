@@ -1,7 +1,7 @@
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.List.ProdTake.eq.Mul_ProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.Nat.MulMul.eq.Mul_Mul
 open List Nat
 
@@ -18,7 +18,7 @@ private lemma main
   rw [EraseIdx.eq.Append_Drop_Add_1]
   rw [ProdAppend.eq.MulProdS]
   rw [Mul_Mul.eq.MulMul]
-  rw [Mul_ProdTake.eq.ProdTake.of.Lt_Length]
+  rw [Mul_ProdTake.eq.ProdTake.of.GtLength]
   apply Prod.eq.MulProdS
 
 

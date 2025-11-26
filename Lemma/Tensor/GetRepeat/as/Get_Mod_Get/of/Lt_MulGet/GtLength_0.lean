@@ -30,10 +30,10 @@ import Lemma.Nat.EqMod.of.Lt
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.List.EqProdTakeSet__1.of.GtLength_0
 import Lemma.List.AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.Lt_Get_0.GtLength_0
-import Lemma.List.ProdSet__MulGet.eq.Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet__MulGet.eq.Mul_Prod.of.GtLength
 import Lemma.List.GtProdTail_0.of.Lt_ProdTailSet_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
-import Lemma.List.EqGetSet.of.Lt_Length
+import Lemma.List.EqGetSet.of.GtLength
 open Tensor Vector List Bool Nat
 
 
@@ -116,7 +116,7 @@ private lemma main
               ·
                 assumption
             ·
-              simp [ProdSet__MulGet.eq.Mul_Prod.of.Lt_Length h_s n]
+              simp [ProdSet__MulGet.eq.Mul_Prod.of.GtLength h_s n]
           ·
             simp [TailSet_0.eq.Tail]
   ·
@@ -129,7 +129,7 @@ private lemma main
   ·
     rw [EqProdTakeSet__1.of.GtLength_0 h_s]
     rw [HeadD.eq.Get_0.of.GtLength_0 (by grind)]
-    rw [EqGetSet.of.Lt_Length h_s]
+    rw [EqGetSet.of.GtLength h_s]
 
 
 @[main]

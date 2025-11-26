@@ -1,6 +1,6 @@
 import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Nat.EqMul_Div.of.Dvd
-import Lemma.List.Dvd_ProdSet.of.Lt_Length
+import Lemma.List.Dvd_ProdSet.of.GtLength
 import Lemma.Nat.AddMul.lt.Mul
 open List Nat
 
@@ -18,7 +18,7 @@ private lemma main
   have h_add_mul := AddMul.lt.Mul j i
   convert Le_SubMulS.of.Lt h_add_mul ((s.set 0 (n * s[0])).prod / (n * s[0]))
   rw [EqMul_Div.of.Dvd]
-  apply Dvd_ProdSet.of.Lt_Length h
+  apply Dvd_ProdSet.of.GtLength h
 
 
 -- created on 2025-07-18

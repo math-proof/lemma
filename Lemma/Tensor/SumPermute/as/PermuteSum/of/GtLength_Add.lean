@@ -73,7 +73,7 @@ private lemma main
         intro t
         have h_t := t.isLt
         simp [EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt] at h_t
-        repeat rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.Lt_Length.fin]
+        repeat rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin]
         .
           apply SEqCastS.of.SEq.Eq.Eq
           .
@@ -91,8 +91,8 @@ private lemma main
             have := SEqSumS.of.SEq this (i + d)
             apply SEq.trans this
             .
-              apply ih h (X.get ⟨t, Lt_Length.of.GtLength_0 (s := s₀ :: s) (by simp) X ⟨t, by simpa⟩⟩)
-              rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simp; omega)]
+              apply ih h (X.get ⟨t, GtLength.of.GtLength_0 (s := s₀ :: s) (by simp) X ⟨t, by simpa⟩⟩)
+              rw [List.LengthEraseIdx.eq.SubLength_1.of.GtLength (by simp; omega)]
               simp
               omega
             .

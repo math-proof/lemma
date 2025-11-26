@@ -1,7 +1,7 @@
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0
-import Lemma.Tensor.SEqGetS.of.SEq.Lt_Length
+import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.Select.as.Stack_Select.of.LtAdd_1Length
 import sympy.tensor.tensor
 open Tensor
@@ -22,7 +22,7 @@ private lemma main
   have := Select.as.Stack_Select.of.LtAdd_1Length h_d X ⟨i, h_i⟩
   have h_i' : j < (X.select ⟨d + 1, h_d⟩ ⟨i, by simpa⟩).length := by
     rwa [LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0 (by linarith)]
-  have := SEqGetS.of.SEq.Lt_Length.fin h_i' this
+  have := SEqGetS.of.SEq.GtLength.fin h_i' this
   rwa [EqGetStack.fn.fin] at this
 
 

@@ -1,4 +1,4 @@
-import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.Nat.EqDivMul.of.Ne_0
 open List Nat
 
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   (s.take (i + 1)).prod / s[i] = (s.take i).prod := by
 -- proof
-  simp [ProdTake.eq.MulProdTake.of.Lt_Length i.isLt]
+  simp [ProdTake.eq.MulProdTake.of.GtLength i.isLt]
   rwa [EqDivMul.of.Ne_0]
 
 

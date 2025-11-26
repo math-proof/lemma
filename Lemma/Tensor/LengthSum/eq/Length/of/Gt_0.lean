@@ -1,7 +1,7 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.EqLength_0.of.Eq_Nil
 import Lemma.Tensor.LengthSum.eq.Length.of.Ge_Length
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 open Tensor List
 

@@ -11,11 +11,11 @@ import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.eq.MulProdS
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTakeDrop.eq.Get.of.Lt_Length
-import Lemma.List.ProdTakeDrop.eq.MulProdTakeDrop.of.Lt_Length
+import Lemma.List.ProdTakeDrop.eq.Get.of.GtLength
+import Lemma.List.ProdTakeDrop.eq.MulProdTakeDrop.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TakeDrop.eq.DropTake
-import Lemma.List.TakeDrop.eq.ListGet.of.Lt_Length
+import Lemma.List.TakeDrop.eq.ListGet.of.GtLength
 import Lemma.List.TakeDropPermute.eq.TakeDrop.of.GtLength_Add
 import Lemma.List.TakeDropTakePermute.eq.TakeDrop.of.GtLength_Add
 import Lemma.List.TakePermute.eq.Take
@@ -174,7 +174,7 @@ private lemma main
                 ·
                   rw [Prod.eq.MulProdS.comm ((s.drop i).take (d + 1)) 1]
                   rw [TakeTake.eq.Take.of.Ge (by omega)]
-                  rw [TakeDrop.eq.ListGet.of.Lt_Length (by omega)]
+                  rw [TakeDrop.eq.ListGet.of.GtLength (by omega)]
                   rw [TakeDrop.eq.DropTake s]
                   simp
                   apply AddMul.lt.Mul.of.Lt.Lt
@@ -232,7 +232,7 @@ private lemma main
                     rw [DivAddMul.eq.Add_Div.of.Gt_0] at h_qₜ_div
                     ·
                       have h_lt := AddMul.lt.Mul.of.Lt.Lt h_rₐ h_qₐ
-                      rw [MulProdTakeDrop.eq.ProdTakeDrop.of.Lt_Length (by omega)] at h_lt
+                      rw [MulProdTakeDrop.eq.ProdTakeDrop.of.GtLength (by omega)] at h_lt
                       simp [Div.eq.Zero.of.Lt h_lt] at h_qₜ_div
                       simp [h_qₜ_div]
                       simp [h_toNat] at h_q'_div
@@ -257,7 +257,7 @@ private lemma main
                       simp [EqMin.of.Le (show d + 1 ≤ s.length - i by omega)] at h_qₓ_div h_rₓ_mod
                       rw [EqMod.of.Lt (show 1 < d + 1 by omega)] at h_qₓ_div h_rₓ_mod
                       simp [TakeTake.eq.Take.of.Ge (show d + 1 ≥ 1 by omega)] at h_qₓ_div h_rₓ_mod
-                      simp [ProdTakeDrop.eq.Get.of.Lt_Length h_i] at h_qₓ_div h_rₓ_mod
+                      simp [ProdTakeDrop.eq.Get.of.GtLength h_i] at h_qₓ_div h_rₓ_mod
                       simp [h_qₑ_div] at h_qₓ_div h_rₓ_mod
                       simp [Add_Add.eq.AddAdd] at h_qₓ_div h_rₓ_mod
                       simp [AddAdd.comm]

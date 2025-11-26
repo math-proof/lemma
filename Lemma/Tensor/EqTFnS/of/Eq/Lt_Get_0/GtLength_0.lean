@@ -1,6 +1,6 @@
 import Lemma.Tensor.EqLengthS.of.SEq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.EqTFnS.of.Eq.Lt_Length
+import Lemma.Tensor.EqTFnS.of.Eq.GtLength
 open Tensor
 
 
@@ -19,7 +19,7 @@ private lemma main
   f s A ⟨i, h_i⟩ ≃ f s' B ⟨i, by rwa [← EqLengthS.of.SEq h]⟩ := by
 -- proof
   intro h_i
-  apply EqTFnS.of.Eq.Lt_Length.tensor h_i h
+  apply EqTFnS.of.Eq.GtLength.tensor h_i h
 
 
 -- created on 2025-07-13

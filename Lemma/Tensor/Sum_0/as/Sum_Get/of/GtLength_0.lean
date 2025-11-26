@@ -1,4 +1,4 @@
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import stdlib.SEq
 import sympy.tensor.tensor
@@ -12,7 +12,7 @@ private lemma main
   (h : s.length > 0)
   (X : Tensor α s) :
 -- imply
-  X.sum 0 ≃ ∑ i : Fin s[0], X[i]'(by apply Lt_Length.of.GtLength_0 h) := by
+  X.sum 0 ≃ ∑ i : Fin s[0], X[i]'(by apply GtLength.of.GtLength_0 h) := by
 -- proof
   match s with
   | [] =>
@@ -29,7 +29,7 @@ private lemma fin
   (h : s.length > 0)
   (X : Tensor α s) :
 -- imply
-  X.sum 0 ≃ ∑ i : Fin s[0], X.get ⟨i, by apply Lt_Length.of.GtLength_0 h⟩ := by
+  X.sum 0 ≃ ∑ i : Fin s[0], X.get ⟨i, by apply GtLength.of.GtLength_0 h⟩ := by
 -- proof
   apply main
 

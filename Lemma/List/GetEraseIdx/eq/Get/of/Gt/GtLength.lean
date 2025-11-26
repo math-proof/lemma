@@ -1,4 +1,4 @@
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 open List
 
 
@@ -9,7 +9,7 @@ private lemma main
   (h_i : s.length > i)
   (h_j : i > j) :
 -- imply
-  let  := LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_i
+  let  := LengthEraseIdx.eq.SubLength_1.of.GtLength h_i
   (s.eraseIdx i)[j] = s[j] := by
 -- proof
   grind

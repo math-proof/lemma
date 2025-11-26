@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.SEqGetS.of.SEq.Lt_Length
+import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
 import Lemma.Tensor.Unsqueeze.as.Stack_Unsqueeze.of.GtLength_0
@@ -23,7 +23,7 @@ private lemma main
   have := Unsqueeze.as.Stack_Unsqueeze.of.GtLength_0 h_s X d
   have h_i' : i < (X.unsqueeze (d + 1)).length := by
     rwa [LengthUnsqueeze.eq.Length.of.Gt_0 (by linarith)]
-  have := SEqGetS.of.SEq.Lt_Length.fin h_i' this
+  have := SEqGetS.of.SEq.GtLength.fin h_i' this
   rwa [EqGetStack.fn.fin] at this
 
 

@@ -2,16 +2,16 @@ import sympy.tensor.tensor
 import sympy.vector.functions
 import Lemma.Nat.Ge.of.NotLt
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
+import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.TakeInsertIdx.eq.Take.of.Ge
 import Lemma.List.TakeEraseIdx.eq.Take.of.Ge
 import Lemma.List.EqGetInsertIdx.of.GeLength
 import Lemma.List.DropInsertIdx.eq.Drop.of.Lt
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
-import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
-import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
-import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
+import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.GtLength
+import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
+import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength
 open Algebra List Tensor Nat
 
 /--
@@ -54,8 +54,8 @@ Tensor.sum (keepdim=True)
 def Tensor.keepdim (X : Tensor α (s.eraseIdx dim)) : Tensor α s :=
   if h : dim < s.length then
     cast
-      (by simp [List.EqSetInsertIdxEraseIdx.of.Lt_Length h])
-      ((X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.Lt_Length h 1⟩)
+      (by simp [List.EqSetInsertIdxEraseIdx.of.GtLength h])
+      ((X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.GtLength h 1⟩)
   else
     cast (by rw [EqEraseIdx.of.Ge_Length (Ge.of.NotLt h)]) X
 

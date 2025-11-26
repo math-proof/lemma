@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
-import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.Lt_Length
+import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 open Tensor
 
 
@@ -16,7 +16,7 @@ private lemma main
 -- proof
   have := SEqPermutePermute.of.GtLength_Add (i := i - d) (d := d) (by omega) X
   apply SEq.symm ∘ SEq.trans this.symm
-  repeat apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ (by omega) rfl
+  repeat apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ (by omega) rfl
   rfl
 
 

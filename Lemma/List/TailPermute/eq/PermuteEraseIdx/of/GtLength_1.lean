@@ -1,7 +1,7 @@
 import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.Tail.eq.Drop_1
@@ -20,7 +20,7 @@ private lemma main
   (h : s.length > 1)
   (d : ℕ):
 -- imply
-  (s.permute ⟨0, by omega⟩ ↑(d + 1)).tail = (s.eraseIdx 1).permute ⟨0, by rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]; omega⟩ d := by
+  (s.permute ⟨0, by omega⟩ ↑(d + 1)).tail = (s.eraseIdx 1).permute ⟨0, by rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by omega)]; omega⟩ d := by
 -- proof
   repeat rw [Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0]
   rw [TailAppend.eq.AppendTail.of.GtLength_0 (by simp; omega)]
@@ -47,7 +47,7 @@ private lemma main
     simp
   ·
     simp
-    rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]
+    rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by omega)]
     omega
   ·
     simp
@@ -61,7 +61,7 @@ private lemma pos
 -- given
   (h : s.length > 1) :
 -- imply
-  (s.permute ⟨0, by omega⟩ d).tail = (s.eraseIdx 1).permute ⟨0, by rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]; omega⟩ ↑(d - 1) := by
+  (s.permute ⟨0, by omega⟩ d).tail = (s.eraseIdx 1).permute ⟨0, by rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by omega)]; omega⟩ ↑(d - 1) := by
 -- proof
   rw [← main (s := s) (d := d - 1) (by omega)]
   congr

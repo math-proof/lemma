@@ -1,4 +1,4 @@
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
+import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 open List
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   s.set 0 a = a :: s.tail := by
 -- proof
-  rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length h]
+  rw [Set.eq.AppendTake__Cons_Drop.of.GtLength h]
   simp
 
 

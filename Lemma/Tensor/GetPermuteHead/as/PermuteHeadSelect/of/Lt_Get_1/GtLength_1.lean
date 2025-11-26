@@ -5,10 +5,10 @@ import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxTail.eq.Drop_2
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail
-import Lemma.List.GetAppend.eq.Get.of.Lt_Length
-import Lemma.List.GetRotate.eq.Ite.of.GeLength.Lt_Length
+import Lemma.List.GetAppend.eq.Get.of.GtLength
+import Lemma.List.GetRotate.eq.Ite.of.GeLength.GtLength
 import Lemma.List.Get_0.dvd.ProdTakeEraseIdx.of.Gt_0.Gt_0.GtLength_1
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.LengthEraseIdx.ge.SubLength_1
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.Prod.eq.MulProdS
@@ -244,7 +244,7 @@ private lemma main
                       else if h : s.length = 2 then
                         have h_q := q.isLt
                         simp [ProdRotate.eq.Prod] at h_q
-                        have h_length_eq_1 := LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)
+                        have h_length_eq_1 := LengthEraseIdx.eq.SubLength_1.of.GtLength (by omega)
                         have h_mod_eq_0 : 1 % (d ⊓ (s.eraseIdx 1).length) = 0 := by
                           simp [h_length_eq_1]
                           omega
@@ -354,7 +354,7 @@ private lemma main
           rw [MulProdS.eq.ProdAppend]
           apply congrArg
           rw [← Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0 (by omega)]
-          have := Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0 (s := s.eraseIdx 1) (by rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]; omega) (d - 1)
+          have := Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0 (s := s.eraseIdx 1) (by rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by omega)]; omega) (d - 1)
           rw [EqAddSub.of.Ge (by omega)] at this
           rw [← this]
           simp
@@ -363,9 +363,9 @@ private lemma main
       simp
       omega
     ·
-      rw [GetAppend.eq.Get.of.Lt_Length]
+      rw [GetAppend.eq.Get.of.GtLength]
       ·
-        rw [GetRotate.eq.Ite.of.GeLength.Lt_Length]
+        rw [GetRotate.eq.Ite.of.GeLength.GtLength]
         ·
           simp
           split_ifs

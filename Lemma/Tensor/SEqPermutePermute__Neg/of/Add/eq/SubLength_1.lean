@@ -17,7 +17,7 @@ import Lemma.List.ProdDrop.eq.Get.of.EqLength_Add_1
 import Lemma.List.ProdDropPermute__Neg.eq.ProdDrop.of.Add.eq.SubLength_1
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTakeDrop.eq.Get.of.Lt_Length
+import Lemma.List.ProdTakeDrop.eq.Get.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailTakeDrop.eq.TakeDrop
 import Lemma.List.TakeDrop.eq.DropTake
@@ -251,7 +251,7 @@ private lemma main
                     simp [TakeDrop.eq.DropTake]
                     rw [EqTake.of.Ge_Length (n := i + (d + 1)) (by simp; omega)]
                     simp [DropTake.eq.TakeDrop]
-                    rw [ProdTakeDrop.eq.Get.of.Lt_Length (i := i) (s := s.permute ⟨i + d, by grind⟩ (-d)) (by simp; omega)]
+                    rw [ProdTakeDrop.eq.Get.of.GtLength (i := i) (s := s.permute ⟨i + d, by grind⟩ (-d)) (by simp; omega)]
                     simp [GetPermute__Neg.eq.Get_Add.of.GtLength_Add]
                   ·
                     grind

@@ -2,7 +2,7 @@ import stdlib.List
 import Lemma.List.ProductCons.eq.FlatMap_FunMapProduct
 import Lemma.List.LengthProductCons.eq.MulLengthS
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength
+import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.GtLength.All_EqLength
 open List Nat
 
 
@@ -24,7 +24,7 @@ private lemma main
     simp [ProductCons.eq.FlatMap_FunMapProduct]
     simp [List.flatMap]
     simp [h_ij]
-    rw [GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength] <;>
+    rw [GetFlatten_AddMul.eq.Get.of.Lt.GtLength.All_EqLength] <;>
     ·
       simp_all
 

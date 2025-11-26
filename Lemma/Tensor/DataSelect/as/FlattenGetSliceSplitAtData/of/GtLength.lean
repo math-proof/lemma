@@ -15,8 +15,8 @@ import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdEraseIdx.eq.Mul_ProdEraseIdxTail.of.GtLength_0
 import Lemma.List.ProdTail.eq.MulProdS
-import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
-import Lemma.List.ProdTake.eq.Mul_ProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
+import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.List.ProdTakeTailMapCast.eq.CastProdTakeTail
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.Nat.AddAdd
@@ -33,7 +33,7 @@ import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataStack.eq.FlattenMap_FunData
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.SEqStack_Get.of.GtLength_0
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
 import Lemma.Tensor.SelectStack.eq.Stack_Select.of.GtLength
@@ -118,7 +118,7 @@ private lemma main
     have h_X := EqCast.of.SEq h_X
     conv_lhs => rw [← h_X]
     have h_s := EqCons_Tail.of.GtLength_0 (s := s) (by omega)
-    have := SelectCast.eq.Cast_Select.of.Eq h_s (([i < s[0]] (X[i]'(Lt_Length.of.GtLength_0 (by omega) X i)))) ⟨d + 1, by simp; grind⟩ ⟨i, by grind⟩
+    have := SelectCast.eq.Cast_Select.of.Eq h_s (([i < s[0]] (X[i]'(GtLength.of.GtLength_0 (by omega) X i)))) ⟨d + 1, by simp; grind⟩ ⟨i, by grind⟩
     simp at this
     simp [this]
     rw [DataCast.eq.Cast_Data.of.Eq (by grind)]
@@ -136,7 +136,7 @@ private lemma main
         simp at ih
         have h_eq : (⟨i, ((List.map Nat.cast s).tail.take (d + 1)).prod, s[d + 1]⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.drop (d + 1 + 1)).prod = (s.tail.eraseIdx d).prod := by
           rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
-          rw [ProdTake.eq.MulProdTake.of.Lt_Length (by grind)]
+          rw [ProdTake.eq.MulProdTake.of.GtLength (by grind)]
           rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)]
           rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
           rw [Drop.eq.DropTail]
@@ -174,7 +174,7 @@ private lemma main
         have h_lt : r < (⟨i, (s.tail.take (d + 1)).prod, s.tail[d]'(by simpa)⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.tail.drop (d + 1)).prod := by
           simp
           rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
-          rw [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
+          rw [ProdTake.eq.MulProdTake.of.GtLength h_d_lt]
           rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
           rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
           rw [Drop.eq.DropTail]
@@ -205,7 +205,7 @@ private lemma main
           rw [Mul_Mul.eq.MulMul]
           simp [AddMulS.eq.MulAdd]
           left
-          rw [ProdTake.eq.Mul_ProdTake.of.Lt_Length (by omega)]
+          rw [ProdTake.eq.Mul_ProdTake.of.GtLength (by omega)]
           rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
           rw [Mul_Mul.eq.MulMul]
           rw [MulMul.comm]
@@ -219,9 +219,9 @@ private lemma main
           simp at h_rₐ
           omega
         ·
-          simp [ProdTake.eq.MulProdTake.of.Lt_Length h]
+          simp [ProdTake.eq.MulProdTake.of.GtLength h]
         ·
-          simp [ProdTake.eq.MulProdTake.of.Lt_Length h]
+          simp [ProdTake.eq.MulProdTake.of.GtLength h]
           rw [EqDivMul.of.Ne_0 (by grind)]
           have h_q' := q'.isLt
           simp at h_q'
@@ -229,14 +229,14 @@ private lemma main
         ·
           grind
         ·
-          simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
+          simp [ProdTake.eq.MulProdTake.of.GtLength h_d_lt]
         ·
-          simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
+          simp [ProdTake.eq.MulProdTake.of.GtLength h_d_lt]
           rw [EqDivMul.of.Ne_0 (by grind)]
           convert (qₐ.isLt)
           simp
           rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
-          rw [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt]
+          rw [ProdTake.eq.MulProdTake.of.GtLength h_d_lt]
           rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
           rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
         ·

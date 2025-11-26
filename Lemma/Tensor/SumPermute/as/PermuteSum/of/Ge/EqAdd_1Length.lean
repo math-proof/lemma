@@ -9,7 +9,7 @@ import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
 import Lemma.List.EraseIdxPermute__Neg.eq.EraseIdx.of.Ge
 import Lemma.List.EraseIdxRotate.eq.AppendEraseIdxDrop.of.GtLength_Add
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
-import Lemma.List.GetRotate.eq.Ite.of.GeLength.Lt_Length
+import Lemma.List.GetRotate.eq.Ite.of.GeLength.GtLength
 import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
@@ -19,7 +19,7 @@ import Lemma.List.ProdDrop.eq.Get.of.EqLength_Add_1
 import Lemma.List.ProdDrop.eq.MulProdS
 import Lemma.List.ProdRotate.eq.MulProdS
 import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailRotate.eq.Take.of.EqLength_Add_1
 import Lemma.List.TakeAppend.eq.Take.of.GeLength
@@ -114,7 +114,7 @@ private lemma main
         rwa [Add.comm (a := 1)] at this
       have h_get : (s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1))[↑i - d]'(by simp; omega) = s[i] := by 
         rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp; omega)]
-        rw [GetRotate.eq.Ite.of.GeLength.Lt_Length (by simp; omega) (by simp; omega)]
+        rw [GetRotate.eq.Ite.of.GeLength.GtLength (by simp; omega) (by simp; omega)]
         simp_all
         split_ifs with h_lt
         ·
@@ -165,8 +165,8 @@ private lemma main
               have h_q' := q'.isLt
               simp [List.Vector.length] at h_q'
               let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
-              have h_prod := ProdTake.eq.MulProdTake.of.Lt_Length (show i < s.length by omega)
-              have h_prod' := ProdTake.eq.MulProdTake.of.Lt_Length (show ↑i - d < (s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1)).length by simp; omega)
+              have h_prod := ProdTake.eq.MulProdTake.of.GtLength (show i < s.length by omega)
+              have h_prod' := ProdTake.eq.MulProdTake.of.GtLength (show ↑i - d < (s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1)).length by simp; omega)
               repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
               repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ (by simpa [h_get])]
               ·

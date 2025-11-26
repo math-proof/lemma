@@ -10,13 +10,13 @@ import Lemma.List.Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0
 import Lemma.List.Prod.eq.Mul_ProdDropLast.of.GtLength_0
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.eq.Get.of.GtLength_0
-import Lemma.List.ProdDropTake.eq.Get.of.Lt_Length
+import Lemma.List.ProdDropTake.eq.Get.of.GtLength
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdPermute.eq.Prod
-import Lemma.List.ProdRotate.eq.MulProdS.of.Lt_Length
+import Lemma.List.ProdRotate.eq.MulProdS.of.GtLength
 import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTake.eq.DivProdTake.of.Lt_Length
-import Lemma.List.ProdTake.eq.Mul_ProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.DivProdTake.of.GtLength
+import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailPermute.eq.EraseIdx
 import Lemma.List.TakeTake.eq.Take.of.Ge
@@ -134,7 +134,7 @@ private lemma main
                 simp only [h_toNat]
                 simp [h_d_succ]
                 simp [h_end]
-                rw [ProdRotate.eq.MulProdS.of.Lt_Length (by omega)]
+                rw [ProdRotate.eq.MulProdS.of.GtLength (by omega)]
                 rw [DropLast.eq.Take_SubLength_1]
                 apply AddMul.lt.Mul.of.Lt.Lt _ h_t
                 rw [ProdDrop.eq.Get.of.GtLength_0 (by omega)]
@@ -229,7 +229,7 @@ private lemma main
                   simp [EqMin.of.Le h_d_succ] at ⊢ h_qₑ_div h_rₑ_mod
                   apply congrArg
                   simp [h_qₐ]
-                  rw [ProdDropTake.eq.Get.of.Lt_Length (by omega)]
+                  rw [ProdDropTake.eq.Get.of.GtLength (by omega)]
                   rw [TakeTake.eq.Take.of.Ge (by omega), ← h_qₐrₐ] at h_qₑ_div h_rₑ_mod
                   rw [ProdEraseIdx.eq.MulProdS, Mul_Mul.eq.MulMul] at h_q'_div h_r'_mod
                   rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_q'_div
@@ -261,10 +261,10 @@ private lemma main
               left
               simp [ProdRotate.eq.Prod]
         ·
-          simp [ProdTake.eq.Mul_ProdTake.of.Lt_Length d.isLt]
+          simp [ProdTake.eq.Mul_ProdTake.of.GtLength d.isLt]
         ·
           have := Gt_0 i
-          rwa [ProdTake.eq.DivProdTake.of.Lt_Length d.isLt (by grind)] at h_q
+          rwa [ProdTake.eq.DivProdTake.of.GtLength d.isLt (by grind)] at h_q
         ·
           exact i.isLt
       ·

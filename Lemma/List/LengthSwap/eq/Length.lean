@@ -1,4 +1,4 @@
-import Lemma.List.LengthAppend_Cons_Drop.eq.Length.of.Lt.Lt_Length
+import Lemma.List.LengthAppend_Cons_Drop.eq.Length.of.Lt.GtLength
 import Lemma.Nat.NotGt.is.Le
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
@@ -18,7 +18,7 @@ private lemma main
   ·
     rfl
   ·
-    apply LengthAppend_Cons_Drop.eq.Length.of.Lt.Lt_Length h_lt? h_j
+    apply LengthAppend_Cons_Drop.eq.Length.of.Lt.GtLength h_lt? h_j
   ·
     rfl
   ·
@@ -26,7 +26,7 @@ private lemma main
     simp at h_eq
     have h_ne := Ne.of.NotEq h_eq
     have h_lt := Lt.of.Le.Ne h_le h_ne.symm
-    apply LengthAppend_Cons_Drop.eq.Length.of.Lt.Lt_Length h_lt h_i
+    apply LengthAppend_Cons_Drop.eq.Length.of.Lt.GtLength h_lt h_i
   ·
     rfl
 

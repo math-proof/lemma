@@ -1,5 +1,5 @@
 import Lemma.List.GetDrop.eq.Get_Add.of.GtLength_Add
-import Lemma.List.Take.eq.AppendTake.of.Lt_Length
+import Lemma.List.Take.eq.AppendTake.of.GtLength
 open List
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   (s.drop i).take (d + 1) = (s.drop i).take d ++ [s[i + d]] := by
 -- proof
-  rw [Take.eq.AppendTake.of.Lt_Length (s := s.drop i)]
+  rw [Take.eq.AppendTake.of.GtLength (s := s.drop i)]
   ·
     rw [GetDrop.eq.Get_Add.of.GtLength_Add]
   ·

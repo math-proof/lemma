@@ -1,5 +1,5 @@
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.List.GetSet.eq.Get.of.Ne.Lt_Length
+import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
 import Lemma.Nat.Ne.of.Gt
 open List Nat
 
@@ -16,7 +16,7 @@ private lemma main
   ((s.set d a).take 1).prod = s[0] := by
 -- proof
   rw [ProdTake_1.eq.Get_0.of.GtLength_0 (by grind)]
-  apply GetSet.eq.Get.of.Ne.Lt_Length
+  apply GetSet.eq.Get.of.Ne.GtLength
   apply Ne.of.Gt h_d
 
 

@@ -16,7 +16,7 @@ import Lemma.List.LengthTake.gt.Zero.of.LengthTake.gt.Zero
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.Sub_1.lt.LengthTail.of.In_Ioo0Length
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.In_CartesianProduct.of.In_CartesianProductCons
 import Lemma.List.Lt.of.In_CartesianProductCons

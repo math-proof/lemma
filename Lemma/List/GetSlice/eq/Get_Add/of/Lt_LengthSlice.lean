@@ -1,4 +1,4 @@
-import Lemma.List.GetArraySlice.eq.Get_Add.of.Lt_Length
+import Lemma.List.GetArraySlice.eq.Get_Add.of.GtLength
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.Nat.Lt.of.Lt_Min
@@ -17,7 +17,7 @@ private lemma main
   (s.slice i n)[j] = s[i + j] := by
 -- proof
   unfold List.slice
-  rw [GetArraySlice.eq.Get_Add.of.Lt_Length]
+  rw [GetArraySlice.eq.Get_Add.of.GtLength]
 
 
 -- created on 2025-06-07

@@ -1,5 +1,5 @@
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
-import Lemma.List.GetInsertIdx.eq.Get.of.Gt.Lt_Length
+import Lemma.List.GetInsertIdx.eq.Get.of.Gt.GtLength
 open List
 
 
@@ -16,7 +16,7 @@ private lemma fin
     linarith
   (s.insertIdx i a).get ⟨j, h_i⟩ = s.get ⟨j, by linarith⟩ := by
 -- proof
-  apply GetInsertIdx.eq.Get.of.Gt.Lt_Length.fin
+  apply GetInsertIdx.eq.Get.of.Gt.GtLength.fin
   assumption
 
 

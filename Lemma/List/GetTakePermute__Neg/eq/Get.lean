@@ -1,4 +1,4 @@
-import Lemma.List.EqGetS.of.Eq.Lt_Length
+import Lemma.List.EqGetS.of.Eq.GtLength
 import Lemma.List.TakePermute__Neg.eq.ListGet
 import Lemma.Nat.Gt_0
 open List Nat
@@ -16,7 +16,7 @@ private lemma main
 -- proof
   intro h h_length
   have := TakePermute__Neg.eq.ListGet i
-  have := EqGetS.of.Eq.Lt_Length (i := 0) (by simp; omega) this
+  have := EqGetS.of.Eq.GtLength (i := 0) (by simp; omega) this
   simpa
 
 

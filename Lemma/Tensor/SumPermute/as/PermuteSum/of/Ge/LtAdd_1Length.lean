@@ -4,7 +4,7 @@ import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.DropPermute__Neg.eq.AppendDropTake.of.Ge.GtLength
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxPermute__Neg.eq.EraseIdx.of.Ge
-import Lemma.List.Get.dvd.ProdTake.of.Lt_Length
+import Lemma.List.Get.dvd.ProdTake.of.GtLength
 import Lemma.List.GetPermute__Neg.eq.Get.of.Ge.GtLength
 import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
@@ -15,8 +15,8 @@ import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdRotate.eq.MulProdS
 import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
-import Lemma.List.ProdTake.eq.Mul_ProdTake.of.Lt_Length
+import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
+import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TakeDrop.eq.DropTake
@@ -160,7 +160,7 @@ private lemma main
               conv_rhs => simp [DropTake.eq.TakeDrop]
               rw [Sub_Sub.eq.Add.of.Ge.comm]
               have := Lt_Sub_Sub.of.Ge.Gt i.isLt h_d
-              rw [ProdTake.eq.Mul_ProdTake.of.Lt_Length (show d < (s.drop (i - d)).length by simpa)]
+              rw [ProdTake.eq.Mul_ProdTake.of.GtLength (show d < (s.drop (i - d)).length by simpa)]
               simp [TakeDrop.eq.DropTake]
               simp [EqAddSub.of.Ge h_d]
               repeat conv_rhs => rw [Mul_Mul.eq.MulMul]
@@ -217,7 +217,7 @@ private lemma main
                 simp
                 simp [Mul_Mul.eq.MulMul] at h_rₐ_mod
                 simp [ProdRotate.eq.Prod] at *
-                rw [ProdTake.eq.Mul_ProdTake.of.Lt_Length (by simp; omega)] at ⊢ h_qₑ_div h_rₑ_mod
+                rw [ProdTake.eq.Mul_ProdTake.of.GtLength (by simp; omega)] at ⊢ h_qₑ_div h_rₑ_mod
                 simp at ⊢ h_qₑ_div h_rₑ_mod
                 simp [TakeDrop.eq.DropTake] at ⊢ h_qₑ_div h_rₑ_mod
                 simp [EqAddSub.of.Ge h_d] at ⊢ h_qₑ_div h_rₑ_mod
@@ -278,16 +278,16 @@ private lemma main
             rw [EqMin.of.Le (by omega)]
             rw [Append_Append.eq.AppendAppend]
         ·
-          apply Get.dvd.ProdTake.of.Lt_Length
+          apply Get.dvd.ProdTake.of.GtLength
         ·
           simp [List.Vector.length] at h_q'
           rw [LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength (by simp) (by simpa [h_get])] at h_q'
-          simp [ProdTake.eq.MulProdTake.of.Lt_Length i.isLt]
+          simp [ProdTake.eq.MulProdTake.of.GtLength i.isLt]
           rwa [EqDivMul.of.Ne_0 h_ne_0]
         ·
-          apply Get.dvd.ProdTake.of.Lt_Length
+          apply Get.dvd.ProdTake.of.GtLength
         ·
-          simp [ProdTake.eq.MulProdTake.of.Lt_Length h_sub_lt]
+          simp [ProdTake.eq.MulProdTake.of.GtLength h_sub_lt]
           rwa [EqDivMul.of.Ne_0]
           rwa [h_get]
       ·

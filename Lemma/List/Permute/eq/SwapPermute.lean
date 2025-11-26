@@ -1,9 +1,9 @@
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.Bool.IffEqS.of.Eq
-import Lemma.List.GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt_Length
+import Lemma.List.GetSwap.eq.Ite.of.GtLength.GtLength.GtLength
 import Lemma.List.EqSwap.of.Ge_Length
 import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
-import Lemma.List.GetPermute.eq.Ite.of.Lt_Length.Lt_Length
+import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
 open List Bool
 
 
@@ -28,13 +28,13 @@ private lemma main
     if h_j : j < s.length then
       simp_all
       apply IffEqS.of.Eq
-      rw [GetSwap.eq.Ite.of.Lt_Length.Lt_Length.Lt_Length (by simp; linarith) (by simp_all) (by simp_all)]
+      rw [GetSwap.eq.Ite.of.GtLength.GtLength.GtLength (by simp; linarith) (by simp_all) (by simp_all)]
       split_ifs <;>
       ·
         try simp_all
-        rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
+        rw [GetPermute.eq.Ite.of.GtLength.GtLength]
         simp [show s.permute i (d + 1) = s.permute i ↑(d + 1) by simp]
-        rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
+        rw [GetPermute.eq.Ite.of.GtLength.GtLength]
         repeat grind
     else
       simp_all

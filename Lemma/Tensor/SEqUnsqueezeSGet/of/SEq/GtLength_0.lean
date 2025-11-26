@@ -1,4 +1,4 @@
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.SEqBFnSGet.of.SEq.GtLength_0
 open Tensor
 
@@ -14,8 +14,8 @@ private lemma main
   (dim : ℕ) :
 -- imply
   have h_s := h_X.left
-  have := Lt_Length.of.GtLength_0 h X i
-  have := Lt_Length.of.GtLength_0 (by grind) X' ⟨i, by grind⟩
+  have := GtLength.of.GtLength_0 h X i
+  have := GtLength.of.GtLength_0 (by grind) X' ⟨i, by grind⟩
   X[i].unsqueeze dim ≃ X'[i].unsqueeze dim := by
 -- proof
   apply SEqBFnSGet.of.SEq.GtLength_0 h h_X i _ (fun s X => X.unsqueeze dim)

@@ -2,11 +2,11 @@ import sympy.tensor.functions
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
-import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
+import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength
+import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 open Tensor List Bool Nat
 
 
@@ -24,22 +24,22 @@ private lemma main
   unfold Tensor.keepdim
   simp
   have h_d := d.isLt
-  have h_dim := Lt_LengthInsertIdxEraseIdx.of.Lt_Length h_d 1
+  have h_dim := Lt_LengthInsertIdxEraseIdx.of.GtLength h_d 1
   have h_cast := SelectCast.eq.Cast_Select.of.Eq
-    (by simp [EqSetInsertIdxEraseIdx.of.Lt_Length])
+    (by simp [EqSetInsertIdxEraseIdx.of.GtLength])
     ((((X.sum d).unsqueeze d).repeat s[d] ⟨d, h_dim⟩)) ⟨d, by simpa⟩ ⟨i, by simp⟩
     (s' := s)
   simp at h_cast
   simp [h_cast]
   apply Eq_Cast.of.SEq.Eq
   ·
-    simp [EqSetInsertIdxEraseIdx.of.Lt_Length]
+    simp [EqSetInsertIdxEraseIdx.of.GtLength]
   ·
     have h := SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet (by simp) ((X.sum d).unsqueeze d) (i := i) (d := ⟨d, by simpa⟩) (n := s[d])
     apply SEq.symm ∘ h.trans
     simp [EqMod_1'0] at *
     apply SEqSelectUnsqueeze.of.GeLength
-    rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_d]
+    rw [LengthEraseIdx.eq.SubLength_1.of.GtLength h_d]
     omega
 
 

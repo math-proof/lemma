@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 import sympy.tensor.tensor
 open Tensor
 
@@ -10,7 +10,7 @@ private lemma main
   (h : s.length > 0)
   (A B : Tensor α s) :
 -- imply
-  A = B ↔ ∀ i : Fin s[0], A.get ⟨i, by apply Lt_Length.of.GtLength_0 h⟩ = B.get ⟨i, by apply Lt_Length.of.GtLength_0 h⟩ := by
+  A = B ↔ ∀ i : Fin s[0], A.get ⟨i, by apply GtLength.of.GtLength_0 h⟩ = B.get ⟨i, by apply GtLength.of.GtLength_0 h⟩ := by
 -- proof
   match s with
   | [] =>

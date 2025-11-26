@@ -27,7 +27,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthPermute.eq.Get_0.of.GtVal_0
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Tensor.SEqGetS.of.SEq.Lt_Length
+import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.SEqPermute__0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -58,7 +58,7 @@ private lemma main
     simp
     have := SEqPermute__0 (X.get ⟨k, h_Xk⟩) ⟨i, by grind⟩
     apply SEq.symm ∘ SEq.trans this
-    apply SEqGetS.of.SEq.Lt_Length
+    apply SEqGetS.of.SEq.GtLength
     apply SEq_Permute__0
   else if h_i0 : i = 0 then
     have : NeZero d := ⟨h_d⟩

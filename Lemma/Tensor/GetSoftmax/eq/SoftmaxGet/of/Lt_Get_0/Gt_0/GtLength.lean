@@ -3,9 +3,9 @@ import Lemma.Tensor.GetDiv.eq.DivGetS
 import Lemma.Tensor.GetExp.eq.ExpGet
 import Lemma.Tensor.LengthExp.eq.Length
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.Tensor.GetKeepdim.eq.KeepdimCast_Get.of.Lt_Get_0.Gt_0.Lt_Length
+import Lemma.Tensor.GetKeepdim.eq.KeepdimCast_Get.of.Lt_Get_0.Gt_0.GtLength
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length
+import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength
 open Tensor Bool
 
 
@@ -28,10 +28,10 @@ private lemma fin
   rw [GetDiv.eq.DivGetS.fin (i := ⟨i, by simpa [LengthExp.eq.Length]⟩)]
   rw [GetExp.eq.ExpGet.fin (i := ⟨i, h_iX⟩)]
   apply EqUFnS.of.Eq _ (exp (X.get ⟨i, h_iX⟩) / ·)
-  rw [GetKeepdim.eq.KeepdimCast_Get.of.Lt_Get_0.Gt_0.Lt_Length h_s h_d h_i]
+  rw [GetKeepdim.eq.KeepdimCast_Get.of.Lt_Get_0.Gt_0.GtLength h_s h_d h_i]
   congr
   apply EqCast.of.SEq
-  have := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.Lt_Length.fin h_s h_d h_i (exp X)
+  have := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength.fin h_s h_d h_i (exp X)
   apply SEq.trans this
   rw [GetExp.eq.ExpGet.fin (i := ⟨i, h_iX⟩)]
 

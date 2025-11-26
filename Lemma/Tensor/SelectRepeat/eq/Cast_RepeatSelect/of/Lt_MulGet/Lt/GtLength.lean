@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
-import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt_MulGet.Lt.Lt_Length
+import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt_MulGet.Lt.GtLength
 open Bool List Tensor
 
 
@@ -20,7 +20,7 @@ private lemma main
   ·
     simp [EraseIdxSet.eq.SetEraseIdx.of.Lt h_k, GetEraseIdx.eq.Get.of.Gt.GtLength h_d h_k]
   ·
-    apply SelectRepeat.as.RepeatSelect.of.Lt_MulGet.Lt.Lt_Length _ h_k
+    apply SelectRepeat.as.RepeatSelect.of.Lt_MulGet.Lt.GtLength _ h_k
 
 
 -- created on 2025-11-26

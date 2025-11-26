@@ -1,5 +1,5 @@
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
@@ -42,7 +42,7 @@ private lemma main
     simp
   ·
     simp
-    rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]
+    rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by omega)]
     omega
   ·
     simp

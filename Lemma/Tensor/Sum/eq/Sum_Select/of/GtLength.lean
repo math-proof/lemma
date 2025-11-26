@@ -5,14 +5,14 @@ import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.EqGetCons
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
+import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Tensor.Cast_Sum.eq.Sum_Cast.of.Eq
 import Lemma.Tensor.EqGetStack.of.Lt
 import Lemma.Tensor.EqStackS.of.All_Eq
 import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
-import Lemma.Tensor.Lt_Length.of.GtLength
+import Lemma.Tensor.GtLength.of.GtLength
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Tensor.Sum.eq.Cast_Stack_Sum.of.LtAdd_1Length
@@ -50,7 +50,7 @@ private lemma main
         simp
         have h_s := Gt_0.of.Gt h
         simp only [EqGetCons] at h_t
-        have := EqGetStack.of.Lt.fin h_t (fun j : Fin s[0] => ∑ k, (X[j]'(Lt_Length.of.GtLength h X j)).select ⟨i, h_lt_length_tail⟩ k)
+        have := EqGetStack.of.Lt.fin h_t (fun j : Fin s[0] => ∑ k, (X[j]'(GtLength.of.GtLength h X j)).select ⟨i, h_lt_length_tail⟩ k)
         simp at this
         rw [this]
         rw [GetSum.eq.Sum_Get.of.GtLength_0.fin _ (fun k : Fin s[i + 1] => X.select ⟨i + 1, h⟩ k) ⟨t, _⟩]
@@ -72,7 +72,7 @@ private lemma main
           .
             simp
         ·
-          rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simpa)]
+          rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by simpa)]
           apply Gt_0.of.Gt h_i
         ·
           rwa [GetEraseIdx.eq.Get.of.Gt.GtLength (by simpa) (by simp)]

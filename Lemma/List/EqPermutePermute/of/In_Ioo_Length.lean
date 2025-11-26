@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Bool.IffEqS.of.Eq
-import Lemma.List.GetPermute__Neg.eq.Ite.of.Lt_Length
-import Lemma.List.GetPermute.eq.Ite.of.Lt_Length.Lt_Length
+import Lemma.List.GetPermute__Neg.eq.Ite.of.GtLength
+import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
 import Lemma.List.GetElem.eq.None.of.Ge_Length
 open Bool List
 
@@ -21,11 +21,11 @@ private lemma main
   if h_k_length : k < s.length then
     simp [h_k_length]
     apply IffEqS.of.Eq
-    rw [GetPermute__Neg.eq.Ite.of.Lt_Length (by simpa)]
+    rw [GetPermute__Neg.eq.Ite.of.GtLength (by simpa)]
     split_ifs <;>
     ·
       try simp
-      rw [GetPermute.eq.Ite.of.Lt_Length.Lt_Length]
+      rw [GetPermute.eq.Ite.of.GtLength.GtLength]
       repeat grind
   else
     simp at h_k_length

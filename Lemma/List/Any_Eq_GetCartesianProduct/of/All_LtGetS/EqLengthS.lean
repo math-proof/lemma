@@ -2,7 +2,7 @@ import Lemma.List.LengthCartesianProduct.eq.Prod
 import Lemma.List.CartesianProductNil.eq.ListNil
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.List.CartesianProductCons.eq.FlatMap_FunMapCartesianProduct
-import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength
+import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.GtLength.All_EqLength
 open List Nat
 
 
@@ -47,7 +47,7 @@ private lemma main
       use ⟨x₀ * s.prod + i, this⟩
       simp [CartesianProductCons.eq.FlatMap_FunMapCartesianProduct]
       unfold List.flatMap
-      rw [GetFlatten_AddMul.eq.Get.of.Lt.Lt_Length.All_EqLength] <;>
+      rw [GetFlatten_AddMul.eq.Get.of.Lt.GtLength.All_EqLength] <;>
       ·
         simp_all
 

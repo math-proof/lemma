@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqStack_Get
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 import sympy.tensor.stack
 open Tensor
 
@@ -10,7 +10,7 @@ private lemma main
   (h : s.length > 0)
   (X : Tensor α s) :
 -- imply
-  [i < s[0]] X[i]'(Lt_Length.of.GtLength_0 h X i) ≃ X := by
+  [i < s[0]] X[i]'(GtLength.of.GtLength_0 h X i) ≃ X := by
 -- proof
   match s with
   | [] =>

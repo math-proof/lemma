@@ -2,7 +2,7 @@ import stdlib.List
 import Lemma.Nat.NotGt.is.Le
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.List.ProdAppend_Cons_Drop.eq.Prod.of.Lt.Lt_Length
+import Lemma.List.ProdAppend_Cons_Drop.eq.Prod.of.Lt.GtLength
 open List Bool Nat
 
 
@@ -20,7 +20,7 @@ private lemma main
   ·
     rfl
   ·
-    apply ProdAppend_Cons_Drop.eq.Prod.of.Lt.Lt_Length h_lt? h_j
+    apply ProdAppend_Cons_Drop.eq.Prod.of.Lt.GtLength h_j h_lt?
   ·
     rfl
   ·
@@ -28,7 +28,7 @@ private lemma main
     simp at h_eq
     have h_ne := Ne.of.NotEq h_eq
     have h_lt := Lt.of.Le.Ne h_le h_ne.symm
-    apply ProdAppend_Cons_Drop.eq.Prod.of.Lt.Lt_Length h_lt h_i
+    apply ProdAppend_Cons_Drop.eq.Prod.of.Lt.GtLength h_i h_lt
   ·
     rfl
 

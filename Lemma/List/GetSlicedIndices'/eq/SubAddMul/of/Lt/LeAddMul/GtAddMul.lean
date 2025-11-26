@@ -1,5 +1,5 @@
 import Lemma.Int.SubSub
-import Lemma.List.EqGetSSlicedIndices'.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
+import Lemma.List.EqGetSSlicedIndices'.of.GtLength.GtLength.Gt_0.Gt_0.Le.Le.Lt.Lt
 import Lemma.List.EqLengthGetSlicedIndices'.of.LeSubAddMul.GtSubAddMul
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
@@ -43,7 +43,7 @@ private lemma main
       | i + 1 =>
         simp
         rw [← ih (i := i) (j := j) (by nlinarith [j'.isLt]) (by grind) (by simp_all)]
-        apply EqGetSSlicedIndices'.of.Lt_Length.Lt_Length.Gt_0.Gt_0.Le.Le.Lt.Lt
+        apply EqGetSSlicedIndices'.of.GtLength.GtLength.Gt_0.Gt_0.Le.Le.Lt.Lt
         repeat grind
     ·
       have h := Ge.of.NotLt h_start?

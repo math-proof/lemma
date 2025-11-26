@@ -1,9 +1,9 @@
 import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
 import Lemma.Nat.LtVal
 import Lemma.Nat.LtSubS.of.Lt.Le
-import Lemma.Tensor.Lt_Length.of.GtLength_0
+import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.List.GetSet.eq.Get.of.Gt.Lt_Length
+import Lemma.List.GetSet.eq.Get.of.Gt.GtLength
 import Lemma.Nat.Gt_0
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
@@ -31,7 +31,7 @@ private lemma main
   have h_s₀ : s₀ = s.headD 1 := by
     simp only [s₀]
     repeat rw [HeadD.eq.Get_0.of.GtLength_0 (by grind)]
-    apply GetSet.eq.Get.of.Gt.Lt_Length h_s h
+    apply GetSet.eq.Get.of.Gt.GtLength h_s h
   have h_head := HeadD.eq.Get_0.of.GtLength_0 h_s 1
   have h_d_1 : d - 1 < s.tail.length := by
     simp
@@ -46,7 +46,7 @@ private lemma main
         congr
         repeat apply EqAddSub.of.Ge (by linarith)
       )
-      ((X.get ⟨i, Lt_Length.of.GtLength_0 (by grind) X ⟨i, by grind⟩⟩).repeat n ⟨d - 1, h_d_1⟩) := by
+      ((X.get ⟨i, GtLength.of.GtLength_0 (by grind) X ⟨i, by grind⟩⟩).repeat n ⟨d - 1, h_d_1⟩) := by
 -- proof
   intro s₀ h_s h_s₀ h_head h_d_1
   ext i

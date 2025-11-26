@@ -1,6 +1,6 @@
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.Lt_Length
+import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.GtLength
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.AddAdd
@@ -24,7 +24,7 @@ private lemma main
   rw [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length]
   ·
     rw [EraseIdx.eq.Append_Drop_Add_1 s (j + 1)]
-    rw [EraseIdxAppend.eq.AppendEraseIdx.of.Lt_Length]
+    rw [EraseIdxAppend.eq.AppendEraseIdx.of.GtLength]
     ·
       rw [EraseIdx.eq.Append_Drop_Add_1 _ i]
       rw [TakeTake.eq.Take.of.Ge (by omega)]

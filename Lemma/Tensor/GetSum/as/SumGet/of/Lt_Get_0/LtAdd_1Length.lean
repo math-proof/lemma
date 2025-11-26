@@ -1,7 +1,7 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0
 import Lemma.Tensor.Sum.as.Stack_Sum.of.LtAdd_1Length
-import Lemma.Tensor.SEqGetS.of.SEq.Lt_Length
+import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.EqGetStack
 open Tensor
 
@@ -23,7 +23,7 @@ private lemma main
   have := Sum.as.Stack_Sum.of.LtAdd_1Length h_d X
   have h_i' : i < (X.sum (d + 1)).length := by
     rwa [LengthSum.eq.Length.of.Gt_0 (by linarith)]
-  have := SEqGetS.of.SEq.Lt_Length.fin h_i' this
+  have := SEqGetS.of.SEq.GtLength.fin h_i' this
   rwa [EqGetStack.fn.fin] at this
 
 

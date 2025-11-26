@@ -16,7 +16,7 @@ private lemma main
 -- proof
   have := SEqPermutePermute__Neg.of.GtLength_Add (i := i - d) (d := d) (by omega) X
   apply SEq.symm ∘ SEq.trans this.symm
-  repeat apply SEqPermuteS.of.SEq.Eq.Eq.Lt_Length _ (by omega) rfl
+  repeat apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ (by omega) rfl
   rfl
 
 

@@ -1,7 +1,7 @@
 import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.EqMulS.of.Eq
-import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.Lt_Length
+import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
 open List Nat
 
 
@@ -19,7 +19,7 @@ private lemma main
   apply EqMulS.of.Eq.left
   rw [MulMul.eq.Mul_Mul]
   apply EqMulS.of.Eq.left
-  apply Mul_ProdDrop_Add_1.eq.ProdDrop.of.Lt_Length
+  apply Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength
 
 
 -- created on 2025-07-17

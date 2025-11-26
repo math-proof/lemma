@@ -1,7 +1,6 @@
-import stdlib.List
 import Lemma.Nat.LtAddS.is.Lt
 import Lemma.List.Eq.of.GetElemRange.eq.Some
-import Lemma.List.GetElemEnumerate.eq.Some.of.Lt_length
+import Lemma.List.GetElemEnumerate.eq.Some.of.GtLength
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.Eq.of.EqValS
 import Lemma.Nat.Cast_1.eq.One
@@ -54,7 +53,7 @@ private lemma main
       have h := h ⟨i', hi'⟩ tail[i']
       constructor
       ·
-        rw [GetElemEnumerate.eq.Some.of.Lt_length]
+        rw [GetElemEnumerate.eq.Some.of.GtLength]
       ·
         rw [← hc]
         rw [hi]
@@ -73,7 +72,7 @@ private lemma main
         simp [Eq.of.GetElemRange.eq.Some h_some]
         have : i + 1 < (head :: tail).length := by
           simp_all
-        have := GetElemEnumerate.eq.Some.of.Lt_length this
+        have := GetElemEnumerate.eq.Some.of.GtLength this
         simp_all
         congr
         simp
