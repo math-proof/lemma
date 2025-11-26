@@ -16,7 +16,7 @@ private lemma main
   rw [Length.eq.Get_0.of.GtLength_0]
   ·
     simp
-    rwa [List.GetEraseIdx.eq.Get.of.Lt.Lt_Length h_d]
+    rwa [List.GetEraseIdx.eq.Get.of.Gt.GtLength h_d]
   ·
     simp
     rw [List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_d]

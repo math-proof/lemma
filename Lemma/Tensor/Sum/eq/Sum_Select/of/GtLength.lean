@@ -4,7 +4,7 @@ import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Lengt
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.EqGetCons
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
-import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
+import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Nat.Lt_Sub.of.LtAdd
@@ -75,7 +75,7 @@ private lemma main
           rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by simpa)]
           apply Gt_0.of.Gt h_i
         ·
-          rwa [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
+          rwa [GetEraseIdx.eq.Get.of.Gt.GtLength (by simpa) (by simp)]
       .
         rw [EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0]
     .

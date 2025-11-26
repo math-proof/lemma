@@ -19,7 +19,7 @@ import Lemma.List.MulProd_Mul_Prod.eq.Mul_Prod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.List.AddMul_ProdSet.lt.MulProd_Mul_Prod.of.Lt_Mul_ProdTail.Lt_Get_0.GtVal_0.GtLength_0
 import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
-import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.GtLength
 import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -34,7 +34,7 @@ import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.Gt_Length
 import Lemma.List.ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Vector.EqGetSSplitAt.of.Lt_Mul_ProdTail.Gt_0.Lt_Get_0.GtLength_0
 import Lemma.Vector.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.List.Lt_ProdTakeSet.of.Gt_0.Lt_Get_0.GtLength_0
@@ -89,7 +89,7 @@ private lemma main
         simp
       ·
         rw [MulProd_Mul_Prod.eq.Mul_Prod]
-        rw [ProdSet__Mul_Get.eq.Mul_Prod.of.Lt_Length.fin]
+        rw [ProdSet__Mul_Get.eq.Mul_Prod.of.GtLength.fin]
       ·
         rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin]
         ·
@@ -102,7 +102,7 @@ private lemma main
               simp
               rwa [ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0]
             simp only [GetElem.getElem]
-            have h_eq := MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.Lt_Length (d.isLt) n
+            have h_eq := MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.GtLength (d.isLt) n
             have h_eq := EqUFnS.of.Eq h_eq (List.Vector α)
             have h_i_prod := Lt_ProdTakeSet.of.Gt_0.Lt_Get_0.GtLength_0 (by assumption) h_i h (n * s[d])
             have h_t_prod := Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0 h h_t
@@ -149,7 +149,7 @@ private lemma main
               .
                 simp_all
             ·
-              apply MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.Lt_Length
+              apply MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.GtLength
           ·
             simp
             rw [ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0]

@@ -9,7 +9,7 @@ import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdDrop.eq.MulProdSDrop.of.Le
 import Lemma.List.ProdDropSet__Mul_Get.eq.Mul_ProdDrop.of.Ge.Lt_Length
-import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
 import Lemma.List.TakeSet.eq.Take.of.Ge
 import Lemma.Nat.AddAdd
@@ -45,7 +45,7 @@ open List Nat Bool Tensor Vector
 @[main]
 private lemma main
 -- given
-  (h_k : k < s.length)
+  (h_k : s.length > k)
   (h_d : k > d)
   (h_i : i < s[d])
   (X : Tensor α s)
@@ -53,7 +53,7 @@ private lemma main
 -- imply
   (X.repeat n ⟨k, h_k⟩).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select ⟨d, by grind⟩ ⟨i, h_i⟩).repeat n ⟨k - 1, by grind⟩ := by
 -- proof
-  have h_get_eraseIdx : (s.eraseIdx d)[k - 1]'(by grind) = s[k] := by 
+  have h_get_eraseIdx : (s.eraseIdx d)[k - 1]'(by grind) = s[k] := by
     rw [GetEraseIdx.eq.Get_Add_1.of.Le.LtAdd_1Length (by omega) (by omega)]
     simp [EqAddSub.of.Ge (show k ≥ 1 by omega)]
   apply SEq.of.SEqDataS.Eq
@@ -65,7 +65,7 @@ private lemma main
     conv_rhs => rw [DataRepeat.eq.Cast_FlattenMapSplitAtData]
     have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s.set k (n * s[k])) (d := d) (i := i) (by grind) (by grind)
     simp at h_length_slice
-    have h_prod_set := ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length (s := s.eraseIdx d) (i := k - 1) (by grind) n
+    have h_prod_set := ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength (s := s.eraseIdx d) (i := k - 1) (by grind) n
     have h_d_length : d < s.length := by omega
     apply SEqCastS.of.SEq.Eq.Eq
     ·
@@ -107,7 +107,7 @@ private lemma main
           ·
             have h_prod_take := ProdTake.eq.MulProdTake.of.Lt_Length h_d_length
             simp [List.Vector.length]
-            have h_lt : (↑q * s[d] + i) * ((s.set k (n * s[k])).drop (d + 1)).prod + ↑r < (s.take k).prod * (n * (s.drop k).prod) := by 
+            have h_lt : (↑q * s[d] + i) * ((s.set k (n * s[k])).drop (d + 1)).prod + ↑r < (s.take k).prod * (n * (s.drop k).prod) := by
               simp [ProdDropSet__Mul_Get.eq.Mul_ProdDrop.of.Ge.Lt_Length h_k (show k ≥ d + 1 by omega)] at ⊢ h_r
               conv_rhs => rw [Mul_Mul.eq.MulMul]
               conv_rhs => rw [MulMul.comm]
@@ -120,7 +120,7 @@ private lemma main
               rwa [TakeSet.eq.Take.of.Ge (show k ≥ d by omega)] at h_q
             let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
             let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
-            have h_lt : ↑q' * ((s.eraseIdx d).drop (k - 1)).prod + ↑r' % ((s.eraseIdx d).drop (k - 1)).prod < (⟨↑i, ↑(s.take (d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by 
+            have h_lt : ↑q' * ((s.eraseIdx d).drop (k - 1)).prod + ↑r' % ((s.eraseIdx d).drop (k - 1)).prod < (⟨↑i, ↑(s.take (d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
               simp [h_length_slice]
               rw [Prod.eq.MulProdS (s.eraseIdx d) (k - 1)]
               apply AddMul.lt.Mul.of.Lt.Lt q'.isLt
@@ -179,7 +179,7 @@ private lemma main
           ·
             simp [h_length_slice]
           ·
-            simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length h_k]
+            simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength h_k]
         ·
           simp [ProdTake.eq.MulProdTake.of.Lt_Length h_d_lt_length]
         ·

@@ -11,7 +11,7 @@ import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Tensor.GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1
-import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.Lt_Length
+import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength
 import Lemma.Tensor.GetSum_0.as.SumSelect.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermuteHead_1
@@ -55,7 +55,7 @@ private lemma main
         simp at h_t
         rw [GetAppend.eq.Get.of.Lt_Length (by simpa)] at h_t
         rw [GetTake.eq.Get.of.Lt_LengthTake (by simpa)] at h_t
-        rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.Lt_Length.fin]
+        rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength.fin]
         ·
           simp
           have := GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1 (by simpa) (by simpa) X (d := d + 1) (k := t)

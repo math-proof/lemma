@@ -11,7 +11,7 @@ private lemma main
   [Monoid α]
   {s : List α}
 -- given
-  (h : i < s.length)
+  (h : s.length > i)
   (a : α) :
 -- imply
   (s.set i a).prod = (s.take i).prod * (a * (s.drop (i + 1)).prod) := by

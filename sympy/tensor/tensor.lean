@@ -17,7 +17,7 @@ import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.Sub_1.lt.LengthTail.of.In_Ioo0Length
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
+import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.In_CartesianProduct.of.In_CartesianProductCons
 import Lemma.List.Lt.of.In_CartesianProductCons
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
@@ -78,7 +78,7 @@ def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) 
         conv_rhs =>
           rw [Eq_Cons_Tail.of.GtLength_0 (show (s.eraseIdx offset).length > 0 by grind)]
         congr
-        rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length]
+        rw [GetEraseIdx.eq.Get.of.Gt.GtLength]
         · apply List.HeadD.eq.Get_0.of.GtLength_0
         · simp
         · assumption

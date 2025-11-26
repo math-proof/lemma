@@ -1,5 +1,5 @@
 import Lemma.Nat.Mul
-import Lemma.List.ProdSet__MulGet.eq.MulProd.of.Lt_Length
+import Lemma.List.ProdSet__MulGet.eq.MulProd.of.GtLength
 open List Nat
 
 
@@ -8,13 +8,13 @@ private lemma main
   [CommMonoid α]
   {s : List α}
 -- given
-  (h : i < s.length)
+  (h : s.length > i)
   (t : α) :
 -- imply
   (s.set i (t * s[i])).prod = t * s.prod := by
 -- proof
   repeat rw [Mul.comm (a := t)]
-  apply ProdSet__MulGet.eq.MulProd.of.Lt_Length h
+  apply ProdSet__MulGet.eq.MulProd.of.GtLength h
 
 
 @[main]
@@ -22,7 +22,7 @@ private lemma fin
   [CommMonoid α]
   {s : List α}
 -- given
-  (h : i < s.length)
+  (h : s.length > i)
   (t : α) :
 -- imply
   (s.set i (t * s.get ⟨i, h⟩)).prod = t * s.prod := by

@@ -9,7 +9,7 @@ import Lemma.Nat.EqMaxS.of.Mk.eq.IteGt
 import Lemma.Nat.EqMulDiv.of.Dvd
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.ProdInsertIdx.eq.Prod
-import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx
@@ -268,7 +268,7 @@ the following eqaulity holds:
   X[i₀, i₁, i₂, i₃, i₄, i₅, i₆, i₇, i₈, i₉] = t'[i₀, i₁, i₂, i₃, i₄ + s₄ * X, i₅, i₆, i₇, i₈, i₉]
 -/
 def Tensor.repeat (X : Tensor α s) (n : ℕ) (dim : Fin s.length) : Tensor α (s.set dim (n * s[dim])) :=
-  ⟨cast (by simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length dim.isLt]) ((X.data.splitAt dim).map (·.repeat n)).flatten⟩
+  ⟨cast (by simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength dim.isLt]) ((X.data.splitAt dim).map (·.repeat n)).flatten⟩
 
 def Tensor.rotate (X : Tensor α s) (i : ℕ): Tensor α (s.rotate i) :=
   let k := i % s.length

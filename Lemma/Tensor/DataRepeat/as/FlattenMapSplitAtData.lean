@@ -1,5 +1,5 @@
 import Lemma.Tensor.DataRepeat.eq.Cast_FlattenMapSplitAtData
-import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 open Tensor Bool List
 
@@ -16,7 +16,7 @@ private lemma main
 -- proof
   apply SEq.of.Eq_Cast
   apply DataRepeat.eq.Cast_FlattenMapSplitAtData
-  simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length d.isLt]
+  simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength d.isLt]
 
 
 -- created on 2025-11-18

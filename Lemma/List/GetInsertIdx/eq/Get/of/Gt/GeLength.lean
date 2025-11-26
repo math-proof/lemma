@@ -1,5 +1,5 @@
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
-import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length
+import Lemma.List.GetInsertIdx.eq.Get.of.Gt.Lt_Length
 open List
 
 
@@ -7,30 +7,33 @@ open List
 private lemma fin
   {s : List α}
 -- given
-  (h : i ≤ s.length)
+  (h : s.length ≥ i)
+  (h_ij : i > j)
   (a : α) :
 -- imply
-  have h_i : i < (s.insertIdx i a).length := by
+  have h_i : j < (s.insertIdx i a).length := by
     rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h]
     linarith
-  (s.insertIdx i a).get ⟨i, h_i⟩ = a := by
+  (s.insertIdx i a).get ⟨j, h_i⟩ = s.get ⟨j, by linarith⟩ := by
 -- proof
-  simp
+  apply GetInsertIdx.eq.Get.of.Gt.Lt_Length.fin
+  assumption
 
 
 @[main]
 private lemma main
   {s : List α}
 -- given
-  (h : i ≤ s.length)
+  (h : s.length ≥ i)
+  (h_ij : i > j)
   (a : α) :
 -- imply
   have : i < (s.insertIdx i a).length := by
     rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h]
     linarith
-  (s.insertIdx i a)[i] = a := by
+  (s.insertIdx i a)[j] = s[j] := by
 -- proof
-  apply fin h
+  apply fin h h_ij
 
 
--- created on 2025-10-03
+-- created on 2025-10-09

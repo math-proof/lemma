@@ -1,4 +1,3 @@
-import sympy.tensor.functions
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GetDiv.eq.DivGetS
 import Lemma.Tensor.GetExp.eq.ExpGet
@@ -13,16 +12,16 @@ open Tensor Bool
 @[main]
 private lemma fin
   [Exp α]
-  {dim i : ℕ}
+  {d i : ℕ}
 -- given
-  (h_s : dim < s.length)
-  (h_d : dim > 0)
+  (h_s : s.length > d)
+  (h_d : d > 0)
   (h_i : i < s[0])
   (X : Tensor α s) :
 -- imply
-  have h_i : i < (X.softmax dim).length := by rwa [Length.eq.Get_0.of.GtLength_0]
+  have h_i : i < (X.softmax d).length := by rwa [Length.eq.Get_0.of.GtLength_0]
   have h_iX : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
-  (X.softmax dim).get ⟨i, h_i⟩ = (X.get ⟨i, h_iX⟩).softmax (dim - 1) := by
+  (X.softmax d).get ⟨i, h_i⟩ = (X.get ⟨i, h_iX⟩).softmax (d - 1) := by
 -- proof
   intro h_i' h_iX
   unfold Tensor.softmax
@@ -40,16 +39,16 @@ private lemma fin
 @[main]
 private lemma main
   [Exp α]
-  {dim i : ℕ}
+  {d i : ℕ}
 -- given
-  (h_s : dim < s.length)
-  (h_d : dim > 0)
+  (h_s : s.length > d)
+  (h_d : d > 0)
   (h_i : i < s[0])
   (X : Tensor α s) :
 -- imply
-  have : i < (X.softmax dim).length := by rwa [Length.eq.Get_0.of.GtLength_0]
+  have : i < (X.softmax d).length := by rwa [Length.eq.Get_0.of.GtLength_0]
   have : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
-  (X.softmax dim)[i] = X[i].softmax (dim - 1) := by
+  (X.softmax d)[i] = X[i].softmax (d - 1) := by
 -- proof
   apply fin h_s h_d h_i X
 

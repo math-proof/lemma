@@ -1,5 +1,5 @@
 import Lemma.Tensor.LengthKeepdim.eq.Length.of.Gt_0
-import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
+import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_LengthTail
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Keepdim.as.RepeatUnsqueeze.of.Lt_Length
@@ -9,7 +9,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Gt_0.Lt_SubLength
 import Lemma.List.TailInsertIdx.eq.InsertIdxTail.of.Gt_0.GtLength_0
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
-import Lemma.List.GetInsertIdx.eq.Get.of.Gt.Le_Length
+import Lemma.List.GetInsertIdx.eq.Get.of.Gt.GeLength
 import Lemma.Tensor.GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.Nat.EqAddSub.of.Ge
@@ -36,13 +36,13 @@ private lemma main
   (h_i : i < s[0])
   (X : Tensor α (s.eraseIdx d)) :
 -- imply
-  X.keepdim.get ⟨i, by rwa [LengthKeepdim.eq.Length.of.Gt_0 h_d X, Length.eq.Get_0.of.GtLength_0 (by grind), GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_d]⟩ = (cast
+  X.keepdim.get ⟨i, by rwa [LengthKeepdim.eq.Length.of.Gt_0 h_d X, Length.eq.Get_0.of.GtLength_0 (by grind), GetEraseIdx.eq.Get.of.Gt.GtLength h_s h_d]⟩ = (cast
     (congrArg (Tensor α) (TailEraseIdx.eq.EraseIdxTail.of.Gt_0.Lt_SubLength h_s h_d))
     (X.get ⟨i, by
       rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
-      rwa [GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_d]⟩)).keepdim := by
+      rwa [GetEraseIdx.eq.Get.of.Gt.GtLength h_s h_d]⟩)).keepdim := by
 -- proof
-  have h_get_eraseIdx := GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_d
+  have h_get_eraseIdx := GetEraseIdx.eq.Get.of.Gt.GtLength h_s h_d
   have h := Keepdim.as.RepeatUnsqueeze.of.Lt_Length h_s X
   have h := All_SEqGetS.of.SEq h ⟨i, by rwa [Length.eq.Get_0.of.GtLength h_s]⟩
   have h_dim_add_sub := EqAddSub.of.Ge (by omega : d ≥ 1)
@@ -56,7 +56,7 @@ private lemma main
       have h_tail := InsertIdxTail.eq.TailInsertIdx.of.Gt_0.GtLength_0 h_length_pos h_d 1
       have h_i : i < X.length := by
         rw [Length.eq.Get_0.of.GtLength h_length_pos]
-        rwa [GetEraseIdx.eq.Get.of.Lt.Lt_Length h_s h_d]
+        rwa [GetEraseIdx.eq.Get.of.Gt.GtLength h_s h_d]
       have h_lt_length_tail : d - 1 < s.tail.length := by
         simp
         omega
@@ -100,7 +100,7 @@ private lemma main
       rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]
       omega
   ·
-    rw [GetInsertIdx.eq.Get.of.Gt.Le_Length _ h_d]
+    rw [GetInsertIdx.eq.Get.of.Gt.GeLength _ h_d]
     ·
       rwa [h_get_eraseIdx]
     ·

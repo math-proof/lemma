@@ -1,5 +1,5 @@
 import Lemma.List.EqEraseIdx.of.Ge_Length
-import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
+import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.Get_0.dvd.ProdTake.of.Gt_0.GtLength_0
 import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.List.Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0
@@ -21,7 +21,7 @@ private lemma main
     rw [Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0 _ h_d]
     ·
       rw [ProdCons.eq.Mul_Prod]
-      rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length h_length h_i]
+      rw [GetEraseIdx.eq.Get.of.Gt.GtLength h_length h_i]
       simp
     ·
       grind

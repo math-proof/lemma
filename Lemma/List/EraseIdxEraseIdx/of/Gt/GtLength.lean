@@ -1,4 +1,4 @@
-import Lemma.List.EraseIdxEraseIdx.eq.EraseIdxEraseIdx.of.Le.GtLength
+import Lemma.List.EraseIdxEraseIdx.of.Le.GtLength
 import Lemma.Nat.EqAddSub.of.Ge
 open List Nat
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   (s.eraseIdx i).eraseIdx j = (s.eraseIdx j).eraseIdx (i - 1) := by
 -- proof
-  rw [EraseIdxEraseIdx.eq.EraseIdxEraseIdx.of.Le.GtLength h_j (by omega)]
+  rw [EraseIdxEraseIdx.of.Le.GtLength h_j (by omega)]
   rw [EqAddSub.of.Ge (by omega)]
 
 

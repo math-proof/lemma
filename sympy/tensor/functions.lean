@@ -6,7 +6,7 @@ import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
 import Lemma.List.TakeInsertIdx.eq.Take.of.Ge
 import Lemma.List.TakeEraseIdx.eq.Take.of.Ge
-import Lemma.List.EqGetInsertIdx.of.Le_Length
+import Lemma.List.EqGetInsertIdx.of.GeLength
 import Lemma.List.DropInsertIdx.eq.Drop.of.Lt
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length

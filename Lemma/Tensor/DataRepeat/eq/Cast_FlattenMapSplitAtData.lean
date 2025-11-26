@@ -1,5 +1,5 @@
 import sympy.tensor.Basic
-import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 open List
 
 
@@ -11,7 +11,7 @@ private lemma main
   (d : Fin s.length)
   (n : ℕ) :
 -- imply
-  (X.repeat n d).data = cast (by simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.Lt_Length d.isLt]) ((X.data.splitAt d).map (·.repeat n)).flatten := by
+  (X.repeat n d).data = cast (by simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength d.isLt]) ((X.data.splitAt d).map (·.repeat n)).flatten := by
 -- proof
   simp [Tensor.repeat]
 

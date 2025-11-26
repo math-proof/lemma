@@ -12,7 +12,7 @@ import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.EqCons_Tail.of.GtLength_0
-import Lemma.List.GetEraseIdx.eq.Get.of.Lt.Lt_Length
+import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
@@ -64,13 +64,13 @@ private lemma main
       rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 (by simpa) (by simp)]
       rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 (by simpa)]
       apply EqCons_Tail.of.Eq_Get_0.GtLength_0
-      rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
+      rw [GetEraseIdx.eq.Get.of.Gt.GtLength (by simpa) (by simp)]
       simp
     ·
       rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 (by simpa)]
       rw [HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
       apply EqCons_Tail.of.Eq_Get_0.GtLength_0
-      rw [GetEraseIdx.eq.Get.of.Lt.Lt_Length (by simpa) (by simp)]
+      rw [GetEraseIdx.eq.Get.of.Gt.GtLength (by simpa) (by simp)]
     ·
       rw [ToVector.eq.MapRange_Get.of.GtLength_0 (by simpa)]
       simp

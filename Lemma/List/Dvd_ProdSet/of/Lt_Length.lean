@@ -1,4 +1,4 @@
-import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.Lt_Length
+import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Nat.Dvd_Mul.of.Dvd
 import Lemma.Nat.Dvd_Mul
 open List Nat
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   a ∣ (s.set i a).prod := by
 -- proof
-  rw [ProdSet.eq.MulProd_Mul_Prod.of.Lt_Length h]
+  rw [ProdSet.eq.MulProd_Mul_Prod.of.GtLength h]
   apply Dvd_Mul.of.Dvd
   apply Dvd_Mul.left
 
