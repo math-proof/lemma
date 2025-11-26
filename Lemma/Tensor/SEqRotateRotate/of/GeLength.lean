@@ -1,7 +1,7 @@
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.List.EqRotateRotate.of.Le_Length
+import Lemma.List.EqRotateRotate.of.GeLength
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.Rotate.eq.AppendDrop__Take
@@ -48,7 +48,7 @@ private lemma main
     unfold Tensor.rotate
     apply SEq.of.SEqDataS.Eq
     ·
-      rw [EqRotateRotate.of.Le_Length h]
+      rw [EqRotateRotate.of.GeLength h]
     ·
       simp
       apply SEqCast.of.SEq.Eq.Eq
@@ -56,7 +56,7 @@ private lemma main
         rw [MulProdS.eq.ProdAppend]
         rw [AppendDrop__Take.eq.Rotate]
       ·
-        rw [EqRotateRotate.of.Le_Length h]
+        rw [EqRotateRotate.of.GeLength h]
       ·
         apply SEq.of.All_EqGetS.Eq
         ·
@@ -106,7 +106,7 @@ private lemma main
         ·
           rw [MulProdS.eq.ProdAppend]
           rw [AppendDrop__Take.eq.Rotate]
-          rw [EqRotateRotate.of.Le_Length h]
+          rw [EqRotateRotate.of.GeLength h]
 
 
 -- created on 2025-10-18

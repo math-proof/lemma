@@ -6,7 +6,7 @@ import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.Slice.eq.Nil
 import Lemma.List.SliceTake.eq.Slice.of.Ge
 import Lemma.List.Slice_0.eq.Take
@@ -58,7 +58,7 @@ private lemma main
       simp_all
       if h_d : d + 1 ≤ i then
         simp [h_d]
-        rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
+        rw [Rotate.eq.AppendDrop__Take.of.GeLength]
         ·
           simp
           rw [EqAddSub.of.Ge (by simp_all)]
@@ -92,7 +92,7 @@ private lemma main
         rw [Cons_Append.eq.AppendCons]
         apply EqAppendS.of.Eq
         rw [EqMin.of.Gt (by assumption)]
-        rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
+        rw [Rotate.eq.AppendDrop__Take.of.GeLength]
         ·
           rw [TakeTake.eq.Take.of.Ge (by linarith)]
           rw [Cons.eq.Append]

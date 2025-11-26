@@ -2,7 +2,7 @@ import Lemma.List.Slice.eq.Nil.of.Ge
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.List.EqAppendTake__Drop
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.List.DropAppend.eq.AppendDrop.of.Le_Length
+import Lemma.List.DropAppend.eq.AppendDrop.of.GeLength
 import Lemma.Nat.Le.of.Le.Lt
 import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Nat.Ge.of.Gt.Ge
@@ -28,7 +28,7 @@ private lemma main
     have h_j' := Gt.of.Ge.Gt h h_ij
     have := EqAppendTake__Drop s j'
     have := EqUFnS.of.Eq this (fun s => s.drop i)
-    rw [DropAppend.eq.AppendDrop.of.Le_Length (by simp_all; linarith)] at this
+    rw [DropAppend.eq.AppendDrop.of.GeLength (by simp_all; linarith)] at this
     rw [DropTake.eq.TakeDrop]
     rw [TakeTake.eq.Take.of.Ge]
     apply GeSubS.of.Ge h

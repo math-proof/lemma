@@ -5,7 +5,7 @@ import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.Lt_Length
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Lt_Length
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
-import Lemma.Tensor.SEqSelectUnsqueeze.of.Le_Length
+import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 open Tensor List Bool Nat
 
@@ -38,7 +38,7 @@ private lemma main
     have h := SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet (by simp) ((X.sum d).unsqueeze d) (i := i) (d := ⟨d, by simpa⟩) (n := s[d])
     apply SEq.symm ∘ h.trans
     simp [EqMod_1'0] at *
-    apply SEqSelectUnsqueeze.of.Le_Length
+    apply SEqSelectUnsqueeze.of.GeLength
     rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length h_d]
     omega
 

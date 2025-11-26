@@ -1,5 +1,5 @@
 import Lemma.List.DropPermute__Neg.eq.Cons_TakeDrop.of.GtLength_Add
-import Lemma.List.TakeAppend.eq.Take.of.Le_Length
+import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeCons.eq.Cons_Take
 import Lemma.List.TakeTake.eq.Take
 open List
@@ -14,7 +14,7 @@ private lemma main
   ((s.permute ⟨i + d, h⟩ (-d)).drop i).take (d + 1) = s[i + d] :: (s.drop i).take d := by
 -- proof
   rw [DropPermute__Neg.eq.Cons_TakeDrop.of.GtLength_Add h]
-  rw [TakeAppend.eq.Take.of.Le_Length]
+  rw [TakeAppend.eq.Take.of.GeLength]
   ·
     rw [TakeCons.eq.Cons_Take]
     rw [TakeTake.eq.Take]

@@ -1,4 +1,4 @@
-import Lemma.List.EqRotateRotate.of.Le_Length
+import Lemma.List.EqRotateRotate.of.GeLength
 open List
 
 
@@ -12,7 +12,7 @@ private lemma main
   (s.rotate i).rotate (L - i) = s := by
 -- proof
   rw [h_s]
-  apply EqRotateRotate.of.Le_Length h_i
+  apply EqRotateRotate.of.GeLength h_i
 
 
 -- created on 2025-10-14

@@ -1,6 +1,6 @@
 import Lemma.List.EqSet.of.LeLength
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
-import Lemma.List.TakeAppend.eq.Take.of.Le_Length
+import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeTake.eq.Take.of.Ge
 open List
 
@@ -16,7 +16,7 @@ private lemma main
 -- proof
   if h_i : i < s.length then
     rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length h_i]
-    rw [TakeAppend.eq.Take.of.Le_Length (by simp; omega)]
+    rw [TakeAppend.eq.Take.of.GeLength (by simp; omega)]
     apply TakeTake.eq.Take.of.Ge h
   else
     rw [EqSet.of.LeLength]

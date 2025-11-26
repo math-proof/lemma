@@ -1,5 +1,5 @@
 import Lemma.List.DropTakePermute.eq.RotateTakeDrop
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.EqDropAppend.of.Eq_Length
 import Lemma.Nat.EqMin.of.Le
 import Lemma.List.TakeTake.eq.Take.of.Ge
@@ -20,7 +20,7 @@ private lemma main
   have h := DropTakePermute.eq.RotateTakeDrop i d
   have h := congrArg (·.drop d) h
   simp at h
-  rw [Rotate.eq.AppendDrop__Take.of.Le_Length] at h
+  rw [Rotate.eq.AppendDrop__Take.of.GeLength] at h
   ·
     rw [EqDropAppend.of.Eq_Length] at h
     ·

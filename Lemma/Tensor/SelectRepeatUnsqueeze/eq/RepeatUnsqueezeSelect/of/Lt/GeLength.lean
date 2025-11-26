@@ -1,12 +1,12 @@
 import stdlib.SEq
 import Lemma.List.Lt_LengthInsertIdx
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
-import Lemma.Tensor.SEqSelectUnsqueeze.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
+import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
 import Lemma.Nat.EqMod_1'0
-import Lemma.List.GetInsertIdx.eq.Get.of.Lt.Le_Length
+import Lemma.List.GetInsertIdx.eq.Get.of.Lt.GeLength
 import Lemma.List.GetSet.eq.Get.of.Lt.Lt_Length
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import sympy.tensor.tensor
 open List Nat Tensor
 

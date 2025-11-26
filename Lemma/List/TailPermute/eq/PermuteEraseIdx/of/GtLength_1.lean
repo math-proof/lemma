@@ -3,10 +3,10 @@ import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
-import Lemma.List.TakeAppend.eq.Take.of.Le_Length
+import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.EqMin.of.Lt
@@ -24,7 +24,7 @@ private lemma main
 -- proof
   repeat rw [Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0]
   rw [TailAppend.eq.AppendTail.of.GtLength_0 (by simp; omega)]
-  repeat rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
+  repeat rw [Rotate.eq.AppendDrop__Take.of.GeLength]
   ·
     rw [TailAppend.eq.AppendTail.of.GtLength_0 (by simp; omega)]
     rw [Tail.eq.Drop_1]
@@ -38,7 +38,7 @@ private lemma main
     rw [TailTake.eq.TakeTail]
     rw [TailAppend.eq.AppendTail.of.GtLength_0 (by simp; omega)]
     simp [TailTake.eq.TakeTail]
-    rw [TakeAppend.eq.Take.of.Le_Length (by simp; omega)]
+    rw [TakeAppend.eq.Take.of.GeLength (by simp; omega)]
     rw [TakeTake.eq.Take.of.Ge (by omega)]
     simp
     rw [DropAppend.eq.Drop.of.Ge_Length (by simp)]

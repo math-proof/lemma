@@ -1,5 +1,5 @@
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
-import Lemma.List.GetRotate.eq.Ite.of.Le_Length.Lt_Length
+import Lemma.List.GetRotate.eq.Ite.of.GeLength.Lt_Length
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.Basic
 open List Tensor
@@ -18,7 +18,7 @@ private lemma main
   ·
     rw [GetAppend.eq.Get.of.Lt_Length]
     ·
-      rw [GetRotate.eq.Ite.of.Le_Length.Lt_Length]
+      rw [GetRotate.eq.Ite.of.GeLength.Lt_Length]
       ·
         split_ifs with h_pos
         ·

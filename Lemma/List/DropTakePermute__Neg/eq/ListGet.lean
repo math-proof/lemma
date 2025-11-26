@@ -2,8 +2,8 @@ import Lemma.List.DropTake.eq.ListGet
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.DropTakePermute__Neg.eq.RotateDropTake
 import Lemma.List.EqPermuteS__Neg.of.Ge
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
-import Lemma.List.TakeAppend.eq.Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
+import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakePermute__Neg.eq.ListGet
 import Lemma.List.TakeTake.eq.Take.of.Ge
@@ -36,12 +36,12 @@ private lemma main
     rw [TakeTake.eq.Take.of.Ge (by omega)] at h
     rw [h]
     rw [EqMin.of.Le h_d]
-    rw [Rotate.eq.AppendDrop__Take.of.Le_Length] <;>
+    rw [Rotate.eq.AppendDrop__Take.of.GeLength] <;>
       simp
     ·
       rw [EqAddSub.of.Ge h_d]
       rw [DropTake.eq.ListGet]
-      rw [TakeAppend.eq.Take.of.Le_Length (by simp)]
+      rw [TakeAppend.eq.Take.of.GeLength (by simp)]
       simp
     ·
       omega

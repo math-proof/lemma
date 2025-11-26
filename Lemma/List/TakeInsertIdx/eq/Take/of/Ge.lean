@@ -1,4 +1,4 @@
-import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length
+import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength
 import Lemma.List.EqInsertIdx.of.Gt_Length
 import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.List.LengthTake.eq.Min_Length
@@ -17,7 +17,7 @@ private lemma main
   (a.insertIdx i x).take j = a.take j := by
 -- proof
   if h_i : i ≤ a.length then
-    rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length h_i h]
+    rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength h_i h]
     apply EqTakeAppend.of.Eq_Length
     rw [LengthTake.eq.Min_Length]
     apply EqMin.of.Le ∘ Le.of.Le.Le h

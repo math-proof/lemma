@@ -1,5 +1,5 @@
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
-import Lemma.List.DropAppend.eq.AppendDrop.of.Le_Length
+import Lemma.List.DropAppend.eq.AppendDrop.of.GeLength
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 open List
 
@@ -17,7 +17,7 @@ private lemma main
     simp
   else
     rw [EraseIdx.eq.Append_Drop_Add_1]
-    rw [DropAppend.eq.AppendDrop.of.Le_Length]
+    rw [DropAppend.eq.AppendDrop.of.GeLength]
     simp
     omega
 

@@ -1,4 +1,4 @@
-import Lemma.List.DropAppend.eq.AppendDrop.of.Le_Length
+import Lemma.List.DropAppend.eq.AppendDrop.of.GeLength
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EqSet.of.LeLength
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
@@ -18,7 +18,7 @@ private lemma main
 -- proof
   if h_i : i < s.length then
     repeat rw [Set.eq.AppendTake__Cons_Drop.of.Lt_Length (by grind)]
-    rw [DropAppend.eq.AppendDrop.of.Le_Length (by grind)]
+    rw [DropAppend.eq.AppendDrop.of.GeLength (by grind)]
     simp [← DropTake.eq.TakeDrop]
     rw [Add_Add.eq.AddAdd]
     rw [EqAdd_Sub.of.Ge h]

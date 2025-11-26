@@ -1,5 +1,5 @@
 import Lemma.Nat.EqSub.of.EqAdd
-import Lemma.List.TakeRotate.eq.Drop.of.Le_Length
+import Lemma.List.TakeRotate.eq.Drop.of.GeLength
 open Nat List
 
 
@@ -13,7 +13,7 @@ private lemma main
 -- proof
   have h := Eq_Sub.of.EqAdd.left h.symm
   subst h
-  apply TakeRotate.eq.Drop.of.Le_Length
+  apply TakeRotate.eq.Drop.of.GeLength
   omega
 
 

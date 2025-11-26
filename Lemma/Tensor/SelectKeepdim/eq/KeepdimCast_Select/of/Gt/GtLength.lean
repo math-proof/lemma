@@ -8,7 +8,7 @@ import Lemma.List.GetEraseIdx.eq.Get.of.Lt.GtLength
 import Lemma.List.GetInsertIdx.eq.Get.of.Gt.GeLength
 import Lemma.List.GetSet.eq.Get.of.Gt.Lt_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Nat.EqAddSub.of.Ge
@@ -60,7 +60,7 @@ private lemma main
     have k_le : k - 1 ≤ ((s.eraseIdx k).eraseIdx d).length := by 
       repeat rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by grind)]
       omega
-    rw [RepeatCast.eq.Cast_Repeat.of.Eq h_insertIdx ((X.select ⟨d, by grind⟩ ⟨i, by grind⟩).unsqueeze (k - 1)) s[k] ⟨k - 1, by rw [LengthInsertIdx.eq.Add1Length.of.Le_Length (by omega)]; omega⟩]
+    rw [RepeatCast.eq.Cast_Repeat.of.Eq h_insertIdx ((X.select ⟨d, by grind⟩ ⟨i, by grind⟩).unsqueeze (k - 1)) s[k] ⟨k - 1, by rw [LengthInsertIdx.eq.Add1Length.of.GeLength (by omega)]; omega⟩]
     apply SEq_Cast.of.SEq.Eq
     ·
       simp [h_eraseIdx]

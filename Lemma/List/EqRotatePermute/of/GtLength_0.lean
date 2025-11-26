@@ -1,6 +1,6 @@
 import stdlib.List
 import Lemma.List.Permute.eq.Rotate.of.GtLength_0
-import Lemma.List.EqRotateRotate.of.Le_Length
+import Lemma.List.EqRotateRotate.of.GeLength
 open List
 
 
@@ -13,7 +13,7 @@ private lemma main
   (s.permute ⟨0, h⟩ (s.length - 1 : ℕ)).rotate (s.length - 1) = s := by
 -- proof
   rw [Permute.eq.Rotate.of.GtLength_0]
-  rw [EqRotateRotate.of.Le_Length]
+  rw [EqRotateRotate.of.GeLength]
   omega
 
 

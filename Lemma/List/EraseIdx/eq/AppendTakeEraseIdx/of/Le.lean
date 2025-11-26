@@ -1,7 +1,7 @@
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.EqTake.of.Ge_Length
-import Lemma.List.TakeAppend.eq.Take.of.Le_Length
+import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeTake.eq.Take.of.Ge
 open List
 
@@ -17,7 +17,7 @@ private lemma main
   if h_d : d ≤ (s.eraseIdx i).length then
     rw [← EqAppendTake__Drop (s.eraseIdx i) d]
     simp [DropEraseIdx.eq.Drop.of.Le h]
-    rw [TakeAppend.eq.Take.of.Le_Length (by simpa)]
+    rw [TakeAppend.eq.Take.of.GeLength (by simpa)]
     rw [TakeTake.eq.Take.of.Ge (by simp)]
   else
     simp at h_d

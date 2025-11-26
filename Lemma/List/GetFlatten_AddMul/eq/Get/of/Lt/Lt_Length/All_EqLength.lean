@@ -1,4 +1,4 @@
-import Lemma.List.LengthFlattenTake.eq.Mul.of.Le_Length.All_Eq
+import Lemma.List.LengthFlattenTake.eq.Mul.of.GeLength.All_Eq
 import Lemma.Nat.Le.of.Lt
 import Lemma.List.AppendFlattenS.eq.Flatten
 import Lemma.List.LengthAppend.eq.AddLengthS
@@ -31,9 +31,9 @@ private lemma main
   simp [← this]
   rw [LengthAppend.eq.AddLengthS] at h₃
   have := Le.of.Lt h₁
-  rw [LengthFlattenTake.eq.Mul.of.Le_Length.All_Eq h₀ this] at h₃
+  rw [LengthFlattenTake.eq.Mul.of.GeLength.All_Eq h₀ this] at h₃
   have h₃ := Lt.of.LtAddS.left h₃
-  have := LengthFlattenTake.eq.Mul.of.Le_Length.All_Eq (by assumption) (by assumption)
+  have := LengthFlattenTake.eq.Mul.of.GeLength.All_Eq (by assumption) (by assumption)
   rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by linarith)]
   simp_all [FlattenDrop.eq.Append_FlattenDrop.of.Lt_Length h₁]
 

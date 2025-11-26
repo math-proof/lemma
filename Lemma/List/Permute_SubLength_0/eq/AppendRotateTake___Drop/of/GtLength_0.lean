@@ -1,7 +1,7 @@
 import Lemma.List.Cons.eq.Append
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqAppendS.of.Eq
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.EqPermute__0
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.Drop.eq.Nil
@@ -64,7 +64,7 @@ private lemma main
       if h_i : s.length ≥ d + 2 then
         have h_i' := LeSubS.of.Le h_i 1
         simp at h_i'
-        rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
+        rw [Rotate.eq.AppendDrop__Take.of.GeLength]
         ·
           simp
           rw [EqMin.of.Le h_i']
@@ -92,7 +92,7 @@ private lemma main
         rw [Slice_0.eq.Take]
         rw [Cons.eq.Append]
         rw [← Drop_SubLength_1.eq.ListGet.of.GtLength_0 (by linarith)]
-        rw [Rotate.eq.AppendDrop__Take.of.Le_Length (by simp_all)]
+        rw [Rotate.eq.AppendDrop__Take.of.GeLength (by simp_all)]
 
 
 -- created on 2025-06-17

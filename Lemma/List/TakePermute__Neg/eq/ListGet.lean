@@ -1,7 +1,7 @@
 import Lemma.List.DropTake.eq.ListGet
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
-import Lemma.List.TakeAppend.eq.Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
+import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.Nat.Ge_1
 open List Nat
 
@@ -15,11 +15,11 @@ private lemma main
   (s.permute i (-i)).take 1 = [s[i]] := by
 -- proof
   simp [Permute__Neg.eq.Append_AppendRotateDropTake.simp]
-  rw [TakeAppend.eq.Take.of.Le_Length]
+  rw [TakeAppend.eq.Take.of.GeLength]
   ·
-    rw [Rotate.eq.AppendDrop__Take.of.Le_Length (by simp)]
+    rw [Rotate.eq.AppendDrop__Take.of.GeLength (by simp)]
     rw [DropTake.eq.ListGet]
-    rw [TakeAppend.eq.Take.of.Le_Length (by simp)]
+    rw [TakeAppend.eq.Take.of.GeLength (by simp)]
     simp
   ·
     simp

@@ -1,4 +1,4 @@
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.List.LengthDrop.eq.SubLength
 open List
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   (s.rotate n).take (s.length - n) = s.drop (n) := by
 -- proof
-  rw [Rotate.eq.AppendDrop__Take.of.Le_Length h]
+  rw [Rotate.eq.AppendDrop__Take.of.GeLength h]
   rw [EqTakeAppend.of.Eq_Length]
   apply LengthDrop.eq.SubLength
 

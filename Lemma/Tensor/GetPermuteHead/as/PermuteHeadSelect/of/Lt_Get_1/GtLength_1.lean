@@ -6,7 +6,7 @@ import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxTail.eq.Drop_2
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
-import Lemma.List.GetRotate.eq.Ite.of.Le_Length.Lt_Length
+import Lemma.List.GetRotate.eq.Ite.of.GeLength.Lt_Length
 import Lemma.List.Get_0.dvd.ProdTakeEraseIdx.of.Gt_0.Gt_0.GtLength_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.LengthEraseIdx.ge.SubLength_1
@@ -365,7 +365,7 @@ private lemma main
     ·
       rw [GetAppend.eq.Get.of.Lt_Length]
       ·
-        rw [GetRotate.eq.Ite.of.Le_Length.Lt_Length]
+        rw [GetRotate.eq.Ite.of.GeLength.Lt_Length]
         ·
           simp
           split_ifs

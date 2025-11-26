@@ -1,7 +1,7 @@
 import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Gt
 import Lemma.List.EqAppendTake__Drop
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
+import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.GeLength
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Le
 open List Nat
@@ -22,7 +22,7 @@ private lemma main
     simp
     conv_lhs =>
       rw [← EqAppendTake__Drop a i]
-    rw [InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length]
+    rw [InsertIdxAppend.eq.Append_InsertIdx.of.GeLength]
     <;> rw [LengthTake.eq.Min_Length]
     <;> rw [EqMin.of.Le h_i]
     simp

@@ -1,6 +1,6 @@
 import stdlib.SEq
 import sympy.tensor.tensor
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.Tensor.EqGetUnsqueeze
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
@@ -16,7 +16,7 @@ private lemma main
   (h_dim : d ≤ s.length)
   (X : Tensor α s) :
 -- imply
-  (X.unsqueeze d).select ⟨d, by rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by
+  (X.unsqueeze d).select ⟨d, by rw [LengthInsertIdx.eq.Add1Length.of.GeLength h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by
 -- proof
   induction d generalizing s X with
   | zero =>

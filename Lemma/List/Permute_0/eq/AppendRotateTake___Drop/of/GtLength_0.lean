@@ -2,7 +2,7 @@ import Lemma.List.Cons.eq.Append
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.LengthTake.eq.Min_Length
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.Nat.Le_Min.of.Le.Le
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.List.EqAppendS.of.Eq.Eq
@@ -25,7 +25,7 @@ private lemma main
   rw [Cons.eq.Append]
   rw [Append_Append.eq.AppendAppend]
   apply EqAppendS.of.Eq
-  rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
+  rw [Rotate.eq.AppendDrop__Take.of.GeLength]
   ·
     rw [TakeTake.eq.Take.of.Ge (by linarith)]
     apply EqAppendS.of.Eq.Eq

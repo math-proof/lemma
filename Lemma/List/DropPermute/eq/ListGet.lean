@@ -1,7 +1,7 @@
 import Lemma.List.DropPermute.eq.RotateDrop
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.Nat.EqAdd_Sub.of.Ge
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.EqDropAppend.of.Eq_Length
 import Lemma.List.TakeDrop.eq.ListGet.of.Lt_Length
 open List Nat
@@ -20,7 +20,7 @@ private lemma main
   simp only [DropDrop.eq.Drop_Add] at h
   rw [EqAdd_Sub.of.Ge (show i ≤ s.length - 1 by omega)] at h
   rw [h]
-  rw [Rotate.eq.AppendDrop__Take.of.Le_Length (by grind)]
+  rw [Rotate.eq.AppendDrop__Take.of.GeLength (by grind)]
   rw [EqDropAppend.of.Eq_Length (by grind)]
   apply TakeDrop.eq.ListGet.of.Lt_Length
 

@@ -1,5 +1,5 @@
 import stdlib.SEq
-import Lemma.Tensor.SEqRotateRotate.of.Le_Length
+import Lemma.Tensor.SEqRotateRotate.of.GeLength
 import Lemma.Tensor.SEqRotateS.of.SEq
 import Lemma.Nat.EqSub_Sub.of.Ge
 open Tensor Nat
@@ -19,7 +19,7 @@ private lemma main
   have h_length := congrArg List.length h_s
   simp at h_length
   have h := SEqRotateS.of.SEq h i
-  have := SEqRotateRotate.of.Le_Length (i := s.length - i) (by grind) Y
+  have := SEqRotateRotate.of.GeLength (i := s.length - i) (by grind) Y
   rw [← h_length] at this
   rw [EqSub_Sub.of.Ge (by grind)] at this
   apply h.trans this

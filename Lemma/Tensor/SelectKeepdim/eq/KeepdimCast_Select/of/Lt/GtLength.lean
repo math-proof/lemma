@@ -6,10 +6,10 @@ import Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.GetEraseIdx.eq.Get_Add_1.of.Le.LtAdd_1Length
-import Lemma.List.GetInsertIdx.eq.Get.of.Lt.Le_Length
+import Lemma.List.GetInsertIdx.eq.Get.of.Lt.GeLength
 import Lemma.List.GetSet.eq.Get.of.Lt.Lt_Length
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Nat.EqAddSub.of.Ge
@@ -18,7 +18,7 @@ import Lemma.Tensor.RepeatCast.eq.Cast_Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
 import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Lt_MulGet.Lt.GtLength
-import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.Le_Length
+import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength
 import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq
 import sympy.tensor.functions
 open Bool List Nat Tensor
@@ -51,7 +51,7 @@ private lemma main
     simp [EqSetInsertIdxEraseIdx.of.Lt_Length]
   have h_length := LengthInsertIdxEraseIdx.eq.Length.of.Lt_Length h_k_length 1
   have h_i_lt : i < ((s.eraseIdx k).insertIdx k 1)[d] := by
-    rw [GetInsertIdx.eq.Get.of.Lt.Le_Length _ h_k]
+    rw [GetInsertIdx.eq.Get.of.Lt.GeLength _ h_k]
     repeat omega
   have := SelectCast.eq.Cast_Select.of.Eq (i := ⟨i, by simp; rwa [GetSet.eq.Get.of.Lt.Lt_Length (by omega) (by omega)]⟩) (d := ⟨d, by rw [LengthSet.eq.Length]; omega⟩) h_set (X := ((X.unsqueeze k).repeat s[k] ⟨k, by simpa [h_length]⟩))
   simp at this
@@ -67,7 +67,7 @@ private lemma main
     have k_le : k ≤ ((s.eraseIdx k).eraseIdx (d - 1)).length := by
       rw [LengthEraseIdx.eq.SubLength_1.of.Lt_Length (by omega)]
       omega
-    rw [RepeatCast.eq.Cast_Repeat.of.Eq h_insertIdx ((X.select ⟨d - 1, h_d_length⟩ ⟨i, h_i_get⟩).unsqueeze k) s[k] ⟨k, by rw [LengthInsertIdx.eq.Add1Length.of.Le_Length (by omega)]; omega⟩]
+    rw [RepeatCast.eq.Cast_Repeat.of.Eq h_insertIdx ((X.select ⟨d - 1, h_d_length⟩ ⟨i, h_i_get⟩).unsqueeze k) s[k] ⟨k, by rw [LengthInsertIdx.eq.Add1Length.of.GeLength (by omega)]; omega⟩]
     apply SEq_Cast.of.SEq.Eq
     ·
       simp [h_eraseIdx]
@@ -82,7 +82,7 @@ private lemma main
         simp
       ·
         apply SEqRepeatS.of.SEq
-        have := SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.Le_Length (by omega) h_k X ⟨i, by omega⟩
+        have := SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength (by omega) h_k X ⟨i, by omega⟩
         simp at this
         assumption
   repeat grind

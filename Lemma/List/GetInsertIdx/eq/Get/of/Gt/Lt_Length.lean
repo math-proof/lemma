@@ -1,4 +1,4 @@
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 open List
 
 

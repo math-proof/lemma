@@ -9,7 +9,7 @@ import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
 import Lemma.List.EraseIdxPermute__Neg.eq.EraseIdx.of.Ge
 import Lemma.List.EraseIdxRotate.eq.AppendEraseIdxDrop.of.GtLength_Add
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
-import Lemma.List.GetRotate.eq.Ite.of.Le_Length.Lt_Length
+import Lemma.List.GetRotate.eq.Ite.of.GeLength.Lt_Length
 import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
@@ -22,7 +22,7 @@ import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.ProdTake.eq.MulProdTake.of.Lt_Length
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailRotate.eq.Take.of.EqLength_Add_1
-import Lemma.List.TakeAppend.eq.Take.of.Le_Length
+import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeTake.eq.Take
 import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -114,7 +114,7 @@ private lemma main
         rwa [Add.comm (a := 1)] at this
       have h_get : (s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1))[↑i - d]'(by simp; omega) = s[i] := by 
         rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp; omega)]
-        rw [GetRotate.eq.Ite.of.Le_Length.Lt_Length (by simp; omega) (by simp; omega)]
+        rw [GetRotate.eq.Ite.of.GeLength.Lt_Length (by simp; omega) (by simp; omega)]
         simp_all
         split_ifs with h_lt
         ·
@@ -183,7 +183,7 @@ private lemma main
                   simp [h_i]
                   omega
                 simp [h_sub_eq] at ⊢ h_q h_r h_q_div h_r_mod
-                rw [TakeAppend.eq.Take.of.Le_Length (show (↑i - d) ≤ (s.take (i - d)).length by simp; omega)] at h_q
+                rw [TakeAppend.eq.Take.of.GeLength (show (↑i - d) ≤ (s.take (i - d)).length by simp; omega)] at h_q
                 rw [TakeTake.eq.Take] at h_q
                 have h_lt : (↑q * s[↑i] + ↑t) * ((s.drop (↑i - d)).take d).prod + ↑r < (s.take (s.length - (d + 1))).prod * ((s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1)).prod := by 
                   simp [h_sub_eq]

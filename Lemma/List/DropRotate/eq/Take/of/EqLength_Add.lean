@@ -1,4 +1,4 @@
-import Lemma.List.DropRotate.eq.Take.of.Le_Length
+import Lemma.List.DropRotate.eq.Take.of.GeLength
 import Lemma.Nat.Le.of.EqAdd
 open List Nat
 
@@ -12,7 +12,7 @@ private lemma main
   (s.rotate n).drop m = s.take n := by
 -- proof
   have := Ge.of.Eq_Add h
-  convert DropRotate.eq.Take.of.Le_Length this
+  convert DropRotate.eq.Take.of.GeLength this
   simp [h]
 
 

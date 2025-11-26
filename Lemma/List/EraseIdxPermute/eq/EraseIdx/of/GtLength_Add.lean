@@ -1,7 +1,7 @@
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.Lt_Length
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
-import Lemma.List.EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.Le_Length
+import Lemma.List.EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.GeLength
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeTake.eq.Take.of.Ge
@@ -26,7 +26,7 @@ private lemma main
   rw [EqSubAdd.left]
   rw [EraseIdxAppend.eq.AppendEraseIdx.of.Lt_Length]
   ·
-    rw [EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.Le_Length]
+    rw [EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.GeLength]
     ·
       simp
       rw [EqMin.of.Le (by omega)]

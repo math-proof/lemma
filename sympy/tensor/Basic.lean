@@ -13,7 +13,7 @@ import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length
+import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.GeLength
 import Lemma.List.SwapAppend.eq.Append_Swap.of.Ge_Length.Ge_Length
 import Lemma.List.EqSwap_0'1
 import Lemma.List.ProdSwap.eq.Prod
@@ -370,7 +370,7 @@ def Tensor.dot [Mul α] [Add α] [Zero α] (A : Tensor α (batch_size ++ [m, k])
     B.T
   let B : Tensor α (batch_size ++ [1, n, k]) := cast
     (by
-      rw [InsertIdxAppend.eq.Append_InsertIdx.of.Le_Length (by simp)]
+      rw [InsertIdxAppend.eq.Append_InsertIdx.of.GeLength (by simp)]
       simp
     )
     (B.unsqueeze batch_size.length)

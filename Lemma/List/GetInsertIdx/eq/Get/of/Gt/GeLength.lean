@@ -1,4 +1,4 @@
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.GetInsertIdx.eq.Get.of.Gt.Lt_Length
 open List
 
@@ -12,7 +12,7 @@ private lemma fin
   (a : α) :
 -- imply
   have h_i : j < (s.insertIdx i a).length := by
-    rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h]
+    rw [LengthInsertIdx.eq.Add1Length.of.GeLength h]
     linarith
   (s.insertIdx i a).get ⟨j, h_i⟩ = s.get ⟨j, by linarith⟩ := by
 -- proof
@@ -29,7 +29,7 @@ private lemma main
   (a : α) :
 -- imply
   have : i < (s.insertIdx i a).length := by
-    rw [LengthInsertIdx.eq.Add1Length.of.Le_Length h]
+    rw [LengthInsertIdx.eq.Add1Length.of.GeLength h]
     linarith
   (s.insertIdx i a)[j] = s[j] := by
 -- proof

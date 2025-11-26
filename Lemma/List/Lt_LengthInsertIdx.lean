@@ -1,5 +1,5 @@
 import stdlib.List
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 open List
 
 
@@ -13,7 +13,7 @@ private lemma main
   i < (s.insertIdx i a).length := by
 -- proof
   have h_i := i.isLt
-  rw [LengthInsertIdx.eq.Add1Length.of.Le_Length]
+  rw [LengthInsertIdx.eq.Add1Length.of.GeLength]
   repeat linarith
 
 

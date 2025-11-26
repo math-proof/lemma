@@ -1,6 +1,6 @@
 import Lemma.Nat.SubSub
 import Lemma.List.DropPermute.eq.RotateDrop
-import Lemma.List.EqRotateRotate.of.Le_Length.Eq_Length
+import Lemma.List.EqRotateRotate.of.GeLength.Eq_Length
 open Nat List
 
 
@@ -14,7 +14,7 @@ private lemma main
 -- proof
   rw [DropPermute.eq.RotateDrop]
   rw [SubSub.comm]
-  rw [EqRotateRotate.of.Le_Length.Eq_Length] <;>
+  rw [EqRotateRotate.of.GeLength.Eq_Length] <;>
     simp
   omega
 

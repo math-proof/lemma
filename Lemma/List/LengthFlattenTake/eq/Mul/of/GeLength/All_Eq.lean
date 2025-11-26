@@ -1,4 +1,4 @@
-import Lemma.List.MapTake.eq.Replicate.of.Le_Length.All_Eq
+import Lemma.List.MapTake.eq.Replicate.of.GeLength.All_Eq
 open List
 
 
@@ -13,7 +13,7 @@ private lemma main
   (s.take i).flatten.length = i * n := by
 -- proof
   rw [List.length_flatten]
-  rw [MapTake.eq.Replicate.of.Le_Length.All_Eq (by assumption) (by assumption), List.sum_replicate]
+  rw [MapTake.eq.Replicate.of.GeLength.All_Eq (by assumption) (by assumption), List.sum_replicate]
   rfl
 
 

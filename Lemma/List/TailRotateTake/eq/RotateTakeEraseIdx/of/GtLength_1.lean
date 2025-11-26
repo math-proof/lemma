@@ -1,6 +1,6 @@
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.List.TakeAppend.eq.Append_Take.of.Ge_Length
@@ -22,7 +22,7 @@ private lemma main
   ((s.take (d + 1)).rotate 1).tail = ((s.eraseIdx 1).take d).rotate 1 := by
 -- proof
   have h_d := NeZero.pos d
-  repeat rw [Rotate.eq.AppendDrop__Take.of.Le_Length]
+  repeat rw [Rotate.eq.AppendDrop__Take.of.GeLength]
   ·
     rw [TailAppend.eq.AppendTail.of.GtLength_0 (by simp; omega)]
     repeat rw [TakeTake.eq.Take.of.Ge (by omega)]

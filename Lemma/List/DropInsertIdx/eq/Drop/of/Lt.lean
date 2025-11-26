@@ -1,7 +1,7 @@
 import Lemma.List.EqInsertIdx.of.Gt_Length
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.Nat.Le_Sub_1.of.Lt
-import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length
+import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength
 import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.Ge_Min.of.Ge
@@ -23,7 +23,7 @@ private lemma main
   (a.insertIdx i x).drop j = a.drop (j - 1) := by
 -- proof
   if h_i : i ≤ a.length then
-    rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.Le_Length h_i (by rfl) (j := i)]
+    rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength h_i (by rfl) (j := i)]
     simp
     rw [DropAppend.eq.Drop.of.Ge_Length] <;>
       rw [LengthTake.eq.Min_Length]

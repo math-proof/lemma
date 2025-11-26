@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import sympy.vector.functions
 import Lemma.Nat.Ge.of.NotLt
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.Lt_Length
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.Lt_Length
 import Lemma.List.TakeInsertIdx.eq.Take.of.Ge

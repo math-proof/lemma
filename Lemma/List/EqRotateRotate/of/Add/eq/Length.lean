@@ -1,5 +1,5 @@
 import Lemma.Nat.EqSub.of.EqAdd
-import Lemma.List.EqRotateRotate.of.Le_Length.Eq_Length
+import Lemma.List.EqRotateRotate.of.GeLength.Eq_Length
 open Nat List
 
 
@@ -13,7 +13,7 @@ private lemma main
 -- proof
   have h := Eq_Sub.of.EqAdd.left h
   rw [h]
-  apply EqRotateRotate.of.Le_Length.Eq_Length rfl (by omega)
+  apply EqRotateRotate.of.GeLength.Eq_Length rfl (by omega)
 
 
 -- created on 2025-10-15

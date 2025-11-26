@@ -16,7 +16,7 @@ import Lemma.List.ProdTakeDrop.eq.MulProdTakeDrop.of.GtLength_Add
 import Lemma.List.ProdTakeDrop.eq.Mul_ProdTakeDrop.of.GtLength_Add
 import Lemma.List.ProdTakeDropPermute__Neg.eq.ProdTakeDrop.of.GtLength_Add
 import Lemma.List.Rotate.eq.AppendDrop__Take
-import Lemma.List.TakeAppend.eq.Take.of.Le_Length
+import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add
 import Lemma.List.TakeDropTake.eq.TakeDrop
@@ -137,7 +137,7 @@ private lemma main
           simp [Add_Add.eq.AddAdd (a := i)]
           simp [DropPermute__Neg.eq.Drop ⟨i + d, by omega⟩]
           simp [DropPermute__Neg.eq.Cons_TakeDrop.of.GtLength_Add h_id]
-          simp [TakeAppend.eq.Take.of.Le_Length (show d ≤ ((s.drop i).take d).length by simp; omega)]
+          simp [TakeAppend.eq.Take.of.GeLength (show d ≤ ((s.drop i).take d).length by simp; omega)]
           simp [TakeTake.eq.Take]
           rw [ProdTakeDrop.eq.Get.of.Lt_Length (by simp; omega)] at h_rₐ
           rw [GetPermute__Neg.eq.Get_Add.of.GtLength_Add (by omega)] at h_rₐ

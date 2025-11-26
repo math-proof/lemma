@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.Le_Length
+import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthInsertIdx.eq.Length.of.Gt_Length
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
@@ -39,7 +39,7 @@ private lemma main
       simp_all [InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0]
     ·
       if h : d ≤ (s₀ :: s).length then
-        rw [LengthInsertIdx.eq.Add1Length.of.Le_Length (by simpa)]
+        rw [LengthInsertIdx.eq.Add1Length.of.GeLength (by simpa)]
         simp
       else
         simp at h

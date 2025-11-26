@@ -1,4 +1,4 @@
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.GetAppend.eq.Get.of.Lt_Length
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
 open List
@@ -22,7 +22,7 @@ private lemma main
       (s.take d)[i - (s.length - d)] := by
 -- proof
   intro h_i'
-  simp [Rotate.eq.AppendDrop__Take.of.Le_Length h_d]
+  simp [Rotate.eq.AppendDrop__Take.of.GeLength h_d]
   split_ifs with h
   · 
     rw [GetAppend.eq.Get.of.Lt_Length (by simpa)]

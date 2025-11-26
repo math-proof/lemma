@@ -1,4 +1,4 @@
-import Lemma.List.GetInsertIdx.eq.Get.of.Lt.Le_Length
+import Lemma.List.GetInsertIdx.eq.Get.of.Lt.GeLength
 open List
 
 
@@ -12,7 +12,7 @@ private lemma fin
 -- imply
   (s.insertIdx i a).get ⟨j, by grind⟩ = s.get ⟨j - 1, by grind⟩ := by
 -- proof
-  apply GetInsertIdx.eq.Get.of.Lt.Le_Length.fin (by grind) h_i
+  apply GetInsertIdx.eq.Get.of.Lt.GeLength.fin (by grind) h_i
 
 
 @[main]

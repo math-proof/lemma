@@ -1,6 +1,6 @@
 import Lemma.List.TakePermute.eq.RotateTake.of.Lt_Length
 import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.List.Rotate.eq.AppendDrop__Take.of.Le_Length
+import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.EqTakeAppend.of.Eq_Length
 open List
 
@@ -17,7 +17,7 @@ private lemma main
   have h_take := congrArg (·.take d) h_take
   simp [TakeTake.eq.Take.of.Ge] at h_take
   rw [h_take]
-  rw [Rotate.eq.AppendDrop__Take.of.Le_Length (by grind)]
+  rw [Rotate.eq.AppendDrop__Take.of.GeLength (by grind)]
   rw [EqTakeAppend.of.Eq_Length (by grind)]
   simp
 
