@@ -1,5 +1,5 @@
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength
-import Lemma.List.EqInsertIdx.of.Gt_Length
+import Lemma.List.EqInsertIdx.of.LtLength
 import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Le
@@ -23,7 +23,7 @@ private lemma main
     apply EqMin.of.Le ∘ Le.of.Le.Le h
     assumption
   else
-    rw [EqInsertIdx.of.Gt_Length]
+    rw [EqInsertIdx.of.LtLength]
     linarith
 
 

@@ -1,7 +1,7 @@
 import stdlib.SEq
 import sympy.tensor.Basic
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
-import Lemma.List.EqInsertIdx.of.Gt_Length
+import Lemma.List.EqInsertIdx.of.LtLength
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.List.InsertIdx.ne.Nil.of.Ne_Nil
@@ -26,7 +26,7 @@ private lemma main
   induction s generalizing d with
   | nil =>
     simp at h_d
-    have h_nil := EqInsertIdx.of.Gt_Length (by simpa) 1 (a := []) (i := d)
+    have h_nil := EqInsertIdx.of.LtLength (by simpa) 1 (a := []) (i := d)
     constructor
     ·
       assumption
@@ -60,7 +60,7 @@ private lemma main
         simp at h_d
         apply ih (by omega) (X.get ⟨i, h_i⟩)
       .
-        rw [EqInsertIdx.of.Gt_Length h_d]
+        rw [EqInsertIdx.of.LtLength h_d]
 
 
 -- created on 2025-10-10

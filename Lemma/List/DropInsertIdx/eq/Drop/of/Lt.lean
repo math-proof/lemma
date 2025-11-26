@@ -1,4 +1,4 @@
-import Lemma.List.EqInsertIdx.of.Gt_Length
+import Lemma.List.EqInsertIdx.of.LtLength
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength
@@ -39,7 +39,7 @@ private lemma main
       assumption
   else
     simp at h_i
-    rw [EqInsertIdx.of.Gt_Length h_i]
+    rw [EqInsertIdx.of.LtLength h_i]
     repeat rw [Drop.eq.Nil.of.Ge_Length]
     ·
       apply GeSub_1.of.Gt

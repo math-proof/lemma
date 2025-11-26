@@ -1,6 +1,6 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
-import Lemma.List.LengthInsertIdx.eq.Length.of.Gt_Length
+import Lemma.List.LengthInsertIdx.eq.Length.of.LtLength
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
 import Lemma.Nat.Ge_1.of.Gt_0
@@ -26,7 +26,7 @@ private lemma main
       simp
       have := EqUFnS.of.Eq h_insert List.length
       simp at this
-      rw [LengthInsertIdx.eq.Length.of.Gt_Length] at this
+      rw [LengthInsertIdx.eq.Length.of.LtLength] at this
       ·
         simp at this
       ·
@@ -43,7 +43,7 @@ private lemma main
         simp
       else
         simp at h
-        rw [LengthInsertIdx.eq.Length.of.Gt_Length (by assumption)]
+        rw [LengthInsertIdx.eq.Length.of.LtLength (by assumption)]
         simp
 
 

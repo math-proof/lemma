@@ -30,7 +30,7 @@ import Lemma.Nat.Mul
 import Lemma.Vector.EqGetS
 import Lemma.List.ProdTakeSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
-import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.Gt_Length
+import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.LtLength
 import Lemma.List.ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Bool.EqUFnS.of.Eq

@@ -1,6 +1,6 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
-import Lemma.List.LengthInsertIdx.eq.Length.of.Gt_Length
+import Lemma.List.LengthInsertIdx.eq.Length.of.LtLength
 open Tensor List
 
 

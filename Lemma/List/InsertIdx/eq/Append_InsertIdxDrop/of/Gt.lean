@@ -2,7 +2,7 @@ import Lemma.List.EqAppendTake__Drop
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.GeLength
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Le
-import Lemma.List.EqInsertIdx.of.Gt_Length
+import Lemma.List.EqInsertIdx.of.LtLength
 import Lemma.List.EqTake.of.Ge_Length
 import Lemma.List.Drop.eq.Nil.of.Ge_Length
 import Lemma.Nat.Ge.of.Gt
@@ -34,13 +34,13 @@ private lemma main
   else
     simp at h_j
     have h_i := Gt.of.Gt.Gt h h_j
-    rw [EqInsertIdx.of.Gt_Length h_i]
+    rw [EqInsertIdx.of.LtLength h_i]
     have h_j := Ge.of.Gt h_j
     rw [EqTake.of.Ge_Length h_j]
     rw [Drop.eq.Nil.of.Ge_Length h_j]
     simp
     have h_ij := Sub.gt.Zero.of.Gt h
-    rw [EqInsertIdx.of.Gt_Length h_ij]
+    rw [EqInsertIdx.of.LtLength h_ij]
 
 
 -- created on 2025-10-03
