@@ -21,7 +21,7 @@ private lemma main
   {i : Fin a.length}
   {d t : ℕ}
 -- given
-  (h : t < a.length) :
+  (h : a.length > t) :
 -- imply
   have : t < (a.permute i (-d)).length := by simpa
   (a.permute i (-d))[t] =

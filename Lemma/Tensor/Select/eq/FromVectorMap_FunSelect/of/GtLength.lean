@@ -5,7 +5,7 @@ import sympy.tensor.tensor
 private lemma main
   {d : ℕ}
 -- given
-  (h : d < s.length)
+  (h : s.length > d)
   (i : Fin s[d])
   (X : Tensor α (n :: s)) :
 -- imply

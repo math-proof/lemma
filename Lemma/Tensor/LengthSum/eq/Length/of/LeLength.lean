@@ -9,7 +9,7 @@ private lemma main
   [Add α] [Zero α]
   {dim : ℕ}
 -- given
-  (h : dim ≥ s.length)
+  (h : s.length ≤ dim)
   (X : Tensor α s) :
 -- imply
   (X.sum dim).length = X.length := by

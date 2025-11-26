@@ -10,7 +10,7 @@ private lemma main
   [Monoid α]
   {s : List α}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   (s.take (i + 1)).prod = (s.take i).prod * s[i] := by
 -- proof

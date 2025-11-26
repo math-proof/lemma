@@ -11,7 +11,7 @@ open List Nat
 private lemma main
   {s : List α}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   (s.drop i).take (d + 1) = s[i] :: (s.drop (i + 1)).take d := by
 -- proof

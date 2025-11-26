@@ -15,7 +15,7 @@ open List Nat
 private lemma main
   {s : List α}
 -- given
-  (h_i : i < s.length)
+  (h_i : s.length > i)
   (h₁ : i ≤ j) :
 -- imply
   (s.eraseIdx i).eraseIdx j = (s.eraseIdx (j + 1)).eraseIdx i := by

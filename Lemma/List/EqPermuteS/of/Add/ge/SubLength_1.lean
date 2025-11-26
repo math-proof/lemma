@@ -17,7 +17,7 @@ private lemma main
 -- proof
   repeat rw [Permute.eq.Append_AppendRotateTakeDrop]
   simp_all [show (s.length - 1 - i + 1) = s.length - i by omega]
-  rw [Drop.eq.Nil.of.LeLength (i := i + (d + 1)) (by simp; omega)]
+  rw [Drop.eq.Nil.of.LeLength (i := i + (d + 1)) (by omega)]
   simp
   omega
 

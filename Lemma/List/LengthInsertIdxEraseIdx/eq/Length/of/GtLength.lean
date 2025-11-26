@@ -8,13 +8,13 @@ open List Nat
 
 @[main]
 private lemma main
-  {dim : ℕ}
+  {d : ℕ}
   {s : List α}
 -- given
-  (h : dim < s.length)
+  (h : s.length > d)
   (a : α) :
 -- imply
-  ((s.eraseIdx dim).insertIdx dim a).length = s.length := by
+  ((s.eraseIdx d).insertIdx d a).length = s.length := by
 -- proof
   rw [LengthInsertIdx.eq.Add1Length.of.GeLength] <;>
     rw [LengthEraseIdx.eq.SubLength_1.of.GtLength h]

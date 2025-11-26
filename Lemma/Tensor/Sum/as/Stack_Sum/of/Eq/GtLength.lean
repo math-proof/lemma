@@ -9,7 +9,7 @@ private lemma main
   {d : ℕ}
 -- given
   (h₀ : n = m)
-  (h₁ : d < s.length)
+  (h₁ : s.length > d)
   (X : Tensor α (n :: s)) :
 -- imply
   have : X.length = m := by aesop

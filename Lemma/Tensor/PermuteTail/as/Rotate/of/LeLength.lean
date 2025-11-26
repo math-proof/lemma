@@ -20,7 +20,7 @@ open Vector Nat Tensor Bool List
 private lemma main
   {s : List ℕ}
 -- given
-  (h : n ≥ s.length)
+  (h : s.length ≤ n)
   (X : Tensor α s) :
 -- imply
   X.permuteTail n ≃ X.rotate (s.length - 1) := by

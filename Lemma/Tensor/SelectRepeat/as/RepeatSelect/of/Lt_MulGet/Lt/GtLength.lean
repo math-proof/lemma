@@ -53,7 +53,7 @@ open Nat List Bool Tensor Vector
 @[main]
 private lemma main
 -- given
-  (h_d : d < s.length)
+  (h_d : s.length > d)
   (h_k : k < d)
   (h_i : i < s[d])
   (X : Tensor α s)

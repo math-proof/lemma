@@ -5,7 +5,7 @@ import sympy.Basic
 private lemma main
   {a : List α}
 -- given
-  (h : i > a.length)
+  (h : a.length < i)
   (x : α) :
 -- imply
   a.insertIdx i x = a :=

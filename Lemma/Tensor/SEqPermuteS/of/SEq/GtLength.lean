@@ -7,7 +7,7 @@ private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}
 -- given
-  (h_dim : dim < s.length)
+  (h_dim : s.length > dim)
   (h : A ≃ B)
   (k : ℤ) :
 -- imply

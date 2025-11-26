@@ -7,7 +7,7 @@ private lemma main
   {s : List α}
   {i : ℕ}
 -- given
-  (h_s : i < s.length)
+  (h_s : s.length > i)
   (h_i : i > 0) :
 -- imply
   s.tail.eraseIdx (i - 1) = (s.eraseIdx i).tail := by

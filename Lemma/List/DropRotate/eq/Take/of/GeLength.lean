@@ -9,7 +9,7 @@ open List
 private lemma main
   {s : List α}
 -- given
-  (h : n ≤ s.length) :
+  (h : s.length ≥ n) :
 -- imply
   (s.rotate n).drop (s.length - n) = s.take n := by
 -- proof

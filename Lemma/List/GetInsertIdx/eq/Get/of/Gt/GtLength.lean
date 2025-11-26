@@ -6,7 +6,7 @@ open List
 private lemma fin
   {s : List α}
 -- given
-  (h : j < s.length)
+  (h : s.length > j)
   (h_ij : i > j)
   (a : α) :
 -- imply
@@ -20,7 +20,7 @@ private lemma fin
 private lemma main
   {s : List α}
 -- given
-  (h : j < s.length)
+  (h : s.length > j)
   (h_ij : i > j)
   (a : α) :
 -- imply

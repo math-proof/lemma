@@ -7,7 +7,7 @@ private lemma main
   {i : ℕ}
   {s : List (List α)}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   (s.drop i).flatten = s[i] ++ (s.drop (i + 1)).flatten := by
 -- proof

@@ -11,7 +11,7 @@ private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}
 -- given
-  (h_i : i < s.length)
+  (h_i : s.length > i)
   (h : A ≃ B)
   (g : (s : List ℕ) → Fin s.length → List ℕ)
   (f : (s : List ℕ) → (i : Fin s.length) → Tensor α s → Tensor α (g s i)) :
@@ -37,7 +37,7 @@ private lemma tensor
   {A : Tensor α s}
   {B : Tensor α s'}
 -- given
-  (h_i : i < A.length)
+  (h_i : A.length > i)
   (h : A ≃ B)
   (g : List ℕ → List ℕ)
   (f : (s : List ℕ) → (X : Tensor α s) → (i : Fin X.length) → Tensor α (g s)) :

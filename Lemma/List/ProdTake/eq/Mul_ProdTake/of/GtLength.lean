@@ -7,7 +7,7 @@ private lemma main
   [CommMonoid α]
   {s : List α}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   (s.take (i + 1)).prod = s[i] * (s.take i).prod := by
 -- proof

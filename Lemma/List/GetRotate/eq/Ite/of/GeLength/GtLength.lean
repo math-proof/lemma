@@ -9,8 +9,8 @@ private lemma main
   {s : List α}
   {d : ℕ}
 -- given
-  (h_i : i < s.length)
-  (h_d : d ≤ s.length) :
+  (h_i : s.length > i)
+  (h_d : s.length ≥ d) :
 -- imply
   have : i < (s.rotate d).length := by simp_all
   (s.rotate d)[i] =
@@ -24,14 +24,14 @@ private lemma main
   intro h_i'
   simp [Rotate.eq.AppendDrop__Take.of.GeLength h_d]
   split_ifs with h
-  · 
+  ·
     rw [GetAppend.eq.Get.of.GtLength (by simpa)]
     simp
-  · 
+  ·
     rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
-    · 
+    ·
       simp
-    · 
+    ·
       simpa using h
 
 

@@ -5,7 +5,7 @@ import sympy.Basic
 private lemma main
   {s : List α}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   s.drop i = s[i] :: s.drop (i + 1) :=
 -- proof

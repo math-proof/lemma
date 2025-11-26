@@ -9,8 +9,8 @@ private lemma main
   {a : List α}
   {i j : ℕ}
 -- given
-  (h₀ : j < a.length)
-  (h₁ : i < a.length) :
+  (h₀ : a.length > j)
+  (h₁ : a.length > i) :
 -- imply
   have : i < (a.swap i j).length := by rwa [LengthSwap.eq.Length]
   (a.swap i j)[i] = a[j] := by
@@ -26,8 +26,8 @@ private lemma left
   {a : List α}
   {i j : ℕ}
 -- given
-  (h₀ : i < a.length)
-  (h₁ : j < a.length) :
+  (h₀ : a.length > i)
+  (h₁ : a.length > j) :
 -- imply
   have : j < (a.swap i j).length := by rwa [LengthSwap.eq.Length]
   (a.swap i j)[j] = a[i] := by

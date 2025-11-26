@@ -7,7 +7,7 @@ open Tensor
 private lemma main
   {d : ℕ}
 -- given
-  (h : d < s.length)
+  (h : s.length > d)
   (X : Tensor α (n :: s))
   (i : Fin s[d]) :
 -- imply

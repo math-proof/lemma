@@ -10,7 +10,7 @@ private lemma main
   [MulDivCancelClass α]
   {s : List α}
 -- given
-  (h : i < s.length)
+  (h : s.length > i)
   (h_i : s[i] ≠ 0) :
 -- imply
   (s.take i).prod = (s.take (i + 1)).prod / s[i] := by

@@ -15,7 +15,7 @@ open List Nat Tensor
 private lemma main
   {s : List ℕ}
 -- given
-  (h_d : d < s.length)
+  (h_d : s.length > d)
   (h_i : i < s[d - 1])
   (h_k : k < d)
   (X : Tensor α s)

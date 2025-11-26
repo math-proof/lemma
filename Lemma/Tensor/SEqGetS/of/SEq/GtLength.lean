@@ -9,7 +9,7 @@ private lemma main
   {B : Tensor α s'}
   {i : ℕ}
 -- given
-  (h₀ : i < A.length)
+  (h₀ : A.length > i)
   (h₁ : A ≃ B) :
 -- imply
   A[i] ≃ B[i]'(by rwa [Length.of.SEq h₁] at h₀) := by
@@ -23,7 +23,7 @@ private lemma fin
   {B : Tensor α s'}
   {i : ℕ}
 -- given
-  (h₀ : i < A.length)
+  (h₀ : A.length > i)
   (h₁ : A ≃ B) :
 -- imply
   A.get ⟨i, h₀⟩ ≃ B.get ⟨i, by rwa [Length.of.SEq h₁] at h₀⟩ :=

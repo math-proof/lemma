@@ -13,7 +13,7 @@ open List Tensor Vector
 @[main]
 private lemma main
 -- given
-  (h_dim : d ≤ s.length)
+  (h_dim : s.length ≥ d)
   (X : Tensor α s) :
 -- imply
   (X.unsqueeze d).select ⟨d, by rw [LengthInsertIdx.eq.Add1Length.of.GeLength h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by

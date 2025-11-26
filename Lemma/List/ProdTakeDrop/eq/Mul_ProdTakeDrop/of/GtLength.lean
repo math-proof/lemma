@@ -7,7 +7,7 @@ private lemma main
   [Mul α] [One α]
   {s : List α}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   ((s.drop i).take (d + 1)).prod = s[i] * ((s.drop (i + 1)).take d).prod := by
 -- proof

@@ -5,7 +5,7 @@ import sympy.Basic
 private lemma main
   {s : List α}
 -- given
-  (h₀ : j < s.length)
+  (h₀ : s.length > j)
   (h₁ : i < j) :
 -- imply
   (s.eraseIdx i)[j - 1]'(by grind) = s[j] := by

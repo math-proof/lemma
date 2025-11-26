@@ -7,7 +7,7 @@ open List
 private lemma main
   {a : List α}
 -- given
-  (h : stop ≥ a.length) :
+  (h : a.length ≤ stop) :
 -- imply
   a.slice start stop = a.slice start a.length := by
 -- proof

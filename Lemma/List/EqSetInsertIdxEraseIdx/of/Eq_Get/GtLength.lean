@@ -7,7 +7,7 @@ private lemma main
   {dim : ℕ}
   {s : List α}
 -- given
-  (h : dim < s.length)
+  (h : s.length > dim)
   (h_x : x = s[dim])
   (a : α) :
 -- imply

@@ -7,7 +7,7 @@ private lemma main
   {X : Tensor α s}
   {i : ℕ}
 -- given
-  (h : i < X.length) :
+  (h : X.length > i) :
 -- imply
   X[i] = X.get ⟨i, h⟩ := by
 -- proof

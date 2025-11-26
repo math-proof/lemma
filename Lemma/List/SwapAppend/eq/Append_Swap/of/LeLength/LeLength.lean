@@ -9,8 +9,8 @@ private lemma main
   {a : List α}
   {i j : ℕ}
 -- given
-  (h₀ : i ≥ a.length)
-  (h₁ : j ≥ a.length)
+  (h₀ : a.length ≤ i)
+  (h₁ : a.length ≤ j)
   (b : List α) :
 -- imply
   (a ++ b).swap i j = a ++ b.swap (i - a.length) (j - a.length) := by

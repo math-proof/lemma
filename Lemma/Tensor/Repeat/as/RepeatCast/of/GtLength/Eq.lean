@@ -8,7 +8,7 @@ private lemma main
   {s : List ℕ}
 -- given
   (h : s = s')
-  (h_d : d < s.length)
+  (h_d : s.length > d)
   (X : Tensor α s)
   (n : ℕ) :
 -- imply

@@ -9,7 +9,7 @@ open Bool Tensor Nat
 private lemma main
   {s : List ℕ}
 -- given
-  (h : n ≥ s.length)
+  (h : s.length ≤ n)
   (X : Tensor α s) :
 -- imply
   have h : s.rotate (s.length - 1) = s.take (s.length - n) ++ (s.drop (s.length - n)).rotate (n ⊓ s.length - 1) := by

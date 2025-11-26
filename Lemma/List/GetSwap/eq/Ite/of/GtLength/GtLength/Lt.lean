@@ -19,8 +19,8 @@ private lemma main
   {i j t : ℕ}
 -- given
   (h₀ : i < j)
-  (h₁ : j < a.length)
-  (h₂ : t < a.length) :
+  (h₁ : a.length > j)
+  (h₂ : a.length > t) :
 -- imply
   have : t < (a.swap i j).length := by simp_all [LengthSwap.eq.Length]
   (a.swap i j)[t] =

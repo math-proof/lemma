@@ -7,7 +7,7 @@ open List
 private lemma main
   {s : List α}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   (s.drop i).take 1 = [s[i]] := by
 -- proof

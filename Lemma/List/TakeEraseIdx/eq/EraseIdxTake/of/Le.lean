@@ -30,8 +30,9 @@ private lemma main
     omega
   else
     simp at h_i
-    repeat rw [EqEraseIdx.of.LeLength (by simp; omega)]
+    repeat rw [EqEraseIdx.of.LeLength]
     repeat rw [EqTake.of.LeLength (by omega)]
+    repeat omega
 
 
 -- created on 2025-11-03

@@ -5,7 +5,7 @@ import sympy.Basic
 private lemma main
   {x : List α}
 -- given
-  (h_i : i < x.length)
+  (h_i : x.length > i)
   (a : α) :
 -- imply
   have : i < (x.set i a).length := by simpa

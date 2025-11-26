@@ -8,7 +8,7 @@ private lemma left
   {a : List α}
   {i : ℕ}
 -- given
-  (h : i ≥ a.length)
+  (h : a.length ≤ i)
   (j : ℕ) :
 -- imply
   a.swap i j = a := by
@@ -31,7 +31,7 @@ private lemma left
 private lemma main
   {a : List α}
 -- given
-  (h : j ≥ a.length)
+  (h : a.length ≤ j)
   (i : ℕ) :
 -- imply
   a.swap i j = a := by

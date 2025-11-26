@@ -6,7 +6,7 @@ open List
 @[main]
 private lemma main
 -- given
-  (h : i ≥ a.length)
+  (h : a.length ≤ i)
   (b : List α) :
 -- imply
   (a ++ b).drop i = b.drop (i - a.length) := by

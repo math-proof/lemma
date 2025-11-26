@@ -15,7 +15,7 @@ private lemma main
   {s : List (List α)}
 -- given
   (h₀ : ∀ l ∈ s, l.length = n)
-  (h₁ : i < s.length)
+  (h₁ : s.length > i)
   (h₂ : j < n) :
 -- imply
   have : j < s[i].length := by

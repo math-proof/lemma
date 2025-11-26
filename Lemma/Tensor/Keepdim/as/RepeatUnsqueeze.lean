@@ -11,7 +11,7 @@ private lemma main
   {dim : ℕ}
   {s : List ℕ}
 -- given
-  (h : dim < s.length)
+  (h : s.length > dim)
   (X : Tensor α (s.eraseIdx dim)) :
 -- imply
   X.keepdim ≃ (X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.GtLength h 1⟩ := by

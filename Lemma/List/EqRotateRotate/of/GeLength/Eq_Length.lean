@@ -7,7 +7,7 @@ private lemma main
   {s : List α}
 -- given
   (h_s : L = s.length)
-  (h_i : i ≤ s.length) :
+  (h_i : s.length ≥ i) :
 -- imply
   (s.rotate i).rotate (L - i) = s := by
 -- proof

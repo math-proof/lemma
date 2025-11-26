@@ -7,7 +7,7 @@ private lemma main
   {s : List α}
   {f : α → β}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   have : i < (s.map f).length := by rwa [List.length_map]
   (s.map f)[i] = f s[i] := by

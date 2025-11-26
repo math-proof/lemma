@@ -9,7 +9,7 @@ private lemma main
   {B : Tensor α s'}
 -- given
   (h : A ≃ B)
-  (h_d : d < s.length)
+  (h_d : s.length > d)
   (n : ℕ) :
 -- imply
   A.repeat n ⟨d, h_d⟩ ≃ B.repeat n ⟨d, by rwa [← h.left]⟩ := by

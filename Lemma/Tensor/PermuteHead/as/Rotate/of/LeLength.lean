@@ -19,7 +19,7 @@ open Tensor Bool List Vector Nat
 private lemma main
   {s : List ℕ}
 -- given
-  (h : n ≥ s.length)
+  (h : s.length ≤ n)
   (X : Tensor α s) :
 -- imply
   X.permuteHead n ≃ X.rotate 1 := by

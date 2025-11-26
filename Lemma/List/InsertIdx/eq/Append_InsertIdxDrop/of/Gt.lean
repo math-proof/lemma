@@ -1,5 +1,5 @@
 import Lemma.List.EqAppendTake__Drop
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.GeLength
+import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Le
 import Lemma.List.EqInsertIdx.of.LtLength
@@ -24,7 +24,7 @@ private lemma main
   if h_j : j ≤ a.length then
     conv_lhs =>
       rw [← EqAppendTake__Drop a j]
-    rw [InsertIdxAppend.eq.Append_InsertIdx.of.GeLength] <;>
+    rw [InsertIdxAppend.eq.Append_InsertIdx.of.LeLength] <;>
       rw [LengthTake.eq.Min_Length]
     ·
       rwa [EqMin.of.Le]

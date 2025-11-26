@@ -8,7 +8,7 @@ private lemma main
   [Monoid α]
   {s : List α}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   (s.rotate i).prod = (s.drop i).prod * (s.take i).prod := by
 -- proof

@@ -14,7 +14,7 @@ private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}
 -- given
-  (h_i : i < s.length)
+  (h_i : s.length > i)
   (h_i' : i' < s'.length)
   (h_eq : i = i')
   (h : A.permute ⟨i, h_i⟩ d ≃ B.permute ⟨i', h_i'⟩ d) :

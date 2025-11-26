@@ -5,7 +5,7 @@ import sympy.Basic
 private lemma fin
   {s : List α}
 -- given
-  (h_j : j ≤ s.length)
+  (h_j : s.length ≥ j)
   (h_i : i < j)
   (a : α) :
 -- imply
@@ -20,7 +20,7 @@ private lemma fin
 private lemma main
   {s : List α}
 -- given
-  (h_j : j ≤ s.length)
+  (h_j : s.length ≥ j)
   (h_i : i < j)
   (a : α) :
 -- imply

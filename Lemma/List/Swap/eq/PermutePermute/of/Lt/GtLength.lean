@@ -12,7 +12,7 @@ open Bool List Nat
 private lemma main
   {s : List α}
 -- given
-  (h_j : j < s.length)
+  (h_j : s.length > j)
   (h_ij : i < j) :
 -- imply
   let d := j - i

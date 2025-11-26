@@ -18,7 +18,7 @@ open List Bool Nat Tensor Vector
 @[main]
 private lemma main
 -- given
-  (h : n ≥ s.length)
+  (h : s.length ≤ n)
   (X : Tensor α s) :
 -- imply
   X.permuteTail n ≃ X.permuteTail s.length := by

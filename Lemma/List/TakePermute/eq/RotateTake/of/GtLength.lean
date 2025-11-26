@@ -7,7 +7,7 @@ open List
 private lemma main
   {s : List α}
 -- given
-  (h : d < s.length) :
+  (h : s.length > d) :
 -- imply
   (s.permute ⟨0, by grind⟩ d).take (d + 1) = (s.take (d + 1)).rotate 1 := by
 -- proof

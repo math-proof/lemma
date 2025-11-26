@@ -15,7 +15,7 @@ open Tensor Vector Nat
 private lemma main
   [DivisionSemiring α]
 -- given
-  (h : dim < s.length)
+  (h : s.length > dim)
   (X : Tensor α s)
   (n : Tensor α []) :
 -- imply

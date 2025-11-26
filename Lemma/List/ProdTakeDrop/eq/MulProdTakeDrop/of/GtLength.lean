@@ -8,7 +8,7 @@ private lemma main
   [One α] [CommMagma α]
   {s : List α}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   ((s.drop i).take (d + 1)).prod = ((s.drop (i + 1)).take d).prod * s[i] := by
 -- proof

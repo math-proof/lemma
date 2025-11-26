@@ -6,7 +6,7 @@ private lemma main
   {a b : List α}
   {i : ℕ}
 -- given
-  (h₀ : i < a.length)
+  (h₀ : a.length > i)
   (h₁ : a = b) :
 -- imply
   have : i < b.length := by simp_all

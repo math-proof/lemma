@@ -7,7 +7,7 @@ open Tensor
 @[main]
 private lemma main
 -- given
-  (h_d : d < s.length)
+  (h_d : s.length > d)
   (h_d₀ : d > 0)
   (h_i : i < s[d])
   (h_j : j < s[0])

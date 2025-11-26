@@ -6,7 +6,7 @@ import sympy.Basic
 private lemma main
   {a : List α}
 -- given
-  (h : i < a.length) :
+  (h : a.length > i) :
 -- imply
   a[i]? = some a[i] := by
 -- proof

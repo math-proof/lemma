@@ -12,7 +12,7 @@ private lemma main
   {s : List ℕ}
 -- given
   (h₀ : i < s.cartesianProduct.length)
-  (h₂ : j < s.length) :
+  (h₂ : s.length > j) :
 -- imply
   have : j < s.cartesianProduct[i].length := by
     rwa [← LengthGetCartesianProduct.eq.Length.of.Lt_LengthCartesianProduct] at h₂

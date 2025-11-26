@@ -14,7 +14,7 @@ private lemma main
   {dim : ℕ}
   {s : List α}
 -- given
-  (h : dim < s.length)
+  (h : s.length > dim)
   (a : α):
 -- imply
   ((s.eraseIdx dim).insertIdx dim a).set dim s[dim] = s := by

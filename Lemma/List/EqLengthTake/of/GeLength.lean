@@ -6,7 +6,7 @@ private lemma main
   {s : List α}
   {n : Nat}
 -- given
-  (h : n ≤ s.length) :
+  (h : s.length ≥ n) :
 -- imply
   (s.take n).length = n := by
 -- proof

@@ -6,7 +6,7 @@ open List Nat
 @[main]
 private lemma main
 -- given
-  (h : i ≤ a.length)
+  (h : a.length ≥ i)
   (b : List α) :
 -- imply
   (a ++ b).drop i = a.drop i ++ b := by

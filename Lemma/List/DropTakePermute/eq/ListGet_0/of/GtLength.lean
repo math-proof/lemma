@@ -6,7 +6,7 @@ open List
 private lemma main
   {s : List α}
 -- given
-  (h : d < s.length) :
+  (h : s.length > d) :
 -- imply
   ((s.permute ⟨0, by linarith⟩ d).take (d + 1)).drop d = [s[0]] := by
 -- proof

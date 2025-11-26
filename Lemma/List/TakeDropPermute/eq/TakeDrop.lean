@@ -58,7 +58,7 @@ private lemma main
     rw [EqPermuteS.of.Add.ge.SubLength_1 (by omega)] at this ⊢
     rw [EqTake.of.LeLength (by simp)] at this
     rw [this]
-    rw [Drop.eq.Nil.of.LeLength (i := i + d + 1) (by simp; omega)]
+    rw [Drop.eq.Nil.of.LeLength (i := i + d + 1) (by omega)]
     simp
     rw [EqMin.of.Ge (by simp; omega)]
     rw [EqTake.of.LeLength (n := s.length - i) (by simp)]

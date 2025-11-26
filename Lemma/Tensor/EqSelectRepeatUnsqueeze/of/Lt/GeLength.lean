@@ -10,7 +10,7 @@ open List Tensor Nat
 private lemma main
   {s : List ℕ}
 -- given
-  (h_d : d ≤ s.length)
+  (h_d : s.length ≥ d)
   (h_i : i < n)
   (X : Tensor α s) :
 -- imply

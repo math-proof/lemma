@@ -10,7 +10,7 @@ private lemma main
   [MulZeroClass α]
   {a : List α}
 -- given
-  (h : l ≤ a.length) :
+  (h : a.length ≥ l) :
 -- imply
   List.zipWith HMul.hMul (List.replicate l 0) a = List.replicate l 0 := by
 -- proof

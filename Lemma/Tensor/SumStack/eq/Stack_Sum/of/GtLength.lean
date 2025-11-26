@@ -11,7 +11,7 @@ set_option maxHeartbeats 400000
 private lemma main
   [Add α] [Zero α]
 -- given
-  (h : d < s.length)
+  (h : s.length > d)
   (f : Fin n → Tensor α s):
 -- imply
   ([k < n] f k).sum (d + 1) = [k < n] (f k).sum d := by

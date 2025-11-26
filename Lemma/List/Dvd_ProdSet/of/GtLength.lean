@@ -9,7 +9,7 @@ private lemma main
   [CommMonoid α]
   {s : List α}
 -- given
-  (h : i < s.length)
+  (h : s.length > i)
   (a : α) :
 -- imply
   a ∣ (s.set i a).prod := by

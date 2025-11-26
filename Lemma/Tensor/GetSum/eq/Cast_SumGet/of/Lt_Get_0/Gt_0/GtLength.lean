@@ -13,7 +13,7 @@ private lemma main
   [Add α] [Zero α]
   {dim i : ℕ}
 -- given
-  (h₀ : dim < s.length)
+  (h₀ : s.length > dim)
   (h₁ : dim > 0)
   (h₂ : i < s[0])
   (X : Tensor α s) :
@@ -36,7 +36,7 @@ private lemma fin
   [Add α] [Zero α]
   {dim i : ℕ}
 -- given
-  (h₀ : dim < s.length)
+  (h₀ : s.length > dim)
   (h₁ : dim > 0)
   (h₂ : i < s[0])
   (X : Tensor α s) :

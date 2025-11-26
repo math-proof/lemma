@@ -5,7 +5,7 @@ import sympy.Basic
 private lemma main
   {a b : List α}
 -- given
-  (h₀ : i < a.length) :
+  (h₀ : a.length > i) :
 -- imply
   have : i < (a ++ b).length := by
     rw [List.length_append]

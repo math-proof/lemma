@@ -16,7 +16,7 @@ private lemma main
   {i j : ℕ}
 -- given
   (h₀ : i < j)
-  (h₁ : j < a.length) :
+  (h₁ : a.length > j) :
 -- imply
   (a.take i ++ a[j] :: a.slice (i + 1) j ++ a[i] :: a.drop (j + 1)).length = a.length := by
 -- proof

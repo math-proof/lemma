@@ -7,7 +7,7 @@ open List
 private lemma main
   {a : List α}
 -- given
-  (h : i < a.length) :
+  (h : a.length > i) :
 -- imply
   a.enumerate[i]? = some ⟨⟨i, h⟩, a[i]⟩ := by
 -- proof

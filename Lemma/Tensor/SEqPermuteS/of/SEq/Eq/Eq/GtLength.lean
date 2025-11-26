@@ -7,7 +7,7 @@ private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}
 -- given
-  (h_s : i < s.length)
+  (h_s : s.length > i)
   (h_i : i' = i)
   (h_d : d' = d)
   (h : A ≃ B) :

@@ -10,7 +10,7 @@ private lemma main
   [CommMonoid α]
   {s : List α}
 -- given
-  (h : i < s.length)
+  (h : s.length > i)
   (h : i ≥ j)
   (n : α) :
 -- imply

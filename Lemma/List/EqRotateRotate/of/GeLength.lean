@@ -8,7 +8,7 @@ open List Nat
 private lemma main
   {s : List α}
 -- given
-  (h : i ≤ s.length) :
+  (h : s.length ≥ i) :
 -- imply
   (s.rotate i).rotate (s.length - i) = s := by
 -- proof

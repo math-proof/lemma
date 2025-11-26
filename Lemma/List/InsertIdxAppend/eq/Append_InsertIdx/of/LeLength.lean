@@ -7,7 +7,7 @@ open List Nat
 private lemma main
   {a : List α}
 -- given
-  (h : i ≥ a.length)
+  (h : a.length ≤ i)
   (x : α) :
 -- imply
   (a ++ b).insertIdx i x = a ++ b.insertIdx (i - a.length) x := by

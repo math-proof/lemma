@@ -7,7 +7,7 @@ private lemma main
   [MulOneClass α]
   {s : List α}
 -- given
-  (h : i < s.length) :
+  (h : s.length > i) :
 -- imply
   ((s.take (i + 1)).drop i).prod = s[i] := by
 -- proof

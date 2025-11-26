@@ -33,7 +33,7 @@ private lemma main
   {d t : ℕ}
 -- given
   (h₀ : i + d < a.length)
-  (h₁ : t < a.length) :
+  (h₁ : a.length > t) :
 -- imply
   have : t < (a.permute i d).length := by simp_all
   (a.permute i d)[t] =

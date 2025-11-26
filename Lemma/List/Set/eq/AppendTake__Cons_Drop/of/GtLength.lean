@@ -6,7 +6,7 @@ private lemma main
   {s : List α}
   {i : ℕ}
 -- given
-  (h : i < s.length)
+  (h : s.length > i)
   (a : α) :
 -- imply
   s.set i a = s.take i ++ a :: s.drop (i + 1) :=

@@ -16,7 +16,7 @@ open Bool List Nat Tensor
 private lemma main
   [Add α] [Zero α]
 -- given
-  (h_d : d < s.length)
+  (h_d : s.length > d)
   (h : s[d] = 0)
   (X : Tensor α s) :
 -- imply

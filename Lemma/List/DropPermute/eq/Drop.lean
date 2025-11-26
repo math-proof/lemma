@@ -32,10 +32,11 @@ private lemma main
     omega
   else
     repeat rw [Drop.eq.Nil.of.LeLength]
-    repeat {
+    .
+      omega
+    .
       simp
       omega
-    }
 
 
 -- created on 2025-10-14

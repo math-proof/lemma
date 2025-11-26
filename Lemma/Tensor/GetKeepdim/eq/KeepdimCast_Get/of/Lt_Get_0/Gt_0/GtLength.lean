@@ -31,7 +31,7 @@ private lemma main
   {d i : ℕ}
   {s : List ℕ}
 -- given
-  (h_s : d < s.length)
+  (h_s : s.length > d)
   (h_d : d > 0)
   (h_i : i < s[0])
   (X : Tensor α (s.eraseIdx d)) :

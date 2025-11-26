@@ -4,13 +4,13 @@ open List
 
 @[main]
 private lemma main
-  {dim : ℕ}
+  {d : ℕ}
   {s : List α}
 -- given
-  (h : dim < s.length)
+  (h : s.length > d)
   (a : α) :
 -- imply
-  dim < ((s.eraseIdx dim).insertIdx dim a).length := by
+  d < ((s.eraseIdx d).insertIdx d a).length := by
 -- proof
   rwa [LengthInsertIdxEraseIdx.eq.Length.of.GtLength h]
 

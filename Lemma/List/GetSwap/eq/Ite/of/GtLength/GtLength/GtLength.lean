@@ -11,9 +11,9 @@ private lemma main
   {a : List α}
   {i j t : ℕ}
 -- given
-  (h₀ : i < a.length)
-  (h₁ : j < a.length)
-  (h₂ : t < a.length) :
+  (h₀ : a.length > i)
+  (h₁ : a.length > j)
+  (h₂ : a.length > t) :
 -- imply
   have : t < (a.swap i j).length := by
     rwa [LengthSwap.eq.Length]

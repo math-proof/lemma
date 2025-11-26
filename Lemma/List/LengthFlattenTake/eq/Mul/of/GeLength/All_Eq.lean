@@ -8,7 +8,7 @@ private lemma main
   {s : List (List α)}
 -- given
   (h₀ : ∀ l ∈ s, l.length = n)
-  (h₁ : i ≤ s.length) :
+  (h₁ : s.length ≥ i) :
 -- imply
   (s.take i).flatten.length = i * n := by
 -- proof

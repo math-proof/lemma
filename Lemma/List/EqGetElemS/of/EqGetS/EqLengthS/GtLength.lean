@@ -6,7 +6,7 @@ private lemma main
   {a b : List α}
   {i : ℕ}
 -- given
-  (h_i : i < a.length)
+  (h_i : a.length > i)
   (h_eq : a.length = b.length)
   (h : a[i] = b[i]) :
 -- imply

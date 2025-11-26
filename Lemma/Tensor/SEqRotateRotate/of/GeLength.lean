@@ -26,7 +26,7 @@ open Vector Tensor List Bool Nat
 @[main]
 private lemma main
 -- given
-  (h : i ≤ s.length)
+  (h : s.length ≥ i)
   (X : Tensor α s) :
 -- imply
   (X.rotate i).rotate (s.length - i) ≃ X := by

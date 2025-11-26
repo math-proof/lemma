@@ -10,7 +10,7 @@ open Bool Tensor List
 private lemma main
   {s : List ℕ}
 -- given
-  (h : n ≥ s.length)
+  (h : s.length ≤ n)
   (X : Tensor α s) :
 -- imply
   have h : s.rotate 1 = ((s.take n).rotate 1 ++ s.drop n) := by

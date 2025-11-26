@@ -8,7 +8,7 @@ private lemma main
   [Add α] [Zero α]
   {d : ℕ}
 -- given
-  (h : d < s.length)
+  (h : s.length > d)
   (X : Tensor α (n :: s)) :
 -- imply
   X.sum (d + 1) = [i < n] (X[i].sum d) := by

@@ -14,7 +14,7 @@ private lemma main
   {i j : ℕ}
 -- given
   (h₀ : i < j)
-  (h₁ : j < a.length) :
+  (h₁ : a.length > j) :
 -- imply
   let a' := a.swap i j
   a'.take i ++ a[i] :: (a'.slice (i + 1) j ++ a[j] :: a'.drop (j + 1)) = a := by

@@ -10,7 +10,7 @@ private lemma main
   {X : Tensor α s}
   {Y : Tensor α s'}
 -- given
-  (h_i : i ≤ s.length)
+  (h_i : s.length ≥ i)
   (h : X ≃ Y.rotate (s.length - i)) :
 -- imply
   X.rotate i ≃ Y := by

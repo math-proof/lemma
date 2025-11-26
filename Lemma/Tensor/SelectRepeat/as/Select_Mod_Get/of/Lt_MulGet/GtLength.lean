@@ -31,7 +31,7 @@ open Tensor List Vector Bool Nat
 @[main]
 private lemma main
 -- given
-  (h_d : d < s.length)
+  (h_d : s.length > d)
   (h_i : i < n * s[d])
   (X : Tensor α s) :
 -- imply

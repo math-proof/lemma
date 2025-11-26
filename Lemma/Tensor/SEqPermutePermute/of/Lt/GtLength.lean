@@ -8,7 +8,7 @@ open Nat Tensor
 private lemma main
   {s : List ℕ}
 -- given
-  (h_j : j < s.length)
+  (h_j : s.length > j)
   (h : i < j)
   (X : Tensor α s) :
 -- imply

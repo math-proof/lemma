@@ -6,7 +6,7 @@ private lemma main
   {s : List α}
   {i : ℕ}
 -- given
-  (h : i ≥ s.length) :
+  (h : s.length ≤ i) :
 -- imply
   s.eraseIdx i = s :=
 -- proof

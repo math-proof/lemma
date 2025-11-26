@@ -9,7 +9,7 @@ private lemma main
   {s : List α}
 -- given
   (h_d : d > 0)
-  (h_s : d < s.length) :
+  (h_s : s.length > d) :
 -- imply
   (s.set d (n * s[d])).tail.prod = (s.tail.take (d - 1)).prod * (n * (s.tail.drop (d - 1)).prod) := by
 -- proof

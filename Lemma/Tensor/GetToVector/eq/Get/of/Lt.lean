@@ -7,7 +7,7 @@ open Tensor
 private lemma main
   {X : Tensor α (n :: s)}
 -- given
-  (h : i < X.length) :
+  (h : X.length > i) :
 -- imply
   X.toVector[i] = X[i] := by
 -- proof

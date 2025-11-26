@@ -18,7 +18,7 @@ private lemma main
   {s : List ℕ}
   {d : ℕ}
 -- given
-  (h_d : d > s.length)
+  (h_d : s.length < d)
   (X : Tensor α s) :
 -- imply
   X.unsqueeze d ≃ X := by

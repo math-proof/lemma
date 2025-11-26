@@ -8,7 +8,7 @@ open List Nat
 private lemma main
   {s : List α}
 -- given
-  (h_d : d ≤ s.length)
+  (h_d : s.length ≥ d)
   (h : s.length ≤ i + d) :
 -- imply
   (s.rotate d).eraseIdx i = s.drop d ++ (s.take d).eraseIdx (i + d - s.length) := by
