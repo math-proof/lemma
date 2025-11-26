@@ -2,7 +2,7 @@
 # . .\ps1\update.ps1
 # Read the lean-toolchain file
 param(
-    [String]$version = "v4.24.0"
+    [String]$version = "v4.25.2"
 )
 $versionNumber = $version.Substring(1)
 # cd ~/.elan/toolchains
@@ -201,8 +201,19 @@ if ($null -ne $node) {
 # Run lake commands
 $start = Get-Date
 lake clean
-# lake build -v
+# build proofwidgets to eliminate the following error:
+# error: ProofWidgets not up-to-date. Please run `lake exe cache get` to fetch the latest ProofWidgets. 
+$name = "proofwidgets"
+Write-Host "⏳ build package $name..."
+$packagePath = ".lake/packages/$name"
+Push-Location $packagePath
 lake build
+Pop-Location
+# now build the entire project
+Write-Host "⏳ building the entire project..."
+lake build
+# build specifically sympy.printing.echo for latex printing support
+lake build sympy.printing.echo
 $end = Get-Date
 $totalTime = ($end - $start).TotalSeconds
 Write-Host "🏁 Build completed in $totalTime seconds." -ForegroundColor Cyan

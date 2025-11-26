@@ -12,7 +12,7 @@ private lemma main
   (s.drop i).flatten = s[i] ++ (s.drop (i + 1)).flatten := by
 -- proof
   rw [Drop.eq.Cons_Drop_Add_1.of.GtLength h]
-  rw [List.flatten]
+  simp [List.flatten]
 
 
 -- created on 2025-06-14

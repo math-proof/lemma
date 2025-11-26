@@ -83,9 +83,7 @@ private lemma main
         rw [← hc]
         simp [hi]
         simp [← hb]
-        rw [hi] at h
         simp at h
-        rw [← hb] at h
         simp_all
         rw [← h]
         congr

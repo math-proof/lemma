@@ -1,6 +1,5 @@
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Rat.NeDivS.of.Ne.Ne_0
-open Bool Rat
+open Bool
 
 
 @[main]
@@ -18,9 +17,8 @@ private lemma main
     assumption
   else
     simp [h_d]
-    apply NotEq.of.Ne
-    have h_d := Ne.of.NotEq h_d
-    apply NeDivS.of.Ne.Ne_0 h h_d
+    apply NotEq.of.Ne h
 
 
 -- created on 2025-10-01
+-- updated on 2025-11-26

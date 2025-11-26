@@ -180,8 +180,8 @@ def String.is_relational_operator : String → Bool
   | _ => false
 
 def String.transformPrefix (s : String) : String :=
-  match s with
-  | ⟨s₀ :: s₁ :: expr⟩ =>
+  match s.data with
+  | s₀ :: s₁ :: expr =>
     match s₀, s₁, expr with
     | 'E', 'q', s₂ :: expr
     | 'N', 'e', s₂ :: expr =>

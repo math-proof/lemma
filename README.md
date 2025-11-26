@@ -20,7 +20,7 @@ The main goals of this project are formalizing in Lean4:
   More examples can be found in the theorem library at [www.lemma.cn](http://www.lemma.cn).
 
 
-It also ficilitates reading by visualizing Lean 4 code with KaTeX. 
+It also facilitates reading by visualizing Lean 4 code with KaTeX. 
 This feature converts one-dimensional Lean code into rainbow-colored KaTeX-rendered mathematical formulas. Over **240,000 theorems from Mathlib** have already been visualized in KaTeX format, for example:
   [http://www.lemma.cn/lean/?mathlib=Finset.*sum](http://www.lemma.cn/lean/?mathlib=Finset.*sum)
   (You can use any regular expression to search.)
