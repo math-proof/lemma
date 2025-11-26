@@ -1,6 +1,6 @@
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.EqAppendTake__Drop
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeTake.eq.Take.of.Ge
 open List
@@ -21,7 +21,7 @@ private lemma main
     rw [TakeTake.eq.Take.of.Ge (by simp)]
   else
     simp at h_d
-    rw [EqTake.of.Ge_Length (by omega)]
+    rw [EqTake.of.LeLength (by omega)]
     simp
     grind
 

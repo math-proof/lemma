@@ -1,4 +1,4 @@
-import Lemma.List.EqEraseIdx.of.Ge_Length
+import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.Tensor.CastDiv.eq.DivCast.of.Eq
 import Lemma.Nat.NotLt.of.Ge
 open List Tensor Nat
@@ -17,7 +17,7 @@ private lemma main
   unfold Tensor.sum
   simp [NotLt.of.Ge h]
   simp at h
-  have h := EqEraseIdx.of.Ge_Length h
+  have h := EqEraseIdx.of.LeLength h
   rw [CastDiv.eq.DivCast.of.Eq.scalar h.symm X]
 
 

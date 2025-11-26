@@ -1,7 +1,7 @@
 import Lemma.Tensor.GetSum_0.as.SumSelect.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
+import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
@@ -42,7 +42,7 @@ private lemma main
       ·
         intro t
         have h_t := t.isLt
-        simp [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length h_d1] at h_t
+        simp [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength h_d1] at h_t
         rw [GetAppend.eq.Get.of.GtLength (by simpa)] at h_t
         rw [GetTake.eq.Get.of.Lt_LengthTake (by simpa)] at h_t
         rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin]
@@ -56,7 +56,7 @@ private lemma main
             rw [EqMin.of.Le h_d]
             rwa [EqAdd_Sub.of.Ge h_d]
           ·
-            simp [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length h_d1]
+            simp [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength h_d1]
             simp [EqMin.of.Le h_d]
           ·
             have := Tensor.GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1 (by simpa) (by simpa) X (d := d + 1) (k := t)
@@ -76,7 +76,7 @@ private lemma main
               exact h_s
             .
               simp
-              rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length (by omega)]
+              rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by omega)]
               simp [EqMin.of.Le h_d]
         ·
           simp [EqMin.of.Le h_d]

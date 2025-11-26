@@ -2,7 +2,7 @@ import sympy.sets.sets
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.List.GetPermute__Neg.eq.Ite.of.GtLength
 import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
-import Lemma.List.GetElem.eq.None.of.Ge_Length
+import Lemma.List.GetElem.eq.None.of.LeLength
 open Bool List
 
 
@@ -29,7 +29,7 @@ private lemma main
       repeat grind
   else
     simp at h_k_length
-    repeat rw [GetElem.eq.None.of.Ge_Length]
+    repeat rw [GetElem.eq.None.of.LeLength]
     repeat simpa
 
 

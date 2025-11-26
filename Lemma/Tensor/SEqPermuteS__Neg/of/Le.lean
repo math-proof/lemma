@@ -22,7 +22,7 @@ import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqPermuteTail.of.Le_1
-import Lemma.Tensor.SEqPermuteTailS.of.Ge_Length
+import Lemma.Tensor.SEqPermuteTailS.of.LeLength
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
@@ -74,7 +74,7 @@ private lemma main
           simp [h_i0]
           rw [EqPermute__0]
         ·
-          have := SEqPermuteTailS.of.Ge_Length (n := 1 + d) (by omega) X
+          have := SEqPermuteTailS.of.LeLength (n := 1 + d) (by omega) X
           apply SEq.trans this
           apply SEqPermuteTail.of.Le_1
           omega
@@ -92,7 +92,7 @@ private lemma main
           rw [h_toNat_i]
           rw [h_length]
           rw [show (s.length - 1 + 1) = s.length by omega]
-          apply SEqPermuteTailS.of.Ge_Length
+          apply SEqPermuteTailS.of.LeLength
           omega
     ·
       apply SEq.of.SEqDataS.Eq

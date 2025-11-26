@@ -1,4 +1,4 @@
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.ProdTakeDrop.eq.Get.of.GtLength
 open List
 
@@ -13,7 +13,7 @@ private lemma main
   (s.drop n).prod = s[n] := by
 -- proof
   have := ProdTakeDrop.eq.Get.of.GtLength (s := s) (i := n) (by omega)
-  rw [EqTake.of.Ge_Length (by simp; omega)] at this
+  rw [EqTake.of.LeLength (by simp; omega)] at this
   exact this
 
 

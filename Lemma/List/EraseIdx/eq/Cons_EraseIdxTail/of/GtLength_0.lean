@@ -1,5 +1,5 @@
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail
-import Lemma.List.EqEraseIdx.of.Ge_Length
+import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.EqCons_Tail.of.Eq_Get_0.GtLength_0
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 open List
@@ -19,7 +19,7 @@ private lemma main
     rw [HeadD.eq.Get_0.of.GtLength_0 h]
   else
     simp at h_i
-    repeat rw [EqEraseIdx.of.Ge_Length (by simpa using h_i)]
+    repeat rw [EqEraseIdx.of.LeLength (by simpa using h_i)]
     rw [EqCons_Tail.of.GtLength_0]
 
 

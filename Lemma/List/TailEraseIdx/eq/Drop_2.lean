@@ -1,5 +1,5 @@
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
-import Lemma.List.EqEraseIdx.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
+import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.EraseIdx_0.eq.Tail
 import Lemma.List.Tail.eq.Nil.of.LeLength_1
@@ -22,8 +22,8 @@ private lemma main
     ·
       omega
   else
-    rw [EqEraseIdx.of.Ge_Length (by omega)]
-    rw [Drop.eq.Nil.of.Ge_Length (by omega)]
+    rw [EqEraseIdx.of.LeLength (by omega)]
+    rw [Drop.eq.Nil.of.LeLength (by omega)]
     rw [Tail.eq.Nil.of.LeLength_1 (by omega)]
 
 

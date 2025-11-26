@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Tensor.PermuteTail.as.Rotate.of.Ge_Length
+import Lemma.Tensor.PermuteTail.as.Rotate.of.LeLength
 open Tensor
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   X.permuteTail s.length ≃ X.rotate (s.length - 1) := by
 -- proof
-  apply PermuteTail.as.Rotate.of.Ge_Length
+  apply PermuteTail.as.Rotate.of.LeLength
   rfl
 
 

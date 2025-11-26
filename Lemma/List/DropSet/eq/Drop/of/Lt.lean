@@ -1,5 +1,5 @@
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
-import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
+import Lemma.List.DropAppend.eq.Drop.of.LeLength
 import Lemma.List.DropCons.eq.Drop_Sub_1.of.Gt_0
 import Lemma.List.LengthSet.eq.Length
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
@@ -20,7 +20,7 @@ private lemma main
 -- proof
   if h_j : j ≤ s.length then
     rw [Set.eq.AppendTake__Cons_Drop.of.GtLength (by omega)]
-    rw [DropAppend.eq.Drop.of.Ge_Length]
+    rw [DropAppend.eq.Drop.of.LeLength]
     ·
       rw [DropCons.eq.Drop_Sub_1.of.Gt_0]
       ·
@@ -37,7 +37,7 @@ private lemma main
       left
       omega
   else
-    repeat rw [Drop.eq.Nil.of.Ge_Length]
+    repeat rw [Drop.eq.Nil.of.LeLength]
     repeat grind
 
 

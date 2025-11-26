@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.EqEraseIdx.of.Ge_Length
+import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.Nat.NotGe.of.Lt
 open List Bool Nat
 
@@ -22,7 +22,7 @@ private lemma main
     contradiction
   ·
     apply SEqCast.of.Eq
-    rwa [EqEraseIdx.of.Ge_Length]
+    rwa [EqEraseIdx.of.LeLength]
 
 
 -- created on 2025-06-23

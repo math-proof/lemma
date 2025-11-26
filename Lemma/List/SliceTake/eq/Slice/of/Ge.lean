@@ -6,7 +6,7 @@ import Lemma.List.DropAppend.eq.AppendDrop.of.GeLength
 import Lemma.Nat.Le.of.Le.Lt
 import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Nat.Ge.of.Gt.Ge
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.LeSubS.of.Le
 import Lemma.List.DropTake.eq.TakeDrop
@@ -40,7 +40,7 @@ private lemma main
       simp_all [Slice.eq.Nil.of.Ge h_le]
     ·
       have h_j := Ge.of.Gt.Ge h h_lt
-      rw [EqTake.of.Ge_Length h_j]
+      rw [EqTake.of.LeLength h_j]
 
 
 -- created on 2025-06-20

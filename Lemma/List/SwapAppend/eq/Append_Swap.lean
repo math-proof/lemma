@@ -8,9 +8,9 @@ import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.Nat.LtSub.is.Lt_Add.of.Ge
 import Lemma.Nat.Ne_Sub.of.NeAdd.Ge
 import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.GtLength
-import Lemma.List.GetElem.eq.None.of.Ge_Length
+import Lemma.List.GetElem.eq.None.of.LeLength
 import Lemma.Bool.NotAnd.is.OrNotS
-import Lemma.List.EqSwap.of.Ge_Length
+import Lemma.List.EqSwap.of.LeLength
 open List Bool Nat
 
 
@@ -64,7 +64,7 @@ private lemma main
             apply LtSub.of.Lt_Add.Ge (by assumption) (by assumption)
     else
       simp at h
-      repeat rw [GetElem.eq.None.of.Ge_Length]
+      repeat rw [GetElem.eq.None.of.LeLength]
       ·
         rw [LengthAppend.eq.AddLengthS]
         rwa [LengthSwap.eq.Length]
@@ -76,9 +76,9 @@ private lemma main
     simp at h
     obtain h | h := h
     ·
-      repeat rw [EqSwap.of.Ge_Length.left (by simp_all)]
+      repeat rw [EqSwap.of.LeLength.left (by simp_all)]
     ·
-      repeat rw [EqSwap.of.Ge_Length (by simp_all)]
+      repeat rw [EqSwap.of.LeLength (by simp_all)]
 
 
 -- created on 2025-06-10

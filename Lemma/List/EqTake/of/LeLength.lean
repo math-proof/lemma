@@ -5,7 +5,7 @@ import sympy.Basic
 private lemma main
   {s : List α}
 -- given
-  (h : n ≥ s.length):
+  (h : s.length ≤ n):
 -- imply
   s.take n = s := by
 -- proof

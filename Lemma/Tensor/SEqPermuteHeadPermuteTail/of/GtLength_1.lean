@@ -1,7 +1,7 @@
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqRotateRotate.of.Add.eq.Length
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.Rotate.eq.AppendDrop__Take
@@ -36,7 +36,7 @@ private lemma main
   simp
   apply SEq.of.SEqDataS.Eq
   ·
-    simp_all [Drop.eq.Nil.of.Ge_Length, EqTake.of.Ge_Length]
+    simp_all [Drop.eq.Nil.of.LeLength, EqTake.of.LeLength]
     apply EqRotateRotate.of.Add.eq.Length
     omega
   ·
@@ -46,7 +46,7 @@ private lemma main
       rw [MulProdS.eq.ProdAppend]
     ·
       apply congrArg
-      simp_all [Drop.eq.Nil.of.Ge_Length, EqTake.of.Ge_Length]
+      simp_all [Drop.eq.Nil.of.LeLength, EqTake.of.LeLength]
       rw [EqRotateRotate.of.Add.eq.Length]
       omega
     ·
@@ -54,7 +54,7 @@ private lemma main
       ·
         intro t
         have h_t := t.isLt
-        have h_drop := Drop.eq.Nil.of.Ge_Length (show (s.rotate (s.length - 1)).length ≤ s.length by simp)
+        have h_drop := Drop.eq.Nil.of.LeLength (show (s.rotate (s.length - 1)).length ≤ s.length by simp)
         simp
         rw [GetFlatten.eq.Get.of.Eq_AddMul (i := ⟨t, by simp [h_drop] at h_t; simpa⟩) (j := ⟨0, by simp [h_drop]⟩) (by simp [h_drop])]
         unfold Tensor.rotate
@@ -72,7 +72,7 @@ private lemma main
           rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
           rw [GetTranspose.eq.Get.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-          simp_all [Drop.eq.Nil.of.Ge_Length, EqTake.of.Ge_Length]
+          simp_all [Drop.eq.Nil.of.LeLength, EqTake.of.LeLength]
           simp [EqMod.of.Lt h] at h_q h_r
           rw [TailRotate.eq.Take.of.GtLength_0 (by omega)] at h_q
           rw [TakeRotate.eq.Drop.of.EqLength_Add (by omega)] at h_r

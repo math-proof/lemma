@@ -1,4 +1,4 @@
-import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
+import Lemma.List.DropAppend.eq.Drop.of.LeLength
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
@@ -41,7 +41,7 @@ private lemma main
     rw [TakeAppend.eq.Take.of.GeLength (by simp; omega)]
     rw [TakeTake.eq.Take.of.Ge (by omega)]
     simp
-    rw [DropAppend.eq.Drop.of.Ge_Length (by simp)]
+    rw [DropAppend.eq.Drop.of.LeLength (by simp)]
     simp
     rw [EqMin.of.Lt h]
     simp

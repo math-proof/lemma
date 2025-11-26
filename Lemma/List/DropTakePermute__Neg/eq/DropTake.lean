@@ -1,4 +1,4 @@
-import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
+import Lemma.List.DropAppend.eq.Drop.of.LeLength
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.List.TakeDrop.eq.DropTake
@@ -23,7 +23,7 @@ private lemma main
 -- proof
   have := TakePermute__Neg.eq.Append_RotateDropTake i d
   simp [congrArg (·.drop (i - d + 1)) this]
-  rw [DropAppend.eq.Drop.of.Ge_Length (by simp)]
+  rw [DropAppend.eq.Drop.of.LeLength (by simp)]
   simp
   rw [Rotate.eq.AppendDrop__Take.of.GeLength]
   ·

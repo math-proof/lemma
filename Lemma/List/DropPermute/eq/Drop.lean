@@ -1,4 +1,4 @@
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
 import Lemma.List.EqDropAppend.of.Eq_Length
@@ -31,7 +31,7 @@ private lemma main
     rw [EqMin.of.Le]
     omega
   else
-    repeat rw [Drop.eq.Nil.of.Ge_Length]
+    repeat rw [Drop.eq.Nil.of.LeLength]
     repeat {
       simp
       omega

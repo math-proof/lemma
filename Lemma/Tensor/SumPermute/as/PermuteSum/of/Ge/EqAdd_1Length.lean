@@ -2,10 +2,10 @@ import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Int.OfNat.eq.Cast
 import Lemma.List.Append_TakeDrop.eq.Take.of.Ge
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
-import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
+import Lemma.List.DropAppend.eq.Drop.of.LeLength
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
+import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.EraseIdxPermute__Neg.eq.EraseIdx.of.Ge
 import Lemma.List.EraseIdxRotate.eq.AppendEraseIdxDrop.of.GtLength_Add
 import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
@@ -95,7 +95,7 @@ private lemma main
       rw [Sum.eq.Sum_Select]
       rw [Sum.eq.Sum_Select.of.GtLength (by simp; omega)]
       have h_eraseIdx : (s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1)).eraseIdx (↑i - d) = s.eraseIdx ↑i := by 
-        rw [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length (by simp; omega)]
+        rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by simp; omega)]
         simp
         rw [EraseIdxRotate.eq.AppendEraseIdxDrop.of.GtLength_Add (by simp; omega)]
         conv_rhs => rw [EraseIdx.eq.Append_Drop_Add_1]
@@ -174,7 +174,7 @@ private lemma main
                 rw [GetCast.eq.Get.of.Eq.fin (by simp)]
                 simp [h_get]
                 simp [EqMin.of.Le (show (d + 1) ≤ s.length by omega)]
-                simp [DropAppend.eq.Drop.of.Ge_Length (show (↑i - d + 1) ≥ (s.take (s.length - (d + 1))).length by simp; omega)] at ⊢ h_r h_q_div h_r_mod
+                simp [DropAppend.eq.Drop.of.LeLength (show (↑i - d + 1) ≥ (s.take (s.length - (d + 1))).length by simp; omega)] at ⊢ h_r h_q_div h_r_mod
                 simp [show (↑i - d + 1 - (s.length - (d + 1))) = 1 by simp [h_i]; omega] at ⊢ h_r h_q_div h_r_mod
                 have h_sub_min_eq : (d + 1) ⊓ s.length - 1 = d := by omega
                 simp [h_sub_min_eq] at h_r h_q_div h_r_mod
@@ -208,7 +208,7 @@ private lemma main
                   rw [GetTranspose.eq.Get.fin]
                   repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                   apply congrArg
-                  simp [Drop.eq.Nil.of.Ge_Length (show i + 1 ≥ s.length by simp [h_i]; omega)] at ⊢ h_q'_div h_r'_mod
+                  simp [Drop.eq.Nil.of.LeLength (show i + 1 ≥ s.length by simp [h_i]; omega)] at ⊢ h_q'_div h_r'_mod
                   rw [EqMod_1'0] at h_r'_mod
                   simp [h_q'_div, h_r'_mod]
                   simp [h_sub_eq] at ⊢ h_qₑ_div h_rₑ_mod h_qₐ_div h_rₐ_mod

@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Tensor.EqSum.of.Ge_Length
+import Lemma.Tensor.EqSum.of.LeLength
 import Lemma.Tensor.EqLengthS.of.SEq
 open Tensor
 
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   (X.sum dim).length = X.length := by
 -- proof
-  have := EqSum.of.Ge_Length h X
+  have := EqSum.of.LeLength h X
   apply EqLengthS.of.SEq this
 
 

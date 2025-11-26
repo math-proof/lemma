@@ -1,5 +1,5 @@
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.EqTakeAppend.of.Eq_Length
 import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
 open List
@@ -27,7 +27,7 @@ private lemma main
     rw [EqTakeAppend.of.Eq_Length] at h_permute
     ·
       rw [EqPermuteS.of.Add.ge.SubLength_1 (by omega)] at h_permute ⊢
-      rwa [EqTake.of.Ge_Length] at h_permute ⊢
+      rwa [EqTake.of.LeLength] at h_permute ⊢
       .
         simp
         omega

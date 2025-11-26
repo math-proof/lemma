@@ -1,8 +1,8 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
 import Lemma.List.EqPermute__0
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute.eq.Ite
@@ -24,7 +24,7 @@ import Lemma.Nat.SubSub
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Tensor.SEqPermuteHeadS.of.Ge_Length
+import Lemma.Tensor.SEqPermuteHeadS.of.LeLength
 import Lemma.Tensor.SEqPermuteHead_1
 import Lemma.Tensor.SEqPermuteTail_1
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -76,7 +76,7 @@ private lemma main
             simp [h_s]
             rw [EqPermute__0]
           ·
-            have := SEqPermuteHeadS.of.Ge_Length (s := s) (n := d + 1) (by omega) X
+            have := SEqPermuteHeadS.of.LeLength (s := s) (n := d + 1) (by omega) X
             rw [h_s] at this
             apply SEq.trans this
             apply SEqPermuteHead_1
@@ -86,7 +86,7 @@ private lemma main
             simp [Permute.eq.AppendRotateTake___Drop.of.EqVal_0]
           ·
             rw [EqAddSub.of.Ge (by omega)]
-            apply SEqPermuteHeadS.of.Ge_Length (s := s) (n := d + 1) (by omega) X
+            apply SEqPermuteHeadS.of.LeLength (s := s) (n := d + 1) (by omega) X
         ·
           have h_s := Eq.of.Sub.eq.Zero.Ge (by omega) h_0.symm
           apply SEq_Cast.of.SEq.Eq
@@ -94,7 +94,7 @@ private lemma main
             simp [h_s]
             rw [EqPermute__0]
           ·
-            have := SEqPermuteHeadS.of.Ge_Length (s := s) (n := d + 1) (by omega) X
+            have := SEqPermuteHeadS.of.LeLength (s := s) (n := d + 1) (by omega) X
             rw [h_s] at this
             apply SEq.trans this
             have := SEqPermuteHead_1 X
@@ -158,10 +158,10 @@ private lemma main
                       repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                       apply congrArg
                       simp [h_qr]
-                      simp [Drop.eq.Nil.of.Ge_Length (show i + (d + 1) ≥ s.length by omega)] at h_rₐ h_qₐ_div ⊢
+                      simp [Drop.eq.Nil.of.LeLength (show i + (d + 1) ≥ s.length by omega)] at h_rₐ h_qₐ_div ⊢
                       simp [h_rₐ]
                       simp [ProdRotate.eq.Prod]
-                      simp [EqTake.of.Ge_Length (show (d + 1) ≥ (s.drop i).length by simp; omega)]
+                      simp [EqTake.of.LeLength (show (d + 1) ≥ (s.drop i).length by simp; omega)]
                       simp [h_qₕ_div, h_rₕ_mod]
                       rw [EqMin.of.Ge (by omega)]
                       rw [TakeTake.eq.Take.of.Ge (Add_1.ge.Mod1 d (s.length - i))]
@@ -206,12 +206,12 @@ private lemma main
                 unfold Tensor.permuteHead
                 simp
                 have h_take : (s.drop i).take (d + 1) = (s.drop i).take (s.length - i) := by
-                  repeat rw [EqTake.of.Ge_Length]
+                  repeat rw [EqTake.of.LeLength]
                   repeat simp
                   omega
                 have h_drop : (s.drop i).drop (d + 1) = (s.drop i).drop (s.length - i) := by
                   simp
-                  repeat rw [Drop.eq.Nil.of.Ge_Length]
+                  repeat rw [Drop.eq.Nil.of.LeLength]
                   repeat omega
                 simp only [h_take, h_drop] at h_t
                 let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
@@ -227,9 +227,9 @@ private lemma main
                   have h_qₐ := qₐ.isLt
                   have h_rₐ := rₐ.isLt
                   simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_qₐ
-                  simp [Drop.eq.Nil.of.Ge_Length (show i + (d + 1) ≥ s.length by omega)] at h_q_div h_r_mod h_rₐ h_qₐ_div
-                  simp [EqTake.of.Ge_Length (show d + 1 ≥ (s.drop i).length by simp; omega)] at h_q_div h_r_mod
-                  simp [EqTake.of.Ge_Length (show (s.length - i) ≥ (s.drop i).length by simp)] at h_q'_div h_r'_mod
+                  simp [Drop.eq.Nil.of.LeLength (show i + (d + 1) ≥ s.length by omega)] at h_q_div h_r_mod h_rₐ h_qₐ_div
+                  simp [EqTake.of.LeLength (show d + 1 ≥ (s.drop i).length by simp; omega)] at h_q_div h_r_mod
+                  simp [EqTake.of.LeLength (show (s.length - i) ≥ (s.drop i).length by simp)] at h_q'_div h_r'_mod
                   simp [ProdRotate.eq.Prod] at h_q_div h_r_mod h_q'_div h_r'_mod
                   have h_q_eq : q = q' := by grind
                   have h_r_eq : r.val = r'.val := by grind
@@ -257,8 +257,8 @@ private lemma main
                     simp [h_q_eq, h_rₐ, h_rₑ]
                     rw [EqMin.of.Ge (by omega)]
                     simp [TakeDrop.eq.DropTake]
-                    simp [EqTake.of.Ge_Length (show (i + (d + 1)) ≥ s.length by omega)]
-                    simp [Drop.eq.Nil.of.Ge_Length (show i + (d + 1) ≥ s.length by omega)]
+                    simp [EqTake.of.LeLength (show (i + (d + 1)) ≥ s.length by omega)]
+                    simp [Drop.eq.Nil.of.LeLength (show i + (d + 1) ≥ s.length by omega)]
                     simp [h_qₕᵢ_eq, h_rₕᵢ_eq]
                   ·
                     rw [MulProdS.eq.ProdAppend]

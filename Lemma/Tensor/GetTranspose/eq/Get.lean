@@ -4,7 +4,7 @@ import Lemma.Tensor.Permute__0.eq.Cast
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Vector.Eq.of.Eq_Cast.Eq
 import Lemma.Tensor.EqGetS.of.Data.as.FlattenTransposeSplitAt_1
-import Lemma.Tensor.PermuteTail.eq.CastRotate.of.Ge_Length
+import Lemma.Tensor.PermuteTail.eq.CastRotate.of.LeLength
 open Tensor Vector List
 
 
@@ -22,7 +22,7 @@ private lemma main
   unfold Tensor.transpose
   simp [Permute__0.eq.Cast]
   simp [Permute.eq.Ite X]
-  have := PermuteTail.eq.CastRotate.of.Ge_Length (n := 2) (X := X) (by simp)
+  have := PermuteTail.eq.CastRotate.of.LeLength (n := 2) (X := X) (by simp)
   simp at this
   simp [this]
   unfold Tensor.rotate

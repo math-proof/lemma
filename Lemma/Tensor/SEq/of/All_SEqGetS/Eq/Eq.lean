@@ -3,7 +3,7 @@ import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Tensor.All_SEqDataSGet.of.All_SEqGetS.Eq
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.Nat.Ge.of.NotLt
-import Lemma.List.GetElem.eq.None.of.Ge_Length
+import Lemma.List.GetElem.eq.None.of.LeLength
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Tensor.Data.eq.FlattenMapRange
 import Lemma.Vector.GetVal.eq.Get.of.Lt
@@ -88,7 +88,7 @@ private lemma main
       else
         apply IffEqS.of.Eq
         have h := Ge.of.NotLt h
-        rw [GetElem.eq.None.of.Ge_Length h]
+        rw [GetElem.eq.None.of.LeLength h]
         simp_all
 
 

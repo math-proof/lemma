@@ -1,7 +1,7 @@
-import Lemma.List.EqEraseIdx.of.Ge_Length
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.EqEraseIdx.of.LeLength
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
+import Lemma.List.DropAppend.eq.Drop.of.LeLength
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.Ge_Min.of.Ge
 import Lemma.Nat.EqMin.of.Lt
@@ -20,7 +20,7 @@ private lemma main
 -- proof
   if h_i : i < s.length then
     rw [EraseIdx.eq.Append_Drop_Add_1]
-    rw [DropAppend.eq.Drop.of.Ge_Length] <;>
+    rw [DropAppend.eq.Drop.of.LeLength] <;>
       rw [LengthTake.eq.Min_Length]
     ·
       rw [EqMin.of.Lt h_i]
@@ -31,8 +31,8 @@ private lemma main
       apply Ge_Min.of.Ge h
   else
     simp at h_i
-    rw [EqEraseIdx.of.Ge_Length h_i]
-    repeat rw [Drop.eq.Nil.of.Ge_Length (by linarith)]
+    rw [EqEraseIdx.of.LeLength h_i]
+    repeat rw [Drop.eq.Nil.of.LeLength (by linarith)]
 
 
 -- created on 2025-10-03

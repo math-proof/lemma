@@ -1,4 +1,4 @@
-import Lemma.List.EqEraseIdx.of.Ge_Length
+import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 open List
 
@@ -18,7 +18,7 @@ private lemma main
     rw [EraseIdx.eq.Append_Drop_Add_1]
     rw [List.take_append_of_le_length h_le_length, List.take_take, min_eq_left h]
   else
-    rw [EqEraseIdx.of.Ge_Length (by linarith)]
+    rw [EqEraseIdx.of.LeLength (by linarith)]
 
 
 -- created on 2025-10-03

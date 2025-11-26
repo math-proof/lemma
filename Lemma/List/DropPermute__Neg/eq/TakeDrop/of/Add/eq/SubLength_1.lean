@@ -1,4 +1,4 @@
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add
 open List
 
@@ -13,7 +13,7 @@ private lemma main
   ((s.permute ⟨i + d, by grind⟩ (-d)).drop (i + 1)) = (s.drop i).take d := by
 -- proof
   have := TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add (s := s) (i := i) (d := d) (by omega)
-  rwa [EqTake.of.Ge_Length] at this
+  rwa [EqTake.of.LeLength] at this
   simp
   omega
 

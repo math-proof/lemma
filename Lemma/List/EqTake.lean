@@ -1,4 +1,4 @@
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 open List
 
 
@@ -9,7 +9,7 @@ private lemma main
 -- imply
   s.take s.length = s := by
 -- proof
-  apply EqTake.of.Ge_Length
+  apply EqTake.of.LeLength
   rfl
 
 

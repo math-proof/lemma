@@ -1,6 +1,6 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.EqLength_0.of.Eq_Nil
-import Lemma.Tensor.LengthSum.eq.Length.of.Ge_Length
+import Lemma.Tensor.LengthSum.eq.Length.of.LeLength
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 open Tensor List
@@ -23,7 +23,7 @@ private lemma main
       rw [GetEraseIdx.eq.Get.of.Gt.GtLength (by assumption) (by assumption)]
     else
       simp at h
-      apply LengthSum.eq.Length.of.Ge_Length h
+      apply LengthSum.eq.Length.of.LeLength h
   else
     simp at h
     repeat rw [EqLength_0.of.Eq_Nil]

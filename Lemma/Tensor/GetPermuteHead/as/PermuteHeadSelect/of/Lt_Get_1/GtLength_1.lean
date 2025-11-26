@@ -1,5 +1,5 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.DropTake.eq.TakeDrop
@@ -269,8 +269,8 @@ private lemma main
                           conv_rhs => rw [AddAdd.comm]
                           rw [Add_Add.eq.AddAdd]
                           rw [AddAdd.comm]
-                          simp [Drop.eq.Nil.of.Ge_Length (show 2 ≥ s.length by omega)] at *
-                          simp [Drop.eq.Nil.of.Ge_Length (show d + 1 ≥ s.length by omega)] at *
+                          simp [Drop.eq.Nil.of.LeLength (show 2 ≥ s.length by omega)] at *
+                          simp [Drop.eq.Nil.of.LeLength (show d + 1 ≥ s.length by omega)] at *
                           simp [h_q_div] at h_rₑ_mod
                           rw [EqMod.of.Lt h_t] at h_rₑ_mod
                           simp [h_rₑ_mod, h_qₕ_div, h_q_div]

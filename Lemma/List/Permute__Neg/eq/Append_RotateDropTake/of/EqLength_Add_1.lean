@@ -1,4 +1,4 @@
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.TakePermute__Neg.eq.Append_RotateDropTake
 open List
 
@@ -16,7 +16,7 @@ private lemma main
   simp at this
   simp [← h] at this
   rw [← this]
-  rw [EqTake.of.Ge_Length]
+  rw [EqTake.of.LeLength]
   simp
 
 

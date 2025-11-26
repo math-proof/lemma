@@ -1,4 +1,4 @@
-import Lemma.List.EqEraseIdx.of.Ge_Length
+import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.Get_0.dvd.ProdTake.of.Gt_0.GtLength_0
 import Lemma.List.ProdCons.eq.Mul_Prod
@@ -27,7 +27,7 @@ private lemma main
       grind
   else
     simp at h_length
-    rw [EqEraseIdx.of.Ge_Length h_length]
+    rw [EqEraseIdx.of.LeLength h_length]
     exact Get_0.dvd.ProdTake.of.Gt_0.GtLength_0 _ h_d
 
 

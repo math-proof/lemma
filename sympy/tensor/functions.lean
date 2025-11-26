@@ -57,7 +57,7 @@ def Tensor.keepdim (X : Tensor α (s.eraseIdx dim)) : Tensor α s :=
       (by simp [List.EqSetInsertIdxEraseIdx.of.GtLength h])
       ((X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.GtLength h 1⟩)
   else
-    cast (by rw [EqEraseIdx.of.Ge_Length (Ge.of.NotLt h)]) X
+    cast (by rw [EqEraseIdx.of.LeLength (Ge.of.NotLt h)]) X
 
 /--
 [softmax](https://pytorch.org/docs/stable/generated/torch.softmax.html)

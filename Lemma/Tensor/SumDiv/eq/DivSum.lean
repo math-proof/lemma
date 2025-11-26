@@ -1,5 +1,5 @@
 import Lemma.Tensor.SumDiv.eq.DivSum.of.GtLength
-import Lemma.Tensor.SumDiv.eq.DivSum.of.Ge_Length
+import Lemma.Tensor.SumDiv.eq.DivSum.of.LeLength
 open Tensor
 
 
@@ -17,7 +17,7 @@ private lemma main
     apply SumDiv.eq.DivSum.of.GtLength h
   else
     simp at h
-    apply SumDiv.eq.DivSum.of.Ge_Length h
+    apply SumDiv.eq.DivSum.of.LeLength h
 
 
 -- created on 2025-09-21

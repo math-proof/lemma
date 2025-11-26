@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.Tensor.PermuteTail.as.Rotate.of.Ge_Length
+import Lemma.Tensor.PermuteTail.as.Rotate.of.LeLength
 import Lemma.Nat.Sub.eq.Zero.of.Le
 open Bool Tensor Nat
 
@@ -18,7 +18,7 @@ private lemma main
   X.permuteTail n = cast (congrArg (Tensor α) h) (X.rotate (s.length - 1)) := by
 -- proof
   apply Eq_Cast.of.SEq
-  apply PermuteTail.as.Rotate.of.Ge_Length h
+  apply PermuteTail.as.Rotate.of.LeLength h
 
 
 -- created on 2025-10-17

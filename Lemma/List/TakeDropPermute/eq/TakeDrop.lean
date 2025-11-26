@@ -1,7 +1,7 @@
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
 import Lemma.List.DropTake.eq.TakeDrop
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.TakeAppend.eq.Take.of.GeLength
@@ -56,19 +56,19 @@ private lemma main
     have := congrArg (·.take (s.length - i)) this
     simp at this
     rw [EqPermuteS.of.Add.ge.SubLength_1 (by omega)] at this ⊢
-    rw [EqTake.of.Ge_Length (by simp)] at this
+    rw [EqTake.of.LeLength (by simp)] at this
     rw [this]
-    rw [Drop.eq.Nil.of.Ge_Length (i := i + d + 1) (by simp; omega)]
+    rw [Drop.eq.Nil.of.LeLength (i := i + d + 1) (by simp; omega)]
     simp
     rw [EqMin.of.Ge (by simp; omega)]
-    rw [EqTake.of.Ge_Length (n := s.length - i) (by simp)]
+    rw [EqTake.of.LeLength (n := s.length - i) (by simp)]
     rw [Rotate.eq.AppendDrop__Take.of.GeLength (by simp; omega)]
     rw [TakeTake.eq.Take.of.Ge (by simp)]
     rw [TakeDrop.eq.DropTake]
     simp
     rw [TakeAppend.eq.Take.of.GeLength]
     ·
-      rw [EqTake.of.Ge_Length]
+      rw [EqTake.of.LeLength]
       ·
         rw [DropTake.eq.TakeDrop]
         simp

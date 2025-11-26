@@ -1,7 +1,7 @@
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.EqTake.of.Ge_Length
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.Vector.FlattenCast.eq.Cast_Flatten.of.Eq.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take
@@ -25,8 +25,8 @@ private lemma main
   X.permuteHead n ≃ X.rotate 1 := by
 -- proof
   simp [Tensor.permuteHead, Tensor.rotate]
-  have h_take := EqTake.of.Ge_Length h
-  have h_drop := Drop.eq.Nil.of.Ge_Length h
+  have h_take := EqTake.of.LeLength h
+  have h_drop := Drop.eq.Nil.of.LeLength h
   have h_rotate := Rotate.eq.AppendDrop__Take s 1
   apply SEq.of.SEqDataS.Eq
   ·

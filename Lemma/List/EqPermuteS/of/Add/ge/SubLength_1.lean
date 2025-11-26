@@ -1,5 +1,5 @@
 import Lemma.Int.NegSucc.eq.NegAdd_1
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 open List Int Nat
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   repeat rw [Permute.eq.Append_AppendRotateTakeDrop]
   simp_all [show (s.length - 1 - i + 1) = s.length - i by omega]
-  rw [Drop.eq.Nil.of.Ge_Length (i := i + (d + 1)) (by simp; omega)]
+  rw [Drop.eq.Nil.of.LeLength (i := i + (d + 1)) (by simp; omega)]
   simp
   omega
 

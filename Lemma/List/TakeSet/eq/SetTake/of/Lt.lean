@@ -1,7 +1,7 @@
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.LengthSet.eq.Length
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
-import Lemma.List.TakeAppend.eq.Append_Take.of.Ge_Length
+import Lemma.List.TakeAppend.eq.Append_Take.of.LeLength
 import Lemma.List.TakeCons.eq.Cons_Take.of.Gt_0
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeTake.eq.Take.of.Ge
@@ -22,7 +22,7 @@ private lemma main
 -- proof
   if h_j : j ≤ s.length then
     rw [Set.eq.AppendTake__Cons_Drop.of.GtLength (by omega)]
-    rw [TakeAppend.eq.Append_Take.of.Ge_Length]
+    rw [TakeAppend.eq.Append_Take.of.LeLength]
     ·
       rw [Set.eq.AppendTake__Cons_Drop.of.GtLength (by simp; omega)]
       rw [TakeTake.eq.Take.of.Ge (by omega)]
@@ -37,7 +37,7 @@ private lemma main
       left
       omega
   else
-    repeat rw [EqTake.of.Ge_Length]
+    repeat rw [EqTake.of.LeLength]
     ·
       omega
     ·

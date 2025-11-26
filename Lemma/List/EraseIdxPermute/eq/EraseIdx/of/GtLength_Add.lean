@@ -1,6 +1,6 @@
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.GtLength
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
+import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.GeLength
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.TakeDrop.eq.DropTake
@@ -20,7 +20,7 @@ private lemma main
   (s.permute ⟨i, by grind⟩ d).eraseIdx (i + d) = s.eraseIdx i := by
 -- proof
   rw [Permute.eq.Append_AppendRotateTakeDrop]
-  rw [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length (by simp)]
+  rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by simp)]
   simp
   rw [EqMin.of.Le (by omega)]
   rw [EqSubAdd.left]

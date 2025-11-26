@@ -14,19 +14,19 @@ import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.GeLength
-import Lemma.List.SwapAppend.eq.Append_Swap.of.Ge_Length.Ge_Length
+import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
 import Lemma.List.EqSwap_0'1
 import Lemma.List.ProdSwap.eq.Prod
 import Lemma.List.Rotate_Mod.eq.Rotate
 import Lemma.List.EqPermute__0
-import Lemma.List.EqTake.of.Ge_Length
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.EqTake.of.LeLength
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.Take.eq.Nil.of.Eq_0
 import Lemma.List.EqDrop.of.Eq_0
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
 import Lemma.List.EqSwapS.of.Mk.eq.IteGt
-import Lemma.List.EqEraseIdx.of.Ge_Length
+import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
@@ -182,7 +182,7 @@ def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) 
   else
     cast (by
       simp at h_dim
-      rw [EqEraseIdx.of.Ge_Length h_dim]
+      rw [EqEraseIdx.of.LeLength h_dim]
     ) X
 
 /--
@@ -321,9 +321,9 @@ def Tensor.transpose (X : Tensor α s) (i : ℕ) (j : ℕ): Tensor α (s.swap i 
       (by
         obtain hi | hj := h
         .
-          simp_all [EqSwap.of.Ge_Length.left]
+          simp_all [EqSwap.of.LeLength.left]
         .
-          simp_all [EqSwap.of.Ge_Length]
+          simp_all [EqSwap.of.LeLength]
       )
       X
   else
@@ -364,7 +364,7 @@ def Tensor.dot [Mul α] [Add α] [Zero α] (A : Tensor α (batch_size ++ [m, k])
     (A.repeat n ⟨batch_size.length + 1, by simp⟩)
   let B : Tensor α (batch_size ++ [n, k]) := cast
     (by
-      rw [SwapAppend.eq.Append_Swap.of.Ge_Length.Ge_Length (by simp) (by simp)]
+      rw [SwapAppend.eq.Append_Swap.of.LeLength.LeLength (by simp) (by simp)]
       simp [EqSwap_0'1]
     )
     B.T

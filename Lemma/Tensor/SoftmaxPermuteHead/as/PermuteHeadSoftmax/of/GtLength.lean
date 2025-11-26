@@ -1,7 +1,7 @@
 import Lemma.Tensor.SelectSoftmax.eq.SoftmaxSelect.of.Lt
 import Lemma.Tensor.SEqPermuteHeadS.of.SEq
 import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
+import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake

@@ -3,7 +3,7 @@ import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
-import Lemma.List.TakeAppend.eq.Append_Take.of.Ge_Length
+import Lemma.List.TakeAppend.eq.Append_Take.of.LeLength
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeEraseIdx.eq.Take.of.Ge
 import Lemma.List.TailTake.eq.TakeTail
@@ -31,7 +31,7 @@ private lemma main
     rw [TailTake.eq.TakeTail]
     rw [EraseIdx.eq.Append_Drop_Add_1]
     simp
-    rw [TakeAppend.eq.Append_Take.of.Ge_Length (by simp; omega)]
+    rw [TakeAppend.eq.Append_Take.of.LeLength (by simp; omega)]
     simp [EqMin.of.Lt h]
     rw [TailAppend.eq.AppendTail.of.GtLength_0 (by simp; omega)]
     rw [TailTake.eq.TakeTail]

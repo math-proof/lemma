@@ -1,7 +1,7 @@
-import Lemma.List.EqEraseIdx.of.Ge_Length
-import Lemma.List.EqTake.of.Ge_Length
+import Lemma.List.EqEraseIdx.of.LeLength
+import Lemma.List.EqTake.of.LeLength
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.TakeAppend.eq.Append_Take.of.Ge_Length
+import Lemma.List.TakeAppend.eq.Append_Take.of.LeLength
 import Lemma.List.TakeDrop.eq.DropTake
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.AddAdd
@@ -19,7 +19,7 @@ private lemma main
 -- proof
   if h_i : i < a.length then
     repeat rw [EraseIdx.eq.Append_Drop_Add_1]
-    rw [TakeAppend.eq.Append_Take.of.Ge_Length (by simp; omega)]
+    rw [TakeAppend.eq.Append_Take.of.LeLength (by simp; omega)]
     simp
     rw [TakeTake.eq.Take.of.Ge (by omega)]
     simp
@@ -30,8 +30,8 @@ private lemma main
     omega
   else
     simp at h_i
-    repeat rw [EqEraseIdx.of.Ge_Length (by simp; omega)]
-    repeat rw [EqTake.of.Ge_Length (by omega)]
+    repeat rw [EqEraseIdx.of.LeLength (by simp; omega)]
+    repeat rw [EqTake.of.LeLength (by omega)]
 
 
 -- created on 2025-11-03

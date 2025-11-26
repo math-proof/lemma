@@ -1,8 +1,8 @@
 import Lemma.List.EqInsertIdx.of.LtLength
-import Lemma.List.Drop.eq.Nil.of.Ge_Length
+import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.List.InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength
-import Lemma.List.DropAppend.eq.Drop.of.Ge_Length
+import Lemma.List.DropAppend.eq.Drop.of.LeLength
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.Ge_Min.of.Ge
 import Lemma.Nat.Ge.of.Gt
@@ -25,7 +25,7 @@ private lemma main
   if h_i : i ≤ a.length then
     rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength h_i (by rfl) (j := i)]
     simp
-    rw [DropAppend.eq.Drop.of.Ge_Length] <;>
+    rw [DropAppend.eq.Drop.of.LeLength] <;>
       rw [LengthTake.eq.Min_Length]
     ·
       rw [EqMin.of.Le h_i]
@@ -40,7 +40,7 @@ private lemma main
   else
     simp at h_i
     rw [EqInsertIdx.of.LtLength h_i]
-    repeat rw [Drop.eq.Nil.of.Ge_Length]
+    repeat rw [Drop.eq.Nil.of.LeLength]
     ·
       apply GeSub_1.of.Gt
       linarith

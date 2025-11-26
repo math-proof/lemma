@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.Tensor.PermuteHead.as.Rotate.of.Ge_Length
+import Lemma.Tensor.PermuteHead.as.Rotate.of.LeLength
 open Tensor
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   X.permuteHead s.length ≃ X.rotate 1 := by
 -- proof
-  apply PermuteHead.as.Rotate.of.Ge_Length
+  apply PermuteHead.as.Rotate.of.LeLength
   rfl
 
 

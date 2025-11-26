@@ -1,7 +1,7 @@
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.EraseIdxAppend.eq.AppendEraseIdx.of.GtLength
-import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length
+import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -21,7 +21,7 @@ private lemma main
   (s.eraseIdx i).eraseIdx j = (s.eraseIdx (j + 1)).eraseIdx i := by
 -- proof
   rw [EraseIdx.eq.Append_Drop_Add_1 s i]
-  rw [EraseIdxAppend.eq.Append_EraseIdx.of.Ge_Length]
+  rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength]
   ·
     rw [EraseIdx.eq.Append_Drop_Add_1 s (j + 1)]
     rw [EraseIdxAppend.eq.AppendEraseIdx.of.GtLength]

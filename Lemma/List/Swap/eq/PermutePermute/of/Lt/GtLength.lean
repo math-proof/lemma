@@ -4,7 +4,7 @@ import Lemma.List.GetSwap.eq.Ite.of.GtLength.GtLength.Lt
 import Lemma.List.GetPermute__Neg.eq.Ite.of.GtLength
 import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
-import Lemma.List.GetElem.eq.None.of.Ge_Length
+import Lemma.List.GetElem.eq.None.of.LeLength
 open Bool List Nat
 
 
@@ -63,7 +63,7 @@ private lemma main
         repeat grind
   else
     simp at h_k_length
-    repeat rw [GetElem.eq.None.of.Ge_Length]
+    repeat rw [GetElem.eq.None.of.LeLength]
     ·
       simpa
     ·
