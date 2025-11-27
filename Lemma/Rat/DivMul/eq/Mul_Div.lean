@@ -14,7 +14,7 @@ private lemma main
 
 
 @[main, comm]
-private lemma comm'
+private lemma Comm
   [Semifield α]
 -- given
   (a b c : α) :

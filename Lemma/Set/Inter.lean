@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma comm'
+private lemma Comm
   {a b : Set α} :
 -- imply
   a ∩ b = b ∩ a :=

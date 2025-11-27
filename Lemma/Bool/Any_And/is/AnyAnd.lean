@@ -13,7 +13,7 @@ private lemma main
 
 
 @[main, comm, mp, mpr]
-private lemma comm'
+private lemma Comm
 -- given
   (f g p : α → Prop) :
 -- imply

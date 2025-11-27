@@ -4,7 +4,7 @@ open Nat Int
 
 
 @[main]
-private lemma comm'
+private lemma Comm
   [AddCommGroup α]
   {a b : α} :
 -- imply

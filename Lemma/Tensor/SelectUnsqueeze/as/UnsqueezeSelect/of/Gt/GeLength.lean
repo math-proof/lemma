@@ -1,4 +1,4 @@
-import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt
+import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength
 import Lemma.List.GetInsertIdx.eq.Get.of.Gt.GeLength
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import stdlib.SEq
@@ -18,7 +18,7 @@ private lemma main
 -- proof
   apply SEq.of.SEqDataS.Eq
   ·
-    apply EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt h_k
+    apply EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength (by omega) h_k
   ·
     sorry
 

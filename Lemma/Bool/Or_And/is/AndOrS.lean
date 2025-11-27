@@ -10,7 +10,7 @@ private lemma main :
 
 
 @[main, comm, mp, mpr]
-private lemma comm' :
+private lemma Comm :
 -- imply
   r ∨ p ∧ q ↔ (p ∨ r) ∧ (q ∨ r) := by
 -- proof

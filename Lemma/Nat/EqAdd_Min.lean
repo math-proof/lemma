@@ -16,7 +16,7 @@ private lemma main
 
 
 @[main]
-private lemma comm'
+private lemma Comm
 -- given
   (a b : ℕ) :
 -- imply

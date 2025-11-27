@@ -4,7 +4,7 @@ open Nat
 
 
 @[main]
-private lemma comm'
+private lemma Comm
 -- given
   (a b c : ℕ) :
 -- imply

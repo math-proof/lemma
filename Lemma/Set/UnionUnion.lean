@@ -4,7 +4,7 @@ open Set
 
 
 @[main]
-private lemma comm'
+private lemma Comm
   {a b c : Set α} :
 -- imply
   a ∪ b ∪ c = a ∪ c ∪ b := by

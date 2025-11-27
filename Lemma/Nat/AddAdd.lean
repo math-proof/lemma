@@ -4,7 +4,7 @@ open Nat
 
 
 @[main]
-private lemma comm'
+private lemma Comm
   [AddCommSemigroup α]
   {a b : α} :
 -- imply

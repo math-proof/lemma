@@ -19,7 +19,7 @@ private lemma main
 
 
 @[main]
-private lemma comm'
+private lemma Comm
 -- given
   (h_i : i < n)
   (h_j : j < d)

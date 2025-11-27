@@ -5778,7 +5778,9 @@ class LeanIte extends LeanArgs
                 return $caret;
             }
             if ($caret === $this->then) {
-                $this->then = new LeanIte([$caret], $this->indent + 2, $caret->level);
+                if ($caret->indent < $this->indent + 2)
+                    $caret->indent = $this->indent + 2;
+                $this->then = new LeanIte([$caret], $caret->indent, $caret->level);
                 return $caret;
             }
         }
@@ -5839,7 +5841,8 @@ class LeanIte extends LeanArgs
     public function is_indented()
     {
         $parent = $this->parent;
-        return !$parent || $parent instanceof LeanStatements || $parent instanceof LeanIte && $this === $parent->then;
+        # in case that $parent->then is null, wherein the `then` part is the result of splitting 
+        return !$parent || $parent instanceof LeanStatements || $parent instanceof LeanIte && (!($then = $parent->then) || $this === $then);
     }
 
     public function strFormat()

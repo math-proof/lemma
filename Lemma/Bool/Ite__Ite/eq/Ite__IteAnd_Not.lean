@@ -8,7 +8,8 @@ open Bool
 private lemma main
   [Decidable p]
   [Decidable q]
-  {a b c : α} :
+-- given
+  (a b c : α) :
 -- imply
   (if p then
     a
@@ -23,6 +24,8 @@ private lemma main
     c := by
 -- proof
   denote h_P : P = left
+  -- simp doen't work here
+  -- simp [Ite__Ite.eq.IteAnd_Not__Ite] at h_P
   rw [Ite__Ite.eq.IteAnd_Not__Ite] at h_P
   rw [Ite__Ite.eq.IteAnd_Not__Ite] at h_P
   simp only [IffAnd_NotAnd_Not (p := p)] at h_P

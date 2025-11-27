@@ -1,6 +1,4 @@
-import Lemma.Nat.Sub.eq.Zero.of.Le
-import Lemma.List.DropAppend.eq.AppendDropS
-open List Nat
+import sympy.Basic
 
 
 @[main]
@@ -9,12 +7,10 @@ private lemma main
   (h : a.length ≥ i)
   (b : List α) :
 -- imply
-  (a ++ b).drop i = a.drop i ++ b := by
+  (a ++ b).drop i = a.drop i ++ b :=
 -- proof
-  rw [DropAppend.eq.AppendDropS]
-  rw [Sub.eq.Zero.of.Le h]
-  simp
+  List.drop_append_of_le_length h
 
 
 -- created on 2025-06-20
--- updated on 2025-10-03
+-- updated on 2025-11-26

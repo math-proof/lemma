@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma comm' :
+private lemma Comm :
 -- imply
   (p ∨ q) ∨ r ↔ (q ∨ p) ∨ r := by
 -- proof

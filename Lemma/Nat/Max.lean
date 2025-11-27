@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma comm'
+private lemma Comm
   [LinearOrder α]
   {a b : α} :
 -- imply

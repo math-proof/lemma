@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma comm'
+private lemma Comm
   [CommSemigroup G]
 -- given
   (a b c : G) :

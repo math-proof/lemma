@@ -1,7 +1,7 @@
 import sympy.Basic
 
 @[main]
-private lemma comm'
+private lemma Comm
   [CommMonoid β]
   {s : Finset γ}
   {t : Finset α}
