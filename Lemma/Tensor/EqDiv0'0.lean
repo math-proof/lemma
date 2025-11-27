@@ -36,7 +36,7 @@ private lemma scalar
   rw [EqData0'0]
   ext i
   simp
-  rw [EqGet0'0.fin]
+  rw [EqGet0_0.fin]
   apply EqDiv0'0 (a := x)
 
 

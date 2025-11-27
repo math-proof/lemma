@@ -394,6 +394,13 @@ instance [SubNegMonoid α] : SubNegMonoid (Tensor α s) where
     simp at h
     rw [h]
 
+instance [AddGroup α] : AddGroup (Tensor α s) where
+  neg_add_cancel x := by
+    apply Eq.of.EqDataS
+    rw [DataAdd.eq.AddDataS]
+    rw [DataNeg.eq.NegData]
+    simp [EqData0'0]
+
 instance [DivInvMonoid α] : DivInvMonoid (Tensor α s) where
   div_eq_mul_inv a b := by
     apply Eq.of.EqDataS

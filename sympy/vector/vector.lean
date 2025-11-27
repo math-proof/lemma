@@ -9,7 +9,8 @@ import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.GetInv.eq.InvGet
 import Lemma.Vector.GetNeg.eq.NegGet
 import Lemma.Vector.NeReplicateS.of.Ne.Gt_0
-import Lemma.Vector.EqGet1'1
+import Lemma.Vector.EqGet1_1
+import Lemma.Vector.EqGet0_0
 open Vector
 
 namespace List.Vector
@@ -136,7 +137,7 @@ instance [AddMonoidWithOne α] : AddMonoidWithOne (Vector α n) where
     simp [NatCast.natCast]
     ext i
     rw [GetAdd.eq.AddGetS.fin]
-    rw [EqGet1'1.fin]
+    rw [EqGet1_1.fin]
     repeat rw [get_replicate]
 
 instance [AddCommMonoidWithOne α] : AddCommMonoidWithOne (Vector α n) where
@@ -188,6 +189,13 @@ instance [SubNegMonoid α] : SubNegMonoid (Vector α n) where
     rw [h]
     rw [GetNeg.eq.NegGet.fin]
     simp
+
+instance [AddGroup α] : AddGroup (Vector α n) where
+  neg_add_cancel x := by
+    ext i
+    simp [GetAdd.eq.AddGetS.fin]
+    simp [GetNeg.eq.NegGet.fin]
+    simp [EqGet0_0.fin]
 
 instance [DivInvMonoid α] : DivInvMonoid (Vector α n) where
   div_eq_mul_inv a b := by

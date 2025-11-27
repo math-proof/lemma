@@ -4,7 +4,6 @@ import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
 import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Lt.GtLength
 import Lemma.Tensor.Softmax.eq.Div_SumExp
-import sympy.tensor.functions
 open Tensor Nat Bool
 
 
@@ -28,7 +27,7 @@ private lemma main
   apply congrArg
   apply EqCast.of.SEq.Eq
   .
-    sorry
+    conv_rhs => rw [List.EraseIdxEraseIdx.of.Gt.GtLength (by grind) h_k]
   .
     sorry
 

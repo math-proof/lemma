@@ -110,29 +110,12 @@ export default {
                 CommMagma,
             },
         };
-        const AddCommMonoid = {
-            AddMonoid, 
-            AddCommSemigroup: {
-                AddSemigroup,
-                AddCommMagma,
-            }
-        };
-        const AddGroup = [];
-        const AddCommGroup = {
-            AddGroup, 
-            AddCommMonoid,
-        };
         const LeftDistribClass = {Mul, Add};
         const RightDistribClass = {Mul, Add};
         const Distrib = {
             Mul, Add, 
             LeftDistribClass, // Distrib.leftDistribClass
             RightDistribClass, // Distrib.rightDistribClass
-        };
-        const NonUnitalNonAssocSemiring = {
-            AddCommMonoid, 
-            Distrib, 
-            MulZeroClass
         };
         const SemigroupWithZero = {Semigroup, MulZeroClass};
         const MulZeroOneClass = {MulOneClass, MulZeroClass};
@@ -151,13 +134,39 @@ export default {
             AddMonoid, 
             One,
         };
+        const SubNegMonoid = {
+            AddMonoid, 
+            Neg, 
+            Sub,
+        }
+        const AddGroup = {SubNegMonoid};
+        const AddCommMonoid = {
+            AddMonoid, 
+            AddCommSemigroup: {
+                AddSemigroup,
+                AddCommMagma,
+            }
+        };
+        const AddCommGroup = {
+            AddGroup, 
+            AddCommMonoid,
+        };
         const AddCommMonoidWithOne = {
             AddMonoidWithOne, 
             AddCommMonoid,
         };
+        const NonUnitalNonAssocSemiring = {
+            AddCommMonoid, 
+            Distrib, 
+            MulZeroClass
+        };
         const NonUnitalSemiring = {NonUnitalNonAssocSemiring, SemigroupWithZero};
         const NonAssocSemiring = {NonUnitalNonAssocSemiring, MulZeroOneClass, AddCommMonoidWithOne};
-        const Semiring = {NonUnitalSemiring, NonAssocSemiring, MonoidWithZero}
+        const Semiring = {NonUnitalSemiring, NonAssocSemiring, MonoidWithZero};
+        const CommSemiring = {
+            Semiring, 
+            CommMonoid,
+        };
         const AddGroupWithOne = {
             IntCast: [], 
             AddMonoidWithOne, 
@@ -166,6 +175,10 @@ export default {
         const NonUnitalNonAssocRing = {
             AddCommGroup, 
             NonUnitalNonAssocSemiring
+        };
+        const NonUnitalRing = {
+            NonUnitalNonAssocRing, 
+            NonUnitalSemiring
         };
         const AddCommGroupWithOne = {
             AddCommGroup, 
@@ -177,10 +190,6 @@ export default {
             NonAssocSemiring,
             AddCommGroupWithOne,
         };
-        const NonUnitalRing = {
-            NonUnitalNonAssocRing, 
-            NonUnitalSemiring
-        };
         const Ring = {
             Semiring,
             AddCommGroup, 
@@ -188,15 +197,6 @@ export default {
             NonUnitalRing, //Ring.toNonUnitalRing
             NonAssocRing, // Ring.toNonAssocRing
         };
-        const CommSemiring = {
-            Semiring, 
-            CommMonoid,
-        };
-        const SubNegMonoid = {
-            AddMonoid, 
-            Neg, 
-            Sub,
-        }
         const DivInvMonoid = {
             Monoid, 
             Inv,

@@ -1,4 +1,4 @@
-import Lemma.Vector.EqGet0'0
+import Lemma.Vector.EqGet0_0
 open Vector
 
 
@@ -13,7 +13,7 @@ private lemma main
   simp [Inv.inv]
   ext i
   simp
-  rw [EqGet0'0.fin]
+  rw [EqGet0_0.fin]
   simp [inv_zero]
 
 

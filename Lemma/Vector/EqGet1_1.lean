@@ -1,4 +1,4 @@
-import Lemma.Vector.EqGet1'1.of.Lt
+import Lemma.Vector.EqGet1_1.of.Lt
 open Vector
 
 
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   (1 : List.Vector α n)[i] = 1 := by
 -- proof
-  apply EqGet1'1.of.Lt
+  apply EqGet1_1.of.Lt
 
 
 @[main]

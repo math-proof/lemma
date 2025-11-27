@@ -43,7 +43,7 @@ theorem Hyperreal.exp_pos x : exp x > 0 := by
     simp [Real.exp_pos]
 
 
-class Exp (α : Type u) extends SubNegMonoid α, DivInvMonoid α where
+class Exp (α : Type u) extends AddCommGroup α, DivInvMonoid α where
   exp : α → α
   exp_add (x y : α) : exp (x + y) = exp x * exp y
   exp_zero : exp 0 = 1

@@ -4,8 +4,8 @@ import Lemma.Tensor.Sum.eq.MkListSumData
 import Lemma.Vector.SumSoftmax.eq.One
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Nat.Eq_0
-import Lemma.Vector.EqGet1'1
-import Lemma.Tensor.EqGet1'1
+import Lemma.Vector.EqGet1_1
+import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength
 import Lemma.Tensor.EqData1'1
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength
@@ -35,7 +35,7 @@ private lemma main
       simp
       ext i
       rw [EqData1'1]
-      simp [EqGet1'1.fin (n := [].prod)]
+      simp [EqGet1_1.fin (n := [].prod)]
       have h_0 := Eq_0 i
       subst h_0
       simp [List.Vector.get]
@@ -51,7 +51,7 @@ private lemma main
       have := GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength (by simp) (by simp) (by simp) X.softmax (dim := (s₀ :: s₁ :: s).length - 1) (i := i)
       simp at this
       simp [this]
-      have := EqGet1'1 (s := (s₀ :: s₁ :: s).eraseIdx ((s₀ :: s₁ :: s).length - 1)) (i := i) (α := α)
+      have := EqGet1_1 (s := (s₀ :: s₁ :: s).eraseIdx ((s₀ :: s₁ :: s).length - 1)) (i := i) (α := α)
       simp at this
       simp [this]
       rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength (by simp) (by simp) (by simp)]

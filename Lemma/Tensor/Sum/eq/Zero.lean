@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.EqGet0'0.of.Lt
+import Lemma.Vector.EqGet0_0.of.Lt
 import Lemma.Vector.Sum.eq.Zero
 open Tensor Vector
 

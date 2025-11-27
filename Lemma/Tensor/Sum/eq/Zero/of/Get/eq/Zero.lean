@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.Eq
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.Nat.Lt_Sub.of.LtAdd
-import Lemma.Tensor.EqGet0'0
+import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEq0S.of.Eq
@@ -32,7 +32,7 @@ private lemma main
     apply SEq.of.All_SEqGetS.Eq.GtLength_0
     ·
       intro t
-      rw [EqGet0'0.fin]
+      rw [EqGet0_0.fin]
       rw [EqGetStack.fn.fin]
       have hi := Lt_Sub.of.LtAdd h_d
       rw [ih (by simpa) (by simpa)]

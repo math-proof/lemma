@@ -1,7 +1,7 @@
 import sympy.vector.vector
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
-import Lemma.Vector.EqGet0'0
+import Lemma.Vector.EqGet0_0
 open Vector Finset
 
 
@@ -17,7 +17,7 @@ private lemma main
   simp [Sum.eq.Sum_Get]
   let f := fun v : List.Vector α n => v[i]
   have h_f0 : f 0 = 0 := by
-    apply EqGet0'0
+    apply EqGet0_0
   have h_add : ∀ (a b : List.Vector α n), f (a + b) = f a + f b := by
     intro a b
     simp [f]

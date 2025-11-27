@@ -1,5 +1,5 @@
 import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
-import Lemma.Tensor.EqGet0'0
+import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.GetAdd.eq.AddGetS.of.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength_0
 import sympy.tensor.tensor
@@ -21,7 +21,7 @@ private lemma main
 -- proof
   let f := fun X : Tensor α s => X.get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩
   have h_f0 : f 0 = 0 := by
-    apply EqGet0'0.fin
+    apply EqGet0_0.fin
   have h_add : ∀ (a b : Tensor α s), f (a + b) = f a + f b := by
     intro a b
     simp [f]

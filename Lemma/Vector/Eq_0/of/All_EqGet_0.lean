@@ -1,4 +1,4 @@
-import Lemma.Vector.EqGet0'0
+import Lemma.Vector.EqGet0_0
 open Vector
 
 
@@ -12,7 +12,7 @@ private lemma main
   a = 0 := by
 -- proof
   ext i
-  simp_all [EqGet0'0.fin]
+  simp_all [EqGet0_0.fin]
 
 
 
