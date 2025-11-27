@@ -5,7 +5,7 @@ import Lemma.List.EqRotate_1.of.LeLength_1
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.EqGetS
@@ -49,41 +49,35 @@ private lemma main
       apply EqAppendTake__Drop
     ·
       simp
-      apply SEqCast.of.SEq.Eq.Eq
+      apply SEqCast.of.SEq.Eq (by simp)
+      apply SEq.of.All_EqGetS.Eq
       ·
-        simp
+        intro t
+        have h_t := t.isLt
+        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        have h_r := r.isLt
+        simp at h_r
+        have h_q := q.isLt
+        simp [EqRotate_1.of.LeLength_1] at h_q
+        simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
+        simp at h_t
+        unfold Tensor.rotate
+        simp [GetElem.getElem]
+        rw [GetCast.eq.Get.of.Eq.fin]
+        ·
+          rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp [h_length]⟩) (i := ⟨q, by simpa [h_length]⟩) (t := q) (by simp [h_length])]
+          rw [GetTranspose.eq.Get.fin]
+          repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          simp at h_qr
+          simp
+          simp [h_qr]
+        ·
+          simp [h_length]
+          simp [EqRotate_1.of.LeLength_1]
       ·
         rw [EqRotate_1.of.LeLength_1 (by simp)]
+        rw [MulProdS.eq.ProdAppend]
         rw [EqAppendTake__Drop]
-      ·
-        apply SEq.of.All_EqGetS.Eq
-        ·
-          intro t
-          have h_t := t.isLt
-          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
-          have h_r := r.isLt
-          simp at h_r
-          have h_q := q.isLt
-          simp [EqRotate_1.of.LeLength_1] at h_q
-          simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
-          simp at h_t
-          unfold Tensor.rotate
-          simp [GetElem.getElem]
-          rw [GetCast.eq.Get.of.Eq.fin]
-          ·
-            rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp [h_length]⟩) (i := ⟨q, by simpa [h_length]⟩) (t := q) (by simp [h_length])]
-            rw [GetTranspose.eq.Get.fin]
-            repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            simp at h_qr
-            simp
-            simp [h_qr]
-          ·
-            simp [h_length]
-            simp [EqRotate_1.of.LeLength_1]
-        ·
-          rw [EqRotate_1.of.LeLength_1 (by simp)]
-          rw [MulProdS.eq.ProdAppend]
-          rw [EqAppendTake__Drop]
 
 
 -- created on 2025-10-20

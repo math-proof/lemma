@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.DropPermute__Neg.eq.Drop
 import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length
 import Lemma.List.GetTakePermute__Neg.eq.Get
@@ -55,11 +55,9 @@ private lemma main
     have h_permute := EqPermutePermute__Neg.of.In_Ioo_Length (s := s) (i := d) (j := 0) ⟨by omega, by omega⟩
     simp at h_permute
     have h_lt_add_1 := LtAdd.of.Lt_Sub h
-    apply SEqCast.of.SEq.Eq.Eq
+    apply SEqCast.of.SEq.Eq
     ·
       simp [Permute.eq.Append_AppendRotateTakeDrop]
-    ·
-      rw [h_permute]
     ·
       unfold Tensor.permuteHead
       simp
@@ -68,11 +66,9 @@ private lemma main
         rw [← Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0 (by simp; omega), h_permute]
       ·
         simp
-        apply SEqCast.of.SEq.Eq.Eq
+        apply SEqCast.of.SEq.Eq
         ·
           rw [MulProdS.eq.ProdAppend]
-        ·
-          rw [← Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0 (by simp; omega), h_permute]
         ·
           apply SEq.of.All_EqGetS.Eq
           ·

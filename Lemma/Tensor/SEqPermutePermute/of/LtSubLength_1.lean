@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.DropPermute.eq.Drop.of.GtLength_0
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
@@ -57,15 +57,13 @@ private lemma main
     rw [h_permute]
   ·
     have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
-    apply SEqCast.of.SEq.Eq.Eq
+    apply SEqCast.of.SEq.Eq
     ·
       rw [MulProdS.eq.ProdAppend]
       rw [h_toNat]
       simp
       rw [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
       simp [Permute__Neg.eq.Append_AppendRotateDropTake]
-    ·
-      rw [h_permute]
     ·
       rw [h_toNat]
       unfold Tensor.permuteTail

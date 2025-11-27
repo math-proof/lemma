@@ -5,7 +5,7 @@ import Lemma.Nat.Lt.of.LtAdd
 import Lemma.List.PermuteCons.eq.Cons_Permute.of.GtLength
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqPermute__0
 import Lemma.List.EraseIdxPermute.eq.Tail.of.GtLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
@@ -44,12 +44,9 @@ private lemma main
     .
       rw [SumCast.eq.Cast_Sum.of.Eq]
       .
-        apply SEqCast.of.SEq.Eq.Eq
+        apply SEqCast.of.SEq.Eq
         ·
           rw [Permute.eq.AppendRotateTake___Drop.of.GtLength_0]
-        ·
-          simp
-          rw [EraseIdxPermute.eq.Tail.of.GtLength h]
         ·
           apply SumPermuteHead.as.Sum_0.of.GtLength h X
       .

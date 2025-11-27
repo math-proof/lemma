@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqRotateRotate.of.Add.eq.Length
 import Lemma.List.EqTake.of.LeLength
@@ -41,14 +41,9 @@ private lemma main
     omega
   ·
     simp
-    apply SEqCast.of.SEq.Eq.Eq
+    apply SEqCast.of.SEq.Eq
     ·
       rw [MulProdS.eq.ProdAppend]
-    ·
-      apply congrArg
-      simp_all [Drop.eq.Nil.of.LeLength, EqTake.of.LeLength]
-      rw [EqRotateRotate.of.Add.eq.Length]
-      omega
     ·
       apply SEq.of.All_EqGetS.Eq
       ·

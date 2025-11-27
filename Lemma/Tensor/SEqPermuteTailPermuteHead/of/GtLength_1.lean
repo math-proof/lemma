@@ -2,7 +2,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.List.EqRotateRotate.of.GeLength
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
@@ -39,14 +39,9 @@ private lemma main
     omega
   ·
     simp
-    apply SEqCast.of.SEq.Eq.Eq
+    apply SEqCast.of.SEq.Eq
     ·
       rw [MulProdS.eq.ProdAppend]
-    ·
-      apply congrArg
-      simp
-      apply Eq_RotateRotate.of.GeLength
-      omega
     ·
       apply SEq.of.All_EqGetS.Eq
       ·
@@ -97,7 +92,6 @@ private lemma main
           have h_prod : r' * s[0] + q' < (s.rotate 1).prod := by
             simp [Rotate.eq.AppendDrop__Take.of.GeLength (s := s) (n := 1) (by omega), ProdTake_1.eq.Get_0.of.GtLength_0 (by omega)]
             apply AddMul.lt.Mul.of.Lt.Lt <;>
-            ·
               assumption
           rw [GetCast.eq.Get.of.Eq.fin]
           ·

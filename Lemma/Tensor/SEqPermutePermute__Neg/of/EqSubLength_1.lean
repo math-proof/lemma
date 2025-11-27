@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length
 import Lemma.List.EqPermute__0
@@ -37,20 +37,16 @@ private lemma main
   split_ifs with h_d
   ·
     subst h_d
-    apply SEqCast.of.SEq.Eq.Eq
+    apply SEqCast.of.SEq.Eq
     ·
       rw [h_permute]
       simp [EqPermute__0]
     ·
-      rw [h_permute]
-    ·
       apply SEqPermute__0
   ·
-    apply SEqCast.of.SEq.Eq.Eq
+    apply SEqCast.of.SEq.Eq
     ·
       simp [Permute.eq.Append_AppendRotateTakeDrop]
-    ·
-      aesop
     ·
       subst h
       rw [EqAddSub.of.Ge (by omega)]
@@ -64,7 +60,7 @@ private lemma main
         rw [EqAdd_Sub.of.Ge (by omega)] at h_toNat
         rw [PermuteHeadCast.eq.Cast_PermuteHead.of.Eq]
         ·
-          apply SEqCast.of.SEq.Eq.Eq
+          apply SEqCast.of.SEq.Eq
           ·
             rw [h_toNat]
             simp
@@ -73,14 +69,6 @@ private lemma main
             repeat rw [EqTake.of.LeLength (by simp)]
             rw [Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0]
             omega
-          ·
-            rw [Drop.eq.Nil.of.LeLength (by simp)]
-            simp
-            rw [EqTake.of.LeLength (by simp)]
-            rw [Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0 (by omega)]
-            rw [RotateRotate.eq.Rotate_Add]
-            rw [EqAddSub.of.Ge (by omega)]
-            rw [EqRotate_Length]
           ·
             rw [h_toNat]
             apply SEqPermuteHeadPermuteTail.of.Ne_Nil

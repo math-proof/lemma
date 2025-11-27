@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.DropPermute.eq.Drop
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.DropTakePermute.eq.ListGet.of.GtLength_Add
@@ -89,11 +89,9 @@ private lemma main
       rw [Add_Add.eq.AddAdd]
       have := Permute__Neg.eq.Append_AppendRotateDropTake (s := (s.permute ⟨i, by grind⟩ d)) (i := ⟨i + d, by simp_all; grind⟩) (d := d)
       simp_all
-    apply SEqCast.of.SEq.Eq.Eq
+    apply SEqCast.of.SEq.Eq
     ·
       rw [h_permute_simp, h_permute]
-    ·
-      rw [h_permute]
     ·
       apply SEq.of.All_EqGetS.Eq
       ·

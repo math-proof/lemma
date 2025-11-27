@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEqCast.of.Eq
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Int.Lt.of.LtAdd
 import Lemma.List.EqPermute__0
@@ -53,20 +53,16 @@ private lemma main
     ·
       rw [SoftmaxCast.eq.Cast_Softmax.of.Eq]
       ·
-        apply SEqCast.of.SEq.Eq.Eq
+        apply SEqCast.of.SEq.Eq
         ·
           rw [Permute.eq.AppendRotateTake___Drop.of.GtLength_0]
-        ·
-          simp
         ·
           rw [@Tensor.Permute.eq.Ite]
           simp
           split_ifs
-          apply SEq_Cast.of.SEq.Eq.Eq
+          apply SEq_Cast.of.SEq.Eq
           .
             rw [List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0]
-          .
-            sorry
           .
             -- apply SoftmaxPermuteHead.as.PermuteHeadSoftmax.of.GtLength h X
             sorry

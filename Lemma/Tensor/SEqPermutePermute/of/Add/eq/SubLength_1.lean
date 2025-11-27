@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
 import Lemma.List.DropPermute.eq.ListGet.of.Add.eq.SubLength_1
@@ -72,14 +72,12 @@ private lemma main
   have h_i := NeZero.pos i
   have h_Lt1d : 1 + d < s.length := by omega
   have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
-  apply SEqCast.of.SEq.Eq.Eq
+  apply SEqCast.of.SEq.Eq
   ·
     rw [h_toNat]
     simp [EqMin.of.Lt h_Lt1d]
     rw [Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1 (s := (s.permute ⟨i, by grind⟩ d)) (i := ⟨i + d, by simp; grind⟩) (by simp; omega) d]
     simp [Add.comm (a := d), EqMin.of.Lt h_Lt1d]
-  ·
-    rw [h_permute]
   ·
     rw [h_toNat]
     unfold Tensor.permuteTail

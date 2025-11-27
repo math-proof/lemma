@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Drop.eq.AppendTakeDrop
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.DropPermute__Neg.eq.Drop
@@ -76,12 +76,10 @@ private lemma main
   simp at h_permute
   rw [EqSubAdd.left] at h_permute
   apply SEq.of.SEqDataS.Eq h_permute
-  apply SEqCast.of.SEq.Eq.Eq
+  apply SEqCast.of.SEq.Eq
   ·
     rw [MulProdS.eq.ProdAppend]
     rw [Permute.eq.Append_AppendRotateTakeDrop]
-  ·
-    rw [h_permute]
   ·
     apply SEq.of.All_EqGetS.Eq
     ·

@@ -2,7 +2,7 @@ import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Tensor.SEqPermuteTailPermuteHead.of.GtLength_1
 import Lemma.Tensor.SEqPermuteTail_1
 import Lemma.Tensor.SEqPermuteHead_1
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.PermuteTailCast.eq.Cast_PermuteTail.of.Eq
 open List Tensor Bool

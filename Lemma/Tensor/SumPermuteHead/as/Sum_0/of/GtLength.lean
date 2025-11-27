@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetSum_0.as.SumSelect.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1
-import Lemma.Bool.SEqCast.of.SEq.Eq.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.GetAppend.eq.Get.of.GtLength
@@ -48,16 +48,13 @@ private lemma main
         rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin]
         ·
           simp
-          apply SEqCast.of.SEq.Eq.Eq
+          apply SEqCast.of.SEq.Eq
           ·
             simp
             rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1]
             simp
             rw [EqMin.of.Le h_d]
             rwa [EqAdd_Sub.of.Ge h_d]
-          ·
-            simp [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength h_d1]
-            simp [EqMin.of.Le h_d]
           ·
             have := Tensor.GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1 (by simpa) (by simpa) X (d := d + 1) (k := t)
             have := Tensor.SEqSumS.of.SEq this d

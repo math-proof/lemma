@@ -10,7 +10,7 @@ import Lemma.Nat.Sub_Add.eq.SubSub
 open List Nat
 
 
-@[main]
+@[main, comm]
 private lemma main
   {d : ℕ}
   {s : List α}

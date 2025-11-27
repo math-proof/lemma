@@ -244,12 +244,7 @@ the following eqaulity holds:
 X[i₀, i₁, i₂, i₃, i₄, i₅, i₆, i₇, i₈, i₉] = t'[i₀, i₁, i₂, i₃, 0, i₄, i₅, i₆, i₇, i₈, i₉]
 -/
 def Tensor.unsqueeze (X : Tensor α s) (dim : ℕ) : Tensor α (s.insertIdx dim 1) :=
-  let s' := s.insertIdx dim 1
-  have h_prod := ProdInsertIdx.eq.Prod s dim
-  let data : List.Vector α s'.prod := (List.Vector.range s'.prod).map fun i =>
-    let i : Fin s.prod := cast (by rw [h_prod]) i
-    X.data[i]
-  ⟨data⟩
+  ⟨(List.Vector.range (s.insertIdx dim 1).prod).map fun i => X.data[cast (congrArg Fin (ProdInsertIdx.eq.Prod s dim)) i]⟩
 
 /--
 [torch.repeat_interleave](https://docs.pytorch.org/docs/stable/generated/torch.repeat_interleave.html)

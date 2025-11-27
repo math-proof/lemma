@@ -7,9 +7,9 @@ private lemma main
   (h_n : m = n)
   (h_i : i < n) :
 -- imply
-  cast (congrArg Fin h_n) ⟨i, h_n ▸ h_i⟩ = i := by
+  cast (congrArg Fin h_n) ⟨i, h_n ▸ h_i⟩ = ⟨i, h_i⟩ := by
 -- proof
   aesop
 
 
--- created on 2025-07-11
+-- created on 2025-11-27
