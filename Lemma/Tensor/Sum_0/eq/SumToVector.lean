@@ -1,4 +1,4 @@
-import Lemma.Finset.EqSumS.of.All_Eq
+import Lemma.Finset.Sum.of.All_Eq
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import Lemma.Vector.Sum.eq.Sum_Get
@@ -17,7 +17,7 @@ private lemma main
   rw [Sum.eq.Sum_Get]
   simp [GetElem.getElem]
   have h_all := GetToVector.eq.Get.cons.fin X
-  rw [EqSumS.of.All_Eq.fin h_all]
+  rw [Sum.of.All_Eq.fin h_all]
   rw [Sum_0.eq.Sum_Get]
 
 

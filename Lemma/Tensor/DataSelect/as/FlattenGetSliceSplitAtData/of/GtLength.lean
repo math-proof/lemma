@@ -53,16 +53,15 @@ set_option maxHeartbeats 2000000
 
 
 @[main]
-private lemma main
+private lemma simp
   {s : List ℕ}
 -- given
   (h : s.length > d)
   (X : Tensor α s)
   (i : Fin s[d]) :
 -- imply
-  (X.select ⟨d, h⟩ i).data ≃ (X.data.splitAt (d + 1))[i :: s[d]].flatten := by
+  (X.select ⟨d, h⟩ i).data ≃ (X.data.splitAt (d + 1))[i : (s.take (d + 1)).prod : s[d]].flatten := by
 -- proof
-  simp
   induction d generalizing s X with
   | zero =>
     simp
@@ -72,7 +71,6 @@ private lemma main
     | s₀ :: s =>
       rw [Select_0.eq.Cast_Get.of.GtLength_0]
       rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
-      simp only [List.Vector.length]
       apply SEqCast.of.SEq.Eq (by simp)
       have := DataGet.as.GetSplitAtData.of.GtLength_0.fin h X i
       apply SEq.trans this
@@ -231,6 +229,19 @@ private lemma main
     ·
       simp [List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
       rw [List.ProdEraseIdx.eq.Mul_ProdEraseIdxTail.of.GtLength_0]
+
+
+@[main]
+private lemma main
+  {s : List ℕ}
+-- given
+  (h : s.length > d)
+  (X : Tensor α s)
+  (i : Fin s[d]) :
+-- imply
+  (X.select ⟨d, h⟩ i).data ≃ (X.data.splitAt (d + 1))[i :: s[d]].flatten := by
+-- proof
+  apply simp
 
 
 -- created on 2025-11-10

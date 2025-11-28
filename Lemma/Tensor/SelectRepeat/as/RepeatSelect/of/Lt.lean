@@ -1,3 +1,4 @@
+import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
@@ -8,10 +9,10 @@ import Lemma.List.LengthSet.eq.Length
 import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.List.Prod.eq.MulProdS
-import Lemma.List.ProdDrop.dvd.ProdDropEraseIdx.of.Gt
+import Lemma.List.ProdDrop.dvd.ProdDropEraseIdx.of.Ge
 import Lemma.List.ProdDrop.eq.MulProdSDrop.of.Le
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
-import Lemma.List.ProdDropEraseIdx.eq.ProdAppendDropTake.of.Gt
+import Lemma.List.ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge
 import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.GtLength
 import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
@@ -52,15 +53,18 @@ open Nat List Bool Tensor Vector
 
 @[main]
 private lemma main
+  {d : Fin s.length}
+  {k : ℕ}
 -- given
-  (h_d : s.length > d)
   (h_k : k < d)
-  (h_i : i < s[d])
   (X : Tensor α s)
+  (i : Fin s[d])
   (n : ℕ) :
 -- imply
-  (X.repeat n ⟨k, by grind⟩).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select ⟨d, h_d⟩ ⟨i, h_i⟩).repeat n ⟨k, by grind⟩ := by
+  (X.repeat n ⟨k, h_k.trans d.isLt⟩).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select d i).repeat n ⟨k, by grind⟩ := by
 -- proof
+  have h_i : i < s[d.val] := i.isLt
+  have h_d := d.isLt
   have h_get_eraseIdx := GetEraseIdx.eq.Get.of.Gt.GtLength h_d h_k
   apply SEq.of.SEqDataS.Eq
   ·
@@ -70,6 +74,7 @@ private lemma main
     rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
     conv_rhs => rw [DataRepeat.eq.Cast_FlattenMapSplitAtData]
     have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s.set k (n * s[k])) (d := d) (i := i) (by grind) (by grind)
+    rw [List.ProdTakeMapCast.eq.CastProdTake] at h_length_slice
     simp at h_length_slice
     have h_prod_set := ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength (s := s.eraseIdx d) (i := k) (by grind) n
     apply SEqCastS.of.SEq.Eq.Eq
@@ -87,10 +92,12 @@ private lemma main
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
         have h_q := q.isLt
         have h_r := r.isLt
-        have h_d_lt_length := LengthSet.eq.Length s k (n * s[k]) ▸ h_d
-        have := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (i := i) h_d_lt_length (by grind)
-        simp at this
-        simp [this] at h_q
+        have h_s := LengthSet.eq.Length s k (n * s[k])
+        have h_d_lt_length := h_d
+        simp only [← h_s] at h_d_lt_length
+        have := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (i := i) h_d_lt_length (show ↑i < (s.set k (n * s[k]))[d.val] by grind)
+        rw [List.ProdTakeMapCast.eq.CastProdTake] at this
+        simp only [this] at h_q
         let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
         simp [h_length_slice] at h_t
         rw [EraseIdxSet.eq.SetEraseIdx.of.Lt h_k] at h_t
@@ -104,9 +111,10 @@ private lemma main
           rw [GetRepeat.eq.Get_Mod.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           simp [GetSet.eq.Get.of.Lt.GtLength h_d h_k]
-          simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+          rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
           simp [DataRepeat.eq.Cast_FlattenMapSplitAtData]
           have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
+          rw [List.ProdTakeMapCast.eq.CastProdTake] at h_length_slice
           repeat rw [GetCast.eq.Get.of.Eq.fin]
           ·
             simp [List.Vector.length]
@@ -129,8 +137,8 @@ private lemma main
               rwa [this] at h_q
             let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
             let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
-            have h_lt : ↑q' * ((s.eraseIdx d).drop k).prod + ↑r' % ((s.eraseIdx d).drop k).prod < (⟨↑i, ↑(s.take (d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
-              simp [h_length_slice]
+            have h_lt : ↑q' * ((s.eraseIdx d).drop k).prod + ↑r' % ((s.eraseIdx d).drop k).prod < (⟨↑i, ↑(s.take (d + 1)).prod, s[d.val]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
+              rw [h_length_slice]
               rw [Prod.eq.MulProdS (s.eraseIdx d) k]
               apply AddMul.lt.Mul.of.Lt.Lt q'.isLt
               apply LtMod.of.Gt_0
@@ -139,14 +147,15 @@ private lemma main
             have h_qₑ := qₑ.isLt
             let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
             repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
-            rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ h_i]
+            rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ (by assumption)]
             ·
               simp [GetRepeat.eq.Get_Mod.fin]
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
               apply congrArg
               simp
-              rw [ModAdd.eq.Mod.of.Dvd.left (Dvd_Mul.of.Dvd (ProdDrop.dvd.ProdDropEraseIdx.of.Gt h_k s) q')] at h_rₑ_mod
-              simp [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Gt h_k] at h_qₑ_div h_rₑ_mod h_q'_div h_r'_mod h_t
+              have h_k' := Le.of.Lt h_k
+              rw [ModAdd.eq.Mod.of.Dvd.left (Dvd_Mul.of.Dvd (ProdDrop.dvd.ProdDropEraseIdx.of.Ge h_k' s) q')] at h_rₑ_mod
+              simp [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge h_k'] at h_qₑ_div h_rₑ_mod h_q'_div h_r'_mod h_t
               rw [Mul_Mul.eq.MulMul] at h_qₑ_div
               rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_qₑ_div
               simp [h_rₑ_mod]
@@ -201,7 +210,7 @@ private lemma main
               simp [h_prod_take]
               rwa [EqDivMul.of.Ne_0 (by grind)]
           ·
-            simp [h_length_slice]
+            rw [h_length_slice]
           ·
             simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength (Lt.of.Lt.Lt h_k h_d)]
         ·

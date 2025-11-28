@@ -3,7 +3,7 @@ import Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
-import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Gt.GtLength
+import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Gt
 import Lemma.Tensor.Softmax.eq.Div_SumExp
 import Lemma.Tensor.Sum.eq.Sum_Select
 open Bool List Nat Tensor
@@ -12,8 +12,9 @@ open Bool List Nat Tensor
 @[main, comm]
 private lemma main
   [Exp α]
+  {d : Fin s.length}
+  {k : ℕ}
 -- given
-  (h_k : s.length > k)
   (h_d : k > d)
   (X : Tensor α s)
   (i : Fin s[d]) :
@@ -24,15 +25,18 @@ private lemma main
   rw [SelectDiv.eq.DivSelectS]
   rw [SelectExp.eq.ExpSelect]
   apply EqDivS.of.Eq.left
-  rw [SelectKeepdim.eq.KeepdimCast_Select.of.Gt.GtLength (by omega) (by omega)]
+  rw [SelectKeepdim.eq.KeepdimCast_Select.of.Gt h_d]
   apply congrArg
   apply EqCast.of.SEq.Eq
   ·
     rw [EraseIdxEraseIdx.of.Gt.GtLength (by grind) h_d]
   ·
-    rw [Sum.eq.Sum_Select (exp X) ⟨k, by grind⟩]
-    rw [Sum.eq.Sum_Select (exp (X.select ⟨d, by omega⟩ i)) ⟨k - 1, by grind⟩]
-    sorry
+    if k ≥ s.length then
+      sorry
+    else
+      rw [Sum.eq.Sum_Select (exp X) ⟨k, by grind⟩]
+      rw [Sum.eq.Sum_Select (exp (X.select ⟨d, by omega⟩ i)) ⟨k - 1, by grind⟩]
+      sorry
 
 
 -- created on 2025-11-17

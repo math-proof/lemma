@@ -1,7 +1,6 @@
-import Lemma.List.Drop.eq.Nil.of.LeLength
-import Lemma.List.DropAppend.eq.AppendDrop.of.GeLength
-import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-open List
+import Lemma.List.DropEraseIdx.eq.AppendDropTake.of.Ge
+import Lemma.Nat.Ge.of.Gt
+open List Nat
 
 
 @[main]
@@ -12,14 +11,8 @@ private lemma main
 -- imply
   (s.eraseIdx i).drop j = (s.take i).drop j ++ s.drop (i + 1) := by
 -- proof
-  if h_j : j ≥ s.length then
-    repeat rw [Drop.eq.Nil.of.LeLength (by grind)]
-    simp
-  else
-    rw [EraseIdx.eq.Append_Drop_Add_1]
-    rw [DropAppend.eq.AppendDrop.of.GeLength]
-    simp
-    omega
+  apply DropEraseIdx.eq.AppendDropTake.of.Ge
+  apply Ge.of.Gt h
 
 
--- created on 2025-11-21
+-- created on 2025-11-28

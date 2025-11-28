@@ -8,6 +8,26 @@ open Bool List Tensor
 
 
 @[main]
+private lemma simp
+  {s : List ℕ}
+-- given
+  (h_d : s.length > d)
+  (X : Tensor α s)
+  (i : Fin s[d]) :
+-- imply
+  (X.select ⟨d, h_d⟩ i).data = cast
+    (by
+      simp
+      rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+      simp
+    )
+    (X.data.splitAt (d + 1))[i : (s.take (d + 1)).prod : s[d]].flatten := by
+-- proof
+  apply Eq_Cast.of.SEq
+  apply DataSelect.as.FlattenGetSliceSplitAtData.of.GtLength.simp h_d
+
+
+@[main]
 private lemma main
   {s : List ℕ}
 -- given
@@ -23,8 +43,7 @@ private lemma main
     )
     (X.data.splitAt (d + 1))[i :: s[d]].flatten := by
 -- proof
-  apply Eq_Cast.of.SEq
-  apply DataSelect.as.FlattenGetSliceSplitAtData.of.GtLength h_d
+  apply simp
 
 
 -- created on 2025-11-07

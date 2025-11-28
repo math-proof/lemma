@@ -1,5 +1,4 @@
-import sympy.tensor.tensor
-import Lemma.Tensor.EqSum.of.LeLength
+import Lemma.Tensor.SEqSum.of.LeLength
 import Lemma.Tensor.Length.of.SEq
 open Tensor
 
@@ -7,14 +6,14 @@ open Tensor
 @[main]
 private lemma main
   [Add α] [Zero α]
-  {dim : ℕ}
+  {d : ℕ}
 -- given
-  (h : s.length ≤ dim)
+  (h : s.length ≤ d)
   (X : Tensor α s) :
 -- imply
-  (X.sum dim).length = X.length := by
+  (X.sum d).length = X.length := by
 -- proof
-  have := EqSum.of.LeLength h X
+  have := SEqSum.of.LeLength h X
   apply Length.of.SEq this
 
 

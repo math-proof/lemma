@@ -5,15 +5,15 @@ import Lemma.Nat.NotGe.of.Lt
 open List Bool Nat
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Add α] [Zero α]
-  {dim : ℕ}
+  {d : ℕ}
 -- given
-  (h : s.length ≤ dim)
+  (h : s.length ≤ d)
   (X : Tensor α s) :
 -- imply
-  X.sum dim ≃ X := by
+  X.sum d ≃ X := by
 -- proof
   unfold Tensor.sum
   split_ifs with h

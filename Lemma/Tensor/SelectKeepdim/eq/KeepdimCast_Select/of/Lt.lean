@@ -17,7 +17,7 @@ import Lemma.Nat.Ge_1.of.Gt
 import Lemma.Tensor.RepeatCast.eq.Cast_Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
-import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Lt_MulGet.Lt.GtLength
+import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Lt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength
 import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq
 import sympy.tensor.functions
@@ -27,9 +27,9 @@ open Bool List Nat Tensor
 @[main, comm]
 private lemma main
   {s : List ℕ}
+  {d : Fin s.length}
   {k : ℕ}
 -- given
-  (h_s : s.length > d)
   (h_k : k < d)
   (X : Tensor α (s.eraseIdx k))
   (i : Fin s[d]) :
@@ -39,9 +39,9 @@ private lemma main
   have h_d_length : d - 1 < (s.eraseIdx k).length := by
     rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by omega)]
     omega
-  have h_i_get : ↑i < (s.eraseIdx k)[d - 1] := by
+  have h_i_get : ↑i < (s.eraseIdx k)[d.val - 1] := by
     simp [h_get, EqAddSub.of.Ge (Ge_1.of.Gt h_k)]
-  X.keepdim.select ⟨d, h_s⟩ i = (cast (congrArg (Tensor α) h_eraseIdx) (X.select ⟨d - 1, h_d_length⟩ ⟨i, h_i_get⟩)).keepdim := by
+  X.keepdim.select d i = (cast (congrArg (Tensor α) h_eraseIdx) (X.select ⟨d - 1, h_d_length⟩ ⟨i, h_i_get⟩)).keepdim := by
 -- proof
   intro h_get h_eraseIdx h_d_length h_i_get
   unfold Tensor.keepdim
@@ -51,8 +51,8 @@ private lemma main
     simp [EqSetInsertIdxEraseIdx.of.GtLength]
   have h_length := LengthInsertIdxEraseIdx.eq.Length.of.GtLength h_k_length 1
   have h_i_lt : i < ((s.eraseIdx k).insertIdx k 1)[d] := by
-    rw [GetInsertIdx.eq.Get.of.Lt.GeLength _ h_k]
-    repeat omega
+    simp [GetInsertIdx.eq.Get.of.Lt.GeLength (by omega) h_k (s := s.eraseIdx k) 1]
+    omega
   have := SelectCast.eq.Cast_Select.of.Eq (i := ⟨i, by simp; rwa [GetSet.eq.Get.of.Lt.GtLength (by omega) (by omega)]⟩) (d := ⟨d, by rw [LengthSet.eq.Length]; omega⟩) h_set (X := ((X.unsqueeze k).repeat s[k] ⟨k, by simpa [h_length]⟩))
   simp at this
   rw [this]
@@ -72,7 +72,7 @@ private lemma main
     ·
       simp [h_eraseIdx]
     ·
-      rw [SelectRepeat.eq.Cast_RepeatSelect.of.Lt_MulGet.Lt.GtLength _ h_k]
+      rw [SelectRepeat.eq.Cast_RepeatSelect.of.Lt (by simpa) (X.unsqueeze k) (d := ⟨d, by grind⟩) ⟨i, by simp; grind⟩]
       apply SEqCast.of.SEq.Eq
       ·
         simp

@@ -1,4 +1,4 @@
-import Lemma.List.DropEraseIdx.eq.AppendDropTake.of.Gt
+import Lemma.List.DropEraseIdx.eq.AppendDropTake.of.Ge
 import Lemma.List.ProdAppend.eq.MulProdS
 open List
 
@@ -7,12 +7,12 @@ open List
 private lemma main
   [Monoid α]
 -- given
-  (h : i > j)
+  (h : i ≥ j)
   (s : List α) :
 -- imply
   ((s.eraseIdx i).drop j).prod = ((s.take i).drop j).prod * (s.drop (i + 1)).prod := by
 -- proof
-  rw [DropEraseIdx.eq.AppendDropTake.of.Gt h]
+  rw [DropEraseIdx.eq.AppendDropTake.of.Ge h]
   rw [ProdAppend.eq.MulProdS]
 
 

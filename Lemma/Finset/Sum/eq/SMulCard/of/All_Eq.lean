@@ -1,4 +1,4 @@
-import Lemma.Finset.EqSumS.of.All_Eq
+import Lemma.Finset.Sum.of.All_Eq
 open Finset
 
 
@@ -14,7 +14,7 @@ private lemma main
   ∑ i ∈ s, x i = s.card • a := by
 -- proof
   let y := fun _ : ι => a
-  have := EqSumS.of.All_Eq (y := y) h
+  have := Sum.of.All_Eq (y := y) h
   simp [y] at this
   assumption
 

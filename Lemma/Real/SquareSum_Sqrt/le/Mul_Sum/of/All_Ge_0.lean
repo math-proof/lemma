@@ -1,7 +1,7 @@
 import Lemma.Finset.SquareSum.le.Mul_Sum_Square
 import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Bool.All.of.All.All_Imp
-import Lemma.Finset.EqSumS.of.All_Eq
+import Lemma.Finset.Sum.of.All_Eq
 open Bool Finset Real
 
 
@@ -19,7 +19,7 @@ private lemma cauchy_schwarz
     intro t h
     apply EqSquareSqrt.of.Ge_0 h
   have := All.of.All.All_Imp.fin this h
-  rwa [EqSumS.of.All_Eq this] at h_Le
+  rwa [Sum.of.All_Eq this] at h_Le
 
 
 -- created on 2025-06-06

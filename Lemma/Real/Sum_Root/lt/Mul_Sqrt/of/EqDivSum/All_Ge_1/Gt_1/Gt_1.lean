@@ -10,7 +10,7 @@ import Lemma.Bool.All.of.All.All_Imp
 import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
 import Lemma.Finset.Sum.eq.Add_Sum.of.Gt_0
-import Lemma.Finset.EqSumS.of.All_Eq
+import Lemma.Finset.Sum.of.All_Eq
 import Lemma.Real.Sqrt.eq.Root_2
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.CoeSub.eq.SubCoeS
@@ -83,7 +83,7 @@ private lemma main
     have h_Eq_Sum := Sum.eq.Add_Sum.of.Gt_0 (x := f) (by linarith [h₀])
     simp only [f, Cast_0.eq.Zero, EqAdd0] at h_Eq_Sum
     rw [Root_2.eq.Sqrt] at h_Eq_Sum
-    have h_Eq_Sum' := EqSumS.of.All_Eq h_All_Eq_Root
+    have h_Eq_Sum' := Sum.of.All_Eq h_All_Eq_Root
     simp only [Pow1.eq.One] at h_Eq_Sum'
     have h_Eq_Sub : ∑ x ∈ Finset.Ico 1 n, (1 : ℝ) = n - 1 := by
       norm_cast
@@ -99,7 +99,7 @@ private lemma main
     norm_cast
     norm_cast at h_Eq_Sum
     rw [h_Eq_Sum]
-    have h_Eq_Sum_1 := EqSumS.of.All_Eq h_All_Eq
+    have h_Eq_Sum_1 := Sum.of.All_Eq h_All_Eq
     have h_Eq_Sum := Sum.eq.Add_Sum.of.Gt_0 (x := x) (by linarith [h₀])
     rw [h_Eq_Sum_1] at h_Eq_Sum
     rw [h_Eq_Sub] at h_Eq_Sum

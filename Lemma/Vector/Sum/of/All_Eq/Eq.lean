@@ -1,4 +1,4 @@
-import Lemma.Finset.EqSumS.of.All_Eq
+import Lemma.Finset.Sum.of.All_Eq
 import Lemma.Vector.Sum.eq.Sum_Get
 open Finset Vector
 
@@ -15,7 +15,7 @@ private lemma main
   x.sum = y.sum := by
 -- proof
   repeat rw [Sum.eq.Sum_Get]
-  rw [EqSumS.of.All_Eq.fin h]
+  rw [Sum.of.All_Eq.fin h]
   aesop
 
 

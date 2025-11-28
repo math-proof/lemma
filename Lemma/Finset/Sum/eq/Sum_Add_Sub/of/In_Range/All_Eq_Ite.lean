@@ -1,4 +1,4 @@
-import Lemma.Finset.EqSumS.of.All_Eq
+import Lemma.Finset.Sum.of.All_Eq
 import Lemma.Set.Lt.of.In_Range
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Nat.Add
@@ -20,7 +20,7 @@ private lemma main
 -- imply
   ∑ i ∈ s, y' i = (∑ i ∈ s, y i) + (x i' - y i') := by
 -- proof
-  have := EqSumS.of.All_Eq h₁
+  have := Sum.of.All_Eq h₁
   rw [Finset.sum_ite] at this
   simp [Filter.eq.Singleton.of.In h₀] at this
   rw [this]
@@ -41,8 +41,8 @@ private lemma main
     simp at h_y''
     intro i hi
     apply h_y'' i hi
-  have h_Eq := EqSumS.of.All_Eq h_Eq
-  have := EqSumS.of.All_Eq h_y''
+  have h_Eq := Sum.of.All_Eq h_Eq
+  have := Sum.of.All_Eq h_y''
   have := Eq.trans h_Eq.symm this
   rw [Finset.sum_ite] at this
   rw [this]

@@ -28,4 +28,18 @@ private lemma main
   assumption
 
 
+@[main]
+private lemma fin
+  [AddCommMonoid α]
+  [DecidableEq ι]
+-- given
+  (s : Finset ι)
+  (x : ι → List.Vector α n)
+  (k : Fin n) :
+-- imply
+  (∑ i ∈ s, x i).get k = ∑ i ∈ s, (x i).get k := by
+-- proof
+  apply main
+
+
 -- created on 2025-11-06

@@ -1,6 +1,6 @@
 import Lemma.Finset.All_EqCast.of.All_SEq.Ne_Empty
 import Lemma.Finset.Any_In.is.Ne_Empty
-import Lemma.Finset.EqSumS.of.All_Eq
+import Lemma.Finset.Sum.of.All_Eq
 import Lemma.Vector.Sum.as.Sum_Cast.of.Eq
 open Finset Vector
 
@@ -21,7 +21,7 @@ private lemma main
   let ⟨i, hi⟩ := Any_In.of.Ne_Empty h_s
   have hi := h i hi
   have h := All_EqCast.of.All_SEq.Ne_Empty h_s h
-  have h := EqSumS.of.All_Eq h
+  have h := Sum.of.All_Eq h
   rw [← h]
   apply Sum.as.Sum_Cast.of.Eq hi.left
 
