@@ -109,6 +109,9 @@ private lemma main
                   rwa [← EraseIdxEraseIdx.of.Gt.GtLength (by omega) (by omega)]
                   grind
                 let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+                have h_q' := q'.isLt
+                simp at h_q'
+                rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (by grind) (by grind)] at h_q'
                 let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
                 have h_lt : (↑q * s[↑d] + ↑i) * (((s.take k).drop (↑d + 1)).prod * (s.drop (k + 1)).prod) + ↑r < (⟨↑↑j, ↑(s.take (k + 1)).prod, ↑s[k]⟩ : Slice).length (s.take (k + 1)).prod * (s.drop (k + 1)).prod := by
                   simp
@@ -150,14 +153,15 @@ private lemma main
                         simp [List.DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega)]
                         sorry
                       .
-                        -- simp [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
-                        sorry
+                        rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp d.isLt i.isLt]
                     .
-                      sorry
+                      rw [Nat.ValCast.eq.Val.of.Eq h_cast]
+                      omega
                     .
-                      sorry
+                      simp [ProdTake.eq.MulProdTake.of.GtLength (show (s.eraseIdx ↑d).length > k - 1 by grind)]
                     .
-                      sorry
+                      simp [ProdTake.eq.MulProdTake.of.GtLength (show (s.eraseIdx ↑d).length > k - 1 by grind)]
+                      rwa [EqDivMul.of.Ne_0 (by grind)]
                   ·
                     simp [ProdTake.eq.MulProdTake.of.GtLength h_k]
                   ·
