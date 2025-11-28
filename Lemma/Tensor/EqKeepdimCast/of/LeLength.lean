@@ -1,4 +1,3 @@
-import sympy.tensor.Basic
 import sympy.tensor.functions
 import Lemma.List.EqEraseIdx.of.LeLength
 open List
