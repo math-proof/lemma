@@ -6,6 +6,7 @@ open Int Rat
 @[main]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
+-- given
   (n d : ℤ) :
 -- imply
   n.fmod d / (d : α) ≥ 0 := by

@@ -13,6 +13,7 @@ open Nat Int Rat
 @[main]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
+-- given
   (n d : ℤ) :
 -- imply
   (n.fmod d) / (d : α) < 1 := by

@@ -8,6 +8,7 @@ open Int Nat Rat
 @[main]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
+-- given
   (n d : ℤ) :
 -- imply
   n / (d : α) = (n // d : ℤ) + (n.fmod d : ℤ) / (d : α) := by

@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import Lemma.List.ProdTake.eq.Mul_ProdDropTake.of.Ge
 import Lemma.List.DropPermute.eq.Drop
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.DropTakePermute.eq.ListGet.of.GtLength_Add
@@ -6,7 +7,6 @@ import Lemma.List.DropTakePermute.eq.RotateTakeDrop
 import Lemma.List.EqPermutePermute.of.In_Ioo_Length
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
-import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.eq.MulProdS
 import Lemma.List.ProdPermute.eq.Prod
@@ -157,8 +157,7 @@ private lemma main
               rw [Prod.eq.MulProdS s (i + d + 1)]
               apply AddMul.lt.Mul.of.Lt.Lt
               ·
-                rw [Prod.eq.MulProdS (s.take (i + d + 1)) i]
-                rw [TakeTake.eq.Take.of.Ge (show i + d + 1 ≥ i by omega)]
+                rw [ProdTake.eq.Mul_ProdDropTake.of.Ge (show i + d + 1 ≥ i by omega)]
                 simp [AddAdd.eq.Add_Add (c := 1), ← TakeDrop.eq.DropTake]
                 apply AddMul.lt.Mul.of.Lt.Lt
                 ·

@@ -4,7 +4,7 @@ import Lemma.Nat.MulMul
 import Lemma.List.ProdTake_Add_1.eq.MulProdTake.of.GtLength
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
-import Lemma.List.ProdTake.eq.MulProdS.of.Le
+import Lemma.List.ProdTake.eq.MulProdS.of.Ge
 open List Nat
 
 
@@ -28,7 +28,7 @@ private lemma main
   rw [MulMul.comm (b := s[j])]
   rw [MulMul.eq.Mul_Mul]
   rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength (by assumption)]
-  rw [← ProdTake.eq.MulProdS.of.Le (by assumption)]
+  rw [← ProdTake.eq.MulProdS.of.Ge (by assumption)]
   simp
 
 

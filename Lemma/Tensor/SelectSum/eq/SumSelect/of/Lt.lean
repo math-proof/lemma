@@ -1,3 +1,9 @@
+import Lemma.List.ProdTake.eq.Mul_ProdDropTake.of.Ge
+import Lemma.List.TakeTake.eq.Take.of.Le
+import Lemma.List.EraseIdxTake.eq.Take
+import Lemma.List.TakeEraseIdx.eq.Take.of.Gt
+import Lemma.List.ProdEraseIdx.eq.MulProdS.of.Lt
+import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.List.DropEraseIdx.eq.AppendDropTake.of.Ge
 import Lemma.Nat.ValCast.eq.Val.of.Eq
 import Lemma.List.TakeEraseIdx.eq.EraseIdxTake.of.Le
@@ -101,6 +107,7 @@ private lemma main
                 grind
               let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
               have h_q' := q'.isLt
+              have h_r' := r'.isLt
               simp at h_q'
               rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (by grind) (by grind)] at h_q'
               let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
@@ -135,7 +142,7 @@ private lemma main
                 rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin _ _ h_j]
                 .
                   rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0.simp]
-                  rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin _ _ ]
+                  rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin]
                   .
                     repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                     rw [GetCast.eq.Get.of.Eq.fin]
@@ -143,17 +150,52 @@ private lemma main
                       simp [h_cast.symm]
                       simp [Nat.ValCast.eq.Val.of.Eq h_cast]
                       simp [List.DropEraseIdx.eq.AppendDropTake.of.Ge (show d ≥ k + 1 by omega)]
-                      sorry
+                      let h_lt : (↑q' * s[k] + ↑j) * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod) + ↑r' < (⟨↑↑i, ↑(s.take (↑d + 1)).prod, ↑s[d]⟩:Slice).length (s.take (↑d + 1)).prod * (s.drop (↑d + 1)).prod := by
+                        simp
+                        rw [List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength d.isLt i.isLt]
+                        rw [List.ProdEraseIdx.eq.MulProdS.of.Lt (show d < d.val + 1 by omega)]
+                        rw [List.EraseIdxTake.eq.Take]
+                        rw [List.ProdTake.eq.Mul_ProdDropTake.of.Ge (show d ≥ k + 1 by omega)]
+                        rw [MulMul.eq.Mul_Mul]
+                        apply AddMul.lt.Mul.of.Lt.Lt _
+                        .
+                          simp [List.DropEraseIdx.eq.AppendDropTake.of.Ge (show d ≥ k + 1 by omega)] at h_r'
+                          exact h_r'
+                        .
+                          rw [ProdTake.eq.MulProdTake.of.GtLength h_k_length]
+                          rw [List.TakeEraseIdx.eq.Take.of.Gt h_k] at h_q'
+                          apply AddMul.lt.Mul.of.Lt.Lt h_q' h_j
+                      let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+                      have h_qₑ := qₑ.isLt
+                      simp at h_qₑ
+                      have := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength d.isLt i.isLt
+                      simp at this
+                      simp [this] at h_qₑ
+                      let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
+                      rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₑrₑ]
+                      rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin]
+                      .
+                        rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+                        apply congrArg
+                        simp
+                        sorry
+                      .
+                        simp [ProdTake.eq.MulProdTake.of.GtLength d.isLt]
+                      .
+                        simp [ProdTake.eq.MulProdTake.of.GtLength d.isLt]
+                        rwa [EqDivMul.of.Ne_0 (by grind)]
+                      .
+                        exact i.isLt
                     .
                       rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp d.isLt i.isLt]
-                  .
-                    rw [Nat.ValCast.eq.Val.of.Eq h_cast]
-                    omega
                   .
                     simp [ProdTake.eq.MulProdTake.of.GtLength (show (s.eraseIdx ↑d).length > k by grind)]
                   .
                     simp [ProdTake.eq.MulProdTake.of.GtLength (show (s.eraseIdx ↑d).length > k by grind)]
                     rwa [EqDivMul.of.Ne_0 (by grind)]
+                  .
+                    rw [Nat.ValCast.eq.Val.of.Eq h_cast]
+                    omega
                 .
                   simp [ProdTake.eq.MulProdTake.of.GtLength h_k_length]
                 .

@@ -13,11 +13,11 @@ open List Nat
 private lemma main
 -- given
   (h : i ≤ j)
-  (a : List α) :
+  (s : List α) :
 -- imply
-  (a.eraseIdx i).take j = (a.take (j + 1)).eraseIdx i := by
+  (s.eraseIdx i).take j = (s.take (j + 1)).eraseIdx i := by
 -- proof
-  if h_i : i < a.length then
+  if h_i : i < s.length then
     repeat rw [EraseIdx.eq.Append_Drop_Add_1]
     rw [TakeAppend.eq.Append_Take.of.LeLength (by simp; omega)]
     simp
