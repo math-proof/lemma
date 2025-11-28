@@ -30,17 +30,8 @@ private lemma main
   ·
     rw [EraseIdxEraseIdx.of.Gt.GtLength (by grind) h_d]
   ·
-    have := Sum.eq.Sum_Select (exp X) ⟨k, by grind⟩
-    simp at this
-    have h_i : ↑i < (s.eraseIdx k)[d]'(by grind) := by
-      rw [List.GetEraseIdx.eq.Get.of.Gt.GtLength (by omega) (by omega)]
-      grind
-    have h_d : d < (s.eraseIdx k).length := by
-      grind
-    have := congrArg (fun X => X.select ⟨d, h_d⟩ ⟨i, h_i⟩) this
-    simp at this
-    have := Bool.SEq.of.Eq this
-    apply SEq.trans this
+    rw [Sum.eq.Sum_Select (exp X) ⟨k, by grind⟩]
+    rw [Sum.eq.Sum_Select (exp (X.select ⟨d, by omega⟩ i)) ⟨k - 1, by grind⟩]
     sorry
 
 

@@ -4,6 +4,7 @@ import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
 import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Lt.GtLength
 import Lemma.Tensor.Softmax.eq.Div_SumExp
+import Lemma.Tensor.Sum.eq.Sum_Select
 open Tensor Nat Bool
 
 
@@ -29,6 +30,8 @@ private lemma main
   .
     conv_rhs => rw [List.EraseIdxEraseIdx.of.Gt.GtLength (by grind) h_k]
   .
+    rw [Sum.eq.Sum_Select (exp X) ⟨k, by grind⟩]
+    rw [Sum.eq.Sum_Select (exp (X.select d i)) ⟨k, by grind⟩]
     sorry
 
 

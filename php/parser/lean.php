@@ -8840,9 +8840,8 @@ class LbigOperator extends LeanArgs
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
         if ($caret === $this->scope) {
-            if ($indent <= $this->indent)
-                $indent = $this->indent + 2;
-            return $this->push_args_indented($indent, $newline_count);
+            if ($new = $this->push_args_indented($this->indent + 2, $newline_count))
+                return $new;
         }
         return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
