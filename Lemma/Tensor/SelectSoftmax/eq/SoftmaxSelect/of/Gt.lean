@@ -4,8 +4,9 @@ import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
 import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Gt
+import Lemma.Tensor.SelectSum.eq.SumSelect.of.Gt
 import Lemma.Tensor.Softmax.eq.Div_SumExp
-import Lemma.Tensor.Sum.eq.Sum_Select
+import Lemma.Tensor.Softmax.eq.One.of.LeLength
 open Bool List Nat Tensor
 
 
@@ -31,13 +32,10 @@ private lemma main
   ·
     rw [EraseIdxEraseIdx.of.Gt.GtLength (by grind) h_d]
   ·
-    if k ≥ s.length then
-      sorry
-    else
-      rw [Sum.eq.Sum_Select (exp X) ⟨k, by grind⟩]
-      rw [Sum.eq.Sum_Select (exp (X.select ⟨d, by omega⟩ i)) ⟨k - 1, by grind⟩]
-      sorry
+    have := SelectSum.eq.SumSelect.of.Gt h_d (exp X) i
+    apply SEq.trans this
+    rw [SelectExp.eq.ExpSelect]
 
 
 -- created on 2025-11-17
--- updated on 2025-11-27
+-- updated on 2025-11-28

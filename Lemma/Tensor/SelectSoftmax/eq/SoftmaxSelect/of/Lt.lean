@@ -1,11 +1,12 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
+import Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
 import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Lt
+import Lemma.Tensor.SelectSum.eq.SumSelect.of.Lt
 import Lemma.Tensor.Softmax.eq.Div_SumExp
-import Lemma.Tensor.Sum.eq.Sum_Select
-open Tensor Nat Bool
+open Bool List Nat Tensor
 
 
 @[main, comm]
@@ -27,13 +28,13 @@ private lemma main
   rw [SelectKeepdim.eq.KeepdimCast_Select.of.Lt h_k]
   apply congrArg
   apply EqCast.of.SEq.Eq
-  .
-    conv_rhs => rw [List.EraseIdxEraseIdx.of.Gt.GtLength (by grind) h_k]
-  .
-    rw [Sum.eq.Sum_Select (exp X) ⟨k, by grind⟩]
-    rw [Sum.eq.Sum_Select (exp (X.select d i)) ⟨k, by grind⟩]
-    sorry
+  ·
+    conv_rhs => rw [EraseIdxEraseIdx.of.Gt.GtLength (by grind) h_k]
+  ·
+    have := SelectSum.eq.SumSelect.of.Lt h_k (exp X) i
+    apply SEq.trans this
+    rw [SelectExp.eq.ExpSelect]
 
 
 -- created on 2025-11-17
--- updated on 2025-11-24
+-- updated on 2025-11-28
