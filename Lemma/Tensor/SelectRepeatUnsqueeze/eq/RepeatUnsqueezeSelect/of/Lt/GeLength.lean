@@ -2,8 +2,6 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Lt.GeLength
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
 import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Lt
-import stdlib.SEq
-import sympy.tensor.tensor
 open Bool Tensor List
 
 
