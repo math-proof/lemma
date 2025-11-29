@@ -12,7 +12,7 @@ private lemma main
 -- imply
   (cast (congrArg (Tensor α) (Eq_EraseIdx.of.LeLength h)) X).keepdim = X := by
 -- proof
-  sorry
+  simp_all [Tensor.keepdim]
 
 
 -- created on 2025-11-28
