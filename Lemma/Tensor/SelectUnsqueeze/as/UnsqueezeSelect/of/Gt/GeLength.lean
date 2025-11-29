@@ -14,7 +14,7 @@ import Lemma.Nat.Cast.eq.Mk.of.Lt.Eq
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataUnsqueeze.eq.Map_FunGetData
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.EqGetRange
@@ -43,7 +43,7 @@ private lemma main
     apply EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength (by omega) h_k
   ·
     simp
-    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
     apply SEqCast.of.SEq.Eq
     ·
       simp
@@ -57,7 +57,7 @@ private lemma main
         intro t
         have h_t := t.isLt
         simp [EqGetRange.fin]
-        rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+        rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
         rw [GetCast.eq.Get.of.Eq.fin]
         ·
           simp [List.Vector.length]

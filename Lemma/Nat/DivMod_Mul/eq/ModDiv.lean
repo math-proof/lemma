@@ -28,4 +28,15 @@ private lemma main
     apply LtMod.of.Ne_0 h
 
 
+@[main]
+private lemma Comm
+-- given
+  (m n d : ℕ) :
+-- imply
+  m % (d * n) / n = m / n % d := by
+-- proof
+  rw [Mul.comm (a := d)]
+  apply main
+
+
 -- created on 2025-11-22

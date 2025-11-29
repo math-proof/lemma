@@ -45,7 +45,7 @@ import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.ToNatSub_Neg.eq.Add
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Eq
@@ -132,7 +132,7 @@ private lemma main
         simp at h_length_slice
         apply SEq.of.SEqDataS.Eq h_eraseIdx
         ·
-          repeat rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+          repeat rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
           simp
           apply SEqCastS.of.SEq.Eq.Eq
           ·

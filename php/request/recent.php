@@ -8,7 +8,7 @@ $topk = $_GET['top'];
 $folder = axiom_directory();
 
 $topKHeap = new std\TopKHeap($topk);
-foreach (read_all_lemma($folder) as $leanFile) {
+foreach (read_all_lean($folder) as $leanFile) {
     $lean = file($leanFile);
     $count = count($lean);
     

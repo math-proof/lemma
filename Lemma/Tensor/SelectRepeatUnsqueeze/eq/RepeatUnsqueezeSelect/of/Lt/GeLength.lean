@@ -1,14 +1,10 @@
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Lt.GeLength
+import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
+import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Lt
 import stdlib.SEq
-import Lemma.List.Lt_LengthInsertIdx
-import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
-import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
-import Lemma.Nat.EqMod_1'0
-import Lemma.List.GetInsertIdx.eq.Get.of.Lt.GeLength
-import Lemma.List.GetSet.eq.Get.of.Lt.GtLength
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import sympy.tensor.tensor
-open List Nat Tensor
+open Bool Tensor List
 
 
 @[main]
@@ -25,8 +21,14 @@ private lemma main
 -- proof
   let s' := s.insertIdx d 1
   let d' : Fin s'.length := ⟨d, by simp [s']; grind⟩
-  -- have h := SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet (by grind) (X.unsqueeze d)
-  sorry
+  rw [SelectRepeat.eq.Cast_RepeatSelect.of.Lt (d := ⟨d, by grind⟩) (by omega) (X.unsqueeze k) ⟨i, by grind⟩]
+  apply SEqCast.of.SEq.Eq
+  ·
+    simp [EraseIdxSet.eq.SetEraseIdx.of.Lt h_k]
+    simp [EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Lt.GeLength (show s.length ≥ k by omega) h_k]
+  ·
+    sorry
 
 
 -- created on 2025-11-17
+-- updated on 2025-11-29

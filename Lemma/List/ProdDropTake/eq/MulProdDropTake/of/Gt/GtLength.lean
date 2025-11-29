@@ -9,12 +9,12 @@ private lemma main
   [Monoid α]
   {s : List α}
 -- given
-  (h_d : s.length > d)
-  (h : k < d) :
+  (h_i : s.length > i)
+  (h : i > j) :
 -- imply
-  ((s.take (d + 1)).drop (k + 1)).prod = ((s.take d).drop (k + 1)).prod * s[d] := by
+  ((s.take (i + 1)).drop (j + 1)).prod = ((s.take i).drop (j + 1)).prod * s[i] := by
 -- proof
-  rw [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ d by omega)]
+  rw [ProdDrop.eq.MulProdSDrop.of.Le (show j + 1 ≤ i by omega)]
   rw [ProdDropTake.eq.Get.of.GtLength (by omega)]
   rw [TakeTake.eq.Take.of.Gt (by omega)]
 

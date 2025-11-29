@@ -31,7 +31,7 @@ import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul_Mul
 import Lemma.Tensor.DataRepeat.eq.Cast_FlattenMapSplitAtData
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -61,7 +61,7 @@ private lemma main
     simp [h_get_eraseIdx]
     rw [EraseIdxSet.eq.SetEraseIdx.of.Gt h_d]
   ·
-    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
     conv_rhs => rw [DataRepeat.eq.Cast_FlattenMapSplitAtData]
     have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s.set k (n * s[k])) (d := d) (i := i) (by grind) (by grind)
     simp at h_length_slice
@@ -100,7 +100,7 @@ private lemma main
           rw [GetRepeat.eq.Get_Mod.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           simp [GetSet.eq.Get.of.Gt.GtLength h_d_length h_d]
-          simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+          simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
           simp [DataRepeat.eq.Cast_FlattenMapSplitAtData]
           have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
           repeat rw [GetCast.eq.Get.of.Eq.fin]

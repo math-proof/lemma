@@ -38,7 +38,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.ToNatSub_Neg.eq.Add
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.LengthPermute.eq.Get
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -65,7 +65,7 @@ private lemma main
     apply EraseIdx.eq.TailPermute
   ·
     have h_s := Gt_0 d
-    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
     rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨i, by simp [GetPermute__Neg.eq.Get.of.GtLength d.isLt]⟩) (by simpa)]
     apply SEqCastS.of.SEq.Eq.Eq
     ·

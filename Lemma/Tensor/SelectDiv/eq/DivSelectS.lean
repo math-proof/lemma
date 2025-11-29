@@ -6,7 +6,7 @@ import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne_0
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -30,7 +30,7 @@ private lemma main
 -- proof
   simp [HDiv.hDiv]
   apply Eq.of.EqDataS
-  rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+  rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
   have h_length_slice := MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (i := i) (d := d) (by simp) (by simp)
   apply EqCast.of.SEq.Eq (by simp [h_length_slice])
   simp [Div.div]
@@ -47,7 +47,7 @@ private lemma main
   rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin (by simp) (by assumption) (by simp)]
   rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   repeat rw [GetDiv.eq.DivGetS.fin]
-  repeat rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+  repeat rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
   repeat rw [GetCast.eq.Get.of.Eq.fin (by simp [h_length_slice])]
   simp
   repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]

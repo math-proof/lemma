@@ -77,52 +77,13 @@ function println($param, $file = null)
     print_r("<br>");
 }
 
-function read_all_lemma($dir)
+function read_all_lean($dir)
 {
-    foreach (std\list_directory($dir) as $directory) {
-        foreach (std\list_all_files($directory, 'lean') as $lean) {
-            if (!str_ends_with($lean, ".echo.lean"))
-                yield $lean;
-        }
+    foreach (std\list_all_files($dir, 'lean') as $lean) {
+        if (!str_ends_with($lean, ".echo.lean"))
+            yield $lean;
     }
 }
-
-function detect_axiom(&$statement)
-{
-    // Eq << Eq.x_j_subset.apply(Discrete.Set.subset.nonempty, Eq.x_j_inequality, evaluate=False)
-    if (preg_match('/\.apply\((.+)\)/', $statement, $matches)) {
-        $theorem = preg_split("/\s*,\s*/", $matches[1], -1, PREG_SPLIT_NO_EMPTY)[0];
-        // error_log('create_a_tag: ' . __LINE__);
-        return [
-            $theorem
-        ];
-    } else {
-        return [];
-    }
-}
-
-function detect_axiom_given_theorem(&$theorem, &$statement)
-{
-    if (str_starts_with($theorem, '.') || str_starts_with($theorem, 'Eq')) {
-        // consider the case
-        // Eq[-2].this.args[0].apply(Algebra.Cond.Cond.to.And, invert=True, swap=True)
-        return detect_axiom($statement);
-    }
-
-    if (strpos($theorem, 'Eq.') === false) {
-        return [
-            $theorem
-        ];
-    }
-
-    return detect_axiom($statement);
-}
-
-function has_unterminated_parantheses($statement)
-{
-    return substr_count($statement, "(") > substr_count($statement, ")");
-}
-
 
 function split_module($theorem)
 {
@@ -210,15 +171,6 @@ function modify_codes($python_file, $_proveCodes, $applyCodes = null)
 
     $code = join('', $codes);
     file_put_contents($python_file, $code);
-}
-
-function read_all_php($dir)
-{
-    foreach (std\list_directory($dir) as $directory) {
-        foreach (std\list_all_files($directory, 'php') as $php) {
-            yield $php;
-        }
-    }
 }
 
 function detect_dependency_by_module($module, $unique = true)
@@ -323,9 +275,14 @@ function look_for_executable_python()
     return "python";
 }
 
+function project_directory()
+{
+    return dirname(dirname(__file__)) . "/";
+}
+
 function axiom_directory()
 {
-    return dirname(dirname(__file__)) . "/Lemma/";
+    return project_directory() . "Lemma/";
 }
 
 function select_lemma_by_type($user, $type, $limit = 100)

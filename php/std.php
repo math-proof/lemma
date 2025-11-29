@@ -1046,7 +1046,6 @@ function decode($param)
 function list_directory($dir)
 {
     if (is_dir($dir)) {
-
         $handle = opendir($dir);
 
         if ($handle) {
@@ -1106,9 +1105,8 @@ function list_all_files($dir, $ext = null)
 
         if ($handle) {
             while (($fl = readdir($handle)) !== false) {
-                if ($fl == '.' || $fl == '..') {
+                if ($fl == '.' || $fl == '..')
                     continue;
-                }
 
                 $temp = $dir . DIRECTORY_SEPARATOR . $fl;
 
@@ -1116,9 +1114,8 @@ function list_all_files($dir, $ext = null)
                     // echo 'directory : ' . $temp . '<br>';
                     yield from list_all_files($temp, $ext);
                 } else {
-                    if (! $ext || equals(get_extension($temp), $ext)) {
+                    if (! $ext || equals(get_extension($temp), $ext))
                         yield $temp;
-                    }
                 }
             }
             closedir($handle);

@@ -498,3 +498,5 @@ Write-Output "total failed    = $($failingModules.Count)"
 .\ps1\delete_import.ps1
 
 Remove-Item $tempConfigPath -Force -ErrorAction SilentlyContinue
+$Lines = (Get-ChildItem -Path @("Lemma", "sympy", "stdlib") -Filter "*.lean" -Exclude "*.echo.lean" -Recurse -File | Get-Content | Measure-Object -Line).Lines
+Write-Output "total lines     = $Lines"

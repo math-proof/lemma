@@ -40,7 +40,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataRepeat.eq.Cast_FlattenMapSplitAtData
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -49,6 +49,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat List Bool Tensor Vector
+set_option maxHeartbeats 2000000
 
 
 @[main]
@@ -71,7 +72,7 @@ private lemma main
     simp [h_get_eraseIdx]
     grind
   ·
-    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
     conv_rhs => rw [DataRepeat.eq.Cast_FlattenMapSplitAtData]
     have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s.set k (n * s[k])) (d := d) (i := i) (by grind) (by grind)
     rw [List.ProdTakeMapCast.eq.CastProdTake] at h_length_slice
@@ -111,7 +112,7 @@ private lemma main
           rw [GetRepeat.eq.Get_Mod.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           simp [GetSet.eq.Get.of.Lt.GtLength h_d h_k]
-          rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.of.GtLength_0]
+          rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
           simp [DataRepeat.eq.Cast_FlattenMapSplitAtData]
           have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
           rw [List.ProdTakeMapCast.eq.CastProdTake] at h_length_slice

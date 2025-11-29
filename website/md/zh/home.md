@@ -39,7 +39,7 @@
 # 算法定理库的建设
   <br>
   
-目前积累了<label id=count>5000</label>个已知定理用于交互式推导。涉及：	
+目前积累了<label id=count>5000</label>个已知定理(<label id=lines>100000</label>行lean代码)用于交互式推导。涉及：	
 	
 * [Nat](../?module=Nat) 自然数相关初等代数
 * [Int](../?module=Int) 整数相关初等代数
@@ -66,4 +66,5 @@
 
 <script type=module>
 	$('#count').innerHTML = await get("../php/request/count.php");
+  $('#lines').innerHTML = await get("../php/request/lines.php");
 </script>

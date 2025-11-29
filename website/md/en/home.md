@@ -41,7 +41,7 @@ Abductive reasoning is a method of inferring possible causes from known results.
 # The construction of Mathematical Theorem Repertoire
   <br>
   
-As of this writing, the system has accumulated <label id=count>5000</label> proven theorems for interactive derivation, covering:
+As of this writing, the system has accumulated <label id=count>5000</label> proven theorems (with <label id=lines>100000</label> lines of lean code) for interactive derivation, covering:
 
 * [Nat](../?module=Nat) – Elementary algebra related to natural numbers  
 * [Int](../?module=Int) – Elementary algebra related to integers  
@@ -66,4 +66,5 @@ With its practical value of simplifying complexity for both research and teachin
 
 <script type=module>
 	$('#count').innerHTML = await get("../php/request/count.php");
+  $('#lines').innerHTML = await get("../php/request/lines.php");
 </script>
