@@ -1,19 +1,27 @@
-import sympy.Basic
+import Lemma.Nat.Mul
+open Nat
 
 
-/--
-This lemma asserts the associativity of the multiplication operation in a semigroup, confirming that the grouping of elements in a product does not affect the result.
-Specifically, it states that for any elements `a`, `b`, and `c` in a semigroup, the product `a * b * c` is equal to `a * (b * c)`, leveraging the inherent associative property of the semigroup's binary operation.
--/
 @[main, comm]
 private lemma main
   [Semigroup α]
   {a b : α} :
 -- imply
-  a * b * c = a * (b * c) := by
+  a * b * c = a * (b * c) :=
 -- proof
-  rw [mul_assoc]
+  mul_assoc a b c
+
+
+@[main, comm]
+private lemma Comm
+  [CommSemigroup α]
+  {a b : α} :
+-- imply
+  a * b * c = a * (c * b) := by
+-- proof
+  rw [main]
+  rw [Mul.comm (a := b)]
 
 
 -- created on 2024-07-01
--- updated on 2025-04-04
+-- updated on 2025-11-29

@@ -72,7 +72,7 @@ private lemma main
     simp [h_get_eraseIdx]
     grind
   ·
-    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
+    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
     conv_rhs => rw [DataRepeat.eq.Cast_FlattenMapSplitAtData]
     have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s.set k (n * s[k])) (d := d) (i := i) (by grind) (by grind)
     rw [List.ProdTakeMapCast.eq.CastProdTake] at h_length_slice
@@ -85,7 +85,7 @@ private lemma main
       simp [h_prod_set]
     ·
       rw [h_get_eraseIdx] at h_prod_set
-      simp [List.Vector.length]
+      simp
       apply SEq.of.All_EqGetS.Eq.fin
       ·
         intro t
@@ -112,13 +112,12 @@ private lemma main
           rw [GetRepeat.eq.Get_Mod.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           simp [GetSet.eq.Get.of.Lt.GtLength h_d h_k]
-          rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
+          rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
           simp [DataRepeat.eq.Cast_FlattenMapSplitAtData]
           have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
           rw [List.ProdTakeMapCast.eq.CastProdTake] at h_length_slice
           repeat rw [GetCast.eq.Get.of.Eq.fin]
           ·
-            simp [List.Vector.length]
             have h_prod_take := ProdTake.eq.MulProdTake.of.GtLength h_d
             have h_lt : (↑q * s[d] + i) * ((s.set k (n * s[k])).drop (d + 1)).prod + ↑r < (s.take k).prod * (n * (s.drop k).prod) := by
               simp [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at ⊢ h_r
@@ -179,10 +178,7 @@ private lemma main
                 simp [Mul_Mul.eq.MulMul]
                 simp [h_q'_div]
                 simp [h_q_div, h_r_mod]
-                rw [TakeEraseIdx.eq.Take.of.Ge (by omega)] at h_t
-                simp [Mul_Mul.eq.MulMul] at h_t
                 rw [h_prod_drop]
-                rw [ProdTakeSet.eq.Mul_ProdTake.of.Lt.GtLength (by omega) h_k] at h_q
                 simp [Div_Mul.eq.DivDiv.comm]
                 simp [AddAdd.eq.Add_Add]
                 simp [Mul_Mul.eq.MulMul]
