@@ -18,7 +18,7 @@ import Lemma.Tensor.RepeatCast.eq.Cast_Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
-import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Lt_MulGet.Gt.GtLength
+import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Gt.GtLength
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Gt.GeLength
 import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq
 import sympy.tensor.functions
@@ -67,7 +67,7 @@ private lemma main
       ·
         simp [h_eraseIdx]
       ·
-        rw [SelectRepeat.eq.Cast_RepeatSelect.of.Lt_MulGet.Gt.GtLength _ h_k]
+        rw [SelectRepeat.eq.Cast_RepeatSelect.of.Gt.GtLength (by grind) h_k (X.unsqueeze k) ⟨i, by grind⟩]
         apply SEqCast.of.SEq.Eq
         ·
           simp
