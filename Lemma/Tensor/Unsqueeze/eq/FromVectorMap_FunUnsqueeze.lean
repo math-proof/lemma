@@ -18,11 +18,11 @@ open Vector List Bool Nat
 
 @[main]
 private lemma main
-  {dim : ℕ}
+  {d : ℕ}
 -- given
   (X : Tensor α (n :: s)) :
 -- imply
-  X.unsqueeze (dim + 1) = Tensor.fromVector (X.toVector.map (·.unsqueeze dim)) := by
+  X.unsqueeze (d + 1) = Tensor.fromVector (X.toVector.map (·.unsqueeze d)) := by
 -- proof
   obtain ⟨data⟩ := X
   unfold Tensor.unsqueeze Tensor.fromVector
@@ -30,15 +30,15 @@ private lemma main
   ext k
   simp [EqGetRange.fin]
   have h_k := k.isLt
-  have h_prod_insert := ProdInsertIdx.eq.Prod s dim
+  have h_prod_insert := ProdInsertIdx.eq.Prod s d
   obtain ⟨i, h_i, j, h_j, h_ij⟩ := Any_Eq_AddMul.of.Lt_Mul h_k
   obtain ⟨k, hk⟩ := k
   simp at h_ij
   simp [EqGetS]
   simp [h_ij]
-  have h_eq : Fin ((n :: s).tail.insertIdx dim 1).prod = Fin (n :: s).tail.prod := by
+  have h_eq : Fin ((n :: s).tail.insertIdx d 1).prod = Fin (n :: s).tail.prod := by
     simp_all
-  have := GetFlatten_AddMul.eq.Get.of.Lt.Lt h_i h_j ((⟨data⟩ : Tensor α (n :: s)).toVector.map (fun X ↦ List.Vector.map (fun k ↦ X.data[cast h_eq k]) (List.Vector.range (s.insertIdx dim 1).prod)))
+  have := GetFlatten_AddMul.eq.Get.of.Lt.Lt h_i h_j ((⟨data⟩ : Tensor α (n :: s)).toVector.map (fun X ↦ List.Vector.map (fun k ↦ X.data[cast h_eq k]) (List.Vector.range (s.insertIdx d 1).prod)))
   simp_all
   unfold Tensor.toVector
   have h_prod : data.length / n = s.prod := by
@@ -52,7 +52,7 @@ private lemma main
   have := GetCast_Map.eq.UFnGet.of.Eq.Lt (i := i) (n := ((n :: s).take 1).prod) (n' := (n :: s).headD 1) (by simp_all) (by simp_all) (data.splitAt 1) (fun data ↦ (⟨data⟩ : Tensor α s))
   simp at this
   simp [this]
-  have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop (s := n :: s) (d := 1) (i := i) (j := (cast h_eq (List.Vector.range (s.insertIdx dim 1).prod)[j]).val)
+  have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop (s := n :: s) (d := 1) (i := i) (j := (cast h_eq (List.Vector.range (s.insertIdx d 1).prod)[j]).val)
     (by simp_all) (by simp_all) data
   simp at this
   simp [this]

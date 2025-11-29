@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.GetPermute.eq.Get.of.Lt
+import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.Prod.eq.MulProdS
@@ -61,7 +61,7 @@ private lemma main
         rw [Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0]
       ·
         simp
-        rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (by simp; omega) (X.permute ⟨1, h⟩ d) ⟨k, by rwa [GetPermute.eq.Get.of.Lt (by simp)]⟩]
+        rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (by simp; omega) (X.permute ⟨1, h⟩ d) ⟨k, by rwa [GetPermute.eq.Get.of.Gt (by simp)]⟩]
         apply SEqCastS.of.SEq.Eq.Eq
         ·
           simp
@@ -103,7 +103,7 @@ private lemma main
               ·
                 rw [Prod.eq.Mul_ProdTail.of.GtLength_0]
                 ·
-                  rw [GetPermute.eq.Get.of.Lt]
+                  rw [GetPermute.eq.Get.of.Gt]
                   simp
                 ·
                   simp

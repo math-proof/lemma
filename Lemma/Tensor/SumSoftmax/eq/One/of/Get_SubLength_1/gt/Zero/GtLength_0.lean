@@ -48,7 +48,7 @@ private lemma main
     | .cons s₁ s =>
       apply Eq.of.All_EqGetS (m := s₀)
       intro i
-      have := GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength (by simp) (by simp) (by simp) X.softmax (dim := (s₀ :: s₁ :: s).length - 1) (i := i)
+      have := GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength (by simp) (by simp) (by simp) X.softmax (d := (s₀ :: s₁ :: s).length - 1) (i := i)
       simp at this
       simp [this]
       have := EqGet1_1 (s := (s₀ :: s₁ :: s).eraseIdx ((s₀ :: s₁ :: s).length - 1)) (i := i) (α := α)

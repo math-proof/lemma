@@ -1,4 +1,4 @@
-import Lemma.List.DropInsertIdx.eq.InsertIdxDrop.of.Ge
+import Lemma.List.DropInsertIdx.eq.InsertIdxDrop.of.Ge.GeLength
 import Lemma.List.EqInsertIdx.of.LtLength
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx.of.LeLength
@@ -28,7 +28,7 @@ private lemma main
     rw [EqMin.of.Le (by omega)]
     rw [TakeInsertIdx.eq.Take.of.Ge (by simp; omega)]
     simp
-    rw [DropInsertIdx.eq.InsertIdxDrop.of.Ge (by omega) (by omega)]
+    rw [DropInsertIdx.eq.InsertIdxDrop.of.Ge.GeLength (by omega) (by omega)]
     rw [SubSub.eq.Sub_Add]
     rw [Add.comm]
   else

@@ -14,7 +14,6 @@ private lemma fin
   simp
   rw [GetToVector.eq.Get.cons.fin]
   rw [EqGetRange.fin]
-  simp [GetElem.getElem]
 
 
 @[main]

@@ -4,14 +4,14 @@ open List
 
 @[main]
 private lemma main
-  {dim : ℕ}
+  {d : ℕ}
   {s : List α}
 -- given
-  (h : s.length > dim)
-  (h_x : x = s[dim])
+  (h : s.length > d)
+  (h_x : x = s[d])
   (a : α) :
 -- imply
-  ((s.eraseIdx dim).insertIdx dim a).set dim x = s := by
+  ((s.eraseIdx d).insertIdx d a).set d x = s := by
 -- proof
   subst h_x
   apply EqSetInsertIdxEraseIdx.of.GtLength h

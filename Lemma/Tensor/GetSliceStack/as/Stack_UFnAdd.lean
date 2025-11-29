@@ -9,6 +9,7 @@ import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.GetMkFlatten.eq.MkGet
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetValIndices.eq.Add.of.Lt
+import Lemma.Vector.EqGetS
 open Tensor List Vector Nat
 
 
@@ -48,14 +49,12 @@ private lemma main
       simp [Tensor.length]
       simp [GetElem.getElem]
       rw [GetToVector.eq.Get.cons.fin]
-      rw [GetMkFlatten.eq.MkGet]
-      apply Eq.of.EqDataS
-      simp [GetElem.getElem]
-      simp [List.Vector.get]
-      congr
-      rw [EqGetStack.fin]
-      congr
-      rw [GetValIndices.eq.Add.of.Lt]
+      rw [GetMkFlatten.eq.MkGet.fin]
+      simp [EqGetStack.fin]
+      rw [Vector.EqGetS]
+      have h_i := i.isLt
+      simp [← GetValIndices.eq.Add.of.Lt (i := i) (j := j) (n := n) (by simpa)]
+      rfl
   ·
     rw [AddCoeS.eq.CoeAdd]
     apply EqLengthSlice

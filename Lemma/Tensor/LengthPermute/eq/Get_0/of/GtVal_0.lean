@@ -1,4 +1,4 @@
-import Lemma.List.GetPermute.eq.Get.of.Lt
+import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.Nat.Gt_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.Basic
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   rw [Length.eq.Get_0.of.GtLength_0]
   ·
-    apply GetPermute.eq.Get.of.Lt h
+    apply GetPermute.eq.Get.of.Gt h
   ·
     simp
     apply Gt_0 i

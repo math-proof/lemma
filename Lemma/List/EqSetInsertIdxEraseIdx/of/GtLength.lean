@@ -11,13 +11,13 @@ open List Nat
 
 @[main]
 private lemma main
-  {dim : ℕ}
+  {d : ℕ}
   {s : List α}
 -- given
-  (h : s.length > dim)
+  (h : s.length > d)
   (a : α):
 -- imply
-  ((s.eraseIdx dim).insertIdx dim a).set dim s[dim] = s := by
+  ((s.eraseIdx d).insertIdx d a).set d s[d] = s := by
 -- proof
   rw [Set.eq.AppendTake__Cons_Drop.of.GtLength]
   .

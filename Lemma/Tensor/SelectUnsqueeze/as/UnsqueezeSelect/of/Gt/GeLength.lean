@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Finset.Prod.eq.MulProdS
-import Lemma.List.DropInsertIdx.eq.InsertIdxDrop.of.Ge
+import Lemma.List.DropInsertIdx.eq.InsertIdxDrop.of.Ge.GeLength
 import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength
 import Lemma.List.GetInsertIdx.eq.Get.of.Gt.GeLength
 import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
@@ -88,7 +88,7 @@ private lemma main
               rw [Cast.eq.Mk.of.Lt.Eq]
               ·
                 simp [EqGetRange.fin]
-                simp [DropInsertIdx.eq.InsertIdxDrop.of.Ge (show s.length ≥ d + 1 by omega) (show k ≥ d + 1 by omega)] at ⊢ h_q_div h_r_mod
+                simp [DropInsertIdx.eq.InsertIdxDrop.of.Ge.GeLength (show s.length ≥ d + 1 by omega) (show k ≥ d + 1 by omega)] at ⊢ h_q_div h_r_mod
                 rw [ProdInsertIdx.eq.Prod] at ⊢ h_q_div h_r_mod
                 simp [← h_q_div] at h_q'_div
                 simp [← h_r_mod] at h_r'_mod
@@ -98,7 +98,7 @@ private lemma main
                 rw [ProdInsertIdx.eq.Prod]
               ·
                 simp [EqGetRange.fin]
-                simp [DropInsertIdx.eq.InsertIdxDrop.of.Ge (show s.length ≥ d + 1 by omega) (show k ≥ d + 1 by omega)] at ⊢ h_r
+                simp [DropInsertIdx.eq.InsertIdxDrop.of.Ge.GeLength (show s.length ≥ d + 1 by omega) (show k ≥ d + 1 by omega)] at ⊢ h_r
                 rw [ProdInsertIdx.eq.Prod] at ⊢ h_r
                 rw [Prod.eq.MulProdS s (d + 1)]
                 apply AddMul.lt.Mul.of.Lt.Lt _ h_r

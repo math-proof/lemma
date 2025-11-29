@@ -24,5 +24,16 @@ private lemma main
   aesop
 
 
+@[main]
+private lemma fin
+-- given
+  (v : List.Vector (List.Vector α s.prod) n)
+  (i : Fin n) :
+-- imply
+  (⟨v.flatten⟩ : Tensor α (n :: s)).get i = ⟨v.get i⟩ := by
+-- proof
+  apply main
+
+
 -- created on 2025-05-24
 -- updated on 2025-05-27

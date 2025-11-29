@@ -23,7 +23,7 @@ private lemma cons.fin
   (X : Tensor α (n :: s))
   (i : Fin n) :
 -- imply
-  X.toVector.get i = X[i] := by
+  X.toVector.get i = X.get i := by
 -- proof
   have := cons X i
   simp [GetElem.getElem] at *

@@ -9,7 +9,7 @@ private lemma main
   {i : Fin s.length}
   {j : ℕ}
 -- given
-  (h : j < i)
+  (h : i > j)
   (d : ℕ) :
 -- imply
   (s.permute i d)[j]'(by simp; omega) = s[j] := by
@@ -18,14 +18,14 @@ private lemma main
   .
     rw [GetPermute.eq.Ite.of.GtLength.GtLength h_d (by omega)]
     split_ifs
-    rfl
+    repeat rfl
   .
     simp at h_d
     have h_d : i + d ≥ s.length - 1 := by omega
     simp [EqPermuteS.of.Add.ge.SubLength_1 h_d]
     rw [GetPermute.eq.Ite.of.GtLength.GtLength (by omega) (by omega)]
     split_ifs
-    rfl
+    repeat rfl
 
 
 -- created on 2025-11-02
