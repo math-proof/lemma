@@ -1,8 +1,9 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Gt
+import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Gt.GtLength
-open Bool Tensor List
+open Bool List Tensor
 
 
 @[main]
@@ -24,6 +25,7 @@ private lemma main
     simp [EraseIdxSet.eq.SetEraseIdx.of.Gt h_d]
     simp [EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength h_d_length h_d 1]
   ·
+    apply SEqRepeatS.of.SEq
     sorry
 
 

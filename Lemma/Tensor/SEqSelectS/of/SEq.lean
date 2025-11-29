@@ -1,6 +1,5 @@
-import Lemma.Bool.SEq.is.Eq
-import sympy.tensor.tensor
-open Bool
+import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
+open Tensor
 
 
 @[main]
@@ -15,10 +14,8 @@ private lemma main
   have h_s := h.left.symm
   A.select d i ≃ B.select ⟨d, by simp [h_s]⟩ ⟨i, by simp [h_s]⟩ := by
 -- proof
-  intro h_s
-  have h_s := h_s.symm
-  subst h_s
-  rw [Eq.of.SEq h]
+  apply SEqSelectS.of.SEq.EqValS.EqValS h rfl rfl
 
 
 -- created on 2025-11-28
+-- updated on 2025-11-29

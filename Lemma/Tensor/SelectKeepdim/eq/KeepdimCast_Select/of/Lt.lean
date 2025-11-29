@@ -16,9 +16,10 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Ge_1.of.Gt
 import Lemma.Tensor.RepeatCast.eq.Cast_Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq
+import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
 import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Lt
-import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength
+import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
 import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq
 import sympy.tensor.functions
 open Bool List Nat Tensor
@@ -82,11 +83,19 @@ private lemma main
         simp
       ·
         apply SEqRepeatS.of.SEq
-        have := SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength (by omega) h_k X ⟨i, by omega⟩
+        have := SelectUnsqueeze.as.UnsqueezeSelect.of.Le (by simp; omega) X ⟨i, by omega⟩ (k := k) (d := ⟨d - 1, by omega⟩)
         simp at this
-        assumption
+        apply SEq.symm ∘ SEq.trans this.symm
+        apply SEqSelectS.of.SEq.EqValS.EqValS
+        .
+          rfl
+        .
+          simp
+          omega
+        .
+          rfl
   repeat grind
 
 
 -- created on 2025-11-17
--- updated on 2025-11-26
+-- updated on 2025-11-29
