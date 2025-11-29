@@ -1,30 +1,22 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.Int.Lt.of.LtAdd
+import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.EqPermute__0
-import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
-import Lemma.List.EraseIdxPermute.eq.EraseIdx.of.GtLength_Add
-import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.List.PermuteCons.eq.Cons_Permute.of.GtLength
+import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.AddAdd
 import Lemma.Nat.EqAdd0
-import Lemma.Tensor.GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length
-import Lemma.Tensor.GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength
-import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.Permute.eq.Ite
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermute__0
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
-import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SoftmaxCast.eq.Cast_Softmax.of.Eq
-import Lemma.Tensor.SumPermuteHead.as.Sum_0.of.GtLength
+import Lemma.Tensor.SoftmaxPermuteHead.as.PermuteHeadSoftmax.of.GtLength
 import sympy.tensor.functions
-open Bool Int List Nat Tensor
+open Bool List Nat Tensor
 
 
+/--
+similar with Tensor.SumPermute.as.PermuteSum.of.GtLength_Add
+-/
 @[main]
 private lemma main
   [ExpPos α]
@@ -61,11 +53,10 @@ private lemma main
           simp
           split_ifs
           apply SEq_Cast.of.SEq.Eq
-          .
-            rw [List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0]
-          .
-            -- apply SoftmaxPermuteHead.as.PermuteHeadSoftmax.of.GtLength h X
-            sorry
+          ·
+            rw [Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0]
+          ·
+            apply SoftmaxPermuteHead.as.PermuteHeadSoftmax.of.GtLength h X
       ·
         rw [Permute.eq.AppendRotateTake___Drop.of.GtLength_0]
     ·
@@ -81,7 +72,13 @@ private lemma main
       rw [AddAdd.comm] at h
       simp at h
       have h_length_gt : (s₀ :: s).length > i + 1 + d := by omega
+      have ih := ih h
+      apply SEq.of.All_SEqGetS.Eq.GtLength_0
+      intro t
+      have h_t := t.isLt
       sorry
+      repeat simp
 
 
 -- created on 2025-10-31
+-- updated on 2025-11-29

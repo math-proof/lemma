@@ -38,9 +38,9 @@ private lemma main
     split_ifs with h_d0 h_pos h_s
     .
       subst h_d0
-      apply Tensor.SEqSumS.of.SEq
-      apply Bool.SEqCast.of.Eq
-      simp [List.EqPermute__0]
+      apply SEqSumS.of.SEq
+      apply SEqCast.of.Eq
+      simp [EqPermute__0]
     .
       rw [SumCast.eq.Cast_Sum.of.Eq]
       .
@@ -65,7 +65,7 @@ private lemma main
       simp at h
       have h_length_gt : (s₀ :: s).length > i + 1 + d := by omega
       have h_length_gt_i := Lt.of.LtAdd.left h
-      apply Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
+      apply SEq.of.All_SEqGetS.Eq.GtLength_0
       .
         intro t
         have h_t := t.isLt
@@ -89,7 +89,7 @@ private lemma main
             apply SEq.trans this
             .
               apply ih h (X.get ⟨t, GtLength.of.GtLength_0 (s := s₀ :: s) (by simp) X ⟨t, by simpa⟩⟩)
-              rw [List.LengthEraseIdx.eq.SubLength_1.of.GtLength (by simp; omega)]
+              rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by simp; omega)]
               simp
               omega
             .
