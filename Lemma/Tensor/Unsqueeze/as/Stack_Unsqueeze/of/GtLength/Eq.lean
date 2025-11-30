@@ -14,7 +14,7 @@ private lemma main
   X.unsqueeze (dim + 1) ≃ [i < m] (X[i].unsqueeze dim) := by
 -- proof
   rw [Unsqueeze.eq.Stack_Unsqueeze]
-  apply EqStackSUFnGet.of.Eq h _ (fun X => X.unsqueeze dim)
+  apply EqStackSUFnGet.of.Eq h _ (·.unsqueeze dim)
 
 
 -- created on 2025-07-13

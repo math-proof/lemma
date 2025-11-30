@@ -16,7 +16,7 @@ private lemma main
   X.select ⟨d + 1, by grind⟩ ⟨i, by grind⟩ ≃ [k < m] (X[k].select ⟨d, by simpa⟩ ⟨i, by simp⟩) := by
 -- proof
   simp only [Select.eq.Stack_Select.of.GtLength h_d X i]
-  apply EqStackSUFnGet.of.Eq h_n (fun s => s.eraseIdx d) (fun X => X.select ⟨d, by simpa⟩ ⟨i, by simp⟩)
+  apply EqStackSUFnGet.of.Eq h_n (·.eraseIdx d) (·.select ⟨d, by simpa⟩ ⟨i, by simp⟩)
 
 
 -- created on 2025-11-15

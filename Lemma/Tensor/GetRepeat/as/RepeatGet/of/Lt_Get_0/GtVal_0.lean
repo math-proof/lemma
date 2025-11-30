@@ -74,7 +74,7 @@ private lemma main
     simp only [GetElem.getElem]
     simp [Tensor.get]
     simp [Tensor.toVector]
-    obtain ⟨data⟩ := X
+    obtain ⟨X⟩ := X
     have h_s := Gt_0 d
     have h_d := Ge_1.of.Gt_0 h
     simp
@@ -108,7 +108,7 @@ private lemma main
             have h_t_prod := Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0 h h_t
             have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin
               h_i_prod h_t_prod
-              ((cast h_eq (List.Vector.map (·.repeat n) (data.splitAt d)).flatten))
+              ((cast h_eq (List.Vector.map (·.repeat n) (X.splitAt d)).flatten))
             simp at this
             simp [this]
             rw [GetCast.eq.Get.of.Eq.fin (n' := (s.set d (n * s[d])).prod)]
@@ -139,7 +139,7 @@ private lemma main
               simp [EqGetS]
               simp [h_i''_eq, h_j_j''_eq, h_j''_eq, h_i'_eq, h_j_j'_eq, h_j'_eq]
               simp [EqAddSub.of.Ge h_d]
-              rw [EqGetSSplitAt.of.Lt_Mul_ProdTail.Gt_0.Lt_Get_0.GtLength_0 h_s h_i h_d h_t data]
+              rw [EqGetSSplitAt.of.Lt_Mul_ProdTail.Gt_0.Lt_Get_0.GtLength_0 h_s h_i h_d h_t X]
               apply EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq (by simp) (by simp)
               simp_all
               apply SEqFlattenSSplitAt.of.SEq

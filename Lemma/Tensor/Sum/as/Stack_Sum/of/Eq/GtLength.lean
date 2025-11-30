@@ -16,7 +16,7 @@ private lemma main
   X.sum (d + 1) ≃ [i < m] (X[i].sum d) := by
 -- proof
   rw [Sum.eq.Stack_Sum.of.GtLength h₁]
-  apply EqStackSUFnGet.of.Eq h₀ (fun s => s.eraseIdx d) (fun X => X.sum d)
+  apply EqStackSUFnGet.of.Eq h₀ (·.eraseIdx d) (·.sum d)
 
 
 -- created on 2025-06-27

@@ -23,7 +23,7 @@ private lemma main
 -- imply
   X.unsqueeze (d + 1) = Tensor.fromVector (X.toVector.map (·.unsqueeze d)) := by
 -- proof
-  obtain ⟨data⟩ := X
+  obtain ⟨X⟩ := X
   simp [Unsqueeze.eq.TensorMap_FunGetData]
   unfold Tensor.fromVector
   simp
@@ -38,22 +38,22 @@ private lemma main
   simp [h_ij]
   have h_eq : Fin ((n :: s).tail.insertIdx d 1).prod = Fin (n :: s).tail.prod := by
     simp_all
-  have := GetFlatten_AddMul.eq.Get.of.Lt.Lt h_i h_j ((⟨data⟩ : Tensor α (n :: s)).toVector.map (fun X ↦ List.Vector.map (fun k ↦ X.data[cast h_eq k]) (List.Vector.range (s.insertIdx d 1).prod)))
+  have := GetFlatten_AddMul.eq.Get.of.Lt.Lt h_i h_j ((⟨X⟩ : Tensor α (n :: s)).toVector.map (fun X ↦ List.Vector.map (fun k ↦ X.data[cast h_eq k]) (List.Vector.range (s.insertIdx d 1).prod)))
   simp_all
   unfold Tensor.toVector
-  have h_prod : data.length / n = s.prod := by
+  have h_prod : X.length / n = s.prod := by
     simp [List.Vector.length]
     rw [EqDivMul.of.Ne_0.left]
     linarith
-  have : data.length / n ≤ n * s.prod - ↑(List.Vector.range n)[i] * (data.length / n) := by
+  have : X.length / n ≤ n * s.prod - ↑(List.Vector.range n)[i] * (X.length / n) := by
     simp [h_prod]
     rw [EqGetRange.of.Lt]
     apply Le_SubMulS.of.Lt h_i
-  have := GetCast_Map.eq.UFnGet.of.Eq.Lt (i := i) (n := ((n :: s).take 1).prod) (n' := (n :: s).headD 1) (by simp_all) (by simp_all) (data.splitAt 1) (fun data ↦ (⟨data⟩ : Tensor α s))
+  have := GetCast_Map.eq.UFnGet.of.Eq.Lt (i := i) (n := ((n :: s).take 1).prod) (n' := (n :: s).headD 1) (by simp_all) (by simp_all) (X.splitAt 1) (fun X ↦ (⟨X⟩ : Tensor α s))
   simp at this
   simp [this]
   have := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop (s := n :: s) (d := 1) (i := i) (j := (cast h_eq (List.Vector.range (s.insertIdx d 1).prod)[j]).val)
-    (by simp_all) (by simp_all) data
+    (by simp_all) (by simp_all) X
   simp at this
   simp [this]
   simp [GetElem.getElem]

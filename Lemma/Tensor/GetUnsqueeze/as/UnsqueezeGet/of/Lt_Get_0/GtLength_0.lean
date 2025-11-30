@@ -19,10 +19,8 @@ private lemma main
   have : i < (X.unsqueeze (d + 1)).length := by rwa [LengthUnsqueeze.eq.Length.of.Gt_0 (by linarith)]
   (X.unsqueeze (d + 1))[i] ≃ X[i].unsqueeze d := by
 -- proof
-  intro h_i_length _
+  intro h_i_length h_i'
   have := Unsqueeze.as.Stack_Unsqueeze.of.GtLength_0 h_s X d
-  have h_i' : i < (X.unsqueeze (d + 1)).length := by
-    rwa [LengthUnsqueeze.eq.Length.of.Gt_0 (by linarith)]
   have := SEqGetS.of.SEq.GtLength.fin h_i' this
   rwa [EqGetStack.fn.fin] at this
 

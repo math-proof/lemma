@@ -16,7 +16,7 @@ private lemma main
   X.softmax (d + 1) ≃ [i < m] (X[i].softmax d) := by
 -- proof
   rw [Softmax.eq.Stack_Softmax.of.GtLength h₁]
-  apply EqStackSUFnGet.of.Eq h₀ id (fun X => X.softmax d)
+  apply EqStackSUFnGet.of.Eq h₀ id (·.softmax d)
 
 
 -- created on 2025-11-30

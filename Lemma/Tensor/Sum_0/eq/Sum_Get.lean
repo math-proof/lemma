@@ -23,7 +23,6 @@ private lemma main
   apply HEq.of.All_Eq.Eq.fin (by simp)
   intro i
   simp [GetElem.getElem]
-  obtain ⟨data⟩ := X
   unfold Tensor.get Tensor.toVector
   have := i.isLt
   simp

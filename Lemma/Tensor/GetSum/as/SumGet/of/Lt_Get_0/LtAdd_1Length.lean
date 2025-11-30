@@ -19,10 +19,8 @@ private lemma main
   have : i < (X.sum (d + 1)).length := by rwa [LengthSum.eq.Length.of.Gt_0 (by linarith)]
   (X.sum (d + 1))[i] ≃ X[i].sum d := by
 -- proof
-  intro h_i_length _
+  intro h_i_length h_i'
   have := Sum.as.Stack_Sum.of.LtAdd_1Length h_d X
-  have h_i' : i < (X.sum (d + 1)).length := by
-    rwa [LengthSum.eq.Length.of.Gt_0 (by linarith)]
   have := SEqGetS.of.SEq.GtLength.fin h_i' this
   rwa [EqGetStack.fn.fin] at this
 
