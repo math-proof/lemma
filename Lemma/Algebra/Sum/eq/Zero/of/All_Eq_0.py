@@ -17,7 +17,7 @@ def prove(Eq):
     f = Function(complex=True)
     Eq << apply(All[i:n](Equal(f(i), 0)))
 
-    Eq << Finset.EqSumS.of.All_Eq.apply(Eq[0])
+    Eq << Finset.Sum.of.All_Eq.apply(Eq[0])
 
 
 if __name__ == '__main__':

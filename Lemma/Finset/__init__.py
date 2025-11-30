@@ -4,7 +4,6 @@ from . import Mul_Sum
 from . import Sum_Mul
 from . import Prod_Mul
 from . import MulProdS
-from . import EqSumS
 from . import Sum_Add
 from . import AddSumS
 from . import Sum

@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.Cond.apply(Eq[0], i)
 
-    Eq << Finset.EqSumS.of.All_Eq.apply(Eq[-1])
+    Eq << Finset.Sum.of.All_Eq.apply(Eq[-1])
 
 
 if __name__ == '__main__':

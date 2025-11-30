@@ -37,7 +37,7 @@ def prove(Eq):
     _n = Symbol("n", domain=Range(a, oo))
     Eq << Set.AllIn_SDiff.of.All.apply(Eq[-1], Range(a, _n))
 
-    Eq << Finset.EqSumS.of.All_Eq.apply(Eq[-1])
+    Eq << Finset.Sum.of.All_Eq.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.doit()
 

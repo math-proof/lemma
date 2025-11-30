@@ -52,7 +52,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.of.Eq_0.invert)
     Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
-    Eq << Finset.EqSumS.of.All_Eq.apply(Eq[-1])
+    Eq << Finset.Sum.of.All_Eq.apply(Eq[-1])
     Eq << Eq[-1].subs(Eq.m_def)
 
 

@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.rhs.find(Sum).apply(Finset.Sum_Mul.eq.Mul_Sum, simplify=1)
 
-    Eq << Finset.EqSumS.of.All_Eq.apply(Eq[-1])
+    Eq << Finset.Sum.of.All_Eq.apply(Eq[-1])
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

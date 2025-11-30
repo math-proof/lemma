@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << apply(All[i:n](Equal(a[i], b[i])) & Element(Sum[i:n](a[i]), S))
 
-    Eq << Finset.EqSumS.of.All_Eq.apply(Eq[-2])
+    Eq << Finset.Sum.of.All_Eq.apply(Eq[-2])
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
