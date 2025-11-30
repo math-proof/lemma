@@ -14,16 +14,16 @@ open List Nat
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
   (h : i > j)
   (x : α) :
 -- imply
-  a.insertIdx i x = a.take j ++ (a.drop j).insertIdx (i - j) x := by
+  s.insertIdx i x = s.take j ++ (s.drop j).insertIdx (i - j) x := by
 -- proof
-  if h_j : j ≤ a.length then
+  if h_j : j ≤ s.length then
     conv_lhs =>
-      rw [← EqAppendTake__Drop a j]
+      rw [← EqAppendTake__Drop s j]
     rw [InsertIdxAppend.eq.Append_InsertIdx.of.LeLength] <;>
       rw [LengthTake.eq.Min_Length]
     ·

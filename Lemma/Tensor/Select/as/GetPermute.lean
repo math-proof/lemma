@@ -15,7 +15,7 @@ import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.ProdRotate.eq.MulProdS.of.GtLength
 import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTake.eq.DivProdTake.of.GtLength
+import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailPermute.eq.EraseIdx
@@ -264,7 +264,7 @@ private lemma main
           simp [ProdTake.eq.Mul_ProdTake.of.GtLength d.isLt]
         ·
           have := Gt_0 i
-          rwa [ProdTake.eq.DivProdTake.of.GtLength d.isLt (by grind)] at h_q
+          rwa [ProdTake.eq.DivProdTake.of.Ne_0.GtLength d.isLt (by grind)] at h_q
         ·
           exact i.isLt
       ·

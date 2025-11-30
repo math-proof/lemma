@@ -6,9 +6,15 @@ import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.List.ProdInsertIdx.eq.Prod
+import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
+import Lemma.List.TakeEraseIdx.eq.Take
+import Lemma.List.TakeInsertIdx.eq.Take
+import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.DivMul.eq.Mul_Div.of.Dvd
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
+import Lemma.Nat.LtMod.of.Ne_0
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData
@@ -25,7 +31,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
 import sympy.tensor.functions
-open List Finset Nat Tensor Vector
+open Finset List Nat Tensor Vector
 set_option maxHeartbeats 2000000
 
 
@@ -62,11 +68,11 @@ private lemma main
   apply EqDivS.of.Eq.left
   repeat rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data.of.GtLength (by grind)]
   simp
-  have h_prod : (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) = s.prod := by 
+  have h_prod : (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) = s.prod := by
     simp [Mul_Mul.eq.MulMul.comm]
     apply MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
   repeat rw [GetCast.eq.Get.of.Eq.fin (by grind)]
-  have h_lt : t < n * (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) := by 
+  have h_lt : t < n * (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) := by
     simp [Mul_Mul.eq.MulMul.comm]
     simp [MulMul.eq.Mul_Mul]
     rwa [MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength]
@@ -74,13 +80,15 @@ private lemma main
   let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
   have h_q' := q'.isLt
   have h_r' := r'.isLt
-  have h_lt : r < (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) := by 
+  have h_lt : r < (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) := by
     simp [Mul_Mul.eq.MulMul.comm]
     rwa [MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength]
   let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
   let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
   have h_qₐ := qₐ.isLt
+  simp [TakeInsertIdx.eq.Take, TakeEraseIdx.eq.Take] at h_q' h_qₐ
   have h_rₐ := rₐ.isLt
+  simp [ProdDropInsertIdxEraseIdx.eq.Prod.of.GtLength h] at h_rₐ
   repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
   simp
   repeat rw [GetRepeat.eq.Get_Mod.fin]
@@ -88,7 +96,7 @@ private lemma main
   simp [ProdDropInsertIdxEraseIdx.eq.Prod.of.GtLength h]
   rw [DataSum.eq.Sum_DataSelect (d := ⟨d + 1, by grind⟩)]
   rw [DataSum.eq.Sum_DataSelect (d := ⟨d, by grind⟩)]
-  have h_prod : (s.eraseIdx d).prod = ((s.eraseIdx d).insertIdx d 1).prod := by 
+  have h_prod : (s.eraseIdx d).prod = ((s.eraseIdx d).insertIdx d 1).prod := by
     simp [ProdInsertIdx.eq.Prod]
   repeat rw [GetCast.eq.Get.of.Eq.fin (by grind)]
   repeat rw [GetSum.eq.Sum_Get.fin]
@@ -99,21 +107,30 @@ private lemma main
   repeat rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
   repeat rw [GetCast.eq.Get.of.Eq.fin]
   ·
-    have h_lt : ↑q' * (s.drop (d + 1)).prod + ↑r' % (s.drop (d + 1)).prod < (⟨↑↑k, ↑(n * (s.take (d + 1)).prod), ↑s[d]⟩ : Slice).length (n * (s.take (d + 1)).prod) * (s.drop (d + 1)).prod := by 
-      sorry
+    have h_dvdₑ := Get.dvd.Mul_ProdTake.of.GtLength h n
+    have h_dvdₕ := Get.dvd.ProdTake.of.GtLength h
+    have h_lt : ↑q' * (s.drop (d + 1)).prod + ↑r' % (s.drop (d + 1)).prod < (⟨↑↑k, ↑(n * (s.take (d + 1)).prod), ↑s[d]⟩ : Slice).length (n * (s.take (d + 1)).prod) * (s.drop (d + 1)).prod := by
+      rw [LengthSlice.eq.Div.of.Lt.Dvd h_dvdₑ h_k]
+      rw [DivMul.eq.Mul_Div.of.Dvd h_dvdₕ]
+      rw [DivProdTake.eq.ProdTake.of.Ne_0.GtLength h (by grind)]
+      apply AddMul.lt.Mul.of.Lt.Lt h_q'
+      apply LtMod.of.Ne_0
+      grind
     let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
     let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
     have h_qₑ := qₑ.isLt
-    have h_dvd := Get.dvd.Mul_ProdTake.of.GtLength h n
-    simp only [LengthSlice.eq.Div.of.Lt.Dvd h_dvd h_k] at h_qₑ
+    simp only [LengthSlice.eq.Div.of.Lt.Dvd h_dvdₑ h_k] at h_qₑ
     have h_rₑ := rₑ.isLt
-    have h_lt : ↑qₐ * (s.drop (d + 1)).prod + ↑rₐ % (s.drop (d + 1)).prod < (⟨↑↑k, ↑(s.take (d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by 
-      sorry
+    have h_lt : ↑qₐ * (s.drop (d + 1)).prod + ↑rₐ % (s.drop (d + 1)).prod < (⟨↑↑k, ↑(s.take (d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
+      rw [LengthSlice.eq.Div.of.Lt.Dvd h_dvdₕ h_k]
+      rw [DivProdTake.eq.ProdTake.of.Ne_0.GtLength h (by grind)]
+      apply AddMul.lt.Mul.of.Lt.Lt h_qₐ
+      apply LtMod.of.Ne_0
+      grind
     let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
     let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
     have h_qₕ := qₕ.isLt
-    have h_dvd := Get.dvd.ProdTake.of.GtLength h
-    simp only [LengthSlice.eq.Div.of.Lt.Dvd h_dvd h_k] at h_qₕ
+    simp only [LengthSlice.eq.Div.of.Lt.Dvd h_dvdₕ h_k] at h_qₕ
     have h_rₕ := rₕ.isLt
     repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
     repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin]

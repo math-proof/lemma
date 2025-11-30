@@ -7,9 +7,9 @@ open List Nat
 private lemma main
 -- given
   (h : i > j)
-  (a : List α) :
+  (s : List α) :
 -- imply
-  (a.eraseIdx i).take j = a.take j := by
+  (s.eraseIdx i).take j = s.take j := by
 -- proof
   apply TakeEraseIdx.eq.Take.of.Ge
   apply Ge.of.Gt h

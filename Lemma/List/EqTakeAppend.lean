@@ -1,4 +1,3 @@
-import stdlib.List
 import sympy.Basic
 
 

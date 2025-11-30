@@ -3,12 +3,12 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length < i)
+  (h : s.length < i)
   (x : α) :
 -- imply
-  a.insertIdx i x = a :=
+  s.insertIdx i x = s :=
 -- proof
   List.insertIdx_of_length_lt h
 

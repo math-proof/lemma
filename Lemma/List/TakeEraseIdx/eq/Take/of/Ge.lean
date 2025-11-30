@@ -7,12 +7,12 @@ open List
 private lemma main
 -- given
   (h : i ≥ j)
-  (a : List α) :
+  (s : List α) :
 -- imply
-  (a.eraseIdx i).take j = a.take j := by
+  (s.eraseIdx i).take j = s.take j := by
 -- proof
-  if h_j : j ≤ a.length then
-    have h_le_length : j ≤ (a.take i).length := by 
+  if h_j : j ≤ s.length then
+    have h_le_length : j ≤ (s.take i).length := by
       rw [List.length_take]
       exact le_min h h_j
     rw [EraseIdx.eq.Append_Drop_Add_1]

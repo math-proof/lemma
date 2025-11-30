@@ -24,7 +24,7 @@ private lemma main
   induction s generalizing d with
   | nil =>
     simp at h_d
-    have h_nil := EqInsertIdx.of.LtLength (by simpa) 1 (a := []) (i := d)
+    have h_nil := EqInsertIdx.of.LtLength (by simpa) 1 (s := []) (i := d)
     constructor
     ·
       assumption

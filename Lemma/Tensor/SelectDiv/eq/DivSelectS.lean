@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.DivProdTake.eq.ProdTake.of.Gt_0.GtLength_0.Ne_0
+import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
@@ -14,7 +14,6 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import sympy.tensor.tensor
 open Bool List Nat Tensor Vector
 
 
@@ -40,9 +39,8 @@ private lemma main
   let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
   have h_q := q.isLt
   simp at h_q
-  rw [LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength (by omega) (by omega)] at h_q
-  rw [← DivProdTake.eq.ProdTake.of.Gt_0.GtLength_0.Ne_0 (by apply Ne_0 i)] at h_q
-  have h_r := r.isLt
+  rw [LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength d.isLt i.isLt] at h_q
+  rw [ProdTake.eq.DivProdTake.of.Ne_0.GtLength d.isLt (Ne_0 i)] at h_q
   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
   rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin (by simp) (by assumption) (by simp)]
   rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]

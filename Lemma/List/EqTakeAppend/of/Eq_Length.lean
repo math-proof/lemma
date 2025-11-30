@@ -1,4 +1,3 @@
-import stdlib.List
 import Lemma.List.EqTakeAppend
 open List
 

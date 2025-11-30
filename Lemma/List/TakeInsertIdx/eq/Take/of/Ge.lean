@@ -11,12 +11,12 @@ open List Nat
 private lemma main
 -- given
   (h : i ≥ j)
-  (a : List α)
+  (s : List α)
   (x : α) :
 -- imply
-  (a.insertIdx i x).take j = a.take j := by
+  (s.insertIdx i x).take j = s.take j := by
 -- proof
-  if h_i : i ≤ a.length then
+  if h_i : i ≤ s.length then
     rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength (by omega) h]
     apply EqTakeAppend.of.Eq_Length
     rw [LengthTake.eq.Min_Length]
