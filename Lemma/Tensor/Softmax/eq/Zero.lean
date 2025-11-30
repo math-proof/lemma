@@ -13,7 +13,7 @@ open Tensor Vector
 
 @[main]
 private lemma main
-  [ExpGroup α]
+  [ExpRing α]
 -- given
   (X : Tensor α (0 :: s)) :
 -- imply

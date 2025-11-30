@@ -4,7 +4,7 @@ open Tensor
 
 @[main]
 private lemma main
-  [ExpGroup α]
+  [ExpRing α]
 -- given
   (h_s : s.length > 0)
   (h_0 : s[0] = 0)

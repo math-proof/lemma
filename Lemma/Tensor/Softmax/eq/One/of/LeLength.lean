@@ -9,7 +9,7 @@ open Tensor Vector
 
 @[main, comm]
 private lemma main
-  [ExpGroup α]
+  [ExpRing α]
   {d : ℕ}
 -- given
   (h : s.length ≤ d)

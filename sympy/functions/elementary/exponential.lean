@@ -86,12 +86,12 @@ noncomputable instance : ExpNeZero ℝ* where
 /--
 typeclass for ℝ ℝ* ℂ, where GroupWithZero is a requisite
 -/
-class ExpGroup (α : Type u) extends ExpNeZero α, DivisionSemiring α
+class ExpRing (α : Type u) extends ExpNeZero α, DivisionSemiring α
 
 /--
 typeclass for ℝ ℝ* only
 -/
-class ExpPos (α : Type u) extends ExpGroup α, PartialOrder α where
+class ExpPos (α : Type u) extends ExpRing α, PartialOrder α where
   exp_pos (x : α) : exp x > 0
 
 noncomputable instance : ExpPos ℝ where

@@ -11,7 +11,7 @@ open Bool Nat Tensor List
 
 @[main]
 private lemma main
-  [ExpGroup α]
+  [ExpRing α]
 -- given
   (h_d : s.length > d)
   (h : s[d] = 0)
