@@ -9,16 +9,16 @@ open Tensor List
 @[main]
 private lemma main
   [Add α] [Zero α]
-  {dim : ℕ}
+  {d : ℕ}
 -- given
-  (h : dim > 0)
+  (h : d > 0)
   (X : Tensor α s) :
 -- imply
-  (X.sum dim).length = X.length := by
+  (X.sum d).length = X.length := by
 -- proof
   if h : s.length > 0 then
     repeat rw [Length.eq.Get_0.of.GtLength_0 (by assumption)]
-    if h : dim < s.length then
+    if h : d < s.length then
       repeat rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
       rw [GetEraseIdx.eq.Get.of.Gt.GtLength (by assumption) (by assumption)]
     else

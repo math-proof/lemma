@@ -8,13 +8,13 @@ open List Bool
 
 @[main]
 private lemma main
-  {dim : ℕ}
+  {d : ℕ}
   {s : List ℕ}
 -- given
-  (h : s.length > dim)
-  (X : Tensor α (s.eraseIdx dim)) :
+  (h : s.length > d)
+  (X : Tensor α (s.eraseIdx d)) :
 -- imply
-  X.keepdim ≃ (X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.GtLength h 1⟩ := by
+  X.keepdim ≃ (X.unsqueeze d).repeat s[d] ⟨d, Lt_LengthInsertIdxEraseIdx.of.GtLength h 1⟩ := by
 -- proof
   apply SEq.of.EqCast.Eq
   ·

@@ -6,11 +6,11 @@ open Tensor List
 
 @[main]
 private lemma main
-  {dim : ℕ}
+  {d : ℕ}
   {s : List ℕ}
 -- given
-  (h_dim : dim > 0)
-  (X : Tensor α (s.eraseIdx dim)) :
+  (h_dim : d > 0)
+  (X : Tensor α (s.eraseIdx d)) :
 -- imply
   X.keepdim.length = X.length := by
 -- proof
