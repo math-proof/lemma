@@ -2,7 +2,10 @@
     <div class=lemma>
         <template v-if=comment>
             <span class=green>/--</span><br>
-            <markdown v-if=markdownComment :root=markdownComment.root v-clipboard :data-clipboard-text=comment />
+            <template v-if=markdownComment>
+                <markdown :root=markdownComment.root v-clipboard :data-clipboard-text=comment />
+                <input type=hidden :name="`lemma[${index}][comment]`" :value=comment />
+            </template>
             <textarea v-else class=green :name="`lemma[${index}][comment]`" :value=comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea></textarea>
             <span class=green>-/</span>
             <br>
