@@ -15,7 +15,7 @@ open Bool List Nat Tensor
 
 
 /--
-[flash_attn](http://myhz0606.com/article/flash_attn)
+自然语言论述：[flash_attn](http://myhz0606.com/article/flash_attn)
 -/
 @[main]
 private lemma main
