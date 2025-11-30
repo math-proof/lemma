@@ -1,7 +1,6 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
+import sympy.tensor.Basic
 import Lemma.List.ProdInsertIdx.eq.Prod
-import Lemma.Tensor.DataUnsqueeze.as.Data
-open Bool List Tensor
+open List
 
 
 @[main]
@@ -13,11 +12,7 @@ private lemma main
 -- imply
   (X.unsqueeze d).data = cast (congrArg (List.Vector α) (Prod.eq.ProdInsertIdx s d)) X.data := by
 -- proof
-  apply Eq_Cast.of.SEq.Eq
-  ·
-    apply Prod.eq.ProdInsertIdx
-  ·
-    apply DataUnsqueeze.as.Data
+  simp [Tensor.unsqueeze]
 
 
 -- created on 2025-11-30

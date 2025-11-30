@@ -1,3 +1,4 @@
+import sympy.tensor.tensor
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.Eq
