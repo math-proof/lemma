@@ -24,7 +24,7 @@ set_option maxHeartbeats 1000000
 
 @[main]
 private lemma main
-  [ExpPos α]
+  [Exp α]
   {d : ℕ}
 -- given
   (h : s.length > d)
@@ -72,7 +72,7 @@ private lemma main
             apply SEqPermuteHeadS.of.SEq
             apply SEq.of.Eq
             .
-              rw [Tensor.SelectSoftmax.eq.SoftmaxSelect.of.Lt]
+              rw [SelectSoftmax.eq.SoftmaxSelect.of.Lt]
               simp
             .
               simp

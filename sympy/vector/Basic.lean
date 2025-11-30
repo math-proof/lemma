@@ -92,8 +92,18 @@ def a : List ℕ := List.range 10
 def getSlice (L : Vector α n) (s : Slice) : Vector α (s.length n) :=
   (indices s L.length).map fun i => L[i]
 
+/--
+automatically defined:
+instance [Sub α] : Sub (Vector α n) ...
+-/
 instance [Add α] : Add (Vector α n) where
   add a b := a.map₂ HAdd.hAdd b
+
+instance [Add α] : HAdd (Vector α n) α (Vector α n) where
+  hAdd a b := a.map (· + b)
+
+instance [Sub α] : HSub (Vector α n) α (Vector α n) where
+  hSub a b := a.map (· - b)
 
 instance [Mul α] : Mul (Vector α n) where
   mul a b := a.map₂ HMul.hMul b

@@ -18,7 +18,7 @@ open Tensor Vector Bool Nat List
 
 @[main]
 private lemma main
-  [ExpPos α]
+  [Exp α]
 -- given
   (X : Tensor α [n]) :
 -- imply

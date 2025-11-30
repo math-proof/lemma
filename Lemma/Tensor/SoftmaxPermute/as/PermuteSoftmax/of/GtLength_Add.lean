@@ -23,7 +23,7 @@ similar with Tensor.SumPermute.as.PermuteSum.of.GtLength_Add
 -/
 @[main]
 private lemma main
-  [ExpPos α]
+  [Exp α]
   {i d : ℕ}
 -- given
   (h : s.length > i + d)

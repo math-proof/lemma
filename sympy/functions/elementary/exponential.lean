@@ -68,6 +68,9 @@ noncomputable instance : Exp ℝ* where
   exp_neg := Hyperreal.exp_neg
 
 
+/--
+typeclass for ℝ ℝ* ℂ, List.Vector α, Tensor α
+-/
 class ExpNeZero (α : Type u) extends Exp α where
   exp_ne_zero (x : α) : exp x ≠ 0
 
@@ -80,7 +83,15 @@ noncomputable instance : ExpNeZero ℂ where
 noncomputable instance : ExpNeZero ℝ* where
   exp_ne_zero := Hyperreal.exp_ne_zero
 
-class ExpPos (α : Type u) extends ExpNeZero α, PartialOrder α, DivisionSemiring α where
+/--
+typeclass for ℝ ℝ* ℂ, where GroupWithZero is a requisite
+-/
+class ExpGroup (α : Type u) extends ExpNeZero α, DivisionSemiring α
+
+/--
+typeclass for ℝ ℝ* only
+-/
+class ExpPos (α : Type u) extends ExpGroup α, PartialOrder α where
   exp_pos (x : α) : exp x > 0
 
 noncomputable instance : ExpPos ℝ where
