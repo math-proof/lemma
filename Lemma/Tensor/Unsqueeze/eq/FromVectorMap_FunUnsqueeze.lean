@@ -1,19 +1,18 @@
-import sympy.tensor.Basic
-import Lemma.List.ProdInsertIdx.eq.Prod
-import Lemma.Vector.EqGetRange
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Vector.EqGetS
-import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt
-import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Vector.EqGetRange.of.Lt
-import Lemma.Nat.Le_SubMulS.of.Lt
-import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 import Lemma.Bool.EqCast.of.HEq
-import Lemma.Bool.HEq.of.All_HEq.Eq
 import Lemma.Bool.HEqMkS.of.Eq.Eq.Lt
+import Lemma.List.ProdInsertIdx.eq.Prod
+import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
-open Vector List Bool Nat
+import Lemma.Nat.Le_SubMulS.of.Lt
+import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
+import Lemma.Vector.EqGetRange
+import Lemma.Vector.EqGetRange.of.Lt
+import Lemma.Vector.EqGetS
+import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
+import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt
+import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
+open List Vector Nat Bool Tensor
 
 
 @[main]
@@ -25,7 +24,8 @@ private lemma main
   X.unsqueeze (d + 1) = Tensor.fromVector (X.toVector.map (·.unsqueeze d)) := by
 -- proof
   obtain ⟨data⟩ := X
-  unfold Tensor.unsqueeze Tensor.fromVector
+  simp [Unsqueeze.eq.TensorMap_FunGetData]
+  unfold Tensor.fromVector
   simp
   ext k
   simp [EqGetRange.fin]
@@ -60,16 +60,16 @@ private lemma main
   congr
   apply EqCast.of.HEq
   apply HEqMkS.of.Eq.Eq.Lt
-  .
+  ·
     simp_all
-  .
+  ·
     simp [EqGetRange.fin]
     rw [EqValCast.of.Lt.Eq]
-    .
+    ·
       assumption
-    .
+    ·
       rwa [h_prod_insert] at h_j
 
 
 -- created on 2025-07-13
--- updated on 2025-07-17
+-- updated on 2025-11-30

@@ -1,15 +1,13 @@
-import stdlib.SEq
-import sympy.tensor.Basic
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
 import Lemma.List.EqInsertIdx.of.LtLength
-import Lemma.Tensor.HEq.of.SEqDataS.Eq
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.List.InsertIdx.ne.Nil.of.Ne_Nil
-import Lemma.List.Ne_Nil.is.GtLength_0
-import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Nat.Gt_0.of.Gt
-import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
+import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
+import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
+import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
+import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Ne_Nil
+import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
+import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Tensor List Vector Nat
 
 
@@ -40,7 +38,7 @@ private lemma main
           intro i
           have h_i := i.isLt
           simp [h_nil] at h_i
-          unfold Tensor.unsqueeze
+          rw [Unsqueeze.eq.TensorMap_FunGetData]
           simp [h_i]
         ·
           rw [h_nil]
@@ -56,11 +54,12 @@ private lemma main
       simp [Length.eq.Get_0.of.Ne_Nil] at h_i
       have := GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by simp) h_d_pos h_i X
       apply SEq.trans this
-      .
+      ·
         simp at h_d
         apply ih (by omega) (X.get ⟨i, h_i⟩)
-      .
+      ·
         rw [EqInsertIdx.of.LtLength h_d]
 
 
 -- created on 2025-10-10
+-- updated on 2025-11-30

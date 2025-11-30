@@ -1,14 +1,14 @@
-import sympy.tensor.tensor
-import Lemma.Bool.EqCast.of.SEq
-import Lemma.Vector.ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.EqCast.of.Eq
+import Lemma.Bool.EqCast.of.SEq
+import Lemma.Bool.SEq.is.Eq
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
+import Lemma.Vector.ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
 import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Vector.EqGetMapRange
-open Vector Bool
+import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
+import Lemma.Vector.GetCast.eq.Get.of.Eq
+open Bool Vector Tensor
 
 
 @[main]
@@ -19,7 +19,7 @@ private lemma main
   have : (X.unsqueeze 0).length > 0 := by simp [Tensor.length]
   (X.unsqueeze 0)[0] = X := by
 -- proof
-  unfold Tensor.unsqueeze
+  rw [Unsqueeze.eq.TensorMap_FunGetData]
   simp
   match X with
   | ⟨data⟩ =>
@@ -61,3 +61,4 @@ private lemma fin
 
 
 -- created on 2025-07-11
+-- updated on 2025-11-30
