@@ -4,17 +4,26 @@ import Lemma.List.Get.dvd.ProdTake.of.GtLength
 import Lemma.List.LengthSlice.eq.Div.of.Lt.Dvd
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
+import Lemma.List.Prod.eq.MulProdS
+import Lemma.List.ProdDrop.dvd.Prod
+import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.List.TakeEraseIdx.eq.Take
 import Lemma.List.TakeInsertIdx.eq.Take
+import Lemma.Nat.AddAdd
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Nat.Div.eq.AddMulDiv_Mul
+import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Nat.DivMul.eq.Mul_Div.of.Dvd
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtMod.of.Ne_0
+import Lemma.Nat.ModMod.eq.Mod.of.Dvd
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData
@@ -32,7 +41,6 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
 import sympy.tensor.functions
 open Finset List Nat Tensor Vector
-set_option maxHeartbeats 2000000
 
 
 @[main]
@@ -88,12 +96,11 @@ private lemma main
   have h_qₐ := qₐ.isLt
   simp [TakeInsertIdx.eq.Take, TakeEraseIdx.eq.Take] at h_q' h_qₐ
   have h_rₐ := rₐ.isLt
-  simp [ProdDropInsertIdxEraseIdx.eq.Prod.of.GtLength h] at h_rₐ
   repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
   simp
   repeat rw [GetRepeat.eq.Get_Mod.fin]
   repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-  simp [ProdDropInsertIdxEraseIdx.eq.Prod.of.GtLength h]
+  simp [ProdDropInsertIdxEraseIdx.eq.Prod.of.GtLength h] at ⊢ h_rₐ h_q'_div h_r'_mod h_qₐ_div h_rₐ_mod
   rw [DataSum.eq.Sum_DataSelect (d := ⟨d + 1, by grind⟩)]
   rw [DataSum.eq.Sum_DataSelect (d := ⟨d, by grind⟩)]
   have h_prod : (s.eraseIdx d).prod = ((s.eraseIdx d).insertIdx d 1).prod := by
@@ -142,7 +149,25 @@ private lemma main
       rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
       repeat apply congrArg
       simp
-      sorry
+      simp [MulAdd.eq.AddMulS]
+      simp [Add_Add.eq.AddAdd]
+      rw [AddAdd.comm]
+      conv_rhs => rw [AddAdd.comm]
+      simp
+      simp at h_rₕ_mod h_rₑ_mod
+      rw [DivAddMul.eq.Add_Div.of.Ne_0 (by grind)] at h_qₕ_div h_qₑ_div
+      simp at h_qₕ_div h_qₑ_div
+      simp [h_qₕ_div, h_qₑ_div, h_rₕ_mod, h_rₑ_mod]
+      simp [h_r'_mod, h_rₐ_mod, h_r_mod]
+      rw [ModMod.eq.Mod.of.Dvd (by apply ProdDrop.dvd.Prod)]
+      simp [MulMul.eq.Mul_Mul]
+      rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength h] at ⊢ h_qₐ_div h_q'_div
+      simp only [Prod.eq.MulProdS s d] at ⊢ h_q_div h_r_mod
+      rw [Mul_Mul.eq.MulMul]
+      simp [AddMulS.eq.MulAdd]
+      left
+      rw [h_qₐ_div, h_q'_div, h_q_div, h_r_mod]
+      apply Div.eq.AddMulDiv_Mul
     ·
       simpa
     ·

@@ -1,4 +1,5 @@
-import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1
+import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
+import Lemma.List.ProdCons.eq.Mul_Prod
 open List
 
 
@@ -11,10 +12,9 @@ private lemma main
 -- imply
   (s.drop i).prod = s[i] * (s.drop (i + 1)).prod := by
 -- proof
-  let i' : Fin s.length := ⟨i, h⟩
-  have h : i' = i := rfl
-  have := ProdDrop.eq.Mul_ProdDrop_Add_1 i'
-  simp_all
+  rw [Drop.eq.Cons_Drop_Add_1.of.GtLength h]
+  rw [ProdCons.eq.Mul_Prod]
 
 
 -- created on 2025-06-08
+-- updated on 2025-11-30
