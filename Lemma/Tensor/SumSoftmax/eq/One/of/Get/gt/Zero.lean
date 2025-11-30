@@ -14,6 +14,9 @@ import Lemma.Tensor.SumSoftmax.eq.One.of.Get_SubLength_1.gt.Zero.GtLength_0
 open Bool List Nat Tensor
 
 
+/--
+[flash_attn](http://myhz0606.com/article/flash_attn)
+-/
 @[main]
 private lemma main
   [ExpPos α] [IsOrderedCancelAddMonoid α]
