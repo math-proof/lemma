@@ -1,4 +1,4 @@
-import Lemma.Rat.EqDiv0'0
+import Lemma.Rat.EqDiv0_0
 import Lemma.Rat.LeDivS.of.Ge.Le_0
 open Rat
 
@@ -14,7 +14,7 @@ private lemma main
   a / b ≥ 0 := by
 -- proof
   have h := LeDivS.of.Ge.Le_0 h₀ h₁
-  simp only [EqDiv0'0] at h
+  simp only [EqDiv0_0] at h
   exact h
 
 

@@ -22,7 +22,7 @@ import Lemma.Nat.SubNatNat.eq.Sub
 import Lemma.Real.SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
 import Lemma.Bool.All_EqUFnS.of.All_Eq
 import Lemma.Nat.EqAdd0
-import Lemma.Nat.Cast_0.eq.Zero
+import Lemma.Nat.EqCast_0'0
 open Bool Finset Real Nat Int
 
 
@@ -81,7 +81,7 @@ private lemma main
     simp only [f] at h_All_Eq_Root
     let f := fun i : ℕ => (x i) ^ (1 / (i + 2) : ℝ)
     have h_Eq_Sum := Sum.eq.Add_Sum.of.Gt_0 (x := f) (by linarith [h₀])
-    simp only [f, Cast_0.eq.Zero, EqAdd0] at h_Eq_Sum
+    simp only [f, EqCast_0'0, EqAdd0] at h_Eq_Sum
     rw [Root_2.eq.Sqrt] at h_Eq_Sum
     have h_Eq_Sum' := Sum.of.All_Eq h_All_Eq_Root
     simp only [Pow1.eq.One] at h_Eq_Sum'

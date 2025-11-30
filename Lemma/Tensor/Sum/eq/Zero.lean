@@ -1,7 +1,6 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.Eq.is.EqDataS
+import Lemma.Tensor.EqData0'0
 import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.EqGet0_0.of.Lt
 import Lemma.Vector.Sum.eq.Zero
 open Tensor Vector
 
@@ -16,11 +15,10 @@ private lemma main
 -- proof
   simp [Tensor.sum]
   apply Eq.of.EqDataS
-  have h_zero : Tensor.data (0 : Tensor α ((0 :: s).eraseIdx 0)) = 0 := by
-    rfl
-  simp [h_zero]
+  simp [EqData0'0]
   apply Eq.of.All_EqGetS
   simp [Sum.eq.Zero]
 
 
 -- created on 2025-09-04
+-- updated on 2025-11-30

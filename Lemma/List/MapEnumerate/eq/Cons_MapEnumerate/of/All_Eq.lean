@@ -3,7 +3,7 @@ import Lemma.List.Eq.of.GetElemRange.eq.Some
 import Lemma.List.GetElemEnumerate.eq.Some.of.GtLength
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.Eq.of.EqValS
-import Lemma.Nat.Cast_1.eq.One
+import Lemma.Nat.EqCast_1'1
 open List Nat
 
 

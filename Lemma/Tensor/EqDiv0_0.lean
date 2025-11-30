@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
-import Lemma.Vector.EqDiv0'0
-import Lemma.Rat.EqDiv0'0
+import Lemma.Vector.EqDiv0_0
+import Lemma.Rat.EqDiv0_0
 open Tensor Vector Rat
 
 
@@ -18,7 +18,7 @@ private lemma main
   simp [HDiv.hDiv]
   simp [Div.div]
   rw [EqData0'0]
-  apply EqDiv0'0 X.data
+  apply EqDiv0_0 X.data
 
 
 @[main]
@@ -37,7 +37,7 @@ private lemma scalar
   ext i
   simp
   rw [EqGet0_0.fin]
-  apply EqDiv0'0 (a := x)
+  apply EqDiv0_0 (a := x)
 
 
 -- created on 2025-09-04

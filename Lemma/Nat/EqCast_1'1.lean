@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm]
+@[main]
 private lemma main
   [AddMonoidWithOne R] :
 -- imply

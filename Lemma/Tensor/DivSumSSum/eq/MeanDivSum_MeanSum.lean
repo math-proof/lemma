@@ -1,6 +1,6 @@
 import Lemma.Tensor.MeanDiv.eq.DivMean
 import Lemma.Tensor.Sum.eq.Zero
-import Lemma.Tensor.EqDiv0'0
+import Lemma.Tensor.EqDiv0_0
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.NeCoeS.of.Ne
 import Lemma.Tensor.Div.eq.DivDivS.of.Ne_0
@@ -43,7 +43,7 @@ private lemma main
     subst hb
     rw [Sum.eq.Zero (X := loss.sum)]
     rw [Sum.eq.Zero (X := mask.sum)]
-    rw [EqDiv0'0.scalar]
+    rw [EqDiv0_0.scalar]
     rfl
   else
     rw [Div.eq.DivDivS.of.Ne_0 (A := ↑batch_size)]
