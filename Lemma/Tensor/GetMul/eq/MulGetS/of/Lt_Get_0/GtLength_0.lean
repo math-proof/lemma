@@ -8,7 +8,7 @@ private lemma main
   [Mul α]
 -- given
   (h : s.length > 0)
-  (h : i < s[0])
+  (h_i : i < s[0])
   (A B : Tensor α s) :
 -- imply
   have : i < (A * B).length := by rwa [Length.eq.Get_0.of.GtLength_0]
@@ -21,10 +21,23 @@ private lemma main
     contradiction
   | cons s₀ s =>
     simp at h
-    let i' : Fin s₀ := ⟨i, h⟩
+    let i' : Fin s₀ := ⟨i, h_i⟩
     have h_i : i' = i := rfl
     have := GetMul.eq.MulGetS A B i'
     simp_all
+
+
+@[main]
+private lemma fin
+  [Mul α]
+-- given
+  (h : s.length > 0)
+  (h_i : i < s[0])
+  (A B : Tensor α s) :
+-- imply
+  (A * B).get ⟨i, by rwa [Length.eq.Get_0.of.GtLength_0]⟩ = A.get ⟨i, by rwa [Length.eq.Get_0.of.GtLength_0]⟩ * B.get ⟨i, by rwa [Length.eq.Get_0.of.GtLength_0]⟩ := by
+-- proof
+  apply main h h_i A B
 
 
 -- created on 2025-07-01

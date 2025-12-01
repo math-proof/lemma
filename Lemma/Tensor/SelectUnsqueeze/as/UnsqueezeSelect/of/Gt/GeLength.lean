@@ -10,7 +10,7 @@ import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.List.TakeInsertIdx.eq.Take.of.Ge
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.Cast.eq.Mk.of.Lt.Eq
+import Lemma.Nat.Cast.eq.Fin.of.Lt.Eq
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
@@ -83,7 +83,7 @@ private lemma main
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
               simp [DataUnsqueeze.eq.Map_FunGetData.fin]
               apply congrArg
-              rw [Cast.eq.Mk.of.Lt.Eq]
+              rw [Cast.eq.Fin.of.Lt.Eq]
               ·
                 simp [EqGetRange.fin]
                 simp [DropInsertIdx.eq.InsertIdxDrop.of.Ge.GeLength (show s.length ≥ d + 1 by omega) (show k ≥ d + 1 by omega)] at ⊢ h_q_div h_r_mod

@@ -1,5 +1,5 @@
 import Lemma.Nat.Eq_0.of.Lt_1
-import Lemma.Nat.Eq_Mk.of.EqVal
+import Lemma.Nat.Eq_Fin.of.EqVal
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqFlattenMapRange.of.All_EqGetUnflatten
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -18,7 +18,7 @@ private lemma main
   intro t
   have h_t := t.isLt
   have h_t := Eq_0.of.Lt_1 h_t
-  have h_t := Eq_Mk.of.EqVal h_t
+  have h_t := Eq_Fin.of.EqVal h_t
   simp [h_t]
   apply Eq.of.All_EqGetS
   intro i

@@ -4,8 +4,8 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.Ne_0
-import Lemma.Nat.Lt.of.Mk.eq.IteGt.Ne
-import Lemma.Nat.EqMaxS.of.Mk.eq.IteGt
+import Lemma.Nat.Lt.of.Prod.eq.IteGt.Ne
+import Lemma.Nat.EqMaxS.of.Prod.eq.IteGt
 import Lemma.Nat.EqMulDiv.of.Dvd
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.ProdInsertIdx.eq.Prod
@@ -25,7 +25,7 @@ import Lemma.List.Take.eq.Nil.of.Eq_0
 import Lemma.List.EqDrop.of.Eq_0
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
-import Lemma.List.EqSwapS.of.Mk.eq.IteGt
+import Lemma.List.EqSwapS.of.Prod.eq.IteGt
 import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
@@ -323,9 +323,9 @@ def Tensor.transpose (X : Tensor α s) (i : ℕ) (j : ℕ): Tensor α (s.swap i 
     let args : ℕ × ℕ := if i > j then ⟨j, i⟩ else ⟨i, j⟩
     have h_ite : (args : ℕ × ℕ) = if i > j then ⟨j, i⟩ else ⟨i, j⟩ := rfl
     let ⟨i, j⟩ := args
-    have h_lt := Lt.of.Mk.eq.IteGt.Ne h_eq h_ite
+    have h_lt := Lt.of.Prod.eq.IteGt.Ne h_eq h_ite
     have h : i ⊔ j < s.length := by
-      simp_all [EqMaxS.of.Mk.eq.IteGt h_ite]
+      simp_all [EqMaxS.of.Prod.eq.IteGt h_ite]
     have h_i : i < s.length := by
       simp_all
     have h_j : j < s.length := by
@@ -337,7 +337,7 @@ def Tensor.transpose (X : Tensor α s) (i : ℕ) (j : ℕ): Tensor α (s.swap i 
       (by
         apply EqUFnS.of.Eq (f := Tensor α)
         rw [PermutePermute.eq.Swap.of.Lt.GtLength h_j h_lt]
-        rw [EqSwapS.of.Mk.eq.IteGt h_ite]
+        rw [EqSwapS.of.Prod.eq.IteGt h_ite]
       )
       ((X.permute ⟨i, h_i⟩ (d - 1)).permute ⟨j, h_j'⟩ (-d))
 

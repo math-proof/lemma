@@ -1,6 +1,6 @@
 import sympy.tensor.functions
 import Lemma.Tensor.LengthInv.eq.Length
-import Lemma.Tensor.GetMkMap.eq.MkMapDataGet
+import Lemma.Tensor.GetTensorMapData.eq.TensorMapDataGet
 open Tensor
 
 
@@ -13,7 +13,7 @@ private lemma fin
 -- imply
   (X⁻¹).get ⟨i, by simp [LengthInv.eq.Length]⟩ = (X.get i)⁻¹ := by
 -- proof
-  apply GetMkMap.eq.MkMapDataGet
+  apply GetTensorMapData.eq.TensorMapDataGet
 
 
 @[main]

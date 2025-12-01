@@ -2,7 +2,7 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Int.OfNat.eq.Cast
 import Lemma.List.DropLast.eq.Take_SubLength_1
 import Lemma.List.EqPermute__0
-import Lemma.List.GetPermute__Neg.eq.Get.of.GtLength
+import Lemma.List.GetPermute__Neg.eq.Get
 import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
@@ -18,7 +18,7 @@ import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take
-import Lemma.List.TailPermute.eq.EraseIdx
+import Lemma.List.TailPermute__Neg.eq.EraseIdx
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -49,6 +49,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat List Vector Bool Int Tensor Fin
+set_option maxHeartbeats 2000000
 
 
 @[main]
@@ -62,11 +63,11 @@ private lemma main
 -- proof
   apply SEq.of.SEqDataS.Eq
   ·
-    apply EraseIdx.eq.TailPermute
+    apply EraseIdx.eq.TailPermute__Neg
   ·
     have h_s := Gt_0 d
     rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
-    rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨i, by simp [GetPermute__Neg.eq.Get.of.GtLength d.isLt]⟩) (by simpa)]
+    rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨i, by simp [GetPermute__Neg.eq.Get]⟩) (by simpa)]
     apply SEqCastS.of.SEq.Eq.Eq
     ·
       simp [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength]
@@ -92,7 +93,7 @@ private lemma main
           have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
           rw [Add.comm] at h_toNat
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-          simp [TailPermute.eq.EraseIdx]
+          simp [TailPermute__Neg.eq.EraseIdx]
           simp [@Tensor.Permute.eq.Ite]
           split_ifs with h_d0 h_neg h_end
           ·
@@ -269,7 +270,7 @@ private lemma main
           exact i.isLt
       ·
         simp [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength]
-        rw [EraseIdx.eq.TailPermute]
+        rw [EraseIdx.eq.TailPermute__Neg]
 
 
 -- created on 2025-11-22

@@ -1,6 +1,5 @@
-import stdlib.List
 import Lemma.Nat.EqMod.of.Lt
-import Lemma.List.SplitAt.eq.MkTake__Drop
+import Lemma.List.SplitAt.eq.ProdTake__Drop
 open List Nat
 
 
@@ -18,7 +17,7 @@ private lemma main
   match h_v : s.splitAt n with
   | ⟨l₁, l₂⟩ =>
     simp
-    rw [SplitAt.eq.MkTake__Drop] at h_v
+    rw [SplitAt.eq.ProdTake__Drop] at h_v
     simp at h_v
     simp_all
 

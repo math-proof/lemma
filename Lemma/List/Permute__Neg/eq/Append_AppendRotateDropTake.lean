@@ -17,7 +17,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqMin.of.Gt
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.EqSub.of.EqAdd
-import Lemma.Nat.Eq_Mk.of.EqVal
+import Lemma.Nat.Eq_Fin.of.EqVal
 import Lemma.Nat.Ge_1
 import Lemma.Nat.Gt_0
 import Lemma.Nat.LeAdd_1
@@ -39,7 +39,7 @@ private lemma main
   have h_i := LeAdd_1 i
   by_cases h_i' : i + 1 = s.length
   ·
-    have h_i' := Eq_Mk.of.EqVal (Eq_Sub.of.EqAdd h_i')
+    have h_i' := Eq_Fin.of.EqVal (Eq_Sub.of.EqAdd h_i')
     rw [h_i']
     rw [Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0]
     ·

@@ -1,5 +1,5 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
-import Lemma.Tensor.Softmax.eq.MkSoftmaxData
+import Lemma.Tensor.Softmax.eq.TensorSoftmaxData
 import Lemma.Tensor.Sum.eq.MkListSumData
 import Lemma.Vector.SumSoftmax.eq.One
 import Lemma.Tensor.Eq.is.EqDataS
@@ -28,7 +28,7 @@ private lemma main
   | cons s₀ s ih =>
     match s with
     | .nil =>
-      rw [Softmax.eq.MkSoftmaxData]
+      rw [Softmax.eq.TensorSoftmaxData]
       rw [Sum.eq.MkListSumData]
       simp
       apply Eq.of.EqDataS

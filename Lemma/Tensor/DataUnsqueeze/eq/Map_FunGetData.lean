@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.ProdInsertIdx.eq.Prod
-import Lemma.Nat.Cast.eq.Mk.of.Lt.Eq
+import Lemma.Nat.Cast.eq.Fin.of.Lt.Eq
 import Lemma.Tensor.DataUnsqueeze.eq.Cast_Data
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
@@ -25,8 +25,7 @@ private lemma main
   simp [GetElem.getElem]
   apply congrArg
   simp [EqGetRange.fin]
-  apply Mk.eq.Cast.of.Lt.Eq
-  assumption
+  apply Fin.eq.Cast.of.Lt.Eq h_prod
 
 
 @[main]

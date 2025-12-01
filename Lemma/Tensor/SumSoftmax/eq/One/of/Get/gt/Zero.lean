@@ -3,7 +3,7 @@ import Lemma.Bool.Eq.of.SEq.SEq
 import Lemma.List.EraseIdxPermute.eq.EraseIdx.of.Ge
 import Lemma.List.GetPermute.eq.Get.of.Ge
 import Lemma.Nat.EqSub_Sub.of.Ge
-import Lemma.Nat.Eq_Mk.of.EqVal
+import Lemma.Nat.Eq_Fin.of.EqVal
 import Lemma.Nat.Gt_0
 import Lemma.Nat.Le_Sub_1
 import Lemma.Tensor.SEq1S.of.Eq
@@ -29,7 +29,7 @@ private lemma main
 -- proof
   if h_i : i = s.length - 1 then
     have h_pos := Gt_0 i
-    have h_i : i = ⟨s.length - 1, by simp [h_pos]⟩ := Eq_Mk.of.EqVal h_i
+    have h_i : i = ⟨s.length - 1, by simp [h_pos]⟩ := Eq_Fin.of.EqVal h_i
     subst h_i
     simp
     apply SumSoftmax.eq.One.of.Get_SubLength_1.gt.Zero.GtLength_0 h_pos h

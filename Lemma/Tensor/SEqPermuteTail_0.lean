@@ -35,7 +35,7 @@ private lemma main
     unfold Tensor.rotate
     simp
     simp only [GetElem.getElem]
-    rw [Vector.GetCast.eq.Get.of.Eq.fin (by simp)]
+    rw [GetCast.eq.Get.of.Eq.fin (by simp)]
     rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by simp⟩) (j := ⟨0, by simp⟩) (by simp)]
     rw [GetTranspose.eq.Get.fin]
     repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]

@@ -1,4 +1,4 @@
-import Lemma.List.GetPermute__Neg.eq.Get.of.GtLength
+import Lemma.List.GetPermute__Neg.eq.Get
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.tensor
 open List Tensor
@@ -14,8 +14,7 @@ private lemma main
 -- proof
   rw [Length.eq.Get_0.of.GtLength_0]
   ·
-    rw [GetPermute__Neg.eq.Get.of.GtLength]
-    simp
+    rw [GetPermute__Neg.eq.Get]
   ·
     simp
     linarith [d.isLt]

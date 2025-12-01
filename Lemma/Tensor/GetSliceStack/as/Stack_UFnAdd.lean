@@ -6,7 +6,7 @@ import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqGetStack.of.Eq
 import Lemma.Vector.EqMapS.of.All_Eq
 import Lemma.Tensor.GetToVector.eq.Get
-import Lemma.Tensor.GetMkFlatten.eq.MkGet
+import Lemma.Tensor.GetTensorFlatten.eq.TensorGet
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetValIndices.eq.Add.of.Lt
 import Lemma.Vector.EqGetS
@@ -49,7 +49,7 @@ private lemma main
       simp [Tensor.length]
       simp [GetElem.getElem]
       rw [GetToVector.eq.Get.cons.fin]
-      rw [GetMkFlatten.eq.MkGet.fin]
+      rw [GetTensorFlatten.eq.TensorGet.fin]
       simp [EqGetStack.fin]
       rw [Vector.EqGetS]
       have h_i := i.isLt

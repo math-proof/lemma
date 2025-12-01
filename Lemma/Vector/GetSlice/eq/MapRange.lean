@@ -1,5 +1,5 @@
 import Lemma.List.EqLengthSlice_Mul.of.Lt
-import Lemma.Nat.Eq_Mk.of.EqVal
+import Lemma.Nat.Eq_Fin.of.EqVal
 import Lemma.Vector.GetIndices.eq.AddMul
 import Lemma.Vector.EqGetMapRange.of.Lt
 import Lemma.Rat.FloorDiv.eq.Zero
@@ -58,7 +58,7 @@ private lemma main
       simp [GetElem.getElem]
       apply congrArg
       simp [List.Vector.length]
-      apply Eq_Mk.of.EqVal
+      apply Eq_Fin.of.EqVal
       apply GetIndices.eq.AddMul ⟨t, h_t⟩
     ·
       simp [EqLengthSlice_Mul.of.Lt h_j]

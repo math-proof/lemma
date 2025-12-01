@@ -1,5 +1,5 @@
 import Lemma.Bool.EqCast.of.HEq
-import Lemma.Bool.HEqMkS.of.Eq.Eq.Lt
+import Lemma.Fin.HEqFinS.of.Eq.Eq.Lt
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqDivMul.of.Ne_0
@@ -59,7 +59,7 @@ private lemma main
   simp [GetElem.getElem]
   congr
   apply EqCast.of.HEq
-  apply HEqMkS.of.Eq.Eq.Lt
+  apply HEqFinS.of.Eq.Eq.Lt
   ·
     simp_all
   ·

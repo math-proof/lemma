@@ -1,6 +1,6 @@
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.Gt_0
-import Lemma.Nat.Eq_Mk
+import Lemma.Nat.Eq_Fin
 open List Nat
 
 
@@ -15,7 +15,7 @@ private lemma main
   s.permute i d = (s.take (d + 1)).rotate 1 ++ s.drop (d + 1) := by
 -- proof
   rw [← Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0]
-  have h_mk := Eq_Mk i
+  have h_mk := Eq_Fin i
   simp [h] at h_mk
   rw [h_mk]
 
