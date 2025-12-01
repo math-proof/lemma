@@ -8,7 +8,7 @@ import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailRotate.eq.Take.of.GtLength_0
 import Lemma.List.TakeRotate.eq.Drop.of.EqLength_Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.EqMul_1.of.Eq_1
@@ -20,7 +20,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Nat List Bool Tensor Vector
+open Nat List Bool Tensor Vector Fin
 
 
 @[main]
@@ -61,7 +61,7 @@ private lemma main
             simp [h_drop]
           simp only [EqMul_1.of.Eq_1 this] at h_t
           simp only [Rotate.eq.AppendDrop__Take (n := 1), ProdAppend.eq.MulProdS] at h_t
-          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
           have h_q := q.isLt
           have h_r := r.isLt
           rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
@@ -85,7 +85,7 @@ private lemma main
             simp
             rw [GetCast.eq.Get.of.Eq.fin]
             ·
-              let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+              let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
               let ⟨h_q'_div, h_r'_div⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
               simp [s'] at h_q'_div h_r'_div
               rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']

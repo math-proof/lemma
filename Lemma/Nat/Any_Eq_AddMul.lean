@@ -1,5 +1,5 @@
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
-open Nat
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
+open Fin
 
 
 @[main]
@@ -11,12 +11,8 @@ private lemma main
   ∃ i : Fin m, ∃ j : Fin n, t = i.val * n + j := by
 -- proof
   let ⟨t, h_t⟩ := t
-  obtain ⟨i, hi, j, hj, h_eq⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
-  let i' : Fin m := ⟨i, hi⟩
-  have h_i : i' = i := rfl
-  let j' : Fin n := ⟨j, hj⟩
-  have h_j : j' = j := rfl
-  use i', j'
+  obtain ⟨i, j, h_eq⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
+  use i, j
 
 
 @[main]

@@ -21,7 +21,7 @@ import Lemma.List.ProdTakeTailMapCast.eq.CastProdTakeTail
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqSubAdd
@@ -48,7 +48,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.Indices.eq.Cast_MapRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Nat Bool Int List Tensor Vector
+open Nat Bool Int List Tensor Vector Fin
 set_option maxHeartbeats 2000000
 
 
@@ -141,13 +141,13 @@ private lemma simp
       simp only [EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0 (show d + 1 > 0 by omega)] at h_t
       rw [@Nat.EqSubAdd] at h_t
       rw [ProdCons.eq.Mul_Prod] at h_t
-      let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+      let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
       let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
       rw [Mul_ProdEraseIdxTail.eq.ProdEraseIdx.of.GtLength_0] at h_t
       have h_t : t < (⟨i, (X.data.splitAt (d + 1 + 1)).length, s[d + 1]⟩ : Slice).length (s.take (d + 1 + 1)).prod * (s.drop (d + 1 + 1)).prod := by
         simpa [List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
       simp only [GetElem.getElem]
-      let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+      let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
       let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
       repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
       simp
@@ -164,7 +164,7 @@ private lemma simp
         rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
         rw [Drop.eq.DropTail]
         rwa [MulProdS.eq.ProdEraseIdx]
-      let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+      let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
       let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
       rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
       repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]

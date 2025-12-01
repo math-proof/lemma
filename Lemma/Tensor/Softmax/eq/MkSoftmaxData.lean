@@ -1,4 +1,3 @@
-import sympy.tensor.functions
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData

@@ -15,7 +15,7 @@ import Lemma.List.TakePermute__Neg.eq.ListGet
 import Lemma.List.TakeTake.eq.Take.of.Gt
 import Lemma.Nat.Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.EqMin.of.Lt
@@ -31,7 +31,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open List Nat Bool Tensor Vector
+open List Nat Bool Tensor Vector Fin
 set_option maxHeartbeats 400000
 
 
@@ -74,7 +74,7 @@ private lemma main
           ·
             intro t
             have h_t := t.isLt
-            let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+            let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
             have h_q := q.isLt
             simp only [Rotate.eq.AppendDrop__Take] at h_q
             have := h_q
@@ -85,7 +85,7 @@ private lemma main
             simp only [GetElem.getElem]
             repeat rw [GetCast.eq.Get.of.Eq.fin]
             ·
-              let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_q
+              let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_q
               have h_q' := q'.isLt
               have h_r' := r'.isLt
               simp at h_q' h_r'
@@ -124,7 +124,7 @@ private lemma main
                   exact h_r
               rw [GetCast.eq.Get.of.Eq.fin]
               ·
-                let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+                let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
                 let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
                 have h_qₐ := qₐ.isLt
                 simp only [ProdAppend.eq.MulProdS] at h_qₐ
@@ -133,7 +133,7 @@ private lemma main
                 simp
                 rw [GetCast.eq.Get.of.Eq.fin]
                 ·
-                  let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_qₐ
+                  let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul h_qₐ
                   let ⟨h_qₑ_div, _⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
                   simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₑrₑ]
                   unfold Tensor.rotate
@@ -142,7 +142,7 @@ private lemma main
                   simp only [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS] at h_rₑ
                   rw [GetCast.eq.Get.of.Eq.fin]
                   ·
-                    let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_rₑ
+                    let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul h_rₑ
                     let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
                     rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₕrₕ]
                     rw [GetTranspose.eq.Get.fin]

@@ -2,7 +2,7 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.Rotate.eq.AppendDrop__Take
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Sub.eq.Zero.of.Le
@@ -12,7 +12,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open List Bool Nat Tensor Vector
+open List Bool Nat Tensor Vector Fin
 
 
 @[main]
@@ -41,7 +41,7 @@ private lemma main
       ·
         intro t
         have h_t := t.isLt
-        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         let ⟨h_q_div, _⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
         have h_q := q.isLt
         simp [Sub.eq.Zero.of.Le h] at h_q
@@ -50,7 +50,7 @@ private lemma main
         have h_t : t < (s.take (s.length - s.length)).prod * ((s.drop (s.length - s.length)).rotate (s.length ⊓ s.length - 1)).prod := by
           simp [ProdRotate.eq.Prod] at h_t ⊢
           assumption
-        let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         let ⟨h_q'_div, _⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
         simp [ProdRotate.eq.Prod] at h_q_div h_q'_div
         simp [Sub.eq.Zero.of.Le h] at h_q_div
@@ -64,8 +64,8 @@ private lemma main
         simp [GetElem.getElem]
         repeat rw [GetCast.eq.Get.of.Eq.fin]
         ·
-          let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
-          let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r'
+          let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_r
+          let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul h_r'
           let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
           let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
           repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]

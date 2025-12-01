@@ -3,7 +3,7 @@ import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqMod
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Nat.AddMul.lt.Mul
@@ -34,7 +34,7 @@ import Lemma.List.ProdSet__MulGet.eq.Mul_Prod.of.GtLength
 import Lemma.List.GtProdTail_0.of.Lt_ProdTailSet_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.List.EqGetSet.of.GtLength
-open Tensor Vector List Bool Nat
+open Tensor Vector List Bool Nat Fin
 
 
 @[main]
@@ -52,7 +52,7 @@ private lemma main
   (X.repeat n ⟨0, h_s⟩)[i] ≃ X[i % s[0]] := by
 -- proof
   intros
-  obtain ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_i
+  obtain ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_i
   simp [h_qr, EqMod]
   unfold Tensor.repeat
   simp

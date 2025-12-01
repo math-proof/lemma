@@ -9,7 +9,7 @@ import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.List.TakeInsertIdx.eq.Take.of.Ge
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Cast.eq.Mk.of.Lt.Eq
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
@@ -23,9 +23,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import stdlib.SEq
-import sympy.tensor.tensor
-open Nat Bool List Tensor Vector Finset
+open Nat Bool List Tensor Vector Finset Fin
 
 
 @[main]
@@ -61,7 +59,7 @@ private lemma main
         rw [GetCast.eq.Get.of.Eq.fin]
         ·
           simp [List.Vector.length]
-          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
           let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
           rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
           have h_q := q.isLt
@@ -71,10 +69,10 @@ private lemma main
           rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (by grind) (by grind)] at h_t
           rw [EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength (by omega) h_k] at h_t
           rw [ProdInsertIdx.eq.Prod] at h_t
-          have h_lt : t < (⟨i, (s.take (d + 1)).prod, s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by 
+          have h_lt : t < (⟨i, (s.take (d + 1)).prod, s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
             simp
             rwa [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (by omega) i.isLt]
-          let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+          let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
           let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
           have h_q' := q'.isLt
           have h_r' := r'.isLt

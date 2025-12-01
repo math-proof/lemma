@@ -5,7 +5,7 @@ import Lemma.List.EqRotateRotate.of.GeLength
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
@@ -18,7 +18,7 @@ import Lemma.List.TakeRotate.eq.Drop.of.GeLength
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Nat.Gt_0.of.Gt
-open Vector Tensor List Bool Nat
+open Vector Tensor List Bool Nat Fin
 
 
 @[main]
@@ -47,7 +47,7 @@ private lemma main
       ·
         intro t
         have h_t := t.isLt
-        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         have h_r := r.isLt
         simp at h_r
         rw [Rotate.eq.AppendDrop__Take.of.GeLength (n := s.length - 1) (by simp)] at h_r
@@ -66,7 +66,7 @@ private lemma main
             unfold s' s₀
             simp
           rw [← h_rotate, ← h_length] at h_r
-          let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_r
+          let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_r
           rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
           simp [show s₀.length = s.length by simp [s₀], show s'.length = s.length by simp [s', s₀]] at h_q'r'
           rw [GetTranspose.eq.Get.fin]

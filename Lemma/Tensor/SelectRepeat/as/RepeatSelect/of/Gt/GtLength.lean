@@ -15,7 +15,7 @@ import Lemma.List.TakeSet.eq.Take.of.Ge
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.DivDiv.eq.Div_Mul
@@ -39,7 +39,7 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open List Nat Bool Tensor Vector
+open List Nat Bool Tensor Vector Fin
 
 
 @[main]
@@ -80,7 +80,7 @@ private lemma main
       ·
         intro t
         have h_t := t.isLt
-        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         have h_q := q.isLt
         have h_r := r.isLt
         have h_d_lt_length := LengthSet.eq.Length s k (n * s[k]) ▸ h_k
@@ -92,7 +92,7 @@ private lemma main
         simp [h_length_slice] at h_t
         rw [EraseIdxSet.eq.SetEraseIdx.of.Gt h_d] at h_t
         rw [h_prod_set] at h_t
-        let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
         repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
         simp
@@ -119,7 +119,7 @@ private lemma main
               rw [h_prod_take]
               apply AddMul.lt.Mul.of.Lt.Lt _ h_i
               rwa [TakeSet.eq.Take.of.Ge (show k ≥ d by omega)] at h_q
-            let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+            let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
             let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
             have h_lt : ↑q' * ((s.eraseIdx d).drop (k - 1)).prod + ↑r' % ((s.eraseIdx d).drop (k - 1)).prod < (⟨↑i, ↑(s.take (d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
               simp [h_length_slice]
@@ -127,7 +127,7 @@ private lemma main
               apply AddMul.lt.Mul.of.Lt.Lt q'.isLt
               apply LtMod.of.Gt_0
               grind
-            let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+            let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
             have h_qₑ := qₑ.isLt
             let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
             repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]

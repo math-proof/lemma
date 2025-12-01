@@ -6,7 +6,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.ProdRotate.eq.Prod
@@ -20,7 +20,7 @@ import Lemma.Tensor.SEqRotate_Length
 import Lemma.List.LengthRotate.eq.Length
 import Lemma.Tensor.SEqRotate_0
 import Lemma.Nat.Sub.eq.Zero
-open Vector Tensor List Bool Nat
+open Vector Tensor List Bool Nat Fin
 
 
 @[main]
@@ -60,7 +60,7 @@ private lemma main
         ·
           intro t
           have h_t := t.isLt
-          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
           simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
           rw [GetTranspose.eq.Get]
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop]

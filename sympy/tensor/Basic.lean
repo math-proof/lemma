@@ -93,15 +93,11 @@ instance : Coe α (Tensor α []) where
 instance [Add α] : Add (Tensor α s) where
   add A B := ⟨A.data + B.data⟩
 
-/--
-broadcast addition of tensors
 instance [Add α] : HAdd (Tensor α s) α (Tensor α s) where
-  hAdd A B := A + (B : Tensor α [])
--/
+  hAdd A B := ⟨A.data + B⟩
+
 instance [Add α] : HAdd (Tensor α s) (Tensor α []) (Tensor α s) where
-  hAdd A B :=
-    let B : Tensor α s := ⟨List.Vector.replicate s.prod B.data[0]⟩
-    A + B
+  hAdd A B := A + B.data[0]
 
 instance [Add α] : HAdd (Tensor α (n :: s).tail) (Tensor α s) (Tensor α s) where
   hAdd A B :=

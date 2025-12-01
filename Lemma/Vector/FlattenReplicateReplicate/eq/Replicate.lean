@@ -1,8 +1,8 @@
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import sympy.vector.vector
-open Nat Vector
+open Nat Vector Fin
 
 
 @[main]
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   ext t
   have h_t := t.isLt
-  let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+  let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
   simp
 

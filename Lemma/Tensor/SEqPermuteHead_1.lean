@@ -1,5 +1,5 @@
 import Lemma.List.Ne_Nil.is.GtLength_0
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.List.EqRotate_1.of.LeLength_1
 import Lemma.Vector.GetTranspose.eq.Get
@@ -11,7 +11,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.EqGetS
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.ProdAppend.eq.MulProdS
-open List Nat Vector Bool Tensor
+open List Vector Bool Tensor Fin
 
 
 @[main, comm]
@@ -54,7 +54,7 @@ private lemma main
       ·
         intro t
         have h_t := t.isLt
-        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         have h_r := r.isLt
         simp at h_r
         have h_q := q.isLt

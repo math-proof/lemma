@@ -1,16 +1,17 @@
-import sympy.tensor.Basic
 import sympy.Basic
+import sympy.tensor.Basic
 
 
 @[main]
 private lemma main
   [Mul α]
-  {a b : Tensor α s} :
+-- given
+  (A B : Tensor α s) :
 -- imply
-  (a * b).data = a.data * b.data :=
+  (A * B).data = A.data * B.data :=
 -- proof
   rfl
 
 
 -- created on 2025-05-02
--- updated on 2025-06-22
+-- updated on 2025-12-01

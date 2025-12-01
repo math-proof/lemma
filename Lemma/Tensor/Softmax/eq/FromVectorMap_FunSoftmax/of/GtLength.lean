@@ -15,7 +15,7 @@ import Lemma.List.TakeInsertIdx.eq.Take
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Div.eq.AddMulDiv_Mul
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Nat.DivMul.eq.Mul_Div.of.Dvd
@@ -40,7 +40,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
 import sympy.tensor.functions
-open Finset List Nat Tensor Vector
+open Finset List Nat Tensor Vector Fin
 
 
 @[main]
@@ -60,7 +60,7 @@ private lemma main
   simp [DataDiv.eq.DivDataS]
   ext t
   have h_t := t.isLt
-  let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+  let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
   let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
   have h_q := q.isLt
   have h_r := r.isLt
@@ -84,14 +84,14 @@ private lemma main
     simp [Mul_Mul.eq.MulMul.comm]
     simp [MulMul.eq.Mul_Mul]
     rwa [MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength]
-  let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+  let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
   let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
   have h_q' := q'.isLt
   have h_r' := r'.isLt
   have h_lt : r < (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) := by
     simp [Mul_Mul.eq.MulMul.comm]
     rwa [MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength]
-  let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+  let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
   let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
   have h_qₐ := qₐ.isLt
   simp [TakeInsertIdx.eq.Take, TakeEraseIdx.eq.Take] at h_q' h_qₐ
@@ -123,7 +123,7 @@ private lemma main
       apply AddMul.lt.Mul.of.Lt.Lt h_q'
       apply LtMod.of.Ne_0
       grind
-    let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+    let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
     let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
     have h_qₑ := qₑ.isLt
     simp only [LengthSlice.eq.Div.of.Lt.Dvd h_dvdₑ h_k] at h_qₑ
@@ -134,7 +134,7 @@ private lemma main
       apply AddMul.lt.Mul.of.Lt.Lt h_qₐ
       apply LtMod.of.Ne_0
       grind
-    let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+    let ⟨qₕ, rₕ, h_qₕrₕ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
     let ⟨h_qₕ_div, h_rₕ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₕrₕ
     have h_qₕ := qₕ.isLt
     simp only [LengthSlice.eq.Div.of.Lt.Dvd h_dvdₕ h_k] at h_qₕ

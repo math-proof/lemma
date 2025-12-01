@@ -1,4 +1,4 @@
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -6,7 +6,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Tensor Vector Nat Bool
+open Tensor Vector Bool Fin
 
 
 @[main]
@@ -26,7 +26,7 @@ private lemma main
     apply SEq.of.All_EqGetS.Eq (by simp)
     intro t
     have h_t := t.isLt
-    let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+    let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
     have h_r := r.isLt
     simp at h_r
     simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]

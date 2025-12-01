@@ -22,7 +22,7 @@ import Lemma.List.TakeTake.eq.Take.of.Gt
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Nat.DivDiv.eq.Div_Mul
@@ -44,7 +44,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.Sum.of.All_Eq.Eq
-open Bool Finset List Nat Tensor Vector
+open Bool Finset List Nat Tensor Vector Fin
 set_option maxHeartbeats 4000000
 
 
@@ -80,7 +80,7 @@ private lemma main
         intro t
         have h_t := t.isLt
         simp
-        let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+        let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
         have h_q' := q'.isLt
         simp at h_q'
@@ -120,7 +120,7 @@ private lemma main
                 rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
                 rwa [EraseIdxEraseIdx.of.Gt.GtLength (by omega) (by omega)]
                 grind
-              let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+              let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
               have h_q := q.isLt
               have h_r := r.isLt
               simp at h_q
@@ -144,7 +144,7 @@ private lemma main
                   exact h_q'
                 ·
                   exact h_r'
-              let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+              let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
               have h_qₑ := qₑ.isLt
               simp at h_qₑ
               rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (by grind) (by grind)] at h_qₑ
@@ -178,7 +178,7 @@ private lemma main
                         ·
                           simp [DropEraseIdx.eq.AppendDropTake.of.Ge h_k] at h_r
                           exact h_r
-                      let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_lt
+                      let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
                       have h_qₐ := qₐ.isLt
                       simp at h_qₐ
                       have := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength d.isLt i.isLt

@@ -2,12 +2,12 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.List.EqRotate_0
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.Any_Eq_AddMul.of.Lt_Mul
+import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Nat.EqVal_0
-open Tensor List Bool Vector Nat
+open Tensor List Bool Vector Nat Fin
 
 
 @[main]
@@ -28,7 +28,7 @@ private lemma main
     ·
       intro t
       have h_t := t.isLt
-      let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul.fin h_t
+      let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
       simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
       have := GetTranspose.eq.Get (X.data.splitAt 0) ⟨0, by simp⟩ ⟨q, by simp⟩
       simp at this

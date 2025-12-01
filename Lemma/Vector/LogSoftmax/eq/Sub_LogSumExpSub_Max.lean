@@ -12,5 +12,5 @@ private lemma main
 -- proof
   sorry
 
-#check List.maximum
+
 -- created on 2025-11-30
