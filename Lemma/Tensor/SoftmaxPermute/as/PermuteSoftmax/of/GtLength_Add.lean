@@ -6,7 +6,7 @@ import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.AddAdd
 import Lemma.Nat.EqAdd0
-import Lemma.Tensor.GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length
+import Lemma.Tensor.GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
@@ -81,12 +81,12 @@ private lemma main
       simp [GetPermute.eq.Get.of.Gt (by simp) d (s := s₀ :: s) (i := ⟨i + 1, by omega⟩) (j := 0)] at h_t
       rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by simp)]
       simp
-      have := GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
+      have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
       have := SEqSoftmaxS.of.SEq this (i + d)
       apply SEq.trans this
       have ih := ih h (X.get ⟨t, by grind⟩)
       apply SEq.trans ih
-      have := GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t (X.softmax (i + 1)) d
+      have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t (X.softmax (i + 1)) d
       apply SEq.symm ∘ SEq.trans this
       rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by simpa)]
       rfl

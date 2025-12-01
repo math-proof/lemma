@@ -22,7 +22,7 @@ import Lemma.Nat.LtAddMul.of.Lt.Lt.Eq
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
-import Lemma.Tensor.GetPermute.eq.PermuteGet.of.Lt_Get_0.GtLength_1
+import Lemma.Tensor.GetPermute.as.PermuteGet.of.Lt_Get_0.GtLength_1
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthPermute.eq.Get_0.of.GtVal_0
 import Lemma.Tensor.Permute.eq.Ite
@@ -63,7 +63,7 @@ private lemma main
     have : NeZero d := ⟨h_d⟩
     subst h_i0
     simp
-    apply GetPermute.eq.PermuteGet.of.Lt_Get_0.GtLength_1 _ h_k
+    apply GetPermute.as.PermuteGet.of.Lt_Get_0.GtLength_1 _ h_k
   else
     rw [@Tensor.Permute.eq.Ite (i := ⟨i, by simp; omega⟩) (d := d)]
     simp

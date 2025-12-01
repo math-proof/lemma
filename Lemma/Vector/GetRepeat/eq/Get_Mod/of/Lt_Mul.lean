@@ -17,5 +17,16 @@ private lemma main
   simpa
 
 
+@[main]
+private lemma fin
+-- given
+  (h : k < t * n)
+  (v : List.Vector α n) :
+-- imply
+  (v.repeat t).get ⟨k, h⟩ = v.get ⟨k % n, LtMod.of.Gt_0 (Gt_0.of.GtMul h) k⟩ := by
+-- proof
+  apply main h
+
+
 -- created on 2025-07-12
 -- updated on 2025-09-24

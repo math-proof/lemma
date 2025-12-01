@@ -1,4 +1,4 @@
-import Lemma.Tensor.GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length
+import Lemma.Tensor.GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Nat.Lt.of.LtAdd
@@ -84,7 +84,7 @@ private lemma main
           .
             rw [show i + 1 + d - 1 = i + d by simp]
             simp
-            have := GetPermute.eq.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
+            have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
             have := SEqSumS.of.SEq this (i + d)
             apply SEq.trans this
             .
