@@ -15,7 +15,7 @@ open Bool Tensor Nat List
 
 @[main]
 private lemma main
-  [NeZero (d : ℕ)]
+  [NeZero d]
   {s : List ℕ}
 -- given
   (h : d = s.length - 1)

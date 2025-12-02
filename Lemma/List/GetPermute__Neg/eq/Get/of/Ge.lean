@@ -6,14 +6,15 @@ open List Nat
 @[main, comm]
 private lemma main
   {s : List α}
+  {i : Fin s.length}
+  {d : ℕ}
 -- given
-  (h : s.length > i)
   (h_d : i ≥ d) :
 -- imply
-  have : i - d < (s.permute ⟨i, h⟩ (-d)).length := by
+  have : i - d < (s.permute i (-d)).length := by
     simp
     omega
-  (s.permute ⟨i, h⟩ (-d))[i - d] = s[i] := by
+  (s.permute i (-d))[i - d] = s[i] := by
 -- proof
   have := GetPermute__Neg.eq.Get_Add.of.GtLength_Add (s := s) (i := i - d) (d := d) (by omega)
   simp [EqAddSub.of.Ge h_d] at this

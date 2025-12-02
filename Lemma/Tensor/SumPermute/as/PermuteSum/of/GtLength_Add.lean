@@ -2,7 +2,7 @@ import Lemma.Tensor.GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Nat.Lt.of.LtAdd
-import Lemma.List.PermuteCons.eq.Cons_Permute.of.GtLength
+import Lemma.List.PermuteCons.eq.Cons_Permute
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
@@ -74,9 +74,7 @@ private lemma main
         .
           apply SEqCastS.of.SEq.Eq.Eq
           .
-            simp
-            rw [PermuteCons.eq.Cons_Permute.of.GtLength h_length_gt_i s₀ d]
-            simp
+            simp [PermuteCons.eq.Cons_Permute (i := ⟨i, by omega⟩)]
             rw [EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0 (by simp)]
             simp
           .

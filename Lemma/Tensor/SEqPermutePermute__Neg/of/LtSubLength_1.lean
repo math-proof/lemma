@@ -37,7 +37,7 @@ set_option maxHeartbeats 400000
 
 @[main]
 private lemma main
-  [NeZero (d : ℕ)]
+  [NeZero d]
   {s : List ℕ}
 -- given
   (h : d < s.length - 1)

@@ -14,7 +14,7 @@ open List Nat
 
 @[main]
 private lemma main
-  [NeZero (d : ℕ)]
+  [NeZero d]
   {s : List ℕ}
 -- given
   (h : s.length > 1) :

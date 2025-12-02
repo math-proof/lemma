@@ -5,7 +5,7 @@ import sympy.tensor.Basic
 open Nat Tensor List
 
 
-@[main, comm]
+@[main]
 private lemma main
   {i : Fin s.length}
 -- given

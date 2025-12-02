@@ -3,7 +3,7 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [NeZero (i : ℕ)]
+  [NeZero i]
 -- given
   (n : ℕ) :
 -- imply

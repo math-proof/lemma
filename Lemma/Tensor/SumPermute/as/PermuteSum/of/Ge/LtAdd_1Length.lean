@@ -5,7 +5,7 @@ import Lemma.List.DropPermute__Neg.eq.AppendDropTake.of.Ge.GtLength
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxPermute__Neg.eq.EraseIdx.of.Ge
 import Lemma.List.Get.dvd.ProdTake.of.GtLength
-import Lemma.List.GetPermute__Neg.eq.Get.of.Ge.GtLength
+import Lemma.List.GetPermute__Neg.eq.Get.of.Ge
 import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
@@ -93,7 +93,7 @@ private lemma main
   rw [Sum.eq.Sum_Select]
   rw [Sum.eq.Sum_Select.of.GtLength]
   have h_eraseIdx := EraseIdxPermute__Neg.eq.EraseIdx.of.Ge h_d
-  have h_get := GetPermute__Neg.eq.Get.of.Ge.GtLength (d := d) i.isLt h_d
+  have h_get := GetPermute__Neg.eq.Get.of.Ge (d := d) h_d
   apply SEqSumS.of.All_SEq.Eq.Eq h_eraseIdx h_get
   ·
     intro t

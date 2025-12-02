@@ -39,7 +39,7 @@ import Lemma.Nat.ToNatSub_Neg.eq.Add
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
-import Lemma.Tensor.LengthPermute.eq.Get
+import Lemma.Tensor.LengthPermute__Neg.eq.Get
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -59,7 +59,7 @@ private lemma main
   (d : Fin s.length)
   (i : Fin s[d]) :
 -- imply
-  X.select d i ≃ (X.permute d (-d)).get ⟨i, by simp [LengthPermute.eq.Get]⟩ := by
+  X.select d i ≃ (X.permute d (-d)).get ⟨i, by simp [LengthPermute__Neg.eq.Get]⟩ := by
 -- proof
   apply SEq.of.SEqDataS.Eq
   ·

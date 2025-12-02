@@ -40,4 +40,38 @@ def softmax [Div α] [Exp α] (x : Vector α n) : Vector α n :=
   let x_exp := exp x
   x_exp / x_exp.sum
 
+private def argminmax [NeZero n] (x : Vector α n) (cmp : α → α → Prop) [DecidableRel cmp] : Fin n :=
+  Nat.rec
+    (motive := fun n => n ≠ 0 → Vector α n → Fin n)
+    (fun h_n _ => False.elim (h_n rfl))
+    (fun n ih _ v =>
+      if h_n : n = 0 then
+        0
+      else
+        let i := ih h_n v.tail
+        if cmp v.head (v.tail.get i) then
+          i.succ
+        else
+          0
+    )
+    n (NeZero.ne n) x
+
+def argmin [NeZero n] [LT α] [DecidableLT α] (x : Vector α n) : Fin n := argminmax x GT.gt
+
+def argmax [NeZero n] [LT α] [DecidableLT α] (x : Vector α n) : Fin n := argminmax x LT.lt
+
+/--
+def v : List.Vector Float 5 := ⟨[3, 1, 4, 1, 5], by simp⟩
+#eval v.min  -- Output: 1
+-/
+def min [NeZero n] [LT α] [DecidableLT α] (x : Vector α n) : α := x.get x.argmin
+
+/--
+```lean
+def v : List.Vector Float 4 := ⟨[2.5, 3.6, 1.2, 4.8], by simp⟩
+#eval v.max  -- Output: 4.8
+```
+-/
+def max [NeZero n] [LT α] [DecidableLT α] (x : Vector α n) : α := x.get x.argmax
+
 end List.Vector

@@ -4,7 +4,7 @@ import sympy.Basic
 @[main]
 private lemma main
   [Zero α]
-  [NeZero (b : α)]
+  [NeZero b]
   {a : α}
 -- given
   (h : a = b) :

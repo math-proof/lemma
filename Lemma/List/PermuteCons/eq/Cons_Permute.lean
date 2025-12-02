@@ -5,13 +5,12 @@ open List
 @[main]
 private lemma main
   {s : List α}
-  {i : ℕ}
 -- given
-  (h : s.length > i)
+  (i : Fin s.length)
   (s₀ : α)
   (d : ℕ) :
 -- imply
-  (s₀ :: s).permute ⟨i + 1, by simp; grind⟩ d = s₀ :: s.permute ⟨i, h⟩ d := by
+  (s₀ :: s).permute ⟨i + 1, by simp⟩ d = s₀ :: s.permute i d := by
 -- proof
   simp [Permute.eq.Append_AppendRotateTakeDrop]
 

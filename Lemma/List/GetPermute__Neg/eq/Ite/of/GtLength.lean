@@ -17,28 +17,28 @@ open List Nat
 
 @[main]
 private lemma main
-  {a : List α}
-  {i : Fin a.length}
-  {d t : ℕ}
+  {s : List α}
 -- given
-  (h : a.length > t) :
+  (h : s.length > t)
+  (i : Fin s.length)
+  (d : ℕ):
 -- imply
-  have : t < (a.permute i (-d)).length := by simpa
-  (a.permute i (-d))[t] =
+  have : t < (s.permute i (-d)).length := by simpa
+  (s.permute i (-d))[t] =
     if t < i - d then
-      a[t]
+      s[t]
     else if t = i - d then
-      a[i]
+      s[i]
     else if t ≤ i then
-      a[t - 1]
+      s[t - 1]
     else
-      a[t] := by
+      s[t] := by
 -- proof
   have h_sub := LtSub i d
   simp [Permute.eq.Ite]
   split_ifs with h_d
   ·
-    have h_t : t < (a.take (i - d)).length + (a[(i : ℕ)] :: (a.slice (i - d) i ++ a.drop (i + 1))).length := by
+    have h_t : t < (s.take (i - d)).length + (s[(i : ℕ)] :: (s.slice (i - d) i ++ s.drop (i + 1))).length := by
       rw [LengthCons.eq.Add1Length]
       rw [LengthAppend.eq.AddLengthS]
       rw [LengthSlice.eq.SubMin]

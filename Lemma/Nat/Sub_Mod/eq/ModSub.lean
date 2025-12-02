@@ -4,7 +4,7 @@ open Nat
 
 @[main, comm]
 private lemma main
-  [NeZero (n : ℕ)]
+  [NeZero n]
   {m : ℕ}
 -- given
   (h : m > n) :

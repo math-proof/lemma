@@ -8,7 +8,7 @@ import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.eq.MulProdS
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.ProdRotate.eq.Prod
-import Lemma.List.ProdTail.eq.MulProdS
+import Lemma.List.ProdTail.eq.MulProdTakeTail
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.TailPermute.eq.PermuteTail.of.GtLength_Add_1
 import Lemma.Nat.Add
@@ -172,7 +172,7 @@ private lemma main
                   rw [ProdPermute.eq.Prod] at h_q_div h_q'_div h_r_mod h_r'_mod
                   rw [TailPermute.eq.PermuteTail.of.GtLength_Add_1 (by simp; omega)] at h_q'_div h_r'_mod
                   rw [ProdPermute.eq.Prod] at h_q'_div h_r'_mod
-                  rw [ProdTail.eq.MulProdS (d := i), Mul_Mul.eq.MulMul] at h_q'_div h_r'_mod
+                  rw [ProdTail.eq.MulProdTakeTail (d := i), Mul_Mul.eq.MulMul] at h_q'_div h_r'_mod
                   rw [ProdRotate.eq.Prod, MulProdS.eq.ProdAppend] at h_r'
                   simp at h_r'
                   rw [DivAddMul.eq.AddDiv.of.Gt_0 (by omega)] at h_q'_div
@@ -180,7 +180,7 @@ private lemma main
                   rw [MulAdd.eq.AddMulS]
                   simp [AddAdd.eq.Add_Add]
                   rw [MulMul.eq.Mul_Mul]
-                  simp [← ProdTail.eq.MulProdS]
+                  simp [← ProdTail.eq.MulProdTakeTail]
                   simp at h_rₑ_mod h_rₐ_mod h_r'_mod h_r_mod h_qₕ_div h_rₕ_mod h_qᵢ_div h_rᵢ_mod h_qₐ_div h_qₑ_div
                   have h_rₐₑ_eq : rₐ.val = rₑ.val := by grind
                   have h_qₕᵢ_eq : qₕ.val = qᵢ.val := by grind

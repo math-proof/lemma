@@ -14,7 +14,7 @@ import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 import Lemma.List.ProdEraseIdx.eq.Mul_ProdEraseIdxTail.of.GtLength_0
-import Lemma.List.ProdTail.eq.MulProdS
+import Lemma.List.ProdTail.eq.MulProdTakeTail
 import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.List.ProdTakeTailMapCast.eq.CastProdTakeTail
@@ -186,7 +186,7 @@ private lemma simp
           arg 2
           simp [h_r_mod]
         simp [← h_r'_mod]
-        rw [ProdTail.eq.MulProdS s (d + 1)]
+        rw [ProdTail.eq.MulProdTakeTail s (d + 1)]
         rw [Mul_Mul.eq.MulMul]
         simp [AddMulS.eq.MulAdd]
         left

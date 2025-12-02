@@ -5,7 +5,7 @@ import sympy.tensor.Basic
 open List Tensor
 
 
-@[main, comm]
+@[main]
 private lemma main
 -- given
   (h_d : d > 1)

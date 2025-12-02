@@ -3,7 +3,7 @@ import Lemma.List.Slice.eq.Nil
 open List
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List α}
 -- given

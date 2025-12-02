@@ -4,8 +4,8 @@ import sympy.Basic
 @[main]
 private lemma main
   [Field α]
-  [NeZero (c : α)]
-  [NeZero (d : α)]
+  [NeZero c]
+  [NeZero d]
   {a b x : α}
 -- given
   (h₀ : a = d * x)

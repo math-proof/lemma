@@ -3,7 +3,7 @@ import Lemma.List.Permute__Neg.eq.Cons_EraseIdx
 import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq
 import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0
-import Lemma.Tensor.PermuteMul.eq.MulPermuteS
+import Lemma.Tensor.PermuteMul.eq.MulPermuteS__Neg
 import Lemma.Tensor.Select.eq.Cast_GetPermute
 open List Tensor
 
@@ -27,7 +27,7 @@ private lemma main
   simp at h_all
   simp [← h_all]
   congr
-  rw [PermuteMul.eq.MulPermuteS]
+  rw [PermuteMul.eq.MulPermuteS__Neg]
   apply Cast_Mul.eq.MulCastS.of.Eq h_s
 
 

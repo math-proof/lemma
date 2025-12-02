@@ -9,20 +9,17 @@ open List Nat
 @[main]
 private lemma main
   {s : List α}
-  {i d : ℕ}
+  {i : Fin s.length}
+  {d : ℕ}
 -- given
-  (h : s.length > i)
   (h_d : i ≥ d) :
 -- imply
-  (s₀ :: s).permute ⟨i + 1, by simp; grind⟩ (-d) = s₀ :: s.permute ⟨i, h⟩ (-d) := by
+  (s₀ :: s).permute ⟨i + 1, by simp⟩ (-d) = s₀ :: s.permute i (-d) := by
 -- proof
-  rw [Permute__Neg.eq.Append_AppendRotateDropTake.simp]
-  simp
+  simp [Permute__Neg.eq.Append_AppendRotateDropTake.simp]
   rw [SubAdd.eq.AddSub.of.Ge h_d]
   rw [TakeCons.eq.Cons_Take]
   rw [AppendCons.eq.Cons_Append]
-  simp
-  rw [Permute__Neg.eq.Append_AppendRotateDropTake.simp]
   simp
   repeat rw [EqMin.of.Le (by omega)]
 
