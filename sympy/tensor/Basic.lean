@@ -391,6 +391,10 @@ instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α [m, k]) (Tensor α [k, 
 def Tensor.map (f : α → β) (X : Tensor α s) : Tensor β s :=
   ⟨X.data.map f⟩
 
+-- Helper: Element-wise zip with function
+def Tensor.map₂ (f : α → β → γ) (X : Tensor α s) (Y : Tensor β s) : Tensor γ s :=
+  ⟨X.data.map₂ f Y.data⟩
+
 instance [Coe α β] : Coe (Tensor α s) (Tensor β s) where
   coe X := X.map (fun a => Coe.coe a)
 

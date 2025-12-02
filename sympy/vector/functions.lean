@@ -56,9 +56,9 @@ private def argminmax [NeZero n] (x : Vector α n) (cmp : α → α → Prop) [D
     )
     n (NeZero.ne n) x
 
-def argmin [NeZero n] [LT α] [DecidableLT α] (x : Vector α n) : Fin n := argminmax x GT.gt
+def argmin [NeZero n] [LT α] [DecidableLT α] (x : Vector α n) : Fin n := x.argminmax GT.gt
 
-def argmax [NeZero n] [LT α] [DecidableLT α] (x : Vector α n) : Fin n := argminmax x LT.lt
+def argmax [NeZero n] [LT α] [DecidableLT α] (x : Vector α n) : Fin n := x.argminmax LT.lt
 
 /--
 def v : List.Vector Float 5 := ⟨[3, 1, 4, 1, 5], by simp⟩
@@ -73,5 +73,17 @@ def v : List.Vector Float 4 := ⟨[2.5, 3.6, 1.2, 4.8], by simp⟩
 ```
 -/
 def max [NeZero n] [LT α] [DecidableLT α] (x : Vector α n) : α := x.get x.argmax
+
+/--
+array minimum / maximum of each row column in a matrix, similar to `Tensor.aminmax` in PyTorch
+-/
+def aminmax [NeZero m] (x : Vector (Vector α n) m) (cmp : α → α → Prop) [DecidableRel cmp] : Vector α n :=
+  x.transpose.map (fun v => v.get (v.argminmax cmp))
+
+/--
+Returns the array index of the minimum/maximum element for each column.
+-/
+def argAminmax [NeZero m] (x : Vector (Vector α n) m) (cmp : α → α → Prop) [DecidableRel cmp] : Vector (Fin m) n :=
+  x.transpose.map (fun v => v.argminmax cmp)
 
 end List.Vector

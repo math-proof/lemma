@@ -1,11 +1,10 @@
 # Purpose of this project
-This is Lean 4 machine learning project (related to Torch, SymPy, [KaTeX](https://github.com/KaTeX/KaTeX), and [arXiv](https://arxiv.org)):
-👉 **[https://github.com/math-proof/lemma](https://github.com/math-proof/lemma)**
+This is Lean4 machine learning project (related to Torch, SymPy, [KaTeX](https://github.com/KaTeX/KaTeX), and [arXiv](https://arxiv.org)).
 
-The main goals of this project are formalizing in Lean4:
+The main objectives of this project are formalizing in Lean4:
 
 * **machine learning framework Torch**
-  The most commonly used Torch operators — such as `softmax`, `sum`, `mean`, `unsqueeze`, `matmul`, `repeat`, `permute`, `transpose`, `exp`, and `log` — have already been translated into Lean 4.
+  The most commonly used Torch operators: `softmax`, `sum`, `mean`, `unsqueeze`, `matmul`, `repeat`, `permute`, `transpose`, `select`, `max`, `min`, `argmax`, `argmin`, `exp`, and `log` — have been translated into Lean4.
 
 * **symbolic mathematics from SymPy (symbolic mathematics for Python).**
   SymPy is also a fundamental algorithmic component of the PyTorch framework.
@@ -20,7 +19,7 @@ The main goals of this project are formalizing in Lean4:
   More examples can be found in the theorem library at [www.lemma.cn](http://www.lemma.cn).
 
 
-It also facilitates reading by visualizing Lean 4 code with KaTeX. 
+It also facilitates reading by visualizing Lean4 code with KaTeX. 
 This feature converts one-dimensional Lean code into rainbow-colored KaTeX-rendered mathematical formulas. Over **240,000 theorems from Mathlib** have already been visualized in KaTeX format, for example:
   [http://www.lemma.cn/lean/?mathlib=Finset.*sum](http://www.lemma.cn/lean/?mathlib=Finset.*sum)
   (You can use any regular expression to search.)
