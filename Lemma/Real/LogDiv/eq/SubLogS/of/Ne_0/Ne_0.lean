@@ -8,9 +8,9 @@ private lemma main
   (h₀ : x ≠ 0)
   (h₁ : y ≠ 0) :
 -- imply
-  (x * y).log = x.log + y.log :=
+  (x / y).log = x.log - y.log :=
 -- proof
-  Real.log_mul h₀ h₁
+  Real.log_div h₀ h₁
 
 
--- created on 2025-10-03
+-- created on 2025-12-03
