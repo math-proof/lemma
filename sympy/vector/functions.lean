@@ -34,7 +34,20 @@ instance [NeZero n] [ExpNeZero α] : ExpNeZero (Vector α n) where
 
 instance [Log α] : Log (Vector α n) where
   log a := a.map Log.log
-
+  log_zero := by
+    ext i
+    simp [Zero.eq.Replicate]
+    apply Log.log_zero
+  log_one := by
+    ext i
+    simp [One.eq.Replicate]
+    simp [EqGet0_0.fin]
+    apply Log.log_one
+  log_div_self x := by
+    ext i
+    simp [GetDiv.eq.DivGetS.fin]
+    simp [EqGet0_0.fin]
+    apply Log.log_div_self
 
 def softmax [Div α] [Exp α] (x : Vector α n) : Vector α n :=
   let x_exp := exp x

@@ -29,6 +29,7 @@ export const tactics = [
     'exists',
     'ext',
     'field_simp',
+    'filter_upwards',
     'fin_cases',
     'fin_omega',
     'funext',
