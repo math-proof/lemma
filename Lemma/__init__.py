@@ -12,4 +12,3 @@ from . import Int
 from . import Finset
 from . import Rat
 from . import Complex
-from . import Vector
