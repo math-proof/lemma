@@ -1,6 +1,6 @@
 import sympy.tensor.stack
 import Lemma.Nat.Mul
-import Lemma.Vector.MulFlattenS.eq.FlattenMul
+import Lemma.Vector.FlattenMul.eq.MulFlattenS
 import Lemma.Vector.MulMapS.eq.Map_FunMul
 open Vector Nat
 

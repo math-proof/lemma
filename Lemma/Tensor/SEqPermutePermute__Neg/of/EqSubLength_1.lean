@@ -9,8 +9,7 @@ import Lemma.List.Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0
 import Lemma.List.RotateRotate.eq.Rotate_Add
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqAdd_Sub.of.Ge
-import Lemma.Nat.OfNat.eq.Cast
-import Lemma.Nat.ToNatSub_Neg.eq.Add
+import Lemma.Nat.ToNatSub_Neg.eq.Add1
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteHeadCast.eq.Cast_PermuteHead.of.Eq
 import Lemma.Tensor.SEqPermute__0
@@ -56,7 +55,7 @@ private lemma main
       ·
         omega
       ·
-        have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 (s.length - 1)
+        have h_toNat := ToNatSub_Neg.eq.Add1 (s.length - 1)
         rw [EqAdd_Sub.of.Ge (by omega)] at h_toNat
         rw [PermuteHeadCast.eq.Cast_PermuteHead.of.Eq]
         ·

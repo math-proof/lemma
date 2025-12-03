@@ -8,14 +8,13 @@ private lemma main
   {B : Tensor α s'}
 -- given
   (h_s : s.length > i)
-  (h_i : i' = i)
-  (h_d : d' = d)
+  (h_i : i = i')
+  (h_d : d = d')
   (h : A ≃ B) :
 -- imply
-  B.permute ⟨i', by rwa [← h.left, h_i]⟩ d' ≃ A.permute ⟨i, h_s⟩ d:= by
+  A.permute ⟨i, h_s⟩ d ≃ B.permute ⟨i', by rwa [← h.left, ← h_i]⟩ d' := by
 -- proof
   subst h_d h_i
-  apply SEq.symm
   apply SEqPermuteS.of.SEq.GtLength h_s h
 
 

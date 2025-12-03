@@ -16,8 +16,7 @@ import Lemma.Nat.EqMod_1'0
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Gt_0
-import Lemma.Nat.OfNat.eq.Cast
-import Lemma.Nat.ToNatSub_Neg.eq.Add
+import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -49,9 +48,8 @@ private lemma main
     have h_d := Gt.of.Ge.Ne h (by omega)
     rw [@Tensor.Permute.eq.Ite]
     simp
-    have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
-    have h_toNat_i := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 i
-    rw [Add.comm] at h_toNat_i
+    have h_toNat := ToNatSub_Neg.eq.Add1 d
+    have h_toNat_i := ToNatSub_Neg.eq.Add_1 i
     split_ifs with h_i0 h_pos? h_i h_length
     repeat omega
     apply SEqCast.of.SEq.Eq

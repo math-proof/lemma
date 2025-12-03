@@ -22,8 +22,7 @@ import Lemma.Nat.EqMin.of.Lt
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtAdd.of.Lt_Sub
-import Lemma.Nat.OfNat.eq.Cast
-import Lemma.Nat.ToNatSub_Neg.eq.Add
+import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -104,8 +103,7 @@ private lemma main
               split_ifs
               repeat omega
               simp
-              have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
-              rw [Add.comm] at h_toNat
+              have h_toNat := ToNatSub_Neg.eq.Add_1 d
               simp [EqMin.of.Lt h_lt_add_1]
               simp [EqMod.of.Lt h_1_lt]
               simp [DropPermute__Neg.eq.Drop (s := s) (i := ⟨d, by grind⟩)]

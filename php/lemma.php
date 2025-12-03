@@ -244,8 +244,10 @@ if ($_POST) {
 		$proof = ltrim(implode("\n", $proof), "\n");
 		$proof = rtrim($proof);
 		$proof = preg_replace("/(?<=\n)\s+\n/", '', $proof);
-		if ($declspec)
+		if ($declspec) {
+			$declspec = rtrim($declspec);
 			$declspec = "\n$declspec";
+		}
 		if (!str_ends_with($declspec, ':')) 
 			$declspec .= " :";
 		$proof = <<<EOT

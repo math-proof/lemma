@@ -18,7 +18,7 @@ private lemma main
   intro d
   have := SoftmaxPermute.as.PermuteSoftmax.of.GtLength_Add (i := i) (d := d) (by omega) X
   have h_id : i + d = s.length - 1 := by omega
-  have := SEqPermuteS.of.SEq.Eq.Eq.GtLength (i := i + d) (i' := i + d) (d := -d) (d' := -d) (by simp; omega) (by omega) (by omega) this
+  have := SEqPermuteS.of.SEq.Eq.Eq.GtLength (i := i + d) (i' := i + d) (d := -d) (d' := -d) (by simp; omega) (by omega) (by omega) this.symm
   simp [h_id] at this
   have h_sim: ((X.permute ⟨i, by omega⟩ d).softmax (s.length - 1)).permute ⟨i + d, by simp; grind⟩ (-d) ≃ (X.permute ⟨i, by omega⟩ d).softmax.permute ⟨s.length - 1, by simp; grind⟩ (-d) := by
     apply SEqPermuteS.of.SEq.Eq.Eq.GtLength

@@ -19,9 +19,8 @@ import Lemma.Nat.EqSub.of.EqAdd
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.Nat.LtAddMulAddMul.of.Lt.Lt.Lt.Eq
-import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
-import Lemma.Nat.ToNatSub_Neg.eq.Add
+import Lemma.Nat.ToNatSub_Neg.eq.Add1
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -56,7 +55,7 @@ private lemma main
   ·
     rw [h_permute]
   ·
-    have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
+    have h_toNat := ToNatSub_Neg.eq.Add1 d
     apply SEqCast.of.SEq.Eq
     ·
       rw [MulProdS.eq.ProdAppend]

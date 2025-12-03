@@ -35,7 +35,7 @@ import Lemma.Nat.Gt_0
 import Lemma.Nat.LtDiv.of.Lt_Mul
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.ToNatSub_Neg.eq.Add
+import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
@@ -90,8 +90,7 @@ private lemma main
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
         rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
         ·
-          have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
-          rw [Add.comm] at h_toNat
+          have h_toNat := ToNatSub_Neg.eq.Add_1 d
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           simp [TailPermute__Neg.eq.EraseIdx]
           simp [@Tensor.Permute.eq.Ite]

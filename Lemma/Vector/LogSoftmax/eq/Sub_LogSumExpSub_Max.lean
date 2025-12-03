@@ -1,3 +1,4 @@
+import sympy.tensor.functions
 import sympy.Basic
 import sympy.vector.functions
 

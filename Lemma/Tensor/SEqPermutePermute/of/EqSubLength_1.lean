@@ -4,9 +4,8 @@ import Lemma.List.EqRotatePermute.of.GtLength_0
 import Lemma.List.Permute.eq.Rotate.of.GtLength_0
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqAdd_Sub.of.Ge
-import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Nat.ToNatAdd.eq.Add
-import Lemma.Nat.ToNatSub_Neg.eq.Add
+import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteTailCast.eq.Cast_PermuteTail.of.Eq
 import Lemma.Tensor.SEqPermuteTailPermuteHead
@@ -40,7 +39,7 @@ private lemma main
     rw [h_permute]
     apply EqRotatePermute.of.GtLength_0
   ·
-    have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
+    have h_toNat := ToNatSub_Neg.eq.Add1 d
     rw [h_toNat]
     subst h
     rw [EqAdd_Sub.of.Ge (by omega)]

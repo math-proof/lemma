@@ -1,11 +1,11 @@
-import sympy.tensor.Basic
 import sympy.Basic
+import sympy.tensor.Basic
 
 
 @[main]
 private lemma main
   [Mul α]
-  {A B : Tensor α n}
+  {A B : Tensor α s}
 -- given
   (h : A = B)
   (x : α) :
@@ -16,3 +16,4 @@ private lemma main
 
 
 -- created on 2025-12-01
+-- updated on 2025-12-03

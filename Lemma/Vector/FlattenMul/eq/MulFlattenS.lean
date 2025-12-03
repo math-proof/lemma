@@ -6,13 +6,13 @@ import Lemma.Vector.GetMul.eq.MulGetS.of.GtLength
 open Vector Nat
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Mul α]
 -- given
   (a b : List.Vector (List.Vector α n) m) :
 -- imply
-  a.flatten * b.flatten = (a * b).flatten := by
+  (a * b).flatten = a.flatten * b.flatten := by
 -- proof
   ext k
   obtain ⟨i, j, h_eq⟩ := Any_Eq_AddMul k

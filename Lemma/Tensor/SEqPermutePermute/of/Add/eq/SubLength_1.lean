@@ -34,8 +34,7 @@ import Lemma.Nat.EqSubAdd
 import Lemma.Nat.EqSub_Sub.of.Gt
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.MulAdd.eq.AddMulS
-import Lemma.Nat.OfNat.eq.Cast
-import Lemma.Nat.ToNatSub_Neg.eq.Add
+import Lemma.Nat.ToNatSub_Neg.eq.Add1
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -71,7 +70,7 @@ private lemma main
   rw [EqSubAdd.left] at h_permute
   have h_i := NeZero.pos i
   have h_Lt1d : 1 + d < s.length := by omega
-  have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
+  have h_toNat := ToNatSub_Neg.eq.Add1 d
   apply SEqCast.of.SEq.Eq
   ·
     rw [h_toNat]

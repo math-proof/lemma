@@ -24,7 +24,7 @@ private lemma main
   have h_length := Length.of.SEq.shape h
   simp at h_length
   have h : (A.permute ⟨i, h_i⟩ d).permute ⟨i + d, by simp; omega⟩ (-d) ≃ (B.permute ⟨i', h_i'⟩ d).permute ⟨i' + d, by simp [← h_eq]; omega⟩ (-d) := by
-    apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ _ rfl h.symm
+    apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ _ rfl h
     simp [← h_eq]
   have h_A := SEqPermutePermute.of.GtLength_Add h_d A (d := d)
   have : (A.permute ⟨i, by omega⟩ d).permute ⟨i + d, by simp; omega⟩ (-d) ≃ (A.permute ⟨i, by omega⟩ d).permute ⟨i + d, by simp; omega⟩ (-d) := by

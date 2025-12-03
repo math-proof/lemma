@@ -41,8 +41,7 @@ import Lemma.Nat.Mul
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.OfNat.eq.Cast
-import Lemma.Nat.ToNatSub_Neg.eq.Add
+import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -126,8 +125,7 @@ private lemma main
           simp
           split_ifs
           repeat omega
-          have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
-          rw [Add.comm] at h_toNat
+          have h_toNat := ToNatSub_Neg.eq.Add_1 d
           unfold Tensor.permuteTail
           have h_d1_le_length : d + 1 ≤ s.length - i := by omega
           simp [EqMin.of.Le h_d1_le_length]

@@ -44,7 +44,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Sub_Add.eq.SubSub
-import Lemma.Nat.ToNatSub_Neg.eq.Add
+import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -75,8 +75,7 @@ private lemma main
   (X.permute i (-d)).sum (i - d) ≃ X.sum i := by
 -- proof
   simp [@Tensor.Permute.eq.Ite]
-  have h_toNat := Cast.eq.OfNat (α := ℤ) 1 ▸ ToNatSub_Neg.eq.Add 1 d
-  rw [Add.comm] at h_toNat
+  have h_toNat := ToNatSub_Neg.eq.Add_1 d
   have := NeZero.pos d
   split_ifs with h_d0 h_pos? h_i0 h_i
   repeat omega

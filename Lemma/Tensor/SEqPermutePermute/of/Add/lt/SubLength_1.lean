@@ -37,7 +37,6 @@ import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Nat.ToNatAdd.eq.Add
 import Lemma.Nat.ToNatSub_Neg.eq.Add
 import Lemma.Tensor.Permute.eq.Ite

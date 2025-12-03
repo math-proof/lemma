@@ -20,7 +20,7 @@ private lemma main
 -- proof
   have h : (A.permute ⟨i, h_i⟩ (-d)).permute ⟨i - d, by simp; omega⟩ d ≃ (B.permute ⟨i', h_i'⟩ (-d)).permute ⟨i' - d, by simp [← h_eq]; omega⟩ d := by
     apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ (by omega) rfl
-    exact h.symm
+    exact h
   have h_A := SEqPermutePermute__Neg.of.Ge (i := ⟨i, by grind⟩) h_d A
   simp at h_A
   have h := h.symm.trans h_A
