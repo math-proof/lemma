@@ -132,7 +132,7 @@ noncomputable instance : Log ℝ* where
     simp [Real.log_div_self]
 
 
-class LogPos (α : Type u) extends Log α, Mul α, Add α, Sub α where
+class LogPos (α : Type u) extends Log α, ExpPos α where
   log_mul (h_x : x ≠ 0) (h_y : y ≠ 0) : log (x * y) = log x + log y
   log_div (h_x : x ≠ 0) (h_y : y ≠ 0) : log (x / y) = log x - log y
 

@@ -7,8 +7,7 @@ open Vector
 private lemma main
   [NeZero n]
   [LT α] [DecidableLT α]
-  [ExpPos α]
-  [Log α]
+  [LogPos α]
 -- given
   (x : List.Vector α n) :
 -- imply
