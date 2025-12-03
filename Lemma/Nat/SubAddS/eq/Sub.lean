@@ -6,7 +6,8 @@ open Nat
 
 @[main]
 private lemma main
-  {a b : ℕ} :
+-- given
+  (a b : ℕ) :
 -- imply
   a + c - (b + c) = a - b := by
 -- proof
