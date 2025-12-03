@@ -1,10 +1,6 @@
-import Lemma.List.ProdTail.eq.MulProdTakeTailTake.of.Ge
-import Lemma.List.ProdTail.eq.MulProdTakeTail
-import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.GetPermute__Neg.eq.Get_0.of.Gt
 import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
@@ -12,19 +8,27 @@ import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdAppend.eq.MulProdS
+import Lemma.List.ProdRotate.eq.Prod
+import Lemma.List.ProdTail.eq.MulProdTakeTail
+import Lemma.List.ProdTail.eq.MulProdTakeTailTake.of.Ge
+import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.List.Tail.eq.Drop_1
 import Lemma.List.TailPermute__Neg.eq.PermuteTail.of.Gt
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.Add
+import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
+import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
+import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.SubAddS.eq.Sub
 import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
+import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthPermute__Neg.eq.Get_0.of.Gt
 import Lemma.Tensor.Permute.eq.Ite
@@ -36,7 +40,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool List Nat Tensor Vector Fin
+open List Nat Bool Fin Tensor Vector
 set_option maxHeartbeats 1000000
 
 
@@ -207,39 +211,32 @@ private lemma main
             simp [show (i + 1 - (i - d)) = d + 1 by omega] at ⊢ h_qₕ_div h_rₕ_mod h_qₕ h_rₕ
             simp [show (d ⊓ i) = d by omega] at ⊢ h_qₐ_div h_rₐ_mod h_qₕ_div h_rₕ_mod h_qₐ h_rₐ h_qₕ h_rₕ h_q
             simp [show (i - d + d) = i by omega]
-            have h_q' := h_q'
-            have h_r' := h_r'
-            have h_q := h_q
             simp [Permute__Neg.eq.Append_AppendRotateDropTake] at h_q'_div h_r'_mod
             simp [Mul_Mul.eq.MulMul] at h_q'_div h_r'_mod
-            rw [Nat.DivAddMul.eq.Add_Div.of.Ne_0 (by omega)] at h_q'_div
-            simp only [List.ProdRotate.eq.Prod] at h_qₐ_div h_rₐ_mod h_qₑ_div h_rₑ_mod h_q'_div h_q' h_q
-            -- h_qₕ_div h_rₕ_mod
-            -- h_qᵢ_div h_rᵢ_mod
+            rw [DivAddMul.eq.Add_Div.of.Ne_0 (by omega)] at h_q'_div
+            simp only [ProdRotate.eq.Prod] at h_qₐ_div h_rₐ_mod h_qₑ_div h_rₑ_mod h_q'_div h_q' h_q
+            simp [h_q'_div] at h_qₑ_div h_rₑ_mod
+            rw [MulMul.eq.Mul_Mul] at h_qₑ_div h_rₑ_mod
+            simp [h_qₑ_div]
+            simp [← TailTake.eq.TakeTail] at ⊢ h_qₐ_div h_rₐ_mod h_qₕ_div h_rₕ_mod
+            rw [ProdTail.eq.MulProdTakeTail (s.take (i + 1 + 1)) (i - d)]
+            rw [Mul_Mul.eq.MulMul]
+            simp [show (i - d + 1) = i + 1 - d by omega]
+            rw [DivAddMul.eq.Add_Div.of.Ne_0 (by grind)]
+            simp [MulAdd.eq.AddMulS]
+            simp [MulMul.eq.Mul_Mul]
+            rw [← ProdTail.eq.MulProdTakeTailTake.of.Ge h_d]
+            simp [AddAdd.eq.Add_Add]
+            simp only [DropTail.eq.Drop] at h_r_mod
+            simp [h_r'_mod, h_r_mod]
             have h_q_div := h_q_div
-            have h_q'_div := h_q'_div
-            have h_r_mod := h_r_mod
-            have h_r'_mod := h_r'_mod
             have h_qₐ_div := h_qₐ_div
             have h_rₐ_mod := h_rₐ_mod
-            have h_qₑ_div := h_qₑ_div
             have h_rₑ_mod := h_rₑ_mod
             have h_qₕ_div := h_qₕ_div
             have h_rₕ_mod := h_rₕ_mod
             have h_qᵢ_div := h_qᵢ_div
             have h_rᵢ_mod := h_rᵢ_mod
-            simp [h_q'_div] at h_qₑ_div h_rₑ_mod
-            rw [MulMul.eq.Mul_Mul] at h_qₑ_div h_rₑ_mod
-            simp [h_qₑ_div]
-            simp [← List.TailTake.eq.TakeTail]
-            rw [List.ProdTail.eq.MulProdTakeTail (s.take (i + 1 + 1)) (i - d)]
-            rw [Mul_Mul.eq.MulMul]
-            simp [show (i - d + 1) = i + 1 - d by omega]
-            rw [Nat.DivAddMul.eq.Add_Div.of.Ne_0 (by grind)]
-            simp [MulAdd.eq.AddMulS]
-            simp [MulMul.eq.Mul_Mul]
-            rw [← List.ProdTail.eq.MulProdTakeTailTake.of.Ge h_d]
-            simp [AddAdd.eq.Add_Add]
             sorry
             repeat rw [Rotate.eq.AppendDrop__Take, ProdAppend.eq.MulProdS]
             repeat rw [ProdAppend.eq.MulProdS]
