@@ -135,20 +135,17 @@ noncomputable instance : Log ℝ* where
 class LogPos (α : Type u) extends Log α, ExpPos α where
   log_mul (h_x : x ≠ 0) (h_y : y ≠ 0) : log (x * y) = log x + log y
   log_div (h_x : x ≠ 0) (h_y : y ≠ 0) : log (x / y) = log x - log y
+  log_exp (x : α) : log (exp x) = x
 
 noncomputable instance : LogPos ℝ where
   log_mul h_x h_y := Real.log_mul h_x h_y
   log_div h_x h_y := Real.log_div h_x h_y
-
+  log_exp x := Real.log_exp x
 
 noncomputable instance : LogPos ℝ* where
   log_mul {x y : ℝ*} h_x h_y := by
     revert h_x h_y
     refine Germ.inductionOn₂ x y fun f g h_x h_y => ?_
-    -- refine Germ.inductionOn₂ x y fun f g => ?_
-    -- We need to show that for almost all n, Real.log (f n * g n) = Real.log (f n) + Real.log (g n)
-    -- The Real.log_mul theorem requires that f n ≠ 0 and g n ≠ 0
-    -- Since x ≠ 0 and y ≠ 0 as germs, we know that f and g are eventually nonzero
     have hx_event : {t | f t ≠ 0} ∈ hyperfilter ℕ := by
       apply Ultrafilter.eventually_not.mpr
       apply mt Germ.coe_eq.mpr
@@ -157,7 +154,6 @@ noncomputable instance : LogPos ℝ* where
       apply Ultrafilter.eventually_not.mpr
       apply mt Germ.coe_eq.mpr
       exact h_y
-    -- Now apply Real.log_mul pointwise on the set where both are nonzero
     apply Germ.coe_eq.mpr
     filter_upwards [hx_event, hy_event] with n hn gn
     apply Real.log_mul hn gn
@@ -165,7 +161,6 @@ noncomputable instance : LogPos ℝ* where
   log_div {x y : ℝ*} := by
     refine Germ.inductionOn₂ x y fun f g => ?_
     intro h_x h_y
-    -- Similar reasoning as for log_mul
     have hx_event : ∀ᶠ n in hyperfilter ℕ, f n ≠ 0 := by
       apply Ultrafilter.eventually_not.mpr
       apply mt Germ.coe_eq.mpr
@@ -179,6 +174,11 @@ noncomputable instance : LogPos ℝ* where
     apply Germ.coe_eq.mpr
     filter_upwards [h_event] with n hn
     exact Real.log_div hn.1 hn.2
+
+  log_exp x := by
+    refine Germ.inductionOn x fun f => ?_
+    apply Germ.coe_eq.mpr ∘ Eventually.of_forall
+    simp [Real.log_exp]
 
 export Exp (exp)
 export Log (log)

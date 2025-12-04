@@ -14,7 +14,7 @@ private lemma main
   (X : Tensor α s)
   (d : ℕ) :
 -- imply
-  log (X.softmax d) = X - (X.max d).keepdim - log (exp ((X - (X.max d).keepdim).sum d).keepdim) := by
+  log (X.softmax d) = X - (X.max d).keepdim - log ((exp (X - (X.max d).keepdim)).sum d).keepdim := by
 -- proof
   sorry
 
