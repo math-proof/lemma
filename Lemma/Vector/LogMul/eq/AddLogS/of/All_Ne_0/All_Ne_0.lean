@@ -1,6 +1,8 @@
+import Lemma.Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0
+import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetAdd.eq.AddGetS
 import sympy.vector.functions
-open Vector
+open Real Vector
 
 
 @[main]
@@ -17,10 +19,10 @@ private lemma main
   rw [GetAdd.eq.AddGetS.fin]
   simp [Log.log]
   rw [GetMul.eq.MulGetS.fin]
-  rw [LogPos.log_mul ]
-  .
+  apply LogMul.eq.AddLogS.of.Ne_0.Ne_0
+  ·
     apply h₀
-  .
+  ·
     apply h₁
 
 

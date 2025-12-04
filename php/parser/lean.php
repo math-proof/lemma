@@ -2089,6 +2089,13 @@ abstract class LeanBinary extends LeanArgs
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
+
+    public function insert_tactic($caret, $func)
+    {
+        // consider the case where `case` is a tactic within (LeanColon/LeanAdd):
+        // (h : arg x + arg y ∈ Ioc (-Real.pi) Real.pi) :
+        return $this->insert_word($caret, $func);
+    }
 }
 
 class LeanProperty extends LeanBinary

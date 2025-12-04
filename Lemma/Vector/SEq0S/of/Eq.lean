@@ -1,6 +1,5 @@
-import Lemma.Tensor.HEq.of.SEqDataS.Eq
-import sympy.tensor.tensor
-open Tensor
+import stdlib.SEq
+import sympy.vector.vector
 
 
 @[main]
