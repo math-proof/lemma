@@ -43,6 +43,8 @@ Abductive reasoning is a method of inferring possible causes from known results.
   
 As of this writing, the system has accumulated <label id=count>5000</label> proven theorems (with <label id=lines>100000</label> lines of lean code) for interactive derivation, covering:
 
+* [Bool](../?module=Bool) Elementary logical (boolean) operations
+* [Fin](../?module=Fin) Elementary algebra of finite sets of natural numbers
 * [Nat](../?module=Nat) – Elementary algebra related to natural numbers  
 * [Int](../?module=Int) – Elementary algebra related to integers  
 * [Rat](../?module=Rat) – Elementary algebra related to rational numbers  
