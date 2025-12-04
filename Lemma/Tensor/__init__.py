@@ -86,3 +86,4 @@ from . import Add_Stack
 from . import EqSliceS
 from . import SoftmaxAdd
 from . import LogSoftmax
+from . import GetSlice
