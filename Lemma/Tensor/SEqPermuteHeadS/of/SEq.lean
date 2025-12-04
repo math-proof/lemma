@@ -1,5 +1,6 @@
-import Lemma.Tensor.SEqBFnS.of.SEq
-open Tensor
+import Lemma.Bool.SEqBFnS.of.SEq
+import sympy.tensor.Basic
+open Bool
 
 
 @[main]

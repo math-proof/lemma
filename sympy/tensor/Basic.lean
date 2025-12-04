@@ -94,7 +94,7 @@ instance [Add α] : Add (Tensor α s) where
   add A B := ⟨A.data + B.data⟩
 
 instance [Add α] : HAdd (Tensor α s) α (Tensor α s) where
-  hAdd A B := ⟨A.data + B⟩
+  hAdd A b := ⟨A.data + b⟩
 
 instance [Add α] : HAdd (Tensor α s) (Tensor α []) (Tensor α s) where
   hAdd A B := A + B.data[0]
@@ -103,6 +103,12 @@ instance [Add α] : HAdd (Tensor α (n :: s).tail) (Tensor α s) (Tensor α s) w
   hAdd A B :=
     let A : Tensor α s := A
     A + B
+
+instance [Sub α] : HSub (Tensor α s) α (Tensor α s) where
+  hSub A b := ⟨A.data - b⟩
+
+instance [Sub α] : HSub (Tensor α s) (Tensor α []) (Tensor α s) where
+  hSub A B := A - B.data[0]
 
 instance [Mul α] : Mul (Tensor α s) where
   mul A B := ⟨A.data * B.data⟩

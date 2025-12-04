@@ -1,3 +1,4 @@
+import Lemma.Real.NeExp_0
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.Div.eq.One.of.All_Ne_0
 import Lemma.Tensor.EqKeepdimCast.of.LeLength
@@ -24,7 +25,7 @@ private lemma main
   intro i
   rw [DataExp.eq.ExpData]
   rw [GetExp.eq.ExpGet]
-  apply ExpNeZero.exp_ne_zero
+  apply Real.NeExp_0
 
 
 -- created on 2025-11-28

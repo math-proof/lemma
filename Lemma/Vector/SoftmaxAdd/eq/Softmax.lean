@@ -1,3 +1,4 @@
+import Lemma.Real.NeExp_0
 import Lemma.Rat.DivMulS.eq.Div.of.Ne_0
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.ExpAdd.eq.MulExpS
@@ -23,7 +24,7 @@ private lemma main
   repeat rw [GetDiv.eq.DivGet.fin]
   rw [GetMul.eq.MulGet.fin]
   rw [DivMulS.eq.Div.of.Ne_0]
-  apply ExpNeZero.exp_ne_zero
+  apply Real.NeExp_0
 
 
 -- created on 2025-11-30

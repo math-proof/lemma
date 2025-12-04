@@ -7,7 +7,7 @@ import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdDrop.dvd.Prod
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
-import Lemma.List.ProdDropInsertIdxEraseIdx.eq.Prod.of.GtLength
+import Lemma.List.ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.List.TakeEraseIdx.eq.Take
@@ -27,7 +27,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData
-import Lemma.Tensor.DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data.of.GtLength
+import Lemma.Tensor.DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Tensor.Eq.is.EqDataS
@@ -39,7 +39,6 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
-import sympy.tensor.functions
 open Finset List Nat Tensor Vector Fin
 
 
@@ -74,7 +73,8 @@ private lemma main
   rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp [← h_qr]
   apply EqDivS.of.Eq.left
-  repeat rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data.of.GtLength (by grind)]
+  rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d + 1, by grind⟩)]
+  rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d, by grind⟩)]
   simp
   have h_prod : (((s.eraseIdx d).insertIdx d 1).take d).prod * (s[d] * (((s.eraseIdx d).insertIdx d 1).drop d).prod) = s.prod := by
     simp [Mul_Mul.eq.MulMul.comm]
@@ -100,7 +100,7 @@ private lemma main
   simp
   repeat rw [GetRepeat.eq.Get_Mod.fin]
   repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-  simp [ProdDropInsertIdxEraseIdx.eq.Prod.of.GtLength h] at ⊢ h_rₐ h_q'_div h_r'_mod h_qₐ_div h_rₐ_mod
+  simp [ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength h] at ⊢ h_rₐ h_q'_div h_r'_mod h_qₐ_div h_rₐ_mod
   rw [DataSum.eq.Sum_DataSelect (d := ⟨d + 1, by grind⟩)]
   rw [DataSum.eq.Sum_DataSelect (d := ⟨d, by grind⟩)]
   have h_prod : (s.eraseIdx d).prod = ((s.eraseIdx d).insertIdx d 1).prod := by

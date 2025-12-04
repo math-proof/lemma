@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.GtLength.of.GtLength_0
-import Lemma.Tensor.SEqBFnS.of.SEq
+import Lemma.Bool.SEqBFnS.of.SEq
 import Lemma.Bool.SEq.is.Eq
 open Tensor Bool
 
