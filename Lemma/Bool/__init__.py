@@ -64,3 +64,4 @@ from . import BFn_Ite
 from . import Or_And
 from . import Or_OrAndS
 from . import SquareBool
+from . import EqBool

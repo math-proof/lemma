@@ -17,7 +17,7 @@ def apply(eq_max, eq_min, A, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Bool
+    from Lemma import Tensor, Algebra, Set, Bool
 
     n, l, u, d_z, d = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)

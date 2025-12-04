@@ -11,9 +11,9 @@ def BandPart(x, *limits):
     '''
     >>> n = 20
     >>> BandPart[5, 3](Ones(n, n)).this.defun()
-    >>> Algebra.eq.then.eq.bool.apply(Eq[-1].this.rhs.doit())     
+    >>> Bool.EqBool.of.Eq.apply(Eq[-1].this.rhs.doit())
     >>> BandPart[5, 3, 2](Ones(n, n)).this.defun() #dilated version
-    >>> Algebra.eq.then.eq.bool.apply(Eq[-1].this.rhs.doit())
+    >>> Bool.EqBool.of.Eq.apply(Eq[-1].this.rhs.doit())
     '''
     
     if len(limits) == 3:
