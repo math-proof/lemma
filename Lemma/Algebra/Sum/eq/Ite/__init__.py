@@ -26,9 +26,9 @@ def prove(Eq):
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[0])
 
-    Eq << Eq[-1].this.args[0].apply(Bool.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.args[0].apply(Bool.And_BFnIte.given.And_BFn)
 
-    Eq << Eq[-1].this.find(And).apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.find(And).apply(Bool.And_BFnIte.given.And_BFn, invert=True)
 
 
 

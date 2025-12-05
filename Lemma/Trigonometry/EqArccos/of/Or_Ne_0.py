@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq <<= Eq.x_is_nonnegative & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.rhs.apply(Bool.And_BFnIte.given.And_BFn)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq <<= Eq.x_is_negative & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.rhs.apply(Bool.And_BFnIte.given.And_BFn, invert=True)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 

@@ -53,7 +53,7 @@ def apply(eq_R, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Nat
 
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -86,7 +86,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Add)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.Mul)
+    Eq << Eq[-1].this.find(Piecewise).apply(Nat.Ite_MulS.eq.Mul_Ite)
 
     # reference:
     # https://arxiv.org/pdf/2104.09864.pdf#page=7

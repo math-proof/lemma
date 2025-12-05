@@ -19,11 +19,11 @@ def prove(Eq):
 
     Eq << Eq[-1].apply(Bool.BFn_Ite.given.OrAndS)
 
-    Eq << Bool.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[-1])
+    Eq << Bool.And_BFnIte.given.And_BFn.apply(Eq[0], Eq[-1])
 
     Eq << -Eq[1]
 
-    Eq << Bool.Cond.BFnIte.given.And_BFn.apply(Eq[-1], Eq[-2])
+    Eq << Bool.And_BFnIte.given.And_BFn.apply(Eq[-1], Eq[-2])
 
 
 

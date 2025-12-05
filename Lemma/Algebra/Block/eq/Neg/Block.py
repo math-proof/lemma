@@ -10,7 +10,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Nat
 
     n, m = Symbol(integer=True, positive=True)
     A, B, C, D = Symbol(real=True, shape=(m, n))
@@ -19,7 +19,7 @@ def prove(Eq):
     i = Symbol(domain=Range(m * 2))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], i)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ite_MulS.eq.Mul_Ite)
 
 
 

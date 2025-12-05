@@ -34,3 +34,4 @@ from . import AddIteS
 from . import Pow_Ite
 from . import Min
 from . import Max
+from . import Ite_MulS

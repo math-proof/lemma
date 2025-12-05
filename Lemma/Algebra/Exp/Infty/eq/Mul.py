@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor, Nat
+    from Lemma import Algebra, Bool, Tensor, Nat, Real
 
     n = Symbol(integer=True, positive=True)
     p = Function(bool=True)
@@ -39,9 +39,9 @@ def prove(Eq):
 
     Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Exp.eq.Ite)
+    Eq << Eq[-1].this.rhs.apply(Real.ExpIte.eq.Ite_ExpS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ite.eq.Mul.Bool)
+    Eq << Eq[-1].this.rhs.apply(Nat.Ite.eq.MulBool)
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 

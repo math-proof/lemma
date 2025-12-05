@@ -31,11 +31,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Max).apply(Nat.Max.eq.IteGe)
 
-    Eq << Eq[-1].this.args[0].apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.args[0].apply(Bool.And_BFnIte.given.And_BFn, invert=True)
 
     Eq << Eq[-1].this.find(Min).apply(Nat.Min.eq.IteLt)
 
-    Eq << Eq[-1].this.find(And).apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.find(And).apply(Bool.And_BFnIte.given.And_BFn, invert=True)
 
 
 

@@ -37,7 +37,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Real, Real
 
     a, b, n = Symbol(integer=True, positive=True)
     A = Symbol(real=True, shape=(a, n))
@@ -47,7 +47,7 @@ def prove(Eq):
     i = Symbol(domain=Range(a + b))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], i)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Exp.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Real.ExpIte.eq.Ite_ExpS)
 
 
 

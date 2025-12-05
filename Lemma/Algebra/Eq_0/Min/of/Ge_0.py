@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Min.eq.IteLe)
 
-    Eq << Bool.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[-1], reverse=True)
+    Eq << Bool.And_BFnIte.given.And_BFn.apply(Eq[0], Eq[-1], reverse=True)
 
 
 if __name__ == '__main__':

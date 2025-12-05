@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].apply(Nat.Min.eq.IteLe)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ite_MulS.eq.Mul_Ite)
 
     Eq.eq = Algebra.Eq.given.Eq.Div.apply(Eq[-1], r)
 

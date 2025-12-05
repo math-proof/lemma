@@ -47,15 +47,15 @@ def prove(Eq):
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
-    Eq << Eq[-1].this.args[0].apply(Bool.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.args[0].apply(Bool.And_BFnIte.given.And_BFn)
 
-    Eq << Eq[-1].this.args[1].args[::2].apply(Bool.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.args[1].args[::2].apply(Bool.And_BFnIte.given.And_BFn)
 
-    Eq << Eq[-1].this.args[1].args[:2].apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.args[1].args[:2].apply(Bool.And_BFnIte.given.And_BFn, invert=True)
 
-    Eq << Eq[-1].this.args[-1].args[::2].apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.args[-1].args[::2].apply(Bool.And_BFnIte.given.And_BFn, invert=True)
 
-    Eq << Eq[-1].this.args[-1].args[:2].apply(Bool.Cond.BFnIte.given.And_BFn, invert=True)
+    Eq << Eq[-1].this.args[-1].args[:2].apply(Bool.And_BFnIte.given.And_BFn, invert=True)
 
     Eq << Bool.Or_OrAndS.given.Or_And_Or.apply(Eq[-1], cond=Unequal(x, y), simplify=None)
 
@@ -67,5 +67,3 @@ if __name__ == '__main__':
     run()
 # created on 2019-08-15
 # updated on 2023-08-26
-del Bool
-from . import Bool

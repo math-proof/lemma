@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
 
-    Eq << Bool.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[-1])
+    Eq << Bool.And_BFnIte.given.And_BFn.apply(Eq[0], Eq[-1])
 
 
 

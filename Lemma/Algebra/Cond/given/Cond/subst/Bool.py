@@ -20,7 +20,7 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply(Equal(Piecewise((f(a), Element(a, A)), (f(b), True)), 0), cond=Element(a, A))
 
-    Eq << Bool.Cond.BFnIte.given.And_BFn.apply(Eq[0], Eq[2])
+    Eq << Bool.And_BFnIte.given.And_BFn.apply(Eq[0], Eq[2])
 
 
 if __name__ == '__main__':

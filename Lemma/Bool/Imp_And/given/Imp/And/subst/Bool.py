@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp_And.And.apply(Eq[0], 1)
 
-    Eq << Eq[-1].this.rhs.apply(Bool.Cond.BFnIte.given.And_BFn)
+    Eq << Eq[-1].this.rhs.apply(Bool.And_BFnIte.given.And_BFn)
 
 
 

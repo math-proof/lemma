@@ -9,16 +9,16 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Bool, Nat
 
     x = Symbol(real=True)
     g = Function(shape=(), real=True)
     p = Function(bool=True)
     Eq << apply(Piecewise((g(x), p(x)), (0, True)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ite.eq.Mul)
+    Eq << Eq[-1].this.lhs.apply(Nat.Ite_MulS.eq.Mul_Ite)
 
-    Eq << Eq[-1].this.find(Piecewise).apply(Algebra.Ite.eq.Bool)
+    Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite.eq.Bool)
 
 
 if __name__ == '__main__':
