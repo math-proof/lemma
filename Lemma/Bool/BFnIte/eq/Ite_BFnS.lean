@@ -5,9 +5,9 @@ open Bool
 @[main]
 private lemma main
   [Decidable p]
-  {f : β → α → γ}
-  {c : α}
-  {a b : β} :
+  (f : β → α → γ)
+  (c : α)
+  (a b : β) :
 -- imply
   f (if p then
     a

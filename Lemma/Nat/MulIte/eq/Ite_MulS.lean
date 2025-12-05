@@ -16,7 +16,7 @@ private lemma main
   else
     b * c := by
 -- proof
-  apply BFnIte.eq.Ite_BFnS (f := (· * · : α → α → α))
+  apply BFnIte.eq.Ite_BFnS Mul.mul
 
 
 -- created on 2025-04-18

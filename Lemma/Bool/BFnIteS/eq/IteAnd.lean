@@ -9,8 +9,8 @@ open Bool
 private lemma main
   [Decidable p]
   [Decidable q]
-  {f : α → α → α}
-  {a a' b b' : α} :
+  (f : α → α → α)
+  (a a' b b' : α) :
 -- imply
   f (if p then
     a

@@ -2,7 +2,7 @@ import Lemma.Bool.BFn_Ite.eq.Ite_BFnS
 open Bool
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Decidable p]
   [Mul α]
@@ -16,7 +16,7 @@ private lemma main
   else
     c * b := by
 -- proof
-  apply BFn_Ite.eq.Ite_BFnS (f := (· * · : α → α → α))
+  apply BFn_Ite.eq.Ite_BFnS (f := Mul.mul)
 
 
 -- created on 2025-04-12

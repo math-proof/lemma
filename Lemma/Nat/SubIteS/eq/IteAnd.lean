@@ -22,9 +22,9 @@ private lemma main
   else if p then
     a - b'
   else
-    a' - b' :=
+    a' - b' := by
 -- proof
-  BFnIteS.eq.IteAnd (f := (· - · : α → α → α))
+  apply BFnIteS.eq.IteAnd Sub.sub
 
 
 -- created on 2025-04-28
