@@ -16,7 +16,7 @@ private lemma main
 -- proof
   have h_Eq := EqLengthReplicate (0 : α) l
   rw [← h_Eq] at h
-  have h₁ := ZipWith.eq.ZipWith_Take.of.Ge (f := HMul.hMul) h
+  have h₁ := ZipWith.eq.ZipWith_Take.of.Ge h HMul.hMul
   rw [h_Eq] at h₁
   have h_Eq' := EqLengthTake.of.Ge h
   rw [h_Eq] at h_Eq'

@@ -28,9 +28,9 @@ private lemma main
     f a' b' := by
 -- proof
   denote h_X : X = left
-  rw [BFn_Ite.eq.Ite_BFnS (f := f)] at h_X
-  rw [BFnIte.eq.Ite_BFnS (f := f)] at h_X
-  rw [BFnIte.eq.Ite_BFnS (f := f)] at h_X
+  rw [BFn_Ite.eq.Ite_BFnS f] at h_X
+  rw [BFnIte.eq.Ite_BFnS f] at h_X
+  rw [BFnIte.eq.Ite_BFnS f] at h_X
   rw [Ite_Ite.eq.Ite__Ite] at h_X
   simp [And.comm (a := q)] at h_X
   assumption
