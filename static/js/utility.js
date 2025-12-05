@@ -1,9 +1,7 @@
 "use strict";
 
-
 function axiom_user() {
-	var m = location.href.match(/([^\/]+)\/((?:index\.(?:php|html)|php\/\w+\.php|\?)\b|\??$)/);
-	return m && m[1];
+	return location.pathname.replace(/^\/([^\/]+)\/.*$/,'$1');
 }
 
 function textFocused(text, selectionStart) {
