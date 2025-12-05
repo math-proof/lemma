@@ -20,7 +20,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Vector
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.lhs.expr.apply(Algebra.Mul.Conj.eq.Square.Abs)
 

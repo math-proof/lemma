@@ -94,6 +94,7 @@ function find_and_jump(event) {
 
 const sections = [
 	'Algebra',
+	'Fin',
 	'Nat',
 	'Int',
 	'Rat',
@@ -104,6 +105,7 @@ const sections = [
 	'Discrete',
 	'Geometry',
 	'Bool',
+	'Vector',
 	'Tensor',
 	'Probability',
 	'Set',

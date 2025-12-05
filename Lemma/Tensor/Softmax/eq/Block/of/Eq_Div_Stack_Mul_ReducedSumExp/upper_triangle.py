@@ -26,7 +26,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Nat
+    from Lemma import Tensor, Algebra, Set, Bool, Nat, Vector
 
     n = Symbol(domain=Range(2, oo))
     u = Symbol(domain=Range(2, n + 1))
@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq.zi_def.find(ReducedSum).this.subs(Eq.ksi_def)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InAdd, i)
 

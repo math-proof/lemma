@@ -11,7 +11,7 @@ def apply(eq_x_bar, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset, Finset
+    from Lemma import Algebra, Finset, Finset, Finset, Vector
 
     x = Symbol(real=True, shape=(oo,))
     σ2 = Symbol("σ^2", shape=(oo,))
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[0] * n
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get)
 
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@ def apply(lamda):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Vector
 
     i, j = Symbol(integer=True)
     n, m = Symbol(integer=True, positive=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Vector.Sum.eq.Sum_Get)
     Eq << Eq[-1].this.lhs.simplify()
 
 

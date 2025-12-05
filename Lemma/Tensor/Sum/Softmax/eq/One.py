@@ -10,17 +10,17 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Vector
 
     m, n = Symbol(integer=True, positive=True)
     x = Symbol(shape=(m, n), real=True)
     Eq << apply(ReducedSum(Softmax(x)))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Sum.eq.Stack)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.domain_defined)
 

@@ -15,7 +15,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Vector
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -32,9 +32,9 @@ def prove(Eq):
         Equal(P_quote, P + n * Stack[k:n](functions.Bool(P[k] < 0))),
         Equal(I_quote, Stack[k:n](I[P_quote[k]])))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.eq.Sum, k)
+    Eq << Eq[-1].this.lhs.apply(Vector.Sum.eq.Sum_Get, k)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum, k)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get, k)
 
     Eq << Eq[-1].subs(Eq[3], Eq[2], Eq[1])
 

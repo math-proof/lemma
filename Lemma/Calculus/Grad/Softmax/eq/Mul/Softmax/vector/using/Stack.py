@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Calculus, Algebra
+    from Lemma import Tensor, Calculus, Algebra, Vector
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative[ReducedSum]).apply(Calculus.Grad.eq.ReducedSum)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.find(Sum[Mul[~Derivative]]).apply(Calculus.Grad.eq.Mul.Grad)
 

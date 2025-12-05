@@ -15,7 +15,7 @@ def apply(eq_conditioned, eq_expect, j=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Probability, Algebra, Finset
+    from Lemma import Discrete, Probability, Algebra, Finset, Vector
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Probability.Var.eq.Sum.of.Eq_Conditioned.apply(Eq[0], n)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum, k)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, k)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Var.Sum.eq.Add.Sum, j)
 

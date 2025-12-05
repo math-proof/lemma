@@ -11,7 +11,7 @@ def apply(all_lt, subset, A):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool
+    from Lemma import Tensor, Algebra, Bool, Vector
 
     n, m = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, m), real=True)
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq.zi_def.find(ReducedSum).this.subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum, j)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get, j)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.absorb)
 

@@ -11,13 +11,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Vector
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True)
     Eq << apply(ReducedSum(x + y))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[0].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 

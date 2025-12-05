@@ -14,7 +14,7 @@ def apply(eq_relu, eq_min, A, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Bool
+    from Lemma import Tensor, Algebra, Set, Discrete, Bool, Vector
 
     n, l, u, d_z = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq.zi_definition.find(ReducedSum).this.arg.args[0].subs(Eq.Xi_definition)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InAdd, i)
 

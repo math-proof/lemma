@@ -27,14 +27,14 @@ def apply(self, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability
+    from Lemma import Probability, Vector
 
     x = Symbol(real=True, random=True)
     y = Symbol(real=True, shape=(oo,), random=True)
     n = Symbol(integer=True, positive=True)
     Eq << apply(Covariance(x, ReducedSum(y[:n])))
 
-    Eq << Eq[0].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[0].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Cov.Sum.eq.Sum.Cov)
 

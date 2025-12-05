@@ -29,7 +29,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Vector
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -44,9 +44,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum_SquareSub.eq.Sub_SquareSum)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
 
 if __name__ == '__main__':

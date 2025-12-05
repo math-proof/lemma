@@ -9,14 +9,14 @@ def apply(self, i=None, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability
+    from Lemma import Probability, Vector
 
     x = Symbol(real=True, shape=(oo,), random=True)
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
     Eq << apply(Variance(ReducedSum(x[:n])), i, j)
 
-    Eq << Eq[0].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[0].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Var.Sum.eq.Sum.Cov)
 

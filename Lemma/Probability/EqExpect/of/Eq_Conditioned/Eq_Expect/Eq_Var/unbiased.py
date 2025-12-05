@@ -14,7 +14,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Discrete, Int, Nat
+    from Lemma import Algebra, Probability, Discrete, Int, Nat, Vector
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Mul)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum, k)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, k)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum, k)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, k)
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.Sum.eq.Sum.Expect)
 

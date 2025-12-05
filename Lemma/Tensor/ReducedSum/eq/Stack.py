@@ -26,7 +26,7 @@ def apply(self, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Vector
 
     j = Symbol(integer=True)
     p, q, n, m = Symbol(integer=True, positive=True)
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[-1], i)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.lhs.simplify()
 

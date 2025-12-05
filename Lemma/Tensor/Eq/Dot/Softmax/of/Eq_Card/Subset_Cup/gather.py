@@ -15,7 +15,7 @@ def apply(eq_cup, subset, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Bool
+    from Lemma import Tensor, Algebra, Set, Discrete, Bool, Vector
 
     n, k, m = Symbol(integer=True, positive=True)
     r = Symbol(shape=(n,), integer=True)
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq.zi_definition.find(ReducedSum).this.subs(Eq.Xi_def)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.absorb)
 

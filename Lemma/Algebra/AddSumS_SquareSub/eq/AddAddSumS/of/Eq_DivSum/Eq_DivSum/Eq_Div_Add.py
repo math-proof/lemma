@@ -15,7 +15,7 @@ def apply(eq_x_bar_A, eq_x_bar_B, eq_x_bar, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Int
+    from Lemma import Algebra, Finset, Nat, Int, Vector
 
     x_A = Symbol("x^A", real=True, shape=(oo,))
     x_B = Symbol("x^B", real=True, shape=(oo,))
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS), Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq <<= (Eq[0] * n_A).this.rhs.apply(Algebra.ReducedSum.eq.Sum, k), (Eq[1] * n_B).this.rhs.apply(Algebra.ReducedSum.eq.Sum, k)
+    Eq <<= (Eq[0] * n_A).this.rhs.apply(Vector.Sum.eq.Sum_Get, k), (Eq[1] * n_B).this.rhs.apply(Vector.Sum.eq.Sum_Get, k)
 
     Eq <<= Eq[-4].subs(Eq[-2].reversed), Eq[-3].subs(Eq[-1].reversed)
 

@@ -11,13 +11,13 @@ def apply(eq_conditioned, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Finset, Finset, Finset
+    from Lemma import Algebra, Probability, Bool, Finset, Finset, Finset, Vector
 
     x = Symbol(real=True, shape=(oo,), random=True)
     n = Symbol(integer=True)
     Eq << apply(Equal(x[n] | x[:n], x[n]))
 
-    Eq << Eq[1].lhs.this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[1].lhs.this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.rhs.apply(Probability.Var.Sum.eq.Add.Sum)
 

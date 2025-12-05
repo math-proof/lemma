@@ -11,7 +11,7 @@ def apply(eq, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Vector
 
     n = Symbol(integer=True, positive=True)
     t = Symbol(real=True, shape=(oo,))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.Ge.of.In_Icc)
 
-    Eq << Eq[0].this.lhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[0].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Algebra.All.Le.of.Eq_Sum.All_Ge_0.apply(Eq[-1], Eq[-2])
 

@@ -16,7 +16,7 @@ def apply(given, t=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Discrete, Algebra, Tensor, Vector
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True, given=True)
@@ -26,9 +26,9 @@ def prove(Eq):
 
     Eq << Tensor.EqReducedSum.of.Eq_Dot.apply(Eq[0])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum, t)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get, t)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.eq.Sum, t)
+    Eq << Eq[-1].this.lhs.apply(Vector.Sum.eq.Sum_Get, t)
 
 
 if __name__ == '__main__':

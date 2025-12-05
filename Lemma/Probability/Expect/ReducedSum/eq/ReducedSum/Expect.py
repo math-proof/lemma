@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability
+    from Lemma import Algebra, Probability, Vector
 
     n = Symbol(integer=True, positive=True)
     f = Function(real=True)
@@ -25,9 +25,9 @@ def prove(Eq):
     x = Symbol(real=True, random=True, shape=(n,))
     Eq << apply(Expectation(ReducedSum(f(x)) | s))
 
-    Eq << Eq[0].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[0].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.Sum.eq.Sum.Expect)
 

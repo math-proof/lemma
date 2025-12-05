@@ -11,7 +11,7 @@ def apply(eq_given):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Bool, Real
+    from Lemma import Probability, Algebra, Calculus, Bool, Real, Vector
 
     m, n = Symbol(integer=True, positive=True)
     φ = Function(real=True, shape=(m, n))
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative[MatMul]).apply(Calculus.Grad_Add_Dot.simp)
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum, a)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, a)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Algebra.Mul.Sum.absorb, 1)
 

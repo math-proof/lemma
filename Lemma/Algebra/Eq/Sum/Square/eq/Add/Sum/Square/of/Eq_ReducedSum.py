@@ -11,7 +11,7 @@ def apply(eq_x_bar, t, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset, Finset, Int, Int, Nat
+    from Lemma import Algebra, Finset, Finset, Finset, Int, Int, Nat, Vector
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[0] * n
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum, k)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get, k)
 
     Eq << Eq[-3].subs(Eq[-1].reversed)
 

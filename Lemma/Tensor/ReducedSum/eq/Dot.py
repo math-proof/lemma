@@ -14,14 +14,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Discrete, Tensor, Vector
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
     y, x = Symbol(shape=(n,), real=True)
     Eq << apply(ReducedSum(x * y))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[0].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
     Eq << Eq[-1].this.lhs.simplify()

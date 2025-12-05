@@ -16,7 +16,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote, eq_I_dquote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Finset
+    from Lemma import Algebra, Tensor, Bool, Finset, Vector
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -36,9 +36,9 @@ def prove(Eq):
         Equal(I_quote, BlockMatrix(0, I)),
         Equal(I_dquote, Stack[k:n](I_quote[P_quote[k]])))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.eq.Sum, k)
+    Eq << Eq[-1].this.lhs.apply(Vector.Sum.eq.Sum_Get, k)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Sum, k)
+    Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get, k)
 
     Eq << Eq[-1].subs(Eq[4], simplify=None)
 

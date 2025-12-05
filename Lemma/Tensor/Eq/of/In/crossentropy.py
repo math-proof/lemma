@@ -15,7 +15,7 @@ def apply(el, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic, Bool
+    from Lemma import Algebra, Tensor, Logic, Bool, Vector
 
     n = Symbol(domain=Range(2, oo))
     t = Symbol(integer=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.lhs.apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Tensor.Eq.of.Eq.crossentropy.apply(Eq[-1], x)
 

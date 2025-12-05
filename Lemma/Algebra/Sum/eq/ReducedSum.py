@@ -20,13 +20,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Vector
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
     y = Symbol(shape=(n, n), real=True)
     Eq << apply(Sum[i:n, j:n](y[j, i]))
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.rhs.expr.apply(Vector.Sum.eq.Sum_Get)
 
 
 if __name__ == '__main__':

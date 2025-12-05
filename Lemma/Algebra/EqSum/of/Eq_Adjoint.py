@@ -9,16 +9,16 @@ def apply(eq, i, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Vector
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)
     i, j = Symbol(integer=True)
     Eq << apply(Equal(A, ~A.T), i, j)
 
-    Eq << Eq[1].lhs.this.apply(Algebra.ReducedSum.eq.Sum, i)
+    Eq << Eq[1].lhs.this.apply(Vector.Sum.eq.Sum_Get, i)
 
-    Eq << Eq[-1].this.rhs.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum, j)
+    Eq << Eq[-1].this.rhs.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get, j)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.split.limits)
 

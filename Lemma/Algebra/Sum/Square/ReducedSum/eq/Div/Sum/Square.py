@@ -29,14 +29,14 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Vector
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     x = Symbol(integer=True, shape=(oo,))
     Eq << apply(Sum[i:n]((x[i] - ReducedSum(x[:n]) / n) ** 2))
 
-    Eq << Eq[-1].this.find(ReducedSum).apply(Algebra.ReducedSum.eq.Sum)
+    Eq << Eq[-1].this.find(ReducedSum).apply(Vector.Sum.eq.Sum_Get)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.Square.eq.Div.Sum.Square)
 
