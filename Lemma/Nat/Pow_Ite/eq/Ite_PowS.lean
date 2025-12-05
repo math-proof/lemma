@@ -15,9 +15,9 @@ private lemma main
     b) = if p then
     c ^ a
   else
-    c ^ b :=
+    c ^ b := by
 -- proof
-  BFn_Ite.eq.Ite_BFnS (f := (· ^ · : α → β → γ))
+  apply BFn_Ite.eq.Ite_BFnS HPow.hPow
 
 
 -- created on 2025-04-27
