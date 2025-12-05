@@ -81,7 +81,7 @@ def prove(Eq):
     delta = Symbol(real=True, positive=True)
     Eq << Algebra.Any.of.Any.subst.apply(Eq[-1], Min(δ_0, δ_1, δ_2), delta)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In.given.In.Add, x0)
+    Eq << Eq[-1].this.find(Element).apply(Set.In.given.Add.In.IccAddS, x0)
 
     Eq << Eq[-1].this.expr.apply(Bool.All.of.Imp)
 

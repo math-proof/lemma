@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq <<= Eq[-2].this.lhs.apply(Set.InAdd.of.In_Icc, t), Eq[-1].this.rhs.apply(Set.In.given.In.Add, t)
+    Eq <<= Eq[-2].this.lhs.apply(Set.InAdd.of.In_Icc, t), Eq[-1].this.rhs.apply(Set.In.given.Add.In.IccAddS, t)
 
 
 

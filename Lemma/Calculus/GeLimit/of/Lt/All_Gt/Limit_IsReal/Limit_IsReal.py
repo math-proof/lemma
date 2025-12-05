@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.lhs.apply(Set.In_Icc.given.InNeg)
 
-    Eq <<= Eq[-1].this.lhs.apply(Set.In.given.In.Add, b)
+    Eq <<= Eq[-1].this.lhs.apply(Set.In.given.Add.In.IccAddS, b)
 
     Eq <<= Eq[-1].this.lhs.apply(Set.In_Ico.given.Ge.Lt)
 

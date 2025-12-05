@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.lhs.apply(Calculus.Grad.eq.Add)
 
-    Eq << Eq[-1].this.expr.apply(Set.In.given.In.Add, f(b) - f(a))
+    Eq << Eq[-1].this.expr.apply(Set.In.given.Add.In.IccAddS, f(b) - f(a))
 
     Eq << Set.All.And.of.All.apply(Eq[2], simplify=None)
 
