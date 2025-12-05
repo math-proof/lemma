@@ -179,7 +179,11 @@ where
 limit 1`;
 			console.log(sql);
 			var data = await form_post('php/request/execute.php', {sql, resultType: 1});
-			var caller = getParameterByName('caller', 'Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate');
+			var caller = location.hash;
+			if (caller)
+				caller = caller.slice(1);
+			else 
+			 	caller = 'Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate';
 			data = [{caller}];
 			console.log(data);
 			data = data.map(row => row.caller);
