@@ -1,7 +1,6 @@
 <template>
 	<div tabindex=1 @keydown=keydown>
 		the whole math repertoire is composed of the following sections:
- 
 		<searchForm v-if="issearch" :keyword=keyword :caseSensitive=caseSensitive :wholeWord=wholeWord :regularExpression=regularExpression :latex=latex></searchForm>		
 		<ul>
 			<li v-for="(content, section) in repertoire">
@@ -28,16 +27,14 @@
 		in summary, the following is the total count of each state for all lemmas:
 		<br>
 		<table tabindex=0 align=left border=1>
-	
 			<tr>
 				<th>state</th>
 				<th>count</th>
 			</tr>
-	
 			<tr v-for="tuple of state_count_pairs">
 				<td><a :href="href_state(tuple.state)">{{tuple.state}}</a></td>
 				<td>{{tuple.count}}</td>
-			</tr>	
+			</tr>
 		</table>
 		<table tabindex=0 align=left border=1>
 			<tr>
@@ -62,7 +59,7 @@
 			<tr>
 				<td>total</td>
 				<td>{{count[0] + count[1]}}</td>
-			</tr>	
+			</tr>
 		</table><br>
 		<div class=clear>
 			most wanted <input size=2 v-model=topk @change=change_input />of {{count[0] - whitelist.length}} unformalized lemmas: <br>
@@ -83,12 +80,12 @@
 
 <script>
 console.log('import axiomSummary.vue');
-	
+
 import searchForm from "./searchForm.vue"
-	
+
 export default {
 	components: {searchForm},
-	
+
 	props : ['state_count_pairs', 'repertoire'],
 	
 	computed: {
@@ -181,6 +178,7 @@ limit 1`;
 			var data = await form_post('php/request/execute.php', {sql, resultType: 1});
 			var caller = location.hash;
 			if (caller)
+				// http://localhost/py/#Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.GetSlice.eq.DotSoftmaxAdd_DivDot_Transpose.kv_cache
 				caller = caller.slice(1);
 			else 
 			 	caller = 'Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate';
