@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].expr.apply(Calculus.IntegralIcc.eq.Ite)
 
-    Eq << Eq[-1].this.find(-Piecewise).apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite)
 

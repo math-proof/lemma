@@ -12,7 +12,6 @@ from . import Pow
 from . import Sum
 from . import Re
 from . import Max
-from . import Ite
 from . import Sup
 from . import Inf
 from . import Ceil

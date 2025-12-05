@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(-~Piecewise).find(Less).apply(Algebra.Lt.transport, lhs=slice(0, 3, 2))
 
-    Eq << Eq[-1].this.rhs.find(-Piecewise).apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.rhs.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Nat.AddIteS.eq.IteAnd, swap=True)
 

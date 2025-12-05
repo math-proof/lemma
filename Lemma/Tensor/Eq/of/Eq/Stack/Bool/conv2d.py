@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq.convolution_definition = Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
+    Eq.convolution_definition = Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     C_quote = Symbol("C'", Eq[1].rhs)
     Eq << C_quote.this.definition

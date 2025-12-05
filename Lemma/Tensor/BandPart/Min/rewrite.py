@@ -16,7 +16,7 @@ def apply(self, lower=True, upper=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor
+    from Lemma import Algebra, Set, Bool, Tensor, Nat
 
     m, n, l, u = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, m), real=True)
@@ -34,9 +34,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.Is.And)
 

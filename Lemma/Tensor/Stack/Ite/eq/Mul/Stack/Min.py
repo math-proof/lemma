@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Min).apply(Nat.Min.eq.IteLe)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq << Eq[-1].this.rhs.simplify(wrt=i)
 
@@ -35,11 +35,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.eq.Ite)
 
-    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
     Eq << Eq[-1].this.find(Add[Piecewise]).apply(Nat.Add_Ite.eq.Ite_AddS, simplify=False)
 
-    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=False)
+    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=False)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite_Ite.eq.Ite__Ite, index=0)
 

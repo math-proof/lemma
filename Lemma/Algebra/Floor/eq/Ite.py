@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * -2
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
     Eq << Algebra.Mod.eq.Ite.apply(Eq[-1].lhs)
 

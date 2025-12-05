@@ -10,14 +10,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra
+    from Lemma import Trigonometry, Algebra, Nat
 
     z = Symbol(complex=True, given=True)
     Eq << apply(Im(z))
 
     Eq << Eq[0].this.find(sin).apply(Trigonometry.Sin.Arg.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq << Eq[-1].this.find(Abs).apply(Algebra.Abs.eq.Sqrt)
 

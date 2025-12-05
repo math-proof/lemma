@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     ε = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
     # 0 < ε < 1
@@ -22,11 +22,11 @@ def prove(Eq):
 
     Eq << Eq[-1].lhs.this.apply(Algebra.Min.Clip.eq.Mul.Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
 
 

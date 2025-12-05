@@ -34,13 +34,13 @@ def prove(Eq):
 
     Eq <<= Eq.f_def.this.find(Floor).apply(Algebra.Floor.eq.Ite), Eq.f_quote_def.this.find(Floor).apply(Algebra.Floor.eq.Ite)
 
-    Eq <<= Eq[-2].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None), Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None)
+    Eq <<= Eq[-2].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None), Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
     Eq <<= Eq[-2].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, simplify=None), Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, simplify=None)
 
     Eq <<= Eq[-2].this.find(Pow[Piecewise]).apply(Nat.Pow_Ite.eq.Ite_PowS, simplify=None), Eq[-1].this.find(Pow[Piecewise]).apply(Nat.Pow_Ite.eq.Ite_PowS, simplify=None)
 
-    Eq <<= Eq[-2].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None), Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None)
+    Eq <<= Eq[-2].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None), Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
     Eq <<= Eq[-2].this.find(Cos[Piecewise]).apply(Trigonometry.Cos.eq.Ite), Eq[-1].this.find(Sin[Piecewise]).apply(Trigonometry.Sin.eq.Ite)
 
@@ -163,9 +163,9 @@ def prove(Eq):
 
     Eq << Eq[-3].this.rhs.subs(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
-    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd, simplify=None)
 
@@ -181,7 +181,7 @@ def prove(Eq):
 
     Eq << Eq[-1] / -2
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
     Eq << Eq[-1] + 1
 
@@ -189,13 +189,13 @@ def prove(Eq):
 
     Eq << Eq[-1] * S.Pi
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
     Eq <<= Trigonometry.EqCos.of.Eq.apply(Eq[-1]), Trigonometry.EqSin.of.Eq.apply(Eq[-1])
 
     Eq << Eq.eq_euler.subs(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Algebra.Mul.eq.Ite, simplify=None)
+    Eq << Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
     Eq << Eq[-1].this.find(Add).apply(Nat.AddIteS.eq.IteAnd, simplify=None)
 

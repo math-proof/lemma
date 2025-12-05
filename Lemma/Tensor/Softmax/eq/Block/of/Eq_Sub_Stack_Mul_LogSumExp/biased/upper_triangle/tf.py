@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Tensor.Expr.eq.Stack)
 
-    Eq << Eq[-1].this.rhs.find(-Piecewise).apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.rhs.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Nat.AddIteS.eq.IteAnd)
 

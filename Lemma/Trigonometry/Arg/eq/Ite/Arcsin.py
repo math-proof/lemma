@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Bool, Int
+    from Lemma import Trigonometry, Algebra, Bool, Int, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(Arg(x + y * S.ImaginaryUnit))
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(acos).apply(Trigonometry.Arccos.eq.Ite.Arcsin)
 
-    Eq << Eq[-1].this.find(-Piecewise).apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq.eq = Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not)
 

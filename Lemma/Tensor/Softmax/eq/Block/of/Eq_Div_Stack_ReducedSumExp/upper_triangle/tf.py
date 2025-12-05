@@ -23,7 +23,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool
+    from Lemma import Tensor, Algebra, Set, Bool, Nat
 
     n, u = Symbol(domain=Range(2, oo))
     A = Symbol(shape=(n, n), real=True)
@@ -80,7 +80,7 @@ def prove(Eq):
     j = Eq.ksi_def.rhs.variable
     Eq << Eq[-1][j]
 
-    Eq.zij_def = Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Ite)
+    Eq.zij_def = Eq[-1].this.find(Mul).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     z_dquote = Symbol('z^\"', Eq[1].rhs)
     Eq.z_dquote_def = z_dquote.this.definition

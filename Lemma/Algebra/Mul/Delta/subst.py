@@ -32,7 +32,7 @@ def apply(self, index=None, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(integer=True)
     f = Function(complex=True)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.eq.Ite)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
 
 

@@ -18,7 +18,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Nat
 
     a, b, c, d = Symbol(real=True)
     x = Symbol(real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
     j = Symbol(domain=Range(4))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], j)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
 
 

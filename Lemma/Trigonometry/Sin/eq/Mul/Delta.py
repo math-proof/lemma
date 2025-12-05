@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x = Symbol(complex=True)
     i, j = Symbol(integer=True)
@@ -19,9 +19,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(KroneckerDelta).apply(Algebra.Delta.eq.Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
 
 if __name__ == '__main__':

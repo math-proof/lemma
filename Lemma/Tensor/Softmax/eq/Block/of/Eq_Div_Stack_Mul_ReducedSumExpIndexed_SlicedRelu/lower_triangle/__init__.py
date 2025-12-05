@@ -21,7 +21,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool
+    from Lemma import Tensor, Algebra, Set, Bool, Nat
     from sympy import Min
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))
@@ -81,7 +81,7 @@ def prove(Eq):
     j = Eq.ksi_def.rhs.variable
     Eq << Eq[-1][j]
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Ite)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
     Eq.zij_def = Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InNeg)
 
