@@ -4,7 +4,7 @@ import sympy.Basic
 @[main]
 private lemma main
   [Decidable p]
-  [Ring α]
+  [NonAssocSemiring α]
 -- given
   (a b : α) :
 -- imply

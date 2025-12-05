@@ -5,7 +5,7 @@ open Bool Finset
 
 @[main]
 private lemma main
-  [Ring β]
+  [NonAssocSemiring β]
   {x : ι → α}
   {s : Finset ι}
   {f : α → β}

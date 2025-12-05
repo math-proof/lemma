@@ -9,9 +9,7 @@ private lemma main
 -- imply
   (-x)² = x² := by
 -- proof
-    -- Use the property of additive inverses in rings: (-a) * (-b) = a * b
   rw [sq, sq]
-    -- Apply the ring property to show that (-x) * (-x) = x * x
   simp [mul_neg, neg_mul, neg_neg]
 
 

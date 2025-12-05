@@ -3,7 +3,7 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [Ring α]
+  [Semiring α]
 -- given
   (s : List ℕ)
   (i : ℕ) :

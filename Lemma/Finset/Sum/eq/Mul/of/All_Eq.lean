@@ -5,7 +5,7 @@ open Finset
 
 @[main]
 private lemma main
-  [Ring α]
+  [NonAssocSemiring α]
   {x : ι → α}
   {a : α}
   {s : Finset ι}
@@ -20,7 +20,7 @@ private lemma main
 
 @[main]
 private lemma range
-  [Ring α]
+  [NonAssocSemiring α]
   {x : ℕ → α}
   {a : α}
   {n : ℕ}

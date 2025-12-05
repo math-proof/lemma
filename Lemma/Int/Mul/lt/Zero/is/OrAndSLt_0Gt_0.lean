@@ -3,12 +3,9 @@ import sympy.Basic
 
 @[main, comm, mp, mpr]
 private lemma main
-  [Ring α]
-  [LinearOrder α]
-  [PosMulStrictMono α]
-  [MulPosStrictMono α]
-  [AddLeftReflectLT α]
-  [AddLeftStrictMono α]
+  [Ring α] [LinearOrder α]
+  [PosMulStrictMono α] [MulPosStrictMono α]
+  [AddLeftReflectLT α] [AddLeftStrictMono α]
 -- given
   (a b : α) :
 -- imply

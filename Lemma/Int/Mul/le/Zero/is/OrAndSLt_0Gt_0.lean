@@ -3,12 +3,9 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [Ring α]
-  [LinearOrder α]
-  [MulPosStrictMono α]
-  [PosMulStrictMono α]
-  [AddLeftReflectLE α]
-  [AddLeftMono α]
+  [Ring α] [LinearOrder α]
+  [MulPosStrictMono α] [PosMulStrictMono α]
+  [AddLeftReflectLE α] [AddLeftMono α]
   {a b : α} :
 -- imply
   a * b ≤ 0 ↔ a ≤ 0 ∧ b ≥ 0 ∨ b ≤ 0 ∧ a ≥ 0 := by
