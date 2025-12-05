@@ -55,7 +55,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Bool, Probability, Bool
+    from Lemma import Tensor, Bool, Probability
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
