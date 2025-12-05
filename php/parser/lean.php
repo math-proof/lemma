@@ -8541,28 +8541,43 @@ class Lean_lemma extends Lean_def
     }
 }
 
-class Lean_let extends LeanUnary
+class Lean_let extends LeanArgs
 {
+    public function __construct($arg, $indent, $level, $parent = null)
+    {
+        parent::__construct([$arg], $indent, $level, $parent);
+    }
+
     public function is_indented()
     {
-        return true;
+        return !($this->parent instanceof LeanSequentialTacticCombinator);
     }
 
     public function strFormat()
     {
-        return "$this->operator %s";
+        $func = $this->operator;
+        $args = [];
+        foreach ($this->args as $arg) {
+            if ($arg instanceof LeanCaret);
+            elseif ($arg instanceof LeanSequentialTacticCombinator && $arg->newline)
+                $args[] = "\n";
+            else
+                $args[] = ' ';
+            $args[] = '%s';
+        }
+        return $func . implode('', $args);
     }
 
     public function latexFormat()
     {
         //cm-def {color: #00f;} 
         //defined in static/codemirror/lib/codemirror.css
-        return "{\\color{#00f}$this->command}\\ %s";
+        return "{\\color{#00f}$this->command}\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
     }
     public function jsonSerialize(): mixed
     {
         return [
-            $this->operator => $this->arg->jsonSerialize()
+            $this->operator => $this->args[0]->jsonSerialize()
         ];
     }
 
@@ -8574,6 +8589,13 @@ class Lean_let extends LeanUnary
             case 'operator':
             case 'command':
                 return 'let';
+            case 'sequential_tactic_combinator':
+                $args = &$this->args;
+                for ($index = count($args) - 1; $index >= 0; --$index) {
+                    if ($args[$index] instanceof LeanSequentialTacticCombinator)
+                        return $args[$index];
+                }
+                return;
             default:
                 return parent::__get($vname);
         }
@@ -8581,7 +8603,7 @@ class Lean_let extends LeanUnary
 
     public function get_echo_token()
     {
-        $assign = $this->arg;
+        $assign = $this->args[0];
         if ($assign instanceof LeanAssign) {
             $angleBracket = $assign->lhs;
             if ($angleBracket instanceof LeanAngleBracket) {
@@ -8596,7 +8618,7 @@ class Lean_let extends LeanUnary
     {
         $token = $this->get_echo_token();
         if ($token) {
-            $by = $this->arg->rhs;
+            $by = $this->args[0]->rhs;
             if ($by instanceof LeanBy) {
                 $stmt = $by->arg;
                 if ($stmt instanceof LeanStatements)
@@ -8612,13 +8634,40 @@ class Lean_let extends LeanUnary
 
     public function split(&$syntax = null)
     {
-        $assign = $this->arg;
+        $assign = $this->args[0];
         if ($assign instanceof LeanAssign && ($by = $assign->rhs) instanceof LeanBy && ($stmts = $by->arg) instanceof LeanStatements) {
             $statements = $assign->split($syntax);
             $statements[0] = new static($statements[0], $this->indent, $assign->level);
             return $statements;
         }
         return [$this];
+    }
+
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($caret === $this->args[0]) {
+            if ($next == '<' && $this->parent instanceof LeanSequentialTacticCombinator) {
+                // possibly newline-indented <;>
+                $caret = new LeanCaret($indent, $caret->level);
+                $this->push($caret);
+                return $caret;
+            }
+        }
+        return parent::insert_newline($caret, $newline_count, $indent, $next);
+    }
+
+    public function insert_sequential_tactic_combinator($caret, $next_token)
+    {
+        if ($caret === end($this->args)) {
+            if ($caret instanceof LeanCaret)
+                $this->replace($caret, new LeanSequentialTacticCombinator($caret, $this->indent, $caret->level, $next_token != "\n"));
+            else {
+                $caret = new LeanCaret(0, 0); # use 0 as the temporary indentation
+                $this->push(new LeanSequentialTacticCombinator($caret, $this->indent, $caret->level));
+            }
+            return $caret;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 }
 
@@ -8643,7 +8692,7 @@ class Lean_have extends Lean_let
 
     public function get_echo_token()
     {
-        $assign = $this->arg;
+        $assign = $this->args[0];
         if ($assign instanceof LeanAssign) {
             $token = $assign->lhs;
             if ($token instanceof LeanColon)
@@ -8664,7 +8713,7 @@ class Lean_have extends Lean_let
 
     public function sep()
     {
-        $assign = $this->arg;
+        $assign = $this->args[0];
         if ($assign instanceof LeanAssign) {
             $lhs = $assign->lhs;
             if ($lhs instanceof LeanCaret || $lhs instanceof LeanColon && $lhs->lhs instanceof LeanCaret)
@@ -9099,8 +9148,8 @@ function transformExpr(string $s0, string $s): string {
 }
 
 function transformPrefix(string $s): string {
-    // Pattern 1: EqX or NeX
-    if (preg_match('/^(Eq|Ne)(.)(.*)$/', $s, $matches)) {
+    // Pattern 1: EqX, NeX, OrX
+    if (preg_match('/^(Eq|Ne|Or)(.)(.*)$/', $s, $matches)) {
         $prefix = $matches[1];
         $s2 = $matches[2];
         $rest = $matches[3];
@@ -9108,8 +9157,8 @@ function transformPrefix(string $s): string {
         return $prefix . $transformed;
     }
     
-    // Pattern 2: SEqX, HEqX, or IffX
-    if (preg_match('/^([SH]Eq)(.)(.*)$/', $s, $matches) || preg_match('/^(Iff)(.)(.*)$/', $s, $matches)) {
+    // Pattern 2: SEqX, HEqX, IffX, AndX
+    if (preg_match('/^([SH]Eq)(.)(.*)$/', $s, $matches) || preg_match('/^(Iff|And)(.)(.*)$/', $s, $matches)) {
         $prefix = $matches[1];
         $s3 = $matches[2];
         $rest = $matches[3];

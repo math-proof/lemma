@@ -268,8 +268,12 @@ def Lean.Expr.comm : Expr → Expr
     (Expr.const `LT.lt us).mkApp [α, I, b, a]
   | .app (.app (.app (.app (.const `GE.ge us) α) I) a) b =>
     (Expr.const `LE.le us).mkApp [α, I, b, a]
+  | .app (.app (.const `And us) a) b =>
+    (Expr.const `And us).mkApp [b, a]
+  | .app (.app (.const `Or us) a) b =>
+    (Expr.const `Or us).mkApp [b, a]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, but got {e.ctorName} :\n{e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, And, Or, but got {e.ctorName} :\n{e}"
 
 @[symm]
 theorem LT.symm [LT α] {a b : α} (h : a < b) : b > a := h
@@ -299,8 +303,12 @@ def Lean.Expr.symm : Expr → Expr
     (Expr.const `GT.symm us).mkApp [α, I, a, b]
   | .app (.app (.app (.app (.const `GE.ge us) α) I) a) b =>
     (Expr.const `GE.symm us).mkApp [α, I, a, b]
+  | .app (.app (.const `And us) a) b =>
+    (Expr.const `And.symm us).mkApp [a, b]
+  | .app (.app (.const `Or us) a) b =>
+    (Expr.const `Or.symm us).mkApp [a, b]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, but got {e.ctorName} :\n{e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, And, Or, but got {e.ctorName} :\n{e}"
 
 def Lean.Expr.decomposeType : Expr → Expr × Expr
   | .app (.app (.app (.app (.const `letFun us) α) β) v) (.lam binderName binderType body binderInfo) =>

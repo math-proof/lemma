@@ -184,11 +184,13 @@ def String.transformPrefix (s : String) : String :=
   | s₀ :: s₁ :: expr =>
     match s₀, s₁, expr with
     | 'E', 'q', s₂ :: expr
-    | 'N', 'e', s₂ :: expr =>
+    | 'N', 'e', s₂ :: expr
+    | 'O', 'r', s₂ :: expr =>
       (s₀ :: s₁ :: s₂.transformExpr expr).asString
     | 'S', 'E', s₂@'q' :: s₃ :: expr
     | 'I', 'f', s₂@'f' :: s₃ :: expr
-    | 'H', 'E', s₂@'q' :: s₃ :: expr =>
+    | 'H', 'E', s₂@'q' :: s₃ :: expr
+    | 'A', 'n', s₂@'d' :: s₃ :: expr =>
       (s₀ :: s₁ :: s₂ :: s₃.transformExpr expr).asString
     | 'L', 't', _
     | 'L', 'e', _

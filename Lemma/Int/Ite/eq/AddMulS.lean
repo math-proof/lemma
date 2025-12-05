@@ -2,7 +2,7 @@ import Lemma.Nat.Ite.eq.AddMulSBool
 import Lemma.Bool.BoolNot.eq.Sub1
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Bool.Bool.le.One
-open Bool Nat Int
+open Bool Nat
 
 
 @[main]

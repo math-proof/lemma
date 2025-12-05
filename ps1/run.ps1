@@ -113,8 +113,8 @@ function transformExpr {
 function transformPrefix {
     param([string]$s)
     
-    # Pattern 1: EqX or NeX
-    if ($s -cmatch '^(Eq|Ne)(.)(.*)$') {
+    # Pattern 1: EqX, NeX, OrX
+    if ($s -cmatch '^(Eq|Ne|Or)(.)(.*)$') {
         $prefix = $matches[1]
         $s2 = $matches[2]
         $rest = $matches[3]
@@ -122,8 +122,8 @@ function transformPrefix {
         return $prefix + $transformed
     }
     
-    # Pattern 2: SEqX, HEqX, or IffX
-    if ($s -cmatch '^([SH]Eq)(.)(.*)$' -or $s -cmatch '^(Iff)(.)(.*)$') {
+    # Pattern 2: SEqX, HEqX, IffX, AndX
+    if ($s -cmatch '^([SH]Eq)(.)(.*)$' -or $s -cmatch '^(Iff|And)(.)(.*)$') {
         $prefix = $matches[1]
         $s3 = $matches[2]
         $rest = $matches[3]
@@ -218,11 +218,32 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
     }
     if (Select-String -Path $file -Pattern '^@\[main, .*\bmp\.comm\b' -Quiet) {
         $tokens = $module -split '\.'
-        Write-Host "@[mp.comm] at $file"
+        if ($tokens[2] -eq "is") {
+            $tokens = $tokens | Where-Object { $_ -ne 'of' }
+            $tmp = transformPrefix $tokens[1]
+            $tokens[1] = transformPrefix $tokens[3]
+            $tokens[2] = "of"
+            $tokens[3] = $tmp
+            $new_module = $tokens -join "."
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
+        else {
+            Write-Host "Ignoring @\[main, mp.comm] at $file"
+        }
     }
     if (Select-String -Path $file -Pattern '^@\[main, .*\bmpr\.comm\b' -Quiet) {
         $tokens = $module -split '\.'
-        Write-Host "@[mpr.comm] at $file"
+        if ($tokens[2] -eq "is") {
+            $tokens = $tokens | Where-Object { $_ -ne 'of' }
+            $tokens[1] = transformPrefix $tokens[1]
+            $tokens[2] = "of"
+            $tokens[3] = transformPrefix $tokens[3]
+            $new_module = $tokens -join "."
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
+        else {
+            Write-Host "Ignoring @\[main, mp.comm] at $file"
+        }
     }
     if (Select-String -Path $file -Pattern '^@\[main, .*\bcomm\.is\b' -Quiet) {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(\.of\..+)?$') {

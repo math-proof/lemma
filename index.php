@@ -99,8 +99,18 @@ if (! str_ends_with($path_info, '/')) {
             switch ($tokens[2]) {
                 case 'is':
                     $index = array_search('of', $tokens);
-                    if ($index === false)
+                    if ($index === false) {
+                        $tokens_ = [...$tokens];
+                        $tokens_[1] = transformPrefix($tokens[1]);
+                        $tokens_[3] = transformPrefix($tokens[3]);
+                        $module = implode('.', $tokens_);
+                        $path = module_to_lean($module);
+                        if (file_exists($path)) {
+                            header("location:?module=$module");
+                            exit();
+                        }
                         $tokens = array_merge([$tokens[0]], array_slice($tokens, 3), ['is'], [$tokens[1]]);
+                    }
                     else {
                         if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches))
                             $tokens[1] = $matches[1] . $matches[2];
