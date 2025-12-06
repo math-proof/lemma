@@ -9034,6 +9034,9 @@ class LeanStack extends LbigOperator
         $syntax[get_class($this)] = true;
         return parent::latexArgs($syntax);
     }
+
+    public function push_args_indented($indent, $newline_count, $function_call = true) {
+    }
 }
 
 function compile($code) {
