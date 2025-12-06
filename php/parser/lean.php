@@ -1660,7 +1660,7 @@ class LeanParenthesis extends LeanPairedGroup
 
     public function is_indented()
     {
-        return ($parent = $this->parent) instanceof LeanArgsNewLineSeparated || $parent instanceof LeanArgsCommaNewLineSeparated;
+        return ($parent = $this->parent) instanceof LeanArgsNewLineSeparated || $parent instanceof LeanArgsCommaNewLineSeparated || ($parent instanceof LeanIte && $this !== $parent->if);
     }
     public function argFormat() {
         $arg = $this->arg;

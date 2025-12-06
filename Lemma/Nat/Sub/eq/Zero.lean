@@ -4,13 +4,13 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [IntegerRing Z]
+  [Zero Q] [SubSelf Q]
 -- given
-  (a : Z) :
+  (a : Q) :
 -- imply
   a - a = 0 :=
 -- proof
-  IntegerRing.sub_self a
+  SubSelf.sub_self a
 
 
 -- created on 2025-10-16

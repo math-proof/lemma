@@ -5,6 +5,7 @@ open Bool
 @[main]
 private lemma main
   [Decidable p]
+-- given
   (f : β → α → γ)
   (c : α)
   (a b : β) :

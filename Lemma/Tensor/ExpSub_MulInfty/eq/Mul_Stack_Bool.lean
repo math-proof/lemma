@@ -1,3 +1,4 @@
+import sympy.core.relational
 import sympy.tensor.stack
 import sympy.tensor.functions
 

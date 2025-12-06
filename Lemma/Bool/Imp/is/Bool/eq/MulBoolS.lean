@@ -3,7 +3,6 @@ import Lemma.Bool.Cond.is.Bool.eq.One
 import Lemma.Bool.Imp.of.Imp.Imp
 import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Bool.Bool.eq.Zero.of.Bool.ne.One
-import Lemma.Nat.Mul.eq.Zero.of.OrEqS
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Nat.Mul
 import Lemma.Nat.EqCoeS.is.Eq
@@ -33,14 +32,9 @@ private lemma main
     have := Imp.of.Imp.Imp h_P this
     have := Or_Not.of.Imp this
     mp [Bool.eq.Zero.of.Bool.ne.One (p := p)] at this
-    have := Mul.eq.Zero.of.OrEqS this
-    rw [MulSub.eq.SubMulS] at this
-    simp at this
-    have := Eq.of.Sub.eq.Zero this
-    have := Eq.of.EqCoeS this
-    rw [Mul.comm]
-    apply Eq.symm
-    assumption
+    obtain h_p | h_q := this <;>
+    .
+      aesop
   .
     have := EqCoeS.of.Eq (R := ℤ) h
     rw [CoeMul.eq.MulCoeS] at this

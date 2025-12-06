@@ -1,6 +1,6 @@
-import Lemma.Int.Sub.eq.Zero
+import Lemma.Nat.Sub.eq.Zero
 import Lemma.Int.LeSubS.is.Le
-open Int
+open Int Nat
 
 
 @[main]
@@ -12,8 +12,8 @@ private lemma main
 -- imply
   x - y ≤ 0 := by
 -- proof
-  have := LeSubS.of.Le y h
-  rwa [Sub.eq.Zero] at this
+  have h := LeSubS.of.Le y h
+  rwa [Sub.eq.Zero] at h
 
 
 -- created on 2025-03-15

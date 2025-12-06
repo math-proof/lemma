@@ -1,7 +1,7 @@
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Nat.Add
 import Lemma.Int.Sub_Add.eq.SubSub
-import Lemma.Int.Sub.eq.Zero
+import Lemma.Nat.Sub.eq.Zero
 open Nat Int
 
 

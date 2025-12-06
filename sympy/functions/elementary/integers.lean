@@ -7,7 +7,10 @@ notation:max n "is" "odd" => Odd n
 notation:max n "isn't" "odd" => ¬Odd n
 infixl:70 "//" => Int.fdiv
 
-class IntegerRing (Z : Type) extends Semiring Z, LinearOrder Z, IsStrictOrderedRing Z, Sub Z, Div Z, Mod Z, CommMagma Z, MulDivCancelClass Z, CommMonoidWithZero Z where
+class SubSelf (Z : Type*) [Zero Z] extends Sub Z where
+  sub_self (a : Z) : a - a = 0
+
+class IntegerRing (Z : Type) extends Semiring Z, LinearOrder Z, IsStrictOrderedRing Z, SubSelf Z, Div Z, Mod Z, CommMagma Z, MulDivCancelClass Z, CommMonoidWithZero Z where
   succ_le_of_lt {a b : Z} : a < b → a + 1 ≤ b
   lt_of_succ_le {a b : Z} : a + 1 ≤ b → a < b
   lt_succ_of_le {a b : Z} : a ≤ b → a < b + 1
@@ -27,7 +30,6 @@ class IntegerRing (Z : Type) extends Semiring Z, LinearOrder Z, IsStrictOrderedR
   mul_div_assoc (a : Z) : (c ∣ b) → a * b / c = a * (b / c)
   div_one (n : Z) : n / 1 = n
   div_eq_zero_of_lt {a b : Z} : (a ≥ 0) → (a < b) → a / b = 0
-  sub_self (n : Z) : n - n = 0
   zero_mod (n : Z) : 0 % n = 0
   div_zero (n : Z) : n / 0 = 0
   even_iff {n : Z} : Even n ↔ n % 2 = 0
@@ -112,3 +114,7 @@ instance : IntegerRing ℤ where
   odd_iff := Int.odd_iff
   mod_two_ne_one := Int.emod_two_ne_one
   mod_mul := by simp
+
+instance [AddGroup G] : SubSelf G := ⟨by simp⟩
+
+-- instance (priority := 100) AddGroup.toSubSelf [s : AddGroup α] : SubSelf α := ⟨by simp⟩

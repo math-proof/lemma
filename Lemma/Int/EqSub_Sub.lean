@@ -1,5 +1,5 @@
 import Lemma.Int.AddSub.eq.Sub_Sub
-import Lemma.Int.Sub.eq.Zero
+import Lemma.Nat.Sub.eq.Zero
 import Lemma.Nat.EqAdd0
 open Int Nat
 

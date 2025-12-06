@@ -9,6 +9,7 @@ open Bool
 private lemma main
   [Decidable p]
   [Decidable q]
+-- given
   (f : α → α → α)
   (a a' b b' : α) :
 -- imply

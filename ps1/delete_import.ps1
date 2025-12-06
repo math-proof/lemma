@@ -5,7 +5,7 @@ $modules = @(
     'stdlib.SEq:≃'
     'sympy.core.relational:\n +denote '
     'sympy.core.logic:\n +mpr? \['
-    'sympy.functions.elementary.integers:\b(is even|is odd|fract|sign|IntegerRing)\b|//'
+    'sympy.functions.elementary.integers:\b(is even|is odd|fract|sign|IntegerRing|SubSelf)\b|//'
     'sympy.tensor.tensor:\b(Tensor|Zeros|Ones|Indexed|Sliced)\b'
     'sympy.sets.sets:\b(Ioo|Ico|Iio|Icc|Iic|Ioc|Ici|Ioi|range)\b'
     'sympy.Basic:^([\s\S](?!\nimport Lemma))*$'

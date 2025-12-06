@@ -6,7 +6,7 @@ import sympy.Basic
 private lemma main
   [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
   [FloorRing α]
-  {x : α} :
+  (x : α) :
 -- imply
   fract x = x - ⌊x⌋ :=
 -- proof

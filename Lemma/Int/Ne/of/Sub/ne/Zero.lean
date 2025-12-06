@@ -1,5 +1,5 @@
-import Lemma.Int.Sub.eq.Zero
-open Int
+import Lemma.Nat.Sub.eq.Zero
+open Nat
 
 
 @[main]

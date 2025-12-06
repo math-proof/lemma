@@ -1,7 +1,7 @@
 import Lemma.Int.LeSubS.is.Le
-import Lemma.Int.Sub.eq.Zero
+import Lemma.Nat.Sub.eq.Zero
 import Lemma.Int.Sub0.eq.Neg
-open Int
+open Int Nat
 
 
 @[main]

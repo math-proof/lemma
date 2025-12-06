@@ -1,4 +1,3 @@
-import sympy.vector.functions
 import Lemma.Vector.SumDiv.eq.DivSum
 import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Vector.GtSumExp_0

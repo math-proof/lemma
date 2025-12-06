@@ -1,7 +1,7 @@
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.Add
-import Lemma.Int.Sub.eq.Zero
+import Lemma.Nat.Sub.eq.Zero
 import Lemma.Int.FDiv.eq.Zero.of.Lt_0.IccAdd_1'0
 open Nat Int
 
