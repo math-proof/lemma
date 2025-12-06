@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Tensor
 
     n = Symbol(integer=True, positive=True)
     p = Function(bool=True)
@@ -23,7 +23,7 @@ def prove(Eq):
     Ξ = Stack[j:n, i:n](Bool(p(i, j)))
     Eq << apply(Ξ * exp(a))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Exp.Infty.eq.Mul)
+    Eq << Eq[-1].this.rhs.apply(Tensor.ExpSub_MulInfty.eq.Mul_Stack_Bool)
 
 
 
