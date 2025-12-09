@@ -96,66 +96,195 @@ if (! str_ends_with($path_info, '/')) {
         }
         else {
             $tokens = explode('.', $module);
-            switch ($tokens[2]) {
-                case 'is':
-                    $index = array_search('of', $tokens);
-                    if ($index === false) {
-                        $tokens_ = [...$tokens];
-                        $tokens_[1] = transformPrefix($tokens[1]);
-                        $tokens_[3] = transformPrefix($tokens[3]);
-                        $module = implode('.', $tokens_);
-                        $path = module_to_lean($module);
-                        if (file_exists($path)) {
-                            header("location:?module=$module");
-                            exit();
-                        }
-                        $tokens = array_merge([$tokens[0]], array_slice($tokens, 3), ['is'], [$tokens[1]]);
+            [$section, $segment] = parseInfixSegments($tokens);
+            $index = array_search('of', $tokens);
+            if ($index !== false) {
+                if (count ($segment[1]) == 1) {
+                    switch ($segment[1][0]) {
+                        case 'is':
+                            $index = array_search('of', $tokens);
+                            if ($index === false) {
+                                $tokens_ = [...$tokens];
+                                $tokens_[1] = transformPrefix($tokens[1]);
+                                $tokens_[3] = transformPrefix($tokens[3]);
+                                $module = implode('.', $tokens_);
+                                $path = module_to_lean($module);
+                                if (file_exists($path)) {
+                                    header("location:?module=$module");
+                                    exit();
+                                }
+                                $tokens = array_merge([$tokens[0]], array_slice($tokens, 3), ['is'], [$tokens[1]]);
+                            }
+                            else {
+                                if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches))
+                                    $tokens[1] = $matches[1] . $matches[2];
+                                $tokens = array_merge([$tokens[0]], array_slice($tokens, 3, $index - 3), ['is'], [$tokens[1]], array_slice($tokens, $index));
+                            }
+                            break;
+                        case 'eq':
+                        case 'as':
+                        case 'ne':
+                            $tmp = $tokens[1];
+                            $tokens[1] = $tokens[3];
+                            $tokens[3] = $tmp;
+                            break;
+                        case 'of':
+                            $first = $segment[0];
+                            if (count($first) == 1) {
+                                if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $first[0], $matches)) {
+                                    $tokens[1] = $matches[1] . $matches[2];
+                                    $module = implode('.', $tokens);
+                                    $path = module_to_lean($module);
+                                    if (!file_exists($path)) {
+                                        $tokens[1] = $first;
+                                        $tokens[2] = 'is';
+                                        if (count($tokens) > 4)
+                                            std\array_insert($tokens, 4, 'of');
+                                    }
+                                }
+                                else {
+                                    if (count($tokens) == 5) {
+                                        $tokens_ = [...$tokens];
+                                        $tokens_[1] = transformPrefix($tokens_[1]);
+                                        $tokens_[3] = transformPrefix($tokens_[3]);
+                                        $tokens_[4] = transformPrefix($tokens_[4]);
+                                        $module = implode('.', $tokens_);
+                                        $path = module_to_lean($module);
+                                        if (file_exists($path)) {
+                                            header("location:?module=$module");
+                                            exit();
+                                        }
+                                    }
+                                    $segment[1][0] = 'is';
+                                }
+                            }
+                            elseif (count($first) == 3) {
+                                if (is_infix_operator($first[1])) {
+                                    # comm
+                                    $segment_ = [...$segment];
+                                    $segment_[0] = [$first[2], $first[1], $first[0]];
+                                    $path = module_to_lean($segment_, $section);
+                                    if (!file_exists($path)) {
+                                        $segment[1][0] = 'is';
+                                    }
+                                }
+                            }
+                            break;
+                        default:
+                            $first = $tokens[1];
+                            if (preg_match($first, "^(S?Eq)_([\w'!₀-₉]+)$", $m))
+                                $tokens[1] = $m[1] . $m[2];
+                            else if ($index = array_search('of', $tokens))
+                                $tokens[$index] = 'is';
+                            else if ($index = array_search('is', $tokens)) {
+                                $section = $tokens[0];
+                                $first = array_slice($tokens, 1, $index - 1);
+                                $second = array_slice($tokens, $index + 1);
+                                $tokens = array_merge([$section], $second, ['is'], $first);
+                            }
+                            else 
+                                $leanFile = null;
+                            break;
                     }
-                    else {
-                        if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches))
-                            $tokens[1] = $matches[1] . $matches[2];
-                        $tokens = array_merge([$tokens[0]], array_slice($tokens, 3, $index - 3), ['is'], [$tokens[1]], array_slice($tokens, $index));
+                }
+            }
+            else {
+                if (count ($segment) > 1 && count ($segment[1]) == 1) {
+                    switch ($segment[1][0]) {
+                        case 'is':
+                            $index = array_search('of', $tokens);
+                            if ($index === false) {
+                                $tokens_ = [...$tokens];
+                                $tokens_[1] = transformPrefix($tokens[1]);
+                                $tokens_[3] = transformPrefix($tokens[3]);
+                                $module = implode('.', $tokens_);
+                                $path = module_to_lean($module);
+                                if (file_exists($path)) {
+                                    header("location:?module=$module");
+                                    exit();
+                                }
+                                $tokens = array_merge([$tokens[0]], array_slice($tokens, 3), ['is'], [$tokens[1]]);
+                            }
+                            else {
+                                if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches))
+                                    $tokens[1] = $matches[1] . $matches[2];
+                                $tokens = array_merge([$tokens[0]], array_slice($tokens, 3, $index - 3), ['is'], [$tokens[1]], array_slice($tokens, $index));
+                            }
+                            break;
+                        case 'eq':
+                        case 'as':
+                        case 'ne':
+                            $tmp = $tokens[1];
+                            $tokens[1] = $tokens[3];
+                            $tokens[3] = $tmp;
+                            break;
+                        case 'of':
+                            $first = $tokens[1];
+                            if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $first, $matches)) {
+                                $tokens[1] = $matches[1] . $matches[2];
+                                $module = implode('.', $tokens);
+                                $path = module_to_lean($module);
+                                if (!file_exists($path)) {
+                                    $tokens[1] = $first;
+                                    $tokens[2] = 'is';
+                                    if (count($tokens) > 4)
+                                        std\array_insert($tokens, 4, 'of');
+                                }
+                            }
+                            else {
+                                if (count($tokens) == 5) {
+                                    $tokens_ = [...$tokens];
+                                    $tokens_[1] = transformPrefix($tokens_[1]);
+                                    $tokens_[3] = transformPrefix($tokens_[3]);
+                                    $tokens_[4] = transformPrefix($tokens_[4]);
+                                    $module = implode('.', $tokens_);
+                                    $path = module_to_lean($module);
+                                    if (file_exists($path)) {
+                                        header("location:?module=$module");
+                                        exit();
+                                    }
+                                }
+                                $tokens[2] = 'is';
+                            }
+                            break;
+                        default:
+                            $first = $tokens[1];
+                            if (preg_match($first, "^(S?Eq)_([\w'!₀-₉]+)$", $m))
+                                $tokens[1] = $m[1] . $m[2];
+                            else if ($index = array_search('of', $tokens))
+                                $tokens[$index] = 'is';
+                            else if ($index = array_search('is', $tokens)) {
+                                $section = $tokens[0];
+                                $first = array_slice($tokens, 1, $index - 1);
+                                $second = array_slice($tokens, $index + 1);
+                                $tokens = array_merge([$section], $second, ['is'], $first);
+                            }
+                            else 
+                                $leanFile = null;
+                            break;
                     }
-                    break;
-                case 'eq':
-                case 'as':
-                case 'ne':
-                    $tmp = $tokens[1];
-                    $tokens[1] = $tokens[3];
-                    $tokens[3] = $tmp;
-                    break;
-                case 'of':
-                    $first = $tokens[1];
-                    if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $first, $matches)) {
-                        $tokens[1] = $matches[1] . $matches[2];
-                        $module = implode('.', $tokens);
-                        $path = module_to_lean($module);
-                        if (!file_exists($path)) {
-                            $tokens[1] = $first;
-                            $tokens[2] = 'is';
-                            if (count($tokens) > 4)
-                                std\array_insert($tokens, 4, 'of');
-                        }
+                }
+                else {
+                    $first = $segment[0];
+                    if (count($first) == 1) {
+                        if (preg_match($first[0], "^(S?Eq)_([\w'!₀-₉]+)$", $m))
+                            $tokens[1] = $m[1] . $m[2];
                     }
-                    else {
-                        if (count($tokens) == 5) {
-                            $tokens_ = [...$tokens];
-                            $tokens_[1] = transformPrefix($tokens_[1]);
-                            $tokens_[3] = transformPrefix($tokens_[3]);
-                            $tokens_[4] = transformPrefix($tokens_[4]);
-                            $module = implode('.', $tokens_);
-                            $path = module_to_lean($module);
+                    elseif (count($first) == 3) {
+                        if (is_infix_operator($first[1])) {
+                            # comm
+                            $segment_ = [...$segment];
+                            $segment_[0] = [$first[2], $first[1], $first[0]];
+                            $path = module_to_lean($segment_, $section);
                             if (file_exists($path)) {
-                                header("location:?module=$module");
-                                exit();
+                                $segment = $segment_;
+                            }
+                            else {
+                                $segment[1][0] = 'is';
                             }
                         }
-                        $tokens[2] = 'is';
                     }
-                    break;
-                default:
-                    $first = $tokens[1];
-                    if (preg_match($first, "^(S?Eq)_([\w'!₀-₉]+)$", $m))
+                    elseif (preg_match($first, "^(S?Eq)_([\w'!₀-₉]+)$", $m))
                         $tokens[1] = $m[1] . $m[2];
                     else if ($index = array_search('of', $tokens))
                         $tokens[$index] = 'is';
@@ -167,10 +296,10 @@ if (! str_ends_with($path_info, '/')) {
                     }
                     else 
                         $leanFile = null;
-                    break;
+                }
             }
             if ($leanFile) {
-                $module = implode('.', $tokens);
+                $module = tokens_to_module($segment, $section);
                 header("location:?module=$module");
                 exit();
             }

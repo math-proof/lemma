@@ -33,9 +33,19 @@ function lean_to_module($lean)
     return $module;
 }
 
-function module_to_lean($theorem)
+function tokens_to_module($tokens, $section)
 {
-    return module_to_path($theorem) . ".lean";
+    $module = implode('.', array_map(fn ($tokens) => implode('.', $tokens), $tokens));
+    $module = $section . ".". $module;
+    return $module;
+}
+function module_to_lean($module, $section = null)
+{
+    if ($section) {
+        $module = implode('.', array_map(fn ($tokens) => implode('.', $tokens), $module));
+        $module = $section . ".". $module;
+    }
+    return module_to_path($module) . ".lean";
 }
 
 function module_to_path($theorem)
@@ -43,38 +53,6 @@ function module_to_path($theorem)
     $theorem = str_replace(".", "/", $theorem);
 
     return dirname(dirname(__file__)) . "/Lemma/$theorem";
-}
-
-function reference(&$value)
-{
-    if (is_array($value)) {
-        foreach ($value as &$element) {
-            $element = reference($element);
-        }
-        $value = join(', ', $value);
-        return $value;
-    }
-    if (preg_match('/\d+/', $value, $matches)) {
-        $value = (int) $value;
-        if ($value < 0)
-            return "plausible";
-        return "Eq[$value]";
-    } else {
-        return "Eq.$value";
-    }
-}
-
-function println($param, $file = null)
-{
-    if (is_array($param)) {
-        $param = jsonify($param);
-    }
-
-    if ($file) {
-        echo "called in $file:<br>";
-    }
-    print_r($param);
-    print_r("<br>");
 }
 
 function read_all_lean($dir)

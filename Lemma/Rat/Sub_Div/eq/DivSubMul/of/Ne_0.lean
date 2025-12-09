@@ -6,9 +6,10 @@ open Int Rat
 @[main, comm]
 private lemma main
   [DivisionRing α]
-  {a b x : α}
+  {b : α}
 -- given
-  (h : b ≠ 0) :
+  (h : b ≠ 0)
+  (x a : α) :
 -- imply
   x - a / b = (x * b - a) / b := by
 -- proof

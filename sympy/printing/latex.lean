@@ -215,7 +215,8 @@ def Expr.latexFormat : Expr → String
             match type with
             | Basic (.BinaryInfix ⟨`Membership.mem⟩) .. => ""
             | _ => "%s \\rightarrow %s"
-          | _ => ""
+          | _ =>
+            ""
         | .Lean_lambda =>
           opStr ++ "\\ %s".repeat (args.length - 1) ++ "\\mapsto\\ %s"
         | .Lean_let =>
@@ -310,7 +311,30 @@ def Expr.latexFormat : Expr → String
         | `letFun => "{\\begin{align*}&{\\color{blue}let}\\ %s : %s := ⋯\\\\&%s\\end{align*}}"
         | `KroneckerDelta => "\\delta_{%s %s}"
         | `OfScientific.ofScientific => "%s%s.%s"
-        -- | `cast
+        | `Subtype =>
+          let postOp :=
+            match args with
+            -- consider special cases:
+            | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [const (.natVal 0), Symbol binderName binderType] _, Binder .default binderName' binderType' nil] _] =>
+              -- ℝ⁺ = Subtype fun x : ℝ => 0 < x
+              if binderName == binderName' && binderType == binderType' then
+                "%s^{+}"
+              else
+                ""
+            | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [Symbol binderName binderType, const (.natVal 0)] _, Binder .default binderName' binderType' nil] _] =>
+              -- ℝ⁻ = Subtype fun x : ℝ => x < 0
+              if binderName == binderName' && binderType == binderType' then
+                "%s^{-}"
+              else
+                ""
+            | _ =>
+              ""
+          if postOp.isEmpty then
+            let args := args.map fun arg =>
+              level.toColor (arg.priority > func.priority)
+            opStr ++ "\\ " ++ "\\ ".intercalate args
+          else
+            postOp
         | _  =>
           let args := args.map fun arg =>
             level.toColor (arg.priority > func.priority)
@@ -429,6 +453,8 @@ where
           | [returnType@(Symbol _ (sort (.succ _))), Binder .default _ binderType nil]
           | [returnType, Binder .given _ binderType nil] =>
             [binderType.toLatex, returnType.toLatex]
+          | [scope, Binder .default binderName binderType nil] =>
+            [("%s : %s".format (binderName.escape_specials " "), binderType.toLatex), scope.toLatex]
           | _ =>
             []
         | .Lean_lambda =>
@@ -578,6 +604,25 @@ where
           [sign, integer, fraction]
         else
           map args
+      | .Lean_operatorname `Subtype =>
+        let args :=
+          match args with
+          -- consider special cases:
+          | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [const (.natVal 0), Symbol binderName binderType] _, Binder .default binderName' binderType' nil] _] =>
+            -- ℝ⁺ = Subtype fun x : ℝ => 0 < x
+            if binderName == binderName' && binderType == binderType' then
+              [binderType]
+            else
+              args
+          | [Basic (.ExprWithLimits .Lean_lambda) [Basic (.BinaryInfix ⟨`LT.lt⟩) [Symbol binderName binderType, const (.natVal 0)] _, Binder .default binderName' binderType' nil] _] =>
+            -- ℝ⁻ = Subtype fun x : ℝ => x < 0
+            if binderName == binderName' && binderType == binderType' then
+              [binderType]
+            else
+              args
+          | _ =>
+            args
+        map args
       | .Lean_typeclass `HEq =>
         match args with
         | [a, Basic (.ExprWithAttr _) ..] =>

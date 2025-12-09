@@ -1,4 +1,5 @@
 import stdlib.Lean.Name
+import Mathlib.Data.Real.Basic
 open Lean
 
 inductive Constant where
@@ -71,3 +72,7 @@ def Constant.toLatex : Constant → String
     | `Hyperreal.epsilon => "0^+"
     | `Hyperreal.omega => "\\infty"
     | _ => name.escape_specials "."
+
+
+notation "ℝ⁺" => { x : ℝ // 0 < x }
+notation "ℝ⁻" => { x : ℝ // x < 0 }

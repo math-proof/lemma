@@ -4,6 +4,9 @@ import Lemma.Nat.Ne.of.Gt
 open Nat Rat
 
 
+/--
+constructor order of multiplication
+-/
 @[main]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]

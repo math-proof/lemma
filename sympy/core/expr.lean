@@ -134,6 +134,7 @@ def UnaryPrefix.func : UnaryPrefix → Func
     | `Bool.not => ⟨40, "!", "\\text{!}"⟩  -- LeanNot
     | `Complement.complement => ⟨100, "~~~", "~~~"⟩
     | `Complex.ofReal
+    | `Hyperreal.ofReal
     | `Int.ofNat
     | `Nat.cast
     | `Int.cast
@@ -196,7 +197,7 @@ def ExprWithLimits.func : ExprWithLimits → Func
   | Lean_min _ => ⟨52, "min", "\\min"⟩
   | Lean_forall => ⟨24, "∀", "\\forall"⟩
   | Lean_exists => ⟨24, "∃", "\\exists"⟩
-  | Lean_lambda => ⟨72, "fun", "\\operatorname{\\color{magenta}fun}"⟩
+  | Lean_lambda => ⟨72, "fun", "{\\color{magenta}fun}"⟩
   | Lean_let => ⟨47, "let", "{\\color{blue}let}"⟩
 
 def ExprWithLimits.name : ExprWithLimits → Name
@@ -247,7 +248,7 @@ def Special.func : Special → Func
     | `Tensor.get
     | `GetElem.getElem => ⟨99, "%s[%s]", "%s_%s"⟩  -- LeanGetElem
     | `GetElem?.getElem? => ⟨99, "%s[%s]?", "%s_{%s?}"⟩  -- LeanGetElemQue
-    | `Nat.ModEq => ⟨32, "%s ≡ %s [MOD %s]", "%s \\equiv %s\\ \\left[\\operatorname{MOD}\\ %s\\right]"⟩  -- Lean_equiv
+    | `Nat.ModEq => ⟨32, "%s ≡ %s [MOD %s]", "%s \\equiv %s\\ \\left[\\text{MOD}\\ %s\\right]"⟩  -- Lean_equiv
     | `Singleton.singleton
     | `Insert.insert => ⟨72, "{%s}", "\\left\\{%s\\right\\}"⟩  -- LeanBrace
     | `setOf => ⟨72, "{%s | %s}", "\\left\\{%s \\mid %s\\right\\}"⟩  -- LeanSetOf
@@ -288,7 +289,7 @@ def ExprWithAttr.func : ExprWithAttr → Func
     ⟨
       75,
       name,
-      "\\operatorname{\\color{#708}%s}".format name.escape_specials
+      "\\text{\\color{#708}%s}".format name.escape_specials
     ⟩
   | LeanLemma name =>
     let name := name.getLast.toString
@@ -565,6 +566,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Real.sqrt
     | `Root.sqrt
     | `Complex.ofReal
+    | `Hyperreal.ofReal
     | `Int.ofNat
     | `OfNat.ofNat
     | `Nat.cast

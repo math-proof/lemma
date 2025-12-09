@@ -1,5 +1,5 @@
 import Lemma.Tensor.Mul.eq.Mul_KeepdimTensorReplicateProdEraseIdx
-import Lemma.Tensor.Mul.eq.Mul_TensorReplicateProd
+import Lemma.Tensor.Mul.eq.Mul_TensorReplicate
 import Lemma.Tensor.SumMul_Keepdim.eq.MulSum
 open Tensor
 
@@ -16,7 +16,7 @@ private lemma main
 -- proof
   rw [Mul.eq.Mul_KeepdimTensorReplicateProdEraseIdx]
   rw [SumMul_Keepdim.eq.MulSum]
-  rw [Mul.eq.Mul_TensorReplicateProd]
+  rw [Mul.eq.Mul_TensorReplicate]
 
 
 -- created on 2025-12-01

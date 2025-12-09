@@ -72,6 +72,7 @@ $token2classname = [
     '≢' => 'LeanNotEquiv',
     '≍' => 'Lean_asymp',
     '≃' => 'Lean_simeq',
+    '≈' => 'Lean_approx',
     '∣' => 'LeanDvd',
 ];
 
@@ -674,15 +675,16 @@ abstract class Lean extends IndentedNode
                 if ($tokens[$i + 1] == '=') {
                     ++$i;
                     return $this->parent->insert_assign($this);
-                } elseif ($tokens[$i + 1] == ':') {
+                }
+                if ($tokens[$i + 1] == ':') {
                     ++$i;
                     if ($tokens[$i + 1] == 'ᵥ') {
                         ++$i;
                         return $this->parent->insert_vconstruct($this);
                     } else
                         return $this->parent->insert_construct($this);
-                } else
-                    return $this->parent->insert_colon($this);
+                }
+                return $this->parent->insert_colon($this);
             case ';':
                 return $this->parent->insert_semicolon($this);
             case '-':
@@ -828,6 +830,8 @@ abstract class Lean extends IndentedNode
             case '≡':
             case '≢':
             case '≃':
+            case '≍':
+            case '≈':
             case '∣':
                 return $this->push_arithmetic($token);
             case '←':
@@ -860,12 +864,14 @@ abstract class Lean extends IndentedNode
                 return $this->push_post_unary('LeanCube');
             case '⁴':
                 return $this->push_post_unary('LeanTesseract');
+            case '⁺':
+                return $this->push_post_unary('LeanPosPart');
             case '⁻':
                 if ($tokens[$i + 1] == '¹') {
                     ++$i;
                     return $this->push_post_unary('LeanInv');
                 }
-                return $this;
+                return $this->push_post_unary('LeanNegPart');
             case 'by':
             # modifiers
             case 'using':
@@ -2388,7 +2394,7 @@ class LeanAssign extends LeanBinary
     }
     public function is_indented()
     {
-        return $this->parent instanceof LeanArgsNewLineSeparated;
+        return ($parent= $this->parent) instanceof LeanArgsNewLineSeparated || ($parent instanceof LeanArgsIndented && $parent->rhs === $this);
     }
 
     public function strFormat()
@@ -2426,6 +2432,8 @@ class LeanAssign extends LeanBinary
                     if ($this->parent)
                         return $this->parent->insert_newline($this, $newline_count, $indent, $next);
                 } else {
+                    if ($this->parent instanceof LeanCalc)
+                        return $this->parent->insert_newline($this, $newline_count, $indent, $next);
                     $caret = $this->push_args_indented($indent, $newline_count, false);
                 }
                 return $caret;
@@ -2701,6 +2709,26 @@ class Lean_simeq extends LeanRelational
 
 }
 
+class Lean_approx extends LeanRelational
+{
+    public static $input_priority = 50;
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '≈';
+            default:
+                return parent::__get($vname);
+        }
+    }
+
+    public function latexArgs(&$syntax = null)
+    {
+        $syntax['≈'] = true;
+        return parent::latexArgs($syntax);
+    }
+}
+
 class Lean_asymp extends LeanRelational
 {
     public static $input_priority = 50;
@@ -2712,6 +2740,11 @@ class Lean_asymp extends LeanRelational
             default:
                 return parent::__get($vname);
         }
+    }
+    public function latexArgs(&$syntax = null)
+    {
+        $syntax['≍'] = true;
+        return parent::latexArgs($syntax);
     }
 }
 
@@ -3546,6 +3579,56 @@ class LeanPlus extends LeanUnaryArithmeticPre
 }
 
 class LeanInv extends LeanUnaryArithmeticPost
+{
+    public static $input_priority = 71;
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+    public function latexFormat()
+    {
+        return "{%s}$this->command";
+    }
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '⁻¹';
+            case 'command':
+                return '^{-1}';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
+class LeanPosPart extends LeanUnaryArithmeticPost
+{
+    public static $input_priority = 71;
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+    public function latexFormat()
+    {
+        return "{%s}$this->command";
+    }
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return '⁺';
+            case 'command':
+                return '^{⁺}';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
+class LeanNegPart extends LeanUnaryArithmeticPost
 {
     public static $input_priority = 71;
     public function strFormat()
@@ -7434,12 +7517,19 @@ class LeanCalc extends LeanUnary
 
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
-        if ($this->indent <= $indent && $caret instanceof LeanCaret && $caret === $this->arg) {
-            if ($indent == $this->indent)
-                $indent = $this->indent + 2;
-            $caret->indent = $indent;
-            $this->arg = new LeanArgsNewLineSeparated([$caret], $indent, $caret->level);
-            return $this->arg->push_newlines($newline_count - 1);
+        if ($this->indent <= $indent && $caret === $this->arg) {
+            if ($caret instanceof LeanCaret) {
+                if ($indent == $this->indent)
+                    $indent = $this->indent + 2;
+                $caret->indent = $indent;
+                $this->arg = new LeanArgsNewLineSeparated([$caret], $indent, $caret->level);
+                return $this->arg->push_newlines($newline_count - 1);
+            }
+            if ($caret instanceof LeanAssign) {
+                $caret = $this->push_args_indented($indent, $newline_count, false);
+                if ($caret)
+                    return $caret;
+            }
         }
 
         return parent::insert_newline($caret, $newline_count, $indent, $next);
@@ -7456,6 +7546,8 @@ class LeanCalc extends LeanUnary
             case 'operator':
             case 'command':
                 return 'calc';
+            case 'stack_priority':
+                return LeanAssign::$input_priority - 1;
             default:
                 return parent::__get($vname);
         }
@@ -9192,4 +9284,55 @@ function transformPrefix(string $s): string {
     
     // If no patterns matched, return original string
     return $s;
+}
+
+function is_infix_operator(string $op): bool
+{
+    $infixOps = ["eq", "is", "as", "ne", "lt", "le", "gt", "ge", "in", "ou", "et"];
+    return in_array($op, $infixOps, true);
+}
+
+function parseInfixSegments(array $list): array
+{
+    $section = $list[0];
+    $list = array_slice($list, 1);
+    $n = count($list);
+    if ($n === 0)
+        return [];
+    if ($n === 1)
+        return [$list];
+
+    // Build result iteratively to mirror the Lean recursion
+    $result = [];
+    $i = 0;
+    while ($i < $n) {
+        // If fewer than 3 elements remain, just push each as singletons
+        if ($i + 2 >= $n) {
+            // push remaining elements as singletons
+            for (; $i < $n; $i++) {
+                $result[] = [$list[$i]];
+            }
+            break;
+        }
+
+        $x  = $list[$i];
+        $op = $list[$i + 1];
+        $y  = $list[$i + 2];
+        if (is_infix_operator($op)) {
+            // take 3: [x, op, y]
+            $result[] = [$x, $op, $y];
+            // advance by 3, but drop 1 from the remaining (equivalent to y.drop 1 in Lean)
+            $i += 3 - 1; // net +2 (consume x,op,y; next start at y+1)
+        } else {
+            // Not an infix operator: treat x and op as separate segments
+            $result[] = [$x];
+            $result[] = [$op];
+            $i += 2;
+            continue;
+        }
+
+        $i++; // move to next position after the adjusted step above
+    }
+
+    return [$section, $result];
 }

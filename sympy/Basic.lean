@@ -57,7 +57,7 @@ def List.parseInfixSegments (list : List String) : List (List String) :=
     | "eq" | "is" | "as" | "ne" | "lt" | "le" | "gt" | "ge" | "in" | "ou" | "et" =>
       list.take 3 :: parseInfixSegments (y.drop 1)
     | _ =>
-      [x] :: [op] :: parseInfixSegments y
+      [x] :: parseInfixSegments (op :: y)
 termination_by list.length
 
 def List.transformPrefix (list : List String) : List String :=
