@@ -2935,6 +2935,10 @@ class LeanMul extends LeanArithmetic
         } elseif ($rhs instanceof LeanNeg) {
             $rhs = new LeanParenthesis($rhs, $this->indent, $level);
             $rhs->is_closed = true;
+        } 
+
+        if ($lhs instanceof LeanParenthesis && $lhs->arg instanceof LeanDiv) {
+            $lhs = $lhs->arg;
         } elseif ($lhs instanceof LeanNeg) {
             $lhs = new LeanParenthesis($lhs, $this->indent, $level);
             $lhs->is_closed = true;

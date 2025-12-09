@@ -1,12 +1,12 @@
 import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.InvDiv.eq.Inv
+import Lemma.Rat.MulDivS.eq.Div.of.Ne_0
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
-import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
-import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.NotInfinite.of.NeSt_0
 import Lemma.Hyperreal.StInv.eq.Inv.of.EqSt
 import Lemma.Hyperreal.Infinitesimal_0
+import Lemma.Hyperreal.NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal
 open Hyperreal Rat Nat Int
 export Hyperreal (Infinite Infinitesimal IsSt st)
 
@@ -45,17 +45,15 @@ instance : Setoid ℝ* where
             ·
               assumption
             ·
-              have h := EqSt.of.InfinitesimalSub h.1
-              have h_ab := InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
-              have h_ab := EqSt_0.of.Infinitesimal h_ab
-              rw [h_ab] at h
-              simp at h
+              simp [h_b] at h
+              have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
+              contradiction
         else
           simp [h_a] at ⊢ h
           if h_b : Infinitesimal b then
             simp [h_b] at h
           else
-            have h := h.1
+            simp [h_b] at h
             have h := EqSt.of.InfinitesimalSub h
             have h := StInv.eq.Inv.of.EqSt h
             rw [InvDiv.eq.Inv] at h
@@ -63,6 +61,48 @@ instance : Setoid ℝ* where
             apply InfinitesimalSub.of.EqSt.NotInfinite _ h
             apply NotInfinite.of.NeSt_0
             linarith
-      trans {x y z} h₀ h₁:= by
-        sorry
+      trans {a b c} h_ab h_bc:= by
+        if h_a : Infinitesimal a then
+          simp [h_a] at ⊢ h_ab
+          if h_b : Infinitesimal b then
+            simp [h_b] at ⊢ h_ab h_bc
+            if h_c : Infinitesimal c then
+              simp [h_c]
+            else
+              simp [h_c] at h_bc
+              have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_b h_c
+              contradiction
+          else
+            simp [h_b] at h_ab
+            have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
+            contradiction
+        else
+          simp [h_a] at ⊢ h_ab
+          if h_b : Infinitesimal b then
+            simp [h_b] at h_ab
+          else
+            simp [h_b] at ⊢ h_ab h_bc
+            if h_c : Infinitesimal c then
+              simp [h_c] at h_bc
+            else
+              simp [h_c] at ⊢ h_bc
+              have h_ab := EqSt.of.InfinitesimalSub h_ab
+              have h_bc := EqSt.of.InfinitesimalSub h_bc
+              have h_abc := Hyperreal.st_mul
+                (x := a / b)
+                (y := b / c)
+                (NotInfinite.of.NeSt_0 (by linarith))
+                (NotInfinite.of.NeSt_0 (by linarith))
+              rw [MulDivS.eq.Div.of.Ne_0] at h_abc
+              .
+                apply InfinitesimalSub.of.EqSt.NotInfinite
+                .
+                  apply NotInfinite.of.NeSt_0
+                  simp_all
+                .
+                  simp_all
+              .
+                contrapose! h_b
+                subst h_b
+                apply Infinitesimal_0
     }
