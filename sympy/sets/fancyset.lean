@@ -1,5 +1,5 @@
 import Lemma.Rat.Div.eq.One.of.Ne_0
-import Lemma.Rat.InvDiv.eq.Inv
+import Lemma.Rat.InvDiv.eq.Div
 import Lemma.Rat.MulDivS.eq.Div.of.Ne_0
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
@@ -9,7 +9,6 @@ import Lemma.Hyperreal.Infinitesimal_0
 import Lemma.Hyperreal.NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal
 open Hyperreal Rat Nat Int
 export Hyperreal (Infinite Infinitesimal IsSt st)
-
 
 /--
 the approx operator that defines asymptotically equivalence/closeness between hyperreal numbers.
@@ -46,7 +45,8 @@ instance : Setoid ℝ* where
               assumption
             ·
               simp [h_b] at h
-              have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
+              have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_a h_b (d := 1)
+              simp at this
               contradiction
         else
           simp [h_a] at ⊢ h
@@ -56,7 +56,7 @@ instance : Setoid ℝ* where
             simp [h_b] at h
             have h := EqSt.of.InfinitesimalSub h
             have h := StInv.eq.Inv.of.EqSt h
-            rw [InvDiv.eq.Inv] at h
+            rw [InvDiv.eq.Div] at h
             simp at h
             apply InfinitesimalSub.of.EqSt.NotInfinite _ h
             apply NotInfinite.of.NeSt_0
@@ -70,11 +70,13 @@ instance : Setoid ℝ* where
               simp [h_c]
             else
               simp [h_c] at h_bc
-              have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_b h_c
+              have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_b h_c (d := 1)
+              simp at this
               contradiction
           else
             simp [h_b] at h_ab
-            have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
+            have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_a h_b (d := 1)
+            simp at this
             contradiction
         else
           simp [h_a] at ⊢ h_ab

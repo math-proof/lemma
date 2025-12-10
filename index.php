@@ -271,7 +271,7 @@ if (! str_ends_with($path_info, '/')) {
                             $tokens[1] = $m[1] . $m[2];
                     }
                     elseif (count($first) == 3) {
-                        if (is_infix_operator($first[1])) {
+                        if (is_symm_operator($first[1])) {
                             # comm
                             $segment_ = [...$segment];
                             $segment_[0] = [$first[2], $first[1], $first[0]];
@@ -280,7 +280,19 @@ if (! str_ends_with($path_info, '/')) {
                                 $segment = $segment_;
                             }
                             else {
-                                $segment[1][0] = 'is';
+                                $first = $segment_[0];
+                                $first[0] = transformPrefix($first[0]);
+                                $first[2] = transformPrefix($first[2]);
+                                $segment_[0] = [$first[0], $first[1], $first[2]];
+                                $path = module_to_lean($segment_, $section);
+                                if (file_exists($path))
+                                    $segment = $segment_;
+                                else {
+                                    $segment_[0] = [$first[2], $first[1], $first[0]];
+                                    $path = module_to_lean($segment_, $section);
+                                    if (file_exists($path))
+                                        $segment = $segment_;
+                                }
                             }
                         }
                     }

@@ -4,15 +4,14 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {x : ℝ}
+  [MonoidWithZero α]
+  {x : α}
 -- given
   (h : x = 0) :
 -- imply
   x² = 0 := by
 -- proof
-    -- Square both sides of the equation
   rw [h]
-    -- Calculate the square of 0 and substitute back into the equation
   norm_num
 
 

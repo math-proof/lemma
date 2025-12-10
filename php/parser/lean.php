@@ -2394,7 +2394,8 @@ class LeanAssign extends LeanBinary
     }
     public function is_indented()
     {
-        return ($parent= $this->parent) instanceof LeanArgsNewLineSeparated || ($parent instanceof LeanArgsIndented && $parent->rhs === $this);
+        $parent = $this->parent;
+        return !$parent || $parent instanceof LeanArgsNewLineSeparated || ($parent instanceof LeanArgsIndented && $parent->rhs === $this);
     }
 
     public function strFormat()
@@ -6424,6 +6425,7 @@ class LeanArgsSpaceSeparated extends LeanArgs
         if ($func instanceof LeanToken) {
             switch ($func->text) {
                 case 'HEq':
+                case 'Infinitesimal':
                     return true;
             }
         }
@@ -6490,14 +6492,20 @@ class LeanArgsNewLineSeparated extends LeanArgs
         switch ($vname) {
             case 'stack_priority':
                 if (($parent = $this->parent) instanceof LeanCalc)
-                    return 17;
+                    return LeanAssign::$input_priority - 1;
                 if ($parent instanceof LeanArgsIndented) {
-                    if ($parent->parent instanceof LeanQuantifier)
+                    if (($grandparent = $parent->parent) instanceof LeanQuantifier)
                         // consider the following case of
                         // ∀ i ∈ s, cast 
                         //   (by sorry)
                         //   (x i) = y i
                         return LeanRelational::$input_priority + 1;
+                    if ($grandparent instanceof LeanCalc)
+                        // consider the following case of
+                        //   calc _ ≤ _ := by sorry
+                        //     _ < _ := by sorry
+                        //     _ = _ := by sorry
+                        return LeanAssign::$input_priority - 1;
                 }
                 return 47;
             default:
@@ -6583,7 +6591,8 @@ class LeanArgsIndented extends LeanBinary
         if ($this->indent < $indent) {
             if ($new = $this->push_args_indented($indent, $newline_count))
                 return $new;
-            throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+            $this->rhs = new LeanArgsNewLineSeparated([$caret], $indent, $caret->level);
+            return $this->rhs->push_newlines($newline_count);
         }
         if ($this->parent instanceof LeanAssign)
             return parent::insert_newline($caret, $newline_count, $indent, $next);
@@ -7499,7 +7508,8 @@ class LeanCalc extends LeanUnary
 {
     public function is_indented()
     {
-        return $this->parent instanceof LeanStatements;
+        $parent = $this->parent;
+        return !$parent || $parent instanceof LeanStatements || $parent instanceof LeanIte;
     }
 
     public function sep()
@@ -7530,9 +7540,9 @@ class LeanCalc extends LeanUnary
                 return $this->arg->push_newlines($newline_count - 1);
             }
             if ($caret instanceof LeanAssign) {
-                $caret = $this->push_args_indented($indent, $newline_count, false);
-                if ($caret)
-                    return $caret;
+                $new = $this->push_args_indented($indent, $newline_count, false);
+                if ($new)
+                    return $new;
             }
         }
 
@@ -7571,6 +7581,30 @@ class LeanCalc extends LeanUnary
             foreach ($arg->args as $stmt)
                 $stmt->echo();
         }
+    }
+
+    public function split(&$syntax = null)
+    {
+        $arg = $this->arg;
+        if ($arg instanceof LeanArgsNewLineSeparated) {
+            $syntax['calc'] = true;
+            $self = clone $this;
+            $stmts = $self->arg->args;
+            $self->arg = new LeanCaret($this->indent, $this->level);
+            $statements = [$self];
+            foreach ($stmts as $stmt) {
+                array_push($statements, ...$stmt->split($syntax));
+            }
+            return $statements;
+        }
+        if ($arg instanceof LeanArgsIndented) {
+            $syntax['calc'] = true;
+            $statements = [];
+            foreach ($arg->args as $stmt) {
+            }
+            return $statements;
+        }
+        return [$this];
     }
 }
 
@@ -8946,7 +8980,7 @@ class LbigOperator extends LeanArgs
 
     public function is_indented()
     {
-        return ($parent = $this->parent) instanceof LeanStatements || ($parent) instanceof LeanIte;
+        return ($parent = $this->parent) instanceof LeanStatements || $parent instanceof LeanIte;
     }
 
     public function strFormat()
@@ -9290,10 +9324,14 @@ function transformPrefix(string $s): string {
     return $s;
 }
 
+function is_symm_operator(string $op): bool
+{
+    return in_array($op, ["eq", "is", "as", "ne"], true);
+}
+
 function is_infix_operator(string $op): bool
 {
-    $infixOps = ["eq", "is", "as", "ne", "lt", "le", "gt", "ge", "in", "ou", "et"];
-    return in_array($op, $infixOps, true);
+    return in_array($op, ["eq", "is", "as", "ne", "lt", "le", "gt", "ge", "in", "ou", "et"], true);
 }
 
 function parseInfixSegments(array $list): array

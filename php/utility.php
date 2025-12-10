@@ -4,7 +4,7 @@
 require_once 'std.php';
 require_once 'mysql.php';
 
-use std\Set, std\Text, std\Queue;
+use std\Set, std\Queue;
 
 function get_project_name()
 {
@@ -48,11 +48,11 @@ function module_to_lean($module, $section = null)
     return module_to_path($module) . ".lean";
 }
 
-function module_to_path($theorem)
+function module_to_path($theorem, $dirname = "Lemma")
 {
     $theorem = str_replace(".", "/", $theorem);
 
-    return dirname(dirname(__file__)) . "/Lemma/$theorem";
+    return dirname(dirname(__file__)) . "/$dirname/$theorem";
 }
 
 function read_all_lean($dir)

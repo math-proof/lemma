@@ -7,7 +7,7 @@ open Int Nat
 @[main]
 private lemma main
   [CommRing α]
-  {a b : α} :
+  (a b : α) :
 -- imply
   (a - b)² = a² + b² - 2 * a * b := by
 -- proof

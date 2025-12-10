@@ -12,7 +12,7 @@ private lemma main
 -- imply
   √x > 0 := by
 -- proof
-  have := GeSqrt_0 (x := x)
+  have := GeSqrt_0 x
   have h_Ne := NeSqrt_0.of.Gt_0 h
   exact Gt.of.Ge.Ne this h_Ne
 

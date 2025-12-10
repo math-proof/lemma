@@ -4,7 +4,8 @@ import sympy.Basic
 @[main]
 private lemma main
   [Lattice α] [AddGroup α] [AddLeftMono α] [AddRightMono α]
-  {a : α} :
+-- given
+  (a : α) :
 -- imply
   |a| ≥ 0 :=
 -- proof

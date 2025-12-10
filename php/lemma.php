@@ -97,6 +97,7 @@ if ($_POST) {
 	$sectionRegex = str_replace('List', 'List(?!\.Vector)', $sectionRegex); // avoid List.Vector
 	$sectionRegex = str_replace('Finset', 'Finset(?!\.Nonempty)', $sectionRegex); // avoid Finset.Nonempty
 	$sectionRegex = str_replace('Tensor', 'Tensor(?!\.T\b)', $sectionRegex); // avoid Tensor.T
+	$sectionRegex = str_replace('Hyperreal', 'Hyperreal(?!\.Infinite\b)', $sectionRegex); // avoid Hyperreal.Infinite
 	$sectionRegex = "(?:$sectionRegex)(?=\.[A-Z])";
 
 	function detect_lemma(&$line)  {
@@ -438,6 +439,28 @@ if (!file_exists($leanEchoFile) || filemtime($leanFile) < filemtime($leanEchoFil
 }
 
 if (!$code || !$code['lemma'] || !$code['date']) {
+	function contains_module(string $parentModule, string $module): bool {
+		$filePath = module_to_path($parentModule, '') . ".lean";
+		if (!file_exists($filePath))
+			return false;
+		$fileObject = new SplFileObject($filePath, 'r');
+		// Iterate through the file line by line
+		foreach ($fileObject as $line) {
+			// preg_match returns 1 if pattern matches, 0 if not, false on error
+			$line = rtrim($line);
+			if (str_starts_with($line, 'import')) {
+				$m = substr($line, strlen('import '));
+				if ($m == $module)
+					return true;
+				if (contains_module($m, $module))
+					return true;
+			}
+			else 
+				break;
+		}
+		return false;
+	}
+
 	// $_ = new std\Timer("compile and render2vue");
 	$leanCode = compile(file_get_contents($leanFile));
 	$syntax = [];
@@ -486,6 +509,16 @@ where
 EOF;
 			[[$count]] = get_rows($sql, MYSQLI_NUM);
 			if (!intval($count)) {
+				$imports = $code['imports'];
+				$hit = false;
+				foreach ($imports as $module) {
+					if (contains_module($module, $import)) {
+						$hit = true;
+						break;
+					}
+				}
+				if ($hit)
+					return false;
 				array_unshift($code['imports'], $import);
 				$leanCode->import($import);
 				return true;

@@ -1,4 +1,4 @@
-import Mathlib.Tactic
+import sympy.sets.fancyset
 import sympy.core.power
 
 
@@ -17,6 +17,14 @@ noncomputable instance : Root ℝ where
   sqrt := Real.sqrt
   cubic x := x ^ (3:ℝ)⁻¹
   quartic x := x ^ (4:ℝ)⁻¹
+
+noncomputable instance : Pow ℝ* ℝ* where
+  pow x y := x.map₂ Real.rpow y
+
+noncomputable instance : Root ℝ* where
+  sqrt x := x.map Real.sqrt
+  cubic x := x ^ (3:ℝ*)⁻¹
+  quartic x := x ^ (4:ℝ*)⁻¹
 
 
 noncomputable instance : Root ℂ where

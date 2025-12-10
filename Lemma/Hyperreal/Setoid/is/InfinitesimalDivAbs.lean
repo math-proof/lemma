@@ -1,5 +1,4 @@
 import Lemma.Hyperreal.Setoid.is.OrAndS
-import sympy.core.power
 import sympy.sets.fancyset
 open Hyperreal
 

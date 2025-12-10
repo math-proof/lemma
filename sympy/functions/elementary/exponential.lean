@@ -1,11 +1,13 @@
 import sympy.sets.fancyset
-open Filter
+import Lemma.Hyperreal.UFn.of.All_Ufn
+open Filter Hyperreal
+
 
 noncomputable def Hyperreal.exp (x : ℝ*) : ℝ* :=
   x.map Real.exp
 
 theorem Hyperreal.exp_add (x y : ℝ*) : exp (x + y) = exp x * exp y := by
-  refine Germ.inductionOn₂ x y fun f g => ?_
+  refine Germ.inductionOn₂ x y fun x y => ?_
   -- rw [Germ.map]
   apply Germ.coe_eq.mpr ∘ Eventually.of_forall
   simp [Real.exp_add]
@@ -24,22 +26,22 @@ noncomputable def Hyperreal.expMonoidHom : MonoidHom (Multiplicative ℝ*) ℝ* 
 
 
 theorem Hyperreal.exp_neg x : exp (-x) = (exp x)⁻¹ := by
-  refine Germ.inductionOn x fun f => ?_
+  apply UFn.of.All_Ufn x
+  intro x
   apply Germ.coe_eq.mpr ∘ Eventually.of_forall
   simp [Real.exp_neg]
 
 theorem Hyperreal.exp_ne_zero x : exp x ≠ 0 := by
-  refine Germ.inductionOn x fun f => ?_
-  -- rw [Germ.map]
-  intro h
-  obtain ⟨n, hn⟩ := Filter.nonempty_of_mem (Germ.coe_eq.mp h)
+  apply UFn.of.All_Ufn x
+  intro x h
+  obtain ⟨n, hn⟩ := nonempty_of_mem (Germ.coe_eq.mp h)
   simp at hn
 
 theorem Hyperreal.exp_pos x : exp x > 0 := by
-    refine Germ.inductionOn x fun f => ?_
-    -- show 0 < Germ.ofFun (fun n => Real.exp (f n))
-    apply Germ.coe_lt.mpr ∘ Eventually.of_forall
-    simp [Real.exp_pos]
+  apply UFn.of.All_Ufn x
+  intro x
+  apply Germ.coe_lt.mpr ∘ Eventually.of_forall
+  simp [Real.exp_pos]
 
 
 class Exp (α : Type u) extends AddCommGroup α, DivInvMonoid α where
@@ -126,7 +128,8 @@ noncomputable instance : Log ℝ* where
     apply Germ.coe_eq.mpr ∘ Eventually.of_forall
     simp [Real.log_one]
   log_div_self x := by
-    refine Germ.inductionOn x fun f => ?_
+    apply UFn.of.All_Ufn x
+    intro x
     apply Germ.coe_eq.mpr ∘ Eventually.of_forall
     simp [Real.log_div_self]
 
@@ -144,12 +147,12 @@ noncomputable instance : LogPos ℝ where
 noncomputable instance : LogPos ℝ* where
   log_mul {x y : ℝ*} h_x h_y := by
     revert h_x h_y
-    refine Germ.inductionOn₂ x y fun f g h_x h_y => ?_
-    have hx_event : {t | f t ≠ 0} ∈ hyperfilter ℕ := by
+    refine Germ.inductionOn₂ x y fun x y h_x h_y => ?_
+    have hx_event : {t | x t ≠ 0} ∈ hyperfilter ℕ := by
       apply Ultrafilter.eventually_not.mpr
       apply mt Germ.coe_eq.mpr
       exact h_x
-    have hy_event : {t | g t ≠ 0} ∈ hyperfilter ℕ := by
+    have hy_event : {t | y t ≠ 0} ∈ hyperfilter ℕ := by
       apply Ultrafilter.eventually_not.mpr
       apply mt Germ.coe_eq.mpr
       exact h_y
@@ -158,24 +161,25 @@ noncomputable instance : LogPos ℝ* where
     apply Real.log_mul hn gn
 
   log_div {x y : ℝ*} := by
-    refine Germ.inductionOn₂ x y fun f g => ?_
+    refine Germ.inductionOn₂ x y fun x y => ?_
     intro h_x h_y
-    have hx_event : ∀ᶠ n in hyperfilter ℕ, f n ≠ 0 := by
+    have hx_event : ∀ᶠ n in hyperfilter ℕ, x n ≠ 0 := by
       apply Ultrafilter.eventually_not.mpr
       apply mt Germ.coe_eq.mpr
       exact h_x
-    have hy_event : ∀ᶠ n in hyperfilter ℕ, g n ≠ 0 := by
+    have hy_event : ∀ᶠ n in hyperfilter ℕ, y n ≠ 0 := by
       apply Ultrafilter.eventually_not.mpr
       apply mt Germ.coe_eq.mpr
       exact h_y
-    have h_event : ∀ᶠ n in hyperfilter ℕ, f n ≠ 0 ∧ g n ≠ 0 :=
+    have h_event : ∀ᶠ n in hyperfilter ℕ, x n ≠ 0 ∧ y n ≠ 0 :=
       hx_event.and hy_event
     apply Germ.coe_eq.mpr
     filter_upwards [h_event] with n hn
     exact Real.log_div hn.1 hn.2
 
   log_exp x := by
-    refine Germ.inductionOn x fun f => ?_
+    apply UFn.of.All_Ufn x
+    intro x
     apply Germ.coe_eq.mpr ∘ Eventually.of_forall
     simp [Real.log_exp]
 
