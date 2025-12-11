@@ -1940,6 +1940,11 @@ class LeanAbs extends LeanPairedGroup
     {
         return '\left| {%s} \right|';
     }
+
+    public function insert_bar($caret, $prev_token, $next)
+    {
+        return $this->push_right('LeanAbs');
+    }
 }
 
 class LeanNorm extends LeanPairedGroup
@@ -6426,6 +6431,9 @@ class LeanArgsSpaceSeparated extends LeanArgs
             switch ($func->text) {
                 case 'HEq':
                 case 'Infinitesimal':
+                case 'Infinite':
+                case 'InfinitePos':
+                case 'InfiniteNeg':
                     return true;
             }
         }

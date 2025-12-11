@@ -1,7 +1,6 @@
-import Lemma.Nat.LeMulS.of.Le.Gt_0
-import Lemma.Rat.Div.eq.Mul_Inv
-import Lemma.Rat.GtInv_0.is.Gt_0
-open Rat Nat
+import Lemma.Nat.Ge.of.Gt
+import Lemma.Rat.LeDivS.of.Le.Ge_0
+open Nat Rat
 
 
 @[main, comm 2]
@@ -18,11 +17,9 @@ private lemma main
 -- imply
   a / x ≤ b / x := by
 -- proof
-  have := GtInv_0.of.Gt_0 h₁
-  have := LeMulS.of.Le.Gt_0 h₀ this
-  repeat rw [Mul_Inv.eq.Div] at this
-  assumption
+  apply LeDivS.of.Le.Ge_0 h₀
+  apply Ge.of.Gt h₁
 
 
 -- created on 2024-11-25
--- updated on 2025-03-30
+-- updated on 2025-12-11

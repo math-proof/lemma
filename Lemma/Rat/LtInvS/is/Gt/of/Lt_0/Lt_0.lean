@@ -11,7 +11,7 @@ private lemma main
   (ha : a < 0)
   (hb : b < 0) :
 -- imply
-  a⁻¹ < b⁻¹ ↔ b < a :=
+  a⁻¹ < b⁻¹ ↔ a > b :=
 -- proof
   inv_lt_inv_of_neg ha hb
 

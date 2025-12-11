@@ -1,6 +1,6 @@
 import Lemma.Int.Mul.gt.Zero.is.AndGtS_0.ou.AndLtS_0
-import Lemma.Rat.LtInvS.is.Lt.of.Gt0.Gt0
-import Lemma.Rat.LtInvS.is.Lt.of.Lt0.Lt0
+import Lemma.Rat.LtInvS.is.Gt.of.Lt_0.Lt_0
+import Lemma.Rat.LtInvS.is.Gt.of.Gt_0.Gt_0
 open Rat Int
 
 
@@ -16,10 +16,10 @@ private lemma main
 -- proof
   obtain ⟨ha, hb⟩ | ⟨ha, hb⟩ := AndGtS_0.ou.AndLtS_0.of.Mul.gt.Zero h₀
   ·
-    apply Lt.of.LtInvS.Lt0.Lt0
+    apply Gt.of.LtInvS.Gt_0.Gt_0
     repeat assumption
   ·
-    apply Lt.of.LtInvS.Gt0.Gt0
+    apply Gt.of.LtInvS.Lt_0.Lt_0
     repeat assumption
 
 

@@ -9,10 +9,10 @@ private lemma main
   [MulPosReflectLT G]
   {a b : G}
 -- given
-  (ha : 0 < a)
-  (hb : 0 < b) :
+  (ha : a > 0)
+  (hb : b > 0) :
 -- imply
-  a⁻¹ < b⁻¹ ↔ b < a :=
+  a⁻¹ < b⁻¹ ↔ a > b :=
 -- proof
   inv_lt_inv₀ ha hb
 

@@ -1,6 +1,6 @@
 import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Rat.Div.ge.Zero
-import Lemma.Rat.LtDiv.of.Lt_Mul.Gt_0
+import Lemma.Rat.LtDiv.is.Lt_Mul.of.Gt_0
 open Rat Int
 
 
@@ -21,10 +21,10 @@ private lemma main
     simp
     apply LtDiv.of.Lt_Mul.Gt_0
     ·
-      simpa
-    ·
       simp
       linarith
+    ·
+      simpa
 
 
 -- created on 2025-07-07

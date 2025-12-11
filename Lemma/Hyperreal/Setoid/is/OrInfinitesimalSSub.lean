@@ -1,10 +1,10 @@
-import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.InfinitesimalAdd.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.NotInfinite.of.NeSt_0
+import Lemma.Hyperreal.NotInfiniteDiv.of.InfinitesimalSubAddDivS.NotInfinitesimal
 import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.NotInfinitesimalSub.of.NotInfinitesimal.Infinitesimal
 import Lemma.Hyperreal.NotInfinitesimalSubAddDivS.of.Infinitesimal.NotInfinitesimal
@@ -13,6 +13,7 @@ import Lemma.Hyperreal.StAdd.eq.AddStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StDiv.eq.InvStInv
 import Lemma.Nat.Add
 import Lemma.Rat.SubDiv.eq.DivSub.of.Ne_0
+import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
 import sympy.sets.fancyset
 open Hyperreal Nat Rat Real
 
@@ -79,21 +80,22 @@ private lemma main
         contradiction
       else
         simp [h_b]
-        have h := EqSt.of.InfinitesimalSub h
-        rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite] at h
+        have h_st := EqSt.of.InfinitesimalSub h
+        rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite] at h_st
         ·
-          conv_lhs at h =>
+          conv_lhs at h_st =>
             arg 2
-            rw [Hyperreal.StDiv.eq.InvStInv]
-          have h := Eq_1.of.Add_Inv.eq.Two h
+            rw [StDiv.eq.InvStInv]
+          have h := Eq_1.of.Add_Inv.eq.Two h_st
           apply InfinitesimalSub.of.EqSt.NotInfinite _ h
           apply NotInfinite.of.NeSt_0
           linarith
         ·
-          sorry
+          apply NotInfiniteDiv.of.InfinitesimalSubAddDivS.NotInfinitesimal h_a h
         ·
-          sorry
+          rw [Add.comm] at h
+          apply NotInfiniteDiv.of.InfinitesimalSubAddDivS.NotInfinitesimal h_b h
 
 
 -- created on 2025-12-09
--- updated on 2025-12-10
+-- updated on 2025-12-11

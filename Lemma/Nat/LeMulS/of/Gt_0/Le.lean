@@ -1,6 +1,6 @@
-import Lemma.Nat.Ge.of.Gt
 import Lemma.Int.LeMulS.of.Ge_0.Le
-open Nat Int
+import Lemma.Nat.Ge.of.Gt
+open Int Nat
 
 
 @[main, comm 1]
@@ -13,9 +13,8 @@ private lemma main
 -- imply
   x * a ≤ x * b := by
 -- proof
-  have h := Ge.of.Gt h₀
-  apply LeMulS.of.Ge_0.Le h h₁
+  apply LeMulS.of.Ge_0.Le _ h₁
+  apply Ge.of.Gt h₀
 
 
--- created on 2024-07-01
--- updated on 2025-04-06
+-- created on 2025-12-11
