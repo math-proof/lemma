@@ -1,6 +1,6 @@
 import Lemma.Int.EqAddSub
 import Lemma.Int.Sub.ne.Zero.of.Ne
-import Lemma.Rat.Add_Div.eq.DivAdd.of.Ne_0
+import Lemma.Rat.Add1Div.eq.DivAdd.of.Ne_0
 import Lemma.Rat.Div1.eq.Inv
 open Int Rat
 
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   (1 - a)⁻¹ = 1 + a / (1 - a) := by
 -- proof
-  rw [Add_Div.eq.DivAdd.of.Ne_0]
+  rw [Add1Div.eq.DivAdd.of.Ne_0]
   ·
     rw [EqAddSub]
     rw [Inv.eq.Div1]

@@ -8,10 +8,10 @@ private lemma main
   [ExistsAddOfLE α]
   [PosMulStrictMono α] [MulPosStrictMono α]
   [AddLeftStrictMono α] [AddLeftReflectLT α]
-  -- given
+-- given
   (a b : α) :
 -- imply
-  0 < a * b ↔ a > 0 ∧ b > 0 ∨ a < 0 ∧ b < 0 :=
+  a * b > 0 ↔ a > 0 ∧ b > 0 ∨ a < 0 ∧ b < 0 :=
 -- proof
   mul_pos_iff
 

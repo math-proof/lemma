@@ -1,7 +1,24 @@
+import Lemma.Hyperreal.Gt_0.of.GtSt_0
+import Lemma.Rat.Div.gt.Zero.is.Mul.gt.Zero
+import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
+import Lemma.Hyperreal.InfinitesimalAdd.of.Infinitesimal.Infinitesimal
+import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.InfinitesimalPow.of.Infinitesimal
+import Lemma.Hyperreal.InfinitesimalSub.is.InfinitesimalSub
+import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
+import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
+import Lemma.Hyperreal.Ne_0.of.Infinitesimal
+import Lemma.Hyperreal.NotInfinitesimalAdd.of.Infinitesimal.Ne_0
+import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.Ne_0
 import Lemma.Hyperreal.Setoid.is.OrAndS
+import Lemma.Hyperreal.StDiv.eq.InvStInv
+import Lemma.Nat.Add
+import Lemma.Nat.AddAdd.eq.Add_Add
+import Lemma.Rat.DivSquareSub.eq.Sub1DivAddS
+import Lemma.Rat.Div_AddS1.eq.Add1DivSquareSub.of.Mul.gt.Zero
 import sympy.core.power
 import sympy.sets.fancyset
-open Hyperreal
+open Hyperreal Nat Rat
 
 
 @[main, comm, mp, mpr]
@@ -13,10 +30,72 @@ private lemma main
 -- proof
   rw [Setoid.is.OrAndS]
   constructor
+  intro h
   ·
-    sorry
+    obtain h | h := h
+    ·
+      let ⟨h_a, h_b⟩ := h
+      apply InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
+      ·
+        apply InfinitesimalPow.of.Infinitesimal
+        apply InfinitesimalSub.of.Infinitesimal.Infinitesimal h_a h_b
+      ·
+        rw [AddAdd.eq.Add_Add]
+        rw [Add.comm]
+        apply NotInfinitesimalAdd.of.Infinitesimal.Ne_0
+        ·
+          apply InfinitesimalAdd.of.Infinitesimal.Infinitesimal
+          ·
+            exact InfinitesimalPow.of.Infinitesimal h_a
+          ·
+            exact InfinitesimalPow.of.Infinitesimal h_b
+        ·
+          simp
+    ·
+      let ⟨h_ab, h_b⟩ := h
+      if h_a : a.Infinitesimal then
+        have h_ab_div := InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
+        have := NotInfinitesimalSub.of.Infinitesimal.Ne_0 h_ab_div (by simp) (r := 1)
+        contradiction
+      else
+        have h_ab := EqSt.of.InfinitesimalSub h_ab
+        have h_ba := StDiv.eq.InvStInv (a := b) (b := a)
+        rw [h_ab] at h_ba
+        simp at h_ba
+        have h_a := Ne_0.of.Infinitesimal h_a
+        have h_b := Ne_0.of.Infinitesimal h_b
+        rw [DivSquareSub.eq.Sub1DivAddS]
+        apply InfinitesimalSub.of.InfinitesimalSub
+        apply InfinitesimalSub.of.EqSt.NotInfinite
+        ·
+          sorry
+        ·
+          rw [StDiv.eq.InvStInv]
+          simp
+          rw [Div_AddS1.eq.Add1DivSquareSub.of.Mul.gt.Zero]
+          ·
+            sorry
+          ·
+            apply Mul.gt.Zero.of.Div.gt.Zero
+            apply Gt_0.of.GtSt_0
+            linarith
   ·
-    sorry
+    intro h
+    if h_a : a.Infinitesimal then
+      simp [h_a]
+      if h_b : b.Infinitesimal then
+        simp [h_b]
+      else
+        simp [h_b]
+        sorry
+    else
+      simp [h_a]
+      if h_b : b.Infinitesimal then
+        simp [h_b]
+        sorry
+      else
+        simp [h_b]
+        sorry
 
 
 -- created on 2025-12-09

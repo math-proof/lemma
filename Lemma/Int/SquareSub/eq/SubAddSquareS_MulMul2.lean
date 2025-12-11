@@ -1,4 +1,3 @@
-import sympy.core.power
 import Lemma.Nat.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Int.Sub.eq.Add_Neg
 open Int Nat
@@ -7,6 +6,7 @@ open Int Nat
 @[main]
 private lemma main
   [CommRing α]
+-- given
   (a b : α) :
 -- imply
   (a - b)² = a² + b² - 2 * a * b := by

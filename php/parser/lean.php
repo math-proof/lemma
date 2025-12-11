@@ -3699,6 +3699,7 @@ class Lean_sqrt extends LeanUnaryArithmeticPre
 
 class LeanSquare extends LeanUnaryArithmeticPost
 {
+    public static $input_priority = 66; //LeanAdd::$input_priority + 1;
     public function strFormat()
     {
         return "%s$this->operator";

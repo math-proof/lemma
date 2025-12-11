@@ -5,7 +5,7 @@ import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.NotInfinite.of.NeSt_0
 import Lemma.Hyperreal.StInv.eq.Inv.of.EqSt
-import Lemma.Hyperreal.Infinitesimal_0
+import Lemma.Hyperreal.Infinitesimal0
 import Lemma.Hyperreal.NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal
 open Hyperreal Rat Nat Int
 export Hyperreal (Infinite Infinitesimal IsSt st)
@@ -29,11 +29,11 @@ instance : Setoid ℝ* where
           rw [Div.eq.One.of.Ne_0]
           .
             simp
-            apply Infinitesimal_0
+            apply Infinitesimal0
           .
             contrapose! h
             subst h
-            apply Infinitesimal_0
+            apply Infinitesimal0
       symm {a b} h := by
         if h_a : Infinitesimal a then
           simp [h_a] at ⊢ h
@@ -106,5 +106,5 @@ instance : Setoid ℝ* where
               .
                 contrapose! h_b
                 subst h_b
-                apply Infinitesimal_0
+                apply Infinitesimal0
     }
