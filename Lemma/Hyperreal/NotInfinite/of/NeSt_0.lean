@@ -1,6 +1,5 @@
-import Mathlib.Analysis.Real.Hyperreal
-import sympy.Basic
-open Hyperreal (st Infinite)
+import Lemma.Hyperreal.EqSt_0.of.Infinite
+open Hyperreal
 
 
 @[main]
@@ -11,7 +10,8 @@ private lemma main
 -- imply
   ¬Infinite x :=
 -- proof
-  mt Hyperreal.Infinite.st_eq h
+  mt EqSt_0.of.Infinite h
 
 
 -- created on 2025-12-09
+-- updated on 2025-12-12

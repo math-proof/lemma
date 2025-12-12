@@ -10,12 +10,9 @@ private lemma main
 -- imply
   x < 0 := by
 -- proof
-  if h : x < 0 then
-    assumption
-  else
-    simp at h
-    have := GeSt_0.of.Ge_0 h
-    linarith
+  contrapose! h
+  have := GeSt_0.of.Ge_0 h
+  linarith
 
 
 -- created on 2025-12-11
