@@ -273,6 +273,56 @@ initialize registerBuiltinAttribute {
     }
 }
 
+def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
+  type.println context "original type"
+  let b := type
+  println! s!"binders = {binders}"
+  let Not := fun type => (Lean.Expr.const `Not []).mkApp [type]
+  let (binders, type, a) :=
+    if let ⟨h, premise, .default⟩ :: rest := binders then
+      let a := premise.incDeBruijnIndex 1
+      ((h, Not (type.decDeBruijnIndex 1), BinderInfo.default) :: rest, Not a, a)
+    else
+      panic! "The theorem must have at least one hypothesis."
+  println! s!"binders = {binders}"
+  let ⟨h, premise, default⟩ := binders[0]!
+  premise.println (binders.tail.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)) "premise"
+  type.println context "new type"
+  let telescope := fun lam hint body => do
+    body.println context s!"prior {hint}"
+    let body := binders.foldl
+      (fun body ⟨binderName, binderType, binderInfo⟩ =>
+        lam binderName binderType body binderInfo
+      )
+      body
+    body.println [] s!"final {hint}"
+    return body
+  -- mt {a b : Prop} (h₁ : a → b) (h₂ : ¬b) : ¬a
+  let proof :=
+     ((Lean.Expr.const `mt []).mkApp [a, b, proof.mkApp [(.bvar 1)], .bvar 0])
+  (type, proof).mapM (telescope Expr.forallE "type") (telescope .lam "value")
+
+initialize registerBuiltinAttribute {
+  name := `mt'
+  descr := "Automatically generate the contraposition of a theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ ← Expr.mt' decl.type (.const declName (levelParams.map .param))
+    let name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
+    let name := name ++ `mt
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
 initialize registerBuiltinAttribute {
   name := `debug
   descr := "debug"
