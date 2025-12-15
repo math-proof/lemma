@@ -4,7 +4,7 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  -- given
+-- given
   (r : ℝ) :
 -- imply
   ¬Hyperreal.Infinite r :=
