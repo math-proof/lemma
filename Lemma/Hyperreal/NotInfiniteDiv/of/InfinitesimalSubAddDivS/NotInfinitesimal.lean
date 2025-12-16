@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.InfinitesimalDiv.of.InfiniteDiv
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
-import Lemma.Hyperreal.NotInfinite.of.NeSt_0
+import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Int.EqSubAdd
 import Lemma.Nat.Ne_0.of.Eq

@@ -207,5 +207,18 @@ def String.transformPrefix (s : String) : String :=
   | _ =>
     s
 
+def String.Not (s : String) : String :=
+  match s.data with
+  | s₀ :: s₁ :: expr =>
+    match s₀, s₁, expr with
+    | 'E', 'q', expr =>
+      ('N' :: 'e' :: expr).asString
+    | 'N', 'e', expr =>
+      ('E' :: 'q' :: expr).asString
+    | _, _, _ =>
+      "Not" ++ s
+  | _ =>
+    "Not" ++ s
+
 -- #eval "%%Hello %%%-10s! %5.2f%%".format "World", -20.666666 + 1
 -- #eval "number: %4.2f".format -1

@@ -1,9 +1,8 @@
 import Mathlib.Analysis.Real.Hyperreal
 import sympy.Basic
-import sympy.Basic'
 
 
-@[main, mt']
+@[main, mt]
 private lemma main
   {x : ℝ*}
 -- given
@@ -13,6 +12,5 @@ private lemma main
 -- proof
   h.st_eq
 
-#check Hyperreal.Infinite.mt
 
 -- created on 2025-12-12

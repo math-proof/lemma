@@ -1,6 +1,5 @@
 import Lemma.Int.LeMulS.of.Ge.Le_0
 import Lemma.Nat.Le.of.Lt
-import sympy.Basic'
 open Nat Int
 
 /--

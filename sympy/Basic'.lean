@@ -287,7 +287,7 @@ def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
     else
       panic! "The theorem must have at least one hypothesis."
   println! s!"binders = {binders}"
-  let ⟨h, premise, default⟩ := binders[0]!
+  let ⟨_, premise, _⟩ := binders[0]!
   premise.println (binders.tail.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)) "premise"
   type.println context "new type"
   let telescope := fun lam hint body => do
@@ -312,8 +312,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ ← Expr.mt' decl.type (.const declName (levelParams.map .param))
-    let name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
-    let name := name ++ `mt
+    let name := (← getEnv).moduleTokens.mt.lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name

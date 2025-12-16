@@ -449,3 +449,73 @@ initialize registerBuiltinAttribute {
       value := value
     }
 }
+
+def List.Not (list : List String) : List String :=
+  if list.length == 1 then
+    [list.head!.Not]
+  else
+    let op :=
+      match list[1]! with
+      | "eq"  => "ne"
+      | "ne" => "eq"
+      | _ =>
+        panic! s!"Expected the operator 'eq' or 'ne', got: {list[1]!}"
+    list[0]! :: op :: list.tail
+
+def List.mt (list : List String) : Name :=
+  let i := list.idxOf "of"
+  let ⟨first, ofPart⟩ := list.splitAt i
+  let domain := first[0]!
+  let first := first.tail
+  let of := ofPart[0]!
+  let ofPart := ofPart.tail.parseInfixSegments
+  let (first, ofPart) := (ofPart[0]!, ofPart.set 0 first.Not)
+  (domain :: first.Not ++ of :: ofPart.map (".".intercalate ·)).foldl Name.str default
+
+def Expr.mt (type proof : Lean.Expr) : Lean.Expr × Lean.Expr :=
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let b := type
+  let Not := fun type => (Lean.Expr.const `Not []).mkApp [type]
+  let (binders, type, a) :=
+    if let ⟨h, premise, .default⟩ :: rest := binders then
+      let a := premise.incDeBruijnIndex 1
+      ((h, Not (type.decDeBruijnIndex 1), BinderInfo.default) :: rest, Not a, a)
+    else
+      panic! "The theorem must have at least one hypothesis."
+  let telescope := fun lam body =>
+    binders.foldl
+      (fun body ⟨binderName, binderType, binderInfo⟩ =>
+        lam binderName binderType body binderInfo
+      )
+      body
+  -- mt {a b : Prop} (h₁ : a → b) (h₂ : ¬b) : ¬a
+  let proof :=
+     ((Lean.Expr.const `mt []).mkApp [a, b, proof.mkApp [(.bvar 1)], .bvar 0])
+  (type, proof).map (telescope Expr.forallE) (telescope .lam)
+
+
+/--
+`@[mt]` (abbreviated from `modus tollens`) attribute automatically generates the mt version of an implication theorem.
+Usage:
+```lean
+@[mt]
+theorem Section.LHS.of.RHS {a : α} {b : β} (h : lhs a b) : rhs a b := proof
+-- Generates:
+theorem Section.NotRHS.of.NotLHS {a : α} {b : β} (h : ¬rhs a b): ¬lhs a b := mt Section.LHS.of.RHS h
+```
+-/
+initialize registerBuiltinAttribute {
+  name := `mt
+  descr := "Automatically generate the contraposition of a theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ := Expr.mt decl.type (.const declName (levelParams.map .param))
+    addAndCompile <| .thmDecl {
+      name := (← getEnv).moduleTokens.mt.lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}

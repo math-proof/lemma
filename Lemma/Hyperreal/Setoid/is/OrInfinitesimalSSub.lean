@@ -3,7 +3,7 @@ import Lemma.Hyperreal.InfinitesimalAdd.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
-import Lemma.Hyperreal.NotInfinite.of.NeSt_0
+import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.NotInfiniteDiv.of.InfinitesimalSubAddDivS.NotInfinitesimal
 import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.NotInfinitesimalSub.of.NotInfinitesimal.Infinitesimal
