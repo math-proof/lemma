@@ -1,5 +1,8 @@
-import Mathlib.Analysis.Real.Hyperreal
-import sympy.Basic
+import Lemma.Hyperreal.Infinite.is.InfiniteNeg
+import Lemma.Hyperreal.StAdd.eq.AddStS.of.NotInfinite.NotInfinite
+import Lemma.Hyperreal.StNeg.eq.NegSt
+import Lemma.Int.Sub.eq.Add_Neg
+open Hyperreal Int
 
 
 @[main]
@@ -11,7 +14,14 @@ private lemma main
 -- imply
   (x - y).st = x.st - y.st := by
 -- proof
-  sorry
+  rw [Sub.eq.Add_Neg]
+  rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_a]
+  ·
+    rw [StNeg.eq.NegSt]
+    rw [Sub.eq.Add_Neg]
+  ·
+    rwa [InfiniteNeg.is.Infinite]
 
 
 -- created on 2025-12-10
+-- updated on 2025-12-16
