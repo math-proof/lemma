@@ -24,6 +24,7 @@ if (!$lemma) {
     $limit = $_GET["limit"]?? 100;
     if ($name) {
         $regexp = str_replace(".", '\.', $name);
+        $regexp = preg_replace("/(?<![\\\\])[\\\\]b/", '\\\\\\\\b', $name);
         $binary = 'COLLATE utf8mb4_bin';
         $where = "name $binary regexp \"$regexp\"";
     }
