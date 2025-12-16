@@ -1,4 +1,4 @@
-import Lemma.Hyperreal.Any_Ge.of.NotInfinitesimal
+import Lemma.Hyperreal.NotInfinitesimal.is.Any_Ge
 import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Nat.LeMulS.of.Le.Gt_0

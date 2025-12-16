@@ -208,16 +208,13 @@ def String.transformPrefix (s : String) : String :=
     s
 
 def String.Not (s : String) : String :=
-  match s.data with
-  | s₀ :: s₁ :: expr =>
-    match s₀, s₁, expr with
-    | 'E', 'q', expr =>
-      ('N' :: 'e' :: expr).asString
-    | 'N', 'e', expr =>
-      ('E' :: 'q' :: expr).asString
-    | _, _, _ =>
-      "Not" ++ s
-  | _ =>
+  if s.startsWith "Not" then
+    s.drop 3
+  else if s.startsWith "Eq" then
+    "Ne" ++ s.drop 2
+  else if s.startsWith "Ne" then
+    "Eq" ++ s.drop 2
+  else
     "Not" ++ s
 
 -- #eval "%%Hello %%%-10s! %5.2f%%".format "World", -20.666666 + 1

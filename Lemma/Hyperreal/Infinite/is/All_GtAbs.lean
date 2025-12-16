@@ -15,7 +15,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  Hyperreal.Infinite x ↔ ∀ δ : ℝ⁺, |x| > δ := by
+  x.Infinite ↔ ∀ δ : ℝ⁺, |x| > δ := by
 -- proof
   unfold Hyperreal.Infinite
   constructor <;>

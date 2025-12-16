@@ -279,7 +279,29 @@ def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
   type.println context "original type"
   let b := type
   println! s!"binders = {binders}"
-  let Not := fun type => (Lean.Expr.const `Not []).mkApp [type]
+  let Not := fun type =>
+    match type with
+    | .app (.const `Not _) arg =>
+      arg
+    | .app (.app (.const `Eq us) lhs) rhs =>
+      (Lean.Expr.const `Ne us).mkApp [lhs, rhs]
+    | .app (.app (.const `Ne us) lhs) rhs =>
+      (Lean.Expr.const `Eq us).mkApp [lhs, rhs]
+    | _ =>
+      (Lean.Expr.const `Not []).mkApp [type]
+  let h :=
+    let h := Lean.Expr.bvar 0
+    match type with
+    | .app (.const `Not _) arg =>
+      (Lean.Expr.const `Iff.mpr []).mkApp [
+        (Lean.Expr.const `Not []).mkApp [(Lean.Expr.const `Not []).mkApp [arg]],
+        arg,
+        (Lean.Expr.const `Classical.not_not []).mkApp [arg],
+        h
+      ]
+    | _ =>
+      h
+  println! s!"h = {h}"
   let (binders, type, a) :=
     if let ⟨h, premise, .default⟩ :: rest := binders then
       let a := premise.incDeBruijnIndex 1
@@ -300,8 +322,7 @@ def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
     body.println [] s!"final {hint}"
     return body
   -- mt {a b : Prop} (h₁ : a → b) (h₂ : ¬b) : ¬a
-  let proof :=
-     ((Lean.Expr.const `mt []).mkApp [a, b, proof.mkApp [(.bvar 1)], .bvar 0])
+  let proof := ((Lean.Expr.const `mt []).mkApp [a, b, proof.mkApp [(.bvar 1)], h])
   (type, proof).mapM (telescope Expr.forallE "type") (telescope .lam "value")
 
 initialize registerBuiltinAttribute {

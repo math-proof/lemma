@@ -1,6 +1,6 @@
 import sympy.core.power
 import Lemma.Nat.EqDivS.of.Eq
-import Lemma.Rat.Add1Div.eq.DivAdd.of.Ne_0
+import Lemma.Rat.DivAdd.eq.Add1Div.of.Ne_0
 open Nat Rat
 
 

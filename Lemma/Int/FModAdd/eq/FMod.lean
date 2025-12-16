@@ -5,7 +5,7 @@ import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeAdd.eq.AddCoeS
-import Lemma.Rat.DivAdd.eq.Add1Div
+import Lemma.Rat.DivAdd.eq.Add1Div.of.Ne_0
 import Lemma.Int.NeCoeS.of.Ne
 import Lemma.Rat.FloorAdd1.eq.Add1Floor
 import Lemma.Nat.MulAdd.eq.AddMulS
@@ -32,7 +32,7 @@ private lemma main
     rw [CoeAdd.eq.AddCoeS]
     rw [Add.comm]
     have h := NeCoeS.of.Ne (R := ℚ) h
-    rw [DivAdd.eq.Add1Div h]
+    rw [DivAdd.eq.Add1Div.of.Ne_0 h]
     rw [FloorAdd1.eq.Add1Floor]
     rw [MulAdd.eq.AddMulS]
     norm_num

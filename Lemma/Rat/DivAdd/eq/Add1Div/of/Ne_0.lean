@@ -3,12 +3,13 @@ import Lemma.Rat.Div.eq.One.of.Ne_0
 open Rat
 
 
-@[main]
+@[main, comm]
 private lemma main
   [DivisionSemiring α]
-  {x d : α}
+  {d : α}
 -- given
-  (h : d ≠ 0) :
+  (h : d ≠ 0)
+  (x : α):
 -- imply
   (d + x) / d = 1 + x / d := by
 -- proof
