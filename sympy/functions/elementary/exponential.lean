@@ -150,12 +150,10 @@ noncomputable instance : LogPos ℝ* where
     refine Germ.inductionOn₂ x y fun x y h_x h_y => ?_
     have hx_event : {t | x t ≠ 0} ∈ hyperfilter ℕ := by
       apply Ultrafilter.eventually_not.mpr
-      apply mt Germ.coe_eq.mpr
-      exact h_x
+      apply mt Germ.coe_eq.mpr h_x
     have hy_event : {t | y t ≠ 0} ∈ hyperfilter ℕ := by
       apply Ultrafilter.eventually_not.mpr
-      apply mt Germ.coe_eq.mpr
-      exact h_y
+      apply mt Germ.coe_eq.mpr h_y
     apply Germ.coe_eq.mpr
     filter_upwards [hx_event, hy_event] with n hn gn
     apply Real.log_mul hn gn
@@ -165,12 +163,10 @@ noncomputable instance : LogPos ℝ* where
     intro h_x h_y
     have hx_event : ∀ᶠ n in hyperfilter ℕ, x n ≠ 0 := by
       apply Ultrafilter.eventually_not.mpr
-      apply mt Germ.coe_eq.mpr
-      exact h_x
+      apply mt Germ.coe_eq.mpr h_x
     have hy_event : ∀ᶠ n in hyperfilter ℕ, y n ≠ 0 := by
       apply Ultrafilter.eventually_not.mpr
-      apply mt Germ.coe_eq.mpr
-      exact h_y
+      apply mt Germ.coe_eq.mpr h_y
     have h_event : ∀ᶠ n in hyperfilter ℕ, x n ≠ 0 ∧ y n ≠ 0 :=
       hx_event.and hy_event
     apply Germ.coe_eq.mpr
