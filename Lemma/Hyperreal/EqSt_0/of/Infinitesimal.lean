@@ -4,7 +4,7 @@ import Lemma.Int.LtAbs.is.LtNeg.Lt
 open Hyperreal Int
 
 
-@[main]
+@[main, mt]
 private lemma main
   {x : ℝ*}
 -- given

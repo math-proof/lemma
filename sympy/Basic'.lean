@@ -302,10 +302,22 @@ def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
     | _ =>
       h
   println! s!"h = {h}"
-  let (binders, type, a) :=
+  let (binders, type, a, mp) :=
     if let ⟨h, premise, .default⟩ :: rest := binders then
       let a := premise.incDeBruijnIndex 1
-      ((h, Not (type.decDeBruijnIndex 1), BinderInfo.default) :: rest, Not a, a)
+      let mp :=
+        match a with
+        | .app (.const `Not _) arg =>
+          fun h : Lean.Expr =>
+            (Lean.Expr.const `Iff.mp []).mkApp [
+              (Lean.Expr.const `Not []).mkApp [(Lean.Expr.const `Not []).mkApp [arg]],
+              arg,
+              (Lean.Expr.const `Classical.not_not []).mkApp [arg],
+              h
+            ]
+        | _ =>
+          id
+      ((h, Not (type.decDeBruijnIndex 1), BinderInfo.default) :: rest, Not a, a, mp)
     else
       panic! "The theorem must have at least one hypothesis."
   println! s!"binders = {binders}"
@@ -322,7 +334,8 @@ def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
     body.println [] s!"final {hint}"
     return body
   -- mt {a b : Prop} (h₁ : a → b) (h₂ : ¬b) : ¬a
-  let proof := ((Lean.Expr.const `mt []).mkApp [a, b, proof.mkApp [(.bvar 1)], h])
+  let proof := ((Lean.Expr.const `mt []).mkApp [a, b, proof.mkApp ((List.range binders.length).map fun i => (Lean.Expr.bvar i)).tail.reverse, h])
+  let proof := mp proof
   (type, proof).mapM (telescope Expr.forallE "type") (telescope .lam "value")
 
 initialize registerBuiltinAttribute {
@@ -331,9 +344,16 @@ initialize registerBuiltinAttribute {
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
+    let env ← getEnv
+    let constructor_order :=
+      match ← findDocString? env declName with
+      | some doc =>
+        doc.containsSubstr "constructor order"
+      | none =>
+        false
     let levelParams := decl.levelParams
     let ⟨type, value⟩ ← Expr.mt' decl.type (.const declName (levelParams.map .param))
-    let name := (← getEnv).moduleTokens.mt.lemmaName declName
+    let name := ((← getEnv).moduleTokens.mt constructor_order).lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name

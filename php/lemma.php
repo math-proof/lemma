@@ -7,6 +7,21 @@ use function std\array_insert;
 require_once 'init.php';
 require_once 'std.php';
 if ($_POST) {
+	function Not($token) {
+		if (is_string($token)) {
+			if (str_starts_with($token, 'Not'))
+				return substr($token, 3);
+			elseif (str_starts_with($token, 'Eq'))
+				return "Ne" . substr($token, 2);
+			elseif (str_starts_with($token, 'Ne'))
+				return "Eq" . substr($token, 2);
+			else
+				return "Not" . $token;
+		}
+		if (count($token) == 1)
+			return [Not($token[0])];
+		return $token;
+	}
 	function module_exists(string $module)  {
 		$path = module_to_lean($module);
 		// Case-insensitive check first (works on both OS)
@@ -59,8 +74,14 @@ if ($_POST) {
 								if (!file_exists($path))
 									return;
 							}
-							else
-								return;
+							else {
+								# mt
+								$module = implode('.', array_merge([$section], Not($second), ['of'], Not($first)));
+								$path = module_to_lean($module);
+								if (!file_exists($path))
+									return;
+							}
+								
 						}
 					}
 				}
@@ -338,16 +359,24 @@ EOT;
 			break;
 		case 'of':
 			# try comm:
-			if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[0], $matches))
-				$tokens[0] = $matches[1] . $matches[2];
-			elseif (preg_match("/^([SH]?Eq|Iff)(.+)/", $tokens[0], $matches))
-				$tokens[0] = $matches[1] . "_" . $matches[2];
+			$tokens_ = [...$tokens];
+			if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens_[0], $matches))
+				$tokens_[0] = $matches[1] . $matches[2];
+			elseif (preg_match("/^([SH]?Eq|Iff)(.+)/", $tokens_[0], $matches))
+				$tokens_[0] = $matches[1] . "_" . $matches[2];
 			else
 				break;
-			$import = implode('.', $tokens);
+			$import = implode('.', $tokens_);
 			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
 			if (preg_match("/\b$import\b/", $lemmaCode))
 				return true;
+			# try mt:
+			if (count($tokens) == 3) {
+				$import = implode('.', [Not($tokens[2]), 'of', Not($tokens[0])]);
+				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
+				if (preg_match("/\b$import\b/", $lemmaCode))
+					return true;
+			}
 			break;
 		default:
 			if ($tokens[1] === null) {

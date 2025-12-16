@@ -7,7 +7,10 @@ import Lemma.Rat.LtDiv.is.Lt_Mul.of.Gt_0
 open Hyperreal Nat Rat
 
 
-@[main]
+/--
+the hypotheses are arranged in the constructor order of division a / b
+-/
+@[main, mt]
 private lemma main
   {a b : ℝ*}
 -- given
