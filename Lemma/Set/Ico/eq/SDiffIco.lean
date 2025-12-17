@@ -5,7 +5,6 @@ import Lemma.Nat.Ge.of.Ge.Ge
 import Lemma.Set.Le.of.In_Ico
 import Lemma.Set.Lt.of.In_Ico
 import Lemma.Set.In_SDiff.is.In.NotIn
-import Lemma.Set.In_Ico.of.Le.Lt
 import Lemma.Set.NotIn.of.In_SDiff
 import Lemma.Set.In.of.In_SDiff
 open Set Bool Nat
@@ -42,47 +41,6 @@ private lemma main
     have h_ne := Ne.of.NotEq h_ne
     have h_i := Lt.of.Le.Ne h_i h_ne.symm
     constructor
-    ·
-      apply LeAdd_1.of.Lt h_i
-    ·
-      assumption
-
-
-@[main]
-private lemma fin
--- given
-  (i n : ℕ) :
--- imply
-  Finset.Ico (i + 1) n = Finset.Ico i n \ {i} := by
--- proof
-  apply Finset.ext
-  intro t
-  constructor
-  ·
-    intro h_t
-    have h_i := Le.of.In_Ico.fin h_t
-    have h_n := Lt.of.In_Ico.fin h_t
-    apply In_SDiff.of.In.NotIn.fin
-    ·
-      apply In_Ico.of.Le.Lt.fin
-      ·
-        apply Ge.of.Ge.Ge h_i
-        simp
-      ·
-        assumption
-    ·
-      simp
-      linarith
-  ·
-    intro h_t
-    have h_ne := NotIn.of.In_SDiff.fin h_t
-    have h_in := In.of.In_SDiff.fin h_t
-    have h_i := Le.of.In_Ico.fin h_in
-    have h_n := Lt.of.In_Ico.fin h_in
-    simp at h_ne
-    have h_ne := Ne.of.NotEq h_ne
-    have h_i := Lt.of.Le.Ne h_i h_ne.symm
-    apply In_Ico.of.Le.Lt.fin
     ·
       apply LeAdd_1.of.Lt h_i
     ·

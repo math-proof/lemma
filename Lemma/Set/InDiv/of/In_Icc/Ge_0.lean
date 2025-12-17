@@ -1,4 +1,4 @@
-import Lemma.Set.In_Icc.of.Le.Le
+import Lemma.Set.In_Icc.is.Le.Le
 import Lemma.Set.Ge.of.In_Icc
 import Lemma.Set.Le.of.In_Icc
 import Lemma.Rat.LeDivS.of.Le.Ge_0

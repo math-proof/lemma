@@ -55,8 +55,15 @@ if ($_POST) {
 								$tokens[3] = $matches[1] . $matches[2];
 							$module = implode('.', $tokens);
 							$path = module_to_lean($module);
-							if (!file_exists($path))
-								return;
+							if (!file_exists($path)) {
+								# mt
+								$tokens[1] = Not($tokens[1]);
+								$tokens[3] = Not($tokens[3]);
+								$module = implode('.', $tokens);
+								$path = module_to_lean($module);
+								if (!file_exists($path))
+									return;
+							}
 						}
 					}
 					else {
@@ -81,7 +88,6 @@ if ($_POST) {
 								if (!file_exists($path))
 									return;
 							}
-								
 						}
 					}
 				}
@@ -99,7 +105,6 @@ if ($_POST) {
 					return;
 			}
 		}
-	
 		// Linux (and case-sensitive macOS): Use built-in check
 		if (!std\is_linux()) {
 			// Windows: Verify exact case via directory scan
@@ -111,7 +116,6 @@ if ($_POST) {
 		}
 		return $module;
 	}
-
 	$term = "(?:[A-Z][\w'!₀-₉]*|(?:of|is|et|ou|to|eq|ne|gt|lt|ge|le|in|as|dvd|sub|sup)(?=\.))";
 	$sections = std\listdir($root = dirname(dirname(__FILE__)) . "/Lemma/");
 	$sectionRegex = implode('|', $sections);
@@ -282,6 +286,12 @@ EOT;
 		$lemmaCode[] = $proof;
 	}
 	$lemmaCode = implode("\n\n\n", $lemmaCode);
+	function try_pattern($tokens, $lemmaCode) {
+		$import = implode('.', $tokens);
+		$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
+		if (preg_match("/\b$import\b/", $lemmaCode))
+			return true;
+	};
 	$imports = array_filter($imports, function ($import) use ($lemmaCode, $open_section) {
 		$tokens = explode('.', $import);
 		switch ($tokens[0]) {
@@ -289,7 +299,7 @@ EOT;
 			array_shift($tokens);
 			if (in_array($tokens[0], $open_section))
 				array_shift($tokens);
-			$import = implode('.', $tokens);
+			
 			break;
 		case 'sympy':
 			if ($tokens[1] == 'Basic')
@@ -298,17 +308,14 @@ EOT;
 		case 'Mathlib':
 			return true;
 		}
-		$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-		if (preg_match("/\b$import\b/", $lemmaCode))
+		if (try_pattern($tokens, $lemmaCode))
 			return true;
 		switch ($tokens[1]) {
 		case 'eq':
 		case 'as':
 		case 'ne':
 			[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
-			$import = implode('.', $tokens);
-			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-			if (preg_match("/\b$import\b/", $lemmaCode))
+			if (try_pattern($tokens, $lemmaCode))
 				return true;
 			break;
 		case 'is':
@@ -317,43 +324,40 @@ EOT;
 				$tokens[1] = 'of';
 				array_delete($tokens, $indexOf);
 				# try mpr:
-				$import = implode('.', $tokens);
-				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-				if (preg_match("/\b$import\b/", $lemmaCode))
+				if (try_pattern($tokens, $lemmaCode))
 					return true;
 				# try mp:
 				[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
-				$import = implode('.', $tokens);
-				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-				if (preg_match("/\b$import\b/", $lemmaCode))
+				if (try_pattern($tokens, $lemmaCode))
 					return true;
 				# try comm:
 				if (preg_match("/^([SH]?Eq|Iff)(?!_)(.+)/", $tokens[0], $matches)) {
 					$tokens[0] = $matches[1] . "_" . $matches[2];
-					$import = implode('.', $tokens);
-					$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-					if (preg_match("/\b$import\b/", $lemmaCode))
+					if (try_pattern($tokens, $lemmaCode))
+						return true;
+				}
+				if ($indexOf == 3) {
+					$tokens[0] = Not($tokens[0]);
+					$tokens[2] = Not($tokens[2]);
+					if (try_pattern($tokens, $lemmaCode))
+						return true;
+					[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
+					if (try_pattern($tokens, $lemmaCode))
 						return true;
 				}
 			}
 			else {
 				# try mp:
 				$tokens[1] = 'of';
-				$import = implode('.', $tokens);
-				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-				if (preg_match("/\b$import\b/", $lemmaCode))
+				if (try_pattern($tokens, $lemmaCode))
 					return true;
 				# try mpr:
 				[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
-				$import = implode('.', $tokens);
-				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-				if (preg_match("/\b$import\b/", $lemmaCode))
+				if (try_pattern($tokens, $lemmaCode))
 					return true;
 				# try comm:
 				$tokens[1] = 'is';
-				$import = implode('.', $tokens);
-				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-				if (preg_match("/\b$import\b/", $lemmaCode))
+				if (try_pattern($tokens, $lemmaCode))
 					return true;
 			}
 			break;
@@ -365,16 +369,14 @@ EOT;
 			elseif (preg_match("/^([SH]?Eq|Iff)(.+)/", $tokens_[0], $matches))
 				$tokens_[0] = $matches[1] . "_" . $matches[2];
 			else
-				break;
-			$import = implode('.', $tokens_);
-			$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-			if (preg_match("/\b$import\b/", $lemmaCode))
-				return true;
+				$tokens_ = [];
+			if ($tokens_) {
+				if (try_pattern($tokens_, $lemmaCode))
+					return true;
+			}
 			# try mt:
 			if (count($tokens) == 3) {
-				$import = implode('.', [Not($tokens[2]), 'of', Not($tokens[0])]);
-				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-				if (preg_match("/\b$import\b/", $lemmaCode))
+				if (try_pattern([Not($tokens[2]), 'of', Not($tokens[0])], $lemmaCode))
 					return true;
 			}
 			break;
@@ -387,9 +389,7 @@ EOT;
 					$tokens[0] = $matches[1] . "_" . $matches[2];
 				else
 					break;
-				$import = implode('.', $tokens);
-				$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
-				if (preg_match("/\b$import\b/", $lemmaCode))
+				if (try_pattern($tokens, $lemmaCode))
 					return true;
 			}
 			else

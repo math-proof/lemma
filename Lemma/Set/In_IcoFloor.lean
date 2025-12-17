@@ -1,6 +1,6 @@
 import sympy.core.relational
 import Lemma.Int.EqFloor.is.Le.Lt
-import Lemma.Set.In_Ico.of.Le.Lt
+import Lemma.Set.In_Ico.is.Le.Lt
 open Set Int
 
 
@@ -16,9 +16,8 @@ private lemma main
   denote h_d : d = ⌊x⌋
   have := Le.Lt.of.EqFloor h_d.symm
   let ⟨h₀, h₁⟩ := this
-  rw [h_d] at h₀
-  rw [h_d] at h₁
-  apply In_Ico.of.Le.Lt h₀ h₁
+  rw [h_d] at h₀ h₁
+  exact In_Ico.of.Le.Lt h₀ h₁
 
 
 -- created on 2025-03-30

@@ -6,10 +6,10 @@ import sympy.Basic
 | :---: | :---: |
 | main | Nat.LtAddS.is.Lt |
 | comm | Nat.Lt.is.LtAddS |
-| mp   | Nat.Lt.of.LtAddS |
-| mpr  | Nat.LtAddS.of.Lt |
-| mp.comm | Nat.Gt.of.GtAddS |
-| mpr.comm | Nat.GtAddS.of.Gt |
+| mp 4 | Nat.Lt.of.LtAddS |
+| mpr 8 | Nat.LtAddS.of.Lt |
+| mp.comm 4| Nat.Gt.of.GtAddS |
+| mpr.comm 8| Nat.GtAddS.of.Gt |
 | comm.is | Nat.GtAddS.is.Gt |
 -/
 @[main, comm, mp 4, mpr 8, mp.comm 4, mpr.comm 8, comm.is]

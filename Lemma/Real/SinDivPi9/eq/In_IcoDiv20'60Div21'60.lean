@@ -1,6 +1,6 @@
 import sympy.core.relational
 import Lemma.Nat.Ge.of.Gt
-import Lemma.Set.In_Ico.of.Le.Lt
+import Lemma.Set.In_Ico.is.Le.Lt
 import Lemma.Set.In_IooDivS.of.In_Ico0.Sub.eq.DivSqrt3'2
 import Lemma.Real.SinMul3.eq.SubMul3_Mul4SinMul3
 import Lemma.Real.SinDivPi3.eq.DivSqrt3'2

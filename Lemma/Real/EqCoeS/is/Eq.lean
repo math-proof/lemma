@@ -2,7 +2,17 @@ import Mathlib.Analysis.Real.Hyperreal
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Real.EqCoeS.is.Eq |
+| comm | Real.Eq.is.EqCoeS |
+| mp | Real.Eq.of.EqCoeS |
+| mpr | Real.EqCoeS.of.Eq |
+| mp.mt | Real.NeCoeS.of.Ne |
+| mpr.mt | Real.Ne.of.NeCoeS |
+-/
+@[main, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
   {a b : ℝ} :
 -- imply

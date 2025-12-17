@@ -2,7 +2,7 @@ import Lemma.Set.Ge.of.In_Ico
 import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Set.Lt.of.In_Ico
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
-import Lemma.Set.In_Ico.of.Le.Lt
+import Lemma.Set.In_Ico.is.Le.Lt
 open Set Rat
 
 

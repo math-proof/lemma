@@ -1,10 +1,10 @@
 import Lemma.Int.OrAndSLe_0Ge_0.of.Mul.le.Zero
 import Lemma.Int.Le.of.Sub.le.Zero
 import Lemma.Int.Ge.of.Sub.ge.Zero
-import Lemma.Set.In_Icc.of.Le.Ge
+import Lemma.Set.In_Icc.is.Le.Le
 import Lemma.Nat.Ge.of.Ge.Ge
 import Lemma.Nat.Eq.of.Ge.Le
-import Lemma.Set.In_Icc.of.Ge.Le
+import Lemma.Set.In_Icc.is.Le.Le
 open Set Nat Int
 
 
@@ -27,16 +27,16 @@ private lemma main
     have h_Ge := Ge.of.Sub.ge.Zero h_Ge
     have := Ge.of.Ge.Ge h_Le h_Ge
     have := Eq.of.Ge.Le this h₁
-    apply In_Icc.of.Le.Ge
-    ·
-      rwa [← this]
+    apply In_Icc.of.Le.Le
     ·
       rwa [this]
+    ·
+      rwa [← this]
   ·
     let ⟨h_Le, h_Ge⟩ := h_And
     have h_Le := Le.of.Sub.le.Zero h_Le
     have h_Ge := Ge.of.Sub.ge.Zero h_Ge
-    apply In_Icc.of.Ge.Le h_Ge h_Le
+    apply In_Icc.of.Le.Le h_Ge h_Le
 
 
 -- created on 2025-03-30

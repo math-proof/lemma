@@ -2,7 +2,7 @@ import Lemma.Int.FMod.ge.Zero.of.Gt_0
 import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Int.EqSign_1.of.Gt_0
-import Lemma.Set.In_Icc.of.Le.Le
+import Lemma.Set.In_Icc.is.Le.Le
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.LeSub.is.Le_Add

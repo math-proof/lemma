@@ -1,7 +1,7 @@
 import Lemma.Nat.Gt.is.Ge.Ne
-import Lemma.Set.In_Ioo.of.Gt.Lt
+import Lemma.Set.In_Ioo.is.Lt.Lt
 import Lemma.Nat.Ne.of.Gt
-import Lemma.Set.In_Ico.of.Lt.Ge
+import Lemma.Set.In_Ico.is.Le.Lt
 import Lemma.Nat.Ge.of.Gt
 open Set Nat
 
@@ -21,12 +21,12 @@ private lemma main
     simp at h₁
     let ⟨h₀, h₂⟩ := h₀
     have := Gt.of.Ge.Ne h₀ h₁
-    apply In_Ioo.of.Gt.Lt this h₂
+    apply In_Ioo.of.Lt.Lt this h₂
   ·
     let ⟨h₀, h₁⟩ := h
     constructor
     ·
-      apply In_Ico.of.Lt.Ge h₁
+      apply In_Ico.of.Le.Lt _ h₁
       apply Ge.of.Gt h₀
     ·
       simp

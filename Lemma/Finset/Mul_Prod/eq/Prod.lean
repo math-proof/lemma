@@ -1,10 +1,9 @@
-import sympy.sets.sets
 import Lemma.Finset.Prod.eq.MulProdS
 import Lemma.Set.Ico.eq.SDiffRangeS
 import Lemma.Set.In_Ico
 import Lemma.Set.EqInterSingleton.of.In
 import Lemma.Nat.EqMulS.of.Eq
-import Lemma.Set.Ico.eq.SDiffIco
+import Lemma.Finset.Ico.eq.SDiffIco
 open Set Finset Nat
 
 
@@ -22,7 +21,7 @@ private lemma main
   simp
   apply EqMulS.of.Eq.left
   congr
-  apply Ico.eq.SDiffIco.fin
+  apply Ico.eq.SDiffIco
 
 
 -- created on 2025-05-18

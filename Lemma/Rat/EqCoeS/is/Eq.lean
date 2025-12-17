@@ -1,7 +1,17 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Rat.EqCoeS.is.Eq |
+| comm | Rat.Eq.is.EqCoeS |
+| mp | Rat.Eq.of.EqCoeS |
+| mpr | Rat.EqCoeS.of.Eq |
+| mp.mt | Rat.NeCoeS.of.Ne |
+| mpr.mt | Rat.Ne.of.NeCoeS |
+-/
+@[main, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
   [DivisionRing R]
   [CharZero R]

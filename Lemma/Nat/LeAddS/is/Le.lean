@@ -21,10 +21,10 @@ private lemma left
 | :---: | :---: |
 | main | Nat.LeAddS.is.Le |
 | comm | Nat.Le.is.LeAddS |
-| mp   | Nat.Le.of.LeAddS |
-| mpr  | Nat.LeAddS.of.Le |
-| mp.comm | Nat.Ge.of.GeAddS |
-| mpr.comm | Nat.GeAddS.of.Ge |
+| mp 8 | Nat.Le.of.LeAddS |
+| mpr 4| Nat.LeAddS.of.Le |
+| mp.comm 8| Nat.Ge.of.GeAddS |
+| mpr.comm 4| Nat.GeAddS.of.Ge |
 | comm.is | Nat.GeAddS.is.Ge |
 -/
 @[main, comm, mp 8, mpr 4, mp.comm 8, mpr.comm 4, comm.is]

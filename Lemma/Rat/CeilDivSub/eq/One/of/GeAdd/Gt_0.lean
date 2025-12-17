@@ -1,7 +1,7 @@
 import Lemma.Int.LeSub.is.Le_Add
 import Lemma.Set.CeilDivSub.eq.One.of.In_Ioc0.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Gt
-import Lemma.Set.In_Ioc.of.Gt.Le
+import Lemma.Set.In_Ioc.is.Lt.Le
 open Set Int
 
 
@@ -19,8 +19,8 @@ private lemma main
 -- proof
   have h_Le := Ge_Sub.of.GeAdd.left h₁
   have h_Gt_0 := Sub.gt.Zero.of.Gt h₂
-  have h_Mem := In_Ioc.of.Gt.Le h_Gt_0 h_Le
-  apply CeilDivSub.eq.One.of.In_Ioc0.Gt_0 h₀ h_Mem
+  apply CeilDivSub.eq.One.of.In_Ioc0.Gt_0 h₀
+  apply In_Ioc.of.Lt.Le h_Gt_0 h_Le
 
 
 -- created on 2025-05-04

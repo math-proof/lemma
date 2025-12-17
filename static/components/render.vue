@@ -251,7 +251,7 @@ export default {
                     // Field.toSemifield
                     Semifield: {
                         CommSemiring, 
-                        DivisionSemiring, 
+                        DivisionSemiring, // commutative DivisionSemiring
                         CommGroupWithZero: {
                             CommMonoidWithZero, 
                             GroupWithZero,

@@ -1,15 +1,13 @@
-import Lemma.Set.In_Ico.of.Ge.Lt
-import Lemma.Set.In_Ioc.of.Gt.Le
+import Lemma.Set.In_Ico.is.Le.Lt
+import Lemma.Set.In_Ioc.is.Lt.Le
 import Lemma.Int.LeSubS.is.Ge
 open Set Int
 
 
 @[main]
 private lemma main
-  [AddGroup α]
-  [PartialOrder α]
-  [AddLeftMono α]
-  [AddRightMono α]
+  [AddGroup α] [PartialOrder α]
+  [AddLeftMono α] [AddRightMono α]
 -- given
   (x a b c : α) :
 -- imply
@@ -18,14 +16,14 @@ private lemma main
   constructor
   .
     intro ⟨h_ge, h_lt⟩
-    apply In_Ico.of.Ge.Lt
+    apply In_Ico.of.Le.Lt
     ·
       apply LeSubS.of.Ge _ h_lt
     ·
       simpa
   .
     intro ⟨h_ge, h_lt⟩
-    apply In_Ioc.of.Gt.Le
+    apply In_Ioc.of.Lt.Le
     ·
       simp at h_lt
       simpa

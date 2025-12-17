@@ -1,3 +1,4 @@
+import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Rat.Div.eq.Mul_Inv
 open Nat Rat
@@ -20,5 +21,18 @@ private lemma main
   rw [Div.eq.Mul_Inv]
 
 
+@[main]
+private lemma left
+  [Semifield α]
+  {a n d : α}
+-- given
+  (h : a ≠ 0) :
+-- imply
+  (a * n) / (a * d) = n / d := by
+-- proof
+  repeat rw [Mul.comm (a := a)]
+  apply main h
+
+
 -- created on 2025-04-06
--- updated on 2025-10-04
+-- updated on 2025-12-17

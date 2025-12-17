@@ -1,13 +1,12 @@
 import sympy.sets.sets
-import Lemma.Set.In_Icc.of.Ge.Le
+import Lemma.Set.In_Icc.is.Le.Le
 import Lemma.Int.LeSubS.is.Ge
 open Set Int
 
 
 @[main]
 private lemma main
-  [AddGroup α]
-  [PartialOrder α]
+  [AddGroup α] [Preorder α]
   [AddLeftMono α]
   [AddRightMono α]
 -- given
@@ -17,7 +16,7 @@ private lemma main
 -- proof
   constructor
   <;> intro ⟨h_ge, h_le⟩
-  <;> apply In_Icc.of.Ge.Le
+  <;> apply In_Icc.of.Le.Le
   repeat apply LeSubS.of.Ge _ (by assumption)
   repeat apply Ge.of.LeSubS (by assumption)
 

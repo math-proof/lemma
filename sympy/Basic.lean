@@ -527,6 +527,14 @@ def Expr.mt (type proof : Expr) : Expr × Expr :=
   (type, proof).map (telescope Expr.forallE) (telescope .lam)
 
 
+def constructor_order (declName : Name) : CoreM Bool := do
+  let env ← getEnv
+  match ← findDocString? env declName with
+  | some doc =>
+    return doc.containsSubstr "constructor order"
+  | none =>
+    return false
+
 /--
 `@[mt]` (abbreviated from `modus tollens`) attribute automatically generates the mt version of an implication theorem.
 Usage:
@@ -543,17 +551,73 @@ initialize registerBuiltinAttribute {
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
-    let env ← getEnv
-    let constructor_order :=
-      match ← findDocString? env declName with
-      | some doc =>
-        doc.containsSubstr "constructor order"
-      | none =>
-        false
+    let constructor_order ← constructor_order declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.mt decl.type (.const declName (levelParams.map .param))
     addAndCompile <| .thmDecl {
       name := ((← getEnv).moduleTokens.mt constructor_order).lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[mp.mt]` attribute automatically generates the mt version of an mp implication from an equivalence theorem.
+Usage:
+```lean
+@[mp.mt]
+theorem Section.LHS.is.RHS {a : α} {b : β} : lhs a b ↔ rhs a b := proof
+-- Generates:
+theorem Section.NotLHS.of.NotRHS {a : α} {b : β} (h : ¬rhs a b): ¬lhs a b := mt Section.LHS.is.RHS.mp h
+```
+-/
+initialize registerBuiltinAttribute {
+  name := `mp.mt
+  descr := "Automatically generate the mt version of the mp implication of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let constructor_order ← constructor_order declName
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let proof : Lean.Expr := .const declName (levelParams.map .param)
+    let parity := stx.getNum
+    let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
+    let ⟨type, value⟩ := Expr.mt type value
+    let moduleTokens := (← getEnv).moduleTokens.mp
+    addAndCompile <| .thmDecl {
+      name := (moduleTokens.mt constructor_order).lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[mpr.mt]` attribute automatically generates the mt version of an mp implication from an equivalence theorem.
+Usage:
+```lean
+@[mpr.mt]
+theorem Section.LHS.is.RHS {a : α} {b : β} : lhs a b ↔ rhs a b := proof
+-- Generates:
+theorem Section.NotRHS.of.NotLHS {a : α} {b : β} (h : ¬lhs a b): ¬rhs a b := mt Section.LHS.is.RHS.mpr h
+```
+-/
+initialize registerBuiltinAttribute {
+  name := `mpr.mt
+  descr := "Automatically generate the mt version of the mpr implication of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let constructor_order ← constructor_order declName
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let proof : Lean.Expr := .const declName (levelParams.map .param)
+    let parity := stx.getNum
+    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
+    let ⟨type, value⟩ := Expr.mt type value
+    let moduleTokens := (← getEnv).moduleTokens.mpr
+    addAndCompile <| .thmDecl {
+      name := (moduleTokens.mt constructor_order).lemmaName declName
       levelParams := levelParams
       type := type
       value := value

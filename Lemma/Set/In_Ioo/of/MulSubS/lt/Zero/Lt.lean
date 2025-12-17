@@ -3,7 +3,7 @@ import Lemma.Int.Lt.of.Sub.lt.Zero
 import Lemma.Int.Sub.gt.Zero.is.Gt
 import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Nat.NotLt.of.Gt
-import Lemma.Set.In_Ioo.of.Gt.Lt
+import Lemma.Set.In_Ioo.is.Lt.Lt
 open Set Int Nat
 
 
@@ -30,7 +30,7 @@ private lemma main
     let ⟨h_Lt, h_Gt⟩ := h_And
     have h_Lt := Lt.of.Sub.lt.Zero h_Lt
     have h_Gt := Gt.of.Sub.gt.Zero h_Gt
-    apply In_Ioo.of.Gt.Lt h_Gt h_Lt
+    apply In_Ioo.of.Lt.Lt h_Gt h_Lt
 
 
 -- created on 2025-03-30

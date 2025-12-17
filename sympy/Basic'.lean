@@ -343,17 +343,58 @@ initialize registerBuiltinAttribute {
   descr := "Automatically generate the contraposition of a theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
+    let constructor_order ← constructor_order declName
     let decl ← getConstInfo declName
-    let env ← getEnv
-    let constructor_order :=
-      match ← findDocString? env declName with
-      | some doc =>
-        doc.containsSubstr "constructor order"
-      | none =>
-        false
     let levelParams := decl.levelParams
     let ⟨type, value⟩ ← Expr.mt' decl.type (.const declName (levelParams.map .param))
     let name := ((← getEnv).moduleTokens.mt constructor_order).lemmaName declName
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `mp.mt'
+  descr := "Automatically generate the mt version of the mp implication of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let constructor_order ← constructor_order declName
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let proof : Lean.Expr := .const declName (levelParams.map .param)
+    let parity := stx.getNum
+    let and := stx.getIdent == `and
+    let ⟨_, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
+    let ⟨type, value⟩ ← Expr.mt' type value
+    let moduleTokens := (← getEnv).moduleTokens.mp
+    let name := (moduleTokens.mt constructor_order).lemmaName declName
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `mpr.mt'
+  descr := "Automatically generate the mt version of the mpr implication of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let constructor_order ← constructor_order declName
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let proof : Lean.Expr := .const declName (levelParams.map .param)
+    let parity := stx.getNum
+    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
+    let ⟨type, value⟩ ← Expr.mt' type value
+    let moduleTokens := (← getEnv).moduleTokens.mpr
+    let name := (moduleTokens.mt constructor_order).lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name

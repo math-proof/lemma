@@ -1,4 +1,4 @@
-import Lemma.Set.In_Ioc.of.Lt.Le
+import Lemma.Set.In_Ioc.is.Lt.Le
 import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.LeAddS.is.Le
 open Set Nat
@@ -6,12 +6,9 @@ open Set Nat
 
 @[main]
 private lemma main
-  [Preorder α]
-  [Add α]
-  [AddLeftMono α]
-  [AddRightMono α]
-  [AddLeftStrictMono α]
-  [AddRightStrictMono α]
+  [Preorder α] [Add α]
+  [AddLeftMono α] [AddRightMono α]
+  [AddLeftStrictMono α] [AddRightStrictMono α]
   {a b : α}
 -- given
   (h : x ∈ Ioc a b)
