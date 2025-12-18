@@ -36,7 +36,8 @@ function lean_to_module($lean)
 function tokens_to_module($tokens, $section)
 {
     $module = implode('.', array_map(fn ($tokens) => implode('.', $tokens), $tokens));
-    $module = $section . ".". $module;
+    if ($section)
+        $module = $section . ".". $module;
     return $module;
 }
 function module_to_lean($module, $section = null)

@@ -1,3 +1,4 @@
+import Lemma.Hyperreal.NotInfinite.of.StDiv.eq.One
 import Lemma.Hyperreal.Gt_0.of.GtSt_0
 import Lemma.Rat.Div.gt.Zero.is.Mul.gt.Zero
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
@@ -68,7 +69,7 @@ private lemma main
         apply InfinitesimalSub.of.InfinitesimalSub
         apply InfinitesimalSub.of.EqSt.NotInfinite
         ·
-          sorry
+          apply NotInfinite.of.StDiv.eq.One h_ab
         ·
           rw [StDiv.eq.InvStInv]
           simp

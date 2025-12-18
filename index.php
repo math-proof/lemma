@@ -194,10 +194,8 @@ if (! str_ends_with($path_info, '/')) {
                         case 'is':
                             $index = array_search('of', $tokens);
                             if ($index === false) {
-                                $tokens_ = [...$tokens];
-                                $tokens_[1] = transformPrefix($tokens[1]);
-                                $tokens_[3] = transformPrefix($tokens[3]);
-                                $module = implode('.', $tokens_);
+                                [$segment[0], $segment[2]] = [$segment[2], $segment[0]]; 
+                                $module = tokens_to_module($segment, $section);
                                 $path = module_to_lean($module);
                                 if (file_exists($path)) {
                                     header("location:?module=$module");

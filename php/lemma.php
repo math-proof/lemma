@@ -27,6 +27,7 @@ if ($_POST) {
 		// Case-insensitive check first (works on both OS)
 		if (!file_exists($path)) {
 			$tokens = explode('.', $module);
+			[$section, $segment] = parseInfixSegments($tokens);
 			switch ($tokens[2]) {
 			case 'eq':
 			case 'is':
@@ -85,8 +86,13 @@ if ($_POST) {
 								# mt
 								$module = implode('.', array_merge([$section], Not($second), ['of'], Not($first)));
 								$path = module_to_lean($module);
-								if (!file_exists($path))
-									return;
+								if (!file_exists($path)) {
+									# mp.mt/mpr.mt
+									$module = implode('.', array_merge([$section], Not($second), ['is'], Not($first)));
+									$path = module_to_lean($module);
+									if (!file_exists($path))
+										return;
+								}
 							}
 						}
 					}
@@ -97,6 +103,14 @@ if ($_POST) {
 					if (preg_match("/^([SH]?Eq|Iff)_(.+)/", $tokens[1], $matches))
 						$tokens[1] = $matches[1] . $matches[2];
 					$module = implode('.', $tokens);
+					$path = module_to_lean($module);
+					if (!file_exists($path))
+						return;
+				}
+				elseif (count($segment) == 3 && $segment[1] == ['of']) {
+					[$segment[0], $segment[2]] = [$segment[2], $segment[0]]; // swap
+					$segment[1] = ['is']; 
+					$module = tokens_to_module($segment, $section);
 					$path = module_to_lean($module);
 					if (!file_exists($path))
 						return;
@@ -287,7 +301,10 @@ EOT;
 	}
 	$lemmaCode = implode("\n\n\n", $lemmaCode);
 	function try_pattern($tokens, $lemmaCode) {
-		$import = implode('.', $tokens);
+		if (is_array($tokens[0]))
+			$import = tokens_to_module($tokens, null);
+		else 
+			$import = implode('.', $tokens);
 		$import = str_replace('.', '\.', $import) . "(?!\.(of\.|[A-Z][\w'!₀-₉]*))";
 		if (preg_match("/\b$import\b/", $lemmaCode))
 			return true;
@@ -297,9 +314,8 @@ EOT;
 		switch ($tokens[0]) {
 		case 'Lemma':
 			array_shift($tokens);
-			if (in_array($tokens[0], $open_section))
+			if (in_array($section = $tokens[0], $open_section))
 				array_shift($tokens);
-			
 			break;
 		case 'sympy':
 			if ($tokens[1] == 'Basic')
@@ -310,6 +326,7 @@ EOT;
 		}
 		if (try_pattern($tokens, $lemmaCode))
 			return true;
+		[$section, $segment] = parseInfixSegments($tokens, $section);
 		switch ($tokens[1]) {
 		case 'eq':
 		case 'as':
@@ -355,6 +372,14 @@ EOT;
 				[$tokens[0], $tokens[2]] = [$tokens[2], $tokens[0]]; // swap
 				if (try_pattern($tokens, $lemmaCode))
 					return true;
+				if (count($tokens) == 3) {
+					$tokens_ = [...$tokens];
+					# try mp.mt/mpr.mt
+					$tokens_[0] = Not($tokens_[0]);
+					$tokens_[2] = Not($tokens_[2]);
+					if (try_pattern($tokens_, $lemmaCode))
+						return true;
+				}
 				# try comm:
 				$tokens[1] = 'is';
 				if (try_pattern($tokens, $lemmaCode))
@@ -390,6 +415,12 @@ EOT;
 				else
 					break;
 				if (try_pattern($tokens, $lemmaCode))
+					return true;
+			}
+			elseif (count($segment) == 3 && $segment[1] == ['is']) {
+				[$segment[0], $segment[2]] = [$segment[2], $segment[0]]; // swap
+				$segment[1] = ['of']; 
+				if (try_pattern($segment, $lemmaCode))
 					return true;
 			}
 			else

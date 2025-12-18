@@ -9346,21 +9346,21 @@ function is_infix_operator(string $op): bool
     return in_array($op, ["eq", "is", "as", "ne", "lt", "le", "gt", "ge", "in", "ou", "et"], true);
 }
 
-function parseInfixSegments(array $list): array
+function parseInfixSegments(array $list, $section = null): array
 {
-    $section = $list[0];
-    $list = array_slice($list, 1);
+    if (!$section) {
+        $section = $list[0];
+        $list = array_slice($list, 1);
+    }
     $n = count($list);
     if ($n === 0)
         return [];
     if ($n === 1)
         return [$list];
 
-    // Build result iteratively to mirror the Lean recursion
     $result = [];
     $i = 0;
     while ($i < $n) {
-        // If fewer than 3 elements remain, just push each as singletons
         if ($i + 2 >= $n) {
             // push remaining elements as singletons
             for (; $i < $n; $i++) {
@@ -9368,25 +9368,16 @@ function parseInfixSegments(array $list): array
             }
             break;
         }
-
         $x  = $list[$i];
         $op = $list[$i + 1];
         $y  = $list[$i + 2];
         if (is_infix_operator($op)) {
-            // take 3: [x, op, y]
             $result[] = [$x, $op, $y];
-            // advance by 3, but drop 1 from the remaining (equivalent to y.drop 1 in Lean)
-            $i += 3 - 1; // net +2 (consume x,op,y; next start at y+1)
+            $i += 3;
         } else {
-            // Not an infix operator: treat x and op as separate segments
             $result[] = [$x];
-            $result[] = [$op];
-            $i += 2;
-            continue;
+            ++$i;
         }
-
-        $i++; // move to next position after the adjusted step above
     }
-
     return [$section, $result];
 }

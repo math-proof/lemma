@@ -1,24 +1,29 @@
 import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
+import Lemma.Hyperreal.Infinite.is.InfiniteAdd
+import Lemma.Hyperreal.Infinite.is.InfinitePow
 import Lemma.Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero
 import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite
+import Lemma.Hyperreal.Infinitesimal.is.InfiniteInv
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.Ne_0.of.Infinite
+import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
 import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
 import Lemma.Hyperreal.NotInfiniteAdd.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.NotInfiniteInv.of.Infinite
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
+import Lemma.Hyperreal.NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.StAdd.eq.AddSt.of.NotInfinite
 import Lemma.Hyperreal.StAdd.eq.AddStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StAdd.eq.Add_St.of.NotInfinite
 import Lemma.Hyperreal.StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal
 import Lemma.Hyperreal.StDiv.eq.Inv.of.EqSt
 import Lemma.Hyperreal.StInv.eq.Inv.of.EqSt
+import Lemma.Hyperreal.StInvMul.gt.Zero.of.StDiv.gt.Zero.NotInfinite.NotInfinite.NotInfinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.StMul.eq.MulStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StMul.eq.Mul_St.of.NotInfinite
 import Lemma.Hyperreal.StPow.eq.PowSt.of.NotInfinite
-import Lemma.Hyperreal.Infinite.is.InfiniteAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
@@ -96,8 +101,8 @@ private lemma main
     have h_ab_st := EqSt_0.of.Infinite h_ab_inf
     have h_ab_st := StInv.eq.Inv.of.EqSt h_ab_st
     conv_rhs at h_ab_st => simp
-    have h_inv_ab_ne_inf := NotInfiniteInv.of.Infinite h_ab_inf
-    have h_2_ab_st := StAdd.eq.AddSt.of.NotInfinite h_inv_ab_ne_inf 2
+    have h_ne_inf_inv_ab := NotInfiniteInv.of.Infinite h_ab_inf
+    have h_2_ab_st := StAdd.eq.AddSt.of.NotInfinite h_ne_inf_inv_ab 2
     rw [h_ab_st] at h_2_ab_st
     conv_rhs at h_2_ab_st => simp
     have h_div_ba := StDiv.eq.Inv.of.EqSt h
@@ -108,10 +113,10 @@ private lemma main
     simp [h_div_ba, h] at h_add_div_ab
     norm_num at h_add_div_ab
     have h_add_div_ba_ne_inf := NotInfiniteAdd.of.NotInfinite.NotInfinite h_div_ab_ne_inf h_div_ba_ne_inf
-    have h_add_inv_div_ab := StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_inv_ab_ne_inf h_add_div_ba_ne_inf
+    have h_add_inv_div_ab := StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_ne_inf_inv_ab h_add_div_ba_ne_inf
     rw [h_ab_st, h_add_div_ab] at h_add_inv_div_ab
     conv_rhs at h_add_inv_div_ab => norm_num
-    have h_add_inv_ab_inf := NotInfiniteAdd.of.NotInfinite h_inv_ab_ne_inf (r := 2)
+    have h_add_inv_ab_inf := NotInfiniteAdd.of.NotInfinite h_ne_inf_inv_ab (r := 2)
     have h_add_inv_div_ab_ne_inf := NotInfinitesimal.of.NeSt_0 (x := ((a * b)⁻¹ + (a / b + b / a))) (by linarith)
     have h_add_add_inv_div_ab_ne_inf := StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal h_add_inv_ab_inf h_add_inv_div_ab_ne_inf
     rw [h_add_inv_div_ab, h_2_ab_st] at h_add_add_inv_div_ab_ne_inf
@@ -138,10 +143,28 @@ private lemma main
     rw [AddAdd.eq.Add_Add]
     rw [MulMul.eq.Mul_Mul]
     rw [EqDivMul.of.Ne_0 h_ab]
-    -- have h_ab := Hyperreal.NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal h_a h_b
-    -- have h_2_ab_st := StAdd.eq.AddSt.of.NotInfinite h_inv_ab_ne_inf 2
-    sorry
+    have h_ab_ne_eps := NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal h_a h_b
+    have h_ne_inf_inv_ab := NotInfiniteInv.of.NotInfinitesimal h_ab_ne_eps
+    have h_2_ab_st := StAdd.eq.AddSt.of.NotInfinite h_ne_inf_inv_ab 2
+    have h_div_ba := StDiv.eq.Inv.of.EqSt h
+    simp at h_div_ba
+    have h_div_ab_ne_inf := NotInfinite.of.NeSt_0 (x := a / b) (by linarith)
+    have h_div_ba_ne_inf := NotInfinite.of.NeSt_0 (x := b / a) (by linarith)
+    have h_add_div_ab := StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_div_ab_ne_inf h_div_ba_ne_inf
+    simp [h_div_ba, h] at h_add_div_ab
+    norm_num at h_add_div_ab
+    have h_add_div_ba_ne_inf := NotInfiniteAdd.of.NotInfinite.NotInfinite h_div_ab_ne_inf h_div_ba_ne_inf
+    have h_add_inv_div_ab := StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_ne_inf_inv_ab h_add_div_ba_ne_inf
+    rw [h_add_div_ab] at h_add_inv_div_ab
+    have h_add_inv_ab_inf := NotInfiniteAdd.of.NotInfinite h_ne_inf_inv_ab (r := 2)
+    have h_st_ne_0 := StInvMul.gt.Zero.of.StDiv.gt.Zero.NotInfinite.NotInfinite.NotInfinitesimal.NotInfinitesimal h_a h_b h_a_inf h_b_inf (by linarith)
+    have h_add_inv_div_ab_ne_inf := NotInfinitesimal.of.NeSt_0 (x := ((a * b)⁻¹ + (a / b + b / a))) (by linarith)
+    have h_add_add_inv_div_ab_ne_inf := StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal h_add_inv_ab_inf h_add_inv_div_ab_ne_inf
+    rw [h_add_inv_div_ab, h_2_ab_st] at h_add_add_inv_div_ab_ne_inf
+    apply NotInfinite.of.NeSt_0
+    simp_all
+    linarith
 
 
 -- created on 2025-12-16
--- updated on 2025-12-17
+-- updated on 2025-12-18
