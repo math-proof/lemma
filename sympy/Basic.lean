@@ -471,7 +471,7 @@ def List.mt (list : List String) (constructorOrder : Bool := false): Name :=
   let ofPart := ofPart.tail.parseInfixSegments
   let i := if constructorOrder then ofPart.length - 1 else 0
   let (first, ofPart) := (ofPart[i]!, ofPart.set i first.Not)
-  (domain :: first.Not ++ of :: ofPart.map (".".intercalate ·)).foldl Name.str default
+  (domain :: first.Not ++ of :: ofPart.flatten).foldl Name.str default
 
 def Expr.mt (type proof : Expr) : Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE

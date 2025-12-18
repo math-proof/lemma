@@ -4575,7 +4575,7 @@ class LeanStatements extends LeanArgs
                 }
             } elseif ($sequential_tactic_combinator = $tactic->sequential_tactic_combinator)
                 $sequential_tactic_combinator->echo();
-        } elseif ($tactic instanceof LeanTacticBlock || $tactic instanceof LeanIte)
+        } elseif ($tactic instanceof LeanTacticBlock || $tactic instanceof LeanIte || $tactic instanceof LeanCalc)
             $tactic->echo();
     }
 
@@ -7608,9 +7608,12 @@ class LeanCalc extends LeanUnary
         }
         if ($arg instanceof LeanArgsIndented) {
             $syntax['calc'] = true;
-            $statements = [];
-            foreach ($arg->args as $stmt) {
-            }
+            $self = clone $this;
+            $arg = $self->arg;
+            $content = $arg->rhs;
+            $arg->rhs = new LeanCaret($content->indent, $content->level);
+            $statements = [$self];
+            array_push($statements, ...$content->split($syntax));
             return $statements;
         }
         return [$this];

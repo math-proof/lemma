@@ -41,7 +41,7 @@ private lemma main
   ¬((1 + 2 * a * b) / (1 + a² + b²)).Infinite := by
 -- proof
   if h_a : a.Infinitesimal then
-    have h_b := Infinitesimal.of.Infinitesimal.StDiv.ne.Zero (by linarith) h_a (b := b)
+    have h_b := Infinitesimal.of.Infinitesimal.StDiv.ne.Zero.left (by linarith) h_a (b := b)
     have h_a₀ := EqSt_0.of.Infinitesimal h_a
     have h_b₀ := EqSt_0.of.Infinitesimal h_b
     have h_a' := NotInfinite.of.Infinitesimal h_a
@@ -74,7 +74,7 @@ private lemma main
     apply NotInfinite.of.NeSt_0
     linarith
   else if h_a_inf : a.Infinite then
-    have h_b_inf := Infinite.of.Infinite.StDiv.ne.Zero (by linarith) h_a_inf (b := b)
+    have h_b_inf := Infinite.of.Infinite.StDiv.ne.Zero.left (by linarith) h_a_inf (b := b)
     have h_a_ne_0 := Ne_0.of.Infinite h_a_inf
     have h_b_ne_0 := Ne_0.of.Infinite h_b_inf
     have h_ab := Mul.ne.Zero.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0
@@ -96,8 +96,8 @@ private lemma main
     have h_ab_st := EqSt_0.of.Infinite h_ab_inf
     have h_ab_st := StInv.eq.Inv.of.EqSt h_ab_st
     conv_rhs at h_ab_st => simp
-    have h_inv_ab_inf := NotInfiniteInv.of.Infinite h_ab_inf
-    have h_2_ab_st := StAdd.eq.AddSt.of.NotInfinite h_inv_ab_inf 2
+    have h_inv_ab_ne_inf := NotInfiniteInv.of.Infinite h_ab_inf
+    have h_2_ab_st := StAdd.eq.AddSt.of.NotInfinite h_inv_ab_ne_inf 2
     rw [h_ab_st] at h_2_ab_st
     conv_rhs at h_2_ab_st => simp
     have h_div_ba := StDiv.eq.Inv.of.EqSt h
@@ -108,10 +108,10 @@ private lemma main
     simp [h_div_ba, h] at h_add_div_ab
     norm_num at h_add_div_ab
     have h_add_div_ba_ne_inf := NotInfiniteAdd.of.NotInfinite.NotInfinite h_div_ab_ne_inf h_div_ba_ne_inf
-    have h_add_inv_div_ab := StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_inv_ab_inf h_add_div_ba_ne_inf
+    have h_add_inv_div_ab := StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_inv_ab_ne_inf h_add_div_ba_ne_inf
     rw [h_ab_st, h_add_div_ab] at h_add_inv_div_ab
     conv_rhs at h_add_inv_div_ab => norm_num
-    have h_add_inv_ab_inf := NotInfiniteAdd.of.NotInfinite h_inv_ab_inf (r := 2)
+    have h_add_inv_ab_inf := NotInfiniteAdd.of.NotInfinite h_inv_ab_ne_inf (r := 2)
     have h_add_inv_div_ab_ne_inf := NotInfinitesimal.of.NeSt_0 (x := ((a * b)⁻¹ + (a / b + b / a))) (by linarith)
     have h_add_add_inv_div_ab_ne_inf := StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal h_add_inv_ab_inf h_add_inv_div_ab_ne_inf
     rw [h_add_inv_div_ab, h_2_ab_st] at h_add_add_inv_div_ab_ne_inf
@@ -119,6 +119,27 @@ private lemma main
     apply NotInfinite.of.NeSt_0
     simp_all
   else
+    have h_b := NotInfinitesimal.of.NotInfinitesimal.StDiv.ne.Zero (by linarith) h_a (b := b)
+    have h_b_inf := NotInfinite.of.NotInfinite.StDiv.ne.Zero (by linarith) h_a_inf (b := b)
+    have h_a_ne_0 := Ne_0.of.NotInfinitesimal h_a
+    have h_b_ne_0 := Ne_0.of.NotInfinitesimal h_b
+    have h_ab := Mul.ne.Zero.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0
+    rw [Div.eq.DivDivS.of.Ne_0 h_ab]
+    rw [DivAdd.eq.AddDivS]
+    conv =>
+      arg 1
+      arg 1
+      arg 2
+      repeat rw [DivAdd.eq.AddDivS]
+      repeat rw [Square.eq.Mul]
+      rw [DivMulS.eq.Div.of.Ne_0 h_b_ne_0]
+      rw [DivMulS.eq.Div.of.Ne_0.left h_a_ne_0]
+    repeat rw [Div1.eq.Inv]
+    rw [AddAdd.eq.Add_Add]
+    rw [MulMul.eq.Mul_Mul]
+    rw [EqDivMul.of.Ne_0 h_ab]
+    -- have h_ab := Hyperreal.NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal h_a h_b
+    -- have h_2_ab_st := StAdd.eq.AddSt.of.NotInfinite h_inv_ab_ne_inf 2
     sorry
 
 

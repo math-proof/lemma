@@ -1,4 +1,4 @@
-import Lemma.Hyperreal.NotInfinitesimal.is.Any_Ge
+import Lemma.Hyperreal.NotInfinitesimal.is.Any_GeAbs
 import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Nat.LeMulS.of.Le.Gt_0
@@ -22,7 +22,7 @@ private lemma main
   apply Infinitesimal.of.All_LtAbs
   intro ⟨δ, hδ⟩
   simp [AbsDiv.eq.DivAbsS]
-  let ⟨⟨B, h_B⟩, h_B_le⟩ := Any_Ge.of.NotInfinitesimal h_b
+  let ⟨⟨B, h_B⟩, h_B_le⟩ := Any_GeAbs.of.NotInfinitesimal h_b
   apply LtDiv.of.Lt_Mul.Gt_0
   ·
     apply Gt.of.Ge.Gt h_B_le
