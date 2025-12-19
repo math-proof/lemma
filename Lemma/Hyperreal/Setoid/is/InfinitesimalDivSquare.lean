@@ -18,7 +18,6 @@ import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Rat.DivSquareSub.eq.Sub1DivAddS
 import Lemma.Rat.Div_AddS1.eq.Add1DivSquareSub.of.Mul.gt.Zero
-import sympy.core.power
 import sympy.sets.fancyset
 open Hyperreal Nat Rat
 
@@ -81,9 +80,7 @@ private lemma main
         simp [h_b]
       else
         simp [h_b]
-        have : NeZero (1 + a ^ 2 + b ^ 2) := ⟨by
-          sorry
-        ⟩
+        have : NeZero (1 + a ^ 2 + b ^ 2) := ⟨by nlinarith⟩
         have := Infinitesimal.of.InfinitesimalDiv.NotInfinite (by sorry) h
         -- contradiction
         sorry

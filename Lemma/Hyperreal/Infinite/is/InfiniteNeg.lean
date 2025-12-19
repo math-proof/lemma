@@ -17,7 +17,7 @@ private lemma mp
   exact h δ hδ
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
 -- given
   (x : ℝ*) :

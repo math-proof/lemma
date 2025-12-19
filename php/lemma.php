@@ -7,21 +7,6 @@ use function std\array_insert;
 require_once 'init.php';
 require_once 'std.php';
 if ($_POST) {
-	function Not($token) {
-		if (is_string($token)) {
-			if (str_starts_with($token, 'Not'))
-				return substr($token, 3);
-			elseif (str_starts_with($token, 'Eq'))
-				return "Ne" . substr($token, 2);
-			elseif (str_starts_with($token, 'Ne'))
-				return "Eq" . substr($token, 2);
-			else
-				return "Not" . $token;
-		}
-		if (count($token) == 1)
-			return [Not($token[0])];
-		return $token;
-	}
 	function module_exists(string $module)  {
 		$path = module_to_lean($module);
 		// Case-insensitive check first (works on both OS)

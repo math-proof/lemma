@@ -155,7 +155,21 @@ if (! str_ends_with($path_info, '/')) {
                                             exit();
                                         }
                                     }
-                                    $segment[1][0] = 'is';
+                                    $hit = false;
+                                    for ($i = 2; $i < count($segment); $i++) {
+                                        # try mt $i
+                                        $segment_ = [...$segment];
+                                        $segment_[0] = Not($segment_[$i]);
+                                        $segment_[$i] = Not($first);
+                                        $path = module_to_lean($segment_, $section);
+                                        if (file_exists($path)) {
+                                            $hit = true;
+                                            $segment = $segment_;
+                                            break;
+                                        }
+                                    }
+                                    if (! $hit)
+                                        $segment[1][0] = 'is';
                                 }
                             }
                             elseif (count($first) == 3) {

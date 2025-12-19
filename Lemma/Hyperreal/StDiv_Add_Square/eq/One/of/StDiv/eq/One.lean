@@ -6,7 +6,7 @@ import Lemma.Hyperreal.Infinite.is.InfinitePow
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.Ne_0.Ne_0.of.NotInfinitesimal.StDiv.eq.One
 import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
-import Lemma.Hyperreal.NotInfiniteAdd.of.NotInfinite.NotInfinite
+import Lemma.Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite
 import Lemma.Hyperreal.NotInfiniteInvMul.of.NotInfinitesimal.StDiv.eq.One
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite

@@ -9381,3 +9381,19 @@ function parseInfixSegments(array $list, $section = null): array
     }
     return [$section, $result];
 }
+
+function Not($token) {
+    if (is_string($token)) {
+        if (str_starts_with($token, 'Not'))
+            return substr($token, 3);
+        elseif (str_starts_with($token, 'Eq'))
+            return "Ne" . substr($token, 2);
+        elseif (str_starts_with($token, 'Ne'))
+            return "Eq" . substr($token, 2);
+        else
+            return "Not" . $token;
+    }
+    if (count($token) == 1)
+        return [Not($token[0])];
+    return $token;
+}

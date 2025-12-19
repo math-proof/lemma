@@ -156,19 +156,38 @@ function transformPrefix {
     return $s
 }
 
+function Not($token) {
+    if ($token.StartsWith('Not')) {
+        return $token.Substring(3)
+    }
+    elseif ($token.StartsWith('Eq')) {
+        return "Ne" + $token.Substring(2)
+    }
+    elseif ($token.StartsWith('Ne')) {
+        return "Eq" + $token.Substring(2)
+    }
+    else {
+        return "Not" + $token
+    }
+}
+
 # Get all .lean files except *.echo.lean under Lemma/
 Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForEach-Object {
     $file = $_.FullName
-    if (!(Select-String -Path $file -Pattern '^@\[main, [^]]+\]' -Quiet)) {return}
     $file = Resolve-Path -Relative $file
+    $content = Get-Content $file -Raw
+    $match = $content -cmatch '(?:\n/--\n([\s\S]*)\n-/)?\n@\[main, ([^]]+)\]'
+    if (!$match) {return}
+
     $module = $file -creplace '^\.\\Lemma\\', ''
     $module = $module -replace '\\', '.'
     $module = $module -replace '\.lean$', ''
-    $content = Get-Content $file -Raw
-    $match = $content -cmatch '(?:\n/--\n([\s\S]*)\n-/)?\n@\[main, .*\b(?<!mpr?\.)comm(?: ([0-9]+))?\b'
+    $constructor_order = $matches[1] -and $matches[1].Contains("constructor order")
+    $attributes = $matches[2]
+    $match = $attributes -cmatch '\b(?<!mpr?\.)comm(?: ([0-9]+))?\b'
     if ($match) {
         $tokens = $module -split '\.'
-        $deBruijn = $matches[2]
+        $deBruijn = $matches[1]
         switch -regex ($tokens[2]) {
             "^(eq|is|as|ne|lt|le|gt|ge)$" {
                 $tmp = $tokens[1]
@@ -177,7 +196,7 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             }
             default {
                 $deBruijn = [int]$deBruijn
-                if ($matches[1] -and $matches[1].Contains("constructor order")) {
+                if ($constructor_order) {
                     $index = $tokens.length - 1
                     $increment = -1
                 }
@@ -204,19 +223,19 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
         $new_module = $tokens -join "."
         Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
     }
-    if (Select-String -Path $file -Pattern '^@\[main, .*\bmp\b' -Quiet) {
+    if ($attributes -cmatch '\bmp\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$') {
             $new_module = "$($matches[1]).$($matches[3]).of.$($matches[2])$($matches[4])"
             Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
         }
     }
-    if (Select-String -Path $file -Pattern '^@\[main, .*\bmpr\b' -Quiet) {
+    if ($attributes -cmatch '\bmpr\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(\.of\..+)?$') {
             $new_module = "$($matches[1]).$($matches[2]).of.$($matches[3])$($matches[4])"
             Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
         }
     }
-    if (Select-String -Path $file -Pattern '^@\[main, .*\bmp\.comm\b' -Quiet) {
+    if ($attributes -cmatch '\bmp\.comm\b') {
         $tokens = $module -split '\.'
         if ($tokens[2] -eq "is") {
             $tokens = $tokens | Where-Object { $_ -ne 'of' }
@@ -231,7 +250,7 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             Write-Host "Ignoring @\[main, mp.comm] at $file"
         }
     }
-    if (Select-String -Path $file -Pattern '^@\[main, .*\bmpr\.comm\b' -Quiet) {
+    if ($attributes -cmatch '\bmpr\.comm\b') {
         $tokens = $module -split '\.'
         if ($tokens[2] -eq "is") {
             $tokens = $tokens | Where-Object { $_ -ne 'of' }
@@ -245,7 +264,7 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             Write-Host "Ignoring @\[main, mp.comm] at $file"
         }
     }
-    if (Select-String -Path $file -Pattern '^@\[main, .*\bcomm\.is\b' -Quiet) {
+    if ($attributes -cmatch '\bcomm\.is\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(\.of\..+)?$') {
             $section = $matches[1]
             $given = $matches[2]
@@ -254,6 +273,23 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             $given = transformPrefix $given
             $imply = transformPrefix $imply
             $new_module = "$section.$given.is.$imply$arguments"
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
+    }
+    $mt_group = [regex]::Matches($attributes, '\b(?<!\.)mt(?:\s+(\d+))?\b')
+    if ($mt_group -and $module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.of\.(.+)$') {
+        $section = $matches[1]
+        $imply = $matches[2]
+        $imply = Not $imply
+        $given = $matches[3].Split('.')
+        foreach ($m in $mt_group) {
+            $i = if ($m.Groups[1].Success) {$given.Length - 1 - [Numerics.BitOperations]::Log2($m.Groups[1].Value) } else { 0 }
+            $i = if ($constructor_order) {$given.Length - 1 - $i} else { $i }
+            $new_imply = Not $given[$i]
+            $arguments = $given.Clone()
+            $arguments[$i] = $imply
+            $new_given = $arguments -join '.'
+            $new_module = "$section.$new_imply.of.$new_given"
             Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
         }
     }

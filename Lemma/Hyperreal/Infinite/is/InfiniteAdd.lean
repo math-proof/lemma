@@ -1,8 +1,7 @@
-import Lemma.Hyperreal.Infinite.is.All_GtAbs
-import Lemma.Int.GeAbs_0
-import Lemma.Int.SubAbsS.le.AbsAdd
-import Lemma.Nat.Gt.of.Ge.Gt
-open Hyperreal Int Nat
+import Lemma.Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite
+import Lemma.Hyperreal.NotInfinite
+import Lemma.Nat.Add
+open Hyperreal Nat
 
 
 private lemma mp
@@ -13,15 +12,9 @@ private lemma mp
 -- imply
   Infinite (x + r) := by
 -- proof
-  apply Infinite.of.All_GtAbs
-  have h := All_GtAbs.of.Infinite h
-  intro ⟨δ, hδ⟩
-  have h_r := GeAbs_0 r
-  have h := h ⟨|r| + δ, by linarith⟩
-  simp at ⊢ h
-  have h_ge := SubAbsS.le.AbsAdd x r
-  apply Gt.of.Ge.Gt h_ge
-  linarith
+  rw [Add.comm]
+  apply InfiniteAdd.of.Infinite.NotInfinite _ h
+  apply NotInfinite
 
 
 @[main, comm, mp, mpr, mp.mt, mpr.mt]
@@ -32,14 +25,27 @@ private lemma main
 -- imply
   Infinite x ↔ Infinite (x + r) := by
 -- proof
-  constructor <;>
+  constructor <;> 
     intro h
-  .
+  ·
     apply mp h
-  .
+  ·
     have h := mp h (-r)
     simp at h
     exact h
 
 
+@[main, comm, mp, mpr, mp.mt, mpr.mt]
+private lemma left
+-- given
+  (r : ℝ)
+  (x : ℝ*) :
+-- imply
+  Infinite x ↔ Infinite (r + x) := by
+-- proof
+  rw [Add.comm]
+  apply main
+
+
 -- created on 2025-12-11
+-- updated on 2025-12-19
