@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.GtSt_0.of.Gt_0.NotInfinite.NotInfinitesimal
 import Lemma.Hyperreal.Gt_0.of.GtSt_0
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
-import Lemma.Hyperreal.NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalMul.NotInfinitesimal
 import Lemma.Hyperreal.StInv.eq.InvSt
 import Lemma.Rat.Div.gt.Zero.is.Mul.gt.Zero
 open Hyperreal Rat

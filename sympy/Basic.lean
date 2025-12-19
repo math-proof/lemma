@@ -462,19 +462,26 @@ def List.Not (list : List String) : List String :=
         panic! s!"Expected the operator 'eq' or 'ne', got: {list[1]!}"
     list[0]! :: op :: list.tail
 
-def List.mt (list : List String) (constructorOrder : Bool := false): Name :=
+def List.mt (list : List String) (constructorOrder : Bool := false) (index : ℕ := 0) : Name :=
   let i := list.idxOf "of"
   let ⟨first, ofPart⟩ := list.splitAt i
   let domain := first[0]!
   let first := first.tail
   let of := ofPart[0]!
   let ofPart := ofPart.tail.parseInfixSegments
-  let i := if constructorOrder then ofPart.length - 1 else 0
+  let i := if constructorOrder then ofPart.length - 1 - index else index
   let (first, ofPart) := (ofPart[i]!, ofPart.set i first.Not)
   (domain :: first.Not ++ of :: ofPart.flatten).foldl Name.str default
 
-def Expr.mt (type proof : Expr) : Expr × Expr :=
+def Expr.mt (type proof : Expr) (parity : ℕ := 0) : ℕ × Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
+  let defaultCount := binders.countP (·.snd.snd == .default)
+  let parity :=
+    if parity = 0 then
+      1 <<< (defaultCount - 1)
+    else
+      parity
+  let index := defaultCount - 1 - Nat.log2 parity
   let b := type
   let Not := fun type =>
     match type with
@@ -487,7 +494,7 @@ def Expr.mt (type proof : Expr) : Expr × Expr :=
     | _ =>
       (Expr.const `Not []).mkApp [type]
   let h :=
-    let h := Expr.bvar 0
+    let h := Expr.bvar index
     match type with
     | .app (.const `Not _) arg =>
       (Expr.const `Iff.mpr []).mkApp [
@@ -499,23 +506,21 @@ def Expr.mt (type proof : Expr) : Expr × Expr :=
     | _ =>
       h
   let (binders, type, a, mp) :=
-    if let ⟨h, premise, .default⟩ :: rest := binders then
-      let a := premise.incDeBruijnIndex 1
-      let mp :=
-        match a with
-        | .app (.const `Not _) arg =>
-          fun h : Expr =>
-            (Expr.const `Iff.mp []).mkApp [
-              (Expr.const `Not []).mkApp [(Expr.const `Not []).mkApp [arg]],
-              arg,
-              (Expr.const `Classical.not_not []).mkApp [arg],
-              h
-            ]
-        | _ =>
-          id
-      ((h, Not (type.decDeBruijnIndex 1), BinderInfo.default) :: rest, Not a, a, mp)
-    else
-      panic! "The theorem must have at least one hypothesis."
+    let ⟨h, premise, df⟩ := binders[index]!
+    let a := premise.incDeBruijnIndex index.succ
+    let mp :=
+      match a with
+      | .app (.const `Not _) arg =>
+        fun h : Expr =>
+          (Expr.const `Iff.mp []).mkApp [
+            (Expr.const `Not []).mkApp [(Expr.const `Not []).mkApp [arg]],
+            arg,
+            (Expr.const `Classical.not_not []).mkApp [arg],
+            h
+          ]
+      | _ =>
+        id
+    (binders.set index (h, Not (type.decDeBruijnIndex index.succ), df), Not a, a, mp)
   let telescope := fun lam body =>
     binders.foldl
       (fun body ⟨binderName, binderType, binderInfo⟩ =>
@@ -523,8 +528,20 @@ def Expr.mt (type proof : Expr) : Expr × Expr :=
       )
       body
   -- mt {a b : Prop} (h₁ : a → b) (h₂ : ¬b) : ¬a
-  let proof := mp ((Expr.const `mt []).mkApp [a, b, proof.mkApp ((List.range binders.length).map fun i => (Lean.Expr.bvar i)).tail.reverse, h])
-  (type, proof).map (telescope Expr.forallE) (telescope .lam)
+  let proof := ((Expr.const `mt []).mkApp [
+    a,
+    b,
+    if index > 0 then
+      let bvar := ((List.range binders.length).map fun i => (Expr.bvar i))
+      let ⟨take, drop⟩ := bvar.splitAt index
+      let drop := drop.tail.map fun e => e.incDeBruijnIndex 1
+      let ⟨binderName, _, binderInfo⟩ := binders[index]!
+      .lam binderName a (proof.mkApp ((take ++ drop).reverse ++ [h])) binderInfo
+    else
+      proof.mkApp ((List.range binders.length).map fun i => (.bvar i)).tail.reverse,
+    h
+  ])
+  (index, (type, mp proof).map (telescope Expr.forallE) (telescope .lam))
 
 
 def constructor_order (declName : Name) : CoreM Bool := do
@@ -553,9 +570,9 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let constructor_order ← constructor_order declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ := Expr.mt decl.type (.const declName (levelParams.map .param))
+    let ⟨index, type, value⟩ := Expr.mt decl.type (.const declName (levelParams.map .param)) stx.getNum
     addAndCompile <| .thmDecl {
-      name := ((← getEnv).moduleTokens.mt constructor_order).lemmaName declName
+      name := ((← getEnv).moduleTokens.mt constructor_order index).lemmaName declName
       levelParams := levelParams
       type := type
       value := value
@@ -583,7 +600,7 @@ initialize registerBuiltinAttribute {
     let proof : Lean.Expr := .const declName (levelParams.map .param)
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
-    let ⟨type, value⟩ := Expr.mt type value
+    let ⟨_, type, value⟩ := Expr.mt type value
     let moduleTokens := (← getEnv).moduleTokens.mp
     addAndCompile <| .thmDecl {
       name := (moduleTokens.mt constructor_order).lemmaName declName
@@ -614,7 +631,7 @@ initialize registerBuiltinAttribute {
     let proof : Lean.Expr := .const declName (levelParams.map .param)
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
-    let ⟨type, value⟩ := Expr.mt type value
+    let ⟨_, type, value⟩ := Expr.mt type value
     let moduleTokens := (← getEnv).moduleTokens.mpr
     addAndCompile <| .thmDecl {
       name := (moduleTokens.mt constructor_order).lemmaName declName

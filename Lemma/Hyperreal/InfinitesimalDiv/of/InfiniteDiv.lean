@@ -1,4 +1,4 @@
-import Lemma.Hyperreal.InfinitesimalInv.of.Infinite
+import Lemma.Hyperreal.Infinite.is.InfinitesimalInv
 open Hyperreal
 
 

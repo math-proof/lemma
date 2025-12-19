@@ -273,8 +273,16 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
+def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
+  let defaultCount := binders.countP (·.snd.snd == .default)
+  let parity :=
+    if parity = 0 then
+      1 <<< (defaultCount - 1)
+    else
+      parity
+  let index := defaultCount - 1 - Nat.log2 parity
+  println! "index = {index}"
   let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
   type.println context "original type"
   let b := type
@@ -290,7 +298,7 @@ def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
     | _ =>
       (Lean.Expr.const `Not []).mkApp [type]
   let h :=
-    let h := Lean.Expr.bvar 0
+    let h := Lean.Expr.bvar index
     match type with
     | .app (.const `Not _) arg =>
       (Lean.Expr.const `Iff.mpr []).mkApp [
@@ -303,26 +311,22 @@ def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
       h
   println! s!"h = {h}"
   let (binders, type, a, mp) :=
-    if let ⟨h, premise, .default⟩ :: rest := binders then
-      let a := premise.incDeBruijnIndex 1
-      let mp :=
-        match a with
-        | .app (.const `Not _) arg =>
-          fun h : Lean.Expr =>
-            (Lean.Expr.const `Iff.mp []).mkApp [
-              (Lean.Expr.const `Not []).mkApp [(Lean.Expr.const `Not []).mkApp [arg]],
-              arg,
-              (Lean.Expr.const `Classical.not_not []).mkApp [arg],
-              h
-            ]
-        | _ =>
-          id
-      ((h, Not (type.decDeBruijnIndex 1), BinderInfo.default) :: rest, Not a, a, mp)
-    else
-      panic! "The theorem must have at least one hypothesis."
+    let ⟨h, premise, df⟩ := binders[index]!
+    let a := premise.incDeBruijnIndex index.succ
+    let mp :=
+      match a with
+      | .app (.const `Not _) arg =>
+        fun h : Lean.Expr =>
+          (Lean.Expr.const `Iff.mp []).mkApp [
+            (Lean.Expr.const `Not []).mkApp [(Lean.Expr.const `Not []).mkApp [arg]],
+            arg,
+            (Lean.Expr.const `Classical.not_not []).mkApp [arg],
+            h
+          ]
+      | _ =>
+        id
+    (binders.set index (h, Not (type.decDeBruijnIndex index.succ), df), Not a, a, mp)
   println! s!"binders = {binders}"
-  let ⟨_, premise, _⟩ := binders[0]!
-  premise.println (binders.tail.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)) "premise"
   type.println context "new type"
   let telescope := fun lam hint body => do
     body.println context s!"prior {hint}"
@@ -334,9 +338,22 @@ def Expr.mt' (type proof : Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
     body.println [] s!"final {hint}"
     return body
   -- mt {a b : Prop} (h₁ : a → b) (h₂ : ¬b) : ¬a
-  let proof := ((Lean.Expr.const `mt []).mkApp [a, b, proof.mkApp ((List.range binders.length).map fun i => (Lean.Expr.bvar i)).tail.reverse, h])
-  let proof := mp proof
-  (type, proof).mapM (telescope Expr.forallE "type") (telescope .lam "value")
+  proof.println context "proof"
+  a.println context "a"
+  let proof := ((Lean.Expr.const `mt []).mkApp [
+    a,
+    b,
+    if index > 0 then
+      let bvar := ((List.range binders.length).map fun i => (Expr.bvar i))
+      let ⟨take, drop⟩ := bvar.splitAt index
+      let drop := drop.tail.map fun e => e.incDeBruijnIndex 1
+      let ⟨binderName, _, binderInfo⟩ := binders[index]!
+      .lam binderName a (proof.mkApp ((take ++ drop).reverse ++ [h])) binderInfo
+    else
+      proof.mkApp ((List.range binders.length).map fun i => (.bvar i)).tail.reverse,
+    h
+  ])
+  return (index, ← (type, mp proof).mapM (telescope Expr.forallE "type") (telescope .lam "value"))
 
 initialize registerBuiltinAttribute {
   name := `mt'
@@ -346,8 +363,10 @@ initialize registerBuiltinAttribute {
     let constructor_order ← constructor_order declName
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ ← Expr.mt' decl.type (.const declName (levelParams.map .param))
-    let name := ((← getEnv).moduleTokens.mt constructor_order).lemmaName declName
+    let parity := stx.getNum
+    println! s!"parity = {parity}"
+    let ⟨parity, type, value⟩ ← Expr.mt' decl.type (.const declName (levelParams.map .param)) parity
+    let name := ((← getEnv).moduleTokens.mt constructor_order parity).lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name
@@ -369,7 +388,7 @@ initialize registerBuiltinAttribute {
     let parity := stx.getNum
     let and := stx.getIdent == `and
     let ⟨_, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
-    let ⟨type, value⟩ ← Expr.mt' type value
+    let ⟨_, type, value⟩ ← Expr.mt' type value
     let moduleTokens := (← getEnv).moduleTokens.mp
     let name := (moduleTokens.mt constructor_order).lemmaName declName
     println! s!"name = {name}"
@@ -392,7 +411,7 @@ initialize registerBuiltinAttribute {
     let proof : Lean.Expr := .const declName (levelParams.map .param)
     let parity := stx.getNum
     let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
-    let ⟨type, value⟩ ← Expr.mt' type value
+    let ⟨_, type, value⟩ ← Expr.mt' type value
     let moduleTokens := (← getEnv).moduleTokens.mpr
     let name := (moduleTokens.mt constructor_order).lemmaName declName
     println! s!"name = {name}"

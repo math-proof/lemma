@@ -3,7 +3,7 @@ import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite
 import Lemma.Hyperreal.Infinitesimal.is.InfiniteInv
 import Lemma.Hyperreal.NotInfiniteInv.of.Infinite
-import Lemma.Hyperreal.NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalMul.NotInfinitesimal
 open Hyperreal
 
 
@@ -17,13 +17,13 @@ private lemma main
   ¬(a * b)⁻¹.Infinite := by
 -- proof
   if h_a_inf : a.Infinite then
-    have h_b_inf := Infinite.of.Infinite.StDiv.ne.Zero.left (by linarith) h_a_inf (b := b)
-    have h_ab_inf := InfiniteMul.of.Infinite.Infinite h_a_inf h_b_inf
-    exact NotInfiniteInv.of.Infinite h_ab_inf
+    apply NotInfiniteInv.of.Infinite
+    apply InfiniteMul.of.Infinite.Infinite h_a_inf
+    apply Infinite.of.Infinite.StDiv.ne.Zero.left (by linarith) h_a_inf
   else
-    have h_b := NotInfinitesimal.of.NotInfinitesimal.StDiv.ne.Zero (by linarith) h_a (b := b)
-    have h_ab_ne_eps := NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal h_a h_b
-    exact NotInfiniteInv.of.NotInfinitesimal h_ab_ne_eps
+    apply NotInfiniteInv.of.NotInfinitesimal
+    apply NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal h_a
+    apply NotInfinitesimal.of.NotInfinitesimal.StDiv.ne.Zero (by linarith) h_a
 
 
 -- created on 2025-12-18

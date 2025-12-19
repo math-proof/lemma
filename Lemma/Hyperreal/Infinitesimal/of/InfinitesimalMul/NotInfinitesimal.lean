@@ -4,15 +4,16 @@ import Lemma.Nat.LeMulS.of.Le.Le.Ge_0.Ge_0
 open Int Nat Hyperreal
 
 
-@[main]
+@[main, mt]
 private lemma main
   {a b : ℝ*}
 -- given
   (h_a : ¬Infinitesimal a)
-  (h_b : ¬Infinitesimal b) :
+  (h_b : Infinitesimal (a * b)) :
 -- imply
-  ¬Infinitesimal (a * b) := by
+  Infinitesimal b := by
 -- proof
+  contrapose! h_b
   apply NotInfinitesimal.of.Any_GeAbs
   let ⟨⟨δ_a, hδ_a⟩, h_a⟩ := Any_GeAbs.of.NotInfinitesimal h_a
   let ⟨⟨δ_b, hδ_b⟩, h_b⟩ := Any_GeAbs.of.NotInfinitesimal h_b

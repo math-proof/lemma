@@ -1,4 +1,5 @@
-import Lemma.Hyperreal.NotInfinite.of.StDiv.eq.One
+import Lemma.Hyperreal.Infinite.of.InfinitesimalDiv.NotInfinitesimal
+import Lemma.Hyperreal.NotInfiniteDiv_Add_Square.of.StDiv.eq.One
 import Lemma.Hyperreal.Gt_0.of.GtSt_0
 import Lemma.Rat.Div.gt.Zero.is.Mul.gt.Zero
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
@@ -69,17 +70,9 @@ private lemma main
         apply InfinitesimalSub.of.InfinitesimalSub
         apply InfinitesimalSub.of.EqSt.NotInfinite
         ·
-          apply NotInfinite.of.StDiv.eq.One h_ab
+          apply NotInfiniteDiv_Add_Square.of.StDiv.eq.One h_ab
         ·
-          rw [StDiv.eq.InvStInv]
-          simp
-          rw [Div_AddS1.eq.Add1DivSquareSub.of.Mul.gt.Zero]
-          ·
-            sorry
-          ·
-            apply Mul.gt.Zero.of.Div.gt.Zero
-            apply Gt_0.of.GtSt_0
-            linarith
+          apply StDiv_Add_Square.eq.One.of.StDiv.eq.One h_ab
   ·
     intro h
     if h_a : a.Infinitesimal then
@@ -88,11 +81,17 @@ private lemma main
         simp [h_b]
       else
         simp [h_b]
+        have : NeZero (1 + a ^ 2 + b ^ 2) := ⟨by
+          sorry
+        ⟩
+        have := Infinitesimal.of.InfinitesimalDiv.NotInfinite (by sorry) h
+        -- contradiction
         sorry
     else
       simp [h_a]
       if h_b : b.Infinitesimal then
         simp [h_b]
+        -- contradiction
         sorry
       else
         simp [h_b]

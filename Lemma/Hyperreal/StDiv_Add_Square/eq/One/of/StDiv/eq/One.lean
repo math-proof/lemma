@@ -3,20 +3,13 @@ import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.GeStInv_0.of.NotInfinitesimal.StDiv.eq.One
 import Lemma.Hyperreal.Infinite.is.InfiniteAdd
 import Lemma.Hyperreal.Infinite.is.InfinitePow
-import Lemma.Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero
-import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite
-import Lemma.Hyperreal.Infinitesimal.is.InfiniteInv
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.Ne_0.Ne_0.of.NotInfinitesimal.StDiv.eq.One
-import Lemma.Hyperreal.Ne_0.of.Infinite
-import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
 import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
 import Lemma.Hyperreal.NotInfiniteAdd.of.NotInfinite.NotInfinite
-import Lemma.Hyperreal.NotInfiniteInv.of.Infinite
 import Lemma.Hyperreal.NotInfiniteInvMul.of.NotInfinitesimal.StDiv.eq.One
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
-import Lemma.Hyperreal.NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.StAdd.eq.AddSt.of.NotInfinite
 import Lemma.Hyperreal.StAdd.eq.AddStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StAdd.eq.Add_St.of.NotInfinite
@@ -44,7 +37,7 @@ private lemma main
 -- given
   (h : st (a / b) = 1) :
 -- imply
-  ¬((1 + 2 * a * b) / (1 + a² + b²)).Infinite := by
+  ((1 + 2 * a * b) / (1 + a² + b²)).st = 1 := by
 -- proof
   if h_a : a.Infinitesimal then
     have h_b := Infinitesimal.of.Infinitesimal.StDiv.ne.Zero.left (by linarith) h_a (b := b)
@@ -77,8 +70,7 @@ private lemma main
     have h_1_a₂b₂' := NotInfinitesimal.of.NeSt_0 h_1_a₂b₂'
     have h_div := StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal h_1_2ab' h_1_a₂b₂'
     simp [h_1_a₂b₂, h_1_2ab] at h_div
-    apply NotInfinite.of.NeSt_0
-    linarith
+    assumption
   else
     have h_nonneg_st_inv_ab := GeStInv_0.of.NotInfinitesimal.StDiv.eq.One h h_a
     have h_ne_inf_inv_ab := NotInfiniteInvMul.of.NotInfinitesimal.StDiv.eq.One h h_a
@@ -113,9 +105,8 @@ private lemma main
     have h_add_inv_div_ab_ne_inf := NotInfinitesimal.of.NeSt_0 (x := ((a * b)⁻¹ + (a / b + b / a))) (by linarith)
     have h_add_add_inv_div_ab_ne_inf := StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal h_add_inv_ab_inf h_add_inv_div_ab_ne_inf
     rw [h_add_inv_div_ab, h_2_ab_st] at h_add_add_inv_div_ab_ne_inf
-    apply NotInfinite.of.NeSt_0
-    simp_all
+    rwa [Div.eq.One.of.Ne_0] at h_add_add_inv_div_ab_ne_inf
     linarith
 
--- created on 2025-12-16
--- updated on 2025-12-18
+
+-- created on 2025-12-19
