@@ -139,8 +139,11 @@ initialize registerBuiltinAttribute {
     Lean.logInfo s!"parity = {parity}"
     Lean.logInfo s!"and = {and}"
     let ⟨_, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
+    let name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
+    Lean.logInfo s!"name = {name}"
+    Lean.logInfo s!"(← getEnv).moduleTokens = {(← getEnv).moduleTokens}"
     addAndCompile <| .thmDecl {
-      name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
+      name := name
       levelParams := levelParams
       type := type
       value := value
@@ -159,8 +162,10 @@ initialize registerBuiltinAttribute {
     let parity := stx.getNum
     let and := stx.getIdent == `and
     let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity and
+    let name := ((← getEnv).moduleTokens.mpr.foldl Name.str default).lemmaName declName
+    println! s!"name = {name}"
     addAndCompile <| .thmDecl {
-      name := ((← getEnv).moduleTokens.mpr.foldl Name.str default).lemmaName declName
+      name := name
       levelParams := levelParams
       type := type
       value := value
@@ -390,6 +395,7 @@ initialize registerBuiltinAttribute {
     let ⟨_, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
     let ⟨_, type, value⟩ ← Expr.mt' type value
     let moduleTokens := (← getEnv).moduleTokens.mp
+    println! s!"moduleTokens.mp = {moduleTokens}"
     let name := (moduleTokens.mt constructor_order).lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {

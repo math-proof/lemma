@@ -460,7 +460,7 @@ def List.Not (list : List String) : List String :=
       | "ne" => "eq"
       | _ =>
         panic! s!"Expected the operator 'eq' or 'ne', got: {list[1]!}"
-    list[0]! :: op :: list.tail
+    list[0]! :: op :: list.drop 2
 
 def List.mt (list : List String) (constructorOrder : Bool := false) (index : ℕ := 0) : Name :=
   let i := list.idxOf "of"

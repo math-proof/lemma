@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Real.Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0
 import Lemma.Bool.NotAny.is.All_Not
 import Lemma.Bool.AndAnd.is.And_And
@@ -26,13 +25,6 @@ import Lemma.Nat.EqCast_0'0
 open Bool Finset Real Nat Int
 
 
-/--
-Given a natural number `n > 1` and a sequence `x` of real numbers indexed by natural numbers, this lemma establishes an inequality involving sums of roots under the following conditions:
-1. Each element `x i` for `i` in the range `[0, n-1]` is at least 1.
-2. The first element `x 0` is strictly greater than 1.
-3. The average of the first `n` elements of `x` equals the `n`-th element `x n`.
-Under these conditions, the sum of each `x i` raised to the power `1/(i+2)` for `i` from 0 to `n-1` is strictly less than `n` times the square root of `x n`.
--/
 @[main]
 private lemma main
   {n : ℕ}
@@ -96,8 +88,7 @@ private lemma main
     rw [SubNatNat.eq.Sub] at h_Eq_Sum
     rw [CoeSub.eq.SubCoeS] at h_Eq_Sum
     simp only [Add_Sub.eq.SubAdd] at h_Eq_Sum
-    norm_cast
-    norm_cast at h_Eq_Sum
+    norm_cast at ⊢ h_Eq_Sum
     rw [h_Eq_Sum]
     have h_Eq_Sum_1 := Sum.of.All_Eq h_All_Eq
     have h_Eq_Sum := Sum.eq.Add_Sum.of.Gt_0 (x := x) (by linarith [h₀])

@@ -1,25 +1,25 @@
-import Lemma.Hyperreal.Infinite.of.InfinitesimalDiv.NotInfinitesimal
-import Lemma.Hyperreal.NotInfiniteDiv_Add_Square.of.StDiv.eq.One
-import Lemma.Hyperreal.Gt_0.of.GtSt_0
-import Lemma.Rat.Div.gt.Zero.is.Mul.gt.Zero
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
+import Lemma.Hyperreal.EqSt_0.of.Infinite
+import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalPow
+import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.InfinitesimalDivSquare
 import Lemma.Hyperreal.InfinitesimalAdd.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
-import Lemma.Hyperreal.InfinitesimalPow.of.Infinitesimal
-import Lemma.Hyperreal.InfinitesimalSub.is.InfinitesimalSub
+import Lemma.Hyperreal.InfinitesimalSub
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
-import Lemma.Hyperreal.Ne_0.of.Infinitesimal
+import Lemma.Hyperreal.NotInfiniteDiv_Add_Square.of.StDiv.eq.One
 import Lemma.Hyperreal.NotInfinitesimalAdd.of.Infinitesimal.Ne_0
 import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.Ne_0
 import Lemma.Hyperreal.Setoid.is.OrAndS
-import Lemma.Hyperreal.StDiv.eq.InvStInv
+import Lemma.Hyperreal.StDiv.eq.One.is.InfinitesimalDivSquareSub.of.NotInfinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.StDiv_Add_Square.eq.One.of.StDiv.eq.One
+import Lemma.Int.SquareSub
 import Lemma.Nat.Add
+import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Rat.DivSquareSub.eq.Sub1DivAddS
-import Lemma.Rat.Div_AddS1.eq.Add1DivSquareSub.of.Mul.gt.Zero
 import sympy.sets.fancyset
-open Hyperreal Nat Rat
+open Hyperreal Int Nat Rat
 
 
 @[main, comm, mp, mpr]
@@ -59,19 +59,8 @@ private lemma main
         have := NotInfinitesimalSub.of.Infinitesimal.Ne_0 h_ab_div (by simp) (r := 1)
         contradiction
       else
-        have h_ab := EqSt.of.InfinitesimalSub h_ab
-        have h_ba := StDiv.eq.InvStInv (a := b) (b := a)
-        rw [h_ab] at h_ba
-        simp at h_ba
-        have h_a := Ne_0.of.Infinitesimal h_a
-        have h_b := Ne_0.of.Infinitesimal h_b
-        rw [DivSquareSub.eq.Sub1DivAddS]
-        apply InfinitesimalSub.of.InfinitesimalSub
-        apply InfinitesimalSub.of.EqSt.NotInfinite
-        ·
-          apply NotInfiniteDiv_Add_Square.of.StDiv.eq.One h_ab
-        ·
-          apply StDiv_Add_Square.eq.One.of.StDiv.eq.One h_ab
+        have h := EqSt.of.InfinitesimalSub h_ab
+        apply InfinitesimalDivSquareSub.of.StDiv.eq.One.NotInfinitesimal.NotInfinitesimal h_a h_b h
   ·
     intro h
     if h_a : a.Infinitesimal then
@@ -79,21 +68,22 @@ private lemma main
       if h_b : b.Infinitesimal then
         simp [h_b]
       else
-        simp [h_b]
-        have : NeZero (1 + a ^ 2 + b ^ 2) := ⟨by nlinarith⟩
-        have := Infinitesimal.of.InfinitesimalDiv.NotInfinite (by sorry) h
-        -- contradiction
-        sorry
+        have := Infinitesimal.of.Infinitesimal.InfinitesimalDivSquare h h_a
+        contradiction
     else
       simp [h_a]
       if h_b : b.Infinitesimal then
-        simp [h_b]
-        -- contradiction
-        sorry
+        rw [SquareSub.comm] at h
+        rw [AddAdd.comm] at h
+        have := Infinitesimal.of.Infinitesimal.InfinitesimalDivSquare h h_b
+        contradiction
       else
         simp [h_b]
-        sorry
+        have h_st_ab := StDiv.eq.One.of.InfinitesimalDivSquareSub.NotInfinitesimal.NotInfinitesimal h_a h_b h
+        apply InfinitesimalSub.of.EqSt.NotInfinite _ h_st_ab
+        apply NotInfinite.of.NeSt_0
+        linarith
 
 
 -- created on 2025-12-09
--- updated on 2025-12-11
+-- updated on 2025-12-20

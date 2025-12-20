@@ -3,7 +3,7 @@ import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
 open Hyperreal
 
 
-@[main]
+@[main, mt]
 private lemma main
   {x : ℝ*}
 -- given

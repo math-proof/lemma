@@ -43,12 +43,22 @@ if ($_POST) {
 							$path = module_to_lean($module);
 							if (!file_exists($path)) {
 								# mt
-								$tokens[1] = Not($tokens[1]);
-								$tokens[3] = Not($tokens[3]);
-								$module = implode('.', $tokens);
-								$path = module_to_lean($module);
-								if (!file_exists($path))
+								$first = $segment[0];
+								for ($i = 2; $i < count($segment); $i++) {
+									# try mt $i
+									$segment_ = [...$segment];
+									$segment_[0] = Not($segment_[$i]);
+									$segment_[$i] = Not($first);
+									$path = module_to_lean($segment_, $section);
+									if (file_exists($path)) {
+										$hit = true;
+										$segment = $segment_;
+										break;
+									}
+								}
+								if (! $hit)
 									return;
+								$module = tokens_to_module($segment, $section);
 							}
 						}
 					}
@@ -72,11 +82,17 @@ if ($_POST) {
 								$module = implode('.', array_merge([$section], Not($second), ['of'], Not($first)));
 								$path = module_to_lean($module);
 								if (!file_exists($path)) {
-									# mp.mt/mpr.mt
-									$module = implode('.', array_merge([$section], Not($second), ['is'], Not($first)));
+									# mp.mt
+									$module = implode('.', array_merge([$section], Not($first), ['is'], Not($second)));
 									$path = module_to_lean($module);
-									if (!file_exists($path))
-										return;
+									if (!file_exists($path)) {
+										// mpr.mt
+										$module = implode('.', array_merge([$section], Not($second), ['is'], Not($first)));
+										$path = module_to_lean($module);
+										if (!file_exists($path)) {
+											return;
+										}
+									}
 								}
 							}
 						}
@@ -359,9 +375,13 @@ EOT;
 					return true;
 				if (count($tokens) == 3) {
 					$tokens_ = [...$tokens];
-					# try mp.mt/mpr.mt
+					# try mpr.mt
 					$tokens_[0] = Not($tokens_[0]);
 					$tokens_[2] = Not($tokens_[2]);
+					if (try_pattern($tokens_, $lemmaCode))
+						return true;
+					// try mp.mt
+					[$tokens_[0], $tokens_[2]] = [$tokens_[2], $tokens_[0]]; // swap
 					if (try_pattern($tokens_, $lemmaCode))
 						return true;
 				}
@@ -385,8 +405,10 @@ EOT;
 					return true;
 			}
 			# try mt:
-			if (count($tokens) == 3) {
-				if (try_pattern([Not($tokens[2]), 'of', Not($tokens[0])], $lemmaCode))
+			for ($i = 2 ; $i < count($tokens); $i++) {
+				$tokens_copy = array_slice($tokens, 2);
+				$tokens_copy[$i - 2] = Not($tokens[0]);
+				if (try_pattern([Not($tokens[$i]), 'of', ...$tokens_copy], $lemmaCode))
 					return true;
 			}
 			break;

@@ -2322,6 +2322,20 @@ class LeanProperty extends LeanBinary
         if ($other instanceof LeanProperty)
             return $this->lhs->equals($other->lhs) && $this->rhs->equals($other->rhs);
     }
+
+    public function isProp($vars)
+    {
+        $rhs = $this->rhs;
+        if ($rhs instanceof LeanToken) {
+            switch ($rhs->text) {
+                case 'Infinite':
+                case 'Infinitesimal':
+                case 'InfinitePos':
+                case 'InfiniteNeg':
+                    return true;
+            }
+        }
+    }
 }
 
 class LeanColon extends LeanBinary

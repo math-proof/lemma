@@ -1,4 +1,4 @@
-import Lemma.Int.Eq_0.of.EqSquare_0
+import Lemma.Int.Eq_0.is.EqSquare_0
 import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Int.AddSub.eq.SubAdd
 import Lemma.Int.Sub.eq.Zero.is.Eq

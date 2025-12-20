@@ -1,4 +1,5 @@
-import Lemma.Hyperreal.InfinitesimalPow.of.Infinitesimal
+import sympy.core.power
+import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalPow
 open Hyperreal
 
 
@@ -8,7 +9,7 @@ private lemma main
 -- given
   (h : Infinitesimal x) :
 -- imply
-  Infinitesimal x² := 
+  Infinitesimal x² :=
 -- proof
   InfinitesimalPow.of.Infinitesimal h
 

@@ -1,4 +1,4 @@
-import Lemma.Hyperreal.InfinitesimalSub.is.InfinitesimalSub
+import Lemma.Hyperreal.InfinitesimalSub
 import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.NotInfinitesimal
 open Hyperreal
 
@@ -12,9 +12,10 @@ private lemma main
 -- imply
   ¬Infinitesimal (a - b) := by
 -- proof
-  rw [InfinitesimalSub.is.InfinitesimalSub]
+  rw [InfinitesimalSub.comm]
   apply NotInfinitesimalSub.of.Infinitesimal.NotInfinitesimal
   repeat assumption
 
 
 -- created on 2025-12-10
+-- updated on 2025-12-20

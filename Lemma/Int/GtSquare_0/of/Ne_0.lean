@@ -1,5 +1,5 @@
 import Lemma.Int.GeSquare_0
-import Lemma.Int.NeSquare_0.of.Ne_0
+import Lemma.Int.Eq_0.is.EqSquare_0
 import Lemma.Nat.Gt.is.Ge.Ne
 open Int Nat
 
@@ -14,7 +14,7 @@ private lemma main
   a² > 0 :=
 -- proof
   Gt.of.Ge.Ne
-    (GeSquare_0 (a := a))
+    (GeSquare_0 a)
     (NeSquare_0.of.Ne_0 h)
 
 

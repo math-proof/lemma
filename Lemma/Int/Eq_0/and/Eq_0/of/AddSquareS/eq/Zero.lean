@@ -1,6 +1,6 @@
 import Lemma.Int.GeSquare_0
 import Lemma.Int.Eq_0.and.Eq_0.of.Ge_0.Ge_0.Add.eq.Zero
-import Lemma.Int.Eq_0.of.EqSquare_0
+import Lemma.Int.Eq_0.is.EqSquare_0
 open Int
 
 

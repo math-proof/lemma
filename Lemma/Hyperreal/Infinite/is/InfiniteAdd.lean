@@ -17,6 +17,16 @@ private lemma mp
   apply NotInfinite
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.Infinite.is.InfiniteAdd |
+| comm | Hyperreal.InfiniteAdd.is.Infinite |
+| mp   | Hyperreal.InfiniteAdd.of.Infinite |
+| mpr  | Hyperreal.Infinite.of.InfiniteAdd |
+| mp.mt | Hyperreal.NotInfinite.of.NotInfiniteAdd |
+| mpr.mt | Hyperreal.NotInfiniteAdd.NotInfinite |
+-/
 @[main, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main
 -- given
@@ -25,7 +35,7 @@ private lemma main
 -- imply
   Infinite x ↔ Infinite (x + r) := by
 -- proof
-  constructor <;> 
+  constructor <;>
     intro h
   ·
     apply mp h

@@ -5,6 +5,7 @@ import sympy.Basic
 @[main]
 private lemma main
   [Semiring α] [LinearOrder α] [ExistsAddOfLE α] [PosMulMono α] [AddLeftMono α]
+-- given
   (a : α) :
 -- imply
   a² ≥ 0 :=
