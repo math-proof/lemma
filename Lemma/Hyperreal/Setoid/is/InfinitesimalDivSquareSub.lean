@@ -1,22 +1,20 @@
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalPow
-import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.InfinitesimalDivSquare
+import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.InfinitesimalDivSquareSub
 import Lemma.Hyperreal.InfinitesimalAdd.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.InfinitesimalSub
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
-import Lemma.Hyperreal.NotInfiniteDiv_Add_Square.of.StDiv.eq.One
+import Lemma.Hyperreal.NotInfiniteDiv_AddAddSquareS.of.StDiv.eq.One
 import Lemma.Hyperreal.NotInfinitesimalAdd.of.Infinitesimal.Ne_0
 import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.Ne_0
 import Lemma.Hyperreal.Setoid.is.OrAndS
 import Lemma.Hyperreal.StDiv.eq.One.of.InfinitesimalDivSquareSub.NotInfinitesimal.NotInfinitesimal
-import Lemma.Hyperreal.StDiv_Add_Square.eq.One.of.StDiv.eq.One
+import Lemma.Hyperreal.StDiv_AddAddSquareS.eq.One.of.StDiv.eq.One
 import Lemma.Int.SquareSub
-import Lemma.Nat.Add
 import Lemma.Nat.AddAdd
-import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Rat.DivSquareSub.eq.Sub1DivAddS
 open Hyperreal Int Nat Rat
 
@@ -26,7 +24,7 @@ private lemma main
 -- given
   (a b : ℝ*) :
 -- imply
-  a ≈ b ↔ Infinitesimal ((a - b)² / (1 + a² + b²)) := by
+  a ≈ b ↔ Infinitesimal ((a - b)² / (a² + b² + 1)) := by
 -- proof
   rw [Setoid.is.OrAndS]
   constructor <;>
@@ -40,8 +38,6 @@ private lemma main
         apply InfinitesimalPow.of.Infinitesimal
         apply InfinitesimalSub.of.Infinitesimal.Infinitesimal h_a h_b
       ·
-        rw [AddAdd.eq.Add_Add]
-        rw [Add.comm]
         apply NotInfinitesimalAdd.of.Infinitesimal.Ne_0
         ·
           apply InfinitesimalAdd.of.Infinitesimal.Infinitesimal
@@ -60,23 +56,27 @@ private lemma main
         rw [InfinitesimalSub.comm]
         apply InfinitesimalSub.of.EqSt.NotInfinite
         ·
-          apply NotInfiniteDiv_Add_Square.of.StDiv.eq.One h
+          apply NotInfiniteDiv_AddAddSquareS.of.StDiv.eq.One h
         ·
-          apply StDiv_Add_Square.eq.One.of.StDiv.eq.One h
+          apply StDiv_AddAddSquareS.eq.One.of.StDiv.eq.One h
   ·
     if h_a : a.Infinitesimal then
       simp [h_a]
       if h_b : b.Infinitesimal then
         simp [h_b]
       else
-        have := Infinitesimal.of.Infinitesimal.InfinitesimalDivSquare h h_a
+        have := Infinitesimal.of.Infinitesimal.InfinitesimalDivSquareSub h h_a
         contradiction
     else
       simp [h_a]
       if h_b : b.Infinitesimal then
         rw [SquareSub.comm] at h
-        rw [AddAdd.comm] at h
-        have := Infinitesimal.of.Infinitesimal.InfinitesimalDivSquare h h_b
+        conv at h =>
+          arg 1
+          arg 2
+          arg 1
+          rw [Add.comm]
+        have := Infinitesimal.of.Infinitesimal.InfinitesimalDivSquareSub h h_b
         contradiction
       else
         simp [h_b]

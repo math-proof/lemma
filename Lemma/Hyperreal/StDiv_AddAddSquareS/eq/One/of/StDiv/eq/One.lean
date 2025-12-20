@@ -23,7 +23,7 @@ import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Ne_0.of.Eq
 import Lemma.Rat.Div.eq.One.of.Ne_0
-import Lemma.Rat.Div_Add_Square.eq.Div_AddInvMul.of.Ne_0.Ne_0
+import Lemma.Rat.Div_AddAddSquareS.eq.Div_Add_AddDivS.of.Ne_0.Ne_0
 open Hyperreal Nat Rat
 
 
@@ -33,7 +33,7 @@ private lemma main
 -- given
   (h : st (a / b) = 1) :
 -- imply
-  ((1 + 2 * a * b) / (1 + a² + b²)).st = 1 := by
+  ((2 * a * b + 1) / (a² + b² + 1)).st = 1 := by
 -- proof
   if h_a : a.Infinitesimal then
     have h_b := Infinitesimal.of.Infinitesimal.StDiv.ne.Zero.left (by linarith) h_a (b := b)
@@ -50,28 +50,28 @@ private lemma main
     have h_ab' := NotInfiniteMul.of.NotInfinite.NotInfinite h_a' h_b'
     have h_2ab := StMul.eq.Mul_St.of.NotInfinite 2 h_ab'
     have h_2ab' := NotInfiniteMul.of.NotInfinite.left 2 h_ab'
-    have h_1_2ab := StAdd.eq.Add_St.of.NotInfinite 1 h_2ab'
-    rw [h_2ab, Mul_Mul.eq.MulMul, h_ab] at h_1_2ab
-    simp at h_1_2ab
+    have h_add_2ab_1 := StAdd.eq.AddSt.of.NotInfinite h_2ab' 1
+    rw [h_2ab, Mul_Mul.eq.MulMul, h_ab] at h_add_2ab_1
+    simp at h_add_2ab_1
     have h_a₂' := NotInfinitePow.of.NotInfinite h_a' (n := 2)
     have h_b₂' := NotInfinitePow.of.NotInfinite h_b' (n := 2)
     have h_ab' := StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_a₂' h_b₂'
     simp [h_a₂, h_b₂] at h_ab'
     have h_a₂b₂' := NotInfiniteAdd.of.NotInfinite.NotInfinite h_a₂' h_b₂'
-    have h_1_a₂b₂ := StAdd.eq.Add_St.of.NotInfinite 1 h_a₂b₂'
-    simp [h_ab', Add_Add.eq.AddAdd] at h_1_a₂b₂
-    have h_1_2ab' := Ne_0.of.Eq h_1_2ab
-    have h_1_2ab' := NotInfinite.of.NeSt_0 h_1_2ab'
-    have h_1_a₂b₂' := Ne_0.of.Eq h_1_a₂b₂
-    have h_1_a₂b₂' := NotInfinitesimal.of.NeSt_0 h_1_a₂b₂'
-    have h_div := StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal h_1_2ab' h_1_a₂b₂'
-    simp [h_1_a₂b₂, h_1_2ab] at h_div
+    have h_add_a₂b₂_1 := StAdd.eq.AddSt.of.NotInfinite h_a₂b₂' 1
+    simp [h_ab'] at h_add_a₂b₂_1
+    have h_st_add_2ab_1 := Ne_0.of.Eq h_add_2ab_1
+    have h_st_add_2ab_1 := NotInfinite.of.NeSt_0 h_st_add_2ab_1
+    have h_st_add_a₂b₂_1 := Ne_0.of.Eq h_add_a₂b₂_1
+    have h_st_add_a₂b₂_1 := NotInfinitesimal.of.NeSt_0 h_st_add_a₂b₂_1
+    have h_div := StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal h_st_add_2ab_1 h_st_add_a₂b₂_1
+    simp [h_add_a₂b₂_1, h_add_2ab_1] at h_div
     assumption
   else
     have h_nonneg_st_inv_ab := GeStInv_0.of.NotInfinitesimal.StDiv.eq.One h h_a
     have h_ne_inf_inv_ab := NotInfiniteInvMul.of.NotInfinitesimal.StDiv.eq.One h h_a
     let ⟨h_a_ne_0, h_b_ne_0⟩ := Ne_0.Ne_0.of.NotInfinitesimal.StDiv.eq.One h h_a
-    rw [Div_Add_Square.eq.Div_AddInvMul.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0]
+    rw [Div_AddAddSquareS.eq.Div_Add_AddDivS.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0]
     have h_2_ab_st := StAdd.eq.AddSt.of.NotInfinite h_ne_inf_inv_ab 2
     have h_div_ba := StDiv.eq.Inv.of.EqSt h
     simp at h_div_ba

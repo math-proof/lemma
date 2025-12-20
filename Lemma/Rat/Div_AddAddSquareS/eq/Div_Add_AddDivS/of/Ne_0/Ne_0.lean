@@ -1,4 +1,6 @@
+import Lemma.Nat.Add
 import Lemma.Nat.AddAdd.eq.Add_Add
+import Lemma.Nat.Add_Add
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Nat.MulMul.eq.Mul_Mul
@@ -7,7 +9,6 @@ import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
 import Lemma.Rat.Div1.eq.Inv
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivMulS.eq.Div.of.Ne_0
-import sympy.core.power
 open Nat Rat
 
 
@@ -19,7 +20,7 @@ private lemma main
   (h_a : a ≠ 0)
   (h_b : b ≠ 0) :
 -- imply
-  (1 + 2 * a * b) / (1 + a² + b²) = ((a * b)⁻¹ + 2) / ((a * b)⁻¹ + (a / b + b / a)) := by
+  (2 * a * b + 1) / (a² + b² + 1) = ((a * b)⁻¹ + 2) / ((a * b)⁻¹ + (a / b + b / a)) := by
 -- proof
   have h_ab := Mul.ne.Zero.of.Ne_0.Ne_0 h_a h_b
   rw [Div.eq.DivDivS.of.Ne_0 h_ab]
@@ -34,6 +35,7 @@ private lemma main
   rw [AddAdd.eq.Add_Add]
   rw [MulMul.eq.Mul_Mul]
   rw [EqDivMul.of.Ne_0 h_ab]
+  ring
 
 
 -- created on 2025-12-20

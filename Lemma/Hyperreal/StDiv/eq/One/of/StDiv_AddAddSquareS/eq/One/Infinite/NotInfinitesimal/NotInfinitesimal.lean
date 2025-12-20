@@ -14,7 +14,7 @@ import Lemma.Hyperreal.StAdd.eq.AddStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal
 import Lemma.Hyperreal.StDiv.eq.InvStInv
 import Lemma.Nat.Add
-import Lemma.Rat.Div_Add_Square.eq.Div_AddInvMul.of.Ne_0.Ne_0
+import Lemma.Rat.Div_AddAddSquareS.eq.Div_Add_AddDivS.of.Ne_0.Ne_0
 import Lemma.Rat.EqDiv.is.Eq_Div.of.Ne_0
 import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
 open Hyperreal Nat Rat Real
@@ -27,13 +27,13 @@ private lemma main
   (h_a : ¬Infinitesimal a)
   (h_b : ¬Infinitesimal b)
   (h_a_inf : Infinite a)
-  (h : ((1 + 2 * a * b) / (1 + a² + b²)).st = 1) :
+  (h : ((2 * a * b + 1) / (a² + b² + 1)).st = 1) :
 -- imply
   (a / b).st = 1 := by
 -- proof
   have h_a_ne_0 := Ne_0.of.NotInfinitesimal h_a
   have h_b_ne_0 := Ne_0.of.NotInfinitesimal h_b
-  rw [Div_Add_Square.eq.Div_AddInvMul.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0] at h
+  rw [Div_AddAddSquareS.eq.Div_Add_AddDivS.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0] at h
   have h_ab := InfiniteMul.of.Infinite.NotInfinitesimal h_a_inf h_b
   have h_ab := InfinitesimalInv.of.Infinite h_ab
   have h_eq_add_st : st ((a * b)⁻¹ + 2) = 2 := by

@@ -13,12 +13,9 @@ import Lemma.Int.Sub.gt.Zero.is.Lt
 open Set Nat Int
 
 
-def f (x : ℝ) := 3 * x - 4 * x ^ 3
+def f (x : ℝ) := 3 * x - 4 * x³
 
 
-/--
-This lemma establishes that the function \( f(x) = 3x - 4x^3 \) is strictly increasing on the interval \([0, \frac{1}{2})\). Consequently, for any \( x_0, x_1 \) within this interval, if \( f(x_0) < f(x_1) \), then it must follow that \( x_0 < x_1 \). The proof leverages the positivity of the derivative \( f'(x) = 3 - 12x^2 \) over \([0, \frac{1}{2})\) to confirm the function's monotonicity.
--/
 @[main]
 private lemma main
   {x₀ x₁ : ℝ}
@@ -29,11 +26,8 @@ private lemma main
 -- imply
   x₀ < x₁ := by
 -- proof
-  -- show that f x is strictly increasing at interval (0, 1 / 2) since y' = 3 - 12 * x² = 3 * (1 - 2 * x) * (1 + 2 * x) > 0 for x ∈ [0, 1/2), thus proving the main lemma
-  -- suppose f is defined as:
-  -- def f (x : ℝ) := 3 * x  - 4 * x ^ 3
-  have h_f0 : f x₀ = 3 * x₀ - 4 * x₀ ^ 3 := rfl
-  have h_f1 : f x₁ = 3 * x₁ - 4 * x₁ ^ 3 := rfl
+  have h_f0 : f x₀ = 3 * x₀ - 4 * x₀³ := rfl
+  have h_f1 : f x₁ = 3 * x₁ - 4 * x₁³ := rfl
   rw [h_f0, h_f1] at h₂
   have := Sub.lt.Zero.of.Lt h₂
   rw [Sub_Sub.eq.AddSub] at this

@@ -1,3 +1,4 @@
+import sympy.core.power
 import sympy.Basic
 
 
@@ -8,7 +9,7 @@ private lemma main
   (hx : x ≥ 0)
   (hy : y ≥ 0) :
 -- imply
-  x ≤ √y ↔ x ^ 2 ≤ y :=
+  x ≤ √y ↔ x² ≤ y :=
 -- proof
   Real.le_sqrt hx hy
 

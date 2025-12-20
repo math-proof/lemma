@@ -13,7 +13,7 @@ import Lemma.Nat.LtMulS.of.Gt_0.Lt
 open Set Nat Int
 
 
-def f (x : ℝ) := 3 * x  - 4 * x ^ 3
+def f (x : ℝ) := 3 * x  - 4 * x³
 
 
 @[main]
@@ -26,9 +26,8 @@ private lemma main
 -- imply
   f x₀ < f x₁ := by
 -- proof
-  -- show that f x is strictly increasing at interval (0, 1 / 2) since y' = 3 - 12 * x² = 3 * (1 - 2 * x) * (1 + 2 * x) > 0 for x ∈ [0, 1/2), thus proving the main lemma
-  have h_f0 : f x₀ = 3 * x₀ - 4 * x₀ ^ 3 := rfl
-  have h_f1 : f x₁ = 3 * x₁ - 4 * x₁ ^ 3 := rfl
+  have h_f0 : f x₀ = 3 * x₀ - 4 * x₀³ := rfl
+  have h_f1 : f x₁ = 3 * x₁ - 4 * x₁³ := rfl
   rw [h_f0, h_f1]
   apply Lt.of.Sub.lt.Zero
   rw [Sub_Sub.eq.AddSub]

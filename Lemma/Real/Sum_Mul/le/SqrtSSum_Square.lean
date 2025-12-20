@@ -1,3 +1,4 @@
+import sympy.core.power
 import sympy.Basic
 
 
@@ -7,7 +8,7 @@ private lemma main
   (s : Finset ι)
   (f g : ι → ℝ) :
 -- imply
-  ∑ i ∈ s, f i * g i ≤ √(∑ i ∈ s, f i ^ 2) * √(∑ i ∈ s, g i ^ 2) :=
+  ∑ i ∈ s, f i * g i ≤ √(∑ i ∈ s, (f i)²) * √(∑ i ∈ s, (g i)²) :=
 -- proof
   Real.sum_mul_le_sqrt_mul_sqrt s f g
 

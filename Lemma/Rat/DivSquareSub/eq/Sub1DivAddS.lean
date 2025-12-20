@@ -13,14 +13,12 @@ private lemma main
 -- given
   (a b : α) :
 -- imply
-  (a - b)² / (1 + a² + b²) = 1 - (1 + 2 * a * b) / (1 + a² + b²) := by
+  (a - b)² / (a² + b² + 1) = 1 - (2 * a * b + 1) / (a² + b² + 1) := by
 -- proof
   rw [Sub1Div.eq.DivSub.of.Ne_0]
   ·
     apply EqDivS.of.Eq
-    rw [AddAdd.eq.Add_Add]
-    rw [SubAddS.eq.Sub.left]
-    rw [SquareSub.eq.SubAddSquareS_MulMul2]
+    simp [SquareSub.eq.SubAddSquareS_MulMul2]
   ·
     have h_a := GeSquare_0 a
     have h_b := GeSquare_0 b
