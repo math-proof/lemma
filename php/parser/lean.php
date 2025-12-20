@@ -3079,8 +3079,8 @@ class LeanDiv extends LeanArithmetic
 
     public function latexFormat()
     {
-        $lhs = $this->lhs;
-        if ($lhs instanceof LeanDiv) {
+        [$lhs, $rhs] = $this->args;
+        if ($lhs instanceof LeanDiv || $rhs instanceof LeanParenthesis && $rhs->arg instanceof LeanDiv) {
             return '\left. {%s} \right/ {%s}';
         } else {
             return '\frac {%s} {%s}';

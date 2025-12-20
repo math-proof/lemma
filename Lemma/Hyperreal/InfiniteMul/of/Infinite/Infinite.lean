@@ -1,8 +1,6 @@
-import Lemma.Nat.Square.eq.Mul
-import Lemma.Nat.LtMulS.of.Lt.Lt.Gt_0.Gt_0
-import Lemma.Real.GtSqrt_0.of.Gt_0
-import Lemma.Hyperreal.Infinite.is.All_GtAbs
-open Hyperreal Real Nat
+import Lemma.Hyperreal.InfiniteMul.of.Infinite.NotInfinitesimal
+import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
+open Hyperreal
 
 
 @[main]
@@ -14,28 +12,9 @@ private lemma main
 -- imply
   Infinite (a * b) := by
 -- proof
-  apply Infinite.of.All_GtAbs
-  intro ⟨δ, hδ⟩
-  simp
-  have h_a := All_GtAbs.of.Infinite h_a
-  have h_b := All_GtAbs.of.Infinite h_b
-  have hδ_sqrt := GtSqrt_0.of.Gt_0 hδ
-  have h_a := h_a ⟨√δ, hδ_sqrt⟩
-  have h_b := h_b ⟨√δ, hδ_sqrt⟩
-  calc
-    |a| * |b| > √δ * √δ := by
-      apply GtMulS.of.Gt.Gt.Gt_0.Gt_0
-      .
-        apply Gt.of.Gt.Gt h_a
-        simpa
-      repeat simpa
-    _ = _ := by
-      rw [Mul.eq.Square]
-      have := EqSquareSqrt.of.Gt_0 hδ
-      simp at this
-      conv_rhs => rw [← this]
-      rfl
+  apply InfiniteMul.of.Infinite.NotInfinitesimal h_a
+  apply NotInfinitesimal.of.Infinite h_b
 
 
 -- created on 2025-12-16
--- updated on 2025-12-17
+-- updated on 2025-12-20
