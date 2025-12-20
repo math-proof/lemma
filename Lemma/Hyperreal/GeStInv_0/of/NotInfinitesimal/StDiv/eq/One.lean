@@ -3,7 +3,7 @@ import Lemma.Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite
 import Lemma.Hyperreal.StInv.eq.Inv.of.EqSt
-import Lemma.Hyperreal.StInvMul.gt.Zero.of.StDiv.gt.Zero.NotInfinite.NotInfinite.NotInfinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.Lt0StInvMul.of.StDiv.gt.Zero.NotInfinite.NotInfinite.NotInfinitesimal.NotInfinitesimal
 open Hyperreal
 
 
@@ -26,7 +26,7 @@ private lemma main
   else
     have h_b := NotInfinitesimal.of.NotInfinitesimal.StDiv.ne.Zero (by linarith) h_a (b := b)
     have h_b_inf := NotInfinite.of.NotInfinite.StDiv.ne.Zero (by linarith) h_a_inf (b := b)
-    linarith [StInvMul.gt.Zero.of.StDiv.gt.Zero.NotInfinite.NotInfinite.NotInfinitesimal.NotInfinitesimal h_a h_b h_a_inf h_b_inf (by linarith)]
+    linarith [Lt0StInvMul.of.StDiv.gt.Zero.NotInfinite.NotInfinite.NotInfinitesimal.NotInfinitesimal h_a h_b h_a_inf h_b_inf (by linarith)]
 
 
 -- created on 2025-12-18

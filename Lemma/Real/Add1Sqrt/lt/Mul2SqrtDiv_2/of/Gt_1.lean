@@ -1,5 +1,5 @@
 import Lemma.Int.Lt.of.LtSquareS.Ge_0
-import Lemma.Int.Mul.ge.Zero.of.Ge_0.Ge_0
+import Lemma.Int.Le0Mul.of.Ge_0.Ge_0
 import Lemma.Real.GeSqrt_0
 import Lemma.Nat.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Nat.SquareMul.eq.MulSquareS
@@ -53,7 +53,7 @@ private lemma main
       ·
         norm_num
   ·
-    apply Mul.ge.Zero.of.Ge_0.Ge_0
+    apply Le0Mul.of.Ge_0.Ge_0
     ·
       norm_num
     ·

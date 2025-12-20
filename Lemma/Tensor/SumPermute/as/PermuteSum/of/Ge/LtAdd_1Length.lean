@@ -46,7 +46,7 @@ import Lemma.Nat.LtSub.of.Lt
 import Lemma.Nat.Lt_Sub_Sub.of.Ge.Gt
 import Lemma.Nat.ModDivMod_Mul.eq.ModDiv
 import Lemma.Nat.Mul
-import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Ne_0.of.Gt
@@ -257,7 +257,7 @@ private lemma main
                   simp [← h_q'_div]
                   apply EqAddMulDiv
                 ·
-                  apply Mul.gt.Zero.of.Gt_0.Gt_0
+                  apply Lt0Mul.of.Gt_0.Gt_0
                   repeat grind
               ·
                 rw [MulProdS.eq.ProdAppend]

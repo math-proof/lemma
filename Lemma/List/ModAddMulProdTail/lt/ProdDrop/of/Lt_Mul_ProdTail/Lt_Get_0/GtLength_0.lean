@@ -1,7 +1,7 @@
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.GtMul
 import Lemma.Nat.Gt_0.of.Lt
-import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdDrop.gt.Zero.of.GtProd_0
 open List Nat
@@ -21,7 +21,7 @@ private lemma main
   apply LtMod.of.Gt_0
   have h_tail := Gt_0.of.GtMul h_t
   have h_head := Gt_0.of.Lt h_i
-  have h_prod := Mul.gt.Zero.of.Gt_0.Gt_0 h_head h_tail
+  have h_prod := Lt0Mul.of.Gt_0.Gt_0 h_head h_tail
   rw [← Prod.eq.Mul_ProdTail.of.GtLength_0 h_s] at h_prod
   apply ProdDrop.gt.Zero.of.GtProd_0 h_prod
 

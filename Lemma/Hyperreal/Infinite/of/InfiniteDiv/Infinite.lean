@@ -4,6 +4,12 @@ import Lemma.Rat.EqMul_Div.of.Ne_0
 open Hyperreal Rat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.Infinite.of.InfiniteDiv.Infinite |
+| mt | Hyperreal.NotInfiniteDiv.of.NotInfinite.Infinite |
+-/
 @[main, mt]
 private lemma main
   {a b : ℝ*}

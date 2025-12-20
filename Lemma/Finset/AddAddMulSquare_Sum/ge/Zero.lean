@@ -1,4 +1,4 @@
-import Lemma.Finset.Sum_SquareAddMul.ge.Zero
+import Lemma.Finset.Le0Sum_SquareAddMul
 import Lemma.Nat.SquareAdd.eq.AddAddSquareS_MulMul2
 import Lemma.Finset.Sum_Add.eq.AddSumS
 import Lemma.Nat.SquareMul.eq.MulSquareS
@@ -19,7 +19,7 @@ private lemma main
 -- imply
   x² * ∑ i ∈ s, (a i)² + 2 * x * ∑ i ∈ s, a i * b i + ∑ i ∈ s, (b i)² ≥ 0 := by
 -- proof
-  have := Sum_SquareAddMul.ge.Zero (s := s) (x := x) (a := a) (b := b)
+  have := Le0Sum_SquareAddMul (s := s) (x := x) (a := a) (b := b)
   simp [SquareAdd.eq.AddAddSquareS_MulMul2] at this
   rw [Sum_Add.eq.AddSumS] at this
   rw [Sum_Add.eq.AddSumS] at this

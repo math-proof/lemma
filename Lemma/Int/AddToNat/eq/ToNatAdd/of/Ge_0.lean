@@ -1,6 +1,6 @@
 import Lemma.Nat.EqCoeS.is.Eq
 import Lemma.Int.EqToNat.of.Ge_0
-import Lemma.Nat.Add.ge.Zero.of.Ge_0.Ge_0
+import Lemma.Nat.Le0Add.of.Ge_0.Ge_0
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 open Int Nat
 
@@ -20,7 +20,7 @@ private lemma main
     rw [CoeAdd.eq.AddCoeS]
     rwa [EqToNat.of.Ge_0]
   ·
-    apply Add.ge.Zero.of.Ge_0.Ge_0 h
+    apply Le0Add.of.Ge_0.Ge_0 h
     simp
 
 

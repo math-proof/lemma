@@ -1,4 +1,4 @@
-import Lemma.Rat.Div.ge.Zero.of.Mul.ge.Zero
+import Lemma.Rat.Le0Div.of.Le0Mul
 import Lemma.Int.MulFMod.ge.Zero
 open Int Rat
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   n.fmod d / (d : α) ≥ 0 := by
 -- proof
-  apply Div.ge.Zero.of.Mul.ge.Zero
+  apply Le0Div.of.Le0Mul
   norm_cast
   apply MulFMod.ge.Zero
 

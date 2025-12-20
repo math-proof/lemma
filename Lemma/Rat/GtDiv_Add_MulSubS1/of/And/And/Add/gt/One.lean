@@ -2,7 +2,7 @@ import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Nat.LtMulS.of.Gt_0.Lt
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Rat.Div.eq.One.of.Gt_0
-import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Nat.Add.gt.Zero.of.Gt_0.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Lt
 import Lemma.Int.LtSub.is.Lt_Add
@@ -39,8 +39,8 @@ private lemma main
   have h_Gt := Gt_Add.of.GtSub h
   rw [Add.comm] at h_Gt
   have h_Add_gt_0 := Add.gt.Zero.of.Gt_0.Gt_0
-    (Mul.gt.Zero.of.Gt_0.Gt_0 hₚ.left hₜ.left)
-    (Mul.gt.Zero.of.Gt_0.Gt_0
+    (Lt0Mul.of.Gt_0.Gt_0 hₚ.left hₜ.left)
+    (Lt0Mul.of.Gt_0.Gt_0
       h_Sub_gt_0
       (Sub.gt.Zero.of.Lt hₜ.right)
     )

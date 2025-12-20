@@ -1,5 +1,5 @@
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
-import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 open List Nat
 
 
@@ -16,7 +16,7 @@ private lemma main
   s.prod > 0 := by
 -- proof
   rw [Prod.eq.Mul_ProdTail.of.GtLength_0 h_s]
-  apply Mul.gt.Zero.of.Gt_0.Gt_0
+  apply Lt0Mul.of.Gt_0.Gt_0
   repeat assumption
 
 

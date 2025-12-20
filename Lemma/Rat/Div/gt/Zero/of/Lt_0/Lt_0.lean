@@ -1,4 +1,4 @@
-import Lemma.Int.Mul.gt.Zero.of.Lt_0.Lt_0
+import Lemma.Int.Lt0Mul.of.Lt_0.Lt_0
 import Lemma.Rat.Div.eq.Mul_Inv
 import Lemma.Rat.LtInv_0.is.Lt_0
 open Rat Int
@@ -15,7 +15,7 @@ private lemma main
   x / y > 0 := by
 -- proof
   have h₁ := LtInv_0.of.Lt_0 h₁
-  have := Mul.gt.Zero.of.Lt_0.Lt_0 h₀ h₁
+  have := Lt0Mul.of.Lt_0.Lt_0 h₀ h₁
   rwa [Mul_Inv.eq.Div] at this
 
 

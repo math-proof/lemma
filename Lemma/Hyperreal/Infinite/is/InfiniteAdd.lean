@@ -25,7 +25,7 @@ private lemma mp
 | mp   | Hyperreal.InfiniteAdd.of.Infinite |
 | mpr  | Hyperreal.Infinite.of.InfiniteAdd |
 | mp.mt | Hyperreal.NotInfinite.of.NotInfiniteAdd |
-| mpr.mt | Hyperreal.NotInfiniteAdd.NotInfinite |
+| mpr.mt | Hyperreal.NotInfiniteAdd.of.NotInfinite |
 -/
 @[main, comm, mp, mpr, mp.mt, mpr.mt]
 private lemma main

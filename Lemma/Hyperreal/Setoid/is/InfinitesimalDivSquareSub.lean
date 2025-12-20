@@ -18,7 +18,6 @@ import Lemma.Nat.Add
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Rat.DivSquareSub.eq.Sub1DivAddS
-import sympy.sets.fancyset
 open Hyperreal Int Nat Rat
 
 
@@ -30,8 +29,8 @@ private lemma main
   a ≈ b ↔ Infinitesimal ((a - b)² / (1 + a² + b²)) := by
 -- proof
   rw [Setoid.is.OrAndS]
-  constructor
-  intro h
+  constructor <;>
+    intro h
   ·
     obtain h | h := h
     ·
@@ -46,10 +45,7 @@ private lemma main
         apply NotInfinitesimalAdd.of.Infinitesimal.Ne_0
         ·
           apply InfinitesimalAdd.of.Infinitesimal.Infinitesimal
-          ·
-            exact InfinitesimalPow.of.Infinitesimal h_a
-          ·
-            exact InfinitesimalPow.of.Infinitesimal h_b
+          repeat exact InfinitesimalPow.of.Infinitesimal (by assumption)
         ·
           simp
     ·
@@ -68,7 +64,6 @@ private lemma main
         ·
           apply StDiv_Add_Square.eq.One.of.StDiv.eq.One h
   ·
-    intro h
     if h_a : a.Infinitesimal then
       simp [h_a]
       if h_b : b.Infinitesimal then

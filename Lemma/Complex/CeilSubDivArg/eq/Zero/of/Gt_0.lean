@@ -9,7 +9,7 @@ import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
 import Lemma.Real.Pi.gt.Zero
-import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Real.Pi.ne.Zero
 import Lemma.Set.EqCeil_0.of.In_Ioc
 import Lemma.Set.In.of.In.Subset
@@ -33,7 +33,7 @@ private lemma main
   have h_mem := Arg.in.IocNegPiPi z
   have h_mem := InDiv.of.In_Ioc.Gt_0 h_mem (by apply GtCoe_0.of.Gt_0 h : (n : ℝ) > 0)
   have h_mem := InSub.of.In_Ioc h_mem Real.pi
-  have h_Gt_0 := Mul.gt.Zero.of.Gt_0.Gt_0 (by norm_num : (2 : ℝ) > 0) Pi.gt.Zero
+  have h_Gt_0 := Lt0Mul.of.Gt_0.Gt_0 (by norm_num : (2 : ℝ) > 0) Pi.gt.Zero
   have h_mem := InDiv.of.In_Ioc.Gt_0 h_mem h_Gt_0
   simp only [DivSub.eq.SubDivS] at h_mem
   simp only [DivDiv.eq.Div_Mul] at h_mem

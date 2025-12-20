@@ -53,12 +53,21 @@ if ($_POST) {
 									if (file_exists($path)) {
 										$hit = true;
 										$segment = $segment_;
+										$module = tokens_to_module($segment, $section);
 										break;
 									}
 								}
-								if (! $hit)
-									return;
-								$module = tokens_to_module($segment, $section);
+								if (! $hit) {
+									$segment[1] = ['is'];
+									# try mpr.mt
+									array_insert($segment, 3, ['of']);
+									[$segment[0], $segment[2]] = [Not($segment[2]), Not($segment[0])];
+									$module = tokens_to_module($segment, $section);
+									$path = module_to_lean($segment, $section);
+									if (!file_exists($path)) {
+										return;
+									}
+								}
 							}
 						}
 					}

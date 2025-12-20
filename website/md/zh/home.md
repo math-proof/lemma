@@ -3,7 +3,7 @@
 
 [lemma.cn](../index.php)是一个算法形式化定理库网站，最先用[Python](../../py/website/index.php)开发，主要依靠开源符号计算项目 
 [sympy](https://github.com/sympy/sympy)进行交互式探索改造, 其函数命名主要参考数学软件语言
-[Mathematica](https://reference.wolfram.com/language/index.html.en?source=footer)。后为追求更严密的逻辑完备性，由基于依赖类型理论（DTT）的[Lean](https://github.com/math-proof/lemma/tree/main)证明助手全部改写。 
+[Mathematica](https://reference.wolfram.com/language/index.html.en?source=footer)。后为追求更严密的逻辑完备性，由基于依赖类型理论（DTT）的[Lean](https://github.com/math-proof/lemma/tree/main)证明助手改写。 
 其主要特征在于：交互式(ITP)、公理化、代码即证明。  
 基本设计理念是：语法精确，表达简洁，执行高效，书写美观，力求体现数学美学标准：理论完美性，结构对称性，应用普适性
 	

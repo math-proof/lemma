@@ -8,7 +8,7 @@ import Lemma.Nat.CoeMul.eq.MulCoeS
 import Lemma.Nat.EqAdd_Mul_DivSub1Sign_2
 import Lemma.Nat.Gt_0
 import Lemma.Nat.LeCoeS.is.Le
-import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Rat.EqCeilDivSubMul.of.Lt
 import Lemma.Vector.EqGetS
@@ -46,7 +46,7 @@ private lemma main
     ·
       nlinarith
     ·
-      apply Mul.gt.Zero.of.Gt_0.Gt_0
+      apply Lt0Mul.of.Gt_0.Gt_0
       repeat omega
   ·
     rw [MulCoeS.eq.CoeMul] at h
@@ -101,7 +101,7 @@ private lemma Comm
     ·
       nlinarith
     ·
-      apply Mul.gt.Zero.of.Gt_0.Gt_0
+      apply Lt0Mul.of.Gt_0.Gt_0
       repeat omega
   ·
     rw [MulCoeS.eq.CoeMul] at h

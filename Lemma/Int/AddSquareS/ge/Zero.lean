@@ -1,5 +1,5 @@
 import Lemma.Int.GeSquare_0
-import Lemma.Nat.Add.ge.Zero.of.Ge_0.Ge_0
+import Lemma.Nat.Le0Add.of.Ge_0.Ge_0
 open Nat Int
 
 
@@ -12,8 +12,7 @@ private lemma main
 -- proof
   have hₐ := GeSquare_0 (a := a)
   have h_b := GeSquare_0 (a := b)
-  have := Add.ge.Zero.of.Ge_0.Ge_0 hₐ h_b
-  assumption
+  exact Le0Add.of.Ge_0.Ge_0 hₐ h_b
 
 
 -- created on 2025-01-16

@@ -1,6 +1,6 @@
 import Lemma.Nat.MulMul
 import Lemma.Int.Lt.of.LtSquareS.Ge_0
-import Lemma.Int.Mul.ge.Zero.of.Ge_0.Ge_0
+import Lemma.Int.Le0Mul.of.Ge_0.Ge_0
 import Lemma.Real.GeSqrt_0
 import Lemma.Nat.SquareMul.eq.MulSquareS
 import Lemma.Real.EqSquareSqrt.of.Ge_0
@@ -21,7 +21,7 @@ import Lemma.Nat.Square.eq.Mul
 import Lemma.Nat.Mul
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Int.EqSub_Sub
-import Lemma.Nat.Mul.gt.Zero.of.Gt_0.Gt_0
+import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Real.AddSub_Mul2Sqrt.gt.Zero.of.Gt_1
 open Nat Int Real Rat
 
@@ -60,7 +60,7 @@ private lemma main
       rw [MulMul]
       rw [@Int.SubMulS.eq.MulSub]
       rw [AddMulS.eq.MulAdd]
-      apply Mul.gt.Zero.of.Gt_0.Gt_0
+      apply Lt0Mul.of.Gt_0.Gt_0
       ·
         apply AddSub_Mul2Sqrt.gt.Zero.of.Gt_1 h₁
       ·
@@ -74,7 +74,7 @@ private lemma main
         norm_cast
         linarith [h₀]
   ·
-    apply Mul.ge.Zero.of.Ge_0.Ge_0
+    apply Le0Mul.of.Ge_0.Ge_0
     ·
       simp
     ·

@@ -1,5 +1,5 @@
 import Lemma.Nat.Gt_0.of.Gt
-import Lemma.Nat.Gt_0.of.Mul.gt.Zero
+import Lemma.Nat.Gt_0.of.Lt0Mul
 import Lemma.Nat.Mul
 open Nat
 
@@ -12,7 +12,7 @@ private lemma left
 -- imply
   n > 0 :=
 -- proof
-  (Gt_0.of.Mul.gt.Zero.left ∘ Gt_0.of.Gt) h
+  (Gt_0.of.Lt0Mul.left ∘ Gt_0.of.Gt) h
 
 
 @[main]
