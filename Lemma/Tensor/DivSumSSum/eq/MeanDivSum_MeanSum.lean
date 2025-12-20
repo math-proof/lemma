@@ -23,7 +23,7 @@ X.mean = X.mean (-1)
 -/
 @[main]
 private lemma main
-  [Field float]
+  [Semifield float]
   [CharZero float]
 -- given
   (loss : Tensor float [batch_size, seq_length])
@@ -57,8 +57,8 @@ private lemma main
       simp [Eq_0.prod]
       simp [GetElem.getElem]
     .
-      have hb := Ne.of.NotEq hb
-      simpa [NeCoeS.of.Ne hb (Z := float)]
+      have := Ne.of.NotEq hb
+      simp_all
 
 
 -- created on 2025-08-29

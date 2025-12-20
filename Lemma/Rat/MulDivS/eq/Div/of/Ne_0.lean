@@ -6,7 +6,7 @@ open Nat Rat
 
 @[main]
 private lemma main
-  [Field α]
+  [Semifield α]
   {a : α}
 -- given
   (h : a ≠ 0)

@@ -3,9 +3,7 @@ import sympy.Basic
 
 @[main, comm, mp, mpr]
 private lemma main
-  [Field α]
-  [LinearOrder α]
-  [IsStrictOrderedRing α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
   {a b : α}
 -- given
   (ha : a < 0)

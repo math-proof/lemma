@@ -5,9 +5,7 @@ open Rat Int
 
 @[main, comm, mp, mpr]
 private lemma main
-  [Field α]
-  [LinearOrder α]
-  [IsStrictOrderedRing α]
+  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given
   (a b : α) :
 -- imply

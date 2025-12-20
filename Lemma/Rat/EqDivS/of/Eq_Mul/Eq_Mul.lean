@@ -3,9 +3,8 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  [Field α]
-  [NeZero c]
-  [NeZero d]
+  [Semifield α]
+  [NeZero c] [NeZero d]
   {a b x : α}
 -- given
   (h₀ : a = d * x)

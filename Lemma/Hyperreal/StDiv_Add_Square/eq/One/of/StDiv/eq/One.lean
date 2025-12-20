@@ -2,11 +2,11 @@ import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.GeStInv_0.of.NotInfinitesimal.StDiv.eq.One
 import Lemma.Hyperreal.Infinite.is.InfiniteAdd
+import Lemma.Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite
 import Lemma.Hyperreal.Infinite.is.InfinitePow
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.StDiv.ne.Zero
 import Lemma.Hyperreal.Ne_0.Ne_0.of.NotInfinitesimal.StDiv.eq.One
 import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
-import Lemma.Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite
 import Lemma.Hyperreal.NotInfiniteInvMul.of.NotInfinitesimal.StDiv.eq.One
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
@@ -19,15 +19,11 @@ import Lemma.Hyperreal.StMul.eq.MulStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StMul.eq.Mul_St.of.NotInfinite
 import Lemma.Hyperreal.StPow.eq.PowSt.of.NotInfinite
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Ne_0.of.Eq
-import Lemma.Nat.Square.eq.Mul
-import Lemma.Rat.Div.eq.DivDivS.of.Ne_0
-import Lemma.Rat.Div1.eq.Inv
-import Lemma.Rat.DivAdd.eq.AddDivS
-import Lemma.Rat.DivMulS.eq.Div.of.Ne_0
+import Lemma.Rat.Div.eq.One.of.Ne_0
+import Lemma.Rat.Div_Add_Square.eq.Div_AddInvMul.of.Ne_0.Ne_0
 open Hyperreal Nat Rat
 
 
@@ -75,21 +71,7 @@ private lemma main
     have h_nonneg_st_inv_ab := GeStInv_0.of.NotInfinitesimal.StDiv.eq.One h h_a
     have h_ne_inf_inv_ab := NotInfiniteInvMul.of.NotInfinitesimal.StDiv.eq.One h h_a
     let ⟨h_a_ne_0, h_b_ne_0⟩ := Ne_0.Ne_0.of.NotInfinitesimal.StDiv.eq.One h h_a
-    have h_ab := Mul.ne.Zero.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0
-    rw [Div.eq.DivDivS.of.Ne_0 h_ab]
-    rw [DivAdd.eq.AddDivS]
-    conv =>
-      arg 1
-      arg 1
-      arg 2
-      repeat rw [DivAdd.eq.AddDivS]
-      repeat rw [Square.eq.Mul]
-      rw [DivMulS.eq.Div.of.Ne_0 h_b_ne_0]
-      rw [DivMulS.eq.Div.of.Ne_0.left h_a_ne_0]
-    repeat rw [Div1.eq.Inv]
-    rw [AddAdd.eq.Add_Add]
-    rw [MulMul.eq.Mul_Mul]
-    rw [EqDivMul.of.Ne_0 h_ab]
+    rw [Div_Add_Square.eq.Div_AddInvMul.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0]
     have h_2_ab_st := StAdd.eq.AddSt.of.NotInfinite h_ne_inf_inv_ab 2
     have h_div_ba := StDiv.eq.Inv.of.EqSt h
     simp at h_div_ba
@@ -110,3 +92,4 @@ private lemma main
 
 
 -- created on 2025-12-19
+-- updated on 2025-12-20

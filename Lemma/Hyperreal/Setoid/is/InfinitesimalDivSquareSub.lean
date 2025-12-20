@@ -11,7 +11,7 @@ import Lemma.Hyperreal.NotInfiniteDiv_Add_Square.of.StDiv.eq.One
 import Lemma.Hyperreal.NotInfinitesimalAdd.of.Infinitesimal.Ne_0
 import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.Ne_0
 import Lemma.Hyperreal.Setoid.is.OrAndS
-import Lemma.Hyperreal.StDiv.eq.One.is.InfinitesimalDivSquareSub.of.NotInfinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.StDiv.eq.One.of.InfinitesimalDivSquareSub.NotInfinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.StDiv_Add_Square.eq.One.of.StDiv.eq.One
 import Lemma.Int.SquareSub
 import Lemma.Nat.Add
@@ -60,7 +60,13 @@ private lemma main
         contradiction
       else
         have h := EqSt.of.InfinitesimalSub h_ab
-        apply InfinitesimalDivSquareSub.of.StDiv.eq.One.NotInfinitesimal.NotInfinitesimal h_a h_b h
+        rw [DivSquareSub.eq.Sub1DivAddS]
+        rw [InfinitesimalSub.comm]
+        apply InfinitesimalSub.of.EqSt.NotInfinite
+        ·
+          apply NotInfiniteDiv_Add_Square.of.StDiv.eq.One h
+        ·
+          apply StDiv_Add_Square.eq.One.of.StDiv.eq.One h
   ·
     intro h
     if h_a : a.Infinitesimal then
@@ -79,8 +85,11 @@ private lemma main
         contradiction
       else
         simp [h_b]
-        have h_st_ab := StDiv.eq.One.of.InfinitesimalDivSquareSub.NotInfinitesimal.NotInfinitesimal h_a h_b h
-        apply InfinitesimalSub.of.EqSt.NotInfinite _ h_st_ab
+        rw [DivSquareSub.eq.Sub1DivAddS] at h
+        rw [InfinitesimalSub.comm] at h
+        have h := EqSt.of.InfinitesimalSub h
+        have h := StDiv.eq.One.of.InfinitesimalDivSquareSub.NotInfinitesimal.NotInfinitesimal h_a h_b h
+        apply InfinitesimalSub.of.EqSt.NotInfinite _ h
         apply NotInfinite.of.NeSt_0
         linarith
 
