@@ -1,4 +1,4 @@
-import Lemma.Nat.EqSquare_0.of.Eq_0
+import Lemma.Nat.Eq_0.is.EqSquare_0
 import Lemma.Real.EqSquareSqrt.of.Gt_0
 import Lemma.Nat.NotGt.of.Eq
 open Real Nat
@@ -12,7 +12,6 @@ private lemma main
 -- imply
   √x ≠ 0 := by
 -- proof
-  -- Assume for contradiction that √x = 0
   intro h₀
   have h_Eq_0 := EqSquare_0.of.Eq_0 h₀
   have := EqSquareSqrt.of.Gt_0 h

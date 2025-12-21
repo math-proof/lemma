@@ -4,6 +4,13 @@ import Lemma.Rat.Div.eq.Mul_Inv
 open Hyperreal Rat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.Infinite.of.InfinitesimalDiv.NotInfinitesimal |
+| mt   | Hyperreal.NotInfinitesimalDiv.of.NotInfinite.NotInfinitesimal |
+| mt 1 | Hyperreal.Infinitesimal.of.InfinitesimalDiv.NotInfinite |
+-/
 @[main, mt, mt 1]
 private lemma main
   [NeZero (b : ℝ*)]

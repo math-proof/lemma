@@ -13,7 +13,7 @@ import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
 import Lemma.Hyperreal.StAdd.eq.AddSt.of.NotInfinite
 import Lemma.Hyperreal.StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal
 import Lemma.Hyperreal.StPow.eq.PowSt.of.NotInfinite
-import Lemma.Int.Eq_0.is.EqSquare_0
+import Lemma.Nat.Eq_0.is.EqSquare_0
 import Lemma.Int.SquareSub
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add

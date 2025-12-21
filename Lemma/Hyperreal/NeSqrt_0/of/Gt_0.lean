@@ -1,4 +1,4 @@
-import Lemma.Nat.EqSquare_0.of.Eq_0
+import Lemma.Nat.Eq_0.is.EqSquare_0
 import Lemma.Nat.NotGt.of.Eq
 import Lemma.Hyperreal.EqSquareSqrt.of.Gt_0
 open Nat Hyperreal

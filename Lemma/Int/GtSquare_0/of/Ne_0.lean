@@ -1,5 +1,5 @@
 import Lemma.Int.GeSquare_0
-import Lemma.Int.Eq_0.is.EqSquare_0
+import Lemma.Nat.Eq_0.is.EqSquare_0
 import Lemma.Nat.Gt.is.Ge.Ne
 open Int Nat
 
