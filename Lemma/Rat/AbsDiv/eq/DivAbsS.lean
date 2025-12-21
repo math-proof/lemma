@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Field α] [LinearOrder α] [IsStrictOrderedRing α]
 -- given

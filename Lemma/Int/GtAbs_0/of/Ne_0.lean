@@ -1,4 +1,4 @@
-import Lemma.Int.NeAbs_0.of.Ne_0
+import Lemma.Int.EqAbs_0.is.Eq_0
 import Lemma.Int.GeAbs_0
 import Lemma.Nat.Gt.is.Ge.Ne
 open Int Nat

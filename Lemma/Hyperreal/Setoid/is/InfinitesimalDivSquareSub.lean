@@ -8,7 +8,7 @@ import Lemma.Hyperreal.InfinitesimalSub
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.NotInfiniteDiv_AddAddSquareS.of.StDiv.eq.One
-import Lemma.Hyperreal.NotInfinitesimalAdd.of.Infinitesimal.Ne_0
+import Lemma.Hyperreal.Eq_0.of.InfinitesimalAdd.Infinitesimal
 import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.Ne_0
 import Lemma.Hyperreal.Setoid.is.OrAndS
 import Lemma.Hyperreal.StDiv.eq.One.of.InfinitesimalDivSquareSub.NotInfinitesimal.NotInfinitesimal
@@ -38,7 +38,7 @@ private lemma main
         apply InfinitesimalPow.of.Infinitesimal
         apply InfinitesimalSub.of.Infinitesimal.Infinitesimal h_a h_b
       ·
-        apply NotInfinitesimalAdd.of.Infinitesimal.Ne_0
+        apply NotInfinitesimalAdd.of.Ne_0.Infinitesimal
         ·
           apply InfinitesimalAdd.of.Infinitesimal.Infinitesimal
           repeat exact InfinitesimalPow.of.Infinitesimal (by assumption)
