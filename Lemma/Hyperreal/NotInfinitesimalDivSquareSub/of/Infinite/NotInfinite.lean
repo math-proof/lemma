@@ -38,11 +38,11 @@ private lemma main
   rw [DivSub.eq.SubDivS]
   repeat rw [Div.eq.One.of.Ne_0 (by assumption)]
   have h_inf_div_ba := InfinitesimalDiv.of.NotInfinite.Infinite h_inf_b h_inf_a
-  have h_fin_sub_div : ¬(1 - b / a).Infinite := by 
+  have h_fin_sub_div : ¬(1 - b / a).Infinite := by
     apply NotInfiniteSub.of.NotInfinite.left
     apply NotInfinite.of.Infinitesimal h_inf_div_ba
   have h_fin_square := NotInfiniteSquare.of.NotInfinite h_fin_sub_div
-  have h_eps_add_div_square : ¬(1 + (b ^ 2 + 1) / a ^ 2).Infinitesimal := by 
+  have h_eps_add_div_square : ¬(1 + (b² + 1) / a²).Infinitesimal := by
     apply NotInfinitesimalAdd.of.Ne_0.Infinitesimal.left
     apply InfinitesimalDiv.of.NotInfinite.Infinite
     ·
@@ -52,13 +52,13 @@ private lemma main
       apply InfinitePow.of.Infinite h_inf_a
     ·
       simp
-  have h_st_square_sub : st (1 - b / a)² = 1 := by 
+  have h_st_square_sub : st (1 - b / a)² = 1 := by
     rw [StPow.eq.PowSt.of.NotInfinite h_fin_sub_div]
-    suffices st (1 - b / a) = 1 by 
+    suffices st (1 - b / a) = 1 by
       simp [this]
     apply EqSt.of.InfinitesimalSub
     simpa
-  have h_st_add_div_square : st (1 + (b² + 1) / a²) = 1 := by 
+  have h_st_add_div_square : st (1 + (b² + 1) / a²) = 1 := by
     apply EqSt.of.InfinitesimalSub
     simp
     apply InfinitesimalDiv.of.NotInfinite.Infinite
