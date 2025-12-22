@@ -63,11 +63,11 @@ open Hyperreal Int Nat Rat Real
 
 /--
 the operator `≈` (approximately equal) mimics the behavior of [torch.isclose](https://docs.pytorch.org/docs/stable/generated/torch.isclose.html) function, wherein:
-- absolute tolerance
+- atol : absolute tolerance
   - is defined as `|a - b|`
   - is considered to be `0` in this context, as we are working with hyper-real numbers (with infinites and infinitesimals)
   - if the absolute tolerance `|a - b|` is infinitesimal, then `a` and `b` are guaranteed to be approximately equal, but not vice versa! (e.g., `a` and `b` are both infinite and differ by an infinite quantity, but their relative tolerance could still be infinitesimal)
-- relative tolerance
+- rtol : relative tolerance
   - is defined as `|a - b| / (|a| + |b| + 1)`
   - the addition of `1` in the denominator ensures stability when both `a` and `b` are close to zero
   - two hyper-real numbers `a` and `b` are considered approximately equal (close to each other) iff this relative tolerance is infinitesimal
