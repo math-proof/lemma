@@ -320,9 +320,9 @@ private lemma main
               simp
           ·
             simp
-        else
-          have := NotInfinitesimalDivAbsSub.of.Infinite.NotInfinite h_inf_a h_inf_b
-          contradiction
+      else
+        have := NotInfinitesimalDivAbsSub.of.Infinite.NotInfinite h_inf_a h_inf_b
+        contradiction
     else if h_inf_b : b.Infinite then
       have h := NotInfinitesimalDivAbsSub.of.Infinite.NotInfinite h_inf_b h_inf_a
       rw [AbsSub.comm] at h
