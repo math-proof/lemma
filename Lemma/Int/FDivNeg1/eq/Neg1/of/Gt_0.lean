@@ -3,7 +3,7 @@ import Lemma.Int.EqFloor.is.Le.Lt
 import Lemma.Rat.Le_Div.of.LeMul.Gt_0
 import Lemma.Int.DivInt.eq.Div
 import Lemma.Int.LtCoeS.is.Lt
-import Lemma.Rat.Div.lt.Zero.of.Lt_0.Gt_0
+import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
 open Int Rat
 
 
@@ -32,7 +32,7 @@ private lemma main
     norm_cast
     simp
     rw [DivInt.eq.Div]
-    apply Div.lt.Zero.of.Lt_0.Gt_0
+    apply Gt0Div.of.Lt_0.Gt_0
     norm_num
     assumption
 

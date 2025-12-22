@@ -354,7 +354,7 @@ abstract class Lean extends IndentedNode
                         $this instanceof LeanToken || 
                         $this instanceof LeanProperty || 
                         $this instanceof LeanGetElem || $this instanceof LeanGetElemQue || $this instanceof LeanGetElemQuote || 
-                        $this instanceof LeanInv || 
+                        $this instanceof LeanUnaryArithmeticPost || 
                         $this instanceof LeanPairedGroup && $this->is_Expr()
                     ) {
                         # consider the case: (f x)[n], f[m][n]
@@ -1563,6 +1563,7 @@ abstract class LeanPairedGroup extends LeanUnary
             $parent instanceof LeanArithmetic || 
             $parent instanceof LeanProperty || 
             $parent instanceof LeanColon || 
+            $parent instanceof LeanUnaryArithmeticPost || 
             $parent instanceof LeanPairedGroup
         );
     }
@@ -3645,7 +3646,7 @@ class LeanPosPart extends LeanUnaryArithmeticPost
             case 'operator':
                 return '⁺';
             case 'command':
-                return '^{⁺}';
+                return '^{+}';
             default:
                 return parent::__get($vname);
         }
@@ -3668,9 +3669,9 @@ class LeanNegPart extends LeanUnaryArithmeticPost
     {
         switch ($vname) {
             case 'operator':
-                return '⁻¹';
+                return '⁻';
             case 'command':
-                return '^{-1}';
+                return '^{-}';
             default:
                 return parent::__get($vname);
         }

@@ -1,6 +1,6 @@
 import Lemma.Nat.Eq.ou.Lt.of.Le
 import Lemma.Nat.Le.of.Lt
-import Lemma.Rat.Div.lt.Zero.of.Gt_0.Lt_0
+import Lemma.Rat.Gt0Div.of.Gt_0.Lt_0
 open Nat Rat
 
 
@@ -19,7 +19,7 @@ private lemma main
     simp [← hx]
   ·
     apply Le.of.Lt
-    apply Div.lt.Zero.of.Gt_0.Lt_0 hx h₁
+    apply Gt0Div.of.Gt_0.Lt_0 hx h₁
 
 
 -- created on 2025-11-07

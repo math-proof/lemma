@@ -1,25 +1,28 @@
 import Lemma.Nat.Eq.ou.Lt.of.Le
 import Lemma.Nat.Le.of.Lt
-import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
-open Nat Rat
+import Lemma.Int.Gt0Mul.of.Lt_0.Gt_0
+open Nat Int
 
 
 @[main]
 private lemma main
-  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
+  [MulZeroClass α]
+  [PartialOrder α]
+  [MulPosStrictMono α]
   {x y : α}
 -- given
   (h₀ : x ≤ 0)
   (h₁ : y > 0) :
 -- imply
-  x / y ≤ 0 := by
+  x * y ≤ 0 := by
 -- proof
   obtain hx | hx := Eq.ou.Lt.of.Le h₀
   ·
     simp_all
   ·
     apply Le.of.Lt
-    apply Gt0Div.of.Lt_0.Gt_0 hx h₁
+    apply Gt0Mul.of.Lt_0.Gt_0 hx h₁
 
 
--- created on 2025-05-05
+-- created on 2025-03-23
+-- updated on 2025-05-05

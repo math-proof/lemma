@@ -1,5 +1,5 @@
 import Lemma.Rat.LtInvS.of.Gt.Gt_0
-import Lemma.Int.Sub.lt.Zero.of.Lt
+import Lemma.Int.Lt.is.Gt0Sub
 open Rat Int
 
 
@@ -13,8 +13,8 @@ private lemma main
 -- imply
   x⁻¹ - y⁻¹ < 0 := by
 -- proof
-  have := LtInvS.of.Gt.Gt_0 h₀ h₁
-  exact Sub.lt.Zero.of.Lt this
+  apply Gt0Sub.of.Lt
+  apply LtInvS.of.Gt.Gt_0 h₀ h₁
 
 
 -- created on 2025-03-15

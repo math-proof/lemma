@@ -10,8 +10,8 @@ import Lemma.Int.LeToNat.is.Le
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
 import Lemma.Nat.NotGe.is.Lt
 import Lemma.Nat.LtCoeS.is.Lt
-import Lemma.Int.Sub.lt.Zero.of.Lt
-import Lemma.Rat.Div.lt.Zero.of.Lt_0.Gt_0
+import Lemma.Int.Lt.is.Gt0Sub
+import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
 import Lemma.Nat.Le.of.Lt
 import Lemma.Int.EqToNat_0.of.Le_0
 open Bool Int Nat Rat
@@ -44,8 +44,8 @@ private lemma main
     else
       have h := Lt.of.NotGe h_ge
       have h := LtCoeS.of.Lt (R := α) h
-      have h := Sub.lt.Zero.of.Lt h
-      have h := Div.lt.Zero.of.Lt_0.Gt_0 h h_pos
+      have h := Gt0Sub.of.Lt h
+      have h := Gt0Div.of.Lt_0.Gt_0 h h_pos
       have h := Le.of.Lt h
       rw [OfNat.eq.Cast] at h
       have h := LeCeil.of.Le h

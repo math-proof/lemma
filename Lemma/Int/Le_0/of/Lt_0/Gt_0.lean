@@ -1,5 +1,5 @@
 import Lemma.Nat.Le.of.Lt
-import Lemma.Int.Mul.lt.Zero.of.Lt_0.Gt_0
+import Lemma.Int.Gt0Mul.of.Lt_0.Gt_0
 open Nat Int
 
 
@@ -16,7 +16,7 @@ private lemma main
   x * y ≤ 0 := by
 -- proof
   apply Le.of.Lt
-  apply Mul.lt.Zero.of.Lt_0.Gt_0 h₀ h₁
+  apply Gt0Mul.of.Lt_0.Gt_0 h₀ h₁
 
 
 -- created on 2025-03-24

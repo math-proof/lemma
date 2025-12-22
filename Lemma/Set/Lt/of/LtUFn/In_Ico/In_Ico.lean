@@ -1,12 +1,12 @@
-import Lemma.Int.Sub.lt.Zero.of.Lt
+import Lemma.Int.Lt.is.Gt0Sub
 import Lemma.Int.AddSub.eq.Sub_Sub
 import Lemma.Int.SubSub
 import Lemma.Int.Mul_Sub.eq.SubMulS
 import Lemma.Int.SubCubeS.eq.MulSub__AddSquareS
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Int.Lt.of.Sub.lt.Zero
-import Lemma.Int.Lt_0.of.Mul.lt.Zero.Gt_0
+import Lemma.Int.Lt.is.Gt0Sub
+import Lemma.Int.Lt_0.of.Gt0Mul.Gt_0
 import Lemma.Set.AddAddSquareS.lt.Div3'4.of.In_Ico0.In_Ico0
 import Lemma.Nat.LtMulS.of.Gt_0.Lt
 import Lemma.Int.Sub.gt.Zero.is.Lt
@@ -29,7 +29,7 @@ private lemma main
   have h_f0 : f x₀ = 3 * x₀ - 4 * x₀³ := rfl
   have h_f1 : f x₁ = 3 * x₁ - 4 * x₁³ := rfl
   rw [h_f0, h_f1] at h₂
-  have := Sub.lt.Zero.of.Lt h₂
+  have := Gt0Sub.of.Lt h₂
   rw [Sub_Sub.eq.AddSub] at this
   rw [SubSub.comm] at this
   rw [SubMulS.eq.Mul_Sub] at this
@@ -41,8 +41,8 @@ private lemma main
   rw [Mul.comm (a := 4)] at this
   rw [MulMul.eq.Mul_Mul] at this
   rw [SubMulS.eq.Mul_Sub] at this
-  apply Lt.of.Sub.lt.Zero
-  apply Lt_0.of.Mul.lt.Zero.Gt_0 this
+  apply Lt.of.Gt0Sub
+  apply Lt_0.of.Gt0Mul.Gt_0 this
   apply Sub.gt.Zero.of.Lt
   have := AddAddSquareS.lt.Div3'4.of.In_Ico0.In_Ico0 h₀ h₁
   have := LtMulS.of.Gt_0.Lt (by norm_num : 4 > (0 : ℝ)) this
