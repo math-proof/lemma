@@ -1,7 +1,6 @@
-import sympy.sets.sets
 import Lemma.Set.Cup.eq.Cup_Ite
 import Lemma.Set.IffInS_Ico
-import Lemma.Set.CupUFn.eq.Cup_UFnNeg
+import Lemma.Set.Cup_UFn.eq.Cup_UFnNeg
 import Lemma.Int.Add.eq.Sub_Neg
 import Lemma.Set.In_Ico.is.InNeg_Ioc
 import Lemma.Set.Ioc.eq.Ico
@@ -23,7 +22,7 @@ private lemma main
   -- rw [Cup.eq.Cup_Ite (fun x => decidable_of_iff (h (c - x)).decide (h_iff x))]
   conv_rhs =>
     simp only [Cup.eq.Cup_Ite]
-    rw [CupUFn.eq.Cup_UFnNeg]
+    rw [Cup_UFn.eq.Cup_UFnNeg]
     simp only [Sub_Neg.eq.Add]
     simp only [In_Ico.is.InNeg_Ioc]
     simp only [EqNegNeg]
