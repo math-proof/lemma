@@ -5,7 +5,8 @@ open Hyperreal
 
 @[main]
 private lemma main
-  {r : ℝ} :
+-- given
+  (r : ℝ) :
 -- imply
   st r = r := by
 -- proof

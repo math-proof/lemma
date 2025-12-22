@@ -22,7 +22,6 @@ import Lemma.Rat.DivSquareSub.eq.DivSubAddDivS.Ne_0.Ne_0
 import Lemma.Rat.Gt0Div.of.Gt_0.Lt_0
 import Lemma.Rat.Gt0Div.of.Lt_0
 import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
-import sympy.core.power
 open Hyperreal Int Nat Rat
 
 

@@ -296,24 +296,29 @@ def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.E
     match type with
     | .app (.const `Not _) arg =>
       arg
-    | .app (.app (.const `Eq us) lhs) rhs =>
-      (Lean.Expr.const `Ne us).mkApp [lhs, rhs]
-    | .app (.app (.const `Ne us) lhs) rhs =>
-      (Lean.Expr.const `Eq us).mkApp [lhs, rhs]
+    | .app (.app (.app (.const `Ne us) α) a) b =>
+      (Lean.Expr.const `Eq us).mkApp [α, a, b]
     | _ =>
       (Lean.Expr.const `Not []).mkApp [type]
+  let h_bvar := Lean.Expr.bvar index
   let h :=
-    let h := Lean.Expr.bvar index
     match type with
     | .app (.const `Not _) arg =>
       (Lean.Expr.const `Iff.mpr []).mkApp [
         (Lean.Expr.const `Not []).mkApp [(Lean.Expr.const `Not []).mkApp [arg]],
         arg,
         (Lean.Expr.const `Classical.not_not []).mkApp [arg],
-        h
+        h_bvar
+      ]
+    | Ne@(.app (.app (.app (.const `Ne us) α) a) b) =>
+      (Lean.Expr.const `Iff.mpr []).mkApp [
+        (Lean.Expr.const `Not []).mkApp [Ne],-- ¬a ≠ b
+        .app (.app (.app (.const `Eq us) α) a) b, -- a = b
+        (Lean.Expr.const `not_ne_iff us).mkApp [α, a, b],
+        h_bvar
       ]
     | _ =>
-      h
+      h_bvar
   println! s!"h = {h}"
   let (binders, type, a, mp) :=
     let ⟨h, premise, df⟩ := binders[index]!
@@ -326,6 +331,14 @@ def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.E
             (Lean.Expr.const `Not []).mkApp [(Lean.Expr.const `Not []).mkApp [arg]],
             arg,
             (Lean.Expr.const `Classical.not_not []).mkApp [arg],
+            h
+          ]
+      | Ne@(.app (.app (.app (.const `Ne us) α) a) b) =>
+        fun h : Lean.Expr =>
+          (Lean.Expr.const `Iff.mp []).mkApp [
+            (Lean.Expr.const `Not []).mkApp [Ne],-- ¬a ≠ b
+            .app (.app (.app (.const `Eq us) α) a) b, -- a = b
+            (Lean.Expr.const `not_ne_iff us).mkApp [α, a, b],
             h
           ]
       | _ =>
@@ -353,7 +366,7 @@ def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.E
       let ⟨take, drop⟩ := bvar.splitAt index
       let drop := drop.tail.map fun e => e.incDeBruijnIndex 1
       let ⟨binderName, _, binderInfo⟩ := binders[index]!
-      .lam binderName a (proof.mkApp ((take ++ drop).reverse ++ [h])) binderInfo
+      .lam binderName a (proof.mkApp ((take ++ drop).reverse ++ [h_bvar])) binderInfo
     else
       proof.mkApp ((List.range binders.length).map fun i => (.bvar i)).tail.reverse,
     h

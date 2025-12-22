@@ -487,35 +487,48 @@ def Expr.mt (type proof : Expr) (parity : ℕ := 0) : ℕ × Expr × Expr :=
     match type with
     | .app (.const `Not _) arg =>
       arg
-    | .app (.app (.const `Eq us) lhs) rhs =>
-      (Expr.const `Ne us).mkApp [lhs, rhs]
-    | .app (.app (.const `Ne us) lhs) rhs =>
-      (Expr.const `Eq us).mkApp [lhs, rhs]
+    | .app (.app (.app (.const `Ne us) α) a) b =>
+      (Lean.Expr.const `Eq us).mkApp [α, a, b]
     | _ =>
       (Expr.const `Not []).mkApp [type]
+  let h_bvar := Lean.Expr.bvar index
   let h :=
-    let h := Expr.bvar index
     match type with
     | .app (.const `Not _) arg =>
       (Expr.const `Iff.mpr []).mkApp [
         (Expr.const `Not []).mkApp [(Expr.const `Not []).mkApp [arg]],
         arg,
         (Expr.const `Classical.not_not []).mkApp [arg],
-        h
+        h_bvar
+      ]
+    | Ne@(.app (.app (.app (.const `Ne us) α) a) b) =>
+      (Lean.Expr.const `Iff.mpr []).mkApp [
+        (Lean.Expr.const `Not []).mkApp [Ne],-- ¬a ≠ b
+        .app (.app (.app (.const `Eq us) α) a) b, -- a = b
+        (Lean.Expr.const `not_ne_iff us).mkApp [α, a, b],
+        h_bvar
       ]
     | _ =>
-      h
+      h_bvar
   let (binders, type, a, mp) :=
     let ⟨h, premise, df⟩ := binders[index]!
     let a := premise.incDeBruijnIndex index.succ
     let mp :=
       match a with
       | .app (.const `Not _) arg =>
-        fun h : Expr =>
+        fun h =>
           (Expr.const `Iff.mp []).mkApp [
             (Expr.const `Not []).mkApp [(Expr.const `Not []).mkApp [arg]],
             arg,
             (Expr.const `Classical.not_not []).mkApp [arg],
+            h
+          ]
+      | Ne@(.app (.app (.app (.const `Ne us) α) a) b) =>
+        fun h =>
+          (Expr.const `Iff.mp []).mkApp [
+            (Expr.const `Not []).mkApp [Ne],-- ¬a ≠ b
+            .app (.app (.app (.const `Eq us) α) a) b, -- a = b
+            (Expr.const `not_ne_iff us).mkApp [α, a, b],
             h
           ]
       | _ =>
@@ -536,7 +549,7 @@ def Expr.mt (type proof : Expr) (parity : ℕ := 0) : ℕ × Expr × Expr :=
       let ⟨take, drop⟩ := bvar.splitAt index
       let drop := drop.tail.map fun e => e.incDeBruijnIndex 1
       let ⟨binderName, _, binderInfo⟩ := binders[index]!
-      .lam binderName a (proof.mkApp ((take ++ drop).reverse ++ [h])) binderInfo
+      .lam binderName a (proof.mkApp ((take ++ drop).reverse ++ [h_bvar])) binderInfo
     else
       proof.mkApp ((List.range binders.length).map fun i => (.bvar i)).tail.reverse,
     h
