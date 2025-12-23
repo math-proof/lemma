@@ -148,3 +148,17 @@ Returns the indices of the maximum value of a tensor along `dim`.
 -/
 def Tensor.argmax [NeZero s.prod] [LT α] [DecidableLT α] (X : Tensor α s) (dim : Fin s.length) : Tensor (Fin s[dim]) (s.eraseIdx dim) :=
   X.argAminmax LT.lt dim
+
+
+/--
+the approx operator that defines asymptotically equivalence/closeness between hyperreal numbers.
+numerical analogy:
+- [torch.isclose](https://docs.pytorch.org/docs/stable/generated/torch.isclose.html)
+-/
+instance : Setoid (Tensor ℝ* s) where
+  r A B := A.data ≈ B.data
+  iseqv :=
+    { refl x := by simp
+      symm {a b} h := Setoid.symm h
+      trans {a b c} h_ab h_bc := Setoid.trans h_ab h_bc
+    }

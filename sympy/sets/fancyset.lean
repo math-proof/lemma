@@ -13,7 +13,6 @@ export Hyperreal (Infinite Infinitesimal IsSt st)
 /--
 the approx operator that defines asymptotically equivalence/closeness between hyperreal numbers.
 numerical analogy:
-- [torch.isclose](https://docs.pytorch.org/docs/stable/generated/torch.isclose.html)
 - [math.isclose][https://docs.python.org/3/library/math.html#math.isclose]
 - [numpy.isclose][https://numpy.org/doc/stable/reference/generated/numpy.isclose.html]
 -/
@@ -108,3 +107,5 @@ instance : Setoid ℝ* where
                 subst h_b
                 apply Infinitesimal0
     }
+
+noncomputable instance : Coe ℝ ℝ* := ⟨Hyperreal.ofReal⟩

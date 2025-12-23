@@ -100,3 +100,18 @@ def argAminmax [NeZero m] (x : Vector (Vector α n) m) (cmp : α → α → Prop
   x.transpose.map (fun v => v.argminmax cmp)
 
 end List.Vector
+
+instance : Setoid (List.Vector ℝ* n) where
+  r a b := ∀ i : Fin n, a[i] ≈ b[i]
+  iseqv :=
+    { refl x := by simp
+      symm {a b} h := by
+        intro i
+        specialize h i
+        exact Setoid.symm h
+      trans {a b c} h_ab h_bc:= by
+        intro i
+        specialize h_ab i
+        specialize h_bc i
+        exact Setoid.trans h_ab h_bc
+    }

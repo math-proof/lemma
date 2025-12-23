@@ -26,6 +26,7 @@ def BinaryInfix.func : BinaryInfix → Func
     | `Iff => ⟨20, "↔", "\\leftrightarrow"⟩  -- Lean_leftrightarrow, https://github.com/leanprover/lean4/blob/v4.23.0/src/Init/Core.lean#L190
     | `Or => ⟨30, "∨", "\\lor"⟩  -- Lean_lor
     | `or => ⟨30, "||", "||"⟩  -- LeanLogicOr
+    | `xor => ⟨33, "^^", "\\^\\^"⟩  -- Lean_xor, https://github.com/leanprover/lean4/blob/v4.23.0/src/Init/Data/Bool.lean#L31
     | `And => ⟨35, "∧", "\\land"⟩  -- Lean_land
     | `and => ⟨35, "&&", "&&"⟩  -- LeanLogicAnd
     | `LE.le => ⟨50, "≤", "\\le"⟩  -- Lean_le
@@ -36,7 +37,6 @@ def BinaryInfix.func : BinaryInfix → Func
     | `Ne => ⟨50, "≠", "\\ne"⟩ -- Lean_ne
     | `BEq.beq => ⟨50, "==", "=="⟩  -- LeanBEq
     | `bne => ⟨50, "!=", "!="⟩  -- Lean_bne
-    | `xor => ⟨33, "^^", "\\^\\^"⟩  -- Lean_xor, https://github.com/leanprover/lean4/blob/v4.23.0/src/Init/Data/Bool.lean#L31
     | `HEq => ⟨50, "≍", "\\asymp"⟩  -- Lean_asymp
     | `SEq => ⟨50, "≃", "\\simeq"⟩  -- Lean_simeq
     | `Membership.mem
@@ -46,10 +46,10 @@ def BinaryInfix.func : BinaryInfix → Func
     | `Superset => ⟨50, "⊇", "\\supseteq"⟩  -- Lean_supseteq
     | `SSuperset => ⟨50, "⊃", "\\supset"⟩    -- Lean_supset
     | `Dvd.dvd => ⟨50, "∣", "{\\color{red}\\ \\mid\\ }"⟩  -- Lean_mid
+    | `HasEquiv.Equiv => ⟨50, "≈", "\\approx"⟩
     | `HOr.hOr => ⟨55, "|||", "\\mid\\mid\\mid"⟩  -- LeanBitwiseOr
     | `HXor.hXor => ⟨58, "^^^", "\\^\\^\\^"⟩  -- LeanBitwiseXor
     | `HAnd.hAnd => ⟨60, "&&&", "\\&\\!\\!\\&\\!\\!\\&"⟩  -- LeanBitwiseAnd
-    | `HasEquiv.Equiv => ⟨50, "≈", "≈"⟩
     -- arithmetic operator
     | `Nat.add
     | `HAdd.hAdd => ⟨65, "+", "+"⟩ -- LeanAdd
@@ -108,6 +108,7 @@ def BinaryInfix.isProp : BinaryInfix → Bool
     | `Ne
     | `HEq
     | `SEq
+    | `HasEquiv.Equiv
     | `And
     | `Or
     | `Iff
@@ -516,6 +517,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Ne
     | `HEq
     | `SEq
+    | `HasEquiv.Equiv
     | `Nat.add
     | `HAdd.hAdd
     | `Nat.sub

@@ -7,7 +7,8 @@ import Lemma.Rat.DivAdd.eq.AddDiv.of.Ne_0
 open Hyperreal Rat
 
 
-public lemma main
+@[main]
+private lemma main
 -- given
   (x : ℝ) :
 -- imply

@@ -30,7 +30,9 @@ import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.DataInv.eq.InvData
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
+-- @[grind =]
 import Lemma.Tensor.EqLength
+import Lemma.Tensor.LengthMap.eq.Length
 open Bool Nat Int List Tensor
 
 def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
