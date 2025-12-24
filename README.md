@@ -45,7 +45,7 @@ for linux: (better to use VPN to download, using a browser not by wget!)
 ```sh
 # suppose ~/github is your working directory and the binary installer file is copied here.
 cd ~/github
-versionNumber=4.24.0
+versionNumber=4.26.0
 # prepare zstd
 # Ubuntu/Debian
 sudo apt install zstd
@@ -225,6 +225,7 @@ small-letter binary infix operators are short name for Capital-letter operator n
 | X.as.Y | SEqXY | -- | 
 | X.ou.Y | OrXY | Or | 
 | X.et.Y | AndXY | And | 
+| X.to.Y | SetoidXY | Setoid | 
 | X.dvd.Y | DvdXY | -- | 
 | X.sub.Y | SubsetXY | Subset | 
 | X.sup.Y | SupsetXY | Supset | 

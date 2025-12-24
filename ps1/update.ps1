@@ -2,7 +2,7 @@
 # . .\ps1\update.ps1
 # Read the lean-toolchain file
 param(
-    [String]$version = "v4.25.2"
+    [String]$version = "v4.26.0"
 )
 $versionNumber = $version.Substring(1)
 # cd ~/.elan/toolchains
@@ -41,7 +41,7 @@ else {
         Write-Host "Lean $version already exists in systemprofile, skipping copying."
     }
     else {
-        Write-Host "Copying Lean $version to systemprofile..."
+        Write-Host "Copying $targetDir to systemprofile..."
         Copy-Item -Path "$targetDir" -Destination "C:\Windows\System32\config\systemprofile\.elan\toolchains\" -Recurse -Force
     }
 }

@@ -26,6 +26,7 @@ private lemma main
       else
         have ih := ih h_n
         have := InfinitesimalMul.of.Infinitesimal.Infinitesimal h ih
+        simp [pow_succ]
         grind
   .
     induction n with

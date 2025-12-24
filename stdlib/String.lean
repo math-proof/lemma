@@ -25,9 +25,9 @@ where
   format (fmt : List Char) (args : List String) : String :=
     let i := fmt.idxOf '%'
     if i == fmt.length then
-      fmt.asString
+      String.ofList fmt
     else
-      (fmt.take i).asString ++ format_after_percent (fmt.drop (i + 1)) args
+      String.ofList (fmt.take i) ++ format_after_percent (fmt.drop (i + 1)) args
 
   format_after_percent (fmt : List Char) (args : List String) : String :=
     match fmt with
@@ -41,7 +41,7 @@ where
   parse_digits (fmt : List Char) (args : List String) (left : Bool := false): String :=
     match args with
     | .nil =>
-      let fmt := fmt.asString
+      let fmt := String.ofList fmt
       if left then
         "-" ++ fmt
       else
@@ -50,7 +50,7 @@ where
       let ⟨num, fmt⟩ := List.span Char.isDigit fmt
       match fmt with
       | .nil =>
-        let s := num.asString
+        let s := String.ofList num
         if left then
           "-" ++ s
         else
@@ -72,7 +72,7 @@ where
                 if dec.isEmpty then
                   arg.toString
                 else
-                  let dec := dec.asString.toNat!
+                  let dec := (String.ofList dec).toNat!
                   let ⟨mantissa, exponent⟩ := arg
                   let mantissa :=
                     if exponent > dec then
@@ -90,7 +90,7 @@ where
                   let arg := JsonNumber.mk mantissa dec
 
                   let arg := arg.toString
-                  if arg.posOf '.' == arg.endPos then
+                  if arg.posOf '.' == arg.rawEndPos then
                     arg ++ "." ++ "0".repeat dec
                   else
                     let zeros := countTailingZeros mantissa
@@ -108,7 +108,7 @@ where
 
           alignment num arg left ++ format fmt args'
         | _ =>
-          let s := num.asString ++ "." ++ dec.asString ++ fmt.asString
+          let s := String.ofList num ++ "." ++ String.ofList dec ++ String.ofList fmt
           if left then
             "-" ++ s
           else
@@ -116,7 +116,7 @@ where
 
       | ch :: fmt =>
         let s := ch.toString ++ format fmt args
-        let s := num.asString ++ s
+        let s := String.ofList num ++ s
         if left then
           "-" ++ s
         else
@@ -126,7 +126,7 @@ where
     if num.isEmpty then
       arg
     else
-      let num := num.asString.toNat!
+      let num := (String.ofList num).toNat!
       let padding := fun arg : String => " ".repeat (num - arg.length)
       if left then
         arg ++ padding arg
@@ -144,8 +144,8 @@ def String.replaceFirst (s : String) (old new : String) : String :=
   match s.findSubstr? old with
   | none => s
   | some ⟨_, startPos, stopPos⟩ =>
-    let before : Substring := ⟨s, 0, startPos⟩
-    let after : Substring := ⟨s, stopPos, s.endPos⟩
+    let before : Substring.Raw := ⟨s, 0, startPos⟩
+    let after : Substring.Raw := ⟨s, stopPos, s.rawEndPos⟩
     before.toString ++ new ++ after.toString
 
 
@@ -154,7 +154,7 @@ def String.escape_specials (s : String) : String :=
   let ⟨head, tail⟩ := List.span (fun ch => ch.isAlpha || ch.isSubscriptDigit) s.toList
   if tail[0]? == some '_' then
     let tail := tail.drop 1
-    let tail := String.mk <| tail.flatMap fun c =>
+    let tail := String.ofList <| tail.flatMap fun c =>
       if c == '{' then ['\\', '{']
       else if c == '}' then ['\\', '}']
       else if c == '_' then ['\\', '_']
@@ -164,7 +164,7 @@ def String.escape_specials (s : String) : String :=
       | 0 => "%s\\_%s"
       | 1 => "{%s}_{%s}"
       | _ =>  "{%s}\\_%s"
-    formatStr.printf [String.mk head, tail]
+    formatStr.printf [String.ofList head, tail]
   else s
 
 def String.endsWithNumberedWord (s : String) (word : String) : Bool :=
@@ -180,18 +180,18 @@ def String.is_relational_operator : String → Bool
   | _ => false
 
 def String.transformPrefix (s : String) : String :=
-  match s.data with
+  match s.toList with
   | s₀ :: s₁ :: expr =>
     match s₀, s₁, expr with
     | 'E', 'q', s₂ :: expr
     | 'N', 'e', s₂ :: expr
     | 'O', 'r', s₂ :: expr =>
-      (s₀ :: s₁ :: s₂.transformExpr expr).asString
+      String.ofList (s₀ :: s₁ :: s₂.transformExpr expr)
     | 'S', 'E', s₂@'q' :: s₃ :: expr
     | 'I', 'f', s₂@'f' :: s₃ :: expr
     | 'H', 'E', s₂@'q' :: s₃ :: expr
     | 'A', 'n', s₂@'d' :: s₃ :: expr =>
-      (s₀ :: s₁ :: s₂ :: s₃.transformExpr expr).asString
+      String.ofList (s₀ :: s₁ :: s₂ :: s₃.transformExpr expr)
     | 'L', 't', _
     | 'L', 'e', _
     | 'G', 't', _
@@ -199,9 +199,9 @@ def String.transformPrefix (s : String) : String :=
       let s₀ := if s₀ == 'L' then 'G' else 'L'
       match expr with
       | s₂ :: expr =>
-        (s₀ :: s₁ :: s₂.transformExpr expr).asString
+        String.ofList (s₀ :: s₁ :: s₂.transformExpr expr)
       | _ =>
-        [s₀, s₁].asString
+        String.ofList [s₀, s₁]
     | _, _, _ =>
       s
   | _ =>

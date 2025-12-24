@@ -18,8 +18,8 @@ private lemma main
   have hb := b.2
   rw [List.length_eq_one_iff] at hb
   let ⟨y, hy⟩ := hb
-  have a_eq : a = ⟨[x], by simp⟩ := Subtype.eq hx
-  have b_eq : b = ⟨[y], by simp⟩ := Subtype.eq hy
+  have a_eq : a = ⟨[x], by simp⟩ := Subtype.ext hx
+  have b_eq : b = ⟨[y], by simp⟩ := Subtype.ext hy
   aesop
 
 
