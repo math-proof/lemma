@@ -1,18 +1,20 @@
-import Lemma.Int.Abs.eq.IteGt_0
-open Int
+import Lemma.Int.EqAbs.is.Ge_0
+import Lemma.Nat.Ge.of.Gt
+open Int Nat
 
 
 @[main]
 private lemma main
-  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
+  [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α]
   {x : α}
 -- given
   (h : x > 0) :
 -- imply
   |x| = x := by
 -- proof
-  rw [Abs.eq.IteGt_0]
-  rw [if_pos h]
+  apply EqAbs.of.Ge_0
+  apply Ge.of.Gt h
 
 
 -- created on 2025-10-01
+-- updated on 2025-12-25

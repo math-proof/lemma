@@ -101,10 +101,11 @@ def argAminmax [NeZero m] (x : Vector (Vector α n) m) (cmp : α → α → Prop
 
 end List.Vector
 
-instance : Setoid (List.Vector ℝ* n) where
+instance [Setoid α] : Setoid (List.Vector α n) where
   r a b := ∀ i : Fin n, a[i] ≈ b[i]
   iseqv :=
-    { refl x := by simp
+    {
+      refl x := by simp
       symm {a b} h := by
         intro i
         specialize h i

@@ -2,7 +2,7 @@ import Lemma.Hyperreal.GeSt_0.of.Ge_0
 import Lemma.Hyperreal.LeSt_0.of.Le_0
 import Lemma.Hyperreal.StNeg.eq.NegSt
 import Lemma.Int.Abs.eq.Neg.of.Le_0
-import Lemma.Int.EqAbs.of.Ge_0
+import Lemma.Int.EqAbs.is.Ge_0
 open Hyperreal Int
 
 

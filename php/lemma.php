@@ -146,7 +146,7 @@ if ($_POST) {
 	$sectionRegex = str_replace('List', 'List(?!\.Vector)', $sectionRegex); // avoid List.Vector
 	$sectionRegex = str_replace('Finset', 'Finset(?!\.Nonempty)', $sectionRegex); // avoid Finset.Nonempty
 	$sectionRegex = str_replace('Tensor', 'Tensor(?!\.T\b)', $sectionRegex); // avoid Tensor.T
-	$sectionRegex = str_replace('Hyperreal', 'Hyperreal(?!\.Infinite(?!\.)\b)', $sectionRegex); // avoid Hyperreal.Infinite
+	$sectionRegex = str_replace('Hyperreal', 'Hyperreal(?!\.Infinite(?:Pos|Neg)?(?!\.)\b)', $sectionRegex); // avoid Hyperreal.Infinite
 	$sectionRegex = "(?:$sectionRegex)(?=\.[A-Z])";
 
 	function detect_lemma(&$line)  {

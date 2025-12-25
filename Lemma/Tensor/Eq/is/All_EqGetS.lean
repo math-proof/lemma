@@ -12,9 +12,9 @@ private lemma main
 -- proof
   constructor <;>
     intro h
-  .
+  ·
     aesop
-  .
+  ·
     simp [Eq.is.EqDataS (s := s)] at h
     simp [GetElem.getElem] at h
     simp [Tensor.get] at h

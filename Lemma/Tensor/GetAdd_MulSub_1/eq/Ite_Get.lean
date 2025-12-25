@@ -45,8 +45,6 @@ private lemma main
     (-Hyperreal.omega : Tensor ℝ* []) := by
 -- proof
   intro mask
-  let A' := (A : Tensor ℝ* [n, n]) + (mask - 1) * Hyperreal.omega
-  have h_A : A' = (A : Tensor ℝ* [n, n]) + (mask - 1) * Hyperreal.omega := rfl
   simp [GetElem.getElem]
   repeat rw [@Tensor.GetAdd.eq.AddGetS.fin]
   have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) (mask - 1) Hyperreal.omega (i := i)
@@ -107,6 +105,24 @@ private lemma main
     simp [Add_Neg.eq.Sub]
     simp [List.Vector.head]
     apply Sub_Infty.to.NegInfty
+
+
+@[main]
+private lemma fin
+  {n : ℕ}
+-- given
+  (p : Fin n → Fin n → Bool)
+  (A : Tensor ℝ [n, n])
+  (i j : Fin n) :
+-- imply
+  let mask : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (p i j))
+  let A : Tensor ℝ* [n, n] := A
+  ((A + (mask - 1) * Hyperreal.omega).get i).get j ≈ if p i j then
+    (A.get i).get j
+  else
+    (-Hyperreal.omega : Tensor ℝ* []) := by
+-- proof
+  apply main
 
 
 -- created on 2025-12-06

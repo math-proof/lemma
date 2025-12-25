@@ -1,6 +1,7 @@
 import sympy.sets.fancyset
 import Lemma.Hyperreal.UFn.of.All_Ufn
-open Filter Hyperreal
+import Lemma.Int.Abs.eq.Max_Neg
+open Filter Hyperreal Int
 
 
 noncomputable def Hyperreal.exp (x : ℝ*) : ℝ* :=
@@ -8,7 +9,6 @@ noncomputable def Hyperreal.exp (x : ℝ*) : ℝ* :=
 
 theorem Hyperreal.exp_add (x y : ℝ*) : exp (x + y) = exp x * exp y := by
   refine Germ.inductionOn₂ x y fun x y => ?_
-  -- rw [Germ.map]
   apply Germ.coe_eq.mpr ∘ Eventually.of_forall
   simp [Real.exp_add]
 
@@ -20,10 +20,11 @@ theorem Hyperreal.exp_zero : exp 0 = 1 := by
 /-- the exponential function as a monoid hom from `Multiplicative ℝ*` to `ℝ*` -/
 @[simps]
 noncomputable def Hyperreal.expMonoidHom : MonoidHom (Multiplicative ℝ*) ℝ* :=
-  { toFun := fun x => exp x.toAdd,
+  {
+    toFun := fun x => exp x.toAdd,
     map_one' := by simp,
-    map_mul' := by simp [exp_add] }
-
+    map_mul' := by simp [exp_add]
+  }
 
 theorem Hyperreal.exp_neg x : exp (-x) = (exp x)⁻¹ := by
   apply UFn.of.All_Ufn x
@@ -43,6 +44,34 @@ theorem Hyperreal.exp_pos x : exp x > 0 := by
   apply Germ.coe_lt.mpr ∘ Eventually.of_forall
   simp [Real.exp_pos]
 
+-- copied from Mathlib\Analysis\Complex\Exponential.lean
+theorem Real.add_one_lt_exp_of_pos {x : ℝ} (hx : 0 < x) : x + 1 < exp x :=
+  (by nlinarith : x + 1 < 1 + x + x ^ 2 / 2).trans_le (quadratic_le_exp_of_nonneg hx.le)
+
+-- copied from Mathlib\Analysis\Complex\Exponential.lean
+theorem Real.add_one_le_exp_of_nonneg {x : ℝ} (hx : 0 ≤ x) : x + 1 ≤ exp x := by
+  rcases eq_or_lt_of_le hx with (rfl | h)
+  · simp
+  exact (add_one_lt_exp_of_pos h).le
+
+theorem Hyperreal.add_one_le_exp_of_nonneg (hx : 0 ≤ x) : x + 1 ≤ exp x := by
+  revert hx
+  apply UFn.of.All_Ufn x
+  intro x hx
+  apply Germ.coe_le.mpr
+  filter_upwards [Germ.coe_nonneg.mp hx] with _ hn
+  exact Real.add_one_le_exp_of_nonneg hn
+
+@[mono, gcongr]
+theorem Hyperreal.exp_strictMono : StrictMono exp := fun x y h => by
+  rw [← sub_add_cancel y x, exp_add]
+  exact (lt_mul_iff_one_lt_left (exp_pos _)).2 (lt_of_lt_of_le (by linarith) (add_one_le_exp_of_nonneg (by linarith)))
+
+theorem Hyperreal.exp_injective : Function.Injective Hyperreal.exp :=
+  exp_strictMono.injective
+
+theorem Hyperreal.exp_eq_exp : exp x = exp y ↔ x = y :=
+  exp_injective.eq_iff
 
 class Exp (α : Type u) extends AddCommGroup α, DivInvMonoid α where
   exp : α → α
@@ -92,14 +121,20 @@ class ExpRing (α : Type u) extends ExpNeZero α, DivisionSemiring α
 /--
 typeclass for ℝ ℝ* only
 -/
-class ExpPos (α : Type u) extends ExpRing α, PartialOrder α where
+class ExpPos (α : Type u) extends ExpRing α, LinearOrder α where
   exp_pos (x : α) : exp x > 0
+  exp_eq_exp : exp x = exp y ↔ x = y
+  exp_lt_exp : exp x < exp y ↔ x < y
 
 noncomputable instance : ExpPos ℝ where
   exp_pos := Real.exp_pos
+  exp_eq_exp := Real.exp_eq_exp
+  exp_lt_exp := Real.exp_lt_exp
 
 noncomputable instance : ExpPos ℝ* where
   exp_pos := Hyperreal.exp_pos
+  exp_eq_exp := Hyperreal.exp_eq_exp
+  exp_lt_exp := Hyperreal.exp_strictMono.lt_iff_lt
 
 class Log (α : Type u) extends Zero α, One α, Div α where
   log : α → α
@@ -138,46 +173,42 @@ class LogPos (α : Type u) extends Log α, ExpPos α where
   log_mul (h_x : x ≠ 0) (h_y : y ≠ 0) : log (x * y) = log x + log y
   log_div (h_x : x ≠ 0) (h_y : y ≠ 0) : log (x / y) = log x - log y
   log_exp (x : α) : log (exp x) = x
+  exp_log_eq_abs (h : x ≠ 0) : exp (log x) = |x|
 
 noncomputable instance : LogPos ℝ where
   log_mul h_x h_y := Real.log_mul h_x h_y
   log_div h_x h_y := Real.log_div h_x h_y
   log_exp x := Real.log_exp x
+  exp_log_eq_abs := Real.exp_log_eq_abs
 
 noncomputable instance : LogPos ℝ* where
-  log_mul {x y : ℝ*} h_x h_y := by
-    revert h_x h_y
+  log_mul {x y} := by
     refine Germ.inductionOn₂ x y fun x y h_x h_y => ?_
-    have hx_event : {t | x t ≠ 0} ∈ hyperfilter ℕ := by
-      apply Ultrafilter.eventually_not.mpr
-      apply mt Germ.coe_eq.mpr h_x
-    have hy_event : {t | y t ≠ 0} ∈ hyperfilter ℕ := by
-      apply Ultrafilter.eventually_not.mpr
-      apply mt Germ.coe_eq.mpr h_y
     apply Germ.coe_eq.mpr
-    filter_upwards [hx_event, hy_event] with n hn gn
-    apply Real.log_mul hn gn
+    filter_upwards [Ultrafilter.eventually_not.mpr (mt Germ.coe_eq.mpr h_x), Ultrafilter.eventually_not.mpr (mt Germ.coe_eq.mpr h_y)] with _ hn gn
+    exact Real.log_mul hn gn
 
-  log_div {x y : ℝ*} := by
+  log_div {x y} := by
     refine Germ.inductionOn₂ x y fun x y => ?_
     intro h_x h_y
-    have hx_event : ∀ᶠ n in hyperfilter ℕ, x n ≠ 0 := by
-      apply Ultrafilter.eventually_not.mpr
-      apply mt Germ.coe_eq.mpr h_x
-    have hy_event : ∀ᶠ n in hyperfilter ℕ, y n ≠ 0 := by
-      apply Ultrafilter.eventually_not.mpr
-      apply mt Germ.coe_eq.mpr h_y
-    have h_event : ∀ᶠ n in hyperfilter ℕ, x n ≠ 0 ∧ y n ≠ 0 :=
-      hx_event.and hy_event
     apply Germ.coe_eq.mpr
-    filter_upwards [h_event] with n hn
-    exact Real.log_div hn.1 hn.2
+    filter_upwards [Ultrafilter.eventually_not.mpr (mt Germ.coe_eq.mpr h_x), Ultrafilter.eventually_not.mpr (mt Germ.coe_eq.mpr h_y)] with _ hn gn
+    exact Real.log_div hn gn
 
   log_exp x := by
     apply UFn.of.All_Ufn x
     intro x
     apply Germ.coe_eq.mpr ∘ Eventually.of_forall
     simp [Real.log_exp]
+
+  exp_log_eq_abs {x} := by
+    apply UFn.of.All_Ufn x
+    intro x h
+    apply Germ.coe_eq.mpr
+    filter_upwards [Ultrafilter.eventually_not.mpr (mt Germ.coe_eq.mpr h)] with _ hn
+    simp [Real.exp_log_eq_abs hn]
+    apply Abs.eq.Max_Neg
+
 
 export Exp (exp)
 export Log (log)

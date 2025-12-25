@@ -4,8 +4,9 @@ import sympy.tensor.functions
 
 @[main, comm, mp, mpr]
 private lemma main
+  [Setoid α]
 -- given
-  (A B : Tensor ℝ* s) :
+  (A B : Tensor α s) :
 -- imply
   A ≈ B ↔ A.data ≈ B.data := by
 -- proof

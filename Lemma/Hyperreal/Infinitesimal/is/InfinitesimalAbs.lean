@@ -1,6 +1,6 @@
 import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalNeg
 import Lemma.Int.Abs.eq.Neg.of.Lt_0
-import Lemma.Int.EqAbs.of.Ge_0
+import Lemma.Int.EqAbs.is.Ge_0
 open Int Hyperreal
 
 

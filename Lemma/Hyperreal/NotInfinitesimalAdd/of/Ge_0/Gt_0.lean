@@ -1,6 +1,6 @@
 import Lemma.Hyperreal.NotInfinitesimal.is.Any_GeAbs
 import Lemma.Nat.LtAddS.of.Le.Lt
-import Lemma.Int.EqAbs.of.Ge_0
+import Lemma.Int.EqAbs.is.Ge_0
 import Lemma.Real.LtCoeS.is.Lt
 open Hyperreal Int Nat Real
 

@@ -16,7 +16,7 @@ private lemma main
   intro x h
   simp [Root.sqrt]
   apply Filter.Germ.coe_eq.mpr
-  filter_upwards [h] with n h
+  filter_upwards [h] with _ h
   exact Real.sq_sqrt h
 
 
