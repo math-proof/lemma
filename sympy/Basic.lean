@@ -450,17 +450,21 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def List.Not (list : List String) : List String :=
+partial def List.Not (list : List String) : List String :=
   if list.length == 1 then
     [list.head!.Not]
   else
-    let op :=
-      match list[1]! with
-      | "eq"  => "ne"
-      | "ne" => "eq"
-      | _ =>
-        panic! s!"Expected the operator 'eq' or 'ne', got: {list[1]!}"
-    list[0]! :: op :: list.drop 2
+    match list[1]! with
+    | "eq"  =>
+      list[0]! :: "ne" :: list.drop 2
+    | "ne" =>
+      list[0]! :: "eq" :: list.drop 2
+    | "ou" =>
+      let ⟨first, second⟩ := list.splitAt 1
+      first.Not ++ second.tail.Not
+    | _ =>
+      panic! s!"Expected the operator 'eq' or 'ne', got: {list[1]!}"
+
 
 def List.mt (list : List String) (constructorOrder : Bool := false) (index : ℕ := 0) : Name :=
   let i := list.idxOf "of"
@@ -473,6 +477,33 @@ def List.mt (list : List String) (constructorOrder : Bool := false) (index : ℕ
   let (first, ofPart) := (ofPart[i]!, ofPart.set i first.Not)
   (domain :: first.Not ++ of :: ofPart.flatten).foldl Name.str default
 
+def Lean.Expr.Not : Expr → Expr
+  | .app (.const `Not _) arg =>
+    arg
+  | .app (.app (.app (.const `Ne us) α) a) b =>
+    (Expr.const `Eq us).mkApp [α, a, b]
+  | (.app (.app (.const `Or _) p) q) =>
+    (Expr.const `And []).mkApp [(Expr.const `Not []).mkApp [p], (Expr.const `Not []).mkApp [q]]
+  | type =>
+    (Expr.const `Not []).mkApp [type]
+
+def Lean.Expr.mp (type h : Expr) (us : List Level) (args : List Expr) (lemmaName : Name) (reverse : Bool := false) :=
+  (Expr.const (if reverse then `Iff.mpr else `Iff.mp) []).mkApp [
+    (Expr.const `Not []).mkApp [type],
+    type.Not,
+    (Expr.const lemmaName us).mkApp args,
+    h
+  ]
+
+def Lean.Expr.mpr (type h : Expr) (us : List Level) (args : List Expr) (lemmaName : Name) :=
+  type.mp h us args lemmaName true
+
+def Lean.Expr.decomposeNot : Expr → List Level × List Expr × Name
+  | .app (.const `Not us) arg => ⟨us, [arg], `Classical.not_not⟩
+  | .app (.app (.app (.const `Ne us) α) a) b => ⟨us, [α, a, b], `not_ne_iff⟩
+  | .app (.app (.const `Or us) p) q => ⟨us, [p, q], `not_or⟩
+  | _ => ⟨[], [], default⟩
+
 def Expr.mt (type proof : Expr) (parity : ℕ := 0) : ℕ × Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
   let defaultCount := binders.countP (·.snd.snd == .default)
@@ -481,59 +512,25 @@ def Expr.mt (type proof : Expr) (parity : ℕ := 0) : ℕ × Expr × Expr :=
       1 <<< (defaultCount - 1)
     else
       parity
-  let index := defaultCount - 1 - Nat.log2 parity
+  let index := defaultCount - 1 - parity.log2
   let b := type
-  let Not := fun type =>
-    match type with
-    | .app (.const `Not _) arg =>
-      arg
-    | .app (.app (.app (.const `Ne us) α) a) b =>
-      (Lean.Expr.const `Eq us).mkApp [α, a, b]
-    | _ =>
-      (Expr.const `Not []).mkApp [type]
-  let h_bvar := Lean.Expr.bvar index
+  let h_bvar := Expr.bvar index
   let h :=
-    match type with
-    | .app (.const `Not _) arg =>
-      (Expr.const `Iff.mpr []).mkApp [
-        (Expr.const `Not []).mkApp [(Expr.const `Not []).mkApp [arg]],
-        arg,
-        (Expr.const `Classical.not_not []).mkApp [arg],
-        h_bvar
-      ]
-    | Ne@(.app (.app (.app (.const `Ne us) α) a) b) =>
-      (Lean.Expr.const `Iff.mpr []).mkApp [
-        (Lean.Expr.const `Not []).mkApp [Ne],-- ¬a ≠ b
-        .app (.app (.app (.const `Eq us) α) a) b, -- a = b
-        (Lean.Expr.const `not_ne_iff us).mkApp [α, a, b],
-        h_bvar
-      ]
-    | _ =>
+    let ⟨us, args, lemmaName⟩ := type.decomposeNot
+    if lemmaName == default then
       h_bvar
+    else
+      type.mpr h_bvar us args lemmaName
   let (binders, type, a, mp) :=
     let ⟨h, premise, df⟩ := binders[index]!
-    let a := premise.incDeBruijnIndex index.succ
+    let premise := premise.incDeBruijnIndex index.succ
     let mp :=
-      match a with
-      | .app (.const `Not _) arg =>
-        fun h =>
-          (Expr.const `Iff.mp []).mkApp [
-            (Expr.const `Not []).mkApp [(Expr.const `Not []).mkApp [arg]],
-            arg,
-            (Expr.const `Classical.not_not []).mkApp [arg],
-            h
-          ]
-      | Ne@(.app (.app (.app (.const `Ne us) α) a) b) =>
-        fun h =>
-          (Expr.const `Iff.mp []).mkApp [
-            (Expr.const `Not []).mkApp [Ne],-- ¬a ≠ b
-            .app (.app (.app (.const `Eq us) α) a) b, -- a = b
-            (Expr.const `not_ne_iff us).mkApp [α, a, b],
-            h
-          ]
-      | _ =>
+      let ⟨us, args, lemmaName⟩ := premise.decomposeNot
+      if lemmaName == default then
         id
-    (binders.set index (h, Not (type.decDeBruijnIndex index.succ), df), Not a, a, mp)
+      else
+        fun h => premise.mp h us args lemmaName
+    (binders.set index (h, (type.decDeBruijnIndex index.succ).Not, df), premise.Not, premise, mp)
   let telescope := fun lam body =>
     binders.foldl
       (fun body ⟨binderName, binderType, binderInfo⟩ =>
@@ -610,7 +607,7 @@ initialize registerBuiltinAttribute {
     let constructor_order ← constructor_order declName
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let proof : Lean.Expr := .const declName (levelParams.map .param)
+    let proof : Expr := .const declName (levelParams.map .param)
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
     let ⟨_, type, value⟩ := Expr.mt type value
@@ -641,7 +638,7 @@ initialize registerBuiltinAttribute {
     let constructor_order ← constructor_order declName
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let proof : Lean.Expr := .const declName (levelParams.map .param)
+    let proof : Expr := .const declName (levelParams.map .param)
     let parity := stx.getNum
     let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
     let ⟨_, type, value⟩ := Expr.mt type value

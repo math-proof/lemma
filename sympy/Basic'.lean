@@ -286,64 +286,30 @@ def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.E
       1 <<< (defaultCount - 1)
     else
       parity
-  let index := defaultCount - 1 - Nat.log2 parity
+  let index := defaultCount - 1 - parity.log2
   println! "index = {index}"
   let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
   type.println context "original type"
   let b := type
   println! s!"binders = {binders}"
-  let Not := fun type =>
-    match type with
-    | .app (.const `Not _) arg =>
-      arg
-    | .app (.app (.app (.const `Ne us) α) a) b =>
-      (Lean.Expr.const `Eq us).mkApp [α, a, b]
-    | _ =>
-      (Lean.Expr.const `Not []).mkApp [type]
   let h_bvar := Lean.Expr.bvar index
   let h :=
-    match type with
-    | .app (.const `Not _) arg =>
-      (Lean.Expr.const `Iff.mpr []).mkApp [
-        (Lean.Expr.const `Not []).mkApp [(Lean.Expr.const `Not []).mkApp [arg]],
-        arg,
-        (Lean.Expr.const `Classical.not_not []).mkApp [arg],
-        h_bvar
-      ]
-    | Ne@(.app (.app (.app (.const `Ne us) α) a) b) =>
-      (Lean.Expr.const `Iff.mpr []).mkApp [
-        (Lean.Expr.const `Not []).mkApp [Ne],-- ¬a ≠ b
-        .app (.app (.app (.const `Eq us) α) a) b, -- a = b
-        (Lean.Expr.const `not_ne_iff us).mkApp [α, a, b],
-        h_bvar
-      ]
-    | _ =>
+    let ⟨us, args, lemmaName⟩ := type.decomposeNot
+    if lemmaName == default then
       h_bvar
+    else
+      type.mpr h_bvar us args lemmaName
   println! s!"h = {h}"
   let (binders, type, a, mp) :=
     let ⟨h, premise, df⟩ := binders[index]!
-    let a := premise.incDeBruijnIndex index.succ
+    let premise := premise.incDeBruijnIndex index.succ
     let mp :=
-      match a with
-      | .app (.const `Not _) arg =>
-        fun h : Lean.Expr =>
-          (Lean.Expr.const `Iff.mp []).mkApp [
-            (Lean.Expr.const `Not []).mkApp [(Lean.Expr.const `Not []).mkApp [arg]],
-            arg,
-            (Lean.Expr.const `Classical.not_not []).mkApp [arg],
-            h
-          ]
-      | Ne@(.app (.app (.app (.const `Ne us) α) a) b) =>
-        fun h : Lean.Expr =>
-          (Lean.Expr.const `Iff.mp []).mkApp [
-            (Lean.Expr.const `Not []).mkApp [Ne],-- ¬a ≠ b
-            .app (.app (.app (.const `Eq us) α) a) b, -- a = b
-            (Lean.Expr.const `not_ne_iff us).mkApp [α, a, b],
-            h
-          ]
-      | _ =>
+      let ⟨us, args, lemmaName⟩ := premise.decomposeNot
+      if lemmaName == default then
         id
-    (binders.set index (h, Not (type.decDeBruijnIndex index.succ), df), Not a, a, mp)
+      else
+        fun h => premise.mp h us args lemmaName
+    (binders.set index (h, (type.decDeBruijnIndex index.succ).Not, df), premise.Not, premise, mp)
   println! s!"binders = {binders}"
   type.println context "new type"
   let telescope := fun lam hint body => do
@@ -405,7 +371,7 @@ initialize registerBuiltinAttribute {
     let proof : Lean.Expr := .const declName (levelParams.map .param)
     let parity := stx.getNum
     let and := stx.getIdent == `and
-    let ⟨_, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
+    let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
     let ⟨_, type, value⟩ ← Expr.mt' type value
     let moduleTokens := (← getEnv).moduleTokens.mp
     println! s!"moduleTokens.mp = {moduleTokens}"

@@ -4,9 +4,9 @@ import sympy.Basic
 @[main, comm, mp, mpr]
 private lemma main :
 -- imply
-  ¬(p ∨ q) ↔ ¬p ∧ ¬q := by
+  ¬(p ∨ q) ↔ ¬p ∧ ¬q :=
 -- proof
-  tauto
+  not_or
 
 
 -- created on 2024-07-01
