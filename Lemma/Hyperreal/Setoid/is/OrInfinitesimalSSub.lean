@@ -5,8 +5,8 @@ import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.NotInfiniteDiv.of.InfinitesimalSubAddDivS.NotInfinitesimal
-import Lemma.Hyperreal.NotInfinitesimalSub.of.Infinitesimal.NotInfinitesimal
-import Lemma.Hyperreal.NotInfinitesimalSub.of.NotInfinitesimal.Infinitesimal
+import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.InfinitesimalSub
+import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalSub.Infinitesimal
 import Lemma.Hyperreal.NotInfinitesimalSubAddDivS.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.Setoid.is.OrAndS
 import Lemma.Hyperreal.StAdd.eq.AddStS.of.NotInfinite.NotInfinite

@@ -1,3 +1,4 @@
+import Lemma.Hyperreal.IsSt_St.of.NotInfinite
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Bool.NotAnd.is.OrNotS
@@ -28,9 +29,8 @@ private lemma main
     let ⟨h₀, h₁⟩ := h
     intro h
     apply h₁
-    have h_isSt := isSt_st' h₀
-    rw [h] at h_isSt
-    exact h_isSt
+    have h_isSt := IsSt_St.of.NotInfinite h₀
+    rwa [h] at h_isSt
 
 
 -- created on 2025-12-18

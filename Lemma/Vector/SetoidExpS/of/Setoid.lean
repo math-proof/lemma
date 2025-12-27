@@ -1,4 +1,4 @@
-import Lemma.Hyperreal.SetoidExpS.of.Setoid
+import Lemma.Hyperreal.SetoidExpS.of.InfinitesimalSub
 import Lemma.Vector.Setoid.is.All_SetoidGetS
 import sympy.vector.functions
 open Vector Hyperreal
@@ -16,8 +16,10 @@ private lemma main
   apply Setoid.of.All_SetoidGetS.fin
   intro i
   simp
-  apply SetoidExpS.of.Setoid
-  apply All_SetoidGetS.of.Setoid.fin h
+  apply SetoidExpS.of.InfinitesimalSub
+  -- apply All_SetoidGetS.of.Setoid.fin h i
+  sorry
+
 
 
 -- created on 2025-12-24

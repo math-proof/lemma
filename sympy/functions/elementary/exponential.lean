@@ -97,6 +97,8 @@ noncomputable instance : Exp ℝ* where
   exp_zero := Hyperreal.exp_zero
   exp_neg := Hyperreal.exp_neg
 
+@[simp]
+theorem Hyperreal.exp.rfl (x : ℝ*) : Exp.exp x = x.exp := by rfl
 
 /--
 typeclass for ℝ ℝ* ℂ, List.Vector α, Tensor α

@@ -4,10 +4,11 @@ import Lemma.Rat.Div.eq.Mul_Inv
 open Int Rat
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Exp R]
-  {a b : R} :
+-- given
+  (a b : R) :
 -- imply
   exp (a - b) = exp a / exp b := by
 -- proof

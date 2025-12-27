@@ -3,20 +3,26 @@ import Lemma.Hyperreal.InfinitesimalSub
 open Hyperreal
 
 
-@[main]
+/--
+constructor order of substraction of a - (a - b) = b
+
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.Infinitesimal.of.Infinitesimal.InfinitesimalSub |
+| mt | Hyperreal.NotInfinitesimalSub.of.Infinitesimal.NotInfinitesimal |
+-/
+@[main, mt]
 private lemma main
   {a b : ℝ*}
 -- given
   (h_a : Infinitesimal a)
-  (h_b : ¬Infinitesimal b) :
+  (h_b : Infinitesimal (a - b)) :
 -- imply
-  ¬Infinitesimal (a - b) := by
+  Infinitesimal b := by
 -- proof
-  contrapose! h_b
   have h_b := InfinitesimalSub.comm.mp h_b
   have := InfinitesimalAdd.of.Infinitesimal.Infinitesimal h_a h_b
-  simp at this
-  assumption
+  simp_all
 
 
 -- created on 2025-12-10

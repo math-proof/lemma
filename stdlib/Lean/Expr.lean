@@ -272,6 +272,8 @@ def Lean.Expr.comm : Expr → Expr
     (Expr.const `And us).mkApp [b, a]
   | .app (.app (.const `Or us) a) b =>
     (Expr.const `Or us).mkApp [b, a]
+  | .app (.app (.app (.app (.const `HasEquiv.Equiv us) α) self) a) b =>
+    (Expr.const `HasEquiv.Equiv us).mkApp [α, self, b, a]
   | e  =>
     panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, And, Or, but got {e.ctorName} :\n{e}"
 
@@ -307,6 +309,8 @@ def Lean.Expr.symm : Expr → Expr
     (Expr.const `And.symm us).mkApp [a, b]
   | .app (.app (.const `Or us) a) b =>
     (Expr.const `Or.symm us).mkApp [a, b]
+  | .app (.app (.app (.app (.const `HasEquiv.Equiv us) α) self) a) b =>
+    (Expr.const `Setoid.symm us).mkApp [α, self, a, b]
   | e  =>
     panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, And, Or, but got {e.ctorName} :\n{e}"
 
