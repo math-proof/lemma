@@ -23,8 +23,8 @@ private lemma main
   have h_a := All_GtAbs.of.Infinite h_a
   let ⟨⟨B, hB⟩, h_b⟩ := Any_GeAbs.of.NotInfinitesimal h_b
   simp at h_b
-  have h_div_gt_0 := Div.gt.Zero.of.Gt_0.Gt_0 hδ hB
-  have h_a := h_a ⟨δ / B, h_div_gt_0⟩
+  have h_div_pos := Div.gt.Zero.of.Gt_0.Gt_0 hδ hB
+  have h_a := h_a ⟨δ / B, h_div_pos⟩
   simp at h_a
   calc
     |a| * |b| > δ / B * B := by

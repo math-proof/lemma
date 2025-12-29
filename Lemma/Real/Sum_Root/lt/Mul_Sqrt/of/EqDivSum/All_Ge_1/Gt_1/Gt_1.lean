@@ -42,8 +42,8 @@ private lemma main
     let ⟨i, hi⟩ := h
     let ⟨h_In, h_Gt_1⟩ := hi
     rw [Finset.mem_Ico] at h_In
-    have h_Gt_0 := Gt.of.Ge.Gt h_In.left (by norm_num : 1 > 0)
-    have h := Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0 h_Gt_1 h_Gt_0
+    have h_pos := Gt.of.Ge.Gt h_In.left (by norm_num : 1 > 0)
+    have h := Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0 h_Gt_1 h_pos
     have h_Any : ∃ i ∈ Finset.range n, (x i) ^ (1 / (i + 2) : ℝ) < √(x i) := by
       use i
       constructor

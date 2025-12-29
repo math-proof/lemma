@@ -33,8 +33,8 @@ private lemma main
   have h_mem := Arg.in.IocNegPiPi z
   have h_mem := InDiv.of.In_Ioc.Gt_0 h_mem (by apply GtCoe_0.of.Gt_0 h : (n : ℝ) > 0)
   have h_mem := InSub.of.In_Ioc h_mem Real.pi
-  have h_Gt_0 := Lt0Mul.of.Gt_0.Gt_0 (by norm_num : (2 : ℝ) > 0) Pi.gt.Zero
-  have h_mem := InDiv.of.In_Ioc.Gt_0 h_mem h_Gt_0
+  have h_pos := Lt0Mul.of.Gt_0.Gt_0 (by norm_num : (2 : ℝ) > 0) Pi.gt.Zero
+  have h_mem := InDiv.of.In_Ioc.Gt_0 h_mem h_pos
   simp only [DivSub.eq.SubDivS] at h_mem
   simp only [DivDiv.eq.Div_Mul] at h_mem
   rw [DivNeg.eq.NegDiv] at h_mem

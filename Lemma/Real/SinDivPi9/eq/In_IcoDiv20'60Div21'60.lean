@@ -29,9 +29,9 @@ private lemma main:
     rw [SinMul3.eq.SubMul3_Mul4SinMul3]
   rw [h_3t] at h_f
   rw [SinDivPi3.eq.DivSqrt3'2] at h_f
-  have h_Gt_0 := SinDivPi9.gt.Zero
-  rw [← h_t] at h_Gt_0
-  have h_Ge_0 := Ge.of.Gt h_Gt_0
+  have h_pos := SinDivPi9.gt.Zero
+  rw [← h_t] at h_pos
+  have h_Ge_0 := Ge.of.Gt h_pos
   have h_Lt := SinDivPi9.lt.Div1'2
   unfold f at h_f
   have := In_Ico.of.Le.Lt h_Ge_0 h_Lt

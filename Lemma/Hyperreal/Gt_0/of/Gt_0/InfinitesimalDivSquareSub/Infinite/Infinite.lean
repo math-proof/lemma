@@ -46,15 +46,15 @@ private lemma main
   by_contra h_b_0
   simp at h_b_0
   have h_b_0 := Lt.of.Le.Ne  h_b_0 h_b_ne_0
-  have h_div_ab_lt_0 := Gt0Div.of.Gt_0.Lt_0 h_0 h_b_0
-  have h_div_ba_lt_0 := Gt0Div.of.Lt_0.Gt_0 h_b_0 h_0
-  have h_mul_ba_lt_0 := Gt0Mul.of.Lt_0.Gt_0 h_b_0 h_0
+  have h_div_ab_neg := Gt0Div.of.Gt_0.Lt_0 h_0 h_b_0
+  have h_div_ba_neg := Gt0Div.of.Lt_0.Gt_0 h_b_0 h_0
+  have h_mul_ba_neg := Gt0Mul.of.Lt_0.Gt_0 h_b_0 h_0
   have h_inf_add_divs := NotInfiniteAdd.of.NotInfinite.NotInfinite h_inf_ab h_inf_ba
   have h_eps_sub : ¬(a / b + b / a - 2).Infinitesimal := by
     have h_le : a / b + b / a - 2 ≤ (-2 : ℝ) := by
       simp
       apply Le.of.Lt
-      apply Gt0Add.of.Lt_0.Lt_0 h_div_ab_lt_0 h_div_ba_lt_0
+      apply Gt0Add.of.Lt_0.Lt_0 h_div_ab_neg h_div_ba_neg
     have h_inf_sub_add_divs : ¬(a / b + b / a - 2).Infinite := NotInfiniteSub.of.NotInfinite h_inf_add_divs (r := 2)
     have h_st_le := LeSt.of.Le.NotInfinite h_inf_sub_add_divs h_le
     apply NotInfinitesimal.of.NeSt_0
@@ -72,9 +72,9 @@ private lemma main
       apply Ne.of.Lt
       apply Gt0Add.of.Lt_0.Lt_0
       ·
-        apply Gt0Add.of.Lt_0.Lt_0 h_div_ab_lt_0 h_div_ba_lt_0
+        apply Gt0Add.of.Lt_0.Lt_0 h_div_ab_neg h_div_ba_neg
       ·
-        have := Gt0Div.of.Lt_0.left (d := 1) h_mul_ba_lt_0
+        have := Gt0Div.of.Lt_0.left (d := 1) h_mul_ba_neg
         simp at this
         simpa
   ⟩

@@ -41,13 +41,15 @@ private lemma main
   rw [Mul.comm (a := 4)]
   rw [MulMul.eq.Mul_Mul]
   rw [SubMulS.eq.Mul_Sub]
-  have h_Lt_0 := Gt0Sub.of.Lt h₂
-  apply Gt0Mul.of.Lt_0.Gt_0 h_Lt_0
-  apply Sub.gt.Zero.of.Lt
-  have := AddAddSquareS.lt.Div3'4.of.In_Ico0.In_Ico0 h₀ h₁
-  have := LtMulS.of.Gt_0.Lt (by norm_num : 4 > (0 : ℝ)) this
-  norm_num at this
-  assumption
+  apply Gt0Mul.of.Lt_0.Gt_0
+  .
+    apply Gt0Sub.of.Lt h₂
+  .
+    apply Sub.gt.Zero.of.Lt
+    have := AddAddSquareS.lt.Div3'4.of.In_Ico0.In_Ico0 h₀ h₁
+    have := LtMulS.of.Gt_0.Lt (by norm_num : 4 > (0 : ℝ)) this
+    norm_num at this
+    assumption
 
 
 -- created on 2025-03-24

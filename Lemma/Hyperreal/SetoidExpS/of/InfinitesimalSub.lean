@@ -1,3 +1,4 @@
+import Lemma.Hyperreal.Infinite.is.InfiniteSub.of.NotInfinite
 import Lemma.Hyperreal.Infinite.is.InfinitePos.ou.InfiniteNeg
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinite
@@ -30,11 +31,11 @@ private lemma main
 -- proof
   have h := Setoid.of.InfinitesimalSub h_sub
   apply Setoid.of.OrAndS
-  if h_a : a.InfiniteNeg then
-    have h_a_exp := InfinitesimalExp.of.InfiniteNeg h_a
+  if h_a_neg : a.InfiniteNeg then
+    have h_a_exp := InfinitesimalExp.of.InfiniteNeg h_a_neg
     simp [h_a_exp]
     have h := OrAndS.of.Setoid h
-    have ⟨h_a, h_a_lt_0⟩ := Infinite.Lt_0.of.InfiniteNeg h_a
+    have ⟨h_a, h_a_neg⟩ := Infinite.Lt_0.of.InfiniteNeg h_a_neg
     simp [NotInfinitesimal.of.Infinite h_a] at h
     have ⟨h, h_b_eps⟩ := h
     have h_st := EqSt.of.InfinitesimalSub h
@@ -42,9 +43,9 @@ private lemma main
       have h_b_exp := InfinitesimalExp.of.InfiniteNeg h_b_neg
       simp [h_b_exp]
     else if h_b_pos : b.InfinitePos then
-      have ⟨h_b, h_b_lt_0⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos
-      have h_ab := Gt0Div.of.Lt_0.Gt_0 h_a_lt_0 h_b_lt_0
-      have h_ab_st := LeSt_0.of.Le_0 (by linarith) (x := a / b)
+      have ⟨h_b, h_b_neg⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos
+      have h_ab := Gt0Div.of.Lt_0.Gt_0 h_a_neg h_b_neg
+      have := LeSt_0.of.Le_0 (by linarith) (x := a / b)
       linarith
     else
       have h_b_inf := NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_b_pos, h_b_neg⟩
@@ -53,26 +54,26 @@ private lemma main
       have := EqSt_0.of.Infinite this
       linarith
   else if h_b_neg : b.InfiniteNeg then
-    have h_b := NotInfiniteNeg.of.NotInfiniteNeg.Setoid (Setoid.symm h) h_a
+    have h_b := NotInfiniteNeg.of.NotInfiniteNeg.Setoid (Setoid.symm h) h_a_neg
     contradiction
   else
-    have h_a_exp := NotInfinitesimalExp.of.NotInfiniteNeg h_a
+    have h_a_exp := NotInfinitesimalExp.of.NotInfiniteNeg h_a_neg
     have h_b_exp := NotInfinitesimalExp.of.NotInfiniteNeg h_b_neg
     simp [h_a_exp, h_b_exp]
+    have h_div_exp := DivExpS.eq.ExpSub a b
+    simp at h_div_exp
+    rw [h_div_exp]
     if h_a_pos : a.InfinitePos then
       have h_b_pos := InfinitePos.of.InfinitePos.Setoid h h_a_pos
-      have h_div_exp := DivExpS.eq.ExpSub a b
-      simp at h_div_exp
       have h_eps := OrAndS.of.Setoid h
       have h_a := NotInfinitesimal.of.InfinitePos h_a_pos
       have h_b := NotInfinitesimal.of.InfinitePos h_b_pos
       simp [h_a, h_b] at h_eps
       have h_st := EqSt.of.InfinitesimalSub h_eps
-      rw [h_div_exp]
       apply InfinitesimalSub.of.EqSt.NotInfinite
       ·
         apply NotInfiniteExp.of.NotInfinitePos
-        apply Hyperreal.NotInfinitePos.of.Infinitesimal h_sub
+        exact NotInfinitePos.of.Infinitesimal h_sub
       ·
         rw [StExp.eq.ExpSt.of.NotInfinite]
         ·
@@ -81,13 +82,26 @@ private lemma main
         ·
           apply NotInfinite.of.Infinitesimal h_sub
     else if h_b_pos : b.InfinitePos then
-      have h_a := Hyperreal.NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_a_pos, h_a⟩
+      have h_a := NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_a_pos, h_a_neg⟩
       have h_b := Infinite.of.InfinitePos h_b_pos
-      have ⟨h_b, h_b_lt_0⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos
-      sorry
+      have h_sub := InfiniteSub.of.Infinite.NotInfinite h_a h_b
+      have h_sub := NotInfinitesimal.of.Infinite h_sub
+      contradiction
     else
-      have h_b_inf := NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_b_pos, h_b_neg⟩
-      sorry
+      apply InfinitesimalSub.of.EqSt.NotInfinite
+      .
+        apply NotInfiniteExp.of.NotInfinitePos
+        apply NotInfinitePos.of.Infinitesimal h_sub
+      .
+        rw [StExp.eq.ExpSt.of.NotInfinite]
+        .
+          simp [EqSt_0.of.Infinitesimal h_sub]
+        .
+          apply NotInfiniteSub.of.NotInfinite.NotInfinite
+          .
+            exact NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_a_pos, h_a_neg⟩
+          .
+            exact NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_b_pos, h_b_neg⟩
 
 
 -- created on 2025-12-24

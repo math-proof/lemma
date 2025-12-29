@@ -29,7 +29,7 @@ private lemma main
   ((∑ i ∈ range n, x i) / n = x n ∧ (∑ i ∈ range n, (x i) ^ (1 / (i + 2) : ℝ)) = n * (x n) ^ (1 / 2 : ℝ) ∧ ∀ i ∈ range n, x i ≥ 1) ↔ ∀ i ∈ range (n + 1), x i = 1 := by
 -- proof
   have h_Gt_1 := GtCoeS.of.Gt (R := ℝ) h
-  have h_Gt_0 : (n : ℝ) > 0 := by apply Gt.of.Gt.Gt h_Gt_1 (by norm_num)
+  have h_pos : (n : ℝ) > 0 := by apply Gt.of.Gt.Gt h_Gt_1 (by norm_num)
   constructor
   ·
     intro ⟨h₀, h₁, h₂⟩
@@ -37,7 +37,7 @@ private lemma main
     have := Sum.eq.Mul.of.All_Eq.range h'
     simp at this
     have := EqDivS.of.Eq this n
-    simp [Div.eq.One.of.Gt_0 h_Gt_0] at this
+    simp [Div.eq.One.of.Gt_0 h_pos] at this
     have h₀ := h₀.symm.trans this
     apply All_Eq.of.All_Eq.Eq.is_constant h₀ h'
   ·
@@ -50,7 +50,7 @@ private lemma main
       have := Sum.eq.Mul.of.All_Eq.range h_All_Eq
       simp at this
       have := EqDivS.of.Eq this n
-      simp [Div.eq.One.of.Gt_0 h_Gt_0] at this
+      simp [Div.eq.One.of.Gt_0 h_pos] at this
       apply this.trans h_Eq.symm
     ·
       rw [h_Eq]

@@ -39,25 +39,25 @@ private lemma main
   rw [NotGe.is.Lt, NotGe.is.Lt]
   intro h_Or
   cases h_Or with
-  | inl h_Lt_0 =>
-    apply Eq_Ite.of.Cond.NotAnd.Eq h_Lt_0
+  | inl h_neg =>
+    apply Eq_Ite.of.Cond.NotAnd.Eq h_neg
     rw [IffAndSAnd]
     rw [Gt.Lt.is.False]
     simp
-    have := Iff_True.of.Cond h_Lt_0
+    have := Iff_True.of.Cond h_neg
     simp [this]
     rw [Add_Neg.eq.Sub]
     rw [SubNeg.comm]
-    apply FDiv.eq.Ite__Ite.of.Lt_0 h_Lt_0
-  | inr h_Lt_0 =>
-    have := Iff_True.of.Cond h_Lt_0
+    apply FDiv.eq.Ite__Ite.of.Lt_0 h_neg
+  | inr h_neg =>
+    have := Iff_True.of.Cond h_neg
     simp [this]
-    have := Eq.is.False.of.Lt h_Lt_0
+    have := Eq.is.False.of.Lt h_neg
     simp [this]
-    have := Gt.is.False.of.Lt h_Lt_0
+    have := Gt.is.False.of.Lt h_neg
     simp [this]
     rw [AddNeg.eq.Sub]
-    apply FDiv.eq.Ite.of.Lt_0 h_Lt_0
+    apply FDiv.eq.Ite.of.Lt_0 h_neg
 
 
 -- created on 2025-03-21

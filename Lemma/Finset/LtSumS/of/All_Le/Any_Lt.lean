@@ -28,12 +28,16 @@ private lemma main
     else
       unfold y'
       simp [h]
-  have := All_Le.of.All_Le.All_Eq_Ite h_In h₀ h_y'
-  have h_Le := LeSumS.of.All_Le this
-  have := Sum.eq.Sum_Add_Sub.of.In_Range.All_Eq_Ite h_In h_y'
-  have h_Lt_0 := Gt0Sub.of.Lt h_Lt
-  apply Lt.of.Le.Lt h_Le
-  apply Lt.of.Eq_Add.Lt_0 this h_Lt_0
+  apply Lt.of.Le.Lt
+  .
+    apply LeSumS.of.All_Le
+    apply All_Le.of.All_Le.All_Eq_Ite h_In h₀ h_y'
+  .
+    apply Lt.of.Eq_Add.Lt_0
+    .
+      apply Sum.eq.Sum_Add_Sub.of.In_Range.All_Eq_Ite h_In h_y'
+    .
+      apply Gt0Sub.of.Lt h_Lt
 
 
 -- created on 2025-04-06

@@ -20,11 +20,11 @@ private lemma main
   have h_Sqrt := GtSqrtS.of.Gt.Gt_0 h (by linarith [h])
   norm_num at h_Sqrt
   have h_Sqrt := Sub.gt.Zero.of.Gt h_Sqrt
-  have h_Gt_0 := GtSquare_0.of.Gt_0 (a := √x - 1) h_Sqrt
-  rw [this] at h_Gt_0
+  have h_pos := GtSquare_0.of.Gt_0 (a := √x - 1) h_Sqrt
+  rw [this] at h_pos
   have := EqSquareSqrt.of.Gt_0 (by linarith [h] : x > 0)
-  rw [this] at h_Gt_0
-  rwa [SubAdd.eq.AddSub] at h_Gt_0
+  rw [this] at h_pos
+  rwa [SubAdd.eq.AddSub] at h_pos
 
 
 -- created on 2025-04-06

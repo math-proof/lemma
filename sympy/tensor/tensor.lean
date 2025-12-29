@@ -121,13 +121,12 @@ def Tensor.getElem (base : Tensor α s) (indices : List ℕ) (h : indices ∈ (s
   | .nil =>
     base
   | index :: indices =>
-    have h_Gt_0 := GtLength_0.of.Cons.in.CartesianProduct h
-    have h_Gt_0 := LengthTake.gt.Zero.of.LengthTake.gt.Zero h_Gt_0
-    have h_in : index :: indices ∈ (s[0] :: s.tail.take indices.length).cartesianProduct := by rwa [Eq_Cons_Tail.of.GtLength_0 h_Gt_0] at h
+    have h_pos := GtLength_0.of.Cons.in.CartesianProduct h
+    have h_pos := LengthTake.gt.Zero.of.LengthTake.gt.Zero h_pos
+    have h_in : index :: indices ∈ (s[0] :: s.tail.take indices.length).cartesianProduct := by rwa [Eq_Cons_Tail.of.GtLength_0 h_pos] at h
     have h := In_CartesianProduct.of.In_CartesianProductCons h_in
     have := Lt.of.In_CartesianProductCons h_in
-    have h_eq := Length.eq.Get_0.of.GtLength_0 h_Gt_0 base
-    cast (by simp) (getElem (base.get ⟨index, by rwa [h_eq]⟩) indices h)
+    cast (by simp) (getElem (base.get ⟨index, by rwa [Length.eq.Get_0.of.GtLength_0 h_pos base]⟩) indices h)
 
 /--
 mimics tensor slicing in libraries like PyTorch: X[start:stop:step]

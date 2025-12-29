@@ -74,10 +74,10 @@ private lemma main
   rw [MulMul.comm (a := P + N)] at h
   rw [Mul.eq.Square] at h
   rw [MulMul.eq.Mul_Mul] at h
-  have h_gt_0 := GtMulS.of.Gt.Gt_0 (GtSquare_0.of.Ne_0 h_Add_ne_Zero) h₀
-  simp only [EqMul0_0] at h_gt_0
+  have h_pos := GtMulS.of.Gt.Gt_0 (GtSquare_0.of.Ne_0 h_Add_ne_Zero) h₀
+  simp only [EqMul0_0] at h_pos
   have h_le_0 := LeNegSquare_0 (a := TN * P - TP * N)
-  have h_le_0 := LeDivS.of.Le.Gt_0 h_le_0 h_gt_0
+  have h_le_0 := LeDivS.of.Le.Gt_0 h_le_0 h_pos
   simp at h_le_0
   rwa [← h] at h_le_0
 

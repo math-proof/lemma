@@ -32,20 +32,20 @@ private lemma main
   p * rₜₚ / (p * rₜₚ + (1 - p) * (1 - rₜₙ)) > p := by
 -- proof
   have h := Gt_Sub.of.GtAdd h
-  have h_Sub_gt_0 := Sub.gt.Zero.of.Lt hₚ.right
-  have h := GtMulS.of.Gt_0.Gt h_Sub_gt_0 h
+  have h_sub_pos := Sub.gt.Zero.of.Lt hₚ.right
+  have h := GtMulS.of.Gt_0.Gt h_sub_pos h
   rw [MulSub.eq.SubMulS] at h
   simp only [EqMul1] at h
   have h_Gt := Gt_Add.of.GtSub h
   rw [Add.comm] at h_Gt
-  have h_Add_gt_0 := Lt0Add.of.Gt_0.Gt_0
+  have h_add_pos := Lt0Add.of.Gt_0.Gt_0
     (Lt0Mul.of.Gt_0.Gt_0 hₚ.left hₜ.left)
     (Lt0Mul.of.Gt_0.Gt_0
-      h_Sub_gt_0
+      h_sub_pos
       (Sub.gt.Zero.of.Lt hₜ.right)
     )
-  have h_Gt_1 := GtDivS.of.Gt.Gt_0 h_Gt h_Add_gt_0
-  simp only [Div.eq.One.of.Gt_0 h_Add_gt_0] at h_Gt_1
+  have h_Gt_1 := GtDivS.of.Gt.Gt_0 h_Gt h_add_pos
+  simp only [Div.eq.One.of.Gt_0 h_add_pos] at h_Gt_1
   have h_Gt := GtMulS.of.Gt_0.Gt hₚ.left h_Gt_1
   rw [EqMul_1] at h_Gt
   rwa [Mul_Div.eq.DivMul] at h_Gt

@@ -17,10 +17,12 @@ private lemma main
 -- imply
   ⌈(c - a) / b⌉ = 1 := by
 -- proof
-  have h_Le := Ge_Sub.of.GeAdd.left h₁
-  have h_Gt_0 := Sub.gt.Zero.of.Gt h₂
   apply CeilDivSub.eq.One.of.In_Ioc0.Gt_0 h₀
-  apply In_Ioc.of.Lt.Le h_Gt_0 h_Le
+  apply In_Ioc.of.Lt.Le
+  .
+    apply Sub.gt.Zero.of.Gt h₂
+  .
+    apply Ge_Sub.of.GeAdd.left h₁
 
 
 -- created on 2025-05-04

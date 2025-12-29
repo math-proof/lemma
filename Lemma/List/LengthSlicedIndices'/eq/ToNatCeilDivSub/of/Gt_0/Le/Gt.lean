@@ -21,16 +21,16 @@ private lemma main
 -- imply
   (Nat.sliced_indices' h_stop h_start h_step).length = ⌈(start - stop : ℚ) / step⌉.toNat := by
 -- proof
-  have h_Gt_0 := Sub.gt.Zero.of.Gt h_stop
-  have h_Gt_0 := GtCoeS.of.Gt (R := ℚ) h_Gt_0
-  rw [CoeSub.eq.SubCoeS.of.Gt h_stop] at h_Gt_0
+  have h_pos := Sub.gt.Zero.of.Gt h_stop
+  have h_pos := GtCoeS.of.Gt (R := ℚ) h_pos
+  rw [CoeSub.eq.SubCoeS.of.Gt h_stop] at h_pos
   have h_step' := GtCoeS.of.Gt (R := ℚ) h_step
-  have h_Gt_0 := GtDivS.of.Gt.Gt_0 h_Gt_0 h_step'
-  simp at h_Gt_0
+  have h_pos := GtDivS.of.Gt.Gt_0 h_pos h_step'
+  simp at h_pos
   have h_Le := GeCeil (x := (start - stop : ℚ) / step)
-  have h_Gt_0 := Gt.of.Ge.Gt h_Le h_Gt_0
-  have h_Gt_0 := Gt.of.GtCoeS h_Gt_0
-  have h_Eq := EqToNat.of.Gt_0 h_Gt_0
+  have h_pos := Gt.of.Ge.Gt h_Le h_pos
+  have h_pos := Gt.of.GtCoeS h_pos
+  have h_Eq := EqToNat.of.Gt_0 h_pos
   apply Eq.of.EqCoeS (R := ℤ)
   rw [h_Eq]
   have h_Le := LeMulS.of.Le.Gt_0 h_Le h_step'
