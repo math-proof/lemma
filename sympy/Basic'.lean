@@ -154,7 +154,7 @@ def Expr.mpr' (type proof : Lean.Expr) (parity : ℕ := 0) (and : Bool := false)
 
 initialize registerBuiltinAttribute {
   name := `mpr'
-  descr := "Automatically generate the two implications of an equivalence theorem"
+  descr := "Automatically generate the mpr implication of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
@@ -174,7 +174,7 @@ initialize registerBuiltinAttribute {
 
 initialize registerBuiltinAttribute {
   name := `mp.comm'
-  descr := "Automatically generate the two implications of an equivalence theorem"
+  descr := "Automatically generate the commutative mp implication of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
@@ -197,7 +197,7 @@ initialize registerBuiltinAttribute {
 
 initialize registerBuiltinAttribute {
   name := `mpr.comm'
-  descr := "Automatically generate the two implications of an equivalence theorem"
+  descr := "Automatically generate the commutative mpr implication of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
@@ -253,7 +253,7 @@ def Expr.comm.is' (type mp mpr : Lean.Expr) (parity : ℕ := 0) : CoreM (List (B
 
 initialize registerBuiltinAttribute {
   name := `comm.is'
-  descr := "Automatically generate the two implications of an equivalence theorem"
+  descr := "Automatically generate the commutative version of an equivalence theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
@@ -341,7 +341,7 @@ def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.E
 
 initialize registerBuiltinAttribute {
   name := `mt'
-  descr := "Automatically generate the contraposition of a theorem"
+  descr := "Automatically generate the contraposition (modus tollens) of an implication theorem"
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let constructor_order ← constructor_order declName
@@ -399,6 +399,138 @@ initialize registerBuiltinAttribute {
     let ⟨_, type, value⟩ ← Expr.mt' type value
     let moduleTokens := (← getEnv).moduleTokens.mpr
     let name := (moduleTokens.mt constructor_order).lemmaName declName
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+def Expr.disjunction' (type proof : Lean.Expr) (parity : ℕ := 0) (left : Bool := true) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let defaultCount := binders.countP (·.snd.snd == .default)
+  let parity :=
+    if parity = 0 then
+      1 <<< (defaultCount - 1)
+    else
+      parity
+  let index := defaultCount - 1 - parity.log2
+  println! "index = {index}"
+  let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
+  let ⟨h, given, info⟩ := binders[index]!
+  let ⟨inl, inr⟩ : Lean.Expr × Lean.Expr:=
+    if let .app (.app (.const `Or _) a) b := given then
+      ⟨a, b⟩
+    else
+      panic! "disjunction not found"
+  let binders := binders.set index ⟨h, if left then inl else inr, info⟩
+  type.println context "original type"
+  println! s!"binders = {binders}"
+  type.println context "new type"
+  let telescope := fun lam hint body => do
+    body.println context s!"prior {hint}"
+    let body := binders.foldl
+      (fun body ⟨binderName, binderType, binderInfo⟩ =>
+        lam binderName binderType body binderInfo
+      )
+      body
+    body.println [] s!"final {hint}"
+    return body
+  let h_bvar := Lean.Expr.bvar index
+  let intro := if left then `Or.inl else `Or.inr
+  let proof : Lean.Expr :=
+    if index > 0 then
+      let bvar := ((List.range binders.length).map fun i => (Expr.bvar i))
+      let ⟨take, drop⟩ := bvar.splitAt index
+      let drop := drop.tail.map fun e => e.incDeBruijnIndex 1
+      let ⟨binderName, type, binderInfo⟩ := binders[index]!
+      Lean.Expr.lam binderName type (proof.mkApp ((take ++ drop).reverse ++ [h_bvar])) binderInfo
+    else
+      let args := ((List.range binders.length).map fun i => (.bvar i))
+      let args := args.set index ((Lean.Expr.const intro []).mkApp [inl.incDeBruijnIndex 1, inr.incDeBruijnIndex 1, h_bvar])
+      proof.mkApp args.reverse
+  proof.println context "proof"
+  return (index, ← (type, proof).mapM (telescope Expr.forallE "type") (telescope .lam "value"))
+
+initialize registerBuiltinAttribute {
+  name := `left'
+  descr := "Automatically generate the left introduction of a disjunction theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let parity := stx.getNum
+    println! s!"parity = {parity}"
+    let ⟨parity, type, value⟩ ← Expr.disjunction' decl.type (.const declName (levelParams.map .param)) parity
+    let name := ((← getEnv).moduleTokens.left).lemmaName declName
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `right'
+  descr := "Automatically generate the right introduction of a disjunction theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let parity := stx.getNum
+    println! s!"parity = {parity}"
+    let ⟨parity, type, value⟩ ← Expr.disjunction' decl.type (.const declName (levelParams.map .param)) parity false
+    let name := ((← getEnv).moduleTokens.right).lemmaName declName
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `mpr.left'
+  descr := "Automatically generate the left introduction of a disjunction theorem from the mpr part of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let parity := stx.getNum
+    let and := stx.getIdent == `and
+    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity and
+    let moduleTokens := (← getEnv).moduleTokens.mpr
+    println! s!"moduleTokens = {moduleTokens}"
+    let ⟨parity, type, value⟩ ← Expr.disjunction' type value
+    let name := (moduleTokens.left).lemmaName declName
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `mpr.right'
+  descr := "Automatically generate the right introduction of a disjunction theorem from the mpr part of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let parity := stx.getNum
+    let and := stx.getIdent == `and
+    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity and
+    let moduleTokens := (← getEnv).moduleTokens.mpr
+    println! s!"moduleTokens = {moduleTokens}"
+    let ⟨parity, type, value⟩ ← Expr.disjunction' type value 0 false
+    let name := (moduleTokens.right).lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name

@@ -3,20 +3,22 @@ import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.StDiv.eq.InvStInv
+import Lemma.Hyperreal.EqCoeS
 open Hyperreal
 
 
-@[main]
+@[main, mt]
 private lemma main
   [NeZero (d : ℕ)]
   {a b : ℝ*}
 -- given
   (h_a : Infinitesimal a)
-  (h_b : ¬Infinitesimal b) :
+  (h_b : Infinitesimal (a / b + b / a - d)) :
 -- imply
-  ¬Infinitesimal (a / b + b / a - d) := by
+  Infinitesimal b := by
 -- proof
-  suffices ¬Infinitesimal (a / b + b / a - (d : ℝ)) by assumption
+  contrapose! h_b
+  rw [EqCoeS d]
   by_contra h
   have h_ab := InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
   rw [show a / b + b / a - (d : ℝ) = (a / b) + (b / a - (d : ℝ)) by ring] at h

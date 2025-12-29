@@ -7,14 +7,13 @@ import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.NotInfiniteDiv.of.InfinitesimalSubAddDivS.NotInfinitesimal
 import Lemma.Hyperreal.Infinitesimal.of.Infinitesimal.InfinitesimalSub
 import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalSub.Infinitesimal
-import Lemma.Hyperreal.NotInfinitesimalSubAddDivS.of.Infinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalSubAddDivS.Infinitesimal
 import Lemma.Hyperreal.Setoid.is.OrAndS
 import Lemma.Hyperreal.StAdd.eq.AddStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.StDiv.eq.InvStInv
 import Lemma.Nat.Add
 import Lemma.Rat.SubDiv.eq.DivSub.of.Ne_0
 import Lemma.Real.Eq_1.of.Add_Inv.eq.Two
-import sympy.sets.fancyset
 open Hyperreal Nat Rat Real
 
 
@@ -25,8 +24,7 @@ private lemma main
 -- imply
   a ≈ b ↔ Infinitesimal (a - b) ∨ Infinitesimal (a / b + b / a - 2) := by
 -- proof
-  suffices a ≈ b ↔ Infinitesimal (a - b) ∨ Infinitesimal (a / b + b / a - (2 : ℝ)) by
-    assumption
+  rw [show (2 : ℝ*) = (2 : ℝ) by rfl]
   rw [Setoid.is.OrAndS]
   constructor
   <;> intro h
@@ -70,13 +68,13 @@ private lemma main
       if h_b : b.Infinitesimal then
         simp [h_b]
       else
-        have := NotInfinitesimalSubAddDivS.of.Infinitesimal.NotInfinitesimal h_a h_b (d := 2)
+        have := NotInfinitesimalSubAddDivS.of.NotInfinitesimal.Infinitesimal h_a h_b (d := 2)
         contradiction
     else
       simp [h_a]
       if h_b : b.Infinitesimal then
         rw [Add.comm] at h
-        have := NotInfinitesimalSubAddDivS.of.Infinitesimal.NotInfinitesimal h_b h_a (d := 2)
+        have := NotInfinitesimalSubAddDivS.of.NotInfinitesimal.Infinitesimal h_b h_a (d := 2)
         contradiction
       else
         simp [h_b]

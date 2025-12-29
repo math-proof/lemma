@@ -1,20 +1,23 @@
-import Lemma.Hyperreal.Setoid.of.InfinitesimalSub
-import Lemma.Hyperreal.StExp.eq.ExpSt.of.NotInfinite
-import Lemma.Real.LeExpS.is.Le
-import Lemma.Real.ExpSub.eq.DivExpS
-import Lemma.Hyperreal.InfinitePos.is.InfinitePos.of.Setoid
-import Lemma.Hyperreal.InfiniteNeg.is.InfiniteNeg.of.Setoid
-import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
 import Lemma.Hyperreal.Infinite.is.InfinitePos.ou.InfiniteNeg
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
+import Lemma.Hyperreal.EqSt_0.of.Infinite
+import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.InfiniteDiv.of.Infinite.NotInfinite
+import Lemma.Hyperreal.InfiniteNeg.is.InfiniteNeg.of.Setoid
 import Lemma.Hyperreal.InfiniteNeg.is.InfinitesimalExp
+import Lemma.Hyperreal.InfinitePos.is.InfiniteExp
+import Lemma.Hyperreal.InfinitePos.is.InfinitePos.of.Setoid
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.LeSt_0.of.Le_0
+import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
 import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
+import Lemma.Hyperreal.NotInfinitePos.of.Infinitesimal
 import Lemma.Hyperreal.Setoid.is.OrAndS
+import Lemma.Hyperreal.Setoid.of.InfinitesimalSub
+import Lemma.Hyperreal.StExp.eq.ExpSt.of.NotInfinite
 import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
-open Hyperreal Rat Real
+import Lemma.Real.ExpSub.eq.DivExpS
+open Hyperreal Real Rat
 
 
 @[main]
@@ -25,7 +28,7 @@ private lemma main
 -- imply
   a.exp ≈ b.exp := by
 -- proof
-  have h := Hyperreal.Setoid.of.InfinitesimalSub h_sub
+  have h := Setoid.of.InfinitesimalSub h_sub
   apply Setoid.of.OrAndS
   if h_a : a.InfiniteNeg then
     have h_a_exp := InfinitesimalExp.of.InfiniteNeg h_a
@@ -64,19 +67,22 @@ private lemma main
       have h_a := NotInfinitesimal.of.InfinitePos h_a_pos
       have h_b := NotInfinitesimal.of.InfinitePos h_b_pos
       simp [h_a, h_b] at h_eps
+      have h_st := EqSt.of.InfinitesimalSub h_eps
       rw [h_div_exp]
       apply InfinitesimalSub.of.EqSt.NotInfinite
-      .
-        apply NotInfinite.of.Any_LeAbs
-        sorry
-      .
+      ·
+        apply NotInfiniteExp.of.NotInfinitePos
+        apply Hyperreal.NotInfinitePos.of.Infinitesimal h_sub
+      ·
         rw [StExp.eq.ExpSt.of.NotInfinite]
-        .
+        ·
           simp
           apply EqSt_0.of.Infinitesimal h_sub
-        .
+        ·
           apply NotInfinite.of.Infinitesimal h_sub
     else if h_b_pos : b.InfinitePos then
+      have h_a := Hyperreal.NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_a_pos, h_a⟩
+      have h_b := Infinite.of.InfinitePos h_b_pos
       have ⟨h_b, h_b_lt_0⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos
       sorry
     else
@@ -85,4 +91,4 @@ private lemma main
 
 
 -- created on 2025-12-24
--- updated on 2025-12-26
+-- updated on 2025-12-28

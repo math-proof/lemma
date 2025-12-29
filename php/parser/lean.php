@@ -6876,6 +6876,15 @@ abstract class LeanSyntax extends LeanArgs
             case 'arg':
                 $this->args[0] = $val;
                 break;
+            case 'sequential_tactic_combinator':
+                $args = &$this->args;
+                for ($index = count($args) - 1; $index >= 0; --$index) {
+                    if ($args[$index] instanceof LeanSequentialTacticCombinator) {
+                        $args[$index] = $val;
+                        break;
+                    }
+                }
+                break;
             default:
                 parent::__set($vname, $val);
                 return;
@@ -7229,6 +7238,7 @@ class LeanTactic extends LeanSyntax
     public function echo()
     {
         $token = $this->get_echo_token();
+        $has_sequential_tactic_combinator = ($sequential_tactic_combinator = $this->sequential_tactic_combinator) && $sequential_tactic_combinator->arg->indent;
         if ($token) {
             $echo = new LeanTactic('echo', $token, $this->indent, $this->level);
             if ($token instanceof LeanToken && $token->text == '*')
@@ -7236,9 +7246,15 @@ class LeanTactic extends LeanSyntax
                 return [1, $echo, $this];
             if (($by = $this->by) && $by->arg instanceof LeanStatements)
                 $by->echo();
+            if ($has_sequential_tactic_combinator && $sequential_tactic_combinator->newline) {
+                $echo->push($sequential_tactic_combinator);
+                $this->sequential_tactic_combinator = new LeanSequentialTacticCombinator($echo, $this->indent, $this->level, true);
+                $sequential_tactic_combinator->echo();
+                return; 
+            }
             return [1, $this, $echo];
         }
-        if (($sequential_tactic_combinator = $this->sequential_tactic_combinator) && $sequential_tactic_combinator->arg->indent)
+        if ($has_sequential_tactic_combinator)
             $sequential_tactic_combinator->echo();
     }
 
@@ -7265,7 +7281,7 @@ class LeanTactic extends LeanSyntax
                     $stmts->swap_echo_star($syntax, $statements);
                     return $statements;
                 }
-            } elseif ($block instanceof LeanTactic && $block->indent >= $this->indent) {
+            } elseif (($block instanceof LeanTactic || $block instanceof Lean_have || $block instanceof Lean_let) && $block->indent >= $this->indent) {
                 $self = clone $this;
                 if ($sequential_tactic_combinator->newline) {
                     $block = $self->sequential_tactic_combinator;
@@ -7278,6 +7294,9 @@ class LeanTactic extends LeanSyntax
                 $array = [$self];
                 array_push($array, ...$block->split($syntax));
                 return $array;
+            }
+            else {
+                // unexpected case
             }
         }
         if (($by = $this->by) && ($stmts = $by->arg) instanceof LeanStatements) {
@@ -7942,7 +7961,7 @@ class LeanSequentialTacticCombinator extends LeanUnary
                     $arg = $sequential_tactic_combinator;
                 $arg->push(new LeanSequentialTacticCombinator($echo, $indent, $level, true));
             } else {
-                $echo->push(new LeanSequentialTacticCombinator($arg, $indent, $level));
+                $echo->push(new LeanSequentialTacticCombinator($arg, $indent, $level, $this->newline));
                 $this->arg = $echo;
                 $arg->echo();
             }
@@ -8698,7 +8717,7 @@ class Lean_lemma extends Lean_def
     }
 }
 
-class Lean_let extends LeanArgs
+class Lean_let extends LeanSyntax
 {
     public function __construct($arg, $indent, $level, $parent = null)
     {

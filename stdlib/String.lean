@@ -8,6 +8,8 @@ open Lean (Json JsonNumber)
 def String.repeat (s : String) (n : Nat) : String :=
   String.join (List.replicate n s)
 
+def String.eraseIdx (s : String) (n : Nat) : String :=
+  s.take n ++ s.drop n.succ
 
 partial def countTailingZeros (n : Int) : Nat :=
   let rec loop (n : Int) (digits : Nat) : Nat :=

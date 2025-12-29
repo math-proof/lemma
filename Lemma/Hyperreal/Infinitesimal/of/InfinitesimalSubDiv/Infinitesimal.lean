@@ -1,21 +1,22 @@
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.EqCoeS
 open Hyperreal
 
 
-@[main]
+@[main, mt]
 private lemma main
   [NeZero (d : ℕ)]
   {a b : ℝ*}
 -- given
   (h_a : Infinitesimal a)
-  (h_b : ¬Infinitesimal b) :
+  (h_b : Infinitesimal (a / b - d)) :
 -- imply
-  ¬Infinitesimal (a / b - d) := by
+  Infinitesimal b := by
 -- proof
-  suffices ¬Infinitesimal (a / b - (d : ℝ)) by
-    exact this
+  contrapose! h_b
+  rw [EqCoeS d]
   have h_d := NeZero.ne d
   by_contra h
   have h := EqSt.of.InfinitesimalSub h

@@ -6,7 +6,7 @@ import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.StInv.eq.Inv.of.EqSt
 import Lemma.Hyperreal.Infinitesimal0
-import Lemma.Hyperreal.NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalSubDiv.Infinitesimal
 open Hyperreal Rat Nat Int
 export Hyperreal (Infinite Infinitesimal IsSt st)
 
@@ -44,7 +44,7 @@ instance : Setoid ℝ* where
               assumption
             ·
               simp [h_b] at h
-              have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_a h_b (d := 1)
+              have := NotInfinitesimalSubDiv.of.NotInfinitesimal.Infinitesimal h_a h_b (d := 1)
               simp at this
               contradiction
         else
@@ -69,12 +69,12 @@ instance : Setoid ℝ* where
               simp [h_c]
             else
               simp [h_c] at h_bc
-              have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_b h_c (d := 1)
+              have := NotInfinitesimalSubDiv.of.NotInfinitesimal.Infinitesimal h_b h_c (d := 1)
               simp at this
               contradiction
           else
             simp [h_b] at h_ab
-            have := NotInfinitesimalSubDiv.of.Infinitesimal.NotInfinitesimal h_a h_b (d := 1)
+            have := NotInfinitesimalSubDiv.of.NotInfinitesimal.Infinitesimal h_a h_b (d := 1)
             simp at this
             contradiction
         else

@@ -107,8 +107,7 @@ private lemma main
         rw [DivSquareSub.eq.DivSubAddDivS.Ne_0.Ne_0 h_b_ne_0 h_a_ne_0] at h
         have h_inf_add_divs := NotInfiniteAdd.of.NotInfinite.NotInfinite h_inf_ab h_inf_ba
         have h_st_sub_add_divs : st (a / b + b / a - 2) = st (a / b + b / a) - 2 := by
-          suffices st (a / b + b / a - (2 : ℝ)) = st (a / b + b / a) - 2 by
-            assumption
+          rw [show (2 : ℝ*) = (2 : ℝ) by rfl]
           rw [StSub.eq.SubSt.of.NotInfinite h_inf_add_divs]
         have h_st_add_add_divs : st (a / b + b / a + 1 / (b * a)) = st (a / b + b / a) := by
           rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_inf_add_divs]

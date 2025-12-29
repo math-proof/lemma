@@ -37,8 +37,7 @@ private lemma main
   have h_ab := InfiniteMul.of.Infinite.NotInfinitesimal h_a_inf h_b
   have h_ab := InfinitesimalInv.of.Infinite h_ab
   have h_eq_add_st : st ((a * b)⁻¹ + 2) = 2 := by
-    suffices st ((a * b)⁻¹ + (2 : ℝ)) = 2 by
-      assumption
+    rw [show (2 : ℝ*) = (2 : ℝ) by rfl]
     rw [StAdd.eq.AddSt.of.NotInfinite]
     ·
       rw [EqSt_0.of.Infinitesimal h_ab]
