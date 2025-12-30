@@ -7,8 +7,7 @@ private lemma main :
 -- imply
   p ∨ q ↔ ¬p → q := by
 -- proof
-  rw [Imp.is.OrNot]
-  simp
+  simp [Imp.is.OrNot]
 
 
 -- created on 2025-01-12

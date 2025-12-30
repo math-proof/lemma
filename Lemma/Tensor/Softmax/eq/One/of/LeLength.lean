@@ -2,7 +2,7 @@ import Lemma.Real.NeExp_0
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.Div.eq.One.of.All_Ne_0
 import Lemma.Tensor.EqKeepdimCast.of.LeLength
-import Lemma.Tensor.Softmax.eq.Div_SumExp
+import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Sum.eq.Cast_Sum.of.LeLength
 import Lemma.Vector.GetExp.eq.ExpGet
 open Tensor Vector
@@ -18,7 +18,7 @@ private lemma main
 -- imply
   X.softmax d = 1 := by
 -- proof
-  rw [Softmax.eq.Div_SumExp]
+  rw [Softmax.eq.DivExp_KeepdimSumExp]
   rw [Sum.eq.Cast_Sum.of.LeLength h]
   rw [EqKeepdimCast.of.LeLength h]
   apply @Tensor.Div.eq.One.of.All_Ne_0

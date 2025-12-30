@@ -224,13 +224,13 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
         Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
     }
     if ($attributes -cmatch '\bmp\b') {
-        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)\.of(\..+)?$') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$($matches[3]).of.$($matches[2])$($matches[4])"
             Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
         }
     }
     if ($attributes -cmatch '\bmpr\b') {
-        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)\.of(\..+)?$') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$($matches[2]).of.$($matches[3])$($matches[4])"
             Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
         }

@@ -5,7 +5,7 @@ import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
 import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Gt
 import Lemma.Tensor.SelectSum.eq.SumSelect.of.Gt
-import Lemma.Tensor.Softmax.eq.Div_SumExp
+import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Softmax.eq.One.of.LeLength
 open Bool List Nat Tensor
 
@@ -22,7 +22,7 @@ private lemma main
 -- imply
   (X.softmax k).select ⟨d, by omega⟩ i = (X.select ⟨d, by omega⟩ i).softmax (k - 1) := by
 -- proof
-  repeat rw [Softmax.eq.Div_SumExp]
+  repeat rw [Softmax.eq.DivExp_KeepdimSumExp]
   rw [SelectDiv.eq.DivSelectS]
   rw [SelectExp.eq.ExpSelect]
   apply EqDivS.of.Eq.left

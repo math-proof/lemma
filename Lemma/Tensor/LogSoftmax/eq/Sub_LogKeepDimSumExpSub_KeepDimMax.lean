@@ -23,7 +23,7 @@ import Lemma.Tensor.EqLogExp
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
 import Lemma.Tensor.LogDiv.eq.SubLogS.of.All_Ne_0.All_Ne_0
 import Lemma.Tensor.Max.eq.Cast.of.LeLength
-import Lemma.Tensor.Softmax.eq.Div_SumExp
+import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Softmax.eq.One.of.LeLength
 import Lemma.Tensor.SoftmaxSub_Keepdim.eq.Softmax
 import Lemma.Tensor.Sum.eq.Cast_Sum.of.LeLength
@@ -54,7 +54,7 @@ private lemma main
   if h : s.length > d then
     have := SoftmaxSub_Keepdim.eq.Softmax X (X.max d)
     have := congrArg Log.log this
-    rw [Softmax.eq.Div_SumExp] at this
+    rw [Softmax.eq.DivExp_KeepdimSumExp] at this
     rw [← this]
     rw [@Tensor.LogDiv.eq.SubLogS.of.All_Ne_0.All_Ne_0]
     ·

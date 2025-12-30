@@ -1,6 +1,6 @@
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
-import Lemma.Tensor.Softmax.eq.Div_SumExp
+import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Sum.eq.SelectKeepdimSum
 open Nat Tensor
 
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   (X.softmax d).select d i = (exp X).select d i / (exp X).sum d := by
 -- proof
-  rw [Softmax.eq.Div_SumExp]
+  rw [Softmax.eq.DivExp_KeepdimSumExp]
   rw [SelectDiv.eq.DivSelectS]
   apply EqDivS.of.Eq.left
   apply SelectKeepdimSum.eq.Sum
