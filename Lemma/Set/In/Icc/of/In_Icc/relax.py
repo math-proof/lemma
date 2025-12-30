@@ -22,9 +22,9 @@ def prove(Eq):
     x, a, b = Symbol(integer=True, given=True)
     Eq << apply(Element(x, Interval(a, b)), lower=a - 1)
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq << Algebra.Ge.of.Ge.relax.apply(Eq[-1], lower=a - 1)
 

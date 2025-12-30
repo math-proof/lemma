@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
 
-    Eq << Eq[-1].this.rhs.arg.apply(Tensor.Softmax.eq.Div_SumExp)
+    Eq << Eq[-1].this.rhs.arg.apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
 
 if __name__ == '__main__':

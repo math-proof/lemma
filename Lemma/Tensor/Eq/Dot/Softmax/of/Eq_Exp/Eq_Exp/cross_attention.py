@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq << Eq[-1].this.find(softmax).apply(Tensor.Softmax.eq.Div_SumExp)
+    Eq << Eq[-1].this.find(softmax).apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
     Eq.zi_definition = Eq[-1].this.rhs.subs(Eq[-4])
 

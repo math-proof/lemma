@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[0], Eq[0].variable, Floor(x))
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq << Algebra.Lt_Add_.Floor.One.apply(x)
 

@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3].this.lhs.find(Element).apply(Set.Ge.of.In_Ico), Bool.Imp.given.Cond.apply(Eq[-2]), Eq[-1].this.rhs.apply(Set.In_Ico.given.And)
 
-    Eq <<= Eq[-3].this.lhs.expr.apply(Nat.Gt.of.Gt.Ge), Set.In_Ico.given.Ge.Lt.apply(Eq[-2]), Eq[-1].this.rhs.apply(Algebra.Ge.transport, lhs=0)
+    Eq <<= Eq[-3].this.lhs.expr.apply(Nat.Gt.of.Gt.Ge), Set.In_Ico.given.Le.Lt.apply(Eq[-2]), Eq[-1].this.rhs.apply(Algebra.Ge.transport, lhs=0)
 
     Eq << Eq[-4].this.lhs.apply(Set.IsPositive.of.Gt_0, simplify=None)
 

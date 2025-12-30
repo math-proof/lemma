@@ -17,14 +17,14 @@ def prove(Eq):
 
     Eq << Set.IsReal.of.IsReal.IsReal.apply(Eq[0], Eq[0])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
     Eq << Set.Eq.Square.Abs.of.IsReal.apply(Eq[0])
 
     Eq <<= Eq[1].subs(Eq[-1].reversed), Eq[2].subs(Eq[-1].reversed)
 
 
-    Eq <<= Set.In_Ico.given.Ge.Lt.apply(Eq[-2]),Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq <<= Set.In_Ico.given.Le.Lt.apply(Eq[-2]),Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
 
 

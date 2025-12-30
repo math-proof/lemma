@@ -20,9 +20,9 @@ def prove(Eq):
     x0, x1, a, b, c, d = Symbol(real=True)
     Eq << apply(Element(x0, Interval(a, b, left_open=True)), Element(x1, Interval(c, d, left_open=True)))
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
     Eq <<= Eq[-2] + Eq[-4], Eq[-1] + Eq[-3]
 

@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3].this.lhs.find(Element).apply(Set.Ge.of.In_Ico), Eq[-1].this.rhs.apply(Set.In_Ico.given.And), Bool.Imp.given.Cond.apply(Eq[-2])
 
-    Eq <<= Eq[-3].this.lhs.expr.apply(Algebra.GeAdd.of.Ge.Ge), -Eq[-2].this.rhs, Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq <<= Eq[-3].this.lhs.expr.apply(Algebra.GeAdd.of.Ge.Ge), -Eq[-2].this.rhs, Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq << Eq[-4].this.lhs.apply(Set.IsNotPositive.of.Le_0, simplify=None)
 

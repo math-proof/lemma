@@ -16,7 +16,7 @@ def prove(Eq):
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq << Algebra.Le_Abs.given.And.apply(Eq[1])
 

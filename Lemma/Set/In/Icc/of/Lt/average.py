@@ -15,7 +15,7 @@ def prove(Eq):
     a, b = Symbol(real=True, given=True)
     Eq << apply(a < b)
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq <<= Eq[-2] * 2, Eq[-1] * 2
 

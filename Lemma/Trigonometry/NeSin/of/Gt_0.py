@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
+    Eq << Eq[-1].this.find(Element).apply(Set.Le.Le.of.In_Icc)
 
     Eq << Trigonometry.Sin.In.Icc.apply(x)
 

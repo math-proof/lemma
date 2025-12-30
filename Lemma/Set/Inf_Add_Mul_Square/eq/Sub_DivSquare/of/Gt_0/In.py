@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Set.InSub.of.In_Icc.apply(Eq[1], Eq[1].lhs)
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
     Eq << Algebra.Inf_Square.eq.Zero.of.Gt_0.Le_0.apply(Eq[-1], Eq[-2], left_open=False, x=x)
 

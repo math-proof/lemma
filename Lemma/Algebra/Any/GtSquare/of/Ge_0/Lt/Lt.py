@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq.ge.this.rhs.apply(Algebra.Any.given.Cond.subst, x, (sqrt(U) + M) / 2)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.given.Ge.Lt)
+    Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.given.Le.Lt)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1], index=None)
 

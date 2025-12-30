@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], Eq[-1].variable, Ceil(x) - 1)
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq << Algebra.Gt_Sub_.Ceil.One.apply(x)
 

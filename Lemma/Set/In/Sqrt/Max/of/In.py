@@ -16,7 +16,7 @@ def prove(Eq):
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
     Eq << Set.LeMax.of.In.apply(Eq[0])
 

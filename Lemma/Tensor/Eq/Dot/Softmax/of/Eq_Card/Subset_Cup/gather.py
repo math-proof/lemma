@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.Xi_def.reversed, Eq.a_def[i].reversed)
 
-    Eq << Eq[-1].this.find(softmax).apply(Tensor.Softmax.eq.Div_SumExp)
+    Eq << Eq[-1].this.find(softmax).apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
     Eq << Algebra.Mul.eq.Exp.Infty.apply(exp(a[i]) * Xi).reversed
 

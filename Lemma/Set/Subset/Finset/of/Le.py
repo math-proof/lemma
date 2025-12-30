@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 
-    Eq <<= Set.In_Ico.given.Ge.Lt.apply(Eq[-2]), Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq <<= Set.In_Ico.given.Le.Lt.apply(Eq[-2]), Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq << Eq[-1].reversed
 

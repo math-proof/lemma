@@ -15,7 +15,7 @@ def prove(Eq):
     d = Symbol(real=True, positive=True)
     Eq << apply(n, d)
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[0])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[0])
 
     Eq << Rat.LeFloor.apply(Eq[0].find(Floor).arg)
 

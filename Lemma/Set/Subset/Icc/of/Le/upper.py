@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Set.Subset.given.All_In.apply(Eq[1])
 
-    Eq << Eq[-1].this.expr.apply(Set.In_Ico.given.Ge.Lt)
+    Eq << Eq[-1].this.expr.apply(Set.In_Ico.given.Le.Lt)
 
     Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 

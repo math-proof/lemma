@@ -26,17 +26,17 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[0].args[1].apply(Algebra.Ge.transport, lhs=1)
 
-    Eq << Eq[-1].this.args[0].apply(Set.In_Icc.of.Le.Ge)
+    Eq << Eq[-1].this.args[0].apply(Set.In_Icc.of.Le.Le)
 
     Eq << Eq[-1].this.args[1].args[0].apply(Algebra.Le.transport, lhs=1)
 
     Eq << Eq[-1].this.args[1].args[1].apply(Algebra.Ge.transport, lhs=0)
 
-    Eq << Eq[-1].this.args[1].apply(Set.In_Icc.of.Le.Ge)
+    Eq << Eq[-1].this.args[1].apply(Set.In_Icc.of.Le.Le)
 
     Eq << Eq[-1].this.rhs.apply(Set.Union.eq.Icc.Abs)
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
     Eq << Eq[-1].reversed
 

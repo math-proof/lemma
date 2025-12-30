@@ -32,17 +32,17 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.find(Less).apply(Algebra.Lt.given.Gt_0), Eq[-2].this.expr.apply(Algebra.Any.given.Cond.subst, x, M / 2)
 
-    Eq <<= Eq[-2].this.find(Greater) * Rational(4, 3), Eq[-1].this.args[0].apply(Set.In_Ico.given.Ge.Lt)
+    Eq <<= Eq[-2].this.find(Greater) * Rational(4, 3), Eq[-1].this.args[0].apply(Set.In_Ico.given.Le.Lt)
 
     Eq <<= Bool.All_And.given.All.All.apply(Eq[-2]), Eq[-1].this.args[0].apply(Algebra.Lt.given.Gt_0)
 
-    Eq <<= Bool.All.given.All_Or_Not.apply(Eq[-3]), Eq[-2].this.expr.apply(Set.In_Ico.given.Ge.Lt), Bool.And_And.given.And.Cond.apply(Eq[-1])
+    Eq <<= Bool.All.given.All_Or_Not.apply(Eq[-3]), Eq[-2].this.expr.apply(Set.In_Ico.given.Le.Lt), Bool.And_And.given.And.Cond.apply(Eq[-1])
 
     Eq <<= Eq[-4].this.args[1].apply(Set.NotIn_Icc.given.OrLtS)
 
     Eq <<= Bool.All.given.Imp.apply(Eq[-3]), Eq[-2] * 2, Bool.All.given.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.lhs.apply(Set.Ge.Le.of.In_Icc), Eq[-1].this.rhs * 4
+    Eq <<= Eq[-2].this.lhs.apply(Set.Le.Le.of.In_Icc), Eq[-1].this.rhs * 4
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.LeSqrt.of.Gt_0.Le, ret=0), Eq[-1].this.rhs.reversed
 

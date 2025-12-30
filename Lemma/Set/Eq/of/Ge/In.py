@@ -17,7 +17,7 @@ def prove(Eq):
     a, b, c, x, y = Symbol(real=True)
     Eq << apply(a >= b, Element(x, Interval(a, b)))
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
     Eq << Nat.Le.of.Ge.Le.apply(Eq[-1], Eq[-2])
 

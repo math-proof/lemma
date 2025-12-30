@@ -121,9 +121,14 @@ export default {
 				'Algebra.Ge.Is.Eq.squeeze',
 				'Algebra.EqSumS.of.Eq', // Algebra.EqSumS.of.All_Eq
 				'Algebra.GeSqrt_0.of.Ge_0', // Algebra.GeSqrt_0
+				'Algebra.Sum.limits.domain_defined.delete',
+				'Algebra.Sum.limits.domain_defined',
+				'Algebra.Sum.eq.ReducedSum',
 
 				'Tensor.Ne_0.Ne_0.of.Mul.ne.Zero', // Algebra.Ne_0.Ne_0.of.Mul.ne.Zero
 				'Tensor.EqStackS.of.Eq', // Tensor.EqStackS.of.All_Eq
+				'Tensor.Dot.eq.Sum',
+				'Tensor.Sum.eq.Dot',
 			],
 		};
 	},

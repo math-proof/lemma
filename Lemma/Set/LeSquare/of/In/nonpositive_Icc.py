@@ -17,7 +17,7 @@ def prove(Eq):
     x, m = Symbol(real=True)
     Eq << apply(Element(x, Interval(m, 0)))
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq << Algebra.LeSquare.of.Le_0.Ge.apply(Eq[-1], Eq[-2])
 

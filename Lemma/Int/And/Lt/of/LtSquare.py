@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.Union.eq.Icc.Abs)
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
     Eq << Eq[-1].reversed
 

@@ -16,7 +16,7 @@ def prove(Eq):
     x = Symbol(real=True, shape=(n,))
     Eq << apply(log(softmax(x)))
 
-    Eq << Eq[0].find(softmax).this.apply(Tensor.Softmax.eq.Div_SumExp)
+    Eq << Eq[0].find(softmax).this.apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
     Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
 

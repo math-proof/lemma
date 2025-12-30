@@ -18,7 +18,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Derivative[x](softmax(f(x))))
 
-    Eq << Derivative[x](log(softmax(f(x)))).this.find(softmax).apply(Tensor.Softmax.eq.Div_SumExp)
+    Eq << Derivative[x](log(softmax(f(x)))).this.find(softmax).apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Grad.eq.Add)
 
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Calculus.Stack.Grad.eq.Dot)
 
-    Eq << Eq[-1].this.find(Exp).apply(Tensor.Exp.eq.Mul.Softmax)
+    Eq << Eq[-1].this.find(Exp).apply(Tensor.Exp.eq.MulSoftmax_SumExp)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 

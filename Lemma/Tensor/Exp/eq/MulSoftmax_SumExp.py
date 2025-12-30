@@ -15,7 +15,7 @@ def prove(Eq):
     x = Symbol(shape=(n,), real=True)
     Eq << apply(exp(x))
 
-    Eq << Eq[-1].this.find(Softmax).apply(Tensor.Softmax.eq.Div_SumExp)
+    Eq << Eq[-1].this.find(Softmax).apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
 
 

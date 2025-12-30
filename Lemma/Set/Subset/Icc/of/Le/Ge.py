@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.AnySetOf.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
+    Eq << Eq[-1].this.find(Element).apply(Set.Le.Le.of.In_Icc)
 
     # if self implies a False proposition, then self must be False
     Eq << Eq[-1].this.expr.apply(Algebra.Cond.Cond.Or.given.Or, simplify=False)

@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Tensor.Stack.eq.Exp)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Exp.eq.Mul.Softmax)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Exp.eq.MulSoftmax_SumExp)
 
 
 

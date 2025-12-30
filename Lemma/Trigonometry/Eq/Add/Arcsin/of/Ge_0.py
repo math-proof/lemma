@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << LessEqual(x, 1, plausible=True)
 
-    Eq << Set.In_Icc.of.Le.Ge.apply(Eq[-1], Eq[0])
+    Eq << Set.In_Icc.of.Le.Le.apply(Eq[-1], Eq[0])
 
     Eq <<= Trigonometry.In.Arcsin.of.In.apply(Eq[-1]), Set.In.Sqrt.Max.of.In.apply(Eq[-1])
 

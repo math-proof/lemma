@@ -15,11 +15,11 @@ def prove(Eq):
     x, a, b = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq <<= Eq[-1].reversed, Eq[-2].reversed
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
 
 if __name__ == '__main__':

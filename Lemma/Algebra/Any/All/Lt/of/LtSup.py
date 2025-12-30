@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Set.In.given.In.Sub.apply(Eq[-1], M0)
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq << Eq[-1].subs(Eq[2])
 

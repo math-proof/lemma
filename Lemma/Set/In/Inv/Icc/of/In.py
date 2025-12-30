@@ -26,7 +26,7 @@ def prove(Eq):
     a = Symbol(real=True, positive=True)
     Eq << apply(Element(x, Interval(a, b)))
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq <<= Algebra.LeInv.of.Ge.apply(Eq[-2]), Algebra.Gt_0.of.Ge.apply(Eq[-2])
 

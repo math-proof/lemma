@@ -23,15 +23,15 @@ def prove(Eq):
     a, b, c, x = Symbol(real=True)
     Eq << apply(Element(c, Interval.open(a, b)), Element(x, Interval(a, b)))
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq << Nat.Gt.of.Ge.Gt.apply(Eq[-4], Eq[-2])
 
     Eq << Nat.Ge.of.Gt.apply(Eq[-1])
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
 
 

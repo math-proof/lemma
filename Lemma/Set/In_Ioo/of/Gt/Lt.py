@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << apply(x > b, x < a)
 
     # Eq << apply(b > x, a < x)
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
 
 

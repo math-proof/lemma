@@ -26,9 +26,9 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Set.Ge.Le.of.In_Icc, simplify=False)
+    Eq << Eq[-2].this.lhs.apply(Set.Le.Le.of.In_Icc, simplify=False)
 
-    Eq << Eq[-1].this.lhs.apply(Set.In_Icc.of.Le.Ge)
+    Eq << Eq[-1].this.lhs.apply(Set.In_Icc.of.Le.Le)
 
 
 if __name__ == '__main__':

@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq <<= ~Eq[0] & Eq[1]
 
-    Eq << Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
+    Eq << Eq[-1].this.find(Element).apply(Set.Le.Le.of.In_Icc)
 
     Eq << Bool.OrAndS.of.And_Or.apply(Eq[-1])
 

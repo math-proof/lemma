@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Set.In.Icc.of.Lt.Lt)
 
-    Eq << Eq[-1].this.lhs.apply(Set.Ge.Le.of.In_Icc)
+    Eq << Eq[-1].this.lhs.apply(Set.Le.Le.of.In_Icc)
 
     Eq << Eq[-1].this.find(Greater).reversed
 

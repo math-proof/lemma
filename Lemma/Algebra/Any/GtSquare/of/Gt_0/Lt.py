@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Lt)
+    Eq << Eq[-1].this.rhs.apply(Set.In_Ico.given.Le.Lt)
 
     Eq << Bool.Imp.given.Cond.apply(Eq[-1])
 
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.Gt.given.Gt_0), Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Lt)
+    Eq <<= Eq[-2].this.rhs.apply(Algebra.Gt.given.Gt_0), Eq[-1].this.rhs.apply(Set.In_Ico.given.Le.Lt)
 
     Eq <<= Eq[-2].this.find(Add).apply(Algebra.Sub.Square.eq.Mul), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 

@@ -20,9 +20,9 @@ def prove(Eq):
     b = Symbol(domain=Interval(-1, 1, right_open=True))
     Eq << apply(Element(x, Interval(a, b, right_open=True, left_open=True)))
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
-    Eq.gt, Eq.lt = Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq.gt, Eq.lt = Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq << Element(a, Interval(-1, 1), plausible=True)
 

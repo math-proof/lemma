@@ -18,13 +18,13 @@ def prove(Eq):
     delta = Symbol(real=True)
     Eq << apply(x, delta)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Softmax.eq.Div_SumExp)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
     Eq << Eq[-1].this.find(ReducedSum[~Exp]).apply(Real.ExpAdd.eq.MulExpS)
 
     Eq << Eq[-1].this.lhs.powsimp()
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Softmax.eq.Div_SumExp)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
 
 

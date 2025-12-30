@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Set.Sub.In.Ioc.of.In.In.apply(Eq[-2], Eq[-1])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
     Eq <<= Nat.Ge_Add_1.of.Gt.apply(Eq[-2]), Nat.Le_Sub_1.of.Lt.apply(Eq[-1])
 

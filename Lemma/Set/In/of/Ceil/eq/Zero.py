@@ -14,7 +14,7 @@ def prove(Eq):
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(Ceil(x), 0))
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq << Algebra.Le_Ceil.apply(x)
 

@@ -21,7 +21,7 @@ def prove(Eq):
     x = Eq[1].variable
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], x, (a + b) / 2)
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq <<= Eq[-2] * 2, Eq[-1] * 2
 

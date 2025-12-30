@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Set.Any_In.of.Ne_Empty.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Set.Ge.Le.of.In_Icc)
+    Eq << Eq[-1].this.expr.apply(Set.Le.Le.of.In_Icc)
 
     Eq << Eq[-1].this.expr.apply(Nat.Le.of.Le.Ge)
 

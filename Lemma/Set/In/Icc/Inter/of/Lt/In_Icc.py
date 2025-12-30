@@ -17,9 +17,9 @@ def prove(Eq):
     a, b, x, y = Symbol(real=True)
     Eq << apply(x < b, Element(x, Interval(a, b)))
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[2])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[2])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
 
 if __name__ == '__main__':

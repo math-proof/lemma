@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Ge.of.In_Icc)
 
-    Eq <<= Eq[-3].this.lhs.expr.apply(Nat.Ge.of.Ge.Ge), Set.In_Ico.given.Ge.Lt.apply(Eq[-2])
+    Eq <<= Eq[-3].this.lhs.expr.apply(Nat.Ge.of.Ge.Ge), Set.In_Ico.given.Le.Lt.apply(Eq[-2])
 
     Eq << Eq[-3].this.lhs.apply(Set.IsNotNegative.of.Ge_0, simplify=None)
 

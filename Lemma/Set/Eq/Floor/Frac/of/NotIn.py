@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-1])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
     Eq <<= Rat.LtFloor.of.Lt.apply(Eq[-1]), Rat.GeFloor.of.Gt.apply(Eq[-2])
 

@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.In_SDiff.of.In.Ne.apply(Eq[-2], Eq[-1])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
 if __name__ == '__main__':
     run()

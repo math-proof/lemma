@@ -32,14 +32,14 @@ def prove(Eq):
     a = Symbol(real=True, positive=True)
     Eq << apply(Element(x, Interval(a, b)))
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq << Algebra.GeLog.of.Ge.apply(Eq[-2])
 
     Eq << Algebra.Gt_0.of.Ge.apply(Eq[2])
     Eq << Algebra.LeLog.of.Gt_0.Le.apply(Eq[-1], Eq[3])
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
 
 if __name__ == '__main__':

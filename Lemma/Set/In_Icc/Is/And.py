@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Set.Ge.Le.of.In_Icc)
+    Eq << Eq[-2].this.lhs.apply(Set.Le.Le.of.In_Icc)
 
-    Eq << Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Lt)
+    Eq << Eq[-1].this.rhs.apply(Set.In_Ico.given.Le.Lt)
 
 
 if __name__ == '__main__':

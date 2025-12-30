@@ -16,7 +16,7 @@ def prove(Eq):
     b = Symbol(real=True)
     Eq << apply(n <= b)
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
     Eq << Greater(n, 0, plausible=True)
 

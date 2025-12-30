@@ -16,7 +16,7 @@ def prove(Eq):
     Eq << apply(abs(x) <= a)
 
     Eq << Algebra.And.of.LeAbs.apply(Eq[0])
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
 
 if __name__ == '__main__':

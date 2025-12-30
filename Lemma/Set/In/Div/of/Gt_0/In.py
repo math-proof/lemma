@@ -22,7 +22,7 @@ def prove(Eq):
     t, x, a, b = Symbol(real=True)
     Eq << apply(t > 0, Element(x, Interval(a, b, left_open=True)))
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
     Eq <<= Algebra.GtDiv.of.Gt_0.Gt.apply(Eq[0], Eq[-2]), Algebra.LeDiv.of.Gt_0.Le.apply(Eq[0], Eq[-1])
 

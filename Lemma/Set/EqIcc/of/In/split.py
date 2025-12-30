@@ -19,17 +19,17 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Set.In_Union.given.OrInS), Eq[-1].this.lhs.apply(Set.OrInS.of.In_Union)
 
-    Eq <<= Eq[-2].this.lhs.apply(Set.Ge.Le.of.In_Icc), Eq[-1].this.rhs.apply(Set.In_Ico.given.Ge.Lt)
+    Eq <<= Eq[-2].this.lhs.apply(Set.Le.Le.of.In_Icc), Eq[-1].this.rhs.apply(Set.In_Ico.given.Le.Lt)
 
-    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.Ge.Lt), Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.Le.Lt), Eq[-1].this.find(Element).apply(Set.Le.Le.of.In_Icc)
 
-    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.Ge.Lt), Eq[-1].this.find(Element).apply(Set.Ge.Le.of.In_Icc)
+    Eq <<= Eq[-2].this.find(Element).apply(Set.In_Ico.given.Le.Lt), Eq[-1].this.find(Element).apply(Set.Le.Le.of.In_Icc)
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
     Eq <<= Bool.ImpAnd.given.Imp.apply(Eq[-2], 1), Bool.ImpAnd.given.Imp.apply(Eq[-1], 0)
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq <<= Bool.Imp.of.Cond.apply(Eq[-2], cond=t > x), Bool.Imp.of.Cond.apply(Eq[-1], cond=t <= x)
 

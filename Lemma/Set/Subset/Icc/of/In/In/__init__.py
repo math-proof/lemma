@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Set.Subset.given.All_In.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Set.In_Ico.given.Ge.Lt)
+    Eq << Eq[-1].this.expr.apply(Set.In_Ico.given.Le.Lt)
 
     Eq << Bool.All.given.All_Or_Not.apply(Eq[-1])
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq <<= Set.Ge.Le.of.In_Icc.apply(Eq[0]), Set.Ge.Le.of.In_Icc.apply(Eq[1])
+    Eq <<= Set.Le.Le.of.In_Icc.apply(Eq[0]), Set.Le.Le.of.In_Icc.apply(Eq[1])
 
     Eq <<= Eq[-1] & Eq[-4]
 

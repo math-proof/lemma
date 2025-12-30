@@ -24,7 +24,7 @@ def prove(Eq):
     Eq << apply(x > b, a >= x)
 
     # Eq << apply(b > x, x >= a)
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
 
 

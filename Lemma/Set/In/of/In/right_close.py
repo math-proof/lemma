@@ -16,9 +16,9 @@ def prove(Eq):
     x, a, b = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True, right_open=True)))
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
     Eq << Nat.Le.of.Lt.apply(Eq[-1])
 
 

@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Algebra.All_Le_Sup.apply(Eq[1].find(Sup))
 
-    Eq.gt_zero, Eq.lt = Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq.gt_zero, Eq.lt = Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq << Algebra.Gt_0.Pow.of.Gt_0.apply(Eq.gt_zero, n)
 

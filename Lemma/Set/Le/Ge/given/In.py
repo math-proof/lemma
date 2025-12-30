@@ -19,7 +19,7 @@ def prove(Eq):
     a, b, x = Symbol(real=True)
     Eq << apply(a <= x, b >= x)
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
     Eq << Eq[-1].reversed
 

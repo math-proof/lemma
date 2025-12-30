@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Algebra.Lt_0.given.Lt.apply(Eq[-1])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[-1])
 

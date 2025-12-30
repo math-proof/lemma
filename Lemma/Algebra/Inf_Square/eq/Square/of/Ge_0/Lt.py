@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.In.Icc.of.Lt.average.apply(Eq[1])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[-1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[-1])
 
     Eq << Nat.Gt.of.Gt.Ge.apply(Eq[-2], Eq[0])
 

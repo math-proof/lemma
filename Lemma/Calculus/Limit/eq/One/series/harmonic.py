@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Set.In.Inv.Icc.of.In)
 
-    Eq << Eq[-1].this.expr.apply(Set.Ge.Le.of.In_Icc)
+    Eq << Eq[-1].this.expr.apply(Set.Le.Le.of.In_Icc)
 
     Eq << Bool.All.All.of.All_And.apply(Eq[-1])
 

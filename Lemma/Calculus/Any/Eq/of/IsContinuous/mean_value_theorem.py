@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.max.reversed) / (b - a)
 
-    Eq <<= Set.In_Icc.of.Le.Ge.apply(Eq[-4], Eq[-1])
+    Eq <<= Set.In_Icc.of.Le.Le.apply(Eq[-4], Eq[-1])
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq.intermediate_value, Eq.intermediate_value.rhs, Eq[-1].lhs)
 

@@ -17,7 +17,7 @@ def prove(Eq):
     n = Symbol(integer=True)
     Eq << apply(x, n)
 
-    Eq << Eq[-1].this.expr.apply(Set.In_Ico.given.Ge.Lt)
+    Eq << Eq[-1].this.expr.apply(Set.In_Ico.given.Le.Lt)
 
     Eq << Eq[-1].this.find(Greater) + 1
 

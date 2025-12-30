@@ -22,11 +22,11 @@ def prove(Eq):
     d = 2
     Eq << apply(Element(x, Interval(a, b)), d)
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[0])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
     Eq <<= Eq[-2] / d, Eq[-1] / d
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
 
 

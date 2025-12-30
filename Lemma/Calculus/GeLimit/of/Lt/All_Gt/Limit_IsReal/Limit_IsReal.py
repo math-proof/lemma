@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1].this.lhs.apply(Set.In.given.Add.In.IccAddS, b)
 
-    Eq <<= Eq[-1].this.lhs.apply(Set.In_Ico.given.Ge.Lt)
+    Eq <<= Eq[-1].this.lhs.apply(Set.In_Ico.given.Le.Lt)
 
     Eq << Bool.All.of.Imp.apply(Eq[-1])
 

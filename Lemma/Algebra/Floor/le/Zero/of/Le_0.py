@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Set.Any_In_Ico.apply(x)
 
-    Eq << Eq[-1].this.expr.apply(Set.Ge.Le.of.In_Icc)
+    Eq << Eq[-1].this.expr.apply(Set.Le.Le.of.In_Icc)
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=None)
 

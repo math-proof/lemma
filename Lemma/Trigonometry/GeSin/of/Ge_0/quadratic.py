@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.And.Imp.invert.apply(Eq[-1], cond=x >= 0)
 
-    Eq << Eq[-1].this.lhs.apply(Set.In_Icc.of.Le.Ge)
+    Eq << Eq[-1].this.lhs.apply(Set.In_Icc.of.Le.Le)
 
     Eq << Eq[-1].this.lhs.apply(Trigonometry.GeSin.of.In_Icc.quadratic)
 

@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Set.Eq_Ceil.given.In.Icc.apply(Eq[0])
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
     Eq << Eq[-2].this.find(Sign).apply(Algebra.Sign.eq.Ite.Abs)
 

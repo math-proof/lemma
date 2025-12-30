@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Ge.of.In_Icc.apply(Eq[1])
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[0])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[0])
 
 
 if __name__ == '__main__':

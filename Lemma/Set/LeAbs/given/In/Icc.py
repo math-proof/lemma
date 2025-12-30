@@ -15,7 +15,7 @@ def prove(Eq):
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) <= a)
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[1])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
     Eq << Algebra.LeAbs.of.Le.Ge.apply(Eq[-1], Eq[-2])
 

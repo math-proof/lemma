@@ -23,9 +23,9 @@ def prove(Eq):
     a, b, c, d, x, y, z = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True)), Element(y, Interval(c, d, right_open=True)), Element(z, Interval(x, y, left_open=True)))
 
-    Eq << Set.In_Ico.given.Ge.Lt.apply(Eq[-1])
+    Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
-    Eq << Set.Ge.Le.of.In_Icc.apply(Eq[2])
+    Eq << Set.Le.Le.of.In_Icc.apply(Eq[2])
 
     Eq <<= Set.Gt.of.In_Icc.apply(Eq[0]), Set.Lt.of.In_Icc.apply(Eq[1])
 

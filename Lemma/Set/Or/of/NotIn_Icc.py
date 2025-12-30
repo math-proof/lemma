@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].apply(Set.In_Icc.of.Le.Ge)
+    Eq << Eq[-1].apply(Set.In_Icc.of.Le.Le)
 
     Eq << ~Eq[-1]
 
