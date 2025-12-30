@@ -37,9 +37,9 @@ private lemma fin
   (j : Fin n):
 -- imply
   have h_ij := AddMul.lt.Mul i j
-  (v.unflatten.get i).get j = v.get ⟨i * n + j, h_ij⟩ := by
+  (v.unflatten.get i).get j = v.get ⟨i * n + j, h_ij⟩ :=
 -- proof
-  apply main
+  main v i j
 
 
 -- created on 2025-05-31

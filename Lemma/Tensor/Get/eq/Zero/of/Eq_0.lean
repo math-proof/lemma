@@ -25,9 +25,9 @@ private lemma fin
   (h : X = 0)
   (i : Fin X.length) :
 -- imply
-  X.get i = 0 := by
+  X.get i = 0 :=
 -- proof
-  apply main h i
+  main h i
 
 
 -- created on 2025-12-06

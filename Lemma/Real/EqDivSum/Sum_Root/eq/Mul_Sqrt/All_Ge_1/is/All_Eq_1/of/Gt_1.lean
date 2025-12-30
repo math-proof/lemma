@@ -11,7 +11,7 @@ import Lemma.Nat.Eq.of.All_Eq.Lt
 import Lemma.Bool.All_EqUFnS.of.All_Eq
 import Lemma.Nat.Pow1.eq.One
 import Lemma.Nat.Ge.of.Eq
-import Lemma.Bool.All.of.All.All_Imp
+import Lemma.Finset.All.of.All.All_Imp
 open Bool Real Finset Nat Rat
 
 
@@ -65,7 +65,7 @@ private lemma main
       have h_All : ∀ x : ℝ, x = 1 → x ≥ 1 := by
         intro i h_Eq
         apply Ge.of.Eq h_Eq
-      apply All.of.All.All_Imp.fin h_All h_All_Eq
+      apply All.of.All.All_Imp h_All h_All_Eq
 
 
 -- created on 2025-04-26

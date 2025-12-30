@@ -34,9 +34,9 @@ private lemma fin
   (v : List.Vector α (n :: s).prod)
   (i : Fin n) :
 -- imply
-  (v.splitAt 1).get ⟨i, by simp⟩ = v.unflatten.get i := by
+  (v.splitAt 1).get ⟨i, by simp⟩ = v.unflatten.get i :=
 -- proof
-  apply main
+  main v i
 
 
 -- created on 2025-07-16

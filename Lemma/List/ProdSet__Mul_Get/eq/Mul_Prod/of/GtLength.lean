@@ -25,9 +25,9 @@ private lemma fin
   (h : s.length > i)
   (t : α) :
 -- imply
-  (s.set i (t * s.get ⟨i, h⟩)).prod = t * s.prod := by
+  (s.set i (t * s.get ⟨i, h⟩)).prod = t * s.prod :=
 -- proof
-  apply main h
+  main h t
 
 
 -- created on 2025-07-12

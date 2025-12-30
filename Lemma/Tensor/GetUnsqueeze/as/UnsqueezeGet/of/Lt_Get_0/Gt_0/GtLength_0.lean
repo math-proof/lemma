@@ -33,9 +33,9 @@ private lemma fin
   (X : Tensor α s) :
 -- imply
   have h_i : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0 h_s]
-  (X.unsqueeze d).get ⟨i, by rwa [LengthUnsqueeze.eq.Length.of.Gt_0 h]⟩ ≃ (X.get ⟨i, h_i⟩).unsqueeze (d - 1) := by
+  (X.unsqueeze d).get ⟨i, by rwa [LengthUnsqueeze.eq.Length.of.Gt_0 h]⟩ ≃ (X.get ⟨i, h_i⟩).unsqueeze (d - 1) :=
 -- proof
-  apply main h_s h h_i X
+  main h_s h h_i X
 
 
 -- created on 2025-07-12

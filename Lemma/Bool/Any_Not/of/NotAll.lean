@@ -2,19 +2,6 @@ import sympy.Basic
 
 
 @[main]
-private lemma fin
-  {f : ι → Prop}
-  {s : Finset ι}
--- given
-  (h : ¬∀ i ∈ s, f i) :
--- imply
-  ∃ i ∈ s, ¬(f i) := by
--- proof
-  by_contra! h'
-  contradiction
-
-
-@[main]
 private lemma main
   {p : α → Prop}
 -- given

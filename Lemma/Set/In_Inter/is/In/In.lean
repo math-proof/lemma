@@ -2,18 +2,6 @@ import sympy.Basic
 
 
 @[main, comm, mp, mpr]
-private lemma fin
-  [DecidableEq ι]
--- given
-  (e : ι)
-  (A B : Finset ι) :
--- imply
-  e ∈ A ∩ B ↔ e ∈ A ∧ e ∈ B :=
--- proof
-  Finset.mem_inter
-
-
-@[main, comm, mp, mpr]
 private lemma main
 -- given
   (e : α)

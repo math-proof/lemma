@@ -19,9 +19,9 @@ private lemma fin
 -- given
   (a b : List.Vector α n) :
 -- imply
-  a ≈ b ↔ ∀ i : Fin n, a.get i ≈ b.get i := by
+  a ≈ b ↔ ∀ i : Fin n, a.get i ≈ b.get i :=
 -- proof
-  aesop
+  main a b
 
 
 -- created on 2025-12-23

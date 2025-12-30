@@ -33,9 +33,9 @@ private lemma fin
   (i : Fin s[0]) :
 -- imply
   have h := congrArg (Tensor α) h₁
-  (cast h X).get ⟨i, GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩⟩ = cast (by rw [h₁]) (X.get ⟨i, GtLength.of.GtLength_0 h₀ X i⟩) := by
+  (cast h X).get ⟨i, GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩⟩ = cast (by rw [h₁]) (X.get ⟨i, GtLength.of.GtLength_0 h₀ X i⟩) :=
 -- proof
-  apply main h₀ h₁ X i
+  main h₀ h₁ X i
 
 
 -- created on 2025-07-04

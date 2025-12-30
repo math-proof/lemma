@@ -20,9 +20,9 @@ private lemma fin
   (h : a = b)
   (i : Fin n):
 -- imply
-  a.get i = b.get i := by
+  a.get i = b.get i :=
 -- proof
-  rw [h]
+  main h i
 
 
 -- created on 2025-09-23

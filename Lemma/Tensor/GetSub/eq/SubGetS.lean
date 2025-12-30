@@ -5,14 +5,15 @@ open Int Tensor
 
 
 @[main]
-private lemma fin
+private lemma main
   [SubNegMonoid α]
 -- given
   (A B : Tensor α (m :: s))
   (i : Fin m) :
 -- imply
-  (A - B).get i = A.get i - B.get i := by
+  (A - B)[i] = A[i] - B[i] := by
 -- proof
+  simp [GetElem.getElem]
   rw [Sub.eq.Add_Neg]
   rw [GetAdd.eq.AddGetS.fin]
   have := GetNeg.eq.NegGet.fin (i := ⟨i, by grind⟩) B
@@ -22,15 +23,15 @@ private lemma fin
 
 
 @[main]
-private lemma main
+private lemma fin
   [SubNegMonoid α]
 -- given
   (A B : Tensor α (m :: s))
   (i : Fin m) :
 -- imply
-  (A - B)[i] = A[i] - B[i] := by
+  (A - B).get i = A.get i - B.get i :=
 -- proof
-  apply fin
+  main A B i
 
 
 -- created on 2025-12-08

@@ -32,9 +32,9 @@ private lemma fin
     b.get i) = (if p then
     a
   else
-    b).get i := by
+    b).get i :=
 -- proof
-  apply main
+  main a b i
 
 
 -- created on 2025-10-09

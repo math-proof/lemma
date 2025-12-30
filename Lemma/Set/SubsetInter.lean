@@ -1,5 +1,4 @@
 import Lemma.Set.Inter
-import Lemma.Set.In.In.of.In_Inter
 open Set
 
 
@@ -24,31 +23,6 @@ private lemma left
 -- proof
   have := main B A
   rwa [Inter.comm] at this
-
-
-@[main]
-private lemma left.fin
-  [DecidableEq α]
--- given
-  (A B : Finset α) :
--- imply
-  A ∩ B ⊆ A := by
--- proof
-  intro x hx
-  let ⟨hxA, hxB⟩ := In.In.of.In_Inter.fin hx
-  assumption
-
-
-@[main]
-private lemma fin
-  [DecidableEq α]
--- given
-  (A B : Finset α) :
--- imply
-  A ∩ B ⊆ B := by
--- proof
-  have := left.fin B A
-  rwa [Inter.comm.fin] at this
 
 
 -- created on 2025-04-08

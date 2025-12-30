@@ -1,7 +1,6 @@
-import sympy.sets.sets
 import Lemma.Real.Root_Add_2.le.Sqrt.of.Ge_1
-import Lemma.Bool.All.of.All.All_Imp
-open Bool Real
+import Lemma.Finset.All.of.All.All_Imp
+open Finset Real
 
 
 @[main]
@@ -16,7 +15,7 @@ private lemma main
   have : ∀ (t : ℝ) (i : ℕ), t ≥ 1 → (t ^ (1 / (i + 2) : ℝ) ≤ √t) := by
     intro t i h
     apply Root_Add_2.le.Sqrt.of.Ge_1 h
-  exact All.of.All.All_Imp.binary this h₀
+  exact All.of.All.All_Imp.bin this h₀
 
 
 -- created on 2025-04-06

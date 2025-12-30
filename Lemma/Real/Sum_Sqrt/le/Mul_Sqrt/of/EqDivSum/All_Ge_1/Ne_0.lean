@@ -1,5 +1,4 @@
-import sympy.sets.sets
-import Lemma.Bool.All.of.All.All_Imp
+import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Rat.EqMulDiv.of.Ne_0
@@ -13,13 +12,9 @@ import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Real.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
 import Lemma.Real.GeSqrt_0
-open Bool Nat Finset Real Rat
+open Nat Finset Real Rat
 
 
-/--
-Given a non-zero natural number `n` and a sequence `x` of real numbers where each element is at least 1, if the average of the first `n` elements equals the `n`-th element, then the sum of the square roots of the first `n` elements is bounded above by `n` times the square root of the `n`-th element.
-This result leverages the Cauchy-Schwarz inequality and algebraic manipulations under the specified conditions.
--/
 @[main]
 private lemma main
   {n : ℕ}
@@ -34,7 +29,7 @@ private lemma main
   have : ∀ t : ℝ, t ≥ 1 → t ≥ 0 := by
     intro t h
     linarith
-  have h_Ge_0 := All.of.All.All_Imp.fin this h₁
+  have h_Ge_0 := All.of.All.All_Imp this h₁
   have h_Le := Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0.cauchy_schwarz h_Ge_0
   simp only [Finset.card_range] at h_Le
   have h_Eq := EqMulS.of.Eq h₂ n

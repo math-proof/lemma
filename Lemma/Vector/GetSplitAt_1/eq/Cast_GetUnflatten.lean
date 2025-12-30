@@ -7,27 +7,6 @@ open List Vector
 
 
 @[main, comm]
-private lemma fin
-  {s : List ℕ}
--- given
-  (v : List.Vector α s.prod)
-  (i : Fin (s.take 1).prod) :
--- imply
-  (v.splitAt 1).get i = (cast (congrArg (List.Vector α) (Prod.eq.MulProdS s 1)) v).unflatten.get i := by
--- proof
-  match s with
-  | [] =>
-    simp [List.Vector.splitAt]
-  | s₀ :: s =>
-    have hi := i.isLt
-    rw [GetSplitAt_1.eq.GetUnflatten.fin v ⟨i, by simp_all⟩]
-    ext j
-    simp [GetUnflatten.eq.Get_AddMul.fin]
-    rw [GetCast.eq.Get.of.Eq.fin]
-    simp [Foldr.eq.Prod]
-
-
-@[main, comm]
 private lemma main
   {s : List ℕ}
 -- given
@@ -36,7 +15,29 @@ private lemma main
 -- imply
   (v.splitAt 1)[i] = (cast (congrArg (List.Vector α) (Prod.eq.MulProdS s 1)) v).unflatten[i] := by
 -- proof
-  apply fin
+  match s with
+  | [] =>
+    simp [List.Vector.splitAt]
+  | s₀ :: s =>
+    have hi := i.isLt
+    simp [GetElem.getElem]
+    rw [GetSplitAt_1.eq.GetUnflatten.fin v ⟨i, by simp_all⟩]
+    ext j
+    simp [GetUnflatten.eq.Get_AddMul.fin]
+    rw [GetCast.eq.Get.of.Eq.fin]
+    simp [Foldr.eq.Prod]
+
+
+@[main, comm]
+private lemma fin
+  {s : List ℕ}
+-- given
+  (v : List.Vector α s.prod)
+  (i : Fin (s.take 1).prod) :
+-- imply
+  (v.splitAt 1).get i = (cast (congrArg (List.Vector α) (Prod.eq.MulProdS s 1)) v).unflatten.get i :=
+-- proof
+  main v i
 
 
 -- created on 2025-10-08

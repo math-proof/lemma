@@ -2,18 +2,6 @@ import sympy.Basic
 
 
 @[main]
-private lemma fin
-  {A B : Finset ι}
--- given
-  (h : A = B)
-  (x : ι):
--- imply
-  x ∈ A ↔ x ∈ B := by
--- proof
-  rw [h]
-
-
-@[main]
 private lemma main
   {A B : Set α}
 -- given

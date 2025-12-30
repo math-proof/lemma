@@ -3,18 +3,6 @@ open Bool
 
 
 @[main, comm, mp, mpr]
-private lemma fin
--- given
-  (s : Finset ι)
-  (p : ι → Prop) :
--- imply
-  ¬(∃ i ∈ s, p i) ↔ ∀ i ∈ s, ¬(p i) := by
--- proof
-  rw [All.is.NotAny_Not]
-  simp
-
-
-@[main, comm, mp, mpr]
 private lemma main
 -- given
   (p : α → Prop) :

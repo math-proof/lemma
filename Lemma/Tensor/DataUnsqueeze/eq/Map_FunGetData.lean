@@ -35,9 +35,9 @@ private lemma fin
   (X : Tensor α s)
   (d : ℕ) :
 -- imply
-  (X.unsqueeze d).data = (List.Vector.range (s.insertIdx d 1).prod).map fun i => X.data.get (cast (congrArg Fin (ProdInsertIdx.eq.Prod s d)) i) := by
+  (X.unsqueeze d).data = (List.Vector.range (s.insertIdx d 1).prod).map fun i => X.data.get (cast (congrArg Fin (ProdInsertIdx.eq.Prod s d)) i) :=
 -- proof
-  apply main
+  main X d
 
 
 -- created on 2025-11-27

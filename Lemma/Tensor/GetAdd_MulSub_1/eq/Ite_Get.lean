@@ -120,9 +120,9 @@ private lemma fin
   ((A + (mask - 1) * Hyperreal.omega).get i).get j ≈ if p i j then
     (A.get i).get j
   else
-    (-Hyperreal.omega : Tensor ℝ* []) := by
+    (-Hyperreal.omega : Tensor ℝ* []) :=
 -- proof
-  apply main
+  main p A i j
 
 
 -- created on 2025-12-06

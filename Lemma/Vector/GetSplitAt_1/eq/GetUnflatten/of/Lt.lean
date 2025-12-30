@@ -22,9 +22,9 @@ private lemma fin
   (v : List.Vector α (n :: s).prod) :
 -- imply
   have h_i : i < ((n :: s).take 1 ).prod := by simp_all
-  (v.splitAt 1).get ⟨i, h_i⟩ = v.unflatten.get ⟨i, h⟩ := by
+  (v.splitAt 1).get ⟨i, h_i⟩ = v.unflatten.get ⟨i, h⟩ :=
 -- proof
-  apply main
+  main h v
 
 
 -- created on 2025-07-16

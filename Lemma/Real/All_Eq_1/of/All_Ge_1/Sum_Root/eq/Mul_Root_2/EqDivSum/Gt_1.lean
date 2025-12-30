@@ -1,14 +1,11 @@
 import sympy.sets.sets
 import Lemma.Real.Sqrt.eq.Root_2
-import Lemma.Bool.Any_Not.of.NotAll
-import Lemma.Nat.Ne.of.Lt
 import Lemma.Real.Sum_Root.lt.Mul_Sqrt.of.EqDivSum.Any_Ne_1.All_Ge_1.Gt_1
-open Bool Real Nat
+import Lemma.Nat.Ne.of.Lt
+import Lemma.Finset.Any_Not.of.NotAll
+open Finset Real Nat
 
 
-/--
-Given a natural number \( n > 1 \) and a sequence \( \{x_i\} \) where each \( x_i \geq 1 \), if the sum of \( x_i^{1/(i+2)} \) for \( i \) in the range \( 1 \) to \( n \) equals \( n \sqrt{x_n} \) and the average of \( \{x_i\} \) is \( x_n \), then all \( x_i \) must be equal to \( 1 \).
--/
 @[main]
 private lemma main
   {n : ℕ}
@@ -23,7 +20,7 @@ private lemma main
 -- proof
   rw [Root_2.eq.Sqrt] at h₂
   by_contra h
-  have h := Any_Not.of.NotAll.fin h
+  have h := Any_Not.of.NotAll h
   have := Sum_Root.lt.Mul_Sqrt.of.EqDivSum.Any_Ne_1.All_Ge_1.Gt_1 h₀ h₃ h h₁
   have := Ne.of.Lt this
   contradiction

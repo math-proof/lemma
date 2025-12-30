@@ -1,8 +1,8 @@
 import Lemma.Finset.SquareSum.le.Mul_Sum_Square
 import Lemma.Real.EqSquareSqrt.of.Ge_0
-import Lemma.Bool.All.of.All.All_Imp
+import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Finset.Sum.of.All_Eq
-open Bool Finset Real
+open Finset Real
 
 
 @[main]
@@ -18,7 +18,7 @@ private lemma cauchy_schwarz
   have : ∀ t : ℝ, t ≥ 0 → (√t)² = t := by
     intro t h
     apply EqSquareSqrt.of.Ge_0 h
-  have := All.of.All.All_Imp.fin this h
+  have := All.of.All.All_Imp this h
   rwa [Sum.of.All_Eq this] at h_Le
 
 

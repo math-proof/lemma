@@ -39,19 +39,6 @@ private lemma set
 
 
 @[main, comm, mp, mpr]
-private lemma fin
-  [DecidableEq ι]
--- given
-  (x : α)
-  (s : Finset ι)
-  (f : ι → Finset α) :
--- imply
-  x ∈ ⋃ i ∈ s, f i ↔ ∃ i ∈ s, x ∈ f i := by
--- proof
-  simp
-
-
-@[main, comm, mp, mpr]
 private lemma set₂
   {κ : ι → Type u}
 -- given

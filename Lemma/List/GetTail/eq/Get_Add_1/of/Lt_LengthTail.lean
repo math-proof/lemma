@@ -27,9 +27,9 @@ private lemma fin
   have h_i : i + 1 < s.length := by
     simp at h
     omega
-  s.tail.get ⟨i, h⟩ = s.get ⟨i + 1, h_i⟩ := by
+  s.tail.get ⟨i, h⟩ = s.get ⟨i + 1, h_i⟩ :=
 -- proof
-  apply main h
+  main h
 
 
 -- created on 2025-10-10

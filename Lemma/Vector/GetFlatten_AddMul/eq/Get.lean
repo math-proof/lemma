@@ -41,9 +41,9 @@ private lemma fin
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  v.flatten.get ⟨i * n + j, AddMul.lt.Mul i j⟩ = (v.get i).get j := by
+  v.flatten.get ⟨i * n + j, AddMul.lt.Mul i j⟩ = (v.get i).get j :=
 -- proof
-  apply main
+  main v i j
 
 
 -- created on 2025-05-31

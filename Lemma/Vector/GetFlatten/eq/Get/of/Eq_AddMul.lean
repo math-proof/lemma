@@ -27,10 +27,9 @@ private lemma fin
   (v : List.Vector (List.Vector α n) m) :
 -- imply
   have h_t : t < m * n := by convert AddMul.lt.Mul i j
-  v.flatten.get ⟨t, h_t⟩ = (v.get i).get j := by
+  v.flatten.get ⟨t, h_t⟩ = (v.get i).get j :=
 -- proof
-  apply main
-  assumption
+  main h_t v
 
 
 -- created on 2025-07-06

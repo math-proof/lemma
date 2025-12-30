@@ -25,9 +25,9 @@ private lemma fin
   (h : s.length > 0)
   (X : Tensor α s) :
 -- imply
-  X.sum 0 = cast (by simp) (∑ i : Fin s[0], X.get ⟨i, by apply GtLength.of.GtLength_0 h⟩) := by
+  X.sum 0 = cast (by simp) (∑ i : Fin s[0], X.get ⟨i, by apply GtLength.of.GtLength_0 h⟩) :=
 -- proof
-  apply main
+  main h X
 
 
 -- created on 2025-11-06

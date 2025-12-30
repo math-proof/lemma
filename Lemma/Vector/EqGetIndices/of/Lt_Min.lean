@@ -35,10 +35,9 @@ private lemma fin
   (h : i < n ⊓ m) :
 -- imply
   have h_i : i < (List.Vector.indices ⟨0, n, 1⟩ m).length := by simp_all [LengthSlice.eq.Min]
-  (List.Vector.indices ⟨0, n, 1⟩ m).get ⟨i, h_i⟩ = i := by
+  (List.Vector.indices ⟨0, n, 1⟩ m).get ⟨i, h_i⟩ = i :=
 -- proof
-  apply main
-  repeat assumption
+  main h
 
 
 -- created on 2025-08-04

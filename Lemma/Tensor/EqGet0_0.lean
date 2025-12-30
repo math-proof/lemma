@@ -15,13 +15,14 @@ open Tensor Vector Bool List
 
 
 @[main]
-private lemma fin
+private lemma main
   [Zero α]
 -- given
   (i : Fin (0 : Tensor α s).length) :
 -- imply
-  (0 : Tensor α s).get i = 0 := by
+  (0 : Tensor α s)[i] = 0 := by
 -- proof
+  simp [GetElem.getElem]
   simp [Tensor.get]
   simp [Tensor.toVector]
   have h_i := i.isLt
@@ -49,14 +50,14 @@ private lemma fin
 
 
 @[main]
-private lemma main
+private lemma fin
   [Zero α]
 -- given
   (i : Fin (0 : Tensor α s).length) :
 -- imply
-  (0 : Tensor α s)[i.val] = 0 := by
+  (0 : Tensor α s).get i = 0 :=
 -- proof
-  apply fin
+  main i
 
 
 -- created on 2025-10-12

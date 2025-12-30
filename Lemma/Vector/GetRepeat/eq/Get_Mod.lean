@@ -31,9 +31,9 @@ private lemma fin
   (x : List.Vector α n)
   (k : Fin (m * n)) :
 -- imply
-  (x.repeat m).get k = x.get ⟨k % n, LtMod.of.Ne_0 (Ne_0.of.Mul.ne.Zero (Ne_0 k)) k⟩ := by
+  (x.repeat m).get k = x.get ⟨k % n, LtMod.of.Ne_0 (Ne_0.of.Mul.ne.Zero (Ne_0 k)) k⟩ :=
 -- proof
-  apply main
+  main x k
 
 
 -- created on 2025-09-24

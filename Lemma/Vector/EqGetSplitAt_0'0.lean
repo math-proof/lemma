@@ -45,11 +45,9 @@ private lemma fin
 -- given
   (v : List.Vector α s.prod) :
 -- imply
-  (v.splitAt 0).get ⟨0, by simp⟩ = v := by
+  (v.splitAt 0).get ⟨0, by simp⟩ = v :=
 -- proof
-  have := main v
-  simp [GetElem.getElem] at this
-  assumption
+  main v
 
 
 -- created on 2025-07-12

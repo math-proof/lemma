@@ -21,9 +21,9 @@ private lemma fin
   (x : List.Vector α n)
   (i : Fin n) :
 -- imply
-  (log x).get i = log (x.get i) := by
+  (log x).get i = log (x.get i) :=
 -- proof
-  apply main
+  main x i
 
 
 -- created on 2025-12-04

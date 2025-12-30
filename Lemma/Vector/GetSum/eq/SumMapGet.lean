@@ -34,9 +34,9 @@ private lemma fin
   (x : List.Vector (List.Vector α n) m)
   (i : Fin n) :
 -- imply
-  x.sum.get i = (x.map (·.get i)).sum := by
+  x.sum.get i = (x.map (·.get i)).sum :=
 -- proof
-  apply main
+  main x i
 
 
 -- created on 2025-10-11

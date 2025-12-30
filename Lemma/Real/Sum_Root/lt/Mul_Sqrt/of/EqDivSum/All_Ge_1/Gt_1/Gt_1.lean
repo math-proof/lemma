@@ -3,9 +3,9 @@ import Lemma.Bool.NotAny.is.All_Not
 import Lemma.Bool.AndAnd.is.And_And
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Finset.AllIco.of.AllRange
-import Lemma.Bool.All_And.of.All.All
+import Lemma.Finset.All_And.of.All.All
 import Lemma.Nat.Eq.of.Le.Ge
-import Lemma.Bool.All.of.All.All_Imp
+import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Real.All_LeRoot_Sqrt.of.All_Ge_1
 import Lemma.Finset.LtSumS.of.All_Le.Any_Lt
 import Lemma.Finset.Sum.eq.Add_Sum.of.Gt_0
@@ -42,19 +42,19 @@ private lemma main
     let ⟨i, hi⟩ := h
     let ⟨h_In, h_Gt_1⟩ := hi
     rw [Finset.mem_Ico] at h_In
-    have h_pos := Gt.of.Ge.Gt h_In.left (by norm_num : 1 > 0)
-    have h := Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0 h_Gt_1 h_pos
-    have h_Any : ∃ i ∈ Finset.range n, (x i) ^ (1 / (i + 2) : ℝ) < √(x i) := by
+    apply Lt.of.Lt.Le
+    .
+      apply LtSumS.of.All_Le.Any_Lt h_All
       use i
       constructor
       ·
         rw [Finset.mem_range]
         exact h_In.right
       ·
-        assumption
-    have h_Lt := LtSumS.of.All_Le.Any_Lt h_All h_Any
-    have := Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0 (by linarith [h₀]) h₁ h₃
-    exact Lt.of.Lt.Le h_Lt this
+        apply Root_Add_2.lt.Sqrt.of.Gt_1.Gt_0 h_Gt_1
+        apply Gt.of.Ge.Gt h_In.left (by norm_num : 1 > 0)
+    .
+      apply Sum_Sqrt.le.Mul_Sqrt.of.EqDivSum.All_Ge_1.Ne_0 (by linarith [h₀]) h₁ h₃
   else
     have := All_Not.of.NotAny h
     simp at this
@@ -63,11 +63,11 @@ private lemma main
       rw [Finset.mem_Ico] at hi
       exact this i hi.left hi.right
     have h_All_Ge_1 := AllIco.of.AllRange h₁ 1
-    have h_All_And := All_And.of.All.All.fin h_All_Le_1 h_All_Ge_1
+    have h_All_And := All_And.of.All.All h_All_Le_1 h_All_Ge_1
     have : ∀ t : ℝ, t ≤ 1 ∧ t ≥ 1 → t = 1 := by
       intro t ht
       exact Eq.of.Le.Ge ht.left ht.right
-    have h_All_Eq := All.of.All.All_Imp.fin this h_All_And
+    have h_All_Eq := All.of.All.All_Imp this h_All_And
     let f := fun (xi : ℝ) (i : ℕ) => xi ^ (1 / (i + 2) : ℝ)
     have h_All_Eq_Root := All_EqUFnS.of.All_Eq.binary (f := f) h_All_Eq
     simp only [f] at h_All_Eq_Root
@@ -97,8 +97,7 @@ private lemma main
     rw [Add_Sub.eq.SubAdd] at h_Eq_Sum
     rw [h_Eq_Sum] at h₃
     rw [← h₃]
-    apply SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
-    repeat assumption
+    exact SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1 h₀ h₂
 
 
 -- created on 2025-04-06

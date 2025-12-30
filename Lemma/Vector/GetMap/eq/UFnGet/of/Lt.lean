@@ -22,9 +22,9 @@ private lemma fin
   (v : List.Vector α n)
   (f : α → β) :
 -- imply
-  (v.map f).get ⟨i, h⟩ = f (v.get ⟨i, h⟩) := by
+  (v.map f).get ⟨i, h⟩ = f (v.get ⟨i, h⟩) :=
 -- proof
-  apply main
+  main h v f
 
 
 -- created on 2025-06-01

@@ -3,18 +3,6 @@ import sympy.Basic
 
 
 @[main]
-private lemma fin
-  [Preorder α] [LocallyFiniteOrder α]
-  {a b : α}
--- given
-  (h : x ∈ Finset.Ioc a b) :
--- imply
-  a < x := by
--- proof
-  simp_all
-
-
-@[main]
 private lemma main
   [Preorder α]
   {a b : α}

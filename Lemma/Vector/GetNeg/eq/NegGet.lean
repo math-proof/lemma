@@ -21,9 +21,9 @@ private lemma fin
   (x : List.Vector α n)
   (i : Fin n) :
 -- imply
-  (-x).get i = -x.get i := by
+  (-x).get i = -x.get i :=
 -- proof
-  apply main
+  main x i
 
 
 -- created on 2025-10-04

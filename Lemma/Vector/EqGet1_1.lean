@@ -19,9 +19,9 @@ private lemma fin
 -- given
   (i : Fin n) :
 -- imply
-  (1 : List.Vector α n).get i = 1 := by
+  (1 : List.Vector α n).get i = 1 :=
 -- proof
-  apply main
+  main i
 
 
 -- created on 2025-09-23

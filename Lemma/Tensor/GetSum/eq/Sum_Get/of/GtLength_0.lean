@@ -40,9 +40,9 @@ private lemma fin
   (X : Fin n → Tensor α s)
   (k : Fin s[0]) :
 -- imply
-  (∑ i : Fin n, X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ = ∑ i : Fin n, (X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ := by
+  (∑ i : Fin n, X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ = ∑ i : Fin n, (X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ :=
 -- proof
-  apply main h_s
+  main h_s X k Finset.univ
 
 
 -- created on 2025-11-06

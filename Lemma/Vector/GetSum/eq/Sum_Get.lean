@@ -37,9 +37,9 @@ private lemma fin
   (x : ι → List.Vector α n)
   (k : Fin n) :
 -- imply
-  (∑ i ∈ s, x i).get k = ∑ i ∈ s, (x i).get k := by
+  (∑ i ∈ s, x i).get k = ∑ i ∈ s, (x i).get k :=
 -- proof
-  apply main
+  main s x k
 
 
 -- created on 2025-11-06

@@ -1,11 +1,11 @@
-import Lemma.Finset.Sum.eq.Sum_MulBool
-import Lemma.Finset.Sum_Add.eq.AddSumS
 import Lemma.Nat.MulAdd.eq.AddMulS
-import Lemma.Set.In.is.In_Inter.ou.In_SDiff
 import Lemma.Bool.BoolOr.eq.SubAddBoolS
 import Lemma.Bool.ToNatDecide.eq.Bool
-import Lemma.Set.In_Inter.In_SDiff.is.False
-open Set Bool Finset Nat
+import Lemma.Finset.In_Inter.In_SDiff.is.False
+import Lemma.Finset.In.is.In_Inter.ou.In_SDiff
+import Lemma.Finset.Sum.eq.Sum_MulBool
+import Lemma.Finset.Sum_Add.eq.AddSumS
+open Bool Finset Nat
 
 
 @[main]
@@ -27,11 +27,11 @@ private lemma main
     rw [Sum.eq.Sum_MulBool]
   rw [AddSumS.eq.Sum_Add]
   simp only [AddMulS.eq.MulAdd]
-  have h := In.is.In_Inter.ou.In_SDiff.fin A B
+  have h := In.is.In_Inter.ou.In_SDiff A B
   conv_lhs =>
     simp only [h]
   simp only [BoolOr.eq.SubAddBoolS]
-  simp only [Set.In_Inter.In_SDiff.is.False.fin]
+  simp only [In_Inter.In_SDiff.is.False]
   simp
 
 

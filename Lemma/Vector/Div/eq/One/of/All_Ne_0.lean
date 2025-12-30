@@ -29,9 +29,9 @@ private lemma fin
 -- given
   (h : ∀ i : Fin n, x.get i ≠ 0) :
 -- imply
-  x / x = 1 := by
+  x / x = 1 :=
 -- proof
-  apply main h
+  main h
 
 
 -- created on 2025-11-28

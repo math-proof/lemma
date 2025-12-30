@@ -1,9 +1,9 @@
-import Lemma.Bool.NotAny.is.All_Not
-import Lemma.Bool.All.of.All.All_Imp
-import Lemma.Bool.All_And.of.All.All
+import Lemma.Finset.NotAny.is.All_Not
+import Lemma.Finset.All.of.All.All_Imp
+import Lemma.Finset.All_And.of.All.All
 import Lemma.Bool.NotAny_Not.of.All
 import Lemma.Nat.Eq.of.Le.Ge
-open Bool Nat
+open Bool Nat Finset
 
 
 @[main]
@@ -19,18 +19,18 @@ private lemma main
   ∃ i ∈ s, x i > a := by
 -- proof
   by_contra h
-  have h := All_Not.of.NotAny.fin h
+  have h := All_Not.of.NotAny h
   have : ∀ t : N, ¬t > a → t ≤ a := by
     intro t h
     aesop
-  have h_Ge_0 := All.of.All.All_Imp.fin (α := N) this h
-  have h := All_And.of.All.All.fin h₀ h_Ge_0
+  have h_Ge_0 := All.of.All.All_Imp (α := N) this h
+  have h := All_And.of.All.All h₀ h_Ge_0
   have : ∀ t : N, t ≥ a ∧ t ≤ a → t = a := by
     intro t ⟨h_ge, h_le⟩
     apply Eq.of.Le.Ge h_le h_ge
-  have h := All.of.All.All_Imp.fin this h
+  have h := All.of.All.All_Imp this h
   have := NotAny_Not.of.All h
-  have h_NotAny : ¬∃ i ∈ s, x i ≠ a := by
+  have : ¬∃ i ∈ s, x i ≠ a := by
     simp
     simp at h
     exact h

@@ -1,5 +1,4 @@
-import sympy.sets.sets
-import Lemma.Bool.All.of.All.All_Imp
+import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Real.Root_Add_2.le.Sqrt.of.Ge_1
 import Lemma.Finset.LeSumS.of.All_Le
 import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
@@ -16,7 +15,7 @@ import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Real.EqSquareSqrt.of.Ge_0
 import Lemma.Real.SqrtMulSquareS.eq.Mul.of.Ge_0.Ge_0
 import Lemma.Real.GeSqrt_0
-open Finset Bool Nat Real Rat
+open Finset Nat Real Rat
 
 
 @[main]
@@ -33,12 +32,12 @@ private lemma main
   have : ∀ (t : ℝ) (i : ℕ), t ≥ 1 → (t ^ (1 / (i + 2) : ℝ) ≤ √t) := by
     intro t i h
     apply Root_Add_2.le.Sqrt.of.Ge_1 h
-  have := All.of.All.All_Imp.binary this h₁
+  have := All.of.All.All_Imp.bin this h₁
   have h_Le := LeSumS.of.All_Le this
   have : ∀ t : ℝ, t ≥ 1 → t ≥ 0 := by
     intro t h
     linarith
-  have h_Ge_0 := All.of.All.All_Imp.fin this h₁
+  have h_Ge_0 := All.of.All.All_Imp this h₁
   have := Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0.cauchy_schwarz h_Ge_0
   simp only [Finset.card_range] at this
   have h_Le := Le.of.Le.Le h_Le this

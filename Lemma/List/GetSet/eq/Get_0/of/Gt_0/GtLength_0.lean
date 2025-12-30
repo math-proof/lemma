@@ -26,9 +26,9 @@ private lemma fin
   (h : d > 0)
   (a : α) :
 -- imply
-  (x.set d a).get ⟨0, by rwa [LengthSet.eq.Length]⟩ = x.get ⟨0, by omega⟩ := by
+  (x.set d a).get ⟨0, by rwa [LengthSet.eq.Length]⟩ = x.get ⟨0, by omega⟩ :=
 -- proof
-  apply main h_x h
+  main h_x h a
 
 
 -- created on 2025-07-17

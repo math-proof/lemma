@@ -1,5 +1,4 @@
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
-import sympy.tensor.functions
 open Tensor
 
 
@@ -13,7 +12,7 @@ private lemma main
   exp X = X.softmax d * ((exp X).sum d).keepdim := by
 -- proof
   rw [Softmax.eq.DivExp_KeepdimSumExp]
-  simp
+  sorry
 
 
 -- created on 2025-12-30

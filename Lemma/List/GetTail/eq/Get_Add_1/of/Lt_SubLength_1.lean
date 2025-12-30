@@ -19,9 +19,9 @@ private lemma fin
 -- given
   (h : i < s.length - 1) :
 -- imply
-  s.tail.get ⟨i, by simpa⟩ = s.get ⟨i + 1, LtAdd.of.Lt_Sub h⟩ := by
+  s.tail.get ⟨i, by simpa⟩ = s.get ⟨i + 1, LtAdd.of.Lt_Sub h⟩ :=
 -- proof
-  apply main h
+  main h
 
 
 -- created on 2025-10-05

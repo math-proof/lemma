@@ -28,9 +28,9 @@ private lemma fin
   (A B : Tensor α (m :: s))
   (i : Fin m) :
 -- imply
-  (A + B).get i = A.get i + B.get i := by
+  (A + B).get i = A.get i + B.get i :=
 -- proof
-  apply main
+  main A B i
 
 
 -- created on 2025-07-20

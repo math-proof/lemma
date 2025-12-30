@@ -23,9 +23,9 @@ private lemma fin
   (a : α)
   (i : Fin n) :
 -- imply
-  (x + a).get i = x.get i + a := by
+  (x + a).get i = x.get i + a :=
 -- proof
-  apply main
+  main x a i
 
 
 -- created on 2025-11-30
