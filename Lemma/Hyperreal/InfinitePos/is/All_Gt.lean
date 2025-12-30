@@ -6,14 +6,14 @@ open Int
 
 
 @[main, comm, mp, mpr]
-private lemma main
+private lemma pos
 -- given
   (x : ℝ*) :
 -- imply
   x.InfinitePos ↔ ∀ δ : ℝ⁺, x > δ := by
 -- proof
   unfold Hyperreal.InfinitePos
-  constructor <;> 
+  constructor <;>
     intro h
   ·
     intro ⟨δ, hδ⟩
@@ -31,6 +31,16 @@ private lemma main
       have h := h 1
       simp_all
       linarith
+
+
+@[main, comm, mp, mpr]
+private lemma main
+-- given
+  (x : ℝ*) :
+-- imply
+  x.InfinitePos ↔ ∀ δ : ℝ, x > δ := by
+-- proof
+  simp [Hyperreal.InfinitePos]
 
 
 -- created on 2025-12-25

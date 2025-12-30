@@ -6,7 +6,7 @@ open Int
 
 
 @[main, comm, mp, mpr]
-private lemma main
+private lemma neg
 -- given
   (x : ℝ*) :
 -- imply
@@ -32,6 +32,16 @@ private lemma main
       have h := h ⟨-1, by simp⟩
       simp_all
       linarith
+
+
+@[main, comm, mp, mpr]
+private lemma main
+-- given
+  (x : ℝ*) :
+-- imply
+  x.InfiniteNeg ↔ ∀ δ : ℝ, x < δ := by
+-- proof
+  simp [Hyperreal.InfiniteNeg]
 
 
 -- created on 2025-12-25

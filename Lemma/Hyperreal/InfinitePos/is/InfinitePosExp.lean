@@ -17,10 +17,10 @@ private lemma main
 -- proof
   constructor
   <;> intro h
-  <;> apply InfinitePos.of.All_Gt
+  <;> apply InfinitePos.of.All_Gt.pos
   <;> intro ⟨δ, hδ⟩
   <;> simp
-  <;> have h := All_Gt.of.InfinitePos h
+  <;> have h := All_Gt.of.InfinitePos.pos h
   ·
     if h_δ : δ > 1 then
       specialize h ⟨δ.log, GtLog_0.of.Gt_1 h_δ⟩

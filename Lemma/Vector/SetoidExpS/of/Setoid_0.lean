@@ -1,14 +1,15 @@
+import Lemma.Hyperreal.Infinitesimal.is.Setoid_0
 import Lemma.Hyperreal.SetoidExpS.of.InfinitesimalSub
+import Lemma.Vector.GetSub.eq.SubGetS
 import Lemma.Vector.Setoid.is.All_SetoidGetS
-import sympy.vector.functions
-open Vector Hyperreal
+open Hyperreal Vector
 
 
 @[main]
 private lemma main
   {a b : List.Vector ℝ* n}
 -- given
-  (h : a ≈ b) :
+  (h : a - b ≈ 0) :
 -- imply
   exp a ≈ exp b := by
 -- proof
@@ -17,10 +18,11 @@ private lemma main
   intro i
   simp
   apply SetoidExpS.of.InfinitesimalSub
-  -- apply All_SetoidGetS.of.Setoid.fin h i
-  sorry
-
+  apply Infinitesimal.of.Setoid_0
+  rw [SubGetS.eq.GetSub.fin]
+  have h := All_SetoidGetS.of.Setoid.fin h i
+  rwa [EqGet0_0.fin] at h
 
 
 -- created on 2025-12-24
--- updated on 2025-12-25
+-- updated on 2025-12-29

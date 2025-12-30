@@ -1,5 +1,4 @@
-import Lemma.Nat.Sub.gt.Zero.is.Lt
-open Nat
+import sympy.Basic
 
 
 @[main, comm, mp, mpr]
@@ -9,7 +8,7 @@ private lemma main
 -- imply
   b - a > 0 ↔ b > a :=
 -- proof
-  Sub.gt.Zero.is.Lt
+  tsub_pos_iff_lt
 
 
 -- created on 2025-10-16

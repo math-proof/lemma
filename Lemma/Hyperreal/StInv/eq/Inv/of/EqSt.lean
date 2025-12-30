@@ -1,4 +1,3 @@
-import Mathlib.Analysis.Real.Hyperreal
 import Lemma.Hyperreal.StInv.eq.InvSt
 open Hyperreal
 
