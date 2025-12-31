@@ -1,27 +1,17 @@
-import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.EqGetRange
 open Vector
 
 
-@[main]
-private lemma fin
--- given
-  (i : Fin n) :
--- imply
-  ((List.Vector.range n).map f).get i = f i := by
--- proof
-  congr
-  simp [EqGetRange.fin]
-
-
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (i : Fin n) :
 -- imply
-  ((List.Vector.range n).map f)[i] = f i :=
+  ((List.Vector.range n).map f)[i] = f i := by
 -- proof
-  fin i
+  simp [GetElem.getElem]
+  congr
+  simp [EqGetRange.fin]
 
 
 -- created on 2025-06-29

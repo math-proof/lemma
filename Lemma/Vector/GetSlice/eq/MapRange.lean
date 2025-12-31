@@ -15,7 +15,6 @@ import Lemma.Rat.Div.le.Zero.of.Le_0
 import Lemma.Nat.LeCeil.is.Le
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SEq.of.Eq_0.Eq_0
-import sympy.vector.vector
 open Int Nat Rat Vector List
 
 
@@ -42,8 +41,7 @@ private lemma main
     ·
       rfl
   else
-    have h_n : ¬n < 0 := by omega
-    simp [h_n]
+    simp [show ¬n < 0 by omega]
     rw [MulCoeS.eq.CoeMul]
     have := Ne_0 j
     have h_j := j.isLt
@@ -53,7 +51,7 @@ private lemma main
       have h_t := t.isLt
       simp [EqLengthSlice_Mul.of.Lt h_j] at h_t
       simp only [GetElem.getElem]
-      simp [Vector.EqGetRange.fin]
+      simp [EqGetRange.fin]
       unfold List.Vector.getSlice
       simp [GetElem.getElem]
       apply congrArg

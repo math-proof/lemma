@@ -791,3 +791,45 @@ initialize registerBuiltinAttribute {
       value := value
     }
 }
+
+def Expr.subst (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr): Lean.Expr × Lean.Expr :=
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let telescope := fun lam body =>
+    binders.foldl
+      (fun body ⟨binderName, binderType, binderInfo⟩ =>
+        lam binderName binderType body binderInfo
+      )
+      body
+  (subst type, proof.mkApp ((List.range binders.length).map fun i => (.bvar i)).reverse).map (telescope Expr.forallE) (telescope .lam)
+
+initialize registerBuiltinAttribute {
+  name := `fin
+  descr := "Automatically generate the theorem with .getElem substituted by .get"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get
+    addAndCompile <| .thmDecl {
+      name := (((← getEnv).moduleTokens.concat "fin").foldl Name.str default).lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `val
+  descr := "Automatically generate the theorem with Fin type substituted by its val type"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.fin2val
+    addAndCompile <| .thmDecl {
+      name := (((← getEnv).moduleTokens.concat "val").foldl Name.str default).lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}

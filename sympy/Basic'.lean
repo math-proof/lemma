@@ -10,7 +10,7 @@ def Expr.comm' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (List (Bool 
   let telescope := fun localBinders lam hint body => do
       let mut body := body
       let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
-      body.println context s!"original {hint}"
+      body.println context s!"prior {hint}"
       for ⟨declName, type, deBruijn⟩ in localBinders do
           let type := type.incDeBruijnIndex (deBruijn + 1)
           let declName :=
@@ -227,7 +227,7 @@ def Expr.comm.is' (type mp mpr : Lean.Expr) (parity : ℕ := 0) : CoreM (List (B
   let telescope := fun localBinders lam hint body => do
       let mut body := body
       let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
-      body.println context s!"original {hint}"
+      body.println context s!"prior {hint}"
       for ⟨declName, type, deBruijn⟩ in localBinders do
           let type := type.incDeBruijnIndex (deBruijn + 1)
           let declName :=
@@ -289,7 +289,7 @@ def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.E
   let index := defaultCount - 1 - parity.log2
   println! "index = {index}"
   let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
-  type.println context "original type"
+  type.println context "old type"
   let b := type
   println! s!"binders = {binders}"
   let h_bvar := Lean.Expr.bvar index
@@ -426,7 +426,7 @@ def Expr.disjunction' (type proof : Lean.Expr) (parity : ℕ := 0) (left : Bool 
     else
       panic! "disjunction not found"
   let binders := binders.set index ⟨h, if left then inl else inr, info⟩
-  type.println context "original type"
+  type.println context "old type"
   println! s!"binders = {binders}"
   type.println context "new type"
   let telescope := fun lam hint body => do
@@ -531,6 +531,68 @@ initialize registerBuiltinAttribute {
     println! s!"moduleTokens = {moduleTokens}"
     let ⟨parity, type, value⟩ ← Expr.disjunction' type value 0 false
     let name := (moduleTokens.right).lemmaName declName
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+def Expr.subst' (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
+  type.println context "old type"
+  println! s!"binders = {binders}"
+  let type := subst type
+  type.println context "new type"
+  let telescope := fun lam hint body => do
+    body.println context s!"prior {hint}"
+    let body := binders.foldl
+      (fun body ⟨binderName, binderType, binderInfo⟩ =>
+        lam binderName binderType body binderInfo
+      )
+      body
+    body.println [] s!"final {hint}"
+    return body
+  let proof : Lean.Expr :=
+    let args := ((List.range binders.length).map fun i => (.bvar i))
+    proof.mkApp args.reverse
+  proof.println context "proof"
+  (type, proof).mapM (telescope Expr.forallE "type") (telescope .lam "value")
+
+initialize registerBuiltinAttribute {
+  name := `fin'
+  descr := "Automatically generate the theorem with .getElem substituted by .get"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ ← Expr.subst' decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get
+    let moduleTokens := (← getEnv).moduleTokens
+    println! s!"moduleTokens = {moduleTokens}"
+    let name := ((moduleTokens.concat "fin").foldl Name.str default).lemmaName declName
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `val'
+  descr := "Automatically generate the theorem with Fin type substituted by its val type"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ ← Expr.subst' decl.type (.const declName (levelParams.map .param)) Lean.Expr.fin2val
+    let moduleTokens := (← getEnv).moduleTokens
+    println! s!"moduleTokens = {moduleTokens}"
+    let name := ((moduleTokens.concat "val").foldl Name.str default).lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name

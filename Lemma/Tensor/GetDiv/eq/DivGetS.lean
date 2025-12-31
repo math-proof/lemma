@@ -11,14 +11,15 @@ open Tensor Vector List
 
 
 @[main]
-private lemma fin
+private lemma main
   [Div α]
 -- given
   (A B : Tensor α s)
   (i : Fin A.length) :
 -- imply
-  (A / B).get ⟨i, by simp [LengthDiv.eq.Length.left]⟩ = A.get i / B.get ⟨i, by simp [EqLengthS B A]⟩ := by
+  (A / B)[i]'(by simp [LengthDiv.eq.Length.left A B]) = A[i] / B[i]'(by simp [EqLengthS B A]) := by
 -- proof
+  simp [GetElem.getElem]
   simp [HDiv.hDiv]
   apply Eq.of.EqDataS
   simp [Tensor.get]
@@ -33,19 +34,15 @@ private lemma fin
 
 
 @[main]
-private lemma main
+private lemma fin
   [Div α]
 -- given
   (A B : Tensor α s)
   (i : Fin A.length) :
 -- imply
-  have : i < (A / B).length := by
-    simp [LengthDiv.eq.Length.left A B]
-  have : i < B.length := by
-    simp [EqLengthS B A]
-  (A / B)[i] = A[i] / B[i] := by
+  (A / B).get ⟨i, by simp [LengthDiv.eq.Length.left]⟩ = A.get i / B.get ⟨i, by simp [EqLengthS B A]⟩ :=
 -- proof
-  apply fin
+  main A B i
 
 
 -- created on 2025-10-08

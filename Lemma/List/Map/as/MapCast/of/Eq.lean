@@ -12,8 +12,8 @@ private lemma main
 -- imply
   v.map f ≃ (cast (congrArg (List.Vector α) h) v).map f := by
 -- proof
-  apply SEq.of.All_EqGetS.Eq h
-  simp [GetCast.eq.Get.of.Eq h]
+  apply SEq.of.All_EqGetS.Eq.fin h
+  simp [GetCast.eq.Get.of.Eq.fin h]
 
 
 -- created on 2025-11-11

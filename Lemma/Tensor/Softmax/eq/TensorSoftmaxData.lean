@@ -49,9 +49,9 @@ private lemma main
   simp [DataExp.eq.ExpData]
   unfold List.Vector.splitAt
   have h_eq := Prod.eq.MulProdS [n] 1
-  have := GetSum.eq.SumMapGet (cast (congrArg (List.Vector α) h_eq) (exp X)).unflatten ⟨0, by simp⟩
+  have := GetSum.eq.SumMapGet.val (cast (congrArg (List.Vector α) h_eq) (exp X)).unflatten ⟨0, by simp⟩
   simp at this
-  simp [this]
+  rw [this]
   apply congrArg
   ext i
   simp

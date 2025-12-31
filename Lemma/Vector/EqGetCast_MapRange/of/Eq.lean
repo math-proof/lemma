@@ -12,12 +12,11 @@ private lemma main
 -- imply
   (cast (congrArg (List.Vector α) h) ((List.Vector.range n).map f))[i] = f i := by
 -- proof
+  simp [GetElem.getElem]
   let v := (List.Vector.range n).map f
   have h_v : v = (List.Vector.range n).map f := rfl
   rw [← h_v]
-  have := GetCast.eq.Get.of.Eq h v i
-  simp [GetElem.getElem] at this ⊢
-  simp [this]
+  rw [GetCast.eq.Get.of.Eq.fin h]
   rw [EqGetMapRange.fin]
 
 

@@ -354,6 +354,51 @@ def Lean.Expr.decompose_forallE (binders : List (Name × Expr × BinderInfo) := 
   | body =>
     ⟨binders, body⟩
 
+def Lean.Expr.getElem2get : Expr → Expr
+  | app (app (app (app (app (app (app (app (const `GetElem.getElem _) coll) idx) _) _) _) xs) i) isLt =>
+    match coll, idx with
+    | app (app (const `List.Vector us) α) n, app (const `Fin usFin) n' =>
+      let i :=
+        if n == n' then
+          i
+        else
+          (const `Fin.mk usFin).mkApp [n, (const `Fin.val usFin).mkApp [n', i], isLt]
+      (const `List.Vector.get us).mkApp [α, n, xs, i]
+    | _, _ =>
+      panic! s!"Expected a collection of List.Vector, but got: coll = {coll}, idx = {idx}"
+  | app fn arg =>
+    app fn.getElem2get arg.getElem2get
+  | forallE binderName binderType body binderInfo =>
+    forallE binderName binderType.getElem2get body.getElem2get binderInfo
+  | lam binderName binderType body binderInfo =>
+    lam binderName binderType.getElem2get body.getElem2get binderInfo
+  | letE declName type value body nondep =>
+    letE declName (type.getElem2get) (value.getElem2get) (body.getElem2get) nondep
+  | proj typeName idx struct => proj typeName idx struct.getElem2get
+  | mdata data expr => mdata data expr.getElem2get
+  | expr => expr
+
+def Lean.Expr.fin2val : Expr → Expr
+  | expr@(app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) _) self) xs) i) h) =>
+    match idx, self with
+    | app (const `Fin usFin) n, app (app (app _ valid) _) self =>
+      let idx := const `Nat usFin
+      let i := app (app (const `Fin.val usFin) n) i
+      app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) valid) self) xs) i) h
+    | _, _ =>
+      expr
+  | app fn arg =>
+    app fn.fin2val arg.fin2val
+  | forallE binderName binderType body binderInfo =>
+    forallE binderName binderType.fin2val body.fin2val binderInfo
+  | lam binderName binderType body binderInfo =>
+    lam binderName binderType.fin2val body.fin2val binderInfo
+  | letE declName type value body nondep =>
+    letE declName (type.fin2val) (value.fin2val) (body.fin2val) nondep
+  | proj typeName idx struct => proj typeName idx struct.fin2val
+  | mdata data expr => mdata data expr.fin2val
+  | expr => expr
+
 def Lean.Expr.format (indent : Nat := 0) (is_indented : Bool := true): Expr → String
   | .lam binderName binderType body binderInfo =>
     let pairedGroup := binderInfo.pairedGroup

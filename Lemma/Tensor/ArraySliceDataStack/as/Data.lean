@@ -30,7 +30,7 @@ private lemma main
 -- imply
   ([i < n] f i).data.array_slice (i * s.prod) s.prod ≃ (f i).data := by
 -- proof
-  apply fin
+  apply fin _ i
 
 
 -- created on 2025-05-23
