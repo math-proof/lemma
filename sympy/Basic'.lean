@@ -608,6 +608,6 @@ initialize registerBuiltinAttribute {
   applicationTime := .afterCompilation
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
-    -- Lean.logInfo s!"decl.type = \n{decl.type.format}"
+    Lean.logInfo s!"decl.type = \n{decl.type.format}"
     Lean.logInfo s!"decl.value! = \n{decl.value!.format}"
 }

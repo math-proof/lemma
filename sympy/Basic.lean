@@ -161,13 +161,12 @@ def Expr.comm (type proof : Expr) (parity : ℕ := 0) : List (Bool × Expr) × E
   )
 
 /--
-`@[comm]` (abbreviated from `law of commutativity` : 交换律) attribute automatically generates the symmetric version of a theorem
-if it proves an equality.
+`@[comm]` (abbreviated from `law of commutativity` : 交换律) attribute automatically generates the symmetric version of a theorem if it proves an equality.
 
 Usage:
 ```lean
 @[comm]
-theorem Section.LHS.eq.RHS {c : γ} (a : α) (b : β) : lhs a b = rhs a b:= by proof
+theorem Section.LHS.eq.RHS {c : γ} (a : α) (b : β) : lhs a b = rhs a b := by proof
 -- Generates:
 theorem Section.RHS.eq.LHS {c : γ} (a : α) (b : β) : rhs a b = lhs a b := (Section.LHS.eq.RHS a b).symm
 
@@ -264,12 +263,12 @@ def List.comm.is (list : List String) (parity : List Bool) : List String :=
 Usage:
 ```lean
 @[mp]
-theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : lhs a b ↔ rhs a b:= ⟨proof.mp, proof.mpr⟩
+theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : lhs a b ↔ rhs a b := ⟨proof.mp, proof.mpr⟩
 -- Generates:
 theorem Section.RHS.of.LHS {c : γ} {a : α} {b : β} (h : lhs a b): rhs a b := (Section.LHS.eq.RHS a b).mp h
 
 @[mp 4]
-theorem Section.LHS.is.RHS [Class_0 α] [Class_1 α] [Class_2 α] {c : γ} (a : α) (b : β) : lhs a b ↔ rhs a b:= by proof
+theorem Section.LHS.is.RHS [Class_0 α] [Class_1 α] [Class_2 α] {c : γ} (a : α) (b : β) : lhs a b ↔ rhs a b := by proof
 -- 4 is decomposed as binary digits : 100 => [0, 0, 1], where each bit represents whether the corresponding instImplicit binder is filtered.
 Generates:
 theorem Section.RHS.of.LHS [Class_0 α] [Class_1 α] {c : γ} {a : α} {b : β} (h : lhs a b): rhs a b := proof.mp h
@@ -307,7 +306,7 @@ def List.mpr (list : List String) : List String :=
 Usage:
 ```lean
 @[mpr]
-theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : lhs a b ↔ rhs a b:= by proof
+theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : lhs a b ↔ rhs a b := by proof
 -- Generates:
 theorem Section.LHS.of.RHS {c : γ} {a : α} {b : β} (h : rhs a b) : lhs a b := (Section.LHS.eq.RHS a b).mpr h
 ```
@@ -334,7 +333,7 @@ initialize registerBuiltinAttribute {
 Usage:
 ```lean
 @[mpr]
-theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : lhs a b ↔ a = b:= by proof
+theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : lhs a b ↔ a = b := by proof
 -- Generates:
 theorem Section.RHS'.of.LHS {c : γ} {a : α} {b : β} (h : lhs a b) : b = a := (Section.LHS.eq.RHS a b).mp.symm
 ```
@@ -364,7 +363,7 @@ initialize registerBuiltinAttribute {
 Usage:
 ```lean
 @[mpr]
-theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : a = b ↔ rhs a b:= by proof
+theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : a = b ↔ rhs a b := by proof
 -- Generates:
 theorem Section.LHS'.of.RHS {c : γ} {a : α} {b : β} (h : rhs a b) : b = a := (Section.LHS.eq.RHS a b).mpr.symm
 ```
@@ -420,9 +419,9 @@ def Expr.comm.is (type mp mpr : Expr) (parity : ℕ := 0) : List (Bool × Expr) 
 Usage:
 ```lean
 @[mpr]
-theorem Section.LHS.is.RHS (a : α) (b : β) : a ≃ b ↔ a' = b':= by proof
+theorem Section.LHS.is.RHS (a : α) (b : β) : a ≃ b ↔ a' = b' := by proof
 -- Generates:
-theorem Section.LHS'.is.RHS' {a : α} {b : β} : b ≃ a ↔ b' = a':= ⟨mr.comm, mpr.comm⟩
+theorem Section.LHS'.is.RHS' {a : α} {b : β} : b ≃ a ↔ b' = a' := ⟨mr.comm, mpr.comm⟩
 ```
 -/
 initialize registerBuiltinAttribute {
@@ -802,6 +801,17 @@ def Expr.subst (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr): Lean.
       body
   (subst type, proof.mkApp ((List.range binders.length).map fun i => (.bvar i)).reverse).map (telescope Expr.forallE) (telescope .lam)
 
+/--
+`@[fin]` attribute automatically generates the fin version of a theorem
+
+Usage:
+```lean
+@[fin]
+theorem Section.UFnGet {a : List α} (b : List α) (i j : ℕ) : f a[i] = g b[j] := by proof
+-- Generates:
+theorem Section.UFnGet.fin {a : List α} (b : List α) (i j : ℕ) : f (a.get ⟨i, by grind⟩) = g (b.get ⟨j, by grind⟩) := by sorry
+```
+-/
 initialize registerBuiltinAttribute {
   name := `fin
   descr := "Automatically generate the theorem with .getElem substituted by .get"
@@ -818,6 +828,17 @@ initialize registerBuiltinAttribute {
     }
 }
 
+/--
+`@[val]` attribute automatically generates the val version of a theorem
+
+Usage:
+```lean
+@[val]
+theorem Section.UFnGet {a : List.Vector α n} (b : List.Vector α n) (i j : Fin n) : f a[i] = g b[j] := by proof
+-- Generates:
+theorem Section.UFnGet.val {a : List.Vector α n} (b : List.Vector α n) (i j : Fin n) : f a[i.val] = g b[j.val] := by proof
+```
+-/
 initialize registerBuiltinAttribute {
   name := `val
   descr := "Automatically generate the theorem with Fin type substituted by its val type"

@@ -364,6 +364,9 @@ def Lean.Expr.getElem2get : Expr → Expr
         else
           (const `Fin.mk usFin).mkApp [n, (const `Fin.val usFin).mkApp [n', i], isLt]
       (const `List.Vector.get us).mkApp [α, n, xs, i]
+    | app (const `List us) α, const `Nat usNat =>
+      let i := (const `Fin.mk usNat).mkApp [(const `List.length us).mkApp [α, xs], i, isLt]
+      (const `List.get us).mkApp [α, xs, i]
     | _, _ =>
       panic! s!"Expected a collection of List.Vector, but got: coll = {coll}, idx = {idx}"
   | app fn arg =>
