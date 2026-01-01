@@ -8,7 +8,7 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 open Tensor List Vector
 
 
-@[main]
+@[main, fin]
 private lemma main
   {s : List ℕ}
 -- given
@@ -17,8 +17,7 @@ private lemma main
   (i : Fin s[0]) :
 -- imply
   have := GtLength.of.GtLength_0 h X i
-  have := Lt_LengthSplitAtData.of.GtLength_0 h X i
-  X[i].data ≃ (X.data.splitAt 1)[i] := by
+  X[i].data ≃ (X.data.splitAt 1)[i]'(Lt_LengthSplitAtData.of.GtLength_0 h X i) := by
 -- proof
   simp
   match s with
@@ -28,19 +27,6 @@ private lemma main
     simp [GetElem.getElem]
     rw [GetSplitAt_1.eq.GetUnflatten.fin]
     rw [DataGet.eq.GetUnflattenData.fin]
-
-
-@[main]
-private lemma fin
-  {s : List ℕ}
--- given
-  (h : s.length > 0)
-  (X : Tensor α s)
-  (i : Fin s[0]) :
--- imply
-  (X.get ⟨i, GtLength.of.GtLength_0 h X i⟩).data ≃ (X.data.splitAt 1).get ⟨i, Lt_LengthSplitAtData.of.GtLength_0 h X i⟩ :=
--- proof
-  main h X i
 
 
 -- created on 2025-11-01

@@ -7,7 +7,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
 
 
-@[main]
+@[main, fin]
 private lemma main
   {s : List ℕ}
 -- given
@@ -26,18 +26,6 @@ private lemma main
   apply congrArg
   simp [EqGetRange.fin]
   apply Fin.eq.Cast.of.Lt.Eq h_prod
-
-
-@[main]
-private lemma fin
-  {s : List ℕ}
--- given
-  (X : Tensor α s)
-  (d : ℕ) :
--- imply
-  (X.unsqueeze d).data = (List.Vector.range (s.insertIdx d 1).prod).map fun i => X.data.get (cast (congrArg Fin (ProdInsertIdx.eq.Prod s d)) i) :=
--- proof
-  main X d
 
 
 -- created on 2025-11-27

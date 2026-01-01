@@ -6,7 +6,7 @@ import sympy.tensor.tensor
 open Tensor Bool
 
 
-@[main]
+@[main, fin]
 private lemma main
   {s : List ℕ}
 -- given
@@ -20,19 +20,6 @@ private lemma main
 -- proof
   apply Eq_Cast.of.SEq
   apply DataGet.as.GetSplitAtData.of.GtLength_0 h
-
-
-@[main]
-private lemma fin
-  {s : List ℕ}
--- given
-  (h : s.length > 0)
-  (X : Tensor α s)
-  (i : Fin s[0]) :
--- imply
-  (X.get ⟨i, GtLength.of.GtLength_0 h X i⟩).data = cast (by simp) ((X.data.splitAt 1).get ⟨i, Lt_LengthSplitAtData.of.GtLength_0 h X i⟩) :=
--- proof
-  main h X i
 
 
 -- created on 2025-11-02

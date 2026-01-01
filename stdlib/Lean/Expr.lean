@@ -356,21 +356,85 @@ def Lean.Expr.decompose_forallE (binders : List (Name × Expr × BinderInfo) := 
 
 def Lean.Expr.getElem2get : Expr → Expr
   | app (app (app (app (app (app (app (app (const `GetElem.getElem _) coll) idx) _) _) _) xs) i) isLt =>
-    match coll, idx with
-    | app (app (const `List.Vector us) α) n, app (const `Fin usFin) n' =>
+    match coll with
+    | app (app (const `List.Vector us) α) n =>
+      if let app (const `Fin usFin) n' := idx then
+        let isomorphic :=
+          if n == n' then
+            true
+          else
+            match n, n' with
+            | app (app (app (app (const `List.prod _) (const `Nat _)) _) _) s, app (app (app (app (const `List.prod _) (const `Nat _)) _) _) s' =>
+              s == s'
+            | _, _ =>
+              false
+        let i :=
+          if isomorphic then
+            i
+          else
+            let i := (const `Fin.val usFin).mkApp [n', i]
+            (const `Fin.mk usFin).mkApp [n, i, isLt]
+        (const `List.Vector.get us).mkApp [α, n, xs, i]
+      else
+        panic! s!"Expected a Fin index, but got: {idx}"
+    | app (const `List us) α =>
+      if let const `Nat usNat := idx then
+        let i := (const `Fin.mk usNat).mkApp [(const `List.length us).mkApp [α, xs], i, isLt]
+        (const `List.get us).mkApp [α, xs, i]
+      else
+        panic! s!"Expected a Nat index, but got: {idx}"
+    | app (app (const `Tensor us) α) s =>
       let i :=
-        if n == n' then
-          i
-        else
-          (const `Fin.mk usFin).mkApp [n, (const `Fin.val usFin).mkApp [n', i], isLt]
-      (const `List.Vector.get us).mkApp [α, n, xs, i]
-    | app (const `List us) α, const `Nat usNat =>
-      let i := (const `Fin.mk usNat).mkApp [(const `List.length us).mkApp [α, xs], i, isLt]
-      (const `List.get us).mkApp [α, xs, i]
-    | app (app (const `Tensor us) α) s, app (const `Fin _) _ =>
-      (const `Tensor.get us).mkApp [α, s, xs, i]
-    | _, _ =>
-      panic! s!"Expected a collection, but got: coll = {coll}, idx = {idx}"
+        match idx with
+        | app (const `Fin _) n =>
+          match n with
+          | app (app (app (const `List.get _) (const `Nat _)) s)
+              (app
+                (app
+                  (app (const `Fin.mk _)
+                    (.app (.app (const `List.length _) (const `Nat _)) s')
+                  )
+                  zero
+                ) _
+              )
+          | app
+              (app
+                (app
+                  (app
+                    (app (app
+                      (app
+                        (app (const `GetElem.getElem _)
+                          (.app (const `List _) (const `Nat _))
+                        )
+                        (const `Nat _)
+                      )
+                      (const `Nat _)) _
+                    )
+                    (.app (const `List.instGetElemNatLtLength _) (const `Nat _))
+                  )
+                  s'
+                )
+                zero
+              ) _ =>
+            if s == s' then
+              if let app (app (app (const `OfNat.ofNat _) (const `Nat usNat)) (lit (.natVal 0))) (app (const `instOfNatNat _) (lit (.natVal 0))) := zero then
+                let i := (const `Fin.val usNat).mkApp [n, i]
+                let n := (const `Tensor.length us).mkApp [α, s, xs]
+                (const `Fin.mk usNat).mkApp [n, i, isLt]
+              else
+                panic! s!"unmatched zero, got {zero}"
+            else
+              panic! s!"unmatched shapes, {s} != {s'}"
+          | _ =>
+            i
+        | const `Nat usNat =>
+          let n := (const `Tensor.length us).mkApp [α, s, xs]
+          (const `Fin.mk usNat).mkApp [n, i, isLt]
+        | _ =>
+          panic! s!"Expected a Fin index, but got: {idx}"
+        (const `Tensor.get us).mkApp [α, s, xs, i]
+    | _ =>
+      panic! s!"Expected a collection, but got: coll = {coll}"
   | app fn arg =>
     app fn.getElem2get arg.getElem2get
   | forallE binderName binderType body binderInfo =>
@@ -384,12 +448,12 @@ def Lean.Expr.getElem2get : Expr → Expr
   | expr => expr
 
 def Lean.Expr.fin2val : Expr → Expr
-  | expr@(app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) _) self) xs) i) h) =>
+  | expr@(app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) _) self) xs) i) isLt) =>
     match idx, self with
     | app (const `Fin usFin) n, app (app (app _ valid) _) self =>
       let idx := const `Nat usFin
       let i := app (app (const `Fin.val usFin) n) i
-      app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) valid) self) xs) i) h
+      app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) valid) self) xs) i) isLt
     | _, _ =>
       expr
   | app fn arg =>
