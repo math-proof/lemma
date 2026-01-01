@@ -358,7 +358,8 @@ def Lean.Expr.getElem2get : Expr → Expr
   | expr@(app (app (app (app (app (app (app (app (const `GetElem.getElem _) coll) idx) _) _) _) xs) i) isLt) =>
     match coll with
     | app (app (const `List.Vector us) α) n =>
-      if let app (const `Fin usFin) n' := idx then
+      match idx with
+      | app (const `Fin usFin) n' =>
         let isomorphic :=
           if n == n' then
             true
@@ -374,13 +375,33 @@ def Lean.Expr.getElem2get : Expr → Expr
           else
             let i := (const `Fin.val usFin).mkApp [n', i]
             (const `Fin.mk usFin).mkApp [n, i, isLt]
-        (const `List.Vector.get us).mkApp [α, n, xs, i]
-      else
+        (const `List.Vector.get us).mkApp [α, n, xs.getElem2get, i]
+      | const `Nat usNat =>
+        let i :=
+          match i, n with
+          | (.app (.app (.app (const `OfNat.ofNat usOfNat) (const `Nat _)) (lit (.natVal i))) (.app (const `instOfNatNat _) (lit (.natVal _)))), .app (const `Nat.succ _) n_pred =>
+            (const `OfNat.ofNat usOfNat).mkApp [
+              app (const `Fin usNat) n,
+              lit (.natVal i),
+              (const `Fin.instOfNat usNat).mkApp [n, (const `Nat.instNeZeroSucc usNat).mkApp [n_pred], lit (.natVal i)]
+            ]
+          | _, _=>
+            (const `Fin.mk usNat).mkApp [n, i, isLt]
+        (const `List.Vector.get us).mkApp [α, n, xs.getElem2get, i]
+      | _=>
         panic! s!"Expected a Fin index, but got: {idx}"
     | app (const `List us) α =>
-      if let const `Nat usNat := idx then
+      let args : Option (List Level × Expr) :=
+        match idx with
+        | app (const `Fin usFin) n =>
+          (usFin, (const `Fin.val usFin).mkApp [n, i])
+        | const `Nat usNat =>
+          (usNat, i)
+        | _ =>
+          none
+      if let some (usNat, i) := args then
         let i := (const `Fin.mk usNat).mkApp [(const `List.length us).mkApp [α, xs], i, isLt]
-        (const `List.get us).mkApp [α, xs, i]
+        (const `List.get us).mkApp [α, xs.getElem2get, i]
       else
         expr
     | app (app (const `Tensor us) α) s =>
@@ -392,7 +413,7 @@ def Lean.Expr.getElem2get : Expr → Expr
               (app
                 (app
                   (app (const `Fin.mk _)
-                    (.app (.app (const `List.length _) (const `Nat _)) s')
+                    (.app (.app (const `List.length _) (const `Nat _)) _)
                   )
                   zero
                 ) _
@@ -411,20 +432,16 @@ def Lean.Expr.getElem2get : Expr → Expr
                       (const `Nat _)) _
                     )
                     (.app (const `List.instGetElemNatLtLength _) (const `Nat _))
-                  )
-                  s'
+                  ) _
                 )
                 zero
               ) _ =>
-            if s == s' then
-              if let app (app (app (const `OfNat.ofNat _) (const `Nat usNat)) (lit (.natVal 0))) (app (const `instOfNatNat _) (lit (.natVal 0))) := zero then
-                let i := (const `Fin.val usNat).mkApp [n, i]
-                let n := (const `Tensor.length us).mkApp [α, s, xs]
-                (const `Fin.mk usNat).mkApp [n, i, isLt]
-              else
-                panic! s!"unmatched zero, got {zero}"
+            if let app (app (app (const `OfNat.ofNat _) (const `Nat usNat)) (lit (.natVal 0))) (app (const `instOfNatNat _) (lit (.natVal 0))) := zero then
+              let i := (const `Fin.val usNat).mkApp [n, i]
+              let n := (const `Tensor.length us).mkApp [α, s, xs]
+              (const `Fin.mk usNat).mkApp [n, i, isLt]
             else
-              panic! s!"unmatched shapes, {s} != {s'}"
+              panic! s!"unmatched zero, got {zero}"
           | _ =>
             i
         | const `Nat usNat =>
@@ -432,7 +449,7 @@ def Lean.Expr.getElem2get : Expr → Expr
           (const `Fin.mk usNat).mkApp [n, i, isLt]
         | _ =>
           panic! s!"Expected a Fin index, but got: {idx}"
-        (const `Tensor.get us).mkApp [α, s, xs, i]
+        (const `Tensor.get us).mkApp [α, s, xs.getElem2get, i]
     | _ =>
       panic! s!"Expected a collection, but got: coll = {coll}"
   | app fn arg =>

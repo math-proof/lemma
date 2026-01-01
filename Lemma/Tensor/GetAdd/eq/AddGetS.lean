@@ -4,7 +4,7 @@ import Lemma.Tensor.AddStackS.eq.Stack_Add
 open Tensor
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Add α]
 -- given
@@ -19,18 +19,6 @@ private lemma main
   rw [AddStackS.eq.Stack_Add]
   have := EqGetStack.fn fun i : Fin m => A[i] + B[i]
   simp_all
-
-
-@[main]
-private lemma fin
-  [Add α]
--- given
-  (A B : Tensor α (m :: s))
-  (i : Fin m) :
--- imply
-  (A + B).get i = A.get i + B.get i :=
--- proof
-  main A B i
 
 
 -- created on 2025-07-20

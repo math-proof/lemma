@@ -830,6 +830,58 @@ initialize registerBuiltinAttribute {
     }
 }
 
+initialize registerBuiltinAttribute {
+  name := `fin.comm
+  descr := "Automatically generate the comm theorem with .getElem substituted by .get"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get stx.getNum
+    let ⟨parity, type, value⟩ := Expr.comm type value
+    let ⟨moduleTokens, parity⟩ ← parity.extractParity
+    addAndCompile <| .thmDecl {
+      name := (((moduleTokens.comm parity).foldl Name.str default).lemmaName declName).str "fin"
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `fin.mp
+  descr := "Automatically generate the mp theorem with .getElem substituted by .get"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get stx.getNum
+    let ⟨_, type, value⟩ := Expr.mp type value
+    addAndCompile <| .thmDecl {
+      name := (((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName).str "fin"
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `fin.mpr
+  descr := "Automatically generate the mpr theorem with .getElem substituted by .get"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get stx.getNum
+    let ⟨_, type, value⟩ := Expr.mpr type value
+    addAndCompile <| .thmDecl {
+      name := (((← getEnv).moduleTokens.mpr.foldl Name.str default).lemmaName declName).str "fin"
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
 /--
 `@[val]` attribute automatically generates the val version of a theorem
 

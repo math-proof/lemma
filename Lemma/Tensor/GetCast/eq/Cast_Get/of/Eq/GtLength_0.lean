@@ -5,7 +5,7 @@ import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor Bool
 
 
-@[main]
+@[main, fin]
 private lemma main
   {s s' : List ℕ}
 -- given
@@ -21,21 +21,6 @@ private lemma main
 -- proof
   apply Eq_Cast.of.SEq
   apply GetCast.as.Get.of.Eq.GtLength_0 h₀ h₁ X i
-
-
-@[main]
-private lemma fin
-  {s s' : List ℕ}
--- given
-  (h₀ : s.length > 0)
-  (h₁ : s = s')
-  (X : Tensor α s)
-  (i : Fin s[0]) :
--- imply
-  have h := congrArg (Tensor α) h₁
-  (cast h X).get ⟨i, GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩⟩ = cast (by rw [h₁]) (X.get ⟨i, GtLength.of.GtLength_0 h₀ X i⟩) :=
--- proof
-  main h₀ h₁ X i
 
 
 -- created on 2025-07-04

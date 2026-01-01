@@ -29,7 +29,7 @@ import sympy.tensor.stack
 open Hyperreal Int Nat Tensor Vector
 
 
-@[main]
+@[main, fin]
 private lemma main
   {n : ℕ}
 -- given
@@ -105,24 +105,6 @@ private lemma main
     simp [Add_Neg.eq.Sub]
     simp [List.Vector.head]
     apply Sub_Infty.to.NegInfty
-
-
-@[main]
-private lemma fin
-  {n : ℕ}
--- given
-  (p : Fin n → Fin n → Bool)
-  (A : Tensor ℝ [n, n])
-  (i j : Fin n) :
--- imply
-  let mask : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (p i j))
-  let A : Tensor ℝ* [n, n] := A
-  ((A + (mask - 1) * Hyperreal.omega).get i).get j ≈ if p i j then
-    (A.get i).get j
-  else
-    (-Hyperreal.omega : Tensor ℝ* []) :=
--- proof
-  main p A i j
 
 
 -- created on 2025-12-06
