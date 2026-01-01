@@ -1,8 +1,7 @@
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
-open List
+import sympy.Basic
 
 
-@[main]
+@[main, fin]
 private lemma main
   {s : List α}
 -- given
@@ -10,23 +9,9 @@ private lemma main
   (h_ij : i > j)
   (a : α) :
 -- imply
-  have := h.trans_le List.length_le_length_insertIdx
-  (s.insertIdx i a)[j] = s[j] := by
+  (s.insertIdx i a)[j]'(by grind) = s[j] := by
 -- proof
   apply List.get_insertIdx_of_lt (hn := h_ij)
-
-
-@[main]
-private lemma fin
-  {s : List α}
--- given
-  (h : s.length > j)
-  (h_ij : i > j)
-  (a : α) :
--- imply
-  (s.insertIdx i a).get ⟨j, h.trans_le List.length_le_length_insertIdx⟩ = s.get ⟨j, h⟩ :=
--- proof
-  main h h_ij a
 
 
 -- created on 2025-10-09

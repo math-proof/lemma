@@ -367,8 +367,13 @@ def Lean.Expr.getElem2get : Expr → Expr
     | app (const `List us) α, const `Nat usNat =>
       let i := (const `Fin.mk usNat).mkApp [(const `List.length us).mkApp [α, xs], i, isLt]
       (const `List.get us).mkApp [α, xs, i]
+    | app (app (const `Tensor us) α) s, app (const `Fin _) (app (app (app (const `Tensor.length _) α') s') X) =>
+      if α == α' && s == s' then
+        (const `Tensor.get us).mkApp [α, s, X, i]
+      else
+        panic! s!"{α} ≠ {α'} or {s} ≠ {s'}"
     | _, _ =>
-      panic! s!"Expected a collection of List.Vector, but got: coll = {coll}, idx = {idx}"
+      panic! s!"Expected a collection, but got: coll = {coll}, idx = {idx}"
   | app fn arg =>
     app fn.getElem2get arg.getElem2get
   | forallE binderName binderType body binderInfo =>

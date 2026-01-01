@@ -14,13 +14,13 @@ import Lemma.Vector.EqGet1_1
 open Tensor Vector Bool List
 
 
-@[main]
+@[main, fin, val]
 private lemma main
   [One α]
 -- given
   (i : Fin (1 : Tensor α s).length) :
 -- imply
-  (1 : Tensor α s)[i.val] = 1 := by
+  (1 : Tensor α s)[i] = 1 := by
 -- proof
   simp [GetElem.getElem]
   simp [Tensor.get]
@@ -47,17 +47,6 @@ private lemma main
   ·
     rw [h_i]
     apply Length.eq.HeadD.of.GtLength_0 (by omega)
-
-
-@[main]
-private lemma fin
-  [One α]
--- given
-  (i : Fin (1 : Tensor α s).length) :
--- imply
-  (1 : Tensor α s).get i = 1 :=
--- proof
-  main i
 
 
 -- created on 2025-10-12

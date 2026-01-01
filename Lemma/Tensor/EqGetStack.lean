@@ -26,25 +26,25 @@ private lemma fn.fin
 
 
 @[main]
-private lemma fin
--- given
-  (f : ℕ → Tensor α s)
-  (i : Fin n) :
--- imply
-  ([i < n] f i).get i = f i := by
--- proof
-  apply fn.fin
-
-
-@[main]
 private lemma main
 -- given
   (f : ℕ → Tensor α s)
   (i : Fin n) :
 -- imply
-  ([i < n] f i)[i] = f i :=
+  ([i < n] f i)[i] = f i := by
 -- proof
-  fin f i
+  apply fn.fin
+
+
+@[main]
+private lemma fin
+-- given
+  (f : ℕ → Tensor α s)
+  (i : Fin n) :
+-- imply
+  ([i < n] f i).get i = f i :=
+-- proof
+  main f i
 
 
 @[main]

@@ -14,7 +14,7 @@ import Lemma.Vector.EqGet0_0
 open Tensor Vector Bool List
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Zero α]
 -- given
@@ -47,17 +47,6 @@ private lemma main
   ·
     rw [h_i]
     apply Length.eq.HeadD.of.GtLength_0 (by omega)
-
-
-@[main]
-private lemma fin
-  [Zero α]
--- given
-  (i : Fin (0 : Tensor α s).length) :
--- imply
-  (0 : Tensor α s).get i = 0 :=
--- proof
-  main i
 
 
 -- created on 2025-10-12
