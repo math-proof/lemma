@@ -2,7 +2,7 @@ import sympy.Basic
 import sympy.vector.vector
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp, mpr, fin, fin.comm, fin.mp, fin.mpr]
 private lemma main
 -- given
   (a b : List.Vector α n) :
@@ -10,16 +10,6 @@ private lemma main
   a = b ↔ ∀ i : Fin n, a[i] = b[i] := by
 -- proof
   aesop
-
-
-@[main, comm, mp, mpr]
-private lemma fin
--- given
-  (a b : List.Vector α n) :
--- imply
-  a = b ↔ ∀ i : Fin n, a.get i = b.get i :=
--- proof
-  main a b
 
 
 -- created on 2025-07-11

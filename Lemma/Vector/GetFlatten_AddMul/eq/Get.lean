@@ -5,14 +5,14 @@ import Lemma.Nat.AddMul.lt.Mul
 open Vector Nat
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α n) m)
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  have := AddMul.lt.Mul i j
+  have h := AddMul.lt.Mul i j
   v.flatten[i * n + j] = v[i, j] := by
 -- proof
   intro h
@@ -32,18 +32,6 @@ private lemma main
   simp [GetElem.getElem] at this
   simp [List.Vector.get] at this
   rw [this]
-
-
-@[main]
-private lemma fin
--- given
-  (v : List.Vector (List.Vector α n) m)
-  (i : Fin m)
-  (j : Fin n) :
--- imply
-  v.flatten.get ⟨i * n + j, AddMul.lt.Mul i j⟩ = (v.get i).get j :=
--- proof
-  main v i j
 
 
 -- created on 2025-05-31

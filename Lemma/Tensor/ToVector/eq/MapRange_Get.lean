@@ -3,27 +3,18 @@ import Lemma.Vector.EqGetRange
 open Tensor Vector
 
 
-@[main]
-private lemma fin
--- given
-  (X : Tensor α (n :: s)) :
--- imply
-  X.toVector = (List.Vector.range n).map fun i => X.get i := by
--- proof
-  ext i
-  simp
-  rw [GetToVector.eq.Get.cons.fin]
-  rw [EqGetRange.fin]
-
-
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (X : Tensor α (n :: s)) :
 -- imply
   X.toVector = (List.Vector.range n).map fun i => X[i] := by
 -- proof
-  apply fin
+  simp [GetElem.getElem]
+  ext i
+  simp
+  rw [GetToVector.eq.Get.cons.fin]
+  rw [EqGetRange.fin]
 
 
 -- created on 2025-09-24

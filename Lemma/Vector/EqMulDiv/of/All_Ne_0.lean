@@ -5,7 +5,7 @@ import Lemma.Vector.GetMul.eq.MulGetS
 open Vector Rat
 
 
-@[main]
+@[main, fin 1]
 private lemma main
   [GroupWithZero α]
   {b : List.Vector α n}
@@ -20,19 +20,6 @@ private lemma main
   rw [GetMul.eq.MulGetS]
   rw [GetDiv.eq.DivGetS]
   rw [EqMulDiv.of.Ne_0 (h i)]
-
-
-@[main]
-private lemma fin
-  [GroupWithZero α]
-  {b : List.Vector α n}
--- given
-  (h : ∀ i : Fin n, b.get i ≠ 0)
-  (a : List.Vector α n) :
--- imply
-  a / b * b = a :=
--- proof
-  main h a
 
 
 -- created on 2025-12-30

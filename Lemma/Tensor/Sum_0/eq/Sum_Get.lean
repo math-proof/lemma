@@ -6,7 +6,7 @@ import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 open Tensor Vector Fin
 
 
-@[main]
+@[main, fin]
 private lemma main
   [AddCommMonoid α]
 -- given
@@ -28,17 +28,6 @@ private lemma main
   simp
   rw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp_all) (by simp)]
   simp [GetElem.getElem]
-
-
-@[main]
-private lemma fin
-  [AddCommMonoid α]
--- given
-  (X : Tensor α (n :: s)) :
--- imply
-  X.sum 0 = ∑ i : Fin n, X.get i :=
--- proof
-  main X
 
 
 -- created on 2025-07-13

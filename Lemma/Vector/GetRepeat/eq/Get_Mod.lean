@@ -8,14 +8,13 @@ import Lemma.Nat.EqMod
 open Vector Nat
 
 
-@[main]
+@[main, fin, val]
 private lemma main
 -- given
   (x : List.Vector α n)
   (k : Fin (m * n)) :
 -- imply
-  have := LtMod.of.Ne_0 (Ne_0.of.Mul.ne.Zero (Ne_0 k)) k
-  (x.repeat m)[k.val] = x[k % n] := by
+  (x.repeat m)[k] = x[k % n]'(LtMod.of.Ne_0 (Ne_0.of.Mul.ne.Zero (Ne_0 k)) k) := by
 -- proof
   let ⟨i, j, h_ij⟩ := Any_Eq_AddMul k
   unfold List.Vector.repeat
@@ -23,17 +22,6 @@ private lemma main
   simp [GetElem.getElem]
   rw [GetFlatten_AddMul.eq.Get.fin]
   simp [EqMod]
-
-
-@[main]
-private lemma fin
--- given
-  (x : List.Vector α n)
-  (k : Fin (m * n)) :
--- imply
-  (x.repeat m).get k = x.get ⟨k % n, LtMod.of.Ne_0 (Ne_0.of.Mul.ne.Zero (Ne_0 k)) k⟩ :=
--- proof
-  main x k
 
 
 -- created on 2025-09-24

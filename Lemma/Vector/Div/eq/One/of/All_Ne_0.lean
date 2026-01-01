@@ -5,7 +5,7 @@ import sympy.vector.vector
 open Vector
 
 
-@[main]
+@[main, fin 1]
 private lemma main
   [GroupWithZero α]
   {x : List.Vector α n}
@@ -20,18 +20,6 @@ private lemma main
   rw [GetDiv.eq.DivGetS]
   rw [Rat.Div.eq.One.of.Ne_0]
   apply h i
-
-
-@[main]
-private lemma fin
-  [GroupWithZero α]
-  {x : List.Vector α n}
--- given
-  (h : ∀ i : Fin n, x.get i ≠ 0) :
--- imply
-  x / x = 1 :=
--- proof
-  main h
 
 
 -- created on 2025-11-28

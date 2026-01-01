@@ -6,7 +6,7 @@ import Lemma.List.Prod.eq.Foldr
 open List Vector
 
 
-@[main, comm]
+@[main, comm, fin, fin.comm]
 private lemma main
   {s : List ℕ}
 -- given
@@ -26,18 +26,6 @@ private lemma main
     simp [GetUnflatten.eq.Get_AddMul.fin]
     rw [GetCast.eq.Get.of.Eq.fin]
     simp [Foldr.eq.Prod]
-
-
-@[main, comm]
-private lemma fin
-  {s : List ℕ}
--- given
-  (v : List.Vector α s.prod)
-  (i : Fin (s.take 1).prod) :
--- imply
-  (v.splitAt 1).get i = (cast (congrArg (List.Vector α) (Prod.eq.MulProdS s 1)) v).unflatten.get i :=
--- proof
-  main v i
 
 
 -- created on 2025-10-08

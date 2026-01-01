@@ -2,7 +2,7 @@ import sympy.vector.Basic
 import sympy.Basic
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Div α]
 -- given
@@ -13,19 +13,6 @@ private lemma main
   (x / a)[i] = x[i] / a := by
 -- proof
   simp [HDiv.hDiv]
-
-
-@[main]
-private lemma fin
-  [Div α]
--- given
-  (x : List.Vector α n)
-  (a : α)
-  (i : Fin n) :
--- imply
-  (x / a).get i = x.get i / a :=
--- proof
-  main x a i
 
 
 -- created on 2025-09-22

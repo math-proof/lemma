@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, fin]
 private lemma main
   {β : Type*}
 -- given
@@ -12,19 +12,6 @@ private lemma main
   (v.map f)[i] = f v[i] := by
 -- proof
   simp [GetElem.getElem]
-
-
-@[main]
-private lemma fin
-  {β : Type*}
--- given
-  (h : i < n)
-  (v : List.Vector α n)
-  (f : α → β) :
--- imply
-  (v.map f).get ⟨i, h⟩ = f (v.get ⟨i, h⟩) :=
--- proof
-  main h v f
 
 
 -- created on 2025-06-01

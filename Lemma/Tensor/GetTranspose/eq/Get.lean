@@ -8,7 +8,7 @@ import Lemma.Tensor.PermuteTail.eq.CastRotate.of.LeLength
 open Tensor Vector List
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (X : Tensor α [m, n])
@@ -45,18 +45,6 @@ private lemma main
       assumption
     ·
       simp
-
-
-@[main]
-private lemma fin
--- given
-  (X : Tensor α [m, n])
-  (i : Fin m)
-  (j : Fin n) :
--- imply
-  (Xᵀ.get j).get i = (X.get i).get j := by
--- proof
-  apply main
 
 
 -- created on 2025-07-13

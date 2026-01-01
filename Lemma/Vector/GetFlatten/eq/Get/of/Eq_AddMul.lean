@@ -3,7 +3,7 @@ import Lemma.Nat.AddMul.lt.Mul
 open Vector Nat
 
 
-@[main]
+@[main, fin, val]
 private lemma main
   {i : Fin m}
   {j : Fin n}
@@ -11,25 +11,10 @@ private lemma main
   (h_t : t = i * n + j)
   (v : List.Vector (List.Vector α n) m) :
 -- imply
-  have : t < m * n := by convert AddMul.lt.Mul i j
-  v.flatten[t] = v[i.val, j.val] := by
+  v.flatten[t]'(by convert AddMul.lt.Mul i j) = v[i, j] := by
 -- proof
   simp [h_t]
   apply GetFlatten_AddMul.eq.Get
-
-
-@[main]
-private lemma fin
-  {i : Fin m}
-  {j : Fin n}
--- given
-  (h_t : t = i * n + j)
-  (v : List.Vector (List.Vector α n) m) :
--- imply
-  have h_t : t < m * n := by convert AddMul.lt.Mul i j
-  v.flatten.get ⟨t, h_t⟩ = (v.get i).get j :=
--- proof
-  main h_t v
 
 
 -- created on 2025-07-06

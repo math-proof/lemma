@@ -30,10 +30,10 @@ private lemma main
       have h_t := t.isLt
       let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
       simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
-      have := GetTranspose.eq.Get (X.data.splitAt 0) ⟨0, by simp⟩ ⟨q, by simp⟩
+      have := GetTranspose.eq.Get.val (X.data.splitAt 0) ⟨0, by simp⟩ ⟨q, by simp⟩
       simp at this
       rw [this]
-      have := GetSplitAt.eq.Get_AddMul_ProdDrop (d := 0) X.data ⟨0, by simp⟩ ⟨q, by simp⟩
+      have := GetSplitAt.eq.Get_AddMul_ProdDrop.val (d := 0) X.data ⟨0, by simp⟩ ⟨q, by simp⟩
       simp at this
       rw [this]
       grind

@@ -6,7 +6,7 @@ import Lemma.Vector.Eq.of.Eq_Cast.Eq
 open Vector List Bool
 
 
-@[main]
+@[main, fin, val]
 private lemma main
   {s : List ℕ}
   {d : ℕ}
@@ -16,7 +16,7 @@ private lemma main
   (j : Fin (s.drop d).prod) :
 -- imply
   have := AddMul_ProdDrop.lt.Prod i j
-  (v.splitAt d)[i.val, j.val] = v[i * (s.drop d).prod + j] := by
+  (v.splitAt d)[i, j] = v[i * (s.drop d).prod + j] := by
 -- proof
   intro h_lt
   unfold List.Vector.splitAt
@@ -37,20 +37,6 @@ private lemma main
     assumption
   ·
     simp
-
-
-@[main]
-private lemma fin
-  {s : List ℕ}
-  {d : ℕ}
--- given
-  (v : List.Vector α s.prod)
-  (i : Fin (s.take d).prod)
-  (j : Fin (s.drop d).prod) :
--- imply
-  ((v.splitAt d).get i).get j = v.get ⟨i * (s.drop d).prod + j, AddMul_ProdDrop.lt.Prod i j⟩ := by
--- proof
-  apply main
 
 
 -- created on 2025-07-08

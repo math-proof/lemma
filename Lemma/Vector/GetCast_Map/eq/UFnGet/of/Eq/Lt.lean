@@ -2,7 +2,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Vector
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (h_i : i < n)
@@ -14,19 +14,6 @@ private lemma main
 -- proof
   simp [GetElem.getElem]
   simp [GetCast.eq.Get.of.Eq.fin h]
-
-
-@[main]
-private lemma fin
--- given
-  (h_i : i < n)
-  (h : n = n')
-  (v : List.Vector α n)
-  (f : α → β) :
--- imply
-  (cast (congrArg (List.Vector β) h) (v.map f)).get ⟨i, by simp_all⟩ = f (v.get ⟨i, h_i⟩) :=
--- proof
-  main h_i h v f
 
 
 -- created on 2025-07-15

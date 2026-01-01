@@ -5,7 +5,7 @@ import sympy.vector.vector
 open Int Vector
 
 
-@[main, comm]
+@[main, comm, fin, fin.comm]
 private lemma main
   [SubNegMonoid α]
 -- given
@@ -18,18 +18,6 @@ private lemma main
   rw [GetAdd.eq.AddGetS]
   rw [GetNeg.eq.NegGet]
   rw [Sub.eq.Add_Neg]
-
-
-@[main, comm]
-private lemma fin
-  [SubNegMonoid α]
--- given
-  (a b : List.Vector α n)
-  (i : Fin n) :
--- imply
-  (a - b).get i = a.get i - b.get i :=
--- proof
-  main a b i
 
 
 -- created on 2025-12-03

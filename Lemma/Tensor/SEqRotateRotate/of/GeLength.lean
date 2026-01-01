@@ -62,8 +62,8 @@ private lemma main
           have h_t := t.isLt
           let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
           simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
-          rw [GetTranspose.eq.Get]
-          rw [GetSplitAt.eq.Get_AddMul_ProdDrop]
+          rw [GetTranspose.eq.Get.val]
+          rw [GetSplitAt.eq.Get_AddMul_ProdDrop.val]
           simp at h_qr ⊢
           simp [GetElem.getElem]
           rw [GetCast.eq.Get.of.Eq.fin]

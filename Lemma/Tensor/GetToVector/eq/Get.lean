@@ -25,37 +25,24 @@ private lemma cons.fin
 -- imply
   X.toVector.get i = X.get i := by
 -- proof
-  have := cons X i
-  simp [GetElem.getElem] at *
-  assumption
+  apply cons X i
 
+#check Tensor.GetToVector.eq.Get.cons.fin
 
-@[main]
-private lemma fin
+@[main, fin]
+private lemma main
 -- given
   (X : Tensor α s)
   (i : Fin X.length) :
 -- imply
-  X.toVector.get ⟨i, Lt_HeadD i⟩ = X.get i := by
+  X.toVector[i]'(Lt_HeadD i) = X[i] := by
 -- proof
   have h_s := GtLength_0 i
   match s with
   | [] =>
     contradiction
   | s₀ :: s =>
-    apply cons.fin
-
-
-@[main]
-private lemma main
--- given
-  (X : Tensor α s)
-  (i : Fin X.length) :
--- imply
-  have := Lt_HeadD i
-  X.toVector[i] = X[i] := by
--- proof
-  apply fin
+    apply cons
 
 
 -- created on 2025-05-23

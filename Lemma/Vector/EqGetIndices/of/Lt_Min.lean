@@ -5,14 +5,13 @@ import Lemma.List.EqGetSlicedIndices.of.Lt.Le.Gt_0
 open List Nat
 
 
-@[main]
+@[main, fin]
 private lemma main
   {i n m : ℕ}
 -- given
   (h : i < n ⊓ m) :
 -- imply
-  have : i < (List.Vector.indices ⟨0, n, 1⟩ m).length := by simp_all [LengthSlice.eq.Min]
-  (List.Vector.indices ⟨0, n, 1⟩ m)[i] = i := by
+  (List.Vector.indices ⟨0, n, 1⟩ m)[i]'(by simp_all [LengthSlice.eq.Min]) = i := by
 -- proof
   unfold List.Vector.indices
   simp [GetElem.getElem]
@@ -26,18 +25,6 @@ private lemma main
   ·
     apply EqGetSlicedIndices.of.Lt.Le.Gt_0
     simp_all [EqAdd_Mul_DivSub1Sign_2]
-
-
-@[main]
-private lemma fin
-  {i n m : ℕ}
--- given
-  (h : i < n ⊓ m) :
--- imply
-  have h_i : i < (List.Vector.indices ⟨0, n, 1⟩ m).length := by simp_all [LengthSlice.eq.Min]
-  (List.Vector.indices ⟨0, n, 1⟩ m).get ⟨i, h_i⟩ = i :=
--- proof
-  main h
 
 
 -- created on 2025-08-04

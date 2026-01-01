@@ -5,7 +5,7 @@ import sympy.vector.vector
 open Vector Finset
 
 
-@[main]
+@[main, fin]
 private lemma main
   [AddCommMonoid α]
   [DecidableEq ι]
@@ -26,20 +26,6 @@ private lemma main
   have := UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0 h_f0 h_add s x
   simp [f] at this
   assumption
-
-
-@[main]
-private lemma fin
-  [AddCommMonoid α]
-  [DecidableEq ι]
--- given
-  (s : Finset ι)
-  (x : ι → List.Vector α n)
-  (k : Fin n) :
--- imply
-  (∑ i ∈ s, x i).get k = ∑ i ∈ s, (x i).get k :=
--- proof
-  main s x k
 
 
 -- created on 2025-11-06

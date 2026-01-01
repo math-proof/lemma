@@ -2,7 +2,7 @@ import sympy.vector.Basic
 import sympy.Basic
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Mul α]
 -- given
@@ -16,16 +16,5 @@ private lemma main
   simp [Mul.mul]
   simp [GetElem.getElem]
 
-
-@[main]
-private lemma fin
-  [Mul α]
--- given
-  (a b : List.Vector α n)
-  (i : Fin n):
--- imply
-  (a * b).get i = a.get i * b.get i :=
--- proof
-  main a b i
 
 -- created on 2025-07-14

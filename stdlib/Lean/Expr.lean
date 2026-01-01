@@ -470,7 +470,7 @@ def Lean.Expr.fin2val : Expr → Expr
     | app (const `Fin usFin) n, app (app (app _ valid) _) self =>
       let idx := const `Nat usFin
       let i := app (app (const `Fin.val usFin) n) i
-      app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) valid) self) xs) i) isLt
+      app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) valid) self) xs.fin2val) i) isLt
     | _, _ =>
       expr
   | app fn arg =>

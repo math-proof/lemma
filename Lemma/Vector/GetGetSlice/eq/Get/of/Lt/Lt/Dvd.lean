@@ -8,7 +8,7 @@ import sympy.vector.vector
 open List Nat Vector
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (h_d : d ∣ n)
@@ -23,19 +23,6 @@ private lemma main
   rw [EqDivMul.of.Ne_0 (by omega)] at h_i
   have := GetGetSlice.eq.Get v ⟨i, h_i⟩ ⟨j, h_j⟩
   aesop
-
-
-@[main]
-private lemma fin
--- given
-  (h_d : d ∣ n)
-  (h_i : i < n / d)
-  (h_j : j < d)
-  (v : List.Vector α n):
--- imply
-  (v.getSlice ⟨j, n, d⟩).get ⟨i, by simp_all [LengthSlice.eq.Div.of.Lt.Dvd]⟩ = v.get ⟨i * d + j, LtAddMul.of.Lt.Lt_Div.Dvd h_d h_i h_j⟩ :=
--- proof
-  main h_d h_i h_j v
 
 
 @[main]

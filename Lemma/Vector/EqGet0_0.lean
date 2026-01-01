@@ -2,7 +2,7 @@ import Lemma.Vector.EqGet0_0.of.Lt
 open Vector
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Zero α]
 -- given
@@ -11,17 +11,6 @@ private lemma main
   (0 : List.Vector α n)[i] = 0 := by
 -- proof
   apply EqGet0_0.of.Lt
-
-
-@[main]
-private lemma fin
-  [Zero α]
--- given
-  (i : Fin n) :
--- imply
-  (0 : List.Vector α n).get i = 0 :=
--- proof
-  main i
 
 
 -- created on 2025-09-04

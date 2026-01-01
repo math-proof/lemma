@@ -5,7 +5,7 @@ import Lemma.Nat.AddMul.lt.Mul
 open Vector Nat
 
 
-@[main, comm]
+@[main, comm, fin, fin.comm]
 private lemma main
 -- given
   (v : List.Vector α (m * n))
@@ -27,19 +27,6 @@ private lemma main
   apply GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
   simp
   apply Lt_Sub.of.LtAdd.left h
-
-
-@[main, comm]
-private lemma fin
--- given
-  (v : List.Vector α (m * n))
-  (i : Fin m)
-  (j : Fin n):
--- imply
-  have h_ij := AddMul.lt.Mul i j
-  (v.unflatten.get i).get j = v.get ⟨i * n + j, h_ij⟩ :=
--- proof
-  main v i j
 
 
 -- created on 2025-05-31

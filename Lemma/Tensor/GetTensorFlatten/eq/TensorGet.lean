@@ -5,7 +5,7 @@ import Lemma.Bool.EqUFnS.of.Eq
 open Tensor Bool
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (v : List.Vector (List.Vector α s.prod) n)
@@ -22,17 +22,6 @@ private lemma main
   simp at h_eq
   have := DataGet.eq.Get.of.EqData_Flatten h_eq i
   aesop
-
-
-@[main]
-private lemma fin
--- given
-  (v : List.Vector (List.Vector α s.prod) n)
-  (i : Fin n) :
--- imply
-  (⟨v.flatten⟩ : Tensor α (n :: s)).get i = ⟨v.get i⟩ := by
--- proof
-  apply main
 
 
 -- created on 2025-05-24

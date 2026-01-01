@@ -10,7 +10,7 @@ import Lemma.Bool.EqCast.of.SEq
 open Vector Bool Nat
 
 
-@[main]
+@[main, fin]
 private lemma main
   {s : List ℕ}
 -- given
@@ -37,17 +37,6 @@ private lemma main
     rw [EqMin.of.Le]
     rw [EqGetRange.of.Lt]
     simp
-
-
-@[main]
-private lemma fin
-  {s : List ℕ}
--- given
-  (v : List.Vector α s.prod) :
--- imply
-  (v.splitAt 0).get ⟨0, by simp⟩ = v :=
--- proof
-  main v
 
 
 -- created on 2025-07-12

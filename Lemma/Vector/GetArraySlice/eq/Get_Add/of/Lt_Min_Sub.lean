@@ -5,7 +5,7 @@ import Lemma.Nat.Lt.of.Lt_Min
 open Vector Nat
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (h : j < n ⊓ (N - i))
@@ -20,17 +20,6 @@ private lemma main
   have := GetDrop.eq.Get_Add.of.Lt_Sub this v
   simp [GetElem.getElem] at this
   assumption
-
-
-@[main]
-private lemma fin
--- given
-  (h : j < n ⊓ (N - i))
-  (v : List.Vector α N) :
--- imply
-  (v.array_slice i n).get ⟨j, h⟩ = v.get ⟨i + j, by omega⟩ := by
--- proof
-  apply main h
 
 
 -- created on 2025-05-31

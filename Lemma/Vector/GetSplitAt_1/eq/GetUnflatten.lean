@@ -6,7 +6,7 @@ import Lemma.Bool.EqImpS_Decidable.of.Eq
 open List Bool
 
 
-@[main, comm]
+@[main, comm, fin, fin.comm]
 private lemma main
 -- given
   (v : List.Vector α (n :: s).prod)
@@ -26,17 +26,6 @@ private lemma main
     ·
       simp [Prod.eq.Foldr]
   repeat simp
-
-
-@[main, comm]
-private lemma fin
--- given
-  (v : List.Vector α (n :: s).prod)
-  (i : Fin n) :
--- imply
-  (v.splitAt 1).get ⟨i, by simp⟩ = v.unflatten.get i :=
--- proof
-  main v i
 
 
 -- created on 2025-07-16

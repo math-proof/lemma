@@ -4,23 +4,7 @@ import Lemma.Nat.EqMod
 open Vector Nat
 
 
-@[main]
-private lemma fin
-  {i : Fin m}
-  {j : Fin n}
--- given
-  (h_t : t = i * n + j)
-  (v : List.Vector α n) :
--- imply
-  have h_t : t < m * n := by convert AddMul.lt.Mul i j
-  (v.repeat m).get ⟨t, h_t⟩ = v.get j := by
--- proof
-  simp [GetRepeat.eq.Get_Mod.fin]
-  simp [h_t]
-  simp [EqMod]
-
-
-@[main]
+@[main, fin]
 private lemma main
   {i : Fin m}
   {j : Fin n}
@@ -28,11 +12,12 @@ private lemma main
   (h_t : t = i * n + j)
   (v : List.Vector α n) :
 -- imply
-  have : t < m * n := by convert AddMul.lt.Mul i j
-  (v.repeat m)[t] = v[j] := by
+  (v.repeat m)[t]'(by convert AddMul.lt.Mul i j) = v[j] := by
 -- proof
-  apply fin
-  assumption
+  simp [GetElem.getElem]
+  simp [GetRepeat.eq.Get_Mod.fin]
+  simp [h_t]
+  simp [EqMod]
 
 
 -- created on 2025-09-24

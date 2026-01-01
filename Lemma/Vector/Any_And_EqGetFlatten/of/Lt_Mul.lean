@@ -3,13 +3,13 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 open Vector Fin
 
 
-@[main]
+@[main, fin, val]
 private lemma main
 -- given
   (h : t < m * n)
   (v : List.Vector (List.Vector α n) m) :
 -- imply
-  ∃ (i : Fin m) (j : Fin n), t = i * n + j ∧ v.flatten[t] = v[i.val, j.val] := by
+  ∃ (i : Fin m) (j : Fin n), t = i * n + j ∧ v.flatten[t] = v[i, j] := by
 -- proof
   let ⟨q, r, h⟩ := Any_Eq_AddMul.of.Lt_Mul h
   use q, r
@@ -18,17 +18,6 @@ private lemma main
     exact h
   .
     apply GetFlatten.eq.Get.of.Eq_AddMul h
-
-
-@[main]
-private lemma fin
--- given
-  (h : t < m * n)
-  (v : List.Vector (List.Vector α n) m) :
--- imply
-  ∃ (i : Fin m) (j : Fin n), t = i * n + j ∧ v.flatten.get ⟨t, h⟩ = (v.get i).get j :=
--- proof
-  main h v
 
 
 -- created on 2025-11-02
