@@ -5,7 +5,7 @@ import Lemma.Vector.Div.eq.One.of.All_Ne_0
 open Tensor Vector
 
 
-@[main]
+@[main, fin 1]
 private lemma main
   [GroupWithZero α]
   {X : Tensor α s}
@@ -18,18 +18,6 @@ private lemma main
   rw [DataDiv.eq.DivDataS]
   rw [EqData1'1]
   apply Div.eq.One.of.All_Ne_0 h
-
-
-@[main]
-private lemma fin
-  [GroupWithZero α]
-  {X : Tensor α s}
--- given
-  (h : ∀ i : Fin s.prod, X.data.get i ≠ 0) :
--- imply
-  X / X = 1 := by
--- proof
-  apply main h
 
 
 -- created on 2025-11-28

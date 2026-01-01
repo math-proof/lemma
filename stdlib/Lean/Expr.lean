@@ -355,7 +355,7 @@ def Lean.Expr.decompose_forallE (binders : List (Name × Expr × BinderInfo) := 
     ⟨binders, body⟩
 
 def Lean.Expr.getElem2get : Expr → Expr
-  | app (app (app (app (app (app (app (app (const `GetElem.getElem _) coll) idx) _) _) _) xs) i) isLt =>
+  | expr@(app (app (app (app (app (app (app (app (const `GetElem.getElem _) coll) idx) _) _) _) xs) i) isLt) =>
     match coll with
     | app (app (const `List.Vector us) α) n =>
       if let app (const `Fin usFin) n' := idx then
@@ -382,7 +382,7 @@ def Lean.Expr.getElem2get : Expr → Expr
         let i := (const `Fin.mk usNat).mkApp [(const `List.length us).mkApp [α, xs], i, isLt]
         (const `List.get us).mkApp [α, xs, i]
       else
-        panic! s!"Expected a Nat index, but got: {idx}"
+        expr
     | app (app (const `Tensor us) α) s =>
       let i :=
         match idx with

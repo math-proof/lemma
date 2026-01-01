@@ -6,7 +6,7 @@ import Lemma.Tensor.EqGetUnsqueeze
 open Tensor Nat
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (h_i : i < n)
@@ -24,21 +24,6 @@ private lemma main
     apply EqGetUnsqueeze
   ·
     simpa
-
-
-@[main]
-private lemma fin
--- given
-  (h_i : i < n)
-  (X : Tensor α s) :
--- imply
-  have h_i : i < ((X.unsqueeze 0).repeat n ⟨0, by simp⟩).length := by
-    rw [LengthRepeat.eq.MulGet_0.of.GtLength_0]
-    simpa
-  ((X.unsqueeze 0).repeat n ⟨0, by simp⟩).get ⟨i, h_i⟩ = X := by
--- proof
-  apply main
-  assumption
 
 
 -- created on 2025-07-10

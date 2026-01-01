@@ -791,8 +791,10 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.subst (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr): Lean.Expr × Lean.Expr :=
+def Expr.subst (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr) (parity : ℕ) : Lean.Expr × Lean.Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
+  let binders := (binders.zipParity parity).map fun ⟨comm, binderName, binderType, binderInfo⟩ =>
+    (binderName, if comm then subst binderType else binderType, binderInfo)
   let telescope := fun lam body =>
     binders.foldl
       (fun body ⟨binderName, binderType, binderInfo⟩ =>
@@ -806,10 +808,10 @@ def Expr.subst (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr): Lean.
 
 Usage:
 ```lean
-@[fin]
-theorem Section.UFnGet {a : List α} (b : List α) (i j : ℕ) : f a[i] = g b[j] := by proof
+@[fin 1]
+theorem Section.UFnGet {a : List α} {b : List α} {i j : ℕ} (h : f a[j] = g b[i]) : f a[i] = g b[j] := by proof
 -- Generates:
-theorem Section.UFnGet.fin {a : List α} (b : List α) (i j : ℕ) : f (a.get ⟨i, by grind⟩) = g (b.get ⟨j, by grind⟩) := by sorry
+theorem Section.UFnGet.fin {a : List α} {b : List α} {i j : ℕ} (h : f (a.get ⟨j, by grind⟩) = g (b.get ⟨i, by grind⟩)) : f (a.get ⟨i, by grind⟩) = g (b.get ⟨j, by grind⟩) := by sorry
 ```
 -/
 initialize registerBuiltinAttribute {
@@ -819,7 +821,7 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get
+    let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get stx.getNum
     addAndCompile <| .thmDecl {
       name := ((← getEnv).module.lemmaName declName).str "fin"
       levelParams := levelParams
@@ -846,7 +848,7 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.fin2val
+    let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.fin2val stx.getNum
     addAndCompile <| .thmDecl {
       name := ((← getEnv).module.lemmaName declName).str "val"
       levelParams := levelParams

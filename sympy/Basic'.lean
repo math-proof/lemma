@@ -540,8 +540,11 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.subst' (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr) : CoreM (Lean.Expr × Lean.Expr) := do
+def Expr.subst' (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr) (parity : ℕ) : CoreM (Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
+  let binders := binders.zipParity parity
+  let binders := binders.map fun ⟨comm, binderName, binderType, binderInfo⟩ =>
+    (binderName, if comm then subst binderType else binderType, binderInfo)
   let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
   type.println context "old type"
   println! s!"binders = {binders}"
@@ -569,7 +572,7 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ ← Expr.subst' decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get
+    let ⟨type, value⟩ ← Expr.subst' decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get stx.getNum
     let name := (← getEnv).module.lemmaName declName
     let name := name.str "fin"
     println! s!"name = {name}"
@@ -588,7 +591,7 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let ⟨type, value⟩ ← Expr.subst' decl.type (.const declName (levelParams.map .param)) Lean.Expr.fin2val
+    let ⟨type, value⟩ ← Expr.subst' decl.type (.const declName (levelParams.map .param)) Lean.Expr.fin2val stx.getNum
     let name := (← getEnv).module.lemmaName declName
     let name := name.str "val"
     println! s!"name = {name}"
