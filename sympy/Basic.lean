@@ -821,7 +821,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get
     addAndCompile <| .thmDecl {
-      name := (((← getEnv).moduleTokens.concat "fin").foldl Name.str default).lemmaName declName
+      name := ((← getEnv).module.lemmaName declName).str "fin"
       levelParams := levelParams
       type := type
       value := value
@@ -848,7 +848,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let ⟨type, value⟩ := Expr.subst decl.type (.const declName (levelParams.map .param)) Lean.Expr.fin2val
     addAndCompile <| .thmDecl {
-      name := (((← getEnv).moduleTokens.concat "val").foldl Name.str default).lemmaName declName
+      name := ((← getEnv).module.lemmaName declName).str "val"
       levelParams := levelParams
       type := type
       value := value

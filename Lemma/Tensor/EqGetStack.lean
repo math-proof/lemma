@@ -5,14 +5,15 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Tensor Vector
 
 
-@[main]
-private lemma fn.fin
+@[main, fin]
+private lemma fn
 -- given
   (f : Fin n → Tensor α s)
   (i : Fin n) :
 -- imply
-  ([i < n] f i).get i = f i := by
+  ([i < n] f i)[i] = f i := by
 -- proof
+  simp [GetElem.getElem]
   simp [Tensor.get]
   simp [GetElem.getElem]
   unfold Tensor.toVector
@@ -25,37 +26,15 @@ private lemma fn.fin
   rwa [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (f : ℕ → Tensor α s)
   (i : Fin n) :
 -- imply
-  ([i < n] f i)[i] = f i := by
--- proof
-  apply fn.fin
-
-
-@[main]
-private lemma fin
--- given
-  (f : ℕ → Tensor α s)
-  (i : Fin n) :
--- imply
-  ([i < n] f i).get i = f i :=
--- proof
-  main f i
-
-
-@[main]
-private lemma fn
--- given
-  (f : Fin n → Tensor α s)
-  (i : Fin n) :
--- imply
   ([i < n] f i)[i] = f i :=
 -- proof
-  fn.fin f i
+  fn _ i
 
 
 -- created on 2025-05-23

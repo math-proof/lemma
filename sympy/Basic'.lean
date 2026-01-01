@@ -570,9 +570,8 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ ← Expr.subst' decl.type (.const declName (levelParams.map .param)) Lean.Expr.getElem2get
-    let moduleTokens := (← getEnv).moduleTokens
-    println! s!"moduleTokens = {moduleTokens}"
-    let name := ((moduleTokens.concat "fin").foldl Name.str default).lemmaName declName
+    let name := (← getEnv).module.lemmaName declName
+    let name := name.str "fin"
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name
@@ -590,9 +589,8 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let ⟨type, value⟩ ← Expr.subst' decl.type (.const declName (levelParams.map .param)) Lean.Expr.fin2val
-    let moduleTokens := (← getEnv).moduleTokens
-    println! s!"moduleTokens = {moduleTokens}"
-    let name := ((moduleTokens.concat "val").foldl Name.str default).lemmaName declName
+    let name := (← getEnv).module.lemmaName declName
+    let name := name.str "val"
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name
