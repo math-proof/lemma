@@ -26,7 +26,7 @@ private lemma main
   have h_i := i.isLt
   apply Eq.of.EqDataS
   simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
-  have h_length_slice : (⟨↑↑i, ↑(s.take (↑d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (↑d + 1)).prod * (s.drop (↑d + 1)).prod = (s.eraseIdx ↑d).prod := by 
+  have h_length_slice : (⟨↑↑i, ↑(s.take (↑d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (↑d + 1)).prod * (s.drop (↑d + 1)).prod = (s.eraseIdx ↑d).prod := by
     simp
     rw [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength]
     grind
@@ -42,7 +42,7 @@ private lemma main
   let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
   have h_prod := ProdTake.eq.Mul_ProdTake.of.GtLength d.isLt
   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-  rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin]
+  rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
   ·
     simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   ·

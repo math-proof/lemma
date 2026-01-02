@@ -86,7 +86,7 @@ private lemma main
           have h_r' := r'.isLt
           rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := q') (j := r')]
           ·
-            repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin]
+            repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
             ·
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
               simp [DataUnsqueeze.eq.Map_FunGetData.fin]

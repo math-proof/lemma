@@ -92,7 +92,7 @@ private lemma main
         simp [DropEraseIdx.eq.Drop.of.Le (show k ≤ d - 1 + 1 by omega)] at h_r'
         simp [EqAddSub.of.Ge (show d.val ≥ 1 by omega)] at h_r' h_q'_div h_r'_mod
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
-        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin _ _ h_i_lt]
+        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ h_i_lt]
         ·
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           rw [GetSum.eq.Sum_Get.fin]
@@ -152,10 +152,10 @@ private lemma main
               rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
               rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := qₑ) (j := rₑ)]
               ·
-                rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin _ _ h_j]
+                rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ h_j]
                 ·
                   rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
-                  rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin]
+                  rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
                   ·
                     repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                     rw [GetCast.eq.Get.of.Eq.fin]
@@ -186,7 +186,7 @@ private lemma main
                       simp [this] at h_qₐ
                       let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
                       rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
-                      rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin]
+                      rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
                       ·
                         rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                         apply congrArg

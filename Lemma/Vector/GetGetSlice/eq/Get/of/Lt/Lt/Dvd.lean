@@ -8,7 +8,7 @@ import sympy.vector.vector
 open List Nat Vector
 
 
-@[main, fin]
+@[main]
 private lemma main
 -- given
   (h_d : d ∣ n)
@@ -16,7 +16,7 @@ private lemma main
   (h_j : j < d)
   (v : List.Vector α n):
 -- imply
-  v[j : n:d][i]'(by simp_all [LengthSlice.eq.Div.of.Lt.Dvd]) = v[i * d + j]'(LtAddMul.of.Lt.Lt_Div.Dvd h_d h_i h_j) := by
+  v[j : n:d].get ⟨i, by simp_all [LengthSlice.eq.Div.of.Lt.Dvd]⟩ = v.get ⟨i * d + j, LtAddMul.of.Lt.Lt_Div.Dvd h_d h_i h_j⟩ := by
 -- proof
   let ⟨m, h_n⟩ := Any_Eq_Mul.of.Dvd.left h_d
   subst h_n
@@ -26,7 +26,7 @@ private lemma main
 
 
 @[main]
-private lemma fin.fin
+private lemma fin
   {n d j: ℕ}
   {i : Fin ((⟨j, n, d⟩ : Slice).length n)}
 -- given

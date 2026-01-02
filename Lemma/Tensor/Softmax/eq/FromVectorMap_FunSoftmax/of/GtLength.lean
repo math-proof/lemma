@@ -140,7 +140,7 @@ private lemma main
     simp only [LengthSlice.eq.Div.of.Lt.Dvd h_dvdₕ h_k] at h_qₕ
     have h_rₕ := rₕ.isLt
     repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
-    repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin]
+    repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
     ·
       simp [DataExp.eq.ExpData]
       repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]

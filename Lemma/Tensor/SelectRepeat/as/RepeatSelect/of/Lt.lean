@@ -107,7 +107,7 @@ private lemma main
         let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
         repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
         simp
-        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
+        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd]
         ·
           rw [GetRepeat.eq.Get_Mod.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
@@ -147,7 +147,7 @@ private lemma main
             have h_qₑ := qₑ.isLt
             let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
             repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
-            rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ (by assumption)]
+            rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd _ _ (by assumption)]
             ·
               simp [GetRepeat.eq.Get_Mod.fin]
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]

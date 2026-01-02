@@ -20,7 +20,7 @@ private lemma main
   have h_t := t.isLt
   simp [LengthSlice.eq.Div.of.Lt.Dvd h_d h_i] at h_t
   rw [GetExp.eq.ExpGet.fin]
-  repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin h_d h_t h_i]
+  repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd h_d h_t h_i]
   rw [GetExp.eq.ExpGet.fin]
 
 

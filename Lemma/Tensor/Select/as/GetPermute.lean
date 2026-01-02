@@ -88,7 +88,7 @@ private lemma main
         have h_r := r.isLt
         let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
+        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd]
         ·
           have h_toNat := ToNatSub_Neg.eq.Add_1 d
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]

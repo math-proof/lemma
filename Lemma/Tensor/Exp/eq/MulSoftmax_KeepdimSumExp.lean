@@ -86,7 +86,7 @@ private lemma main
             ⟨r % (s.drop (d + 1)).prod, by apply LtMod.of.Gt_0 (by grind)⟩
           simp at this
           rw [this]
-          rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ h_i]
+          rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd _ _ h_i]
           ·
             simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
             rw [DataExp.eq.ExpData]

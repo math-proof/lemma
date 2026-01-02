@@ -137,11 +137,11 @@ private lemma main
         rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength h_sub_lt (by simpa [h_get])] at h_q
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
-        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ (by simpa [h_get])]
+        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd _ _ (by simpa [h_get])]
         simp [List.Vector.length]
         have h_i1_le := LeAdd_1 i
         have h_LeAddS := LeAddS.of.Le 1 h_d
-        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin.fin _ _ h_t]
+        rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ h_t]
         ·
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           rw [GetCast.eq.Get.of.Eq.fin]

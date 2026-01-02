@@ -110,7 +110,7 @@ private lemma main
               simp only [h_length_slice] at h_q'
               have h_r' := r'.isLt
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
-              rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ i.isLt]
+              rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd _ _ i.isLt]
               ·
                 rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                 simp [DataExp.eq.ExpData]

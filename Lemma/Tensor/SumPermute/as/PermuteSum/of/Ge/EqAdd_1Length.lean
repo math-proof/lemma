@@ -165,7 +165,7 @@ private lemma main
               have h_prod := ProdTake.eq.MulProdTake.of.GtLength (show i < s.length by omega)
               have h_prod' := ProdTake.eq.MulProdTake.of.GtLength (show ↑i - d < (s.take (s.length - (d + 1)) ++ (s.drop (s.length - (d + 1))).rotate ((d + 1) ⊓ s.length - 1)).length by simp; omega)
               repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
-              repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin _ _ (by simpa [h_get])]
+              repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd _ _ (by simpa [h_get])]
               ·
                 repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                 rw [GetCast.eq.Get.of.Eq.fin (by simp)]

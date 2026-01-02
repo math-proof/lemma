@@ -167,7 +167,7 @@ private lemma simp
       let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
       let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
       rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
-      repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
+      repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd]
       ·
         repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin]
