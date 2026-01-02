@@ -4,7 +4,6 @@ import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Nat.Any_Eq_Mul.of.Dvd
 import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
 import Lemma.Vector.GetGetSlice.eq.Get
-import sympy.vector.vector
 open List Nat Vector
 
 

@@ -30,7 +30,7 @@ import Lemma.Tensor.Sum.eq.Cast_Sum.of.LeLength
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
+import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
@@ -110,17 +110,11 @@ private lemma main
               simp only [h_length_slice] at h_q'
               have h_r' := r'.isLt
               simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
-              rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd _ _ i.isLt]
-              ·
-                rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-                simp [DataExp.eq.ExpData]
-                rw [GetExp.eq.ExpGet.fin]
-                apply GtExp_0
-              ·
-                simp [ProdTake.eq.MulProdTake.of.GtLength h]
-              ·
-                simp [ProdTake.eq.MulProdTake.of.GtLength h]
-                rwa [EqDivMul.of.Ne_0 (by grind)]
+              rw [GetGetSlice.eq.Get.of.GtGet.GtLength h i.isLt]
+              rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+              simp [DataExp.eq.ExpData]
+              rw [GetExp.eq.ExpGet.fin]
+              apply GtExp_0
             ·
               apply MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp h i.isLt
         ·

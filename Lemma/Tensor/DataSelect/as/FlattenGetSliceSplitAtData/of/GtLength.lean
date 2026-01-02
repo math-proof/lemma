@@ -43,7 +43,7 @@ import Lemma.Vector.FlattenCast.eq.Cast_Flatten.of.Eq.Eq
 import Lemma.Vector.FlattenMapRange.eq.Cast_UFn_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
+import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.Indices.eq.Cast_MapRange
@@ -167,65 +167,41 @@ private lemma simp
       let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
       let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
       rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
-      repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd]
-      ·
-        repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-        rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin]
-        rw [GetCast.eq.Get.of.Eq.fin (by simp)]
-        rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-        apply congrArg
-        simp
-        repeat rw [MulAdd.eq.AddMulS]
-        conv_lhs => rw [AddAdd.comm]
-        conv_rhs => rw [AddAdd.comm]
-        simp [Add_Add.eq.AddAdd]
-        simp at h_qₐ_div h_rₐ_mod h_r'_mod
-        simp [h_qₐ_div, h_rₐ_mod]
-        simp [ProdEraseIdx.eq.MulProdS] at h_r_mod
-        conv_lhs =>
-          arg 2
-          simp [h_r_mod]
-        simp [← h_r'_mod]
-        rw [ProdTail.eq.MulProdTakeTail s (d + 1)]
-        rw [Mul_Mul.eq.MulMul]
-        simp [AddMulS.eq.MulAdd]
-        left
-        rw [ProdTake.eq.Mul_ProdTake.of.GtLength (by omega)]
-        rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
-        rw [Mul_Mul.eq.MulMul]
-        rw [MulMul.comm]
-        simp [AddMulS.eq.MulAdd]
-        left
-        simp [h_q'_div, h_qr]
-        simp [ProdEraseIdx.eq.MulProdS]
-        rw [Mul_Mul.eq.MulMul]
-        rw [DivAddMul.eq.Add_Div.of.Gt_0]
-        have h_rₐ := rₐ.isLt
-        simp at h_rₐ
-        omega
-      ·
-        simp [ProdTake.eq.MulProdTake.of.GtLength h]
-      ·
-        simp [ProdTake.eq.MulProdTake.of.GtLength h]
-        rw [EqDivMul.of.Ne_0 (by grind)]
-        have h_q' := q'.isLt
-        simp at h_q'
-        rwa [List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength h (by omega)] at h_q'
-      ·
-        grind
-      ·
-        simp [ProdTake.eq.MulProdTake.of.GtLength h_d_lt]
-      ·
-        simp [ProdTake.eq.MulProdTake.of.GtLength h_d_lt]
-        rw [EqDivMul.of.Ne_0 (by grind)]
-        convert (qₐ.isLt)
-        simp
-        rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
-        rw [ProdTake.eq.MulProdTake.of.GtLength h_d_lt]
-        rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
-        rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
-      ·
-        grind
+      repeat rw [GetGetSlice.eq.Get.of.GtGet.GtLength (by grind) (by grind)]
+      repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+      rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin]
+      rw [GetCast.eq.Get.of.Eq.fin (by simp)]
+      rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+      apply congrArg
+      simp
+      repeat rw [MulAdd.eq.AddMulS]
+      conv_lhs => rw [AddAdd.comm]
+      conv_rhs => rw [AddAdd.comm]
+      simp [Add_Add.eq.AddAdd]
+      simp at h_qₐ_div h_rₐ_mod h_r'_mod
+      simp [h_qₐ_div, h_rₐ_mod]
+      simp [ProdEraseIdx.eq.MulProdS] at h_r_mod
+      conv_lhs =>
+        arg 2
+        simp [h_r_mod]
+      simp [← h_r'_mod]
+      rw [ProdTail.eq.MulProdTakeTail s (d + 1)]
+      rw [Mul_Mul.eq.MulMul]
+      simp [AddMulS.eq.MulAdd]
+      left
+      rw [ProdTake.eq.Mul_ProdTake.of.GtLength (by omega)]
+      rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
+      rw [Mul_Mul.eq.MulMul]
+      rw [MulMul.comm]
+      simp [AddMulS.eq.MulAdd]
+      left
+      simp [h_q'_div, h_qr]
+      simp [ProdEraseIdx.eq.MulProdS]
+      rw [Mul_Mul.eq.MulMul]
+      rw [DivAddMul.eq.Add_Div.of.Gt_0]
+      have h_rₐ := rₐ.isLt
+      simp at h_rₐ
+      omega
     ·
       simp [List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
       rw [List.ProdEraseIdx.eq.Mul_ProdEraseIdxTail.of.GtLength_0]

@@ -23,7 +23,7 @@ import Lemma.Tensor.Sum.eq.Cast_Sum.of.LeLength
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
-import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
+import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
@@ -86,17 +86,11 @@ private lemma main
             ⟨r % (s.drop (d + 1)).prod, by apply LtMod.of.Gt_0 (by grind)⟩
           simp at this
           rw [this]
-          rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd _ _ h_i]
-          ·
-            simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            rw [DataExp.eq.ExpData]
-            rw [GetExp.eq.ExpGet.fin]
-            apply GtExp_0
-          ·
-            apply Get.dvd.ProdTake.of.GtLength
-          ·
-            rwa [DivProdTake.eq.ProdTake.of.Ne_0.GtLength]
-            grind
+          rw [GetGetSlice.eq.Get.of.GtGet.GtLength h_d h_i]
+          simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          rw [DataExp.eq.ExpData]
+          rw [GetExp.eq.ExpGet.fin]
+          apply GtExp_0
         ·
           have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp h_d h_i
           simp at this
