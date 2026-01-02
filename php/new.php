@@ -130,9 +130,27 @@ EOT;
 
         [$lemma] = get_rows($sql);
         $latex = $lemma['latex'];
-        $latex = explode("\n", $latex)[0];
+        $latexs = explode("\n", $latex);
+        $latex = $latexs[0];
         $lean = $lemma['lean'];
-        $lean = std\decode($lean)[0];
+        $leans = std\decode($lean);
+        $lean = $leans[0];
+        $tokens = explode('.', $module);
+        $of_index = array_search('of', $tokens);
+        if ($of_index !== false) {
+            $num_hypotheses = 0;
+            for ($i = $of_index + 1; $i <= count($tokens); $i++) {
+                if (ctype_upper($tokens[$i][0]))
+                    $num_hypotheses++;
+                else 
+                    break;
+            }
+            if ($num_hypotheses > 0) {
+                $lean = ["tab" => array_slice($leans, 0, $num_hypotheses + 1)];
+                $latex = implode("\t", array_slice($latexs, 0, $num_hypotheses + 1));
+            }
+        }
+
         if (str_contains($module, '.given.')) {
             $module = str_replace('.given.', '.of.', $module);
             if (is_array($lean) && array_key_exists('tab', $lean)) {
