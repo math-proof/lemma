@@ -11,7 +11,7 @@ import Lemma.Nat.Eq.of.EqValS
 open Tensor Vector List Nat
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (X : Tensor α (s₀ :: s))
@@ -44,19 +44,6 @@ private lemma main
   .
     simp only [LengthSlice.eq.Min]
     rwa [← h_s₀]
-
-
-@[main]
-private lemma fin
--- given
-  (X : Tensor α (s₀ :: s))
-  (h : i < n ⊓ s₀) :
--- imply
-  have h_i : i < (⟨0, n, 1⟩ : Slice).length s₀ := by simp_all [LengthSlice.eq.Min]
-  X[:n].get ⟨i, h_i⟩ = X.get ⟨i, by aesop⟩ := by
--- proof
-  apply main
-  assumption
 
 
 -- created on 2025-08-04

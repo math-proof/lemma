@@ -10,7 +10,7 @@ import Lemma.Vector.GetDiv.eq.DivGetS
 open Tensor Vector List
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Div α]
 -- given
@@ -31,18 +31,6 @@ private lemma main
   congr
   rw [SplitAtDiv.eq.DivSplitAtS]
   rw [GetDiv.eq.DivGetS.fin]
-
-
-@[main]
-private lemma fin
-  [Div α]
--- given
-  (A B : Tensor α s)
-  (i : Fin A.length) :
--- imply
-  (A / B).get ⟨i, by simp [LengthDiv.eq.Length.left]⟩ = A.get i / B.get ⟨i, by simp [EqLengthS B A]⟩ :=
--- proof
-  main A B i
 
 
 -- created on 2025-10-08

@@ -8,7 +8,7 @@ import Lemma.Bool.EqCast.of.SEq
 open Tensor List Bool Nat
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Add α] [Zero α]
   {d i : ℕ}
@@ -29,28 +29,6 @@ private lemma main
 -- proof
   have := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength h₀ h₁ h₂ X
   apply Eq_Cast.of.SEq this
-
-
-@[main]
-private lemma fin
-  [Add α] [Zero α]
-  {d i : ℕ}
--- given
-  (h₀ : s.length > d)
-  (h₁ : d > 0)
-  (h₂ : i < s[0])
-  (X : Tensor α s) :
--- imply
-  have h_shape := LengthSum.eq.Length.of.Gt_0 h₁ X
-  have h_i : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
-  (X.sum d).get ⟨i, by grind⟩ = cast (by
-    let h_dim := Sub_1.lt.LengthTail.of.In_Ioo0Length ⟨h₁, h₀⟩
-    rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_LengthTail h_dim]
-    congr
-    rw [EqAddSub.of.Ge (by assumption)]
-  ) ((X.get ⟨i, by grind⟩).sum (d - 1)) := by
--- proof
-  apply main h₀ h₁ h₂
 
 
 -- created on 2025-06-22

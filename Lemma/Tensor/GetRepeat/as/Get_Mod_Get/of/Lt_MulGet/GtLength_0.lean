@@ -37,7 +37,7 @@ import Lemma.List.EqGetSet.of.GtLength
 open Tensor Vector List Bool Nat Fin
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (h_s : s.length > 0)
@@ -130,23 +130,6 @@ private lemma main
     rw [EqProdTakeSet__1.of.GtLength_0 h_s]
     rw [HeadD.eq.Get_0.of.GtLength_0 (by grind)]
     rw [EqGetSet.of.GtLength h_s]
-
-
-@[main]
-private lemma fin
--- given
-  (h_s : s.length > 0)
-  (h_i : i < n * s[0])
-  (X : Tensor α s) :
--- imply
-  have h_i : i < (X.repeat n ⟨0, h_s⟩).length := by rwa [LengthRepeat.eq.Mul_Get_0.of.GtLength_0]
-  have h_mod : i % s[0] < X.length := by
-    rw [Length.eq.Get_0.of.GtLength_0 h_s]
-    apply LtMod.of.Gt_0 ∘ Gt_0.of.GtMul
-    assumption
-  (X.repeat n ⟨0, h_s⟩).get ⟨i, h_i⟩ ≃ X.get ⟨i % s[0], h_mod⟩ := by
--- proof
-  apply main _ h_i
 
 
 -- created on 2025-07-10

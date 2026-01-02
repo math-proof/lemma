@@ -359,7 +359,7 @@ def Lean.Expr.getElem2get : Expr → Expr
     match coll with
     | app (app (const `List.Vector us) α) n =>
       match idx with
-      | app (const `Fin usFin) n' =>
+      | app (const `Fin usNat) n' =>
         let isomorphic :=
           if n == n' then
             true
@@ -367,14 +367,31 @@ def Lean.Expr.getElem2get : Expr → Expr
             match n, n' with
             | app (app (app (app (const `List.prod _) (const `Nat _)) _) _) s, app (app (app (app (const `List.prod _) (const `Nat _)) _) _) s' =>
               s == s'
+            | app
+                (app
+                  (app (const `List.headD _)
+                    (const `Nat _)
+                  )
+                  (app
+                    (app
+                      (app (const `List.cons _)
+                        (const `Nat _)
+                      )
+                      n
+                    )
+                    _ -- tail
+                  )
+                )
+                (app (app (app (const `OfNat.ofNat _) (const `Nat _)) (lit (.natVal _))) (.app (const `instOfNatNat _) (lit (.natVal _)))), _ =>
+              n == n'
             | _, _ =>
               false
         let i :=
           if isomorphic then
             i
           else
-            let i := (const `Fin.val usFin).mkApp [n', i]
-            (const `Fin.mk usFin).mkApp [n, i, isLt]
+            let i := (const `Fin.val usNat).mkApp [n', i]
+            (const `Fin.mk usNat).mkApp [n, i, isLt]
         (const `List.Vector.get us).mkApp [α, n, xs.getElem2get, i]
       | const `Nat usNat =>
         let i :=
@@ -393,8 +410,8 @@ def Lean.Expr.getElem2get : Expr → Expr
     | app (const `List us) α =>
       let args : Option (List Level × Expr) :=
         match idx with
-        | app (const `Fin usFin) n =>
-          (usFin, (const `Fin.val usFin).mkApp [n, i])
+        | app (const `Fin usNat) n =>
+          (usNat, (const `Fin.val usNat).mkApp [n, i])
         | const `Nat usNat =>
           (usNat, i)
         | _ =>
@@ -405,11 +422,11 @@ def Lean.Expr.getElem2get : Expr → Expr
       else
         expr
     | app (app (const `Tensor us) α) s =>
-      let i :=
+      let args : Option (List Level × Expr) :=
         match idx with
-        | app (const `Fin _) n =>
+        | app (const `Fin usNat) n =>
           match n with
-          | app (app (app (const `List.get _) (const `Nat _)) s)
+          | app (app (app (const `List.get _) (const `Nat _)) _) -- s
               (app
                 (app
                   (app (const `Fin.mk _)
@@ -437,19 +454,29 @@ def Lean.Expr.getElem2get : Expr → Expr
                 zero
               ) _ =>
             if let app (app (app (const `OfNat.ofNat _) (const `Nat usNat)) (lit (.natVal 0))) (app (const `instOfNatNat _) (lit (.natVal 0))) := zero then
-              let i := (const `Fin.val usNat).mkApp [n, i]
-              let n := (const `Tensor.length us).mkApp [α, s, xs]
-              (const `Fin.mk usNat).mkApp [n, i, isLt]
+              (usNat, (const `Fin.val usNat).mkApp [n, i])
             else
               panic! s!"unmatched zero, got {zero}"
+          | app (app (app (const `Tensor.length _) _) _) xs' =>
+            if xs == xs' then
+              none
+            else
+              (usNat, (const `Fin.val usNat).mkApp [n, i])
+          | app (app (const `Slice.length _) _) _ =>
+            (usNat, (const `Fin.val usNat).mkApp [n, i])
           | _ =>
-            i
+            none
         | const `Nat usNat =>
-          let n := (const `Tensor.length us).mkApp [α, s, xs]
-          (const `Fin.mk usNat).mkApp [n, i, isLt]
+          (usNat, i)
         | _ =>
           panic! s!"Expected a Fin index, but got: {idx}"
-        (const `Tensor.get us).mkApp [α, s, xs.getElem2get, i]
+      let i :=
+        if let some (usNat, i) := args then
+          let n := (const `Tensor.length us).mkApp [α, s, xs]
+          (const `Fin.mk usNat).mkApp [n, i, isLt]
+        else
+          i
+      (const `Tensor.get us).mkApp [α, s, xs.getElem2get, i]
     | _ =>
       panic! s!"Expected a collection, but got: coll = {coll}"
   | app fn arg =>
@@ -467,9 +494,9 @@ def Lean.Expr.getElem2get : Expr → Expr
 def Lean.Expr.fin2val : Expr → Expr
   | expr@(app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) _) self) xs) i) isLt) =>
     match idx, self with
-    | app (const `Fin usFin) n, app (app (app _ valid) _) self =>
-      let idx := const `Nat usFin
-      let i := app (app (const `Fin.val usFin) n) i
+    | app (const `Fin usNat) n, app (app (app _ valid) _) self =>
+      let idx := const `Nat usNat
+      let i := app (app (const `Fin.val usNat) n) i
       app (app (app (app (app (app (app (app (const `GetElem.getElem us) coll) idx) elem) valid) self) xs.fin2val) i) isLt
     | _, _ =>
       expr

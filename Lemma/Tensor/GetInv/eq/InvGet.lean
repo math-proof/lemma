@@ -4,29 +4,16 @@ import Lemma.Tensor.GetTensorMapData.eq.TensorMapDataGet
 open Tensor
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Inv α]
 -- given
   (X : Tensor α s)
   (i : Fin X.length) :
 -- imply
-  have hi : i < X⁻¹.length := by simp [LengthInv.eq.Length]
-  X⁻¹[i] = X[i]⁻¹ := by
+  X⁻¹[i]'(by simp [LengthInv.eq.Length]) = X[i]⁻¹ := by
 -- proof
   apply GetTensorMapData.eq.TensorMapDataGet
-
-
-@[main]
-private lemma fin
-  [Inv α]
--- given
-  (X : Tensor α s)
-  (i : Fin X.length) :
--- imply
-  (X⁻¹).get ⟨i, by simp [LengthInv.eq.Length]⟩ = (X.get i)⁻¹ :=
--- proof
-  main X i
 
 
 -- created on 2025-10-08

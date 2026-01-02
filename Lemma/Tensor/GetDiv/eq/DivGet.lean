@@ -7,13 +7,13 @@ import Lemma.List.Prod.eq.Foldr
 open Tensor Vector List
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Div α]
 -- given
   (X : Tensor α (n :: s))
   (A : Tensor α [])
-  (i : Fin X.length) :
+  (i : Fin n) :
 -- imply
   (X / A)[i] = X[i] / A := by
 -- proof
@@ -30,19 +30,6 @@ private lemma main
   simp
   repeat rw [GetUnflatten.eq.Get_AddMul.fin]
   simp
-
-
-@[main]
-private lemma fin
-  [Div α]
--- given
-  (X : Tensor α (n :: s))
-  (A : Tensor α [])
-  (i : Fin X.length) :
--- imply
-  (X / A).get i = X.get i / A :=
--- proof
-  main X A i
 
 
 -- created on 2025-09-24

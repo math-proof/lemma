@@ -11,6 +11,7 @@ import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetUnsqueeze
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
+import Lemma.Vector.Head.eq.Get_0
 import Lemma.List.Prod.eq.MulProdS
 open Tensor Vector Bool Nat List
 
@@ -51,6 +52,7 @@ private lemma main
   have h_eq := Prod.eq.MulProdS [n] 1
   have := GetSum.eq.SumMapGet.val (cast (congrArg (List.Vector α) h_eq) (exp X)).unflatten ⟨0, by simp⟩
   simp at this
+  simp [Head.eq.Get_0]
   rw [this]
   apply congrArg
   ext i

@@ -4,7 +4,7 @@ import Lemma.Tensor.GtLength_0
 open Tensor
 
 
-@[main]
+@[main, fin]
 private lemma cons
 -- given
   (X : Tensor α (n :: s))
@@ -16,18 +16,6 @@ private lemma cons
   simp [Tensor.get]
   simp [GetElem.getElem]
 
-
-@[main]
-private lemma cons.fin
--- given
-  (X : Tensor α (n :: s))
-  (i : Fin n) :
--- imply
-  X.toVector.get i = X.get i := by
--- proof
-  apply cons X i
-
-#check Tensor.GetToVector.eq.Get.cons.fin
 
 @[main, fin]
 private lemma main

@@ -7,14 +7,16 @@ import Lemma.Vector.Head.eq.Get_0
 open Tensor Vector
 
 
-@[main]
-private lemma fin
+@[main, fin]
+private lemma main
 -- given
   (h_i : i < n)
   (X : Tensor α [n]) :
 -- imply
-  X.data.get ⟨i, by simpa⟩ = (X.get ⟨i, GtLength.of.GtLength_0 (by grind) X ⟨i, by grind⟩⟩).data[0] := by
+  have := GtLength.of.GtLength_0 (by grind) X ⟨i, by grind⟩
+  X.data[i]'(by simpa) = X[i].data[0] := by
 -- proof
+  simp [GetElem.getElem]
   intros
   simp [Tensor.get]
   unfold Tensor.toVector
@@ -24,18 +26,6 @@ private lemma fin
   rw [Head.eq.Get_0.fin]
   rw [Vector.GetUnflatten.eq.Get_AddMul.fin]
   simp [GetCast.eq.Get.of.Eq.fin]
-
-
-@[main]
-private lemma main
--- given
-  (h_i : i < n)
-  (X : Tensor α [n]) :
--- imply
-  have := GtLength.of.GtLength_0 (by grind) X ⟨i, by grind⟩
-  X.data[i]'(by simpa) = X[i].data[0] :=
--- proof
-  fin h_i X
 
 
 -- created on 2025-10-11

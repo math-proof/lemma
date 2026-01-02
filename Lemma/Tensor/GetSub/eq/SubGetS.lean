@@ -4,7 +4,7 @@ import Lemma.Tensor.GetNeg.eq.NegGet
 open Int Tensor
 
 
-@[main]
+@[main, fin]
 private lemma main
   [SubNegMonoid α]
 -- given
@@ -20,18 +20,6 @@ private lemma main
   simp at this
   rw [this]
   rw [Sub.eq.Add_Neg]
-
-
-@[main]
-private lemma fin
-  [SubNegMonoid α]
--- given
-  (A B : Tensor α (m :: s))
-  (i : Fin m) :
--- imply
-  (A - B).get i = A.get i - B.get i :=
--- proof
-  main A B i
 
 
 -- created on 2025-12-08

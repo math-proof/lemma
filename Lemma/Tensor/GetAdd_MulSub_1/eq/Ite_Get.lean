@@ -89,9 +89,8 @@ private lemma main
     have h_k := Eq_0 k
     subst h_k
     have := GetData.eq.GetDataGet.of.Lt.fin (i := j) (by simp) (A.get i)
-    simp [GetElem.getElem] at this
-    rw [Head.eq.Get_0.fin] at this
-    rw [← this]
+    simp at this
+    simp [← this]
     rw [GetSubStackBool.eq.One]
     simp [h_p]
     rw [DataGet.eq.GetUnflattenData.fin A i]
