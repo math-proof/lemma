@@ -3209,7 +3209,7 @@ class Infinity(with_metaclass(Singleton, Number)):
         return 'oo'
     
     def _lean(self, p):
-        return '\N{INFINITY}'
+        return 'Hyperreal.omega'
     
     def _eval_subs(self, old, new, **hints):
         if self == old:
@@ -3430,7 +3430,7 @@ class NegativeInfinity(with_metaclass(Singleton, Number)):
         return '-oo'
 
     def _lean(self, p):
-        return '-\N{INFINITY}'
+        return '-Hyperreal.omega'
     
     def _eval_subs(self, old, new, **hints):
         if self == old:
@@ -4668,7 +4668,7 @@ class Infinitesimal(with_metaclass(Singleton, Number)):
         return "S.Infinitesimal"
     
     def _lean(self, p):
-        return "S.Infinitesimal"
+        return "Hyperreal.epsilon"
     
     def _latex(self, p):
         return r"0^{+}"
@@ -4899,7 +4899,7 @@ class NegativeInfinitesimal(with_metaclass(Singleton, Number)):
         return "-S.Infinitesimal"
     
     def _lean(self, p):
-        return "-S.Infinitesimal"
+        return "-Hyperreal.epsilon"
     
     def _latex(self, p):
         return r"0^{-}"
