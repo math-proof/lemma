@@ -38,9 +38,9 @@ def prove(Eq):
 
     Eq << Tensor.EqStackS.of.All_Eq.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Stack_Dot.eq.DotSliceS)
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Stack_Dot.eq.DotSliceS)
 
     Eq << Eq[-1].T
 

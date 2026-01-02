@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(softmax).apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
-    Eq << Algebra.Mul.eq.Exp.Infty.apply(exp(a[i]) * Xi).reversed
+    Eq << Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool.apply(exp(a[i]) * Xi).reversed
 
     Eq.zi_definition = Eq[-2].subs(Eq[-1])
 
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.T
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Stack_Dot.eq.DotSliceS)
 
     Eq << Eq.zi_definition.subs(Eq[-1])
 
@@ -95,13 +95,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack[Mul]).apply(Tensor.Stack.eq.Mul)
 
-    Eq << Eq[-1].this.find(Stack[MatMul]).apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.find(Stack[MatMul]).apply(Tensor.Stack_Dot.eq.DotSliceS)
 
     Eq << Eq[-1].this.find(Stack[Tuple[2]]).apply(Tensor.Stack.eq.Transpose)
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Stack_Dot.eq.DotSliceS)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Softmax.eq.Softmax)
 

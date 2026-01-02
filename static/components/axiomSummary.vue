@@ -129,6 +129,7 @@ export default {
 				'Tensor.EqStackS.of.Eq', // Tensor.EqStackS.of.All_Eq
 				'Tensor.Dot.eq.Sum',
 				'Tensor.Sum.eq.Dot',
+				'Tensor.Stack_Dot.eq.DotSliceS',
 			],
 		};
 	},

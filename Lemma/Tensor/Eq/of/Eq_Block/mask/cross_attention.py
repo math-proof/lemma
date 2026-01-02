@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
-    Eq << Algebra.Mul.eq.Exp.Infty.apply(exp(a) * Ξ_quote).reversed
+    Eq << Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool.apply(exp(a) * Ξ_quote).reversed
 
     Eq << Eq[-1].subs(Eq[-2])
 

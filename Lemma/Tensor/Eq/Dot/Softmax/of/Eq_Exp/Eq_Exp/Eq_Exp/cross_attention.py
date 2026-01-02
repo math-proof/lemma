@@ -146,11 +146,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Ite)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Dot.eq.DotSliceS)
 
     Eq << Eq[-1].this.rhs.find(MatMul).T
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Dot.eq.DotSliceS)
 
     Eq << Eq[-1].this.rhs.find(MatMul[Stack]).T
 

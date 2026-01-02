@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack).apply(Calculus.Stack.Grad.eq.Dot)
 
-    Eq << Eq[-1].this.find(Exp).apply(Tensor.Exp.eq.MulSoftmax_SumExp)
+    Eq << Eq[-1].this.find(Exp).apply(Tensor.Exp.eq.MulSoftmax_KeepdimSumExp)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 

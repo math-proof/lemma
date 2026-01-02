@@ -39,7 +39,7 @@ def prove(Eq):
     Eq <<= Eq.gt_zero.find(Indexed ** 2 * Norm ** 2).this.args[1].apply(Algebra.Square.Norm.eq.Add.pop).this.rhs.apply(Algebra.Mul_Add.eq.AddMulS),\
         Eq.gt_zero.find(-2 * Expr).this.find(Expr @ Expr @ Expr).apply(Tensor.Dot.eq.Sub.push)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Dot.eq.DotSliceS)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
 
@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Norm[BlockMatrix @ Sliced] ** 2).apply(Algebra.Square.Norm.eq.Sub.push)
 
-    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Dot.eq.DotSliceS)
 
     Eq << Eq[-1].this.find(Abs ** 2).apply(Algebra.Square.Abs.eq.Mul.Conj)
 

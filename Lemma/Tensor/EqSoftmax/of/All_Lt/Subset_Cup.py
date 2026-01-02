@@ -29,7 +29,7 @@ def prove(Eq):
     Ξ = Symbol(Ξ)
     Eq.ksi_def = Ξ.this.definition
 
-    Eq << Algebra.Mul.eq.Exp.Infty.apply(exp(A) * Ξ).reversed
+    Eq << Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool.apply(exp(A) * Ξ).reversed
 
     a_quote = Symbol(Eq[-1].lhs.arg)
     Eq.a_quote_def = a_quote.this.definition

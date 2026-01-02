@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq.z_definition = Eq[-1].subs(Eq[0].reversed)
 
-    Eq << Algebra.Mul.eq.Exp.Infty.apply(exp(a) * band_part).reversed
+    Eq << Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool.apply(exp(a) * band_part).reversed
 
     a_quote = Symbol(Eq[-1].lhs.arg)
     Eq << Eq[-1].subs(a_quote.this.definition.reversed)
@@ -102,11 +102,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.T
 
-    Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Dot.eq.Dot)
+    Eq << Eq[-1].this.rhs.apply(Tensor.Stack_Dot.eq.DotSliceS)
 
     Eq << Eq.zi_definition.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Exp).apply(Tensor.Exp.eq.MulSoftmax_SumExp)
+    Eq << Eq[-1].this.find(Exp).apply(Tensor.Exp.eq.MulSoftmax_KeepdimSumExp)
 
     Eq << Eq[0][i]
 
