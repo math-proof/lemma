@@ -1,6 +1,6 @@
 import sympy.vector.functions
 import Lemma.Vector.Sum.eq.Sum_Get
-import Lemma.Finset.Sum.gt.Zero.of.All_Gt_0.Ne_Empty
+import Lemma.Finset.Lt0Sum.of.All_Gt_0.Ne_Empty
 import Lemma.Finset.Any_In.is.Ne_Empty
 open Vector Finset
 
@@ -15,7 +15,7 @@ private lemma main
   (exp x).sum > 0 := by
 -- proof
   rw [Sum.eq.Sum_Get]
-  apply Sum.gt.Zero.of.All_Gt_0.Ne_Empty
+  apply Lt0Sum.of.All_Gt_0.Ne_Empty
   .
     apply Ne_Empty.of.Any_In
     aesop

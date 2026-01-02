@@ -1,5 +1,5 @@
 import Lemma.Finset.NeUnivEmpty.of.Gt_0
-import Lemma.Finset.Sum.gt.Zero.of.All_Gt_0.Ne_Empty
+import Lemma.Finset.Lt0Sum.of.All_Gt_0.Ne_Empty
 open Finset
 
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   ∑ i : Fin n, x i > 0 := by
 -- proof
-  apply Sum.gt.Zero.of.All_Gt_0.Ne_Empty (s := Finset.univ)
+  apply Lt0Sum.of.All_Gt_0.Ne_Empty (s := Finset.univ)
   ·
     apply NeUnivEmpty.of.Gt_0 h_n
   ·

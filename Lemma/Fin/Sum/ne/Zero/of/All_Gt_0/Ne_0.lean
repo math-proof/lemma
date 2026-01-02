@@ -1,4 +1,4 @@
-import Lemma.Fin.Sum.gt.Zero.of.All_Gt_0.Gt_0
+import Lemma.Fin.Lt0Sum.of.All_Gt_0.Gt_0
 import Lemma.Nat.Ne.of.Gt
 open Fin Nat
 
@@ -14,7 +14,7 @@ private lemma main
   ∑ i : Fin n, x i ≠ 0 := by
 -- proof
   apply Ne.of.Gt
-  apply Sum.gt.Zero.of.All_Gt_0.Gt_0 _ h
+  apply Lt0Sum.of.All_Gt_0.Gt_0 _ h
   omega
 
 

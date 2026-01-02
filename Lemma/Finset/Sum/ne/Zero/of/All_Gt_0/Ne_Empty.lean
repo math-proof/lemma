@@ -1,4 +1,4 @@
-import Lemma.Finset.Sum.gt.Zero.of.All_Gt_0.Ne_Empty
+import Lemma.Finset.Lt0Sum.of.All_Gt_0.Ne_Empty
 import Lemma.Nat.Ne.of.Gt
 open Finset Nat
 
@@ -15,7 +15,7 @@ private lemma main
   ∑ i ∈ s, (x i) ≠ 0 := by
 -- proof
   apply Ne.of.Gt
-  apply Sum.gt.Zero.of.All_Gt_0.Ne_Empty h_s h
+  apply Lt0Sum.of.All_Gt_0.Ne_Empty h_s h
 
 
 -- created on 2025-12-04
