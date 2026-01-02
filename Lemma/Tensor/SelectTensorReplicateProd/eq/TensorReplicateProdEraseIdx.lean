@@ -8,7 +8,7 @@ import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
+import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin List Nat Tensor Vector
@@ -42,16 +42,8 @@ private lemma main
   let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
   have h_prod := ProdTake.eq.Mul_ProdTake.of.GtLength d.isLt
   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-  rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
-  ·
-    simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-  ·
-    simp [h_prod]
-  ·
-    simp [h_prod]
-    rwa [EqDivMul.of.Ne_0.left (by grind)]
-  ·
-    exact i.isLt
+  rw [GetGetSlice.eq.Get.of.GtGet.GtLength (by grind) (by grind)]
+  simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
 
 
 -- created on 2025-12-01

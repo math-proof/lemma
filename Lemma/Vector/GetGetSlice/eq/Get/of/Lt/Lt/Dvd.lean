@@ -25,19 +25,4 @@ private lemma main
   aesop
 
 
-@[main]
-private lemma fin
-  {n d j: ℕ}
-  {i : Fin ((⟨j, n, d⟩ : Slice).length n)}
--- given
-  (h_d : d ∣ n)
-  (h_i : i < n / d)
-  (h_j : j < d)
-  (v : List.Vector α n) :
--- imply
-  (v.getSlice ⟨j, n, d⟩).get i = v.get ⟨i * d + j, LtAddMul.of.Lt.Lt_Div.Dvd h_d h_i h_j⟩ :=
--- proof
-  main h_d h_i h_j v
-
-
 -- created on 2025-11-14

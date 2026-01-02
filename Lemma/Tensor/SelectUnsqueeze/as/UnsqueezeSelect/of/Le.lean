@@ -21,7 +21,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
+import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat Bool List Tensor Vector Finset Fin
@@ -86,58 +86,30 @@ private lemma main
           have h_r' := r'.isLt
           rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := q') (j := r')]
           ·
-            repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
+            repeat rw [GetGetSlice.eq.Get.of.GtGet.GtLength (by grind) (by grind)]
+            repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+            simp [DataUnsqueeze.eq.Map_FunGetData.fin]
+            apply congrArg
+            rw [Cast.eq.Fin.of.Lt.Eq]
             ·
-              repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-              simp [DataUnsqueeze.eq.Map_FunGetData.fin]
-              apply congrArg
-              rw [Cast.eq.Fin.of.Lt.Eq]
-              ·
-                simp [EqGetRange.fin]
-                simp [DropInsertIdx.eq.Drop.of.Lt (show k < d + 1 + 1 by omega)] at ⊢ h_q_div h_r_mod
-                simp [← h_q_div] at h_q'_div
-                simp [← h_r_mod] at h_r'_mod
-                simp [h_q'_div, h_r'_mod]
-                simp [GetInsertIdx.eq.Get.of.Lt.GeLength h_d h_k_lt]
-              ·
-                rw [ProdInsertIdx.eq.Prod]
-              ·
-                simp [EqGetRange.fin]
-                simp [DropInsertIdx.eq.Drop.of.Lt (show k < d + 1 + 1 by omega)] at ⊢ h_r
-                rw [Prod.eq.MulProdS s (d + 1)]
-                apply AddMul.lt.Mul.of.Lt.Lt _ h_r
-                simp [GetInsertIdx.eq.Get.of.Lt.GeLength h_d h_k_lt]
-                apply AddMul.lt.Mul.of.Lt.Lt _ h_i
-                rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (by grind) (by grind)] at h_q
-                rw [TakeInsertIdx.eq.InsertIdxTake.of.Lt.GeLength (show s.length ≥ k by omega) h_k_lt] at h_q
-                rwa [ProdInsertIdx.eq.Prod] at h_q
+              simp [EqGetRange.fin]
+              simp [DropInsertIdx.eq.Drop.of.Lt (show k < d + 1 + 1 by omega)] at ⊢ h_q_div h_r_mod
+              simp [← h_q_div] at h_q'_div
+              simp [← h_r_mod] at h_r'_mod
+              simp [h_q'_div, h_r'_mod]
+              simp [GetInsertIdx.eq.Get.of.Lt.GeLength h_d h_k_lt]
             ·
-              simp [ProdTake.eq.MulProdTake.of.GtLength h_d]
+              rw [ProdInsertIdx.eq.Prod]
             ·
-              simp [ProdTake.eq.MulProdTake.of.GtLength h_d]
-              rw [EqDivMul.of.Ne_0]
-              ·
-                simp at h_q'
-                have := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength.simp h_d h_i
-                simp at this
-                rwa [this] at h_q'
-              ·
-                grind
-            ·
-              grind
-            ·
-              simp [ProdTake.eq.MulProdTake.of.GtLength (show d + 1 < (s.insertIdx k 1).length by grind)]
-            ·
-              simp [ProdTake.eq.MulProdTake.of.GtLength (show d + 1 < (s.insertIdx k 1).length by grind)]
-              rw [EqDivMul.of.Ne_0]
-              ·
-                rwa [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (by grind) (by grind)] at h_q
-              ·
-                rw [GetInsertIdx.eq.Get.of.Lt.GeLength (by omega) (by omega)]
-                simp
-                grind
-            ·
-              grind
+              simp [EqGetRange.fin]
+              simp [DropInsertIdx.eq.Drop.of.Lt (show k < d + 1 + 1 by omega)] at ⊢ h_r
+              rw [Prod.eq.MulProdS s (d + 1)]
+              apply AddMul.lt.Mul.of.Lt.Lt _ h_r
+              simp [GetInsertIdx.eq.Get.of.Lt.GeLength h_d h_k_lt]
+              apply AddMul.lt.Mul.of.Lt.Lt _ h_i
+              rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (by grind) (by grind)] at h_q
+              rw [TakeInsertIdx.eq.InsertIdxTake.of.Lt.GeLength (show s.length ≥ k by omega) h_k_lt] at h_q
+              rwa [ProdInsertIdx.eq.Prod] at h_q
           ·
             rw [← h_q'r']
             apply EqValCast.of.Lt.Eq _ h_t

@@ -35,7 +35,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetGetSlice.eq.Get.of.Lt.Lt.Dvd
+import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
@@ -140,46 +140,38 @@ private lemma main
     simp only [LengthSlice.eq.Div.of.Lt.Dvd h_dvdₕ h_k] at h_qₕ
     have h_rₕ := rₕ.isLt
     repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
-    repeat rw [GetGetSlice.eq.Get.of.Lt.Lt.Dvd.fin]
-    ·
-      simp [DataExp.eq.ExpData]
-      repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-      rw [GetExp.eq.ExpGet.fin]
-      rw [GetExp.eq.ExpGet.fin]
-      rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-      repeat apply congrArg
-      simp
-      simp [MulAdd.eq.AddMulS]
-      simp [Add_Add.eq.AddAdd]
-      rw [AddAdd.comm]
-      conv_rhs => rw [AddAdd.comm]
-      simp
-      simp at h_rₕ_mod h_rₑ_mod
-      rw [DivAddMul.eq.Add_Div.of.Ne_0 (by grind)] at h_qₕ_div h_qₑ_div
-      simp at h_qₕ_div h_qₑ_div
-      simp [h_qₕ_div, h_qₑ_div, h_rₕ_mod, h_rₑ_mod]
-      simp [h_r'_mod, h_rₐ_mod, h_r_mod]
-      rw [ModMod.eq.Mod.of.Dvd (by apply ProdDrop.dvd.Prod)]
-      simp [MulMul.eq.Mul_Mul]
-      rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength h] at ⊢ h_qₐ_div h_q'_div
-      simp only [Prod.eq.MulProdS s d] at ⊢ h_q_div h_r_mod
-      rw [Mul_Mul.eq.MulMul]
-      simp [AddMulS.eq.MulAdd]
-      left
-      rw [h_qₐ_div, h_q'_div, h_q_div, h_r_mod]
-      apply Div.eq.AddMulDiv_Mul
-    ·
-      simpa
-    ·
-      simpa
-    ·
-      simp
-    ·
-      simpa
-    ·
-      exact h_qₑ
-    ·
-      simp
+    have := GetGetSlice.eq.Get.of.GtGet.GtLength (j := k) (by grind) (by grind) ((exp (⟨X⟩ : Tensor α _)).data.splitAt ((⟨d + 1, by grind⟩ : Fin (n :: s).length) + 1))
+    simp at this
+    simp [this]
+    have := GetGetSlice.eq.Get.of.GtGet.GtLength (j := k) (by grind) (by grind) ((exp (⟨(X.splitAt 1).get (⟨q, by grind⟩ : Fin (n * 1))⟩ : Tensor α _)).data.splitAt (d + 1))
+    simp at this
+    simp [this]
+    simp [DataExp.eq.ExpData]
+    repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+    rw [GetExp.eq.ExpGet.fin]
+    rw [GetExp.eq.ExpGet.fin]
+    rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+    repeat apply congrArg
+    simp
+    simp [MulAdd.eq.AddMulS]
+    simp [Add_Add.eq.AddAdd]
+    rw [AddAdd.comm]
+    conv_rhs => rw [AddAdd.comm]
+    simp
+    simp at h_rₕ_mod h_rₑ_mod
+    rw [DivAddMul.eq.Add_Div.of.Ne_0 (by grind)] at h_qₕ_div h_qₑ_div
+    simp at h_qₕ_div h_qₑ_div
+    simp [h_qₕ_div, h_qₑ_div, h_rₕ_mod, h_rₑ_mod]
+    simp [h_r'_mod, h_rₐ_mod, h_r_mod]
+    rw [ModMod.eq.Mod.of.Dvd (by apply ProdDrop.dvd.Prod)]
+    simp [MulMul.eq.Mul_Mul]
+    rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength h] at ⊢ h_qₐ_div h_q'_div
+    simp only [Prod.eq.MulProdS s d] at ⊢ h_q_div h_r_mod
+    rw [Mul_Mul.eq.MulMul]
+    simp [AddMulS.eq.MulAdd]
+    left
+    rw [h_qₐ_div, h_q'_div, h_q_div, h_r_mod]
+    apply Div.eq.AddMulDiv_Mul
   ·
     have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp (by grind) (by grind) (s := s) (d := d) (i := k)
     simp_all
