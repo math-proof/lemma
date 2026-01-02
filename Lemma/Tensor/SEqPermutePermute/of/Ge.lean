@@ -15,7 +15,8 @@ private lemma main
   (X.permute ⟨i - d, by omega⟩ d).permute ⟨i, by simp⟩ (-d) ≃ X := by
 -- proof
   have := SEqPermutePermute.of.GtLength_Add (i := i - d) (d := d) (by omega) X
-  apply SEq.symm ∘ SEq.trans this.symm
+  symm
+  apply this.symm.trans
   repeat apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ (by omega) rfl
   rfl
 

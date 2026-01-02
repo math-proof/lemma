@@ -20,7 +20,7 @@ private lemma main
 -- imply
   (a - b).Infinitesimal := by
 -- proof
-  have h' := Setoid.symm h
+  have h' := h.symm
   have h_b := NotInfinite.of.NotInfinite.Setoid h' h_a
   obtain h_eps | h_eps := OrInfinitesimalSSub.of.Setoid h
   ·

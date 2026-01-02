@@ -85,7 +85,8 @@ private lemma main
         apply SEqRepeatS.of.SEq
         have := SelectUnsqueeze.as.UnsqueezeSelect.of.Le (by simp; omega) X ⟨i, by omega⟩ (k := k) (d := ⟨d - 1, by omega⟩)
         simp at this
-        apply SEq.symm ∘ SEq.trans this.symm
+        symm
+        apply this.symm.trans
         apply SEqSelectS.of.SEq.EqValS.EqValS
         .
           rfl

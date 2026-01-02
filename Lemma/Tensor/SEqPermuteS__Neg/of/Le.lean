@@ -73,7 +73,7 @@ private lemma main
           rw [EqPermute__0]
         ·
           have := SEqPermuteTailS.of.LeLength (n := 1 + d) (by omega) X
-          apply SEq.trans this
+          apply this.trans
           apply SEqPermuteTail.of.Le_1
           omega
       ·

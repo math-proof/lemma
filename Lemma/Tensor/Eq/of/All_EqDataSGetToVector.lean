@@ -23,7 +23,7 @@ private lemma main
   rw [h_data]
   intro i
   have h_eq := ArraySliceData.as.DataGetToVector a i
-  apply SEq.trans h_eq
+  apply h_eq.trans
   rw [h i]
 
 

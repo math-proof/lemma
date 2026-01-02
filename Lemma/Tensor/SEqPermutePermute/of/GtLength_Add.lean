@@ -23,7 +23,7 @@ private lemma main
   .
     subst h_d
     simp_all
-    apply SEq.trans (SEqPermute__0 (X.permute ⟨i, by grind⟩ 0) ⟨i, by simp; omega⟩)
+    apply (SEqPermute__0 (X.permute ⟨i, by grind⟩ 0) ⟨i, by simp; omega⟩).trans
     apply SEqPermute__0
   .
     have : NeZero d := ⟨h_d⟩
@@ -33,14 +33,16 @@ private lemma main
       if h_d : d = s.length - 1 then
         have := SEqPermutePermute.of.EqSubLength_1 h_d X
         simp at this
-        apply SEq.symm ∘ SEq.trans this.symm
+        symm
+        apply this.symm.trans
         apply SEqPermuteS.of.SEq.Eq.Eq.GtLength
         repeat aesop
       else
         have h := Le_Sub_1.of.Lt h
         have h := Lt.of.Le.Ne h h_d
         have := SEqPermutePermute.of.LtSubLength_1 h X
-        apply SEq.symm ∘ SEq.trans this.symm
+        symm
+        apply this.symm.trans
         apply SEqPermuteS.of.SEq.Eq.Eq.GtLength
         repeat aesop
     else

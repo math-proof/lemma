@@ -18,7 +18,7 @@ private lemma main
   have := Imp.of.Iff h.symm
   have h₁ := Bool.eq.MulBoolS.of.Imp this
   rw [Mul.comm] at h₁
-  exact Eq.trans h₀ h₁.symm
+  exact h₀.trans h₁.symm
 
 
 -- created on 2025-04-12

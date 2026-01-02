@@ -43,7 +43,7 @@ private lemma main
     apply h_y'' i hi
   have h_Eq := Sum.of.All_Eq h_Eq
   have := Sum.of.All_Eq h_y''
-  have := Eq.trans h_Eq.symm this
+  have := h_Eq.symm.trans this
   rw [Finset.sum_ite] at this
   rw [this]
   repeat rw [Finset.sum_filter]

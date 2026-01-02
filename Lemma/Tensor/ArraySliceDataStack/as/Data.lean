@@ -17,7 +17,7 @@ private lemma fin
 -- proof
   have := ArraySlice.as.GetUnflatten ([i < n] f i).data i
   simp at this
-  apply SEq.trans this
+  apply this.trans
   apply SEq.of.Eq
   apply GetUnflattenDataStack.eq.Data.fin
 

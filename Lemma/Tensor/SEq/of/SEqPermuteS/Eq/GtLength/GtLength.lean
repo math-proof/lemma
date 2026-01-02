@@ -43,7 +43,8 @@ private lemma main
       ·
         have := SEqPermuteS.of.SEq.Eq.Eq.GtLength (i := i') (i' := i) (d := (s.length - 1 - i : ℕ)) (d' := (s'.length - 1 - i : ℕ)) (A := B) (B := B) (by omega) (by omega) (by simp; grind) (by rfl)
         have h := h.trans this.symm
-        apply SEq.symm ∘ SEq.trans h.symm
+        symm
+        apply h.symm.trans
         rfl
       ·
         omega

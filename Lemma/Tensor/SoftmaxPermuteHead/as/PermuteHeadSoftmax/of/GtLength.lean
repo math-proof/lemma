@@ -36,7 +36,8 @@ private lemma main
   | zero =>
     simp
     have := SEqPermuteHead_1 (X.softmax 0)
-    apply SEq.symm ∘ SEq.trans this
+    symm
+    apply this.trans
     apply SEqSoftmaxS.of.SEq
     apply SEq_PermuteHead_1
   | succ d ih =>
@@ -60,15 +61,16 @@ private lemma main
           simp
           have := GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1 (by simpa) (by simpa) X (d := d + 1) (k := t)
           have := SEqSoftmaxS.of.SEq this d
-          apply SEq.trans this
+          apply this.trans
           have h_length : ((s₀ :: s).eraseIdx 1).length > d := by
             simp
             rwa [EqAddSub.of.Ge (Ge_1.of.Gt_0 h_s)]
           have ih := ih h_length (X.select ⟨1, by simpa⟩ ⟨t, by simpa⟩)
-          apply SEq.trans ih
+          apply ih.trans
           ·
             have := GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1 (by simpa) (by simpa) (X.softmax 0) (d := d + 1) (k := t)
-            apply SEq.symm ∘ SEq.trans this
+            symm
+            apply this.trans
             apply SEqPermuteHeadS.of.SEq
             apply SEq.of.Eq
             .

@@ -46,7 +46,8 @@ private lemma main
       simp
     have := SEqSumS.of.All_SEq.Gt_0 (by omega) h_all
     simp at this
-    apply SEq.symm ∘ SEq.trans this
+    symm
+    apply this.trans
     rw [GetSum.eq.Sum_Get.of.GtLength_0 h_s (fun i : Fin s₀ => X.get i) ⟨i, by omega⟩]
 
 

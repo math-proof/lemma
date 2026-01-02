@@ -160,6 +160,6 @@ instance [Setoid α] : Setoid (Tensor α s) where
   iseqv :=
     {
       refl x := by simp
-      symm {a b} h := Setoid.symm h
-      trans {a b c} h_ab h_bc := Setoid.trans h_ab h_bc
+      symm {a b} h := h.symm
+      trans {a b c} h_ab h_bc := h_ab.trans h_bc
     }

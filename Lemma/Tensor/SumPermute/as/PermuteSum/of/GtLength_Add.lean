@@ -84,7 +84,7 @@ private lemma main
             simp
             have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
             have := SEqSumS.of.SEq this (i + d)
-            apply SEq.trans this
+            apply this.trans
             .
               apply ih h (X.get ⟨t, GtLength.of.GtLength_0 (s := s₀ :: s) (by simp) X ⟨t, by simpa⟩⟩)
               rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by simp; omega)]

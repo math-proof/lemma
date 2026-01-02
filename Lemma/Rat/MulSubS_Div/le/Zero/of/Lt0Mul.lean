@@ -46,7 +46,7 @@ private lemma main
     (Ne_0.of.Lt0Mul.left h₀)
     (x := TP + TN)
     (y := TP)
-  have h₁ := Eq.trans h₁ h_together
+  have h₁ := h₁.trans h_together
   rw [
     MulAdd.eq.AddMulS,
     Mul_Add.eq.AddMulS
@@ -58,7 +58,7 @@ private lemma main
     (Ne_0.of.Lt0Mul h₀)
     (x := TP + TN)
     (y := TN)
-  have h₂ := Eq.trans h₂ h_together
+  have h₂ := h₂.trans h_together
   rw [
     MulAdd.eq.AddMulS,
     Mul_Add.eq.AddMulS

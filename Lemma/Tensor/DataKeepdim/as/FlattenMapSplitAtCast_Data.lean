@@ -21,7 +21,7 @@ private lemma main
 -- proof
   have := Keepdim.as.RepeatUnsqueeze X
   have := SEqDataS.of.SEq this
-  apply SEq.trans this
+  apply this.trans
   simp [DataRepeat.eq.Cast_FlattenMapSplitAtData]
   apply SEqCast.of.SEq.Eq
   ·

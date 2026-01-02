@@ -56,7 +56,8 @@ private lemma main
     subst h_d
     simp
     have := SEqPermute__0 (X.get ⟨k, h_Xk⟩) ⟨i, by grind⟩
-    apply SEq.symm ∘ SEq.trans this
+    symm
+    apply this.trans
     apply SEqGetS.of.SEq.GtLength
     apply SEq_Permute__0
   else if h_i0 : i = 0 then

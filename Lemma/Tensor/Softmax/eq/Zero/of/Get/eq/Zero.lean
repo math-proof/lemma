@@ -25,7 +25,7 @@ private lemma main
   | succ d ih =>
     apply Eq.of.SEq
     have := Softmax.as.Stack_Softmax.of.LtAdd_1Length h_d X
-    apply SEq.trans this
+    apply this.trans
     apply SEq.of.All_SEqGetS.Eq.GtLength_0
     ·
       intro t

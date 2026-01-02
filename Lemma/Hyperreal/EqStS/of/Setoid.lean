@@ -29,7 +29,7 @@ private lemma main
     have h_b := EqSt_0.of.Infinite h_b
     aesop
   else
-    have h' := Setoid.symm h
+    have h' := h.symm
     have h_b := NotInfinitesimal.of.NotInfinitesimal.Setoid h' h_a
     have h := OrAndS.of.Setoid h
     simp [h_a, h_b] at h

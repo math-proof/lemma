@@ -17,9 +17,10 @@ private lemma main
 -- proof
   if h_s : s.length = 1 then
     have h_tail := SEqPermuteTail_1 X
-    apply SEq.symm ∘ SEq.trans h_tail.symm
+    symm
+    apply h_tail.symm.trans
     have h_head := SEqPermuteHead_1 (X.permuteTail 1)
-    apply SEq.trans h_head.symm
+    apply h_head.symm.trans
     apply SEqPermuteHeadS.of.SEq.Eq
     ·
       aesop

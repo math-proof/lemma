@@ -68,7 +68,8 @@ private lemma main
     subst h_d0
     simp
     have := SEqPermute__0 (X.get ⟨k, h_Xk⟩) ⟨i, by grind⟩
-    apply SEq.symm ∘ SEq.trans this
+    symm
+    apply this.trans
     apply SEqGetS.of.SEq.GtLength
     apply SEq_Permute__0
   else if h_i0 : i = s.length - 2 then
@@ -90,7 +91,7 @@ private lemma main
         rw [h_toNat]
         have := Permute__Neg.as.PermuteTail.of.Val.eq.SubLength_1 (by simp; omega) X (i := ⟨i + 1, h_i⟩) (d := d)
         have := SEqGetS.of.SEq.GtLength.fin (by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by grind)]) this (i := k)
-        apply SEq.trans this
+        apply this.trans
         apply GetPermuteTail.as.PermuteTailGet.of.Lt_Get_0.GtLength _ h_k
         omega
     ·
@@ -103,7 +104,7 @@ private lemma main
     have := Permute.eq.Ite X ⟨i + 1, by grind⟩ (-d : ℤ)
     have h_i_ne : i + 1 ≠ s.length - 1 := by omega
     simp [h_d0, h_d0?, h_i_ne] at this
-    have h_k' : k < (s.permute ⟨i + 1, by grind⟩ (-↑d))[0]'(by simp; grind) := by 
+    have h_k' : k < (s.permute ⟨i + 1, by grind⟩ (-↑d))[0]'(by simp; grind) := by
       rwa [GetPermute__Neg.eq.Get_0.of.Gt (by simp; omega)]
     simp [EqGetS.of.Eq.GtLength_0 (by simp; omega) this ⟨k, h_k'⟩]
     apply SEq.of.SEqDataS.Eq
@@ -137,7 +138,7 @@ private lemma main
             simp only [Permute__Neg.eq.Append_AppendRotateDropTake, ProdAppend.eq.MulProdS] at h_t
             simp at h_t
             rw [EqMin.of.Le (by omega)] at h_t
-            have h_lt : t < ((s.tail.take (i + 1)).take ((s.tail.take (i + 1)).length - (1 - (-d : ℤ)).toNat) ++ ((s.tail.take (i + 1)).drop ((s.tail.take (i + 1)).length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ (s.tail.take (i + 1)).length - 1)).prod * (s.tail.drop (i + 1)).prod := by 
+            have h_lt : t < ((s.tail.take (i + 1)).take ((s.tail.take (i + 1)).length - (1 - (-d : ℤ)).toNat) ++ ((s.tail.take (i + 1)).drop ((s.tail.take (i + 1)).length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ (s.tail.take (i + 1)).length - 1)).prod * (s.tail.drop (i + 1)).prod := by
               simp only [h_toNat]
               simp
               repeat rw [EqMin.of.Le (by omega)]
@@ -148,7 +149,7 @@ private lemma main
             have h_r := r.isLt
             let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
             rw [TakeTake.eq.Take.of.Ge (by omega)] at h_t
-            have h_lt : k * (s.tail.permute ⟨i, by grind⟩ ((-d : ℤ))).prod + ↑t < ((s.take (i + 1 + 1)).take ((s.take (i + 1 + 1)).length - (1 - (-d : ℤ)).toNat) ++ ((s.take (i + 1 + 1)).drop ((s.take (i + 1 + 1)).length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ (s.take (i + 1 + 1)).length - 1)).prod * (s.drop (i + 1 + 1)).prod := by 
+            have h_lt : k * (s.tail.permute ⟨i, by grind⟩ ((-d : ℤ))).prod + ↑t < ((s.take (i + 1 + 1)).take ((s.take (i + 1 + 1)).length - (1 - (-d : ℤ)).toNat) ++ ((s.take (i + 1 + 1)).drop ((s.take (i + 1 + 1)).length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ (s.take (i + 1 + 1)).length - 1)).prod * (s.drop (i + 1 + 1)).prod := by
               simp only [h_toNat]
               simp
               repeat rw [EqMin.of.Le (by omega)]

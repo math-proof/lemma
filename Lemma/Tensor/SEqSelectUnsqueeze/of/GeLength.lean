@@ -46,7 +46,7 @@ private lemma main
           rw [h]
           simp at h_dim
           have ih := ih h_dim (X.get (List.Vector.range s₀)[i])
-          apply SEq.trans ih
+          apply ih.trans
           simp [GetElem.getElem]
           rw [EqGetRange.fin]
       ·

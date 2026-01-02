@@ -15,7 +15,7 @@ private lemma main
     subst h_s
     simp
     have := SEqPermuteTail_0 (X.permuteHead 0)
-    apply SEq.trans this
+    apply this.trans
     apply SEqPermuteHead_0
   else
     apply SEqPermuteTailPermuteHead.of.Ne_Nil h_s

@@ -19,9 +19,10 @@ private lemma main
   if h_s : s.length = 1 then
     rw [h_s]
     have h_head := SEqPermuteHead_1 X
-    apply SEq.symm ∘ SEq.trans h_head.symm
+    symm
+    apply h_head.symm.trans
     have h_tail := SEqPermuteTail_1 (X.permuteHead 1)
-    apply SEq.trans h_tail.symm
+    apply h_tail.symm.trans
     rfl
   else
     have h := GeLength_1.of.Ne_Nil h

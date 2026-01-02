@@ -53,7 +53,7 @@ private lemma main
       simp [LengthUnsqueeze.eq.Length.of.Gt_0 h_d_pos] at h_i
       simp [Length.eq.Get_0.of.Ne_Nil] at h_i
       have := GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by simp) h_d_pos h_i X
-      apply SEq.trans this
+      apply this.trans
       ·
         simp at h_d
         apply ih (by omega) (X.get ⟨i, h_i⟩)

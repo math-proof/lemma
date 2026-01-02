@@ -33,7 +33,8 @@ private lemma main
       .
         rfl
   have := this.trans h_sim
-  apply SEq.symm ∘ SEq.trans this.symm
+  symm
+  apply this.symm.trans
   apply SEqPermutePermute.of.GtLength_Add (i := i) (d := d) (by omega) (X.softmax i)
 
 

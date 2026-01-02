@@ -54,7 +54,7 @@ private lemma main
       have := EqSt_0.of.Infinite this
       linarith
   else if h_b_neg : b.InfiniteNeg then
-    have h_b := NotInfiniteNeg.of.NotInfiniteNeg.Setoid (Setoid.symm h) h_a_neg
+    have h_b := NotInfiniteNeg.of.NotInfiniteNeg.Setoid h.symm h_a_neg
     contradiction
   else
     have h_a_exp := NotInfinitesimalExp.of.NotInfiniteNeg h_a_neg

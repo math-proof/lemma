@@ -15,7 +15,7 @@ private lemma main
   a = c := by
 -- proof
   apply Eq.of.SEq
-  apply SEq.trans h₀ h₁
+  apply h₀.trans h₁
 
 
 -- created on 2025-10-10

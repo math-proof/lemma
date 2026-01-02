@@ -53,7 +53,8 @@ private lemma main
       have h_B := h_all B
       have h_A_mul_B := SEqMulS.of.SEq.SEq h_A h_B
       apply Eq.of.SEq
-      apply SEq.symm ∘ SEq.trans h_A_mul_B
+      symm
+      apply h_A_mul_B.trans
       have h_s := Eq_Permute__0 ⟨0, h_i⟩
       rw [@Tensor.Cast_Mul.eq.MulCastS.of.Eq (h := h_s)]
       apply SEq.of.EqCast.Eq (h := h_s)
@@ -63,7 +64,7 @@ private lemma main
     ·
       simp [@Tensor.Permute.eq.Ite]
       split_ifs
-      have h_permute : s.take (s.length - (1 - -(d : ℤ)).toNat) ++ (s.drop (s.length - (1 - -(d : ℤ)).toNat)).rotate ((1 - -(d : ℤ)).toNat ⊓ s.length - 1) = s.permute ⟨0 + d, h_i⟩ (-(d : ℤ)) := by 
+      have h_permute : s.take (s.length - (1 - -(d : ℤ)).toNat) ++ (s.drop (s.length - (1 - -(d : ℤ)).toNat)).rotate ((1 - -(d : ℤ)).toNat ⊓ s.length - 1) = s.permute ⟨0 + d, h_i⟩ (-(d : ℤ)) := by
         simp only [h_toNat]
         simp [h_min]
         rw [Permute__Neg.eq.Cons_EraseIdx]
@@ -119,7 +120,8 @@ private lemma main
     have h_B := this.symm.trans h_B
     have h_A_mul_B := SEqMulS.of.SEq.SEq h_A h_B
     apply Eq.of.SEq
-    apply SEq.symm ∘ SEq.trans h_A_mul_B
+    symm
+    apply h_A_mul_B.trans
     rw [← ih (s := s.tail) (by grind) (A.get ⟨t, by grind⟩) (B.get ⟨t, by grind⟩) (d := d)]
     have h_AB := h_all (A * B)
     simp [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin _ h_t] at h_AB

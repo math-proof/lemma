@@ -31,7 +31,7 @@ private lemma main
   ·
     apply SEqRepeatS.of.SEq
     have := SelectUnsqueeze.as.UnsqueezeSelect.of.Le h_k X i
-    apply SEq.trans this
+    apply this.trans
     simp
     rfl
 

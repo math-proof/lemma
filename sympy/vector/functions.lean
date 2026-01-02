@@ -109,10 +109,10 @@ instance [Setoid α] : Setoid (List.Vector α n) where
       symm {a b} h := by
         intro i
         specialize h i
-        exact Setoid.symm h
+        exact h.symm
       trans {a b c} h_ab h_bc:= by
         intro i
         specialize h_ab i
         specialize h_bc i
-        exact Setoid.trans h_ab h_bc
+        exact h_ab.trans h_bc
     }

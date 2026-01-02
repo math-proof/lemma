@@ -52,7 +52,7 @@ private lemma main
 -- imply
   a.InfiniteNeg ↔ b.InfiniteNeg :=
 -- proof
-  ⟨mp h, mp (Setoid.symm h)⟩
+  ⟨mp h, mp h.symm⟩
 
 
 -- created on 2025-12-27

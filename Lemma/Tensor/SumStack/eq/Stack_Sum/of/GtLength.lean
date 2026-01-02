@@ -21,7 +21,7 @@ private lemma main
   rw [EqGetStack.fn]
   apply Eq.of.SEq
   have := GetSum.as.SumGet.of.Lt_Get_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)
-  apply SEq.trans this
+  apply this.trans
   simp [GetElem.getElem]
   rw [EqGetStack.fn.fin]
 

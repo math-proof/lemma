@@ -78,7 +78,7 @@ private lemma main
           ·
             have := SEqPermuteHeadS.of.LeLength (s := s) (n := d + 1) (by omega) X
             rw [h_s] at this
-            apply SEq.trans this
+            apply this.trans
             apply SEqPermuteHead_1
         ·
           apply SEq_Cast.of.SEq.Eq
@@ -96,12 +96,13 @@ private lemma main
           ·
             have := SEqPermuteHeadS.of.LeLength (s := s) (n := d + 1) (by omega) X
             rw [h_s] at this
-            apply SEq.trans this
+            apply this.trans
             have := SEqPermuteHead_1 X
-            apply SEq.trans this
+            apply this.trans
             rw [show (1 - (s.length - 1 : ℕ) : ℤ).toNat = 1 by omega]
             have := SEqPermuteTail_1 X
-            apply SEq.symm ∘ SEq.trans this
+            symm
+            apply this.trans
             rfl
         ·
           grind

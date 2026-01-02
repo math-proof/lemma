@@ -20,7 +20,8 @@ private lemma main
   have h_A_mul_B := SEqMulS.of.SEq.SEq h_A h_B
   rw [← h_AB] at h_A_mul_B
   apply Eq.of.SEq
-  apply SEq.symm ∘ SEq.trans h_A_mul_B.symm
+  symm
+  apply h_A_mul_B.symm.trans
   apply SEqPermuteS.of.SEq.Eq.Eq.GtLength
   .
     simp

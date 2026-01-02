@@ -24,7 +24,7 @@ private lemma main
 -- imply
   a = b :=
 -- proof
-  Eq.trans h_a.symm h_b
+  h_a.symm.trans h_b
 
 
 -- created on 2025-06-06

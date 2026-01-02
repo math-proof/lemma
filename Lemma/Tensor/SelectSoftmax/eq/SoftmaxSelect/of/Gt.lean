@@ -33,7 +33,7 @@ private lemma main
     rw [EraseIdxEraseIdx.of.Gt.GtLength (by grind) h_d]
   ·
     have := SelectSum.eq.SumSelect.of.Gt h_d (exp X) i
-    apply SEq.trans this
+    apply this.trans
     rw [SelectExp.eq.ExpSelect]
 
 

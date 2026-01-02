@@ -58,12 +58,12 @@ private lemma main
           ·
             have := Tensor.GetPermuteHead.as.PermuteHeadSelect.of.Lt_Get_1.GtLength_1 (by simpa) (by simpa) X (d := d + 1) (k := t)
             have := Tensor.SEqSumS.of.SEq this d
-            apply SEq.trans this
+            apply this.trans
             have h_length : ((s₀ :: s).eraseIdx 1).length > d := by
               simp
               rwa [EqAddSub.of.Ge (Nat.Ge_1.of.Gt_0 h_s)]
             have ih := ih h_length (X.select ⟨1, by simpa⟩ ⟨t, by simpa⟩)
-            apply SEq.trans ih
+            apply ih.trans
             .
               apply Tensor.SumSelect.as.GetSum_0.of.Lt_Get_0.GtLength_0 _ h_t
               simp

@@ -73,7 +73,7 @@ private lemma simp
       rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
       apply SEqCast.of.SEq.Eq (by simp)
       have := DataGet.as.GetSplitAtData.of.GtLength_0.fin h X i
-      apply SEq.trans this
+      apply this.trans
       unfold List.Vector.getSlice
       simp [List.Vector.length]
       simp [GetElem.getElem]

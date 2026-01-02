@@ -38,9 +38,9 @@ private lemma main
     have := SumPermute.as.PermuteSum.of.Ge (i := ⟨s.length - 1, by simp; grind⟩) (d := s.length - 1 - i) (by simp) ((X.permute i ↑(s.length - 1 - i)).softmax (s.length - 1))
     simp at this
     rw [EqSub_Sub.of.Ge (by omega)] at this
-    apply SEq.trans this
+    apply this.trans
     have h_sum : ((X.permute i ↑(s.length - 1 - i)).softmax (s.length - 1)).sum (s.length - 1) ≃ ((X.permute i ↑(s.length - 1 - i)).softmax (s.length - 1)).sum := SEqSumS.of.SEq.Eq (by simp) (by rfl)
-    apply SEq.trans h_sum
+    apply h_sum.trans
     have := GetPermute.eq.Get.of.Ge (s := s) (i := i) (j := ⟨s.length - 1, by grind⟩) (Le_Sub_1 i)
     simp at this
     have := SumSoftmax.eq.One.of.Get_SubLength_1.gt.Zero.GtLength_0 (by simp; omega) (by simpa [this]) (X.permute i ↑(s.length - 1 - ↑i))

@@ -31,7 +31,7 @@ private lemma main
 -- imply
   a.Infinitesimal ↔ b.Infinitesimal :=
 -- proof
-  ⟨mp h, mp (Setoid.symm h)⟩
+  ⟨mp h, mp h.symm⟩
 
 
 -- created on 2025-12-27

@@ -63,7 +63,8 @@ private lemma main
 -- proof
   if h_k : k ≥ s.length then
     have := SEqSum.of.LeLength (show (s.eraseIdx ↑d).length ≤ k - 1 by grind) (X.select d i)
-    apply SEq.symm ∘ SEq.trans this
+    symm
+    apply this.trans
     apply SEqSelectS.of.SEq
     apply SEq_Sum.of.LeLength h_k
   else

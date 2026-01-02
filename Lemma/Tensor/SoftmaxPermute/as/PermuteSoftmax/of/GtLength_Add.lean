@@ -42,7 +42,8 @@ private lemma main
       subst h_d0
       simp
       have := SEqPermute__0 (X.softmax 0) ⟨0, h⟩
-      apply SEq.symm ∘ SEq.trans this
+      symm
+      apply this.trans
       apply SEqSoftmaxS.of.SEq
       apply SEq_Cast.of.Eq
       rw [EqPermute__0]
@@ -83,11 +84,12 @@ private lemma main
       simp
       have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
       have := SEqSoftmaxS.of.SEq this (i + d)
-      apply SEq.trans this
+      apply this.trans
       have ih := ih h (X.get ⟨t, by grind⟩)
-      apply SEq.trans ih
+      apply ih.trans
       have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t (X.softmax (i + 1)) d
-      apply SEq.symm ∘ SEq.trans this
+      symm
+      apply this.trans
       rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by simpa)]
       rfl
 

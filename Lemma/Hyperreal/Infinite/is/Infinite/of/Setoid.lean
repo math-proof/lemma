@@ -30,7 +30,7 @@ private lemma main
 -- imply
   a.Infinite ↔ b.Infinite :=
 -- proof
-  ⟨mp h, mp (Setoid.symm h)⟩
+  ⟨mp h, mp h.symm⟩
 
 
 -- created on 2025-12-27

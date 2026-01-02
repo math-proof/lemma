@@ -28,7 +28,7 @@ private lemma main
   | succ d ih =>
     apply Eq.of.SEq
     have := Sum.as.Stack_Sum.of.LtAdd_1Length h_d X
-    apply SEq.trans this
+    apply this.trans
     apply SEq.of.All_SEqGetS.Eq.GtLength_0
     ·
       intro t

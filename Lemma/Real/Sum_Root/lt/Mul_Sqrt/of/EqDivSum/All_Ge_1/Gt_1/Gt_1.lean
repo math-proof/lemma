@@ -82,7 +82,7 @@ private lemma main
       simp
       rw [SubNatNat.eq.Sub]
       rw [CoeSub.eq.SubCoeS.of.Ge (by linarith [h₀])]
-    have h_Eq_Sum' := Eq.trans h_Eq_Sum' h_Eq_Sub
+    have h_Eq_Sum' := h_Eq_Sum'.trans h_Eq_Sub
     rw [h_Eq_Sum'] at h_Eq_Sum
     norm_cast at h_Eq_Sum
     rw [SubNatNat.eq.Sub] at h_Eq_Sum

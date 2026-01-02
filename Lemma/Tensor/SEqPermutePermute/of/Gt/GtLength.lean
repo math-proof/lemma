@@ -17,7 +17,8 @@ private lemma main
   intro d
   have := SEqPermutePermute__Neg.of.GtLength_Add (s := s) (i := j) (d := d) (by omega) X
   simp [d] at this ⊢
-  apply SEq.symm ∘ SEq.trans this.symm
+  symm
+  apply this.symm.trans
   apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ rfl rfl
   apply SEqPermuteS.of.SEq.Eq.Eq.GtLength _ _ rfl
   .

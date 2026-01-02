@@ -37,12 +37,12 @@ private lemma main
     ·
       have := SEqRotate_0 (X.rotate s.length)
       rw [← Sub.eq.Zero s.length] at this
-      apply SEq.trans this
+      apply this.trans
       apply SEqRotate_Length
     ·
       have := SEqRotate_Length (X.rotate 0)
       rw [← LengthRotate.eq.Length s 0]
-      apply SEq.trans this
+      apply this.trans
       apply SEqRotate_0
   else
     unfold Tensor.rotate

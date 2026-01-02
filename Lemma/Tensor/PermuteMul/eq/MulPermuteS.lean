@@ -38,7 +38,8 @@ private lemma main
       have h_B := h_all B
       have h_A_mul_B := SEqMulS.of.SEq.SEq h_A h_B
       apply Eq.of.SEq
-      apply SEq.symm ∘ SEq.trans h_A_mul_B
+      symm
+      apply h_A_mul_B.trans
       have h_s := Eq_Permute__0 ⟨0, h_i⟩
       rw [Cast_Mul.eq.MulCastS.of.Eq h_s]
       apply SEq.of.EqCast.Eq (h := h_s)
@@ -64,7 +65,8 @@ private lemma main
     have h_B := h_all B
     have h_A_mul_B := SEqMulS.of.SEq.SEq h_A h_B
     apply Eq.of.SEq
-    apply SEq.symm ∘ SEq.trans h_A_mul_B
+    symm
+    apply h_A_mul_B.trans
     rw [← ih (s := s.tail) (by grind) (A.get ⟨t, by grind⟩) (B.get ⟨t, by grind⟩) d (by grind)]
     have h_AB := h_all (A * B)
     simp [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin _ h_t] at h_AB

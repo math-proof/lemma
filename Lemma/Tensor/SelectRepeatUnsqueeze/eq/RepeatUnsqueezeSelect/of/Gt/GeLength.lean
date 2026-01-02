@@ -28,7 +28,7 @@ private lemma main
   ·
     apply SEqRepeatS.of.SEq
     have := SelectUnsqueeze.as.UnsqueezeSelect.of.Gt.GeLength h_k h_d X i
-    apply SEq.trans this
+    apply this.trans
     simp
     rfl
 
