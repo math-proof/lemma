@@ -11,22 +11,14 @@ private lemma main
   [NeZero (u : ℕ)]
   [NeZero (n : ℕ)]
   [NeZero (d_z : ℕ)]
-  {β ζ : Tensor ℕ [n]}
 -- given
   (A  : Tensor ℝ [n, n])
-  (V  : Tensor ℝ [n, d_z])
-  (i : Fin n) :
+  (V  : Tensor ℝ [n, d_z]) :
 -- imply
   let mask := (1 : Tensor ℝ* [n, n]).band_part (l - 1) (u - 1)
   let A : Tensor ℝ* [n, n] := A
-  let Q := (A + (mask - 1) * Hyperreal.omega).softmax
-  let V' : Tensor ℝ* [n, d_z] := V
-  Q @ V' ≃ [i < n] (
-    let A'' := A[i][i + 1 - l : n ⊓ i + u]
-    let Q' := A''.softmax
-    let V' := V'[i + 1 - l : n ⊓ i + u]
-    Q' @ V'
-  ) := by
+  let V : Tensor ℝ* [n, d_z] := V
+  (A + (mask - 1) * Hyperreal.omega).softmax @ V = [i < n] A[i, i + 1 - l : n ⊓ i + u].softmax @ V[i + 1 - l : n ⊓ i + u] := by
 -- proof
   sorry
 
