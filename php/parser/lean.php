@@ -1708,8 +1708,10 @@ class LeanParenthesis extends LeanPairedGroup
     {
         $arg = $this->arg;
         if ($arg instanceof LeanColon) {
-            if ($arg->lhs instanceof LeanBrace || $arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
+            if ($arg->lhs instanceof LeanBrace)
                 return $arg->lhs->latexArgs($syntax);
+            if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
+                return [$arg->lhs->toLatex($syntax)];
         }
         return parent::latexArgs($syntax);
     }
@@ -2557,6 +2559,16 @@ abstract class LeanBinaryBoolean extends LeanBinary
             return $this->parent->push_args_indented($indent, $newline_count, false);
         }
         return parent::insert_newline($caret, $newline_count, $indent, $next);
+    }
+
+    public function insert_colon($caret)
+    {
+        if ($caret === $this->rhs) {
+            $new = new LeanCaret($caret->indent, $caret->level);
+            $this->parent->replace($this, new LeanColon($this, $new, $caret->indent, $caret->level));
+            return $new;
+        }
+        return $caret->push_binary('LeanColon');
     }
 }
 
