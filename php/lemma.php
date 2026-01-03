@@ -515,7 +515,9 @@ if (!file_exists($leanEchoFile) || filemtime($leanFile) < filemtime($leanEchoFil
 }
 
 if (!$code || !$code['lemma'] || !$code['date']) {
-	function contains_module(string $parentModule, string $module): bool {
+	function contains_module(string $parentModule, string $module, int $depth = 0): bool {
+		if ($depth > 10)
+			return false;
 		$filePath = module_to_path($parentModule, '') . ".lean";
 		if (!file_exists($filePath))
 			return false;
@@ -528,7 +530,7 @@ if (!$code || !$code['lemma'] || !$code['date']) {
 				$m = substr($line, strlen('import '));
 				if ($m == $module)
 					return true;
-				if (contains_module($m, $module))
+				if (contains_module($m, $module, $depth + 1))
 					return true;
 			}
 			else 

@@ -3,7 +3,7 @@ import Lemma.Tensor.Eq.of.All_EqDataSGetToVector
 open Tensor
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp, mpr, fin, fin.comm, fin.mp, fin.mpr]
 private lemma main
 -- given
   (A B : Tensor α (m :: s)) :
