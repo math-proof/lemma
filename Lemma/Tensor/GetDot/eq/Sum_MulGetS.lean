@@ -31,7 +31,7 @@ private lemma main
   (A @ B)[i, j] = ∑ k : Fin l, A[i, k] * B[k, j] := by
 -- proof
   simp [MatMul.dot]
-  simp [Tensor.dot]
+  simp [Tensor.batch_dot]
   have : ∀ X : Tensor α [m, n, l], (X.sum 2)[i][j] = X[i][j].sum 0 := GetSum_2.eq.SumGet__0 (i := i) (j := j)
   simp_all [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0 (s := [m, n, l])]
   simp_all [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0 (s := [n, l])]

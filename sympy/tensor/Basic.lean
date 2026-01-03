@@ -366,7 +366,10 @@ def Tensor.T (X : Tensor α s) : Tensor α (s.swap (s.length - 2) (s.length - 1)
 
 postfix:1024 "ᵀ" => Tensor.T
 
-def Tensor.dot [Mul α] [Add α] [Zero α] (A : Tensor α (batch_size ++ [m, k])) (B : Tensor α (batch_size ++ [k, n])) : Tensor α (batch_size ++ [m, n]) :=
+/--
+[batch_dot](https://tensorflow.google.cn/api_docs/python/tf/keras/backend/batch_dot)
+-/
+def Tensor.batch_dot [Mul α] [Add α] [Zero α] (A : Tensor α (batch_size ++ [m, k])) (B : Tensor α (batch_size ++ [k, n])) : Tensor α (batch_size ++ [m, n]) :=
   let A : Tensor α (batch_size ++ [m, 1, k]) := cast
     (by simp_all [InsertIdxAppend.eq.Append_InsertIdx])
     (A.unsqueeze (batch_size.length + 1))
@@ -388,10 +391,9 @@ def Tensor.dot [Mul α] [Add α] [Zero α] (A : Tensor α (batch_size ++ [m, k])
   let B : Tensor α (batch_size ++ [m, n, k]) := cast
     (by simp)
     (B.repeat m ⟨batch_size.length, by simp⟩)
-  let C : Tensor α (batch_size ++ [m, n]) := cast
+  cast
     (by simp_all [EraseIdxAppend.eq.Append_EraseIdx])
     ((A * B).sum (batch_size.length + 2))
-  C
 
 class MatMul (α : Type u) (β : Type v) (γ : outParam (Type w)) where
   /--

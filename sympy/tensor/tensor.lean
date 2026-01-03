@@ -97,7 +97,7 @@ def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) 
 def Tensor.broadcast_matmul_rec [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, t])) (Y : Tensor α (s' ++ [t, k])) (h : s.length = s'.length) : Tensor α (Tensor.broadcast_shape s s' ++ [m, k]) :=
   match s, s' with
   | [], [] =>
-    Tensor.dot X Y
+    Tensor.batch_dot X Y
   | n :: s, n' :: s' =>
     have h : s.length = s'.length := by grind
     if h_n : n < n' then
@@ -276,7 +276,7 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
             simp [show s'.length - 2 + 1 = s'.length - 1 by omega]
             rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
           )
-          ((X.dot Y).select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩)
+          ((X.batch_dot Y).select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩)
   else if h_s' : s'.length = 1 then
     match s' with
     | [n'] =>
@@ -322,7 +322,7 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
           simp [show s.length - 2 + 1 = s.length - 1 by omega]
           rw [DropLast.eq.Take_SubLength_1]
         )
-        ((X.dot Y).select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩)
+        ((X.batch_dot Y).select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩)
   else
     have h_s : s.length ≥ 2 := by omega
     have h_s' : s'.length ≥ 2 := by omega
