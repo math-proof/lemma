@@ -1695,16 +1695,22 @@ class LeanParenthesis extends LeanPairedGroup
     public function latexFormat()
     {
         $arg = $this->arg;
-        if ($arg instanceof LeanColon && $arg->lhs instanceof LeanBrace)
-            return $arg->lhs->latexFormat();
+        if ($arg instanceof LeanColon) {
+            if ($arg->lhs instanceof LeanBrace)
+                return $arg->lhs->latexFormat(); # special case for ({ ... } : ...)
+            if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
+                return '\left|{%s}\right|';
+        }
         return $this->toColor();
     }
 
     public function latexArgs(&$syntax = null)
     {
         $arg = $this->arg;
-        if ($arg instanceof LeanColon && $arg->lhs instanceof LeanBrace)
-            return $arg->lhs->latexArgs($syntax);
+        if ($arg instanceof LeanColon) {
+            if ($arg->lhs instanceof LeanBrace || $arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
+                return $arg->lhs->latexArgs($syntax);
+        }
         return parent::latexArgs($syntax);
     }
 
@@ -2802,7 +2808,8 @@ class Lean_in extends LeanBinaryBoolean
     {
         [$lhs, $rhs] = $this->args;
         if ($lhs instanceof LeanParenthesis) {
-            $lhs = $lhs->arg;
+            if (!($lhs->arg instanceof LeanColon))
+                $lhs = $lhs->arg;
         }
         $lhs = $lhs->toLatex($syntax);
         $rhs = $rhs->toLatex($syntax);

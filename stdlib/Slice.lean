@@ -76,17 +76,3 @@ def Slice.mk.unexpand : PrettyPrinter.Unexpander
   | `($_ $start $stop $step) => `(⟨$start, $stop, $step⟩)
   | _  =>
     throw ()
-
-@[app_unexpander Min.min]
-def Min.min.unexpand : PrettyPrinter.Unexpander
-  | `($_ $m:term $n:term) =>
-    `($m ⊓ $n)
-  | _ =>
-    throw ()
-
-@[app_unexpander Max.max]
-def Max.max.unexpand : PrettyPrinter.Unexpander
-  | `($_ $m:term $n:term) =>
-    `($m ⊔ $n)
-  | _ =>
-    throw ()

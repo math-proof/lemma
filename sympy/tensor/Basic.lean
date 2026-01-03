@@ -1,3 +1,4 @@
+import stdlib.Nat
 import sympy.vector.vector
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Nat.MulMul.eq.Mul_Mul
@@ -403,12 +404,6 @@ def Tensor.map₂ (f : α → β → γ) (X : Tensor α s) (Y : Tensor β s) : T
 
 instance [Coe α β] : Coe (Tensor α s) (Tensor β s) where
   coe X := X.map (fun a => Coe.coe a)
-
-instance : Coe Bool ℕ where
-  coe b := b.toNat
-
-instance [NatCast α] : Coe ℕ α where
-  coe n := (n : α)
 
 def Tensor.broadcast (X : Tensor α s) (S : List ℕ) (h : s.prod ∣ S.prod) : Tensor α S :=
   ⟨cast (by rw [EqMulDiv.of.Dvd h]) (X.data.repeat (S.prod / s.prod))⟩

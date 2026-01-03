@@ -36,10 +36,9 @@ def Expr.merge (func : Operator) (expr : List Expr) (limits : List Expr) (level 
         none
     | _, _ =>
       none
-  match list with
-  | some expr =>
+  if let some expr := list then
     Basic func expr level
-  | none =>
+  else
     Basic func (expr ++ limits) level
 
 
@@ -149,7 +148,7 @@ binders = {binders}
     | .forallE binderName binderType body binderInfo =>
       args_from_binders binderName binderType body binderInfo nil
 
-    | .letE binderName binderType value body _    =>
+    | .letE binderName binderType value body _ =>
       -- binderName : binderType := value; body
       args_from_binders binderName binderType body BinderInfo.default (← Expr.toExpr value binders level)
 

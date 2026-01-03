@@ -1,7 +1,6 @@
 import sympy.tensor.functions
 import Lemma.Tensor.LengthNeg.eq.Length
 import Lemma.Tensor.GetTensorMapData.eq.TensorMapDataGet
-import sympy.Basic'
 open Tensor
 
 

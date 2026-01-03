@@ -12,8 +12,6 @@ private lemma main
   [NeZero (d_z : ℕ)]
   {β ζ : Tensor ℕ [n]}
 -- given
-  (h₀ : β = [i < n] (i + 1 - l : ℕ))
-  (h₁ : ζ = [i < n] (n ⊓ i + u))
   (A  : Tensor ℝ [n, n])
   (V  : Tensor ℝ [n, d_z]) :
 -- imply

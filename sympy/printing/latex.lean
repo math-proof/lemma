@@ -454,7 +454,7 @@ where
           | [returnType, Binder .given _ binderType nil] =>
             [binderType.toLatex, returnType.toLatex]
           | [scope, Binder .default binderName binderType nil] =>
-            [("%s : %s".format (binderName.escape_specials " "), binderType.toLatex), scope.toLatex]
+            [("%s : %s".format (binderName.escape_specials "\\ "), binderType.toLatex), scope.toLatex]
           | _ =>
             []
         | .Lean_lambda =>
@@ -463,7 +463,7 @@ where
             let limits := limits.map fun arg =>
               match arg with
               | Binder .default name _ nil =>
-                name.toString.escape_specials
+                name.escape_specials "\\ "
               | _ =>
                 arg.toLatex
             limits.reverse ++ [expr.toLatex]
