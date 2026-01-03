@@ -6,7 +6,13 @@ import Lemma.Nat.GtVal_0.of.Ne_0
 import Lemma.Nat.LtSubS_1.of.Lt.Ne_0
 import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Nat.EqAddSub.of.Ge
+import Lemma.Nat.EqAddMulDiv
 import Lemma.Int.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
+import Lemma.List.Drop.eq.ListGetS.of.GeLength_2
+import Lemma.List.ZipWith_AppendS.eq.AppendZipWithS
+import Lemma.List.DropLast.eq.Take_SubLength_1
+import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
+import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.List.MapEnumerate.eq.Cons_MapEnumerate.of.All_Eq
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthDrop_1.ge.Sub_1.of.GeLength.Gt_1
@@ -87,6 +93,292 @@ def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) 
         · assumption
       )
       X
+
+def Tensor.broadcast_matmul_rec [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, t])) (Y : Tensor α (s' ++ [t, k])) (h : s.length = s'.length) : Tensor α (Tensor.broadcast_shape s s' ++ [m, k]) :=
+  match s, s' with
+  | [], [] =>
+    Tensor.dot X Y
+  | n :: s, n' :: s' =>
+    have h : s.length = s'.length := by grind
+    if h_n : n < n' then
+      let q := n' / n
+      let r := n' % n
+      let X : Tensor α (n' :: (s ++ [m, t])) := cast
+        (by simp [q, r, EqAddMulDiv])
+        ((cast (by simp_all) (X.repeat q ⟨0, by simp⟩) : Tensor α (q * n :: (s ++ [m, t]))) ++ (0 : Tensor α (r :: (s ++ [m, t]))))
+      let P := List.Vector.map₂ (fun x y => broadcast_matmul_rec x y h) X.toVector Y.toVector
+      cast
+        (by
+          congr
+          simp [broadcast_shape]
+          split_ifs with h_l h_u
+          .
+            simp
+            sorry
+          .
+            simp
+            sorry
+          .
+            simp
+            omega
+        )
+        (Tensor.fromVector P)
+    else
+      let q := n / n'
+      let r := n % n'
+      let Y : Tensor α (n :: (s' ++ [t, k])) := cast
+        (by simp [q, r, EqAddMulDiv])
+        ((cast (by simp_all) (Y.repeat q ⟨0, by simp⟩) : Tensor α (q * n' :: (s' ++ [t, k]))) ++ (0 : Tensor α (r :: (s' ++ [t, k]))))
+      let P := List.Vector.map₂ (fun x y => broadcast_matmul_rec x y h) X.toVector Y.toVector
+      cast
+        (by
+          congr
+          simp [broadcast_shape]
+          split_ifs with h_l h_u
+          .
+            simp
+            sorry
+          .
+            simp
+            sorry
+          .
+            simp
+            omega
+        )
+        (Tensor.fromVector P)
+
+def Tensor.broadcast_matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, n])) (Y : Tensor α (s' ++ [n, k])) : Tensor α (Tensor.broadcast_shape s s' ++ [m, k]) :=
+  if h : s.length < s'.length then
+    let X := X.broadcast (s'.take (s'.length - s.length) ++ s ++ [m, n]) (by simp)
+    cast
+      (by
+        apply congrArg
+        simp [broadcast_shape]
+        split_ifs with h_l h_u
+        .
+          grind
+        .
+          grind
+        .
+          simp
+          rw [Append_Append.eq.AppendAppend]
+          apply EqAppendS.of.Eq
+          have h_s := EqAppendTake__Drop s' (s'.length - s.length)
+          conv_lhs =>
+            arg 3
+            rw [← h_s]
+          rw [ZipWith_AppendS.eq.AppendZipWithS (by rfl)]
+          apply EqAppendS.of.Eq
+          simp
+      )
+      (broadcast_matmul_rec X Y (by grind))
+  else if h : s.length > s'.length then
+    let Y := Y.broadcast (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by simp)
+    cast
+      (by
+        apply congrArg
+        simp [broadcast_shape]
+        split_ifs with h_l h_u
+        .
+          grind
+        .
+          grind
+        .
+          simp
+          rw [Append_Append.eq.AppendAppend]
+          apply EqAppendS.of.Eq
+          have h_s := EqAppendTake__Drop s (s.length - s'.length)
+          conv_lhs =>
+            arg 2
+            rw [← h_s]
+          rw [ZipWith_AppendS.eq.AppendZipWithS (by rfl)]
+          apply EqAppendS.of.Eq
+          simp
+      )
+      (broadcast_matmul_rec X Y (by grind))
+  else
+    broadcast_matmul_rec X Y (by grind)
+
+/--
+perform matrix multiplication between two tensors like
+[torch.matmul](https://docs.pytorch.org/docs/stable/generated/torch.matmul.html)
+if the batch dimensions are different, the shorter length is broadcasted to the longer one, eg:
+- if A.shape = [1, 4, 5], B.shape = [9, 5, 6], then the result is :
+  A.repeat 9 0 @ B,  with shape of [9, 4, 6]
+- if A.shape = [3, 4, 5], B.shape = [9, 5, 6], then the result is :
+  A.repeat 3 0 @ B,  with shape of [9, 4, 6]
+- if A.shape = [2, 4, 5], B.shape = [9, 5, 6], then the result is :
+  A.repeat 4 0 ++ (0 : Tensor α [1, 4, 5]) @ B,  with shape of [9, 4, 6]
+-- instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α (batch_size ++ [m, k])) (Tensor α (batch_size ++ [k, n])) (Tensor α (batch_size ++ [m, n])) := ⟨Tensor.dot⟩
+-/
+def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s') : Tensor α (Tensor.matmul_shape s s') :=
+  if h_s : s.length = 0 then
+    cast (by simp_all [Tensor.matmul_shape]) (Y.map (fun y => X.data[0]'(by simp_all) * y))
+  else if h_s' : s'.length = 0 then
+    cast (by simp_all [Tensor.matmul_shape]) (X.map (fun x => x * Y.data[0]'(by simp_all)))
+  else if h_s : s.length = 1 then
+    match s with
+    | [n] =>
+      if h_s' : s'.length = 1 then
+        match s' with
+        | [n'] =>
+          if h_n : n < n' then
+            let q := n' / n
+            let r := n' % n
+            let X : Tensor α [n'] := cast
+              (by simp [q, r, EqAddMulDiv])
+              ((cast (by simp_all) (X.repeat q ⟨0, by linarith⟩) : Tensor α [q * n]) ++ (0 : Tensor α [r]))
+            ((X.data * Y.data).sum : Tensor α [])
+          else
+            let q := n / n'
+            let r := n % n'
+            let Y : Tensor α [n] := cast
+              (by simp [q, r, EqAddMulDiv])
+              ((cast (by simp_all) (Y.repeat q ⟨0, by linarith⟩) : Tensor α [q * n']) ++ (0 : Tensor α [r]))
+            ((X.data * Y.data).sum : Tensor α [])
+      else
+        have h_s' : s'.length ≥ 2 := by omega
+        let batch_size' := s'.take (s'.length - 2)
+        let n' := s'[s'.length - 2]
+        let k' := s'[s'.length - 1]
+        let Y : Tensor α (batch_size' ++ [n', k']) := cast
+          (by
+            congr
+            simp [batch_size', n', k']
+            conv_lhs => rw [← EqAppendTake__Drop s' (s'.length - 2)]
+            apply EqAppendS.of.Eq.left
+            apply Drop.eq.ListGetS.of.GeLength_2 h_s'
+          )
+          Y
+        let ⟨X, Y⟩ : Tensor α [n ⊔ n'] × Tensor α (batch_size' ++ [n ⊔ n', k']) :=
+          if h_n : n ≤ n' then
+            let q := n' / n
+            let r := n' % n
+            let X : Tensor α [n'] := cast
+              (by simp [q, r, EqAddMulDiv])
+              ((cast (by grind) (X.repeat q ⟨0, by linarith⟩) : Tensor α [q * n]) ++ (0 : Tensor α [r]))
+            ⟨cast (by grind) X, cast (by grind) Y⟩
+          else
+            have h_n : n > n' := by omega
+            let q := n / n'
+            let r := n % n'
+            let Y : Tensor α (batch_size' ++ [n, k']) := cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp [batch_size']) (Y.repeat q ⟨s'.length - 2, by simp [batch_size']⟩) : Tensor α (batch_size' ++ [q * n', k'])) ++ (0 : Tensor α (batch_size' ++ [r, k'])))
+            ⟨cast (by grind) X, cast (by grind) Y⟩
+        let X := X.broadcast ((batch_size' ++ [1, n ⊔ n'])) (by simp)
+        cast
+          (by
+            congr
+            simp [batch_size', k', matmul_shape]
+            have h_s' : s' ≠ [] := by grind
+            simp [h_s']
+            rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
+            simp [EraseIdx.eq.Append_Drop_Add_1]
+            simp [show s'.length - 2 + 1 = s'.length - 1 by omega]
+            rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
+          )
+          ((X.dot Y).select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩)
+  else if h_s' : s'.length = 1 then
+    match s' with
+    | [n'] =>
+      have h_s : s.length ≥ 2 := by omega
+      let batch_size := s.take (s.length - 2)
+      let k := s[s.length - 2]
+      let n := s[s.length - 1]
+      let X : Tensor α (batch_size ++ [k, n]) := cast
+        (by
+          congr
+          simp [batch_size, n, k]
+          conv_lhs => rw [← EqAppendTake__Drop s (s.length - 2)]
+          apply EqAppendS.of.Eq.left
+          apply Drop.eq.ListGetS.of.GeLength_2 h_s
+        )
+        X
+      let ⟨X, Y⟩ : Tensor α (batch_size ++ [k, n ⊔ n']) × Tensor α [n ⊔ n'] :=
+        if h_n : n' ≤ n then
+          let q := n / n'
+          let r := n % n'
+          let Y : Tensor α [n] := cast
+            (by simp [q, r, EqAddMulDiv])
+            ((cast (by grind) (Y.repeat q ⟨0, by linarith⟩) : Tensor α [q * n']) ++ (0 : Tensor α [r]))
+          ⟨cast (by grind) X, cast (by grind) Y⟩
+        else
+          have h_n : n' > n := by omega
+          let q := n' / n
+          let r := n' % n
+          let X : Tensor α (batch_size ++ [k, n']) := cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp [batch_size]; grind) (X.repeat q ⟨s.length - 1, by simp [batch_size]; omega⟩) : Tensor α (batch_size ++ [k] ++ [q * n])) ++ (0 : Tensor α (batch_size ++ [k] ++ [r])))
+          ⟨cast (by grind) X, cast (by grind) Y⟩
+      let Y := Y.broadcast ((batch_size ++ [n ⊔ n', 1])) (by simp)
+      cast
+        (by
+          congr
+          simp [batch_size, k, matmul_shape]
+          have h_s : s ≠ [] := by grind
+          simp [h_s]
+          have h_s : s.length ≠ 1 := by grind
+          simp [h_s]
+          rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
+          simp [EraseIdx.eq.Append_Drop_Add_1]
+          simp [show s.length - 1 - (s.length - 2) = 1 by omega]
+          simp [show s.length - 2 + 1 = s.length - 1 by omega]
+          rw [DropLast.eq.Take_SubLength_1]
+        )
+        ((X.dot Y).select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩)
+  else
+    have h_s : s.length ≥ 2 := by omega
+    have h_s' : s'.length ≥ 2 := by omega
+    let batch_size := s.take (s.length - 2)
+    let batch_size' := s'.take (s'.length - 2)
+    let m := s[s.length - 2]
+    let n := s[s.length - 1]
+    let n' := s'[s'.length - 2]
+    let k := s'[s'.length - 1]
+    let X : Tensor α (batch_size ++ [m, n]) := cast
+      (by
+        congr
+        simp [batch_size, m, n]
+        conv_lhs => rw [← EqAppendTake__Drop s (s.length - 2)]
+        apply EqAppendS.of.Eq.left
+        apply Drop.eq.ListGetS.of.GeLength_2 h_s
+      )
+      X
+    let Y : Tensor α (batch_size' ++ [n', k]) := cast
+      (by
+        congr
+        simp [batch_size', n', k]
+        conv_lhs => rw [← EqAppendTake__Drop s' (s'.length - 2)]
+        apply EqAppendS.of.Eq.left
+        apply Drop.eq.ListGetS.of.GeLength_2 h_s'
+      )
+      Y
+    let ⟨X, Y⟩ : Tensor α (batch_size ++ [m, n ⊔ n']) × Tensor α (batch_size' ++ [n ⊔ n', k]) :=
+      if h_n : n < n' then
+        let q := n' / n
+        let r := n' % n
+        let X : Tensor α (batch_size ++ [m, n']) := cast
+          (by simp [q, r, EqAddMulDiv])
+          ((cast (by simp; grind) (X.repeat q ⟨s.length - 1, by simp [batch_size]; omega⟩) : Tensor α (batch_size ++ [m] ++ [q * n])) ++ (0 : Tensor α (batch_size ++ [m] ++ [r])))
+        ⟨cast (by grind) X, cast (by grind) Y⟩
+      else
+        let q := n / n'
+        let r := n % n'
+        let Y : Tensor α (batch_size' ++ [n, k]) := cast
+          (by simp [q, r, EqAddMulDiv])
+          ((cast (by simp [batch_size']) (Y.repeat q ⟨s'.length - 2, by simp [batch_size']⟩) : Tensor α (batch_size' ++ [q * n', k])) ++ (0 : Tensor α (batch_size' ++ [r, k])))
+        ⟨cast (by grind) X, cast (by grind) Y⟩
+    cast
+      (by
+        congr
+        simp [batch_size, batch_size', m, k, matmul_shape, broadcast_shape]
+        grind
+      )
+      (broadcast_matmul X Y)
+
+instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α s) (Tensor α s') (Tensor α (Tensor.matmul_shape s s')) := ⟨Tensor.matmul⟩
+
+instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α [m, k]) (Tensor α [k, n]) (Tensor α [m, n]) where
+  dot A B :=
+    let A : Tensor α ([] ++ [m, k]) := A
+    A.dot B
 
 instance : GetElem (Tensor α s) ℕ (Tensor α s.tail) fun X i => i < X.length where
   getElem X i h := X.get ⟨i, h⟩

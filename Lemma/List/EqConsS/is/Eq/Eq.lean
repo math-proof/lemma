@@ -1,13 +1,12 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
-  {a b : List α}
 -- given
-  (h : a₀ :: a = b₀ :: b) :
+  (a b : List α) :
 -- imply
-  a₀ = b₀ ∧ a = b := by
+  a₀ :: a = b₀ :: b ↔ a₀ = b₀ ∧ a = b := by
 -- proof
   aesop
 

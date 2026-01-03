@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.Length.of.Eq
-import Lemma.List.Eq.Eq.of.EqConsS
+import Lemma.List.EqConsS.is.Eq.Eq
 open Tensor List
 
 
@@ -19,7 +19,7 @@ private lemma main
   match s_A, s_B with
   | [], [] =>
     constructor <;>
-    · 
+    ·
       aesop
   | [], s_B₀ :: s_B =>
     simp_all

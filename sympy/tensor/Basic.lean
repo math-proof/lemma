@@ -167,6 +167,19 @@ def Tensor.fromVector (X : List.Vector (Tensor α s) n) : Tensor α (n :: s) :=
   ⟨(X.map Tensor.data).flatten⟩
 
 /--
+Append two tensors with batching.
+-/
+def Tensor.batch_append (xs : Tensor α (b_z ++ n :: s)) (ys : Tensor α (b_z ++ m :: s)) : Tensor α (b_z ++ (n + m) :: s) :=
+  match b_z with
+  | [] =>
+    xs.append ys
+  | _ :: _ =>
+    Tensor.fromVector (List.Vector.map₂ Tensor.batch_append xs.toVector ys.toVector)
+
+instance : HAppend (Tensor α (b_z ++ n :: s)) (Tensor α (b_z ++ m :: s)) (Tensor α (b_z ++ (n + m) :: s)) where
+  hAppend := Tensor.batch_append
+
+/--
 [torch.sum](https://docs.pytorch.org/docs/stable/generated/torch.sum.html)
 use (X.sum dim).keepdim to keep the dimension
 -/
@@ -388,13 +401,6 @@ class MatMul (α : Type u) (β : Type v) (γ : outParam (Type w)) where
 
 @[inherit_doc] infixl:70 " @ " => MatMul.dot
 
-instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α (batch_size ++ [m, k])) (Tensor α (batch_size ++ [k, n])) (Tensor α (batch_size ++ [m, n])) := ⟨Tensor.dot⟩
-
-instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α [m, k]) (Tensor α [k, n]) (Tensor α [m, n]) where
-  dot A B :=
-    let A : Tensor α ([] ++ [m, k]) := A
-    A.dot B
-
 def Tensor.map (f : α → β) (X : Tensor α s) : Tensor β s :=
   ⟨X.data.map f⟩
 
@@ -407,3 +413,25 @@ instance [Coe α β] : Coe (Tensor α s) (Tensor β s) where
 
 def Tensor.broadcast (X : Tensor α s) (S : List ℕ) (h : s.prod ∣ S.prod) : Tensor α S :=
   ⟨cast (by rw [EqMulDiv.of.Dvd h]) (X.data.repeat (S.prod / s.prod))⟩
+
+def Tensor.broadcast_shape (s : List ℕ) (s' : List ℕ) : List ℕ :=
+  let ⟨batch_size, s, s'⟩ : List ℕ × List ℕ × List ℕ :=
+    if _ : s.length < s'.length then
+      ⟨s'.take (s'.length - s.length), s, (s'.drop (s'.length - s.length))⟩
+    else if _ : s.length > s'.length then
+      ⟨s.take (s.length - s'.length), (s.drop (s.length - s'.length)), s'⟩
+    else
+      ⟨[], s, s'⟩
+  batch_size ++ List.zipWith (fun a b => a ⊔ b) s s'
+
+def Tensor.matmul_shape (s : List ℕ) (s' : List ℕ) : List ℕ :=
+  if h : s.length = 0 then
+    s' -- reduced to scalar product
+  else if h : s'.length = 0 then
+    s -- reduced to scalar product
+  else if h : s.length = 1 then
+    s'.eraseIdx (s'.length - 2)
+  else if h : s'.length = 1 then
+    s.eraseIdx (s.length - 1)
+  else
+    broadcast_shape (s.take (s.length - 2)) (s'.take (s'.length - 2)) ++ [s[s.length - 2], s'[s'.length - 1]]

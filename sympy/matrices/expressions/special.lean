@@ -29,8 +29,6 @@ def Tensor.masked_fill [Zero α] (X : Tensor α s) (d : ℤ) (cmp : ℤ → ℤ 
     match h : s with
     | [m, n] =>
       [i < m] [j < n] (if cmp (j - i) d  then 0 else (X.get ⟨i, by grind⟩).get ⟨j, by grind⟩)
-    | [] =>
-      False.elim (by simp_all)
 
 /--
 [torch.tril](https://docs.pytorch.org/docs/stable/generated/torch.tril.html)
