@@ -1,7 +1,7 @@
 from util import *
 
 
-@apply
+@apply(given=True)
 def apply(eq_relu, eq_min, A, V):
     ((i, l), limit_i), β = eq_relu.of(Equal[Stack[relu[Expr + 1 - Expr]]])
     ((n, (S[i], u)), S[limit_i]), ζ = eq_min.of(Equal[Stack[Min[Add]]])
@@ -14,7 +14,7 @@ def apply(eq_relu, eq_min, A, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Bool, Vector
+    from Lemma import Tensor, Algebra, Set, Bool, Vector
 
     n, l, u, d_z = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -95,12 +95,11 @@ def prove(Eq):
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_definition, Eq[-1])
 
 
-
-
-
 if __name__ == '__main__':
     run()
 # created on 2020-12-28
 # updated on 2022-03-30
+
+
 
 

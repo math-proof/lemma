@@ -29,7 +29,7 @@ def prove(Eq):
     (Eq.beta, Eq.zeta), Eq.objective = apply(Equal(β, Stack[i:n](relu(i - l + 1))), Equal(ζ, Stack[i:n](Min(i + u, n))), Q, K, V)
 
     A = Symbol(Eq.objective.find(Mul[MatMul]))
-    Eq << Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax.of.Eq_Stack_Relu.Eq_Stack_Min.apply(Eq.beta, Eq.zeta, A, V)
+    Eq << Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax.apply(Eq.beta, Eq.zeta, A, V)
 
     Eq << Eq[-1].subs(A.this.definition)
 

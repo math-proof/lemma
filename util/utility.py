@@ -1057,9 +1057,10 @@ def apply(*args, **kwargs):
             return given(axiom, **kwargs)
 
         if type in binary_operators:
-            kwargs['given'] = None
+            if not kwargs.get('given'):
+                kwargs['given'] = None
         return imply(axiom, **kwargs)
-    
+
     return lambda axiom: apply(axiom, **kwargs)
 
 
