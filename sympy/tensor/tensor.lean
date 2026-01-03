@@ -378,7 +378,7 @@ instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α s) (Tensor α s') (Tens
 instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α [m, k]) (Tensor α [k, n]) (Tensor α [m, n]) where
   dot A B :=
     let A : Tensor α ([] ++ [m, k]) := A
-    A.dot B
+    A.batch_dot B
 
 instance : GetElem (Tensor α s) ℕ (Tensor α s.tail) fun X i => i < X.length where
   getElem X i h := X.get ⟨i, h⟩
