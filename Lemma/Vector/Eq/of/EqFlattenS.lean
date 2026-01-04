@@ -1,10 +1,9 @@
 import sympy.vector.vector
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.List.Eq_Nil.of.EqLength_0
 import Lemma.Vector.Eq_Cons_Tail
 import Lemma.Vector.ValFlattenCons.eq.ValAppend_Flatten
 import Lemma.Vector.Eq.of.EqFlattenSMap.EqLengthS
-open Vector List Bool
+open Vector Bool
 
 
 @[main]

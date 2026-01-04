@@ -14,7 +14,7 @@ private lemma main
 -- imply
   let mask : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (p i j))
   let A : Tensor ℝ* [n, n] := A
-  Exp.exp (A - (1 - mask) * Hyperreal.omega) ≈ exp A * mask := by
+  Exp.exp (A - (1 - mask) * ∞) ≈ exp A * mask := by
 -- proof
   have := ExpAdd_MulInfty.eq.Mul_Stack_Bool p A
   simp

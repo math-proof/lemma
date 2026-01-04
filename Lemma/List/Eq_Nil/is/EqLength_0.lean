@@ -1,13 +1,12 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm, mp, mpr]
 private lemma main
-  {a : List α}
 -- given
-  (h : a.length = 0) :
+  (a : List α) :
 -- imply
-  a = [] := by
+  a = [] ↔ a.length = 0 := by
 -- proof
   aesop
 

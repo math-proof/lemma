@@ -39,19 +39,19 @@ private lemma main
 -- imply
   let mask : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (p i j))
   let A : Tensor ℝ* [n, n] := A
-  (A + (mask - 1) * Hyperreal.omega)[i, j] ≈ if p i j then
+  (A + (mask - 1) * ∞)[i, j] ≈ if p i j then
     A[i, j]
   else
-    (-Hyperreal.omega : Tensor ℝ* []) := by
+    (-∞ : Tensor ℝ* []) := by
 -- proof
   intro mask
   simp [GetElem.getElem]
   repeat rw [@Tensor.GetAdd.eq.AddGetS.fin]
-  have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) (mask - 1) Hyperreal.omega (i := i)
+  have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) (mask - 1) ∞ (i := i)
   simp at this
   rw [this]
   simp
-  have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) ((mask - 1).get i) Hyperreal.omega (i := j)
+  have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) ((mask - 1).get i) ∞ (i := j)
   simp at this
   rw [this]
   split_ifs with h_p

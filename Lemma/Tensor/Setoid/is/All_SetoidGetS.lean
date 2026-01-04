@@ -9,7 +9,7 @@ import Lemma.Vector.Setoid.is.All_SetoidGetS
 open Fin List Nat Tensor Vector
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp, mpr, fin, fin.comm, fin.mp, fin.mpr]
 private lemma main
   [Setoid α]
 -- given

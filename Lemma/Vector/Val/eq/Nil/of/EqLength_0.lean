@@ -1,4 +1,4 @@
-import Lemma.List.Eq_Nil.of.EqLength_0
+import Lemma.List.Eq_Nil.is.EqLength_0
 open List
 
 

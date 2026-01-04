@@ -30,27 +30,27 @@ private lemma main
   (p : Fin n → Fin n → Bool)
   (A : Tensor ℝ [n, n]) :
 -- imply
-  let mask : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (p i j))
+  let Ξ : Tensor ℝ* [n, n] := [i < n] [j < n] (Bool.toNat (p i j))
   let A : Tensor ℝ* [n, n] := A
-  Exp.exp (A + (mask - 1) * Hyperreal.omega) ≈ exp A * mask := by
+  Exp.exp (A + (Ξ - 1) * ∞) ≈ exp A * Ξ := by
 -- proof
-  intro mask A'
+  intro Ξ A'
   have h_A : A' = map Hyperreal.ofReal A := rfl
   apply Setoid.of.All_SetoidGetS.GtLength_0 (h := by simp)
   intro i
   apply Setoid.of.All_SetoidGetS.GtLength_0 (h := by simp)
   intro j
   simp
-  have := GetExp.eq.ExpGet.fin (A' + (mask - 1) * Hyperreal.omega) ⟨i, by grind⟩
+  have := GetExp.eq.ExpGet.fin (A' + (Ξ - 1) * ∞) ⟨i, by grind⟩
   simp at this
   rw [this]
-  have := GetExp.eq.ExpGet.fin ((A' + (mask - 1) * Hyperreal.omega).get i) ⟨j, by grind⟩
+  have := GetExp.eq.ExpGet.fin ((A' + (Ξ - 1) * ∞).get i) ⟨j, by grind⟩
   simp at this
   rw [this]
   have := GetAdd_MulSub_1.eq.Ite_Get.fin p A i j
   simp at this
   rw [← h_A] at this
-  simp [mask]
+  simp [Ξ]
   apply Setoid.of.SetoidDataS
   rw [DataExp.eq.ExpData]
   repeat rw [GetAdd.eq.AddGetS.fin]

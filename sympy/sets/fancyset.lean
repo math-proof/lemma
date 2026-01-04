@@ -114,3 +114,5 @@ noncomputable instance : Coe ℝ ℝ* := ⟨Hyperreal.ofReal⟩
 def HasEquiv.Equiv.symm [Setoid α] {a b : α} (h : a ≈ b) : b ≈ a := Setoid.symm h
 
 def HasEquiv.Equiv.trans [Setoid α] {a b c : α} (h_ab : a ≈ b) (h_bc : b ≈ c) : a ≈ c := Setoid.trans h_ab h_bc
+
+notation "∞" => Hyperreal.omega

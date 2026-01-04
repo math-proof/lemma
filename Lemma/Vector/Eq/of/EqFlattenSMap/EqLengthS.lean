@@ -1,5 +1,5 @@
 import sympy.vector.vector
-import Lemma.List.Eq_Nil.of.EqLength_0
+import Lemma.List.Eq_Nil.is.EqLength_0
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.Nat.EqAddS.is.Eq
 import Lemma.List.MapCons.eq.Cons_Map

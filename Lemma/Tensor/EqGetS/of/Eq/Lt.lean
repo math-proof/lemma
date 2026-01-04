@@ -4,7 +4,6 @@ open Tensor
 
 @[main, fin]
 private lemma main
-  {m : ℕ}
   {X Y : Tensor α (m :: s)}
 -- given
   (h₀ : n < m)
