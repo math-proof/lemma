@@ -465,7 +465,16 @@ def Lean.Expr.getElem2get : Expr → Expr
           | app (app (const `Slice.length _) _) _ =>
             (usNat, (const `Fin.val usNat).mkApp [n, i])
           | _ =>
-            none
+            match s with
+            | app (app (const `Tensor.matmul_shape _) _) _ =>
+              (usNat, (const `Fin.val usNat).mkApp [n, i])
+            | app (app (app (const `List.cons _) (const `Nat _)) n') _ =>
+              if n == n' then
+                none
+              else
+                (usNat, (const `Fin.val usNat).mkApp [n, i])
+            | _ =>
+              none
         | const `Nat usNat =>
           (usNat, i)
         | _ =>
