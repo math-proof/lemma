@@ -1,11 +1,11 @@
 import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Tensor.GetSum_2.as.SumGet__1
+import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Bool.SEq.is.Eq
 open Tensor Bool
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Add α] [Zero α]
 -- given
@@ -16,7 +16,8 @@ private lemma main
   (X.sum 2)[i][j] = X[i][j].sum 0 := by
 -- proof
   have h_j := j.isLt
-  have h_Xi := GetSum_2.as.SumGet__1 X i
+  have h_Xi := GetSum_2.eq.SumGet__1 X i
+  have h_Xi := SEq.of.Eq h_Xi
   have h_Xij := SEqGetS.of.SEq.GtLength h_j h_Xi
   have h_Xij' := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength (d := 1) (s := [m, n, l].tail) (by simp) (by simp) h_j X[i]
   have h_eq := h_Xij.trans h_Xij'

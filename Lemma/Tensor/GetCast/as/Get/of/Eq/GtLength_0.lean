@@ -5,7 +5,7 @@ import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 
-@[main]
+@[main, fin]
 private lemma main
   {s s' : List ℕ}
 -- given
