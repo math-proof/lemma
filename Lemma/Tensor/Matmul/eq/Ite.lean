@@ -1,5 +1,13 @@
+import Lemma.List.Drop.eq.ListGet.of.GtLength_0
+import Lemma.List.Drop.eq.ListGetS.of.GeLength_2
+import Lemma.List.DropLast.eq.Take_SubLength_1
+import Lemma.List.EqAppendS.of.Eq
+import Lemma.List.EqAppendTake__Drop
+import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
+import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
+import Lemma.Nat.EqAddMulDiv
 import sympy.tensor.tensor
-import sympy.Basic
+open Nat List
 set_option maxHeartbeats 1000000
 
 
@@ -12,9 +20,9 @@ private lemma main
 -- imply
   X.matmul Y =
     if h_s : s.length = 0 then
-      cast (by simp_all [Tensor.matmul_shape]) (Y.map (fun y => X.data[0]'(by simp_all) * y))
+      cast (by simp_all [Tensor.matmul_shape]) (X.data[0]'(by simp_all) * Y)
     else if h_s' : s'.length = 0 then
-      cast (by simp_all [Tensor.matmul_shape]) (X.map (fun x => x * Y.data[0]'(by simp_all)))
+      cast (by simp_all [Tensor.matmul_shape]) (X * Y.data[0]'(by simp_all))
     else if h_s : s.length = 1 then
       match s with
       | [n] =>
@@ -62,7 +70,7 @@ private lemma main
             cast
               (by
                 congr
-                simp [batch_size', k', matmul_shape]
+                simp [batch_size', k', Tensor.matmul_shape]
                 have h_s' : s' ≠ [] := by grind
                 simp [h_s']
                 rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
@@ -79,7 +87,7 @@ private lemma main
             cast
               (by
                 congr
-                simp [batch_size', k', matmul_shape]
+                simp [batch_size', k', Tensor.matmul_shape]
                 have h_s' : s' ≠ [] := by grind
                 simp [h_s']
                 rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
@@ -88,9 +96,8 @@ private lemma main
                 rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
               )
               ((X.batch_dot Y).select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩)
-          else
-            if h_n : n < n' then
-              let q := n' / n
+          else if h_n : n < n' then
+            let q := n' / n
               let r := n' % n
               let X : Tensor α [n'] := cast
                 (by simp [q, r, EqAddMulDiv])
@@ -99,7 +106,7 @@ private lemma main
               cast
                 (by
                   congr
-                  simp [batch_size', k', matmul_shape]
+                  simp [batch_size', k', Tensor.matmul_shape]
                   have h_s' : s' ≠ [] := by grind
                   simp [h_s']
                   rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
@@ -108,15 +115,16 @@ private lemma main
                   rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
                 )
                 ((X.batch_dot Y).select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩)
-            else if h_n : n > n' then
-              let q := n / n'
+
+          else if h_n : n > n' then
+            let q := n / n'
               let r := n % n'
               let Y : Tensor α (batch_size' ++ [n, k']) := cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp [batch_size']) (Y.repeat q ⟨s'.length - 2, by simp [batch_size']⟩) : Tensor α (batch_size' ++ [q * n', k'])) ++ (0 : Tensor α (batch_size' ++ [r, k'])))
               let X := X.broadcast ((batch_size' ++ [1, n])) (by simp)
               cast
                 (by
                   congr
-                  simp [batch_size', k', matmul_shape]
+                  simp [batch_size', k', Tensor.matmul_shape]
                   have h_s' : s' ≠ [] := by grind
                   simp [h_s']
                   rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
@@ -125,13 +133,14 @@ private lemma main
                   rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
                 )
                 ((X.batch_dot Y).select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩)
-            else
-              let Y : Tensor α (batch_size' ++ [n, k']) := cast (by grind) Y
+
+          else
+            let Y : Tensor α (batch_size' ++ [n, k']) := cast (by grind) Y
               let X := X.broadcast ((batch_size' ++ [1, n])) (by simp)
               cast
                 (by
                   congr
-                  simp [batch_size', k', matmul_shape]
+                  simp [batch_size', k', Tensor.matmul_shape]
                   have h_s' : s' ≠ [] := by grind
                   simp [h_s']
                   rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
@@ -164,7 +173,7 @@ private lemma main
           cast
             (by
               congr
-              simp [batch_size, k, matmul_shape]
+              simp [batch_size, k, Tensor.matmul_shape]
               have h_s : s ≠ [] := by grind
               simp [h_s]
               have h_s : s.length ≠ 1 := by grind
@@ -186,7 +195,7 @@ private lemma main
           cast
             (by
               congr
-              simp [batch_size, k, matmul_shape]
+              simp [batch_size, k, Tensor.matmul_shape]
               have h_s : s ≠ [] := by grind
               simp [h_s]
               have h_s : s.length ≠ 1 := by grind
@@ -204,7 +213,7 @@ private lemma main
           cast
             (by
               congr
-              simp [batch_size, k, matmul_shape]
+              simp [batch_size, k, Tensor.matmul_shape]
               have h_s : s ≠ [] := by grind
               simp [h_s]
               have h_s : s.length ≠ 1 := by grind
@@ -252,10 +261,10 @@ private lemma main
         cast
           (by
             congr
-            simp [batch_size, batch_size', m, k, matmul_shape, broadcast_shape]
+            simp [batch_size, batch_size', m, k, Tensor.matmul_shape, Tensor.broadcast_shape]
             grind
           )
-          (broadcast_matmul X Y)
+          (Tensor.broadcast_matmul X Y)
       else if h_n : n > n' then
         let q := n / n'
         let r := n % n'
@@ -265,20 +274,20 @@ private lemma main
         cast
           (by
             congr
-            simp [batch_size, batch_size', m, k, matmul_shape, broadcast_shape]
+            simp [batch_size, batch_size', m, k, Tensor.matmul_shape, Tensor.broadcast_shape]
             grind
           )
-          (broadcast_matmul X Y)
+          (Tensor.broadcast_matmul X Y)
       else
         have h_n : n = n' := by omega
         let Y : Tensor α (batch_size' ++ [n, k]) := cast (by simp_all) Y
         cast
           (by
             congr
-            simp [batch_size, batch_size', m, k, matmul_shape, broadcast_shape]
+            simp [batch_size, batch_size', m, k, Tensor.matmul_shape, Tensor.broadcast_shape]
             grind
           )
-          (broadcast_matmul X Y) := by
+          (Tensor.broadcast_matmul X Y) := by
 -- proof
   unfold Tensor.matmul
   split_ifs
@@ -286,3 +295,4 @@ private lemma main
 
 
 -- created on 2026-01-05
+-- updated on 2026-01-06

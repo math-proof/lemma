@@ -111,6 +111,9 @@ instance [Mul α] : Mul (Vector α n) where
 instance [Mul α] : HMul (Vector α n) α (Vector α n) where
   hMul a b := a.map (· * b)
 
+instance [Mul α] : HMul α (Vector α n) (Vector α n) where
+  hMul a b := b.map (a * ·)
+
 instance [Div α] : Div (Vector α n) where
   div a b := a.map₂ HDiv.hDiv b
 

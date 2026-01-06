@@ -114,6 +114,9 @@ instance [Sub α] : HSub (Tensor α s) (Tensor α []) (Tensor α s) where
 instance [Mul α] : Mul (Tensor α s) where
   mul A B := ⟨A.data * B.data⟩
 
+instance [Mul α] : HMul α (Tensor α s) (Tensor α s) where
+  hMul a B := ⟨a * B.data⟩
+
 instance [Mul α] : HMul (Tensor α s) α (Tensor α s) where
   hMul A b := ⟨A.data * b⟩
 

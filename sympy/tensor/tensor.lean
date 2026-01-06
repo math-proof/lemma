@@ -192,9 +192,9 @@ if the batch dimensions are different, the shorter length is broadcasted to the 
 -/
 def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s') : Tensor α (Tensor.matmul_shape s s') :=
   if h_s : s.length = 0 then
-    cast (by simp_all [Tensor.matmul_shape]) (Y.map (fun y => X.data[0]'(by simp_all) * y))
+    cast (by simp_all [Tensor.matmul_shape]) (X.data[0]'(by simp_all) * Y)
   else if h_s' : s'.length = 0 then
-    cast (by simp_all [Tensor.matmul_shape]) (X.map (fun x => x * Y.data[0]'(by simp_all)))
+    cast (by simp_all [Tensor.matmul_shape]) (X * Y.data[0]'(by simp_all))
   else if h_s : s.length = 1 then
     match s with
     | [n] =>
