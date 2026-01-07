@@ -115,7 +115,6 @@ private lemma main
                   rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
                 )
                 ((X.batch_dot Y).select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩)
-
           else if h_n : n > n' then
             let q := n / n'
               let r := n % n'
