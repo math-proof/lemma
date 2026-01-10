@@ -15,15 +15,15 @@ import Lemma.List.Prod.eq.Foldr
 open Vector List Bool Nat
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
-  (a : Tensor α (m :: s))
-  (b : Tensor α (n :: s))
+  (A : Tensor α (m :: s))
+  (B : Tensor α (n :: s))
   (i : Fin m) :
 -- imply
   have : i < m + n := by linarith [i.isLt]
-  (a ++ b)[i] = a[i] := by
+  (A ++ B)[i] = A[i] := by
 -- proof
   simp [GetElem.getElem]
   simp [Tensor.get]
@@ -37,9 +37,9 @@ private lemma main
   unfold List.Vector.splitAt
   simp
   apply Eq.of.SEq
-  apply SEq.of.SEq.SEq (c := a.data.unflatten[i])
+  apply SEq.of.SEq.SEq (c := A.data.unflatten[i])
   ·
-    apply SEq.of.SEq.SEq (c := (a.data ++ b.data).array_slice (i * s.prod) s.prod)
+    apply SEq.of.SEq.SEq (c := (A.data ++ B.data).array_slice (i * s.prod) s.prod)
     ·
       rw [GetUnflatten.eq.Cast_ArraySlice.of.Lt (by linarith)]
       apply SEqCast.of.SEq.Eq

@@ -18,16 +18,16 @@ import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_Pr
 open Vector List Bool Nat
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (h₀ : i ≥ m)
   (h₁ : i < m + n)
-  (a : Tensor α (m :: s))
-  (b : Tensor α (n :: s)) :
+  (A : Tensor α (m :: s))
+  (B : Tensor α (n :: s)) :
 -- imply
   let h_i : i - m < n := LtSub.of.Lt_Add.Ge h₀ h₁
-  (a ++ b)[i] = b[i - m] := by
+  (A ++ B)[i] = B[i - m] := by
 -- proof
   simp [GetElem.getElem]
   simp [Tensor.get]
@@ -40,12 +40,12 @@ private lemma main
     repeat rw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp_all) (by simp_all)]
     simp
     apply Eq.of.SEq
-    apply SEq.of.SEq.SEq (c := b.data.unflatten[i - m])
+    apply SEq.of.SEq.SEq (c := B.data.unflatten[i - m])
     ·
       have h_prod := AddProdSCons.eq.MulAdd m n s
-      apply SEq.of.SEq.SEq (c := (a.data ++ b.data).array_slice (i * s.prod) s.prod)
+      apply SEq.of.SEq.SEq (c := (A.data ++ B.data).array_slice (i * s.prod) s.prod)
       ·
-        have := GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0 (s := (m + n) :: s) (by simp) h₁ (cast (congrArg (List.Vector α) (AddProdSCons.eq.ProdConsAdd s m n)) (a.data ++ b.data))
+        have := GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0 (s := (m + n) :: s) (by simp) h₁ (cast (congrArg (List.Vector α) (AddProdSCons.eq.ProdConsAdd s m n)) (A.data ++ B.data))
         apply SEq.of.SEq.SEq this
         apply SEq.symm
         apply this.symm.trans
@@ -53,8 +53,8 @@ private lemma main
           simp_all
       ·
         simp at h_prod
-        let ab : List.Vector α ((m + n) * s.prod) := cast (by simp_all) (a.data ++ b.data)
-        have h_ab : ab ≃ a.data ++ b.data := by
+        let ab : List.Vector α ((m + n) * s.prod) := cast (by simp_all) (A.data ++ B.data)
+        have h_ab : ab ≃ A.data ++ B.data := by
           simp [ab]
           apply SEqCast.of.Eq h_prod
         apply SEq.of.SEq.SEq (c := ab.unflatten[i])
@@ -72,7 +72,7 @@ private lemma main
           ·
             apply GetUnflatten.as.ArraySlice.of.Lt (by assumption)
     ·
-      have := GetUnflatten.eq.GetSplitAt_1.of.Lt h_lt b.data
+      have := GetUnflatten.eq.GetSplitAt_1.of.Lt h_lt B.data
       simp at this
       rw [this]
 

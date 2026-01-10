@@ -31,6 +31,7 @@ class IntegerRing (Z : Type) extends Semiring Z, LinearOrder Z, IsStrictOrderedR
   div_one (n : Z) : n / 1 = n
   div_eq_zero_of_lt {a b : Z} : (a ≥ 0) → (a < b) → a / b = 0
   zero_mod (n : Z) : 0 % n = 0
+  div_self {n : Z} : n ≠ 0 → n / n = 1
   div_zero (n : Z) : n / 0 = 0
   even_iff {n : Z} : Even n ↔ n % 2 = 0
   odd_iff {n : Z} : Odd n ↔ n % 2 = 1
@@ -64,6 +65,7 @@ instance : IntegerRing ℕ where
   div_eq_zero_of_lt := by simp_all
   sub_self := Nat.sub_self
   zero_mod := Nat.zero_mod
+  div_self {n : ℕ} (h : n ≠ 0) := Nat.div_self (by omega)
   div_zero := Nat.div_zero
   even_iff := Nat.even_iff
   odd_iff := Nat.odd_iff
@@ -109,6 +111,7 @@ instance : IntegerRing ℤ where
   div_eq_zero_of_lt := Int.ediv_eq_zero_of_lt
   sub_self := Int.sub_self
   zero_mod := Int.zero_emod
+  div_self := Int.ediv_self
   div_zero := Int.ediv_zero
   even_iff := Int.even_iff
   odd_iff := Int.odd_iff

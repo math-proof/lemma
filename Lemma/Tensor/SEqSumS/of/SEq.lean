@@ -14,7 +14,8 @@ private lemma main
 -- imply
   A.sum i ≃ B.sum i := by
 -- proof
-  apply SEqBFnS.of.SEq h (fun (s : List ℕ) (X : Tensor α s) => X.sum i)
+  apply SEqBFnS.of.SEq h
 
 
--- created on 2025-10-31
+-- created on 2025-06-29
+-- updated on 2025-07-13
