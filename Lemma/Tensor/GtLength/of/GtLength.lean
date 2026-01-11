@@ -6,7 +6,7 @@ open Tensor
 private lemma main
   {s : List ℕ}
 -- given
-  (h : s.length > i)
+  (h : s.length > j)
   (X : Tensor α s)
   (i : Fin s[0]) :
 -- imply

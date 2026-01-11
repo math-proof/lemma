@@ -9,7 +9,8 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Int.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
 import Lemma.List.Drop.eq.ListGetS.of.GeLength_2
-import Lemma.List.ZipWith_AppendS.eq.AppendZipWithS
+import Lemma.List.ZipWith_Append.eq.AppendZipWithS
+import Lemma.List.ZipWith__Append.eq.AppendZipWithS
 import Lemma.List.DropLast.eq.Take_SubLength_1
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
@@ -142,11 +143,7 @@ def Tensor.broadcast_matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m,
           simp
           rw [Append_Append.eq.AppendAppend]
           apply EqAppendS.of.Eq
-          have h_s := EqAppendTake__Drop s' (s'.length - s.length)
-          conv_lhs =>
-            arg 3
-            rw [← h_s]
-          rw [ZipWith_AppendS.eq.AppendZipWithS (by rfl)]
+          rw [ZipWith_Append.eq.AppendZipWithS]
           apply EqAppendS.of.Eq
           simp
       )
@@ -166,11 +163,7 @@ def Tensor.broadcast_matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m,
           simp
           rw [Append_Append.eq.AppendAppend]
           apply EqAppendS.of.Eq
-          have h_s := EqAppendTake__Drop s (s.length - s'.length)
-          conv_lhs =>
-            arg 2
-            rw [← h_s]
-          rw [ZipWith_AppendS.eq.AppendZipWithS (by rfl)]
+          rw [ZipWith__Append.eq.AppendZipWithS]
           apply EqAppendS.of.Eq
           simp
       )

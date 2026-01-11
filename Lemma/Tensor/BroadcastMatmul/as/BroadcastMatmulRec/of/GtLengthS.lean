@@ -1,8 +1,7 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqAppendS.of.Eq
-import Lemma.List.EqAppendTake__Drop
-import Lemma.List.ZipWith_AppendS.eq.AppendZipWithS
+import Lemma.List.ZipWith__Append.eq.AppendZipWithS
 import sympy.tensor.tensor
 open Bool List
 
@@ -36,11 +35,7 @@ private lemma main
         simp
         rw [Append_Append.eq.AppendAppend]
         apply EqAppendS.of.Eq
-        have h_s := EqAppendTake__Drop s (s.length - s'.length)
-        conv_lhs =>
-          arg 2
-          rw [← h_s]
-        rw [ZipWith_AppendS.eq.AppendZipWithS (by rfl)]
+        rw [ZipWith__Append.eq.AppendZipWithS]
         apply EqAppendS.of.Eq
         simp
     ·
