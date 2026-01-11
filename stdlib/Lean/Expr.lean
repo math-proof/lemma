@@ -216,9 +216,9 @@ def Lean.Expr.extract_conditions (e : Expr) (n : Nat) (list : List Expr) : List 
     else
       list
 
-def Lean.Expr.mapDeBruijnIndex (h : Nat → Nat → Nat) (offset : Nat) : Expr → Expr
+def Lean.Expr.mapDeBruijnIndex (h : Nat → Nat → Expr) (offset : Nat) : Expr → Expr
   | bvar deBruijnIndex =>
-    bvar (h deBruijnIndex offset)
+    h deBruijnIndex offset
   | app fn arg =>
     app (fn.mapDeBruijnIndex h offset) (arg.mapDeBruijnIndex h offset)
   | lam binderName binderType body binderInfo =>
@@ -234,13 +234,13 @@ def Lean.Expr.mapDeBruijnIndex (h : Nat → Nat → Nat) (offset : Nat) : Expr �
   | e => e
 
 def Lean.Expr.setDeBruijnIndex (e : Expr) (old : Nat) (new : Nat) : Expr :=
-  e.mapDeBruijnIndex (fun deBruijnIndex offset => if deBruijnIndex == old + offset then new + offset else deBruijnIndex) 0
+  e.mapDeBruijnIndex (fun deBruijnIndex offset => if deBruijnIndex == old + offset then bvar (new + offset) else bvar deBruijnIndex) 0
 
 def Lean.Expr.incDeBruijnIndex (e : Expr) (n : Nat) (offset : Nat := 0): Expr :=
-  e.mapDeBruijnIndex (fun deBruijnIndex offset => if deBruijnIndex ≥ offset then deBruijnIndex + n else deBruijnIndex) offset
+  e.mapDeBruijnIndex (fun deBruijnIndex offset => if deBruijnIndex ≥ offset then bvar (deBruijnIndex + n) else bvar deBruijnIndex) offset
 
 def Lean.Expr.decDeBruijnIndex (e : Expr) (n : Nat) (offset : Nat := 0): Expr :=
-  e.mapDeBruijnIndex (fun deBruijnIndex offset => if deBruijnIndex ≥ offset then deBruijnIndex - n else deBruijnIndex) offset
+  e.mapDeBruijnIndex (fun deBruijnIndex offset => if deBruijnIndex ≥ offset then bvar (deBruijnIndex - n) else bvar deBruijnIndex) offset
 
 /--
   Construct a nested application expression from a function and a list of arguments.
@@ -486,6 +486,13 @@ def Lean.Expr.getElem2get : Expr → Expr
         else
           i
       (const `Tensor.get us).mkApp [α, s, xs.getElem2get, i]
+    | app (lam _ _ (app (app (const `List.Vector us) α) n) .default) deBruijn_0 =>
+      -- (fun s => List.Vector α (fn s) n) s
+      -- change # 0 to deBruijn_0
+      let map := fun deBruijnIndex offset => if deBruijnIndex == offset then deBruijn_0.incDeBruijnIndex offset else if deBruijnIndex > offset then bvar (deBruijnIndex - 1) else bvar deBruijnIndex
+      let α := α.mapDeBruijnIndex map 0
+      let n := n.mapDeBruijnIndex map 0
+      (const `List.Vector.get us).mkApp [α, n, xs.getElem2get, i]
     | _ =>
       panic! s!"Expected a collection, but got: coll = {coll}"
   | app fn arg =>

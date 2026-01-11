@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.tensor.Basic
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (h : s = s')

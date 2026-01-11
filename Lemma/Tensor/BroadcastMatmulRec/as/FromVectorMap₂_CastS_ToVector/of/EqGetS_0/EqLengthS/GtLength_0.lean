@@ -19,29 +19,27 @@ private lemma main
   {s s' : List ℕ}
 -- given
   (h : s.length > 0)
-  (h : s.length = s'.length)
+  (h_length : s.length = s'.length)
   (h_0 : s[0] = s'[0])
   (X : Tensor α (s ++ [m, n]))
   (Y : Tensor α (s' ++ [n, k])) :
 -- imply
-  let Xs : List.Vector (Tensor α (s.tail ++ [m, n])) s[0] := cast
+  let Xs : List.Vector (Tensor α (s ++ [m, n]).tail) s[0] := cast
     (by
-      congr
       rw [TailAppend.eq.AppendTail.of.GtLength_0 (by grind)]
       rw [HeadD.eq.Get_0.of.GtLength_0 (by grind)]
       rw [GetAppend.eq.Get.of.GtLength (by grind)]
     )
     X.toVector
-  let Ys : List.Vector (Tensor α (s'.tail ++ [n, k])) s[0] := cast
+  let Ys : List.Vector (Tensor α (s' ++ [n, k]).tail) s[0] := cast
     (by
-      congr
       rw [TailAppend.eq.AppendTail.of.GtLength_0 (by grind)]
       rw [HeadD.eq.Get_0.of.GtLength_0 (by grind)]
       rw [GetAppend.eq.Get.of.GtLength (by grind)]
       rw [← h_0]
     )
     Y.toVector
-  X.broadcast_matmul_rec Y (by grind) ≃ Tensor.fromVector (List.Vector.map₂ (fun X Y => X.broadcast_matmul_rec Y (by grind)) Xs Ys) := by
+  X.broadcast_matmul_rec Y (by grind) ≃ Tensor.fromVector (List.Vector.map₂ (fun X Y => Tensor.broadcast_matmul_rec (cast (congrArg (Tensor α) (show (s ++ [m, n]).tail = s.tail ++ [m, n] by grind)) X) (cast (congrArg (Tensor α) (show (s' ++ [n, k]).tail = (s'.tail ++ [n, k]) by grind)) Y) (by grind)) Xs Ys) := by
 -- proof
   simp
   match s, s' with
