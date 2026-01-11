@@ -125,7 +125,7 @@ def Tensor.broadcast_matmul_rec [Mul α] [Add α] [Zero α] (X : Tensor α (s ++
         split_ifs
         repeat simp_all
       )
-      (Tensor.fromVector (List.Vector.map₂ (fun x y => broadcast_matmul_rec x y h) X.toVector Y.toVector))
+      (Tensor.fromVector (List.Vector.map₂ (fun X Y => broadcast_matmul_rec X Y h) X.toVector Y.toVector))
 
 def Tensor.broadcast_matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, n])) (Y : Tensor α (s' ++ [n, k])) : Tensor α (Tensor.broadcast_shape s s' ++ [m, k]) :=
   if h : s.length < s'.length then

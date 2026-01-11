@@ -43,6 +43,7 @@ private lemma main
       apply EqAppendS.of.Eq
       simp
     ·
+      conv_lhs => unfold broadcast_matmul_rec
       sorry
   ·
     simp [broadcast_shape]
