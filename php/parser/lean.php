@@ -864,6 +864,8 @@ abstract class Lean extends IndentedNode
                 return $this->push_post_unary('LeanCube');
             case '⁴':
                 return $this->push_post_unary('LeanTesseract');
+            case 'ᵀ':
+                return $this->push_post_unary('LeanTranspose');
             case '⁺':
                 return $this->push_post_unary('LeanPosPart');
             case '⁻':
@@ -3925,6 +3927,31 @@ class LeanTesseract extends LeanUnaryArithmeticPost
                 return '⁴';
             case 'command':
                 return '^4';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
+
+class LeanTranspose extends LeanUnaryArithmeticPost
+{
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+
+    public function latexFormat()
+    {
+        return "{%s}$this->command";
+    }
+
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+                return 'ᵀ';
+            case 'command':
+                return '^\top';
             default:
                 return parent::__get($vname);
         }
