@@ -1,6 +1,6 @@
+import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import stdlib.SEq
 open List Tensor
 
 
@@ -22,7 +22,7 @@ private lemma main
   | cons k ks ih =>
     match ks with
     | [] =>
-      sorry
+      rw [GetDot.eq.DotGet.fin]
     | k' :: ks' =>
       sorry
 

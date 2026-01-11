@@ -1,16 +1,16 @@
-import sympy.Basic
 import sympy.tensor.Basic
+import sympy.Basic
 
 
 @[main]
 private lemma main
+  [Add α] [Zero α]
   {A B : Tensor α s}
-
 -- given
   (h : A = B)
-  (d : ℕ) :
+  (i : ℕ) :
 -- imply
-  A.unsqueeze d = B.unsqueeze d := by
+  A.sum i = B.sum i := by
 -- proof
   subst h
   simp

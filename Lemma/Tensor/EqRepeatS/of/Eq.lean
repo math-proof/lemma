@@ -1,16 +1,16 @@
-import sympy.Basic
 import sympy.tensor.Basic
+import sympy.Basic
 
 
 @[main]
 private lemma main
   {A B : Tensor α s}
-
 -- given
   (h : A = B)
-  (d : ℕ) :
+  (n : ℕ)
+  (d : Fin s.length) :
 -- imply
-  A.unsqueeze d = B.unsqueeze d := by
+  A.repeat n d = B.repeat n d := by
 -- proof
   subst h
   simp
