@@ -373,10 +373,7 @@ private lemma main
             assumption
           ·
             omega
-        repeat {
-          simp
-          omega
-        }
+        repeat grind
       ·
         simp
         omega

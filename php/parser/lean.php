@@ -1646,10 +1646,13 @@ abstract class LeanPairedGroup extends LeanUnary
     }
     public function strFormat()
     {
-        $arg = $this->argFormat();
+        $format = $this->argFormat();
         $operator = $this->operator;
-        $format = "$operator[0]$arg";
         if ($this->is_closed)
+            $format = $operator[0] . $format . $operator[1];
+        else if ($this->is_closed === null)
+            $format = $operator[0] . $format;
+        else 
             $format .= $operator[1];
         return $format;
     }
@@ -4636,6 +4639,8 @@ class LeanStatements extends LeanArgs
                 }
             } elseif ($sequential_tactic_combinator = $tactic->sequential_tactic_combinator)
                 $sequential_tactic_combinator->echo();
+            else if ($block = $tactic->repeat_block())
+                $block->echo();
         } elseif ($tactic instanceof LeanTacticBlock || $tactic instanceof LeanIte || $tactic instanceof LeanCalc)
             $tactic->echo();
     }
@@ -7302,6 +7307,8 @@ class LeanTactic extends LeanSyntax
         }
         if ($has_sequential_tactic_combinator)
             $sequential_tactic_combinator->echo();
+        elseif ($block = $this->repeat_block())
+            $block->echo();
     }
 
     public function split(&$syntax = null)
@@ -7345,6 +7352,17 @@ class LeanTactic extends LeanSyntax
                 // unexpected case
             }
         }
+        elseif ($block = $this->repeat_block()) {
+            $self = clone $this;
+            $self->arg = new LeanBrace(new LeanCaret($this->indent, $this->level), $this->indent, $this->level);
+            $array = [$self];
+            foreach ($block->args as $stmt)
+                array_push($array, ...$stmt->split($syntax));
+            $rbrace = new LeanBrace(new LeanCaret($this->indent, $this->level), $this->indent, $this->level);
+            $rbrace->is_closed = false; // only the right brace is printed
+            $array[] = $rbrace;
+            return $array;
+        }
         if (($by = $this->by) && ($stmts = $by->arg) instanceof LeanStatements) {
             $self = clone $this;
             $self->by->arg = new LeanCaret($by->indent, $by->level);
@@ -7353,6 +7371,12 @@ class LeanTactic extends LeanSyntax
             return $statements;
         }
         return [$this];
+    }
+
+    public function repeat_block()
+    {
+        if ($this->func == 'repeat' && ($brace = $this->arg) instanceof LeanBrace && ($block = $brace->arg) instanceof LeanStatements)
+            return $block;
     }
 
     public function insert_sequential_tactic_combinator($caret, $next_token)
