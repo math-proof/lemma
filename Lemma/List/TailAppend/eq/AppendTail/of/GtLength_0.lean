@@ -1,4 +1,5 @@
-import sympy.Basic
+import Lemma.List.TailAppend.eq.AppendTail.of.Ne_Nil
+open List
 
 
 @[main]
@@ -10,11 +11,9 @@ private lemma main
 -- imply
   (a ++ b).tail = a.tail ++ b := by
 -- proof
-  match a with
-  | [] =>
-    contradiction
-  | a₀ :: a =>
-    simp
+  apply TailAppend.eq.AppendTail.of.Ne_Nil
+  grind
 
 
 -- created on 2025-07-06
+-- updated on 2026-01-12
