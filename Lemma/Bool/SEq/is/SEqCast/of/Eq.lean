@@ -2,16 +2,13 @@ import stdlib.SEq
 import sympy.Basic
 
 /--
-design tricks : (h : n_a = n_b')
-proposition `cast (congrArg Vector h) a ≃ b` is dependent on `h`, effectively making h an implicit argument.
-thus the resulted lemma name using attribute mpr.comm is `Bool.SEq.of.SEq_Cast`
 | attributes | lemma |
 | --- | --- |
 | main | Bool.SEq.is.SEqCast.of.Eq |
 | comm | Bool.SEqCast.is.SEq.of.Eq |
 | mp  | Bool.SEqCast.of.SEq.Eq |
 | mpr   | Bool.SEq.of.SEqCast.Eq |
-| mp.comm | Bool.SEq_Cast.of.SEq |
+| mp.comm | Bool.SEq_Cast.of.SEq.Eq |
 | mpr.comm | Bool.SEq.of.SEq_Cast |
 | comm.is 1 | Bool.SEq.is.SEq_Cast.of.Eq |
 -/

@@ -1,3 +1,10 @@
+import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
+import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec
+import Lemma.List.Cons_Append_List.eq.AppendTake_Length
+import Lemma.List.TakeAppend.eq.Take.of.GeLength
+import Lemma.List.TakeCons.eq.Cons_Take.of.Gt_0
+import Lemma.Tensor.GetBroadcastMatmul.as.BroadcastMatmulRecGet.of.GtLength_0
 import Lemma.Tensor.GetIte.eq.IteGetS
 import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
@@ -31,7 +38,7 @@ import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
 import Lemma.Vector.Repeat.eq.Cast.of.Eq_1
 open Bool List Nat Tensor Vector
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 40000000
 
 
 @[main, fin]
@@ -57,20 +64,88 @@ private lemma main
     rw [Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
     simp
     apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
-    unfold broadcast_matmul
-    simp
-    -- simp [broadcast_matmul_rec]
-    unfold broadcast
-    simp [broadcast_shape]
-    split_ifs with h
+    have h_s0 : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) ++ [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2]] ++ [n' / (s₀ :: (s ++ [k]))[(s ++ [k]).length] * (s₀ :: (s ++ [k]))[(s ++ [k]).length] + n' % (s₀ :: (s ++ [k]))[(s ++ [k]).length]] = (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) ++ [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2], n'] := by
+      simp
+      rw [EqAddMulDiv]
+      apply List.Cons_Append_List.eq.AppendTake_Length
+    have h_s1 : ((n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) ++ [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2], (s₀ :: (s ++ [k]))[(s ++ [k]).length]]).set ((n :: (s₀ :: s ++ [k])).length - 1) (n' / (s₀ :: (s ++ [k]))[(s ++ [k]).length] * ((n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) ++ [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2], (s₀ :: (s ++ [k]))[(s ++ [k]).length]])[(n :: (s₀ :: s ++ [k])).length - 1]) = (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) ++ [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2]] ++ [n' / (s₀ :: (s ++ [k]))[(s ++ [k]).length] * (s₀ :: (s ++ [k]))[(s ++ [k]).length]] := by
+      simp [show s.length ⊓ (s.length + 1 + 1) = s.length by omega]
+      apply List.AppendTake_Length.eq.Cons_Append_List
+    have h_s2 : n :: (s₀ :: s ++ [k]) = (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) ++ [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2], (s₀ :: (s ++ [k]))[(s ++ [k]).length]] := by
+      simp
+      apply List.Cons_Append_List.eq.AppendTake_Length
+    have := GetBroadcastMatmul.as.BroadcastMatmulRecGet.of.GtLength_0.fin
+      (by simp)
+      (cast (congrArg (Tensor α) h_s0)
+        (cast (congrArg (Tensor α) h_s1)
+          ((cast (congrArg (Tensor α) h_s2) X).repeat (n' / (s₀ :: (s ++ [k]))[(s ++ [k]).length]) ⟨(s ++ [k]).length + 1, by grind⟩) ++ (0 : Tensor α ((n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) ++ [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2]] ++ [n' % (s₀ :: (s ++ [k]))[(s ++ [k]).length]]))
+        )
+      )
+      Y ⟨i, by simp⟩
+    simp at this
+    apply this.trans
+    have h_s0 : (s₀ :: (s ++ [k])).take ((s₀ :: (s ++ [k])).length - 2) ++ [(s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 2]] ++ [[n', k'][[n', k'].length - 2] / (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1] * (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1] + [n', k'][[n', k'].length - 2] % (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1]] = (s₀ :: (s ++ [k])).take ((s₀ :: (s ++ [k])).length - 2) ++ [(s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 2], [n', k'][[n', k'].length - 2]] := by
+      simp
+      rw [EqAddMulDiv]
+      apply List.Cons_Append_List.eq.AppendTake_Length
+    have h_s1 : ((s₀ :: (s ++ [k])).take ((s₀ :: (s ++ [k])).length - 2) ++ [(s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 2], (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1]]).set ((s₀ :: (s ++ [k])).length - 1) ([n', k'][[n', k'].length - 2] / (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1] * ((s₀ :: (s ++ [k])).take ((s₀ :: (s ++ [k])).length - 2) ++ [(s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 2], (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1]])[(s₀ :: (s ++ [k])).length - 1]) = (s₀ :: (s ++ [k])).take ((s₀ :: (s ++ [k])).length - 2) ++ [(s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 2]] ++ [[n', k'][[n', k'].length - 2] / (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1] * (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1]] := by
+      simp [show s.length ⊓ (s.length + 1 + 1) = s.length by omega]
+      apply List.AppendTake_Length.eq.Cons_Append_List
+    have h_s2 : s₀ :: (s ++ [k]) = (s₀ :: (s ++ [k])).take ((s₀ :: (s ++ [k])).length - 2) ++ [(s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 2], (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1]] := by
+      simp
+      apply List.Cons_Append_List.eq.AppendTake_Length
+    have := Tensor.BroadcastMatmul.as.BroadcastMatmulRec
+      (cast (congrArg (Tensor α) h_s0)
+        (cast (congrArg (Tensor α) h_s1)
+          ((cast (congrArg (Tensor α) h_s2) (X.get i)).repeat (n' / (s₀ :: (s ++ [k]))[(s ++ [k]).length]) ⟨(s ++ [k]).length, by grind⟩) ++ (0 : Tensor α ((s₀ :: (s ++ [k])).take ((s₀ :: (s ++ [k])).length - 2) ++ [(s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 2]] ++ [[n', k'][[n', k'].length - 2] % (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1]]))
+        )
+      )
+      Y
+    symm
+    simp at this
+    apply this.trans
+    apply Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
     .
-      have h' : ((n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2)).length > 0 := by
+      simp
+    .
+      rfl
+    .
+      rfl
+    .
+      apply SEqCastS.of.SEq.Eq.Eq
+      .
         simp
-      -- simp [Tensor.GetIte.eq.IteGetS.fin]
-      -- simp [h']
-      sorry
+        rw [EqAddMulDiv]
+        apply Cons_Append_List.eq.AppendTake_Length
+      .
+        simp
+      .
+        rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩)]
+        .
+          apply SEq_Cast.of.SEq.Eq
+          .
+            simp
+            rw [EqAddMulDiv]
+            apply Cons_Append_List.eq.AppendTake_Length
+          .
+            simp
+            rw [GetAppend.eq.Cast_AppendCastS_Get.of.GtLength_0.fin]
+            .
+              sorry
+            .
+              sorry
+        .
+          simp
+          rw [EqAddMulDiv]
+          apply Cons_Append_List.eq.AppendTake_Length
+        .
+          simp
     .
-      sorry
+      apply SEqBroadcastS.of.Eq.Eq
+      .
+        simp
+      .
+        rfl
 
 
 -- created on 2026-01-11
