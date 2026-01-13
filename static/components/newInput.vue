@@ -111,10 +111,8 @@ export default {
 		keydown(event){
 			var self = event.target; 
 			var text = self.value;
-
 			if (self.size <= text.length)
 				self.size = text.length * 1.5;
-
 			var key = event.key;
 			switch (key) {
 				case '/':
@@ -123,21 +121,15 @@ export default {
 					key = '';
 					var start = self.selectionStart;
 					var text = text.slice(0, start);
-
 					var prefix = text.match(/([\w.]+)$/)[1] + key;
-
 					console.log(`perform code suggestion on ${prefix}`);
 					break;
-
 				case '.':
 					var start = self.selectionStart;
 					var text = text.slice(0, start);
-
 					var prefix = text.match(/([\w.]+)$/)[1] + key;
-
 					console.log(`perform code suggestion on ${prefix}`);
 					break;
-
 				case 'ArrowDown':
 					var start = self.selectionStart;
 					var cm = this.get_next_input().editor;
@@ -150,36 +142,29 @@ export default {
 					else 
 						cm.setCursor(0, start);
 					break;
-
 				case 'F3':
 					console.log("F3 is pressed");
 					find_and_jump(event, this.$parent.sections);
 					break;
-
 				case 'F5':
 					if (event.ctrlKey){
 						event.preventDefault();
 						form.submit();
-					}					
+					}
 					break;
-
 				case 's':
 					if (event.ctrlKey){
 						event.preventDefault();
-						form.submit();
+						this.$parent.save();
 					}
-					break;						
-					
+					break;
 				default:
 					break;
 			}
-			
 		},	
-		
 		blur(event){
 			this.phrases = null;	
 		},
-		
 		keydown_select(event){
 			var self = event.target;
 			switch (event.key) {
