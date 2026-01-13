@@ -1,7 +1,12 @@
-import Lemma.Tensor.GetDot.eq.DotGet
+import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.Ne_Nil.is.GeLength_1
+import Lemma.List.Ne_Nil.is.GtLength_0
+import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
+import Lemma.Tensor.GetDot.as.DotGet
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-open List Tensor
+import Lemma.Tensor.SEqDotS.of.SEq
+import Lemma.Tensor.SEqGetS.of.SEq.GtLength
+open Tensor List Bool
 
 
 @[main, fin]
@@ -15,62 +20,27 @@ private lemma main
 -- imply
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil h_s (by apply GeLength_1.of.Ne_Nil h_s) X Y i) ≃ X[i] @ Y := by
 -- proof
+  have h_s := GtLength_0.of.Ne_Nil h_s
+  let X' : Tensor α (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])) := cast (by simp; grind) X
+  have h_get := GetDot.as.DotGet.fin X' Y i
+  simp [X'] at h_get
   simp [GetElem.getElem]
-  induction s generalizing n' k' n with
-  | nil =>
-    contradiction
-  | cons k₀ ks ih =>
-    match ks with
-    | [] =>
-      rw [GetDot.eq.DotGet.fin]
-    | k₁ :: ks' =>
-      simp at ih
-      have ih_i := ih (Y := Y) (n := n) (i := i)
-      have ih_j : ∀ j : Fin k₀,
-        let Xj : Tensor α (n :: k₁ :: ks') := X.select ⟨1, by simp⟩ ⟨j, by simp⟩
-        (Xj @ Y).get ⟨i, by grind⟩ ≃ (Xj.get i) @ Y := by
-        intro j Xj
-        specialize ih_i (X := Xj)
-        exact ih_i
-      simp at ih_j
-      apply Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-      .
-        intro j
-        have h_j := j.isLt
-        simp [matmul_shape, broadcast_shape] at h_j
-        simp [List.TakeTake.eq.Take.of.Ge] at h_j
-        have := Nat.EqMin.of.Le (show ks'.length ≤ ks'.length + 1 + 1 by omega)
-        simp [this] at h_j
-        have h_j : j < k₀ := by
-          if h_ks : ks'.length = 0 then
-            have h_ks := List.Eq_Nil.of.EqLength_0 h_ks
-            simp [h_ks] at h_j
-            conv_rhs at h_j => simp
-            assumption
-          else
-            rw [List.GetAppend.eq.Get.of.GtLength (by simp; omega)] at h_j
-            have : 0 < ((k₀ :: k₁ :: ks').take ks'.length).length := by
-              simp
-              apply Nat.Gt_0.of.Ne_0
-              assumption
-            rw [List.GetTake.eq.Get.of.Lt_LengthTake this] at h_j
-            simp at h_j
-            assumption
-        have ih_j' := ih (X.get i) (n := k₀) (i := ⟨j, h_j⟩) (Y := Y)
-        simp at ih_j'
-        apply SEq.symm
-        apply ih_j'.trans
-        .
-          sorry
-        .
-          simp [matmul_shape, broadcast_shape]
-      .
-        simp [matmul_shape, broadcast_shape]
-        split_ifs with h₀
-        .
-          simp
-        .
-          simp_all
+  have h_cast := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp; grind) X ⟨i, by grind⟩ (s' := n :: (s.take (s.length - 1) ++ [s[s.length - 1]]))
+  simp at h_cast
+  rw [h_cast] at h_get
+  have h_s : (n :: s).tail = (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])).tail := by 
+    simp
+    grind
+  have h_seq : (cast (congrArg (Tensor α) h_s) (X.get i)) @ Y ≃ (X.get i) @ Y := SEqDotS.of.SEq (by apply SEqCast.of.Eq h_s) Y
+  have h_get := h_get.trans h_seq
+  symm
+  apply h_get.symm.trans
+  apply SEqGetS.of.SEq.GtLength
+  apply SEqDotS.of.SEq
+  apply SEqCast.of.Eq
+  simp
+  grind
 
 
 -- created on 2026-01-04
+-- updated on 2026-01-13
