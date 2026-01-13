@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Tensor.SEqBroadcastS.of.SEq.Eq
+import Lemma.Tensor.SEqBroadcastS.of.SEq.Eq.Dvd
 open Tensor Bool
 
 
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   A.broadcast s_A h_dvd ≃ B.broadcast s_B (by rwa [← h_s]) := by
 -- proof
-  apply SEqBroadcastS.of.SEq.Eq _ h_s
+  apply SEqBroadcastS.of.SEq.Eq.Dvd _ h_s
   apply SEq.of.Eq h
 
 

@@ -4,7 +4,7 @@ import Lemma.List.EqConsS.is.Eq.Eq
 open List
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List α}
 -- given
