@@ -10,15 +10,11 @@ private lemma main
   {s : List ℕ}
 -- given
   (X : Tensor α (s ++ [m, n]))
-  (Y : Tensor α ([n, k])) :
+  (Y : Tensor α [n, k]) :
 -- imply
-  have h_s : [n, k] = [] ++ [n, k] := by simp
-  let Y := cast (congrArg (Tensor α) h_s) Y
-  X.broadcast_matmul Y ≃ X.broadcast_matmul_rec (Y.broadcast (s ++ [n, k]) (by simp)) (by grind) := by
+  (X.broadcast_matmul Y : Tensor α (broadcast_shape s [] ++ [m, k])) ≃ X.broadcast_matmul_rec (Y.broadcast (s ++ [n, k]) (by simp)) (by grind) := by
 -- proof
-  intro h_s Y
-  have := BroadcastMatmul.as.BroadcastMatmulRec.of.GeLengthS (by simp) X Y
-  simp at this
+  have := BroadcastMatmul.as.BroadcastMatmulRec.of.GeLengthS (by simp) X Y (s' := [])
   apply this.trans
   apply SEqBroadcastMatmulRecS.of.SEq.SEq
   ·

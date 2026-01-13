@@ -35,9 +35,9 @@ set_option maxHeartbeats 1000000
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h : k < n')
-  (X : Tensor α [n, n'])
-  (Y : Tensor α [k, k'])
+  (h : k > n')
+  (X : Tensor α [n, k])
+  (Y : Tensor α [n', k'])
   (i : Fin n) :
 -- imply
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] @ Y := by
@@ -50,10 +50,10 @@ private lemma main
     rw [Matmul.eq.SelectBatchDot.of.Gt_Get_SubLength.GeLength_2]
     ·
       simp
-      let Y' : Tensor α [n' / k * k, k'] := Y.repeat (n' / k) (0 : Fin 2)
-      let Y'Append : Tensor α [n' / k * k + n' % k, k'] := Y' ++ (0 : Tensor α [n' % k, k'])
-      have h_s : [n' / k * k + n' % k, k'] = [n', k'] := by simp [EqAddMulDiv]
-      let XiBroadcast : Tensor α ([] ++ [1, n']) := (X.get i).broadcast [1, n'] (by simp)
+      let Y' : Tensor α [k / n' * n', k'] := Y.repeat (k / n') (0 : Fin 2)
+      let Y'Append : Tensor α [k / n' * n' + k % n', k'] := Y' ++ (0 : Tensor α [k % n', k'])
+      have h_s : [k / n' * n' + k % n', k'] = [k, k'] := by simp [EqAddMulDiv]
+      let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).broadcast [1, k] (by simp)
       have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) ⟨0, by simp⟩ (XiBroadcast.batch_dot (cast (congrArg (Tensor α) h_s) Y'Append))
       simp [XiBroadcast] at this
       rw [this]
@@ -70,7 +70,7 @@ private lemma main
       rw [this]
       have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
         (by simp)
-        (show [n, k' * 1, n'] = [n, k', n'] by simp)
+        (show [n, k' * 1, k] = [n, k', k] by simp)
         ((X.unsqueeze 1).repeat k' (1 : Fin 3))
         ⟨i, by simp⟩
       simp at this
@@ -80,7 +80,7 @@ private lemma main
       rw [this]
       have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
         (by simp)
-        (show [n * 1, k', n'] = [n, k', n'] by simp)
+        (show [n * 1, k', k] = [n, k', k] by simp)
         (((cast (congrArg (Tensor α) h_s) Y'Append)ᵀ.unsqueeze 0).repeat n (0 : Fin 3))
         ⟨i, by simp⟩
       simp at this
@@ -114,7 +114,7 @@ private lemma main
             repeat rw [GetCast.eq.Get.of.Eq.fin]
             ·
               simp
-              have h_t : t < 1 * (k' * (1 * (n' * 1))) := by
+              have h_t : t < 1 * (k' * (1 * (k * 1))) := by
                 simp_all
               let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
               repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
