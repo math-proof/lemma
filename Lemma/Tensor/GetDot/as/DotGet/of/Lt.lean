@@ -87,7 +87,6 @@ private lemma main
         )
       )
       Y ⟨i, by simp⟩
-    simp at this
     apply this.trans
     have h_s0' : (s₀ :: (s ++ [k])).take ((s₀ :: (s ++ [k])).length - 2) ++ [(s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 2]] ++ [[n', k'][[n', k'].length - 2] / (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1] * (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1] + [n', k'][[n', k'].length - 2] % (s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 1]] = (s₀ :: (s ++ [k])).take ((s₀ :: (s ++ [k])).length - 2) ++ [(s₀ :: (s ++ [k]))[(s₀ :: (s ++ [k])).length - 2], [n', k'][[n', k'].length - 2]] := by
       simp
@@ -107,7 +106,6 @@ private lemma main
       )
       Y
     symm
-    simp at this
     apply this.trans
     apply SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
     .
@@ -142,7 +140,6 @@ private lemma main
               (0 : Tensor α ((n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) ++ [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2]] ++ [n' % (s₀ :: (s ++ [k]))[(s ++ [k]).length]]))
               ⟨i, by simp⟩
             symm
-            simp at this
             apply this.trans
             simp [@Tensor.EqGet0_0.fin]
             apply SEqAppendS.of.SEq.SEq.EqLengthS
