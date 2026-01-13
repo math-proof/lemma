@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqRepeatS.of.SEq
-import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.SEq0S.of.Eq
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq.EqLengthS
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -161,8 +161,8 @@ private lemma main
                     apply AppendTake_Length.eq.Cons_Append_List
                   .
                     simp
-                    have := GetRepeat.as.RepeatGet.of.Lt_Get_0.GtLength_0.fin (by simp) (by grind) (cast (congrArg (Tensor α) h_s2) X) (n' / (s₀ :: (s ++ [k]))[(s ++ [k]).length]) ⟨(s ++ [k]).length, by simp; grind⟩ (i := i)
-                    apply this.trans
+                    rw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtLength_0.fin (by simp) (by grind) _ _ ⟨(s ++ [k]).length, by simp; grind⟩]
+                    apply SEqCast.of.SEq.Eq (by simp)
                     apply SEqRepeatS.of.SEq (d := ⟨(s ++ [k]).length, by simp; grind⟩)
                     rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩)]
                     .
