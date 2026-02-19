@@ -1,6 +1,5 @@
 # List of package names to process
 $packages = Get-ChildItem -Path "Lemma" -Directory | Select-Object -ExpandProperty Name
-
 # Loop over each package
 foreach ($package in $packages) {
     $escapedPackage = [regex]::Escape($package)
