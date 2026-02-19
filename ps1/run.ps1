@@ -123,7 +123,7 @@ function transformPrefix {
     }
     
     # Pattern 2: SEqX, HEqX, IffX, AndX
-    if ($s -cmatch '^([SH]Eq)(.)(.*)$' -or $s -cmatch '^(Iff|And)(.)(.*)$') {
+    if ($s -cmatch '^([SH]Eq|Iff|And)(.)(.*)$') {
         $prefix = $matches[1]
         $s3 = $matches[2]
         $rest = $matches[3]
@@ -196,20 +196,8 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             }
             default {
                 $deBruijn = [int]$deBruijn
-                if ($constructor_order) {
-                    $index = $tokens.length - 1
-                    $increment = -1
-                }
-                else {
-                    $index = $tokens.length - 1
-                    $increment = -1
-                    # $indices = $tokens | Select-String "of"
-                    # if ($indices.Count -eq 0) {
-                    #     throw "No 'of' found in module $module"
-                    # }
-                    # $index = $indices[0].LineNumber
-                    # $increment = 1
-                }
+                $index = $tokens.length - 1
+                $increment = -1
                 while ($deBruijn) {
                     if ($deBruijn -band 1) {
                         $tokens[$index] = transformPrefix $tokens[$index]
