@@ -344,7 +344,7 @@ if [ $? -eq 0 ]; then
   # Check if the mysql command was successful
   if [ $? -eq 0 ]; then
     echo "Table 'lemma' created successfully."
-    bash run.sh
+    bash sh/run.sh
     exit 0
   else
     echo "Failed to create table 'lemma'."
@@ -356,7 +356,6 @@ end_time=$(date +%s)
 time_cost=$((end_time - start_time))
 
 # post-processing
-
 function remove_invalid_ir_file {
   module=${1#*/*/*/}
   module=${module%%.*}
@@ -409,5 +408,5 @@ bash sh/delete_open.sh
 bash sh/delete_import.sh
 rm -f "$tempConfigPath"
 
-echo "total lines     = $(find Lemma sympy stdlib -type f -name '*.lean' ! -name '*.echo.lean' -exec wc -l {} + | awk '{sum+=$1} END{print sum}')"
+echo "total lines     = $(find Lemma -type f -name '*.lean' -not -name '*.echo.lean' -exec awk 'END{print NR}' {} + 2>/dev/null | awk '{s+=$1} END{print s}')"
 

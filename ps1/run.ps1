@@ -433,9 +433,7 @@ mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "delete from lemma whe
 $end_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()
 $time_cost = $end_time - $start_time
 
-# Output the time cost (optional)
-Write-Output "Operation completed in $time_cost seconds"
-
+# post-processing
 function remove_invalid_ir_file {
     param(
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
