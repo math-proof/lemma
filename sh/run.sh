@@ -29,7 +29,8 @@ while read -r file; do
 done < <(find Lemma -type f -name "*.lean" -not -name "*.echo.lean") 
 
 touch test.log
-lake setup-file test.lean 2>&1 | tee test.log
+# lake setup-file test.lean 2>&1 | head -n -1 | tee test.log
+lake setup-file test.lean 2>&1 | sed '$d' | tee test.log
 
 sed -i -E "s/^import //" test.lean
 imports=$(cat test.lean)

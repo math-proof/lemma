@@ -31,6 +31,16 @@
             "env": { "PYTHONPATH": "${workspaceFolder}" },
         },
         {
+            "type": "bashdb",
+            "request": "launch",
+            "name": "Bash-Debug",
+            "cwd": "${workspaceFolder}",
+            "env": { 
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "program": "${file}"
+        },
+        {
             "name": "PowerShell: Launch Current File",
             "type": "PowerShell",
             "request": "launch",
