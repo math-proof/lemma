@@ -1,0 +1,17 @@
+{
+  "name": "lemma",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lean4 lemma library — Node lemma browser (EJS + stub Lean parser)",
+  "scripts": {
+    "start": "node server/app.mjs",
+    "node": "node server/app.mjs",
+    "test:lean": "node scripts/test-lean-parser.mjs",
+    "test:lean:scan": "node scripts/test-lean-parser.mjs --scan-lemma"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.0.1"
+  }
+}
