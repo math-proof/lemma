@@ -318,7 +318,7 @@ tempConfigPath="${tempConfigPath}.cnf"
 cat > "$tempConfigPath" << EOF
 [client]
 user = $MYSQL_USER
-password = $MYSQL_PASSWORD
+password = $MYSQL_PWD
 port = $MYSQL_PORT
 EOF
 

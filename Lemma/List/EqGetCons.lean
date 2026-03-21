@@ -2,10 +2,10 @@ import stdlib.List
 import sympy.Basic
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
-  (head : α) 
+  (head : α)
   (tail : List α) :
 -- imply
   (head :: tail)[0] = head := by

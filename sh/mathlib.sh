@@ -14,10 +14,10 @@ if [ ! -f "json/mathlib.tsv" ]; then
 fi
 
 
-mysql --local-infile=1 -u$MYSQL_USER -p$MYSQL_PASSWORD -P$MYSQL_PORT -D axiom < sql/insert/mathlib.sql 2>&1 | tee test.log
+mysql --local-infile=1 -u$MYSQL_USER -p$MYSQL_PWD -P$MYSQL_PORT -D axiom < sql/insert/mathlib.sql 2>&1 | tee test.log
 grep -P "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.mathlib' doesn't exist" test.log
 if [ $? -eq 0 ]; then
-  mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -P$MYSQL_PORT -D axiom < sql/create/mathlib.sql
+  mysql -u$MYSQL_USER -p$MYSQL_PWD -P$MYSQL_PORT -D axiom < sql/create/mathlib.sql
   # Check if the mysql command was successful
   if [ $? -eq 0 ]; then
     echo "Table 'mathlib' created successfully."

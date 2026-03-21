@@ -1,3 +1,7 @@
+import Lemma.List.EqGetCons
+import Lemma.Tensor.GetSum_2.eq.SumGet__0
+import Lemma.Nat.EqMulDiv
+import Lemma.Tensor.GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
@@ -18,7 +22,9 @@ import Lemma.Tensor.GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.eq.Cast_BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Matmul.eq.SelectBatchDot.of.Gt_Get_SubLength.GeLength_2
+import Lemma.Tensor.Matmul.eq.SumMulDataS.of.Gt
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -147,6 +153,73 @@ private lemma main
       simpa
   ·
     simp
+  ·
+    simp
+  ·
+    simpa
+
+
+@[main, fin]
+private lemma one
+  [Mul α] [Add α] [Zero α]
+-- given
+  (h : k > n')
+  (X : Tensor α [n, k])
+  (Y : Tensor α [n'])
+  (i : Fin n) :
+-- imply
+  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) = X[i] @ Y := by
+-- proof
+  simp [GetElem.getElem]
+  simp [MatMul.dot]
+  rw [Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2]
+  ·
+    simp [Matmul.eq.SumMulDataS.of.Gt h]
+    unfold Tensor.broadcast
+    unfold Tensor.batch_dot
+    simp
+    have h_s0 : ([] ++ [1, 1, k]).set ([] : List ℕ).length (n * ([] ++ [1, 1, k])[([] : List ℕ).length]) = [n, 1, k] := by
+      simp
+    have h_s1 : [k, 1].prod / [k].prod * [k].prod = [k, 1].prod := by
+      simp [Nat.EqMulDiv]
+    have h_s2 : [k / n' * n' + k % n'] = [k] := by
+      simp [Nat.EqAddMulDiv]
+    let Y' : Tensor α [k / n' * n'] := Y.repeat (k / n') (0 : Fin 1)
+    let X' : Tensor α [n, 1, k] := (X.unsqueeze 1).repeat 1 (1 : Fin 3)
+    have := Tensor.GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
+      (by grind)
+      (by grind)
+      (by grind)
+      ((X' * cast (congrArg (Tensor α) h_s0)
+        (((⟨cast (congrArg (List.Vector α) h_s1)
+          ((cast (congrArg (Tensor α) h_s2) (Y' ++ (0 : Tensor α [k % n']))).data.repeat (k * 1 / (k * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat n (0 : Fin 3)
+        )).sum 2
+      )
+      (i := 0) (j := i)
+    simp at this
+    rw [this]
+    rw [Tensor.GetSum_2.eq.SumGet__0.fin]
+    rw [Tensor.GetMul.eq.MulGetS.fin]
+    -- simp [X', Y']
+    have := Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
+      (by grind)
+      (by
+        simp
+        constructor
+        .
+          simp only [GetElem.getElem]
+          simp
+        .
+          rfl
+      )
+      (((⟨cast (congrArg (List.Vector α) h_s1)
+        ((cast (congrArg (Tensor α) h_s2) (Y' ++ (0 : Tensor α [k % n']))).data.repeat (k * 1 / (k * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat n (0 : Fin 3)
+      )
+      ⟨i, by grind⟩
+      (s' := [n, 1, k])
+    simp at this
+    rw [this]
+    sorry
   ·
     simp
   ·

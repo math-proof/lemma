@@ -2,8 +2,6 @@ import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.Lt_Get_0.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthGet.eq.Get_0.of.Lt_Get_0.GtLength_1
 import Lemma.Tensor.LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0
-import stdlib.SEq
-import sympy.tensor.tensor
 open Tensor
 
 

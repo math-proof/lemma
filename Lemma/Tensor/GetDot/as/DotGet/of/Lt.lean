@@ -143,5 +143,24 @@ private lemma main
           rfl
 
 
+@[main, fin]
+private lemma one
+  [Mul α] [Add α] [Zero α]
+-- given
+  (h : k < n')
+  (X : Tensor α (n :: (s ++ [k])))
+  (Y : Tensor α [n'])
+  (i : Fin n) :
+-- imply
+  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) ≃ X[i] @ Y := by
+-- proof
+  simp [GetElem.getElem]
+  match s with
+  | [] =>
+    sorry
+  | s₀ :: s =>
+    sorry
+
+
 -- created on 2026-01-11
 -- updated on 2026-01-13

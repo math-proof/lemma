@@ -21,4 +21,20 @@ private lemma main
     apply GetDot.as.DotGet.of.Ge (by omega)
 
 
+@[main, fin]
+private lemma one
+  [Mul α] [Add α] [Zero α]
+-- given
+  (X : Tensor α (n :: (s ++ [k])))
+  (Y : Tensor α [n'])
+  (i : Fin n) :
+-- imply
+  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) ≃ X[i] @ Y := by
+-- proof
+  if h_n : k < n' then
+    sorry
+  else
+    sorry
+
+
 -- created on 2026-01-13

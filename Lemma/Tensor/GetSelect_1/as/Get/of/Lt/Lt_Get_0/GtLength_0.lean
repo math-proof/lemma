@@ -15,7 +15,6 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
-import sympy.tensor.tensor
 open List Tensor Vector Bool
 
 

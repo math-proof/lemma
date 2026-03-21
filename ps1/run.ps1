@@ -1,5 +1,5 @@
 # usage :
-# . ps1\run.ps1
+# .\ps1\run.ps1
 param(
     [int]$limit = 4096
 )
@@ -376,7 +376,7 @@ $tempConfigPath = [IO.Path]::ChangeExtension((New-TemporaryFile).FullName, '.ini
 @"
 [client]
 user = $env:MYSQL_USER
-password = $env:MYSQL_PASSWORD
+password = $env:MYSQL_PWD
 port = $env:MYSQL_PORT
 default-character-set=utf8mb4
 "@ | Set-Content $tempConfigPath
@@ -391,7 +391,7 @@ if (Select-String -Path test.log -Pattern "ERROR \d+ \(\d+\): Unknown database '
     
     # Create the database
     mysql --defaults-extra-file="$tempConfigPath" -e "CREATE DATABASE axiom;"
-    # mysql "-u$env:MYSQL_USER" "-p$env:MYSQL_PASSWORD" "-P$env:MYSQL_PORT" -e "CREATE DATABASE axiom;"
+    # mysql "-u$env:MYSQL_USER" "-p$env:MYSQL_PWD" "-P$env:MYSQL_PORT" -e "CREATE DATABASE axiom;"
     
     # Check if database creation was successful
     if ($LASTEXITCODE -eq 0) {
@@ -415,7 +415,7 @@ Get-Content test.sql -Encoding UTF8 | mysql --defaults-extra-file="$tempConfigPa
 if (Select-String -Path test.log -Pattern "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.lemma' doesn't exist" -Quiet) {
     # Create the table
     Get-Content sql/create/lemma.sql | mysql --defaults-extra-file="$tempConfigPath" -D axiom
-    # Get-Content sql/create/lemma.sql | mysql "-u$env:MYSQL_USER" "-p$env:MYSQL_PASSWORD" "-P$env:MYSQL_PORT" -D axiom
+    # Get-Content sql/create/lemma.sql | mysql "-u$env:MYSQL_USER" "-p$env:MYSQL_PWD" "-P$env:MYSQL_PORT" -D axiom
     if ($?) {
         Write-Host "Table 'lemma' created successfully."
         .\ps1\run.ps1

@@ -52,7 +52,6 @@ function apply_chat_template(message, role='assistant') {
 function get_url(model, stream, kwargs) {
     var temperature = null;
     var top_p = null;
-    var {repetition_penalty} = kwargs;
     switch(model) {
     case 'o1-preview':
     case 'o1-mini':

@@ -28,7 +28,40 @@ private lemma main
   have h_cast := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp; grind) X ⟨i, by grind⟩ (s' := n :: (s.take (s.length - 1) ++ [s[s.length - 1]]))
   simp at h_cast
   rw [h_cast] at h_get
-  have h_s : (n :: s).tail = (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])).tail := by 
+  have h_s : (n :: s).tail = (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])).tail := by
+    simp
+    grind
+  have h_seq : (cast (congrArg (Tensor α) h_s) (X.get i)) @ Y ≃ (X.get i) @ Y := SEqDotS.of.SEq (by apply SEqCast.of.Eq h_s) Y
+  have h_get := h_get.trans h_seq
+  symm
+  apply h_get.symm.trans
+  apply SEqGetS.of.SEq.GtLength
+  apply SEqDotS.of.SEq
+  apply SEqCast.of.Eq
+  simp
+  grind
+
+
+@[main, fin]
+private lemma one
+  [Mul α] [Add α] [Zero α]
+-- given
+  (h_s : s ≠ [])
+  (X : Tensor α (n :: s))
+  (Y : Tensor α [n'])
+  (i : Fin n) :
+-- imply
+  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil h_s (by simp) X Y i) ≃ X[i] @ Y := by
+-- proof
+  have h_s := GtLength_0.of.Ne_Nil h_s
+  let X' : Tensor α (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])) := cast (by simp; grind) X
+  have h_get := GetDot.as.DotGet.one.fin X' Y i
+  simp [X'] at h_get
+  simp [GetElem.getElem]
+  have h_cast := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp; grind) X ⟨i, by grind⟩ (s' := n :: (s.take (s.length - 1) ++ [s[s.length - 1]]))
+  simp at h_cast
+  rw [h_cast] at h_get
+  have h_s : (n :: s).tail = (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])).tail := by
     simp
     grind
   have h_seq : (cast (congrArg (Tensor α) h_s) (X.get i)) @ Y ≃ (X.get i) @ Y := SEqDotS.of.SEq (by apply SEqCast.of.Eq h_s) Y

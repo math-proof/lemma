@@ -53,7 +53,7 @@ $tempConfigPath = [System.IO.Path]::ChangeExtension((New-TemporaryFile).FullName
 @"
 [client]
 user = $env:MYSQL_USER
-password = $env:MYSQL_PASSWORD
+password = $env:MYSQL_PWD
 port = $env:MYSQL_PORT
 "@ | Set-Content $tempConfigPath
 

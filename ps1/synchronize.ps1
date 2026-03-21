@@ -5,7 +5,7 @@ $tempConfigPath = [IO.Path]::ChangeExtension((New-TemporaryFile).FullName, '.ini
 @"
 [client]
 user = $env:MYSQL_USER
-password = $env:MYSQL_PASSWORD
+password = $env:MYSQL_PWD
 port = $env:MYSQL_PORT
 default-character-set=utf8mb4
 "@ | Set-Content $tempConfigPath
@@ -20,7 +20,7 @@ Write-Host "Data Directory is: $local_datadir"
 
 # We construct the command string to run on the Linux side.
 $mysql = "/usr/local/mysql/bin/mysql"
-$mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PASSWORD -P $env:REMOTE_MYSQL_PORT -s -N -e 'SHOW VARIABLES WHERE Variable_name = `"datadir`"'"
+$mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PWD -P $env:REMOTE_MYSQL_PORT -s -N -e 'SHOW VARIABLES WHERE Variable_name = `"datadir`"'"
 $sshOutput = ssh $env:REMOTE_MYSQL_USER@$env:REMOTE_MYSQL_HOST $mysqlCommand
 if ($sshOutput) {
     # Split by whitespace and take the last element (the path)
@@ -28,17 +28,17 @@ if ($sshOutput) {
     Write-Host "Remote DataDir is: $remote_datadir"
 }
 
-$mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PASSWORD -P $env:REMOTE_MYSQL_PORT -D axiom -e 'ALTER TABLE lemma DISCARD TABLESPACE'"
+$mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PWD -P $env:REMOTE_MYSQL_PORT -D axiom -e 'ALTER TABLE lemma DISCARD TABLESPACE'"
 $sshOutput = ssh $env:REMOTE_MYSQL_USER@$env:REMOTE_MYSQL_HOST $mysqlCommand
 Write-Debug "Discard Tablespace Output: $sshOutput"
 # send the files from the table axiom.lemma in the data directory: $local_datadir\axiom\lemma#P#p*.ibd to the remote server
 scp "$local_datadir\axiom\lemma*.ibd" ${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}:${remote_datadir}axiom
-$mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PASSWORD -P $env:REMOTE_MYSQL_PORT -D axiom -e 'ALTER TABLE lemma IMPORT TABLESPACE'"
+$mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PWD -P $env:REMOTE_MYSQL_PORT -D axiom -e 'ALTER TABLE lemma IMPORT TABLESPACE'"
 $sshOutput = ssh $env:REMOTE_MYSQL_USER@$env:REMOTE_MYSQL_HOST $mysqlCommand
 Write-Debug "Import Tablespace Output: $sshOutput"
 
 # test : check the number of rows in the local and remote lemma table
-$mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PASSWORD -P $env:REMOTE_MYSQL_PORT -D axiom -e 'select count(*) from lemma'"
+$mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PWD -P $env:REMOTE_MYSQL_PORT -D axiom -e 'select count(*) from lemma'"
 $remoteCount = ssh $env:REMOTE_MYSQL_USER@$env:REMOTE_MYSQL_HOST $mysqlCommand
 Write-Debug "Remote lemma count: $remoteCount"
 
