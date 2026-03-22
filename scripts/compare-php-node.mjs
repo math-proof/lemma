@@ -108,7 +108,7 @@ function fetch(url) {
 }
 
 async function main() {
-  const phpUrl = `http://localhost/lean/?module=${encodeURIComponent(MODULE)}`;
+  const phpUrl = `http://localhost/lean.php/?module=${encodeURIComponent(MODULE)}`;
   const nodeUrl = `http://localhost:3000/lean/?module=${encodeURIComponent(MODULE)}`;
   console.log('Fetching from URLs...');
   console.log('  PHP:  ', phpUrl);
