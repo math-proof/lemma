@@ -31,6 +31,11 @@ function strStmt(node) {
     return String(node).replace(/\n$/, '');
 }
 
+/** Normalize import path: trim, collapse space-around-dot to dot, then spaces to dots to match PHP. */
+function normalizeImportStr(s) {
+    return s.trim().replace(/\s*\.\s*/g, '.').replace(/\s+/g, '.');
+}
+
 /** Normalize type string: collapse spaces, fix bracket interior spacing to match Lean source e.g. [n, n]. */
 function normalizeTypeStr(s) {
     return s
@@ -43,6 +48,42 @@ function normalizeTypeStr(s) {
 /** PHP `preg_replace("/^  /m", "", …)` */
 function unindentTwo(s) {
     return s.replace(/^  /gm, '');
+}
+
+/** Normalize instImplicit to match PHP: "[NeZero (l : ℕ)]" not "[ NeZero ( l  ℕ)]". */
+function normalizeInstImplicit(s) {
+    if (!s || !s.trim()) return s;
+    return s
+        .split('\n')
+        .map((line) =>
+            line
+                .trim()
+                .replace(/\s{2,}/g, ' ')
+                .replace(/\[\s+/g, '[')
+                .replace(/\s+\]/g, ']')
+                .replace(/\(\s+/g, '(')
+                .replace(/\s+\)/g, ')'),
+        )
+        .join('\n');
+}
+
+/**
+ * Extract attribute names from LeanAttribute (e.g. @[main] → ['main']).
+ * Handles both LeanBracket and LeanArgsSpaceSeparated (from push_left).
+ */
+function extractAttribute(attr) {
+    if (!attr) return null;
+    let a = /** @type {*} */ (attr).arg;
+    if (nameOf(a) === 'LeanArgsSpaceSeparated') {
+        const bracket = a.args.find((x) => nameOf(x) === 'LeanBracket');
+        a = bracket || null;
+    }
+    if (!a || nameOf(a) !== 'LeanBracket') return null;
+    a = /** @type {*} */ (a).arg;
+    if (a instanceof LeanArgsSpaceSeparated)
+        return a.args.map((x) => strStmt(x)).filter(Boolean);
+    if (a instanceof LeanToken) return [strStmt(a)];
+    return null;
 }
 
 /**
@@ -223,7 +264,7 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
     for (let idx = 0; idx < args.length; idx++) {
         const stmt = args[idx];
         if (nameOf(stmt) === 'Lean_import') {
-            import_.push(strStmt(/** @type {*} */ (stmt).arg));
+            import_.push(normalizeImportStr(strStmt(/** @type {*} */ (stmt).arg)));
         } else if (stmt instanceof Lean_lemma) {
             /** @type {import('../../../static/js/parser/lean.js').LeanAssign | null} */
             let assignment = stmt.assignment instanceof LeanAssign ? stmt.assignment : null;
@@ -268,6 +309,8 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                 let flatInstImplicit = [];
                 let flatExplicit = '';
                 let flatGiven = null;
+                /** @type {import('../../../static/js/parser/lean.js').Lean[]} */
+                let flatImplyStmts = [];
                 if (assignIdx >= 0) {
                     let firstAssign = assignIdx;
                     for (let k = idx + 1; k < assignIdx; k++) {
@@ -276,8 +319,19 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                             break;
                         }
                     }
+                    /** Collect Lean_let/Lean_have between lemma and main assignment for imply (JS parser may have them as siblings). */
                     for (let k = idx + 1; k < firstAssign; k++) {
                         const s = args[k];
+                        if (nameOf(s) === 'Lean_let' || nameOf(s) === 'Lean_have') {
+                            flatImplyStmts.push(s);
+                        }
+                    }
+                    for (let k = idx + 1; k < firstAssign; k++) {
+                        const s = args[k];
+                        if (nameOf(s) === 'LeanBracket') {
+                            flatInstImplicit.push(strStmt(s));
+                            continue;
+                        }
                         if (nameOf(s) === 'LeanColon' && s.lhs) {
                             const lb = s.lhs;
                             if (nameOf(lb) === 'LeanBracket') {
@@ -349,7 +403,11 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                             nameOf(rhsColon) === 'LeanStatements' ||
                             nameOf(rhsColon) === 'LeanArgsNewLineSeparated');
                     if (!rhsColon || !rhsArgs || !isImplyList) {
-                        if (assignIdx >= 0 && assignment.lhs && typeof assignment.lhs.toLatex === 'function') {
+                        if (
+                            assignIdx >= 0 &&
+                            assignment.lhs &&
+                            (typeof assignment.lhs.toLatex === 'function' || flatImplyStmts.length > 0)
+                        ) {
                             useSimpleDeclspec = true;
                         } else {
                             error.push({
@@ -364,16 +422,7 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                 }
                 if (declspec instanceof LeanColon && !useSimpleDeclspec) {
                     const rhsColon = declspec.rhs;
-                    let attribute = stmt.attribute;
-                    if (attribute) {
-                        attribute = /** @type {*} */ (attribute).arg;
-                        if (nameOf(attribute) === 'LeanBracket') {
-                            attribute = /** @type {*} */ (attribute).arg;
-                            if (attribute instanceof LeanArgsSpaceSeparated)
-                                attribute = attribute.args.map((a) => strStmt(a));
-                            else if (attribute instanceof LeanToken) attribute = [strStmt(attribute)];
-                        }
-                    }
+                    let attribute = extractAttribute(stmt.attribute);
                     let imply = /** @type {import('../../../static/js/parser/lean.js').Lean[]} */ (
                         /** @type {{ args: import('../../../static/js/parser/lean.js').Lean[] }} */ (rhsColon).args.slice()
                     );
@@ -412,7 +461,9 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                     } else if (declspec && declspec.args && declspec.args.length >= 2) {
                         const dargs = declspec.args;
                         name = dargs[0];
-                        declspec = dargs[1] && dargs[1].args ? dargs[1].args : [];
+                        /** PHP expects [name, binders]; JS parser may produce flat [name, bracket, paren, paren]. */
+                        const binders = dargs[1] && dargs[1].args ? dargs[1].args : (dargs.length > 2 ? dargs.slice(1) : []);
+                        declspec = binders;
                     } else {
                         name = stmt.assignment;
                         declspec = /** @type {*} */ ([]);
@@ -585,9 +636,11 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                         comment,
                         accessibility: String(accessibility),
                         attribute,
-                        name: strStmt(name),
-                        instImplicit: unindentTwo(
-                            instImplicit.length ? instImplicit.join('\n') : flatInstImplicit.join('\n'),
+                        name: strStmt(name).trim(),
+                        instImplicit: normalizeInstImplicit(
+                            unindentTwo(
+                                instImplicit.length ? instImplicit.join('\n') : flatInstImplicit.join('\n'),
+                            ),
                         ),
                         implicit: implicitStr,
                         explicit: explicit.length ? explicit.join('\n') : flatExplicit,
@@ -597,8 +650,7 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                         proof: proofOut,
                     });
                     comment = null;
-                } else if (declspec && typeof declspec.toLatex === 'function') {
-                    const imply = [declspec];
+                } else if (declspec && (typeof declspec.toLatex === 'function' || flatImplyStmts?.length > 0)) {
                     const proof0 = assignment.rhs;
                     const by =
                         proof0 instanceof LeanBy
@@ -606,11 +658,72 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                             : nameOf(proof0) === 'LeanCalc'
                               ? 'calc'
                               : '';
-                    const implyLean = unindentTwo(strStmt(declspec)) + ' :=' + (by ? ` ${by}` : '');
-                    const implyLatex =
-                        (declspec.toLatex ? declspec.toLatex(syntax) : strStmt(declspec)) +
-                        `\\tag*{ :=${by ? ` ${by}` : ''}}`;
-                    const implyOut = { lean: implyLean, latex: implyLatex };
+                    /** When declspec is nested LeanColon, extract explicit from inner.lhs and imply from inner.rhs. */
+                    let simpleExplicit = flatExplicit;
+                    let implyNode = declspec;
+                    if (
+                        declspec instanceof LeanColon &&
+                        declspec.lhs instanceof LeanColon &&
+                        !flatExplicit
+                    ) {
+                        const inner = declspec.lhs;
+                        /** Binders (A:T)(V:T) are in the lhs of the inner colon; inner.rhs is LeanStatements. */
+                        const binderNode =
+                            inner.lhs instanceof LeanColon
+                                ? inner.lhs.lhs
+                                : inner.lhs;
+                        const collectParens = (/** @type {import('../../../static/js/parser/lean.js').Lean} */ n) => {
+                            if (!n) return [];
+                            if (nameOf(n) === 'LeanParenthesis') return [n];
+                            const a = n.args ?? (n.lhs != null && n.rhs != null ? [n.lhs, n.rhs] : []);
+                            return a.flatMap(collectParens);
+                        };
+                        const parens = collectParens(binderNode);
+                        if (parens.length > 0) {
+                            const lines = parens.map((p) => {
+                                const arg = /** @type {*} */ (p).arg;
+                                if (arg instanceof LeanColon && arg.lhs && arg.rhs)
+                                    return `(${strStmt(arg.lhs).trim()} : ${normalizeTypeStr(strStmt(arg.rhs))})`;
+                                return strStmt(p);
+                            });
+                            if (lines.length) {
+                                lines[lines.length - 1] += ' :';
+                                simpleExplicit = lines.join('\n');
+                            }
+                        }
+                        /** Imply = LeanStatements (let block) from inner; or inner.lhs.rhs when triple-nested. */
+                        const innerLhs = inner.lhs;
+                        implyNode =
+                            (innerLhs && innerLhs.rhs && (nameOf(innerLhs.rhs) === 'LeanStatements' || nameOf(innerLhs.rhs) === 'LeanArgsNewLineSeparated'))
+                                ? innerLhs.rhs
+                                : inner.rhs || declspec;
+                    }
+                    let implyOut;
+                    if (flatImplyStmts && flatImplyStmts.length > 0) {
+                        const imply = [...flatImplyStmts, assignment.lhs];
+                        const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
+                        let implyLatex;
+                        if (imply.length > 1 && (nameOf(imply[0]) === 'Lean_let' || nameOf(imply[0]) === 'Lean_have')) {
+                            implyLatex =
+                                '\\begin{align}\n' +
+                                imply
+                                    .map((st) => `&${st.toLatex ? st.toLatex(syntax) : strStmt(st)}&& `)
+                                    .join('\\\\\n') +
+                                '\n\\end{align}';
+                        } else {
+                            implyLatex = imply
+                                .map((st) => (st.toLatex ? st.toLatex(syntax) : strStmt(st)))
+                                .join('\n');
+                        }
+                        implyLatex += `\\tag*{ :=${by ? ` ${by}` : ''}}`;
+                        implyOut = { lean: implyLean + ' :=' + (by ? ` ${by}` : ''), latex: implyLatex };
+                    } else {
+                        const implyLean = unindentTwo(strStmt(implyNode)) + ' :=' + (by ? ` ${by}` : '');
+                        const implyLatex =
+                            (implyNode.toLatex ? implyNode.toLatex(syntax) : strStmt(implyNode)) +
+                            `\\tag*{ :=${by ? ` ${by}` : ''}}`;
+                        implyOut = { lean: implyLean, latex: implyLatex };
+                    }
                     const proof = assignment.rhs;
                     let proofOut;
                     const proofArg = proof && typeof proof === 'object' && 'arg' in proof ? proof.arg : proof;
@@ -620,25 +733,16 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                     } else {
                         proofOut = hasProofArgs ? mergeProof(proofArg, echo, syntax) : [{ lean: strStmt(proof || ''), latex: null }];
                     }
-                    let attribute = stmt.attribute;
-                    if (attribute) {
-                        attribute = /** @type {*} */ (attribute).arg;
-                        if (nameOf(attribute) === 'LeanBracket') {
-                            attribute = /** @type {*} */ (attribute).arg;
-                            if (attribute instanceof LeanArgsSpaceSeparated)
-                                attribute = attribute.args.map((a) => strStmt(a));
-                            else if (attribute instanceof LeanToken) attribute = [strStmt(attribute)];
-                        }
-                    } else attribute = null;
+                    let attribute = extractAttribute(stmt.attribute);
                     const name = stmt.assignment;
                     lemma.push({
                         comment,
                         accessibility: String(stmt.accessibility),
                         attribute,
-                        name: strStmt(name),
-                        instImplicit: unindentTwo(flatInstImplicit.join('\n')),
+                        name: strStmt(name).trim(),
+                        instImplicit: normalizeInstImplicit(unindentTwo(flatInstImplicit.join('\n'))),
                         implicit: '',
-                        explicit: flatExplicit,
+                        explicit: simpleExplicit,
                         given: flatGiven,
                         default: '',
                         imply: implyOut,
@@ -674,7 +778,7 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                                 ? defs.args.map((a) => strStmt(a))
                                 : [strStmt(/** @type {*} */ (defs).arg)],
                     });
-                } else open.push(o.args.map((a) => strStmt(a)));
+                } else open.push(o.args.map((a) => strStmt(a)).filter((s) => s.trim()));
             } else open.push([strStmt(/** @type {*} */ (o).text)]);
         } else if (nameOf(stmt) === 'Lean_set_option') {
             const a = /** @type {*} */ (stmt).arg;
