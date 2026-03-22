@@ -1068,6 +1068,10 @@ export class LeanArgs extends Lean {
 
 /** Port of `LeanArgsCommaSeparated` (php/parser/lean.php ~6755–6765). */
 export class LeanArgsCommaSeparated extends LeanArgs {
+    /** PHP `LeanArgsCommaSeparated::strFormat` (php/parser/lean.php ~6738–6740). */
+    strFormat() {
+        return Array(this.args.length).fill('%s').join(', ');
+    }
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
         this.push(caret2);

@@ -1,11 +1,5 @@
-/** Same as `String.prototype.format` in `static/js/std.js`; parser code must not depend on loading std. */
-if (typeof String.prototype.format !== 'function') {
-    String.prototype.format = function formatPolyfill() {
-        const args = arguments;
-        let index = 0;
-        return this.replace(/%[sd]/g, () => args[index++]);
-    };
-}
+/** Uses shared format polyfill from utility.js (same as std.js); parser must not depend on std. */
+import '../utility.js';
 
 export class Node {
     constructor(kwargs, parent = null) {

@@ -19,7 +19,7 @@ include_once 'script.php';
 <script src="static/unpkg.com/xregexp@5.1.1/xregexp-all.js"></script>
 
 <script src="static/js/std.js"></script>
-<script src='static/js/utility.js'></script>
+<script type="module" src='static/js/utility.js'></script>
 <script>
 MathJax = InitMathJax(1000);
 </script>

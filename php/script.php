@@ -9,4 +9,4 @@
 <script src="static/unpkg.com/vue3-sfc-loader@0.9.5/dist/vue3-sfc-loader.js"></script>
 
 <script src='static/js/std.js'></script>
-<script src='static/js/utility.js'></script>
+<script type="module" src='static/js/utility.js'></script>

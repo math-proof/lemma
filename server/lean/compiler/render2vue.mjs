@@ -1,6 +1,6 @@
 /**
  * Port of `LeanModule::render2vue` / `merge_proof` (php/parser/lean.php ~4685–5188).
- * Produces the same JSON shape as `server/lean/php-bridge/render2vue.php`.
+ * Produces the same JSON shape as the PHP `LeanModule::render2vue`.
  */
 
 import {
@@ -29,6 +29,15 @@ function nameOf(node) {
 /** @param {import('../../../static/js/parser/lean.js').Lean} node */
 function strStmt(node) {
     return String(node).replace(/\n$/, '');
+}
+
+/** Normalize type string: collapse spaces, fix bracket interior spacing to match Lean source e.g. [n, n]. */
+function normalizeTypeStr(s) {
+    return s
+        .trim()
+        .replace(/\s+/g, ' ')
+        .replace(/\[\s+/g, '[')
+        .replace(/\s+\]/g, ']');
 }
 
 /** PHP `preg_replace("/^  /m", "", …)` */
@@ -210,24 +219,151 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
     /** @type {string | null} */
     let comment = null;
 
-    for (const stmt of mod.args) {
+    const args = mod.args;
+    for (let idx = 0; idx < args.length; idx++) {
+        const stmt = args[idx];
         if (nameOf(stmt) === 'Lean_import') {
             import_.push(strStmt(/** @type {*} */ (stmt).arg));
         } else if (stmt instanceof Lean_lemma) {
-            if (stmt.assignment instanceof LeanAssign) {
+            /** @type {import('../../../static/js/parser/lean.js').LeanAssign | null} */
+            let assignment = stmt.assignment instanceof LeanAssign ? stmt.assignment : null;
+            /** @type {number} */
+            let assignIdx = -1;
+            if (!assignment) {
+                let proofStart = args.length;
+                for (let k = idx + 1; k < args.length; k++) {
+                    const x = args[k];
+                    if (x instanceof LeanLineComment && /** @type {*} */ (x).text === 'proof') {
+                        proofStart = k;
+                        break;
+                    }
+                    if (x && nameOf(x) === 'LeanTactic') {
+                        proofStart = k;
+                        break;
+                    }
+                }
+                for (let j = idx + 1; j < proofStart; j++) {
+                    const cand = args[j];
+                    if (cand instanceof LeanAssign) {
+                        const lhs = cand.lhs;
+                        if (lhs && (nameOf(lhs) === 'Lean_let' || nameOf(lhs) === 'Lean_have')) continue;
+                        assignment = cand;
+                        assignIdx = j;
+                    }
+                }
+                if (!assignment) {
+                    for (let j = idx + 1; j < args.length; j++) {
+                        const cand = args[j];
+                        if (cand instanceof LeanAssign) {
+                            assignment = cand;
+                            assignIdx = j;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (assignment instanceof LeanAssign) {
                 const accessibility = stmt.accessibility;
-                let declspec = stmt.assignment.lhs;
+                let declspec = assignment.lhs;
+                let flatInstImplicit = [];
+                let flatExplicit = '';
+                let flatGiven = null;
+                if (assignIdx >= 0) {
+                    let firstAssign = assignIdx;
+                    for (let k = idx + 1; k < assignIdx; k++) {
+                        if (args[k] instanceof LeanAssign) {
+                            firstAssign = k;
+                            break;
+                        }
+                    }
+                    for (let k = idx + 1; k < firstAssign; k++) {
+                        const s = args[k];
+                        if (nameOf(s) === 'LeanColon' && s.lhs) {
+                            const lb = s.lhs;
+                            if (nameOf(lb) === 'LeanBracket') {
+                                const inner = /** @type {*} */ (lb).arg;
+                                const lhsStr = inner ? strStmt(inner).trim() : strStmt(lb).trim();
+                                const rhsStr = s.rhs ? strStmt(s.rhs).trim() : '';
+                                const parts = lhsStr.split(/\s+/).filter(Boolean);
+                                const varPart = parts.length > 1 ? parts[parts.length - 1] : parts[0] || '';
+                                const headPart = parts.length > 1 ? parts.slice(0, -1).join(' ') : lhsStr;
+                                const repr =
+                                    rhsStr && varPart
+                                        ? `[${headPart} (${varPart} : ${rhsStr})]`
+                                        : `[${lhsStr}${rhsStr ? ` : ${rhsStr}` : ''}]`;
+                                flatInstImplicit.push(repr);
+                            } else if (nameOf(lb) === 'LeanParenthesis' || (nameOf(lb) === 'LeanColon' && lb.rhs)) {
+                                if (nameOf(s.rhs) === 'LeanStatements' || nameOf(s.rhs) === 'LeanArgsNewLineSeparated') {
+                                    const inner = lb;
+                                    if (nameOf(inner) === 'LeanColon' && inner.lhs && inner.rhs) {
+                                        const innerLhs = inner.lhs;
+                                        if (nameOf(innerLhs) === 'LeanParenthesis' && inner.rhs) {
+                                            if (flatGiven === null) flatGiven = [];
+                                            const varPart = strStmt(
+                                                /** @type {*} */ (innerLhs).arg
+                                            ).trim();
+                                            const typePart = normalizeTypeStr(strStmt(inner.rhs));
+                                            flatGiven.push({
+                                                lean: `(${varPart} : ${typePart})`,
+                                                latex: inner.toLatex ? inner.toLatex(syntax) : null,
+                                            });
+                                        }
+                                    }
+                                } else {
+                                    if (flatGiven === null) flatGiven = [];
+                                    let leanStr;
+                                    if (nameOf(lb) === 'LeanParenthesis' && s.rhs) {
+                                        const varPart = strStmt(/** @type {*} */ (lb).arg).trim();
+                                        const typePart = normalizeTypeStr(strStmt(s.rhs));
+                                        leanStr = `(${varPart} : ${typePart})`;
+                                    } else {
+                                        leanStr = strStmt(s).trim();
+                                        if (nameOf(lb) === 'LeanParenthesis' && !leanStr.startsWith('('))
+                                            leanStr = '(' + leanStr;
+                                    }
+                                    if (leanStr.includes('-- imply'))
+                                        leanStr = leanStr.replace(/\s*--\s*imply.*$/, '').trim();
+                                    flatGiven.push({ lean: leanStr, latex: s.toLatex ? s.toLatex(syntax) : null });
+                                }
+                            }
+                        }
+                    }
+                    if (flatGiven && flatGiven.length > 0) {
+                        const lines = flatGiven.map((g) => g.lean);
+                        lines[lines.length - 1] += ' :';
+                        flatExplicit = lines.join('\n');
+                        flatGiven = null;
+                    }
+                }
+                let useSimpleDeclspec = false;
                 if (declspec instanceof LeanColon) {
                     const rhsColon = declspec.rhs;
-                    if (!rhsColon || !('args' in rhsColon) || !/** @type {{ args?: unknown }} */ (rhsColon).args) {
-                        error.push({
-                            code: strStmt(declspec),
-                            line: 0,
-                            info: 'lemma colon rhs must have args (LeanArgsSpaceSeparated)',
-                            type: 'linter',
-                        });
-                        continue;
+                    const rhsArgs = rhsColon && 'args' in rhsColon ? /** @type {{ args?: unknown[] }} */ (rhsColon).args : null;
+                    const isImplyList =
+                        rhsArgs &&
+                        Array.isArray(rhsArgs) &&
+                        rhsArgs.length > 0 &&
+                        (rhsArgs[0] instanceof LeanLineComment ||
+                            nameOf(rhsArgs[0]) === 'Lean_let' ||
+                            nameOf(rhsColon) === 'LeanArgsSpaceSeparated' ||
+                            nameOf(rhsColon) === 'LeanStatements' ||
+                            nameOf(rhsColon) === 'LeanArgsNewLineSeparated');
+                    if (!rhsColon || !rhsArgs || !isImplyList) {
+                        if (assignIdx >= 0 && assignment.lhs && typeof assignment.lhs.toLatex === 'function') {
+                            useSimpleDeclspec = true;
+                        } else {
+                            error.push({
+                                code: strStmt(declspec),
+                                line: 0,
+                                info: 'lemma colon rhs must have args (LeanArgsSpaceSeparated)',
+                                type: 'linter',
+                            });
+                            continue;
+                        }
                     }
+                }
+                if (declspec instanceof LeanColon && !useSimpleDeclspec) {
+                    const rhsColon = declspec.rhs;
                     let attribute = stmt.attribute;
                     if (attribute) {
                         attribute = /** @type {*} */ (attribute).arg;
@@ -243,7 +379,7 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                     );
                     if (imply[0] instanceof LeanLineComment && imply[0].text === 'imply') imply.shift();
 
-                    const proof0 = stmt.assignment.rhs;
+                    const proof0 = assignment.rhs;
                     const by =
                         proof0 instanceof LeanBy
                             ? 'by'
@@ -263,9 +399,9 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                     } else {
                         implyLatex = imply.map((st) => st.toLatex(syntax)).join('\n');
                     }
-                    const assignment = ' :=' + (by ? ` ${by}` : '');
-                    implyLatex += `\\tag*{${assignment}}`;
-                    const implyOut = { lean: implyLean + assignment, latex: implyLatex };
+                    const assignSuffix = ' :=' + (by ? ` ${by}` : '');
+                    implyLatex += `\\tag*{${assignSuffix}}`;
+                    const implyOut = { lean: implyLean + assignSuffix, latex: implyLatex };
 
                     declspec = declspec.lhs;
                     /** @type {import('../../../static/js/parser/lean.js').Lean} */
@@ -273,10 +409,13 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                     if (declspec instanceof LeanToken || declspec instanceof LeanProperty) {
                         name = declspec;
                         declspec = /** @type {*} */ ([]);
+                    } else if (declspec && declspec.args && declspec.args.length >= 2) {
+                        const dargs = declspec.args;
+                        name = dargs[0];
+                        declspec = dargs[1] && dargs[1].args ? dargs[1].args : [];
                     } else {
-                        const args = declspec.args;
-                        name = args[0];
-                        declspec = args[1].args;
+                        name = stmt.assignment;
+                        declspec = /** @type {*} */ ([]);
                     }
 
                     /** @type {string[]} */
@@ -429,7 +568,7 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                         }
                     }
 
-                    const proof = stmt.assignment.rhs;
+                    const proof = assignment.rhs;
                     /** @type {unknown} */
                     let proofOut;
                     if (by) {
@@ -447,11 +586,61 @@ export function render2vue(mod, echo, modify = null, syntax = {}) {
                         accessibility: String(accessibility),
                         attribute,
                         name: strStmt(name),
-                        instImplicit: unindentTwo(instImplicit.join('\n')),
+                        instImplicit: unindentTwo(
+                            instImplicit.length ? instImplicit.join('\n') : flatInstImplicit.join('\n'),
+                        ),
                         implicit: implicitStr,
-                        explicit: explicit.join('\n'),
-                        given: givenOut,
+                        explicit: explicit.length ? explicit.join('\n') : flatExplicit,
+                        given: givenOut ?? flatGiven,
                         default: default_.join('\n'),
+                        imply: implyOut,
+                        proof: proofOut,
+                    });
+                    comment = null;
+                } else if (declspec && typeof declspec.toLatex === 'function') {
+                    const imply = [declspec];
+                    const proof0 = assignment.rhs;
+                    const by =
+                        proof0 instanceof LeanBy
+                            ? 'by'
+                            : nameOf(proof0) === 'LeanCalc'
+                              ? 'calc'
+                              : '';
+                    const implyLean = unindentTwo(strStmt(declspec)) + ' :=' + (by ? ` ${by}` : '');
+                    const implyLatex =
+                        (declspec.toLatex ? declspec.toLatex(syntax) : strStmt(declspec)) +
+                        `\\tag*{ :=${by ? ` ${by}` : ''}}`;
+                    const implyOut = { lean: implyLean, latex: implyLatex };
+                    const proof = assignment.rhs;
+                    let proofOut;
+                    const proofArg = proof && typeof proof === 'object' && 'arg' in proof ? proof.arg : proof;
+                    const hasProofArgs = proofArg && typeof proofArg === 'object' && Array.isArray(proofArg.args);
+                    if (by) {
+                        proofOut = { [by]: hasProofArgs ? mergeProof(proofArg, echo, syntax) : [] };
+                    } else {
+                        proofOut = hasProofArgs ? mergeProof(proofArg, echo, syntax) : [{ lean: strStmt(proof || ''), latex: null }];
+                    }
+                    let attribute = stmt.attribute;
+                    if (attribute) {
+                        attribute = /** @type {*} */ (attribute).arg;
+                        if (nameOf(attribute) === 'LeanBracket') {
+                            attribute = /** @type {*} */ (attribute).arg;
+                            if (attribute instanceof LeanArgsSpaceSeparated)
+                                attribute = attribute.args.map((a) => strStmt(a));
+                            else if (attribute instanceof LeanToken) attribute = [strStmt(attribute)];
+                        }
+                    } else attribute = null;
+                    const name = stmt.assignment;
+                    lemma.push({
+                        comment,
+                        accessibility: String(stmt.accessibility),
+                        attribute,
+                        name: strStmt(name),
+                        instImplicit: unindentTwo(flatInstImplicit.join('\n')),
+                        implicit: '',
+                        explicit: flatExplicit,
+                        given: flatGiven,
+                        default: '',
                         imply: implyOut,
                         proof: proofOut,
                     });

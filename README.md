@@ -39,7 +39,7 @@ bash sh/run.sh
 
 ### Node.js lemma server (port 3000, **no PHP / Apache required**)
 
-`server/app.mjs` serves `http://127.0.0.1:3000/lean/?module=…` using **Node + EJS** and **`server/lean/compiler/index.mjs`**: with PHP on `PATH`, it runs the real **`compile` → `render2vue(false)`** via `php-bridge/render2vue.php`; otherwise it falls back to **`parseLeanStub.mjs`**. See **`server/lean/compiler/README.md`**.
+`server/app.mjs` serves `http://127.0.0.1:3000/lean/?module=…` using **Node + EJS** and **`server/lean/compiler/index.mjs`** (JS parser + `render2vue.mjs`; falls back to regex stub on error). See **`server/lean/compiler/README.md`**.
 
 ```bash
 npm install

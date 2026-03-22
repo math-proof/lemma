@@ -1,5 +1,5 @@
 /**
- * Lean lemma browser — pure Node.js (reads `.lean` files, stub parser, EJS shell).
+ * Lean lemma browser — pure Node.js (reads `.lean` files, JS compiler, EJS shell).
  */
 import express from 'express';
 import path from 'path';
@@ -96,8 +96,5 @@ app.get('/', (_req, res) => {
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Lemma server  http://127.0.0.1:${PORT}/lean/`);
   console.log(`  static:      /lean/static/`);
-  const mode = process.env.LEAN_COMPILER || 'auto';
-  if (mode === 'php') console.log(`  compiler:    PHP (php-bridge/render2vue.php)`);
-  else if (mode === 'stub') console.log(`  compiler:    stub (parseLeanStub.mjs)`);
-  else console.log(`  compiler:    auto (PHP if available, else stub)`);
+  console.log(`  compiler:    JS (render2vue.mjs)`);
 });
