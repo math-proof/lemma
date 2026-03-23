@@ -1,16 +1,6 @@
-/**
- * JavaScript port of the Lean source tokenizer and `Lean::parse` driver from
- * `php/parser/lean.php` (see `function parse` ~484–942, `LeanParser::build` ~9311–9326,
- * `compile` ~9288–9290, and `$token2classname` ~8–77).
- *
- * This file provides the same token stream and parse-dispatch behavior as PHP.
- * Full `render2vue` / `toLatex` / echo pipelines remain in PHP unless separately ported.
- */
-
 import { IndentedNode, AbstractParser } from './node.js';
-import { tactics as TACTICS_LIST } from '../../codemirror/mode/lean/tactics.js';
+import { tactics } from '../../codemirror/mode/lean/tactics.js';
 
-/** @type {Readonly<Record<string, string>>} Same keys as PHP `$token2classname`. */
 export const token2classname = Object.freeze({
     '+': 'LeanAdd',
     '-': 'LeanSub',
@@ -82,7 +72,6 @@ export const token2classname = Object.freeze({
     '∣': 'LeanDvd',
 });
 
-/** Inverse of `token2classname` for `LeanBinary::command` / LaTeX (php/parser/lean.php). */
 export const classNameToSymbol = Object.freeze(
     Object.fromEntries(Object.entries(token2classname).map(([tok, cls]) => [cls, tok])),
 );
@@ -124,8 +113,6 @@ const CLASS_TO_LATEX_COMMAND = Object.freeze({
     LeanPow: '^',
 });
 
-/** Sorted list for binary search (PHP `std\binary_search` + tactics from tactics.js). */
-const TACTICS = [...TACTICS_LIST].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
 
 /**
  * PHP `std\binary_search` — returns index of match or insertion point.
@@ -148,6 +135,11 @@ function binarySearch(arr, value) {
 /** PHP `std\isspace` on a single token string. */
 function isSpaceToken(s) {
     return typeof s === 'string' && /^\s+$/u.test(s);
+}
+
+/** Lean identifier continuation token (supports Unicode letters like Ξ). */
+function isIdentContinueToken(s) {
+    return typeof s === 'string' && /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
 }
 
 /**
@@ -818,7 +810,7 @@ export class Lean extends IndentedNode {
                     this.parent.replace(this, new LeanGetElemQuote([lhs, rhs, caret], this.indent, this.level));
                     return caret;
                 }
-                while (/[\w'!?₀-₉]/u.test(tokens[self.start_idx + 1])) {
+                while (isIdentContinueToken(tokens[self.start_idx + 1])) {
                     self.start_idx++;
                     token += tokens[self.start_idx];
                 }
@@ -959,7 +951,7 @@ export class Lean extends IndentedNode {
             case 'MOD':
             case 'from':
                 if (this instanceof LeanCaret && this.parent instanceof LeanProperty) {
-                    while (/['!?\w]/u.test(tokens[self.start_idx + 1])) {
+                    while (isIdentContinueToken(tokens[self.start_idx + 1])) {
                         self.start_idx++;
                         token += tokens[self.start_idx];
                     }
@@ -968,7 +960,7 @@ export class Lean extends IndentedNode {
                 return this.parent.insert(this, `Lean${token[0].toUpperCase() + token.slice(1)}`, 'modifier');
             case 'calc':
                 if (this instanceof LeanCaret && this.parent instanceof LeanProperty) {
-                    while (/['!?\w]/u.test(tokens[self.start_idx + 1])) {
+                    while (isIdentContinueToken(tokens[self.start_idx + 1])) {
                         self.start_idx++;
                         token += tokens[self.start_idx];
                     }
@@ -998,12 +990,12 @@ export class Lean extends IndentedNode {
                 return this.parent.push_right('LeanNorm');
             default: {
                 const tokenOrig = token;
-                const index = binarySearch(TACTICS, tokenOrig);
-                while (/[\w'!?₀-₉]/u.test(tokens[self.start_idx + 1])) {
+                const index = binarySearch(tactics, tokenOrig);
+                while (isIdentContinueToken(tokens[self.start_idx + 1])) {
                     self.start_idx++;
                     token += tokens[self.start_idx];
                 }
-                if (index < TACTICS.length && TACTICS[index] === tokenOrig)
+                if (index < tactics.length && tactics[index] === tokenOrig)
                     return this.parent.insert_tactic(this, token);
                 return this.parent.insert_word(this, token);
             }
@@ -1745,18 +1737,24 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     toLatex(syntax) {
-        const args = this.latexArgs(syntax);
-        const nonEmpty = args.filter((r) => r !== '');
-        const hasEmpty = nonEmpty.length < args.length;
-        if (hasEmpty) {
-            const fmt = Array(nonEmpty.length)
-                .fill('%s')
-                .join('\\ ');
-            return fmt ? String(fmt).format(...nonEmpty) : '';
+        const active = this.args.filter((a) => !(a instanceof LeanCaret));
+        if (active.length === 0) return '';
+        const parts = [];
+        for (let i = 0; i < active.length; i++) {
+            const cur = active[i];
+            const curLatex = cur.toLatex(syntax);
+            if (!curLatex) continue;
+            if (parts.length > 0) {
+                const prev = active[i - 1];
+                const prevText = prev instanceof LeanToken ? prev.text : '';
+                // Keep subscript-like identifiers contiguous: h_ Ξ -> h\_Ξ
+                const sep =
+                    prev && prevText.endsWith('_') && cur instanceof LeanToken ? '' : '\\ ';
+                parts.push(sep);
+            }
+            parts.push(curLatex);
         }
-        const fmt = this.latexFormat();
-        if (args.length) return String(fmt).format(...args);
-        return fmt;
+        return parts.join('');
     }
 }
 
