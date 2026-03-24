@@ -127,7 +127,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — `LeanArgs::jsonSerialize`; `LeanStatements::insert_if` / `isProp` / `jsonSerialize` (~4521–4568); `insert_if` returns undefined when caret ≠ last arg (PHP throws; JS keeps corpus e.g. `Lemma/Bool/Ite.lean`); `node scripts/test-lean-parser.mjs` — corpus OK.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — `LeanArgsNewLineSeparated` full port (~6520–6636): `stack_priority`, `insert_if`, `insert_newline`, `is_indented`, `latexFormat`, `relocateLastComment`, `strFormat` (+ existing `set_line` / `push_newlines`); `node scripts/test-lean-parser.mjs` — corpus OK.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)

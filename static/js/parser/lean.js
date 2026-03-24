@@ -1115,13 +1115,100 @@ export class LeanArgsCommaSeparated extends LeanArgs {
     }
 }
 
-/** Port of `LeanArgsNewLineSeparated` (php/parser/lean.php ~6520–6624). */
+/** Port of `LeanArgsNewLineSeparated` (php/parser/lean.php ~6520–6636). */
 export class LeanArgsNewLineSeparated extends LeanArgs {
+    get stack_priority() {
+        const parent = this.parent;
+        if (parent instanceof LeanCalc) return LeanAssign.input_priority - 1;
+        if (parent instanceof LeanArgsIndented) {
+            const gp = parent.parent;
+            if (gp instanceof LeanQuantifier) return 51;
+            if (gp instanceof LeanCalc) return LeanAssign.input_priority - 1;
+        }
+        return 47;
+    }
+
+    /**
+     * PHP `LeanArgsNewLineSeparated::insert_if` (~6549–6558).
+     * Non-last caret: return undefined (see `LeanStatements.insert_if`).
+     */
+    insert_if(caret) {
+        if (!(caret instanceof LeanCaret)) return undefined;
+        const last = this.args[this.args.length - 1];
+        if (last !== caret) return undefined;
+        this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
+        return caret;
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent > indent) {
+            if (caret instanceof LeanParenthesis && next === ':') return caret;
+            return super.insert_newline(caret, newlineCount, indent, next);
+        }
+        if (this.indent < indent) {
+            const pushed = this.push_args_indented(indent, newlineCount);
+            if (pushed) return pushed;
+            const c = new LeanCaret(indent, caret.level);
+            this.push(c);
+            return c;
+        }
+        if (this.parent instanceof LeanAssign && !(caret instanceof LeanLineComment)) {
+            return super.insert_newline(caret, newlineCount, indent, next);
+        }
+        const last = this.args[this.args.length - 1];
+        if (last === caret) {
+            for (let i = 0; i < newlineCount; ++i) {
+                caret = new LeanCaret(indent, caret.level);
+                this.push(caret);
+            }
+            return caret;
+        }
+        throw new Error(`LeanArgsNewLineSeparated.insert_newline: unexpected for ${this.constructor.name}`);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    latexFormat() {
+        return Array(this.args.length)
+            .fill('{%s}')
+            .join('\n');
+    }
+
     push_newlines(newlineCount) {
         for (let i = 0; i < newlineCount; ++i) {
             this.push(new LeanCaret(this.indent, this.level));
         }
         return this.args[this.args.length - 1];
+    }
+
+    relocateLastComment() {
+        for (let index = this.args.length - 1; index >= 0; --index) {
+            const end = this.args[index];
+            if (end instanceof LeanCaret || end.is_comment()) {
+                let self = this;
+                let parent = null;
+                while (self) {
+                    parent = self.parent;
+                    if (parent instanceof LeanStatements) break;
+                    self = parent;
+                }
+                if (parent) {
+                    const last = this.args.pop();
+                    const ix = parent.args.indexOf(self);
+                    parent.args.splice(ix + 1, 0, last);
+                    last.parent = parent;
+                    return parent.relocateLastComment();
+                }
+            } else {
+                return end.relocateLastComment();
+            }
+        }
+    }
+
+    strFormat() {
+        return Array(this.args.length).fill('%s').join('\n');
     }
 
     /** PHP trait `LeanMultipleLine::set_line` (php/parser/lean.php ~1380–1387). */
