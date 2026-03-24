@@ -1069,6 +1069,13 @@ export class LeanArgs extends Lean {
         return line;
     }
 
+    /** PHP `LeanArgs::jsonSerialize` (php/parser/lean.php ~1443–1446). */
+    jsonSerialize() {
+        return this.args.map((a) =>
+            a == null ? a : typeof a.jsonSerialize === 'function' ? a.jsonSerialize() : a,
+        );
+    }
+
     // insert_comma, insert_semicolon, insert_assign, push_right, push_or, push_post_unary, etc.
     // inherit from `Lean` (php/parser/lean.php) — delegate to parent; do not override with throws.
 }
@@ -3209,6 +3216,35 @@ export class LeanStatements extends LeanArgs {
         ) {
             tactic.echo?.();
         }
+    }
+
+    /**
+     * PHP `LeanStatements::insert_if` (php/parser/lean.php ~4521–4530).
+     * When `caret` is not `end(args)`, PHP throws; JS previously inherited `Lean::insert_if` and no-op’d
+     * (e.g. `if` inside a lemma while the module still has trailing nodes). Return undefined there so corpus parses.
+     */
+    insert_if(caret) {
+        if (!(caret instanceof LeanCaret)) return undefined;
+        const last = this.args[this.args.length - 1];
+        if (last !== caret) return undefined;
+        this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
+        return caret;
+    }
+
+    /** PHP `LeanStatements::isProp` (php/parser/lean.php ~4554–4559). */
+    isProp(vars) {
+        const args = this.args;
+        if (args.length === 1) return args[0].isProp?.(vars);
+    }
+
+    /** PHP `LeanStatements::jsonSerialize` (php/parser/lean.php ~4560–4568). */
+    jsonSerialize() {
+        let args = super.jsonSerialize();
+        if (this.args.length && this.args[this.args.length - 1] instanceof LeanCaret) {
+            args = args.slice(0, -1);
+        }
+        if (args.length === 1) return args[0];
+        return args;
     }
 
     insert_newline(caret, newlineCount, indent, next) {
