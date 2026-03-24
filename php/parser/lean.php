@@ -4682,60 +4682,27 @@ class LeanModule extends LeanStatements
         }
     }
 
-    static function merge_proof($proof, $echo, &$syntax = null)
+    public function array_push(&$vars, $lhs, $rhs)
     {
-        $proof = $proof->args;
-        if ($proof[0] instanceof LeanLineComment && $proof[0]->text == 'proof')
-            array_shift($proof);
-
-        $proof = array_filter($proof, fn($stmt) => !($stmt instanceof LeanCaret));
-        $code = [];
-        $last = [];
-        $statements = [];
-        foreach ($proof as $s)
-            array_push($statements, ...$s->split($syntax));
-
-        if ($echo) {
-            foreach ($statements as $stmt) {
-                if ($echo = $stmt->getEcho()) {
-                    $code[] = [$last, is_int($echo->line) ? null : $echo->line];
-                    $last = [];
-                } else
-                    $last[] = $stmt;
-            }
-        } else {
-            foreach ($statements as $stmt) {
-                if ($stmt instanceof Lean_have || $stmt instanceof LeanTactic) {
-                    $last[] = $stmt;
-                    $code[] = [$last, null];
-                    $last = [];
-                } else
-                    $last[] = $stmt;
-            }
+        if ($lhs instanceof LeanToken) {
+            $args = [$lhs, $rhs];
+            while (($end = end($args)) instanceof Lean_rightarrow)
+                array_splice($args, count($args) - 1, 2, [$end->lhs, $end->rhs]);
+            $vars[] = $args;
+        } elseif ($lhs instanceof LeanArgsSpaceSeparated) {
+            foreach ($lhs->args as $lhs)
+                $this->array_push($vars, $lhs, $rhs);
         }
-        if ($last)
-            $code[] = [$last, null];
-        return array_map(
-            fn($code) =>
-            [
-                'lean' => implode("\n", array_map(fn($stmt) => preg_replace("/^  /m", "", rtrim("$stmt", "\n")), $code[0])),
-                'latex' => $code[1]
-            ],
-            $code
+    }
+    public function create_property($module) {
+        return array_reduce(
+            explode('.', $module),
+            function ($carry, $token) {
+                $token = new LeanToken($token, 0, 0);
+                return $carry ? new LeanProperty($carry, $token, 0, 0) : $token;
+            },
         );
     }
-
-    public function insert($caret, $func, $type)
-    {
-        if (end($this->args) === $caret) {
-            if ($caret instanceof LeanCaret) {
-                $this->push(new $func($caret, $this->indent, $caret->level));
-                return $caret;
-            }
-        }
-        return $caret;
-    }
-
     public function decode(&$json, &$latex)
     {
         [[$line, $latexFormat]] = std\entries($json);
@@ -4747,6 +4714,13 @@ class LeanModule extends LeanStatements
             $latex[$line] = $latexFormat;
     }
 
+    public function echo()
+    {
+        $args = &$this->args;
+        $this->import('sympy.printing.echo');
+        for ($index = 0; $index < count($args); ++$index)
+            $args[$index]->echo();
+    }
     public function echo2vue($leanFile)
     {
         $this->relocate_last_comment();
@@ -4864,18 +4838,22 @@ class LeanModule extends LeanStatements
         return $codes;
     }
 
-    public function array_push(&$vars, $lhs, $rhs)
+    public function import($module)
     {
-        if ($lhs instanceof LeanToken) {
-            $args = [$lhs, $rhs];
-            while (($end = end($args)) instanceof Lean_rightarrow)
-                array_splice($args, count($args) - 1, 2, [$end->lhs, $end->rhs]);
-            $vars[] = $args;
-        } elseif ($lhs instanceof LeanArgsSpaceSeparated) {
-            foreach ($lhs->args as $lhs)
-                $this->array_push($vars, $lhs, $rhs);
-        }
+        $this->unshift(new Lean_import($this->create_property($module), 0, 0));
     }
+
+    public function insert($caret, $func, $type)
+    {
+        if (end($this->args) === $caret) {
+            if ($caret instanceof LeanCaret) {
+                $this->push(new $func($caret, $this->indent, $caret->level));
+                return $caret;
+            }
+        }
+        return $caret;
+    }
+
     public function parse_vars($implicit)
     {
         $vars = [];
@@ -5187,27 +5165,49 @@ class LeanModule extends LeanStatements
         ];
     }
 
-    public function create_property($module) {
-        return array_reduce(
-            explode('.', $module),
-            function ($carry, $token) {
-                $token = new LeanToken($token, 0, 0);
-                return $carry ? new LeanProperty($carry, $token, 0, 0) : $token;
-            },
+    static function merge_proof($proof, $echo, &$syntax = null)
+    {
+        $proof = $proof->args;
+        if ($proof[0] instanceof LeanLineComment && $proof[0]->text == 'proof')
+            array_shift($proof);
+
+        $proof = array_filter($proof, fn($stmt) => !($stmt instanceof LeanCaret));
+        $code = [];
+        $last = [];
+        $statements = [];
+        foreach ($proof as $s)
+            array_push($statements, ...$s->split($syntax));
+
+        if ($echo) {
+            foreach ($statements as $stmt) {
+                if ($echo = $stmt->getEcho()) {
+                    $code[] = [$last, is_int($echo->line) ? null : $echo->line];
+                    $last = [];
+                } else
+                    $last[] = $stmt;
+            }
+        } else {
+            foreach ($statements as $stmt) {
+                if ($stmt instanceof Lean_have || $stmt instanceof LeanTactic) {
+                    $last[] = $stmt;
+                    $code[] = [$last, null];
+                    $last = [];
+                } else
+                    $last[] = $stmt;
+            }
+        }
+        if ($last)
+            $code[] = [$last, null];
+        return array_map(
+            fn($code) =>
+            [
+                'lean' => implode("\n", array_map(fn($stmt) => preg_replace("/^  /m", "", rtrim("$stmt", "\n")), $code[0])),
+                'latex' => $code[1]
+            ],
+            $code
         );
     }
-    public function import($module)
-    {
-        $this->unshift(new Lean_import($this->create_property($module), 0, 0));
-    }
 
-    public function echo()
-    {
-        $args = &$this->args;
-        $this->import('sympy.printing.echo');
-        for ($index = 0; $index < count($args); ++$index)
-            $args[$index]->echo();
-    }
 }
 
 abstract class LeanCommand extends LeanUnary

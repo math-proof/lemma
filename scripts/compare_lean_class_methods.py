@@ -206,6 +206,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanStatements extends LeanArgs\n{",
         "\n}\n\n\nclass LeanModule extends LeanStatements",
     ),
+    "leanmodule": (
+        "class LeanModule extends LeanStatements\n{",
+        "\n}\n\nabstract class LeanCommand extends LeanUnary",
+    ),
     "leancommand": (
         "abstract class LeanCommand extends LeanUnary\n{",
         "\n}\n\nclass Lean_import extends LeanCommand",
@@ -462,6 +466,7 @@ SEGMENT_SPLIT_PRESETS = frozenset(
         "leanargsnewlineseparated",
         "leanargscommanewlineseparated",
         "leanstatements",
+        "leanmodule",
         "leantactic",
         "leansequentialtacticcombinator",
         "lean_fun",

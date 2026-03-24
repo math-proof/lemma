@@ -51,6 +51,7 @@ Presets (see php/parser/README.md):
   leanlogicxor    — class LeanLogicXor
   leanlor         — class Lean_lor
   leanstatements  — class LeanStatements (members-first: use + methods)
+  leanmodule      — class LeanModule (members-first: use + methods; bare static OK)
   leancommand     — abstract class LeanCommand
   leanimport      — class Lean_import
   leanopen        — class Lean_open
@@ -311,6 +312,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanStatements extends LeanArgs\n{",
         "\n}\n\n\nclass LeanModule extends LeanStatements",
     ),
+    "leanmodule": (
+        "class LeanModule extends LeanStatements\n{",
+        "\n}\n\nabstract class LeanCommand extends LeanUnary",
+    ),
     "leancommand": (
         "abstract class LeanCommand extends LeanUnary\n{",
         "\n}\n\nclass Lean_import extends LeanCommand",
@@ -529,6 +534,7 @@ MEMBERS_FIRST_PRESETS = frozenset(
         "leanargsnewlineseparated",
         "leanargscommanewlineseparated",
         "leanstatements",
+        "leanmodule",
         "leantactic",
         "leansequentialtacticcombinator",
         "lean_fun",
@@ -580,7 +586,11 @@ def reorder_class(text: str, marker_start: str, marker_end: str) -> str:
             raise ValueError(f"bad sig: {sig_line!r}")
         name = name_m.group(1)
         block = body[m.start() : matches[i + 1].start() if i + 1 < len(matches) else len(body)]
-        is_static = "public static function" in sig_line or "static public function" in sig_line
+        is_static = (
+            "public static function" in sig_line
+            or "static public function" in sig_line
+            or bool(re.match(r"(?:abstract )?static function ", sig_line))
+        )
         methods.append((name, is_static, block))
     methods.sort(key=_sort_key)
     new_body = preamble + "".join(m[2] for m in methods)
@@ -601,7 +611,7 @@ def _method_meta(seg: str) -> tuple[str, bool]:
             r"\n    (?:(?:public\s+)?static\s+function|static\s+public\s+function)\s+\w+",
             seg,
         )
-    )
+    ) or bool(re.search(r"\n    static\s+function\s+\w+", seg))
     return name, is_static
 
 
