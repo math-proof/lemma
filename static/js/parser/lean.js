@@ -1337,6 +1337,11 @@ export class LeanBinary extends LeanArgs {
     latexFormat() {
         return `{%s} ${this.command} {%s}`;
     }
+
+    /** PHP `LeanBinary::echo` (php/parser/lean.php ~2480–2483). */
+    echo() {
+        this.rhs?.echo?.();
+    }
 }
 
 /** PHP LeanProperty (php/parser/lean.php ~2126–2134); binary for property access e.g. Foo.bar. */
@@ -1932,6 +1937,94 @@ export class LeanRightarrow extends LeanBinary {
     /** PHP `LeanRightarrow::relocate_last_comment` (php/parser/lean.php ~5501–5504). */
     relocateLastComment() {
         this.rhs.relocateLastComment();
+    }
+
+    /**
+     * PHP `LeanRightarrow::echo` (php/parser/lean.php ~5506–5576): inject `echo` tactic for match/induction arms.
+     */
+    echo() {
+        /** @type {Lean[]} */
+        const token = [];
+        const bar = this.parent;
+        if (bar instanceof LeanBar) {
+            const withNode = bar.parent;
+            if (withNode instanceof LeanWith) {
+                const outer = withNode.parent;
+                if (
+                    outer instanceof Lean_match ||
+                    (outer instanceof LeanTactic && outer.tacticName === 'induction')
+                ) {
+                    token.push(new LeanToken('⊢', this.rhs.indent, this.rhs.level));
+                    const subject = outer.args[0];
+                    if (subject instanceof LeanArgsCommaSeparated) {
+                        for (const sujet of subject.args) {
+                            if (sujet instanceof LeanColon) token.push(sujet.lhs);
+                        }
+                    } else if (subject instanceof LeanColon) {
+                        token.push(subject.lhs);
+                    }
+                }
+            }
+        }
+        const expr = this.lhs;
+        if (expr instanceof LeanArgsSpaceSeparated) {
+            let func = null;
+            if (expr.args[0] instanceof LeanToken) func = expr.args[0].text;
+            else if (
+                expr.args[0] instanceof LeanProperty &&
+                expr.args[0].lhs instanceof LeanCaret &&
+                expr.args[0].rhs instanceof LeanToken
+            ) {
+                func = expr.args[0].rhs.text;
+            }
+            let start = 1;
+            switch (func) {
+                case 'succ':
+                case 'ofNat':
+                case 'negSucc':
+                    start = 2;
+                    break;
+                case 'cons':
+                    start = 3;
+                    break;
+                default:
+                    start = 1;
+            }
+            token.push(...expr.args.slice(start));
+        } else if (expr instanceof LeanAngleBracket) {
+            if (expr.arg instanceof LeanArgsCommaSeparated) {
+                token.push(...expr.arg.args.slice(1));
+            }
+        } else if (expr instanceof LeanArgsCommaSeparated) {
+            for (const arg of expr.args) {
+                if (arg instanceof LeanAngleBracket && arg.arg instanceof LeanArgsCommaSeparated) {
+                    token.push(arg.arg.args[1]);
+                }
+            }
+        }
+        const stmt = this.rhs;
+        stmt.echo?.();
+        if (token.length && stmt instanceof LeanStatements) {
+            const indent = stmt.args[0].indent;
+            const level = stmt.args[0].level;
+            let payload;
+            if (token.length > 1) {
+                payload = new LeanArgsCommaSeparated(
+                    token.map((arg) => {
+                        const c = arg.clone();
+                        c.indent = indent;
+                        c.level = level;
+                        return c;
+                    }),
+                    indent,
+                    level
+                );
+            } else {
+                const [only] = token;
+                payload = only;
+            }
+            stmt.unshift(new LeanTactic('echo', payload, indent, level));
+        }
     }
 }
 
