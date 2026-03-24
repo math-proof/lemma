@@ -4,13 +4,79 @@
  * Environment-agnostic exports (format); browser-only code guarded by typeof window.
  */
 
-/** String.prototype.format polyfill. Same as std.js; parser must not depend on std. */
-if (typeof String.prototype.format !== "function") {
-  String.prototype.format = function () {
-    const args = arguments;
-    let index = 0;
-    return this.replace(/%[sd]/g, () => args[index++]);
-  };
+String.prototype.format = function () {
+  const args = arguments;
+  let index = 0;
+  return this.replace(/%[sd]/g, () => args[index++]);
+};
+
+String.prototype.isString = true;
+
+Array.prototype.binary_search = function(value, cmp) {
+	if (cmp) {
+		if (cmp.length == 1) {
+			var key = cmp;
+			cmp = (lhs, rhs) => compareTo(key(lhs), key(rhs));
+		}
+	}
+	else {
+		cmp = (a, b) => a.compareTo(b);
+	}
+
+  var begin = 0, end = this.length;
+  for (;;) {
+      if (begin == end)
+          return begin;
+
+      var mid = begin + end >> 1;
+
+      var ret = cmp(this[mid], value);
+      if (ret < 0)
+          begin = mid + 1;
+      else if (ret > 0)
+          end = mid;
+      else
+          return mid;
+  }
+}
+
+export function ord(s) {
+  return s.charCodeAt(0);
+}
+
+export function chr(unicode) {
+	return String.fromCharCode(unicode);
+}
+
+export function compareTo(lhs, rhs) {
+  if (lhs.isString)
+    return compareTo(lhs.map(ch => ord(ch)), rhs.map(ch => ord(ch)));
+  if (lhs.isArray) {
+		for (var [lhs, rhs] of zip(lhs, rhs)) {
+			var cmp = compareTo(lhs, rhs);
+			if (cmp)
+				return cmp;
+		}
+
+		return 0;
+	}
+	return lhs - rhs;
+}
+
+export function *zip() {
+  var size = Infinity;
+  for (var arr of arguments) {
+  size = Math.min(arr.length, size);
+}
+
+  for (var i of range(size)) {
+  var arrs = [];
+  for (var arr of arguments) {
+    arrs.push(arr[i]);
+  }
+
+      yield arrs;
+  }
 }
 
 function axiom_user() {
@@ -109,6 +175,9 @@ latex.updated = function (el, binding) {
 };
 
 if (typeof window !== "undefined") {
+  window.ord = ord;
+  window.chr = chr;
+  window.zip = zip;
   window.axiom_user = axiom_user;
   window.textFocused = textFocused;
   window.find_and_jump = find_and_jump;

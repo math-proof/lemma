@@ -132,14 +132,6 @@ function octet_stream_post(url, data, successCallback, errorCallback) {
 	}
 }
 
-function ord(s) {
-	return s.charCodeAt(0);
-}
-
-function chr(unicode) {
-	return String.fromCharCode(unicode);
-}
-
 function strlen(s) {
 	var length = 0;
 	for (let i = 0; i < s.length; i++) {
@@ -775,16 +767,6 @@ String.prototype.contains = function(rhs){
 	return this.indexOf(rhs) >= 0;
 };
 
-String.prototype.format = function() {
-	var args = arguments;
-	var index = 0;
-	return this.replace(/%[sd]/g,
-		function() {
-			return args[index++];
-		}
-	);
-};
-
 String.prototype.percentage = function() {
 	return 'NaN';
 };
@@ -915,8 +897,6 @@ String.prototype.regexp = function(flags='') {
 String.prototype.strlen = function() {
 	return strlen(this);
 };
-
-String.prototype.isString = true;
 
 NodeList.prototype.indexOf = function(e) {
 	for (var i = 0; i < this.length; ++i) {
@@ -1364,51 +1344,6 @@ Array.prototype.shuffle = function() {
 
 Array.prototype.clone = function() {
 	return this.map(value => (typeof value?.clone === 'function')? value.clone() : value);
-}
-
-function compareTo(lhs, rhs) {
-	if (lhs.isString)
-		return compareTo(lhs.map(ch => ord(ch)), rhs.map(ch => ord(ch)));
-
-	if (lhs.isArray) {
-		for (var [lhs, rhs] of zip(lhs, rhs)) {
-			var cmp = compareTo(lhs, rhs);
-			if (cmp)
-				return cmp;
-		}
-
-		return 0;
-	}
-
-	return lhs - rhs;
-}
-
-Array.prototype.binary_search = function(value, compareTo) {
-	if (compareTo) {
-		if (compareTo.length == 1) {
-			var key = compareTo;
-			compareTo = (lhs, rhs) => window.compareTo(key(lhs), key(rhs));
-		}
-	}
-	else {
-		compareTo = (a, b) => a.compareTo(b);
-	}
-
-    var begin = 0, end = this.length;
-    for (;;) {
-        if (begin == end)
-            return begin;
-
-        var mid = begin + end >> 1;
-
-        var ret = compareTo(this[mid], value);
-        if (ret < 0)
-            begin = mid + 1;
-        else if (ret > 0)
-            end = mid;
-        else
-            return mid;
-    }
 }
 
 Array.prototype.binary_insert = function(value, compareTo) {
@@ -4458,22 +4393,6 @@ function partitionText(text, d){
 	return arr;
 }
 
-
-function *zip() {
-    var size = Infinity;
-    for (var arr of arguments) {
-		size = Math.min(arr.length, size);
-	}
-
-    for (var i of range(size)) {
-		var arrs = [];
-		for (var arr of arguments) {
-			arrs.push(arr[i]);
-		}
-
-        yield arrs;
-    }
-}
 
 function zipped() {
     return [...zip(...arguments)];

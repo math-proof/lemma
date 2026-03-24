@@ -1,3 +1,4 @@
+import '../utility.js';
 import { IndentedNode, AbstractParser } from './node.js';
 import { tactics } from '../../codemirror/mode/lean/tactics.js';
 
@@ -113,24 +114,6 @@ const CLASS_TO_LATEX_COMMAND = Object.freeze({
     LeanPow: '^',
 });
 
-
-/**
- * PHP `std\binary_search` — returns index of match or insertion point.
- * @param {string[]} arr
- * @param {string} value
- */
-function binarySearch(arr, value) {
-    let begin = 0;
-    let end = arr.length;
-    for (;;) {
-        if (begin === end) return begin;
-        const mid = (begin + end) >> 1;
-        const cmp = arr[mid] < value ? -1 : arr[mid] > value ? 1 : 0;
-        if (cmp < 0) begin = mid + 1;
-        else if (cmp > 0) end = mid;
-        else return mid;
-    }
-}
 
 /** PHP `std\isspace` on a single token string. */
 function isSpaceToken(s) {
@@ -990,7 +973,9 @@ export class Lean extends IndentedNode {
                 return this.parent.push_right('LeanNorm');
             default: {
                 const tokenOrig = token;
-                const index = binarySearch(tactics, tokenOrig);
+                const index = tactics.binary_search(tokenOrig, (a, b) =>
+                    a < b ? -1 : a > b ? 1 : 0
+                );
                 while (isIdentContinueToken(tokens[self.start_idx + 1])) {
                     self.start_idx++;
                     token += tokens[self.start_idx];
