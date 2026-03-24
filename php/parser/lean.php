@@ -3836,16 +3836,6 @@ class Lean_uparrow extends LeanUnaryArithmeticPre
 class LeanUparrow extends LeanUnaryArithmeticPre
 {
     public static $input_priority = 1024;
-    public function strFormat()
-    {
-        return "$this->operator%s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command %s";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3857,20 +3847,20 @@ class LeanUparrow extends LeanUnaryArithmeticPre
                 return parent::__get($vname);
         }
     }
+    public function latexFormat()
+    {
+        return "$this->command %s";
+    }
+
+    public function strFormat()
+    {
+        return "$this->operator%s";
+    }
+
 }
 
 class LeanCube extends LeanUnaryArithmeticPost
 {
-    public function strFormat()
-    {
-        return "%s$this->operator";
-    }
-
-    public function latexFormat()
-    {
-        return "{%s}$this->command";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3882,20 +3872,20 @@ class LeanCube extends LeanUnaryArithmeticPost
                 return parent::__get($vname);
         }
     }
+    public function latexFormat()
+    {
+        return "{%s}$this->command";
+    }
+
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+
 }
 
 class LeanQuarticRoot extends LeanUnaryArithmeticPre
 {
-    public function strFormat()
-    {
-        return "$this->operator%s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command{%s}";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3909,20 +3899,20 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre
                 return parent::__get($vname);
         }
     }
+    public function latexFormat()
+    {
+        return "$this->command{%s}";
+    }
+
+    public function strFormat()
+    {
+        return "$this->operator%s";
+    }
+
 }
 
 class LeanTesseract extends LeanUnaryArithmeticPost
 {
-    public function strFormat()
-    {
-        return "%s$this->operator";
-    }
-
-    public function latexFormat()
-    {
-        return "{%s}$this->command";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3934,20 +3924,20 @@ class LeanTesseract extends LeanUnaryArithmeticPost
                 return parent::__get($vname);
         }
     }
-}
-
-class LeanTranspose extends LeanUnaryArithmeticPost
-{
-    public function strFormat()
-    {
-        return "%s$this->operator";
-    }
-
     public function latexFormat()
     {
         return "{%s}$this->command";
     }
 
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+
+}
+
+class LeanTranspose extends LeanUnaryArithmeticPost
+{
     public function __get($vname)
     {
         switch ($vname) {
@@ -3959,20 +3949,20 @@ class LeanTranspose extends LeanUnaryArithmeticPost
                 return parent::__get($vname);
         }
     }
+    public function latexFormat()
+    {
+        return "{%s}$this->command";
+    }
+
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+
 }
 
 class LeanPipeForward extends LeanUnaryArithmeticPost
 {
-    public function strFormat()
-    {
-        return "%s $this->operator";
-    }
-
-    public function latexFormat()
-    {
-        return "{%s} $this->command";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3984,16 +3974,21 @@ class LeanPipeForward extends LeanUnaryArithmeticPost
                 return parent::__get($vname);
         }
     }
+    public function latexFormat()
+    {
+        return "{%s} $this->command";
+    }
+
+    public function strFormat()
+    {
+        return "%s $this->operator";
+    }
+
 }
 
 class LeanMethodChaining extends LeanBinary
 {
     public static $input_priority = 67;
-    public function sep()
-    {
-        return '';
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -4004,13 +3999,18 @@ class LeanMethodChaining extends LeanBinary
         }
     }
 
-    public function strFormat()
-    {
-        return '%s |>.%s';
-    }
     public function latexFormat()
     {
         return '%s\\ \texttt{|>.}%s';
+    }
+    public function sep()
+    {
+        return '';
+    }
+
+    public function strFormat()
+    {
+        return '%s |>.%s';
     }
 }
 

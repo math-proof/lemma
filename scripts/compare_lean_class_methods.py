@@ -134,6 +134,34 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class Lean_uparrow extends LeanUnaryArithmeticPre\n{",
         "\n}\n\nclass LeanUparrow extends LeanUnaryArithmeticPre",
     ),
+    "leanuparrowuc": (
+        "class LeanUparrow extends LeanUnaryArithmeticPre\n{",
+        "\n}\n\nclass LeanCube extends LeanUnaryArithmeticPost",
+    ),
+    "leancube": (
+        "class LeanCube extends LeanUnaryArithmeticPost\n{",
+        "\n}\n\nclass LeanQuarticRoot extends LeanUnaryArithmeticPre",
+    ),
+    "leanquarticroot": (
+        "class LeanQuarticRoot extends LeanUnaryArithmeticPre\n{",
+        "\n}\n\nclass LeanTesseract extends LeanUnaryArithmeticPost",
+    ),
+    "leantesseract": (
+        "class LeanTesseract extends LeanUnaryArithmeticPost\n{",
+        "\n}\n\nclass LeanTranspose extends LeanUnaryArithmeticPost",
+    ),
+    "leantranspose": (
+        "class LeanTranspose extends LeanUnaryArithmeticPost\n{",
+        "\n}\n\nclass LeanPipeForward extends LeanUnaryArithmeticPost",
+    ),
+    "leanpipeforward": (
+        "class LeanPipeForward extends LeanUnaryArithmeticPost\n{",
+        "\n}\n\nclass LeanMethodChaining extends LeanBinary",
+    ),
+    "leanmethodchaining": (
+        "class LeanMethodChaining extends LeanBinary\n{",
+        "\n}\n\ntrait LeanGetElemBase",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
