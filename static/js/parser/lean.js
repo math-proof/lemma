@@ -981,6 +981,16 @@ export class LeanArgs extends Lean {
         return caret.push_token(word);
     }
 
+    /** PHP `LeanArgs::insert_calc` (php/parser/lean.php ~1472–1481). */
+    insert_calc(caret) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret && caret instanceof LeanCaret) {
+            this.replace(caret, new LeanCalc(caret, caret.indent, caret.level));
+            return caret;
+        }
+        throw new Error(`insert_calc: unexpected for ${this.constructor.name}`);
+    }
+
     /**
      * Port of `LeanArgs::push_args_indented` (php/parser/lean.php ~1483–1492).
      * @param {number} indent
@@ -2654,7 +2664,7 @@ export class LeanStatements extends LeanArgs {
                         const assignment = lemma.assignment;
                         if (assignment instanceof LeanAssign) {
                             let proof = assignment.rhs;
-                            if (proof instanceof LeanBy || proof.constructor.name === 'LeanCalc') {
+                            if (proof instanceof LeanBy || proof instanceof LeanCalc) {
                                 proof = proof.arg;
                                 if (proof instanceof LeanStatements) {
                                     for (let i = j + 1; i <= index; ++i) proof.push(this.args[i]);
@@ -3712,6 +3722,104 @@ class LeanFrom extends LeanUnary {
     }
 }
 
+/** PHP `LeanCalc` (php/parser/lean.php ~7620–7725). */
+class LeanCalc extends LeanUnary {
+    is_indented() {
+        const p = this.parent;
+        return !p || p instanceof LeanStatements || p instanceof LeanIte;
+    }
+
+    sep() {
+        return this.arg instanceof LeanArgsNewLineSeparated ? '\n' : ' ';
+    }
+
+    strFormat() {
+        const s = this.sep();
+        return `${this.operator}${s}%s`;
+    }
+
+    latexFormat() {
+        const s = this.sep();
+        return `${this.command}${s}%s`;
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent && caret === this.arg) {
+            if (caret instanceof LeanCaret) {
+                let ind = indent;
+                if (ind === this.indent) ind = this.indent + 2;
+                caret.indent = ind;
+                const nl = new LeanArgsNewLineSeparated([caret], ind, caret.level);
+                this.replace(caret, nl);
+                return nl.push_newlines(newlineCount - 1);
+            }
+            if (caret instanceof LeanAssign) {
+                const new_ = this.push_args_indented(indent, newlineCount, false);
+                if (new_) return new_;
+            }
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    relocateLastComment() {
+        this.arg.relocateLastComment();
+    }
+
+    get operator() {
+        return 'calc';
+    }
+
+    get command() {
+        return 'calc';
+    }
+
+    get stack_priority() {
+        return LeanAssign.input_priority - 1;
+    }
+
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        if (this.arg instanceof LeanArgsNewLineSeparated) L++;
+        return this.arg.set_line(L);
+    }
+
+    echo() {
+        const arg = this.arg;
+        if (arg instanceof LeanArgsNewLineSeparated) {
+            for (const stmt of arg.args) stmt.echo?.();
+        }
+    }
+
+    /**
+     * PHP `LeanCalc::split` (php/parser/lean.php ~7699–7724).
+     * @param {Record<string, unknown>} [syntax]
+     */
+    split(syntax) {
+        const arg = this.arg;
+        if (arg instanceof LeanArgsNewLineSeparated) {
+            if (syntax && typeof syntax === 'object') syntax.calc = true;
+            const self = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+            const stmts = self.arg.args;
+            self.arg = new LeanCaret(this.indent, this.level);
+            const statements = [self];
+            for (const stmt of stmts) statements.push(...stmt.split(syntax));
+            return statements;
+        }
+        if (arg instanceof LeanArgsIndented) {
+            if (syntax && typeof syntax === 'object') syntax.calc = true;
+            const self = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+            const a = self.arg;
+            const content = a.rhs;
+            a.rhs = new LeanCaret(content.indent, content.level);
+            const statements = [self];
+            statements.push(...content.split(syntax));
+            return statements;
+        }
+        return [this];
+    }
+}
+
 /** PHP `LeanMOD` (php/parser/lean.php ~7728–7763). */
 class LeanMOD extends LeanUnary {
     is_indented() {
@@ -4091,6 +4199,7 @@ const LEAN_CLASSES = {
     LeanAssign,
     LeanArgsIndented,
     LeanBy,
+    LeanCalc,
     LeanAttribute,
     Lean_leftarrow,
     LeanNeg,
