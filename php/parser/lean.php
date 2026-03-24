@@ -3200,9 +3200,15 @@ class LeanBitOr extends LeanArithmetic
 {
     // used in the syntax:
     // rcases lt_trichotomy 0 a with ha | h_0 | ha
-    public function is_indented()
+    public function __get($vname)
     {
-        return false;
+        switch ($vname) {
+            case 'operator':
+            case 'command':
+                return '|';
+            default:
+                return parent::__get($vname);
+        }
     }
 
     public function insert_bar($caret, $prev_token, $next)
@@ -3216,17 +3222,17 @@ class LeanBitOr extends LeanArithmetic
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
-    public function __get($vname)
+    public function is_indented()
     {
-        switch ($vname) {
-            case 'operator':
-            case 'command':
-                return '|';
-            default:
-                return parent::__get($vname);
-        }
+        return false;
     }
 
+    public function latexArgs(&$syntax = null)
+    {
+        if ($this->parent instanceof LeanQuantifier)
+            $syntax['setOf'] = true;
+        return parent::latexArgs($syntax);
+    }
     public function tokens_bar_separated()
     {
         $tokens = [];
@@ -3280,12 +3286,6 @@ class LeanBitOr extends LeanArithmetic
         }
     }
 
-    public function latexArgs(&$syntax = null)
-    {
-        if ($this->parent instanceof LeanQuantifier)
-            $syntax['setOf'] = true;
-        return parent::latexArgs($syntax);
-    }
 }
 
 class LeanBitwiseOr extends LeanArithmetic

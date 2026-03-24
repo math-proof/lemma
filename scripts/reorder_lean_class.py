@@ -25,6 +25,7 @@ Presets (see php/parser/README.md):
   leanarithmetic  — abstract class LeanArithmetic
   leanmul         — class LeanMul
   leandiv         — class LeanDiv
+  leanbitor       — class LeanBitOr
   leantoken       — class LeanToken (data members first, then sorted methods)
 
 Syntax check (match http://localhost/info.php), e.g. WAMP PHP 8.0.x:
@@ -130,6 +131,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
+    ),
+    "leanbitor": (
+        "class LeanBitOr extends LeanArithmetic\n{",
+        "\n}\n\nclass LeanBitwiseOr extends LeanArithmetic",
     ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
