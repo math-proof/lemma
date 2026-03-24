@@ -955,33 +955,6 @@ abstract class Lean extends IndentedNode
 
 class LeanCaret extends Lean
 {
-    public function is_indented()
-    {
-        return $this->parent instanceof LeanArgsNewLineSeparated;
-    }
-
-    public function strFormat()
-    {
-        return '';
-    }
-
-    public function push_line_comment($comment)
-    {
-        $parent = $this->parent;
-        $new = new LeanLineComment($comment, $this->indent, $this->level);
-        $parent->replace($this, $new);
-        return $new;
-    }
-
-    public function push_block_comment($comment, $docstring)
-    {
-        $parent = $this->parent;
-        $func = $docstring ? 'LeanDocString' : 'LeanBlockComment';
-        $parent->replace($this, new $func($comment, $this->indent, $this->level));
-        $parent->push($this);
-        return $this;
-    }
-
     public function append($new, $func)
     {
         if (is_string($new)) {
@@ -993,15 +966,38 @@ class LeanCaret extends Lean
         }
     }
 
+    public function is_indented()
+    {
+        return $this->parent instanceof LeanArgsNewLineSeparated;
+    }
+
+    public function is_outsider()
+    {
+        return true;
+    }
+    public function jsonSerialize(): mixed
+    {
+        return "";
+    }
+
+    public function latexFormat()
+    {
+        return "";
+    }
+
     public function push_accessibility($new, $accessibility)
     {
         $this->parent->replace($this, new $new($accessibility, $this, $this->indent, $this->level));
         return $this;
     }
 
-    public function jsonSerialize(): mixed
+    public function push_block_comment($comment, $docstring)
     {
-        return "";
+        $parent = $this->parent;
+        $func = $docstring ? 'LeanDocString' : 'LeanBlockComment';
+        $parent->replace($this, new $func($comment, $this->indent, $this->level));
+        $parent->push($this);
+        return $this;
     }
 
     public function push_left($func, $prev_token)
@@ -1010,15 +1006,19 @@ class LeanCaret extends Lean
         return $this;
     }
 
-    public function latexFormat()
+    public function push_line_comment($comment)
     {
-        return "";
+        $parent = $this->parent;
+        $new = new LeanLineComment($comment, $this->indent, $this->level);
+        $parent->replace($this, $new);
+        return $new;
     }
 
-    public function is_outsider()
+    public function strFormat()
     {
-        return true;
+        return '';
     }
+
 }
 
 class LeanToken extends Lean
