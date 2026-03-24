@@ -1552,22 +1552,32 @@ abstract class LeanPairedGroup extends LeanUnary
 {
     use Closable;
     public static $input_priority = 60;
-    public function is_indented()
+    public function argFormat() {
+        return '%s';
+    }
+    public function insert($caret, $func, $type)
     {
-        $parent = $this->parent;
-        return !($parent instanceof LeanTactic || 
-            $parent instanceof LeanArgsCommaSeparated || 
-            $parent instanceof LeanAssign || 
-            $parent instanceof LeanArgsSpaceSeparated || 
-            $parent instanceof LeanRelational || 
-            $parent instanceof LeanRightarrow || 
-            $parent instanceof LeanUnaryArithmeticPre || 
-            $parent instanceof LeanArithmetic || 
-            $parent instanceof LeanProperty || 
-            $parent instanceof LeanColon || 
-            $parent instanceof LeanUnaryArithmeticPost || 
-            $parent instanceof LeanPairedGroup
-        );
+        if ($this->arg === $caret) {
+            if ($caret instanceof LeanCaret) {
+                $this->arg = new $func($caret, $this->indent, $caret->level);
+                return $caret;
+            }
+            if ($caret instanceof LeanToken) {
+                $caret = new LeanCaret($this->indent, $caret->level);
+                $this->arg = new LeanArgsSpaceSeparated([$this->arg, new $func($caret, $this->indent, $caret->level)], $this->indent, $caret->level);
+                return $caret;
+            }
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+    public function insert_comma($caret)
+    {
+        $caret = new LeanCaret($this->indent, $caret->level);
+        if ($caret instanceof LeanArgsCommaSeparated)
+            $this->arg->push($caret);
+        else
+            $this->arg = new LeanArgsCommaSeparated([$this->arg, $caret], $this->indent, $caret->level);
+        return $caret;
     }
 
     public function insert_newline($caret, $newline_count, $indent, $next)
@@ -1588,21 +1598,41 @@ abstract class LeanPairedGroup extends LeanUnary
             return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
 
-    public function insert_comma($caret)
-    {
-        $caret = new LeanCaret($this->indent, $caret->level);
-        if ($caret instanceof LeanArgsCommaSeparated)
-            $this->arg->push($caret);
-        else
-            $this->arg = new LeanArgsCommaSeparated([$this->arg, $caret], $this->indent, $caret->level);
-        return $caret;
-    }
-
     public function insert_tactic($caret, $token)
     {
         if ($caret instanceof LeanCaret)
             return $this->insert_word($caret, $token);
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function is_Expr() {
+        return true;
+    }
+    public function is_indented()
+    {
+        $parent = $this->parent;
+        return !($parent instanceof LeanTactic || 
+            $parent instanceof LeanArgsCommaSeparated || 
+            $parent instanceof LeanAssign || 
+            $parent instanceof LeanArgsSpaceSeparated || 
+            $parent instanceof LeanRelational || 
+            $parent instanceof LeanRightarrow || 
+            $parent instanceof LeanUnaryArithmeticPre || 
+            $parent instanceof LeanArithmetic || 
+            $parent instanceof LeanProperty || 
+            $parent instanceof LeanColon || 
+            $parent instanceof LeanUnaryArithmeticPost || 
+            $parent instanceof LeanPairedGroup
+        );
+    }
+
+    public function push_right($func)
+    {
+        if (get_class($this) == $func) {
+            $this->is_closed = true;
+            return $this;
+        }
+        return $this->parent->push_right($func);
     }
 
     public function set_line($line)
@@ -1617,33 +1647,6 @@ abstract class LeanPairedGroup extends LeanUnary
         return $line;
     }
 
-    public function push_right($func)
-    {
-        if (get_class($this) == $func) {
-            $this->is_closed = true;
-            return $this;
-        }
-        return $this->parent->push_right($func);
-    }
-
-    public function insert($caret, $func, $type)
-    {
-        if ($this->arg === $caret) {
-            if ($caret instanceof LeanCaret) {
-                $this->arg = new $func($caret, $this->indent, $caret->level);
-                return $caret;
-            }
-            if ($caret instanceof LeanToken) {
-                $caret = new LeanCaret($this->indent, $caret->level);
-                $this->arg = new LeanArgsSpaceSeparated([$this->arg, new $func($caret, $this->indent, $caret->level)], $this->indent, $caret->level);
-                return $caret;
-            }
-        }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-    public function argFormat() {
-        return '%s';
-    }
     public function strFormat()
     {
         $format = $this->argFormat();
@@ -1657,9 +1660,6 @@ abstract class LeanPairedGroup extends LeanUnary
         return $format;
     }
 
-    public function is_Expr() {
-        return true;
-    }
 }
 
 class LeanParenthesis extends LeanPairedGroup
