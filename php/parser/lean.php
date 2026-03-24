@@ -4354,13 +4354,6 @@ class Lean_lor extends LeanLogic
         }
     }
 
-    public function jsonSerialize(): mixed
-    {
-        $lhs = $this->lhs->jsonSerialize();
-        $rhs = $this->rhs->jsonSerialize();
-        return [$this->func => [$lhs, $rhs]];
-    }
-
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
         if ($caret === $this->rhs && $caret instanceof LeanCaret) {
@@ -4374,6 +4367,13 @@ class Lean_lor extends LeanLogic
         }
         return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
+    public function jsonSerialize(): mixed
+    {
+        $lhs = $this->lhs->jsonSerialize();
+        $rhs = $this->rhs->jsonSerialize();
+        return [$this->func => [$lhs, $rhs]];
+    }
+
 }
 
 class Lean_land extends LeanLogic
@@ -4462,6 +4462,73 @@ class Lean_supset extends LeanLogic
 class LeanStatements extends LeanArgs
 {
     use LeanMultipleLine;
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'stack_priority':
+                return LeanColon::$input_priority;
+            default:
+                return parent::__get($vname);
+        }
+    }
+    public function echo()
+    {
+        $args = &$this->args;
+        $count = count($args);
+        $void_lines = 0;
+        // skip trailing carets and comments
+        while (($last = $args[$count - 1]) instanceof LeanCaret || $last instanceof LeanLineComment || $last instanceof LeanBlockComment) {
+            --$count;
+            ++$void_lines;
+        }
+        for ($index = 0; $index < count($args) - $void_lines - 1; ++$index) {
+            $result = $args[$index]->echo();
+            if (is_array($result)) {
+                // zero-th element is the length to be replaced
+                $length = array_shift($result);
+                if ($index + 1 < count($args) - $void_lines && $args[$index + 1] instanceof LeanTactic && $args[$index + 1]->func == 'try' && 
+                    count($result) == 2 && $result[0] === $args[$index] && $result[1] instanceof LeanTactic && $result[1]->func == 'echo') {
+                    // next tactic is 'try', so the current echo tactic should also be 'try echo ..'
+                    $result[1] = new LeanTactic('try', $result[1], $result[1]->indent, $result[1]->level);
+                }
+                foreach ($result as $echo)
+                    $echo->parent = $this;
+                $increment = std\index($result, $args[$index]);
+                array_splice($args, $index, $length, $result);
+                $index += $increment;
+            }
+        }
+        $tactic = $args[$index];
+        if ($tactic instanceof LeanTactic || $tactic instanceof Lean_match) {
+            if (($with = $tactic->with)) {
+                if ($with->sep() == "\n") {
+                    foreach ($with->args as $case)
+                        $case->echo();
+                } elseif ($sequential_tactic_combinator = $tactic->sequential_tactic_combinator) {
+                    if (($block = $sequential_tactic_combinator->arg) instanceof LeanTacticBlock)
+                        $block->echo();
+                    else
+                        $sequential_tactic_combinator->echo();
+                }
+            } elseif ($sequential_tactic_combinator = $tactic->sequential_tactic_combinator)
+                $sequential_tactic_combinator->echo();
+            else if ($block = $tactic->repeat_block())
+                $block->echo();
+        } elseif ($tactic instanceof LeanTacticBlock || $tactic instanceof LeanIte || $tactic instanceof LeanCalc)
+            $tactic->echo();
+    }
+
+    public function insert_if($caret)
+    {
+        if (end($this->args) === $caret) {
+            if ($caret instanceof LeanCaret) {
+                $this->replace($caret, new LeanIte([$caret], $caret->indent, $caret->level));
+                return $caret;
+            }
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
         if ($this->indent > $indent)
@@ -4480,36 +4547,24 @@ class LeanStatements extends LeanArgs
         return $caret;
     }
 
-    public function insert_if($caret)
-    {
-        if (end($this->args) === $caret) {
-            if ($caret instanceof LeanCaret) {
-                $this->replace($caret, new LeanIte([$caret], $caret->indent, $caret->level));
-                return $caret;
-            }
-        }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'stack_priority':
-                return LeanColon::$input_priority;
-            default:
-                return parent::__get($vname);
-        }
-    }
     public function is_indented()
     {
         return false;
     }
-    public function strFormat()
+    public function isProp($vars)
     {
-        $format = implode("\n", array_fill(0, count($this->args), '%s'));
-        if ($this->parent instanceof LeanBrace)
-            $format = "\n$format\n" . str_repeat(' ', $this->parent->indent);
-        return $format;
+        $args = &$this->args;
+        if (count($args) == 1)
+            return $args[0]->isProp($vars);
+    }
+    public function jsonSerialize(): mixed
+    {
+        $args = parent::jsonSerialize();
+        if (end($this->args) instanceof LeanCaret)
+            array_pop($args);
+        if (count($args) == 1)
+            [$args] = $args;
+        return $args;
     }
 
     public function latexFormat()
@@ -4521,16 +4576,6 @@ class LeanStatements extends LeanArgs
         if ($this->parent instanceof LeanBy)
             return $stmt;
         return "\\begin{align*}\n$stmt\n\\end{align*}";
-    }
-
-    public function jsonSerialize(): mixed
-    {
-        $args = parent::jsonSerialize();
-        if (end($this->args) instanceof LeanCaret)
-            array_pop($args);
-        if (count($args) == 1)
-            [$args] = $args;
-        return $args;
     }
 
     public function relocate_last_comment()
@@ -4598,51 +4643,12 @@ class LeanStatements extends LeanArgs
         }
     }
 
-    public function echo()
+    public function strFormat()
     {
-        $args = &$this->args;
-        $count = count($args);
-        $void_lines = 0;
-        // skip trailing carets and comments
-        while (($last = $args[$count - 1]) instanceof LeanCaret || $last instanceof LeanLineComment || $last instanceof LeanBlockComment) {
-            --$count;
-            ++$void_lines;
-        }
-        for ($index = 0; $index < count($args) - $void_lines - 1; ++$index) {
-            $result = $args[$index]->echo();
-            if (is_array($result)) {
-                // zero-th element is the length to be replaced
-                $length = array_shift($result);
-                if ($index + 1 < count($args) - $void_lines && $args[$index + 1] instanceof LeanTactic && $args[$index + 1]->func == 'try' && 
-                    count($result) == 2 && $result[0] === $args[$index] && $result[1] instanceof LeanTactic && $result[1]->func == 'echo') {
-                    // next tactic is 'try', so the current echo tactic should also be 'try echo ..'
-                    $result[1] = new LeanTactic('try', $result[1], $result[1]->indent, $result[1]->level);
-                }
-                foreach ($result as $echo)
-                    $echo->parent = $this;
-                $increment = std\index($result, $args[$index]);
-                array_splice($args, $index, $length, $result);
-                $index += $increment;
-            }
-        }
-        $tactic = $args[$index];
-        if ($tactic instanceof LeanTactic || $tactic instanceof Lean_match) {
-            if (($with = $tactic->with)) {
-                if ($with->sep() == "\n") {
-                    foreach ($with->args as $case)
-                        $case->echo();
-                } elseif ($sequential_tactic_combinator = $tactic->sequential_tactic_combinator) {
-                    if (($block = $sequential_tactic_combinator->arg) instanceof LeanTacticBlock)
-                        $block->echo();
-                    else
-                        $sequential_tactic_combinator->echo();
-                }
-            } elseif ($sequential_tactic_combinator = $tactic->sequential_tactic_combinator)
-                $sequential_tactic_combinator->echo();
-            else if ($block = $tactic->repeat_block())
-                $block->echo();
-        } elseif ($tactic instanceof LeanTacticBlock || $tactic instanceof LeanIte || $tactic instanceof LeanCalc)
-            $tactic->echo();
+        $format = implode("\n", array_fill(0, count($this->args), '%s'));
+        if ($this->parent instanceof LeanBrace)
+            $format = "\n$format\n" . str_repeat(' ', $this->parent->indent);
+        return $format;
     }
 
     public function swap_echo_star(&$syntax, &$statements) {
@@ -4658,12 +4664,6 @@ class LeanStatements extends LeanArgs
             array_push($statements, ...$stmt->split($syntax));
     }
 
-    public function isProp($vars)
-    {
-        $args = &$this->args;
-        if (count($args) == 1)
-            return $args[0]->isProp($vars);
-    }
 }
 
 

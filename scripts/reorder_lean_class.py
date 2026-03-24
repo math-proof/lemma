@@ -48,6 +48,8 @@ Presets (see php/parser/README.md):
   leanlogicand    — class LeanLogicAnd
   leanlogicor     — class LeanLogicOr
   leanlogicxor    — class LeanLogicXor
+  leanlor         — class Lean_lor
+  leanstatements  — class LeanStatements (members-first: use + methods)
   leandiv         — class LeanDiv
   leanbitor       — class LeanBitOr
   leantoken       — class LeanToken (data members first, then sorted methods)
@@ -248,6 +250,14 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanLogicXor extends LeanLogic\n{",
         "\n}\n\n\nclass Lean_lor extends LeanLogic",
     ),
+    "leanlor": (
+        "class Lean_lor extends LeanLogic\n{",
+        "\n}\n\nclass Lean_land extends LeanLogic",
+    ),
+    "leanstatements": (
+        "class LeanStatements extends LeanArgs\n{",
+        "\n}\n\n\nclass LeanModule extends LeanStatements",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -269,6 +279,7 @@ MEMBERS_FIRST_PRESETS = frozenset(
         "leangotelem",
         "leangotelemque",
         "leangotelemquote",
+        "leanstatements",
         "leantoken",
     }
 )
