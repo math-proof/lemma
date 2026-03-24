@@ -182,6 +182,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class Lean_is_not extends LeanBinary\n{",
         "\n}\n\nabstract class LeanSetOperator extends LeanBinary {",
     ),
+    "leanlogic": (
+        "abstract class LeanLogic extends LeanBinaryBoolean\n{",
+        "\n}\n\n\nclass LeanLogicAnd extends LeanLogic",
+    ),
     "leanlogicand": (
         "class LeanLogicAnd extends LeanLogic\n{",
         "\n}\n\n\nclass LeanLogicOr extends LeanLogic",

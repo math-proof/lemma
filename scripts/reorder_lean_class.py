@@ -45,6 +45,7 @@ Presets (see php/parser/README.md):
   leangotelemquote — class LeanGetElemQuote (members-first)
   leanis          — class Lean_is
   leanisnot       — class Lean_is_not
+  leanlogic       — abstract class LeanLogic
   leanlogicand    — class LeanLogicAnd
   leanlogicor     — class LeanLogicOr
   leanlogicxor    — class LeanLogicXor
@@ -285,6 +286,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leanisnot": (
         "class Lean_is_not extends LeanBinary\n{",
         "\n}\n\nabstract class LeanSetOperator extends LeanBinary {",
+    ),
+    "leanlogic": (
+        "abstract class LeanLogic extends LeanBinaryBoolean\n{",
+        "\n}\n\n\nclass LeanLogicAnd extends LeanLogic",
     ),
     "leanlogicand": (
         "class LeanLogicAnd extends LeanLogic\n{",

@@ -4227,14 +4227,14 @@ class Lean_cap extends LeanSetOperator
 abstract class LeanLogic extends LeanBinaryBoolean
 {
     public $hanging_indentation;
-    public function sep()
-    {
-        return $this->hanging_indentation ? "\n" . str_repeat(' ', $this->rhs->indent) : ' ';
-    }
-
     public function is_indented()
     {
         return $this->parent instanceof LeanStatements;
+    }
+
+    public function sep()
+    {
+        return $this->hanging_indentation ? "\n" . str_repeat(' ', $this->rhs->indent) : ' ';
     }
 
     public function strFormat()
