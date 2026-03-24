@@ -30,6 +30,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanDocString extends LeanBlockComment\n{",
         "\n}\n\n\ntrait LeanMultipleLine",
     ),
+    "leanargs": (
+        "abstract class LeanArgs extends Lean\n{",
+        "\n}\n\n# Frac|Abs|Norm|Length|Sign|Square|Sqrt|Floor|Ceil|Sin|Cos|Tan|Cot|Arg|Neg|Inv|Cast|Coe|Exp|Log|Val|Card|ToNat|Arccos|Arcsin|Arctan|Arccot|Re|Im|Succ",
+    ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
         "\n}\n\nLeanToken::$subscript_keys",

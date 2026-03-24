@@ -1390,18 +1390,6 @@ trait LeanMultipleLine
 abstract class LeanArgs extends Lean
 {
     public static $input_priority = 47;
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'command':
-                return "\\$this->func";
-            case 'func':
-                return preg_replace('/^Lean_?/', '', get_class($this));
-            default:
-                return parent::__get($vname);
-        }
-    }
-
     public function __clone()
     {
         parent::__clone();
@@ -1420,53 +1408,16 @@ abstract class LeanArgs extends Lean
         }
     }
 
-    public function jsonSerialize(): mixed
+    public function __get($vname)
     {
-        return array_map(fn($arg) => $arg->jsonSerialize(), $this->args);
-    }
-
-    public function set_line($line)
-    {
-        $this->line = $line;
-        foreach ($this->args as $arg) {
-            $line = $arg->set_line($line);
+        switch ($vname) {
+            case 'command':
+                return "\\$this->func";
+            case 'func':
+                return preg_replace('/^Lean_?/', '', get_class($this));
+            default:
+                return parent::__get($vname);
         }
-        return $line;
-    }
-
-    public function traverse()
-    {
-        yield $this;
-        foreach ($this->args as $arg) {
-            if ($arg != null)
-                yield from $arg->traverse();
-        }
-    }
-
-    public function regexp()
-    {
-        $func = ucfirst($this->func);
-        $args = array_map(fn($arg) => [...$arg->regexp(), "_"], $this->args);
-        $regexp = [];
-        foreach (itertools\product($args) as $list) {
-            $expr = implode("", $list);
-            $regexp[] = "$func$expr";
-        }
-        return $regexp;
-    }
-
-    public function strip_parenthesis()
-    {
-        return array_map(fn($arg) => $arg instanceof LeanParenthesis && !($arg->arg instanceof LeanMethodChaining || $arg->arg instanceof Lean_rightarrow || $arg->arg instanceof LeanColon) ? $arg->arg : $arg, $this->args);
-    }
-
-    public function insert_tactic($caret, $func)
-    {
-        if ($caret instanceof LeanCaret) {
-            $this->replace($caret, new LeanTactic($func, $caret, $this->indent, $caret->level));
-            return $caret;
-        }
-        return $this->insert_word($caret, $func);
     }
 
     public function insert_calc($caret)
@@ -1480,6 +1431,20 @@ abstract class LeanArgs extends Lean
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
+    public function insert_tactic($caret, $func)
+    {
+        if ($caret instanceof LeanCaret) {
+            $this->replace($caret, new LeanTactic($func, $caret, $this->indent, $caret->level));
+            return $caret;
+        }
+        return $this->insert_word($caret, $func);
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return array_map(fn($arg) => $arg->jsonSerialize(), $this->args);
+    }
+
     public function push_args_indented($indent, $newline_count, $function_call = true) {
         $end = end($this->args);
         if (!$function_call || $end instanceof LeanToken || $end instanceof LeanProperty || $end instanceof LeanParenthesis) {
@@ -1490,6 +1455,41 @@ abstract class LeanArgs extends Lean
             return $caret;
         }
     }
+    public function regexp()
+    {
+        $func = ucfirst($this->func);
+        $args = array_map(fn($arg) => [...$arg->regexp(), "_"], $this->args);
+        $regexp = [];
+        foreach (itertools\product($args) as $list) {
+            $expr = implode("", $list);
+            $regexp[] = "$func$expr";
+        }
+        return $regexp;
+    }
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        foreach ($this->args as $arg) {
+            $line = $arg->set_line($line);
+        }
+        return $line;
+    }
+
+    public function strip_parenthesis()
+    {
+        return array_map(fn($arg) => $arg instanceof LeanParenthesis && !($arg->arg instanceof LeanMethodChaining || $arg->arg instanceof Lean_rightarrow || $arg->arg instanceof LeanColon) ? $arg->arg : $arg, $this->args);
+    }
+
+    public function traverse()
+    {
+        yield $this;
+        foreach ($this->args as $arg) {
+            if ($arg != null)
+                yield from $arg->traverse();
+        }
+    }
+
 }
 
 # Frac|Abs|Norm|Length|Sign|Square|Sqrt|Floor|Ceil|Sin|Cos|Tan|Cot|Arg|Neg|Inv|Cast|Coe|Exp|Log|Val|Card|ToNat|Arccos|Arcsin|Arctan|Arccot|Re|Im|Succ
