@@ -1950,15 +1950,15 @@ class LeanAbs extends LeanPairedGroup
                 return parent::__get($vname);
         }
     }
+    public function insert_bar($caret, $prev_token, $next)
+    {
+        return $this->push_right('LeanAbs');
+    }
     public function latexFormat()
     {
         return '\left| {%s} \right|';
     }
 
-    public function insert_bar($caret, $prev_token, $next)
-    {
-        return $this->push_right('LeanAbs');
-    }
 }
 
 class LeanNorm extends LeanPairedGroup
