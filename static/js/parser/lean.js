@@ -1226,6 +1226,36 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
  * Used by `LeanPairedGroup::insert_newline` when wrapping a caret (not `LeanArgsNewLineSeparated`).
  */
 export class LeanArgsCommaNewLineSeparated extends LeanArgs {
+    get stack_priority() {
+        return 17;
+    }
+
+    /**
+     * PHP `LeanArgsCommaNewLineSeparated::insert` (php/parser/lean.php ~6869–6878).
+     * @param {Lean} caret
+     * @param {string | typeof Lean} func
+     * @param {string} [_type]
+     */
+    insert(caret, func, _type) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret && caret instanceof LeanCaret) {
+            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+            return caret;
+        }
+        throw new Error(`LeanArgsCommaNewLineSeparated.insert: unexpected for ${this.constructor.name}`);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    latexFormat() {
+        return Array(this.args.length)
+            .fill('{%s}')
+            .join(',\n');
+    }
+
     strFormat() {
         return Array(this.args.length).fill('%s').join(',\n');
     }
