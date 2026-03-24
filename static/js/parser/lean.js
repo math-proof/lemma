@@ -177,6 +177,18 @@ export class Lean extends IndentedNode {
         return line;
     }
 
+    /**
+     * Shallow instance copy (same pattern as `static/js/parser/sql.js` `clone()`).
+     * `LeanArgs` overrides to deep-clone `this.args` (PHP `LeanArgs::__clone`).
+     * @returns {this}
+     */
+    clone() {
+        const copy = Object.create(Object.getPrototypeOf(this));
+        Object.assign(copy, this);
+        copy.parent = null;
+        return copy;
+    }
+
     get stack_priority() {
         const c = /** @type {{ input_priority?: number }} */ (this.constructor);
         return typeof c.input_priority === 'number' ? c.input_priority : 100;
@@ -1012,6 +1024,22 @@ export class LeanArgs extends Lean {
             this.replace(end, new LeanArgsIndented(end, nl, this.indent, c.level));
             return c;
         }
+    }
+
+    /**
+     * PHP `LeanArgs::__clone` (php/parser/lean.php ~1405–1411): same shell as `Lean.prototype.clone`,
+     * then replace `args` with recursive `clone()` and fix `parent` links.
+     * @returns {this}
+     */
+    clone() {
+        const copy = Object.create(Object.getPrototypeOf(this));
+        Object.assign(copy, this);
+        copy.parent = null;
+        copy.args = this.args.map((a) => (a != null ? a.clone() : a));
+        for (const a of copy.args) {
+            if (a) a.parent = copy;
+        }
+        return copy;
     }
 
     // insert_comma, insert_semicolon, insert_assign, push_right, push_or, push_post_unary, etc.
@@ -3022,6 +3050,266 @@ class Lean_fun extends LeanCommand {
     }
 }
 
+/** PHP `Lean_match` (php/parser/lean.php ~5781–5915). */
+class Lean_match extends LeanArgs {
+    /**
+     * @param {Lean} subject
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(subject, indent, level, parent = null) {
+        super([subject], indent, level, parent);
+    }
+
+    get stack_priority() {
+        return LeanColon.input_priority - 1;
+    }
+
+    get subject() {
+        return this.args[0];
+    }
+    set subject(v) {
+        this.args[0] = v;
+        if (v) v.parent = this;
+    }
+
+    get with() {
+        return this.args[1] ?? null;
+    }
+    set with(v) {
+        if (this.args.length < 2) this.args.push(v);
+        else this.args[1] = v;
+        if (v) v.parent = this;
+    }
+
+    get operator() {
+        return 'match';
+    }
+
+    is_indented() {
+        return true;
+    }
+
+    strFormat() {
+        if (this.with) return `${this.operator} %s %s`;
+        return `${this.operator} %s`;
+    }
+
+    latexFormat() {
+        if (this.with) {
+            const n = this.with.args.length;
+            const cases = Array(n).fill('%s').join('\\\\');
+            return `\\begin{cases} ${cases} \\end{cases}`;
+        }
+        return 'match\\ %s';
+    }
+
+    /**
+     * PHP `Lean_match::latexArgs` (php/parser/lean.php ~5820–5833).
+     * @param {Record<string, unknown>} [syntax]
+     */
+    latexArgs(syntax) {
+        const subject = this.subject.toLatex(syntax);
+        const w = this.with;
+        if (w) {
+            return w.args.map((row) => {
+                const a = row.arg;
+                const type = a.lhs.toLatex(syntax);
+                const value = a.rhs.toLatex(syntax);
+                return `{${value}} & {\\color{blue}\\text{if}}\\ \\: ${subject}\\ =\\ ${type}`;
+            });
+        }
+        return [subject];
+    }
+
+    insert(caret, func, _type) {
+        if (!this.with && func === 'LeanWith') {
+            const c = new LeanCaret(this.indent, caret.level);
+            const Ctor = getLeanClass(func);
+            const w = new Ctor(c, this.indent, c.level);
+            this.with = w;
+            return c;
+        }
+        throw new Error(`Lean_match.insert: unexpected for ${String(func)}`);
+    }
+
+    insert_comma(caret) {
+        if (caret === this.subject) {
+            const c = new LeanCaret(this.indent, caret.level);
+            this.subject = new LeanArgsCommaSeparated([this.subject, c], this.indent, caret.level);
+            return c;
+        }
+        if (this.parent) return this.parent.insert_comma(this);
+    }
+
+    relocateLastComment() {
+        const w = this.with;
+        if (w instanceof LeanWith) w.relocateLastComment();
+    }
+
+    insert_tactic(caret, token) {
+        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
+        return super.insert_tactic(caret, token);
+    }
+
+    /**
+     * PHP `Lean_match::split` (php/parser/lean.php ~5892–5903); clone via `this.clone()` / `LeanArgs::__clone`.
+     * @param {Record<string, unknown>} [syntax]
+     */
+    split(syntax) {
+        const w = this.with;
+        if (!w) return [this];
+        const self = this.clone();
+        if (self.with) self.with.args = [];
+        const statements = [self];
+        for (const stmt of w.args) {
+            statements.push(...stmt.split(syntax));
+        }
+        return statements;
+    }
+
+    isProp(vars) {
+        const w = this.with;
+        if (!w) return undefined;
+        const cases = w.args;
+        const first = cases[0];
+        if (first instanceof LeanBar) {
+            const arrow = first.arg;
+            if (arrow instanceof LeanRightarrow) {
+                return arrow.rhs.isProp(vars);
+            }
+        }
+        return undefined;
+    }
+}
+
+/** PHP `LeanWith` (php/parser/lean.php ~8413–8551). */
+class LeanWith extends LeanArgs {
+    /**
+     * @param {Lean} arg
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(arg, indent, level, parent = null) {
+        super([arg], indent, level, parent);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    get stack_priority() {
+        return this.parent instanceof Lean_match ? 23 : 17;
+    }
+
+    get operator() {
+        return 'with';
+    }
+    get command() {
+        return 'with';
+    }
+
+    sep() {
+        if (this.args.length > 1) return '\n';
+        if (!this.args.length) return '';
+        const [caret] = this.args;
+        return caret instanceof LeanCaret || caret.tokens_space_separated() || caret instanceof LeanBitOr ? ' ' : '\n';
+    }
+
+    strFormat() {
+        const s = this.sep();
+        return `${this.operator}${s}${Array(this.args.length).fill('%s').join('\n')}`;
+    }
+
+    relocateLastComment() {
+        const a = this.args[this.args.length - 1];
+        a?.relocateLastComment?.();
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent > indent) {
+            return super.insert_newline(caret, newlineCount, indent, next);
+        }
+        const cases = this.args;
+        if (cases.length > 0) {
+            let c = cases[cases.length - 1];
+            if (c instanceof LeanCaret) return c;
+            if (next === '|') {
+                if (c instanceof LeanBar || c.is_comment()) {
+                    const nc = new LeanCaret(this.indent, c.level);
+                    this.push(nc);
+                    return nc;
+                }
+            }
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    insert_bar(caret, prevToken, next) {
+        const cases = this.args;
+        const last = cases[cases.length - 1];
+        if (last === caret) {
+            if (caret instanceof LeanCaret) {
+                this.replace(caret, new LeanBar(caret, this.indent, caret.level));
+                return caret;
+            }
+            const new_ = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanBitOr(caret, new_, this.indent, caret.level));
+            return new_;
+        }
+        throw new Error(`LeanWith.insert_bar: unexpected for ${this.constructor.name}`);
+    }
+
+    insert_tactic(caret, token) {
+        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
+        return super.insert_tactic(caret, token);
+    }
+
+    insert_comma(caret) {
+        if (caret === this.args[this.args.length - 1]) {
+            const new_ = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanArgsCommaSeparated([caret, new_], this.indent, caret.level));
+            return new_;
+        }
+        throw new Error(`LeanWith.insert_comma: unexpected for ${this.constructor.name}`);
+    }
+
+    set_line(line) {
+        this.line = line;
+        if (this.sep() === '\n') line++;
+        for (const arg of this.args) {
+            line = arg.set_line(line) + 1;
+        }
+        return line - 1;
+    }
+
+    tokens_bar_separated() {
+        if (this.args.length === 1 && this.args[0] instanceof LeanBitOr) {
+            return this.args[0].tokens_bar_separated();
+        }
+        return [];
+    }
+
+    unique_token(indent) {
+        if (this.args.length === 1) {
+            const stmt = this.args[0];
+            if (stmt instanceof LeanBitOr || stmt instanceof LeanArgsSpaceSeparated) {
+                return stmt.unique_token(indent);
+            }
+        }
+        return undefined;
+    }
+
+    tokens_space_separated() {
+        if (this.args.length === 1 && this.args[0] instanceof LeanArgsSpaceSeparated) {
+            return this.args[0].tokens_space_separated();
+        }
+        return [];
+    }
+}
+
 /** Port of `LbigOperator` (php/parser/lean.php ~9058–9150). */
 class LeanBigOperator extends LeanArgs {
     /**
@@ -3239,6 +3527,12 @@ export class LeanToken extends Lean {
         this.text = text;
         /** @type {Record<string, unknown> | null} PHP `LeanToken::$cache` */
         this.cache = null;
+    }
+
+    clone() {
+        const copy = super.clone();
+        copy.cache = null;
+        return copy;
     }
 
     strFormat() {
@@ -4214,6 +4508,8 @@ const LEAN_CLASSES = {
     Lean_let,
     Lean_have,
     Lean_fun,
+    Lean_match,
+    LeanWith,
     LeanToken,
     LeanLineComment,
     LeanBlockComment,

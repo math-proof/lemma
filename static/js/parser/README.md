@@ -16,7 +16,7 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 
 ### Source of Truth
 - **PHP**: `php/parser/lean.php` (~9500 lines)
-- **JS**: `static/js/parser/lean.js` (~4000 lines)
+- **JS**: `static/js/parser/lean.js` (~4200 lines)
 
 ### Class Mapping
 JS flattens some PHP hierarchies:
@@ -32,15 +32,14 @@ JS flattens some PHP hierarchies:
 | `__get('x')` | getter `get x()` |
 | `__set('x', v)` | setter `set x(v)` |
 | `__toString` | `toString()` (uses `strFormat` + `strArgs`) |
-| `__clone` | clone or copy logic |
+| `__clone` | instance method **`clone()`** — see [AST cloning for translation](#ast-cloning-for-translation) under Translation Task Steps |
 | `$this->args` | `this.args` |
 | `parent::method()` | `super.method()` |
 | `get_class($this)` | `this.constructor.name` |
 | `throw new Exception(...)` | `throw new Error(...)` |
 
 ### Known Gaps
-- `Lean_match`, `LeanWith`: match/induction structure (partially handled)
-- `LeanBar` depends on `LeanWith` for full PHP `split` / echo behavior
+- `LeanBar` / `Lean_match` / `LeanWith`: `split` and echo paths may still differ from PHP in edge cases
 - Large tactic / proof surface still thin vs PHP: `LeanTactic` (`get_echo_token`, `has_tactic_block_followed`, `insert_sequential_tactic_combinator` wiring vs PHP `LeanSequentialTacticCombinator` unary), `LeanTacticBlock::echo`, `LeanRightarrow::echo`
 
 ### Running Tests
@@ -51,6 +50,23 @@ node scripts/test-lean-parser.mjs
 ## Translation Task Steps (PHP ↔ JS)
 
 Use this prompt when syncing `php/parser/lean.php` with `static/js/parser/lean.js`.
+
+### AST cloning for translation
+
+When a PHP method uses `clone $this`, `LeanArgs::__clone`, or otherwise duplicates part of the AST:
+
+1. **Base pattern (same shell as `clone()` in the SQL parser’s `sql.js`)** — implement on **`Lean`** (or the relevant leaf class) as:
+   - `const copy = Object.create(Object.getPrototypeOf(this));`
+   - `Object.assign(copy, this);`
+   - `copy.parent = null;`
+   - `return copy;`  
+   This copies own enumerable fields only (**shallow**).
+
+2. **`LeanArgs`** — **override** `clone()`: use the same three lines as above, then replace `copy.args` with `this.args.map((a) => (a != null ? a.clone() : a))` and set `a.parent = copy` for each child. That mirrors PHP **`LeanArgs::__clone`** (deep-clone along `args` only).
+
+3. **`LeanToken`** — override `clone()` to `const copy = super.clone(); copy.cache = null; return copy;` so tactic-block cache is not shared.
+
+4. **Call sites** — use **`node.clone()`**, not a standalone helper such as `cloneLeanSubtree(node)`.
 
 ### Step 1: Class Inventory and Missing Classes
 
@@ -98,6 +114,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 3. **Translation precision**
    - For each method, compare PHP logic with JS implementation.
    - **If JS differs**: Update the JS implementation to match PHP behavior.
+   - If PHP uses **`clone` / `__clone`**: port via **`clone()`** per [AST cloning for translation](#ast-cloning-for-translation) above (extend `Lean` / `LeanArgs` / `LeanToken` as needed).
 
 ### Step 4: Output and Verification
 
@@ -107,30 +124,30 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2025-03-24): inventory, `LeanCalc` + `LeanArgs::insert_calc`, README refresh, tests.
+Last run: Steps 1–4 (2025-03-24): `Lean_match.split` uses `this.clone()`; `Lean` / `LeanArgs` / `LeanToken` `clone()` (sql.js shell + deep `args`); README cloning note, tests.
 
 ```
-## Step 1: Class inventory (~162 PHP Lean* vs ~164 JS Lean* incl. LeanBigOperator / LeanQuantifier)
+## Step 1: Class inventory (~162 PHP Lean* vs ~166 JS Lean* incl. LeanBigOperator / LeanQuantifier)
 
 Registry: LEAN_CLASSES + getLeanClass only.
 
 Abstract in PHP only (flattened in JS): LeanArithmetic, LeanBinaryBoolean, LeanLogic, LeanRelational,
   LeanSetOperator, LeanUnaryArithmetic, LeanUnaryArithmeticPre, LeanSyntax.
 
-PHP names still absent in JS (10 total): 8 abstracts above + 2 concrete — Lean_match, LeanWith.
+PHP names still absent in JS (8 total): the abstracts listed above only (concrete Lean_match, LeanWith now in JS).
 
-This pass: LeanCalc (PHP ~7620–7725) + LeanArgs.insert_calc (PHP ~1472–1481); LeanCalc in LEAN_CLASSES;
-  relocateLastComment uses instanceof LeanCalc.
+This pass: Lean_match, LeanWith + LEAN_CLASSES; LeanArgs.clone() mirrors PHP LeanArgs::__clone for split.
 
-Prior ports: LeanArgsSemicolonSeparated; LeanUsing, LeanFrom, LeanMOD, LeanGeneralizing, LeanIn; LeanNot,
-  LeanTacticBlock; big operators; Lean_show; etc.
+Prior ports: LeanCalc; LeanArgsSemicolonSeparated; LeanUsing, LeanFrom, LeanMOD, LeanGeneralizing, LeanIn;
+  LeanNot, LeanTacticBlock; big operators; Lean_show; etc.
 
 ## Step 2: Order
 - Option B: JS grouped by role; not matched to lean.php line order.
 
 ## Step 3: Per-class audit (sampled)
-- LeanCalc: is_indented, sep, strFormat, latexFormat, insert_newline, relocateLastComment, stack_priority,
-  set_line, echo, split (PHP ~7620–7724).
+- Lean_match / LeanWith: insert (LeanWith), strFormat, latexFormat, latexArgs, insert_comma, relocateLastComment,
+  insert_tactic, split, isProp; With sep, insert_newline, insert_bar, insert_tactic, insert_comma, set_line,
+  tokens_bar_separated, unique_token, tokens_space_separated, stack_priority.
 - LeanTactic: still thin vs PHP for sequential combinator / echo / jsonSerialize (see Known Gaps).
 
 ## Step 4: Verification
