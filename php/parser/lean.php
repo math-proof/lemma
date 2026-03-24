@@ -1891,16 +1891,6 @@ class LeanBracket extends LeanPairedGroup
 
 class LeanBrace extends LeanPairedGroup
 {
-    public function is_Expr() {
-        return false;
-    }
-
-    public function is_indented()
-    {
-        $parent = $this->parent;
-        return !($parent instanceof LeanQuantifier || $parent instanceof LeanBinaryBoolean || $parent instanceof LeanColon || $parent instanceof LeanSetOperator || $parent instanceof LeanTactic || $parent instanceof LeanAssign);
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -1912,11 +1902,6 @@ class LeanBrace extends LeanPairedGroup
                 return parent::__get($vname);
         }
     }
-    public function latexFormat()
-    {
-        return '\left\{ {%s} \right\}';
-    }
-
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
         if ($this->indent <= $indent) {
@@ -1934,6 +1919,21 @@ class LeanBrace extends LeanPairedGroup
         } else
             return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
+    public function is_Expr() {
+        return false;
+    }
+
+    public function is_indented()
+    {
+        $parent = $this->parent;
+        return !($parent instanceof LeanQuantifier || $parent instanceof LeanBinaryBoolean || $parent instanceof LeanColon || $parent instanceof LeanSetOperator || $parent instanceof LeanTactic || $parent instanceof LeanAssign);
+    }
+
+    public function latexFormat()
+    {
+        return '\left\{ {%s} \right\}';
+    }
+
 }
 
 class LeanAbs extends LeanPairedGroup
