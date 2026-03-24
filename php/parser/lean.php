@@ -3102,15 +3102,6 @@ class LeanDiv extends LeanArithmetic
         }
     }
 
-    public function latexFormat()
-    {
-        [$lhs, $rhs] = $this->args;
-        if ($lhs instanceof LeanDiv || $rhs instanceof LeanParenthesis && $rhs->arg instanceof LeanDiv) {
-            return '\left. {%s} \right/ {%s}';
-        } else {
-            return '\frac {%s} {%s}';
-        }
-    }
     public function latexArgs(&$syntax = null)
     {
         $lhs = $this->lhs;
@@ -3125,6 +3116,15 @@ class LeanDiv extends LeanArithmetic
         $lhs = $lhs->toLatex($syntax);
         $rhs = $rhs->toLatex($syntax);
         return [$lhs, $rhs];
+    }
+    public function latexFormat()
+    {
+        [$lhs, $rhs] = $this->args;
+        if ($lhs instanceof LeanDiv || $rhs instanceof LeanParenthesis && $rhs->arg instanceof LeanDiv) {
+            return '\left. {%s} \right/ {%s}';
+        } else {
+            return '\frac {%s} {%s}';
+        }
     }
 }
 
