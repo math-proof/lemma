@@ -2355,36 +2355,6 @@ class LeanProperty extends LeanBinary
 class LeanColon extends LeanBinary
 {
     public static $input_priority = 19;
-    public function sep()
-    {
-        $rhs = $this->rhs;
-        return $rhs instanceof LeanStatements ? "\n" : ($rhs instanceof LeanCaret || $this->parent instanceof LeanGetElem ? '' : ' ');
-    }
-
-    public function is_indented()
-    {
-        return false;
-    }
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        $first = "%s";
-        if (!($this->parent instanceof LeanGetElem))
-            $first .= " ";
-        return "$first$this->operator$sep%s";
-    }
-
-    public function strArgs()
-    {
-        [$lhs, $rhs] = $this->args;
-        if ($lhs instanceof LeanArgsNewLineSeparated) {
-            $args = array_map(fn($arg) => "$arg", array_slice($lhs->args, 1));
-            array_unshift($args, "{$lhs->args[0]}");
-            $lhs = implode("\n", $args);
-        }
-        return [$lhs, $rhs];
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -2409,6 +2379,36 @@ class LeanColon extends LeanBinary
         }
         return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
+    public function is_indented()
+    {
+        return false;
+    }
+    public function sep()
+    {
+        $rhs = $this->rhs;
+        return $rhs instanceof LeanStatements ? "\n" : ($rhs instanceof LeanCaret || $this->parent instanceof LeanGetElem ? '' : ' ');
+    }
+
+    public function strArgs()
+    {
+        [$lhs, $rhs] = $this->args;
+        if ($lhs instanceof LeanArgsNewLineSeparated) {
+            $args = array_map(fn($arg) => "$arg", array_slice($lhs->args, 1));
+            array_unshift($args, "{$lhs->args[0]}");
+            $lhs = implode("\n", $args);
+        }
+        return [$lhs, $rhs];
+    }
+
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        $first = "%s";
+        if (!($this->parent instanceof LeanGetElem))
+            $first .= " ";
+        return "$first$this->operator$sep%s";
+    }
+
 }
 
 class LeanAssign extends LeanBinary

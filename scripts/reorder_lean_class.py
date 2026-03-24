@@ -18,6 +18,7 @@ Presets (see php/parser/README.md):
   leandoubleanglequotation — class LeanDoubleAngleQuotation
   leanbinary      — abstract class LeanBinary
   leanproperty    — class LeanProperty
+  leancolon       — class LeanColon
   leantoken       — class LeanToken (data members first, then sorted methods)
 
 Syntax check (match http://localhost/info.php), e.g. WAMP PHP 8.0.x:
@@ -95,6 +96,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leanproperty": (
         "class LeanProperty extends LeanBinary\n{",
         "\n}\n\nclass LeanColon extends LeanBinary",
+    ),
+    "leancolon": (
+        "class LeanColon extends LeanBinary\n{",
+        "\n}\n\nclass LeanAssign extends LeanBinary",
     ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
