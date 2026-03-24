@@ -9055,7 +9055,7 @@ class Lean_fun extends LeanUnary
 
 }
 
-class LbigOperator extends LeanArgs
+class LeanBigOperator extends LeanArgs
 {
     public function __construct($bound, $indent, $level, $parent = null)
     {
@@ -9150,7 +9150,7 @@ class LbigOperator extends LeanArgs
 }
 
 
-class LeanQuantifier extends LbigOperator
+class LeanQuantifier extends LeanBigOperator
 {
     use LeanProp;
     public static $input_priority = 24;
@@ -9192,7 +9192,7 @@ class Lean_exists extends LeanQuantifier
 }
 
 
-class Lean_sum extends LbigOperator
+class Lean_sum extends LeanBigOperator
 {
     public static $input_priority = 67;
     public function __get($vname)
@@ -9206,7 +9206,7 @@ class Lean_sum extends LbigOperator
     }
 }
 
-class Lean_prod extends LbigOperator
+class Lean_prod extends LeanBigOperator
 {
     public static $input_priority = 67;
     public function __get($vname)
@@ -9220,7 +9220,7 @@ class Lean_prod extends LbigOperator
     }
 }
 
-class Lean_bigcap extends LbigOperator
+class Lean_bigcap extends LeanBigOperator
 {
     public static $input_priority = 60;
     public function __get($vname)
@@ -9234,7 +9234,7 @@ class Lean_bigcap extends LbigOperator
     }
 }
 
-class Lean_bigcup extends LbigOperator
+class Lean_bigcup extends LeanBigOperator
 {
     public static $input_priority = 60;
     public function __get($vname)
@@ -9248,7 +9248,7 @@ class Lean_bigcup extends LbigOperator
     }
 }
 
-class LeanStack extends LbigOperator
+class LeanStack extends LeanBigOperator
 {
     public static $input_priority = 52;
     public function __get($vname)

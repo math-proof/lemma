@@ -4035,7 +4035,7 @@ class LeanWith extends LeanArgs {
     }
 }
 
-/** Port of `LbigOperator` (php/parser/lean.php ~9058–9150). */
+/** Port of `LeanBigOperator` (php/parser/lean.php ~9058–9150). */
 class LeanBigOperator extends LeanArgs {
     /**
      * @param {Lean} bound

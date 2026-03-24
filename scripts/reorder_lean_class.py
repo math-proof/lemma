@@ -90,7 +90,7 @@ Presets (see php/parser/README.md):
   leanhave        — class Lean_have
   leanshow        — class Lean_show
   lean_fun        — class Lean_fun (members-first: static property)
-  lbigoperator    — class LbigOperator
+  leanbigoperator — class LeanBigOperator
   leanquantifier  — class LeanQuantifier (members-first: use + properties + methods)
   leanforall      — class Lean_forall
   leanexists      — class Lean_exists
@@ -466,14 +466,14 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "lean_fun": (
         "class Lean_fun extends LeanUnary\n{",
-        "\n}\n\nclass LbigOperator extends LeanArgs",
+        "\n}\n\nclass LeanBigOperator extends LeanArgs",
     ),
-    "lbigoperator": (
-        "class LbigOperator extends LeanArgs\n{",
-        "\n}\n\n\nclass LeanQuantifier extends LbigOperator",
+    "leanbigoperator": (
+        "class LeanBigOperator extends LeanArgs\n{",
+        "\n}\n\n\nclass LeanQuantifier extends LeanBigOperator",
     ),
     "leanquantifier": (
-        "class LeanQuantifier extends LbigOperator\n{",
+        "class LeanQuantifier extends LeanBigOperator\n{",
         "\n}\n\n\n// universal quantifier\nclass Lean_forall extends LeanQuantifier",
     ),
     "leanforall": (
@@ -482,26 +482,26 @@ PRESETS: dict[str, tuple[str, str]] = {
     ),
     "leanexists": (
         "class Lean_exists extends LeanQuantifier\n{",
-        "\n}\n\n\nclass Lean_sum extends LbigOperator",
+        "\n}\n\n\nclass Lean_sum extends LeanBigOperator",
     ),
     "leansum": (
-        "class Lean_sum extends LbigOperator\n{",
-        "\n}\n\nclass Lean_prod extends LbigOperator",
+        "class Lean_sum extends LeanBigOperator\n{",
+        "\n}\n\nclass Lean_prod extends LeanBigOperator",
     ),
     "leanprod": (
-        "class Lean_prod extends LbigOperator\n{",
-        "\n}\n\nclass Lean_bigcap extends LbigOperator",
+        "class Lean_prod extends LeanBigOperator\n{",
+        "\n}\n\nclass Lean_bigcap extends LeanBigOperator",
     ),
     "leanbigcap": (
-        "class Lean_bigcap extends LbigOperator\n{",
-        "\n}\n\nclass Lean_bigcup extends LbigOperator",
+        "class Lean_bigcap extends LeanBigOperator\n{",
+        "\n}\n\nclass Lean_bigcup extends LeanBigOperator",
     ),
     "leanbigcup": (
-        "class Lean_bigcup extends LbigOperator\n{",
-        "\n}\n\nclass LeanStack extends LbigOperator",
+        "class Lean_bigcup extends LeanBigOperator\n{",
+        "\n}\n\nclass LeanStack extends LeanBigOperator",
     ),
     "leanstack": (
-        "class LeanStack extends LbigOperator\n{",
+        "class LeanStack extends LeanBigOperator\n{",
         "\n}\n\nfunction compile($code) {",
     ),
     "leanparser": (
