@@ -1083,6 +1083,55 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     }
 }
 
+/** Port of `LeanArgsSemicolonSeparated` (php/parser/lean.php ~6798–6854). */
+export class LeanArgsSemicolonSeparated extends LeanArgs {
+    is_indented() {
+        return false;
+    }
+
+    strFormat() {
+        return Array(this.args.length).fill('%s').join('; ');
+    }
+
+    latexFormat() {
+        return Array(this.args.length).fill('{%s}').join('; ');
+    }
+
+    get stack_priority() {
+        return LeanColon.input_priority - 1;
+    }
+
+    insert_semicolon(caret) {
+        const c = new LeanCaret(this.indent, caret.level);
+        this.push(c);
+        return c;
+    }
+
+    insert_tactic(caret, type) {
+        if (caret instanceof LeanCaret) {
+            const p = this.parent;
+            if ((p instanceof LeanTactic && p.is_inline_tactic_block()) || p instanceof LeanBy) {
+                this.replace(caret, new LeanTactic(type, caret, this.indent, caret.level));
+                return caret;
+            }
+            return this.insert_word(caret, type);
+        }
+        throw new Error(`LeanArgsSemicolonSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
+    }
+
+    insert(caret, func, type) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret) {
+            if (caret instanceof LeanCaret) {
+                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+                return caret;
+            }
+            if (this.parent) return this.parent.insert(this, func, type);
+        }
+    }
+}
+
 export class LeanBinary extends LeanArgs {
     static input_priority = 47;
     /**
@@ -1920,12 +1969,22 @@ export class LeanBy extends LeanUnary {
             caret.indent = ind;
             this.arg = new LeanStatements([caret], ind, caret.level);
             for (let i = 1; i < newlineCount; ++i) {
-                caret = new LeanCaret(indent, caret.level);
+                caret = new LeanCaret(ind, caret.level);
                 this.arg.push(caret);
             }
             return caret;
         }
         return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    /** PHP `LeanBy::insert_semicolon` (php/parser/lean.php ~7541–7549). */
+    insert_semicolon(caret) {
+        if (caret === this.arg) {
+            const c = new LeanCaret(this.indent, caret.level);
+            this.arg = new LeanArgsSemicolonSeparated([this.arg, c], this.indent, c.level);
+            return c;
+        }
+        if (this.parent) return this.parent.insert_semicolon(this);
     }
 }
 
@@ -3570,6 +3629,182 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup {
     }
 }
 
+/** PHP `LeanUsing` (php/parser/lean.php ~7766–7810): tactic modifier `using`. */
+class LeanUsing extends LeanUnary {
+    is_indented() {
+        return false;
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            caret.indent = ind;
+            this.arg = new LeanStatements([caret], ind, caret.level);
+            for (let i = 1; i < newlineCount; i++) {
+                caret = new LeanCaret(ind, caret.level);
+                this.arg.push(caret);
+            }
+            return caret;
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+    get operator() {
+        return 'using';
+    }
+    get command() {
+        return 'using';
+    }
+}
+
+/** PHP `LeanFrom` (php/parser/lean.php ~7552–7618). */
+class LeanFrom extends LeanUnary {
+    is_indented() {
+        return this.parent instanceof LeanArgsCommaNewLineSeparated;
+    }
+    sep() {
+        return this.arg instanceof LeanStatements ? '\n' : ' ';
+    }
+    strFormat() {
+        const s = this.sep();
+        return `${this.operator}${s}%s`;
+    }
+    latexFormat() {
+        const s = this.sep();
+        return `${this.command}${s}%s`;
+    }
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            caret.indent = ind;
+            this.arg = new LeanStatements([caret], ind, caret.level);
+            for (let i = 1; i < newlineCount; i++) {
+                caret = new LeanCaret(ind, caret.level);
+                this.arg.push(caret);
+            }
+            return caret;
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+    relocateLastComment() {
+        this.arg.relocateLastComment();
+    }
+    echo() {
+        this.arg.echo?.();
+    }
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        if (this.arg instanceof LeanStatements) L++;
+        return this.arg.set_line(L);
+    }
+    get operator() {
+        return 'from';
+    }
+    get command() {
+        return 'from';
+    }
+}
+
+/** PHP `LeanMOD` (php/parser/lean.php ~7728–7763). */
+class LeanMOD extends LeanUnary {
+    is_indented() {
+        return false;
+    }
+    sep() {
+        return ' ';
+    }
+    strFormat() {
+        const s = this.sep();
+        return `${this.operator}${s}%s`;
+    }
+    latexFormat() {
+        const s = this.sep();
+        return `${this.command}\\${s}%s`;
+    }
+    get operator() {
+        return 'MOD';
+    }
+    get command() {
+        return '\\operatorname{MOD}';
+    }
+}
+
+/** PHP `LeanGeneralizing` (php/parser/lean.php ~7906–7950). */
+class LeanGeneralizing extends LeanUnary {
+    is_indented() {
+        return false;
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            caret.indent = ind;
+            this.arg = new LeanStatements([caret], ind, caret.level);
+            for (let i = 1; i < newlineCount; i++) {
+                caret = new LeanCaret(ind, caret.level);
+                this.arg.push(caret);
+            }
+            return caret;
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+    get operator() {
+        return 'generalizing';
+    }
+    get command() {
+        return 'generalizing';
+    }
+}
+
+/** PHP `LeanIn` (php/parser/lean.php ~7858–7904): tactic modifier `in` (not `Lean_in` ∈). */
+class LeanIn extends LeanUnary {
+    is_indented() {
+        return false;
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            caret.indent = ind;
+            this.arg = new LeanStatements([caret], ind, caret.level);
+            for (let i = 1; i < newlineCount; i++) {
+                caret = new LeanCaret(ind, caret.level);
+                this.arg.push(caret);
+            }
+            return caret;
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+    get stack_priority() {
+        return 18;
+    }
+    get operator() {
+        return 'in';
+    }
+    get command() {
+        return 'in';
+    }
+}
+
 /** PHP LeanAt extends LeanUnary (php/parser/lean.php ~7812–7856): modifier "at %s". */
 export class LeanAt extends LeanUnary {
     get operator() {
@@ -3683,6 +3918,75 @@ export class LeanTactic extends LeanUnary {
         if (this.parent) return this.parent.insert(this, func, type);
     }
 
+    /** PHP `LeanTactic::is_inline_tactic_block` (php/parser/lean.php ~6980–6983). */
+    is_inline_tactic_block() {
+        return this.tacticName === 'repeat' || this.tacticName === 'try';
+    }
+
+    /** PHP `LeanTactic::__get('stack_priority')` (php/parser/lean.php ~6996–7001). */
+    get stack_priority() {
+        if (this.parent instanceof LeanBy) return LeanColon.input_priority;
+        if (this.tacticName === 'obtain') return LeanAssign.input_priority - 1;
+        return LeanAssign.input_priority;
+    }
+
+    /** PHP `LeanTactic::insert_newline` (php/parser/lean.php ~7408–7426). */
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this.arg) {
+            if (this.indent < indent && caret instanceof LeanArgsSpaceSeparated) {
+                const new_ = new LeanCaret(this.indent, caret.level);
+                caret.push(new_);
+                return new_;
+            }
+            if (next === '<') {
+                const c = new LeanCaret(indent, caret.level);
+                this.push(c);
+                return c;
+            }
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    /** PHP `LeanTactic::insert_comma` (php/parser/lean.php ~7428–7443). */
+    insert_comma(caret) {
+        if (caret === this.arg) {
+            if (
+                caret instanceof LeanToken ||
+                caret instanceof LeanBinary ||
+                caret instanceof LeanPairedGroup
+            ) {
+                const new_ = new LeanCaret(this.indent, caret.level);
+                this.replace(caret, new LeanArgsCommaSeparated([caret, new_], this.indent, caret.level));
+                return new_;
+            }
+            if (caret instanceof LeanArgsCommaSeparated) {
+                const new_ = new LeanCaret(this.indent, caret.level);
+                caret.push(new_);
+                return new_;
+            }
+        }
+        return super.insert_comma(caret);
+    }
+
+    /** PHP `LeanTactic::insert_semicolon` (php/parser/lean.php ~7445–7466). */
+    insert_semicolon(caret) {
+        if (caret === this.arg) {
+            if (this.is_inline_tactic_block()) {
+                const new_ = new LeanCaret(this.indent, caret.level);
+                if (caret instanceof LeanArgsSemicolonSeparated) caret.push(new_);
+                else this.replace(caret, new LeanArgsSemicolonSeparated([caret, new_], this.indent, caret.level));
+                return new_;
+            }
+            if (this.parent instanceof LeanBy) {
+                const new_ = new LeanCaret(this.indent, caret.level);
+                if (caret instanceof LeanArgsSemicolonSeparated) caret.push(new_);
+                else this.parent.replace(this, new LeanArgsSemicolonSeparated([this, new_], this.indent, caret.level));
+                return new_;
+            }
+        }
+        return super.insert_semicolon(caret);
+    }
+
     /** PHP `LeanTactic::strFormat` (php/parser/lean.php ~7053–7066): "func" + sep + "%s" for each arg. */
     strFormat() {
         const func = this.tacticName;
@@ -3781,6 +4085,7 @@ const LEAN_CLASSES = {
     LeanArgsCommaSeparated,
     LeanArgsNewLineSeparated,
     LeanArgsCommaNewLineSeparated,
+    LeanArgsSemicolonSeparated,
     LeanColon,
     LeanRightarrow,
     LeanAssign,
@@ -3816,6 +4121,7 @@ const LEAN_CLASSES = {
     LeanNorm,
     LeanCeil,
     LeanFloor,
+    LeanFrom,
     LeanDoubleAngleQuotation,
     Lean_equiv,
     LeanNotEquiv,
@@ -3850,6 +4156,7 @@ const LEAN_CLASSES = {
     Lean_lll,
     Lean_gg,
     Lean_ggg,
+    LeanGeneralizing,
     Lean_cdotp,
     Lean_circ,
     Lean_blacktriangleright,
@@ -3872,6 +4179,7 @@ const LEAN_CLASSES = {
     Lean_is,
     Lean_is_not,
     LeanMethodChaining,
+    LeanMOD,
     Lean_approx,
     Lean_lt,
     Lean_gt,
@@ -3906,6 +4214,7 @@ const LEAN_CLASSES = {
     LeanCubicRoot,
     LeanCube,
     Lean_import,
+    LeanIn,
     LeanInv,
     Lean_lnot,
     Lean_namespace,
@@ -3925,6 +4234,7 @@ const LEAN_CLASSES = {
     LeanTranspose,
     Lean_uparrow,
     LeanUparrow,
+    LeanUsing,
 };
 
 /**

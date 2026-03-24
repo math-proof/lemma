@@ -16,7 +16,7 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 
 ### Source of Truth
 - **PHP**: `php/parser/lean.php` (~9500 lines)
-- **JS**: `static/js/parser/lean.js` (~3500 lines)
+- **JS**: `static/js/parser/lean.js` (~4000 lines)
 
 ### Class Mapping
 JS flattens some PHP hierarchies:
@@ -40,7 +40,9 @@ JS flattens some PHP hierarchies:
 
 ### Known Gaps
 - `Lean_match`, `LeanWith`: match/induction structure (partially handled)
-- `Lean_namespace`, `LeanBar`: added for parity; `LeanBar` used when `LeanWith` is ported
+- `LeanBar` depends on `LeanWith` for full PHP `split` / echo behavior
+- `LeanCalc`: not ported (calc blocks / `split` / echo)
+- Large tactic / proof surface still thin vs PHP: `LeanTactic` (`get_echo_token`, `has_tactic_block_followed`, `insert_sequential_tactic_combinator`, …), `LeanTacticBlock::echo`, `LeanRightarrow::echo`
 
 ### Running Tests
 ```bash
@@ -106,40 +108,38 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: automated name diff + spot checks (2025-03-24). Re-run the steps after large PHP or JS edits.
+Last run: full workflow Steps 1–4 (2025-03-24): name diff, concrete ports, `LeanTactic` method audit slice, tests.
 
 ```
-## Step 1: Class inventory (~162 PHP Lean* declarations vs ~156 JS Lean* classes)
+## Step 1: Class inventory (~162 PHP Lean* vs ~163 JS Lean* incl. LeanBigOperator / LeanQuantifier)
 
-Abstract / intermediate in PHP only (intentionally flattened or absent in JS):
-- LeanArithmetic, LeanRelational, LeanBinaryBoolean, LeanLogic, LeanSetOperator,
-  LeanUnaryArithmetic, LeanUnaryArithmeticPre, LeanSyntax → JS uses LeanBinary / LeanUnary / LeanArgs.
+Registry: LEAN_CLASSES + getLeanClass only (no command/unary/paired caches).
 
-Concrete PHP classes still missing as dedicated JS classes (parser may delegate or not hit yet):
-- Lean_match, LeanWith — match / induction (partial; README known gaps)
-- LeanCalc, LeanFrom, LeanMOD, LeanUsing, LeanGeneralizing, LeanIn, LeanNot, LeanTacticBlock
-- LeanArgsSemicolonSeparated
+Abstract / intermediate in PHP only (flattened in JS): LeanArithmetic, LeanRelational, LeanBinaryBoolean,
+  LeanLogic, LeanSetOperator, LeanUnaryArithmetic, LeanUnaryArithmeticPre, LeanSyntax.
 
-PHP maps tokens to class names that exist only in JS (no `class LeanEDiv` in PHP source; JS implements):
-- LeanEDiv, Lean_ominus, Lean_oslash, Lean_circledcirc, Lean_circledast, Lean_circleddash, Lean_circleeq,
-  Lean_boxplus, Lean_boxminus, Lean_boxtimes, Lean_dotsquare (see PHP token table vs JS LEAN_CLASSES)
+PHP names still absent in JS (11 total): 8 abstract bases above + 3 concrete — Lean_match, LeanWith, LeanCalc.
 
-PHP `LbigOperator` / `LeanQuantifier` → JS internal `LeanBigOperator` / `LeanQuantifier`; concretes
-  Lean_forall, Lean_exists, Lean_sum, Lean_prod, Lean_bigcap, Lean_bigcup are in LEAN_CLASSES.
+Ported this pass (in LEAN_CLASSES): LeanArgsSemicolonSeparated; tactic modifiers LeanUsing, LeanFrom,
+  LeanMOD, LeanGeneralizing, LeanIn (parse builds LeanIn via `Lean${capitalized}` for keyword `in`).
+
+Earlier additions: LeanNot, LeanTacticBlock; big operators; Lean_show; unary/postfix via getLeanClass.
+
+PHP token-only class names (no `class Lean*` in PHP): LeanEDiv, Lean_ominus, Lean_oslash, circled/box ops, etc.
 
 ## Step 2: Order
-- Left as-is: JS groups exports (args, binary cluster, unary, commands, parser); matching PHP file order
-  would shuffle hundreds of lines with little runtime benefit.
+- Option B: JS grouped by role; not matched to lean.php declaration order.
 
-## Step 3: Per-Class gaps (high level)
-- Lean_rightarrow: ported is_indented, sep, strFormat, stack_priority 24, insert_newline, isProp (PHP ~5591–5645).
-- LeanTactic, LeanRightarrow::echo, Lean_match / LeanWith, tactic block helpers: still large PHP surface;
-  prioritize by failing corpus or render2vue usage.
-- Full method-by-method pass: use grep on `class LeanFoo` in both files for remaining classes.
+## Step 3: Per-class audit (sampled)
+- LeanTactic: added is_inline_tactic_block, stack_priority, insert_newline, insert_comma, insert_semicolon
+  (PHP ~6980–7466); still missing insert_sequential_tactic_combinator, jsonSerialize, get_echo_token, etc.
+- LeanBy: insert_semicolon + insert_newline loop indent fix (aligned with PHP ~7541–7549, ~7495–7509).
+- LeanArgsSemicolonSeparated: strFormat, latexFormat, stack_priority, insert_semicolon, insert_tactic, insert
+  (PHP ~6798–6854).
 
 ## Step 4: Verification
 - node scripts/test-lean-parser.mjs — corpus OK
-- No new linter issues on static/js/parser/lean.js
+- No linter issues on static/js/parser/lean.js
 ```
 
 ## References
