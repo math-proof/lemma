@@ -278,6 +278,46 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanArgsCommaNewLineSeparated extends LeanArgs\n{",
         "\n}\n\nabstract class LeanSyntax extends LeanArgs",
     ),
+    "leantactic": (
+        "class LeanTactic extends LeanSyntax\n{",
+        "\n}\n\nclass LeanBy extends LeanUnary",
+    ),
+    "leanby": (
+        "class LeanBy extends LeanUnary\n{",
+        "\n}\n\nclass LeanFrom extends LeanUnary",
+    ),
+    "leanfrom": (
+        "class LeanFrom extends LeanUnary\n{",
+        "\n}\n\nclass LeanCalc extends LeanUnary",
+    ),
+    "leancalc": (
+        "class LeanCalc extends LeanUnary\n{",
+        "\n}\n\n\nclass LeanMOD extends LeanUnary",
+    ),
+    "leanmod": (
+        "class LeanMOD extends LeanUnary\n{",
+        "\n}\n\n\nclass LeanUsing extends LeanUnary",
+    ),
+    "leanusing": (
+        "class LeanUsing extends LeanUnary\n{",
+        "\n}\n\nclass LeanAt extends LeanUnary",
+    ),
+    "leanat": (
+        "class LeanAt extends LeanUnary\n{",
+        "\n}\n\nclass LeanIn extends LeanUnary",
+    ),
+    "leanin": (
+        "class LeanIn extends LeanUnary\n{",
+        "\n}\n\nclass LeanGeneralizing extends LeanUnary",
+    ),
+    "leangeneralizing": (
+        "class LeanGeneralizing extends LeanUnary\n{",
+        "\n}\n\nclass LeanSequentialTacticCombinator extends LeanUnary",
+    ),
+    "leansequentialtacticcombinator": (
+        "class LeanSequentialTacticCombinator extends LeanUnary\n{",
+        "\n}\n\nclass LeanTacticBlock extends LeanUnary",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -342,6 +382,8 @@ SEGMENT_SPLIT_PRESETS = frozenset(
         "leanargsnewlineseparated",
         "leanargscommanewlineseparated",
         "leanstatements",
+        "leantactic",
+        "leansequentialtacticcombinator",
         "leantoken",
     }
 )
