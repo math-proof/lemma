@@ -16,6 +16,7 @@ Presets (see php/parser/README.md):
   leanbrace       — class LeanBrace
   leanabs         — class LeanAbs
   leandoubleanglequotation — class LeanDoubleAngleQuotation
+  leanbinary      — abstract class LeanBinary
   leantoken       — class LeanToken (data members first, then sorted methods)
 
 Syntax check (match http://localhost/info.php), e.g. WAMP PHP 8.0.x:
@@ -86,6 +87,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanDoubleAngleQuotation extends LeanPairedGroup\n{",
         "\n}\n\nabstract class LeanBinary extends LeanArgs",
     ),
+    "leanbinary": (
+        "abstract class LeanBinary extends LeanArgs\n{",
+        "\n}\n\nclass LeanProperty extends LeanBinary",
+    ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
         "\n}\n\nLeanToken::$subscript_keys",
@@ -93,7 +98,7 @@ PRESETS: dict[str, tuple[str, str]] = {
 }
 
 pat = re.compile(
-    r"\n    ((?:public static |public |static )?function \w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
+    r"\n    ((?:abstract )?(?:public static |public |static )?function \w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
     re.MULTILINE,
 )
 

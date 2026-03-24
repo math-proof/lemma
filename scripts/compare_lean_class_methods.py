@@ -66,6 +66,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanDoubleAngleQuotation extends LeanPairedGroup\n{",
         "\n}\n\nabstract class LeanBinary extends LeanArgs",
     ),
+    "leanbinary": (
+        "abstract class LeanBinary extends LeanArgs\n{",
+        "\n}\n\nclass LeanProperty extends LeanBinary",
+    ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
         "\n}\n\nLeanToken::$subscript_keys",
@@ -73,7 +77,7 @@ PRESETS: dict[str, tuple[str, str]] = {
 }
 
 SIG_RE = re.compile(
-    r"\n    ((?:public static |public |static )?function (\w+)\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
+    r"\n    ((?:abstract )?(?:public static |public |static )?function (\w+)\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
     re.MULTILINE,
 )
 

@@ -2082,28 +2082,6 @@ abstract class LeanBinary extends LeanArgs
         $val->parent = $this;
     }
 
-    public function jsonSerialize(): mixed
-    {
-        return [$this->func => [$this->lhs->jsonSerialize(), $this->rhs->jsonSerialize()]];
-    }
-
-    abstract public function sep();
-
-    public function set_line($line)
-    {
-        $this->line = $line;
-        $line = $this->lhs->set_line($line);
-        $sep = $this->sep();
-        if ($sep && $sep[0] == "\n")
-            ++$line;
-        return $this->rhs->set_line($line);
-    }
-
-    public function latexFormat()
-    {
-        return "{%s} $this->command {%s}";
-    }
-
     public function insert_if($caret)
     {
         if ($this->rhs === $caret) {
@@ -2121,6 +2099,28 @@ abstract class LeanBinary extends LeanArgs
         // (h : arg x + arg y ∈ Ioc (-Real.pi) Real.pi) :
         return $this->insert_word($caret, $func);
     }
+    public function jsonSerialize(): mixed
+    {
+        return [$this->func => [$this->lhs->jsonSerialize(), $this->rhs->jsonSerialize()]];
+    }
+
+    public function latexFormat()
+    {
+        return "{%s} $this->command {%s}";
+    }
+
+    abstract public function sep();
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        $line = $this->lhs->set_line($line);
+        $sep = $this->sep();
+        if ($sep && $sep[0] == "\n")
+            ++$line;
+        return $this->rhs->set_line($line);
+    }
+
 }
 
 class LeanProperty extends LeanBinary
