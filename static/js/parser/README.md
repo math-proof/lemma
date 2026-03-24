@@ -39,7 +39,7 @@ JS flattens some PHP hierarchies:
 | `throw new Exception(...)` | `throw new Error(...)` |
 
 ### Known Gaps
-- `Lean_match` / `LeanWith`: echo and other edge cases may still differ from PHP; `LeanBar.split` now clones like PHP before rewriting `=>` rhs
+- `Lean_match` / `LeanWith`: echo and other edge cases may still differ from PHP in corner cases; `LeanBar.split` / `LeanCalc.split` use deep `clone()` like PHP
 - Nested proof echo: worth spot-diffing `LeanTacticBlock::echo` / `LeanStatements::echo` against PHP after corpus changes
 - Recent parity: `LeanTacticBlock` (`echo`, `split`, `tactic_block`, `set_line`), `LeanArgsSpaceSeparated` (`tokens_space_separated`, `construct_prefix_tree`, `tactic_block_info`, `operand_count`), `LeanSequentialTacticCombinator`, `LeanTactic` echo/split helpers, `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
 
@@ -127,7 +127,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — `LeanCalc.split` uses deep `clone()` like PHP (~7693–7717), not shallow copy (fixes shared `args` with original); `LeanBar.split` / `LeanRightarrow.insert`; `node scripts/test-lean-parser.mjs` — corpus OK.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — full `LeanIte` port (~5917–6186): `echo` / `split` / `strFormat` / `latex*` / insert paths / `echo_part`; `LeanArgs.strip_parenthesis`; `LeanArgs.clone` skips `.clone()` on non-objects (e.g. split marker `0`); `node scripts/test-lean-parser.mjs` — corpus OK.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)

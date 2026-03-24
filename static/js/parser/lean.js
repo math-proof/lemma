@@ -1035,11 +1035,29 @@ export class LeanArgs extends Lean {
         const copy = Object.create(Object.getPrototypeOf(this));
         Object.assign(copy, this);
         copy.parent = null;
-        copy.args = this.args.map((a) => (a != null ? a.clone() : a));
+        copy.args = this.args.map((a) => {
+            if (a == null) return a;
+            if (typeof a.clone === 'function') return a.clone();
+            return a;
+        });
         for (const a of copy.args) {
-            if (a) a.parent = copy;
+            if (a && typeof a === 'object') a.parent = copy;
         }
         return copy;
+    }
+
+    /**
+     * PHP `LeanArgs::strip_parenthesis` (php/parser/lean.php ~1479–1482).
+     * @returns {Lean[]}
+     */
+    strip_parenthesis() {
+        return this.args.map((arg) => {
+            if (!(arg instanceof LeanParenthesis)) return arg;
+            const inner = arg.arg;
+            const n = inner?.constructor?.name;
+            if (n === 'LeanMethodChaining' || n === 'Lean_rightarrow' || n === 'LeanColon') return arg;
+            return inner;
+        });
     }
 
     // insert_comma, insert_semicolon, insert_assign, push_right, push_or, push_post_unary, etc.
@@ -5611,8 +5629,277 @@ export class LeanTactic extends LeanUnary {
     }
 }
 
-/** Placeholders for instanceof checks in parse */
-export class LeanIte extends LeanArgs {}
+/**
+ * PHP `LeanIte` (php/parser/lean.php ~5917–6186): `if … then … else …`.
+ */
+export class LeanIte extends LeanArgs {
+    static input_priority = 60;
+
+    get stack_priority() {
+        return 23;
+    }
+
+    get if() {
+        return this.args[0];
+    }
+    set if(v) {
+        this.args[0] = v;
+        if (v) v.parent = this;
+    }
+
+    get then() {
+        return this.args[1] ?? null;
+    }
+    set then(v) {
+        if (this.args.length < 2) this.args.push(v);
+        else this.args[1] = v;
+        if (v) v.parent = this;
+    }
+
+    get else() {
+        return this.args[2] ?? null;
+    }
+    set else(v) {
+        while (this.args.length < 3) this.args.push(undefined);
+        this.args[2] = v;
+        if (v != null && typeof v === 'object') v.parent = this;
+    }
+
+    echo() {
+        const if_ = this.args[0];
+        let token = null;
+        if (if_ instanceof LeanColon && if_.args[0] instanceof LeanToken) token = if_.args[0];
+        const then = this.then;
+        const else_ = this.else;
+        if (then) this.echo_then(token);
+        if (else_) this.echo_else(token);
+    }
+
+    /** @param {LeanToken | null} token */
+    echo_else(token) {
+        const part = this.else;
+        part.echo?.();
+        if (token) {
+            if (part instanceof LeanIte) LeanIte.echo_part(part.then, token);
+            else LeanIte.echo_part(part, token);
+        }
+    }
+
+    /** @param {LeanToken | null} token */
+    echo_then(token) {
+        const part = this.then;
+        part.echo?.();
+        if (token) LeanIte.echo_part(part, token);
+    }
+
+    insert_colon(caret) {
+        if (caret === this.if) {
+            const c = new LeanCaret(caret.indent, caret.level);
+            this.replace(caret, new LeanColon(caret, c, caret.indent, caret.level));
+            return c;
+        }
+        return caret.push_binary('LeanColon');
+    }
+
+    insert_else(caret) {
+        if (!this.else) {
+            const c = new LeanCaret(this.indent + 2, caret.level);
+            this.else = c;
+            return c;
+        }
+        if (this.parent) return this.parent.insert_else(this);
+    }
+
+    insert_if(caret) {
+        if (caret instanceof LeanCaret) {
+            if (caret === this.else) {
+                this.else = new LeanIte([caret], this.indent, caret.level);
+                return caret;
+            }
+            if (caret === this.then) {
+                if (caret.indent < this.indent + 2) caret.indent = this.indent + 2;
+                this.then = new LeanIte([caret], caret.indent, caret.level);
+                return caret;
+            }
+        }
+        throw new Error(`LeanIte.insert_if: unexpected for ${this.constructor.name}`);
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this.then) {
+            if (caret instanceof LeanTactic || caret instanceof Lean_let) {
+                const stmt = new LeanStatements([caret], caret.indent, caret.level);
+                this.then = stmt;
+                for (let i = 0; i < newlineCount; i++) {
+                    caret = new LeanCaret(caret.indent, caret.level);
+                    stmt.push(caret);
+                }
+            }
+            return caret;
+        }
+        if (caret === this.else) {
+            if (caret instanceof LeanCaret) return caret;
+            if (indent > this.indent && (caret instanceof LeanTactic || caret instanceof Lean_let)) {
+                const stmt = new LeanStatements([caret], caret.indent, caret.level);
+                this.else = stmt;
+                for (let i = 0; i < newlineCount; i++) {
+                    caret = new LeanCaret(caret.indent, caret.level);
+                    stmt.push(caret);
+                }
+                return caret;
+            }
+        }
+        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+    }
+
+    insert_tactic(caret, func) {
+        if (caret instanceof LeanCaret) {
+            this.replace(
+                caret,
+                new LeanTactic(func, caret, this.indent + 2, caret.level),
+            );
+            return caret;
+        }
+        const c = new LeanCaret(this.indent + 2, caret.level);
+        this.replace(
+            caret,
+            new LeanStatements(
+                [caret, new LeanTactic(func, c, this.indent + 2, caret.level)],
+                this.indent + 2,
+                caret.level,
+            ),
+        );
+        return c;
+    }
+
+    insert_then(caret) {
+        if (!this.then) {
+            const c = new LeanCaret(this.indent + 2, caret.level);
+            this.then = c;
+            return c;
+        }
+        throw new Error(`LeanIte.insert_then: unexpected for ${this.constructor.name}`);
+    }
+
+    is_indented() {
+        const p = this.parent;
+        return (
+            !p ||
+            p instanceof LeanStatements ||
+            (p instanceof LeanIte && (!p.then || this === p.then))
+        );
+    }
+
+    /**
+     * PHP `LeanIte::latexArgs` (php/parser/lean.php ~6078–6094).
+     * @param {Record<string, unknown>} [syntax]
+     */
+    latexArgs(syntax) {
+        const cases = [];
+        let cur = /** @type {LeanIte | Lean} */ (this);
+        while (true) {
+            const [if_, then, els] = cur.strip_parenthesis();
+            const ifL = if_.toLatex(syntax);
+            const thenL = then.toLatex(syntax);
+            cases.push(`{${thenL}} & {\\color{blue}\\text{if}}\\ ${ifL} `);
+            if (!(els instanceof LeanIte)) {
+                cases.push(els.toLatex(syntax));
+                break;
+            }
+            cur = els;
+        }
+        return cases;
+    }
+
+    latexFormat() {
+        let n = 0;
+        let cur = /** @type {LeanIte | Lean} */ (this);
+        while (true) {
+            const [, , els] = cur.strip_parenthesis();
+            n++;
+            if (!(els instanceof LeanIte)) break;
+            cur = els;
+        }
+        const rows = Array(n).fill('%s').join('\\\\');
+        return `\\begin{cases} ${rows} \\\\ {%s} & {\\color{blue}\\text{else}} \\end{cases}`;
+    }
+
+    relocateLastComment() {
+        const els = this.else;
+        if (els instanceof LeanStatements || els instanceof LeanIte) els.relocateLastComment();
+    }
+
+    set_line(line) {
+        this.line = line;
+        const if_ = this.args[0];
+        const then = this.args[1];
+        const else_ = this.args[2];
+        line = if_.set_line(line);
+        line++;
+        line = then.set_line(line);
+        line++;
+        if (!(else_ instanceof LeanIte)) line++;
+        return else_.set_line(line);
+    }
+
+    /**
+     * PHP `LeanIte::split` (php/parser/lean.php ~6133–6158).
+     * @param {Record<string, unknown>} [syntax]
+     */
+    split(syntax) {
+        const then = this.then;
+        const else_ = this.else;
+        if (then && else_) {
+            const self = this.clone();
+            const sIf = self.args[0];
+            const sThen = self.args[1];
+            const sElse = self.args[2];
+            self.args = [sIf];
+            const statements = [self];
+            if (sThen instanceof LeanStatements) sThen.swap_echo_star(syntax, statements);
+            else statements.push(sThen);
+            if (sElse instanceof LeanIte) {
+                const sp = sElse.split(syntax);
+                sp[0].args[2] = 0;
+                statements.push(...sp);
+            } else {
+                statements.push(new LeanIte([], this.indent, else_.level));
+                if (sElse instanceof LeanStatements) sElse.swap_echo_star(syntax, statements);
+                else statements.push(sElse);
+            }
+            return statements;
+        }
+        return [this];
+    }
+
+    strFormat() {
+        const if_ = this.args[0];
+        const then = this.args[1];
+        const else_ = this.args[2];
+        if (!then && !else_) {
+            if (if_ == null) return 'else';
+            if (else_ === 0) return 'else if %s then';
+            return 'if %s then';
+        }
+        const indent_else = ' '.repeat(this.indent);
+        const sep = else_ instanceof LeanIte ? ' ' : '\n';
+        const thenFmt = then == null ? '' : '%s';
+        const elseFmt = else_ == null ? '' : '%s';
+        return `if %s then\n${thenFmt}\n${indent_else}else${sep}${elseFmt}`;
+    }
+
+    /**
+     * PHP `LeanIte::echo_part` (php/parser/lean.php ~6179–6185).
+     * @param {Lean} part
+     * @param {LeanToken} token
+     */
+    static echo_part(part, token) {
+        const echo = new LeanTactic('echo', token.clone(), part.indent, part.level);
+        if (part instanceof LeanStatements) part.unshift(echo);
+        else if (part.parent)
+            part.parent.replace(part, new LeanStatements([echo, part], part.indent, part.level));
+    }
+}
 
 export class LeanParser extends AbstractParser {
     constructor() {
