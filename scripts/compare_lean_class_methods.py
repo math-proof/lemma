@@ -358,6 +358,38 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LbigOperator extends LeanArgs\n{",
         "\n}\n\n\nclass LeanQuantifier extends LbigOperator",
     ),
+    "leanquantifier": (
+        "class LeanQuantifier extends LbigOperator\n{",
+        "\n}\n\n\n// universal quantifier\nclass Lean_forall extends LeanQuantifier",
+    ),
+    "leanforall": (
+        "class Lean_forall extends LeanQuantifier\n{",
+        "\n}\n\n// existential quantifier\nclass Lean_exists extends LeanQuantifier",
+    ),
+    "leanexists": (
+        "class Lean_exists extends LeanQuantifier\n{",
+        "\n}\n\n\nclass Lean_sum extends LbigOperator",
+    ),
+    "leansum": (
+        "class Lean_sum extends LbigOperator\n{",
+        "\n}\n\nclass Lean_prod extends LbigOperator",
+    ),
+    "leanprod": (
+        "class Lean_prod extends LbigOperator\n{",
+        "\n}\n\nclass Lean_bigcap extends LbigOperator",
+    ),
+    "leanbigcap": (
+        "class Lean_bigcap extends LbigOperator\n{",
+        "\n}\n\nclass Lean_bigcup extends LbigOperator",
+    ),
+    "leanbigcup": (
+        "class Lean_bigcup extends LbigOperator\n{",
+        "\n}\n\nclass LeanStack extends LbigOperator",
+    ),
+    "leanstack": (
+        "class LeanStack extends LbigOperator\n{",
+        "\n}\n\nfunction compile($code) {",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -425,6 +457,7 @@ SEGMENT_SPLIT_PRESETS = frozenset(
         "leantactic",
         "leansequentialtacticcombinator",
         "lean_fun",
+        "leanquantifier",
         "leantoken",
     }
 )

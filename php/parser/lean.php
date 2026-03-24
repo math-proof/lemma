@@ -9265,9 +9265,10 @@ class LeanStack extends LbigOperator
         }
     }
 
-    public function strFormat()
+    public function latexArgs(&$syntax = null)
     {
-        return "[%s] %s";
+        $syntax[get_class($this)] = true;
+        return parent::latexArgs($syntax);
     }
 
     public function latexFormat()
@@ -9275,14 +9276,13 @@ class LeanStack extends LbigOperator
         return "\left[{%s}\\right]{%s}";
     }
 
-    public function latexArgs(&$syntax = null)
-    {
-        $syntax[get_class($this)] = true;
-        return parent::latexArgs($syntax);
-    }
-
     public function push_args_indented($indent, $newline_count, $function_call = true) {
     }
+    public function strFormat()
+    {
+        return "[%s] %s";
+    }
+
 }
 
 function compile($code) {
