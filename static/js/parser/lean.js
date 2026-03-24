@@ -77,13 +77,6 @@ export const classNameToSymbol = Object.freeze(
     Object.fromEntries(Object.entries(token2classname).map(([tok, cls]) => [cls, tok])),
 );
 
-/** Binary operators not in token2classname (multi-char like :=). PHP LeanBinary::__get('operator'). */
-const BINARY_STR_OPERATOR = Object.freeze({
-    LeanAssign: ':=',
-    LeanEq: '=',
-    LeanRightarrow: '=>',
-});
-
 /**
  * PHP LaTeX command overrides for toLatex (php/parser/lean.php LeanAdd/LeanSub/LeanMul/LeanMatMul etc).
  * Uses literal symbols instead of \Add, \Sub so KaTeX renders correctly.
@@ -1187,7 +1180,16 @@ export class LeanBinary extends LeanArgs {
     /** PHP LeanBinary::__get('operator') — used by strFormat (php/parser/lean.php ~2433–2437). */
     get operator() {
         const name = this.constructor.name;
-        return BINARY_STR_OPERATOR[name] ?? classNameToSymbol[name] ?? null;
+        switch (name) {
+            case 'LeanAssign':
+                return ':=';
+            case 'LeanEq':
+                return '=';
+            case 'LeanRightarrow':
+                return '=>';
+            default:
+                return classNameToSymbol[name] ?? null;
+        }
     }
 
     /** PHP `LeanBinary::sep` (php/parser/lean.php ~2525–2527). */
