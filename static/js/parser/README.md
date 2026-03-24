@@ -22,7 +22,8 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 JS flattens some PHP hierarchies:
 - PHP `LeanRelational`, `LeanArithmetic`, `LeanUnaryArithmeticPre`, `LeanUnaryArithmeticPost`, `LeanSetOperator`, `LeanLogic`, `LeanBinaryBoolean` → JS `LeanBinary` or `LeanUnary`
 - PHP `Lean_is_not` ↔ JS `Lean_is_not` (identical)
-- **PHP** uses `new $ClassName(...)` with no separate registry; **JS** uses **`LEAN_CLASSES`**: a map of **concrete** AST classes only (keys = `constructor.name`). **Abstract/intermediate** bases (`Lean`, `LeanArgs`, `LeanBinary`, `LeanUnary`, `LeanPairedGroup`, `LeanCommand`, marker classes, etc.) are **not** in the map—they remain normal exports in `lean.js`. **`getLeanClass(name)`** looks up `LEAN_CLASSES` only; unknown names throw (add the concrete class to `LEAN_CLASSES`). Prefix unary (`insert_unary`), postfix (`push_post_unary`), and `push_left` paired delimiters use **`getLeanClass`** like PHP `new $ClassName`.
+- **PHP** uses `new $ClassName(...)` with no separate registry; **JS** uses **`LEAN_CLASSES`**: a map of **concrete** AST classes only (keys = `constructor.name`). **Abstract/intermediate** bases (`Lean`, `LeanArgs`, `LeanBinary`, `LeanUnary`, `LeanSyntax`, `LeanPairedGroup`, `LeanCommand`, marker classes, etc.) are **not** in the map—they remain normal exports in `lean.js`. **`getLeanClass(name)`** looks up `LEAN_CLASSES` only; unknown names throw (add the concrete class to `LEAN_CLASSES`). Prefix unary (`insert_unary`), postfix (`push_post_unary`), and `push_left` paired delimiters use **`getLeanClass`** like PHP `new $ClassName`.
+- PHP `abstract class LeanSyntax extends LeanArgs` holds `insert` and related `__set` behavior; **JS** exports **`LeanSyntax`** and **`LeanTactic extends LeanSyntax`** (constructor `super([arg], indent, level)`). PHP `Lean_let` / `Lean_show` also extend `LeanSyntax`; JS still uses **`LeanCommand` / `LeanArgs`** for those—separate parity item if you need identical hierarchy.
 
 ### Conventions (PHP → JS)
 
@@ -41,7 +42,7 @@ JS flattens some PHP hierarchies:
 ### Known Gaps
 - `Lean_match` / `LeanWith`: echo and other edge cases may still differ from PHP in corner cases; `LeanBar.split` / `LeanCalc.split` use deep `clone()` like PHP
 - Nested proof echo: worth spot-diffing `LeanTacticBlock::echo` / `LeanStatements::echo` against PHP after corpus changes
-- Recent parity: `LeanArgs::traverse` (preorder over `args`, matching PHP; base `Lean::traverse` still yields only `this`), `LeanTacticBlock` (`echo`, `split`, `tactic_block`, `set_line`), `LeanArgsSpaceSeparated` (`tokens_space_separated`, `construct_prefix_tree`, `tactic_block_info`, `operand_count`), `LeanSequentialTacticCombinator`, `LeanTactic` echo/split helpers, `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
+- Recent parity: **`LeanSyntax`** class with `insert` / `arg` / `sequential_tactic_combinator` setters; **`LeanTactic extends LeanSyntax`** (PHP-aligned; `insert` lives on `LeanSyntax`, not on `LeanTactic`), `LeanArgs::traverse` (preorder over `args`, matching PHP; base `Lean::traverse` still yields only `this`), `LeanTacticBlock` (`echo`, `split`, `tactic_block`, `set_line`), `LeanArgsSpaceSeparated` (`tokens_space_separated`, `construct_prefix_tree`, `tactic_block_info`, `operand_count`), `LeanSequentialTacticCombinator`, `LeanTactic` echo/split helpers, `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
 
 ### Running Tests
 ```bash
@@ -127,18 +128,18 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — `LeanArgs::traverse` ported (PHP ~1484–1491): generator yields `this` then `yield*` each non-null `arg.traverse()`; `node scripts/test-lean-parser.mjs` — corpus OK.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — Introduced **`LeanSyntax`** (PHP ~6922–6955); moved **`insert`** and **`set sequential_tactic_combinator`** / **`arg`** accessors there; **`LeanTactic extends LeanSyntax`** with `super([arg], indent, level)`; `node scripts/test-lean-parser.mjs` — corpus OK.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
 
 - PHP Lean* declarations: 161
-- JS Lean* declarations: 165
+- JS Lean* declarations: 166
 
 Registry: LEAN_CLASSES + getLeanClass only.
 
-PHP class names with no JS class of the same name (8, abstract / flattened into LeanBinary or LeanUnary in JS):
-  LeanArithmetic, LeanBinaryBoolean, LeanLogic, LeanRelational, LeanSetOperator, LeanSyntax,
+PHP class names with no JS class of the same name (7, abstract / flattened into LeanBinary or LeanUnary in JS):
+  LeanArithmetic, LeanBinaryBoolean, LeanLogic, LeanRelational, LeanSetOperator,
   LeanUnaryArithmetic, LeanUnaryArithmeticPre
 
 (Also abstract in PHP, present in JS with the same name: LeanUnaryArithmeticPost — not in the list above.)

@@ -5345,7 +5345,43 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 }
 
-export class LeanTactic extends LeanUnary {
+/**
+ * PHP `abstract class LeanSyntax extends LeanArgs` (php/parser/lean.php ~6922–6955).
+ * Defines `insert` and `__set`-style behavior for `arg` / `sequential_tactic_combinator`; `LeanTactic` extends this (not `LeanUnary`).
+ */
+export class LeanSyntax extends LeanArgs {
+    get arg() {
+        return this.args[0];
+    }
+
+    set arg(v) {
+        this.args[0] = v;
+        v.parent = this;
+    }
+
+    set sequential_tactic_combinator(val) {
+        for (let i = this.args.length - 1; i >= 0; i--) {
+            if (this.args[i] instanceof LeanSequentialTacticCombinator) {
+                this.args[i] = val;
+                val.parent = this;
+                return;
+            }
+        }
+    }
+
+    insert(caret, func, _type) {
+        const last = this.args[this.args.length - 1];
+        if (caret === last) {
+            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            const newCaret = new LeanCaret(this.indent, caret.level);
+            this.push(new Ctor(newCaret, this.indent, caret.level));
+            return newCaret;
+        }
+        throw new Error(`insert is unexpected for ${this.constructor.name}`);
+    }
+}
+
+export class LeanTactic extends LeanSyntax {
     /**
      * @param {string} name
      * @param {Lean} arg
@@ -5353,7 +5389,7 @@ export class LeanTactic extends LeanUnary {
      * @param {number} level
      */
     constructor(name, arg, indent, level) {
-        super(arg, indent, level);
+        super([arg], indent, level);
         this.tacticName = name;
         /** @type {boolean | undefined} PHP `$only` */
         this.only = undefined;
@@ -5386,37 +5422,12 @@ export class LeanTactic extends LeanUnary {
         return this._lastOf(LeanSequentialTacticCombinator);
     }
 
-    set sequential_tactic_combinator(val) {
-        for (let i = this.args.length - 1; i >= 0; i--) {
-            if (this.args[i] instanceof LeanSequentialTacticCombinator) {
-                this.args[i] = val;
-                val.parent = this;
-                return;
-            }
-        }
-    }
-
     get by() {
         return this._lastOf(LeanBy);
     }
 
     get arrow() {
         return this._lastOf(LeanRightarrow);
-    }
-
-    /**
-     * PHP `LeanSyntax::insert` (php/parser/lean.php ~6946–6954); `LeanTactic` inherits it.
-     * Last arg is the active caret → push `new Ctor(freshCaret, indent, level)` (modifiers `at` / `with`, etc.).
-     */
-    insert(caret, func, _type) {
-        const last = this.args[this.args.length - 1];
-        if (caret === last) {
-            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
-            const newCaret = new LeanCaret(this.indent, caret.level);
-            this.push(new Ctor(newCaret, this.indent, caret.level));
-            return newCaret;
-        }
-        if (this.parent) return this.parent.insert(this, func, type);
     }
 
     /** PHP `LeanTactic::is_inline_tactic_block` (php/parser/lean.php ~6980–6983). */
