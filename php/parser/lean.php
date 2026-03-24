@@ -1847,18 +1847,6 @@ class LeanAngleBracket extends LeanPairedGroup
 
 class LeanBracket extends LeanPairedGroup
 {
-    public function is_Expr() {
-        return false;
-    }
-
-    public function strArgs()
-    {
-        $arg = $this->arg;
-        if ($arg instanceof LeanArgsCommaNewLineSeparated)
-            $arg = "\n$arg\n" . str_repeat(' ', $this->indent);
-        return [$arg];
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -1870,6 +1858,10 @@ class LeanBracket extends LeanPairedGroup
                 return parent::__get($vname);
         }
     }
+    public function is_Expr() {
+        return false;
+    }
+
     public function latexFormat()
     {
         return '\left[ {%s} \right]';
@@ -1887,6 +1879,14 @@ class LeanBracket extends LeanPairedGroup
         }
         return parent::push_right($func);
     }
+    public function strArgs()
+    {
+        $arg = $this->arg;
+        if ($arg instanceof LeanArgsCommaNewLineSeparated)
+            $arg = "\n$arg\n" . str_repeat(' ', $this->indent);
+        return [$arg];
+    }
+
 }
 
 class LeanBrace extends LeanPairedGroup
