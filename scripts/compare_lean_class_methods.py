@@ -318,6 +318,46 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanSequentialTacticCombinator extends LeanUnary\n{",
         "\n}\n\nclass LeanTacticBlock extends LeanUnary",
     ),
+    "leantacticblock": (
+        "class LeanTacticBlock extends LeanUnary\n{",
+        "\n}\n\n\nclass LeanWith extends LeanArgs",
+    ),
+    "leanwith": (
+        "class LeanWith extends LeanArgs\n{",
+        "\n}\n\nclass LeanAttribute extends LeanUnary",
+    ),
+    "leanattribute": (
+        "class LeanAttribute extends LeanUnary\n{",
+        "\n}\n\nclass Lean_def extends LeanArgs",
+    ),
+    "lean_def": (
+        "class Lean_def extends LeanArgs\n{",
+        "\n}\n\nclass Lean_theorem extends Lean_def {}",
+    ),
+    "lean_lemma": (
+        "class Lean_lemma extends Lean_def\n{",
+        "\n}\n\nclass Lean_let extends LeanSyntax",
+    ),
+    "leanlet": (
+        "class Lean_let extends LeanSyntax\n{",
+        "\n}\n\nclass Lean_have extends Lean_let",
+    ),
+    "leanhave": (
+        "class Lean_have extends Lean_let\n{",
+        "\n}\n\n\nclass Lean_show extends LeanSyntax",
+    ),
+    "leanshow": (
+        "class Lean_show extends LeanSyntax\n{",
+        "\n}\n\nclass Lean_fun extends LeanUnary",
+    ),
+    "lean_fun": (
+        "class Lean_fun extends LeanUnary\n{",
+        "\n}\n\nclass LbigOperator extends LeanArgs",
+    ),
+    "lbigoperator": (
+        "class LbigOperator extends LeanArgs\n{",
+        "\n}\n\n\nclass LeanQuantifier extends LbigOperator",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -384,6 +424,7 @@ SEGMENT_SPLIT_PRESETS = frozenset(
         "leanstatements",
         "leantactic",
         "leansequentialtacticcombinator",
+        "lean_fun",
         "leantoken",
     }
 )

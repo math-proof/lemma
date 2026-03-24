@@ -8070,74 +8070,6 @@ class LeanSequentialTacticCombinator extends LeanUnary
 
 class LeanTacticBlock extends LeanUnary
 {
-    public function is_indented()
-    {
-        return true;
-    }
-
-    public function sep()
-    {
-        return $this->arg instanceof LeanStatements ? "\n" : ($this->arg instanceof LeanCaret ? '': ' ');
-    }
-
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "$this->operator$sep%s";
-    }
-
-    public function latexFormat()
-    {
-        $sep = $this->sep();
-        return "$this->command$sep%s";
-    }
-
-    public function insert_newline($caret, $newline_count, $indent, $next)
-    {
-        if ($caret === $this->arg) {
-            if ($caret instanceof LeanCaret) {
-                if ($this->indent <= $indent) {
-                    if ($indent == $this->indent)
-                        $indent = $this->indent + 2;
-                    $caret->indent = $indent;
-                    $this->arg = new LeanStatements([$caret], $indent, $caret->level);
-                    for ($i = 1; $i < $newline_count; ++$i) {
-                        $caret = new LeanCaret($indent, $caret->level);
-                        $this->arg->push($caret);
-                    }
-                    return $caret;
-                }
-            } elseif ($caret instanceof LeanStatements) {
-                $block = $caret;
-                if ($indent >= $block->indent) {
-                    for ($i = 0; $i < $newline_count; ++$i) {
-                        $caret = new LeanCaret($block->indent, $block->level);
-                        $block->push($caret);
-                    }
-                    return $caret;
-                }
-            } elseif ($this->indent < $indent) {
-                $caret = new LeanCaret($indent, $caret->level);
-                $this->arg->indent = $indent;
-                $this->arg = new LeanStatements([$this->arg, $caret], $indent, $caret->level);
-                return $caret;
-            }
-        }
-
-        return parent::insert_newline($caret, $newline_count, $indent, $next);
-    }
-
-    public function insert_line_comment($caret, $comment)
-    {
-        if ($caret instanceof LeanCaret) {
-            $indent = $this->indent + 2;
-            $new = new LeanLineComment($comment, $indent, $caret->level);
-            $this->arg = new LeanStatements([$new], $indent, $caret->level);
-            return $new;
-        }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -8378,13 +8310,66 @@ class LeanTacticBlock extends LeanUnary
     }
 
     // return the stop (right open) index of the range [0, stop) that contains $span elements of LeanTacticBlock
-    public function tactic_block($args, $span) {
-        $count = 0;
-        for ($j = 0; $count < $span && $j < count($args); ++$j) {
-            if ($args[$j] instanceof LeanTacticBlock)
-                ++$count;
+    public function insert_line_comment($caret, $comment)
+    {
+        if ($caret instanceof LeanCaret) {
+            $indent = $this->indent + 2;
+            $new = new LeanLineComment($comment, $indent, $caret->level);
+            $this->arg = new LeanStatements([$new], $indent, $caret->level);
+            return $new;
         }
-        return $j;
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($caret === $this->arg) {
+            if ($caret instanceof LeanCaret) {
+                if ($this->indent <= $indent) {
+                    if ($indent == $this->indent)
+                        $indent = $this->indent + 2;
+                    $caret->indent = $indent;
+                    $this->arg = new LeanStatements([$caret], $indent, $caret->level);
+                    for ($i = 1; $i < $newline_count; ++$i) {
+                        $caret = new LeanCaret($indent, $caret->level);
+                        $this->arg->push($caret);
+                    }
+                    return $caret;
+                }
+            } elseif ($caret instanceof LeanStatements) {
+                $block = $caret;
+                if ($indent >= $block->indent) {
+                    for ($i = 0; $i < $newline_count; ++$i) {
+                        $caret = new LeanCaret($block->indent, $block->level);
+                        $block->push($caret);
+                    }
+                    return $caret;
+                }
+            } elseif ($this->indent < $indent) {
+                $caret = new LeanCaret($indent, $caret->level);
+                $this->arg->indent = $indent;
+                $this->arg = new LeanStatements([$this->arg, $caret], $indent, $caret->level);
+                return $caret;
+            }
+        }
+
+        return parent::insert_newline($caret, $newline_count, $indent, $next);
+    }
+
+    public function is_indented()
+    {
+        return true;
+    }
+
+    public function latexFormat()
+    {
+        $sep = $this->sep();
+        return "$this->command$sep%s";
+    }
+
+    public function sep()
+    {
+        return $this->arg instanceof LeanStatements ? "\n" : ($this->arg instanceof LeanCaret ? '': ' ');
     }
 
     public function set_line($line)
@@ -8407,6 +8392,21 @@ class LeanTacticBlock extends LeanUnary
         }
         return [$this];
     }
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "$this->operator$sep%s";
+    }
+
+    public function tactic_block($args, $span) {
+        $count = 0;
+        for ($j = 0; $count < $span && $j < count($args); ++$j) {
+            if ($args[$j] instanceof LeanTacticBlock)
+                ++$count;
+        }
+        return $j;
+    }
+
 }
 
 
@@ -8416,34 +8416,45 @@ class LeanWith extends LeanArgs
     {
         parent::__construct([$arg], $indent, $level, $parent);
     }
-    public function is_indented()
+    public function __get($vname)
     {
-        return false;
-    }
-    public function sep()
-    {
-        if (count($this->args) > 1)
-            return "\n";
-        if (!count($this->args))
-            return "";
-        [$caret] = $this->args;
-        return $caret instanceof LeanCaret || $caret->tokens_space_separated() || $caret instanceof LeanBitOr ? ' ' : "\n";
-    }
-
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "$this->operator$sep" . implode("\n", array_fill(0, count($this->args), '%s'));
+        switch ($vname) {
+            case 'stack_priority':
+                if ($this->parent instanceof Lean_match)
+                    return 23;
+                return 17;
+            case 'operator':
+            case 'command':
+                return 'with';
+            default:
+                return parent::__get($vname);
+        }
     }
 
-    public function latexFormat()
+    public function insert_bar($caret, $prev_token, $next)
     {
-        return $this->strFormat();
+        $cases = $this->args;
+        if (end($cases) === $caret) {
+            if ($caret instanceof LeanCaret) {
+                $this->replace($caret, new LeanBar($caret, $this->indent, $caret->level));
+                return $caret;
+            } else {
+                $new = new LeanCaret($this->indent, $caret->level);
+                $this->replace($caret, new LeanBitOr($caret, $new, $this->indent, $caret->level));
+                return $new;
+            }
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
-    public function relocate_last_comment()
+    public function insert_comma($caret)
     {
-        end($this->args)->relocate_last_comment();
+        if ($caret === end($this->args)) {
+            $new = new LeanCaret($this->indent, $caret->level);
+            $this->replace($caret, new LeanArgsCommaSeparated([$caret, $new], $this->indent, $caret->level));
+            return $new;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
     public function insert_newline($caret, $newline_count, $indent, $next)
@@ -8468,22 +8479,6 @@ class LeanWith extends LeanArgs
         return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
 
-    public function insert_bar($caret, $prev_token, $next)
-    {
-        $cases = $this->args;
-        if (end($cases) === $caret) {
-            if ($caret instanceof LeanCaret) {
-                $this->replace($caret, new LeanBar($caret, $this->indent, $caret->level));
-                return $caret;
-            } else {
-                $new = new LeanCaret($this->indent, $caret->level);
-                $this->replace($caret, new LeanBitOr($caret, $new, $this->indent, $caret->level));
-                return $new;
-            }
-        }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-
     public function insert_tactic($caret, $token)
     {
         if ($caret instanceof LeanCaret)
@@ -8491,29 +8486,28 @@ class LeanWith extends LeanArgs
         return parent::insert_tactic($caret, $token);
     }
 
-    public function __get($vname)
+    public function is_indented()
     {
-        switch ($vname) {
-            case 'stack_priority':
-                if ($this->parent instanceof Lean_match)
-                    return 23;
-                return 17;
-            case 'operator':
-            case 'command':
-                return 'with';
-            default:
-                return parent::__get($vname);
-        }
+        return false;
+    }
+    public function latexFormat()
+    {
+        return $this->strFormat();
     }
 
-    public function insert_comma($caret)
+    public function relocate_last_comment()
     {
-        if ($caret === end($this->args)) {
-            $new = new LeanCaret($this->indent, $caret->level);
-            $this->replace($caret, new LeanArgsCommaSeparated([$caret, $new], $this->indent, $caret->level));
-            return $new;
-        }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+        end($this->args)->relocate_last_comment();
+    }
+
+    public function sep()
+    {
+        if (count($this->args) > 1)
+            return "\n";
+        if (!count($this->args))
+            return "";
+        [$caret] = $this->args;
+        return $caret instanceof LeanCaret || $caret->tokens_space_separated() || $caret instanceof LeanBitOr ? ' ' : "\n";
     }
 
     public function set_line($line)
@@ -8526,6 +8520,12 @@ class LeanWith extends LeanArgs
         return $line - 1;
     }
 
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "$this->operator$sep" . implode("\n", array_fill(0, count($this->args), '%s'));
+    }
+
     public function tokens_bar_separated()
     {
         if (count($this->args) == 1 && $this->args[0] instanceof LeanBitOr)
@@ -8533,6 +8533,12 @@ class LeanWith extends LeanArgs
         return [];
     }
 
+    public function tokens_space_separated()
+    {
+        if (count($this->args) == 1 && $this->args[0] instanceof LeanArgsSpaceSeparated)
+            return $this->args[0]->tokens_space_separated();
+        return [];
+    }
     public function unique_token($indent)
     {
         if (count($this->args) == 1) {
@@ -8542,34 +8548,23 @@ class LeanWith extends LeanArgs
         }
     }
 
-    public function tokens_space_separated()
-    {
-        if (count($this->args) == 1 && $this->args[0] instanceof LeanArgsSpaceSeparated)
-            return $this->args[0]->tokens_space_separated();
-        return [];
-    }
 }
 
 class LeanAttribute extends LeanUnary
 {
-    public function is_indented()
+    public function __get($vname)
     {
-        return false;
+        switch ($vname) {
+            case 'operator':
+            case 'command':
+                return '@';
+            default:
+                return parent::__get($vname);
+        }
     }
-
-    public function sep()
+    public function append($new, $type)
     {
-        return '';
-    }
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "$this->operator$sep%s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command %s";
+        return $this->push_accessibility($new, "public");
     }
 
     public function insert_newline($caret, $newline_count, $indent, $next)
@@ -8579,9 +8574,14 @@ class LeanAttribute extends LeanUnary
         return $caret;
     }
 
-    public function append($new, $type)
+    public function is_indented()
     {
-        return $this->push_accessibility($new, "public");
+        return false;
+    }
+
+    public function latexFormat()
+    {
+        return "$this->command %s";
     }
 
     public function push_accessibility($new, $accessibility)
@@ -8601,16 +8601,16 @@ class LeanAttribute extends LeanUnary
         }
     }
 
-    public function __get($vname)
+    public function sep()
     {
-        switch ($vname) {
-            case 'operator':
-            case 'command':
-                return '@';
-            default:
-                return parent::__get($vname);
-        }
+        return '';
     }
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "$this->operator$sep%s";
+    }
+
 }
 
 class Lean_def extends LeanArgs
@@ -8626,72 +8626,6 @@ class Lean_def extends LeanArgs
         array_unshift($this->args, null);
         $this->accessibility = $accessibility;
     }
-    public function is_indented()
-    {
-        return false;
-    }
-
-    public function strFormat()
-    {
-        $accessibilityString = $this->accessibility == 'public' ? '' : "$this->accessibility ";
-        $def = "$accessibilityString$this->func %s";
-        if ($this->attribute)
-            $def = "%s\n$def";
-        return $def;
-    }
-
-    public function latexFormat()
-    {
-        return $this->strFormat();
-    }
-
-    public function strArgs()
-    {
-        [$attribute, $assignment] = $this->args;
-        if ($attribute == null)
-            return [$assignment];
-        return $this->args;
-    }
-
-    public function jsonSerialize(): mixed
-    {
-        $json = [
-            $this->operator => parent::jsonSerialize(),
-            "accessibility" => $this->accessibility
-        ];
-        if ($this->attribute)
-            $json['attribute'] = $this->attribute->jsonSerialize();
-        return $json;
-    }
-
-    public function insert_newline($caret, $newline_count, $indent, $next)
-    {
-        if ($this->indent < $indent) {
-            if ($caret === $this->assignment) {
-                if ($new = $this->push_args_indented($indent, $newline_count))
-                    return $new;
-                if ($caret instanceof LeanColon) {
-                    if ($caret->rhs instanceof LeanCaret) {
-                        $caret = $caret->rhs;
-                        $caret->indent = $indent;
-                        $this->assignment->rhs = new LeanStatements([$caret], $indent, $caret->level);
-                        return $caret;
-                    }
-                } elseif ($caret instanceof LeanAssign) {
-                    $caret = $this->assignment->rhs;
-                    if ($caret instanceof LeanCaret) {
-                        $caret->indent = $indent;
-                        $this->assignment->rhs = new LeanStatements([$caret], $indent, $caret->level);
-                        return $caret;
-                    } else
-                        return parent::insert_newline($caret, $newline_count, $this->indent, $next);
-                }
-            }
-            throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-        }
-        return parent::insert_newline($caret, $newline_count, $indent, $next);
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -8729,6 +8663,59 @@ class Lean_def extends LeanArgs
         $val->parent = $this;
     }
 
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($this->indent < $indent) {
+            if ($caret === $this->assignment) {
+                if ($new = $this->push_args_indented($indent, $newline_count))
+                    return $new;
+                if ($caret instanceof LeanColon) {
+                    if ($caret->rhs instanceof LeanCaret) {
+                        $caret = $caret->rhs;
+                        $caret->indent = $indent;
+                        $this->assignment->rhs = new LeanStatements([$caret], $indent, $caret->level);
+                        return $caret;
+                    }
+                } elseif ($caret instanceof LeanAssign) {
+                    $caret = $this->assignment->rhs;
+                    if ($caret instanceof LeanCaret) {
+                        $caret->indent = $indent;
+                        $this->assignment->rhs = new LeanStatements([$caret], $indent, $caret->level);
+                        return $caret;
+                    } else
+                        return parent::insert_newline($caret, $newline_count, $this->indent, $next);
+                }
+            }
+            throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+        }
+        return parent::insert_newline($caret, $newline_count, $indent, $next);
+    }
+
+    public function insert_tactic($caret, $token)
+    {
+        return $this->insert_word($caret, $token);
+    }
+    public function is_indented()
+    {
+        return false;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        $json = [
+            $this->operator => parent::jsonSerialize(),
+            "accessibility" => $this->accessibility
+        ];
+        if ($this->attribute)
+            $json['attribute'] = $this->attribute->jsonSerialize();
+        return $json;
+    }
+
+    public function latexFormat()
+    {
+        return $this->strFormat();
+    }
+
     public function relocate_last_comment()
     {
         $assignment = $this->assignment;
@@ -8745,10 +8732,23 @@ class Lean_def extends LeanArgs
         return $this->assignment->set_line($line);
     }
 
-    public function insert_tactic($caret, $token)
+    public function strArgs()
     {
-        return $this->insert_word($caret, $token);
+        [$attribute, $assignment] = $this->args;
+        if ($attribute == null)
+            return [$assignment];
+        return $this->args;
     }
+
+    public function strFormat()
+    {
+        $accessibilityString = $this->accessibility == 'public' ? '' : "$this->accessibility ";
+        $def = "$accessibilityString$this->func %s";
+        if ($this->attribute)
+            $def = "%s\n$def";
+        return $def;
+    }
+
 }
 
 class Lean_theorem extends Lean_def {}
@@ -8794,39 +8794,6 @@ class Lean_let extends LeanSyntax
         parent::__construct([$arg], $indent, $level, $parent);
     }
 
-    public function is_indented()
-    {
-        return !($this->parent instanceof LeanSequentialTacticCombinator);
-    }
-
-    public function strFormat()
-    {
-        $func = $this->operator;
-        $args = [];
-        foreach ($this->args as $arg) {
-            if ($arg instanceof LeanCaret);
-            elseif ($arg instanceof LeanSequentialTacticCombinator && $arg->newline)
-                $args[] = "\n";
-            else
-                $args[] = ' ';
-            $args[] = '%s';
-        }
-        return $func . implode('', $args);
-    }
-
-    public function latexFormat()
-    {
-        //cm-def {color: #00f;} 
-        //defined in static/codemirror/lib/codemirror.css
-        return "{\\color{#00f}$this->command}\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
-    }
-    public function jsonSerialize(): mixed
-    {
-        return [
-            $this->operator => $this->args[0]->jsonSerialize()
-        ];
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -8847,19 +8814,6 @@ class Lean_let extends LeanSyntax
         }
     }
 
-    public function get_echo_token()
-    {
-        $assign = $this->args[0];
-        if ($assign instanceof LeanAssign) {
-            $angleBracket = $assign->lhs;
-            if ($angleBracket instanceof LeanAngleBracket) {
-                $token = $angleBracket->tokens_comma_separated();
-                if (count($token) == 1)
-                    return $token[0];
-                return new LeanArgsCommaSeparated($token, $this->indent, $angleBracket->level);
-            }
-        }
-    }
     public function echo()
     {
         $token = $this->get_echo_token();
@@ -8878,17 +8832,19 @@ class Lean_let extends LeanSyntax
         }
     }
 
-    public function split(&$syntax = null)
+    public function get_echo_token()
     {
         $assign = $this->args[0];
-        if ($assign instanceof LeanAssign && ($by = $assign->rhs) instanceof LeanBy && ($stmts = $by->arg) instanceof LeanStatements) {
-            $statements = $assign->split($syntax);
-            $statements[0] = new static($statements[0], $this->indent, $assign->level);
-            return $statements;
+        if ($assign instanceof LeanAssign) {
+            $angleBracket = $assign->lhs;
+            if ($angleBracket instanceof LeanAngleBracket) {
+                $token = $angleBracket->tokens_comma_separated();
+                if (count($token) == 1)
+                    return $token[0];
+                return new LeanArgsCommaSeparated($token, $this->indent, $angleBracket->level);
+            }
         }
-        return [$this];
     }
-
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
         if ($caret === $this->args[0]) {
@@ -8915,16 +8871,54 @@ class Lean_let extends LeanSyntax
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
+    public function is_indented()
+    {
+        return !($this->parent instanceof LeanSequentialTacticCombinator);
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            $this->operator => $this->args[0]->jsonSerialize()
+        ];
+    }
+
+    public function latexFormat()
+    {
+        //cm-def {color: #00f;} 
+        //defined in static/codemirror/lib/codemirror.css
+        return "{\\color{#00f}$this->command}\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
+    }
+    public function split(&$syntax = null)
+    {
+        $assign = $this->args[0];
+        if ($assign instanceof LeanAssign && ($by = $assign->rhs) instanceof LeanBy && ($stmts = $by->arg) instanceof LeanStatements) {
+            $statements = $assign->split($syntax);
+            $statements[0] = new static($statements[0], $this->indent, $assign->level);
+            return $statements;
+        }
+        return [$this];
+    }
+
+    public function strFormat()
+    {
+        $func = $this->operator;
+        $args = [];
+        foreach ($this->args as $arg) {
+            if ($arg instanceof LeanCaret);
+            elseif ($arg instanceof LeanSequentialTacticCombinator && $arg->newline)
+                $args[] = "\n";
+            else
+                $args[] = ' ';
+            $args[] = '%s';
+        }
+        return $func . implode('', $args);
+    }
+
 }
 
 class Lean_have extends Lean_let
 {
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "$this->operator$sep%s";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -8967,6 +8961,12 @@ class Lean_have extends Lean_let
         }
         return ' ';
     }
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "$this->operator$sep%s";
+    }
+
 }
 
 
@@ -8975,32 +8975,6 @@ class Lean_show extends LeanSyntax
     public function __construct($arg, $indent, $level, $parent = null)
     {
         parent::__construct([$arg], $indent, $level, $parent);
-    }
-
-    public function is_indented()
-    {
-        $parent = $this->parent;
-        return $parent instanceof LeanStatements || $parent instanceof LeanArgsNewLineSeparated;
-    }
-
-    public function strFormat()
-    {
-        return "$this->func " . implode(' ', array_fill(0, count($this->args), "%s"));
-    }
-
-    public function latexFormat()
-    {
-        //cm-def {color: #00f;} 
-        //defined in static/codemirror/lib/codemirror.css
-        $func = "{\\color{#00f}$this->func}";
-        return "$func\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
-    }
-
-    public function jsonSerialize(): mixed
-    {
-        return [
-            $this->operator => parent::jsonSerialize()
-        ];
     }
 
     public function __get($vname)
@@ -9014,34 +8988,37 @@ class Lean_show extends LeanSyntax
                 return parent::__get($vname);
         }
     }
-}
-
-class Lean_fun extends LeanUnary
-{
-    public static $input_priority = 18;
     public function is_indented()
     {
         $parent = $this->parent;
-        return $parent instanceof LeanArgsNewLineSeparated || $parent instanceof LeanStatements;
-    }
-
-    public function strFormat()
-    {
-        return "$this->operator %s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command\\ %s";
+        return $parent instanceof LeanStatements || $parent instanceof LeanArgsNewLineSeparated;
     }
 
     public function jsonSerialize(): mixed
     {
         return [
-            $this->operator => $this->arg->jsonSerialize()
+            $this->operator => parent::jsonSerialize()
         ];
     }
 
+    public function latexFormat()
+    {
+        //cm-def {color: #00f;} 
+        //defined in static/codemirror/lib/codemirror.css
+        $func = "{\\color{#00f}$this->func}";
+        return "$func\\ " . implode('\ ', array_fill(0, count($this->args), "%s"));
+    }
+
+    public function strFormat()
+    {
+        return "$this->func " . implode(' ', array_fill(0, count($this->args), "%s"));
+    }
+
+}
+
+class Lean_fun extends LeanUnary
+{
+    public static $input_priority = 18;
     public function __get($vname)
     {
         switch ($vname) {
@@ -9053,6 +9030,29 @@ class Lean_fun extends LeanUnary
                 return parent::__get($vname);
         }
     }
+    public function is_indented()
+    {
+        $parent = $this->parent;
+        return $parent instanceof LeanArgsNewLineSeparated || $parent instanceof LeanStatements;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            $this->operator => $this->arg->jsonSerialize()
+        ];
+    }
+
+    public function latexFormat()
+    {
+        return "$this->command\\ %s";
+    }
+
+    public function strFormat()
+    {
+        return "$this->operator %s";
+    }
+
 }
 
 class LbigOperator extends LeanArgs
@@ -9094,30 +9094,6 @@ class LbigOperator extends LeanArgs
         $val->parent = $this;
     }
 
-    public function is_indented()
-    {
-        return ($parent = $this->parent) instanceof LeanStatements || $parent instanceof LeanIte;
-    }
-
-    public function strFormat()
-    {
-        if (count($this->args) == 1)
-            return "$this->operator %s,";
-        return "$this->operator %s, %s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command\\limits_{\\substack{%s}} {%s}";
-    }
-
-    public function jsonSerialize(): mixed
-    {
-        return [
-            $this->func => parent::jsonSerialize()
-        ];
-    }
-
     public function insert_comma($caret)
     {
         if ($caret === $this->bound) {
@@ -9147,6 +9123,30 @@ class LbigOperator extends LeanArgs
         }
         return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
+    public function is_indented()
+    {
+        return ($parent = $this->parent) instanceof LeanStatements || $parent instanceof LeanIte;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            $this->func => parent::jsonSerialize()
+        ];
+    }
+
+    public function latexFormat()
+    {
+        return "$this->command\\limits_{\\substack{%s}} {%s}";
+    }
+
+    public function strFormat()
+    {
+        if (count($this->args) == 1)
+            return "$this->operator %s,";
+        return "$this->operator %s, %s";
+    }
+
 }
 
 
