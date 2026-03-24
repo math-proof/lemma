@@ -2966,10 +2966,6 @@ class LeanMul extends LeanArithmetic
         }
     }
 
-    public function latexFormat()
-    {
-        return "%s $this->command %s";
-    }
     public function latexArgs(&$syntax = null)
     {
         [$lhs, $rhs] = $this->args;
@@ -2991,6 +2987,10 @@ class LeanMul extends LeanArithmetic
         $lhs = $lhs->toLatex($syntax);
         $rhs = $rhs->toLatex($syntax);
         return [$lhs, $rhs];
+    }
+    public function latexFormat()
+    {
+        return "%s $this->command %s";
     }
 }
 

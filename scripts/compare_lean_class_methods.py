@@ -94,6 +94,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "abstract class LeanArithmetic extends LeanBinary\n{",
         "\n}\n\n\nclass LeanAdd extends LeanArithmetic",
     ),
+    "leanmul": (
+        "class LeanMul extends LeanArithmetic\n{",
+        "\n}\n\n\nclass Lean_times extends LeanArithmetic",
+    ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
         "\n}\n\nLeanToken::$subscript_keys",
