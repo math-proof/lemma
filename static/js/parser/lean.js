@@ -4490,15 +4490,16 @@ class LeanCalc extends LeanUnary {
     }
 
     /**
-     * PHP `LeanCalc::split` (php/parser/lean.php ~7699–7724).
+     * PHP `LeanCalc::split` (php/parser/lean.php ~7693–7717): `clone $this` then detach body;
+     * must use deep `clone()` so `this.args` is not shared with the original (see `LeanBar.split`).
      * @param {Record<string, unknown>} [syntax]
      */
     split(syntax) {
         const arg = this.arg;
         if (arg instanceof LeanArgsNewLineSeparated) {
             if (syntax && typeof syntax === 'object') syntax.calc = true;
-            const self = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
-            const stmts = self.arg.args;
+            const self = this.clone();
+            const stmts = /** @type {LeanArgsNewLineSeparated} */ (self.arg).args;
             self.arg = new LeanCaret(this.indent, this.level);
             const statements = [self];
             for (const stmt of stmts) statements.push(...stmt.split(syntax));
@@ -4506,8 +4507,8 @@ class LeanCalc extends LeanUnary {
         }
         if (arg instanceof LeanArgsIndented) {
             if (syntax && typeof syntax === 'object') syntax.calc = true;
-            const self = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
-            const a = self.arg;
+            const self = this.clone();
+            const a = /** @type {LeanArgsIndented} */ (self.arg);
             const content = a.rhs;
             a.rhs = new LeanCaret(content.indent, content.level);
             const statements = [self];

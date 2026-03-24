@@ -127,7 +127,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — `LeanBar.split` uses `clone()` per PHP (~5424–5438); `LeanRightarrow.insert` (~5533–5543); prior `LeanTactic` / `LeanTacticBlock` / `LeanArgsSpaceSeparated::tactic_block_info` parity; `node scripts/test-lean-parser.mjs` — corpus OK.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — `LeanCalc.split` uses deep `clone()` like PHP (~7693–7717), not shallow copy (fixes shared `args` with original); `LeanBar.split` / `LeanRightarrow.insert`; `node scripts/test-lean-parser.mjs` — corpus OK.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
