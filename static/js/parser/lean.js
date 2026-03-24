@@ -103,10 +103,26 @@ export class Lean extends IndentedNode {
         return false;
     }
 
+    /** PHP `Lean::tokens_space_separated` (php/parser/lean.php ~94–97). */
+    tokens_space_separated() {
+        return [];
+    }
+
     /** Port of `Lean::is_outsider` (php/parser/lean.php ~99–101). */
     is_outsider() {
         return false;
     }
+
+    /** PHP `Lean::getEcho` (php/parser/lean.php ~104): base returns void. */
+    getEcho() {}
+
+    /** PHP `Lean::strArgs` (php/parser/lean.php ~106–109). */
+    strArgs() {
+        return this.args ?? [];
+    }
+
+    /** PHP `Lean::echo` (php/parser/lean.php ~152–154): no-op. */
+    echo() {}
 
     /** Port of `Lean::relocate_last_comment` (php/parser/lean.php ~438). */
     relocateLastComment() {}
@@ -143,6 +159,17 @@ export class Lean extends IndentedNode {
     /** Port of `Lean::isProp` (php/parser/lean.php ~148–150). */
     isProp(_vars) {
         return false;
+    }
+
+    /** PHP `Lean::traverse` (php/parser/lean.php ~156–159): generator yielding this. */
+    *traverse() {
+        yield this;
+    }
+
+    /** PHP `Lean::set_line` (php/parser/lean.php ~161–165). */
+    set_line(line) {
+        this.line = line;
+        return line;
     }
 
     get stack_priority() {
@@ -1613,7 +1640,7 @@ export class Lean_is extends LeanBinary {
     static input_priority = 62;
 }
 
-/** PHP `Lean_is_not` (php/parser/lean.php L_is_not ~4136–4168). */
+/** PHP `Lean_is_not` (php/parser/lean.php ~4136–4168). */
 export class Lean_is_not extends LeanBinary {
     static input_priority = 62;
 }
@@ -2055,6 +2082,56 @@ class LeanPipeForward extends LeanUnary {
     }
     strFormat() {
         return `%s ${this.operator}`;
+    }
+}
+
+/** PHP LeanBar (php/parser/lean.php ~5379–5446): pattern separator | in match/with/induction. */
+class LeanBar extends LeanUnary {
+    is_indented() {
+        return true;
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+    get operator() {
+        return '|';
+    }
+    get command() {
+        return '|';
+    }
+    get stack_priority() {
+        return LeanAssign?.input_priority ?? 20;
+    }
+    echo() {
+        this.arg?.echo?.();
+    }
+    split(_syntax) {
+        const arrow = this.arg;
+        if (arrow instanceof LeanRightarrow) {
+            const stmts = arrow.rhs;
+            if (stmts instanceof LeanStatements) {
+                const self = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+                const statements = [self];
+                arrow.rhs = new LeanCaret(arrow.indent, stmts.level);
+                stmts.swap_echo_star?.(_syntax, statements);
+                return statements;
+            }
+        }
+        return [this];
+    }
+    insert_comma(caret) {
+        if (caret === this.arg) {
+            const new_ = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanArgsCommaSeparated([caret, new_], this.indent, caret.level));
+            return new_;
+        }
+        throw new Error(`LeanBar.insert_comma: unexpected for ${this.constructor.name}`);
+    }
+    insert_tactic(caret, token) {
+        return this.insert_word(caret, token);
     }
 }
 
@@ -2778,6 +2855,13 @@ class Lean_set_option extends LeanCommand {
     }
 }
 
+/** PHP Lean_namespace (php/parser/lean.php ~5364–5376): "namespace %s". */
+class Lean_namespace extends LeanCommand {
+    get operator() {
+        return 'namespace';
+    }
+}
+
 function resolveCommandCtor(name) {
     switch (name) {
         case 'Lean_def':
@@ -2802,6 +2886,8 @@ function resolveCommandCtor(name) {
             return Lean_open;
         case 'Lean_set_option':
             return Lean_set_option;
+        case 'Lean_namespace':
+            return Lean_namespace;
         default:
             break;
     }

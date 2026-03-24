@@ -4133,7 +4133,7 @@ class Lean_is extends LeanBinary
     }
 }
 
-class L_is_not extends LeanBinary
+class Lean_is_not extends LeanBinary
 {
     public static $input_priority = 62;
     public function sep()
