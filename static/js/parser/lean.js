@@ -1609,6 +1609,24 @@ export class LeanAssign extends LeanBinary {
     relocateLastComment() {
         this.rhs.relocateLastComment();
     }
+
+    /**
+     * PHP `LeanAssign::split` (php/parser/lean.php ~2494–2504).
+     * @param {Record<string, unknown>} [syntax]
+     * @returns {Lean[]}
+     */
+    split(syntax) {
+        const by = this.rhs;
+        if (by instanceof LeanBy && by.arg instanceof LeanStatements) {
+            const self = this.clone();
+            const stmts = by.arg;
+            self.rhs.arg = new LeanCaret(by.indent, by.level);
+            const statements = [self];
+            stmts.swap_echo_star(syntax, statements);
+            return statements;
+        }
+        return [this];
+    }
 }
 
 /** PHP LeanRelational group (php/parser/lean.php ~2596–2795): _gt, _ge, _lt, _le, Eq, BEq, _bne, _ne, _equiv, NotEquiv, _simeq, _approx, _asymp, Dvd. */
@@ -3608,89 +3626,6 @@ class LeanCommand extends LeanUnary {
     static input_priority = 27;
 }
 
-/** PHP `Lean_let::strFormat` (php/parser/lean.php ~8802–8814): "let" + sep + "%s" per arg. */
-class Lean_let extends LeanCommand {
-    static input_priority = 7;
-
-    get operator() {
-        return 'let';
-    }
-
-    strFormat() {
-        const func = this.operator;
-        const parts = [];
-        for (const arg of this.args) {
-            if (arg instanceof LeanCaret) continue;
-            parts.push(arg?.constructor?.name === 'LeanSequentialTacticCombinator' &&
-                /** @type {*} */ (arg).newline ? '\n' : ' ');
-            parts.push('%s');
-        }
-        return func + parts.join('');
-    }
-
-    latexFormat() {
-        return `{\\color{#00f}let}\\ ${Array(this.args.length).fill('%s').join('\\ ')}`;
-    }
-
-    latexArgs(syntax) {
-        return this.args.map((a) => a.toLatex(syntax));
-    }
-}
-
-/** PHP `Lean_have::strFormat` (php/parser/lean.php ~8922–8926): "have" + sep + "%s". */
-class Lean_have extends Lean_let {
-    get operator() {
-        return 'have';
-    }
-
-    latexFormat() {
-        return `{\\color{#00f}have}\\ ${Array(this.args.length).fill('%s').join('\\ ')}`;
-    }
-}
-
-/** PHP `Lean_show` (php/parser/lean.php ~8973–9017). */
-class Lean_show extends LeanArgs {
-    /**
-     * @param {Lean} arg
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(arg, indent, level, parent = null) {
-        super([arg], indent, level, parent);
-    }
-
-    get stack_priority() {
-        return 7;
-    }
-
-    get operator() {
-        return 'show';
-    }
-
-    is_indented() {
-        const p = this.parent;
-        return p instanceof LeanStatements || p instanceof LeanArgsNewLineSeparated;
-    }
-
-    strFormat() {
-        return `${this.func} ${Array(this.args.length).fill('%s').join(' ')}`;
-    }
-
-    latexFormat() {
-        const f = `{\\color{#00f}${this.func}}`;
-        return `${f}\\ ${Array(this.args.length).fill('%s').join('\\ ')}`;
-    }
-
-    jsonSerialize() {
-        return {
-            [this.operator]: this.args.map((a) =>
-                a && typeof a.jsonSerialize === 'function' ? a.jsonSerialize() : a
-            ),
-        };
-    }
-}
-
 /** PHP Lean_fun (php/parser/lean.php ~9019–9056): lambda "fun %s". */
 class Lean_fun extends LeanCommand {
     static input_priority = 18;
@@ -5347,7 +5282,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
 
 /**
  * PHP `abstract class LeanSyntax extends LeanArgs` (php/parser/lean.php ~6922–6955).
- * Defines `insert` and `__set`-style behavior for `arg` / `sequential_tactic_combinator`; `LeanTactic` extends this (not `LeanUnary`).
+ * Defines `insert` and `__set`-style behavior for `arg` / `sequential_tactic_combinator`; `LeanTactic`, `Lean_let`, `Lean_show` extend this (not `LeanUnary`).
  */
 export class LeanSyntax extends LeanArgs {
     get arg() {
@@ -5369,6 +5304,12 @@ export class LeanSyntax extends LeanArgs {
         }
     }
 
+    get sequential_tactic_combinator() {
+        for (let i = this.args.length - 1; i >= 0; i--) {
+            if (this.args[i] instanceof LeanSequentialTacticCombinator) return this.args[i];
+        }
+    }
+
     insert(caret, func, _type) {
         const last = this.args[this.args.length - 1];
         if (caret === last) {
@@ -5378,6 +5319,211 @@ export class LeanSyntax extends LeanArgs {
             return newCaret;
         }
         throw new Error(`insert is unexpected for ${this.constructor.name}`);
+    }
+}
+
+/** PHP `Lean_let` extends `LeanSyntax` (php/parser/lean.php ~8790–8917). */
+class Lean_let extends LeanSyntax {
+    static input_priority = 7;
+
+    /**
+     * @param {Lean} arg
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(arg, indent, level, parent = null) {
+        super([arg], indent, level, parent);
+    }
+
+    get stack_priority() {
+        return 7;
+    }
+
+    get operator() {
+        return 'let';
+    }
+
+    get command() {
+        return 'let';
+    }
+
+    echo() {
+        const token = this.get_echo_token();
+        if (token) {
+            const by = this.args[0]?.rhs;
+            if (by instanceof LeanBy) {
+                const stmt = by.arg;
+                if (stmt instanceof LeanStatements) stmt.echo();
+            }
+            return [1, this, new LeanTactic('echo', token, this.indent, token.level)];
+        }
+    }
+
+    get_echo_token() {
+        const assign = this.args[0];
+        if (assign instanceof LeanAssign) {
+            const angleBracket = assign.lhs;
+            if (angleBracket instanceof LeanAngleBracket) {
+                const token = angleBracket.tokens_comma_separated();
+                if (token.length === 1) return token[0];
+                return new LeanArgsCommaSeparated(token, this.indent, angleBracket.level);
+            }
+        }
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this.args[0]) {
+            if (next === '<' && this.parent instanceof LeanSequentialTacticCombinator) {
+                const c = new LeanCaret(indent, caret.level);
+                this.push(c);
+                return c;
+            }
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    insert_sequential_tactic_combinator(caret, nextToken) {
+        const last = this.args[this.args.length - 1];
+        if (caret === last) {
+            if (caret instanceof LeanCaret) {
+                this.replace(
+                    caret,
+                    new LeanSequentialTacticCombinator(caret, this.indent, caret.level, nextToken !== '\n'),
+                );
+            } else {
+                const c = new LeanCaret(0, 0);
+                this.push(new LeanSequentialTacticCombinator(c, this.indent, c.level));
+            }
+            return caret;
+        }
+        throw new Error(`insert_sequential_tactic_combinator is unexpected for ${this.constructor.name}`);
+    }
+
+    is_indented() {
+        return !(this.parent instanceof LeanSequentialTacticCombinator);
+    }
+
+    jsonSerialize() {
+        const a0 = this.args[0];
+        return {
+            [this.operator]: typeof a0?.jsonSerialize === 'function' ? a0.jsonSerialize() : a0,
+        };
+    }
+
+    /** PHP `Lean_let::latexFormat` (php/parser/lean.php ~8886–8890). */
+    latexFormat() {
+        return `{\\color{#00f}${this.command}}\\ ` + Array(this.args.length).fill('%s').join('\\ ');
+    }
+
+    /**
+     * PHP `Lean_let::split` (php/parser/lean.php ~8892–8900).
+     * @param {Record<string, unknown>} [syntax]
+     */
+    split(syntax) {
+        const assign = this.args[0];
+        if (assign instanceof LeanAssign) {
+            const by = assign.rhs;
+            if (by instanceof LeanBy && by.arg instanceof LeanStatements) {
+                const statements = assign.split(syntax);
+                const Ctor = /** @type {typeof Lean_let} */ (this.constructor);
+                statements[0] = new Ctor(statements[0], this.indent, assign.level);
+                return statements;
+            }
+        }
+        return [this];
+    }
+
+    strFormat() {
+        const func = this.operator;
+        const parts = [];
+        for (const arg of this.args) {
+            if (arg instanceof LeanCaret);
+            else if (arg instanceof LeanSequentialTacticCombinator && arg.newline) parts.push('\n');
+            else parts.push(' ');
+            parts.push('%s');
+        }
+        return func + parts.join('');
+    }
+
+    latexArgs(syntax) {
+        return this.args.map((a) => a.toLatex(syntax));
+    }
+}
+
+/** PHP `Lean_have` (php/parser/lean.php ~8920–8969). */
+class Lean_have extends Lean_let {
+    get operator() {
+        return 'have';
+    }
+
+    get command() {
+        return 'have';
+    }
+
+    get_echo_token() {
+        const assign = this.args[0];
+        if (!(assign instanceof LeanAssign)) return;
+        let token = assign.lhs;
+        if (token instanceof LeanColon) token = token.lhs;
+        if (token instanceof LeanCaret) token = new LeanToken('this', this.indent, token.level);
+        if (
+            token instanceof LeanAngleBracket &&
+            token.arg instanceof LeanArgsCommaSeparated &&
+            token.arg.args.every((arg) => arg instanceof LeanToken)
+        ) {
+            token = token.arg;
+        }
+        if (token instanceof LeanToken || token instanceof LeanArgsCommaSeparated) return token;
+    }
+
+    sep() {
+        const assign = this.args[0];
+        if (assign instanceof LeanAssign) {
+            const lhs = assign.lhs;
+            if (lhs instanceof LeanCaret) return '';
+            if (lhs instanceof LeanColon && lhs.lhs instanceof LeanCaret) return '';
+        }
+        return ' ';
+    }
+
+    strFormat() {
+        return `${this.operator}${this.sep()}%s`;
+    }
+}
+
+/** PHP `Lean_show` extends `LeanSyntax` (php/parser/lean.php ~8973–9017). */
+class Lean_show extends LeanSyntax {
+    constructor(arg, indent, level, parent = null) {
+        super([arg], indent, level, parent);
+    }
+
+    get stack_priority() {
+        return 7;
+    }
+
+    get operator() {
+        return 'show';
+    }
+
+    is_indented() {
+        const p = this.parent;
+        return p instanceof LeanStatements || p instanceof LeanArgsNewLineSeparated;
+    }
+
+    jsonSerialize() {
+        return {
+            [this.operator]: super.jsonSerialize(),
+        };
+    }
+
+    latexFormat() {
+        const f = `{\\color{#00f}${this.func}}`;
+        return `${f}\\ ${Array(this.args.length).fill('%s').join('\\ ')}`;
+    }
+
+    strFormat() {
+        return `${this.func} ${Array(this.args.length).fill('%s').join(' ')}`;
     }
 }
 
@@ -5416,10 +5562,6 @@ export class LeanTactic extends LeanSyntax {
 
     get with() {
         return this._lastOf(LeanWith);
-    }
-
-    get sequential_tactic_combinator() {
-        return this._lastOf(LeanSequentialTacticCombinator);
     }
 
     get by() {
