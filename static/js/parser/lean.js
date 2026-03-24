@@ -180,6 +180,7 @@ export class Lean extends IndentedNode {
         const parent = this.parent;
         if (!parent) return undefined;
         const Ctor = LEAN_CLASSES[funcName];
+        if (!Ctor) throw new Error(`push_binary: unknown function ${funcName}`);
         if (Ctor.input_priority > parent.stack_priority) {
             const level = this.level;
             const caret = new LeanCaret(this.indent, level);
@@ -208,6 +209,7 @@ export class Lean extends IndentedNode {
         const parent = this.parent;
         if (!parent) throw new Error('push_multiple: no parent');
         const Ctor = LEAN_CLASSES[funcName];
+        if (!Ctor) throw new Error(`push_multiple: unknown function ${funcName}`);
         if (parent instanceof Ctor) {
             parent.push(caret);
         } else {
@@ -928,6 +930,7 @@ export class LeanArgs extends Lean {
         const parent = this.parent;
         if (!parent) return undefined;
         const Ctor = LEAN_CLASSES[funcName];
+        if (!Ctor) throw new Error(`push_binary: unknown function ${funcName}`);
         if (Ctor.input_priority > parent.stack_priority) {
             const level = this.level;
             const caret = new LeanCaret(this.indent, level);
@@ -1080,6 +1083,10 @@ export class LeanBinary extends LeanArgs {
                 return '=';
             case 'LeanRightarrow':
                 return '=>';
+            case 'Lean_is':
+                return 'is';
+            case 'Lean_is_not':
+                return 'is not';
             default: {
                 const pair = Object.entries(token2classname).find(([, cls]) => cls === name);
                 return pair ? pair[0] : null;
@@ -1145,12 +1152,68 @@ export class LeanBinary extends LeanArgs {
                 return '>';
             case 'Lean_ne':
                 return '\\ne';
+            case 'LeanBEq':
+                return '\\!\\!=';
+            case 'Lean_simeq':
+                return '\\simeq';
+            case 'Lean_asymp':
+                return '\\asymp';
+            case 'LeanDvd':
+                return '{\\color{red}{\\ \\mid\\ }}';
+            case 'Lean_notin':
+                return '\\notin';
+            case 'Lean_leftrightarrow':
+                return '\\leftrightarrow';
+            case 'Lean_rightarrow':
+                return '\\rightarrow';
             case 'Lean_lor':
                 return '\\lor';
             case 'Lean_land':
                 return '\\land';
             case 'LeanPow':
                 return '^';
+            case 'LeanFDiv':
+                return '/\\!\\!/';
+            case 'LeanModular':
+                return '\\%\\%';
+            case 'Lean_cdotp':
+                return '{\\color{red}\\cdotp}';
+            case 'LeanAppend':
+                return '+\\!\\!+';
+            case 'LeanConstruct':
+                return '::';
+            case 'LeanVConstruct':
+                return '::_v';
+            case 'LeanBitAnd':
+                return '\\&';
+            case 'LeanBitwiseAnd':
+                return '\\&\\!\\!\\&\\!\\!\\&';
+            case 'LeanBitwiseXor':
+                return '\\^\\^\\^';
+            case 'LeanBitOr':
+                return '|';
+            case 'LeanBitwiseOr':
+                return '|\\!\\!|\\!\\!|';
+            case 'LeanLogicAnd':
+                return '\\&\\&';
+            case 'LeanLogicOr':
+                return '\\|\\|';
+            case 'LeanLogicXor':
+                return '\\^\\^';
+            case 'Lean_subseteq':
+                return '\\subseteq';
+            case 'Lean_subset':
+                return '\\subset';
+            case 'Lean_supseteq':
+                return '\\supseteq';
+            case 'Lean_supset':
+                return '\\supset';
+            case 'Lean_setminus':
+                return '\\setminus';
+            case 'Lean_is':
+                return '{\\color{blue}\\text{is}}';
+            case 'Lean_is_not':
+                return '{\\color{blue}\\text{is not}}';
             default:
                 return super.command;
         }
@@ -1162,6 +1225,133 @@ export class LeanBinary extends LeanArgs {
     }
 }
 
+/** PHP LeanProperty (php/parser/lean.php ~2126–2134); binary for property access e.g. Foo.bar. */
+export class LeanProperty extends LeanBinary {
+    static input_priority = 81;
+
+    get command() {
+        return '.';
+    }
+    get operator() {
+        return '.';
+    }
+    strFormat() {
+        return `%s${this.operator}%s`;
+    }
+    latexFormat() {
+        return `{%s}${this.command}{%s}`;
+    }
+}
+
+/** Port of `LeanColon` (php/parser/lean.php ~2355–2411). */
+export class LeanColon extends LeanBinary {
+    static input_priority = 19;
+
+    /** PHP `LeanColon::strFormat` (php/parser/lean.php ~2368–2375): "%s : %s" so (l : ℕ) renders correctly. */
+    strFormat() {
+        const sep = this.rhs instanceof LeanStatements ? '\n' : (this.rhs instanceof LeanCaret || (this.parent && this.parent.constructor?.name === 'LeanGetElem') ? '' : ' ');
+        const first = this.parent && this.parent.constructor?.name === 'LeanGetElem' ? '%s' : '%s ';
+        return `${first}:${sep}%s`;
+    }
+
+    /** PHP `LeanColon::insert_newline` (php/parser/lean.php ~2399–2410). */
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.rhs === caret) {
+            if (caret instanceof LeanCaret && indent >= this.indent) {
+                let ind = indent;
+                if (ind === this.indent) ind = this.indent + 2;
+                caret.indent = ind;
+                const stmts = new LeanStatements([caret], ind, caret.level);
+                this.replace(caret, stmts);
+                return caret;
+            }
+            if (caret instanceof LeanStatements && indent === this.indent && this.parent?.constructor.name === 'LeanParenthesis') return caret;
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+}
+
+/** Port of `LeanAssign` (php/parser/lean.php ~2414+). */
+export class LeanAssign extends LeanBinary {
+    static input_priority = 18;
+    relocateLastComment() {
+        this.rhs.relocateLastComment();
+    }
+}
+
+/** PHP LeanRelational group (php/parser/lean.php ~2596–2795): _gt, _ge, _lt, _le, Eq, BEq, _bne, _ne, _equiv, NotEquiv, _simeq, _approx, _asymp, Dvd. */
+export class Lean_gt extends LeanBinary {
+    static input_priority = 50;
+}
+export class Lean_ge extends LeanBinary {
+    static input_priority = 50;
+}
+export class Lean_lt extends LeanBinary {
+    static input_priority = 50;
+}
+export class Lean_le extends LeanBinary {
+    static input_priority = 50;
+}
+export class LeanEq extends LeanBinary {
+    static input_priority = 50;
+}
+export class LeanBEq extends LeanBinary {
+    static input_priority = 50;
+}
+export class Lean_bne extends LeanBinary {
+    static input_priority = 50;
+}
+export class Lean_ne extends LeanBinary {
+    static input_priority = 50;
+}
+export class Lean_equiv extends LeanBinary {
+    static input_priority = 40;
+}
+export class LeanNotEquiv extends LeanBinary {
+    static input_priority = 40;
+}
+export class Lean_simeq extends LeanBinary {
+    static input_priority = 50;
+    latexArgs(syntax) {
+        if (syntax) syntax['≃'] = true;
+        return super.latexArgs(syntax);
+    }
+}
+export class Lean_approx extends LeanBinary {
+    static input_priority = 50;
+    latexArgs(syntax) {
+        if (syntax) syntax['≈'] = true;
+        return super.latexArgs(syntax);
+    }
+}
+export class Lean_asymp extends LeanBinary {
+    static input_priority = 50;
+    latexArgs(syntax) {
+        if (syntax) syntax['≍'] = true;
+        return super.latexArgs(syntax);
+    }
+}
+export class LeanDvd extends LeanBinary {
+    static input_priority = 50;
+}
+
+/** PHP LeanBinaryBoolean (php/parser/lean.php ~2811–2863): _in, _notin, _leftrightarrow. */
+export class Lean_in extends LeanBinary {
+    static input_priority = 50;
+    latexArgs(syntax) {
+        let lhs = this.lhs;
+        if (lhs instanceof LeanParenthesis && !(lhs.arg instanceof LeanColon)) lhs = lhs.arg;
+        return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
+    }
+}
+export class Lean_notin extends LeanBinary {
+    static input_priority = 50;
+}
+export class Lean_leftrightarrow extends LeanBinary {
+    static input_priority = 50;
+}
+
+/** PHP LeanArithmetic group (php/parser/lean.php ~2901–3513): Add, Sub, Mul, _times, MatMul, _bullet, _odot, _otimes, _oplus, Div, FDiv, BitAnd, BitwiseAnd, BitwiseXor, BitOr, BitwiseOr, Pow, _ll, _lll, _gg, _ggg, Modular, Construct, VConstruct, Append, _sqcup, _sqcap, _cdotp, _circ, _blacktriangleright. */
 /** PHP `LeanAdd` / `LeanSub` / `LeanMul` (php/parser/lean.php ~2901–2936): `input_priority` matches PHP statics. */
 export class LeanAdd extends LeanBinary {
     static input_priority = 65;
@@ -1183,37 +1373,254 @@ export class Lean_sqcap extends LeanBinary {
     static input_priority = 69;
 }
 
-/** PHP `Lean_approx` (php/parser/lean.php ~2756–2774): relational `≈`; extends `LeanRelational` (`input_priority` 50). */
-export class Lean_approx extends LeanBinary {
-    static input_priority = 50;
-
-    /** PHP `Lean_approx::latexArgs` (php/parser/lean.php ~2769–2772). */
-    latexArgs(syntax) {
-        if (syntax) syntax['≈'] = true;
-        return super.latexArgs(syntax);
-    }
+/** PHP `Lean_sqcup` (php/parser/lean.php ~3455–3467): lattice join `⊔`. */
+export class Lean_sqcup extends LeanBinary {
+    static input_priority = 68;
 }
 
-/** PHP `Lean_lt` (php/parser/lean.php ~2622–2633): relational `<`; extends `LeanRelational` (`input_priority` 50). */
-export class Lean_lt extends LeanBinary {
+/** PHP `LeanDiv` (php/parser/lean.php ~3091–3128). */
+export class LeanDiv extends LeanBinary {
+    static input_priority = 70;
+}
+
+/** PHP `Lean_times` (php/parser/lean.php ~2998–3011): `×`. */
+export class Lean_times extends LeanBinary {
+    static input_priority = 72;
+}
+
+/** PHP `LeanPow` (php/parser/lean.php ~3308–3336): `^`. */
+export class LeanPow extends LeanBinary {
+    static input_priority = 80;
+}
+
+/** PHP `LeanConstruct` (php/parser/lean.php ~3408–3420): `::`. */
+export class LeanConstruct extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP `LeanVConstruct` (php/parser/lean.php ~3423–3436): `::ᵥ`. */
+export class LeanVConstruct extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP `LeanAppend` (php/parser/lean.php ~3439–3452): `++`. */
+export class LeanAppend extends LeanBinary {
+    static input_priority = 65;
+}
+
+/** PHP `Lean_bullet` (php/parser/lean.php ~3030–3043): `•`. */
+export class Lean_bullet extends LeanBinary {
+    static input_priority = 73;
+}
+
+/** PHP `Lean_odot` (php/parser/lean.php ~3045–3058): `⊙`. */
+export class Lean_odot extends LeanBinary {
+    static input_priority = 73;
+}
+
+/** PHP `Lean_otimes` (php/parser/lean.php ~3060–3074): `⊗`. */
+export class Lean_otimes extends LeanBinary {
+    static input_priority = 32;
+}
+
+/** PHP `Lean_oplus` (php/parser/lean.php ~3076–3089): `⊕`. */
+export class Lean_oplus extends LeanBinary {
+    static input_priority = 30;
+}
+
+/** PHP token2classname `⊖` => Lean_ominus. No explicit PHP class; extends LeanArithmetic. */
+export class Lean_ominus extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP token2classname `⊘` => Lean_oslash. No explicit PHP class. */
+export class Lean_oslash extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP token2classname `⊚` => Lean_circledcirc. No explicit PHP class. */
+export class Lean_circledcirc extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP token2classname `⊛` => Lean_circledast. No explicit PHP class. */
+export class Lean_circledast extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP token2classname `⊜` => Lean_circleeq. No explicit PHP class. */
+export class Lean_circleeq extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP token2classname `⊝` => Lean_circleddash. No explicit PHP class. */
+export class Lean_circleddash extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP token2classname `⊞` => Lean_boxplus. No explicit PHP class. */
+export class Lean_boxplus extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP token2classname `⊟` => Lean_boxminus. No explicit PHP class. */
+export class Lean_boxminus extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP token2classname `⊠` => Lean_boxtimes. No explicit PHP class. */
+export class Lean_boxtimes extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP token2classname `⊡` => Lean_dotsquare. No explicit PHP class. */
+export class Lean_dotsquare extends LeanBinary {
+    static input_priority = 67;
+}
+
+/** PHP `LeanEDiv` (php/parser/lean.php token2classname): euclidean division `÷`. No explicit PHP class; uses LeanArithmetic default. */
+export class LeanEDiv extends LeanBinary {
+    static input_priority = 70;
+}
+
+/** PHP `LeanFDiv` (php/parser/lean.php ~3131–3145): `//`. */
+export class LeanFDiv extends LeanBinary {
+    static input_priority = 70;
+}
+
+/** PHP `LeanModular` (php/parser/lean.php ~3392–3405): `%`. */
+export class LeanModular extends LeanBinary {
+    static input_priority = 70;
+}
+
+/** PHP `Lean_ll` (php/parser/lean.php ~3339–3350): `<<`. */
+export class Lean_ll extends LeanBinary {
+    static input_priority = 47;
+}
+
+/** PHP `Lean_lll` (php/parser/lean.php ~3352–3363): `<<<`. */
+export class Lean_lll extends LeanBinary {
+    static input_priority = 47;
+}
+
+/** PHP `Lean_gg` (php/parser/lean.php ~3365–3376): `>>`. */
+export class Lean_gg extends LeanBinary {
+    static input_priority = 47;
+}
+
+/** PHP `Lean_ggg` (php/parser/lean.php ~3378–3390): `>>>`. */
+export class Lean_ggg extends LeanBinary {
+    static input_priority = 75;
+}
+
+/** PHP `Lean_cdotp` (php/parser/lean.php ~3483–3496): `⬝`. */
+export class Lean_cdotp extends LeanBinary {
+    static input_priority = 71;
+}
+
+/** PHP `Lean_circ` (php/parser/lean.php ~3499–3510): `∘`. */
+export class Lean_circ extends LeanBinary {
+    static input_priority = 90;
+}
+
+/** PHP `Lean_blacktriangleright` (php/parser/lean.php ~3513–3528): `▸`. */
+export class Lean_blacktriangleright extends LeanBinary {
+    static input_priority = 47;
+}
+
+/** PHP `LeanBitAnd` (php/parser/lean.php ~3148–3163). */
+export class LeanBitAnd extends LeanBinary {
+    static input_priority = 68;
+}
+
+/** PHP `LeanBitwiseAnd` (php/parser/lean.php ~3165–3179). */
+export class LeanBitwiseAnd extends LeanBinary {
+    static input_priority = 60;
+}
+
+/** PHP `LeanBitwiseXor` (php/parser/lean.php ~3182–3196). */
+export class LeanBitwiseXor extends LeanBinary {
+    static input_priority = 60;
+}
+
+/** PHP `LeanBitOr` (php/parser/lean.php ~3199+). */
+export class LeanBitOr extends LeanBinary {
+    static input_priority = 47;
+}
+
+/** PHP `LeanBitwiseOr` (php/parser/lean.php ~3291+). */
+export class LeanBitwiseOr extends LeanBinary {
+    static input_priority = 55;
+}
+
+/** PHP `Lean_land` (php/parser/lean.php ~4380–4402): `∧`. */
+export class Lean_land extends LeanBinary {
+    static input_priority = 35;
+}
+
+/** PHP `LeanLogicAnd` (php/parser/lean.php ~4248–4281): `&&`. */
+export class LeanLogicAnd extends LeanBinary {
+    static input_priority = 37;
+}
+
+/** PHP `LeanLogicOr` (php/parser/lean.php ~4284–4315): `||`. */
+export class LeanLogicOr extends LeanBinary {
+    static input_priority = 37;
+}
+
+/** PHP `LeanLogicXor` (php/parser/lean.php ~4319–4338): `^^`. */
+export class LeanLogicXor extends LeanBinary {
+    static input_priority = 33;
+}
+
+/** PHP `Lean_cup` (php/parser/lean.php ~4197–4210): `∪`. */
+export class Lean_cup extends LeanBinary {
     static input_priority = 50;
 }
 
-/** PHP `LeanEq` (php/parser/lean.php ~2648–2660): `=`; extends `LeanRelational` (`input_priority` 50). */
-export class LeanEq extends LeanBinary {
+/** PHP `Lean_cap` (php/parser/lean.php ~4212–4245): `∩`. */
+export class Lean_cap extends LeanBinary {
     static input_priority = 50;
 }
 
-/** PHP `Lean_in` (php/parser/lean.php ~2811–2835): membership `∈`; extends `LeanBinaryBoolean` (`input_priority` 50). */
-export class Lean_in extends LeanBinary {
-    static input_priority = 50;
+/** PHP `Lean_setminus` (php/parser/lean.php ~4183–4194): `\`. */
+export class Lean_setminus extends LeanBinary {
+    static input_priority = 70;
+}
 
-    /** PHP `Lean_in::latexArgs` (php/parser/lean.php ~2824–2833). */
-    latexArgs(syntax) {
-        let lhs = this.lhs;
-        if (lhs instanceof LeanParenthesis && !(lhs.arg instanceof LeanColon)) lhs = lhs.arg;
-        return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
-    }
+/** PHP `Lean_subseteq` (php/parser/lean.php ~4404–4417): `⊆`. */
+export class Lean_subseteq extends LeanBinary {
+    static input_priority = 50;
+}
+
+/** PHP `Lean_subset` (php/parser/lean.php ~4419–4432): `⊂`. */
+export class Lean_subset extends LeanBinary {
+    static input_priority = 50;
+}
+
+/** PHP `Lean_supseteq` (php/parser/lean.php ~4434–4446): `⊇`. */
+export class Lean_supseteq extends LeanBinary {
+    static input_priority = 50;
+}
+
+/** PHP `Lean_supset` (php/parser/lean.php ~4448–4460): `⊃`. */
+export class Lean_supset extends LeanBinary {
+    static input_priority = 50;
+}
+
+/** PHP `Lean_is` (php/parser/lean.php ~4096–4133): `is`. */
+export class Lean_is extends LeanBinary {
+    static input_priority = 62;
+}
+
+/** PHP `Lean_is_not` (php/parser/lean.php L_is_not ~4136–4168). */
+export class Lean_is_not extends LeanBinary {
+    static input_priority = 62;
+}
+
+/** PHP `LeanMethodChaining` (php/parser/lean.php ~3989–4015): `|>.`. */
+export class LeanMethodChaining extends LeanBinary {
+    static input_priority = 67;
 }
 
 /** PHP `Lean_lor` (e.g. `∨`): lower priority than typical relation binaries. */
@@ -1221,40 +1628,43 @@ export class Lean_lor extends LeanBinary {
     static input_priority = 30;
 }
 
-/** Port of `LeanColon` (php/parser/lean.php ~2355–2411). */
-export class LeanColon extends LeanBinary {
-    static input_priority = 19;
+/** PHP `Lean_rightarrow` (php/parser/lean.php ~5591–5616): `→` (right associative, priority 25). */
+export class Lean_rightarrow extends LeanBinary {
+    static input_priority = 25;
+}
 
-    /** PHP `LeanColon::strFormat` (php/parser/lean.php ~2368–2375): "%s : %s" so (l : ℕ) renders correctly. */
-    strFormat() {
-        const sep = this.rhs instanceof LeanStatements ? '\n' : (this.rhs instanceof LeanCaret || (this.parent && this.parent.constructor?.name === 'LeanGetElem') ? '' : ' ');
-        const first = this.parent && this.parent.constructor?.name === 'LeanGetElem' ? '%s' : '%s ';
-        return `${first}:${sep}%s`;
+/** PHP `Lean_mapsto` (php/parser/lean.php ~5647–5692): `↦`; stack_priority 23, sep for Statements. */
+export class Lean_mapsto extends LeanBinary {
+    static input_priority = 47;
+
+    get stack_priority() {
+        return 23;
     }
 
-    /**
-     * Port of `LeanColon::insert_newline` (php/parser/lean.php ~2399–2410).
-     */
+    /** PHP `Lean_mapsto::sep` (php/parser/lean.php ~5650–5653). */
+    sep() {
+        return this.rhs instanceof LeanStatements ? '\n' : ' ';
+    }
+
+    /** PHP `Lean_mapsto::strFormat` (php/parser/lean.php ~5658–5662). */
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+
+    /** PHP `Lean_mapsto::insert_newline` (php/parser/lean.php ~5664–5679). */
     insert_newline(caret, newlineCount, indent, next) {
-        if (this.rhs === caret) {
-            // PHP uses `indent > this.indent` only; real lemmas often continue proof at the same
-            // column as the `:` line — mirror `LeanBrace` (~1924–1925): bump when indent matches.
-            if (caret instanceof LeanCaret && indent >= this.indent) {
-                let ind = indent;
-                if (ind === this.indent) ind = this.indent + 2;
-                caret.indent = ind;
-                const stmts = new LeanStatements([caret], ind, caret.level);
-                this.replace(caret, stmts);
-                return caret;
+        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            caret.indent = ind;
+            const stmts = new LeanStatements([caret], ind, caret.level);
+            this.replace(caret, stmts);
+            for (let i = 1; i < newlineCount; i++) {
+                const c = new LeanCaret(ind, caret.level);
+                stmts.push(c);
             }
-            if (
-                caret instanceof LeanStatements &&
-                indent === this.indent &&
-                this.parent &&
-                this.parent.constructor.name === 'LeanParenthesis'
-            ) {
-                return caret;
-            }
+            return stmts.args[stmts.args.length - 1];
         }
         return super.insert_newline(caret, newlineCount, indent, next);
     }
@@ -1305,16 +1715,6 @@ export class LeanRightarrow extends LeanBinary {
     }
 
     /** PHP `LeanRightarrow::relocate_last_comment` (php/parser/lean.php ~5501–5504). */
-    relocateLastComment() {
-        this.rhs.relocateLastComment();
-    }
-}
-
-/** Port of `LeanAssign` (php/parser/lean.php ~2414+); full `insert_newline` port can grow here. */
-export class LeanAssign extends LeanBinary {
-    static input_priority = 18;
-
-    /** PHP `LeanAssign::relocate_last_comment` (php/parser/lean.php ~2451–2454). */
     relocateLastComment() {
         this.rhs.relocateLastComment();
     }
@@ -1450,14 +1850,113 @@ class LeanNeg extends LeanUnary {
     }
 }
 
+/** PHP LeanPlus (php/parser/lean.php ~3607–3627): unary plus "+%s". */
+class LeanPlus extends LeanUnary {
+    get operator() {
+        return '+';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** PHP Lean_sqrt (php/parser/lean.php ~3705–3736): √%s. */
+class Lean_sqrt extends LeanUnary {
+    static input_priority = 72;
+    get stack_priority() {
+        return 71;
+    }
+    get operator() {
+        return '√';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** PHP LeanCubicRoot (php/parser/lean.php ~3776–3799): ∛%s. */
+class LeanCubicRoot extends LeanUnary {
+    get stack_priority() {
+        return 71;
+    }
+    get operator() {
+        return '∛';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** PHP Lean_uparrow (php/parser/lean.php ~3802–3833): ↑%s. */
+class Lean_uparrow extends LeanUnary {
+    static input_priority = 1024;
+    get stack_priority() {
+        return 70;
+    }
+    get operator() {
+        return '↑';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** PHP LeanUparrow (php/parser/lean.php ~3836–3858): ⇑%s. */
+class LeanUparrow extends LeanUnary {
+    static input_priority = 1024;
+    get stack_priority() {
+        return 71;
+    }
+    get operator() {
+        return '⇑';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** PHP LeanQuarticRoot (php/parser/lean.php ~3887–3911): ∜%s. */
+class LeanQuarticRoot extends LeanUnary {
+    get stack_priority() {
+        return 71;
+    }
+    get operator() {
+        return '∜';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** PHP Lean_lnot (php/parser/lean.php ~5717+): ¬%s. */
+class Lean_lnot extends LeanUnary {
+    static input_priority = 40;
+    get operator() {
+        return '¬';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
 function resolveUnaryCtor(name) {
     let C = unaryClassCache.get(name);
     if (!C) {
         C = name === 'LeanAttribute' ? LeanAttribute
             : name === 'Lean_leftarrow' ? Lean_leftarrow
             : name === 'LeanNeg' ? LeanNeg
+            : name === 'LeanPlus' ? LeanPlus
+            : name === 'Lean_sqrt' ? Lean_sqrt
+            : name === 'LeanCubicRoot' ? LeanCubicRoot
+            : name === 'Lean_uparrow' ? Lean_uparrow
+            : name === 'LeanUparrow' ? LeanUparrow
+            : name === 'LeanQuarticRoot' ? LeanQuarticRoot
+            : name === 'Lean_lnot' ? Lean_lnot
             : class extends LeanUnary {};
-        if (C !== LeanAttribute && C !== Lean_leftarrow && C !== LeanNeg) Object.defineProperty(C, 'name', { value: name });
+        if (![
+            LeanAttribute, Lean_leftarrow, LeanNeg, LeanPlus, Lean_sqrt,
+            LeanCubicRoot, Lean_uparrow, LeanUparrow, LeanQuarticRoot, Lean_lnot
+        ].includes(C)) Object.defineProperty(C, 'name', { value: name });
         unaryClassCache.set(name, C);
     }
     return C;
@@ -1475,11 +1974,102 @@ export class LeanUnaryArithmeticPost extends Lean {
     static input_priority = 72;
 }
 
+/** PHP LeanInv (php/parser/lean.php ~3630–3652): %s⁻¹ postfix. */
+class LeanInv extends LeanUnary {
+    static input_priority = 71;
+    get operator() {
+        return '⁻¹';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** PHP LeanPosPart (php/parser/lean.php ~3655–3677): %s⁺. */
+class LeanPosPart extends LeanUnary {
+    static input_priority = 71;
+    get operator() {
+        return '⁺';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** PHP LeanNegPart (php/parser/lean.php ~3680–3702): %s⁻. */
+class LeanNegPart extends LeanUnary {
+    static input_priority = 71;
+    get operator() {
+        return '⁻';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** PHP LeanSquare (php/parser/lean.php ~3739–3773): %s². */
+class LeanSquare extends LeanUnary {
+    static input_priority = 66;
+    get operator() {
+        return '²';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** PHP LeanCube (php/parser/lean.php ~3868–3890): %s³. */
+class LeanCube extends LeanUnary {
+    get operator() {
+        return '³';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** PHP LeanTesseract (php/parser/lean.php ~3920–3943): %s⁴. */
+class LeanTesseract extends LeanUnary {
+    get operator() {
+        return '⁴';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** PHP LeanTranspose (php/parser/lean.php ~3945–3968): %sᵀ. */
+class LeanTranspose extends LeanUnary {
+    get operator() {
+        return 'ᵀ';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** PHP LeanPipeForward (php/parser/lean.php ~3970–3986): %s|>. */
+class LeanPipeForward extends LeanUnary {
+    get operator() {
+        return '|>';
+    }
+    strFormat() {
+        return `%s ${this.operator}`;
+    }
+}
+
 function resolveUnaryPostCtor(name) {
     let C = unaryPostClassCache.get(name);
     if (!C) {
-        C = class extends LeanUnaryPost {};
-        Object.defineProperty(C, 'name', { value: name });
+        const explicit = {
+            LeanInv, LeanPosPart, LeanNegPart, LeanSquare, LeanCube,
+            LeanTesseract, LeanTranspose, LeanPipeForward
+        }[name];
+        C = explicit || (() => {
+            const Klass = class extends LeanUnary {};
+            Object.defineProperty(Klass, 'name', { value: name });
+            return Klass;
+        })();
         unaryPostClassCache.set(name, C);
     }
     return C;
@@ -2158,6 +2748,36 @@ class Lean_fun extends LeanCommand {
     }
 }
 
+/** PHP Lean_import (php/parser/lean.php ~5237–5274): "import %s". */
+class Lean_import extends LeanCommand {
+    get operator() {
+        return 'import';
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+}
+
+/** PHP Lean_open (php/parser/lean.php ~5275–5312): "open %s". */
+class Lean_open extends LeanCommand {
+    get operator() {
+        return 'open';
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+}
+
+/** PHP Lean_set_option (php/parser/lean.php ~5313+): "set_option %s". */
+class Lean_set_option extends LeanCommand {
+    get operator() {
+        return 'set_option';
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+}
+
 function resolveCommandCtor(name) {
     switch (name) {
         case 'Lean_def':
@@ -2176,6 +2796,12 @@ function resolveCommandCtor(name) {
             return LeanAt;
         case 'Lean_fun':
             return Lean_fun;
+        case 'Lean_import':
+            return Lean_import;
+        case 'Lean_open':
+            return Lean_open;
+        case 'Lean_set_option':
+            return Lean_set_option;
         default:
             break;
     }
@@ -2337,31 +2963,6 @@ class LeanDocString extends Lean {
     }
 }
 
-export class LeanProperty extends LeanBinary {
-    static input_priority = 85;
-
-    /** PHP `LeanProperty::__get('command')` / `operator` (php/parser/lean.php ~2247–2254). */
-    get command() {
-        return '.';
-    }
-
-    get operator() {
-        return '.';
-    }
-
-    strFormat() {
-        return `%s${this.operator}%s`;
-    }
-
-    /**
-     * Default branch of PHP `LeanProperty::latexFormat` (php/parser/lean.php ~2203–2204).
-     * Full special cases (exp, cos, card, …) can be ported incrementally.
-     */
-    latexFormat() {
-        return `{%s}${this.command}{%s}`;
-    }
-}
-
 export class LeanGetElem extends LeanBinary {
     static input_priority = 88;
 
@@ -2484,12 +3085,103 @@ class LeanBracket extends LeanPairedGroup {
     }
 }
 
-export class Lean_equiv extends LeanBinary {
-    static input_priority = 40;
+/** PHP `LeanBrace` (php/parser/lean.php ~1892–1938). */
+class LeanBrace extends LeanPairedGroup {
+    is_Expr() {
+        return false;
+    }
+    get stack_priority() {
+        return 17;
+    }
+    get operator() {
+        return '{}';
+    }
+    latexFormat() {
+        return '\\left\\{ {%s} \\right\\}';
+    }
 }
 
-export class LeanNotEquiv extends LeanBinary {
-    static input_priority = 40;
+/** PHP `LeanAngleBracket` (php/parser/lean.php ~1802–1845). */
+class LeanAngleBracket extends LeanPairedGroup {
+    get stack_priority() {
+        return 10;
+    }
+    get operator() {
+        return ['⟨', '⟩'];
+    }
+    latexFormat() {
+        return '\\langle {%s} \\rangle';
+    }
+}
+
+/** PHP `LeanAbs` (php/parser/lean.php ~1939–1962). */
+class LeanAbs extends LeanPairedGroup {
+    get stack_priority() {
+        return 17;
+    }
+    get operator() {
+        return '||';
+    }
+    latexFormat() {
+        return '\\left| {%s} \\right|';
+    }
+}
+
+/** PHP `LeanNorm` (php/parser/lean.php ~1964–1982). */
+class LeanNorm extends LeanPairedGroup {
+    get stack_priority() {
+        return 17;
+    }
+    get operator() {
+        return ['‖', '‖'];
+    }
+    latexFormat() {
+        return '\\left\\lVert {%s} \\right\\rVert';
+    }
+}
+
+/** PHP `LeanCeil` (php/parser/lean.php ~1984–2002). */
+class LeanCeil extends LeanPairedGroup {
+    static input_priority = 72;
+    get stack_priority() {
+        return 22;
+    }
+    get operator() {
+        return ['⌈', '⌉'];
+    }
+    latexFormat() {
+        return '\\left\\lceil {%s} \\right\\rceil';
+    }
+}
+
+/** PHP `LeanFloor` (php/parser/lean.php ~2004–2022). */
+class LeanFloor extends LeanPairedGroup {
+    static input_priority = 72;
+    get stack_priority() {
+        return 22;
+    }
+    get operator() {
+        return ['⌊', '⌋'];
+    }
+    latexFormat() {
+        return '\\left\\lfloor {%s} \\right\\rfloor';
+    }
+}
+
+/** PHP `LeanDoubleAngleQuotation` (php/parser/lean.php ~2024–2044). */
+class LeanDoubleAngleQuotation extends LeanPairedGroup {
+    is_Expr() {
+        return false;
+    }
+    get stack_priority() {
+        return 22;
+    }
+    get operator() {
+        return ['«', '»'];
+    }
+    latexFormat() {
+        return '\\left\\langle{%s}\\right\\rangle'; // «» guillemets
+    }
 }
 
 /** PHP LeanAt extends LeanUnary (php/parser/lean.php ~7812–7856): modifier "at %s". */
@@ -2662,6 +3354,13 @@ const LEAN_CLASSES = {
     LeanGetElemQuote,
     LeanStack,
     LeanBracket,
+    LeanBrace,
+    LeanAngleBracket,
+    LeanAbs,
+    LeanNorm,
+    LeanCeil,
+    LeanFloor,
+    LeanDoubleAngleQuotation,
     Lean_equiv,
     LeanNotEquiv,
     LeanAt,
@@ -2674,11 +3373,74 @@ const LEAN_CLASSES = {
     LeanMul,
     LeanMatMul,
     Lean_sqcap,
+    Lean_sqcup,
+    LeanDiv,
+    Lean_times,
+    LeanPow,
+    LeanConstruct,
+    LeanVConstruct,
+    LeanAppend,
+    Lean_bullet,
+    Lean_odot,
+    Lean_otimes,
+    Lean_oplus,
+    LeanFDiv,
+    LeanModular,
+    Lean_ll,
+    Lean_lll,
+    Lean_gg,
+    Lean_ggg,
+    Lean_cdotp,
+    Lean_circ,
+    Lean_blacktriangleright,
+    LeanBitAnd,
+    LeanBitwiseAnd,
+    LeanBitwiseXor,
+    LeanBitOr,
+    LeanBitwiseOr,
+    Lean_land,
+    LeanLogicAnd,
+    LeanLogicOr,
+    LeanLogicXor,
+    Lean_cup,
+    Lean_cap,
+    Lean_setminus,
+    Lean_subseteq,
+    Lean_subset,
+    Lean_supseteq,
+    Lean_supset,
+    Lean_is,
+    Lean_is_not,
+    LeanMethodChaining,
     Lean_approx,
     Lean_lt,
+    Lean_gt,
+    Lean_ge,
+    Lean_le,
     LeanEq,
+    LeanBEq,
+    Lean_ne,
+    Lean_simeq,
+    Lean_asymp,
+    LeanDvd,
     Lean_in,
+    Lean_notin,
+    Lean_leftrightarrow,
+    Lean_rightarrow,
     Lean_lor,
+    LeanEDiv,
+    Lean_ominus,
+    Lean_oslash,
+    Lean_circledcirc,
+    Lean_circledast,
+    Lean_circleeq,
+    Lean_circleddash,
+    Lean_boxplus,
+    Lean_boxminus,
+    Lean_boxtimes,
+    Lean_dotsquare,
+    Lean_mapsto,
+    Lean_bne,
 };
 
 /**
