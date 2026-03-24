@@ -3705,24 +3705,6 @@ class LeanNegPart extends LeanUnaryArithmeticPost
 class Lean_sqrt extends LeanUnaryArithmeticPre
 {
     public static $input_priority = 72;
-    public function strFormat()
-    {
-        return "$this->operator%s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command{%s}";
-    }
-    public function latexArgs(&$syntax = null)
-    {
-        $arg = $this->arg;
-        if ($arg instanceof LeanParenthesis)
-            $arg = $arg->arg;
-        $arg = $arg->toLatex($syntax);
-        return [$arg];
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3734,6 +3716,24 @@ class Lean_sqrt extends LeanUnaryArithmeticPre
                 return parent::__get($vname);
         }
     }
+    public function latexArgs(&$syntax = null)
+    {
+        $arg = $this->arg;
+        if ($arg instanceof LeanParenthesis)
+            $arg = $arg->arg;
+        $arg = $arg->toLatex($syntax);
+        return [$arg];
+    }
+
+    public function latexFormat()
+    {
+        return "$this->command{%s}";
+    }
+    public function strFormat()
+    {
+        return "$this->operator%s";
+    }
+
 }
 
 class LeanSquare extends LeanUnaryArithmeticPost

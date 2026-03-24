@@ -118,6 +118,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanNegPart extends LeanUnaryArithmeticPost\n{",
         "\n}\n\nclass Lean_sqrt extends LeanUnaryArithmeticPre",
     ),
+    "leansqrt": (
+        "class Lean_sqrt extends LeanUnaryArithmeticPre\n{",
+        "\n}\n\nclass LeanSquare extends LeanUnaryArithmeticPost",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
