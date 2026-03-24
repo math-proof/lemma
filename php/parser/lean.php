@@ -1525,17 +1525,6 @@ abstract class LeanUnary extends LeanArgs
         $val->parent = $this;
     }
 
-    public function replace($old, $new)
-    {
-        assert($this->arg === $old, new Exception("assert failed: public function replace(\$old, \$new)"));
-        $this->arg = $new;
-    }
-
-    public function jsonSerialize(): mixed
-    {
-        return $this->arg->jsonSerialize();
-    }
-
     public function insert_if($caret)
     {
         if ($this->arg === $caret) {
@@ -1546,6 +1535,17 @@ abstract class LeanUnary extends LeanArgs
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
+    public function jsonSerialize(): mixed
+    {
+        return $this->arg->jsonSerialize();
+    }
+
+    public function replace($old, $new)
+    {
+        assert($this->arg === $old, new Exception("assert failed: public function replace(\$old, \$new)"));
+        $this->arg = $new;
+    }
+
 }
 
 abstract class LeanPairedGroup extends LeanUnary
