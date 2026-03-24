@@ -73,10 +73,6 @@ export const token2classname = Object.freeze({
     '∣': 'LeanDvd',
 });
 
-export const classNameToSymbol = Object.freeze(
-    Object.fromEntries(Object.entries(token2classname).map(([tok, cls]) => [cls, tok])),
-);
-
 /**
  * PHP LaTeX command overrides for toLatex (php/parser/lean.php LeanAdd/LeanSub/LeanMul/LeanMatMul etc).
  * Uses literal symbols instead of \Add, \Sub so KaTeX renders correctly.
@@ -1187,8 +1183,10 @@ export class LeanBinary extends LeanArgs {
                 return '=';
             case 'LeanRightarrow':
                 return '=>';
-            default:
-                return classNameToSymbol[name] ?? null;
+            default: {
+                const pair = Object.entries(token2classname).find(([, cls]) => cls === name);
+                return pair ? pair[0] : null;
+            }
         }
     }
 
