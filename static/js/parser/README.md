@@ -40,7 +40,8 @@ JS flattens some PHP hierarchies:
 
 ### Known Gaps
 - `LeanBar` / `Lean_match` / `LeanWith`: `split` and echo paths may still differ from PHP in edge cases
-- Large tactic / proof surface still thin vs PHP: `LeanTactic` (`get_echo_token`, `has_tactic_block_followed`, `insert_sequential_tactic_combinator` wiring vs PHP `LeanSequentialTacticCombinator` unary), `LeanTacticBlock::echo`
+- `LeanTacticBlock::echo` and nested proof echo still worth diffing against PHP line-by-line
+- Recent parity: `LeanSequentialTacticCombinator` (unary + `newline`, `echo`, `split`, …), `LeanTactic` (`get_echo_token`, `has_tactic_block_followed`, `insert_sequential_tactic_combinator`, `insert_only`, `insert_tactic`, `echo`, `split`, `jsonSerialize`, `latexFormat`, …), `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
 
 ### Running Tests
 ```bash
@@ -97,6 +98,8 @@ When a PHP method uses `clone $this`, `LeanArgs::__clone`, or otherwise duplicat
 
 3. **Output**: Either the reordered `lean.js` or a note explaining why order was left as-is.
 
+4. **Automation**: `node scripts/audit-lean-classes.mjs` prints a pairwise-order statistic for shared class names (PHP file order vs `lean.js` order). A high inversion count is expected under Option B.
+
 ### Step 3: Per-Class Function Audit
 
 For each class defined in **both** `lean.php` and `lean.js`:
@@ -124,7 +127,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2025-03-24): class audit script; `LeanBinary::echo` + `LeanRightarrow::echo` ported (PHP ~2480–2483, ~5506–5576); README + tests.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — `LeanTactic` + `LeanSequentialTacticCombinator` port (PHP ~7021–7447, ~7952–8068); supporting `LeanBy::echo`, `LeanBitOr`/`LeanAngleBracket`/`LeanArgsCommaSeparated` token lists; `node scripts/test-lean-parser.mjs` — corpus OK.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
@@ -134,33 +137,35 @@ Last run: Steps 1–4 (2025-03-24): class audit script; `LeanBinary::echo` + `Le
 
 Registry: LEAN_CLASSES + getLeanClass only.
 
-PHP class names with no JS class of the same name (8, all abstract / flattened in JS):
+PHP class names with no JS class of the same name (8, abstract / flattened into LeanBinary or LeanUnary in JS):
   LeanArithmetic, LeanBinaryBoolean, LeanLogic, LeanRelational, LeanSetOperator, LeanSyntax,
   LeanUnaryArithmetic, LeanUnaryArithmeticPre
 
-JS class names with no PHP class of the same name (extra concrete nodes / split symbols):
+(Also abstract in PHP, present in JS with the same name: LeanUnaryArithmeticPost — not in the list above.)
+
+JS class names with no PHP class of the same name (12, extra concrete nodes / Unicode operator symbols in token2classname):
   LeanBigOperator, LeanEDiv, Lean_boxminus, Lean_boxplus, Lean_boxtimes, Lean_circledast, Lean_circledcirc,
   Lean_circleddash, Lean_circleeq, Lean_dotsquare, Lean_ominus, Lean_oslash
 
-This pass: LeanBinary.echo, LeanRightarrow.echo (match / induction `=>` echo injection).
-
-Prior: Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers; etc.
+Missing classes to port: none — every concrete PHP Lean* node has a same-named JS class or an intentional JS-only split as above.
 
 ## Step 2: Order
 - Option B: JS grouped by role; not matched to lean.php line order.
+- Pairwise order check (shared names only, PHP declaration order vs lean.js): ~29% of class pairs inverted
+  (see audit script output; 0% would mean identical ordering).
 
-## Step 3: Per-class audit (sampled)
-- LeanBinary: echo → rhs.echo (PHP ~2480–2483).
-- LeanRightarrow: echo — ⊢ token, lhs pattern args, rhs echo, unshift LeanTactic echo (PHP ~5506–5576).
-- LeanTactic: still thin vs PHP for sequential combinator / getEcho / jsonSerialize (see Known Gaps).
+## Step 3: Per-class audit
+- Full method-by-method parity is not automated here (naming camelCase vs snake_case, helpers on different bases).
+- Track gaps via [Known Gaps](#known-gaps) and targeted ports (e.g. LeanTactic vs PHP sequential combinator / getEcho).
+- Prior parity work (examples): LeanBinary.echo, LeanRightarrow.echo; Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers.
 
 ## Step 4: Verification
 - node scripts/test-lean-parser.mjs — corpus OK
-- No linter issues on static/js/parser/lean.js
+- No new linter issues on static/js/parser/lean.js
 ```
 
 ## References
 
 - `scripts/compare-php-node.mjs` – comparison utilities
-- `scripts/audit-lean-classes.mjs` – PHP vs JS `Lean*` class name diff (Translation Step 1)
+- `scripts/audit-lean-classes.mjs` – PHP vs JS `Lean*` class name diff (Step 1) + pairwise order statistic (Step 2)
 - `server/lean/compiler/render2vue.mjs` – uses `LeanTactic::getEcho`

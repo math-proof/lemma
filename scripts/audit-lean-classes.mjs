@@ -42,3 +42,30 @@ const abstractsPhp = [
     'LeanSyntax',
 ];
 console.log('Expected flattened (abstract PHP only):', abstractsPhp.join(', '));
+
+// --- Step 2: declaration order (shared classes only) ---
+const jsIndex = new Map();
+jn.forEach((name, i) => {
+    if (!jsIndex.has(name)) jsIndex.set(name, i);
+});
+const sharedInPhpOrder = [...new Set(pn)].filter((n) => jsSet.has(n));
+let inversions = 0;
+let pairs = 0;
+for (let i = 0; i < sharedInPhpOrder.length; i++) {
+    for (let j = i + 1; j < sharedInPhpOrder.length; j++) {
+        const a = sharedInPhpOrder[i];
+        const b = sharedInPhpOrder[j];
+        pairs++;
+        if (jsIndex.get(a) > jsIndex.get(b)) inversions++;
+    }
+}
+console.log('');
+console.log('Step 2 (order): shared class names PHP∩JS:', sharedInPhpOrder.length);
+console.log(
+    '  Pairwise order vs lean.js (0 = JS matches PHP order):',
+    inversions,
+    'inversions of',
+    pairs,
+    `(~${pairs ? ((100 * inversions) / pairs).toFixed(1) : 0}% inverted)`,
+);
+console.log('  Note: high inversion rate is expected (JS groups by role; README Option B).');

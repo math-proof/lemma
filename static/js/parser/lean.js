@@ -1053,6 +1053,16 @@ export class LeanArgsCommaSeparated extends LeanArgs {
         return Array(this.args.length).fill('%s').join(', ');
     }
 
+    /** PHP `LeanArgsCommaSeparated::tokens_comma_separated` (php/parser/lean.php ~6785–6794). */
+    tokens_comma_separated() {
+        const tokens = [];
+        for (const arg of this.args) {
+            if (arg instanceof LeanToken) tokens.push(arg);
+            else if (arg instanceof LeanAngleBracket) tokens.push(...arg.tokens_comma_separated());
+        }
+        return tokens;
+    }
+
     /**
      * When this is the GetElem index (e.g. A[i, i+1-l:n⊓i+u]), use stack_priority 18 so the
      * slice `:` creates LeanColon inside the index instead of bubbling to the lemma colon.
@@ -1706,9 +1716,45 @@ export class LeanBitwiseXor extends LeanBinary {
     static input_priority = 60;
 }
 
-/** PHP `LeanBitOr` (php/parser/lean.php ~3199+). */
+/** PHP `LeanBitOr` (php/parser/lean.php ~3199–3288). */
 export class LeanBitOr extends LeanBinary {
     static input_priority = 47;
+
+    /** PHP `LeanBitOr::tokens_bar_separated` (php/parser/lean.php ~3236–3247). */
+    tokens_bar_separated() {
+        const tokens = [];
+        for (const arg of this.args) {
+            if (arg instanceof LeanBitOr) tokens.push(...arg.tokens_bar_separated());
+            else if (arg instanceof LeanAngleBracket) tokens.push(arg.tokens_comma_separated());
+            else tokens.push(arg);
+        }
+        return tokens;
+    }
+
+    /** PHP `LeanBitOr::unique_token` (php/parser/lean.php ~3250–3286). */
+    unique_token(indent) {
+        let tokens = this.tokens_bar_separated();
+        tokens = tokens.map((t) =>
+            Array.isArray(t) ? t.filter((x) => x.text !== 'rfl') : t,
+        );
+        const key = (t) =>
+            t instanceof LeanToken ? t.text : t.map((x) => x.text).join(',');
+        const keys = tokens.map(key);
+        if (new Set(keys).size !== 1) return;
+        let tok = tokens[0];
+        if (Array.isArray(tok) && tok.length === 1) tok = tok[0];
+        if (Array.isArray(tok)) {
+            const mapped = tok.map((x) => {
+                const c = x.clone();
+                c.indent = indent;
+                return c;
+            });
+            return new LeanArgsCommaSeparated(mapped, indent, 0);
+        }
+        const c = tok.clone();
+        c.indent = indent;
+        return c;
+    }
 }
 
 /** PHP `LeanBitwiseOr` (php/parser/lean.php ~3291+). */
@@ -2116,6 +2162,11 @@ export class LeanBy extends LeanUnary {
             return c;
         }
         if (this.parent) return this.parent.insert_semicolon(this);
+    }
+
+    /** PHP `LeanBy::echo` (php/parser/lean.php ~7482–7485). */
+    echo() {
+        this.arg?.echo?.();
     }
 }
 
@@ -3954,6 +4005,13 @@ class LeanAngleBracket extends LeanPairedGroup {
     latexFormat() {
         return '\\langle {%s} \\rangle';
     }
+
+    /** PHP `LeanAngleBracket::tokens_comma_separated` (php/parser/lean.php ~1835–1843). */
+    tokens_comma_separated() {
+        const a = this.arg;
+        if (a instanceof LeanArgsCommaSeparated) return a.tokens_comma_separated();
+        return [a];
+    }
 }
 
 /** PHP `LeanAbs` (php/parser/lean.php ~1939–1962). */
@@ -4387,6 +4445,131 @@ class LeanTacticBlock extends LeanUnary {
     }
 }
 
+/**
+ * PHP `LeanSequentialTacticCombinator` (php/parser/lean.php ~7952–8068): unary `·` / `<;>` combinator.
+ * @extends {LeanUnary}
+ */
+export class LeanSequentialTacticCombinator extends LeanUnary {
+    /**
+     * @param {Lean} arg
+     * @param {number} indent
+     * @param {number} level
+     * @param {boolean} [newline]
+     */
+    constructor(arg, indent, level, newline = false) {
+        super(arg, indent, level);
+        /** @type {boolean} */
+        this.newline = !!newline;
+    }
+
+    get operator() {
+        return '<;>';
+    }
+
+    get command() {
+        return '<;>';
+    }
+
+    /** @param {Record<string, unknown>} [_syntax] */
+    echo() {
+        let arg = this.arg;
+        if (arg instanceof LeanTacticBlock) {
+            arg.echo?.();
+            return;
+        }
+        if (arg.indent > 0) {
+            const indent = arg.indent;
+            const level = arg.level;
+            const echo = new LeanTactic('echo', new LeanToken('⊢', indent, level), indent, level);
+            const parentTactic = this.parent;
+            if (
+                parentTactic instanceof LeanTactic &&
+                parentTactic.tacticName === 'by_cases' &&
+                parentTactic.has_tactic_block_followed?.()
+            ) {
+                let a = arg;
+                let stc;
+                while ((stc = a.sequential_tactic_combinator) && stc.arg?.indent) a = stc;
+                a.push(new LeanSequentialTacticCombinator(echo, indent, level, true));
+            } else {
+                echo.push(new LeanSequentialTacticCombinator(arg, indent, level, this.newline));
+                this.arg = echo;
+                arg.echo?.();
+            }
+        }
+    }
+
+    getEcho() {
+        if (this.newline) {
+            const e = this.arg;
+            if (e instanceof LeanTactic && e.tacticName === 'echo') return e;
+        }
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret instanceof LeanCaret && caret === this.arg) {
+            if (next === '·' || next === '.') {
+                if (indent === this.indent) {
+                    caret.indent = indent;
+                    return caret;
+                }
+            } else {
+                let ind = indent;
+                if (ind > this.indent) ind = this.indent + 2;
+                else ind = this.indent;
+                caret.indent = ind;
+                return caret;
+            }
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    insert_tactic(caret, type) {
+        if (caret instanceof LeanCaret) {
+            this.arg = new LeanTactic(type, caret, caret.indent, caret.level);
+            return caret;
+        }
+        throw new Error(`LeanSequentialTacticCombinator.insert_tactic: unexpected`);
+    }
+
+    is_indented() {
+        return !!this.newline;
+    }
+
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+
+    sep() {
+        return this.arg instanceof LeanTacticBlock || (this.arg.indent > 0 && !this.newline) ? '\n' : ' ';
+    }
+
+    set_line(line) {
+        this.line = line;
+        if (this.arg instanceof LeanTacticBlock || this.arg.indent >= this.indent) line++;
+        return this.arg.set_line(line);
+    }
+
+    /**
+     * @param {Record<string, unknown>} [syntax]
+     * @returns {Lean[]}
+     */
+    split(syntax) {
+        if (!this.newline) return [this];
+        const arg = this.arg;
+        const args = arg.split(syntax);
+        const self = this.clone();
+        self.arg = args[0];
+        args[0] = self;
+        return args;
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `${this.operator}${sep}%s`;
+    }
+}
+
 export class LeanTactic extends LeanUnary {
     /**
      * @param {string} name
@@ -4397,6 +4580,53 @@ export class LeanTactic extends LeanUnary {
     constructor(name, arg, indent, level) {
         super(arg, indent, level);
         this.tacticName = name;
+        /** @type {boolean | undefined} PHP `$only` */
+        this.only = undefined;
+    }
+
+    /** PHP `$this->func` */
+    get func() {
+        return this.tacticName;
+    }
+
+    get modifiers() {
+        return this.args.slice(1);
+    }
+
+    _lastOf(Cls) {
+        for (let i = this.args.length - 1; i >= 0; i--) {
+            if (this.args[i] instanceof Cls) return this.args[i];
+        }
+    }
+
+    get at() {
+        return this._lastOf(LeanAt);
+    }
+
+    get with() {
+        return this._lastOf(LeanWith);
+    }
+
+    get sequential_tactic_combinator() {
+        return this._lastOf(LeanSequentialTacticCombinator);
+    }
+
+    set sequential_tactic_combinator(val) {
+        for (let i = this.args.length - 1; i >= 0; i--) {
+            if (this.args[i] instanceof LeanSequentialTacticCombinator) {
+                this.args[i] = val;
+                val.parent = this;
+                return;
+            }
+        }
+    }
+
+    get by() {
+        return this._lastOf(LeanBy);
+    }
+
+    get arrow() {
+        return this._lastOf(LeanRightarrow);
     }
 
     /**
@@ -4482,14 +4712,18 @@ export class LeanTactic extends LeanUnary {
         return super.insert_semicolon(caret);
     }
 
-    /** PHP `LeanTactic::strFormat` (php/parser/lean.php ~7053–7066): "func" + sep + "%s" for each arg. */
+    /** PHP `LeanTactic::strFormat` (php/parser/lean.php ~7450–7464). */
     strFormat() {
-        const func = this.tacticName;
+        let func = this.tacticName;
+        if (this.only) func += ' only';
         const parts = [];
         for (const arg of this.args) {
             if (arg instanceof LeanCaret) continue;
-            parts.push(arg?.constructor?.name === 'LeanSequentialTacticCombinator' &&
-                /** @type {*} */ (arg).newline ? '\n' : ' ');
+            parts.push(
+                arg?.constructor?.name === 'LeanSequentialTacticCombinator' && /** @type {*} */ (arg).newline
+                    ? '\n'
+                    : ' ',
+            );
             parts.push('%s');
         }
         return func + parts.join('');
@@ -4514,8 +4748,341 @@ export class LeanTactic extends LeanUnary {
         return line;
     }
 
+    /** PHP `LeanTactic::has_tactic_block_followed` (php/parser/lean.php ~7217–7231). */
+    has_tactic_block_followed() {
+        const p = this.parent;
+        if (!(p instanceof LeanStatements)) return;
+        const stmts = p.args;
+        const idx = stmts.indexOf(this);
+        if (idx < 0) return;
+        for (let i = idx + 1; i < stmts.length; i++) {
+            const stmt = stmts[i];
+            if (stmt instanceof LeanTacticBlock) return true;
+            if (!stmt.is_comment()) break;
+        }
+    }
+
     /**
-     * Port of `LeanTactic::getEcho` (php/parser/lean.php ~6985–6991).
+     * PHP `LeanTactic::get_echo_token` (php/parser/lean.php ~7054–7215).
+     * @returns {Lean | Lean[] | undefined}
+     */
+    get_echo_token() {
+        const at = this.at;
+        if (at) {
+            let token = at.arg;
+            if (this.tacticName === 'split') {
+                if (this.has_tactic_block_followed()) return;
+            } else {
+                if (token instanceof LeanArgsSpaceSeparated) {
+                    token = new LeanArgsCommaSeparated(
+                        token.args.map((a) => a.clone()),
+                        this.indent,
+                        token.level,
+                    );
+                }
+            }
+            return token;
+        }
+        let token = [];
+        let turnstile = '⊢';
+        const arg = this.arg;
+        switch (this.tacticName) {
+            case 'intro':
+            case 'by_contra':
+                if (arg instanceof LeanToken) token.push(arg.clone());
+                else if (arg instanceof LeanArgsSpaceSeparated) {
+                    for (const a of arg.tokens_space_separated()) {
+                        if (a instanceof LeanToken) token.push(a.clone());
+                        else if (Array.isArray(a)) for (const x of a) token.push(x.clone());
+                    }
+                } else if (arg instanceof LeanAngleBracket) {
+                    const inner = arg.arg;
+                    if (inner instanceof LeanToken) token.push(inner.clone());
+                    else if (inner instanceof LeanArgsCommaSeparated)
+                        token = inner.args.map((x) => x.clone());
+                }
+                break;
+            case 'denote':
+            case "denote'":
+                if (arg instanceof LeanColon) {
+                    const v = arg.lhs;
+                    if (v instanceof LeanToken) token.push(v.clone());
+                }
+                turnstile = null;
+                break;
+            case 'by_cases':
+                if (arg instanceof LeanColon) {
+                    const v = arg.lhs;
+                    if (v instanceof LeanToken) {
+                        if (this.has_tactic_block_followed()) return;
+                        token.push(v.clone());
+                    }
+                }
+                break;
+            case 'split_ifs': {
+                const w = this.with;
+                if (w && w.sep() === ' ') {
+                    if (this.has_tactic_block_followed()) return;
+                    const toks = w.tokens_space_separated();
+                    if (toks.length) token.push(toks[0].clone());
+                }
+                break;
+            }
+            case "cases'": {
+                const w = this.with;
+                if (w && w.sep() === ' ' && this.sequential_tactic_combinator) {
+                    const ut = w.unique_token(this.indent);
+                    if (ut) token.push(ut);
+                }
+                break;
+            }
+            case 'injection': {
+                const w = this.with;
+                if (w && w.sep() === ' ') {
+                    let v = w.args[0];
+                    if (v instanceof LeanArgsSpaceSeparated) token = v.args;
+                    else token = [v];
+                    turnstile = null;
+                }
+                break;
+            }
+            case 'rcases': {
+                const w = this.with;
+                const bars = w?.tokens_bar_separated?.();
+                if (w && bars?.length) {
+                    if (this.has_tactic_block_followed()) return;
+                    for (const br of bars) {
+                        if (Array.isArray(br))
+                            token.push(...br.filter((t) => t.text !== 'rfl'));
+                        else if (br.text !== 'rfl') token.push(br);
+                        break;
+                    }
+                }
+                break;
+            }
+            case 'obtain': {
+                const assign = arg;
+                if (assign instanceof LeanAssign) {
+                    const lhs = assign.lhs;
+                    if (lhs instanceof LeanAngleBracket) {
+                        for (const t of lhs.tokens_comma_separated()) {
+                            if (t.text !== 'rfl') token.push(t);
+                        }
+                    } else if (lhs instanceof LeanBitOr) {
+                        if (this.has_tactic_block_followed()) return;
+                        for (const br of lhs.tokens_bar_separated()) {
+                            if (Array.isArray(br))
+                                token.push(...br.filter((t) => t.text !== 'rfl'));
+                            else if (br.text !== 'rfl') token.push(br);
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+            case 'specialize': {
+                let a = arg;
+                if (a instanceof LeanArgsSpaceSeparated && (a = a.args[0]) instanceof LeanToken) token.push(a.clone());
+                turnstile = null;
+                break;
+            }
+            case 'contrapose':
+            case 'contrapose!':
+                if (arg instanceof LeanToken) token.push(arg.clone());
+                break;
+            case 'sorry':
+            case 'echo':
+                return;
+            case 'try':
+                if (arg instanceof LeanTactic && arg.tacticName === 'echo') return;
+                break;
+            default:
+                break;
+        }
+        if (this.has_tactic_block_followed() || this.parent instanceof LeanSequentialTacticCombinator);
+        else if (turnstile) token.push(new LeanToken(turnstile, this.indent, this.level));
+        if (token.length === 0) return;
+        if (token.length === 1) return token[0];
+        return new LeanArgsCommaSeparated(token, this.indent, this.level);
+    }
+
+    /** PHP `LeanTactic::echo` (php/parser/lean.php ~7021–7043). */
+    echo() {
+        const tok = this.get_echo_token();
+        const stc = this.sequential_tactic_combinator;
+        const hasStc = stc && stc.arg?.indent;
+        if (tok) {
+            const echo = new LeanTactic('echo', tok, this.indent, this.level);
+            if (tok instanceof LeanToken && tok.text === '*') return [1, echo, this];
+            const by = this.by;
+            if (by && by.arg instanceof LeanStatements) by.echo?.();
+            if (hasStc && stc.newline) {
+                echo.push(stc);
+                this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, true);
+                stc.echo?.();
+                return;
+            }
+            return [1, this, echo];
+        }
+        if (hasStc) stc.echo?.();
+        else {
+            const block = this.repeat_block();
+            if (block) block.echo?.();
+        }
+    }
+
+    insert_only(caret) {
+        if (caret !== this.args[this.args.length - 1]) {
+            throw new Error(`LeanTactic.insert_only: unexpected for ${this.constructor.name}`);
+        }
+        this.only = true;
+        return caret;
+    }
+
+    insert_sequential_tactic_combinator(caret, nextToken) {
+        const last = this.args[this.args.length - 1];
+        if (caret !== last) {
+            throw new Error(`LeanTactic.insert_sequential_tactic_combinator: unexpected for ${this.constructor.name}`);
+        }
+        if (caret instanceof LeanCaret) {
+            this.replace(
+                caret,
+                new LeanSequentialTacticCombinator(caret, this.indent, caret.level, nextToken !== '\n'),
+            );
+            return caret;
+        }
+        const ph = new LeanCaret(0, 0);
+        this.push(new LeanSequentialTacticCombinator(ph, this.indent, ph.level));
+        return ph;
+    }
+
+    insert_tactic(caret, type) {
+        const last = this.args[this.args.length - 1];
+        if (last !== caret || !(caret instanceof LeanCaret)) {
+            throw new Error(`LeanTactic.insert_tactic: unexpected for ${this.constructor.name}`);
+        }
+        if (this.is_inline_tactic_block()) {
+            this.replace(caret, new LeanTactic(type, caret, this.indent, caret.level));
+            return caret;
+        }
+        return this.insert_word(caret, type);
+    }
+
+    /** PHP `LeanTactic::is_indented` (php/parser/lean.php ~7333–7336). */
+    is_indented() {
+        const p = this.parent;
+        if (!p) return true;
+        if (p instanceof LeanStatements || p instanceof LeanIte) return true;
+        if (p instanceof LeanSequentialTacticCombinator) {
+            return this.indent >= p.indent && !p.newline;
+        }
+        return false;
+    }
+
+    jsonSerialize() {
+        return {
+            [this.tacticName]: this.arg.jsonSerialize?.() ?? this.arg,
+            only: this.only,
+            modifiers: this.modifiers.map((m) => m.jsonSerialize?.() ?? m),
+        };
+    }
+
+    latexFormat() {
+        let func = escapeSpecialsForLatex(this.tacticName);
+        if (this.only) func += '\\ only';
+        const color = this.tacticName === 'sorry' ? '708' : '00f';
+        func = `{\\color{#${color}}${func}}`;
+        if (!(this.arg instanceof LeanCaret)) func += '\\ ';
+        return func + Array(this.args.length).fill('%s').join('\\ ');
+    }
+
+    relocateLastComment() {
+        const a = this.args[this.args.length - 1];
+        if (a instanceof LeanRightarrow || a instanceof LeanWith) a.relocateLastComment?.();
+    }
+
+    repeat_block() {
+        if (this.tacticName === 'repeat') {
+            const brace = this.arg;
+            if (brace instanceof LeanBrace) {
+                const block = brace.arg;
+                if (block instanceof LeanStatements) return block;
+            }
+        }
+    }
+
+    /**
+     * PHP `LeanTactic::split` (php/parser/lean.php ~7388–7447).
+     * @param {Record<string, unknown>} [syntax]
+     * @returns {Lean[]}
+     */
+    split(syntax) {
+        if (!syntax) syntax = {};
+        syntax[this.tacticName] = true;
+        const w = this.with;
+        if (w && w.sep() === '\n') {
+            const self = this.clone();
+            if (self.with) self.with.args = [];
+            const statements = [self];
+            for (const stmt of w.args) statements.push(...stmt.split(syntax));
+            return statements;
+        }
+        const stc = this.sequential_tactic_combinator;
+        if (stc) {
+            let block = stc.arg;
+            if (block instanceof LeanTacticBlock) {
+                if (block.arg instanceof LeanStatements) {
+                    const self = this.clone();
+                    const inner = self.sequential_tactic_combinator.arg;
+                    const stmts = inner.arg;
+                    inner.arg = new LeanCaret(0, 0);
+                    const statements = [self];
+                    stmts.swap_echo_star?.(syntax, statements);
+                    return statements;
+                }
+            } else if (
+                (block instanceof LeanTactic || block?.constructor?.name === 'Lean_have' || block?.constructor?.name === 'Lean_let') &&
+                block.indent >= this.indent
+            ) {
+                const self = this.clone();
+                if (stc.newline) {
+                    block = self.sequential_tactic_combinator;
+                    const la = self.args[self.args.length - 1];
+                    if (la instanceof LeanSequentialTacticCombinator) self.args.pop();
+                } else {
+                    block = self.sequential_tactic_combinator.arg;
+                    self.sequential_tactic_combinator.arg = new LeanCaret(0, 0);
+                }
+                const arr = [self];
+                arr.push(...block.split(syntax));
+                return arr;
+            }
+        } else {
+            const rb = this.repeat_block();
+            if (rb) {
+                const self = this.clone();
+                self.arg = new LeanBrace(new LeanCaret(this.indent, this.level), this.indent, this.level);
+                const arr = [self];
+                for (const stmt of rb.args) arr.push(...stmt.split(syntax));
+                const rbrace = new LeanBrace(new LeanCaret(this.indent, this.level), this.indent, this.level);
+                rbrace.is_closed = false;
+                arr.push(rbrace);
+                return arr;
+            }
+        }
+        const by = this.by;
+        if (by && by.arg instanceof LeanStatements) {
+            const self = this.clone();
+            self.by.arg = new LeanCaret(by.indent, by.level);
+            const statements = [self];
+            by.arg.swap_echo_star?.(syntax, statements);
+            return statements;
+        }
+        return [this];
+    }
+
+    /**
+     * Port of `LeanTactic::getEcho` (php/parser/lean.php ~7046–7052).
      * @returns {LeanTactic | undefined}
      */
     getEcho() {
@@ -4523,8 +5090,6 @@ export class LeanTactic extends LeanUnary {
         if (this.tacticName === 'try' && this.arg instanceof LeanTactic && this.arg.tacticName === 'echo') return this.arg;
     }
 }
-
-export class LeanSequentialTacticCombinator extends LeanArgs {}
 
 /** Placeholders for instanceof checks in parse */
 export class LeanIte extends LeanArgs {}
