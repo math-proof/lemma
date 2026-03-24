@@ -30,6 +30,7 @@ Presets (see php/parser/README.md):
   leanpospart     — class LeanPosPart
   leannegpart     — class LeanNegPart
   leansqrt        — class Lean_sqrt
+  leansquare      — class LeanSquare
   leandiv         — class LeanDiv
   leanbitor       — class LeanBitOr
   leantoken       — class LeanToken (data members first, then sorted methods)
@@ -157,6 +158,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leansqrt": (
         "class Lean_sqrt extends LeanUnaryArithmeticPre\n{",
         "\n}\n\nclass LeanSquare extends LeanUnaryArithmeticPost",
+    ),
+    "leansquare": (
+        "class LeanSquare extends LeanUnaryArithmeticPost\n{",
+        "\n}\n\nclass LeanCubicRoot extends LeanUnaryArithmeticPre",
     ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",

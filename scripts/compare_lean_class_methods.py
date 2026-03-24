@@ -122,6 +122,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class Lean_sqrt extends LeanUnaryArithmeticPre\n{",
         "\n}\n\nclass LeanSquare extends LeanUnaryArithmeticPost",
     ),
+    "leansquare": (
+        "class LeanSquare extends LeanUnaryArithmeticPost\n{",
+        "\n}\n\nclass LeanCubicRoot extends LeanUnaryArithmeticPre",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",

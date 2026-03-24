@@ -3739,14 +3739,16 @@ class Lean_sqrt extends LeanUnaryArithmeticPre
 class LeanSquare extends LeanUnaryArithmeticPost
 {
     public static $input_priority = 66; //LeanAdd::$input_priority + 1;
-    public function strFormat()
+    public function __get($vname)
     {
-        return "%s$this->operator";
-    }
-
-    public function latexFormat()
-    {
-        return "{%s}$this->command";
+        switch ($vname) {
+            case 'operator':
+                return '²';
+            case 'command':
+                return '^2';
+            default:
+                return parent::__get($vname);
+        }
     }
     public function latexArgs(&$syntax = null)
     {
@@ -3760,17 +3762,15 @@ class LeanSquare extends LeanUnaryArithmeticPost
         return [$arg];
     }
 
-    public function __get($vname)
+    public function latexFormat()
     {
-        switch ($vname) {
-            case 'operator':
-                return '²';
-            case 'command':
-                return '^2';
-            default:
-                return parent::__get($vname);
-        }
+        return "{%s}$this->command";
     }
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+
 }
 
 class LeanCubicRoot extends LeanUnaryArithmeticPre
