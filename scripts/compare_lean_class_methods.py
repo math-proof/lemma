@@ -254,6 +254,30 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanIte extends LeanArgs\n{",
         "\n}\n\nclass LeanArgsSpaceSeparated extends LeanArgs",
     ),
+    "leanargsspaceseparated": (
+        "class LeanArgsSpaceSeparated extends LeanArgs\n{",
+        "\n}\n\nclass LeanArgsNewLineSeparated extends LeanArgs",
+    ),
+    "leanargsnewlineseparated": (
+        "class LeanArgsNewLineSeparated extends LeanArgs\n{",
+        "\n}\n\nclass LeanArgsIndented extends LeanBinary",
+    ),
+    "leanargsindented": (
+        "class LeanArgsIndented extends LeanBinary\n{",
+        "\n}\n\nclass LeanArgsCommaSeparated extends LeanArgs",
+    ),
+    "leanargscommaseparated": (
+        "class LeanArgsCommaSeparated extends LeanArgs\n{",
+        "\n}\n\nclass LeanArgsSemicolonSeparated extends LeanArgs",
+    ),
+    "leanargssemicolonseparated": (
+        "class LeanArgsSemicolonSeparated extends LeanArgs\n{",
+        "\n}\n\nclass LeanArgsCommaNewLineSeparated extends LeanArgs",
+    ),
+    "leanargscommanewlineseparated": (
+        "class LeanArgsCommaNewLineSeparated extends LeanArgs\n{",
+        "\n}\n\nabstract class LeanSyntax extends LeanArgs",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -315,6 +339,8 @@ SEGMENT_SPLIT_PRESETS = frozenset(
         "leangotelemquote",
         "leanlnot",
         "leannot",
+        "leanargsnewlineseparated",
+        "leanargscommanewlineseparated",
         "leanstatements",
         "leantoken",
     }
