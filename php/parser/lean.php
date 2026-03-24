@@ -2126,15 +2126,84 @@ abstract class LeanBinary extends LeanArgs
 class LeanProperty extends LeanBinary
 {
     public static $input_priority = 81; // LeanPow::$input_priority + 1
-    public function push_attr($caret)
+    public function __get($vname)
     {
-        return parent::push_attr($caret);
+        switch ($vname) {
+            case 'stack_priority':
+                return 87;
+            case 'operator':
+            case 'command':
+                return '.';
+            default:
+                return parent::__get($vname);
+        }
     }
 
-    public function sep()
-    {
-        return '';
+    public function equals($other) {
+        if ($other instanceof LeanProperty)
+            return $this->lhs->equals($other->lhs) && $this->rhs->equals($other->rhs);
     }
+
+    public function insert($caret, $func, $type)
+    {
+        if ($this->rhs === $caret) {
+            if ($caret instanceof LeanCaret) {
+                if (str_starts_with($func, 'Lean_'))
+                    $caret = $this->insert_word($caret, substr($func, 5));
+            } elseif ($type == 'modifier') {
+                return $this->parent->insert($this, $func, $type);
+            } else {
+                $caret = new LeanCaret($this->indent, $caret->level);
+                $this->parent->replace(
+                    $this,
+                    new LeanArgsSpaceSeparated(
+                        [
+                            $this,
+                            new $func($caret, $caret->indent, $caret->level)
+                        ],
+                        $this->indent, $caret->level
+                    )
+                );
+            }
+            return $caret;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function insert_left($caret, $func, $prev_token = '')
+    {
+        if ($func == 'LeanDoubleAngleQuotation')
+            return $caret->push_left($func, $prev_token);
+        if ($this->parent)
+            return $this->parent->insert_left($this, $func, $prev_token);
+    }
+
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($this->parent instanceof LeanTactic && $indent > $this->indent)
+            return $this->parent->push_args_indented($indent, $newline_count, false);
+        return $this->parent->insert_newline($this, $newline_count, $indent, $next);
+    }
+
+    public function insert_tactic($caret, $token)
+    {
+        return $this->insert_word($caret, $token);
+    }
+
+    public function insert_unary($caret, $func)
+    {
+        if ($this->parent)
+            return $this->parent->insert_unary($this, $func);
+    }
+
+    public function insert_word($caret, $word)
+    {
+        if ($caret instanceof LeanCaret)
+            return parent::insert_word($caret, $word);
+        if ($this->parent)
+            return $this->parent->insert_word($this, $word);
+    }
+
     public function is_indented()
     {
         $parent = $this->parent;
@@ -2144,11 +2213,19 @@ class LeanProperty extends LeanBinary
             ($parent instanceof LeanIte && $parent->else === $this);
     }
 
-    public function strFormat()
+    public function isProp($vars)
     {
-        return "%s$this->operator%s";
+        $rhs = $this->rhs;
+        if ($rhs instanceof LeanToken) {
+            switch ($rhs->text) {
+                case 'Infinite':
+                case 'Infinitesimal':
+                case 'InfinitePos':
+                case 'InfiniteNeg':
+                    return true;
+            }
+        }
     }
-
     public function is_space_separated()
     {
         $rhs = $this->rhs;
@@ -2162,6 +2239,45 @@ class LeanProperty extends LeanBinary
                     return true;
             }
         }
+    }
+    public function latexArgs(&$syntax = null)
+    {
+        [$lhs, $rhs] = $this->args;
+        if ($rhs instanceof LeanToken) {
+            switch ($rhs->text) {
+                case 'exp':
+                    $arg = '%s';
+                    if ($lhs instanceof LeanToken) {
+                        switch ($lhs->text) {
+                            case 'Real':
+                            case 'Complex':
+                            case 'Exp':
+                                $arg = null;
+                        }
+                    }
+                    if ($arg) {
+                        $exponent = $this->lhs;
+                        if ($exponent instanceof LeanParenthesis) {
+                            $exponent = $exponent->arg;
+                        }
+                        return [$exponent->toLatex($syntax)];
+                    }
+                    break;
+                case 'cos':
+                case 'sin':
+                case 'tan':
+                case 'log':
+                case 'fmod':
+                    return [$this->lhs->toLatex($syntax)];
+                case 'card':
+                    if (!($this->lhs instanceof LeanToken && $this->parent instanceof LeanArgsSpaceSeparated && $this->parent->args[0] === $this))
+                        return [$this->lhs->toLatex($syntax)];
+                case 'softmax':
+                    $syntax['softmax'] = true;
+                    break;
+            }
+        }
+        return parent::latexArgs($syntax);
     }
     public function latexFormat()
     {
@@ -2203,72 +2319,9 @@ class LeanProperty extends LeanBinary
         return "{%s}$this->command{%s}";
     }
 
-    public function latexArgs(&$syntax = null)
+    public function push_attr($caret)
     {
-        [$lhs, $rhs] = $this->args;
-        if ($rhs instanceof LeanToken) {
-            switch ($rhs->text) {
-                case 'exp':
-                    $arg = '%s';
-                    if ($lhs instanceof LeanToken) {
-                        switch ($lhs->text) {
-                            case 'Real':
-                            case 'Complex':
-                            case 'Exp':
-                                $arg = null;
-                        }
-                    }
-                    if ($arg) {
-                        $exponent = $this->lhs;
-                        if ($exponent instanceof LeanParenthesis) {
-                            $exponent = $exponent->arg;
-                        }
-                        return [$exponent->toLatex($syntax)];
-                    }
-                    break;
-                case 'cos':
-                case 'sin':
-                case 'tan':
-                case 'log':
-                case 'fmod':
-                    return [$this->lhs->toLatex($syntax)];
-                case 'card':
-                    if (!($this->lhs instanceof LeanToken && $this->parent instanceof LeanArgsSpaceSeparated && $this->parent->args[0] === $this))
-                        return [$this->lhs->toLatex($syntax)];
-                case 'softmax':
-                    $syntax['softmax'] = true;
-                    break;
-            }
-        }
-        return parent::latexArgs($syntax);
-    }
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'stack_priority':
-                return 87;
-            case 'operator':
-            case 'command':
-                return '.';
-            default:
-                return parent::__get($vname);
-        }
-    }
-
-    public function insert_left($caret, $func, $prev_token = '')
-    {
-        if ($func == 'LeanDoubleAngleQuotation')
-            return $caret->push_left($func, $prev_token);
-        if ($this->parent)
-            return $this->parent->insert_left($this, $func, $prev_token);
-    }
-
-    public function insert_word($caret, $word)
-    {
-        if ($caret instanceof LeanCaret)
-            return parent::insert_word($caret, $word);
-        if ($this->parent)
-            return $this->parent->insert_word($this, $word);
+        return parent::push_attr($caret);
     }
 
     public function push_token($word)
@@ -2277,11 +2330,6 @@ class LeanProperty extends LeanBinary
         $new = new LeanToken($word, $this->indent, $level);
         $this->parent->replace($this, new LeanArgsSpaceSeparated([$this, $new], $this->indent, $level));
         return $new;
-    }
-
-    public function insert_tactic($caret, $token)
-    {
-        return $this->insert_word($caret, $token);
     }
 
     public function regexp()
@@ -2293,63 +2341,15 @@ class LeanProperty extends LeanBinary
         return $regexp;
     }
 
-    public function insert_unary($caret, $func)
+    public function sep()
     {
-        if ($this->parent)
-            return $this->parent->insert_unary($this, $func);
+        return '';
+    }
+    public function strFormat()
+    {
+        return "%s$this->operator%s";
     }
 
-    public function insert($caret, $func, $type)
-    {
-        if ($this->rhs === $caret) {
-            if ($caret instanceof LeanCaret) {
-                if (str_starts_with($func, 'Lean_'))
-                    $caret = $this->insert_word($caret, substr($func, 5));
-            } elseif ($type == 'modifier') {
-                return $this->parent->insert($this, $func, $type);
-            } else {
-                $caret = new LeanCaret($this->indent, $caret->level);
-                $this->parent->replace(
-                    $this,
-                    new LeanArgsSpaceSeparated(
-                        [
-                            $this,
-                            new $func($caret, $caret->indent, $caret->level)
-                        ],
-                        $this->indent, $caret->level
-                    )
-                );
-            }
-            return $caret;
-        }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-
-    public function insert_newline($caret, $newline_count, $indent, $next)
-    {
-        if ($this->parent instanceof LeanTactic && $indent > $this->indent)
-            return $this->parent->push_args_indented($indent, $newline_count, false);
-        return $this->parent->insert_newline($this, $newline_count, $indent, $next);
-    }
-
-    public function equals($other) {
-        if ($other instanceof LeanProperty)
-            return $this->lhs->equals($other->lhs) && $this->rhs->equals($other->rhs);
-    }
-
-    public function isProp($vars)
-    {
-        $rhs = $this->rhs;
-        if ($rhs instanceof LeanToken) {
-            switch ($rhs->text) {
-                case 'Infinite':
-                case 'Infinitesimal':
-                case 'InfinitePos':
-                case 'InfiniteNeg':
-                    return true;
-            }
-        }
-    }
 }
 
 class LeanColon extends LeanBinary
