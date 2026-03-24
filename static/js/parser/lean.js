@@ -137,6 +137,11 @@ export class Lean extends IndentedNode {
         return [this];
     }
 
+    /** PHP `Lean::regexp` (php/parser/lean.php ~904–906). */
+    regexp() {
+        return [];
+    }
+
     /** Default: same as `strFormat` (php/parser/lean.php ~125–127). */
     latexFormat() {
         return this.strFormat();
@@ -3626,11 +3631,25 @@ class LeanCommand extends LeanUnary {
     static input_priority = 27;
 }
 
-/** PHP Lean_fun (php/parser/lean.php ~9019–9056): lambda "fun %s". */
-class Lean_fun extends LeanCommand {
+/** PHP `Lean_fun` extends `LeanUnary` (php/parser/lean.php ~9019–9056). */
+class Lean_fun extends LeanUnary {
     static input_priority = 18;
     get operator() {
         return 'fun';
+    }
+    get command() {
+        return '\\lambda';
+    }
+    is_indented() {
+        const p = this.parent;
+        return p instanceof LeanArgsNewLineSeparated || p instanceof LeanStatements;
+    }
+    jsonSerialize() {
+        const inner = this.arg?.jsonSerialize?.() ?? this.arg;
+        return { [this.operator]: inner };
+    }
+    latexFormat() {
+        return `${this.command}\\ %s`;
     }
     strFormat() {
         return `${this.operator} %s`;
