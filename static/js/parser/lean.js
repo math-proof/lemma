@@ -75,20 +75,7 @@ export const token2classname = Object.freeze({
 
 /** Lean identifier continuation token (supports Unicode letters like Ξ). */
 function isIdentContinueToken(s) {
-    return typeof s === 'string' && /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
-}
-
-/**
- * Same as PHP: `preg_match_all('/\w+|\W/u', $text)` flattened to token strings.
- * @param {string} text
- * @returns {string[]}
- */
-export function tokenize(text) {
-    const re = /\w+|\W/gu;
-    const out = [];
-    let m;
-    while ((m = re.exec(text)) !== null) out.push(m[0]);
-    return out;
+    return /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
 }
 
 /** Default input stack priority when a class omits `input_priority` (PHP uses per-class statics). */
@@ -2586,7 +2573,7 @@ export class LeanParser extends AbstractParser {
     build(text) {
         this.init();
         if (!text.endsWith('\n')) text += '\n';
-        this.tokens = tokenize(text);
+        this.tokens = Array.from(text.matchAll(/\w+|\W/gu), (m) => m[0]);
         const { tokens } = this;
         const length = tokens.length;
         this.start_idx = 0;
