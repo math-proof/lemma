@@ -61,6 +61,8 @@ Presets (see php/parser/README.md):
   leanleftarrow   — class Lean_leftarrow
   leanlnot        — class Lean_lnot (members-first: use + methods)
   leannot         — class LeanNot (members-first)
+  leanmatch       — class Lean_match
+  leanite         — class LeanIte
   leandiv         — class LeanDiv
   leanbitor       — class LeanBitOr
   leantoken       — class LeanToken (data members first, then sorted methods)
@@ -313,6 +315,14 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanNot extends LeanUnary\n{",
         "\n}\n\nclass Lean_match extends LeanArgs",
     ),
+    "leanmatch": (
+        "class Lean_match extends LeanArgs\n{",
+        "\n}\n\nclass LeanIte extends LeanArgs",
+    ),
+    "leanite": (
+        "class LeanIte extends LeanArgs\n{",
+        "\n}\n\nclass LeanArgsSpaceSeparated extends LeanArgs",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -342,7 +352,7 @@ MEMBERS_FIRST_PRESETS = frozenset(
 )
 
 pat = re.compile(
-    r"\n    ((?:abstract )?(?:public static |public |static )?function \w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
+    r"\n    ((?:abstract )?(?:public static |static public |public |static )?function \w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
     re.MULTILINE,
 )
 
@@ -351,6 +361,7 @@ MEMBER_HEAD = re.compile(
     r"\n    (?:"
     r"(?:public|protected|private)\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
     r"|(?:public\s+)?static\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
+    r"|static\s+public\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
     r"|(?:public|protected|private)\s+\$\w+"
     r"|static\s+\$\w+"
     r"|use\s+[\w\\]+(?:\s*,\s*[\w\\]+)*\s*;"
@@ -383,7 +394,7 @@ def reorder_class(text: str, marker_start: str, marker_end: str) -> str:
             raise ValueError(f"bad sig: {sig_line!r}")
         name = name_m.group(1)
         block = body[m.start() : matches[i + 1].start() if i + 1 < len(matches) else len(body)]
-        is_static = "static function" in sig_line
+        is_static = "public static function" in sig_line or "static public function" in sig_line
         methods.append((name, is_static, block))
     methods.sort(key=_sort_key)
     new_body = preamble + "".join(m[2] for m in methods)
@@ -400,7 +411,10 @@ def _method_meta(seg: str) -> tuple[str, bool]:
         raise ValueError(f"method segment without function name: {seg[:80]!r}")
     name = name_m.group(1)
     is_static = bool(
-        re.search(r"\n    (?:public\s+)?static\s+function\s+\w+", seg)
+        re.search(
+            r"\n    (?:(?:public\s+)?static\s+function|static\s+public\s+function)\s+\w+",
+            seg,
+        )
     )
     return name, is_static
 

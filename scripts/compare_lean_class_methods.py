@@ -246,6 +246,14 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanNot extends LeanUnary\n{",
         "\n}\n\nclass Lean_match extends LeanArgs",
     ),
+    "leanmatch": (
+        "class Lean_match extends LeanArgs\n{",
+        "\n}\n\nclass LeanIte extends LeanArgs",
+    ),
+    "leanite": (
+        "class LeanIte extends LeanArgs\n{",
+        "\n}\n\nclass LeanArgsSpaceSeparated extends LeanArgs",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -261,7 +269,7 @@ PRESETS: dict[str, tuple[str, str]] = {
 }
 
 SIG_RE = re.compile(
-    r"\n    ((?:abstract )?(?:public static |public |static )?function (\w+)\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
+    r"\n    ((?:abstract )?(?:public static |static public |public |static )?function (\w+)\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
     re.MULTILINE,
 )
 
@@ -269,6 +277,7 @@ MEMBER_HEAD = re.compile(
     r"\n    (?:"
     r"(?:public|protected|private)\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
     r"|(?:public\s+)?static\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
+    r"|static\s+public\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
     r"|(?:public|protected|private)\s+\$\w+"
     r"|static\s+\$\w+"
     r"|use\s+[\w\\]+(?:\s*,\s*[\w\\]+)*\s*;"

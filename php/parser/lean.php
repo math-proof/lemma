@@ -5785,53 +5785,6 @@ class Lean_match extends LeanArgs
         parent::__construct([$subject], $indent, $level, $parent);
     }
 
-    public function insert($caret, $func, $type)
-    {
-        if (!$this->with && $func == 'LeanWith') {
-            $caret = new LeanCaret($this->indent, $caret->level);
-            $with = new $func($caret, $this->indent, $caret->level);
-            $this->with = $with;
-            return $caret;
-        }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-
-    public function is_indented()
-    {
-        return true;
-    }
-
-    public function strFormat()
-    {
-        if ($this->with)
-            return "$this->operator %s %s";
-        return "$this->operator %s";
-    }
-
-    public function latexFormat()
-    {
-        if ($this->with) {
-            $cases = $this->with->args;
-            $cases = implode("\\\\", array_fill(0, count($cases), "%s"));
-            return "\\begin{cases} $cases \\end{cases}";
-        }
-        return "match\\ %s";
-    }
-    public function latexArgs(&$syntax = null)
-    {
-        $subject = $this->subject->toLatex($syntax);
-        if ($this->with) {
-            $cases = $this->with->args;
-            return array_map(function ($arg) use ($subject, &$syntax) {
-                $arg = $arg->arg;
-                $type = $arg->lhs->toLatex($syntax);
-                $value = $arg->rhs->toLatex($syntax);
-                return "{{$value}} & {\\color{blue}\\text{if}}\\ \\: $subject\\ =\\ $type";
-            }, $cases);
-        }
-        return [$subject];
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -5864,6 +5817,17 @@ class Lean_match extends LeanArgs
         $val->parent = $this;
     }
 
+    public function insert($caret, $func, $type)
+    {
+        if (!$this->with && $func == 'LeanWith') {
+            $caret = new LeanCaret($this->indent, $caret->level);
+            $with = new $func($caret, $this->indent, $caret->level);
+            $this->with = $with;
+            return $caret;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
     public function insert_comma($caret)
     {
         if ($caret === $this->subject) {
@@ -5875,18 +5839,57 @@ class Lean_match extends LeanArgs
             return $this->parent->insert_comma($this);
     }
 
-    public function relocate_last_comment()
-    {
-        $with = $this->with;
-        if ($with instanceof LeanWith)
-            $with->relocate_last_comment();
-    }
-
     public function insert_tactic($caret, $token)
     {
         if ($caret instanceof LeanCaret)
             return $this->insert_word($caret, $token);
         return parent::insert_tactic($caret, $token);
+    }
+
+    public function is_indented()
+    {
+        return true;
+    }
+
+    public function isProp($vars)
+    {
+        $cases = $this->with->args;
+        $case = $cases[0] ?? null;
+        if ($case instanceof LeanBar) {
+            $rightarrow = $case->arg;
+            if ($rightarrow instanceof LeanRightarrow)
+                return $rightarrow->rhs->isProp($vars);
+        }
+    }
+    public function latexArgs(&$syntax = null)
+    {
+        $subject = $this->subject->toLatex($syntax);
+        if ($this->with) {
+            $cases = $this->with->args;
+            return array_map(function ($arg) use ($subject, &$syntax) {
+                $arg = $arg->arg;
+                $type = $arg->lhs->toLatex($syntax);
+                $value = $arg->rhs->toLatex($syntax);
+                return "{{$value}} & {\\color{blue}\\text{if}}\\ \\: $subject\\ =\\ $type";
+            }, $cases);
+        }
+        return [$subject];
+    }
+
+    public function latexFormat()
+    {
+        if ($this->with) {
+            $cases = $this->with->args;
+            $cases = implode("\\\\", array_fill(0, count($cases), "%s"));
+            return "\\begin{cases} $cases \\end{cases}";
+        }
+        return "match\\ %s";
+    }
+    public function relocate_last_comment()
+    {
+        $with = $this->with;
+        if ($with instanceof LeanWith)
+            $with->relocate_last_comment();
     }
 
     public function split(&$syntax = null)
@@ -5902,30 +5905,91 @@ class Lean_match extends LeanArgs
         return [$this];
     }
 
-    public function isProp($vars)
+    public function strFormat()
     {
-        $cases = $this->with->args;
-        $case = $cases[0] ?? null;
-        if ($case instanceof LeanBar) {
-            $rightarrow = $case->arg;
-            if ($rightarrow instanceof LeanRightarrow)
-                return $rightarrow->rhs->isProp($vars);
-        }
+        if ($this->with)
+            return "$this->operator %s %s";
+        return "$this->operator %s";
     }
+
 }
 
 class LeanIte extends LeanArgs
 {
     public static $input_priority = 60;
-    public function insert_then($caret)
+    public function __get($vname)
     {
-        if (!$this->then) {
-            $caret = new LeanCaret($this->indent + 2, $caret->level);
-            $this->then = $caret;
-            return $caret;
+        switch ($vname) {
+            case 'stack_priority':
+                return 23;
+            case 'if':
+                return $this->args[0];
+            case 'then':
+                return $this->args[1] ?? null;
+            case 'else':
+                return $this->args[2] ?? null;
+            default:
+                return parent::__get($vname);
         }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
+
+    public function __set($vname, $val)
+    {
+        switch ($vname) {
+            case 'if':
+                $this->args[0] = $val;
+                break;
+            case 'then':
+                $this->args[1] = $val;
+                break;
+            case 'else':
+                $this->args[2] = $val;
+                break;
+            default:
+                parent::__set($vname, $val);
+                return;
+        }
+        $val->parent = $this;
+    }
+
+    public function echo()
+    {
+        [$if, $then, $else] = $this->args;
+        $token = null;
+        if ($if instanceof LeanColon && ($token = $if->args[0]) instanceof LeanToken);
+        if ($then)
+            $this->echo_then($token);
+        if ($else)
+            $this->echo_else($token);
+    }
+
+    public function echo_else($token) {
+        $part = $this->else;
+        $part->echo();
+        if ($token) {
+            if ($part instanceof LeanIte)
+                $this::echo_part($part->then, $token);
+            else 
+                $this::echo_part($part, $token);
+        }
+    }
+
+    public function echo_then($token) {
+        $part = $this->then;
+        $part->echo();
+        if ($token)
+            $this::echo_part($part, $token);
+    }
+    public function insert_colon($caret)
+    {
+        if ($caret === $this->if) {
+            $new = new LeanCaret($caret->indent, $caret->level);
+            $this->replace($caret, new LeanColon($caret, $new, $caret->indent, $caret->level));
+            return $new;
+        }
+        return $caret->push_binary('LeanColon');
+    }
+
     public function insert_else($caret)
     {
         if (!$this->else) {
@@ -5952,16 +6016,6 @@ class LeanIte extends LeanArgs
             }
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-
-    public function insert_colon($caret)
-    {
-        if ($caret === $this->if) {
-            $new = new LeanCaret($caret->indent, $caret->level);
-            $this->replace($caret, new LeanColon($caret, $new, $caret->indent, $caret->level));
-            return $new;
-        }
-        return $caret->push_binary('LeanColon');
     }
 
     public function insert_newline($caret, $newline_count, $indent, $next)
@@ -6005,6 +6059,15 @@ class LeanIte extends LeanArgs
         return $new;
     }
 
+    public function insert_then($caret)
+    {
+        if (!$this->then) {
+            $caret = new LeanCaret($this->indent + 2, $caret->level);
+            $this->then = $caret;
+            return $caret;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
     public function is_indented()
     {
         $parent = $this->parent;
@@ -6012,22 +6075,22 @@ class LeanIte extends LeanArgs
         return !$parent || $parent instanceof LeanStatements || $parent instanceof LeanIte && (!($then = $parent->then) || $this === $then);
     }
 
-    public function strFormat()
+    public function latexArgs(&$syntax = null)
     {
-        [$if, $then, $else] = $this->args;
-        if (!$else && !$then) {
-            // for split functions
-            if ($if === null)
-                return "else";
-            if ($else === 0)
-                return "else if %s then";
-            return "if %s then";
+        $cases = [];
+        $else = $this;
+        while (true) {
+            [$if, $then, $else] = $else->strip_parenthesis();
+            $if = $if->toLatex($syntax);
+            $then = $then->toLatex($syntax);
+            $cases[] = "{{$then}} & {\\color{blue}\\text{if}}\\ $if ";
+
+            if (!($else instanceof LeanIte))
+                break;
         }
-        $indent_else = str_repeat(' ', $this->indent);
-        $sep = $else instanceof LeanIte ? ' ' : "\n";
-        $then = $then == null? '' : '%s';
-        $else = $else == null? '' : '%s';
-        return "if %s then\n$then\n{$indent_else}else$sep$else";
+
+        $else = $else->toLatex($syntax);
+        return array_merge($cases, [$else]);
     }
 
     public function latexFormat()
@@ -6049,59 +6112,12 @@ class LeanIte extends LeanArgs
         return "\\begin{cases} $cases \\\\ {%s} & {\\color{blue}\\text{else}} \\end{cases}";
     }
 
-    public function latexArgs(&$syntax = null)
+    public function relocate_last_comment()
     {
-        $cases = [];
-        $else = $this;
-        while (true) {
-            [$if, $then, $else] = $else->strip_parenthesis();
-            $if = $if->toLatex($syntax);
-            $then = $then->toLatex($syntax);
-            $cases[] = "{{$then}} & {\\color{blue}\\text{if}}\\ $if ";
-
-            if (!($else instanceof LeanIte))
-                break;
-        }
-
-        $else = $else->toLatex($syntax);
-        return array_merge($cases, [$else]);
+        $else = $this->else;
+        if ($else instanceof LeanStatements || $else instanceof LeanIte)
+            $else->relocate_last_comment();
     }
-
-    public function __get($vname)
-    {
-        switch ($vname) {
-            case 'stack_priority':
-                return 23;
-            case 'if':
-                return $this->args[0];
-            case 'then':
-                return $this->args[1] ?? null;
-            case 'else':
-                return $this->args[2] ?? null;
-            default:
-                return parent::__get($vname);
-        }
-    }
-
-    public function __set($vname, $val)
-    {
-        switch ($vname) {
-            case 'if':
-                $this->args[0] = $val;
-                break;
-            case 'then':
-                $this->args[1] = $val;
-                break;
-            case 'else':
-                $this->args[2] = $val;
-                break;
-            default:
-                parent::__set($vname, $val);
-                return;
-        }
-        $val->parent = $this;
-    }
-
     public function set_line($line)
     {
         $this->line = $line;
@@ -6114,41 +6130,6 @@ class LeanIte extends LeanArgs
             ++$line;
         return $else->set_line($line);
     }
-    static public function echo_part($part, $token) {
-        $echo = new LeanTactic('echo', clone $token, $part->indent, $part->level);
-        if ($part instanceof LeanStatements)
-            $part->unshift($echo);
-        else
-            $part->parent->replace($part, new LeanStatements([$echo, $part], $part->indent, $part->level));
-    }
-    public function echo_then($token) {
-        $part = $this->then;
-        $part->echo();
-        if ($token)
-            $this::echo_part($part, $token);
-    }
-    public function echo_else($token) {
-        $part = $this->else;
-        $part->echo();
-        if ($token) {
-            if ($part instanceof LeanIte)
-                $this::echo_part($part->then, $token);
-            else 
-                $this::echo_part($part, $token);
-        }
-    }
-
-    public function echo()
-    {
-        [$if, $then, $else] = $this->args;
-        $token = null;
-        if ($if instanceof LeanColon && ($token = $if->args[0]) instanceof LeanToken);
-        if ($then)
-            $this->echo_then($token);
-        if ($else)
-            $this->echo_else($token);
-    }
-
     public function split(&$syntax = null)
     {
         [$if, $then, $else] = $this->args;
@@ -6177,11 +6158,30 @@ class LeanIte extends LeanArgs
         return [$this];
     }
 
-    public function relocate_last_comment()
+    public function strFormat()
     {
-        $else = $this->else;
-        if ($else instanceof LeanStatements || $else instanceof LeanIte)
-            $else->relocate_last_comment();
+        [$if, $then, $else] = $this->args;
+        if (!$else && !$then) {
+            // for split functions
+            if ($if === null)
+                return "else";
+            if ($else === 0)
+                return "else if %s then";
+            return "if %s then";
+        }
+        $indent_else = str_repeat(' ', $this->indent);
+        $sep = $else instanceof LeanIte ? ' ' : "\n";
+        $then = $then == null? '' : '%s';
+        $else = $else == null? '' : '%s';
+        return "if %s then\n$then\n{$indent_else}else$sep$else";
+    }
+
+    static public function echo_part($part, $token) {
+        $echo = new LeanTactic('echo', clone $token, $part->indent, $part->level);
+        if ($part instanceof LeanStatements)
+            $part->unshift($echo);
+        else
+            $part->parent->replace($part, new LeanStatements([$echo, $part], $part->indent, $part->level));
     }
 }
 
