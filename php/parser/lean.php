@@ -3606,15 +3606,6 @@ class LeanNeg extends LeanUnaryArithmeticPre
 
 class LeanPlus extends LeanUnaryArithmeticPre
 {
-    public function strFormat()
-    {
-        return "$this->operator%s";
-    }
-    public function latexFormat()
-    {
-        return "$this->command{%s}";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3625,20 +3616,20 @@ class LeanPlus extends LeanUnaryArithmeticPre
                 return parent::__get($vname);
         }
     }
+    public function latexFormat()
+    {
+        return "$this->command{%s}";
+    }
+
+    public function strFormat()
+    {
+        return "$this->operator%s";
+    }
 }
 
 class LeanInv extends LeanUnaryArithmeticPost
 {
     public static $input_priority = 71;
-    public function strFormat()
-    {
-        return "%s$this->operator";
-    }
-    public function latexFormat()
-    {
-        return "{%s}$this->command";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3650,20 +3641,20 @@ class LeanInv extends LeanUnaryArithmeticPost
                 return parent::__get($vname);
         }
     }
-}
-
-class LeanPosPart extends LeanUnaryArithmeticPost
-{
-    public static $input_priority = 71;
-    public function strFormat()
-    {
-        return "%s$this->operator";
-    }
     public function latexFormat()
     {
         return "{%s}$this->command";
     }
 
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+}
+
+class LeanPosPart extends LeanUnaryArithmeticPost
+{
+    public static $input_priority = 71;
     public function __get($vname)
     {
         switch ($vname) {
@@ -3675,20 +3666,20 @@ class LeanPosPart extends LeanUnaryArithmeticPost
                 return parent::__get($vname);
         }
     }
-}
-
-class LeanNegPart extends LeanUnaryArithmeticPost
-{
-    public static $input_priority = 71;
-    public function strFormat()
-    {
-        return "%s$this->operator";
-    }
     public function latexFormat()
     {
         return "{%s}$this->command";
     }
 
+    public function strFormat()
+    {
+        return "%s$this->operator";
+    }
+}
+
+class LeanNegPart extends LeanUnaryArithmeticPost
+{
+    public static $input_priority = 71;
     public function __get($vname)
     {
         switch ($vname) {
@@ -3699,6 +3690,15 @@ class LeanNegPart extends LeanUnaryArithmeticPost
             default:
                 return parent::__get($vname);
         }
+    }
+    public function latexFormat()
+    {
+        return "{%s}$this->command";
+    }
+
+    public function strFormat()
+    {
+        return "%s$this->operator";
     }
 }
 
