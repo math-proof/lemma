@@ -4564,27 +4564,37 @@ export class LeanGetElemQuote extends LeanArgs {
 }
 
 /**
- * Port of LeanStack (php/parser/lean.php ~9251–9286). For [i < n] body — fin.pi/bounded notation.
- * Replaces LeanBracket when closing ] on pattern (Lean_lt with LeanToken lhs).
+ * PHP `LeanStack` extends `LeanBigOperator` (php/parser/lean.php ~9251–9286). `[i < n] body` notation.
  */
-class LeanStack extends LeanArgs {
+class LeanStack extends LeanBigOperator {
     static input_priority = 52;
 
-    get bound() {
-        return this.args[0];
+    get operator() {
+        return 'Stack';
     }
-    get scope() {
-        return this.args[1];
+
+    get command() {
+        return 'Stack';
     }
-    set scope(v) {
-        if (this.args.length < 2) this.args.push(v);
-        else this.args[1] = v;
-        if (v) v.parent = this;
+
+    /** PHP `LeanStack::__get('stack_priority')` (php/parser/lean.php ~9261–9262). */
+    get stack_priority() {
+        return 28;
+    }
+
+    /** PHP `LeanStack::latexArgs` (php/parser/lean.php ~9268–9272). */
+    latexArgs(syntax) {
+        const s = syntax ?? {};
+        s[this.constructor.name] = true;
+        return super.latexArgs(s);
     }
 
     latexFormat() {
         return '\\left[{%s}\\right]{%s}';
     }
+
+    /** PHP `LeanStack::push_args_indented` (php/parser/lean.php ~9279–9280): no-op. */
+    push_args_indented(_indent, _newlineCount, _functionCall = true) {}
 
     strFormat() {
         return '[%s] %s';
@@ -4607,8 +4617,8 @@ class LeanBracket extends LeanPairedGroup {
             const ok = bound && bound.constructor?.name === 'Lean_lt' && bound.lhs instanceof LeanToken;
             if (ok) {
                 const scope = new LeanCaret(this.indent, this.level);
-                const stack = new LeanStack([bound, scope], this.indent, this.level);
-                scope.parent = stack;
+                const stack = new LeanStack(bound, this.indent, this.level);
+                stack.scope = scope;
                 this.parent.replace(this, stack);
                 return scope;
             }
