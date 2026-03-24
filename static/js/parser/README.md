@@ -127,7 +127,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — full `LeanIte` port (~5917–6186): `echo` / `split` / `strFormat` / `latex*` / insert paths / `echo_part`; `LeanArgs.strip_parenthesis`; `LeanArgs.clone` skips `.clone()` on non-objects (e.g. split marker `0`); `node scripts/test-lean-parser.mjs` — corpus OK.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — `set_line` parity: `LeanArgs` (~1470–1477), `LeanBinary` (~2114–2122), `LeanPairedGroup` (~1638–1648), trait `LeanMultipleLine` on `LeanStatements` / `LeanArgsNewLineSeparated` / `LeanArgsCommaNewLineSeparated` (~1380–1387); `LeanBy` `set_line` / `relocateLastComment` / `latexFormat` (~7537–7526); `node scripts/test-lean-parser.mjs` — corpus OK.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)

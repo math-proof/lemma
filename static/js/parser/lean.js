@@ -1060,6 +1060,15 @@ export class LeanArgs extends Lean {
         });
     }
 
+    /** PHP `LeanArgs::set_line` (php/parser/lean.php ~1470–1477). */
+    set_line(line) {
+        this.line = line;
+        for (const arg of this.args) {
+            if (arg != null) line = arg.set_line(line);
+        }
+        return line;
+    }
+
     // insert_comma, insert_semicolon, insert_assign, push_right, push_or, push_post_unary, etc.
     // inherit from `Lean` (php/parser/lean.php) — delegate to parent; do not override with throws.
 }
@@ -1107,6 +1116,15 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
         }
         return this.args[this.args.length - 1];
     }
+
+    /** PHP trait `LeanMultipleLine::set_line` (php/parser/lean.php ~1380–1387). */
+    set_line(line) {
+        this.line = line;
+        for (const arg of this.args) {
+            line = arg.set_line(line) + 1;
+        }
+        return line - 1;
+    }
 }
 
 /**
@@ -1146,6 +1164,15 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
         const c2 = new LeanCaret(this.indent, caret.level);
         this.push(c2);
         return c2;
+    }
+
+    /** PHP trait `LeanMultipleLine::set_line` (php/parser/lean.php ~1380–1387). */
+    set_line(line) {
+        this.line = line;
+        for (const arg of this.args) {
+            line = arg.set_line(line) + 1;
+        }
+        return line - 1;
     }
 }
 
@@ -1241,6 +1268,15 @@ export class LeanBinary extends LeanArgs {
     /** PHP `LeanBinary::sep` (php/parser/lean.php ~2525–2527). */
     sep() {
         return this.rhs instanceof LeanStatements ? '\n' : ' ';
+    }
+
+    /** PHP `LeanBinary::set_line` (php/parser/lean.php ~2114–2122). */
+    set_line(line) {
+        this.line = line;
+        line = this.lhs.set_line(line);
+        const s = this.sep();
+        if (s && s[0] === '\n') line++;
+        return this.rhs.set_line(line);
     }
 
     /** PHP `LeanBinary::strFormat` (php/parser/lean.php ~2433–2437): "%s $this->operator$sep%s". */
@@ -2196,6 +2232,25 @@ export class LeanBy extends LeanUnary {
     echo() {
         this.arg?.echo?.();
     }
+
+    latexFormat() {
+        const arg = this.arg;
+        const command = '{\\color{#00f}by}';
+        if (arg instanceof LeanStatements) return `\\begin{align*}\n${command} && \\\\\n%s\n\\end{align*}`;
+        return `${command}\\ %s`;
+    }
+
+    relocateLastComment() {
+        this.arg?.relocateLastComment?.();
+    }
+
+    /** PHP `LeanBy::set_line` (php/parser/lean.php ~7537–7543). */
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        if (this.arg instanceof LeanStatements) L++;
+        return this.arg.set_line(L);
+    }
 }
 
 /** Port of PHP LeanAttribute (php/parser/lean.php ~8553–8614). Needed so @[main] becomes lemma.attribute. */
@@ -2640,6 +2695,18 @@ class LeanPairedGroup extends LeanUnary {
         return caret2;
     }
 
+    /** PHP `LeanPairedGroup::set_line` (php/parser/lean.php ~1638–1648). */
+    set_line(line) {
+        this.line = line;
+        const arg = this.arg;
+        const hasNewline =
+            arg instanceof LeanArgsCommaNewLineSeparated || arg instanceof LeanStatements;
+        if (hasNewline) line++;
+        line = arg.set_line(line);
+        if (hasNewline) line++;
+        return line;
+    }
+
     get is_closed() {
         return this.kwargs.is_closed;
     }
@@ -3059,6 +3126,15 @@ export class LeanStatements extends LeanArgs {
             }
         }
         for (const stmt of this.args) statements.push(...stmt.split(syntax));
+    }
+
+    /** PHP trait `LeanMultipleLine::set_line` via `LeanStatements` (php/parser/lean.php ~1378–1387). */
+    set_line(line) {
+        this.line = line;
+        for (const arg of this.args) {
+            line = arg.set_line(line) + 1;
+        }
+        return line - 1;
     }
 
     /**
