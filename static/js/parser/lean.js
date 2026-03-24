@@ -3482,6 +3482,10 @@ export class Lean_def extends LeanArgs {
         return 7;
     }
 
+    get operator() {
+        return 'def';
+    }
+
     /**
      * @param {string|Lean} accessibility
      * @param {Lean|number} name
@@ -3513,8 +3517,67 @@ export class Lean_def extends LeanArgs {
         return this.args[0];
     }
 
+    set attribute(v) {
+        this.args[0] = v;
+        if (v) v.parent = this;
+    }
+
     get assignment() {
         return this.args[1];
+    }
+
+    set assignment(v) {
+        this.args[1] = v;
+        if (v) v.parent = this;
+    }
+
+    /** PHP `Lean_def::strArgs` (php/parser/lean.php ~8735–8740). */
+    strArgs() {
+        const [attr, assignment] = this.args;
+        if (attr == null) return [assignment];
+        return this.args;
+    }
+
+    /** PHP `Lean_def::strFormat` (php/parser/lean.php ~8743–8749): uses `func` (def / theorem / lemma). */
+    strFormat() {
+        const acc = this.accessibility === 'public' ? '' : `${this.accessibility} `;
+        let def = `${acc}${this.func} %s`;
+        if (this.attribute) def = `%s\n${def}`;
+        return def;
+    }
+
+    /** PHP `Lean_def::latexFormat` (php/parser/lean.php ~8714–8716). */
+    latexFormat() {
+        return this.strFormat();
+    }
+
+    /** PHP `Lean_def::jsonSerialize` (php/parser/lean.php ~8703–8711): key is `operator` (`'def'`), not `func`. */
+    jsonSerialize() {
+        const json = {
+            [this.operator]: super.jsonSerialize(),
+            accessibility: this.accessibility,
+        };
+        if (this.attribute) json.attribute = this.attribute.jsonSerialize?.() ?? this.attribute;
+        return json;
+    }
+
+    /** PHP `Lean_def::insert_tactic` (php/parser/lean.php ~8694–8696). */
+    insert_tactic(caret, token) {
+        return this.insert_word(caret, token);
+    }
+
+    /** PHP `Lean_def::is_indented` (php/parser/lean.php ~8698–8700). */
+    is_indented() {
+        return false;
+    }
+
+    /** PHP `Lean_def::set_line` (php/parser/lean.php ~8726–8732). */
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        const attr = this.attribute;
+        if (attr) L = attr.set_line(L) + 1;
+        return this.assignment.set_line(L);
     }
 
     /** PHP `Lean_def::relocate_last_comment` (php/parser/lean.php ~8732–8736). */
@@ -3559,7 +3622,39 @@ export class Lean_def extends LeanArgs {
 
 export class Lean_theorem extends Lean_def {}
 
-export class Lean_lemma extends Lean_def {}
+export class Lean_lemma extends Lean_def {
+    /** PHP `Lean_lemma::echo` (php/parser/lean.php ~8758–8787). */
+    echo() {
+        this.assignment?.echo?.();
+        const asn = this.assignment;
+        if (asn instanceof LeanAssign && asn.rhs instanceof LeanBy) {
+            const statement = asn.rhs.arg;
+            if (statement instanceof LeanStatements) {
+                const stmts = statement.args;
+                for (let i = stmts.length - 1; i >= 0; i--) {
+                    const stmt = stmts[i];
+                    if (stmt.is_comment?.()) continue;
+                    if (stmt instanceof LeanTactic || stmt instanceof Lean_let) {
+                        const token = stmt.get_echo_token?.();
+                        if (token) {
+                            const ind = statement.indent;
+                            const lev = statement.level;
+                            statement.push(
+                                new LeanTactic(
+                                    'try',
+                                    new LeanTactic('echo', token, ind, lev),
+                                    ind,
+                                    lev,
+                                ),
+                            );
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
 
 export class LeanCaret extends Lean {
     static input_priority = 100;
