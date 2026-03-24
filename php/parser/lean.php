@@ -1670,57 +1670,6 @@ class LeanParenthesis extends LeanPairedGroup
         ++$this->arg->level;
     }
 
-    public function is_indented()
-    {
-        return ($parent = $this->parent) instanceof LeanArgsNewLineSeparated || $parent instanceof LeanArgsCommaNewLineSeparated || ($parent instanceof LeanIte && $this !== $parent->if);
-    }
-    public function argFormat() {
-        $arg = $this->arg;
-        if ($arg instanceof LeanBy && ($stmt = $arg->arg) instanceof LeanStatements && end($stmt->args) instanceof LeanCaret) {
-            $indent = str_repeat(' ', $this->indent);
-            return "%s$indent";
-        } else
-            return '%s';
-    }
-
-    public function toColor(): string
-    {
-        $n = $this->arg->level & 7;
-        $b = "9f"[$n & 1];
-        $n >>= 1;
-        $g = "9f"[$n & 1];
-        $n >>= 1;
-        $r = "9f"[$n & 1];
-        // for katex:
-        return "\\colorbox{#{$r}{$g}{$b}}{\$\\mathord{\\left(%s\\right)}\$}";
-        // for mathjax:
-        // return "\\bbox[#{$r}{$g}{$b}]{\\left(%s\\right)}";
-    }
-
-    public function latexFormat()
-    {
-        $arg = $this->arg;
-        if ($arg instanceof LeanColon) {
-            if ($arg->lhs instanceof LeanBrace)
-                return $arg->lhs->latexFormat(); # special case for ({ ... } : ...)
-            if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
-                return '\left|{%s}\right|';
-        }
-        return $this->toColor();
-    }
-
-    public function latexArgs(&$syntax = null)
-    {
-        $arg = $this->arg;
-        if ($arg instanceof LeanColon) {
-            if ($arg->lhs instanceof LeanBrace)
-                return $arg->lhs->latexArgs($syntax);
-            if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
-                return [$arg->lhs->toLatex($syntax)];
-        }
-        return parent::latexArgs($syntax);
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -1749,6 +1698,15 @@ class LeanParenthesis extends LeanPairedGroup
             $this->parent->replace($this, new LeanArgsSpaceSeparated([$this, $new], $indent, $level));
             return $new;
         }
+    }
+
+    public function argFormat() {
+        $arg = $this->arg;
+        if ($arg instanceof LeanBy && ($stmt = $arg->arg) instanceof LeanStatements && end($stmt->args) instanceof LeanCaret) {
+            $indent = str_repeat(' ', $this->indent);
+            return "%s$indent";
+        } else
+            return '%s';
     }
 
     public function insert_newline($caret, $newline_count, $indent, $next)
@@ -1788,15 +1746,57 @@ class LeanParenthesis extends LeanPairedGroup
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
+    public function is_indented()
+    {
+        return ($parent = $this->parent) instanceof LeanArgsNewLineSeparated || $parent instanceof LeanArgsCommaNewLineSeparated || ($parent instanceof LeanIte && $this !== $parent->if);
+    }
+    public function isProp($vars)
+    {
+        return $this->arg->isProp($vars);
+    }
+    public function latexArgs(&$syntax = null)
+    {
+        $arg = $this->arg;
+        if ($arg instanceof LeanColon) {
+            if ($arg->lhs instanceof LeanBrace)
+                return $arg->lhs->latexArgs($syntax);
+            if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
+                return [$arg->lhs->toLatex($syntax)];
+        }
+        return parent::latexArgs($syntax);
+    }
+
+    public function latexFormat()
+    {
+        $arg = $this->arg;
+        if ($arg instanceof LeanColon) {
+            if ($arg->lhs instanceof LeanBrace)
+                return $arg->lhs->latexFormat(); # special case for ({ ... } : ...)
+            if ($arg->rhs instanceof LeanToken && $arg->rhs->text == 'Bool')
+                return '\left|{%s}\right|';
+        }
+        return $this->toColor();
+    }
+
     public function regexp()
     {
         return $this->arg->regexp();
     }
 
-    public function isProp($vars)
+    public function toColor(): string
     {
-        return $this->arg->isProp($vars);
+        $n = $this->arg->level & 7;
+        $b = "9f"[$n & 1];
+        $n >>= 1;
+        $g = "9f"[$n & 1];
+        $n >>= 1;
+        $r = "9f"[$n & 1];
+        // for katex:
+        return "\\colorbox{#{$r}{$g}{$b}}{\$\\mathord{\\left(%s\\right)}\$}";
+        // for mathjax:
+        // return "\\bbox[#{$r}{$g}{$b}]{\\left(%s\\right)}";
     }
+
 }
 
 class LeanAngleBracket extends LeanPairedGroup

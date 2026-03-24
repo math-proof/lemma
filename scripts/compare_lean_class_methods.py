@@ -42,6 +42,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "abstract class LeanPairedGroup extends LeanUnary\n{",
         "\n}\n\nclass LeanParenthesis extends LeanPairedGroup",
     ),
+    "leanparenthesis": (
+        "class LeanParenthesis extends LeanPairedGroup\n{",
+        "\n}\n\nclass LeanAngleBracket extends LeanPairedGroup",
+    ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
         "\n}\n\nLeanToken::$subscript_keys",
