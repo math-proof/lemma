@@ -3775,15 +3775,6 @@ class LeanSquare extends LeanUnaryArithmeticPost
 
 class LeanCubicRoot extends LeanUnaryArithmeticPre
 {
-    public function strFormat()
-    {
-        return "$this->operator%s";
-    }
-    public function latexFormat()
-    {
-        return "$this->command{%s}";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3797,29 +3788,20 @@ class LeanCubicRoot extends LeanUnaryArithmeticPre
                 return parent::__get($vname);
         }
     }
+    public function latexFormat()
+    {
+        return "$this->command{%s}";
+    }
+
+    public function strFormat()
+    {
+        return "$this->operator%s";
+    }
 }
 
 class Lean_uparrow extends LeanUnaryArithmeticPre
 {
     public static $input_priority = 1024;
-    public function strFormat()
-    {
-        return "$this->operator%s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command %s";
-    }
-
-    public function latexArgs(&$syntax = null)
-    {
-        $arg = $this->arg;
-        if ($arg instanceof LeanParenthesis && $arg->arg instanceof LeanArgsSpaceSeparated && $arg->arg->is_Abs())
-            $arg = $arg->arg;
-        return [$arg->toLatex($syntax)];
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -3831,6 +3813,24 @@ class Lean_uparrow extends LeanUnaryArithmeticPre
                 return parent::__get($vname);
         }
     }
+    public function latexArgs(&$syntax = null)
+    {
+        $arg = $this->arg;
+        if ($arg instanceof LeanParenthesis && $arg->arg instanceof LeanArgsSpaceSeparated && $arg->arg->is_Abs())
+            $arg = $arg->arg;
+        return [$arg->toLatex($syntax)];
+    }
+
+    public function latexFormat()
+    {
+        return "$this->command %s";
+    }
+
+    public function strFormat()
+    {
+        return "$this->operator%s";
+    }
+
 }
 
 class LeanUparrow extends LeanUnaryArithmeticPre
