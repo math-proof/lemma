@@ -73,37 +73,6 @@ export const token2classname = Object.freeze({
     '∣': 'LeanDvd',
 });
 
-/**
- * PHP LaTeX command overrides for toLatex (php/parser/lean.php LeanAdd/LeanSub/LeanMul/LeanMatMul etc).
- * Uses literal symbols instead of \Add, \Sub so KaTeX renders correctly.
- */
-const CLASS_TO_LATEX_COMMAND = Object.freeze({
-    LeanAdd: '+',
-    LeanSub: '-',
-    LeanMul: '\\cdot',
-    LeanDiv: '\\frac',
-    LeanMatMul: '{\\color{red}\\times}',
-    Lean_times: '×',
-    Lean_approx: '\\approx',
-    LeanColon: ':',
-    LeanAssign: ':=',
-    Lean_equiv: '\\equiv',
-    Lean_in: '\\in',
-    Lean_cup: '\\cup',
-    Lean_cap: '\\cap',
-    Lean_sqcap: '\\sqcap',
-    Lean_sqcup: '\\sqcup',
-    Lean_le: '\\le',
-    Lean_ge: '\\ge',
-    Lean_lt: '<',
-    Lean_gt: '>',
-    Lean_ne: '\\ne',
-    Lean_lor: '\\lor',
-    Lean_land: '\\land',
-    LeanPow: '^',
-});
-
-
 /** PHP `std\isspace` on a single token string. */
 function isSpaceToken(s) {
     return typeof s === 'string' && /^\s+$/u.test(s);
@@ -1205,9 +1174,56 @@ export class LeanBinary extends LeanArgs {
 
     /** PHP arithmetic/relational override: use literal LaTeX (+, -, \\cdot) not \\Add, \\Sub. */
     get command() {
-        const lat = CLASS_TO_LATEX_COMMAND[this.constructor.name];
-        if (lat != null) return lat;
-        return super.command;
+        switch (this.constructor.name) {
+            case 'LeanAdd':
+                return '+';
+            case 'LeanSub':
+                return '-';
+            case 'LeanMul':
+                return '\\cdot';
+            case 'LeanDiv':
+                return '\\frac';
+            case 'LeanMatMul':
+                return '{\\color{red}\\times}';
+            case 'Lean_times':
+                return '×';
+            case 'Lean_approx':
+                return '\\approx';
+            case 'LeanColon':
+                return ':';
+            case 'LeanAssign':
+                return ':=';
+            case 'Lean_equiv':
+                return '\\equiv';
+            case 'Lean_in':
+                return '\\in';
+            case 'Lean_cup':
+                return '\\cup';
+            case 'Lean_cap':
+                return '\\cap';
+            case 'Lean_sqcap':
+                return '\\sqcap';
+            case 'Lean_sqcup':
+                return '\\sqcup';
+            case 'Lean_le':
+                return '\\le';
+            case 'Lean_ge':
+                return '\\ge';
+            case 'Lean_lt':
+                return '<';
+            case 'Lean_gt':
+                return '>';
+            case 'Lean_ne':
+                return '\\ne';
+            case 'Lean_lor':
+                return '\\lor';
+            case 'Lean_land':
+                return '\\land';
+            case 'LeanPow':
+                return '^';
+            default:
+                return super.command;
+        }
     }
 
     /** PHP `LeanBinary::latexFormat` (php/parser/lean.php ~2102–2104). */
