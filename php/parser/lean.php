@@ -1801,14 +1801,6 @@ class LeanParenthesis extends LeanPairedGroup
 
 class LeanAngleBracket extends LeanPairedGroup
 {
-    public function strArgs()
-    {
-        $arg = $this->arg;
-        if ($arg instanceof LeanArgsCommaNewLineSeparated)
-            $arg = "\n$arg\n" . str_repeat(' ', $this->indent);
-        return [$arg];
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -1825,6 +1817,21 @@ class LeanAngleBracket extends LeanPairedGroup
         return '\langle {%s} \rangle';
     }
 
+    public function push_token($word)
+    {
+        $level = $this->level;
+        $new = new LeanToken($word, $this->indent, $level);
+        $this->parent->replace($this, new LeanArgsSpaceSeparated([$this, $new], $this->indent, $level));
+        return $new;
+    }
+    public function strArgs()
+    {
+        $arg = $this->arg;
+        if ($arg instanceof LeanArgsCommaNewLineSeparated)
+            $arg = "\n$arg\n" . str_repeat(' ', $this->indent);
+        return [$arg];
+    }
+
     public function tokens_comma_separated()
     {
         $tokens = [];
@@ -1836,13 +1843,6 @@ class LeanAngleBracket extends LeanPairedGroup
         return $tokens;
     }
 
-    public function push_token($word)
-    {
-        $level = $this->level;
-        $new = new LeanToken($word, $this->indent, $level);
-        $this->parent->replace($this, new LeanArgsSpaceSeparated([$this, $new], $this->indent, $level));
-        return $new;
-    }
 }
 
 class LeanBracket extends LeanPairedGroup
