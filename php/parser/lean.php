@@ -2878,6 +2878,12 @@ class Lean_leftrightarrow extends LeanBinaryBoolean
 abstract class LeanArithmetic extends LeanBinary
 {
     public static $input_priority = 67;
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($caret instanceof LeanCaret)
+            return $caret;
+        return $this->parent->insert_newline($this, $newline_count, $indent, $next);
+    }
     public function sep()
     {
         return ' ';
@@ -2889,12 +2895,6 @@ abstract class LeanArithmetic extends LeanBinary
         return "%s $this->operator$sep%s";
     }
 
-    public function insert_newline($caret, $newline_count, $indent, $next)
-    {
-        if ($caret instanceof LeanCaret)
-            return $caret;
-        return $this->parent->insert_newline($this, $newline_count, $indent, $next);
-    }
 }
 
 
