@@ -26,6 +26,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanBlockComment extends Lean\n{",
         "\n}\n\nclass LeanDocString extends LeanBlockComment",
     ),
+    "leandocstring": (
+        "class LeanDocString extends LeanBlockComment\n{",
+        "\n}\n\n\ntrait LeanMultipleLine",
+    ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
         "\n}\n\nLeanToken::$subscript_keys",

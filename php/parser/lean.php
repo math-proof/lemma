@@ -1350,11 +1350,6 @@ class LeanDocString extends LeanBlockComment
 {
     public $text;
 
-    public function strFormat()
-    {
-        return "/--\n$this->text\n-/";
-    }
-
     public function is_indented()
     {
         return false;
@@ -1372,6 +1367,11 @@ class LeanDocString extends LeanBlockComment
         ++$line;
         return $line;
     }
+    public function strFormat()
+    {
+        return "/--\n$this->text\n-/";
+    }
+
 }
 
 
