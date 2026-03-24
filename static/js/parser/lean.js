@@ -298,7 +298,7 @@ export class Lean extends IndentedNode {
 
     insert_unary(self, funcName) {
         const parent = self.parent;
-        const Ctor = resolveUnaryCtor(funcName);
+        const Ctor = getLeanClass(funcName);
         let caret;
         let replacement;
         if (self instanceof LeanCaret) {
@@ -316,7 +316,7 @@ export class Lean extends IndentedNode {
     push_post_unary(funcName) {
         const parent = this.parent;
         if (!parent) return undefined;
-        const Ctor = resolveUnaryPostCtor(funcName);
+        const Ctor = getLeanClass(funcName);
         if (Ctor.input_priority > parent.stack_priority) {
             const created = new Ctor(this, this.indent, this.level);
             parent.replace(this, created);
@@ -1699,9 +1699,66 @@ export class Lean_lor extends LeanBinary {
     static input_priority = 30;
 }
 
-/** PHP `Lean_rightarrow` (php/parser/lean.php ~5591–5616): `→` (right associative, priority 25). */
+/** PHP `Lean_rightarrow` (php/parser/lean.php ~5591–5645): `→` (right associative, priority 25). */
 export class Lean_rightarrow extends LeanBinary {
     static input_priority = 25;
+
+    get stack_priority() {
+        return 24;
+    }
+
+    get operator() {
+        return '→';
+    }
+
+    /** PHP `Lean_rightarrow::is_indented` (php/parser/lean.php ~5599–5602). */
+    is_indented() {
+        return this.parent instanceof LeanStatements;
+    }
+
+    /** PHP `Lean_rightarrow::sep` (php/parser/lean.php ~5594–5597). */
+    sep() {
+        return this.rhs instanceof LeanStatements ? '\n' : ' ';
+    }
+
+    /** PHP `Lean_rightarrow::strFormat` (php/parser/lean.php ~5604–5608). */
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+
+    /** PHP `Lean_rightarrow::insert_newline` (php/parser/lean.php ~5610–5625). */
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            caret.indent = ind;
+            const stmts = new LeanStatements([caret], ind, caret.level);
+            this.replace(caret, stmts);
+            for (let i = 1; i < newlineCount; i++) {
+                const c = new LeanCaret(ind, caret.level);
+                stmts.push(c);
+            }
+            return stmts.args[stmts.args.length - 1];
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    /**
+     * PHP `Lean_rightarrow::isProp` (php/parser/lean.php ~5639–5644).
+     * @param {Record<string, unknown>} [vars]
+     */
+    isProp(vars) {
+        const lhs = this.lhs;
+        const rhs = this.rhs;
+        const lhsOk =
+            (lhs instanceof LeanToken && (vars?.[lhs.text] ?? 'Prop') === 'Prop') ||
+            (!(lhs instanceof LeanToken) && lhs.isProp(vars));
+        const rhsOk =
+            (rhs instanceof LeanToken && (vars?.[rhs.text] ?? 'Prop') === 'Prop') ||
+            (!(rhs instanceof LeanToken) && rhs.isProp(vars));
+        return Boolean(lhsOk && rhsOk);
+    }
 }
 
 /** PHP `Lean_mapsto` (php/parser/lean.php ~5647–5692): `↦`; stack_priority 23, sep for Statements. */
@@ -1872,9 +1929,6 @@ export class LeanBy extends LeanUnary {
     }
 }
 
-/** @type {Map<string, typeof LeanUnary>} */
-const unaryClassCache = new Map();
-
 /** Port of PHP LeanAttribute (php/parser/lean.php ~8553–8614). Needed so @[main] becomes lemma.attribute. */
 class LeanAttribute extends LeanUnary {
     /** Port of LeanAttribute::insert_newline (php/parser/lean.php ~8575–8579). Return caret to keep it inside so push_accessibility runs on next line. */
@@ -2010,34 +2064,33 @@ class Lean_lnot extends LeanUnary {
     }
 }
 
-function resolveUnaryCtor(name) {
-    let C = unaryClassCache.get(name);
-    if (!C) {
-        C = name === 'LeanAttribute' ? LeanAttribute
-            : name === 'Lean_leftarrow' ? Lean_leftarrow
-            : name === 'LeanNeg' ? LeanNeg
-            : name === 'LeanPlus' ? LeanPlus
-            : name === 'Lean_sqrt' ? Lean_sqrt
-            : name === 'LeanCubicRoot' ? LeanCubicRoot
-            : name === 'Lean_uparrow' ? Lean_uparrow
-            : name === 'LeanUparrow' ? LeanUparrow
-            : name === 'LeanQuarticRoot' ? LeanQuarticRoot
-            : name === 'Lean_lnot' ? Lean_lnot
-            : class extends LeanUnary {};
-        if (![
-            LeanAttribute, Lean_leftarrow, LeanNeg, LeanPlus, Lean_sqrt,
-            LeanCubicRoot, Lean_uparrow, LeanUparrow, LeanQuarticRoot, Lean_lnot
-        ].includes(C)) Object.defineProperty(C, 'name', { value: name });
-        unaryClassCache.set(name, C);
+/** PHP `LeanNot` (php/parser/lean.php ~5748–5779): prefix `!` (distinct from `Lean_lnot` ¬). */
+class LeanNot extends LeanUnary {
+    static input_priority = 40;
+
+    is_indented() {
+        return this.parent instanceof LeanStatements;
     }
-    return C;
-}
 
-/** @type {Map<string, typeof LeanUnaryPost>} */
-const unaryPostClassCache = new Map();
+    strFormat() {
+        return `${this.operator}%s`;
+    }
 
-class LeanUnaryPost extends Lean {
-    static input_priority = 72;
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+
+    isProp(_vars) {
+        return true;
+    }
+
+    get operator() {
+        return '!';
+    }
+
+    get command() {
+        return '\\text{!}';
+    }
 }
 
 /** Placeholder for `instanceof` checks in `Lean::push_left` (php/parser/lean.php). */
@@ -2178,26 +2231,6 @@ class LeanBar extends LeanUnary {
         return this.insert_word(caret, token);
     }
 }
-
-function resolveUnaryPostCtor(name) {
-    let C = unaryPostClassCache.get(name);
-    if (!C) {
-        const explicit = {
-            LeanInv, LeanPosPart, LeanNegPart, LeanSquare, LeanCube,
-            LeanTesseract, LeanTranspose, LeanPipeForward
-        }[name];
-        C = explicit || (() => {
-            const Klass = class extends LeanUnary {};
-            Object.defineProperty(Klass, 'name', { value: name });
-            return Klass;
-        })();
-        unaryPostClassCache.set(name, C);
-    }
-    return C;
-}
-
-/** @type {Map<string, typeof LeanPairedGroup>} */
-const pairedClassCache = new Map();
 
 class LeanPairedGroup extends LeanUnary {
     static input_priority = 60;
@@ -3547,6 +3580,83 @@ export class LeanAt extends LeanUnary {
     }
 }
 
+/** PHP `LeanTacticBlock` (php/parser/lean.php ~8071–8151): `<;>` tactic block (structure; `echo` not fully ported). */
+class LeanTacticBlock extends LeanUnary {
+    is_indented() {
+        return true;
+    }
+
+    sep() {
+        const a = this.arg;
+        return a instanceof LeanStatements ? '\n' : a instanceof LeanCaret ? '' : ' ';
+    }
+
+    strFormat() {
+        const s = this.sep();
+        return `${this.operator}${s}%s`;
+    }
+
+    latexFormat() {
+        const s = this.sep();
+        return `${this.command}${s}%s`;
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this.arg) {
+            if (caret instanceof LeanCaret) {
+                if (this.indent <= indent) {
+                    let ind = indent;
+                    if (ind === this.indent) ind = this.indent + 2;
+                    caret.indent = ind;
+                    const stmts = new LeanStatements([caret], ind, caret.level);
+                    this.arg = stmts;
+                    let last = caret;
+                    for (let i = 1; i < newlineCount; i++) {
+                        last = new LeanCaret(ind, caret.level);
+                        stmts.push(last);
+                    }
+                    return last;
+                }
+            } else if (caret instanceof LeanStatements) {
+                const block = caret;
+                if (indent >= block.indent) {
+                    let last = /** @type {LeanCaret | null} */ (null);
+                    for (let i = 0; i < newlineCount; i++) {
+                        last = new LeanCaret(block.indent, block.level);
+                        block.push(last);
+                    }
+                    return last;
+                }
+            } else if (this.indent < indent) {
+                const oldArg = this.arg;
+                oldArg.indent = indent;
+                const c = new LeanCaret(indent, oldArg.level);
+                this.arg = new LeanStatements([oldArg, c], indent, c.level);
+                return c;
+            }
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    insert_line_comment(caret, comment) {
+        if (caret instanceof LeanCaret) {
+            const ind = this.indent + 2;
+            const line = new LeanLineComment(comment, ind, caret.level);
+            this.arg = new LeanStatements([line], ind, caret.level);
+            return line;
+        }
+        throw new Error('LeanTacticBlock.insert_line_comment: unexpected');
+    }
+
+    get operator() {
+        return '·';
+    }
+
+    get command() {
+        return '\\cdot';
+    }
+}
+
 export class LeanTactic extends LeanUnary {
     /**
      * @param {string} name
@@ -3711,6 +3821,7 @@ const LEAN_CLASSES = {
     LeanNotEquiv,
     LeanAt,
     LeanTactic,
+    LeanTacticBlock,
     LeanSequentialTacticCombinator,
     LeanIte,
     LeanAdd,
@@ -3799,6 +3910,7 @@ const LEAN_CLASSES = {
     Lean_lnot,
     Lean_namespace,
     LeanNegPart,
+    LeanNot,
     Lean_open,
     LeanPipeForward,
     LeanPlus,

@@ -22,7 +22,7 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 JS flattens some PHP hierarchies:
 - PHP `LeanRelational`, `LeanArithmetic`, `LeanUnaryArithmeticPre`, `LeanUnaryArithmeticPost`, `LeanSetOperator`, `LeanLogic`, `LeanBinaryBoolean` → JS `LeanBinary` or `LeanUnary`
 - PHP `Lean_is_not` ↔ JS `Lean_is_not` (identical)
-- **PHP** uses `new $ClassName(...)` with no separate registry; **JS** uses **`LEAN_CLASSES`**: a map of **concrete** AST classes only (keys = `constructor.name`). **Abstract/intermediate** bases (`Lean`, `LeanArgs`, `LeanBinary`, `LeanUnary`, `LeanPairedGroup`, `LeanCommand`, marker classes, etc.) are **not** in the map—they remain normal exports in `lean.js`. **`getLeanClass(name)`** looks up `LEAN_CLASSES` only; unknown names throw (add the concrete class to `LEAN_CLASSES`). Unary/postfix/paired delimiters still use `resolveUnaryCtor`, `resolveUnaryPostCtor`, and `pairedClassCache` where appropriate.
+- **PHP** uses `new $ClassName(...)` with no separate registry; **JS** uses **`LEAN_CLASSES`**: a map of **concrete** AST classes only (keys = `constructor.name`). **Abstract/intermediate** bases (`Lean`, `LeanArgs`, `LeanBinary`, `LeanUnary`, `LeanPairedGroup`, `LeanCommand`, marker classes, etc.) are **not** in the map—they remain normal exports in `lean.js`. **`getLeanClass(name)`** looks up `LEAN_CLASSES` only; unknown names throw (add the concrete class to `LEAN_CLASSES`). Prefix unary (`insert_unary`), postfix (`push_post_unary`), and `push_left` paired delimiters use **`getLeanClass`** like PHP `new $ClassName`.
 
 ### Conventions (PHP → JS)
 
@@ -60,10 +60,10 @@ Use this prompt when syncing `php/parser/lean.php` with `static/js/parser/lean.j
 2. **For each PHP class**, determine the JS equivalent:
    - **Explicit**: Same or similar class name in `lean.js`.
    - **In `LEAN_CLASSES`**: **Concrete** classes only—register under `constructor.name` if the parser ever does `new ThatClass(...)` or `getLeanClass('ThatClass')` / `push_binary('ThatClass')`. Do **not** add abstract/intermediate PHP bases (`abstract class LeanBinary`, `LeanUnary`, `LeanPairedGroup`, `LeanCommand`, etc.) to `LEAN_CLASSES`.
-   - **Via unary/postfix/paired caches**: `resolveUnaryCtor`, `resolveUnaryPostCtor`, `pairedClassCache` where the PHP code uses a dedicated code path instead of `new Lean_*`.
+   - **`getLeanClass`** / **`LEAN_CLASSES`** for any dynamic `new ThatClass(...)` (same idea as PHP `new $ClassName`).
    - **Flattened**: PHP hierarchy (e.g. `LeanRelational`, `LeanArithmetic`) collapsed into `LeanBinary` or `LeanUnary` in JS.
 
-3. **Print missing classes** — classes in PHP that have no equivalent (neither a concrete JS class nor an entry in `LEAN_CLASSES` / caches). Remember this list.
+3. **Print missing classes** — classes in PHP that have no equivalent (neither a concrete JS class nor an entry in `LEAN_CLASSES`). Remember this list.
 
 4. **Translate missing classes** — for each missing class:
    - Port the class and its methods from PHP to JS.
@@ -106,31 +106,40 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
+Last run: automated name diff + spot checks (2025-03-24). Re-run the steps after large PHP or JS edits.
+
 ```
-## Step 1: Missing Classes
-- None; concrete classes explicit or via resolvers; abstract PHP bases flattened to LeanBinary/LeanUnary.
+## Step 1: Class inventory (~162 PHP Lean* declarations vs ~156 JS Lean* classes)
+
+Abstract / intermediate in PHP only (intentionally flattened or absent in JS):
+- LeanArithmetic, LeanRelational, LeanBinaryBoolean, LeanLogic, LeanSetOperator,
+  LeanUnaryArithmetic, LeanUnaryArithmeticPre, LeanSyntax → JS uses LeanBinary / LeanUnary / LeanArgs.
+
+Concrete PHP classes still missing as dedicated JS classes (parser may delegate or not hit yet):
+- Lean_match, LeanWith — match / induction (partial; README known gaps)
+- LeanCalc, LeanFrom, LeanMOD, LeanUsing, LeanGeneralizing, LeanIn, LeanNot, LeanTacticBlock
+- LeanArgsSemicolonSeparated
+
+PHP maps tokens to class names that exist only in JS (no `class LeanEDiv` in PHP source; JS implements):
+- LeanEDiv, Lean_ominus, Lean_oslash, Lean_circledcirc, Lean_circledast, Lean_circleddash, Lean_circleeq,
+  Lean_boxplus, Lean_boxminus, Lean_boxtimes, Lean_dotsquare (see PHP token table vs JS LEAN_CLASSES)
+
+PHP `LbigOperator` / `LeanQuantifier` → JS internal `LeanBigOperator` / `LeanQuantifier`; concretes
+  Lean_forall, Lean_exists, Lean_sum, Lean_prod, Lean_bigcap, Lean_bigcup are in LEAN_CLASSES.
 
 ## Step 2: Order
-- Order left as-is: JS flattens binary hierarchy; reordering would require large refactor.
+- Left as-is: JS groups exports (args, binary cluster, unary, commands, parser); matching PHP file order
+  would shuffle hundreds of lines with little runtime benefit.
 
-## Step 3: Per-Class Gaps
-### Lean (base)
-- Added: is_space_separated() → false (PHP ~469–472)
-### LeanToken
-- Added: cache, tokens_space_separated, isProp(vars), jsonSerialize, starts_with_2_letters,
-  ends_with_2_letters, is_variable, lower, regexp, operand_count, is_parallel_operator,
-  tactic_block_info, equals (PHP ~1026–1211)
-### LeanProperty
-- Added: is_space_separated() for cos/sin/tan/log rhs (PHP ~2152–2165)
-### LeanArgsSpaceSeparated
-- Added: constructor cache, is_space_separated() true (PHP ~6191–6195)
-### LeanMul
-- Added: get command() conditional \\cdot vs \\  vs '' (PHP ~2937–2960); removed fixed \\cdot from LeanBinary switch
-### Lean_set_option / LeanTactic
-- OK (echo / getEcho from prior audits)
-### Remaining gaps (documented)
-- LeanMul::latexArgs (unwrap paren/div, LeanNeg paren) not ported; LeanArgsSpaceSeparated::tokens_space_separated /
-  tactic_block_info / construct_prefix_tree (needs eval_prefix); Lean_match / LeanWith
+## Step 3: Per-Class gaps (high level)
+- Lean_rightarrow: ported is_indented, sep, strFormat, stack_priority 24, insert_newline, isProp (PHP ~5591–5645).
+- LeanTactic, LeanRightarrow::echo, Lean_match / LeanWith, tactic block helpers: still large PHP surface;
+  prioritize by failing corpus or render2vue usage.
+- Full method-by-method pass: use grep on `class LeanFoo` in both files for remaining classes.
+
+## Step 4: Verification
+- node scripts/test-lean-parser.mjs — corpus OK
+- No new linter issues on static/js/parser/lean.js
 ```
 
 ## References
