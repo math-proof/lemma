@@ -40,8 +40,8 @@ JS flattens some PHP hierarchies:
 
 ### Known Gaps
 - `LeanBar` / `Lean_match` / `LeanWith`: `split` and echo paths may still differ from PHP in edge cases
-- `LeanTacticBlock::echo` and nested proof echo still worth diffing against PHP line-by-line
-- Recent parity: `LeanSequentialTacticCombinator` (unary + `newline`, `echo`, `split`, …), `LeanTactic` (`get_echo_token`, `has_tactic_block_followed`, `insert_sequential_tactic_combinator`, `insert_only`, `insert_tactic`, `echo`, `split`, `jsonSerialize`, `latexFormat`, …), `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
+- Nested proof echo: worth spot-diffing `LeanTacticBlock::echo` / `LeanStatements::echo` against PHP after corpus changes
+- Recent parity: `LeanTacticBlock` (`echo`, `split`, `tactic_block`, `set_line`), `LeanArgsSpaceSeparated` (`tokens_space_separated`, `construct_prefix_tree`, `tactic_block_info`, `operand_count`), `LeanSequentialTacticCombinator`, `LeanTactic` echo/split helpers, `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
 
 ### Running Tests
 ```bash

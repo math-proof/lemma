@@ -2697,6 +2697,60 @@ export class LeanParenthesis extends LeanPairedGroup {
     }
 }
 
+/**
+ * PHP `std\Expr` used by `eval_prefix` (php/std.php ~3567–3605).
+ * @typedef {import('./node.js').Node} LeanNode
+ */
+class LeanPrefixExpr {
+    /**
+     * @param {LeanToken} func
+     * @param {LeanPrefixExpr[]} args
+     */
+    constructor(func, args) {
+        this.func = func;
+        this.args = args;
+        /** @type {LeanPrefixExpr | null} */
+        this.parent = null;
+        /** @type {Record<string, unknown>} */
+        this.cache = {};
+        for (const arg of args) {
+            if (arg) arg.parent = this;
+        }
+    }
+
+    /**
+     * @param {(n: LeanPrefixExpr) => void} visit
+     */
+    traverse(visit) {
+        visit(this);
+        for (const arg of this.args) arg.traverse(visit);
+    }
+
+    size() {
+        if (this.cache.size != null) return /** @type {number} */ (this.cache.size);
+        let s = 1;
+        for (const arg of this.args) s += arg.size();
+        this.cache.size = s;
+        return s;
+    }
+}
+
+/** PHP `std\eval_prefix` (php/std.php ~3608–3619). */
+function leanEvalPrefix(expressions, operandCount) {
+    const stack = [];
+    for (let i = expressions.length - 1; i >= 0; i--) {
+        const token = expressions[i];
+        const n = operandCount(token);
+        const operand = [];
+        for (let k = 0; k < n; k++) {
+            if (!stack.length) break;
+            operand[k] = stack.pop();
+        }
+        stack.push(new LeanPrefixExpr(token, operand));
+    }
+    return stack.reverse();
+}
+
 export class LeanArgsSpaceSeparated extends LeanArgs {
     static input_priority = 80;
 
@@ -2709,6 +2763,94 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     /** PHP `LeanArgsSpaceSeparated::is_space_separated` (php/parser/lean.php ~6192–6195). */
     is_space_separated() {
         return true;
+    }
+
+    /** PHP `LeanArgsSpaceSeparated::operand_count` (php/parser/lean.php ~6443–6445). */
+    operand_count() {
+        return this.args[0].operand_count();
+    }
+
+    /**
+     * PHP `LeanArgsSpaceSeparated::tokens_space_separated` (php/parser/lean.php ~6490–6504).
+     * Angle-bracket contents are flattened (spread) so `eval_prefix` / `tactic_block_info` only see `LeanToken`s.
+     * @returns {LeanToken[]}
+     */
+    tokens_space_separated() {
+        if (!this.cache) this.cache = {};
+        if (this.cache.tokens_space_separated != null)
+            return /** @type {LeanToken[]} */ (this.cache.tokens_space_separated);
+        const tokens = [];
+        for (const arg of this.args) {
+            if (arg instanceof LeanToken) tokens.push(arg);
+            else if (arg instanceof LeanAngleBracket) tokens.push(...arg.tokens_comma_separated());
+            else {
+                this.cache.tokens_space_separated = [];
+                return [];
+            }
+        }
+        this.cache.tokens_space_separated = tokens;
+        return tokens;
+    }
+
+    /** PHP `LeanArgsSpaceSeparated::construct_prefix_tree` (php/parser/lean.php ~6192–6195). */
+    construct_prefix_tree() {
+        const tokens = this.tokens_space_separated();
+        return leanEvalPrefix(tokens, (arg) => arg.operand_count());
+    }
+
+    /** PHP `LeanArgsSpaceSeparated::tactic_block_info` (php/parser/lean.php ~6452–6487). */
+    tactic_block_info() {
+        if (!this.cache) this.cache = {};
+        if (this.cache.tactic_block_info != null)
+            return /** @type {Record<number, LeanToken[]>} */ (this.cache.tactic_block_info);
+        const nodes = this.construct_prefix_tree();
+        let physic_index = 0;
+        let logic_index = 0;
+        for (const node of nodes) {
+            node.traverse((n) => {
+                /** @type {LeanPrefixExpr[] | null} */
+                let args;
+                if (n.parent) args = n.parent.args;
+                else args = nodes;
+                const i = args.indexOf(n);
+                if (i > 0) {
+                    for (let j = i - 1; j >= 0; j--) {
+                        const size = args[j].size();
+                        const pi = /** @type {{ physic_index?: number }} */ (args[j].cache).physic_index ?? 0;
+                        if (pi + size === physic_index) {
+                            const fc = /** @type {LeanToken} */ (args[j].func);
+                            if (!fc.cache) fc.cache = {};
+                            const idx = /** @type {{ index?: number }} */ (fc.cache).index ?? 0;
+                            logic_index = Math.max(logic_index, idx + size);
+                        }
+                    }
+                } else if (n.parent && /** @type {LeanToken} */ (n.parent.func).is_parallel_operator()) {
+                    logic_index++;
+                }
+                const f = /** @type {LeanToken} */ (n.func);
+                if (!f.cache) f.cache = {};
+                f.cache.index = logic_index;
+                f.cache.size = n.size();
+                n.cache.physic_index = physic_index;
+                physic_index++;
+            });
+        }
+        const tokens = this.tokens_space_separated();
+        /** @type {Record<number, LeanToken[]>} */
+        const map = {};
+        for (let ti = tokens.length - 1; ti >= 0; ti--) {
+            const token = tokens[ti];
+            if (!token.cache) token.cache = {};
+            if (token.is_parallel_operator()) {
+                const sz = /** @type {{ size?: number }} */ (token.cache).size ?? 1;
+                token.cache.size = sz - 1;
+            }
+            const idx = /** @type {{ index?: number }} */ (token.cache).index ?? 0;
+            if (!map[idx]) map[idx] = [];
+            map[idx].push(token);
+        }
+        this.cache.tactic_block_info = map;
+        return map;
     }
 
     /** Omit LeanCaret; use no sep for subscript (e.g. h_Ξ_def = h_ + Ξ_def). */
@@ -2862,6 +3004,102 @@ export class LeanStatements extends LeanArgs {
         const line = new LeanLineComment(comment, this.indent, this.level);
         this.push(line);
         return line;
+    }
+
+    /**
+     * PHP `LeanStatements::swap_echo_star` (php/parser/lean.php ~4654–4665).
+     * @param {Record<string, unknown>} syntax
+     * @param {Lean[]} statements
+     */
+    swap_echo_star(syntax, statements) {
+        const args = this.args;
+        for (let i = 0; i < args.length; ++i) {
+            const echo = args[i];
+            if (
+                echo instanceof LeanTactic &&
+                echo.tacticName === 'echo' &&
+                echo.arg instanceof LeanToken &&
+                echo.arg.text === '*'
+            ) {
+                [args[i], args[i + 1]] = [args[i + 1], args[i]];
+                i++;
+            }
+        }
+        for (const stmt of this.args) statements.push(...stmt.split(syntax));
+    }
+
+    /**
+     * PHP `LeanStatements::echo` (php/parser/lean.php ~4474–4519).
+     * @returns {void}
+     */
+    echo() {
+        const args = this.args;
+        let count = args.length;
+        let voidLines = 0;
+        while (count > 0) {
+            const last = args[count - 1];
+            if (
+                last instanceof LeanCaret ||
+                last instanceof LeanLineComment ||
+                last instanceof LeanBlockComment
+            ) {
+                count--;
+                voidLines++;
+            } else break;
+        }
+        const limit = args.length - voidLines - 1;
+        let index = 0;
+        while (index < limit) {
+            const result = args[index].echo?.();
+            if (Array.isArray(result)) {
+                const length = /** @type {number} */ (result.shift());
+                if (
+                    index + 1 < args.length - voidLines &&
+                    args[index + 1] instanceof LeanTactic &&
+                    args[index + 1].tacticName === 'try' &&
+                    result.length === 2 &&
+                    result[0] === args[index] &&
+                    result[1] instanceof LeanTactic &&
+                    result[1].tacticName === 'echo'
+                ) {
+                    const e = result[1];
+                    result[1] = new LeanTactic('try', e, e.indent, e.level);
+                }
+                for (const echo of result) echo.parent = this;
+                const oldRef = args[index];
+                const inc = result.indexOf(oldRef);
+                const increment = inc >= 0 ? inc : 0;
+                args.splice(index, length, ...result);
+                index += increment;
+            } else {
+                index++;
+            }
+        }
+        index = limit;
+        const tactic = args[index];
+        if (tactic instanceof LeanTactic || tactic?.constructor?.name === 'Lean_match') {
+            const w = tactic.with;
+            if (w) {
+                if (w.sep() === '\n') {
+                    for (const c of w.args) c.echo?.();
+                } else if (tactic.sequential_tactic_combinator) {
+                    const block = tactic.sequential_tactic_combinator.arg;
+                    if (block instanceof LeanTacticBlock) block.echo?.();
+                    else tactic.sequential_tactic_combinator.echo?.();
+                }
+            } else if (tactic.sequential_tactic_combinator) {
+                tactic.sequential_tactic_combinator.echo?.();
+            } else {
+                const rb = tactic.repeat_block?.();
+                if (rb) rb.echo?.();
+            }
+        } else if (
+            tactic instanceof LeanTacticBlock ||
+            tactic instanceof LeanIte ||
+            tactic?.constructor?.name === 'LeanCalc'
+        ) {
+            tactic.echo?.();
+        }
     }
 
     insert_newline(caret, newlineCount, indent, next) {
@@ -4434,6 +4672,272 @@ class LeanTacticBlock extends LeanUnary {
             return line;
         }
         throw new Error('LeanTacticBlock.insert_line_comment: unexpected');
+    }
+
+    /**
+     * PHP `LeanTacticBlock::echo` (php/parser/lean.php ~8085–8310).
+     * @returns {void | (Lean | number)[]}
+     */
+    echo() {
+        const statements = this.arg;
+        if (!(statements instanceof LeanStatements)) return;
+        statements.echo();
+        const p = this.parent;
+        if (p instanceof LeanSequentialTacticCombinator) {
+            let token;
+            const gp = p.parent;
+            if (gp instanceof LeanTactic) {
+                const w = gp.with;
+                if (w) token = w.unique_token(statements.indent);
+            }
+            if (token == null) token = new LeanToken('⊢', statements.indent, statements.level);
+            statements.unshift(new LeanTactic('echo', token, statements.indent, statements.level));
+        } else if (p instanceof LeanStatements) {
+            const ix = p.args.indexOf(this);
+            if (ix < 0) return;
+            let tacticBlockCount = 0;
+            for (let i = ix - 1; i >= 0; i--) {
+                const stmt = p.args[i];
+                if (stmt.is_comment()) continue;
+                if (stmt instanceof LeanTacticBlock) {
+                    tacticBlockCount++;
+                    continue;
+                }
+                if (stmt instanceof LeanTactic) {
+                    if (stmt.tacticName === 'echo') continue;
+                    const st = stmt.tacticName;
+                    const indent = statements.indent;
+                    const level = statements.level;
+                    switch (st) {
+                        case 'rcases': {
+                            const w = stmt.with;
+                            const tokens = w?.tokens_bar_separated?.() ?? [];
+                            if (w && tokens.length) {
+                                let token = tokens[tacticBlockCount];
+                                if (Array.isArray(token)) {
+                                    token = token.filter((t) => t.text !== 'rfl');
+                                    token = token.map((t) => {
+                                        const c = t.clone();
+                                        c.indent = indent;
+                                        c.level = level;
+                                        return c;
+                                    });
+                                    token =
+                                        token.length === 1 ? token[0] : new LeanArgsCommaSeparated(token, indent, level);
+                                } else {
+                                    token = token.clone();
+                                    token.indent = indent;
+                                    token.level = level;
+                                }
+                                statements.unshift(new LeanTactic('echo', token, indent, level));
+                            }
+                            break;
+                        }
+                        case "cases'": {
+                            const w = stmt.with;
+                            const tokens = w?.tokens_space_separated?.() ?? [];
+                            if (w instanceof LeanWith && tokens.length) {
+                                const token = tokens[tacticBlockCount].clone();
+                                token.indent = statements.indent;
+                                token.level = statements.level;
+                                statements.unshift(
+                                    new LeanTactic('echo', token, statements.indent, statements.level),
+                                );
+                            }
+                            break;
+                        }
+                        case 'obtain': {
+                            const assign = stmt.arg;
+                            if (assign instanceof LeanAssign) {
+                                const bitOr = assign.lhs;
+                                if (bitOr instanceof LeanBitOr) {
+                                    const tokens = bitOr.tokens_bar_separated();
+                                    if (tokens.length) {
+                                        const token = tokens[tacticBlockCount].clone();
+                                        token.indent = statements.indent;
+                                        token.level = statements.level;
+                                        statements.unshift(
+                                            new LeanTactic('echo', token, statements.indent, statements.level),
+                                        );
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        case 'split_ifs': {
+                            const w = stmt.with;
+                            if (!(w instanceof LeanWith) || w.args.length !== 1) break;
+                            const toks = w.args[0];
+                            if (!(toks instanceof LeanArgsSpaceSeparated || toks instanceof LeanToken)) break;
+                            statements.unshift(
+                                new LeanTactic(
+                                    'echo',
+                                    new LeanToken('⊢', statements.indent, statements.level),
+                                    statements.indent,
+                                    statements.level,
+                                ),
+                            );
+                            const infoMap =
+                                typeof toks.tactic_block_info === 'function' ? toks.tactic_block_info() : {};
+                            const tbi = infoMap[tacticBlockCount] ?? null;
+                            if (tbi) {
+                                const span = tbi.map((token) => {
+                                    const c = token.cache;
+                                    return c && typeof c.size === 'number' ? c.size : 1;
+                                });
+                                    let rest = p.args.slice(ix);
+                                    const length = rest.length;
+                                    for (let si = 0; si < span.length; si++) {
+                                        const span_i = span[si];
+                                        let token = tbi[si].clone();
+                                        token.indent = this.indent;
+                                        const stop = this.tactic_block(rest, span_i);
+                                        let newList = rest.slice(0, stop);
+                                        const first = newList[0];
+                                        if (first instanceof LeanTactic && first.tacticName === 'echo') {
+                                            if (first.arg instanceof LeanToken)
+                                                first.arg = new LeanArgsCommaSeparated(
+                                                    [token, first.arg],
+                                                    this.indent,
+                                                    token.level,
+                                                );
+                                            else first.arg.unshift(token);
+                                        } else {
+                                            newList.unshift(
+                                                new LeanTactic('echo', token, this.indent, token.level),
+                                            );
+                                        }
+                                        const last = newList[newList.length - 1];
+                                        if (last instanceof LeanTactic && last.tacticName === 'echo') {
+                                            if (last.arg instanceof LeanToken)
+                                                last.arg = new LeanArgsCommaSeparated(
+                                                    [last.arg, token],
+                                                    this.indent,
+                                                    token.level,
+                                                );
+                                            else last.arg.push(token);
+                                        } else {
+                                            newList.push(new LeanTactic('echo', token, this.indent, token.level));
+                                        }
+                                        rest = [...newList, ...rest.slice(stop)];
+                                    }
+                                    if (ix > 0) {
+                                        const prev = p.args[ix - 1];
+                                        if (prev instanceof LeanTactic && prev.tacticName === 'echo') {
+                                            const first = rest.shift();
+                                            if (prev.arg instanceof LeanToken) {
+                                                if (first.arg instanceof LeanToken)
+                                                    prev.arg = new LeanArgsCommaSeparated(
+                                                        [prev.arg, first.arg],
+                                                        this.indent,
+                                                        prev.arg.level,
+                                                    );
+                                                else
+                                                    prev.arg = new LeanArgsCommaSeparated(
+                                                        [prev.arg, ...first.arg.args],
+                                                        this.indent,
+                                                        prev.arg.level,
+                                                    );
+                                            } else {
+                                                if (first.arg instanceof LeanToken) prev.arg.push(first.arg);
+                                                else for (const a of first.arg.args) prev.arg.push(a);
+                                            }
+                                        }
+                                    }
+                                    return [length, ...rest];
+                            }
+                            break;
+                        }
+                        case 'by_cases': {
+                            const colon = stmt.arg;
+                            if (colon instanceof LeanColon && colon.lhs instanceof LeanToken) {
+                                const spaceToks = colon.lhs.tokens_space_separated?.() ?? [];
+                                const token = spaceToks[tacticBlockCount];
+                                if (token) {
+                                    const c = token.clone();
+                                    c.indent = this.indent;
+                                    c.level = this.level;
+                                    const echo = new LeanTactic('echo', c, this.indent, this.level);
+                                    return [1, echo, this, echo.clone()];
+                                }
+                            }
+                            break;
+                        }
+                        case 'split': {
+                            const at = stmt.at;
+                            if (at) {
+                                const t = at.arg;
+                                if (t instanceof LeanToken) {
+                                    const c = t.clone();
+                                    c.indent = statements.indent;
+                                    c.level = statements.level;
+                                    statements.unshift(
+                                        new LeanTactic('echo', c, statements.indent, statements.level),
+                                    );
+                                }
+                            }
+                            break;
+                        }
+                        default: {
+                            let token = new LeanToken('⊢', statements.indent, statements.level);
+                            const stc = stmt.sequential_tactic_combinator;
+                            if (stc) {
+                                const tactic = stc.arg;
+                                const tacticToken = tactic?.get_echo_token?.();
+                                if (tacticToken) {
+                                    if (tacticToken instanceof LeanArgsCommaSeparated) {
+                                        tacticToken.push(token);
+                                        token = tacticToken;
+                                    } else {
+                                        token = new LeanArgsCommaSeparated(
+                                            [tacticToken, token],
+                                            statements.indent,
+                                            statements.level,
+                                        );
+                                    }
+                                }
+                            }
+                            statements.unshift(new LeanTactic('echo', token, statements.indent, statements.level));
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    /** PHP `LeanTacticBlock::tactic_block` (php/parser/lean.php ~8401–8407). */
+    tactic_block(args, span) {
+        let count = 0;
+        let j = 0;
+        while (count < span && j < args.length) {
+            if (args[j] instanceof LeanTacticBlock) count++;
+            j++;
+        }
+        return j;
+    }
+
+    /**
+     * PHP `LeanTacticBlock::split` (php/parser/lean.php ~8383–8394).
+     * @param {Record<string, unknown>} [syntax]
+     */
+    split(syntax) {
+        if (this.arg instanceof LeanStatements) {
+            const self = this.clone();
+            const stmts = self.arg;
+            self.arg = new LeanCaret(this.indent, self.arg.level);
+            const statements = [self];
+            stmts.swap_echo_star(syntax, statements);
+            return statements;
+        }
+        return [this];
+    }
+
+    /** PHP `LeanTacticBlock::set_line` (php/parser/lean.php ~8375–8380). */
+    set_line(line) {
+        this.line = line;
+        if (this.arg instanceof LeanStatements) line++;
+        return this.arg.set_line(line);
     }
 
     get operator() {
