@@ -73,11 +73,6 @@ export const token2classname = Object.freeze({
     '∣': 'LeanDvd',
 });
 
-/** PHP `std\isspace` on a single token string. */
-function isSpaceToken(s) {
-    return typeof s === 'string' && /^\s+$/u.test(s);
-}
-
 /** Lean identifier continuation token (supports Unicode letters like Ξ). */
 function isIdentContinueToken(s) {
     return typeof s === 'string' && /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
@@ -571,8 +566,12 @@ export class Lean extends IndentedNode {
                     p = p.parent;
                 }
                 let func = `Lean_${token}`;
+                const sp = tokens[self.start_idx + 1];
                 const not =
-                    self.start_idx + 2 < count && isSpaceToken(tokens[self.start_idx + 1]) && tokens[self.start_idx + 2].toLowerCase() === 'not';
+                    self.start_idx + 2 < count &&
+                    typeof sp === 'string' &&
+                    sp.isspace() &&
+                    tokens[self.start_idx + 2].toLowerCase() === 'not';
                 if (not) {
                     self.start_idx += 2;
                     func += '_not';

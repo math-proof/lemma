@@ -886,10 +886,6 @@ String.prototype.fullmatch = function(regex){
 	);
 };
 
-String.prototype.isspace = function() {
-	return /^\s+$/.test(this);
-};
-
 String.prototype.regexp = function(flags='') {
     return new RegExp(this, flags);
 }

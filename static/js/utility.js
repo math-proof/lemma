@@ -10,6 +10,10 @@ String.prototype.format = function () {
   return this.replace(/%[sd]/g, () => args[index++]);
 };
 
+String.prototype.isspace = function () {
+  return /^\s+$/.test(this);
+};
+
 String.prototype.isString = true;
 
 Array.prototype.binary_search = function(value, cmp) {
