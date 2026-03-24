@@ -3627,8 +3627,32 @@ export class LeanCaret extends Lean {
     }
 }
 
+/** PHP `abstract class LeanCommand extends LeanUnary` (php/parser/lean.php ~5213–5234). */
 class LeanCommand extends LeanUnary {
     static input_priority = 27;
+
+    is_indented() {
+        return false;
+    }
+
+    /** PHP `__get('command')` matches `operator` for import/open/set_option/namespace. */
+    get command() {
+        return this.operator;
+    }
+
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+
+    /** PHP `LeanCommand::jsonSerialize` (php/parser/lean.php ~5220–5224). */
+    jsonSerialize() {
+        const inner = this.arg?.jsonSerialize?.() ?? this.arg;
+        return { [this.func]: inner };
+    }
 }
 
 /** PHP `Lean_fun` extends `LeanUnary` (php/parser/lean.php ~9019–9056). */
@@ -4061,9 +4085,6 @@ class Lean_import extends LeanCommand {
     get operator() {
         return 'import';
     }
-    strFormat() {
-        return `${this.operator} %s`;
-    }
 
     /** PHP `Lean_import::append` (php/parser/lean.php ~5253–5261): `$this->arg` (PHP sources use `$this->sql`; same slot). */
     append(func, _type) {
@@ -4096,9 +4117,6 @@ class Lean_open extends LeanCommand {
     get operator() {
         return 'open';
     }
-    strFormat() {
-        return `${this.operator} %s`;
-    }
 
     append(func, _type) {
         if (typeof func !== 'string') {
@@ -4128,9 +4146,6 @@ class Lean_set_option extends LeanCommand {
     }
     get operator() {
         return 'set_option';
-    }
-    strFormat() {
-        return `${this.operator} %s`;
     }
 
     append(func, _type) {
