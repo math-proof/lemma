@@ -78,9 +78,6 @@ function isIdentContinueToken(s) {
     return /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
 }
 
-/** Default input stack priority when a class omits `input_priority` (PHP uses per-class statics). */
-const DEFAULT_INPUT_PRIORITY = 47;
-
 /** @type {Map<string, typeof LeanBinary>} */
 const binaryClassCache = new Map();
 
@@ -88,7 +85,7 @@ const binaryClassCache = new Map();
  * @param {string} name
  * @param {number} [priority]
  */
-function getBinaryClass(name, priority = DEFAULT_INPUT_PRIORITY) {
+function getBinaryClass(name, priority = 47) {
     const key = `${name}@${priority}`;
     let C = binaryClassCache.get(key);
     if (C) return C;
@@ -110,7 +107,7 @@ function resolveBinaryCtor(funcName) {
     if (funcName === 'LeanProperty') return LeanProperty;
     const p =
         BINARY_PRIORITY_OVERRIDES[funcName] ??
-        (token2classname[/** @type {keyof typeof token2classname} */ (funcName)] ? 50 : DEFAULT_INPUT_PRIORITY);
+        (token2classname[/** @type {keyof typeof token2classname} */ (funcName)] ? 50 : 47);
     return getBinaryClass(funcName, p);
 }
 
@@ -1110,7 +1107,7 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
 }
 
 export class LeanBinary extends LeanArgs {
-    static input_priority = DEFAULT_INPUT_PRIORITY;
+    static input_priority = 47;
     /**
      * @param {Lean} lhs
      * @param {Lean} rhs
@@ -1295,7 +1292,7 @@ export class LeanArgsIndented extends LeanBinary {
 }
 
 export class LeanUnary extends LeanArgs {
-    static input_priority = DEFAULT_INPUT_PRIORITY;
+    static input_priority = 47;
     /**
      * @param {Lean} arg
      * @param {number} indent
