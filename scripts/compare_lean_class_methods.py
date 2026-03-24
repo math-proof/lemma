@@ -82,6 +82,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanAssign extends LeanBinary\n{",
         "\n}\n\ntrait LeanProp",
     ),
+    "leanbinaryboolean": (
+        "abstract class LeanBinaryBoolean extends LeanBinary\n{",
+        "\n}\n\nabstract class LeanRelational extends LeanBinaryBoolean",
+    ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
         "\n}\n\nLeanToken::$subscript_keys",
@@ -99,6 +103,7 @@ MEMBER_HEAD = re.compile(
     r"|(?:public\s+)?static\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
     r"|(?:public|protected|private)\s+\$\w+"
     r"|static\s+\$\w+"
+    r"|use\s+[\w\\]+(?:\s*,\s*[\w\\]+)*\s*;"
     r")"
 )
 
@@ -126,7 +131,7 @@ def _declaration_segments(body: str) -> tuple[str, list[str]]:
 
 
 def split_methods(body: str, preset: str) -> dict[str, str]:
-    if preset == "leantoken":
+    if preset in ("leantoken", "leanbinaryboolean"):
         _, segments = _declaration_segments(body)
         out: dict[str, str] = {}
         for seg in segments:

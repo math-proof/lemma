@@ -2521,20 +2521,7 @@ trait LeanProp
 
 abstract class LeanBinaryBoolean extends LeanBinary
 {
-    public function sep()
-    {
-        return $this->rhs instanceof LeanStatements ? "\n" : ' ';
-    }
-    public function is_indented()
-    {
-        return $this->parent instanceof LeanStatements;
-    }
-
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "%s $this->operator$sep%s";
-    }
+    use LeanProp;
 
     public function append($new, $type)
     {
@@ -2551,8 +2538,15 @@ abstract class LeanBinaryBoolean extends LeanBinary
         }
     }
 
-    use LeanProp;
-
+    public function insert_colon($caret)
+    {
+        if ($caret === $this->rhs) {
+            $new = new LeanCaret($caret->indent, $caret->level);
+            $this->parent->replace($this, new LeanColon($this, $new, $caret->indent, $caret->level));
+            return $new;
+        }
+        return $caret->push_binary('LeanColon');
+    }
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
         if ($this->rhs === $caret && $indent > $this->indent) {
@@ -2566,15 +2560,21 @@ abstract class LeanBinaryBoolean extends LeanBinary
         return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
 
-    public function insert_colon($caret)
+    public function is_indented()
     {
-        if ($caret === $this->rhs) {
-            $new = new LeanCaret($caret->indent, $caret->level);
-            $this->parent->replace($this, new LeanColon($this, $new, $caret->indent, $caret->level));
-            return $new;
-        }
-        return $caret->push_binary('LeanColon');
+        return $this->parent instanceof LeanStatements;
     }
+
+    public function sep()
+    {
+        return $this->rhs instanceof LeanStatements ? "\n" : ' ';
+    }
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "%s $this->operator$sep%s";
+    }
+
 }
 
 abstract class LeanRelational extends LeanBinaryBoolean

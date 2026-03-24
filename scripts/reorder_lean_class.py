@@ -20,6 +20,7 @@ Presets (see php/parser/README.md):
   leanproperty    — class LeanProperty
   leancolon       — class LeanColon
   leanassign      — class LeanAssign
+  leanbinaryboolean — abstract class LeanBinaryBoolean (members-first: use + methods)
   leantoken       — class LeanToken (data members first, then sorted methods)
 
 Syntax check (match http://localhost/info.php), e.g. WAMP PHP 8.0.x:
@@ -106,6 +107,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanAssign extends LeanBinary\n{",
         "\n}\n\ntrait LeanProp",
     ),
+    "leanbinaryboolean": (
+        "abstract class LeanBinaryBoolean extends LeanBinary\n{",
+        "\n}\n\nabstract class LeanRelational extends LeanBinaryBoolean",
+    ),
     "leantoken": (
         "class LeanToken extends Lean\n{",
         "\n}\n\nLeanToken::$subscript_keys",
@@ -124,6 +129,7 @@ MEMBER_HEAD = re.compile(
     r"|(?:public\s+)?static\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
     r"|(?:public|protected|private)\s+\$\w+"
     r"|static\s+\$\w+"
+    r"|use\s+[\w\\]+(?:\s*,\s*[\w\\]+)*\s*;"
     r")"
 )
 
@@ -220,14 +226,14 @@ def main() -> int:
     args = ap.parse_args()
     start, end = PRESETS[args.preset]
     text = LEAN.read_text(encoding="utf-8")
-    if args.preset == "leantoken":
+    if args.preset in ("leantoken", "leanbinaryboolean"):
         new_text = reorder_class_members_first(text, start, end)
     else:
         new_text = reorder_class(text, start, end)
     LEAN.write_text(new_text, encoding="utf-8", newline="\n")
     # count methods
     body = new_text[new_text.index(start) + len(start) : new_text.index(end, new_text.index(start))]
-    if args.preset == "leantoken":
+    if args.preset in ("leantoken", "leanbinaryboolean"):
         _, segs = _declaration_segments(body)
         n = sum(1 for seg in segs if _is_method_segment(seg))
     else:
