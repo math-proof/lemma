@@ -5397,11 +5397,12 @@ export class LeanTactic extends LeanUnary {
     }
 
     /**
-     * Port of PHP LeanTactic::insert for modifiers like "at", "with" (php/parser/lean.php).
-     * When "at h_Ξ" follows "rw [← h_band_part]", the modifier is pushed as a new arg.
+     * PHP `LeanSyntax::insert` (php/parser/lean.php ~6946–6954); `LeanTactic` inherits it.
+     * Last arg is the active caret → push `new Ctor(freshCaret, indent, level)` (modifiers `at` / `with`, etc.).
      */
-    insert(caret, func, type) {
-        if (type === 'modifier' && this.args[this.args.length - 1] === caret) {
+    insert(caret, func, _type) {
+        const last = this.args[this.args.length - 1];
+        if (caret === last) {
             const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
             const newCaret = new LeanCaret(this.indent, caret.level);
             this.push(new Ctor(newCaret, this.indent, caret.level));

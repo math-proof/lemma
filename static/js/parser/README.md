@@ -127,7 +127,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — `LeanArgsCommaNewLineSeparated`: `stack_priority` (17), `insert`, `is_indented`, `latexFormat` (~6856–6919); `insert_newline` still extends PHP with `push_args_indented` for multiline `⟨…⟩` / `[…]`; `node scripts/test-lean-parser.mjs` — corpus OK.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — `LeanTactic.insert` matches PHP `LeanSyntax::insert` (~6946–6954): when caret is `end(args)`, push `Ctor(newCaret, indent, level)` for any insert type (not only `modifier`); `node scripts/test-lean-parser.mjs` — corpus OK.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
