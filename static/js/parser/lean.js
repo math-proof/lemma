@@ -4036,31 +4036,102 @@ class Lean_bigcup extends LeanBigOperator {
 
 /** PHP Lean_import (php/parser/lean.php ~5237–5274): "import %s". */
 class Lean_import extends LeanCommand {
+    get stack_priority() {
+        return 27;
+    }
     get operator() {
         return 'import';
     }
     strFormat() {
         return `${this.operator} %s`;
     }
+
+    /** PHP `Lean_import::append` (php/parser/lean.php ~5253–5261): `$this->arg` (PHP sources use `$this->sql`; same slot). */
+    append(func, _type) {
+        if (typeof func !== 'string') {
+            throw new Error(`append is unexpected for ${this.constructor.name}`);
+        }
+        const Ctor = getLeanClass(func);
+        const level = this.arg.level;
+        const c = new LeanCaret(this.indent, level);
+        this.arg = new Ctor(c, this.indent, level);
+        return c;
+    }
+
+    /** PHP `Lean_import::push_attr` (php/parser/lean.php ~5263–5270). */
+    push_attr(caret) {
+        if (caret === this.arg) {
+            const new_ = new LeanCaret(this.indent, caret.level);
+            this.arg = new LeanProperty(this.arg, new_, this.indent, caret.level);
+            return new_;
+        }
+        throw new Error(`push_attr is unexpected for ${this.constructor.name}`);
+    }
 }
 
 /** PHP Lean_open (php/parser/lean.php ~5275–5312): "open %s". */
 class Lean_open extends LeanCommand {
+    get stack_priority() {
+        return 27;
+    }
     get operator() {
         return 'open';
     }
     strFormat() {
         return `${this.operator} %s`;
     }
+
+    append(func, _type) {
+        if (typeof func !== 'string') {
+            throw new Error(`append is unexpected for ${this.constructor.name}`);
+        }
+        const Ctor = getLeanClass(func);
+        const level = this.arg.level;
+        const c = new LeanCaret(this.indent, level);
+        this.arg = new Ctor(c, this.indent, level);
+        return c;
+    }
+
+    push_attr(caret) {
+        if (caret === this.arg) {
+            const new_ = new LeanCaret(this.indent, caret.level);
+            this.arg = new LeanProperty(this.arg, new_, this.indent, caret.level);
+            return new_;
+        }
+        throw new Error(`push_attr is unexpected for ${this.constructor.name}`);
+    }
 }
 
 /** PHP Lean_set_option (php/parser/lean.php ~5313+): "set_option %s". */
 class Lean_set_option extends LeanCommand {
+    get stack_priority() {
+        return 27;
+    }
     get operator() {
         return 'set_option';
     }
     strFormat() {
         return `${this.operator} %s`;
+    }
+
+    append(func, _type) {
+        if (typeof func !== 'string') {
+            throw new Error(`append is unexpected for ${this.constructor.name}`);
+        }
+        const Ctor = getLeanClass(func);
+        const level = this.arg.level;
+        const c = new LeanCaret(this.indent, level);
+        this.arg = new Ctor(c, this.indent, level);
+        return c;
+    }
+
+    push_attr(caret) {
+        if (caret === this.arg) {
+            const new_ = new LeanCaret(this.indent, caret.level);
+            this.arg = new LeanProperty(this.arg, new_, this.indent, caret.level);
+            return new_;
+        }
+        throw new Error(`push_attr is unexpected for ${this.constructor.name}`);
     }
 
     /** PHP `Lean_set_option::echo` (php/parser/lean.php ~5350–5362): multiply maxHeartbeats by 5 for proof echo. */

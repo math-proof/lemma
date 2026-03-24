@@ -42,7 +42,7 @@ JS flattens some PHP hierarchies:
 ### Known Gaps
 - `Lean_match` / `LeanWith`: echo and other edge cases may still differ from PHP in corner cases; `LeanBar.split` / `LeanCalc.split` use deep `clone()` like PHP
 - Nested proof echo: worth spot-diffing `LeanTacticBlock::echo` / `LeanStatements::echo` against PHP after corpus changes
-- Recent parity: **`Lean_let` / `Lean_have` / `Lean_show` → `LeanSyntax`** (moved below `LeanSyntax` in `lean.js`; `echo`, `get_echo_token`, `insert_newline`, `insert_sequential_tactic_combinator`, `split`, PHP-shaped `jsonSerialize` for let/show), **`LeanAssign::split`**, **`LeanSyntax` `get sequential_tactic_combinator`**, `LeanArgs::traverse` (preorder over `args`, matching PHP; base `Lean::traverse` still yields only `this`), `LeanTacticBlock` (`echo`, `split`, `tactic_block`, `set_line`), `LeanArgsSpaceSeparated` (`tokens_space_separated`, `construct_prefix_tree`, `tactic_block_info`, `operand_count`), `LeanSequentialTacticCombinator`, `LeanTactic` echo/split helpers, `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
+- Recent parity: **`Lean_import` / `Lean_open` / `Lean_set_option`**: PHP `append` + `push_attr` + explicit `stack_priority` 27 (PHP ~5253–5360); **`Lean_let` / `Lean_have` / `Lean_show` → `LeanSyntax`** (moved below `LeanSyntax` in `lean.js`; `echo`, `get_echo_token`, `insert_newline`, `insert_sequential_tactic_combinator`, `split`, PHP-shaped `jsonSerialize` for let/show), **`LeanAssign::split`**, **`LeanSyntax` `get sequential_tactic_combinator`**, `LeanArgs::traverse` (preorder over `args`, matching PHP; base `Lean::traverse` still yields only `this`), `LeanTacticBlock` (`echo`, `split`, `tactic_block`, `set_line`), `LeanArgsSpaceSeparated` (`tokens_space_separated`, `construct_prefix_tree`, `tactic_block_info`, `operand_count`), `LeanSequentialTacticCombinator`, `LeanTactic` echo/split helpers, `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
 
 ### Running Tests
 ```bash
@@ -128,7 +128,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — **`Lean_let` / `Lean_have` / `Lean_show`** extend **`LeanSyntax`** (PHP ~8790–9017); **`LeanAssign.split`** (~2494–2504); classes placed after **`LeanSyntax`** in source order; `node scripts/test-lean-parser.mjs` — corpus OK.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — **`Lean_import` / `Lean_open` / `Lean_set_option`**: `append`, `push_attr`, `get stack_priority` → 27 (PHP ~5253–5360; JS uses `this.arg`, not PHP’s typo `$this->sql`); `node scripts/test-lean-parser.mjs` — corpus OK.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
