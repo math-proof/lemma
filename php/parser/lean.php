@@ -5448,46 +5448,6 @@ class LeanBar extends LeanUnary
 class LeanRightarrow extends LeanBinary
 {
     public static $input_priority = 19; // same as LeanColon::$input_priority;
-    public function sep()
-    {
-        return $this->rhs instanceof LeanStatements ? "\n" : ($this->rhs instanceof LeanCaret ? '' : ' ');
-    }
-
-    public function is_indented()
-    {
-        return false;
-    }
-
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        $lhs = "%s";
-        if (!($this->lhs instanceof LeanCaret))
-            $lhs .= ' ';
-        return "$lhs$this->operator$sep%s";
-    }
-
-    public function insert_newline($caret, $newline_count, $indent, $next)
-    {
-        if ($this->indent <= $indent && $caret === $this->rhs) {
-            if ($caret instanceof LeanCaret || $caret instanceof LeanLineComment) {
-                if ($indent == $this->indent)
-                    $indent = $this->indent + 2;
-                    $caret->indent = $indent;
-                    $this->rhs = new LeanStatements([$caret], $indent, $caret->level);
-                    if (!($caret instanceof LeanCaret))
-                        ++$newline_count;
-                    for ($i = 1; $i < $newline_count; ++$i) {
-                        $caret = new LeanCaret($indent, $caret->level);
-                        $this->rhs->push($caret);
-                    }
-                    return $caret;
-            }
-        }
-
-        return parent::insert_newline($caret, $newline_count, $indent, $next);
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -5496,11 +5456,6 @@ class LeanRightarrow extends LeanBinary
             default:
                 return parent::__get($vname);
         }
-    }
-
-    public function relocate_last_comment()
-    {
-        $this->rhs->relocate_last_comment();
     }
 
     public function echo()
@@ -5586,44 +5541,56 @@ class LeanRightarrow extends LeanBinary
         if ($this->parent)
             return $this->parent->insert($this, $func, $type);
     }
-}
-
-class Lean_rightarrow extends LeanBinary
-{
-    public static $input_priority = 25; // right associative operator
-    public function sep()
-    {
-        return $this->rhs instanceof LeanStatements ? "\n" : ' ';
-    }
-
-    public function is_indented()
-    {
-        return $this->parent instanceof LeanStatements;
-    }
-
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "%s $this->operator$sep%s";
-    }
-
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
-        if ($this->indent <= $indent && $caret instanceof LeanCaret && $caret === $this->rhs) {
-            if ($indent == $this->indent)
-                $indent = $this->indent + 2;
-            $caret->indent = $indent;
-            $this->rhs = new LeanStatements([$caret], $indent, $caret->level);
-            for ($i = 1; $i < $newline_count; ++$i) {
-                $caret = new LeanCaret($indent, $caret->level);
-                $this->rhs->push($caret);
+        if ($this->indent <= $indent && $caret === $this->rhs) {
+            if ($caret instanceof LeanCaret || $caret instanceof LeanLineComment) {
+                if ($indent == $this->indent)
+                    $indent = $this->indent + 2;
+                    $caret->indent = $indent;
+                    $this->rhs = new LeanStatements([$caret], $indent, $caret->level);
+                    if (!($caret instanceof LeanCaret))
+                        ++$newline_count;
+                    for ($i = 1; $i < $newline_count; ++$i) {
+                        $caret = new LeanCaret($indent, $caret->level);
+                        $this->rhs->push($caret);
+                    }
+                    return $caret;
             }
-            return $caret;
         }
 
         return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
 
+    public function is_indented()
+    {
+        return false;
+    }
+
+    public function relocate_last_comment()
+    {
+        $this->rhs->relocate_last_comment();
+    }
+
+    public function sep()
+    {
+        return $this->rhs instanceof LeanStatements ? "\n" : ($this->rhs instanceof LeanCaret ? '' : ' ');
+    }
+
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        $lhs = "%s";
+        if (!($this->lhs instanceof LeanCaret))
+            $lhs .= ' ';
+        return "$lhs$this->operator$sep%s";
+    }
+
+}
+
+class Lean_rightarrow extends LeanBinary
+{
+    public static $input_priority = 25; // right associative operator
     public function __get($vname)
     {
         switch ($vname) {
@@ -5636,31 +5603,6 @@ class Lean_rightarrow extends LeanBinary
         }
     }
 
-    public function isProp($vars)
-    {
-        [$lhs, $rhs] = $this->args;
-        return ($lhs instanceof LeanToken && (($vars["$lhs"] ?? 'Prop') == 'Prop') || $lhs->isProp($vars)) &&
-            ($rhs instanceof LeanToken && (($vars["$rhs"] ?? 'Prop') == 'Prop') || $rhs->isProp($vars));
-    }
-}
-
-class Lean_mapsto extends LeanBinary
-{
-    public function sep()
-    {
-        return $this->rhs instanceof LeanStatements ? "\n" : ' ';
-    }
-    public function is_indented()
-    {
-        return false;
-    }
-
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "%s $this->operator$sep%s";
-    }
-
     public function insert_newline($caret, $newline_count, $indent, $next)
     {
         if ($this->indent <= $indent && $caret instanceof LeanCaret && $caret === $this->rhs) {
@@ -5678,6 +5620,32 @@ class Lean_mapsto extends LeanBinary
         return parent::insert_newline($caret, $newline_count, $indent, $next);
     }
 
+    public function is_indented()
+    {
+        return $this->parent instanceof LeanStatements;
+    }
+
+    public function isProp($vars)
+    {
+        [$lhs, $rhs] = $this->args;
+        return ($lhs instanceof LeanToken && (($vars["$lhs"] ?? 'Prop') == 'Prop') || $lhs->isProp($vars)) &&
+            ($rhs instanceof LeanToken && (($vars["$rhs"] ?? 'Prop') == 'Prop') || $rhs->isProp($vars));
+    }
+    public function sep()
+    {
+        return $this->rhs instanceof LeanStatements ? "\n" : ' ';
+    }
+
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "%s $this->operator$sep%s";
+    }
+
+}
+
+class Lean_mapsto extends LeanBinary
+{
     public function __get($vname)
     {
         switch ($vname) {
@@ -5689,20 +5657,42 @@ class Lean_mapsto extends LeanBinary
                 return parent::__get($vname);
         }
     }
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($this->indent <= $indent && $caret instanceof LeanCaret && $caret === $this->rhs) {
+            if ($indent == $this->indent)
+                $indent = $this->indent + 2;
+            $caret->indent = $indent;
+            $this->rhs = new LeanStatements([$caret], $indent, $caret->level);
+            for ($i = 1; $i < $newline_count; ++$i) {
+                $caret = new LeanCaret($indent, $caret->level);
+                $this->rhs->push($caret);
+            }
+            return $caret;
+        }
+
+        return parent::insert_newline($caret, $newline_count, $indent, $next);
+    }
+
+    public function is_indented()
+    {
+        return false;
+    }
+
+    public function sep()
+    {
+        return $this->rhs instanceof LeanStatements ? "\n" : ' ';
+    }
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "%s $this->operator$sep%s";
+    }
+
 }
 
 class Lean_leftarrow extends LeanUnary
 {
-    public function strFormat()
-    {
-        return "$this->operator %s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command %s";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -5712,26 +5702,21 @@ class Lean_leftarrow extends LeanUnary
                 return parent::__get($vname);
         }
     }
-}
-
-class Lean_lnot extends LeanUnary
-{
-    public static $input_priority = 40;
-    public function is_indented()
-    {
-        return $this->parent instanceof LeanStatements;
-    }
-
-    public function strFormat()
-    {
-        return "$this->operator%s";
-    }
-
     public function latexFormat()
     {
         return "$this->command %s";
     }
 
+    public function strFormat()
+    {
+        return "$this->operator %s";
+    }
+
+}
+
+class Lean_lnot extends LeanUnary
+{
+    public static $input_priority = 40;
     use LeanProp;
 
     public function __get($vname)
@@ -5743,19 +5728,9 @@ class Lean_lnot extends LeanUnary
                 return parent::__get($vname);
         }
     }
-}
-
-class LeanNot extends LeanUnary
-{
-    public static $input_priority = 40;
     public function is_indented()
     {
         return $this->parent instanceof LeanStatements;
-    }
-
-    public function strFormat()
-    {
-        return "$this->operator%s";
     }
 
     public function latexFormat()
@@ -5763,6 +5738,16 @@ class LeanNot extends LeanUnary
         return "$this->command %s";
     }
 
+    public function strFormat()
+    {
+        return "$this->operator%s";
+    }
+
+}
+
+class LeanNot extends LeanUnary
+{
+    public static $input_priority = 40;
     use LeanProp;
 
     public function __get($vname)
@@ -5776,6 +5761,21 @@ class LeanNot extends LeanUnary
                 return parent::__get($vname);
         }
     }
+    public function is_indented()
+    {
+        return $this->parent instanceof LeanStatements;
+    }
+
+    public function latexFormat()
+    {
+        return "$this->command %s";
+    }
+
+    public function strFormat()
+    {
+        return "$this->operator%s";
+    }
+
 }
 
 class Lean_match extends LeanArgs

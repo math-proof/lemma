@@ -222,6 +222,30 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanBar extends LeanUnary\n{",
         "\n}\n\nclass LeanRightarrow extends LeanBinary",
     ),
+    "leanRightarrow": (
+        "class LeanRightarrow extends LeanBinary\n{",
+        "\n}\n\nclass Lean_rightarrow extends LeanBinary",
+    ),
+    "leanrightarrow": (
+        "class Lean_rightarrow extends LeanBinary\n{",
+        "\n}\n\nclass Lean_mapsto extends LeanBinary",
+    ),
+    "leanmapsto": (
+        "class Lean_mapsto extends LeanBinary\n{",
+        "\n}\n\nclass Lean_leftarrow extends LeanUnary",
+    ),
+    "leanleftarrow": (
+        "class Lean_leftarrow extends LeanUnary\n{",
+        "\n}\n\nclass Lean_lnot extends LeanUnary",
+    ),
+    "leanlnot": (
+        "class Lean_lnot extends LeanUnary\n{",
+        "\n}\n\nclass LeanNot extends LeanUnary",
+    ),
+    "leannot": (
+        "class LeanNot extends LeanUnary\n{",
+        "\n}\n\nclass Lean_match extends LeanArgs",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -280,6 +304,8 @@ SEGMENT_SPLIT_PRESETS = frozenset(
         "leangotelem",
         "leangotelemque",
         "leangotelemquote",
+        "leanlnot",
+        "leannot",
         "leanstatements",
         "leantoken",
     }

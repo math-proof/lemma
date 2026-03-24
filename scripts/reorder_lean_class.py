@@ -55,6 +55,12 @@ Presets (see php/parser/README.md):
   leanopen        — class Lean_open
   leansetoption   — class Lean_set_option
   leanbar         — class LeanBar
+  leanRightarrow  — class LeanRightarrow
+  leanrightarrow  — class Lean_rightarrow
+  leanmapsto      — class Lean_mapsto
+  leanleftarrow   — class Lean_leftarrow
+  leanlnot        — class Lean_lnot (members-first: use + methods)
+  leannot         — class LeanNot (members-first)
   leandiv         — class LeanDiv
   leanbitor       — class LeanBitOr
   leantoken       — class LeanToken (data members first, then sorted methods)
@@ -283,6 +289,30 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanBar extends LeanUnary\n{",
         "\n}\n\nclass LeanRightarrow extends LeanBinary",
     ),
+    "leanRightarrow": (
+        "class LeanRightarrow extends LeanBinary\n{",
+        "\n}\n\nclass Lean_rightarrow extends LeanBinary",
+    ),
+    "leanrightarrow": (
+        "class Lean_rightarrow extends LeanBinary\n{",
+        "\n}\n\nclass Lean_mapsto extends LeanBinary",
+    ),
+    "leanmapsto": (
+        "class Lean_mapsto extends LeanBinary\n{",
+        "\n}\n\nclass Lean_leftarrow extends LeanUnary",
+    ),
+    "leanleftarrow": (
+        "class Lean_leftarrow extends LeanUnary\n{",
+        "\n}\n\nclass Lean_lnot extends LeanUnary",
+    ),
+    "leanlnot": (
+        "class Lean_lnot extends LeanUnary\n{",
+        "\n}\n\nclass LeanNot extends LeanUnary",
+    ),
+    "leannot": (
+        "class LeanNot extends LeanUnary\n{",
+        "\n}\n\nclass Lean_match extends LeanArgs",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -304,6 +334,8 @@ MEMBERS_FIRST_PRESETS = frozenset(
         "leangotelem",
         "leangotelemque",
         "leangotelemquote",
+        "leanlnot",
+        "leannot",
         "leanstatements",
         "leantoken",
     }
