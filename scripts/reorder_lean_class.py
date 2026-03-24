@@ -21,6 +21,7 @@ Presets (see php/parser/README.md):
   leancolon       — class LeanColon
   leanassign      — class LeanAssign
   leanbinaryboolean — abstract class LeanBinaryBoolean (members-first: use + methods)
+  leanrelational  — abstract class LeanRelational
   leantoken       — class LeanToken (data members first, then sorted methods)
 
 Syntax check (match http://localhost/info.php), e.g. WAMP PHP 8.0.x:
@@ -110,6 +111,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leanbinaryboolean": (
         "abstract class LeanBinaryBoolean extends LeanBinary\n{",
         "\n}\n\nabstract class LeanRelational extends LeanBinaryBoolean",
+    ),
+    "leanrelational": (
+        "abstract class LeanRelational extends LeanBinaryBoolean\n{",
+        "\n}\n\n\nclass Lean_gt extends LeanRelational",
     ),
     "leantoken": (
         "class LeanToken extends Lean\n{",

@@ -2580,16 +2580,16 @@ abstract class LeanBinaryBoolean extends LeanBinary
 abstract class LeanRelational extends LeanBinaryBoolean
 {
     public static $input_priority = 50;
+    public function insert_tactic($caret, $token)
+    {
+        return $this->insert_word($caret, $token);
+    }
     public function latexArgs(&$syntax = null)
     {
         [$lhs, $rhs] = $this->strip_parenthesis();
         return [$lhs->toLatex($syntax), $rhs->toLatex($syntax)];
     }
 
-    public function insert_tactic($caret, $token)
-    {
-        return $this->insert_word($caret, $token);
-    }
 }
 
 
