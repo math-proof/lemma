@@ -5,6 +5,7 @@ Presets (see php/parser/README.md):
   lean            — abstract class Lean
   leancaret       — class LeanCaret
   leanlinecomment — class LeanLineComment
+  leanblockcomment — class LeanBlockComment
   leantoken       — class LeanToken (data members first, then sorted methods)
 
 Syntax check (match http://localhost/info.php), e.g. WAMP PHP 8.0.x:
@@ -30,6 +31,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leanlinecomment": (
         "class LeanLineComment extends Lean\n{",
         "\n}\n\nclass LeanBlockComment extends Lean",
+    ),
+    "leanblockcomment": (
+        "class LeanBlockComment extends Lean\n{",
+        "\n}\n\nclass LeanDocString extends LeanBlockComment",
     ),
     "leantoken": (
         "class LeanToken extends Lean\n{",

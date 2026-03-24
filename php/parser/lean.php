@@ -1315,24 +1315,23 @@ class LeanBlockComment extends Lean
         $this->text = $text;
     }
 
+    public function is_comment()
+    {
+        return true;
+    }
     public function is_indented()
     {
         return true;
     }
-    public function sep()
-    {
-        return '';
-    }
-    public function strFormat()
-    {
-        return "/-$this->text-/";
-    }
-
     public function jsonSerialize(): mixed
     {
         return [$this->func => $this->text];
     }
 
+    public function sep()
+    {
+        return '';
+    }
     public function set_line($line)
     {
         $this->line = $line;
@@ -1340,10 +1339,11 @@ class LeanBlockComment extends Lean
         return $line;
     }
 
-    public function is_comment()
+    public function strFormat()
     {
-        return true;
+        return "/-$this->text-/";
     }
+
 }
 
 class LeanDocString extends LeanBlockComment
