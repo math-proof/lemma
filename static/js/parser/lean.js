@@ -1985,6 +1985,16 @@ export class LeanRightarrow extends LeanBinary {
         this.rhs.relocateLastComment();
     }
 
+    /** PHP `LeanRightarrow::insert` (php/parser/lean.php ~5533–5543). */
+    insert(caret, func, type) {
+        if (this.rhs === caret && caret instanceof LeanCaret) {
+            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+            return caret;
+        }
+        if (this.parent) return this.parent.insert(this, func, type);
+    }
+
     /**
      * PHP `LeanRightarrow::echo` (php/parser/lean.php ~5506–5576): inject `echo` tactic for match/induction arms.
      */
@@ -2446,17 +2456,22 @@ class LeanBar extends LeanUnary {
     echo() {
         this.arg?.echo?.();
     }
-    split(_syntax) {
+    /**
+     * PHP `LeanBar::split` (php/parser/lean.php ~5424–5438): clone this bar, then detach rhs statements on the clone only.
+     * @param {Record<string, unknown>} [syntax]
+     */
+    split(syntax) {
         const arrow = this.arg;
         if (arrow instanceof LeanRightarrow) {
-            const stmts = arrow.rhs;
+            const self = this.clone();
+            const statements = [self];
+            const clonedArrow = /** @type {LeanRightarrow} */ (self.arg);
+            const stmts = clonedArrow.rhs;
             if (stmts instanceof LeanStatements) {
-                const self = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
-                const statements = [self];
-                arrow.rhs = new LeanCaret(arrow.indent, stmts.level);
-                stmts.swap_echo_star?.(_syntax, statements);
-                return statements;
+                clonedArrow.rhs = new LeanCaret(clonedArrow.indent, stmts.level);
+                stmts.swap_echo_star(syntax, statements);
             }
+            return statements;
         }
         return [this];
     }
