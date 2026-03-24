@@ -1076,6 +1076,14 @@ export class LeanArgs extends Lean {
         );
     }
 
+    /** PHP `LeanArgs::traverse` (php/parser/lean.php ~1484–1491). */
+    *traverse() {
+        yield this;
+        for (const arg of this.args) {
+            if (arg != null) yield* arg.traverse();
+        }
+    }
+
     // insert_comma, insert_semicolon, insert_assign, push_right, push_or, push_post_unary, etc.
     // inherit from `Lean` (php/parser/lean.php) — delegate to parent; do not override with throws.
 }
