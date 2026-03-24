@@ -5217,35 +5217,25 @@ abstract class LeanCommand extends LeanUnary
         return false;
     }
 
-    public function strFormat()
-    {
-        return "$this->operator %s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command %s";
-    }
     public function jsonSerialize(): mixed
     {
         return [
             $this->func => $this->arg->jsonSerialize(),
         ];
     }
+    public function latexFormat()
+    {
+        return "$this->command %s";
+    }
+    public function strFormat()
+    {
+        return "$this->operator %s";
+    }
+
 }
 
 class Lean_import extends LeanCommand
 {
-    public function push_attr($caret)
-    {
-        if ($caret === $this->arg) {
-            $new = new LeanCaret($this->indent, $caret->level);
-            $this->arg = new LeanProperty($this->arg, $new, $this->indent, $caret->level);
-            return $new;
-        }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -5270,10 +5260,6 @@ class Lean_import extends LeanCommand
         }
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
-}
-
-class Lean_open extends LeanCommand
-{
     public function push_attr($caret)
     {
         if ($caret === $this->arg) {
@@ -5284,6 +5270,10 @@ class Lean_open extends LeanCommand
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
+}
+
+class Lean_open extends LeanCommand
+{
     public function __get($vname)
     {
         switch ($vname) {
@@ -5308,10 +5298,6 @@ class Lean_open extends LeanCommand
 
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
-}
-
-class Lean_set_option extends LeanCommand
-{
     public function push_attr($caret)
     {
         if ($caret === $this->arg) {
@@ -5322,6 +5308,10 @@ class Lean_set_option extends LeanCommand
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
     }
 
+}
+
+class Lean_set_option extends LeanCommand
+{
     public function __get($vname)
     {
         switch ($vname) {
@@ -5359,6 +5349,16 @@ class Lean_set_option extends LeanCommand
             }
         }
     }
+    public function push_attr($caret)
+    {
+        if ($caret === $this->arg) {
+            $new = new LeanCaret($this->indent, $caret->level);
+            $this->arg = new LeanProperty($this->arg, $new, $this->indent, $caret->level);
+            return $new;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
 }
 
 class Lean_namespace extends LeanCommand
@@ -5378,21 +5378,6 @@ class Lean_namespace extends LeanCommand
 
 class LeanBar extends LeanUnary
 {
-    public function is_indented()
-    {
-        return true;
-    }
-
-    public function strFormat()
-    {
-        return "$this->operator %s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command %s";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -5412,6 +5397,30 @@ class LeanBar extends LeanUnary
         $this->arg->echo();
     }
 
+    public function insert_comma($caret)
+    {
+        if ($caret === end($this->args)) {
+            $new = new LeanCaret($this->indent, $caret->level);
+            $this->replace($caret, new LeanArgsCommaSeparated([$caret, $new], $this->indent, $caret->level));
+            return $new;
+        }
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function insert_tactic($caret, $token)
+    {
+        return $this->insert_word($caret, $token);
+    }
+    public function is_indented()
+    {
+        return true;
+    }
+
+    public function latexFormat()
+    {
+        return "$this->command %s";
+    }
+
     public function split(&$syntax = null)
     {
         $arrow = $this->arg;
@@ -5429,20 +5438,11 @@ class LeanBar extends LeanUnary
         return [$this];
     }
 
-    public function insert_comma($caret)
+    public function strFormat()
     {
-        if ($caret === end($this->args)) {
-            $new = new LeanCaret($this->indent, $caret->level);
-            $this->replace($caret, new LeanArgsCommaSeparated([$caret, $new], $this->indent, $caret->level));
-            return $new;
-        }
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+        return "$this->operator %s";
     }
 
-    public function insert_tactic($caret, $token)
-    {
-        return $this->insert_word($caret, $token);
-    }
 }
 
 class LeanRightarrow extends LeanBinary

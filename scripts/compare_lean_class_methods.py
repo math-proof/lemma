@@ -202,6 +202,26 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanStatements extends LeanArgs\n{",
         "\n}\n\n\nclass LeanModule extends LeanStatements",
     ),
+    "leancommand": (
+        "abstract class LeanCommand extends LeanUnary\n{",
+        "\n}\n\nclass Lean_import extends LeanCommand",
+    ),
+    "leanimport": (
+        "class Lean_import extends LeanCommand\n{",
+        "\n}\n\nclass Lean_open extends LeanCommand",
+    ),
+    "leanopen": (
+        "class Lean_open extends LeanCommand\n{",
+        "\n}\n\nclass Lean_set_option extends LeanCommand",
+    ),
+    "leansetoption": (
+        "class Lean_set_option extends LeanCommand\n{",
+        "\n}\n\nclass Lean_namespace extends LeanCommand",
+    ),
+    "leanbar": (
+        "class LeanBar extends LeanUnary\n{",
+        "\n}\n\nclass LeanRightarrow extends LeanBinary",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",

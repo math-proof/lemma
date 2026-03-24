@@ -50,6 +50,11 @@ Presets (see php/parser/README.md):
   leanlogicxor    — class LeanLogicXor
   leanlor         — class Lean_lor
   leanstatements  — class LeanStatements (members-first: use + methods)
+  leancommand     — abstract class LeanCommand
+  leanimport      — class Lean_import
+  leanopen        — class Lean_open
+  leansetoption   — class Lean_set_option
+  leanbar         — class LeanBar
   leandiv         — class LeanDiv
   leanbitor       — class LeanBitOr
   leantoken       — class LeanToken (data members first, then sorted methods)
@@ -257,6 +262,26 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leanstatements": (
         "class LeanStatements extends LeanArgs\n{",
         "\n}\n\n\nclass LeanModule extends LeanStatements",
+    ),
+    "leancommand": (
+        "abstract class LeanCommand extends LeanUnary\n{",
+        "\n}\n\nclass Lean_import extends LeanCommand",
+    ),
+    "leanimport": (
+        "class Lean_import extends LeanCommand\n{",
+        "\n}\n\nclass Lean_open extends LeanCommand",
+    ),
+    "leanopen": (
+        "class Lean_open extends LeanCommand\n{",
+        "\n}\n\nclass Lean_set_option extends LeanCommand",
+    ),
+    "leansetoption": (
+        "class Lean_set_option extends LeanCommand\n{",
+        "\n}\n\nclass Lean_namespace extends LeanCommand",
+    ),
+    "leanbar": (
+        "class LeanBar extends LeanUnary\n{",
+        "\n}\n\nclass LeanRightarrow extends LeanBinary",
     ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
