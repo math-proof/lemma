@@ -3560,21 +3560,17 @@ abstract class LeanUnaryArithmeticPre extends LeanUnaryArithmetic
 class LeanNeg extends LeanUnaryArithmeticPre
 {
     public static $input_priority = 75;
-    public function sep()
+    public function __get($vname)
     {
-        if ($this->arg instanceof LeanNeg)
-            return ' ';
-        return '';
-    }
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "$this->operator$sep%s";
-    }
-
-    public function latexFormat()
-    {
-        return "$this->command{%s}";
+        switch ($vname) {
+            case 'stack_priority':
+                return 70;
+            case 'operator':
+            case 'command':
+                return '-';
+            default:
+                return parent::__get($vname);
+        }
     }
     public function latexArgs(&$syntax = null)
     {
@@ -3590,18 +3586,22 @@ class LeanNeg extends LeanUnaryArithmeticPre
         return [$arg];
     }
 
-    public function __get($vname)
+    public function latexFormat()
     {
-        switch ($vname) {
-            case 'stack_priority':
-                return 70;
-            case 'operator':
-            case 'command':
-                return '-';
-            default:
-                return parent::__get($vname);
-        }
+        return "$this->command{%s}";
     }
+    public function sep()
+    {
+        if ($this->arg instanceof LeanNeg)
+            return ' ';
+        return '';
+    }
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "$this->operator$sep%s";
+    }
+
 }
 
 class LeanPlus extends LeanUnaryArithmeticPre

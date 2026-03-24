@@ -24,6 +24,7 @@ Presets (see php/parser/README.md):
   leanrelational  — abstract class LeanRelational
   leanarithmetic  — abstract class LeanArithmetic
   leanmul         — class LeanMul
+  leanneg         — class LeanNeg
   leandiv         — class LeanDiv
   leanbitor       — class LeanBitOr
   leantoken       — class LeanToken (data members first, then sorted methods)
@@ -127,6 +128,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leanmul": (
         "class LeanMul extends LeanArithmetic\n{",
         "\n}\n\n\nclass Lean_times extends LeanArithmetic",
+    ),
+    "leanneg": (
+        "class LeanNeg extends LeanUnaryArithmeticPre\n{",
+        "\n}\n\nclass LeanPlus extends LeanUnaryArithmeticPre",
     ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
