@@ -81,322 +81,14 @@ preg_match_all("/'(\w+)'/", file_get_contents(dirname(__FILE__) . '/../../static
 
 abstract class Lean extends IndentedNode
 {
-    public function __construct($indent, $level, $parent = null) {
-        parent::__construct($indent, $parent);
-        $this->level = $level; // nesting level for rainbow printing of parentheses
-    }
-
-    public function is_comment()
-    {
-        return false;
-    }
-
-    public function tokens_space_separated()
-    {
-        return [];
-    }
-
-    public function is_outsider()
-    {
-        return false;
-    }
-
-    public function getEcho() {}
-
-    public function strArgs()
-    {
-        return $this->args;
-    }
-
-    public function toString()
-    {
-        $format = $this->strFormat();
-        $args = $this->strArgs();
-        if ($args)
-            return sprintf($format, ...$args);
-        return $format;
-    }
-
-    public function __toString()
-    {
-        return ($this->is_indented() ? str_repeat(' ', $this->indent) : '') . $this->toString();
-    }
-
-    public function latexFormat()
-    {
-        return $this->strFormat();
-    }
-    public function latexArgs(&$syntax = null)
-    {
-        return array_map(
-            function ($arg) use (&$syntax) {
-                return $arg->toLatex($syntax);
-            },
-            $this->args
-        );
-    }
-
-    public function toLatex(&$syntax = null)
-    {
-        $format = $this->latexFormat();
-        $args = $this->latexArgs($syntax);
-        if ($args)
-            return sprintf($format, ...$args);
-        return $format;
-    }
-
-    public function isProp($vars)
-    {
-        return false;
-    }
-
-    public function echo()
-    {
-    }
-
-    public function traverse()
-    {
-        yield $this;
-    }
-
-    public function set_line($line)
-    {
-        $this->line = $line;
-        return $line;
-    }
-
-    public function insert($caret, $func, $type)
-    {
-        if ($this->parent)
-            return $this->parent->insert($this, $func, $type);
-    }
-
-    public function insert_space($caret)
-    {
-        return $caret;
-    }
-
-    public function insert_newline($caret, $newline_count, $indent, $next)
-    {
-        if ($this->parent)
-            return $this->parent->insert_newline($this, $newline_count, $indent, $next);
-    }
-
-    public function insert_end($caret)
-    {
-        if ($this->parent)
-            return $this->parent->insert_end($this);
-    }
-
-    public function append($new, $type)
-    {
-        if ($this->parent)
-            return $this->parent->append($new, $type);
-    }
-
-    public function push_accessibility($new, $accessibility)
-    {
-        if ($this->parent)
-            return $this->parent->push_accessibility($new, $accessibility);
-    }
-
     public function __clone()
     {
         $this->parent = null;
     }
 
-    public function push_binary($func)
-    {
-        if ($parent = $this->parent) {
-            if ($func::$input_priority > $parent->stack_priority) {
-                $level = $this->level;
-                $new = new LeanCaret($this->indent, $level);
-                $parent->replace($this, new $func($this, $new, $this->indent, $level));
-                return $new;
-            }
-            return $parent->push_binary($func);
-        }
-    }
-
-    public function push_arithmetic($token)
-    {
-        global $token2classname;
-        return $this->push_binary($token2classname[$token]);
-    }
-    public function push_or()
-    {
-        $parent = $this->parent;
-        return Lean_lor::$input_priority > $parent->stack_priority ? $this->push_multiple("Lean_lor", new LeanCaret($this->indent, $this->level)) : $parent->push_or();
-    }
-
-    public function push_multiple($func, $caret)
-    {
-        $parent = $this->parent;
-        if ($parent instanceof $func) {
-            $parent->push($caret);
-        } else
-            $parent->replace($this, new $func([$this, $caret], $parent));
-
-        return $caret;
-    }
-
-    public function push_token($word)
-    {
-        return $this->append(new LeanToken($word, $this->indent, $this->level), "token");
-    }
-
-    public function insert_word($caret, $word)
-    {
-        return $caret->push_token($word);
-    }
-
-    public function insert_comma($caret)
-    {
-        if ($this->parent)
-            return $this->parent->insert_comma($this);
-    }
-
-    public function insert_semicolon($caret)
-    {
-        if ($this->parent)
-            return $this->parent->insert_semicolon($this);
-    }
-
-    public function insert_colon($caret)
-    {
-        return $caret->push_binary('LeanColon');
-    }
-
-    public function insert_assign($caret)
-    {
-        return $caret->push_binary('LeanAssign');
-    }
-    public function insert_vconstruct($caret)
-    {
-        return $caret->push_binary('LeanVConstruct');
-    }
-    public function insert_construct($caret)
-    {
-        return $caret->push_binary('LeanConstruct');
-    }
-    public function insert_bar($caret, $prev_token, $next)
-    {
-        switch ($next) {
-            case ' ':
-                if ($prev_token == ' ')
-                    return $caret->push_arithmetic('|');
-                return $this->push_right('LeanAbs');
-            case ')':
-                return $this->push_right('LeanAbs');
-            default:
-                if (!$next)
-                    return $this->push_right('LeanAbs');
-                return $this->insert_unary($caret, 'LeanAbs');
-        }
-    }
-
-    public function insert_unary($self, $func)
-    {
-        $parent = $self->parent;
-        if ($self instanceof LeanCaret) {
-            $caret = $self;
-            $new = new $func($caret, $self->indent, $self->level);
-        } else {
-            $caret = new LeanCaret($self->indent, $self->level);
-            $new = new $func($caret, $self->indent, $self->level);
-            $new = new LeanArgsSpaceSeparated([$self, $new], $self->indent, $self->level);
-        }
-        $parent->replace($self, $new);
-        return $caret;
-    }
-
-    public function push_post_unary($func)
-    {
-        $parent = $this->parent;
-        if ($func::$input_priority > $parent->stack_priority) {
-            $new = new $func($this, $this->indent, $this->level);
-            $parent->replace($this, $new);
-            return $new;
-        } else
-            return $parent->push_post_unary($func);
-    }
-
-    public function push_left($func, $prev_token)
-    {
-        switch ($func) {
-            case 'LeanParenthesis':
-            case 'LeanBracket':
-            case 'LeanBrace':
-            case 'LeanAngleBracket':
-            case 'LeanFloor':
-            case 'LeanCeil':
-            case 'LeanNorm':
-            case 'LeanDoubleAngleQuotation':
-                $indent = $this->indent;
-                $level = $this->level;
-                $caret = new LeanCaret($indent, $level);
-                if ($func == 'LeanBracket') {
-                    if ($prev_token == ' ') {
-                        # consider the case: a ≡ b [MOD n]
-                        $self = $this;
-                        $parent = $self->parent;
-                        while ($parent) {
-                            if ($parent instanceof Lean_equiv || $parent instanceof LeanNotEquiv) {
-                                $level = $self->level;
-                                $new = new $func($caret, $indent, $level);
-                                $parent->replace($self, new LeanArgsSpaceSeparated([$self, $new], $indent, $level));
-                                return $caret;
-                            }
-                            $self = $parent;
-                            $parent = $parent->parent;
-                        }
-                    } elseif (
-                        $this instanceof LeanToken || 
-                        $this instanceof LeanProperty || 
-                        $this instanceof LeanGetElem || $this instanceof LeanGetElemQue || $this instanceof LeanGetElemQuote || 
-                        $this instanceof LeanUnaryArithmeticPost || 
-                        $this instanceof LeanPairedGroup && $this->is_Expr()
-                    ) {
-                        # consider the case: (f x)[n], f[m][n]
-                        $this->parent->replace($this, new LeanGetElem($this, $caret, $indent, $level));
-                        return $caret;
-                    }
-                }
-                $new = new $func($caret, $indent, $level);
-                if ($this->parent instanceof LeanArgsSpaceSeparated)
-                    $this->parent->push($new);
-                else
-                    $this->parent->replace($this, new LeanArgsSpaceSeparated([$this, $new], $indent, $level));
-                return $caret;
-            default:
-                throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-        }
-    }
-
-    public function insert_left($caret, $func, $prev_token = '')
-    {
-        return $caret->push_left($func, $prev_token);
-    }
-
-    public function push_right($func)
-    {
-        if ($this->parent)
-            return $this->parent->push_right($func);
-    }
-
-    public function push_attr($caret)
-    {
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-
-    public function push_minus()
-    {
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
-    }
-
-    public function push_quote($quote)
-    {
-        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    public function __construct($indent, $level, $parent = null) {
+        parent::__construct($indent, $parent);
+        $this->level = $level; // nesting level for rainbow printing of parentheses
     }
 
     public function __get($vname)
@@ -429,21 +121,112 @@ abstract class Lean extends IndentedNode
         }
     }
 
+    public function __toString()
+    {
+        return ($this->is_indented() ? str_repeat(' ', $this->indent) : '') . $this->toString();
+    }
+
+    public function append($new, $type)
+    {
+        if ($this->parent)
+            return $this->parent->append($new, $type);
+    }
+
+    public function case_default($key, ...$kwargs)
+    {
+        return $this;
+    }
+
+    public function echo()
+    {
+    }
+
+    public function getEcho() {}
+
+    public function insert($caret, $func, $type)
+    {
+        if ($this->parent)
+            return $this->parent->insert($this, $func, $type);
+    }
+
+    public function insert_assign($caret)
+    {
+        return $caret->push_binary('LeanAssign');
+    }
+    public function insert_bar($caret, $prev_token, $next)
+    {
+        switch ($next) {
+            case ' ':
+                if ($prev_token == ' ')
+                    return $caret->push_arithmetic('|');
+                return $this->push_right('LeanAbs');
+            case ')':
+                return $this->push_right('LeanAbs');
+            default:
+                if (!$next)
+                    return $this->push_right('LeanAbs');
+                return $this->insert_unary($caret, 'LeanAbs');
+        }
+    }
+
+    public function insert_colon($caret)
+    {
+        return $caret->push_binary('LeanColon');
+    }
+
+    public function insert_comma($caret)
+    {
+        if ($this->parent)
+            return $this->parent->insert_comma($this);
+    }
+
+    public function insert_construct($caret)
+    {
+        return $caret->push_binary('LeanConstruct');
+    }
+    public function insert_else($caret)
+    {
+        if ($this->parent)
+            return $this->parent->insert_else($this);
+    }
+
+    public function insert_end($caret)
+    {
+        if ($this->parent)
+            return $this->parent->insert_end($this);
+    }
+
+    public function insert_left($caret, $func, $prev_token = '')
+    {
+        return $caret->push_left($func, $prev_token);
+    }
+
+    public function insert_line_comment($caret, $comment)
+    {
+        return $caret->push_line_comment($comment);
+    }
+
+    public function insert_newline($caret, $newline_count, $indent, $next)
+    {
+        if ($this->parent)
+            return $this->parent->insert_newline($this, $newline_count, $indent, $next);
+    }
+
+    public function insert_semicolon($caret)
+    {
+        if ($this->parent)
+            return $this->parent->insert_semicolon($this);
+    }
+
     public function insert_sequential_tactic_combinator($caret, $next_token)
     {
         if ($this->parent)
             return $this->parent->insert_sequential_tactic_combinator($this, $next_token);
     }
 
-    public function relocate_last_comment() {}
-
-    public function split(&$syntax = null)
+    public function insert_space($caret)
     {
-        return [$this];
-    }
-    public function regexp()
-    {
-        return [];
+        return $caret;
     }
 
     public function insert_then($caret)
@@ -451,10 +234,33 @@ abstract class Lean extends IndentedNode
         if ($this->parent)
             return $this->parent->insert_then($this);
     }
-    public function insert_else($caret)
+    public function insert_unary($self, $func)
     {
-        if ($this->parent)
-            return $this->parent->insert_else($this);
+        $parent = $self->parent;
+        if ($self instanceof LeanCaret) {
+            $caret = $self;
+            $new = new $func($caret, $self->indent, $self->level);
+        } else {
+            $caret = new LeanCaret($self->indent, $self->level);
+            $new = new $func($caret, $self->indent, $self->level);
+            $new = new LeanArgsSpaceSeparated([$self, $new], $self->indent, $self->level);
+        }
+        $parent->replace($self, $new);
+        return $caret;
+    }
+
+    public function insert_vconstruct($caret)
+    {
+        return $caret->push_binary('LeanVConstruct');
+    }
+    public function insert_word($caret, $word)
+    {
+        return $caret->push_token($word);
+    }
+
+    public function is_comment()
+    {
+        return false;
     }
 
     public function is_indented()
@@ -466,21 +272,35 @@ abstract class Lean extends IndentedNode
             $parent instanceof LeanIte && ($this === $parent->then || $this === $parent->else);
     }
 
+    public function is_outsider()
+    {
+        return false;
+    }
+
+    public function isProp($vars)
+    {
+        return false;
+    }
+
     public function is_space_separated()
     {
         return false;
     }
 
-    public function insert_line_comment($caret, $comment)
+    public function latexArgs(&$syntax = null)
     {
-        return $caret->push_line_comment($comment);
+        return array_map(
+            function ($arg) use (&$syntax) {
+                return $arg->toLatex($syntax);
+            },
+            $this->args
+        );
     }
 
-    public function case_default($key, ...$kwargs)
+    public function latexFormat()
     {
-        return $this;
+        return $this->strFormat();
     }
-
     function parse($token, ...$kwargs)
     {
         [$self] = $kwargs;
@@ -941,14 +761,194 @@ abstract class Lean extends IndentedNode
         }
     }
 
-    public function push_line_comment($comment)
+    public function push_accessibility($new, $accessibility)
     {
-        return $this->parent->push_line_comment($comment);
+        if ($this->parent)
+            return $this->parent->push_accessibility($new, $accessibility);
+    }
+
+    public function push_arithmetic($token)
+    {
+        global $token2classname;
+        return $this->push_binary($token2classname[$token]);
+    }
+    public function push_attr($caret)
+    {
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function push_binary($func)
+    {
+        if ($parent = $this->parent) {
+            if ($func::$input_priority > $parent->stack_priority) {
+                $level = $this->level;
+                $new = new LeanCaret($this->indent, $level);
+                $parent->replace($this, new $func($this, $new, $this->indent, $level));
+                return $new;
+            }
+            return $parent->push_binary($func);
+        }
     }
 
     public function push_block_comment($comment, $docstring)
     {
         throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function push_left($func, $prev_token)
+    {
+        switch ($func) {
+            case 'LeanParenthesis':
+            case 'LeanBracket':
+            case 'LeanBrace':
+            case 'LeanAngleBracket':
+            case 'LeanFloor':
+            case 'LeanCeil':
+            case 'LeanNorm':
+            case 'LeanDoubleAngleQuotation':
+                $indent = $this->indent;
+                $level = $this->level;
+                $caret = new LeanCaret($indent, $level);
+                if ($func == 'LeanBracket') {
+                    if ($prev_token == ' ') {
+                        # consider the case: a ≡ b [MOD n]
+                        $self = $this;
+                        $parent = $self->parent;
+                        while ($parent) {
+                            if ($parent instanceof Lean_equiv || $parent instanceof LeanNotEquiv) {
+                                $level = $self->level;
+                                $new = new $func($caret, $indent, $level);
+                                $parent->replace($self, new LeanArgsSpaceSeparated([$self, $new], $indent, $level));
+                                return $caret;
+                            }
+                            $self = $parent;
+                            $parent = $parent->parent;
+                        }
+                    } elseif (
+                        $this instanceof LeanToken || 
+                        $this instanceof LeanProperty || 
+                        $this instanceof LeanGetElem || $this instanceof LeanGetElemQue || $this instanceof LeanGetElemQuote || 
+                        $this instanceof LeanUnaryArithmeticPost || 
+                        $this instanceof LeanPairedGroup && $this->is_Expr()
+                    ) {
+                        # consider the case: (f x)[n], f[m][n]
+                        $this->parent->replace($this, new LeanGetElem($this, $caret, $indent, $level));
+                        return $caret;
+                    }
+                }
+                $new = new $func($caret, $indent, $level);
+                if ($this->parent instanceof LeanArgsSpaceSeparated)
+                    $this->parent->push($new);
+                else
+                    $this->parent->replace($this, new LeanArgsSpaceSeparated([$this, $new], $indent, $level));
+                return $caret;
+            default:
+                throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+        }
+    }
+
+    public function push_line_comment($comment)
+    {
+        return $this->parent->push_line_comment($comment);
+    }
+
+    public function push_minus()
+    {
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function push_multiple($func, $caret)
+    {
+        $parent = $this->parent;
+        if ($parent instanceof $func) {
+            $parent->push($caret);
+        } else
+            $parent->replace($this, new $func([$this, $caret], $parent));
+
+        return $caret;
+    }
+
+    public function push_or()
+    {
+        $parent = $this->parent;
+        return Lean_lor::$input_priority > $parent->stack_priority ? $this->push_multiple("Lean_lor", new LeanCaret($this->indent, $this->level)) : $parent->push_or();
+    }
+
+    public function push_post_unary($func)
+    {
+        $parent = $this->parent;
+        if ($func::$input_priority > $parent->stack_priority) {
+            $new = new $func($this, $this->indent, $this->level);
+            $parent->replace($this, $new);
+            return $new;
+        } else
+            return $parent->push_post_unary($func);
+    }
+
+    public function push_quote($quote)
+    {
+        throw new Exception(__METHOD__ . " is unexpected for " . get_class($this));
+    }
+
+    public function push_right($func)
+    {
+        if ($this->parent)
+            return $this->parent->push_right($func);
+    }
+
+    public function push_token($word)
+    {
+        return $this->append(new LeanToken($word, $this->indent, $this->level), "token");
+    }
+
+    public function regexp()
+    {
+        return [];
+    }
+
+    public function relocate_last_comment() {}
+
+    public function set_line($line)
+    {
+        $this->line = $line;
+        return $line;
+    }
+
+    public function split(&$syntax = null)
+    {
+        return [$this];
+    }
+    public function strArgs()
+    {
+        return $this->args;
+    }
+
+    public function tokens_space_separated()
+    {
+        return [];
+    }
+
+    public function toLatex(&$syntax = null)
+    {
+        $format = $this->latexFormat();
+        $args = $this->latexArgs($syntax);
+        if ($args)
+            return sprintf($format, ...$args);
+        return $format;
+    }
+
+    public function toString()
+    {
+        $format = $this->strFormat();
+        $args = $this->strArgs();
+        if ($args)
+            return sprintf($format, ...$args);
+        return $format;
+    }
+
+    public function traverse()
+    {
+        yield $this;
     }
 
 }
