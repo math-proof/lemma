@@ -162,6 +162,38 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanMethodChaining extends LeanBinary\n{",
         "\n}\n\ntrait LeanGetElemBase",
     ),
+    "leangotelem": (
+        "class LeanGetElem extends LeanBinary\n{",
+        "\n}\n\nclass LeanGetElemQue extends LeanBinary",
+    ),
+    "leangotelemque": (
+        "class LeanGetElemQue extends LeanBinary\n{",
+        "\n}\n\nclass LeanGetElemQuote extends LeanArgs",
+    ),
+    "leangotelemquote": (
+        "class LeanGetElemQuote extends LeanArgs\n{",
+        "\n}\n\nclass Lean_is extends LeanBinary",
+    ),
+    "leanis": (
+        "class Lean_is extends LeanBinary\n{",
+        "\n}\n\nclass Lean_is_not extends LeanBinary",
+    ),
+    "leanisnot": (
+        "class Lean_is_not extends LeanBinary\n{",
+        "\n}\n\nabstract class LeanSetOperator extends LeanBinary {",
+    ),
+    "leanlogicand": (
+        "class LeanLogicAnd extends LeanLogic\n{",
+        "\n}\n\n\nclass LeanLogicOr extends LeanLogic",
+    ),
+    "leanlogicor": (
+        "class LeanLogicOr extends LeanLogic\n{",
+        "\n}\n\nclass LeanLogicXor extends LeanLogic",
+    ),
+    "leanlogicxor": (
+        "class LeanLogicXor extends LeanLogic\n{",
+        "\n}\n\n\nclass Lean_lor extends LeanLogic",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -214,8 +246,19 @@ def _declaration_segments(body: str) -> tuple[str, list[str]]:
     return preamble, segments
 
 
+SEGMENT_SPLIT_PRESETS = frozenset(
+    {
+        "leanbinaryboolean",
+        "leangotelem",
+        "leangotelemque",
+        "leangotelemquote",
+        "leantoken",
+    }
+)
+
+
 def split_methods(body: str, preset: str) -> dict[str, str]:
-    if preset in ("leantoken", "leanbinaryboolean"):
+    if preset in SEGMENT_SPLIT_PRESETS:
         _, segments = _declaration_segments(body)
         out: dict[str, str] = {}
         for seg in segments:

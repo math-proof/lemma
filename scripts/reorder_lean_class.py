@@ -40,6 +40,14 @@ Presets (see php/parser/README.md):
   leantranspose   — class LeanTranspose
   leanpipeforward — class LeanPipeForward
   leanmethodchaining — class LeanMethodChaining
+  leangotelem     — class LeanGetElem (members-first: use + methods)
+  leangotelemque  — class LeanGetElemQue (members-first)
+  leangotelemquote — class LeanGetElemQuote (members-first)
+  leanis          — class Lean_is
+  leanisnot       — class Lean_is_not
+  leanlogicand    — class LeanLogicAnd
+  leanlogicor     — class LeanLogicOr
+  leanlogicxor    — class LeanLogicXor
   leandiv         — class LeanDiv
   leanbitor       — class LeanBitOr
   leantoken       — class LeanToken (data members first, then sorted methods)
@@ -208,6 +216,38 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanMethodChaining extends LeanBinary\n{",
         "\n}\n\ntrait LeanGetElemBase",
     ),
+    "leangotelem": (
+        "class LeanGetElem extends LeanBinary\n{",
+        "\n}\n\nclass LeanGetElemQue extends LeanBinary",
+    ),
+    "leangotelemque": (
+        "class LeanGetElemQue extends LeanBinary\n{",
+        "\n}\n\nclass LeanGetElemQuote extends LeanArgs",
+    ),
+    "leangotelemquote": (
+        "class LeanGetElemQuote extends LeanArgs\n{",
+        "\n}\n\nclass Lean_is extends LeanBinary",
+    ),
+    "leanis": (
+        "class Lean_is extends LeanBinary\n{",
+        "\n}\n\nclass Lean_is_not extends LeanBinary",
+    ),
+    "leanisnot": (
+        "class Lean_is_not extends LeanBinary\n{",
+        "\n}\n\nabstract class LeanSetOperator extends LeanBinary {",
+    ),
+    "leanlogicand": (
+        "class LeanLogicAnd extends LeanLogic\n{",
+        "\n}\n\n\nclass LeanLogicOr extends LeanLogic",
+    ),
+    "leanlogicor": (
+        "class LeanLogicOr extends LeanLogic\n{",
+        "\n}\n\nclass LeanLogicXor extends LeanLogic",
+    ),
+    "leanlogicxor": (
+        "class LeanLogicXor extends LeanLogic\n{",
+        "\n}\n\n\nclass Lean_lor extends LeanLogic",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",
@@ -221,6 +261,17 @@ PRESETS: dict[str, tuple[str, str]] = {
         "\n}\n\nLeanToken::$subscript_keys",
     ),
 }
+
+# Presets that use reorder_class_members_first (properties + use lines, then sorted methods).
+MEMBERS_FIRST_PRESETS = frozenset(
+    {
+        "leanbinaryboolean",
+        "leangotelem",
+        "leangotelemque",
+        "leangotelemquote",
+        "leantoken",
+    }
+)
 
 pat = re.compile(
     r"\n    ((?:abstract )?(?:public static |public |static )?function \w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
@@ -331,14 +382,14 @@ def main() -> int:
     args = ap.parse_args()
     start, end = PRESETS[args.preset]
     text = LEAN.read_text(encoding="utf-8")
-    if args.preset in ("leantoken", "leanbinaryboolean"):
+    if args.preset in MEMBERS_FIRST_PRESETS:
         new_text = reorder_class_members_first(text, start, end)
     else:
         new_text = reorder_class(text, start, end)
     LEAN.write_text(new_text, encoding="utf-8", newline="\n")
     # count methods
     body = new_text[new_text.index(start) + len(start) : new_text.index(end, new_text.index(start))]
-    if args.preset in ("leantoken", "leanbinaryboolean"):
+    if args.preset in MEMBERS_FIRST_PRESETS:
         _, segs = _declaration_segments(body)
         n = sum(1 for seg in segs if _is_method_segment(seg))
     else:

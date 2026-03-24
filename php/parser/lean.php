@@ -4055,13 +4055,13 @@ class LeanGetElem extends LeanBinary
 {
     public static $input_priority = 67;
     use LeanGetElemBaseBinary;
-    public function strFormat()
-    {
-        return '%s[%s]';
-    }
     public function latexFormat()
     {
         return '{%s}_{%s}';
+    }
+    public function strFormat()
+    {
+        return '%s[%s]';
     }
 }
 
@@ -4069,13 +4069,13 @@ class LeanGetElemQue extends LeanBinary
 {
     public static $input_priority = 67;
     use LeanGetElemBaseBinary;
-    public function strFormat()
-    {
-        return '%s[%s]?';
-    }
     public function latexFormat()
     {
         return '{%s}_{%s?}';
+    }
+    public function strFormat()
+    {
+        return '%s[%s]?';
     }
 }
 
@@ -4083,38 +4083,19 @@ class LeanGetElemQuote extends LeanArgs
 {
     public static $input_priority = 67;
     use LeanGetElemBase;
-    public function strFormat()
-    {
-        return "%s[%s]'%s";
-    }
     public function latexFormat()
     {
         return "{%s}_{%s{\\color{red}\\text{'}}%s}";
+    }
+    public function strFormat()
+    {
+        return "%s[%s]'%s";
     }
 }
 
 class Lean_is extends LeanBinary
 {
     public static $input_priority = 62;
-    public function sep()
-    {
-        return ' ';
-    }
-    public function is_indented()
-    {
-        return $this->parent instanceof LeanStatements;
-    }
-
-    public function strFormat()
-    {
-        return "%s $this->operator %s";
-    }
-
-    public function latexFormat()
-    {
-        return "{%s}\\ $this->command\\ {%s}";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -4127,29 +4108,34 @@ class Lean_is extends LeanBinary
         }
     }
 
-    public function isProp($vars)
-    {
-        return true;
-    }
-}
-
-class Lean_is_not extends LeanBinary
-{
-    public static $input_priority = 62;
-    public function sep()
-    {
-        return ' ';
-    }
     public function is_indented()
     {
         return $this->parent instanceof LeanStatements;
     }
 
+    public function isProp($vars)
+    {
+        return true;
+    }
+    public function latexFormat()
+    {
+        return "{%s}\\ $this->command\\ {%s}";
+    }
+
+    public function sep()
+    {
+        return ' ';
+    }
     public function strFormat()
     {
         return "%s $this->operator %s";
     }
 
+}
+
+class Lean_is_not extends LeanBinary
+{
+    public static $input_priority = 62;
     public function __get($vname)
     {
         switch ($vname) {
@@ -4162,10 +4148,24 @@ class Lean_is_not extends LeanBinary
         }
     }
 
+    public function is_indented()
+    {
+        return $this->parent instanceof LeanStatements;
+    }
+
     public function isProp($vars)
     {
         return true;
     }
+    public function sep()
+    {
+        return ' ';
+    }
+    public function strFormat()
+    {
+        return "%s $this->operator %s";
+    }
+
 }
 
 abstract class LeanSetOperator extends LeanBinary {
@@ -4249,11 +4249,6 @@ class LeanLogicAnd extends LeanLogic
 {
     public static $input_priority = 37;
 
-    public function strFormat()
-    {
-        return "%s $this->operator %s";
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -4278,17 +4273,17 @@ class LeanLogicAnd extends LeanLogic
 
         return [$this->func => [$lhs, $rhs]];
     }
+    public function strFormat()
+    {
+        return "%s $this->operator %s";
+    }
+
 }
 
 
 class LeanLogicOr extends LeanLogic
 {
     public static $input_priority = 37;
-
-    public function strFormat()
-    {
-        return "%s $this->operator %s";
-    }
 
     public function __get($vname)
     {
@@ -4313,16 +4308,16 @@ class LeanLogicOr extends LeanLogic
 
         return [$this->func => [$lhs, $rhs]];
     }
+    public function strFormat()
+    {
+        return "%s $this->operator %s";
+    }
+
 }
 
 class LeanLogicXor extends LeanLogic
 {
     public static $input_priority = 33;
-
-    public function strFormat()
-    {
-        return "%s $this->operator %s";
-    }
 
     public function __get($vname)
     {
@@ -4335,6 +4330,11 @@ class LeanLogicXor extends LeanLogic
                 return parent::__get($vname);
         }
     }
+    public function strFormat()
+    {
+        return "%s $this->operator %s";
+    }
+
 }
 
 
