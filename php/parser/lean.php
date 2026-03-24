@@ -2023,10 +2023,6 @@ class LeanFloor extends LeanPairedGroup
 
 class LeanDoubleAngleQuotation extends LeanPairedGroup
 {
-    public function is_Expr() {
-        return false;
-    }
-
     public function __get($vname)
     {
         switch ($vname) {
@@ -2037,6 +2033,10 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup
             default:
                 return parent::__get($vname);
         }
+    }
+
+    public function is_Expr() {
+        return false;
     }
 
     public function is_indented()
