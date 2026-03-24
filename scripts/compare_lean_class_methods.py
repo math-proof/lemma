@@ -390,6 +390,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanStack extends LbigOperator\n{",
         "\n}\n\nfunction compile($code) {",
     ),
+    "leanparser": (
+        "class LeanParser extends AbstractParser {\n",
+        "\n}\n\nLeanParser::$instance = new LeanParser();",
+    ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",
         "\n}\n\nclass LeanFDiv extends LeanArithmetic",

@@ -97,6 +97,7 @@ Presets (see php/parser/README.md):
   leanbigcap      — class Lean_bigcap
   leanbigcup      — class Lean_bigcup
   leanstack       — class LeanStack
+  leanparser      — class LeanParser (opening `{` on same line as class)
   leandiv         — class LeanDiv
   leanbitor       — class LeanBitOr
   leantoken       — class LeanToken (data members first, then sorted methods)
@@ -492,6 +493,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leanstack": (
         "class LeanStack extends LbigOperator\n{",
         "\n}\n\nfunction compile($code) {",
+    ),
+    "leanparser": (
+        "class LeanParser extends AbstractParser {\n",
+        "\n}\n\nLeanParser::$instance = new LeanParser();",
     ),
     "leandiv": (
         "class LeanDiv extends LeanArithmetic\n{",

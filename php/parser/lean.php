@@ -9298,12 +9298,6 @@ class LeanParser extends AbstractParser {
     public function __construct() {
     }
 
-    public function init() {
-        $caret = new LeanCaret(0, 0);
-        $this->caret = $caret;
-        $this->root = new LeanModule([$caret], 0, 0);
-    }
-
     public function __toString() {
         return (string)$this->root;
     }
@@ -9324,6 +9318,12 @@ class LeanParser extends AbstractParser {
         }
         return $this->root;
     }
+    public function init() {
+        $caret = new LeanCaret(0, 0);
+        $this->caret = $caret;
+        $this->root = new LeanModule([$caret], 0, 0);
+    }
+
 }
 
 LeanParser::$instance = new LeanParser();
