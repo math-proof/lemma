@@ -18,6 +18,10 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanCaret extends Lean\n{",
         "\n}\n\nclass LeanToken extends Lean",
     ),
+    "leanlinecomment": (
+        "class LeanLineComment extends Lean\n{",
+        "\n}\n\nclass LeanBlockComment extends Lean",
+    ),
 }
 
 SIG_RE = re.compile(

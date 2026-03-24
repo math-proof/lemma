@@ -2,8 +2,9 @@
 """Reorder methods in a `lean.php` class: alphabetic (instance first, static last).
 
 Presets (see php/parser/README.md):
-  lean       — abstract class Lean
-  leancaret  — class LeanCaret
+  lean            — abstract class Lean
+  leancaret       — class LeanCaret
+  leanlinecomment — class LeanLineComment (do not use on LeanToken: static $ between methods)
 
 Syntax check (match http://localhost/info.php), e.g. WAMP PHP 8.0.x:
     "D:\\wamp64\\bin\\php\\php8.0.26\\php.exe" -l php/parser/lean.php
@@ -24,6 +25,10 @@ PRESETS: dict[str, tuple[str, str]] = {
     "leancaret": (
         "class LeanCaret extends Lean\n{",
         "\n}\n\nclass LeanToken extends Lean",
+    ),
+    "leanlinecomment": (
+        "class LeanLineComment extends Lean\n{",
+        "\n}\n\nclass LeanBlockComment extends Lean",
     ),
 }
 

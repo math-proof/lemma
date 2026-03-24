@@ -1224,11 +1224,22 @@ class LeanLineComment extends Lean
         $this->text = $text;
     }
 
-    public function is_outsider()
+    public function __get($vname)
     {
-        return preg_match('/^(created|updated) on (\d\d\d\d-\d\d-\d\d)$/', $this->text);
+        switch ($vname) {
+            case 'operator':
+                return '--';
+            case 'command':
+                return '%';
+            default:
+                return parent::__get($vname);
+        }
     }
 
+    public function is_comment()
+    {
+        return true;
+    }
     public function is_indented()
     {
         switch ($this->text) {
@@ -1266,14 +1277,9 @@ class LeanLineComment extends Lean
         }
         return true;
     }
-    public function sep()
+    public function is_outsider()
     {
-        return ' ';
-    }
-    public function strFormat()
-    {
-        $sep = $this->sep();
-        return "$this->operator$sep$this->text";
+        return preg_match('/^(created|updated) on (\d\d\d\d-\d\d-\d\d)$/', $this->text);
     }
 
     public function jsonSerialize(): mixed
@@ -1287,22 +1293,16 @@ class LeanLineComment extends Lean
         return "$this->command$sep$this->text";
     }
 
-    public function __get($vname)
+    public function sep()
     {
-        switch ($vname) {
-            case 'operator':
-                return '--';
-            case 'command':
-                return '%';
-            default:
-                return parent::__get($vname);
-        }
+        return ' ';
+    }
+    public function strFormat()
+    {
+        $sep = $this->sep();
+        return "$this->operator$sep$this->text";
     }
 
-    public function is_comment()
-    {
-        return true;
-    }
 }
 
 class LeanBlockComment extends Lean

@@ -24,8 +24,9 @@ Use this workflow when you want a class in `lean.php` to follow a consistent met
 
 - Prefer a small script (regex-based split of method blocks + sort + rewrite) rather than hand-editing huge classes.
 - Repo helper: [`scripts/reorder_lean_class.py`](../../scripts/reorder_lean_class.py)  
-  - **Presets:** `lean` (default) = `abstract class Lean`; `leancaret` = `class LeanCaret`.  
-  - Add a preset in that script if you reorder another class.  
+  - **Presets:** `lean` (default) = `abstract class Lean`; `leancaret` = `class LeanCaret`; `leanlinecomment` = `class LeanLineComment`.  
+  - **Not safe:** `LeanToken` has `static $…` properties **between** methods — the regex splitter would corrupt it unless the script is extended. Add presets only for classes whose body is **methods only** (plus leading `public $` fields before the first method).  
+  - Add a preset in that script if you reorder another eligible class.  
   - Run from repo root, e.g.:  
     `python scripts/reorder_lean_class.py`  
     `python scripts/reorder_lean_class.py leancaret`
