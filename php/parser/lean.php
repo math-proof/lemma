@@ -1026,23 +1026,6 @@ class LeanToken extends Lean
     public $text;
     public $cache = null;
 
-    public function __construct($text, $indent, $level, $parent = null)
-    {
-        parent::__construct($indent, $level, $parent);
-        $this->text = $text;
-    }
-
-    public function push_quote($quote)
-    {
-        $this->text .= $quote;
-        return $this;
-    }
-
-    public function strFormat()
-    {
-        return $this->text;
-    }
-
     static $subscript = [
         'ₐ' => 'a',
         'ₑ' => 'e',
@@ -1105,6 +1088,56 @@ class LeanToken extends Lean
         'ᵡ' => 'chi',
     ];
     static $supscript_keys = null;
+    public function __construct($text, $indent, $level, $parent = null)
+    {
+        parent::__construct($indent, $level, $parent);
+        $this->text = $text;
+    }
+
+    public function append($new, $func)
+    {
+        if ($this->parent)
+            return $this->parent->insert($this, $new, $func);
+    }
+
+    public function ends_with_2_letters()
+    {
+        return preg_match("/[a-zA-Z]{2,}$/", $this->text);
+    }
+
+    public function equals($other) {
+        if ($other instanceof LeanToken)
+            return $this->text == $other->text;
+    }
+    public function is_parallel_operator() {
+        return preg_match("/_\?+$/", $this->text);
+    }
+
+    public function isProp($vars)
+    {
+        return ($vars[$this->text] ?? null) == 'Prop';
+    }
+
+    public function is_TypeStar() {
+        // implicit universe variable
+        switch ($this->text) {
+            case 'Sort':
+            case 'Type':
+            case 'ℝ':
+                return true;
+        }
+    }
+
+    public function is_variable()
+    {
+        return std\fullmatch('/[a-zA-Z_][a-zA-Z_0-9]*/', $this->text);
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->text;
+    }
+
     public function latexFormat()
     {
         $text = escape_specials($this->text);
@@ -1126,14 +1159,20 @@ class LeanToken extends Lean
         return $text;
     }
 
-    public function starts_with_2_letters()
+    public function lower()
     {
-        return preg_match("/^[a-zA-Z]{2,}/", $this->text);
+        $this->text = strtolower($this->text);
+        return $this;
     }
 
-    public function ends_with_2_letters()
+    public function operand_count() {
+        preg_match("/\?*$/", $this->text, $m);
+        return strlen($m[0]);
+    }
+    public function push_quote($quote)
     {
-        return preg_match("/[a-zA-Z]{2,}$/", $this->text);
+        $this->text .= $quote;
+        return $this;
     }
 
     public function push_token($word)
@@ -1144,48 +1183,18 @@ class LeanToken extends Lean
         return $new;
     }
 
-    public function append($new, $func)
-    {
-        if ($this->parent)
-            return $this->parent->insert($this, $new, $func);
-    }
-
-    public function jsonSerialize(): mixed
-    {
-        return $this->text;
-    }
-
-    public function is_variable()
-    {
-        return std\fullmatch('/[a-zA-Z_][a-zA-Z_0-9]*/', $this->text);
-    }
-
-    public function lower()
-    {
-        $this->text = strtolower($this->text);
-        return $this;
-    }
-
     public function regexp()
     {
         return ["_"];
     }
-    public function tokens_space_separated()
+    public function starts_with_2_letters()
     {
-        return [$this];
+        return preg_match("/^[a-zA-Z]{2,}/", $this->text);
     }
 
-    public function isProp($vars)
+    public function strFormat()
     {
-        return ($vars[$this->text] ?? null) == 'Prop';
-    }
-
-    public function operand_count() {
-        preg_match("/\?*$/", $this->text, $m);
-        return strlen($m[0]);
-    }
-    public function is_parallel_operator() {
-        return preg_match("/_\?+$/", $this->text);
+        return $this->text;
     }
 
     public function tactic_block_info() {
@@ -1195,20 +1204,11 @@ class LeanToken extends Lean
         return $map;
     }
 
-    public function is_TypeStar() {
-        // implicit universe variable
-        switch ($this->text) {
-            case 'Sort':
-            case 'Type':
-            case 'ℝ':
-                return true;
-        }
+    public function tokens_space_separated()
+    {
+        return [$this];
     }
 
-    public function equals($other) {
-        if ($other instanceof LeanToken)
-            return $this->text == $other->text;
-    }
 }
 
 LeanToken::$subscript_keys = '/[' . implode('', array_keys(LeanToken::$subscript)) . ']+/u';

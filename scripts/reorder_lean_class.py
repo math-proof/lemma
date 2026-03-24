@@ -4,7 +4,8 @@
 Presets (see php/parser/README.md):
   lean            — abstract class Lean
   leancaret       — class LeanCaret
-  leanlinecomment — class LeanLineComment (do not use on LeanToken: static $ between methods)
+  leanlinecomment — class LeanLineComment
+  leantoken       — class LeanToken (data members first, then sorted methods)
 
 Syntax check (match http://localhost/info.php), e.g. WAMP PHP 8.0.x:
     "D:\\wamp64\\bin\\php\\php8.0.26\\php.exe" -l php/parser/lean.php
@@ -30,11 +31,25 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanLineComment extends Lean\n{",
         "\n}\n\nclass LeanBlockComment extends Lean",
     ),
+    "leantoken": (
+        "class LeanToken extends Lean\n{",
+        "\n}\n\nLeanToken::$subscript_keys",
+    ),
 }
 
 pat = re.compile(
     r"\n    ((?:public static |public |static )?function \w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
     re.MULTILINE,
+)
+
+# Top-level class member starts (4-space indent); splits properties from methods.
+MEMBER_HEAD = re.compile(
+    r"\n    (?:"
+    r"(?:public|protected|private)\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
+    r"|(?:public\s+)?static\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
+    r"|(?:public|protected|private)\s+\$\w+"
+    r"|static\s+\$\w+"
+    r")"
 )
 
 
@@ -70,6 +85,54 @@ def reorder_class(text: str, marker_start: str, marker_end: str) -> str:
     return text[:si] + new_body + text[ei:]
 
 
+def _is_method_segment(seg: str) -> bool:
+    return re.search(r"\n    .+function\s+\w+\s*\(", seg) is not None
+
+
+def _method_meta(seg: str) -> tuple[str, bool]:
+    name_m = re.search(r"function\s+(\w+)\s*\(", seg)
+    if not name_m:
+        raise ValueError(f"method segment without function name: {seg[:80]!r}")
+    name = name_m.group(1)
+    is_static = bool(
+        re.search(r"\n    (?:public\s+)?static\s+function\s+\w+", seg)
+    )
+    return name, is_static
+
+
+def _declaration_segments(body: str) -> tuple[str, list[str]]:
+    heads = list(MEMBER_HEAD.finditer(body))
+    if not heads:
+        raise ValueError("no class members found (MEMBER_HEAD)")
+    preamble = body[: heads[0].start()]
+    segments: list[str] = []
+    for i, m in enumerate(heads):
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(body)
+        segments.append(body[m.start() : end])
+    return preamble, segments
+
+
+def reorder_class_members_first(text: str, marker_start: str, marker_end: str) -> str:
+    """All data members (properties) first, preserving their relative order; then methods sorted."""
+    si = text.index(marker_start) + len(marker_start)
+    ei = text.index(marker_end, si)
+    body = text[si:ei]
+    preamble, segments = _declaration_segments(body)
+    member_parts: list[str] = [preamble]
+    methods: list[tuple[str, bool, str]] = []
+    for seg in segments:
+        if _is_method_segment(seg):
+            name, is_static = _method_meta(seg)
+            methods.append((name, is_static, seg))
+        else:
+            member_parts.append(seg)
+    if not methods:
+        raise ValueError("no methods found after splitting members")
+    methods.sort(key=_sort_key)
+    new_body = "".join(member_parts) + "".join(m[2] for m in methods)
+    return text[:si] + new_body + text[ei:]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Reorder methods in a lean.php class.")
     ap.add_argument(
@@ -82,11 +145,18 @@ def main() -> int:
     args = ap.parse_args()
     start, end = PRESETS[args.preset]
     text = LEAN.read_text(encoding="utf-8")
-    new_text = reorder_class(text, start, end)
+    if args.preset == "leantoken":
+        new_text = reorder_class_members_first(text, start, end)
+    else:
+        new_text = reorder_class(text, start, end)
     LEAN.write_text(new_text, encoding="utf-8", newline="\n")
     # count methods
     body = new_text[new_text.index(start) + len(start) : new_text.index(end, new_text.index(start))]
-    n = len(list(pat.finditer(body)))
+    if args.preset == "leantoken":
+        _, segs = _declaration_segments(body)
+        n = sum(1 for seg in segs if _is_method_segment(seg))
+    else:
+        n = len(list(pat.finditer(body)))
     print(f"reordered preset={args.preset!r}: {n} methods in {LEAN.relative_to(ROOT)}")
     return 0
 

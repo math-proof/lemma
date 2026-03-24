@@ -22,11 +22,24 @@ PRESETS: dict[str, tuple[str, str]] = {
         "class LeanLineComment extends Lean\n{",
         "\n}\n\nclass LeanBlockComment extends Lean",
     ),
+    "leantoken": (
+        "class LeanToken extends Lean\n{",
+        "\n}\n\nLeanToken::$subscript_keys",
+    ),
 }
 
 SIG_RE = re.compile(
     r"\n    ((?:public static |public |static )?function (\w+)\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?)",
     re.MULTILINE,
+)
+
+MEMBER_HEAD = re.compile(
+    r"\n    (?:"
+    r"(?:public|protected|private)\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
+    r"|(?:public\s+)?static\s+function\s+\w+\([^)]*\)(?:\s*:\s*\??[\w\\|]+)?"
+    r"|(?:public|protected|private)\s+\$\w+"
+    r"|static\s+\$\w+"
+    r")"
 )
 
 
@@ -36,9 +49,39 @@ def extract_class_body(text: str, marker_start: str, marker_end: str) -> str:
     return text[si:ei]
 
 
-def split_methods(body: str) -> dict[str, str]:
+def _is_method_segment(seg: str) -> bool:
+    return re.search(r"\n    .+function\s+\w+\s*\(", seg) is not None
+
+
+def _declaration_segments(body: str) -> tuple[str, list[str]]:
+    heads = list(MEMBER_HEAD.finditer(body))
+    if not heads:
+        raise ValueError("no class members found (MEMBER_HEAD)")
+    preamble = body[: heads[0].start()]
+    segments: list[str] = []
+    for i, m in enumerate(heads):
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(body)
+        segments.append(body[m.start() : end])
+    return preamble, segments
+
+
+def split_methods(body: str, preset: str) -> dict[str, str]:
+    if preset == "leantoken":
+        _, segments = _declaration_segments(body)
+        out: dict[str, str] = {}
+        for seg in segments:
+            if not _is_method_segment(seg):
+                continue
+            name_m = re.search(r"function\s+(\w+)\s*\(", seg)
+            if not name_m:
+                continue
+            name = name_m.group(1)
+            if name in out:
+                print(f"WARNING: duplicate method {name!r}", file=sys.stderr)
+            out[name] = seg
+        return out
     matches = list(SIG_RE.finditer(body))
-    out: dict[str, str] = {}
+    out = {}
     for i, m in enumerate(matches):
         name = m.group(2)
         chunk = body[m.start() : matches[i + 1].start() if i + 1 < len(matches) else len(body)]
@@ -79,8 +122,8 @@ def main() -> int:
 
     hb = extract_class_body(head_text, marker_start, marker_end)
     wb = extract_class_body(work_text, marker_start, marker_end)
-    h = split_methods(hb)
-    w = split_methods(wb)
+    h = split_methods(hb, args.preset)
+    w = split_methods(wb, args.preset)
 
     head_names = set(h)
     work_names = set(w)

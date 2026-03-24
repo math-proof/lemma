@@ -13,8 +13,9 @@ Use this workflow when you want a class in `lean.php` to follow a consistent met
 - Search `lean.php` for `class …` / `abstract class …`.
 - For each candidate, list method names in **declaration order** and compare to **alphabetical order** (case-insensitive, see rules below).
 
-### 2. Reorder methods
+### 2. Reorder methods (and data members)
 
+- **Data members first:** All **properties** (`public $…`, `protected $…`, `static $…`, etc.) must appear **before** any instance or static **methods** in the class body. Preserve the **relative order** of properties as you gather them (e.g. if `static $foo` was declared after `public $bar` in the file, keep that order when you move blocks). **Constants** and assignments **outside** the class (e.g. `LeanToken::$subscript_keys = …` after the closing `}`) stay where they are; only the **inside** of the class is reordered.
 - **Alphabetic order** for instance methods:
   - **Magic methods** (`__construct`, `__clone`, `__get`, `__set`, `__toString`, …): keep them in a **first group**, sorted by `strtolower($name)`. (Do not merge them with normal methods by stripping `_` from the whole name, or `append` can sort before `__clone`.)
   - **Other instance methods**: sort by a key that ignores underscores only for *non-magic* names so names like `isProp` order before `is_space_separated` (plain ASCII would put `_` before letters).
@@ -24,9 +25,9 @@ Use this workflow when you want a class in `lean.php` to follow a consistent met
 
 - Prefer a small script (regex-based split of method blocks + sort + rewrite) rather than hand-editing huge classes.
 - Repo helper: [`scripts/reorder_lean_class.py`](../../scripts/reorder_lean_class.py)  
-  - **Presets:** `lean` (default) = `abstract class Lean`; `leancaret` = `class LeanCaret`; `leanlinecomment` = `class LeanLineComment`.  
-  - **Not safe:** `LeanToken` has `static $…` properties **between** methods — the regex splitter would corrupt it unless the script is extended. Add presets only for classes whose body is **methods only** (plus leading `public $` fields before the first method).  
-  - Add a preset in that script if you reorder another eligible class.  
+  - **Presets:** `lean` (default) = `abstract class Lean`; `leancaret` = `class LeanCaret`; `leanlinecomment` = `class LeanLineComment`; `leantoken` = `class LeanToken` (**members-first** reorder: all properties, then sorted methods).  
+  - For classes **without** interleaved properties, the legacy path still applies; for **`LeanToken`**-style classes, use preset `leantoken` so properties are not merged into the previous method.  
+  - Add a preset (and matching end marker) if you reorder another class.  
   - Run from repo root, e.g.:  
     `python scripts/reorder_lean_class.py`  
     `python scripts/reorder_lean_class.py leancaret`
@@ -63,7 +64,7 @@ Use this workflow when you want a class in `lean.php` to follow a consistent met
 
 - **Read the whole diff** and confirm it is **safe to push**:
   - Changes are confined to the **intended class(es)** (no accidental edits elsewhere).
-  - Hunks look like **reordered method blocks** only (no surprise edits to logic, signatures, or unrelated lines).
+  - Hunks look like **moved property blocks and/or reordered method blocks** only (no surprise edits to logic, signatures, or unrelated lines).
   - If anything else appears (merge artifacts, encoding, accidental deletes), **fix or revert** before pushing.
 
 - This step complements the compare script (structural equality); **both** are required before you treat the task as done and push.
@@ -86,10 +87,10 @@ Use this workflow when you want a class in `lean.php` to follow a consistent met
 
 ```text
 Modification task steps for lean.php:
-- Find a PHP class whose function order is not alphabetic order.
-- Reorder the class methods/functions in alphabetic order; static methods should come after instance methods.
+- Find a PHP class whose function order is not alphabetic order (and whose properties are not already grouped before all methods).
+- Data members (properties: public/protected/private/static $…) must come first inside the class, in a sensible preserved order; then instance methods in alphabetic order (magic methods first per README); then static methods after instance methods.
 - Use the PHP version shown at http://localhost/info.php to run php -l on the modified lean.php and confirm syntax.
-- Use Python to perform the reorder (scripts/reorder_lean_class.py PRESET, or add a preset for the target class).
+- Use Python to perform the reorder (scripts/reorder_lean_class.py PRESET, or add a preset for the target class). Use preset leantoken for class LeanToken (members-first + method sort).
 Afterward, you must run scripts/compare_lean_class_methods.py with the same PRESET (or an equivalent) so no method was dropped and bodies are unchanged aside from order; skipping this step is not allowed.
-Before git push, you must run `git diff php/parser/lean.php`, read the full diff, and confirm changes are limited to the intended class(es) and look like method reorder only; skipping this review is not allowed.
+Before git push, you must run `git diff php/parser/lean.php`, read the full diff, and confirm changes are limited to the intended class(es) and look like property/method reorder only; skipping this review is not allowed.
 ```
