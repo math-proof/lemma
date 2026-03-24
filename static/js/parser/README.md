@@ -22,7 +22,7 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 JS flattens some PHP hierarchies:
 - PHP `LeanRelational`, `LeanArithmetic`, `LeanUnaryArithmeticPre`, `LeanUnaryArithmeticPost`, `LeanSetOperator`, `LeanLogic`, `LeanBinaryBoolean` → JS `LeanBinary` or `LeanUnary`
 - PHP `Lean_is_not` ↔ JS `Lean_is_not` (identical)
-- Dynamic classes: JS uses `resolveUnaryCtor`, `resolveUnaryPostCtor`, `resolveCommandCtor` for unknown identifiers
+- **PHP** uses `new $ClassName(...)` with no separate registry; **JS** uses **`LEAN_CLASSES`**: a map of **concrete** AST classes only (keys = `constructor.name`). **Abstract/intermediate** bases (`Lean`, `LeanArgs`, `LeanBinary`, `LeanUnary`, `LeanPairedGroup`, `LeanCommand`, marker classes, etc.) are **not** in the map—they remain normal exports in `lean.js`. **`getLeanClass(name)`** looks up `LEAN_CLASSES` only; unknown names throw (add the concrete class to `LEAN_CLASSES`). Unary/postfix/paired delimiters still use `resolveUnaryCtor`, `resolveUnaryPostCtor`, and `pairedClassCache` where appropriate.
 
 ### Conventions (PHP → JS)
 
@@ -40,7 +40,6 @@ JS flattens some PHP hierarchies:
 
 ### Known Gaps
 - `Lean_match`, `LeanWith`: match/induction structure (partially handled)
-- Some tactic-specific `echo` behaviors (e.g. `Lean_set_option::echo` maxHeartbeats)
 - `Lean_namespace`, `LeanBar`: added for parity; `LeanBar` used when `LeanWith` is ported
 
 ### Running Tests
@@ -60,15 +59,16 @@ Use this prompt when syncing `php/parser/lean.php` with `static/js/parser/lean.j
 
 2. **For each PHP class**, determine the JS equivalent:
    - **Explicit**: Same or similar class name in `lean.js`.
-   - **Via resolver**: Covered by `resolveUnaryCtor`, `resolveUnaryPostCtor`, or `resolveCommandCtor` (dynamic class creation).
+   - **In `LEAN_CLASSES`**: **Concrete** classes only—register under `constructor.name` if the parser ever does `new ThatClass(...)` or `getLeanClass('ThatClass')` / `push_binary('ThatClass')`. Do **not** add abstract/intermediate PHP bases (`abstract class LeanBinary`, `LeanUnary`, `LeanPairedGroup`, `LeanCommand`, etc.) to `LEAN_CLASSES`.
+   - **Via unary/postfix/paired caches**: `resolveUnaryCtor`, `resolveUnaryPostCtor`, `pairedClassCache` where the PHP code uses a dedicated code path instead of `new Lean_*`.
    - **Flattened**: PHP hierarchy (e.g. `LeanRelational`, `LeanArithmetic`) collapsed into `LeanBinary` or `LeanUnary` in JS.
 
-3. **Print missing classes** — classes in PHP that have no equivalent (neither explicit nor via resolver). Remember this list.
+3. **Print missing classes** — classes in PHP that have no equivalent (neither a concrete JS class nor an entry in `LEAN_CLASSES` / caches). Remember this list.
 
 4. **Translate missing classes** — for each missing class:
    - Port the class and its methods from PHP to JS.
    - Map conventions per the table above (`__construct` → `constructor`, `__get`/`__set` → getters/setters, etc.).
-   - Add to `lean.js` and wire into resolvers if needed (e.g. add to `resolveCommandCtor` switch).
+   - **If the class is concrete** (instantiable as an AST node): **add it to `LEAN_CLASSES`**. Abstract JS bases stay out of the map. Unknown names passed to `getLeanClass` throw at runtime.
 
 ### Step 2: Class Declaration Order
 
@@ -104,23 +104,33 @@ For each class defined in **both** `lean.php` and `lean.js`:
 - Ensure no new linter errors.
 - Optionally update this README with class mapping summary, known gaps, or caveats.
 
-### Example Output Format
+### Example Output Format (Last Audit)
 
 ```
 ## Step 1: Missing Classes
-- LeanBar (added)
-- Lean_namespace (added)
+- None; concrete classes explicit or via resolvers; abstract PHP bases flattened to LeanBinary/LeanUnary.
 
 ## Step 2: Order
 - Order left as-is: JS flattens binary hierarchy; reordering would require large refactor.
 
 ## Step 3: Per-Class Gaps
 ### Lean (base)
-- Added: tokens_space_separated, getEcho, strArgs, echo, traverse, set_line
-### LeanCaret
-- OK (methods match)
-### LeanTactic
-- getEcho: OK (precise)
+- Added: is_space_separated() → false (PHP ~469–472)
+### LeanToken
+- Added: cache, tokens_space_separated, isProp(vars), jsonSerialize, starts_with_2_letters,
+  ends_with_2_letters, is_variable, lower, regexp, operand_count, is_parallel_operator,
+  tactic_block_info, equals (PHP ~1026–1211)
+### LeanProperty
+- Added: is_space_separated() for cos/sin/tan/log rhs (PHP ~2152–2165)
+### LeanArgsSpaceSeparated
+- Added: constructor cache, is_space_separated() true (PHP ~6191–6195)
+### LeanMul
+- Added: get command() conditional \\cdot vs \\  vs '' (PHP ~2937–2960); removed fixed \\cdot from LeanBinary switch
+### Lean_set_option / LeanTactic
+- OK (echo / getEcho from prior audits)
+### Remaining gaps (documented)
+- LeanMul::latexArgs (unwrap paren/div, LeanNeg paren) not ported; LeanArgsSpaceSeparated::tokens_space_separated /
+  tactic_block_info / construct_prefix_tree (needs eval_prefix); Lean_match / LeanWith
 ```
 
 ## References
