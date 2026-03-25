@@ -162,7 +162,7 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 - Prior parity work (examples): LeanBinary.echo, LeanRightarrow.echo; Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers.
 
 ## Step 4: Verification
-- node scripts/test-lean-parser.mjs — corpus OK
+- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: 39/40 corpus lemmas match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (see `ROUND_TRIP_CORPUS_MISMATCH_OK` in `scripts/test-lean-parser.mjs`; remaining gap: `Lemma/Tensor/GetSelect_1/eq/Cast_Get/of/Lt_Get_0/Lt_Get_1/GtLength_1.lean` — long `imply` with nested `select` / `.get` / `⟨…, by …⟩`).
 - No new linter issues on static/js/parser/lean.js
 ```
 

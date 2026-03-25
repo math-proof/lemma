@@ -41,19 +41,7 @@ const SMOKE = [
  * Shrink this set as `strFormat` / parser parity improves.
  */
 const ROUND_TRIP_CORPUS_MISMATCH_OK = new Set([
-    'Lemma/List/EqGetCons.lean',
     'Lemma/Tensor/GetSelect_1/eq/Cast_Get/of/Lt_Get_0/Lt_Get_1/GtLength_1.lean',
-    'Lemma/Complex/Im/eq/MulAbs_SinArg.lean',
-    'Lemma/Finset/Ico/eq/SDiffRangeS.lean',
-    'Lemma/Vector/Eq_0/of/All_EqGet_0.lean',
-    'Lemma/Tensor/EqLengthS.lean',
-    'Lemma/Bool/ImpAndS/of/Imp.lean',
-    'Lemma/Finset/In_Union/is/OrInS.lean',
-    'Lemma/Finset/Sum/eq/Sum_MulBool.lean',
-    'Lemma/List/Rotate_Mod/eq/Rotate.lean',
-    'Lemma/Vector/EqGetCons.lean',
-    'Lemma/Vector/Map/eq/Cons_MapTail.lean',
-    'Lemma/Tensor/GetDot/eq/Sum_MulGetS.lean',
 ]);
 
 /**

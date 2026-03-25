@@ -61,6 +61,8 @@ export const token2classname = Object.freeze({
     '⊔': 'Lean_sqcup',
     '⊓': 'Lean_sqcap',
     '++': 'LeanAppend',
+    '::': 'LeanConstruct',
+    '::ᵥ': 'LeanVConstruct',
     '→': 'Lean_rightarrow',
     '↦': 'Lean_mapsto',
     '↔': 'Lean_leftrightarrow',
@@ -2418,14 +2420,45 @@ export class LeanArgsIndented extends LeanBinary {
         super(lhs, rhs, indent, level);
     }
 
-    /** PHP LeanArgsIndented::sep (php/parser/lean.php ~6640). */
+    /** PHP LeanArgsIndented::sep (php/parser/lean.php ~6719–6722). */
     sep() {
         return '\n';
     }
 
-    /** PHP LeanArgsIndented::latexFormat (php/parser/lean.php ~6655–6658): %s + sep + %s, no command. */
+    /** PHP LeanArgsIndented::strFormat (php/parser/lean.php ~6723–6727): no binary `operator`, only newline sep. */
+    strFormat() {
+        return `%s${this.sep()}%s`;
+    }
+
+    /**
+     * Multi-line binder groups (`(A …)\n(f …)`) store column on each `LeanParenthesis`; prefix lines for round-trip.
+     */
+    toString() {
+        const lhsS = String(this.lhs);
+        const rhsS = String(this.rhs);
+        const core = `${lhsS}\n${rhsS}`;
+        if (!(this.rhs instanceof LeanArgsNewLineSeparated)) return core;
+        let ind = 0;
+        if (this.lhs instanceof LeanParenthesis) ind = Math.max(ind, this.lhs.indent ?? 0);
+        for (const c of this.rhs.args) {
+            if (c instanceof LeanParenthesis) ind = Math.max(ind, c.indent ?? 0);
+        }
+        if (ind <= 0) return core;
+        const pad = ' '.repeat(ind);
+        return core
+            .split('\n')
+            .map((line) => (line === '' ? line : pad + line))
+            .join('\n');
+    }
+
+    /** PHP LeanArgsIndented::latexFormat (php/parser/lean.php ~6687–6691): %s + sep + %s, no command. */
     latexFormat() {
         return '{%s}' + this.sep() + '{%s}';
+    }
+
+    /** PHP LeanArgsIndented::is_indented (php/parser/lean.php ~6682–6685). */
+    is_indented() {
+        return this.parent instanceof LeanStatements;
     }
 }
 
@@ -2913,12 +2946,16 @@ class LeanPairedGroup extends LeanUnary {
     strFormat() {
         let format = this.argFormat();
         const operator = this.operator;
-        if (this.is_closed) {
-            format = operator[0] + format + operator[1];
-        } else if (this.is_closed === null) {
-            format = operator[0] + format;
+        const open = typeof operator === 'string' ? operator[0] : operator[0];
+        const close = typeof operator === 'string' ? operator[1] : operator[1];
+        const c = this.is_closed;
+        if (c === false) {
+            format += close;
+        } else if (c === null) {
+            format = open + format;
         } else {
-            format += operator[1];
+            // `true`, or `undefined` when `push_right` never ran — still a complete pair on disk.
+            format = open + format + close;
         }
         return format;
     }
@@ -3279,18 +3316,27 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     toString() {
         const active = this.args.filter((a) => !(a instanceof LeanCaret));
         if (active.length === 0) return '';
-        if (active.length === 1) return String(active[0]);
+        const ind = this.indent ?? 0;
+        const modPad =
+            ind > 0 && this.parent?.constructor?.name === 'LeanModule' ? ' '.repeat(ind) : '';
+        if (active.length === 1) return modPad + String(active[0]);
+        const parentTactic = this.parent instanceof LeanTactic;
         const parts = [];
         for (let i = 0; i < active.length; i++) {
             const a = active[i];
             const prev = active[i - 1];
             const prevText = prev instanceof LeanToken ? prev.text : '';
-            const sep =
-                prev && prevText.endsWith('_') && a instanceof LeanToken ? '' : ' ';
+            const subscriptGlue =
+                prev &&
+                prevText.length > 1 &&
+                prevText.endsWith('_') &&
+                a instanceof LeanToken;
+            let sep = subscriptGlue ? '' : ' ';
+            if (parentTactic && a instanceof LeanTactic) sep = '\n';
             if (i > 0) parts.push(sep);
             parts.push(String(a));
         }
-        return parts.join('');
+        return modPad + parts.join('');
     }
 
     /**
@@ -3330,9 +3376,11 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             if (parts.length > 0) {
                 const prev = active[i - 1];
                 const prevText = prev instanceof LeanToken ? prev.text : '';
-                // Keep subscript-like identifiers contiguous: h_ Ξ -> h\_Ξ
+                // Keep subscript-like identifiers contiguous: h_ Ξ -> h\_Ξ (not `_ h` placeholders)
                 const sep =
-                    prev && prevText.endsWith('_') && cur instanceof LeanToken ? '' : '\\ ';
+                    prev && prevText.length > 1 && prevText.endsWith('_') && cur instanceof LeanToken
+                        ? ''
+                        : '\\ ';
                 parts.push(sep);
             }
             parts.push(curLatex);
@@ -3359,7 +3407,8 @@ export class LeanStatements extends LeanArgs {
             p instanceof LeanAssign ||
             p instanceof LeanColon ||
             p instanceof LeanBy ||
-            p instanceof Lean_def;
+            p instanceof Lean_def ||
+            p instanceof LeanTacticBlock;
         return Array(n).fill('%s').join(nl ? '\n' : ' ');
     }
 
@@ -3612,6 +3661,102 @@ export class LeanModule extends LeanStatements {
         const n = this.args.length;
         if (n === 0) return '';
         return Array(n).fill('%s').join('\n');
+    }
+
+    /**
+     * Echo-style lemmas: `LeanAssign` with empty `LeanCaret` rhs and proof on the next module lines — emit `:= by`
+     * so the second parse matches.
+     */
+    toString() {
+        const args = this.args;
+        const skip = new Set();
+        const parts = [];
+        const indentText = (s, ind) => {
+            if (ind <= 0) return s;
+            const pad = ' '.repeat(ind);
+            return s
+                .split('\n')
+                .map((line) => (line === '' ? line : pad + line))
+                .join('\n');
+        };
+        for (let i = 0; i < args.length; i++) {
+            if (skip.has(i)) continue;
+            const a = args[i];
+            if (a == null) continue;
+            if (a instanceof LeanCaret) {
+                parts.push('');
+                continue;
+            }
+            if (a instanceof LeanAssign && a.rhs instanceof LeanCaret) {
+                let j = i + 1;
+                while (j < args.length && args[j] instanceof LeanCaret) j++;
+                const cmts = [];
+                while (j < args.length && args[j].is_comment?.()) {
+                    cmts.push(args[j]);
+                    j++;
+                }
+                let proof = j < args.length ? args[j] : null;
+                const proofOk =
+                    proof &&
+                    (proof instanceof LeanTactic ||
+                        proof instanceof LeanArgsSpaceSeparated);
+                if (proofOk) {
+                    let endJ = j;
+                    let proofStr = String(proof);
+                    let proofInd = proof.indent ?? 0;
+                    for (const c of cmts) proofInd = Math.max(proofInd, c.indent ?? 0);
+                    if (proof instanceof LeanTactic) {
+                        let danglingStc = false;
+                        for (let k = 1; k < proof.args.length; k++) {
+                            const x = proof.args[k];
+                            if (x instanceof LeanSequentialTacticCombinator && x.arg instanceof LeanCaret) {
+                                danglingStc = true;
+                                break;
+                            }
+                        }
+                        if (danglingStc && endJ + 1 < args.length && args[endJ + 1] instanceof LeanTacticBlock) {
+                            endJ++;
+                            const ps = indentText(String(proof), proofInd);
+                            const tb = String(args[endJ]);
+                            const join = ps.endsWith('\n') ? '' : '\n';
+                            proofStr = `${ps}${join}${tb}`;
+                        } else {
+                            proofStr = indentText(String(proof), proofInd);
+                        }
+                    } else {
+                        proofStr = indentText(String(proof), proofInd);
+                    }
+                    for (let k = i + 1; k <= endJ; k++) skip.add(k);
+                    let block = `${String(a.lhs)} := by`;
+                    for (const c of cmts) block += `\n${String(c)}`;
+                    block += `\n${proofStr}`;
+                    parts.push(block);
+                    continue;
+                }
+            }
+            if (a instanceof LeanTactic) {
+                const next = i + 1 < args.length ? args[i + 1] : null;
+                let danglingStc = false;
+                for (let k = 1; k < a.args.length; k++) {
+                    const x = a.args[k];
+                    if (x instanceof LeanSequentialTacticCombinator && x.arg instanceof LeanCaret) {
+                        danglingStc = true;
+                        break;
+                    }
+                }
+                if (danglingStc && next instanceof LeanTacticBlock) {
+                    skip.add(i + 1);
+                    const ind = Math.max(a.indent ?? 0, next.indent ?? 0);
+                    const as = String(a);
+                    const ns = String(next);
+                    const join = as.endsWith('\n') ? '' : '\n';
+                    parts.push(indentText(`${as}${join}${ns}`, ind));
+                    continue;
+                }
+            }
+            parts.push(String(a));
+        }
+        return parts.join('\n');
     }
 
     insert_space(caret) {
@@ -4856,6 +5001,13 @@ class LeanBracket extends LeanPairedGroup {
     latexFormat() {
         return '\\left[ {%s} \\right]';
     }
+
+    toString() {
+        const s = super.toString();
+        const ind = this.indent ?? 0;
+        if (ind > 0 && this.parent?.constructor?.name === 'LeanModule') return ' '.repeat(ind) + s;
+        return s;
+    }
 }
 
 /** PHP `LeanBrace` (php/parser/lean.php ~1892–1938). */
@@ -5263,6 +5415,19 @@ class LeanTacticBlock extends LeanUnary {
     strFormat() {
         const s = this.sep();
         return `${this.operator}${s}%s`;
+    }
+
+    /** Indent the `·` line only; inner proof lines keep their own indentation. */
+    toString() {
+        const fmt = this.strFormat();
+        const s = String(fmt).format(this.arg);
+        const ind = this.indent ?? 0;
+        if (ind <= 0) return s;
+        const lines = s.split('\n');
+        if (lines.length && lines[0] !== '') {
+            lines[0] = ' '.repeat(ind) + lines[0];
+        }
+        return lines.join('\n');
     }
 
     latexFormat() {
@@ -5688,7 +5853,12 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     sep() {
-        return this.arg instanceof LeanTacticBlock || (this.arg.indent > 0 && !this.newline) ? '\n' : ' ';
+        if (this.arg instanceof LeanTacticBlock) return '\n';
+        // Dangling `<;>` before `·` / next tactic: newline, not a trailing space before empty caret.
+        if (this.arg instanceof LeanCaret) return '\n';
+        // `constructor <;>` then a more-indented `intro` / tactic on the next line (OrInS-style).
+        if (this.arg instanceof LeanTactic && this.arg.indent > this.indent) return '\n';
+        return this.arg.indent > 0 && !this.newline ? '\n' : ' ';
     }
 
     set_line(line) {
@@ -5881,6 +6051,22 @@ class Lean_let extends LeanSyntax {
             parts.push('%s');
         }
         return func + parts.join('');
+    }
+
+    /** Match `LeanTactic::toString` indentation in proof blocks (`have`, `let`, …). */
+    toString() {
+        const format = this.strFormat();
+        const active = this.args.filter((a) => !(a instanceof LeanCaret));
+        let s = active.length > 0 ? String(format).format(...active) : format;
+        const ind = this.indent ?? 0;
+        if (ind > 0 && this.is_indented()) {
+            const pad = ' '.repeat(ind);
+            s = s
+                .split('\n')
+                .map((line) => (line === '' ? line : pad + line))
+                .join('\n');
+        }
+        return s;
     }
 
     latexArgs(syntax) {
@@ -6085,11 +6271,15 @@ export class LeanTactic extends LeanSyntax {
         const parts = [];
         for (const arg of this.args) {
             if (arg instanceof LeanCaret) continue;
-            parts.push(
-                arg?.constructor?.name === 'LeanSequentialTacticCombinator' && /** @type {*} */ (arg).newline
-                    ? '\n'
-                    : ' ',
-            );
+            let sepCh = ' ';
+            if (arg?.constructor?.name === 'LeanSequentialTacticCombinator') {
+                const stc = /** @type {LeanSequentialTacticCombinator} */ (arg);
+                const deeperTactic =
+                    stc.arg instanceof LeanTactic && stc.arg.indent > stc.indent;
+                if (deeperTactic) sepCh = ' ';
+                else if (stc.newline) sepCh = '\n';
+            }
+            parts.push(sepCh);
             parts.push('%s');
         }
         return func + parts.join('');
@@ -6099,8 +6289,16 @@ export class LeanTactic extends LeanSyntax {
     toString() {
         const format = this.strFormat();
         const active = this.args.filter((a) => !(a instanceof LeanCaret));
-        if (active.length > 0) return format.format(...active);
-        return format;
+        let s = active.length > 0 ? String(format).format(...active) : format;
+        const ind = this.indent ?? 0;
+        if (ind > 0 && this.is_indented()) {
+            const pad = ' '.repeat(ind);
+            s = s
+                .split('\n')
+                .map((line) => (line === '' ? line : pad + line))
+                .join('\n');
+        }
+        return s;
     }
 
     /** Port of `LeanTactic::insert_line_comment` / `push_line_comment` (php/parser/lean.php ~6968–6977). */
@@ -6339,6 +6537,8 @@ export class LeanTactic extends LeanSyntax {
         const p = this.parent;
         if (!p) return true;
         if (p instanceof LeanStatements || p instanceof LeanIte) return true;
+        if (p instanceof LeanArgsSpaceSeparated && p.parent instanceof LeanTactic) return true;
+        if (p instanceof LeanSequentialTacticCombinator && p.arg === this) return true;
         if (p instanceof LeanSequentialTacticCombinator) {
             return this.indent >= p.indent && !p.newline;
         }
