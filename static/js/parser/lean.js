@@ -221,8 +221,9 @@ export class Lean extends IndentedNode {
         if (this.parent) return this.parent.append(this, _new, _type);
     }
 
+    /** PHP `Lean::push_accessibility` (php/parser/lean.php ~764–767): two-arg bubble, no `this` prefix. */
     push_accessibility(_new, _accessibility) {
-        if (this.parent) return this.parent.push_accessibility(this, _new, _accessibility);
+        if (this.parent) return this.parent.push_accessibility(_new, _accessibility);
     }
 
     push_binary(funcName) {
@@ -2408,25 +2409,60 @@ export class LeanBy extends LeanUnary {
     }
 }
 
-/** Port of PHP LeanAttribute (php/parser/lean.php ~8553–8614). Needed so @[main] becomes lemma.attribute. */
+/** PHP `LeanAttribute` (php/parser/lean.php ~8553–8614). */
 class LeanAttribute extends LeanUnary {
-    /** Port of LeanAttribute::insert_newline (php/parser/lean.php ~8575–8579). Return caret to keep it inside so push_accessibility runs on next line. */
+    get operator() {
+        return '@';
+    }
+
+    get command() {
+        return '@';
+    }
+
+    /** PHP `LeanAttribute::append` (php/parser/lean.php ~8565–8568). */
+    append(new_, _type) {
+        return this.push_accessibility(new_, 'public');
+    }
+
+    /** PHP `LeanAttribute::insert_newline` (php/parser/lean.php ~8570–8574). */
     insert_newline(caret, newlineCount, indent, next) {
-        if (this.parent && this.parent.constructor?.name === 'LeanTactic')
+        if (this.parent instanceof LeanTactic)
             return super.insert_newline(caret, newlineCount, indent, next);
         return caret;
     }
 
-    push_accessibility(_child, New, accessibility) {
-        if (New !== 'Lean_theorem' && New !== 'Lean_lemma' && New !== 'Lean_def')
-            return super.push_accessibility(_child, New, accessibility);
-        const Ctor = getLeanClass(New);
-        const caret = new LeanCaret(this.indent, this.level);
-        const replacement = new Ctor(accessibility, caret, this.indent, this.level);
-        this.parent.replace(this, replacement);
-        replacement.args[0] = this;
-        this.parent = replacement;
-        return caret;
+    is_indented() {
+        return false;
+    }
+
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+
+    sep() {
+        return '';
+    }
+
+    strFormat() {
+        return `${this.operator}${this.sep()}%s`;
+    }
+
+    /** PHP `LeanAttribute::push_accessibility` (php/parser/lean.php ~8587–8601). */
+    push_accessibility(New, accessibility) {
+        switch (New) {
+            case 'Lean_theorem':
+            case 'Lean_lemma':
+            case 'Lean_def': {
+                const Ctor = getLeanClass(New);
+                const caret = new LeanCaret(this.indent, this.level);
+                const replacement = new Ctor(accessibility, caret, this.indent, this.level);
+                this.parent.replace(this, replacement);
+                replacement.attribute = this;
+                return caret;
+            }
+            default:
+                throw new Error(`push_accessibility is unexpected for ${this.constructor.name}`);
+        }
     }
 }
 
@@ -4083,11 +4119,10 @@ class LeanBigOperator extends LeanArgs {
         return `${cmd}\\limits_{\\substack{%s}} {%s}`;
     }
 
+    /** PHP `LeanBigOperator::jsonSerialize` (php/parser/lean.php ~9131–9135): `{ [func]: parent::jsonSerialize() }`. */
     jsonSerialize() {
         return {
-            [this.func]: this.args.map((a) =>
-                a && typeof a.jsonSerialize === 'function' ? a.jsonSerialize() : a
-            ),
+            [this.func]: super.jsonSerialize(),
         };
     }
 
