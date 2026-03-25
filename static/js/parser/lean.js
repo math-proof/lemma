@@ -1598,11 +1598,61 @@ export class LeanProperty extends LeanBinary {
 export class LeanColon extends LeanBinary {
     static input_priority = 19;
 
-    /** PHP `LeanColon::strFormat` (php/parser/lean.php ~2368–2375): "%s : %s" so (l : ℕ) renders correctly. */
+    /** `lemma main:\n` is tight; `{a b : α} :\n` keeps a space before the final colon. */
+    colonLhsLooksLikeBinderHead() {
+        const L = this.lhs;
+        if (!L) return true;
+        if (L instanceof LeanParenthesis) return true;
+        const n = L.constructor?.name;
+        if (n === 'LeanBracket' || n === 'LeanBrace') return true;
+        if (L instanceof LeanArgsSpaceSeparated) {
+            const active = L.args.filter((a) => a != null && !(a instanceof LeanCaret));
+            if (active.length !== 1) return true;
+            return !(active[0] instanceof LeanToken);
+        }
+        if (L instanceof LeanToken) return false;
+        return true;
+    }
+
+    /** PHP `LeanColon::strFormat` (php/parser/lean.php ~2368–2375) + round-trip for newline decl heads. */
     strFormat() {
-        const sep = this.rhs instanceof LeanStatements ? '\n' : (this.rhs instanceof LeanCaret || (this.parent && this.parent.constructor?.name === 'LeanGetElem') ? '' : ' ');
-        const first = this.parent && this.parent.constructor?.name === 'LeanGetElem' ? '%s' : '%s ';
+        const rhs = this.rhs;
+        const inGetElem = this.parent?.constructor?.name === 'LeanGetElem';
+        if (inGetElem) {
+            const sep = rhs instanceof LeanCaret ? '' : ' ';
+            return `%s:${sep}%s`;
+        }
+        if (rhs instanceof LeanStatements) {
+            return this.colonLhsLooksLikeBinderHead() ? '%s :\n%s' : '%s:\n%s';
+        }
+        const sep = rhs instanceof LeanCaret ? '' : ' ';
+        const first = '%s ';
         return `${first}:${sep}%s`;
+    }
+
+    /**
+     * For newline `LeanStatements` rhs, prefix non-comment lines with `indent` (declaration type / `π ≠ 0` lines).
+     */
+    toString() {
+        const rhs = this.rhs;
+        if (this.parent?.constructor?.name === 'LeanGetElem' || !(rhs instanceof LeanStatements)) {
+            return super.toString();
+        }
+        const lhsS = String(this.lhs);
+        const head = this.colonLhsLooksLikeBinderHead() ? `${lhsS} :\n` : `${lhsS}:\n`;
+        const active = rhs.args.filter((a) => a != null && !(a instanceof LeanCaret));
+        const parts = active.map((a) => {
+            let s = a.toString();
+            if (a.is_comment?.()) return s;
+            const ind = a.indent ?? 0;
+            if (ind <= 0) return s;
+            const pad = ' '.repeat(ind);
+            return s
+                .split('\n')
+                .map((line) => (line === '' ? line : pad + line))
+                .join('\n');
+        });
+        return head + parts.join('\n');
     }
 
     /** PHP `LeanColon::insert_newline` (php/parser/lean.php ~2399–2410). */
@@ -1646,6 +1696,32 @@ export class LeanAssign extends LeanBinary {
             }
         }
         return ' ';
+    }
+
+    /**
+     * Newline-separated `LeanStatements` after `:=` (no `by`) need indented lines in the serial form so the second
+     * parse matches (e.g. proof terms under `-- proof`). `by` proofs use `super.toString()` unchanged.
+     */
+    toString() {
+        const rhs = this.rhs;
+        if (rhs instanceof LeanStatements) {
+            const lhsS = String(this.lhs);
+            const sep = this.sep();
+            const active = rhs.args.filter((a) => a != null && !(a instanceof LeanCaret));
+            const parts = active.map((a) => {
+                let s = a.toString();
+                if (a.is_comment?.()) return s;
+                const ind = a.indent ?? 0;
+                if (ind <= 0) return s;
+                const pad = ' '.repeat(ind);
+                return s
+                    .split('\n')
+                    .map((line) => (line === '' ? line : pad + line))
+                    .join('\n');
+            });
+            return `${lhsS} :=${sep}${parts.join('\n')}`;
+        }
+        return super.toString();
     }
 
     /**
@@ -4639,6 +4715,16 @@ export class LeanGetElem extends LeanBinary {
         return caret2;
     }
 
+    /** PHP `LeanGetElemBaseBinary::sep` (php/parser/lean.php ~4037–4039). */
+    sep() {
+        return '';
+    }
+
+    /** PHP `LeanGetElem::strFormat` (php/parser/lean.php ~4062–4065): `A[i,j]`. */
+    strFormat() {
+        return '%s[%s]';
+    }
+
     /** PHP `LeanGetElem::latexFormat` (php/parser/lean.php ~4062–4064): subscript. */
     latexFormat() {
         return '{%s}_{%s}';
@@ -4659,6 +4745,25 @@ export class LeanGetElemQue extends LeanBinary {
         return super.push_right(funcName);
     }
 
+    /** PHP `LeanGetElemBase::insert_comma` (php/parser/lean.php ~4026–4031). */
+    insert_comma(caret) {
+        const caret2 = new LeanCaret(this.indent, caret.level);
+        const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
+        this.args[1] = commaSep;
+        commaSep.parent = this;
+        return caret2;
+    }
+
+    /** PHP `LeanGetElemBaseBinary::sep` (php/parser/lean.php ~4037–4039). */
+    sep() {
+        return '';
+    }
+
+    /** PHP `LeanGetElemQue::strFormat` (php/parser/lean.php ~4076–4079). */
+    strFormat() {
+        return '%s[%s]?';
+    }
+
     /** PHP `LeanGetElemQue::latexFormat` (php/parser/lean.php ~4076–4078). */
     latexFormat() {
         return '{%s}_{%s?}';
@@ -4677,6 +4782,11 @@ export class LeanGetElemQuote extends LeanArgs {
     push_right(funcName) {
         if (funcName === 'LeanBracket') return this;
         return super.push_right(funcName);
+    }
+
+    /** PHP `LeanGetElemQuote::strFormat` (php/parser/lean.php ~4090–4093). */
+    strFormat() {
+        return "%s[%s]'%s";
     }
 }
 
