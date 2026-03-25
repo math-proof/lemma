@@ -1352,30 +1352,34 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     }
 }
 
-/** Port of `LeanArgsSemicolonSeparated` (php/parser/lean.php ~6798–6854). */
+/** Port of `LeanArgsSemicolonSeparated` (php/parser/lean.php ~6798–6854). Method order matches PHP. */
 export class LeanArgsSemicolonSeparated extends LeanArgs {
-    is_indented() {
-        return false;
-    }
-
-    strFormat() {
-        return Array(this.args.length).fill('%s').join('; ');
-    }
-
-    latexFormat() {
-        return Array(this.args.length).fill('{%s}').join('; ');
-    }
-
+    /** PHP `LeanArgsSemicolonSeparated::__get('stack_priority')` (php/parser/lean.php ~6803–6804). */
     get stack_priority() {
         return LeanColon.input_priority - 1;
     }
 
+    /** PHP `LeanArgsSemicolonSeparated::insert` (php/parser/lean.php ~6810–6818). */
+    insert(caret, func, type) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret) {
+            if (caret instanceof LeanCaret) {
+                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+                return caret;
+            }
+            if (this.parent) return this.parent.insert(this, func, type);
+        }
+    }
+
+    /** PHP `LeanArgsSemicolonSeparated::insert_semicolon` (php/parser/lean.php ~6820–6824). */
     insert_semicolon(caret) {
         const c = new LeanCaret(this.indent, caret.level);
         this.push(c);
         return c;
     }
 
+    /** PHP `LeanArgsSemicolonSeparated::insert_tactic` (php/parser/lean.php ~6827–6836). */
     insert_tactic(caret, type) {
         if (caret instanceof LeanCaret) {
             const p = this.parent;
@@ -1388,16 +1392,21 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
         throw new Error(`LeanArgsSemicolonSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
     }
 
-    insert(caret, func, type) {
-        const last = this.args[this.args.length - 1];
-        if (last === caret) {
-            if (caret instanceof LeanCaret) {
-                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
-                this.replace(caret, new Ctor(caret, caret.indent, caret.level));
-                return caret;
-            }
-            if (this.parent) return this.parent.insert(this, func, type);
-        }
+    /** PHP `LeanArgsSemicolonSeparated::is_indented` (php/parser/lean.php ~6839–6841). */
+    is_indented() {
+        return false;
+    }
+
+    /** PHP `LeanArgsSemicolonSeparated::latexFormat` (php/parser/lean.php ~6844–6846). */
+    latexFormat() {
+        return Array(this.args.length)
+            .fill('{%s}')
+            .join('; ');
+    }
+
+    /** PHP `LeanArgsSemicolonSeparated::strFormat` (php/parser/lean.php ~6849–6851). */
+    strFormat() {
+        return Array(this.args.length).fill('%s').join('; ');
     }
 }
 

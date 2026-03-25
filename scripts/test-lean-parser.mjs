@@ -133,6 +133,17 @@ const CORPUS = [
     { rel: 'Lemma/Int/EqAbs/is/Ge_0.lean', note: 'Int eq abs' },
     { rel: 'Lemma/Int/AbsAdd/le/AddAbsS.lean', note: 'Int abs add' },
     { rel: 'Lemma/Real/ExpMulI/eq/AddCos_MulISin.lean', note: 'Real exp mul I' },
+    // Random Lemma/ sample (repro: `node scripts/sample-round-trip-corpus.mjs 20260326 10`)
+    { rel: 'Lemma/Nat/ToNatAdd/eq/Add.lean', note: 'Nat toNat add' },
+    { rel: 'Lemma/Hyperreal/StInv/eq/Inv/of/EqSt.lean', note: 'Hyperreal st inv' },
+    { rel: 'Lemma/Int/LtSub_1/of/Le.lean', note: 'Int lt sub' },
+    { rel: 'Lemma/Set/InterInter/eq/Inter_Inter.lean', note: 'Set inter inter' },
+    { rel: 'Lemma/Nat/Mul/ne/Zero/of/Ne_0/Ne_0.lean', note: 'Nat mul ne zero' },
+    { rel: 'Lemma/Real/EqSqrt_0/of/Lt_0.lean', note: 'Real eq sqrt' },
+    { rel: 'Lemma/Int/Abs/ge/Neg.lean', note: 'Int abs ge neg' },
+    { rel: 'Lemma/Int/EqNegToNatNeg/of/Le_0.lean', note: 'Int neg toNat' },
+    { rel: 'Lemma/Hyperreal/InfinitePos/is/Infinite/Gt_0.lean', note: 'Hyperreal infinite pos' },
+    { rel: 'Lemma/List/GtProdTail_0/of/Lt_ProdTailSet_0.lean', note: 'List prod tail gt' },
 ];
 
 function resolveAbs(rel) {
