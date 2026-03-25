@@ -2498,3 +2498,5 @@
 {"rel":"Lemma/Nat/Pow_Ite/eq/Ite_PowS.lean","note":"random sample (Nat)"}
 {"rel":"Lemma/Nat/EqAddSub/of/Ge.lean","note":"random sample (Nat)"}
 {"rel":"Lemma/Tensor/GetDot/eq/DotGet/of/Gt.lean","note":"LeanPairedGroup newline inside nested ⟨⟩ / () (off-corpus parse1)"}
+{"rel":"Lemma/Bool/AndAnd__Not/is/False.lean","note":"LeanStatements.strFormat newlines like PHP (match arm parse2)"}
+{"rel":"Lemma/Bool/All/of/All_And.lean","note":"off-corpus full round-trip; colon-lhs stmt newlines + paired-group insert_tactic"}

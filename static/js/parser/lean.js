@@ -2988,6 +2988,7 @@ class LeanPairedGroup extends LeanUnary {
 
     insert_tactic(caret, token) {
         if (caret instanceof LeanCaret) return this.insert_word(caret, token);
+        if (this.parent) return this.parent.insert_tactic(caret, token);
         throw new Error(`LeanPairedGroup.insert_tactic: unexpected for ${this.constructor.name}`);
     }
 
@@ -3212,6 +3213,23 @@ function leanEvalPrefix(expressions, operandCount) {
     return stack.reverse();
 }
 
+/**
+ * Proof/script nodes that often start a new source line after a term in `LeanArgsSpaceSeparated`
+ * (parser keeps them as siblings under `apply` / colon lhs; spaces would glue `calc` to `simp` and break re-parse).
+ */
+function leanSpaceSepStmtLike(arg) {
+    const nm = arg?.constructor?.name;
+    return (
+        nm === 'LeanTactic' ||
+        nm === 'Lean_have' ||
+        nm === 'Lean_let' ||
+        nm === 'LeanIte' ||
+        nm === 'Lean_fun' ||
+        nm === 'Lean_match' ||
+        nm === 'LeanCalc'
+    );
+}
+
 export class LeanArgsSpaceSeparated extends LeanArgs {
     static input_priority = 80;
 
@@ -3334,7 +3352,15 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 prevText.endsWith('_') &&
                 a instanceof LeanToken;
             let sep = subscriptGlue ? '' : ' ';
-            if (parentTactic && a instanceof LeanTactic) sep = '\n';
+            const colonLhs = this.parent instanceof LeanColon && this.parent.lhs === this;
+            if (
+                colonLhs &&
+                leanSpaceSepStmtLike(a) &&
+                prev &&
+                (leanSpaceSepStmtLike(prev) || prev.constructor.name === 'LeanProperty')
+            )
+                sep = '\n';
+            if (parentTactic && (a instanceof LeanTactic || a instanceof LeanCalc)) sep = '\n';
             if (i > 0) parts.push(sep);
             parts.push(String(a));
         }
@@ -3396,22 +3422,15 @@ export class LeanStatements extends LeanArgs {
         return 19;
     }
 
-    /**
-     * PHP `LeanStatements::strFormat` uses spaces. For proof/type script
-     * regions (parent Assign / Colon / By / def-like decl), newlines between args preserve line structure
-     * for parse→print→parse. Elsewhere (e.g. under ∑ with commas) keep spaces so `insert_comma` still matches.
-     */
+    /** PHP `LeanStatements::strFormat` — always `\n` between args; `LeanBrace` parent adds wrapped newlines + indent. */
     strFormat() {
         const n = this.args.length;
         if (n === 0) return '';
-        const p = this.parent;
-        const nl =
-            p instanceof LeanAssign ||
-            p instanceof LeanColon ||
-            p instanceof LeanBy ||
-            p instanceof Lean_def ||
-            p instanceof LeanTacticBlock;
-        return Array(n).fill('%s').join(nl ? '\n' : ' ');
+        let format = Array(n).fill('%s').join('\n');
+        if (this.parent instanceof LeanBrace) {
+            format = `\n${format}\n${' '.repeat(this.parent.indent)}`;
+        }
+        return format;
     }
 
     /**
