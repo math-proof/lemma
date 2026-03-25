@@ -11,10 +11,11 @@
  *   node scripts/test-lean-parser.mjs --scan-lemma
  *   node scripts/test-lean-parser.mjs Lemma/Nat/Min.lean
  *   node scripts/test-lean-parser.mjs --json
+ *   node scripts/test-lean-parser.mjs --round-trip-verbose
  *
  * Exit codes:
- *   0 — all smoke tests passed; corpus is informational unless --strict
- *   1 — a smoke test failed, or --strict and a corpus file failed unexpectedly
+ *   0 — all smoke tests passed; round-trip smoke + corpus rules satisfied; corpus parse informational unless --strict
+ *   1 — a smoke test failed; or --strict and a corpus file failed unexpectedly; or an unexpected round-trip failure
  */
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'fs';
@@ -33,6 +34,30 @@ const SMOKE = [
     { name: 'open', source: 'open Bar\n' },
     { name: 'two imports', source: 'import A\nimport B\n' },
 ];
+
+/**
+ * Corpus paths where `jsonSerialize(parse(String(parse(file))))` may still differ from the first
+ * parse (layout / tactic structure / etc.). Every other corpus file must round-trip.
+ * Shrink this set as `strFormat` / parser parity improves.
+ */
+const ROUND_TRIP_CORPUS_MISMATCH_OK = new Set([
+    'Lemma/List/EqGetCons.lean',
+    'Lemma/Tensor/GetSelect_1/eq/Cast_Get/of/Lt_Get_0/Lt_Get_1/GtLength_1.lean',
+    'Lemma/Real/Pi/ne/Zero.lean',
+    'Lemma/Complex/Im/eq/MulAbs_SinArg.lean',
+    'Lemma/Hyperreal/InfinitePosInfty.lean',
+    'Lemma/Finset/Ico/eq/SDiffRangeS.lean',
+    'Lemma/Vector/Eq_0/of/All_EqGet_0.lean',
+    'Lemma/Tensor/EqLengthS.lean',
+    'Lemma/Bool/ImpAndS/of/Imp.lean',
+    'Lemma/Finset/In_Union/is/OrInS.lean',
+    'Lemma/Finset/Sum/eq/Sum_MulBool.lean',
+    'Lemma/Hyperreal/NeInfty0.lean',
+    'Lemma/List/Rotate_Mod/eq/Rotate.lean',
+    'Lemma/Vector/EqGetCons.lean',
+    'Lemma/Vector/Map/eq/Cons_MapTail.lean',
+    'Lemma/Tensor/GetDot/eq/Sum_MulGetS.lean',
+]);
 
 /**
  * Lemma library files (under `Lemma/` only). Set `expectError` + `errorContains` when a file is
@@ -111,15 +136,72 @@ function isUnderLemma(absPath) {
 }
 
 function parseArgs(argv) {
-    const out = { strict: false, json: false, scanLemma: false, extraFiles: [] };
+    const out = {
+        strict: false,
+        json: false,
+        scanLemma: false,
+        roundTripVerbose: false,
+        extraFiles: [],
+    };
     for (const a of argv) {
         if (a === '--help' || a === '-h') out.help = true;
         else if (a === '--strict') out.strict = true;
         else if (a === '--json') out.json = true;
         else if (a === '--scan-lemma') out.scanLemma = true;
+        else if (a === '--round-trip' || a === '--round-trip-verbose') out.roundTripVerbose = true;
         else if (!a.startsWith('-')) out.extraFiles.push(a);
     }
     return out;
+}
+
+/**
+ * Stable fingerprint for AST equality: `root.jsonSerialize()` then `JSON.stringify`
+ * (handles nested structures; ignores object identity).
+ *
+ * @param {{ jsonSerialize: () => unknown }} root
+ */
+function stableAstJson(root) {
+    return JSON.stringify(root.jsonSerialize(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
+}
+
+/**
+ * Stable round-trip: AST₁ = parse(source), text = String(AST₁), AST₂ = parse(text).
+ * Returns whether `stableAstJson(AST₁) === stableAstJson(AST₂)` when both parses succeed.
+ *
+ * @param {string} source
+ */
+function runRoundTrip(source) {
+    let root1;
+    try {
+        root1 = compile(source);
+    } catch (e) {
+        return {
+            ok: false,
+            phase: 'parse1',
+            error: e instanceof Error ? e.message : String(e),
+        };
+    }
+    const printed = String(root1);
+    let root2;
+    try {
+        root2 = compile(printed);
+    } catch (e) {
+        return {
+            ok: false,
+            phase: 'parse2',
+            printed,
+            error: e instanceof Error ? e.message : String(e),
+        };
+    }
+    const j1 = stableAstJson(root1);
+    const j2 = stableAstJson(root2);
+    return {
+        ok: true,
+        match: j1 === j2,
+        printed,
+        j1Len: j1.length,
+        j2Len: j2.length,
+    };
 }
 
 function runCompile(source, label) {
@@ -166,10 +248,14 @@ function main() {
         console.log(`Usage: node scripts/test-lean-parser.mjs [options] [extra.lean ...]
 
 Options:
-  --strict       Exit 1 if any corpus file fails unexpectedly (smoke always enforced)
-  --scan-lemma   After corpus, compile every file under Lemma/ and print ok/fail counts
-  --json         Print machine-readable JSON on stdout
-  --help         This message
+  --strict                 Exit 1 if any corpus file fails unexpectedly (smoke always enforced)
+  --scan-lemma             After corpus, compile every file under Lemma/ and print ok/fail counts
+  --json                   Print machine-readable JSON on stdout
+  --round-trip-verbose     Print per-file round-trip lines (default: summary only)
+  --help                   This message
+
+Every run checks: parse(s) → String(AST) → parse yields the same jsonSerialize() for all smoke
+sources and for each corpus file (except paths listed in ROUND_TRIP_CORPUS_MISMATCH_OK).
 
 Without paths, runs built-in smoke tests + corpus list. Extra paths must be under
 Lemma/ (relative to repo root, or absolute inside the repo).
@@ -194,6 +280,27 @@ Lemma/ (relative to repo root, or absolute inside the repo).
         process.exit(1);
     }
 
+    /** @type {{ label: string; kind: string; match?: boolean; phase?: string; error?: string; j1Len?: number; j2Len?: number }[]} */
+    const roundTripSmoke = [];
+    for (const s of SMOKE) {
+        const rt = runRoundTrip(s.source);
+        roundTripSmoke.push({
+            label: s.name,
+            kind: 'smoke',
+            ...(rt.ok
+                ? { match: rt.match, j1Len: rt.j1Len, j2Len: rt.j2Len }
+                : { phase: rt.phase, error: rt.error }),
+        });
+        if (!rt.ok || !rt.match) {
+            if (!args.json) {
+                console.error(`\nROUND-TRIP SMOKE FAILED: ${s.name}`);
+                if (!rt.ok) console.error(`  phase=${rt.phase} ${rt.error}`);
+                else console.error(`  jsonSerialize mismatch`);
+            }
+            process.exit(1);
+        }
+    }
+
     const filteredExtras = [];
     for (const rel of args.extraFiles) {
         const abs = resolveAbs(rel);
@@ -208,6 +315,8 @@ Lemma/ (relative to repo root, or absolute inside the repo).
 
     const corpusFiles = [...new Set([...CORPUS.map((c) => c.rel), ...filteredExtras])];
     const corpusResults = [];
+
+    let roundTripFail = false;
 
     for (const rel of corpusFiles) {
         const abs = resolveAbs(rel);
@@ -240,6 +349,23 @@ Lemma/ (relative to repo root, or absolute inside the repo).
               ? { status: 'pass', detail: `${raw.ms}ms` }
               : { status: 'fail', detail: raw.error };
 
+        /** @type {Record<string, unknown> | null} */
+        let roundTrip = null;
+        if (raw.ok && expectation.status === 'pass') {
+            const rt = runRoundTrip(source);
+            const allowed = ROUND_TRIP_CORPUS_MISMATCH_OK.has(label);
+            const bad = !rt.ok || !rt.match;
+            if (bad && !allowed) roundTripFail = true;
+            roundTrip = {
+                match: rt.ok ? rt.match : false,
+                phase: rt.ok ? undefined : rt.phase,
+                error: rt.ok ? undefined : rt.error,
+                j1Len: rt.ok ? rt.j1Len : undefined,
+                j2Len: rt.ok ? rt.j2Len : undefined,
+                allowedMismatch: allowed,
+            };
+        }
+
         corpusResults.push({
             file: label,
             tokens: source.length,
@@ -247,6 +373,7 @@ Lemma/ (relative to repo root, or absolute inside the repo).
             ...expectation,
             ms: raw.ms,
             note: meta?.note,
+            roundTrip,
         });
     }
 
@@ -306,9 +433,10 @@ Lemma/ (relative to repo root, or absolute inside the repo).
             ms: r.ms,
             root: r.root?.constructor?.name,
         })),
+        roundTripSmoke,
         corpus: corpusResults,
         scanLemma: args.scanLemma ? scanResults : undefined,
-        exitCode: strictFail ? 1 : 0,
+        exitCode: strictFail || roundTripFail ? 1 : 0,
     };
 
     if (args.json) {
@@ -339,9 +467,37 @@ Lemma/ (relative to repo root, or absolute inside the repo).
                 '\nNote: expected failures (XF) match known missing PHP ports in lean.js. Re-run with --strict to fail on any corpus error.',
             );
         }
+
+        const rtCorpus = corpusResults.filter((c) => c.roundTrip);
+        const rtOk = rtCorpus.filter((c) => c.roundTrip.match === true).length;
+        const rtAllow = rtCorpus.filter(
+            (c) => c.roundTrip && c.roundTrip.allowedMismatch && c.roundTrip.match !== true,
+        ).length;
+        console.log(
+            `\nRound-trip (parse → String(AST) → parse; same jsonSerialize): smoke OK (${SMOKE.length}/${SMOKE.length}). Corpus checked: ${rtCorpus.length} — ${rtOk} match, ${rtAllow} allowlisted mismatch (ROUND_TRIP_CORPUS_MISMATCH_OK).`,
+        );
+        if (args.roundTripVerbose) {
+            for (const c of rtCorpus) {
+                const rt = c.roundTrip;
+                if (rt.match === true) console.log(`  RT OK   ${c.file}`);
+                else if (rt.allowedMismatch)
+                    console.log(
+                        `  RT XF   ${c.file}  (${rt.phase ?? 'mismatch'}${rt.error ? `: ${rt.error}` : ` len ${rt.j1Len} vs ${rt.j2Len}`})`,
+                    );
+                else
+                    console.log(
+                        `  RT FAIL ${c.file}  (${rt.phase ?? 'mismatch'}${rt.error ? `: ${rt.error}` : ''})`,
+                    );
+            }
+        }
+        if (roundTripFail) {
+            console.error(
+                '\nRound-trip: unexpected failure (not in ROUND_TRIP_CORPUS_MISMATCH_OK). Use --round-trip-verbose.',
+            );
+        }
     }
 
-    process.exit(strictFail ? 1 : 0);
+    process.exit(strictFail || roundTripFail ? 1 : 0);
 }
 
 main();

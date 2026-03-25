@@ -424,8 +424,12 @@ export class Lean extends IndentedNode {
         if (this.parent) return this.parent.insert(this, func, type);
     }
 
+    /**
+     * PHP has no `Lean::insert_if`; concrete parents handle the caret. Forward the same `caret` up the chain
+     * (unlike `insert_then` / `insert_else`, which pass `this` — php/parser/lean.php ~187–236).
+     */
     insert_if(caret) {
-        if (this.parent) return this.parent.insert_if(this);
+        if (this.parent) return this.parent.insert_if(caret);
     }
 
     insert_then(caret) {
@@ -1544,6 +1548,15 @@ export class LeanBinary extends LeanArgs {
     echo() {
         this.rhs?.echo?.();
     }
+
+    /** PHP `LeanBinary::insert_if` (php/parser/lean.php ~2085–2094). */
+    insert_if(caret) {
+        if (this.rhs === caret && caret instanceof LeanCaret) {
+            this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
+            return caret;
+        }
+        throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
+    }
 }
 
 /** PHP LeanProperty (php/parser/lean.php ~2126–2134); binary for property access e.g. Foo.bar. */
@@ -1614,6 +1627,25 @@ export class LeanAssign extends LeanBinary {
     static input_priority = 18;
     relocateLastComment() {
         this.rhs.relocateLastComment();
+    }
+
+    /** PHP `LeanAssign::sep` (php/parser/lean.php ~2484–2492). Drives `strFormat` so `:= by` / proof blocks keep newlines. */
+    sep() {
+        const rhs = this.rhs;
+        if (rhs instanceof LeanStatements || rhs instanceof LeanBy) return '\n';
+        if (rhs instanceof LeanArgsNewLineSeparated) {
+            const lines = rhs.args;
+            const l0 = lines[0];
+            const l1 = lines[1];
+            if (
+                lines.length > 2 ||
+                !(l1 instanceof LeanArgsNewLineSeparated) ||
+                l0 instanceof LeanLineComment
+            ) {
+                return '\n';
+            }
+        }
+        return ' ';
     }
 
     /**
@@ -2327,9 +2359,10 @@ export class LeanUnary extends LeanArgs {
      * @param {Lean} arg
      * @param {number} indent
      * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
      */
-    constructor(arg, indent, level) {
-        super([], indent, level);
+    constructor(arg, indent, level, parent = null) {
+        super([], indent, level, parent);
         this.args = [arg];
         arg.parent = this;
     }
@@ -2340,6 +2373,28 @@ export class LeanUnary extends LeanArgs {
     set arg(v) {
         this.args[0] = v;
         v.parent = this;
+    }
+
+    /** PHP `LeanUnary::insert_if` (php/parser/lean.php ~1528–1536). */
+    insert_if(caret) {
+        if (this.arg === caret && caret instanceof LeanCaret) {
+            this.arg = new LeanIte([caret], caret.indent, caret.level);
+            return caret;
+        }
+        throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
+    }
+
+    /** PHP `LeanUnary::jsonSerialize` (php/parser/lean.php ~1538–1540). */
+    jsonSerialize() {
+        return this.arg?.jsonSerialize?.() ?? this.arg;
+    }
+
+    /** PHP `LeanUnary::replace` (php/parser/lean.php ~1543–1547). */
+    replace(oldNode, newNode) {
+        if (this.arg !== oldNode) {
+            throw new Error(`replace: assert failed in ${this.constructor.name}`);
+        }
+        this.arg = newNode;
     }
 }
 
@@ -3216,6 +3271,23 @@ export class LeanStatements extends LeanArgs {
     }
 
     /**
+     * PHP `LeanStatements::strFormat` uses spaces (php/parser/lean.php ~6447–6449). For proof/type script
+     * regions (parent Assign / Colon / By / def-like decl), newlines between args preserve line structure
+     * for parse→print→parse. Elsewhere (e.g. under ∑ with commas) keep spaces so `insert_comma` still matches.
+     */
+    strFormat() {
+        const n = this.args.length;
+        if (n === 0) return '';
+        const p = this.parent;
+        const nl =
+            p instanceof LeanAssign ||
+            p instanceof LeanColon ||
+            p instanceof LeanBy ||
+            p instanceof Lean_def;
+        return Array(n).fill('%s').join(nl ? '\n' : ' ');
+    }
+
+    /**
      * PHP LeanStatements::latexFormat (php/parser/lean.php ~4515–4524).
      * Each statement on its own line in align; `\\` between rows so let blocks render with newlines.
      */
@@ -3453,6 +3525,17 @@ export class LeanModule extends LeanStatements {
 
     get stack_priority() {
         return -3;
+    }
+
+    /**
+     * Top-level declarations must be separated by newlines for re-parse: `import A import B` leaves
+     * the second `import` inside the first `Lean_import` and breaks `compile(String(root))`.
+     * Inner `LeanStatements` (proofs, etc.) keep space-separated `strFormat` from `LeanStatements` / `Lean`.
+     */
+    strFormat() {
+        const n = this.args.length;
+        if (n === 0) return '';
+        return Array(n).fill('%s').join('\n');
     }
 
     insert_space(caret) {
