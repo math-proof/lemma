@@ -2497,3 +2497,4 @@
 {"rel":"Lemma/Nat/LeMod/of/Gt_0.lean","note":"random sample (Nat)"}
 {"rel":"Lemma/Nat/Pow_Ite/eq/Ite_PowS.lean","note":"random sample (Nat)"}
 {"rel":"Lemma/Nat/EqAddSub/of/Ge.lean","note":"random sample (Nat)"}
+{"rel":"Lemma/Tensor/GetDot/eq/DotGet/of/Gt.lean","note":"LeanPairedGroup newline inside nested ⟨⟩ / () (off-corpus parse1)"}

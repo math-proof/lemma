@@ -2,6 +2,12 @@
 
 JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST for Lean source code used by the web UI (syntax highlighting, LaTeX export, proof echo).
 
+### Maintainer checklist (translation + AST round-trip)
+
+1. **Follow Steps 1 → 4 in order** (below): [Step 1](#step-1-class-inventory-and-missing-classes) inventory → [Step 2](#step-2-class-declaration-order) class order vs PHP → [Step 3](#step-3-per-class-function-audit) per-class audit → [Step 4](#step-4-output-and-verification) verification. Prefer **one class** (or a tight related set) per change so diffs stay reviewable.
+2. **Within each class in `lean.js`:** respect **method declaration order** — **normally alphabetic** by method name, with `constructor` first and `static` field initializers next ([Step 3 §2](#step-3-per-class-function-audit)).
+3. **AST → string → AST:** run **`node scripts/test-lean-parser.mjs`** after **every** `lean.js` edit so everything in **`round-trip-corpus.jsonl`** **keeps** passing; improve coverage by fixing **`round-trip-failures.jsonl`** **one row at a time**, then append that lemma to the corpus and rebuild failures ([Running Tests](#running-tests)).
+
 ## Files
 
 | File | Description |
@@ -40,7 +46,7 @@ JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup:
 | `throw new Exception(...)` | `throw new Error(...)` |
 
 ### Known Gaps
-- `LeanArgsIndented`: PHP `insert_newline`, `relocate_last_comment`, and conditional `stack_priority` are not ported in JS — enabling them changes parse-time AST and breaks AST→string→AST on some `Lemma/` files (see Step 4 last run note).
+- `LeanArgsIndented`: PHP `insert_newline`, `relocate_last_comment`, and conditional `stack_priority` are not ported in JS — enabling them changes parse-time AST and breaks AST→string→AST on some `Lemma/` files (see [Running Tests](#running-tests) and `round-trip-failures.jsonl`).
 - `Lean_match` / `LeanWith`: echo and other edge cases may still differ from PHP in corner cases; `LeanBar.split` / `LeanCalc.split` use deep `clone()` like PHP
 - Nested proof echo: worth spot-diffing `LeanTacticBlock::echo` / `LeanStatements::echo` against PHP after corpus changes
 - Recent parity: **`LeanStack` → `LeanBigOperator`** (PHP ~9251–9286): `operator` / `command` / `stack_priority` 28, `latexArgs` marks class in syntax map, no-op `push_args_indented`, `LeanBracket` builds `new LeanStack(bound, …)` then `stack.scope = caret`; **`Lean_def`**: `operator`, `set attribute` / `set assignment`, `strArgs`, `strFormat` (keyword from `func`), `latexFormat`, `jsonSerialize` (top-level key from `operator` = `'def'` per PHP), `insert_tactic`, `is_indented`, `set_line` (PHP ~8616–8750); **`Lean_lemma::echo`** (`try` + `echo` around last tactic/let, PHP ~8758–8787); **`LeanCommand`** base: `is_indented`, `get command` (= `operator`), `strFormat` / `latexFormat`, **`jsonSerialize`** `{ [func]: arg }` (PHP ~5213–5234); deduped `strFormat` on import/open/set_option; **`Lean::regexp`** → `[]` (PHP ~904–906); **`Lean_fun` → `LeanUnary`** + `command` / `latexFormat` / `jsonSerialize` / `is_indented` (PHP ~9019–9056); **`Lean_import` / `Lean_open` / `Lean_set_option`**: PHP `append` + `push_attr` + explicit `stack_priority` 27 (PHP ~5253–5360); **`Lean_let` / `Lean_have` / `Lean_show` → `LeanSyntax`** (moved below `LeanSyntax` in `lean.js`; `echo`, `get_echo_token`, `insert_newline`, `insert_sequential_tactic_combinator`, `split`, PHP-shaped `jsonSerialize` for let/show), **`LeanAssign::split`**, **`LeanSyntax` `get sequential_tactic_combinator`**, `LeanArgs::traverse` (preorder over `args`, matching PHP; base `Lean::traverse` still yields only `this`), `LeanTacticBlock` (`echo`, `split`, `tactic_block`, `set_line`), `LeanArgsSpaceSeparated` (`tokens_space_separated`, `construct_prefix_tree`, `tactic_block_info`, `operand_count`), `LeanSequentialTacticCombinator`, `LeanTactic` echo/split helpers, `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
@@ -50,9 +56,11 @@ JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup:
 node scripts/test-lean-parser.mjs
 ```
 
-**AST round-trip corpus:** `scripts/round-trip-corpus.jsonl` is **saturated** for random sampling right now: **2498** `Lemma/` files pass parse and AST→string→AST and are listed; **915** files are still off the list because they fail parse or round-trip. A run like `node scripts/sample-round-trip-corpus.mjs 20260409 1000 --append` therefore appends **0** until `lean.js` round-trips more shapes (or new lemmas land). Regenerate the full off-list failure queue with **`node scripts/build-round-trip-failures.mjs`** → `scripts/round-trip-failures.jsonl` (one JSON object per line: `rel`, `failure`: `parse1` | `parse2` | `mismatch`, plus diagnostics). Use `node scripts/test-lean-parser.mjs --round-trip-verbose` on a single path to debug.
+**AST → string → AST (sanity-check):** Run that command after **every** `lean.js` edit. **`scripts/round-trip-corpus.jsonl`** is the **regression contract** — every listed `Lemma/` must keep passing parse and round-trip (`jsonSerialize` stable). **Do not regress** those successes while fixing failures.
 
-**Step-by-step workflow:** (1) **Step 1** — class inventory / missing nodes (`scripts/audit-lean-classes.mjs`). (2) **Step 2** — class declaration order vs PHP when you touch structure. (3) **Step 3** — one shared class at a time: missing methods, then **within-class method declaration order** in **`lean.js`** (**normally alphabetic** by name; see Step 3 §2), then logic parity vs PHP. (4) **Step 4** — sanity-check **AST → string → AST** (`jsonSerialize` stable) via `node scripts/test-lean-parser.mjs`; add more `Lemma/` files with `node scripts/sample-round-trip-corpus.mjs <seed> <count> --append` (e.g. **1000** new paths: `… 20260409 1000 --append`). The script may append **fewer** than `<count>` (including **zero**) when the corpus is saturated or files fail parse / round-trip — then improve `lean.js` or add new lemmas.
+**Failure queue (one by one):** **`scripts/round-trip-failures.jsonl`** lists off-corpus lemmas that fail `parse1`, `parse2`, or `mismatch`. Regenerate: **`node scripts/build-round-trip-failures.mjs`**. Work **one `rel` per change**: `node scripts/test-lean-parser.mjs --round-trip-verbose Lemma/…`, adjust **`lean.js`** under [Translation Task Steps](#translation-task-steps-php--js) — especially **within-class method declaration order** in **`lean.js`** (**normally alphabetic**, Step 3 §2) and PHP parity — then **full** `test-lean-parser` again, append `{"rel":…,"note":…}` to **`round-trip-corpus.jsonl`**, and rebuild failures. **`sample-round-trip-corpus.mjs`** is optional; it only adds rows when round-tripping files still exist off-list.
+
+**Step-by-step workflow:** (1) **Step 1** — class inventory / missing nodes (`scripts/audit-lean-classes.mjs`). (2) **Step 2** — class declaration order vs PHP when you touch structure. (3) **Step 3** — one shared class at a time: missing methods, **within-class method declaration order** (**normally alphabetic**; Step 3 §2), logic parity vs PHP. (4) **Step 4** — **preserve** corpus passes + **extend** by clearing **`round-trip-failures.jsonl`** entries individually (see two paragraphs above).
 
 ## Translation Task Steps (PHP ↔ JS)
 
@@ -133,14 +141,15 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Step 4: Output and Verification
 
-- Run `node scripts/test-lean-parser.mjs` after changes (corpus list: `scripts/round-trip-corpus.jsonl`).
-- To grow the corpus: `node scripts/sample-round-trip-corpus.mjs <seed> <count> --append` appends up to `<count>` round-trip–verified `Lemma/` paths (reproducible with the same seed). Fewer lines are written if there are not enough eligible files left or some fail parse / round-trip. When every off-list file fails, the corpus is **saturated** until the parser/printer improves (see **AST round-trip corpus** under [Running Tests](#running-tests)).
+- Run `node scripts/test-lean-parser.mjs` after **every** `lean.js` edit (corpus: `scripts/round-trip-corpus.jsonl`) so existing round-trip successes **stay** successes.
+- **Shrink the failure set:** choose one row from `scripts/round-trip-failures.jsonl`, debug with `node scripts/test-lean-parser.mjs --round-trip-verbose <Lemma/…>` (or that path as the only extra arg), align behavior with PHP where relevant, then append `{"rel":"Lemma/…","note":"…"}` to `round-trip-corpus.jsonl` and run `node scripts/build-round-trip-failures.mjs` to refresh the queue.
+- Optional bulk discovery: `node scripts/sample-round-trip-corpus.mjs <seed> <count> --append` appends up to `<count>` new round-trip–verified paths when such files still exist off the list.
 - Ensure no new linter errors.
 - Optionally update this README with class mapping summary, known gaps, or caveats.
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-04-09): **`node scripts/sample-round-trip-corpus.mjs 20260409 1000 --append`** (asked **1000**; **0** appended — **915** off-list `Lemma/` files tried, **none** pass parse + AST→string→AST; corpus unchanged); **`node scripts/test-lean-parser.mjs`** — corpus **2498** lemmas, AST round-trip **2498/2498**.
+Last run: Steps 1–4 (README 2026-04-11): **Running Tests** — **preserve** **2498** corpus lemmas (**2498/2498** round-trip via `test-lean-parser.mjs`); **extend** by fixing **`round-trip-failures.jsonl`** **one row at a time** ([Running Tests](#running-tests)).
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
@@ -175,6 +184,7 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 
 ## Step 4: Verification
 - node scripts/test-lean-parser.mjs — corpus OK; **2498/2498** listed lemmas pass AST round-trip (`jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))`).
+- Fix `scripts/round-trip-failures.jsonl` entries one by one; after each fix, full corpus test still **2498/2498** (until you append the fixed `rel`).
 - No new linter issues on static/js/parser/lean.js
 ```
 

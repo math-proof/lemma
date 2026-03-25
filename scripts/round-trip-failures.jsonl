@@ -97,8 +97,8 @@
 {"rel":"Lemma/Hyperreal/GeSqrt_0.lean","failure":"mismatch","j1Len":688,"j2Len":688}
 {"rel":"Lemma/Hyperreal/GeSt_0/of/Ge_0.lean","failure":"mismatch","j1Len":642,"j2Len":636}
 {"rel":"Lemma/Hyperreal/GeStInv_0/of/NotInfinitesimal/StDiv/eq/One.lean","failure":"mismatch","j1Len":2495,"j2Len":2498}
-{"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivAbsSub/Infinite/Infinite.lean","failure":"parse1","error":"LeanPairedGroup.insert_newline: unexpected for LeanAngleBracket"}
-{"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivSquareSub/Infinite/Infinite.lean","failure":"parse1","error":"LeanPairedGroup.insert_newline: unexpected for LeanAngleBracket"}
+{"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivAbsSub/Infinite/Infinite.lean","failure":"parse1","error":"Maximum call stack size exceeded"}
+{"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivSquareSub/Infinite/Infinite.lean","failure":"parse1","error":"Maximum call stack size exceeded"}
 {"rel":"Lemma/Hyperreal/Gt_0/of/GtSt_0.lean","failure":"mismatch","j1Len":485,"j2Len":484}
 {"rel":"Lemma/Hyperreal/GtSt_0/of/Gt_0/NotInfinite/NotInfinitesimal.lean","failure":"mismatch","j1Len":971,"j2Len":965}
 {"rel":"Lemma/Hyperreal/Infinite/is/All_GtAbs.lean","failure":"mismatch","j1Len":2353,"j2Len":2359}
@@ -311,7 +311,7 @@
 {"rel":"Lemma/List/LengthSwap/eq/Length.lean","failure":"mismatch","j1Len":1600,"j2Len":1468}
 {"rel":"Lemma/List/LengthTail/ge/Sub_1/of/GeLength/Gt_0.lean","failure":"mismatch","j1Len":1240,"j2Len":1239}
 {"rel":"Lemma/List/LengthTail/gt/Sub_1/of/GtLength/Gt_0.lean","failure":"mismatch","j1Len":1015,"j2Len":818}
-{"rel":"Lemma/List/LengthToList/eq/Length.lean","failure":"parse2","error":"LeanPairedGroup.insert_newline: unexpected for LeanBracket","printedLength":2538,"printedHead":"import Lemma.Int.EqToNat_0.of.Le_0\nimport Lemma.Int.EqSub.is.Eq_Add\nimport Lemma.Rat.EqToNatCeil_0.of.Le\nimport Lemma.Rat.ToNatCeilDivNeg.eq.Zero\nimport Lemma.Rat.CoeAdd.eq.AddCoeS\nimport Lemma.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt\nimport Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt\nopen Int Rat List\n\n\n@[main]\nprivate lemma main\n{s : Slice} :\n-- imply\n(s.toL"}
+{"rel":"Lemma/List/LengthToList/eq/Length.lean","failure":"parse2","error":"Maximum call stack size exceeded","printedLength":2538,"printedHead":"import Lemma.Int.EqToNat_0.of.Le_0\nimport Lemma.Int.EqSub.is.Eq_Add\nimport Lemma.Rat.EqToNatCeil_0.of.Le\nimport Lemma.Rat.ToNatCeilDivNeg.eq.Zero\nimport Lemma.Rat.CoeAdd.eq.AddCoeS\nimport Lemma.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt\nimport Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt\nopen Int Rat List\n\n\n@[main]\nprivate lemma main\n{s : Slice} :\n-- imply\n(s.toL"}
 {"rel":"Lemma/List/MapEnumerate/eq/Cons_MapEnumerate/of/All_Eq.lean","failure":"mismatch","j1Len":4364,"j2Len":4309}
 {"rel":"Lemma/List/MapTake/eq/Replicate/of/GeLength/All_Eq.lean","failure":"mismatch","j1Len":1075,"j2Len":1069}
 {"rel":"Lemma/List/ModAddMulProdTail/lt/ProdDrop/of/Lt_Mul_ProdTail/Lt_Get_0/GtLength_0.lean","failure":"mismatch","j1Len":1662,"j2Len":1491}
@@ -581,7 +581,7 @@
 {"rel":"Lemma/Tensor/GetBroadcastMatmul/as/BroadcastMatmulRecGet/of/GtLength_0.lean","failure":"mismatch","j1Len":2559,"j2Len":2532}
 {"rel":"Lemma/Tensor/GetBroadcastMatmul/as/BroadcastMatmulRecGet/of/GtLengthS.lean","failure":"mismatch","j1Len":6501,"j2Len":6501}
 {"rel":"Lemma/Tensor/GetBroadcastMatmul/eq/Cast_BroadcastMatmulRecGet/of/GtLength_0.lean","failure":"mismatch","j1Len":2133,"j2Len":2133}
-{"rel":"Lemma/Tensor/GetBroadcastMatmulRec/as/Map₂_ToVectorS/of/GtLengthS.lean","failure":"parse1","error":"LeanPairedGroup.insert_newline: unexpected for LeanBrace"}
+{"rel":"Lemma/Tensor/GetBroadcastMatmulRec/as/Map₂_ToVectorS/of/GtLengthS.lean","failure":"parse1","error":"Maximum call stack size exceeded"}
 {"rel":"Lemma/Tensor/GetCast/as/Get/of/Eq/GtLength_0.lean","failure":"mismatch","j1Len":1147,"j2Len":1147}
 {"rel":"Lemma/Tensor/GetCast/eq/Cast_Get/of/Eq/GtLength_0.lean","failure":"mismatch","j1Len":1420,"j2Len":1420}
 {"rel":"Lemma/Tensor/GetCast/eq/Cast_Get/of/Lt_Get_0/Eq/GtLength_0.lean","failure":"mismatch","j1Len":1455,"j2Len":1455}
@@ -592,7 +592,6 @@
 {"rel":"Lemma/Tensor/GetDot/as/DotGet/of/Lt.lean","failure":"mismatch","j1Len":9566,"j2Len":9648}
 {"rel":"Lemma/Tensor/GetDot/eq/DotGet.lean","failure":"mismatch","j1Len":1381,"j2Len":1381}
 {"rel":"Lemma/Tensor/GetDot/eq/DotGet/of/Ge.lean","failure":"mismatch","j1Len":10873,"j2Len":10732}
-{"rel":"Lemma/Tensor/GetDot/eq/DotGet/of/Gt.lean","failure":"parse1","error":"LeanPairedGroup.insert_newline: unexpected for LeanAngleBracket"}
 {"rel":"Lemma/Tensor/GetDot/eq/DotGet/of/Lt.lean","failure":"mismatch","j1Len":13670,"j2Len":13501}
 {"rel":"Lemma/Tensor/GetDot/eq/DotGet/of/LtLengthS/ou/EqLength_1/Ne_Nil.lean","failure":"mismatch","j1Len":1550,"j2Len":1553}
 {"rel":"Lemma/Tensor/GetDot/eq/DotGet/of/Ne_Nil.lean","failure":"mismatch","j1Len":5830,"j2Len":5830}
@@ -606,7 +605,7 @@
 {"rel":"Lemma/Tensor/GetMul/eq/MulGetS/of/Lt_Get_0/GtLength_0.lean","failure":"mismatch","j1Len":1348,"j2Len":1313}
 {"rel":"Lemma/Tensor/GetPermute__Neg/as/Permute__Neg_Get/of/Lt_Get_0/LtAdd_1Length.lean","failure":"mismatch","j1Len":23077,"j2Len":21709}
 {"rel":"Lemma/Tensor/GetPermute/as/PermuteGet/of/Lt_Get_0/LtAdd_1Length.lean","failure":"parse2","error":"LeanTactic.insert_tactic: unexpected for LeanTactic","printedLength":7626,"printedHead":"import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq\nimport Lemma.List.DropTail.eq.Drop\nimport Lemma.List.GetPermute.eq.Get.of.Gt\nimport Lemma.List.Permute.eq.Append_AppendRotateTakeDrop\nimport Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0\nimport Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0\nimport Lemma.List.ProdAppend.eq.MulProdS\nimport Lemma.List.ProdDrop.eq.MulProdS\nimport Lemma.List.ProdPe"}
-{"rel":"Lemma/Tensor/GetPermuteHead/as/PermuteHeadSelect/of/Lt_Get_1/GtLength_1.lean","failure":"parse1","error":"LeanPairedGroup.insert_newline: unexpected for LeanBrace"}
+{"rel":"Lemma/Tensor/GetPermuteHead/as/PermuteHeadSelect/of/Lt_Get_1/GtLength_1.lean","failure":"parse1","error":"Maximum call stack size exceeded"}
 {"rel":"Lemma/Tensor/GetPermuteTail/as/PermuteTailGet/of/Lt_Get_0/GtLength.lean","failure":"mismatch","j1Len":12849,"j2Len":11812}
 {"rel":"Lemma/Tensor/GetRepeat/as/Get_Mod_Get/of/Lt_MulGet/GtLength_0.lean","failure":"mismatch","j1Len":9120,"j2Len":9107}
 {"rel":"Lemma/Tensor/GetRepeat/as/RepeatGet/of/Lt_Get_0/GtLength_0.lean","failure":"mismatch","j1Len":1648,"j2Len":1648}
@@ -811,7 +810,7 @@
 {"rel":"Lemma/Tensor/SumSoftmax/eq/One/of/Get/gt/Zero.lean","failure":"mismatch","j1Len":4653,"j2Len":4578}
 {"rel":"Lemma/Tensor/SumSoftmax/eq/Stack_Softmax/of/GtLength.lean","failure":"mismatch","j1Len":1485,"j2Len":1485}
 {"rel":"Lemma/Tensor/SumStack/eq/Stack_Sum/of/GtLength.lean","failure":"mismatch","j1Len":1570,"j2Len":1569}
-{"rel":"Lemma/Tensor/ToVector/eq/MapRange_Get/of/GtLength_0.lean","failure":"parse1","error":"LeanPairedGroup.insert_newline: unexpected for LeanAngleBracket"}
+{"rel":"Lemma/Tensor/ToVector/eq/MapRange_Get/of/GtLength_0.lean","failure":"parse1","error":"Maximum call stack size exceeded"}
 {"rel":"Lemma/Tensor/ToVectorRepeat/as/Map_FunRepeatGet/of/Lt_Get_0/GtVal_0.lean","failure":"mismatch","j1Len":4951,"j2Len":4609}
 {"rel":"Lemma/Tensor/Tril/eq/Stack_BoolLeSub.lean","failure":"mismatch","j1Len":1566,"j2Len":1560}
 {"rel":"Lemma/Tensor/Triu/eq/Stack_BoolGeSub.lean","failure":"mismatch","j1Len":1555,"j2Len":1549}
@@ -854,7 +853,7 @@
 {"rel":"Lemma/Vector/EqGetSIndices/of/Eq/Eq/Eq/Eq.lean","failure":"mismatch","j1Len":7848,"j2Len":7853}
 {"rel":"Lemma/Vector/EqGetSplitAt_0'0.lean","failure":"mismatch","j1Len":2192,"j2Len":2186}
 {"rel":"Lemma/Vector/EqGetSSplitAt/of/Lt_Mul_ProdTail/Gt_0/Lt_Get_0/GtLength_0.lean","failure":"mismatch","j1Len":6180,"j2Len":6145}
-{"rel":"Lemma/Vector/EqGetSUnflatten/of/Eq/Eq/Lt/Eq/Eq.lean","failure":"parse1","error":"LeanPairedGroup.insert_newline: unexpected for LeanBrace"}
+{"rel":"Lemma/Vector/EqGetSUnflatten/of/Eq/Eq/Lt/Eq/Eq.lean","failure":"parse1","error":"Maximum call stack size exceeded"}
 {"rel":"Lemma/Vector/EqGetSUnflatten/of/Eq/Lt/Eq/Eq.lean","failure":"mismatch","j1Len":950,"j2Len":944}
 {"rel":"Lemma/Vector/EqGetValRange/of/Lt.lean","failure":"mismatch","j1Len":733,"j2Len":735}
 {"rel":"Lemma/Vector/EqMulDiv/of/All_Ne_0.lean","failure":"mismatch","j1Len":1138,"j2Len":1138}

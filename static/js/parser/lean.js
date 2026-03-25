@@ -2939,6 +2939,9 @@ class LeanPairedGroup extends LeanUnary {
     }
 
     insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this) {
+            caret = this.arg;
+        }
         if (this.indent > indent) {
             return super.insert_newline(caret, newlineCount, indent, next);
         }
@@ -2955,6 +2958,29 @@ class LeanPairedGroup extends LeanUnary {
                 return caret;
             }
             if (indent === this.indent) return caret;
+            /**
+             * `Lean::insert_newline` bubbles with `this` (not the inner parse node), so `caret` is often the
+             * full `arg` (e.g. `LeanArgsSpaceSeparated`) while `indent` is the continuation column inside a
+             * nested `()` / last operand. Descend to the trailing structural child and recurse — mirrors
+             * how the proof term continues on the next line (last sibling).
+             * Do not recurse into `LeanCaret`: `LeanCaret.insert_newline` delegates to parent and would pass
+             * the whole `LeanArgsSpaceSeparated` again → infinite loop with this branch.
+             */
+            if (indent > this.indent && caret === this.arg) {
+                let target = this.arg;
+                while (target instanceof LeanArgsSpaceSeparated) {
+                    const next = target.args[target.args.length - 1];
+                    if (!next) break;
+                    target = next;
+                }
+                if (target instanceof LeanCaret || target instanceof LeanArgsSpaceSeparated) {
+                    return super.insert_newline(caret, newlineCount, indent, next);
+                }
+                if (target instanceof LeanPairedGroup) {
+                    return target.insert_newline(target, newlineCount, indent, next);
+                }
+                return super.insert_newline(caret, newlineCount, indent, next);
+            }
             throw new Error(`LeanPairedGroup.insert_newline: unexpected for ${this.constructor.name}`);
         }
         return super.insert_newline(caret, newlineCount, indent, next);
@@ -3112,6 +3138,9 @@ export class LeanParenthesis extends LeanPairedGroup {
      * Port of `LeanParenthesis::insert_newline`.
      */
     insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this) {
+            caret = this.arg;
+        }
         if (this.indent <= indent && caret === this.arg) {
             if (caret instanceof LeanBy && this.indent === indent) {
                 const c2 = new LeanCaret(indent, caret.level);
