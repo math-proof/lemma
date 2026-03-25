@@ -1274,10 +1274,11 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
 }
 
 /**
- * Port of `LeanArgsCommaNewLineSeparated` (php/parser/lean.php ~6856–6919).
- * Used by `LeanPairedGroup::insert_newline` when wrapping a caret (not `LeanArgsNewLineSeparated`).
+ * Port of `LeanArgsCommaNewLineSeparated` + trait `LeanMultipleLine` (php/parser/lean.php ~6856–6919, ~1380–1387).
+ * Method order matches PHP class body; `set_line` last (from trait). Used by `LeanPairedGroup::insert_newline`.
  */
 export class LeanArgsCommaNewLineSeparated extends LeanArgs {
+    /** PHP `LeanArgsCommaNewLineSeparated::__get('stack_priority')` (php/parser/lean.php ~6862–6863). */
     get stack_priority() {
         return 17;
     }
@@ -1298,26 +1299,18 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
         throw new Error(`LeanArgsCommaNewLineSeparated.insert: unexpected for ${this.constructor.name}`);
     }
 
-    is_indented() {
-        return false;
+    /** PHP `LeanArgsCommaNewLineSeparated::insert_comma` (php/parser/lean.php ~6879–6883). */
+    insert_comma(caret) {
+        const c2 = new LeanCaret(this.indent, caret.level);
+        this.push(c2);
+        return c2;
     }
 
-    latexFormat() {
-        return Array(this.args.length)
-            .fill('{%s}')
-            .join(',\n');
-    }
-
-    strFormat() {
-        return Array(this.args.length).fill('%s').join(',\n');
-    }
-
+    /** PHP `LeanArgsCommaNewLineSeparated::insert_newline` (php/parser/lean.php ~6887–6903); JS extends for `push_args_indented` when `indent` increases (multiline `⟨…⟩` / `[…]`). */
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent > indent) {
             return super.insert_newline(caret, newlineCount, indent, next);
         }
-        // PHP `LeanArgsCommaNewLineSeparated::insert_newline` throws here; mirror
-        // `LeanArgsNewLineSeparated` (~6544–6549) so indented multiline `⟨…⟩` / `[…]` lemmas parse.
         if (this.indent < indent) {
             const pushed = this.push_args_indented(indent, newlineCount);
             if (pushed) return pushed;
@@ -1336,10 +1329,21 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
         throw new Error(`LeanArgsCommaNewLineSeparated.insert_newline: unexpected for ${this.constructor.name}`);
     }
 
-    insert_comma(caret) {
-        const c2 = new LeanCaret(this.indent, caret.level);
-        this.push(c2);
-        return c2;
+    /** PHP `LeanArgsCommaNewLineSeparated::is_indented` (php/parser/lean.php ~6906–6908). */
+    is_indented() {
+        return false;
+    }
+
+    /** PHP `LeanArgsCommaNewLineSeparated::latexFormat` (php/parser/lean.php ~6911–6913). */
+    latexFormat() {
+        return Array(this.args.length)
+            .fill('{%s}')
+            .join(',\n');
+    }
+
+    /** PHP `LeanArgsCommaNewLineSeparated::strFormat` (php/parser/lean.php ~6916–6918). */
+    strFormat() {
+        return Array(this.args.length).fill('%s').join(',\n');
     }
 
     /** PHP trait `LeanMultipleLine::set_line` (php/parser/lean.php ~1380–1387). */

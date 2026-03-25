@@ -144,6 +144,17 @@ const CORPUS = [
     { rel: 'Lemma/Int/EqNegToNatNeg/of/Le_0.lean', note: 'Int neg toNat' },
     { rel: 'Lemma/Hyperreal/InfinitePos/is/Infinite/Gt_0.lean', note: 'Hyperreal infinite pos' },
     { rel: 'Lemma/List/GtProdTail_0/of/Lt_ProdTailSet_0.lean', note: 'List prod tail gt' },
+    // Random Lemma/ sample (repro: `node scripts/sample-round-trip-corpus.mjs 20260327 10`)
+    { rel: 'Lemma/Finset/Lt/of/In_Ioo.lean', note: 'Finset lt Ioo' },
+    { rel: 'Lemma/Vector/GetMap/eq/UFnGet/of/Lt.lean', note: 'Vector get map' },
+    { rel: 'Lemma/Finset/SumIco/eq/Sub.lean', note: 'Finset sum Ico' },
+    { rel: 'Lemma/Tensor/LengthPermute__Neg/eq/Get.lean', note: 'Tensor length permute' },
+    { rel: 'Lemma/Rat/SubInvS/lt/Zero/of/Gt_0/Ge.lean', note: 'Rat sub inv' },
+    { rel: 'Lemma/Int/Add_ToNatNeg/eq/ToNatSub/of/Lt_0.lean', note: 'Int add toNat neg' },
+    { rel: 'Lemma/Hyperreal/InfinitesimalSub/of/EqSt/NotInfinite.lean', note: 'Hyperreal infinitesimal' },
+    { rel: 'Lemma/Vector/GetSplitAt_1/eq/GetUnflatten/of/Lt.lean', note: 'Vector split unflatten' },
+    { rel: 'Lemma/List/TailTail/eq/Nil.lean', note: 'List tail tail' },
+    { rel: 'Lemma/List/Permute__Neg/eq/Cons_EraseIdx.lean', note: 'List permute erase' },
 ];
 
 function resolveAbs(rel) {
