@@ -1118,14 +1118,13 @@ export class LeanArgsCommaSeparated extends LeanArgs {
     }
 
     /**
-     * When this is the GetElem index (e.g. A[i, i+1-l:n⊓i+u]), use stack_priority 18 so the
-     * slice `:` creates LeanColon inside the index instead of bubbling to the lemma colon.
-     * Port of LeanGetElemBaseBinary::stack_priority (php/parser/lean.php ~4045–4046).
+     * PHP `LeanArgsCommaSeparated::__get('stack_priority')` (php/parser/lean.php ~6736–6739).
+     * Under LeanBar use LeanColon input priority; else one less so `:` binds correctly in other contexts.
+     * GetElem index behavior comes from the parent `LeanGetElem*` node (stack_priority 18), not here.
      */
     get stack_priority() {
-        const p = this.parent?.constructor?.name;
-        if (p === 'LeanGetElem' || p === 'LeanGetElemQue' || p === 'LeanGetElemQuote') return 18;
-        return 100;
+        if (this.parent instanceof LeanBar) return LeanColon.input_priority;
+        return LeanColon.input_priority - 1;
     }
 
     /** PHP `LeanArgsCommaSeparated::insert` (php/parser/lean.php ~6745–6754). */

@@ -129,7 +129,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — parity + round-trip: **`LeanArgsCommaSeparated::insert`** ported (modifiers like `by` after `,` inside `⟨…⟩`); **`LeanPairedGroup::strFormat`** treats unset `is_closed` as closed; `node scripts/test-lean-parser.mjs` — corpus OK, **40/40** AST round-trip.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — parity + round-trip: **`LeanArgsCommaSeparated::stack_priority`** matches PHP (`LeanBar` parent → `LeanColon.input_priority`, else `- 1`; was wrongly duplicating GetElem logic); **`LeanArgsCommaSeparated::insert`** (modifiers after `,` in `⟨…⟩`); **`LeanPairedGroup::strFormat`** unset `is_closed` as closed; `node scripts/test-lean-parser.mjs` — corpus OK, **40/40** AST round-trip.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
