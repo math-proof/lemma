@@ -37,12 +37,6 @@ const SMOKE = [
     { name: 'two imports', source: 'import A\nimport B\n' },
 ];
 
-/**
- * Corpus paths allowed to fail AST round-trip (`jsonSerialize` after parse → String → parse).
- * Keep empty so regressions fail CI; add paths only while fixing known parser/print gaps.
- */
-const ROUND_TRIP_CORPUS_MISMATCH_OK = new Set([]);
-
 /** Lemma paths and notes: `scripts/round-trip-corpus.jsonl` (one JSON object per line). */
 const CORPUS = loadRoundTripCorpus(CORPUS_JSONL);
 
@@ -191,7 +185,7 @@ Options:
   --help                   This message
 
 Every run checks: parse(s) → String(AST) → parse yields the same jsonSerialize() for all smoke
-sources and for each corpus file (except paths listed in ROUND_TRIP_CORPUS_MISMATCH_OK).
+sources and for each corpus file in scripts/round-trip-corpus.jsonl (plus any extra Lemma/ paths).
 
 Without paths, runs built-in smoke tests + corpus from scripts/round-trip-corpus.jsonl.
 Extra paths must be under Lemma/ (relative to repo root, or absolute inside the repo).
@@ -289,16 +283,14 @@ Extra paths must be under Lemma/ (relative to repo root, or absolute inside the 
         let roundTrip = null;
         if (raw.ok && expectation.status === 'pass') {
             const rt = runRoundTrip(source);
-            const allowed = ROUND_TRIP_CORPUS_MISMATCH_OK.has(label);
             const bad = !rt.ok || !rt.match;
-            if (bad && !allowed) roundTripFail = true;
+            if (bad) roundTripFail = true;
             roundTrip = {
                 match: rt.ok ? rt.match : false,
                 phase: rt.ok ? undefined : rt.phase,
                 error: rt.ok ? undefined : rt.error,
                 j1Len: rt.ok ? rt.j1Len : undefined,
                 j2Len: rt.ok ? rt.j2Len : undefined,
-                allowedMismatch: allowed,
             };
         }
 
@@ -406,20 +398,13 @@ Extra paths must be under Lemma/ (relative to repo root, or absolute inside the 
 
         const rtCorpus = corpusResults.filter((c) => c.roundTrip);
         const rtOk = rtCorpus.filter((c) => c.roundTrip.match === true).length;
-        const rtAllow = rtCorpus.filter(
-            (c) => c.roundTrip && c.roundTrip.allowedMismatch && c.roundTrip.match !== true,
-        ).length;
         console.log(
-            `\nRound-trip (parse → String(AST) → parse; same jsonSerialize): smoke OK (${SMOKE.length}/${SMOKE.length}). Corpus checked: ${rtCorpus.length} — ${rtOk} match, ${rtAllow} allowlisted mismatch (ROUND_TRIP_CORPUS_MISMATCH_OK).`,
+            `\nRound-trip (parse → String(AST) → parse; same jsonSerialize): smoke OK (${SMOKE.length}/${SMOKE.length}). Corpus checked: ${rtCorpus.length} — ${rtOk} match.`,
         );
         if (args.roundTripVerbose) {
             for (const c of rtCorpus) {
                 const rt = c.roundTrip;
                 if (rt.match === true) console.log(`  RT OK   ${c.file}`);
-                else if (rt.allowedMismatch)
-                    console.log(
-                        `  RT XF   ${c.file}  (${rt.phase ?? 'mismatch'}${rt.error ? `: ${rt.error}` : ` len ${rt.j1Len} vs ${rt.j2Len}`})`,
-                    );
                 else
                     console.log(
                         `  RT FAIL ${c.file}  (${rt.phase ?? 'mismatch'}${rt.error ? `: ${rt.error}` : ''})`,
@@ -427,9 +412,7 @@ Extra paths must be under Lemma/ (relative to repo root, or absolute inside the 
             }
         }
         if (roundTripFail) {
-            console.error(
-                '\nRound-trip: unexpected failure (not in ROUND_TRIP_CORPUS_MISMATCH_OK). Use --round-trip-verbose.',
-            );
+            console.error('\nRound-trip: one or more corpus files failed. Use --round-trip-verbose.');
         }
     }
 

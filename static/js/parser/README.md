@@ -7,7 +7,7 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 | File | Description |
 |------|-------------|
 | `node.js` | Base `Node`, `IndentedNode`, `AbstractParser` |
-| `lean.js` | Lean AST classes and `LeanParser` |
+| `lean.js` | Lean AST classes and `LeanParser` (~7100 lines) |
 | `newline.js` | Newline handling utilities |
 | `markdown.js` | Markdown parsing |
 | `xml.js` | XML parsing |
@@ -16,11 +16,10 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 
 ### Source of Truth
 - **PHP**: `php/parser/lean.php` (~9500 lines)
-- **JS**: `static/js/parser/lean.js` (~4300 lines)
+- **JS**: `static/js/parser/lean.js` (~7100 lines)
 
 ### Class Mapping
-JS flattens some PHP hierarchies:
-- PHP `LeanRelational`, `LeanArithmetic`, `LeanUnaryArithmeticPre`, `LeanUnaryArithmeticPost`, `LeanSetOperator`, `LeanLogic`, `LeanBinaryBoolean` → JS `LeanBinary` or `LeanUnary`
+JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup::is_indented`, `push_left`, …): **`LeanRelational`**, **`LeanArithmetic`**, **`LeanUnaryArithmetic`**, **`LeanUnaryArithmeticPre`**, **`LeanUnaryArithmeticPost`** (concrete nodes extend these where PHP does). Still flattened or absent as named classes in JS (extend **`LeanBinary`** / **`LeanUnary`** directly): **`LeanBinaryBoolean`**, **`LeanLogic`**, **`LeanSetOperator`**
 - PHP `Lean_is_not` ↔ JS `Lean_is_not` (identical)
 - **PHP** uses `new $ClassName(...)` with no separate registry; **JS** uses **`LEAN_CLASSES`**: a map of **concrete** AST classes only (keys = `constructor.name`). **Abstract/intermediate** bases (`Lean`, `LeanArgs`, `LeanBinary`, `LeanUnary`, `LeanSyntax`, `LeanPairedGroup`, `LeanCommand`, marker classes, etc.) are **not** in the map—they remain normal exports in `lean.js`. **`getLeanClass(name)`** looks up `LEAN_CLASSES` only; unknown names throw (add the concrete class to `LEAN_CLASSES`). Prefix unary (`insert_unary`), postfix (`push_post_unary`), and `push_left` paired delimiters use **`getLeanClass`** like PHP `new $ClassName`.
 - PHP `abstract class LeanSyntax extends LeanArgs` holds `insert` and related `__set` behavior; **JS** exports **`LeanSyntax`**. **`LeanTactic`**, **`Lean_let`**, **`Lean_have`**, and **`Lean_show`** extend **`LeanSyntax`** (single-arg nodes use `super([arg], indent, level, parent)`). **`get sequential_tactic_combinator`** is implemented on **`LeanSyntax`** (shared with `LeanTactic` / `Lean_let`). **`LeanAssign::split`** is ported for `Lean_let::split`.
@@ -50,6 +49,10 @@ JS flattens some PHP hierarchies:
 ```bash
 node scripts/test-lean-parser.mjs
 ```
+
+**AST round-trip corpus:** `scripts/round-trip-corpus.jsonl` is **saturated** for random sampling right now: **2498** `Lemma/` files pass parse and AST→string→AST and are listed; **915** files are still off the list because they fail parse or round-trip. A run like `node scripts/sample-round-trip-corpus.mjs 20260409 1000 --append` therefore appends **0** until `lean.js` round-trips more shapes (or new lemmas land). Regenerate the full off-list failure queue with **`node scripts/build-round-trip-failures.mjs`** → `scripts/round-trip-failures.jsonl` (one JSON object per line: `rel`, `failure`: `parse1` | `parse2` | `mismatch`, plus diagnostics). Use `node scripts/test-lean-parser.mjs --round-trip-verbose` on a single path to debug.
+
+**Step-by-step workflow:** (1) **Step 1** — class inventory / missing nodes (`scripts/audit-lean-classes.mjs`). (2) **Step 2** — class declaration order vs PHP when you touch structure. (3) **Step 3** — one shared class at a time: missing methods, then **within-class method declaration order** in **`lean.js`** (**normally alphabetic** by name; see Step 3 §2), then logic parity vs PHP. (4) **Step 4** — sanity-check **AST → string → AST** (`jsonSerialize` stable) via `node scripts/test-lean-parser.mjs`; add more `Lemma/` files with `node scripts/sample-round-trip-corpus.mjs <seed> <count> --append` (e.g. **1000** new paths: `… 20260409 1000 --append`). The script may append **fewer** than `<count>` (including **zero**) when the corpus is saturated or files fail parse / round-trip — then improve `lean.js` or add new lemmas.
 
 ## Translation Task Steps (PHP ↔ JS)
 
@@ -105,6 +108,8 @@ When a PHP method uses `clone $this`, `LeanArgs::__clone`, or otherwise duplicat
 
 ### Step 3: Per-Class Function Audit
 
+Work **one class at a time** (inventory → order → precision) so PHP and JS stay aligned without mixing unrelated edits.
+
 For each class defined in **both** `lean.php` and `lean.js`:
 
 1. **Missing functions**
@@ -112,10 +117,10 @@ For each class defined in **both** `lean.php` and `lean.js`:
    - List JS methods (including getters/setters for `__get`/`__set`).
    - **If JS is missing methods**: Print the missing function names and port them from PHP into `lean.js`.
 
-2. **If no missing functions** — check **function order**:
-   - Compare the order of method declarations in PHP vs JS.
-   - **If order is inconsistent**: Reorder methods in `lean.js` to follow PHP's order.
-   - **If order is consistent**: Proceed to the translation precision check below.
+2. **If no missing functions** — check **function order** (within the same class only; do not reorder methods across unrelated classes):
+   - In **`lean.js`**, instance and static **methods** should **normally** appear in **alphabetic order by method name** (Unicode code point order, case-sensitive: capitals before lowercase). Put **`constructor`** first when the class defines one, then **`static` field initializers** (e.g. `static input_priority = …`), then methods alphabetically. For **`get x` / `set x`**, sort by accessor name **`x`** as if it were a method named `x` (list getters before setters for the same name if both exist). Defer to a different order only when readability or inheritance overrides would suffer (document in a short class comment if so).
+   - PHP’s `lean.php` uses its own ordering rules when refactoring there (`php/parser/README.md`); do **not** assume PHP declaration order matches JS alphabetical order.
+   - **If order is wrong**: Reorder methods in `lean.js` to satisfy the rule above, then proceed to the translation precision check below.
 
 3. **Translation precision**
    - For each method, compare PHP logic with JS implementation.
@@ -129,27 +134,26 @@ For each class defined in **both** `lean.php` and `lean.js`:
 ### Step 4: Output and Verification
 
 - Run `node scripts/test-lean-parser.mjs` after changes (corpus list: `scripts/round-trip-corpus.jsonl`).
-- To grow the corpus: `node scripts/sample-round-trip-corpus.mjs <seed> <count> --append` appends round-trip–verified `Lemma/` paths to that file (reproducible with the same seed).
+- To grow the corpus: `node scripts/sample-round-trip-corpus.mjs <seed> <count> --append` appends up to `<count>` round-trip–verified `Lemma/` paths (reproducible with the same seed). Fewer lines are written if there are not enough eligible files left or some fail parse / round-trip. When every off-list file fails, the corpus is **saturated** until the parser/printer improves (see **AST round-trip corpus** under [Running Tests](#running-tests)).
 - Ensure no new linter errors.
 - Optionally update this README with class mapping summary, known gaps, or caveats.
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): round-trip corpus moved to **`scripts/round-trip-corpus.jsonl`** (maintain paths there, not inside `test-lean-parser.mjs`); **`LeanBy`** / **`LeanAttribute`** method order aligned with PHP; **`LeanBy::is_indented`** ported; **`LeanUnary`** and several unary nodes scrubbed of file/line comments; corpus **147** (+**10** via **`node scripts/sample-round-trip-corpus.mjs 20260424 10 --append`**); AST round-trip **147/147**.
+Last run: Steps 1–4 (2026-04-09): **`node scripts/sample-round-trip-corpus.mjs 20260409 1000 --append`** (asked **1000**; **0** appended — **915** off-list `Lemma/` files tried, **none** pass parse + AST→string→AST; corpus unchanged); **`node scripts/test-lean-parser.mjs`** — corpus **2498** lemmas, AST round-trip **2498/2498**.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
 
 - PHP Lean* declarations: 162
-- JS Lean* declarations: 167
+- JS Lean* declarations: 171
 
 Registry: LEAN_CLASSES + getLeanClass only.
 
-PHP class names with no JS class of the same name (7, abstract / flattened into LeanBinary or LeanUnary in JS):
-  LeanArithmetic, LeanBinaryBoolean, LeanLogic, LeanRelational, LeanSetOperator,
-  LeanUnaryArithmetic, LeanUnaryArithmeticPre
+PHP class names with no JS class of the same name (3, abstract / still flattened into LeanBinary in JS):
+  LeanBinaryBoolean, LeanLogic, LeanSetOperator
 
-(Also abstract in PHP, present in JS with the same name: LeanUnaryArithmeticPost — not in the list above.)
+(Abstract PHP bases that **do** exist as JS classes: `LeanArithmetic`, `LeanRelational`, `LeanUnaryArithmetic`, `LeanUnaryArithmeticPre`, `LeanUnaryArithmeticPost`.)
 
 JS class names with no PHP class of the same name (12, extra concrete nodes / Unicode operator symbols in token2classname):
   LeanEDiv, LeanPrefixExpr, Lean_boxminus, Lean_boxplus, Lean_boxtimes, Lean_circledast, Lean_circledcirc,
@@ -164,13 +168,13 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 
 ## Step 3: Per-class audit
 - Full method-by-method parity is not automated here (naming camelCase vs snake_case, helpers on different bases).
-- **Within-class method order**: align **declaration order** in `lean.js` with the PHP parser class (constructors/getters for `__get` first, then methods in PHP order; trait-style helpers e.g. `set_line` after the class body). Examples: **`LeanArgsCommaSeparated`**, **`LeanArgsSemicolonSeparated`**, **`LeanArgsCommaNewLineSeparated`**.
+- **Within-class method order** in **`lean.js`**: **normally alphabetic** by method name (Step 3 §2). Examples audited/reordered earlier: **`LeanCaret`**, **`LeanCommand`**, **`LeanArgsCommaSeparated`**, **`LeanArgsSemicolonSeparated`**, **`LeanArgsCommaNewLineSeparated`**, **`LeanLineComment`**, **`LeanBlockComment`**, **`LeanDocString`**, **`LeanToken`**, **`Lean_set_option`**, **`Lean_import`**, **`Lean_open`**.
 - **Comments**: no `lean.php` filename or line ranges in `lean.js` (Step 3 §4).
 - Track gaps via [Known Gaps](#known-gaps) and targeted ports (e.g. LeanTactic vs PHP sequential combinator / getEcho).
 - Prior parity work (examples): LeanBinary.echo, LeanRightarrow.echo; Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers.
 
 ## Step 4: Verification
-- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: **147/147** lemmas in `scripts/round-trip-corpus.jsonl` match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (`ROUND_TRIP_CORPUS_MISMATCH_OK` empty in `scripts/test-lean-parser.mjs`).
+- node scripts/test-lean-parser.mjs — corpus OK; **2498/2498** listed lemmas pass AST round-trip (`jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))`).
 - No new linter issues on static/js/parser/lean.js
 ```
 
@@ -180,6 +184,8 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 - `scripts/audit-lean-classes.mjs` – PHP vs JS `Lean*` class name diff (Step 1) + pairwise order statistic (Step 2)
 - `scripts/reorder_lean_class.py` / `scripts/compare_lean_class_methods.py` – PHP class segment tools (`php/parser/README.md`; presets `leanargscommaseparated`, `leanargssemicolonseparated`, `leanargscommanewlineseparated`)
 - `scripts/round-trip-corpus.jsonl` – one JSON object per line (`rel`, optional `note`); source list for parser round-trip tests
+- `scripts/round-trip-failures.jsonl` – off-corpus `Lemma/` files that fail parse or AST→string→AST; regenerate via `node scripts/build-round-trip-failures.mjs`
 - `scripts/load-round-trip-corpus.mjs` – loader for the JSONL corpus
 - `scripts/sample-round-trip-corpus.mjs` – reproducible random sample from `Lemma/`; use `--append` to append winners to `round-trip-corpus.jsonl`
+- `scripts/build-round-trip-failures.mjs` – writes `round-trip-failures.jsonl` for fixing round-trip gaps one file at a time
 - `server/lean/compiler/render2vue.mjs` – uses `LeanTactic::getEcho`
