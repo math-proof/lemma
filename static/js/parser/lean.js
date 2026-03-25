@@ -1100,23 +1100,8 @@ export class LeanArgs extends Lean {
     // inherit from `Lean` (php/parser/lean.php) — delegate to parent; do not override with throws.
 }
 
-/** Port of `LeanArgsCommaSeparated` (php/parser/lean.php ~6755–6765). */
+/** Port of `LeanArgsCommaSeparated` (php/parser/lean.php ~6731–6796). Method order matches PHP. */
 export class LeanArgsCommaSeparated extends LeanArgs {
-    /** PHP `LeanArgsCommaSeparated::strFormat` (php/parser/lean.php ~6738–6740). */
-    strFormat() {
-        return Array(this.args.length).fill('%s').join(', ');
-    }
-
-    /** PHP `LeanArgsCommaSeparated::tokens_comma_separated` (php/parser/lean.php ~6785–6794). */
-    tokens_comma_separated() {
-        const tokens = [];
-        for (const arg of this.args) {
-            if (arg instanceof LeanToken) tokens.push(arg);
-            else if (arg instanceof LeanAngleBracket) tokens.push(...arg.tokens_comma_separated());
-        }
-        return tokens;
-    }
-
     /**
      * PHP `LeanArgsCommaSeparated::__get('stack_priority')` (php/parser/lean.php ~6736–6739).
      * Under LeanBar use LeanColon input priority; else one less so `:` binds correctly in other contexts.
@@ -1140,10 +1125,45 @@ export class LeanArgsCommaSeparated extends LeanArgs {
         }
     }
 
+    /** PHP `LeanArgsCommaSeparated::insert_comma` (php/parser/lean.php ~6756–6760). */
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
         this.push(caret2);
         return caret2;
+    }
+
+    /** PHP `LeanArgsCommaSeparated::insert_tactic` (php/parser/lean.php ~6763–6767). */
+    insert_tactic(caret, token) {
+        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
+        throw new Error(`LeanArgsCommaSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
+    }
+
+    /** PHP `LeanArgsCommaSeparated::is_indented` (php/parser/lean.php ~6770–6772). */
+    is_indented() {
+        return false;
+    }
+
+    /** PHP `LeanArgsCommaSeparated::latexFormat` (php/parser/lean.php ~6775–6777). */
+    latexFormat() {
+        const n = this.args.length;
+        return Array(n)
+            .fill('{%s}')
+            .join(', ');
+    }
+
+    /** PHP `LeanArgsCommaSeparated::strFormat` (php/parser/lean.php ~6780–6782). */
+    strFormat() {
+        return Array(this.args.length).fill('%s').join(', ');
+    }
+
+    /** PHP `LeanArgsCommaSeparated::tokens_comma_separated` (php/parser/lean.php ~6785–6794). */
+    tokens_comma_separated() {
+        const tokens = [];
+        for (const arg of this.args) {
+            if (arg instanceof LeanToken) tokens.push(arg);
+            else if (arg instanceof LeanAngleBracket) tokens.push(...arg.tokens_comma_separated());
+        }
+        return tokens;
     }
 }
 

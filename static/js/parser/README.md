@@ -129,7 +129,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — parity + round-trip: **`LeanArgsCommaSeparated::stack_priority`** matches PHP (`LeanBar` parent → `LeanColon.input_priority`, else `- 1`; was wrongly duplicating GetElem logic); **`LeanArgsCommaSeparated::insert`** (modifiers after `,` in `⟨…⟩`); **`LeanPairedGroup::strFormat`** unset `is_closed` as closed; `node scripts/test-lean-parser.mjs` — corpus OK, **40/40** AST round-trip.
+Last run: Steps 1–4 (2026-03-24): audit script; **`LeanArgsCommaSeparated`** in `lean.js` — **method order matches PHP** (`lean.php` ~6731–6796) and **ports** `insert_tactic`, `is_indented`, `latexFormat`; **`node scripts/test-lean-parser.mjs`** — corpus **77** lemmas (+**10** via **`node scripts/sample-round-trip-corpus.mjs 20260325 10`**); AST round-trip **77/77**.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
@@ -146,7 +146,7 @@ PHP class names with no JS class of the same name (7, abstract / flattened into 
 (Also abstract in PHP, present in JS with the same name: LeanUnaryArithmeticPost — not in the list above.)
 
 JS class names with no PHP class of the same name (12, extra concrete nodes / Unicode operator symbols in token2classname):
-  LeanBigOperator, LeanEDiv, Lean_boxminus, Lean_boxplus, Lean_boxtimes, Lean_circledast, Lean_circledcirc,
+  LeanEDiv, LeanPrefixExpr, Lean_boxminus, Lean_boxplus, Lean_boxtimes, Lean_circledast, Lean_circledcirc,
   Lean_circleddash, Lean_circleeq, Lean_dotsquare, Lean_ominus, Lean_oslash
 
 Missing classes to port: none — every concrete PHP Lean* node has a same-named JS class or an intentional JS-only split as above.
@@ -158,11 +158,12 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 
 ## Step 3: Per-class audit
 - Full method-by-method parity is not automated here (naming camelCase vs snake_case, helpers on different bases).
+- **Within-class method order**: when auditing a class, align **declaration order** in `lean.js` with `lean.php` (constructors/getters for `__get` first, then methods in PHP order). Example: **`LeanArgsCommaSeparated`** matches PHP order end-to-end.
 - Track gaps via [Known Gaps](#known-gaps) and targeted ports (e.g. LeanTactic vs PHP sequential combinator / getEcho).
 - Prior parity work (examples): LeanBinary.echo, LeanRightarrow.echo; Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers.
 
 ## Step 4: Verification
-- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: **40/40** corpus lemmas match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (`ROUND_TRIP_CORPUS_MISMATCH_OK` empty in `scripts/test-lean-parser.mjs`).
+- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: **77/77** corpus lemmas match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (`ROUND_TRIP_CORPUS_MISMATCH_OK` empty in `scripts/test-lean-parser.mjs`).
 - No new linter issues on static/js/parser/lean.js
 ```
 
@@ -170,4 +171,6 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 
 - `scripts/compare-php-node.mjs` – comparison utilities
 - `scripts/audit-lean-classes.mjs` – PHP vs JS `Lean*` class name diff (Step 1) + pairwise order statistic (Step 2)
+- `scripts/reorder_lean_class.py` / `scripts/compare_lean_class_methods.py` – PHP class segment tools (`php/parser/README.md`; preset `leanargscommaseparated` for PHP ordering reference)
+- `scripts/sample-round-trip-corpus.mjs` – reproducible random sample from `Lemma/` for expanding round-trip corpus
 - `server/lean/compiler/render2vue.mjs` – uses `LeanTactic::getEcho`
