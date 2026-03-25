@@ -155,6 +155,28 @@ const CORPUS = [
     { rel: 'Lemma/Vector/GetSplitAt_1/eq/GetUnflatten/of/Lt.lean', note: 'Vector split unflatten' },
     { rel: 'Lemma/List/TailTail/eq/Nil.lean', note: 'List tail tail' },
     { rel: 'Lemma/List/Permute__Neg/eq/Cons_EraseIdx.lean', note: 'List permute erase' },
+    // Random Lemma/ sample (repro: `node scripts/sample-round-trip-corpus.mjs 20260329 10`)
+    { rel: 'Lemma/Int/SubNeg.lean', note: 'Int sub neg' },
+    { rel: 'Lemma/Nat/DivAddMul/eq/Add_Div/of/Ne_0.lean', note: 'Nat div add mul' },
+    { rel: 'Lemma/Int/LeNegS/of/Ge.lean', note: 'Int le neg' },
+    { rel: 'Lemma/Nat/EqAddS/of/Eq/Eq.lean', note: 'Nat eq add' },
+    { rel: 'Lemma/Int/FloorAdd/eq/AddFloor.lean', note: 'Int floor add' },
+    { rel: 'Lemma/Rat/CoeCoe/eq/Coe.lean', note: 'Rat coe' },
+    { rel: 'Lemma/List/GtLength_0/of/Cons/in/CartesianProduct.lean', note: 'List length Cartesian' },
+    { rel: 'Lemma/List/EqAppendTake__ListGet/of/EqLength_Add_1.lean', note: 'List append take get' },
+    { rel: 'Lemma/List/AppendAppend/eq/Append_Append.lean', note: 'List append append' },
+    { rel: 'Lemma/Real/ExpSum/eq/ProdMap.lean', note: 'Real exp sum' },
+    // Random Lemma/ sample (repro: `node scripts/sample-round-trip-corpus.mjs 20260330 10`)
+    { rel: 'Lemma/List/EqProdTakeSet__1/of/GtLength_0.lean', note: 'List prod take set' },
+    { rel: 'Lemma/Set/Any_And_AndInS/of/Any_And.lean', note: 'Set any and' },
+    { rel: 'Lemma/List/ProdTakeDropPermute__Neg/eq/ProdTakeDrop/of/GtLength_Add.lean', note: 'List prod take drop' },
+    { rel: 'Lemma/Vector/EqMapS/of/All_Eq.lean', note: 'Vector map eq' },
+    { rel: 'Lemma/Vector/GetFlatten/eq/Get/of/Eq_AddMul.lean', note: 'Vector flatten get' },
+    { rel: 'Lemma/Bool/BFnUFnFunIte/Not/of/AndBFnUFn.lean', note: 'Bool BFn UFn' },
+    { rel: 'Lemma/Nat/Gt/of/Lt.lean', note: 'Nat gt lt' },
+    { rel: 'Lemma/Hyperreal/NotInfiniteDiv/of/InfiniteDiv.lean', note: 'Hyperreal not infinite div' },
+    { rel: 'Lemma/Bool/Bool/eq/Zero/ou/Bool/eq/One.lean', note: 'Bool zero one' },
+    { rel: 'Lemma/Hyperreal/InfinitesimalDiv/of/NotInfinite/Infinite.lean', note: 'Hyperreal infinitesimal div' },
 ];
 
 function resolveAbs(rel) {

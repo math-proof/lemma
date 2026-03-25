@@ -1005,7 +1005,7 @@ export class LeanArgs extends Lean {
         return caret.push_token(word);
     }
 
-    /** PHP `LeanArgs::insert_calc` (php/parser/lean.php ~1472–1481). */
+    /** Replace trailing caret with `LeanCalc`. */
     insert_calc(caret) {
         const last = this.args[this.args.length - 1];
         if (last === caret && caret instanceof LeanCaret) {
@@ -1016,7 +1016,6 @@ export class LeanArgs extends Lean {
     }
 
     /**
-     * Port of `LeanArgs::push_args_indented` (php/parser/lean.php ~1483–1492).
      * @param {number} indent
      * @param {number} newlineCount
      * @param {boolean} [functionCall]
@@ -1039,8 +1038,7 @@ export class LeanArgs extends Lean {
     }
 
     /**
-     * PHP `LeanArgs::__clone` (php/parser/lean.php ~1405–1411): same shell as `Lean.prototype.clone`,
-     * then replace `args` with recursive `clone()` and fix `parent` links.
+     * Deep-clone `args` and reparent children (same pattern as `Lean.prototype.clone` shell).
      * @returns {this}
      */
     clone() {
@@ -1059,7 +1057,6 @@ export class LeanArgs extends Lean {
     }
 
     /**
-     * PHP `LeanArgs::strip_parenthesis` (php/parser/lean.php ~1479–1482).
      * @returns {Lean[]}
      */
     strip_parenthesis() {
@@ -1072,7 +1069,7 @@ export class LeanArgs extends Lean {
         });
     }
 
-    /** PHP `LeanArgs::set_line` (php/parser/lean.php ~1470–1477). */
+    /** Propagate line numbers through `args`. */
     set_line(line) {
         this.line = line;
         for (const arg of this.args) {
@@ -1081,14 +1078,13 @@ export class LeanArgs extends Lean {
         return line;
     }
 
-    /** PHP `LeanArgs::jsonSerialize` (php/parser/lean.php ~1443–1446). */
     jsonSerialize() {
         return this.args.map((a) =>
             a == null ? a : typeof a.jsonSerialize === 'function' ? a.jsonSerialize() : a,
         );
     }
 
-    /** PHP `LeanArgs::traverse` (php/parser/lean.php ~1484–1491). */
+    /** Preorder over `this` then each `arg`. */
     *traverse() {
         yield this;
         for (const arg of this.args) {
@@ -1097,22 +1093,20 @@ export class LeanArgs extends Lean {
     }
 
     // insert_comma, insert_semicolon, insert_assign, push_right, push_or, push_post_unary, etc.
-    // inherit from `Lean` (php/parser/lean.php) — delegate to parent; do not override with throws.
+    // inherit from Lean — delegate to parent; do not override with throws.
 }
 
-/** Port of `LeanArgsCommaSeparated` (php/parser/lean.php ~6731–6796). Method order matches PHP. */
+/** Comma-separated argument list; method order matches PHP class `LeanArgsCommaSeparated`. */
 export class LeanArgsCommaSeparated extends LeanArgs {
     /**
-     * PHP `LeanArgsCommaSeparated::__get('stack_priority')` (php/parser/lean.php ~6736–6739).
-     * Under LeanBar use LeanColon input priority; else one less so `:` binds correctly in other contexts.
-     * GetElem index behavior comes from the parent `LeanGetElem*` node (stack_priority 18), not here.
+     * Under LeanBar: LeanColon input priority; else one less so `:` binds in the right place.
+     * GetElem index uses parent `LeanGetElem*` stack_priority, not this.
      */
     get stack_priority() {
         if (this.parent instanceof LeanBar) return LeanColon.input_priority;
         return LeanColon.input_priority - 1;
     }
 
-    /** PHP `LeanArgsCommaSeparated::insert` (php/parser/lean.php ~6745–6754). */
     insert(caret, func, type) {
         const last = this.args[this.args.length - 1];
         if (last === caret) {
@@ -1125,25 +1119,21 @@ export class LeanArgsCommaSeparated extends LeanArgs {
         }
     }
 
-    /** PHP `LeanArgsCommaSeparated::insert_comma` (php/parser/lean.php ~6756–6760). */
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
         this.push(caret2);
         return caret2;
     }
 
-    /** PHP `LeanArgsCommaSeparated::insert_tactic` (php/parser/lean.php ~6763–6767). */
     insert_tactic(caret, token) {
         if (caret instanceof LeanCaret) return this.insert_word(caret, token);
         throw new Error(`LeanArgsCommaSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
     }
 
-    /** PHP `LeanArgsCommaSeparated::is_indented` (php/parser/lean.php ~6770–6772). */
     is_indented() {
         return false;
     }
 
-    /** PHP `LeanArgsCommaSeparated::latexFormat` (php/parser/lean.php ~6775–6777). */
     latexFormat() {
         const n = this.args.length;
         return Array(n)
@@ -1151,12 +1141,10 @@ export class LeanArgsCommaSeparated extends LeanArgs {
             .join(', ');
     }
 
-    /** PHP `LeanArgsCommaSeparated::strFormat` (php/parser/lean.php ~6780–6782). */
     strFormat() {
         return Array(this.args.length).fill('%s').join(', ');
     }
 
-    /** PHP `LeanArgsCommaSeparated::tokens_comma_separated` (php/parser/lean.php ~6785–6794). */
     tokens_comma_separated() {
         const tokens = [];
         for (const arg of this.args) {
@@ -1167,7 +1155,7 @@ export class LeanArgsCommaSeparated extends LeanArgs {
     }
 }
 
-/** Port of `LeanArgsNewLineSeparated` (php/parser/lean.php ~6520–6636). */
+/** Newline-separated args; method order matches PHP class `LeanArgsNewLineSeparated`. */
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -1180,10 +1168,7 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
         return 47;
     }
 
-    /**
-     * PHP `LeanArgsNewLineSeparated::insert_if` (~6549–6558).
-     * Non-last caret: return undefined (see `LeanStatements.insert_if`).
-     */
+    /** Non-last caret: return undefined (see `LeanStatements.insert_if`). */
     insert_if(caret) {
         if (!(caret instanceof LeanCaret)) return undefined;
         const last = this.args[this.args.length - 1];
@@ -1263,7 +1248,7 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
         return Array(this.args.length).fill('%s').join('\n');
     }
 
-    /** PHP trait `LeanMultipleLine::set_line` (php/parser/lean.php ~1380–1387). */
+    /** `LeanMultipleLine`-style line tracking (same pattern as related arg-list classes). */
     set_line(line) {
         this.line = line;
         for (const arg of this.args) {
@@ -1274,17 +1259,15 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
 }
 
 /**
- * Port of `LeanArgsCommaNewLineSeparated` + trait `LeanMultipleLine` (php/parser/lean.php ~6856–6919, ~1380–1387).
- * Method order matches PHP class body; `set_line` last (from trait). Used by `LeanPairedGroup::insert_newline`.
+ * Comma + newline separated args (`LeanMultipleLine`); used from `LeanPairedGroup.insert_newline`.
+ * Method order: class body then `set_line`, matching PHP class `LeanArgsCommaNewLineSeparated`.
  */
 export class LeanArgsCommaNewLineSeparated extends LeanArgs {
-    /** PHP `LeanArgsCommaNewLineSeparated::__get('stack_priority')` (php/parser/lean.php ~6862–6863). */
     get stack_priority() {
         return 17;
     }
 
     /**
-     * PHP `LeanArgsCommaNewLineSeparated::insert` (php/parser/lean.php ~6869–6878).
      * @param {Lean} caret
      * @param {string | typeof Lean} func
      * @param {string} [_type]
@@ -1299,14 +1282,13 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
         throw new Error(`LeanArgsCommaNewLineSeparated.insert: unexpected for ${this.constructor.name}`);
     }
 
-    /** PHP `LeanArgsCommaNewLineSeparated::insert_comma` (php/parser/lean.php ~6879–6883). */
     insert_comma(caret) {
         const c2 = new LeanCaret(this.indent, caret.level);
         this.push(c2);
         return c2;
     }
 
-    /** PHP `LeanArgsCommaNewLineSeparated::insert_newline` (php/parser/lean.php ~6887–6903); JS extends for `push_args_indented` when `indent` increases (multiline `⟨…⟩` / `[…]`). */
+    /** When indent increases, also tries `push_args_indented` (multiline `⟨…⟩` / `[…]`). */
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent > indent) {
             return super.insert_newline(caret, newlineCount, indent, next);
@@ -1329,24 +1311,20 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
         throw new Error(`LeanArgsCommaNewLineSeparated.insert_newline: unexpected for ${this.constructor.name}`);
     }
 
-    /** PHP `LeanArgsCommaNewLineSeparated::is_indented` (php/parser/lean.php ~6906–6908). */
     is_indented() {
         return false;
     }
 
-    /** PHP `LeanArgsCommaNewLineSeparated::latexFormat` (php/parser/lean.php ~6911–6913). */
     latexFormat() {
         return Array(this.args.length)
             .fill('{%s}')
             .join(',\n');
     }
 
-    /** PHP `LeanArgsCommaNewLineSeparated::strFormat` (php/parser/lean.php ~6916–6918). */
     strFormat() {
         return Array(this.args.length).fill('%s').join(',\n');
     }
 
-    /** PHP trait `LeanMultipleLine::set_line` (php/parser/lean.php ~1380–1387). */
     set_line(line) {
         this.line = line;
         for (const arg of this.args) {
@@ -1356,14 +1334,12 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     }
 }
 
-/** Port of `LeanArgsSemicolonSeparated` (php/parser/lean.php ~6798–6854). Method order matches PHP. */
+/** Semicolon-separated args; method order matches PHP class `LeanArgsSemicolonSeparated`. */
 export class LeanArgsSemicolonSeparated extends LeanArgs {
-    /** PHP `LeanArgsSemicolonSeparated::__get('stack_priority')` (php/parser/lean.php ~6803–6804). */
     get stack_priority() {
         return LeanColon.input_priority - 1;
     }
 
-    /** PHP `LeanArgsSemicolonSeparated::insert` (php/parser/lean.php ~6810–6818). */
     insert(caret, func, type) {
         const last = this.args[this.args.length - 1];
         if (last === caret) {
@@ -1376,14 +1352,12 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
         }
     }
 
-    /** PHP `LeanArgsSemicolonSeparated::insert_semicolon` (php/parser/lean.php ~6820–6824). */
     insert_semicolon(caret) {
         const c = new LeanCaret(this.indent, caret.level);
         this.push(c);
         return c;
     }
 
-    /** PHP `LeanArgsSemicolonSeparated::insert_tactic` (php/parser/lean.php ~6827–6836). */
     insert_tactic(caret, type) {
         if (caret instanceof LeanCaret) {
             const p = this.parent;
@@ -1396,19 +1370,16 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
         throw new Error(`LeanArgsSemicolonSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
     }
 
-    /** PHP `LeanArgsSemicolonSeparated::is_indented` (php/parser/lean.php ~6839–6841). */
     is_indented() {
         return false;
     }
 
-    /** PHP `LeanArgsSemicolonSeparated::latexFormat` (php/parser/lean.php ~6844–6846). */
     latexFormat() {
         return Array(this.args.length)
             .fill('{%s}')
             .join('; ');
     }
 
-    /** PHP `LeanArgsSemicolonSeparated::strFormat` (php/parser/lean.php ~6849–6851). */
     strFormat() {
         return Array(this.args.length).fill('%s').join('; ');
     }
@@ -1433,7 +1404,7 @@ export class LeanBinary extends LeanArgs {
         return this.args[1];
     }
 
-    /** PHP LeanBinary::__get('operator') — used by strFormat (php/parser/lean.php ~2433–2437). */
+    /** Operator token for `strFormat` (from class name / `token2classname`). */
     get operator() {
         const name = this.constructor.name;
         switch (name) {
@@ -1454,12 +1425,11 @@ export class LeanBinary extends LeanArgs {
         }
     }
 
-    /** PHP `LeanBinary::sep` (php/parser/lean.php ~2525–2527). */
+    /** Space vs newline between lhs/rhs depending on rhs shape. */
     sep() {
         return this.rhs instanceof LeanStatements ? '\n' : ' ';
     }
 
-    /** PHP `LeanBinary::set_line` (php/parser/lean.php ~2114–2122). */
     set_line(line) {
         this.line = line;
         line = this.lhs.set_line(line);
@@ -1468,7 +1438,6 @@ export class LeanBinary extends LeanArgs {
         return this.rhs.set_line(line);
     }
 
-    /** PHP `LeanBinary::strFormat` (php/parser/lean.php ~2433–2437): "%s $this->operator$sep%s". */
     strFormat() {
         const op = this.operator;
         if (op == null) return super.strFormat();
@@ -1476,7 +1445,7 @@ export class LeanBinary extends LeanArgs {
         return `%s ${op}${sep}%s`;
     }
 
-    /** PHP arithmetic/relational override: use literal LaTeX (+, -, \\cdot) not \\Add, \\Sub. */
+    /** LaTeX operator token; literals for arithmetic/relations vs macro names. */
     get command() {
         switch (this.constructor.name) {
             case 'LeanAdd':
@@ -1586,17 +1555,14 @@ export class LeanBinary extends LeanArgs {
         }
     }
 
-    /** PHP `LeanBinary::latexFormat` (php/parser/lean.php ~2102–2104). */
     latexFormat() {
         return `{%s} ${this.command} {%s}`;
     }
 
-    /** PHP `LeanBinary::echo` (php/parser/lean.php ~2480–2483). */
     echo() {
         this.rhs?.echo?.();
     }
 
-    /** PHP `LeanBinary::insert_if` (php/parser/lean.php ~2085–2094). */
     insert_if(caret) {
         if (this.rhs === caret && caret instanceof LeanCaret) {
             this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
@@ -1606,11 +1572,11 @@ export class LeanBinary extends LeanArgs {
     }
 }
 
-/** PHP LeanProperty (php/parser/lean.php ~2126–2134); binary for property access e.g. Foo.bar. */
+/** Property access `Foo.bar`. */
 export class LeanProperty extends LeanBinary {
     static input_priority = 81;
 
-    /** PHP `LeanProperty::is_space_separated` (php/parser/lean.php ~2152–2165): trig/log rhs. */
+    /** Extra space before trig/log rhs token names. */
     is_space_separated() {
         const rhs = this.rhs;
         if (rhs instanceof LeanToken) {
@@ -1641,7 +1607,7 @@ export class LeanProperty extends LeanBinary {
     }
 }
 
-/** Port of `LeanColon` (php/parser/lean.php ~2355–2411). */
+/** Type ascription / declaration colon. */
 export class LeanColon extends LeanBinary {
     static input_priority = 19;
 
@@ -1661,7 +1627,7 @@ export class LeanColon extends LeanBinary {
         return true;
     }
 
-    /** PHP `LeanColon::strFormat` (php/parser/lean.php ~2368–2375) + round-trip for newline decl heads. */
+    /** Spacing for caret vs statements vs binder-like lhs (round-trip). */
     strFormat() {
         const rhs = this.rhs;
         const inGetElem = this.parent?.constructor?.name === 'LeanGetElem';
@@ -1702,7 +1668,6 @@ export class LeanColon extends LeanBinary {
         return head + parts.join('\n');
     }
 
-    /** PHP `LeanColon::insert_newline` (php/parser/lean.php ~2399–2410). */
     insert_newline(caret, newlineCount, indent, next) {
         if (this.rhs === caret) {
             if (caret instanceof LeanCaret && indent >= this.indent) {
@@ -1719,14 +1684,14 @@ export class LeanColon extends LeanBinary {
     }
 }
 
-/** Port of `LeanAssign` (php/parser/lean.php ~2414+). */
+/** Definition / assignment `:=`. */
 export class LeanAssign extends LeanBinary {
     static input_priority = 18;
     relocateLastComment() {
         this.rhs.relocateLastComment();
     }
 
-    /** PHP `LeanAssign::sep` (php/parser/lean.php ~2484–2492). Drives `strFormat` so `:= by` / proof blocks keep newlines. */
+    /** Newlines before rhs when proof-like or multiline arg list (drives `strFormat`). */
     sep() {
         const rhs = this.rhs;
         if (rhs instanceof LeanStatements || rhs instanceof LeanBy) return '\n';
@@ -1772,7 +1737,6 @@ export class LeanAssign extends LeanBinary {
     }
 
     /**
-     * PHP `LeanAssign::split` (php/parser/lean.php ~2494–2504).
      * @param {Record<string, unknown>} [syntax]
      * @returns {Lean[]}
      */
@@ -1790,7 +1754,7 @@ export class LeanAssign extends LeanBinary {
     }
 }
 
-/** PHP LeanRelational group (php/parser/lean.php ~2596–2795): _gt, _ge, _lt, _le, Eq, BEq, _bne, _ne, _equiv, NotEquiv, _simeq, _approx, _asymp, Dvd. */
+/** Relational / equality binary nodes (`>`, `≥`, `=`, `≃`, `∣`, …). */
 export class Lean_gt extends LeanBinary {
     static input_priority = 50;
 }
@@ -1846,7 +1810,7 @@ export class LeanDvd extends LeanBinary {
     static input_priority = 50;
 }
 
-/** PHP LeanBinaryBoolean (php/parser/lean.php ~2811–2863): _in, _notin, _leftrightarrow. */
+/** Set / arrow: `∈` (membership). */
 export class Lean_in extends LeanBinary {
     static input_priority = 50;
     latexArgs(syntax) {
@@ -1858,12 +1822,12 @@ export class Lean_in extends LeanBinary {
 export class Lean_notin extends LeanBinary {
     static input_priority = 50;
 }
+/** `↔`. */
 export class Lean_leftrightarrow extends LeanBinary {
     static input_priority = 50;
 }
 
-/** PHP LeanArithmetic group (php/parser/lean.php ~2901–3513): Add, Sub, Mul, _times, MatMul, _bullet, _odot, _otimes, _oplus, Div, FDiv, BitAnd, BitwiseAnd, BitwiseXor, BitOr, BitwiseOr, Pow, _ll, _lll, _gg, _ggg, Modular, Construct, VConstruct, Append, _sqcup, _sqcap, _cdotp, _circ, _blacktriangleright. */
-/** PHP `LeanAdd` / `LeanSub` / `LeanMul` (php/parser/lean.php ~2901–2936): `input_priority` matches PHP statics. */
+/** Arithmetic / ring / bitwise / shift / lattice ops (`+`, `×`, `^`, `⊓`, …). */
 export class LeanAdd extends LeanBinary {
     static input_priority = 65;
 }

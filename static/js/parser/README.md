@@ -121,6 +121,10 @@ For each class defined in **both** `lean.php` and `lean.js`:
    - **If JS differs**: Update the JS implementation to match PHP behavior.
    - If PHP uses **`clone` / `__clone`**: port via **`clone()`** per [AST cloning for translation](#ast-cloning-for-translation) above (extend `Lean` / `LeanArgs` / `LeanToken` as needed).
 
+4. **Comments in `lean.js` (maintainability)**
+   - Do **not** cite the filename `lean.php` or **line numbers** (or `~1234` ranges) in **`lean.js`** comments—they drift and create churn. (This README may still name `lean.php` as the PHP side of the sync.)
+   - Prefer short **behavioral** notes; when needed, name a PHP **class** or **method** (e.g. “matches PHP `LeanArgsCommaSeparated`”) without file paths.
+
 ### Step 4: Output and Verification
 
 - Run `node scripts/test-lean-parser.mjs` after changes.
@@ -129,7 +133,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): audit script; arg-list classes **`LeanArgsCommaSeparated`**, **`LeanArgsSemicolonSeparated`**, **`LeanArgsCommaNewLineSeparated`** — **method order matches PHP** (`lean.php` ~6731–6920, `set_line` last as `LeanMultipleLine`); **`node scripts/test-lean-parser.mjs`** — corpus **97** (+**10** via **`node scripts/sample-round-trip-corpus.mjs 20260327 10`**); AST round-trip **97/97**.
+Last run: Steps 1–4 (2026-03-24): audit script; **Step 3 §4** scrub on **`LeanArgs`** (tail), **`LeanBinary`–`LeanAssign`**, relational header; **`node scripts/test-lean-parser.mjs`** — corpus **117** (+**10** via **`node scripts/sample-round-trip-corpus.mjs 20260330 10`**); AST round-trip **117/117** (~**200** `lean.php` / `php/parser` refs remain in `lean.js` for later passes).
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
@@ -158,12 +162,13 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 
 ## Step 3: Per-class audit
 - Full method-by-method parity is not automated here (naming camelCase vs snake_case, helpers on different bases).
-- **Within-class method order**: when auditing a class, align **declaration order** in `lean.js` with `lean.php` (constructors/getters for `__get` first, then methods in PHP order; trait methods e.g. `set_line` after the class body). Examples: **`LeanArgsCommaSeparated`**, **`LeanArgsSemicolonSeparated`**, **`LeanArgsCommaNewLineSeparated`**.
+- **Within-class method order**: align **declaration order** in `lean.js` with the PHP parser class (constructors/getters for `__get` first, then methods in PHP order; trait-style helpers e.g. `set_line` after the class body). Examples: **`LeanArgsCommaSeparated`**, **`LeanArgsSemicolonSeparated`**, **`LeanArgsCommaNewLineSeparated`**.
+- **Comments**: no `lean.php` filename or line ranges in `lean.js` (Step 3 §4).
 - Track gaps via [Known Gaps](#known-gaps) and targeted ports (e.g. LeanTactic vs PHP sequential combinator / getEcho).
 - Prior parity work (examples): LeanBinary.echo, LeanRightarrow.echo; Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers.
 
 ## Step 4: Verification
-- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: **97/97** corpus lemmas match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (`ROUND_TRIP_CORPUS_MISMATCH_OK` empty in `scripts/test-lean-parser.mjs`).
+- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: **117/117** corpus lemmas match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (`ROUND_TRIP_CORPUS_MISMATCH_OK` empty in `scripts/test-lean-parser.mjs`).
 - No new linter issues on static/js/parser/lean.js
 ```
 
