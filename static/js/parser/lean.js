@@ -3758,10 +3758,8 @@ export class LeanCaret extends Lean {
     }
 }
 
-/** PHP `abstract class LeanCommand extends LeanUnary` (php/parser/lean.php ~5213–5234). */
+/** PHP `abstract class LeanCommand extends LeanUnary` (php/parser/lean.php ~5213–5234). No `static $input_priority` on `LeanCommand` — only `Lean_import` / `Lean_open` / `Lean_set_option` use 27; `Lean_namespace` keeps `LeanUnary`’s 47. */
 class LeanCommand extends LeanUnary {
-    static input_priority = 27;
-
     is_indented() {
         return false;
     }
@@ -4077,9 +4075,10 @@ class LeanBigOperator extends LeanArgs {
      * @param {Lean} bound
      * @param {number} indent
      * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
      */
-    constructor(bound, indent, level) {
-        super([bound], indent, level);
+    constructor(bound, indent, level, parent = null) {
+        super([bound], indent, level, parent);
     }
 
     get bound() {
