@@ -1,23 +1,27 @@
 #!/usr/bin/env node
 /**
- * Randomly sample `.lean` files under Lemma/ that are not yet in `test-lean-parser.mjs` CORPUS,
+ * Randomly sample `.lean` files under Lemma/ that are not yet in `round-trip-corpus.jsonl`,
  * and keep those that pass parse + AST→String→AST jsonSerialize equality.
  *
  * Usage:
  *   node scripts/sample-round-trip-corpus.mjs [seed] [count]
+ *   node scripts/sample-round-trip-corpus.mjs [seed] [count] --append
  * Defaults: seed=20260324, count=12
  *
- * Prints JSON with `winners` (rel + note). Re-run with the same seed for a reproducible draw.
+ * With --append: appends winner lines to scripts/round-trip-corpus.jsonl (skips rels already listed).
+ * Without --append: prints JSON only (rel + note) for manual copy.
  */
 
-import { readFileSync, readdirSync, statSync } from 'fs';
+import { readFileSync, readdirSync, statSync, appendFileSync, existsSync } from 'fs';
 import { join, dirname, relative } from 'path';
 import { fileURLToPath } from 'url';
 
 import { compile } from '../static/js/parser/lean.js';
+import { loadRoundTripCorpusRels } from './load-round-trip-corpus.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, '..');
+const CORPUS_JSONL = join(__dirname, 'round-trip-corpus.jsonl');
 
 function stableAstJson(root) {
     return JSON.stringify(root.jsonSerialize(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
@@ -41,18 +45,6 @@ function walkLemmaLeanFiles(dir) {
     return out;
 }
 
-/** `rel:` entries in CORPUS (same file; avoids exporting CORPUS from the test runner). */
-function extractCorpusRels() {
-    const txt = readFileSync(join(__dirname, 'test-lean-parser.mjs'), 'utf8');
-    const rels = new Set();
-    const re = /rel:\s*'([^']+)'/g;
-    let m;
-    while ((m = re.exec(txt)) !== null) {
-        if (m[1].startsWith('Lemma/')) rels.add(m[1]);
-    }
-    return rels;
-}
-
 function mulberry32(a) {
     return function () {
         let t = (a += 0x6d2b79f5);
@@ -71,9 +63,16 @@ function shuffle(arr, rand) {
     return a;
 }
 
-const seed = parseInt(process.argv[2] ?? '20260324', 10);
-const want = parseInt(process.argv[3] ?? '12', 10);
-const existing = extractCorpusRels();
+const argv = process.argv.slice(2);
+const append = argv.includes('--append');
+const nums = argv.filter((a) => /^\d+$/.test(a));
+const seed = parseInt(nums[0] ?? '20260324', 10);
+const want = parseInt(nums[1] ?? '12', 10);
+
+const existing = existsSync(CORPUS_JSONL)
+    ? loadRoundTripCorpusRels(CORPUS_JSONL)
+    : new Set();
+
 const absAll = walkLemmaLeanFiles(join(REPO_ROOT, 'Lemma'));
 const candidates = absAll
     .map((abs) => relative(REPO_ROOT, abs).replace(/\\/g, '/'))
@@ -103,9 +102,16 @@ for (const rel of shuffled) {
     winners.push({ rel, note: `random sample (${top})` });
 }
 
+if (append && winners.length > 0) {
+    const lines = winners.map((w) => JSON.stringify(w)).join('\n') + '\n';
+    appendFileSync(CORPUS_JSONL, lines, 'utf8');
+}
+
 console.log(
     JSON.stringify(
         {
+            corpusFile: relative(REPO_ROOT, CORPUS_JSONL).replace(/\\/g, '/'),
+            append,
             seed,
             want,
             candidatesPool: candidates.length,

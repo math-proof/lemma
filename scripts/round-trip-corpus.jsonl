@@ -1,0 +1,148 @@
+# Round-trip corpus for scripts/test-lean-parser.mjs — one JSON object per line: {"rel":"Lemma/...","note":"..."}
+{"rel":"Lemma/Nat/Min.lean","note":"min_comm / parentheses"}
+{"rel":"Lemma/List/EqGetCons.lean","note":"binders with commas"}
+{"rel":"Lemma/Tensor/GetSelect_1/eq/Cast_Get/of/Lt_Get_0/Lt_Get_1/GtLength_1.lean","note":"deep proof / attrs"}
+{"rel":"Lemma/Bool/IffAndSAnd.lean","note":"Bool"}
+{"rel":"Lemma/Bool/EqCast/of/SEq.lean","note":"Bool / casts"}
+{"rel":"Lemma/Nat/Pow1/eq/One.lean","note":"Nat"}
+{"rel":"Lemma/Int/Add/eq/Sub_Neg.lean","note":"Int"}
+{"rel":"Lemma/Rat/EqDivMul.lean","note":"Rat"}
+{"rel":"Lemma/Real/Pi/ne/Zero.lean","note":"Real"}
+{"rel":"Lemma/Complex/Im/eq/MulAbs_SinArg.lean","note":"Complex"}
+{"rel":"Lemma/Hyperreal/InfinitePosInfty.lean","note":"Hyperreal"}
+{"rel":"Lemma/Set/UnionUnion.lean","note":"Set"}
+{"rel":"Lemma/Finset/Ico/eq/SDiffRangeS.lean","note":"Finset"}
+{"rel":"Lemma/List/EqDropAppend.lean","note":"List"}
+{"rel":"Lemma/Vector/Eq_0/of/All_EqGet_0.lean","note":"Vector"}
+{"rel":"Lemma/Tensor/EqLengthS.lean","note":"Tensor"}
+{"rel":"Lemma/Nat/SubSub.lean","note":"Nat Sub"}
+{"rel":"Lemma/Nat/MulMul.lean","note":"Nat Mul"}
+{"rel":"Lemma/Nat/GeMax.lean","note":"Nat max"}
+{"rel":"Lemma/Nat/EqMul1.lean","note":"Nat EqMul1"}
+{"rel":"Lemma/Bool/Ite.lean","note":"Bool Ite"}
+{"rel":"Lemma/Bool/ImpAndS/of/Imp.lean","note":"Bool Imp"}
+{"rel":"Lemma/Finset/Inter.lean","note":"Finset Inter"}
+{"rel":"Lemma/Finset/In_Union/is/OrInS.lean","note":"Finset union"}
+{"rel":"Lemma/Finset/Sum/eq/Sum_MulBool.lean","note":"Finset sum"}
+{"rel":"Lemma/Set/InterUnion/eq/UnionInterS.lean","note":"Set inter/union"}
+{"rel":"Lemma/Rat/DivDiv/eq/Div_Mul.lean","note":"Rat div"}
+{"rel":"Lemma/Rat/GeCeil.lean","note":"Rat ceil"}
+{"rel":"Lemma/Real/LtExpS/is/Lt.lean","note":"Real exp"}
+{"rel":"Lemma/Real/SinMul3/eq/SubMul3_Mul4SinMul3.lean","note":"Real sin"}
+{"rel":"Lemma/Complex/ExpMulI/eq/AddCos_MulISin.lean","note":"Complex exp"}
+{"rel":"Lemma/Hyperreal/NeInfty0.lean","note":"Hyperreal ne"}
+{"rel":"Lemma/Int/AddSub/eq/SubAdd.lean","note":"Int add/sub"}
+{"rel":"Lemma/Int/CeilSub/eq/SubCeil.lean","note":"Int ceil"}
+{"rel":"Lemma/List/DropDrop/eq/Drop_Add.lean","note":"List drop"}
+{"rel":"Lemma/List/Rotate_Mod/eq/Rotate.lean","note":"List rotate"}
+{"rel":"Lemma/Vector/EqGetCons.lean","note":"Vector cons"}
+{"rel":"Lemma/Vector/Map/eq/Cons_MapTail.lean","note":"Vector map"}
+{"rel":"Lemma/Tensor/GetDot/eq/Sum_MulGetS.lean","note":"Tensor dot"}
+{"rel":"Lemma/Tensor/GtLength_0.lean","note":"Tensor length"}
+{"rel":"Lemma/Nat/ModEq__AddDiv__Mod.lean","note":"Nat MOD / denote / grind"}
+{"rel":"Lemma/Set/EqIooS.lean","note":"Set Ioo = Finset.Ioo / typeclasses"}
+{"rel":"Lemma/Bool/OrOr.lean","note":"Bool Or assoc / aesop"}
+{"rel":"Lemma/Tensor/SEqNegS/of/SEq.lean","note":"Tensor SEq neg"}
+{"rel":"Lemma/Hyperreal/EqSt.lean","note":"Hyperreal st"}
+{"rel":"Lemma/List/TakeCons/eq/Cons_Take.lean","note":"List take / cons"}
+{"rel":"Lemma/Real/GtSqrt_0/of/Gt_0.lean","note":"Real sqrt"}
+{"rel":"Lemma/Vector/GetInv/eq/InvGet.lean","note":"Vector get / inv"}
+{"rel":"Lemma/Rat/SquareDiv/eq/DivSquareS.lean","note":"Rat square div"}
+{"rel":"Lemma/Nat/EqCeilCoe.lean","note":"Nat ceil coe"}
+{"rel":"Lemma/List/Prod/eq/Mul_ProdTail.lean","note":"List prod tail"}
+{"rel":"Lemma/Set/In_IocCeil.lean","note":"Set Ioc ceil"}
+{"rel":"Lemma/List/ProdTakePermute/eq/ProdTake/of/GtLength.lean","note":"List prod / take / permute"}
+{"rel":"Lemma/List/ProdDropEraseIdx/eq/ProdAppendDropTake/of/Ge.lean","note":"List prod drop erase"}
+{"rel":"Lemma/Vector/Mul/eq/Mul_Replicate.lean","note":"Vector mul replicate"}
+{"rel":"Lemma/Tensor/EqLength.lean","note":"Tensor eq length"}
+{"rel":"Lemma/Real/Eq/of/EqExpS.lean","note":"Real eq exp"}
+{"rel":"Lemma/Set/In_Ico/is/InNeg_Ioc.lean","note":"Set Ico / Ioc neg"}
+{"rel":"Lemma/Real/Square/le/MulMul4/of/Ge_0/AddAddMul_Square/ge/Zero.lean","note":"Real square / mul bounds"}
+{"rel":"Lemma/Set/SDiff/eq/Empty/of/Subset.lean","note":"Set sdiff empty"}
+{"rel":"Lemma/Int/CoeDiv/eq/DivCoeS/of/Ne_0/Dvd.lean","note":"Int coe div"}
+{"rel":"Lemma/Vector/GetRepeat/eq/Get_Mod.lean","note":"Vector get repeat mod"}
+{"rel":"Lemma/Int/NegSucc/eq/NegCoeAdd_1.lean","note":"Int neg succ coe"}
+{"rel":"Lemma/Int/Sub/le/Zero/of/Le.lean","note":"Int sub le zero"}
+{"rel":"Lemma/Nat/Min/eq/IteGe.lean","note":"Nat min ite ge"}
+{"rel":"Lemma/Bool/And/of/Imp/AndOr.lean","note":"Bool and / imp / or"}
+{"rel":"Lemma/Int/Ge/of/LeNegS.lean","note":"Int ge le neg"}
+{"rel":"Lemma/Bool/Or/Or/of/Or_And.lean","note":"Bool or / and nesting"}
+{"rel":"Lemma/Vector/EqUnflatten/is/Eq_Flatten.lean","note":"Vector unflatten / flatten"}
+{"rel":"Lemma/List/TakeDropPermute/eq/TakeDrop/of/GtLength_Add.lean","note":"List take drop permute"}
+{"rel":"Lemma/Rat/Div/le/Zero/of/Ge_0/Le_0.lean","note":"Rat div le zero"}
+{"rel":"Lemma/List/DropTakePermute/eq/RotateTakeDrop.lean","note":"List drop take rotate"}
+{"rel":"Lemma/Nat/EqMax/of/Ge.lean","note":"Nat eq max ge"}
+{"rel":"Lemma/Nat/AddIteS/eq/IteAnd.lean","note":"Nat add ite and"}
+{"rel":"Lemma/Int/EqAbs/is/Ge_0.lean","note":"Int eq abs"}
+{"rel":"Lemma/Int/AbsAdd/le/AddAbsS.lean","note":"Int abs add"}
+{"rel":"Lemma/Real/ExpMulI/eq/AddCos_MulISin.lean","note":"Real exp mul I"}
+{"rel":"Lemma/Nat/ToNatAdd/eq/Add.lean","note":"Nat toNat add"}
+{"rel":"Lemma/Hyperreal/StInv/eq/Inv/of/EqSt.lean","note":"Hyperreal st inv"}
+{"rel":"Lemma/Int/LtSub_1/of/Le.lean","note":"Int lt sub"}
+{"rel":"Lemma/Set/InterInter/eq/Inter_Inter.lean","note":"Set inter inter"}
+{"rel":"Lemma/Nat/Mul/ne/Zero/of/Ne_0/Ne_0.lean","note":"Nat mul ne zero"}
+{"rel":"Lemma/Real/EqSqrt_0/of/Lt_0.lean","note":"Real eq sqrt"}
+{"rel":"Lemma/Int/Abs/ge/Neg.lean","note":"Int abs ge neg"}
+{"rel":"Lemma/Int/EqNegToNatNeg/of/Le_0.lean","note":"Int neg toNat"}
+{"rel":"Lemma/Hyperreal/InfinitePos/is/Infinite/Gt_0.lean","note":"Hyperreal infinite pos"}
+{"rel":"Lemma/List/GtProdTail_0/of/Lt_ProdTailSet_0.lean","note":"List prod tail gt"}
+{"rel":"Lemma/Finset/Lt/of/In_Ioo.lean","note":"Finset lt Ioo"}
+{"rel":"Lemma/Vector/GetMap/eq/UFnGet/of/Lt.lean","note":"Vector get map"}
+{"rel":"Lemma/Finset/SumIco/eq/Sub.lean","note":"Finset sum Ico"}
+{"rel":"Lemma/Tensor/LengthPermute__Neg/eq/Get.lean","note":"Tensor length permute"}
+{"rel":"Lemma/Rat/SubInvS/lt/Zero/of/Gt_0/Ge.lean","note":"Rat sub inv"}
+{"rel":"Lemma/Int/Add_ToNatNeg/eq/ToNatSub/of/Lt_0.lean","note":"Int add toNat neg"}
+{"rel":"Lemma/Hyperreal/InfinitesimalSub/of/EqSt/NotInfinite.lean","note":"Hyperreal infinitesimal"}
+{"rel":"Lemma/Vector/GetSplitAt_1/eq/GetUnflatten/of/Lt.lean","note":"Vector split unflatten"}
+{"rel":"Lemma/List/TailTail/eq/Nil.lean","note":"List tail tail"}
+{"rel":"Lemma/List/Permute__Neg/eq/Cons_EraseIdx.lean","note":"List permute erase"}
+{"rel":"Lemma/Int/SubNeg.lean","note":"Int sub neg"}
+{"rel":"Lemma/Nat/DivAddMul/eq/Add_Div/of/Ne_0.lean","note":"Nat div add mul"}
+{"rel":"Lemma/Int/LeNegS/of/Ge.lean","note":"Int le neg"}
+{"rel":"Lemma/Nat/EqAddS/of/Eq/Eq.lean","note":"Nat eq add"}
+{"rel":"Lemma/Int/FloorAdd/eq/AddFloor.lean","note":"Int floor add"}
+{"rel":"Lemma/Rat/CoeCoe/eq/Coe.lean","note":"Rat coe"}
+{"rel":"Lemma/List/GtLength_0/of/Cons/in/CartesianProduct.lean","note":"List length Cartesian"}
+{"rel":"Lemma/List/EqAppendTake__ListGet/of/EqLength_Add_1.lean","note":"List append take get"}
+{"rel":"Lemma/List/AppendAppend/eq/Append_Append.lean","note":"List append append"}
+{"rel":"Lemma/Real/ExpSum/eq/ProdMap.lean","note":"Real exp sum"}
+{"rel":"Lemma/List/EqProdTakeSet__1/of/GtLength_0.lean","note":"List prod take set"}
+{"rel":"Lemma/Set/Any_And_AndInS/of/Any_And.lean","note":"Set any and"}
+{"rel":"Lemma/List/ProdTakeDropPermute__Neg/eq/ProdTakeDrop/of/GtLength_Add.lean","note":"List prod take drop"}
+{"rel":"Lemma/Vector/EqMapS/of/All_Eq.lean","note":"Vector map eq"}
+{"rel":"Lemma/Vector/GetFlatten/eq/Get/of/Eq_AddMul.lean","note":"Vector flatten get"}
+{"rel":"Lemma/Bool/BFnUFnFunIte/Not/of/AndBFnUFn.lean","note":"Bool BFn UFn"}
+{"rel":"Lemma/Nat/Gt/of/Lt.lean","note":"Nat gt lt"}
+{"rel":"Lemma/Hyperreal/NotInfiniteDiv/of/InfiniteDiv.lean","note":"Hyperreal not infinite div"}
+{"rel":"Lemma/Bool/Bool/eq/Zero/ou/Bool/eq/One.lean","note":"Bool zero one"}
+{"rel":"Lemma/Hyperreal/InfinitesimalDiv/of/NotInfinite/Infinite.lean","note":"Hyperreal infinitesimal div"}
+{"rel":"Lemma/Nat/Eq_Mod/of/Eq_AddMul.lean","note":"Nat eq mod add mul"}
+{"rel":"Lemma/Nat/Odd/is/NotEven.lean","note":"Nat odd not even"}
+{"rel":"Lemma/List/EqMapSEnumerate/of/Eq/Eq.lean","note":"List map enumerate"}
+{"rel":"Lemma/Set/UnionIocS/eq/Ioc/of/Le/Le.lean","note":"Set union Ioc"}
+{"rel":"Lemma/Rat/Sub_Inv/eq/DivSubMul/of/Ne_0.lean","note":"Rat sub inv"}
+{"rel":"Lemma/Nat/EqValCast/of/Lt/Eq.lean","note":"Nat val cast"}
+{"rel":"Lemma/Bool/Or_AndNot/of/Or.lean","note":"Bool or and not"}
+{"rel":"Lemma/Tensor/DataUnsqueeze/eq/Cast_Data.lean","note":"Tensor unsqueeze"}
+{"rel":"Lemma/Bool/BFnIte/is/Imp/Imp.lean","note":"Bool BFn ite imp"}
+{"rel":"Lemma/Nat/Lt/of/Lt/Lt.lean","note":"Nat lt chain"}
+{"rel":"Lemma/Tensor/SEqUnsqueezeS/of/SEq.lean","note":"Tensor SEq unsqueeze"}
+{"rel":"Lemma/Hyperreal/LeSt/of/Le/NotInfinite.lean","note":"Hyperreal le st"}
+{"rel":"Lemma/Int/Ge0Mul/of/Le_0/Ge_0.lean","note":"Int ge0 mul"}
+{"rel":"Lemma/Tensor/LengthGetSlice/eq/Min.lean","note":"Tensor length get slice"}
+{"rel":"Lemma/Vector/EqGetReplicate.lean","note":"Vector get replicate"}
+{"rel":"Lemma/List/EqLengthSlicedIndices/of/Gt_0/Gt_0/Lt.lean","note":"List sliced indices length"}
+{"rel":"Lemma/Nat/Min/eq/Add_1.lean","note":"Nat min add 1"}
+{"rel":"Lemma/List/MapCast/eq/Cast_Map/of/Eq.lean","note":"List map cast"}
+{"rel":"Lemma/Nat/MulMul/eq/Mul_Mul.lean","note":"Nat mul mul assoc"}
+{"rel":"Lemma/Bool/Iff_False/of/Not.lean","note":"Bool iff false"}
+{"rel":"Lemma/Nat/Ge/of/Gt/Ge.lean","note":"random sample (Nat)"}
+{"rel":"Lemma/List/AddMul_ProdDrop/lt/Prod.lean","note":"random sample (List)"}
+{"rel":"Lemma/Tensor/LengthPermute__Neg/eq/Get_0/of/Gt.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Rat/InvSub1/eq/AddDiv_Sub1/of/Ne_1.lean","note":"random sample (Rat)"}
+{"rel":"Lemma/Hyperreal/SetoidNegS/of/Setoid.lean","note":"random sample (Hyperreal)"}
+{"rel":"Lemma/Finset/GeSumS/of/All_Ge.lean","note":"random sample (Finset)"}
+{"rel":"Lemma/Bool/Imp/is/ImpNotS.lean","note":"random sample (Bool)"}
+{"rel":"Lemma/Hyperreal/NotInfinitesimalDivSquareSub/of/Infinite/NotInfinite.lean","note":"random sample (Hyperreal)"}
+{"rel":"Lemma/Rat/DivSquareSub/eq/Sub1DivAddS.lean","note":"random sample (Rat)"}
+{"rel":"Lemma/Int/AddSquareS/ge/Zero.lean","note":"random sample (Int)"}

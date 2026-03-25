@@ -41,6 +41,7 @@ JS flattens some PHP hierarchies:
 | `throw new Exception(...)` | `throw new Error(...)` |
 
 ### Known Gaps
+- `LeanArgsIndented`: PHP `insert_newline`, `relocate_last_comment`, and conditional `stack_priority` are not ported in JS — enabling them changes parse-time AST and breaks AST→string→AST on some `Lemma/` files (see Step 4 last run note).
 - `Lean_match` / `LeanWith`: echo and other edge cases may still differ from PHP in corner cases; `LeanBar.split` / `LeanCalc.split` use deep `clone()` like PHP
 - Nested proof echo: worth spot-diffing `LeanTacticBlock::echo` / `LeanStatements::echo` against PHP after corpus changes
 - Recent parity: **`LeanStack` → `LeanBigOperator`** (PHP ~9251–9286): `operator` / `command` / `stack_priority` 28, `latexArgs` marks class in syntax map, no-op `push_args_indented`, `LeanBracket` builds `new LeanStack(bound, …)` then `stack.scope = caret`; **`Lean_def`**: `operator`, `set attribute` / `set assignment`, `strArgs`, `strFormat` (keyword from `func`), `latexFormat`, `jsonSerialize` (top-level key from `operator` = `'def'` per PHP), `insert_tactic`, `is_indented`, `set_line` (PHP ~8616–8750); **`Lean_lemma::echo`** (`try` + `echo` around last tactic/let, PHP ~8758–8787); **`LeanCommand`** base: `is_indented`, `get command` (= `operator`), `strFormat` / `latexFormat`, **`jsonSerialize`** `{ [func]: arg }` (PHP ~5213–5234); deduped `strFormat` on import/open/set_option; **`Lean::regexp`** → `[]` (PHP ~904–906); **`Lean_fun` → `LeanUnary`** + `command` / `latexFormat` / `jsonSerialize` / `is_indented` (PHP ~9019–9056); **`Lean_import` / `Lean_open` / `Lean_set_option`**: PHP `append` + `push_attr` + explicit `stack_priority` 27 (PHP ~5253–5360); **`Lean_let` / `Lean_have` / `Lean_show` → `LeanSyntax`** (moved below `LeanSyntax` in `lean.js`; `echo`, `get_echo_token`, `insert_newline`, `insert_sequential_tactic_combinator`, `split`, PHP-shaped `jsonSerialize` for let/show), **`LeanAssign::split`**, **`LeanSyntax` `get sequential_tactic_combinator`**, `LeanArgs::traverse` (preorder over `args`, matching PHP; base `Lean::traverse` still yields only `this`), `LeanTacticBlock` (`echo`, `split`, `tactic_block`, `set_line`), `LeanArgsSpaceSeparated` (`tokens_space_separated`, `construct_prefix_tree`, `tactic_block_info`, `operand_count`), `LeanSequentialTacticCombinator`, `LeanTactic` echo/split helpers, `LeanBy::echo`, `LeanBitOr` / `LeanAngleBracket` / `LeanArgsCommaSeparated` token helpers
@@ -127,13 +128,14 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Step 4: Output and Verification
 
-- Run `node scripts/test-lean-parser.mjs` after changes.
+- Run `node scripts/test-lean-parser.mjs` after changes (corpus list: `scripts/round-trip-corpus.jsonl`).
+- To grow the corpus: `node scripts/sample-round-trip-corpus.mjs <seed> <count> --append` appends round-trip–verified `Lemma/` paths to that file (reproducible with the same seed).
 - Ensure no new linter errors.
 - Optionally update this README with class mapping summary, known gaps, or caveats.
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): audit script; **Step 3 §4** scrub on **`LeanArgs`** (tail), **`LeanBinary`–`LeanAssign`**, relational header; **`node scripts/test-lean-parser.mjs`** — corpus **117** (+**10** via **`node scripts/sample-round-trip-corpus.mjs 20260330 10`**); AST round-trip **117/117** (~**200** `lean.php` / `php/parser` refs remain in `lean.js` for later passes).
+Last run: Steps 1–4 (2026-03-24): round-trip corpus moved to **`scripts/round-trip-corpus.jsonl`** (maintain paths there, not inside `test-lean-parser.mjs`); **`LeanBy`** / **`LeanAttribute`** method order aligned with PHP; **`LeanBy::is_indented`** ported; **`LeanUnary`** and several unary nodes scrubbed of file/line comments; corpus **147** (+**10** via **`node scripts/sample-round-trip-corpus.mjs 20260424 10 --append`**); AST round-trip **147/147**.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
@@ -168,7 +170,7 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 - Prior parity work (examples): LeanBinary.echo, LeanRightarrow.echo; Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers.
 
 ## Step 4: Verification
-- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: **117/117** corpus lemmas match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (`ROUND_TRIP_CORPUS_MISMATCH_OK` empty in `scripts/test-lean-parser.mjs`).
+- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: **147/147** lemmas in `scripts/round-trip-corpus.jsonl` match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (`ROUND_TRIP_CORPUS_MISMATCH_OK` empty in `scripts/test-lean-parser.mjs`).
 - No new linter issues on static/js/parser/lean.js
 ```
 
@@ -177,5 +179,7 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 - `scripts/compare-php-node.mjs` – comparison utilities
 - `scripts/audit-lean-classes.mjs` – PHP vs JS `Lean*` class name diff (Step 1) + pairwise order statistic (Step 2)
 - `scripts/reorder_lean_class.py` / `scripts/compare_lean_class_methods.py` – PHP class segment tools (`php/parser/README.md`; presets `leanargscommaseparated`, `leanargssemicolonseparated`, `leanargscommanewlineseparated`)
-- `scripts/sample-round-trip-corpus.mjs` – reproducible random sample from `Lemma/` for expanding round-trip corpus
+- `scripts/round-trip-corpus.jsonl` – one JSON object per line (`rel`, optional `note`); source list for parser round-trip tests
+- `scripts/load-round-trip-corpus.mjs` – loader for the JSONL corpus
+- `scripts/sample-round-trip-corpus.mjs` – reproducible random sample from `Lemma/`; use `--append` to append winners to `round-trip-corpus.jsonl`
 - `server/lean/compiler/render2vue.mjs` – uses `LeanTactic::getEcho`
