@@ -1128,6 +1128,19 @@ export class LeanArgsCommaSeparated extends LeanArgs {
         return 100;
     }
 
+    /** PHP `LeanArgsCommaSeparated::insert` (php/parser/lean.php ~6745–6754). */
+    insert(caret, func, type) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret) {
+            if (caret instanceof LeanCaret) {
+                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+                return caret;
+            }
+            if (this.parent) return this.parent.insert(this, func, type);
+        }
+    }
+
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
         this.push(caret2);
@@ -2410,16 +2423,6 @@ export class LeanRightarrow extends LeanBinary {
  * PHP latexFormat returns "%s\n%s" (no command) — KaTeX has no \ArgsIndented.
  */
 export class LeanArgsIndented extends LeanBinary {
-    /**
-     * @param {Lean} lhs
-     * @param {Lean} rhs
-     * @param {number} indent
-     * @param {number} level
-     */
-    constructor(lhs, rhs, indent, level) {
-        super(lhs, rhs, indent, level);
-    }
-
     /** PHP LeanArgsIndented::sep (php/parser/lean.php ~6719–6722). */
     sep() {
         return '\n';

@@ -129,13 +129,13 @@ For each class defined in **both** `lean.php` and `lean.js`:
 
 ### Example Output Format (Last Audit)
 
-Last run: Steps 1–4 (2026-03-24): `lean.js` — **`LeanStack`** extends **`LeanBigOperator`** like PHP; `node scripts/test-lean-parser.mjs` — corpus OK.
+Last run: Steps 1–4 (2026-03-24): `lean.js` — parity + round-trip: **`LeanArgsCommaSeparated::insert`** ported (modifiers like `by` after `,` inside `⟨…⟩`); **`LeanPairedGroup::strFormat`** treats unset `is_closed` as closed; `node scripts/test-lean-parser.mjs` — corpus OK, **40/40** AST round-trip.
 
 ```
 ## Step 1: Class inventory (node scripts/audit-lean-classes.mjs)
 
-- PHP Lean* declarations: 161
-- JS Lean* declarations: 166
+- PHP Lean* declarations: 162
+- JS Lean* declarations: 167
 
 Registry: LEAN_CLASSES + getLeanClass only.
 
@@ -153,7 +153,7 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 
 ## Step 2: Order
 - Option B: JS grouped by role; not matched to lean.php line order.
-- Pairwise order check (shared names only, PHP declaration order vs lean.js): ~29% of class pairs inverted
+- Pairwise order check (shared names only, PHP declaration order vs lean.js): ~28.7% of class pairs inverted
   (see audit script output; 0% would mean identical ordering).
 
 ## Step 3: Per-class audit
@@ -162,7 +162,7 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 - Prior parity work (examples): LeanBinary.echo, LeanRightarrow.echo; Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers.
 
 ## Step 4: Verification
-- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: 39/40 corpus lemmas match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (see `ROUND_TRIP_CORPUS_MISMATCH_OK` in `scripts/test-lean-parser.mjs`; remaining gap: `Lemma/Tensor/GetSelect_1/eq/Cast_Get/of/Lt_Get_0/Lt_Get_1/GtLength_1.lean` — long `imply` with nested `select` / `.get` / `⟨…, by …⟩`).
+- node scripts/test-lean-parser.mjs — corpus OK; AST round-trip: **40/40** corpus lemmas match `jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))` (`ROUND_TRIP_CORPUS_MISMATCH_OK` empty in `scripts/test-lean-parser.mjs`).
 - No new linter issues on static/js/parser/lean.js
 ```
 

@@ -36,13 +36,10 @@ const SMOKE = [
 ];
 
 /**
- * Corpus paths where `jsonSerialize(parse(String(parse(file))))` may still differ from the first
- * parse (layout / tactic structure / etc.). Every other corpus file must round-trip.
- * Shrink this set as `strFormat` / parser parity improves.
+ * Corpus paths allowed to fail AST round-trip (`jsonSerialize` after parse → String → parse).
+ * Keep empty so regressions fail CI; add paths only while fixing known parser/print gaps.
  */
-const ROUND_TRIP_CORPUS_MISMATCH_OK = new Set([
-    'Lemma/Tensor/GetSelect_1/eq/Cast_Get/of/Lt_Get_0/Lt_Get_1/GtLength_1.lean',
-]);
+const ROUND_TRIP_CORPUS_MISMATCH_OK = new Set([]);
 
 /**
  * Lemma library files (under `Lemma/` only). Set `expectError` + `errorContains` when a file is
