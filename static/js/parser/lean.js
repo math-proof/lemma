@@ -123,8 +123,9 @@ export class Lean extends IndentedNode {
     }
 
     /**
-     * PHP `__toString`: optional leading spaces when `is_indented()`, then PHP `toString()` body (inlined in JS
-     * as `leanPhpToStringBody` — PHP has no separate method name for the nested-`%s` path).
+     * PHP `__toString`: optional leading spaces when `is_indented()`, then `Lean::toString()` body
+     * (`leanPhpToStringBody`). Nested `Lean` holes use `String(node)` → this method, like PHP `sprintf` casting
+     * objects to `__toString`.
      */
     toString() {
         const inner = leanPhpToStringBody(this);
@@ -1633,24 +1634,16 @@ export class LeanColon extends LeanBinary {
         return `${first}:${sep}%s`;
     }
 
+    /** PHP `LeanColon::strArgs`. */
     strArgs() {
+        let lhs = this.lhs;
         const rhs = this.rhs;
-        if (this.parent?.constructor?.name !== 'LeanGetElem' && rhs instanceof LeanStatements) {
-            const active = rhs.args.filter((a) => a != null && !(a instanceof LeanCaret));
-            const parts = active.map((a) => {
-                let s = leanPhpToStringBody(a);
-                if (a.is_comment?.()) return s;
-                const ind = a.indent ?? 0;
-                if (ind <= 0) return s;
-                const pad = ' '.repeat(ind);
-                return s
-                    .split('\n')
-                    .map((line) => (line === '' ? line : pad + line))
-                    .join('\n');
-            });
-            return [this.lhs, parts.join('\n')];
+        if (lhs instanceof LeanArgsNewLineSeparated) {
+            const la = lhs.args;
+            const tail = la.slice(1).map((arg) => String(arg));
+            lhs = [String(la[0]), ...tail].join('\n');
         }
-        return super.strArgs();
+        return [lhs, rhs];
     }
 
     insert_newline(caret, newlineCount, indent, next) {
@@ -7564,9 +7557,10 @@ function getLeanClass(name) {
 }
 
 /**
- * PHP `Lean::toString()` (lean.php) — `strFormat` + `strArgs` + `sprintf`. Non-Lean values pass through as
- * strings; nested `Lean` args use this function again (not `node.toString()`, which applies the `__toString`
- * indent column). Special-case layouts live on the owning classes via `strFormat` / `strArgs`.
+ * PHP `Lean::toString()` (lean.php) — `strFormat` + `strArgs` + `sprintf` only. It does not recurse into
+ * children itself: nested `Lean` values are coerced the same way as PHP `%s` on objects (`__toString`), here
+ * `String(arg)` → `Lean.prototype.toString()` → optional indent + this body. Layout details live in `strFormat` /
+ * `strArgs` on each class.
  *
  * @param {unknown} node
  * @returns {string}
@@ -7576,7 +7570,7 @@ function leanPhpToStringBody(node) {
     const format = node.strFormat();
     const args = node.strArgs();
     if (args.length === 0) return format;
-    return String(format).format(...args.map((a) => (a instanceof Lean ? leanPhpToStringBody(a) : a)));
+    return String(format).format(...args.map((a) => (a instanceof Lean ? String(a) : a)));
 }
 
 /**
