@@ -122,11 +122,6 @@ export class Lean extends IndentedNode {
         this.kwargs.level = v;
     }
 
-    /**
-     * PHP `__toString`: optional leading spaces when `is_indented()`, then `Lean::toString()` body
-     * (`leanPhpToStringBody`). Nested `Lean` holes use `String(node)` → this method, like PHP `sprintf` casting
-     * objects to `__toString`.
-     */
     toString() {
         const inner = leanPhpToStringBody(this);
         return (this.is_indented() ? ' '.repeat(this.indent) : '') + inner;
