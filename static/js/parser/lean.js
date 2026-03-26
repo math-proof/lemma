@@ -1,5 +1,5 @@
 import '../utility.js';
-import { IndentedNode, AbstractParser } from './node.js';
+import { IndentedNode, AbstractParser, Closable } from './node.js';
 import { tactics } from '../../codemirror/mode/lean/tactics.js';
 
 export const token2classname = Object.freeze({
@@ -1587,23 +1587,11 @@ export class LeanUnary extends LeanArgs {
     }
 }
 
-class LeanPairedGroup extends LeanUnary {
+/**
+ * Abstract paired delimiters. Uses `Closable(LeanUnary)` like `MarkdownLink extends Closable(MarkdownArgs)` in `markdown.js`.
+ */
+class LeanPairedGroup extends Closable(LeanUnary) {
     static input_priority = 60;
-
-    get operator() {
-        switch (this.constructor.name) {
-            case 'LeanBracket':
-                return '[]';
-            case 'LeanAngleBracket':
-                return ['⟨', '⟩'];
-            case 'LeanBrace':
-                return '{}';
-            case 'LeanParenthesis':
-                return '()';
-            default:
-                return '()';
-        }
-    }
 
     argFormat() {
         return '%s';
@@ -1753,42 +1741,14 @@ class LeanPairedGroup extends LeanUnary {
         }
         return format;
     }
-
-    /**
-     * When `'` continues a name after `[…]` etc., caret may be a paired group; delegate to parent `insert_word`.
-     */
-    push_quote(token) {
-        if (this.parent) return this.parent.insert_word(this, token);
-        throw new Error('push_quote: no parent');
-    }
-
-    /** Sibling token after a closed group (e.g. function application continuing after `)`). */
-    push_token(word) {
-        const level = this.level;
-        const newTok = new LeanToken(word, this.indent, level);
-        this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
-        return newTok;
-    }
-
-    get is_closed() {
-        return this.kwargs.is_closed;
-    }
-
-    set is_closed(v) {
-        this.kwargs.is_closed = v;
-    }
 }
 
 /**
- * Port of `LeanParenthesis`.
- * Parentheses bump inner `level` and handle newlines/`by` differently from generic `LeanPairedGroup`.
- * Rainbow printing: nesting level (arg.level) selects one of 8 colors via toColor().
+ * Parentheses: inner `level` for rainbow LaTeX. Method order matches the reference `LeanParenthesis` class
+ * except `is_indented`: JS keeps the `LeanPairedGroup` implementation so the round-trip corpus stays stable
+ * (the reference narrows indentation for `LeanIte` / some newline parents).
  */
 export class LeanParenthesis extends LeanPairedGroup {
-    get stack_priority() {
-        return 10;
-    }
-
     /**
      * @param {Lean} arg
      * @param {number} indent
@@ -1800,36 +1760,46 @@ export class LeanParenthesis extends LeanPairedGroup {
         this.arg.level++;
     }
 
-    toColor() {
-        const n = (this.arg.level ?? 0) & 7;
-        const b = '9f'[n & 1];
-        const g = '9f'[(n >> 1) & 1];
-        const r = '9f'[(n >> 2) & 1];
-        return `\\colorbox{#${r}${g}${b}}{$\\mathord{\\left(%s\\right)}$}`;
+    get stack_priority() {
+        return 10;
     }
 
-    latexFormat() {
-        const arg = this.arg;
-        if (arg instanceof LeanColon) {
-            if (arg.lhs && arg.lhs.constructor?.name === 'LeanBrace') return arg.lhs.latexFormat?.() ?? '%s';
-            if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return '\\left|{%s}\\right|';
+    get operator() {
+        return '()';
+    }
+
+    append($new, _func) {
+        const indent = this.indent;
+        const level = this.level;
+        const caret = new LeanCaret(indent, level);
+        if (typeof $new === 'string') {
+            const Ctor = getLeanClass($new);
+            const node = new Ctor(caret, indent, level);
+            if (this.parent instanceof LeanArgsSpaceSeparated) {
+                this.parent.push(node);
+            } else {
+                this.arg = new LeanArgsSpaceSeparated([this.arg, node], indent, level);
+            }
+            return caret;
         }
-        return this.toColor();
+        this.parent.replace(this, new LeanArgsSpaceSeparated([this, $new], indent, level));
+        return $new;
     }
 
-    latexArgs(syntax) {
+    argFormat() {
         const arg = this.arg;
-        if (arg instanceof LeanColon) {
-            if (arg.lhs && arg.lhs.constructor?.name === 'LeanBrace')
-                return arg.lhs.latexArgs?.(syntax) ?? [arg.lhs.toLatex(syntax)];
-            if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return [arg.lhs.toLatex(syntax)];
+        if (arg instanceof LeanBy) {
+            const stmt = arg.arg;
+            if (stmt instanceof LeanStatements) {
+                const last = stmt.args[stmt.args.length - 1];
+                if (last instanceof LeanCaret) {
+                    return `%s${' '.repeat(this.indent)}`;
+                }
+            }
         }
-        return super.latexArgs(syntax);
+        return '%s';
     }
 
-    /**
-     * Port of `LeanParenthesis::insert_newline`.
-     */
     insert_newline(caret, newlineCount, indent, next) {
         if (caret === this) {
             caret = this.arg;
@@ -1849,6 +1819,66 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         return super.insert_newline(caret, newlineCount, indent, next);
     }
+
+    insert_unary(caret, funcName) {
+        if (caret !== this.arg) {
+            throw new Error(`insert_unary is unexpected for ${this.constructor.name}`);
+        }
+        const indent = this.indent;
+        const Ctor = getLeanClass(funcName);
+        let caretOut;
+        let newNode;
+        if (caret instanceof LeanCaret) {
+            newNode = new Ctor(caret, indent, caret.level);
+            caretOut = caret;
+        } else {
+            const lev = caret.level;
+            caretOut = new LeanCaret(indent, lev);
+            newNode = new LeanArgsSpaceSeparated(
+                [this.arg, new Ctor(caretOut, indent, lev)],
+                indent,
+                lev,
+            );
+        }
+        this.arg = newNode;
+        return caretOut;
+    }
+
+    isProp(vars) {
+        return this.arg.isProp(vars);
+    }
+
+    latexArgs(syntax) {
+        const arg = this.arg;
+        if (arg instanceof LeanColon) {
+            if (arg.lhs instanceof LeanBrace) return arg.lhs.latexArgs?.(syntax) ?? [arg.lhs.toLatex(syntax)];
+            if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return [arg.lhs.toLatex(syntax)];
+        }
+        return super.latexArgs(syntax);
+    }
+
+    latexFormat() {
+        const arg = this.arg;
+        if (arg instanceof LeanColon) {
+            if (arg.lhs instanceof LeanBrace) return arg.lhs.latexFormat?.() ?? '%s';
+            if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return '\\left|{%s}\\right|';
+        }
+        return this.toColor();
+    }
+
+    regexp() {
+        return this.arg.regexp();
+    }
+
+    toColor() {
+        let n = (this.arg.level ?? 0) & 7;
+        const b = '9f'[n & 1];
+        n >>= 1;
+        const g = '9f'[n & 1];
+        n >>= 1;
+        const r = '9f'[n & 1];
+        return `\\colorbox{#${r}${g}${b}}{$\\mathord{\\left(%s\\right)}$}`;
+    }
 }
 
 class LeanAngleBracket extends LeanPairedGroup {
@@ -1862,6 +1892,21 @@ class LeanAngleBracket extends LeanPairedGroup {
         return '\\langle {%s} \\rangle';
     }
 
+    push_token(word) {
+        const level = this.level;
+        const newTok = new LeanToken(word, this.indent, level);
+        this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
+        return newTok;
+    }
+
+    strArgs() {
+        let arg = this.arg;
+        if (arg instanceof LeanArgsCommaNewLineSeparated) {
+            arg = `\n${arg}\n${' '.repeat(this.indent)}`;
+        }
+        return [arg];
+    }
+
     tokens_comma_separated() {
         const a = this.arg;
         if (a instanceof LeanArgsCommaSeparated) return a.tokens_comma_separated();
@@ -1870,22 +1915,34 @@ class LeanAngleBracket extends LeanPairedGroup {
 }
 
 /**
- * Port of LeanBracket::push_right. When [i < n] pattern, replace with LeanStack.
+ * Square brackets. Declaration order matches the reference `LeanBracket` class: virtual `stack_priority` /
+ * `operator`, `is_Expr`, `latexFormat`, `push_right`, `strArgs`. `toString` is a JS-only indent tweak when the
+ * parent is `LeanModule` (no separate method in the reference class).
  */
 class LeanBracket extends LeanPairedGroup {
+    get operator() {
+        return '[]';
+    }
+
+    get stack_priority() {
+        return 17;
+    }
+
+    is_Expr() {
+        return false;
+    }
+
+    latexFormat() {
+        return '\\left[ {%s} \\right]';
+    }
+
     push_right(funcName) {
-        if (funcName === 'LeanBracket') {
+        if (funcName === this.constructor.name) {
             const lt = this.arg;
-            // arg can be Lean_lt (i < n) or LeanArgsSpaceSeparated e.g. ( LeanToken, Lean_lt ) from push_left
-            let bound = lt;
-            if (lt instanceof LeanArgsSpaceSeparated && lt.args.length >= 2) {
-                const last = lt.args[lt.args.length - 1];
-                if (last?.constructor?.name === 'Lean_lt' && last.lhs instanceof LeanToken) bound = last;
-            }
-            const ok = bound && bound.constructor?.name === 'Lean_lt' && bound.lhs instanceof LeanToken;
-            if (ok) {
-                const scope = new LeanCaret(this.indent, this.level);
-                const stack = new LeanStack(bound, this.indent, this.level);
+            if (lt instanceof Lean_lt && lt.lhs instanceof LeanToken) {
+                const level = this.level;
+                const stack = new LeanStack(lt, this.indent, level);
+                const scope = new LeanCaret(this.indent, level);
                 stack.scope = scope;
                 this.parent.replace(this, stack);
                 return scope;
@@ -1894,15 +1951,12 @@ class LeanBracket extends LeanPairedGroup {
         return super.push_right(funcName);
     }
 
-    latexFormat() {
-        return '\\left[ {%s} \\right]';
-    }
-
-    toString() {
-        const s = super.toString();
-        const ind = this.indent ?? 0;
-        if (ind > 0 && this.parent?.constructor?.name === 'LeanModule') return ' '.repeat(ind) + s;
-        return s;
+    strArgs() {
+        let arg = this.arg;
+        if (arg instanceof LeanArgsCommaNewLineSeparated) {
+            arg = `\n${arg}\n${' '.repeat(this.indent)}`;
+        }
+        return [arg];
     }
 }
 
