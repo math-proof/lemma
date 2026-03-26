@@ -1564,6 +1564,14 @@ export class LeanBinary extends LeanArgs {
         throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
     }
 
+    /** PHP `LeanBinary::insert_newline`. */
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.parent instanceof LeanTactic && indent > this.indent) {
+            return this.parent.push_args_indented(indent, newlineCount, false);
+        }
+        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+    }
+
     /** PHP `LeanBinary::insert_tactic`. */
     insert_tactic(caret, func) {
         return this.insert_word(caret, func);
@@ -2543,50 +2551,100 @@ export class LeanRightarrow extends LeanBinary {
     }
 }
 
-/** Indented `lhs` + newline `rhs`; core methods in same order as PHP `LeanArgsIndented` (no `insert_newline` / `relocate_last_comment` here — keeps corpus round-trip). */
+/** Indented `lhs` + newline `rhs`; ports PHP `LeanArgsIndented`. Method order: README Step 3 §2 (alphabetic). */
 export class LeanArgsIndented extends LeanBinary {
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent > indent) {
+            return super.insert_newline(caret, newlineCount, indent, next);
+        }
+        if (this.indent < indent) {
+            const pushed = this.push_args_indented(indent, newlineCount);
+            if (pushed) return pushed;
+            this.rhs = new LeanArgsNewLineSeparated([caret], indent, caret.level);
+            return this.rhs.push_newlines(newlineCount);
+        }
+        if (this.parent instanceof LeanAssign) {
+            return super.insert_newline(caret, newlineCount, indent, next);
+        }
+        const last = this.args[this.args.length - 1];
+        if (last === caret) {
+            for (let i = 0; i < newlineCount; ++i) {
+                caret = new LeanCaret(indent, caret.level);
+                this.push(caret);
+            }
+            return caret;
+        }
+        throw new Error(`LeanArgsIndented.insert_newline is unexpected for ${this.constructor.name}`);
+    }
+
     is_indented() {
         return this.parent instanceof LeanStatements;
     }
 
     latexFormat() {
-        return '{%s}' + this.sep() + '{%s}';
+        const sep = this.sep();
+        return `%s${sep}%s`;
+    }
+
+    relocate_last_comment() {
+        for (let index = this.args.length - 1; index >= 0; --index) {
+            const end = this.args[index];
+            if (end instanceof LeanCaret || end.is_comment()) {
+                let self = this;
+                let parent = null;
+                while (self) {
+                    parent = self.parent;
+                    if (parent instanceof LeanStatements) break;
+                    self = parent;
+                }
+                if (parent) {
+                    const last = this.args.pop();
+                    const ix = parent.args.indexOf(self);
+                    parent.args.splice(ix + 1, 0, last);
+                    last.parent = parent;
+                    return parent.relocate_last_comment();
+                }
+            } else {
+                return end.relocate_last_comment();
+            }
+        }
     }
 
     sep() {
         return '\n';
     }
 
-    /**
-     * Single `%s` with a pre-joined lhs/rhs body (PHP `toString` shape without an extra indent column per hole).
-     */
-    strFormat() {
-        return '%s';
+    get stack_priority() {
+        if (this.parent instanceof LeanCalc) return 17;
+        if (this.parent instanceof LeanQuantifier) return LeanRelational.input_priority + 1;
+        return 47;
     }
 
+    /**
+     * PHP uses `Lean::strArgs` → `[lhs, rhs]`; when `rhs` is newline-separated under a wide `lhs` paren,
+     * pad each line like the former single-`%s` join so corpus round-trip stays stable.
+     */
     strArgs() {
-        const lhsS = leanPhpToStringBody(this.lhs);
-        const rhsS = leanPhpToStringBody(this.rhs);
-        let out = `${lhsS}\n${rhsS}`;
-        if (this.rhs instanceof LeanArgsNewLineSeparated) {
+        const rhs = this.rhs;
+        if (rhs instanceof LeanArgsNewLineSeparated) {
             let ind = 0;
             if (this.lhs instanceof LeanParenthesis) ind = Math.max(ind, this.lhs.indent ?? 0);
-            for (const c of this.rhs.args) {
+            for (const c of rhs.args) {
                 if (c instanceof LeanParenthesis) ind = Math.max(ind, c.indent ?? 0);
             }
             if (ind > 0) {
                 const pad = ' '.repeat(ind);
-                out = out
-                    .split('\n')
-                    .map((line) => (line === '' ? line : pad + line))
-                    .join('\n');
+                const padBlock = (s) =>
+                    s.split('\n').map((line) => (line === '' ? line : pad + line)).join('\n');
+                return [padBlock(leanPhpToStringBody(this.lhs)), padBlock(leanPhpToStringBody(rhs))];
             }
         }
-        return [out];
+        return [this.lhs, this.rhs];
     }
 
-    toString() {
-        return leanPhpToStringBody(this);
+    strFormat() {
+        const sep = this.sep();
+        return `%s${sep}%s`;
     }
 }
 
