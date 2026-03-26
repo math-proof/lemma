@@ -4,6 +4,9 @@
  * that is **not** listed in `scripts/round-trip-corpus.jsonl` and fails either initial `compile`
  * or AST → string → AST with stable `jsonSerialize` (same rules as `test-lean-parser.mjs`).
  *
+ * After extending the corpus for a fix, run `related-round-trip-scan.mjs` (same error shape) before
+ * relying only on this full-file list.
+ *
  * Usage: node scripts/build-round-trip-failures.mjs
  */
 

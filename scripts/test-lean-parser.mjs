@@ -5,6 +5,9 @@
  * Round-trip corpus paths live in `scripts/round-trip-corpus.jsonl` (one JSON object per line:
  * `{"rel":"Lemma/…","note":"…"}`). Paths must stay under `Lemma/` (same trees the site renders).
  *
+ * After adding one verified corpus row for a fix, scan for **related** lemmas (same error class):
+ * `node scripts/related-round-trip-scan.mjs <mode>` then `--append` when OK. See that script’s header.
+ *
  * Usage:
  *   node scripts/test-lean-parser.mjs
  *   node scripts/test-lean-parser.mjs --strict
@@ -12,6 +15,7 @@
  *   node scripts/test-lean-parser.mjs Lemma/Nat/Min.lean
  *   node scripts/test-lean-parser.mjs --json
  *   node scripts/test-lean-parser.mjs --round-trip-verbose
+ *   node scripts/related-round-trip-scan.mjs echo-def-module-proof
  *
  * Exit codes:
  *   0 — all smoke tests passed; round-trip smoke + corpus rules satisfied; corpus parse informational unless --strict

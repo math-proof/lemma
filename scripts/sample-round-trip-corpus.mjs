@@ -10,6 +10,9 @@
  *
  * With --append: appends winner lines to scripts/round-trip-corpus.jsonl (skips rels already listed).
  * Without --append: prints JSON only (rel + note) for manual copy.
+ *
+ * For a **known bug class** (not random sampling), prefer `related-round-trip-scan.mjs` after each fix:
+ * type-specific detectors batch-append every passing lemma that shares the same parse shape.
  */
 
 import { readFileSync, readdirSync, statSync, appendFileSync, existsSync } from 'fs';

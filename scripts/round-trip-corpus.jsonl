@@ -2500,3 +2500,9 @@
 {"rel":"Lemma/Tensor/GetDot/eq/DotGet/of/Gt.lean","note":"LeanPairedGroup newline inside nested ⟨⟩ / () (off-corpus parse1)"}
 {"rel":"Lemma/Bool/AndAnd__Not/is/False.lean","note":"LeanStatements.strFormat newlines like PHP (match arm parse2)"}
 {"rel":"Lemma/Bool/All/of/All_And.lean","note":"off-corpus full round-trip; colon-lhs stmt newlines + paired-group insert_tactic"}
+{"rel":"Lemma/Bool/All_And/of/All/All.lean","note":"echo `:= by`; dedent nested tactic lines before module indentText (intro/apply/exact)"}
+{"rel":"Lemma/Bool/All_Any_All_And/of/All_Any/All.lean","note":"`--` after tokens; newline + indent for `·` bullet blocks under tactics"}
+{"rel":"Lemma/Bool/All_Eq/of/All_Eq/Surjective.lean","note":"newline before `let`/`have`/… siblings under `intro` (leanSpaceSepStmtLike)"}
+{"rel":"Lemma/Bool/All/of/All_Or_Not.lean","note":"newline before standalone `LeanLineComment` under tactic (not after `LeanToken`)"}
+{"rel":"Lemma/Bool/And_False/is/False.lean","note":"`Lean_def` + empty assign caret; proof as module siblings — emit `:= by` + tail in `LeanModule.toString`"}
+{"rel":"Lemma/Bool/OrAnd/is/AndOrS.lean","note":"same echo `Lean_def` / module-level proof tail as And_False"}

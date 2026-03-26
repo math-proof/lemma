@@ -2,6 +2,9 @@
  * Load AST round-trip corpus: one JSON object per line.
  * Each line: { "rel": "Lemma/…/file.lean", "note": "optional" }
  * Blank lines and lines starting with # are ignored.
+ *
+ * Workflow: after each verified addition, batch similar lemmas via `related-round-trip-scan.mjs`
+ * (type-specific detectors) so one fix covers the whole shape class, not a single file.
  */
 import { readFileSync, existsSync } from 'fs';
 
