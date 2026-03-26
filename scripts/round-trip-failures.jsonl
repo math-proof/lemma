@@ -1,5 +1,4 @@
 # Off-corpus round-trip failures — not in round-trip-corpus.jsonl; fail parse1, parse2, or jsonSerialize match after print. Regenerate: node scripts/build-round-trip-failures.mjs
-{"rel":"Lemma/Bool/AndAllSSetOf/of/All.lean","failure":"mismatch","j1Len":642,"j2Len":645}
 {"rel":"Lemma/Bool/AndAndNot/is/False.lean","failure":"mismatch","j1Len":731,"j2Len":730}
 {"rel":"Lemma/Bool/Any_And/is/AndAny.lean","failure":"mismatch","j1Len":959,"j2Len":950}
 {"rel":"Lemma/Bool/BFn_Ite/is/Imp/Imp.lean","failure":"mismatch","j1Len":1032,"j2Len":1037}
@@ -10,15 +9,12 @@
 {"rel":"Lemma/Bool/HEq/of/All_HEq/Eq.lean","failure":"mismatch","j1Len":924,"j2Len":924}
 {"rel":"Lemma/Bool/HEq/of/Cond/Cond.lean","failure":"mismatch","j1Len":848,"j2Len":858}
 {"rel":"Lemma/Bool/Iff/is/IffNotS.lean","failure":"mismatch","j1Len":837,"j2Len":837}
-{"rel":"Lemma/Bool/IffImpSAndEq.lean","failure":"mismatch","j1Len":545,"j2Len":548}
 {"rel":"Lemma/Bool/IffOr_False.lean","failure":"mismatch","j1Len":601,"j2Len":592}
 {"rel":"Lemma/Bool/Imp/is/Bool/eq/MulBoolS.lean","failure":"mismatch","j1Len":3587,"j2Len":3590}
 {"rel":"Lemma/Bool/ImpAndS/of/Imp/Imp.lean","failure":"mismatch","j1Len":869,"j2Len":869}
 {"rel":"Lemma/Bool/ImpOrS/of/Imp/Imp.lean","failure":"mismatch","j1Len":2595,"j2Len":2595}
 {"rel":"Lemma/Bool/Ne/is/False/of/Eq.lean","failure":"mismatch","j1Len":505,"j2Len":505}
-{"rel":"Lemma/Bool/Ne/is/NotEq.lean","failure":"mismatch","j1Len":445,"j2Len":448}
 {"rel":"Lemma/Bool/NotAnd/is/OrNotS.lean","failure":"mismatch","j1Len":1351,"j2Len":1335}
-{"rel":"Lemma/Bool/NotImp/is/And_Not.lean","failure":"mismatch","j1Len":434,"j2Len":437}
 {"rel":"Lemma/Bool/SEqCastS/of/SEq/Eq/Eq.lean","failure":"mismatch","j1Len":884,"j2Len":884}
 {"rel":"Lemma/Complex/And_Imp_Eq_Div_Mul2_Sub_Sqrt/of/AddMul_Square_Mul/eq/Zero.lean","failure":"mismatch","j1Len":1867,"j2Len":1872}
 {"rel":"Lemma/Complex/CeilSubDivArg/eq/Zero.lean","failure":"mismatch","j1Len":716,"j2Len":716}
@@ -46,7 +42,7 @@
 {"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivAbsSub/Infinite/Infinite.lean","failure":"mismatch","j1Len":5008,"j2Len":4968}
 {"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivSquareSub/Infinite/Infinite.lean","failure":"mismatch","j1Len":5045,"j2Len":5040}
 {"rel":"Lemma/Hyperreal/GtSt_0/of/Gt_0/NotInfinite/NotInfinitesimal.lean","failure":"mismatch","j1Len":971,"j2Len":965}
-{"rel":"Lemma/Hyperreal/Infinite/is/All_GtAbs.lean","failure":"mismatch","j1Len":2353,"j2Len":2362}
+{"rel":"Lemma/Hyperreal/Infinite/is/All_GtAbs.lean","failure":"mismatch","j1Len":2353,"j2Len":2359}
 {"rel":"Lemma/Hyperreal/Infinite/is/Infinite/of/Setoid.lean","failure":"mismatch","j1Len":1542,"j2Len":1544}
 {"rel":"Lemma/Hyperreal/Infinite/is/InfiniteAbs.lean","failure":"mismatch","j1Len":992,"j2Len":995}
 {"rel":"Lemma/Hyperreal/Infinite/is/InfiniteAdd.lean","failure":"mismatch","j1Len":2206,"j2Len":2208}
@@ -160,11 +156,11 @@
 {"rel":"Lemma/List/GetFlatten_AddMul/eq/Get/of/Lt/GtLength/All_EqLength.lean","failure":"mismatch","j1Len":2700,"j2Len":2700}
 {"rel":"Lemma/List/GetMap/eq/UFnGet/of/GtLength.lean","failure":"mismatch","j1Len":502,"j2Len":504}
 {"rel":"Lemma/List/GetPermute__Neg/eq/Get_0/of/Gt.lean","failure":"mismatch","j1Len":800,"j2Len":802}
-{"rel":"Lemma/List/GetPermute__Neg/eq/Get_Add/of/GtLength_Add.lean","failure":"mismatch","j1Len":857,"j2Len":862}
+{"rel":"Lemma/List/GetPermute__Neg/eq/Get_Add/of/GtLength_Add.lean","failure":"mismatch","j1Len":857,"j2Len":859}
 {"rel":"Lemma/List/GetPermute__Neg/eq/Get.lean","failure":"mismatch","j1Len":764,"j2Len":766}
 {"rel":"Lemma/List/GetPermute__Neg/eq/Get/of/Ge.lean","failure":"mismatch","j1Len":1050,"j2Len":1052}
 {"rel":"Lemma/List/GetPermute__Neg/eq/Ite/of/GtLength.lean","failure":"mismatch","j1Len":4815,"j2Len":4820}
-{"rel":"Lemma/List/GetPermute/eq/Get/of/GtLength_Add.lean","failure":"mismatch","j1Len":834,"j2Len":839}
+{"rel":"Lemma/List/GetPermute/eq/Get/of/GtLength_Add.lean","failure":"mismatch","j1Len":834,"j2Len":836}
 {"rel":"Lemma/List/GetPermute/eq/Ite/of/GtLength/GtLength.lean","failure":"mismatch","j1Len":6451,"j2Len":6454}
 {"rel":"Lemma/List/GetRotate/eq/Ite/of/GeLength/GtLength.lean","failure":"mismatch","j1Len":1784,"j2Len":1787}
 {"rel":"Lemma/List/GetSet/eq/Get/of/Gt/GtLength.lean","failure":"mismatch","j1Len":806,"j2Len":806}
@@ -229,16 +225,11 @@
 {"rel":"Lemma/Nat/EqMod/of/Lt/Ge_0.lean","failure":"mismatch","j1Len":1411,"j2Len":1411}
 {"rel":"Lemma/Nat/EqSub/of/Gt.lean","failure":"mismatch","j1Len":2524,"j2Len":2526}
 {"rel":"Lemma/Nat/EvenSub_1/of/Odd.lean","failure":"mismatch","j1Len":1059,"j2Len":1059}
-{"rel":"Lemma/Nat/Ge_Max/is/Ge/Ge.lean","failure":"mismatch","j1Len":501,"j2Len":504}
 {"rel":"Lemma/Nat/Ge_Mod.lean","failure":"mismatch","j1Len":827,"j2Len":806}
-{"rel":"Lemma/Nat/Gt_Max/is/Gt/Gt.lean","failure":"mismatch","j1Len":501,"j2Len":504}
 {"rel":"Lemma/Nat/GtVal_0/of/Ne_0.lean","failure":"mismatch","j1Len":686,"j2Len":686}
 {"rel":"Lemma/Nat/HEq_Mk/of/Eq.lean","failure":"mismatch","j1Len":448,"j2Len":448}
-{"rel":"Lemma/Nat/Ite/eq/AddMulSBool.lean","failure":"mismatch","j1Len":471,"j2Len":474}
-{"rel":"Lemma/Nat/Le_Min/is/Le/Le.lean","failure":"mismatch","j1Len":501,"j2Len":504}
 {"rel":"Lemma/Nat/Le/of/Lt_Add_1.lean","failure":"mismatch","j1Len":1167,"j2Len":1167}
 {"rel":"Lemma/Nat/Lt_CeilDivSub_Add/of/Add_1/lt/CeilDivSub.lean","failure":"mismatch","j1Len":1526,"j2Len":1529}
-{"rel":"Lemma/Nat/Lt_Min/is/Lt/Lt.lean","failure":"mismatch","j1Len":501,"j2Len":504}
 {"rel":"Lemma/Nat/Lt/of/Prod/eq/IteGt/Ne.lean","failure":"mismatch","j1Len":1267,"j2Len":1277}
 {"rel":"Lemma/Nat/LtAddMul/of/Lt/Lt_Div/Dvd.lean","failure":"mismatch","j1Len":1004,"j2Len":1004}
 {"rel":"Lemma/Nat/LtSub/of/Lt.lean","failure":"mismatch","j1Len":917,"j2Len":917}

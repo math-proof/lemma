@@ -16,6 +16,8 @@
  * MODES:
  *   echo-def-module-proof — `Lean_def` / lemma with `LeanAssign` rhs an empty `LeanCaret`, proof as
  *     module-level siblings (comments + tactic). Matches the `LeanModule.toString` echo `:= by` tail.
+ *   dangling-stc-tactic-block — module-level `LeanTactic` whose arg includes `LeanSequentialTacticCombinator`
+ *     with empty `LeanCaret`, immediately followed by `LeanTacticBlock` (`constructor <;>` then `·`).
  *
  * Usage:
  *   node scripts/related-round-trip-scan.mjs
@@ -34,6 +36,7 @@ import {
     LeanCaret,
     LeanTactic,
     LeanArgsSpaceSeparated,
+    LeanSequentialTacticCombinator,
 } from '../static/js/parser/lean.js';
 import { loadRoundTripCorpusRels } from './load-round-trip-corpus.mjs';
 
@@ -58,6 +61,22 @@ const MODES = {
                 while (j < args.length && args[j].is_comment?.()) j++;
                 const proof = args[j];
                 if (proof instanceof LeanTactic || proof instanceof LeanArgsSpaceSeparated) return true;
+            }
+            return false;
+        },
+    },
+    'dangling-stc-tactic-block': {
+        note: 'dangling `<;>` + module `LeanTacticBlock` merge in `LeanModule.toString` (scan tactic args from k=0)',
+        test(root) {
+            const args = root.args;
+            for (let i = 0; i + 1 < args.length; i++) {
+                const a = args[i];
+                const n = args[i + 1];
+                if (!(a instanceof LeanTactic) || n?.constructor?.name !== 'LeanTacticBlock') continue;
+                for (let k = 0; k < a.args.length; k++) {
+                    const x = a.args[k];
+                    if (x instanceof LeanSequentialTacticCombinator && x.arg instanceof LeanCaret) return true;
+                }
             }
             return false;
         },

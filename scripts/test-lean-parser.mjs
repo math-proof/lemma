@@ -16,6 +16,7 @@
  *   node scripts/test-lean-parser.mjs --json
  *   node scripts/test-lean-parser.mjs --round-trip-verbose
  *   node scripts/related-round-trip-scan.mjs echo-def-module-proof
+ *   node scripts/related-round-trip-scan.mjs dangling-stc-tactic-block
  *
  * Exit codes:
  *   0 — all smoke tests passed; round-trip smoke + corpus rules satisfied; corpus parse informational unless --strict

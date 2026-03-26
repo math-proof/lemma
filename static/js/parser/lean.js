@@ -3847,7 +3847,7 @@ function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
     if (proof instanceof LeanTactic) {
         const tacticProofRaw = dedentEchoProofTacticLines(String(proof));
         let danglingStc = false;
-        for (let k = 1; k < proof.args.length; k++) {
+        for (let k = 0; k < proof.args.length; k++) {
             const x = proof.args[k];
             if (x instanceof LeanSequentialTacticCombinator && x.arg instanceof LeanCaret) {
                 danglingStc = true;
@@ -3944,7 +3944,7 @@ export class LeanModule extends LeanStatements {
             if (a instanceof LeanTactic) {
                 const next = i + 1 < args.length ? args[i + 1] : null;
                 let danglingStc = false;
-                for (let k = 1; k < a.args.length; k++) {
+                for (let k = 0; k < a.args.length; k++) {
                     const x = a.args[k];
                     if (x instanceof LeanSequentialTacticCombinator && x.arg instanceof LeanCaret) {
                         danglingStc = true;

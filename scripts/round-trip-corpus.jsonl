@@ -2506,3 +2506,17 @@
 {"rel":"Lemma/Bool/All/of/All_Or_Not.lean","note":"newline before standalone `LeanLineComment` under tactic (not after `LeanToken`)"}
 {"rel":"Lemma/Bool/And_False/is/False.lean","note":"`Lean_def` + empty assign caret; proof as module siblings — emit `:= by` + tail in `LeanModule.toString`"}
 {"rel":"Lemma/Bool/OrAnd/is/AndOrS.lean","note":"same echo `Lean_def` / module-level proof tail as And_False"}
+{"rel":"Lemma/Bool/AndAllSSetOf/of/All.lean","note":"dangling `<;>` + sibling `LeanTacticBlock`: merge in `LeanModule.toString` (scan tactic args from k=0)"}
+{"rel":"Lemma/Bool/Any_Or/is/OrAnyS.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Bool/IffImpSAndEq.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Bool/Ne/is/NotEq.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Bool/NotImp/is/And_Not.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Bool/Or/is/OrAnd.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Nat/Ge_Max/is/Ge/Ge.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Nat/Gt_Max/is/Gt/Gt.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Nat/Le_Min/is/Le/Le.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Nat/Lt/Ne/is/Lt.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Nat/Lt_Min/is/Lt/Lt.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Set/SDiffSDiff/eq/SDiff/of/Subset.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Tensor/Eq_Stack/of/GtLength_0.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Nat/Ite/eq/AddMulSBool.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
