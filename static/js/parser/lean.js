@@ -1920,20 +1920,16 @@ class LeanAngleBracket extends LeanPairedGroup {
  * parent is `LeanModule` (no separate method in the reference class).
  */
 class LeanBracket extends LeanPairedGroup {
-    get operator() {
-        return '[]';
-    }
-
-    get stack_priority() {
-        return 17;
-    }
-
     is_Expr() {
         return false;
     }
 
     latexFormat() {
         return '\\left[ {%s} \\right]';
+    }
+
+    get operator() {
+        return '[]';
     }
 
     push_right(funcName) {
@@ -1951,6 +1947,10 @@ class LeanBracket extends LeanPairedGroup {
         return super.push_right(funcName);
     }
 
+    get stack_priority() {
+        return 17;
+    }
+
     strArgs() {
         let arg = this.arg;
         if (arg instanceof LeanArgsCommaNewLineSeparated) {
@@ -1961,14 +1961,6 @@ class LeanBracket extends LeanPairedGroup {
 }
 
 class LeanBrace extends LeanPairedGroup {
-    get operator() {
-        return '{}';
-    }
-
-    get stack_priority() {
-        return 17;
-    }
-
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent <= indent) {
             if (caret instanceof LeanCaret) {
@@ -2000,6 +1992,14 @@ class LeanBrace extends LeanPairedGroup {
 
     latexFormat() {
         return '\\left\\{ {%s} \\right\\}';
+    }
+
+    get operator() {
+        return '{}';
+    }
+
+    get stack_priority() {
+        return 17;
     }
 }
 
@@ -2071,6 +2071,207 @@ class LeanDoubleAngleQuotation extends LeanPairedGroup {
     }
 }
 
+
+export class LeanBinary extends LeanArgs {
+    static input_priority = 47;
+
+    /**
+     * @param {Lean} lhs
+     * @param {Lean} rhs
+     * @param {number} indent
+     * @param {number} level
+     */
+    constructor(lhs, rhs, indent, level) {
+        super([lhs, rhs], indent, level);
+    }
+
+    /** LaTeX operator token; literals for arithmetic/relations vs macro names. */
+    get command() {
+        switch (this.constructor.name) {
+            case 'LeanAdd':
+                return '+';
+            case 'LeanSub':
+                return '-';
+            case 'LeanDiv':
+                return '\\frac';
+            case 'LeanMatMul':
+                return '{\\color{red}\\times}';
+            case 'Lean_times':
+                return '×';
+            case 'Lean_approx':
+                return '\\approx';
+            case 'LeanColon':
+                return ':';
+            case 'LeanEq':
+                return '=';
+            case 'LeanAssign':
+                return ':=';
+            case 'Lean_equiv':
+                return '\\equiv';
+            case 'Lean_in':
+                return '\\in';
+            case 'Lean_cup':
+                return '\\cup';
+            case 'Lean_cap':
+                return '\\cap';
+            case 'Lean_sqcap':
+                return '\\sqcap';
+            case 'Lean_sqcup':
+                return '\\sqcup';
+            case 'Lean_le':
+                return '\\le';
+            case 'Lean_ge':
+                return '\\ge';
+            case 'Lean_lt':
+                return '<';
+            case 'Lean_gt':
+                return '>';
+            case 'Lean_ne':
+                return '\\ne';
+            case 'LeanBEq':
+                return '\\!\\!=';
+            case 'Lean_simeq':
+                return '\\simeq';
+            case 'Lean_asymp':
+                return '\\asymp';
+            case 'LeanDvd':
+                return '{\\color{red}{\\ \\mid\\ }}';
+            case 'Lean_notin':
+                return '\\notin';
+            case 'Lean_leftrightarrow':
+                return '\\leftrightarrow';
+            case 'Lean_rightarrow':
+                return '\\rightarrow';
+            case 'Lean_lor':
+                return '\\lor';
+            case 'Lean_land':
+                return '\\land';
+            case 'LeanPow':
+                return '^';
+            case 'LeanFDiv':
+                return '/\\!\\!/';
+            case 'LeanModular':
+                return '\\%\\%';
+            case 'Lean_cdotp':
+                return '{\\color{red}\\cdotp}';
+            case 'LeanAppend':
+                return '+\\!\\!+';
+            case 'LeanConstruct':
+                return '::';
+            case 'LeanVConstruct':
+                return '::_v';
+            case 'LeanBitAnd':
+                return '\\&';
+            case 'LeanBitwiseAnd':
+                return '\\&\\!\\!\\&\\!\\!\\&';
+            case 'LeanBitwiseXor':
+                return '\\^\\^\\^';
+            case 'LeanBitOr':
+                return '|';
+            case 'LeanBitwiseOr':
+                return '|\\!\\!|\\!\\!|';
+            case 'LeanLogicAnd':
+                return '\\&\\&';
+            case 'LeanLogicOr':
+                return '\\|\\|';
+            case 'LeanLogicXor':
+                return '\\^\\^';
+            case 'Lean_subseteq':
+                return '\\subseteq';
+            case 'Lean_subset':
+                return '\\subset';
+            case 'Lean_supseteq':
+                return '\\supseteq';
+            case 'Lean_supset':
+                return '\\supset';
+            case 'Lean_setminus':
+                return '\\setminus';
+            case 'Lean_is':
+                return '{\\color{blue}\\text{is}}';
+            case 'Lean_is_not':
+                return '{\\color{blue}\\text{is not}}';
+            default:
+                return super.command;
+        }
+    }
+
+    echo() {
+        this.rhs?.echo?.();
+    }
+
+    insert_if(caret) {
+        if (this.rhs === caret && caret instanceof LeanCaret) {
+            this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
+            return caret;
+        }
+        throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.parent instanceof LeanTactic && indent > this.indent) {
+            return this.parent.push_args_indented(indent, newlineCount, false);
+        }
+        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+    }
+
+    insert_tactic(caret, func) {
+        return this.insert_word(caret, func);
+    }
+
+    jsonSerialize() {
+        const lhs = this.lhs?.jsonSerialize?.() ?? this.lhs;
+        const rhs = this.rhs?.jsonSerialize?.() ?? this.rhs;
+        return { [this.func]: [lhs, rhs] };
+    }
+
+    latexFormat() {
+        return `{%s} ${this.command} {%s}`;
+    }
+
+    get lhs() {
+        return this.args[0];
+    }
+
+    set lhs(v) {
+        this.args[0] = v;
+        if (v) v.parent = this;
+    }
+
+    get operator() {
+        const name = this.constructor.name;
+        const pair = Object.entries(token2classname).find(([, cls]) => cls === name);
+        return pair ? pair[0] : null;
+    }
+
+    get rhs() {
+        return this.args[1];
+    }
+
+    set rhs(v) {
+        this.args[1] = v;
+        if (v) v.parent = this;
+    }
+
+    /** Space vs newline between lhs/rhs depending on rhs shape. */
+    sep() {
+        return this.rhs instanceof LeanStatements ? '\n' : ' ';
+    }
+
+    set_line(line) {
+        this.line = line;
+        line = this.lhs.set_line(line);
+        const s = this.sep();
+        if (s && s[0] === '\n') line++;
+        return this.rhs.set_line(line);
+    }
+
+    strFormat() {
+        const op = this.operator;
+        if (op == null) return super.strFormat();
+        const sep = this.sep();
+        return `%s ${op}${sep}%s`;
+    }
+}
 
 export class LeanArgsCommaSeparated extends LeanArgs {
     /**
@@ -2342,200 +2543,6 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
 
     strFormat() {
         return Array(this.args.length).fill('%s').join('; ');
-    }
-}
-
-export class LeanBinary extends LeanArgs {
-    static input_priority = 47;
-    /**
-     * @param {Lean} lhs
-     * @param {Lean} rhs
-     * @param {number} indent
-     * @param {number} level
-     */
-    constructor(lhs, rhs, indent, level) {
-        super([lhs, rhs], indent, level);
-    }
-
-    get lhs() {
-        return this.args[0];
-    }
-
-    set lhs(v) {
-        this.args[0] = v;
-        if (v) v.parent = this;
-    }
-
-    get rhs() {
-        return this.args[1];
-    }
-
-    set rhs(v) {
-        this.args[1] = v;
-        if (v) v.parent = this;
-    }
-
-    get operator() {
-        const name = this.constructor.name;
-        const pair = Object.entries(token2classname).find(([, cls]) => cls === name);
-        return pair ? pair[0] : null;
-    }
-
-    /** Space vs newline between lhs/rhs depending on rhs shape. */
-    sep() {
-        return this.rhs instanceof LeanStatements ? '\n' : ' ';
-    }
-
-    set_line(line) {
-        this.line = line;
-        line = this.lhs.set_line(line);
-        const s = this.sep();
-        if (s && s[0] === '\n') line++;
-        return this.rhs.set_line(line);
-    }
-
-    strFormat() {
-        const op = this.operator;
-        if (op == null) return super.strFormat();
-        const sep = this.sep();
-        return `%s ${op}${sep}%s`;
-    }
-
-    /** LaTeX operator token; literals for arithmetic/relations vs macro names. */
-    get command() {
-        switch (this.constructor.name) {
-            case 'LeanAdd':
-                return '+';
-            case 'LeanSub':
-                return '-';
-            case 'LeanDiv':
-                return '\\frac';
-            case 'LeanMatMul':
-                return '{\\color{red}\\times}';
-            case 'Lean_times':
-                return '×';
-            case 'Lean_approx':
-                return '\\approx';
-            case 'LeanColon':
-                return ':';
-            case 'LeanEq':
-                return '=';
-            case 'LeanAssign':
-                return ':=';
-            case 'Lean_equiv':
-                return '\\equiv';
-            case 'Lean_in':
-                return '\\in';
-            case 'Lean_cup':
-                return '\\cup';
-            case 'Lean_cap':
-                return '\\cap';
-            case 'Lean_sqcap':
-                return '\\sqcap';
-            case 'Lean_sqcup':
-                return '\\sqcup';
-            case 'Lean_le':
-                return '\\le';
-            case 'Lean_ge':
-                return '\\ge';
-            case 'Lean_lt':
-                return '<';
-            case 'Lean_gt':
-                return '>';
-            case 'Lean_ne':
-                return '\\ne';
-            case 'LeanBEq':
-                return '\\!\\!=';
-            case 'Lean_simeq':
-                return '\\simeq';
-            case 'Lean_asymp':
-                return '\\asymp';
-            case 'LeanDvd':
-                return '{\\color{red}{\\ \\mid\\ }}';
-            case 'Lean_notin':
-                return '\\notin';
-            case 'Lean_leftrightarrow':
-                return '\\leftrightarrow';
-            case 'Lean_rightarrow':
-                return '\\rightarrow';
-            case 'Lean_lor':
-                return '\\lor';
-            case 'Lean_land':
-                return '\\land';
-            case 'LeanPow':
-                return '^';
-            case 'LeanFDiv':
-                return '/\\!\\!/';
-            case 'LeanModular':
-                return '\\%\\%';
-            case 'Lean_cdotp':
-                return '{\\color{red}\\cdotp}';
-            case 'LeanAppend':
-                return '+\\!\\!+';
-            case 'LeanConstruct':
-                return '::';
-            case 'LeanVConstruct':
-                return '::_v';
-            case 'LeanBitAnd':
-                return '\\&';
-            case 'LeanBitwiseAnd':
-                return '\\&\\!\\!\\&\\!\\!\\&';
-            case 'LeanBitwiseXor':
-                return '\\^\\^\\^';
-            case 'LeanBitOr':
-                return '|';
-            case 'LeanBitwiseOr':
-                return '|\\!\\!|\\!\\!|';
-            case 'LeanLogicAnd':
-                return '\\&\\&';
-            case 'LeanLogicOr':
-                return '\\|\\|';
-            case 'LeanLogicXor':
-                return '\\^\\^';
-            case 'Lean_subseteq':
-                return '\\subseteq';
-            case 'Lean_subset':
-                return '\\subset';
-            case 'Lean_supseteq':
-                return '\\supseteq';
-            case 'Lean_supset':
-                return '\\supset';
-            case 'Lean_setminus':
-                return '\\setminus';
-            case 'Lean_is':
-                return '{\\color{blue}\\text{is}}';
-            case 'Lean_is_not':
-                return '{\\color{blue}\\text{is not}}';
-            default:
-                return super.command;
-        }
-    }
-
-    latexFormat() {
-        return `{%s} ${this.command} {%s}`;
-    }
-
-    echo() {
-        this.rhs?.echo?.();
-    }
-
-    insert_if(caret) {
-        if (this.rhs === caret && caret instanceof LeanCaret) {
-            this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
-            return caret;
-        }
-        throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
-    }
-
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.parent instanceof LeanTactic && indent > this.indent) {
-            return this.parent.push_args_indented(indent, newlineCount, false);
-        }
-        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
-    }
-
-    insert_tactic(caret, func) {
-        return this.insert_word(caret, func);
     }
 }
 
