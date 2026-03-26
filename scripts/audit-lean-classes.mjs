@@ -32,7 +32,6 @@ console.log('JS only (no PHP class name):', jsOnly.length ? jsOnly.join(', ') : 
 
 const abstractsPhp = [
     'LeanArithmetic',
-    'LeanBinaryBoolean',
     'LeanLogic',
     'LeanRelational',
     'LeanSetOperator',

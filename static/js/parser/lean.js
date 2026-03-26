@@ -900,7 +900,7 @@ export class Lean extends IndentedNode {
         return [];
     }
 
-    relocateLastComment() {}
+    relocate_last_comment() {}
 
     set_line(line) {
         this.line = line;
@@ -1211,7 +1211,7 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
         return this.args[this.args.length - 1];
     }
 
-    relocateLastComment() {
+    relocate_last_comment() {
         for (let index = this.args.length - 1; index >= 0; --index) {
             const end = this.args[index];
             if (end instanceof LeanCaret || end.is_comment()) {
@@ -1227,10 +1227,10 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
                     const ix = parent.args.indexOf(self);
                     parent.args.splice(ix + 1, 0, last);
                     last.parent = parent;
-                    return parent.relocateLastComment();
+                    return parent.relocate_last_comment();
                 }
             } else {
-                return end.relocateLastComment();
+                return end.relocate_last_comment();
             }
         }
     }
@@ -1391,8 +1391,20 @@ export class LeanBinary extends LeanArgs {
     get lhs() {
         return this.args[0];
     }
+
+    set lhs(v) {
+        this.args[0] = v;
+        if (v) v.parent = this;
+    }
+
     get rhs() {
         return this.args[1];
+    }
+
+    /** PHP `LeanBinary::__set('lhs'|'rhs')`. */
+    set rhs(v) {
+        this.args[1] = v;
+        if (v) v.parent = this;
     }
 
     /**
@@ -1551,6 +1563,11 @@ export class LeanBinary extends LeanArgs {
         }
         throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
     }
+
+    /** PHP `LeanBinary::insert_tactic`. */
+    insert_tactic(caret, func) {
+        return this.insert_word(caret, func);
+    }
 }
 
 /** Property access `Foo.bar`. */
@@ -1662,65 +1679,93 @@ export class LeanColon extends LeanBinary {
     }
 }
 
-/** Definition / assignment `:=`. */
+/** Definition / assignment `:=`. Method order matches PHP `LeanAssign`. */
 export class LeanAssign extends LeanBinary {
     static input_priority = 18;
 
-    /** PHP `LeanAssign::__get('operator')`. */
+    /** PHP `LeanAssign::__get('operator'|'command')`. */
     get operator() {
         return ':=';
     }
 
-    relocateLastComment() {
-        this.rhs.relocateLastComment();
+    get command() {
+        return ':=';
     }
 
-    /** Newlines before rhs when proof-like or multiline arg list (drives `strFormat`). */
+    /** PHP `LeanAssign::echo`. */
+    echo() {
+        this.rhs?.echo?.();
+    }
+
+    /**
+     * PHP `LeanAssign::insert` (rhs caret only). When `caret !== rhs`, bubble like `LeanArgs*::insert`
+     * unresolved arms — the tokenizer sometimes targets a nested caret while `rhs` is already wrapped.
+     */
+    insert(caret, func, type) {
+        if (this.rhs === caret && caret instanceof LeanCaret) {
+            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+            return caret;
+        }
+        if (this.parent) return this.parent.insert(this, func, type);
+        throw new Error(`insert is unexpected for ${this.constructor.name}`);
+    }
+
+    /** PHP `LeanAssign::insert_newline`. */
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent < indent) {
+            if (caret === this.rhs) {
+                let out = caret;
+                if (caret instanceof LeanCaret) {
+                    caret.indent = indent;
+                    this.rhs = new LeanArgsNewLineSeparated([caret], indent, caret.level);
+                    out = this.rhs.push_newlines(newlineCount - 1);
+                } else if (caret instanceof LeanArgsNewLineSeparated) {
+                    if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+                } else {
+                    if (this.parent instanceof LeanCalc)
+                        return this.parent.insert_newline(this, newlineCount, indent, next);
+                    out = this.push_args_indented(indent, newlineCount, false);
+                }
+                return out;
+            }
+            throw new Error(`insert_newline is unexpected for ${this.constructor.name}`);
+        }
+        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+    }
+
+    /** PHP `LeanAssign::insert_tactic`. */
+    insert_tactic(caret, type) {
+        return this.insert_word(caret, type);
+    }
+
+    /** PHP `LeanAssign::is_indented`. */
+    is_indented() {
+        const p = this.parent;
+        return !p || p instanceof LeanArgsNewLineSeparated || (p instanceof LeanArgsIndented && p.rhs === this);
+    }
+
+    /** PHP `LeanAssign::relocate_last_comment`. */
+    relocate_last_comment() {
+        this.rhs.relocate_last_comment();
+    }
+
+    /** PHP `LeanAssign::sep`. */
     sep() {
         const rhs = this.rhs;
-        if (rhs instanceof LeanStatements || rhs instanceof LeanBy) return '\n';
         if (rhs instanceof LeanArgsNewLineSeparated) {
             const lines = rhs.args;
             const l0 = lines[0];
             const l1 = lines[1];
-            if (
-                lines.length > 2 ||
-                !(l1 instanceof LeanArgsNewLineSeparated) ||
-                l0 instanceof LeanLineComment
-            ) {
+            if (lines.length > 2 || !(l1 instanceof LeanArgsNewLineSeparated) || l0 instanceof LeanLineComment) {
                 return '\n';
             }
         }
         return ' ';
     }
 
-    /** PHP `LeanAssign::is_indented` — not statement-column indented like generic `Lean`. */
-    is_indented() {
-        const p = this.parent;
-        return !p || p instanceof LeanArgsNewLineSeparated || (p instanceof LeanArgsIndented && p.rhs === this);
-    }
-
-    strArgs() {
-        const rhs = this.rhs;
-        if (rhs instanceof LeanStatements) {
-            const active = rhs.args.filter((a) => a != null && !(a instanceof LeanCaret));
-            const parts = active.map((a) => {
-                let s = leanPhpToStringBody(a);
-                if (a.is_comment?.()) return s;
-                const ind = a.indent ?? 0;
-                if (ind <= 0) return s;
-                const pad = ' '.repeat(ind);
-                return s
-                    .split('\n')
-                    .map((line) => (line === '' ? line : pad + line))
-                    .join('\n');
-            });
-            return [this.lhs, parts.join('\n')];
-        }
-        return super.strArgs();
-    }
-
     /**
+     * PHP `LeanAssign::split`.
      * @param {Record<string, unknown>} [syntax]
      * @returns {Lean[]}
      */
@@ -1736,10 +1781,29 @@ export class LeanAssign extends LeanBinary {
         }
         return [this];
     }
+
+    /** PHP `LeanAssign::strFormat`. */
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+}
+
+/**
+ * PHP `abstract class LeanBinaryBoolean` and `trait LeanProp` (`isProp` always true).
+ * Other PHP members on that class stay on `LeanBinary` in JS unless a subclass overrides.
+ */
+export class LeanBinaryBoolean extends LeanBinary {
+    /**
+     * @param {Record<string, unknown>} [_vars]
+     */
+    isProp(_vars) {
+        return true;
+    }
 }
 
 /** PHP `LeanRelational` (abstract): relational / equality for `instanceof` parity. */
-export class LeanRelational extends LeanBinary {
+export class LeanRelational extends LeanBinaryBoolean {
     static input_priority = 50;
 }
 
@@ -1827,7 +1891,7 @@ export class LeanDvd extends LeanRelational {
 }
 
 /** Set / arrow: `∈` (membership). */
-export class Lean_in extends LeanBinary {
+export class Lean_in extends LeanBinaryBoolean {
     static input_priority = 50;
     latexArgs(syntax) {
         let lhs = this.lhs;
@@ -1835,7 +1899,7 @@ export class Lean_in extends LeanBinary {
         return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
     }
 }
-export class Lean_notin extends LeanBinary {
+export class Lean_notin extends LeanBinaryBoolean {
     static input_priority = 50;
     latexArgs(syntax) {
         let lhs = this.lhs;
@@ -1844,7 +1908,7 @@ export class Lean_notin extends LeanBinary {
     }
 }
 /** `↔`. */
-export class Lean_leftrightarrow extends LeanBinary {
+export class Lean_leftrightarrow extends LeanBinaryBoolean {
     static input_priority = 50;
 }
 
@@ -2114,22 +2178,22 @@ export class LeanBitwiseOr extends LeanArithmetic {
 }
 
 /** `∧`. */
-export class Lean_land extends LeanBinary {
+export class Lean_land extends LeanBinaryBoolean {
     static input_priority = 35;
 }
 
 /** `&&`. */
-export class LeanLogicAnd extends LeanBinary {
+export class LeanLogicAnd extends LeanBinaryBoolean {
     static input_priority = 37;
 }
 
 /** `||`. */
-export class LeanLogicOr extends LeanBinary {
+export class LeanLogicOr extends LeanBinaryBoolean {
     static input_priority = 37;
 }
 
 /** `^^`. */
-export class LeanLogicXor extends LeanBinary {
+export class LeanLogicXor extends LeanBinaryBoolean {
     static input_priority = 33;
 }
 
@@ -2149,22 +2213,22 @@ export class Lean_setminus extends LeanBinary {
 }
 
 /** `⊆`. */
-export class Lean_subseteq extends LeanBinary {
+export class Lean_subseteq extends LeanBinaryBoolean {
     static input_priority = 50;
 }
 
 /** `⊂`. */
-export class Lean_subset extends LeanBinary {
+export class Lean_subset extends LeanBinaryBoolean {
     static input_priority = 50;
 }
 
 /** `⊇`. */
-export class Lean_supseteq extends LeanBinary {
+export class Lean_supseteq extends LeanBinaryBoolean {
     static input_priority = 50;
 }
 
 /** `⊃`. */
-export class Lean_supset extends LeanBinary {
+export class Lean_supset extends LeanBinaryBoolean {
     static input_priority = 50;
 }
 
@@ -2236,7 +2300,7 @@ export class LeanMethodChaining extends LeanBinary {
 }
 
 /** `∨` (lower priority than typical relations). */
-export class Lean_lor extends LeanBinary {
+export class Lean_lor extends LeanBinaryBoolean {
     static input_priority = 30;
 }
 
@@ -2463,8 +2527,8 @@ export class LeanRightarrow extends LeanBinary {
         return false;
     }
 
-    relocateLastComment() {
-        this.rhs.relocateLastComment();
+    relocate_last_comment() {
+        this.rhs.relocate_last_comment();
     }
 
     sep() {
@@ -2479,7 +2543,7 @@ export class LeanRightarrow extends LeanBinary {
     }
 }
 
-/** Indented `lhs` + newline `rhs`; core methods in same order as PHP `LeanArgsIndented` (no `insert_newline` / `relocateLastComment` here — keeps corpus round-trip). */
+/** Indented `lhs` + newline `rhs`; core methods in same order as PHP `LeanArgsIndented` (no `insert_newline` / `relocate_last_comment` here — keeps corpus round-trip). */
 export class LeanArgsIndented extends LeanBinary {
     is_indented() {
         return this.parent instanceof LeanStatements;
@@ -2620,8 +2684,8 @@ export class LeanBy extends LeanUnary {
         return `${command}\\ %s`;
     }
 
-    relocateLastComment() {
-        this.arg?.relocateLastComment?.();
+    relocate_last_comment() {
+        this.arg?.relocate_last_comment?.();
     }
 
     sep() {
@@ -2800,9 +2864,18 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre {
 /** Logical not `¬`. */
 class Lean_lnot extends LeanUnary {
     static input_priority = 40;
+
+    /**
+     * @param {Record<string, unknown>} [_vars]
+     */
+    isProp(_vars) {
+        return true;
+    }
+
     get operator() {
         return '¬';
     }
+
     strFormat() {
         return `${this.operator}%s`;
     }
@@ -3105,7 +3178,7 @@ class LeanPairedGroup extends LeanUnary {
             parent instanceof LeanArgsCommaSeparated ||
             parent instanceof LeanAssign ||
             parent instanceof LeanArgsSpaceSeparated ||
-            parent instanceof LeanRelational ||
+            parent instanceof LeanBinaryBoolean ||
             parent instanceof LeanRightarrow ||
             parent instanceof LeanUnaryArithmeticPre ||
             parent instanceof LeanArithmetic ||
@@ -3603,7 +3676,7 @@ export class LeanStatements extends LeanArgs {
     /**
      * Port of `LeanStatements::relocate_last_comment`.
      */
-    relocateLastComment() {
+    relocate_last_comment() {
         for (let index = this.args.length - 1; index >= 0; --index) {
             const end = this.args[index];
             if (end.is_outsider()) {
@@ -3620,7 +3693,7 @@ export class LeanStatements extends LeanArgs {
                     parent.args.splice(ix + 1, 0, last);
                     last.parent = parent;
                     last.indent = parent.indent;
-                    parent.relocateLastComment();
+                    parent.relocate_last_comment();
                     break;
                 }
             } else {
@@ -3655,7 +3728,7 @@ export class LeanStatements extends LeanArgs {
                         }
                     }
                 }
-                end.relocateLastComment();
+                end.relocate_last_comment();
                 break;
             }
         }
@@ -4152,9 +4225,9 @@ export class Lean_def extends LeanArgs {
     }
 
     /** PHP `Lean_def::relocate_last_comment`. */
-    relocateLastComment() {
+    relocate_last_comment() {
         const assignment = this.assignment;
-        if (assignment instanceof LeanAssign) assignment.relocateLastComment();
+        if (assignment instanceof LeanAssign) assignment.relocate_last_comment();
     }
 
     /**
@@ -4461,9 +4534,9 @@ class Lean_match extends LeanArgs {
         if (this.parent) return this.parent.insert_comma(this);
     }
 
-    relocateLastComment() {
+    relocate_last_comment() {
         const w = this.with;
-        if (w instanceof LeanWith) w.relocateLastComment();
+        if (w instanceof LeanWith) w.relocate_last_comment();
     }
 
     insert_tactic(caret, token) {
@@ -4541,9 +4614,9 @@ class LeanWith extends LeanArgs {
         return `${this.operator}${s}${Array(this.args.length).fill('%s').join('\n')}`;
     }
 
-    relocateLastComment() {
+    relocate_last_comment() {
         const a = this.args[this.args.length - 1];
-        a?.relocateLastComment?.();
+        a?.relocate_last_comment?.();
     }
 
     insert_newline(caret, newlineCount, indent, next) {
@@ -5564,8 +5637,8 @@ class LeanFrom extends LeanUnary {
         }
         return super.insert_newline(caret, newlineCount, indent, next);
     }
-    relocateLastComment() {
-        this.arg.relocateLastComment();
+    relocate_last_comment() {
+        this.arg.relocate_last_comment();
     }
     echo() {
         this.arg.echo?.();
@@ -5623,8 +5696,8 @@ class LeanCalc extends LeanUnary {
         return super.insert_newline(caret, newlineCount, indent, next);
     }
 
-    relocateLastComment() {
-        this.arg.relocateLastComment();
+    relocate_last_comment() {
+        this.arg.relocate_last_comment();
     }
 
     get operator() {
@@ -6972,9 +7045,9 @@ export class LeanTactic extends LeanSyntax {
         return func + Array(this.args.length).fill('%s').join('\\ ');
     }
 
-    relocateLastComment() {
+    relocate_last_comment() {
         const a = this.args[this.args.length - 1];
-        if (a instanceof LeanRightarrow || a instanceof LeanWith) a.relocateLastComment?.();
+        if (a instanceof LeanRightarrow || a instanceof LeanWith) a.relocate_last_comment?.();
     }
 
     repeat_block() {
@@ -7262,9 +7335,9 @@ export class LeanIte extends LeanArgs {
         return `\\begin{cases} ${rows} \\\\ {%s} & {\\color{blue}\\text{else}} \\end{cases}`;
     }
 
-    relocateLastComment() {
+    relocate_last_comment() {
         const els = this.else;
-        if (els instanceof LeanStatements || els instanceof LeanIte) els.relocateLastComment();
+        if (els instanceof LeanStatements || els instanceof LeanIte) els.relocate_last_comment();
     }
 
     set_line(line) {

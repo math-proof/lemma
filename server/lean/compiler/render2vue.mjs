@@ -358,7 +358,7 @@ export function mergeProof(proof, echo, syntax = {}) {
  * @param {Record<string, unknown>} [syntax]
  */
 export function render2vue(mod, echo, modify = null, syntax = {}) {
-    if (!echo) mod.relocateLastComment();
+    if (!echo) mod.relocate_last_comment();
 
     /** @type {string[]} */
     const import_ = [];

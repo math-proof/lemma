@@ -25,7 +25,7 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 - **JS**: `static/js/parser/lean.js` (~7100 lines)
 
 ### Class Mapping
-JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup::is_indented`, `push_left`, …): **`LeanRelational`**, **`LeanArithmetic`**, **`LeanUnaryArithmetic`**, **`LeanUnaryArithmeticPre`**, **`LeanUnaryArithmeticPost`** (concrete nodes extend these where PHP does). Still flattened or absent as named classes in JS (extend **`LeanBinary`** / **`LeanUnary`** directly): **`LeanBinaryBoolean`**, **`LeanLogic`**, **`LeanSetOperator`**
+JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup::is_indented`, `push_left`, …): **`LeanBinaryBoolean`** (PHP `trait LeanProp`: `isProp` → `true`), **`LeanRelational`**, **`LeanArithmetic`**, **`LeanUnaryArithmetic`**, **`LeanUnaryArithmeticPre`**, **`LeanUnaryArithmeticPost`** (concrete nodes extend these where PHP does). **`Lean_lnot`**, **`LeanNot`**, and **`LeanQuantifier`** keep explicit `isProp` like PHP’s `use LeanProp` on those classes. Still flattened or absent as named classes in JS (extend **`LeanBinary`** / **`LeanUnary`** directly): **`LeanLogic`**, **`LeanSetOperator`**
 - PHP `Lean_is_not` ↔ JS `Lean_is_not` (identical)
 - **PHP** uses `new $ClassName(...)` with no separate registry; **JS** uses **`LEAN_CLASSES`**: a map of **concrete** AST classes only (keys = `constructor.name`). **Abstract/intermediate** bases (`Lean`, `LeanArgs`, `LeanBinary`, `LeanUnary`, `LeanSyntax`, `LeanPairedGroup`, `LeanCommand`, marker classes, etc.) are **not** in the map—they remain normal exports in `lean.js`. **`getLeanClass(name)`** looks up `LEAN_CLASSES` only; unknown names throw (add the concrete class to `LEAN_CLASSES`). Prefix unary (`insert_unary`), postfix (`push_post_unary`), and `push_left` paired delimiters use **`getLeanClass`** like PHP `new $ClassName`.
 - PHP `abstract class LeanSyntax extends LeanArgs` holds `insert` and related `__set` behavior; **JS** exports **`LeanSyntax`**. **`LeanTactic`**, **`Lean_let`**, **`Lean_have`**, and **`Lean_show`** extend **`LeanSyntax`** (single-arg nodes use `super([arg], indent, level, parent)`). **`get sequential_tactic_combinator`** is implemented on **`LeanSyntax`** (shared with `LeanTactic` / `Lean_let`). **`LeanAssign::split`** is ported for `Lean_let::split`.
@@ -39,6 +39,7 @@ JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup:
 | `__get('x')` | getter `get x()` |
 | `__set('x', v)` | setter `set x(v)` |
 | `__toString` | `toString()` (uses `strFormat` + `strArgs`) |
+| `relocate_last_comment` | `relocate_last_comment()` (keep **snake_case** like PHP for parity) |
 | `__clone` | instance method **`clone()`** — see [AST cloning for translation](#ast-cloning-for-translation) under Translation Task Steps |
 | `$this->args` | `this.args` |
 | `parent::method()` | `super.method()` |
@@ -159,10 +160,10 @@ Last run: Steps 1–4 (README 2026-04-11): **Running Tests** — **preserve** **
 
 Registry: LEAN_CLASSES + getLeanClass only.
 
-PHP class names with no JS class of the same name (3, abstract / still flattened into LeanBinary in JS):
-  LeanBinaryBoolean, LeanLogic, LeanSetOperator
+PHP class names with no JS class of the same name (2, abstract / still flattened into LeanBinary in JS):
+  LeanLogic, LeanSetOperator
 
-(Abstract PHP bases that **do** exist as JS classes: `LeanArithmetic`, `LeanRelational`, `LeanUnaryArithmetic`, `LeanUnaryArithmeticPre`, `LeanUnaryArithmeticPost`.)
+(Abstract PHP bases that **do** exist as JS classes: `LeanBinaryBoolean`, `LeanArithmetic`, `LeanRelational`, `LeanUnaryArithmetic`, `LeanUnaryArithmeticPre`, `LeanUnaryArithmeticPost`.)
 
 JS class names with no PHP class of the same name (12, extra concrete nodes / Unicode operator symbols in token2classname):
   LeanEDiv, LeanPrefixExpr, Lean_boxminus, Lean_boxplus, Lean_boxtimes, Lean_circledast, Lean_circledcirc,
