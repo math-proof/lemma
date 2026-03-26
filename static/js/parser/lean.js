@@ -1961,15 +1961,43 @@ class LeanBracket extends LeanPairedGroup {
 }
 
 class LeanBrace extends LeanPairedGroup {
-    is_Expr() {
-        return false;
-    }
-    get stack_priority() {
-        return 17;
-    }
     get operator() {
         return '{}';
     }
+
+    get stack_priority() {
+        return 17;
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent) {
+            if (caret instanceof LeanCaret) {
+                if (indent === this.indent) {
+                    indent = this.indent + 2;
+                }
+                caret.indent = indent;
+                this.arg = new LeanStatements([caret], indent, caret.level);
+                return caret;
+            } else {
+                if (indent === this.indent) {
+                    return caret;
+                }
+                throw new Error(`${this.constructor.name}.insert_newline is unexpected for ${caret.constructor.name}`);
+            }
+        } else {
+            return super.insert_newline(caret, newlineCount, indent, next);
+        }
+    }
+
+    is_Expr() {
+        return false;
+    }
+
+    is_indented() {
+        const p = this.parent;
+        return !(p instanceof LeanQuantifier || p instanceof LeanBinaryBoolean || p instanceof LeanColon || p instanceof LeanSetOperator || p instanceof LeanTactic || p instanceof LeanAssign);
+    }
+
     latexFormat() {
         return '\\left\\{ {%s} \\right\\}';
     }
