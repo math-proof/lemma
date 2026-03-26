@@ -89,17 +89,17 @@ export class Node {
     }
 
     replace(old, $new) {
-        var i = this.args.indexOf(old);
-        if (i < 0)
-            throw new Error("replace is unexpected for " + get_class(this));
+        const i = this.args.indexOf(old);
+        if (i < 0) throw new Error('replace is unexpected for ' + get_class(this));
 
-        if ($new.isArray) {
+        if (Array.isArray($new)) {
             this.args.splice(i, 1, ...$new);
-            for (var el of $new)
-                el.parent = this;
+            for (const el of $new) {
+                if (!el.parent) el.parent = this;
+            }
         } else {
             this.args[i] = $new;
-            $new.parent = this;
+            if (!$new.parent) $new.parent = this;
         }
     }
 

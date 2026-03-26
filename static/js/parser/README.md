@@ -7,13 +7,14 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 1. **Follow Steps 1 → 4 in order** (below): [Step 1](#step-1-class-inventory-and-missing-classes) inventory → [Step 2](#step-2-class-declaration-order) class order vs PHP → [Step 3](#step-3-per-class-function-audit) per-class audit → [Step 4](#step-4-output-and-verification) verification. Prefer **one class** (or a tight related set) per change so diffs stay reviewable.
 2. **Within each class in `lean.js`:** respect **method declaration order** — **normally alphabetic** by method name, with `constructor` first and `static` field initializers next ([Step 3 §2](#step-3-per-class-function-audit)).
 3. **AST → string → AST:** run **`node scripts/test-lean-parser.mjs`** after **every** `lean.js` edit so everything in **`round-trip-corpus.jsonl`** **keeps** passing; improve coverage by fixing **`round-trip-failures.jsonl`** **one row at a time**, then append that lemma to the corpus and rebuild failures ([Running Tests](#running-tests)).
+4. **`lean.js` comments:** do **not** mention PHP, `php/`, `lean.php`, or the old PHP port—those sources are being retired. Prefer neutral behavioral notes, or point to **`scripts/reorder_lean_class.py`** and tests. (Parity and sync context stay in **this README** and **`php/parser/README.md`**.)
 
 ## Files
 
 | File | Description |
 |------|-------------|
 | `node.js` | Base `Node`, `IndentedNode`, `AbstractParser` |
-| `lean.js` | Lean AST classes and `LeanParser` (~7100 lines) |
+| `lean.js` | Lean AST classes and `LeanParser` (~7225 lines) |
 | `newline.js` | Newline handling utilities |
 | `markdown.js` | Markdown parsing |
 | `xml.js` | XML parsing |
@@ -22,11 +23,10 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 
 ### Source of Truth
 - **PHP**: `php/parser/lean.php` (~9500 lines)
-- **JS**: `static/js/parser/lean.js` (~7100 lines)
+- **JS**: `static/js/parser/lean.js` (~7225 lines)
 
 ### Class Mapping
-JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup::is_indented`, `push_left`, …): **`LeanBinaryBoolean`** (PHP `trait LeanProp`: `isProp` → `true`), **`LeanRelational`**, **`LeanArithmetic`**, **`LeanUnaryArithmetic`**, **`LeanUnaryArithmeticPre`**, **`LeanUnaryArithmeticPost`** (concrete nodes extend these where PHP does). **`Lean_lnot`**, **`LeanNot`**, and **`LeanQuantifier`** keep explicit `isProp` like PHP’s `use LeanProp` on those classes. Still flattened or absent as named classes in JS (extend **`LeanBinary`** / **`LeanUnary`** directly): **`LeanLogic`**, **`LeanSetOperator`**
-- PHP `Lean_is_not` ↔ JS `Lean_is_not` (identical)
+JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup::is_indented`, `push_left`, …): **`LeanBinaryBoolean`** (PHP `trait LeanProp`: `isProp` → `true`), **`LeanRelational`**, **`LeanArithmetic`**, **`LeanUnaryArithmetic`**, **`LeanUnaryArithmeticPre`**, **`LeanUnaryArithmeticPost`** (concrete nodes extend these where PHP does). **`Lean_lnot`**, **`LeanNot`**, and **`LeanQuantifier`** keep explicit `isProp` like PHP’s `use LeanProp` on those classes. Abstract **`LeanLogic`** and **`LeanSetOperator`** exist in JS as in PHP (`LeanLogicAnd` / `Lean_lor` / … vs `Lean_setminus` / `Lean_cup` / `Lean_cap`). Some PHP-only abstract bases are still folded into **`LeanBinary`** / **`LeanUnary`** in JS (see audit script “flattened” list).
 - **PHP** uses `new $ClassName(...)` with no separate registry; **JS** uses **`LEAN_CLASSES`**: a map of **concrete** AST classes only (keys = `constructor.name`). **Abstract/intermediate** bases (`Lean`, `LeanArgs`, `LeanBinary`, `LeanUnary`, `LeanSyntax`, `LeanPairedGroup`, `LeanCommand`, marker classes, etc.) are **not** in the map—they remain normal exports in `lean.js`. **`getLeanClass(name)`** looks up `LEAN_CLASSES` only; unknown names throw (add the concrete class to `LEAN_CLASSES`). Prefix unary (`insert_unary`), postfix (`push_post_unary`), and `push_left` paired delimiters use **`getLeanClass`** like PHP `new $ClassName`.
 - PHP `abstract class LeanSyntax extends LeanArgs` holds `insert` and related `__set` behavior; **JS** exports **`LeanSyntax`**. **`LeanTactic`**, **`Lean_let`**, **`Lean_have`**, and **`Lean_show`** extend **`LeanSyntax`** (single-arg nodes use `super([arg], indent, level, parent)`). **`get sequential_tactic_combinator`** is implemented on **`LeanSyntax`** (shared with `LeanTactic` / `Lean_let`). **`LeanAssign::split`** is ported for `Lean_let::split`.
 - PHP **`Lean_fun` extends `LeanUnary`** (not `LeanCommand`); **JS** matches: **`Lean_fun extends LeanUnary`** with `command` → `\lambda` for LaTeX, `is_indented`, `jsonSerialize` like PHP. **`LeanCommand`** is used for **`Lean_import` / `Lean_open` / `Lean_set_option` / `Lean_namespace`** (not `Lean_fun`).
@@ -42,6 +42,7 @@ JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup:
 | `relocate_last_comment` | `relocate_last_comment()` (keep **snake_case** like PHP for parity) |
 | `__clone` | instance method **`clone()`** — see [AST cloning for translation](#ast-cloning-for-translation) under Translation Task Steps |
 | `$this->args` | `this.args` |
+| `$new` (e.g. `append`, `push_accessibility`) | `$new` — valid JS identifier, same role as PHP `$new` |
 | `parent::method()` | `super.method()` |
 | `get_class($this)` | `this.constructor.name` |
 | `throw new Exception(...)` | `throw new Error(...)` |
@@ -114,11 +115,17 @@ When a PHP method uses `clone $this`, `LeanArgs::__clone`, or otherwise duplicat
 
 3. **Output**: Either the reordered `lean.js` or a note explaining why order was left as-is.
 
-4. **Automation**: `node scripts/audit-lean-classes.mjs` prints a pairwise-order statistic for shared class names (PHP file order vs `lean.js` order). A high inversion count is expected under Option B.
+4. **Automation**: `node scripts/audit-lean-classes.mjs` prints a pairwise-order statistic for shared class names (PHP file order vs `lean.js` order). A high inversion count is expected under Option B. For a **row-aligned** dump of both declaration sequences, run `node scripts/print-lean-class-order.mjs`. The **early cluster** `LeanCaret` → `LeanToken` → `LeanLineComment` → `LeanBlockComment` → `LeanDocString` → `LeanArgs` → **`LeanUnary`** → **`LeanPairedGroup`** and concrete paired delimiters through **`LeanDoubleAngleQuotation`** matches `lean.php` through that block (caret and comments only reference other classes inside methods at runtime; `escapeSpecialsForLatex` is a hoisted `function` above `Lean` and is also used by **`LeanToken.latexFormat`** alongside **`LeanToken`’s** static sub/superscript maps). **`LeanStack`** stays next to **`LeanGetElem*`** / bracket indexing (it is declared just before **`LeanUsing`**, after **`LeanBracket`** has been defined). Reordering the **rest** of `lean.js` to match `lean.php` line-for-line is still usually impractical without a dependency pass.
 
 ### Step 3: Per-Class Function Audit
 
 Work **one class at a time** (inventory → order → precision) so PHP and JS stay aligned without mixing unrelated edits.
+
+**`LeanCaret` (reference surface):** no `static input_priority`; instance methods only: `append` → `is_indented` → `is_outsider` → `jsonSerialize` → `latexFormat` → `push_accessibility` → `push_block_comment` → `push_left` → `push_line_comment` → `strFormat`. Parameters **`$new`** / **`$func`** / **`$accessibility`** / **`$prevToken`** on `append` / `push_accessibility` / `push_left`. Caret + following word as `LeanArgsSpaceSeparated` is implemented in **`Lean.insert_word`** (not on `LeanCaret`). A bare caret before `'` uses `parent.insert_word` from `Lean.parse`. Preset **`leancaret`** in `scripts/reorder_lean_class.py`.
+
+**`LeanToken` (reference surface):** instance fields **`text`** / **`cache`** (then static **`subscript`** / **`subscript_keys`** / **`supscript`** / **`supscript_keys`**, with regexes in a **`static { }`** block). Map keys use the same Unicode literals as PHP (quoted in JS where needed). No **`static input_priority`** in PHP. **`constructor`** then **`clone`** (clear **`cache`**), then instance methods in PHP declaration order through **`tokens_space_separated`**. **`push_line_comment`** is inherited from **`Lean`** (delegates to **`parent`**), not overridden on **`LeanToken`**. Preset **`leantoken`** in `scripts/reorder_lean_class.py`.
+
+**`LeanArgs` (reference surface):** **`static input_priority = 47`**, then declaration order matching **`lean.php`**: **`clone()`** → **`constructor`** → **`get func` / `get command`** (PHP **`__get`**) → **`insert_calc`** → **`insert_tactic`** → **`jsonSerialize`** → **`push_args_indented`** → **`regexp`** (Cartesian product over child **`regexp()`** + **`'_'`**, **`ucfirst`** of **`func`**) → **`set_line`** → **`strip_parenthesis`** → **`traverse`**. **`replace`** / **`push`** live on **`Node`** in **`node.js`** (port of **`node.php`**); **`push_binary`** on **`Lean`**. PHP trait **`LeanMultipleLine`** is hoisted as **`leanMultipleLineSetLine`** in **`lean.js`** and used by **`set_line`** on **`LeanStatements`**, **`LeanArgsNewLineSeparated`**, and **`LeanArgsCommaNewLineSeparated`** (**`LeanModule`** inherits it via **`LeanStatements`**).
 
 For each class defined in **both** `lean.php` and `lean.js`:
 
@@ -138,8 +145,7 @@ For each class defined in **both** `lean.php` and `lean.js`:
    - If PHP uses **`clone` / `__clone`**: port via **`clone()`** per [AST cloning for translation](#ast-cloning-for-translation) above (extend `Lean` / `LeanArgs` / `LeanToken` as needed).
 
 4. **Comments in `lean.js` (maintainability)**
-   - Do **not** cite the filename `lean.php` or **line numbers** (or `~1234` ranges) in **`lean.js`** comments—they drift and create churn. (This README may still name `lean.php` as the PHP side of the sync.)
-   - Prefer short **behavioral** notes; when needed, name a PHP **class** or **method** (e.g. “matches PHP `LeanArgsCommaSeparated`”) without file paths.
+   - Do **not** reference **PHP**, **`php/`**, **`lean.php`**, PHP class/method names, or **line numbers** (including `~1234` ranges) in **`lean.js`** comments—the PHP parser is being retired and such notes drift. Use neutral behavioral descriptions, or cite **`scripts/reorder_lean_class.py`** / **`node scripts/test-lean-parser.mjs`**. (This README and **`php/parser/README.md`** still document PHP ↔ JS sync.)
 
 ### Step 4: Output and Verification
 
@@ -180,7 +186,7 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 ## Step 3: Per-class audit
 - Full method-by-method parity is not automated here (naming camelCase vs snake_case, helpers on different bases).
 - **Within-class method order** in **`lean.js`**: **normally alphabetic** by method name (Step 3 §2). Examples audited/reordered earlier: **`LeanCaret`**, **`LeanCommand`**, **`LeanArgsCommaSeparated`**, **`LeanArgsSemicolonSeparated`**, **`LeanArgsCommaNewLineSeparated`**, **`LeanLineComment`**, **`LeanBlockComment`**, **`LeanDocString`**, **`LeanToken`**, **`Lean_set_option`**, **`Lean_import`**, **`Lean_open`**.
-- **Comments**: no `lean.php` filename or line ranges in `lean.js` (Step 3 §4).
+- **Comments**: no PHP / `lean.php` / line-range references in `lean.js` (Step 3 §4; see [Maintainer checklist](#maintainer-checklist-translation--ast-round-trip) item 4).
 - Track gaps via [Known Gaps](#known-gaps) and targeted ports (e.g. LeanTactic vs PHP sequential combinator / getEcho).
 - Prior parity work (examples): LeanBinary.echo, LeanRightarrow.echo; Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers.
 
@@ -194,6 +200,7 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 
 - `scripts/compare-php-node.mjs` – comparison utilities
 - `scripts/audit-lean-classes.mjs` – PHP vs JS `Lean*` class name diff (Step 1) + pairwise order statistic (Step 2)
+- `scripts/print-lean-class-order.mjs` – side-by-side PHP vs JS `Lean*` declaration order (Step 2 comparison aid)
 - `scripts/reorder_lean_class.py` / `scripts/compare_lean_class_methods.py` – PHP class segment tools (`php/parser/README.md`; presets `leanargscommaseparated`, `leanargssemicolonseparated`, `leanargscommanewlineseparated`)
 - `scripts/round-trip-corpus.jsonl` – one JSON object per line (`rel`, optional `note`); source list for parser round-trip tests
 - `scripts/round-trip-failures.jsonl` – off-corpus `Lemma/` files that fail parse or AST→string→AST; regenerate via `node scripts/build-round-trip-failures.mjs`

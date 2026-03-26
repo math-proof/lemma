@@ -32,15 +32,14 @@ console.log('JS only (no PHP class name):', jsOnly.length ? jsOnly.join(', ') : 
 
 const abstractsPhp = [
     'LeanArithmetic',
-    'LeanLogic',
     'LeanRelational',
-    'LeanSetOperator',
     'LeanUnaryArithmetic',
     'LeanUnaryArithmeticPre',
     'LeanUnaryArithmeticPost',
     'LeanSyntax',
 ];
-console.log('Expected flattened (abstract PHP only):', abstractsPhp.join(', '));
+console.log('Abstract in PHP often mirrored in JS (not flattened):', abstractsPhp.join(', '));
+console.log('Also in both: LeanLogic, LeanSetOperator (abstract bases).');
 
 // --- Step 2: declaration order (shared classes only) ---
 const jsIndex = new Map();

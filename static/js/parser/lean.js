@@ -80,10 +80,19 @@ function isIdentContinueToken(s) {
     return /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
 }
 
-/**
- * Port of PHP `abstract class Lean`; method order follows `lean.php` (`__construct` → `__get` → `__set` → … → `append`).
- * See `scripts/reorder_lean_class.py` preset `lean`.
- */
+function escapeSpecialsForLatex(token) {
+    const s = String(token);
+    const m = /^(\w+?)_(.+)$/.exec(s);
+    if (m) {
+        const [, head, tail] = m;
+        const escTail = tail.replace(/[{}_]/g, (c) => `\\${c}`);
+        return head.length === 1 ? `${head}_{${escTail}}` : `${head}\\_${escTail}`;
+    }
+    if (/\w_$/.test(s)) return s.slice(0, -1) + '\\_';
+    return s;
+}
+
+/** Abstract Lean AST node; method order follows `scripts/reorder_lean_class.py` preset `lean`. */
 export class Lean extends IndentedNode {
     constructor(indent, level, parent = null) {
         super(indent, parent);
@@ -123,12 +132,17 @@ export class Lean extends IndentedNode {
     }
 
     toString() {
-        const inner = leanPhpToStringBody(this);
+        const format = this.strFormat();
+        const args = this.strArgs();
+        const inner =
+            args.length === 0
+                ? format
+                : String(format).format(...args.map((a) => (a instanceof Lean ? String(a) : a)));
         return (this.is_indented() ? ' '.repeat(this.indent) : '') + inner;
     }
 
-    append(_new, _type) {
-        if (this.parent) return this.parent.append(this, _new, _type);
+    append($new, _type) {
+        if (this.parent) return this.parent.append(this, $new, _type);
     }
 
     case_default() {
@@ -160,10 +174,6 @@ export class Lean extends IndentedNode {
         }
     }
 
-    insert_calc(caret) {
-        if (this.parent) return this.parent.insert_calc(this);
-    }
-
     insert_colon(caret) {
         return caret.push_binary('LeanColon');
     }
@@ -184,10 +194,6 @@ export class Lean extends IndentedNode {
         if (this.parent) return this.parent.insert_end(this);
     }
 
-    insert_if(caret) {
-        if (this.parent) return this.parent.insert_if(caret);
-    }
-
     insert_left(caret, func, prevToken = '') {
         return caret.push_left(func, prevToken);
     }
@@ -201,10 +207,6 @@ export class Lean extends IndentedNode {
         throw new Error('insert_newline: no parent');
     }
 
-    insert_only(caret) {
-        if (this.parent) return this.parent.insert_only(this);
-    }
-
     insert_semicolon(caret) {
         if (this.parent) return this.parent.insert_semicolon(this);
     }
@@ -215,10 +217,6 @@ export class Lean extends IndentedNode {
 
     insert_space(caret) {
         return caret;
-    }
-
-    insert_tactic(caret, token) {
-        if (this.parent) return this.parent.insert_tactic(this, token);
     }
 
     insert_then(caret) {
@@ -247,6 +245,12 @@ export class Lean extends IndentedNode {
     }
 
     insert_word(caret, word) {
+        if (caret instanceof LeanCaret) {
+            const level = caret.level;
+            const newTok = new LeanToken(word, caret.indent, level);
+            caret.parent.replace(caret, new LeanArgsSpaceSeparated([caret, newTok], caret.indent, level));
+            return newTok;
+        }
         return caret.push_token(word);
     }
 
@@ -274,12 +278,6 @@ export class Lean extends IndentedNode {
 
     is_space_separated() {
         return false;
-    }
-
-    strFormat() {
-        const n = this.args.length;
-        if (n === 0) return '';
-        return Array(n).fill('%s').join(' ');
     }
 
     latexArgs(syntax) {
@@ -566,6 +564,7 @@ export class Lean extends IndentedNode {
                     self.start_idx++;
                     token += tokens[self.start_idx];
                 }
+                if (this instanceof LeanCaret) return this.parent.insert_word(this, token);
                 return this.push_quote(token);
             case '+':
                 if (this instanceof LeanCaret) return this.parent.insert_unary(this, 'LeanPlus');
@@ -757,8 +756,8 @@ export class Lean extends IndentedNode {
         return this;
     }
 
-    push_accessibility(_new, _accessibility) {
-        if (this.parent) return this.parent.push_accessibility(_new, _accessibility);
+    push_accessibility($new, _accessibility) {
+        if (this.parent) return this.parent.push_accessibility($new, _accessibility);
     }
 
     push_arithmetic(token) {
@@ -906,6 +905,12 @@ export class Lean extends IndentedNode {
         return [this];
     }
 
+    strFormat() {
+        const n = this.args.length;
+        if (n === 0) return '';
+        return Array(n).fill('%s').join(' ');
+    }
+
     strArgs() {
         return this.args ?? [];
     }
@@ -926,7 +931,519 @@ export class Lean extends IndentedNode {
     }
 }
 
+export class LeanCaret extends Lean {
+    append($new, $func) {
+        if (typeof $new === 'string') {
+            const Ctor = getLeanClass($new);
+            this.parent.replace(this, new Ctor(this, this.indent, this.level));
+            return this;
+        }
+        this.parent.replace(this, $new);
+        return $new;
+    }
+
+    is_indented() {
+        return this.parent instanceof LeanArgsNewLineSeparated;
+    }
+
+    is_outsider() {
+        return true;
+    }
+
+    jsonSerialize() {
+        return '';
+    }
+
+    latexFormat() {
+        return '';
+    }
+
+    push_accessibility($new, $accessibility) {
+        this.parent.replace(this, new (getLeanClass($new))($accessibility, this, this.indent, this.level));
+        return this;
+    }
+
+    push_block_comment(comment, docstring) {
+        const parent = this.parent;
+        const Cls = docstring ? LeanDocString : LeanBlockComment;
+        parent.replace(this, new Cls(comment, this.indent, this.level));
+        parent.push(this);
+        return this;
+    }
+
+    push_left($func, $prevToken) {
+        const Ctor = getLeanClass($func);
+        this.parent.replace(this, new Ctor(this, this.indent, this.level));
+        return this;
+    }
+
+    push_line_comment(comment) {
+        const parent = this.parent;
+        const $new = new LeanLineComment(comment, this.indent, this.level);
+        parent.replace(this, $new);
+        return $new;
+    }
+
+    strFormat() {
+        return '';
+    }
+}
+
+export class LeanToken extends Lean {
+    /** @type {string} */
+    text;
+
+    /** @type {Record<string, unknown> | null} */
+    cache = null;
+
+    static subscript = {
+        'ₐ': 'a',
+        'ₑ': 'e',
+        'ₕ': 'h',
+        'ᵢ': 'i',
+        'ⱼ': 'j',
+        'ₖ': 'k',
+        'ₗ': 'l',
+        'ₘ': 'm',
+        'ₙ': 'n',
+        'ₒ': 'o',
+        'ₚ': 'p',
+        'ᵣ': 'r',
+        'ₛ': 's',
+        'ₜ': 't',
+        'ᵤ': 'u',
+        'ᵥ': 'v',
+        'ₓ': 'x',
+        '₀': '0',
+        '₁': '1',
+        '₂': '2',
+        '₃': '3',
+        '₄': '4',
+        '₅': '5',
+        '₆': '6',
+        '₇': '7',
+        '₈': '8',
+        '₉': '9',
+        'ᵦ': '\\beta',
+        'ᵧ': '\\gamma',
+        'ᵨ': '\\rho',
+        'ᵩ': '\\phi',
+        'ᵪ': '\\chi',
+    };
+
+    /** @type {RegExp | null} */
+    static subscript_keys = null;
+
+    static supscript = {
+        '⁰': '0',
+        '¹': '1',
+        '²': '2',
+        '³': '3',
+        '⁴': '4',
+        '⁵': '5',
+        '⁶': '6',
+        '⁷': '7',
+        '⁸': '8',
+        '⁹': '9',
+        'ᵅ': 'alpha',
+        'ᵝ': 'beta',
+        'ᵞ': 'gamma',
+        'ᵟ': 'delta',
+        'ᵋ': 'epsilon',
+        'ᵑ': 'eta',
+        'ᶿ': 'theta',
+        'ᶥ': 'iota',
+        'ᶺ': 'lambda',
+        'ᵚ': 'omega',
+        'ᶹ': 'upsilon',
+        'ᵠ': 'phi',
+        'ᵡ': 'chi',
+    };
+
+    /** @type {RegExp | null} */
+    static supscript_keys = null;
+
+    static {
+        const escClass = (/** @type {Record<string, string>} */ m) =>
+            Object.keys(m)
+                .map((k) => {
+                    const ch = [...k][0];
+                    return /[\]\\^-]/.test(ch) ? `\\${ch}` : k;
+                })
+                .join('');
+        LeanToken.subscript_keys = new RegExp(`[${escClass(LeanToken.subscript)}]+`, 'u');
+        LeanToken.supscript_keys = new RegExp(`[${escClass(LeanToken.supscript)}]+`, 'u');
+    }
+
+    /**
+     * @param {string} text
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(text, indent, level, parent = null) {
+        super(indent, level, parent);
+        this.text = text;
+    }
+
+    clone() {
+        const copy = super.clone();
+        copy.cache = null;
+        return copy;
+    }
+
+    append($new, $func) {
+        if (this.parent) return this.parent.insert(this, $new, $func);
+    }
+
+    ends_with_2_letters() {
+        return /[a-zA-Z]{2,}$/.test(this.text);
+    }
+
+    equals(other) {
+        if (other instanceof LeanToken) return this.text === other.text;
+    }
+
+    is_parallel_operator() {
+        return /_\?+$/.test(this.text);
+    }
+
+    isProp(vars) {
+        return (vars?.[this.text] ?? null) === 'Prop';
+    }
+
+    is_TypeStar() {
+        switch (this.text) {
+            case 'Sort':
+            case 'Type':
+            case 'ℝ':
+                return true;
+        }
+    }
+
+    is_variable() {
+        return /^[a-zA-Z_][a-zA-Z_0-9]*$/.test(this.text);
+    }
+
+    jsonSerialize() {
+        return this.text;
+    }
+
+    latexArgs(_syntax) {
+        return [];
+    }
+
+    latexFormat() {
+        let text = escapeSpecialsForLatex(this.text);
+        if (text === this.text) {
+            const sk = LeanToken.subscript_keys;
+            const spk = LeanToken.supscript_keys;
+            const sub = LeanToken.subscript;
+            const sup = LeanToken.supscript;
+            if (sk) {
+                text = text.replace(sk, (m) => {
+                    const inner = [...m].map((ch) => (sub[ch] !== undefined ? sub[ch] : ch)).join('');
+                    return `_{${inner}}`;
+                });
+            }
+            if (spk) {
+                text = text.replace(spk, (m) => {
+                    const inner = [...m].map((ch) => (sup[ch] !== undefined ? sup[ch] : ch)).join('');
+                    return `^{${inner}}`;
+                });
+            }
+            if (text.startsWith('_')) text = `\\${text}`;
+        }
+        return text;
+    }
+
+    lower() {
+        this.text = this.text.toLowerCase();
+        return this;
+    }
+
+    operand_count() {
+        const m = /\?*$/.exec(this.text);
+        return m ? m[0].length : 0;
+    }
+
+    push_quote(quote) {
+        this.text += quote;
+        return this;
+    }
+
+    push_token(word) {
+        const level = this.level;
+        const $new = new LeanToken(word, this.indent, level);
+        this.parent.replace(this, new LeanArgsSpaceSeparated([this, $new], this.indent, level));
+        return $new;
+    }
+
+    regexp() {
+        return ['_'];
+    }
+
+    starts_with_2_letters() {
+        return /^[a-zA-Z]{2,}/.test(this.text);
+    }
+
+    strFormat() {
+        return this.text;
+    }
+
+    tactic_block_info() {
+        const map = [];
+        map[0] = [this];
+        this.cache ??= {};
+        this.cache.size = 1;
+        return map;
+    }
+
+    tokens_space_separated() {
+        return [this];
+    }
+}
+
+export class LeanLineComment extends Lean {
+    /**
+     * @param {string} text
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(text, indent, level, parent = null) {
+        super(indent, level, parent);
+        this.text = text;
+    }
+
+    get operator() {
+        return '--';
+    }
+
+    get command() {
+        return '%';
+    }
+
+    is_comment() {
+        return true;
+    }
+
+    is_indented() {
+        const t = this.text;
+        if (t === 'given') {
+            let parent = this.parent;
+            if (
+                parent instanceof LeanArgsNewLineSeparated &&
+                (parent = parent.parent) instanceof LeanArgsIndented &&
+                (parent = parent.parent) instanceof LeanColon &&
+                (parent = parent.parent) instanceof LeanAssign &&
+                parent.parent instanceof Lean_lemma
+            ) {
+                return false;
+            }
+            if (this.parent instanceof LeanModule) {
+                const mod = this.parent;
+                const ix = mod.args.indexOf(this);
+                if (ix > 0 && mod.args[ix - 1] instanceof Lean_lemma) return false;
+            }
+            return true;
+        }
+        if (t === 'proof') {
+            let parent = this.parent;
+            if (parent instanceof LeanStatements) {
+                if (parent.parent instanceof LeanBy) parent = parent.parent;
+                if (
+                    (parent = parent.parent) instanceof LeanAssign &&
+                    parent.parent instanceof Lean_lemma
+                ) {
+                    return false;
+                }
+            } else if (parent instanceof LeanArgsNewLineSeparated) {
+                if (
+                    (parent = parent.parent) instanceof LeanAssign &&
+                    parent.parent instanceof Lean_lemma
+                ) {
+                    return false;
+                }
+            }
+        }
+        if (t === 'imply' || t === 'proof') {
+            let parent = this.parent;
+            if (
+                parent instanceof LeanStatements &&
+                (parent = parent.parent) instanceof LeanColon &&
+                (parent = parent.parent) instanceof LeanAssign &&
+                parent.parent instanceof Lean_lemma
+            ) {
+                return false;
+            }
+            if (t === 'imply' && this.parent instanceof LeanStatements) {
+                const colon = this.parent.parent;
+                if (colon instanceof LeanColon) {
+                    const holder = colon.parent;
+                    if (holder instanceof LeanModule) {
+                        const mod = holder;
+                        const ix = mod.args.indexOf(colon);
+                        if (ix >= 0) {
+                            for (let j = 0; j < ix; j++) {
+                                if (mod.args[j] instanceof Lean_lemma) return false;
+                            }
+                        }
+                    } else if (holder instanceof LeanAssign && holder.parent instanceof LeanModule) {
+                        const mod = holder.parent;
+                        const ix = mod.args.indexOf(holder);
+                        if (ix >= 0) {
+                            for (let j = 0; j < ix; j++) {
+                                if (mod.args[j] instanceof Lean_lemma) return false;
+                            }
+                        }
+                    }
+                }
+            }
+            if (t === 'proof' && this.parent instanceof LeanModule) {
+                const mod = this.parent;
+                const ix = mod.args.indexOf(this);
+                if (ix > 0 && mod.args[ix - 1] instanceof LeanAssign) return false;
+            }
+        } else if (this.parent instanceof LeanTactic) {
+            return false;
+        }
+        return true;
+    }
+
+    is_outsider() {
+        return /^(created|updated) on (\d\d\d\d-\d\d-\d\d)$/.test(this.text);
+    }
+
+    latexFormat() {
+        if (this.text === 'imply' || this.text === 'given' || this.text === 'proof') return '';
+        return `\\%${this.sep()}${this.text}`;
+    }
+
+    sep() {
+        return ' ';
+    }
+
+    strFormat() {
+        return `${this.operator}${this.sep()}${this.text}`;
+    }
+}
+
+class LeanBlockComment extends Lean {
+    /**
+     * @param {string} text
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(text, indent, level, parent = null) {
+        super(indent, level, parent);
+        this.text = text;
+    }
+
+    is_comment() {
+        return true;
+    }
+
+    is_indented() {
+        return true;
+    }
+
+    sep() {
+        return '';
+    }
+
+    set_line(line) {
+        this.line = line;
+        return line + (this.text.match(/\n/g)?.length ?? 0);
+    }
+
+    strFormat() {
+        return `/-${this.text}-/`;
+    }
+}
+
+class LeanDocString extends LeanBlockComment {
+    /**
+     * @param {string} text
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(text, indent, level, parent = null) {
+        super(text, indent, level, parent);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    set_line(line) {
+        this.line = line;
+        let L = line + 1;
+        L += this.text.match(/\n/g)?.length ?? 0;
+        return L + 1;
+    }
+
+    strFormat() {
+        return `/--\n${this.text}\n-/`;
+    }
+}
+
+/**
+ * Port of PHP trait `LeanMultipleLine` (`set_line`): advance one logical line between each child.
+ * Used by `LeanStatements`, `LeanModule`, `LeanArgsNewLineSeparated`, `LeanArgsCommaNewLineSeparated`.
+ * @param {{ line: unknown; args: Lean[] }} self
+ * @param {number} line
+ */
+function leanMultipleLineSetLine(self, line) {
+    self.line = line;
+    for (const arg of self.args) {
+        line = arg.set_line(line) + 1;
+    }
+    return line - 1;
+}
+
+/**
+ * Cartesian product of string columns (port of `itertools\product` in `LeanArgs::regexp`).
+ * @param {string[][]} cols
+ * @returns {string[][]}
+ */
+function regexpProductCols(cols) {
+    if (cols.length === 0) return [[]];
+    const [first, ...rest] = cols;
+    const tail = regexpProductCols(rest);
+    const out = [];
+    for (const x of first) {
+        for (const t of tail) {
+            out.push([x, ...t]);
+        }
+    }
+    return out;
+}
+
 export class LeanArgs extends Lean {
+    static input_priority = 47;
+
+    /**
+     * Deep-clone `args` and reparent children (same pattern as `LeanArgs::__clone` / `Lean.prototype.clone`).
+     * @returns {this}
+     */
+    clone() {
+        const copy = Object.create(Object.getPrototypeOf(this));
+        Object.assign(copy, this);
+        copy.parent = null;
+        copy.args = this.args.map((a) => {
+            if (a == null) return a;
+            if (typeof a.clone === 'function') return a.clone();
+            return a;
+        });
+        for (const a of copy.args) {
+            if (a && typeof a === 'object') a.parent = copy;
+        }
+        return copy;
+    }
+
     /**
      * @param {Lean[]} args
      * @param {number} indent
@@ -939,44 +1456,21 @@ export class LeanArgs extends Lean {
         for (const a of args) if (a) a.parent = this;
     }
 
-    /** PHP `LeanArgs::__get('func')`: `preg_replace('/^Lean_?/', '', get_class($this))`. */
     get func() {
         return this.constructor.name.replace(/^Lean_?/, '');
     }
 
-    /** PHP `LeanArgs::__get('command')`: `"\\$this->func"` (LaTeX command name). */
     get command() {
         return '\\' + this.func;
     }
 
-    push(arg) {
-        this.args.push(arg);
-        arg.parent = this;
-    }
-
-    replace(oldNode, newNode) {
-        const i = this.args.indexOf(oldNode);
-        if (i < 0) throw new Error(`replace: not found in ${this.constructor.name}`);
-        if (Array.isArray(newNode)) {
-            this.args.splice(i, 1, ...newNode);
-            for (const el of newNode) el.parent = this;
-        } else {
-            this.args[i] = newNode;
-            newNode.parent = this;
-        }
-    }
-
-    push_binary(funcName) {
-        const parent = this.parent;
-        if (!parent) return undefined;
-        const Ctor = getLeanClass(funcName);
-        if (Ctor.input_priority > parent.stack_priority) {
-            const level = this.level;
-            const caret = new LeanCaret(this.indent, level);
-            parent.replace(this, new Ctor(this, caret, this.indent, level));
+    insert_calc(caret) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret && caret instanceof LeanCaret) {
+            this.replace(caret, new LeanCalc(caret, caret.indent, caret.level));
             return caret;
         }
-        return parent.push_binary(funcName);
+        throw new Error(`insert_calc: unexpected for ${this.constructor.name}`);
     }
 
     insert_tactic(caret, func) {
@@ -987,18 +1481,10 @@ export class LeanArgs extends Lean {
         return this.insert_word(caret, func);
     }
 
-    insert_word(caret, word) {
-        return caret.push_token(word);
-    }
-
-    /** Replace trailing caret with `LeanCalc`. */
-    insert_calc(caret) {
-        const last = this.args[this.args.length - 1];
-        if (last === caret && caret instanceof LeanCaret) {
-            this.replace(caret, new LeanCalc(caret, caret.indent, caret.level));
-            return caret;
-        }
-        throw new Error(`insert_calc: unexpected for ${this.constructor.name}`);
+    jsonSerialize() {
+        return this.args.map((a) =>
+            a == null ? a : typeof a.jsonSerialize === 'function' ? a.jsonSerialize() : a,
+        );
     }
 
     /**
@@ -1023,23 +1509,19 @@ export class LeanArgs extends Lean {
         }
     }
 
-    /**
-     * Deep-clone `args` and reparent children (same pattern as `Lean.prototype.clone` shell).
-     * @returns {this}
-     */
-    clone() {
-        const copy = Object.create(Object.getPrototypeOf(this));
-        Object.assign(copy, this);
-        copy.parent = null;
-        copy.args = this.args.map((a) => {
-            if (a == null) return a;
-            if (typeof a.clone === 'function') return a.clone();
-            return a;
-        });
-        for (const a of copy.args) {
-            if (a && typeof a === 'object') a.parent = copy;
+    regexp() {
+        const f = this.func;
+        const head = f.length > 0 ? f.charAt(0).toUpperCase() + f.slice(1) : f;
+        const cols = this.args.map((arg) => [...arg.regexp(), '_']);
+        return regexpProductCols(cols).map((list) => head + list.join(''));
+    }
+
+    set_line(line) {
+        this.line = line;
+        for (const arg of this.args) {
+            if (arg != null) line = arg.set_line(line);
         }
-        return copy;
+        return line;
     }
 
     /**
@@ -1055,34 +1537,456 @@ export class LeanArgs extends Lean {
         });
     }
 
-    /** Propagate line numbers through `args`. */
-    set_line(line) {
-        this.line = line;
-        for (const arg of this.args) {
-            if (arg != null) line = arg.set_line(line);
-        }
-        return line;
-    }
-
-    jsonSerialize() {
-        return this.args.map((a) =>
-            a == null ? a : typeof a.jsonSerialize === 'function' ? a.jsonSerialize() : a,
-        );
-    }
-
-    /** Preorder over `this` then each `arg`. */
     *traverse() {
         yield this;
         for (const arg of this.args) {
             if (arg != null) yield* arg.traverse();
         }
     }
-
-    // insert_comma, insert_semicolon, insert_assign, push_right, push_or, push_post_unary, etc.
-    // inherit from Lean — delegate to parent; do not override with throws.
 }
 
-/** Comma-separated argument list; method order matches PHP class `LeanArgsCommaSeparated`. */
+export class LeanUnary extends LeanArgs {
+    static input_priority = 47;
+    /**
+     * @param {Lean} arg
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(arg, indent, level, parent = null) {
+        super([], indent, level, parent);
+        this.args = [arg];
+        arg.parent = this;
+    }
+
+    get arg() {
+        return this.args[0];
+    }
+    set arg(v) {
+        this.args[0] = v;
+        v.parent = this;
+    }
+
+    insert_if(caret) {
+        if (this.arg === caret && caret instanceof LeanCaret) {
+            this.arg = new LeanIte([caret], caret.indent, caret.level);
+            return caret;
+        }
+        throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
+    }
+
+    jsonSerialize() {
+        return this.arg?.jsonSerialize?.() ?? this.arg;
+    }
+
+    replace(oldNode, newNode) {
+        if (this.arg !== oldNode) {
+            throw new Error(`replace: assert failed in ${this.constructor.name}`);
+        }
+        this.arg = newNode;
+    }
+}
+
+class LeanPairedGroup extends LeanUnary {
+    static input_priority = 60;
+
+    get operator() {
+        switch (this.constructor.name) {
+            case 'LeanBracket':
+                return '[]';
+            case 'LeanAngleBracket':
+                return ['⟨', '⟩'];
+            case 'LeanBrace':
+                return '{}';
+            case 'LeanParenthesis':
+                return '()';
+            default:
+                return '()';
+        }
+    }
+
+    argFormat() {
+        return '%s';
+    }
+
+    /**
+     * @param {Lean} caret
+     * @param {string | typeof Lean} func
+     * @param {string} _type
+     */
+    insert(caret, func, _type) {
+        if (this.arg === caret) {
+            if (caret instanceof LeanCaret) {
+                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                this.arg = new Ctor(caret, this.indent, caret.level);
+                return caret;
+            }
+            if (caret instanceof LeanToken) {
+                const caret2 = new LeanCaret(this.indent, caret.level);
+                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                this.arg = new LeanArgsSpaceSeparated([this.arg, new Ctor(caret2, this.indent, caret.level)], this.indent, caret.level);
+                return caret2;
+            }
+        }
+        if (this.parent) return this.parent.insert(this, func, _type);
+    }
+
+    insert_comma(caret) {
+        const caret2 = new LeanCaret(this.indent, caret.level);
+        const a = this.arg;
+        if (a instanceof LeanArgsCommaSeparated) {
+            a.push(caret2);
+        } else {
+            this.arg = new LeanArgsCommaSeparated([a, caret2], this.indent, caret2.level);
+        }
+        return caret2;
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this) {
+            caret = this.arg;
+        }
+        if (this.indent > indent) {
+            return super.insert_newline(caret, newlineCount, indent, next);
+        }
+        if (this.indent <= indent) {
+            if (caret instanceof LeanCaret) {
+                let ind = indent;
+                if (ind === this.indent) ind = this.indent + 2;
+                caret.indent = ind;
+                if (this.constructor.name === 'LeanBrace') {
+                    this.arg = new LeanStatements([caret], ind, caret.level);
+                    return caret;
+                }
+                this.arg = new LeanArgsCommaNewLineSeparated([caret], ind, caret.level);
+                return caret;
+            }
+            if (indent === this.indent) return caret;
+            /**
+             * `Lean::insert_newline` bubbles with `this` (not the inner parse node), so `caret` is often the
+             * full `arg` (e.g. `LeanArgsSpaceSeparated`) while `indent` is the continuation column inside a
+             * nested `()` / last operand. Descend to the trailing structural child and recurse — mirrors
+             * how the proof term continues on the next line (last sibling).
+             * Do not recurse into `LeanCaret`: `LeanCaret.insert_newline` delegates to parent and would pass
+             * the whole `LeanArgsSpaceSeparated` again → infinite loop with this branch.
+             */
+            if (indent > this.indent && caret === this.arg) {
+                let target = this.arg;
+                while (target instanceof LeanArgsSpaceSeparated) {
+                    const next = target.args[target.args.length - 1];
+                    if (!next) break;
+                    target = next;
+                }
+                if (target instanceof LeanCaret || target instanceof LeanArgsSpaceSeparated) {
+                    return super.insert_newline(caret, newlineCount, indent, next);
+                }
+                if (target instanceof LeanPairedGroup) {
+                    return target.insert_newline(target, newlineCount, indent, next);
+                }
+                return super.insert_newline(caret, newlineCount, indent, next);
+            }
+            throw new Error(`LeanPairedGroup.insert_newline: unexpected for ${this.constructor.name}`);
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    insert_tactic(caret, token) {
+        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
+        if (this.parent) return this.parent.insert_tactic(caret, token);
+        throw new Error(`LeanPairedGroup.insert_tactic: unexpected for ${this.constructor.name}`);
+    }
+
+    is_Expr() {
+        return true;
+    }
+
+    is_indented() {
+        const parent = this.parent;
+        return !(
+            parent instanceof LeanTactic ||
+            parent instanceof LeanArgsCommaSeparated ||
+            parent instanceof LeanAssign ||
+            parent instanceof LeanArgsSpaceSeparated ||
+            parent instanceof LeanBinaryBoolean ||
+            parent instanceof LeanRightarrow ||
+            parent instanceof LeanUnaryArithmeticPre ||
+            parent instanceof LeanArithmetic ||
+            parent instanceof LeanProperty ||
+            parent instanceof LeanColon ||
+            parent instanceof LeanUnaryArithmeticPost ||
+            parent instanceof LeanPairedGroup
+        );
+    }
+
+    /** @param {string} funcName e.g. 'LeanParenthesis' */
+    push_right(funcName) {
+        if (this.constructor.name === funcName) {
+            this.is_closed = true;
+            return this;
+        }
+        if (this.parent) return this.parent.push_right(funcName);
+    }
+
+    set_line(line) {
+        this.line = line;
+        const arg = this.arg;
+        const hasNewline =
+            arg instanceof LeanArgsCommaNewLineSeparated || arg instanceof LeanStatements;
+        if (hasNewline) line++;
+        line = arg.set_line(line);
+        if (hasNewline) line++;
+        return line;
+    }
+
+    strFormat() {
+        let format = this.argFormat();
+        const operator = this.operator;
+        const open = typeof operator === 'string' ? operator[0] : operator[0];
+        const close = typeof operator === 'string' ? operator[1] : operator[1];
+        const c = this.is_closed;
+        if (c === false) {
+            format += close;
+        } else if (c === null) {
+            format = open + format;
+        } else {
+            format = open + format + close;
+        }
+        return format;
+    }
+
+    /**
+     * When `'` continues a name after `[…]` etc., caret may be a paired group; delegate to parent `insert_word`.
+     */
+    push_quote(token) {
+        if (this.parent) return this.parent.insert_word(this, token);
+        throw new Error('push_quote: no parent');
+    }
+
+    /** Sibling token after a closed group (e.g. function application continuing after `)`). */
+    push_token(word) {
+        const level = this.level;
+        const newTok = new LeanToken(word, this.indent, level);
+        this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
+        return newTok;
+    }
+
+    get is_closed() {
+        return this.kwargs.is_closed;
+    }
+
+    set is_closed(v) {
+        this.kwargs.is_closed = v;
+    }
+}
+
+/**
+ * Port of `LeanParenthesis`.
+ * Parentheses bump inner `level` and handle newlines/`by` differently from generic `LeanPairedGroup`.
+ * Rainbow printing: nesting level (arg.level) selects one of 8 colors via toColor().
+ */
+export class LeanParenthesis extends LeanPairedGroup {
+    get stack_priority() {
+        return 10;
+    }
+
+    /**
+     * @param {Lean} arg
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(arg, indent, level, parent = null) {
+        super(arg, indent, level, parent);
+        this.arg.level++;
+    }
+
+    toColor() {
+        const n = (this.arg.level ?? 0) & 7;
+        const b = '9f'[n & 1];
+        const g = '9f'[(n >> 1) & 1];
+        const r = '9f'[(n >> 2) & 1];
+        return `\\colorbox{#${r}${g}${b}}{$\\mathord{\\left(%s\\right)}$}`;
+    }
+
+    latexFormat() {
+        const arg = this.arg;
+        if (arg instanceof LeanColon) {
+            if (arg.lhs && arg.lhs.constructor?.name === 'LeanBrace') return arg.lhs.latexFormat?.() ?? '%s';
+            if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return '\\left|{%s}\\right|';
+        }
+        return this.toColor();
+    }
+
+    latexArgs(syntax) {
+        const arg = this.arg;
+        if (arg instanceof LeanColon) {
+            if (arg.lhs && arg.lhs.constructor?.name === 'LeanBrace')
+                return arg.lhs.latexArgs?.(syntax) ?? [arg.lhs.toLatex(syntax)];
+            if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return [arg.lhs.toLatex(syntax)];
+        }
+        return super.latexArgs(syntax);
+    }
+
+    /**
+     * Port of `LeanParenthesis::insert_newline`.
+     */
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this) {
+            caret = this.arg;
+        }
+        if (this.indent <= indent && caret === this.arg) {
+            if (caret instanceof LeanBy && this.indent === indent) {
+                const c2 = new LeanCaret(indent, caret.level);
+                const newNL = new LeanArgsNewLineSeparated([this.arg, c2], indent, c2.level);
+                const c = newNL.push_newlines(newlineCount - 1);
+                this.arg = newNL;
+                return c;
+            }
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            const c = this.push_args_indented(ind, newlineCount, false);
+            return c;
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+}
+
+class LeanAngleBracket extends LeanPairedGroup {
+    get stack_priority() {
+        return 10;
+    }
+    get operator() {
+        return ['⟨', '⟩'];
+    }
+    latexFormat() {
+        return '\\langle {%s} \\rangle';
+    }
+
+    tokens_comma_separated() {
+        const a = this.arg;
+        if (a instanceof LeanArgsCommaSeparated) return a.tokens_comma_separated();
+        return [a];
+    }
+}
+
+/**
+ * Port of LeanBracket::push_right. When [i < n] pattern, replace with LeanStack.
+ */
+class LeanBracket extends LeanPairedGroup {
+    push_right(funcName) {
+        if (funcName === 'LeanBracket') {
+            const lt = this.arg;
+            // arg can be Lean_lt (i < n) or LeanArgsSpaceSeparated e.g. ( LeanToken, Lean_lt ) from push_left
+            let bound = lt;
+            if (lt instanceof LeanArgsSpaceSeparated && lt.args.length >= 2) {
+                const last = lt.args[lt.args.length - 1];
+                if (last?.constructor?.name === 'Lean_lt' && last.lhs instanceof LeanToken) bound = last;
+            }
+            const ok = bound && bound.constructor?.name === 'Lean_lt' && bound.lhs instanceof LeanToken;
+            if (ok) {
+                const scope = new LeanCaret(this.indent, this.level);
+                const stack = new LeanStack(bound, this.indent, this.level);
+                stack.scope = scope;
+                this.parent.replace(this, stack);
+                return scope;
+            }
+        }
+        return super.push_right(funcName);
+    }
+
+    latexFormat() {
+        return '\\left[ {%s} \\right]';
+    }
+
+    toString() {
+        const s = super.toString();
+        const ind = this.indent ?? 0;
+        if (ind > 0 && this.parent?.constructor?.name === 'LeanModule') return ' '.repeat(ind) + s;
+        return s;
+    }
+}
+
+class LeanBrace extends LeanPairedGroup {
+    is_Expr() {
+        return false;
+    }
+    get stack_priority() {
+        return 17;
+    }
+    get operator() {
+        return '{}';
+    }
+    latexFormat() {
+        return '\\left\\{ {%s} \\right\\}';
+    }
+}
+
+class LeanAbs extends LeanPairedGroup {
+    get stack_priority() {
+        return 17;
+    }
+    get operator() {
+        return '||';
+    }
+    latexFormat() {
+        return '\\left| {%s} \\right|';
+    }
+}
+
+class LeanNorm extends LeanPairedGroup {
+    get stack_priority() {
+        return 17;
+    }
+    get operator() {
+        return ['‖', '‖'];
+    }
+    latexFormat() {
+        return '\\left\\lVert {%s} \\right\\rVert';
+    }
+}
+
+class LeanCeil extends LeanPairedGroup {
+    static input_priority = 72;
+    get stack_priority() {
+        return 22;
+    }
+    get operator() {
+        return ['⌈', '⌉'];
+    }
+    latexFormat() {
+        return '\\left\\lceil {%s} \\right\\rceil';
+    }
+}
+
+class LeanFloor extends LeanPairedGroup {
+    static input_priority = 72;
+    get stack_priority() {
+        return 22;
+    }
+    get operator() {
+        return ['⌊', '⌋'];
+    }
+    latexFormat() {
+        return '\\left\\lfloor {%s} \\right\\rfloor';
+    }
+}
+
+class LeanDoubleAngleQuotation extends LeanPairedGroup {
+    is_Expr() {
+        return false;
+    }
+    get stack_priority() {
+        return 22;
+    }
+    get operator() {
+        return ['«', '»'];
+    }
+    latexFormat() {
+        return '\\left\\langle{%s}\\right\\rangle'; // «» guillemets
+    }
+}
+
+
 export class LeanArgsCommaSeparated extends LeanArgs {
     /**
      * Under LeanBar: LeanColon input priority; else one less so `:` binds in the right place.
@@ -1141,7 +2045,6 @@ export class LeanArgsCommaSeparated extends LeanArgs {
     }
 }
 
-/** Newline-separated args; method order matches PHP class `LeanArgsNewLineSeparated`. */
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -1234,20 +2137,11 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
         return Array(this.args.length).fill('%s').join('\n');
     }
 
-    /** `LeanMultipleLine`-style line tracking (same pattern as related arg-list classes). */
     set_line(line) {
-        this.line = line;
-        for (const arg of this.args) {
-            line = arg.set_line(line) + 1;
-        }
-        return line - 1;
+        return leanMultipleLineSetLine(this, line);
     }
 }
 
-/**
- * Comma + newline separated args (`LeanMultipleLine`); used from `LeanPairedGroup.insert_newline`.
- * Method order: class body then `set_line`, matching PHP class `LeanArgsCommaNewLineSeparated`.
- */
 export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     get stack_priority() {
         return 17;
@@ -1312,15 +2206,10 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     }
 
     set_line(line) {
-        this.line = line;
-        for (const arg of this.args) {
-            line = arg.set_line(line) + 1;
-        }
-        return line - 1;
+        return leanMultipleLineSetLine(this, line);
     }
 }
 
-/** Semicolon-separated args; method order matches PHP class `LeanArgsSemicolonSeparated`. */
 export class LeanArgsSemicolonSeparated extends LeanArgs {
     get stack_priority() {
         return LeanColon.input_priority - 1;
@@ -1396,17 +2285,11 @@ export class LeanBinary extends LeanArgs {
         return this.args[1];
     }
 
-    /** PHP `LeanBinary::__set('lhs'|'rhs')`. */
     set rhs(v) {
         this.args[1] = v;
         if (v) v.parent = this;
     }
 
-    /**
-     * PHP `LeanBinary` has no `__get('operator')`. Concrete subclasses use `case 'operator':` there;
-     * in JS each of those classes defines `get operator()`. This base getter only mirrors tokens
-     * that live in `token2classname` (e.g. `+`, `∈`, `⊆`) when a subclass does not override.
-     */
     get operator() {
         const name = this.constructor.name;
         const pair = Object.entries(token2classname).find(([, cls]) => cls === name);
@@ -1559,7 +2442,6 @@ export class LeanBinary extends LeanArgs {
         throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
     }
 
-    /** PHP `LeanBinary::insert_newline`. */
     insert_newline(caret, newlineCount, indent, next) {
         if (this.parent instanceof LeanTactic && indent > this.indent) {
             return this.parent.push_args_indented(indent, newlineCount, false);
@@ -1567,7 +2449,6 @@ export class LeanBinary extends LeanArgs {
         if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
     }
 
-    /** PHP `LeanBinary::insert_tactic`. */
     insert_tactic(caret, func) {
         return this.insert_word(caret, func);
     }
@@ -1612,12 +2493,10 @@ export class LeanProperty extends LeanBinary {
 export class LeanColon extends LeanBinary {
     static input_priority = 19;
 
-    /** PHP `LeanColon::is_indented` returns false (so `__toString` adds no extra column here). */
     is_indented() {
         return false;
     }
 
-    /** PHP `LeanColon::__get('operator')`. */
     get operator() {
         return ':';
     }
@@ -1654,7 +2533,6 @@ export class LeanColon extends LeanBinary {
         return `${first}:${sep}%s`;
     }
 
-    /** PHP `LeanColon::strArgs`. */
     strArgs() {
         let lhs = this.lhs;
         const rhs = this.rhs;
@@ -1682,11 +2560,9 @@ export class LeanColon extends LeanBinary {
     }
 }
 
-/** Definition / assignment `:=`. Method order matches PHP `LeanAssign`. */
 export class LeanAssign extends LeanBinary {
     static input_priority = 18;
 
-    /** PHP `LeanAssign::__get('operator'|'command')`. */
     get operator() {
         return ':=';
     }
@@ -1695,15 +2571,10 @@ export class LeanAssign extends LeanBinary {
         return ':=';
     }
 
-    /** PHP `LeanAssign::echo`. */
     echo() {
         this.rhs?.echo?.();
     }
 
-    /**
-     * PHP `LeanAssign::insert` (rhs caret only). When `caret !== rhs`, bubble like `LeanArgs*::insert`
-     * unresolved arms — the tokenizer sometimes targets a nested caret while `rhs` is already wrapped.
-     */
     insert(caret, func, type) {
         if (this.rhs === caret && caret instanceof LeanCaret) {
             const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
@@ -1714,7 +2585,6 @@ export class LeanAssign extends LeanBinary {
         throw new Error(`insert is unexpected for ${this.constructor.name}`);
     }
 
-    /** PHP `LeanAssign::insert_newline`. */
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent < indent) {
             if (caret === this.rhs) {
@@ -1737,23 +2607,19 @@ export class LeanAssign extends LeanBinary {
         if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
     }
 
-    /** PHP `LeanAssign::insert_tactic`. */
     insert_tactic(caret, type) {
         return this.insert_word(caret, type);
     }
 
-    /** PHP `LeanAssign::is_indented`. */
     is_indented() {
         const p = this.parent;
         return !p || p instanceof LeanArgsNewLineSeparated || (p instanceof LeanArgsIndented && p.rhs === this);
     }
 
-    /** PHP `LeanAssign::relocate_last_comment`. */
     relocate_last_comment() {
         this.rhs.relocate_last_comment();
     }
 
-    /** PHP `LeanAssign::sep`. */
     sep() {
         const rhs = this.rhs;
         if (rhs instanceof LeanArgsNewLineSeparated) {
@@ -1767,11 +2633,6 @@ export class LeanAssign extends LeanBinary {
         return ' ';
     }
 
-    /**
-     * PHP `LeanAssign::split`.
-     * @param {Record<string, unknown>} [syntax]
-     * @returns {Lean[]}
-     */
     split(syntax) {
         const by = this.rhs;
         if (by instanceof LeanBy && by.arg instanceof LeanStatements) {
@@ -1785,17 +2646,12 @@ export class LeanAssign extends LeanBinary {
         return [this];
     }
 
-    /** PHP `LeanAssign::strFormat`. */
     strFormat() {
         const sep = this.sep();
         return `%s ${this.operator}${sep}%s`;
     }
 }
 
-/**
- * PHP `abstract class LeanBinaryBoolean` and `trait LeanProp` (`isProp` always true).
- * Other PHP members on that class stay on `LeanBinary` in JS unless a subclass overrides.
- */
 export class LeanBinaryBoolean extends LeanBinary {
     /**
      * @param {Record<string, unknown>} [_vars]
@@ -1805,7 +2661,6 @@ export class LeanBinaryBoolean extends LeanBinary {
     }
 }
 
-/** PHP `LeanRelational` (abstract): relational / equality for `instanceof` parity. */
 export class LeanRelational extends LeanBinaryBoolean {
     static input_priority = 50;
 }
@@ -1816,7 +2671,6 @@ export class Lean_gt extends LeanRelational {
 }
 export class Lean_ge extends LeanRelational {
     static input_priority = 50;
-    /** PHP `Lean_ge::__get('operator')`. */
     get operator() {
         return '≥';
     }
@@ -1826,7 +2680,6 @@ export class Lean_lt extends LeanRelational {
 }
 export class Lean_le extends LeanRelational {
     static input_priority = 50;
-    /** PHP `Lean_le::__get('operator')`. */
     get operator() {
         return '≤';
     }
@@ -1834,7 +2687,6 @@ export class Lean_le extends LeanRelational {
 export class LeanEq extends LeanRelational {
     static input_priority = 50;
 
-    /** PHP `LeanEq::__get('operator')`. */
     get operator() {
         return '=';
     }
@@ -1842,7 +2694,6 @@ export class LeanEq extends LeanRelational {
 export class LeanBEq extends LeanRelational {
     static input_priority = 50;
 
-    /** PHP `LeanBEq::__get('operator')`. */
     get operator() {
         return '==';
     }
@@ -1850,14 +2701,12 @@ export class LeanBEq extends LeanRelational {
 export class Lean_bne extends LeanRelational {
     static input_priority = 50;
 
-    /** PHP `Lean_bne::__get('operator')`. */
     get operator() {
         return '!=';
     }
 }
 export class Lean_ne extends LeanRelational {
     static input_priority = 50;
-    /** PHP `Lean_ne::__get('operator')`. */
     get operator() {
         return '≠';
     }
@@ -1915,7 +2764,6 @@ export class Lean_leftrightarrow extends LeanBinaryBoolean {
     static input_priority = 50;
 }
 
-/** PHP `LeanArithmetic` (abstract): ring / bitwise / shift / lattice ops for `instanceof` parity. */
 export class LeanArithmetic extends LeanBinary {}
 
 /** Arithmetic / ring / bitwise / shift / lattice ops (`+`, `×`, `^`, `⊓`, …). */
@@ -2180,39 +3028,185 @@ export class LeanBitwiseOr extends LeanArithmetic {
     static input_priority = 55;
 }
 
-/** `∧`. */
-export class Lean_land extends LeanBinaryBoolean {
-    static input_priority = 35;
+/** Set-theoretic binary (`\\`, `∪`, `∩`); abstract base like `LeanSetOperator`. */
+export class LeanSetOperator extends LeanBinary {
+    sep() {
+        return ' ';
+    }
+
+    strFormat() {
+        return `%s ${this.operator} %s`;
+    }
 }
 
-/** `&&`. */
-export class LeanLogicAnd extends LeanBinaryBoolean {
-    static input_priority = 37;
-}
-
-/** `||`. */
-export class LeanLogicOr extends LeanBinaryBoolean {
-    static input_priority = 37;
-}
-
-/** `^^`. */
-export class LeanLogicXor extends LeanBinaryBoolean {
-    static input_priority = 33;
-}
-
-/** `∪`. */
-export class Lean_cup extends LeanBinary {
-    static input_priority = 50;
-}
-
-/** `∩`. */
-export class Lean_cap extends LeanBinary {
-    static input_priority = 50;
-}
-
-/** Set difference `\\`. */
-export class Lean_setminus extends LeanBinary {
+export class Lean_setminus extends LeanSetOperator {
     static input_priority = 70;
+
+    get operator() {
+        return '\\';
+    }
+}
+
+export class Lean_cup extends LeanSetOperator {
+    static input_priority = 65;
+
+    get operator() {
+        return '∪';
+    }
+}
+
+export class Lean_cap extends LeanSetOperator {
+    static input_priority = 70;
+
+    get operator() {
+        return '∩';
+    }
+}
+
+/** Logic connectives under `LeanStatements` (`&&`, `∨`, …); hanging newline via `hanging_indentation`. */
+export class LeanLogic extends LeanBinaryBoolean {
+    /** @type {boolean|undefined} */
+    hanging_indentation;
+
+    is_indented() {
+        return this.parent instanceof LeanStatements;
+    }
+
+    sep() {
+        if (this.hanging_indentation) {
+            const ind = this.rhs?.indent ?? 0;
+            return '\n' + ' '.repeat(ind);
+        }
+        return ' ';
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+}
+
+export class LeanLogicAnd extends LeanLogic {
+    static input_priority = 37;
+
+    get stack_priority() {
+        return 50;
+    }
+
+    get command() {
+        return '\\&\\&';
+    }
+
+    get operator() {
+        return '&&';
+    }
+
+    jsonSerialize() {
+        const lhs = this.lhs.jsonSerialize();
+        const rhs = this.rhs.jsonSerialize();
+        const f = this.func;
+        const rec = lhs && typeof lhs === 'object' ? /** @type {Record<string, unknown>} */ (lhs) : null;
+        if (this.lhs instanceof LeanLogicAnd && rec && Array.isArray(rec[f])) {
+            return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
+        }
+        return { [f]: [lhs, rhs] };
+    }
+
+    strFormat() {
+        return `%s ${this.operator} %s`;
+    }
+}
+
+export class LeanLogicOr extends LeanLogic {
+    static input_priority = 37;
+
+    get stack_priority() {
+        return 36;
+    }
+
+    get command() {
+        return '\\|\\|';
+    }
+
+    get operator() {
+        return '||';
+    }
+
+    jsonSerialize() {
+        const lhs = this.lhs.jsonSerialize();
+        const rhs = this.rhs.jsonSerialize();
+        const f = this.func;
+        const rec = lhs && typeof lhs === 'object' ? /** @type {Record<string, unknown>} */ (lhs) : null;
+        if (this.lhs instanceof LeanLogicOr && rec && Array.isArray(rec[f])) {
+            return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
+        }
+        return { [f]: [lhs, rhs] };
+    }
+
+    strFormat() {
+        return `%s ${this.operator} %s`;
+    }
+}
+
+export class LeanLogicXor extends LeanLogic {
+    static input_priority = 33;
+
+    get command() {
+        return '\\^\\^';
+    }
+
+    get operator() {
+        return '^^';
+    }
+
+    strFormat() {
+        return `%s ${this.operator} %s`;
+    }
+}
+
+export class Lean_lor extends LeanLogic {
+    static input_priority = 30;
+
+    get stack_priority() {
+        return 29;
+    }
+
+    get operator() {
+        return '∨';
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this.rhs && caret instanceof LeanCaret) {
+            if (indent >= this.indent) {
+                let ind = indent;
+                if (ind === this.indent) ind = this.indent + 2;
+                this.hanging_indentation = true;
+                caret.indent = ind;
+                return caret;
+            }
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    jsonSerialize() {
+        return { [this.func]: [this.lhs.jsonSerialize(), this.rhs.jsonSerialize()] };
+    }
+}
+
+export class Lean_land extends LeanLogic {
+    static input_priority = 35;
+
+    get stack_priority() {
+        return 34;
+    }
+
+    get operator() {
+        return '∧';
+    }
+
+    jsonSerialize() {
+        return { [this.func]: [this.lhs.jsonSerialize(), this.rhs.jsonSerialize()] };
+    }
 }
 
 /** `⊆`. */
@@ -2226,20 +3220,27 @@ export class Lean_subset extends LeanBinaryBoolean {
 }
 
 /** `⊇`. */
-export class Lean_supseteq extends LeanBinaryBoolean {
+export class Lean_supseteq extends LeanLogic {
     static input_priority = 50;
+
+    get operator() {
+        return '⊇';
+    }
 }
 
 /** `⊃`. */
-export class Lean_supset extends LeanBinaryBoolean {
+export class Lean_supset extends LeanLogic {
     static input_priority = 50;
+
+    get operator() {
+        return '⊃';
+    }
 }
 
 /** `is`. */
 export class Lean_is extends LeanBinary {
     static input_priority = 62;
 
-    /** PHP `Lean_is::__get('operator')`. */
     get operator() {
         return 'is';
     }
@@ -2272,7 +3273,6 @@ export class Lean_is extends LeanBinary {
 export class Lean_is_not extends LeanBinary {
     static input_priority = 62;
 
-    /** PHP `Lean_is_not::__get('operator')`. */
     get operator() {
         return 'is not';
     }
@@ -2302,12 +3302,6 @@ export class LeanMethodChaining extends LeanBinary {
     static input_priority = 67;
 }
 
-/** `∨` (lower priority than typical relations). */
-export class Lean_lor extends LeanBinaryBoolean {
-    static input_priority = 30;
-}
-
-/** `→` (right-associative). Method order matches PHP class `Lean_rightarrow`. */
 export class Lean_rightarrow extends LeanBinary {
     static input_priority = 25;
 
@@ -2364,7 +3358,6 @@ export class Lean_rightarrow extends LeanBinary {
     }
 }
 
-/** `↦`; `stack_priority` 23. Method order matches PHP class `Lean_mapsto`. */
 export class Lean_mapsto extends LeanBinary {
     static input_priority = 47;
 
@@ -2402,11 +3395,9 @@ export class Lean_mapsto extends LeanBinary {
     }
 }
 
-/** Tactic arrow `=>`; same `input_priority` as `LeanColon`. Method order matches PHP class `LeanRightarrow`. */
 export class LeanRightarrow extends LeanBinary {
     static input_priority = 19;
 
-    /** PHP `LeanRightarrow::__get('operator')`. */
     get operator() {
         return '=>';
     }
@@ -2546,7 +3537,6 @@ export class LeanRightarrow extends LeanBinary {
     }
 }
 
-/** Indented `lhs` + newline `rhs`; ports PHP `LeanArgsIndented`. Method order: README Step 3 §2 (alphabetic). */
 export class LeanArgsIndented extends LeanBinary {
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent > indent) {
@@ -2621,58 +3611,13 @@ export class LeanArgsIndented extends LeanBinary {
     }
 }
 
-export class LeanUnary extends LeanArgs {
-    static input_priority = 47;
-    /**
-     * @param {Lean} arg
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(arg, indent, level, parent = null) {
-        super([], indent, level, parent);
-        this.args = [arg];
-        arg.parent = this;
-    }
-
-    get arg() {
-        return this.args[0];
-    }
-    set arg(v) {
-        this.args[0] = v;
-        v.parent = this;
-    }
-
-    insert_if(caret) {
-        if (this.arg === caret && caret instanceof LeanCaret) {
-            this.arg = new LeanIte([caret], caret.indent, caret.level);
-            return caret;
-        }
-        throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
-    }
-
-    jsonSerialize() {
-        return this.arg?.jsonSerialize?.() ?? this.arg;
-    }
-
-    replace(oldNode, newNode) {
-        if (this.arg !== oldNode) {
-            throw new Error(`replace: assert failed in ${this.constructor.name}`);
-        }
-        this.arg = newNode;
-    }
-}
-
-/** PHP `LeanUnaryArithmetic` / pre — prefix unary ops for `instanceof` parity. */
 class LeanUnaryArithmetic extends LeanUnary {}
 class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {}
 
-/** PHP `LeanUnaryArithmeticPost` — postfix unary ops for `instanceof` parity (`push_left`, `LeanPairedGroup::is_indented`). */
 export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
     static input_priority = 72;
 }
 
-/** Tactic block intro `by`. Method order matches PHP class `LeanBy`. */
 export class LeanBy extends LeanUnary {
     static input_priority = 47;
 
@@ -2736,7 +3681,6 @@ export class LeanBy extends LeanUnary {
     }
 }
 
-/** Attribute prefix `@…` on declarations. Method order matches PHP class `LeanAttribute`. */
 class LeanAttribute extends LeanUnary {
     get operator() {
         return '@';
@@ -2746,8 +3690,8 @@ class LeanAttribute extends LeanUnary {
         return '@';
     }
 
-    append(new_, _type) {
-        return this.push_accessibility(new_, 'public');
+    append($new, _type) {
+        return this.push_accessibility($new, 'public');
     }
 
     insert_newline(caret, newlineCount, indent, next) {
@@ -2764,12 +3708,12 @@ class LeanAttribute extends LeanUnary {
         return `${this.command} %s`;
     }
 
-    push_accessibility(New, accessibility) {
-        switch (New) {
+    push_accessibility($new, accessibility) {
+        switch ($new) {
             case 'Lean_theorem':
             case 'Lean_lemma':
             case 'Lean_def': {
-                const Ctor = getLeanClass(New);
+                const Ctor = getLeanClass($new);
                 const caret = new LeanCaret(this.indent, this.level);
                 const replacement = new Ctor(accessibility, caret, this.indent, this.level);
                 this.parent.replace(this, replacement);
@@ -2912,7 +3856,6 @@ class Lean_lnot extends LeanUnary {
     }
 }
 
-/** Prefix `!` (boolean/programmatic; distinct from `Lean_lnot` `¬`). Method order matches PHP class `LeanNot`. */
 class LeanNot extends LeanUnary {
     static input_priority = 40;
 
@@ -3025,7 +3968,6 @@ class LeanPipeForward extends LeanUnaryArithmeticPost {
     }
 }
 
-/** `|` arm separator in `match` / `with` / `induction`. Method order matches PHP class `LeanBar`. */
 class LeanBar extends LeanUnary {
     get stack_priority() {
         return LeanAssign?.input_priority ?? 20;
@@ -3045,9 +3987,9 @@ class LeanBar extends LeanUnary {
 
     insert_comma(caret) {
         if (caret === this.arg) {
-            const new_ = new LeanCaret(this.indent, caret.level);
-            this.replace(caret, new LeanArgsCommaSeparated([caret, new_], this.indent, caret.level));
-            return new_;
+            const $new = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
+            return $new;
         }
         throw new Error(`LeanBar.insert_comma: unexpected for ${this.constructor.name}`);
     }
@@ -3089,286 +4031,6 @@ class LeanBar extends LeanUnary {
     }
 }
 
-class LeanPairedGroup extends LeanUnary {
-    static input_priority = 60;
-
-    get operator() {
-        switch (this.constructor.name) {
-            case 'LeanBracket':
-                return '[]';
-            case 'LeanAngleBracket':
-                return ['⟨', '⟩'];
-            case 'LeanBrace':
-                return '{}';
-            case 'LeanParenthesis':
-                return '()';
-            default:
-                return '()';
-        }
-    }
-
-    argFormat() {
-        return '%s';
-    }
-
-    /**
-     * @param {Lean} caret
-     * @param {string | typeof Lean} func
-     * @param {string} _type
-     */
-    insert(caret, func, _type) {
-        if (this.arg === caret) {
-            if (caret instanceof LeanCaret) {
-                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
-                this.arg = new Ctor(caret, this.indent, caret.level);
-                return caret;
-            }
-            if (caret instanceof LeanToken) {
-                const caret2 = new LeanCaret(this.indent, caret.level);
-                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
-                this.arg = new LeanArgsSpaceSeparated([this.arg, new Ctor(caret2, this.indent, caret.level)], this.indent, caret.level);
-                return caret2;
-            }
-        }
-        if (this.parent) return this.parent.insert(this, func, _type);
-    }
-
-    insert_comma(caret) {
-        const caret2 = new LeanCaret(this.indent, caret.level);
-        const a = this.arg;
-        if (a instanceof LeanArgsCommaSeparated) {
-            a.push(caret2);
-        } else {
-            this.arg = new LeanArgsCommaSeparated([a, caret2], this.indent, caret2.level);
-        }
-        return caret2;
-    }
-
-    insert_newline(caret, newlineCount, indent, next) {
-        if (caret === this) {
-            caret = this.arg;
-        }
-        if (this.indent > indent) {
-            return super.insert_newline(caret, newlineCount, indent, next);
-        }
-        if (this.indent <= indent) {
-            if (caret instanceof LeanCaret) {
-                let ind = indent;
-                if (ind === this.indent) ind = this.indent + 2;
-                caret.indent = ind;
-                if (this.constructor.name === 'LeanBrace') {
-                    this.arg = new LeanStatements([caret], ind, caret.level);
-                    return caret;
-                }
-                this.arg = new LeanArgsCommaNewLineSeparated([caret], ind, caret.level);
-                return caret;
-            }
-            if (indent === this.indent) return caret;
-            /**
-             * `Lean::insert_newline` bubbles with `this` (not the inner parse node), so `caret` is often the
-             * full `arg` (e.g. `LeanArgsSpaceSeparated`) while `indent` is the continuation column inside a
-             * nested `()` / last operand. Descend to the trailing structural child and recurse — mirrors
-             * how the proof term continues on the next line (last sibling).
-             * Do not recurse into `LeanCaret`: `LeanCaret.insert_newline` delegates to parent and would pass
-             * the whole `LeanArgsSpaceSeparated` again → infinite loop with this branch.
-             */
-            if (indent > this.indent && caret === this.arg) {
-                let target = this.arg;
-                while (target instanceof LeanArgsSpaceSeparated) {
-                    const next = target.args[target.args.length - 1];
-                    if (!next) break;
-                    target = next;
-                }
-                if (target instanceof LeanCaret || target instanceof LeanArgsSpaceSeparated) {
-                    return super.insert_newline(caret, newlineCount, indent, next);
-                }
-                if (target instanceof LeanPairedGroup) {
-                    return target.insert_newline(target, newlineCount, indent, next);
-                }
-                return super.insert_newline(caret, newlineCount, indent, next);
-            }
-            throw new Error(`LeanPairedGroup.insert_newline: unexpected for ${this.constructor.name}`);
-        }
-        return super.insert_newline(caret, newlineCount, indent, next);
-    }
-
-    insert_tactic(caret, token) {
-        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
-        if (this.parent) return this.parent.insert_tactic(caret, token);
-        throw new Error(`LeanPairedGroup.insert_tactic: unexpected for ${this.constructor.name}`);
-    }
-
-    is_Expr() {
-        return true;
-    }
-
-    is_indented() {
-        const parent = this.parent;
-        return !(
-            parent instanceof LeanTactic ||
-            parent instanceof LeanArgsCommaSeparated ||
-            parent instanceof LeanAssign ||
-            parent instanceof LeanArgsSpaceSeparated ||
-            parent instanceof LeanBinaryBoolean ||
-            parent instanceof LeanRightarrow ||
-            parent instanceof LeanUnaryArithmeticPre ||
-            parent instanceof LeanArithmetic ||
-            parent instanceof LeanProperty ||
-            parent instanceof LeanColon ||
-            parent instanceof LeanUnaryArithmeticPost ||
-            parent instanceof LeanPairedGroup
-        );
-    }
-
-    /** @param {string} funcName e.g. 'LeanParenthesis' */
-    push_right(funcName) {
-        if (this.constructor.name === funcName) {
-            this.is_closed = true;
-            return this;
-        }
-        if (this.parent) return this.parent.push_right(funcName);
-    }
-
-    set_line(line) {
-        this.line = line;
-        const arg = this.arg;
-        const hasNewline =
-            arg instanceof LeanArgsCommaNewLineSeparated || arg instanceof LeanStatements;
-        if (hasNewline) line++;
-        line = arg.set_line(line);
-        if (hasNewline) line++;
-        return line;
-    }
-
-    strFormat() {
-        let format = this.argFormat();
-        const operator = this.operator;
-        const open = typeof operator === 'string' ? operator[0] : operator[0];
-        const close = typeof operator === 'string' ? operator[1] : operator[1];
-        const c = this.is_closed;
-        if (c === false) {
-            format += close;
-        } else if (c === null) {
-            format = open + format;
-        } else {
-            format = open + format + close;
-        }
-        return format;
-    }
-
-    /**
-     * When `'` continues a name after `[…]` etc., caret may be a paired group; delegate to parent `insert_word`.
-     */
-    push_quote(token) {
-        if (this.parent) return this.parent.insert_word(this, token);
-        throw new Error('push_quote: no parent');
-    }
-
-    /** Sibling token after a closed group (e.g. function application continuing after `)`). */
-    push_token(word) {
-        const level = this.level;
-        const newTok = new LeanToken(word, this.indent, level);
-        this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
-        return newTok;
-    }
-
-    get is_closed() {
-        return this.kwargs.is_closed;
-    }
-
-    set is_closed(v) {
-        this.kwargs.is_closed = v;
-    }
-}
-
-/**
- * Port of `LeanParenthesis`.
- * Parentheses bump inner `level` and handle newlines/`by` differently from generic `LeanPairedGroup`.
- * Rainbow printing: nesting level (arg.level) selects one of 8 colors via toColor().
- */
-export class LeanParenthesis extends LeanPairedGroup {
-    /** PHP `LeanParenthesis::__get('stack_priority')` returns 10. Ensures `:` creates LeanColon inside parens, e.g. (1 : Tensor ℝ* [n,n]). */
-    get stack_priority() {
-        return 10;
-    }
-
-    /**
-     * @param {Lean} arg
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(arg, indent, level, parent = null) {
-        super(arg, indent, level, parent);
-        this.arg.level++;
-    }
-
-    /**
-     * PHP `LeanParenthesis::toColor`.
-     * Maps nesting level (arg.level & 7) to RGB hex for rainbow parentheses.
-     */
-    toColor() {
-        const n = (this.arg.level ?? 0) & 7;
-        const b = '9f'[n & 1];
-        const g = '9f'[(n >> 1) & 1];
-        const r = '9f'[(n >> 2) & 1];
-        return `\\colorbox{#${r}${g}${b}}{$\\mathord{\\left(%s\\right)}$}`;
-    }
-
-    /**
-     * PHP `LeanParenthesis::latexFormat`.
-     * Special cases for LeanColon/lhs LeanBrace and Bool; otherwise rainbow colorbox.
-     */
-    latexFormat() {
-        const arg = this.arg;
-        if (arg instanceof LeanColon) {
-            if (arg.lhs && arg.lhs.constructor?.name === 'LeanBrace') return arg.lhs.latexFormat?.() ?? '%s';
-            if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return '\\left|{%s}\\right|';
-        }
-        return this.toColor();
-    }
-
-    /**
-     * PHP `LeanParenthesis::latexArgs`.
-     */
-    latexArgs(syntax) {
-        const arg = this.arg;
-        if (arg instanceof LeanColon) {
-            if (arg.lhs && arg.lhs.constructor?.name === 'LeanBrace')
-                return arg.lhs.latexArgs?.(syntax) ?? [arg.lhs.toLatex(syntax)];
-            if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return [arg.lhs.toLatex(syntax)];
-        }
-        return super.latexArgs(syntax);
-    }
-
-    /**
-     * Port of `LeanParenthesis::insert_newline`.
-     */
-    insert_newline(caret, newlineCount, indent, next) {
-        if (caret === this) {
-            caret = this.arg;
-        }
-        if (this.indent <= indent && caret === this.arg) {
-            if (caret instanceof LeanBy && this.indent === indent) {
-                const c2 = new LeanCaret(indent, caret.level);
-                const newNL = new LeanArgsNewLineSeparated([this.arg, c2], indent, c2.level);
-                const c = newNL.push_newlines(newlineCount - 1);
-                this.arg = newNL;
-                return c;
-            }
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            const c = this.push_args_indented(ind, newlineCount, false);
-            return c;
-        }
-        return super.insert_newline(caret, newlineCount, indent, next);
-    }
-}
-
-/**
- * PHP `std\Expr` used by `eval_prefix`.
- * @typedef {import('./node.js').Node} LeanNode
- */
 class LeanPrefixExpr {
     /**
      * @param {LeanToken} func
@@ -3403,7 +4065,6 @@ class LeanPrefixExpr {
     }
 }
 
-/** PHP `std\eval_prefix`. */
 function leanEvalPrefix(expressions, operandCount) {
     const stack = [];
     for (let i = expressions.length - 1; i >= 0; i--) {
@@ -3424,11 +4085,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     constructor(args, indent, level, parent = null) {
         super(args, indent, level, parent);
-        /** @type {Record<string, unknown> | null} PHP `LeanArgsSpaceSeparated::$cache` */
         this.cache = null;
     }
 
-    /** PHP `LeanArgsSpaceSeparated::construct_prefix_tree`. */
     construct_prefix_tree() {
         const tokens = this.tokens_space_separated();
         return leanEvalPrefix(tokens, (arg) => arg.operand_count());
@@ -3448,7 +4107,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return 80;
     }
 
-    /** PHP `LeanArgsSpaceSeparated::is_space_separated`. */
     is_space_separated() {
         return true;
     }
@@ -3461,19 +4119,16 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             .join('\\ ');
     }
 
-    /** PHP `LeanArgsSpaceSeparated::operand_count`. */
     operand_count() {
         return this.args[0].operand_count();
     }
 
-    /** PHP `LeanArgsSpaceSeparated::strFormat` (one `%s` per arg, including carets). */
     strFormat() {
         const n = this.args.length;
         if (n === 0) return '';
         return Array(n).fill('%s').join(' ');
     }
 
-    /** PHP `LeanArgsSpaceSeparated::tactic_block_info`. */
     tactic_block_info() {
         if (!this.cache) this.cache = {};
         if (this.cache.tactic_block_info != null)
@@ -3528,10 +4183,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return map;
     }
 
-    /**
-     * PHP `LeanArgsSpaceSeparated::tokens_space_separated`.
-     * @returns {LeanToken[]}
-     */
     tokens_space_separated() {
         if (!this.cache) this.cache = {};
         if (this.cache.tokens_space_separated != null)
@@ -3549,7 +4200,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return tokens;
     }
 
-    /** JS helper: subscript glue and sparse holes vs PHP `implode` default `toLatex` path. */
     toLatex(syntax) {
         const active = this.args.filter((a) => !(a instanceof LeanCaret));
         if (active.length === 0) return '';
@@ -3578,7 +4228,6 @@ export class LeanStatements extends LeanArgs {
         return 19;
     }
 
-    /** PHP `LeanStatements::strFormat` — always `\n` between args; `LeanBrace` parent adds wrapped newlines + indent. */
     strFormat() {
         const n = this.args.length;
         if (n === 0) return '';
@@ -3589,10 +4238,6 @@ export class LeanStatements extends LeanArgs {
         return format;
     }
 
-    /**
-     * PHP LeanStatements::latexFormat.
-     * Each statement on its own line in align; `\\` between rows so let blocks render with newlines.
-     */
     latexFormat() {
         const n = this.args.length;
         if (n === 0) return '';
@@ -3671,11 +4316,6 @@ export class LeanStatements extends LeanArgs {
         return line;
     }
 
-    /**
-     * PHP `LeanStatements::swap_echo_star`.
-     * @param {Record<string, unknown>} syntax
-     * @param {Lean[]} statements
-     */
     swap_echo_star(syntax, statements) {
         const args = this.args;
         for (let i = 0; i < args.length; ++i) {
@@ -3693,19 +4333,10 @@ export class LeanStatements extends LeanArgs {
         for (const stmt of this.args) statements.push(...stmt.split(syntax));
     }
 
-    /** PHP trait `LeanMultipleLine::set_line` via `LeanStatements`. */
     set_line(line) {
-        this.line = line;
-        for (const arg of this.args) {
-            line = arg.set_line(line) + 1;
-        }
-        return line - 1;
+        return leanMultipleLineSetLine(this, line);
     }
 
-    /**
-     * PHP `LeanStatements::echo`.
-     * @returns {void}
-     */
     echo() {
         const args = this.args;
         let count = args.length;
@@ -3776,11 +4407,6 @@ export class LeanStatements extends LeanArgs {
         }
     }
 
-    /**
-     * PHP `LeanStatements::insert_if`.
-     * When `caret` is not `end(args)`, PHP throws; JS previously inherited `Lean::insert_if` and no-op’d
-     * (e.g. `if` inside a lemma while the module still has trailing nodes). Return undefined there so corpus parses.
-     */
     insert_if(caret) {
         if (!(caret instanceof LeanCaret)) return undefined;
         const last = this.args[this.args.length - 1];
@@ -3789,13 +4415,11 @@ export class LeanStatements extends LeanArgs {
         return caret;
     }
 
-    /** PHP `LeanStatements::isProp`. */
     isProp(vars) {
         const args = this.args;
         if (args.length === 1) return args[0].isProp?.(vars);
     }
 
-    /** PHP `LeanStatements::jsonSerialize`. */
     jsonSerialize() {
         let args = super.jsonSerialize();
         if (this.args.length && this.args[this.args.length - 1] instanceof LeanCaret) {
@@ -4002,7 +4626,6 @@ export class LeanModule extends LeanStatements {
         if (this.indent < indent) {
             const c = this.push_args_indented(indent, newlineCount);
             if (c) return c;
-            // PHP throws here when `push_args_indented` cannot wrap the last arg; for real lemmas the
             // last node is often `Lean_lemma` (not Token/Parenthesis). Fall through like the
             // same-indent branch so parsing can continue (proof lines, etc.).
         }
@@ -4044,7 +4667,7 @@ export class LeanModule extends LeanStatements {
         return caret.push_binary('LeanColon');
     }
 
-    // insert_comma, push_right, insert_if, insert_calc, push_line_comment, etc. inherit from `Lean`.
+    // insert_comma, push_right, insert_if, insert_only, push_line_comment, etc. bubble via the parent chain.
 }
 
 /**
@@ -4105,14 +4728,12 @@ export class Lean_def extends LeanArgs {
         if (v) v.parent = this;
     }
 
-    /** PHP `Lean_def::strArgs`. */
     strArgs() {
         const [attr, assignment] = this.args;
         if (attr == null) return [assignment];
         return this.args;
     }
 
-    /** PHP `Lean_def::strFormat`: uses `func` (def / theorem / lemma). */
     strFormat() {
         const acc = this.accessibility === 'public' ? '' : `${this.accessibility} `;
         let def = `${acc}${this.func} %s`;
@@ -4120,12 +4741,10 @@ export class Lean_def extends LeanArgs {
         return def;
     }
 
-    /** PHP `Lean_def::latexFormat`. */
     latexFormat() {
         return this.strFormat();
     }
 
-    /** PHP `Lean_def::jsonSerialize`: key is `operator` (`'def'`), not `func`. */
     jsonSerialize() {
         const json = {
             [this.operator]: super.jsonSerialize(),
@@ -4135,17 +4754,14 @@ export class Lean_def extends LeanArgs {
         return json;
     }
 
-    /** PHP `Lean_def::insert_tactic`. */
     insert_tactic(caret, token) {
         return this.insert_word(caret, token);
     }
 
-    /** PHP `Lean_def::is_indented`. */
     is_indented() {
         return false;
     }
 
-    /** PHP `Lean_def::set_line`. */
     set_line(line) {
         this.line = line;
         let L = line;
@@ -4154,7 +4770,6 @@ export class Lean_def extends LeanArgs {
         return this.assignment.set_line(L);
     }
 
-    /** PHP `Lean_def::relocate_last_comment`. */
     relocate_last_comment() {
         const assignment = this.assignment;
         if (assignment instanceof LeanAssign) assignment.relocate_last_comment();
@@ -4197,7 +4812,6 @@ export class Lean_def extends LeanArgs {
 export class Lean_theorem extends Lean_def {}
 
 export class Lean_lemma extends Lean_def {
-    /** PHP `Lean_lemma::echo`. */
     echo() {
         this.assignment?.echo?.();
         const asn = this.assignment;
@@ -4227,98 +4841,6 @@ export class Lean_lemma extends Lean_def {
                 }
             }
         }
-    }
-}
-
-export class LeanCaret extends Lean {
-    static input_priority = 100;
-
-    append(New, _func) {
-        if (typeof New === 'string') {
-            const Ctor = getLeanClass(New);
-            this.parent.replace(this, new Ctor(this, this.indent, this.level));
-            return this;
-        }
-        this.parent.replace(this, New);
-        return New;
-    }
-
-    is_indented() {
-        return this.parent instanceof LeanArgsNewLineSeparated;
-    }
-
-    is_outsider() {
-        return true;
-    }
-
-    jsonSerialize() {
-        return '';
-    }
-
-    /** PHP `LeanCaret` participates in `Lean::toString` as empty text. */
-    strFormat() {
-        return '';
-    }
-
-    strArgs() {
-        return [];
-    }
-
-    latexFormat() {
-        return '';
-    }
-
-    /**
-     * Empty slot; `Lean.toString` would still apply `__toString`-style indent when `is_indented`, which
-     * injects spaces into `strFormat` holes and breaks round-trip. PHP effectively omits caret text.
-     */
-    toString() {
-        return '';
-    }
-
-    push_accessibility(New, accessibility) {
-        this.parent.replace(this, new (getLeanClass(New))(accessibility, this, this.indent, this.level));
-        return this;
-    }
-
-    push_block_comment(comment, docstring) {
-        const parent = this.parent;
-        const Cls = docstring ? LeanDocString : LeanBlockComment;
-        parent.replace(this, new Cls(comment, this.indent, this.level));
-        parent.push(this);
-        return this;
-    }
-
-    /** Port of LeanCaret::push_left — simpler than Lean::push_left. */
-    push_left(func, _prevToken) {
-        const Ctor = getLeanClass(func);
-        this.parent.replace(this, new Ctor(this, this.indent, this.level));
-        return this;
-    }
-
-    push_line_comment(comment) {
-        const parent = this.parent;
-        const line = new LeanLineComment(comment, this.indent, this.level);
-        parent.replace(this, line);
-        return line;
-    }
-
-    /** PHP does not define this on LeanCaret; delegate so `case "'"` can finish (see LeanToken::push_quote). */
-    push_quote(token) {
-        if (this.parent) return this.parent.insert_word(this, token);
-        throw new Error('push_quote: no parent');
-    }
-
-    /** Same spacing behavior as `LeanToken::push_token` when building word sequences from a caret. */
-    push_token(word) {
-        const level = this.level;
-        const newTok = new LeanToken(word, this.indent, level);
-        this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
-        return newTok;
-    }
-
-    strFormat() {
-        return '';
     }
 }
 
@@ -4371,7 +4893,6 @@ class Lean_fun extends LeanUnary {
     }
 }
 
-/** PHP `Lean_match`. */
 class Lean_match extends LeanArgs {
     /**
      * @param {Lean} subject
@@ -4426,10 +4947,6 @@ class Lean_match extends LeanArgs {
         return 'match\\ %s';
     }
 
-    /**
-     * PHP `Lean_match::latexArgs`.
-     * @param {Record<string, unknown>} [syntax]
-     */
     latexArgs(syntax) {
         const subject = this.subject.toLatex(syntax);
         const w = this.with;
@@ -4474,10 +4991,6 @@ class Lean_match extends LeanArgs {
         return super.insert_tactic(caret, token);
     }
 
-    /**
-     * PHP `Lean_match::split`; clone via `this.clone()` / `LeanArgs::__clone`.
-     * @param {Record<string, unknown>} [syntax]
-     */
     split(syntax) {
         const w = this.with;
         if (!w) return [this];
@@ -4505,7 +5018,6 @@ class Lean_match extends LeanArgs {
     }
 }
 
-/** PHP `LeanWith`. */
 class LeanWith extends LeanArgs {
     /**
      * @param {Lean} arg
@@ -4576,9 +5088,9 @@ class LeanWith extends LeanArgs {
                 this.replace(caret, new LeanBar(caret, this.indent, caret.level));
                 return caret;
             }
-            const new_ = new LeanCaret(this.indent, caret.level);
-            this.replace(caret, new LeanBitOr(caret, new_, this.indent, caret.level));
-            return new_;
+            const $new = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanBitOr(caret, $new, this.indent, caret.level));
+            return $new;
         }
         throw new Error(`LeanWith.insert_bar: unexpected for ${this.constructor.name}`);
     }
@@ -4590,9 +5102,9 @@ class LeanWith extends LeanArgs {
 
     insert_comma(caret) {
         if (caret === this.args[this.args.length - 1]) {
-            const new_ = new LeanCaret(this.indent, caret.level);
-            this.replace(caret, new LeanArgsCommaSeparated([caret, new_], this.indent, caret.level));
-            return new_;
+            const $new = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
+            return $new;
         }
         throw new Error(`LeanWith.insert_comma: unexpected for ${this.constructor.name}`);
     }
@@ -4680,7 +5192,6 @@ class LeanBigOperator extends LeanArgs {
         return `${cmd}\\limits_{\\substack{%s}} {%s}`;
     }
 
-    /** PHP `LeanBigOperator::jsonSerialize`: `{ [func]: parent::jsonSerialize() }`. */
     jsonSerialize() {
         return {
             [this.func]: super.jsonSerialize(),
@@ -4790,9 +5301,9 @@ class Lean_import extends LeanCommand {
 
     push_attr(caret) {
         if (caret === this.arg) {
-            const new_ = new LeanCaret(this.indent, caret.level);
-            this.arg = new LeanProperty(this.arg, new_, this.indent, caret.level);
-            return new_;
+            const $new = new LeanCaret(this.indent, caret.level);
+            this.arg = new LeanProperty(this.arg, $new, this.indent, caret.level);
+            return $new;
         }
         throw new Error(`push_attr is unexpected for ${this.constructor.name}`);
     }
@@ -4820,9 +5331,9 @@ class Lean_open extends LeanCommand {
 
     push_attr(caret) {
         if (caret === this.arg) {
-            const new_ = new LeanCaret(this.indent, caret.level);
-            this.arg = new LeanProperty(this.arg, new_, this.indent, caret.level);
-            return new_;
+            const $new = new LeanCaret(this.indent, caret.level);
+            this.arg = new LeanProperty(this.arg, $new, this.indent, caret.level);
+            return $new;
         }
         throw new Error(`push_attr is unexpected for ${this.constructor.name}`);
     }
@@ -4861,9 +5372,9 @@ class Lean_set_option extends LeanCommand {
 
     push_attr(caret) {
         if (caret === this.arg) {
-            const new_ = new LeanCaret(this.indent, caret.level);
-            this.arg = new LeanProperty(this.arg, new_, this.indent, caret.level);
-            return new_;
+            const $new = new LeanCaret(this.indent, caret.level);
+            this.arg = new LeanProperty(this.arg, $new, this.indent, caret.level);
+            return $new;
         }
         throw new Error(`push_attr is unexpected for ${this.constructor.name}`);
     }
@@ -4876,370 +5387,19 @@ class Lean_namespace extends LeanCommand {
     }
 }
 
-/**
- * PHP `escape_specials`.
- * Escapes underscores in identifiers: single-char prefix → subscript (e.g. d_z → d_{z}),
- * multi-char → literal underscore (e.g. band_part → band\_part).
- * @param {string} token
- * @returns {string}
- */
-function escapeSpecialsForLatex(token) {
-    const s = String(token);
-    const m = /^(\w+?)_(.+)$/.exec(s);
-    if (m) {
-        const [, head, tail] = m;
-        const escTail = tail.replace(/[{}_]/g, (c) => `\\${c}`);
-        return head.length === 1 ? `${head}_{${escTail}}` : `${head}\\_${escTail}`;
-    }
-    // Handle identifiers ending with underscore, e.g. `h_`.
-    if (/\w_$/.test(s)) return s.slice(0, -1) + '\\_';
-    return s;
-}
-
-export class LeanToken extends Lean {
-    static input_priority = 90;
-
-    /**
-     * @param {string} text
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(text, indent, level, parent = null) {
-        super(indent, level, parent);
-        this.text = text;
-        /** @type {Record<string, unknown> | null} */
-        this.cache = null;
-    }
-
-    clone() {
-        const copy = super.clone();
-        copy.cache = null;
-        return copy;
-    }
-
-    append(New, func) {
-        if (this.parent) return this.parent.insert(this, New, func);
-    }
-
-    ends_with_2_letters() {
-        return /[a-zA-Z]{2,}$/.test(this.text);
-    }
-
-    equals(other) {
-        return other instanceof LeanToken && this.text === other.text;
-    }
-
-    is_parallel_operator() {
-        return /_\?+$/.test(this.text);
-    }
-
-    isProp(vars) {
-        return (vars?.[this.text] ?? null) === 'Prop';
-    }
-
-    is_TypeStar() {
-        return this.text === 'Sort' || this.text === 'Type' || this.text === 'ℝ';
-    }
-
-    is_variable() {
-        return /^[a-zA-Z_][a-zA-Z_0-9]*$/.test(this.text);
-    }
-
-    jsonSerialize() {
-        return this.text;
-    }
-
-    latexFormat() {
-        return '%s';
-    }
-
-    latexArgs() {
-        return [this.text];
-    }
-
-    /**
-     * Identifier LaTeX: backslash-escape then `escapeSpecialsForLatex` (sub/superscripts).
-     * @param {Record<string, unknown>} [_syntax]
-     */
-    toLatex(_syntax) {
-        const backslashEscaped = this.text.replace(/\\/g, '\\textbackslash ');
-        return escapeSpecialsForLatex(backslashEscaped);
-    }
-
-    lower() {
-        this.text = this.text.toLowerCase();
-        return this;
-    }
-
-    operand_count() {
-        const m = /\?*$/.exec(this.text);
-        return m ? m[0].length : 0;
-    }
-
-    push_quote(quote) {
-        this.text += quote;
-        return this;
-    }
-
-    push_token(word) {
-        const level = this.level;
-        const newTok = new LeanToken(word, this.indent, level);
-        this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
-        return newTok;
-    }
-
-    regexp() {
-        return ['_'];
-    }
-
-    starts_with_2_letters() {
-        return /^[a-zA-Z]{2,}/.test(this.text);
-    }
-
-    strFormat() {
-        return this.text;
-    }
-
-    tactic_block_info() {
-        if (!this.cache) this.cache = {};
-        const map = { 0: [this] };
-        this.cache.size = 1;
-        return map;
-    }
-
-    tokens_space_separated() {
-        return [this];
-    }
-
-    /**
-     * `--` after an identifier: keep the token and append the comment (e.g. `intro x -- note`).
-     * Replacing the token used to drop the binder and break round-trip.
-     */
-    push_line_comment(comment) {
-        const parent = this.parent;
-        if (!parent) throw new Error(`push_line_comment: no parent for LeanToken`);
-        const line = new LeanLineComment(comment, this.indent, this.level);
-        if (parent instanceof LeanArgsSpaceSeparated) {
-            const i = parent.args.indexOf(this);
-            if (i >= 0) {
-                parent.args.splice(i + 1, 0, line);
-                line.parent = parent;
-                return line;
-            }
-        }
-        parent.replace(this, line);
-        return line;
-    }
-}
-
-export class LeanLineComment extends Lean {
-    /**
-     * @param {string} text
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(text, indent, level, parent = null) {
-        super(indent, level, parent);
-        this.text = text;
-    }
-
-    get operator() {
-        return '--';
-    }
-
-    get command() {
-        return '%';
-    }
-
-    is_comment() {
-        return true;
-    }
-
-    is_indented() {
-        const t = this.text;
-        if (t === 'given') {
-            let parent = this.parent;
-            if (
-                parent instanceof LeanArgsNewLineSeparated &&
-                (parent = parent.parent) instanceof LeanArgsIndented &&
-                (parent = parent.parent) instanceof LeanColon &&
-                (parent = parent.parent) instanceof LeanAssign &&
-                parent.parent instanceof Lean_lemma
-            ) {
-                return false;
-            }
-            if (this.parent instanceof LeanModule) {
-                const mod = this.parent;
-                const ix = mod.args.indexOf(this);
-                if (ix > 0 && mod.args[ix - 1] instanceof Lean_lemma) return false;
-            }
-            return true;
-        }
-        if (t === 'proof') {
-            let parent = this.parent;
-            if (parent instanceof LeanStatements) {
-                if (parent.parent instanceof LeanBy) parent = parent.parent;
-                if (
-                    (parent = parent.parent) instanceof LeanAssign &&
-                    parent.parent instanceof Lean_lemma
-                ) {
-                    return false;
-                }
-            } else if (parent instanceof LeanArgsNewLineSeparated) {
-                if (
-                    (parent = parent.parent) instanceof LeanAssign &&
-                    parent.parent instanceof Lean_lemma
-                ) {
-                    return false;
-                }
-            }
-        }
-        if (t === 'imply' || t === 'proof') {
-            let parent = this.parent;
-            if (
-                parent instanceof LeanStatements &&
-                (parent = parent.parent) instanceof LeanColon &&
-                (parent = parent.parent) instanceof LeanAssign &&
-                parent.parent instanceof Lean_lemma
-            ) {
-                return false;
-            }
-            // `lemma` + sibling layout: `Colon` may sit under `LeanAssign` (parent `LeanModule`, not `Lean_lemma`)
-            // or directly under `LeanModule` after `Lean_lemma`.
-            if (t === 'imply' && this.parent instanceof LeanStatements) {
-                const colon = this.parent.parent;
-                if (colon instanceof LeanColon) {
-                    const holder = colon.parent;
-                    if (holder instanceof LeanModule) {
-                        const mod = holder;
-                        const ix = mod.args.indexOf(colon);
-                        if (ix >= 0) {
-                            for (let j = 0; j < ix; j++) {
-                                if (mod.args[j] instanceof Lean_lemma) return false;
-                            }
-                        }
-                    } else if (holder instanceof LeanAssign && holder.parent instanceof LeanModule) {
-                        const mod = holder.parent;
-                        const ix = mod.args.indexOf(holder);
-                        if (ix >= 0) {
-                            for (let j = 0; j < ix; j++) {
-                                if (mod.args[j] instanceof Lean_lemma) return false;
-                            }
-                        }
-                    }
-                }
-            }
-            // Echo-style proof header: `-- proof` as its own module line after `… :=`.
-            if (t === 'proof' && this.parent instanceof LeanModule) {
-                const mod = this.parent;
-                const ix = mod.args.indexOf(this);
-                if (ix > 0 && mod.args[ix - 1] instanceof LeanAssign) return false;
-            }
-        } else if (this.parent instanceof LeanTactic) {
-            return false;
-        }
-        return true;
-    }
-
-    is_outsider() {
-        return /^(created|updated) on (\d\d\d\d-\d\d-\d\d)$/.test(this.text);
-    }
-
-    /**
-     * `%` starts a LaTeX comment; structural markers (`imply`, `given`, `proof`) would truncate output.
-     */
-    latexFormat() {
-        if (this.text === 'imply' || this.text === 'given' || this.text === 'proof') return '';
-        return `\\%${this.sep()}${this.text}`;
-    }
-
-    sep() {
-        return ' ';
-    }
-
-    strFormat() {
-        return `${this.operator}${this.sep()}${this.text}`;
-    }
-}
-
-class LeanBlockComment extends Lean {
-    /**
-     * @param {string} text
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(text, indent, level, parent = null) {
-        super(indent, level, parent);
-        this.text = text;
-    }
-
-    is_comment() {
-        return true;
-    }
-
-    is_indented() {
-        return true;
-    }
-
-    sep() {
-        return '';
-    }
-
-    set_line(line) {
-        this.line = line;
-        return line + (this.text.match(/\n/g)?.length ?? 0);
-    }
-
-    strFormat() {
-        return `/-${this.text}-/`;
-    }
-}
-
-class LeanDocString extends LeanBlockComment {
-    /**
-     * @param {string} text
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(text, indent, level, parent = null) {
-        super(text, indent, level, parent);
-    }
-
-    is_indented() {
-        return false;
-    }
-
-    set_line(line) {
-        this.line = line;
-        let L = line + 1;
-        L += this.text.match(/\n/g)?.length ?? 0;
-        return L + 1;
-    }
-
-    strFormat() {
-        return `/--\n${this.text}\n-/`;
-    }
-}
 
 export class LeanGetElem extends LeanBinary {
     static input_priority = 88;
 
-    /** PHP LeanGetElemBaseBinary::stack_priority 18. Keeps slice `:` and binary ops inside the index. */
     get stack_priority() {
         return 18;
     }
 
-    /** PHP `LeanGetElemBase::push_right`. Absorb `]` so it closes the index bracket, not an outer LeanBracket. */
     push_right(funcName) {
         if (funcName === 'LeanBracket') return this;
         return super.push_right(funcName);
     }
 
-    /** PHP `LeanGetElemBase::insert_comma`. Create comma-separated index e.g. A[i, j]. */
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
         const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
@@ -5248,17 +5408,14 @@ export class LeanGetElem extends LeanBinary {
         return caret2;
     }
 
-    /** PHP `LeanGetElemBaseBinary::sep`. */
     sep() {
         return '';
     }
 
-    /** PHP `LeanGetElem::strFormat`: `A[i,j]`. */
     strFormat() {
         return '%s[%s]';
     }
 
-    /** PHP `LeanGetElem::latexFormat`: subscript. */
     latexFormat() {
         return '{%s}_{%s}';
     }
@@ -5267,18 +5424,15 @@ export class LeanGetElem extends LeanBinary {
 export class LeanGetElemQue extends LeanBinary {
     static input_priority = 88;
 
-    /** PHP LeanGetElemBaseBinary::stack_priority 18. */
     get stack_priority() {
         return 18;
     }
 
-    /** PHP `LeanGetElemBase::push_right` — absorb `]` for index. */
     push_right(funcName) {
         if (funcName === 'LeanBracket') return this;
         return super.push_right(funcName);
     }
 
-    /** PHP `LeanGetElemBase::insert_comma`. */
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
         const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
@@ -5287,17 +5441,14 @@ export class LeanGetElemQue extends LeanBinary {
         return caret2;
     }
 
-    /** PHP `LeanGetElemBaseBinary::sep`. */
     sep() {
         return '';
     }
 
-    /** PHP `LeanGetElemQue::strFormat`. */
     strFormat() {
         return '%s[%s]?';
     }
 
-    /** PHP `LeanGetElemQue::latexFormat`. */
     latexFormat() {
         return '{%s}_{%s?}';
     }
@@ -5306,26 +5457,20 @@ export class LeanGetElemQue extends LeanBinary {
 export class LeanGetElemQuote extends LeanArgs {
     static input_priority = 88;
 
-    /** PHP LeanGetElemBaseBinary::stack_priority 18. */
     get stack_priority() {
         return 18;
     }
 
-    /** PHP `LeanGetElemBase::push_right` — absorb `]` for index. */
     push_right(funcName) {
         if (funcName === 'LeanBracket') return this;
         return super.push_right(funcName);
     }
 
-    /** PHP `LeanGetElemQuote::strFormat`. */
     strFormat() {
         return "%s[%s]'%s";
     }
 }
 
-/**
- * PHP `LeanStack` extends `LeanBigOperator`. `[i < n] body` notation.
- */
 class LeanStack extends LeanBigOperator {
     static input_priority = 52;
 
@@ -5337,12 +5482,10 @@ class LeanStack extends LeanBigOperator {
         return 'Stack';
     }
 
-    /** PHP `LeanStack::__get('stack_priority')`. */
     get stack_priority() {
         return 28;
     }
 
-    /** PHP `LeanStack::latexArgs`. */
     latexArgs(syntax) {
         const s = syntax ?? {};
         s[this.constructor.name] = true;
@@ -5353,7 +5496,6 @@ class LeanStack extends LeanBigOperator {
         return '\\left[{%s}\\right]{%s}';
     }
 
-    /** PHP `LeanStack::push_args_indented`: no-op. */
     push_args_indented(_indent, _newlineCount, _functionCall = true) {}
 
     strFormat() {
@@ -5361,150 +5503,6 @@ class LeanStack extends LeanBigOperator {
     }
 }
 
-/**
- * Port of LeanBracket::push_right. When [i < n] pattern, replace with LeanStack.
- */
-class LeanBracket extends LeanPairedGroup {
-    push_right(funcName) {
-        if (funcName === 'LeanBracket') {
-            const lt = this.arg;
-            // arg can be Lean_lt (i < n) or LeanArgsSpaceSeparated e.g. ( LeanToken, Lean_lt ) from push_left
-            let bound = lt;
-            if (lt instanceof LeanArgsSpaceSeparated && lt.args.length >= 2) {
-                const last = lt.args[lt.args.length - 1];
-                if (last?.constructor?.name === 'Lean_lt' && last.lhs instanceof LeanToken) bound = last;
-            }
-            const ok = bound && bound.constructor?.name === 'Lean_lt' && bound.lhs instanceof LeanToken;
-            if (ok) {
-                const scope = new LeanCaret(this.indent, this.level);
-                const stack = new LeanStack(bound, this.indent, this.level);
-                stack.scope = scope;
-                this.parent.replace(this, stack);
-                return scope;
-            }
-        }
-        return super.push_right(funcName);
-    }
-
-    latexFormat() {
-        return '\\left[ {%s} \\right]';
-    }
-
-    toString() {
-        const s = super.toString();
-        const ind = this.indent ?? 0;
-        if (ind > 0 && this.parent?.constructor?.name === 'LeanModule') return ' '.repeat(ind) + s;
-        return s;
-    }
-}
-
-/** PHP `LeanBrace`. */
-class LeanBrace extends LeanPairedGroup {
-    is_Expr() {
-        return false;
-    }
-    get stack_priority() {
-        return 17;
-    }
-    get operator() {
-        return '{}';
-    }
-    latexFormat() {
-        return '\\left\\{ {%s} \\right\\}';
-    }
-}
-
-/** PHP `LeanAngleBracket`. */
-class LeanAngleBracket extends LeanPairedGroup {
-    get stack_priority() {
-        return 10;
-    }
-    get operator() {
-        return ['⟨', '⟩'];
-    }
-    latexFormat() {
-        return '\\langle {%s} \\rangle';
-    }
-
-    /** PHP `LeanAngleBracket::tokens_comma_separated`. */
-    tokens_comma_separated() {
-        const a = this.arg;
-        if (a instanceof LeanArgsCommaSeparated) return a.tokens_comma_separated();
-        return [a];
-    }
-}
-
-/** PHP `LeanAbs`. */
-class LeanAbs extends LeanPairedGroup {
-    get stack_priority() {
-        return 17;
-    }
-    get operator() {
-        return '||';
-    }
-    latexFormat() {
-        return '\\left| {%s} \\right|';
-    }
-}
-
-/** PHP `LeanNorm`. */
-class LeanNorm extends LeanPairedGroup {
-    get stack_priority() {
-        return 17;
-    }
-    get operator() {
-        return ['‖', '‖'];
-    }
-    latexFormat() {
-        return '\\left\\lVert {%s} \\right\\rVert';
-    }
-}
-
-/** PHP `LeanCeil`. */
-class LeanCeil extends LeanPairedGroup {
-    static input_priority = 72;
-    get stack_priority() {
-        return 22;
-    }
-    get operator() {
-        return ['⌈', '⌉'];
-    }
-    latexFormat() {
-        return '\\left\\lceil {%s} \\right\\rceil';
-    }
-}
-
-/** PHP `LeanFloor`. */
-class LeanFloor extends LeanPairedGroup {
-    static input_priority = 72;
-    get stack_priority() {
-        return 22;
-    }
-    get operator() {
-        return ['⌊', '⌋'];
-    }
-    latexFormat() {
-        return '\\left\\lfloor {%s} \\right\\rfloor';
-    }
-}
-
-/** PHP `LeanDoubleAngleQuotation`. */
-class LeanDoubleAngleQuotation extends LeanPairedGroup {
-    is_Expr() {
-        return false;
-    }
-    get stack_priority() {
-        return 22;
-    }
-    get operator() {
-        return ['«', '»'];
-    }
-    latexFormat() {
-        return '\\left\\langle{%s}\\right\\rangle'; // «» guillemets
-    }
-}
-
-/** PHP `LeanUsing`: tactic modifier `using`. */
 class LeanUsing extends LeanUnary {
     is_indented() {
         return false;
@@ -5537,7 +5535,6 @@ class LeanUsing extends LeanUnary {
     }
 }
 
-/** PHP `LeanFrom`. */
 class LeanFrom extends LeanUnary {
     is_indented() {
         return this.parent instanceof LeanArgsCommaNewLineSeparated;
@@ -5587,7 +5584,6 @@ class LeanFrom extends LeanUnary {
     }
 }
 
-/** PHP `LeanCalc`. */
 class LeanCalc extends LeanUnary {
     is_indented() {
         const p = this.parent;
@@ -5619,8 +5615,8 @@ class LeanCalc extends LeanUnary {
                 return nl.push_newlines(newlineCount - 1);
             }
             if (caret instanceof LeanAssign) {
-                const new_ = this.push_args_indented(indent, newlineCount, false);
-                if (new_) return new_;
+                const $new = this.push_args_indented(indent, newlineCount, false);
+                if ($new) return $new;
             }
         }
         return super.insert_newline(caret, newlineCount, indent, next);
@@ -5656,11 +5652,6 @@ class LeanCalc extends LeanUnary {
         }
     }
 
-    /**
-     * PHP `LeanCalc::split`: `clone $this` then detach body;
-     * must use deep `clone()` so `this.args` is not shared with the original (see `LeanBar.split`).
-     * @param {Record<string, unknown>} [syntax]
-     */
     split(syntax) {
         const arg = this.arg;
         if (arg instanceof LeanArgsNewLineSeparated) {
@@ -5686,7 +5677,6 @@ class LeanCalc extends LeanUnary {
     }
 }
 
-/** PHP `LeanMOD`. */
 class LeanMOD extends LeanUnary {
     is_indented() {
         return false;
@@ -5710,7 +5700,6 @@ class LeanMOD extends LeanUnary {
     }
 }
 
-/** PHP `LeanGeneralizing`. */
 class LeanGeneralizing extends LeanUnary {
     is_indented() {
         return false;
@@ -5743,7 +5732,6 @@ class LeanGeneralizing extends LeanUnary {
     }
 }
 
-/** PHP `LeanIn`: tactic modifier `in` (not `Lean_in` ∈). */
 class LeanIn extends LeanUnary {
     is_indented() {
         return false;
@@ -5779,7 +5767,6 @@ class LeanIn extends LeanUnary {
     }
 }
 
-/** PHP LeanAt extends LeanUnary: modifier "at %s". */
 export class LeanAt extends LeanUnary {
     get operator() {
         return 'at';
@@ -5789,7 +5776,6 @@ export class LeanAt extends LeanUnary {
     }
 }
 
-/** PHP `LeanTacticBlock`; method order README Step 3 §2 (alphabetic). */
 class LeanTacticBlock extends LeanUnary {
     get command() {
         return '\\cdot';
@@ -5860,15 +5846,10 @@ class LeanTacticBlock extends LeanUnary {
         return a instanceof LeanStatements ? '\n' : a instanceof LeanCaret ? '' : ' ';
     }
 
-    /** PHP `LeanTacticBlock::strFormat`. */
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
     }
 
-    /**
-     * PHP `LeanTacticBlock::echo`.
-     * @returns {void | (Lean | number)[]}
-     */
     echo() {
         const statements = this.arg;
         if (!(statements instanceof LeanStatements)) return;
@@ -6097,7 +6078,6 @@ class LeanTacticBlock extends LeanUnary {
         }
     }
 
-    /** PHP `LeanTacticBlock::tactic_block`. */
     tactic_block(args, span) {
         let count = 0;
         let j = 0;
@@ -6108,10 +6088,6 @@ class LeanTacticBlock extends LeanUnary {
         return j;
     }
 
-    /**
-     * PHP `LeanTacticBlock::split`.
-     * @param {Record<string, unknown>} [syntax]
-     */
     split(syntax) {
         if (this.arg instanceof LeanStatements) {
             const self = this.clone();
@@ -6124,7 +6100,6 @@ class LeanTacticBlock extends LeanUnary {
         return [this];
     }
 
-    /** PHP `LeanTacticBlock::set_line`. */
     set_line(line) {
         this.line = line;
         if (this.arg instanceof LeanStatements) line++;
@@ -6132,10 +6107,6 @@ class LeanTacticBlock extends LeanUnary {
     }
 }
 
-/**
- * PHP `LeanSequentialTacticCombinator`: unary `·` / `<;>` combinator.
- * @extends {LeanUnary}
- */
 export class LeanSequentialTacticCombinator extends LeanUnary {
     /**
      * @param {Lean} arg
@@ -6262,10 +6233,6 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 }
 
-/**
- * PHP `abstract class LeanSyntax extends LeanArgs`.
- * Defines `insert` and `__set`-style behavior for `arg` / `sequential_tactic_combinator`; `LeanTactic`, `Lean_let`, `Lean_show` extend this (not `LeanUnary`).
- */
 export class LeanSyntax extends LeanArgs {
     get arg() {
         return this.args[0];
@@ -6304,7 +6271,6 @@ export class LeanSyntax extends LeanArgs {
     }
 }
 
-/** PHP `Lean_let` extends `LeanSyntax`; method order README Step 3 §2 (alphabetic). */
 class Lean_let extends LeanSyntax {
     static input_priority = 7;
 
@@ -6385,7 +6351,6 @@ class Lean_let extends LeanSyntax {
         };
     }
 
-    /** PHP `Lean_let::latexFormat`. */
     latexFormat() {
         return `{\\color{#00f}${this.command}}\\ ` + Array(this.args.length).fill('%s').join('\\ ');
     }
@@ -6394,10 +6359,6 @@ class Lean_let extends LeanSyntax {
         return 'let';
     }
 
-    /**
-     * PHP `Lean_let::split`.
-     * @param {Record<string, unknown>} [syntax]
-     */
     split(syntax) {
         const assign = this.args[0];
         if (assign instanceof LeanAssign) {
@@ -6416,7 +6377,6 @@ class Lean_let extends LeanSyntax {
         return 7;
     }
 
-    /** PHP `Lean_let::strFormat`. */
     strFormat() {
         const func = this.operator;
         const parts = [];
@@ -6430,7 +6390,6 @@ class Lean_let extends LeanSyntax {
     }
 }
 
-/** PHP `Lean_have`. */
 class Lean_have extends Lean_let {
     get command() {
         return 'have';
@@ -6466,13 +6425,11 @@ class Lean_have extends Lean_let {
         return ' ';
     }
 
-    /** PHP `Lean_have::strFormat`. */
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
     }
 }
 
-/** PHP `Lean_show` extends `LeanSyntax`. */
 class Lean_show extends LeanSyntax {
     constructor(arg, indent, level, parent = null) {
         super([arg], indent, level, parent);
@@ -6517,7 +6474,6 @@ export class LeanTactic extends LeanSyntax {
     constructor(name, arg, indent, level) {
         super([arg], indent, level);
         this.tacticName = name;
-        /** @type {boolean | undefined} PHP `$only` */
         this.only = undefined;
     }
 
@@ -6539,7 +6495,6 @@ export class LeanTactic extends LeanSyntax {
         return this._lastOf(LeanBy);
     }
 
-    /** PHP `$this->func` */
     get func() {
         return this.tacticName;
     }
@@ -6552,25 +6507,22 @@ export class LeanTactic extends LeanSyntax {
         return this._lastOf(LeanWith);
     }
 
-    /** PHP `LeanTactic::is_inline_tactic_block`. */
     is_inline_tactic_block() {
         return this.tacticName === 'repeat' || this.tacticName === 'try';
     }
 
-    /** PHP `LeanTactic::__get('stack_priority')`. */
     get stack_priority() {
         if (this.parent instanceof LeanBy) return LeanColon.input_priority;
         if (this.tacticName === 'obtain') return LeanAssign.input_priority - 1;
         return LeanAssign.input_priority;
     }
 
-    /** PHP `LeanTactic::insert_newline`. */
     insert_newline(caret, newlineCount, indent, next) {
         if (caret === this.arg) {
             if (this.indent < indent && caret instanceof LeanArgsSpaceSeparated) {
-                const new_ = new LeanCaret(this.indent, caret.level);
-                caret.push(new_);
-                return new_;
+                const $new = new LeanCaret(this.indent, caret.level);
+                caret.push($new);
+                return $new;
             }
             if (next === '<') {
                 const c = new LeanCaret(indent, caret.level);
@@ -6581,7 +6533,6 @@ export class LeanTactic extends LeanSyntax {
         return super.insert_newline(caret, newlineCount, indent, next);
     }
 
-    /** PHP `LeanTactic::insert_comma`. */
     insert_comma(caret) {
         if (caret === this.arg) {
             if (
@@ -6589,33 +6540,32 @@ export class LeanTactic extends LeanSyntax {
                 caret instanceof LeanBinary ||
                 caret instanceof LeanPairedGroup
             ) {
-                const new_ = new LeanCaret(this.indent, caret.level);
-                this.replace(caret, new LeanArgsCommaSeparated([caret, new_], this.indent, caret.level));
-                return new_;
+                const $new = new LeanCaret(this.indent, caret.level);
+                this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
+                return $new;
             }
             if (caret instanceof LeanArgsCommaSeparated) {
-                const new_ = new LeanCaret(this.indent, caret.level);
-                caret.push(new_);
-                return new_;
+                const $new = new LeanCaret(this.indent, caret.level);
+                caret.push($new);
+                return $new;
             }
         }
         return super.insert_comma(caret);
     }
 
-    /** PHP `LeanTactic::insert_semicolon`. */
     insert_semicolon(caret) {
         if (caret === this.arg) {
             if (this.is_inline_tactic_block()) {
-                const new_ = new LeanCaret(this.indent, caret.level);
-                if (caret instanceof LeanArgsSemicolonSeparated) caret.push(new_);
-                else this.replace(caret, new LeanArgsSemicolonSeparated([caret, new_], this.indent, caret.level));
-                return new_;
+                const $new = new LeanCaret(this.indent, caret.level);
+                if (caret instanceof LeanArgsSemicolonSeparated) caret.push($new);
+                else this.replace(caret, new LeanArgsSemicolonSeparated([caret, $new], this.indent, caret.level));
+                return $new;
             }
             if (this.parent instanceof LeanBy) {
-                const new_ = new LeanCaret(this.indent, caret.level);
-                if (caret instanceof LeanArgsSemicolonSeparated) caret.push(new_);
-                else this.parent.replace(this, new LeanArgsSemicolonSeparated([this, new_], this.indent, caret.level));
-                return new_;
+                const $new = new LeanCaret(this.indent, caret.level);
+                if (caret instanceof LeanArgsSemicolonSeparated) caret.push($new);
+                else this.parent.replace(this, new LeanArgsSemicolonSeparated([this, $new], this.indent, caret.level));
+                return $new;
             }
         }
         return super.insert_semicolon(caret);
@@ -6632,7 +6582,6 @@ export class LeanTactic extends LeanSyntax {
         return line;
     }
 
-    /** PHP `LeanTactic::has_tactic_block_followed`. */
     has_tactic_block_followed() {
         const p = this.parent;
         if (!(p instanceof LeanStatements)) return;
@@ -6646,10 +6595,6 @@ export class LeanTactic extends LeanSyntax {
         }
     }
 
-    /**
-     * PHP `LeanTactic::get_echo_token`.
-     * @returns {Lean | Lean[] | undefined}
-     */
     get_echo_token() {
         const at = this.at;
         if (at) {
@@ -6790,7 +6735,6 @@ export class LeanTactic extends LeanSyntax {
         return new LeanArgsCommaSeparated(token, this.indent, this.level);
     }
 
-    /** PHP `LeanTactic::echo`. */
     echo() {
         const tok = this.get_echo_token();
         const stc = this.sequential_tactic_combinator;
@@ -6852,7 +6796,6 @@ export class LeanTactic extends LeanSyntax {
         return this.insert_word(caret, type);
     }
 
-    /** PHP `LeanTactic::is_indented`. */
     is_indented() {
         const p = this.parent;
         if (!p) return true;
@@ -6897,11 +6840,6 @@ export class LeanTactic extends LeanSyntax {
         }
     }
 
-    /**
-     * PHP `LeanTactic::split`.
-     * @param {Record<string, unknown>} [syntax]
-     * @returns {Lean[]}
-     */
     split(syntax) {
         if (!syntax) syntax = {};
         syntax[this.tacticName] = true;
@@ -6967,7 +6905,6 @@ export class LeanTactic extends LeanSyntax {
         return [this];
     }
 
-    /** PHP `LeanTactic::strFormat`. */
     strFormat() {
         let func = this.tacticName;
         if (this.only) func += ' only';
@@ -6991,9 +6928,6 @@ export class LeanTactic extends LeanSyntax {
     }
 }
 
-/**
- * PHP `LeanIte`: `if … then … else …`.
- */
 export class LeanIte extends LeanArgs {
     static input_priority = 60;
 
@@ -7152,10 +7086,6 @@ export class LeanIte extends LeanArgs {
         );
     }
 
-    /**
-     * PHP `LeanIte::latexArgs`.
-     * @param {Record<string, unknown>} [syntax]
-     */
     latexArgs(syntax) {
         const cases = [];
         let cur = /** @type {LeanIte | Lean} */ (this);
@@ -7204,10 +7134,6 @@ export class LeanIte extends LeanArgs {
         return else_.set_line(line);
     }
 
-    /**
-     * PHP `LeanIte::split`.
-     * @param {Record<string, unknown>} [syntax]
-     */
     split(syntax) {
         const then = this.then;
         const else_ = this.else;
@@ -7250,11 +7176,6 @@ export class LeanIte extends LeanArgs {
         return `if %s then\n${thenFmt}\n${indent_else}else${sep}${elseFmt}`;
     }
 
-    /**
-     * PHP `LeanIte::echo_part`.
-     * @param {Lean} part
-     * @param {LeanToken} token
-     */
     static echo_part(part, token) {
         const echo = new LeanTactic('echo', token.clone(), part.indent, part.level);
         if (part instanceof LeanStatements) part.unshift(echo);
@@ -7469,32 +7390,10 @@ const LEAN_CLASSES = {
     LeanUsing,
 };
 
-/**
- * Resolve an AST class by name. Mirrors PHP `new $ClassName(...)`
- * Looks up `LEAN_CLASSES` (concrete classes only).
- * @param {string} name
- */
 function getLeanClass(name) {
     const C = LEAN_CLASSES[name];
     if (C) return C;
     throw new Error(`getLeanClass: unknown class ${name} (add to LEAN_CLASSES)`);
-}
-
-/**
- * PHP `Lean::toString()` (lean.php) — `strFormat` + `strArgs` + `sprintf` only. It does not recurse into
- * children itself: nested `Lean` values are coerced the same way as PHP `%s` on objects (`__toString`), here
- * `String(arg)` → `Lean.prototype.toString()` → optional indent + this body. Layout details live in `strFormat` /
- * `strArgs` on each class.
- *
- * @param {unknown} node
- * @returns {string}
- */
-function leanPhpToStringBody(node) {
-    if (!(node instanceof Lean)) return String(node);
-    const format = node.strFormat();
-    const args = node.strArgs();
-    if (args.length === 0) return format;
-    return String(format).format(...args.map((a) => (a instanceof Lean ? String(a) : a)));
 }
 
 /**
@@ -7505,7 +7404,6 @@ export function compile(code) {
     return LeanParser.instance.build(code);
 }
 
-// Align with PHP `LeanParser::$instance`
 LeanParser._instance = new LeanParser();
 Object.defineProperty(LeanParser, 'instance', {
     get() {
