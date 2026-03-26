@@ -2004,11 +2004,14 @@ class LeanBrace extends LeanPairedGroup {
 }
 
 class LeanAbs extends LeanPairedGroup {
+    get operator() {
+        return '||';
+    }
     get stack_priority() {
         return 17;
     }
-    get operator() {
-        return '||';
+    insert_bar(caret, prevToken, next) {
+        return this.push_right('LeanAbs');
     }
     latexFormat() {
         return '\\left| {%s} \\right|';
