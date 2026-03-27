@@ -2,7 +2,7 @@
 /**
  * After fixing a round-trip bug and adding **one** verified row to `round-trip-corpus.jsonl`, run a
  * **type-specific scan**: find other `.lean` files under `Lemma/` that share the same parse/print shape
- * (same class of error), verify `parse → String(AST) → parse` with stable `jsonSerialize`, and append
+ * (same class of error), verify `parse → String(AST) → parse` with stable `toJSON`, and append
  * all passing paths in one batch. Errors are often universal among similar sources; this avoids
  * rediscovering the same fix lemma-by-lemma.
  *
@@ -95,7 +95,7 @@ function walkLemmaLeanFiles(dir) {
 }
 
 function stableAstJson(root) {
-    return JSON.stringify(root.jsonSerialize(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
+    return JSON.stringify(root.toJSON(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
 }
 
 function roundTripOk(source) {

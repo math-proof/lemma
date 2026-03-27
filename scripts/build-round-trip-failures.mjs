@@ -2,7 +2,7 @@
 /**
  * Build `scripts/round-trip-failures.jsonl`: every `Lemma/*.lean` (excluding `*.echo.lean`)
  * that is **not** listed in `scripts/round-trip-corpus.jsonl` and fails either initial `compile`
- * or AST → string → AST with stable `jsonSerialize` (same rules as `test-lean-parser.mjs`).
+ * or AST → string → AST with stable `toJSON` (same rules as `test-lean-parser.mjs`).
  *
  * After extending the corpus for a fix, run `related-round-trip-scan.mjs` (same error shape) before
  * relying only on this full-file list.
@@ -34,7 +34,7 @@ function walkLemmaLeanFiles(dir) {
 }
 
 function stableAstJson(root) {
-    return JSON.stringify(root.jsonSerialize(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
+    return JSON.stringify(root.toJSON(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
 }
 
 /**
@@ -101,7 +101,7 @@ function main() {
     rows.sort((a, b) => a.rel.localeCompare(b.rel));
 
     const header =
-        '# Off-corpus round-trip failures — not in round-trip-corpus.jsonl; fail parse1, parse2, or jsonSerialize match after print. Regenerate: node scripts/build-round-trip-failures.mjs';
+        '# Off-corpus round-trip failures — not in round-trip-corpus.jsonl; fail parse1, parse2, or toJSON match after print. Regenerate: node scripts/build-round-trip-failures.mjs';
     const body = rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : '');
     writeFileSync(OUT_JSONL, `${header}\n${body}`, 'utf8');
 

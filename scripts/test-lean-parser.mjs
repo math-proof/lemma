@@ -90,13 +90,13 @@ function parseArgs(argv) {
 }
 
 /**
- * Stable fingerprint for AST equality: `root.jsonSerialize()` then `JSON.stringify`
+ * Stable fingerprint for AST equality: `root.toJSON()` then `JSON.stringify`
  * (handles nested structures; ignores object identity).
  *
- * @param {{ jsonSerialize: () => unknown }} root
+ * @param {{ toJSON: () => unknown }} root
  */
 function stableAstJson(root) {
-    return JSON.stringify(root.jsonSerialize(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
+    return JSON.stringify(root.toJSON(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
 }
 
 /**
@@ -189,7 +189,7 @@ Options:
   --round-trip-verbose     Print per-file round-trip lines (default: summary only)
   --help                   This message
 
-Every run checks: parse(s) → String(AST) → parse yields the same jsonSerialize() for all smoke
+Every run checks: parse(s) → String(AST) → parse yields the same toJSON() for all smoke
 sources and for each corpus file in scripts/round-trip-corpus.jsonl (plus any extra Lemma/ paths).
 
 Without paths, runs built-in smoke tests + corpus from scripts/round-trip-corpus.jsonl.
@@ -230,7 +230,7 @@ Extra paths must be under Lemma/ (relative to repo root, or absolute inside the 
             if (!args.json) {
                 console.error(`\nROUND-TRIP SMOKE FAILED: ${s.name}`);
                 if (!rt.ok) console.error(`  phase=${rt.phase} ${rt.error}`);
-                else console.error(`  jsonSerialize mismatch`);
+                else console.error(`  toJSON mismatch`);
             }
             process.exit(1);
         }
@@ -409,7 +409,7 @@ Extra paths must be under Lemma/ (relative to repo root, or absolute inside the 
         const rtCorpus = corpusResults.filter((c) => c.roundTrip);
         const rtOk = rtCorpus.filter((c) => c.roundTrip.match === true).length;
         console.log(
-            `\nRound-trip (parse → String(AST) → parse; same jsonSerialize): smoke OK (${SMOKE.length}/${SMOKE.length}). Corpus checked: ${rtCorpus.length} — ${rtOk} match.`,
+            `\nRound-trip (parse → String(AST) → parse; same toJSON): smoke OK (${SMOKE.length}/${SMOKE.length}). Corpus checked: ${rtCorpus.length} — ${rtOk} match.`,
         );
         if (args.roundTripVerbose) {
             for (const c of rtCorpus) {

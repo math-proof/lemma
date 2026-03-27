@@ -359,10 +359,10 @@ function alignLeanParenthesisInheritedIndented(pMem, jMem, className) {
     return [pMem.filter((x) => x !== 'method:is_indented'), jMem];
 }
 
-/** JS `toJSON` helper used by `jsonSerialize`; no separate PHP method. */
-function alignLeanLineCommentToJSON(pMem, jMem, className) {
-    if (className !== 'LeanLineComment') return [pMem, jMem];
-    return [pMem, jMem.filter((x) => x !== 'method:toJSON')];
+/** PHP `JsonSerializable::jsonSerialize`; JS `toJSON` (same role for stable AST fingerprints). */
+function alignJsonSerializePhpVsJs(pMem, jMem, _className) {
+    const p = pMem.map((x) => (x === 'method:jsonSerialize' ? 'method:toJSON' : x));
+    return [p, jMem];
 }
 
 /** JS-only `strArgs` helper for dotted names; not a separate PHP method on this class. */
@@ -431,6 +431,7 @@ if (membersMode) {
         if (normalize) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
             [pMem, jMem] = alignCommandGetter(pMem, jMem);
+            [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLean_defPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
@@ -441,7 +442,6 @@ if (membersMode) {
             [pMem, jMem] = alignLeanTokenPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
             [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
-            [pMem, jMem] = alignLeanLineCommentToJSON(pMem, jMem, name);
             [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
             [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
         }

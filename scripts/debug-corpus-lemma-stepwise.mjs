@@ -35,7 +35,7 @@ if (!rel) {
 const source = readFileSync(join(process.cwd(), rel), 'utf8');
 
 function stableAstJson(root) {
-    return JSON.stringify(root.jsonSerialize(), (_, v) => (typeof v === 'bigint' ? v.toString() : v));
+    return JSON.stringify(root.toJSON(), (_, v) => (typeof v === 'bigint' ? v.toString() : v));
 }
 
 function brief(n, depth = 0, maxDepth = 8) {
@@ -63,7 +63,7 @@ console.log(printed);
 console.log('\n=== Step 4: Re-parse printed ===');
 const root2 = compile(printed);
 const m = stableAstJson(root) === stableAstJson(root2);
-console.log(`stable jsonSerialize match: ${m}`);
+console.log(`stable toJSON match: ${m}`);
 if (!m) {
     const j1 = stableAstJson(root);
     const j2 = stableAstJson(root2);

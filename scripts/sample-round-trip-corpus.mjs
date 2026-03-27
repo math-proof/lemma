@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Randomly sample `.lean` files under Lemma/ that are not yet in `round-trip-corpus.jsonl`,
- * and keep those that pass parse + AST→String→AST jsonSerialize equality.
+ * and keep those that pass parse + AST→String→AST toJSON equality.
  *
  * Usage:
  *   node scripts/sample-round-trip-corpus.mjs [seed] [count]
@@ -27,7 +27,7 @@ const REPO_ROOT = join(__dirname, '..');
 const CORPUS_JSONL = join(__dirname, 'round-trip-corpus.jsonl');
 
 function stableAstJson(root) {
-    return JSON.stringify(root.jsonSerialize(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
+    return JSON.stringify(root.toJSON(), (_k, v) => (typeof v === 'bigint' ? v.toString() : v));
 }
 
 function roundTripOk(source) {
