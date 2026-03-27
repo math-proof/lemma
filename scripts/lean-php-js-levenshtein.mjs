@@ -292,6 +292,12 @@ function alignLeanLineCommentToJSON(pMem, jMem, className) {
     return [pMem, jMem.filter((x) => x !== 'method:toJSON')];
 }
 
+/** JS-only `strArgs` helper for dotted names; not a separate PHP method on this class. */
+function alignLeanPropertyStrArgs(pMem, jMem, className) {
+    if (className !== 'LeanProperty') return [pMem, jMem];
+    return [pMem, jMem.filter((x) => x !== 'method:strArgs')];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -347,6 +353,7 @@ if (membersMode) {
             [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
             [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
             [pMem, jMem] = alignLeanLineCommentToJSON(pMem, jMem, name);
+            [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;

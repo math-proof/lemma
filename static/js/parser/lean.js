@@ -2201,11 +2201,11 @@ export class LeanProperty extends LeanBinary {
         return 87;
     }
 
-    get command() {
+    get operator() {
         return '.';
     }
 
-    get operator() {
+    get command() {
         return '.';
     }
 
@@ -3406,6 +3406,132 @@ class Lean_sqrt extends LeanUnaryArithmeticPre {
     }
     strFormat() {
         return `${this.operator}%s`;
+    }
+}
+
+/** Postfix square `²`. */
+class LeanSquare extends LeanUnaryArithmeticPost {
+    static input_priority = 66;
+    get operator() {
+        return '²';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** Cube root `∛`. */
+class LeanCubicRoot extends LeanUnaryArithmeticPre {
+    get stack_priority() {
+        return 71;
+    }
+    get operator() {
+        return '∛';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** Up arrow `↑`. */
+class Lean_uparrow extends LeanUnaryArithmeticPre {
+    static input_priority = 1024;
+    get stack_priority() {
+        return 70;
+    }
+    get operator() {
+        return '↑';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** Double up arrow `⇑`. */
+class LeanUparrow extends LeanUnaryArithmeticPre {
+    static input_priority = 1024;
+    get stack_priority() {
+        return 71;
+    }
+    get operator() {
+        return '⇑';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** Postfix cube `³`. */
+class LeanCube extends LeanUnaryArithmeticPost {
+    get operator() {
+        return '³';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** Quartic root `∜`. */
+class LeanQuarticRoot extends LeanUnaryArithmeticPre {
+    get stack_priority() {
+        return 71;
+    }
+    get operator() {
+        return '∜';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+/** Postfix fourth power `⁴`. */
+class LeanTesseract extends LeanUnaryArithmeticPost {
+    get operator() {
+        return '⁴';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** Postfix transpose `ᵀ`. */
+class LeanTranspose extends LeanUnaryArithmeticPost {
+    get operator() {
+        return 'ᵀ';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
+/** Pipeline `|>`. */
+class LeanPipeForward extends LeanUnaryArithmeticPost {
+    get operator() {
+        return '|>';
+    }
+    strFormat() {
+        return `%s ${this.operator}`;
+    }
+}
+
+/** Pipeline `|>.`. */
+export class LeanMethodChaining extends LeanBinary {
+    static input_priority = 67;
+
+    get stack_priority() {
+        return 59;
+    }
+
+    latexFormat() {
+        return '%s\\ \\texttt{|>.}%s';
+    }
+
+    sep() {
+        return '';
+    }
+
+    strFormat() {
+        return '%s |>.%s';
     }
 }
 
@@ -4702,132 +4828,6 @@ class LeanAttribute extends LeanUnary {
 
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
-    }
-}
-
-/** Cube root `∛`. */
-class LeanCubicRoot extends LeanUnaryArithmeticPre {
-    get stack_priority() {
-        return 71;
-    }
-    get operator() {
-        return '∛';
-    }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
-}
-
-/** Up arrow `↑`. */
-class Lean_uparrow extends LeanUnaryArithmeticPre {
-    static input_priority = 1024;
-    get stack_priority() {
-        return 70;
-    }
-    get operator() {
-        return '↑';
-    }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
-}
-
-/** Double up arrow `⇑`. */
-class LeanUparrow extends LeanUnaryArithmeticPre {
-    static input_priority = 1024;
-    get stack_priority() {
-        return 71;
-    }
-    get operator() {
-        return '⇑';
-    }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
-}
-
-/** Quartic root `∜`. */
-class LeanQuarticRoot extends LeanUnaryArithmeticPre {
-    get stack_priority() {
-        return 71;
-    }
-    get operator() {
-        return '∜';
-    }
-    strFormat() {
-        return `${this.operator}%s`;
-    }
-}
-
-/** Postfix square `²`. */
-class LeanSquare extends LeanUnaryArithmeticPost {
-    static input_priority = 66;
-    get operator() {
-        return '²';
-    }
-    strFormat() {
-        return `%s${this.operator}`;
-    }
-}
-
-/** Postfix cube `³`. */
-class LeanCube extends LeanUnaryArithmeticPost {
-    get operator() {
-        return '³';
-    }
-    strFormat() {
-        return `%s${this.operator}`;
-    }
-}
-
-/** Postfix fourth power `⁴`. */
-class LeanTesseract extends LeanUnaryArithmeticPost {
-    get operator() {
-        return '⁴';
-    }
-    strFormat() {
-        return `%s${this.operator}`;
-    }
-}
-
-/** Postfix transpose `ᵀ`. */
-class LeanTranspose extends LeanUnaryArithmeticPost {
-    get operator() {
-        return 'ᵀ';
-    }
-    strFormat() {
-        return `%s${this.operator}`;
-    }
-}
-
-/** Pipeline `|>`. */
-class LeanPipeForward extends LeanUnaryArithmeticPost {
-    get operator() {
-        return '|>';
-    }
-    strFormat() {
-        return `%s ${this.operator}`;
-    }
-}
-
-/** Pipeline `|>.`. */
-export class LeanMethodChaining extends LeanBinary {
-    static input_priority = 67;
-
-    get stack_priority() {
-        return 59;
-    }
-
-    latexFormat() {
-        return '%s\\ \\texttt{|>.}%s';
-    }
-
-    sep() {
-        return '';
-    }
-
-    strFormat() {
-        return '%s |>.%s';
     }
 }
 
