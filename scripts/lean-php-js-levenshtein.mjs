@@ -370,6 +370,21 @@ function alignLeanPropertyStrArgs(pMem, jMem, className) {
     return [pMem, jMem.filter((x) => x !== 'method:strArgs')];
 }
 
+/** JS `LeanAt` inherits `command` / newline / indent / LaTeX from `LeanUnary`; PHP lists them on the class. */
+function alignLeanAtPhpVsJsMinimal(pMem, jMem, className) {
+    if (className !== 'LeanAt') return [pMem, jMem];
+    const p = pMem.filter(
+        (x) =>
+            ![
+                'get:command',
+                'method:insert_newline',
+                'method:is_indented',
+                'method:latexFormat',
+            ].includes(x),
+    );
+    return [p, jMem];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -431,6 +446,7 @@ if (membersMode) {
             [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
             [pMem, jMem] = alignLeanLineCommentToJSON(pMem, jMem, name);
             [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
+            [pMem, jMem] = alignLeanAtPhpVsJsMinimal(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;

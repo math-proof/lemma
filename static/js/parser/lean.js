@@ -4194,6 +4194,24 @@ function dedentEchoProofTacticLines(s) {
 }
 
 /**
+ * Echo term proofs: `String(proof)` often already includes `proof.indent` spaces; `indentText` would add
+ * `proofInd` again and widen the line so newline scanning picks a larger continuation indent and folds
+ * the proof into `LeanAssign` (round-trip mismatch).
+ * @param {string} s
+ */
+function dedentEchoProofTermBlock(s) {
+    const lines = s.split('\n');
+    let minLead = Infinity;
+    for (const line of lines) {
+        if (line === '') continue;
+        const lead = /^ */.exec(line);
+        if (lead) minLead = Math.min(minLead, lead[0].length);
+    }
+    if (!Number.isFinite(minLead) || minLead === 0) return s;
+    return lines.map((line) => (line === '' ? line : line.slice(minLead))).join('\n');
+}
+
+/**
  * Scan module args after `LeanAssign`/`Lean_def` with empty rhs caret: optional carets, line comments,
  * then `LeanTactic` or space-separated proof. Used for echo `:= by` serialization.
  * @param {Lean[]} moduleArgs
@@ -4238,7 +4256,7 @@ function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
             proofStr = indentText(tacticProofRaw, proofInd);
         }
     } else {
-        proofStr = indentText(String(proof), proofInd);
+        proofStr = indentText(dedentEchoProofTermBlock(String(proof)), proofInd);
     }
     return { cmts, proofStr, endJ, proofIsTactic };
 }
@@ -4265,7 +4283,10 @@ export class LeanModule extends LeanStatements {
 
     /**
      * Echo-style lemmas: `LeanAssign` with empty `LeanCaret` rhs and proof on the next module lines — emit `:= by`
-     * so the second parse matches.
+     * when the proof is tactic-shaped, pad the assign line with `assign.indent`, dedent term proofs before
+     * re-indenting (so newline scanning does not over-read continuation indent), and when a `LeanColon`
+     * (indented, module child) is immediately followed by such an echo assign, prefix the colon block’s
+     * first line with `colon.indent` so re-parse keeps the assign at module scope.
      */
     toString() {
         const args = this.args;
@@ -4297,7 +4318,8 @@ export class LeanModule extends LeanStatements {
                         const kw = `${acc}${a.func} `;
                         const head = a.attribute ? `${String(a.attribute)}\n${kw}` : kw;
                         const by = tail.proofIsTactic ? ' by' : '';
-                        let block = `${head}${String(asn.lhs)} :=${by}`;
+                        const asnPad = ' '.repeat(Math.max(0, asn.indent ?? 0));
+                        let block = `${head}${asnPad}${String(asn.lhs)} :=${by}`;
                         for (const c of tail.cmts) block += `\n${String(c)}`;
                         block += `\n${tail.proofStr}`;
                         parts.push(block);
@@ -4310,7 +4332,8 @@ export class LeanModule extends LeanStatements {
                 if (tail) {
                     for (let k = i + 1; k <= tail.endJ; k++) skip.add(k);
                     const by = tail.proofIsTactic ? ' by' : '';
-                    let block = `${String(a.lhs)} :=${by}`;
+                    const asnPad = ' '.repeat(Math.max(0, a.indent ?? 0));
+                    let block = `${asnPad}${String(a.lhs)} :=${by}`;
                     for (const c of tail.cmts) block += `\n${String(c)}`;
                     block += `\n${tail.proofStr}`;
                     parts.push(block);
@@ -4335,6 +4358,24 @@ export class LeanModule extends LeanStatements {
                     const join = as.endsWith('\n') ? '' : '\n';
                     parts.push(indentText(`${as}${join}${ns}`, ind));
                     continue;
+                }
+            }
+            if (a instanceof LeanColon && a.parent === this) {
+                const ind = a.indent ?? 0;
+                if (ind > 0) {
+                    let k = i + 1;
+                    while (k < args.length && args[k] instanceof LeanCaret) k++;
+                    const next = args[k];
+                    const echoTail =
+                        next instanceof LeanAssign &&
+                        next.rhs instanceof LeanCaret &&
+                        consumeEchoAssignProofTail(args, k + 1, indentText);
+                    if (echoTail) {
+                        const lines = String(a).split('\n');
+                        if (lines[0] !== '') lines[0] = ' '.repeat(ind) + lines[0];
+                        parts.push(lines.join('\n'));
+                        continue;
+                    }
                 }
             }
             parts.push(String(a));
@@ -4416,417 +4457,6 @@ class LeanCommand extends LeanUnary {
 
     strFormat() {
         return `${this.operator} %s`;
-    }
-}
-
-/** `fun` (λ-style binder head). */
-class Lean_fun extends LeanUnary {
-    static input_priority = 18;
-    get operator() {
-        return 'fun';
-    }
-    get command() {
-        return '\\lambda';
-    }
-    is_indented() {
-        const p = this.parent;
-        return p instanceof LeanArgsNewLineSeparated || p instanceof LeanStatements;
-    }
-    jsonSerialize() {
-        const inner = this.arg?.jsonSerialize?.() ?? this.arg;
-        return { [this.operator]: inner };
-    }
-    latexFormat() {
-        return `${this.command}\\ %s`;
-    }
-    strFormat() {
-        return `${this.operator} %s`;
-    }
-}
-
-class Lean_match extends LeanArgs {
-    /**
-     * @param {Lean} subject
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(subject, indent, level, parent = null) {
-        super([subject], indent, level, parent);
-    }
-
-    get stack_priority() {
-        return LeanColon.input_priority - 1;
-    }
-
-    get subject() {
-        return this.args[0];
-    }
-    set subject(v) {
-        this.args[0] = v;
-        if (v) v.parent = this;
-    }
-
-    get with() {
-        return this.args[1] ?? null;
-    }
-    set with(v) {
-        if (this.args.length < 2) this.args.push(v);
-        else this.args[1] = v;
-        if (v) v.parent = this;
-    }
-
-    get operator() {
-        return 'match';
-    }
-
-    is_indented() {
-        return true;
-    }
-
-    strFormat() {
-        if (this.with) return `${this.operator} %s %s`;
-        return `${this.operator} %s`;
-    }
-
-    latexFormat() {
-        if (this.with) {
-            const n = this.with.args.length;
-            const cases = Array(n).fill('%s').join('\\\\');
-            return `\\begin{cases} ${cases} \\end{cases}`;
-        }
-        return 'match\\ %s';
-    }
-
-    latexArgs(syntax) {
-        const subject = this.subject.toLatex(syntax);
-        const w = this.with;
-        if (w) {
-            return w.args.map((row) => {
-                const a = row.arg;
-                const type = a.lhs.toLatex(syntax);
-                const value = a.rhs.toLatex(syntax);
-                return `{${value}} & {\\color{blue}\\text{if}}\\ \\: ${subject}\\ =\\ ${type}`;
-            });
-        }
-        return [subject];
-    }
-
-    insert(caret, func, _type) {
-        if (!this.with && func === 'LeanWith') {
-            const c = new LeanCaret(this.indent, caret.level);
-            const Ctor = getLeanClass(func);
-            const w = new Ctor(c, this.indent, c.level);
-            this.with = w;
-            return c;
-        }
-        throw new Error(`Lean_match.insert: unexpected for ${String(func)}`);
-    }
-
-    insert_comma(caret) {
-        if (caret === this.subject) {
-            const c = new LeanCaret(this.indent, caret.level);
-            this.subject = new LeanArgsCommaSeparated([this.subject, c], this.indent, caret.level);
-            return c;
-        }
-        if (this.parent) return this.parent.insert_comma(this);
-    }
-
-    relocate_last_comment() {
-        const w = this.with;
-        if (w instanceof LeanWith) w.relocate_last_comment();
-    }
-
-    insert_tactic(caret, token) {
-        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
-        return super.insert_tactic(caret, token);
-    }
-
-    split(syntax) {
-        const w = this.with;
-        if (!w) return [this];
-        const self = this.clone();
-        if (self.with) self.with.args = [];
-        const statements = [self];
-        for (const stmt of w.args) {
-            statements.push(...stmt.split(syntax));
-        }
-        return statements;
-    }
-
-    isProp(vars) {
-        const w = this.with;
-        if (!w) return undefined;
-        const cases = w.args;
-        const first = cases[0];
-        if (first instanceof LeanBar) {
-            const arrow = first.arg;
-            if (arrow instanceof LeanRightarrow) {
-                return arrow.rhs.isProp(vars);
-            }
-        }
-        return undefined;
-    }
-}
-
-class LeanWith extends LeanArgs {
-    /**
-     * @param {Lean} arg
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(arg, indent, level, parent = null) {
-        super([arg], indent, level, parent);
-    }
-
-    is_indented() {
-        return false;
-    }
-
-    get stack_priority() {
-        return this.parent instanceof Lean_match ? 23 : 17;
-    }
-
-    get operator() {
-        return 'with';
-    }
-    get command() {
-        return 'with';
-    }
-
-    sep() {
-        if (this.args.length > 1) return '\n';
-        if (!this.args.length) return '';
-        const [caret] = this.args;
-        return caret instanceof LeanCaret || caret.tokens_space_separated() || caret instanceof LeanBitOr ? ' ' : '\n';
-    }
-
-    strFormat() {
-        const s = this.sep();
-        return `${this.operator}${s}${Array(this.args.length).fill('%s').join('\n')}`;
-    }
-
-    relocate_last_comment() {
-        const a = this.args[this.args.length - 1];
-        a?.relocate_last_comment?.();
-    }
-
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.indent > indent) {
-            return super.insert_newline(caret, newlineCount, indent, next);
-        }
-        const cases = this.args;
-        if (cases.length > 0) {
-            let c = cases[cases.length - 1];
-            if (c instanceof LeanCaret) return c;
-            if (next === '|') {
-                if (c instanceof LeanBar || c.is_comment()) {
-                    const nc = new LeanCaret(this.indent, c.level);
-                    this.push(nc);
-                    return nc;
-                }
-            }
-        }
-        return super.insert_newline(caret, newlineCount, indent, next);
-    }
-
-    insert_bar(caret, prevToken, next) {
-        const cases = this.args;
-        const last = cases[cases.length - 1];
-        if (last === caret) {
-            if (caret instanceof LeanCaret) {
-                this.replace(caret, new LeanBar(caret, this.indent, caret.level));
-                return caret;
-            }
-            const $new = new LeanCaret(this.indent, caret.level);
-            this.replace(caret, new LeanBitOr(caret, $new, this.indent, caret.level));
-            return $new;
-        }
-        throw new Error(`LeanWith.insert_bar: unexpected for ${this.constructor.name}`);
-    }
-
-    insert_tactic(caret, token) {
-        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
-        return super.insert_tactic(caret, token);
-    }
-
-    insert_comma(caret) {
-        if (caret === this.args[this.args.length - 1]) {
-            const $new = new LeanCaret(this.indent, caret.level);
-            this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
-            return $new;
-        }
-        throw new Error(`LeanWith.insert_comma: unexpected for ${this.constructor.name}`);
-    }
-
-    set_line(line) {
-        this.line = line;
-        if (this.sep() === '\n') line++;
-        for (const arg of this.args) {
-            line = arg.set_line(line) + 1;
-        }
-        return line - 1;
-    }
-
-    tokens_bar_separated() {
-        if (this.args.length === 1 && this.args[0] instanceof LeanBitOr) {
-            return this.args[0].tokens_bar_separated();
-        }
-        return [];
-    }
-
-    unique_token(indent) {
-        if (this.args.length === 1) {
-            const stmt = this.args[0];
-            if (stmt instanceof LeanBitOr || stmt instanceof LeanArgsSpaceSeparated) {
-                return stmt.unique_token(indent);
-            }
-        }
-        return undefined;
-    }
-
-    tokens_space_separated() {
-        if (this.args.length === 1 && this.args[0] instanceof LeanArgsSpaceSeparated) {
-            return this.args[0].tokens_space_separated();
-        }
-        return [];
-    }
-}
-
-/** Port of `LeanBigOperator`. */
-class LeanBigOperator extends LeanArgs {
-    /**
-     * @param {Lean} bound
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(bound, indent, level, parent = null) {
-        super([bound], indent, level, parent);
-    }
-
-    get bound() {
-        return this.args[0];
-    }
-    set bound(v) {
-        this.args[0] = v;
-        if (v) v.parent = this;
-    }
-
-    get scope() {
-        return this.args[1] ?? null;
-    }
-    set scope(v) {
-        if (this.args.length < 2) this.args.push(v);
-        else this.args[1] = v;
-        if (v) v.parent = this;
-    }
-
-    get stack_priority() {
-        return LeanColon.input_priority - 1;
-    }
-
-    is_indented() {
-        const p = this.parent;
-        return p instanceof LeanStatements || p instanceof LeanIte;
-    }
-
-    strFormat() {
-        const op = this.operator;
-        if (this.args.length === 1) return `${op} %s,`;
-        return `${op} %s, %s`;
-    }
-
-    latexFormat() {
-        const cmd = this.command;
-        return `${cmd}\\limits_{\\substack{%s}} {%s}`;
-    }
-
-    jsonSerialize() {
-        return {
-            [this.func]: super.jsonSerialize(),
-        };
-    }
-
-    insert_comma(caret) {
-        if (caret === this.bound) {
-            const c = new LeanCaret(this.indent, caret.level);
-            this.scope = c;
-            return c;
-        }
-        throw new Error(`${this.constructor.name}.insert_comma: unexpected`);
-    }
-
-    insert_if(caret) {
-        if (this.scope === caret && caret instanceof LeanCaret) {
-            this.scope = new LeanIte([caret], caret.indent, caret.level);
-            return caret;
-        }
-        throw new Error(`${this.constructor.name}.insert_if: unexpected`);
-    }
-
-    insert_newline(caret, newlineCount, indent, next) {
-        if (caret === this.scope) {
-            const pushed = this.push_args_indented(this.indent + 2, newlineCount);
-            if (pushed) return pushed;
-        }
-        return super.insert_newline(caret, newlineCount, indent, next);
-    }
-}
-
-/** Port of `LeanQuantifier`. */
-class LeanQuantifier extends LeanBigOperator {
-    static input_priority = 24;
-
-    isProp(_vars) {
-        return true;
-    }
-
-    latexFormat() {
-        const cmd = this.command;
-        if (this.args.length === 1) return `${cmd}\\ {%s},`;
-        return `${cmd}\\ {%s}, {%s}`;
-    }
-}
-
-class Lean_forall extends LeanQuantifier {
-    get operator() {
-        return '∀';
-    }
-}
-
-class Lean_exists extends LeanQuantifier {
-    get operator() {
-        return '∃';
-    }
-}
-
-class Lean_sum extends LeanBigOperator {
-    static input_priority = 67;
-    get operator() {
-        return '∑';
-    }
-}
-
-class Lean_prod extends LeanBigOperator {
-    static input_priority = 67;
-    get operator() {
-        return '∏';
-    }
-}
-
-class Lean_bigcap extends LeanBigOperator {
-    static input_priority = 60;
-    get operator() {
-        return '⋂';
-    }
-}
-
-class Lean_bigcup extends LeanBigOperator {
-    static input_priority = 60;
-    get operator() {
-        return '⋃';
     }
 }
 
@@ -5308,37 +4938,6 @@ class LeanNot extends LeanUnary {
 
     isProp(_vars) {
         return true;
-    }
-}
-class LeanStack extends LeanBigOperator {
-    static input_priority = 52;
-
-    get operator() {
-        return 'Stack';
-    }
-
-    get command() {
-        return 'Stack';
-    }
-
-    get stack_priority() {
-        return 28;
-    }
-
-    latexArgs(syntax) {
-        const s = syntax ?? {};
-        s[this.constructor.name] = true;
-        return super.latexArgs(s);
-    }
-
-    latexFormat() {
-        return '\\left[{%s}\\right]{%s}';
-    }
-
-    push_args_indented(_indent, _newlineCount, _functionCall = true) {}
-
-    strFormat() {
-        return '[%s] %s';
     }
 }
 
@@ -6300,6 +5899,449 @@ class Lean_show extends LeanSyntax {
 
     strFormat() {
         return `${this.func} ${Array(this.args.length).fill('%s').join(' ')}`;
+    }
+}
+
+/** `fun` (λ-style binder head). */
+class Lean_fun extends LeanUnary {
+    static input_priority = 18;
+    get operator() {
+        return 'fun';
+    }
+    get command() {
+        return '\\lambda';
+    }
+    is_indented() {
+        const p = this.parent;
+        return p instanceof LeanArgsNewLineSeparated || p instanceof LeanStatements;
+    }
+    jsonSerialize() {
+        const inner = this.arg?.jsonSerialize?.() ?? this.arg;
+        return { [this.operator]: inner };
+    }
+    latexFormat() {
+        return `${this.command}\\ %s`;
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+}
+
+class Lean_match extends LeanArgs {
+    /**
+     * @param {Lean} subject
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(subject, indent, level, parent = null) {
+        super([subject], indent, level, parent);
+    }
+
+    get stack_priority() {
+        return LeanColon.input_priority - 1;
+    }
+
+    get subject() {
+        return this.args[0];
+    }
+    set subject(v) {
+        this.args[0] = v;
+        if (v) v.parent = this;
+    }
+
+    get with() {
+        return this.args[1] ?? null;
+    }
+    set with(v) {
+        if (this.args.length < 2) this.args.push(v);
+        else this.args[1] = v;
+        if (v) v.parent = this;
+    }
+
+    get operator() {
+        return 'match';
+    }
+
+    is_indented() {
+        return true;
+    }
+
+    strFormat() {
+        if (this.with) return `${this.operator} %s %s`;
+        return `${this.operator} %s`;
+    }
+
+    latexFormat() {
+        if (this.with) {
+            const n = this.with.args.length;
+            const cases = Array(n).fill('%s').join('\\\\');
+            return `\\begin{cases} ${cases} \\end{cases}`;
+        }
+        return 'match\\ %s';
+    }
+
+    latexArgs(syntax) {
+        const subject = this.subject.toLatex(syntax);
+        const w = this.with;
+        if (w) {
+            return w.args.map((row) => {
+                const a = row.arg;
+                const type = a.lhs.toLatex(syntax);
+                const value = a.rhs.toLatex(syntax);
+                return `{${value}} & {\\color{blue}\\text{if}}\\ \\: ${subject}\\ =\\ ${type}`;
+            });
+        }
+        return [subject];
+    }
+
+    insert(caret, func, _type) {
+        if (!this.with && func === 'LeanWith') {
+            const c = new LeanCaret(this.indent, caret.level);
+            const Ctor = getLeanClass(func);
+            const w = new Ctor(c, this.indent, c.level);
+            this.with = w;
+            return c;
+        }
+        throw new Error(`Lean_match.insert: unexpected for ${String(func)}`);
+    }
+
+    insert_comma(caret) {
+        if (caret === this.subject) {
+            const c = new LeanCaret(this.indent, caret.level);
+            this.subject = new LeanArgsCommaSeparated([this.subject, c], this.indent, caret.level);
+            return c;
+        }
+        if (this.parent) return this.parent.insert_comma(this);
+    }
+
+    relocate_last_comment() {
+        const w = this.with;
+        if (w instanceof LeanWith) w.relocate_last_comment();
+    }
+
+    insert_tactic(caret, token) {
+        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
+        return super.insert_tactic(caret, token);
+    }
+
+    split(syntax) {
+        const w = this.with;
+        if (!w) return [this];
+        const self = this.clone();
+        if (self.with) self.with.args = [];
+        const statements = [self];
+        for (const stmt of w.args) {
+            statements.push(...stmt.split(syntax));
+        }
+        return statements;
+    }
+
+    isProp(vars) {
+        const w = this.with;
+        if (!w) return undefined;
+        const cases = w.args;
+        const first = cases[0];
+        if (first instanceof LeanBar) {
+            const arrow = first.arg;
+            if (arrow instanceof LeanRightarrow) {
+                return arrow.rhs.isProp(vars);
+            }
+        }
+        return undefined;
+    }
+}
+
+class LeanWith extends LeanArgs {
+    /**
+     * @param {Lean} arg
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(arg, indent, level, parent = null) {
+        super([arg], indent, level, parent);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    get stack_priority() {
+        return this.parent instanceof Lean_match ? 23 : 17;
+    }
+
+    get operator() {
+        return 'with';
+    }
+    get command() {
+        return 'with';
+    }
+
+    sep() {
+        if (this.args.length > 1) return '\n';
+        if (!this.args.length) return '';
+        const [caret] = this.args;
+        return caret instanceof LeanCaret || caret.tokens_space_separated() || caret instanceof LeanBitOr ? ' ' : '\n';
+    }
+
+    strFormat() {
+        const s = this.sep();
+        return `${this.operator}${s}${Array(this.args.length).fill('%s').join('\n')}`;
+    }
+
+    relocate_last_comment() {
+        const a = this.args[this.args.length - 1];
+        a?.relocate_last_comment?.();
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent > indent) {
+            return super.insert_newline(caret, newlineCount, indent, next);
+        }
+        const cases = this.args;
+        if (cases.length > 0) {
+            let c = cases[cases.length - 1];
+            if (c instanceof LeanCaret) return c;
+            if (next === '|') {
+                if (c instanceof LeanBar || c.is_comment()) {
+                    const nc = new LeanCaret(this.indent, c.level);
+                    this.push(nc);
+                    return nc;
+                }
+            }
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    insert_bar(caret, prevToken, next) {
+        const cases = this.args;
+        const last = cases[cases.length - 1];
+        if (last === caret) {
+            if (caret instanceof LeanCaret) {
+                this.replace(caret, new LeanBar(caret, this.indent, caret.level));
+                return caret;
+            }
+            const $new = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanBitOr(caret, $new, this.indent, caret.level));
+            return $new;
+        }
+        throw new Error(`LeanWith.insert_bar: unexpected for ${this.constructor.name}`);
+    }
+
+    insert_tactic(caret, token) {
+        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
+        return super.insert_tactic(caret, token);
+    }
+
+    insert_comma(caret) {
+        if (caret === this.args[this.args.length - 1]) {
+            const $new = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
+            return $new;
+        }
+        throw new Error(`LeanWith.insert_comma: unexpected for ${this.constructor.name}`);
+    }
+
+    set_line(line) {
+        this.line = line;
+        if (this.sep() === '\n') line++;
+        for (const arg of this.args) {
+            line = arg.set_line(line) + 1;
+        }
+        return line - 1;
+    }
+
+    tokens_bar_separated() {
+        if (this.args.length === 1 && this.args[0] instanceof LeanBitOr) {
+            return this.args[0].tokens_bar_separated();
+        }
+        return [];
+    }
+
+    unique_token(indent) {
+        if (this.args.length === 1) {
+            const stmt = this.args[0];
+            if (stmt instanceof LeanBitOr || stmt instanceof LeanArgsSpaceSeparated) {
+                return stmt.unique_token(indent);
+            }
+        }
+        return undefined;
+    }
+
+    tokens_space_separated() {
+        if (this.args.length === 1 && this.args[0] instanceof LeanArgsSpaceSeparated) {
+            return this.args[0].tokens_space_separated();
+        }
+        return [];
+    }
+}
+
+/** Port of `LeanBigOperator`. */
+class LeanBigOperator extends LeanArgs {
+    /**
+     * @param {Lean} bound
+     * @param {number} indent
+     * @param {number} level
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(bound, indent, level, parent = null) {
+        super([bound], indent, level, parent);
+    }
+
+    get bound() {
+        return this.args[0];
+    }
+    set bound(v) {
+        this.args[0] = v;
+        if (v) v.parent = this;
+    }
+
+    get scope() {
+        return this.args[1] ?? null;
+    }
+    set scope(v) {
+        if (this.args.length < 2) this.args.push(v);
+        else this.args[1] = v;
+        if (v) v.parent = this;
+    }
+
+    get stack_priority() {
+        return LeanColon.input_priority - 1;
+    }
+
+    is_indented() {
+        const p = this.parent;
+        return p instanceof LeanStatements || p instanceof LeanIte;
+    }
+
+    strFormat() {
+        const op = this.operator;
+        if (this.args.length === 1) return `${op} %s,`;
+        return `${op} %s, %s`;
+    }
+
+    latexFormat() {
+        const cmd = this.command;
+        return `${cmd}\\limits_{\\substack{%s}} {%s}`;
+    }
+
+    jsonSerialize() {
+        return {
+            [this.func]: super.jsonSerialize(),
+        };
+    }
+
+    insert_comma(caret) {
+        if (caret === this.bound) {
+            const c = new LeanCaret(this.indent, caret.level);
+            this.scope = c;
+            return c;
+        }
+        throw new Error(`${this.constructor.name}.insert_comma: unexpected`);
+    }
+
+    insert_if(caret) {
+        if (this.scope === caret && caret instanceof LeanCaret) {
+            this.scope = new LeanIte([caret], caret.indent, caret.level);
+            return caret;
+        }
+        throw new Error(`${this.constructor.name}.insert_if: unexpected`);
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this.scope) {
+            const pushed = this.push_args_indented(this.indent + 2, newlineCount);
+            if (pushed) return pushed;
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+}
+
+/** Port of `LeanQuantifier`. */
+class LeanQuantifier extends LeanBigOperator {
+    static input_priority = 24;
+
+    isProp(_vars) {
+        return true;
+    }
+
+    latexFormat() {
+        const cmd = this.command;
+        if (this.args.length === 1) return `${cmd}\\ {%s},`;
+        return `${cmd}\\ {%s}, {%s}`;
+    }
+}
+
+class Lean_forall extends LeanQuantifier {
+    get operator() {
+        return '∀';
+    }
+}
+
+class Lean_exists extends LeanQuantifier {
+    get operator() {
+        return '∃';
+    }
+}
+
+class Lean_sum extends LeanBigOperator {
+    static input_priority = 67;
+    get operator() {
+        return '∑';
+    }
+}
+
+class Lean_prod extends LeanBigOperator {
+    static input_priority = 67;
+    get operator() {
+        return '∏';
+    }
+}
+
+class Lean_bigcap extends LeanBigOperator {
+    static input_priority = 60;
+    get operator() {
+        return '⋂';
+    }
+}
+
+class Lean_bigcup extends LeanBigOperator {
+    static input_priority = 60;
+    get operator() {
+        return '⋃';
+    }
+}
+
+class LeanStack extends LeanBigOperator {
+    static input_priority = 52;
+
+    get operator() {
+        return 'Stack';
+    }
+
+    get command() {
+        return 'Stack';
+    }
+
+    get stack_priority() {
+        return 28;
+    }
+
+    latexArgs(syntax) {
+        const s = syntax ?? {};
+        s[this.constructor.name] = true;
+        return super.latexArgs(s);
+    }
+
+    latexFormat() {
+        return '\\left[{%s}\\right]{%s}';
+    }
+
+    push_args_indented(_indent, _newlineCount, _functionCall = true) {}
+
+    strFormat() {
+        return '[%s] %s';
     }
 }
 
