@@ -7972,12 +7972,22 @@ export class LeanParser extends AbstractParser {
         const { tokens } = this;
         const length = tokens.length;
         this.start_idx = 0;
-        while (this.start_idx < length) {
-            const next = this.caret.parse(tokens[this.start_idx], this);
-            this.caret = next ?? this.caret;
-            this.start_idx++;
+        for (; this.start_idx < length; this.start_idx++) {
+            this.parse(tokens[this.start_idx], this);
+            if (!this.caret) break;
         }
         return this.root;
+    }
+
+    /**
+     * Same entry point as `AbstractParser.parse`, but if `this.caret.parse` returns `undefined`
+     * (some `Lean` handlers omit `return`), keep the previous caret so `build` matches PHP control flow
+     * without aborting the token loop early.
+     */
+    parse(token, ...kwargs) {
+        const next = this.caret.parse(token, ...kwargs);
+        this.caret = next ?? this.caret;
+        return this.caret;
     }
 
     init() {
