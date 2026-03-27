@@ -2486,24 +2486,6 @@ export class LeanColon extends LeanBinary {
         }
         return `${first}${this.operator}${sep}%s`;
     }
-
-    // JS-only extensions (alphabetical order)
-
-    /** `lemma main:\n` is tight; `{a b : α} :\n` keeps a space before the final colon. */
-    colonLhsLooksLikeBinderHead() {
-        const L = this.lhs;
-        if (!L) return true;
-        if (L instanceof LeanParenthesis) return true;
-        const n = L.constructor?.name;
-        if (n === 'LeanBracket' || n === 'LeanBrace') return true;
-        if (L instanceof LeanArgsSpaceSeparated) {
-            const active = L.args.filter((a) => a != null && !(a instanceof LeanCaret));
-            if (active.length !== 1) return true;
-            return !(active[0] instanceof LeanToken);
-        }
-        if (L instanceof LeanToken) return false;
-        return true;
-    }
 }
 
 export class LeanAssign extends LeanBinary {
@@ -3354,6 +3336,20 @@ export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
 }
 
 class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {}
+
+/** Unary minus. */
+class LeanNeg extends LeanUnaryArithmeticPre {
+    static input_priority = 75;
+    get operator() {
+        return '-';
+    }
+    sep() {
+        return this.arg?.constructor?.name === 'LeanNeg' ? ' ' : '';
+    }
+    strFormat() {
+        return `${this.operator}${this.sep()}%s`;
+    }
+}
 
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
@@ -4646,20 +4642,6 @@ class LeanAttribute extends LeanUnary {
         return '';
     }
 
-    strFormat() {
-        return `${this.operator}${this.sep()}%s`;
-    }
-}
-
-/** Unary minus. */
-class LeanNeg extends LeanUnaryArithmeticPre {
-    static input_priority = 75;
-    get operator() {
-        return '-';
-    }
-    sep() {
-        return this.arg?.constructor?.name === 'LeanNeg' ? ' ' : '';
-    }
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
     }

@@ -255,10 +255,13 @@ function alignLeanGetElemBase(pMem, jMem, phpInner) {
     return [pMem, j];
 }
 
-/** JS-only binder-head heuristic; no PHP counterpart. */
-function alignLeanColonJsOnly(pMem, jMem, className) {
-    if (className !== 'LeanColon') return [pMem, jMem];
-    return [pMem, jMem.filter((x) => x !== 'method:colonLhsLooksLikeBinderHead')];
+/** PHP `__set` for if/then/else; JS uses `set if` / `set then` / `set else`. */
+function alignLeanItePhpSetVsJsSetters(pMem, jMem, className) {
+    if (className !== 'LeanIte') return [pMem, jMem];
+    return [
+        pMem.filter((x) => x !== 'magic:__set'),
+        jMem.filter((x) => !x.startsWith('set:')),
+    ];
 }
 
 const argv = process.argv.slice(2);
@@ -312,7 +315,7 @@ if (membersMode) {
             [pMem, jMem] = alignCommandGetter(pMem, jMem);
             [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
-            [pMem, jMem] = alignLeanColonJsOnly(pMem, jMem, name);
+            [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;
