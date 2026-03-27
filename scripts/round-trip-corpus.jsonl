@@ -2891,3 +2891,4 @@
 {"rel":"Lemma/Set/Cup/eq/Cup_Ite.lean","note":"random sample (Set)"}
 {"rel":"Lemma/Tensor/GetSelect/as/SelectGet/of/Lt_Get_0/Lt_Get_Add_1/LtAdd_1Length.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/Tensor/SumDiv/eq/DivSum/of/LeLength.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Fin/HEqFinS/of/Eq/Lt.lean","note":"passes parse and AST round-trip; extends corpus off previous list"}

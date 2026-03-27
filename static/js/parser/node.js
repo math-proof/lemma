@@ -343,9 +343,13 @@ export class AbstractParser {
     }
 
     static get instance() {
-		if (!this._instance)
-			this._instance = new this();
-		return this._instance;
+        if (!this._instance) this._instance = new this();
+        return this._instance;
+    }
+
+    /** Allows eager `SubParser.instance = new SubParser()` like PHP `SubParser::$instance = ...`. */
+    static set instance(v) {
+        this._instance = v;
     }
 
     get func() {
