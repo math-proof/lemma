@@ -280,6 +280,23 @@ function alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, className) {
     ];
 }
 
+/** PHP `__set` covers `arg` / `sequential_tactic_combinator`; JS uses getters/setters. */
+function alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, className) {
+    if (className !== 'LeanSyntax') return [pMem, jMem];
+    return [
+        pMem.filter((x) => x !== 'magic:__set'),
+        jMem.filter(
+            (x) =>
+                ![
+                    'get:arg',
+                    'set:arg',
+                    'set:sequential_tactic_combinator',
+                    'get:sequential_tactic_combinator',
+                ].includes(x),
+        ),
+    ];
+}
+
 /** PHP spells `is_indented`; JS uses `LeanPairedGroup`'s implementation for round-trip stability. */
 function alignLeanParenthesisInheritedIndented(pMem, jMem, className) {
     if (className !== 'LeanParenthesis') return [pMem, jMem];
@@ -351,6 +368,7 @@ if (membersMode) {
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
             [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
+            [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
             [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
             [pMem, jMem] = alignLeanLineCommentToJSON(pMem, jMem, name);
             [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
