@@ -280,6 +280,26 @@ function alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, className) {
     ];
 }
 
+/** PHP `__set` for `lhs`/`rhs`; JS uses setters. Abstract `sep()` is not picked up by the PHP line scanner; `echo` / `insert_newline` / `operator` / `strFormat` are JS-only or inherited from `Lean` in PHP. */
+function alignLeanBinaryPhpMagicVsJs(pMem, jMem, className) {
+    if (className !== 'LeanBinary') return [pMem, jMem];
+    return [
+        pMem.filter((x) => x !== 'magic:__set'),
+        jMem.filter(
+            (x) =>
+                ![
+                    'set:lhs',
+                    'set:rhs',
+                    'method:sep',
+                    'method:echo',
+                    'method:insert_newline',
+                    'get:operator',
+                    'method:strFormat',
+                ].includes(x),
+        ),
+    ];
+}
+
 /** PHP `LeanToken` uses `static $…` (not `public static`); extractor skips them. `clone` / `latexArgs` live on `Lean` in PHP. */
 function alignLeanTokenPhpVsJs(pMem, jMem, className) {
     if (className !== 'LeanToken') return [pMem, jMem];
@@ -378,6 +398,7 @@ if (membersMode) {
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
             [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
+            [pMem, jMem] = alignLeanBinaryPhpMagicVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanTokenPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
             [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
