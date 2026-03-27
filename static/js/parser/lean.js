@@ -2723,6 +2723,10 @@ export class LeanBEq extends LeanRelational {
 export class Lean_bne extends LeanRelational {
     static input_priority = 50;
 
+    get command() {
+        return '!=';
+    }
+
     get operator() {
         return '!=';
     }
@@ -3090,64 +3094,6 @@ export class LeanBitwiseXor extends LeanArithmetic {
     }
 }
 
-export class LeanArgsCommaSeparated extends LeanArgs {
-    /**
-     * Under LeanBar: LeanColon input priority; else one less so `:` binds in the right place.
-     * GetElem index uses parent `LeanGetElem*` stack_priority, not this.
-     */
-    get stack_priority() {
-        if (this.parent instanceof LeanBar) return LeanColon.input_priority;
-        return LeanColon.input_priority - 1;
-    }
-
-    insert(caret, func, type) {
-        const last = this.args[this.args.length - 1];
-        if (last === caret) {
-            if (caret instanceof LeanCaret) {
-                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
-                this.replace(caret, new Ctor(caret, caret.indent, caret.level));
-                return caret;
-            }
-            if (this.parent) return this.parent.insert(this, func, type);
-        }
-    }
-
-    insert_comma(caret) {
-        const caret2 = new LeanCaret(this.indent, caret.level);
-        this.push(caret2);
-        return caret2;
-    }
-
-    insert_tactic(caret, token) {
-        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
-        throw new Error(`LeanArgsCommaSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
-    }
-
-    is_indented() {
-        return false;
-    }
-
-    latexFormat() {
-        const n = this.args.length;
-        return Array(n)
-            .fill('{%s}')
-            .join(', ');
-    }
-
-    strFormat() {
-        return Array(this.args.length).fill('%s').join(', ');
-    }
-
-    tokens_comma_separated() {
-        const tokens = [];
-        for (const arg of this.args) {
-            if (arg instanceof LeanToken) tokens.push(arg);
-            else if (arg instanceof LeanAngleBracket) tokens.push(...arg.tokens_comma_separated());
-        }
-        return tokens;
-    }
-}
-
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -3245,6 +3191,114 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
     }
 }
 
+export class LeanArgsCommaSeparated extends LeanArgs {
+    /**
+     * Under LeanBar: LeanColon input priority; else one less so `:` binds in the right place.
+     * GetElem index uses parent `LeanGetElem*` stack_priority, not this.
+     */
+    get stack_priority() {
+        if (this.parent instanceof LeanBar) return LeanColon.input_priority;
+        return LeanColon.input_priority - 1;
+    }
+
+    insert(caret, func, type) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret) {
+            if (caret instanceof LeanCaret) {
+                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+                return caret;
+            }
+            if (this.parent) return this.parent.insert(this, func, type);
+        }
+    }
+
+    insert_comma(caret) {
+        const caret2 = new LeanCaret(this.indent, caret.level);
+        this.push(caret2);
+        return caret2;
+    }
+
+    insert_tactic(caret, token) {
+        if (caret instanceof LeanCaret) return this.insert_word(caret, token);
+        throw new Error(`LeanArgsCommaSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    latexFormat() {
+        const n = this.args.length;
+        return Array(n)
+            .fill('{%s}')
+            .join(', ');
+    }
+
+    strFormat() {
+        return Array(this.args.length).fill('%s').join(', ');
+    }
+
+    tokens_comma_separated() {
+        const tokens = [];
+        for (const arg of this.args) {
+            if (arg instanceof LeanToken) tokens.push(arg);
+            else if (arg instanceof LeanAngleBracket) tokens.push(...arg.tokens_comma_separated());
+        }
+        return tokens;
+    }
+}
+
+export class LeanArgsSemicolonSeparated extends LeanArgs {
+    get stack_priority() {
+        return LeanColon.input_priority - 1;
+    }
+
+    insert(caret, func, type) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret) {
+            if (caret instanceof LeanCaret) {
+                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+                return caret;
+            }
+            if (this.parent) return this.parent.insert(this, func, type);
+        }
+    }
+
+    insert_semicolon(caret) {
+        const c = new LeanCaret(this.indent, caret.level);
+        this.push(c);
+        return c;
+    }
+
+    insert_tactic(caret, type) {
+        if (caret instanceof LeanCaret) {
+            const p = this.parent;
+            if ((p instanceof LeanTactic && p.is_inline_tactic_block()) || p instanceof LeanBy) {
+                this.replace(caret, new LeanTactic(type, caret, this.indent, caret.level));
+                return caret;
+            }
+            return this.insert_word(caret, type);
+        }
+        throw new Error(`LeanArgsSemicolonSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    latexFormat() {
+        return Array(this.args.length)
+            .fill('{%s}')
+            .join('; ');
+    }
+
+    strFormat() {
+        return Array(this.args.length).fill('%s').join('; ');
+    }
+}
+
 export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     get stack_priority() {
         return 17;
@@ -3310,56 +3364,6 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
 
     set_line(line) {
         return leanMultipleLineSetLine(this, line);
-    }
-}
-
-export class LeanArgsSemicolonSeparated extends LeanArgs {
-    get stack_priority() {
-        return LeanColon.input_priority - 1;
-    }
-
-    insert(caret, func, type) {
-        const last = this.args[this.args.length - 1];
-        if (last === caret) {
-            if (caret instanceof LeanCaret) {
-                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
-                this.replace(caret, new Ctor(caret, caret.indent, caret.level));
-                return caret;
-            }
-            if (this.parent) return this.parent.insert(this, func, type);
-        }
-    }
-
-    insert_semicolon(caret) {
-        const c = new LeanCaret(this.indent, caret.level);
-        this.push(c);
-        return c;
-    }
-
-    insert_tactic(caret, type) {
-        if (caret instanceof LeanCaret) {
-            const p = this.parent;
-            if ((p instanceof LeanTactic && p.is_inline_tactic_block()) || p instanceof LeanBy) {
-                this.replace(caret, new LeanTactic(type, caret, this.indent, caret.level));
-                return caret;
-            }
-            return this.insert_word(caret, type);
-        }
-        throw new Error(`LeanArgsSemicolonSeparated.insert_tactic: unexpected for ${this.constructor.name}`);
-    }
-
-    is_indented() {
-        return false;
-    }
-
-    latexFormat() {
-        return Array(this.args.length)
-            .fill('{%s}')
-            .join('; ');
-    }
-
-    strFormat() {
-        return Array(this.args.length).fill('%s').join('; ');
     }
 }
 
@@ -3861,8 +3865,8 @@ export class Lean_land extends LeanLogic {
 export class Lean_subseteq extends LeanBinaryBoolean {
     static input_priority = 50;
 
-    get command() {
-        return '\\subseteq';
+    get operator() {
+        return '⊆';
     }
 }
 
@@ -3870,8 +3874,8 @@ export class Lean_subseteq extends LeanBinaryBoolean {
 export class Lean_subset extends LeanBinaryBoolean {
     static input_priority = 50;
 
-    get command() {
-        return '\\subset';
+    get operator() {
+        return '⊂';
     }
 }
 
@@ -4367,6 +4371,64 @@ export class Lean_mapsto extends LeanBinary {
     }
 }
 
+/** Unary `←`. Declaration order matches `lean.php` after `Lean_mapsto`. */
+class Lean_leftarrow extends LeanUnary {
+    get operator() {
+        return '←';
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+}
+
+/** Logical not `¬`. Declaration order matches `lean.php` after `Lean_leftarrow`. */
+class Lean_lnot extends LeanUnary {
+    static input_priority = 40;
+
+    /**
+     * @param {Record<string, unknown>} [_vars]
+     */
+    isProp(_vars) {
+        return true;
+    }
+
+    get operator() {
+        return '¬';
+    }
+
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
+class LeanNot extends LeanUnary {
+    static input_priority = 40;
+
+    get operator() {
+        return '!';
+    }
+
+    get command() {
+        return '\\text{!}';
+    }
+
+    is_indented() {
+        return this.parent instanceof LeanStatements;
+    }
+
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+
+    isProp(_vars) {
+        return true;
+    }
+}
+
 export class LeanArgsIndented extends LeanBinary {
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent > indent) {
@@ -4425,14 +4487,14 @@ export class LeanArgsIndented extends LeanBinary {
         }
     }
 
-    sep() {
-        return '\n';
-    }
-
     get stack_priority() {
         if (this.parent instanceof LeanCalc) return 17;
         if (this.parent instanceof LeanQuantifier) return LeanRelational.input_priority + 1;
         return 47;
+    }
+
+    sep() {
+        return '\n';
     }
 
     strFormat() {
@@ -4442,7 +4504,6 @@ export class LeanArgsIndented extends LeanBinary {
 }
 
 class LeanUnaryArithmetic extends LeanUnary {}
-class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {}
 
 export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
     static input_priority = 72;
@@ -4451,6 +4512,8 @@ export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
         return 60;
     }
 }
+
+class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {}
 
 export class LeanBy extends LeanUnary {
     static input_priority = 47;
@@ -4568,16 +4631,6 @@ class LeanAttribute extends LeanUnary {
     }
 }
 
-/** Unary `←`. */
-class Lean_leftarrow extends LeanUnary {
-    get operator() {
-        return '←';
-    }
-    strFormat() {
-        return `${this.operator} %s`;
-    }
-}
-
 /** Unary minus. */
 class LeanNeg extends LeanUnaryArithmeticPre {
     static input_priority = 75;
@@ -4667,54 +4720,6 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre {
     }
     strFormat() {
         return `${this.operator}%s`;
-    }
-}
-
-/** Logical not `¬`. */
-class Lean_lnot extends LeanUnary {
-    static input_priority = 40;
-
-    /**
-     * @param {Record<string, unknown>} [_vars]
-     */
-    isProp(_vars) {
-        return true;
-    }
-
-    get operator() {
-        return '¬';
-    }
-
-    strFormat() {
-        return `${this.operator}%s`;
-    }
-}
-
-class LeanNot extends LeanUnary {
-    static input_priority = 40;
-
-    get operator() {
-        return '!';
-    }
-
-    get command() {
-        return '\\text{!}';
-    }
-
-    is_indented() {
-        return this.parent instanceof LeanStatements;
-    }
-
-    latexFormat() {
-        return `${this.command} %s`;
-    }
-
-    strFormat() {
-        return `${this.operator}%s`;
-    }
-
-    isProp(_vars) {
-        return true;
     }
 }
 
@@ -5275,7 +5280,7 @@ function dedentEchoProofTacticLines(s) {
  * @param {Lean[]} moduleArgs
  * @param {number} startJ
  * @param {(s: string, ind: number) => string} indentText
- * @returns {{ cmts: Lean[], proofStr: string, endJ: number } | null}
+ * @returns {{ cmts: Lean[], proofStr: string, endJ: number, proofIsTactic: boolean } | null}
  */
 function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
     let j = startJ;
@@ -5293,7 +5298,8 @@ function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
     let proofStr = String(proof);
     let proofInd = proof.indent ?? 0;
     for (const c of cmts) proofInd = Math.max(proofInd, c.indent ?? 0);
-    if (proof instanceof LeanTactic) {
+    const proofIsTactic = proof instanceof LeanTactic;
+    if (proofIsTactic) {
         const tacticProofRaw = dedentEchoProofTacticLines(String(proof));
         let danglingStc = false;
         for (let k = 0; k < proof.args.length; k++) {
@@ -5315,7 +5321,7 @@ function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
     } else {
         proofStr = indentText(String(proof), proofInd);
     }
-    return { cmts, proofStr, endJ };
+    return { cmts, proofStr, endJ, proofIsTactic };
 }
 
 export class LeanModule extends LeanStatements {
@@ -5371,7 +5377,8 @@ export class LeanModule extends LeanStatements {
                         const acc = a.accessibility === 'public' ? '' : `${a.accessibility} `;
                         const kw = `${acc}${a.func} `;
                         const head = a.attribute ? `${String(a.attribute)}\n${kw}` : kw;
-                        let block = `${head}${String(asn.lhs)} := by`;
+                        const by = tail.proofIsTactic ? ' by' : '';
+                        let block = `${head}${String(asn.lhs)} :=${by}`;
                         for (const c of tail.cmts) block += `\n${String(c)}`;
                         block += `\n${tail.proofStr}`;
                         parts.push(block);
@@ -5383,7 +5390,8 @@ export class LeanModule extends LeanStatements {
                 const tail = consumeEchoAssignProofTail(args, i + 1, indentText);
                 if (tail) {
                     for (let k = i + 1; k <= tail.endJ; k++) skip.add(k);
-                    let block = `${String(a.lhs)} := by`;
+                    const by = tail.proofIsTactic ? ' by' : '';
+                    let block = `${String(a.lhs)} :=${by}`;
                     for (const c of tail.cmts) block += `\n${String(c)}`;
                     block += `\n${tail.proofStr}`;
                     parts.push(block);
