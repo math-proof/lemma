@@ -280,6 +280,12 @@ function alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, className) {
     ];
 }
 
+/** PHP spells `is_indented`; JS uses `LeanPairedGroup`'s implementation for round-trip stability. */
+function alignLeanParenthesisInheritedIndented(pMem, jMem, className) {
+    if (className !== 'LeanParenthesis') return [pMem, jMem];
+    return [pMem.filter((x) => x !== 'method:is_indented'), jMem];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -333,6 +339,7 @@ if (membersMode) {
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
             [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
+            [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;

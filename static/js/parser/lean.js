@@ -3373,6 +3373,17 @@ class LeanInv extends LeanUnaryArithmeticPost {
     }
 }
 
+/** Postfix positive part `⁺`. */
+class LeanPosPart extends LeanUnaryArithmeticPost {
+    static input_priority = 71;
+    get operator() {
+        return '⁺';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -4734,17 +4745,6 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre {
     }
     strFormat() {
         return `${this.operator}%s`;
-    }
-}
-
-/** Postfix positive part `⁺`. */
-class LeanPosPart extends LeanUnaryArithmeticPost {
-    static input_priority = 71;
-    get operator() {
-        return '⁺';
-    }
-    strFormat() {
-        return `%s${this.operator}`;
     }
 }
 

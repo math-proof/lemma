@@ -2530,3 +2530,4 @@
 {"rel":"Lemma/Bool/HEq/of/Cond/Cond.lean","note":"off-corpus AST round-trip (sample-round-trip-corpus)"}
 {"rel":"Lemma/Tensor/SEqPermuteTailPermuteHead/of/GtLength_1.lean","note":"off-corpus AST round-trip (sample-round-trip-corpus)"}
 {"rel":"Lemma/Tensor/EqGetS/of/Data/as/FlattenTransposeSplitAt_1.lean","note":"off-corpus AST round-trip (sample-round-trip-corpus)"}
+{"rel":"Lemma/Set/In/is/Add/in/IccAddS.lean","note":"off-corpus AST round-trip (sample-round-trip-corpus)"}
