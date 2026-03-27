@@ -311,13 +311,16 @@ export class Lean extends IndentedNode {
                 return this.append(`Lean_${token}`, 'tactic');
             case 'public':
             case 'private':
-            case 'protected':
+            case 'protected': {
+                let access = token;
                 while (tokens[++self.start_idx] === ' ');
                 if (tokens[self.start_idx] === 'nonrec') {
+                    access += ' nonrec';
                     self.start_idx++;
                     while (tokens[++self.start_idx] === ' ');
                 }
-                return this.push_accessibility(`Lean_${tokens[self.start_idx]}`, token);
+                return this.push_accessibility(`Lean_${tokens[self.start_idx]}`, access);
+            }
             case 'scoped':
             case 'noncomputable':
             case 'nonrec':
@@ -355,6 +358,8 @@ export class Lean extends IndentedNode {
                 if (indent === 0 && tokens[self.start_idx + k] === 'end') newlineCount -= 1;
                 const nextCaret = this.parent.insert_newline(this, newlineCount, indent, tokens[self.start_idx + k]);
                 self.start_idx += j - 1;
+                // When a callee omits `return` (PHP can yield null in the same situations), keep this caret so
+                // `AbstractParser.parse` matches practical parse completion without a `LeanParser` override.
                 return nextCaret ?? this;
             }
             case '.':
@@ -367,7 +372,9 @@ export class Lean extends IndentedNode {
             case 'is': {
                 if (this instanceof LeanCaret && this.parent instanceof LeanProperty)
                     return this.parent.insert_word(this, token);
-                // In import/open/set_option/def etc., "is" is a plain identifier (e.g. Setoid.is.All_SetoidGetS)
+                // PHP `Lean::parse` treats non-property `is` as `Lean_is` / `Lean_is_not` only. In JS we also
+                // treat `is` as a plain identifier under import/open/def/… (e.g. `Setoid.is.All_SetoidGetS`)
+                // so round-trip and lemma paths match the tokenizer/AST shape the repo relies on.
                 let p = this;
                 while (p && p.parent) {
                     const name = p.parent.constructor?.name || '';
@@ -385,7 +392,6 @@ export class Lean extends IndentedNode {
                 if (not) {
                     self.start_idx += 2;
                     func += '_not';
-                    self.start_idx = self.start_idx;
                 }
                 return this.push_binary(func);
             }
@@ -753,7 +759,6 @@ export class Lean extends IndentedNode {
                 return this.parent.insert_word(this, token);
             }
         }
-        return this;
     }
 
     push_accessibility($new, _accessibility) {
@@ -7977,17 +7982,6 @@ export class LeanParser extends AbstractParser {
             if (!this.caret) break;
         }
         return this.root;
-    }
-
-    /**
-     * Same entry point as `AbstractParser.parse`, but if `this.caret.parse` returns `undefined`
-     * (some `Lean` handlers omit `return`), keep the previous caret so `build` matches PHP control flow
-     * without aborting the token loop early.
-     */
-    parse(token, ...kwargs) {
-        const next = this.caret.parse(token, ...kwargs);
-        this.caret = next ?? this.caret;
-        return this.caret;
     }
 
     init() {
