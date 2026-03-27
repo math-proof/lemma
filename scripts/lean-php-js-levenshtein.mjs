@@ -1,0 +1,319 @@
+#!/usr/bin/env node
+/**
+ * Levenshtein (edit) distance between PHP and JS parity lists for the Lean parser translation.
+ *
+ * **Class declarations** — ordered `Lean*` class names (first occurrence, deduped, same rules as
+ * `compare-lean-class-declarations.mjs`). Metric: edit distance on the two sequences (tokens =
+ * class names).
+ *
+ * **Member declarations** — per shared class, ordered normalized members (same extraction as
+ * `compare-lean-class-members.mjs`). Metric: sum of per-class Levenshtein distances on member-token
+ * sequences.
+ *
+ * Usage:
+ *   node scripts/lean-php-js-levenshtein.mjs
+ *   node scripts/lean-php-js-levenshtein.mjs --members
+ *   node scripts/lean-php-js-levenshtein.mjs --members --normalize
+ *   node scripts/lean-php-js-levenshtein.mjs --members --arithmetic   (only LeanArithmetic subclasses)
+ *   node scripts/lean-php-js-levenshtein.mjs --json
+ *
+ * Exit 0 always (reporting only). Use `--fail-if-class-gt N` / `--fail-if-members-gt N` for gates.
+ */
+import fs from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const phpPath = join(root, 'php/parser/lean.php');
+const jsPath = join(root, 'static/js/parser/lean.js');
+
+const phpSrc = fs.readFileSync(phpPath, 'utf8');
+const jsSrc = fs.readFileSync(jsPath, 'utf8');
+
+const phpAllRe = /(?:^|\n)(?:abstract )?class (Lean\w+)/g;
+const jsAllRe = /(?:^|\n)(?:export )?class (Lean\w+)/g;
+const phpClassDecl =
+    /(?:^|\n)((?:abstract )?)class (Lean\w+)\s+extends\s+\w+(?:\s*\{|\s*\n\s*\{)/g;
+const jsClassDecl = /(?:^|\n)export class (Lean\w+)\s+extends\s+\w+\s*\{/g;
+const phpArithmeticRe = /(?:^|\n)class (Lean\w+)\s+extends LeanArithmetic/g;
+
+function collect(re, s) {
+    const out = [];
+    let m;
+    while ((m = re.exec(s))) out.push(m[1]);
+    return out;
+}
+
+function collectClassOrder(re, s) {
+    const out = [];
+    let m;
+    while ((m = re.exec(s))) out.push(m[2] ?? m[1]);
+    return [...new Set(out)];
+}
+
+function collectArithmeticOrder(s) {
+    const out = [];
+    let m;
+    while ((m = phpArithmeticRe.exec(s))) out.push(m[1]);
+    return out;
+}
+
+/**
+ * Levenshtein distance on sequences of strings (insert / delete / substitute token).
+ * Substitute cost = 0 if a[i] === b[j], else 1.
+ */
+function levenshteinArrays(a, b) {
+    const n = a.length;
+    const m = b.length;
+    if (n === 0) return m;
+    if (m === 0) return n;
+    const dp = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
+    for (let i = 0; i <= n; i++) dp[i][0] = i;
+    for (let j = 0; j <= m; j++) dp[0][j] = j;
+    for (let i = 1; i <= n; i++) {
+        for (let j = 1; j <= m; j++) {
+            const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+            dp[i][j] = Math.min(
+                dp[i - 1][j] + 1,
+                dp[i][j - 1] + 1,
+                dp[i - 1][j - 1] + cost,
+            );
+        }
+    }
+    return dp[n][m];
+}
+
+function extractClassBlock(s, className, exportJs) {
+    const needle = exportJs ? `export class ${className} extends ` : `class ${className} extends `;
+    const idx = s.indexOf(needle);
+    if (idx < 0) return null;
+    let start = idx;
+    const prevNl = s.lastIndexOf('\n', idx - 1);
+    const prevComment = s.lastIndexOf('\n/**', idx);
+    if (prevComment > prevNl && prevComment < idx) start = prevComment + 1;
+    const open = s.indexOf('{', idx);
+    let depth = 0;
+    let i = open;
+    for (; i < s.length; i++) {
+        const c = s[i];
+        if (c === '{') depth++;
+        else if (c === '}') {
+            depth--;
+            if (depth === 0) {
+                i++;
+                break;
+            }
+        }
+    }
+    return s.slice(start, i);
+}
+
+function innerBody(classBlock) {
+    const open = classBlock.indexOf('{');
+    if (open < 0) return '';
+    let depth = 0;
+    for (let i = open; i < classBlock.length; i++) {
+        if (classBlock[i] === '{') depth++;
+        else if (classBlock[i] === '}') {
+            depth--;
+            if (depth === 0) return classBlock.slice(open + 1, i);
+        }
+    }
+    return '';
+}
+
+function dedupePreserveOrder(arr) {
+    const seen = new Set();
+    const o = [];
+    for (const x of arr) {
+        if (!seen.has(x)) {
+            seen.add(x);
+            o.push(x);
+        }
+    }
+    return o;
+}
+
+function jsMembers(body) {
+    const out = [];
+    const lines = body.split('\n');
+    for (const line of lines) {
+        const t = line.trim();
+        if (/^static\s+(\w+)\s*=/.test(t)) {
+            const m = t.match(/^static\s+(\w+)\s*=/);
+            if (m) out.push(`static:${m[1]}`);
+        } else if (/^(?:async\s+)?constructor\s*\(/.test(t)) {
+            out.push('constructor');
+        } else if (/^get\s+(\w+)\s*\(/.test(t)) {
+            const m = t.match(/^get\s+(\w+)\s*\(/);
+            if (m) out.push(`get:${m[1]}`);
+        } else if (/^set\s+(\w+)\s*\(/.test(t)) {
+            const m = t.match(/^set\s+(\w+)\s*\(/);
+            if (m) out.push(`set:${m[1]}`);
+        } else if (/^(\w+)\s*\([^)]*\)\s*\{/.test(t) && !/^\s*(if|for|while|switch|catch)\s*\(/.test(t)) {
+            const m = t.match(/^(\w+)\s*\(/);
+            if (
+                m &&
+                !['if', 'for', 'while', 'switch', 'catch', 'function', 'return', 'throw'].includes(m[1])
+            ) {
+                out.push(`method:${m[1]}`);
+            }
+        }
+    }
+    return dedupePreserveOrder(out);
+}
+
+function phpMembersOrdered(body) {
+    const statics = [];
+    const getters = [];
+    const methods = [];
+    const lines = body.split('\n');
+    let inGet = false;
+    let getDepth = 0;
+    for (let li = 0; li < lines.length; li++) {
+        const line = lines[li];
+        const t = line.trim();
+        if (!inGet && /^public\s+function\s+__get\s*\(/.test(t)) {
+            inGet = true;
+            getDepth = (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length;
+            const rest = lines.slice(li).join('\n');
+            const caseRe = /case\s+['"](\w+)['"]\s*:/g;
+            let cm;
+            while ((cm = caseRe.exec(rest))) {
+                if (!getters.includes(`get:${cm[1]}`)) getters.push(`get:${cm[1]}`);
+            }
+            continue;
+        }
+        if (inGet) {
+            getDepth += (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length;
+            if (getDepth <= 0) inGet = false;
+            continue;
+        }
+        if (/^public\s+static\s+\$(\w+)/.test(t)) {
+            const m = t.match(/^public\s+static\s+\$(\w+)/);
+            if (m) statics.push(`static:${m[1]}`);
+        } else if (/^public\s+function\s+(__construct|__set|__clone)\s*\(/.test(t)) {
+            const m = t.match(/^public\s+function\s+(__construct|__set|__clone)\s*\(/);
+            if (m[1] === '__construct') methods.push('constructor');
+            else methods.push(`magic:${m[1]}`);
+        } else if (/^public\s+function\s+(\w+)\s*\(/.test(t)) {
+            const m = t.match(/^public\s+function\s+(\w+)\s*\(/);
+            if (m && !['__get'].includes(m[1])) methods.push(`method:${m[1]}`);
+        }
+    }
+    return dedupePreserveOrder([...statics, ...getters, ...methods]);
+}
+
+function alignStaticInputPriority(pMem, jMem, phpInner) {
+    const phpDeclaresStatic = /public\s+static\s+\$input_priority/.test(phpInner);
+    let p = [...pMem];
+    let j = [...jMem];
+    if (!phpDeclaresStatic) {
+        j = j.filter((x) => x !== 'static:input_priority');
+    }
+    return [p, j];
+}
+
+function alignCommandGetter(pMem, jMem) {
+    if (!pMem.includes('get:command')) {
+        return [pMem, jMem.filter((x) => x !== 'get:command')];
+    }
+    return [pMem, jMem];
+}
+
+const argv = process.argv.slice(2);
+const jsonOut = argv.includes('--json');
+const membersMode = argv.includes('--members');
+const normalize = argv.includes('--normalize');
+const arithmeticOnly = argv.includes('--arithmetic');
+
+function parseFailArg(name) {
+    const a = argv.find((x) => x.startsWith(`${name}=`));
+    if (!a) return null;
+    const v = Number(a.slice(name.length + 1), 10);
+    return Number.isFinite(v) ? v : null;
+}
+
+const phpOrderAll = [...new Set(collect(phpAllRe, phpSrc))];
+const jsOrderAll = [...new Set(collect(jsAllRe, jsSrc))];
+const classDist = levenshteinArrays(phpOrderAll, jsOrderAll);
+
+const out = {
+    classDeclaration: {
+        metric: 'levenshtein_distance_on_class_name_sequences',
+        phpCount: phpOrderAll.length,
+        jsCount: jsOrderAll.length,
+        distance: classDist,
+        phpOrder: phpOrderAll,
+        jsOrder: jsOrderAll,
+    },
+    members: null,
+};
+
+if (membersMode) {
+    const phpClasses = collectClassOrder(phpClassDecl, phpSrc);
+    const jsClasses = collectClassOrder(jsClassDecl, jsSrc);
+    const shared = phpClasses.filter((c) => jsClasses.includes(c));
+    const arithmeticShared = collectArithmeticOrder(phpSrc).filter((c) => jsClasses.includes(c));
+    const todo = arithmeticOnly ? arithmeticShared : shared;
+
+    const perClass = [];
+    let sum = 0;
+    for (const name of todo) {
+        const phpBlock = extractClassBlock(phpSrc, name, false);
+        const jsBlock = extractClassBlock(jsSrc, name, true);
+        if (!phpBlock || !jsBlock) continue;
+        const pInner = innerBody(phpBlock);
+        const jInner = innerBody(jsBlock);
+        let pMem = phpMembersOrdered(pInner);
+        let jMem = jsMembers(jInner);
+        if (normalize) {
+            [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
+            [pMem, jMem] = alignCommandGetter(pMem, jMem);
+        }
+        const d = levenshteinArrays(pMem, jMem);
+        sum += d;
+        perClass.push({ name, distance: d, phpMembers: pMem, jsMembers: jMem });
+    }
+    out.members = {
+        metric: 'sum_of_levenshtein_distance_per_class_member_sequences',
+        scope: arithmeticOnly ? 'LeanArithmetic_subclasses_present_in_js' : 'all_shared_classes',
+        classCount: perClass.length,
+        normalized: normalize,
+        totalDistance: sum,
+        perClass,
+    };
+}
+
+if (jsonOut) {
+    console.log(JSON.stringify(out, null, 2));
+} else {
+    console.log('=== Class declaration order (first occurrence, deduped) ===');
+    console.log(`PHP (${out.classDeclaration.phpCount}): ${phpOrderAll.join(', ')}`);
+    console.log(`JS  (${out.classDeclaration.jsCount}): ${jsOrderAll.join(', ')}`);
+    console.log(`Levenshtein distance (class name sequences): ${classDist}`);
+    if (out.members) {
+        console.log('\n=== Member lists per class ===');
+        console.log(`Scope: ${out.members.scope}${normalize ? ' (normalized)' : ''}`);
+        console.log(`Classes: ${out.members.classCount}  Sum of distances: ${out.members.totalDistance}`);
+        const pc = out.members.perClass;
+        const nonzero = pc.filter((r) => r.distance > 0);
+        const show = nonzero.slice(0, 40);
+        if (show.length) {
+            console.log('Non-zero distances (first 40):');
+            for (const r of show) {
+                console.log(`  ${r.name}: ${r.distance}`);
+            }
+            if (nonzero.length > 40) console.log('  ...');
+        } else {
+            console.log('All per-class distances are 0.');
+        }
+    }
+}
+
+const failClass = parseFailArg('--fail-if-class-gt');
+const failMem = parseFailArg('--fail-if-members-gt');
+let code = 0;
+if (failClass !== null && classDist > failClass) code = 1;
+if (failMem !== null && out.members && out.members.totalDistance > failMem) code = 1;
+process.exit(code);

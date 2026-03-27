@@ -48,6 +48,7 @@ JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup:
 | `throw new Exception(...)` | `throw new Error(...)` |
 
 ### Known Gaps
+- `LeanBinary.command` — moved from base class switch (JS-only pattern) to individual subclass getters (`LeanAdd`, `LeanSub`, `LeanEq`, etc.) matching PHP `__get('command')` on each concrete subclass (~2048–2150 in `lean.php`). Base `LeanBinary` now relies on inheritance like PHP's abstract `LeanBinary`.
 - `LeanArgsIndented::strArgs` adds optional line padding when `rhs` is `LeanArgsNewLineSeparated` (not in PHP); keeps AST→string→AST stable on quantifier/calc-indented bodies.
 - `LeanArgsSpaceSeparated`, `LeanTacticBlock`, `Lean_let`, `LeanTactic` (and `Lean_have` via `strFormat` only): no `strArgs` override — same as PHP (inherit `Lean::strArgs` → `this.args`); `strFormat` follows PHP.
 - `Lean_match` / `LeanWith`: echo and other edge cases may still differ from PHP in corner cases; `LeanBar.split` / `LeanCalc.split` use deep `clone()` like PHP
@@ -188,7 +189,7 @@ Missing classes to port: none — every concrete PHP Lean* node has a same-named
 - **Within-class method order** in **`lean.js`**: **normally alphabetic** by method name (Step 3 §2). Examples audited/reordered earlier: **`LeanCaret`**, **`LeanCommand`**, **`LeanArgsCommaSeparated`**, **`LeanArgsSemicolonSeparated`**, **`LeanArgsCommaNewLineSeparated`**, **`LeanLineComment`**, **`LeanBlockComment`**, **`LeanDocString`**, **`LeanToken`**, **`Lean_set_option`**, **`Lean_import`**, **`Lean_open`**.
 - **Comments**: no PHP / `lean.php` / line-range references in `lean.js` (Step 3 §4; see [Maintainer checklist](#maintainer-checklist-translation--ast-round-trip) item 4).
 - Track gaps via [Known Gaps](#known-gaps) and targeted ports (e.g. LeanTactic vs PHP sequential combinator / getEcho).
-- Prior parity work (examples): LeanBinary.echo, LeanRightarrow.echo; Lean_match, LeanWith; clone() on Lean / LeanArgs / LeanToken; LeanCalc; tactic modifiers.
+- Prior parity work (examples): `LeanBinary` method order (constructor → lhs/rhs getters/setters → insert_if → insert_tactic → jsonSerialize → latexFormat → sep → set_line) and removed base `get command()` switch; `LeanBinary.echo`, `LeanRightarrow.echo`; `Lean_match`, `LeanWith`; `clone()` on `Lean` / `LeanArgs` / `LeanToken`; `LeanCalc`; tactic modifiers.
 
 ## Step 4: Verification
 - node scripts/test-lean-parser.mjs — corpus OK; **2498/2498** listed lemmas pass AST round-trip (`jsonSerialize(compile(String(compile(file))))` vs `jsonSerialize(compile(file))`).

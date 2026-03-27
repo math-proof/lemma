@@ -2520,3 +2520,5 @@
 {"rel":"Lemma/Set/SDiffSDiff/eq/SDiff/of/Subset.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
 {"rel":"Lemma/Tensor/Eq_Stack/of/GtLength_0.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
 {"rel":"Lemma/Nat/Ite/eq/AddMulSBool.lean","note":"same dangling STC + `LeanTacticBlock` merge as AndAllSSetOf"}
+{"rel":"Lemma/Bool/All/All/of/All.lean","note":"All quantifier; passes parse → print → parse"}
+{"rel":"Lemma/Bool/All/of/All/All_Imp.lean","note":"All/Imp; off-corpus round-trip (corpus +1)"}

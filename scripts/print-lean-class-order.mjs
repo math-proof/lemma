@@ -52,3 +52,19 @@ const phpOnly = phpOrder.filter((n) => !jsS.has(n));
 const jsOnly = jsOrder.filter((n) => !ps.has(n));
 if (phpOnly.length) console.log('PHP only:', phpOnly.join(', '));
 if (jsOnly.length) console.log('JS only:', jsOnly.join(', '));
+
+// Optional: compare neighborhood of one class (e.g. node scripts/print-lean-class-order.mjs --around Lean_bullet)
+const aroundArg = process.argv.find((a) => a.startsWith('--around='));
+const aroundName = aroundArg?.slice('--around='.length) || (process.argv.includes('--around') ? process.argv[process.argv.indexOf('--around') + 1] : null);
+if (aroundName) {
+    const pi = phpOrder.indexOf(aroundName);
+    const ji = jsOrder.indexOf(aroundName);
+    console.log(`\n=== Around ${aroundName} (PHP idx ${pi}, JS idx ${ji}) ===`);
+    const w = 6;
+    for (let k = -w; k <= w; k++) {
+        const p = pi >= 0 ? phpOrder[pi + k] : '';
+        const j = ji >= 0 ? jsOrder[ji + k] : '';
+        const mark = p && j && p === j ? '  ' : '**';
+        if (p || j) console.log(`${mark} ${String(k).padStart(3)}  PHP: ${(p || '—').padEnd(28)}  JS: ${(j || '—').padEnd(28)}`);
+    }
+}

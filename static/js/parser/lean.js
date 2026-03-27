@@ -1327,6 +1327,24 @@ export class LeanLineComment extends Lean {
     strFormat() {
         return `${this.operator}${this.sep()}${this.text}`;
     }
+
+    /**
+     * Stable for round-trip: layout before `--` can change after print; body whitespace is normalized.
+     * Keyword markers `proof` / `imply` / `given` stay aligned with PHP echo.
+     */
+    jsonSerialize() {
+        return this.toJSON();
+    }
+
+    /** Stable fingerprint for `-- proof` / `-- imply` / `-- given`: indent can differ after re-parse. */
+    toJSON() {
+        const t = this.text;
+        if (t === 'proof' || t === 'imply' || t === 'given') {
+            return `  -- ${t}`;
+        }
+        const body = typeof t === 'string' ? t.trim() : t;
+        return `${this.operator}${this.sep()}${body}`;
+    }
 }
 
 class LeanBlockComment extends Lean {
@@ -1482,9 +1500,14 @@ export class LeanArgs extends Lean {
     }
 
     jsonSerialize() {
-        return this.args.map((a) =>
+        const mapped = this.args.map((a) =>
             a == null ? a : typeof a.jsonSerialize === 'function' ? a.jsonSerialize() : a,
         );
+        let i = 0;
+        while (i < mapped.length && mapped[i] === '') i++;
+        let j = mapped.length;
+        while (j > i && mapped[j - 1] === '') j--;
+        return i === 0 && j === mapped.length ? mapped : mapped.slice(i, j);
     }
 
     /**
@@ -2085,118 +2108,22 @@ export class LeanBinary extends LeanArgs {
         super([lhs, rhs], indent, level);
     }
 
-    /** LaTeX operator token; literals for arithmetic/relations vs macro names. */
-    get command() {
-        switch (this.constructor.name) {
-            case 'LeanAdd':
-                return '+';
-            case 'LeanSub':
-                return '-';
-            case 'LeanDiv':
-                return '\\frac';
-            case 'LeanMatMul':
-                return '{\\color{red}\\times}';
-            case 'Lean_times':
-                return '×';
-            case 'Lean_approx':
-                return '\\approx';
-            case 'LeanColon':
-                return ':';
-            case 'LeanEq':
-                return '=';
-            case 'LeanAssign':
-                return ':=';
-            case 'Lean_equiv':
-                return '\\equiv';
-            case 'Lean_in':
-                return '\\in';
-            case 'Lean_cup':
-                return '\\cup';
-            case 'Lean_cap':
-                return '\\cap';
-            case 'Lean_sqcap':
-                return '\\sqcap';
-            case 'Lean_sqcup':
-                return '\\sqcup';
-            case 'Lean_le':
-                return '\\le';
-            case 'Lean_ge':
-                return '\\ge';
-            case 'Lean_lt':
-                return '<';
-            case 'Lean_gt':
-                return '>';
-            case 'Lean_ne':
-                return '\\ne';
-            case 'LeanBEq':
-                return '\\!\\!=';
-            case 'Lean_simeq':
-                return '\\simeq';
-            case 'Lean_asymp':
-                return '\\asymp';
-            case 'LeanDvd':
-                return '{\\color{red}{\\ \\mid\\ }}';
-            case 'Lean_notin':
-                return '\\notin';
-            case 'Lean_leftrightarrow':
-                return '\\leftrightarrow';
-            case 'Lean_rightarrow':
-                return '\\rightarrow';
-            case 'Lean_lor':
-                return '\\lor';
-            case 'Lean_land':
-                return '\\land';
-            case 'LeanPow':
-                return '^';
-            case 'LeanFDiv':
-                return '/\\!\\!/';
-            case 'LeanModular':
-                return '\\%\\%';
-            case 'Lean_cdotp':
-                return '{\\color{red}\\cdotp}';
-            case 'LeanAppend':
-                return '+\\!\\!+';
-            case 'LeanConstruct':
-                return '::';
-            case 'LeanVConstruct':
-                return '::_v';
-            case 'LeanBitAnd':
-                return '\\&';
-            case 'LeanBitwiseAnd':
-                return '\\&\\!\\!\\&\\!\\!\\&';
-            case 'LeanBitwiseXor':
-                return '\\^\\^\\^';
-            case 'LeanBitOr':
-                return '|';
-            case 'LeanBitwiseOr':
-                return '|\\!\\!|\\!\\!|';
-            case 'LeanLogicAnd':
-                return '\\&\\&';
-            case 'LeanLogicOr':
-                return '\\|\\|';
-            case 'LeanLogicXor':
-                return '\\^\\^';
-            case 'Lean_subseteq':
-                return '\\subseteq';
-            case 'Lean_subset':
-                return '\\subset';
-            case 'Lean_supseteq':
-                return '\\supseteq';
-            case 'Lean_supset':
-                return '\\supset';
-            case 'Lean_setminus':
-                return '\\setminus';
-            case 'Lean_is':
-                return '{\\color{blue}\\text{is}}';
-            case 'Lean_is_not':
-                return '{\\color{blue}\\text{is not}}';
-            default:
-                return super.command;
-        }
+    get lhs() {
+        return this.args[0];
     }
 
-    echo() {
-        this.rhs?.echo?.();
+    set lhs(v) {
+        this.args[0] = v;
+        if (v) v.parent = this;
+    }
+
+    get rhs() {
+        return this.args[1];
+    }
+
+    set rhs(v) {
+        this.args[1] = v;
+        if (v) v.parent = this;
     }
 
     insert_if(caret) {
@@ -2205,13 +2132,6 @@ export class LeanBinary extends LeanArgs {
             return caret;
         }
         throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
-    }
-
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.parent instanceof LeanTactic && indent > this.indent) {
-            return this.parent.push_args_indented(indent, newlineCount, false);
-        }
-        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
     }
 
     insert_tactic(caret, func) {
@@ -2228,30 +2148,6 @@ export class LeanBinary extends LeanArgs {
         return `{%s} ${this.command} {%s}`;
     }
 
-    get lhs() {
-        return this.args[0];
-    }
-
-    set lhs(v) {
-        this.args[0] = v;
-        if (v) v.parent = this;
-    }
-
-    get operator() {
-        const name = this.constructor.name;
-        const pair = Object.entries(token2classname).find(([, cls]) => cls === name);
-        return pair ? pair[0] : null;
-    }
-
-    get rhs() {
-        return this.args[1];
-    }
-
-    set rhs(v) {
-        this.args[1] = v;
-        if (v) v.parent = this;
-    }
-
     /** Space vs newline between lhs/rhs depending on rhs shape. */
     sep() {
         return this.rhs instanceof LeanStatements ? '\n' : ' ';
@@ -2265,11 +2161,932 @@ export class LeanBinary extends LeanArgs {
         return this.rhs.set_line(line);
     }
 
+    // JS-only extensions (alphabetical order)
+
+    /** Forward echo to rhs. */
+    echo() {
+        this.rhs?.echo?.();
+    }
+
+    /** Handle newline insertion for tactic contexts. */
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.parent instanceof LeanTactic && indent > this.indent) {
+            return this.parent.push_args_indented(indent, newlineCount, false);
+        }
+        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+    }
+
+    /** Source-code operator token; derived from token2classname reverse lookup. */
+    get operator() {
+        const name = this.constructor.name;
+        const pair = Object.entries(token2classname).find(([, cls]) => cls === name);
+        return pair ? pair[0] : null;
+    }
+
+    /** String format using operator token. */
     strFormat() {
         const op = this.operator;
         if (op == null) return super.strFormat();
         const sep = this.sep();
         return `%s ${op}${sep}%s`;
+    }
+}
+
+/** Property access `Foo.bar`. */
+export class LeanProperty extends LeanBinary {
+    static input_priority = 81; // LeanPow::$input_priority + 1
+
+    get stack_priority() {
+        return 87;
+    }
+
+    get command() {
+        return '.';
+    }
+
+    get operator() {
+        return '.';
+    }
+
+    equals(other) {
+        if (other instanceof LeanProperty) {
+            return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
+        }
+        return false;
+    }
+
+    insert(caret, func, type) {
+        if (this.rhs === caret) {
+            if (caret instanceof LeanCaret) {
+                if (func.startsWith('Lean_')) {
+                    return this.insert_word(caret, func.slice(5));
+                }
+            } else if (type === 'modifier') {
+                return this.parent.insert(this, func, type);
+            } else {
+                const newCaret = new LeanCaret(this.indent, caret.level);
+                this.parent.replace(
+                    this,
+                    new LeanArgsSpaceSeparated(
+                        [this, new (getLeanClass(func))(newCaret, newCaret.indent, newCaret.level)],
+                        this.indent,
+                        newCaret.level
+                    )
+                );
+                return newCaret;
+            }
+        }
+        throw new Error(`insert is unexpected for ${this.constructor.name}`);
+    }
+
+    insert_left(caret, func, prevToken = '') {
+        if (func === 'LeanDoubleAngleQuotation') {
+            return caret.push_left(func, prevToken);
+        }
+        if (this.parent) {
+            return this.parent.insert_left(this, func, prevToken);
+        }
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.parent instanceof LeanTactic && indent > this.indent) {
+            return this.parent.push_args_indented(indent, newlineCount, false);
+        }
+        return this.parent.insert_newline(this, newlineCount, indent, next);
+    }
+
+    insert_tactic(caret, token) {
+        return this.insert_word(caret, token);
+    }
+
+    insert_unary(caret, func) {
+        if (this.parent) {
+            return this.parent.insert_unary(this, func);
+        }
+    }
+
+    insert_word(caret, word) {
+        if (caret instanceof LeanCaret) {
+            return super.insert_word(caret, word);
+        }
+        if (this.parent) {
+            return this.parent.insert_word(this, word);
+        }
+    }
+
+    is_indented() {
+        const parent = this.parent;
+        return parent instanceof LeanArgsCommaNewLineSeparated ||
+            parent instanceof LeanArgsNewLineSeparated ||
+            (parent instanceof LeanArgsIndented && parent.rhs === this) ||
+            (parent instanceof LeanIte && parent.else === this);
+    }
+
+    isProp(vars) {
+        const rhs = this.rhs;
+        if (rhs instanceof LeanToken) {
+            switch (rhs.text) {
+                case 'Infinite':
+                case 'Infinitesimal':
+                case 'InfinitePos':
+                case 'InfiniteNeg':
+                    return true;
+            }
+        }
+    }
+
+    is_space_separated() {
+        const rhs = this.rhs;
+        if (rhs instanceof LeanToken) {
+            switch (rhs.text) {
+                case 'cos':
+                case 'sin':
+                case 'tan':
+                case 'log':
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    latexArgs(syntax = null) {
+        const [lhs, rhs] = this.args;
+        if (rhs instanceof LeanToken) {
+            switch (rhs.text) {
+                case 'exp':
+                    let arg = '%s';
+                    if (lhs instanceof LeanToken) {
+                        switch (lhs.text) {
+                            case 'Real':
+                            case 'Complex':
+                            case 'Exp':
+                                arg = null;
+                        }
+                    }
+                    if (arg) {
+                        const exponent = this.lhs instanceof LeanParenthesis ? this.lhs.arg : this.lhs;
+                        return [exponent.toLatex(syntax)];
+                    }
+                    break;
+                case 'cos':
+                case 'sin':
+                case 'tan':
+                case 'log':
+                case 'fmod':
+                    return [this.lhs.toLatex(syntax)];
+                case 'card':
+                    if (!(lhs instanceof LeanToken && this.parent instanceof LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
+                        return [this.lhs.toLatex(syntax)];
+                    }
+                    break;
+                case 'softmax':
+                    if (syntax) syntax.softmax = true;
+                    break;
+            }
+        }
+        return super.latexArgs(syntax);
+    }
+
+    latexFormat() {
+        const [lhs, rhs] = this.args;
+        if (rhs instanceof LeanToken) {
+            switch (rhs.text) {
+                case 'exp':
+                    let arg = '%s';
+                    if (lhs instanceof LeanToken) {
+                        switch (lhs.text) {
+                            case 'Real':
+                            case 'Complex':
+                            case 'Exp':
+                                arg = null;
+                        }
+                    }
+                    if (arg) {
+                        return '{\\color{RoyalBlue} e} ^ {%s}';
+                    }
+                    break;
+                case 'cos':
+                case 'sin':
+                case 'tan':
+                case 'log':
+                    return `\\\\${rhs.text} {%s}`;
+                case 'fmod':
+                    return '{%s} {\\color{red}\\%%}';
+                case 'card':
+                    if (!(lhs instanceof LeanToken && this.parent instanceof LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
+                        return '\\left|{%s}\\right|';
+                    }
+                    break;
+                case 'epsilon':
+                    if (lhs instanceof LeanToken && lhs.text === 'Hyperreal') {
+                        return '0^+';
+                    }
+                    break;
+                case 'omega':
+                    if (lhs instanceof LeanToken && lhs.text === 'Hyperreal') {
+                        return '\\infty';
+                    }
+                    break;
+            }
+        }
+        return `{%s}${this.command}{%s}`;
+    }
+
+    push_attr(caret) {
+        return super.push_attr(caret);
+    }
+
+    push_token(word) {
+        const level = this.level;
+        const newToken = new LeanToken(word, this.indent, level);
+        this.parent.replace(this, new LeanArgsSpaceSeparated([this, newToken], this.indent, level));
+        return newToken;
+    }
+
+    regexp() {
+        const str = String(this.rhs);
+        const func = str.charAt(0).toUpperCase() + str.slice(1);
+        let regexp = this.lhs.regexp().map(expr => `${func}${expr}`);
+        regexp.push(`${func}_`);
+        return regexp;
+    }
+
+    sep() {
+        return '';
+    }
+
+    strFormat() {
+        return `%s${this.operator}%s`;
+    }
+
+    // JS-only extensions (alphabetical order)
+
+    /** Unwrap LeanArgsSpaceSeparated to get the actual token (handles import/open dotted names). */
+    strArgs() {
+        let rhs = this.rhs;
+        if (rhs instanceof LeanArgsSpaceSeparated && rhs.args.length === 2 && rhs.args[0] instanceof LeanCaret) {
+            rhs = rhs.args[1];
+        }
+        return [this.lhs, rhs];
+    }
+}
+
+/** Type ascription / declaration colon. */
+export class LeanColon extends LeanBinary {
+    static input_priority = 19;
+
+    get command() {
+        return ':';
+    }
+
+    get operator() {
+        return ':';
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.rhs === caret) {
+            if (caret instanceof LeanCaret && indent >= this.indent) {
+                let ind = indent;
+                if (ind === this.indent) ind = this.indent + 2;
+                caret.indent = ind;
+                const stmts = new LeanStatements([caret], ind, caret.level);
+                this.replace(caret, stmts);
+                return caret;
+            }
+            if (caret instanceof LeanStatements && indent === this.indent && this.parent?.constructor.name === 'LeanParenthesis') return caret;
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    sep() {
+        const rhs = this.rhs;
+        return rhs instanceof LeanStatements ? '\n' : (rhs instanceof LeanCaret || this.parent instanceof LeanGetElem ? '' : ' ');
+    }
+
+    strArgs() {
+        let lhs = this.lhs;
+        const rhs = this.rhs;
+        if (lhs instanceof LeanArgsNewLineSeparated) {
+            const la = lhs.args;
+            const tail = la.slice(1).map((arg) => String(arg));
+            lhs = [String(la[0]), ...tail].join('\n');
+        }
+        return [lhs, rhs];
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        let first = '%s';
+        if (!this.parent?.constructor?.name?.includes('GetElem')) {
+            first += ' ';
+        }
+        return `${first}${this.operator}${sep}%s`;
+    }
+
+    // JS-only extensions (alphabetical order)
+
+    /** `lemma main:\n` is tight; `{a b : α} :\n` keeps a space before the final colon. */
+    colonLhsLooksLikeBinderHead() {
+        const L = this.lhs;
+        if (!L) return true;
+        if (L instanceof LeanParenthesis) return true;
+        const n = L.constructor?.name;
+        if (n === 'LeanBracket' || n === 'LeanBrace') return true;
+        if (L instanceof LeanArgsSpaceSeparated) {
+            const active = L.args.filter((a) => a != null && !(a instanceof LeanCaret));
+            if (active.length !== 1) return true;
+            return !(active[0] instanceof LeanToken);
+        }
+        if (L instanceof LeanToken) return false;
+        return true;
+    }
+}
+
+export class LeanAssign extends LeanBinary {
+    static input_priority = 18;
+
+    get operator() {
+        return ':=';
+    }
+
+    get command() {
+        return ':=';
+    }
+
+    echo() {
+        this.rhs?.echo?.();
+    }
+
+    insert(caret, func, type) {
+        if (this.rhs === caret && caret instanceof LeanCaret) {
+            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+            return caret;
+        }
+        if (this.parent) return this.parent.insert(this, func, type);
+        throw new Error(`insert is unexpected for ${this.constructor.name}`);
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent < indent) {
+            if (caret === this.rhs) {
+                let out = caret;
+                if (caret instanceof LeanCaret) {
+                    caret.indent = indent;
+                    this.rhs = new LeanArgsNewLineSeparated([caret], indent, caret.level);
+                    out = this.rhs.push_newlines(newlineCount - 1);
+                } else if (caret instanceof LeanArgsNewLineSeparated) {
+                    if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+                } else {
+                    if (this.parent instanceof LeanCalc)
+                        return this.parent.insert_newline(this, newlineCount, indent, next);
+                    out = this.push_args_indented(indent, newlineCount, false);
+                }
+                return out;
+            }
+            throw new Error(`insert_newline is unexpected for ${this.constructor.name}`);
+        }
+        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+    }
+
+    insert_tactic(caret, type) {
+        return this.insert_word(caret, type);
+    }
+
+    is_indented() {
+        const p = this.parent;
+        return !p || p instanceof LeanArgsNewLineSeparated || (p instanceof LeanArgsIndented && p.rhs === this);
+    }
+
+    relocate_last_comment() {
+        this.rhs.relocate_last_comment();
+    }
+
+    sep() {
+        const rhs = this.rhs;
+        if (rhs instanceof LeanArgsNewLineSeparated) {
+            const lines = rhs.args;
+            const l0 = lines[0];
+            const l1 = lines[1];
+            if (lines.length > 2 || !(l1 instanceof LeanArgsNewLineSeparated) || l0 instanceof LeanLineComment) {
+                return '\n';
+            }
+        }
+        return ' ';
+    }
+
+    split(syntax) {
+        const by = this.rhs;
+        if (by instanceof LeanBy && by.arg instanceof LeanStatements) {
+            const self = this.clone();
+            const stmts = by.arg;
+            self.rhs.arg = new LeanCaret(by.indent, by.level);
+            const statements = [self];
+            stmts.swap_echo_star(syntax, statements);
+            return statements;
+        }
+        return [this];
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+}
+
+export class LeanBinaryBoolean extends LeanBinary {
+    /**
+     * @param {Record<string, unknown>} [_vars]
+     */
+    isProp(_vars) {
+        return true;
+    }
+
+    append(new_, type) {
+        const indent = this.indent;
+        const level = this.level;
+        const caret = new LeanCaret(indent, level);
+        if (typeof new_ === 'string') {
+            const Ctor = getLeanClass(new_);
+            const newNode = new Ctor(caret, indent, level);
+            this.rhs = new LeanArgsSpaceSeparated([this.rhs, newNode], indent, level);
+            return caret;
+        } else {
+            this.parent.replace(this, new LeanArgsSpaceSeparated([this, new_], indent, level));
+            return new_;
+        }
+    }
+
+    insert_colon(caret) {
+        if (caret === this.rhs) {
+            const newCaret = new LeanCaret(caret.indent, caret.level);
+            this.parent.replace(this, new LeanColon(this, newCaret, caret.indent, caret.level));
+            return newCaret;
+        }
+        return caret.push_binary('LeanColon');
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.rhs === caret && indent > this.indent) {
+            if (caret instanceof LeanCaret) {
+                caret.indent = indent;
+                this.rhs = new LeanStatements([caret], indent, caret.level);
+                return caret;
+            }
+            return this.parent.push_args_indented(indent, newlineCount, false);
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    is_indented() {
+        return this.parent instanceof LeanStatements;
+    }
+
+    sep() {
+        return this.rhs instanceof LeanStatements ? '\n' : ' ';
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+}
+
+export class LeanRelational extends LeanBinaryBoolean {
+    static input_priority = 50;
+
+    insert_tactic(caret, token) {
+        return this.insert_word(caret, token);
+    }
+
+    latexArgs(syntax = null) {
+        const [lhs, rhs] = this.strip_parenthesis();
+        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
+    }
+}
+
+/** Relational / equality binary nodes (`>`, `≥`, `=`, `≃`, `∣`, …). */
+export class Lean_gt extends LeanRelational {
+    static input_priority = 50;
+
+    get operator() {
+        return '>';
+    }
+}
+export class Lean_ge extends LeanRelational {
+    static input_priority = 50;
+
+    get operator() {
+        return '≥';
+    }
+}
+export class Lean_lt extends LeanRelational {
+    static input_priority = 50;
+
+    get operator() {
+        return '<';
+    }
+}
+export class Lean_le extends LeanRelational {
+    static input_priority = 50;
+
+    get operator() {
+        return '≤';
+    }
+}
+export class LeanEq extends LeanRelational {
+    static input_priority = 50;
+
+    get command() {
+        return '=';
+    }
+
+    get operator() {
+        return '=';
+    }
+}
+export class LeanBEq extends LeanRelational {
+    static input_priority = 50;
+
+    get command() {
+        return '\\!\\!=';
+    }
+
+    get operator() {
+        return '==';
+    }
+}
+export class Lean_bne extends LeanRelational {
+    static input_priority = 50;
+
+    get operator() {
+        return '!=';
+    }
+}
+export class Lean_ne extends LeanRelational {
+    static input_priority = 50;
+
+    get command() {
+        return '\\ne';
+    }
+
+    get operator() {
+        return '≠';
+    }
+}
+export class Lean_equiv extends LeanRelational {
+    static input_priority = 32;
+
+    get command() {
+        return '\\equiv';
+    }
+
+    get operator() {
+        return '≡';
+    }
+}
+export class LeanNotEquiv extends LeanRelational {
+    static input_priority = 32;
+
+    get command() {
+        return '\\not\\equiv';
+    }
+
+    get operator() {
+        return '≢';
+    }
+}
+export class Lean_simeq extends LeanRelational {
+    static input_priority = 50;
+
+    get command() {
+        return '\\simeq';
+    }
+
+    get operator() {
+        return '≃';
+    }
+
+    latexArgs(syntax) {
+        if (syntax) syntax['≃'] = true;
+        return super.latexArgs(syntax);
+    }
+}
+export class Lean_approx extends LeanRelational {
+    static input_priority = 50;
+
+    get operator() {
+        return '≈';
+    }
+
+    latexArgs(syntax) {
+        if (syntax) syntax['≈'] = true;
+        return super.latexArgs(syntax);
+    }
+}
+export class Lean_asymp extends LeanRelational {
+    static input_priority = 50;
+
+    get command() {
+        return '\\asymp';
+    }
+
+    get operator() {
+        return '≍';
+    }
+
+    latexArgs(syntax) {
+        if (syntax) syntax['≍'] = true;
+        return super.latexArgs(syntax);
+    }
+}
+export class LeanDvd extends LeanRelational {
+    static input_priority = 50;
+
+    get command() {
+        return '{\\color{red}{\\ \\mid\\ }}';
+    }
+
+    get operator() {
+        return '∣';
+    }
+}
+
+/** Set / arrow: `∈` (membership). */
+export class Lean_in extends LeanBinaryBoolean {
+    static input_priority = 50;
+
+    get operator() {
+        return '∈';
+    }
+
+    latexArgs(syntax) {
+        let lhs = this.lhs;
+        if (lhs instanceof LeanParenthesis && !(lhs.arg instanceof LeanColon)) lhs = lhs.arg;
+        return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
+    }
+}
+export class Lean_notin extends LeanBinaryBoolean {
+    static input_priority = 50;
+
+    get operator() {
+        return '∉';
+    }
+
+    latexArgs(syntax) {
+        let lhs = this.lhs;
+        if (lhs instanceof LeanParenthesis) lhs = lhs.arg;
+        return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
+    }
+}
+/** `↔`. */
+export class Lean_leftrightarrow extends LeanBinaryBoolean {
+    static input_priority = 20;
+
+    get operator() {
+        return '↔';
+    }
+}
+
+export class LeanArithmetic extends LeanBinary {
+    static input_priority = 67;
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret instanceof LeanCaret)
+            return caret;
+        return this.parent.insert_newline(this, newlineCount, indent, next);
+    }
+
+    sep() {
+        return ' ';
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+}
+
+export class LeanAdd extends LeanArithmetic {
+    static input_priority = 65;
+
+    get command() {
+        return '+';
+    }
+
+    get operator() {
+        return '+';
+    }
+}
+
+export class LeanSub extends LeanArithmetic {
+    static input_priority = 65;
+
+    get command() {
+        return '-';
+    }
+
+    get operator() {
+        return '-';
+    }
+}
+
+export class LeanMul extends LeanArithmetic {
+    static input_priority = 70;
+
+    /** LaTeX: `\\cdot`, thin space, or empty for juxtaposition. */
+    get command() {
+        const lhs = this.lhs;
+        const rhs = this.rhs;
+        if (
+            (rhs instanceof LeanParenthesis && rhs.arg instanceof LeanDiv) ||
+            (rhs instanceof LeanToken && /^\d+$/.test(rhs.text)) ||
+            (rhs instanceof LeanMul && rhs.command) ||
+            (lhs instanceof LeanMul && lhs.command) ||
+            lhs.is_space_separated?.() ||
+            lhs instanceof LeanFDiv ||
+            rhs instanceof LeanPow
+        ) {
+            return '\\cdot';
+        }
+        if (
+            (lhs instanceof LeanToken &&
+                (rhs.is_space_separated?.() || (rhs instanceof LeanToken && rhs.starts_with_2_letters?.()))) ||
+            (lhs instanceof LeanToken && lhs.ends_with_2_letters?.() && rhs instanceof LeanToken) ||
+            lhs instanceof LeanProperty ||
+            rhs instanceof LeanProperty
+        ) {
+            return '\\ ';
+        }
+        return '';
+    }
+
+    get operator() {
+        return '*';
+    }
+
+    latexArgs(syntax) {
+        let lhs = this.lhs;
+        let rhs = this.rhs;
+        const level = this.level;
+        if (rhs instanceof LeanParenthesis && rhs.arg instanceof LeanDiv) {
+            rhs = rhs.arg;
+        } else if (rhs instanceof LeanNeg) {
+            rhs = new LeanParenthesis(rhs, this.indent, level);
+            rhs.is_closed = true;
+        }
+        if (lhs instanceof LeanParenthesis && lhs.arg instanceof LeanDiv) {
+            lhs = lhs.arg;
+        } else if (lhs instanceof LeanNeg) {
+            lhs = new LeanParenthesis(lhs, this.indent, level);
+            lhs.is_closed = true;
+        }
+        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
+    }
+
+    latexFormat() {
+        const command = this.command;
+        if (command) {
+            return `${this.lhs.toLatex()} ${command} ${this.rhs.toLatex()}`;
+        }
+        return `%s  %s`;
+    }
+}
+
+export class Lean_times extends LeanArithmetic {
+    static input_priority = 72;
+
+    get command() {
+        return '×';
+    }
+
+    get operator() {
+        return '×';
+    }
+}
+
+export class LeanMatMul extends LeanArithmetic {
+    static input_priority = 70;
+
+    get operator() {
+        return '@';
+    }
+
+    get command() {
+        return '{\\color{red}\\times}';
+    }
+}
+
+export class Lean_bullet extends LeanArithmetic {
+    static input_priority = 73;
+
+    get operator() {
+        return '•';
+    }
+}
+
+export class Lean_odot extends LeanArithmetic {
+    static input_priority = 73;
+
+    get operator() {
+        return '⊙';
+    }
+}
+
+export class Lean_otimes extends LeanArithmetic {
+    static input_priority = 32;
+
+    get operator() {
+        return '⊗';
+    }
+}
+
+export class Lean_oplus extends LeanArithmetic {
+    static input_priority = 30;
+
+    get operator() {
+        return '⊕';
+    }
+}
+
+export class LeanDiv extends LeanArithmetic {
+    static input_priority = 70;
+
+    get operator() {
+        return '/';
+    }
+
+    latexArgs(syntax) {
+        let lhs = this.lhs;
+        let rhs = this.rhs;
+        if (!(lhs instanceof LeanDiv)) {
+            if (lhs instanceof LeanParenthesis && !(lhs.arg instanceof LeanColon))
+                lhs = lhs.arg;
+            if (rhs instanceof LeanParenthesis && !(rhs.arg instanceof LeanColon))
+                rhs = rhs.arg;
+        }
+        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
+    }
+
+    latexFormat() {
+        const lhs = this.lhs;
+        const rhs = this.rhs;
+        if (lhs instanceof LeanDiv || (rhs instanceof LeanParenthesis && rhs.arg instanceof LeanDiv)) {
+            return '\\left. {%s} \\right/ {%s}';
+        }
+        return '\\frac {%s} {%s}';
+    }
+}
+
+export class LeanFDiv extends LeanArithmetic {
+    static input_priority = 70;
+
+    get command() {
+        return '/\\!\\!/';
+    }
+
+    get operator() {
+        return '//';
+    }
+}
+
+export class LeanBitAnd extends LeanArithmetic {
+    static input_priority = 68;
+
+    get command() {
+        return '\\&';
+    }
+
+    get operator() {
+        return '&';
+    }
+}
+
+export class LeanBitwiseAnd extends LeanArithmetic {
+    static input_priority = 60;
+
+    get command() {
+        return '\\&\\!\\!\\&\\!\\!\\&';
+    }
+
+    get operator() {
+        return '&&&';
+    }
+}
+
+export class LeanBitwiseXor extends LeanArithmetic {
+    static input_priority = 60;
+
+    get command() {
+        return '\\^\\^\\^';
+    }
+
+    get operator() {
+        return '^^^';
     }
 }
 
@@ -2546,539 +3363,37 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
     }
 }
 
-/** Property access `Foo.bar`. */
-export class LeanProperty extends LeanBinary {
-    static input_priority = 81;
-
-    /** Extra space before trig/log rhs token names. */
-    is_space_separated() {
-        const rhs = this.rhs;
-        if (rhs instanceof LeanToken) {
-            switch (rhs.text) {
-                case 'cos':
-                case 'sin':
-                case 'tan':
-                case 'log':
-                    return true;
-                default:
-                    break;
-            }
-        }
-        return false;
-    }
-
-    get command() {
-        return '.';
-    }
-    get operator() {
-        return '.';
-    }
-    strFormat() {
-        return `%s${this.operator}%s`;
-    }
-    latexFormat() {
-        return `{%s}${this.command}{%s}`;
-    }
-}
-
-/** Type ascription / declaration colon. */
-export class LeanColon extends LeanBinary {
-    static input_priority = 19;
-
-    is_indented() {
-        return false;
-    }
-
-    get operator() {
-        return ':';
-    }
-
-    /** `lemma main:\n` is tight; `{a b : α} :\n` keeps a space before the final colon. */
-    colonLhsLooksLikeBinderHead() {
-        const L = this.lhs;
-        if (!L) return true;
-        if (L instanceof LeanParenthesis) return true;
-        const n = L.constructor?.name;
-        if (n === 'LeanBracket' || n === 'LeanBrace') return true;
-        if (L instanceof LeanArgsSpaceSeparated) {
-            const active = L.args.filter((a) => a != null && !(a instanceof LeanCaret));
-            if (active.length !== 1) return true;
-            return !(active[0] instanceof LeanToken);
-        }
-        if (L instanceof LeanToken) return false;
-        return true;
-    }
-
-    /** Spacing for caret vs statements vs binder-like lhs (round-trip). */
-    strFormat() {
-        const rhs = this.rhs;
-        const inGetElem = this.parent?.constructor?.name === 'LeanGetElem';
-        if (inGetElem) {
-            const sep = rhs instanceof LeanCaret ? '' : ' ';
-            return `%s:${sep}%s`;
-        }
-        if (rhs instanceof LeanStatements) {
-            return this.colonLhsLooksLikeBinderHead() ? '%s :\n%s' : '%s:\n%s';
-        }
-        const sep = rhs instanceof LeanCaret ? '' : ' ';
-        const first = '%s ';
-        return `${first}:${sep}%s`;
-    }
-
-    strArgs() {
-        let lhs = this.lhs;
-        const rhs = this.rhs;
-        if (lhs instanceof LeanArgsNewLineSeparated) {
-            const la = lhs.args;
-            const tail = la.slice(1).map((arg) => String(arg));
-            lhs = [String(la[0]), ...tail].join('\n');
-        }
-        return [lhs, rhs];
-    }
-
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.rhs === caret) {
-            if (caret instanceof LeanCaret && indent >= this.indent) {
-                let ind = indent;
-                if (ind === this.indent) ind = this.indent + 2;
-                caret.indent = ind;
-                const stmts = new LeanStatements([caret], ind, caret.level);
-                this.replace(caret, stmts);
-                return caret;
-            }
-            if (caret instanceof LeanStatements && indent === this.indent && this.parent?.constructor.name === 'LeanParenthesis') return caret;
-        }
-        return super.insert_newline(caret, newlineCount, indent, next);
-    }
-}
-
-export class LeanAssign extends LeanBinary {
-    static input_priority = 18;
-
-    get operator() {
-        return ':=';
-    }
-
-    get command() {
-        return ':=';
-    }
-
-    echo() {
-        this.rhs?.echo?.();
-    }
-
-    insert(caret, func, type) {
-        if (this.rhs === caret && caret instanceof LeanCaret) {
-            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
-            this.replace(caret, new Ctor(caret, caret.indent, caret.level));
-            return caret;
-        }
-        if (this.parent) return this.parent.insert(this, func, type);
-        throw new Error(`insert is unexpected for ${this.constructor.name}`);
-    }
-
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.indent < indent) {
-            if (caret === this.rhs) {
-                let out = caret;
-                if (caret instanceof LeanCaret) {
-                    caret.indent = indent;
-                    this.rhs = new LeanArgsNewLineSeparated([caret], indent, caret.level);
-                    out = this.rhs.push_newlines(newlineCount - 1);
-                } else if (caret instanceof LeanArgsNewLineSeparated) {
-                    if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
-                } else {
-                    if (this.parent instanceof LeanCalc)
-                        return this.parent.insert_newline(this, newlineCount, indent, next);
-                    out = this.push_args_indented(indent, newlineCount, false);
-                }
-                return out;
-            }
-            throw new Error(`insert_newline is unexpected for ${this.constructor.name}`);
-        }
-        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
-    }
-
-    insert_tactic(caret, type) {
-        return this.insert_word(caret, type);
-    }
-
-    is_indented() {
-        const p = this.parent;
-        return !p || p instanceof LeanArgsNewLineSeparated || (p instanceof LeanArgsIndented && p.rhs === this);
-    }
-
-    relocate_last_comment() {
-        this.rhs.relocate_last_comment();
-    }
-
-    sep() {
-        const rhs = this.rhs;
-        if (rhs instanceof LeanArgsNewLineSeparated) {
-            const lines = rhs.args;
-            const l0 = lines[0];
-            const l1 = lines[1];
-            if (lines.length > 2 || !(l1 instanceof LeanArgsNewLineSeparated) || l0 instanceof LeanLineComment) {
-                return '\n';
-            }
-        }
-        return ' ';
-    }
-
-    split(syntax) {
-        const by = this.rhs;
-        if (by instanceof LeanBy && by.arg instanceof LeanStatements) {
-            const self = this.clone();
-            const stmts = by.arg;
-            self.rhs.arg = new LeanCaret(by.indent, by.level);
-            const statements = [self];
-            stmts.swap_echo_star(syntax, statements);
-            return statements;
-        }
-        return [this];
-    }
-
-    strFormat() {
-        const sep = this.sep();
-        return `%s ${this.operator}${sep}%s`;
-    }
-}
-
-export class LeanBinaryBoolean extends LeanBinary {
-    /**
-     * @param {Record<string, unknown>} [_vars]
-     */
-    isProp(_vars) {
-        return true;
-    }
-}
-
-export class LeanRelational extends LeanBinaryBoolean {
-    static input_priority = 50;
-}
-
-/** Relational / equality binary nodes (`>`, `≥`, `=`, `≃`, `∣`, …). */
-export class Lean_gt extends LeanRelational {
-    static input_priority = 50;
-}
-export class Lean_ge extends LeanRelational {
-    static input_priority = 50;
-    get operator() {
-        return '≥';
-    }
-}
-export class Lean_lt extends LeanRelational {
-    static input_priority = 50;
-}
-export class Lean_le extends LeanRelational {
-    static input_priority = 50;
-    get operator() {
-        return '≤';
-    }
-}
-export class LeanEq extends LeanRelational {
-    static input_priority = 50;
-
-    get operator() {
-        return '=';
-    }
-}
-export class LeanBEq extends LeanRelational {
-    static input_priority = 50;
-
-    get operator() {
-        return '==';
-    }
-}
-export class Lean_bne extends LeanRelational {
-    static input_priority = 50;
-
-    get operator() {
-        return '!=';
-    }
-}
-export class Lean_ne extends LeanRelational {
-    static input_priority = 50;
-    get operator() {
-        return '≠';
-    }
-}
-export class Lean_equiv extends LeanRelational {
-    static input_priority = 40;
-}
-export class LeanNotEquiv extends LeanRelational {
-    static input_priority = 40;
-}
-export class Lean_simeq extends LeanRelational {
-    static input_priority = 50;
-    latexArgs(syntax) {
-        if (syntax) syntax['≃'] = true;
-        return super.latexArgs(syntax);
-    }
-}
-export class Lean_approx extends LeanRelational {
-    static input_priority = 50;
-    latexArgs(syntax) {
-        if (syntax) syntax['≈'] = true;
-        return super.latexArgs(syntax);
-    }
-}
-export class Lean_asymp extends LeanRelational {
-    static input_priority = 50;
-    latexArgs(syntax) {
-        if (syntax) syntax['≍'] = true;
-        return super.latexArgs(syntax);
-    }
-}
-export class LeanDvd extends LeanRelational {
-    static input_priority = 50;
-}
-
-/** Set / arrow: `∈` (membership). */
-export class Lean_in extends LeanBinaryBoolean {
-    static input_priority = 50;
-    latexArgs(syntax) {
-        let lhs = this.lhs;
-        if (lhs instanceof LeanParenthesis && !(lhs.arg instanceof LeanColon)) lhs = lhs.arg;
-        return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
-    }
-}
-export class Lean_notin extends LeanBinaryBoolean {
-    static input_priority = 50;
-    latexArgs(syntax) {
-        let lhs = this.lhs;
-        if (lhs instanceof LeanParenthesis) lhs = lhs.arg;
-        return [lhs.toLatex(syntax), this.rhs.toLatex(syntax)];
-    }
-}
-/** `↔`. */
-export class Lean_leftrightarrow extends LeanBinaryBoolean {
-    static input_priority = 50;
-}
-
-export class LeanArithmetic extends LeanBinary {}
-
-/** Arithmetic / ring / bitwise / shift / lattice ops (`+`, `×`, `^`, `⊓`, …). */
-export class LeanAdd extends LeanArithmetic {
-    static input_priority = 65;
-}
-export class LeanSub extends LeanArithmetic {
-    static input_priority = 65;
-}
-export class LeanMul extends LeanArithmetic {
-    static input_priority = 70;
-
-    /** LaTeX: `\\cdot`, thin space, or empty for juxtaposition. */
-    get command() {
-        const lhs = this.lhs;
-        const rhs = this.rhs;
-        if (
-            (rhs instanceof LeanParenthesis && rhs.arg instanceof LeanDiv) ||
-            (rhs instanceof LeanToken && /^\d+$/.test(rhs.text)) ||
-            (rhs instanceof LeanMul && rhs.command) ||
-            (lhs instanceof LeanMul && lhs.command) ||
-            lhs.is_space_separated?.() ||
-            lhs instanceof LeanFDiv ||
-            rhs instanceof LeanPow
-        ) {
-            return '\\cdot';
-        }
-        if (
-            (lhs instanceof LeanToken &&
-                (rhs.is_space_separated?.() || (rhs instanceof LeanToken && rhs.starts_with_2_letters?.()))) ||
-            (lhs instanceof LeanToken && lhs.ends_with_2_letters?.() && rhs instanceof LeanToken) ||
-            lhs instanceof LeanProperty ||
-            rhs instanceof LeanProperty
-        ) {
-            return '\\ ';
-        }
-        return '';
-    }
-}
-
-/** Matrix multiply `@` (LaTeX via `LeanBinary.command`). */
-export class LeanMatMul extends LeanArithmetic {
-    static input_priority = 70;
-}
-
-/** Lattice meet `⊓`. */
-export class Lean_sqcap extends LeanArithmetic {
-    static input_priority = 69;
-}
-
-/** Lattice join `⊔`. */
-export class Lean_sqcup extends LeanArithmetic {
-    static input_priority = 68;
-}
-
-/** Division `/` (LaTeX `\\frac`). */
-export class LeanDiv extends LeanArithmetic {
-    static input_priority = 70;
-}
-
-/** `×`. */
-export class Lean_times extends LeanArithmetic {
-    static input_priority = 72;
-}
-
-/** `^`. */
-export class LeanPow extends LeanArithmetic {
-    static input_priority = 80;
-}
-
-/** `::`. */
-export class LeanConstruct extends LeanArithmetic {
-    static input_priority = 67;
-}
-
-/** `::ᵥ`. */
-export class LeanVConstruct extends LeanArithmetic {
-    static input_priority = 67;
-}
-
-/** `++`. */
-export class LeanAppend extends LeanArithmetic {
-    static input_priority = 65;
-}
-
-/** `•`. */
-export class Lean_bullet extends LeanArithmetic {
-    static input_priority = 73;
-}
-
-/** `⊙`. */
-export class Lean_odot extends LeanArithmetic {
-    static input_priority = 73;
-}
-
-/** `⊗`. */
-export class Lean_otimes extends LeanArithmetic {
-    static input_priority = 32;
-}
-
-/** `⊕`. */
-export class Lean_oplus extends LeanArithmetic {
-    static input_priority = 30;
-}
-
-/** `⊖`. */
-export class Lean_ominus extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** `⊘`. */
-export class Lean_oslash extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** `⊚`. */
-export class Lean_circledcirc extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** `⊛`. */
-export class Lean_circledast extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** `⊜`. */
-export class Lean_circleeq extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** `⊝`. */
-export class Lean_circleddash extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** `⊞`. */
-export class Lean_boxplus extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** `⊟`. */
-export class Lean_boxminus extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** `⊠`. */
-export class Lean_boxtimes extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** `⊡`. */
-export class Lean_dotsquare extends LeanBinary {
-    static input_priority = 67;
-}
-
-/** Euclidean division `÷`. */
-export class LeanEDiv extends LeanBinary {
-    static input_priority = 70;
-}
-
-/** `//`. */
-export class LeanFDiv extends LeanArithmetic {
-    static input_priority = 70;
-}
-
-/** `%`. */
-export class LeanModular extends LeanArithmetic {
-    static input_priority = 70;
-}
-
-/** `<<`. */
-export class Lean_ll extends LeanArithmetic {
-    static input_priority = 47;
-}
-
-/** `<<<`. */
-export class Lean_lll extends LeanArithmetic {
-    static input_priority = 47;
-}
-
-/** `>>`. */
-export class Lean_gg extends LeanArithmetic {
-    static input_priority = 47;
-}
-
-/** `>>>`. */
-export class Lean_ggg extends LeanArithmetic {
-    static input_priority = 75;
-}
-
-/** `⬝`. */
-export class Lean_cdotp extends LeanArithmetic {
-    static input_priority = 71;
-}
-
-/** `∘`. */
-export class Lean_circ extends LeanArithmetic {
-    static input_priority = 90;
-}
-
-/** `▸`. */
-export class Lean_blacktriangleright extends LeanArithmetic {
-    static input_priority = 47;
-}
-
-/** Bitwise `&`. */
-export class LeanBitAnd extends LeanArithmetic {
-    static input_priority = 68;
-}
-
-/** `&&&`. */
-export class LeanBitwiseAnd extends LeanArithmetic {
-    static input_priority = 60;
-}
-
-/** `^^^`. */
-export class LeanBitwiseXor extends LeanArithmetic {
-    static input_priority = 60;
-}
-
-/** Bar-separated alternatives `|`. */
 export class LeanBitOr extends LeanArithmetic {
     static input_priority = 47;
+
+    get operator() {
+        return '|';
+    }
+
+    get command() {
+        return '|';
+    }
+
+    insert_bar(caret, prevToken, next) {
+        if (caret instanceof LeanToken) {
+            const newCaret = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanBitOr(caret, newCaret, this.indent, caret.level));
+            return newCaret;
+        }
+        throw new Error(`LeanBitOr.insert_bar: unexpected for ${this.constructor.name}`);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    latexArgs(syntax = null) {
+        if (this.parent instanceof LeanQuantifier) {
+            if (!syntax) syntax = {};
+            syntax.setOf = true;
+        }
+        return super.latexArgs(syntax);
+    }
 
     tokens_bar_separated() {
         const tokens = [];
@@ -3115,9 +3430,230 @@ export class LeanBitOr extends LeanArithmetic {
     }
 }
 
-/** `|||`. */
 export class LeanBitwiseOr extends LeanArithmetic {
     static input_priority = 55;
+
+    get command() {
+        return '|\\!\\!|\\!\\!|';
+    }
+
+    get operator() {
+        return '|||';
+    }
+}
+
+export class LeanPow extends LeanArithmetic {
+    static input_priority = 80;
+
+    get operator() {
+        return '^';
+    }
+
+    get command() {
+        return '^';
+    }
+
+    get stack_priority() {
+        return 79;
+    }
+
+    latexArgs(syntax) {
+        let lhs = this.lhs;
+        let rhs = this.rhs;
+        if (lhs instanceof LeanParenthesis) {
+            const inner = lhs.arg;
+            if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
+                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs?.() || inner.is_Bool?.())))
+                lhs = inner;
+        }
+        if (rhs instanceof LeanParenthesis) {
+            const inner = rhs.arg;
+            if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
+                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs?.() || inner.is_Bool?.())))
+                rhs = inner;
+        }
+        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
+    }
+}
+
+export class Lean_ll extends LeanArithmetic {
+    static input_priority = 47;
+
+    get operator() {
+        return '<<';
+    }
+}
+
+export class Lean_lll extends LeanArithmetic {
+    static input_priority = 47;
+
+    get operator() {
+        return '<<<';
+    }
+}
+
+export class Lean_gg extends LeanArithmetic {
+    static input_priority = 47;
+
+    get operator() {
+        return '>>';
+    }
+}
+
+export class Lean_ggg extends LeanArithmetic {
+    static input_priority = 75;
+
+    get operator() {
+        return '>>>';
+    }
+}
+
+export class LeanModular extends LeanArithmetic {
+    static input_priority = 70;
+
+    get command() {
+        return '\\%\\%';
+    }
+
+    get operator() {
+        return '%';
+    }
+}
+
+export class LeanConstruct extends LeanArithmetic {
+    static input_priority = 67;
+
+    get command() {
+        return '::';
+    }
+
+    get operator() {
+        return '::';
+    }
+}
+
+export class LeanVConstruct extends LeanArithmetic {
+    static input_priority = 67;
+
+    get command() {
+        return '::_v';
+    }
+
+    get operator() {
+        return '::ᵥ';
+    }
+}
+
+export class LeanAppend extends LeanArithmetic {
+    static input_priority = 65;
+
+    get command() {
+        return '+\\!\\!+';
+    }
+
+    get operator() {
+        return '++';
+    }
+}
+
+export class Lean_sqcup extends LeanArithmetic {
+    static input_priority = 68;
+
+    get command() {
+        return '\\sqcup';
+    }
+
+    get operator() {
+        return '⊔';
+    }
+}
+
+export class Lean_sqcap extends LeanArithmetic {
+    static input_priority = 69;
+
+    get command() {
+        return '\\sqcap';
+    }
+
+    get operator() {
+        return '⊓';
+    }
+}
+
+export class Lean_cdotp extends LeanArithmetic {
+    static input_priority = 71;
+
+    get operator() {
+        return '⬝';
+    }
+
+    get command() {
+        return '{\\color{red}\\cdotp}';
+    }
+}
+
+export class Lean_circ extends LeanArithmetic {
+    static input_priority = 90;
+
+    get operator() {
+        return '∘';
+    }
+}
+
+export class Lean_blacktriangleright extends LeanArithmetic {
+    static input_priority = 47;
+
+    get operator() {
+        return '▸';
+    }
+
+    is_indented() {
+        return this.parent instanceof LeanArgsNewLineSeparated;
+    }
+}
+
+export class Lean_ominus extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_oslash extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_circledcirc extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_circledast extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_circleeq extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_circleddash extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_boxplus extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_boxminus extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_boxtimes extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_dotsquare extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class LeanEDiv extends LeanBinary {
+    static input_priority = 70;
 }
 
 /** Set-theoretic binary (`\\`, `∪`, `∩`); abstract base like `LeanSetOperator`. */
@@ -3134,6 +3670,10 @@ export class LeanSetOperator extends LeanBinary {
 export class Lean_setminus extends LeanSetOperator {
     static input_priority = 70;
 
+    get command() {
+        return '\\setminus';
+    }
+
     get operator() {
         return '\\';
     }
@@ -3142,6 +3682,10 @@ export class Lean_setminus extends LeanSetOperator {
 export class Lean_cup extends LeanSetOperator {
     static input_priority = 65;
 
+    get command() {
+        return '\\cup';
+    }
+
     get operator() {
         return '∪';
     }
@@ -3149,6 +3693,10 @@ export class Lean_cup extends LeanSetOperator {
 
 export class Lean_cap extends LeanSetOperator {
     static input_priority = 70;
+
+    get command() {
+        return '\\cap';
+    }
 
     get operator() {
         return '∩';
@@ -3263,6 +3811,10 @@ export class Lean_lor extends LeanLogic {
         return 29;
     }
 
+    get command() {
+        return '\\lor';
+    }
+
     get operator() {
         return '∨';
     }
@@ -3292,6 +3844,10 @@ export class Lean_land extends LeanLogic {
         return 34;
     }
 
+    get command() {
+        return '\\land';
+    }
+
     get operator() {
         return '∧';
     }
@@ -3304,16 +3860,28 @@ export class Lean_land extends LeanLogic {
 /** `⊆`. */
 export class Lean_subseteq extends LeanBinaryBoolean {
     static input_priority = 50;
+
+    get command() {
+        return '\\subseteq';
+    }
 }
 
 /** `⊂`. */
 export class Lean_subset extends LeanBinaryBoolean {
     static input_priority = 50;
+
+    get command() {
+        return '\\subset';
+    }
 }
 
 /** `⊇`. */
 export class Lean_supseteq extends LeanLogic {
     static input_priority = 50;
+
+    get command() {
+        return '\\supseteq';
+    }
 
     get operator() {
         return '⊇';
@@ -3324,14 +3892,105 @@ export class Lean_supseteq extends LeanLogic {
 export class Lean_supset extends LeanLogic {
     static input_priority = 50;
 
+    get command() {
+        return '\\supset';
+    }
+
     get operator() {
         return '⊃';
+    }
+}
+
+export class LeanGetElem extends LeanBinary {
+    static input_priority = 88;
+
+    get stack_priority() {
+        return 18;
+    }
+
+    push_right(funcName) {
+        if (funcName === 'LeanBracket') return this;
+        return super.push_right(funcName);
+    }
+
+    insert_comma(caret) {
+        const caret2 = new LeanCaret(this.indent, caret.level);
+        const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
+        this.args[1] = commaSep;
+        commaSep.parent = this;
+        return caret2;
+    }
+
+    sep() {
+        return '';
+    }
+
+    strFormat() {
+        return '%s[%s]';
+    }
+
+    latexFormat() {
+        return '{%s}_{%s}';
+    }
+}
+
+export class LeanGetElemQue extends LeanBinary {
+    static input_priority = 88;
+
+    get stack_priority() {
+        return 18;
+    }
+
+    push_right(funcName) {
+        if (funcName === 'LeanBracket') return this;
+        return super.push_right(funcName);
+    }
+
+    insert_comma(caret) {
+        const caret2 = new LeanCaret(this.indent, caret.level);
+        const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
+        this.args[1] = commaSep;
+        commaSep.parent = this;
+        return caret2;
+    }
+
+    sep() {
+        return '';
+    }
+
+    strFormat() {
+        return '%s[%s]?';
+    }
+
+    latexFormat() {
+        return '{%s}_{%s?}';
+    }
+}
+
+export class LeanGetElemQuote extends LeanArgs {
+    static input_priority = 88;
+
+    get stack_priority() {
+        return 18;
+    }
+
+    push_right(funcName) {
+        if (funcName === 'LeanBracket') return this;
+        return super.push_right(funcName);
+    }
+
+    strFormat() {
+        return "%s[%s]'%s";
     }
 }
 
 /** `is`. */
 export class Lean_is extends LeanBinary {
     static input_priority = 62;
+
+    get command() {
+        return '{\\color{blue}\\text{is}}';
+    }
 
     get operator() {
         return 'is';
@@ -3365,6 +4024,10 @@ export class Lean_is extends LeanBinary {
 export class Lean_is_not extends LeanBinary {
     static input_priority = 62;
 
+    get command() {
+        return '{\\color{blue}\\text{is not}}';
+    }
+
     get operator() {
         return 'is not';
     }
@@ -3389,106 +4052,76 @@ export class Lean_is_not extends LeanBinary {
     }
 }
 
-/** Pipeline `|>.`. */
-export class LeanMethodChaining extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_rightarrow extends LeanBinary {
-    static input_priority = 25;
-
+/** Declaration order matches `lean.php`: `LeanBar` → `LeanRightarrow` → `Lean_rightarrow` → `Lean_mapsto`. */
+class LeanBar extends LeanUnary {
     get stack_priority() {
-        return 24;
+        return LeanAssign?.input_priority ?? 20;
     }
 
     get operator() {
-        return '→';
+        return '|';
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            caret.indent = ind;
-            const stmts = new LeanStatements([caret], ind, caret.level);
-            this.replace(caret, stmts);
-            for (let i = 1; i < newlineCount; i++) {
-                const c = new LeanCaret(ind, caret.level);
-                stmts.push(c);
-            }
-            return stmts.args[stmts.args.length - 1];
+    get command() {
+        return '|';
+    }
+
+    echo() {
+        this.arg?.echo?.();
+    }
+
+    insert_comma(caret) {
+        if (caret === this.arg) {
+            const $new = new LeanCaret(this.indent, caret.level);
+            this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
+            return $new;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        throw new Error(`LeanBar.insert_comma: unexpected for ${this.constructor.name}`);
+    }
+
+    insert_tactic(caret, token) {
+        return this.insert_word(caret, token);
     }
 
     is_indented() {
-        return this.parent instanceof LeanStatements;
+        return true;
+    }
+
+    latexFormat() {
+        return `${this.command} %s`;
     }
 
     /**
-     * @param {Record<string, unknown>} [vars]
+     * Clone bar and detach `=>` rhs statements onto `swap_echo_star` list (proof echo).
+     * @param {Record<string, unknown>} [syntax]
      */
-    isProp(vars) {
-        const lhs = this.lhs;
-        const rhs = this.rhs;
-        const lhsOk =
-            (lhs instanceof LeanToken && (vars?.[lhs.text] ?? 'Prop') === 'Prop') ||
-            (!(lhs instanceof LeanToken) && lhs.isProp(vars));
-        const rhsOk =
-            (rhs instanceof LeanToken && (vars?.[rhs.text] ?? 'Prop') === 'Prop') ||
-            (!(rhs instanceof LeanToken) && rhs.isProp(vars));
-        return Boolean(lhsOk && rhsOk);
-    }
-
-    sep() {
-        return this.rhs instanceof LeanStatements ? '\n' : ' ';
-    }
-
-    strFormat() {
-        const sep = this.sep();
-        return `%s ${this.operator}${sep}%s`;
-    }
-}
-
-export class Lean_mapsto extends LeanBinary {
-    static input_priority = 47;
-
-    get stack_priority() {
-        return 23;
-    }
-
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            caret.indent = ind;
-            const stmts = new LeanStatements([caret], ind, caret.level);
-            this.replace(caret, stmts);
-            for (let i = 1; i < newlineCount; i++) {
-                const c = new LeanCaret(ind, caret.level);
-                stmts.push(c);
+    split(syntax) {
+        const arrow = this.arg;
+        if (arrow instanceof LeanRightarrow) {
+            const self = this.clone();
+            const statements = [self];
+            const clonedArrow = /** @type {LeanRightarrow} */ (self.arg);
+            const stmts = clonedArrow.rhs;
+            if (stmts instanceof LeanStatements) {
+                clonedArrow.rhs = new LeanCaret(clonedArrow.indent, stmts.level);
+                stmts.swap_echo_star(syntax, statements);
             }
-            return stmts.args[stmts.args.length - 1];
+            return statements;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
-    }
-
-    is_indented() {
-        return false;
-    }
-
-    sep() {
-        return this.rhs instanceof LeanStatements ? '\n' : ' ';
+        return [this];
     }
 
     strFormat() {
-        const sep = this.sep();
-        return `%s ${this.operator}${sep}%s`;
+        return `${this.operator} %s`;
     }
 }
 
 export class LeanRightarrow extends LeanBinary {
     static input_priority = 19;
+
+    get command() {
+        return '\\Rightarrow';
+    }
 
     get operator() {
         return '=>';
@@ -3629,6 +4262,111 @@ export class LeanRightarrow extends LeanBinary {
     }
 }
 
+export class Lean_rightarrow extends LeanBinary {
+    static input_priority = 25;
+
+    get stack_priority() {
+        return 24;
+    }
+
+    get command() {
+        return '\\rightarrow';
+    }
+
+    get operator() {
+        return '→';
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            caret.indent = ind;
+            const stmts = new LeanStatements([caret], ind, caret.level);
+            this.replace(caret, stmts);
+            for (let i = 1; i < newlineCount; i++) {
+                const c = new LeanCaret(ind, caret.level);
+                stmts.push(c);
+            }
+            return stmts.args[stmts.args.length - 1];
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    is_indented() {
+        return this.parent instanceof LeanStatements;
+    }
+
+    /**
+     * @param {Record<string, unknown>} [vars]
+     */
+    isProp(vars) {
+        const lhs = this.lhs;
+        const rhs = this.rhs;
+        const lhsOk =
+            (lhs instanceof LeanToken && (vars?.[lhs.text] ?? 'Prop') === 'Prop') ||
+            (!(lhs instanceof LeanToken) && lhs.isProp(vars));
+        const rhsOk =
+            (rhs instanceof LeanToken && (vars?.[rhs.text] ?? 'Prop') === 'Prop') ||
+            (!(rhs instanceof LeanToken) && rhs.isProp(vars));
+        return Boolean(lhsOk && rhsOk);
+    }
+
+    sep() {
+        return this.rhs instanceof LeanStatements ? '\n' : ' ';
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+}
+
+export class Lean_mapsto extends LeanBinary {
+    static input_priority = 47;
+
+    get stack_priority() {
+        return 23;
+    }
+
+    get operator() {
+        return '↦';
+    }
+
+    get command() {
+        return '\\mapsto';
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            caret.indent = ind;
+            const stmts = new LeanStatements([caret], ind, caret.level);
+            this.replace(caret, stmts);
+            for (let i = 1; i < newlineCount; i++) {
+                const c = new LeanCaret(ind, caret.level);
+                stmts.push(c);
+            }
+            return stmts.args[stmts.args.length - 1];
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    sep() {
+        return this.rhs instanceof LeanStatements ? '\n' : ' ';
+    }
+
+    strFormat() {
+        const sep = this.sep();
+        return `%s ${this.operator}${sep}%s`;
+    }
+}
+
 export class LeanArgsIndented extends LeanBinary {
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent > indent) {
@@ -3708,6 +4446,10 @@ class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {}
 
 export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
     static input_priority = 72;
+
+    get stack_priority() {
+        return 60;
+    }
 }
 
 export class LeanBy extends LeanUnary {
@@ -4060,66 +4802,24 @@ class LeanPipeForward extends LeanUnaryArithmeticPost {
     }
 }
 
-class LeanBar extends LeanUnary {
+/** Pipeline `|>.`. */
+export class LeanMethodChaining extends LeanBinary {
+    static input_priority = 67;
+
     get stack_priority() {
-        return LeanAssign?.input_priority ?? 20;
-    }
-
-    get operator() {
-        return '|';
-    }
-
-    get command() {
-        return '|';
-    }
-
-    echo() {
-        this.arg?.echo?.();
-    }
-
-    insert_comma(caret) {
-        if (caret === this.arg) {
-            const $new = new LeanCaret(this.indent, caret.level);
-            this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
-            return $new;
-        }
-        throw new Error(`LeanBar.insert_comma: unexpected for ${this.constructor.name}`);
-    }
-
-    insert_tactic(caret, token) {
-        return this.insert_word(caret, token);
-    }
-
-    is_indented() {
-        return true;
+        return 59;
     }
 
     latexFormat() {
-        return `${this.command} %s`;
+        return '%s\\ \\texttt{|>.}%s';
     }
 
-    /**
-     * Clone bar and detach `=>` rhs statements onto `swap_echo_star` list (proof echo).
-     * @param {Record<string, unknown>} [syntax]
-     */
-    split(syntax) {
-        const arrow = this.arg;
-        if (arrow instanceof LeanRightarrow) {
-            const self = this.clone();
-            const statements = [self];
-            const clonedArrow = /** @type {LeanRightarrow} */ (self.arg);
-            const stmts = clonedArrow.rhs;
-            if (stmts instanceof LeanStatements) {
-                clonedArrow.rhs = new LeanCaret(clonedArrow.indent, stmts.level);
-                stmts.swap_echo_star(syntax, statements);
-            }
-            return statements;
-        }
-        return [this];
+    sep() {
+        return '';
     }
 
     strFormat() {
-        return `${this.operator} %s`;
+        return '%s |>.%s';
     }
 }
 
@@ -4219,6 +4919,12 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const n = this.args.length;
         if (n === 0) return '';
         return Array(n).fill('%s').join(' ');
+    }
+
+    insert_word(caret, word) {
+        const newTok = new LeanToken(word, this.indent, caret.level);
+        this.push(newTok);
+        return newTok;
     }
 
     tactic_block_info() {
@@ -5476,90 +6182,6 @@ class Lean_set_option extends LeanCommand {
 class Lean_namespace extends LeanCommand {
     get operator() {
         return 'namespace';
-    }
-}
-
-
-export class LeanGetElem extends LeanBinary {
-    static input_priority = 88;
-
-    get stack_priority() {
-        return 18;
-    }
-
-    push_right(funcName) {
-        if (funcName === 'LeanBracket') return this;
-        return super.push_right(funcName);
-    }
-
-    insert_comma(caret) {
-        const caret2 = new LeanCaret(this.indent, caret.level);
-        const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
-        this.args[1] = commaSep;
-        commaSep.parent = this;
-        return caret2;
-    }
-
-    sep() {
-        return '';
-    }
-
-    strFormat() {
-        return '%s[%s]';
-    }
-
-    latexFormat() {
-        return '{%s}_{%s}';
-    }
-}
-
-export class LeanGetElemQue extends LeanBinary {
-    static input_priority = 88;
-
-    get stack_priority() {
-        return 18;
-    }
-
-    push_right(funcName) {
-        if (funcName === 'LeanBracket') return this;
-        return super.push_right(funcName);
-    }
-
-    insert_comma(caret) {
-        const caret2 = new LeanCaret(this.indent, caret.level);
-        const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
-        this.args[1] = commaSep;
-        commaSep.parent = this;
-        return caret2;
-    }
-
-    sep() {
-        return '';
-    }
-
-    strFormat() {
-        return '%s[%s]?';
-    }
-
-    latexFormat() {
-        return '{%s}_{%s?}';
-    }
-}
-
-export class LeanGetElemQuote extends LeanArgs {
-    static input_priority = 88;
-
-    get stack_priority() {
-        return 18;
-    }
-
-    push_right(funcName) {
-        if (funcName === 'LeanBracket') return this;
-        return super.push_right(funcName);
-    }
-
-    strFormat() {
-        return "%s[%s]'%s";
     }
 }
 
@@ -6901,10 +7523,14 @@ export class LeanTactic extends LeanSyntax {
     }
 
     jsonSerialize() {
+        const name = this.tacticName;
+        const arg = this.arg.jsonSerialize?.() ?? this.arg;
+        const modifiers = this.modifiers.map((m) => m.jsonSerialize?.() ?? m);
+        /** Fixed key order so parse → print → parse matches JSON.stringify output. */
         return {
-            [this.tacticName]: this.arg.jsonSerialize?.() ?? this.arg,
+            modifiers,
             only: this.only,
-            modifiers: this.modifiers.map((m) => m.jsonSerialize?.() ?? m),
+            [name]: arg,
         };
     }
 
