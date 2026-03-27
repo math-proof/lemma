@@ -1571,14 +1571,6 @@ export class LeanArgs extends Lean {
 export class LeanUnary extends LeanArgs {
     static input_priority = 47;
 
-    get arg() {
-        return this.args[0];
-    }
-    set arg(v) {
-        this.args[0] = v;
-        v.parent = this;
-    }
-
     /**
      * @param {Lean} arg
      * @param {number} indent
@@ -1589,6 +1581,14 @@ export class LeanUnary extends LeanArgs {
         super([], indent, level, parent);
         this.args = [arg];
         arg.parent = this;
+    }
+
+    get arg() {
+        return this.args[0];
+    }
+    set arg(v) {
+        this.args[0] = v;
+        v.parent = this;
     }
 
     insert_if(caret) {

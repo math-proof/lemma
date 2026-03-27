@@ -7,8 +7,9 @@
  * class names).
  *
  * **Member declarations** — per shared class, ordered normalized members (same extraction as
- * `compare-lean-class-members.mjs`). Metric: sum of per-class Levenshtein distances on member-token
- * sequences.
+ * `compare-lean-class-members.mjs`: PHP tokens follow **source order**, including `__construct`
+ * before `__get` case names when that is how `lean.php` is written). Metric: sum of per-class
+ * Levenshtein distances on member-token sequences.
  *
  * Usage:
  *   node scripts/lean-php-js-levenshtein.mjs
@@ -163,10 +164,20 @@ function jsMembers(body) {
     return dedupePreserveOrder(out);
 }
 
+/**
+ * PHP member tokens in **source order** (static, constructor, `__get` cases where the switch
+ * appears, `__set`, then ordinary methods). Older bucket merge `[statics, getters, methods]`
+ * wrongly put all `__get` names before `__construct` when the constructor appeared first.
+ */
 function phpMembersOrdered(body) {
-    const statics = [];
-    const getters = [];
-    const methods = [];
+    const out = [];
+    const seen = new Set();
+    const push = (tok) => {
+        if (!seen.has(tok)) {
+            seen.add(tok);
+            out.push(tok);
+        }
+    };
     const lines = body.split('\n');
     let inGet = false;
     let getDepth = 0;
@@ -176,32 +187,28 @@ function phpMembersOrdered(body) {
         if (!inGet && /^public\s+function\s+__get\s*\(/.test(t)) {
             inGet = true;
             getDepth = (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length;
-            const rest = lines.slice(li).join('\n');
-            const caseRe = /case\s+['"](\w+)['"]\s*:/g;
-            let cm;
-            while ((cm = caseRe.exec(rest))) {
-                if (!getters.includes(`get:${cm[1]}`)) getters.push(`get:${cm[1]}`);
-            }
             continue;
         }
         if (inGet) {
+            const caseM = t.match(/^case\s+['"](\w+)['"]\s*:/);
+            if (caseM) push(`get:${caseM[1]}`);
             getDepth += (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length;
             if (getDepth <= 0) inGet = false;
             continue;
         }
         if (/^public\s+static\s+\$(\w+)/.test(t)) {
             const m = t.match(/^public\s+static\s+\$(\w+)/);
-            if (m) statics.push(`static:${m[1]}`);
+            if (m) push(`static:${m[1]}`);
         } else if (/^public\s+function\s+(__construct|__set|__clone)\s*\(/.test(t)) {
             const m = t.match(/^public\s+function\s+(__construct|__set|__clone)\s*\(/);
-            if (m[1] === '__construct') methods.push('constructor');
-            else methods.push(`magic:${m[1]}`);
+            if (m[1] === '__construct') push('constructor');
+            else push(`magic:${m[1]}`);
         } else if (/^public\s+function\s+(\w+)\s*\(/.test(t)) {
             const m = t.match(/^public\s+function\s+(\w+)\s*\(/);
-            if (m && !['__get'].includes(m[1])) methods.push(`method:${m[1]}`);
+            if (m && !['__get'].includes(m[1])) push(`method:${m[1]}`);
         }
     }
-    return dedupePreserveOrder([...statics, ...getters, ...methods]);
+    return out;
 }
 
 function alignStaticInputPriority(pMem, jMem, phpInner) {
