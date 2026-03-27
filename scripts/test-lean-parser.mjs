@@ -238,6 +238,11 @@ Extra paths must be under Lemma/ (relative to repo root, or absolute inside the 
 
     const filteredExtras = [];
     for (const rel of args.extraFiles) {
+        const norm = rel.replace(/\\/g, '/');
+        if (norm.endsWith('.echo.lean')) {
+            console.warn(`[test-lean-parser] Skipping "${rel}" — *.echo.lean is not a source lemma for round-trip.`);
+            continue;
+        }
         const abs = resolveAbs(rel);
         if (!isUnderLemma(abs)) {
             console.warn(

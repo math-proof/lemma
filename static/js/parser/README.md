@@ -6,7 +6,7 @@ JavaScript port of the Lean 4 parser from `php/parser/lean.php`. Produces an AST
 
 1. **Follow Steps 1 → 4 in order** (below): [Step 1](#step-1-class-inventory-and-missing-classes) inventory → [Step 2](#step-2-class-declaration-order) class order vs PHP → [Step 3](#step-3-per-class-function-audit) per-class audit → [Step 4](#step-4-output-and-verification) verification. Prefer **one class** (or a tight related set) per change so diffs stay reviewable.
 2. **Within each class in `lean.js`:** respect **method declaration order** — **normally alphabetic** by method name, with `constructor` first and `static` field initializers next ([Step 3 §2](#step-3-per-class-function-audit)).
-3. **AST → string → AST:** run **`node scripts/test-lean-parser.mjs`** after **every** `lean.js` edit so everything in **`round-trip-corpus.jsonl`** **keeps** passing; improve coverage by fixing **`round-trip-failures.jsonl`** **one row at a time**, then append that lemma to the corpus and rebuild failures ([Running Tests](#running-tests)).
+3. **AST → string → AST:** run **`node scripts/test-lean-parser.mjs`** after **every** `lean.js` edit so everything in **`round-trip-corpus.jsonl`** **keeps** passing; improve coverage by fixing **`round-trip-failures.jsonl`** **one row at a time**, then append that lemma to the corpus and rebuild failures ([Running Tests](#running-tests)). **Never** add **`*.echo.lean`** to the corpus (generated echo-sidecar files; loaders and Lemma scans ignore them).
 4. **`lean.js` comments:** do **not** mention PHP, `php/`, `lean.php`, or the old PHP port—those sources are being retired. Prefer neutral behavioral notes, or point to **`scripts/reorder_lean_class.py`** and tests. (Parity and sync context stay in **this README** and **`php/parser/README.md`**.)
 
 ## Files
@@ -60,7 +60,7 @@ JS mirrors several PHP abstract bases for `instanceof` parity (`LeanPairedGroup:
 node scripts/test-lean-parser.mjs
 ```
 
-**AST → string → AST (sanity-check):** Run that command after **every** `lean.js` edit. **`scripts/round-trip-corpus.jsonl`** is the **regression contract** — every listed `Lemma/` must keep passing parse and round-trip (`jsonSerialize` stable). **Do not regress** those successes while fixing failures.
+**AST → string → AST (sanity-check):** Run that command after **every** `lean.js` edit. **`scripts/round-trip-corpus.jsonl`** is the **regression contract** — every listed `Lemma/` must keep passing parse and round-trip (`jsonSerialize` stable). **Do not regress** those successes while fixing failures. Corpus entries must be real lemma sources only: **`*.echo.lean` paths are ignored** if present (do not rely on them for coverage).
 
 **Failure queue (one by one):** **`scripts/round-trip-failures.jsonl`** lists off-corpus lemmas that fail `parse1`, `parse2`, or `mismatch`. Regenerate: **`node scripts/build-round-trip-failures.mjs`**. Work **one `rel` per change**: `node scripts/test-lean-parser.mjs --round-trip-verbose Lemma/…`, adjust **`lean.js`** under [Translation Task Steps](#translation-task-steps-php--js) — especially **within-class method declaration order** in **`lean.js`** (**normally alphabetic**, Step 3 §2) and PHP parity — then **full** `test-lean-parser` again, append `{"rel":…,"note":…}` to **`round-trip-corpus.jsonl`**, and rebuild failures. **`sample-round-trip-corpus.mjs`** is optional; it only adds rows when round-tripping files still exist off-list.
 

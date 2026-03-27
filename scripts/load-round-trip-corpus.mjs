@@ -2,6 +2,7 @@
  * Load AST round-trip corpus: one JSON object per line.
  * Each line: { "rel": "Lemma/…/file.lean", "note": "optional" }
  * Blank lines and lines starting with # are ignored.
+ * Rows whose `rel` ends with `.echo.lean` are skipped (generated echo pipeline files, not source lemmas).
  *
  * Workflow: after each verified addition, batch similar lemmas via `related-round-trip-scan.mjs`
  * (type-specific detectors) so one fix covers the whole shape class, not a single file.
@@ -34,6 +35,12 @@ export function loadRoundTripCorpus(jsonlPath) {
         }
         if (!row.rel.startsWith('Lemma/')) {
             throw new Error(`${jsonlPath}:${lineNo}: rel must start with Lemma/: ${row.rel}`);
+        }
+        if (row.rel.endsWith('.echo.lean')) {
+            console.warn(
+                `[load-round-trip-corpus] ${jsonlPath}:${lineNo}: skipping rel (*.echo.lean not allowed in corpus): ${row.rel}`,
+            );
+            continue;
         }
         out.push(row);
     }
