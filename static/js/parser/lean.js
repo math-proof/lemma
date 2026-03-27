@@ -3384,6 +3384,17 @@ class LeanPosPart extends LeanUnaryArithmeticPost {
     }
 }
 
+/** Postfix negative part `⁻`. */
+class LeanNegPart extends LeanUnaryArithmeticPost {
+    static input_priority = 71;
+    get operator() {
+        return '⁻';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -4745,17 +4756,6 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre {
     }
     strFormat() {
         return `${this.operator}%s`;
-    }
-}
-
-/** Postfix negative part `⁻`. */
-class LeanNegPart extends LeanUnaryArithmeticPost {
-    static input_priority = 71;
-    get operator() {
-        return '⁻';
-    }
-    strFormat() {
-        return `%s${this.operator}`;
     }
 }
 
@@ -6502,14 +6502,6 @@ class LeanGeneralizing extends LeanUnary {
 }
 
 export class LeanSequentialTacticCombinator extends LeanUnary {
-    get operator() {
-        return '<;>';
-    }
-
-    get command() {
-        return '<;>';
-    }
-
     /**
      * @param {Lean} arg
      * @param {number} indent
@@ -6520,6 +6512,14 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
         super(arg, indent, level);
         /** @type {boolean} */
         this.newline = !!newline;
+    }
+
+    get operator() {
+        return '<;>';
+    }
+
+    get command() {
+        return '<;>';
     }
 
     /** @param {Record<string, unknown>} [_syntax] */
