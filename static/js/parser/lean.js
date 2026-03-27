@@ -2435,11 +2435,11 @@ export class LeanProperty extends LeanBinary {
 export class LeanColon extends LeanBinary {
     static input_priority = 19;
 
-    get command() {
+    get operator() {
         return ':';
     }
 
-    get operator() {
+    get command() {
         return ':';
     }
 
@@ -3344,6 +3344,16 @@ export class Lean_blacktriangleright extends LeanArithmetic {
 }
 
 class LeanUnaryArithmetic extends LeanUnary {}
+
+export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
+    static input_priority = 72;
+
+    get stack_priority() {
+        return 60;
+    }
+}
+
+class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {}
 
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
@@ -4516,17 +4526,6 @@ export class LeanArgsIndented extends LeanBinary {
         return `%s${sep}%s`;
     }
 }
-
-
-export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
-    static input_priority = 72;
-
-    get stack_priority() {
-        return 60;
-    }
-}
-
-class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {}
 
 export class LeanBy extends LeanUnary {
     static input_priority = 47;

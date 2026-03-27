@@ -255,6 +255,12 @@ function alignLeanGetElemBase(pMem, jMem, phpInner) {
     return [pMem, j];
 }
 
+/** JS-only binder-head heuristic; no PHP counterpart. */
+function alignLeanColonJsOnly(pMem, jMem, className) {
+    if (className !== 'LeanColon') return [pMem, jMem];
+    return [pMem, jMem.filter((x) => x !== 'method:colonLhsLooksLikeBinderHead')];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -306,6 +312,7 @@ if (membersMode) {
             [pMem, jMem] = alignCommandGetter(pMem, jMem);
             [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
+            [pMem, jMem] = alignLeanColonJsOnly(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;
