@@ -6458,38 +6458,6 @@ export class LeanBy extends LeanUnary {
     }
 }
 
-class LeanUsing extends LeanUnary {
-    is_indented() {
-        return false;
-    }
-    strFormat() {
-        return `${this.operator} %s`;
-    }
-    latexFormat() {
-        return `${this.command} %s`;
-    }
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            caret.indent = ind;
-            this.arg = new LeanStatements([caret], ind, caret.level);
-            for (let i = 1; i < newlineCount; i++) {
-                caret = new LeanCaret(ind, caret.level);
-                this.arg.push(caret);
-            }
-            return caret;
-        }
-        return super.insert_newline(caret, newlineCount, indent, next);
-    }
-    get operator() {
-        return 'using';
-    }
-    get command() {
-        return 'using';
-    }
-}
-
 class LeanFrom extends LeanUnary {
     is_indented() {
         return this.parent instanceof LeanArgsCommaNewLineSeparated;
@@ -6652,6 +6620,38 @@ class LeanMOD extends LeanUnary {
     }
     get command() {
         return '\\operatorname{MOD}';
+    }
+}
+
+class LeanUsing extends LeanUnary {
+    is_indented() {
+        return false;
+    }
+    strFormat() {
+        return `${this.operator} %s`;
+    }
+    latexFormat() {
+        return `${this.command} %s`;
+    }
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
+            let ind = indent;
+            if (ind === this.indent) ind = this.indent + 2;
+            caret.indent = ind;
+            this.arg = new LeanStatements([caret], ind, caret.level);
+            for (let i = 1; i < newlineCount; i++) {
+                caret = new LeanCaret(ind, caret.level);
+                this.arg.push(caret);
+            }
+            return caret;
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+    get operator() {
+        return 'using';
+    }
+    get command() {
+        return 'using';
     }
 }
 
