@@ -221,6 +221,18 @@ function alignCommandGetter(pMem, jMem) {
     return [pMem, jMem];
 }
 
+/** PHP lists trait methods separately; `extractClassBlock` inner body omits `use` trait bodies. */
+function alignPhpTraitMembers(pMem, jMem, phpInner) {
+    let j = [...jMem];
+    if (/\buse\s+LeanProp\b/.test(phpInner)) {
+        j = j.filter((x) => x !== 'method:isProp');
+    }
+    if (/\buse\s+LeanMultipleLine\b/.test(phpInner)) {
+        j = j.filter((x) => x !== 'method:set_line');
+    }
+    return [pMem, j];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -270,6 +282,7 @@ if (membersMode) {
         if (normalize) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
             [pMem, jMem] = alignCommandGetter(pMem, jMem);
+            [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;

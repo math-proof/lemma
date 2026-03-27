@@ -2524,3 +2524,4 @@
 {"rel":"Lemma/Bool/All/of/All/All_Imp.lean","note":"All/Imp; off-corpus round-trip (corpus +1)"}
 {"rel":"Lemma/Bool/AndAndNot/is/False.lean","note":"Bool nested And/Not; AST round-trip +1"}
 {"rel":"Lemma/Bool/Any_And/is/AndAny.lean","note":"Bool Any/And; AST round-trip +1"}
+{"rel":"Lemma/Bool/AllIn_Insert/is/And_All.echo.lean","note":"off-corpus round-trip; companion `.echo.lean` lemma file"}
