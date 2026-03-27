@@ -1570,6 +1570,15 @@ export class LeanArgs extends Lean {
 
 export class LeanUnary extends LeanArgs {
     static input_priority = 47;
+
+    get arg() {
+        return this.args[0];
+    }
+    set arg(v) {
+        this.args[0] = v;
+        v.parent = this;
+    }
+
     /**
      * @param {Lean} arg
      * @param {number} indent
@@ -1580,14 +1589,6 @@ export class LeanUnary extends LeanArgs {
         super([], indent, level, parent);
         this.args = [arg];
         arg.parent = this;
-    }
-
-    get arg() {
-        return this.args[0];
-    }
-    set arg(v) {
-        this.args[0] = v;
-        v.parent = this;
     }
 
     insert_if(caret) {
@@ -3361,6 +3362,17 @@ class LeanPlus extends LeanUnaryArithmeticPre {
     }
 }
 
+/** Postfix inverse `⁻¹`. */
+class LeanInv extends LeanUnaryArithmeticPost {
+    static input_priority = 71;
+    get operator() {
+        return '⁻¹';
+    }
+    strFormat() {
+        return `%s${this.operator}`;
+    }
+}
+
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -4722,17 +4734,6 @@ class LeanQuarticRoot extends LeanUnaryArithmeticPre {
     }
     strFormat() {
         return `${this.operator}%s`;
-    }
-}
-
-/** Postfix inverse `⁻¹`. */
-class LeanInv extends LeanUnaryArithmeticPost {
-    static input_priority = 71;
-    get operator() {
-        return '⁻¹';
-    }
-    strFormat() {
-        return `%s${this.operator}`;
     }
 }
 
