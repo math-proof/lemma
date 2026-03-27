@@ -3173,6 +3173,176 @@ export class LeanBitwiseOr extends LeanArithmetic {
     }
 }
 
+export class LeanPow extends LeanArithmetic {
+    static input_priority = 80;
+
+    get operator() {
+        return '^';
+    }
+
+    get command() {
+        return '^';
+    }
+
+    get stack_priority() {
+        return 79;
+    }
+
+    latexArgs(syntax) {
+        let lhs = this.lhs;
+        let rhs = this.rhs;
+        if (lhs instanceof LeanParenthesis) {
+            const inner = lhs.arg;
+            if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
+                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs?.() || inner.is_Bool?.())))
+                lhs = inner;
+        }
+        if (rhs instanceof LeanParenthesis) {
+            const inner = rhs.arg;
+            if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
+                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs?.() || inner.is_Bool?.())))
+                rhs = inner;
+        }
+        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
+    }
+}
+
+export class Lean_ll extends LeanArithmetic {
+    static input_priority = 47;
+
+    get operator() {
+        return '<<';
+    }
+}
+
+export class Lean_lll extends LeanArithmetic {
+    static input_priority = 47;
+
+    get operator() {
+        return '<<<';
+    }
+}
+
+export class Lean_gg extends LeanArithmetic {
+    static input_priority = 47;
+
+    get operator() {
+        return '>>';
+    }
+}
+
+export class Lean_ggg extends LeanArithmetic {
+    static input_priority = 75;
+
+    get operator() {
+        return '>>>';
+    }
+}
+
+export class LeanModular extends LeanArithmetic {
+    static input_priority = 70;
+
+    get command() {
+        return '\\%\\%';
+    }
+
+    get operator() {
+        return '%';
+    }
+}
+
+export class LeanConstruct extends LeanArithmetic {
+    static input_priority = 67;
+
+    get command() {
+        return '::';
+    }
+
+    get operator() {
+        return '::';
+    }
+}
+
+export class LeanVConstruct extends LeanArithmetic {
+    static input_priority = 67;
+
+    get command() {
+        return '::_v';
+    }
+
+    get operator() {
+        return '::ᵥ';
+    }
+}
+
+export class LeanAppend extends LeanArithmetic {
+    static input_priority = 65;
+
+    get command() {
+        return '+\\!\\!+';
+    }
+
+    get operator() {
+        return '++';
+    }
+}
+
+export class Lean_sqcup extends LeanArithmetic {
+    static input_priority = 68;
+
+    get command() {
+        return '\\sqcup';
+    }
+
+    get operator() {
+        return '⊔';
+    }
+}
+
+export class Lean_sqcap extends LeanArithmetic {
+    static input_priority = 69;
+
+    get command() {
+        return '\\sqcap';
+    }
+
+    get operator() {
+        return '⊓';
+    }
+}
+
+export class Lean_cdotp extends LeanArithmetic {
+    static input_priority = 71;
+
+    get operator() {
+        return '⬝';
+    }
+
+    get command() {
+        return '{\\color{red}\\cdotp}';
+    }
+}
+
+export class Lean_circ extends LeanArithmetic {
+    static input_priority = 90;
+
+    get operator() {
+        return '∘';
+    }
+}
+
+export class Lean_blacktriangleright extends LeanArithmetic {
+    static input_priority = 47;
+
+    get operator() {
+        return '▸';
+    }
+
+    is_indented() {
+        return this.parent instanceof LeanArgsNewLineSeparated;
+    }
+}
+
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -3443,176 +3613,6 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
 
     set_line(line) {
         return leanMultipleLineSetLine(this, line);
-    }
-}
-
-export class LeanPow extends LeanArithmetic {
-    static input_priority = 80;
-
-    get operator() {
-        return '^';
-    }
-
-    get command() {
-        return '^';
-    }
-
-    get stack_priority() {
-        return 79;
-    }
-
-    latexArgs(syntax) {
-        let lhs = this.lhs;
-        let rhs = this.rhs;
-        if (lhs instanceof LeanParenthesis) {
-            const inner = lhs.arg;
-            if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
-                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs?.() || inner.is_Bool?.())))
-                lhs = inner;
-        }
-        if (rhs instanceof LeanParenthesis) {
-            const inner = rhs.arg;
-            if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
-                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs?.() || inner.is_Bool?.())))
-                rhs = inner;
-        }
-        return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
-    }
-}
-
-export class Lean_ll extends LeanArithmetic {
-    static input_priority = 47;
-
-    get operator() {
-        return '<<';
-    }
-}
-
-export class Lean_lll extends LeanArithmetic {
-    static input_priority = 47;
-
-    get operator() {
-        return '<<<';
-    }
-}
-
-export class Lean_gg extends LeanArithmetic {
-    static input_priority = 47;
-
-    get operator() {
-        return '>>';
-    }
-}
-
-export class Lean_ggg extends LeanArithmetic {
-    static input_priority = 75;
-
-    get operator() {
-        return '>>>';
-    }
-}
-
-export class LeanModular extends LeanArithmetic {
-    static input_priority = 70;
-
-    get command() {
-        return '\\%\\%';
-    }
-
-    get operator() {
-        return '%';
-    }
-}
-
-export class LeanConstruct extends LeanArithmetic {
-    static input_priority = 67;
-
-    get command() {
-        return '::';
-    }
-
-    get operator() {
-        return '::';
-    }
-}
-
-export class LeanVConstruct extends LeanArithmetic {
-    static input_priority = 67;
-
-    get command() {
-        return '::_v';
-    }
-
-    get operator() {
-        return '::ᵥ';
-    }
-}
-
-export class LeanAppend extends LeanArithmetic {
-    static input_priority = 65;
-
-    get command() {
-        return '+\\!\\!+';
-    }
-
-    get operator() {
-        return '++';
-    }
-}
-
-export class Lean_sqcup extends LeanArithmetic {
-    static input_priority = 68;
-
-    get command() {
-        return '\\sqcup';
-    }
-
-    get operator() {
-        return '⊔';
-    }
-}
-
-export class Lean_sqcap extends LeanArithmetic {
-    static input_priority = 69;
-
-    get command() {
-        return '\\sqcap';
-    }
-
-    get operator() {
-        return '⊓';
-    }
-}
-
-export class Lean_cdotp extends LeanArithmetic {
-    static input_priority = 71;
-
-    get operator() {
-        return '⬝';
-    }
-
-    get command() {
-        return '{\\color{red}\\cdotp}';
-    }
-}
-
-export class Lean_circ extends LeanArithmetic {
-    static input_priority = 90;
-
-    get operator() {
-        return '∘';
-    }
-}
-
-export class Lean_blacktriangleright extends LeanArithmetic {
-    static input_priority = 47;
-
-    get operator() {
-        return '▸';
-    }
-
-    is_indented() {
-        return this.parent instanceof LeanArgsNewLineSeparated;
     }
 }
 
@@ -3992,12 +3992,12 @@ export class LeanGetElemQuote extends LeanArgs {
 export class Lean_is extends LeanBinary {
     static input_priority = 62;
 
-    get command() {
-        return '{\\color{blue}\\text{is}}';
-    }
-
     get operator() {
         return 'is';
+    }
+
+    get command() {
+        return '{\\color{blue}\\text{is}}';
     }
 
     is_indented() {
@@ -4430,6 +4430,12 @@ class LeanNot extends LeanUnary {
 }
 
 export class LeanArgsIndented extends LeanBinary {
+    get stack_priority() {
+        if (this.parent instanceof LeanCalc) return 17;
+        if (this.parent instanceof LeanQuantifier) return LeanRelational.input_priority + 1;
+        return 47;
+    }
+
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent > indent) {
             return super.insert_newline(caret, newlineCount, indent, next);
@@ -4487,12 +4493,6 @@ export class LeanArgsIndented extends LeanBinary {
         }
     }
 
-    get stack_priority() {
-        if (this.parent instanceof LeanCalc) return 17;
-        if (this.parent instanceof LeanQuantifier) return LeanRelational.input_priority + 1;
-        return 47;
-    }
-
     sep() {
         return '\n';
     }
@@ -4517,6 +4517,14 @@ class LeanUnaryArithmeticPre extends LeanUnaryArithmetic {}
 
 export class LeanBy extends LeanUnary {
     static input_priority = 47;
+
+    get operator() {
+        return 'by';
+    }
+
+    get command() {
+        return 'by';
+    }
 
     echo() {
         this.arg?.echo?.();
@@ -6499,6 +6507,14 @@ class LeanGeneralizing extends LeanUnary {
 }
 
 export class LeanSequentialTacticCombinator extends LeanUnary {
+    get operator() {
+        return '<;>';
+    }
+
+    get command() {
+        return '<;>';
+    }
+
     /**
      * @param {Lean} arg
      * @param {number} indent
@@ -6509,14 +6525,6 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
         super(arg, indent, level);
         /** @type {boolean} */
         this.newline = !!newline;
-    }
-
-    get operator() {
-        return '<;>';
-    }
-
-    get command() {
-        return '<;>';
     }
 
     /** @param {Record<string, unknown>} [_syntax] */
