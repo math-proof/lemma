@@ -292,12 +292,13 @@ function alignLean_defPhpVsJs(pMem, jMem, className) {
     return [p, [...j, ...extra]];
 }
 
-/** PHP `__clone`; JS `clone()`. PHP `traverse` is a normal method; JS uses `*traverse()` (scanner skips it). Order `get:command` before `get:func` like PHP `__get` cases. */
+/** PHP `__clone` ↔ JS `clone()`. PHP `traverse` is a normal method; JS uses `*traverse()` (scanner skips it). Order `get:command` before `get:func` like PHP `__get` cases. */
 function alignLeanArgsPhpVsJs(pMem, jMem, className) {
     if (className !== 'LeanArgs') return [pMem, jMem];
-    const p = pMem.filter((x) => x !== 'magic:__clone' && x !== 'method:traverse');
-    const jNoClone = jMem.filter((x) => x !== 'method:clone');
-    const rest = jNoClone.filter((x) => !x.startsWith('get:'));
+    const p = pMem
+        .filter((x) => x !== 'method:traverse')
+        .map((x) => (x === 'magic:__clone' ? 'method:clone' : x));
+    const rest = jMem.filter((x) => !x.startsWith('get:'));
     const ci = rest.indexOf('constructor');
     const head = ci >= 0 ? rest.slice(0, ci + 1) : rest;
     const tail = ci >= 0 ? rest.slice(ci + 1) : [];
@@ -370,6 +371,17 @@ function alignLeanPropertyStrArgs(pMem, jMem, className) {
     return [pMem, jMem.filter((x) => x !== 'method:strArgs')];
 }
 
+/** PHP `__toString`; JS `toString()`. Order `build` before `init` like `lean.php`. */
+function alignLeanParserPhpVsJs(pMem, jMem, className) {
+    if (className !== 'LeanParser') return [pMem, jMem];
+    const p = pMem.map((x) => (x === 'method:__toString' ? 'method:toString' : x));
+    const want = ['constructor', 'method:toString', 'method:build', 'method:init', 'method:parse'];
+    const have = new Set(jMem);
+    const ordered = want.filter((t) => have.has(t));
+    const tail = jMem.filter((t) => !want.includes(t));
+    return [p, [...ordered, ...tail]];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -431,6 +443,7 @@ if (membersMode) {
             [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
             [pMem, jMem] = alignLeanLineCommentToJSON(pMem, jMem, name);
             [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
+            [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;
