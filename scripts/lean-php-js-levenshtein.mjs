@@ -286,6 +286,12 @@ function alignLeanParenthesisInheritedIndented(pMem, jMem, className) {
     return [pMem.filter((x) => x !== 'method:is_indented'), jMem];
 }
 
+/** JS `toJSON` helper used by `jsonSerialize`; no separate PHP method. */
+function alignLeanLineCommentToJSON(pMem, jMem, className) {
+    if (className !== 'LeanLineComment') return [pMem, jMem];
+    return [pMem, jMem.filter((x) => x !== 'method:toJSON')];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -340,6 +346,7 @@ if (membersMode) {
             [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
             [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
             [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
+            [pMem, jMem] = alignLeanLineCommentToJSON(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;

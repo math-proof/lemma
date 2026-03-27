@@ -1315,19 +1315,6 @@ export class LeanLineComment extends Lean {
         return /^(created|updated) on (\d\d\d\d-\d\d-\d\d)$/.test(this.text);
     }
 
-    latexFormat() {
-        if (this.text === 'imply' || this.text === 'given' || this.text === 'proof') return '';
-        return `\\%${this.sep()}${this.text}`;
-    }
-
-    sep() {
-        return ' ';
-    }
-
-    strFormat() {
-        return `${this.operator}${this.sep()}${this.text}`;
-    }
-
     /**
      * Stable for round-trip: layout before `--` can change after print; body whitespace is normalized.
      * Keyword markers `proof` / `imply` / `given` stay aligned with PHP echo.
@@ -1344,6 +1331,19 @@ export class LeanLineComment extends Lean {
         }
         const body = typeof t === 'string' ? t.trim() : t;
         return `${this.operator}${this.sep()}${body}`;
+    }
+
+    latexFormat() {
+        if (this.text === 'imply' || this.text === 'given' || this.text === 'proof') return '';
+        return `\\%${this.sep()}${this.text}`;
+    }
+
+    sep() {
+        return ' ';
+    }
+
+    strFormat() {
+        return `${this.operator}${this.sep()}${this.text}`;
     }
 }
 
@@ -3395,6 +3395,20 @@ class LeanNegPart extends LeanUnaryArithmeticPost {
     }
 }
 
+/** Square root `√`. */
+class Lean_sqrt extends LeanUnaryArithmeticPre {
+    static input_priority = 72;
+    get stack_priority() {
+        return 71;
+    }
+    get operator() {
+        return '√';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -4688,20 +4702,6 @@ class LeanAttribute extends LeanUnary {
 
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
-    }
-}
-
-/** Square root `√`. */
-class Lean_sqrt extends LeanUnaryArithmeticPre {
-    static input_priority = 72;
-    get stack_priority() {
-        return 71;
-    }
-    get operator() {
-        return '√';
-    }
-    strFormat() {
-        return `${this.operator}%s`;
     }
 }
 
