@@ -3351,6 +3351,16 @@ class LeanNeg extends LeanUnaryArithmeticPre {
     }
 }
 
+/** Unary plus. */
+class LeanPlus extends LeanUnaryArithmeticPre {
+    get operator() {
+        return '+';
+    }
+    strFormat() {
+        return `${this.operator}%s`;
+    }
+}
+
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -4644,16 +4654,6 @@ class LeanAttribute extends LeanUnary {
 
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
-    }
-}
-
-/** Unary plus. */
-class LeanPlus extends LeanUnaryArithmeticPre {
-    get operator() {
-        return '+';
-    }
-    strFormat() {
-        return `${this.operator}%s`;
     }
 }
 

@@ -264,6 +264,15 @@ function alignLeanItePhpSetVsJsSetters(pMem, jMem, className) {
     ];
 }
 
+/** PHP `__set` for `arg`; JS uses `set arg`. */
+function alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, className) {
+    if (className !== 'LeanUnary') return [pMem, jMem];
+    return [
+        pMem.filter((x) => x !== 'magic:__set'),
+        jMem.filter((x) => x !== 'set:arg'),
+    ];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -316,6 +325,7 @@ if (membersMode) {
             [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
+            [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;

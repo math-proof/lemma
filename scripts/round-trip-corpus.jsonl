@@ -2528,3 +2528,4 @@
 {"rel":"Lemma/Vector/EqGetSUnflatten/of/Eq/Lt/Eq/Eq.lean","note":"off-corpus AST round-trip (sample-round-trip-corpus)"}
 {"rel":"Lemma/Tensor/Softmax/eq/Zero/of/EqGet_0'0/of/GtLength_0.lean","note":"off-corpus AST round-trip (sample-round-trip-corpus)"}
 {"rel":"Lemma/Bool/HEq/of/Cond/Cond.lean","note":"off-corpus AST round-trip (sample-round-trip-corpus)"}
+{"rel":"Lemma/Tensor/SEqPermuteTailPermuteHead/of/GtLength_1.lean","note":"off-corpus AST round-trip (sample-round-trip-corpus)"}
