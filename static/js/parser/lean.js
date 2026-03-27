@@ -3698,51 +3698,6 @@ export class Lean_is_not extends LeanBinary {
     }
 }
 
-
-export class Lean_ominus extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_oslash extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_circledcirc extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_circledast extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_circleeq extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_circleddash extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_boxplus extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_boxminus extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_boxtimes extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class Lean_dotsquare extends LeanBinary {
-    static input_priority = 67;
-}
-
-export class LeanEDiv extends LeanBinary {
-    static input_priority = 70;
-}
-
 /** Set-theoretic binary (`\\`, `∪`, `∩`); abstract base like `LeanSetOperator`. */
 export class LeanSetOperator extends LeanBinary {
     sep() {
@@ -7960,6 +7915,51 @@ export class LeanParser extends AbstractParser {
         }
         return this.root;
     }
+}
+
+/** Concrete binary nodes for extra operator symbols (see token registry). */
+export class Lean_ominus extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_oslash extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_circledcirc extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_circledast extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_circleeq extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_circleddash extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_boxplus extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_boxminus extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_boxtimes extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class Lean_dotsquare extends LeanBinary {
+    static input_priority = 67;
+}
+
+export class LeanEDiv extends LeanBinary {
+    static input_priority = 70;
 }
 
 /** Concrete AST / parser node classes only (keys = `constructor.name`). No abstract/intermediate bases (`Lean`, `LeanArgs`, `LeanBinary`, …). */

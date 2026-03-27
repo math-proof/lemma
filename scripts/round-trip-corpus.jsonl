@@ -2614,3 +2614,4 @@
 {"rel":"Lemma/Finset/Cup_Ioc/eq/Ioc0.lean","note":"random sample (Finset)"}
 {"rel":"Lemma/Tensor/SEqRepeatS/of/SEq/EqValS/Eq.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/Tensor/SumDiv/eq/DivSum/of/GtLength.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Vector/GetIndices/eq/AddMul.lean","note":"random sample (Vector)"}

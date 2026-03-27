@@ -280,6 +280,16 @@ function alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, className) {
     ];
 }
 
+/** PHP `LeanToken` uses `static $…` (not `public static`); extractor skips them. `clone` / `latexArgs` live on `Lean` in PHP. */
+function alignLeanTokenPhpVsJs(pMem, jMem, className) {
+    if (className !== 'LeanToken') return [pMem, jMem];
+    const j = jMem.filter(
+        (x) =>
+            !x.startsWith('static:') && x !== 'method:clone' && x !== 'method:latexArgs',
+    );
+    return [pMem, j];
+}
+
 /** PHP `__set` covers `arg` / `sequential_tactic_combinator`; JS uses getters/setters. */
 function alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, className) {
     if (className !== 'LeanSyntax') return [pMem, jMem];
@@ -368,6 +378,7 @@ if (membersMode) {
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
             [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
+            [pMem, jMem] = alignLeanTokenPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
             [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
             [pMem, jMem] = alignLeanLineCommentToJSON(pMem, jMem, name);
