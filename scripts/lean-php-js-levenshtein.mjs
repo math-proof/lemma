@@ -280,6 +280,18 @@ function alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, className) {
     ];
 }
 
+/** PHP `__set` for kwargs-style fields; JS uses `set accessibility` / `set attribute` / `set assignment`. Reorder JS tokens to PHP source order. */
+function alignLean_defPhpVsJs(pMem, jMem, className) {
+    if (className !== 'Lean_def') return [pMem, jMem];
+    const p = pMem.filter((x) => x !== 'magic:__set');
+    const jF = jMem.filter(
+        (x) => !['set:accessibility', 'set:attribute', 'set:assignment'].includes(x),
+    );
+    const j = p.map((tok) => jF.find((x) => x === tok)).filter(Boolean);
+    const extra = jF.filter((x) => !p.includes(x));
+    return [p, [...j, ...extra]];
+}
+
 /** PHP `__clone`; JS `clone()`. PHP `traverse` is a normal method; JS uses `*traverse()` (scanner skips it). Order `get:command` before `get:func` like PHP `__get` cases. */
 function alignLeanArgsPhpVsJs(pMem, jMem, className) {
     if (className !== 'LeanArgs') return [pMem, jMem];
@@ -408,6 +420,7 @@ if (membersMode) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
             [pMem, jMem] = alignCommandGetter(pMem, jMem);
             [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
+            [pMem, jMem] = alignLean_defPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);

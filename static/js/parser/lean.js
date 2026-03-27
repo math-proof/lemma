@@ -4395,180 +4395,6 @@ export class LeanModule extends LeanStatements {
     // insert_comma, push_right, insert_if, insert_only, push_line_comment, etc. bubble via the parent chain.
 }
 
-/**
- * Port of `Lean_def`. Used by `LeanCaret::append` (3-arg) and
- * `LeanCaret::push_accessibility` (4-arg).
- */
-export class Lean_def extends LeanArgs {
-    get stack_priority() {
-        return 7;
-    }
-
-    get operator() {
-        return 'def';
-    }
-
-    /**
-     * @param {string|Lean} accessibility
-     * @param {Lean|number} name
-     * @param {number} [indent]
-     * @param {number} [level]
-     * @param {import('./node.js').Node | null} [parent]
-     */
-    constructor(accessibility, name, indent, level, parent = null) {
-        if (level === null || level === undefined) {
-            indent = /** @type {number} */ (name);
-            name = /** @type {Lean} */ (accessibility);
-            accessibility = 'public';
-            level = name instanceof Lean ? name.level : 0;
-        }
-        super([name], indent, level, parent);
-        this.args.unshift(null);
-        this.kwargs.accessibility = accessibility;
-    }
-
-    get accessibility() {
-        return this.kwargs.accessibility;
-    }
-
-    set accessibility(v) {
-        this.kwargs.accessibility = v;
-    }
-
-    get attribute() {
-        return this.args[0];
-    }
-
-    set attribute(v) {
-        this.args[0] = v;
-        if (v) v.parent = this;
-    }
-
-    get assignment() {
-        return this.args[1];
-    }
-
-    set assignment(v) {
-        this.args[1] = v;
-        if (v) v.parent = this;
-    }
-
-    strArgs() {
-        const [attr, assignment] = this.args;
-        if (attr == null) return [assignment];
-        return this.args;
-    }
-
-    strFormat() {
-        const acc = this.accessibility === 'public' ? '' : `${this.accessibility} `;
-        let def = `${acc}${this.func} %s`;
-        if (this.attribute) def = `%s\n${def}`;
-        return def;
-    }
-
-    latexFormat() {
-        return this.strFormat();
-    }
-
-    jsonSerialize() {
-        const json = {
-            [this.operator]: super.jsonSerialize(),
-            accessibility: this.accessibility,
-        };
-        if (this.attribute) json.attribute = this.attribute.jsonSerialize?.() ?? this.attribute;
-        return json;
-    }
-
-    insert_tactic(caret, token) {
-        return this.insert_word(caret, token);
-    }
-
-    is_indented() {
-        return false;
-    }
-
-    set_line(line) {
-        this.line = line;
-        let L = line;
-        const attr = this.attribute;
-        if (attr) L = attr.set_line(L) + 1;
-        return this.assignment.set_line(L);
-    }
-
-    relocate_last_comment() {
-        const assignment = this.assignment;
-        if (assignment instanceof LeanAssign) assignment.relocate_last_comment();
-    }
-
-    /**
-     * Port of `Lean_def::insert_newline`.
-     * Stops indented proof lines from bubbling to `LeanModule` (which would throw).
-     */
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.indent < indent) {
-            if (caret === this.assignment) {
-                const pushed = this.push_args_indented(indent, newlineCount);
-                if (pushed) return pushed;
-                if (caret instanceof LeanColon) {
-                    const rhs = caret.rhs;
-                    if (rhs instanceof LeanCaret) {
-                        rhs.indent = indent;
-                        const stmts = new LeanStatements([rhs], indent, rhs.level);
-                        caret.replace(rhs, stmts);
-                        return rhs;
-                    }
-                } else if (caret instanceof LeanAssign) {
-                    const inner = this.assignment.rhs;
-                    if (inner instanceof LeanCaret) {
-                        inner.indent = indent;
-                        const stmts = new LeanStatements([inner], indent, inner.level);
-                        this.assignment.replace(inner, stmts);
-                        return inner;
-                    }
-                    return super.insert_newline(caret, newlineCount, this.indent, next);
-                }
-            }
-            return super.insert_newline(caret, newlineCount, indent, next);
-        }
-        return super.insert_newline(caret, newlineCount, indent, next);
-    }
-}
-
-export class Lean_theorem extends Lean_def {}
-
-export class Lean_lemma extends Lean_def {
-    echo() {
-        this.assignment?.echo?.();
-        const asn = this.assignment;
-        if (asn instanceof LeanAssign && asn.rhs instanceof LeanBy) {
-            const statement = asn.rhs.arg;
-            if (statement instanceof LeanStatements) {
-                const stmts = statement.args;
-                for (let i = stmts.length - 1; i >= 0; i--) {
-                    const stmt = stmts[i];
-                    if (stmt.is_comment?.()) continue;
-                    if (stmt instanceof LeanTactic || stmt instanceof Lean_let) {
-                        const token = stmt.get_echo_token?.();
-                        if (token) {
-                            const ind = statement.indent;
-                            const lev = statement.level;
-                            statement.push(
-                                new LeanTactic(
-                                    'try',
-                                    new LeanTactic('echo', token, ind, lev),
-                                    ind,
-                                    lev,
-                                ),
-                            );
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-    }
-}
-
 /** Top-level commands (`import` / `open` / `set_option` / `namespace`): `stack_priority` 27 except `namespace` (inherits unary 47). */
 class LeanCommand extends LeanUnary {
     get command() {
@@ -7396,6 +7222,180 @@ class LeanAttribute extends LeanUnary {
 
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
+    }
+}
+
+/**
+ * Port of `Lean_def`. Used by `LeanCaret::append` (3-arg) and
+ * `LeanCaret::push_accessibility` (4-arg).
+ */
+export class Lean_def extends LeanArgs {
+    get stack_priority() {
+        return 7;
+    }
+
+    get operator() {
+        return 'def';
+    }
+
+    /**
+     * @param {string|Lean} accessibility
+     * @param {Lean|number} name
+     * @param {number} [indent]
+     * @param {number} [level]
+     * @param {import('./node.js').Node | null} [parent]
+     */
+    constructor(accessibility, name, indent, level, parent = null) {
+        if (level === null || level === undefined) {
+            indent = /** @type {number} */ (name);
+            name = /** @type {Lean} */ (accessibility);
+            accessibility = 'public';
+            level = name instanceof Lean ? name.level : 0;
+        }
+        super([name], indent, level, parent);
+        this.args.unshift(null);
+        this.kwargs.accessibility = accessibility;
+    }
+
+    get accessibility() {
+        return this.kwargs.accessibility;
+    }
+
+    set accessibility(v) {
+        this.kwargs.accessibility = v;
+    }
+
+    get attribute() {
+        return this.args[0];
+    }
+
+    set attribute(v) {
+        this.args[0] = v;
+        if (v) v.parent = this;
+    }
+
+    get assignment() {
+        return this.args[1];
+    }
+
+    set assignment(v) {
+        this.args[1] = v;
+        if (v) v.parent = this;
+    }
+
+    strArgs() {
+        const [attr, assignment] = this.args;
+        if (attr == null) return [assignment];
+        return this.args;
+    }
+
+    strFormat() {
+        const acc = this.accessibility === 'public' ? '' : `${this.accessibility} `;
+        let def = `${acc}${this.func} %s`;
+        if (this.attribute) def = `%s\n${def}`;
+        return def;
+    }
+
+    latexFormat() {
+        return this.strFormat();
+    }
+
+    jsonSerialize() {
+        const json = {
+            [this.operator]: super.jsonSerialize(),
+            accessibility: this.accessibility,
+        };
+        if (this.attribute) json.attribute = this.attribute.jsonSerialize?.() ?? this.attribute;
+        return json;
+    }
+
+    insert_tactic(caret, token) {
+        return this.insert_word(caret, token);
+    }
+
+    is_indented() {
+        return false;
+    }
+
+    set_line(line) {
+        this.line = line;
+        let L = line;
+        const attr = this.attribute;
+        if (attr) L = attr.set_line(L) + 1;
+        return this.assignment.set_line(L);
+    }
+
+    relocate_last_comment() {
+        const assignment = this.assignment;
+        if (assignment instanceof LeanAssign) assignment.relocate_last_comment();
+    }
+
+    /**
+     * Port of `Lean_def::insert_newline`.
+     * Stops indented proof lines from bubbling to `LeanModule` (which would throw).
+     */
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent < indent) {
+            if (caret === this.assignment) {
+                const pushed = this.push_args_indented(indent, newlineCount);
+                if (pushed) return pushed;
+                if (caret instanceof LeanColon) {
+                    const rhs = caret.rhs;
+                    if (rhs instanceof LeanCaret) {
+                        rhs.indent = indent;
+                        const stmts = new LeanStatements([rhs], indent, rhs.level);
+                        caret.replace(rhs, stmts);
+                        return rhs;
+                    }
+                } else if (caret instanceof LeanAssign) {
+                    const inner = this.assignment.rhs;
+                    if (inner instanceof LeanCaret) {
+                        inner.indent = indent;
+                        const stmts = new LeanStatements([inner], indent, inner.level);
+                        this.assignment.replace(inner, stmts);
+                        return inner;
+                    }
+                    return super.insert_newline(caret, newlineCount, this.indent, next);
+                }
+            }
+            return super.insert_newline(caret, newlineCount, indent, next);
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+}
+
+export class Lean_theorem extends Lean_def {}
+
+export class Lean_lemma extends Lean_def {
+    echo() {
+        this.assignment?.echo?.();
+        const asn = this.assignment;
+        if (asn instanceof LeanAssign && asn.rhs instanceof LeanBy) {
+            const statement = asn.rhs.arg;
+            if (statement instanceof LeanStatements) {
+                const stmts = statement.args;
+                for (let i = stmts.length - 1; i >= 0; i--) {
+                    const stmt = stmts[i];
+                    if (stmt.is_comment?.()) continue;
+                    if (stmt instanceof LeanTactic || stmt instanceof Lean_let) {
+                        const token = stmt.get_echo_token?.();
+                        if (token) {
+                            const ind = statement.indent;
+                            const lev = statement.level;
+                            statement.push(
+                                new LeanTactic(
+                                    'try',
+                                    new LeanTactic('echo', token, ind, lev),
+                                    ind,
+                                    lev,
+                                ),
+                            );
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 
