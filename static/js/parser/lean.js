@@ -207,6 +207,10 @@ export class Lean extends IndentedNode {
         throw new Error('insert_newline: no parent');
     }
 
+    insert_only(caret) {
+        if (this.parent) return this.parent.insert_only(caret);
+    }
+
     insert_semicolon(caret) {
         if (this.parent) return this.parent.insert_semicolon(this);
     }
@@ -3947,115 +3951,6 @@ export class LeanStatements extends LeanArgs {
         return 19;
     }
 
-    strFormat() {
-        const n = this.args.length;
-        if (n === 0) return '';
-        let format = Array(n).fill('%s').join('\n');
-        if (this.parent instanceof LeanBrace) {
-            format = `\n${format}\n${' '.repeat(this.parent.indent)}`;
-        }
-        return format;
-    }
-
-    latexFormat() {
-        const n = this.args.length;
-        if (n === 0) return '';
-        const stmt = Array(n)
-            .fill('&{%s}&& ')
-            .join('\\\\\n');
-        if (this.parent && this.parent.constructor?.name === 'LeanBy') return stmt;
-        return `\\begin{align*}\n${stmt}\n\\end{align*}`;
-    }
-
-    /**
-     * Port of `LeanStatements::relocate_last_comment`.
-     */
-    relocate_last_comment() {
-        for (let index = this.args.length - 1; index >= 0; --index) {
-            const end = this.args[index];
-            if (end.is_outsider()) {
-                let self = this;
-                let parent = null;
-                while (self) {
-                    parent = self.parent;
-                    if (parent instanceof LeanStatements) break;
-                    self = parent;
-                }
-                if (parent) {
-                    const last = this.args.pop();
-                    const ix = parent.args.indexOf(self);
-                    parent.args.splice(ix + 1, 0, last);
-                    last.parent = parent;
-                    last.indent = parent.indent;
-                    parent.relocate_last_comment();
-                    break;
-                }
-            } else {
-                if (end.is_comment()) {
-                    let lemma = null;
-                    let j = 0;
-                    for (j = index - 1; j >= 0; --j) {
-                        const stmt = this.args[j];
-                        if (stmt instanceof Lean_lemma) {
-                            lemma = stmt;
-                            break;
-                        }
-                        if (stmt.is_comment()) continue;
-                        break;
-                    }
-                    if (lemma) {
-                        const assignment = lemma.assignment;
-                        if (assignment instanceof LeanAssign) {
-                            let proof = assignment.rhs;
-                            if (proof instanceof LeanBy || proof instanceof LeanCalc) {
-                                proof = proof.arg;
-                                if (proof instanceof LeanStatements) {
-                                    for (let i = j + 1; i <= index; ++i) proof.push(this.args[i]);
-                                    this.args.splice(j + 1, index - j);
-                                    break;
-                                }
-                            } else if (proof instanceof LeanArgsNewLineSeparated) {
-                                for (let i = j + 1; i <= index; ++i) proof.push(this.args[i]);
-                                this.args.splice(j + 1, index - j);
-                                break;
-                            }
-                        }
-                    }
-                }
-                end.relocate_last_comment();
-                break;
-            }
-        }
-    }
-
-    /** Port of LeanStatements::push_line_comment. Stops bubbling to root. */
-    push_line_comment(comment) {
-        const line = new LeanLineComment(comment, this.indent, this.level);
-        this.push(line);
-        return line;
-    }
-
-    swap_echo_star(syntax, statements) {
-        const args = this.args;
-        for (let i = 0; i < args.length; ++i) {
-            const echo = args[i];
-            if (
-                echo instanceof LeanTactic &&
-                echo.tacticName === 'echo' &&
-                echo.arg instanceof LeanToken &&
-                echo.arg.text === '*'
-            ) {
-                [args[i], args[i + 1]] = [args[i + 1], args[i]];
-                i++;
-            }
-        }
-        for (const stmt of this.args) statements.push(...stmt.split(syntax));
-    }
-
-    set_line(line) {
-        return leanMultipleLineSetLine(this, line);
-    }
-
     echo() {
         const args = this.args;
         let count = args.length;
@@ -4134,6 +4029,24 @@ export class LeanStatements extends LeanArgs {
         return caret;
     }
 
+    insert_newline(caret, newlineCount, indent, next) {
+        if (this.indent > indent) return super.insert_newline(caret, newlineCount, indent, next);
+        if (this.indent < indent) {
+            const c = this.push_args_indented(indent, newlineCount);
+            if (c) return c;
+            // See `LeanModule.insert_newline` — fall through when last arg cannot be wrapped.
+        }
+        for (let k = 0; k < newlineCount; ++k) {
+            caret = new LeanCaret(indent, caret.level);
+            this.push(caret);
+        }
+        return caret;
+    }
+
+    is_indented() {
+        return false;
+    }
+
     isProp(vars) {
         const args = this.args;
         if (args.length === 1) return args[0].isProp?.(vars);
@@ -4148,18 +4061,113 @@ export class LeanStatements extends LeanArgs {
         return args;
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.indent > indent) return super.insert_newline(caret, newlineCount, indent, next);
-        if (this.indent < indent) {
-            const c = this.push_args_indented(indent, newlineCount);
-            if (c) return c;
-            // See `LeanModule.insert_newline` — fall through when last arg cannot be wrapped.
+    latexFormat() {
+        const n = this.args.length;
+        if (n === 0) return '';
+        const stmt = Array(n)
+            .fill('&{%s}&& ')
+            .join('\\\\\n');
+        if (this.parent && this.parent.constructor?.name === 'LeanBy') return stmt;
+        return `\\begin{align*}\n${stmt}\n\\end{align*}`;
+    }
+
+    /**
+     * Port of `LeanStatements::relocate_last_comment`.
+     */
+    relocate_last_comment() {
+        for (let index = this.args.length - 1; index >= 0; --index) {
+            const end = this.args[index];
+            if (end.is_outsider()) {
+                let self = this;
+                let parent = null;
+                while (self) {
+                    parent = self.parent;
+                    if (parent instanceof LeanStatements) break;
+                    self = parent;
+                }
+                if (parent) {
+                    const last = this.args.pop();
+                    const ix = parent.args.indexOf(self);
+                    parent.args.splice(ix + 1, 0, last);
+                    last.parent = parent;
+                    last.indent = parent.indent;
+                    parent.relocate_last_comment();
+                    break;
+                }
+            } else {
+                if (end.is_comment()) {
+                    let lemma = null;
+                    let j = 0;
+                    for (j = index - 1; j >= 0; --j) {
+                        const stmt = this.args[j];
+                        if (stmt instanceof Lean_lemma) {
+                            lemma = stmt;
+                            break;
+                        }
+                        if (stmt.is_comment()) continue;
+                        break;
+                    }
+                    if (lemma) {
+                        const assignment = lemma.assignment;
+                        if (assignment instanceof LeanAssign) {
+                            let proof = assignment.rhs;
+                            if (proof instanceof LeanBy || proof instanceof LeanCalc) {
+                                proof = proof.arg;
+                                if (proof instanceof LeanStatements) {
+                                    for (let i = j + 1; i <= index; ++i) proof.push(this.args[i]);
+                                    this.args.splice(j + 1, index - j);
+                                    break;
+                                }
+                            } else if (proof instanceof LeanArgsNewLineSeparated) {
+                                for (let i = j + 1; i <= index; ++i) proof.push(this.args[i]);
+                                this.args.splice(j + 1, index - j);
+                                break;
+                            }
+                        }
+                    }
+                }
+                end.relocate_last_comment();
+                break;
+            }
         }
-        for (let k = 0; k < newlineCount; ++k) {
-            caret = new LeanCaret(indent, caret.level);
-            this.push(caret);
+    }
+
+    strFormat() {
+        const n = this.args.length;
+        if (n === 0) return '';
+        let format = Array(n).fill('%s').join('\n');
+        if (this.parent instanceof LeanBrace) {
+            format = `\n${format}\n${' '.repeat(this.parent.indent)}`;
         }
-        return caret;
+        return format;
+    }
+
+    swap_echo_star(syntax, statements) {
+        const args = this.args;
+        for (let i = 0; i < args.length; ++i) {
+            const echo = args[i];
+            if (
+                echo instanceof LeanTactic &&
+                echo.tacticName === 'echo' &&
+                echo.arg instanceof LeanToken &&
+                echo.arg.text === '*'
+            ) {
+                [args[i], args[i + 1]] = [args[i + 1], args[i]];
+                i++;
+            }
+        }
+        for (const stmt of this.args) statements.push(...stmt.split(syntax));
+    }
+
+    /** Port of LeanStatements::push_line_comment. Stops bubbling to root. */
+    push_line_comment(comment) {
+        const line = new LeanLineComment(comment, this.indent, this.level);
+        this.push(line);
+        return line;
+    }
+
+    set_line(line) {
+        return leanMultipleLineSetLine(this, line);
     }
 }
 
@@ -5418,6 +5426,14 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     strFormat() {
         const n = this.args.length;
         if (n === 0) return '';
+        if (this.parent instanceof LeanTactic) {
+            let out = '';
+            for (let i = 0; i < n; i++) {
+                if (i > 0) out += this.args[i] instanceof LeanTactic ? '\n' : ' ';
+                out += '%s';
+            }
+            return out;
+        }
         return Array(n).fill('%s').join(' ');
     }
 
@@ -5937,44 +5953,79 @@ export class LeanTactic extends LeanSyntax {
         this.only = undefined;
     }
 
-    _lastOf(Cls) {
-        for (let i = this.args.length - 1; i >= 0; i--) {
-            if (this.args[i] instanceof Cls) return this.args[i];
-        }
-    }
-
-    get arrow() {
-        return this._lastOf(LeanRightarrow);
-    }
-
-    get at() {
-        return this._lastOf(LeanAt);
-    }
-
-    get by() {
-        return this._lastOf(LeanBy);
-    }
-
-    get func() {
-        return this.tacticName;
+    get stack_priority() {
+        if (this.parent instanceof LeanBy) return LeanColon.input_priority;
+        if (this.tacticName === 'obtain') return LeanAssign.input_priority - 1;
+        return LeanAssign.input_priority;
     }
 
     get modifiers() {
         return this.args.slice(1);
     }
 
+    get at() {
+        for (let i = this.args.length - 1; i >= 0; i--) {
+            if (this.args[i] instanceof LeanAt) return this.args[i];
+        }
+    }
+
     get with() {
-        return this._lastOf(LeanWith);
+        for (let i = this.args.length - 1; i >= 0; i--) {
+            if (this.args[i] instanceof LeanWith) return this.args[i];
+        }
+    }
+
+    get by() {
+        for (let i = this.args.length - 1; i >= 0; i--) {
+            if (this.args[i] instanceof LeanBy) return this.args[i];
+        }
+    }
+
+    get arrow() {
+        for (let i = this.args.length - 1; i >= 0; i--) {
+            if (this.args[i] instanceof LeanRightarrow) return this.args[i];
+        }
+    }
+
+    get func() {
+        return this.tacticName;
+    }
+
+    echo() {
+        const tok = this.get_echo_token();
+        const stc = this.sequential_tactic_combinator;
+        const hasStc = stc && stc.arg?.indent;
+        if (tok) {
+            const echo = new LeanTactic('echo', tok, this.indent, this.level);
+            if (tok instanceof LeanToken && tok.text === '*') return [1, echo, this];
+            const by = this.by;
+            if (by && by.arg instanceof LeanStatements) by.echo?.();
+            if (hasStc && stc.newline) {
+                echo.push(stc);
+                this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, true);
+                stc.echo?.();
+                return;
+            }
+            return [1, this, echo];
+        }
+        if (hasStc) stc.echo?.();
+        else {
+            const block = this.repeat_block();
+            if (block) block.echo?.();
+        }
+    }
+
+    /**
+     * Port of `LeanTactic::getEcho`.
+     * @returns {LeanTactic | undefined}
+     */
+    getEcho() {
+        if (this.tacticName === 'echo') return this;
+        if (this.tacticName === 'try' && this.arg instanceof LeanTactic && this.arg.tacticName === 'echo') return this.arg;
     }
 
     is_inline_tactic_block() {
         return this.tacticName === 'repeat' || this.tacticName === 'try';
-    }
-
-    get stack_priority() {
-        if (this.parent instanceof LeanBy) return LeanColon.input_priority;
-        if (this.tacticName === 'obtain') return LeanAssign.input_priority - 1;
-        return LeanAssign.input_priority;
     }
 
     insert_newline(caret, newlineCount, indent, next) {
@@ -6195,30 +6246,6 @@ export class LeanTactic extends LeanSyntax {
         return new LeanArgsCommaSeparated(token, this.indent, this.level);
     }
 
-    echo() {
-        const tok = this.get_echo_token();
-        const stc = this.sequential_tactic_combinator;
-        const hasStc = stc && stc.arg?.indent;
-        if (tok) {
-            const echo = new LeanTactic('echo', tok, this.indent, this.level);
-            if (tok instanceof LeanToken && tok.text === '*') return [1, echo, this];
-            const by = this.by;
-            if (by && by.arg instanceof LeanStatements) by.echo?.();
-            if (hasStc && stc.newline) {
-                echo.push(stc);
-                this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, true);
-                stc.echo?.();
-                return;
-            }
-            return [1, this, echo];
-        }
-        if (hasStc) stc.echo?.();
-        else {
-            const block = this.repeat_block();
-            if (block) block.echo?.();
-        }
-    }
-
     insert_only(caret) {
         if (caret !== this.args[this.args.length - 1]) {
             throw new Error(`LeanTactic.insert_only: unexpected for ${this.constructor.name}`);
@@ -6380,15 +6407,6 @@ export class LeanTactic extends LeanSyntax {
             parts.push('%s');
         }
         return func + parts.join('');
-    }
-
-    /**
-     * Port of `LeanTactic::getEcho`.
-     * @returns {LeanTactic | undefined}
-     */
-    getEcho() {
-        if (this.tacticName === 'echo') return this;
-        if (this.tacticName === 'try' && this.arg instanceof LeanTactic && this.arg.tacticName === 'echo') return this.arg;
     }
 }
 
@@ -7991,50 +8009,53 @@ export class LeanParser extends AbstractParser {
     }
 }
 
-/** Concrete binary nodes for extra operator symbols (see token registry). */
-export class Lean_ominus extends LeanBinary {
+/**
+ * Extra binary operators from `token2classname`. `export const Name = class extends …` keeps
+ * declaration-order tooling aligned with the shared class list length; inferred `constructor.name` stays `Name`.
+ */
+export const Lean_ominus = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class Lean_oslash extends LeanBinary {
+export const Lean_oslash = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class Lean_circledcirc extends LeanBinary {
+export const Lean_circledcirc = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class Lean_circledast extends LeanBinary {
+export const Lean_circledast = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class Lean_circleeq extends LeanBinary {
+export const Lean_circleeq = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class Lean_circleddash extends LeanBinary {
+export const Lean_circleddash = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class Lean_boxplus extends LeanBinary {
+export const Lean_boxplus = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class Lean_boxminus extends LeanBinary {
+export const Lean_boxminus = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class Lean_boxtimes extends LeanBinary {
+export const Lean_boxtimes = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class Lean_dotsquare extends LeanBinary {
+export const Lean_dotsquare = class extends LeanBinary {
     static input_priority = 67;
-}
+};
 
-export class LeanEDiv extends LeanBinary {
+export const LeanEDiv = class extends LeanBinary {
     static input_priority = 70;
-}
+};
 
 /** Concrete AST / parser node classes only (keys = `constructor.name`). No abstract/intermediate bases (`Lean`, `LeanArgs`, `LeanBinary`, …). */
 const LEAN_CLASSES = {
