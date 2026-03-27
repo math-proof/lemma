@@ -280,6 +280,19 @@ function alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, className) {
     ];
 }
 
+/** PHP `__clone`; JS `clone()`. PHP `traverse` is a normal method; JS uses `*traverse()` (scanner skips it). Order `get:command` before `get:func` like PHP `__get` cases. */
+function alignLeanArgsPhpVsJs(pMem, jMem, className) {
+    if (className !== 'LeanArgs') return [pMem, jMem];
+    const p = pMem.filter((x) => x !== 'magic:__clone' && x !== 'method:traverse');
+    const jNoClone = jMem.filter((x) => x !== 'method:clone');
+    const rest = jNoClone.filter((x) => !x.startsWith('get:'));
+    const ci = rest.indexOf('constructor');
+    const head = ci >= 0 ? rest.slice(0, ci + 1) : rest;
+    const tail = ci >= 0 ? rest.slice(ci + 1) : [];
+    const j = [...head, 'get:command', 'get:func', ...tail];
+    return [p, j];
+}
+
 /** PHP `__set` for `lhs`/`rhs`; JS uses setters. Abstract `sep()` is not picked up by the PHP line scanner; `echo` / `insert_newline` / `operator` / `strFormat` are JS-only or inherited from `Lean` in PHP. */
 function alignLeanBinaryPhpMagicVsJs(pMem, jMem, className) {
     if (className !== 'LeanBinary') return [pMem, jMem];
@@ -394,6 +407,7 @@ if (membersMode) {
         if (normalize) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
             [pMem, jMem] = alignCommandGetter(pMem, jMem);
+            [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
