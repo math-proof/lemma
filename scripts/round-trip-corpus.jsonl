@@ -2525,3 +2525,4 @@
 {"rel":"Lemma/Bool/AndAndNot/is/False.lean","note":"Bool nested And/Not; AST round-trip +1"}
 {"rel":"Lemma/Bool/Any_And/is/AndAny.lean","note":"Bool Any/And; AST round-trip +1"}
 {"rel":"Lemma/Bool/BFnIte/eq/Ite_BFnS.lean","note":"Bool BFn/ite; off-corpus AST round-trip +1"}
+{"rel":"Lemma/Vector/EqGetSUnflatten/of/Eq/Lt/Eq/Eq.lean","note":"off-corpus AST round-trip (sample-round-trip-corpus)"}

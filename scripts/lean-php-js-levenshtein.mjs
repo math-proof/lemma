@@ -233,6 +233,28 @@ function alignPhpTraitMembers(pMem, jMem, phpInner) {
     return [pMem, j];
 }
 
+/** PHP `LeanGetElemBase*` lives in traits; `extractClassBlock` omits trait bodies. */
+function alignLeanGetElemBase(pMem, jMem, phpInner) {
+    let j = [...jMem];
+    if (/\buse\s+LeanGetElemBaseBinary\b/.test(phpInner)) {
+        j = j.filter(
+            (x) =>
+                x !== 'get:stack_priority' &&
+                x !== 'method:push_right' &&
+                x !== 'method:insert_comma' &&
+                x !== 'method:sep',
+        );
+    } else if (/\buse\s+LeanGetElemBase\b/.test(phpInner)) {
+        j = j.filter(
+            (x) =>
+                x !== 'get:stack_priority' &&
+                x !== 'method:push_right' &&
+                x !== 'method:insert_comma',
+        );
+    }
+    return [pMem, j];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -283,6 +305,7 @@ if (membersMode) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
             [pMem, jMem] = alignCommandGetter(pMem, jMem);
             [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
+            [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;

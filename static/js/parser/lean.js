@@ -3343,6 +3343,8 @@ export class Lean_blacktriangleright extends LeanArithmetic {
     }
 }
 
+class LeanUnaryArithmetic extends LeanUnary {}
+
 export class LeanArgsNewLineSeparated extends LeanArgs {
     get stack_priority() {
         const parent = this.parent;
@@ -3912,11 +3914,6 @@ export class LeanGetElem extends LeanBinary {
         return 18;
     }
 
-    push_right(funcName) {
-        if (funcName === 'LeanBracket') return this;
-        return super.push_right(funcName);
-    }
-
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
         const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
@@ -3925,16 +3922,21 @@ export class LeanGetElem extends LeanBinary {
         return caret2;
     }
 
+    latexFormat() {
+        return '{%s}_{%s}';
+    }
+
+    push_right(funcName) {
+        if (funcName === 'LeanBracket') return this;
+        return super.push_right(funcName);
+    }
+
     sep() {
         return '';
     }
 
     strFormat() {
         return '%s[%s]';
-    }
-
-    latexFormat() {
-        return '{%s}_{%s}';
     }
 }
 
@@ -3945,9 +3947,37 @@ export class LeanGetElemQue extends LeanBinary {
         return 18;
     }
 
+    insert_comma(caret) {
+        const caret2 = new LeanCaret(this.indent, caret.level);
+        const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
+        this.args[1] = commaSep;
+        commaSep.parent = this;
+        return caret2;
+    }
+
+    latexFormat() {
+        return '{%s}_{%s?}';
+    }
+
     push_right(funcName) {
         if (funcName === 'LeanBracket') return this;
         return super.push_right(funcName);
+    }
+
+    sep() {
+        return '';
+    }
+
+    strFormat() {
+        return '%s[%s]?';
+    }
+}
+
+export class LeanGetElemQuote extends LeanArgs {
+    static input_priority = 88;
+
+    get stack_priority() {
+        return 18;
     }
 
     insert_comma(caret) {
@@ -3958,24 +3988,8 @@ export class LeanGetElemQue extends LeanBinary {
         return caret2;
     }
 
-    sep() {
-        return '';
-    }
-
-    strFormat() {
-        return '%s[%s]?';
-    }
-
     latexFormat() {
-        return '{%s}_{%s?}';
-    }
-}
-
-export class LeanGetElemQuote extends LeanArgs {
-    static input_priority = 88;
-
-    get stack_priority() {
-        return 18;
+        return "{%s}_{%s{\\color{red}\\text{'}}%s}";
     }
 
     push_right(funcName) {
@@ -4503,7 +4517,6 @@ export class LeanArgsIndented extends LeanBinary {
     }
 }
 
-class LeanUnaryArithmetic extends LeanUnary {}
 
 export class LeanUnaryArithmeticPost extends LeanUnaryArithmetic {
     static input_priority = 72;
