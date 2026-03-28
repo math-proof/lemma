@@ -4242,8 +4242,6 @@ function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
     return { cmts, proofStr, endJ, proofIsTactic };
 }
 
-
-
 // --- LeanModule::render2vue / merge_proof (server/lean/compiler/render2vue.mjs) ---
 /** Escape a single line for use inside `\\text{...}` in KaTeX (render2vue). */
 function escapeLatexTextForRender2vue(s) {
@@ -5312,27 +5310,16 @@ export class LeanModule extends LeanStatements {
     }
 
     /**
-     * Top-level declarations must be separated by newlines for re-parse: `import A import B` leaves
-     * the second `import` inside the first `Lean_import` and breaks `compile(String(root))`.
-     * Inner `LeanStatements` (proofs, etc.) keep space-separated `strFormat` from `LeanStatements` / `Lean`.
+     * Top-level pieces joined by newlines in `Lean.toString()` (via `strFormat` / `strArgs`).
+     * Echo lemmas, dangling STC + `LeanTacticBlock`, indented colon before echo assign or
+     * `lemma` + `match … := by`, and `Lean_have`-relative tactic indent.
+     * @returns {string[]}
      */
-    strFormat() {
-        const n = this.args.length;
-        if (n === 0) return '';
-        return Array(n).fill('%s').join('\n');
-    }
-
-    /**
-     * Echo-style lemmas: `LeanAssign` with empty `LeanCaret` rhs and proof on the next module lines — emit `:= by`
-     * when the proof is tactic-shaped, pad the assign line with `assign.indent`, dedent term proofs before
-     * re-indenting (so newline scanning does not over-read continuation indent), and when a `LeanColon`
-     * (indented, module child) is immediately followed by such an echo assign, prefix the colon block’s
-     * first line with `colon.indent` so re-parse keeps the assign at module scope.
-     */
-    toString() {
+    leanModuleStrSegments() {
         const args = this.args;
-        const skip = new Set();
+        /** @type {string[]} */
         const parts = [];
+        const skip = new Set();
         const indentText = (s, ind) => {
             if (ind <= 0) return s;
             const pad = ' '.repeat(ind);
@@ -5358,8 +5345,6 @@ export class LeanModule extends LeanStatements {
                         const acc = a.accessibility === 'public' ? '' : `${a.accessibility} `;
                         const kw = `${acc}${a.func} `;
                         const head = a.attribute ? `${String(a.attribute)}\n${kw}` : kw;
-                        // Rhs is still a caret: the lemma was parsed as `:=` then proof lines (no `by` token).
-                        // Do not print ` by` or re-parse will build `LeanBy` and the AST drifts.
                         const asnPad = ' '.repeat(Math.max(0, asn.indent ?? 0));
                         let block = `${head}${asnPad}${String(asn.lhs)} :=`;
                         for (const c of tail.cmts) block += `\n${String(c)}`;
@@ -5437,7 +5422,25 @@ export class LeanModule extends LeanStatements {
             }
             parts.push(out);
         }
-        return parts.join('\n');
+        return parts;
+    }
+
+    /**
+     * Top-level declarations must be separated by newlines for re-parse: `import A import B` leaves
+     * the second `import` inside the first `Lean_import` and breaks `compile(String(root))`.
+     * `Lean.toString()` calls `strFormat()` then `strArgs()`; we cache segments on `_moduleStrSegs` for that pair.
+     */
+    strFormat() {
+        this._moduleStrSegs = this.leanModuleStrSegments();
+        const n = this._moduleStrSegs.length;
+        if (n === 0) return '';
+        return Array(n).fill('%s').join('\n');
+    }
+
+    strArgs() {
+        const segs = this._moduleStrSegs ?? this.leanModuleStrSegments();
+        delete this._moduleStrSegs;
+        return segs;
     }
 
     insert_word(caret, word) {
