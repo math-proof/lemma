@@ -739,8 +739,12 @@ export class Lean extends IndentedNode {
                 return this.parent.insert_end(this);
             case 'only':
                 return this.parent.insert_only(this);
-            case 'if':
-                return this.parent.insert_if(this);
+            case 'if': {
+                let n = this.parent;
+                while (n && typeof n.insert_if !== 'function') n = n.parent;
+                if (!n) throw new Error('insert_if is unexpected');
+                return n.insert_if(this);
+            }
             case 'then':
                 return this.parent.insert_then(this);
             case 'else':
@@ -1490,11 +1494,6 @@ export class LeanArgs extends Lean {
             return caret;
         }
         throw new Error(`insert_calc: unexpected for ${this.constructor.name}`);
-    }
-
-    insert_if(caret) {
-        if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
-        throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
     }
 
     insert_tactic(caret, func) {
@@ -6416,6 +6415,17 @@ function leanEvalPrefix(expressions, operandCount) {
     return stack.reverse();
 }
 
+/** Path lookup for type-variable maps (`get_type` / `isProp`). */
+function leanVarsGetitem(root, keys) {
+    let cur = root;
+    for (const k of keys) {
+        if (k === '' || k == null) return undefined;
+        if (cur == null || typeof cur !== 'object') return undefined;
+        cur = /** @type {Record<string, unknown>} */ (cur)[k];
+    }
+    return cur;
+}
+
 export class LeanArgsSpaceSeparated extends LeanArgs {
     static input_priority = 80;
 
@@ -6427,12 +6437,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     construct_prefix_tree() {
         const tokens = this.tokens_space_separated();
         return leanEvalPrefix(tokens, (arg) => arg.operand_count());
-    }
-
-    insert_word(caret, word) {
-        const newTok = new LeanToken(word, this.indent, caret.level);
-        this.push(newTok);
-        return newTok;
     }
 
     /**
@@ -6449,13 +6453,245 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return 80;
     }
 
+    /**
+     * @param {Record<string, unknown>} vars
+     * @param {Lean} arg
+     * @returns {unknown}
+     */
+    get_type(vars, arg) {
+        if (arg instanceof LeanToken) return vars[arg.text] ?? '';
+        if (arg instanceof LeanArgsSpaceSeparated) {
+            const segs = arg.args.map((a) => this.get_type(vars, a)).map((x) => String(x ?? ''));
+            return leanVarsGetitem(vars, segs);
+        }
+        return '';
+    }
+
+    insert(caret, func, type) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret && !(caret instanceof LeanCaret) && type !== 'modifier') {
+            const c = new LeanCaret(this.indent, caret.level);
+            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            this.push(new Ctor(c, c.indent, c.level));
+            return c;
+        }
+        if (this.parent) return this.parent.insert(this, func, type);
+    }
+
+    insert_unary(caret, func) {
+        const last = this.args[this.args.length - 1];
+        if (last !== caret) throw new Error(`insert_unary is unexpected for ${this.constructor.name}`);
+        const indent = this.indent;
+        const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+        if (caret instanceof LeanCaret) {
+            this.replace(caret, new Ctor(caret, indent, caret.level));
+            return caret;
+        }
+        const c = new LeanCaret(indent, caret.level);
+        this.push(new Ctor(c, indent, this.level));
+        return c;
+    }
+
+    insert_word(caret, word) {
+        const newTok = new LeanToken(word, this.indent, caret.level);
+        this.push(newTok);
+        return newTok;
+    }
+
+    is_Abs() {
+        const args = this.args;
+        const func = args[0];
+        return func instanceof LeanToken && args.length === 2 && func.text === 'abs';
+    }
+
+    is_Bool() {
+        const args = this.args;
+        const func = args[0];
+        return (
+            func instanceof LeanProperty &&
+            func.rhs instanceof LeanToken &&
+            func.rhs.text === 'toNat' &&
+            func.lhs instanceof LeanToken &&
+            func.lhs.text === 'Bool'
+        );
+    }
+
+    is_indented() {
+        const parent = this.parent;
+        return (
+            parent instanceof LeanStatements ||
+            parent instanceof LeanArgsCommaNewLineSeparated ||
+            parent instanceof LeanArgsNewLineSeparated ||
+            (parent instanceof LeanIte && (this === parent.then || this === parent.else))
+        );
+    }
+
+    isProp(vars) {
+        const targs = this.args.map((a) => this.get_type(vars, a));
+        const type0 = targs[0];
+        if (type0 != null && typeof type0 === 'object') {
+            const rest = targs.slice(1).map((x) => String(x ?? ''));
+            if (leanVarsGetitem(/** @type {Record<string, unknown>} */ (type0), rest) === 'Prop') return true;
+        }
+        const func = this.args[0];
+        if (func instanceof LeanToken) {
+            switch (func.text) {
+                case 'HEq':
+                case 'Infinitesimal':
+                case 'Infinite':
+                case 'InfinitePos':
+                case 'InfiniteNeg':
+                    return true;
+                default:
+            }
+        }
+    }
+
     is_space_separated() {
         return true;
     }
 
+    /**
+     * @param {Record<string, unknown> | null} [syntax]
+     * @returns {string[]}
+     */
+    latexArgs(syntax = null) {
+        const syn = syntax ?? {};
+        const args = this.args;
+        const func = args[0];
+        if (this.is_Abs()) {
+            const stripped = this.strip_parenthesis();
+            return [stripped[1].toLatex(syn)];
+        }
+        if (func instanceof LeanToken) {
+            const fn = func.text;
+            syn[fn] = true;
+            switch (args.length) {
+                case 2:
+                    switch (fn) {
+                        case 'exp':
+                        case 'cexp': {
+                            const s = this.strip_parenthesis();
+                            return [s[1].toLatex(syn)];
+                        }
+                        case 'arcsin':
+                        case 'arccos':
+                        case 'arctan':
+                        case 'sin':
+                        case 'cos':
+                        case 'tan':
+                        case 'arg':
+                        case 'arcsec':
+                        case 'arccsc':
+                        case 'arccot':
+                        case 'arcsinh':
+                        case 'arccosh':
+                        case 'arctanh':
+                        case 'arccoth': {
+                            let arg = args[1];
+                            if (arg instanceof LeanParenthesis && arg.arg instanceof LeanDiv) arg = arg.arg;
+                            return [arg.toLatex(syn)];
+                        }
+                        case 'Ici':
+                        case 'Iic':
+                        case 'Ioi':
+                        case 'Iio':
+                        case 'Zeros':
+                        case 'Ones': {
+                            const s = this.strip_parenthesis();
+                            return [s[1].toLatex(syn)];
+                        }
+                        default:
+                    }
+                    break;
+                case 3:
+                    switch (fn) {
+                        case 'Ioc':
+                        case 'Ioo':
+                        case 'Icc':
+                        case 'Ico': {
+                            const s = this.strip_parenthesis();
+                            return [s[1].toLatex(syn), s[2].toLatex(syn)];
+                        }
+                        case 'KroneckerDelta':
+                            return [args[1].toLatex(syn), args[2].toLatex(syn)];
+                        default:
+                    }
+                    break;
+                default:
+            }
+        } else if (this.is_Bool()) {
+            const stripped = this.strip_parenthesis();
+            return [stripped[1].toLatex(syn)];
+        }
+        return super.latexArgs(syn);
+    }
+
     latexFormat() {
-        const n = this.args.length;
-        if (n === 0) return '';
+        const args = this.args;
+        const func = args[0];
+        if (this.is_Abs()) return '\\left|{%s}\\right|';
+        if (func instanceof LeanToken) {
+            switch (args.length) {
+                case 2:
+                    switch (func.text) {
+                        case 'exp':
+                        case 'cexp':
+                            return '{\\color{RoyalBlue} e} ^ {%s}';
+                        case 'arcsin':
+                        case 'arccos':
+                        case 'arctan':
+                        case 'sin':
+                        case 'cos':
+                        case 'tan':
+                        case 'arg':
+                            return `\\${func.text} {%s}`;
+                        case 'arcsec':
+                        case 'arccsc':
+                        case 'arccot':
+                        case 'arcsinh':
+                        case 'arccosh':
+                        case 'arctanh':
+                        case 'arccoth':
+                            return `${func.text}\\ {%s}`;
+                        case 'Ici':
+                            return '\\left[%s, \\infty\\right)';
+                        case 'Iic':
+                            return '\\left(-\\infty, %s\\right]';
+                        case 'Ioi':
+                            return '\\left(%s, \\infty\\right)';
+                        case 'Iio':
+                            return '\\left(-\\infty, %s\\right)';
+                        case 'Zeros':
+                            return '\\mathbf{0}_{%s}';
+                        case 'Ones':
+                            return '\\mathbf{1}_{%s}';
+                        default:
+                    }
+                    break;
+                case 3:
+                    switch (func.text) {
+                        case 'Ioc':
+                            return '\\left(%s, %s\\right]';
+                        case 'Ioo':
+                            return '\\left(%s, %s\\right)';
+                        case 'Icc':
+                            return '\\left[%s, %s\\right]';
+                        case 'Ico':
+                            return '\\left[%s, %s\\right)';
+                        case 'KroneckerDelta':
+                            return '\\delta_{%s %s}';
+                        default:
+                    }
+                    break;
+                default:
+            }
+        } else if (this.is_Bool()) {
+            return '\\left|{%s}\\right|';
+        } else if (func instanceof LeanProperty && func.rhs instanceof LeanToken) {
+            if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';
+        }
+        const n = args.length;
         return Array(n)
             .fill('{%s}')
             .join('\\ ');
@@ -6585,6 +6821,16 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             parts.push(curLatex);
         }
         return parts.join('');
+    }
+
+    unique_token(indent) {
+        const tokens = this.tokens_space_separated();
+        if (!tokens.length) return undefined;
+        const texts = tokens.map((t) => t.text);
+        if (new Set(texts).size !== 1) return undefined;
+        const token = tokens[0].clone();
+        token.indent = indent;
+        return token;
     }
 }
 

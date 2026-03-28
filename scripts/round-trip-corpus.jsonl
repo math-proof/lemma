@@ -2970,3 +2970,10 @@
 {"rel":"Lemma/Tensor/EqDiv0_0.lean","note":"off-corpus AST round-trip (batch append)"}
 {"rel":"Lemma/Tensor/ArraySliceDataStack/as/Data.lean","note":"off-corpus AST round-trip OK; extend corpus (translation task)"}
 {"rel":"Lemma/Tensor/DotSoftmaxAdd_Mul_Infty/eq/Stack_DotSoftmax.lean","note":"off-corpus AST round-trip OK; extend corpus (translation task)"}
+{"rel":"Lemma/Tensor/EqStackS/is/EqStackS/Eq.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Tensor/SumSoftmax/eq/Stack_Softmax/of/GtLength.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Tensor/SumStack/eq/Stack_Sum/of/GtLength.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Tensor/GetSliceStack/as/Stack_UFn.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Tensor/MulStack/eq/Stack_Mul.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Tensor/SelectStack/eq/Stack_Select/of/GtLength.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Tensor/SEqStack_Get/of/GtLength_0.lean","note":"random sample (Tensor)"}
