@@ -2527,9 +2527,15 @@ export class LeanColon extends LeanBinary {
     strFormat() {
         const sep = this.sep();
         let first = '%s';
-        // Only ` : ` when a real space separates colon from rhs; keep `main:\n` / `x:` shapes stable.
-        if (!this.parent?.constructor?.name?.includes('GetElem') && sep === ' ') {
-            first += ' ';
+        const p = this.parent?.constructor?.name ?? '';
+        if (!p.includes('GetElem')) {
+            if (sep === ' ') {
+                first += ' ';
+            } else if (sep === '\n') {
+                const L = this.lhs;
+                // `lemma main:\n-- imply` stays tight; `{binders} :\n-- imply` keeps a space before `:`.
+                if (L instanceof LeanBrace || L instanceof LeanParenthesis) first += ' ';
+            }
         }
         return `${first}${this.operator}${sep}%s`;
     }
@@ -5405,7 +5411,15 @@ export class LeanModule extends LeanStatements {
                         next instanceof LeanAssign &&
                         next.rhs instanceof LeanCaret &&
                         consumeEchoAssignProofTail(args, k + 1, indentText);
-                    if (echoTail) {
+                    let prevIdx = i - 1;
+                    while (prevIdx >= 0 && (args[prevIdx] instanceof LeanCaret || args[prevIdx] == null)) prevIdx--;
+                    const lemmaColonMatchBy =
+                        prevIdx >= 0 &&
+                        args[prevIdx] instanceof Lean_lemma &&
+                        next instanceof LeanAssign &&
+                        next.rhs instanceof LeanBy &&
+                        next.lhs instanceof Lean_match;
+                    if (echoTail || lemmaColonMatchBy) {
                         const lines = String(a).split('\n');
                         if (lines[0] !== '') lines[0] = ' '.repeat(ind) + lines[0];
                         parts.push(lines.join('\n'));
