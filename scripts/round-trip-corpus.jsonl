@@ -2966,3 +2966,6 @@
 {"rel":"Lemma/Tensor/Select/eq/Cast_GetPermute.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/Tensor/Select/as/Stack_Select/of/Eq/GtLength.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/Nat/Le_Sub/of/LeAdd.lean","note":"AST round-trip; extends corpus (translation task)"}
+{"rel":"Lemma/Set/In_Icc/is/In_IccSubS.lean","note":"off-corpus AST round-trip (batch append)"}
+{"rel":"Lemma/Tensor/EqDiv0_0.lean","note":"off-corpus AST round-trip (batch append)"}
+{"rel":"Lemma/Tensor/ArraySliceDataStack/as/Data.lean","note":"off-corpus AST round-trip OK; extend corpus (translation task)"}

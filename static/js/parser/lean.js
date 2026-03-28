@@ -1972,6 +1972,14 @@ class LeanBracket extends LeanPairedGroup {
         return super.push_right(funcName);
     }
 
+    /** Like `LeanAngleBracket.push_token`: after `]` the caret is this node; splice a following identifier (e.g. `[i] X[i]'`). */
+    push_token(word) {
+        const level = this.level;
+        const newTok = new LeanToken(word, this.indent, level);
+        this.parent.replace(this, new LeanArgsSpaceSeparated([this, newTok], this.indent, level));
+        return newTok;
+    }
+
     get stack_priority() {
         return 17;
     }
@@ -5393,6 +5401,12 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return leanEvalPrefix(tokens, (arg) => arg.operand_count());
     }
 
+    insert_word(caret, word) {
+        const newTok = new LeanToken(word, this.indent, caret.level);
+        this.push(newTok);
+        return newTok;
+    }
+
     /**
      * When inside LeanBracket (e.g. [i < n]), use LeanBracket's stack_priority (17) so that
      * Lean_lt is created by replacing the token (LeanToken "i"), not the whole group.
@@ -5450,12 +5464,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 : String(format).format(...args.map((a) => (a instanceof Lean ? String(a) : a)));
         const body = inner.replace(/^\s+/, '');
         return (this.is_indented() ? ' '.repeat(this.indent) : '') + body;
-    }
-
-    insert_word(caret, word) {
-        const newTok = new LeanToken(word, this.indent, caret.level);
-        this.push(newTok);
-        return newTok;
     }
 
     tactic_block_info() {

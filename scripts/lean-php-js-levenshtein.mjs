@@ -398,6 +398,51 @@ function alignLeanParserPhpVsJs(pMem, jMem, className) {
     return [p, [...ordered, ...tail]];
 }
 
+/** PHP-only surface (echo2vue, render2vue, …); JS-only (`strFormat` / `toString` / insert helpers). Shared: `__get` cases + `insert`. */
+function alignLeanModulePhpVsJs(pMem, jMem, className) {
+    if (className !== 'LeanModule') return [pMem, jMem];
+    const phpOnly = [
+        'method:array_push',
+        'method:create_property',
+        'method:decode',
+        'method:echo',
+        'method:echo2vue',
+        'method:import',
+        'method:parse_vars',
+        'method:parse_vars_default',
+        'method:render2vue',
+    ];
+    const jsOnly = [
+        'method:strFormat',
+        'method:toString',
+        'method:insert_space',
+        'method:insert_newline',
+        'method:insert_word',
+        'method:insert_tactic',
+        'method:insert_left',
+        'method:insert_colon',
+    ];
+    return [pMem.filter((x) => !phpOnly.includes(x)), jMem.filter((x) => !jsOnly.includes(x))];
+}
+
+/** PHP-only helpers (`get_type`, `latexArgs`, …); JS-only (`constructor`, `get:stack_priority`, `toString`, `toLatex`). Overlap matches PHP source order. */
+function alignLeanArgsSpaceSeparatedPhpVsJs(pMem, jMem, className) {
+    if (className !== 'LeanArgsSpaceSeparated') return [pMem, jMem];
+    const phpOnly = [
+        'method:get_type',
+        'method:insert',
+        'method:insert_unary',
+        'method:is_Abs',
+        'method:is_Bool',
+        'method:is_indented',
+        'method:isProp',
+        'method:latexArgs',
+        'method:unique_token',
+    ];
+    const jsOnly = ['constructor', 'get:stack_priority', 'method:toString', 'method:toLatex'];
+    return [pMem.filter((x) => !phpOnly.includes(x)), jMem.filter((x) => !jsOnly.includes(x))];
+}
+
 const argv = process.argv.slice(2);
 const jsonOut = argv.includes('--json');
 const membersMode = argv.includes('--members');
@@ -462,6 +507,8 @@ if (membersMode) {
             [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanStatementsInheritedPushLineComment(pMem, jMem, name);
             [pMem, jMem] = alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, name);
+            [pMem, jMem] = alignLeanModulePhpVsJs(pMem, jMem, name);
+            [pMem, jMem] = alignLeanArgsSpaceSeparatedPhpVsJs(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;
