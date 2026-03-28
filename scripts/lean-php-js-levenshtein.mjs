@@ -228,6 +228,7 @@ function alignStaticInputPriority(pMem, jMem, phpInner) {
 /**
  * PHP lists trait methods separately; `extractClassBlock` inner body omits `use` trait bodies.
  * `LeanProperty`: JS-only `strArgs` for dotted paths (no separate `strArgs` in PHP class body).
+ * `LeanStatements`: PHP body omits inherited `push_line_comment` from `Lean`.
  */
 function alignPhpTraitMembers(pMem, jMem, phpInner, className) {
     let j = [...jMem];
@@ -239,6 +240,9 @@ function alignPhpTraitMembers(pMem, jMem, phpInner, className) {
     }
     if (className === 'LeanProperty') {
         j = j.filter((x) => x !== 'method:strArgs');
+    }
+    if (className === 'LeanStatements') {
+        j = j.filter((x) => x !== 'method:push_line_comment');
     }
     return [pMem, j];
 }
@@ -392,12 +396,6 @@ function alignAbstractLeanPhpVsJs(pMem, jMem, className) {
     return [p, jSorted];
 }
 
-/** PHP `LeanStatements` does not redeclare `push_line_comment` in the class body (inherits from `Lean`). */
-function alignLeanStatementsInheritedPushLineComment(pMem, jMem, className) {
-    if (className !== 'LeanStatements') return [pMem, jMem];
-    return [pMem, jMem.filter((x) => x !== 'method:push_line_comment')];
-}
-
 /**
  * PHP `LeanModule` inherits `strFormat` / `strArgs` / `insert_word` from ancestors; JS adds
  * `leanModuleStrSegments` plus `strFormat` / `strArgs` overrides for newline-separated top-level segments.
@@ -512,7 +510,6 @@ if (membersMode) {
         // Trait bodies / PHP magic vs JS accessors — parity for default `--members` (not only `--normalize`).
         [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner, name);
         [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
-        [pMem, jMem] = alignLeanStatementsInheritedPushLineComment(pMem, jMem, name);
         [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
         [pMem, jMem] = alignLeanModulePhpInherited(pMem, jMem, name);

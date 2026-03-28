@@ -3393,3 +3393,4 @@
 {"rel":"Lemma/Vector/Unflatten/eq/SplitAt/of/SEq.lean","note":"off-corpus AST round-trip OK (batch translation task)"}
 {"rel":"Lemma/Vector/ValGet/eq/ArraySliceFlattenMapToList.lean","note":"off-corpus AST round-trip OK (batch translation task)"}
 {"rel":"Lemma/Rat/GeInvAbs_0.lean","note":"AST round-trip: close |a| before ⁻¹ postfix (Lean.insert_bar → open LeanAbs)"}
+{"rel":"Lemma/Finset/All_EqCast/of/All_SEq.lean","note":"AST round-trip: LeanParenthesis under LeanEq in LeanArgsNewLineSeparated keeps line indent"}

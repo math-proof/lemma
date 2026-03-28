@@ -1978,6 +1978,14 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         if (parent instanceof LeanStatements && this.indent > 0) return true;
         if (parent instanceof LeanArgsIndented && this.indent > 0) return true;
+        // `cast (by …)\n    (x i) = …`: `LeanParenthesis` under `LeanEq` inside newline-separated args (not other binaries).
+        if (
+            parent instanceof LeanEq &&
+            this.indent > 0 &&
+            parent.parent instanceof LeanArgsNewLineSeparated
+        ) {
+            return true;
+        }
         return (
             parent instanceof LeanArgsNewLineSeparated ||
             parent instanceof LeanArgsCommaNewLineSeparated ||
