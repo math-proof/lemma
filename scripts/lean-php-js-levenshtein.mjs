@@ -468,18 +468,19 @@ if (membersMode) {
         let pMem = phpMembersOrdered(pInner);
         let jMem = jsMembers(jInner);
         [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
+        // Trait bodies / PHP magic vs JS accessors — parity for default `--members` (not only `--normalize`).
+        [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
+        [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
+        [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
         if (normalize) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLean_defPhpVsJs(pMem, jMem, name);
-            [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
-            [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
             [pMem, jMem] = alignLeanBinaryPhpMagicVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanTokenPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
-            [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
             [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanStatementsInheritedPushLineComment(pMem, jMem, name);
             [pMem, jMem] = alignLeanModulePhpInherited(pMem, jMem, name);

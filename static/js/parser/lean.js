@@ -7643,8 +7643,10 @@ export class LeanBy extends LeanUnary {
 
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
+            // When the next line is already deeper than `by`, use that indent; when it matches the assign
+            // line (common after a column-0 `-- proof`), keep that indent so tactics stay inside the
+            // proof block instead of bubbling to `LeanModule` (AST → string → AST).
+            const ind = indent >= this.indent ? indent : this.indent + 2;
             caret.indent = ind;
             this.arg = new LeanStatements([caret], ind, caret.level);
             for (let i = 1; i < newlineCount; ++i) {
@@ -7714,8 +7716,7 @@ class LeanFrom extends LeanUnary {
     }
     insert_newline(caret, newlineCount, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
+            const ind = indent >= this.indent ? indent : this.indent + 2;
             caret.indent = ind;
             this.arg = new LeanStatements([caret], ind, caret.level);
             for (let i = 1; i < newlineCount; i++) {
