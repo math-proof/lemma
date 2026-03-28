@@ -7624,7 +7624,8 @@ export class LeanTactic extends LeanSyntax {
         const parts = [];
         for (const arg of this.args) {
             if (arg instanceof LeanCaret);
-            else if (arg instanceof LeanSequentialTacticCombinator && arg.newline) parts.push('\n');
+            // Always use a single space before non-caret args (including `<;>`). A newline before `<;>`
+            // breaks round-trip for inline `constructor <;> intro …`-style proofs.
             else parts.push(' ');
             parts.push('%s');
         }
