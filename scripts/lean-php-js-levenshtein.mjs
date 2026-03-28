@@ -472,6 +472,8 @@ if (membersMode) {
         [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
         [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
         [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
+        [pMem, jMem] = alignLeanStatementsInheritedPushLineComment(pMem, jMem, name);
+        [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
         if (normalize) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
             [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
@@ -481,8 +483,6 @@ if (membersMode) {
             [pMem, jMem] = alignLeanBinaryPhpMagicVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanTokenPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
-            [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
-            [pMem, jMem] = alignLeanStatementsInheritedPushLineComment(pMem, jMem, name);
             [pMem, jMem] = alignLeanModulePhpInherited(pMem, jMem, name);
             [pMem, jMem] = alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, name);
             [pMem, jMem] = alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, name);

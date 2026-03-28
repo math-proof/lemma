@@ -5350,9 +5350,10 @@ export class LeanModule extends LeanStatements {
                         const acc = a.accessibility === 'public' ? '' : `${a.accessibility} `;
                         const kw = `${acc}${a.func} `;
                         const head = a.attribute ? `${String(a.attribute)}\n${kw}` : kw;
-                        const by = tail.proofIsTactic ? ' by' : '';
+                        // Rhs is still a caret: the lemma was parsed as `:=` then proof lines (no `by` token).
+                        // Do not print ` by` or re-parse will build `LeanBy` and the AST drifts.
                         const asnPad = ' '.repeat(Math.max(0, asn.indent ?? 0));
-                        let block = `${head}${asnPad}${String(asn.lhs)} :=${by}`;
+                        let block = `${head}${asnPad}${String(asn.lhs)} :=`;
                         for (const c of tail.cmts) block += `\n${String(c)}`;
                         block += `\n${tail.proofStr}`;
                         parts.push(block);
@@ -5364,9 +5365,8 @@ export class LeanModule extends LeanStatements {
                 const tail = consumeEchoAssignProofTail(args, i + 1, indentText);
                 if (tail) {
                     for (let k = i + 1; k <= tail.endJ; k++) skip.add(k);
-                    const by = tail.proofIsTactic ? ' by' : '';
                     const asnPad = ' '.repeat(Math.max(0, a.indent ?? 0));
-                    let block = `${asnPad}${String(a.lhs)} :=${by}`;
+                    let block = `${asnPad}${String(a.lhs)} :=`;
                     for (const c of tail.cmts) block += `\n${String(c)}`;
                     block += `\n${tail.proofStr}`;
                     parts.push(block);
