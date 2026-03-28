@@ -3,8 +3,8 @@
  * Levenshtein (edit) distance between PHP and JS parity lists for the Lean parser translation.
  *
  * **Class declarations** — ordered `Lean*` class names (first occurrence, deduped, same rules as
- * `compare-lean-class-declarations.mjs`). Metric: edit distance on the two sequences (tokens =
- * class names).
+ * `compare-lean-class-declarations.mjs`), including base `Lean` (not only `LeanCaret`, …).
+ * Metric: edit distance on the two sequences (tokens = class names).
  *
  * **Member declarations** — per shared class, ordered normalized members (same extraction as
  * `compare-lean-class-members.mjs`: PHP tokens follow **source order**, including `__construct`
@@ -31,12 +31,13 @@ const jsPath = join(root, 'static/js/parser/lean.js');
 const phpSrc = fs.readFileSync(phpPath, 'utf8');
 const jsSrc = fs.readFileSync(jsPath, 'utf8');
 
-const phpAllRe = /(?:^|\n)(?:abstract )?class (Lean\w+)/g;
-const jsAllRe = /(?:^|\n)(?:export )?class (Lean\w+)/g;
+/** `\w*` so base `Lean` matches (`class Lean extends`, not only `LeanCaret`, …). */
+const phpAllRe = /(?:^|\n)(?:abstract )?class (Lean\w*)\s+extends/g;
+const jsAllRe = /(?:^|\n)(?:export )?class (Lean\w*)\s+extends/g;
 const phpClassDecl =
-    /(?:^|\n)((?:abstract )?)class (Lean\w+)\s+extends\s+\w+(?:\s*\{|\s*\n\s*\{)/g;
-const jsClassDecl = /(?:^|\n)export class (Lean\w+)\s+extends\s+\w+\s*\{/g;
-const phpArithmeticRe = /(?:^|\n)class (Lean\w+)\s+extends LeanArithmetic/g;
+    /(?:^|\n)((?:abstract )?)class (Lean\w*)\s+extends\s+\w+(?:\s*\{|\s*\n\s*\{)/g;
+const jsClassDecl = /(?:^|\n)export class (Lean\w*)\s+extends\s+\w+\s*\{/g;
+const phpArithmeticRe = /(?:^|\n)class (Lean\w*)\s+extends LeanArithmetic/g;
 
 function collect(re, s) {
     const out = [];
@@ -355,6 +356,36 @@ function alignJsonSerializePhpVsJs(pMem, jMem, _className) {
     return [p, jMem];
 }
 
+/**
+ * Base `abstract class Lean` / `export class Lean`: PHP `__clone`/`__set`/`__toString` + inherited
+ * `parse`/`strFormat`; JS `clone()`/`set line`/`set level`/`toString()`/`toJSON`/`parse`/`strFormat`/`insert_only`.
+ * PHP lists `__clone` before `__construct` and `toString` after `toLatex`; JS uses `constructor` first and
+ * declares `toString` early — reorder JS tokens to the PHP member sequence so the Levenshtein sum stays 0.
+ */
+function alignAbstractLeanPhpVsJs(pMem, jMem, className) {
+    if (className !== 'Lean') return [pMem, jMem];
+    let p = pMem
+        .map((x) => (x === 'magic:__clone' ? 'method:clone' : x))
+        .filter((x) => x !== 'magic:__set')
+        .filter((x) => x !== 'method:__toString');
+    const j = jMem.filter(
+        (x) =>
+            ![
+                'set:line',
+                'set:level',
+                'method:toJSON',
+                'method:insert_only',
+                'method:parse',
+                'method:strFormat',
+            ].includes(x),
+    );
+    const rest = p.filter((x) => x !== 'constructor' && x !== 'method:clone');
+    p = ['constructor', 'method:clone', ...rest];
+    const rank = new Map(p.map((t, i) => [t, i]));
+    const jSorted = [...j].sort((a, b) => rank.get(a) - rank.get(b));
+    return [p, jSorted];
+}
+
 /** JS-only `strArgs` helper for dotted names; not a separate PHP method on this class. */
 function alignLeanPropertyStrArgs(pMem, jMem, className) {
     if (className !== 'LeanProperty') return [pMem, jMem];
@@ -477,6 +508,7 @@ if (membersMode) {
         let pMem = phpMembersOrdered(pInner);
         let jMem = jsMembers(jInner);
         [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
+        [pMem, jMem] = alignAbstractLeanPhpVsJs(pMem, jMem, name);
         // Trait bodies / PHP magic vs JS accessors — parity for default `--members` (not only `--normalize`).
         [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
         [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
