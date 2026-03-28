@@ -1911,6 +1911,22 @@ export class LeanParenthesis extends LeanPairedGroup {
 
     is_indented() {
         const parent = this.parent;
+        if (parent instanceof LeanColon && parent.parent instanceof LeanModule) {
+            const rhs = parent.rhs;
+            if (
+                rhs instanceof LeanStatements &&
+                rhs.args.length === 1 &&
+                rhs.args[0] instanceof LeanLineComment &&
+                rhs.args[0].text === 'imply'
+            ) {
+                const mod = parent.parent;
+                const ix = mod.args.indexOf(parent);
+                const next = ix >= 0 && ix + 1 < mod.args.length ? mod.args[ix + 1] : null;
+                if (next instanceof Lean_have) {
+                    return true;
+                }
+            }
+        }
         if (parent instanceof LeanStatements && this.indent > 0) return true;
         if (parent instanceof LeanArgsIndented && this.indent > 0) return true;
         return (
