@@ -1,14 +1,3 @@
 # Off-corpus round-trip failures — not in round-trip-corpus.jsonl; fail parse1, parse2, or toJSON match after print. Regenerate: node scripts/build-round-trip-failures.mjs
 {"rel":"Lemma/Complex/And_Imp_Eq_Div_Mul2_Sub_Sqrt/of/AddMul_Square_Mul/eq/Zero.lean","failure":"mismatch","j1Len":2040,"j2Len":2214}
 {"rel":"Lemma/List/MapEnumerate/eq/Cons_MapEnumerate/of/All_Eq.lean","failure":"mismatch","j1Len":5208,"j2Len":5229}
-{"rel":"Lemma/Tensor/Matmul/eq/Cast_BroadcastMatmul/of/EqGetS_SubLength/GeLength_2/GeLength_2.lean","failure":"mismatch","j1Len":3536,"j2Len":3540}
-{"rel":"Lemma/Tensor/Matmul/eq/Cast_BroadcastMatmul/of/GeGetS_SubLength/GeLength_2/GeLength_2.lean","failure":"mismatch","j1Len":7223,"j2Len":7227}
-{"rel":"Lemma/Tensor/Matmul/eq/Cast_BroadcastMatmul/of/GtGetS_SubLength/GeLength_2/GeLength_2.lean","failure":"mismatch","j1Len":4089,"j2Len":4093}
-{"rel":"Lemma/Tensor/Matmul/eq/Cast_BroadcastMatmul/of/LtGetS_SubLength/GeLength_2/GeLength_2.lean","failure":"mismatch","j1Len":4153,"j2Len":4157}
-{"rel":"Lemma/Tensor/Matmul/eq/Cast_SelectBatchDot/of/EqGet_SubLength_1/GeLength_2.lean","failure":"mismatch","j1Len":4066,"j2Len":4070}
-{"rel":"Lemma/Tensor/Matmul/eq/Cast_SelectBatchDot/of/GtGet_SubLength_1/GeLength_2.lean","failure":"mismatch","j1Len":4517,"j2Len":4521}
-{"rel":"Lemma/Tensor/Matmul/eq/Cast_SelectBatchDot/of/LtGet_SubLength_1/GeLength_2.lean","failure":"mismatch","j1Len":4752,"j2Len":4756}
-{"rel":"Lemma/Tensor/Matmul/eq/SelectBatchDot/of/Eq_Get_SubLength/GeLength_2.lean","failure":"mismatch","j1Len":3758,"j2Len":3762}
-{"rel":"Lemma/Tensor/Matmul/eq/SelectBatchDot/of/Gt_Get_SubLength/GeLength_2.lean","failure":"mismatch","j1Len":4478,"j2Len":4482}
-{"rel":"Lemma/Tensor/Matmul/eq/SelectBatchDot/of/Lt_Get_SubLength/GeLength_2.lean","failure":"mismatch","j1Len":4291,"j2Len":4295}
-{"rel":"Lemma/Tensor/ToVectorRepeat/as/Map_FunRepeatGet/of/Lt_Get_0/GtVal_0.lean","failure":"mismatch","j1Len":7073,"j2Len":7077}

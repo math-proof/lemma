@@ -1902,6 +1902,28 @@ export class LeanParenthesis extends LeanPairedGroup {
         return '%s';
     }
 
+    /**
+     * `LeanArgsIndented` under `LeanStatements` prepends its indent only to this node's line; multiline
+     * `arg` (e.g. `by` / tactic block) keeps smaller absolute indents, so the next parse sees a dedent
+     * before `(` closes and drops the proof body. Pad continuation lines by the parent indent.
+     */
+    strArgs() {
+        const arg = this.arg;
+        if (this.is_indented() && this.parent instanceof LeanArgsIndented && this.parent.indent > 0) {
+            const s = String(arg);
+            if (s.includes('\n')) {
+                const pad = this.parent.indent;
+                const lines = s.split('\n');
+                const bumped = lines.map((line, i) => {
+                    if (i === 0 || line === '') return line;
+                    return ' '.repeat(pad) + line;
+                });
+                return [bumped.join('\n')];
+            }
+        }
+        return [arg];
+    }
+
     insert_newline(caret, newlineCount, indent, next) {
         if (caret === this) {
             caret = this.arg;
