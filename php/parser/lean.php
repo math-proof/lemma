@@ -6214,6 +6214,20 @@ class LeanArgsSpaceSeparated extends LeanArgs
         } elseif ($this->parent)
             return $this->parent->insert($this, $func, $type);
     }
+
+    public function insert_colon($caret)
+    {
+        for ($n = $caret; $n !== null && $n->parent !== null; $n = $n->parent) {
+            $p = $n->parent;
+            if ($p instanceof LeanIte && $p->if === $n) {
+                $c = new LeanCaret($caret->indent, $caret->level);
+                $caret->parent->replace($caret, new LeanColon($caret, $c, $caret->indent, $caret->level));
+                return $c;
+            }
+        }
+        return $caret->push_binary('LeanColon');
+    }
+
     public function insert_unary($caret, $func)
     {
         if ($caret === end($this->args)) {

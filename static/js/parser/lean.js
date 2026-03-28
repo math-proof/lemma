@@ -6474,6 +6474,18 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (this.parent) return this.parent.insert(this, func, type);
     }
 
+    insert_colon(caret) {
+        for (let n = caret; n.parent; n = n.parent) {
+            const p = n.parent;
+            if (p instanceof LeanIte && p.if === n) {
+                const c = new LeanCaret(caret.indent, caret.level);
+                caret.parent.replace(caret, new LeanColon(caret, c, caret.indent, caret.level));
+                return c;
+            }
+        }
+        return caret.push_binary('LeanColon');
+    }
+
     insert_unary(caret, func) {
         const last = this.args[this.args.length - 1];
         if (last !== caret) throw new Error(`insert_unary is unexpected for ${this.constructor.name}`);
