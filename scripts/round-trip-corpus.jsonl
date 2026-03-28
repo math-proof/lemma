@@ -3032,3 +3032,5 @@
 {"rel":"Lemma/Tensor/EqGetRepeatUnsqueeze/of/Lt.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/Hyperreal/Infinite/is/Infinite/of/Setoid.lean","note":"off-corpus AST round-trip OK (translation task)"}
 {"rel":"Lemma/Hyperreal/Infinitesimal/is/Infinitesimal/of/Setoid.lean","note":"off-corpus AST round-trip OK (translation task)"}
+{"rel":"Lemma/Bool/Any_All_And/of/Any_All/Any_All.lean","note":"tactic LeanArgsSpaceSeparated: newline before line comments (round-trip)"}
+{"rel":"Lemma/Bool/Iff/is/IffNotS.lean","note":"tactic LeanArgsSpaceSeparated: newline + indent for intro continuations (round-trip)"}

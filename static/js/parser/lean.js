@@ -2667,13 +2667,6 @@ export class LeanAssign extends LeanBinary {
 }
 
 export class LeanBinaryBoolean extends LeanBinary {
-    /**
-     * @param {Record<string, unknown>} [_vars]
-     */
-    isProp(_vars) {
-        return true;
-    }
-
     append(new_, type) {
         const indent = this.indent;
         const level = this.level;
@@ -2712,6 +2705,13 @@ export class LeanBinaryBoolean extends LeanBinary {
 
     is_indented() {
         return this.parent instanceof LeanStatements;
+    }
+
+    /**
+     * @param {Record<string, unknown>} [_vars]
+     */
+    isProp(_vars) {
+        return true;
     }
 
     sep() {
@@ -6709,6 +6709,27 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return this.args[0].operand_count();
     }
 
+    strArgs() {
+        const args = this.args;
+        let start = 0;
+        while (start < args.length && args[start] instanceof LeanCaret) start++;
+        const slice = args.slice(start);
+        const p = this.parent;
+        if (p instanceof LeanTactic && slice.length > 1) {
+            const floor = (p.indent ?? 0) + 2;
+            return slice.map((a, i) => {
+                if (i === 0 || a instanceof LeanToken || a instanceof LeanCaret) return a;
+                if (a instanceof LeanSyntax || (typeof a.is_comment === 'function' && a.is_comment())) {
+                    const c = a.clone();
+                    if ((c.indent ?? 0) < floor) c.indent = floor;
+                    return c;
+                }
+                return a;
+            });
+        }
+        return slice;
+    }
+
     strFormat() {
         const args = this.args;
         const n = args.length;
@@ -6719,19 +6740,15 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         if (this.parent instanceof LeanTactic) {
             let out = '%s';
             for (let j = start + 1; j < n; j++) {
-                out += args[j] instanceof LeanTactic ? '\n' : ' ';
+                const a = args[j];
+                // `have` / `let` / `show` extend `LeanSyntax` but not `LeanTactic`; keep them on new lines like `by_contra`.
+                const sep = a instanceof LeanSyntax || a.is_comment() ? '\n' : ' ';
+                out += sep;
                 out += '%s';
             }
             return out;
         }
         return Array(n - start).fill('%s').join(' ');
-    }
-
-    strArgs() {
-        const args = this.args;
-        let start = 0;
-        while (start < args.length && args[start] instanceof LeanCaret) start++;
-        return args.slice(start);
     }
 
     tactic_block_info() {
