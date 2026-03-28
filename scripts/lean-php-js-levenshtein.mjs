@@ -366,8 +366,8 @@ function alignLeanStatementsInheritedPushLineComment(pMem, jMem, className) {
 }
 
 /**
- * PHP `LeanModule` inherits `strFormat` / `strArgs` / `insert_word` from ancestors; JS adds
- * `leanModuleStrSegments` plus `strFormat` / `strArgs` overrides for newline-separated top-level segments.
+ * PHP `LeanModule` inherits `strFormat` / `strArgs` / `insert_word` from ancestors; JS overrides
+ * `strFormat` / `strArgs` for newline-separated top-level segments (`leanModuleStrSegments` is a hoisted helper).
  * `toString` stays inherited from `Lean` (same as PHP `__toString` chain), so it is not filtered here.
  */
 function alignLeanModulePhpInherited(pMem, jMem, className) {
@@ -379,7 +379,6 @@ function alignLeanModulePhpInherited(pMem, jMem, className) {
                 ![
                     'method:strFormat',
                     'method:strArgs',
-                    'method:leanModuleStrSegments',
                     'method:insert_word',
                 ].includes(x),
         ),
