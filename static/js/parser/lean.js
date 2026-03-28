@@ -141,6 +141,14 @@ export class Lean extends IndentedNode {
         return (this.is_indented() ? ' '.repeat(this.indent) : '') + inner;
     }
 
+    /**
+     * Subclasses must override or inherit `toJSON` from a base that does (e.g. `LeanArgs`, `LeanUnary`, `LeanBinary`).
+     * Direct `node.toJSON()` calls must not use optional chaining so missing implementations fail fast.
+     */
+    toJSON() {
+        throw new Error(`${this.constructor.name}.toJSON() is not implemented`);
+    }
+
     append($new, _type) {
         if (this.parent) return this.parent.append(this, $new, _type);
     }
@@ -1384,6 +1392,10 @@ class LeanBlockComment extends Lean {
     strFormat() {
         return `/-${this.text}-/`;
     }
+
+    toJSON() {
+        return String(this);
+    }
 }
 
 class LeanDocString extends LeanBlockComment {
@@ -1505,9 +1517,7 @@ export class LeanArgs extends Lean {
     }
 
     toJSON() {
-        const mapped = this.args.map((a) =>
-            a == null ? a : typeof a.toJSON === 'function' ? a.toJSON() : a,
-        );
+        const mapped = this.args.map((a) => (a == null ? a : a.toJSON()));
         let i = 0;
         while (i < mapped.length && mapped[i] === '') i++;
         let j = mapped.length;
@@ -1605,7 +1615,7 @@ export class LeanUnary extends LeanArgs {
     }
 
     toJSON() {
-        return this.arg?.toJSON?.() ?? this.arg;
+        return this.arg.toJSON();
     }
 
     replace(oldNode, newNode) {
@@ -2176,9 +2186,7 @@ export class LeanBinary extends LeanArgs {
     }
 
     toJSON() {
-        const lhs = this.lhs?.toJSON?.() ?? this.lhs;
-        const rhs = this.rhs?.toJSON?.() ?? this.rhs;
-        return { [this.func]: [lhs, rhs] };
+        return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
     }
 
     latexFormat() {
@@ -3756,8 +3764,8 @@ export class LeanLogicAnd extends LeanLogic {
     }
 
     toJSON() {
-        const lhs = this.lhs?.toJSON?.() ?? this.lhs;
-        const rhs = this.rhs?.toJSON?.() ?? this.rhs;
+        const lhs = this.lhs.toJSON();
+        const rhs = this.rhs.toJSON();
         const f = this.func;
         const rec = lhs && typeof lhs === 'object' ? /** @type {Record<string, unknown>} */ (lhs) : null;
         if (this.lhs instanceof LeanLogicAnd && rec && Array.isArray(rec[f])) {
@@ -3787,8 +3795,8 @@ export class LeanLogicOr extends LeanLogic {
     }
 
     toJSON() {
-        const lhs = this.lhs?.toJSON?.() ?? this.lhs;
-        const rhs = this.rhs?.toJSON?.() ?? this.rhs;
+        const lhs = this.lhs.toJSON();
+        const rhs = this.rhs.toJSON();
         const f = this.func;
         const rec = lhs && typeof lhs === 'object' ? /** @type {Record<string, unknown>} */ (lhs) : null;
         if (this.lhs instanceof LeanLogicOr && rec && Array.isArray(rec[f])) {
@@ -3843,7 +3851,7 @@ export class Lean_lor extends LeanLogic {
     }
 
     toJSON() {
-        return { [this.func]: [this.lhs?.toJSON?.() ?? this.lhs, this.rhs?.toJSON?.() ?? this.rhs] };
+        return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
     }
 }
 
@@ -3859,7 +3867,7 @@ export class Lean_land extends LeanLogic {
     }
 
     toJSON() {
-        return { [this.func]: [this.lhs?.toJSON?.() ?? this.lhs, this.rhs?.toJSON?.() ?? this.rhs] };
+        return { [this.func]: [this.lhs.toJSON(), this.rhs.toJSON()] };
     }
 }
 
@@ -5434,8 +5442,7 @@ class LeanCommand extends LeanUnary {
     }
 
     toJSON() {
-        const inner = this.arg?.toJSON?.() ?? this.arg;
-        return { [this.func]: inner };
+        return { [this.func]: this.arg.toJSON() };
     }
 
     latexFormat() {
@@ -7502,8 +7509,8 @@ export class LeanTactic extends LeanSyntax {
 
     toJSON() {
         const name = this.tacticName;
-        const arg = this.arg.toJSON?.() ?? this.arg;
-        const modifiers = this.modifiers.map((m) => m.toJSON?.() ?? m);
+        const arg = this.arg.toJSON();
+        const modifiers = this.modifiers.map((m) => m.toJSON());
         /** Fixed key order so parse → print → parse matches JSON.stringify output. */
         return {
             modifiers,
@@ -8702,7 +8709,7 @@ export class Lean_def extends LeanArgs {
             [this.operator]: super.toJSON(),
             accessibility: this.accessibility,
         };
-        if (this.attribute) json.attribute = this.attribute.toJSON?.() ?? this.attribute;
+        if (this.attribute) json.attribute = this.attribute.toJSON();
         return json;
     }
 
@@ -8870,9 +8877,8 @@ class Lean_let extends LeanSyntax {
     }
 
     toJSON() {
-        const a0 = this.args[0];
         return {
-            [this.operator]: typeof a0?.toJSON === 'function' ? a0.toJSON() : a0,
+            [this.operator]: this.args[0].toJSON(),
         };
     }
 
@@ -9003,8 +9009,7 @@ class Lean_fun extends LeanUnary {
         return p instanceof LeanArgsNewLineSeparated || p instanceof LeanStatements;
     }
     toJSON() {
-        const inner = this.arg?.toJSON?.() ?? this.arg;
-        return { [this.operator]: inner };
+        return { [this.operator]: this.arg.toJSON() };
     }
     latexFormat() {
         return `${this.command}\\ %s`;
