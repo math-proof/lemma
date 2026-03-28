@@ -2,8 +2,6 @@
 {"rel":"Lemma/Complex/And_Imp_Eq_Div_Mul2_Sub_Sqrt/of/AddMul_Square_Mul/eq/Zero.lean","failure":"mismatch","j1Len":2040,"j2Len":2214}
 {"rel":"Lemma/Finset/All_EqCast/of/All_SEq.lean","failure":"mismatch","j1Len":1230,"j2Len":1209}
 {"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivAbsSub/Infinite/Infinite.lean","failure":"mismatch","j1Len":7815,"j2Len":7849}
-{"rel":"Lemma/Hyperreal/InfinitesimalSub/of/Setoid/NotInfinite.lean","failure":"mismatch","j1Len":4108,"j2Len":4106}
-{"rel":"Lemma/Hyperreal/InfinitesimalSub/of/StDiv/eq/One/NotInfinite.lean","failure":"mismatch","j1Len":5521,"j2Len":5519}
 {"rel":"Lemma/Hyperreal/NotInfiniteDiv/of/InfinitesimalDivAbsSub/Infinite/Infinite.lean","failure":"mismatch","j1Len":7288,"j2Len":7328}
 {"rel":"Lemma/Hyperreal/Setoid/is/InfinitesimalDivAbsSub.lean","failure":"mismatch","j1Len":32717,"j2Len":32691}
 {"rel":"Lemma/Hyperreal/StAbs/eq/AbsSt.lean","failure":"mismatch","j1Len":1591,"j2Len":1610}

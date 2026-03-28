@@ -3038,3 +3038,4 @@
 {"rel":"Lemma/List/EqPermutePermute/of/In_Ioo_Length.lean","note":"LeanParenthesis indent before (h:…) when : /-- imply then let (round-trip)"}
 {"rel":"Lemma/List/EqPermutePermute__Neg/of/In_Ioo_Length.lean","note":"LeanParenthesis indent before (h:…) when : /-- imply then let (round-trip)"}
 {"rel":"Lemma/Nat/EqSub/of/Gt.lean","note":"off-corpus AST round-trip OK (translation task; imply binder + module segments)"}
+{"rel":"Lemma/Hyperreal/InfinitesimalSub/of/Setoid/NotInfinite.lean","note":"LeanParenthesis indent after -- imply before property (round-trip)"}

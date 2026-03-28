@@ -151,6 +151,9 @@ function jsMembers(body) {
         } else if (/^set\s+(\w+)\s*\(/.test(t)) {
             const m = t.match(/^set\s+(\w+)\s*\(/);
             if (m) out.push(`set:${m[1]}`);
+        } else if (/^\*(\w+)\s*\(/.test(t)) {
+            const m = t.match(/^\*(\w+)\s*\(/);
+            if (m) out.push(`method:${m[1]}`);
         } else if (/^(\w+)\s*\([^)]*\)\s*\{/.test(t) && !/^\s*(if|for|while|switch|catch)\s*\(/.test(t)) {
             const m = t.match(/^(\w+)\s*\(/);
             if (
@@ -285,11 +288,10 @@ function alignLean_defPhpVsJs(pMem, jMem, className) {
     return [p, [...j, ...extra]];
 }
 
-/** PHP `__clone` ↔ JS `clone()`. PHP `traverse` is a normal method; JS uses `*traverse()` (scanner skips it). JS default `get command` lives on `LeanBinary` / `LeanBigOperator`, not `LeanArgs`, so drop PHP `__get` `command` here. Order `get:func` after constructor like PHP `__get`. */
+/** PHP `__clone` ↔ JS `clone()`. `traverse` ↔ `*traverse()` (counted via `jsMembers` generator branch). JS default `get command` lives on `LeanBinary` / `LeanBigOperator`, not `LeanArgs`, so drop PHP `__get` `command` here. Order `get:func` after constructor like PHP `__get`. */
 function alignLeanArgsPhpVsJs(pMem, jMem, className) {
     if (className !== 'LeanArgs') return [pMem, jMem];
     const p = pMem
-        .filter((x) => x !== 'method:traverse')
         .filter((x) => x !== 'get:command')
         .map((x) => (x === 'magic:__clone' ? 'method:clone' : x));
     const rest = jMem.filter((x) => !x.startsWith('get:'));

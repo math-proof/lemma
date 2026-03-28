@@ -1927,6 +1927,18 @@ export class LeanParenthesis extends LeanPairedGroup {
                 }
             }
         }
+        if (parent instanceof LeanProperty) {
+            const stmts = parent.parent;
+            if (stmts instanceof LeanStatements) {
+                const ix = stmts.args.indexOf(parent);
+                if (ix > 0) {
+                    const prev = stmts.args[ix - 1];
+                    if (prev instanceof LeanLineComment && prev.text === 'imply') {
+                        return true;
+                    }
+                }
+            }
+        }
         if (parent instanceof LeanStatements && this.indent > 0) return true;
         if (parent instanceof LeanArgsIndented && this.indent > 0) return true;
         return (
