@@ -5274,136 +5274,6 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
     };
 }
 
-/**
- * Top-level module string segments for `LeanModule` `strFormat` / `strArgs` (module-level helper).
- * @param {LeanModule} mod
- * @returns {string[]}
- */
-function leanModuleStrSegments(mod) {
-    const args = mod.args;
-    /** @type {string[]} */
-    const parts = [];
-    const skip = new Set();
-    const indentText = (s, ind) => {
-        if (ind <= 0) return s;
-        const pad = ' '.repeat(ind);
-        return s
-            .split('\n')
-            .map((line) => (line === '' ? line : pad + line))
-            .join('\n');
-    };
-    for (let i = 0; i < args.length; i++) {
-        if (skip.has(i)) continue;
-        const a = args[i];
-        if (a == null) continue;
-        if (a instanceof LeanCaret) {
-            parts.push('');
-            continue;
-        }
-        if (a instanceof Lean_def) {
-            const asn = a.assignment;
-            if (asn instanceof LeanAssign && asn.rhs instanceof LeanCaret) {
-                const tail = consumeEchoAssignProofTail(args, i + 1, indentText);
-                if (tail) {
-                    for (let k = i + 1; k <= tail.endJ; k++) skip.add(k);
-                    const acc = a.accessibility === 'public' ? '' : `${a.accessibility} `;
-                    const kw = `${acc}${a.func} `;
-                    const head = a.attribute ? `${String(a.attribute)}\n${kw}` : kw;
-                    const asnPad = ' '.repeat(Math.max(0, asn.indent ?? 0));
-                    let block = `${head}${asnPad}${String(asn.lhs)} :=`;
-                    for (const c of tail.cmts) block += `\n${String(c)}`;
-                    block += `\n${tail.proofStr}`;
-                    parts.push(block);
-                    continue;
-                }
-            }
-        }
-        if (a instanceof LeanAssign && a.rhs instanceof LeanCaret) {
-            const tail = consumeEchoAssignProofTail(args, i + 1, indentText);
-            if (tail) {
-                for (let k = i + 1; k <= tail.endJ; k++) skip.add(k);
-                const asnPad = ' '.repeat(Math.max(0, a.indent ?? 0));
-                let block = `${asnPad}${String(a.lhs)} :=`;
-                for (const c of tail.cmts) block += `\n${String(c)}`;
-                block += `\n${tail.proofStr}`;
-                parts.push(block);
-                continue;
-            }
-        }
-        if (a instanceof LeanTactic) {
-            const next = i + 1 < args.length ? args[i + 1] : null;
-            let danglingStc = false;
-            for (let k = 0; k < a.args.length; k++) {
-                const x = a.args[k];
-                if (x instanceof LeanSequentialTacticCombinator && x.arg instanceof LeanCaret) {
-                    danglingStc = true;
-                    break;
-                }
-            }
-            if (danglingStc && next instanceof LeanTacticBlock) {
-                skip.add(i + 1);
-                const ind = Math.max(a.indent ?? 0, next.indent ?? 0);
-                const as = String(a);
-                const ns = String(next);
-                const join = as.endsWith('\n') ? '' : '\n';
-                parts.push(indentText(`${as}${join}${ns}`, ind));
-                continue;
-            }
-        }
-        if (a instanceof LeanColon && a.parent === mod) {
-            const ind = a.indent ?? 0;
-            if (ind > 0) {
-                let k = i + 1;
-                while (k < args.length && args[k] instanceof LeanCaret) k++;
-                const next = args[k];
-                const echoTail =
-                    next instanceof LeanAssign &&
-                    next.rhs instanceof LeanCaret &&
-                    consumeEchoAssignProofTail(args, k + 1, indentText);
-                let prevIdx = i - 1;
-                while (prevIdx >= 0) {
-                    const p = args[prevIdx];
-                    if (p == null || p instanceof LeanCaret) {
-                        prevIdx--;
-                        continue;
-                    }
-                    if (
-                        p instanceof LeanBrace ||
-                        p instanceof LeanBracket ||
-                        p instanceof LeanParenthesis
-                    ) {
-                        prevIdx--;
-                        continue;
-                    }
-                    break;
-                }
-                const lemmaColonMatchBy =
-                    prevIdx >= 0 &&
-                    args[prevIdx] instanceof Lean_lemma &&
-                    next instanceof LeanAssign &&
-                    next.rhs instanceof LeanBy &&
-                    next.lhs instanceof Lean_match;
-                if (echoTail || lemmaColonMatchBy) {
-                    const lines = String(a).split('\n');
-                    if (lines[0] !== '') lines[0] = ' '.repeat(ind) + lines[0];
-                    parts.push(lines.join('\n'));
-                    continue;
-                }
-            }
-        }
-        let out = String(a);
-        if (a instanceof LeanTactic && (a.indent ?? 0) === 0) {
-            let p = i - 1;
-            while (p >= 0 && (args[p] instanceof LeanCaret || args[p] == null || skip.has(p))) p--;
-            const prev = p >= 0 ? args[p] : null;
-            const ind = prev instanceof Lean_have ? prev.indent ?? 0 : 0;
-            if (ind > 0) out = ' '.repeat(ind) + out;
-        }
-        parts.push(out);
-    }
-    return parts;
-}
-
 export class LeanModule extends LeanStatements {
     get root() {
         return this;
@@ -5492,15 +5362,140 @@ export class LeanModule extends LeanStatements {
         return leanModuleMergeProof(proof, echo, syntax);
     }
 
+    leanModuleStrSegments() {
+        const args = this.args;
+        /** @type {string[]} */
+        const parts = [];
+        const skip = new Set();
+        const indentText = (s, ind) => {
+            if (ind <= 0) return s;
+            const pad = ' '.repeat(ind);
+            return s
+                .split('\n')
+                .map((line) => (line === '' ? line : pad + line))
+                .join('\n');
+        };
+        for (let i = 0; i < args.length; i++) {
+            if (skip.has(i)) continue;
+            const a = args[i];
+            if (a == null) continue;
+            if (a instanceof LeanCaret) {
+                parts.push('');
+                continue;
+            }
+            if (a instanceof Lean_def) {
+                const asn = a.assignment;
+                if (asn instanceof LeanAssign && asn.rhs instanceof LeanCaret) {
+                    const tail = consumeEchoAssignProofTail(args, i + 1, indentText);
+                    if (tail) {
+                        for (let k = i + 1; k <= tail.endJ; k++) skip.add(k);
+                        const acc = a.accessibility === 'public' ? '' : `${a.accessibility} `;
+                        const kw = `${acc}${a.func} `;
+                        const head = a.attribute ? `${String(a.attribute)}\n${kw}` : kw;
+                        const asnPad = ' '.repeat(Math.max(0, asn.indent ?? 0));
+                        let block = `${head}${asnPad}${String(asn.lhs)} :=`;
+                        for (const c of tail.cmts) block += `\n${String(c)}`;
+                        block += `\n${tail.proofStr}`;
+                        parts.push(block);
+                        continue;
+                    }
+                }
+            }
+            if (a instanceof LeanAssign && a.rhs instanceof LeanCaret) {
+                const tail = consumeEchoAssignProofTail(args, i + 1, indentText);
+                if (tail) {
+                    for (let k = i + 1; k <= tail.endJ; k++) skip.add(k);
+                    const asnPad = ' '.repeat(Math.max(0, a.indent ?? 0));
+                    let block = `${asnPad}${String(a.lhs)} :=`;
+                    for (const c of tail.cmts) block += `\n${String(c)}`;
+                    block += `\n${tail.proofStr}`;
+                    parts.push(block);
+                    continue;
+                }
+            }
+            if (a instanceof LeanTactic) {
+                const next = i + 1 < args.length ? args[i + 1] : null;
+                let danglingStc = false;
+                for (let k = 0; k < a.args.length; k++) {
+                    const x = a.args[k];
+                    if (x instanceof LeanSequentialTacticCombinator && x.arg instanceof LeanCaret) {
+                        danglingStc = true;
+                        break;
+                    }
+                }
+                if (danglingStc && next instanceof LeanTacticBlock) {
+                    skip.add(i + 1);
+                    const ind = Math.max(a.indent ?? 0, next.indent ?? 0);
+                    const as = String(a);
+                    const ns = String(next);
+                    const join = as.endsWith('\n') ? '' : '\n';
+                    parts.push(indentText(`${as}${join}${ns}`, ind));
+                    continue;
+                }
+            }
+            if (a instanceof LeanColon && a.parent === this) {
+                const ind = a.indent ?? 0;
+                if (ind > 0) {
+                    let k = i + 1;
+                    while (k < args.length && args[k] instanceof LeanCaret) k++;
+                    const next = args[k];
+                    const echoTail =
+                        next instanceof LeanAssign &&
+                        next.rhs instanceof LeanCaret &&
+                        consumeEchoAssignProofTail(args, k + 1, indentText);
+                    let prevIdx = i - 1;
+                    while (prevIdx >= 0) {
+                        const p = args[prevIdx];
+                        if (p == null || p instanceof LeanCaret) {
+                            prevIdx--;
+                            continue;
+                        }
+                        if (
+                            p instanceof LeanBrace ||
+                            p instanceof LeanBracket ||
+                            p instanceof LeanParenthesis
+                        ) {
+                            prevIdx--;
+                            continue;
+                        }
+                        break;
+                    }
+                    const lemmaColonMatchBy =
+                        prevIdx >= 0 &&
+                        args[prevIdx] instanceof Lean_lemma &&
+                        next instanceof LeanAssign &&
+                        next.rhs instanceof LeanBy &&
+                        next.lhs instanceof Lean_match;
+                    if (echoTail || lemmaColonMatchBy) {
+                        const lines = String(a).split('\n');
+                        if (lines[0] !== '') lines[0] = ' '.repeat(ind) + lines[0];
+                        parts.push(lines.join('\n'));
+                        continue;
+                    }
+                }
+            }
+            let out = String(a);
+            if (a instanceof LeanTactic && (a.indent ?? 0) === 0) {
+                let p = i - 1;
+                while (p >= 0 && (args[p] instanceof LeanCaret || args[p] == null || skip.has(p))) p--;
+                const prev = p >= 0 ? args[p] : null;
+                const ind = prev instanceof Lean_have ? prev.indent ?? 0 : 0;
+                if (ind > 0) out = ' '.repeat(ind) + out;
+            }
+            parts.push(out);
+        }
+        return parts;
+    }
+
     strFormat() {
-        this._moduleStrSegs = leanModuleStrSegments(this);
+        this._moduleStrSegs = this.leanModuleStrSegments();
         const n = this._moduleStrSegs.length;
         if (n === 0) return '';
         return Array(n).fill('%s').join('\n');
     }
 
     strArgs() {
-        const segs = this._moduleStrSegs ?? leanModuleStrSegments(this);
+        const segs = this._moduleStrSegs ?? this.leanModuleStrSegments();
         delete this._moduleStrSegs;
         return segs;
     }
