@@ -2150,6 +2150,15 @@ export class LeanBinary extends LeanArgs {
     }
 
     insert_if(caret) {
+        if (this.constructor.name === 'LeanArgsIndented' && caret instanceof LeanCaret) {
+            const last = this.args[this.args.length - 1];
+            if (last === caret) {
+                this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
+                return caret;
+            }
+            if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
+            throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
+        }
         if (this.rhs === caret && caret instanceof LeanCaret) {
             this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
             return caret;
@@ -6938,17 +6947,6 @@ export class LeanArgsIndented extends LeanBinary {
         if (this.parent instanceof LeanCalc) return 17;
         if (this.parent instanceof LeanQuantifier) return LeanRelational.input_priority + 1;
         return 47;
-    }
-
-    insert_if(caret) {
-        if (!(caret instanceof LeanCaret)) return undefined;
-        const last = this.args[this.args.length - 1];
-        if (last === caret) {
-            this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
-            return caret;
-        }
-        if (this.parent && typeof this.parent.insert_if === 'function') return this.parent.insert_if(caret);
-        throw new Error(`LeanArgsIndented.insert_if: unexpected for ${this.constructor.name}`);
     }
 
     insert_newline(caret, newlineCount, indent, next) {

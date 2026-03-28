@@ -377,6 +377,41 @@ function alignLeanStatementsInheritedPushLineComment(pMem, jMem, className) {
     return [pMem, jMem.filter((x) => x !== 'method:push_line_comment')];
 }
 
+/**
+ * PHP `LeanModule` inherits `__toString` / `strFormat` / `insert_word` from `Lean` / `LeanStatements`; the JS
+ * port redeclares them for newline-separated top-level `strFormat` and echo-style `toString`.
+ */
+function alignLeanModulePhpInherited(pMem, jMem, className) {
+    if (className !== 'LeanModule') return [pMem, jMem];
+    return [
+        pMem,
+        jMem.filter(
+            (x) =>
+                !['method:strFormat', 'method:toString', 'method:insert_word'].includes(x),
+        ),
+    ];
+}
+
+/**
+ * Subclass body in PHP has no `__construct`; `stack_priority` / `__toString` / `toLatex` live on ancestors.
+ * JS uses an explicit `constructor`, `get stack_priority`, and inherits `toString`/`toLatex` as own methods in the scan.
+ */
+function alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, className) {
+    if (className !== 'LeanArgsSpaceSeparated') return [pMem, jMem];
+    return [
+        pMem,
+        jMem.filter(
+            (x) =>
+                ![
+                    'constructor',
+                    'get:stack_priority',
+                    'method:toString',
+                    'method:toLatex',
+                ].includes(x),
+        ),
+    ];
+}
+
 /** PHP `LeanTactic` uses public `$func`; `arg` / `sequential_tactic_combinator` appear in `LeanTactic::__get` but are declared on `LeanSyntax` in JS. */
 function alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, className) {
     if (className !== 'LeanTactic') return [pMem, jMem];
@@ -396,51 +431,6 @@ function alignLeanParserPhpVsJs(pMem, jMem, className) {
     const ordered = want.filter((t) => have.has(t));
     const tail = jMem.filter((t) => !want.includes(t));
     return [p, [...ordered, ...tail]];
-}
-
-/** PHP-only surface (echo2vue, render2vue, …); JS-only (`strFormat` / `toString` / insert helpers). Shared: `__get` cases + `insert`. */
-function alignLeanModulePhpVsJs(pMem, jMem, className) {
-    if (className !== 'LeanModule') return [pMem, jMem];
-    const phpOnly = [
-        'method:array_push',
-        'method:create_property',
-        'method:decode',
-        'method:echo',
-        'method:echo2vue',
-        'method:import',
-        'method:parse_vars',
-        'method:parse_vars_default',
-        'method:render2vue',
-    ];
-    const jsOnly = [
-        'method:strFormat',
-        'method:toString',
-        'method:insert_space',
-        'method:insert_newline',
-        'method:insert_word',
-        'method:insert_tactic',
-        'method:insert_left',
-        'method:insert_colon',
-    ];
-    return [pMem.filter((x) => !phpOnly.includes(x)), jMem.filter((x) => !jsOnly.includes(x))];
-}
-
-/** PHP-only helpers (`get_type`, `latexArgs`, …); JS-only (`constructor`, `get:stack_priority`, `toString`, `toLatex`). Overlap matches PHP source order. */
-function alignLeanArgsSpaceSeparatedPhpVsJs(pMem, jMem, className) {
-    if (className !== 'LeanArgsSpaceSeparated') return [pMem, jMem];
-    const phpOnly = [
-        'method:get_type',
-        'method:insert',
-        'method:insert_unary',
-        'method:is_Abs',
-        'method:is_Bool',
-        'method:is_indented',
-        'method:isProp',
-        'method:latexArgs',
-        'method:unique_token',
-    ];
-    const jsOnly = ['constructor', 'get:stack_priority', 'method:toString', 'method:toLatex'];
-    return [pMem.filter((x) => !phpOnly.includes(x)), jMem.filter((x) => !jsOnly.includes(x))];
 }
 
 const argv = process.argv.slice(2);
@@ -506,9 +496,9 @@ if (membersMode) {
             [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
             [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanStatementsInheritedPushLineComment(pMem, jMem, name);
+            [pMem, jMem] = alignLeanModulePhpInherited(pMem, jMem, name);
+            [pMem, jMem] = alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, name);
             [pMem, jMem] = alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, name);
-            [pMem, jMem] = alignLeanModulePhpVsJs(pMem, jMem, name);
-            [pMem, jMem] = alignLeanArgsSpaceSeparatedPhpVsJs(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;

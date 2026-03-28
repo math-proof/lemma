@@ -2977,3 +2977,4 @@
 {"rel":"Lemma/Tensor/MulStack/eq/Stack_Mul.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/Tensor/SelectStack/eq/Stack_Select/of/GtLength.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/Tensor/SEqStack_Get/of/GtLength_0.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Smoke/RoundTripTrivial.lean","note":"minimal lemma; AST round-trip regression (translation task)"}
