@@ -2083,8 +2083,24 @@ class LeanBracket extends LeanPairedGroup {
 
     push_right(funcName) {
         if (funcName === this.constructor.name) {
-            const lt = this.arg;
-            if (lt instanceof Lean_lt && lt.lhs instanceof LeanToken) {
+            let lt = null;
+            const arg = this.arg;
+            if (arg instanceof Lean_lt && arg.lhs instanceof LeanToken) {
+                lt = arg;
+            } else if (arg instanceof LeanArgsSpaceSeparated) {
+                const siblings = arg.args.filter((x) => !(x instanceof LeanCaret));
+                if (
+                    siblings.length === 1 &&
+                    siblings[0] instanceof Lean_lt &&
+                    siblings[0].lhs instanceof LeanToken
+                ) {
+                    lt = siblings[0];
+                }
+            }
+            if (lt) {
+                // Tensor index `[i < m]`: final tree is LeanStack(Lean_lt, scope), not bracket + wrapper.
+                this.arg = lt;
+                lt.parent = this;
                 const level = this.level;
                 const stack = new LeanStack(lt, this.indent, level);
                 const scope = new LeanCaret(this.indent, level);

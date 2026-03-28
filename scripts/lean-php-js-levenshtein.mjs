@@ -229,8 +229,10 @@ function alignStaticInputPriority(pMem, jMem, phpInner) {
  * PHP lists trait methods separately; `extractClassBlock` inner body omits `use` trait bodies.
  * `LeanProperty`: JS-only `strArgs` for dotted paths (no separate `strArgs` in PHP class body).
  * `LeanStatements`: PHP body omits inherited `push_line_comment` from `Lean`.
+ * `LeanTactic`: PHP `$func` vs JS `get func`; `arg` / `sequential_tactic_combinator` live on `LeanSyntax` in JS.
  */
 function alignPhpTraitMembers(pMem, jMem, phpInner, className) {
+    let p = pMem;
     let j = [...jMem];
     if (/\buse\s+LeanProp\b/.test(phpInner)) {
         j = j.filter((x) => x !== 'method:isProp');
@@ -244,7 +246,13 @@ function alignPhpTraitMembers(pMem, jMem, phpInner, className) {
     if (className === 'LeanStatements') {
         j = j.filter((x) => x !== 'method:push_line_comment');
     }
-    return [pMem, j];
+    if (className === 'LeanTactic') {
+        p = pMem.filter(
+            (x) => x !== 'get:arg' && x !== 'get:sequential_tactic_combinator',
+        );
+        j = j.filter((x) => x !== 'get:func');
+    }
+    return [p, j];
 }
 
 /** PHP `LeanGetElemBase*` lives in traits; `extractClassBlock` omits trait bodies. */
@@ -438,16 +446,6 @@ function alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, className) {
     ];
 }
 
-/** PHP `LeanTactic` uses public `$func`; `arg` / `sequential_tactic_combinator` appear in `LeanTactic::__get` but are declared on `LeanSyntax` in JS. */
-function alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, className) {
-    if (className !== 'LeanTactic') return [pMem, jMem];
-    const p = pMem.filter(
-        (x) => x !== 'get:arg' && x !== 'get:sequential_tactic_combinator',
-    );
-    const j = jMem.filter((x) => x !== 'get:func');
-    return [p, j];
-}
-
 /** PHP `__toString`; JS `toString()`. Order `build` before `init` like `lean.php`. */
 function alignLeanParserPhpVsJs(pMem, jMem, className) {
     if (className !== 'LeanParser') return [pMem, jMem];
@@ -514,7 +512,6 @@ if (membersMode) {
         [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
         [pMem, jMem] = alignLeanModulePhpInherited(pMem, jMem, name);
         [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
-        [pMem, jMem] = alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, name);
         [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
         [pMem, jMem] = alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, name);
