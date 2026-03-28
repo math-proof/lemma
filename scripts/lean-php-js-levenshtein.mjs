@@ -225,14 +225,20 @@ function alignStaticInputPriority(pMem, jMem, phpInner) {
     return [p, j];
 }
 
-/** PHP lists trait methods separately; `extractClassBlock` inner body omits `use` trait bodies. */
-function alignPhpTraitMembers(pMem, jMem, phpInner) {
+/**
+ * PHP lists trait methods separately; `extractClassBlock` inner body omits `use` trait bodies.
+ * `LeanProperty`: JS-only `strArgs` for dotted paths (no separate `strArgs` in PHP class body).
+ */
+function alignPhpTraitMembers(pMem, jMem, phpInner, className) {
     let j = [...jMem];
     if (/\buse\s+LeanProp\b/.test(phpInner)) {
         j = j.filter((x) => x !== 'method:isProp');
     }
     if (/\buse\s+LeanMultipleLine\b/.test(phpInner)) {
         j = j.filter((x) => x !== 'method:set_line');
+    }
+    if (className === 'LeanProperty') {
+        j = j.filter((x) => x !== 'method:strArgs');
     }
     return [pMem, j];
 }
@@ -386,12 +392,6 @@ function alignAbstractLeanPhpVsJs(pMem, jMem, className) {
     return [p, jSorted];
 }
 
-/** JS-only `strArgs` helper for dotted names; not a separate PHP method on this class. */
-function alignLeanPropertyStrArgs(pMem, jMem, className) {
-    if (className !== 'LeanProperty') return [pMem, jMem];
-    return [pMem, jMem.filter((x) => x !== 'method:strArgs')];
-}
-
 /** PHP `LeanStatements` does not redeclare `push_line_comment` in the class body (inherits from `Lean`). */
 function alignLeanStatementsInheritedPushLineComment(pMem, jMem, className) {
     if (className !== 'LeanStatements') return [pMem, jMem];
@@ -510,9 +510,8 @@ if (membersMode) {
         [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignAbstractLeanPhpVsJs(pMem, jMem, name);
         // Trait bodies / PHP magic vs JS accessors — parity for default `--members` (not only `--normalize`).
-        [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
+        [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner, name);
         [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
-        [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
         [pMem, jMem] = alignLeanStatementsInheritedPushLineComment(pMem, jMem, name);
         [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);

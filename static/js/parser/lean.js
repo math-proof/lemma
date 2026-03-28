@@ -112,6 +112,39 @@ function escapeSpecialsForLatex(token) {
     return s;
 }
 
+/**
+ * Whether `target` appears in the Lean subtree rooted at `node` (args / arg / lhs / rhs).
+ * @param {unknown} node
+ * @param {unknown} target
+ */
+function leanSubtreeContains(node, target) {
+    if (node == null || typeof node !== 'object') return false;
+    if (node === target) return true;
+    const o = /** @type {{ args?: unknown[]; arg?: unknown; lhs?: unknown; rhs?: unknown }} */ (node);
+    if (Array.isArray(o.args)) {
+        for (const a of o.args) if (leanSubtreeContains(a, target)) return true;
+    }
+    if (o.arg != null && leanSubtreeContains(o.arg, target)) return true;
+    if (o.lhs != null && leanSubtreeContains(o.lhs, target)) return true;
+    if (o.rhs != null && leanSubtreeContains(o.rhs, target)) return true;
+    return false;
+}
+
+/**
+ * Innermost still-open `LeanAbs` whose inner subtree contains `caret` (walk up from `from`).
+ * Used so a second `|` closes `|a|` instead of starting another abs when `next` is not ` ` / `)` / EOF.
+ * @param {import('./node.js').Node} from
+ * @param {unknown} caret
+ */
+function findInnermostOpenLeanAbsAncestor(from, caret) {
+    for (let p = from; p; p = p.parent) {
+        if (p.constructor.name !== 'LeanAbs') continue;
+        if (p.is_closed === true) continue;
+        if (caret != null && leanSubtreeContains(p.arg, caret)) return p;
+    }
+    return null;
+}
+
 /** Abstract Lean AST node; method order follows `scripts/reorder_lean_class.py` preset `lean`. */
 export class Lean extends IndentedNode {
     constructor(indent, level, parent = null) {
@@ -198,6 +231,10 @@ export class Lean extends IndentedNode {
                 return this.push_right('LeanAbs');
             default:
                 if (!next) return this.push_right('LeanAbs');
+                {
+                    const openAbs = findInnermostOpenLeanAbsAncestor(this, caret);
+                    if (openAbs) return openAbs.insert_bar(caret, prevToken, next);
+                }
                 return this.insert_unary(caret, 'LeanAbs');
         }
     }

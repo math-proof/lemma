@@ -1,13 +1,7 @@
 # Off-corpus round-trip failures — not in round-trip-corpus.jsonl; fail parse1, parse2, or toJSON match after print. Regenerate: node scripts/build-round-trip-failures.mjs
 {"rel":"Lemma/Complex/And_Imp_Eq_Div_Mul2_Sub_Sqrt/of/AddMul_Square_Mul/eq/Zero.lean","failure":"mismatch","j1Len":2040,"j2Len":2214}
 {"rel":"Lemma/Finset/All_EqCast/of/All_SEq.lean","failure":"mismatch","j1Len":1230,"j2Len":1209}
-{"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivAbsSub/Infinite/Infinite.lean","failure":"mismatch","j1Len":7815,"j2Len":7849}
-{"rel":"Lemma/Hyperreal/NotInfiniteDiv/of/InfinitesimalDivAbsSub/Infinite/Infinite.lean","failure":"mismatch","j1Len":7288,"j2Len":7328}
-{"rel":"Lemma/Hyperreal/Setoid/is/InfinitesimalDivAbsSub.lean","failure":"mismatch","j1Len":32717,"j2Len":32691}
-{"rel":"Lemma/Hyperreal/StAbs/eq/AbsSt.lean","failure":"mismatch","j1Len":1591,"j2Len":1610}
 {"rel":"Lemma/List/MapEnumerate/eq/Cons_MapEnumerate/of/All_Eq.lean","failure":"mismatch","j1Len":5208,"j2Len":5229}
-{"rel":"Lemma/Rat/DivAbsSub/eq/DivAbsSubDiv/Ne_0/Ne_0.lean","failure":"mismatch","j1Len":2641,"j2Len":2658}
-{"rel":"Lemma/Rat/GeInvAbs_0.lean","failure":"mismatch","j1Len":597,"j2Len":616}
 {"rel":"Lemma/Tensor/Dot/eq/Stack_Sum_MulGetS.lean","failure":"mismatch","j1Len":1281,"j2Len":1277}
 {"rel":"Lemma/Tensor/Matmul/eq/Cast_BroadcastMatmul/of/EqGetS_SubLength/GeLength_2/GeLength_2.lean","failure":"mismatch","j1Len":3536,"j2Len":3540}
 {"rel":"Lemma/Tensor/Matmul/eq/Cast_BroadcastMatmul/of/GeGetS_SubLength/GeLength_2/GeLength_2.lean","failure":"mismatch","j1Len":7223,"j2Len":7227}
