@@ -2753,20 +2753,12 @@ export class Lean_bne extends LeanRelational {
 export class Lean_ne extends LeanRelational {
     static input_priority = 50;
 
-    get command() {
-        return '\\ne';
-    }
-
     get operator() {
         return '≠';
     }
 }
 export class Lean_equiv extends LeanRelational {
     static input_priority = 32;
-
-    get command() {
-        return '\\equiv';
-    }
 
     get operator() {
         return '≡';
@@ -2785,10 +2777,6 @@ export class LeanNotEquiv extends LeanRelational {
 }
 export class Lean_simeq extends LeanRelational {
     static input_priority = 50;
-
-    get command() {
-        return '\\simeq';
-    }
 
     get operator() {
         return '≃';
@@ -2813,10 +2801,6 @@ export class Lean_approx extends LeanRelational {
 }
 export class Lean_asymp extends LeanRelational {
     static input_priority = 50;
-
-    get command() {
-        return '\\asymp';
-    }
 
     get operator() {
         return '≍';
@@ -2982,10 +2966,6 @@ export class LeanMul extends LeanArithmetic {
 
 export class Lean_times extends LeanArithmetic {
     static input_priority = 72;
-
-    get command() {
-        return '×';
-    }
 
     get operator() {
         return '×';
@@ -3309,10 +3289,6 @@ export class LeanAppend extends LeanArithmetic {
 export class Lean_sqcup extends LeanArithmetic {
     static input_priority = 68;
 
-    get command() {
-        return '\\sqcup';
-    }
-
     get operator() {
         return '⊔';
     }
@@ -3320,10 +3296,6 @@ export class Lean_sqcup extends LeanArithmetic {
 
 export class Lean_sqcap extends LeanArithmetic {
     static input_priority = 69;
-
-    get command() {
-        return '\\sqcap';
-    }
 
     get operator() {
         return '⊓';
@@ -3748,10 +3720,6 @@ export class LeanSetOperator extends LeanBinary {
 export class Lean_setminus extends LeanSetOperator {
     static input_priority = 70;
 
-    get command() {
-        return '\\setminus';
-    }
-
     get operator() {
         return '\\';
     }
@@ -3760,10 +3728,6 @@ export class Lean_setminus extends LeanSetOperator {
 export class Lean_cup extends LeanSetOperator {
     static input_priority = 65;
 
-    get command() {
-        return '\\cup';
-    }
-
     get operator() {
         return '∪';
     }
@@ -3771,10 +3735,6 @@ export class Lean_cup extends LeanSetOperator {
 
 export class Lean_cap extends LeanSetOperator {
     static input_priority = 70;
-
-    get command() {
-        return '\\cap';
-    }
 
     get operator() {
         return '∩';
@@ -3889,10 +3849,6 @@ export class Lean_lor extends LeanLogic {
         return 29;
     }
 
-    get command() {
-        return '\\lor';
-    }
-
     get operator() {
         return '∨';
     }
@@ -3920,10 +3876,6 @@ export class Lean_land extends LeanLogic {
 
     get stack_priority() {
         return 34;
-    }
-
-    get command() {
-        return '\\land';
     }
 
     get operator() {
@@ -3957,10 +3909,6 @@ export class Lean_subset extends LeanBinaryBoolean {
 export class Lean_supseteq extends LeanLogic {
     static input_priority = 50;
 
-    get command() {
-        return '\\supseteq';
-    }
-
     get operator() {
         return '⊇';
     }
@@ -3969,10 +3917,6 @@ export class Lean_supseteq extends LeanLogic {
 /** `⊃`. */
 export class Lean_supset extends LeanLogic {
     static input_priority = 50;
-
-    get command() {
-        return '\\supset';
-    }
 
     get operator() {
         return '⊃';
@@ -5693,10 +5637,6 @@ class LeanBar extends LeanUnary {
 export class LeanRightarrow extends LeanBinary {
     static input_priority = 19;
 
-    get command() {
-        return '\\Rightarrow';
-    }
-
     get operator() {
         return '=>';
     }
@@ -5843,10 +5783,6 @@ export class Lean_rightarrow extends LeanBinary {
         return 24;
     }
 
-    get command() {
-        return '\\rightarrow';
-    }
-
     get operator() {
         return '→';
     }
@@ -5905,10 +5841,6 @@ export class Lean_mapsto extends LeanBinary {
 
     get operator() {
         return '↦';
-    }
-
-    get command() {
-        return '\\mapsto';
     }
 
     insert_newline(caret, newlineCount, indent, next) {

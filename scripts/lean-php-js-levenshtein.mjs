@@ -221,13 +221,6 @@ function alignStaticInputPriority(pMem, jMem, phpInner) {
     return [p, j];
 }
 
-function alignCommandGetter(pMem, jMem) {
-    if (!pMem.includes('get:command')) {
-        return [pMem, jMem.filter((x) => x !== 'get:command')];
-    }
-    return [pMem, jMem];
-}
-
 /** PHP lists trait methods separately; `extractClassBlock` inner body omits `use` trait bodies. */
 function alignPhpTraitMembers(pMem, jMem, phpInner) {
     let j = [...jMem];
@@ -292,17 +285,18 @@ function alignLean_defPhpVsJs(pMem, jMem, className) {
     return [p, [...j, ...extra]];
 }
 
-/** PHP `__clone` ↔ JS `clone()`. PHP `traverse` is a normal method; JS uses `*traverse()` (scanner skips it). Order `get:command` before `get:func` like PHP `__get` cases. */
+/** PHP `__clone` ↔ JS `clone()`. PHP `traverse` is a normal method; JS uses `*traverse()` (scanner skips it). JS default `get command` lives on `LeanBinary` / `LeanBigOperator`, not `LeanArgs`, so drop PHP `__get` `command` here. Order `get:func` after constructor like PHP `__get`. */
 function alignLeanArgsPhpVsJs(pMem, jMem, className) {
     if (className !== 'LeanArgs') return [pMem, jMem];
     const p = pMem
         .filter((x) => x !== 'method:traverse')
+        .filter((x) => x !== 'get:command')
         .map((x) => (x === 'magic:__clone' ? 'method:clone' : x));
     const rest = jMem.filter((x) => !x.startsWith('get:'));
     const ci = rest.indexOf('constructor');
     const head = ci >= 0 ? rest.slice(0, ci + 1) : rest;
     const tail = ci >= 0 ? rest.slice(ci + 1) : [];
-    const j = [...head, 'get:command', 'get:func', ...tail];
+    const j = [...head, 'get:func', ...tail];
     return [p, j];
 }
 
@@ -475,7 +469,6 @@ if (membersMode) {
         let jMem = jsMembers(jInner);
         if (normalize) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
-            [pMem, jMem] = alignCommandGetter(pMem, jMem);
             [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLean_defPhpVsJs(pMem, jMem, name);
