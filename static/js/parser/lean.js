@@ -5309,12 +5309,6 @@ export class LeanModule extends LeanStatements {
         return leanModuleMergeProof(proof, echo, syntax);
     }
 
-    /**
-     * Top-level pieces joined by newlines in `Lean.toString()` (via `strFormat` / `strArgs`).
-     * Echo lemmas, dangling STC + `LeanTacticBlock`, indented colon before echo assign or
-     * `lemma` + `match … := by`, and `Lean_have`-relative tactic indent.
-     * @returns {string[]}
-     */
     leanModuleStrSegments() {
         const args = this.args;
         /** @type {string[]} */
@@ -5425,11 +5419,6 @@ export class LeanModule extends LeanStatements {
         return parts;
     }
 
-    /**
-     * Top-level declarations must be separated by newlines for re-parse: `import A import B` leaves
-     * the second `import` inside the first `Lean_import` and breaks `compile(String(root))`.
-     * `Lean.toString()` calls `strFormat()` then `strArgs()`; we cache segments on `_moduleStrSegs` for that pair.
-     */
     strFormat() {
         this._moduleStrSegs = this.leanModuleStrSegments();
         const n = this._moduleStrSegs.length;
@@ -6657,32 +6646,28 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     strFormat() {
-        const n = this.args.length;
+        const args = this.args;
+        const n = args.length;
         if (n === 0) return '';
+        let start = 0;
+        while (start < n && args[start] instanceof LeanCaret) start++;
+        if (start >= n) return '';
         if (this.parent instanceof LeanTactic) {
-            let out = '';
-            for (let i = 0; i < n; i++) {
-                if (i > 0) out += this.args[i] instanceof LeanTactic ? '\n' : ' ';
+            let out = '%s';
+            for (let j = start + 1; j < n; j++) {
+                out += args[j] instanceof LeanTactic ? '\n' : ' ';
                 out += '%s';
             }
             return out;
         }
-        return Array(n).fill('%s').join(' ');
+        return Array(n - start).fill('%s').join(' ');
     }
 
-    /**
-     * Leading `LeanCaret` stringifies to '' but `strFormat` still inserts a space before the next arg,
-     * yielding `import  Foo` / `open  A` and unstable re-parse vs sources that use a single space.
-     */
-    toString() {
-        const format = this.strFormat();
-        const args = this.strArgs();
-        const inner =
-            args.length === 0
-                ? format
-                : String(format).format(...args.map((a) => (a instanceof Lean ? String(a) : a)));
-        const body = inner.replace(/^\s+/, '');
-        return (this.is_indented() ? ' '.repeat(this.indent) : '') + body;
+    strArgs() {
+        const args = this.args;
+        let start = 0;
+        while (start < args.length && args[start] instanceof LeanCaret) start++;
+        return args.slice(start);
     }
 
     tactic_block_info() {
