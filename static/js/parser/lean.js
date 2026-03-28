@@ -2690,36 +2690,26 @@ export class LeanRelational extends LeanBinaryBoolean {
 
 /** Relational / equality binary nodes (`>`, `≥`, `=`, `≃`, `∣`, …). */
 export class Lean_gt extends LeanRelational {
-    static input_priority = 50;
-
     get operator() {
         return '>';
     }
 }
 export class Lean_ge extends LeanRelational {
-    static input_priority = 50;
-
     get operator() {
         return '≥';
     }
 }
 export class Lean_lt extends LeanRelational {
-    static input_priority = 50;
-
     get operator() {
         return '<';
     }
 }
 export class Lean_le extends LeanRelational {
-    static input_priority = 50;
-
     get operator() {
         return '≤';
     }
 }
 export class LeanEq extends LeanRelational {
-    static input_priority = 50;
-
     get command() {
         return '=';
     }
@@ -2729,8 +2719,6 @@ export class LeanEq extends LeanRelational {
     }
 }
 export class LeanBEq extends LeanRelational {
-    static input_priority = 50;
-
     get command() {
         return '\\!\\!=';
     }
@@ -2740,8 +2728,6 @@ export class LeanBEq extends LeanRelational {
     }
 }
 export class Lean_bne extends LeanRelational {
-    static input_priority = 50;
-
     get command() {
         return '!=';
     }
@@ -2751,8 +2737,6 @@ export class Lean_bne extends LeanRelational {
     }
 }
 export class Lean_ne extends LeanRelational {
-    static input_priority = 50;
-
     get operator() {
         return '≠';
     }
@@ -3094,8 +3078,6 @@ export class LeanBitwiseXor extends LeanArithmetic {
 }
 
 export class LeanBitOr extends LeanArithmetic {
-    static input_priority = 47;
-
     get operator() {
         return '|';
     }
@@ -3207,24 +3189,18 @@ export class LeanPow extends LeanArithmetic {
 }
 
 export class Lean_ll extends LeanArithmetic {
-    static input_priority = 47;
-
     get operator() {
         return '<<';
     }
 }
 
 export class Lean_lll extends LeanArithmetic {
-    static input_priority = 47;
-
     get operator() {
         return '<<<';
     }
 }
 
 export class Lean_gg extends LeanArithmetic {
-    static input_priority = 47;
-
     get operator() {
         return '>>';
     }
@@ -5427,7 +5403,15 @@ export class LeanModule extends LeanStatements {
                     }
                 }
             }
-            parts.push(String(a));
+            let out = String(a);
+            if (a instanceof LeanTactic && (a.indent ?? 0) === 0) {
+                let p = i - 1;
+                while (p >= 0 && (args[p] instanceof LeanCaret || args[p] == null || skip.has(p))) p--;
+                const prev = p >= 0 ? args[p] : null;
+                const ind = prev instanceof Lean_have ? prev.indent ?? 0 : 0;
+                if (ind > 0) out = ' '.repeat(ind) + out;
+            }
+            parts.push(out);
         }
         return parts.join('\n');
     }
@@ -7637,8 +7621,6 @@ export class LeanTactic extends LeanSyntax {
 }
 
 export class LeanBy extends LeanUnary {
-    static input_priority = 47;
-
     get operator() {
         return 'by';
     }

@@ -3030,3 +3030,5 @@
 {"rel":"Lemma/Tensor/GetMul/eq/MulGet/of/Lt_Get_0/GtLength_0.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/List/GetSet/eq/Get/of/Ne/GtLength.lean","note":"random sample (List)"}
 {"rel":"Lemma/Tensor/EqGetRepeatUnsqueeze/of/Lt.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Hyperreal/Infinite/is/Infinite/of/Setoid.lean","note":"off-corpus AST round-trip OK (translation task)"}
+{"rel":"Lemma/Hyperreal/Infinitesimal/is/Infinitesimal/of/Setoid.lean","note":"off-corpus AST round-trip OK (translation task)"}
