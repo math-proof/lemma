@@ -80,6 +80,26 @@ function isIdentContinueToken(s) {
     return /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
 }
 
+/**
+ * Lexeme for `<;>`: `nextToken` for `insert_sequential_tactic_combinator`, plus whether `<;>` is
+ * on the same line as the previous tactic (inline). The token after `>` is often `intros`, not
+ * `\\n`, even when `<;>` starts a new line after `constructor`; scan backward from `<`.
+ * @param {string[]} tokens
+ * @param {number} ltIdx index of `<` in `<;>`
+ */
+function tacticSequentialCombinatorLex(tokens, ltIdx) {
+    const count = tokens.length;
+    if (ltIdx + 2 >= count || tokens[ltIdx + 1] !== ';' || tokens[ltIdx + 2] !== '>') {
+        return { nextToken: tokens[ltIdx + 1] ?? ' ', inlineCombo: true };
+    }
+    let p = ltIdx - 1;
+    while (p >= 0 && tokens[p] === ' ') p--;
+    const inlineCombo = p < 0 || tokens[p] !== '\n';
+    const afterGt = ltIdx + 3 < count ? tokens[ltIdx + 3] : ' ';
+    const nextToken = inlineCombo ? afterGt : '\n';
+    return { nextToken, inlineCombo };
+}
+
 function escapeSpecialsForLatex(token) {
     const s = String(token);
     const m = /^(\w+?)_(.+)$/.exec(s);
@@ -223,8 +243,8 @@ export class Lean extends IndentedNode {
         if (this.parent) return this.parent.insert_semicolon(this);
     }
 
-    insert_sequential_tactic_combinator(caret, nextToken) {
-        if (this.parent) return this.parent.insert_sequential_tactic_combinator(this, nextToken);
+    insert_sequential_tactic_combinator(caret, nextToken, inlineCombo = true) {
+        if (this.parent) return this.parent.insert_sequential_tactic_combinator(this, nextToken, inlineCombo);
     }
 
     insert_space(caret) {
@@ -454,9 +474,10 @@ export class Lean extends IndentedNode {
                     return this.push_binary('Lean_le');
                 }
                 if (self.start_idx + 2 < count && tokens[self.start_idx + 1] === ';' && tokens[self.start_idx + 2] === '>') {
+                    const { nextToken, inlineCombo } = tacticSequentialCombinatorLex(tokens, self.start_idx);
                     self.start_idx += 2;
                     self.start_idx = self.start_idx;
-                    return this.parent.insert_sequential_tactic_combinator(this, tokens[self.start_idx + 1]);
+                    return this.parent.insert_sequential_tactic_combinator(this, nextToken, inlineCombo);
                 }
                 if (tokens[self.start_idx + 1] === '<') {
                     self.start_idx++;
@@ -7488,7 +7509,7 @@ export class LeanTactic extends LeanSyntax {
         return super.insert_semicolon(caret);
     }
 
-    insert_sequential_tactic_combinator(caret, nextToken) {
+    insert_sequential_tactic_combinator(caret, nextToken, inlineCombo = true) {
         const last = this.args[this.args.length - 1];
         if (caret !== last) {
             throw new Error(`LeanTactic.insert_sequential_tactic_combinator: unexpected for ${this.constructor.name}`);
@@ -7496,7 +7517,13 @@ export class LeanTactic extends LeanSyntax {
         if (caret instanceof LeanCaret) {
             this.replace(
                 caret,
-                new LeanSequentialTacticCombinator(caret, this.indent, caret.level, nextToken !== '\n'),
+                new LeanSequentialTacticCombinator(
+                    caret,
+                    this.indent,
+                    caret.level,
+                    nextToken !== '\n',
+                    !inlineCombo,
+                ),
             );
             return caret;
         }
@@ -7647,8 +7674,7 @@ export class LeanTactic extends LeanSyntax {
         const parts = [];
         for (const arg of this.args) {
             if (arg instanceof LeanCaret);
-            // Always use a single space before non-caret args (including `<;>`). A newline before `<;>`
-            // breaks round-trip for inline `constructor <;> intro …`-style proofs.
+            else if (arg instanceof LeanSequentialTacticCombinator && arg.lineBreakBefore) parts.push('\n');
             else parts.push(' ');
             parts.push('%s');
         }
@@ -8032,12 +8058,15 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
      * @param {Lean} arg
      * @param {number} indent
      * @param {number} level
-     * @param {boolean} [newline]
+     * @param {boolean} [newline] passed as `nextToken !== '\\n'` (inline combinator chain)
+     * @param {boolean} [lineBreakBefore] source had a newline before `<;>` (print newline before combinator)
      */
-    constructor(arg, indent, level, newline = false) {
+    constructor(arg, indent, level, newline = false, lineBreakBefore = false) {
         super(arg, indent, level);
         /** @type {boolean} */
         this.newline = !!newline;
+        /** @type {boolean} */
+        this.lineBreakBefore = !!lineBreakBefore;
     }
 
     get operator() {
@@ -8111,7 +8140,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     is_indented() {
-        return !!this.newline;
+        return !!this.newline || !!this.lineBreakBefore;
     }
 
     latexFormat() {
@@ -8884,13 +8913,19 @@ class Lean_let extends LeanSyntax {
         return super.insert_newline(caret, newlineCount, indent, next);
     }
 
-    insert_sequential_tactic_combinator(caret, nextToken) {
+    insert_sequential_tactic_combinator(caret, nextToken, inlineCombo = true) {
         const last = this.args[this.args.length - 1];
         if (caret === last) {
             if (caret instanceof LeanCaret) {
                 this.replace(
                     caret,
-                    new LeanSequentialTacticCombinator(caret, this.indent, caret.level, nextToken !== '\n'),
+                    new LeanSequentialTacticCombinator(
+                        caret,
+                        this.indent,
+                        caret.level,
+                        nextToken !== '\n',
+                        !inlineCombo,
+                    ),
                 );
             } else {
                 const c = new LeanCaret(0, 0);
@@ -8902,7 +8937,9 @@ class Lean_let extends LeanSyntax {
     }
 
     is_indented() {
-        return !(this.parent instanceof LeanSequentialTacticCombinator);
+        const p = this.parent;
+        if (p instanceof LeanSequentialTacticCombinator) return this.indent > 0;
+        return true;
     }
 
     toJSON() {
@@ -8942,8 +8979,12 @@ class Lean_let extends LeanSyntax {
         const parts = [];
         for (const arg of this.args) {
             if (arg instanceof LeanCaret);
-            else if (arg instanceof LeanSequentialTacticCombinator && arg.newline) parts.push('\n');
-            else parts.push(' ');
+            else if (
+                arg instanceof LeanSequentialTacticCombinator &&
+                (arg.newline || arg.lineBreakBefore)
+            ) {
+                parts.push('\n');
+            } else parts.push(' ');
             parts.push('%s');
         }
         return func + parts.join('');

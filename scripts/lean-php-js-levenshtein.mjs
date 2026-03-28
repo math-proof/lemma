@@ -388,7 +388,8 @@ function alignLeanModulePhpInherited(pMem, jMem, className) {
 
 /**
  * Subclass body in PHP has no `__construct`; `stack_priority` / `toLatex` live on ancestors.
- * JS uses an explicit `constructor` and `get stack_priority`; `toString` is inherited from `Lean` (not redeclared here).
+ * JS uses an explicit `constructor` and `get stack_priority`; `strArgs` is a JS-only indent helper;
+ * `toString` is inherited from `Lean` (not redeclared here).
  */
 function alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, className) {
     if (className !== 'LeanArgsSpaceSeparated') return [pMem, jMem];
@@ -399,6 +400,7 @@ function alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, className) {
                 ![
                     'constructor',
                     'get:stack_priority',
+                    'method:strArgs',
                     'method:toLatex',
                 ].includes(x),
         ),
