@@ -3035,3 +3035,5 @@
 {"rel":"Lemma/Bool/Any_All_And/of/Any_All/Any_All.lean","note":"tactic LeanArgsSpaceSeparated: newline before line comments (round-trip)"}
 {"rel":"Lemma/Bool/Iff/is/IffNotS.lean","note":"tactic LeanArgsSpaceSeparated: newline + indent for intro continuations (round-trip)"}
 {"rel":"Lemma/List/GetTake/eq/Get/of/Lt_LengthTake.lean","note":"LeanParenthesis indent before (h:…) when : /-- imply then have (round-trip)"}
+{"rel":"Lemma/List/EqPermutePermute/of/In_Ioo_Length.lean","note":"LeanParenthesis indent before (h:…) when : /-- imply then let (round-trip)"}
+{"rel":"Lemma/List/EqPermutePermute__Neg/of/In_Ioo_Length.lean","note":"LeanParenthesis indent before (h:…) when : /-- imply then let (round-trip)"}

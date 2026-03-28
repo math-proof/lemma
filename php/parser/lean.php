@@ -1748,7 +1748,21 @@ class LeanParenthesis extends LeanPairedGroup
 
     public function is_indented()
     {
-        return ($parent = $this->parent) instanceof LeanArgsNewLineSeparated || $parent instanceof LeanArgsCommaNewLineSeparated || ($parent instanceof LeanIte && $this !== $parent->if);
+        $parent = $this->parent;
+        if ($parent instanceof LeanColon && ($gr = $parent->parent) instanceof LeanModule) {
+            $rhs = $parent->rhs;
+            if ($rhs instanceof LeanStatements
+                && count($rhs->args) === 1
+                && ($c = $rhs->args[0]) instanceof LeanLineComment
+                && $c->text === 'imply'
+            ) {
+                $ix = array_search($parent, $gr->args, true);
+                if ($ix !== false && $ix + 1 < count($gr->args) && $gr->args[$ix + 1] instanceof Lean_let) {
+                    return true;
+                }
+            }
+        }
+        return $parent instanceof LeanArgsNewLineSeparated || $parent instanceof LeanArgsCommaNewLineSeparated || ($parent instanceof LeanIte && $this !== $parent->if);
     }
     public function isProp($vars)
     {

@@ -1922,7 +1922,7 @@ export class LeanParenthesis extends LeanPairedGroup {
                 const mod = parent.parent;
                 const ix = mod.args.indexOf(parent);
                 const next = ix >= 0 && ix + 1 < mod.args.length ? mod.args[ix + 1] : null;
-                if (next instanceof Lean_have) {
+                if (next instanceof Lean_let) {
                     return true;
                 }
             }
