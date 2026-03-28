@@ -5391,7 +5391,22 @@ export class LeanModule extends LeanStatements {
                         next.rhs instanceof LeanCaret &&
                         consumeEchoAssignProofTail(args, k + 1, indentText);
                     let prevIdx = i - 1;
-                    while (prevIdx >= 0 && (args[prevIdx] instanceof LeanCaret || args[prevIdx] == null)) prevIdx--;
+                    while (prevIdx >= 0) {
+                        const p = args[prevIdx];
+                        if (p == null || p instanceof LeanCaret) {
+                            prevIdx--;
+                            continue;
+                        }
+                        if (
+                            p instanceof LeanBrace ||
+                            p instanceof LeanBracket ||
+                            p instanceof LeanParenthesis
+                        ) {
+                            prevIdx--;
+                            continue;
+                        }
+                        break;
+                    }
                     const lemmaColonMatchBy =
                         prevIdx >= 0 &&
                         args[prevIdx] instanceof Lean_lemma &&

@@ -485,12 +485,12 @@ if (membersMode) {
         [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
         [pMem, jMem] = alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, name);
         [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
+        [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
         if (normalize) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
             [pMem, jMem] = alignLean_defPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanBinaryPhpMagicVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanTokenPhpVsJs(pMem, jMem, name);
-            [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
             [pMem, jMem] = alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
