@@ -4217,7 +4217,8 @@ function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
         (proof instanceof LeanTactic ||
             proof instanceof LeanArgsSpaceSeparated ||
             proof instanceof LeanToken ||
-            proof instanceof Lean_fun);
+            proof instanceof Lean_fun ||
+            proof instanceof LeanAngleBracket);
     if (!proofOk) return null;
     let endJ = j;
     let proofStr = String(proof);
@@ -5833,8 +5834,6 @@ export class Lean_rightarrow extends LeanBinary {
 }
 
 export class Lean_mapsto extends LeanBinary {
-    static input_priority = 47;
-
     get stack_priority() {
         return 23;
     }
