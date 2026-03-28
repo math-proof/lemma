@@ -1912,6 +1912,7 @@ export class LeanParenthesis extends LeanPairedGroup {
     is_indented() {
         const parent = this.parent;
         if (parent instanceof LeanStatements && this.indent > 0) return true;
+        if (parent instanceof LeanArgsIndented && this.indent > 0) return true;
         return (
             parent instanceof LeanArgsNewLineSeparated ||
             parent instanceof LeanArgsCommaNewLineSeparated ||
