@@ -353,12 +353,6 @@ function alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, className) {
     ];
 }
 
-/** PHP spells `is_indented`; JS uses `LeanPairedGroup`'s implementation for round-trip stability. */
-function alignLeanParenthesisInheritedIndented(pMem, jMem, className) {
-    if (className !== 'LeanParenthesis') return [pMem, jMem];
-    return [pMem.filter((x) => x !== 'method:is_indented'), jMem];
-}
-
 /** PHP `JsonSerializable::jsonSerialize`; JS `toJSON` (same role for stable AST fingerprints). */
 function alignJsonSerializePhpVsJs(pMem, jMem, _className) {
     const p = pMem.map((x) => (x === 'method:jsonSerialize' ? 'method:toJSON' : x));
@@ -492,7 +486,6 @@ if (membersMode) {
             [pMem, jMem] = alignLeanBinaryPhpMagicVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanTokenPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
-            [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
             [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
             [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanStatementsInheritedPushLineComment(pMem, jMem, name);

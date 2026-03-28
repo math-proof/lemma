@@ -1,6 +1,6 @@
 /**
  * Lean `compile` → `render2vue` — JavaScript API.
- * Uses `compile()` from `static/js/parser/lean.js` + `render2vue.mjs`.
+ * Uses `compile()` / `LeanModule.render2vue` from `static/js/parser/lean.js`; `render2vue.mjs` re-exports helpers.
  * Falls back to regex stub (`parseLeanStub.mjs`) when JS parse fails.
  *
  * See `server/lean/compiler/README.md`.

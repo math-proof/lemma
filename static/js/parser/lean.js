@@ -1781,11 +1781,7 @@ class LeanPairedGroup extends Closable(LeanUnary) {
     }
 }
 
-/**
- * Parentheses: inner `level` for rainbow LaTeX. Method order matches the reference `LeanParenthesis` class
- * except `is_indented`: JS keeps the `LeanPairedGroup` implementation so the round-trip corpus stays stable
- * (the reference narrows indentation for `LeanIte` / some newline parents).
- */
+/** Parentheses: inner `level` for rainbow LaTeX. Method order follows the reference `LeanParenthesis` class. */
 export class LeanParenthesis extends LeanPairedGroup {
     /**
      * @param {Lean} arg
@@ -1880,6 +1876,15 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         this.arg = newNode;
         return caretOut;
+    }
+
+    is_indented() {
+        const parent = this.parent;
+        return (
+            parent instanceof LeanArgsNewLineSeparated ||
+            parent instanceof LeanArgsCommaNewLineSeparated ||
+            (parent instanceof LeanIte && this !== parent.if)
+        );
     }
 
     isProp(vars) {
