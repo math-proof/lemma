@@ -2611,6 +2611,14 @@ export class LeanAssign extends LeanBinary {
                 return '\n';
             }
         }
+        // `:=` then newline before `-- proof` / term under `▸` (see Lemma/Nat/Lt/of/Lt_Add/Eq_Sub/Ge.lean).
+        if (
+            rhs?.constructor?.name === 'Lean_blacktriangleright' &&
+            rhs.lhs instanceof LeanArgsNewLineSeparated &&
+            rhs.lhs.args?.[0] instanceof LeanLineComment
+        ) {
+            return '\n';
+        }
         return ' ';
     }
 

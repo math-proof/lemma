@@ -387,8 +387,8 @@ function alignLeanModulePhpInherited(pMem, jMem, className) {
 }
 
 /**
- * Subclass body in PHP has no `__construct`; `stack_priority` / `__toString` / `toLatex` live on ancestors.
- * JS uses an explicit `constructor`, `get stack_priority`, and inherits `toString`/`toLatex` as own methods in the scan.
+ * Subclass body in PHP has no `__construct`; `stack_priority` / `toLatex` live on ancestors.
+ * JS uses an explicit `constructor` and `get stack_priority`; `toString` is inherited from `Lean` (not redeclared here).
  */
 function alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, className) {
     if (className !== 'LeanArgsSpaceSeparated') return [pMem, jMem];
@@ -399,7 +399,6 @@ function alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, className) {
                 ![
                     'constructor',
                     'get:stack_priority',
-                    'method:toString',
                     'method:toLatex',
                 ].includes(x),
         ),
@@ -486,12 +485,12 @@ if (membersMode) {
         [pMem, jMem] = alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, name);
         [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
+        [pMem, jMem] = alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, name);
         if (normalize) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
             [pMem, jMem] = alignLean_defPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanBinaryPhpMagicVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanTokenPhpVsJs(pMem, jMem, name);
-            [pMem, jMem] = alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;
