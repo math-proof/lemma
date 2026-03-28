@@ -1890,6 +1890,7 @@ export class LeanParenthesis extends LeanPairedGroup {
 
     is_indented() {
         const parent = this.parent;
+        if (parent instanceof LeanStatements && this.indent > 0) return true;
         return (
             parent instanceof LeanArgsNewLineSeparated ||
             parent instanceof LeanArgsCommaNewLineSeparated ||
@@ -2526,7 +2527,8 @@ export class LeanColon extends LeanBinary {
     strFormat() {
         const sep = this.sep();
         let first = '%s';
-        if (!this.parent?.constructor?.name?.includes('GetElem')) {
+        // Only ` : ` when a real space separates colon from rhs; keep `main:\n` / `x:` shapes stable.
+        if (!this.parent?.constructor?.name?.includes('GetElem') && sep === ' ') {
             first += ' ';
         }
         return `${first}${this.operator}${sep}%s`;
