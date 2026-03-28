@@ -6024,88 +6024,6 @@ export class LeanTactic extends LeanSyntax {
         if (this.tacticName === 'try' && this.arg instanceof LeanTactic && this.arg.tacticName === 'echo') return this.arg;
     }
 
-    is_inline_tactic_block() {
-        return this.tacticName === 'repeat' || this.tacticName === 'try';
-    }
-
-    insert_newline(caret, newlineCount, indent, next) {
-        if (caret === this.arg) {
-            if (this.indent < indent && caret instanceof LeanArgsSpaceSeparated) {
-                const $new = new LeanCaret(this.indent, caret.level);
-                caret.push($new);
-                return $new;
-            }
-            if (next === '<') {
-                const c = new LeanCaret(indent, caret.level);
-                this.push(c);
-                return c;
-            }
-        }
-        return super.insert_newline(caret, newlineCount, indent, next);
-    }
-
-    insert_comma(caret) {
-        if (caret === this.arg) {
-            if (
-                caret instanceof LeanToken ||
-                caret instanceof LeanBinary ||
-                caret instanceof LeanPairedGroup
-            ) {
-                const $new = new LeanCaret(this.indent, caret.level);
-                this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
-                return $new;
-            }
-            if (caret instanceof LeanArgsCommaSeparated) {
-                const $new = new LeanCaret(this.indent, caret.level);
-                caret.push($new);
-                return $new;
-            }
-        }
-        return super.insert_comma(caret);
-    }
-
-    insert_semicolon(caret) {
-        if (caret === this.arg) {
-            if (this.is_inline_tactic_block()) {
-                const $new = new LeanCaret(this.indent, caret.level);
-                if (caret instanceof LeanArgsSemicolonSeparated) caret.push($new);
-                else this.replace(caret, new LeanArgsSemicolonSeparated([caret, $new], this.indent, caret.level));
-                return $new;
-            }
-            if (this.parent instanceof LeanBy) {
-                const $new = new LeanCaret(this.indent, caret.level);
-                if (caret instanceof LeanArgsSemicolonSeparated) caret.push($new);
-                else this.parent.replace(this, new LeanArgsSemicolonSeparated([this, $new], this.indent, caret.level));
-                return $new;
-            }
-        }
-        return super.insert_semicolon(caret);
-    }
-
-    /** Port of `LeanTactic::insert_line_comment` / `push_line_comment`. */
-    insert_line_comment(_caret, comment) {
-        return this.push_line_comment(comment);
-    }
-
-    push_line_comment(comment) {
-        const line = new LeanLineComment(comment, this.indent, this.level);
-        this.push(line);
-        return line;
-    }
-
-    has_tactic_block_followed() {
-        const p = this.parent;
-        if (!(p instanceof LeanStatements)) return;
-        const stmts = p.args;
-        const idx = stmts.indexOf(this);
-        if (idx < 0) return;
-        for (let i = idx + 1; i < stmts.length; i++) {
-            const stmt = stmts[i];
-            if (stmt instanceof LeanTacticBlock) return true;
-            if (!stmt.is_comment()) break;
-        }
-    }
-
     get_echo_token() {
         const at = this.at;
         if (at) {
@@ -6246,12 +6164,83 @@ export class LeanTactic extends LeanSyntax {
         return new LeanArgsCommaSeparated(token, this.indent, this.level);
     }
 
+    has_tactic_block_followed() {
+        const p = this.parent;
+        if (!(p instanceof LeanStatements)) return;
+        const stmts = p.args;
+        const idx = stmts.indexOf(this);
+        if (idx < 0) return;
+        for (let i = idx + 1; i < stmts.length; i++) {
+            const stmt = stmts[i];
+            if (stmt instanceof LeanTacticBlock) return true;
+            if (!stmt.is_comment()) break;
+        }
+    }
+
+    insert_comma(caret) {
+        if (caret === this.arg) {
+            if (
+                caret instanceof LeanToken ||
+                caret instanceof LeanBinary ||
+                caret instanceof LeanPairedGroup
+            ) {
+                const $new = new LeanCaret(this.indent, caret.level);
+                this.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
+                return $new;
+            }
+            if (caret instanceof LeanArgsCommaSeparated) {
+                const $new = new LeanCaret(this.indent, caret.level);
+                caret.push($new);
+                return $new;
+            }
+        }
+        return super.insert_comma(caret);
+    }
+
+    insert_line_comment(_caret, comment) {
+        return this.push_line_comment(comment);
+    }
+
+    insert_newline(caret, newlineCount, indent, next) {
+        if (caret === this.arg) {
+            if (this.indent < indent && caret instanceof LeanArgsSpaceSeparated) {
+                const $new = new LeanCaret(this.indent, caret.level);
+                caret.push($new);
+                return $new;
+            }
+            if (next === '<') {
+                const c = new LeanCaret(indent, caret.level);
+                this.push(c);
+                return c;
+            }
+        }
+        return super.insert_newline(caret, newlineCount, indent, next);
+    }
+
     insert_only(caret) {
         if (caret !== this.args[this.args.length - 1]) {
             throw new Error(`LeanTactic.insert_only: unexpected for ${this.constructor.name}`);
         }
         this.only = true;
         return caret;
+    }
+
+    insert_semicolon(caret) {
+        if (caret === this.arg) {
+            if (this.is_inline_tactic_block()) {
+                const $new = new LeanCaret(this.indent, caret.level);
+                if (caret instanceof LeanArgsSemicolonSeparated) caret.push($new);
+                else this.replace(caret, new LeanArgsSemicolonSeparated([caret, $new], this.indent, caret.level));
+                return $new;
+            }
+            if (this.parent instanceof LeanBy) {
+                const $new = new LeanCaret(this.indent, caret.level);
+                if (caret instanceof LeanArgsSemicolonSeparated) caret.push($new);
+                else this.parent.replace(this, new LeanArgsSemicolonSeparated([this, $new], this.indent, caret.level));
+                return $new;
+            }
+        }
+        return super.insert_semicolon(caret);
     }
 
     insert_sequential_tactic_combinator(caret, nextToken) {
@@ -6295,6 +6284,10 @@ export class LeanTactic extends LeanSyntax {
         return false;
     }
 
+    is_inline_tactic_block() {
+        return this.tacticName === 'repeat' || this.tacticName === 'try';
+    }
+
     toJSON() {
         const name = this.tacticName;
         const arg = this.arg.toJSON?.() ?? this.arg;
@@ -6314,6 +6307,12 @@ export class LeanTactic extends LeanSyntax {
         func = `{\\color{#${color}}${func}}`;
         if (!(this.arg instanceof LeanCaret)) func += '\\ ';
         return func + Array(this.args.length).fill('%s').join('\\ ');
+    }
+
+    push_line_comment(comment) {
+        const line = new LeanLineComment(comment, this.indent, this.level);
+        this.push(line);
+        return line;
     }
 
     relocate_last_comment() {

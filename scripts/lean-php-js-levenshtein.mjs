@@ -371,6 +371,22 @@ function alignLeanPropertyStrArgs(pMem, jMem, className) {
     return [pMem, jMem.filter((x) => x !== 'method:strArgs')];
 }
 
+/** PHP `LeanStatements` does not redeclare `push_line_comment` in the class body (inherits from `Lean`). */
+function alignLeanStatementsInheritedPushLineComment(pMem, jMem, className) {
+    if (className !== 'LeanStatements') return [pMem, jMem];
+    return [pMem, jMem.filter((x) => x !== 'method:push_line_comment')];
+}
+
+/** PHP `LeanTactic` uses public `$func`; `arg` / `sequential_tactic_combinator` appear in `LeanTactic::__get` but are declared on `LeanSyntax` in JS. */
+function alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, className) {
+    if (className !== 'LeanTactic') return [pMem, jMem];
+    const p = pMem.filter(
+        (x) => x !== 'get:arg' && x !== 'get:sequential_tactic_combinator',
+    );
+    const j = jMem.filter((x) => x !== 'get:func');
+    return [p, j];
+}
+
 /** PHP `__toString`; JS `toString()`. Order `build` before `init` like `lean.php`. */
 function alignLeanParserPhpVsJs(pMem, jMem, className) {
     if (className !== 'LeanParser') return [pMem, jMem];
@@ -444,6 +460,8 @@ if (membersMode) {
             [pMem, jMem] = alignLeanParenthesisInheritedIndented(pMem, jMem, name);
             [pMem, jMem] = alignLeanPropertyStrArgs(pMem, jMem, name);
             [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
+            [pMem, jMem] = alignLeanStatementsInheritedPushLineComment(pMem, jMem, name);
+            [pMem, jMem] = alignLeanTacticPhpFieldVsJsGetters(pMem, jMem, name);
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;

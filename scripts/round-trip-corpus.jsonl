@@ -2965,3 +2965,4 @@
 {"rel":"Lemma/Tensor/BroadcastMatmul/eq/Cast_BroadcastMatmulRec.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/Tensor/Select/eq/Cast_GetPermute.lean","note":"random sample (Tensor)"}
 {"rel":"Lemma/Tensor/Select/as/Stack_Select/of/Eq/GtLength.lean","note":"random sample (Tensor)"}
+{"rel":"Lemma/Nat/Le_Sub/of/LeAdd.lean","note":"AST round-trip; extends corpus (translation task)"}
