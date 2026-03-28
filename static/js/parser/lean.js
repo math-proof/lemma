@@ -2554,8 +2554,11 @@ export class LeanColon extends LeanBinary {
                 first += ' ';
             } else if (sep === '\n') {
                 const L = this.lhs;
-                // `lemma main:\n-- imply` stays tight; `{binders} :\n-- imply` keeps a space before `:`.
-                if (L instanceof LeanBrace || L instanceof LeanParenthesis) first += ' ';
+                // `lemma main:\n-- imply` stays tight; `{binders} :\n-- imply` and indented binder blocks
+                // `  (h : …) :\n-- imply` keep a space before `:`.
+                if (L instanceof LeanBrace || L instanceof LeanParenthesis || L instanceof LeanArgsIndented) {
+                    first += ' ';
+                }
             }
         }
         return `${first}${this.operator}${sep}%s`;
@@ -3351,7 +3354,11 @@ export class Lean_blacktriangleright extends LeanArithmetic {
     }
 
     is_indented() {
-        return this.parent instanceof LeanArgsNewLineSeparated;
+        const p = this.parent;
+        if (p instanceof LeanArgsNewLineSeparated) return true;
+        // `LeanModule` subclasses `LeanStatements`; only non-module statement blocks get body indent.
+        if (p instanceof LeanStatements && !(p instanceof LeanModule) && this.indent > 0) return true;
+        return false;
     }
 }
 
