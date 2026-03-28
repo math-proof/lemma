@@ -3395,3 +3395,4 @@
 {"rel":"Lemma/Rat/GeInvAbs_0.lean","note":"AST round-trip: close |a| before ⁻¹ postfix (Lean.insert_bar → open LeanAbs)"}
 {"rel":"Lemma/Finset/All_EqCast/of/All_SEq.lean","note":"AST round-trip: LeanParenthesis under LeanEq in LeanArgsNewLineSeparated keeps line indent"}
 {"rel":"Lemma/Tensor/Dot/eq/Stack_Sum_MulGetS.lean","note":"AST round-trip: `[i < m]` closes as LeanStack with bare Lean_lt bound (bracket arg normalized on `]`)"}
+{"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivAbsSub/Infinite/Infinite.lean","note":"off-corpus AST round-trip OK (batch translation task)"}

@@ -230,6 +230,7 @@ function alignStaticInputPriority(pMem, jMem, phpInner) {
  * `LeanProperty`: JS-only `strArgs` for dotted paths (no separate `strArgs` in PHP class body).
  * `LeanStatements`: PHP body omits inherited `push_line_comment` from `Lean`.
  * `LeanTactic`: PHP `$func` vs JS `get func`; `arg` / `sequential_tactic_combinator` live on `LeanSyntax` in JS.
+ * `LeanIte`: PHP `__set` for if/then/else; JS uses `set if` / `set then` / `set else`.
  */
 function alignPhpTraitMembers(pMem, jMem, phpInner, className) {
     let p = pMem;
@@ -251,6 +252,10 @@ function alignPhpTraitMembers(pMem, jMem, phpInner, className) {
             (x) => x !== 'get:arg' && x !== 'get:sequential_tactic_combinator',
         );
         j = j.filter((x) => x !== 'get:func');
+    }
+    if (className === 'LeanIte') {
+        p = pMem.filter((x) => x !== 'magic:__set');
+        j = j.filter((x) => !x.startsWith('set:'));
     }
     return [p, j];
 }
@@ -275,15 +280,6 @@ function alignLeanGetElemBase(pMem, jMem, phpInner) {
         );
     }
     return [pMem, j];
-}
-
-/** PHP `__set` for if/then/else; JS uses `set if` / `set then` / `set else`. */
-function alignLeanItePhpSetVsJsSetters(pMem, jMem, className) {
-    if (className !== 'LeanIte') return [pMem, jMem];
-    return [
-        pMem.filter((x) => x !== 'magic:__set'),
-        jMem.filter((x) => !x.startsWith('set:')),
-    ];
 }
 
 /** PHP `__set` for `arg`; JS uses `set arg`. */
@@ -511,7 +507,6 @@ if (membersMode) {
         [pMem, jMem] = alignLeanParserPhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignLeanGetElemBase(pMem, jMem, pInner);
         [pMem, jMem] = alignLeanModulePhpInherited(pMem, jMem, name);
-        [pMem, jMem] = alignLeanItePhpSetVsJsSetters(pMem, jMem, name);
         [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignLeanSyntaxPhpSetVsJsAccessors(pMem, jMem, name);
         [pMem, jMem] = alignLeanArgsSpaceSeparatedPhpSubclassBody(pMem, jMem, name);
