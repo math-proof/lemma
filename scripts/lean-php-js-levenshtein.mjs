@@ -467,9 +467,9 @@ if (membersMode) {
         const jInner = innerBody(jsBlock);
         let pMem = phpMembersOrdered(pInner);
         let jMem = jsMembers(jInner);
+        [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
         if (normalize) {
             [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
-            [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLeanArgsPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignLean_defPhpVsJs(pMem, jMem, name);
             [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner);
