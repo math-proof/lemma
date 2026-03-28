@@ -31,7 +31,7 @@
 {"rel":"Lemma/Hyperreal/GeStInv_0/of/NotInfinitesimal/StDiv/eq/One.lean","failure":"mismatch","j1Len":3282,"j2Len":3280}
 {"rel":"Lemma/Hyperreal/Gt_0/of/Gt_0/InfinitesimalDivAbsSub/Infinite/Infinite.lean","failure":"mismatch","j1Len":7821,"j2Len":7857}
 {"rel":"Lemma/Hyperreal/Gt_0/of/GtSt_0.lean","failure":"mismatch","j1Len":560,"j2Len":538}
-{"rel":"Lemma/Hyperreal/Infinite/is/All_GtAbs.lean","failure":"parse1","error":"insert_if is unexpected for LeanArgsIndented"}
+{"rel":"Lemma/Hyperreal/Infinite/is/All_GtAbs.lean","failure":"parse2","error":"LeanArgsIndented.insert_newline is unexpected for LeanArgsIndented","printedLength":783,"printedHead":"import Lemma.Hyperreal.InfiniteNeg.is.All_Lt\nimport Lemma.Hyperreal.InfiniteNeg.is.Infinite.Lt_0\nimport Lemma.Hyperreal.InfinitePos.is.All_Gt\nimport Lemma.Hyperreal.InfinitePos.is.Infinite.Gt_0\nimport Lemma.Hyperreal.NotInfinite\nimport Lemma.Int.Abs.eq.Neg.of.Lt_0\nimport Lemma.Int.EqAbs.of.Gt_0\nimport sympy.core.singleton\nopen Hyperreal Int\n\n\n@[main, comm, mp, mpr]\nprivate lemma main\n-- given\n(x :"}
 {"rel":"Lemma/Hyperreal/Infinite/is/Infinite/of/Setoid.lean","failure":"mismatch","j1Len":1927,"j2Len":1926}
 {"rel":"Lemma/Hyperreal/Infinite/is/InfiniteAbs.lean","failure":"mismatch","j1Len":1141,"j2Len":1123}
 {"rel":"Lemma/Hyperreal/Infinite/is/InfiniteNeg.lean","failure":"mismatch","j1Len":1301,"j2Len":1271}
@@ -68,16 +68,16 @@
 {"rel":"Lemma/Hyperreal/NotInfiniteDiv/of/InfinitesimalDivAbsSub/Infinite/Infinite.lean","failure":"mismatch","j1Len":7294,"j2Len":7334}
 {"rel":"Lemma/Hyperreal/NotInfiniteDiv/of/StAddDivS/ne/Zero.lean","failure":"mismatch","j1Len":1609,"j2Len":1608}
 {"rel":"Lemma/Hyperreal/NotInfiniteInvMul/of/NotInfinitesimal/StDiv/eq/One.lean","failure":"mismatch","j1Len":2413,"j2Len":2390}
-{"rel":"Lemma/Hyperreal/Setoid/is/InfinitesimalDivAbsSub.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
-{"rel":"Lemma/Hyperreal/Setoid/is/InfinitesimalDivSquareSub.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
-{"rel":"Lemma/Hyperreal/Setoid/is/OrInfinitesimalSSub.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
-{"rel":"Lemma/Hyperreal/SetoidExpS/of/InfinitesimalSub.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
-{"rel":"Lemma/Hyperreal/StAbs/eq/AbsSt.lean","failure":"parse1","error":"insert_if is unexpected for LeanAbs"}
+{"rel":"Lemma/Hyperreal/Setoid/is/InfinitesimalDivAbsSub.lean","failure":"mismatch","j1Len":32790,"j2Len":32677}
+{"rel":"Lemma/Hyperreal/Setoid/is/InfinitesimalDivSquareSub.lean","failure":"mismatch","j1Len":7243,"j2Len":6778}
+{"rel":"Lemma/Hyperreal/Setoid/is/OrInfinitesimalSSub.lean","failure":"mismatch","j1Len":7518,"j2Len":7512}
+{"rel":"Lemma/Hyperreal/SetoidExpS/of/InfinitesimalSub.lean","failure":"parse2","error":"LeanArgsIndented.insert_newline is unexpected for LeanArgsIndented","printedLength":3843,"printedHead":"import Lemma.Hyperreal.Infinite.is.InfiniteSub.of.NotInfinite\nimport Lemma.Hyperreal.Infinite.is.InfinitePos.ou.InfiniteNeg\nimport Lemma.Hyperreal.EqSt.of.InfinitesimalSub\nimport Lemma.Hyperreal.EqSt_0.of.Infinite\nimport Lemma.Hyperreal.EqSt_0.of.Infinitesimal\nimport Lemma.Hyperreal.InfiniteDiv.of.Infinite.NotInfinite\nimport Lemma.Hyperreal.InfiniteNeg.is.InfiniteNeg.of.Setoid\nimport Lemma.Hyperre"}
+{"rel":"Lemma/Hyperreal/StAbs/eq/AbsSt.lean","failure":"mismatch","j1Len":1373,"j2Len":1350}
 {"rel":"Lemma/Hyperreal/StDiv/eq/One/of/InfinitesimalDivSquareSub/NotInfinitesimal/NotInfinitesimal.lean","failure":"mismatch","j1Len":3746,"j2Len":3640}
 {"rel":"Lemma/Hyperreal/StPow/eq/PowSt/of/NotInfinite.lean","failure":"mismatch","j1Len":1652,"j2Len":1626}
 {"rel":"Lemma/Int/Abs/eq/Neg/of/Le_0.lean","failure":"mismatch","j1Len":908,"j2Len":890}
 {"rel":"Lemma/Int/Add/ne/Zero/of/Lt0Mul.lean","failure":"mismatch","j1Len":1521,"j2Len":1499}
-{"rel":"Lemma/Int/AddFModS/eq/FModNegSign.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
+{"rel":"Lemma/Int/AddFModS/eq/FModNegSign.lean","failure":"mismatch","j1Len":6267,"j2Len":5700}
 {"rel":"Lemma/Int/AllIn_Ico/of/AllIn_Ico.lean","failure":"mismatch","j1Len":1051,"j2Len":1030}
 {"rel":"Lemma/Int/Ceil/eq/FloorDivSub_Sign.lean","failure":"mismatch","j1Len":8186,"j2Len":8168}
 {"rel":"Lemma/Int/CeilAdd_Div_2/eq/AddCeilSub_Div1'2/of/Odd.lean","failure":"mismatch","j1Len":2374,"j2Len":2355}
@@ -90,7 +90,7 @@
 {"rel":"Lemma/Int/Div/ge/FDiv.lean","failure":"mismatch","j1Len":1059,"j2Len":1053}
 {"rel":"Lemma/Int/DivFMod/lt/One.lean","failure":"mismatch","j1Len":3210,"j2Len":2923}
 {"rel":"Lemma/Int/DivSub1Sign_2/eq/Zero/of/Ge_0.lean","failure":"mismatch","j1Len":920,"j2Len":856}
-{"rel":"Lemma/Int/EqFMod/of/Mul_Add_Sign/lt/Zero.lean","failure":"parse1","error":"insert_if is unexpected for LeanArgsIndented"}
+{"rel":"Lemma/Int/EqFMod/of/Mul_Add_Sign/lt/Zero.lean","failure":"mismatch","j1Len":3599,"j2Len":3547}
 {"rel":"Lemma/Int/FDiv/eq/FloorDiv.lean","failure":"mismatch","j1Len":1286,"j2Len":1268}
 {"rel":"Lemma/Int/FDiv/eq/Ite__Ite__Ite__Ite__Ite__Ite.lean","failure":"mismatch","j1Len":1481,"j2Len":1481}
 {"rel":"Lemma/Int/FDiv/eq/Ite__Ite__Ite__Ite__Ite.lean","failure":"mismatch","j1Len":4608,"j2Len":4608}
@@ -129,8 +129,8 @@
 {"rel":"Lemma/List/EqGetSlicedIndices/of/Lt/Le/Gt_0.lean","failure":"mismatch","j1Len":2139,"j2Len":2158}
 {"rel":"Lemma/List/EqGetSSlicedIndices'/of/GtLength/GtLength/Gt_0/Gt_0/Le/Le/Lt/Lt.lean","failure":"mismatch","j1Len":5789,"j2Len":5791}
 {"rel":"Lemma/List/EqGetSSlicedIndices/of/GtLength/GtLength/Gt_0/Gt_0/Le/Le/Lt/Lt.lean","failure":"mismatch","j1Len":5131,"j2Len":5133}
-{"rel":"Lemma/List/EqPermutePermute__Neg/of/In_Ioo_Length.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
-{"rel":"Lemma/List/EqPermutePermute/of/In_Ioo_Length.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
+{"rel":"Lemma/List/EqPermutePermute__Neg/of/In_Ioo_Length.lean","failure":"mismatch","j1Len":1804,"j2Len":1768}
+{"rel":"Lemma/List/EqPermutePermute/of/In_Ioo_Length.lean","failure":"mismatch","j1Len":1781,"j2Len":1745}
 {"rel":"Lemma/List/EqPermuteS/of/Add/ge/SubLength_1.lean","failure":"mismatch","j1Len":2965,"j2Len":2967}
 {"rel":"Lemma/List/EraseIdx/eq/AppendTakeEraseIdx/of/Le.lean","failure":"mismatch","j1Len":2004,"j2Len":1953}
 {"rel":"Lemma/List/EraseIdx/eq/Cons_EraseIdxTail/of/GtLength_0.lean","failure":"mismatch","j1Len":1826,"j2Len":1713}
@@ -178,11 +178,11 @@
 {"rel":"Lemma/List/MapEnumerate/eq/Cons_MapEnumerate/of/All_Eq.lean","failure":"mismatch","j1Len":5208,"j2Len":5227}
 {"rel":"Lemma/List/Permute__Neg/eq/Append_AppendRotateDropTake.lean","failure":"mismatch","j1Len":9582,"j2Len":9555}
 {"rel":"Lemma/List/Permute_SubLength_0/eq/AppendRotateTake___Drop/of/GtLength_0.lean","failure":"mismatch","j1Len":7552,"j2Len":7548}
-{"rel":"Lemma/List/Permute/eq/SwapPermute.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
+{"rel":"Lemma/List/Permute/eq/SwapPermute.lean","failure":"mismatch","j1Len":2420,"j2Len":2345}
 {"rel":"Lemma/List/Rotate/eq/AppendDrop__Take/of/GtLength.lean","failure":"mismatch","j1Len":1114,"j2Len":1111}
 {"rel":"Lemma/List/Slice/eq/Slice__Length/of/LeLength.lean","failure":"mismatch","j1Len":974,"j2Len":956}
 {"rel":"Lemma/List/SliceTake/eq/Slice/of/Ge.lean","failure":"parse2","error":"LeanArgsIndented.insert_newline is unexpected for LeanArgsIndented","printedLength":1194,"printedHead":"import Lemma.List.Slice.eq.Nil.of.Ge\nimport Lemma.Nat.Gt.of.Ge.Gt\nimport Lemma.List.EqAppendTake__Drop\nimport Lemma.Bool.EqUFnS.of.Eq\nimport Lemma.List.DropAppend.eq.AppendDrop.of.GeLength\nimport Lemma.Nat.Le.of.Le.Lt\nimport Lemma.Bool.NotAnd.is.OrNotS\nimport Lemma.Nat.Ge.of.Gt.Ge\nimport Lemma.List.EqTake.of.LeLength\nimport Lemma.List.TakeTake.eq.Take.of.Ge\nimport Lemma.Nat.LeSubS.of.Le\nimport Lem"}
-{"rel":"Lemma/List/Swap/eq/Ite.lean","failure":"parse2","error":"insert_if is unexpected for LeanArgsIndented","printedLength":476,"printedHead":"import stdlib.List\nimport sympy.Basic\n\n\n@[main]\nprivate lemma main\n-- given\n  (a : List α)\n  (i j : ℕ) :\n  -- imply\n  a.swap i j =\n    if i = j then\n      a\n    else if h_lt then : i < j\nif h_j then : j < a.length\n        a.take i ++ a[j] :: a.slice (i + 1) j ++ a[i] :: a.drop (j + 1)\n      \n        a\nif h_i then : i < a.length\n      a.take j ++ a[i] :: a.slice (j + 1) i ++ a[j] :: a.drop (i + 1)\n"}
+{"rel":"Lemma/List/Swap/eq/Ite.lean","failure":"mismatch","j1Len":1236,"j2Len":1199}
 {"rel":"Lemma/List/Swap/eq/PermutePermute/of/Lt/GtLength.lean","failure":"mismatch","j1Len":5190,"j2Len":4730}
 {"rel":"Lemma/List/SwapAppend/eq/Append_Swap.lean","failure":"mismatch","j1Len":6956,"j2Len":6653}
 {"rel":"Lemma/List/TailEraseIdx/eq/Drop_2.lean","failure":"mismatch","j1Len":1703,"j2Len":1685}
@@ -202,12 +202,12 @@
 {"rel":"Lemma/Nat/DivMod/eq/Zero.lean","failure":"mismatch","j1Len":800,"j2Len":782}
 {"rel":"Lemma/Nat/Dvd_Mul.lean","failure":"mismatch","j1Len":977,"j2Len":977}
 {"rel":"Lemma/Nat/Eq_0/is/Pow/eq/Zero.lean","failure":"mismatch","j1Len":1556,"j2Len":1533}
-{"rel":"Lemma/Nat/EqAddSub_1/of/Odd.lean","failure":"parse2","error":"insert_if is unexpected for LeanArgsIndented","printedLength":641,"printedHead":"import Lemma.Nat.EqAddSub.of.Ge\nimport Lemma.Nat.Le.of.LtSub_1\nimport Lemma.Nat.Sub.eq.Zero\nimport Lemma.Nat.NotGt.is.Le\nimport Lemma.Nat.NotOdd.is.Even\nimport Lemma.Nat.Lt.is.Le.Ne\nimport Lemma.Nat.EqAddSub_1.of.Lt_0\nopen Nat\n\n\n@[main]\nprivate lemma main\n  [IntegerRing Z]\n  {n : Z}\n  -- given\n(h : n is odd) :\n-- imply\nn = n - 1 + 1 := by\n    -- proof\nif h_n then : n > 0\n  \n    have h_n := Le.of.N"}
+{"rel":"Lemma/Nat/EqAddSub_1/of/Odd.lean","failure":"mismatch","j1Len":1828,"j2Len":1795}
 {"rel":"Lemma/Nat/EqMod_1'0.lean","failure":"mismatch","j1Len":986,"j2Len":968}
 {"rel":"Lemma/Nat/EqSub/of/Gt.lean","failure":"mismatch","j1Len":3139,"j2Len":3102}
 {"rel":"Lemma/Nat/EvenSub_1/of/Odd.lean","failure":"mismatch","j1Len":1203,"j2Len":1207}
 {"rel":"Lemma/Nat/Fib/eq/AddFibS/of/Ge_2.lean","failure":"mismatch","j1Len":701,"j2Len":703}
-{"rel":"Lemma/Nat/Ge_Mod.lean","failure":"parse1","error":"insert_if is unexpected for LeanArgsIndented"}
+{"rel":"Lemma/Nat/Ge_Mod.lean","failure":"mismatch","j1Len":847,"j2Len":808}
 {"rel":"Lemma/Nat/Ge1Mod1.lean","failure":"mismatch","j1Len":446,"j2Len":448}
 {"rel":"Lemma/Nat/GeAddSub_1.lean","failure":"mismatch","j1Len":1242,"j2Len":1241}
 {"rel":"Lemma/Nat/GeAddSub_1/of/Lt_0.lean","failure":"mismatch","j1Len":1749,"j2Len":1748}
@@ -235,7 +235,7 @@
 {"rel":"Lemma/Rat/FloorDiv/eq/Zero/of/Lt.lean","failure":"mismatch","j1Len":1221,"j2Len":1210}
 {"rel":"Lemma/Rat/FloorDivMod/eq/Zero.lean","failure":"mismatch","j1Len":1124,"j2Len":1106}
 {"rel":"Lemma/Rat/GeInvAbs_0.lean","failure":"mismatch","j1Len":541,"j2Len":504}
-{"rel":"Lemma/Rat/LeToNatCeil_1/of/Le_Add.lean","failure":"parse2","error":"insert_if is unexpected for LeanArgsIndented","printedLength":1528,"printedHead":"import Lemma.Nat.OfNat.eq.Cast\nimport Lemma.Rat.Div.eq.One.of.Gt_0\nimport Lemma.Bool.Ne.is.NotEq\nimport Lemma.Nat.Gt_0.of.Ne_0\nimport Lemma.Nat.LeSub.is.Le_Add\nimport Lemma.Nat.LeCoeS.is.Le\nimport Lemma.Rat.LeDivS.of.Le.Gt_0\nimport Lemma.Nat.LeCeil.is.Le\nimport Lemma.Int.LeToNat.is.Le\nimport Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge\nimport Lemma.Nat.NotGe.is.Lt\nimport Lemma.Nat.LtCoeS.is.Lt\nimport Lemma.I"}
+{"rel":"Lemma/Rat/LeToNatCeil_1/of/Le_Add.lean","failure":"mismatch","j1Len":4569,"j2Len":4420}
 {"rel":"Lemma/Rat/MulSubS_Div/le/Zero/of/Lt0Mul.lean","failure":"mismatch","j1Len":6423,"j2Len":5730}
 {"rel":"Lemma/Rat/SetOf_Eq0AddMul/eq/Singleton/of/Ne_0.lean","failure":"mismatch","j1Len":1797,"j2Len":1791}
 {"rel":"Lemma/Rat/ToNatCeilDivNeg/eq/Zero.lean","failure":"mismatch","j1Len":1409,"j2Len":1400}
@@ -308,7 +308,7 @@
 {"rel":"Lemma/Tensor/GetAppend/eq/Get_Sub/of/Lt_Add/Ge.lean","failure":"mismatch","j1Len":8168,"j2Len":8187}
 {"rel":"Lemma/Tensor/GetAppend/eq/Get.lean","failure":"mismatch","j1Len":4980,"j2Len":4999}
 {"rel":"Lemma/Tensor/GetAppend/eq/Get/of/Lt.lean","failure":"mismatch","j1Len":936,"j2Len":955}
-{"rel":"Lemma/Tensor/GetBroadcast/as/Broadcast/of/GtLength_0.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
+{"rel":"Lemma/Tensor/GetBroadcast/as/Broadcast/of/GtLength_0.lean","failure":"parse2","error":"LeanArgsIndented.insert_newline is unexpected for LeanArgsIndented","printedLength":1940,"printedHead":"import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq\nimport Lemma.List.EqProd_0.is.In0\nimport Lemma.List.TailAppend.eq.AppendTail.of.Ne_Nil\nimport Lemma.Nat.EqDivMul.of.Ne_0\nimport Lemma.Nat.MulMul.eq.Mul_Mul\nimport Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0\nimport Lemma.Tensor.Length.eq.Get_0.of.GtLength_0\nimport Lemma.Tensor.SEq.is.SEqDataS.of.Eq\nimport Lemma.Vector.GetCast.eq.Get.of.Eq\nimport"}
 {"rel":"Lemma/Tensor/GetBroadcastMatmul/as/BroadcastMatmulRecGet/of/GtLength_0.lean","failure":"mismatch","j1Len":2954,"j2Len":2973}
 {"rel":"Lemma/Tensor/GetBroadcastMatmul/as/BroadcastMatmulRecGet/of/GtLengthS.lean","failure":"mismatch","j1Len":8256,"j2Len":8275}
 {"rel":"Lemma/Tensor/GetBroadcastMatmul/eq/Cast_BroadcastMatmulRecGet/of/GtLength_0.lean","failure":"mismatch","j1Len":2637,"j2Len":2635}
@@ -361,9 +361,9 @@
 {"rel":"Lemma/Tensor/Matmul/eq/SelectBatchDot/of/Gt_Get_SubLength/GeLength_2.lean","failure":"mismatch","j1Len":4478,"j2Len":4482}
 {"rel":"Lemma/Tensor/Matmul/eq/SelectBatchDot/of/Lt_Get_SubLength/GeLength_2.lean","failure":"mismatch","j1Len":4291,"j2Len":4295}
 {"rel":"Lemma/Tensor/Mul/eq/Mul_KeepdimTensorReplicateProdEraseIdx.lean","failure":"mismatch","j1Len":6301,"j2Len":5588}
-{"rel":"Lemma/Tensor/Permute/eq/Ite.lean","failure":"parse2","error":"insert_if is unexpected for LeanArgsIndented","printedLength":2998,"printedHead":"import sympy.tensor.tensor\nimport Lemma.List.EqPermute__0\nimport Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0\nimport Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0\nimport Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0\nimport Lemma.Nat.NotGt.is.Le\nimport Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1.Le_0\nimport Lemma.Bool.EqCastS.of"}
+{"rel":"Lemma/Tensor/Permute/eq/Ite.lean","failure":"mismatch","j1Len":7731,"j2Len":7684}
 {"rel":"Lemma/Tensor/SelectSum/eq/SumSelect/of/Gt.lean","failure":"parse2","error":"LeanArgsIndented.insert_newline is unexpected for LeanArgsIndented","printedLength":9980,"printedHead":"import Lemma.Bool.SEq.is.SEqCast.of.Eq\nimport Lemma.Finset.Sum.of.All_Eq.Eq\nimport Lemma.List.DropEraseIdx.eq.AppendDropTake.of.Ge\nimport Lemma.List.DropEraseIdx.eq.Drop.of.Le\nimport Lemma.List.DropEraseIdx.eq.Drop.of.Lt\nimport Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength\nimport Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength\nimport Lemma.List.GetEraseIdx.eq.Get.of.Lt.GtLength\nimport Lemma.List.LengthS"}
-{"rel":"Lemma/Tensor/SEq/of/All_SEqGetS/Eq/Eq.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
+{"rel":"Lemma/Tensor/SEq/of/All_SEqGetS/Eq/Eq.lean","failure":"mismatch","j1Len":4542,"j2Len":4424}
 {"rel":"Lemma/Tensor/SEq/of/SEqPermuteS/Eq/GtLength/GtLength.lean","failure":"mismatch","j1Len":7662,"j2Len":7295}
 {"rel":"Lemma/Tensor/SEqAppend/of/Eq_0.lean","failure":"mismatch","j1Len":2935,"j2Len":2905}
 {"rel":"Lemma/Tensor/SEqBroadcast/of/Eq.lean","failure":"mismatch","j1Len":2921,"j2Len":2906}
@@ -380,7 +380,7 @@
 {"rel":"Lemma/Tensor/SEqPermuteTail_1.lean","failure":"mismatch","j1Len":3425,"j2Len":3375}
 {"rel":"Lemma/Tensor/SEqPermuteTailPermuteHead.lean","failure":"mismatch","j1Len":831,"j2Len":813}
 {"rel":"Lemma/Tensor/SEqPermuteTailPermuteHead/of/Ne_Nil.lean","failure":"mismatch","j1Len":2094,"j2Len":1936}
-{"rel":"Lemma/Tensor/SEqRepeat/of/EqMul_Get.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
+{"rel":"Lemma/Tensor/SEqRepeat/of/EqMul_Get.lean","failure":"mismatch","j1Len":1574,"j2Len":1429}
 {"rel":"Lemma/Tensor/SEqRotate_0.lean","failure":"mismatch","j1Len":3018,"j2Len":3003}
 {"rel":"Lemma/Tensor/SEqRotate_Length.lean","failure":"mismatch","j1Len":3296,"j2Len":3281}
 {"rel":"Lemma/Tensor/SEqRotateRotate/of/GeLength.lean","failure":"mismatch","j1Len":8285,"j2Len":8140}
@@ -392,7 +392,7 @@
 {"rel":"Lemma/Tensor/Softmax/eq/TensorSoftmaxData.lean","failure":"mismatch","j1Len":5604,"j2Len":5594}
 {"rel":"Lemma/Tensor/Softmax/eq/Zero.lean","failure":"mismatch","j1Len":2562,"j2Len":2562}
 {"rel":"Lemma/Tensor/SoftmaxAdd_Keepdim/eq/Softmax.lean","failure":"mismatch","j1Len":9470,"j2Len":9233}
-{"rel":"Lemma/Tensor/Stack/eq/AppendStackS.lean","failure":"parse1","error":"this.parent.insert_if is not a function"}
+{"rel":"Lemma/Tensor/Stack/eq/AppendStackS.lean","failure":"mismatch","j1Len":1789,"j2Len":1734}
 {"rel":"Lemma/Tensor/Sum_0/eq/Sum_Get.lean","failure":"mismatch","j1Len":2320,"j2Len":2301}
 {"rel":"Lemma/Tensor/Sum/as/Sum_Cast/of/Eq.lean","failure":"mismatch","j1Len":2488,"j2Len":2436}
 {"rel":"Lemma/Tensor/Sum/eq/MkListSumData.lean","failure":"mismatch","j1Len":1850,"j2Len":1830}
