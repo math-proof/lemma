@@ -8691,7 +8691,12 @@ class LeanWith extends LeanArgs {
         if (this.args.length > 1) return '\n';
         if (!this.args.length) return '';
         const [caret] = this.args;
-        return caret instanceof LeanCaret || caret.tokens_space_separated() || caret instanceof LeanBitOr ? ' ' : '\n';
+        // `match … with` then `| pat =>`: first case is `LeanBar`; `tokens_space_separated()` is `[]` but
+        // `[]` is truthy in JS, so we wrongly used ` ` and re-parse merged `with` and `|` (round-trip loss).
+        if (caret instanceof LeanBar) return '\n';
+        return caret instanceof LeanCaret || caret.tokens_space_separated() || caret instanceof LeanBitOr
+            ? ' '
+            : '\n';
     }
 
     strFormat() {
