@@ -11,8 +11,9 @@
  * before `__get` case names when that is how `lean.php` is written). PHP `__toString` is counted as
  * `method:toString` to match JS. Metric: sum of per-class Levenshtein distances on member-token
  * sequences. `LeanUnary` maps PHP `__set` (arg only) to `set:arg` like JS setters. When the aligned
- * sum is already 0, JSON output includes `afterJsonAndAbstractLeanOnlyTotalDistance` (pre–trait/magic
- * aligners) for translation progress.
+ * sum is already 0, JSON output includes `afterJsonAndAbstractLeanOnlyTotalDistance` (member debt
+ * after json/abstract-Lean maps plus documented `use LeanProp` / `LeanMultipleLine` / `LeanProperty`
+ * omissions; see `alignEarlyTraitBodyOmissionsForDebtMeasure`).
  *
  * Usage:
  *   node scripts/lean-php-js-levenshtein.mjs
@@ -221,6 +222,25 @@ function phpMembersOrdered(body, className = null) {
         }
     }
     return out;
+}
+
+/**
+ * For member-debt only: `extractClassBlock` omits `use Trait` bodies, and some JS overrides have no
+ * PHP class-body counterpart (see `alignPhpTraitMembers`). Apply the same JS-side drops before the
+ * debt Levenshtein so progress is measurable when aligned `totalDistance` is already 0.
+ */
+function alignEarlyTraitBodyOmissionsForDebtMeasure(jMem, phpInner, className) {
+    let j = jMem;
+    if (/\buse\s+LeanProp\b/.test(phpInner)) {
+        j = j.filter((x) => x !== 'method:isProp');
+    }
+    if (/\buse\s+LeanMultipleLine\b/.test(phpInner)) {
+        j = j.filter((x) => x !== 'method:set_line');
+    }
+    if (className === 'LeanProperty') {
+        j = j.filter((x) => x !== 'method:strArgs');
+    }
+    return j;
 }
 
 function alignStaticInputPriority(pMem, jMem, phpInner) {
@@ -505,7 +525,7 @@ if (membersMode) {
 
     const perClass = [];
     let sum = 0;
-    /** Sum of distances after only `jsonSerialize`→`toJSON` + abstract `Lean` reorder (before trait/magic aligners). */
+    /** Sum of distances after json/toJSON + abstract `Lean` map + early trait/JS-only omissions (`alignEarlyTraitBodyOmissionsForDebtMeasure`). */
     let sumAfterJsonAndAbstractLeanOnly = 0;
     for (const name of todo) {
         const phpBlock = extractClassBlock(phpSrc, name, false);
@@ -517,7 +537,8 @@ if (membersMode) {
         let jMem = jsMembers(jInner);
         [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignAbstractLeanPhpVsJs(pMem, jMem, name);
-        const afterJsonAbstractD = levenshteinArrays(pMem, jMem);
+        const jForDebt = alignEarlyTraitBodyOmissionsForDebtMeasure(jMem, pInner, name);
+        const afterJsonAbstractD = levenshteinArrays(pMem, jForDebt);
         sumAfterJsonAndAbstractLeanOnly += afterJsonAbstractD;
         // Trait bodies / PHP magic vs JS accessors — parity for default `--members` (not only `--normalize`).
         [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner, name);
@@ -550,7 +571,7 @@ if (membersMode) {
         classCount: perClass.length,
         normalized: normalize,
         totalDistance: sum,
-        /** Pre-trait-alignment debt (translation progress target when `totalDistance` is already 0). */
+        /** Member debt after core maps + documented trait/JS-only omissions (see `alignEarlyTraitBodyOmissionsForDebtMeasure`). */
         afterJsonAndAbstractLeanOnlyTotalDistance: sumAfterJsonAndAbstractLeanOnly,
         perClass,
     };
@@ -569,7 +590,7 @@ if (jsonOut) {
         console.log(`Classes: ${out.members.classCount}  Sum of distances: ${out.members.totalDistance}`);
         if (out.members.afterJsonAndAbstractLeanOnlyTotalDistance != null) {
             console.log(
-                `Pre-trait member debt (after jsonSerialize + abstract Lean map): ${out.members.afterJsonAndAbstractLeanOnlyTotalDistance}`,
+                `Member debt (jsonSerialize + abstract Lean + trait/JS-only omissions): ${out.members.afterJsonAndAbstractLeanOnlyTotalDistance}`,
             );
         }
         const pc = out.members.perClass;

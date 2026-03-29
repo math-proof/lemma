@@ -54,6 +54,19 @@ const SMOKE = [
     { name: 'instance', source: 'instance : Inhabited Nat := sorry\n' },
     { name: 'axiom', source: 'axiom bad : False\n' },
     { name: 'class where', source: 'class Fintype (α : Type*) where\n' },
+    { name: 'proof if', source: 'lemma i : True := by\n  if h : True then trivial else trivial\n' },
+    { name: 'proof have', source: 'lemma h : True := by\n  have := trivial\n  trivial\n' },
+    { name: 'proof calc', source: 'lemma c : 1 = 1 := by\n  calc 1 = 1 := rfl\n' },
+    { name: 'proof simp', source: 'lemma s : True := by\n  simp\n' },
+    { name: 'proof exact', source: 'lemma e : True := by\n  exact trivial\n' },
+    { name: 'proof apply', source: 'lemma a : True := by\n  apply trivial\n' },
+    { name: 'proof let', source: 'lemma l : Nat := by\n  let x := 1\n  exact x\n' },
+    { name: 'proof show', source: 'lemma sh : True := by\n  show True\n  trivial\n' },
+    { name: 'import dotted', source: 'import Mathlib.Data.Nat.Basic\n' },
+    { name: 'export names', source: 'export Foo (bar)\n' },
+    { name: 'universe', source: 'universe u v\n' },
+    { name: 'protected def', source: 'protected def f : Nat := 0\n' },
+    { name: 'private lemma', source: 'private lemma p : True := trivial\n' },
 ];
 
 /** Lemma paths and notes: `scripts/round-trip-corpus.jsonl` (one JSON object per line). */
