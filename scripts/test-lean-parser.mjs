@@ -44,6 +44,16 @@ const SMOKE = [
     { name: 'namespace', source: 'namespace MyNs\n' },
     { name: 'example by trivial', source: 'example : True := by trivial\n' },
     { name: 'set_option', source: 'set_option pp.all true\n' },
+    { name: 'theorem by trivial', source: 'theorem t : True := by trivial\n' },
+    { name: 'def simple', source: 'def id (x : Nat) : Nat := x\n' },
+    { name: 'variable', source: 'variable (α : Type*)\n' },
+    { name: 'section end', source: 'section s\n\nend s\n' },
+    { name: 'abbrev', source: 'abbrev K := Nat\n' },
+    { name: 'inductive', source: 'inductive Foo where\n  | bar : Foo\n' },
+    { name: 'structure', source: 'structure Point (α : Type*) where\n  x : α\n' },
+    { name: 'instance', source: 'instance : Inhabited Nat := sorry\n' },
+    { name: 'axiom', source: 'axiom bad : False\n' },
+    { name: 'class where', source: 'class Fintype (α : Type*) where\n' },
 ];
 
 /** Lemma paths and notes: `scripts/round-trip-corpus.jsonl` (one JSON object per line). */

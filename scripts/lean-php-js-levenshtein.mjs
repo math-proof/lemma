@@ -10,8 +10,9 @@
  * `compare-lean-class-members.mjs`: PHP tokens follow **source order**, including `__construct`
  * before `__get` case names when that is how `lean.php` is written). PHP `__toString` is counted as
  * `method:toString` to match JS. Metric: sum of per-class Levenshtein distances on member-token
- * sequences. When the aligned sum is already 0, JSON output includes
- * `afterJsonAndAbstractLeanOnlyTotalDistance` (pre–trait/magic aligners) for translation progress.
+ * sequences. `LeanUnary` maps PHP `__set` (arg only) to `set:arg` like JS setters. When the aligned
+ * sum is already 0, JSON output includes `afterJsonAndAbstractLeanOnlyTotalDistance` (pre–trait/magic
+ * aligners) for translation progress.
  *
  * Usage:
  *   node scripts/lean-php-js-levenshtein.mjs
@@ -175,7 +176,7 @@ function jsMembers(body) {
  * appears, `__set`, then ordinary methods). Older bucket merge `[statics, getters, methods]`
  * wrongly put all `__get` names before `__construct` when the constructor appeared first.
  */
-function phpMembersOrdered(body) {
+function phpMembersOrdered(body, className = null) {
     const out = [];
     const seen = new Set();
     const push = (tok) => {
@@ -208,6 +209,7 @@ function phpMembersOrdered(body) {
         } else if (/^public\s+function\s+(__construct|__set|__clone)\s*\(/.test(t)) {
             const m = t.match(/^public\s+function\s+(__construct|__set|__clone)\s*\(/);
             if (m[1] === '__construct') push('constructor');
+            else if (m[1] === '__set' && className === 'LeanUnary') push('set:arg');
             else push(`magic:${m[1]}`);
         } else if (/^public\s+function\s+(\w+)\s*\(/.test(t)) {
             const m = t.match(/^public\s+function\s+(\w+)\s*\(/);
@@ -295,6 +297,8 @@ function alignLeanGetElemBase(pMem, jMem, phpInner) {
 /** PHP `__set` for `arg`; JS uses `set arg`. */
 function alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, className) {
     if (className !== 'LeanUnary') return [pMem, jMem];
+    // `phpMembersOrdered` maps `__set` → `set:arg`; keep lists aligned without stripping both.
+    if (pMem.includes('set:arg')) return [pMem, jMem];
     return [
         pMem.filter((x) => x !== 'magic:__set'),
         jMem.filter((x) => x !== 'set:arg'),
@@ -509,7 +513,7 @@ if (membersMode) {
         if (!phpBlock || !jsBlock) continue;
         const pInner = innerBody(phpBlock);
         const jInner = innerBody(jsBlock);
-        let pMem = phpMembersOrdered(pInner);
+        let pMem = phpMembersOrdered(pInner, name);
         let jMem = jsMembers(jInner);
         [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignAbstractLeanPhpVsJs(pMem, jMem, name);

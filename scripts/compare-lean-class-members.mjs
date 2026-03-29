@@ -130,7 +130,7 @@ function dedupePreserveOrder(arr) {
  * PHP member tokens in **source order** (not `[statics, getters, methods]`, which mis-orders
  * `__construct` before `__get` cases in classes like `LeanUnary`).
  */
-function phpMembersOrdered(body) {
+function phpMembersOrdered(body, className = null) {
     const out = [];
     const seen = new Set();
     const push = (tok) => {
@@ -163,6 +163,7 @@ function phpMembersOrdered(body) {
         } else if (/^public\s+function\s+(__construct|__set|__clone)\s*\(/.test(t)) {
             const m = t.match(/^public\s+function\s+(__construct|__set|__clone)\s*\(/);
             if (m[1] === '__construct') push('constructor');
+            else if (m[1] === '__set' && className === 'LeanUnary') push('set:arg');
             else push(`magic:${m[1]}`);
         } else if (/^public\s+function\s+(\w+)\s*\(/.test(t)) {
             const m = t.match(/^public\s+function\s+(\w+)\s*\(/);
@@ -222,7 +223,7 @@ for (const name of todo) {
     if (!phpBlock || !jsBlock) continue;
     const pInner = innerBody(phpBlock);
     const jInner = innerBody(jsBlock);
-    let pMem = phpMembersOrdered(pInner);
+    let pMem = phpMembersOrdered(pInner, name);
     let jMem = jsMembers(jInner);
     if (arithmetic) {
         [pMem, jMem] = alignStaticInputPriority(pMem, jMem, pInner);
