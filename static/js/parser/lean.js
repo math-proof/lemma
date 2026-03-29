@@ -131,6 +131,25 @@ function leanSubtreeContains(node, target) {
 }
 
 /**
+ * When `,` is typed after a token whose parent is `LeanArgsSpaceSeparated` under a `LeanTactic`
+ * (e.g. `use 0, head` inside a `match` arm), `Lean.insert_comma` would bubble the space-separated
+ * node and hit `LeanBar.insert_comma` on the enclosing `LeanRightarrow`. Forward the **leaf** to
+ * the tactic only in this one-hop shape (not every tactic ancestor — that breaks binders elsewhere).
+ * @param {import('./node.js').Node} leaf
+ */
+function leanInsertComma(leaf) {
+    const p = leaf.parent;
+    if (
+        p instanceof LeanArgsSpaceSeparated &&
+        p.parent instanceof LeanTactic &&
+        leanSubtreeContains(p.parent.arg, leaf)
+    ) {
+        return p.parent.insert_comma(leaf);
+    }
+    if (leaf.parent) return leaf.parent.insert_comma(leaf);
+}
+
+/**
  * Innermost still-open `LeanAbs` whose inner subtree contains `caret` (walk up from `from`).
  * Used so a second `|` closes `|a|` instead of starting another abs when `next` is not ` ` / `)` / EOF.
  * @param {import('./node.js').Node} from
@@ -564,7 +583,7 @@ export class Lean extends IndentedNode {
                 }
                 return this.parent.insert_unary(this, 'LeanNot');
             case ',':
-                return this.parent.insert_comma(this);
+                return leanInsertComma(this);
             case ':':
                 if (tokens[self.start_idx + 1] === '=') {
                     self.start_idx++;
@@ -7665,6 +7684,26 @@ export class LeanTactic extends LeanSyntax {
                 const $new = new LeanCaret(this.indent, caret.level);
                 caret.push($new);
                 return $new;
+            }
+        }
+        const arg = this.arg;
+        if (arg instanceof LeanArgsSpaceSeparated) {
+            const ix = arg.args.indexOf(caret);
+            if (ix >= 0) {
+                if (
+                    caret instanceof LeanToken ||
+                    caret instanceof LeanBinary ||
+                    caret instanceof LeanPairedGroup
+                ) {
+                    const $new = new LeanCaret(this.indent, caret.level);
+                    arg.replace(caret, new LeanArgsCommaSeparated([caret, $new], this.indent, caret.level));
+                    return $new;
+                }
+                if (caret instanceof LeanArgsCommaSeparated) {
+                    const $new = new LeanCaret(this.indent, caret.level);
+                    caret.push($new);
+                    return $new;
+                }
             }
         }
         return super.insert_comma(caret);

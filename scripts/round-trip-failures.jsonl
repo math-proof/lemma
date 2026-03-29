@@ -1,2 +1,1 @@
 # Off-corpus round-trip failures — not in round-trip-corpus.jsonl; fail parse1, parse2, or toJSON match after print. Regenerate: node scripts/build-round-trip-failures.mjs
-{"rel":"Lemma/List/MapEnumerate/eq/Cons_MapEnumerate/of/All_Eq.lean","failure":"mismatch","j1Len":5208,"j2Len":5229}
