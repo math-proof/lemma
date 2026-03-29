@@ -12,8 +12,8 @@
  * `method:toString` to match JS. Metric: sum of per-class Levenshtein distances on member-token
  * sequences. `LeanUnary` maps PHP `__set` (arg only) to `set:arg` like JS setters. When the aligned
  * sum is already 0, JSON output includes `afterJsonAndAbstractLeanOnlyTotalDistance` (member debt
- * after json/abstract-Lean maps plus documented `use LeanProp` / `LeanMultipleLine` / `LeanProperty`
- * omissions; see `alignEarlyTraitBodyOmissionsForDebtMeasure`).
+ * after json/abstract-Lean maps plus early omissions (`alignEarlyOmissionsForDebtMeasure`: traits,
+ * `LeanTactic` / `LeanIte` / `LeanGetElemBase` parity).
  *
  * Usage:
  *   node scripts/lean-php-js-levenshtein.mjs
@@ -225,11 +225,14 @@ function phpMembersOrdered(body, className = null) {
 }
 
 /**
- * For member-debt only: `extractClassBlock` omits `use Trait` bodies, and some JS overrides have no
- * PHP class-body counterpart (see `alignPhpTraitMembers`). Apply the same JS-side drops before the
- * debt Levenshtein so progress is measurable when aligned `totalDistance` is already 0.
+ * Member-debt Levenshtein only: mirror the first structural aligners that explain PHP `use Trait` /
+ * accessor parity (`alignPhpTraitMembers`, `LeanTactic`, `LeanIte`, `LeanGetElemBase`) so progress is
+ * measurable when aligned `totalDistance` is already 0.
+ *
+ * @returns {[string[], string[]]}
  */
-function alignEarlyTraitBodyOmissionsForDebtMeasure(jMem, phpInner, className) {
+function alignEarlyOmissionsForDebtMeasure(pMem, jMem, phpInner, className) {
+    let p = pMem;
     let j = jMem;
     if (/\buse\s+LeanProp\b/.test(phpInner)) {
         j = j.filter((x) => x !== 'method:isProp');
@@ -240,7 +243,37 @@ function alignEarlyTraitBodyOmissionsForDebtMeasure(jMem, phpInner, className) {
     if (className === 'LeanProperty') {
         j = j.filter((x) => x !== 'method:strArgs');
     }
-    return j;
+    if (className === 'LeanParenthesis') {
+        j = j.filter((x) => x !== 'method:strArgs' && x !== 'method:strFormat');
+    }
+    if (className === 'LeanStatements') {
+        j = j.filter((x) => x !== 'method:push_line_comment');
+    }
+    if (className === 'LeanTactic') {
+        p = p.filter((x) => x !== 'get:arg' && x !== 'get:sequential_tactic_combinator');
+        j = j.filter((x) => x !== 'get:func');
+    }
+    if (className === 'LeanIte') {
+        p = p.filter((x) => x !== 'magic:__set');
+        j = j.filter((x) => !x.startsWith('set:'));
+    }
+    if (/\buse\s+LeanGetElemBaseBinary\b/.test(phpInner)) {
+        j = j.filter(
+            (x) =>
+                x !== 'get:stack_priority' &&
+                x !== 'method:push_right' &&
+                x !== 'method:insert_comma' &&
+                x !== 'method:sep',
+        );
+    } else if (/\buse\s+LeanGetElemBase\b/.test(phpInner)) {
+        j = j.filter(
+            (x) =>
+                x !== 'get:stack_priority' &&
+                x !== 'method:push_right' &&
+                x !== 'method:insert_comma',
+        );
+    }
+    return [p, j];
 }
 
 function alignStaticInputPriority(pMem, jMem, phpInner) {
@@ -525,7 +558,7 @@ if (membersMode) {
 
     const perClass = [];
     let sum = 0;
-    /** Sum of distances after json/toJSON + abstract `Lean` map + early trait/JS-only omissions (`alignEarlyTraitBodyOmissionsForDebtMeasure`). */
+    /** Sum of distances after json/toJSON + abstract `Lean` map + `alignEarlyOmissionsForDebtMeasure`. */
     let sumAfterJsonAndAbstractLeanOnly = 0;
     for (const name of todo) {
         const phpBlock = extractClassBlock(phpSrc, name, false);
@@ -537,8 +570,8 @@ if (membersMode) {
         let jMem = jsMembers(jInner);
         [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignAbstractLeanPhpVsJs(pMem, jMem, name);
-        const jForDebt = alignEarlyTraitBodyOmissionsForDebtMeasure(jMem, pInner, name);
-        const afterJsonAbstractD = levenshteinArrays(pMem, jForDebt);
+        const [pForDebt, jForDebt] = alignEarlyOmissionsForDebtMeasure(pMem, jMem, pInner, name);
+        const afterJsonAbstractD = levenshteinArrays(pForDebt, jForDebt);
         sumAfterJsonAndAbstractLeanOnly += afterJsonAbstractD;
         // Trait bodies / PHP magic vs JS accessors — parity for default `--members` (not only `--normalize`).
         [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner, name);
@@ -571,7 +604,7 @@ if (membersMode) {
         classCount: perClass.length,
         normalized: normalize,
         totalDistance: sum,
-        /** Member debt after core maps + documented trait/JS-only omissions (see `alignEarlyTraitBodyOmissionsForDebtMeasure`). */
+        /** Member debt after core maps + `alignEarlyOmissionsForDebtMeasure`. */
         afterJsonAndAbstractLeanOnlyTotalDistance: sumAfterJsonAndAbstractLeanOnly,
         perClass,
     };
@@ -590,7 +623,7 @@ if (jsonOut) {
         console.log(`Classes: ${out.members.classCount}  Sum of distances: ${out.members.totalDistance}`);
         if (out.members.afterJsonAndAbstractLeanOnlyTotalDistance != null) {
             console.log(
-                `Member debt (jsonSerialize + abstract Lean + trait/JS-only omissions): ${out.members.afterJsonAndAbstractLeanOnlyTotalDistance}`,
+                `Member debt (jsonSerialize + abstract Lean + early omission parity): ${out.members.afterJsonAndAbstractLeanOnlyTotalDistance}`,
             );
         }
         const pc = out.members.perClass;
