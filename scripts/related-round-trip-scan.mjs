@@ -11,7 +11,7 @@
  *   2. Pick the scan mode that matches the bug class (see MODES below).
  *   3. `node scripts/related-round-trip-scan.mjs <mode>` — review OK vs FAIL lists.
  *   4. `node scripts/related-round-trip-scan.mjs <mode> --append` — append OK rels not already in corpus.
- *   5. `node scripts/test-lean-parser.mjs` and `node scripts/build-round-trip-failures.mjs`.
+ *   5. `node scripts/test-lean-parser.mjs`.
  *
  * MODES:
  *   echo-def-module-proof — `Lean_def` / lemma with `LeanAssign` rhs an empty `LeanCaret`, proof as

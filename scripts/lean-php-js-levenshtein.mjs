@@ -8,8 +8,10 @@
  *
  * **Member declarations** — per shared class, ordered normalized members (same extraction as
  * `compare-lean-class-members.mjs`: PHP tokens follow **source order**, including `__construct`
- * before `__get` case names when that is how `lean.php` is written). Metric: sum of per-class
- * Levenshtein distances on member-token sequences.
+ * before `__get` case names when that is how `lean.php` is written). PHP `__toString` is counted as
+ * `method:toString` to match JS. Metric: sum of per-class Levenshtein distances on member-token
+ * sequences. When the aligned sum is already 0, JSON output includes
+ * `afterJsonAndAbstractLeanOnlyTotalDistance` (pre–trait/magic aligners) for translation progress.
  *
  * Usage:
  *   node scripts/lean-php-js-levenshtein.mjs
@@ -209,7 +211,11 @@ function phpMembersOrdered(body) {
             else push(`magic:${m[1]}`);
         } else if (/^public\s+function\s+(\w+)\s*\(/.test(t)) {
             const m = t.match(/^public\s+function\s+(\w+)\s*\(/);
-            if (m && !['__get'].includes(m[1])) push(`method:${m[1]}`);
+            if (m && !['__get'].includes(m[1])) {
+                // JS lists `toString()` as `method:toString`; PHP magic `__toString` is the same hook.
+                const method = m[1] === '__toString' ? 'toString' : m[1];
+                push(`method:${method}`);
+            }
         }
     }
     return out;
@@ -495,6 +501,8 @@ if (membersMode) {
 
     const perClass = [];
     let sum = 0;
+    /** Sum of distances after only `jsonSerialize`→`toJSON` + abstract `Lean` reorder (before trait/magic aligners). */
+    let sumAfterJsonAndAbstractLeanOnly = 0;
     for (const name of todo) {
         const phpBlock = extractClassBlock(phpSrc, name, false);
         const jsBlock = extractClassBlock(jsSrc, name, true);
@@ -505,6 +513,8 @@ if (membersMode) {
         let jMem = jsMembers(jInner);
         [pMem, jMem] = alignJsonSerializePhpVsJs(pMem, jMem, name);
         [pMem, jMem] = alignAbstractLeanPhpVsJs(pMem, jMem, name);
+        const afterJsonAbstractD = levenshteinArrays(pMem, jMem);
+        sumAfterJsonAndAbstractLeanOnly += afterJsonAbstractD;
         // Trait bodies / PHP magic vs JS accessors — parity for default `--members` (not only `--normalize`).
         [pMem, jMem] = alignPhpTraitMembers(pMem, jMem, pInner, name);
         [pMem, jMem] = alignLeanUnaryPhpSetVsJsSetter(pMem, jMem, name);
@@ -522,7 +532,13 @@ if (membersMode) {
         }
         const d = levenshteinArrays(pMem, jMem);
         sum += d;
-        perClass.push({ name, distance: d, phpMembers: pMem, jsMembers: jMem });
+        perClass.push({
+            name,
+            distance: d,
+            afterJsonAndAbstractLeanOnlyDistance: afterJsonAbstractD,
+            phpMembers: pMem,
+            jsMembers: jMem,
+        });
     }
     out.members = {
         metric: 'sum_of_levenshtein_distance_per_class_member_sequences',
@@ -530,6 +546,8 @@ if (membersMode) {
         classCount: perClass.length,
         normalized: normalize,
         totalDistance: sum,
+        /** Pre-trait-alignment debt (translation progress target when `totalDistance` is already 0). */
+        afterJsonAndAbstractLeanOnlyTotalDistance: sumAfterJsonAndAbstractLeanOnly,
         perClass,
     };
 }
@@ -545,6 +563,11 @@ if (jsonOut) {
         console.log('\n=== Member lists per class ===');
         console.log(`Scope: ${out.members.scope}${normalize ? ' (normalized)' : ''}`);
         console.log(`Classes: ${out.members.classCount}  Sum of distances: ${out.members.totalDistance}`);
+        if (out.members.afterJsonAndAbstractLeanOnlyTotalDistance != null) {
+            console.log(
+                `Pre-trait member debt (after jsonSerialize + abstract Lean map): ${out.members.afterJsonAndAbstractLeanOnlyTotalDistance}`,
+            );
+        }
         const pc = out.members.perClass;
         const nonzero = pc.filter((r) => r.distance > 0);
         const show = nonzero.slice(0, 40);

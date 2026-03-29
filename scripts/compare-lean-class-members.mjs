@@ -166,7 +166,10 @@ function phpMembersOrdered(body) {
             else push(`magic:${m[1]}`);
         } else if (/^public\s+function\s+(\w+)\s*\(/.test(t)) {
             const m = t.match(/^public\s+function\s+(\w+)\s*\(/);
-            if (m && !['__get'].includes(m[1])) push(`method:${m[1]}`);
+            if (m && !['__get'].includes(m[1])) {
+                const method = m[1] === '__toString' ? 'toString' : m[1];
+                push(`method:${method}`);
+            }
         }
     }
     return out;

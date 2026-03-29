@@ -41,6 +41,9 @@ const SMOKE = [
     { name: 'open', source: 'open Bar\n' },
     { name: 'two imports', source: 'import A\nimport B\n' },
     { name: 'lemma trivial by', source: 'lemma tiny : True := by trivial\n' },
+    { name: 'namespace', source: 'namespace MyNs\n' },
+    { name: 'example by trivial', source: 'example : True := by trivial\n' },
+    { name: 'set_option', source: 'set_option pp.all true\n' },
 ];
 
 /** Lemma paths and notes: `scripts/round-trip-corpus.jsonl` (one JSON object per line). */
