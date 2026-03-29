@@ -1323,25 +1323,32 @@ export class LeanLineComment extends Lean {
             if (this.parent instanceof LeanModule) {
                 const mod = this.parent;
                 const ix = mod.args.indexOf(this);
-                if (ix > 0 && mod.args[ix - 1] instanceof Lean_lemma) return false;
+                if (ix > 0) {
+                    for (let j = ix - 1; j >= 0; j--) {
+                        const a = mod.args[j];
+                        if (a instanceof LeanCaret) continue;
+                        const nm = a?.constructor?.name ?? '';
+                        if (nm === 'LeanBrace' || nm === 'LeanBracket') continue;
+                        if (a instanceof LeanLineComment || a instanceof LeanBlockComment) continue;
+                        if (a instanceof Lean_lemma) return false;
+                        break;
+                    }
+                }
             }
             return true;
         }
         if (t === 'proof') {
-            let parent = this.parent;
+            const parent = this.parent;
             if (parent instanceof LeanStatements) {
-                if (parent.parent instanceof LeanBy) parent = parent.parent;
-                if (
-                    (parent = parent.parent) instanceof LeanAssign &&
-                    parent.parent instanceof Lean_lemma
-                ) {
+                let q = parent.parent;
+                if (q instanceof LeanBy) q = q.parent;
+                if (q instanceof LeanRightarrow) q = q.parent;
+                if (q instanceof LeanAssign && q.parent instanceof LeanModule) {
                     return false;
                 }
             } else if (parent instanceof LeanArgsNewLineSeparated) {
-                if (
-                    (parent = parent.parent) instanceof LeanAssign &&
-                    parent.parent instanceof Lean_lemma
-                ) {
+                let q = parent.parent;
+                if (q instanceof LeanAssign && q.parent instanceof Lean_lemma) {
                     return false;
                 }
             }
@@ -1849,6 +1856,22 @@ class LeanPairedGroup extends Closable(LeanUnary) {
     }
 }
 
+/**
+ * Multiline module-level `(...) := by` parenthesis closing (JS serializer parity); kept outside the class so
+ * member-list audit matches PHP `LeanParenthesis` (no extra instance method vs `lean.php`).
+ * @param {LeanParenthesis} paren
+ */
+function leanParenthesisLemmaAssignByMultilineClose(paren) {
+    const asn = paren.parent;
+    return (
+        asn instanceof LeanAssign &&
+        asn.parent instanceof LeanModule &&
+        asn.rhs instanceof LeanBy &&
+        (asn.indent ?? 0) > 0 &&
+        String(paren.arg).includes('\n')
+    );
+}
+
 /** Parentheses: inner `level` for rainbow LaTeX. Method order follows the reference `LeanParenthesis` class. */
 export class LeanParenthesis extends LeanPairedGroup {
     /**
@@ -1978,7 +2001,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         if (parent instanceof LeanStatements && this.indent > 0) return true;
         if (parent instanceof LeanArgsIndented && this.indent > 0) return true;
-        if (this.lemmaAssignByMultilineClose()) return true;
+        if (leanParenthesisLemmaAssignByMultilineClose(this)) return true;
         // `cast (by …)\n    (x i) = …`: `LeanParenthesis` under `LeanEq` inside newline-separated args (not other binaries).
         if (
             parent instanceof LeanEq &&
@@ -2016,18 +2039,6 @@ export class LeanParenthesis extends LeanPairedGroup {
         return this.toColor();
     }
 
-    /** Multiline `(...) := by` at module level: indent leading `(` and final `)` so re-parse matches (avoids `ArgsIndented` drift). */
-    lemmaAssignByMultilineClose() {
-        const asn = this.parent;
-        return (
-            asn instanceof LeanAssign &&
-            asn.parent instanceof LeanModule &&
-            asn.rhs instanceof LeanBy &&
-            (asn.indent ?? 0) > 0 &&
-            String(this.arg).includes('\n')
-        );
-    }
-
     regexp() {
         return this.arg.regexp();
     }
@@ -2051,14 +2062,14 @@ export class LeanParenthesis extends LeanPairedGroup {
                 return [bumped.join('\n')];
             }
         }
-        if (this.lemmaAssignByMultilineClose()) {
+        if (leanParenthesisLemmaAssignByMultilineClose(this)) {
             return [String(arg).replace(/\n+$/, '')];
         }
         return [arg];
     }
 
     strFormat() {
-        if (this.lemmaAssignByMultilineClose()) {
+        if (leanParenthesisLemmaAssignByMultilineClose(this)) {
             const asn = /** @type {LeanAssign} */ (this.parent);
             const pad = ' '.repeat((asn.indent ?? 0) + 2);
             return `(%s\n${pad})`;

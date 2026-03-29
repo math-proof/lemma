@@ -228,7 +228,7 @@ function alignStaticInputPriority(pMem, jMem, phpInner) {
 /**
  * PHP lists trait methods separately; `extractClassBlock` inner body omits `use` trait bodies.
  * `LeanProperty`: JS-only `strArgs` for dotted paths (no separate `strArgs` in PHP class body).
- * `LeanParenthesis`: JS-only `strArgs` / `strFormat` / `lemmaAssignByMultilineClose` for AST round-trip (PHP unchanged; class uses inherited `strFormat` / no `strArgs`).
+ * `LeanParenthesis`: JS-only `strArgs` / `strFormat` for AST round-trip (PHP unchanged; class uses inherited `strFormat` / no `strArgs`; lemma-by multiline close is a module helper in `lean.js`).
  * `LeanStatements`: PHP body omits inherited `push_line_comment` from `Lean`.
  * `LeanTactic`: PHP `$func` vs JS `get func`; `arg` / `sequential_tactic_combinator` live on `LeanSyntax` in JS.
  * `LeanIte`: PHP `__set` for if/then/else; JS uses `set if` / `set then` / `set else`.
@@ -246,12 +246,7 @@ function alignPhpTraitMembers(pMem, jMem, phpInner, className) {
         j = j.filter((x) => x !== 'method:strArgs');
     }
     if (className === 'LeanParenthesis') {
-        j = j.filter(
-            (x) =>
-                x !== 'method:strArgs' &&
-                x !== 'method:strFormat' &&
-                x !== 'method:lemmaAssignByMultilineClose',
-        );
+        j = j.filter((x) => x !== 'method:strArgs' && x !== 'method:strFormat');
     }
     if (className === 'LeanStatements') {
         j = j.filter((x) => x !== 'method:push_line_comment');
