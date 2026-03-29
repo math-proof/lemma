@@ -1902,28 +1902,6 @@ export class LeanParenthesis extends LeanPairedGroup {
         return '%s';
     }
 
-    /**
-     * `LeanArgsIndented` under `LeanStatements` prepends its indent only to this node's line; multiline
-     * `arg` (e.g. `by` / tactic block) keeps smaller absolute indents, so the next parse sees a dedent
-     * before `(` closes and drops the proof body. Pad continuation lines by the parent indent.
-     */
-    strArgs() {
-        const arg = this.arg;
-        if (this.is_indented() && this.parent instanceof LeanArgsIndented && this.parent.indent > 0) {
-            const s = String(arg);
-            if (s.includes('\n')) {
-                const pad = this.parent.indent;
-                const lines = s.split('\n');
-                const bumped = lines.map((line, i) => {
-                    if (i === 0 || line === '') return line;
-                    return ' '.repeat(pad) + line;
-                });
-                return [bumped.join('\n')];
-            }
-        }
-        return [arg];
-    }
-
     insert_newline(caret, newlineCount, indent, next) {
         if (caret === this) {
             caret = this.arg;
@@ -2000,6 +1978,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         }
         if (parent instanceof LeanStatements && this.indent > 0) return true;
         if (parent instanceof LeanArgsIndented && this.indent > 0) return true;
+        if (this.lemmaAssignByMultilineClose()) return true;
         // `cast (by …)\n    (x i) = …`: `LeanParenthesis` under `LeanEq` inside newline-separated args (not other binaries).
         if (
             parent instanceof LeanEq &&
@@ -2037,8 +2016,54 @@ export class LeanParenthesis extends LeanPairedGroup {
         return this.toColor();
     }
 
+    /** Multiline `(...) := by` at module level: indent leading `(` and final `)` so re-parse matches (avoids `ArgsIndented` drift). */
+    lemmaAssignByMultilineClose() {
+        const asn = this.parent;
+        return (
+            asn instanceof LeanAssign &&
+            asn.parent instanceof LeanModule &&
+            asn.rhs instanceof LeanBy &&
+            (asn.indent ?? 0) > 0 &&
+            String(this.arg).includes('\n')
+        );
+    }
+
     regexp() {
         return this.arg.regexp();
+    }
+
+    /**
+     * `LeanArgsIndented` under `LeanStatements` prepends its indent only to this node's line; multiline
+     * `arg` (e.g. `by` / tactic block) keeps smaller absolute indents, so the next parse sees a dedent
+     * before `(` closes and drops the proof body. Pad continuation lines by the parent indent.
+     */
+    strArgs() {
+        const arg = this.arg;
+        if (this.is_indented() && this.parent instanceof LeanArgsIndented && this.parent.indent > 0) {
+            const s = String(arg);
+            if (s.includes('\n')) {
+                const pad = this.parent.indent;
+                const lines = s.split('\n');
+                const bumped = lines.map((line, i) => {
+                    if (i === 0 || line === '') return line;
+                    return ' '.repeat(pad) + line;
+                });
+                return [bumped.join('\n')];
+            }
+        }
+        if (this.lemmaAssignByMultilineClose()) {
+            return [String(arg).replace(/\n+$/, '')];
+        }
+        return [arg];
+    }
+
+    strFormat() {
+        if (this.lemmaAssignByMultilineClose()) {
+            const asn = /** @type {LeanAssign} */ (this.parent);
+            const pad = ' '.repeat((asn.indent ?? 0) + 2);
+            return `(%s\n${pad})`;
+        }
+        return super.strFormat();
     }
 
     toColor() {
@@ -5533,11 +5558,31 @@ export class LeanModule extends LeanStatements {
                 if (ind > 0) {
                     let k = i + 1;
                     while (k < args.length && args[k] instanceof LeanCaret) k++;
-                    const next = args[k];
+                    let next = args[k];
                     const echoTail =
                         next instanceof LeanAssign &&
                         next.rhs instanceof LeanCaret &&
                         consumeEchoAssignProofTail(args, k + 1, indentText);
+                    let assignAfterColon = next;
+                    if (!(next instanceof LeanAssign)) {
+                        let j = k;
+                        while (j < args.length) {
+                            const x = args[j];
+                            if (x instanceof LeanCaret) {
+                                j++;
+                                continue;
+                            }
+                            if (x instanceof Lean_land) {
+                                j++;
+                                continue;
+                            }
+                            if (x instanceof LeanAssign) {
+                                assignAfterColon = x;
+                                break;
+                            }
+                            break;
+                        }
+                    }
                     let prevIdx = i - 1;
                     while (prevIdx >= 0) {
                         const p = args[prevIdx];
@@ -5548,7 +5593,9 @@ export class LeanModule extends LeanStatements {
                         if (
                             p instanceof LeanBrace ||
                             p instanceof LeanBracket ||
-                            p instanceof LeanParenthesis
+                            p instanceof LeanParenthesis ||
+                            p instanceof LeanLineComment ||
+                            p instanceof LeanBlockComment
                         ) {
                             prevIdx--;
                             continue;
@@ -5558,9 +5605,10 @@ export class LeanModule extends LeanStatements {
                     const lemmaColonMatchBy =
                         prevIdx >= 0 &&
                         args[prevIdx] instanceof Lean_lemma &&
-                        next instanceof LeanAssign &&
-                        next.rhs instanceof LeanBy &&
-                        next.lhs instanceof Lean_match;
+                        assignAfterColon instanceof LeanAssign &&
+                        assignAfterColon.rhs instanceof LeanBy &&
+                        (assignAfterColon.lhs instanceof Lean_match ||
+                            assignAfterColon.lhs instanceof LeanParenthesis);
                     if (echoTail || lemmaColonMatchBy) {
                         const lines = String(a).split('\n');
                         if (lines[0] !== '') lines[0] = ' '.repeat(ind) + lines[0];
