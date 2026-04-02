@@ -56,7 +56,7 @@
                 <span class=green><b>-- proof</b></span>
             </a>
 
-            <template v-for="(code, i) in get_proof_list(proof)" :key=refresh>
+            <template v-for="(code, i) in get_proof_list(proof)" :key="`${refresh}-${index}-proof-${i}`">
                 <renderLean :text=code.lean :index="get_index(index, i)"></renderLean>
                 <p v-latex.block=gather(code.latex)></p>
                 <markdown v-if=code.think :root=code.think.root v-clipboard :data-clipboard-text=code.prompt />

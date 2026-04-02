@@ -1,5 +1,6 @@
 /**
  * Lean lemma browser — pure Node.js (reads `.lean` files, JS compiler, EJS shell).
+ * Optional MySQL cache: same idea as php/lemma.php (`.echo.lean` + `fetch_from_mysql`).
  */
 import express from 'express';
 import path from 'path';
@@ -15,6 +16,14 @@ import { jsonForScriptEmbed } from './lean/jsonForScriptEmbed.mjs';
 import { listLemmaTopLevelDirs } from './lean/lemmaSections.mjs';
 import { handleExecutePhpStub } from './lean/executeStub.mjs';
 import { handleDisambiguatePhp } from './lean/disambiguateStub.mjs';
+import {
+  leanEchoPath,
+  getMysqlConfig,
+  shouldLoadLemmaFromMysql,
+  fetchLemmaRowFromMysql,
+  codeFromMysqlRow,
+  ensureEmptyEchoFile,
+} from './lean/fetchLemmaMysql.mjs';
 
 const VIEWS = path.join(REPO_ROOT, 'views');
 
@@ -45,7 +54,13 @@ app.use(
   })
 );
 
-function renderLemmaPage(res, module) {
+const PROJECT_USER =
+  process.env.LEAN_PROJECT_USER || path.basename(REPO_ROOT);
+
+/** PHP `lemma.php`: only read MySQL when `.echo.lean` is missing or newer than `.lean`. */
+const MYSQL_USE_PHP_ECHO_RULE = process.env.LEAN_MYSQL_ECHO_RULE === '1';
+
+async function renderLemmaPage(res, module) {
   const abs = moduleToLeanPath(module);
   if (!abs || !fileExists(abs)) {
     res.status(404).type('html').send(
@@ -55,8 +70,32 @@ function renderLemmaPage(res, module) {
     );
     return;
   }
-  const source = readLeanFile(abs);
-  const code = render2vueFromSource(source, module, { user: 'lean' });
+
+  const echoAbs = leanEchoPath(abs);
+  let code = null;
+
+  const mysqlConfigured = getMysqlConfig() != null;
+  const tryMysql =
+    mysqlConfigured &&
+    (MYSQL_USE_PHP_ECHO_RULE ? shouldLoadLemmaFromMysql(abs, echoAbs) : true);
+
+  if (tryMysql) {
+    try {
+      const row = await fetchLemmaRowFromMysql(PROJECT_USER, module);
+      if (row) {
+        code = codeFromMysqlRow(row, module, PROJECT_USER);
+        if (code && !fileExists(echoAbs)) ensureEmptyEchoFile(echoAbs);
+      }
+    } catch (e) {
+      console.warn('[lean mysql]', e.message);
+    }
+  }
+
+  if (!code) {
+    const source = readLeanFile(abs);
+    code = render2vueFromSource(source, module, { user: PROJECT_USER });
+  }
+
   const title = titleFromModule(module);
   const codeJson = jsonForScriptEmbed(code);
   res.set('Content-Type', 'text/html; charset=utf-8');
@@ -80,7 +119,13 @@ function handleLeanGet(req, res) {
     );
     return;
   }
-  renderLemmaPage(res, module);
+  renderLemmaPage(res, module).catch((err) => {
+    console.error('[lean]', err);
+    res.status(500).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+      <p>${escapeHtml(err.message)}</p>`
+    );
+  });
 }
 
 app.get('/lean', handleLeanGet);
@@ -97,4 +142,9 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`Lemma server  http://127.0.0.1:${PORT}/lean/`);
   console.log(`  static:      /lean/static/`);
   console.log(`  compiler:    JS (render2vue.mjs)`);
+  if (getMysqlConfig()) {
+    console.log(
+      `  mysql:       lemma from DB when row exists${MYSQL_USE_PHP_ECHO_RULE ? ' (LEAN_MYSQL_ECHO_RULE=1: php echo gate)' : ''}`
+    );
+  }
 });
