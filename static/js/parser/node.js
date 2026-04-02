@@ -339,8 +339,6 @@ export class AbstractParser {
 
     parse(token, ...kwargs) {
         const next = this.caret.parse(token, ...kwargs);
-        // If `parse` omits a return (PHP can yield null in the same situations), keep the previous caret
-        // so `build` loops do not stop early with a partial tree (Lean corpus round-trip).
         this.caret = next ?? this.caret;
         return this.caret;
     }

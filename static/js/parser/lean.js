@@ -286,8 +286,8 @@ export class Lean extends IndentedNode {
         return caret.push_line_comment(comment);
     }
 
-    insert_newline(_caret, newlineCount, indent, next) {
-        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+    insert_newline(_caret, newline_count, indent, next) {
+        if (this.parent) return this.parent.insert_newline(this, newline_count, indent, next);
         throw new Error('insert_newline: no parent');
     }
 
@@ -313,7 +313,7 @@ export class Lean extends IndentedNode {
 
     insert_unary(self, funcName) {
         const parent = self.parent;
-        const Ctor = getLeanClass(funcName);
+        const Ctor = LEAN_CLASSES[funcName];
         let caret;
         let replacement;
         if (self instanceof LeanCaret) {
@@ -333,12 +333,6 @@ export class Lean extends IndentedNode {
     }
 
     insert_word(caret, word) {
-        if (caret instanceof LeanCaret) {
-            const level = caret.level;
-            const newTok = new LeanToken(word, caret.indent, level);
-            caret.parent.replace(caret, new LeanArgsSpaceSeparated([caret, newTok], caret.indent, level));
-            return newTok;
-        }
         return caret.push_token(word);
     }
 
@@ -399,16 +393,14 @@ export class Lean extends IndentedNode {
                 return this.append(`Lean_${token}`, 'tactic');
             case 'public':
             case 'private':
-            case 'protected': {
-                let access = token;
+            case 'protected':
                 while (tokens[++self.start_idx] === ' ');
                 if (tokens[self.start_idx] === 'nonrec') {
-                    access += ' nonrec';
+                    token += ' nonrec';
                     self.start_idx++;
                     while (tokens[++self.start_idx] === ' ');
                 }
-                return this.push_accessibility(`Lean_${tokens[self.start_idx]}`, access);
-            }
+                return this.push_accessibility(`Lean_${tokens[self.start_idx]}`, token);
             case 'scoped':
             case 'noncomputable':
             case 'nonrec':
@@ -423,13 +415,13 @@ export class Lean extends IndentedNode {
                 break;
             case '\n': {
                 let j = 0;
-                let newlineCount = 1;
+                let newline_count = 1;
                 let indent = 0;
                 while (true) {
                     indent = 0;
                     while (tokens[self.start_idx + ++j] === ' ') ++indent;
                     if (tokens[self.start_idx + j] !== '\n') break;
-                    ++newlineCount;
+                    ++newline_count;
                 }
                 let k = j;
                 while (
@@ -443,12 +435,11 @@ export class Lean extends IndentedNode {
                         while (tokens[self.start_idx + ++k] === ' ') ++indent;
                     }
                 }
-                if (indent === 0 && tokens[self.start_idx + k] === 'end') newlineCount -= 1;
-                const nextCaret = this.parent.insert_newline(this, newlineCount, indent, tokens[self.start_idx + k]);
+                if (indent === 0 && tokens[self.start_idx + k] === 'end') newline_count -= 1;
+                const caret = this.parent.insert_newline(this, newline_count, indent, tokens[self.start_idx + k]);
                 self.start_idx += j - 1;
-                // When a callee omits `return` (PHP can yield null in the same situations), keep this caret so
-                // `AbstractParser.parse` matches practical parse completion without a `LeanParser` override.
-                return nextCaret ?? this;
+                console.assert(caret != null);
+                return caret;
             }
             case '.':
                 if (
@@ -854,8 +845,8 @@ export class Lean extends IndentedNode {
         }
     }
 
-    push_accessibility($new, _accessibility) {
-        if (this.parent) return this.parent.push_accessibility($new, _accessibility);
+    push_accessibility($new, accessibility) {
+        if (this.parent) return this.parent.push_accessibility($new, accessibility);
     }
 
     push_arithmetic(token) {
@@ -871,7 +862,7 @@ export class Lean extends IndentedNode {
     push_binary(funcName) {
         const parent = this.parent;
         if (!parent) return undefined;
-        const Ctor = getLeanClass(funcName);
+        const Ctor = LEAN_CLASSES[funcName];
         if (Ctor.input_priority > parent.stack_priority) {
             const level = this.level;
             const caret = new LeanCaret(this.indent, level);
@@ -904,7 +895,7 @@ export class Lean extends IndentedNode {
                         let par = self.parent;
                         while (par) {
                             if (par instanceof Lean_equiv || par instanceof LeanNotEquiv) {
-                                const newNode = new (getLeanClass(func))(caret, indent, level);
+                                const newNode = new (LEAN_CLASSES[func])(caret, indent, level);
                                 par.replace(self, new LeanArgsSpaceSeparated([self, newNode], indent, level));
                                 return caret;
                             }
@@ -924,7 +915,7 @@ export class Lean extends IndentedNode {
                         return caret;
                     }
                 }
-                const paired = new (getLeanClass(func))(caret, indent, level);
+                const paired = new (LEAN_CLASSES[func])(caret, indent, level);
                 if (this.parent instanceof LeanArgsSpaceSeparated) this.parent.push(paired);
                 else this.parent.replace(this, new LeanArgsSpaceSeparated([this, paired], indent, level));
                 return caret;
@@ -946,7 +937,7 @@ export class Lean extends IndentedNode {
     push_multiple(funcName, caret) {
         const parent = this.parent;
         if (!parent) throw new Error('push_multiple: no parent');
-        const Ctor = getLeanClass(funcName);
+        const Ctor = LEAN_CLASSES[funcName];
         if (parent instanceof Ctor) {
             parent.push(caret);
         } else {
@@ -967,7 +958,7 @@ export class Lean extends IndentedNode {
     push_post_unary(funcName) {
         const parent = this.parent;
         if (!parent) return undefined;
-        const Ctor = getLeanClass(funcName);
+        const Ctor = LEAN_CLASSES[funcName];
         if (Ctor.input_priority > parent.stack_priority) {
             const created = new Ctor(this, this.indent, this.level);
             parent.replace(this, created);
@@ -1030,10 +1021,10 @@ export class Lean extends IndentedNode {
 }
 
 export class LeanCaret extends Lean {
-    append($new, $func) {
+    append($new) {
         if (typeof $new === 'string') {
-            const Ctor = getLeanClass($new);
-            this.parent.replace(this, new Ctor(this, this.indent, this.level));
+            $new = LEAN_CLASSES[$new];
+            this.parent.replace(this, new $new(this, this.indent, this.level));
             return this;
         }
         this.parent.replace(this, $new);
@@ -1057,7 +1048,7 @@ export class LeanCaret extends Lean {
     }
 
     push_accessibility($new, $accessibility) {
-        this.parent.replace(this, new (getLeanClass($new))($accessibility, this, this.indent, this.level));
+        this.parent.replace(this, new (LEAN_CLASSES[$new])($accessibility, this, this.indent, this.level));
         return this;
     }
 
@@ -1070,7 +1061,7 @@ export class LeanCaret extends Lean {
     }
 
     push_left($func, $prevToken) {
-        const Ctor = getLeanClass($func);
+        const Ctor = LEAN_CLASSES[$func];
         this.parent.replace(this, new Ctor(this, this.indent, this.level));
         return this;
     }
@@ -1611,11 +1602,11 @@ export class LeanArgs extends Lean {
 
     /**
      * @param {number} indent
-     * @param {number} newlineCount
+     * @param {number} newline_count
      * @param {boolean} [functionCall]
      * @returns {LeanCaret | undefined}
      */
-    push_args_indented(indent, newlineCount, functionCall = true) {
+    push_args_indented(indent, newline_count, functionCall = true) {
         const end = this.args[this.args.length - 1];
         if (
             !functionCall ||
@@ -1625,7 +1616,7 @@ export class LeanArgs extends Lean {
         ) {
             const caret = new LeanCaret(indent, end.level);
             const nl = new LeanArgsNewLineSeparated([caret], indent, caret.level);
-            const c = nl.push_newlines(newlineCount - 1);
+            const c = nl.push_newlines(newline_count - 1);
             this.replace(end, new LeanArgsIndented(end, nl, this.indent, c.level));
             return c;
         }
@@ -1728,13 +1719,13 @@ class LeanPairedGroup extends Closable(LeanUnary) {
     insert(caret, func, _type) {
         if (this.arg === caret) {
             if (caret instanceof LeanCaret) {
-                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
                 this.arg = new Ctor(caret, this.indent, caret.level);
                 return caret;
             }
             if (caret instanceof LeanToken) {
                 const caret2 = new LeanCaret(this.indent, caret.level);
-                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
                 this.arg = new LeanArgsSpaceSeparated([this.arg, new Ctor(caret2, this.indent, caret.level)], this.indent, caret.level);
                 return caret2;
             }
@@ -1762,12 +1753,12 @@ class LeanPairedGroup extends Closable(LeanUnary) {
         throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret === this) {
             caret = this.arg;
         }
         if (this.indent > indent) {
-            return super.insert_newline(caret, newlineCount, indent, next);
+            return super.insert_newline(caret, newline_count, indent, next);
         }
         if (this.indent <= indent) {
             if (caret instanceof LeanCaret) {
@@ -1798,16 +1789,16 @@ class LeanPairedGroup extends Closable(LeanUnary) {
                     target = next;
                 }
                 if (target instanceof LeanCaret || target instanceof LeanArgsSpaceSeparated) {
-                    return super.insert_newline(caret, newlineCount, indent, next);
+                    return super.insert_newline(caret, newline_count, indent, next);
                 }
                 if (target instanceof LeanPairedGroup) {
-                    return target.insert_newline(target, newlineCount, indent, next);
+                    return target.insert_newline(target, newline_count, indent, next);
                 }
-                return super.insert_newline(caret, newlineCount, indent, next);
+                return super.insert_newline(caret, newline_count, indent, next);
             }
             throw new Error(`LeanPairedGroup.insert_newline: unexpected for ${this.constructor.name}`);
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     insert_tactic(caret, token) {
@@ -1917,7 +1908,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         const level = this.level;
         const caret = new LeanCaret(indent, level);
         if (typeof $new === 'string') {
-            const Ctor = getLeanClass($new);
+            const Ctor = LEAN_CLASSES[$new];
             const node = new Ctor(caret, indent, level);
             if (this.parent instanceof LeanArgsSpaceSeparated) {
                 this.parent.push(node);
@@ -1944,7 +1935,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         return '%s';
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret === this) {
             caret = this.arg;
         }
@@ -1952,16 +1943,16 @@ export class LeanParenthesis extends LeanPairedGroup {
             if (caret instanceof LeanBy && this.indent === indent) {
                 const c2 = new LeanCaret(indent, caret.level);
                 const newNL = new LeanArgsNewLineSeparated([this.arg, c2], indent, c2.level);
-                const c = newNL.push_newlines(newlineCount - 1);
+                const c = newNL.push_newlines(newline_count - 1);
                 this.arg = newNL;
                 return c;
             }
             let ind = indent;
             if (ind === this.indent) ind = this.indent + 2;
-            const c = this.push_args_indented(ind, newlineCount, false);
+            const c = this.push_args_indented(ind, newline_count, false);
             return c;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     insert_unary(caret, funcName) {
@@ -1969,7 +1960,7 @@ export class LeanParenthesis extends LeanPairedGroup {
             throw new Error(`insert_unary is unexpected for ${this.constructor.name}`);
         }
         const indent = this.indent;
-        const Ctor = getLeanClass(funcName);
+        const Ctor = LEAN_CLASSES[funcName];
         let caretOut;
         let newNode;
         if (caret instanceof LeanCaret) {
@@ -2211,7 +2202,7 @@ class LeanBracket extends LeanPairedGroup {
 }
 
 class LeanBrace extends LeanPairedGroup {
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent) {
             if (caret instanceof LeanCaret) {
                 if (indent === this.indent) {
@@ -2227,7 +2218,7 @@ class LeanBrace extends LeanPairedGroup {
                 throw new Error(`${this.constructor.name}.insert_newline is unexpected for ${caret.constructor.name}`);
             }
         } else {
-            return super.insert_newline(caret, newlineCount, indent, next);
+            return super.insert_newline(caret, newline_count, indent, next);
         }
     }
 
@@ -2403,11 +2394,11 @@ export class LeanBinary extends LeanArgs {
     }
 
     /** Handle newline insertion for tactic contexts. */
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.parent instanceof LeanTactic && indent > this.indent) {
-            return this.parent.push_args_indented(indent, newlineCount, false);
+            return this.parent.push_args_indented(indent, newline_count, false);
         }
-        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+        if (this.parent) return this.parent.insert_newline(this, newline_count, indent, next);
     }
 
     /** Source-code operator token; derived from token2classname reverse lookup. */
@@ -2462,7 +2453,7 @@ export class LeanProperty extends LeanBinary {
                 this.parent.replace(
                     this,
                     new LeanArgsSpaceSeparated(
-                        [this, new (getLeanClass(func))(newCaret, newCaret.indent, newCaret.level)],
+                        [this, new (LEAN_CLASSES[func])(newCaret, newCaret.indent, newCaret.level)],
                         this.indent,
                         newCaret.level
                     )
@@ -2482,11 +2473,11 @@ export class LeanProperty extends LeanBinary {
         }
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.parent instanceof LeanTactic && indent > this.indent) {
-            return this.parent.push_args_indented(indent, newlineCount, false);
+            return this.parent.push_args_indented(indent, newline_count, false);
         }
-        return this.parent.insert_newline(this, newlineCount, indent, next);
+        return this.parent.insert_newline(this, newline_count, indent, next);
     }
 
     insert_tactic(caret, token) {
@@ -2677,7 +2668,7 @@ export class LeanColon extends LeanBinary {
         return ':';
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.rhs === caret) {
             if (caret instanceof LeanCaret && indent >= this.indent) {
                 let ind = indent;
@@ -2689,7 +2680,7 @@ export class LeanColon extends LeanBinary {
             }
             if (caret instanceof LeanStatements && indent === this.indent && this.parent?.constructor.name === 'LeanParenthesis') return caret;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     is_indented() {
@@ -2749,7 +2740,7 @@ export class LeanAssign extends LeanBinary {
 
     insert(caret, func, type) {
         if (this.rhs === caret && caret instanceof LeanCaret) {
-            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
             this.replace(caret, new Ctor(caret, caret.indent, caret.level));
             return caret;
         }
@@ -2757,26 +2748,26 @@ export class LeanAssign extends LeanBinary {
         throw new Error(`insert is unexpected for ${this.constructor.name}`);
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent < indent) {
             if (caret === this.rhs) {
                 let out = caret;
                 if (caret instanceof LeanCaret) {
                     caret.indent = indent;
                     this.rhs = new LeanArgsNewLineSeparated([caret], indent, caret.level);
-                    out = this.rhs.push_newlines(newlineCount - 1);
+                    out = this.rhs.push_newlines(newline_count - 1);
                 } else if (caret instanceof LeanArgsNewLineSeparated) {
-                    if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+                    if (this.parent) return this.parent.insert_newline(this, newline_count, indent, next);
                 } else {
                     if (this.parent instanceof LeanCalc)
-                        return this.parent.insert_newline(this, newlineCount, indent, next);
-                    out = this.push_args_indented(indent, newlineCount, false);
+                        return this.parent.insert_newline(this, newline_count, indent, next);
+                    out = this.push_args_indented(indent, newline_count, false);
                 }
                 return out;
             }
             throw new Error(`insert_newline is unexpected for ${this.constructor.name}`);
         }
-        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+        if (this.parent) return this.parent.insert_newline(this, newline_count, indent, next);
     }
 
     insert_tactic(caret, type) {
@@ -2838,7 +2829,7 @@ export class LeanBinaryBoolean extends LeanBinary {
         const level = this.level;
         const caret = new LeanCaret(indent, level);
         if (typeof new_ === 'string') {
-            const Ctor = getLeanClass(new_);
+            const Ctor = LEAN_CLASSES[new_];
             const newNode = new Ctor(caret, indent, level);
             this.rhs = new LeanArgsSpaceSeparated([this.rhs, newNode], indent, level);
             return caret;
@@ -2857,16 +2848,16 @@ export class LeanBinaryBoolean extends LeanBinary {
         return caret.push_binary('LeanColon');
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.rhs === caret && indent > this.indent) {
             if (caret instanceof LeanCaret) {
                 caret.indent = indent;
                 this.rhs = new LeanStatements([caret], indent, caret.level);
                 return caret;
             }
-            return this.parent.push_args_indented(indent, newlineCount, false);
+            return this.parent.push_args_indented(indent, newline_count, false);
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     is_indented() {
@@ -3061,10 +3052,10 @@ export class Lean_leftrightarrow extends LeanBinaryBoolean {
 export class LeanArithmetic extends LeanBinary {
     static input_priority = 67;
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret instanceof LeanCaret)
             return caret;
-        return this.parent.insert_newline(this, newlineCount, indent, next);
+        return this.parent.insert_newline(this, newline_count, indent, next);
     }
 
     sep() {
@@ -4048,7 +4039,7 @@ export class Lean_lor extends LeanLogic {
         return '∨';
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret === this.rhs && caret instanceof LeanCaret) {
             if (indent >= this.indent) {
                 let ind = indent;
@@ -4058,7 +4049,7 @@ export class Lean_lor extends LeanLogic {
                 return caret;
             }
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     toJSON() {
@@ -4203,14 +4194,14 @@ export class LeanStatements extends LeanArgs {
         return caret;
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
-        if (this.indent > indent) return super.insert_newline(caret, newlineCount, indent, next);
+    insert_newline(caret, newline_count, indent, next) {
+        if (this.indent > indent) return super.insert_newline(caret, newline_count, indent, next);
         if (this.indent < indent) {
-            const c = this.push_args_indented(indent, newlineCount);
+            const c = this.push_args_indented(indent, newline_count);
             if (c) return c;
             // See `LeanModule.insert_newline` — fall through when last arg cannot be wrapped.
         }
-        for (let k = 0; k < newlineCount; ++k) {
+        for (let k = 0; k < newline_count; ++k) {
             caret = new LeanCaret(indent, caret.level);
             this.push(caret);
         }
@@ -5482,7 +5473,7 @@ export class LeanModule extends LeanStatements {
     insert(caret, func, type) {
         const last = this.args[this.args.length - 1];
         if (last === caret && caret instanceof LeanCaret) {
-            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
             this.push(new Ctor(caret, this.indent, caret.level));
             return caret;
         }
@@ -5716,7 +5707,7 @@ class Lean_import extends LeanCommand {
         if (typeof func !== 'string') {
             throw new Error(`append is unexpected for ${this.constructor.name}`);
         }
-        const Ctor = getLeanClass(func);
+        const Ctor = LEAN_CLASSES[func];
         const level = this.arg.level;
         const c = new LeanCaret(this.indent, level);
         this.arg = new Ctor(c, this.indent, level);
@@ -5746,7 +5737,7 @@ class Lean_open extends LeanCommand {
         if (typeof func !== 'string') {
             throw new Error(`append is unexpected for ${this.constructor.name}`);
         }
-        const Ctor = getLeanClass(func);
+        const Ctor = LEAN_CLASSES[func];
         const level = this.arg.level;
         const c = new LeanCaret(this.indent, level);
         this.arg = new Ctor(c, this.indent, level);
@@ -5776,7 +5767,7 @@ class Lean_set_option extends LeanCommand {
         if (typeof func !== 'string') {
             throw new Error(`append is unexpected for ${this.constructor.name}`);
         }
-        const Ctor = getLeanClass(func);
+        const Ctor = LEAN_CLASSES[func];
         const level = this.arg.level;
         const c = new LeanCaret(this.indent, level);
         this.arg = new Ctor(c, this.indent, level);
@@ -5969,14 +5960,14 @@ export class LeanRightarrow extends LeanBinary {
 
     insert(caret, func, type) {
         if (this.rhs === caret && caret instanceof LeanCaret) {
-            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
             this.replace(caret, new Ctor(caret, caret.indent, caret.level));
             return caret;
         }
         if (this.parent) return this.parent.insert(this, func, type);
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret === this.rhs) {
             if (caret instanceof LeanCaret || caret instanceof LeanLineComment) {
                 let ind = indent;
@@ -5984,7 +5975,7 @@ export class LeanRightarrow extends LeanBinary {
                 caret.indent = ind;
                 const stmts = new LeanStatements([caret], ind, caret.level);
                 this.replace(caret, stmts);
-                let nl = newlineCount;
+                let nl = newline_count;
                 if (!(caret instanceof LeanCaret)) nl++;
                 let last = caret;
                 for (let i = 1; i < nl; i++) {
@@ -5994,7 +5985,7 @@ export class LeanRightarrow extends LeanBinary {
                 return last;
             }
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     is_indented() {
@@ -6028,20 +6019,20 @@ export class Lean_rightarrow extends LeanBinary {
         return '→';
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
             let ind = indent;
             if (ind === this.indent) ind = this.indent + 2;
             caret.indent = ind;
             const stmts = new LeanStatements([caret], ind, caret.level);
             this.replace(caret, stmts);
-            for (let i = 1; i < newlineCount; i++) {
+            for (let i = 1; i < newline_count; i++) {
                 const c = new LeanCaret(ind, caret.level);
                 stmts.push(c);
             }
             return stmts.args[stmts.args.length - 1];
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     is_indented() {
@@ -6082,20 +6073,20 @@ export class Lean_mapsto extends LeanBinary {
         return '↦';
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
             let ind = indent;
             if (ind === this.indent) ind = this.indent + 2;
             caret.indent = ind;
             const stmts = new LeanStatements([caret], ind, caret.level);
             this.replace(caret, stmts);
-            for (let i = 1; i < newlineCount; i++) {
+            for (let i = 1; i < newline_count; i++) {
                 const c = new LeanCaret(ind, caret.level);
                 stmts.push(c);
             }
             return stmts.args[stmts.args.length - 1];
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     is_indented() {
@@ -6241,7 +6232,7 @@ class Lean_match extends LeanArgs {
     insert(caret, func, _type) {
         if (!this.with && func === 'LeanWith') {
             const c = new LeanCaret(this.indent, caret.level);
-            const Ctor = getLeanClass(func);
+            const Ctor = LEAN_CLASSES[func];
             const w = new Ctor(c, this.indent, c.level);
             this.with = w;
             return c;
@@ -6388,12 +6379,12 @@ export class LeanIte extends LeanArgs {
         throw new Error(`LeanIte.insert_if: unexpected for ${this.constructor.name}`);
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret === this.then) {
             if (caret instanceof LeanTactic || caret instanceof Lean_let) {
                 const stmt = new LeanStatements([caret], caret.indent, caret.level);
                 this.then = stmt;
-                for (let i = 0; i < newlineCount; i++) {
+                for (let i = 0; i < newline_count; i++) {
                     caret = new LeanCaret(caret.indent, caret.level);
                     stmt.push(caret);
                 }
@@ -6405,14 +6396,14 @@ export class LeanIte extends LeanArgs {
             if (indent > this.indent && (caret instanceof LeanTactic || caret instanceof Lean_let)) {
                 const stmt = new LeanStatements([caret], caret.indent, caret.level);
                 this.else = stmt;
-                for (let i = 0; i < newlineCount; i++) {
+                for (let i = 0; i < newline_count; i++) {
                     caret = new LeanCaret(caret.indent, caret.level);
                     stmt.push(caret);
                 }
                 return caret;
             }
         }
-        if (this.parent) return this.parent.insert_newline(this, newlineCount, indent, next);
+        if (this.parent) return this.parent.insert_newline(this, newline_count, indent, next);
     }
 
     insert_tactic(caret, func) {
@@ -6656,7 +6647,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const last = this.args[this.args.length - 1];
         if (last === caret && !(caret instanceof LeanCaret) && type !== 'modifier') {
             const c = new LeanCaret(this.indent, caret.level);
-            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
             this.push(new Ctor(c, c.indent, c.level));
             return c;
         }
@@ -6679,7 +6670,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const last = this.args[this.args.length - 1];
         if (last !== caret) throw new Error(`insert_unary is unexpected for ${this.constructor.name}`);
         const indent = this.indent;
-        const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+        const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
         if (caret instanceof LeanCaret) {
             this.replace(caret, new Ctor(caret, indent, caret.level));
             return caret;
@@ -7065,24 +7056,24 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
         return caret;
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent > indent) {
             if (caret instanceof LeanParenthesis && next === ':') return caret;
-            return super.insert_newline(caret, newlineCount, indent, next);
+            return super.insert_newline(caret, newline_count, indent, next);
         }
         if (this.indent < indent) {
-            const pushed = this.push_args_indented(indent, newlineCount);
-            if (pushed) return pushed;
+            const $new = this.push_args_indented(indent, newline_count);
+            if ($new) return $new;
             const c = new LeanCaret(indent, caret.level);
             this.push(c);
             return c;
         }
         if (this.parent instanceof LeanAssign && !(caret instanceof LeanLineComment)) {
-            return super.insert_newline(caret, newlineCount, indent, next);
+            return super.insert_newline(caret, newline_count, indent, next);
         }
         const last = this.args[this.args.length - 1];
         if (last === caret) {
-            for (let i = 0; i < newlineCount; ++i) {
+            for (let i = 0; i < newline_count; ++i) {
                 caret = new LeanCaret(indent, caret.level);
                 this.push(caret);
             }
@@ -7101,8 +7092,8 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
             .join('\n');
     }
 
-    push_newlines(newlineCount) {
-        for (let i = 0; i < newlineCount; ++i) {
+    push_newlines(newline_count) {
+        for (let i = 0; i < newline_count; ++i) {
             this.push(new LeanCaret(this.indent, this.level));
         }
         return this.args[this.args.length - 1];
@@ -7150,22 +7141,22 @@ export class LeanArgsIndented extends LeanBinary {
         return 47;
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent > indent) {
-            return super.insert_newline(caret, newlineCount, indent, next);
+            return super.insert_newline(caret, newline_count, indent, next);
         }
         if (this.indent < indent) {
-            const pushed = this.push_args_indented(indent, newlineCount);
-            if (pushed) return pushed;
+            const $new = this.push_args_indented(indent, newline_count);
+            if ($new) return $new;
             this.rhs = new LeanArgsNewLineSeparated([caret], indent, caret.level);
-            return this.rhs.push_newlines(newlineCount);
+            return this.rhs.push_newlines(newline_count);
         }
         if (this.parent instanceof LeanAssign) {
-            return super.insert_newline(caret, newlineCount, indent, next);
+            return super.insert_newline(caret, newline_count, indent, next);
         }
         const last = this.args[this.args.length - 1];
         if (last === caret) {
-            for (let i = 0; i < newlineCount; ++i) {
+            for (let i = 0; i < newline_count; ++i) {
                 caret = new LeanCaret(indent, caret.level);
                 this.push(caret);
             }
@@ -7231,7 +7222,7 @@ export class LeanArgsCommaSeparated extends LeanArgs {
         const last = this.args[this.args.length - 1];
         if (last === caret) {
             if (caret instanceof LeanCaret) {
-                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
                 this.replace(caret, new Ctor(caret, caret.indent, caret.level));
                 return caret;
             }
@@ -7284,7 +7275,7 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
         const last = this.args[this.args.length - 1];
         if (last === caret) {
             if (caret instanceof LeanCaret) {
-                const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+                const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
                 this.replace(caret, new Ctor(caret, caret.indent, caret.level));
                 return caret;
             }
@@ -7338,7 +7329,7 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     insert(caret, func, _type) {
         const last = this.args[this.args.length - 1];
         if (last === caret && caret instanceof LeanCaret) {
-            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
             this.replace(caret, new Ctor(caret, caret.indent, caret.level));
             return caret;
         }
@@ -7352,20 +7343,20 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     }
 
     /** When indent increases, also tries `push_args_indented` (multiline `⟨…⟩` / `[…]`). */
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent > indent) {
-            return super.insert_newline(caret, newlineCount, indent, next);
+            return super.insert_newline(caret, newline_count, indent, next);
         }
         if (this.indent < indent) {
-            const pushed = this.push_args_indented(indent, newlineCount);
-            if (pushed) return pushed;
+            const $new = this.push_args_indented(indent, newline_count);
+            if ($new) return $new;
             const c = new LeanCaret(indent, caret.level);
             this.push(c);
             return c;
         }
         const last = this.args[this.args.length - 1];
         if (last === caret) {
-            for (let i = 0; i < newlineCount - 1; ++i) {
+            for (let i = 0; i < newline_count - 1; ++i) {
                 caret = new LeanCaret(indent, caret.level);
                 this.push(caret);
             }
@@ -7423,7 +7414,7 @@ export class LeanSyntax extends LeanArgs {
     insert(caret, func, _type) {
         const last = this.args[this.args.length - 1];
         if (caret === last) {
-            const Ctor = typeof func === 'string' ? getLeanClass(func) : func;
+            const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
             const newCaret = new LeanCaret(this.indent, caret.level);
             this.push(new Ctor(newCaret, this.indent, caret.level));
             return newCaret;
@@ -7713,7 +7704,7 @@ export class LeanTactic extends LeanSyntax {
         return this.push_line_comment(comment);
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret === this.arg) {
             if (this.indent < indent && caret instanceof LeanArgsSpaceSeparated) {
                 const $new = new LeanCaret(this.indent, caret.level);
@@ -7726,7 +7717,7 @@ export class LeanTactic extends LeanSyntax {
                 return c;
             }
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     insert_only(caret) {
@@ -7941,7 +7932,7 @@ export class LeanBy extends LeanUnary {
         this.arg?.echo?.();
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
             // When the next line is already deeper than `by`, use that indent; when it matches the assign
             // line (common after a column-0 `-- proof`), keep that indent so tactics stay inside the
@@ -7949,13 +7940,13 @@ export class LeanBy extends LeanUnary {
             const ind = indent >= this.indent ? indent : this.indent + 2;
             caret.indent = ind;
             this.arg = new LeanStatements([caret], ind, caret.level);
-            for (let i = 1; i < newlineCount; ++i) {
+            for (let i = 1; i < newline_count; ++i) {
                 caret = new LeanCaret(ind, caret.level);
                 this.arg.push(caret);
             }
             return caret;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     insert_semicolon(caret) {
@@ -8014,18 +8005,18 @@ class LeanFrom extends LeanUnary {
         const s = this.sep();
         return `${this.command}${s}%s`;
     }
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
             const ind = indent >= this.indent ? indent : this.indent + 2;
             caret.indent = ind;
             this.arg = new LeanStatements([caret], ind, caret.level);
-            for (let i = 1; i < newlineCount; i++) {
+            for (let i = 1; i < newline_count; i++) {
                 caret = new LeanCaret(ind, caret.level);
                 this.arg.push(caret);
             }
             return caret;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
     relocate_last_comment() {
         this.arg.relocate_last_comment();
@@ -8067,7 +8058,7 @@ class LeanCalc extends LeanUnary {
         return `${this.command}${s}%s`;
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret === this.arg) {
             if (caret instanceof LeanCaret) {
                 let ind = indent;
@@ -8075,14 +8066,14 @@ class LeanCalc extends LeanUnary {
                 caret.indent = ind;
                 const nl = new LeanArgsNewLineSeparated([caret], ind, caret.level);
                 this.replace(caret, nl);
-                return nl.push_newlines(newlineCount - 1);
+                return nl.push_newlines(newline_count - 1);
             }
             if (caret instanceof LeanAssign) {
-                const $new = this.push_args_indented(indent, newlineCount, false);
+                const $new = this.push_args_indented(indent, newline_count, false);
                 if ($new) return $new;
             }
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     relocate_last_comment() {
@@ -8173,19 +8164,19 @@ class LeanUsing extends LeanUnary {
     latexFormat() {
         return `${this.command} %s`;
     }
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
             let ind = indent;
             if (ind === this.indent) ind = this.indent + 2;
             caret.indent = ind;
             this.arg = new LeanStatements([caret], ind, caret.level);
-            for (let i = 1; i < newlineCount; i++) {
+            for (let i = 1; i < newline_count; i++) {
                 caret = new LeanCaret(ind, caret.level);
                 this.arg.push(caret);
             }
             return caret;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
     get operator() {
         return 'using';
@@ -8204,19 +8195,19 @@ export class LeanAt extends LeanUnary {
         return 'at';
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
             let ind = indent;
             if (ind === this.indent) ind = this.indent + 2;
             caret.indent = ind;
             this.arg = new LeanStatements([caret], ind, caret.level);
-            for (let i = 1; i < newlineCount; i++) {
+            for (let i = 1; i < newline_count; i++) {
                 caret = new LeanCaret(ind, caret.level);
                 this.arg.push(caret);
             }
             return caret;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     is_indented() {
@@ -8242,19 +8233,19 @@ class LeanIn extends LeanUnary {
     latexFormat() {
         return `${this.command} %s`;
     }
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
             let ind = indent;
             if (ind === this.indent) ind = this.indent + 2;
             caret.indent = ind;
             this.arg = new LeanStatements([caret], ind, caret.level);
-            for (let i = 1; i < newlineCount; i++) {
+            for (let i = 1; i < newline_count; i++) {
                 caret = new LeanCaret(ind, caret.level);
                 this.arg.push(caret);
             }
             return caret;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
     get stack_priority() {
         return 18;
@@ -8277,19 +8268,19 @@ class LeanGeneralizing extends LeanUnary {
     latexFormat() {
         return `${this.command} %s`;
     }
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
             let ind = indent;
             if (ind === this.indent) ind = this.indent + 2;
             caret.indent = ind;
             this.arg = new LeanStatements([caret], ind, caret.level);
-            for (let i = 1; i < newlineCount; i++) {
+            for (let i = 1; i < newline_count; i++) {
                 caret = new LeanCaret(ind, caret.level);
                 this.arg.push(caret);
             }
             return caret;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
     get operator() {
         return 'generalizing';
@@ -8359,7 +8350,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
         }
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret instanceof LeanCaret && caret === this.arg) {
             if (next === '·' || next === '.') {
                 if (indent === this.indent) {
@@ -8374,7 +8365,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
                 return caret;
             }
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     insert_tactic(caret, type) {
@@ -8447,7 +8438,7 @@ class LeanTacticBlock extends LeanUnary {
         throw new Error('LeanTacticBlock.insert_line_comment: unexpected');
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret === this.arg) {
             if (caret instanceof LeanCaret) {
                 if (this.indent <= indent) {
@@ -8457,7 +8448,7 @@ class LeanTacticBlock extends LeanUnary {
                     const stmts = new LeanStatements([caret], ind, caret.level);
                     this.arg = stmts;
                     let last = caret;
-                    for (let i = 1; i < newlineCount; i++) {
+                    for (let i = 1; i < newline_count; i++) {
                         last = new LeanCaret(ind, caret.level);
                         stmts.push(last);
                     }
@@ -8467,7 +8458,7 @@ class LeanTacticBlock extends LeanUnary {
                 const block = caret;
                 if (indent >= block.indent) {
                     let last = /** @type {LeanCaret | null} */ (null);
-                    for (let i = 0; i < newlineCount; i++) {
+                    for (let i = 0; i < newline_count; i++) {
                         last = new LeanCaret(block.indent, block.level);
                         block.push(last);
                     }
@@ -8481,7 +8472,7 @@ class LeanTacticBlock extends LeanUnary {
                 return c;
             }
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     is_indented() {
@@ -8807,9 +8798,9 @@ class LeanWith extends LeanArgs {
         a?.relocate_last_comment?.();
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent > indent) {
-            return super.insert_newline(caret, newlineCount, indent, next);
+            return super.insert_newline(caret, newline_count, indent, next);
         }
         const cases = this.args;
         if (cases.length > 0) {
@@ -8823,7 +8814,7 @@ class LeanWith extends LeanArgs {
                 }
             }
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     insert_bar(caret, prevToken, next) {
@@ -8902,9 +8893,9 @@ class LeanAttribute extends LeanUnary {
         return this.push_accessibility($new, 'public');
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.parent instanceof LeanTactic)
-            return super.insert_newline(caret, newlineCount, indent, next);
+            return super.insert_newline(caret, newline_count, indent, next);
         return caret;
     }
 
@@ -8921,9 +8912,10 @@ class LeanAttribute extends LeanUnary {
             case 'Lean_theorem':
             case 'Lean_lemma':
             case 'Lean_def': {
-                const Ctor = getLeanClass($new);
-                const caret = new LeanCaret(this.indent, this.level);
-                const replacement = new Ctor(accessibility, caret, this.indent, this.level);
+                $new = LEAN_CLASSES[$new];
+                const {level, indent} = this;
+                const caret = new LeanCaret(indent, level);
+                const replacement = new $new(accessibility, caret, indent, level);
                 this.parent.replace(this, replacement);
                 replacement.attribute = this;
                 return caret;
@@ -9047,33 +9039,30 @@ export class Lean_def extends LeanArgs {
      * Port of `Lean_def::insert_newline`.
      * Stops indented proof lines from bubbling to `LeanModule` (which would throw).
      */
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (this.indent < indent) {
             if (caret === this.assignment) {
-                const pushed = this.push_args_indented(indent, newlineCount);
-                if (pushed) return pushed;
+                const $new = this.push_args_indented(indent, newline_count);
+                if ($new) return $new;
                 if (caret instanceof LeanColon) {
-                    const rhs = caret.rhs;
-                    if (rhs instanceof LeanCaret) {
-                        rhs.indent = indent;
-                        const stmts = new LeanStatements([rhs], indent, rhs.level);
-                        caret.replace(rhs, stmts);
-                        return rhs;
+                    if (caret.rhs instanceof LeanCaret) {
+                        caret = caret.rhs;
+                        caret.indent = indent;
+                        this.assignment.rhs = new LeanStatements([caret], indent, caret.level);
+                        return caret;
                     }
                 } else if (caret instanceof LeanAssign) {
-                    const inner = this.assignment.rhs;
-                    if (inner instanceof LeanCaret) {
-                        inner.indent = indent;
-                        const stmts = new LeanStatements([inner], indent, inner.level);
-                        this.assignment.replace(inner, stmts);
-                        return inner;
+                    const caret = this.assignment.rhs;
+                    if (caret instanceof LeanCaret) {
+                        caret.indent = indent;
+                        this.assignment.rhs = new LeanStatements([caret], indent, caret.level);
+                        return caret;
                     }
-                    return super.insert_newline(caret, newlineCount, this.indent, next);
+                    indent = this.indent;
                 }
             }
-            return super.insert_newline(caret, newlineCount, indent, next);
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 }
 
@@ -9153,7 +9142,7 @@ class Lean_let extends LeanSyntax {
         }
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret === this.args[0]) {
             if (next === '<' && this.parent instanceof LeanSequentialTacticCombinator) {
                 const c = new LeanCaret(indent, caret.level);
@@ -9161,7 +9150,7 @@ class Lean_let extends LeanSyntax {
                 return c;
             }
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 
     insert_sequential_tactic_combinator(caret, nextToken, inlineCombo = true) {
@@ -9411,12 +9400,12 @@ class LeanBigOperator extends LeanArgs {
         throw new Error(`${this.constructor.name}.insert_if: unexpected`);
     }
 
-    insert_newline(caret, newlineCount, indent, next) {
+    insert_newline(caret, newline_count, indent, next) {
         if (caret === this.scope) {
-            const pushed = this.push_args_indented(this.indent + 2, newlineCount);
-            if (pushed) return pushed;
+            const $new = this.push_args_indented(this.indent + 2, newline_count);
+            if ($new) return $new;
         }
-        return super.insert_newline(caret, newlineCount, indent, next);
+        return super.insert_newline(caret, newline_count, indent, next);
     }
 }
 
@@ -9530,7 +9519,7 @@ export class LeanParser extends AbstractParser {
         const { tokens } = this;
         const length = tokens.length;
         this.start_idx = 0;
-        for (; this.start_idx < length; this.start_idx++) {
+        for (; this.start_idx < length; ++this.start_idx) {
             this.parse(tokens[this.start_idx], this);
             if (!this.caret) break;
         }
@@ -9751,12 +9740,6 @@ const LEAN_CLASSES = {
     LeanUparrow,
     LeanUsing,
 };
-
-function getLeanClass(name) {
-    const C = LEAN_CLASSES[name];
-    if (C) return C;
-    throw new Error(`getLeanClass: unknown class ${name} (add to LEAN_CLASSES)`);
-}
 
 /**
  * Port of global `compile`.
