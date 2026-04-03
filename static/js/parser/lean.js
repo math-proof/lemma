@@ -1060,9 +1060,9 @@ export class LeanCaret extends Lean {
         return this;
     }
 
-    push_left($func, $prevToken) {
-        const Ctor = LEAN_CLASSES[$func];
-        this.parent.replace(this, new Ctor(this, this.indent, this.level));
+    push_left(func) {
+        func = LEAN_CLASSES[func];
+        this.parent.replace(this, new func(this, this.indent, this.level));
         return this;
     }
 
