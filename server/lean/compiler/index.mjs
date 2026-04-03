@@ -18,7 +18,7 @@ import { render2vueFromSource as render2vueFromCompiledTree } from './render2vue
 export function render2vueFromSource(source, module, opts = {}) {
   try {
     const code = render2vueFromCompiledTree(source, false);
-    code.module = module;
+    // code.module = module;
     if (opts.user) code.user = opts.user;
     return code;
   } catch (e) {

@@ -4655,63 +4655,8 @@ function buildLetBindings(implyStmts) {
 }
 
 /**
- * Compute LaTeX for a denote tactic when the RHS hole can be expanded from let bindings.
- * E.g. denote h_Ξ_def : Ξ = _ with let Ξ := (1:...).band_part (l-1) (u-1) yields Ξ = 1.band_part ...
- * Handles both LeanColon (denote h_X : Y = _) and LeanTactic(denote) with LeanColon arg.
- * @param {import('../../../static/js/parser/lean.js').Lean} stmt
- * @param {Record<string, unknown>} syntax
- * @returns {string | null}
- */
-function denoteLatexFromLetBindings(stmt, syntax) {
-    let tag = '';
-    let prop = null;
-    if (stmt instanceof LeanColon && stmt.lhs && stmt.rhs) {
-        prop = stmt.rhs;
-        const lhsStr = strStmt(stmt.lhs).trim();
-        const m = lhsStr.match(/^denote\s+(.+)$/);
-        tag = m ? m[1].trim() : lhsStr;
-    } else if (stmt instanceof LeanTactic && stmt.tacticName === 'denote') {
-        const arg = stmt.arg;
-        if (arg instanceof LeanColon && arg.lhs && arg.rhs) {
-            prop = arg.rhs;
-            tag = strStmt(arg.lhs).trim().replace(/^denote\s+/, '') || strStmt(arg.lhs).trim();
-        }
-    }
-    if (!prop || !tag) return null;
-    const isHole = (n) => {
-        if (n instanceof LeanToken && n.text === '_') return true;
-        if (n?.args) {
-            const nonCaret = n.args.filter((a) => !(a instanceof LeanCaret));
-            return nonCaret.length === 1 && nonCaret[0] instanceof LeanToken && nonCaret[0].text === '_';
-        }
-        return false;
-    };
-    let lhsNode = null;
-    let rhsNode = null;
-    if (prop?.lhs != null && prop?.rhs != null) {
-        lhsNode = prop.lhs;
-        rhsNode = prop.rhs;
-    } else if (prop?.args?.length >= 2) {
-        lhsNode = prop.args[0];
-        rhsNode = prop.args[1];
-    }
-    if (!lhsNode || !isHole(rhsNode)) return null;
-    const letBindings = syntax?.letBindings ?? {};
-    const lhsName = strStmt(lhsNode).trim();
-    let expansion = letBindings[lhsName];
-    if (!expansion && lhsName.endsWith("'")) {
-        expansion = letBindings[lhsName.slice(0, -1)];
-    }
-    if (!expansion || typeof expansion.toLatex !== 'function') return null;
-    const lhsLatex = lhsNode.toLatex(syntax);
-    const rhsLatex = expansion.toLatex(syntax);
-    const taggedTag = escapeLatexTextForRender2vue(tag);
-    return `${lhsLatex} = ${rhsLatex}\\tag*{\\text{${taggedTag}}}`;
-}
-
-/**
- * Port of `LeanModule::merge_proof` (php/parser/lean.php ~4685–4725).
- * When echo is false, computes LaTeX for denote tactics from let bindings (syntax.letBindings).
+ * Port of `LeanModule::merge_proof` (php/parser/lean.php ~5182–5222).
+ * `latex` is `$code[1]`: null when `echo` is false; when `echo` is true, null if `echo->line` is int else `echo->line`.
  * @param {import('../../../static/js/parser/lean.js').LeanArgs} proof
  * @param {boolean} echo
  * @param {Record<string, unknown>} [syntax]
@@ -4724,23 +4669,24 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
     const statements = [];
     for (const s of list) statements.push(...s.split(syntax));
 
-    /** @type {[import('../../../static/js/parser/lean.js').Lean[], string | null][]} */
+    /** @type {[import('../../../static/js/parser/lean.js').Lean[], string | number | null][]} */
     const code = [];
     /** @type {import('../../../static/js/parser/lean.js').Lean[]} */
     let last = [];
 
     if (echo) {
         for (const stmt of statements) {
-            const echoNode = stmt instanceof LeanTactic ? stmt.getEcho() : undefined;
+            const echoNode = stmt.getEcho();
             if (echoNode) {
-                code.push([last, typeof echoNode.line === 'number' ? null : echoNode.line]);
+                const line = /** @type {{ line?: unknown }} */ (echoNode).line;
+                /** PHP: `is_int($echo->line) ? null : $echo->line` */
+                code.push([last, Number.isInteger(line) ? null : line == null ? null : line]);
                 last = [];
             } else last.push(stmt);
         }
     } else {
         for (const stmt of statements) {
-            const isHave = nameOf(stmt) === 'Lean_have';
-            if (isHave || stmt instanceof LeanTactic) {
+            if (stmt instanceof Lean_have || stmt instanceof LeanTactic) {
                 last.push(stmt);
                 code.push([last, null]);
                 last = [];
@@ -4749,34 +4695,10 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
     }
     if (last.length) code.push([last, null]);
 
-    return code.map(([stmts, latex]) => {
-        let stepLatex = null;
-        if (!echo && !latex) {
-            const expanded = stmts
-                .map((st) => denoteLatexFromLetBindings(st, syntax))
-                .filter(Boolean);
-            if (expanded.length === 1) stepLatex = expanded[0];
-            else if (expanded.length > 1) stepLatex = `\\begin{gather}\n${expanded.join(' \\\\\n')}\n\\end{gather}`;
-            else {
-                const fallback = stmts
-                    .map((st) => {
-                        try {
-                            const l = typeof st.toLatex === 'function' ? st.toLatex(syntax) : null;
-                            return l && typeof l === 'string' && l.trim() ? l : null;
-                        } catch {
-                            return null;
-                        }
-                    })
-                    .filter(Boolean);
-                if (fallback.length === 1) stepLatex = fallback[0];
-                else if (fallback.length > 1) stepLatex = `\\begin{gather}\n${fallback.join(' \\\\\n')}\n\\end{gather}`;
-            }
-        }
-        return {
-            lean: unindentTwo(stmts.map((st) => strStmt(st)).join('\n')),
-            latex: latex ?? stepLatex,
-        };
-    });
+    return code.map(([stmts, latex]) => ({
+        lean: unindentTwo(stmts.map((st) => strStmt(st)).join('\n')),
+        latex,
+    }));
 }
 
 /**
