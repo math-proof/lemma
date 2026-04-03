@@ -4119,9 +4119,8 @@ export class LeanStatements extends LeanArgs {
                 void_lines++;
             } else break;
         }
-        const limit = args.length - void_lines - 1;
         let index = 0;
-        while (index < limit) {
+        for (; index < args.length - void_lines - 1; ++index) {
             const result = args[index].echo();
             if (Array.isArray(result)) {
                 const length = /** @type {number} */ (result.shift());
@@ -4138,16 +4137,11 @@ export class LeanStatements extends LeanArgs {
                     result[1] = new LeanTactic('try', e, e.indent, e.level);
                 }
                 for (const echo of result) echo.parent = this;
-                const oldRef = args[index];
-                const inc = result.indexOf(oldRef);
-                const increment = inc >= 0 ? inc : 0;
+                const increment = result.indexOf(args[index]);
                 args.splice(index, length, ...result);
                 index += increment;
-            } else {
-                index++;
             }
         }
-        index = limit;
         const tactic = args[index];
         if (tactic instanceof LeanTactic || tactic instanceof Lean_match) {
             const w = tactic.with;
