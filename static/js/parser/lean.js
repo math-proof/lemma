@@ -221,8 +221,8 @@ export class Lean extends IndentedNode {
         throw new Error(`${this.constructor.name}.toJSON() is not implemented`);
     }
 
-    append($new, _type) {
-        if (this.parent) return this.parent.append(this, $new, _type);
+    append($new, type) {
+        if (this.parent) return this.parent.append(this, $new, type);
     }
 
     case_default() {
@@ -1714,9 +1714,9 @@ class LeanPairedGroup extends Closable(LeanUnary) {
     /**
      * @param {Lean} caret
      * @param {string | typeof Lean} func
-     * @param {string} _type
+     * @param {string} type
      */
-    insert(caret, func, _type) {
+    insert(caret, func, type) {
         if (this.arg === caret) {
             if (caret instanceof LeanCaret) {
                 const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
@@ -1730,7 +1730,7 @@ class LeanPairedGroup extends Closable(LeanUnary) {
                 return caret2;
             }
         }
-        if (this.parent) return this.parent.insert(this, func, _type);
+        if (this.parent) return this.parent.insert(this, func, type);
     }
 
     insert_comma(caret) {
@@ -5602,7 +5602,7 @@ class Lean_import extends LeanCommand {
         return 'import';
     }
 
-    append(func, _type) {
+    append(func, type) {
         if (typeof func !== 'string') {
             throw new Error(`append is unexpected for ${this.constructor.name}`);
         }
@@ -5632,7 +5632,7 @@ class Lean_open extends LeanCommand {
         return 'open';
     }
 
-    append(func, _type) {
+    append(func, type) {
         if (typeof func !== 'string') {
             throw new Error(`append is unexpected for ${this.constructor.name}`);
         }
@@ -5662,7 +5662,7 @@ class Lean_set_option extends LeanCommand {
         return 'set_option';
     }
 
-    append(func, _type) {
+    append(func, type) {
         if (typeof func !== 'string') {
             throw new Error(`append is unexpected for ${this.constructor.name}`);
         }
@@ -6117,7 +6117,7 @@ class Lean_match extends LeanArgs {
         return [subject];
     }
 
-    insert(caret, func, _type) {
+    insert(caret, func, type) {
         if (!this.with && func === 'LeanWith') {
             const c = new LeanCaret(this.indent, caret.level);
             const Ctor = LEAN_CLASSES[func];
@@ -7212,9 +7212,9 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     /**
      * @param {Lean} caret
      * @param {string | typeof Lean} func
-     * @param {string} [_type]
+     * @param {string} [type]
      */
-    insert(caret, func, _type) {
+    insert(caret, func, type) {
         const last = this.args[this.args.length - 1];
         if (last === caret && caret instanceof LeanCaret) {
             const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
@@ -7299,7 +7299,7 @@ export class LeanSyntax extends LeanArgs {
         }
     }
 
-    insert(caret, func, _type) {
+    insert(caret, func, type) {
         const last = this.args[this.args.length - 1];
         if (caret === last) {
             const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
@@ -8773,7 +8773,7 @@ class LeanAttribute extends LeanUnary {
         return '@';
     }
 
-    append($new, _type) {
+    append($new, type) {
         return this.push_accessibility($new, 'public');
     }
 
