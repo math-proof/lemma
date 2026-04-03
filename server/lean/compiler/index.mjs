@@ -28,4 +28,9 @@ export function render2vueFromSource(source, module, opts = {}) {
 }
 
 export { tokenizeLeanSource } from './tokenize.mjs';
-export { mergeProof, render2vue, render2vueFromSource as render2vueFromCompiledTree } from './render2vue.mjs';
+export {
+  echo2vueFromSource,
+  mergeProof,
+  render2vue,
+  render2vueFromSource as render2vueFromCompiledTree,
+} from './render2vue.mjs';

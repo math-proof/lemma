@@ -11,7 +11,7 @@ import {
   readLeanFile,
   fileExists,
 } from './lean/modulePath.mjs';
-import { render2vueFromSource } from './lean/compiler/index.mjs';
+import { echo2vueFromSource, render2vueFromSource } from './lean/compiler/index.mjs';
 import { jsonForScriptEmbed } from './lean/jsonForScriptEmbed.mjs';
 import { listLemmaTopLevelDirs } from './lean/lemmaSections.mjs';
 import { handleExecutePhpStub } from './lean/executeStub.mjs';
@@ -45,6 +45,32 @@ app.post('/lean/php/request/execute.php', handleExecutePhpStub);
 
 /** Filesystem disambiguation (same idea as PHP `disambiguate.php`). */
 app.post('/lean/php/request/disambiguate.php', handleDisambiguatePhp);
+
+/** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */
+app.post('/lean/php/request/echo.php', (req, res) => {
+  try {
+    const module = req.body?.module;
+    if (!module || typeof module !== 'string') {
+      res.status(400).json({ error: 'missing module' });
+      return;
+    }
+    const abs = moduleToLeanPath(module);
+    if (!abs || !fileExists(abs)) {
+      res.status(404).json({ error: 'not found', module });
+      return;
+    }
+    const source = readLeanFile(abs);
+    const code = echo2vueFromSource(source, {
+      module,
+      leanAbsPath: abs,
+    });
+    code.user = PROJECT_USER;
+    res.json(code);
+  } catch (e) {
+    console.error('[lean echo]', e);
+    res.status(500).json({ error: String(e?.message || e) });
+  }
+});
 
 app.use(
   '/lean/static',
