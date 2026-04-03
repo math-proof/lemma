@@ -6208,16 +6208,16 @@ export class LeanIte extends LeanArgs {
     }
 
     echo() {
-        const if_ = this.args[0];
+        const [$if, then, $else] = this.args;
         let token = null;
-        if (if_ instanceof LeanColon && if_.args[0] instanceof LeanToken) token = if_.args[0];
-        const then = this.then;
-        const else_ = this.else;
+        if ($if instanceof LeanColon) {
+            token = $if.args[0];
+        }
         if (then) this.echo_then(token);
-        if (else_) this.echo_else(token);
+        if ($else) this.echo_else(token);
     }
 
-    /** @param {LeanToken | null} token */
+    /** @param {Lean | null} token */
     echo_else(token) {
         const part = this.else;
         part.echo();
@@ -6227,7 +6227,7 @@ export class LeanIte extends LeanArgs {
         }
     }
 
-    /** @param {LeanToken | null} token */
+    /** @param {Lean | null} token */
     echo_then(token) {
         const part = this.then;
         part.echo();
@@ -6336,8 +6336,8 @@ export class LeanIte extends LeanArgs {
         const cases = [];
         let cur = /** @type {LeanIte | Lean} */ (this);
         while (true) {
-            const [if_, then, els] = cur.strip_parenthesis();
-            const ifL = if_.toLatex(syntax);
+            const [$if, then, els] = cur.strip_parenthesis();
+            const ifL = $if.toLatex(syntax);
             const thenL = then.toLatex(syntax);
             cases.push(`{${thenL}} & {\\color{blue}\\text{if}}\\ ${ifL} `);
             if (!(els instanceof LeanIte)) {
@@ -6369,21 +6369,21 @@ export class LeanIte extends LeanArgs {
 
     set_line(line) {
         this.line = line;
-        const if_ = this.args[0];
+        const $if = this.args[0];
         const then = this.args[1];
-        const else_ = this.args[2];
-        line = if_.set_line(line);
+        const $else = this.args[2];
+        line = $if.set_line(line);
         line++;
         line = then.set_line(line);
         line++;
-        if (!(else_ instanceof LeanIte)) line++;
-        return else_.set_line(line);
+        if (!($else instanceof LeanIte)) line++;
+        return $else.set_line(line);
     }
 
     split(syntax) {
         const then = this.then;
-        const else_ = this.else;
-        if (then && else_) {
+        const $else = this.else;
+        if (then && $else) {
             const self = this.clone();
             const sIf = self.args[0];
             const sThen = self.args[1];
@@ -6397,7 +6397,7 @@ export class LeanIte extends LeanArgs {
                 sp[0].args[2] = 0;
                 statements.push(...sp);
             } else {
-                statements.push(new LeanIte([], this.indent, else_.level));
+                statements.push(new LeanIte([], this.indent, $else.level));
                 if (sElse instanceof LeanStatements) sElse.swap_echo_star(syntax, statements);
                 else statements.push(sElse);
             }
@@ -6407,18 +6407,18 @@ export class LeanIte extends LeanArgs {
     }
 
     strFormat() {
-        const if_ = this.args[0];
+        const $if = this.args[0];
         const then = this.args[1];
-        const else_ = this.args[2];
-        if (!then && !else_) {
-            if (if_ == null) return 'else';
-            if (else_ === 0) return 'else if %s then';
+        const $else = this.args[2];
+        if (!then && !$else) {
+            if ($if == null) return 'else';
+            if ($else === 0) return 'else if %s then';
             return 'if %s then';
         }
         const indent_else = ' '.repeat(this.indent);
-        const sep = else_ instanceof LeanIte ? ' ' : '\n';
+        const sep = $else instanceof LeanIte ? ' ' : '\n';
         const thenFmt = then == null ? '' : '%s';
-        const elseFmt = else_ == null ? '' : '%s';
+        const elseFmt = $else == null ? '' : '%s';
         return `if %s then\n${thenFmt}\n${indent_else}else${sep}${elseFmt}`;
     }
 
