@@ -2410,7 +2410,6 @@ export class LeanBinary extends LeanArgs {
     }
 }
 
-/** Property access `Foo.bar`. */
 export class LeanProperty extends LeanBinary {
     static input_priority = 81; // LeanPow::$input_priority + 1
 
@@ -5351,7 +5350,7 @@ export class LeanModule extends LeanStatements {
 
     echo() {
         this.import('sympy.printing.echo');
-        const args = this.args;
+        const {args} = this;
         for (let i = 0; i < args.length; i++) args[i].echo();
     }
 
@@ -5674,13 +5673,12 @@ class Lean_set_option extends LeanCommand {
         return c;
     }
 
-    /** Proof echo: scale `maxHeartbeats` token value (×5). */
     echo() {
-        const arg = this.arg;
+        const {arg} = this;
         if (arg instanceof LeanArgsSpaceSeparated && arg.args.length === 2) {
-            const [a0, a1] = arg.args;
-            if (a0 instanceof LeanToken && a1 instanceof LeanToken && a0.text === 'maxHeartbeats') {
-                a1.text = String(parseInt(a1.text, 10) * 5);
+            const {args} = arg;
+            if (args[0] instanceof LeanToken && args[1] instanceof LeanToken && args[0].text === 'maxHeartbeats') {
+                args[1].text = String(parseInt(String(args[1].text), 10) * 5);
             }
         }
     }
@@ -5717,7 +5715,7 @@ class LeanBar extends LeanUnary {
     }
 
     echo() {
-        this.arg?.echo();
+        this.arg.echo();
     }
 
     insert_comma(caret) {
@@ -5741,10 +5739,6 @@ class LeanBar extends LeanUnary {
         return `${this.command} %s`;
     }
 
-    /**
-     * Clone bar and detach `=>` rhs statements onto `swap_echo_star` list (proof echo).
-     * @param {Record<string, unknown>} [syntax]
-     */
     split(syntax) {
         const arrow = this.arg;
         if (arrow instanceof LeanRightarrow) {
@@ -5774,32 +5768,22 @@ export class LeanRightarrow extends LeanBinary {
     }
 
     echo() {
-        /** @type {Lean[]} */
         const token = [];
-        const bar = this.parent;
-        if (bar instanceof LeanBar) {
-            const withNode = bar.parent;
-            if (withNode instanceof LeanWith) {
-                const outer = withNode.parent;
-                if (
-                    outer instanceof Lean_match ||
-                    (outer instanceof LeanTactic && outer.func === 'induction')
-                ) {
-                    token.push(new LeanToken('⊢', this.rhs.indent, this.rhs.level));
-                    const subject = outer.args[0];
-                    if (subject instanceof LeanArgsCommaSeparated) {
-                        for (const sujet of subject.args) {
-                            if (sujet instanceof LeanColon) token.push(sujet.lhs);
-                        }
-                    } else if (subject instanceof LeanColon) {
-                        token.push(subject.lhs);
-                    }
+        var {parent} = this;
+        if (parent instanceof LeanBar && (parent = parent.parent) instanceof LeanWith && ((parent = parent.parent) instanceof Lean_match || (parent instanceof LeanTactic && parent.func === 'induction'))) {
+            token.push(new LeanToken('⊢', this.rhs.indent, this.rhs.level));
+            const subject = parent.args[0];
+            if (subject instanceof LeanArgsCommaSeparated) {
+                for (const sujet of subject.args) {
+                    if (sujet instanceof LeanColon) token.push(sujet.lhs);
                 }
+            } else if (subject instanceof LeanColon) {
+                token.push(subject.lhs);
             }
         }
         const expr = this.lhs;
         if (expr instanceof LeanArgsSpaceSeparated) {
-            let func = null;
+            let func;
             if (expr.args[0] instanceof LeanToken) func = expr.args[0].text;
             else if (
                 expr.args[0] instanceof LeanProperty &&
@@ -5808,7 +5792,9 @@ export class LeanRightarrow extends LeanBinary {
             ) {
                 func = expr.args[0].rhs.text;
             }
-            let start = 1;
+            else
+                func = null;
+            let start;
             switch (func) {
                 case 'succ':
                 case 'ofNat':
@@ -5824,9 +5810,11 @@ export class LeanRightarrow extends LeanBinary {
             token.push(...expr.args.slice(start));
         } else if (expr instanceof LeanAngleBracket) {
             if (expr.arg instanceof LeanArgsCommaSeparated) {
+                // | ⟨v, property⟩ =>
                 token.push(...expr.arg.args.slice(1));
             }
         } else if (expr instanceof LeanArgsCommaSeparated) {
+            // | ⟨x, xProperty⟩, ⟨y, yProperty⟩ =>
             for (const arg of expr.args) {
                 if (arg instanceof LeanAngleBracket && arg.arg instanceof LeanArgsCommaSeparated) {
                     token.push(arg.arg.args[1]);
