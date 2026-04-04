@@ -456,7 +456,7 @@ export class Lean extends IndentedNode {
                 // so round-trip and lemma paths match the tokenizer/AST shape the repo relies on.
                 let p = this;
                 while (p && p.parent) {
-                    const name = p.parent.constructor?.name || '';
+                    const name = p.parent.constructor.name || '';
                     if (/^Lean_(import|open|set_option|namespace|def|theorem|lemma)$/.test(name))
                         return this.parent.insert_word(this, token);
                     p = p.parent;
@@ -1198,7 +1198,7 @@ export class LeanToken extends Lean {
     }
 
     isProp(vars) {
-        return (vars?.[this.text] ?? null) === 'Prop';
+        return (vars[this.text] ?? null) === 'Prop';
     }
 
     is_TypeStar() {
@@ -1332,12 +1332,12 @@ export class LeanLineComment extends Lean {
             }
             if (this.parent instanceof LeanModule) {
                 const mod = this.parent;
-                const ix = mod.args.indexOf(this);
-                if (ix > 0) {
-                    for (let j = ix - 1; j >= 0; j--) {
+                const index = mod.args.indexOf(this);
+                if (index > 0) {
+                    for (let j = index - 1; j >= 0; j--) {
                         const a = mod.args[j];
                         if (a instanceof LeanCaret) continue;
-                        const nm = a?.constructor?.name ?? '';
+                        const nm = a.constructor.name ?? '';
                         if (nm === 'LeanBrace' || nm === 'LeanBracket') continue;
                         if (a instanceof LeanLineComment || a instanceof LeanBlockComment) continue;
                         if (a instanceof Lean_lemma) return false;
@@ -1379,17 +1379,17 @@ export class LeanLineComment extends Lean {
                     const holder = colon.parent;
                     if (holder instanceof LeanModule) {
                         const mod = holder;
-                        const ix = mod.args.indexOf(colon);
-                        if (ix >= 0) {
-                            for (let j = 0; j < ix; j++) {
+                        const index = mod.args.indexOf(colon);
+                        if (index >= 0) {
+                            for (let j = 0; j < index; j++) {
                                 if (mod.args[j] instanceof Lean_lemma) return false;
                             }
                         }
                     } else if (holder instanceof LeanAssign && holder.parent instanceof LeanModule) {
                         const mod = holder.parent;
-                        const ix = mod.args.indexOf(holder);
-                        if (ix >= 0) {
-                            for (let j = 0; j < ix; j++) {
+                        const index = mod.args.indexOf(holder);
+                        if (index >= 0) {
+                            for (let j = 0; j < index; j++) {
                                 if (mod.args[j] instanceof Lean_lemma) return false;
                             }
                         }
@@ -1398,8 +1398,8 @@ export class LeanLineComment extends Lean {
             }
             if (t === 'proof' && this.parent instanceof LeanModule) {
                 const mod = this.parent;
-                const ix = mod.args.indexOf(this);
-                if (ix > 0 && mod.args[ix - 1] instanceof LeanAssign) return false;
+                const index = mod.args.indexOf(this);
+                if (index > 0 && mod.args[index - 1] instanceof LeanAssign) return false;
             }
         } else if (this.parent instanceof LeanTactic) {
             return false;
@@ -1461,7 +1461,7 @@ class LeanBlockComment extends Lean {
 
     set_line(line) {
         this.line = line;
-        return line + (this.text.match(/\n/g)?.length ?? 0);
+        return line + (this.text.match(/\n/g).length ?? 0);
     }
 
     strFormat() {
@@ -1491,7 +1491,7 @@ class LeanDocString extends LeanBlockComment {
     set_line(line) {
         this.line = line;
         let L = line + 1;
-        L += this.text.match(/\n/g)?.length ?? 0;
+        L += this.text.match(/\n/g).length ?? 0;
         return L + 1;
     }
 
@@ -1644,7 +1644,7 @@ export class LeanArgs extends Lean {
         return this.args.map((arg) => {
             if (!(arg instanceof LeanParenthesis)) return arg;
             const inner = arg.arg;
-            const n = inner?.constructor?.name;
+            const n = inner.constructor.name;
             if (n === 'LeanMethodChaining' || n === 'Lean_rightarrow' || n === 'LeanColon') return arg;
             return inner;
         });
@@ -1762,14 +1762,13 @@ class LeanPairedGroup extends Closable(LeanUnary) {
         }
         if (this.indent <= indent) {
             if (caret instanceof LeanCaret) {
-                let ind = indent;
-                if (ind === this.indent) ind = this.indent + 2;
-                caret.indent = ind;
+                if (indent === this.indent) indent = this.indent + 2;
+                caret.indent = indent;
                 if (this.constructor.name === 'LeanBrace') {
-                    this.arg = new LeanStatements([caret], ind, caret.level);
+                    this.arg = new LeanStatements([caret], indent, caret.level);
                     return caret;
                 }
-                this.arg = new LeanArgsCommaNewLineSeparated([caret], ind, caret.level);
+                this.arg = new LeanArgsCommaNewLineSeparated([caret], indent, caret.level);
                 return caret;
             }
             if (indent === this.indent) return caret;
@@ -1947,9 +1946,8 @@ export class LeanParenthesis extends LeanPairedGroup {
                 this.arg = newNL;
                 return c;
             }
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            const c = this.push_args_indented(ind, newline_count, false);
+            if (indent === this.indent) indent = this.indent + 2;
+            const c = this.push_args_indented(indent, newline_count, false);
             return c;
         }
         return super.insert_newline(caret, newline_count, indent, next);
@@ -1967,12 +1965,12 @@ export class LeanParenthesis extends LeanPairedGroup {
             newNode = new Ctor(caret, indent, caret.level);
             caretOut = caret;
         } else {
-            const lev = caret.level;
-            caretOut = new LeanCaret(indent, lev);
+            const level = caret.level;
+            caretOut = new LeanCaret(indent, level);
             newNode = new LeanArgsSpaceSeparated(
-                [this.arg, new Ctor(caretOut, indent, lev)],
+                [this.arg, new Ctor(caretOut, indent, level)],
                 indent,
-                lev,
+                level,
             );
         }
         this.arg = newNode;
@@ -1990,8 +1988,8 @@ export class LeanParenthesis extends LeanPairedGroup {
                 rhs.args[0].text === 'imply'
             ) {
                 const mod = parent.parent;
-                const ix = mod.args.indexOf(parent);
-                const next = ix >= 0 && ix + 1 < mod.args.length ? mod.args[ix + 1] : null;
+                const index = mod.args.indexOf(parent);
+                const next = index >= 0 && index + 1 < mod.args.length ? mod.args[index + 1] : null;
                 if (next instanceof Lean_let || next instanceof LeanQuantifier) {
                     return true;
                 }
@@ -2000,9 +1998,9 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (parent instanceof LeanProperty) {
             const stmts = parent.parent;
             if (stmts instanceof LeanStatements) {
-                const ix = stmts.args.indexOf(parent);
-                if (ix > 0) {
-                    const prev = stmts.args[ix - 1];
+                const index = stmts.args.indexOf(parent);
+                if (index > 0) {
+                    const prev = stmts.args[index - 1];
                     if (prev instanceof LeanLineComment && prev.text === 'imply') {
                         return true;
                     }
@@ -2034,7 +2032,7 @@ export class LeanParenthesis extends LeanPairedGroup {
     latexArgs(syntax) {
         const arg = this.arg;
         if (arg instanceof LeanColon) {
-            if (arg.lhs instanceof LeanBrace) return arg.lhs.latexArgs?.(syntax) ?? [arg.lhs.toLatex(syntax)];
+            if (arg.lhs instanceof LeanBrace) return arg.lhs.latexArgs(syntax) ?? [arg.lhs.toLatex(syntax)];
             if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return [arg.lhs.toLatex(syntax)];
         }
         return super.latexArgs(syntax);
@@ -2043,7 +2041,7 @@ export class LeanParenthesis extends LeanPairedGroup {
     latexFormat() {
         const arg = this.arg;
         if (arg instanceof LeanColon) {
-            if (arg.lhs instanceof LeanBrace) return arg.lhs.latexFormat?.() ?? '%s';
+            if (arg.lhs instanceof LeanBrace) return arg.lhs.latexFormat() ?? '%s';
             if (arg.rhs instanceof LeanToken && arg.rhs.text === 'Bool') return '\\left|{%s}\\right|';
         }
         return this.toColor();
@@ -2663,14 +2661,13 @@ export class LeanColon extends LeanBinary {
     insert_newline(caret, newline_count, indent, next) {
         if (this.rhs === caret) {
             if (caret instanceof LeanCaret && indent >= this.indent) {
-                let ind = indent;
-                if (ind === this.indent) ind = this.indent + 2;
-                caret.indent = ind;
-                const stmts = new LeanStatements([caret], ind, caret.level);
+                if (indent === this.indent) indent = this.indent + 2;
+                caret.indent = indent;
+                const stmts = new LeanStatements([caret], indent, caret.level);
                 this.replace(caret, stmts);
                 return caret;
             }
-            if (caret instanceof LeanStatements && indent === this.indent && this.parent?.constructor.name === 'LeanParenthesis') return caret;
+            if (caret instanceof LeanStatements && indent === this.indent && this.parent.constructor.name === 'LeanParenthesis') return caret;
         }
         return super.insert_newline(caret, newline_count, indent, next);
     }
@@ -2698,7 +2695,7 @@ export class LeanColon extends LeanBinary {
     strFormat() {
         const sep = this.sep();
         let first = '%s';
-        const p = this.parent?.constructor?.name ?? '';
+        const p = this.parent.constructor.name ?? '';
         if (!p.includes('GetElem')) {
             if (sep === ' ') {
                 first += ' ';
@@ -2787,9 +2784,9 @@ export class LeanAssign extends LeanBinary {
         }
         // `:=` then newline before `-- proof` / term under `▸` (see Lemma/Nat/Lt/of/Lt_Add/Eq_Sub/Ge.lean).
         if (
-            rhs?.constructor?.name === 'Lean_blacktriangleright' &&
+            rhs.constructor.name === 'Lean_blacktriangleright' &&
             rhs.lhs instanceof LeanArgsNewLineSeparated &&
-            rhs.lhs.args?.[0] instanceof LeanLineComment
+            rhs.lhs.args[0] instanceof LeanLineComment
         ) {
             return '\n';
         }
@@ -3096,7 +3093,7 @@ export class LeanMul extends LeanArithmetic {
             (rhs instanceof LeanToken && /^\d+$/.test(rhs.text)) ||
             (rhs instanceof LeanMul && rhs.command) ||
             (lhs instanceof LeanMul && lhs.command) ||
-            lhs.is_space_separated?.() ||
+            lhs.is_space_separated() ||
             lhs instanceof LeanFDiv ||
             rhs instanceof LeanPow
         ) {
@@ -3104,8 +3101,8 @@ export class LeanMul extends LeanArithmetic {
         }
         if (
             (lhs instanceof LeanToken &&
-                (rhs.is_space_separated?.() || (rhs instanceof LeanToken && rhs.starts_with_2_letters?.()))) ||
-            (lhs instanceof LeanToken && lhs.ends_with_2_letters?.() && rhs instanceof LeanToken) ||
+                (rhs.is_space_separated() || (rhs instanceof LeanToken && rhs.starts_with_2_letters()))) ||
+            (lhs instanceof LeanToken && lhs.ends_with_2_letters() && rhs instanceof LeanToken) ||
             lhs instanceof LeanProperty ||
             rhs instanceof LeanProperty
         ) {
@@ -3373,13 +3370,13 @@ export class LeanPow extends LeanArithmetic {
         if (lhs instanceof LeanParenthesis) {
             const inner = lhs.arg;
             if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
-                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs?.() || inner.is_Bool?.())))
+                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs() || inner.is_Bool())))
                 lhs = inner;
         }
         if (rhs instanceof LeanParenthesis) {
             const inner = rhs.arg;
             if (inner instanceof Lean_sqrt || inner instanceof LeanPairedGroup ||
-                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs?.() || inner.is_Bool?.())))
+                (inner instanceof LeanArgsSpaceSeparated && (inner.is_Abs() || inner.is_Bool())))
                 rhs = inner;
         }
         return [lhs.toLatex(syntax), rhs.toLatex(syntax)];
@@ -3531,7 +3528,7 @@ class LeanNeg extends LeanUnaryArithmeticPre {
         return '-';
     }
     sep() {
-        return this.arg?.constructor?.name === 'LeanNeg' ? ' ' : '';
+        return this.arg.constructor.name === 'LeanNeg' ? ' ' : '';
     }
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
@@ -3930,8 +3927,8 @@ export class LeanLogic extends LeanBinaryBoolean {
 
     sep() {
         if (this.hanging_indentation) {
-            const ind = this.rhs?.indent ?? 0;
-            return '\n' + ' '.repeat(ind);
+            const indent = this.rhs.indent ?? 0;
+            return '\n' + ' '.repeat(indent);
         }
         return ' ';
     }
@@ -4034,10 +4031,9 @@ export class Lean_lor extends LeanLogic {
     insert_newline(caret, newline_count, indent, next) {
         if (caret === this.rhs && caret instanceof LeanCaret) {
             if (indent >= this.indent) {
-                let ind = indent;
-                if (ind === this.indent) ind = this.indent + 2;
+                if (indent === this.indent) indent = this.indent + 2;
                 this.hanging_indentation = true;
-                caret.indent = ind;
+                caret.indent = indent;
                 return caret;
             }
         }
@@ -4191,7 +4187,7 @@ export class LeanStatements extends LeanArgs {
 
     isProp(vars) {
         const args = this.args;
-        if (args.length === 1) return args[0].isProp?.(vars);
+        if (args.length === 1) return args[0].isProp(vars);
     }
 
     toJSON() {
@@ -4209,7 +4205,7 @@ export class LeanStatements extends LeanArgs {
         const stmt = Array(n)
             .fill('&{%s}&& ')
             .join('\\\\\n');
-        if (this.parent && this.parent.constructor?.name === 'LeanBy') return stmt;
+        if (this.parent && this.parent.constructor.name === 'LeanBy') return stmt;
         return `\\begin{align*}\n${stmt}\n\\end{align*}`;
     }
 
@@ -4229,8 +4225,8 @@ export class LeanStatements extends LeanArgs {
                 }
                 if (parent) {
                     const last = this.args.pop();
-                    const ix = parent.args.indexOf(self);
-                    parent.args.splice(ix + 1, 0, last);
+                    const index = parent.args.indexOf(self);
+                    parent.args.splice(index + 1, 0, last);
                     last.parent = parent;
                     last.indent = parent.indent;
                     parent.relocate_last_comment();
@@ -4363,14 +4359,14 @@ function dedentEchoProofTermBlock(s) {
  * then `LeanTactic`, space-separated term, a single `LeanToken`, or `Lean_fun` proof. Used for echo `:= by` serialization.
  * @param {Lean[]} moduleArgs
  * @param {number} startJ
- * @param {(s: string, ind: number) => string} indentText
+ * @param {(s: string, indent: number) => string} indentText
  * @returns {{ cmts: Lean[], proofStr: string, endJ: number, proofIsTactic: boolean } | null}
  */
 function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
     let j = startJ;
     while (j < moduleArgs.length && moduleArgs[j] instanceof LeanCaret) j++;
     const cmts = [];
-    while (j < moduleArgs.length && moduleArgs[j].is_comment?.()) {
+    while (j < moduleArgs.length && moduleArgs[j].is_comment()) {
         cmts.push(moduleArgs[j]);
         j++;
     }
@@ -4604,7 +4600,7 @@ function zipped(a, b) {
  */
 function buildLetBindings(implyStmts) {
     const bindings = {};
-    if (!implyStmts?.length) return bindings;
+    if (!implyStmts.length) return bindings;
     for (const stmt of implyStmts) {
         if (nameOf(stmt) !== 'Lean_let' && nameOf(stmt) !== 'Lean_have') continue;
         const arg = stmt.arg;
@@ -4620,8 +4616,8 @@ function buildLetBindings(implyStmts) {
                 rhsNode = arg.rhs;
             }
         } else if (arg instanceof LeanColon && arg.rhs instanceof LeanAssign) {
-            nameNode = arg.rhs?.lhs;
-            rhsNode = arg.rhs?.rhs;
+            nameNode = arg.rhs.lhs;
+            rhsNode = arg.rhs.rhs;
         }
         if (nameNode && rhsNode) {
             const name = strStmt(nameNode).trim();
@@ -5125,7 +5121,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     if (
                         assignIdx >= 0 &&
                         !(proof instanceof LeanBy || nameOf(proof) === 'LeanCalc') &&
-                        (proof instanceof LeanCaret || !(proof?.args && proof.args.length))
+                        (proof instanceof LeanCaret || !(proof.args && proof.args.length))
                     ) {
                         let end = assignIdx + 1;
                         for (; end < args.length; ++end) {
@@ -5135,9 +5131,9 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         }
                         proofNode = { args: args.slice(assignIdx + 1, end) };
                     }
-                    syntax.letBindings = buildLetBindings(imply?.length ? imply : flatImplyStmts);
+                    syntax.letBindings = buildLetBindings(imply.length ? imply : flatImplyStmts);
                     if (by) {
-                        proofOut = { [by]: leanModuleMergeProof(proofNode?.arg ?? proofNode, echo, syntax) };
+                        proofOut = { [by]: leanModuleMergeProof(proofNode.arg ?? proofNode, echo, syntax) };
                     } else {
                         proofOut = leanModuleMergeProof(proofNode, echo, syntax);
                     }
@@ -5164,7 +5160,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         proof: proofOut,
                     });
                     comment = null;
-                } else if (declspec && (typeof declspec.toLatex === 'function' || flatImplyStmts?.length > 0)) {
+                } else if (declspec && (typeof declspec.toLatex === 'function' || flatImplyStmts.length > 0)) {
                     const proof0 = assignment.rhs;
                     const by =
                         proof0 instanceof LeanBy
@@ -5407,9 +5403,9 @@ export class LeanModule extends LeanStatements {
         /** @type {string[]} */
         const parts = [];
         const skip = new Set();
-        const indentText = (s, ind) => {
-            if (ind <= 0) return s;
-            const pad = ' '.repeat(ind);
+        const indentText = (s, indent) => {
+            if (indent <= 0) return s;
+            const pad = ' '.repeat(indent);
             return s
                 .split('\n')
                 .map((line) => (line === '' ? line : pad + line))
@@ -5465,17 +5461,17 @@ export class LeanModule extends LeanStatements {
                 }
                 if (danglingStc && next instanceof LeanTacticBlock) {
                     skip.add(i + 1);
-                    const ind = Math.max(a.indent ?? 0, next.indent ?? 0);
+                    const indent = Math.max(a.indent ?? 0, next.indent ?? 0);
                     const as = String(a);
                     const ns = String(next);
                     const join = as.endsWith('\n') ? '' : '\n';
-                    parts.push(indentText(`${as}${join}${ns}`, ind));
+                    parts.push(indentText(`${as}${join}${ns}`, indent));
                     continue;
                 }
             }
             if (a instanceof LeanColon && a.parent === this) {
-                const ind = a.indent ?? 0;
-                if (ind > 0) {
+                const indent = a.indent ?? 0;
+                if (indent > 0) {
                     let k = i + 1;
                     while (k < args.length && args[k] instanceof LeanCaret) k++;
                     let next = args[k];
@@ -5531,7 +5527,7 @@ export class LeanModule extends LeanStatements {
                             assignAfterColon.lhs instanceof LeanParenthesis);
                     if (echoTail || lemmaColonMatchBy) {
                         const lines = String(a).split('\n');
-                        if (lines[0] !== '') lines[0] = ' '.repeat(ind) + lines[0];
+                        if (lines[0] !== '') lines[0] = ' '.repeat(indent) + lines[0];
                         parts.push(lines.join('\n'));
                         continue;
                     }
@@ -5542,8 +5538,8 @@ export class LeanModule extends LeanStatements {
                 let p = i - 1;
                 while (p >= 0 && (args[p] instanceof LeanCaret || args[p] == null || skip.has(p))) p--;
                 const prev = p >= 0 ? args[p] : null;
-                const ind = prev instanceof Lean_have ? prev.indent ?? 0 : 0;
-                if (ind > 0) out = ' '.repeat(ind) + out;
+                const indent = prev instanceof Lean_have ? prev.indent ?? 0 : 0;
+                if (indent > 0) out = ' '.repeat(indent) + out;
             }
             parts.push(out);
         }
@@ -5703,7 +5699,7 @@ class Lean_namespace extends LeanCommand {
 /** Bar, then `=>` and related arrow nodes. */
 class LeanBar extends LeanUnary {
     get stack_priority() {
-        return LeanAssign?.input_priority ?? 20;
+        return LeanAssign.input_priority ?? 20;
     }
 
     get operator() {
@@ -5858,16 +5854,15 @@ export class LeanRightarrow extends LeanBinary {
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret === this.rhs) {
             if (caret instanceof LeanCaret || caret instanceof LeanLineComment) {
-                let ind = indent;
-                if (ind === this.indent) ind = this.indent + 2;
-                caret.indent = ind;
-                const stmts = new LeanStatements([caret], ind, caret.level);
+                if (indent === this.indent) indent = this.indent + 2;
+                caret.indent = indent;
+                const stmts = new LeanStatements([caret], indent, caret.level);
                 this.replace(caret, stmts);
                 let nl = newline_count;
                 if (!(caret instanceof LeanCaret)) nl++;
                 let last = caret;
                 for (let i = 1; i < nl; i++) {
-                    last = new LeanCaret(ind, caret.level);
+                    last = new LeanCaret(indent, caret.level);
                     stmts.push(last);
                 }
                 return last;
@@ -5909,13 +5904,12 @@ export class Lean_rightarrow extends LeanBinary {
 
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            caret.indent = ind;
-            const stmts = new LeanStatements([caret], ind, caret.level);
+            if (indent === this.indent) indent = this.indent + 2;
+            caret.indent = indent;
+            const stmts = new LeanStatements([caret], indent, caret.level);
             this.replace(caret, stmts);
             for (let i = 1; i < newline_count; i++) {
-                const c = new LeanCaret(ind, caret.level);
+                const c = new LeanCaret(indent, caret.level);
                 stmts.push(c);
             }
             return stmts.args[stmts.args.length - 1];
@@ -5934,10 +5928,10 @@ export class Lean_rightarrow extends LeanBinary {
         const lhs = this.lhs;
         const rhs = this.rhs;
         const lhsOk =
-            (lhs instanceof LeanToken && (vars?.[lhs.text] ?? 'Prop') === 'Prop') ||
+            (lhs instanceof LeanToken && (vars[lhs.text] ?? 'Prop') === 'Prop') ||
             (!(lhs instanceof LeanToken) && lhs.isProp(vars));
         const rhsOk =
-            (rhs instanceof LeanToken && (vars?.[rhs.text] ?? 'Prop') === 'Prop') ||
+            (rhs instanceof LeanToken && (vars[rhs.text] ?? 'Prop') === 'Prop') ||
             (!(rhs instanceof LeanToken) && rhs.isProp(vars));
         return Boolean(lhsOk && rhsOk);
     }
@@ -5963,13 +5957,12 @@ export class Lean_mapsto extends LeanBinary {
 
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.rhs) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            caret.indent = ind;
-            const stmts = new LeanStatements([caret], ind, caret.level);
+            if (indent === this.indent) indent = this.indent + 2;
+            caret.indent = indent;
+            const stmts = new LeanStatements([caret], indent, caret.level);
             this.replace(caret, stmts);
             for (let i = 1; i < newline_count; i++) {
-                const c = new LeanCaret(ind, caret.level);
+                const c = new LeanCaret(indent, caret.level);
                 stmts.push(c);
             }
             return stmts.args[stmts.args.length - 1];
@@ -6503,15 +6496,10 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return leanEvalPrefix(tokens, (arg) => arg.operand_count());
     }
 
-    /**
-     * When inside LeanBracket (e.g. [i < n]), use LeanBracket's stack_priority (17) so that
-     * Lean_lt is created by replacing the token (LeanToken "i"), not the whole group.
-     * When inside GetElem index lists or `LeanGetElem*`, use 18 so +, :, ⊓ parse inside the index.
-     */
     get stack_priority() {
-        if (this.parent?.constructor?.name === 'LeanBracket') return 17;
-        const pc = this.parent?.constructor?.name;
-        if (pc === 'LeanArgsCommaSeparated' && this.parent?.parent?.constructor?.name === 'LeanGetElem')
+        if (this.parent.constructor.name === 'LeanBracket') return 17;
+        const pc = this.parent.constructor.name;
+        if (pc === 'LeanArgsCommaSeparated' && this.parent.parent.constructor.name === 'LeanGetElem')
             return 18;
         if (pc === 'LeanGetElem' || pc === 'LeanGetElemQue' || pc === 'LeanGetElemQuote') return 18;
         return 80;
@@ -7000,8 +6988,8 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
                 }
                 if (parent) {
                     const last = this.args.pop();
-                    const ix = parent.args.indexOf(self);
-                    parent.args.splice(ix + 1, 0, last);
+                    const index = parent.args.indexOf(self);
+                    parent.args.splice(index + 1, 0, last);
                     last.parent = parent;
                     return parent.relocate_last_comment();
                 }
@@ -7075,8 +7063,8 @@ export class LeanArgsIndented extends LeanBinary {
                 }
                 if (parent) {
                     const last = this.args.pop();
-                    const ix = parent.args.indexOf(self);
-                    parent.args.splice(ix + 1, 0, last);
+                    const index = parent.args.indexOf(self);
+                    parent.args.splice(index + 1, 0, last);
                     last.parent = parent;
                     return parent.relocate_last_comment();
                 }
@@ -7450,8 +7438,8 @@ export class LeanTactic extends LeanSyntax {
                 const w = this.with;
                 if (w && w.sep() === ' ') {
                     if (this.has_tactic_block_followed()) return;
-                    const toks = w.tokens_space_separated();
-                    if (toks.length) token.push(toks[0].clone());
+                    const tokens = w.tokens_space_separated();
+                    if (tokens.length) token.push(tokens[0].clone());
                 }
                 break;
             }
@@ -7475,8 +7463,8 @@ export class LeanTactic extends LeanSyntax {
             }
             case 'rcases': {
                 const w = this.with;
-                const bars = w?.tokens_bar_separated?.();
-                if (w && bars?.length) {
+                const bars = w.tokens_bar_separated();
+                if (w && bars.length) {
                     if (this.has_tactic_block_followed()) return;
                     for (const br of bars) {
                         if (Array.isArray(br))
@@ -7565,8 +7553,8 @@ export class LeanTactic extends LeanSyntax {
         }
         const arg = this.arg;
         if (arg instanceof LeanArgsSpaceSeparated) {
-            const ix = arg.args.indexOf(caret);
-            if (ix >= 0) {
+            const index = arg.args.indexOf(caret);
+            if (index >= 0) {
                 if (
                     caret instanceof LeanToken ||
                     caret instanceof LeanBinary ||
@@ -7713,7 +7701,7 @@ export class LeanTactic extends LeanSyntax {
 
     relocate_last_comment() {
         const a = this.args[this.args.length - 1];
-        if (a instanceof LeanRightarrow || a instanceof LeanWith) a.relocate_last_comment?.();
+        if (a instanceof LeanRightarrow || a instanceof LeanWith) a.relocate_last_comment();
     }
 
     repeat_block() {
@@ -7747,11 +7735,11 @@ export class LeanTactic extends LeanSyntax {
                     const stmts = inner.arg;
                     inner.arg = new LeanCaret(0, 0);
                     const statements = [self];
-                    stmts.swap_echo_star?.(syntax, statements);
+                    stmts.swap_echo_star(syntax, statements);
                     return statements;
                 }
             } else if (
-                (block instanceof LeanTactic || block?.constructor?.name === 'Lean_have' || block?.constructor?.name === 'Lean_let') &&
+                (block instanceof LeanTactic || block.constructor.name === 'Lean_have' || block.constructor.name === 'Lean_let') &&
                 block.indent >= this.indent
             ) {
                 const self = this.clone();
@@ -7785,7 +7773,7 @@ export class LeanTactic extends LeanSyntax {
             const self = this.clone();
             self.by.arg = new LeanCaret(by.indent, by.level);
             const statements = [self];
-            by.arg.swap_echo_star?.(syntax, statements);
+            by.arg.swap_echo_star(syntax, statements);
             return statements;
         }
         return [this];
@@ -7815,7 +7803,7 @@ export class LeanBy extends LeanUnary {
     }
 
     echo() {
-        this.arg?.echo();
+        this.arg.echo();
     }
 
     insert_newline(caret, newline_count, indent, next) {
@@ -7823,11 +7811,11 @@ export class LeanBy extends LeanUnary {
             // When the next line is already deeper than `by`, use that indent; when it matches the assign
             // line (common after a column-0 `-- proof`), keep that indent so tactics stay inside the
             // proof block instead of bubbling to `LeanModule` (AST → string → AST).
-            const ind = indent >= this.indent ? indent : this.indent + 2;
-            caret.indent = ind;
-            this.arg = new LeanStatements([caret], ind, caret.level);
+            const indent = indent >= this.indent ? indent : this.indent + 2;
+            caret.indent = indent;
+            this.arg = new LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; ++i) {
-                caret = new LeanCaret(ind, caret.level);
+                caret = new LeanCaret(indent, caret.level);
                 this.arg.push(caret);
             }
             return caret;
@@ -7856,7 +7844,7 @@ export class LeanBy extends LeanUnary {
     }
 
     relocate_last_comment() {
-        this.arg?.relocate_last_comment?.();
+        this.arg.relocate_last_comment();
     }
 
     sep() {
@@ -7893,11 +7881,11 @@ class LeanFrom extends LeanUnary {
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
-            const ind = indent >= this.indent ? indent : this.indent + 2;
-            caret.indent = ind;
-            this.arg = new LeanStatements([caret], ind, caret.level);
+            const indent = indent >= this.indent ? indent : this.indent + 2;
+            caret.indent = indent;
+            this.arg = new LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new LeanCaret(ind, caret.level);
+                caret = new LeanCaret(indent, caret.level);
                 this.arg.push(caret);
             }
             return caret;
@@ -7947,10 +7935,9 @@ class LeanCalc extends LeanUnary {
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret === this.arg) {
             if (caret instanceof LeanCaret) {
-                let ind = indent;
-                if (ind === this.indent) ind = this.indent + 2;
-                caret.indent = ind;
-                const nl = new LeanArgsNewLineSeparated([caret], ind, caret.level);
+                if (indent === this.indent) indent = this.indent + 2;
+                caret.indent = indent;
+                const nl = new LeanArgsNewLineSeparated([caret], indent, caret.level);
                 this.replace(caret, nl);
                 return nl.push_newlines(newline_count - 1);
             }
@@ -8052,12 +8039,11 @@ class LeanUsing extends LeanUnary {
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            caret.indent = ind;
-            this.arg = new LeanStatements([caret], ind, caret.level);
+            if (indent === this.indent) indent = this.indent + 2;
+            caret.indent = indent;
+            this.arg = new LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new LeanCaret(ind, caret.level);
+                caret = new LeanCaret(indent, caret.level);
                 this.arg.push(caret);
             }
             return caret;
@@ -8083,12 +8069,11 @@ export class LeanAt extends LeanUnary {
 
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            caret.indent = ind;
-            this.arg = new LeanStatements([caret], ind, caret.level);
+            if (indent === this.indent) indent = this.indent + 2;
+            caret.indent = indent;
+            this.arg = new LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new LeanCaret(ind, caret.level);
+                caret = new LeanCaret(indent, caret.level);
                 this.arg.push(caret);
             }
             return caret;
@@ -8121,12 +8106,11 @@ class LeanIn extends LeanUnary {
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            caret.indent = ind;
-            this.arg = new LeanStatements([caret], ind, caret.level);
+            if (indent === this.indent) indent = this.indent + 2;
+            caret.indent = indent;
+            this.arg = new LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new LeanCaret(ind, caret.level);
+                caret = new LeanCaret(indent, caret.level);
                 this.arg.push(caret);
             }
             return caret;
@@ -8156,12 +8140,11 @@ class LeanGeneralizing extends LeanUnary {
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
-            let ind = indent;
-            if (ind === this.indent) ind = this.indent + 2;
-            caret.indent = ind;
-            this.arg = new LeanStatements([caret], ind, caret.level);
+            if (indent === this.indent) indent = this.indent + 2;
+            caret.indent = indent;
+            this.arg = new LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new LeanCaret(ind, caret.level);
+                caret = new LeanCaret(indent, caret.level);
                 this.arg.push(caret);
             }
             return caret;
@@ -8200,27 +8183,18 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
         return '<;>';
     }
 
-    /** @param {Record<string, unknown>} [_syntax] */
     echo() {
-        let arg = this.arg;
-        if (arg instanceof LeanTacticBlock) {
+        let {arg} = this;
+        if (arg instanceof LeanTacticBlock)
             arg.echo();
-            return;
-        }
-        if (arg.indent > 0) {
-            const indent = arg.indent;
-            const level = arg.level;
+        else if (arg.indent > 0) {
+            const {indent, level} = arg;
             const echo = new LeanTactic('echo', new LeanToken('⊢', indent, level), indent, level);
-            const parentTactic = this.parent;
-            if (
-                parentTactic instanceof LeanTactic &&
-                parentTactic.func === 'by_cases' &&
-                parentTactic.has_tactic_block_followed?.()
-            ) {
-                let a = arg;
+            const by_cases = this.parent;
+            if (by_cases instanceof LeanTactic && by_cases.func === 'by_cases' && by_cases.has_tactic_block_followed()) {
                 let sequential_tactic_combinator;
-                while ((sequential_tactic_combinator = a.sequential_tactic_combinator) && sequential_tactic_combinator.arg?.indent) a = sequential_tactic_combinator;
-                a.push(new LeanSequentialTacticCombinator(echo, indent, level, true));
+                while ((sequential_tactic_combinator = arg.sequential_tactic_combinator) && sequential_tactic_combinator.arg.indent) arg = sequential_tactic_combinator;
+                arg.push(new LeanSequentialTacticCombinator(echo, indent, level, true));
             } else {
                 echo.push(new LeanSequentialTacticCombinator(arg, indent, level, this.newline));
                 this.arg = echo;
@@ -8244,10 +8218,9 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
                     return caret;
                 }
             } else {
-                let ind = indent;
-                if (ind > this.indent) ind = this.indent + 2;
-                else ind = this.indent;
-                caret.indent = ind;
+                if (indent > this.indent) indent = this.indent + 2;
+                else indent = this.indent;
+                caret.indent = indent;
                 return caret;
             }
         }
@@ -8316,9 +8289,9 @@ class LeanTacticBlock extends LeanUnary {
 
     insert_line_comment(caret, comment) {
         if (caret instanceof LeanCaret) {
-            const ind = this.indent + 2;
-            const line = new LeanLineComment(comment, ind, caret.level);
-            this.arg = new LeanStatements([line], ind, caret.level);
+            const indent = this.indent + 2;
+            const line = new LeanLineComment(comment, indent, caret.level);
+            this.arg = new LeanStatements([line], indent, caret.level);
             return line;
         }
         throw new Error('LeanTacticBlock.insert_line_comment: unexpected');
@@ -8328,14 +8301,13 @@ class LeanTacticBlock extends LeanUnary {
         if (caret === this.arg) {
             if (caret instanceof LeanCaret) {
                 if (this.indent <= indent) {
-                    let ind = indent;
-                    if (ind === this.indent) ind = this.indent + 2;
-                    caret.indent = ind;
-                    const stmts = new LeanStatements([caret], ind, caret.level);
+                    if (indent === this.indent) indent = this.indent + 2;
+                    caret.indent = indent;
+                    const stmts = new LeanStatements([caret], indent, caret.level);
                     this.arg = stmts;
                     let last = caret;
                     for (let i = 1; i < newline_count; i++) {
-                        last = new LeanCaret(ind, caret.level);
+                        last = new LeanCaret(indent, caret.level);
                         stmts.push(last);
                     }
                     return last;
@@ -8383,45 +8355,43 @@ class LeanTacticBlock extends LeanUnary {
         const statements = this.arg;
         if (!(statements instanceof LeanStatements)) return;
         statements.echo();
-        const p = this.parent;
-        if (p instanceof LeanSequentialTacticCombinator) {
+        const parent = this.parent;
+        if (parent instanceof LeanSequentialTacticCombinator) {
             let token;
-            const gp = p.parent;
+            const gp = parent.parent;
             if (gp instanceof LeanTactic) {
                 const w = gp.with;
                 if (w) token = w.unique_token(statements.indent);
             }
             if (token == null) token = new LeanToken('⊢', statements.indent, statements.level);
             statements.unshift(new LeanTactic('echo', token, statements.indent, statements.level));
-        } else if (p instanceof LeanStatements) {
-            const ix = p.args.indexOf(this);
-            if (ix < 0) return;
+        } else if (parent instanceof LeanStatements) {
+            const index = parent.args.indexOf(this);
             let tacticBlockCount = 0;
-            for (let i = ix - 1; i >= 0; i--) {
-                const stmt = p.args[i];
+            for (let i = index - 1; i >= 0; i--) {
+                const stmt = parent.args[i];
                 if (stmt.is_comment()) continue;
                 if (stmt instanceof LeanTacticBlock) {
-                    tacticBlockCount++;
+                    ++tacticBlockCount;
                     continue;
                 }
                 if (stmt instanceof LeanTactic) {
                     if (stmt.func === 'echo') continue;
-                    const st = stmt.func;
-                    const indent = statements.indent;
-                    const level = statements.level;
-                    switch (st) {
+                    const {indent, level} = statements;
+                    switch (stmt.func) {
                         case 'rcases': {
-                            const w = stmt.with;
-                            const tokens = w?.tokens_bar_separated?.() ?? [];
-                            if (w && tokens.length) {
+                            const $with = stmt.with;
+                            const tokens = $with.tokens_bar_separated();
+                            if ($with && tokens.length) {
                                 let token = tokens[tacticBlockCount];
                                 if (Array.isArray(token)) {
-                                    token = token.filter((t) => t.text !== 'rfl');
-                                    token = token.map((t) => {
-                                        const c = t.clone();
-                                        c.indent = indent;
-                                        c.level = level;
-                                        return c;
+                                    token = token.filter((token) => token.text !== 'rfl');
+                                    token = [...token];
+                                    token = token.map(token => {
+                                        token = token.clone();
+                                        token.indent = indent;
+                                        token.level = level;
+                                        return token;
                                     });
                                     token =
                                         token.length === 1 ? token[0] : new LeanArgsCommaSeparated(token, indent, level);
@@ -8435,14 +8405,14 @@ class LeanTacticBlock extends LeanUnary {
                             break;
                         }
                         case "cases'": {
-                            const w = stmt.with;
-                            const tokens = w?.tokens_space_separated?.() ?? [];
-                            if (w instanceof LeanWith && tokens.length) {
+                            const $with = stmt.with;
+                            const tokens = w.tokens_space_separated();
+                            if ($with instanceof LeanWith && tokens.length) {
                                 const token = tokens[tacticBlockCount].clone();
-                                token.indent = statements.indent;
-                                token.level = statements.level;
+                                token.indent = indent;
+                                token.level = level;
                                 statements.unshift(
-                                    new LeanTactic('echo', token, statements.indent, statements.level),
+                                    new LeanTactic('echo', token, indent, level),
                                 );
                             }
                             break;
@@ -8455,10 +8425,10 @@ class LeanTacticBlock extends LeanUnary {
                                     const tokens = bitOr.tokens_bar_separated();
                                     if (tokens.length) {
                                         const token = tokens[tacticBlockCount].clone();
-                                        token.indent = statements.indent;
-                                        token.level = statements.level;
+                                        token.indent = indent;
+                                        token.level = level;
                                         statements.unshift(
-                                            new LeanTactic('echo', token, statements.indent, statements.level),
+                                            new LeanTactic('echo', token, indent, level),
                                         );
                                     }
                                 }
@@ -8466,99 +8436,94 @@ class LeanTacticBlock extends LeanUnary {
                             break;
                         }
                         case 'split_ifs': {
-                            const w = stmt.with;
-                            if (!(w instanceof LeanWith) || w.args.length !== 1) break;
-                            const toks = w.args[0];
-                            if (!(toks instanceof LeanArgsSpaceSeparated || toks instanceof LeanToken)) break;
+                            const $with = stmt.with;
+                            if (!($with instanceof LeanWith) || $with.args.length !== 1) break;
+                            let tokens = $with.args[0];
+                            if (!(tokens instanceof LeanArgsSpaceSeparated || tokens instanceof LeanToken)) break;
                             statements.unshift(
                                 new LeanTactic(
                                     'echo',
-                                    new LeanToken('⊢', statements.indent, statements.level),
-                                    statements.indent,
-                                    statements.level,
+                                    new LeanToken('⊢', indent, level),
+                                    indent,
+                                    level,
                                 ),
                             );
-                            const infoMap =
-                                typeof toks.tactic_block_info === 'function' ? toks.tactic_block_info() : {};
-                            const tbi = infoMap[tacticBlockCount] ?? null;
-                            if (tbi) {
-                                const span = tbi.map((token) => {
-                                    const c = token.cache;
-                                    return c && typeof c.size === 'number' ? c.size : 1;
-                                });
-                                    let rest = p.args.slice(ix);
-                                    const length = rest.length;
-                                    for (let si = 0; si < span.length; si++) {
-                                        const span_i = span[si];
-                                        let token = tbi[si].clone();
-                                        token.indent = this.indent;
-                                        const stop = this.tactic_block(rest, span_i);
-                                        let newList = rest.slice(0, stop);
-                                        const first = newList[0];
-                                        if (first instanceof LeanTactic && first.func === 'echo') {
-                                            if (first.arg instanceof LeanToken)
-                                                first.arg = new LeanArgsCommaSeparated(
-                                                    [token, first.arg],
-                                                    this.indent,
-                                                    token.level,
-                                                );
-                                            else first.arg.unshift(token);
-                                        } else {
-                                            newList.unshift(
-                                                new LeanTactic('echo', token, this.indent, token.level),
+                            tokens = tokens.tactic_block_info()[tacticBlockCount] ?? null;
+                            if (tokens) {
+                                const span = tokens.map(token => token.cache.size);
+                                let args = parent.args.slice(index);
+                                const {length} = args;
+                                for (let si = 0; si < span.length; si++) {
+                                    const span_i = span[si];
+                                    let token = tokens[si].clone();
+                                    token.indent = this.indent;
+                                    const stop = this.tactic_block(args, span_i);
+                                    let new_list = args.slice(0, stop);
+                                    const first = new_list[0];
+                                    if (first instanceof LeanTactic && first.func === 'echo') {
+                                        if (first.arg instanceof LeanToken)
+                                            first.arg = new LeanArgsCommaSeparated(
+                                                [token, first.arg],
+                                                this.indent,
+                                                token.level,
                                             );
-                                        }
-                                        const last = newList[newList.length - 1];
-                                        if (last instanceof LeanTactic && last.func === 'echo') {
-                                            if (last.arg instanceof LeanToken)
-                                                last.arg = new LeanArgsCommaSeparated(
-                                                    [last.arg, token],
+                                        else first.arg.unshift(token);
+                                    } else {
+                                        new_list.unshift(
+                                            new LeanTactic('echo', token, this.indent, token.level),
+                                        );
+                                    }
+                                    const last = new_list[new_list.length - 1];
+                                    if (last instanceof LeanTactic && last.func === 'echo') {
+                                        if (last.arg instanceof LeanToken)
+                                            last.arg = new LeanArgsCommaSeparated(
+                                                [last.arg, token],
+                                                this.indent,
+                                                token.level,
+                                            );
+                                        else last.arg.push(token);
+                                    } else {
+                                        new_list.push(new LeanTactic('echo', token, this.indent, token.level));
+                                    }
+                                    args.splice(0, stop, ...new_list);
+                                }
+                                if (index) {
+                                    const prev = parent.args[index - 1];
+                                    if (prev instanceof LeanTactic && prev.func === 'echo') {
+                                        const first = args.shift();
+                                        if (prev.arg instanceof LeanToken) {
+                                            if (first.arg instanceof LeanToken)
+                                                prev.arg = new LeanArgsCommaSeparated(
+                                                    [prev.arg, first.arg],
                                                     this.indent,
-                                                    token.level,
+                                                    prev.arg.level,
                                                 );
-                                            else last.arg.push(token);
+                                            else
+                                                prev.arg = new LeanArgsCommaSeparated(
+                                                    [prev.arg, ...first.arg.args],
+                                                    this.indent,
+                                                    prev.arg.level,
+                                                );
                                         } else {
-                                            newList.push(new LeanTactic('echo', token, this.indent, token.level));
-                                        }
-                                        rest = [...newList, ...rest.slice(stop)];
-                                    }
-                                    if (ix > 0) {
-                                        const prev = p.args[ix - 1];
-                                        if (prev instanceof LeanTactic && prev.func === 'echo') {
-                                            const first = rest.shift();
-                                            if (prev.arg instanceof LeanToken) {
-                                                if (first.arg instanceof LeanToken)
-                                                    prev.arg = new LeanArgsCommaSeparated(
-                                                        [prev.arg, first.arg],
-                                                        this.indent,
-                                                        prev.arg.level,
-                                                    );
-                                                else
-                                                    prev.arg = new LeanArgsCommaSeparated(
-                                                        [prev.arg, ...first.arg.args],
-                                                        this.indent,
-                                                        prev.arg.level,
-                                                    );
-                                            } else {
-                                                if (first.arg instanceof LeanToken) prev.arg.push(first.arg);
-                                                else for (const a of first.arg.args) prev.arg.push(a);
-                                            }
+                                            if (first.arg instanceof LeanToken) prev.arg.push(first.arg);
+                                            else for (const arg of first.arg.args) prev.arg.push(arg);
                                         }
                                     }
-                                    return [length, ...rest];
+                                }
+                                return [length, ...args];
                             }
                             break;
                         }
                         case 'by_cases': {
                             const colon = stmt.arg;
                             if (colon instanceof LeanColon && colon.lhs instanceof LeanToken) {
-                                const spaceToks = colon.lhs.tokens_space_separated?.() ?? [];
-                                const token = spaceToks[tacticBlockCount];
+                                const tokens = colon.lhs.tokens_space_separated();
+                                var token = tokens[tacticBlockCount] ?? null;
                                 if (token) {
-                                    const c = token.clone();
-                                    c.indent = this.indent;
-                                    c.level = this.level;
-                                    const echo = new LeanTactic('echo', c, this.indent, this.level);
+                                    token = token.clone();
+                                    token.indent = this.indent;
+                                    token.level = this.level;
+                                    const echo = new LeanTactic('echo', token, this.indent, this.level);
                                     return [1, echo, this, echo.clone()];
                                 }
                             }
@@ -8567,38 +8532,38 @@ class LeanTacticBlock extends LeanUnary {
                         case 'split': {
                             const at = stmt.at;
                             if (at) {
-                                const t = at.arg;
-                                if (t instanceof LeanToken) {
-                                    const c = t.clone();
-                                    c.indent = statements.indent;
-                                    c.level = statements.level;
+                                const token = at.arg;
+                                if (token instanceof LeanToken) {
+                                    token = token.clone();
+                                    token.indent = indent;
+                                    token.level = level;
                                     statements.unshift(
-                                        new LeanTactic('echo', c, statements.indent, statements.level),
+                                        new LeanTactic('echo', token, indent, level),
                                     );
                                 }
                             }
                             break;
                         }
                         default: {
-                            let token = new LeanToken('⊢', statements.indent, statements.level);
-                            const sequential_tactic_combinator = stmt.sequential_tactic_combinator;
+                            let token = new LeanToken('⊢', indent, level);
+                            const {sequential_tactic_combinator} = stmt;
                             if (sequential_tactic_combinator) {
                                 const tactic = sequential_tactic_combinator.arg;
-                                const tacticToken = tactic?.get_echo_token?.();
-                                if (tacticToken) {
-                                    if (tacticToken instanceof LeanArgsCommaSeparated) {
-                                        tacticToken.push(token);
-                                        token = tacticToken;
+                                const tactic_token = tactic.get_echo_token();
+                                if (tactic_token) {
+                                    if (tactic_token instanceof LeanArgsCommaSeparated) {
+                                        tactic_token.push(token);
+                                        token = tactic_token;
                                     } else {
                                         token = new LeanArgsCommaSeparated(
-                                            [tacticToken, token],
-                                            statements.indent,
-                                            statements.level,
+                                            [tactic_token, token],
+                                            indent,
+                                            level,
                                         );
                                     }
                                 }
                             }
-                            statements.unshift(new LeanTactic('echo', token, statements.indent, statements.level));
+                            statements.unshift(new LeanTactic('echo', token, indent, level));
                         }
                     }
                 }
@@ -8681,7 +8646,7 @@ class LeanWith extends LeanArgs {
 
     relocate_last_comment() {
         const a = this.args[this.args.length - 1];
-        a?.relocate_last_comment?.();
+        a.relocate_last_comment();
     }
 
     insert_newline(caret, newline_count, indent, next) {
@@ -8956,7 +8921,7 @@ export class Lean_theorem extends Lean_def {}
 
 export class Lean_lemma extends Lean_def {
     echo() {
-        this.assignment?.echo();
+        this.assignment.echo();
         const asn = this.assignment;
         if (asn instanceof LeanAssign && asn.rhs instanceof LeanBy) {
             const statement = asn.rhs.arg;
@@ -8964,18 +8929,18 @@ export class Lean_lemma extends Lean_def {
                 const stmts = statement.args;
                 for (let i = stmts.length - 1; i >= 0; i--) {
                     const stmt = stmts[i];
-                    if (stmt.is_comment?.()) continue;
+                    if (stmt.is_comment()) continue;
                     if (stmt instanceof LeanTactic || stmt instanceof Lean_let) {
-                        const token = stmt.get_echo_token?.();
+                        const token = stmt.get_echo_token();
+                        // try echo ⊢
                         if (token) {
-                            const ind = statement.indent;
-                            const lev = statement.level;
+                            const {indent, level} = statement;
                             statement.push(
                                 new LeanTactic(
                                     'try',
-                                    new LeanTactic('echo', token, ind, lev),
-                                    ind,
-                                    lev,
+                                    new LeanTactic('echo', token, indent, level),
+                                    indent,
+                                    level,
                                 ),
                             );
                         }
@@ -9007,7 +8972,7 @@ class Lean_let extends LeanSyntax {
     echo() {
         const token = this.get_echo_token();
         if (token) {
-            const by = this.args[0]?.rhs;
+            const by = this.args[0].rhs;
             if (by instanceof LeanBy) {
                 const stmt = by.arg;
                 if (stmt instanceof LeanStatements) stmt.echo();
@@ -9063,8 +9028,8 @@ class Lean_let extends LeanSyntax {
     }
 
     is_indented() {
-        const p = this.parent;
-        if (p instanceof LeanSequentialTacticCombinator) return this.indent > 0;
+        const parent = this.parent;
+        if (parent instanceof LeanSequentialTacticCombinator) return this.indent > 0;
         return true;
     }
 
@@ -9171,8 +9136,8 @@ class Lean_show extends LeanSyntax {
     }
 
     is_indented() {
-        const p = this.parent;
-        return p instanceof LeanStatements || p instanceof LeanArgsNewLineSeparated;
+        const parent = this.parent;
+        return parent instanceof LeanStatements || parent instanceof LeanArgsNewLineSeparated;
     }
 
     toJSON() {
@@ -9201,8 +9166,8 @@ class Lean_fun extends LeanUnary {
         return '\\lambda';
     }
     is_indented() {
-        const p = this.parent;
-        return p instanceof LeanArgsNewLineSeparated || p instanceof LeanStatements;
+        const parent = this.parent;
+        return parent instanceof LeanArgsNewLineSeparated || parent instanceof LeanStatements;
     }
     toJSON() {
         return { [this.operator]: this.arg.toJSON() };
@@ -9248,8 +9213,8 @@ class LeanBigOperator extends LeanArgs {
     }
 
     is_indented() {
-        const p = this.parent;
-        return p instanceof LeanStatements || p instanceof LeanIte;
+        const parent = this.parent;
+        return parent instanceof LeanStatements || parent instanceof LeanIte;
     }
 
     strFormat() {
