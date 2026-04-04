@@ -16,15 +16,10 @@ import { render2vueFromSource as render2vueFromCompiledTree } from './render2vue
  * @returns {object} Vue `render` payload
  */
 export function render2vueFromSource(source, module, opts = {}) {
-  try {
-    const code = render2vueFromCompiledTree(source, false);
-    // code.module = module;
-    if (opts.user) code.user = opts.user;
-    return code;
-  } catch (e) {
-    console.warn('[lean compiler] JS render2vue failed, using stub:', e.message);
-    return buildRenderPropsFromSource(source, module, { user: opts.user });
-  }
+  const code = render2vueFromCompiledTree(source, false);
+  // code.module = module;
+  if (opts.user) code.user = opts.user;
+  return code;
 }
 
 export { tokenizeLeanSource } from './tokenize.mjs';

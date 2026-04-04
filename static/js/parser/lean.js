@@ -886,8 +886,7 @@ export class Lean extends IndentedNode {
             case 'LeanCeil':
             case 'LeanNorm':
             case 'LeanDoubleAngleQuotation': {
-                const indent = this.indent;
-                const level = this.level;
+                const {indent, level} = this;
                 const caret = new LeanCaret(indent, level);
                 if (func === 'LeanBracket') {
                     if (prevToken === ' ') {
@@ -1903,8 +1902,7 @@ export class LeanParenthesis extends LeanPairedGroup {
     }
 
     append($new, _func) {
-        const indent = this.indent;
-        const level = this.level;
+        const {indent, level} = this;
         const caret = new LeanCaret(indent, level);
         if (typeof $new === 'string') {
             const Ctor = LEAN_CLASSES[$new];
@@ -1957,7 +1955,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (caret !== this.arg) {
             throw new Error(`insert_unary is unexpected for ${this.constructor.name}`);
         }
-        const indent = this.indent;
+        const {indent} = this;
         const Ctor = LEAN_CLASSES[funcName];
         let caretOut;
         let newNode;
@@ -2814,8 +2812,7 @@ export class LeanAssign extends LeanBinary {
 
 export class LeanBinaryBoolean extends LeanBinary {
     append(new_, type) {
-        const indent = this.indent;
-        const level = this.level;
+        const {indent, level} = this;
         const caret = new LeanCaret(indent, level);
         if (typeof new_ === 'string') {
             const Ctor = LEAN_CLASSES[new_];
@@ -4122,11 +4119,11 @@ export class LeanStatements extends LeanArgs {
                 if (
                     index + 1 < args.length - void_lines &&
                     args[index + 1] instanceof LeanTactic &&
-                    args[index + 1].func === 'try' &&
+                    args[index + 1].tacticName === 'try' &&
                     result.length === 2 &&
                     result[0] === args[index] &&
                     result[1] instanceof LeanTactic &&
-                    result[1].func === 'echo'
+                    result[1].tacticName === 'echo'
                 ) {
                     const e = result[1];
                     result[1] = new LeanTactic('try', e, e.indent, e.level);
@@ -4286,7 +4283,7 @@ export class LeanStatements extends LeanArgs {
             const echo = args[i];
             if (
                 echo instanceof LeanTactic &&
-                echo.func === 'echo' &&
+                echo.tacticName === 'echo' &&
                 echo.arg instanceof LeanToken &&
                 echo.arg.text === '*'
             ) {
@@ -5766,7 +5763,7 @@ export class LeanRightarrow extends LeanBinary {
     echo() {
         const token = [];
         var {parent} = this;
-        if (parent instanceof LeanBar && (parent = parent.parent) instanceof LeanWith && ((parent = parent.parent) instanceof Lean_match || (parent instanceof LeanTactic && parent.func === 'induction'))) {
+        if (parent instanceof LeanBar && (parent = parent.parent) instanceof LeanWith && ((parent = parent.parent) instanceof Lean_match || (parent instanceof LeanTactic && parent.tacticName === 'induction'))) {
             token.push(new LeanToken('⊢', this.rhs.indent, this.rhs.level));
             const subject = parent.args[0];
             if (subject instanceof LeanArgsCommaSeparated) {
@@ -5820,8 +5817,7 @@ export class LeanRightarrow extends LeanBinary {
         const stmt = this.rhs;
         stmt.echo();
         if (token.length && stmt instanceof LeanStatements) {
-            const indent = stmt.args[0].indent;
-            const level = stmt.args[0].level;
+            const {indent, level} = stmt.args[0];
             let payload;
             if (token.length > 1) {
                 payload = new LeanArgsCommaSeparated(
@@ -6545,7 +6541,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     insert_unary(caret, func) {
         const last = this.args[this.args.length - 1];
         if (last !== caret) throw new Error(`insert_unary is unexpected for ${this.constructor.name}`);
-        const indent = this.indent;
+        const {indent} = this;
         const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
         if (caret instanceof LeanCaret) {
             this.replace(caret, new Ctor(caret, indent, caret.level));
@@ -7308,13 +7304,13 @@ export class LeanTactic extends LeanSyntax {
      */
     constructor(name, arg, indent, level) {
         super([arg], indent, level);
-        this.func = name;
+        this.tacticName = name;
         this.only = undefined;
     }
 
     get stack_priority() {
         if (this.parent instanceof LeanBy) return LeanColon.input_priority;
-        if (this.func === 'obtain') return LeanAssign.input_priority - 1;
+        if (this.tacticName === 'obtain') return LeanAssign.input_priority - 1;
         return LeanAssign.input_priority;
     }
 
@@ -7377,15 +7373,15 @@ export class LeanTactic extends LeanSyntax {
      * @returns {LeanTactic | undefined}
      */
     getEcho() {
-        if (this.func === 'echo') return this;
-        if (this.func === 'try' && this.arg instanceof LeanTactic && this.arg.func === 'echo') return this.arg;
+        if (this.tacticName === 'echo') return this;
+        if (this.tacticName === 'try' && this.arg instanceof LeanTactic && this.arg.tacticName === 'echo') return this.arg;
     }
 
     get_echo_token() {
         const at = this.at;
         if (at) {
             let token = at.arg;
-            if (this.func === 'split') {
+            if (this.tacticName === 'split') {
                 if (this.has_tactic_block_followed()) return;
             } else {
                 if (token instanceof LeanArgsSpaceSeparated) {
@@ -7401,7 +7397,7 @@ export class LeanTactic extends LeanSyntax {
         let token = [];
         let turnstile = '⊢';
         const arg = this.arg;
-        switch (this.func) {
+        switch (this.tacticName) {
             case 'intro':
             case 'by_contra':
                 if (arg instanceof LeanToken) token.push(arg.clone());
@@ -7509,7 +7505,7 @@ export class LeanTactic extends LeanSyntax {
             case 'echo':
                 return;
             case 'try':
-                if (arg instanceof LeanTactic && arg.func === 'echo') return;
+                if (arg instanceof LeanTactic && arg.tacticName === 'echo') return;
                 break;
             default:
                 break;
@@ -7669,11 +7665,11 @@ export class LeanTactic extends LeanSyntax {
     }
 
     is_inline_tactic_block() {
-        return this.func === 'repeat' || this.func === 'try';
+        return this.tacticName === 'repeat' || this.tacticName === 'try';
     }
 
     toJSON() {
-        const name = this.func;
+        const name = this.tacticName;
         const arg = this.arg.toJSON();
         const modifiers = this.modifiers.map((m) => m.toJSON());
         /** Fixed key order so parse → print → parse matches JSON.stringify output. */
@@ -7685,9 +7681,9 @@ export class LeanTactic extends LeanSyntax {
     }
 
     latexFormat() {
-        let func = escapeSpecialsForLatex(this.func);
+        let func = escapeSpecialsForLatex(this.tacticName);
         if (this.only) func += '\\ only';
-        const color = this.func === 'sorry' ? '708' : '00f';
+        const color = this.tacticName === 'sorry' ? '708' : '00f';
         func = `{\\color{#${color}}${func}}`;
         if (!(this.arg instanceof LeanCaret)) func += '\\ ';
         return func + Array(this.args.length).fill('%s').join('\\ ');
@@ -7705,7 +7701,7 @@ export class LeanTactic extends LeanSyntax {
     }
 
     repeat_block() {
-        if (this.func === 'repeat') {
+        if (this.tacticName === 'repeat') {
             const brace = this.arg;
             if (brace instanceof LeanBrace) {
                 const block = brace.arg;
@@ -7716,7 +7712,7 @@ export class LeanTactic extends LeanSyntax {
 
     split(syntax) {
         if (!syntax) syntax = {};
-        syntax[this.func] = true;
+        syntax[this.tacticName] = true;
         const w = this.with;
         if (w && w.sep() === '\n') {
             const self = this.clone();
@@ -7780,7 +7776,7 @@ export class LeanTactic extends LeanSyntax {
     }
 
     strFormat() {
-        let func = this.func;
+        let func = this.tacticName;
         if (this.only) func += ' only';
         const parts = [];
         for (const arg of this.args) {
@@ -7811,7 +7807,7 @@ export class LeanBy extends LeanUnary {
             // When the next line is already deeper than `by`, use that indent; when it matches the assign
             // line (common after a column-0 `-- proof`), keep that indent so tactics stay inside the
             // proof block instead of bubbling to `LeanModule` (AST → string → AST).
-            const indent = indent >= this.indent ? indent : this.indent + 2;
+            indent = indent >= this.indent ? indent : this.indent + 2;
             caret.indent = indent;
             this.arg = new LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; ++i) {
@@ -7881,7 +7877,7 @@ class LeanFrom extends LeanUnary {
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
-            const indent = indent >= this.indent ? indent : this.indent + 2;
+            indent = indent >= this.indent ? indent : this.indent + 2;
             caret.indent = indent;
             this.arg = new LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
@@ -8191,7 +8187,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
             const {indent, level} = arg;
             const echo = new LeanTactic('echo', new LeanToken('⊢', indent, level), indent, level);
             const by_cases = this.parent;
-            if (by_cases instanceof LeanTactic && by_cases.func === 'by_cases' && by_cases.has_tactic_block_followed()) {
+            if (by_cases instanceof LeanTactic && by_cases.tacticName === 'by_cases' && by_cases.has_tactic_block_followed()) {
                 let sequential_tactic_combinator;
                 while ((sequential_tactic_combinator = arg.sequential_tactic_combinator) && sequential_tactic_combinator.arg.indent) arg = sequential_tactic_combinator;
                 arg.push(new LeanSequentialTacticCombinator(echo, indent, level, true));
@@ -8206,7 +8202,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     getEcho() {
         if (this.newline) {
             const e = this.arg;
-            if (e instanceof LeanTactic && e.func === 'echo') return e;
+            if (e instanceof LeanTactic && e.tacticName === 'echo') return e;
         }
     }
 
@@ -8376,9 +8372,9 @@ class LeanTacticBlock extends LeanUnary {
                     continue;
                 }
                 if (stmt instanceof LeanTactic) {
-                    if (stmt.func === 'echo') continue;
+                    if (stmt.tacticName === 'echo') continue;
                     const {indent, level} = statements;
-                    switch (stmt.func) {
+                    switch (stmt.tacticName) {
                         case 'rcases': {
                             const $with = stmt.with;
                             const tokens = $with.tokens_bar_separated();
@@ -8460,7 +8456,7 @@ class LeanTacticBlock extends LeanUnary {
                                     const stop = this.tactic_block(args, span_i);
                                     let new_list = args.slice(0, stop);
                                     const first = new_list[0];
-                                    if (first instanceof LeanTactic && first.func === 'echo') {
+                                    if (first instanceof LeanTactic && first.tacticName === 'echo') {
                                         if (first.arg instanceof LeanToken)
                                             first.arg = new LeanArgsCommaSeparated(
                                                 [token, first.arg],
@@ -8474,7 +8470,7 @@ class LeanTacticBlock extends LeanUnary {
                                         );
                                     }
                                     const last = new_list[new_list.length - 1];
-                                    if (last instanceof LeanTactic && last.func === 'echo') {
+                                    if (last instanceof LeanTactic && last.tacticName === 'echo') {
                                         if (last.arg instanceof LeanToken)
                                             last.arg = new LeanArgsCommaSeparated(
                                                 [last.arg, token],
@@ -8489,7 +8485,7 @@ class LeanTacticBlock extends LeanUnary {
                                 }
                                 if (index) {
                                     const prev = parent.args[index - 1];
-                                    if (prev instanceof LeanTactic && prev.func === 'echo') {
+                                    if (prev instanceof LeanTactic && prev.tacticName === 'echo') {
                                         const first = args.shift();
                                         if (prev.arg instanceof LeanToken) {
                                             if (first.arg instanceof LeanToken)
