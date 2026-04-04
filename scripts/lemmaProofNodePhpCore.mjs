@@ -7,7 +7,7 @@ import process from 'process';
 /** @returns {{ nodeBase: string, phpBase: string }} */
 export function lemmaProofCompareBases() {
   const nodeBase = (
-    process.env.LEAN_NODE_LEMMA_BASE || 'http://127.0.0.1:3000/lean/'
+    process.env.LEAN_NODE_LEMMA_BASE || 'http://127.0.0.1/lean/'
   ).replace(/\/?$/, '/');
   const phpBase = (
     process.env.LEAN_PHP_LEMMA_BASE || 'http://127.0.0.1:8080/lean.php/'

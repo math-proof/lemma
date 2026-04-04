@@ -9,7 +9,7 @@ npm start
 
 Open:
 
-`http://127.0.0.1:3000/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax`
+`http://127.0.0.1/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax`
 
 Static assets: `/lean/static/...` (served from `./static`).
 
@@ -27,4 +27,4 @@ See **`server/lean/compiler/README.md`** for details.
 
 | Variable | Default | Meaning        |
 |----------|---------|----------------|
-| `PORT`   | `3000`  | Listen port    |
+| `PORT`   | `80`    | Listen port    |

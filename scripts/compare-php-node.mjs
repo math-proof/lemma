@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Compare lemma payload from PHP (localhost) vs Node (localhost:3000).
+ * Compare lemma payload from PHP (localhost:8080) vs Node (localhost, default port 80).
  * Requires both servers to be running.
  *
  * Usage:
@@ -119,7 +119,7 @@ function fetch(url) {
 
 async function main() {
   const phpUrl = `http://localhost:8080/lean.php/?module=${encodeURIComponent(MODULE)}`;
-  const nodeUrl = `http://localhost:3000/lean/?module=${encodeURIComponent(MODULE)}`;
+  const nodeUrl = `http://localhost/lean/?module=${encodeURIComponent(MODULE)}`;
   console.log('Fetching from URLs...');
   console.log('  PHP:  ', phpUrl);
   console.log('  Node: ', nodeUrl);

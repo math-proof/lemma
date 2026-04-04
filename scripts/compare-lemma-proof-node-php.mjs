@@ -9,7 +9,7 @@
  *   node scripts/compare-lemma-proof-node-php.mjs [module]
  *
  * Env (optional):
- *   LEAN_NODE_LEMMA_BASE  default http://127.0.0.1:3000/lean/
+ *   LEAN_NODE_LEMMA_BASE  default http://127.0.0.1/lean/
  *   LEAN_PHP_LEMMA_BASE   default http://127.0.0.1:8080/lean.php/
  *   LEAN_PROOF_COMPARE_INCLUDE_LATEX=1  compare latex too (legacy behavior)
  *

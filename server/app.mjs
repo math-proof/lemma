@@ -28,7 +28,7 @@ import {
 const VIEWS = path.join(REPO_ROOT, 'views');
 
 const app = express();
-const PORT = Number(process.env.PORT || 3000);
+const PORT = Number(process.env.PORT || 80);
 
 app.set('view engine', 'ejs');
 app.set('views', VIEWS);
@@ -162,7 +162,9 @@ app.get('/', (_req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Lemma server  http://127.0.0.1:${PORT}/lean/`);
+  const origin =
+    PORT === 80 ? 'http://127.0.0.1' : `http://127.0.0.1:${PORT}`;
+  console.log(`Lemma server  ${origin}/lean/`);
   console.log(`  static:      /lean/static/`);
   console.log(`  compiler:    JS (render2vue.mjs)`);
   if (getMysqlConfig()) {
