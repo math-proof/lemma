@@ -14,7 +14,7 @@ import {
 import { echo2vueFromSource, render2vueFromSource } from './lean/compiler/index.mjs';
 import { jsonForScriptEmbed } from './lean/jsonForScriptEmbed.mjs';
 import { listLemmaTopLevelDirs } from './lean/lemmaSections.mjs';
-import { handleExecutePhpStub } from './lean/executeStub.mjs';
+import { handleExecutePhp } from './lean/executePhp.mjs';
 import { handleDisambiguatePhp } from './lean/disambiguateStub.mjs';
 import {
   leanEchoPath,
@@ -40,8 +40,13 @@ app.post('/lean/php/request/sections.php', (_req, res) => {
   res.json(listLemmaTopLevelDirs());
 });
 
-/** Stub: no MySQL — returns empty SELECTs / fake rowcount so the UI does not 404. */
-app.post('/lean/php/request/execute.php', handleExecutePhpStub);
+/** Same contract as `php/request/execute.php` (`mysql\execute`); stub when `MYSQL_HOST` unset. */
+app.post('/lean/php/request/execute.php', (req, res) => {
+  handleExecutePhp(req, res).catch((e) => {
+    console.error('[execute.php]', e);
+    res.status(500).type('text/plain').send('0');
+  });
+});
 
 /** Filesystem disambiguation (same idea as PHP `disambiguate.php`). */
 app.post('/lean/php/request/disambiguate.php', handleDisambiguatePhp);
@@ -49,7 +54,7 @@ app.post('/lean/php/request/disambiguate.php', handleDisambiguatePhp);
 /** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */
 app.post('/lean/php/request/echo.php', (req, res) => {
   try {
-    const module = req.body?.module;
+    const {module} = req.body;
     if (!module || typeof module !== 'string') {
       res.status(400).json({ error: 'missing module' });
       return;
@@ -83,9 +88,6 @@ app.use(
 const PROJECT_USER =
   process.env.LEAN_PROJECT_USER || path.basename(REPO_ROOT);
 
-/** PHP `lemma.php`: only read MySQL when `.echo.lean` is missing or newer than `.lean`. */
-const MYSQL_USE_PHP_ECHO_RULE = process.env.LEAN_MYSQL_ECHO_RULE === '1';
-
 async function renderLemmaPage(res, module) {
   const abs = moduleToLeanPath(module);
   if (!abs || !fileExists(abs)) {
@@ -100,12 +102,7 @@ async function renderLemmaPage(res, module) {
   const echoAbs = leanEchoPath(abs);
   let code = null;
 
-  const mysqlConfigured = getMysqlConfig() != null;
-  const tryMysql =
-    mysqlConfigured &&
-    (MYSQL_USE_PHP_ECHO_RULE ? shouldLoadLemmaFromMysql(abs, echoAbs) : true);
-
-  if (tryMysql) {
+  if (shouldLoadLemmaFromMysql(abs, echoAbs)) {
     try {
       const row = await fetchLemmaRowFromMysql(PROJECT_USER, module);
       if (row) {
@@ -169,8 +166,6 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`  static:      /lean/static/`);
   console.log(`  compiler:    JS (render2vue.mjs)`);
   if (getMysqlConfig()) {
-    console.log(
-      `  mysql:       lemma from DB when row exists${MYSQL_USE_PHP_ECHO_RULE ? ' (LEAN_MYSQL_ECHO_RULE=1: php echo gate)' : ''}`
-    );
+    console.log('  mysql:       lemma from DB when row exists (.echo.lean gate like php/lemma.php)');
   }
 });

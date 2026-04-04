@@ -23,7 +23,7 @@ function importPackageString(stmt) {
   return String(/** @type {{ arg: unknown }} */ (stmt).arg).trim();
 }
 
-function getLakePath() {
+function get_lake_path() {
   if (process.env.LEAN_LAKE_PATH) return process.env.LEAN_LAKE_PATH;
   const home = process.env.USERPROFILE || process.env.HOME || '';
   const exe = process.platform === 'win32' ? 'lake.exe' : 'lake';
@@ -31,18 +31,13 @@ function getLakePath() {
 }
 
 /** @param {string} repoRoot */
-function buildLeanEnv(repoRoot) {
+function get_lean_env(repoRoot) {
   const pkgsDir = path.join(repoRoot, '.lake', 'packages');
-  let repos = [];
-  try {
-    repos = fs.readdirSync(pkgsDir).filter((x) => x !== '.' && x !== '..');
-  } catch {
-    /* no .lake/packages */
-  }
+  let repository = fs.readdirSync(pkgsDir).filter((x) => x !== '.' && x !== '..');
   const cwdUnix = repoRoot.replace(/\\/g, '/');
   const env = { ...process.env };
-  env.GIT_CONFIG_COUNT = String(repos.length);
-  repos.forEach((directory, index) => {
+  env.GIT_CONFIG_COUNT = String(repository.length);
+  repository.forEach((directory, index) => {
     env[`GIT_CONFIG_KEY_${index}`] = 'safe.directory';
     env[`GIT_CONFIG_VALUE_${index}`] = `${cwdUnix}/.lake/packages/${directory}`;
   });
@@ -100,8 +95,8 @@ export function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const codeStr = String(tree);
   fs.writeFileSync(leanEchoFile, codeStr, 'utf8');
 
-  const lakePath = getLakePath();
-  const env = buildLeanEnv(repoRoot);
+  const lakePath = get_lake_path();
+  const env = get_lean_env(repoRoot);
   const staleImports = collectStaleLemmaImports(tree, repoRoot);
   if (staleImports.length) {
     const names = staleImports.map((s) => importPackageString(s));

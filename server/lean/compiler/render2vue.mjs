@@ -3,7 +3,7 @@
  */
 
 import { compile, LeanModule } from '../../../static/js/parser/lean.js';
-import { runEcho2Vue } from '../echo2vuePhp.mjs';
+import { runEcho2Vue } from '../echo2vue.mjs';
 
 export function mergeProof(proof, echo, syntax = {}) {
     return LeanModule.merge_proof(proof, echo, syntax);

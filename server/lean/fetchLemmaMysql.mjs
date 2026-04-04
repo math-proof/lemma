@@ -9,10 +9,6 @@
  * not label’s default DB (`corpus`).
  *
  * Connection is used only if MYSQL_HOST is non-empty.
- *
- * Server load order (`app.mjs`): when MySQL is configured, the lemma payload
- * (including `proof.by[].latex`) is read from the DB whenever a valid row
- * exists, unless `LEAN_MYSQL_ECHO_RULE=1` (then PHP’s `.echo.lean` mtime rule applies).
  */
 import fs from 'fs';
 import path from 'path';
@@ -65,8 +61,61 @@ function getPool() {
     queueLimit: 0,
     enableKeepAlive: true,
     keepAliveInitialDelay: 0,
+    /** Match PHP `mysql\execute` multi-statement (`implode(';', $sql)`). */
+    multipleStatements: true,
   });
   return pool;
+}
+
+/** PHP `MYSQLI_ASSOC` / `MYSQLI_NUM` / `MYSQLI_BOTH` */
+const MYSQLI_ASSOC = 1;
+const MYSQLI_NUM = 2;
+const MYSQLI_BOTH = 3;
+
+function parseMysqliResultType(v) {
+  const n = Number(v);
+  if (Number.isFinite(n)) return n;
+  return MYSQLI_NUM;
+}
+
+/**
+ * Port of `mysql\execute` (php/mysql.php) for `php/request/execute.php`.
+ * @param {string} sql
+ * @param {unknown} resultType POST `resultType` (PHP default `MYSQLI_NUM` = 2)
+ * @returns {Promise<unknown[] | number | null>} `null` if MySQL not configured
+ */
+export async function mysqlExecuteLikePhp(sql, resultType) {
+  const p = getPool();
+  if (!p) return null;
+  try {
+    const [rows, fields] = await p.query(sql);
+    if (Array.isArray(rows)) {
+      const rt = parseMysqliResultType(resultType);
+      if (rt === MYSQLI_ASSOC) return rows;
+      if (rt === MYSQLI_NUM) {
+        if (!fields?.length) return [];
+        const names = fields.map((f) => f.name);
+        return rows.map((row) => names.map((name) => row[name]));
+      }
+      if (rt === MYSQLI_BOTH) {
+        if (!fields?.length) return [];
+        const names = fields.map((f) => f.name);
+        return rows.map((row) => {
+          const o = { ...row };
+          names.forEach((name, i) => {
+            o[i] = row[name];
+          });
+          return o;
+        });
+      }
+      return rows;
+    }
+    const header = /** @type {import('mysql2').ResultSetHeader} */ (rows);
+    return header.affectedRows ?? 0;
+  } catch (e) {
+    console.warn('[mysql execute]', /** @type {Error} */ (e).message);
+    return 0;
+  }
 }
 
 /**

@@ -1317,91 +1317,50 @@ export class LeanLineComment extends Lean {
     }
 
     is_indented() {
-        const t = this.text;
-        if (t === 'given') {
-            let parent = this.parent;
-            if (
-                parent instanceof LeanArgsNewLineSeparated &&
-                (parent = parent.parent) instanceof LeanArgsIndented &&
-                (parent = parent.parent) instanceof LeanColon &&
-                (parent = parent.parent) instanceof LeanAssign &&
-                parent.parent instanceof Lean_lemma
-            ) {
-                return false;
-            }
-            if (this.parent instanceof LeanModule) {
-                const mod = this.parent;
-                const index = mod.args.indexOf(this);
-                if (index > 0) {
-                    for (let j = index - 1; j >= 0; j--) {
-                        const a = mod.args[j];
-                        if (a instanceof LeanCaret) continue;
-                        const nm = a.constructor.name ?? '';
-                        if (nm === 'LeanBrace' || nm === 'LeanBracket') continue;
-                        if (a instanceof LeanLineComment || a instanceof LeanBlockComment) continue;
-                        if (a instanceof Lean_lemma) return false;
-                        break;
-                    }
-                }
-            }
-            return true;
-        }
-        if (t === 'proof') {
-            const parent = this.parent;
-            if (parent instanceof LeanStatements) {
-                let q = parent.parent;
-                if (q instanceof LeanBy) q = q.parent;
-                if (q instanceof LeanRightarrow) q = q.parent;
-                if (q instanceof LeanAssign && q.parent instanceof LeanModule) {
+        switch (this.text) {
+            case 'given': {
+                let parent = this.parent;
+                if (
+                    parent instanceof LeanArgsNewLineSeparated &&
+                    (parent = parent.parent) instanceof LeanArgsIndented &&
+                    (parent = parent.parent) instanceof LeanColon &&
+                    (parent = parent.parent) instanceof LeanAssign &&
+                    parent.parent instanceof Lean_lemma
+                )
                     return false;
+                break;
+            }
+            case 'proof': {
+                let parent = this.parent;
+                if (parent instanceof LeanStatements) {
+                    if (parent.parent instanceof LeanBy) parent = parent.parent;
+                    if (
+                        (parent = parent.parent) instanceof LeanAssign &&
+                        parent.parent instanceof Lean_lemma
+                    )
+                        return false;
+                } else if ((parent = this.parent) instanceof LeanArgsNewLineSeparated) {
+                    if (
+                        (parent = parent.parent) instanceof LeanAssign &&
+                        parent.parent instanceof Lean_lemma
+                    )
+                        return false;
                 }
-            } else if (parent instanceof LeanArgsNewLineSeparated) {
-                let q = parent.parent;
-                if (q instanceof LeanAssign && q.parent instanceof Lean_lemma) {
+            }
+            // fall through (PHP `case 'proof';` → `case 'imply':`)
+            case 'imply': {
+                let parent = this.parent;
+                if (
+                    parent instanceof LeanStatements &&
+                    (parent = parent.parent) instanceof LeanColon &&
+                    (parent = parent.parent) instanceof LeanAssign &&
+                    parent.parent instanceof Lean_lemma
+                )
                     return false;
-                }
+                break;
             }
-        }
-        if (t === 'imply' || t === 'proof') {
-            let parent = this.parent;
-            if (
-                parent instanceof LeanStatements &&
-                (parent = parent.parent) instanceof LeanColon &&
-                (parent = parent.parent) instanceof LeanAssign &&
-                parent.parent instanceof Lean_lemma
-            ) {
-                return false;
-            }
-            if (t === 'imply' && this.parent instanceof LeanStatements) {
-                const colon = this.parent.parent;
-                if (colon instanceof LeanColon) {
-                    const holder = colon.parent;
-                    if (holder instanceof LeanModule) {
-                        const mod = holder;
-                        const index = mod.args.indexOf(colon);
-                        if (index >= 0) {
-                            for (let j = 0; j < index; j++) {
-                                if (mod.args[j] instanceof Lean_lemma) return false;
-                            }
-                        }
-                    } else if (holder instanceof LeanAssign && holder.parent instanceof LeanModule) {
-                        const mod = holder.parent;
-                        const index = mod.args.indexOf(holder);
-                        if (index >= 0) {
-                            for (let j = 0; j < index; j++) {
-                                if (mod.args[j] instanceof Lean_lemma) return false;
-                            }
-                        }
-                    }
-                }
-            }
-            if (t === 'proof' && this.parent instanceof LeanModule) {
-                const mod = this.parent;
-                const index = mod.args.indexOf(this);
-                if (index > 0 && mod.args[index - 1] instanceof LeanAssign) return false;
-            }
-        } else if (this.parent instanceof LeanTactic) {
-            return false;
+            default:
+                if (this.parent instanceof LeanTactic) return false;
         }
         return true;
     }
@@ -5349,7 +5308,7 @@ export class LeanModule extends LeanStatements {
 
     echo2vue(_leanFile) {
         throw new Error(
-            'LeanModule.echo2vue runs only on the Node server (see server/lean/echo2vuePhp.mjs `runEcho2Vue`).',
+            'LeanModule.echo2vue runs only on the Node server (see server/lean/echo2vue.mjs `runEcho2Vue`).',
         );
     }
 
