@@ -84,7 +84,7 @@ function parseMysqliResultType(v) {
  * @param {unknown} resultType POST `resultType` (PHP default `MYSQLI_NUM` = 2)
  * @returns {Promise<unknown[] | number | null>} `null` if MySQL not configured
  */
-export async function mysqlExecuteLikePhp(sql, resultType) {
+export async function mysqlExecute(sql, resultType) {
   const p = getPool();
   if (!p) return null;
   try {
@@ -133,7 +133,7 @@ function decode(jsonOrNull) {
 }
 
 /** PHP-like falsy for decoded lemma / date (PHP treats [] as empty). */
-function isEmptyForPhp(v) {
+function isEmptyDecodedLemmaField(v) {
   if (v == null) return true;
   if (Array.isArray(v)) return v.length === 0;
   if (typeof v === 'string') return v.length === 0;
@@ -158,7 +158,7 @@ export function codeFromMysqlRow(row, module, user) {
   code.date = decode(code.date);
   code.module = module;
   code.user = user;
-  if (isEmptyForPhp(code.lemma) || isEmptyForPhp(code.date)) return null;
+  if (isEmptyDecodedLemmaField(code.lemma) || isEmptyDecodedLemmaField(code.date)) return null;
   return code;
 }
 

@@ -2,7 +2,7 @@
  * SQL execute endpoint (legacy path `php/request/execute.php`) — runs MySQL when configured,
  * else stub shapes so the Vue client does not 404.
  */
-import { getMysqlConfig, mysqlExecuteLikePhp } from './fetchLemmaMysql.mjs';
+import { getMysqlConfig, mysqlExecute } from './fetchLemmaMysql.mjs';
 
 function sqlFirstToken(sql) {
   const t = sql.trimStart().match(/^\s*([a-z]+)/i);
@@ -54,7 +54,7 @@ export async function handleExecute(req, res) {
     return;
   }
 
-  const out = await mysqlExecuteLikePhp(sql, resultType);
+  const out = await mysqlExecute(sql, resultType);
   if (out === null) {
     sendStub(req, res);
     return;
