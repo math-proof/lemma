@@ -10,7 +10,7 @@ export function lemmaProofCompareBases() {
     process.env.LEAN_NODE_LEMMA_BASE || 'http://127.0.0.1:3000/lean/'
   ).replace(/\/?$/, '/');
   const phpBase = (
-    process.env.LEAN_PHP_LEMMA_BASE || 'http://127.0.0.1/lean.php/'
+    process.env.LEAN_PHP_LEMMA_BASE || 'http://127.0.0.1:8080/lean.php/'
   ).replace(/\/?$/, '/');
   return { nodeBase, phpBase };
 }

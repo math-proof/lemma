@@ -10,7 +10,7 @@
  *
  * Env (optional):
  *   LEAN_NODE_LEMMA_BASE  default http://127.0.0.1:3000/lean/
- *   LEAN_PHP_LEMMA_BASE   default http://127.0.0.1/lean.php/
+ *   LEAN_PHP_LEMMA_BASE   default http://127.0.0.1:8080/lean.php/
  *   LEAN_PROOF_COMPARE_INCLUDE_LATEX=1  compare latex too (legacy behavior)
  *
  * Exit: 0 same proof, 1 different, 2 fetch/parse error
