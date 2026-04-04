@@ -3324,17 +3324,17 @@ export class LeanBitOr extends LeanArithmetic {
             t instanceof LeanToken ? t.text : t.map((x) => x.text).join(',');
         const keys = tokens.map(key);
         if (new Set(keys).size !== 1) return;
-        let tok = tokens[0];
-        if (Array.isArray(tok) && tok.length === 1) tok = tok[0];
-        if (Array.isArray(tok)) {
-            const mapped = tok.map((x) => {
+        let token = tokens[0];
+        if (Array.isArray(token) && token.length === 1) token = token[0];
+        if (Array.isArray(token)) {
+            const mapped = token.map((x) => {
                 const c = x.clone();
                 c.indent = indent;
                 return c;
             });
             return new LeanArgsCommaSeparated(mapped, indent, 0);
         }
-        const c = tok.clone();
+        const c = token.clone();
         c.indent = indent;
         return c;
     }
@@ -5329,8 +5329,8 @@ export class LeanModule extends LeanStatements {
 
     create_property(module) {
         const parts = String(module).split('.');
-        return parts.reduce((carry, tok) => {
-            const t = new LeanToken(tok, 0, 0);
+        return parts.reduce((carry, token) => {
+            const t = new LeanToken(token, 0, 0);
             return carry ? new LeanProperty(carry, t, 0, 0) : t;
         }, null);
     }
@@ -7359,23 +7359,25 @@ export class LeanTactic extends LeanSyntax {
     }
 
     echo() {
-        const tok = this.get_echo_token();
-        const stc = this.sequential_tactic_combinator;
-        const hasStc = stc && stc.arg?.indent;
-        if (tok) {
-            const echo = new LeanTactic('echo', tok, this.indent, this.level);
-            if (tok instanceof LeanToken && tok.text === '*') return [1, echo, this];
-            const by = this.by;
+        const token = this.get_echo_token();
+        const {sequential_tactic_combinator} = this;
+        const has_sequential_tactic_combinator = sequential_tactic_combinator && sequential_tactic_combinator.arg.indent;
+        if (token) {
+            const echo = new LeanTactic('echo', token, this.indent, this.level);
+            if (token instanceof LeanToken && token.text === '*') 
+                // echo * simp at *
+                return [1, echo, this];
+            const {by} = this;
             if (by && by.arg instanceof LeanStatements) by.echo();
-            if (hasStc && stc.newline) {
-                echo.push(stc);
+            if (has_sequential_tactic_combinator && sequential_tactic_combinator.newline) {
+                echo.push(sequential_tactic_combinator);
                 this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, true);
-                stc.echo();
+                sequential_tactic_combinator.echo();
                 return;
             }
             return [1, this, echo];
         }
-        if (hasStc) stc.echo();
+        if (has_sequential_tactic_combinator) sequential_tactic_combinator.echo();
         else {
             const block = this.repeat_block();
             if (block) block.echo();
@@ -7735,9 +7737,9 @@ export class LeanTactic extends LeanSyntax {
             for (const stmt of w.args) statements.push(...stmt.split(syntax));
             return statements;
         }
-        const stc = this.sequential_tactic_combinator;
-        if (stc) {
-            let block = stc.arg;
+        const sequential_tactic_combinator = this.sequential_tactic_combinator;
+        if (sequential_tactic_combinator) {
+            let block = sequential_tactic_combinator.arg;
             if (block instanceof LeanTacticBlock) {
                 if (block.arg instanceof LeanStatements) {
                     const self = this.clone();
@@ -7753,7 +7755,7 @@ export class LeanTactic extends LeanSyntax {
                 block.indent >= this.indent
             ) {
                 const self = this.clone();
-                if (stc.newline) {
+                if (sequential_tactic_combinator.newline) {
                     block = self.sequential_tactic_combinator;
                     const la = self.args[self.args.length - 1];
                     if (la instanceof LeanSequentialTacticCombinator) self.args.pop();
@@ -8216,8 +8218,8 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
                 parentTactic.has_tactic_block_followed?.()
             ) {
                 let a = arg;
-                let stc;
-                while ((stc = a.sequential_tactic_combinator) && stc.arg?.indent) a = stc;
+                let sequential_tactic_combinator;
+                while ((sequential_tactic_combinator = a.sequential_tactic_combinator) && sequential_tactic_combinator.arg?.indent) a = sequential_tactic_combinator;
                 a.push(new LeanSequentialTacticCombinator(echo, indent, level, true));
             } else {
                 echo.push(new LeanSequentialTacticCombinator(arg, indent, level, this.newline));
@@ -8579,9 +8581,9 @@ class LeanTacticBlock extends LeanUnary {
                         }
                         default: {
                             let token = new LeanToken('⊢', statements.indent, statements.level);
-                            const stc = stmt.sequential_tactic_combinator;
-                            if (stc) {
-                                const tactic = stc.arg;
+                            const sequential_tactic_combinator = stmt.sequential_tactic_combinator;
+                            if (sequential_tactic_combinator) {
+                                const tactic = sequential_tactic_combinator.arg;
                                 const tacticToken = tactic?.get_echo_token?.();
                                 if (tacticToken) {
                                     if (tacticToken instanceof LeanArgsCommaSeparated) {
