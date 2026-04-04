@@ -1,5 +1,5 @@
 /**
- * `php/request/execute.php` — runs `mysql\execute` when MySQL is configured,
+ * SQL execute endpoint (legacy path `php/request/execute.php`) — runs MySQL when configured,
  * else stub shapes so the Vue client does not 404.
  */
 import { getMysqlConfig, mysqlExecuteLikePhp } from './fetchLemmaMysql.mjs';
@@ -37,10 +37,10 @@ function sendStub(req, res) {
 }
 
 /**
- * POST body: `sql`, optional `resultType` (PHP MYSQLI_ASSOC=1, MYSQLI_NUM=2).
+ * POST body: `sql`, optional `resultType` (MYSQLI_ASSOC=1, MYSQLI_NUM=2).
  * SELECT → JSON array; writes / scalar → plain text (affected rows or `0`).
  */
-export async function handleExecutePhp(req, res) {
+export async function handleExecute(req, res) {
   if (!getMysqlConfig()) {
     sendStub(req, res);
     return;

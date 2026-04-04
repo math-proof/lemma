@@ -14,8 +14,8 @@ import {
 import { echo2vueFromSource, render2vueFromSource } from './lean/compiler/index.mjs';
 import { jsonForScriptEmbed } from './lean/jsonForScriptEmbed.mjs';
 import { listLemmaTopLevelDirs } from './lean/lemmaSections.mjs';
-import { handleExecutePhp } from './lean/executePhp.mjs';
-import { handleDisambiguatePhp } from './lean/disambiguateStub.mjs';
+import { handleExecute } from './lean/execute.mjs';
+import { handleDisambiguate } from './lean/disambiguate.mjs';
 import {
   leanEchoPath,
   getMysqlConfig,
@@ -42,14 +42,14 @@ app.post('/lean/php/request/sections.php', (_req, res) => {
 
 /** Same contract as `php/request/execute.php` (`mysql\execute`); stub when `MYSQL_HOST` unset. */
 app.post('/lean/php/request/execute.php', (req, res) => {
-  handleExecutePhp(req, res).catch((e) => {
-    console.error('[execute.php]', e);
+  handleExecute(req, res).catch((e) => {
+    console.error('[execute]', e);
     res.status(500).type('text/plain').send('0');
   });
 });
 
 /** Filesystem disambiguation (same idea as PHP `disambiguate.php`). */
-app.post('/lean/php/request/disambiguate.php', handleDisambiguatePhp);
+app.post('/lean/php/request/disambiguate.php', handleDisambiguate);
 
 /** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */
 app.post('/lean/php/request/echo.php', (req, res) => {

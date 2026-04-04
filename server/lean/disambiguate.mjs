@@ -1,5 +1,5 @@
 /**
- * Same behavior as `php/request/disambiguate.php`: find which top-level `Lemma/<section>/`
+ * Legacy path `php/request/disambiguate.php`: find which top-level `Lemma/<section>/`
  * folder contains the file for a dotted module path (no DB).
  */
 
@@ -31,7 +31,7 @@ function findSectionForSlashPath(sectionDirs, slashPath) {
   return null;
 }
 
-export function handleDisambiguatePhp(req, res) {
+export function handleDisambiguate(req, res) {
   const moduleInput = (req.body?.module ?? '').toString().trim();
   if (!moduleInput) {
     res.type('text/plain').send('');
