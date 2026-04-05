@@ -1,5 +1,6 @@
 # usage: .\ps1\push.ps1
-# Retries `git push` until it succeeds (transient network / GitHub errors).
+# Endless retries: `while ($true)` until `git push` exits 0 (only then `exit 0`).
+# Backoff grows without a cap: 5s, 10s, 15s, …
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
 $OutputEncoding = [Text.Encoding]::UTF8
 
@@ -16,7 +17,7 @@ while ($true) {
         Write-Host "Push succeeded."
         exit 0
     }
-    $delaySec = [Math]::Min(120, 5 + ($attempt - 1) * 5)
+    $delaySec = 5 + ($attempt - 1) * 5
     Write-Host "Push failed (exit code $LASTEXITCODE). Waiting ${delaySec}s before retry..."
     Start-Sleep -Seconds $delaySec
 }
