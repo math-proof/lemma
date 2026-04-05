@@ -58,7 +58,7 @@
 
 <script>
 console.log('import axiomSummary.vue');
-	
+
 import searchForm from "./searchForm.vue"
 	
 export default {

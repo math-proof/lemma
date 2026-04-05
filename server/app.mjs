@@ -30,6 +30,7 @@ import {
   codeFromMysqlRow,
   ensureEmptyEchoFile,
 } from './lean/fetchLemmaMysql.mjs';
+import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
 
 const VIEWS = path.join(REPO_ROOT, 'views');
 
@@ -176,8 +177,41 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;');
 }
 
+/** Same idea as `php/search.php` + `index.php` (`?type=`, `?q=`, `?latex=`). */
+async function renderSearchPage(res, dict) {
+  try {
+    const payload = await buildSearchPayload(dict, PROJECT_USER);
+    const searchJson = jsonForScriptEmbed(payload);
+    res.set('Content-Type', 'text/html; charset=utf-8');
+    if (process.env.NODE_ENV !== 'production') {
+      res.set('Cache-Control', 'no-store');
+    }
+    res.render('search', { searchJson });
+  } catch (err) {
+    console.error('[search]', err);
+    res.status(500).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+      <p>${escapeHtml(String(err?.message || err))}</p>`
+    );
+  }
+}
+
+/** POST body from `searchForm.vue` (PHP `index.php`); same logic as `/lean/` POST. */
+async function handleLeanPostSearch(req, res) {
+  const body = req.body && typeof req.body === 'object' ? req.body : {};
+  if (leanGetWantsSearch(body, body.module)) {
+    await renderSearchPage(res, body);
+    return;
+  }
+  res.redirect(302, '/lean/');
+}
+
 async function handleLeanGet(req, res) {
   const raw = req.query.module;
+  if (leanGetWantsSearch(req.query, raw)) {
+    await renderSearchPage(res, req.query);
+    return;
+  }
   if (raw === undefined || raw === null || raw === '') {
     try {
       await renderSummaryPage(res);
@@ -236,6 +270,57 @@ async function handleLeanGet(req, res) {
 
 app.get('/lean', handleLeanGet);
 app.get('/lean/', handleLeanGet);
+
+/**
+ * PHP-style entry URL (`/${user}/index.php`) so `searchForm.vue` can keep `action="/lean/index.php"`.
+ * Only the configured project user (`LEAN_PROJECT_USER` or repo basename) is served.
+ */
+app.get('/:userSegment/index.php', (req, res) => {
+  if (req.params.userSegment !== PROJECT_USER) {
+    res.status(404).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+      <p>No site for user prefix <code>${escapeHtml(req.params.userSegment)}</code></p>`
+    );
+    return;
+  }
+  handleLeanGet(req, res);
+});
+
+/** Search form POST (PHP `index.php` + `search.php` use POST when form submits). */
+app.post('/lean', (req, res) => {
+  handleLeanPostSearch(req, res).catch((err) => {
+    console.error('[lean post]', err);
+    res.status(500).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+      <p>${escapeHtml(String(err?.message || err))}</p>`
+    );
+  });
+});
+app.post('/lean/', (req, res) => {
+  handleLeanPostSearch(req, res).catch((err) => {
+    console.error('[lean post]', err);
+    res.status(500).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+      <p>${escapeHtml(String(err?.message || err))}</p>`
+    );
+  });
+});
+app.post('/:userSegment/index.php', (req, res) => {
+  if (req.params.userSegment !== PROJECT_USER) {
+    res.status(404).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+      <p>No site for user prefix <code>${escapeHtml(req.params.userSegment)}</code></p>`
+    );
+    return;
+  }
+  handleLeanPostSearch(req, res).catch((err) => {
+    console.error('[lean post]', err);
+    res.status(500).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+      <p>${escapeHtml(String(err?.message || err))}</p>`
+    );
+  });
+});
 
 app.get('/', (_req, res) => {
   res.redirect(302, '/lean/');
