@@ -7,10 +7,13 @@ import path from 'path';
 import {
   REPO_ROOT,
   moduleToLeanPath,
+  moduleToLemmaPackageDir,
   leanPathToModule,
   titleFromModule,
   readLeanFile,
   fileExists,
+  dirExists,
+  listLemmaPackageContents,
 } from './lean/modulePath.mjs';
 import { echo2vueFromSource, render2vueFromSource } from './lean/compiler/index.mjs';
 import { jsonForScriptEmbed } from './lean/jsonForScriptEmbed.mjs';
@@ -101,9 +104,32 @@ async function renderSummaryPage(res) {
   res.render('summary', { summaryJson });
 }
 
+function renderPackageBrowserPage(res, module) {
+  const pkgDir = moduleToLemmaPackageDir(module);
+  if (!pkgDir || !dirExists(pkgDir)) {
+    res.status(404).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+      <p>No Lean file or package folder for module <code>${escapeHtml(module)}</code></p>`
+    );
+    return;
+  }
+  const { packages, theorems } = listLemmaPackageContents(pkgDir);
+  const title = titleFromModule(module);
+  const payloadJson = jsonForScriptEmbed({ packages, theorems });
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  res.render('package', { title, payloadJson });
+}
+
 async function renderLemmaPage(res, module) {
   const abs = moduleToLeanPath(module);
-  if (!abs || !fileExists(abs)) {
+  const leanMissing = !abs || !fileExists(abs);
+  if (leanMissing) {
+    /** Same as PHP `index.php`: folder `Lemma/<module path>/` → `php/package.php` + `axiomContents`. */
+    const pkgDir = moduleToLemmaPackageDir(module);
+    if (pkgDir && dirExists(pkgDir)) {
+      renderPackageBrowserPage(res, module);
+      return;
+    }
     res.status(404).type('html').send(
       `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
       <p>No Lean file for module <code>${escapeHtml(module)}</code></p>
