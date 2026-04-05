@@ -4459,8 +4459,8 @@ function normalizeInstImplicit(s) {
 }
 
 /**
- * Extract attribute names from LeanAttribute (e.g. @[main] → ['main']).
- * Handles both LeanBracket and LeanArgsSpaceSeparated (from push_left).
+ * Extract attribute names from LeanAttribute (e.g. @[main] → ['main'], @[main, fin] → ['main','fin']).
+ * Handles LeanBracket contents as LeanArgsCommaSeparated, LeanArgsSpaceSeparated, or LeanToken.
  */
 function extractAttribute(attr) {
     if (!attr) return null;
@@ -4471,7 +4471,7 @@ function extractAttribute(attr) {
     }
     if (!a || nameOf(a) !== 'LeanBracket') return null;
     a = /** @type {*} */ (a).arg;
-    if (a instanceof LeanArgsSpaceSeparated)
+    if (a instanceof LeanArgsCommaSeparated || a instanceof LeanArgsSpaceSeparated)
         return a.args.map((x) => strStmt(x)).filter(Boolean);
     if (a instanceof LeanToken) return [strStmt(a)];
     return null;
