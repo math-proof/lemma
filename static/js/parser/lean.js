@@ -2652,8 +2652,7 @@ export class LeanColon extends LeanBinary {
     strFormat() {
         const sep = this.sep();
         let first = '%s';
-        const p = this.parent.constructor.name ?? '';
-        if (!p.includes('GetElem')) {
+        if (!(this.parent instanceof LeanGetElem)) {
             if (sep === ' ') {
                 first += ' ';
             } else if (sep === '\n') {
