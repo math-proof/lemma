@@ -66,9 +66,6 @@ export default {
 	
 	props : ['state_count_pairs', 'repertoire'],
 	
-	computed: {
-	},
-	
 	data() {
 		return {
 			issearch: false,
