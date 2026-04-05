@@ -83,8 +83,12 @@ export function *zip() {
   }
 }
 
+/** First path segment (e.g. `lean` for `/lean` or `/lean/`). Used in `/${user}/?module=…` links. */
 function axiom_user() {
-  return location.pathname.replace(/^\/([^\/]+)\/.*$/, "$1");
+  if (typeof location === 'undefined' || !location.pathname) return '';
+  var path = location.pathname.replace(/\/+$/, '') || '/';
+  var m = path.match(/^\/([^\/]+)(?:\/.*|$)/);
+  return m ? m[1] : '';
 }
 
 function textFocused(text, selectionStart) {

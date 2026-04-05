@@ -67,9 +67,6 @@ export default {
 	props : ['state_count_pairs', 'repertoire'],
 	
 	computed: {
-		user() {
-			return axiom_user();
-		},	
 	},
 	
 	data() {
@@ -93,20 +90,18 @@ export default {
 	
 	methods: {
 		href_section(section) {
-			var {user} = this;
-			return `/${user}/?module=${section}`;
+			var q = encodeURIComponent(section);
+			return `?module=${q}`;
 		},
 
 		href_module(axiom) {
-			var {user} = this;
-			return `/${user}/?module=${axiom}`;
+			var q = encodeURIComponent(axiom);
+			return `?module=${q}`;
 		},
 
 		href_state(type){
-			if (type == 'total')
-				return `/${this.user}/run.py`;
-			var {user} = this;
-			return `/${user}/?type=${type}`;
+			var q = encodeURIComponent(type);
+			return `?type=${q}`;
 		},
 	
 		keydown(event){
