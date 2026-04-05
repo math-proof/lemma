@@ -6,3 +6,5 @@
 *.php   eol=lf
 *.css   eol=lf
 *.txt   eol=lf
+*.md   eol=lf
+*.json   eol=lf
