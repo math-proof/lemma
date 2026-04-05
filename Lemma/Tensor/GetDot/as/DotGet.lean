@@ -32,9 +32,9 @@ private lemma one
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) ≃ X[i] @ Y := by
 -- proof
   if h_n : k < n' then
-    sorry
+    apply GetDot.as.DotGet.of.Lt.one h_n
   else
-    sorry
+    apply GetDot.as.DotGet.of.Ge.one (by omega)
 
 
 -- created on 2026-01-13

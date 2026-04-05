@@ -50,7 +50,7 @@ export function getMysqlConfig() {
   return { host, port, user, password, database };
 }
 
-function getPool() {
+export function getMysqlPool() {
   if (pool) return pool;
   const cfg = getMysqlConfig();
   if (!cfg) return null;
@@ -85,7 +85,7 @@ function parseMysqliResultType(v) {
  * @returns {Promise<unknown[] | number | null>} `null` if MySQL not configured
  */
 export async function mysqlExecute(sql, resultType) {
-  const p = getPool();
+  const p = getMysqlPool();
   if (!p) return null;
   try {
     const [rows, fields] = await p.query(sql);
@@ -168,7 +168,7 @@ export function codeFromMysqlRow(row, module, user) {
  * @returns {Promise<Record<string, unknown> | null>}
  */
 export async function fetchLemmaRowFromMysql(user, module) {
-  const p = getPool();
+  const p = getMysqlPool();
   if (!p) return null;
   const [rows] = await p.query(
     'SELECT * FROM lemma WHERE user = ? AND module = ? LIMIT 1',

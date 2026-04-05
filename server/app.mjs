@@ -7,6 +7,7 @@ import path from 'path';
 import {
   REPO_ROOT,
   moduleToLeanPath,
+  leanPathToModule,
   titleFromModule,
   readLeanFile,
   fileExists,
@@ -16,6 +17,8 @@ import { jsonForScriptEmbed } from './lean/jsonForScriptEmbed.mjs';
 import { listLemmaTopLevelDirs } from './lean/lemmaSections.mjs';
 import { handleExecute } from './lean/execute.mjs';
 import { handleDisambiguate } from './lean/disambiguate.mjs';
+import { buildSummaryPayload } from './lean/summaryData.mjs';
+import { handleRecent } from './lean/recent.mjs';
 import {
   leanEchoPath,
   getMysqlConfig,
@@ -50,6 +53,9 @@ app.post('/lean/php/request/execute.php', (req, res) => {
 
 /** Filesystem disambiguation (same idea as PHP `disambiguate.php`). */
 app.post('/lean/php/request/disambiguate.php', handleDisambiguate);
+
+/** Recent modules (PHP `php/request/recent.php`); uses file mtimes. */
+app.get('/lean/php/request/recent.php', handleRecent);
 
 /** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */
 app.post('/lean/php/request/echo.php', (req, res) => {
@@ -87,6 +93,13 @@ app.use(
 
 const PROJECT_USER =
   process.env.LEAN_PROJECT_USER || path.basename(REPO_ROOT);
+
+async function renderSummaryPage(res) {
+  const { state_count_pairs, repertoire } = await buildSummaryPayload(PROJECT_USER);
+  const summaryJson = jsonForScriptEmbed({ state_count_pairs, repertoire });
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  res.render('summary', { summaryJson });
+}
 
 async function renderLemmaPage(res, module) {
   const abs = moduleToLeanPath(module);
@@ -133,15 +146,55 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;');
 }
 
-function handleLeanGet(req, res) {
-  const module = req.query.module;
-  if (!module || typeof module !== 'string') {
+async function handleLeanGet(req, res) {
+  const raw = req.query.module;
+  if (raw === undefined || raw === null || raw === '') {
+    try {
+      await renderSummaryPage(res);
+    } catch (err) {
+      console.error('[summary]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+    }
+    return;
+  }
+  if (typeof raw !== 'string') {
     res.status(400).type('html').send(
       `<!DOCTYPE html><meta charset="utf-8"><title>lemma</title>
-      <p>Add <code>?module=Section.Name.eq.Leaf</code>.</p>`
+      <p><code>module</code> must be a string (or omit it for the summary page).</p>`
     );
     return;
   }
+  let module = raw.trim();
+  if (!module) {
+    try {
+      await renderSummaryPage(res);
+    } catch (err) {
+      console.error('[summary]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+    }
+    return;
+  }
+  /** Same as `index.php`: absolute or Lemma-relative `.lean` path → dotted module + redirect. */
+  if (module.endsWith('.lean')) {
+    const canonical = leanPathToModule(module);
+    if (!canonical) {
+      res.status(400).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>lemma</title>
+      <p>Could not resolve this <code>.lean</code> path to a module under <code>Lemma/</code>
+      (must lie under this repo’s <code>Lemma</code> tree).</p>`
+      );
+      return;
+    }
+    res.redirect(302, `/lean/?module=${encodeURIComponent(canonical)}`);
+    return;
+  }
+  module = module.replace(/\//g, '.');
   renderLemmaPage(res, module).catch((err) => {
     console.error('[lean]', err);
     res.status(500).type('html').send(
@@ -155,10 +208,7 @@ app.get('/lean', handleLeanGet);
 app.get('/lean/', handleLeanGet);
 
 app.get('/', (_req, res) => {
-  res.type('html').send(`<!DOCTYPE html><meta charset="utf-8">
-    <title>lemma</title>
-    <p>Lean server (Node). Example:
-    <a href="/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax">/lean/?module=…</a></p>`);
+  res.redirect(302, '/lean/');
 });
 
 app.listen(PORT, '0.0.0.0', () => {

@@ -103,7 +103,13 @@ export function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     const quoted = names.map((n) => `"${n.replace(/"/g, '\\"')}"`).join(' ');
     const cmd = `"${lakePath}" build ${quoted}`;
     try {
-      execSync(cmd, { cwd: repoRoot, env, stdio: 'pipe', shell: true });
+      execSync(cmd, {
+        cwd: repoRoot,
+        env,
+        stdio: 'pipe',
+        shell: true,
+        windowsHide: true,
+      });
     } catch (e) {
       console.warn('[echo2vue] lake build:', /** @type {Error} */ (e).message || e);
     }
@@ -124,6 +130,7 @@ export function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     env,
     encoding: 'utf8',
     maxBuffer: 64 * 1024 * 1024,
+    windowsHide: true,
   });
   if (r.error) {
     console.warn('[echo2vue] spawn lean:', r.error.message);

@@ -6,6 +6,38 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.join(__dirname, '..', '..');
 
 /**
+ * Map a `.lean` filesystem path to dotted module under `Lemma/`, matching PHP `lean_to_module`
+ * (`php/utility.php`) and `index.php` (redirect when `module` ends with `.lean`).
+ * Accepts absolute paths or paths relative to `Lemma/`.
+ */
+export function leanPathToModule(input, repoRoot = REPO_ROOT) {
+  const trimmed = String(input).trim();
+  if (!trimmed.endsWith('.lean')) {
+    return null;
+  }
+  const lemmaRoot = path.join(repoRoot, 'Lemma');
+  const resolved = path.isAbsolute(trimmed)
+    ? path.normalize(trimmed)
+    : path.normalize(
+        path.join(lemmaRoot, trimmed.replace(/\//g, path.sep))
+      );
+  const rel = path.relative(path.resolve(lemmaRoot), path.resolve(resolved));
+  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) {
+    return null;
+  }
+  const parts = rel.split(/[/\\]/).filter(Boolean);
+  if (parts.length === 0) {
+    return null;
+  }
+  const last = parts[parts.length - 1];
+  if (!last.endsWith('.lean')) {
+    return null;
+  }
+  parts[parts.length - 1] = last.slice(0, -'.lean'.length);
+  return parts.join('.');
+}
+
+/**
  * Map query module to filesystem path, mirroring the common case:
  * `Tensor.Foo.eq.Bar` → `Lemma/Tensor/Foo/eq/Bar.lean`
  * Supports `Foo#suffix` → `Foo/suffix.lean` (Lean submodule filename pattern used in PHP redirects).
