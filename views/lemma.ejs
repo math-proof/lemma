@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<base href="/lean/">
-<link rel="stylesheet" href="/lean/static/css/style.css">
+<link rel="stylesheet" href="static/css/style.css">
 <title><%= title %></title>
-<link rel="stylesheet" href="/lean/static/codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="/lean/static/codemirror/theme/eclipse.css">
-<link rel="stylesheet" href="/lean/static/codemirror/addon/hint/show-hint.css">
-<link rel="stylesheet" href="/lean/static/unpkg.com/katex@0.16.21/dist/katex.min.css">
-<link rel="stylesheet" href="/lean/static/unpkg.com/prismjs@1.30.0/themes/prism.min.css" />
+<link rel="stylesheet" href="static/codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="static/codemirror/theme/eclipse.css">
+<link rel="stylesheet" href="static/codemirror/addon/hint/show-hint.css">
+<link rel="stylesheet" href="static/unpkg.com/katex@0.16.21/dist/katex.min.css">
+<link rel="stylesheet" href="static/unpkg.com/prismjs@1.30.0/themes/prism.min.css" />
 <body></body>
 
-<script src="/lean/static/unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
-<script src="/lean/static/unpkg.com/qs@6.10.2/dist/qs.js"></script>
-<script src="/lean/static/unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
-<script src="/lean/static/unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-<script src="/lean/static/unpkg.com/vue@3.5.13/dist/vue.global.prod.js"></script>
-<script src="/lean/static/unpkg.com/vue3-sfc-loader@0.9.5/dist/vue3-sfc-loader.js"></script>
+<script src="static/unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+<script src="static/unpkg.com/qs@6.10.2/dist/qs.js"></script>
+<script src="static/unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
+<script src="static/unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script src="static/unpkg.com/vue@3.5.13/dist/vue.global.prod.js"></script>
+<script src="static/unpkg.com/vue3-sfc-loader@0.9.5/dist/vue3-sfc-loader.js"></script>
 
-<script src="/lean/static/js/std.js"></script>
-<script src="/lean/static/unpkg.com/lz-string@1.5.0/libs/lz-string.js"></script>
-<script src="/lean/static/unpkg.com/katex@0.16.21/dist/katex.min.js"></script>
-<script src="/lean/static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js"></script>
-<script type="module" src="/lean/static/js/utility.js"></script>
-<script src="/lean/static/unpkg.com/prismjs@1.30.0/prism.js"></script>
-<script src="/lean/static/unpkg.com/prismjs@1.30.0/components/prism-lean.js"></script>
+<script src="static/js/std.js"></script>
+<script src="static/unpkg.com/lz-string@1.5.0/libs/lz-string.js"></script>
+<script src="static/unpkg.com/katex@0.16.21/dist/katex.min.js"></script>
+<script src="static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js"></script>
+<script type="module" src="static/js/utility.js"></script>
+<script src="static/unpkg.com/prismjs@1.30.0/prism.js"></script>
+<script src="static/unpkg.com/prismjs@1.30.0/components/prism-lean.js"></script>
 <script type="module">
-import * as codemirror from "/lean/static/codemirror/lib/codemirror.js"
-import * as lean from "/lean/static/codemirror/mode/lean/lean.js"
-import * as active_line from "/lean/static/codemirror/addon/selection/active-line.js"
-import * as show_hint from "/lean/static/codemirror/addon/hint/show-hint.js"
-import * as matchbrackets from "/lean/static/codemirror/addon/edit/matchbrackets.js"
-import * as comment from "/lean/static/codemirror/addon/comment/comment.js"
+import * as codemirror from "./static/codemirror/lib/codemirror.js"
+import * as lean from "./static/codemirror/mode/lean/lean.js"
+import * as active_line from "./static/codemirror/addon/selection/active-line.js"
+import * as show_hint from "./static/codemirror/addon/hint/show-hint.js"
+import * as matchbrackets from "./static/codemirror/addon/edit/matchbrackets.js"
+import * as comment from "./static/codemirror/addon/comment/comment.js"
 
 createApp('render', <%- codeJson %>);
 </script>

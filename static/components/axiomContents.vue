@@ -17,7 +17,7 @@
 
     <header v-if="!issearch" class="explorer-toolbar">
       <nav class="breadcrumb" aria-label="Path">
-        <a class="crumb root" href="/lean/">Lemma</a>
+        <a class="crumb root">Lemma</a>
         <template v-for="(part, i) in breadcrumbParts" :key="i">
           <span class="crumb-sep" aria-hidden="true">›</span>
           <a

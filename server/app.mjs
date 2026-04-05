@@ -271,10 +271,6 @@ async function handleLeanGet(req, res) {
 app.get('/lean', handleLeanGet);
 app.get('/lean/', handleLeanGet);
 
-/**
- * PHP-style entry URL (`/${user}/index.php`) so `searchForm.vue` can keep `action="/lean/index.php"`.
- * Only the configured project user (`LEAN_PROJECT_USER` or repo basename) is served.
- */
 app.get('/:userSegment/index.php', (req, res) => {
   if (req.params.userSegment !== PROJECT_USER) {
     res.status(404).type('html').send(
