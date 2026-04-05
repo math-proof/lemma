@@ -26,7 +26,6 @@
           >{{ part }}</a>
         </template>
       </nav>
-      <p class="explorer-hint">Double-click or press Enter to open · Ctrl+F search</p>
     </header>
 
     <div v-if="!issearch" class="explorer-frame">
@@ -320,10 +319,14 @@ onMounted(() => {
   font-size: 13px;
   color: #1a1a1a;
   outline: none;
-  min-height: 200px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .explorer-toolbar {
+  flex-shrink: 0;
   padding: 10px 12px 8px;
   background: linear-gradient(180deg, #f9f9f9 0%, #f3f3f3 100%);
   border: 1px solid #e0e0e0;
@@ -356,13 +359,11 @@ onMounted(() => {
   font-size: 12px;
 }
 
-.explorer-hint {
-  margin: 6px 0 0;
-  font-size: 11px;
-  color: #6b6b6b;
-}
-
 .explorer-frame {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 0 0 8px 8px;
@@ -371,6 +372,7 @@ onMounted(() => {
 }
 
 .col-header {
+  flex-shrink: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 12.5rem 11rem 5.75rem;
   gap: 8px;
@@ -394,7 +396,8 @@ onMounted(() => {
   list-style: none;
   margin: 0;
   padding: 4px 0;
-  max-height: min(70vh, 640px);
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: auto;
 }
 
