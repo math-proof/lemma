@@ -2317,6 +2317,8 @@ export class LeanBinary extends LeanArgs {
     }
 
     insert_tactic(caret, func) {
+        // consider the case where `arg` is a tactic within (LeanColon/LeanAdd):
+        // (h : arg x + arg y ∈ Ioc (-Real.pi) Real.pi) :
         return this.insert_word(caret, func);
     }
 
@@ -4053,9 +4055,39 @@ export class Lean_supset extends LeanLogic {
 }
 
 
+/**
+ * Multiline `LeanStatements` is used both for proof scripts (`by …`) and for proposition/type text after `:`.
+ * Tactic names that overlap with term names (e.g. `arg`) must parse as words in the latter case.
+ * @param {LeanStatements} stmts
+ */
+function leanStatementsPreferWordOverTactic(stmts) {
+    for (let p = stmts.parent; p; p = p.parent) {
+        if (p instanceof LeanBy || p instanceof LeanFrom) {
+            return false;
+        }
+        let ch = stmts;
+        while (ch.parent !== p) {
+            if (!ch.parent) break;
+            ch = ch.parent;
+        }
+        if (ch.parent !== p) continue;
+        if (p instanceof LeanColon && p.rhs === ch) return true;
+        if (p instanceof LeanBrace && p.arg === ch) return true;
+        if ((p instanceof Lean_rightarrow || p instanceof Lean_mapsto) && p.rhs === ch) return true;
+    }
+    return false;
+}
+
 export class LeanStatements extends LeanArgs {
     get stack_priority() {
         return 19;
+    }
+
+    insert_tactic(caret, token) {
+        if (caret instanceof LeanCaret && leanStatementsPreferWordOverTactic(this)) {
+            return this.insert_word(caret, token);
+        }
+        return super.insert_tactic(caret, token);
     }
 
     echo() {
@@ -4867,7 +4899,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 .join('\\\\\n') +
                             '\n\\end{align}';
                     } else {
-                        implyLatex = imply.map((st) => st.toLatex(syntax)).join('\n');
+                        implyLatex = imply.map(st => st.toLatex(syntax)).join('\n');
                     }
                     const assignSuffix = ' :=' + (by ? ` ${by}` : '');
                     implyLatex += `\\tag*{${assignSuffix}}`;
@@ -6574,23 +6606,22 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
      * @returns {string[]}
      */
     latexArgs(syntax = null) {
-        const syn = syntax ?? {};
-        const args = this.args;
+        const {args} = this;
         const func = args[0];
         if (this.is_Abs()) {
             const stripped = this.strip_parenthesis();
-            return [stripped[1].toLatex(syn)];
+            return [stripped[1].toLatex(syntax)];
         }
         if (func instanceof LeanToken) {
             const fn = func.text;
-            syn[fn] = true;
+            syntax[fn] = true;
             switch (args.length) {
                 case 2:
                     switch (fn) {
                         case 'exp':
                         case 'cexp': {
                             const s = this.strip_parenthesis();
-                            return [s[1].toLatex(syn)];
+                            return [s[1].toLatex(syntax)];
                         }
                         case 'arcsin':
                         case 'arccos':
@@ -6608,7 +6639,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                         case 'arccoth': {
                             let arg = args[1];
                             if (arg instanceof LeanParenthesis && arg.arg instanceof LeanDiv) arg = arg.arg;
-                            return [arg.toLatex(syn)];
+                            return [arg.toLatex(syntax)];
                         }
                         case 'Ici':
                         case 'Iic':
@@ -6617,7 +6648,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                         case 'Zeros':
                         case 'Ones': {
                             const s = this.strip_parenthesis();
-                            return [s[1].toLatex(syn)];
+                            return [s[1].toLatex(syntax)];
                         }
                         default:
                     }
@@ -6629,10 +6660,10 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                         case 'Icc':
                         case 'Ico': {
                             const s = this.strip_parenthesis();
-                            return [s[1].toLatex(syn), s[2].toLatex(syn)];
+                            return [s[1].toLatex(syntax), s[2].toLatex(syntax)];
                         }
                         case 'KroneckerDelta':
-                            return [args[1].toLatex(syn), args[2].toLatex(syn)];
+                            return [args[1].toLatex(syntax), args[2].toLatex(syntax)];
                         default:
                     }
                     break;
@@ -6640,13 +6671,13 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             }
         } else if (this.is_Bool()) {
             const stripped = this.strip_parenthesis();
-            return [stripped[1].toLatex(syn)];
+            return [stripped[1].toLatex(syntax)];
         }
-        return super.latexArgs(syn);
+        return super.latexArgs(syntax);
     }
 
     latexFormat() {
-        const args = this.args;
+        const {args} = this;
         const func = args[0];
         if (this.is_Abs()) return '\\left|{%s}\\right|';
         if (func instanceof LeanToken) {
@@ -6830,28 +6861,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         }
         this.cache.tokens_space_separated = tokens;
         return tokens;
-    }
-
-    toLatex(syntax) {
-        const active = this.args.filter((a) => !(a instanceof LeanCaret));
-        if (active.length === 0) return '';
-        const parts = [];
-        for (let i = 0; i < active.length; i++) {
-            const cur = active[i];
-            const curLatex = cur.toLatex(syntax);
-            if (!curLatex) continue;
-            if (parts.length > 0) {
-                const prev = active[i - 1];
-                const prevText = prev instanceof LeanToken ? prev.text : '';
-                const sep =
-                    prev && prevText.length > 1 && prevText.endsWith('_') && cur instanceof LeanToken
-                        ? ''
-                        : '\\ ';
-                parts.push(sep);
-            }
-            parts.push(curLatex);
-        }
-        return parts.join('');
     }
 
     unique_token(indent) {
