@@ -5056,7 +5056,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             if (givenSlice.length > latex.length) givenSlice = givenSlice.filter(Boolean);
                             const tagged = latex.map((pair) =>
                                 pair
-                                    ? `${pair[0]}\\tag*{${escapeLatexTextForRender2vue(pair[1])}}`
+                                    ? `${pair[0]}\\tag*{\$${pair[1]}\$}`
                                     : null,
                             );
                             givenOut = zipped(givenSlice, tagged).map(([g, lx]) => {
