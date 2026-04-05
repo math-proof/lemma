@@ -3676,11 +3676,7 @@ export class LeanMethodChaining extends LeanBinary {
 }
 
 export class LeanGetElem extends LeanBinary {
-    static input_priority = 88;
-
-    get stack_priority() {
-        return 18;
-    }
+    static input_priority = 67;
 
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
@@ -3709,11 +3705,7 @@ export class LeanGetElem extends LeanBinary {
 }
 
 export class LeanGetElemQue extends LeanBinary {
-    static input_priority = 88;
-
-    get stack_priority() {
-        return 18;
-    }
+    static input_priority = 67;
 
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
@@ -3742,11 +3734,7 @@ export class LeanGetElemQue extends LeanBinary {
 }
 
 export class LeanGetElemQuote extends LeanArgs {
-    static input_priority = 88;
-
-    get stack_priority() {
-        return 18;
-    }
+    static input_priority = 67;
 
     insert_comma(caret) {
         const caret2 = new LeanCaret(this.indent, caret.level);
@@ -4394,22 +4382,6 @@ function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
         proofStr = indentText(dedentEchoProofTermBlock(String(proof)), proofInd);
     }
     return { cmts, proofStr, endJ, proofIsTactic };
-}
-
-// --- LeanModule::render2vue / merge_proof (server/lean/compiler/render2vue.mjs) ---
-/** Escape a single line for use inside `\\text{...}` in KaTeX (render2vue). */
-function escapeLatexTextForRender2vue(s) {
-    return String(s)
-        .replace(/\\/g, '\\textbackslash{}')
-        .replace(/\{/g, '\\{')
-        .replace(/\}/g, '\\}')
-        .replace(/\$/g, '\\$')
-        .replace(/&/g, '\\&')
-        .replace(/#/g, '\\#')
-        .replace(/\^/g, '\\textasciicircum{}')
-        .replace(/_/g, '\\_')
-        .replace(/%/g, '\\%')
-        .replace(/~/g, '\\textasciitilde{}');
 }
 
 /** @param {import('../../../static/js/parser/lean.js').Lean} node */
@@ -6470,8 +6442,7 @@ function leanVarsGetitem(root, keys) {
 }
 
 export class LeanArgsSpaceSeparated extends LeanArgs {
-    static input_priority = 80;
-
+    static input_priority = 80; // exp x ^ n where exp x evaluates first
     constructor(args, indent, level, parent = null) {
         super(args, indent, level, parent);
         this.cache = null;
