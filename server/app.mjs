@@ -117,6 +117,10 @@ function renderPackageBrowserPage(res, module) {
   const title = titleFromModule(module);
   const payloadJson = jsonForScriptEmbed({ packages, theorems });
   res.set('Content-Type', 'text/html; charset=utf-8');
+  /** Avoid stale embedded JSON during dev (old process served string-only `theorems[]`). */
+  if (process.env.NODE_ENV !== 'production') {
+    res.set('Cache-Control', 'no-store');
+  }
   res.render('package', { title, payloadJson });
 }
 

@@ -116,11 +116,12 @@ export function dirExists(absPath) {
 
 /**
  * Same idea as `php/package.php`: subdirs → `packages`, `*.lean` (not `*.echo.lean`) → `theorems` (names without `.lean`).
+ * Each entry is `{ name, mtimeMs, size }` (`size` is `null` for folders, like Explorer’s details view).
  */
 export function listLemmaPackageContents(dirAbs) {
-  /** @type {string[]} */
+  /** @type {{ name: string; mtimeMs: number; size: number | null }[]} */
   const packages = [];
-  /** @type {string[]} */
+  /** @type {{ name: string; mtimeMs: number; size: number }[]} */
   const theorems = [];
   let entries;
   try {
@@ -131,13 +132,26 @@ export function listLemmaPackageContents(dirAbs) {
   for (const ent of entries) {
     const name = ent.name;
     if (name === '.' || name === '..') continue;
-    if (ent.isDirectory()) {
-      packages.push(name);
+    const full = path.join(dirAbs, name);
+    let st;
+    try {
+      st = fs.statSync(full);
+    } catch {
+      continue;
+    }
+    if (st.isDirectory()) {
+      packages.push({ name, mtimeMs: st.mtimeMs, size: null });
     } else if (name.endsWith('.lean') && !name.endsWith('.echo.lean')) {
-      theorems.push(name.slice(0, -'.lean'.length));
+      theorems.push({
+        name: name.slice(0, -'.lean'.length),
+        mtimeMs: st.mtimeMs,
+        size: st.size,
+      });
     }
   }
-  packages.sort((a, b) => a.localeCompare(b));
-  theorems.sort((a, b) => a.localeCompare(b));
+  const byName = (/** @type {{ name: string }} */ a, /** @type {{ name: string }} */ b) =>
+    a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+  packages.sort(byName);
+  theorems.sort(byName);
   return { packages, theorems };
 }
