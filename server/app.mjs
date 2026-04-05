@@ -58,7 +58,7 @@ app.post('/lean/php/request/disambiguate.php', handleDisambiguate);
 app.get('/lean/php/request/recent.php', handleRecent);
 
 /** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */
-app.post('/lean/php/request/echo.php', (req, res) => {
+app.post('/lean/php/request/echo.php', async (req, res) => {
   try {
     const {module} = req.body;
     if (!module || typeof module !== 'string') {
@@ -71,7 +71,7 @@ app.post('/lean/php/request/echo.php', (req, res) => {
       return;
     }
     const source = readLeanFile(abs);
-    const code = echo2vueFromSource(source, {
+    const code = await echo2vueFromSource(source, {
       module,
       leanAbsPath: abs,
     });

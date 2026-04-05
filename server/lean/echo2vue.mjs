@@ -1,13 +1,17 @@
 /**
  * Port of `LeanModule::echo2vue` (php/parser/lean.php ~4738–4852).
  * Runs from repo root via subprocess `cwd` (no `process.chdir`).
+ * Subprocesses are async so the Node event loop can serve other HTTP requests while Lean runs.
  */
 import fs from 'fs';
 import path from 'path';
-import { execSync, spawnSync } from 'child_process';
+import { exec, spawn } from 'child_process';
+import { promisify } from 'util';
 import { REPO_ROOT } from './modulePath.mjs';
 import { leanEchoPath } from './fetchLemmaMysql.mjs';
 import { LeanModule, LeanTactic } from '../../static/js/parser/lean.js';
+
+const execAsync = promisify(exec);
 
 /** @param {unknown} stmt */
 function isLeanImport(stmt) {
@@ -75,12 +79,75 @@ function collectStaleLemmaImports(tree, repoRoot) {
 /** Lean diagnostic line: `path.lean:line:col: severity: message` */
 const DIAG_RE = /^(.+\.lean):(\d+):(\d+): (\w+): (.+)$/;
 
+const SPAWN_MAX_BUFFER = 64 * 1024 * 1024;
+
+/**
+ * Like `spawnSync` for `lake env lean …` but non-blocking.
+ * @param {string} command
+ * @param {string[]} args
+ * @param {{ cwd: string; env: NodeJS.ProcessEnv; windowsHide?: boolean }}
+ * @returns {Promise<{ stdout: string; stderr: string; error: Error | null }>}
+ */
+function spawnLakeLean(command, args, { cwd, env, windowsHide = true }) {
+  return new Promise((resolve) => {
+    const child = spawn(command, args, {
+      cwd,
+      env,
+      windowsHide,
+    });
+    let stdout = '';
+    let stderr = '';
+    let outBytes = 0;
+    let settled = false;
+
+    /** @param {string} chunk */
+    function onChunk(chunk) {
+      outBytes += Buffer.byteLength(chunk, 'utf8');
+      if (outBytes > SPAWN_MAX_BUFFER && !settled) {
+        settled = true;
+        child.kill();
+        resolve({
+          stdout,
+          stderr,
+          error: new Error('spawn maxBuffer exceeded'),
+        });
+      }
+    }
+
+    /** @param {{ stdout: string; stderr: string; error: Error | null }} result */
+    function finish(result) {
+      if (settled) return;
+      settled = true;
+      resolve(result);
+    }
+
+    child.stdout?.setEncoding('utf8');
+    child.stderr?.setEncoding('utf8');
+    child.stdout?.on('data', (chunk) => {
+      onChunk(chunk);
+      stdout += chunk;
+    });
+    child.stderr?.on('data', (chunk) => {
+      onChunk(chunk);
+      stderr += chunk;
+    });
+    child.on('error', (err) => {
+      console.warn('[echo2vue] spawn lean:', err.message);
+      finish({ stdout, stderr, error: err });
+    });
+    child.on('close', () => {
+      finish({ stdout, stderr, error: null });
+    });
+  });
+}
+
 /**
  * @param {InstanceType<typeof LeanModule>} tree
  * @param {string} leanFileAbs absolute path to the source `.lean` file
  * @param {{ module?: string }} [opts]
+ * @returns {Promise<Record<string, unknown>>}
  */
-export function runEcho2Vue(tree, leanFileAbs, opts = {}) {
+export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   if (!(tree instanceof LeanModule)) throw new Error('runEcho2Vue expects LeanModule');
   const repoRoot = REPO_ROOT;
   const leanEchoFile = leanEchoPath(path.resolve(leanFileAbs));
@@ -103,12 +170,12 @@ export function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     const quoted = names.map((n) => `"${n.replace(/"/g, '\\"')}"`).join(' ');
     const cmd = `"${lakePath}" build ${quoted}`;
     try {
-      execSync(cmd, {
+      await execAsync(cmd, {
         cwd: repoRoot,
         env,
-        stdio: 'pipe',
-        shell: true,
         windowsHide: true,
+        shell: true,
+        maxBuffer: SPAWN_MAX_BUFFER,
       });
     } catch (e) {
       console.warn('[echo2vue] lake build:', /** @type {Error} */ (e).message || e);
@@ -125,11 +192,9 @@ export function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     '-DmaxHeartbeats=4000000',
     echoArg,
   ];
-  const r = spawnSync(lakePath, leanArgs, {
+  const r = await spawnLakeLean(lakePath, leanArgs, {
     cwd: repoRoot,
     env,
-    encoding: 'utf8',
-    maxBuffer: 64 * 1024 * 1024,
     windowsHide: true,
   });
   if (r.error) {

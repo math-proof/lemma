@@ -1,5 +1,14 @@
-# Same behavior as start.sh: PM2 runs server/app.mjs as process "lemma".
+# PM2 runs server/app.mjs as process "lemma".
 # Run from repo root:  .\start.ps1
+#
+# Multi-processing: Node is one thread per process; one stuck request can block that process.
+# PM2 cluster mode runs several Node workers; other workers still accept new connections.
+#   Default: 8 Node workers (PM2 -i 8). Override:
+#   $env:LEAN_WORKERS = 'max'   # one worker per logical CPU (PM2 -i max)
+#   $env:LEAN_WORKERS = '4'     # exactly four workers
+#   $env:LEAN_WORKERS = '1'     # single process
+# After changing LEAN_WORKERS, run:  pm2 delete lemma  then  .\start.ps1
+# (pm2 restart lemma keeps the previous instance count.)
 #
 # On Windows, PowerShell may pick npx.ps1 / npm.ps1 / pm2.ps1 (blocked by
 # ExecutionPolicy). We prefer *.cmd / *.exe shims from the same install.
@@ -56,15 +65,35 @@ function Invoke-Pm2 {
     Invoke-NodeCli npx (@('pm2') + $Pm2Arguments)
 }
 
+$pm2Instances = '8'
+$lw = $env:LEAN_WORKERS
+if ($null -ne $lw -and $lw.Trim() -ne '') {
+    $t = $lw.Trim()
+    if ($t -eq 'max') {
+        $pm2Instances = 'max'
+    }
+    elseif ($t -eq '1') {
+        $pm2Instances = '1'
+    }
+    elseif ($t -match '^[1-9]\d*$') {
+        $pm2Instances = $t
+    }
+    else {
+        Write-Warning "LEAN_WORKERS='$t' not recognized; using 8. Use 1, a positive integer, or max."
+    }
+}
+
 Invoke-Pm2 describe lemma 2>&1 | Out-Null
 if ($LASTEXITCODE -eq 0) {
     Invoke-Pm2 restart lemma
 } else {
-    Invoke-Pm2 start server/app.mjs --name lemma
+    Invoke-Pm2 start server/app.mjs --name lemma -i $pm2Instances
 }
 if ($LASTEXITCODE -ne 0) {
     throw "pm2 start/restart failed (exit $LASTEXITCODE)"
 }
+
+Write-Host "PM2 lemma: pm2 list | pm2 logs lemma. New installs use -i $pm2Instances (set LEAN_WORKERS); pm2 restart keeps existing instance count."
 
 Invoke-Pm2 save
 if ($LASTEXITCODE -ne 0) {

@@ -31,13 +31,14 @@ export function render2vueFromSource(source, echo = false) {
  *
  * @param {string} source
  * @param {{ module?: string, leanAbsPath: string }} options
+ * @returns {Promise<Record<string, unknown>>}
  */
-export function echo2vueFromSource(source, options) {
+export async function echo2vueFromSource(source, options) {
     const { leanAbsPath, module: moduleName } = options || {};
     if (!leanAbsPath || typeof leanAbsPath !== 'string') {
         throw new Error('echo2vueFromSource requires options.leanAbsPath');
     }
     const tree = compile(source);
     if (!(tree instanceof LeanModule)) throw new Error('compile() root must be LeanModule');
-    return runEcho2Vue(tree, leanAbsPath, { module: moduleName });
+    return await runEcho2Vue(tree, leanAbsPath, { module: moduleName });
 }
