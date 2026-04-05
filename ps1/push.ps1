@@ -17,7 +17,7 @@ while ($true) {
         Write-Host "Push succeeded."
         exit 0
     }
-    $delaySec = 5 + ($attempt - 1) * 5
+    $delaySec = 5
     Write-Host "Push failed (exit code $LASTEXITCODE). Waiting ${delaySec}s before retry..."
     Start-Sleep -Seconds $delaySec
 }
