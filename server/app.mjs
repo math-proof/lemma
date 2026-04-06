@@ -16,6 +16,7 @@ import {
   listLemmaPackageContents,
 } from './lean/modulePath.mjs';
 import { echo2vueFromSource, render2vueFromSource } from './lean/compiler/index.mjs';
+import { compile, LeanModule, LeanCaret } from '../static/js/parser/lean.js';
 import { jsonForScriptEmbed } from './lean/jsonForScriptEmbed.mjs';
 import { listLemmaTopLevelDirs } from './lean/lemmaSections.mjs';
 import { handleExecute } from './lean/execute.mjs';
@@ -42,13 +43,24 @@ const PORT = Number(process.env.PORT || 80);
 const PROJECT_USER =
   process.env.LEAN_PROJECT_USER || path.basename(REPO_ROOT);
 
+function ensureProjectUser(req, res, next) {
+  if (req.params.userSegment !== PROJECT_USER) {
+    res.status(404).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+      <p>No site for user prefix <code>${escapeHtml(req.params.userSegment)}</code></p>`
+    );
+    return;
+  }
+  next();
+}
+
 app.set('view engine', 'ejs');
 app.set('views', VIEWS);
 
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 /** Lemma tree size for `website` home.md `<label id=count>` / `<label id=lines>`. */
-app.get('/lean/api/repo-stats.json', async (_req, res) => {
+app.get('/:userSegment/api/repo-stats.json', ensureProjectUser, async (_req, res) => {
   try {
     const { theoremCount, lineCount } = await getRepoStatsCached(PROJECT_USER);
     res.set('Cache-Control', 'public, max-age=300');
@@ -60,12 +72,12 @@ app.get('/lean/api/repo-stats.json', async (_req, res) => {
 });
 
 /** Matches PHP `php/request/sections.php` (POST → JSON array of `Lemma/` child dir names). */
-app.post('/lean/php/request/sections.php', (_req, res) => {
+app.post('/:userSegment/php/request/sections.php', ensureProjectUser, (_req, res) => {
   res.json(listLemmaTopLevelDirs());
 });
 
 /** Same contract as `php/request/execute.php` (`mysql\execute`); stub when `MYSQL_HOST` unset. */
-app.post('/lean/php/request/execute.php', (req, res) => {
+app.post('/:userSegment/php/request/execute.php', ensureProjectUser, (req, res) => {
   handleExecute(req, res).catch((e) => {
     console.error('[execute]', e);
     res.status(500).type('text/plain').send('0');
@@ -73,13 +85,13 @@ app.post('/lean/php/request/execute.php', (req, res) => {
 });
 
 /** Filesystem disambiguation (same idea as PHP `disambiguate.php`). */
-app.post('/lean/php/request/disambiguate.php', handleDisambiguate);
+app.post('/:userSegment/php/request/disambiguate.php', ensureProjectUser, handleDisambiguate);
 
 /** Recent modules (PHP `php/request/recent.php`); uses file mtimes. */
-app.get('/lean/php/request/recent.php', handleRecent);
+app.get('/:userSegment/php/request/recent.php', ensureProjectUser, handleRecent);
 
 /** Plain text, same as `php/request/count.php` (`select_count`). */
-app.get('/lean/php/request/count.php', async (_req, res) => {
+app.get('/:userSegment/php/request/count.php', ensureProjectUser, async (_req, res) => {
   try {
     const { theoremCount } = await getRepoStatsCached(PROJECT_USER);
     res.type('text/plain; charset=utf-8').send(String(theoremCount));
@@ -90,7 +102,7 @@ app.get('/lean/php/request/count.php', async (_req, res) => {
 });
 
 /** Plain text, same as `php/request/lines.php`. */
-app.get('/lean/php/request/lines.php', async (_req, res) => {
+app.get('/:userSegment/php/request/lines.php', ensureProjectUser, async (_req, res) => {
   try {
     const { lineCount } = await getRepoStatsCached(PROJECT_USER);
     res.type('text/plain; charset=utf-8').send(String(lineCount));
@@ -100,8 +112,34 @@ app.get('/lean/php/request/lines.php', async (_req, res) => {
   }
 });
 
+/** Same contract as `php/request/segment_detection.php` (POST `lean` → JSON `{lean}`). */
+app.post('/:userSegment/php/request/segment_detection.php', ensureProjectUser, (req, res) => {
+  const lean = req.body?.lean;
+  if (typeof lean !== 'string') {
+    res.status(400).json({ error: 'missing lean' });
+    return;
+  }
+  try {
+    const code = compile(lean + '\n');
+    if (!(code instanceof LeanModule)) {
+      res.status(500).json({ error: 'compile() root must be LeanModule' });
+      return;
+    }
+    // If first arg is LeanCaret, remove it (matches PHP logic)
+    if (code.args[0] instanceof LeanCaret) {
+      code.args.shift();
+    }
+    // Stringify and trim (PHP rtrim("$code"))
+    const result = String(code).replace(/\s+$/, '');
+    res.json({ lean: result });
+  } catch (e) {
+    console.error('[segment_detection]', e);
+    res.json({ error: String(e?.message || e) });
+  }
+});
+
 /** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */
-app.post('/lean/php/request/echo.php', async (req, res) => {
+app.post('/:userSegment/php/request/echo.php', ensureProjectUser, async (req, res) => {
   try {
     const {module} = req.body;
     if (!module || typeof module !== 'string') {
@@ -126,13 +164,11 @@ app.post('/lean/php/request/echo.php', async (req, res) => {
   }
 });
 
-app.use(
-  '/lean/static',
-  express.static(path.join(REPO_ROOT, 'static'), {
-    fallthrough: true,
-    maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
-  })
-);
+/** Static files under `/:userSegment/static` (validates userSegment first). */
+app.use('/:userSegment/static', ensureProjectUser, express.static(path.join(REPO_ROOT, 'static'), {
+  fallthrough: true,
+  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+}));
 
 async function renderSummaryPage(res) {
   const { state_count_pairs, repertoire } = await buildSummaryPayload(PROJECT_USER);
@@ -214,11 +250,11 @@ function escapeHtml(s) {
 }
 
 /** PHP `lean.php/website` → marketing/docs shell (`website/index.php`). */
-/** No trailing-slash redirect: some proxies strip `/` and would loop with `→ /lean/website/`. */
-app.get(['/lean/website', '/lean/website/'], renderWebsiteIndex);
-app.use('/lean/website/md.php', (req, res, next) => {
+/** No trailing-slash redirect: some proxies strip `/` and would loop with `→ /:userSegment/website/`. */
+app.get(['/:userSegment/website', '/:userSegment/website/'], ensureProjectUser, renderWebsiteIndex);
+app.use('/:userSegment/website/md.php', ensureProjectUser, (req, res) => {
   if (req.method !== 'GET') {
-    next();
+    res.status(405).type('text/plain').send('Method not allowed');
     return;
   }
   handleWebsiteMdPhp(req, res).catch((e) => {
@@ -228,14 +264,12 @@ app.use('/lean/website/md.php', (req, res, next) => {
     );
   });
 });
-app.use(
-  '/lean/website',
+app.use('/:userSegment/website', ensureProjectUser, 
   express.static(path.join(REPO_ROOT, 'website'), {
-    index: false,
-    redirect: false,
-    maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
-  })
-);
+  index: false,
+  redirect: false,
+  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+}));
 
 /** Same idea as `php/search.php` + `index.php` (`?type=`, `?q=`, `?latex=`). */
 async function renderSearchPage(res, dict) {
@@ -256,14 +290,15 @@ async function renderSearchPage(res, dict) {
   }
 }
 
-/** POST body from `searchForm.vue` (PHP `index.php`); same logic as `/lean/` POST. */
+/** POST body from `searchForm.vue` (PHP `index.php`); same logic as `/:userSegment/` POST. */
 async function handleLeanPostSearch(req, res) {
   const body = req.body && typeof req.body === 'object' ? req.body : {};
   if (leanGetWantsSearch(body, body.module)) {
     await renderSearchPage(res, body);
     return;
   }
-  res.redirect(302, '/lean/');
+  const userSegment = req.params.userSegment || PROJECT_USER;
+  res.redirect(302, `/${userSegment}/`);
 }
 
 async function handleLeanGet(req, res) {
@@ -315,7 +350,8 @@ async function handleLeanGet(req, res) {
       );
       return;
     }
-    res.redirect(302, `/lean/?module=${encodeURIComponent(canonical)}`);
+    const userSegment = req.params.userSegment || PROJECT_USER;
+    res.redirect(302, `/${userSegment}/?module=${encodeURIComponent(canonical)}`);
     return;
   }
   module = module.replace(/\//g, '.');
@@ -328,22 +364,12 @@ async function handleLeanGet(req, res) {
   });
 }
 
-app.get('/lean', handleLeanGet);
-app.get('/lean/', handleLeanGet);
-
-app.get('/:userSegment/index.php', (req, res) => {
-  if (req.params.userSegment !== PROJECT_USER) {
-    res.status(404).type('html').send(
-      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
-      <p>No site for user prefix <code>${escapeHtml(req.params.userSegment)}</code></p>`
-    );
-    return;
-  }
-  handleLeanGet(req, res);
-});
+app.get('/:userSegment', ensureProjectUser, handleLeanGet);
+app.get('/:userSegment/', ensureProjectUser, handleLeanGet);
+app.get('/:userSegment/index.php', ensureProjectUser, handleLeanGet);
 
 /** Search form POST (PHP `index.php` + `search.php` use POST when form submits). */
-app.post('/lean', (req, res) => {
+function handleLeanPostSearchRoute(req, res) {
   handleLeanPostSearch(req, res).catch((err) => {
     console.error('[lean post]', err);
     res.status(500).type('html').send(
@@ -351,42 +377,21 @@ app.post('/lean', (req, res) => {
       <p>${escapeHtml(String(err?.message || err))}</p>`
     );
   });
-});
-app.post('/lean/', (req, res) => {
-  handleLeanPostSearch(req, res).catch((err) => {
-    console.error('[lean post]', err);
-    res.status(500).type('html').send(
-      `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
-      <p>${escapeHtml(String(err?.message || err))}</p>`
-    );
-  });
-});
-app.post('/:userSegment/index.php', (req, res) => {
-  if (req.params.userSegment !== PROJECT_USER) {
-    res.status(404).type('html').send(
-      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
-      <p>No site for user prefix <code>${escapeHtml(req.params.userSegment)}</code></p>`
-    );
-    return;
-  }
-  handleLeanPostSearch(req, res).catch((err) => {
-    console.error('[lean post]', err);
-    res.status(500).type('html').send(
-      `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
-      <p>${escapeHtml(String(err?.message || err))}</p>`
-    );
-  });
-});
+}
+
+app.post('/:userSegment', ensureProjectUser, handleLeanPostSearchRoute);
+app.post('/:userSegment/', ensureProjectUser, handleLeanPostSearchRoute);
+app.post('/:userSegment/index.php', ensureProjectUser, handleLeanPostSearchRoute);
 
 app.get('/', (_req, res) => {
-  res.redirect(302, '/lean/');
+  res.redirect(302, `/${PROJECT_USER}/`);
 });
 
 app.listen(PORT, '0.0.0.0', () => {
   const origin =
     PORT === 80 ? 'http://127.0.0.1' : `http://127.0.0.1:${PORT}`;
-  console.log(`Lemma server  ${origin}/lean/`);
-  console.log(`  static:      /lean/static/`);
+  console.log(`Lemma server  ${origin}/${PROJECT_USER}/`);
+  console.log(`  static:      /${PROJECT_USER}/static/`);
   console.log(`  compiler:    JS (render2vue.mjs)`);
   if (getMysqlConfig()) {
     console.log('  mysql:       lemma from DB when row exists (.echo.lean gate like php/lemma.php)');
