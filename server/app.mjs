@@ -31,16 +31,33 @@ import {
   ensureEmptyEchoFile,
 } from './lean/fetchLemmaMysql.mjs';
 import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
+import { renderWebsiteIndex, handleWebsiteMdPhp } from './lean/website.mjs';
+import { getRepoStatsCached } from './lean/lemmaRepoStats.mjs';
 
 const VIEWS = path.join(REPO_ROOT, 'views');
 
 const app = express();
 const PORT = Number(process.env.PORT || 80);
 
+const PROJECT_USER =
+  process.env.LEAN_PROJECT_USER || path.basename(REPO_ROOT);
+
 app.set('view engine', 'ejs');
 app.set('views', VIEWS);
 
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+/** Lemma tree size for `website` home.md `<label id=count>` / `<label id=lines>`. */
+app.get('/lean/api/repo-stats.json', async (_req, res) => {
+  try {
+    const { theoremCount, lineCount } = await getRepoStatsCached(PROJECT_USER);
+    res.set('Cache-Control', 'public, max-age=300');
+    res.json({ theoremCount, lineCount });
+  } catch (e) {
+    console.error('[repo-stats]', e);
+    res.status(500).json({ error: String(e?.message || e) });
+  }
+});
 
 /** Matches PHP `php/request/sections.php` (POST → JSON array of `Lemma/` child dir names). */
 app.post('/lean/php/request/sections.php', (_req, res) => {
@@ -60,6 +77,28 @@ app.post('/lean/php/request/disambiguate.php', handleDisambiguate);
 
 /** Recent modules (PHP `php/request/recent.php`); uses file mtimes. */
 app.get('/lean/php/request/recent.php', handleRecent);
+
+/** Plain text, same as `php/request/count.php` (`select_count`). */
+app.get('/lean/php/request/count.php', async (_req, res) => {
+  try {
+    const { theoremCount } = await getRepoStatsCached(PROJECT_USER);
+    res.type('text/plain; charset=utf-8').send(String(theoremCount));
+  } catch (e) {
+    console.error('[count.php]', e);
+    res.status(500).type('text/plain').send('0');
+  }
+});
+
+/** Plain text, same as `php/request/lines.php`. */
+app.get('/lean/php/request/lines.php', async (_req, res) => {
+  try {
+    const { lineCount } = await getRepoStatsCached(PROJECT_USER);
+    res.type('text/plain; charset=utf-8').send(String(lineCount));
+  } catch (e) {
+    console.error('[lines.php]', e);
+    res.status(500).type('text/plain').send('0');
+  }
+});
 
 /** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */
 app.post('/lean/php/request/echo.php', async (req, res) => {
@@ -94,9 +133,6 @@ app.use(
     maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
   })
 );
-
-const PROJECT_USER =
-  process.env.LEAN_PROJECT_USER || path.basename(REPO_ROOT);
 
 async function renderSummaryPage(res) {
   const { state_count_pairs, repertoire } = await buildSummaryPayload(PROJECT_USER);
@@ -176,6 +212,30 @@ function escapeHtml(s) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
+
+/** PHP `lean.php/website` → marketing/docs shell (`website/index.php`). */
+/** No trailing-slash redirect: some proxies strip `/` and would loop with `→ /lean/website/`. */
+app.get(['/lean/website', '/lean/website/'], renderWebsiteIndex);
+app.use('/lean/website/md.php', (req, res, next) => {
+  if (req.method !== 'GET') {
+    next();
+    return;
+  }
+  handleWebsiteMdPhp(req, res).catch((e) => {
+    console.error('[website md.php]', e);
+    res.status(500).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Error</title><p>${escapeHtml(String(e?.message || e))}</p>`
+    );
+  });
+});
+app.use(
+  '/lean/website',
+  express.static(path.join(REPO_ROOT, 'website'), {
+    index: false,
+    redirect: false,
+    maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  })
+);
 
 /** Same idea as `php/search.php` + `index.php` (`?type=`, `?q=`, `?latex=`). */
 async function renderSearchPage(res, dict) {
@@ -331,4 +391,7 @@ app.listen(PORT, '0.0.0.0', () => {
   if (getMysqlConfig()) {
     console.log('  mysql:       lemma from DB when row exists (.echo.lean gate like php/lemma.php)');
   }
+  getRepoStatsCached(PROJECT_USER).catch((e) =>
+    console.warn('[repo-stats warm]', e?.message || e)
+  );
 });

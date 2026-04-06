@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<title><%= title %></title>
+</head>
+<body>
+	<div id='container'>
+
+		<div id='header' align='center'>
+			<h1 class="site-title"><%= title %></h1>
+
+			<div style="float:right">
+				<%= languageSelect %>
+				<select align='left' onchange="location.href = `?lang=${this.value}`">
+					<option value=en <%= lang === 'en' ? 'selected' : '' %>>English</option>
+					<option value=zh <%= lang === 'zh' ? 'selected' : '' %>>简体中文</option>
+					<option value=fr <%= lang === 'fr' ? 'selected' : '' %>>Français</option>
+				</select>
+				<br>
+			</div>
+		</div>
+		<hr />
+		<div id='content_container'>
+			<div id='sidebar'>
+				<div class='sidebar_heading'>
+					<a href='?lang=<%= lang %>'><%= home %></a>
+				</div>
+				<br>
+				<div class='sidebar_body'>
+					<a href='?lang=<%= lang %>&section=bugReport'><%= bugReport %></a>
+				</div>
+				<div class='sidebar_body'>
+					<a href='?lang=<%= lang %>&section=participation'><%= participation %></a>
+				</div>
+				<div class='sidebar_body'>
+					<a href='?lang=<%= lang %>&section=contact'><%= contact %></a>
+				</div>
+				<div class='sidebar_body'>
+					<a href='?lang=<%= lang %>&section=history'><%= history %></a>
+				</div>
+				<div class='sidebar_body'>
+					<a href='?lang=<%= lang %>&section=endeavour'><%= endeavour %></a>
+				</div>
+
+				<br>
+				<div class='sidebar_heading'><%= userGuide %></div>
+				<br>
+				<div class='sidebar_body'>
+					<a href="?lang=<%= lang %>&section=faq"
+						title="<%= faq %>"><%= faq %></a>
+				</div>
+				<div class='sidebar_body'>
+					<a href="?lang=<%= lang %>&section=designManual"
+						title="<%= designManual %>"><%= designManual %></a>
+				</div>
+				<div class='sidebar_body'>
+					<a href="?lang=<%= lang %>&section=userManual"
+						title="<%= userManual %>"><%= userManual %></a>
+				</div>
+				<div class='sidebar_body'>
+					<a href="md.php/<%= lang %>/programming"
+						title="<%= programmingReference %>"><%= programmingReference %></a>
+				</div>
+			</div>
+
+			<div id='content'></div>
+		</div>
+	</div>
+
+</body>
+</html>
+
+<script	src="../static/unpkg.com/highlight.js/8.8.0/highlight.min.js"></script>
+<script src="../static/unpkg.com/marked@2.1.3/marked.min.js"></script>
+<script src="../static/unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+<script src="../static/unpkg.com/qs@6.10.2/dist/qs.js"></script>
+<script src="../static/js/std.js"></script>
+<script type=module>
+
+hljs.initHighlightingOnLoad();
+
+var url = `../website/md/<%= lang %>/<%= section %>.md`;
+
+var text = await get(url);
+url = url.slice(0, -3);
+
+text = text.transform(/(?<=\n)!\[(.+)\]\((.+)\)/g, m=>{
+	var title = m[1];
+	var address = url + m[2].match(/[^\/]+(\/.+)/)[1];
+	return `![${title}](${address})`;
+});
+
+text = text.transform(/<script( type=module)?>([\s\S]*)<\/script>/g, m=>{
+    var script = m[2];
+    if (m[1])
+        script = `(async function(){${script}})();`;
+
+    console.log('eval: ', script);
+    setTimeout(()=>eval(script), 100);
+    return '';
+});
+
+$("#content").innerHTML = marked(text);
+
+</script>

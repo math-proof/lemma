@@ -61,6 +61,14 @@ A:link {
 	white-space: nowrap;
 }
 
+.site-title {
+	font-size: 1.5rem;
+	font-weight: 600;
+	line-height: 1.25;
+	margin: 0;
+	padding: 0;
+}
+
 #logo {
 	position: absolute;
 	left: 0px;
