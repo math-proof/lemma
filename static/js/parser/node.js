@@ -287,34 +287,43 @@ export class Node {
         console.assert(parent.args.back() === this);
         var path = [];
         if (parent.find_path(parent.args.length - 1, pred, path)) {
-//                                                 _____________________root________
-//root.args[0]                    ____________root.args[1]  (....rest nodes)    root.args[-1]____
-//             root.args[1][0] tagBegin                                                       tagEnd
+//                              _________________________root_____
+// (...)            ____________root.args[0]_____  (...)      root.args[-1]_____
+//          ________root.args[0][0]          (...)                          root.args[-1].args[-1]____
+// (...) tagBegin                                                                                  tagEnd
             var tagBegin = getitem(parent, ...path);
             var {depth, indices} = cls.decompose_path(path);
-//                                                 _____________________root_____________________
-//root.args[0]                    ____________root.args[1]  (....rest nodes)    root.args[-1] tagEnd
-//             root.args[1][0] tagBegin
+//                              _________________________root_________________________________________
+// (...)            ____________root.args[0]_____  (...)      root.args[-1]_____                   tagEnd
+//          ________root.args[0][0]          (...)                          root.args[-1].args[-1] 
+// (...) tagBegin
             for (var _ of range(depth)) {
                 this.parent.args.pop();
                 this.parent.parent.args.push(this);
                 this.parent = this.parent.parent;
             }
-//                                                 ______________________root
-//root.args[0]                    ____________root.args[1]_______________________________________
-//             root.args[1][0] tagBegin                     (....rest nodes)    root.args[-1] tagEnd
+//                              ____________________root
+// (...)            ____________root.args[0]
+//          ________root.args[0][0]___________________________________________________________________
+// (...) tagBegin                            (...) (...)      root.args[-1]_____                   tagEnd
+//                                                                          root.args[-1].args[-1] 
             var start = indices.back();
-            var {parent} = this;
-            if (tagBegin.parent !== parent) {
-                for (const node of this.parent.args.splice(indices[0] + 1))
+            var root = this.parent;
+            var {parent} = tagBegin;
+            for (var i of reversed(range(indices.length - 1))) {
+                for (const node of parent.parent.args.splice(indices[i] + 1))
                     tagBegin.parent.push(node);
-                console.assert(tagBegin.parent === this.parent);
-                parent.adjustment(this.parent, start);
+                parent = parent.parent;
             }
-//                                                 _____________________root
-//root.args[0]      __________________________root.args[1]__________________________
-//             root.args[1][0]    _______________________________________________newTag__________
-//                             tagBegin                     (....rest nodes)    root.args[-1] tagEnd
+            console.assert(parent === root);
+            console.assert(tagBegin.parent === this.parent);
+            root.adjustment(this.parent, start);
+//                              ____________________root
+// (...)            ____________root.args[0]
+//  ________________root.args[0][0]_________________________________________________
+// (...)    _____________________________________________________________________newTag_______________
+//       tagBegin                            (...) (...)      root.args[-1]_____                   tagEnd
+//                                                                          root.args[-1].args[-1]
             var {args} = tagBegin.parent;
             console.assert(args[start] === tagBegin);
             start++;
@@ -348,7 +357,6 @@ export class AbstractParser {
         return this._instance;
     }
 
-    /** Allows eager `SubParser.instance = new SubParser()` like PHP `SubParser::$instance = ...`. */
     static set instance(v) {
         this._instance = v;
     }

@@ -573,7 +573,9 @@ class MarkdownSPAN extends MarkdownArgs {
         console.assert(!(caret instanceof MarkdownCaret));
         console.assert(caret === this.args.back());
         if (caret instanceof MarkdownText) {
-            const previousElementSibling = caret.previousElementSibling;
+            var previousElementSibling = caret.previousElementSibling;
+            if (previousElementSibling === null && caret.parent instanceof MarkdownP && caret.parent.args.length === 1)
+                previousElementSibling = caret.parent.previousElementSibling;
             const newline = previousElementSibling?.is_Paragraph ? '^' : '(?<=\\n)';
             var m;
             // Handle headings
@@ -829,7 +831,8 @@ class MarkdownSPAN extends MarkdownArgs {
     }
 
     insert_bar(caret, ...kwargs) {
-        for (var i of range(this.args.length - 1, -1, -1)) {
+        var {args} = this;
+        for (var i of range(args.length - 1, -1, -1)) {
             var $new = this.process_inner_loop(i, ...kwargs);
             if ($new)
                 return $new;
@@ -2728,6 +2731,7 @@ class MarkdownDocument extends MarkdownArgs {
 }
 MarkdownDocument.prototype.insert_asterisk = MarkdownI.prototype.insert_asterisk;
 MarkdownDocument.prototype.insert_underscore = MarkdownI.prototype.insert_underscore;
+MarkdownDocument.prototype.insert_bar = MarkdownSPAN.prototype.insert_bar;
 MarkdownDocument.prototype.insert_backtick = MarkdownH.prototype.insert_backtick;
 MarkdownDocument.prototype.insert_dollar = MarkdownH.prototype.insert_dollar;
 Markdown.MarkdownCODE = MarkdownCODE;

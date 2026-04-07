@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="explorerRoot"
+    :ref="$refs.explorerRoot"
     class="explorer"
     tabindex="0"
     @keydown.capture="onExplorerKeydown"
@@ -50,7 +50,7 @@
             </label>
             <input
               :id="folderSearchInputId"
-              ref="folderSearchInputRef"
+              :ref="$refs.folderSearchInputRef"
               v-model="folderSearchQuery"
               type="search"
               class="folder-search-input"
@@ -137,7 +137,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue';
+import Vue from '../js/vue.js';
 import searchForm from './searchForm.vue';
 
 const props = defineProps({
@@ -145,29 +145,410 @@ const props = defineProps({
   theorems: { type: Array, default: () => [] },
 });
 
-const issearch = ref(false);
-const q = ref('');
-const caseSensitive = ref(false);
-const wholeWord = ref(false);
-const regularExpression = ref(false);
-const nlp = ref(false);
-const fullText = ref(false);
+const self = new Vue({
+  components: { searchForm },
+  props,
 
-/** Win11-style “Search in &lt;folder&gt;” (Ctrl+F); Ctrl+Shift+F opens full library search. */
-const folderSearchOpen = ref(false);
-const folderSearchQuery = ref('');
-const folderSearchInputRef = ref(/** @type {HTMLInputElement | null} */ (null));
-const folderSearchInputId = 'explorer-folder-search-q';
+  $refs: {
+    explorerRoot: null,
+    folderSearchInputRef: null,
+  },
 
-/** Recursive search results (`null` = not searching / use `rows`). */
-const folderSearchHits = ref(/** @type {null | object[]} */ (null));
-const folderSearchLoading = ref(false);
-let folderSearchTimer = /** @type {ReturnType<typeof setTimeout> | null} */ (null);
-let folderSearchSeq = 0;
+  data: {
+    issearch: false,
+    q: '',
+    caseSensitive: false,
+    wholeWord: false,
+    regularExpression: false,
+    nlp: false,
+    fullText: false,
+    folderSearchOpen: false,
+    folderSearchQuery: '',
+    folderSearchInputId: 'explorer-folder-search-q',
+    folderSearchHits: /** @type {null | object[]} */ (null),
+    folderSearchLoading: false,
+    selectedIndex: 0,
+  },
 
-const selectedIndex = ref(0);
-const explorerRoot = ref(/** @type {HTMLElement | null} */ (null));
+  computed: {
+    rows() {
+      const folders = (this.packages || []).map((raw) => {
+        const e = normalizeListingEntry(raw);
+        return {
+          name: e.name,
+          kind: /** @type {const} */ ('folder'),
+          typeLabel: 'File folder',
+          dateLabel: formatExplorerDate(e.mtimeMs),
+          sizeLabel: formatExplorerSize(e.size),
+          sizeTitle: 'File folder',
+        };
+      });
+      const files = (this.theorems || []).map((raw) => {
+        const e = normalizeListingEntry(raw);
+        const hasBytes = typeof e.size === 'number' && Number.isFinite(e.size);
+        return {
+          name: e.name,
+          kind: /** @type {const} */ ('lean'),
+          typeLabel: 'Lean source file',
+          dateLabel: formatExplorerDate(e.mtimeMs),
+          sizeLabel: formatExplorerSize(e.size),
+          sizeTitle: hasBytes ? `${e.size} bytes` : 'Size not available',
+        };
+      });
+      folders.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+      files.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+      return [...folders, ...files];
+    },
 
+    moduleParam() {
+      const raw = typeof getParameterByName === 'function' ? getParameterByName('module') : null;
+      return raw ? String(raw) : '';
+    },
+
+    breadcrumbParts() {
+      const m = this.moduleParam.replace(/\/+$/, '');
+      if (!m) return [];
+      return m.split(/[./]/).filter(Boolean);
+    },
+
+    currentFolderLabel() {
+      const p = this.breadcrumbParts;
+      if (p.length) return p[p.length - 1];
+      return 'Lemma';
+    },
+
+    displayRows() {
+      const needle = this.folderSearchQuery.trim();
+      if (!needle) return this.rows;
+      if (this.folderSearchLoading && this.folderSearchHits === null) return [];
+      return this.folderSearchHits ?? [];
+    },
+
+    activeId() {
+      return this.displayRows.length ? `explorer-row-${this.selectedIndex}` : undefined;
+    },
+  },
+
+  watch: {
+    displayRows(list) {
+      if (list.length === 0) this.selectedIndex = 0;
+      else if (this.selectedIndex >= list.length) this.selectedIndex = list.length - 1;
+    },
+    folderSearchQuery() {
+      if (folderSearchTimer) {
+        clearTimeout(folderSearchTimer);
+        folderSearchTimer = null;
+      }
+      const raw = this.folderSearchQuery.trim();
+      if (!raw) {
+        this.folderSearchHits = null;
+        this.folderSearchLoading = false;
+        return;
+      }
+      this.folderSearchLoading = true;
+      this.folderSearchHits = null;
+      folderSearchTimer = setTimeout(async () => {
+        folderSearchTimer = null;
+        const qStable = this.folderSearchQuery.trim();
+        if (!qStable) {
+          this.folderSearchLoading = false;
+          return;
+        }
+        const seq = ++folderSearchSeq;
+        try {
+          const seg = typeof axiom_user === 'function' ? axiom_user() : 'lean';
+          const folder = this.moduleParam.replace(/\//g, '.').replace(/\.+$/, '');
+          const url = new URL(`/${seg}/api/folder-search.json`, location.origin);
+          url.searchParams.set('folder', folder);
+          url.searchParams.set('q', qStable);
+          const res = await fetch(url.toString(), { credentials: 'same-origin' });
+          if (!res.ok) throw new Error(String(res.status));
+          const data = await res.json();
+          if (seq !== folderSearchSeq) return;
+          this.folderSearchHits = (data.hits || []).map((h) => ({
+            kind: /** @type {const} */ ('lean'),
+            name: h.name,
+            leanModule: h.module,
+            modulePath: h.module,
+            typeLabel: 'Lean source file',
+            dateLabel: formatExplorerDate(h.mtimeMs),
+            sizeLabel: formatExplorerSize(h.size),
+            sizeTitle: `${h.size} bytes`,
+          }));
+        } catch (e) {
+          console.error(e);
+          if (seq === folderSearchSeq) this.folderSearchHits = [];
+        } finally {
+          if (seq === folderSearchSeq) this.folderSearchLoading = false;
+        }
+      }, 250);
+    },
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      this.explorerRoot?.focus?.();
+    });
+    const hit = this.focusRowFromHash();
+    if (!hit && this.displayRows.length) {
+      this.$nextTick(() => {
+        this.explorerRoot?.querySelector?.('.row-inner')?.focus?.();
+      });
+    }
+    if (this.rows.length === 0 && this.packages.length === 0 && this.theorems.length === 0) {
+      this.issearch = true;
+      const mod = this.moduleParam;
+      if (mod) this.q = mod.split(/[./]/).slice(1).join('.');
+    }
+  },
+
+  unmounted() {
+    if (folderSearchTimer) clearTimeout(folderSearchTimer);
+  },
+
+  methods: {
+    crumbHref(index) {
+      const parts = this.breadcrumbParts.slice(0, index + 1);
+      const mod = parts.join('/');
+      const q = new URLSearchParams();
+      q.set('module', mod);
+      return `${location.pathname}?${q.toString()}`;
+    },
+    selectRow(idx) {
+      if (idx >= 0 && idx < this.displayRows.length) this.selectedIndex = idx;
+    },
+    openFolderSearch() {
+      this.folderSearchOpen = true;
+      this.$nextTick(() => {
+        const el = this.folderSearchInputRef;
+        el?.focus();
+        el?.select();
+      });
+    },
+    closeFolderSearch() {
+      this.folderSearchOpen = false;
+      this.folderSearchQuery = '';
+      this.folderSearchHits = null;
+      this.folderSearchLoading = false;
+      folderSearchSeq += 1;
+      if (folderSearchTimer) {
+        clearTimeout(folderSearchTimer);
+        folderSearchTimer = null;
+      }
+      this.$nextTick(() => this.explorerRoot?.focus());
+    },
+    async deleteSelectedLeanFile() {
+      const row = this.displayRows[this.selectedIndex];
+      if (!row || row.kind !== 'lean') return;
+
+      const pl = packageAndLemmaForDeleteRow(row);
+      if (!pl) return;
+
+      if (!confirm(`Delete lemma file “${row.name}”?`)) return;
+
+      try {
+        await form_post('php/request/delete/lemma.php', {
+          package: pl.package,
+          lemma: pl.lemma,
+        });
+        location.reload();
+      } catch (e) {
+        console.error(e);
+        alert(`Delete failed: ${e && e.message ? e.message : String(e)}`);
+      }
+    },
+    async deleteSelectedFolder() {
+      const row = this.displayRows[this.selectedIndex];
+      if (!row || row.kind !== 'folder') return;
+
+      const pkg = packageFromModuleQuery();
+      if (!pkg) return;
+
+      if (!confirm(`Delete folder “${row.name}” and everything inside it?`)) return;
+
+      try {
+        await form_post('php/request/delete/package.php', {
+          package: pkg,
+          section: row.name,
+        });
+        location.reload();
+      } catch (e) {
+        console.error(e);
+        alert(`Delete failed: ${e && e.message ? e.message : String(e)}`);
+      }
+    },
+    /** Keep the active row visible inside `.item-list`; focus stays on `.explorer`, so arrows/Home/End do not scroll by default. */
+    scrollSelectedRowIntoView() {
+      this.$nextTick(() => {
+        const el = document.getElementById(`explorer-row-${this.selectedIndex}`);
+        el?.scrollIntoView({ block: 'nearest' });
+      });
+    },
+    onExplorerKeydown(event) {
+      if (this.issearch) return;
+      const key = event.key;
+
+      if ((key === 'f' || key === 'F') && event.ctrlKey) {
+        event.preventDefault();
+        if (event.shiftKey) {
+          this.issearch = true;
+          return;
+        }
+        this.openFolderSearch();
+        return;
+      }
+
+      if (key === 'Escape' && this.folderSearchOpen) {
+        event.preventDefault();
+        this.closeFolderSearch();
+        return;
+      }
+
+      if (this.folderSearchOpen && isEventFromFolderSearchInput(event)) {
+        if (['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End', 'Delete'].includes(key)) {
+          return;
+        }
+      }
+
+      if (this.displayRows.length === 0) return;
+
+      if (key === 'ArrowDown') {
+        this.selectedIndex = Math.min(this.selectedIndex + 1, this.displayRows.length - 1);
+        event.preventDefault();
+        this.scrollSelectedRowIntoView();
+      } else if (key === 'ArrowUp') {
+        this.selectedIndex = Math.max(this.selectedIndex - 1, 0);
+        event.preventDefault();
+        this.scrollSelectedRowIntoView();
+      } else if (key === 'Enter') {
+        const row = this.displayRows[this.selectedIndex];
+        if (row) openRow(row);
+        event.preventDefault();
+      } else if (key === 'Home') {
+        this.selectedIndex = 0;
+        event.preventDefault();
+        this.scrollSelectedRowIntoView();
+      } else if (key === 'End') {
+        this.selectedIndex = this.displayRows.length - 1;
+        event.preventDefault();
+        this.scrollSelectedRowIntoView();
+      } else if (key === 'Delete') {
+        const row = this.displayRows[this.selectedIndex];
+        if (row?.kind === 'lean') {
+          event.preventDefault();
+          this.deleteSelectedLeanFile();
+        } else if (row?.kind === 'folder') {
+          event.preventDefault();
+          this.deleteSelectedFolder();
+        }
+      }
+    },
+    focusRowFromHash() {
+      const hash = location.hash ? location.hash.slice(1) : '';
+      if (!hash) return false;
+      const i = this.displayRows.findIndex((r) => r.name === hash);
+      if (i < 0) return false;
+      this.selectedIndex = i;
+      this.$nextTick(() => {
+        const el = document.getElementById(`explorer-row-${i}`);
+        el?.scrollIntoView({ block: 'nearest' });
+        el?.querySelector('.row-inner')?.focus?.();
+      });
+      return true;
+    },
+  },
+});
+
+const {
+  $refs,
+  issearch,
+  q,
+  caseSensitive,
+  wholeWord,
+  regularExpression,
+  nlp,
+  fullText,
+  folderSearchOpen,
+  folderSearchQuery,
+  folderSearchInputId,
+  folderSearchLoading,
+  selectedIndex,
+  rows,
+  breadcrumbParts,
+  currentFolderLabel,
+  displayRows,
+  activeId,
+  crumbHref,
+  selectRow,
+  openFolderSearch,
+  closeFolderSearch,
+  onExplorerKeydown,
+} = self.globals;
+
+/** Match legacy axiomPackage / axiomTheorem URL rules (slash vs dotted modules). */
+function appendModuleSegment(segment, asFolder) {
+  const u = new URL(location.href);
+  const haystack = u.search;
+  let mod = u.searchParams.get('module') || '';
+  const usesDots = haystack.indexOf('.') >= 0;
+
+  if (usesDots) {
+    mod = mod.replace(/\.+$/, '');
+    if (mod.length === 0) mod = segment;
+    else if (mod.endsWith('.')) mod += segment;
+    else mod = `${mod}.${segment}`;
+    if (asFolder) mod += '.';
+  } else {
+    mod = mod.replace(/\/+$/, '');
+    if (mod.length === 0) mod = asFolder ? `${segment}/` : segment;
+    else mod = asFolder ? `${mod}/${segment}/` : `${mod}/${segment}`;
+  }
+
+  u.searchParams.set('module', mod);
+  return `${u.origin}${u.pathname}${u.search}${location.hash}`;
+}
+
+function openRow(row) {
+  if (row.leanModule) {
+    const u = new URL(location.href);
+    u.searchParams.set('module', row.leanModule);
+    location.href = u.toString();
+    return;
+  }
+  location.href = appendModuleSegment(row.name, row.kind === 'folder');
+}
+
+function isEventFromFolderSearchInput(event) {
+  const t = event.target;
+  return t instanceof HTMLElement && !!t.closest('.folder-search-panel');
+}
+
+/**
+ * Same contract as `axiomTheorem.remove()` / `php/request/delete/lemma.php`:
+ * `package` = dotted path from `?module=` (strip trailing `.`), `lemma` = basename without `.lean`.
+ */
+/** Parent dotted module for `php/request/delete/*.php` (strip trailing `.` from `?module=`). */
+function packageFromModuleQuery() {
+  const u = new URL(location.href);
+  let pkg = (u.searchParams.get('module') || '').replace(/\//g, '.').trim();
+  if (!pkg) return '';
+  return pkg.replace(/\.+$/, '');
+}
+
+/** For delete-lemma POST: parent package + leaf name (handles recursive-search rows). */
+function packageAndLemmaForDeleteRow(row) {
+  if (row.leanModule) {
+    const full = row.leanModule;
+    const i = full.lastIndexOf('.');
+    if (i <= 0) return null;
+    return { package: full.slice(0, i), lemma: full.slice(i + 1) };
+  }
+  const pkg = packageFromModuleQuery();
+  if (!pkg) return null;
+  return { package: pkg, lemma: row.name };
+}
+
+/** Listing column helpers (used by `rows` / folder-search mapping). */
 /** @param {unknown} v */
 function toFiniteNumber(v) {
   if (typeof v === 'number' && Number.isFinite(v)) return v;
@@ -226,351 +607,9 @@ function formatExplorerDate(mtimeMs) {
   }
 }
 
-/** @type {import('vue').ComputedRef<{ name: string, kind: 'folder' | 'lean', typeLabel: string, dateLabel: string, sizeLabel: string, sizeTitle: string }[]>} */
-const rows = computed(() => {
-  const folders = (props.packages || []).map((raw) => {
-    const e = normalizeListingEntry(raw);
-    return {
-      name: e.name,
-      kind: /** @type {const} */ ('folder'),
-      typeLabel: 'File folder',
-      dateLabel: formatExplorerDate(e.mtimeMs),
-      sizeLabel: formatExplorerSize(e.size),
-      sizeTitle: 'File folder',
-    };
-  });
-  const files = (props.theorems || []).map((raw) => {
-    const e = normalizeListingEntry(raw);
-    const hasBytes = typeof e.size === 'number' && Number.isFinite(e.size);
-    return {
-      name: e.name,
-      kind: /** @type {const} */ ('lean'),
-      typeLabel: 'Lean source file',
-      dateLabel: formatExplorerDate(e.mtimeMs),
-      sizeLabel: formatExplorerSize(e.size),
-      sizeTitle: hasBytes ? `${e.size} bytes` : 'Size not available',
-    };
-  });
-  folders.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
-  files.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
-  return [...folders, ...files];
-});
-
-const moduleParam = computed(() => {
-  const raw = typeof getParameterByName === 'function' ? getParameterByName('module') : null;
-  return raw ? String(raw) : '';
-});
-
-const breadcrumbParts = computed(() => {
-  const m = moduleParam.value.replace(/\/+$/, '');
-  if (!m) return [];
-  return m.split(/[./]/).filter(Boolean);
-});
-
-const currentFolderLabel = computed(() => {
-  const p = breadcrumbParts.value;
-  if (p.length) return p[p.length - 1];
-  return 'Lemma';
-});
-
-const displayRows = computed(() => {
-  const needle = folderSearchQuery.value.trim();
-  if (!needle) return rows.value;
-  if (folderSearchLoading.value && folderSearchHits.value === null) return [];
-  return folderSearchHits.value ?? [];
-});
-
-const activeId = computed(() =>
-  displayRows.value.length ? `explorer-row-${selectedIndex.value}` : undefined
-);
-
-watch(displayRows, (list) => {
-  if (list.length === 0) selectedIndex.value = 0;
-  else if (selectedIndex.value >= list.length) selectedIndex.value = list.length - 1;
-});
-
-watch(folderSearchQuery, () => {
-  if (folderSearchTimer) {
-    clearTimeout(folderSearchTimer);
-    folderSearchTimer = null;
-  }
-  const raw = folderSearchQuery.value.trim();
-  if (!raw) {
-    folderSearchHits.value = null;
-    folderSearchLoading.value = false;
-    return;
-  }
-  folderSearchLoading.value = true;
-  folderSearchHits.value = null;
-  folderSearchTimer = setTimeout(async () => {
-    folderSearchTimer = null;
-    const qStable = folderSearchQuery.value.trim();
-    if (!qStable) {
-      folderSearchLoading.value = false;
-      return;
-    }
-    const seq = ++folderSearchSeq;
-    try {
-      const seg = typeof axiom_user === 'function' ? axiom_user() : 'lean';
-      const folder = moduleParam.value.replace(/\//g, '.').replace(/\.+$/, '');
-      const url = new URL(`/${seg}/api/folder-search.json`, location.origin);
-      url.searchParams.set('folder', folder);
-      url.searchParams.set('q', qStable);
-      const res = await fetch(url.toString(), { credentials: 'same-origin' });
-      if (!res.ok) throw new Error(String(res.status));
-      const data = await res.json();
-      if (seq !== folderSearchSeq) return;
-      folderSearchHits.value = (data.hits || []).map((h) => ({
-        kind: /** @type {const} */ ('lean'),
-        name: h.name,
-        leanModule: h.module,
-        modulePath: h.module,
-        typeLabel: 'Lean source file',
-        dateLabel: formatExplorerDate(h.mtimeMs),
-        sizeLabel: formatExplorerSize(h.size),
-        sizeTitle: `${h.size} bytes`,
-      }));
-    } catch (e) {
-      console.error(e);
-      if (seq === folderSearchSeq) folderSearchHits.value = [];
-    } finally {
-      if (seq === folderSearchSeq) folderSearchLoading.value = false;
-    }
-  }, 250);
-});
-
-function crumbHref(index) {
-  const parts = breadcrumbParts.value.slice(0, index + 1);
-  const mod = parts.join('/');
-  const q = new URLSearchParams();
-  q.set('module', mod);
-  return `${location.pathname}?${q.toString()}`;
-}
-
-/** Match legacy axiomPackage / axiomTheorem URL rules (slash vs dotted modules). */
-function appendModuleSegment(segment, asFolder) {
-  const u = new URL(location.href);
-  const haystack = u.search;
-  let mod = u.searchParams.get('module') || '';
-  const usesDots = haystack.indexOf('.') >= 0;
-
-  if (usesDots) {
-    mod = mod.replace(/\.+$/, '');
-    if (mod.length === 0) mod = segment;
-    else if (mod.endsWith('.')) mod += segment;
-    else mod = `${mod}.${segment}`;
-    if (asFolder) mod += '.';
-  } else {
-    mod = mod.replace(/\/+$/, '');
-    if (mod.length === 0) mod = asFolder ? `${segment}/` : segment;
-    else mod = asFolder ? `${mod}/${segment}/` : `${mod}/${segment}`;
-  }
-
-  u.searchParams.set('module', mod);
-  return `${u.origin}${u.pathname}${u.search}${location.hash}`;
-}
-
-function openRow(row) {
-  if (row.leanModule) {
-    const u = new URL(location.href);
-    u.searchParams.set('module', row.leanModule);
-    location.href = u.toString();
-    return;
-  }
-  location.href = appendModuleSegment(row.name, row.kind === 'folder');
-}
-
-function selectRow(idx) {
-  if (idx >= 0 && idx < displayRows.value.length) selectedIndex.value = idx;
-}
-
-function openFolderSearch() {
-  folderSearchOpen.value = true;
-  nextTick(() => {
-    const el = folderSearchInputRef.value;
-    el?.focus();
-    el?.select();
-  });
-}
-
-function closeFolderSearch() {
-  folderSearchOpen.value = false;
-  folderSearchQuery.value = '';
-  folderSearchHits.value = null;
-  folderSearchLoading.value = false;
-  folderSearchSeq += 1;
-  if (folderSearchTimer) {
-    clearTimeout(folderSearchTimer);
-    folderSearchTimer = null;
-  }
-  nextTick(() => explorerRoot.value?.focus());
-}
-
-function isEventFromFolderSearchInput(event) {
-  const t = event.target;
-  return t instanceof HTMLElement && !!t.closest('.folder-search-panel');
-}
-
-/**
- * Same contract as `axiomTheorem.remove()` / `php/request/delete/lemma.php`:
- * `package` = dotted path from `?module=` (strip trailing `.`), `lemma` = basename without `.lean`.
- */
-/** Parent dotted module for `php/request/delete/*.php` (strip trailing `.` from `?module=`). */
-function packageFromModuleQuery() {
-  const u = new URL(location.href);
-  let pkg = (u.searchParams.get('module') || '').replace(/\//g, '.').trim();
-  if (!pkg) return '';
-  return pkg.replace(/\.+$/, '');
-}
-
-/** For delete-lemma POST: parent package + leaf name (handles recursive-search rows). */
-function packageAndLemmaForDeleteRow(row) {
-  if (row.leanModule) {
-    const full = row.leanModule;
-    const i = full.lastIndexOf('.');
-    if (i <= 0) return null;
-    return { package: full.slice(0, i), lemma: full.slice(i + 1) };
-  }
-  const pkg = packageFromModuleQuery();
-  if (!pkg) return null;
-  return { package: pkg, lemma: row.name };
-}
-
-async function deleteSelectedLeanFile() {
-  const row = displayRows.value[selectedIndex.value];
-  if (!row || row.kind !== 'lean') return;
-
-  const pl = packageAndLemmaForDeleteRow(row);
-  if (!pl) return;
-
-  if (!confirm(`Delete lemma file “${row.name}”?`)) return;
-
-  try {
-    await form_post('php/request/delete/lemma.php', {
-      package: pl.package,
-      lemma: pl.lemma,
-    });
-    location.reload();
-  } catch (e) {
-    console.error(e);
-    alert(`Delete failed: ${e && e.message ? e.message : String(e)}`);
-  }
-}
-
-/**
- * Same as `php/request/delete/package.php`: remove `Lemma/<package>.<section>/` recursively.
- */
-async function deleteSelectedFolder() {
-  const row = displayRows.value[selectedIndex.value];
-  if (!row || row.kind !== 'folder') return;
-
-  const pkg = packageFromModuleQuery();
-  if (!pkg) return;
-
-  if (!confirm(`Delete folder “${row.name}” and everything inside it?`)) return;
-
-  try {
-    await form_post('php/request/delete/package.php', {
-      package: pkg,
-      section: row.name,
-    });
-    location.reload();
-  } catch (e) {
-    console.error(e);
-    alert(`Delete failed: ${e && e.message ? e.message : String(e)}`);
-  }
-}
-
-function onExplorerKeydown(event) {
-  if (issearch.value) return;
-  const key = event.key;
-
-  if ((key === 'f' || key === 'F') && event.ctrlKey) {
-    event.preventDefault();
-    if (event.shiftKey) {
-      issearch.value = true;
-      return;
-    }
-    openFolderSearch();
-    return;
-  }
-
-  if (key === 'Escape' && folderSearchOpen.value) {
-    event.preventDefault();
-    closeFolderSearch();
-    return;
-  }
-
-  if (folderSearchOpen.value && isEventFromFolderSearchInput(event)) {
-    if (['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End', 'Delete'].includes(key)) {
-      return;
-    }
-  }
-
-  if (displayRows.value.length === 0) return;
-
-  if (key === 'ArrowDown') {
-    selectedIndex.value = Math.min(selectedIndex.value + 1, displayRows.value.length - 1);
-    event.preventDefault();
-  } else if (key === 'ArrowUp') {
-    selectedIndex.value = Math.max(selectedIndex.value - 1, 0);
-    event.preventDefault();
-  } else if (key === 'Enter') {
-    const row = displayRows.value[selectedIndex.value];
-    if (row) openRow(row);
-    event.preventDefault();
-  } else if (key === 'Home') {
-    selectedIndex.value = 0;
-    event.preventDefault();
-  } else if (key === 'End') {
-    selectedIndex.value = displayRows.value.length - 1;
-    event.preventDefault();
-  } else if (key === 'Delete') {
-    const row = displayRows.value[selectedIndex.value];
-    if (row?.kind === 'lean') {
-      event.preventDefault();
-      deleteSelectedLeanFile();
-    } else if (row?.kind === 'folder') {
-      event.preventDefault();
-      deleteSelectedFolder();
-    }
-  }
-}
-
-function focusRowFromHash() {
-  const hash = location.hash ? location.hash.slice(1) : '';
-  if (!hash) return false;
-  const i = displayRows.value.findIndex((r) => r.name === hash);
-  if (i < 0) return false;
-  selectedIndex.value = i;
-  nextTick(() => {
-    const el = document.getElementById(`explorer-row-${i}`);
-    el?.scrollIntoView({ block: 'nearest' });
-    el?.querySelector('.row-inner')?.focus?.();
-  });
-  return true;
-}
-
-onMounted(() => {
-  nextTick(() => {
-    explorerRoot.value?.focus();
-  });
-  const hit = focusRowFromHash();
-  if (!hit && displayRows.value.length) {
-    nextTick(() => {
-      explorerRoot.value?.querySelector('.row-inner')?.focus?.();
-    });
-  }
-  if (rows.value.length === 0 && props.packages.length === 0 && props.theorems.length === 0) {
-    issearch.value = true;
-    const mod = moduleParam.value;
-    if (mod) q.value = mod.split(/[./]/).slice(1).join('.');
-  }
-});
-
-onUnmounted(() => {
-  if (folderSearchTimer) clearTimeout(folderSearchTimer);
-});
+/** Folder-search debounce (module scope; single explorer mount). */
+let folderSearchTimer = /** @type {ReturnType<typeof setTimeout> | null} */ (null);
+let folderSearchSeq = 0;
 </script>
 
 <style scoped>

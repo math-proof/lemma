@@ -24,7 +24,7 @@ const self = new Vue({
 	components,
 	props,
 
-	refs: {
+	$refs: {
 		buttonExpand: null,
 	},
 
