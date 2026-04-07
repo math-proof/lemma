@@ -32,6 +32,7 @@ import {
   ensureEmptyEchoFile,
 } from './lean/fetchLemmaMysql.mjs';
 import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
+import { resolveMissingModuleRedirect } from './lean/indexPhpModuleResolve.mjs';
 import { renderWebsiteIndex, handleWebsiteMdPhp } from './lean/website.mjs';
 import { getRepoStatsCached } from './lean/lemmaRepoStats.mjs';
 
@@ -197,7 +198,7 @@ function renderPackageBrowserPage(res, module) {
   res.render('package', { title, payloadJson });
 }
 
-async function renderLemmaPage(res, module) {
+async function renderLemmaPage(res, module, userSegment) {
   const abs = moduleToLeanPath(module);
   const leanMissing = !abs || !fileExists(abs);
   if (leanMissing) {
@@ -205,6 +206,12 @@ async function renderLemmaPage(res, module) {
     const pkgDir = moduleToLemmaPackageDir(module);
     if (pkgDir && dirExists(pkgDir)) {
       renderPackageBrowserPage(res, module);
+      return;
+    }
+    const canonical = resolveMissingModuleRedirect(module);
+    if (canonical) {
+      const seg = userSegment || PROJECT_USER;
+      res.redirect(302, `/${seg}/?module=${encodeURIComponent(canonical)}`);
       return;
     }
     res.status(404).type('html').send(
@@ -355,7 +362,8 @@ async function handleLeanGet(req, res) {
     return;
   }
   module = module.replace(/\//g, '.');
-  renderLemmaPage(res, module).catch((err) => {
+  const userSeg = req.params.userSegment || PROJECT_USER;
+  renderLemmaPage(res, module, userSeg).catch((err) => {
     console.error('[lean]', err);
     res.status(500).type('html').send(
       `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
