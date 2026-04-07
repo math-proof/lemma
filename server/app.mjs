@@ -355,11 +355,68 @@ async function renderHierarchyPage(res, query, keyInput, userSegment) {
   res.render('hierarchy', { hierarchyJson, userSegment });
 }
 
+/**
+ * PHP `php/new.php` + `index.php?new=`: edit shell for an existing `Lemma/<module>.lean` via `newTheorem.vue`.
+ * (mathlib/axiom-only creation remains PHP-only.)
+ */
+async function renderNewTheoremPage(res, module, userSegment) {
+  const abs = moduleToLeanPath(module);
+  if (!abs || !fileExists(abs)) {
+    res.status(404).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+      <p>No Lean file for <code>${escapeHtml(module)}</code>.</p>
+      <p>Bootstrapping from <code>mathlib</code> / <code>axiom</code> without a local file is only implemented in the PHP entrypoint.</p>`
+    );
+    return;
+  }
+  const source = readLeanFile(abs);
+  let code;
+  try {
+    code = render2vueFromSource(source, module, { user: PROJECT_USER });
+  } catch (err) {
+    console.error('[new theorem]', err);
+    res.status(500).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+      <p>${escapeHtml(String(err?.message || err))}</p>`
+    );
+    return;
+  }
+  if (!code.date || typeof code.date !== 'object') code.date = {};
+  code.date.created = new Date().toISOString().slice(0, 10);
+  delete code.date.updated;
+  code.name = module;
+  const newTheoremJson = jsonForScriptEmbed(code);
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  if (process.env.NODE_ENV !== 'production') {
+    res.set('Cache-Control', 'no-store');
+  }
+  res.render('newTheorem', {
+    title: module,
+    newTheoremJson,
+    userSegment,
+  });
+}
+
 async function handleLeanGet(req, res) {
   const userSeg = req.params.userSegment || PROJECT_USER;
   const raw = req.query.module;
   if (leanGetWantsSearch(req.query, raw)) {
     await renderSearchPage(res, req.query, userSeg);
+    return;
+  }
+
+  const newRaw = req.query.new;
+  if (newRaw != null && String(newRaw).trim() !== '') {
+    const modNew = String(newRaw).trim().replace(/\//g, '.');
+    try {
+      await renderNewTheoremPage(res, modNew, userSeg);
+    } catch (err) {
+      console.error('[new]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+    }
     return;
   }
 

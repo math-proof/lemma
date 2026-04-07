@@ -3,6 +3,7 @@ import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Nat.Eq_0
 import Lemma.Nat.EqMulDiv
 import Lemma.Nat.Div.eq.One.of.Ne_0
+import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Tensor.GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -234,6 +235,7 @@ private lemma one
         subst h_t
         simp [List.Vector.get]
         -- simp only [GetElem.getElem]
+        rw [DataSum.eq.Sum_DataSelect (d := ⟨0, by grind⟩)]
         sorry
       .
         grind
