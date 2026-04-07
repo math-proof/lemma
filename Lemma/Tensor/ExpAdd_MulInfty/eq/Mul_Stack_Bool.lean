@@ -74,7 +74,7 @@ private lemma main
   rw [@Vector.MulSub.eq.SubMulS]
   apply @Vector.Setoid.of.All_SetoidGetS.fin
   intro k
-  have h_k := Eq_0.prod k
+  have h_k := Eq_0 k
   subst h_k
   rw [Vector.GetExp.eq.ExpGet.fin]
   rw [Vector.GetAdd.eq.AddGetS.fin]

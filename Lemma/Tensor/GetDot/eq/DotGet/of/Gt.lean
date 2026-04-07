@@ -1,5 +1,6 @@
 import Lemma.List.EqGetCons
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
+import Lemma.Nat.Eq_0
 import Lemma.Nat.EqMulDiv
 import Lemma.Nat.Div.eq.One.of.Ne_0
 import Lemma.Tensor.GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
@@ -34,6 +35,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.Repeat.eq.Cast.of.Eq_1
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
+import Lemma.Vector.Eq.is.All_EqGetS
 open Fin Bool List Nat Tensor Vector
 set_option maxHeartbeats 1000000
 
@@ -222,6 +224,16 @@ private lemma one
     .
       rw [Cast_Cast.eq.Cast.of.Eq.Eq]
       .
+        unfold Tensor.unsqueeze
+        simp
+        unfold Tensor.repeat
+        simp
+        apply @Vector.Eq.of.All_EqGetS.fin
+        intro t
+        have h_t := Eq_0 t
+        subst h_t
+        simp [List.Vector.get]
+        -- simp only [GetElem.getElem]
         sorry
       .
         grind

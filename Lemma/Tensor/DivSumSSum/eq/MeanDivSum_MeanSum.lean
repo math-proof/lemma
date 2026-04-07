@@ -54,7 +54,7 @@ private lemma main
       simp [Div.eq.HDiv]
       simp [DataDiv.eq.DivDataS]
       simp [GetDiv.eq.DivGetS.fin]
-      simp [Eq_0.prod]
+      simp [Eq_0]
       simp [GetElem.getElem]
     .
       have := Ne.of.NotEq hb

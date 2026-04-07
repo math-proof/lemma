@@ -29,12 +29,11 @@ private lemma main
     rw [DataMul.eq.Mul_Data]
     apply Eq.of.All_EqGetS
     intro i
-    have h_i := Eq_0.prod i
+    have h_i := Eq_0 i
     subst h_i
     rw [GetMul.eq.MulGet]
     rw [GetMul.eq.Mul_Get]
     simp
-    rfl
   ·
     simp
     have := Eq_Nil.of.EqLength_0 h_s?
