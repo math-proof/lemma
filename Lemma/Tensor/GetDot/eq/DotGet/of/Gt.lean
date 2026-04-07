@@ -1,6 +1,7 @@
 import Lemma.List.EqGetCons
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Nat.EqMulDiv
+import Lemma.Nat.Div.eq.One.of.Ne_0
 import Lemma.Tensor.GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -223,12 +224,13 @@ private lemma one
       .
         sorry
       .
-        sorry
+        grind
       .
-        sorry
+        grind
     .
       simp
-      sorry
+      rw [Div.eq.One.of.Ne_0]
+      grind
   ·
     simp
   ·

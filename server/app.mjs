@@ -33,6 +33,11 @@ import {
 } from './lean/fetchLemmaMysql.mjs';
 import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
 import { resolveMissingModuleRedirect } from './lean/moduleResolve.mjs';
+import {
+  establishHierarchyGraph,
+  detectCycleTraceback,
+  buildHierarchyTraceback,
+} from './lean/hierarchyData.mjs';
 import { renderWebsiteIndex, handleWebsiteMdPhp } from './lean/website.mjs';
 import { getRepoStatsCached } from './lean/lemmaRepoStats.mjs';
 
@@ -171,14 +176,14 @@ app.use('/:userSegment/static', ensureProjectUser, express.static(path.join(REPO
   maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
 }));
 
-async function renderSummaryPage(res) {
+async function renderSummaryPage(res, userSegment) {
   const { state_count_pairs, repertoire } = await buildSummaryPayload(PROJECT_USER);
   const summaryJson = jsonForScriptEmbed({ state_count_pairs, repertoire });
   res.set('Content-Type', 'text/html; charset=utf-8');
-  res.render('summary', { summaryJson });
+  res.render('summary', { summaryJson, userSegment });
 }
 
-function renderPackageBrowserPage(res, module) {
+function renderPackageBrowserPage(res, module, userSegment) {
   const pkgDir = moduleToLemmaPackageDir(module);
   if (!pkgDir || !dirExists(pkgDir)) {
     res.status(404).type('html').send(
@@ -195,7 +200,7 @@ function renderPackageBrowserPage(res, module) {
   if (process.env.NODE_ENV !== 'production') {
     res.set('Cache-Control', 'no-store');
   }
-  res.render('package', { title, payloadJson });
+  res.render('package', { title, payloadJson, userSegment });
 }
 
 async function renderLemmaPage(res, module, userSegment) {
@@ -205,7 +210,7 @@ async function renderLemmaPage(res, module, userSegment) {
     /** Same as PHP `index.php`: folder `Lemma/<module path>/` → `php/package.php` + `axiomContents`. */
     const pkgDir = moduleToLemmaPackageDir(module);
     if (pkgDir && dirExists(pkgDir)) {
-      renderPackageBrowserPage(res, module);
+      renderPackageBrowserPage(res, module, userSegment);
       return;
     }
     const canonical = resolveMissingModuleRedirect(module);
@@ -245,7 +250,7 @@ async function renderLemmaPage(res, module, userSegment) {
   const title = titleFromModule(module);
   const codeJson = jsonForScriptEmbed(code);
   res.set('Content-Type', 'text/html; charset=utf-8');
-  res.render('lemma', { title, codeJson });
+  res.render('lemma', { title, codeJson, userSegment });
 }
 
 function escapeHtml(s) {
@@ -279,7 +284,7 @@ app.use('/:userSegment/website', ensureProjectUser,
 }));
 
 /** Same idea as `php/search.php` + `index.php` (`?type=`, `?q=`, `?latex=`). */
-async function renderSearchPage(res, dict) {
+async function renderSearchPage(res, dict, userSegment) {
   try {
     const payload = await buildSearchPayload(dict, PROJECT_USER);
     const searchJson = jsonForScriptEmbed(payload);
@@ -287,7 +292,7 @@ async function renderSearchPage(res, dict) {
     if (process.env.NODE_ENV !== 'production') {
       res.set('Cache-Control', 'no-store');
     }
-    res.render('search', { searchJson });
+    res.render('search', { searchJson, userSegment });
   } catch (err) {
     console.error('[search]', err);
     res.status(500).type('html').send(
@@ -299,24 +304,95 @@ async function renderSearchPage(res, dict) {
 
 /** POST body from `searchForm.vue` (PHP `index.php`); same logic as `/:userSegment/` POST. */
 async function handleLeanPostSearch(req, res) {
+  const userSegment = req.params.userSegment || PROJECT_USER;
   const body = req.body && typeof req.body === 'object' ? req.body : {};
   if (leanGetWantsSearch(body, body.module)) {
-    await renderSearchPage(res, body);
+    await renderSearchPage(res, body, userSegment);
     return;
   }
-  const userSegment = req.params.userSegment || PROJECT_USER;
   res.redirect(302, `/${userSegment}/`);
 }
 
-async function handleLeanGet(req, res) {
-  const raw = req.query.module;
-  if (leanGetWantsSearch(req.query, raw)) {
-    await renderSearchPage(res, req.query);
+async function renderHierarchyPage(res, query, keyInput, userSegment) {
+  const v = query[keyInput];
+  const moduleStr = typeof v === 'string' ? v.replace(/\//g, '.').trim() : '';
+  if (!moduleStr) {
+    res.status(400).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>hierarchy</title>
+      <p>Missing <code>${escapeHtml(keyInput)}</code> module.</p>`
+    );
     return;
   }
+  let deep = false;
+  if (query.deep !== undefined && query.deep !== null && String(query.deep) !== '') {
+    const d = query.deep;
+    if (typeof d === 'string') {
+      try {
+        deep = JSON.parse(d);
+      } catch {
+        deep = d === 'true' || d === '1';
+      }
+    } else {
+      deep = Boolean(d);
+    }
+  }
+  const invert = keyInput === 'callee';
+  const graph = await establishHierarchyGraph(PROJECT_USER, moduleStr, invert);
+  const parent = [];
+  detectCycleTraceback(graph, moduleStr, parent);
+  const traceback = buildHierarchyTraceback(parent, moduleStr);
+  const hierarchyJson = jsonForScriptEmbed({
+    module: moduleStr,
+    graph,
+    traceback,
+    keyInput,
+    deep,
+  });
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  if (process.env.NODE_ENV !== 'production') {
+    res.set('Cache-Control', 'no-store');
+  }
+  res.render('hierarchy', { hierarchyJson, userSegment });
+}
+
+async function handleLeanGet(req, res) {
+  const userSeg = req.params.userSegment || PROJECT_USER;
+  const raw = req.query.module;
+  if (leanGetWantsSearch(req.query, raw)) {
+    await renderSearchPage(res, req.query, userSeg);
+    return;
+  }
+
+  const calleeRaw = req.query.callee;
+  if (calleeRaw != null && String(calleeRaw).trim() !== '') {
+    try {
+      await renderHierarchyPage(res, req.query, 'callee', userSeg);
+    } catch (err) {
+      console.error('[hierarchy callee]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+    }
+    return;
+  }
+  const callerRaw = req.query.caller;
+  if (callerRaw != null && String(callerRaw).trim() !== '') {
+    try {
+      await renderHierarchyPage(res, req.query, 'caller', userSeg);
+    } catch (err) {
+      console.error('[hierarchy caller]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+    }
+    return;
+  }
+
   if (raw === undefined || raw === null || raw === '') {
     try {
-      await renderSummaryPage(res);
+      await renderSummaryPage(res, userSeg);
     } catch (err) {
       console.error('[summary]', err);
       res.status(500).type('html').send(
@@ -336,7 +412,7 @@ async function handleLeanGet(req, res) {
   let module = raw.trim();
   if (!module) {
     try {
-      await renderSummaryPage(res);
+      await renderSummaryPage(res, userSeg);
     } catch (err) {
       console.error('[summary]', err);
       res.status(500).type('html').send(
@@ -362,7 +438,6 @@ async function handleLeanGet(req, res) {
     return;
   }
   module = module.replace(/\//g, '.');
-  const userSeg = req.params.userSegment || PROJECT_USER;
   renderLemmaPage(res, module, userSeg).catch((err) => {
     console.error('[lean]', err);
     res.status(500).type('html').send(

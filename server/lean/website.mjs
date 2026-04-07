@@ -117,12 +117,13 @@ export async function handleWebsiteMdPhp(req, res) {
     const m = pathInfo.match(/^\/(\w+)\//);
     const lang = m ? m[1] : 'en';
     const title = lang === 'zh' ? '标记文档' : 'MarkDown Documents';
-    const fetchPath = `/lean/website/md${pathInfo}`;
+    const userSegment = req.params.userSegment ?? path.basename(REPO_ROOT);
+    const fetchPath = `/${userSegment}/website/md${pathInfo}`;
     res.set('Content-Type', 'text/html; charset=utf-8');
     if (process.env.NODE_ENV !== 'production') {
       res.set('Cache-Control', 'no-store');
     }
-    res.render('websiteMdViewer', { title, fetchPath });
+    res.render('websiteMdViewer', { title, fetchPath, userSegment });
     return;
   }
 
