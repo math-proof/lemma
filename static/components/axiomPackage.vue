@@ -39,18 +39,11 @@ export default {
 		
 		remove() {
 			console.log("this.module = " + this.module);
-			var href = location.href;
-			var m = href.match(/\/([^\/]+)\/(index\.php)?\?module(.+)/);
-			var user = m[1];
-			var section = m[2];
-			if (section.endsWith('.')){
-				section = section.slice(0, -1);
-			}
-			
-			var data = {};
-			data['section'] = section;
-			data['module'] = this.module;
-			
+			// `php/request/delete/package.php` expects `package` (parent module) + `section` (folder name).
+			var u = new URL(location.href);
+			var pkg = (u.searchParams.get('module') || '').replace(/\//g, '.').trim();
+			pkg = pkg.replace(/\.+$/, '');
+			var data = { package: pkg, section: this.module };
 			form_post('php/request/delete/package.php', data).then(res => {
 				console.log('res = ' + res);
 			});

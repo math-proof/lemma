@@ -1,6 +1,7 @@
 <template>
     <div v-finish @click.left.stop=click_left @keydown=keydown>
-        <form name=form spellcheck=false enctype="multipart/form-data" method=post :action=action>
+        <form name=form spellcheck=false method=post :action=action>
+            <input type=hidden name=module :value=module />
             <input type=hidden name=imports :value=JSON.stringify(imports) />
             <input type=hidden name=def :value=JSON.stringify(def) />
             <input type=hidden name=open :value=JSON.stringify(open) />

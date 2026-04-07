@@ -39,10 +39,13 @@ export default {
 
 		remove() {
 			console.log("this.theorem = " + this.theorem);
-			var href = location.href;
-			var m = href.match(/\/([^\/]+)\/(?:index\.php)?\?module=([^#]+)/);
-			var module = m[2];
-			module = module.replace(/\//g, '.').replace(/%27/g, "'");
+			// `?module=Package.path.to.parent.#LemmaName` — query holds parent (often trailing `.`); hash is UI anchor only.
+			var u = new URL(location.href);
+			var module = (u.searchParams.get('module') || '').replace(/\//g, '.');
+			if (!module) {
+				var m = location.href.match(/\/([^\/]+)\/(?:index\.php)?\?module=([^#]+)/);
+				if (m) module = m[2].replace(/\//g, '.').replace(/%27/g, "'");
+			}
 			if (module.endsWith('.'))
 				module = module.slice(0, -1);
 

@@ -4,6 +4,7 @@
  */
 import express from 'express';
 import path from 'path';
+import fs from 'fs/promises';
 import {
   REPO_ROOT,
   moduleToLeanPath,
@@ -31,6 +32,9 @@ import {
   codeFromMysqlRow,
   ensureEmptyEchoFile,
 } from './lean/fetchLemmaMysql.mjs';
+import { assembleLeanSourceFromPostBody } from './lean/assembleLemmaPost.mjs';
+import { handleDeleteLemma } from './lean/deleteLemma.mjs';
+import { handleDeletePackage } from './lean/deletePackage.mjs';
 import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
 import { resolveMissingModuleRedirect } from './lean/moduleResolve.mjs';
 import {
@@ -40,6 +44,10 @@ import {
 } from './lean/hierarchyData.mjs';
 import { renderWebsiteIndex, handleWebsiteMdPhp } from './lean/website.mjs';
 import { getRepoStatsCached } from './lean/lemmaRepoStats.mjs';
+import {
+  searchLeanFilesRecursiveUnderFolder,
+  FOLDER_LEAN_SEARCH_MAX_HITS,
+} from './lean/folderLeanSearch.mjs';
 
 const VIEWS = path.join(REPO_ROOT, 'views');
 
@@ -77,6 +85,25 @@ app.get('/:userSegment/api/repo-stats.json', ensureProjectUser, async (_req, res
   }
 });
 
+/**
+ * Explorer folder search: recursive `.lean` files under `Lemma/<folder>/`.
+ * Query: `folder` = dotted module (optional, empty = all `Lemma/`), `q` = substring (name or full module).
+ */
+app.get('/:userSegment/api/folder-search.json', ensureProjectUser, (req, res) => {
+  try {
+    const folder = String(req.query.folder ?? '');
+    const q = String(req.query.q ?? '');
+    const hits = searchLeanFilesRecursiveUnderFolder(folder, q);
+    if (process.env.NODE_ENV !== 'production') {
+      res.set('Cache-Control', 'no-store');
+    }
+    res.json({ hits, truncated: hits.length >= FOLDER_LEAN_SEARCH_MAX_HITS });
+  } catch (e) {
+    console.error('[folder-search]', e);
+    res.status(500).json({ error: String(e?.message || e) });
+  }
+});
+
 /** Matches PHP `php/request/sections.php` (POST → JSON array of `Lemma/` child dir names). */
 app.post('/:userSegment/php/request/sections.php', ensureProjectUser, (_req, res) => {
   res.json(listLemmaTopLevelDirs());
@@ -87,6 +114,24 @@ app.post('/:userSegment/php/request/execute.php', ensureProjectUser, (req, res) 
   handleExecute(req, res).catch((e) => {
     console.error('[execute]', e);
     res.status(500).type('text/plain').send('0');
+  });
+});
+
+/** Same contract as `php/request/delete/lemma.php` (POST `package`, `lemma` → JSON `"deleted!"`). */
+app.post('/:userSegment/php/request/delete/lemma.php', ensureProjectUser, (req, res) => {
+  const userSeg = req.params.userSegment || PROJECT_USER;
+  handleDeleteLemma(userSeg, req, res).catch((e) => {
+    console.error('[delete-lemma]', e);
+    res.status(500).json({ error: String(e?.message || e) });
+  });
+});
+
+/** Same contract as `php/request/delete/package.php` (POST `package`, `section` → JSON `"deleted!"`). */
+app.post('/:userSegment/php/request/delete/package.php', ensureProjectUser, (req, res) => {
+  const userSeg = req.params.userSegment || PROJECT_USER;
+  handleDeletePackage(userSeg, req, res).catch((e) => {
+    console.error('[delete-package]', e);
+    res.status(500).json({ error: String(e?.message || e) });
   });
 });
 
@@ -204,6 +249,33 @@ function renderPackageBrowserPage(res, module, userSegment) {
 }
 
 async function renderLemmaPage(res, module, userSegment) {
+  /**
+   * PHP `index.php`: `?module=Section...Name.` (trailing `.`) makes `$title` end with `/`,
+   * so `$leanFile` is never set and `package.php` runs — browse the folder, not `Name.lean`.
+   * Node `path.join` drops empty segments, so `Name.` wrongly mapped to `.../Name.lean`.
+   */
+  const modTrim = module.trim();
+  if (modTrim.endsWith('.')) {
+    const pkgMod = modTrim.replace(/\.+$/, '');
+    if (!pkgMod) {
+      res.status(404).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+        <p>Invalid <code>module</code> (only trailing dots).</p>`
+      );
+      return;
+    }
+    const pkgDir = moduleToLemmaPackageDir(pkgMod);
+    if (pkgDir && dirExists(pkgDir)) {
+      renderPackageBrowserPage(res, pkgMod, userSegment);
+      return;
+    }
+    res.status(404).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+      <p>No package folder for <code>${escapeHtml(pkgMod)}</code></p>`
+    );
+    return;
+  }
+
   const abs = moduleToLeanPath(module);
   const leanMissing = !abs || !fileExists(abs);
   if (leanMissing) {
@@ -302,12 +374,76 @@ async function renderSearchPage(res, dict, userSegment) {
   }
 }
 
+function postFieldString(val) {
+  if (val == null) return '';
+  if (Array.isArray(val)) return String(val[val.length - 1] ?? '').trim();
+  return String(val).trim();
+}
+
+/**
+ * Lemma editor save (`render.vue` POST): write `Lemma/<module>.lean` and redirect to `?module=`.
+ * PHP uses `php/lemma.php` inside `index.php`; Node assembles text in `assembleLemmaPost.mjs`.
+ */
+async function handleLemmaSavePost(res, userSegment, body) {
+  let module = postFieldString(body.module).replace(/\//g, '.');
+  if (!module || module.includes('..') || module.includes('\\')) {
+    res.status(400).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Bad request</title><p>Invalid module.</p>`
+    );
+    return;
+  }
+  const leanPath = moduleToLeanPath(module);
+  if (!leanPath) {
+    res.status(400).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Bad request</title><p>Invalid module path.</p>`
+    );
+    return;
+  }
+  const lemmaRoot = path.join(REPO_ROOT, 'Lemma');
+  const rel = path.relative(path.resolve(lemmaRoot), path.resolve(leanPath));
+  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) {
+    res.status(400).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Bad request</title><p>Module outside Lemma/.</p>`
+    );
+    return;
+  }
+
+  let text;
+  try {
+    text = assembleLeanSourceFromPostBody(body);
+  } catch (err) {
+    console.error('[lemma-save]', err);
+    res.status(400).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Save failed</title>
+      <p>${escapeHtml(String(err?.message || err))}</p>`
+    );
+    return;
+  }
+
+  await fs.mkdir(path.dirname(leanPath), { recursive: true });
+  await fs.writeFile(leanPath, text, 'utf8');
+  try {
+    await fs.unlink(leanEchoPath(leanPath));
+  } catch {
+    /* no echo sidecar */
+  }
+
+  res.redirect(302, `/${userSegment}/?module=${encodeURIComponent(module)}`);
+}
+
 /** POST body from `searchForm.vue` (PHP `index.php`); same logic as `/:userSegment/` POST. */
 async function handleLeanPostSearch(req, res) {
   const userSegment = req.params.userSegment || PROJECT_USER;
   const body = req.body && typeof req.body === 'object' ? req.body : {};
-  if (leanGetWantsSearch(body, body.module)) {
+  const moduleRaw = postFieldString(body.module);
+  if (leanGetWantsSearch(body, moduleRaw)) {
     await renderSearchPage(res, body, userSegment);
+    return;
+  }
+  const hasLemmaPayload =
+    body.lemma != null && typeof body.lemma === 'object' && Object.keys(body.lemma).length > 0;
+  if (moduleRaw && hasLemmaPayload) {
+    await handleLemmaSavePost(res, userSegment, body);
     return;
   }
   res.redirect(302, `/${userSegment}/`);
