@@ -1,6 +1,6 @@
 /**
- * Ports `index.php` (lines 84–332): when `Lemma/<module>.lean` is missing, rewrite
- * dotted modules (of/is, eq swaps, Not/comm, etc.) and return the canonical module for redirect.
+ * When `Lemma/<module>.lean` is missing, rewrite dotted modules (of/is, eq swaps,
+ * Not/comm, etc.) to match legacy `index.php` (lines 84–332) and return a canonical module for redirect.
  */
 import path from 'path';
 import fs from 'fs';
@@ -130,7 +130,7 @@ function moduleToLeanFromSegment(segment, section) {
 }
 
 /**
- * If `Lemma/<module>.lean` is missing, apply the same rewrites as PHP `index.php`.
+ * If `Lemma/<module>.lean` is missing, apply the same rewrites as legacy `index.php`.
  * @param {string} moduleDot
  * @param {string} [repoRoot]
  * @returns {string | null} canonical module to redirect to, or null if no rewrite applies

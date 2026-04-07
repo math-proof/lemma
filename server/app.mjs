@@ -32,7 +32,7 @@ import {
   ensureEmptyEchoFile,
 } from './lean/fetchLemmaMysql.mjs';
 import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
-import { resolveMissingModuleRedirect } from './lean/indexPhpModuleResolve.mjs';
+import { resolveMissingModuleRedirect } from './lean/moduleResolve.mjs';
 import { renderWebsiteIndex, handleWebsiteMdPhp } from './lean/website.mjs';
 import { getRepoStatsCached } from './lean/lemmaRepoStats.mjs';
 
