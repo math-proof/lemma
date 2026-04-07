@@ -1,8 +1,9 @@
 /**
- * Port of `php/search.php` MySQL branches for GET/POST search (type / like / regex).
- * `fullText` (grep) and `latex` similarity are not implemented here yet (empty `data`).
+ * Port of php/search.php: MySQL (type / like / regex) + filesystem full-text under Lemma/.
+ * LaTeX similarity (?latex=) is still unimplemented in Node (empty data).
  */
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
+import { searchLemmaFullText } from './lemmaFullTextSearch.mjs';
 
 /** @param {unknown} o @param {string} k */
 function hasKey(o, k) {
@@ -148,7 +149,16 @@ export async function buildSearchPayload(rawDict, projectUser) {
   let data = [];
 
   if (fullText && fullTextPattern) {
-    data = [];
+    const qt = fullTextPattern.trim();
+    data = qt
+      ? searchLemmaFullText({
+          query: qt,
+          caseSensitive,
+          wholeWord,
+          regularExpression,
+          limit,
+        })
+      : [];
   } else if (latex) {
     data = [];
   } else {

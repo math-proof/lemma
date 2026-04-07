@@ -1,5 +1,5 @@
 <template>
-	<form name=search enctype="multipart/form-data" method=post :action=action @keydown=keydown>
+	<form name=search method=post :action=action @keydown=keydown>
 		<input v-focus tabindex=1 type=text spellcheck=false name=q size=48 :value=q placeholder='input a hint in search of a formula/theorem/axiom' @input=input>
 		<br>
 		<template v-if="replacement != null" >

@@ -130,10 +130,7 @@ private lemma main
               repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
               simp
               repeat rw [GetCast.eq.Get.of.Eq.fin]
-              ·
-                simp
-              ·
-                simp
+              repeat simp
             ·
               simp
             ·
@@ -186,7 +183,7 @@ private lemma one
       simp [Nat.EqAddMulDiv]
     let Y' : Tensor α [k / n' * n'] := Y.repeat (k / n') (0 : Fin 1)
     let X' : Tensor α [n, 1, k] := (X.unsqueeze 1).repeat 1 (1 : Fin 3)
-    have := Tensor.GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
+    have := GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
       (by grind)
       (by grind)
       (by grind)
@@ -198,10 +195,9 @@ private lemma one
       (i := 0) (j := i)
     simp at this
     rw [this]
-    rw [Tensor.GetSum_2.eq.SumGet__0.fin]
-    rw [Tensor.GetMul.eq.MulGetS.fin]
-    -- simp [X', Y']
-    have := Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
+    rw [GetSum_2.eq.SumGet__0.fin]
+    rw [@Tensor.GetMul.eq.MulGetS.fin]
+    have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
       (by grind)
       (by
         simp
@@ -219,7 +215,20 @@ private lemma one
       (s' := [n, 1, k])
     simp at this
     rw [this]
-    sorry
+    apply Eq.of.EqDataS
+    simp
+    rw [Repeat.eq.Cast.of.Eq_1]
+    .
+      rw [Cast_Cast.eq.Cast.of.Eq.Eq]
+      .
+        sorry
+      .
+        sorry
+      .
+        sorry
+    .
+      simp
+      sorry
   ·
     simp
   ·
