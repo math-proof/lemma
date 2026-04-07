@@ -45,7 +45,7 @@ export function getMysqlConfig() {
   if (!host) return null;
   const port = Number(process.env.MYSQL_PORT || 3306);
   const user = process.env.MYSQL_USER || 'user';
-  const password = process.env.MYSQL_PWD ?? process.env.MYSQL_PASSWORD ?? 'user';
+  const password = process.env.MYSQL_PWD ?? 'user';
   const database = 'axiom';
   return { host, port, user, password, database };
 }
