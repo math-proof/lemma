@@ -4385,11 +4385,6 @@ function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
 }
 
 /** @param {import('../../../static/js/parser/lean.js').Lean} node */
-function nameOf(node) {
-    return node && node.constructor && node.constructor.name;
-}
-
-/** @param {import('../../../static/js/parser/lean.js').Lean} node */
 function strStmt(node) {
     return String(node).replace(/\n$/, '');
 }
@@ -4437,11 +4432,11 @@ function normalizeInstImplicit(s) {
 function extractAttribute(attr) {
     if (!attr) return null;
     let a = /** @type {*} */ (attr).arg;
-    if (nameOf(a) === 'LeanArgsSpaceSeparated') {
-        const bracket = a.args.find((x) => nameOf(x) === 'LeanBracket');
+    if (a instanceof LeanArgsSpaceSeparated) {
+        const bracket = a.args.find((x) => x instanceof LeanBracket);
         a = bracket || null;
     }
-    if (!a || nameOf(a) !== 'LeanBracket') return null;
+    if (!a || !(a instanceof LeanBracket)) return null;
     a = /** @type {*} */ (a).arg;
     if (a instanceof LeanArgsCommaSeparated || a instanceof LeanArgsSpaceSeparated)
         return a.args.map((x) => strStmt(x)).filter(Boolean);
@@ -4506,7 +4501,7 @@ function arrayPushVars(vars, lhs, rhs) {
     if (lhs instanceof LeanToken) {
         /** @type {import('../../../static/js/parser/lean.js').Lean[]} */
         let args = [lhs, rhs];
-        while (args.length && nameOf(args[args.length - 1]) === 'Lean_rightarrow') {
+        while (args.length && args[args.length - 1] instanceof Lean_rightarrow) {
             const end = args[args.length - 1];
             args.splice(args.length - 1, 1, /** @type {*} */ (end).lhs, /** @type {*} */ (end).rhs);
         }
@@ -4522,7 +4517,7 @@ function arrayPushVars(vars, lhs, rhs) {
 function parseVars(implicit) {
     const vars = [];
     for (const brace of implicit) {
-        if (nameOf(brace) === 'LeanBrace') {
+        if (brace instanceof LeanBrace) {
             const colon = /** @type {*} */ (brace).arg;
             if (colon instanceof LeanColon) arrayPushVars(vars, colon.lhs, colon.rhs);
         }
@@ -4561,7 +4556,7 @@ function buildLetBindings(implyStmts) {
     const bindings = {};
     if (!implyStmts.length) return bindings;
     for (const stmt of implyStmts) {
-        if (nameOf(stmt) !== 'Lean_let' && nameOf(stmt) !== 'Lean_have') continue;
+        if (!(stmt instanceof Lean_let)) continue;
         const arg = stmt.arg;
         if (!arg) continue;
         let nameNode = null;
@@ -4663,7 +4658,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
     const args = mod.args;
     for (let idx = 0; idx < args.length; idx++) {
         const stmt = args[idx];
-        if (nameOf(stmt) === 'Lean_import') {
+        if (stmt instanceof Lean_import) {
             import_.push(normalizeImportStr(strStmt(/** @type {*} */ (stmt).arg)));
         } else if (stmt instanceof Lean_lemma) {
             /** @type {import('../../../static/js/parser/lean.js').LeanAssign | null} */
@@ -4678,7 +4673,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         proofStart = k;
                         break;
                     }
-                    if (x && nameOf(x) === 'LeanTactic') {
+                    if (x instanceof LeanTactic) {
                         proofStart = k;
                         break;
                     }
@@ -4687,7 +4682,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     const cand = args[j];
                     if (cand instanceof LeanAssign) {
                         const lhs = cand.lhs;
-                        if (lhs && (nameOf(lhs) === 'Lean_let' || nameOf(lhs) === 'Lean_have')) continue;
+                        if (lhs instanceof Lean_let) continue;
                         assignment = cand;
                         assignIdx = j;
                     }
@@ -4722,20 +4717,20 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     /** Collect Lean_let/Lean_have between lemma and main assignment for imply (JS parser may have them as siblings). */
                     for (let k = idx + 1; k < firstAssign; k++) {
                         const s = args[k];
-                        if (nameOf(s) === 'Lean_let' || nameOf(s) === 'Lean_have') {
+                        if (s instanceof Lean_let) {
                             flatImplyStmts.push(s);
                         }
                     }
                     for (let k = idx + 1; k < firstAssign; k++) {
                         const s = args[k];
-                        if (nameOf(s) === 'LeanBracket') {
+                        if (s instanceof LeanBracket) {
                             flatInstImplicit.push(strStmt(s));
                             continue;
                         }
                         /** (A : T) and (V : T) — recurse into LeanArgsSpaceSeparated or handle LeanParenthesis(LeanColon). */
                         const collectParenColons = (/** @type {*} */ n) => {
                             if (!n) return;
-                            if (nameOf(n) === 'LeanParenthesis' && n.arg instanceof LeanColon) {
+                            if (n instanceof LeanParenthesis && n.arg instanceof LeanColon) {
                                 const col = n.arg;
                                 if (col.lhs && col.rhs) {
                                     if (flatGiven === null) flatGiven = [];
@@ -4749,17 +4744,17 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             const a = n.args ?? (n.lhs != null && n.rhs != null ? [n.lhs, n.rhs] : []);
                             for (const child of a) collectParenColons(child);
                         };
-                        if (nameOf(s) === 'LeanParenthesis' && s.arg instanceof LeanColon) {
+                        if (s instanceof LeanParenthesis && s.arg instanceof LeanColon) {
                             collectParenColons(s);
                             continue;
                         }
-                        if (nameOf(s) === 'LeanArgsSpaceSeparated' || nameOf(s) === 'LeanArgsNewLineSeparated') {
+                        if (s instanceof LeanArgsSpaceSeparated || s instanceof LeanArgsNewLineSeparated) {
                             collectParenColons(s);
                             continue;
                         }
-                        if (nameOf(s) === 'LeanColon' && s.lhs) {
+                        if (s instanceof LeanColon && s.lhs) {
                             const lb = s.lhs;
-                            if (nameOf(lb) === 'LeanBracket') {
+                            if (lb instanceof LeanBracket) {
                                 const inner = /** @type {*} */ (lb).arg;
                                 const lhsStr = inner ? strStmt(inner).trim() : strStmt(lb).trim();
                                 const rhsStr = s.rhs ? strStmt(s.rhs).trim() : '';
@@ -4771,12 +4766,12 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                         ? `[${headPart} (${varPart} : ${rhsStr})]`
                                         : `[${lhsStr}${rhsStr ? ` : ${rhsStr}` : ''}]`;
                                 flatInstImplicit.push(repr);
-                            } else if (nameOf(lb) === 'LeanParenthesis' || (nameOf(lb) === 'LeanColon' && lb.rhs)) {
-                                if (nameOf(s.rhs) === 'LeanStatements' || nameOf(s.rhs) === 'LeanArgsNewLineSeparated') {
+                            } else if (lb instanceof LeanParenthesis || (lb instanceof LeanColon && lb.rhs)) {
+                                if (s.rhs instanceof LeanStatements || s.rhs instanceof LeanArgsNewLineSeparated) {
                                     const inner = lb;
-                                    if (nameOf(inner) === 'LeanColon' && inner.lhs && inner.rhs) {
+                                    if (inner instanceof LeanColon && inner.lhs && inner.rhs) {
                                         const innerLhs = inner.lhs;
-                                        if (nameOf(innerLhs) === 'LeanParenthesis' && inner.rhs) {
+                                        if (innerLhs instanceof LeanParenthesis && inner.rhs) {
                                             if (flatGiven === null) flatGiven = [];
                                             const varPart = strStmt(
                                                 /** @type {*} */ (innerLhs).arg
@@ -4791,13 +4786,13 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 } else {
                                     if (flatGiven === null) flatGiven = [];
                                     let leanStr;
-                                    if (nameOf(lb) === 'LeanParenthesis' && s.rhs) {
+                                    if (lb instanceof LeanParenthesis && s.rhs) {
                                         const varPart = strStmt(/** @type {*} */ (lb).arg).trim();
                                         const typePart = normalizeTypeStr(strStmt(s.rhs));
                                         leanStr = `(${varPart} : ${typePart})`;
                                     } else {
                                         leanStr = strStmt(s).trim();
-                                        if (nameOf(lb) === 'LeanParenthesis' && !leanStr.startsWith('('))
+                                        if (lb instanceof LeanParenthesis && !leanStr.startsWith('('))
                                             leanStr = '(' + leanStr;
                                     }
                                     if (leanStr.includes('-- imply'))
@@ -4823,10 +4818,10 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         Array.isArray(rhsArgs) &&
                         rhsArgs.length > 0 &&
                         (rhsArgs[0] instanceof LeanLineComment ||
-                            nameOf(rhsArgs[0]) === 'Lean_let' ||
-                            nameOf(rhsColon) === 'LeanArgsSpaceSeparated' ||
-                            nameOf(rhsColon) === 'LeanStatements' ||
-                            nameOf(rhsColon) === 'LeanArgsNewLineSeparated');
+                            rhsArgs[0] instanceof Lean_let ||
+                            rhsColon instanceof LeanArgsSpaceSeparated ||
+                            rhsColon instanceof LeanStatements ||
+                            rhsColon instanceof LeanArgsNewLineSeparated);
                     if (!rhsColon || !rhsArgs || !isImplyList) {
                         if (
                             assignIdx >= 0 &&
@@ -4857,13 +4852,13 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     const by =
                         proof0 instanceof LeanBy
                             ? 'by'
-                            : nameOf(proof0) === 'LeanCalc'
+                            : proof0 instanceof LeanCalc
                               ? 'calc'
                               : '';
                     const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
 
                     let implyLatex;
-                    if (imply.length > 1 && nameOf(imply[0]) === 'Lean_let') {
+                    if (imply.length > 1 && imply[0] instanceof Lean_let) {
                         implyLatex =
                             '\\begin{align}\n' +
                             imply
@@ -4889,7 +4884,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         declspec &&
                         declspec.args &&
                         declspec.args.length >= 2 &&
-                        !(declspec.args[0] && nameOf(declspec.args[0]) === 'LeanParenthesis')
+                        !(declspec.args[0] && declspec.args[0] instanceof LeanParenthesis)
                     ) {
                         /** PHP [name, binders]; skip when args are binders (LeanParenthesis) not name+binders. */
                         const dargs = declspec.args;
@@ -4900,7 +4895,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         /** Parser may produce LeanArgsIndented/LeanArgsSpaceSeparated for (A:T)(V:T). Extract LeanParenthesis nodes. */
                         const collectParens = (/** @type {*} */ n) => {
                             if (!n) return [];
-                            if (nameOf(n) === 'LeanParenthesis') return [n];
+                            if (n instanceof LeanParenthesis) return [n];
                             const a = n.args ?? (n.lhs != null && n.rhs != null ? [n.lhs, n.rhs] : []);
                             return a.flatMap(collectParens);
                         };
@@ -4938,7 +4933,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     const declList = declspec;
                     for (let i = 0; i < declList.length; ++i) {
                         const st = declList[i];
-                        if (nameOf(st) === 'LeanBracket') {
+                        if (st instanceof LeanBracket) {
                             instImplicit.push(strStmt(st));
                             const ia = /** @type {*} */ (st).arg;
                             if (ia instanceof LeanArgsSpaceSeparated && ia.args.length === 2) {
@@ -4946,12 +4941,12 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 if (l instanceof LeanToken && l.text === 'Decidable' && r instanceof LeanToken)
                                     decidables.push(strStmt(r));
                             }
-                        } else if (nameOf(st) === 'LeanBrace') {
+                        } else if (st instanceof LeanBrace) {
                             st.toLatex(syntax);
                             implicit.push(st);
                         } else if (st instanceof LeanArgsSpaceSeparated) {
-                            if (nameOf(st.args[0]) === 'LeanBracket') instImplicit.push(strStmt(st));
-                            else if (nameOf(st.args[0]) === 'LeanBrace') implicit.push(st);
+                            if (st.args[0] instanceof LeanBracket) instImplicit.push(strStmt(st));
+                            else if (st.args[0] instanceof LeanBrace) implicit.push(st);
                             else
                                 error.push({
                                     code: strStmt(st),
@@ -5009,11 +5004,11 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                         givenStop = i;
                                         break;
                                     }
-                                } else if (nameOf(colon) === 'LeanAssign') {
+                                } else if (colon instanceof LeanAssign) {
                                     break;
                                 }
                             } else if (st.is_comment()) latex.push(null);
-                            else if (nameOf(st) === 'LeanBrace') {
+                            else if (st instanceof LeanBrace) {
                                 const pivot = i;
                                 const par = new LeanParenthesis(/** @type {*} */ (st).arg, st.indent, st.parent);
                                 par.is_closed = true;
@@ -5079,7 +5074,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     let proofNode = proof;
                     if (
                         assignIdx >= 0 &&
-                        !(proof instanceof LeanBy || nameOf(proof) === 'LeanCalc') &&
+                        !(proof instanceof LeanBy || proof instanceof LeanCalc) &&
                         (proof instanceof LeanCaret || !(proof.args && proof.args.length))
                     ) {
                         let end = assignIdx + 1;
@@ -5124,7 +5119,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     const by =
                         proof0 instanceof LeanBy
                             ? 'by'
-                            : nameOf(proof0) === 'LeanCalc'
+                            : proof0 instanceof LeanCalc
                               ? 'calc'
                               : '';
                     /** When declspec is LeanColon, extract explicit (A:T)(V:T) from lhs and imply from rhs. */
@@ -5139,7 +5134,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 : inner;
                         const collectParens = (/** @type {import('../../../static/js/parser/lean.js').Lean} */ n) => {
                             if (!n) return [];
-                            if (nameOf(n) === 'LeanParenthesis') return [n];
+                            if (n instanceof LeanParenthesis) return [n];
                             const a = n.args ?? (n.lhs != null && n.rhs != null ? [n.lhs, n.rhs] : []);
                             return a.flatMap(collectParens);
                         };
@@ -5159,7 +5154,9 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         /** Imply = LeanStatements from inner.rhs, or inner.lhs.rhs when triple-nested. */
                         const innerLhs = inner.lhs;
                         implyNode =
-                            (innerLhs && innerLhs.rhs && (nameOf(innerLhs.rhs) === 'LeanStatements' || nameOf(innerLhs.rhs) === 'LeanArgsNewLineSeparated'))
+                            (innerLhs &&
+                                innerLhs.rhs &&
+                                (innerLhs.rhs instanceof LeanStatements || innerLhs.rhs instanceof LeanArgsNewLineSeparated))
                                 ? innerLhs.rhs
                                 : inner.rhs || declspec;
                     }
@@ -5168,7 +5165,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         const imply = [...flatImplyStmts, assignment.lhs];
                         const implyLean = unindentTwo(imply.map((s) => strStmt(s)).join('\n'));
                         let implyLatex;
-                        if (imply.length > 1 && (nameOf(imply[0]) === 'Lean_let' || nameOf(imply[0]) === 'Lean_have')) {
+                        if (imply.length > 1 && imply[0] instanceof Lean_let) {
                             implyLatex =
                                 '\\begin{align}\n' +
                                 imply
@@ -5233,7 +5230,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
             }
         } else if (stmt instanceof Lean_def) {
             def.push(strStmt(stmt));
-        } else if (nameOf(stmt) === 'Lean_open') {
+        } else if (stmt instanceof Lean_open) {
             let o = /** @type {*} */ (stmt).arg;
             if (o instanceof LeanArgsSpaceSeparated) {
                 if (o.args.length === 2 && o.args[1] instanceof LeanParenthesis) {
@@ -5246,14 +5243,14 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     });
                 } else open.push(o.args.map((a) => strStmt(a)).filter((s) => s.trim()));
             } else open.push([strStmt(/** @type {*} */ (o).text)]);
-        } else if (nameOf(stmt) === 'Lean_set_option') {
+        } else if (stmt instanceof Lean_set_option) {
             const a = /** @type {*} */ (stmt).arg;
             if (a instanceof LeanArgsSpaceSeparated) set_option.push(a.args.map((x) => strStmt(x)));
         } else if (stmt instanceof LeanLineComment) {
             const m = /^(created|updated) on (\d\d\d\d-\d\d-\d\d)$/.exec(stmt.text);
             if (m) date[m[1]] = m[2];
             else comment = stmt.text;
-        } else if (nameOf(stmt) === 'LeanBlockComment') {
+        } else if (stmt instanceof LeanBlockComment && !(stmt instanceof LeanDocString)) {
             comment = /** @type {*} */ (stmt).text;
         }
     }
