@@ -3,11 +3,13 @@
  * Works in both Node (import) and browser (script type="module").
  * Environment-agnostic exports (format); browser-only code guarded by typeof window.
  */
-
 String.prototype.format = function () {
-  const args = arguments;
-  let index = 0;
-  return this.replace(/%[sd]/g, () => args[index++]);
+  const args = [...arguments];
+  let i = 0;
+  return this.replace(/%([sd%])/g, (_m, ch) => {
+    if (ch === '%') return '%';
+    return args[i++];
+  });
 };
 
 String.prototype.isspace = function () {

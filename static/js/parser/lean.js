@@ -3370,7 +3370,7 @@ export class LeanModular extends LeanArithmetic {
     static input_priority = 70;
 
     get command() {
-        return '\\%\\%';
+        return '\\%%';
     }
 
     get operator() {
