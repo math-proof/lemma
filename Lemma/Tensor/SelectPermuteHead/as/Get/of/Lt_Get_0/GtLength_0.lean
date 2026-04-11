@@ -2,7 +2,7 @@ import Lemma.List.GetRotate.eq.Get_0.of.Gt_0.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import stdlib.SEq
 import sympy.tensor.tensor
-open List Tensor Bool Fin Nat Vector
+open List Tensor
 
 
 @[main]

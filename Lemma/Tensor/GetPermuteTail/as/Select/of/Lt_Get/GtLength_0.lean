@@ -1,7 +1,7 @@
 import Lemma.Tensor.LengthPermuteTail.eq.Get.of.GtLength_0
 import stdlib.SEq
 import sympy.tensor.tensor
-open Tensor Bool Fin List Nat Vector
+open Tensor
 
 
 @[main]
