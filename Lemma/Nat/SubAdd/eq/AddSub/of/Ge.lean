@@ -1,4 +1,5 @@
 import Lemma.Nat.Add
+import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 open Nat
 
 
@@ -11,7 +12,7 @@ private lemma main
   a + b - c = a - c + b := by
 -- proof
   rw [Add.comm]
-  rw [Nat.add_sub_assoc h]
+  rw [SubAdd.eq.Add_Sub.of.Ge h]
   rw [Add.comm]
 
 

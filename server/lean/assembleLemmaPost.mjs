@@ -4,6 +4,8 @@
  */
 import { listLemmaTopLevelDirs } from './lemmaSections.mjs';
 import { filterImportsByLemmaCode } from './filterImportsByLemmaCode.mjs';
+import { detectLemmaImportsFromScanText, stripOpenSectionQualifiers } from './detectLemmaImports.mjs';
+import { mergeSyntaxDrivenImports } from './syntaxDrivenImports.mjs';
 
 /**
  * @param {unknown} val
@@ -127,6 +129,8 @@ function extractProofLines(proof) {
  * @param {Record<string, unknown>} L
  */
 function buildLemmaBlock(L) {
+  const sections = listLemmaTopLevelDirs();
+
   let comment = '';
   if (L.comment) comment = `/--\n${String(L.comment)}\n-/\n`;
 
@@ -173,10 +177,13 @@ function buildLemmaBlock(L) {
     declspec = ' :';
   }
 
-  const imply = indentEachLine(L.imply != null ? String(L.imply) : '');
+  /** PHP: indent `imply` then `detect_lemma` (strips `Section.` when `open`); proof: detect on raw lines then indent. */
+  let imply = indentEachLine(L.imply != null ? String(L.imply) : '');
+  imply = stripOpenSectionQualifiers(imply, sections);
 
   const { kind, lines } = extractProofLines(L.proof);
   let proofBody = expandCommaRwLines(lines)
+    .map((ln) => stripOpenSectionQualifiers(String(ln), sections))
     .map((ln) => indentEachLine(ln))
     .join('\n');
   proofBody = proofBody.replace(/^\n+/, '').replace(/\n+$/, '');
@@ -195,22 +202,11 @@ ${proofSection}`;
 }
 
 /**
- * Same proof-only string as PHP `$lemmaCode` in `lemma.php` (imploded tactic bodies for `try_pattern`).
+ * Same strings PHP pushes to `$lemmaCode` before `try_pattern` (heredoc with imply + proof per lemma).
  * @param {Record<string, unknown>[]} lemmaArr
  */
 function buildLemmaCodeForImportFilter(lemmaArr) {
-  const chunks = [];
-  for (const L of lemmaArr) {
-    const { kind, lines } = extractProofLines(L.proof);
-    if (kind !== 'by' && kind !== 'calc') continue;
-    let proofBody = expandCommaRwLines(lines)
-      .map((ln) => indentEachLine(ln))
-      .join('\n');
-    proofBody = proofBody.replace(/^\n+/, '').replace(/\n+$/, '');
-    proofBody = proofBody.replace(/(?<=\n)\s+\n/g, '');
-    if (proofBody) chunks.push(proofBody);
-  }
-  return chunks.join('\n\n\n');
+  return lemmaArr.map((L) => buildLemmaBlock(L)).join('\n\n\n');
 }
 
 function parseJsonField(raw, fallback) {
@@ -256,8 +252,29 @@ export function assembleLeanSourceFromPostBody(body) {
     }
   }
 
+  /** PHP `detect_lemma` on imply + proof lines before `array_filter` imports. */
+  const sections = listLemmaTopLevelDirs();
+  const detectedImports = [];
+  const detectedOpen = new Set(openSectionList);
+  for (const L of lemmaArr) {
+    const implyRaw = L.imply != null ? String(L.imply) : '';
+    const implyScan = implyRaw ? indentEachLine(implyRaw) : '';
+    const { kind, lines } = extractProofLines(L.proof);
+    const proofScan =
+      kind === 'by' || kind === 'calc' ? expandCommaRwLines(lines).map((ln) => String(ln)).join('\n') : '';
+    const chunk = [implyScan, proofScan].filter(Boolean).join('\n');
+    const { imports: addI, sectionsFound } = detectLemmaImportsFromScanText(chunk, sections);
+    detectedImports.push(...addI);
+    for (const sec of sectionsFound) {
+      if (sectionSet.has(sec)) detectedOpen.add(sec);
+    }
+  }
+  imports = [...imports, ...detectedImports];
+
+  const openSectionListForFilter = [...detectedOpen];
+
   const lemmaCodeForImportFilter = buildLemmaCodeForImportFilter(lemmaArr);
-  imports = filterImportsByLemmaCode(imports, lemmaCodeForImportFilter, openSectionList);
+  imports = filterImportsByLemmaCode(imports, lemmaCodeForImportFilter, openSectionListForFilter);
 
   const uniqImports = [...new Set(imports)].sort();
   if (
@@ -331,9 +348,30 @@ export function assembleLeanSourceFromPostBody(body) {
   if (updated !== created) parts.push(`-- updated on ${updated}`);
   parts.push('');
 
-  return parts
+  let out = parts
     .join('\n')
     .split('\n')
     .map((line) => line.replace(/\r/g, ''))
     .join('\n');
+
+  /** `php/lemma.php` compile → `$syntax` → `import_syntax` (e.g. `≃` → `stdlib.SEq`). */
+  const mergedImports = mergeSyntaxDrivenImports([...uniqImports], out);
+  let finalImports = [...new Set(mergedImports)].sort();
+  if (
+    !finalImports.some((i) => String(i).startsWith('Lemma.')) &&
+    !finalImports.includes('sympy.Basic')
+  ) {
+    finalImports.push('sympy.Basic');
+    finalImports.sort();
+  }
+  if (finalImports.join('\n') !== uniqImports.join('\n')) {
+    parts[0] = finalImports.map((i) => `import ${i}`).join('\n');
+    out = parts
+      .join('\n')
+      .split('\n')
+      .map((line) => line.replace(/\r/g, ''))
+      .join('\n');
+  }
+
+  return out;
 }

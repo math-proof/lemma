@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, grind =]
 private lemma main
 -- given
   (s : List α)

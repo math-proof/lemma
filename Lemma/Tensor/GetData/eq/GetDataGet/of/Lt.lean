@@ -1,10 +1,6 @@
-import sympy.tensor.tensor
-import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
-import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Tensor.GtLength.of.GtLength_0
-import Lemma.Vector.GetSplitAt_1.eq.Cast_GetUnflatten
-import Lemma.Vector.Head.eq.Get_0
-open Tensor Vector
+import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
+open Tensor
 
 
 @[main, fin]
@@ -16,16 +12,8 @@ private lemma main
   have := GtLength.of.GtLength_0 (by grind) X ⟨i, by grind⟩
   X.data[i]'(by simpa) = X[i].data[0] := by
 -- proof
-  simp [GetElem.getElem]
-  intros
-  simp [Tensor.get]
-  unfold Tensor.toVector
-  simp [GetElem.getElem]
-  simp [GetCast.eq.Get.of.Eq.fin]
-  rw [GetSplitAt_1.eq.Cast_GetUnflatten.fin]
-  rw [Head.eq.Get_0.fin]
-  rw [Vector.GetUnflatten.eq.Get_AddMul.fin]
-  simp [GetCast.eq.Get.of.Eq.fin]
+  have := GetData.eq.GetDataGet.of.GtProd.GtLength_0 (by simp) (by simpa) X (i := i)
+  grind
 
 
 -- created on 2025-10-11
