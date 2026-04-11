@@ -79,6 +79,20 @@ function expandCommaRwLines(lines) {
 }
 
 /**
+ * POST `lemma[n][proof][by][0]`, `[1]`, … parses as an array in Express (`qs` / `body-parser`).
+ * `String(array)` would join with commas and corrupt tactics.
+ *
+ * @param {unknown} byRaw
+ * @returns {string}
+ */
+function normalizeProofByField(byRaw) {
+  if (byRaw == null) return '';
+  if (typeof byRaw === 'string') return byRaw;
+  if (Array.isArray(byRaw)) return byRaw.map((x) => String(x)).join('\n');
+  return String(byRaw);
+}
+
+/**
  * @param {unknown} proof
  * @returns {{ kind: 'by' | 'calc' | '', lines: string[] }}
  */
@@ -86,7 +100,7 @@ function extractProofLines(proof) {
   if (!proof || typeof proof !== 'object') return { kind: '', lines: [] };
   const o = proof;
   const byRaw = o.by;
-  const byStr = byRaw != null ? String(byRaw) : '';
+  const byStr = normalizeProofByField(byRaw);
   const hasBy = byStr.trim() !== '';
 
   let calcArr = [];

@@ -245,11 +245,14 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
               if (!hit && segment[1]) segment[1][0] = 'is';
             }
           } else if (first.length === 3 && isInfixOperator(first[1])) {
+            // (e.g. `Nat.AddSub.eq.SubAdd.of.Ge` → `Nat.SubAdd.eq.AddSub.of.Ge`).
             const segment_ = segment.map((r) => [...r]);
             segment_[0] = [first[2], first[1], first[0]];
             const p = moduleToLeanFromSegment(segment_, section);
-            if (!p || !fs.existsSync(p)) {
-              if (segment[1]) segment[1][0] = 'is';
+            if (p && fs.existsSync(p)) {
+              segment = segment_;
+            } else if (segment[1]) {
+              segment[1][0] = 'is';
             }
           }
           break;

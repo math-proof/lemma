@@ -4683,7 +4683,6 @@ class LeanStatements extends LeanArgs
 
 class LeanModule extends LeanStatements
 {
-    use LeanMultipleLine;
     public function __get($vname)
     {
         switch ($vname) {

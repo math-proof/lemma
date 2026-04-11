@@ -1459,17 +1459,71 @@ class LeanDocString extends LeanBlockComment {
 }
 
 /**
- * Port of PHP trait `LeanMultipleLine` (`set_line`): advance one logical line between each child.
- * Used by `LeanStatements`, `LeanModule`, `LeanArgsNewLineSeparated`, `LeanArgsCommaNewLineSeparated`.
- * @param {{ line: unknown; args: Lean[] }} self
- * @param {number} line
+ * @template {typeof LeanArgs} T
+ * @param {T} Base
  */
-function leanMultipleLineSetLine(self, line) {
-    self.line = line;
-    for (const arg of self.args) {
-        line = arg.set_line(line) + 1;
-    }
-    return line - 1;
+export function LeanMultipleLine(Base) {
+    return class extends Base {
+        set_line(line) {
+            this.line = line;
+            for (const arg of this.args) {
+                line = arg.set_line(line) + 1;
+            }
+            return line - 1;
+        }
+    };
+}
+
+/**
+ * @template {typeof Lean} T
+ * @param {T} Base
+ */
+export function LeanProp(Base) {
+    return class extends Base {
+        /**
+         * @param {Record<string, unknown>} [_vars]
+         */
+        isProp(_vars) {
+            return true;
+        }
+    };
+}
+
+/**
+ * @template {typeof LeanArgs} T
+ * @param {T} Base
+ */
+export function LeanGetElemBase(Base) {
+    return class extends Base {
+        insert_comma(caret) {
+            const caret2 = new LeanCaret(this.indent, caret.level);
+            const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
+            this.args[1] = commaSep;
+            commaSep.parent = this;
+            return caret2;
+        }
+
+        push_right(funcName) {
+            if (funcName === 'LeanBracket') return this;
+            return super.push_right(funcName);
+        }
+    };
+}
+
+/**
+ * @template {typeof LeanBinary} T
+ * @param {T} Base
+ */
+export function LeanGetElemBaseBinary(Base) {
+    return class extends LeanGetElemBase(Base) {
+        get stack_priority() {
+            return 18;
+        }
+
+        sep() {
+            return '';
+        }
+    };
 }
 
 /**
@@ -2770,7 +2824,7 @@ export class LeanAssign extends LeanBinary {
     }
 }
 
-export class LeanBinaryBoolean extends LeanBinary {
+export class LeanBinaryBoolean extends LeanProp(LeanBinary) {
     append(new_, type) {
         const {indent, level} = this;
         const caret = new LeanCaret(indent, level);
@@ -2808,13 +2862,6 @@ export class LeanBinaryBoolean extends LeanBinary {
 
     is_indented() {
         return this.parent instanceof LeanStatements;
-    }
-
-    /**
-     * @param {Record<string, unknown>} [_vars]
-     */
-    isProp(_vars) {
-        return true;
     }
 
     sep() {
@@ -3675,28 +3722,11 @@ export class LeanMethodChaining extends LeanBinary {
     }
 }
 
-export class LeanGetElem extends LeanBinary {
+export class LeanGetElem extends LeanGetElemBaseBinary(LeanBinary) {
     static input_priority = 67;
-
-    insert_comma(caret) {
-        const caret2 = new LeanCaret(this.indent, caret.level);
-        const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
-        this.args[1] = commaSep;
-        commaSep.parent = this;
-        return caret2;
-    }
 
     latexFormat() {
         return '{%s}_{%s}';
-    }
-
-    push_right(funcName) {
-        if (funcName === 'LeanBracket') return this;
-        return super.push_right(funcName);
-    }
-
-    sep() {
-        return '';
     }
 
     strFormat() {
@@ -3704,28 +3734,11 @@ export class LeanGetElem extends LeanBinary {
     }
 }
 
-export class LeanGetElemQue extends LeanBinary {
+export class LeanGetElemQue extends LeanGetElemBaseBinary(LeanBinary) {
     static input_priority = 67;
-
-    insert_comma(caret) {
-        const caret2 = new LeanCaret(this.indent, caret.level);
-        const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
-        this.args[1] = commaSep;
-        commaSep.parent = this;
-        return caret2;
-    }
 
     latexFormat() {
         return '{%s}_{%s?}';
-    }
-
-    push_right(funcName) {
-        if (funcName === 'LeanBracket') return this;
-        return super.push_right(funcName);
-    }
-
-    sep() {
-        return '';
     }
 
     strFormat() {
@@ -3733,24 +3746,11 @@ export class LeanGetElemQue extends LeanBinary {
     }
 }
 
-export class LeanGetElemQuote extends LeanArgs {
+export class LeanGetElemQuote extends LeanGetElemBase(LeanArgs) {
     static input_priority = 67;
-
-    insert_comma(caret) {
-        const caret2 = new LeanCaret(this.indent, caret.level);
-        const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
-        this.args[1] = commaSep;
-        commaSep.parent = this;
-        return caret2;
-    }
 
     latexFormat() {
         return "{%s}_{%s{\\color{red}\\text{'}}%s}";
-    }
-
-    push_right(funcName) {
-        if (funcName === 'LeanBracket') return this;
-        return super.push_right(funcName);
     }
 
     strFormat() {
@@ -4066,9 +4066,9 @@ function leanStatementsPreferWordOverTactic(stmts) {
     return false;
 }
 
-export class LeanStatements extends LeanArgs {
+export class LeanStatements extends LeanMultipleLine(LeanArgs) {
     get stack_priority() {
-        return 19;
+        return LeanColon.input_priority;
     }
 
     insert_tactic(caret, token) {
@@ -4277,10 +4277,6 @@ export class LeanStatements extends LeanArgs {
         const line = new LeanLineComment(comment, this.indent, this.level);
         this.push(line);
         return line;
-    }
-
-    set_line(line) {
-        return leanMultipleLineSetLine(this, line);
     }
 }
 
@@ -5950,15 +5946,8 @@ class Lean_leftarrow extends LeanUnary {
 }
 
 /** Logical not `¬`. */
-class Lean_lnot extends LeanUnary {
+class Lean_lnot extends LeanProp(LeanUnary) {
     static input_priority = 40;
-
-    /**
-     * @param {Record<string, unknown>} [_vars]
-     */
-    isProp(_vars) {
-        return true;
-    }
 
     get operator() {
         return '¬';
@@ -5969,7 +5958,7 @@ class Lean_lnot extends LeanUnary {
     }
 }
 
-class LeanNot extends LeanUnary {
+class LeanNot extends LeanProp(LeanUnary) {
     static input_priority = 40;
 
     get operator() {
@@ -5990,10 +5979,6 @@ class LeanNot extends LeanUnary {
 
     strFormat() {
         return `${this.operator}%s`;
-    }
-
-    isProp(_vars) {
-        return true;
     }
 }
 
@@ -6842,7 +6827,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 }
 
-export class LeanArgsNewLineSeparated extends LeanArgs {
+export class LeanArgsNewLineSeparated extends LeanMultipleLine(LeanArgs) {
     get stack_priority() {
         const parent = this.parent;
         if (parent instanceof LeanCalc) return LeanAssign.input_priority - 1;
@@ -6932,10 +6917,6 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
 
     strFormat() {
         return Array(this.args.length).fill('%s').join('\n');
-    }
-
-    set_line(line) {
-        return leanMultipleLineSetLine(this, line);
     }
 }
 
@@ -7123,7 +7104,7 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
     }
 }
 
-export class LeanArgsCommaNewLineSeparated extends LeanArgs {
+export class LeanArgsCommaNewLineSeparated extends LeanMultipleLine(LeanArgs) {
     get stack_priority() {
         return 17;
     }
@@ -7184,10 +7165,6 @@ export class LeanArgsCommaNewLineSeparated extends LeanArgs {
 
     strFormat() {
         return Array(this.args.length).fill('%s').join(',\n');
-    }
-
-    set_line(line) {
-        return leanMultipleLineSetLine(this, line);
     }
 }
 
@@ -9192,12 +9169,8 @@ class LeanBigOperator extends LeanArgs {
 }
 
 /** Port of `LeanQuantifier`. */
-class LeanQuantifier extends LeanBigOperator {
+class LeanQuantifier extends LeanProp(LeanBigOperator) {
     static input_priority = 24;
-
-    isProp(_vars) {
-        return true;
-    }
 
     latexFormat() {
         const cmd = this.command;

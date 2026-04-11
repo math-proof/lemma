@@ -174,11 +174,13 @@ if (! str_ends_with($path_info, '/')) {
                             }
                             elseif (count($first) == 3) {
                                 if (is_infix_operator($first[1])) {
-                                    # comm
+                                    # comm — when swapped path exists, use it (e.g. Nat.AddSub.eq.SubAdd.of.Ge → Nat.SubAdd.eq.AddSub.of.Ge)
                                     $segment_ = [...$segment];
                                     $segment_[0] = [$first[2], $first[1], $first[0]];
                                     $path = module_to_lean($segment_, $section);
-                                    if (!file_exists($path)) {
+                                    if (file_exists($path)) {
+                                        $segment = $segment_;
+                                    } else {
                                         $segment[1][0] = 'is';
                                     }
                                 }
