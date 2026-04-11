@@ -35,6 +35,7 @@ import {
 import { assembleLeanSourceFromPostBody } from './lean/assembleLemmaPost.mjs';
 import { handleDeleteLemma } from './lean/deleteLemma.mjs';
 import { handleDeletePackage } from './lean/deletePackage.mjs';
+import { handleRenameLemma } from './lean/renameLemma.mjs';
 import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
 import { resolveMissingModuleRedirect } from './lean/moduleResolve.mjs';
 import {
@@ -131,6 +132,15 @@ app.post('/:userSegment/php/request/delete/package.php', ensureProjectUser, (req
   const userSeg = req.params.userSegment || PROJECT_USER;
   handleDeletePackage(userSeg, req, res).catch((e) => {
     console.error('[delete-package]', e);
+    res.status(500).json({ error: String(e?.message || e) });
+  });
+});
+
+/** Same contract as `php/request/rename.php` for POST `old` + `new` (dotted modules). */
+app.post('/:userSegment/php/request/rename.php', ensureProjectUser, (req, res) => {
+  const userSeg = req.params.userSegment || PROJECT_USER;
+  handleRenameLemma(userSeg, req, res).catch((e) => {
+    console.error('[rename]', e);
     res.status(500).json({ error: String(e?.message || e) });
   });
 });

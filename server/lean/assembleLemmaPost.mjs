@@ -1,8 +1,9 @@
 /**
  * Build `.lean` file text from the POST body shape produced by `render.vue` / `lemma.vue`,
- * mirroring the save path in `php/lemma.php` (without PHP-only import rewriting / detect_lemma).
+ * mirroring the save path in `php/lemma.php` (import filtering matches `lemma.php` try_pattern block).
  */
 import { listLemmaTopLevelDirs } from './lemmaSections.mjs';
+import { filterImportsByLemmaCode } from './filterImportsByLemmaCode.mjs';
 
 /**
  * @param {unknown} val
@@ -193,6 +194,25 @@ ${imply}
 ${proofSection}`;
 }
 
+/**
+ * Same proof-only string as PHP `$lemmaCode` in `lemma.php` (imploded tactic bodies for `try_pattern`).
+ * @param {Record<string, unknown>[]} lemmaArr
+ */
+function buildLemmaCodeForImportFilter(lemmaArr) {
+  const chunks = [];
+  for (const L of lemmaArr) {
+    const { kind, lines } = extractProofLines(L.proof);
+    if (kind !== 'by' && kind !== 'calc') continue;
+    let proofBody = expandCommaRwLines(lines)
+      .map((ln) => indentEachLine(ln))
+      .join('\n');
+    proofBody = proofBody.replace(/^\n+/, '').replace(/\n+$/, '');
+    proofBody = proofBody.replace(/(?<=\n)\s+\n/g, '');
+    if (proofBody) chunks.push(proofBody);
+  }
+  return chunks.join('\n\n\n');
+}
+
 function parseJsonField(raw, fallback) {
   if (raw == null || raw === '') return fallback;
   if (typeof raw !== 'string') return raw;
@@ -226,6 +246,18 @@ export function assembleLeanSourceFromPostBody(body) {
   if (lemmaArr.length === 0) {
     throw new Error('Missing lemma fields in POST body');
   }
+
+  const openSectionList = [];
+  for (const packages of open) {
+    if (Array.isArray(packages)) {
+      for (const pkg of packages) {
+        if (pkg && sectionSet.has(String(pkg))) openSectionList.push(String(pkg));
+      }
+    }
+  }
+
+  const lemmaCodeForImportFilter = buildLemmaCodeForImportFilter(lemmaArr);
+  imports = filterImportsByLemmaCode(imports, lemmaCodeForImportFilter, openSectionList);
 
   const uniqImports = [...new Set(imports)].sort();
   if (

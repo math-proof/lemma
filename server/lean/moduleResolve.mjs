@@ -7,7 +7,7 @@ import fs from 'fs';
 import { REPO_ROOT, moduleToLeanPath } from './modulePath.mjs';
 
 /** @param {string} op */
-function isInfixOperator(op) {
+export function isInfixOperator(op) {
   return ['eq', 'is', 'as', 'ne', 'lt', 'le', 'gt', 'ge', 'in', 'ou', 'et'].includes(op);
 }
 
@@ -59,7 +59,7 @@ function transformPrefix(s) {
  * @param {string | null} [sectionIn]
  * @returns {[string, string[][]]}
  */
-function parseInfixSegments(list, sectionIn = null) {
+export function parseInfixSegments(list, sectionIn = null) {
   let section = sectionIn;
   let rest = list;
   if (!section) {
@@ -93,7 +93,7 @@ function parseInfixSegments(list, sectionIn = null) {
 }
 
 /** @param {string | string[]} token */
-function Not(token) {
+export function Not(token) {
   if (typeof token === 'string') {
     if (token.startsWith('Not')) return token.slice(3);
     if (token.startsWith('Eq')) return `Ne${token.slice(2)}`;
@@ -117,9 +117,15 @@ function arrayInsert(arr, index, value) {
   arr.splice(index, 1, ...newArray);
 }
 
-/** @param {string[][]} segment @param {string} section */
-function tokensToModule(segment, section) {
-  const body = segment.map((t) => t.join('.')).join('.');
+/**
+ * Dotted module from `parseInfixSegments` rows (matches PHP `tokens_to_module`).
+ * @param {(string | string[])[]} segment
+ * @param {string | null} [section]
+ */
+export function tokensToModule(segment, section) {
+  const body = segment
+    .map((t) => (Array.isArray(t) ? t.join('.') : String(t)))
+    .join('.');
   return section ? `${section}.${body}` : body;
 }
 
@@ -396,4 +402,26 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
   }
 
   return null;
+}
+
+/**
+ * Swaps the first infix relation in the parsed module (same rewrite as commutative `@[main, comm]` paths).
+ * `imports` in MySQL may use either spelling; reverse hierarchy must match both.
+ * @param {string} moduleDot
+ * @returns {string | null} alternate dotted module, or null if not applicable / unchanged
+ */
+export function commutativeImportAlias(moduleDot) {
+  const module = String(moduleDot).trim().replace(/\//g, '.');
+  if (!module) return null;
+  const tokens = module.split('.');
+  const parsed = parseInfixSegments(tokens);
+  const section = parsed[0];
+  /** @type {string[][]} */
+  const segment = parsed[1].map((row) => [...row]);
+  const first = segment[0];
+  if (!first || first.length !== 3 || !isInfixOperator(first[1])) return null;
+  const segment_ = segment.map((r) => [...r]);
+  segment_[0] = [first[2], first[1], first[0]];
+  const swapped = tokensToModule(segment_, section);
+  return swapped === module ? null : swapped;
 }

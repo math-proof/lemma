@@ -47,8 +47,9 @@ export default {
 	},
 
 	methods: {
-		async delete_folder(error_msg){
-			while (error_msg){
+		async delete_folder(error_msg) {
+			if (typeof error_msg !== 'string' || !/rmdir\s*\(/i.test(error_msg)) return;
+			while (error_msg) {
 				console.log('error_msg = ', error_msg);
 				var m = error_msg.matchAll(/rmdir\((\S+)\)/g);
 				error_msg = '';

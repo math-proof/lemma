@@ -3,6 +3,7 @@
  * `establish_hierarchy` and `php/std.php` `Graph::detect_cycle_traceback` traceback logic.
  */
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
+import { commutativeImportAlias } from './moduleResolve.mjs';
 
 /**
  * @param {string} user
@@ -14,10 +15,17 @@ async function selectHierarchyFromDb(user, module, reverse) {
   if (!pool) return [];
 
   if (reverse) {
+    const alt = commutativeImportAlias(module);
     const [rows] = await pool.query(
-      `SELECT module FROM lemma
-       WHERE user = ? AND JSON_CONTAINS(imports, JSON_QUOTE(CONCAT('Lemma.', ?)), '$')`,
-      [user, module]
+      alt
+        ? `SELECT DISTINCT module FROM lemma
+           WHERE user = ? AND (
+             JSON_CONTAINS(imports, JSON_QUOTE(CONCAT('Lemma.', ?)), '$')
+             OR JSON_CONTAINS(imports, JSON_QUOTE(CONCAT('Lemma.', ?)), '$')
+           )`
+        : `SELECT module FROM lemma
+           WHERE user = ? AND JSON_CONTAINS(imports, JSON_QUOTE(CONCAT('Lemma.', ?)), '$')`,
+      alt ? [user, module, alt] : [user, module]
     );
     if (!Array.isArray(rows)) return [];
     return rows.map((/** @type {{ module: string }} */ r) => r.module);
