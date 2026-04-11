@@ -432,11 +432,6 @@ async function handleLemmaSavePost(res, userSegment, body) {
 
   await fs.mkdir(path.dirname(leanPath), { recursive: true });
   await fs.writeFile(leanPath, text, 'utf8');
-  try {
-    await fs.unlink(leanEchoPath(leanPath));
-  } catch {
-    /* no echo sidecar */
-  }
 
   res.redirect(302, `/${userSegment}/?module=${encodeURIComponent(module)}`);
 }
