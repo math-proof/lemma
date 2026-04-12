@@ -87,7 +87,7 @@ Invoke-Pm2 describe lemma 2>&1 | Out-Null
 if ($LASTEXITCODE -eq 0) {
     Invoke-Pm2 restart lemma
 } else {
-    Invoke-Pm2 start server/app.mjs --name lemma -i $pm2Instances
+    Invoke-Pm2 @('start', 'server/app.mjs', '--name', 'lemma', '-i', $pm2Instances)
 }
 if ($LASTEXITCODE -ne 0) {
     throw "pm2 start/restart failed (exit $LASTEXITCODE)"
