@@ -420,7 +420,7 @@ async function handleLemmaSavePost(res, userSegment, body) {
 
   let text;
   try {
-    text = assembleLeanSourceFromPostBody(body);
+    text = await assembleLeanSourceFromPostBody(body);
   } catch (err) {
     console.error('[lemma-save]', err);
     res.status(400).type('html').send(

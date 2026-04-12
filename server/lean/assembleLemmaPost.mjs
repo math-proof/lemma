@@ -6,6 +6,7 @@ import { listLemmaTopLevelDirs } from './lemmaSections.mjs';
 import { filterImportsByLemmaCode } from './filterImportsByLemmaCode.mjs';
 import { detectLemmaImportsFromScanText, stripOpenSectionQualifiers } from './detectLemmaImports.mjs';
 import { mergeSyntaxDrivenImports } from './syntaxDrivenImports.mjs';
+import { pruneRedundantSyntaxImports } from './importSyntaxDeps.mjs';
 
 /**
  * @param {unknown} val
@@ -82,6 +83,17 @@ function expandCommaRwLines(lines) {
 }
 
 /**
+ * Vue / CodeMirror often post `{ lean: "…" }` per line; `String(x)` would yield `[object Object]`.
+ * @param {unknown} x
+ */
+function proofLineToString(x) {
+  if (x == null) return '';
+  if (typeof x === 'string') return x;
+  if (typeof x === 'object' && x != null && 'lean' in x) return String(/** @type {{ lean: unknown }} */ (x).lean);
+  return String(x);
+}
+
+/**
  * POST `lemma[n][proof][by][0]`, `[1]`, … parses as an array in Express (`qs` / `body-parser`).
  * `String(array)` would join with commas and corrupt tactics.
  *
@@ -91,8 +103,8 @@ function expandCommaRwLines(lines) {
 function normalizeProofByField(byRaw) {
   if (byRaw == null) return '';
   if (typeof byRaw === 'string') return byRaw;
-  if (Array.isArray(byRaw)) return byRaw.map((x) => String(x)).join('\n');
-  return String(byRaw);
+  if (Array.isArray(byRaw)) return byRaw.map(proofLineToString).join('\n');
+  return proofLineToString(byRaw);
 }
 
 /**
@@ -109,13 +121,12 @@ function extractProofLines(proof) {
   let calcArr = [];
   const calcRaw = o.calc;
   if (calcRaw != null) {
-    if (Array.isArray(calcRaw)) calcArr = calcRaw.map((x) => String(x));
+    if (Array.isArray(calcRaw)) calcArr = calcRaw.map(proofLineToString);
     else if (typeof calcRaw === 'object') {
       calcArr = Object.keys(calcRaw)
         .filter((k) => /^\d+$/.test(k))
         .sort((a, b) => Number(a) - Number(b))
-        .map((k) => calcRaw[k])
-        .map(String);
+        .map((k) => proofLineToString(calcRaw[k]));
     } else if (typeof calcRaw === 'string' && calcRaw.trim()) calcArr = [calcRaw];
   }
   const hasCalc = calcArr.some((s) => String(s).trim() !== '');
@@ -178,7 +189,15 @@ function buildLemmaBlock(L) {
   }
 
   /** PHP: indent `imply` then `detect_lemma` (strips `Section.` when `open`); proof: detect on raw lines then indent. */
-  let imply = indentEachLine(L.imply != null ? String(L.imply) : '');
+  const implyRaw =
+    L.imply == null
+      ? ''
+      : typeof L.imply === 'string'
+        ? L.imply
+        : typeof L.imply === 'object' && 'lean' in L.imply
+          ? String(/** @type {{ lean: unknown }} */ (L.imply).lean)
+          : String(L.imply);
+  let imply = indentEachLine(implyRaw);
   imply = stripOpenSectionQualifiers(imply, sections);
 
   const { kind, lines } = extractProofLines(L.proof);
@@ -221,9 +240,9 @@ function parseJsonField(raw, fallback) {
 
 /**
  * @param {Record<string, unknown>} body
- * @returns {string}
+ * @returns {Promise<string>}
  */
-export function assembleLeanSourceFromPostBody(body) {
+export async function assembleLeanSourceFromPostBody(body) {
   const sectionSet = new Set(listLemmaTopLevelDirs());
 
   let imports = parseJsonField(body.imports, []);
@@ -355,7 +374,7 @@ export function assembleLeanSourceFromPostBody(body) {
     .join('\n');
 
   /** `php/lemma.php` compile → `$syntax` → `import_syntax` (e.g. `≃` → `stdlib.SEq`). */
-  const mergedImports = mergeSyntaxDrivenImports([...uniqImports], out);
+  const mergedImports = await mergeSyntaxDrivenImports([...uniqImports], out);
   let finalImports = [...new Set(mergedImports)].sort();
   if (
     !finalImports.some((i) => String(i).startsWith('Lemma.')) &&
@@ -364,8 +383,11 @@ export function assembleLeanSourceFromPostBody(body) {
     finalImports.push('sympy.Basic');
     finalImports.sort();
   }
-  if (finalImports.join('\n') !== uniqImports.join('\n')) {
-    parts[0] = finalImports.map((i) => `import ${i}`).join('\n');
+  finalImports = await pruneRedundantSyntaxImports(finalImports);
+  const newImportBlock = finalImports.map((i) => `import ${i}`).join('\n');
+  /** Compare to assembled header (not only `uniqImports`) so merge+prune wins when e.g. `uniq === final` but `parts[0]` was stale. */
+  if (parts[0] !== newImportBlock) {
+    parts[0] = newImportBlock;
     out = parts
       .join('\n')
       .split('\n')

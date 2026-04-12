@@ -1,19 +1,29 @@
 /**
  * Ports `php/lemma.php` lines 608–659: after `compile` + `render2vue`, `$syntax` keys drive extra
  * `stdlib.*` / `sympy.*` imports (`import_syntax`). Uses the same JS parser as `render2vue.mjs`.
+ *
+ * Skips adding an import when PHP would: already present, or implied by `Lemma.*` via MySQL
+ * recursive deps (`importSyntaxDeps.mjs`) or filesystem `contains_module`.
  */
 import { compile, LeanModule } from '../../static/js/parser/lean.js';
+import { transitiveProvidesImport } from './importSyntaxDeps.mjs';
 
 /**
  * @param {string[]} imports dotted import paths (no `import ` prefix), e.g. `stdlib.SEq`
  * @param {string} leanSource full `.lean` file text (imports + body)
- * @returns {string[]} `imports` plus any syntax-driven additions (PHP `array_unshift` order preserved in front segment)
+ * @returns {Promise<string[]>} `imports` plus any syntax-driven additions (PHP `array_unshift` order)
  */
-export function mergeSyntaxDrivenImports(imports, leanSource) {
+export async function mergeSyntaxDrivenImports(imports, leanSource) {
   const out = imports.map(String);
   const has = (x) => out.includes(x);
-  const unshiftIf = (imp) => {
-    if (!has(imp)) out.unshift(imp);
+
+  /**
+   * @param {string} imp
+   */
+  const maybeUnshift = async (imp) => {
+    if (has(imp)) return;
+    if (await transitiveProvidesImport(out, imp)) return;
+    out.unshift(imp);
   };
 
   let tree;
@@ -38,16 +48,16 @@ export function mergeSyntaxDrivenImports(imports, leanSource) {
   for (const tac of Object.keys(syntax)) {
     switch (tac) {
       case 'denote':
-        unshiftIf('sympy.core.relational');
+        await maybeUnshift('sympy.core.relational');
         break;
       case 'mp':
       case 'mpr':
-        unshiftIf('sympy.core.logic');
+        await maybeUnshift('sympy.core.logic');
         break;
       case '²':
       case '³':
       case '⁴':
-        unshiftIf('sympy.core.power');
+        await maybeUnshift('sympy.core.power');
         break;
       case 'Ici':
       case 'Iic':
@@ -58,33 +68,33 @@ export function mergeSyntaxDrivenImports(imports, leanSource) {
       case 'Icc':
       case 'Ico':
       case 'range':
-        unshiftIf('sympy.sets.sets');
+        await maybeUnshift('sympy.sets.sets');
         break;
       case 'setOf':
-        unshiftIf('sympy.concrete.quantifier');
+        await maybeUnshift('sympy.concrete.quantifier');
         break;
       case 'LeanStack':
-        unshiftIf('sympy.tensor.stack');
+        await maybeUnshift('sympy.tensor.stack');
         break;
       case 'Tensor':
         if (!has('sympy.tensor.tensor') && !has('sympy.tensor.stack')) {
-          unshiftIf('sympy.tensor.Basic');
+          await maybeUnshift('sympy.tensor.Basic');
         }
         break;
       case 'IntegerRing':
-        unshiftIf('sympy.polys.domains');
+        await maybeUnshift('sympy.polys.domains');
         break;
       case 'KroneckerDelta':
-        unshiftIf('sympy.functions.special.tensor_functions');
+        await maybeUnshift('sympy.functions.special.tensor_functions');
         break;
       case 'eye':
-        unshiftIf('sympy.matrices.expressions.special');
+        await maybeUnshift('sympy.matrices.expressions.special');
         break;
       case '≃':
-        unshiftIf('stdlib.SEq');
+        await maybeUnshift('stdlib.SEq');
         break;
       case 'softmax':
-        unshiftIf('sympy.tensor.functions');
+        await maybeUnshift('sympy.tensor.functions');
         break;
       default:
         break;

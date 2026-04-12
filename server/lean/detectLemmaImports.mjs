@@ -1,7 +1,9 @@
 /**
- * Ports `php/lemma.php` `detect_lemma` qualified branch (lines 143–161):
- * - scan for `Section.Name1…` → add `Lemma.<resolved>` imports;
- * - strip `Section.` prefixes (`preg_replace` line 163) so `open Section` allows short names in output.
+ * Ports `php/lemma.php` `detect_lemma` (lines 152–203):
+ * - qualified: `Section.Name1…` → add `Lemma.<resolved>` imports;
+ * - same pass strips `Section.` prefixes (line 163) from a scratch copy for the next step;
+ * - unqualified: chains not starting with a section (e.g. `SEq.of.SEqDataS.Eq` under `open Tensor`)
+ *   → try `Lemma.<section>.<chain>` for each top-level `Lemma/` folder (`module_exists` in PHP).
  */
 import { moduleToLeanPath, fileExists } from './modulePath.mjs';
 import { resolveMissingModuleRedirect } from './moduleResolve.mjs';
@@ -52,6 +54,17 @@ function resolveModuleOnDisk(dotted) {
 }
 
 /**
+ * PHP `detect_lemma` line 173: skip adding if some `Lemma.<section>.<lemmaName>` already exists.
+ * @param {string[]} imports `Lemma.*` strings
+ * @param {string} lemmaName first capture from the unqualified regex (dotted chain)
+ */
+function importAlreadyCoversLemmaName(imports, lemmaName) {
+  const escaped = lemmaName.replace(/\\/g, '\\\\').replace(/\./g, '\\.');
+  const re = new RegExp(`^Lemma\\.\\w+\\.${escaped}$`);
+  return imports.some((imp) => re.test(imp));
+}
+
+/**
  * @param {string} text imply + proof lines (same sources PHP passes to `detect_lemma`)
  * @param {string[]} sections `listLemmaTopLevelDirs()`
  * @returns {{ imports: string[]; sectionsFound: string[] }} `Lemma.*` to merge + section roots (for `open_section` like PHP)
@@ -73,6 +86,50 @@ export function detectLemmaImportsFromScanText(text, sections) {
       sectionsFound.add(m[1]);
     }
   }
+
+  // PHP line 163: strip `Tensor.` / `List.` … when followed by a `$term`, so short names match below.
+  const stripSectionPrefix = new RegExp(`\\b(?<!@)(${sectionRe})\\.(?=${TERM})`, 'gu');
+  const forUnqual = text.replace(stripSectionPrefix, '');
+  const unqualRe = new RegExp(
+    `\\b(?!${sectionRe})(${TERM}(?:\\.${TERM})*)((?:\\.[a-z_]+)*)(?=\\b[^.]|$)`,
+    'gu'
+  );
+  for (const um of forUnqual.matchAll(unqualRe)) {
+    const lemmaName = um[1];
+    const submodule = um[2] ?? '';
+    if (submodule === '.symm' && lemmaName === 'Eq') continue;
+
+    const importsSoFar = [...byKey.values()];
+    if (importAlreadyCoversLemmaName(importsSoFar, lemmaName)) continue;
+
+    /** @type {{ hit: boolean; section: string; resolved: string; lemmaImport: string }[]} */
+    const exists = [];
+    for (const section of sections) {
+      const dotted = `${section}.${lemmaName}`;
+      const resolved = resolveModuleOnDisk(dotted);
+      if (resolved) {
+        const lemmaImport = `Lemma.${resolved}`;
+        exists.push({
+          hit: importsSoFar.includes(lemmaImport),
+          section,
+          resolved,
+          lemmaImport,
+        });
+      }
+    }
+    if (!exists.length) continue;
+
+    const firstHit = exists.find((e) => e.hit);
+    if (firstHit) {
+      sectionsFound.add(firstHit.section);
+      continue;
+    }
+
+    const pick = exists[0];
+    byKey.set(pick.resolved, pick.lemmaImport);
+    sectionsFound.add(pick.section);
+  }
+
   return { imports: [...byKey.values()], sectionsFound: [...sectionsFound] };
 }
 
