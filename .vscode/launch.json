@@ -47,6 +47,20 @@
             "script": "${file}",
             "args": [], // Add arguments here
             "cwd": "${workspaceRoot}"
+        },
+        {
+            "name": "Node: debug current file",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "node",
+            "program": "${file}",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "skipFiles": ["<node_internals>/**"],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ]
         }
     ]
 }

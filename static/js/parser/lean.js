@@ -5246,7 +5246,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
             const m = /^(created|updated) on (\d\d\d\d-\d\d-\d\d)$/.exec(stmt.text);
             if (m) date[m[1]] = m[2];
             else comment = stmt.text;
-        } else if (stmt instanceof LeanBlockComment && !(stmt instanceof LeanDocString)) {
+        } else if (stmt instanceof LeanBlockComment) {
             comment = /** @type {*} */ (stmt).text;
         }
     }

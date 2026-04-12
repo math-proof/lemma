@@ -168,8 +168,14 @@ if (! str_ends_with($path_info, '/')) {
                                             break;
                                         }
                                     }
-                                    if (! $hit)
+                                    if (! $hit) {
+                                        $alt = try_of_is_of_file_rewrite($tokens);
+                                        if ($alt !== null) {
+                                            header("location:?module=$alt");
+                                            exit();
+                                        }
                                         $segment[1][0] = 'is';
+                                    }
                                 }
                             }
                             elseif (count($first) == 3) {
@@ -325,6 +331,11 @@ if (! str_ends_with($path_info, '/')) {
                 }
             }
             if ($leanFile) {
+                $alt = try_of_is_of_file_rewrite(explode('.', $module));
+                if ($alt !== null) {
+                    header("location:?module=$alt");
+                    exit();
+                }
                 $module = tokens_to_module($segment, $section);
                 header("location:?module=$module");
                 exit();

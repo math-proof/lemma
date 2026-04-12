@@ -40,6 +40,32 @@ function tokens_to_module($tokens, $section)
         $module = $section . ".". $module;
     return $module;
 }
+
+/**
+ * `Tensor.SEq.of.SEqDataS.Eq` → `Tensor.SEq.is.SEqDataS.of.Eq` when that `.lean` exists.
+ * Mirrors `server/lean/moduleResolve.mjs` `tryOfIsOfFileRewrite`: `of` is not in `is_infix_operator`,
+ * so `parseInfixSegments` splits singleton rows and `segment[1][0] = 'is'` alone misses the extra `of/`.
+ */
+function try_of_is_of_file_rewrite(array $tokens): ?string
+{
+    // Same insert index as the 5-token case: `…Sub.of.Mid…Rest` → `…Sub.is.Mid.of…Rest`
+    // (e.g. `Tensor.SEq.of.SEqDataS.Eq.SEq` → `Tensor.SEq.is.SEqDataS.of.Eq.SEq`).
+    if (count($tokens) < 5 || ($tokens[2] ?? null) !== 'of') {
+        return null;
+    }
+    $t = $tokens;
+    $t[2] = 'is';
+    if (count($t) > 4) {
+        std\array_insert($t, 4, 'of');
+    }
+    $module = implode('.', $t);
+    $path = module_to_lean($module);
+    if (file_exists($path)) {
+        return $module;
+    }
+    return null;
+}
+
 function module_to_lean($module, $section = null)
 {
     if ($section) {

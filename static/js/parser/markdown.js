@@ -2714,7 +2714,6 @@ class MarkdownDocument extends MarkdownArgs {
                 className = 'think';
         }
         bind.kwargs.class = className;
-        console.log('bind.kwargs.class = ', bind.kwargs.class);
         return bind;
     }
 
@@ -2731,7 +2730,6 @@ class MarkdownDocument extends MarkdownArgs {
 }
 MarkdownDocument.prototype.insert_asterisk = MarkdownI.prototype.insert_asterisk;
 MarkdownDocument.prototype.insert_underscore = MarkdownI.prototype.insert_underscore;
-MarkdownDocument.prototype.insert_bar = MarkdownSPAN.prototype.insert_bar;
 MarkdownDocument.prototype.insert_backtick = MarkdownH.prototype.insert_backtick;
 MarkdownDocument.prototype.insert_dollar = MarkdownH.prototype.insert_dollar;
 Markdown.MarkdownCODE = MarkdownCODE;

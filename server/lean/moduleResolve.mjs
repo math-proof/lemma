@@ -118,6 +118,22 @@ function arrayInsert(arr, index, value) {
 }
 
 /**
+ * `Tensor.SEq.of.SEqDataS.Eq` → `Tensor.SEq.is.SEqDataS.of.Eq` when that file exists (PHP `index.php`
+ * `array_insert` after `tokens[2] = 'is'` when `of` is not parsed as infix — `is_infix_operator` omits `of`).
+ * @param {string[]} tokens dotted module split, e.g. `Tensor.SEq.of.SEqDataS.Eq`
+ * @returns {string | null}
+ */
+function tryOfIsOfFileRewrite(tokens) {
+  if (tokens.length < 5 || tokens[2] !== 'of') return null;
+  const t = [...tokens];
+  t[2] = 'is';
+  if (t.length > 4) arrayInsert(t, 4, 'of');
+  const m = t.join('.');
+  const p = moduleToLeanPath(m);
+  return p && fs.existsSync(p) ? m : null;
+}
+
+/**
  * Dotted module from `parseInfixSegments` rows (matches PHP `tokens_to_module`).
  * @param {(string | string[])[]} segment
  * @param {string | null} [section]
@@ -248,7 +264,11 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
                   break;
                 }
               }
-              if (!hit && segment[1]) segment[1][0] = 'is';
+              if (!hit && segment[1]) {
+                const flatAlt = tryOfIsOfFileRewrite(tokens);
+                if (flatAlt) return flatAlt;
+                segment[1][0] = 'is';
+              }
             }
           } else if (first.length === 3 && isInfixOperator(first[1])) {
             // (e.g. `Nat.AddSub.eq.SubAdd.of.Ge` → `Nat.SubAdd.eq.AddSub.of.Ge`).
@@ -335,6 +355,10 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
               const m = tokens_.join('.');
               const p = moduleToLeanPath(m);
               if (p && fs.existsSync(p)) return m;
+            }
+            {
+              const flatAlt = tryOfIsOfFileRewrite(tokens);
+              if (flatAlt) return flatAlt;
             }
             tokens[2] = 'is';
           }
