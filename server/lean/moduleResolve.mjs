@@ -118,13 +118,14 @@ function arrayInsert(arr, index, value) {
 }
 
 /**
- * `Tensor.SEq.of.SEqDataS.Eq` → `Tensor.SEq.is.SEqDataS.of.Eq` when that file exists (PHP `index.php`
- * `array_insert` after `tokens[2] = 'is'` when `of` is not parsed as infix — `is_infix_operator` omits `of`).
- * @param {string[]} tokens dotted module split, e.g. `Tensor.SEq.of.SEqDataS.Eq`
+ * When `tokens[2]` is `of` but the on-disk path uses `is` (Lean `of` not in `is_infix_operator`):
+ * - Four segments: `List.Eq_Nil.of.EqLength_0` → `List.Eq_Nil.is.EqLength_0`.
+ * - Five or more: `Tensor.SEq.of.SEqDataS.Eq` → `Tensor.SEq.is.SEqDataS.of.Eq` (PHP `index.php` `array_insert`).
+ * @param {string[]} tokens dotted module split
  * @returns {string | null}
  */
 function tryOfIsOfFileRewrite(tokens) {
-  if (tokens.length < 5 || tokens[2] !== 'of') return null;
+  if (tokens.length < 4 || tokens[2] !== 'of') return null;
   const t = [...tokens];
   t[2] = 'is';
   if (t.length > 4) arrayInsert(t, 4, 'of');
@@ -241,6 +242,10 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
                 tokens[1] = first[0];
                 tokens[2] = 'is';
                 if (tokens.length > 4) arrayInsert(tokens, 4, 'of');
+                // `tokens` was updated but `tokensToModule(segment, …)` still read `of` from segment[1].
+                if (segment[1]?.length === 1 && segment[1][0] === 'of') {
+                  segment[1][0] = 'is';
+                }
               }
             } else {
               if (tokens.length === 5) {
@@ -345,6 +350,9 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
               tokens[1] = first;
               tokens[2] = 'is';
               if (tokens.length > 4) arrayInsert(tokens, 4, 'of');
+              if (segment[1]?.length === 1 && segment[1][0] === 'of') {
+                segment[1][0] = 'is';
+              }
             }
           } else {
             if (tokens.length === 5) {
