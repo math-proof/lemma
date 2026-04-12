@@ -5,7 +5,7 @@ open List
 
 @[main, comm]
 private lemma main
-  {s : List α}:
+  {s : List α} :
 -- imply
   (s.rotate 1).take (s.length - 1) = s.tail := by
 -- proof
@@ -15,7 +15,7 @@ private lemma main
   else
     have h : s.length = 0 := by omega
     simp [h]
-    have h := List.Eq_Nil.of.EqLength_0 h
+    have h := Eq_Nil.of.EqLength_0 h
     grind
 
 
