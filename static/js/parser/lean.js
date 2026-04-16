@@ -7756,7 +7756,10 @@ export class LeanBy extends LeanUnary {
     }
 
     sep() {
-        return this.arg instanceof LeanStatements ? '\n' : ' ';
+        const {arg} = this;
+        if (arg instanceof LeanStatements) return '\n';
+        if (arg instanceof LeanCaret) return '';
+        return ' ';
     }
 
     set_line(line) {
@@ -7777,7 +7780,10 @@ class LeanFrom extends LeanUnary {
         return this.parent instanceof LeanArgsCommaNewLineSeparated;
     }
     sep() {
-        return this.arg instanceof LeanStatements ? '\n' : ' ';
+        const {arg} = this;
+        if (arg instanceof LeanStatements) return '\n';
+        if (arg instanceof LeanCaret) return '';
+        return ' ';
     }
     strFormat() {
         const s = this.sep();
