@@ -1,11 +1,10 @@
-import stdlib.SEq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.tensor
 import Lemma.Bool.SEqCast.of.Eq
 open Tensor Bool
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (h_s : s.length > 0)

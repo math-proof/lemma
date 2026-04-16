@@ -14,7 +14,7 @@ private lemma main
   simp
 
 
-@[main]
+@[main, comm]
 private lemma Comm
   [CommMonoid α]
 -- given
