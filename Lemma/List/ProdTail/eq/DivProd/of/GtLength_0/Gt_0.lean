@@ -1,5 +1,5 @@
 import Lemma.Nat.Ne.of.Gt
-import Lemma.List.DivProd.eq.ProdTail.of.NeLength_0.Ne_0
+import Lemma.List.ProdTail.eq.DivProd.of.NeLength_0.Ne_0
 open List Nat
 
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   s.tail.prod = s.prod / s[0] :=
 -- proof
-  DivProd.eq.ProdTail.of.NeLength_0.Ne_0
+  ProdTail.eq.DivProd.of.NeLength_0.Ne_0
     (Ne.of.Gt h₀)
     (Ne.of.Gt h₁)
 
