@@ -243,7 +243,8 @@ function parseJsonField(raw, fallback) {
  * @returns {Promise<string>}
  */
 export async function assembleLeanSourceFromPostBody(body) {
-  const sectionSet = new Set(listLemmaTopLevelDirs());
+  const sections = listLemmaTopLevelDirs();
+  const sectionSet = new Set(sections);
 
   let imports = parseJsonField(body.imports, []);
   if (!Array.isArray(imports)) imports = [];
@@ -272,9 +273,9 @@ export async function assembleLeanSourceFromPostBody(body) {
   }
 
   /** PHP `detect_lemma` on imply + proof lines before `array_filter` imports. */
-  const sections = listLemmaTopLevelDirs();
   const detectedImports = [];
   const detectedOpen = new Set(openSectionList);
+  let importsForDetect = [...imports];
   for (const L of lemmaArr) {
     const implyRaw = L.imply != null ? String(L.imply) : '';
     const implyScan = implyRaw ? indentEachLine(implyRaw) : '';
@@ -282,8 +283,9 @@ export async function assembleLeanSourceFromPostBody(body) {
     const proofScan =
       kind === 'by' || kind === 'calc' ? expandCommaRwLines(lines).map((ln) => String(ln)).join('\n') : '';
     const chunk = [implyScan, proofScan].filter(Boolean).join('\n');
-    const { imports: addI, sectionsFound } = detectLemmaImportsFromScanText(chunk, sections);
+    const { imports: addI, sectionsFound } = detectLemmaImportsFromScanText(chunk, sections, importsForDetect);
     detectedImports.push(...addI);
+    importsForDetect = [...new Set([...importsForDetect, ...addI])];
     for (const sec of sectionsFound) {
       if (sectionSet.has(sec)) detectedOpen.add(sec);
     }

@@ -1,4 +1,3 @@
-import Lemma.Nat.EqDivAddMul.of.Lt
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Finset.Prod.eq.MulProdS
@@ -15,17 +14,18 @@ import Lemma.List.ProdTail.eq.DivProd.of.GtLength_0.Gt_0
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.TakeRotate.eq.Tail
 import Lemma.Nat.EqAddSub.of.Ge
+import Lemma.Nat.EqDivAddMul.of.Lt
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
-import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
-import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqPermuteHeadS.of.Eq
 import Lemma.Tensor.SEqPermuteHead_1
+import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
+import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
@@ -54,13 +54,13 @@ private lemma main
     symm
     apply SEq.trans (Get.as.Select_0.of.Lt_Get_0.GtLength_0 (by omega) h_k X)
     apply SEqSelectS.of.SEq.EqValS.EqValS
-    .
+    ·
       symm
       apply SEq.trans (SEqPermuteHeadS.of.Eq X h_s)
       apply SEqPermuteHead_1
-    .
+    ·
       grind
-    .
+    ·
       simp
   else
     have h_s : s.length > 1 := by omega

@@ -67,10 +67,12 @@ function importAlreadyCoversLemmaName(imports, lemmaName) {
 /**
  * @param {string} text imply + proof lines (same sources PHP passes to `detect_lemma`)
  * @param {string[]} sections `listLemmaTopLevelDirs()`
+ * @param {string[]} [existingImports] PHP `$imports` already present when `detect_lemma` runs
  * @returns {{ imports: string[]; sectionsFound: string[] }} `Lemma.*` to merge + section roots (for `open_section` like PHP)
  */
-export function detectLemmaImportsFromScanText(text, sections) {
+export function detectLemmaImportsFromScanText(text, sections, existingImports = []) {
   if (!text || !sections.length) return { imports: [], sectionsFound: [] };
+  const existing = (existingImports ?? []).map(String);
   const sectionRe = buildSectionRegex(sections);
   const re = new RegExp(`\\b(${sectionRe})((?:\\.${TERM})+)\\b`, 'gu');
   /** @type {Map<string, string>} */
@@ -86,6 +88,7 @@ export function detectLemmaImportsFromScanText(text, sections) {
       sectionsFound.add(m[1]);
     }
   }
+  const importsSoFarFor = () => [...new Set([...existing, ...byKey.values()])];
 
   // PHP line 163: strip `Tensor.` / `List.` … when followed by a `$term`, so short names match below.
   const stripSectionPrefix = new RegExp(`\\b(?<!@)(${sectionRe})\\.(?=${TERM})`, 'gu');
@@ -99,7 +102,7 @@ export function detectLemmaImportsFromScanText(text, sections) {
     const submodule = um[2] ?? '';
     if (submodule === '.symm' && lemmaName === 'Eq') continue;
 
-    const importsSoFar = [...byKey.values()];
+    const importsSoFar = importsSoFarFor();
     if (importAlreadyCoversLemmaName(importsSoFar, lemmaName)) continue;
 
     /** @type {{ hit: boolean; section: string; resolved: string; lemmaImport: string }[]} */
