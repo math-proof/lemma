@@ -5888,7 +5888,10 @@ export class Lean_rightarrow extends LeanBinary {
     }
 
     sep() {
-        return this.rhs instanceof LeanStatements ? '\n' : ' ';
+        const {rhs} = this;
+        if (rhs instanceof LeanStatements) return '\n';
+        if (rhs instanceof LeanCaret) return '';
+        return ' ';
     }
 
     strFormat() {
@@ -5926,7 +5929,10 @@ export class Lean_mapsto extends LeanBinary {
     }
 
     sep() {
-        return this.rhs instanceof LeanStatements ? '\n' : ' ';
+        const {rhs} = this;
+        if (rhs instanceof LeanStatements) return '\n';
+        if (rhs instanceof LeanCaret) return '';
+        return ' ';
     }
 
     strFormat() {
@@ -7833,7 +7839,10 @@ class LeanCalc extends LeanUnary {
     }
 
     sep() {
-        return this.arg instanceof LeanArgsNewLineSeparated ? '\n' : ' ';
+        const {arg} = this;
+        if (arg instanceof LeanArgsNewLineSeparated) return '\n';
+        if (arg instanceof LeanCaret) return '';
+        return ' ';
     }
 
     strFormat() {
