@@ -179,6 +179,75 @@ export async function fetchLemmaRowFromMysql(user, module) {
 }
 
 /**
+ * Map one `mathlib` table row to the `lemma` prop shape expected by `mathlib.vue` / `lemma.vue`.
+ * Mirrors `php/mathlib.php` `get_lemma` + column order from `sql/create/mathlib.sql`.
+ * @param {Record<string, unknown>} row
+ */
+export function mathlibRowToLemmaPayload(row) {
+  const r = row;
+  const implyRaw = decode(r.imply);
+  /** PHP `get_lemma` uses `std\\decode($imply)` only — no forced `insert` (DB is source of truth). */
+  const imply =
+    implyRaw != null && typeof implyRaw === 'object'
+      ? /** @type {Record<string, unknown>} */ ({ ...implyRaw })
+      : { insert: true, lean: '', latex: '' };
+  const givenDec = decode(r.given);
+  const given = Array.isArray(givenDec) ? givenDec : givenDec != null ? [givenDec] : [];
+  return {
+    name: String(r.name ?? ''),
+    type: r.type != null ? String(r.type) : '',
+    instImplicit: r.instImplicit != null ? String(r.instImplicit) : '',
+    strictImplicit: r.strictImplicit != null ? String(r.strictImplicit) : '',
+    implicit: r.implicit != null ? String(r.implicit) : '',
+    explicit: r.explicit != null ? String(r.explicit) : '',
+    given,
+    default: r.default != null ? String(r.default) : '',
+    imply,
+    proof: {},
+  };
+}
+
+/**
+ * `php/mathlib.php`: exact `name`, else `REGEXP` fallback (like PHP), else random rows with empty `imply`.
+ * @param {string} name dotted Mathlib name (may be empty)
+ * @param {number} [limit]
+ * @returns {Promise<object[]>} payloads for `createApp('mathlib', { lemma })`
+ */
+export async function fetchMathlibLemmaPayloadsFromMysql(name, limit = 100) {
+  const p = getMysqlPool();
+  if (!p) return [];
+  const lim = Math.min(Math.max(Number(limit) || 100, 1), 500);
+  const nm = name == null ? '' : String(name).trim();
+  try {
+    if (nm) {
+      const [exact] = await p.query('SELECT * FROM mathlib WHERE `name` = ? LIMIT ?', [nm, lim]);
+      if (Array.isArray(exact) && exact.length > 0) {
+        return exact.map((row) => mathlibRowToLemmaPayload(/** @type {Record<string, unknown>} */ (row)));
+      }
+      const esc = nm.replace(/\\/g, '\\\\').replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\./g, '\\.');
+      const [rx] = await p.query(
+        'SELECT * FROM mathlib WHERE `name` COLLATE utf8mb4_bin REGEXP ? LIMIT ?',
+        [esc, lim]
+      );
+      if (Array.isArray(rx) && rx.length > 0) {
+        return rx.map((row) => mathlibRowToLemmaPayload(/** @type {Record<string, unknown>} */ (row)));
+      }
+      return [];
+    }
+    const [rand] = await p.query(
+      'SELECT * FROM mathlib WHERE json_length(`imply`) = 0 ORDER BY RAND() LIMIT ?',
+      [lim]
+    );
+    return Array.isArray(rand)
+      ? rand.map((row) => mathlibRowToLemmaPayload(/** @type {Record<string, unknown>} */ (row)))
+      : [];
+  } catch (e) {
+    console.warn('[mathlib mysql]', /** @type {Error} */ (e).message);
+    return [];
+  }
+}
+
+/**
  * @param {string} echoAbsPath
  */
 export function ensureEmptyEchoFile(echoAbsPath) {

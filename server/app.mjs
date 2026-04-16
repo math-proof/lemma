@@ -29,6 +29,7 @@ import {
   getMysqlConfig,
   shouldLoadLemmaFromMysql,
   fetchLemmaRowFromMysql,
+  fetchMathlibLemmaPayloadsFromMysql,
   codeFromMysqlRow,
   ensureEmptyEchoFile,
 } from './lean/fetchLemmaMysql.mjs';
@@ -44,6 +45,7 @@ import {
   buildHierarchyTraceback,
 } from './lean/hierarchyData.mjs';
 import { renderWebsiteIndex, handleWebsiteMdPhp } from './lean/website.mjs';
+import { handleMathlibPhpRequest } from './lean/mathlibRequest.mjs';
 import { getRepoStatsCached } from './lean/lemmaRepoStats.mjs';
 import {
   searchLeanFilesRecursiveUnderFolder,
@@ -115,6 +117,14 @@ app.post('/:userSegment/php/request/execute.php', ensureProjectUser, (req, res) 
   handleExecute(req, res).catch((e) => {
     console.error('[execute]', e);
     res.status(500).type('text/plain').send('0');
+  });
+});
+
+/** Same contract as `php/request/mathlib.php` (POST `name` → JSON from Lean `Name.toJson`). */
+app.post('/:userSegment/php/request/mathlib.php', ensureProjectUser, (req, res) => {
+  handleMathlibPhpRequest(req, res).catch((e) => {
+    console.error('[mathlib.php]', e);
+    res.status(500).json({ error: String(e?.message || e) });
   });
 });
 
@@ -497,8 +507,21 @@ async function renderHierarchyPage(res, query, keyInput, userSegment) {
 }
 
 /**
+ * PHP `index.php` default branch + `php/mathlib.php`: `?mathlib=name` → `mathlib.vue` with rows from `mathlib` table.
+ */
+async function renderMathlibPage(res, name, userSegment, limit) {
+  const lemma = await fetchMathlibLemmaPayloadsFromMysql(name, limit);
+  const mathlibJson = jsonForScriptEmbed({ lemma });
+  const title = name ? String(name) : 'mathlib';
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  if (process.env.NODE_ENV !== 'production') {
+    res.set('Cache-Control', 'no-store');
+  }
+  res.render('mathlib', { title, mathlibJson, userSegment });
+}
+
+/**
  * PHP `php/new.php` + `index.php?new=`: edit shell for an existing `Lemma/<module>.lean` via `newTheorem.vue`.
- * (mathlib/axiom-only creation remains PHP-only.)
  */
 async function renderNewTheoremPage(res, module, userSegment) {
   const abs = moduleToLeanPath(module);
@@ -506,7 +529,7 @@ async function renderNewTheoremPage(res, module, userSegment) {
     res.status(404).type('html').send(
       `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
       <p>No Lean file for <code>${escapeHtml(module)}</code>.</p>
-      <p>Bootstrapping from <code>mathlib</code> / <code>axiom</code> without a local file is only implemented in the PHP entrypoint.</p>`
+      <p>Bootstrapping from <code>mathlib</code> / <code>axiom</code> without a local file is not implemented here; use <code>?mathlib=…</code> for Mathlib rows from MySQL.</p>`
     );
     return;
   }
@@ -580,6 +603,24 @@ async function handleLeanGet(req, res) {
       await renderHierarchyPage(res, req.query, 'caller', userSeg);
     } catch (err) {
       console.error('[hierarchy caller]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+    }
+    return;
+  }
+
+  /** PHP `index.php` + `php/mathlib.php`: `?mathlib=div_zero` (key may be present with empty value). */
+  if (Object.prototype.hasOwnProperty.call(req.query, 'mathlib')) {
+    const name = req.query.mathlib == null ? '' : String(req.query.mathlib).trim();
+    const limRaw = req.query.limit;
+    const limit =
+      limRaw != null && String(limRaw).trim() !== '' ? Number(limRaw) : 100;
+    try {
+      await renderMathlibPage(res, name, userSeg, limit);
+    } catch (err) {
+      console.error('[mathlib]', err);
       res.status(500).type('html').send(
         `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
         <p>${escapeHtml(String(err?.message || err))}</p>`

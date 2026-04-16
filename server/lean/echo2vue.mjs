@@ -27,7 +27,7 @@ function importPackageString(stmt) {
   return String(/** @type {{ arg: unknown }} */ (stmt).arg).trim();
 }
 
-function get_lake_path() {
+export function get_lake_path() {
   if (process.env.LEAN_LAKE_PATH) return process.env.LEAN_LAKE_PATH;
   const home = process.env.USERPROFILE || process.env.HOME || '';
   const exe = process.platform === 'win32' ? 'lake.exe' : 'lake';
@@ -35,7 +35,7 @@ function get_lake_path() {
 }
 
 /** @param {string} repoRoot */
-function get_lean_env(repoRoot) {
+export function get_lean_env(repoRoot) {
   const pkgsDir = path.join(repoRoot, '.lake', 'packages');
   let repository = fs.readdirSync(pkgsDir).filter((x) => x !== '.' && x !== '..');
   const cwdUnix = repoRoot.replace(/\\/g, '/');
@@ -88,7 +88,7 @@ const SPAWN_MAX_BUFFER = 64 * 1024 * 1024;
  * @param {{ cwd: string; env: NodeJS.ProcessEnv; windowsHide?: boolean }}
  * @returns {Promise<{ stdout: string; stderr: string; error: Error | null }>}
  */
-function spawnLakeLean(command, args, { cwd, env, windowsHide = true }) {
+export function spawnLakeLean(command, args, { cwd, env, windowsHide = true }) {
   return new Promise((resolve) => {
     const child = spawn(command, args, {
       cwd,
