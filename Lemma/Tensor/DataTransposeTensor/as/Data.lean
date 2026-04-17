@@ -1,3 +1,5 @@
+import Lemma.Tensor.GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0
+import Lemma.Tensor.Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.List.TailPermute__Neg.eq.EraseIdx
 import Lemma.List.ProdPermute.eq.Prod
@@ -46,7 +48,22 @@ private lemma main
         rw [h_tail_permute]
         simpa [h_permute]
       simp [h_0]
-      sorry
+      have h_prod : n = [n, 1].prod := by simp
+      have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by grind) (⟨cast (congrArg (List.Vector α) h_prod) v⟩ : Tensor α [n, 1]) (i := ⟨1, by grind⟩) (d := 1)
+      simp at this
+      rw [this]
+      have := Tensor.GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by grind) (⟨cast (congrArg (List.Vector α) h_prod) v⟩ : Tensor α [n, 1]) (k := 0)
+      simp at this
+      rw [this]
+      simp [Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
+      rw [GetCast.eq.Get.of.Eq.fin]
+      .
+        simp
+        sorry
+      .
+        simp
+        sorry
+        sorry
     .
       rw [ProdPermute.eq.Prod]
       grind
