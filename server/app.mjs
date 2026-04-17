@@ -30,9 +30,11 @@ import {
   shouldLoadLemmaFromMysql,
   fetchLemmaRowFromMysql,
   fetchMathlibLemmaPayloadsFromMysql,
+  fetchMathlibRowByName,
   codeFromMysqlRow,
   ensureEmptyEchoFile,
 } from './lean/fetchLemmaMysql.mjs';
+import { buildNewTheoremCodeFromMathlibRow } from './lean/newTheoremBootstrap.mjs';
 import { assembleLeanSourceFromPostBody } from './lean/assembleLemmaPost.mjs';
 import { handleDeleteLemma } from './lean/deleteLemma.mjs';
 import { handleDeletePackage } from './lean/deletePackage.mjs';
@@ -525,25 +527,40 @@ async function renderMathlibPage(res, name, userSegment, limit) {
  */
 async function renderNewTheoremPage(res, module, userSegment) {
   const abs = moduleToLeanPath(module);
-  if (!abs || !fileExists(abs)) {
-    res.status(404).type('html').send(
-      `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
-      <p>No Lean file for <code>${escapeHtml(module)}</code>.</p>
-      <p>Bootstrapping from <code>mathlib</code> / <code>axiom</code> without a local file is not implemented here; use <code>?mathlib=…</code> for Mathlib rows from MySQL.</p>`
-    );
-    return;
-  }
-  const source = readLeanFile(abs);
   let code;
-  try {
-    code = render2vueFromSource(source, module, { user: PROJECT_USER });
-  } catch (err) {
-    console.error('[new theorem]', err);
-    res.status(500).type('html').send(
-      `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
-      <p>${escapeHtml(String(err?.message || err))}</p>`
-    );
-    return;
+  if (abs && fileExists(abs)) {
+    const source = readLeanFile(abs);
+    try {
+      code = render2vueFromSource(source, module, { user: PROJECT_USER });
+    } catch (err) {
+      console.error('[new theorem]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+      return;
+    }
+  } else {
+    const row = await fetchMathlibRowByName(module);
+    if (!row) {
+      res.status(404).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+        <p>No Lean file for <code>${escapeHtml(module)}</code> and no matching <code>mathlib</code> row (exact <code>name</code>).</p>
+        <p>Configure MySQL (<code>MYSQL_HOST</code>, …) and ensure a row exists, or add <code>Lemma/…</code>. The PHP <code>axiom</code> bootstrap path is not implemented on Node.</p>`
+      );
+      return;
+    }
+    try {
+      code = buildNewTheoremCodeFromMathlibRow(row, module);
+      code.user = PROJECT_USER;
+    } catch (err) {
+      console.error('[new theorem mathlib]', err);
+      res.status(500).type('html').send(
+        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
+        <p>${escapeHtml(String(err?.message || err))}</p>`
+      );
+      return;
+    }
   }
   if (!code.date || typeof code.date !== 'object') code.date = {};
   code.date.created = new Date().toISOString().slice(0, 10);

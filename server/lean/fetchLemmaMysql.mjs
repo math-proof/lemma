@@ -179,6 +179,26 @@ export async function fetchLemmaRowFromMysql(user, module) {
 }
 
 /**
+ * One `mathlib` row by exact `name` (PHP `php/new.php` first fallback).
+ * @param {string} name
+ * @returns {Promise<Record<string, unknown> | null>}
+ */
+export async function fetchMathlibRowByName(name) {
+  const p = getMysqlPool();
+  if (!p) return null;
+  const nm = name == null ? '' : String(name).trim();
+  if (!nm) return null;
+  try {
+    const [rows] = await p.query('SELECT * FROM `mathlib` WHERE `name` = ? LIMIT 1', [nm]);
+    if (!Array.isArray(rows) || rows.length === 0) return null;
+    return /** @type {Record<string, unknown>} */ (rows[0]);
+  } catch (e) {
+    console.warn('[mathlib row by name]', /** @type {Error} */ (e).message);
+    return null;
+  }
+}
+
+/**
  * Map one `mathlib` table row to the `lemma` prop shape expected by `mathlib.vue` / `lemma.vue`.
  * Mirrors `php/mathlib.php` `get_lemma` + column order from `sql/create/mathlib.sql`.
  * @param {Record<string, unknown>} row
