@@ -93,17 +93,68 @@ if ($LASTEXITCODE -ne 0) {
     throw "pm2 start/restart failed (exit $LASTEXITCODE)"
 }
 
-Write-Host "PM2 lemma: pm2 list | pm2 logs lemma. New installs use -i $pm2Instances (set LEAN_WORKERS); pm2 restart keeps existing instance count."
+Write-Host "PM2 lemma: pm2 list. New installs use -i $pm2Instances (set LEAN_WORKERS); pm2 restart keeps existing instance count."
 
 Invoke-Pm2 save
 if ($LASTEXITCODE -ne 0) {
     throw "pm2 save failed (exit $LASTEXITCODE)"
 }
 
+# Same idea as ../label/start.ps1: print the exact prefix to stream logs (PM2 app name is `lemma`).
+$pm2CmdParts = @()
+if (Get-Command pm2 -ErrorAction SilentlyContinue) {
+    $preferred = Get-Command pm2 -ErrorAction SilentlyContinue -All |
+        Where-Object { $_.Source -match '\.(cmd|exe)$' } |
+        Select-Object -First 1
+    if ($preferred) {
+        $pm2CmdParts = @($preferred.Source)
+    }
+    else {
+        $fb = Get-Command pm2 -ErrorAction SilentlyContinue -All | Select-Object -First 1
+        if ($fb) {
+            $pm2CmdParts = @($fb.Source)
+        }
+        else {
+            $pm2CmdParts = @('pm2')
+        }
+    }
+}
+elseif (Test-Path -LiteralPath (Join-Path $PSScriptRoot 'node_modules\pm2') -PathType Container) {
+    $npxCmd = Get-Command npx.cmd -ErrorAction SilentlyContinue
+    if ($npxCmd) {
+        $pm2CmdParts = @($npxCmd.Source, 'pm2')
+    }
+    else {
+        $pm2CmdParts = @('npx', 'pm2')
+    }
+}
+else {
+    $pm2CmdParts = @('pm2')
+}
+
+function Quote-IfNeeded([string]$Text) {
+    if ($null -eq $Text -or $Text -eq '') {
+        return $Text
+    }
+    if ($Text -match '\s') {
+        return '"' + $Text.Replace('"', '""') + '"'
+    }
+    return $Text
+}
+
+# Paths like D:\Program Files\... must be quoted; in PowerShell the call operator & is required.
+$quotedJoin = ($pm2CmdParts | ForEach-Object { Quote-IfNeeded $_ }) -join ' '
+$withLogs = ($quotedJoin + ' logs lemma').Trim()
+$viewerLine = if ($pm2CmdParts[0] -match '\s') {
+    '& ' + $withLogs
+}
+else {
+    $withLogs
+}
+Write-Host "Use the following command to view logs:`n$viewerLine"
+
 # pm2 startup only configures Linux/macOS init (systemd, launchd, …). On Windows it errors
 # with "Init system not found". Use Task Scheduler / NSSM for boot, or run start.ps1 after login.
-if ($env:OS -match 'Windows') {
-    Write-Host 'Skipping pm2 startup on Windows (no supported init system). List already saved via pm2 save.'
-} else {
+if ($env:OS -notmatch 'Windows') {
     Invoke-Pm2 startup
 }
