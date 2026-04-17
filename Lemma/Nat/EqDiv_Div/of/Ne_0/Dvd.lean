@@ -1,6 +1,7 @@
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqDivS.of.Eq
 import Lemma.Nat.EqMul_Div.of.Dvd
+import Lemma.Nat.Eq_0.of.Div.eq.Zero.Dvd
 open Nat
 
 
@@ -22,11 +23,8 @@ private lemma main
     grind
   .
     intro h'
-    have hz : a = 0 := by
-      have key := EqMul_Div.of.Dvd h_dvd
-      rw [h', mul_zero] at key
-      exact key.symm
-    exact h_ne_zero hz
+    have := Eq_0.of.Div.eq.Zero.Dvd h_dvd h'
+    contradiction
 
 
 -- created on 2026-04-16
