@@ -109,11 +109,11 @@ function normalizeProofByField(byRaw) {
 
 /**
  * @param {unknown} proof
- * @returns {{ kind: 'by' | 'calc' | '', lines: string[] }}
+ * @returns {{ kind: 'by' | 'calc' | 'lines' | '', lines: string[] }}
  */
 function extractProofLines(proof) {
   if (!proof || typeof proof !== 'object') return { kind: '', lines: [] };
-  const o = proof;
+  const o = /** @type {Record<string, unknown>} */ (proof);
   const byRaw = o.by;
   const byStr = normalizeProofByField(byRaw);
   const hasBy = byStr.trim() !== '';
@@ -133,6 +133,25 @@ function extractProofLines(proof) {
 
   if (hasBy) return { kind: 'by', lines: byStr.split('\n') };
   if (hasCalc) return { kind: 'calc', lines: calcArr.flatMap((s) => String(s).split('\n')) };
+
+  /**
+   * PHP `lemma.php`: `$by = $proof['by'] ? … : ($proof['calc'] ? … : ''); if ($by) $proof = $proof[$by];`
+   * then `foreach ($proof as &$line)` — so a plain list (no `by` / `calc`) is still emitted under `-- proof`.
+   * Vue `get_proof_list` uses `proof.by ?? proof.calc ?? proof` for that shape (e.g. `[{ lean: "…" }]`).
+   */
+  if (Array.isArray(o)) {
+    const lines = o.map(proofLineToString).flatMap((s) => String(s).split('\n'));
+    return { kind: 'lines', lines };
+  }
+  const numericKeys = Object.keys(o)
+    .filter((k) => /^\d+$/.test(k))
+    .sort((a, b) => Number(a) - Number(b));
+  if (numericKeys.length) {
+    const lines = numericKeys
+      .map((k) => proofLineToString(o[k]))
+      .flatMap((s) => String(s).split('\n'));
+    return { kind: 'lines', lines };
+  }
   return { kind: '', lines: [] };
 }
 
@@ -200,7 +219,7 @@ function buildLemmaBlock(L) {
   let imply = indentEachLine(implyRaw);
   imply = stripOpenSectionQualifiers(imply, sections);
 
-  const { kind, lines } = extractProofLines(L.proof);
+  const { lines } = extractProofLines(L.proof);
   let proofBody = expandCommaRwLines(lines)
     .map((ln) => stripOpenSectionQualifiers(String(ln), sections))
     .map((ln) => indentEachLine(ln))
@@ -208,10 +227,8 @@ function buildLemmaBlock(L) {
   proofBody = proofBody.replace(/^\n+/, '').replace(/\n+$/, '');
   proofBody = proofBody.replace(/(?<=\n)\s+\n/g, '');
 
-  // PHP `lemma.php` uses `by`/`calc` only to pick `$proof['by']` vs `$proof['calc']`;
-  // it does not print the word `by`/`calc` before the proof lines (the `:= by` lives in imply).
-  const proofSection =
-    kind === 'by' || kind === 'calc' ? proofBody : '';
+  // PHP `lemma.php` uses `by`/`calc` only to unwrap nested lines; plain lists still print under `-- proof`.
+  const proofSection = proofBody.trim() !== '' ? proofBody : '';
 
   return `${comment}${attribute}${accessibility}lemma ${name}${declspec}
 -- imply
@@ -279,9 +296,9 @@ export async function assembleLeanSourceFromPostBody(body) {
   for (const L of lemmaArr) {
     const implyRaw = L.imply != null ? String(L.imply) : '';
     const implyScan = implyRaw ? indentEachLine(implyRaw) : '';
-    const { kind, lines } = extractProofLines(L.proof);
-    const proofScan =
-      kind === 'by' || kind === 'calc' ? expandCommaRwLines(lines).map((ln) => String(ln)).join('\n') : '';
+    const { lines } = extractProofLines(L.proof);
+    const proofScanRaw = expandCommaRwLines(lines).map((ln) => String(ln)).join('\n');
+    const proofScan = proofScanRaw.trim() !== '' ? proofScanRaw : '';
     const chunk = [implyScan, proofScan].filter(Boolean).join('\n');
     const { imports: addI, sectionsFound } = detectLemmaImportsFromScanText(chunk, sections, importsForDetect);
     detectedImports.push(...addI);
