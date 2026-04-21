@@ -6,9 +6,8 @@ import Lemma.Nat.NeCoeS.of.Ne
 import Lemma.Tensor.Div.eq.DivDivS.of.Ne_0
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Vector.GetDiv.eq.DivGetS
-import Lemma.Nat.Eq_0
-open Tensor Vector Bool Nat
-set_option synthInstance.maxHeartbeats 200000
+import Lemma.Fin.Eq_0
+open Tensor Vector Bool Nat Fin
 set_option maxHeartbeats 1000000
 
 

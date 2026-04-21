@@ -1,5 +1,5 @@
 import Lemma.List.Eq_Nil.is.EqLength_0
-import Lemma.Nat.Eq_0
+import Lemma.Fin.Eq_0
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.DataMul.eq.Mul_Data
 import Lemma.Tensor.Eq.is.EqDataS
@@ -7,7 +7,7 @@ import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.Mul_Get
 import sympy.tensor.tensor
-open List Nat Tensor Vector
+open List Tensor Vector Fin
 
 
 @[main]

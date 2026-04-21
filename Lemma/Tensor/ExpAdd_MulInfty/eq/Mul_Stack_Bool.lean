@@ -1,6 +1,6 @@
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Tensor.EqHeadData
-import Lemma.Nat.Eq_0
+import Lemma.Fin.Eq_0
 import Lemma.Vector.MulSub.eq.SubMulS
 import Lemma.Tensor.DataSub.eq.SubDataS
 import Lemma.Hyperreal.InfinitePos.is.InfiniteNegSub
@@ -20,7 +20,7 @@ import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetExp.eq.ExpGet
 import sympy.tensor.functions
 import sympy.tensor.stack
-open Hyperreal Tensor Nat Int
+open Hyperreal Tensor Int Fin
 
 
 @[main]

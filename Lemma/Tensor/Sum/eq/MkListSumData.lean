@@ -1,9 +1,9 @@
 import sympy.tensor.functions
-import Lemma.Nat.Eq_0
+import Lemma.Fin.Eq_0
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-open Nat Vector
+open Vector Fin
 
 
 @[main]

@@ -1,11 +1,11 @@
 import Lemma.Tensor.Stack.eq.AppendStackS
-import Lemma.Nat.Eq_0
+import Lemma.Fin.Eq_0
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqSliceS.Eq.of.Eq
 import Lemma.Tensor.GetSliceStack.as.Stack_UFn
 import Lemma.Bool.SEq.is.Eq
-open Tensor Nat Bool
+open Tensor Bool Fin
 
 
 @[main, comm, mp, mpr]

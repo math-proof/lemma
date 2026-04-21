@@ -1,6 +1,6 @@
 import Lemma.Hyperreal.Sub_Infty.to.NegInfty
 import Lemma.Int.Sub.eq.Add_Neg
-import Lemma.Nat.Eq_0
+import Lemma.Fin.Eq_0
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.DataMul.eq.MulData
@@ -26,7 +26,7 @@ import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Setoid.is.All_SetoidGetS
 import sympy.tensor.functions
 import sympy.tensor.stack
-open Hyperreal Int Nat Tensor Vector
+open Hyperreal Int Tensor Vector Fin
 
 
 @[main, fin]
