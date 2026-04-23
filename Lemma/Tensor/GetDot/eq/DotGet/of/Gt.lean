@@ -1,3 +1,4 @@
+import Lemma.Vector.MapSplitAt_0.eq.VectorList
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
@@ -247,7 +248,6 @@ private lemma one
           apply @Vector.SEq.of.All_EqGetS.Eq.fin
           ·
             intro t
-            have h_t := t.isLt
             rw [DataTransposeTensor.eq.Cast]
             rw [Tensor.DataCast.eq.Cast_Data.of.Eq (by simp_all)]
             simp
@@ -255,6 +255,11 @@ private lemma one
           ·
             grind
         simp [Y_T, Y_mk] at h_data
+        have h_data := Bool.EqCast.of.SEq h_data
+        -- rw [h_data]
+        -- rw [h_Y_T.symm]
+        -- rw [Tensor.DataCast.eq.Cast_Data.of.Eq] at h_data
+        rw [Vector.MapSplitAt_0.eq.VectorList]
         sorry
       ·
         grind
