@@ -9,7 +9,7 @@ import Lemma.List.TailPermute__Neg.eq.EraseIdx
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
-import Lemma.Tensor.GetGetSlice.eq.Get
+import Lemma.Vector.GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq
 import Lemma.Tensor.GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0
 import Lemma.Tensor.Permute__0.eq.Cast
 import Lemma.Tensor.Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1
@@ -73,7 +73,7 @@ private lemma main
         have h_r := Eq_0 r
         simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
         simp [h_r] at h_qr
-        rw [GetGetSlice.eq.Get.length_slice.one.fin]
+        rw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨0, by simp⟩)]
         rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         rw [GetCast.eq.Get.of.Eq.fin (by simp)]
         simp [h_qr]
@@ -142,13 +142,13 @@ private lemma row
         simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
         simp [h_r] at h_qr
         symm at h_qr
-        rw [GetGetSlice.eq.Get.length_slice.one.fin]
+        rw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨t, by simpa⟩)]
         rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         rw [GetCast.eq.Get.of.Eq.fin (by simp)]
         simp [h_qr]
       ·
         simp
-        rwa [List.LengthSlice.eq.One.of.Lt]
+        rwa [LengthSlice.eq.One.of.Lt]
     ·
       rw [ProdPermute.eq.Prod]
       grind
