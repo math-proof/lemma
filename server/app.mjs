@@ -40,7 +40,10 @@ import { handleDeleteLemma } from './lean/deleteLemma.mjs';
 import { handleDeletePackage } from './lean/deletePackage.mjs';
 import { handleRenameLemma } from './lean/renameLemma.mjs';
 import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
-import { resolveMissingModuleRedirect } from './lean/moduleResolve.mjs';
+import {
+  resolveMissingModuleRedirect,
+  resolveUnderscoreModuleAlias,
+} from './lean/moduleResolve.mjs';
 import {
   establishHierarchyGraph,
   detectCycleTraceback,
@@ -305,6 +308,12 @@ async function renderLemmaPage(res, module, userSegment) {
     const pkgDir = moduleToLemmaPackageDir(module);
     if (pkgDir && dirExists(pkgDir)) {
       renderPackageBrowserPage(res, module, userSegment);
+      return;
+    }
+    const underscored = resolveUnderscoreModuleAlias(module);
+    if (underscored) {
+      const seg = userSegment || PROJECT_USER;
+      res.redirect(302, `/${seg}/?module=${encodeURIComponent(underscored)}`);
       return;
     }
     const canonical = resolveMissingModuleRedirect(module);

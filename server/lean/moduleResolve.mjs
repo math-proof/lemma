@@ -435,6 +435,41 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
 }
 
 /**
+ * Some `?module=` URLs use `_` between name parts (`Eq_Cast`); on-disk Lean modules are camelCase (`EqCast`).
+ * When the requested path has no `.lean` file, try folding each dotted segment that contains `_` by merging
+ * pieces with capitalized tails (`a_b_c` → `aBC`), and return the first variant whose `Lemma/…/.lean` exists.
+ * @param {string} moduleDot
+ * @returns {string | null} canonical dotted module, or null
+ */
+export function resolveUnderscoreModuleAlias(moduleDot) {
+  const raw = String(moduleDot).trim().replace(/\//g, '.');
+  if (!raw || !raw.includes('_') || raw.includes('#')) return null;
+  let module = raw;
+  for (let guard = 0; guard < 24 && module.includes('_'); guard++) {
+    const parts = module.split('.');
+    let next = null;
+    for (let i = 0; i < parts.length; i++) {
+      const seg = parts[i];
+      if (!seg.includes('_')) continue;
+      const pieces = seg.split('_').filter(Boolean);
+      if (pieces.length < 2) continue;
+      const merged =
+        pieces[0] + pieces.slice(1).map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
+      if (merged === seg) continue;
+      const alt = [...parts.slice(0, i), merged, ...parts.slice(i + 1)].join('.');
+      const p = moduleToLeanPath(alt);
+      if (p && fs.existsSync(p)) {
+        next = alt;
+        break;
+      }
+    }
+    if (!next) break;
+    module = next;
+  }
+  return module === raw ? null : module;
+}
+
+/**
  * Swaps the first infix relation in the parsed module (same rewrite as commutative `@[main, comm]` paths).
  * `imports` in MySQL may use either spelling; reverse hierarchy must match both.
  * @param {string} moduleDot
