@@ -1,21 +1,22 @@
-import Lemma.Vector.Head.eq.Get_0
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Fin.Eq_0
 import Lemma.List.EqPermute__0
 import Lemma.List.EqSwap_0'1
 import Lemma.List.LengthSlice.eq.Min
+import Lemma.List.LengthSlice.eq.One.of.Lt
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.TailPermute__Neg.eq.EraseIdx
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
-import Lemma.Vector.GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq
 import Lemma.Tensor.GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0
 import Lemma.Tensor.Permute__0.eq.Cast
 import Lemma.Tensor.Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
+import Lemma.Vector.GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
+import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Fin List Nat Tensor Vector
 
@@ -23,9 +24,9 @@ open Fin List Nat Tensor Vector
 @[main]
 private lemma main
 -- given
-  (v : List.Vector α n) :
+  (v : List.Vector α [n].prod) :
 -- imply
-  (⟨cast (congrArg (List.Vector α) (by simp)) v⟩ : Tensor α [n, 1])ᵀ.data ≃ v := by
+  (⟨v⟩ : Tensor α [n, 1])ᵀ.data ≃ v := by
 -- proof
   apply SEq.of.All_EqGetS.Eq.fin
   ·
@@ -56,11 +57,10 @@ private lemma main
         rw [h_tail_permute]
         simpa [h_permute]
       simp [h_0]
-      have h_prod : n = [n, 1].prod := by simp
-      have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by grind) (⟨cast (congrArg (List.Vector α) h_prod) v⟩ : Tensor α [n, 1]) (i := ⟨1, by grind⟩) (d := 1)
+      have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by grind) (⟨v⟩ : Tensor α [n, 1]) (i := ⟨1, by grind⟩) (d := 1)
       simp at this
       rw [this]
-      have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by grind) (⟨cast (congrArg (List.Vector α) h_prod) v⟩ : Tensor α [n, 1]) (k := 0)
+      have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by grind) (⟨v⟩ : Tensor α [n, 1]) (k := 0)
       simp at this
       rw [this]
       simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
@@ -75,11 +75,9 @@ private lemma main
         simp [h_r] at h_qr
         rw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨0, by simp⟩)]
         rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-        rw [GetCast.eq.Get.of.Eq.fin (by simp)]
         simp [h_qr]
       ·
-        simp [LengthSlice.eq.Min]
-        simpa [TailPermute__Neg.eq.EraseIdx]
+        simp_all [LengthSlice.eq.Min]
     ·
       rw [ProdPermute.eq.Prod]
       grind
@@ -90,9 +88,9 @@ private lemma main
 @[main]
 private lemma row
 -- given
-  (v : List.Vector α n) :
+  (v : List.Vector α [1, n].prod) :
 -- imply
-  (⟨cast (congrArg (List.Vector α) (by simp)) v⟩ : Tensor α [1, n])ᵀ.data ≃ v := by
+  (⟨v⟩ : Tensor α [1, n])ᵀ.data ≃ v := by
 -- proof
   apply SEq.of.All_EqGetS.Eq.fin
   ·
@@ -121,21 +119,20 @@ private lemma row
         rw [h_tail_permute]
         simp [h_permute]
       simp [h_1]
-      have h_prod : n = [1, n].prod := by simp
-      have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by grind) (⟨cast (congrArg (List.Vector α) h_prod) v⟩ : Tensor α [1, n]) (i := ⟨1, by grind⟩) (d := 1)
+      have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by grind) (⟨v⟩ : Tensor α [1, n]) (i := ⟨1, by grind⟩) (d := 1)
       simp at this
       rw [this]
-      have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by grind) (⟨cast (congrArg (List.Vector α) h_prod) v⟩ : Tensor α [1, n]) (k := t)
+      have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by grind) (⟨v⟩ : Tensor α [1, n]) (k := t)
       simp at this
       rw [this]
       simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
-      rw [Vector.Head.eq.Get_0.fin]
+      rw [Head.eq.Get_0.fin]
       rw [GetCast.eq.Get.of.Eq.fin]
       ·
         simp
         have h_t : 0 < ((⟨t, 1 * (↑n * 1), n⟩ : Slice).length (1 * (n * 1))) * 1 := by
           simp
-          rw [List.LengthSlice.eq.One.of.Lt (by assumption)]
+          rw [LengthSlice.eq.One.of.Lt (by assumption)]
           simp
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         have h_r := Eq_0 r
@@ -144,7 +141,6 @@ private lemma row
         symm at h_qr
         rw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨t, by simpa⟩)]
         rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-        rw [GetCast.eq.Get.of.Eq.fin (by simp)]
         simp [h_qr]
       ·
         simp
@@ -156,5 +152,4 @@ private lemma row
     simp [EqSwap_0'1]
 
 
--- created on 2026-04-07
--- updated on 2026-04-21
+-- created on 2026-04-23

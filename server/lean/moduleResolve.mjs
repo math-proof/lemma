@@ -174,10 +174,6 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
     return null;
   }
 
-  if (fs.existsSync(pathInfo) && fs.statSync(pathInfo).isDirectory()) {
-    return null;
-  }
-
   const parentLean = `${path.dirname(leanFile)}.lean`;
   if (fs.existsSync(parentLean) && fs.statSync(parentLean).isFile()) {
     const lastDot = module.lastIndexOf('.');
@@ -270,9 +266,11 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
                 }
               }
               if (!hit && segment[1]) {
-                const flatAlt = tryOfIsOfFileRewrite(tokens);
-                if (flatAlt) return flatAlt;
                 segment[1][0] = 'is';
+                const p = moduleToLeanPath(tokensToModule(segment, section));
+                if (!fs.existsSync(p)) {
+                  [segment[0], segment[2]] = [segment[2], segment[0]];
+                }
               }
             }
           } else if (first.length === 3 && isInfixOperator(first[1])) {
