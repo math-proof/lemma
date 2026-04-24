@@ -299,6 +299,8 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   }
 
   tree.args.shift();
+  tree.restoreMaxHeartbeats();
+
   const modify = { value: false };
   const syntax = {};
   const codes = tree.render2vue(true, modify, syntax);

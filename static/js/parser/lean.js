@@ -5295,6 +5295,32 @@ export class LeanModule extends LeanStatements {
         );
     }
 
+    /**
+     * After writing `*.echo.lean` with inflated maxHeartbeats (×5 for Lean server),
+     * revert those nodes in the AST so `render2vue` reports the original values.
+     */
+    restoreMaxHeartbeats() {
+        for (const node of this.args) {
+            if (node instanceof Lean_set_option) {
+                const arg = node.arg;
+                if (arg instanceof LeanArgsSpaceSeparated && arg.args.length === 2) {
+                    const [nameTok, valTok] = arg.args;
+                    if (
+                        nameTok instanceof LeanToken &&
+                        valTok instanceof LeanToken &&
+                        nameTok.text === 'maxHeartbeats'
+                    ) {
+                        const v = parseInt(String(valTok.text), 10);
+                        if (!Number.isNaN(v)) {
+                            valTok.text = String(Math.floor(v / 5));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     import(module) {
         this.args.unshift(new Lean_import(this.create_property(module), 0, 0));
     }
