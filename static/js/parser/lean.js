@@ -1784,14 +1784,6 @@ class LeanPairedGroup extends Closable(LeanUnary) {
                 return caret;
             }
             if (indent === this.indent) return caret;
-            /**
-             * `Lean::insert_newline` bubbles with `this` (not the inner parse node), so `caret` is often the
-             * full `arg` (e.g. `LeanArgsSpaceSeparated`) while `indent` is the continuation column inside a
-             * nested `()` / last operand. Descend to the trailing structural child and recurse — mirrors
-             * how the proof term continues on the next line (last sibling).
-             * Do not recurse into `LeanCaret`: `LeanCaret.insert_newline` delegates to parent and would pass
-             * the whole `LeanArgsSpaceSeparated` again → infinite loop with this branch.
-             */
             if (indent > this.indent) {
                 if (caret instanceof LeanArgsSpaceSeparated) {
                     return this.push_args_indented(indent, newline_count, false);
