@@ -37,16 +37,16 @@ lake build
 bash sh/run.sh
 ```
 
-### Node.js lemma server (default port **80**, **no PHP / Apache required**)
+### Node.js lemma server
 
-`server/app.mjs` serves `http://127.0.0.1/lean/?module=…` using **Node + EJS** and **`server/lean/compiler/index.mjs`** (JS parser + `render2vue.mjs`; falls back to regex stub on error). See **`server/lean/compiler/README.md`**. Override with `PORT` (e.g. `PORT=3000`).
+`server/app.mjs` serves `http://localhost/lean/?module=…` using **Node + EJS** and **`server/lean/compiler/index.mjs`** (JS parser + `render2vue.mjs`; falls back to regex stub on error). See **`server/lean/compiler/README.md`**.
 
 ```bash
 npm install
 npm start
 ```
 
-Example: `http://127.0.0.1/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax`
+Example: `http://localhost/lean/?module=Tensor.DotSoftmaxAdd_Mul_Infty.eq.Stack_DotSoftmax`
 
 Details: [`server/README.md`](server/README.md).
 
