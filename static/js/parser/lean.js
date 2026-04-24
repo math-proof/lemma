@@ -1766,9 +1766,6 @@ class LeanPairedGroup extends Closable(LeanUnary) {
     }
 
     insert_newline(caret, newline_count, indent, next) {
-        if (caret === this) {
-            caret = this.arg;
-        }
         if (this.indent > indent) {
             return super.insert_newline(caret, newline_count, indent, next);
         }
@@ -1927,9 +1924,6 @@ export class LeanParenthesis extends LeanPairedGroup {
     }
 
     insert_newline(caret, newline_count, indent, next) {
-        if (caret === this) {
-            caret = this.arg;
-        }
         if (this.indent <= indent && caret === this.arg) {
             if (caret instanceof LeanBy && this.indent === indent) {
                 const c2 = new LeanCaret(indent, caret.level);
