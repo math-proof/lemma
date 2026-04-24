@@ -1852,16 +1852,16 @@ class LeanPairedGroup extends Closable(LeanUnary) {
 
     strFormat(format) {
         format = format || this.argFormat();
-        const operator = this.operator;
+        const {operator} = this;
         const open = typeof operator === 'string' ? operator[0] : operator[0];
         const close = typeof operator === 'string' ? operator[1] : operator[1];
         const c = this.is_closed;
-        if (c === false) {
-            format += close;
-        } else if (c === null) {
+        if (c) {
+            format = open + format + close;
+        } else if (c == null) {
             format = open + format;
         } else {
-            format = open + format + close;
+            format += close;
         }
         return format;
     }
@@ -1937,14 +1937,18 @@ export class LeanParenthesis extends LeanPairedGroup {
 
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret === this.arg) {
-            if (caret instanceof LeanBy && this.indent === indent) {
-                const c2 = new LeanCaret(indent, caret.level);
-                const newNL = new LeanArgsNewLineSeparated([this.arg, c2], indent, c2.level);
-                const c = newNL.push_newlines(newline_count - 1);
-                this.arg = newNL;
-                return c;
+            if (this.indent === indent) {
+                if (caret instanceof LeanBy) {
+                    const c2 = new LeanCaret(indent, caret.level);
+                    const newNL = new LeanArgsNewLineSeparated([this.arg, c2], indent, c2.level);
+                    const c = newNL.push_newlines(newline_count - 1);
+                    this.arg = newNL;
+                    return c;
+                }
+                if (next != ')')
+                    // excluding next = ')' so that the parentheses can balance vertically
+                    indent = this.indent + 2;
             }
-            if (indent === this.indent) indent = this.indent + 2;
             return this.push_args_indented(indent, newline_count, false);
         }
         return super.insert_newline(caret, newline_count, indent, next);
