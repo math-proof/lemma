@@ -58,7 +58,7 @@ for linux: (better to use VPN to download, using a browser not by wget!)
 ```sh
 # suppose ~/github is your working directory and the binary installer file is copied here.
 cd ~/github
-versionNumber=4.26.0
+versionNumber=$(sed 's/.*v//' lean-toolchain)
 # prepare zstd
 # Ubuntu/Debian
 sudo apt install zstd

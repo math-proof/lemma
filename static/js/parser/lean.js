@@ -157,7 +157,7 @@ function leanInsertComma(leaf) {
  */
 function findInnermostOpenLeanAbsAncestor(from, caret) {
     for (let p = from; p; p = p.parent) {
-        if (p.constructor.name !== 'LeanAbs') continue;
+        if (!(p instanceof LeanAbs)) continue;
         if (p.is_closed === true) continue;
         if (caret != null && leanSubtreeContains(p.arg, caret)) return p;
     }
@@ -456,8 +456,16 @@ export class Lean extends IndentedNode {
                 // so round-trip and lemma paths match the tokenizer/AST shape the repo relies on.
                 let p = this;
                 while (p && p.parent) {
-                    const name = p.parent.constructor.name || '';
-                    if (/^Lean_(import|open|set_option|namespace|def|theorem|lemma)$/.test(name))
+                    const par = p.parent;
+                    if (
+                        par instanceof Lean_import ||
+                        par instanceof Lean_open ||
+                        par instanceof Lean_set_option ||
+                        par instanceof Lean_namespace ||
+                        par instanceof Lean_def ||
+                        par instanceof Lean_theorem ||
+                        par instanceof Lean_lemma
+                    )
                         return this.parent.insert_word(this, token);
                     p = p.parent;
                 }
@@ -1624,7 +1632,7 @@ export class LeanArgs extends Lean {
             !functionCall ||
             end instanceof LeanToken ||
             end instanceof LeanProperty ||
-            end.constructor.name === 'LeanParenthesis'
+            end instanceof LeanParenthesis
         ) {
             const caret = new LeanCaret(indent, end.level);
             const nl = new LeanArgsNewLineSeparated([caret], indent, caret.level);
@@ -1656,8 +1664,12 @@ export class LeanArgs extends Lean {
         return this.args.map((arg) => {
             if (!(arg instanceof LeanParenthesis)) return arg;
             const inner = arg.arg;
-            const n = inner.constructor.name;
-            if (n === 'LeanMethodChaining' || n === 'Lean_rightarrow' || n === 'LeanColon') return arg;
+            if (
+                inner instanceof LeanMethodChaining ||
+                inner instanceof Lean_rightarrow ||
+                inner instanceof LeanColon
+            )
+                return arg;
             return inner;
         });
     }
@@ -1773,7 +1785,7 @@ class LeanPairedGroup extends Closable(LeanUnary) {
             if (caret instanceof LeanCaret) {
                 if (indent === this.indent) indent = this.indent + 2;
                 caret.indent = indent;
-                if (this.constructor.name === 'LeanBrace') {
+                if (this instanceof LeanBrace) {
                     this.arg = new LeanStatements([caret], indent, caret.level);
                     return caret;
                 }
@@ -2328,7 +2340,7 @@ export class LeanBinary extends LeanArgs {
     }
 
     insert_if(caret) {
-        if (this.constructor.name === 'LeanArgsIndented' && caret instanceof LeanCaret) {
+        if (this instanceof LeanArgsIndented && caret instanceof LeanCaret) {
             const last = this.args[this.args.length - 1];
             if (last === caret) {
                 this.replace(caret, new LeanIte([caret], caret.indent, caret.level));
@@ -2654,7 +2666,8 @@ export class LeanColon extends LeanBinary {
                 this.replace(caret, stmts);
                 return caret;
             }
-            if (caret instanceof LeanStatements && indent === this.indent && this.parent.constructor.name === 'LeanParenthesis') return caret;
+            if (caret instanceof LeanStatements && indent === this.indent && this.parent instanceof LeanParenthesis)
+                return caret;
         }
         return super.insert_newline(caret, newline_count, indent, next);
     }
@@ -2770,7 +2783,7 @@ export class LeanAssign extends LeanBinary {
         }
         // `:=` then newline before `-- proof` / term under `▸` (see Lemma/Nat/Lt/of/Lt_Add/Eq_Sub/Ge.lean).
         if (
-            rhs.constructor.name === 'Lean_blacktriangleright' &&
+            rhs instanceof Lean_blacktriangleright &&
             rhs.lhs instanceof LeanArgsNewLineSeparated &&
             rhs.lhs.args[0] instanceof LeanLineComment
         ) {
@@ -3506,7 +3519,7 @@ class LeanNeg extends LeanUnaryArithmeticPre {
         return '-';
     }
     sep() {
-        return this.arg.constructor.name === 'LeanNeg' ? ' ' : '';
+        return this.arg instanceof LeanNeg ? ' ' : '';
     }
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
@@ -4154,7 +4167,7 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         const stmt = Array(n)
             .fill('&{%s}&& ')
             .join('\\\\\n');
-        if (this.parent && this.parent.constructor.name === 'LeanBy') return stmt;
+        if (this.parent && this.parent instanceof LeanBy) return stmt;
         return `\\begin{align*}\n${stmt}\n\\end{align*}`;
     }
 
@@ -6416,11 +6429,18 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     get stack_priority() {
-        if (this.parent.constructor.name === 'LeanBracket') return 17;
-        const pc = this.parent.constructor.name;
-        if (pc === 'LeanArgsCommaSeparated' && this.parent.parent.constructor.name === 'LeanGetElem')
+        if (this.parent instanceof LeanBracket) return 17;
+        if (
+            this.parent instanceof LeanArgsCommaSeparated &&
+            this.parent.parent instanceof LeanGetElem
+        )
             return 18;
-        if (pc === 'LeanGetElem' || pc === 'LeanGetElemQue' || pc === 'LeanGetElemQuote') return 18;
+        if (
+            this.parent instanceof LeanGetElem ||
+            this.parent instanceof LeanGetElemQue ||
+            this.parent instanceof LeanGetElemQuote
+        )
+            return 18;
         return 80;
     }
 
@@ -7627,7 +7647,7 @@ export class LeanTactic extends LeanSyntax {
                     return statements;
                 }
             } else if (
-                (block instanceof LeanTactic || block.constructor.name === 'Lean_have' || block.constructor.name === 'Lean_let') &&
+                (block instanceof LeanTactic || block instanceof Lean_have || block instanceof Lean_let) &&
                 block.indent >= this.indent
             ) {
                 const self = this.clone();

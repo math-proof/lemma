@@ -1073,7 +1073,7 @@ class XMLContainerTag extends XMLArgs {
     }
 
     get is_unbalanced() {
-        return !this.tagEnd || (this.tagEnd.constructor && this.tagEnd.constructor.name === 'XMLUnbalancedTag');
+        return !this.tagEnd;
     }
 
     logical2physical(pos) {
