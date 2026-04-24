@@ -97,7 +97,8 @@ private lemma main
             .
               simpa
         .
-          simpa
+          simp
+          omega
         .
           simp
         .

@@ -84,9 +84,7 @@ private lemma main
           simp
       else
         simp at h_i
-        have h_i' := LtSubS.of.Lt.Le (c := 1) (by assumption) h_i
-        simp at h_i'
-        rw [EqMin.of.Gt h_i']
+        rw [EqMin.of.Gt (by omega)]
         rw [Sub.eq.Zero.of.Lt h_i]
         simp
         rw [Slice_0.eq.Take]

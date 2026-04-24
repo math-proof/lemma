@@ -9,6 +9,7 @@ import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.EqGetS.of.Eq_FlattenTransposeSplitAt_1
 open Vector
+set_option maxHeartbeats 400000
 
 
 @[main]
@@ -40,7 +41,7 @@ private lemma main
     simp only [GetElem.getElem]
     repeat rw [GetUnflatten.eq.Get_AddMul.fin]
     simpa [EqGetS]
-  repeat simp
+  repeat simp_all
 
 
 -- created on 2025-07-18

@@ -26,8 +26,7 @@ private lemma main
       ·
         simp
         rw [EqMin.of.Le (by omega)]
-        rw [SubSub.eq.Sub_Add]
-        rw [EqAdd_Sub.of.Ge (by omega)]
+        omega
       ·
         simp
         left

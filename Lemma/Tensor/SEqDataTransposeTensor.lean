@@ -119,10 +119,10 @@ private lemma row
         rw [h_tail_permute]
         simp [h_permute]
       simp [h_1]
-      have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by grind) (⟨v⟩ : Tensor α [1, n]) (i := ⟨1, by grind⟩) (d := 1)
+      have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by simp) (⟨v⟩ : Tensor α [1, n]) (i := ⟨1, by simp⟩) (d := 1)
       simp at this
       rw [this]
-      have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by grind) (⟨v⟩ : Tensor α [1, n]) (k := t)
+      have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by simp; grind) (⟨v⟩ : Tensor α [1, n]) (k := t)
       simp at this
       rw [this]
       simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]

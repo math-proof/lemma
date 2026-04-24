@@ -9,7 +9,7 @@ def String.repeat (s : String) (n : Nat) : String :=
   String.join (List.replicate n s)
 
 def String.eraseIdx (s : String) (n : Nat) : String :=
-  s.take n ++ s.drop n.succ
+  (s.take n).toString ++ (s.drop n.succ).toString
 
 partial def countTailingZeros (n : Int) : Nat :=
   let rec loop (n : Int) (digits : Nat) : Nat :=
@@ -92,7 +92,7 @@ where
                   let arg := JsonNumber.mk mantissa dec
 
                   let arg := arg.toString
-                  if arg.posOf '.' == arg.rawEndPos then
+                  if !arg.contains '.' then
                     arg ++ "." ++ "0".repeat dec
                   else
                     let zeros := countTailingZeros mantissa
@@ -173,7 +173,7 @@ def String.endsWithNumberedWord (s : String) (word : String) : Bool :=
   -- match the regexp expression : \\w+_\\d+
   if s.startsWith (word ++ "_") then
     let rest := s.drop (word.length + 1)
-    rest.length ≥ 1 && rest.all Char.isDigit
+    !rest.isEmpty && rest.all Char.isDigit
   else
     false
 
@@ -211,11 +211,11 @@ def String.transformPrefix (s : String) : String :=
 
 def String.Not (s : String) : String :=
   if s.startsWith "Not" then
-    s.drop 3
+    (s.drop 3).toString
   else if s.startsWith "Eq" then
-    "Ne" ++ s.drop 2
+    "Ne" ++ (s.drop 2).toString
   else if s.startsWith "Ne" then
-    "Eq" ++ s.drop 2
+    "Eq" ++ (s.drop 2).toString
   else
     "Not" ++ s
 

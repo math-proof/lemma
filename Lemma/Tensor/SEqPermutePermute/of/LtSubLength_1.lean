@@ -61,7 +61,7 @@ private lemma main
       rw [MulProdS.eq.ProdAppend]
       rw [h_toNat]
       simp
-      rw [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
+      rw [EqMin.of.Lt h_lt_add_1]
       simp [Permute__Neg.eq.Append_AppendRotateDropTake]
     ·
       rw [h_toNat]
@@ -109,7 +109,7 @@ private lemma main
               rw [GetCast.eq.Get.of.Eq.fin]
               ·
                 unfold Tensor.rotate
-                simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
+                simp [EqMin.of.Lt h_lt_add_1]
                 have h_lt : (r' * (((s.permute ⟨0, by grind⟩ d).take (d + 1)).drop d).prod + q') * ((s.permute ⟨0, by grind⟩ d).drop (d + 1)).prod + r < ((s.take (d + 1)).rotate 1).prod * (s.drop (d + 1)).prod :=
                   LtAddMulAddMul.of.Lt.Lt.Lt.Eq (by simp [h_permute]) h_r' h_q' h_r
                 let ⟨qₚ, rₚ, h_qₚrₚ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
@@ -136,7 +136,7 @@ private lemma main
                   rw [SubAdd.eq.AddSub.of.Ge] at h_qₚrₚ
                   ·
                     simp [h_qₚrₚ]
-                    simp [EqMin.of.Lt h_lt_add_1, Add.comm (a := 1)]
+                    simp [EqMin.of.Lt h_lt_add_1]
                     simp [Add_Add.eq.AddAdd, h_drop]
                     simp [h_qₚ_div]
                     left

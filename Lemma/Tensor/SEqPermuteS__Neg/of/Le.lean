@@ -105,7 +105,6 @@ private lemma main
           rw [MulProdS.eq.ProdAppend]
           rw [Permute__Neg.eq.Append_AppendRotateDropTake]
           rw [EqMin.of.Ge (by simp; omega)]
-          simp [EqMin.of.Le (show i + 1 ≤ s.length by omega)]
           simp [show i + 1 - (1 + d) = i - d by omega]
           left
           left
@@ -175,7 +174,7 @@ private lemma main
               simp [GetElem.getElem]
               have h_t : t < ((s.take (i + 1)).take ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat) ++ ((s.take (i + 1)).drop ((s.take (i + 1)).length - (1 - -(i : ℤ)).toNat)).rotate ((1 - -(i : ℤ)).toNat ⊓ (s.take (i + 1)).length - 1)).prod * (s.drop (i + 1)).prod := by
                 rw [h_toNat_i]
-                rw [show (↑i + 1) ⊓ (s.take (i + 1)).length = i + 1 by simp; omega]
+                rw [show (↑i + 1) ⊓ (s.take (i + 1)).length = i + 1 by simp]
                 simp [ProdRotate.eq.Prod]
                 simp [ProdRotate.eq.Prod] at h_t
                 assumption
@@ -214,7 +213,7 @@ private lemma main
                     apply congrArg
                     simp only [h_toNat_i] at h_qₑ_div h_rₐ_mod h_rₑ_mod h_qᵢ_div h_rᵢ_mod ⊢
                     simp [ProdRotate.eq.Prod] at h_qₐ_div h_qₑ_div h_rₐ_mod h_rₑ_mod
-                    simp [show (↑i + 1) ⊓ s.length = i + 1 by omega] at h_qₐ_div h_rₐ_mod h_rₑ_mod h_qₕ_div h_qᵢ_div h_rₕ_mod h_rᵢ_mod ⊢
+                    simp at h_qₐ_div h_rₐ_mod h_rₑ_mod h_qₕ_div h_qᵢ_div h_rₕ_mod h_rᵢ_mod ⊢
                     simp [show i + 1 - (1 + d) = i - d by omega] at h_qₐ_div h_rₐ_mod h_qₕ_div h_rₕ_mod ⊢
                     simp [show i - d = 0 by omega] at h_qₐ_div h_rₐ_mod h_qₕ_div h_rₕ_mod ⊢
                     simp [show (1 + d) ⊓ (i + 1) = i + 1 by omega] at h_qₕ_div h_rₕ_mod ⊢
@@ -235,10 +234,9 @@ private lemma main
                   rw [MulProdS.eq.ProdAppend]
               ·
                 rw [h_toNat_i]
-                rw [show (↑i + 1) ⊓ (s.take (i + 1)).length = i + 1 by simp; omega]
+                rw [show (↑i + 1) ⊓ (s.take (i + 1)).length = i + 1 by simp]
                 simp [Permute__Neg.eq.Append_AppendRotateDropTake]
           ·
-            simp [show (↑i + 1) ⊓ s.length = i + 1 by omega]
             simp [show i + 1 - (1 + d) = i - d by omega]
             simp [show (1 + d) ⊓ (i + 1) = i + 1 by omega]
             simp [show i - d = 0 by omega]

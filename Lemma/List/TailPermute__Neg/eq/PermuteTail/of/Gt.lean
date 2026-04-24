@@ -26,7 +26,7 @@ private lemma main
   rw [TailTake.eq.TakeTail]
   simp [SubSub.comm]
   simp [← TailTake.eq.TakeTail]
-  rw [EqAddSub.of.Ge (by omega)]
+  omega
 
 
 -- created on 2025-12-03

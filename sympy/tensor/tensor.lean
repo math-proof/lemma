@@ -431,7 +431,6 @@ def Tensor.getSlices
         simp_all
       have : s.length > slices.length := by
         simp_all
-        linarith
       have : (s.drop 1).length ≥ slices.length:= by
         simp
         apply Le_Sub_1.of.Lt

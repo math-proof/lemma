@@ -659,8 +659,8 @@ def List.disjunction (list : List String) (left : Bool := true): Name :=
   let disjunction := disjunctions[0]!
   let intro :=
     if disjunction.startsWith "Or" then
-      let disjunction := disjunction.drop 2
-      let ⟨index⟩ := disjunction.posOf 'S'
+      let disjunction := (disjunction.drop 2).toString
+      let index := (String.Legacy.posOf disjunction 'S').byteIdx
       let left := disjunction.eraseIdx index
       left :: rest
     else if disjunctions[1]! == "ou" then

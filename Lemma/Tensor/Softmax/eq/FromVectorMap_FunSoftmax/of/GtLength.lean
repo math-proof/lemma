@@ -174,10 +174,12 @@ private lemma main
     apply Div.eq.AddMulDiv_Mul
   ·
     have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp (by grind) (by grind) (s := s) (d := d) (i := k)
-    simp_all
+    simp at ⊢ this
+    rw [this]
   ·
     have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp (by grind) (by grind) (s := n :: s) (d := d + 1) (i := k)
-    simp_all
+    simp at ⊢ this
+    rw [this]
 
 
 -- created on 2025-11-29

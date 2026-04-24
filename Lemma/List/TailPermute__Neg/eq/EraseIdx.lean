@@ -23,10 +23,8 @@ private lemma main
       rw [TakeTake.eq.Take.of.Ge (by omega)]
     ·
       simp
-      linarith [d.isLt]
   ·
     simp
-    linarith [d.isLt]
 
 
 -- created on 2025-11-24

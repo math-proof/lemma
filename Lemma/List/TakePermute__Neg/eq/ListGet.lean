@@ -22,8 +22,7 @@ private lemma main
     rw [TakeAppend.eq.Take.of.GeLength (by simp)]
     simp
   ·
-    simp
-    apply Ge_1 i
+    grind
 
 
 -- created on 2025-10-27

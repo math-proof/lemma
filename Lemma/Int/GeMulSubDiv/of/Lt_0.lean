@@ -4,7 +4,7 @@ import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.LeAddS.is.Le
+import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Int.Mod.lt.Neg.of.Lt_0
 open Nat Int
@@ -28,11 +28,9 @@ private lemma main
   rw [MulSub.eq.SubMulS]
   norm_num
   rw [Sub.eq.Add_Neg]
-  rw [AddAdd.eq.Add_Add]
-  apply LeAddS.of.Le.left (a := q * d)
-  apply LeAdd_1.of.Lt
-  have := Mod.lt.Neg.of.Lt_0 h (n - 1)
-  rwa [← h_r] at this
+  rw [LtAddS.is.Lt.left (a := q * d)]
+  have h₁ := Mod.lt.Neg.of.Lt_0 h (n - 1)
+  rwa [← h_r] at h₁
 
 
 -- created on 2025-03-29

@@ -112,11 +112,11 @@ private lemma main
     have h_all := GetPermute__Neg.as.Permute__Neg_Get.of.Lt_Get_0.LtAdd_1Length (s := s) (i := i + d) (k := t) (by grind) h_t (d := d) (α := α) (by grind)
     have h_A := h_all A
     have := SEqPermuteS.of.SEq.Eq.Eq.GtLength (s := s) (i := i + d + 1) (i' := i + 1 + d) (d := -d) (d' := -d) (by omega) (by omega) (by omega) (by rfl) (A := A)
-    have := SEqGetS.of.SEq.GtLength.fin (i := t) (by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp; omega)]) this
+    have := SEqGetS.of.SEq.GtLength.fin (i := t) (by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp)]) this
     have h_A := this.symm.trans h_A
     have h_B := h_all B
     have := SEqPermuteS.of.SEq.Eq.Eq.GtLength (s := s) (i := i + d + 1) (i' := i + 1 + d) (d := -d) (d' := -d) (by omega) (by omega) (by omega) (by rfl) (A := B)
-    have := SEqGetS.of.SEq.GtLength.fin (i := t) (by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp; omega)]) this
+    have := SEqGetS.of.SEq.GtLength.fin (i := t) (by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp)]) this
     have h_B := this.symm.trans h_B
     have h_A_mul_B := SEqMulS.of.SEq.SEq h_A h_B
     apply Eq.of.SEq
@@ -126,7 +126,7 @@ private lemma main
     have h_AB := h_all (A * B)
     simp [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin _ h_t] at h_AB
     have := SEqPermuteS.of.SEq.Eq.Eq.GtLength (s := s) (i := i + d + 1) (i' := i + 1 + d) (d := -d) (d' := -d) (by omega) (by omega) (by omega) (by rfl) (A := A * B)
-    have := SEqGetS.of.SEq.GtLength.fin (i := t) (by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp; omega)]) this
+    have := SEqGetS.of.SEq.GtLength.fin (i := t) (by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp)]) this
     have h_AB := this.symm.trans h_AB
     exact h_AB.symm
 

@@ -43,7 +43,7 @@ private lemma main
     have h_all : ∀ k : Fin s₀, (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get k ≃ (X.get ⟨k, by rw [Length.eq.Get_0.of.GtLength_0 (by simp)]; simp⟩).get ⟨i, by rw [Length.eq.Get_0.of.GtLength_0 (by simpa)]; simpa⟩ := by
       intro k
       apply GetSelect_1.as.Get.of.Lt.Lt_Get_0.GtLength_0 h_s h_i
-      simp
+      grind
     have := SEqSumS.of.All_SEq.Gt_0 (by omega) h_all
     simp at this
     symm

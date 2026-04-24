@@ -20,7 +20,7 @@ private lemma main
     simp [h]
   else
     have h := GtLength_0.of.Ne_Nil h
-    rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0 h (by simp; omega)]
+    rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0 h (by simp)]
     rw [GetAppend.eq.Get.of.GtLength (by simpa)]
     simp [TakeCons.eq.Cons_Take.of.Gt_0 h]
     rw [TakeAppend.eq.Take.of.GeLength (by simp)]

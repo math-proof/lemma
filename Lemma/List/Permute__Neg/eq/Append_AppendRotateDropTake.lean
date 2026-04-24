@@ -78,20 +78,18 @@ private lemma main
         ·
           rw [LengthDrop.eq.SubLength]
           rw [LengthTake.eq.Min_Length]
-          rw [EqMin.of.Le (by linarith)]
+          rw [EqMin.of.Le (by linarith [i.isLt])]
           rw [Sub_Sub.eq.SubAdd.of.Ge (by assumption)]
           rw [Add.comm (b := d + 1)]
           rw [SubAdd.eq.Add_Sub.of.Ge (by linarith)]
           linarith
       else
-        simp at h_d
-        have h_d := Sub.eq.Zero.of.Lt h_d
-        rw [h_d]
-        simp
+        have h_d := Nat.Gt.of.NotLe h_d
+        simp [Sub.eq.Zero.of.Lt h_d]
         rw [Slice_0.eq.Take]
         rw [Cons_Append.eq.AppendCons]
         apply EqAppendS.of.Eq
-        rw [EqMin.of.Gt (by assumption)]
+        rw [EqMin.of.Gt (by omega)]
         rw [Rotate.eq.AppendDrop__Take.of.GeLength]
         ·
           rw [TakeTake.eq.Take.of.Ge (by linarith)]

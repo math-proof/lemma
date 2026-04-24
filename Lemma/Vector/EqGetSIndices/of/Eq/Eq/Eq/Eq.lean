@@ -8,6 +8,7 @@ import Lemma.Nat.CeilDivSubMin.le.Zero.of.Le
 import Lemma.Nat.Min
 import Lemma.Nat.LeAddS.is.Le
 import Lemma.Nat.NotLe.of.Gt
+import Lemma.Nat.NotGt.of.Le
 import Lemma.List.EqGetSSlicedIndices.of.GtLength.GtLength.Gt_0.Gt_0.Le.Le.Lt.Lt
 import Lemma.List.EqGetSSlicedIndices'.of.GtLength.GtLength.Gt_0.Gt_0.Le.Le.Lt.Lt
 open List Bool Int Nat
@@ -129,7 +130,7 @@ private lemma main
         simp at h
         let ⟨⟨h_lt, h_stop'⟩, h_start'⟩ := h
         have h_lt := NotLe.of.Gt h_lt
-        have h_stop' := NotLe.of.Gt h_stop'
+        have h_stop' := NotGt.of.Le h_stop'
         have h_start' := NotLe.of.Gt h_start'
         simp [h_lt, h_stop', h_start']
         apply EqGetSSlicedIndices'.of.GtLength.GtLength.Gt_0.Gt_0.Le.Le.Lt.Lt

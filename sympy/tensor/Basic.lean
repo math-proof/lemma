@@ -31,7 +31,7 @@ import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
-import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1
+import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdDrop
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.List.Rotate.eq.AppendDrop__Take
 open Bool Nat Int List Lean
@@ -321,7 +321,8 @@ def Tensor.permute (X : Tensor α s) (i : Fin s.length) (d : ℤ) : Tensor α (s
       have := Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1 h d.succ
       cast (by simp_all [NegSucc.eq.NegAdd_1]) (X.permuteTail (d + 2))
     else
-      have := ProdPermute__Neg.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1 h d.succ
+      have h1 := ProdPermute__Neg.eq.MulProd_ProdDrop i d.succ
+      have h2 : (d + 2) ⊓ (↑i + 1) - 1 = (d + 1) ⊓ ↑i := by omega
       ⟨cast (by simp_all [NegSucc.eq.NegCoeAdd_1]) ((⟨X.data.splitAt (i + 1)⟩ : Tensor (List.Vector α (s.drop (i + 1)).prod) (s.take (i + 1))).permuteTail (d + 2)).data.flatten⟩
 
 /--

@@ -189,7 +189,6 @@ private lemma main
             simp
             have h_lt : ↑i * (s.eraseIdx ↑d).prod + ↑t < ((s.take (↑d + 1)).take ((s.take (↑d + 1)).length - (1 - (-d : ℤ)).toNat) ++ ((s.take (↑d + 1)).drop ((s.take (↑d + 1)).length - (1 - (-d : ℤ)).toNat)).rotate ((1 - (-d : ℤ)).toNat ⊓ (s.take (↑d + 1)).length - 1)).prod * (s.drop (↑d + 1)).prod := by
               simp only [h_toNat]
-              simp [EqMin.of.Le h_d_succ]
               simp [ProdRotate.eq.Prod]
               rw [Mul.comm (b := s[d.val])]
               rw [MulMul.eq.Mul_Mul]
@@ -225,7 +224,7 @@ private lemma main
                 rw [GetTranspose.eq.Get.fin]
                 repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                 simp only [h_toNat] at ⊢ h_qₑ_div h_rₑ_mod
-                simp [EqMin.of.Le h_d_succ] at ⊢ h_qₑ_div h_rₑ_mod
+                simp at ⊢ h_qₑ_div h_rₑ_mod
                 apply congrArg
                 simp [h_qₐ]
                 rw [ProdDropTake.eq.Get.of.GtLength (by omega)]
@@ -257,8 +256,6 @@ private lemma main
             rw [MulProdS.eq.ProdAppend]
             simp only [h_toNat]
             simp [Permute__Neg.eq.Append_AppendRotateDropTake]
-            left
-            simp [ProdRotate.eq.Prod]
       ·
         simp [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength]
         rw [EraseIdx.eq.TailPermute__Neg]

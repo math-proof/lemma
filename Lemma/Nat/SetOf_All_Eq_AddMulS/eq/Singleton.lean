@@ -46,7 +46,7 @@ private lemma mpr
   simp [G]
   norm_cast
   repeat rw [Mul_Sub.eq.SubMulS]
-  repeat norm_num
+  norm_num
   rw [Fib.eq.AddFibS.of.Ge_2 (n := 3 * n)]
   ·
     rw [Fib.eq.AddFibS.of.Ge_2 (n := 3 * n - 1)]
@@ -117,14 +117,11 @@ private lemma main:
   ext ⟨a, b⟩
   constructor <;>
     rintro h
-  -- Forward direction: If (a, b) satisfies the recurrence, then (a, b) = (4, 1)
   ·
     have := mp h
     simp_all
-  -- Reverse direction: If (a, b) = (4, 1), then the recurrence holds
   ·
     apply mpr
-    -- simp at h
     simp_all
 
 

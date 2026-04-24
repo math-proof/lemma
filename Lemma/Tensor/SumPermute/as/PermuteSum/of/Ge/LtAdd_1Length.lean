@@ -149,10 +149,7 @@ private lemma main
           have h_lt : (↑q * s[i.val] + ↑t) * (((s.take ↑i).drop (↑i - d)).prod * (s.drop (↑i + 1)).prod) + ↑r < ((s.take (↑i + 1)).take ((s.take (↑i + 1)).length - (1 - -(d : ℤ)).toNat) ++ ((s.take (↑i + 1)).drop ((s.take (↑i + 1)).length - (1 - -(d : ℤ)).toNat)).rotate ((1 - -(d : ℤ)).toNat ⊓ (s.take (↑i + 1)).length - 1)).prod * (s.drop (↑i + 1)).prod := by
             simp only [h_toNat]
             simp
-            rw [EqMin.of.Le h_i1_le]
-            rw [SubAddS.eq.Sub]
-            rw [EqMin.of.Le h_LeAddS]
-            rw [@Nat.EqSubAdd]
+            rw [EqMin.of.Le h_d]
             rw [ProdRotate.eq.Prod]
             rw [MulMul.eq.Mul_Mul]
             conv_rhs => simp [DropTake.eq.TakeDrop]
@@ -200,10 +197,7 @@ private lemma main
               apply congrArg
               simp only [h_toNat] at *
               simp at ⊢ h_qₕ_div h_rₕ_mod h_qₑ_div h_rₑ_mod
-              rw [EqMin.of.Le h_i1_le] at ⊢ h_qₕ_div h_rₕ_mod h_qₑ_div h_rₑ_mod
-              rw [SubAddS.eq.Sub] at ⊢ h_qₕ_div h_rₕ_mod h_qₑ_div h_rₑ_mod
-              rw [EqMin.of.Le h_LeAddS] at ⊢ h_qₕ_div h_rₕ_mod h_qₑ_div h_rₑ_mod
-              rw [@Nat.EqSubAdd] at *
+              rw [EqMin.of.Le h_d] at ⊢ h_qₕ_div h_rₕ_mod h_qₑ_div h_rₑ_mod
               simp [DropTake.eq.TakeDrop] at ⊢ h_qₕ_div h_rₕ_mod h_qₑ_div h_rₑ_mod
               rw [Sub_Sub.eq.Add.of.Ge.comm (by omega)] at *
               rw [EqMod.of.Lt (show d < (d + 1) by omega)] at *
@@ -268,10 +262,7 @@ private lemma main
           rw [MulProdS.eq.ProdAppend]
           apply congrArg
           simp
-          rw [EqMin.of.Le h_i1_le]
-          rw [SubAddS.eq.Sub]
-          rw [EqMin.of.Le h_LeAddS]
-          rw [@Nat.EqSubAdd]
+          rw [EqMin.of.Le h_d]
           rw [Permute__Neg.eq.Append_AppendRotateDropTake]
           rw [EqMin.of.Le (by omega)]
           rw [Append_Append.eq.AppendAppend]

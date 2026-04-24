@@ -3,7 +3,7 @@ import Lemma.Nat.EqAddMulDiv
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.AddAdd
-import Lemma.Nat.LeAddS.is.Le
+import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.LeAdd_1.of.Lt
 import Lemma.Nat.LtMod.of.Gt_0
 open Nat Int
@@ -27,9 +27,8 @@ private lemma main
   rw [Eq_Add.of.EqSub h₀.symm]
   rw [MulAdd.eq.AddMulS]
   norm_num
-  rw [AddAdd.permute]
-  apply LeAddS.of.Le (a := q * d)
-  apply LeAdd_1.of.Lt
+  rw [add_comm d (q * d)]
+  rw [LtAddS.is.Lt.left (a := q * d)]
   have := LtMod.of.Gt_0 h (n - 1)
   rwa [← h_r] at this
 

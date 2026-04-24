@@ -2,7 +2,7 @@
 # . .\ps1\update.ps1
 # Read the lean-toolchain file
 param(
-    [String]$version = "v4.26.0"
+    [String]$version = "v4.27.0"
 )
 $versionNumber = $version.Substring(1)
 # cd ~/.elan/toolchains
@@ -217,4 +217,4 @@ lake build sympy.printing.echo
 $end = Get-Date
 $totalTime = ($end - $start).TotalSeconds
 Write-Host "🏁 Build completed in $totalTime seconds." -ForegroundColor Cyan
-. .\ps1\run.ps1
+.\ps1\run.ps1

@@ -61,7 +61,7 @@ private lemma main
             apply this.trans
             have h_length : ((s₀ :: s).eraseIdx 1).length > d := by
               simp
-              rwa [EqAddSub.of.Ge (Nat.Ge_1.of.Gt_0 h_s)]
+              omega
             have ih := ih h_length (X.select ⟨1, by simpa⟩ ⟨t, by simpa⟩)
             apply ih.trans
             .

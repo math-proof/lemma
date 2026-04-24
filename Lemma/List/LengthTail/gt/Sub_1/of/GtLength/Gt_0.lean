@@ -19,9 +19,7 @@ private lemma main
     contradiction
   | head :: tail =>
     simp_all
-    have h_Le := Le.of.Lt_Add_1 h₁
-    have := Gt.of.Ge.Gt h_Le h₀
-    apply LtSub_1.of.Le.Gt_0 this h_Le
+    apply LtSub_1.of.Le.Gt_0.left h₀ h₁
 
 
 -- created on 2025-05-05

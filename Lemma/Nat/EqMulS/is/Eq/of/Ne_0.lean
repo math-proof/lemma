@@ -3,7 +3,8 @@ import sympy.Basic
 
 @[main, comm, mp, mpr]
 private lemma main
-  [CancelMonoidWithZero α]
+  [MonoidWithZero α]
+  [IsCancelMulZero α]
   {d : α}
 -- given
   (h : d ≠ 0)
@@ -16,7 +17,8 @@ private lemma main
 
 @[main, comm, mp, mpr]
 private lemma left
-  [CancelMonoidWithZero α]
+  [MonoidWithZero α]
+  [IsCancelMulZero α]
   {d : α}
 -- given
   (h : d ≠ 0)

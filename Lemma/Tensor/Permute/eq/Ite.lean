@@ -4,7 +4,7 @@ import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
 import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
 import Lemma.Nat.NotGt.is.Le
-import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1.Le_0
+import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Le_0
 import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.Int.NegSucc.eq.NegCoeAdd_1
@@ -38,7 +38,7 @@ private lemma main
       if h_d : i.val = s.length - 1 then
         cast (by rw [Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0 h_k h_d]) ((X.permuteTail (1 - d).toNat))
       else
-        ⟨cast (by rw [ProdPermute.eq.MulProd_ProdDrop.of.Val.ne.SubLength_1.Le_0 h_k h_d]) ((⟨X.data.splitAt (i + 1)⟩ : Tensor (List.Vector α (s.drop (i + 1)).prod) (s.take (i + 1))).permuteTail (1 - d).toNat).data.flatten⟩ := by
+        ⟨cast (by rw [ProdPermute.eq.MulProd_ProdDrop.of.Le_0 h_k]) ((⟨X.data.splitAt (i + 1)⟩ : Tensor (List.Vector α (s.drop (i + 1)).prod) (s.take (i + 1))).permuteTail (1 - d).toNat).data.flatten⟩ := by
 -- proof
   unfold Tensor.permute
   match d with
@@ -77,14 +77,8 @@ private lemma main
         simp
         rw [Mul_Mul.eq.MulMul]
         apply EqMulS.of.Eq
-        have h : (i.val + 1) ⊓ s.length - (offset + 2) = i - (offset + 1) := by
-          rw [Min.eq.Add_1]
-          simp
-        rw [h]
-        apply EqMulS.of.Eq.left
-        rw [Min.eq.Add_1]
-        rw [SubMin.eq.MinSubS]
-        simp
+        have h_rot : (offset + 2) ⊓ (i.val + 1) - 1 = (offset + 1) ⊓ i.val := by omega
+        simp [h_rot]
       ·
         rw [ToNatSubOfNat_NegSucc.eq.AddAdd1]
         simp
