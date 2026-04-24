@@ -1,3 +1,7 @@
+import Lemma.Tensor.HeadDataSum.eq.SumData
+import Lemma.Tensor.GetTensorFlatten.eq.TensorGet
+import Lemma.Tensor.DataAppend.eq.Cast_AppendDataS
+import Lemma.Tensor.DataSum.eq.Sum_DataSelect.of.Lt
 import Lemma.Vector.MapSplitAt_0.eq.VectorList
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -237,8 +241,8 @@ private lemma one
         intro t
         have h_t := Eq_0 t
         subst h_t
-        simp [List.Vector.get]
         simp [@Tensor.GetMul.eq.MulGetS.fin]
+        conv_rhs => simp [List.Vector.head]
         let Y_mk : Tensor α [k, 1] := ⟨(cast (congrArg (Tensor α) h_s2) Y'Append).data⟩
         let Y_T : Tensor α [1, k] := Y_mkᵀ
         have h_Y_T : Y_T = Y_mkᵀ := rfl
@@ -259,7 +263,22 @@ private lemma one
         -- rw [h_data]
         -- rw [h_Y_T.symm]
         -- rw [Tensor.DataCast.eq.Cast_Data.of.Eq] at h_data
-        rw [Vector.MapSplitAt_0.eq.VectorList]
+        -- rw [Vector.MapSplitAt_0.eq.VectorList]
+        -- simp [List.Vector.head]
+        repeat rw [Tensor.DataCast.eq.Cast_Data.of.Eq (by simp_all)]
+        repeat rw [Tensor.DataAppend.eq.Cast_AppendDataS]
+        simp [X', Y']
+        rw [Tensor.EqData0'0]
+        unfold Tensor.unsqueeze
+        simp
+        -- unfold Tensor.repeat
+        -- simp
+        -- rw [Vector.Head.eq.Get_0.fin]
+        -- rw [Tensor.GetTensorFlatten.eq.TensorGet.fin]
+        -- rw [Vector.MapSplitAt_0.eq.VectorList]
+        -- rw [DataTransposeTensor.eq.Cast]
+        -- rw [Tensor.DataSum.eq.Sum_DataSelect.of.Lt]
+        rw [Tensor.HeadDataSum.eq.SumData]
         sorry
       ·
         grind

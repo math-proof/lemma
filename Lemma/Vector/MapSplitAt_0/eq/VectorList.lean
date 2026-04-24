@@ -1,7 +1,7 @@
 import Lemma.Nat.Eq_0.of.Lt_1
 import Lemma.Nat.Eq_Fin.of.EqVal
 import Lemma.Vector.EqGetSplitAt_0'0
-open Nat Vector Bool
+open Nat Vector
 
 
 @[main]
