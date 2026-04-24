@@ -1792,22 +1792,11 @@ class LeanPairedGroup extends Closable(LeanUnary) {
              * Do not recurse into `LeanCaret`: `LeanCaret.insert_newline` delegates to parent and would pass
              * the whole `LeanArgsSpaceSeparated` again → infinite loop with this branch.
              */
-            if (indent > this.indent && caret === this.arg) {
-                let target = this.arg;
-                while (target instanceof LeanArgsSpaceSeparated) {
-                    const next = target.args[target.args.length - 1];
-                    if (!next) break;
-                    target = next;
+            if (indent > this.indent) {
+                if (caret instanceof LeanArgsSpaceSeparated) {
+                    return this.push_args_indented(indent, newline_count, false);
                 }
-                if (target instanceof LeanCaret || target instanceof LeanArgsSpaceSeparated) {
-                    return super.insert_newline(caret, newline_count, indent, next);
-                }
-                if (target instanceof LeanPairedGroup) {
-                    return target.insert_newline(target, newline_count, indent, next);
-                }
-                return super.insert_newline(caret, newline_count, indent, next);
             }
-            throw new Error(`LeanPairedGroup.insert_newline: unexpected for ${this.constructor.name}`);
         }
         return super.insert_newline(caret, newline_count, indent, next);
     }
@@ -1860,8 +1849,8 @@ class LeanPairedGroup extends Closable(LeanUnary) {
         return line;
     }
 
-    strFormat() {
-        let format = this.argFormat();
+    strFormat(format) {
+        format = format || this.argFormat();
         const operator = this.operator;
         const open = typeof operator === 'string' ? operator[0] : operator[0];
         const close = typeof operator === 'string' ? operator[1] : operator[1];
@@ -1958,8 +1947,7 @@ export class LeanParenthesis extends LeanPairedGroup {
                 return c;
             }
             if (indent === this.indent) indent = this.indent + 2;
-            const c = this.push_args_indented(indent, newline_count, false);
-            return c;
+            return this.push_args_indented(indent, newline_count, false);
         }
         return super.insert_newline(caret, newline_count, indent, next);
     }
@@ -2091,7 +2079,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (leanParenthesisLemmaAssignByMultilineClose(this)) {
             const asn = /** @type {LeanAssign} */ (this.parent);
             const pad = ' '.repeat((asn.indent ?? 0) + 2);
-            return `(%s\n${pad})`;
+            return super.strFormat(`%s\n${pad}`);
         }
         return super.strFormat();
     }
