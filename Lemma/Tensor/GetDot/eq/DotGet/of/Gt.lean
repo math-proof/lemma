@@ -1,3 +1,6 @@
+import Lemma.Nat.Mul
+import Lemma.Nat.GtMul.of.Gt_0.Gt_1
+import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt.Eq
 import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Tensor.GetTensorFlatten.eq.TensorGet
 import Lemma.Tensor.DataAppend.eq.Cast_AppendDataS
@@ -166,7 +169,8 @@ private lemma main
 
 @[main, fin]
 private lemma one
-  [Mul α] [Add α] [Zero α]
+  [Mul α]
+  [AddCommMonoid α]
 -- given
   (h : k > n')
   (X : Tensor α [n, k])
@@ -187,13 +191,10 @@ private lemma one
       simp
     have h_s1 : [k, 1].prod / [k].prod * [k].prod = [k, 1].prod := by
       simp [EqMulDiv]
-    have h_s2 : [k / n' * n' + k % n'] = [k] := by simp [EqAddMulDiv]
+    have h_s2 : k / n' * n' + k % n' = k := by simp [EqAddMulDiv]
+    have h_s2 := congrArg (fun n : ℕ => [n]) h_s2
     let Y' : Tensor α [k / n' * n'] := Y.repeat (k / n') (0 : Fin 1)
     let Y'Append : Tensor α [k / n' * n' + k % n'] := Y' ++ (0 : Tensor α [k % n'])
-    -- let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).broadcast [1, k] (by simp)
-    -- have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) ⟨0, by simp⟩ (XiBroadcast.batch_dot (cast (congrArg (Tensor α) h_s) Y'Append))
-    -- simp [XiBroadcast] at this
-    -- rw [this]
     let X' : Tensor α [n, 1, k] := (X.unsqueeze 1).repeat 1 (1 : Fin 3)
     have := GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
       (by grind)
@@ -243,43 +244,73 @@ private lemma one
         subst h_t
         simp [@Tensor.GetMul.eq.MulGetS.fin]
         conv_rhs => simp [List.Vector.head]
-        let Y_mk : Tensor α [k, 1] := ⟨(cast (congrArg (Tensor α) h_s2) Y'Append).data⟩
-        let Y_T : Tensor α [1, k] := Y_mkᵀ
-        have h_Y_T : Y_T = Y_mkᵀ := rfl
-        simp [Y_mk] at h_Y_T
-        have h_data : Y_T.data ≃ Y'Append.data := by
-          simp [Y_T, Y_mk]
-          apply @Vector.SEq.of.All_EqGetS.Eq.fin
-          ·
-            intro t
-            rw [DataTransposeTensor.eq.Cast]
-            rw [Tensor.DataCast.eq.Cast_Data.of.Eq (by simp_all)]
-            simp
-            rw [Vector.GetCast.eq.Get.of.Eq.fin (by simp_all)]
-          ·
-            grind
-        simp [Y_T, Y_mk] at h_data
-        have h_data := Bool.EqCast.of.SEq h_data
-        -- rw [h_data]
-        -- rw [h_Y_T.symm]
-        -- rw [Tensor.DataCast.eq.Cast_Data.of.Eq] at h_data
-        -- rw [Vector.MapSplitAt_0.eq.VectorList]
-        -- simp [List.Vector.head]
         repeat rw [Tensor.DataCast.eq.Cast_Data.of.Eq (by simp_all)]
         repeat rw [Tensor.DataAppend.eq.Cast_AppendDataS]
         simp [X', Y']
         rw [Tensor.EqData0'0]
         unfold Tensor.unsqueeze
         simp
-        -- unfold Tensor.repeat
-        -- simp
-        -- rw [Vector.Head.eq.Get_0.fin]
-        -- rw [Tensor.GetTensorFlatten.eq.TensorGet.fin]
-        -- rw [Vector.MapSplitAt_0.eq.VectorList]
-        -- rw [DataTransposeTensor.eq.Cast]
-        -- rw [Tensor.DataSum.eq.Sum_DataSelect.of.Lt]
+        unfold Tensor.repeat
+        simp
         rw [Tensor.HeadDataSum.eq.SumData]
-        sorry
+        apply Vector.EqSumS.of.SEq
+        apply Vector.SEq.of.All_EqGetS.Eq.fin
+        .
+          intro j
+          have h_j := j.isLt
+          simp at h_j
+          simp [Vector.GetMul.eq.MulGetS.fin]
+          rw [Vector.GetCast.eq.Get.of.Eq.fin (by simpa)]
+          rw [Tensor.DataMul.eq.MulDataS]
+          simp [Vector.GetMul.eq.MulGetS.fin]
+          rw [Tensor.DataGet.eq.GetUnflattenData.fin]
+          rw [Vector.GetUnflatten.eq.Get_AddMul.fin]
+          simp
+          rw [Tensor.DataGet.eq.GetUnflattenData.fin]
+          rw [Vector.GetUnflatten.eq.Get_AddMul.fin]
+          simp
+          rw [Vector.GetCast.eq.Get.of.Eq.fin (by simp)]
+          simp
+          rw [Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt.Eq.fin (by simp) (by simp) (by simpa)]
+          simp [Vector.GetRepeat.eq.Get_Mod.fin]
+          simp [EqMod.of.Lt h_j]
+          rw [Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          simp
+          rw [Vector.GetCast.eq.Get.of.Eq.fin (by simp)]
+          simp
+          repeat rw [Tensor.DataGet.eq.GetUnflattenData.fin]
+          repeat rw [Vector.GetUnflatten.eq.Get_AddMul.fin]
+          simp
+          apply Nat.EqMulS.of.Eq.left
+          rw [Vector.GetCast.eq.Get.of.Eq.fin]
+          .
+            rw [DataTransposeTensor.eq.Cast]
+            simp
+            have h_lt : ↑i * k + ↑j < 1 * (n * (1 * ([k, 1].swap 0 1).prod)) := by
+              simp [List.ProdSwap.eq.Prod]
+              apply Nat.AddMul.lt.Mul.of.Lt.Lt i.isLt h_j
+            obtain ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
+            rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
+            simp
+            rw [GetRepeat.eq.Get_Mod.fin]
+            simp [List.ProdSwap.eq.Prod]
+            rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+            simp
+            rw [Vector.GetCast.eq.Get.of.Eq.fin]
+            .
+              let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
+              simp [List.ProdSwap.eq.Prod] at h_r_mod
+              simp [h_r_mod]
+              simp [EqMod.of.Lt h_j]
+            .
+              simpa [List.ProdSwap.eq.Prod]
+          .
+            simp [List.ProdSwap.eq.Prod]
+            left
+            simp only [GetElem.getElem]
+            simp
+        .
+          simp
       ·
         grind
       ·

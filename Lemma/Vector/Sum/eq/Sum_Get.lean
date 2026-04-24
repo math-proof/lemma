@@ -3,7 +3,7 @@ import Lemma.List.Sum.eq.SumFinLength_Get
 open List
 
 
-@[main]
+@[main, fin]
 private lemma main
   [AddCommMonoid α]
 -- given
