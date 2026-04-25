@@ -15,7 +15,7 @@ function isSafeLemmaModule(m) {
   if (m.includes('..') || m.includes('/') || m.includes('\\') || m.includes('#')) return false;
   const parts = m.split('.').filter(Boolean);
   if (parts.length === 0) return false;
-  return parts.every((p) => /^[\w']+$/.test(p));
+  return parts.every((p) => /^[A-Za-z][A-Za-z0-9_'!?₀-₉]*$/.test(p));
 }
 
 /**

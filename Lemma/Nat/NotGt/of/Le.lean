@@ -9,9 +9,9 @@ private lemma main
 -- given
   (h : a ≤ b) :
 -- imply
-  ¬a > b := by
+  ¬a > b :=
 -- proof
-  apply NotLt.of.Ge h
+  NotLt.of.Ge h
 
 
 -- created on 2025-03-29

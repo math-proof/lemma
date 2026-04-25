@@ -118,23 +118,6 @@ function arrayInsert(arr, index, value) {
 }
 
 /**
- * When `tokens[2]` is `of` but the on-disk path uses `is` (Lean `of` not in `is_infix_operator`):
- * - Four segments: `List.Eq_Nil.of.EqLength_0` → `List.Eq_Nil.is.EqLength_0`.
- * - Five or more: `Tensor.SEq.of.SEqDataS.Eq` → `Tensor.SEq.is.SEqDataS.of.Eq` (PHP `index.php` `array_insert`).
- * @param {string[]} tokens dotted module split
- * @returns {string | null}
- */
-function tryOfIsOfFileRewrite(tokens) {
-  if (tokens.length < 4 || tokens[2] !== 'of') return null;
-  const t = [...tokens];
-  t[2] = 'is';
-  if (t.length > 4) arrayInsert(t, 4, 'of');
-  const m = t.join('.');
-  const p = moduleToLeanPath(m);
-  return p && fs.existsSync(p) ? m : null;
-}
-
-/**
  * Dotted module from `parseInfixSegments` rows (matches PHP `tokens_to_module`).
  * @param {(string | string[])[]} segment
  * @param {string | null} [section]
@@ -267,6 +250,7 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
               }
               if (!hit && segment[1]) {
                 segment[1][0] = 'is';
+                if (segment.length >= 4) arrayInsert(segment, 3, ['of']);
                 const p = moduleToLeanPath(tokensToModule(segment, section));
                 if (!fs.existsSync(p)) {
                   [segment[0], segment[2]] = [segment[2], segment[0]];
@@ -361,10 +345,6 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
               const m = tokens_.join('.');
               const p = moduleToLeanPath(m);
               if (p && fs.existsSync(p)) return m;
-            }
-            {
-              const flatAlt = tryOfIsOfFileRewrite(tokens);
-              if (flatAlt) return flatAlt;
             }
             tokens[2] = 'is';
           }

@@ -313,8 +313,7 @@ private lemma one
           ·
             simp [ProdSwap.eq.Prod]
             left
-            simp only [GetElem.getElem]
-            simp
+            grind
         ·
           simp
       ·
