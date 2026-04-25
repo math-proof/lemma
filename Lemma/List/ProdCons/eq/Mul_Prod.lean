@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Mul M] [One M]
 -- given
