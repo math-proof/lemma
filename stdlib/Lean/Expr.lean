@@ -355,7 +355,7 @@ def Lean.Expr.decompose_forallE (binders : List (Name × Expr × BinderInfo) := 
     ⟨binders, body⟩
 
 def Lean.Expr.getElem2get : Expr → Expr
-  | expr@(app (app (app (app (app (app (app (app (const `GetElem.getElem _) coll) idx) _) _) _) xs) i) isLt) =>
+  | expr@(app (app (app (app (app (app (app (app (const `GetElem.getElem _) coll) idx) elem) _) _) xs) i) isLt) =>
     match coll with
     | app (app (const `List.Vector us) α) n =>
       match idx with
@@ -493,6 +493,20 @@ def Lean.Expr.getElem2get : Expr → Expr
       let α := α.mapDeBruijnIndex map 0
       let n := n.mapDeBruijnIndex map 0
       (const `List.Vector.get us).mkApp [α, n, xs.getElem2get, i]
+    | app (app (lam _ (const `Nat usNat) (app (const `List.Vector us) _) .default) _) m'
+      -- congrArg₂ (fun n => List.Vector (List.Vector α n)) h_n h_m
+    | app (app (lam _ (const `Nat usNat) (lam _ (const `Nat _) (app (app (const `List.Vector us) _) _) .default) .default) _) m' =>
+      -- congrArg₂ (fun n m => List.Vector (List.Vector α n) m) h_n h_m
+      let i :=
+        if let (app (const `Fin usNat) m) := idx then
+          if m == m' then
+            i
+          else
+            let i := (const `Fin.val usNat).mkApp [m, i]
+            (const `Fin.mk usNat).mkApp [m', i, isLt]
+        else
+          (const `Fin.mk usNat).mkApp [m', i, isLt]
+      (const `List.Vector.get us).mkApp [elem, m', xs.getElem2get, i]
     | _ =>
       panic! s!"Expected a collection, but got: coll = {coll}"
   | app fn arg =>
