@@ -59,7 +59,7 @@ const props = defineProps([
 	'date',
 ]);
 
-const emit = defineEmits(['update:module']);
+const $emit = defineEmits(['update:module']);
 
 function postprocess_word(text, word) {
 	for (var char of word)
@@ -77,7 +77,7 @@ function postprocess_char(parser, char) {
 
 const self = new Vue({
 	props,
-	$emit: emit,
+	$emit,
 
 	data() {
         // const model = 'deepseek-r1';
