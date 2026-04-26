@@ -1,4 +1,4 @@
-import { ref, computed, watch, nextTick, getCurrentInstance, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
+import { ref, computed, watch, nextTick, getCurrentInstance, onMounted, onUnmounted, defineAsyncComponent, unref, isRef } from 'vue'
 
 
 class Component {
@@ -11,13 +11,15 @@ class Component {
 				set(value) {
 					$emit(`update:${key}`, value);
 				},
-			}:
+			} :
 			{
 				get() {
-					return data[key].value;
+					return unref(data[key]);
 				},
 				set(value) {
-					data[key].value = value;
+					const slot = data[key];
+					if (isRef(slot))
+						slot.value = value;
 				},
 			};
 		attributes.enumerable = true;
@@ -58,7 +60,20 @@ class Vue extends Component {
 	constructor(vue) {
 		super();
 		this.$$instance = getCurrentInstance();
-		const {data, $refs, computed: $computed, props, $emit, directives, components, mounted, unmounted, created, methods : $methods, watch: $watch} = vue;
+		let {
+			data,
+			$refs,
+			computed: $computed,
+			props,
+			$emit,
+			directives,
+			components,
+			mounted,
+			unmounted,
+			created,
+			methods: $methods,
+			watch: $watch,
+		} = vue;
 		var $expose = {};
 		if (props) {
 			var emit = $emit?? ((event, value) => {
@@ -72,22 +87,53 @@ class Vue extends Component {
 			}
 			this.$props = $props;
 		}
-		if (data) {
-			const $data = {};
-			for (const key in data) {
-				$data[key] = ref(data[key]);
+		if (typeof data === 'function') {
+			data = data.call(this);
+		}
+		var $data = null;
+		if ($refs) {
+			var keys = Object.keys($refs);
+			for (const key of keys) {
+				$refs[key] = ref($refs[key]);
+			}
+			$expose['$refs'] = this.$refs = $refs;
+			const mountedCounters = Object.fromEntries(keys.map((k) => [k, 0]));
+			if (data) {
+				data.$mounted = mountedCounters;
+				$data = data;
+			} else {
+				$data = { $mounted: mountedCounters };
+			}
+
+			let computed_ref = {};
+			for (const key of keys) {
+				if ($computed && key in $computed) {
+					console.warn(`[Vue] computed.${key} is already defined`);
+					continue;
+				}
+				computed_ref[key] = function refMountedHost() {
+					return this.$mounted[key] ? this.$refs[key].value : {};
+				};
+			}
+			if ($computed) {
+				Object.assign($computed, computed_ref);
+			} else {
+				$computed = computed_ref;
+			}
+		}
+		else {
+			$data = data;
+		}
+
+		if ($data) {
+			for (const key in $data) {
+				$data[key] = ref($data[key]);
 				this.defineProperty($data, key);
 				$expose[key] = $data[key];
 			}
 			$expose['$data'] = this.$data = $data;
 		}
-		if ($refs) {
-			for (const key in $refs) {
-				$refs[key] = ref($refs[key]);
-				this.defineProperty($refs, key);
-			}
-			$expose['$refs'] = this.$refs = $refs;
-		}
+
 		if ($computed) {
 			for (const key in $computed) {
 				const definition = $computed[key];
@@ -135,9 +181,9 @@ class Vue extends Component {
 				watch(getter.bind(this), (newVal, oldVal) => handler.call(this, newVal, oldVal), opts);
 			}
 		}
+		const instance = this.$$instance;
 		// Handle directives registration
 		if (directives) {
-			const instance = this.$$instance;
 			if (instance) {
 				// Merge the component's existing directives with new ones
 				instance.type.directives = {
@@ -147,12 +193,27 @@ class Vue extends Component {
 			}
 		}
 		if (components) {
-			this.components = components.isArray?
-				components.reduce((acc, name) => {
-					acc[name] = (name => defineAsyncComponent(() => import(`../components/${name}.vue`)))(name);
-					return acc;
-				}, {}) :
-				components;
+			// std.js: Array.prototype.isArray = true -- only array-of-names is supported here.
+			console.assert(components.isArray, 'components must be an array of .vue base names');
+			const resolved = components.reduce((acc, name) => {
+				acc[name] = defineAsyncComponent(() => import(`../components/${name}.vue`));
+				return acc;
+			}, {});
+			this.components = resolved;
+			if (instance) {
+				instance.type.components = {
+					...(instance.type.components || {}),
+					...resolved,
+				};
+			}
+		}
+		const __name = instance?.type?.__name;
+		if (__name) {
+			onMounted(() => {
+				var { $mounted } = this.$parent;
+				if ($mounted && __name in $mounted)
+					$mounted[__name] = 1;
+			});
 		}
 		if (mounted) {
 			onMounted(() => {
@@ -162,6 +223,13 @@ class Vue extends Component {
 		if (unmounted) {
 			onUnmounted(() => {
 				unmounted.call(this);
+			});
+		}
+		if (__name) {
+			onUnmounted(() => {
+				var { $mounted } = this.$parent;
+				if ($mounted && __name in $mounted)
+					$mounted[__name] = 0;
 			});
 		}
 		if ($methods) {
@@ -210,6 +278,9 @@ class Vue extends Component {
 			const obj = this[source];
 			if (obj) {
 				for (const key in obj) {
+					if (this.$props && key in this.$props) {
+						console.warn(`[Vue.globals] ATTENTION: "${key}" is also declared in $props -- overlap between props and ${source} will confuse bindings; rename one of them.`);
+					}
 					if (key in globals) {
 						console.warn(`[Vue.globals] name collision on "${key}" from ${source}`);
 						continue;
