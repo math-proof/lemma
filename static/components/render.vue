@@ -678,6 +678,14 @@ order by depth desc`);
                     var input = this.$el.querySelector(`input[name="lemma[${index}][attribute]"]`);
                     this.select_span(input.nextElementSibling);
                     break;
+                case 'comment':
+                    var lemmaRoots = this.$el.querySelectorAll('div.lemma');
+                    var commentEl = lemmaRoots[index] && lemmaRoots[index].querySelector('.lemma-comment');
+                    if (commentEl) {
+                        commentEl.focus();
+                        this.select_span(commentEl);
+                    }
+                    break;
                 case 'created':
                     var span = this.$el.querySelector(`a > span.date`);
                     this.select_span(span);

@@ -2,11 +2,13 @@
     <div class=lemma>
         <template v-if=comment>
             <span class=green>/--</span><br>
-            <template v-if=markdownComment>
-                <markdown :root=markdownComment.root v-clipboard :data-clipboard-text=comment />
-                <input type=hidden :name="`lemma[${index}][comment]`" :value=comment />
-            </template>
-            <textarea v-else class=green :name="`lemma[${index}][comment]`" :value=comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea></textarea>
+            <div class=lemma-comment :class=class_comment tabindex=1000 @keydown=keydown_comment @click.left.stop=click_select_comment>
+                <template v-if="markdownComment && !commentEditMode">
+                    <markdown :root=markdownComment.root v-clipboard :data-clipboard-text=comment />
+                    <input type=hidden :name="`lemma[${index}][comment]`" :value=comment />
+                </template>
+                <textarea v-else ref=commentTextarea class=green :name="`lemma[${index}][comment]`" :value=lemma.comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea @input=inputComment></textarea>
+            </div>
             <span class=green>-/</span>
             <br>
         </template>
@@ -85,6 +87,7 @@ export default {
         return {
             postname: 'lemma',
             markdownComment: null,
+            commentEditMode: false,
             accessibilities,
         };
     },
@@ -135,6 +138,10 @@ export default {
 
         class_imply() {
             return this.selectedIndex.equals([this.index, 'imply'])? 'focus': '';
+        },
+
+        class_comment() {
+            return this.selectedIndex.equals([this.index, 'comment', null]) ? 'focus' : '';
         },
 
         regexp_section() {
@@ -556,9 +563,55 @@ ${latex}
             this.$parent.openContainingFolder();
         },
 
+        click_select_comment(event) {
+            this.$parent.selectedIndex.array_assign([this.index, 'comment', null]);
+            event.currentTarget.focus();
+        },
+
+        keydown_comment(event) {
+            var {key, target} = event;
+            if (key !== 'Insert')
+                return;
+            if (this.commentEditMode && (target.tagName === 'TEXTAREA' || target.closest && target.closest('textarea')))
+                return;
+            if (!this.markdownComment)
+                return;
+            if (this.commentEditMode)
+                return;
+            event.preventDefault();
+            this.commentEditMode = true;
+            this.$nextTick(() => {
+                var ta = this.$refs.commentTextarea;
+                if (ta) {
+                    ta.focus();
+                    var n = ta.value.length;
+                    ta.setSelectionRange(n, n);
+                }
+            });
+        },
+
+        inputComment(event) {
+            this.lemma.comment = event.target.value;
+        },
+
+        rebuildMarkdownComment() {
+            if (!this.lemma.comment)
+                return;
+            var md = new MarkdownParser();
+            md.build(this.lemma.comment);
+            this.markdownComment = md;
+        },
+
         async keydown_textarea(event) {
             var {key, target} = event;
             switch (key) {
+            case 'Escape':
+                if (this.markdownComment) {
+                    event.preventDefault();
+                    this.commentEditMode = false;
+                    this.rebuildMarkdownComment();
+                }
+                break;
             case 's':
                 if (event.ctrlKey) {
                     this.save();
