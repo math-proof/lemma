@@ -485,7 +485,7 @@ const {
   onExplorerKeydown,
 } = self.globals;
 
-/** Match legacy axiomPackage / axiomTheorem URL rules (slash vs dotted modules). */
+/** Match `?module=` URL rules (slash vs dotted path segments). */
 function appendModuleSegment(segment, asFolder) {
   const u = new URL(location.href);
   const haystack = u.search;
@@ -524,7 +524,7 @@ function isEventFromFolderSearchInput(event) {
 }
 
 /**
- * Same contract as `axiomTheorem.remove()` / `php/request/delete/lemma.php`:
+ * Same contract as `php/request/delete/lemma.php`:
  * `package` = dotted path from `?module=` (strip trailing `.`), `lemma` = basename without `.lean`.
  */
 /** Parent dotted module for `php/request/delete/*.php` (strip trailing `.` from `?module=`). */

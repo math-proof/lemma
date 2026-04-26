@@ -1,7 +1,7 @@
 /**
  * Node port of `php/request/rename.php` (POST `old`, `new` as dotted modules under `Lemma/`).
  * Runs `sh/rename.sh` (Linux) or `ps1/rename.ps1` (Windows), then optional MySQL `update_axiom`-style updates.
- * The `package` + folder branch from PHP is not implemented here (legacy `smallIcon.vue` payload).
+ * The `package` + folder branch from PHP is not implemented here (legacy folder UI removed).
  */
 import path from 'path';
 import { spawnSync } from 'node:child_process';
