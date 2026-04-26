@@ -12,7 +12,9 @@
         </template>
         <template v-if=attribute>
             <input type=hidden :name="`lemma[${index}][attribute]`" :value=JSON.stringify(attribute) />
-            <span class=orange>@[</span><span class=blue>{{ attribute.join(", ") }}</span><span class=orange>]</span><br>
+            <span class=lemma-attribute-area @keydown=maybeDeleteAttributeToken>
+                <span class=orange>@[</span><template v-for="(part, i) in attribute" :key="`attr-${index}-${i}`"><span v-if="i > 0" class=orange>, </span><span class="blue lemma-attr-part" :data-attr-index=i tabindex=0>{{ part }}</span></template><span class=orange>]</span>
+            </span><br>
         </template>
 
         <select v-if=accessibility :name="`lemma[${index}][accessibility]`" :value=accessibility :style=style_select(accessibility)>
@@ -169,6 +171,114 @@ export default {
     },
 
     methods: {
+        /** Delete or Backspace on a lemma attribute token (focused span or text selection inside it). */
+        maybeDeleteAttributeToken(event) {
+            if (event.key !== 'Delete' && event.key !== 'Backspace')
+                return false;
+            var target = event.target;
+            if (target.closest && target.closest('.CodeMirror'))
+                return false;
+            var tag = target.tagName;
+            if (tag === 'TEXTAREA' || tag === 'INPUT' || tag === 'SELECT')
+                return false;
+
+            var sel = window.getSelection();
+            if (!sel.rangeCount)
+                return false;
+
+            var attrRow = event.currentTarget;
+            if (!attrRow)
+                return false;
+
+            var lem = this.lemma;
+            if (!lem || !lem.attribute)
+                return false;
+
+            var parts = attrRow.querySelectorAll('.lemma-attr-part');
+            var ti = -1;
+
+            if (sel.isCollapsed) {
+                var p = null;
+                var a = sel.anchorNode;
+                if (a) {
+                    var el = a.nodeType === 3 ? a.parentElement : a;
+                    p = el.closest && el.closest('.lemma-attr-part');
+                }
+                if (!p || !attrRow.contains(p)) {
+                    var tEl = target;
+                    if (tEl.nodeType === 3)
+                        tEl = tEl.parentElement;
+                    p = tEl.closest && tEl.closest('.lemma-attr-part');
+                }
+                if (p && attrRow.contains(p))
+                    ti = parseInt(p.getAttribute('data-attr-index'), 10);
+            }
+            else {
+                var r = sel.getRangeAt(0);
+                var a = sel.anchorNode;
+                var f = sel.focusNode;
+                var elA = a.nodeType === 3 ? a.parentElement : a;
+                var elF = f.nodeType === 3 ? f.parentElement : f;
+                var pa = elA.closest && elA.closest('.lemma-attr-part');
+                var pf = elF.closest && elF.closest('.lemma-attr-part');
+
+                if (pa && pa === pf && attrRow.contains(pa))
+                    ti = parseInt(pa.getAttribute('data-attr-index'), 10);
+                else {
+                    var contained = [];
+                    for (var j = 0; j < parts.length; j++) {
+                        try {
+                            if (!r.intersectsNode(parts[j]))
+                                continue;
+                        }
+                        catch (e) {
+                            continue;
+                        }
+                        var nr = document.createRange();
+                        nr.selectNodeContents(parts[j]);
+                        var fullyInside =
+                            r.compareBoundaryPoints(Range.START_TO_START, nr) >= 0 &&
+                            r.compareBoundaryPoints(Range.END_TO_END, nr) <= 0;
+                        if (fullyInside)
+                            contained.push(j);
+                    }
+                    if (contained.length === 1)
+                        ti = contained[0];
+                    else if (contained.length === 0) {
+                        var t = sel.toString();
+                        var hits = [];
+                        for (var j = 0; j < parts.length; j++) {
+                            try {
+                                if (!r.intersectsNode(parts[j]))
+                                    continue;
+                            }
+                            catch (e) {
+                                continue;
+                            }
+                            var exp = String(lem.attribute[j]);
+                            var visible = parts[j].textContent;
+                            if (t === exp || t.trim() === exp || t.trim() === visible.trim())
+                                hits.push(j);
+                        }
+                        if (hits.length === 1)
+                            ti = hits[0];
+                    }
+                }
+            }
+
+            if (Number.isNaN(ti) || ti < 0 || ti >= lem.attribute.length)
+                return false;
+
+            event.preventDefault();
+            event.stopPropagation();
+            lem.attribute.splice(ti, 1);
+            if (lem.attribute.length === 0)
+                delete lem.attribute;
+            sel.removeAllRanges();
+            this.selectedIndex.clear();
+            return true;
+        },
+
         save() {
             this.$parent.save();
         },
@@ -523,6 +633,15 @@ div {
 
 span.blue {
     color: blue;
+}
+
+.lemma-attr-part {
+    user-select: text;
+}
+
+.lemma-attr-part:focus {
+    outline: 1px dotted #888;
+    outline-offset: 1px;
 }
 
 .green {
