@@ -82,4 +82,6 @@ const self = new Vue({
 		latex
 	}
 });
+
+defineExpose(self.$expose);
 </script>

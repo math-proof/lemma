@@ -49,4 +49,6 @@ const self = new Vue({
 	mounted() {
 	}
 });
+
+defineExpose(self.$expose);
 </script>

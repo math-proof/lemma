@@ -7,8 +7,8 @@
             <input type=hidden name=open :value=JSON.stringify(open) />
             <input type=hidden name=set_option :value=JSON.stringify(set_option) />
             <input type=hidden name=date :value=JSON.stringify(date) />
-            <def v-for="lean, index in def" :lean=lean :index=index></def>
-            <lemma v-for="lemma, index in lemma" :comment=lemma.comment :attribute=lemma.attribute :accessibility=lemma.accessibility :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :explicit=lemma.explicit :given=lemma.given :default=lemma.default :imply=lemma.imply :proof=lemma.proof :index=index></lemma>
+            <def v-for="lean, index in self.def" :lean=lean :index=index></def>
+            <lemma v-for="lemma, index in self.lemma" :comment=lemma.comment :attribute=lemma.attribute :accessibility=lemma.accessibility :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :explicit=lemma.explicit :given=lemma.given :default=lemma.default :imply=lemma.imply :proof=lemma.proof :index=index></lemma>
         </form>
 
         <template v-if="error.length != 0">
@@ -31,25 +31,35 @@
                 <span v-if=date.updated class=date>Updated on {{date.updated}}</span>
             </p>
             <p class="left">
-                <!-- <button type=button class=transparent @click=click_download :title="`download into a single ${ext} file`"><u>download</u></button> into a
-			    <select v-model=ext>
-				    <option v-for="value of ['lean', 'json']" :value=value>{{value}}</option>
-			    </select> file, or view via 
-                <button type=button class=transparent @click=click_lean4web title="view this lean file via lean4web"><u>lean4web</u></button> -->
             </p>
         </div>
     </div>
 </template>
 
-<script>
+<script setup>
 import lemma from "./lemma.vue"
 import def from "./def.vue"
-import { mounted, click_left, fetch_lemma, has_typeclasses } from "../js/lemma.js"
-import { generate, parse_token } from "../js/prompting.js"
-import MarkdownParser from "../js/parser/markdown.js"
-import { tactics } from "../codemirror/mode/lean/tactics.js"
-import { sbd } from "../js/sbd.js"
-console.log('import render.vue');
+import Vue from "../js/vue.js";
+import { mounted, click_left as clickLeftDocument, fetch_lemma, has_typeclasses } from "../js/lemma.js";
+import { generate, parse_token } from "../js/prompting.js";
+import MarkdownParser from "../js/parser/markdown.js";
+import { tactics } from "../codemirror/mode/lean/tactics.js";
+import { sbd } from "../js/sbd.js";
+
+console.log("import render.vue");
+
+const props = defineProps([
+	'imports',
+	'open',
+	'set_option',
+	'def',
+	'lemma',
+	'error',
+	'module',
+	'date',
+]);
+
+const emit = defineEmits(['update:module']);
 
 function postprocess_word(text, word) {
 	for (var char of word)
@@ -65,14 +75,11 @@ function postprocess_char(parser, char) {
 	return parser;
 }
 
-export default {
-    components: { lemma, def },
-    props : [ 'imports', 'open', 'set_option', 'def', 'lemma', 'error', 'module', 'date'],
-    
-    created() {
-    },
-    
-    data() {
+const self = new Vue({
+	props,
+	$emit: emit,
+
+	data() {
         // const model = 'deepseek-r1';
         const model = 'deepseek-reasoner';
         const PartialOrder = {
@@ -404,11 +411,12 @@ export default {
         var model = getParameterByName('model[proof]');
         if (!module) {
             var module = getParameterByName('module');
-            module = module.replace(/[\/\\]/g, '.');
-            this.$parent.$data.module = module;
-            this.$props.module = module;
-            if (!model)
-                await this.echo(module);
+            if (module) {
+                module = module.replace(/[\/\\]/g, '.');
+                this.$emit('update:module', module);
+                if (!model)
+                    await this.echo(module);
+            }
         }
 
         var {hash} = location;
@@ -657,26 +665,26 @@ order by depth desc`);
                 switch (attr) {
                 case 'proof':
                     var a = this.$el.querySelectorAll('a[title="caller hierarchy"]')[index];
-                    a.focus();
-                    this.select_span(a.firstChild);
+                        a.focus();
+                        this.select_span(a.firstChild);
                     break;
                 case 'given':
                     var span = this.$el.querySelector(`span.green[data-clipboard-text][index="${index}"]`);
-                    this.select_span(span);
+                        this.select_span(span);
                     break;
                 case 'imply':
                     var a = this.$el.querySelectorAll('a[title="callee hierarchy"]')[index];
-                    a.focus();
-                    this.select_span(a.firstChild);
+                        a.focus();
+                        this.select_span(a.firstChild);
                     break;
                 case 'name':
                     var input = this.$el.querySelector(`input[name="lemma[${index}][name]"]`);
-                    input.focus();
-                    input.select();
+                        input.focus();
+                        input.select();
                     break;
                 case 'attribute':
                     var input = this.$el.querySelector(`input[name="lemma[${index}][attribute]"]`);
-                    this.select_span(input.nextElementSibling);
+                        this.select_span(input.nextElementSibling);
                     break;
                 case 'comment':
                     var lemmaRoots = this.$el.querySelectorAll('div.lemma');
@@ -688,11 +696,11 @@ order by depth desc`);
                     break;
                 case 'created':
                     var span = this.$el.querySelector(`a > span.date`);
-                    this.select_span(span);
+                        this.select_span(span);
                     break;
                 case 'updated':
                     var span = this.$el.querySelector(`p > span.date`);
-                    this.select_span(span);
+                        this.select_span(span);
                     break;
                 }
             }
@@ -700,13 +708,13 @@ order by depth desc`);
                 var [index, attr] = indices;
                 switch (attr) {
                 case 'imply':
-                    this.lemma[index].imply.insert = true;
+                        this.lemma[index].imply.insert = true;
                     this.$nextTick(() => {
                         this.select(indices, line, col, title);
                     });
                     break;
                 case 'given':
-                    this.lemma[index].given[indices[2]].insert = true;
+                        this.lemma[index].given[indices[2]].insert = true;
                     this.$nextTick(() => {
                         this.select(indices, line, col, title);
                     });
@@ -1326,7 +1334,7 @@ ${task}`;
                     docstring = sbd(docstring).map(text => text.replace(/^\n+|\n+$/g, '')).join("\n");
                     console.log(docstring);
                     var i = index[0];
-                    this.lemma[i].comment = docstring;
+                        this.lemma[i].comment = docstring;
                 }
                 break;
             case 'proof':
@@ -1718,7 +1726,7 @@ ${task}`;
             }
         },
 
-        click_left,
+        click_left: clickLeftDocument,
 
         delete(indices) {
             var [index, attr] = indices;
@@ -1787,13 +1795,17 @@ replace into
         },
     },
     
-    directives: {
-        finish :{
-            mounted(el, binding){
-            },
-        },
-    },
-};
+	directives: {
+		finish: {
+			mounted(el, binding) {
+			},
+		},
+	},
+});
+
+const { action, href_switch, click_left, keydown } = self.globals;
+
+defineExpose(self.$expose);
 
 //http://docs.mathjax.org/en/latest/web/typeset.html#typeset-clear
 //http://docs.mathjax.org/en/latest/advanced/typeset.html

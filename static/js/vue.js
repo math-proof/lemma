@@ -37,6 +37,17 @@ class Parent extends Component {
 		for (let key in exposed) {
 			this.defineProperty(exposed, key);
 		}
+		// Options-API root: $data lives on proxy, not in exposed. Skip if defineExpose already set $data.
+		const proxy = instance?.proxy;
+		if (proxy && proxy.$data != null && !('$data' in exposed)) {
+			Object.defineProperty(this, '$data', {
+				enumerable: true,
+				configurable: true,
+				get() {
+					return proxy.$data;
+				},
+			});
+		}
 	}
 
 	get $parent() {
@@ -248,6 +259,10 @@ class Vue extends Component {
 			return nextTick();
 		};
 		$expose['$nextTick'] = this.$nextTick;
+		if ($emit) {
+			this.$emit = $emit;
+			$expose['$emit'] = $emit;
+		}
 		this.$expose = $expose;
 		if (created)
 			created.call(this);
@@ -270,6 +285,12 @@ class Vue extends Component {
 			this.$$root = node || this;
 		}
 		return this.$$root;
+	}
+
+	get $el() {
+		const inst = this.$$instance;
+		if (!inst) return undefined;
+		return inst.proxy?.$el;
 	}
 
 	get globals() {

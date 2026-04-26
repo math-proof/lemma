@@ -2,47 +2,45 @@
     <textarea :name=name>{{text}}</textarea>
 </template>
 
-<script>
-import codeMirror from "./codeMirror.vue"
+<script setup>
+import Vue from "../js/vue.js";
+import { codeMirrorMounted, cmComputedUser, cmComputedModule } from "../js/codeMirrorEditor.js";
+
 console.log('import renderLean.vue');
 
-export default {
-    data() {
-    },
+const props = defineProps(['text', 'index']);
 
-    props : [ 'text', 'index'],
-    
+const self = new Vue({
+    props,
+
     created() {
         setitem(this.$parent.renderLean, ...this.index, this);
     },
-    
-    updated() {
-    },
-    
-    computed:{
+
+    computed: {
         click_left() {
             return this.$parent.click_left;
         },
-        
+
         name() {
             return this.$parent.postname + this.index.map(i => `[${i}]`).join('');
         },
-        
-    	user: codeMirror.computed.user,
-    	module: codeMirror.computed.module,
-        
-		open_lemma_sections() {
-			return this.$parent.open_lemma_sections;
-		},
 
-		regexp_section() {
-			return this.$parent.regexp_section;
-		},
+        user: cmComputedUser,
+        module: cmComputedModule,
+
+        open_lemma_sections() {
+            return this.$parent.open_lemma_sections;
+        },
+
+        regexp_section() {
+            return this.$parent.regexp_section;
+        },
 
         firstSibling() {
             return this.$parent.renderLean[0];
         },
-        
+
         nextSibling() {
             var {index} = this;
             var self = this.$parent;
@@ -202,7 +200,7 @@ export default {
             }
             return getitem(self.renderLean, ...index);
         },
-        
+
         lastSibling() {
             var prove = this.$parent.renderLean;
             return prove[prove.length - 1];
@@ -212,16 +210,16 @@ export default {
             return this.$parent.leanSourceCode;
         },
     },
-    
+
     data() {
-    	return {
-    		editor: null,
-    		focus: true,
-    		theme: 'eclipse indent',
-    		hash: null,
-    	};
+        return {
+            editor: null,
+            focus: true,
+            theme: 'eclipse indent',
+            hash: null,
+        };
     },
-    
+
     methods: {
         save() {
             this.$parent.save();
@@ -231,15 +229,15 @@ export default {
             this.$parent.code_generation(this.index, line);
         },
 
-		append(word) {
-			// precondition: word does not contain newlines
-			var cm = this.editor;
-			var line = cm.lineCount() - 1;
-			var ch = cm.getLine(line).length;
-			cm.setCursor(line, ch);
-			cm.replaceSelection(word);
-			cm.setCursor(line, ch + word.length);
-		},
+        append(word) {
+            // precondition: word does not contain newlines
+            var cm = this.editor;
+            var line = cm.lineCount() - 1;
+            var ch = cm.getLine(line).length;
+            cm.setCursor(line, ch);
+            cm.replaceSelection(word);
+            cm.setCursor(line, ch + word.length);
+        },
 
         new_file() {
             this.$parent.new_file();
@@ -265,9 +263,13 @@ export default {
             );
         }
     },
-    
-    mounted: codeMirror.mounted,
-};
+
+    mounted: codeMirrorMounted,
+});
+
+const { name } = self.globals;
+
+defineExpose(self.$expose);
 </script>
 
 <style>

@@ -32,5 +32,5 @@ import * as show_hint from "./static/codemirror/addon/hint/show-hint.js"
 import * as matchbrackets from "./static/codemirror/addon/edit/matchbrackets.js"
 import * as comment from "./static/codemirror/addon/comment/comment.js"
 
-createApp('render', <%- codeJson %>);
+createApp('render', <%- codeJson %>, undefined, ['module']);
 </script>

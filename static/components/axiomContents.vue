@@ -610,6 +610,8 @@ function formatExplorerDate(mtimeMs) {
 /** Folder-search debounce (module scope; single explorer mount). */
 let folderSearchTimer = /** @type {ReturnType<typeof setTimeout> | null} */ (null);
 let folderSearchSeq = 0;
+
+defineExpose(self.$expose);
 </script>
 
 <style scoped>

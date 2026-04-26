@@ -31,4 +31,6 @@ const self = new Vue({
 	directives: {
 	}
 });
+
+defineExpose(self.$expose);
 </script>

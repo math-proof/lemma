@@ -17,4 +17,6 @@ const self = new Vue({
 		}
     },
 });
+
+defineExpose(self.$expose);
 </script>

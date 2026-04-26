@@ -397,6 +397,7 @@ function input_textarea(event){
 	$parent.data[0].text = text;
 }
 
+defineExpose(self.$expose);
 </script>
 
 <style>

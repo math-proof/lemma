@@ -4,45 +4,36 @@
     </div>
 </template>
 
-<script>
-import renderLean from "./renderLean.vue"
+<script setup>
+import Vue from "../js/vue.js";
+import renderLean from "./renderLean.vue";
+
 console.log('import def.vue');
 
-export default {
-    components: { renderLean },
-    props : [ 'lean', 'index'],
-    
-    created() {
-    },
-    
+const props = defineProps(['lean', 'index']);
+
+const self = new Vue({
+    props,
+
     data() {
         return {
             postname: 'def',
         };
     },
-    
+
     computed: {
         renderLean() {
             return this.$parent.renderLean;
         },
     },
 
-    updated() {
-    },
-    
-    mounted() {
-    },
-
     methods: {
         click_left() {
-
         },
     },
-    
-    directives: {
-    },
-};
+});
 
+defineExpose(self.$expose);
 </script>
 
 <style>

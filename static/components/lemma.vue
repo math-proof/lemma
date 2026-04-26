@@ -7,7 +7,7 @@
                     <markdown :root=markdownComment.root v-clipboard :data-clipboard-text=comment />
                     <input type=hidden :name="`lemma[${index}][comment]`" :value=comment />
                 </template>
-                <textarea v-else ref=commentTextarea class=green :name="`lemma[${index}][comment]`" :value=lemma.comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea @input=inputComment></textarea>
+                <textarea v-else :ref="$refs.commentTextarea" class=green :name="`lemma[${index}][comment]`" :value=comment :rows=comment_rows :cols=comment_cols @keydown=keydown_textarea @input=inputComment></textarea>
             </div>
             <span class=green>-/</span>
             <br>
@@ -28,7 +28,7 @@
         <renderLean v-if=instImplicit :text="given || explicit || strictImplicit || implicit? instImplicit: instImplicit + ' :'" :index="[index, 'instImplicit']"></renderLean>
         <renderLean v-if=strictImplicit :text="given || explicit || implicit? strictImplicit: strictImplicit + ' :'" :index="[index, 'strictImplicit']"></renderLean>
         <renderLean v-if=implicit :text="given || explicit? implicit: implicit + ' :'" :index="[index, 'implicit']"></renderLean>
-        <div v-if="explicit || given || this.default">
+        <div v-if="explicit || given || self.default">
             <hr>
             <span v-clipboard class=green :data-clipboard-text=lemmaName :index=index><b>-- given</b></span>
             <renderLean v-if=explicit :text=explicit :index="[index, 'explicit']"></renderLean>
@@ -69,115 +69,115 @@
     </div>
 </template>
 
-<script>
-import renderLean from "./renderLean.vue"
-import markdown from "./markdown.vue"
-import MarkdownParser from "../js/parser/markdown.js"
-console.log('import lemma.vue');
-const accessibilities = ['public', 'protected', 'private', 'public nonrec', 'protected nonrec', 'private nonrec', 'noncomputable', 'scoped', 'nonrec'];
+<script setup>
+import Vue from "../js/vue.js";
+import renderLean from "./renderLean.vue";
+import markdown from "./markdown.vue";
+import MarkdownParser from "../js/parser/markdown.js";
 
-export default {
-    components: { renderLean, markdown },
-    props : [ 'comment', 'attribute', 'accessibility', 'name', 'instImplicit', 'strictImplicit', 'implicit', 'explicit', 'given', 'default', 'imply', 'proof', 'index'],
-    
-    created() {
+console.log('import lemma.vue');
+
+const props = defineProps(['comment', 'attribute', 'accessibility', 'name', 'instImplicit', 'strictImplicit', 'implicit', 'explicit', 'given', 'default', 'imply', 'proof', 'index']);
+
+const self = new Vue({
+  props,
+
+  $refs: {
+    commentTextarea: null,
+  },
+
+  data() {
+      return {
+          postname: 'lemma',
+          markdownComment: null,
+          commentEditMode: false,
+          accessibilities: ['public', 'protected', 'private', 'public nonrec', 'protected nonrec', 'private nonrec', 'noncomputable', 'scoped', 'nonrec'],
+      };
+  },
+
+  computed: {
+    comment_rows() {
+      var {comment} = this;
+      return comment.split('\n').length;
     },
-    
-    data() {
-        return {
-            postname: 'lemma',
-            markdownComment: null,
-            commentEditMode: false,
-            accessibilities,
-        };
-    },
-    
-    computed: {
-        comment_rows() {
-            var {comment} = this;
-			return comment.split('\n').length;
-		},
-		
-		comment_cols() {
+
+    comment_cols() {
             var {comment} = this;
 			return max(comment.split('\n').map(arg => max(arg.length, 200)));
-		},
+    },
 
-        lemma() {
+    lemma() {
             return this.$parent.lemma[this.index];
-        },
+    },
 
-        click_left() {
-            return this.$parent.click_left;
-        },
-        
-        module() {
-            return this.$parent.module;
-        },
+    click_left() {
+      return this.$parent.click_left;
+    },
 
-        sections() {
+    module() {
+      return this.$parent.module;
+    },
+
+    sections() {
             return this.$parent.sections;
-        },
-
-        renderLean() {
-            return this.$parent.renderLean;
-        },
-
-        refresh: {
-            get() {
-                return this.$parent.refresh;
-            },
-            set(value) {
-                this.$parent.refresh = value;
-            },
-        },
-
-        selectedIndex() {
-            return this.$parent.selectedIndex;
-        },
-
-        class_imply() {
-            return this.selectedIndex.equals([this.index, 'imply'])? 'focus': '';
-        },
-
-        class_comment() {
-            return this.selectedIndex.equals([this.index, 'comment', null]) ? 'focus' : '';
-        },
-
-        regexp_section() {
-            return new RegExp(this.sections.join('|'));
-        },
-
-        open_lemma_sections() {
-            var section = [];
-            for (var open of this.$parent.open_sections) {
-                if (open.fullmatch(this.regexp_section))
-                    section.push(open);
-            }
-            return section;
-        },
-
-        leanSourceCode() {
-            return this.$parent.leanSourceCode(this.index);
-        },
-
-        lemmaName() {
-            return this.$parent.lemmaName(this.index);
-        },
     },
 
-    updated() {
-    },
-    
-    mounted() {
-        if (this.comment) {
-            var markdownComment = new MarkdownParser;
-            markdownComment.build(this.comment);
-            this.markdownComment = markdownComment;
-        }
+    renderLean() {
+      return this.$parent.renderLean;
     },
 
-    methods: {
+    refresh: {
+      get() {
+        return this.$parent.refresh;
+      },
+      set(value) {
+        this.$parent.refresh = value;
+      },
+    },
+
+    selectedIndex() {
+        return this.$parent.selectedIndex;
+    },
+
+    class_imply() {
+        return this.selectedIndex.equals([this.index, 'imply'])? 'focus': '';
+    },
+
+    class_comment() {
+        return this.selectedIndex.equals([this.index, 'comment', null]) ? 'focus' : '';
+    },
+
+    regexp_section() {
+        return new RegExp(this.sections.join('|'));
+    },
+
+    open_lemma_sections() {
+       var section = [];
+       for (var open of this.$parent.open_sections) {
+            if (open.fullmatch(this.regexp_section))
+                section.push(open);
+      }
+      return section;
+    },
+
+    leanSourceCode() {
+      return this.$parent.leanSourceCode(this.index);
+    },
+
+    lemmaName() {
+      return this.$parent.lemmaName(this.index);
+    },
+  },
+
+  mounted() {
+      if (this.comment) {
+          var markdownComment = new MarkdownParser();
+          markdownComment.build(this.comment);
+          this.markdownComment = markdownComment;
+      }
+  },
+
+  methods: {
         /** Delete or Backspace on a lemma attribute token (focused span or text selection inside it). */
         maybeDeleteAttributeToken(event) {
             if (event.key !== 'Delete' && event.key !== 'Backspace')
@@ -581,7 +581,7 @@ ${latex}
             event.preventDefault();
             this.commentEditMode = true;
             this.$nextTick(() => {
-                var ta = this.$refs.commentTextarea;
+                var ta = this.commentTextarea;
                 if (ta) {
                     ta.focus();
                     var n = ta.value.length;
@@ -651,14 +651,43 @@ ${latex}
             if (i < proof.length)
                 return index;
         },
-    },
-    
-    directives: {
+  },
+
+  directives: {
         clipboard,
         latex
-    },
-};
+  },
+});
 
+const {
+  $refs,
+  markdownComment,
+  commentEditMode,
+  accessibilities,
+  comment_rows,
+  comment_cols,
+  module,
+  refresh,
+  class_imply,
+  class_comment,
+  leanSourceCode,
+  lemmaName,
+  maybeDeleteAttributeToken,
+  gather,
+  click_select,
+  keydown_div,
+  keydown_input,
+  click_select_comment,
+  keydown_comment,
+  inputComment,
+  keydown_textarea,
+  class_given,
+  style_select,
+  get_proof_list,
+  get_index,
+} = self.globals;
+
+defineExpose(self.$expose);
 </script>
 
 <style scoped>
