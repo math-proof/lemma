@@ -3,12 +3,12 @@
         <form name=form spellcheck=false method=post :action=action>
             <input type=hidden name=module :value=module />
             <input type=hidden name=imports :value=JSON.stringify(imports) />
-            <input type=hidden name=def :value=JSON.stringify(def) />
+            <input type=hidden name=def :value=JSON.stringify(self.def) />
             <input type=hidden name=open :value=JSON.stringify(open) />
             <input type=hidden name=set_option :value=JSON.stringify(set_option) />
             <input type=hidden name=date :value=JSON.stringify(date) />
-            <def v-for="lean, index in self.def" :lean=lean :index=index></def>
-            <lemma v-for="lemma, index in self.lemma" :comment=lemma.comment :attribute=lemma.attribute :accessibility=lemma.accessibility :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :explicit=lemma.explicit :given=lemma.given :default=lemma.default :imply=lemma.imply :proof=lemma.proof :index=index></lemma>
+            <def v-for="lean, index in self.def" :lean=lean :index=index />
+            <lemma v-for="lemma, index in self.lemma" :comment=lemma.comment :attribute=lemma.attribute :accessibility=lemma.accessibility :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :explicit=lemma.explicit :given=lemma.given :default=lemma.default :imply=lemma.imply :proof=lemma.proof :index=index />
         </form>
 
         <template v-if="error.length != 0">

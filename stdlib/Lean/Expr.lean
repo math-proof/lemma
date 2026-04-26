@@ -493,19 +493,19 @@ def Lean.Expr.getElem2get : Expr → Expr
       let α := α.mapDeBruijnIndex map 0
       let n := n.mapDeBruijnIndex map 0
       (const `List.Vector.get us).mkApp [α, n, xs.getElem2get, i]
-    | app (app (lam _ (const `Nat usNat) (app (const `List.Vector us) _) .default) _) m'
-      -- congrArg₂ (fun n => List.Vector (List.Vector α n)) h_n h_m
-    | app (app (lam _ (const `Nat usNat) (lam _ (const `Nat _) (app (app (const `List.Vector us) _) _) .default) .default) _) m' =>
-      -- congrArg₂ (fun n m => List.Vector (List.Vector α n) m) h_n h_m
+    | app (app (lam _ _ (app (const `List.Vector us) _) .default) _) m'
+      -- curried congrArg₂: outer binder `ℕ` or `List ℕ`; body is partial `List.Vector …`
+    | app (app (lam _ _ (lam _ (const `Nat _) (app (app (const `List.Vector us) _) (bvar 0)) .default) .default) _) m' =>
+      -- congrArg₂ (fun n m => …) / (fun s m => …): inner `ℕ` length + `List.Vector … (bvar 0)`
       let i :=
-        if let (app (const `Fin usNat) m) := idx then
+        if let (app (const `Fin usFin) m) := idx then
           if m == m' then
             i
           else
-            let i := (const `Fin.val usNat).mkApp [m, i]
-            (const `Fin.mk usNat).mkApp [m', i, isLt]
+            let i := (const `Fin.val usFin).mkApp [m, i]
+            (const `Fin.mk usFin).mkApp [m', i, isLt]
         else
-          (const `Fin.mk usNat).mkApp [m', i, isLt]
+          (const `Fin.mk []).mkApp [m', i, isLt]
       (const `List.Vector.get us).mkApp [elem, m', xs.getElem2get, i]
     | _ =>
       panic! s!"Expected a collection, but got: coll = {coll}"
