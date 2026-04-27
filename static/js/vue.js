@@ -263,32 +263,29 @@ class Vue extends Component {
 		const instance = this.$$instance;
 		if (instance == null) return;
 		const exposed = {};
-		const props = this.$props;
-		if (props) {
-			for (const key in props)
-				exposed[key] = props[key];
+		const firstOf = {};
+		const self = {
+			props: this.$props ?? {},
+			data: this.$data ?? {},
+			computed: this.$computed ?? {},
+			methods: this.$methods ?? {},
+			builtin: {
+				$refs: this.$refs,
+				$data: this.$data,
+				$nextTick: this.$nextTick,
+				$emit: this.$emit, // allow this.$parent.$emit(...) to work
+			},
+		};
+		for (const [source, bag] of Object.entries(self)) {
+			for (const key in bag) {
+				if (Object.hasOwn(exposed, key)) {
+					console.warn(`[Vue.defineExpose] key "${key}" from ${source} duplicates key from ${firstOf[key]}; keeping first.`);
+					continue;
+				}
+				exposed[key] = bag[key];
+				firstOf[key] = source;
+			}
 		}
-		if (this.$refs != null)
-			exposed.$refs = this.$refs;
-		const $data = this.$data;
-		if ($data) {
-			for (const key in $data)
-				exposed[key] = $data[key];
-			exposed.$data = $data;
-		}
-		const $computed = this.$computed;
-		if ($computed) {
-			for (const key in $computed)
-				exposed[key] = $computed[key];
-		}
-		const $methods = this.$methods;
-		if ($methods) {
-			for (const key in $methods)
-				exposed[key] = $methods[key];
-		}
-		exposed.$nextTick = this.$nextTick;
-		if (this.$emit)
-			exposed.$emit = this.$emit; // allow this.$parent.$emit(...) to work
 		instance.exposed = exposed;
 	}
 
