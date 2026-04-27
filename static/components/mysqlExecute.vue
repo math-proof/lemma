@@ -396,8 +396,6 @@ function input_textarea(event){
 	var text = JSON.parse(eval("[" + sql.match(/replace into (?:\._\w+)+ *\(\w+(?:, \w+)*\) *values *\((.*)\);$/)[1] + "]")[1]);
 	$parent.data[0].text = text;
 }
-
-defineExpose(self.$expose);
 </script>
 
 <style>

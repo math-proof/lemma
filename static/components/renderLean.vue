@@ -268,8 +268,6 @@ const self = new Vue({
 });
 
 const { name } = self.globals;
-
-defineExpose(self.$expose);
 </script>
 
 <style>

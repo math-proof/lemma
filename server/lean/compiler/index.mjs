@@ -6,18 +6,16 @@
  * See `server/lean/compiler/README.md`.
  */
 
-import { buildRenderPropsFromSource } from '../parseLeanStub.mjs';
 import { render2vueFromSource as render2vueFromCompiledTree } from './render2vue.mjs';
 
 /**
  * @param {string} source
- * @param {string} module
+ * @param {string} _module  Dotted module (reserved for callers; payload `module` is set in `app.mjs`).
  * @param {{ user?: string }} [opts]
  * @returns {object} Vue `render` payload
  */
-export function render2vueFromSource(source, module, opts = {}) {
+export function render2vueFromSource(source, _module, opts = {}) {
   const code = render2vueFromCompiledTree(source, false);
-  // code.module = module;
   if (opts.user) code.user = opts.user;
   return code;
 }

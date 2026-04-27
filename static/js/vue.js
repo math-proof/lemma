@@ -70,7 +70,7 @@ class Parent extends Component {
 class Vue extends Component {
 	constructor(vue) {
 		super();
-		this.$$instance = getCurrentInstance();
+		const instance = this.$$instance = getCurrentInstance();
 		let {
 			data,
 			$refs,
@@ -90,13 +90,11 @@ class Vue extends Component {
 			var emit = $emit?? ((event, value) => {
 				console.log(`emit ${event} = ${value} is not defined`);
 			});
-			const $props = {};
 			for (const key in props) {
-				$props[key] = props[key];
-				this.defineProperty($props, key, emit);
-				$expose[key] = $props[key];
+				this.defineProperty(props, key, emit);
+				$expose[key] = props[key];
 			}
-			this.$props = $props;
+			this.$props = props;
 		}
 		if (typeof data === 'function') {
 			data = data.call(this);
@@ -192,7 +190,6 @@ class Vue extends Component {
 				watch(getter.bind(this), (newVal, oldVal) => handler.call(this, newVal, oldVal), opts);
 			}
 		}
-		const instance = this.$$instance;
 		// Handle directives registration
 		if (directives) {
 			if (instance) {
@@ -261,9 +258,11 @@ class Vue extends Component {
 		$expose['$nextTick'] = this.$nextTick;
 		if ($emit) {
 			this.$emit = $emit;
-			$expose['$emit'] = $emit;
+			$expose['$emit'] = $emit; // allow this.$parent.$emit(...) to work
 		}
-		this.$expose = $expose;
+		// Same effect as defineExpose(self.$expose) in each SFC
+		if (instance != null)
+			instance.exposed = $expose;
 		if (created)
 			created.call(this);
 	}

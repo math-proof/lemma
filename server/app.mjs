@@ -350,6 +350,7 @@ async function renderLemmaPage(res, module, userSegment) {
     code = render2vueFromSource(source, module, { user: PROJECT_USER });
   }
 
+  code.module = code.module ?? null;
   const title = titleFromModule(module);
   const codeJson = jsonForScriptEmbed(code);
   res.set('Content-Type', 'text/html; charset=utf-8');

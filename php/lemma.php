@@ -688,7 +688,7 @@ import * as show_hint from "./static/codemirror/addon/hint/show-hint.js"
 import * as matchbrackets from "./static/codemirror/addon/edit/matchbrackets.js"
 import * as comment from "./static/codemirror/addon/comment/comment.js"
 
-createApp('render', <?php echo std\encode($code) ?>, undefined, ['module']);
+createApp('render', <?php echo std\encode($code) ?>);
 
 //http://codemirror.net/doc/manual.html
 //http://docs.mathjax.org/en/latest/

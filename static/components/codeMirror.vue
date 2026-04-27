@@ -111,8 +111,6 @@ const self = new Vue({
 
 	mounted: codeMirrorMounted,
 });
-
-defineExpose(self.$expose);
 </script>
 
 <style>

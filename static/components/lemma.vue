@@ -686,8 +686,6 @@ const {
   get_proof_list,
   get_index,
 } = self.globals;
-
-defineExpose(self.$expose);
 </script>
 
 <style scoped>

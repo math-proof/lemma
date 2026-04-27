@@ -413,7 +413,7 @@ const self = new Vue({
             var module = getParameterByName('module');
             if (module) {
                 module = module.replace(/[\/\\]/g, '.');
-                this.$emit('update:module', module);
+                this.module = module;
                 if (!model)
                     await this.echo(module);
             }
@@ -1804,9 +1804,6 @@ replace into
 });
 
 const { action, href_switch, click_left, keydown } = self.globals;
-
-defineExpose(self.$expose);
-
 //http://docs.mathjax.org/en/latest/web/typeset.html#typeset-clear
 //http://docs.mathjax.org/en/latest/advanced/typeset.html
 //http://docs.mathjax.org/en/latest/web/typeset.html#typeset-async

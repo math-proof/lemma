@@ -5023,11 +5023,10 @@ Cookie.instance = new Cookie();
 
 /**
  * @param {string} component  SFC base name under static/components/
- * @param {Record<string, unknown>} data  Root state passed as props to the child
+ * @param {Record<string, unknown>} data  Root state passed as props to the child; each own key is bound with v-model:key
  * @param {string} [id='root']  Mount target element id
- * @param {string[]} [vModelKeysArg]  Prop names to bind with v-model (emit update:*). Omit or pass [] for one-way props only.
  */
-async function createApp(component, data, id, vModelKeysArg) {
+async function createApp(component, data, id) {
 	const options = {
 		moduleCache: { vue: Vue },
 
@@ -5093,12 +5092,9 @@ async function createApp(component, data, id, vModelKeysArg) {
 	var components = {};
 	components[component] = await loadModule(`static/components/${component}.vue`, options);
 
-	const vModelKeys = Array.isArray(vModelKeysArg) ? vModelKeysArg : [];
-
 	var args = [];
 	for (let key in data) {
-		const prefix = vModelKeys.includes(key) ? 'v-model:' : ':';
-		args.push(`${prefix}${key}="${key}"`);
+		args.push(`v-model:${key}="${key}"`);
 	}
 
 	var App = {

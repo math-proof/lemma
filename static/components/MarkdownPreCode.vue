@@ -76,6 +76,4 @@ function highlight(el, binding) {
 }
 
 var contextmenu = clipboard.contextmenu;
-
-defineExpose(self.$expose);
 </script>

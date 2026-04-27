@@ -6,6 +6,4 @@
 import Vue from "../js/vue.js"
 // console.log('import MarkdownHR.vue');
 const self = new Vue({});
-
-defineExpose(self.$expose);
 </script>
