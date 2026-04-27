@@ -86,5 +86,6 @@ export function buildNewTheoremCodeFromMathlibRow(row, module) {
     error: [],
     date: { created: today },
     name: module,
+    module: null,
   };
 }

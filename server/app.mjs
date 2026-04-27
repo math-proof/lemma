@@ -347,10 +347,9 @@ async function renderLemmaPage(res, module, userSegment) {
 
   if (!code) {
     const source = readLeanFile(abs);
-    code = render2vueFromSource(source, module, { user: PROJECT_USER });
+    code = render2vueFromSource(source, { user: PROJECT_USER });
   }
 
-  code.module = code.module ?? null;
   const title = titleFromModule(module);
   const codeJson = jsonForScriptEmbed(code);
   res.set('Content-Type', 'text/html; charset=utf-8');
@@ -541,7 +540,7 @@ async function renderNewTheoremPage(res, module, userSegment) {
   if (abs && fileExists(abs)) {
     const source = readLeanFile(abs);
     try {
-      code = render2vueFromSource(source, module, { user: PROJECT_USER });
+      code = render2vueFromSource(source, { user: PROJECT_USER });
     } catch (err) {
       console.error('[new theorem]', err);
       res.status(500).type('html').send(
