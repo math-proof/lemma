@@ -31,7 +31,7 @@ class Component {
 class Parent extends Component {
 	constructor(instance = null) {
 		super();
-		// fetch exposed data from defineExpose(self.$expose) on parent chain
+		// fetch exposed data from Vue.prototype.defineExpose() on parent chain
 		this.$$instance = instance;
 		const exposed = instance?.exposed || {};
 		for (let key in exposed) {
@@ -85,14 +85,12 @@ class Vue extends Component {
 			methods: $methods,
 			watch: $watch,
 		} = vue;
-		var $expose = {};
 		if (props) {
 			var emit = $emit?? ((event, value) => {
 				console.log(`emit ${event} = ${value} is not defined`);
 			});
 			for (const key in props) {
 				this.defineProperty(props, key, emit);
-				$expose[key] = props[key];
 			}
 			this.$props = props;
 		}
@@ -105,7 +103,7 @@ class Vue extends Component {
 			for (const key of keys) {
 				$refs[key] = ref($refs[key]);
 			}
-			$expose['$refs'] = this.$refs = $refs;
+			this.$refs = $refs;
 			const mountedCounters = Object.fromEntries(keys.map((k) => [k, 0]));
 			if (data) {
 				data.$mounted = mountedCounters;
@@ -138,9 +136,8 @@ class Vue extends Component {
 			for (const key in $data) {
 				$data[key] = ref($data[key]);
 				this.defineProperty($data, key);
-				$expose[key] = $data[key];
 			}
-			$expose['$data'] = this.$data = $data;
+			this.$data = $data;
 		}
 
 		if ($computed) {
@@ -166,7 +163,6 @@ class Vue extends Component {
 					throw new Error(`computed.${key} must be a function or {get,set} object`);
 				}
 				this.defineProperty($computed, key);
-				$expose[key] = $computed[key];
 			}
 			this.$computed = $computed;
 		}
@@ -246,7 +242,7 @@ class Vue extends Component {
 					console.warn(`[Vue] method "${key}" collides with existing property; skipping method binding.`);
 					continue;
 				}
-				$expose[key] = this[key] = $methods[key] = $methods[key].bind(this);
+				this[key] = $methods[key] = $methods[key].bind(this);
 			}
 			this.$methods = $methods;
 		}
@@ -255,16 +251,45 @@ class Vue extends Component {
 				return nextTick(() => cb.call(this));
 			return nextTick();
 		};
-		$expose['$nextTick'] = this.$nextTick;
-		if ($emit) {
+		if ($emit)
 			this.$emit = $emit;
-			$expose['$emit'] = $emit; // allow this.$parent.$emit(...) to work
-		}
-		// Same effect as defineExpose(self.$expose) in each SFC
-		if (instance != null)
-			instance.exposed = $expose;
 		if (created)
 			created.call(this);
+		this.defineExpose();
+	}
+
+	/** Mirror former `defineExpose(self.$expose)` in SFCs: publish bindings for `this.$parent`. */
+	defineExpose() {
+		const instance = this.$$instance;
+		if (instance == null) return;
+		const exposed = {};
+		const props = this.$props;
+		if (props) {
+			for (const key in props)
+				exposed[key] = props[key];
+		}
+		if (this.$refs != null)
+			exposed.$refs = this.$refs;
+		const $data = this.$data;
+		if ($data) {
+			for (const key in $data)
+				exposed[key] = $data[key];
+			exposed.$data = $data;
+		}
+		const $computed = this.$computed;
+		if ($computed) {
+			for (const key in $computed)
+				exposed[key] = $computed[key];
+		}
+		const $methods = this.$methods;
+		if ($methods) {
+			for (const key in $methods)
+				exposed[key] = $methods[key];
+		}
+		exposed.$nextTick = this.$nextTick;
+		if (this.$emit)
+			exposed.$emit = this.$emit; // allow this.$parent.$emit(...) to work
+		instance.exposed = exposed;
 	}
 
 	get $parent() {
