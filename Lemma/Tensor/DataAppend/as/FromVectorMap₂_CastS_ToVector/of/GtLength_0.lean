@@ -1,3 +1,5 @@
+import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.Eq
+import Lemma.Vector.GetCast.eq.Cast_Get.of.Eq.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.Cons_Append.eq.AppendCons
 import Lemma.List.EqCons_Tail.of.GtLength_0
@@ -72,8 +74,9 @@ private lemma main
         let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_r'
         simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
         -- unfold List.Vector.splitAt
-        -- simp
-        -- sorry
+        repeat rw [Vector.GetCast.eq.Cast_Get.of.Eq.Eq.fin (by simp) (by simp)]
+        repeat rw [Tensor.GetCast.eq.Cast_Get.of.Eq.Eq.fin (by grind) (by grind)]
+        sorry
       ·
         grind
     ·

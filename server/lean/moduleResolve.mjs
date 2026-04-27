@@ -225,6 +225,12 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
                 if (segment[1]?.length === 1 && segment[1][0] === 'of') {
                   segment[1][0] = 'is';
                 }
+                // Same segment rewrite as the `!hit` branch below (PHP falls through to `tokens_to_module`).
+                if (segment.length >= 4) arrayInsert(segment, 3, ['of']);
+                const pSeg = moduleToLeanPath(tokensToModule(segment, section));
+                if (!fs.existsSync(pSeg)) {
+                  [segment[0], segment[2]] = [segment[2], segment[0]];
+                }
               }
             } else {
               if (tokens.length === 5) {
@@ -408,6 +414,12 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
     if (out !== module) {
       const p = moduleToLeanPath(out);
       if (p && fs.existsSync(p)) return out;
+      /** Rewrites like `Eq_Cast` → `EqCast` in dotted segments. */
+      const folded = resolveUnderscoreModuleAlias(out);
+      if (folded) {
+        const p2 = moduleToLeanPath(folded);
+        if (p2 && fs.existsSync(p2)) return folded;
+      }
     }
   }
 
