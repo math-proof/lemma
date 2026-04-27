@@ -1,3 +1,4 @@
+import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.Eq
 import Lemma.Vector.GetCast.eq.Cast_Get.of.Eq.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
@@ -57,6 +58,7 @@ private lemma main
         rw [ProdCons.eq.Mul_Prod] at h_i
         rw [MulAdd.eq.AddMulS] at h_i
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_i
+        let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
         simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
         have h_i : i < b_z[0] * (b_z.tail ++ (m + n) :: s).prod := by
           rw [List.Mul_Prod.eq.ProdCons]
@@ -64,6 +66,7 @@ private lemma main
           rw [EqCons_Tail.of.GtLength_0]
           grind
         let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_i
+        let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
         simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
         rw [DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData]
         rw [GetCast.eq.Get.of.Eq.fin (by grind)]
@@ -72,10 +75,15 @@ private lemma main
         rw [ProdCons.eq.Mul_Prod] at h_r'
         rw [MulAdd.eq.AddMulS] at h_r'
         let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_r'
+        let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
         simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
         -- unfold List.Vector.splitAt
         repeat rw [Vector.GetCast.eq.Cast_Get.of.Eq.Eq.fin (by simp) (by simp)]
         repeat rw [Tensor.GetCast.eq.Cast_Get.of.Eq.Eq.fin (by grind) (by grind)]
+        simp [h_r'_mod] at h_rₐ_mod
+        simp [Nat.MulAdd.eq.AddMulS] at h_rₐ_mod
+        simp [← h_r_mod] at h_rₐ_mod
+        simp [h_rₐ_mod]
         sorry
       ·
         grind
