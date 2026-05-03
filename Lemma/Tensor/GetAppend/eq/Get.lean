@@ -31,7 +31,6 @@ private lemma main
   have hi := i.isLt
   simp [Tensor.length]
   simp [HAppend.hAppend]
-  simp [Tensor.append]
   simp [Tensor.toVector]
   repeat rw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp_all) (by simp)]
   unfold List.Vector.splitAt

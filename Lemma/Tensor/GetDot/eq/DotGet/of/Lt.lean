@@ -320,8 +320,8 @@ private lemma one
               simp
               have h_s2 : ([n, k].take ↑1).prod * (n' / k * ([n, k].drop ↑1).prod) = ([n, k].set (↑1) (n' / k * [n, k][↑1])).prod := by
                 simp
-              have A : Tensor α ([n] ++ (n' / k * k):: []) := ⟨cast (congrArg (List.Vector α) h_s2) ((X.data.splitAt 1).map fun x ↦ x.repeat (n' / k)).flatten⟩
-              have := DataAppend.eq.Cast_AppendDataS A (0 : Tensor α ([n] ++ (n' % k) :: []))
+              have A : Tensor α (n :: [n' / k * k]) := ⟨cast (congrArg (List.Vector α) h_s2) ((X.data.splitAt 1).map fun x ↦ x.repeat (n' / k)).flatten⟩
+              have := DataAppend.eq.Cast_AppendDataS A (0 : Tensor α (n :: [n' % k]))
               simp at this
               rw [this]
               sorry

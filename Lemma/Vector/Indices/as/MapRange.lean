@@ -1,11 +1,11 @@
 import Lemma.List.EqLengthSlice_CoeMul.of.Lt
 import Lemma.List.EqLengthSlice_Mul.of.Lt
 import Lemma.Nat.AddMul.lt.Mul
-import Lemma.Nat.Eq_Fin.of.EqVal
+import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Vector.EqGetRange.of.Lt
 import Lemma.Vector.GetIndices.eq.AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Vector List Nat
+open Vector List Nat Fin
 
 
 @[main]

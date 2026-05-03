@@ -12,7 +12,6 @@ private lemma main
   (A ++ B).data ≃ A.data ++ B.data := by
 -- proof
   conv_lhs => simp [HAppend.hAppend]
-  unfold Tensor.append
   simp
   apply SEqCast.of.SEq.Eq
   ·

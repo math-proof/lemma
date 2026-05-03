@@ -1,10 +1,10 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.Eq_Fin.of.EqVal
+import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import stdlib.SEq
-open Fin Nat Vector
+open Fin Vector
 
 
 @[main]

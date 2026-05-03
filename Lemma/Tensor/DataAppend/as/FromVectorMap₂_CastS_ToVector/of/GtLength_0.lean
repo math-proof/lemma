@@ -11,7 +11,7 @@ import Lemma.Nat.DivDiv.eq.Div_Mul
 import Lemma.Nat.DivMod_Mul.eq.ModDiv
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Nat.Eq_Fin.of.EqVal
+import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData

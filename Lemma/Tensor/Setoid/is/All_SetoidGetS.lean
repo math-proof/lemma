@@ -1,7 +1,7 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.Eq_Fin.of.EqVal
+import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.Setoid.is.SetoidDataS
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul

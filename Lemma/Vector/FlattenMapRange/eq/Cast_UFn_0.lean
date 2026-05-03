@@ -1,11 +1,11 @@
 import Lemma.Nat.Eq_0.of.Lt_1
-import Lemma.Nat.Eq_Fin.of.EqVal
+import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqFlattenMapRange.of.All_EqGetUnflatten
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import sympy.vector.vector
-open Nat Vector
+open Nat Vector Fin
 
 
 @[main]

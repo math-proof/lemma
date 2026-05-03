@@ -421,7 +421,7 @@ const self = new Vue({
 
         var {hash} = location;
         if (hash) {
-            hash = hash.slice(1);
+            hash = hash.slice(1).decodeURI();
             var [line, col] = hash.split(':');
             var index;
             if (line.isInteger) {

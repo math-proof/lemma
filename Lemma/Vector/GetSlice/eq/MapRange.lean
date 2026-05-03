@@ -1,5 +1,5 @@
 import Lemma.List.EqLengthSlice_Mul.of.Lt
-import Lemma.Nat.Eq_Fin.of.EqVal
+import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Vector.GetIndices.eq.AddMul
 import Lemma.Vector.EqGetMapRange.of.Lt
 import Lemma.Rat.FloorDiv.eq.Zero
@@ -15,7 +15,7 @@ import Lemma.Rat.Div.le.Zero.of.Le_0
 import Lemma.Nat.LeCeil.is.Le
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SEq.of.Eq_0.Eq_0
-open Int Nat Rat Vector List
+open Int Nat Rat Vector List Fin
 
 
 @[main]

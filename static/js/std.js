@@ -751,6 +751,10 @@ String.prototype.encodeURI = function() {
 	return encodeURIComponent(this);
 };
 
+String.prototype.decodeURI = function() {
+	return decodeURIComponent(this);
+};
+
 String.prototype.compareTo = function(that){
 	var lhs = Number(this);
 	if (lhs.isNaN)

@@ -33,7 +33,6 @@ private lemma main
   simp [Tensor.get]
   ·
     simp [HAppend.hAppend]
-    simp [Tensor.append]
     simp [Tensor.toVector]
     have h := Gt_0.of.Lt_Add.Ge h₀ h₁
     have h_lt := LtSub.of.Lt_Add.Ge h₀ h₁

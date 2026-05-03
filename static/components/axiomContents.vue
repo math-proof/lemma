@@ -140,13 +140,9 @@
 import Vue from '../js/vue.js';
 import searchForm from './searchForm.vue';
 
-const props = defineProps({
-  packages: { type: Array, default: () => [] },
-  theorems: { type: Array, default: () => [] },
-});
+const props = defineProps(['packages', 'theorems']);
 
 const self = new Vue({
-  components: { searchForm },
   props,
 
   $refs: {
