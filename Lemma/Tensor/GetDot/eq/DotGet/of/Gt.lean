@@ -73,8 +73,8 @@ private lemma main
     rw [Matmul.eq.SelectBatchDot.of.Gt_Get_SubLength.GeLength_2]
     ·
       simp
-      let Y' : Tensor α [k / n' * n', k'] := Y.repeat (k / n') (0 : Fin 2)
-      let Y'Append : Tensor α [k / n' * n' + k % n', k'] := Y' ++ (0 : Tensor α [k % n', k'])
+      let Y' : Tensor α ([] ++ [k / n' * n', k']) := Y.repeat (k / n') (0 : Fin 2)
+      let Y'Append : Tensor α [k / n' * n' + k % n', k'] := Y' ++ (0 : Tensor α ([] ++ [k % n', k']))
       have h_s : [k / n' * n' + k % n', k'] = [k, k'] := by simp [EqAddMulDiv]
       let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).broadcast [1, k] (by simp)
       have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) ⟨0, by simp⟩ (XiBroadcast.batch_dot (cast (congrArg (Tensor α) h_s) Y'Append))
