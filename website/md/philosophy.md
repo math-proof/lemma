@@ -15,7 +15,7 @@
     - H：身体健康指数，随机变量，Hᵢ∈[-∞, 100]，Hₘₐₓ=H₄₃₈₃=100，《新概念英语4-The process of ageing》: At the age of twelve years, the human body is at its most vigorous, It has yet to reach its full size and strength, and its owner his or her full intelligence, but at this age the likelihood of death is least.
     - M：精神健康指数，随机变量，Mᵢ∈[-∞, ∞]，M₄₃₈₃=100
     - 基线日死亡概率：qₘᵢₙ=2.74e-7，基于国际生命表
-    - 死亡概率：\(q = e^{-\lambda \cdot relu(H)}, \quad\lambda = -\frac{\ln q_{\min}}{100}\)
+    - 死亡概率：$q = e^{-\lambda \cdot relu(H)}, \quad\lambda = -\frac{\ln q_{\min}}{100}$
     - iₒₒ：44383，极限生命末日，若无任何异化劳动，\(H_{i_{oo}}= H_{4383} - 40000 × ΔHₐ = 0\)，极限寿命为121.51岁。目前公认只有一个反例，人类最长寿命纪录是法国的Jeanne Calment 122岁164天
     - T：寿命，随机变量，寿险精算学尾和公式： \[{\mathbb{E}[T] = \sum_{t=1}^{i_{oo}} t \cdot P(T=t)} = \sum_{t=1}^{i_{oo}} P(T \ge t) = i + \sum_{t=0}^{i_{oo}} \mathbb E\left[ \prod_{j=0}^{t}(1-q_{i+j}) \middle| H_i \right]\]
     - ΔHₛ, ΔMₛ：生命体个体常量，12~18岁未成年应试教育造成的身心健康损耗，理由
