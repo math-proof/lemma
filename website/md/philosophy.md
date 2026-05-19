@@ -85,7 +85,7 @@
     - 日薪(血酬)：w = LₚL，活劳动创造的新价值
     - 日收入：w⁺ = w + I⁺
     - 状态表征：s = [B, H, M, P, S, K, A]，描述当前生存状态存量
-    - 日均净盈余(还款能力)：\(\phi_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({w^+}_t - v_i-I^-_i\right) \times \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| s_i \right]\)
+    - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| {\color{red}s}_i \right]\)
     - 当天财务毒性：\(P_{l,i} = \frac {D_i} {{\phi_i} \times 1000000}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
     - ΔBᵥ：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
