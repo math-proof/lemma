@@ -13,10 +13,11 @@
 - 生存边界假设1：根据布迪厄资本理论(修正版)
   - 具身资本
     - i：生命进程离散时刻，表示第i天开始时刻，i=0表示生命出生时刻(假设正好是凌晨0点)
-    - \(\color{red}H\)：身体健康指数，\(\mathbb E[{\color{red}H}_i] \in [-\infty, 100]\)，\(\max_i\mathbb E [{\color{red}H}_{i}] = \mathbb E [{\color{red}H}_{4384}] = 100\)，《新概念英语4-The process of ageing》: At the age of twelve years, the human body is at its most vigorous, It has yet to reach its full size and strength, and its owner his or her full intelligence, but at this age the likelihood of death is least.
-    - \(\color{red}M\)：精神效用，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{4384}] = 100\)
+    - 法定成年年龄18周岁天数：iₘᵢₙ=6574
+    - \(\color{red}H\)：身体健康指数，\(\mathbb E[{\color{red}H}_i] \in [-\infty, 100]\)，\(\max_i\mathbb E [{\color{red}H}_{i}] = \mathbb E [{\color{red}H}_{i_{min}}] = 100\).
+    - \(\color{red}M\)：精神效用，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
     - 基线日死亡概率：qₘᵢₙ=2.74e-7，基于国际生命表
-    - 死亡概率：\({\color{red}q}_i = e^{-\lambda \cdot relu({\color{red}H}_i)}, \quad\lambda = -\frac{\ln q_{\min}}{100}\)
+    - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot relu({\color{red}H})}, \quad\lambda = -\frac{\ln q_{\min}}{100}\)
     - 身心衰老损耗/天：ΔHₐ = ΔMₐ = 0.0025，常量
     - iₒₒ：44723，极限生命末日，目前公认人类最长寿命纪录是法国的Jeanne Calment 122岁164天
     - \(\color{red}T\)：寿命，寿险精算学尾和公式：\[\mathbb{E}\left[{\color{red}T} \middle| {\color{red}H}_i \right] - i = 
@@ -25,10 +26,6 @@
 \sum_{t=i + 1}^{i_{oo}} P\left({\color{red}T} \ge t \middle| {\color{red}H}_i \right) = 
 \sum_{t=0}^{i_{oo} - i - 1} P\left({\color{red}T} \ge t + i + 1 \middle| {\color{red}H}_i \right) = 
 \sum_{t=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{t}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
-    - ΔHₛ, ΔMₛ：生命体个体常量，12~18岁未成年应试教育造成的身心健康损耗，理由
-      - 资本论：教育是生产力的再生产，存在教育异化，如学习的目的是学位，不是学习本身
-      - Einstein: School is a prison where they beat individuality out of you
-    - 法定成年年龄18周岁天数：iₘᵢₙ=6574
     - 公历回归年：\(Y_s = 365 + \frac{1}{4} - \frac{1}{100} + \frac{1}{400} = 365.2425
 \)
     - 当天年龄：\(A_i = \frac i {Y_s}\)
