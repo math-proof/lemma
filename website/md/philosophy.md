@@ -54,8 +54,8 @@
       - 累计精神奖励差分：\(\Delta {\color{red}E}_{i} = {\color{red}{\Xi_m}}_{i + 1} - \sum_{t=i_{\min}}^{i} (1 - e ^ {-{{\color{red}{\delta_m}}_t}}){e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
   - 文化资本\(\color{red}K\)
     - 文化资本差分：\(Δ{\color{red}K}_i = {\color{red}K}_{i + 1} - {\color{red}K}_i = ΔKₑ{\color{red}ε}_i + ΔKₒ{\color{red}L}_i\)，假定ΔKₑ > ΔKₒ
-    - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_i \perp ({\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i)\)
-    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i] = \mu_{m, i} \cdot {L_p}_{i_{min}} \cdot \left(\frac{relu({\color{red}H}_i)}{{\color{red}H}_{i_{min}}}\right)^{\alpha_H} \cdot \left(1 + \beta \cdot \tanh(\gamma_M ({\color{red}M}_i - {\color{red}M}_{i_{min}}))\right) \cdot \left(1 + \delta_K \cdot \ln\left(1 + \frac{{\color{red}K}_i}{{\color{red}K}_{i_{min}}}\right)\right)\)
+    - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_i \perp ({\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i),\quad \mathbb E[\color{red}{\mu_m}_i] = 1\)
+    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i] = {\mu_m}_{i} \cdot {L_p}_{i_{min}} \cdot \left(\frac{relu({\color{red}H}_i)}{{\color{red}H}_{i_{min}}}\right)^{\alpha_H} \cdot \left(1 + \beta \cdot \tanh(\gamma_M ({\color{red}M}_i - {\color{red}M}_{i_{min}}))\right) \cdot \left(1 + \delta_K \cdot \ln\left(1 + \frac{{\color{red}K}_i}{{\color{red}K}_{i_{min}}}\right)\right)\)
   - 社会关系资产(布迪厄社会资本)，是指私人及制度性支持等关系价值，在主体遭遇风险（重疾、破产）时转化为实际支持的能力。包括：
     - 私人关系P存量：亲情、爱情、友情、人情、人脉关系价值，随机向量
       - 连续半衰期/年：βₚ = [50, 30, 15, 7, 2]
