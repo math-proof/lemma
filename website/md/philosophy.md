@@ -56,18 +56,18 @@
     - 文化资本差分：\(Δ{\color{red}K}_i = {\color{red}K}_{i + 1} - {\color{red}K}_i = ΔKₑ{\color{red}ε}_i + ΔKₒ{\color{red}L}_i\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_i \perp ({\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i),\quad \mathbb E[\color{red}{\mu_m}_i] = 1\)
     - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i] = {\mu_m}_{i} \cdot {L_p}_{i_{min}} \cdot \left(\frac{relu({\color{red}H}_i)}{{\color{red}H}_{i_{min}}}\right)^{\alpha_H} \cdot \left(1 + \beta \cdot \tanh(\gamma_M ({\color{red}M}_i - {\color{red}M}_{i_{min}}))\right) \cdot \left(1 + \delta_K \cdot \ln\left(1 + \frac{{\color{red}K}_i}{{\color{red}K}_{i_{min}}}\right)\right)\)
-  - 社会关系资产(布迪厄社会资本)，是指私人及制度性支持等关系价值，在主体遭遇风险（重疾、破产）时转化为实际支持的能力。包括：
-    - 私人关系P存量：亲情、爱情、友情、人情、人脉关系价值，随机向量
-      - 连续半衰期/年：βₚ = [50, 30, 15, 7, 2]
-      - Cₚ：可随机兑现货币，依赖s的随机变量
+  - 社会关系资产(布迪厄社会资本)，是指私人及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
+    - 私人关系\(\color{red}P\)存量：[亲情、爱情、友情、人情、人脉]关系价值
+      - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]
+      - \(\color{red}{C_p}\)：可随机兑现货币，依赖s
       - 私人关系日折旧率：\(\delta_r = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折旧的依据：
         - 心理学：艾宾浩斯遗忘曲线
         - 社会交换理论：互惠义务具有时效性
         - 社会学：格兰诺维特强弱关系理论
         - 演化生物学：亲缘选择理论
-      - P存量差分：\(ΔP = P_{i + 1} - P_i = ΔP_rΘ_i - P_i\left(1 - e^{-δ_r}\right)\)
-    - 制度性支持S：凭法律资格获得医保，民政援助，随机变量
-      - Cₛ：可随机兑现货币，依赖s的随机变量
+      - \(\color{red}P\)存量差分：\(Δ{\color{red}P}_i = {\color{red}P}_{i + 1} - {\color{red}P}_i = ΔP_r{\color{red}Θ}_i - {\color{red}P}_i\left(1 - e^{-δ_r}\right)\)
+    - 制度性支持\(\color{red}S\)：凭法律资格获得医保，民政援助
+      - \(\color{red}{C_s}\)ₛ：可随机兑现货币，依赖s
   - 经济资本
     - B/￥：银行账面余额，初始值(按揭还贷)：\(B_{i_{min}}=-300000\)
     - 存款：\(B⁺ = \frac {|B| + B} 2\)
