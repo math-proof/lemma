@@ -79,8 +79,8 @@
       - 社会要素：通信40￥、社交？￥、公益性开源技术服务？￥
     - 日产值(血酬)：\(\color{red}w = \color{red}{Lₚ}\color{red}{L}\)，活劳动创造的新价值(个人部分)
     - 日收入：\(\color{red}{w^+} = \color{red}w + \color{red}{I^+}\)
-    - 状态表征：\(\color{red}s = [\color{red}H, \color{red}M, \color{red}K, \color{red}B, \color{red}P, \color{red}S, \color{red}A]\)，描述当前生存状态存量
-    - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| {\color{red}s}_i \right]\)
+    - 状态表征：\(\color{red}s = [\color{red}H, \color{red}M, \color{red}K, \color{red}B, \color{red}P, \color{red}S, \color{red}A]\)，描述当前生存状态存量，注：\(\color{red}P, \color{red}S\)是下文定义的社会资本
+    - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| {\color{red}s}_i \right]\)，注：这是一个条件期望，原因：人情社会货币化。掏空6个口袋按揭房贷的本质：你其实只有一个口袋还房贷，其它5个口袋就是银行把你的社会资本货币化了
     - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{B^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
     - ΔBᵥ：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
