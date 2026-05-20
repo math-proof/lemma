@@ -69,14 +69,15 @@
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保，民政援助
       - \(\color{red}{C_s}\)ₛ：可随机兑现货币，依赖s
   - 经济资本
-    - B/￥：银行账面余额，初始值(按揭还贷)：\(B_{i_{min}}=-300000\)
-    - 存款：\(B⁺ = \frac {|B| + B} 2\)
-    - 负债：\(B⁻ = \frac {|B| - B} 2\)
+    - \(\color{red}B\)/￥：银行账面余额，初始值(按揭还贷)：\(B_{i_{min}}=-300000\)
+    - 存款：\(\color{red}{B^+} = \frac {|\color{red}B| + \color{red}B} 2\)
+    - 负债：\(\color{red}{B^-} = \frac {|\color{red}B| - \color{red}B} 2\)
     - 银行家年：Yₖ = 12 ⬝ 30 = 360 < Yₛ
     - 日利率：[α⁺, α⁻]≈[0.01 / Yₛ, 0.03 / Yₖ]
-    - 利息：[I⁺, I⁻] = [B⁺α⁺, B⁻α⁻]
-    - cᵢ：当天本金还款额，随机变量
-    - πₛᵢ：日通货膨胀率，随机变量，即由铸币税(Seigniorage)引发的、对货币持有者征收的隐性财产税率，目的：刺激消费，拉动经济，满足：\(\alpha^+ - \mathbb E[\pi_{s, i}] > \mathbb E[\pi_{s, i}] - \alpha^- > 0\)
+    - 利息：\([\color{red}{I^+}, \color{red}{I^-}] = [\color{red}{B^+}α⁺, \color{red}{B^-}α⁻]
+\)
+    - \(\color{red}c_i\)：当天本金还款额
+    - \(\color{red}{\pi_s}_i\)：日通货膨胀率，随机变量，即由铸币税引发的、对货币持有者征收的隐性财产税率，目的：刺激消费，拉动经济，满足：\(\alpha^+ - \mathbb E[{\color{red}{\pi_s}}_ i] > \mathbb E[{\color{red}{\pi_s}}_i] - \alpha^- > 0\)
     - vᵢ：劳动力价值(货币表现)，维持生存所需的生活资料价值，依赖Hᵢ, Mᵢ, πₛᵢ的随机变量，满足期望方程：\(\mathbb{E}[v_i \mid H_i, M_i, \pi_{s,i}] = v_{i_{min}}\prod (1+\pi_{s,t}) \cdot \left(1 + \gamma_H \cdot (H_{i_{min}} - H_i)\right) \cdot \left(1 + \gamma_M \cdot relu(M_{i_{min}} - M_i)\right)\)，依据《资本论》劳动力价值分类，量化分解每月示例如下：
       - 生理要素：米饭60￥、蔬菜200￥、租房400￥(非一线城市价格)、医保100￥(居民医保更便宜)、水电60￥、衣服40￥
       - 家庭要素(法定义务)：赡养600￥，育儿？￥
