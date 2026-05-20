@@ -91,7 +91,7 @@
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]
-      - \(\color{red}{C_p}\)：可随机兑现货币，采用逻辑回归建模：\(\mathbb{E}\left[ \color{red}{C_{p,i}} \middle|{\color{red}s}_i \right] = \omega_p{\color{red}P}_i \times \sigma\left(\eta_B {\color{red}{B_i}} + \eta_H {\color{red}{H_i}}+ \eta_L {\color{red}{L_{p,i}}}- \eta_v {\color{red}{v_i}}\right),\qquad 其中\eta_B,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：
+      - \(\color{red}{C_p}\)：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ \color{red}{C_{p,i}} \middle|{\color{red}s}_i \right] = \omega_p{\color{red}P}_i \times \sigma\left(\eta_B {\color{red}{B_i}} + \eta_H {\color{red}{H_i}}+ \eta_L {\color{red}{L_{p,i}}}- \eta_v {\color{red}{v_i}}\right),\qquad 其中\eta_B,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：
         - 人际关系像水波纹，以己为心、亲疏有别、随势伸缩
         - 主体的社会资本兑现概率通常与主体的健康指数、劳动生产率、货币资产正相关，与其劳动力价值、负债水平负相关
         - 经验性解释：落魄苏秦归故郭(妻不下纴，嫂不为炊，父母不与言)的千年史例：一个人越失败、越失势、越失能，通常越难从社会资本中获得实际支持
@@ -102,8 +102,10 @@
         - 社会学：格兰诺维特强弱关系理论
         - 演化生物学：亲缘选择理论
       - \(\color{red}P\)存量差分：\(Δ{\color{red}P}_i = {\color{red}P}_{i + 1} - {\color{red}P}_i = ΔP_r{\color{red}Θ}_i - {\color{red}P}_i\left(1 - e^{-δ_r}\right)\)
-    - 制度性支持\(\color{red}S\)：凭法律资格获得医保，民政援助
-      - \(\color{red}{C_s}\)ₛ：可随机兑现货币，依赖s
+    - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
+      - \(\color{red}{C_s}\)：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]
+=\omega_s{\color{red}S}_i
+\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{B}{{\color{red}B}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
 - 行为策略假设2：
   - 动作：a = [n, ς, ξ, ε, θ, Θ, ζ]，时间禀赋的一种实际分配，其中内卷系数\(m′ = \frac ς n\)
   - 策略：π(a | s)，动作a满足的概率分布，取决于内卷系数m′
@@ -127,8 +129,8 @@
 抛开形式逻辑，我们用**边界排除法**来验证行为策略是否存在内点最优解：
 - 内卷至死的穷鬼：m′≫1 
   计算后验终生福祉\(W=\sum_{i=i_{min}}^{i_{max}}{r_i}\)趋向于0
-  - 张XF：高薪坐牢，手机是他的手铐（随时待命），名利是他的刑具，最后被处以死刑（过劳猝死），没有死缓，立即执行（抢救无效）
-  - 王JY：38 岁因肠癌晚期离世，身家百亿，人在天堂，钱在银行，人死了，钱没花完。有健康叫资产，没健康叫遗产，那遗产是不是他的财富？
+  - 张XF：高薪坐牢，手机是他的手铐(随时待命)，名利是他的刑具，最后被处以死刑(心源性过劳猝死)，没有死缓，立即执行(抢救无效)
+  - 王JY：肠癌晚期英年早亡，身家百亿，人在天堂，钱在银行，人死了，钱没花完。有健康叫资产，没健康叫遗产，那遗产是不是他的财富？
 - 消极摆烂的策略：m′≈0
   彻底躺平不是最优解：考虑刚性负债、养老风险，一个人如果年轻不努力加班工作的话，可能破产被剥夺人身自由，先验终身福祉归零，也可能年老时无收入来源，导致无依无靠：少壮不努力，老大徒伤悲；白了少年头，空悲切。
 
