@@ -73,11 +73,12 @@
     - 存款：\(\color{red}{B^+} = \frac {|\color{red}B| + \color{red}B} 2\)
     - 负债：\(\color{red}{B^-} = \frac {|\color{red}B| - \color{red}B} 2\)
     - 银行家年：Yₖ = 12 ⬝ 30 = 360 < Yₛ
-    - 日利率：[α⁺, α⁻]≈[0.01 / Yₛ, 0.03 / Yₖ]
+    - 日名义利率：[α⁺, α⁻]≈[0.01 / Yₛ, 0.03 / Yₖ]
+    - \(\color{red}{\pi_s}_i\)：日通货膨胀率，即由铸币税引发的、对货币持有者征收的隐性财产税率，目的：刺激消费，拉动经济。
+    - 日实际利率：\([r^+_i,r^-_i] = \left[\alpha^+ - \mathbb E[{\color{red}{\pi_s}}_ i],\alpha^- - \mathbb E[{\color{red}{\pi_s}}_i]\right]\)，依据费雪方程式(一阶近似)：名义利率 ≈ 实际利率 + 通胀期望。长期来看，r^+_i < 0，r^-_i > 0
     - 利息：\([\color{red}{I^+}, \color{red}{I^-}] = [\color{red}{B^+}α⁺, \color{red}{B^-}α⁻]
 \)
     - \(\color{red}c_i\)：当天本金还款额
-    - \(\color{red}{\pi_s}_i\)：日通货膨胀率，随机变量，即由铸币税引发的、对货币持有者征收的隐性财产税率，目的：刺激消费，拉动经济，满足：\(\alpha^+ - \mathbb E[{\color{red}{\pi_s}}_ i] > \mathbb E[{\color{red}{\pi_s}}_i] - \alpha^- > 0\)
     - vᵢ：劳动力价值(货币表现)，维持生存所需的生活资料价值，依赖Hᵢ, Mᵢ, πₛᵢ的随机变量，满足期望方程：\(\mathbb{E}[v_i \mid H_i, M_i, \pi_{s,i}] = v_{i_{min}}\prod (1+\pi_{s,t}) \cdot \left(1 + \gamma_H \cdot (H_{i_{min}} - H_i)\right) \cdot \left(1 + \gamma_M \cdot relu(M_{i_{min}} - M_i)\right)\)，依据《资本论》劳动力价值分类，量化分解每月示例如下：
       - 生理要素：米饭60￥、蔬菜200￥、租房400￥(非一线城市价格)、医保100￥(居民医保更便宜)、水电60￥、衣服40￥
       - 家庭要素(法定义务)：赡养600￥，育儿？￥
