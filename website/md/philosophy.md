@@ -59,27 +59,27 @@
         - \(\color{red}ς\)：剩余劳动时间
   - 文化资本\(\color{red}K\)
     - 文化资本差分：\(\Delta{\color{red}K}_i = {\color{red}K}_{i + 1} - {\color{red}K}_i = ΔKₑ{\color{red}ε}_i + ΔKₒ{\color{red}L}_i\)，假定ΔKₑ > ΔKₒ
-    - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_i \perp ({\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i),\quad \mathbb E[\color{red}{\mu_m}_i] = 1\)
+    - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_i \perp ({\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i),\quad \mathbb E[{\color{red}{\mu_m}}_i] = 1\)
     - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i] = {\mu_m}_{i} \cdot {L_p}_{i_{min}} \cdot \left(\frac{relu({\color{red}H}_i)}{{\color{red}H}_{i_{min}}}\right)^{\alpha_H} \cdot \left(1 + \beta \cdot \tanh(\gamma_M ({\color{red}M}_i - {\color{red}M}_{i_{min}}))\right) \cdot \left(1 + \delta_K \cdot \ln\left(1 + \frac{{\color{red}K}_i}{{\color{red}K}_{i_{min}}}\right)\right)\)
   - 经济资本
     - \(\color{red}B\)/￥：银行账面余额，初始值(按揭还贷)：\(B_{i_{min}}=-300000\)
-    - 存款：\(\color{red}{B^+} = \frac {|\color{red}B| + \color{red}B} 2\)
-    - 负债：\(\color{red}{B^-} = \frac {|\color{red}B| - \color{red}B} 2\)
+    - 存款：\({\color{red}{B^+}} = \frac {|{\color{red}B}| + {\color{red}B}} 2\)
+    - 负债：\({\color{red}{B^-}} = \frac {|{\color{red}B}| - {\color{red}B}} 2\)
     - 银行家年：Yₖ = 12 ⬝ 30 = 360 < Yₛ
     - 日名义利率：[α⁺, α⁻]≈[0.01 / Yₛ, 0.03 / Yₖ]
     - \(\color{red}{\pi_s}_i\)：日通货膨胀率，货币持有者被征收的隐性铸币税率，目的：财政融资，刺激消费。
     - 日实际利率：\([r^+_i,r^-_i] = \left[\alpha^+ - \mathbb E[{\color{red}{\pi_s}}_ i],\alpha^- - \mathbb E[{\color{red}{\pi_s}}_i]\right]\)，依据费雪方程式(一阶近似)：名义利率 ≈ 实际利率 + 通胀期望。长期来看，r^+_i < 0，r^-_i > 0
-    - 利息：\([\color{red}{I^+}, \color{red}{I^-}] = [\color{red}{B^+}α⁺, \color{red}{B^-}α⁻]
+    - 利息：\([{\color{red}{I^+}}, {\color{red}{I^-}}] = [{\color{red}{B^+}}α⁺, {\color{red}{B^-}}α⁻]
 \)
     - \(\color{red}c_i\)：当天本金还款额
-    - \(\color{red}v_i\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[\color{red}v_i \mid \color{red}H_i, \color{red}M_i, \color{red}{\pi_s}_{:i}] = v_{i_{min}}\prod_{t=i_{min}}^{i-1} (1+{\color{red}{\pi_s}}_t) \cdot \left(1 + \gamma_H \cdot (H_{i_{min}} - \color{red}H_i)\right) \cdot \left(1 + \gamma_M \cdot relu(M_{i_{min}} - \color{red}M_i)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
+    - \(\color{red}v_i\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}{\pi_s}}_{:i}] = v_{i_{min}}\prod_{t=i_{min}}^{i-1} (1+{\color{red}{\pi_s}}_t) \cdot \left(1 + \gamma_H \cdot (H_{i_{min}} - {\color{red}H}_i)\right) \cdot \left(1 + \gamma_M \cdot relu(M_{i_{min}} - {\color{red}M}_i)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
       - 生理要素：米饭60￥、蔬菜200￥、租房500￥、医保100￥、水电60￥、衣服40￥
       - 家庭要素(法定义务)：赡养500￥，育儿？￥
       - 教育要素：学习300￥
       - 社会要素：通信40￥、社交？￥、公益性开源技术服务？￥
-    - 日产值(血酬)：\(\color{red}w = \color{red}{Lₚ}\color{red}{L}\)，活劳动创造的新价值(个人部分)
-    - 日收入：\(\color{red}{w^+} = \color{red}w + \color{red}{I^+}\)
-    - 状态表征：\(\color{red}s = [\color{red}H, \color{red}M, \color{red}K, \color{red}B, \color{red}P, \color{red}S, \color{red}A]\)，描述当前生存状态存量，注：\(\color{red}P, \color{red}S\)是下文定义的社会资本
+    - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
+    - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
+    - 状态表征：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}B}, {\color{red}P}, {\color{red}S}, {\color{red}A}]\)，描述当前生存状态存量，注：\(\color{red}P\)、\({\color{red}S}\)是下文定义的社会资本
     - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| {\color{red}s}_i \right]\)，注：这是一个条件期望，原因：人情社会货币化。掏空6个口袋按揭房贷的本质：你其实只有一个口袋还房贷，其它5个口袋就是银行把你的社会资本货币化了
     - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{B^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
@@ -91,7 +91,7 @@
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]
-      - \(\color{red}{C_p}\)：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ \color{red}{C_{p,i}} \middle|{\color{red}s}_i \right] = \omega_p{\color{red}P}_i \times \sigma\left(\eta_B {\color{red}{B_i}} + \eta_H {\color{red}{H_i}}+ \eta_L {\color{red}{L_{p,i}}}- \eta_v {\color{red}{v_i}}\right),\qquad 其中\eta_B,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：
+      - \(\color{red}{C_p}\)：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,i}}} \middle|{\color{red}s}_i \right] = \omega_p{\color{red}P}_i \times \sigma\left(\eta_B {\color{red}{B_i}} + \eta_H {\color{red}{H_i}}+ \eta_L {\color{red}{L_{p,i}}}- \eta_v {\color{red}{v_i}}\right),\qquad 其中\eta_B,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：
         - 人际关系像水波纹，以己为心、亲疏有别、随势伸缩
         - 主体的社会资本兑现概率通常与主体的健康指数、劳动生产率、货币资产正相关，与其劳动力价值、负债水平负相关
         - 经验性解释：落魄苏秦归故郭(妻不下纴，嫂不为炊，父母不与言)的千年史例：一个人越失败、越失势、越失能，通常越难从社会资本中获得实际支持
@@ -103,11 +103,9 @@
         - 演化生物学：亲缘选择理论
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_i = {\color{red}P}_{i + 1} - {\color{red}P}_i = ΔPᵣ{\color{red}Θ}_i - {\color{red}P}_i\left(1 - e^{-δᵣ}\right)\)
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
-      - \(\color{red}{C_s}\)：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]
-=\omega_s{\color{red}S}_i
-\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{B}{{\color{red}B}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
+      - \(\color{red}{C_s}\)：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]=\omega_s{\color{red}S}_i\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{B}{{\color{red}B}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
 - 行为策略假设2：
-  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}ξ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac {\color{red}ς} {\color{red}n}\)
+  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}ξ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
   - 策略：\(π\left({\color{red}a} \middle| {\color{red}s}\right)\)，动作\({\color{red}a}\)满足的概率分布，取决于内卷系数\(\color{red}{m′}\)
     - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，依据资本论：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于马克思定义的剩余价值的范畴，是资本家的让渡份额，本实验不研究资本家获得的剩余价值
     - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = {\color{red}{m′}}\)，资本论：剩余价值率 = 剩余劳动时间 ÷ 必要劳动时间
