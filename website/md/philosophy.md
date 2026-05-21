@@ -24,7 +24,7 @@
     - 公历回归年：\(Y_s = 365 + \frac{1}{4} - \frac{1}{100} + \frac{1}{400} = 365.2425
 \)
     - 当天年龄：\(A_i = \frac i {Y_s}\)
-    - \(\color{red}H\)：身体健康指数，\(\mathbb E[{\color{red}H}_i] \in [-\infty, 100]\)，\(\max_i\mathbb E [{\color{red}H}_{i}] = \mathbb E [{\color{red}H}_{i_{min}}] = 100\)
+    - \(\color{red}H\)：身体健康指数(通过体检可观测)，\(\mathbb E[{\color{red}H}_i] \in [-\infty, 100]\)，\(\max_i\mathbb E [{\color{red}H}_{i}] = \mathbb E [{\color{red}H}_{i_{min}}] = 100\)
       - 基线日死亡概率：qₘᵢₙ=2.74e-7，基于国际生命表
       - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot relu({\color{red}H})}, \quad\lambda = -\frac{\ln q_{min}}{100}\)
       - 身体衰老损耗/天：ΔHₐ = 0.0025，常量
