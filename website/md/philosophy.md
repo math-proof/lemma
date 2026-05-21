@@ -34,7 +34,7 @@
 \sum_{t=0}^{i_{oo} - i - 1} P\left({\color{red}T} \ge t + i + 1 \middle| {\color{red}H}_i \right) = 
 \sum_{t=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{t}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
       - \(\color{red}ΔH_v\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
-      - 身体健康指数差分：ΔHᵢ = Hᵢ₊₁ - Hᵢ = ΔHₑθᵢ - ΔHₐ - Pₗᵢωₕ - ΔHₒLᵢ - ΔHᵥᵢ - ΔHₗᵢ, i ≥ iₘᵢₙ 
+      - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = \Delta H_e\,{\color{red}\theta}_i - \Delta H_a - {\color{red}{P_l}}_i\,\omega_h - \Delta H_o\,{\color{red}L}_i - {\color{red}{\Delta H_v}}_i - {\color{red}{\Delta H_l}}_i,\quad i \ge i_{\min}\)
     - \(\color{red}M\)：精神效用，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
@@ -44,12 +44,12 @@
         - 亲身体验的必然痛苦：\({\Xi_m}_i < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_i = \frac{M_i + |{\Xi_m}_i|}{M_i - |{\Xi_m}_i|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是去追求幸福，而是去规避痛苦
         - 累计精神奖励：\({\color{red}E}_{i} = \sum_{t=i_{\min}}^{i} {e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
         - 累计精神奖励差分：\(\Delta {\color{red}E}_{i} = {\color{red}{\Xi_m}}_{i + 1} - \sum_{t=i_{\min}}^{i} (1 - e ^ {-{{\color{red}{\delta_m}}_t}}){e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
-      - 精神效用差分：ΔMᵢ = Mᵢ₊₁ - Mᵢ = ΔMᵣ × Θᵢ + ΔEᵢ + ΔMₑεᵢ - ΔMₐ - Pₗᵢωₘ - ΔMₒLᵢ, i ≥ iₘᵢₙ
+      - 精神效用差分：\(\Delta {\color{red}M}_i = {\color{red}M}_{i+1} - {\color{red}M}_i = \Delta M_e{\color{red}\varepsilon}_i + \Delta M_r \times {\color{red}{\Theta}}_i + \Delta {\color{red}E}_i - \Delta M_a - {\color{red}{P_l}}_i\omega_m - \Delta M_o{\color{red}L}_i,\quad i \ge i_{\min}\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_i]≈4\)，自由学习产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
         - 体育健身\(\color{red}θ\)：\(\mathbb E[{\color{red}θ}_i]≈0.5\)，室内外徒手运动，内生健康投资，目的：享受运动艺术，是自由时间；附带ΔHₑ健身增益/h，满足ΔHₑ < ΔHₐ / 24
-        - 情感投资\(\color{red}Θ\)：\(\mathbb E[{\color{red}Θ}_i]≈[0.5, 0.2, 0.1, 0.05, 0.02]\)，货币？￥，走亲访友，产生人际关系资产增益ΔPᵣ/h，产生精神效用增益ΔMᵣ/h
+        - 情感投资\(\color{red}Θ\)：\(\mathbb E[{\color{red}Θ}_i]≈[0.5, 0.2, 0.1, 0.05, 0.02]\)，货币？￥，走亲访友，产生人际关系资产增益ΔPᵣ/h，精神效用增益ΔMᵣ/h
         - 发呆娱乐\(\color{red}ζ\)：\(\mathbb E[{\color{red}ζ}_i]≈1\)，创造灵感
       - 必要生理时间\(\color{red}ξ\)/h：\(\mathbb E[{\color{red}ξ}_i]≈9\)
         - 睡眠\(\color{red}σ\)：\(\mathbb E[{\color{red}σ}_i]≈8\)，其睡眠生理学健康损耗呈现非对称性U型曲线\(\mathbb{E}({\color{red}σ}_i) = 7 + 2 · e^{-0.04·(A_i-18)}\)；睡梦中的快乐不是自由，梦里不知身是客，是缸中之脑
@@ -83,8 +83,8 @@
     - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| {\color{red}s}_i \right]\)，注：这是一个条件期望，原因：人情社会货币化。掏空6个口袋按揭房贷的本质：你其实只有一个口袋还房贷，其它5个口袋就是银行把你的社会资本货币化了
     - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{B^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
-    - ΔBᵥ：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
-    - 经济资本差分：ΔBᵢ = Bᵢ₊₁ - Bᵢ = w⁺ᵢ + ΔBᵥᵢ - vᵢ - cᵢ - I⁻ᵢ, i ≥ iₘᵢₙ，当Bᵢ₊₁ < 0，信用卡自动透支贴现续命
+    - \(\color{red}{\Delta B_v}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
+    - 经济资本差分：\(\Delta {\color{red}B}_i = {\color{red}B}_{i+1} - {\color{red}B}_i = {\color{red}{w^+}}_i + {\color{red}{\Delta B_v}}_i - {\color{red}v}_i - {\color{red}c}_i - {\color{red}{I^-}}_i,\quad i \ge i_{\min}\)，当\({\color{red}B}_{i+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{i_{max}}\)：有效生命终点，i≤iₘₐₓ<iₒₒ，直接原因
       - 触发死亡，由死亡概率\({\color{red}q}_{i_{max}}\)导致
       - 触发破产，\({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + E[{\color{red}{C_p}}_i∣{\color{red}s}_i] + E[{\color{red}{C_s}}_i∣{\color{red}s}_i] < {\color{red}{B^-}}_i\)，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换 
