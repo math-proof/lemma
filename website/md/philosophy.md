@@ -37,7 +37,7 @@
 \sum_{t=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{t}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
       - \(\color{red}ΔHᵥ\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
       - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = ΔHₑ{\color{red}\theta}_i - ΔHₐ - {\color{red}{P_l}}_i\omega_h - ΔHₒ{\color{red}L}_i - {\color{red}{ΔHᵥ}}_i - {\color{red}{ΔHₗ}}_i - {\color{red}{ΔHᵪ}}_i,\quad i \ge i_{min}\)
-    - \(\color{red}M\)：精神效用，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
+    - \(\color{red}M\)：精神效用(部分可观测)，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
         - 连续半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
@@ -64,14 +64,14 @@
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_i \perp ({\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i),\quad \mathbb E[{\color{red}{\mu_m}}_i] = 1\)
     - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i] = {\mu_m}_{i}{L_p}_{i_{min}}\left(\frac{relu({\color{red}H}_i)}{{\color{red}H}_{i_{min}}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_i - {\color{red}M}_{i_{min}})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_i}{{\color{red}K}_{i_{min}}}\right)\right)\)
   - 经济资本
-    - \(\color{red}B\)/￥：银行账面余额，初始值(按揭还贷)：\(B_{i_{min}}=-300000\)
-    - 存款：\({\color{red}{B^+}} = \frac {|{\color{red}B}| + {\color{red}B}} 2\)
-    - 负债：\({\color{red}{B^-}} = \frac {|{\color{red}B}| - {\color{red}B}} 2\)
+    - \(\color{red}W\)/￥：银行账面余额(可实时观测)，初始值(按揭还贷)：\(W_{i_{min}}=-300000\)
+    - 存款：\({\color{red}{W^+}} = \frac {|{\color{red}W}| + {\color{red}W}} 2\)
+    - 负债：\({\color{red}{W^-}} = \frac {|{\color{red}W}| - {\color{red}W}} 2\)
     - 银行家年：Yₖ = 12 ⬝ 30 = 360 < Yₛ
     - 日名义利率：[α⁺, α⁻]≈[0.01 / Yₛ, 0.03 / Yₖ]
     - \(\color{red}{\pi_s}_i\)：日通货膨胀率，货币持有者被征收的隐性铸币税率，目的：财政融资，刺激消费。
-    - 日实际利率：\([r^+_i,r^-_i] = \left[\alpha^+ - \mathbb E[{\color{red}{\pi_s}}_ i],\alpha^- - \mathbb E[{\color{red}{\pi_s}}_i]\right]\)，依据费雪方程式(一阶近似)：名义利率 ≈ 实际利率 + 通胀期望。长期来看，r^+_i < 0，r^-_i > 0
-    - 利息：\([{\color{red}{I^+}}, {\color{red}{I^-}}] = [{\color{red}{B^+}}α⁺, {\color{red}{B^-}}α⁻]
+    - 日实际利率：\([r^+_i,r^-_i] = \left[α⁺ - \mathbb E[{\color{red}{\pi_s}}_ i],α⁻ - \mathbb E[{\color{red}{\pi_s}}_i]\right]\)，依据费雪方程式(一阶近似)：名义利率 ≈ 实际利率 + 通胀期望。长期来看，r^+_i < 0，r^-_i > 0
+    - 利息：\([{\color{red}{I^+}}, {\color{red}{I^-}}] = [{\color{red}{W^+}}α⁺, {\color{red}{W^-}}α⁻]
 \)
     - \(\color{red}c_i\)：当天本金还款额
     - \(\color{red}v_i\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}{\pi_s}}_{:i}] = v_{i_{min}}\prod_{t=i_{min}}^{i-1} (1+{\color{red}{\pi_s}}_t) \cdot \left(1 + \gamma_H \cdot (H_{i_{min}} - {\color{red}H}_i)\right) \cdot \left(1 + \gamma_M \cdot relu(M_{i_{min}} - {\color{red}M}_i)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
@@ -81,19 +81,19 @@
       - 社会要素：通信40￥、社交？￥、公益性开源技术服务？￥
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
-    - 状态表征：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}B}, {\color{red}P}, {\color{red}S}, {\color{red}A}]\)，描述当前生存状态存量，注：\(\color{red}P\)、\({\color{red}S}\)是下文定义的社会资本
+    - 状态表征：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, {\color{red}A}]\)，描述当前生存状态存量，注：\(\color{red}P\)、\({\color{red}S}\)是下文定义的社会资本
     - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| {\color{red}s}_i \right]\)，注：这是一个条件期望，原因：人情社会货币化。掏空6个口袋按揭房贷的本质：你其实只有一个口袋还房贷，其它5个口袋就是银行把你的社会资本货币化了
-    - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{B^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
+    - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{W^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
-    - \(\color{red}{ΔBᵥ}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
-    - 经济资本差分：\(\Delta {\color{red}B}_i = {\color{red}B}_{i+1} - {\color{red}B}_i = {\color{red}{w^+}}_i + {\color{red}{ΔBᵥ}}_i - {\color{red}v}_i - {\color{red}c}_i - {\color{red}{I^-}}_i,\quad i \ge i_{min}\)，当\({\color{red}B}_{i+1}<0\)时，信用卡自动透支贴现续命
+    - \(\color{red}{ΔWᵥ}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
+    - 经济资本差分：\(\Delta {\color{red}W}_i = {\color{red}W}_{i+1} - {\color{red}W}_i = {\color{red}{w^+}}_i + {\color{red}{ΔWᵥ}}_i - {\color{red}v}_i - {\color{red}c}_i - {\color{red}{I^-}}_i,\quad i \ge i_{min}\)，当\({\color{red}W}_{i+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{i_{max}}\)：有效生命终点，i≤iₘₐₓ<iₒₒ，直接原因
       - 触发死亡，由死亡概率\({\color{red}q}_{i_{max}}\)导致
-      - 触发破产，\({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{B^-}}_i\)，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
+      - 触发破产，\({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{W^-}}_i\)，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]
-      - \(\color{red}{C_p}\)：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,i}}} \middle|{\color{red}s}_i \right] = \omega_p{\color{red}P}_i \times \sigma\left(\eta_B {\color{red}{B_i}} + \eta_H {\color{red}{H_i}}+ \eta_L {\color{red}{L_{p,i}}}- \eta_v {\color{red}{v_i}}\right),\qquad 其中\eta_B,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：
+      - \(\color{red}{C_p}\)：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,i}}} \middle|{\color{red}s}_i \right] = \omega_p{\color{red}P}_i \times \sigma\left(\eta_W {\color{red}{W_i}} + \eta_H {\color{red}{H_i}}+ \eta_L {\color{red}{L_{p,i}}}- \eta_v {\color{red}{v_i}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：
         - 人际关系像水波纹，以己为心、亲疏有别、随势伸缩
         - 主体的社会资本兑现概率通常与主体的健康指数、劳动生产率、货币资产正相关，与其劳动力价值、负债水平负相关
         - 经验性解释：落魄苏秦归故郭(妻不下纴，嫂不为炊，父母不与言)的千年史例：一个人越失败、越失势、越失能，通常越难从社会资本中获得实际支持
@@ -105,7 +105,7 @@
         - 演化生物学：亲缘选择理论
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_i = {\color{red}P}_{i + 1} - {\color{red}P}_i = ΔPᵣ{\color{red}Θ}_i - {\color{red}P}_i\left(1 - e^{-δᵣ}\right)\)
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
-      - \(\color{red}{C_s}\)：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]=\omega_s{\color{red}S}_i\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{B}{{\color{red}B}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
+      - \(\color{red}{C_s}\)：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]=\omega_s{\color{red}S}_i\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{W}{{\color{red}W}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
 - 行为策略假设2：
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
   - 策略：\(π\left({\color{red}a} \middle| {\color{red}s}\right)\)，动作\({\color{red}a}\)满足的概率分布，取决于内卷系数\(\color{red}{m′}\)
@@ -118,7 +118,7 @@
       - 内卷：m′≫1，用自由健康换个别剩余价值，但没花在生存刚需上，如通胀稀释、理财圈套、消费主义广告、房价倒挂收割，在意识形态流通回收机制下属于资本的口袋
 - 生命目标假设3：
   - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}r} = \frac {{\color{red}f} \cdot relu({\color{red}M})} {100}\)，《资本论》：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。所以马克思说，财富就是可以自由支配的时间。
-  - Markov历史无关假设：\({\color{red}r}_i \perp ({\color{red}a}_{:i},{\color{red}s}_{:i})\mid ({\color{red}s}_i,{\color{red}a}_i)\)​，当天状态\({\color{red}s}_i\)已充分编码，历史对当天的影响已经写入当天的\({\color{red}H}_i\)(身体健康)，\({\color{red}M}_i\)(精神效用)，\({\color{red}K}_i\)(文化资本)，\({\color{red}B}_i\)(经济资本)，\({\color{red}P}_i\)(人际关系)，\({\color{red}S}_i\)(制度支持)；这些都是历史存量，故假设成立
+  - Markov历史无关假设：\({\color{red}r}_i \perp ({\color{red}a}_{:i},{\color{red}s}_{:i})\mid ({\color{red}s}_i,{\color{red}a}_i)\)​，当天状态\({\color{red}s}_i\)已充分编码，历史对当天的影响已经写入当天的\({\color{red}H}_i\)(身体健康)，\({\color{red}M}_i\)(精神效用)，\({\color{red}K}_i\)(文化资本)，\({\color{red}W}_i\)(经济资本)，\({\color{red}P}_i\)(人际关系)，\({\color{red}S}_i\)(制度支持)；这些都是历史存量，故假设成立
   - 后验终生福祉：\(\sum_{i=i_{min}}^{i_{max}}{r_i}\)，上帝视角的时间经济学定义
   - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}s}_i)=\mathbb E_{\substack{{\color{red}r}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=i}^{i_{max}} {\color{red}r}_t\middle| {\color{red}s}_i\right]\)，定义为V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
   - 目标函数：先验终身福祉最大化，不考虑18周岁前作为纯消费者的福祉。
@@ -128,7 +128,7 @@
 ## 现实案例验证
 抛开形式逻辑，我们用**边界排除法**来验证行为策略是否存在内点最优解：
 - 内卷至死的穷鬼：m′≫1 
-  计算后验终生福祉\(W=\sum_{i=i_{min}}^{i_{max}}{r_i}\)趋向于0
+  计算后验终生福祉\(\sum_{i=i_{min}}^{i_{max}}{r_i}\)趋向于0
   - 张XF：高薪坐牢，手机是他的手铐(随时待命)，名利是他的刑具，最后被处以死刑(心源性过劳猝死)，没有死缓，立即执行(抢救无效)
   - 王JY：肠癌晚期英年早亡，身家百亿，人在天堂，钱在银行，人死了，钱没花完。有健康叫资产，没健康叫遗产，那遗产是不是他的财富？
 - 消极摆烂的策略：m′≈0
@@ -146,9 +146,9 @@
   - 木桶乞食的Diogenes：当Alexander大帝，世人眼里行走的Aladdin神灯，告诉这个**宇宙公民**：你想要任何东西，我都能满足你。他回答：滚开，别挡住我的太阳
 
 ## 财富自由的谎言 
-马克思说，财富就是可以自由支配的时间。用这把奥卡姆剃刀剃尽财富幻象，我得出财富自由的定义：**以最小的必要劳动，换最大的自由时间**。当你的劳动报酬足以覆盖生存开销，一年只需工作几周、几天甚至几小时，剩余时间完全由自己掌控，就是财富自由。财富自由论本质是以自由论财富，不是靠死劳动(他人活劳动)产生的被动收入≥生活支出，那本质上是一套不劳而获的寄生剥削思想。提高个别劳动生产率产生的劳动报酬增量，属于真资产复杂劳动价值，**复杂劳动是多倍的简单劳动**，不是不劳而获，不算剥削他人。当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{B^-}}_i \middle| {\color{red}s}_i\right)\)。这笔钱不参与任何投机，它是你去阴曹地府跑一趟的**专属旅游基金**，因为天有不测风云，人有旦夕祸福：
-- 电信诈骗：ΔBᵥ ↑ → B↓ → D ↑ → Pₗ ↑ → 破产
-- 意外伤害：ΔHᵥ ↑ → H ↓ → Lₚ ↓ → w ↓ → B ↓ → 破产
+马克思说，财富就是可以自由支配的时间。用这把奥卡姆剃刀剃尽财富幻象，我得出财富自由的定义：**以最小的必要劳动，换最大的自由时间**。当你的劳动报酬足以覆盖生存开销，一年只需工作几周、几天甚至几小时，剩余时间完全由自己掌控，就是财富自由。财富自由论本质是以自由论财富，不是靠死劳动(他人活劳动)产生的被动收入≥生活支出，那本质上是一套不劳而获的寄生剥削思想。提高个别劳动生产率产生的劳动报酬增量，属于真资产复杂劳动价值，**复杂劳动是多倍的简单劳动**，不是不劳而获，不算剥削他人。当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{W^-}}_i \middle| {\color{red}s}_i\right)\)。这笔钱不参与任何投机，它是你去阴曹地府跑一趟的**专属旅游基金**，因为天有不测风云，人有旦夕祸福：
+- 电信诈骗：ΔWᵥ ↑ → W↓ → D ↑ → Pₗ ↑ → 破产
+- 意外伤害：ΔHᵥ ↑ → H ↓ → Lₚ ↓ → w ↓ → W ↓ → 破产
 
 ## 资产是可兑换财富的筹码
 ### 认清真资产
@@ -166,7 +166,7 @@
 
 故凡是可以兑换成财富(可自由支配的时间)的资产就是有用资产，否则就是无用资产。以下以自由时间为标尺来分析一些伪(或次生)资产的可用性：
 - 存款：钱不能生钱。  
-  马克思在《资本论》中明确指出，货币本身不具备自行增殖的能力。存款是低风险次生资产，貌似利息I⁺可以钱生钱，但由生存边界假设1：\(\alpha^+ < \mathbb E[{\color{red}{\pi_s}}_ i]\)，越存越亏；利息不是理财收益，是通胀补偿。**货币拜物教**是资本主义最成功的意识形态洗脑。它先忽悠你：先苦后甜，熬过去就好了。目的：让你推迟自由，并让你相信：今天的自由可以存进银行，未来连本带息取出来！但财富自由论明确告诉你：存款不是财富，只是财富的期权，未来的自由时间fᵢ​不是存量，是流量，且每一滴流量，都要冒着一连串 ∏(1−qⱼ) 的枪林弹雨，才能抵达那个可能不存在的 “未来的你”。存款是战略蓄水池，是一种自由时间的兑现能力，在你失业时，用它兑换自由时间为发展劳动生产率提供机会窗口期。如果金钱不是以交换自由时间为最终目的，就是西美尔所说的，人在桥上安了家，这叫货币异化。《货币哲学》中说：金钱只是通往最终价值的桥梁，而人无法栖居在桥上。**异化劳动是自由时间的跨期置换**：出卖当下你可以自由支配的时间，置换未来你可以自由支配的时间。赚钱就是用你现在发呆的权力，换你未来发呆的权力！很多人是换亏本了：当下把发呆时间全卖光了，累死累活，最后还被房贷、车贷、消费贷捆着，到老都没换到发呆的资格，等于白卖了一辈子。
+  马克思在《资本论》中明确指出，货币本身不具备自行增殖的能力。存款是低风险次生资产，貌似利息I⁺可以钱生钱，但由生存边界假设1：\(α⁺ < \mathbb E[{\color{red}{\pi_s}}_ i]\)，越存越亏；利息不是理财收益，是通胀补偿。**货币拜物教**是资本主义最成功的意识形态洗脑。它先忽悠你：先苦后甜，熬过去就好了。目的：让你推迟自由，并让你相信：今天的自由可以存进银行，未来连本带息取出来！但财富自由论明确告诉你：存款不是财富，只是财富的期权，未来的自由时间fᵢ​不是存量，是流量，且每一滴流量，都要冒着一连串 ∏(1−qⱼ) 的枪林弹雨，才能抵达那个可能不存在的 “未来的你”。存款是战略蓄水池，是一种自由时间的兑现能力，在你失业时，用它兑换自由时间为发展劳动生产率提供机会窗口期。如果金钱不是以交换自由时间为最终目的，就是西美尔所说的，人在桥上安了家，这叫货币异化。《货币哲学》中说：金钱只是通往最终价值的桥梁，而人无法栖居在桥上。**异化劳动是自由时间的跨期置换**：出卖当下你可以自由支配的时间，置换未来你可以自由支配的时间。赚钱就是用你现在发呆的权力，换你未来发呆的权力！很多人是换亏本了：当下把发呆时间全卖光了，累死累活，最后还被房贷、车贷、消费贷捆着，到老都没换到发呆的资格，等于白卖了一辈子。
 - 黄金：黄金不能生黄金。  
   它是被包装成终极避险资产的幻觉型伪资产。巴菲特说过，黄金就是从非洲或别处挖出来，然后熔了，再挖个洞埋起来，旁边雇人守着。本身没有任何内生增殖能力，一斤黄金放一万年，并不会进行**核聚变**，多出一克黄金。你花1000￥购买了一块破石头，还要交保管费，却幻想一年以后有个比你更傻的人，花1500￥买走，这是妥妥的博傻赌徒思维：靠收割傻瓜，不劳而获。没有任何一位世界首富是靠囤积黄金发家。所谓乱世藏金，是一个悖论：你揣着黄金去买粮食，只有两种可能，要么是被杀，要么是被抢。反倒是那些有手艺的铁匠、郎中、裁缝，哪怕身无分文，也能靠着手艺换一口饭吃，只要你还有被利用的价值，就不会被杀。黄金是硬通货，讲的是暴力机关的硬通货，不是普通人的；国家需要黄金，个人不需要。史实如下：
   - 明末李自成攻打北京，拷掠助饷
