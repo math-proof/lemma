@@ -13,7 +13,9 @@
 - 同一字母：
   - 红色表示随机变量
   - 黑色表示其观测值
-- ×表示点积
+- \(\times\)表示点积
+- \(\sigma(·)\)表示[torch.sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.sigmoid.html)
+
 我们假设一个简化的、基于形式逻辑的、18岁生命智能体生存最优解的思想实验：
 - 生存边界假设1：
   - 具身资本
@@ -60,7 +62,7 @@
   - 文化资本\(\color{red}K\)
     - 文化资本差分：\(\Delta{\color{red}K}_i = {\color{red}K}_{i + 1} - {\color{red}K}_i = ΔKₑ{\color{red}ε}_i + ΔKₒ{\color{red}L}_i\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_i \perp ({\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i),\quad \mathbb E[{\color{red}{\mu_m}}_i] = 1\)
-    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i] = {\mu_m}_{i} \cdot {L_p}_{i_{min}} \cdot \left(\frac{relu({\color{red}H}_i)}{{\color{red}H}_{i_{min}}}\right)^{\alpha_H} \cdot \left(1 + \beta \cdot \tanh(\gamma_M ({\color{red}M}_i - {\color{red}M}_{i_{min}}))\right) \cdot \left(1 + \delta_K \cdot \ln\left(1 + \frac{{\color{red}K}_i}{{\color{red}K}_{i_{min}}}\right)\right)\)
+    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i] = {\mu_m}_{i}{L_p}_{i_{min}}\left(\frac{relu({\color{red}H}_i)}{{\color{red}H}_{i_{min}}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_i - {\color{red}M}_{i_{min}})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_i}{{\color{red}K}_{i_{min}}}\right)\right)\)
   - 经济资本
     - \(\color{red}B\)/￥：银行账面余额，初始值(按揭还贷)：\(B_{i_{min}}=-300000\)
     - 存款：\({\color{red}{B^+}} = \frac {|{\color{red}B}| + {\color{red}B}} 2\)
