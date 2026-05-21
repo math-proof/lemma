@@ -34,7 +34,7 @@
 \sum_{t=0}^{i_{oo} - i - 1} P\left({\color{red}T} \ge t + i + 1 \middle| {\color{red}H}_i \right) = 
 \sum_{t=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{t}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
       - \(\color{red}ΔH_v\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
-      - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = \Delta H_e\,{\color{red}\theta}_i - \Delta H_a - {\color{red}{P_l}}_i\,\omega_h - \Delta H_o\,{\color{red}L}_i - {\color{red}{\Delta H_v}}_i - {\color{red}{\Delta H_l}}_i,\quad i \ge i_{min}\)
+      - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = ΔH_e\,{\color{red}\theta}_i - ΔH_a - {\color{red}{P_l}}_i\,\omega_h - ΔH_o\,{\color{red}L}_i - {\color{red}{ΔH_v}}_i - {\color{red}{ΔH_l}}_i,\quad i \ge i_{min}\)
     - \(\color{red}M\)：精神效用，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
@@ -44,7 +44,7 @@
         - 亲身体验的必然痛苦：\({\Xi_m}_i < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_i = \frac{M_i + |{\Xi_m}_i|}{M_i - |{\Xi_m}_i|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是去追求幸福，而是去规避痛苦
         - 累计精神奖励：\({\color{red}E}_{i} = \sum_{t=i_{min}}^{i} {e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
         - 累计精神奖励差分：\(\Delta {\color{red}E}_{i} = {\color{red}{\Xi_m}}_{i + 1} - \sum_{t=i_{min}}^{i} (1 - e ^ {-{{\color{red}{\delta_m}}_t}}){e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
-      - 精神效用差分：\(\Delta {\color{red}M}_i = {\color{red}M}_{i+1} - {\color{red}M}_i = \Delta M_e{\color{red}\varepsilon}_i + \Delta M_r \times {\color{red}{\Theta}}_i + \Delta {\color{red}E}_i - \Delta M_a - {\color{red}{P_l}}_i\omega_m - \Delta M_o{\color{red}L}_i,\quad i \ge i_{min}\)
+      - 精神效用差分：\(\Delta {\color{red}M}_i = {\color{red}M}_{i+1} - {\color{red}M}_i = ΔM_e{\color{red}\varepsilon}_i + ΔM_r \times {\color{red}{\Theta}}_i + \Delta {\color{red}E}_i - ΔM_a - {\color{red}{P_l}}_i\omega_m - ΔM_o{\color{red}L}_i,\quad i \ge i_{\min}\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_i]≈4\)，自由学习产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
@@ -58,7 +58,7 @@
         - \(\color{red}n\)：必要劳动时间，**劳动者为了生产自身劳动力价值，所必须付出的劳动时间。劳动力价值决定必要劳动时间的长短**
         - \(\color{red}ς\)：剩余劳动时间
   - 文化资本\(\color{red}K\)
-    - 文化资本差分：\(Δ{\color{red}K}_i = {\color{red}K}_{i + 1} - {\color{red}K}_i = ΔKₑ{\color{red}ε}_i + ΔKₒ{\color{red}L}_i\)，假定ΔKₑ > ΔKₒ
+    - 文化资本差分：\(\Delta{\color{red}K}_i = {\color{red}K}_{i + 1} - {\color{red}K}_i = ΔKₑ{\color{red}ε}_i + ΔKₒ{\color{red}L}_i\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_i \perp ({\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i),\quad \mathbb E[\color{red}{\mu_m}_i] = 1\)
     - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i] = {\mu_m}_{i} \cdot {L_p}_{i_{min}} \cdot \left(\frac{relu({\color{red}H}_i)}{{\color{red}H}_{i_{min}}}\right)^{\alpha_H} \cdot \left(1 + \beta \cdot \tanh(\gamma_M ({\color{red}M}_i - {\color{red}M}_{i_{min}}))\right) \cdot \left(1 + \delta_K \cdot \ln\left(1 + \frac{{\color{red}K}_i}{{\color{red}K}_{i_{min}}}\right)\right)\)
   - 经济资本
@@ -83,8 +83,8 @@
     - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| {\color{red}s}_i \right]\)，注：这是一个条件期望，原因：人情社会货币化。掏空6个口袋按揭房贷的本质：你其实只有一个口袋还房贷，其它5个口袋就是银行把你的社会资本货币化了
     - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{B^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
-    - \(\color{red}{\Delta B_v}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
-    - 经济资本差分：\(\Delta {\color{red}B}_i = {\color{red}B}_{i+1} - {\color{red}B}_i = {\color{red}{w^+}}_i + {\color{red}{\Delta B_v}}_i - {\color{red}v}_i - {\color{red}c}_i - {\color{red}{I^-}}_i,\quad i \ge i_{min}\)，当\({\color{red}B}_{i+1}<0\)时，信用卡自动透支贴现续命
+    - \(\color{red}{ΔB_v}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
+    - 经济资本差分：\(\Delta {\color{red}B}_i = {\color{red}B}_{i+1} - {\color{red}B}_i = {\color{red}{w^+}}_i + {\color{red}{ΔB_v}}_i - {\color{red}v}_i - {\color{red}c}_i - {\color{red}{I^-}}_i,\quad i \ge i_{min}\)，当\({\color{red}B}_{i+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{i_{max}}\)：有效生命终点，i≤iₘₐₓ<iₒₒ，直接原因
       - 触发死亡，由死亡概率\({\color{red}q}_{i_{max}}\)导致
       - 触发破产，\({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{B^-}}_i\)，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
@@ -101,7 +101,7 @@
         - 社会交换理论：互惠义务具有时效性
         - 社会学：格兰诺维特强弱关系理论
         - 演化生物学：亲缘选择理论
-      - \(\color{red}P\)存量差分：\(Δ{\color{red}P}_i = {\color{red}P}_{i + 1} - {\color{red}P}_i = ΔP_r{\color{red}Θ}_i - {\color{red}P}_i\left(1 - e^{-δ_r}\right)\)
+      - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_i = {\color{red}P}_{i + 1} - {\color{red}P}_i = ΔP_r{\color{red}Θ}_i - {\color{red}P}_i\left(1 - e^{-δ_r}\right)\)
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
       - \(\color{red}{C_s}\)：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]
 =\omega_s{\color{red}S}_i
