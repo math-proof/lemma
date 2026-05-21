@@ -33,8 +33,8 @@
 \sum_{t=i + 1}^{i_{oo}} P\left({\color{red}T} \ge t \middle| {\color{red}H}_i \right) = 
 \sum_{t=0}^{i_{oo} - i - 1} P\left({\color{red}T} \ge t + i + 1 \middle| {\color{red}H}_i \right) = 
 \sum_{t=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{t}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
-      - \(\color{red}ΔH_v\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
-      - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = ΔH_e\,{\color{red}\theta}_i - ΔH_a - {\color{red}{P_l}}_i\,\omega_h - ΔH_o\,{\color{red}L}_i - {\color{red}{ΔH_v}}_i - {\color{red}{ΔH_l}}_i,\quad i \ge i_{min}\)
+      - \(\color{red}ΔHᵥ\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
+      - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = ΔHₑ{\color{red}\theta}_i - ΔHₐ - {\color{red}{P_l}}_i\omega_h - ΔHₒ{\color{red}L}_i - {\color{red}{ΔHᵥ}}_i - {\color{red}{ΔHₗ}}_i,\quad i \ge i_{min}\)
     - \(\color{red}M\)：精神效用，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
@@ -44,7 +44,7 @@
         - 亲身体验的必然痛苦：\({\Xi_m}_i < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_i = \frac{M_i + |{\Xi_m}_i|}{M_i - |{\Xi_m}_i|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是去追求幸福，而是去规避痛苦
         - 累计精神奖励：\({\color{red}E}_{i} = \sum_{t=i_{min}}^{i} {e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
         - 累计精神奖励差分：\(\Delta {\color{red}E}_{i} = {\color{red}{\Xi_m}}_{i + 1} - \sum_{t=i_{min}}^{i} (1 - e ^ {-{{\color{red}{\delta_m}}_t}}){e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
-      - 精神效用差分：\(\Delta {\color{red}M}_i = {\color{red}M}_{i+1} - {\color{red}M}_i = ΔM_e{\color{red}\varepsilon}_i + ΔM_r \times {\color{red}{\Theta}}_i + \Delta {\color{red}E}_i - ΔM_a - {\color{red}{P_l}}_i\omega_m - ΔM_o{\color{red}L}_i,\quad i \ge i_{\min}\)
+      - 精神效用差分：\(\Delta {\color{red}M}_i = {\color{red}M}_{i+1} - {\color{red}M}_i = ΔMₑ{\color{red}\varepsilon}_i + ΔMᵣ \times {\color{red}{\Theta}}_i + \Delta {\color{red}E}_i - ΔMₐ - {\color{red}{P_l}}_i\omega_m - ΔMₒ{\color{red}L}_i,\quad i \ge i_{\min}\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_i]≈4\)，自由学习产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
@@ -83,8 +83,8 @@
     - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| {\color{red}s}_i \right]\)，注：这是一个条件期望，原因：人情社会货币化。掏空6个口袋按揭房贷的本质：你其实只有一个口袋还房贷，其它5个口袋就是银行把你的社会资本货币化了
     - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{B^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
-    - \(\color{red}{ΔB_v}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
-    - 经济资本差分：\(\Delta {\color{red}B}_i = {\color{red}B}_{i+1} - {\color{red}B}_i = {\color{red}{w^+}}_i + {\color{red}{ΔB_v}}_i - {\color{red}v}_i - {\color{red}c}_i - {\color{red}{I^-}}_i,\quad i \ge i_{min}\)，当\({\color{red}B}_{i+1}<0\)时，信用卡自动透支贴现续命
+    - \(\color{red}{ΔBᵥ}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
+    - 经济资本差分：\(\Delta {\color{red}B}_i = {\color{red}B}_{i+1} - {\color{red}B}_i = {\color{red}{w^+}}_i + {\color{red}{ΔBᵥ}}_i - {\color{red}v}_i - {\color{red}c}_i - {\color{red}{I^-}}_i,\quad i \ge i_{min}\)，当\({\color{red}B}_{i+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{i_{max}}\)：有效生命终点，i≤iₘₐₓ<iₒₒ，直接原因
       - 触发死亡，由死亡概率\({\color{red}q}_{i_{max}}\)导致
       - 触发破产，\({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{B^-}}_i\)，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
@@ -96,12 +96,12 @@
         - 主体的社会资本兑现概率通常与主体的健康指数、劳动生产率、货币资产正相关，与其劳动力价值、负债水平负相关
         - 经验性解释：落魄苏秦归故郭(妻不下纴，嫂不为炊，父母不与言)的千年史例：一个人越失败、越失势、越失能，通常越难从社会资本中获得实际支持
         - 金融学类比：人际关系资产是一种状态依赖型期权：它在你生命抵押品优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低
-      - 人际关系日折旧率：\(\delta_r = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折旧的依据：
+      - 人际关系日折旧率：\(δᵣ = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折旧的依据：
         - 心理学：艾宾浩斯遗忘曲线
         - 社会交换理论：互惠义务具有时效性
         - 社会学：格兰诺维特强弱关系理论
         - 演化生物学：亲缘选择理论
-      - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_i = {\color{red}P}_{i + 1} - {\color{red}P}_i = ΔP_r{\color{red}Θ}_i - {\color{red}P}_i\left(1 - e^{-δ_r}\right)\)
+      - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_i = {\color{red}P}_{i + 1} - {\color{red}P}_i = ΔPᵣ{\color{red}Θ}_i - {\color{red}P}_i\left(1 - e^{-δᵣ}\right)\)
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
       - \(\color{red}{C_s}\)：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]
 =\omega_s{\color{red}S}_i
