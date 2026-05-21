@@ -24,7 +24,7 @@
     - 当天年龄：\(A_i = \frac i {Y_s}\)
     - \(\color{red}H\)：身体健康指数，\(\mathbb E[{\color{red}H}_i] \in [-\infty, 100]\)，\(\max_i\mathbb E [{\color{red}H}_{i}] = \mathbb E [{\color{red}H}_{i_{min}}] = 100\)
       - 基线日死亡概率：qₘᵢₙ=2.74e-7，基于国际生命表
-      - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot relu({\color{red}H})}, \quad\lambda = -\frac{\ln q_{\min}}{100}\)
+      - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot relu({\color{red}H})}, \quad\lambda = -\frac{\ln q_{min}}{100}\)
       - 身体衰老损耗/天：ΔHₐ = 0.0025，常量
       - iₒₒ：44723，极限生命末日，目前公认人类最长寿命纪录是法国的Jeanne Calment 122岁164天
       - \(\color{red}T\)：寿命，寿险精算学尾和公式：\[\mathbb{E}\left[{\color{red}T} \middle| {\color{red}H}_i \right] - i = 
@@ -34,7 +34,7 @@
 \sum_{t=0}^{i_{oo} - i - 1} P\left({\color{red}T} \ge t + i + 1 \middle| {\color{red}H}_i \right) = 
 \sum_{t=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{t}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
       - \(\color{red}ΔH_v\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
-      - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = \Delta H_e\,{\color{red}\theta}_i - \Delta H_a - {\color{red}{P_l}}_i\,\omega_h - \Delta H_o\,{\color{red}L}_i - {\color{red}{\Delta H_v}}_i - {\color{red}{\Delta H_l}}_i,\quad i \ge i_{\min}\)
+      - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = \Delta H_e\,{\color{red}\theta}_i - \Delta H_a - {\color{red}{P_l}}_i\,\omega_h - \Delta H_o\,{\color{red}L}_i - {\color{red}{\Delta H_v}}_i - {\color{red}{\Delta H_l}}_i,\quad i \ge i_{min}\)
     - \(\color{red}M\)：精神效用，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
@@ -42,9 +42,9 @@
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\beta_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_i > 0\)，半衰期短，依据：享乐适应，快乐跑步机假说
         - 亲身体验的必然痛苦：\({\Xi_m}_i < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_i = \frac{M_i + |{\Xi_m}_i|}{M_i - |{\Xi_m}_i|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是去追求幸福，而是去规避痛苦
-        - 累计精神奖励：\({\color{red}E}_{i} = \sum_{t=i_{\min}}^{i} {e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
-        - 累计精神奖励差分：\(\Delta {\color{red}E}_{i} = {\color{red}{\Xi_m}}_{i + 1} - \sum_{t=i_{\min}}^{i} (1 - e ^ {-{{\color{red}{\delta_m}}_t}}){e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
-      - 精神效用差分：\(\Delta {\color{red}M}_i = {\color{red}M}_{i+1} - {\color{red}M}_i = \Delta M_e{\color{red}\varepsilon}_i + \Delta M_r \times {\color{red}{\Theta}}_i + \Delta {\color{red}E}_i - \Delta M_a - {\color{red}{P_l}}_i\omega_m - \Delta M_o{\color{red}L}_i,\quad i \ge i_{\min}\)
+        - 累计精神奖励：\({\color{red}E}_{i} = \sum_{t=i_{min}}^{i} {e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
+        - 累计精神奖励差分：\(\Delta {\color{red}E}_{i} = {\color{red}{\Xi_m}}_{i + 1} - \sum_{t=i_{min}}^{i} (1 - e ^ {-{{\color{red}{\delta_m}}_t}}){e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
+      - 精神效用差分：\(\Delta {\color{red}M}_i = {\color{red}M}_{i+1} - {\color{red}M}_i = \Delta M_e{\color{red}\varepsilon}_i + \Delta M_r \times {\color{red}{\Theta}}_i + \Delta {\color{red}E}_i - \Delta M_a - {\color{red}{P_l}}_i\omega_m - \Delta M_o{\color{red}L}_i,\quad i \ge i_{min}\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_i]≈4\)，自由学习产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
@@ -84,10 +84,10 @@
     - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{B^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
     - \(\color{red}{\Delta B_v}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
-    - 经济资本差分：\(\Delta {\color{red}B}_i = {\color{red}B}_{i+1} - {\color{red}B}_i = {\color{red}{w^+}}_i + {\color{red}{\Delta B_v}}_i - {\color{red}v}_i - {\color{red}c}_i - {\color{red}{I^-}}_i,\quad i \ge i_{\min}\)，当\({\color{red}B}_{i+1}<0\)时，信用卡自动透支贴现续命
+    - 经济资本差分：\(\Delta {\color{red}B}_i = {\color{red}B}_{i+1} - {\color{red}B}_i = {\color{red}{w^+}}_i + {\color{red}{\Delta B_v}}_i - {\color{red}v}_i - {\color{red}c}_i - {\color{red}{I^-}}_i,\quad i \ge i_{min}\)，当\({\color{red}B}_{i+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{i_{max}}\)：有效生命终点，i≤iₘₐₓ<iₒₒ，直接原因
       - 触发死亡，由死亡概率\({\color{red}q}_{i_{max}}\)导致
-      - 触发破产，\({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + E[{\color{red}{C_p}}_i∣{\color{red}s}_i] + E[{\color{red}{C_s}}_i∣{\color{red}s}_i] < {\color{red}{B^-}}_i\)，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换 
+      - 触发破产，\({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{B^-}}_i\)，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]
@@ -146,7 +146,7 @@
   - 木桶乞食的Diogenes：当Alexander大帝，世人眼里行走的Aladdin神灯，告诉这个**宇宙公民**：你想要任何东西，我都能满足你。他回答：滚开，别挡住我的太阳
 
 ## 财富自由的谎言 
-马克思说，财富就是可以自由支配的时间。用这把奥卡姆剃刀剃尽财富幻象，我得出财富自由的定义：**以最小的必要劳动，换最大的自由时间**。当你的劳动报酬足以覆盖生存开销，一年只需工作几周、几天甚至几小时，剩余时间完全由自己掌控，就是财富自由。财富自由论本质是以自由论财富，不是靠死劳动(他人活劳动)产生的被动收入≥生活支出，那本质上是一套不劳而获的寄生剥削思想。提高个别劳动生产率产生的劳动报酬增量，属于真资产复杂劳动价值，**复杂劳动是多倍的简单劳动**，不是不劳而获，不算剥削他人。当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + E[{\color{red}{C_p}}_i∣{\color{red}s}_i] + E[{\color{red}{C_s}}_i∣{\color{red}s}_i] < {\color{red}{B^-}}_i)\)。这笔钱不参与任何投机，它是你去阴曹地府跑一趟的**专属旅游基金**，因为天有不测风云，人有旦夕祸福：
+马克思说，财富就是可以自由支配的时间。用这把奥卡姆剃刀剃尽财富幻象，我得出财富自由的定义：**以最小的必要劳动，换最大的自由时间**。当你的劳动报酬足以覆盖生存开销，一年只需工作几周、几天甚至几小时，剩余时间完全由自己掌控，就是财富自由。财富自由论本质是以自由论财富，不是靠死劳动(他人活劳动)产生的被动收入≥生活支出，那本质上是一套不劳而获的寄生剥削思想。提高个别劳动生产率产生的劳动报酬增量，属于真资产复杂劳动价值，**复杂劳动是多倍的简单劳动**，不是不劳而获，不算剥削他人。当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{B^-}}_i \middle| {\color{red}s}_i\right)\)。这笔钱不参与任何投机，它是你去阴曹地府跑一趟的**专属旅游基金**，因为天有不测风云，人有旦夕祸福：
 - 电信诈骗：ΔBᵥ ↑ → B↓ → D ↑ → Pₗ ↑ → 破产
 - 意外伤害：ΔHᵥ ↑ → H ↓ → Lₚ ↓ → w ↓ → B ↓ → 破产
 
