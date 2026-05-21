@@ -38,7 +38,7 @@
     - \(\color{red}M\)：精神效用，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
-        - 连续半衰期/日：\({\color{red}{\beta_m}} = β_0 ⬝ e ^ {-κ ⬝ tanh(μ_m{\color{red}{\Xi_m}})}\)
+        - 连续半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\beta_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_i > 0\)，半衰期短，依据：享乐适应，快乐跑步机假说
         - 亲身体验的必然痛苦：\({\Xi_m}_i < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_i = \frac{M_i + |{\Xi_m}_i|}{M_i - |{\Xi_m}_i|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是去追求幸福，而是去规避痛苦
@@ -52,7 +52,7 @@
         - 情感投资\(\color{red}Θ\)：\(\mathbb E[{\color{red}Θ}_i]≈[0.5, 0.2, 0.1, 0.05, 0.02]\)，货币？￥，走亲访友，产生人际关系资产增益ΔPᵣ/h，精神效用增益ΔMᵣ/h
         - 发呆娱乐\(\color{red}ζ\)：\(\mathbb E[{\color{red}ζ}_i]≈1\)，创造灵感
       - 必要生理时间\(\color{red}ξ\)/h：
-        - 睡眠\(\color{red}χ\)：\(\mathbb{E}({\color{red}χ}_i) = 7 + 2 · e^{-0.04·(A_i-18)}\)；根据睡眠医学，睡眠失调造成的健康损耗呈现非对称性U型曲线：\({\color{red}{ΔHᵪ}}_i=\alpha_\chi\left({\color{red}\chi}_i-\mathbb E[{\color{red}\chi}_i]\right)^2 \left(\frac 1 2 + \sigma\big(\gamma_\chi({\color{red}\chi}_i-\mathbb E[{\color{red}\chi}_i])\big)\right)\)；睡梦中的快乐不是自由，梦里不知身是客，是缸中之脑
+        - 睡眠\(\color{red}χ\)：\(\mathbb{E}({\color{red}χ}_i) = 7 + 2 · e^{-0.04·(A_i-18)}\)；根据睡眠医学，睡眠时长与全因死亡率呈非对称性U型曲线，故睡眠失调造成的健康损耗可建模为：\({\color{red}{ΔHᵪ}}_i=\alpha_\chi\left({\color{red}\chi}_i-\mathbb E[{\color{red}\chi}_i]\right)^2 \left(\frac 1 2 + \sigma\big(-\gamma_\chi({\color{red}\chi}_i-\mathbb E[{\color{red}\chi}_i])\big)\right)\)；睡梦中的快乐不是自由，梦里不知身是客，是缸中之脑
         - 起居\(\color{red}τ\)：\(\mathbb E[{\color{red}τ}_i]≈1\)，洗漱如厕等
       - 异化劳动时间\(\color{red}L\)/h：\(\mathbb E[{\color{red}L}_i]≈8\)，工作日，受市场就业率、就业方式影响，产生文化资本增益ΔKₒ/h，造成身心过劳损耗ΔHₒ/h、ΔMₒ/h；上班摸鱼不算自由时间，主观快乐≠自由。因为时间否决权在老板手里，不在你的嘴里，你被依法炒掉，回家摸王八才算自由。包括：
         - \(\color{red}n\)：必要劳动时间，**劳动者为了生产自身劳动力价值，所必须付出的劳动时间。劳动力价值决定必要劳动时间的长短**
