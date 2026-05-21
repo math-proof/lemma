@@ -34,7 +34,7 @@
 \sum_{t=0}^{i_{oo} - i - 1} P\left({\color{red}T} \ge t + i + 1 \middle| {\color{red}H}_i \right) = 
 \sum_{t=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{t}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
       - \(\color{red}ΔHᵥ\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
-      - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = ΔHₑ{\color{red}\theta}_i - ΔHₐ - {\color{red}{P_l}}_i\omega_h - ΔHₒ{\color{red}L}_i - {\color{red}{ΔHᵥ}}_i - {\color{red}{ΔHₗ}}_i,\quad i \ge i_{min}\)
+      - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = ΔHₑ{\color{red}\theta}_i - ΔHₐ - {\color{red}{P_l}}_i\omega_h - ΔHₒ{\color{red}L}_i - {\color{red}{ΔHᵥ}}_i - {\color{red}{ΔHₗ}}_i - {\color{red}{ΔHᵪ}}_i,\quad i \ge i_{min}\)
     - \(\color{red}M\)：精神效用，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
@@ -51,8 +51,8 @@
         - 体育健身\(\color{red}θ\)：\(\mathbb E[{\color{red}θ}_i]≈0.5\)，室内外徒手运动，内生健康投资，目的：享受运动艺术，是自由时间；附带ΔHₑ健身增益/h，满足ΔHₑ < ΔHₐ / 24
         - 情感投资\(\color{red}Θ\)：\(\mathbb E[{\color{red}Θ}_i]≈[0.5, 0.2, 0.1, 0.05, 0.02]\)，货币？￥，走亲访友，产生人际关系资产增益ΔPᵣ/h，精神效用增益ΔMᵣ/h
         - 发呆娱乐\(\color{red}ζ\)：\(\mathbb E[{\color{red}ζ}_i]≈1\)，创造灵感
-      - 必要生理时间\(\color{red}ξ\)/h：\(\mathbb E[{\color{red}ξ}_i]≈9\)
-        - 睡眠\(\color{red}σ\)：\(\mathbb E[{\color{red}σ}_i]≈8\)，其睡眠生理学健康损耗呈现非对称性U型曲线\(\mathbb{E}({\color{red}σ}_i) = 7 + 2 · e^{-0.04·(A_i-18)}\)；睡梦中的快乐不是自由，梦里不知身是客，是缸中之脑
+      - 必要生理时间\(\color{red}ξ\)/h：
+        - 睡眠\(\color{red}χ\)：\(\mathbb{E}({\color{red}χ}_i) = 7 + 2 · e^{-0.04·(A_i-18)}\)；根据睡眠生理学，睡眠失调造成的健康损耗呈现非对称性U型曲线：\({\color{red}{ΔHᵪ}}_i=\alpha_\chi\left({\color{red}\chi}_i-\mathbb E[{\color{red}\chi}_i]\right)^2 \left(1 + \tanh\big(\gamma_\chi({\color{red}\chi}_i-\mathbb E[{\color{red}\chi}_i])\big)\right)\)；睡梦中的快乐不是自由，梦里不知身是客，是缸中之脑
         - 起居\(\color{red}τ\)：\(\mathbb E[{\color{red}τ}_i]≈1\)，洗漱如厕等
       - 异化劳动时间\(\color{red}L\)/h：\(\mathbb E[{\color{red}L}_i]≈8\)，工作日，受市场就业率、就业方式影响，产生文化资本增益ΔKₒ/h，造成身心过劳损耗ΔHₒ/h、ΔMₒ/h；上班摸鱼不算自由时间，主观快乐≠自由。因为时间否决权在老板手里，不在你的嘴里，你被依法炒掉，回家摸王八才算自由。包括：
         - \(\color{red}n\)：必要劳动时间，**劳动者为了生产自身劳动力价值，所必须付出的劳动时间。劳动力价值决定必要劳动时间的长短**
@@ -105,7 +105,7 @@
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
       - \(\color{red}{C_s}\)：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]=\omega_s{\color{red}S}_i\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{B}{{\color{red}B}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
 - 行为策略假设2：
-  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}ξ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
+  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
   - 策略：\(π\left({\color{red}a} \middle| {\color{red}s}\right)\)，动作\({\color{red}a}\)满足的概率分布，取决于内卷系数\(\color{red}{m′}\)
     - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，依据资本论：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于马克思定义的剩余价值的范畴，是资本家的让渡份额，本实验不研究资本家获得的剩余价值
     - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = {\color{red}{m′}}\)，资本论：剩余价值率 = 剩余劳动时间 ÷ 必要劳动时间
