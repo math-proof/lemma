@@ -81,7 +81,7 @@
       - 社会要素：通信40￥、社交？￥、公益性开源技术服务？￥
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
-    - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  } \right]\)
+    - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  } \middle| {\color{red}s_i}\right]\)
     - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{W^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
     - \(\color{red}{ΔWᵥ}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
@@ -108,7 +108,7 @@
       - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]=\omega_s{\color{red}S}_i\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{W}{{\color{red}W}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
 - 行为策略假设2：
   - 观测：\({\color{red}{o}}_i\in\mathbb R^N\)，表示第i天观测到的生命特征：如体检、存款、表情、言论、学历、社区贡献、社会活动线索
-  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，\({\color{red}ε}+ {\color{red}θ}+{\color{red}Θ}+ {\color{red}ζ}+ {\color{red}χ}+{\color{red}τ}+ {\color{red}n}+ {\color{red}ς}=24\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
+  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, {\color{red}A}]\)
     - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, {\color{red}{\hat{A}}}]\)，其中\({\color{red}{\hat{s}}}_i = \mathbb{E}[{\color{red}s}_i \mid {\color{red}o}_{:i}, {\color{red}a}_{:i}]\)
@@ -121,7 +121,6 @@
       - 躺平：m′≪1，作候鸟工不当社畜(如：技能零售)，赚到生存资料、风险兜底的钱见好就收，不为过多个别剩余价值买单，不花冤枉时间，自由健康优先
       - 内卷：m′≫1，用自由健康换个别剩余价值，但没花在生存刚需上，如通胀稀释、理财圈套、消费主义广告、房价倒挂收割，在意识形态流通回收机制下属于资本的口袋
 - 生命目标假设3：
-  - 自由时间：\({\color{red}f} = {\color{red}ε} +{\color{red}θ} + {\color{red}Θ} +{\color{red}ζ}\)
   - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = \frac {{\color{red}f} \cdot relu({\color{red}M})} {100}\)，信念估计值：\({\color{red}{\hat{r}}} = \frac {{\color{red}f} \cdot relu({\color{red}{\hat{M}}})} {100}\)
     - 财富是可以自由支配的时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。
     - 精神效用\(\color{red}{\hat{M}}\)不是真相事实的观测，是信念驱动的奖励因子。所谓人间清醒就是：看穿信念脑补值与上帝观测值之间的偏差
@@ -154,7 +153,7 @@
 
 ## 财富自由的谎言 
 马克思说，财富就是可以自由支配的时间。用这把奥卡姆剃刀剃尽财富幻象，我得出财富自由的定义：**以最小的必要劳动，换最大的自由时间**。当你的劳动报酬足以覆盖生存开销，一年只需工作几周、几天甚至几小时，剩余时间完全由自己掌控，就是财富自由。财富自由论本质是以自由论财富，不是靠死劳动(他人活劳动)产生的被动收入≥生活支出，那本质上是一套不劳而获的寄生剥削思想。提高个别劳动生产率产生的劳动报酬增量，属于真资产复杂劳动价值，**复杂劳动是多倍的简单劳动**，不是不劳而获，不算剥削他人。当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{W^-}}_i \middle| {\color{red}s}_i\right)\)。这笔钱不参与任何投机，它是你去阴曹地府跑一趟的**专属旅游基金**，因为天有不测风云，人有旦夕祸福：
-- 电信诈骗：ΔWᵥ ↑ → W↓ → D ↑ → Pₗ ↑ → 破产
+- 电信诈骗：ΔWᵥ ↑ → W↓ → W⁻ ↑ → 破产
 - 意外伤害：ΔHᵥ ↑ → H ↓ → Lₚ ↓ → w ↓ → W ↓ → 破产
 
 ## 资产是可兑换财富的筹码
