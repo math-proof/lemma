@@ -16,13 +16,13 @@
 - \(\times\)表示点积
 - \(\sigma(·)\)表示[torch.sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.sigmoid.html)
 
-我们假设一个简化的、基于形式逻辑的、18岁生命智能体生存最优解的思想实验：
+我们假设一个基于信念MDP、生命智能体生存最优解的思想实验：
 - 生存边界假设1：
   - 具身资本
-    - i：生命进程离散时刻，表示第i天开始时刻，i=0表示生命出生时刻(假设正好是凌晨0点)
-    - 法定成年年龄18周岁天数：iₘᵢₙ=6574
+    - i：第i天开始时刻，i=0表示生命出生时刻(假设正好是凌晨0点)
     - 公历回归年：\(Y_s = 365 + \frac{1}{4} - \frac{1}{100} + \frac{1}{400} = 365.2425
 \)
+    - 法定成年年龄18周岁天数：\(i_{min}=\lfloor 18 \cdot Y_s \rfloor = 6574\)
     - 当天年龄：\(A_i = \frac i {Y_s}\)
     - \(\color{red}H\)：身体健康指数(通过体检可观测)，\(\mathbb E[{\color{red}H}_i] \in [-\infty, 100]\)，\(\max_i\mathbb E [{\color{red}H}_{i}] = \mathbb E [{\color{red}H}_{i_{min}}] = 100\)
       - 基线日死亡概率：qₘᵢₙ=2.74e-7，基于国际生命表
@@ -37,7 +37,7 @@
 \sum_{t=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{t}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
       - \(\color{red}ΔHᵥ\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
       - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = ΔHₑ{\color{red}\theta}_i - ΔHₐ - {\color{red}{P_l}}_i\omega_h - ΔHₒ{\color{red}L}_i - {\color{red}{ΔHᵥ}}_i - {\color{red}{ΔHₗ}}_i - {\color{red}{ΔHᵪ}}_i,\quad i \ge i_{min}\)
-    - \(\color{red}M\)：精神效用(部分可观测)，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
+    - \(\color{red}M\)：精神效用(部分可观测：哭笑等表情，真实心情不可测：他心难题)，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
         - 连续半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
@@ -59,12 +59,12 @@
       - 异化劳动时间\(\color{red}L\)/h：\(\mathbb E[{\color{red}L}_i]≈8\)，工作日，受市场就业率、就业方式影响，产生文化资本增益ΔKₒ/h，造成身心过劳损耗ΔHₒ/h、ΔMₒ/h；上班摸鱼不算自由时间，主观快乐≠自由。因为时间否决权在老板手里，不在你的嘴里，你被依法炒掉，回家摸王八才算自由。包括：
         - \(\color{red}n\)：必要劳动时间，**劳动者为了生产自身劳动力价值，所必须付出的劳动时间。劳动力价值决定必要劳动时间的长短**
         - \(\color{red}ς\)：剩余劳动时间
-  - 文化资本\(\color{red}K\)
+  - 文化资本\(\color{red}K\)：学历、专利、作品集可代理观测，肚子里的墨水(知识量)不可测
     - 文化资本差分：\(\Delta{\color{red}K}_i = {\color{red}K}_{i + 1} - {\color{red}K}_i = ΔKₑ{\color{red}ε}_i + ΔKₒ{\color{red}L}_i\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_i \perp ({\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i),\quad \mathbb E[{\color{red}{\mu_m}}_i] = 1\)
     - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}K}_i] = {\mu_m}_{i}{L_p}_{i_{min}}\left(\frac{relu({\color{red}H}_i)}{{\color{red}H}_{i_{min}}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_i - {\color{red}M}_{i_{min}})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_i}{{\color{red}K}_{i_{min}}}\right)\right)\)
   - 经济资本
-    - \(\color{red}W\)/￥：银行账面余额(可实时观测)，初始值(按揭还贷)：\(W_{i_{min}}=-300000\)
+    - \(\color{red}W\)/￥：银行账面余额(实时可观测)，初始值(按揭还贷)：\(W_{i_{min}}=-300000\)
     - 存款：\({\color{red}{W^+}} = \frac {|{\color{red}W}| + {\color{red}W}} 2\)
     - 负债：\({\color{red}{W^-}} = \frac {|{\color{red}W}| - {\color{red}W}} 2\)
     - 银行家年：Yₖ = 12 ⬝ 30 = 360 < Yₛ
@@ -81,8 +81,7 @@
       - 社会要素：通信40￥、社交？￥、公益性开源技术服务？￥
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
-    - 状态表征：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, {\color{red}A}]\)，描述当前生存状态存量，注：\(\color{red}P\)、\({\color{red}S}\)是下文定义的社会资本
-    - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  }\middle| {\color{red}s}_i \right]\)，注：这是一个条件期望，原因：人情社会货币化。掏空6个口袋按揭房贷的本质：你其实只有一个口袋还房贷，其它5个口袋就是银行把你的社会资本货币化了
+    - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  } \right]\)
     - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{W^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
     - \(\color{red}{ΔWᵥ}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
@@ -92,11 +91,11 @@
       - 触发破产，\({\color{red}\phi}_i(\mathbb E[{\color{red}T}|{\color{red}H}_i] - i) + \mathbb{E}[{\color{red}{C_p}}_i\mid{\color{red}s}_i] + \mathbb{E}[{\color{red}{C_s}}_i\mid{\color{red}s}_i] < {\color{red}{W^-}}_i\)，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
+      - 不可观测，比如你帮助了某人，你在他心中的情谊存量不可观测，只能猜测(信念估算)：在你落难时他会帮到多少?
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]
-      - \(\color{red}{C_p}\)：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,i}}} \middle|{\color{red}s}_i \right] = \omega_p{\color{red}P}_i \times \sigma\left(\eta_W {\color{red}{W_i}} + \eta_H {\color{red}{H_i}}+ \eta_L {\color{red}{L_{p,i}}}- \eta_v {\color{red}{v_i}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：
+      - \(\color{red}{C_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,i}}} \middle|{\color{red}s}_i \right] = \omega_p{\color{red}P}_i \times \sigma\left(\eta_W {\color{red}{W_i}} + \eta_H {\color{red}{H_i}}+ \eta_L {\color{red}{L_{p,i}}}- \eta_v {\color{red}{v_i}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：
         - 人际关系像水波纹，以己为心、亲疏有别、随势伸缩
-        - 主体的社会资本兑现概率通常与主体的健康指数、劳动生产率、货币资产正相关，与其劳动力价值、负债水平负相关
-        - 经验性解释：落魄苏秦归故郭(妻不下纴，嫂不为炊，父母不与言)的千年史例：一个人越失败、越失势、越失能，通常越难从社会资本中获得实际支持
+        - 经验性解释：落魄苏秦归故郭(妻不下纴，嫂不为炊，父母不与言)的千年史例：一个人越失败、越失势、越失能，通常越难从人际关系资产中获得实际支持
         - 金融学类比：人际关系资产是一种状态依赖型期权：它在你生命抵押品优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低
       - 人际关系日折旧率：\(δᵣ = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折旧的依据：
         - 心理学：艾宾浩斯遗忘曲线
@@ -105,10 +104,15 @@
         - 演化生物学：亲缘选择理论
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_i = {\color{red}P}_{i + 1} - {\color{red}P}_i = ΔPᵣ{\color{red}Θ}_i - {\color{red}P}_i\left(1 - e^{-δᵣ}\right)\)
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
-      - \(\color{red}{C_s}\)：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]=\omega_s{\color{red}S}_i\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{W}{{\color{red}W}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
+      - 部分可测：年龄、户籍、参保档位、收入口径
+      - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]=\omega_s{\color{red}S}_i\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{W}{{\color{red}W}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
 - 行为策略假设2：
+  - 观测：\({\color{red}{o}}_i\in\mathbb R^N\)，表示第i天0点观测到的生命参数事实：如体检、存款、表情、言论、学历、社区贡献、社会活动线索
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
-  - 策略：\(π\left({\color{red}a} \middle| {\color{red}s}\right)\)，动作\({\color{red}a}\)满足的概率分布，取决于内卷系数\(\color{red}{m′}\)
+  - 状态：描述当前生存状态存量，仅部分可观测
+    - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, {\color{red}A}]\)
+    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, {\color{red}{\hat{A}}}]\)，其中\({\color{red}{\hat{s}}}_i = \mathbb{E}[{\color{red}s}_i \mid {\color{red}o}_{:i+1}, {\color{red}a}_{:i}]\)
+  - 策略：\(π\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布
     - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，依据资本论：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于马克思定义的剩余价值的范畴，是资本家的让渡份额，本实验不研究资本家获得的剩余价值
     - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = {\color{red}{m′}}\)，资本论：剩余价值率 = 剩余劳动时间 ÷ 必要劳动时间
       - 全职工作条件下，自由分配受限，可通过拒绝加班减小m′
@@ -117,13 +121,15 @@
       - 躺平：m′≪1，作候鸟工不当社畜(如：技能零售)，赚到生存资料、风险兜底的钱见好就收，不为过多个别剩余价值买单，不花冤枉时间，自由健康优先
       - 内卷：m′≫1，用自由健康换个别剩余价值，但没花在生存刚需上，如通胀稀释、理财圈套、消费主义广告、房价倒挂收割，在意识形态流通回收机制下属于资本的口袋
 - 生命目标假设3：
-  - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}r} = \frac {{\color{red}f} \cdot relu({\color{red}M})} {100}\)，《资本论》：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。所以马克思说，财富就是可以自由支配的时间。
-  - Markov历史无关假设：\({\color{red}r}_i \perp ({\color{red}a}_{:i},{\color{red}s}_{:i})\mid ({\color{red}s}_i,{\color{red}a}_i)\)​，当天状态\({\color{red}s}_i\)已充分编码，历史对当天的影响已经写入当天的\({\color{red}H}_i\)(身体健康)，\({\color{red}M}_i\)(精神效用)，\({\color{red}K}_i\)(文化资本)，\({\color{red}W}_i\)(经济资本)，\({\color{red}P}_i\)(人际关系)，\({\color{red}S}_i\)(制度支持)；这些都是历史存量，故假设成立
-  - 后验终生福祉：\(\sum_{i=i_{min}}^{i_{max}}{r_i}\)，上帝视角的时间经济学定义
-  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}s}_i)=\mathbb E_{\substack{{\color{red}r}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=i}^{i_{max}} {\color{red}r}_t\middle| {\color{red}s}_i\right]\)，定义为V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
+  - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = \frac {{\color{red}f} \cdot relu({\color{red}M})} {100}\)，信念估计值：\({\color{red}{\hat{r}}} = \frac {{\color{red}f} \cdot relu({\color{red}{\hat{M}}})} {100}\)
+    - 财富就是可以自由支配的时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。
+    - 精神效用\(\color{red}{\hat{M}}\)不是真相事实的观测，是信念驱动的奖励因子。所谓人间清醒就是：看穿信念脑补值与上帝观测值之间的偏差
+  - Markov历史无关假设：\({\color{red}{\hat{r}}}_i \perp ({\color{red}{\hat{s}}}_{:i},{\color{red}a}_{:i})\mid ({\color{red}{\hat{s}}}_i,{\color{red}a}_i)\)​，当天信念状态\({\color{red}{\hat{s}}}_i\)已充分编码，当天的影响已经写入历史存量，故假设成立
+  - 后验终生福祉(上帝视角)：\(\sum_{i=i_{min}}^{i_{max}}{r_i}\)
+  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{\hat{s}}}_i)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=i}^{i_{max}} {\color{red}{\hat{r}}}_t\middle| {\color{red}{\hat{s}}}_i\right]\)，即V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
   - 目标函数：先验终身福祉最大化，不考虑18周岁前作为纯消费者的福祉。
 
-根据实验假定及各变量偏导，先验终身福祉\(V_\pi({\color{red}s}_i)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。生命智能体的生存最优解就是求一个最优行为策略，延长寿命T，提高劳动生产率，控制劳动力价值，避免系统触发破产，使终身福祉最大化。根据策略梯度定理，[最优行为策略](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)：存在一个内点最优内卷系数\(m′_{i,min}\)：当\(m′_i>m′_{i, min}\)，终身福祉V随\(m′_i\)严格递减。
+根据实验假定及各变量偏导，先验终身福祉\(V_\pi({\color{red}{\hat{s}}}_i)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。生命智能体的生存最优解就是求一个最优行为策略，延长寿命T，提高劳动生产率，控制劳动力价值，避免系统触发破产，使终身福祉最大化。根据策略梯度定理，[最优行为策略](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)：存在一个内点最优内卷系数\(m′_{i,min}\)：当\(m′_i>m′_{i, min}\)，终身福祉V随\(m′_i\)严格递减。
 
 ## 现实案例验证
 抛开形式逻辑，我们用**边界排除法**来验证行为策略是否存在内点最优解：
@@ -244,8 +250,8 @@
 #### 兴趣变现
 先验终身福祉计算中，\(\frac {f \cdot relu(M)} {100}\)是被积函数。自由时间定义域相对不变的情况下，积分最大化最有效的手段就是拔高精神效用值域：通过自由学习，发展兴趣爱好，实现人的全面自由发展。故异化劳动谋取基础生存资料之后，顺势兴趣变现，发展生产力，反向缩短必要劳动时间，增加自由时间定义域，形成良性循环：
 - 兴趣变现是一种自由劳动，其前提：
-  - 是生产(资产)型兴趣(哲学，政治、经济、宗教、文学、音乐、体育、科技、编程)
-  - 非消费(负债)型兴趣(成瘾性的无脑段子)
+  - 是生产(资产)型兴趣(哲学、经济、宗教、文学、音乐、体育、科技、编程)
+  - 非消费(负债)型兴趣(无脑段子)
 - 兴趣变现=产消者劳动，如写作、编程，主体是生产者，也是消费者，不仅仅是谋生的手段，而且本身成了生活的第一需要
 - 兴趣变现≠异化劳动，推导：由《1844年经济学哲学手稿》：在资本主义私有制下，劳动从人的自由自觉的类本质活动，异化为一种被迫的、异己的、与劳动者对立的力量。而兴趣变现是自由劳动，是随时可以自由停止(否决权)的劳动，则兴趣变现≠被迫劳动
 - 兴趣变现≠自我剥削，理由
