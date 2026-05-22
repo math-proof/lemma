@@ -108,28 +108,29 @@
       - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_i\middle|{\color{red}s}_i\right]=\omega_s{\color{red}S}_i\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_i}+\zeta_{A}{{\color{red}A}_i}-\zeta_{H}{{\color{red}H}_i}-\zeta_{M}{{\color{red}M}_i}-\zeta_{K}{{\color{red}K}_i}-\zeta_{W}{{\color{red}W}_i}-\zeta_{L}{{\color{red}{L_p}}_i}\right)\)
 - 行为策略假设2：
   - 观测：\({\color{red}{o}}_i\in\mathbb R^N\)，表示第i天观测到的生命特征：如体检、存款、表情、言论、学历、社区贡献、社会活动线索
-  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
+  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，\({\color{red}ε}+ {\color{red}θ}+{\color{red}Θ}+ {\color{red}ζ}+ {\color{red}χ}+{\color{red}τ}+ {\color{red}n}+ {\color{red}ς}=24\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, {\color{red}A}]\)
     - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, {\color{red}{\hat{A}}}]\)，其中\({\color{red}{\hat{s}}}_i = \mathbb{E}[{\color{red}s}_i \mid {\color{red}o}_{:i}, {\color{red}a}_{:i}]\)
   - 策略：\(π\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布
     - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，依据资本论：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于马克思定义的剩余价值的范畴，是资本家的让渡份额，本实验不研究资本家获得的剩余价值
-    - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = {\color{red}{m′}}\)，资本论：剩余价值率 = 剩余劳动时间 ÷ 必要劳动时间
+    - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)，资本论：剩余价值率 = 剩余劳动时间 ÷ 必要劳动时间
       - 全职工作条件下，自由分配受限，可通过拒绝加班减小m′
       - 灵活就业条件下，可自由分配m′
     - 策略分类：
       - 躺平：m′≪1，作候鸟工不当社畜(如：技能零售)，赚到生存资料、风险兜底的钱见好就收，不为过多个别剩余价值买单，不花冤枉时间，自由健康优先
       - 内卷：m′≫1，用自由健康换个别剩余价值，但没花在生存刚需上，如通胀稀释、理财圈套、消费主义广告、房价倒挂收割，在意识形态流通回收机制下属于资本的口袋
 - 生命目标假设3：
+  - 自由时间：\({\color{red}f} = {\color{red}ε} +{\color{red}θ} + {\color{red}Θ} +{\color{red}ζ}\)
   - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = \frac {{\color{red}f} \cdot relu({\color{red}M})} {100}\)，信念估计值：\({\color{red}{\hat{r}}} = \frac {{\color{red}f} \cdot relu({\color{red}{\hat{M}}})} {100}\)
     - 财富是可以自由支配的时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。
     - 精神效用\(\color{red}{\hat{M}}\)不是真相事实的观测，是信念驱动的奖励因子。所谓人间清醒就是：看穿信念脑补值与上帝观测值之间的偏差
   - Markov历史无关假设：\({\color{red}{\hat{r}}}_i \perp ({\color{red}{\hat{s}}}_{:i},{\color{red}a}_{:i})\mid ({\color{red}{\hat{s}}}_i,{\color{red}a}_i)\)​，当天信念状态\({\color{red}{\hat{s}}}_i\)已充分编码，当天的影响已经写入历史存量，故假设成立
   - 后验终生福祉(上帝视角)：\(\sum_{i=i_{min}}^{i_{max}}{r_i}\)
-  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{\hat{s}}}_i)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=i}^{i_{max}} {\color{red}{\hat{r}}}_t\middle| {\color{red}{\hat{s}}}_i\right]\)，即V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
+  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_i)=\mathbb E_{\substack{{\color{red}{r}}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=i}^{i_{max}} {\color{red}{r}}_t\middle| {\color{red}{s}}_i\right]\)，信念估计值：\(V_\pi({\color{red}{\hat{s}}}_i)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=i}^{i_{max}} {\color{red}{\hat{r}}}_t\middle| {\color{red}{\hat{s}}}_i\right]\)，即V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
   - 目标函数：先验终身福祉最大化，不考虑18周岁前作为纯消费者的福祉。
 
-根据实验假定及各变量偏导，先验终身福祉\(V_\pi({\color{red}{\hat{s}}}_i)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。生命智能体的生存最优解就是求一个最优行为策略，延长寿命T，提高劳动生产率，控制劳动力价值，避免系统触发破产，使终身福祉最大化。根据策略梯度定理，[最优行为策略](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)：存在一个内点最优内卷系数\(m′_{i,min}\)：当\(m′_i>m′_{i, min}\)，终身福祉V随\(m′_i\)严格递减。
+根据实验假定及各变量偏导，先验终身福祉\(V_\pi({\color{red}{s}}_i)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。生命智能体的生存最优解就是求一个最优行为策略，延长寿命T，提高劳动生产率，控制劳动力价值，避免系统触发破产，使终身福祉最大化。根据策略梯度定理，[最优行为策略](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)：存在一个内点最优内卷系数\(m′_{i,min}\)：当\(m′_i>m′_{i, min}\)，终身福祉V随\(m′_i\)严格递减。
 
 ## 现实案例验证
 抛开形式逻辑，我们用**边界排除法**来验证行为策略是否存在内点最优解：
