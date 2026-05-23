@@ -1,4 +1,4 @@
-import importlib.util, mysql.connector, std, re, random, time, os, json, pandas as pd, zipfile, tarfile, gzip, pandas
+import importlib.util, mysql.connector, std, re, random, time, os, json, zipfile, tarfile, gzip, pandas
 from tqdm import tqdm
 from collections import defaultdict
 
@@ -484,7 +484,7 @@ class MySQLConnector(Database):
                 for line in f:
                     yield json.loads(line)
         elif file.endswith('.parquet'):
-            for _, row in pd.read_parquet(file).iterrows():
+            for _, row in pandas.read_parquet(file).iterrows():
                 yield json.loads(row.to_json())
         elif file.endswith('.zip'):
             with zipfile.ZipFile(file, 'r') as zip_ref:
@@ -532,7 +532,7 @@ class MySQLConnector(Database):
                 if os.path.isdir(data):
                     array = []
                     for file in std.listdir(data, ext='parquet'):
-                        for _, row in pd.read_parquet(file).iterrows():
+                        for _, row in pandas.read_parquet(file).iterrows():
                             array.append(json.loads(row.to_json()))
                     return self.load_data_from_list(table, array, **kwargs)
                 else:
