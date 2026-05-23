@@ -1092,8 +1092,18 @@ class Equal(Relational):
             if rhs.is_Surrogate and rhs.arg == lhs:
                 return rhs._latex(p)
             
-        if lhs.is_Conditioned or rhs.is_Conditioned:
-            lex = r"{%s}{\color{blue}{\ =\ }}{%s}"
+        if lhs.is_Conditioned:
+            if lhs.lhs == rhs:
+                lhs, rhs = lhs.args
+                lex = r"{%s}\perp{%s}"
+            else:
+                lex = r"{%s}{\color{blue}{\ =\ }}{%s}"
+        elif rhs.is_Conditioned:
+            if lhs == rhs.lhs:
+                lhs, rhs = rhs.args
+                lex = r"{%s}\perp{%s}"
+            else:
+                lex = r"{%s}{\color{blue}{\ =\ }}{%s}"
         else:
             lex = "{%s}={%s}"
         return lex % (p._print(lhs), p._print(rhs))
