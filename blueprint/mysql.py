@@ -1,5 +1,5 @@
 from flask.blueprints import Blueprint
-from std import MySQL
+from sympy import MySQL
 from flask.globals import request
 from std import json_encode
 

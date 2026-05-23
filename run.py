@@ -74,7 +74,6 @@ except ImportError as e:
 import time
 from multiprocessing import cpu_count
 from queue import PriorityQueue
-from functools import singledispatch
 import random
 from util.utility import RetCode
 
@@ -348,8 +347,7 @@ def tackle_type_error(package, debug=True):
 
     os.remove(lock)
     return ret
-    
-@singledispatch
+
 def process(package, debug=False):
     module = import_module(package)
 #     https://www.geeksforgeeks.org/try-except-vs-if-in-python/
@@ -402,8 +400,7 @@ def process(package, debug=False):
     return package, file, state, lapse, latex, *lean
 
 
-@process.register(list) 
-def _(packages, debug=False):
+def process_list(packages, *, debug=False):
     return [process(package, debug=debug) for package in packages]
 
 
@@ -414,7 +411,7 @@ assert user, 'user should not be empty!'
 
 try:
     os.environ['MYSQL_DATABASE'] = 'axiom'
-    from std import MySQL
+    from sympy import MySQL
 
     def select_axiom_lapse_from_axiom(self):
         import mysql.connector
@@ -623,7 +620,7 @@ def prove(debug=False, parallel=True):
     data = []
     
     if isinstance(parallel, bool):
-        for array in process(packages, debug=debug, parallel=parallel):
+        for array in process_tuple(packages, debug=debug, parallel=parallel):
             data += post_process(array)
     else:
         print(f'parallel set to {parallel}, skipping running!')
@@ -688,12 +685,11 @@ def post_process(result):
     return data
 
 def process_debug(packages):
-    return process(packages, debug=True)
+    return process_list(packages, debug=True)
 
 
-@process.register(tuple) 
-def _(items, debug=False, parallel=True):  # @DuplicatedSignature
-    proc = process_debug if debug else process
+def process_tuple(items, debug=False, parallel=True):
+    proc = process_debug if debug else process_list
     # processes = cpu_count()
     processes = 4
     if parallel and processes > 1:
@@ -855,7 +851,7 @@ if __name__ == '__main__':
         args = ''
         
     else:
-        from std.parser import argparse
+        from sympy.parser import argparse
         args, kwargs = argparse()
         
     debug = kwargs.pop('debug', False)

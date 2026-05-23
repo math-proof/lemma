@@ -8,7 +8,7 @@ from os.path import basename
 import datetime
 from std.file import Text
 os.environ['MYSQL_DATABASE'] = 'axiom'
-from std import MySQL
+from sympy import MySQL
 
 def read_all_axioms(dir):
 

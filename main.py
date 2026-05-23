@@ -1,7 +1,7 @@
 from flask import Flask
 
 from werkzeug.routing import BaseConverter
-from std import MySQL
+from sympy import MySQL
 import sys
  
 app = Flask(__name__)

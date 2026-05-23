@@ -578,7 +578,7 @@ def run():
     from run import prove_with_timing, import_module, tackle_type_error 
     res = import_module(package)
     try:
-        from std import MySQL
+        from sympy import MySQL
     except:
         from util import javaScript as MySQL
 
@@ -1008,7 +1008,7 @@ def slow(func):
         else:
             axiomPath = py_to_module(func.__code__.co_filename, '.')
             try:
-                from std import MySQL
+                from sympy import MySQL
                 [[latex, lean]] = MySQL.instance().query(f"select latex, lean from axiom where user = '{user}' and axiom = '{axiomPath}'")
                 if latex:
                     return RetCode.slow, latex, lean
@@ -1570,7 +1570,7 @@ def source_error(index=-2):
     return error_source.splitlines()
 
 def load_data(obj):
-    from std import MySQL
+    from sympy import MySQL
     data = []
     for v in obj.preorder_traversal():
         if v.is_Symbol or v.is_ExprCondPair or v.is_BooleanAtom or v.is_Integer or v.is_Tuple:

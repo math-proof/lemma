@@ -4,7 +4,7 @@ from util.search import py_to_module, read_directory, read_all_files, \
 from os.path import basename
 import os
 os.environ['MYSQL_DATABASE'] = 'axiom'
-from std import MySQL
+from sympy import MySQL
 
 
 def read_all_axioms(dir):
