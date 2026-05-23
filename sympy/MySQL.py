@@ -1,4 +1,8 @@
-import importlib.util, mysql.connector, std, re, random, time, os, json, zipfile, tarfile, gzip, pandas
+import importlib.util, mysql.connector, std, re, random, time, os, json, zipfile, tarfile, gzip
+try:
+    import pandas
+except ImportError:
+    pass
 from tqdm import tqdm
 from collections import defaultdict
 
