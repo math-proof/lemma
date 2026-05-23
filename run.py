@@ -411,6 +411,8 @@ assert user, 'user should not be empty!'
 
 try:
     os.environ['MYSQL_DATABASE'] = 'axiom'
+    os.environ['USER'] = 'prod'
+    os.environ['MYSQL_PWD'] = 'prod'
     from sympy import MySQL
 
     def select_axiom_lapse_from_axiom(self):
