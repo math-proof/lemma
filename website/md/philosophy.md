@@ -31,10 +31,10 @@
       - iₒₒ：44723，极限生命末日，目前公认人类最长寿命纪录是法国的Jeanne Calment 122岁164天
       - \(\color{red}T\)：寿命，寿险精算学尾和公式：\[\mathbb{E}\left[{\color{red}T} \middle| {\color{red}H}_i \right] - i = 
 \mathbb{E}\left[{\color{red}T} - i \middle| {\color{red}H}_i \right] = 
-\sum_{t=i + 1}^{i_{oo}} (t - i) \cdot P\left({\color{red}T}=t \middle| {\color{red}H}_i \right) = 
-\sum_{t=i + 1}^{i_{oo}} P\left({\color{red}T} \ge t \middle| {\color{red}H}_i \right) = 
-\sum_{t=0}^{i_{oo} - i - 1} P\left({\color{red}T} \ge t + i + 1 \middle| {\color{red}H}_i \right) = 
-\sum_{t=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{t}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
+\sum_{j=i + 1}^{i_{oo}} (j - i) \cdot P\left({\color{red}T}=j \middle| {\color{red}H}_i \right) = 
+\sum_{j=i + 1}^{i_{oo}} P\left({\color{red}T} \ge j \middle| {\color{red}H}_i \right) = 
+\sum_{j=0}^{i_{oo} - i - 1} P\left({\color{red}T} \ge j + i + 1 \middle| {\color{red}H}_i \right) = 
+\sum_{j=0}^{i_{oo} - i - 1} \mathbb E\left[ \prod_{j=0}^{j}(1-{\color{red}q}_{i+j}) \middle| {\color{red}H}_i \right]\]
       - \(\color{red}ΔHᵥ\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
       - 身体健康指数差分：\(\Delta {\color{red}H}_i = {\color{red}H}_{i+1} - {\color{red}H}_i = ΔHₑ{\color{red}\theta}_i - ΔHₐ - {\color{red}{P_l}}_i\omega_h - ΔHₒ{\color{red}L}_i - {\color{red}{ΔHᵥ}}_i - {\color{red}{ΔHₗ}}_i - {\color{red}{ΔHᵪ}}_i,\quad i \ge i_{min}\)
     - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测(**子非鱼，安知鱼之乐**)，\(\mathbb E[{\color{red}M}_i] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{i_{min}}] = 100\)
@@ -44,9 +44,9 @@
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\beta_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_i > 0\)，半衰期短，依据：享乐适应，快乐跑步机假说
         - 亲身体验的必然痛苦：\({\Xi_m}_i < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_i = \frac{M_i + |{\Xi_m}_i|}{M_i - |{\Xi_m}_i|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是去追求幸福，而是去规避痛苦
-        - 累计精神奖励：\({\color{red}E}_{i} = \sum_{t=i_{min}}^{i} {e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
-        - 累计精神奖励差分：\(\Delta {\color{red}E}_{i} = {\color{red}{\Xi_m}}_{i + 1} - \sum_{t=i_{min}}^{i} (1 - e ^ {-{{\color{red}{\delta_m}}_t}}){e ^ {-{{\color{red}{\delta_m}}_t(i-t)}}} {\color{red}{\Xi_m}}_t\)
-      - 精神效用差分：\(\Delta {\color{red}M}_i = {\color{red}M}_{i+1} - {\color{red}M}_i = ΔMₑ{\color{red}\varepsilon}_i + ΔMᵣ \times {\color{red}{\Theta}}_i + \Delta {\color{red}E}_i - ΔMₐ - {\color{red}{P_l}}_i\omega_m - ΔMₒ{\color{red}L}_i,\quad i \ge i_{\min}\)
+        - 累计精神奖励：\({\color{red}E}_{i} = \sum_{j=i_{min}}^{i} {e ^ {-{{\color{red}{\delta_m}}_j(i-j)}}} {\color{red}{\Xi_m}}_j\)
+        - 累计精神奖励差分：\(\Delta {\color{red}E}_{i} = {\color{red}{\Xi_m}}_{i + 1} - \sum_{j=i_{min}}^{i} (1 - e ^ {-{{\color{red}{\delta_m}}_j}}){e ^ {-{{\color{red}{\delta_m}}_j(i-j)}}} {\color{red}{\Xi_m}}_j\)
+      - 精神效用指数差分：\(\Delta {\color{red}M}_i = {\color{red}M}_{i+1} - {\color{red}M}_i = ΔMₑ{\color{red}\varepsilon}_i + ΔMᵣ \times {\color{red}{\Theta}}_i + \Delta {\color{red}E}_i - ΔMₐ - {\color{red}{P_l}}_i\omega_m - ΔMₒ{\color{red}L}_i,\quad i \ge i_{\min}\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_i]≈4\)，自由学习产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
@@ -74,14 +74,14 @@
     - 利息：\([{\color{red}{I^+}}, {\color{red}{I^-}}] = [{\color{red}{W^+}}α⁺, {\color{red}{W^-}}α⁻]
 \)
     - \(\color{red}c_i\)：当天本金还款额
-    - \(\color{red}v_i\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}{\pi_s}}_{:i}] = v_{i_{min}}\prod_{t=i_{min}}^{i-1} (1+{\color{red}{\pi_s}}_t) \cdot \left(1 + \gamma_H \cdot (H_{i_{min}} - {\color{red}H}_i)\right) \cdot \left(1 + \gamma_M \cdot relu(M_{i_{min}} - {\color{red}M}_i)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
+    - \(\color{red}v_i\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_i \mid {\color{red}H}_i, {\color{red}M}_i, {\color{red}{\pi_s}}_{:i}] = v_{i_{min}}\prod_{j=i_{min}}^{i-1} (1+{\color{red}{\pi_s}}_j) \cdot \left(1 + \gamma_H \cdot (H_{i_{min}} - {\color{red}H}_i)\right) \cdot \left(1 + \gamma_M \cdot relu(M_{i_{min}} - {\color{red}M}_i)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
       - 生理要素：米饭60￥、蔬菜200￥、租房500￥、医保100￥、水电60￥、衣服40￥
       - 家庭要素(法定义务)：赡养500￥，育儿？￥
       - 教育要素：学习300￥
       - 社会要素：通信40￥、社交？￥、公益性开源技术服务？￥
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
-    - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{t=i_{min}}^{i} \left({\color{red}{w^+}}_t - {\color{red}v}_t-{\color{red}{I^-}}_t\right) \lambda^{i-t}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  } \middle| {\color{red}s_i}\right]\)
+    - 日均净盈余(还款能力)：\({\color{red}\phi}_i = \mathbb{E}\left[ \frac {\sum_{j=i_{min}}^{i} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda^{i-j}} {  \left(1 - \lambda^{i-i_{min}+1}\right)/ \left(1 - \lambda\right)  } \middle| {\color{red}s_i}\right]\)
     - 当天财务毒性：\({\color{red}{P_l}}_i = \dfrac{{\color{red}{W^-}}_i}{{\color{red}\phi}_i \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
     - \(\color{red}{ΔWᵥ}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
@@ -122,7 +122,7 @@
     - 精神效用指数\(\color{red}{\hat{M}}\)不是真相事实的观测，是信念驱动的奖励因子。所谓人间清醒就是：看穿信念脑补值与上帝观测值之间的偏差
   - Markov历史无关假设：\({\color{red}{\hat{r}}}_i \perp ({\color{red}{\hat{s}}}_{:i},{\color{red}a}_{:i})\mid ({\color{red}{\hat{s}}}_i,{\color{red}a}_i)\)​，当天信念状态\({\color{red}{\hat{s}}}_i\)已充分编码，当天的影响已经写入历史存量，故假设成立
   - 后验终生福祉(上帝视角)：\(\sum_{i=i_{min}}^{i_{max}}{r_i}\)，若离散时刻i连续化为t，就是精神效用在自由时间上的积分：\(\int_{t \in F} \mathrm{relu}\left(1-e^{-M_t}\right) dt\)
-  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_i)=\mathbb E_{\substack{{\color{red}{r}}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=i}^{i_{max}} {\color{red}{r}}_t\middle| {\color{red}{s}}_i\right]\)，信念估计值：\(V_\pi({\color{red}{\hat{s}}}_i)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=i}^{i_{max}} {\color{red}{\hat{r}}}_t\middle| {\color{red}{\hat{s}}}_i\right]\)，即V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
+  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_i)=\mathbb E_{\substack{{\color{red}{r}}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=i}^{i_{max}} {\color{red}{r}}_j\middle| {\color{red}{s}}_i\right]\)，信念估计值：\(V_\pi({\color{red}{\hat{s}}}_i)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{i:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=i}^{i_{max}} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_i\right]\)，即V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
   - 目标函数：先验终身福祉(信念估计值)最大化，不考虑18周岁前作为纯消费者的福祉。
 
 根据实验假定及各变量偏导，\(V_\pi({\color{red}{s}}_i)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。
