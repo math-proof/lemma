@@ -107,7 +107,8 @@
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
-    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{red}o}_{:t}, {\color{red}a}_{:t}]\)
+    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{red}o}_{:t}, {\color{red}a}_{:t}]\)，信念随\({\color{red}o}_{:t}\)累积而更新，所谓路遥知马力，事久见人心
+  - 滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t}, {\color{red}{a}}_{:t})\)
   - 策略：
     - 概率分布
       - 上帝理论值：\(\mathbb P_{\pi}\left({\color{red}a} \middle| {\color{red}{s}}\right)\)，基于客观状态\(\color{red}{s}\)输出动作\({\color{red}a}\)的概率分布
