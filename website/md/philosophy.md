@@ -95,7 +95,7 @@
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]
       - \(\color{red}{C_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,t}}} \middle|{\color{red}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W_t}} + \eta_H {\color{red}{H_t}}+ \eta_L {\color{red}{L_{p,t}}}- \eta_v {\color{red}{v_t}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
       - \(\color{red}P\)是一种状态依赖型期权：
-        - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。经验性解释：落魄苏秦归故郭(妻不下纴，嫂不为炊，父母不与言)的千年史例：一个人越失败、越失势、越失能，越难从人际关系资产中获得实际支持
+        - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。经验性解释：落魄苏秦归故郭(**妻不下纴，嫂不为炊，父母不与言**)的千年史例：一个人越失败、越失势、越失能，越难从人际关系资产中获得实际支持
         - 金融系统的反向定价：在你生命抵押品(包括\(\color{red}P\))优质时行权(放贷)，在你生命抵押品折损时平仓(法拍)。还款能力\({\color{red}\phi}_t\)是条件期望，条件是你的全部身家(包括\(\color{red}P\))，合同白纸黑字写好，比苏秦的嫂子更讲契约精神。掏空6个口袋按揭还贷本质是差序格局金融化：你其实只有一个口袋，其它5个口袋就是银行把你的\(\color{red}P\)货币化了
       - 人际关系日折旧率：\(δᵣ = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折旧的依据：心理学：艾宾浩斯遗忘曲线，社会交换理论：互惠义务具有时效性，社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_t = {\color{red}P}_{t + 1} - {\color{red}P}_t = ΔPᵣ{\color{red}Θ}_t - {\color{red}P}_t\left(1 - e^{-δᵣ}\right)\)
@@ -103,12 +103,17 @@
       - 部分可测：年龄、户籍、参保档位、收入口径
       - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_t\middle|{\color{red}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{{\color{red}A}_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
 - 行为策略假设2：
-  - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天观测到的生命特征：如体检、存款、表情、言论、学历、社区贡献、社会活动线索
+  - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天结束观测到的多模态生命特征：体检、存款、表情、言论、社会活动轨迹等
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
     - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{red}o}_{:t}, {\color{red}a}_{:t}]\)
-  - 策略：\(π\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布
+  - 策略：
+    - 概率分布
+      - 上帝理论值：\(\mathbb P_{\pi}\left({\color{red}a} \middle| {\color{red}{s}}\right)\)，基于客观状态\(\color{red}{s}\)输出动作\({\color{red}a}\)的概率分布
+        - 这本质是一个**永生智能体**(上帝：tₘₐₓ → ∞)的行为策略：无限寿命，无限次环境交互，无限历史观测数据，在任意状态下都能作出最优动作
+        - 《论语》：**十五而有志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲不逾矩**⋯⋯；只要有足够寿命充分学习，就能成为圣人(上帝)：**真积力久则入圣，学至乎殁而后止**
+      - 信念估计值：\(\mathbb P_\hat\pi\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布
     - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，依据资本论：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于马克思定义的剩余价值的范畴，是资本家的让渡份额，本实验不研究资本家获得的剩余价值
     - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)，资本论：剩余价值率 = 剩余劳动时间 ÷ 必要劳动时间
       - 全职工作条件下，自由分配受限，可通过拒绝加班减小m′
@@ -119,10 +124,10 @@
 - 生命目标假设3：
   - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}M}}\right)\)，信念估计值：\({\color{red}{\hat{r}}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}{\hat{M}}}}\right)\)
     - 财富是可以自由支配的时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。
-    - 精神效用指数\(\color{red}{\hat{M}}\)不是真相事实的观测，是信念驱动的奖励因子。所谓人间清醒就是：看穿信念脑补值与上帝观测值之间的偏差
+    - 精神效用指数\(\color{red}{\hat{M}}\)是基于有限历史的有偏估计。所谓人间清醒就是：看穿信念脑补值与上帝观测值之间的偏差
   - Markov历史无关假设：\({\color{red}{r}}_t \perp ({\color{red}{s}}_{:t},{\color{red}a}_{:t})\mid ({\color{red}{s}}_t,{\color{red}a}_t)\)​，当天客观状态\({\color{red}{s}}_t\)已充分编码，当天的影响已经写入历史存量，故假设成立
   - 后验终生福祉(上帝视角)：\(\sum_{t=t_{min}}^{t_{max}}{r_t}\)，若离散时刻t连续化，就是精神效用在自由时间上的积分：\(\int_{t \in F} \mathrm{relu}\left(1-e^{-M_t}\right) dt\)
-  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{red}{s}}_t\right]\)，信念估计值：\(V_\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，即V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
+  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{red}{s}}_t\right]\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，即V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
   - 目标函数：先验终身福祉(信念估计值)最大化，不考虑18周岁前作为纯消费者的福祉。
 
 根据实验假定及各变量偏导，\(V_\pi({\color{red}{s}}_t)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。
