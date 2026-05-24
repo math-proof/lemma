@@ -116,7 +116,7 @@
         - 《论语》：**十五而有志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲不逾矩**⋯⋯；只要有足够寿命充分学习，就能成为圣人(上帝)：**真积力久则入圣，学至乎殁而后止**
       - 信念估计值：\(\mathbb P_\hat\pi\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布
     - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，依据资本论：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于马克思定义的剩余价值的范畴，是资本家的让渡份额，本实验不研究资本家获得的剩余价值
-    - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)，资本论：剩余价值率 = 剩余劳动时间 ÷ 必要劳动时间
+    - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)
       - 全职工作条件下，自由分配受限，可通过拒绝加班减小m′
       - 灵活就业条件下，可自由分配m′
     - 策略分类：
