@@ -61,7 +61,7 @@
         - 起居\(\color{red}τ\)：\(\mathbb E[{\color{red}τ}_t]≈1\)，洗漱如厕等
       - 异化劳动时间\(\color{red}L\)/h：\(\mathbb E[{\color{red}L}_t]≈8\)，工作日，受市场就业率、就业方式影响，产生文化资本增益ΔKₒ/h，造成身心过劳损耗ΔHₒ/h、ΔMₒ/h；上班摸鱼不算自由时间，主观快乐≠自由。因为时间否决权在老板手里，不在你的嘴里，你被依法炒掉，回家摸王八才算自由。\({\color{red}L} = {\color{red}n} + {\color{red}ς}\)：
         - \(\color{red}n\)：必要劳动时间，**劳动者为了生产自身劳动力价值，所必须付出的劳动时间。劳动力价值决定必要劳动时间的长短**
-        - \(\color{red}ς\)：剩余劳动时间
+        - \(\color{red}ς\)：剩余劳动时间，定义内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
   - 文化资本\(\color{red}K\)：学历、专利、作品集可代理观测，肚子里的墨水(知识量)不可测
     - 文化资本差分：\(\Delta{\color{red}K}_t = {\color{red}K}_{t + 1} - {\color{red}K}_t = ΔKₑ{\color{red}ε}_t + ΔKₒ{\color{red}L}_t\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_t \perp ({\color{red}H}_t, {\color{red}M}_t, {\color{red}K}_t),\quad \mathbb E[{\color{red}{\mu_m}}_t] = 1\)
@@ -83,6 +83,10 @@
       - 教育要素：学习300￥
       - 社会要素：通信40￥、社交？￥、公益性开源技术服务？￥
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
+    - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，依据：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于《资本论》定义的剩余价值的范畴，是资本家的让渡份额，本实验不研究资本家获得的剩余价值
+    - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)
+      - 全职工作条件下，自由分配受限，可通过拒绝加班减小m′
+      - 灵活就业条件下，可自由分配m′
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
     - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=t_{min}}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda^{t-j}} {  \left(1 - \lambda^{t-t_{min}+1}\right)/ \left(1 - \lambda\right)  } \middle| {\color{magenta}s_t}\right]\)
     - 当天财务毒性：\({\color{red}{P_l}}_t = \dfrac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t \cdot 10^{6}}\)
@@ -107,8 +111,8 @@
       - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_t\middle|{\color{magenta}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
 - 行为策略假设2：
   - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日末观测到的多模态生命特征：体检、存款、表情、言论、社会活动轨迹等
-  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
-  - 后验滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})\)，Bayes更新\(b_{t+1}(s_{t+1}) = \mathbb P({\color{red}s}_{t+1}| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = \int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) \mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) d {s_t} = \frac {\int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t}) d {s_t}} {P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\)，其中\(P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = P({\color{red}s}_t| {\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1}) =\frac {P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t})}{P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\)
+  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，从日初到日末(不含)
+  - 后验滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})\)，Bayes更新递推式：\[b_{t+1}(s_{t+1}) = \mathbb P({\color{red}s}_{t+1}| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = \int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) \mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) d {s_t} = \frac {\int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t}) d {s_t}} {P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\]，其中\[P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = P({\color{red}s}_t| {\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1}) =\frac {P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t})}{P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\]
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
     - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t+1}] =\int s_t\cdot b_t(s_t) d {s_t} \bigg|_{\substack{ o_{:t+1}= {\color{red}o}_{:t+1} \\ a_{:t+1}= {\color{red}a}_{:t+1}}}\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
@@ -118,10 +122,6 @@
         - 这本质是一个**永生智能体**(上帝：tₘₐₓ → ∞)的行为策略：无限寿命，无限次环境交互，无限历史观测数据，在任意状态下都能作出最优动作
         - 《论语》：**十五而有志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲不逾矩**⋯⋯；只要有足够寿命充分学习，就能成为圣人(上帝)：**真积力久则入圣，学至乎殁而后止**
       - 信念估计值：\(\mathbb P_\hat\pi\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布
-    - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，依据资本论：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于马克思定义的剩余价值的范畴，是资本家的让渡份额，本实验不研究资本家获得的剩余价值
-    - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)
-      - 全职工作条件下，自由分配受限，可通过拒绝加班减小m′
-      - 灵活就业条件下，可自由分配m′
     - 策略分类：
       - 躺平：m′≪1，作候鸟工不当社畜(如：技能零售)，赚到生存资料、风险兜底的钱见好就收，不为过多个别剩余价值买单，不花冤枉时间，自由健康优先
       - 内卷：m′≫1，用自由健康换个别剩余价值，但没花在生存刚需上，如通胀稀释、理财圈套、广告洗脑、房价倒挂，在流通回收机制下属于资本的口袋
@@ -130,13 +130,19 @@
     - 财富是可以自由支配的时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。
     - 精神效用指数\(\color{red}{\hat{M}}\)是基于有限历史的有偏估计。所谓人间清醒就是：看穿信念脑补值与上帝观测值之间的偏差
   - Markov历史无关假设：\({\color{red}{r}}_t \perp ({\color{red}{s}}_{:t},{\color{red}a}_{:t})\mid ({\color{red}{s}}_t,{\color{red}a}_t)\)​，当天客观状态\({\color{red}{s}}_t\)已充分编码，当天的影响已经写入历史存量，故假设成立
+  - 状态价值函数：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{magenta}{s}}_t\right]\)，把握当下，眺望未来，评估人生棋局的终局价值，比如陶渊明：**悟已往之不谏，知来者之可追**
+  - 动作价值函数：\(Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{magenta}{s}}_t,{\color{magenta}{a}}_t\right]\)，在人生十字路口，比较每一分叉路的长期收益期望，择一而往，比如《行路难》：**多歧路，今安在**？
+  - [Bellman](http://www.lemma.cn/py/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)方程：
+    - \(V_\pi(s_t) = \mathbb{E}_{{\color{red}{a}}_t \sim \pi} \left[ Q_\pi(s_t, {\color{red}{a}}_t) \middle| {\color{red}{s}}_t \right] =\mathbb{E}_{\substack{{\color{red}{r}}_t \\ {\color{red}{s}}_{t+1} \\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t \right]\)
+    - \(Q_\pi(s_t, a_t) = \mathbb{E}_{ \substack{{\color{red}{r}}_t\\ {\color{red}{s}}_{t+1}\\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t,{\color{red}{a}}_t \right]\)
+  - [策略梯度定理](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)(停时吸收态约定)：\(\nabla_\pi \mathbb{E}_{\substack{{\color{red}{r}} \\ {\color{red}{a}}\sim\pi}} \sum_{t=t_{min}}^{\color{red}{t_{max}}} {\color{red}{r}}_{t} = \mathbb{E}_{\substack{ {\color{red}{r}}\\ {\color{red}{a}}\sim\pi\\ {\color{red}{s}}}} \left[\sum_{t=t_{min}}^{\color{red}{t_{max}}} \nabla_\pi \log \mathbb{P}_\pi({\color{magenta}{a}}_t|{\color{magenta}{s}}_t)\sum_{t=t}^{\color{red}{t_{max}}} {\color{red}{r}}_t\right]\)
   - 后验终生福祉(上帝视角)：\(\sum_{t=t_{min}}^{t_{max}}{r_t}\)，若离散时刻t连续化，就是精神效用在自由时间上的积分：\(\int_{t \in F} \mathrm{relu}\left(1-e^{-M_t}\right) dt\)
   - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{red}{s}}_t\right]\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，即V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
   - 目标函数：先验终身福祉(信念估计值)最大化，不考虑18周岁前作为纯消费者的福祉。
 
 根据实验假定及各变量偏导，\(V_\pi({\color{red}{s}}_t)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。
 生命智能体的生存最优解就是求一个最优行为策略，延长寿命T，提高劳动生产率，控制劳动力价值，避免系统触发破产，使\(V_\pi({\color{red}{s}}_t)\)最大化。
-根据策略梯度定理，[最优行为策略](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)：存在一个内点最优内卷系数\(m′_{t,min}\)：当\(m′_t>m′_{t, min}\)，\(V_\pi({\color{red}{s}}_t)\)随\(m′_t\)严格递减。
+根据策略梯度定理，最优行为策略：存在一个内点最优内卷系数\(m′_{t,min}\)：当\(m′_t>m′_{t, min}\)，\(V_\pi({\color{red}{s}}_t)\)随\(m′_t\)严格递减。
 
 ## 现实案例验证
 抛开形式逻辑，我们用**边界排除法**来验证行为策略是否存在内点最优解：
