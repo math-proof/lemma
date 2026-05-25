@@ -11,15 +11,18 @@
 ## 生命智能体生存最优解
 符号约定：
 - 同一字母：
-  - 红色表示随机变量
-  - 黑色表示其观测值
+  - \(\color{red}{\Large\bullet}\)表示随机变量：\(\mathbb P({\color{red}x}) = \mathbb P({\color{red}x} = x)\)
+  - \(\color{black}{\Large\bullet}\)表示其观测值
+  - \(\color{magenta}{\Large\bullet}\)表示泛函随机变量
+    - 条件期望定义：\(\mathbb E ({\color{red}y} | {\color{red}x})=\mathbb E ({\color{red}y} | {\color{red}x} = x)\)，则随机条件期望为：\(\mathbb E ({\color{red}y} | {\color{magenta}x})=\left. \mathbb E ({\color{red}y} | {\color{red}x} = x) \right|_{\substack{ x= {\color{red}x}}}\)
+    - 条件概率定义：\(\mathbb P\left({\color{red}y} \middle|{\color{red}x}\right) = \mathbb P\left({\color{red}y}=y \middle|{\color{red}x}=x\right)\)，则随机条件概率为：\(\mathbb P\left({\color{magenta}y} \middle|{\color{magenta}x}\right) = \mathbb P\left({\color{red}y}=y \middle|{\color{red}x}=x\right)\bigg|_{x={\color{red}x}\atop y={\color{red}y}}\)
 - \(\times\)表示点积
 - \(\sigma(·)\)表示[torch.sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.sigmoid.html)
 
 我们假设一个基于信念MDP、生命智能体生存最优解的思想实验：
 - 生存边界假设1：
   - 具身资本
-    - \(t \in \mathbb N\)：第t天开始时刻(凌晨0点)
+    - \(t \in \mathbb N\)：第t天日初时刻(凌晨0点)
     - 公历回归年：\(Y_s = 365 + \frac{1}{4} - \frac{1}{100} + \frac{1}{400} = 365.2425
 \)
     - 法定成年年龄18周岁天数：\(t_{min}=\lfloor 18 \cdot Y_s \rfloor = 6574\)
@@ -49,8 +52,8 @@
       - 精神效用指数差分：\(\Delta {\color{red}M}_t = {\color{red}M}_{t+1} - {\color{red}M}_t = ΔMₑ{\color{red}\varepsilon}_t + ΔMᵣ \times {\color{red}{\Theta}}_t + \Delta {\color{red}E}_t - ΔMₐ - {\color{red}{P_l}}_t\omega_m - ΔMₒ{\color{red}L}_t,\quad t \ge t_{\min}\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
-        - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_t]≈4\)，自由学习产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
-        - 体育健身\(\color{red}θ\)：\(\mathbb E[{\color{red}θ}_t]≈0.5\)，室内外徒手运动，内生健康投资，目的：享受运动艺术，是自由时间；附带ΔHₑ健身增益/h，满足ΔHₑ < ΔHₐ / 24
+        - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_t]≈4\)，产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
+        - 体育健身\(\color{red}θ\)：\(\mathbb E[{\color{red}θ}_t]≈0.5\)，室内外徒手运动，内生健康投资，享受运动艺术；附带ΔHₑ健身增益/h，满足ΔHₑ < ΔHₐ / 24
         - 情感投资\(\color{red}Θ\)：\(\mathbb E[{\color{red}Θ}_t]≈[0.5, 0.2, 0.1, 0.05, 0.02]\)，货币？￥，走亲访友，产生人际关系资产增益ΔPᵣ/h，精神效用增益ΔMᵣ/h
         - 发呆娱乐\(\color{red}ζ\)：\(\mathbb E[{\color{red}ζ}_t]≈1\)，创造灵感
       - 必要生理时间\(\color{red}ξ\)/h：
@@ -62,7 +65,7 @@
   - 文化资本\(\color{red}K\)：学历、专利、作品集可代理观测，肚子里的墨水(知识量)不可测
     - 文化资本差分：\(\Delta{\color{red}K}_t = {\color{red}K}_{t + 1} - {\color{red}K}_t = ΔKₑ{\color{red}ε}_t + ΔKₒ{\color{red}L}_t\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_t \perp ({\color{red}H}_t, {\color{red}M}_t, {\color{red}K}_t),\quad \mathbb E[{\color{red}{\mu_m}}_t] = 1\)
-    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_t \mid {\color{red}H}_t, {\color{red}M}_t, {\color{red}K}_t] = {\mu_m}_{t}{L_p}_{t_{min}}\left(\frac{relu({\color{red}H}_t)}{{\color{red}H}_{t_{min}}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_t - {\color{red}M}_{t_{min}})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_t}{{\color{red}K}_{t_{min}}}\right)\right)\)
+    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}K}_t] = {\mu_m}_{t}{L_p}_{t_{min}}\left(\frac{relu({\color{red}H}_t)}{H_{t_{min}}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_t - M_{t_{min}})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_t}{K_{t_{min}}}\right)\right)\)
   - 经济资本
     - \(\color{red}W\)/￥：银行账面余额(实时可观测)，初始值(按揭还贷)：\(W_{t_{min}}=-300000\)
     - 存款：\({\color{red}{W^+}} = \frac {|{\color{red}W}| + {\color{red}W}} 2\)
@@ -81,34 +84,34 @@
       - 社会要素：通信40￥、社交？￥、公益性开源技术服务？￥
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
-    - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=t_{min}}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda^{t-j}} {  \left(1 - \lambda^{t-t_{min}+1}\right)/ \left(1 - \lambda\right)  } \middle| {\color{red}s_t}\right]\)
+    - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=t_{min}}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda^{t-j}} {  \left(1 - \lambda^{t-t_{min}+1}\right)/ \left(1 - \lambda\right)  } \middle| {\color{magenta}s_t}\right]\)
     - 当天财务毒性：\({\color{red}{P_l}}_t = \dfrac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
     - \(\color{red}{ΔWᵥ}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
     - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge t_{min}\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
-      - 触发死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)导致
-      - 触发破产，\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{red}H}_t] - t) + \mathbb{E}[{\color{red}{C_p}}_t\mid{\color{red}s}_t] + \mathbb{E}[{\color{red}{C_s}}_t\mid{\color{red}s}_t] < {\color{red}{W^-}}_t\)，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
+      - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
+      - 破产，由随机不等式\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{C_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{C_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
       - **他心难题**：比如你帮助了某人，你在他心中的情谊存量不可观测，只能猜测(信念估算)：在你落难时他会帮到多少?
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]
-      - \(\color{red}{C_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,t}}} \middle|{\color{red}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W_t}} + \eta_H {\color{red}{H_t}}+ \eta_L {\color{red}{L_{p,t}}}- \eta_v {\color{red}{v_t}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
+      - \(\color{red}{C_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,t}}} \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W_t}} + \eta_H {\color{red}{H_t}}+ \eta_L {\color{red}{L_{p,t}}}- \eta_v {\color{red}{v_t}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
       - \(\color{red}P\)是一种状态依赖型期权：
-        - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。经验性解释：落魄苏秦归故郭(**妻不下纴，嫂不为炊，父母不与言**)的千年史例：一个人越失败、越失势、越失能，越难从人际关系资产中获得实际支持
+        - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。千年史例印证：落魄苏秦归故郭，**妻不下纴，嫂不为炊，父母不与言**。一个人越失败、越失势、越失能，越难从人际关系资产获得实际支持
         - 金融系统的反向定价：在你生命抵押品(包括\(\color{red}P\))优质时行权(放贷)，在你生命抵押品折损时平仓(法拍)。还款能力\({\color{red}\phi}_t\)是条件期望，条件是你的全部身家(包括\(\color{red}P\))，合同白纸黑字写好，比苏秦的嫂子更讲契约精神。掏空6个口袋按揭还贷本质是差序格局金融化：你其实只有一个口袋，其它5个口袋就是银行把你的\(\color{red}P\)货币化了
       - 人际关系日折旧率：\(δᵣ = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折旧的依据：心理学：艾宾浩斯遗忘曲线，社会交换理论：互惠义务具有时效性，社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_t = {\color{red}P}_{t + 1} - {\color{red}P}_t = ΔPᵣ{\color{red}Θ}_t - {\color{red}P}_t\left(1 - e^{-δᵣ}\right)\)
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
       - 部分可测：年龄、户籍、参保档位、收入口径
-      - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_t\middle|{\color{red}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{{\color{red}A}_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
+      - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_t\middle|{\color{magenta}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
 - 行为策略假设2：
-  - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天结束观测到的多模态生命特征：体检、存款、表情、言论、社会活动轨迹等
+  - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日末观测到的多模态生命特征：体检、存款、表情、言论、社会活动轨迹等
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，其中内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
+  - 后验滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})\)，Bayes更新\(b_{t+1}(s_{t+1}) = \mathbb P({\color{red}s}_{t+1}| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = \int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) \mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) d {s_t} = \frac {\int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t}) d {s_t}} {P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\)，其中\(P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = P({\color{red}s}_t| {\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1}) =\frac {P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t})}{P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\)
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
-    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{red}o}_{:t}, {\color{red}a}_{:t}]\)，信念随\({\color{red}o}_{:t}\)累积而更新，所谓路遥知马力，事久见人心
-  - 滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t}, {\color{red}{a}}_{:t})\)
+    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t+1}] =\int s_t\cdot b_t(s_t) d {s_t} \bigg|_{\substack{ o_{:t+1}= {\color{red}o}_{:t+1} \\ a_{:t+1}= {\color{red}a}_{:t+1}}}\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
   - 策略：
     - 概率分布
       - 上帝理论值：\(\mathbb P_{\pi}\left({\color{red}a} \middle| {\color{red}{s}}\right)\)，基于客观状态\(\color{red}{s}\)输出动作\({\color{red}a}\)的概率分布
@@ -166,7 +169,7 @@
 当你的劳动报酬足以覆盖生存开销，一年只需工作几周、几天甚至几小时，剩余时间完全由自己掌控，就是财富自由。
 财富自由论本质是以自由论财富，不是靠死劳动(他人活劳动)产生的被动收入≥生活支出，那本质上是一套不劳而获的寄生剥削思想。
 提高个别劳动生产率产生的劳动报酬增量，属于真资产复杂劳动价值，**复杂劳动是多倍的简单劳动**，不是不劳而获，不算剥削他人。
-当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{red}H}_t] - t) + \mathbb{E}[{\color{red}{C_p}}_t\mid{\color{red}s}_t] + \mathbb{E}[{\color{red}{C_s}}_t\mid{\color{red}s}_t] < {\color{red}{W^-}}_t \middle| {\color{red}s}_t\right)\)。
+当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{C_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{C_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t \middle| {\color{magenta}s}_t\right)\)。
 这笔钱不参与任何投机，它是你去阴曹地府跑一趟的**专属旅游基金**，因为天有不测风云，人有旦夕祸福：
 - 电信诈骗：ΔWᵥ ↑ → W↓ → W⁻ ↑ → 破产
 - 意外伤害：ΔHᵥ ↑ → H ↓ → Lₚ ↓ → w ↓ → W ↓ → 破产
