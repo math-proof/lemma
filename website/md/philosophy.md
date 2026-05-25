@@ -29,7 +29,7 @@
     - 当天年龄：\(A_t = \frac t {Y_s}\)
     - \(\color{red}H\)：身体健康指数(通过体检可观测)，\(\mathbb E[{\color{red}H}_t] \in [-\infty, 100]\)，\(\mathbb E [{\color{red}H}_{t_{min}}] = 100\)
       - 基线日死亡概率：\(q_{min}=2.74 \cdot 10^{-7}\)，基于国际生命表
-      - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot relu({\color{red}H})}, \quad\lambda = -\frac{\ln q_{min}}{100}\)
+      - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot \mathrm{relu}({\color{red}H})}, \quad\lambda = -\frac{\ln q_{min}}{100}\)
       - 身体衰老损耗/天：ΔHₐ = 0.0025，常量
       - tₒₒ：44723，极限生命末日，目前公认人类最长寿命纪录是法国的Jeanne Calment 122岁164天
       - \(\color{red}T\)：寿命，寿险精算学尾和公式：\[\mathbb{E}\left[{\color{red}T} \middle| {\color{red}H}_t \right] - t = 
@@ -65,7 +65,7 @@
   - 文化资本\(\color{red}K\)：学历、专利、作品集可代理观测，肚子里的墨水(知识量)不可测
     - 文化资本差分：\(\Delta{\color{red}K}_t = {\color{red}K}_{t + 1} - {\color{red}K}_t = ΔKₑ{\color{red}ε}_t + ΔKₒ{\color{red}L}_t\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_t \perp ({\color{red}H}_t, {\color{red}M}_t, {\color{red}K}_t),\quad \mathbb E[{\color{red}{\mu_m}}_t] = 1\)
-    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}K}_t] = {\mu_m}_{t}{L_p}_{t_{min}}\left(\frac{relu({\color{red}H}_t)}{H_{t_{min}}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_t - M_{t_{min}})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_t}{K_{t_{min}}}\right)\right)\)
+    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}K}_t] = {\mu_m}_{t}{L_p}_{t_{min}}\left(\frac{\mathrm{relu}({\color{red}H}_t)}{H_{t_{min}}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_t - M_{t_{min}})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_t}{K_{t_{min}}}\right)\right)\)
   - 经济资本
     - \(\color{red}W\)/￥：银行账面余额(实时可观测)，初始值(按揭还贷)：\(W_{t_{min}}=-300000\)
     - 存款：\({\color{red}{W^+}} = \frac {|{\color{red}W}| + {\color{red}W}} 2\)
@@ -77,7 +77,7 @@
     - 利息：\([{\color{red}{I^+}}, {\color{red}{I^-}}] = [{\color{red}{W^+}}α⁺, {\color{red}{W^-}}α⁻]
 \)
     - \(\color{red}c\)：当天本金还款额
-    - \(\color{red}v\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_t \mid {\color{red}H}_t, {\color{red}M}_t, {\color{red}{\pi_s}}_{:t}] = v_{t_{min}}\prod_{j=t_{min}}^{t-1} (1+{\color{red}{\pi_s}}_j) \cdot \left(1 + \gamma_H \cdot (H_{t_{min}} - {\color{red}H}_t)\right) \cdot \left(1 + \gamma_M \cdot relu(M_{t_{min}} - {\color{red}M}_t)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
+    - \(\color{red}v\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}{\pi_s}}_{:t}] = v_{t_{min}}\prod_{j=t_{min}}^{t-1} (1+{\color{red}{\pi_s}}_j) \left(1 + \gamma_H (H_{t_{min}} - {\color{red}H}_t)\right) \left(1 + \gamma_M\mathrm{relu}(M_{t_{min}} - {\color{red}M}_t)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
       - 生理要素：米饭60￥、蔬菜200￥、租房500￥、医保100￥、水电60￥、衣服40￥
       - 家庭要素(法定义务)：赡养500￥，育儿？￥
       - 教育要素：学习300￥
@@ -137,7 +137,7 @@
     - \(Q_\pi(s_t, a_t) = \mathbb{E}_{ \substack{{\color{red}{r}}_t\\ {\color{red}{s}}_{t+1}\\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t,{\color{red}{a}}_t \right]\)
   - [策略梯度定理](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)(停时吸收态约定)：\(\nabla_\pi \mathbb{E}_{\substack{{\color{red}{r}} \\ {\color{red}{a}}\sim\pi}} \sum_{t=t_{min}}^{\color{red}{t_{max}}} {\color{red}{r}}_{t} = \mathbb{E}_{\substack{ {\color{red}{r}}\\ {\color{red}{a}}\sim\pi\\ {\color{red}{s}}}} \left[\sum_{t=t_{min}}^{\color{red}{t_{max}}} \nabla_\pi \log \mathbb{P}_\pi({\color{magenta}{a}}_t|{\color{magenta}{s}}_t)\sum_{t=t}^{\color{red}{t_{max}}} {\color{red}{r}}_t\right]\)
   - 后验终生福祉(上帝视角)：\(\sum_{t=t_{min}}^{t_{max}}{r_t}\)，若离散时刻t连续化，就是精神效用在自由时间上的积分：\(\int_{t \in F} \mathrm{relu}\left(1-e^{-M_t}\right) dt\)
-  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{red}{s}}_t\right]\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，即V价值函数，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
+  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
   - 目标函数：先验终身福祉(信念估计值)最大化，不考虑18周岁前作为纯消费者的福祉。
 
 根据实验假定及各变量偏导，\(V_\pi({\color{red}{s}}_t)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。
@@ -209,7 +209,7 @@
 - 汽车：车子不会生车子。  
   落地就贬值，典型的消费型伪资产。除非你用来跑业务变现，把它开到报废。你也可以学习巴菲特，雨天出门开车，让老天爷，帮你洗车，这叫物尽其用。
 - 金融产品：  
-  之前的资产看得见，摸得着，而金融产品是看不见、摸不着的概念。鼓吹钱生钱的金融游戏（股票、基金、理财、理财型保险等），是收割散户的零和赌局。你不理财会生病吗？为啥指望财来理你？巴菲特有一个经典判别式：**若一项资产的运行逻辑，7岁孩童5分钟内无法理解，即为伪资产**。金融资产的估值、交易、杠杆、风控机制高度抽象，不能吃，不能喝，不能穿，不能住，普通个体无法拆解其财富流转逻辑，本质不直接创造劳动性财富，反而通过投机、博弈、风险转移吞噬普通人的自由时间；即便部分金融标的依附实体企业，其交易投机属性仍会造成自由时间的损耗。若如果读者认为本文观点偏颇，请直面本文前言第4 个问题：谁在生产财富(麦子)，谁在收割自由(镰刀)？我是谁，你是谁？你是镰刀还是麦子？
+  之前的资产看得见，摸得着，而金融产品是看不见、摸不着的概念。鼓吹钱生钱的金融游戏（股票、基金、理财、理财型保险等），是收割散户的零和赌局。你不理财会生病吗？为啥指望财来理你？巴菲特有一个经典判别式：**若一项资产的运行逻辑，7岁孩童5分钟内无法理解，即为伪资产**。金融资产的估值、交易、杠杆、风控机制高度抽象，不能吃，不能喝，不能穿，不能住，普通个体无法拆解其财富流转逻辑，本质不直接创造劳动性财富，反而通过投机、博弈、风险转移吞噬普通人的自由时间；即便部分金融标的依附实体企业，其交易投机属性仍会造成自由时间的损耗。若读者认为本文观点偏颇，请直面本文前言第4 个问题：谁在生产财富(麦子)，谁在收割自由(镰刀)？我是谁，你是谁？你是镰刀还是麦子？
 
 ### 消费主义的陷阱
 #### 消费主义的本质
