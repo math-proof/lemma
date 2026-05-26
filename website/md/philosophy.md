@@ -98,7 +98,7 @@
       - 破产，由随机不等式\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{C_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{C_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
-      - **他心难题**：你帮助了某人，你在他心中的情谊存量不可观测，只能猜测(信念估算)：在你落难时他会帮到多少?
+      - **他心难题**：你帮助了某人，你在他心中的情谊存量不可观测，只能猜测(信念估计)：在你落难时他会帮到多少?
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
       - \(\color{red}{C_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,t}}} \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W_t}} + \eta_H {\color{red}{H_t}}+ \eta_L {\color{red}{L_{p,t}}}- \eta_v {\color{red}{v_t}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
       - \(\color{red}P\)是一种状态依赖型期权：
@@ -112,7 +112,7 @@
 - 行为策略假设2：
   - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日末观测到的多模态生命特征：体检、存款、表情、言论、社会活动轨迹等
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，从日初到日末(不含)
-  - 后验滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})\)，Bayes更新递推式：\[b_{t+1}(s_{t+1}) = \mathbb P({\color{red}s}_{t+1}| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = \int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) \mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) d {s_t} = \frac {\int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t}) d {s_t}} {P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\]，其中\[P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = P({\color{red}s}_t| {\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1}) =\frac {P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t})}{P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\]
+  - 后验滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})\)，Bayes更新(信念校准)递推式：\[b_{t+1}(s_{t+1}) = \mathbb P({\color{red}s}_{t+1}| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = \int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) \mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) d {s_t} = \frac {\int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t}) d {s_t}} {P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\]，其中\[P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = P({\color{red}s}_t| {\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1}) =\frac {P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t})}{P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\]
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
     - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t+1}] =\int s_t\cdot b_t(s_t) d {s_t} \bigg|_{\substack{ o_{:t+1}= {\color{red}o}_{:t+1} \\ a_{:t+1}= {\color{red}a}_{:t+1}}}\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
@@ -122,13 +122,15 @@
         - 这本质是一个**永生智能体**(上帝：tₘₐₓ → ∞)的行为策略：无限寿命，无限次环境交互，无限历史观测数据，在任意状态下都能作出最优动作
         - 《论语》：**十五而有志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲不逾矩**⋯⋯；只要有足够寿命充分学习，就能成为圣人(上帝)：**真积力久则入圣，学至乎殁而后止**
       - 信念估计值：\(\mathbb P_\hat\pi\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布
+        - [信念错位](http://www.lemma.cn/py/?module=Probability.KL.ge.Zero)：\(\mathbb{KL}\left(\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\middle\|\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)\right)=\int \mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\log \frac {\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right) }{\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)} d a_t \gt 0\)，历史数据\({\color{red}o}_{:t+1}\)有限、观测不完全、信念(意识形态)污染，故等号不成立。从心所欲不逾矩，本质是**知行合一**：\(\mathbb{P}_{\hat{\pi}} \to \mathbb{P}_{\pi}\)，KL散度 → 0
+        - 人间清醒：\(\mathfrak{C}_t = e ^ {-\mathbb{KL}\left(\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\middle\|\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)\right)} \in (0, 1)\)，生命智能体在长期强化学习迭代中看穿信念脑补值与上帝理论值之间的偏差的概率学度量，青原惟信禅宗三境：从看山是山(\(\mathfrak{C}_t \in (0,0.2)\)：朴素唯物主义)，到看山不是山(\(\mathfrak{C}_t \in [0.2,0.8)\)：怀疑解构主义)，最后看山还是山(\(\mathfrak{C}_t \in [0.8,1)\)：历史唯物主义)
     - 策略分类：
       - 躺平：m′≪1，作候鸟工不当社畜(如：技能零售)，赚到生存资料、风险兜底的钱见好就收，不为过多个别剩余价值买单，不花冤枉时间，自由健康优先
       - 内卷：m′≫1，用自由健康换个别剩余价值，但没花在生存刚需上，如通胀稀释、理财圈套、广告洗脑、房价倒挂，在流通回收机制下属于资本的口袋
 - 生命目标假设3：
-  - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}M}}\right)\)，信念估计值：\({\color{red}{\hat{r}}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}{\hat{M}}}}\right)\)
+  - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}M}}\right) < {\color{red}f}\)，信念估计值：\({\color{red}{\hat{r}}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}{\hat{M}}}}\right)\)
     - 财富是可以自由支配的时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。
-    - 精神效用指数\(\color{red}{\hat{M}}\)是基于有限历史的有偏估计。所谓人间清醒就是：看穿信念脑补值与上帝观测值之间的偏差
+    - 精神效用指数\(\color{red}{\hat{M}}_t\)是信念驱动的、基于有限历史的有偏估计，不是上帝观测值，其逼近程度取决于\(\mathfrak{C}_t\)
   - Markov历史无关假设：\({\color{red}{r}}_t \perp ({\color{red}{s}}_{:t},{\color{red}a}_{:t})\mid ({\color{red}{s}}_t,{\color{red}a}_t)\)​，当天客观状态\({\color{red}{s}}_t\)已充分编码，当天的影响已经写入历史存量，故假设成立
   - 状态价值函数：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{magenta}{s}}_t\right]\)，把握当下，眺望未来，评估人生棋局的终局价值，比如陶渊明：**悟已往之不谏，知来者之可追**
   - 动作价值函数：\(Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{magenta}{s}}_t,{\color{magenta}{a}}_t\right]\)，在人生十字路口，比较每一分叉路的长期收益期望，择一而往，比如《行路难》：**多歧路，今安在**？
@@ -163,16 +165,16 @@
   - 曳尾涂中的庄子：庙堂供奉的神龟，尊贵已死；江湖摇尾的泥龟，卑贱自由。这叫乱世保命：**宁当王八，不作走狗**。庄子以其精神效用增益ΔMₑ，后验终生福祉反而更高
   - 木桶乞食的Diogenes：当Alexander大帝，世人眼里行走的Aladdin神灯，告诉这个**宇宙公民**：你想要任何东西，我都能满足你。他回答：滚开，别挡住我的太阳。
 
-人们总以为犬儒主义者是一条玩世不恭、愤世嫉俗、哗众取宠、不谙世故、蔑视权贵的狗，一条在脑残家狗前标榜特立独行的智狗，一条不合群的野狗。其实犬儒主义恰好是古典版的《简单致富》(作者：J.L. Collins)：
+人们总以为犬儒主义者是一条玩世不恭、愤世嫉俗、哗众取宠、不谙世故、蔑视权贵的狗，一条在脑残家狗前标榜特立独行的智狗，一条不合群的野狗。其实犬儒主义核心是**物物而不物于物**：以心有足乐者，不知口体之奉不若人，这恰好是古典版的《简单致富》(财经博主：J.L. Collins)：
 - 问：你要是知道怎样巴结权贵，就不用吃糟糠粗粮活着了。
 - 答：你要是知道糟糠粗粮就能活着，就不用去巴结权贵了。
 
-**社会就是一辆汽车：经济发动机+哲学制动机**，只有油门、没有刹车的汽车肯定翻车。有人说要功名利禄，有人说要人间清醒，这叫多元化市场经济，哪里有需求，哪里就有消费。到底一个人怎么活才算没“白”活，依鄙人看，用先验终身福祉(怎么活)、后验终生福祉(有没有白活)来计算最合理。
+**社会就是一辆汽车：经济发动机+哲学制动机**，只有油门、没有刹车的汽车肯定翻车。有人说要功名利禄，有人说要人间清醒，这叫多元化市场经济，哪里有需求，哪里就有消费。到底一个人怎么活才算没白活，依鄙人看，用先验终身福祉(怎么活)、后验终生福祉(是否白活)来计算最合理。
 
 ## 财富自由的谎言 
 马克思说，财富就是可以自由支配的时间。
 用这把奥卡姆剃刀剃尽财富幻象，我得出财富自由的定义：**以最小的必要劳动，换最大的自由时间**。
-当你的劳动报酬足以覆盖生存开销，一年只需工作几周、几天甚至几小时，剩余时间完全由自己掌控，就是财富自由。
+当你的劳动报酬足以覆盖生存开销，一年只需工作几周、几天甚至几小时，剩余时间由自己掌控，就是财富自由。
 财富自由论本质是以自由论财富，不是靠死劳动(他人活劳动)产生的被动收入≥生活支出，那本质上是一套不劳而获的人上人寄生剥削思想。
 提高个别劳动生产率产生的劳动报酬增量，属于真资产复杂劳动价值，**复杂劳动是多倍的简单劳动**，不是不劳而获，不算剥削他人。
 当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{C_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{C_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t \middle| {\color{magenta}s}_t\right)\)。
@@ -311,7 +313,7 @@
   - 是生产(资产)型兴趣(哲学、经济、宗教、文学、音乐、体育、科技、编程)
   - 非消费(负债)型兴趣(无脑段子)
 - 兴趣变现=产消者劳动，如写作、编程，主体是生产者，也是消费者，不仅仅是谋生的手段，而且本身成了生活的第一需要
-- 兴趣变现≠异化劳动，由《1844年经济学哲学手稿》：在资本主义私有制下，劳动从人的自由自觉的类本质活动，异化为一种被迫的、异己的、与劳动者对立的力量。而兴趣变现是自由劳动，是随时可以自由停止(否决权)的劳动，则兴趣变现≠被迫劳动
+- 兴趣变现≠异化劳动，由《1844年经济学哲学手稿》：在资本主义私有制下，劳动从人的自由自觉的类本质活动，异化为一种被迫的、异己的、与劳动者对立的力量。而兴趣变现是自由劳动，是随时可以自由停止的劳动，则兴趣变现≠被迫劳动
 - 兴趣变现≠自我剥削，理由
   - 自我剥削：  
   是比他人剥削更高效的统治形式，因为它伴随着一种自由的感觉，让我们心甘情愿地压榨自身。剥削者同时是被剥削者。施虐者和受害者之间不分彼此。韩炳哲说，功绩至上的主体自认为是自由的，实际上却是一个奴仆，是没有主人强迫却自愿被剥削的绝对的奴仆。没有主人强迫他去劳动。功绩主体努力实现自我，直至死亡。自我实现和自我毁灭在这里合而为一。
@@ -325,5 +327,4 @@
 罗曼·罗兰：世上只有一种真正的英雄主义，那就是在认清生活的真相后依然热爱生活。  
 鲁迅：冷眼看世界，热心过生活。  
 周国平：知世故却不世故，历圆滑而弥天真。  
-青原惟信人生三境：从看山是山，到看山不是山，最后看山还是山。  
 那么，倘若一个人看破消费主义的欲望编排、刚性负债的终身枷锁、金融游戏的收割陷阱、人情社会的道德绑架、资本主义的劳动异化、人类文明的虚伪面纱，仍坚守本心、践行个人社会主义、夺回自由时间、实现财富自由及人的全面自由发展，算不算一种当代英雄主义？
