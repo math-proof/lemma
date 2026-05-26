@@ -1622,7 +1622,7 @@ class KL(Expr):
             else:
                 tex += r"\limits_{\begin{subarray}{c}%s\end{subarray}} " % str.join('\\\\', [_format_ineq(l) for l in limits])
         #\bigg/
-        tex += r"\left(%s\middle/%s\right)" % (p._print(lhs), p._print(rhs))
+        tex += r"\left(%s\middle\|%s\right)" % (p._print(lhs), p._print(rhs))
         return tex
 
     @property
