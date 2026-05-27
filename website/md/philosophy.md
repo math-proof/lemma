@@ -100,7 +100,7 @@
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
       - **他心难题**：你帮助了某人，你在他心中的情谊存量不可观测，只能猜测(信念估计)：在你落难时他会帮到多少?
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
-      - \(\color{red}{C_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,t}}} \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W_t}} + \eta_H {\color{red}{H_t}}+ \eta_L {\color{red}{L_{p,t}}}- \eta_v {\color{red}{v_t}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
+      - \(\color{red}{C_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,t}}} \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W_t}} + \eta_H {\color{red}{H_t}}+ \eta_L {\color{red}{L_{p,t}}}- \eta_v {\color{red}{v_t}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
       - \(\color{red}P\)是一种状态依赖型期权：
         - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。千年史例印证：落魄苏秦归故郭，**妻不下纴，嫂不为炊，父母不与言**。一个人越失败、越失势、越失能，越难从人际关系资产获得实际支持
         - 金融系统的反向定价：在你生命抵押品(包括\(\color{red}P\))优质时行权(放贷)，在你生命抵押品折损时平仓(法拍)。还款能力\({\color{red}\phi}_t\)是条件期望，条件是你的全部身家(包括\(\color{red}P\))，合同白纸黑字写好，比苏秦的嫂子更讲契约精神。掏空6个口袋按揭还贷本质是差序格局金融化：你其实只有一个口袋，其它5个口袋就是银行把你的\(\color{red}P\)货币化了
@@ -110,11 +110,14 @@
       - 部分可测：年龄、户籍、参保档位、收入口径
       - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_t\middle|{\color{magenta}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
 - 行为策略假设2：
-  - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日初观测到的多模态生命特征：体检、存款、表情、言论、社会活动轨迹等
-  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，从日初到日末(不含)
-  - 后验滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})\)，Bayes更新(信念校准)递推式：\[b_{t+1}(s_{t+1}) = \mathbb P({\color{red}s}_{t+1}| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) = \int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) \mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) d {s_t} = \frac {\int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) \mathbb P({\color{red}{o}}_{t+1}, {\color{red}{a}}_t|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})b_{t}(s_{t}) d {s_t}} {\mathbb P({\color{red}{o}}_{t+1},{\color{red}{a}}_t| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})}\]，其中\[\mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) = \mathbb P({\color{red}s}_t| {\color{red}{o}}_{t+1}, {\color{red}{a}}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t}) =\frac {\mathbb P({\color{red}{o}}_{t+1}, {\color{red}{a}}_t|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})b_{t}(s_{t})}{\mathbb P({\color{red}{o}}_{t+1},{\color{red}{a}}_t| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})}\]
+  - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日初观测到的多模态带噪生命特征：体检、表情、言论、存款、社会活动轨迹等
+  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
+    - 后验滤波：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})\)，Bayes更新递推式(基于温故知新的信念校准)：\[b_{t+1}(s_{t+1}) = \mathbb P({\color{red}s}_{t+1}| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) = \int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) \mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) d {s_t} = \frac {\int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{a}}_t) \mathbb P({\color{red}{o}}_{t+1}, {\color{red}{a}}_t|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})b_{t}(s_{t}) d {s_t}} {\mathbb P({\color{red}{o}}_{t+1},{\color{red}{a}}_t| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})}\]，其中
+      - \[\mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) = \mathbb P({\color{red}s}_t| {\color{red}{o}}_{t+1}, {\color{red}{a}}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t}) =\frac {\mathbb P({\color{red}{o}}_{t+1}, {\color{red}{a}}_t|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})b_{t}(s_{t})}{\mathbb P({\color{red}{o}}_{t+1},{\color{red}{a}}_t| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})}\]
+      - Markov状态转移假设：\(\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1})=\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{a}}_t)\)，符合**一级混沌系统**公设：观测行为不影响客观状态
+
     - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t}] =\int s_t\cdot b_t(s_t) d {s_t} \bigg|_{\substack{ o_{:t+1}= {\color{red}o}_{:t+1} \\ a_{:t}= {\color{red}a}_{:t}}}\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
   - 策略：
     - 概率分布
@@ -211,7 +214,7 @@
 - 汽车：车子不会生车子。  
   落地就贬值，典型的消费型伪资产。除非你用来跑业务变现，把它开到报废。你也可以学习巴菲特，雨天出门开车，让老天爷，帮你洗车，这叫物尽其用。
 - 金融产品：  
-  之前的资产看得见，摸得着，而金融产品是看不见、摸不着的概念。鼓吹钱生钱的金融游戏（股票、基金、理财、理财型保险等），是收割散户的零和赌局。你不理财会生病吗？为啥指望财来理你？巴菲特有一个经典判别式：**若一项资产的运行逻辑，7岁孩童5分钟内无法理解，即为伪资产**。金融资产的估值、交易、杠杆、风控机制高度抽象，不能吃，不能喝，不能穿，不能住，普通个体无法拆解其财富流转逻辑，本质不直接创造劳动性财富，反而通过投机、博弈、风险转移吞噬普通人的自由时间；即便部分金融标的依附实体企业，其交易投机属性仍会造成自由时间的损耗。若读者认为本文观点偏颇，请直面本文前言第4 个问题：谁在生产财富(麦子)，谁在收割自由(镰刀)？我是谁，你是谁？你是镰刀还是麦子？
+  之前的资产看得见，摸得着，而金融产品是看不见、摸不着的概念。股市波动，金融市场是二级混沌系统，预测行为本身会改变被预测对象的演化轨迹，股市预测可能引发市场情绪波动，形成利好即利空的反逻辑现象。鼓吹钱生钱的金融游戏（股票、基金、理财、理财型保险等），是收割散户的零和赌局。你不理财会生病吗？为啥指望财来理你？巴菲特说：**若一项资产的运行逻辑，7岁孩童5分钟内无法理解，即为伪资产**。金融资产的估值、交易、杠杆、风控机制高度抽象，不能吃，不能喝，不能穿，不能住，普通个体无法拆解其财富流转逻辑，本质不直接创造劳动性财富，反而通过投机、博弈、风险转移吞噬普通人的自由时间；即便部分金融标的依附实体企业，其交易投机属性仍会造成自由时间的损耗。若读者认为本文观点偏颇，请直面本文前言第4 个问题：谁在生产财富(麦子)，谁在收割自由(镰刀)？你是镰刀还是麦子？
 
 ### 消费主义的陷阱
 #### 消费主义的本质
