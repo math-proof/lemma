@@ -22,12 +22,12 @@
 我们假设一个基于信念MDP、生命智能体生存最优解的思想实验：
 - 生存边界假设1：
   - 具身资本
-    - \(t \in \mathbb N\)：第t天日初时刻(凌晨0点)
+    - \(t \in \mathbb N\)：第t天日初时刻
     - 公历回归年：\(Y_s = 365 + \frac{1}{4} - \frac{1}{100} + \frac{1}{400} = 365.2425
 \)
-    - 法定成年年龄18周岁天数：\(t_{min}=\lfloor 18 \cdot Y_s \rfloor = 6574\)
+    - 法定成年年龄18周岁天数：\(tₘᵢₙ=\lfloor 18 \cdot Y_s \rfloor = 6574\)
     - 当天年龄：\(A_t = \frac t {Y_s}\)
-    - \(\color{red}H\)：身体健康指数(通过体检可观测)，\(\mathbb E[{\color{red}H}_t] \in [-\infty, 100]\)，\(\mathbb E [{\color{red}H}_{t_{min}}] = 100\)
+    - \(\color{red}H\)：身体健康指数(通过体检可观测)，\(\mathbb E[{\color{red}H}_t] \in [-\infty, 100]\)，\(\mathbb E [{\color{red}H}_{tₘᵢₙ}] = 100\)
       - 基线日死亡概率：\(q_{min}=2.74 \cdot 10^{-7}\)，基于国际生命表
       - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot \mathrm{relu}({\color{red}H})}, \quad\lambda = -\frac{\ln q_{min}}{100}\)
       - 身体衰老损耗/天：ΔHₐ = 0.0025，常量
@@ -39,17 +39,17 @@
 \sum_{j=0}^{t_{oo} - t - 1} P\left({\color{red}T} \ge j + t + 1 \middle| {\color{red}H}_t \right) = 
 \sum_{j=0}^{t_{oo} - t - 1} \mathbb E\left[ \prod_{j=0}^{j}(1-{\color{red}q}_{t+j}) \middle| {\color{red}H}_t \right]\]
       - \(\color{red}ΔHᵥ\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
-      - 身体健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - ΔHₒ{\color{red}L}_t - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge t_{min}\)
-    - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测(**子非鱼，安知鱼之乐**)，\(\mathbb E[{\color{red}M}_t] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{t_{min}}] = 100\)
+      - 身体健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - ΔHₒ{\color{red}L}_t - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
+    - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测(**子非鱼，安知鱼之乐**)，\(\mathbb E[{\color{red}M}_t] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{tₘᵢₙ}] = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
         - 连续半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\beta_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_t > 0\)，半衰期短，依据：享乐适应，快乐跑步机假说
         - 亲身体验的必然痛苦：\({\Xi_m}_t < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_t = \frac{M_t + |{\Xi_m}_t|}{M_t - |{\Xi_m}_t|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是去追求幸福，而是去规避痛苦
-        - 累计精神奖励：\({\color{red}E}_{t} = \sum_{j=t_{min}}^{t} {e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
-        - 累计精神奖励差分：\(\Delta {\color{red}E}_{t} = {\color{red}{\Xi_m}}_{t + 1} - \sum_{j=t_{min}}^{t} (1 - e ^ {-{{\color{red}{\delta_m}}_j}}){e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
-      - 精神效用指数差分：\(\Delta {\color{red}M}_t = {\color{red}M}_{t+1} - {\color{red}M}_t = ΔMₑ{\color{red}\varepsilon}_t + ΔMᵣ \times {\color{red}{\Theta}}_t + \Delta {\color{red}E}_t - ΔMₐ - {\color{red}{P_l}}_t\omega_m - ΔMₒ{\color{red}L}_t,\quad t \ge t_{\min}\)
+        - 累计精神奖励：\({\color{red}E}_{t} = \sum_{j=tₘᵢₙ}^{t} {e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
+        - 累计精神奖励差分：\(\Delta {\color{red}E}_{t} = {\color{red}{\Xi_m}}_{t + 1} - \sum_{j=tₘᵢₙ}^{t} (1 - e ^ {-{{\color{red}{\delta_m}}_j}}){e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
+      - 精神效用指数差分：\(\Delta {\color{red}M}_t = {\color{red}M}_{t+1} - {\color{red}M}_t = ΔMₑ{\color{red}\varepsilon}_t + ΔMᵣ \times {\color{red}{\Theta}}_t + \Delta {\color{red}E}_t - ΔMₐ - {\color{red}{P_l}}_t\omega_m - ΔMₒ{\color{red}L}_t,\quad t \ge tₘᵢₙ\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_t]≈4\)，产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
@@ -65,9 +65,9 @@
   - 文化资本\(\color{red}K\)：学历、专利、作品集可代理观测，肚子里的墨水(知识量)不可测
     - 文化资本差分：\(\Delta{\color{red}K}_t = {\color{red}K}_{t + 1} - {\color{red}K}_t = ΔKₑ{\color{red}ε}_t + ΔKₒ{\color{red}L}_t\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_t \perp ({\color{red}H}_t, {\color{red}M}_t, {\color{red}K}_t),\quad \mathbb E[{\color{red}{\mu_m}}_t] = 1\)
-    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}K}_t] = {\mu_m}_{t}{L_p}_{t_{min}}\left(\frac{\mathrm{relu}({\color{red}H}_t)}{H_{t_{min}}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_t - M_{t_{min}})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_t}{K_{t_{min}}}\right)\right)\)
+    - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}K}_t] = {\mu_m}_{t}{L_p}_{tₘᵢₙ}\left(\frac{\mathrm{relu}({\color{red}H}_t)}{H_{tₘᵢₙ}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_t - M_{tₘᵢₙ})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_t}{K_{tₘᵢₙ}}\right)\right)\)
   - 经济资本
-    - \(\color{red}W\)/￥：银行账面余额(实时可观测)，初始值(按揭还贷)：\(W_{t_{min}}=-300000\)
+    - \(\color{red}W\)/￥：银行账面余额(实时可观测)，初始值(按揭还贷)：\(W_{tₘᵢₙ}=-300000\)
     - 存款：\({\color{red}{W^+}} = \frac {|{\color{red}W}| + {\color{red}W}} 2\)
     - 负债：\({\color{red}{W^-}} = \frac {|{\color{red}W}| - {\color{red}W}} 2\)
     - 银行家年：Yₖ = 12 ⬝ 30 = 360 < Yₛ
@@ -77,7 +77,7 @@
     - 利息：\([{\color{red}{I^+}}, {\color{red}{I^-}}] = [{\color{red}{W^+}}α⁺, {\color{red}{W^-}}α⁻]
 \)
     - \(\color{red}c\)：当天本金还款额
-    - \(\color{red}v\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}{\pi_s}}_{:t}] = v_{t_{min}}\prod_{j=t_{min}}^{t-1} (1+{\color{red}{\pi_s}}_j) \left(1 + \gamma_H (H_{t_{min}} - {\color{red}H}_t)\right) \left(1 + \gamma_M\mathrm{relu}(M_{t_{min}} - {\color{red}M}_t)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
+    - \(\color{red}v\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}{\pi_s}}_{:t}] = v_{tₘᵢₙ}\prod_{j=tₘᵢₙ}^{t-1} (1+{\color{red}{\pi_s}}_j) \left(1 + \gamma_H (H_{tₘᵢₙ} - {\color{red}H}_t)\right) \left(1 + \gamma_M\mathrm{relu}(M_{tₘᵢₙ} - {\color{red}M}_t)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
       - 生理要素：米饭60￥、蔬菜200￥、租房500￥、医保100￥、水电60￥、衣服40￥
       - 家庭要素(法定义务)：赡养500￥，育儿？￥
       - 教育要素：学习300￥
@@ -88,11 +88,11 @@
       - 全职工作条件下，自由分配受限，可通过拒绝加班减小m′
       - 灵活就业条件下，可自由分配m′
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
-    - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=t_{min}}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda^{t-j}} {  \left(1 - \lambda^{t-t_{min}+1}\right)/ \left(1 - \lambda\right)  } \middle| {\color{magenta}s_t}\right]\)
+    - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=tₘᵢₙ}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda^{t-j}} {  \left(1 - \lambda^{t-tₘᵢₙ+1}\right)/ \left(1 - \lambda\right)  } \middle| {\color{magenta}s_t}\right]\)
     - 当天财务毒性：\({\color{red}{P_l}}_t = \dfrac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t \cdot 10^{6}}\)
     - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
     - \(\color{red}{ΔWᵥ}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
-    - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge t_{min}\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
+    - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge tₘᵢₙ\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
       - 破产，由随机不等式\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{C_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{C_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
@@ -110,12 +110,12 @@
       - 部分可测：年龄、户籍、参保档位、收入口径
       - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_t\middle|{\color{magenta}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
 - 行为策略假设2：
-  - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日末观测到的多模态生命特征：体检、存款、表情、言论、社会活动轨迹等
+  - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日初观测到的多模态生命特征：体检、存款、表情、言论、社会活动轨迹等
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配，从日初到日末(不含)
-  - 后验滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})\)，Bayes更新(信念校准)递推式：\[b_{t+1}(s_{t+1}) = \mathbb P({\color{red}s}_{t+1}| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = \int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) \mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) d {s_t} = \frac {\int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) \mathbb P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t}) d {s_t}} {\mathbb P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\]，其中\[\mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+2}) = \mathbb P({\color{red}s}_t| {\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1}) =\frac {\mathbb P({\color{red}{o}}_{t+1}, {\color{red}{a}}_{t+1}|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})b_{t}(s_{t})}{\mathbb P({\color{red}{o}}_{t+1},{\color{red}{a}}_{t+1}| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t+1})}\]
+  - 后验滤波分布：\(b_t(s_t) = \mathbb P({\color{red}{s}}_t | {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})\)，Bayes更新(信念校准)递推式：\[b_{t+1}(s_{t+1}) = \mathbb P({\color{red}s}_{t+1}| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) = \int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) \mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) d {s_t} = \frac {\int \mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) \mathbb P({\color{red}{o}}_{t+1}, {\color{red}{a}}_t|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})b_{t}(s_{t}) d {s_t}} {\mathbb P({\color{red}{o}}_{t+1},{\color{red}{a}}_t| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})}\]，其中\[\mathbb P({\color{red}s}_t| {\color{red}{o}}_{:t+2}, {\color{red}{a}}_{:t+1}) = \mathbb P({\color{red}s}_t| {\color{red}{o}}_{t+1}, {\color{red}{a}}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t}) =\frac {\mathbb P({\color{red}{o}}_{t+1}, {\color{red}{a}}_t|{\color{red}s}_t, {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})b_{t}(s_{t})}{\mathbb P({\color{red}{o}}_{t+1},{\color{red}{a}}_t| {\color{red}{o}}_{:t+1}, {\color{red}{a}}_{:t})}\]
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
-    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t+1}] =\int s_t\cdot b_t(s_t) d {s_t} \bigg|_{\substack{ o_{:t+1}= {\color{red}o}_{:t+1} \\ a_{:t+1}= {\color{red}a}_{:t+1}}}\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
+    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t}] =\int s_t\cdot b_t(s_t) d {s_t} \bigg|_{\substack{ o_{:t+1}= {\color{red}o}_{:t+1} \\ a_{:t}= {\color{red}a}_{:t}}}\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
   - 策略：
     - 概率分布
       - 上帝理论值：\(\mathbb P_{\pi}\left({\color{red}a} \middle| {\color{red}{s}}\right)\)，基于客观状态\(\color{red}{s}\)输出动作\({\color{red}a}\)的概率分布
@@ -132,14 +132,14 @@
     - 财富是可以自由支配的时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。
     - 精神效用指数\(\color{red}{\hat{M}}_t\)是信念驱动的、基于有限历史的有偏估计，不是上帝观测值，其逼近程度取决于\(\mathfrak{C}_t\)
   - Markov历史无关假设：\({\color{red}{r}}_t \perp ({\color{red}{s}}_{:t},{\color{red}a}_{:t})\mid ({\color{red}{s}}_t,{\color{red}a}_t)\)​，当天客观状态\({\color{red}{s}}_t\)已充分编码，当天的影响已经写入历史存量，故假设成立
-  - 状态价值函数：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{magenta}{s}}_t\right]\)，把握当下，眺望未来，评估人生棋局的终局价值，比如陶渊明：**悟已往之不谏，知来者之可追**
-  - 动作价值函数：\(Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{r}}_j\middle| {\color{magenta}{s}}_t,{\color{magenta}{a}}_t\right]\)，在人生十字路口，比较每一分叉路的长期收益期望，择一而往，比如《行路难》：**多歧路，今安在**？
+  - 状态价值函数：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t\right]\)，把握当下，眺望未来，评估人生棋局的终局价值，比如陶渊明：**悟已往之不谏，知来者之可追**
+  - 动作价值函数：\(Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t,{\color{magenta}{a}}_t\right]\)，在人生十字路口，比较每一分叉路的长期收益期望，择一而往，比如《行路难》：**多歧路，今安在**？
   - [Bellman](http://www.lemma.cn/py/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)方程：
     - \(V_\pi(s_t) = \mathbb{E}_{{\color{red}{a}}_t \sim \pi} \left[ Q_\pi(s_t, {\color{red}{a}}_t) \middle| {\color{red}{s}}_t \right] =\mathbb{E}_{\substack{{\color{red}{r}}_t \\ {\color{red}{s}}_{t+1} \\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t \right]\)
     - \(Q_\pi(s_t, a_t) = \mathbb{E}_{ \substack{{\color{red}{r}}_t\\ {\color{red}{s}}_{t+1}\\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t,{\color{red}{a}}_t \right]\)
-  - [策略梯度定理](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)(停时吸收态约定)：\(\nabla_\pi \mathbb{E}_{\substack{{\color{red}{r}} \\ {\color{red}{a}}\sim\pi}} \sum_{t=t_{min}}^{\color{red}{t_{max}}} {\color{red}{r}}_{t} = \mathbb{E}_{\substack{ {\color{red}{r}}\\ {\color{red}{a}}\sim\pi\\ {\color{red}{s}}}} \left[\sum_{t=t_{min}}^{\color{red}{t_{max}}} \nabla_\pi \log \mathbb{P}_\pi({\color{magenta}{a}}_t|{\color{magenta}{s}}_t)\sum_{t=t}^{\color{red}{t_{max}}} {\color{red}{r}}_t\right]\)
-  - 后验终生福祉(上帝视角)：\(\sum_{t=t_{min}}^{t_{max}}{r_t}\)，若离散时刻t连续化，就是精神效用在自由时间上的积分：\(\int_{t \in F} \mathrm{relu}\left(1-e^{-M_t}\right) dt\)
-  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{t_{max}} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
+  - [策略梯度定理](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)(停时吸收态约定)：\(\nabla_\pi \mathbb{E}_{\substack{{\color{red}{r}} \\ {\color{red}{a}}\sim\pi}} \sum_{t=tₘᵢₙ}^{tₘₐₓ} {\color{red}{r}}_{t} = \mathbb{E}_{\substack{ {\color{red}{r}}\\ {\color{red}{a}}\sim\pi\\ {\color{red}{s}}}} \left[\sum_{t=tₘᵢₙ}^{tₘₐₓ} \nabla_\pi \log \mathbb{P}_\pi({\color{magenta}{a}}_t|{\color{magenta}{s}}_t)\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\right]\)
+  - 后验终生福祉(上帝视角)：\(\sum_{t=tₘᵢₙ}^{tₘₐₓ}{r_t}\)，若离散时刻t连续化，就是精神效用在自由时间上的积分：\(\int_{t \in F} \mathrm{relu}\left(1-e^{-M_t}\right) dt\)
+  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{tₘₐₓ} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
   - 目标函数：先验终身福祉(信念估计值)最大化，不考虑18周岁前作为纯消费者的福祉。
 
 根据实验假定及各变量偏导，\(V_\pi({\color{red}{s}}_t)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。
@@ -149,7 +149,7 @@
 ## 现实案例验证
 抛开形式逻辑，我们用**边界排除法**来验证行为策略是否存在内点最优解：
 - 内卷至死的穷鬼：m′≫1 
-  计算后验终生福祉\(\sum_{t=t_{min}}^{t_{max}}{r_t}≈0\)
+  计算后验终生福祉\(\sum_{t=tₘᵢₙ}^{tₘₐₓ}{r_t}≈0\)
   - 张XF：高薪坐牢，手机是他的手铐(随时待命)，名利是他的刑具，最后被处以死刑(心源性过劳猝死)，没有死缓，立即执行(抢救无效)
   - 王JY：肠癌晚期英年早亡，身家百亿，人在天堂，钱在银行，人死了，钱没花完。有健康叫资产，没健康叫遗产，那遗产是不是他的财富？
 - 消极摆烂的策略：m′≈0
