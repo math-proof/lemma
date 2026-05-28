@@ -29,7 +29,7 @@
     - 当天年龄：\(A_t = \frac t {Y_s}\)
     - \(\color{red}H\)：身体健康指数(通过体检可观测)，\(\mathbb E[{\color{red}H}_t] \in [-\infty, 100]\)，\(\mathbb E [{\color{red}H}_{tₘᵢₙ}] = 100\)
       - 基线日死亡概率：\(q_{min}=2.74 \cdot 10^{-7}\)，基于国际生命表
-      - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot \mathrm{relu}({\color{red}H})}, \quad\lambda = -\frac{\ln q_{min}}{100}\)
+      - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot \mathrm{relu}({\color{red}H})}, \quad\lambda = -\frac{\ln q_{min}}{100}\)，依据：Gompertz死亡率定律
       - 身体衰老损耗/天：ΔHₐ = 0.0025，常量
       - tₒₒ：44723，极限生命末日，目前公认人类最长寿命纪录是法国的Jeanne Calment 122岁164天
       - \(\color{red}T\)：寿命，寿险精算学尾和公式：\[\mathbb{E}\left[{\color{red}T} \middle| {\color{red}H}_t \right] - t = 
@@ -126,25 +126,25 @@
         - 这本质是一个**永生智能体**(上帝：tₘₐₓ → ∞)的行为策略：无限寿命，无限次环境交互，无限历史观测数据，在任意状态下都能作出最优动作
         - 《论语》：**十五而有志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲不逾矩**⋯⋯；只要有足够寿命充分学习，就能成为圣人(上帝)：**真积力久则入圣，学至乎殁而后止**
       - 信念估计值：\(\mathbb P_\hat\pi\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布，信念MDP建模约定：人不是被客观现实驱动的机器，而是被主观信念(自己对现实的猜测)驱动的自由梦游者
-        - [信念错位](http://www.lemma.cn/py/?module=Probability.KL.ge.Zero)：\(\mathrm{KL}_t = \mathbb{KL}\left(\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\middle\|\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)\right)=\int \mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\log \frac {\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right) }{\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)} d a_t \gt 0\)，历史数据\({\color{red}o}_{:t+1}\)有限、观测不完全、信念(意识形态)污染，故等号不成立。所谓从心所欲不逾矩，本质是**知行合一**：\(\mathbb{P}_{\hat{\pi}} \to \mathbb{P}_{\pi}\)，KL散度 → 0
-        - 人间清醒：\(\mathfrak{C}_t = e ^ {-\mathrm{KL}_t} \in (0, 1)\)，生命智能体在长期强化学习迭代中看穿信念脑补值与上帝理论值之间的偏差，其概率学定义：失真信念策略相对上帝最优策略的信息对齐度，依据：大偏差理论[sanov定理](https://arxiv.org/abs/2112.04280)。所谓青原惟信禅宗三境：从看山是山(\(\mathfrak{C}_t \in (0,0.2)\)：朴素唯物主义)，到看山不是山(\(\mathfrak{C}_t \in [0.2,0.8)\)：怀疑解构主义)，最后看山还是山(\(\mathfrak{C}_t \in [0.8,1)\)：历史唯物主义)
+        - [信念错位指数](http://www.lemma.cn/py/?module=Probability.KL.ge.Zero)：\(\mathrm{KL}_t = \mathbb{KL}\left(\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\middle\|\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)\right)=\int \mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\log \frac {\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right) }{\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)} d a_t \gt 0\)，历史数据\({\color{red}o}_{:t+1}\)有限、观测不完全、信念(意识形态)污染，故等号不成立。所谓从心所欲不逾矩，本质是**知行合一**：\(\mathbb{P}_{\hat{\pi}} \to \mathbb{P}_{\pi}\)，KL散度 → 0
+        - 人间清醒：\(\mathfrak{C}_t = e ^ {-\mathrm{KL}_t} \in (0, 1)\)，生命智能体在长期强化学习迭代中看穿信念脑补值与上帝理论值之间的偏差，其概率学定义：失真信念策略相对上帝最优策略的信息对齐度，负指数函数的依据：大偏差理论[sanov定理](https://arxiv.org/abs/2112.04280)。所谓青原惟信禅宗三境：从看山是山(\(\mathfrak{C}_t \in (0,0.2)\)：朴素唯物主义)，到看山不是山(\(\mathfrak{C}_t \in [0.2,0.8)\)：怀疑解构主义)，最后看山还是山(\(\mathfrak{C}_t \in [0.8,1)\)：历史唯物主义)
     - 策略分类：
       - 躺平：m′≪1，作候鸟工不当社畜(如：技能零售)，赚到生存资料、风险兜底的钱见好就收，不为过多个别剩余价值买单，不花冤枉时间，自由健康优先
       - 内卷：m′≫1，用自由健康换个别剩余价值，但没花在生存刚需上，如通胀稀释、理财圈套、广告洗脑、房价倒挂，在流通回收机制下属于资本的口袋
 - 生命目标假设3：
-  - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}M}}\right) < {\color{red}f}\)，信念估计值：\({\color{red}{\hat{r}}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}{\hat{M}}}}\right)\)
+  - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}M}}\right) < {\color{red}f}\)，信念估计值：\({\color{red}{\hat{r}}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}{\hat{M}}}}\right)\)，其负指数函数形式与经济学恒定绝对风险厌恶(CARA)的边际效用递减同构：越富足的人越不把富足当回事
     - 财富是可以自由支配的时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。
     - 精神效用指数\(\color{red}{\hat{M}}_t\)是信念驱动的、基于有限历史的有偏估计，不是上帝观测值，其逼近程度取决于\(\mathfrak{C}_t\)
   - Markov历史无关假设：\({\color{red}{r}}_t \perp ({\color{red}{s}}_{:t},{\color{red}a}_{:t})\mid ({\color{red}{s}}_t,{\color{red}a}_t)\)​，当天客观状态\({\color{red}{s}}_t\)已充分编码，当天的影响已经写入历史存量，故假设成立
   - 状态价值函数：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t\right]\)，把握当下，眺望未来，评估人生棋局的终局价值，比如陶渊明：**悟已往之不谏，知来者之可追**
-  - 动作价值函数：\(Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t,{\color{magenta}{a}}_t\right]\)，在人生十字路口，比较每一分叉路的长期收益期望，择一而往，比如《行路难》：**多歧路，今安在**？
+  - 动作价值函数：\(Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t,{\color{magenta}{a}}_t\right]\)，在人生岔路口，比较每一分叉路的长期收益期望，择一而往，比如《行路难》：**多歧路，今安在**？
   - [Bellman](http://www.lemma.cn/py/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)方程：
     - \(V_\pi(s_t) = \mathbb{E}_{{\color{red}{a}}_t \sim \pi} \left[ Q_\pi(s_t, {\color{red}{a}}_t) \middle| {\color{red}{s}}_t \right] =\mathbb{E}_{\substack{{\color{red}{r}}_t \\ {\color{red}{s}}_{t+1} \\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t \right]\)
     - \(Q_\pi(s_t, a_t) = \mathbb{E}_{ \substack{{\color{red}{r}}_t\\ {\color{red}{s}}_{t+1}\\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t,{\color{red}{a}}_t \right]\)
   - [策略梯度定理](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)(停时吸收态约定)：\(\nabla_\pi \mathbb{E}_{\substack{{\color{red}{r}} \\ {\color{red}{a}}\sim\pi}} \sum_{t=tₘᵢₙ}^{tₘₐₓ} {\color{red}{r}}_{t} = \mathbb{E}_{\substack{ {\color{red}{r}}\\ {\color{red}{a}}\sim\pi\\ {\color{red}{s}}}} \left[\sum_{t=tₘᵢₙ}^{tₘₐₓ} \nabla_\pi \log \mathbb{P}_\pi({\color{magenta}{a}}_t|{\color{magenta}{s}}_t)\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\right]\)
   - 后验终生福祉(上帝视角)：\(\sum_{t=tₘᵢₙ}^{tₘₐₓ}{r_t}\)，若离散时刻t连续化，就是精神效用在自由时间上的积分：\(\int_{t \in F} \mathrm{relu}\left(1-e^{-M_t}\right) dt\)
   - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{tₘₐₓ} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
-  - 目标函数：先验终身福祉(信念估计值)最大化，不考虑18周岁前作为纯消费者的福祉。
+  - 目标函数：先验终身福祉(信念估计值)最大化(\(t \ge tₘᵢₙ\))
 
 根据实验假定及各变量偏导，\(V_\pi({\color{red}{s}}_t)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。
 生命智能体的生存最优解就是求一个最优行为策略，延长寿命T，提高劳动生产率，控制劳动力价值，避免系统触发破产，使\(V_\pi({\color{red}{s}}_t)\)最大化。
