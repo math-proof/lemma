@@ -123,8 +123,8 @@
   - 策略：
     - 概率分布
       - 上帝理论值：\(\mathbb P_{\pi}\left({\color{red}a} \middle| {\color{red}{s}}\right)\)，基于客观状态\(\color{red}{s}\)输出动作\({\color{red}a}\)的概率分布
-        - 这本质是一个**永生智能体**(上帝：tₘₐₓ → ∞)的行为策略：无限寿命，无限次环境交互，无限历史观测数据，在任意状态下都能作出最优动作
-        - 《论语》：**十五而有志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲不逾矩**⋯⋯；只要有足够寿命充分学习，就能成为圣人(上帝)：**真积力久则入圣，学至乎殁而后止**
+        - 上帝的数学定义：**永生智能体**，无限寿命(tₘₐₓ → ∞)，无限次环境交互，无限历史观测数据，无限次信念校准，其行为策略在任意状态下都能作出最优动作
+        - 凡人逼近上帝的样本轨迹：十五而有志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲不逾矩⋯⋯；只要历史足够漫长并充分学习，便能涌现出圣贤：真积力久则入圣，学至乎殁而后止，故**学不可以已**
       - 信念估计值：\(\mathbb P_\hat\pi\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布，信念MDP建模约定：人不是被客观现实驱动的机器，而是被主观信念(自己对现实的猜测)驱动的自由梦游者
         - [信念错位指数](http://www.lemma.cn/py/?module=Probability.KL.ge.Zero)：\(\mathrm{KL}_t = \mathbb{KL}\left(\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\middle\|\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)\right)=\int \mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\log \frac {\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right) }{\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)} d a_t \gt 0\)，历史数据\({\color{red}o}_{:t+1}\)有限、观测不完全、信念(意识形态)污染，故等号不成立。所谓从心所欲不逾矩，本质是**知行合一**：\(\mathbb{P}_{\hat{\pi}} \to \mathbb{P}_{\pi}\)，KL散度 → 0
         - 认知清醒：\(\mathfrak{C}_t = e ^ {-\mathrm{KL}_t} \in (0, 1)\)，生命智能体在长期强化学习迭代中看穿信念脑补值与上帝理论值之间的偏差，其概率学定义：失真信念策略相对上帝最优策略的信息对齐度，负指数函数的依据：大偏差理论[Sanov定理](https://arxiv.org/abs/2112.04280)。所谓青原惟信禅宗三境是认知清醒的演化：从看山是山(\(\mathfrak{C}_t \in (0,0.2)\)：朴素唯物主义)，到看山不是山(\(\mathfrak{C}_t \in [0.2,0.8)\)：怀疑解构主义)，最后看山还是山(\(\mathfrak{C}_t \in [0.8,1)\)：历史唯物主义)
