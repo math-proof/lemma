@@ -115,8 +115,8 @@
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
     - 后验滤波：\({\color{red}b}_t = \mathbb P({\color{red}{s}}_t | {\color{magenta}{o}}_{:t+1}, {\color{magenta}{a}}_{:t})\)，递推式：\({\color{red}b}_{t+1} = \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{o}}_{t+1}, {\color{magenta}{a}}_t)\)
-    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t}] =\int s_t \cdot {\color{red}b}_t d{s_t}\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
-    - 信念校准：Bayes更新递推式(温故而知新)：\[{\color{red}b}_{t+1} = \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{o}}_{t+1}, {\color{magenta}{a}}_t) = \frac {\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{b}}_t,{\color{magenta}{a}}_t) \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)} {\mathbb P({\color{magenta}{o}}_{t+1}| {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)} = \frac {\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t) \int \mathbb P({\color{red}{s}}_{t+1} | {\color{red}{s}}_t,{\color{magenta}{b}}_t, {\color{magenta}{a}}_t) \mathbb P({\color{red}{s}}_t | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t) d s_t} {\mathbb P({\color{magenta}{o}}_{t+1}| {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)} = \frac {\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t) \int \mathbb P({\color{red}{s}}_{t+1} | {\color{red}{s}}_t,{\color{magenta}{a}}_t) {\color{red}{b}}_t d s_t} {\mathbb P({\color{magenta}{o}}_{t+1}| {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)}\]，其中
+    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t}] =\int s_t \cdot {\color{red}b}_t d s_t\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
+    - 信念校准：Bayes更新递推式(温故而知新)：\[{\color{red}b}_{t+1} = \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{o}}_{t+1}, {\color{magenta}{a}}_t) \\= \frac {\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{b}}_t,{\color{magenta}{a}}_t) \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)} {\mathbb P({\color{magenta}{o}}_{t+1}| {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)} \\\propto \mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t) \int \mathbb P({\color{red}{s}}_{t+1} | {\color{red}{s}}_t,{\color{magenta}{b}}_t, {\color{magenta}{a}}_t) \mathbb P({\color{red}{s}}_t | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t) d s_t  \\\propto \mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t) \int \mathbb P({\color{red}{s}}_{t+1} | {\color{red}{s}}_t,{\color{magenta}{a}}_t) {\color{red}{b}}_t d s_t\]，其中
       - Markov观测独立假设：\(\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{b}}_t,{\color{magenta}{a}}_t)=\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t)\)，观测结果不受主观信念支配
       - Markov状态转移假设：\(\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)=\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{magenta}{a}}_t)\)，符合**一级混沌系统**公设：主观信念，观测行为不影响客观状态
       - \(\mathbb P({\color{red}{s}}_t | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)=\mathbb P({\color{red}{s}}_t | {\color{magenta}{b}}_t) = \mathbb P({\color{red}{s}}_t | {\color{magenta}{o}}_{:t+1}, {\color{magenta}{a}}_{:t}) = {\color{red}b}_t\)，当下行为不影响过去客观状态
@@ -161,9 +161,9 @@
 
 两个**角点解**后果是：卷不起，躺不平。社会经验**反证**了行为策略存在内点最优解的命题成立。那中庸躺平是不是内点最优解？让我们用这把理论锤子来敲打现实钉子：
 - 体制内的明哲保身：
-  - 三国司马懿：
+  - 躺赢曹魏的司马懿：
     - 拒绝无效内卷：认清智谋不及孔明，战胜没好处
-    - 杜绝精神PUA：孔明逼他出战，用妇人衣物极尽羞辱
+    - 免疫职场PUA：识破孔明以妇人衣物辱阵
     - 健康大于一切：**打不过你，我熬死你**
 - 体制外的犬儒主义：  
   - 曳尾涂中的庄子：庙堂供奉的神龟，尊贵已死；江湖摇尾的泥龟，卑贱自由。这叫乱世保命：**宁当王八，不作走狗**。庄子以其精神效用增益ΔMₑ，后验终生福祉反而更高
