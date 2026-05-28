@@ -95,12 +95,12 @@
     - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge tₘᵢₙ\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
-      - 破产，由随机不等式\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{C_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{C_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
+      - 破产，由随机不等式\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
       - **他心难题**：你帮助了某人，你在他心中的情谊存量不可观测，只能猜测(信念估计)：在你落难时他会帮到多少?
       - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
-      - \(\color{red}{C_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[ {\color{red}{C_{p,t}}} \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W_t}} + \eta_H {\color{red}{H_t}}+ \eta_L {\color{red}{L_{p,t}}}- \eta_v {\color{red}{v_t}}\right),\qquad 其中\eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
+      - \(\color{red}{W_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
       - \(\color{red}P\)是一种状态依赖型期权：
         - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。千年史例印证：落魄苏秦归故郭，**妻不下纴，嫂不为炊，父母不与言**。一个人越失败、越失势、越失能，越难从人际关系资产获得实际支持
         - 金融系统的反向定价：在你生命抵押品(包括\(\color{red}P\))优质时行权(放贷)，在你生命抵押品折损时平仓(法拍)。还款能力\({\color{red}\phi}_t\)是条件期望，条件是你的全部身家(包括\(\color{red}P\))，合同白纸黑字写好，比苏秦的嫂子更讲契约精神。掏空6个口袋按揭还贷本质是差序格局金融化：你其实只有一个口袋，其它5个口袋就是银行把你的\(\color{red}P\)货币化了
@@ -108,7 +108,7 @@
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_t = {\color{red}P}_{t + 1} - {\color{red}P}_t = ΔPᵣ{\color{red}Θ}_t - {\color{red}P}_t\left(1 - e^{-δᵣ}\right)\)
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
       - 部分可测：年龄、户籍、参保档位、收入口径
-      - \(\color{red}{C_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{C_s}}_t\middle|{\color{magenta}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
+      - \(\color{red}{W_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_s}}_t\middle|{\color{magenta}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
 - 行为策略假设2：
   - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日初观测到的多模态带噪生命特征：体检、表情、学历、存款、社交轨迹等，是客观状态的直接或代理观测值，是管中窥豹，不是庐山真面目
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配
@@ -183,7 +183,7 @@
 梭罗在《瓦尔登湖》的最小必要劳动时间量化实验表明：1年只需6周(技能提升后可压缩至几天、几小时)，剩余时间自己掌控，就是财富自由。
 财富自由论本质是以自由论财富，不是靠死劳动(他人活劳动)产生的被动收入≥生活支出，那本质上是一套不劳而获的人上人寄生剥削思想。
 提高个别劳动生产率产生的劳动报酬增量，属于真资产复杂劳动价值，**复杂劳动是多倍的简单劳动**，不是不劳而获，不算剥削他人。
-当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{C_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{C_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t \middle| {\color{magenta}s}_t\right)\)。
+当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t \middle| {\color{magenta}s}_t\right)\)。
 这笔钱不参与任何投机，它是你去阴曹地府跑一趟的**专属旅游基金**，因为天有不测风云，人有旦夕祸福：
 - 电信诈骗：ΔWᵥ ↑ → W↓ → W⁻ ↑ → 破产
 - 意外伤害：ΔHᵥ ↑ → H ↓ → Lₚ ↓ → w ↓ → W ↓ → 破产
