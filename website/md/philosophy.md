@@ -23,13 +23,13 @@
 - 生存边界假设1：
   - 具身资本
     - \(t \in \mathbb N\)：第t天日初时刻
-    - 公历回归年：\(Y_s = 365 + \frac{1}{4} - \frac{1}{100} + \frac{1}{400} = 365.2425
+    - 公历回归年/天：\(Y_s = 365 + \frac{1}{4} - \frac{1}{100} + \frac{1}{400} = 365.2425
 \)
     - 法定成年年龄18周岁天数：\(tₘᵢₙ=\lfloor 18 \cdot Y_s \rfloor = 6574\)
     - 当天年龄：\(A_t = \frac t {Y_s}\)
     - \(\color{red}H\)：身体健康指数(通过体检可观测)，\(H_{tₘᵢₙ} = 100\)
       - 基线日死亡概率：\(q_{min}=2.74 \cdot 10^{-7}\)，基于国际生命表
-      - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot \mathrm{relu}({\color{red}H})}, \quad\lambda = -\frac{\ln q_{min}}{100}\)，依据：Gompertz死亡率定律
+      - 死亡概率：\({\color{red}q} = e^{\frac{\ln q_{min}}{100} \cdot \mathrm{relu}({\color{red}H})}\)，依据：Gompertz死亡率定律
       - 身体衰老损耗/天：ΔHₐ = 0.0025，常量
       - tₒₒ：44723，极限生命末日，目前公认人类最长寿命纪录是法国的Jeanne Calment 122岁164天
       - \(\color{red}T\)：寿命，寿险精算学尾和公式：\[\mathbb{E}\left[{\color{red}T} \middle| {\color{red}H}_t \right] - t = 
@@ -40,7 +40,7 @@
 \sum_{j=0}^{t_{oo} - t - 1} \mathbb E\left[ \prod_{j=0}^{j}(1-{\color{red}q}_{t+j}) \middle| {\color{red}H}_t \right]\]
       - \(\color{red}ΔHᵥ\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
       - 身体健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - ΔHₒ{\color{red}L}_t - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
-    - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
+    - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)，本质是人脑生化奖惩系统的跨模态神经信号[多巴胺、血清素、催产素、内啡肽、脑啡肽、去甲肾上腺素、皮质醇等]的综合效用代理，依据：《人类简史》
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
         - 连续半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
@@ -54,7 +54,7 @@
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_t]≈4\)，产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
         - 体育健身\(\color{red}θ\)：\(\mathbb E[{\color{red}θ}_t]≈0.5\)，室内外徒手运动，内生健康投资，享受运动艺术；附带ΔHₑ健身增益/h，满足ΔHₑ < ΔHₐ / 24
-        - 情感投资\(\color{red}Θ\)：\(\mathbb E[{\color{red}Θ}_t]≈[0.5, 0.2, 0.1, 0.05, 0.02]\)，货币？￥，走亲访友，产生人际关系资产增益ΔPᵣ/h，精神效用增益ΔMᵣ/h
+        - 情感投资\(\color{red}Θ\)：\({\color{red}Θ}_t \in R^{\mathfrak {N}}\)，货币？￥，走亲访友，产生人际关系资产增益ΔPᵣ/h，精神效用增益ΔMᵣ/h
         - 发呆娱乐\(\color{red}ζ\)：\(\mathbb E[{\color{red}ζ}_t]≈1\)，创造灵感
       - 必要生理时间\(\color{red}ξ\)/h：
         - 睡眠\(\color{red}χ\)：\(\mathbb{E}({\color{red}χ}_t) = 7 + 2 · e^{-0.04·(A_t-18)}\)；根据睡眠医学，睡眠时长与全因死亡率呈非对称性U型曲线，故睡眠失调造成的健康损耗可建模为：\({\color{red}{ΔHᵪ}}_t=\alpha_\chi\left({\color{red}\chi}_t-\mathbb E[{\color{red}\chi}_t]\right)^2 \left(\frac 1 2 + \sigma\big(-\gamma_\chi({\color{red}\chi}_t-\mathbb E[{\color{red}\chi}_t])\big)\right)\)；睡梦中的快乐不是自由，梦里不知身是客，是缸中之脑
@@ -70,37 +70,40 @@
     - \(\color{red}W\)/￥：银行账面余额(实时可观测)，初始值(按揭还贷)：\(W_{tₘᵢₙ}=-300000\)
     - 存款：\({\color{red}{W^+}} = \frac {|{\color{red}W}| + {\color{red}W}} 2\)
     - 负债：\({\color{red}{W^-}} = \frac {|{\color{red}W}| - {\color{red}W}} 2\)
-    - 银行家年：Yₖ = 12 ⬝ 30 = 360 < Yₛ
+    - 银行家年/天：Yₖ = 12 ⬝ 30 = 360 < Yₛ
     - 日名义利率：[α⁺, α⁻]≈[0.01 / Yₛ, 0.03 / Yₖ]
     - \(\color{red}{\pi_s}_t\)：日通货膨胀率，货币持有者被征收的隐性铸币税率，目的：财政融资，刺激消费。
     - 日实际利率：\([r^+_t,r^-_t] = \left[α⁺ - \mathbb E[{\color{red}{\pi_s}}_t],α⁻ - \mathbb E[{\color{red}{\pi_s}}_t]\right]\)，依据费雪方程式(一阶近似)：名义利率 ≈ 实际利率 + 通胀期望。长期来看，\(r^+_t < 0\)，\(r^-_t > 0\)
     - 利息：\([{\color{red}{I^+}}, {\color{red}{I^-}}] = [{\color{red}{W^+}}α⁺, {\color{red}{W^-}}α⁻]
 \)
-    - \(\color{red}c\)：当天本金还款额
-    - \(\color{red}v\)：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}{\pi_s}}_{:t}] = v_{tₘᵢₙ}\prod_{j=tₘᵢₙ}^{t-1} (1+{\color{red}{\pi_s}}_j) \left(1 + \gamma_H (H_{tₘᵢₙ} - {\color{red}H}_t)\right) \left(1 + \gamma_M\mathrm{relu}(M_{tₘᵢₙ} - {\color{red}M}_t)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
-      - 生理要素：米饭60￥、蔬菜200￥、租房500￥、医保100￥、水电60￥、衣服40￥
-      - 家庭要素(法定义务)：赡养500￥，育儿？￥
-      - 教育要素：学习300￥
-      - 社会要素：通信40￥、社交？￥、公益性开源技术服务？￥
+    - \(\color{red}c\)/￥：当天本金还款额
+    - \(\color{red}v\)/￥：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}{\pi_s}}_{:t}] = v_{tₘᵢₙ}\prod_{j=tₘᵢₙ}^{t-1} (1+{\color{red}{\pi_s}}_j) \left(1 + \gamma_H (H_{tₘᵢₙ} - {\color{red}H}_t)\right) \left(1 + \gamma_M\mathrm{relu}(M_{tₘᵢₙ} - {\color{red}M}_t)\right)\)，依据劳动力价值分类，量化分解每月示例如下：
+      - 生理要素：米饭60、蔬菜200、租房500、医保100、水电60、衣服40
+      - 家庭要素(法定义务)：赡养500，育儿？
+      - 教育要素：学习300
+      - 社会要素：通信40、社交？、公益性开源技术服务？
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
     - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，依据：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于《资本论》定义的剩余价值的范畴，是资本家的让渡份额，本实验不研究资本家获得的剩余价值
     - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)
       - 全职工作条件下，自由分配受限，可通过拒绝加班减小m′
       - 灵活就业条件下，可自由分配m′
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
-    - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=tₘᵢₙ}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda^{t-j}} {  \left(1 - \lambda^{t-tₘᵢₙ+1}\right)/ \left(1 - \lambda\right)  } \middle| {\color{magenta}s_t}\right]\)
-    - 当天财务毒性：\({\color{red}{P_l}}_t = \dfrac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t \cdot 10^{6}}\)
-    - 财务毒性对(H, M)作用权重：[ωₕ, ωₘ]≈[0.2, 0.8]
+    - 日均净盈余：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=tₘᵢₙ}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda_w^{t-j}} {  \left(1 - \lambda_w^{t-tₘᵢₙ+1}\right)/ \left(1 - \lambda_w\right)  } \middle| {\color{magenta}s_t}\right],\quad \lambda_w \in (0, 1)\)，用指数加权移动平均([EWMA](http://www.lemma.cn/py/?module=Tensor.Eq.of.Eq.Eq.adam))估算还款能力
+    - 负债毒性/天：\({\color{red}{P_l}}_t = \frac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t}\)，负债的本质是被抵押的自由时间，也称财务毒性
+    - 负债毒性对(H, M)作用权重/天⁻¹：[ωₕ, ωₘ]≈[5e-7, 2e-6]
     - \(\color{red}{ΔWᵥ}\)：事件驱动型稀疏财务脉冲，随机变量，如：电信诈骗、彩票中奖、高端消费、重疾医疗
     - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge tₘᵢₙ\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
       - 破产，由随机不等式\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
-    - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值
-      - **他心难题**：你帮助了某人，你在他心中的情谊存量不可观测，只能猜测(信念估计)：在你落难时他会帮到多少?
-      - 连续半衰期/年：βₚ≈[50, 30, 15, 7, 2]，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
-      - \(\color{red}{W_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^5\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
+    - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值，人脉包括仇人，共计\(\mathfrak {N}\)人
+      - 心智理论，其中共情系数λₚ是关系网络有向图点对点权重，且λₚᵢₖ∈[-1,1]，i表示他人代号，k≥1表示信念阶数：
+        - 一阶信念：本体具身精神效用，如：我痛故我在
+        - 二阶信念：我对他人一阶信念的信念估值并乘上λₚᵢ₁，如：感同身受、急他人所急；**子非鱼，安知鱼之乐**，不是否定二阶信念，而是质疑其估值的合理性；由于二阶信念驱动，我帮助了某人免于痛苦
+        - 三阶信念：我对他人二阶信念的信念估值并乘上λₚᵢ₂，如：我的形象、口碑、声誉、信用；**子非我，安知我不知鱼之乐**，不是否定三阶信念，而是质疑其估值的合理性；我帮助了某人，我在他心(情谊银行)中的情谊存量不可观测(他心难题)，只能猜测(三阶信念估计)：在我落难时他会帮到多少？
+      - 连续半衰期/年：\(\beta_p \in R^{\mathfrak {N}}\)，一般亲情50、爱情30、友情15、人情7、人脉2，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
+      - \(\color{red}{W_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {N}}\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
       - \(\color{red}P\)是一种状态依赖型期权：
         - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。千年史例印证：落魄苏秦归故郭，**妻不下纴，嫂不为炊，父母不与言**。一个人越失败、越失势、越失能，越难从人际关系资产获得实际支持
         - 金融系统的反向定价：在你生命抵押品(包括\(\color{red}P\))优质时行权(放贷)，在你生命抵押品折损时平仓(法拍)。还款能力\({\color{red}\phi}_t\)是条件期望，条件是你的全部身家(包括\(\color{red}P\))，合同白纸黑字写好，比苏秦的嫂子更讲契约精神。掏空6个口袋按揭还贷本质是差序格局金融化：你其实只有一个口袋，其它5个口袋就是银行把你的\(\color{red}P\)货币化了
@@ -300,7 +303,7 @@
 
 #### 零负债财富自由
 无房无车、无妻无子是人生失败。
-人为了规避社会性死亡(损失厌恶)，主动背上负债化疗(财务毒性)，这是以毒攻毒还是饮鸩止渴？
+人为了规避社会性死亡(损失厌恶)，主动背上负债化疗(负债毒性)，这是以毒攻毒还是饮鸩止渴？
 事实上，财富自由的核心不是花更多自由时间赚更多钱，而是花更少钱换更多自由时间。
 自由不是你想买什么就能买什么，而是你不想买什么就能不买什么。
 剥离伪刚性负债枷锁，轻松实现财富跃迁。
