@@ -27,7 +27,7 @@
 \)
     - 法定成年年龄18周岁天数：\(tₘᵢₙ=\lfloor 18 \cdot Y_s \rfloor = 6574\)
     - 当天年龄：\(A_t = \frac t {Y_s}\)
-    - \(\color{red}H\)：身体健康指数(通过体检可观测)，\(\mathbb E[{\color{red}H}_t] \in [-\infty, 100]\)，\(\mathbb E [{\color{red}H}_{tₘᵢₙ}] = 100\)
+    - \(\color{red}H\)：身体健康指数(通过体检可观测)，\(H_{tₘᵢₙ} = 100\)
       - 基线日死亡概率：\(q_{min}=2.74 \cdot 10^{-7}\)，基于国际生命表
       - 死亡概率：\({\color{red}q} = e^{-\lambda \cdot \mathrm{relu}({\color{red}H})}, \quad\lambda = -\frac{\ln q_{min}}{100}\)，依据：Gompertz死亡率定律
       - 身体衰老损耗/天：ΔHₐ = 0.0025，常量
@@ -40,7 +40,7 @@
 \sum_{j=0}^{t_{oo} - t - 1} \mathbb E\left[ \prod_{j=0}^{j}(1-{\color{red}q}_{t+j}) \middle| {\color{red}H}_t \right]\]
       - \(\color{red}ΔHᵥ\)：事件驱动型稀疏身体健康损伤脉冲，如：车祸，伤残，重疾，人身意外
       - 身体健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - ΔHₒ{\color{red}L}_t - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
-    - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测(**子非鱼，安知鱼之乐**)，\(\mathbb E[{\color{red}M}_t] \in [-\infty, \infty]\)，\(\mathbb E [{\color{red}M}_{tₘᵢₙ}] = 100\)
+    - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - \(\color{red}\Xi_m\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
         - 连续半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
@@ -62,7 +62,7 @@
       - 异化劳动时间\(\color{red}L\)/h：\(\mathbb E[{\color{red}L}_t]≈8\)，工作日，受市场就业率、就业方式影响，产生文化资本增益ΔKₒ/h，造成身心过劳损耗ΔHₒ/h、ΔMₒ/h；上班摸鱼不算自由时间，主观快乐≠自由。因为时间否决权在老板手里，不在你的嘴里，你被依法炒掉，回家摸王八才算自由。\({\color{red}L} = {\color{red}n} + {\color{red}ς}\)：
         - \(\color{red}n\)：必要劳动时间，**劳动者为了生产自身劳动力价值，所必须付出的劳动时间。劳动力价值决定必要劳动时间的长短**
         - \(\color{red}ς\)：剩余劳动时间，定义内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
-  - 文化资本\(\color{red}K\)：学历、专利、作品集可代理观测，肚子里的墨水(知识量)不可测
+  - 文化资本\(\color{red}K\)：学历、专利、作品集可代理观测，腹中墨水不可测
     - 文化资本差分：\(\Delta{\color{red}K}_t = {\color{red}K}_{t + 1} - {\color{red}K}_t = ΔKₑ{\color{red}ε}_t + ΔKₒ{\color{red}L}_t\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_t \perp ({\color{red}H}_t, {\color{red}M}_t, {\color{red}K}_t),\quad \mathbb E[{\color{red}{\mu_m}}_t] = 1\)
     - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}K}_t] = {\mu_m}_{t}{L_p}_{tₘᵢₙ}\left(\frac{\mathrm{relu}({\color{red}H}_t)}{H_{tₘᵢₙ}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_t - M_{tₘᵢₙ})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_t}{K_{tₘᵢₙ}}\right)\right)\)
@@ -331,7 +331,7 @@
   - 自我剥削：  
   是比他人剥削更高效的统治形式，因为它伴随着一种自由的感觉，让我们心甘情愿地压榨自身。剥削者同时是被剥削者。施虐者和受害者之间不分彼此。韩炳哲说，功绩至上的主体自认为是自由的，实际上却是一个奴仆，是没有主人强迫却自愿被剥削的绝对的奴仆。没有主人强迫他去劳动。功绩主体努力实现自我，直至死亡。自我实现和自我毁灭在这里合而为一。
   - 兴趣变现：  
-  Aristotle《尼各马可伦理学》做过分类：生产目的是在生产之外的；实践目的就在实践之中。兴趣变现是一种类本质实践：变现是辅产品，兴趣才是目的，如钓鱼、扔鱼，陌生人打赏。这和自我剥削的目的不一样。
+  Aristotle《尼各马可伦理学》：生产目的是在生产之外的；实践目的就在实践之中。兴趣变现是一种类本质实践：变现是辅产品，兴趣才是目的，如钓鱼、扔鱼，陌生人打赏。这和自我剥削的目的不一样。
 - 兴趣变现产生的劳动价值不是劳动力价值，也不是剩余价值
 
 
