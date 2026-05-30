@@ -42,7 +42,7 @@
       - 身体健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - ΔHₒ{\color{red}L}_t - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
     - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
-      - \(\color{red}{Ξ_m}\)：事件驱动型稀疏精神奖励脉冲，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
+      - 事件驱动型稀疏精神奖励脉冲(下文心智理论)：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m,n]}_t + \sum_{o=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n,o]}_t\right)\right)\right)\right)\right)\)，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
         - 连续半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\beta_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_t > 0\)，半衰期短，依据：享乐适应，快乐跑步机假说
