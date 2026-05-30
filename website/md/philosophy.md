@@ -43,7 +43,7 @@
     - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025，常量
       - 事件驱动型稀疏精神奖励脉冲(下文心智理论)：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m,n]}_t + \sum_{o=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n,o]}_t\right)\right)\right)\right)\right)\)，经验性解释：人逢喜事精神爽，闷上心来瞌睡多；例如：情人变心、仇人被杀、悲欢聚散，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
-        - 连续半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
+        - 半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\beta_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_t > 0\)，半衰期短，依据：享乐适应，快乐跑步机假说
         - 亲身体验的必然痛苦：\({\Xi_m}_t < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_t = \frac{M_t + |{\Xi_m}_t|}{M_t - |{\Xi_m}_t|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是去追求幸福，而是去规避痛苦
@@ -101,17 +101,17 @@
       - 心智理论，其中事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是关系网络有向图点对点权重，i表示人称代词(i=0表示我，j>0表示你，k表示他)，当天没有激活为0：
         - 一阶信念奖励：\({\color{red}{Ω}}^{[i]}_t\)，本体具身精神效用，我痛故我在
         - 二阶信念奖励：\({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)，我对你的同情心(或敌意：Ιₜᵢⱼ<0)，这是4岁孩童的智商；条件期望的依据：庄子游于濠梁之上，体验了出游从容的快乐，故他感同身受地说：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑其估值的条件来源，凭什么知？
-        - 三阶信念奖励：\({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)，他在你心中(k≠i，否则为：我在你心中)的形象、口碑、名誉、信用，典型表现：打肿脸充胖子；我帮助了某人，我在他心(情谊银行)中的情谊存量不可观测(他心难题)，只能猜测：在我落难时他会帮到多少？
+        - 三阶信念奖励：\({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)，他在你心中(k≠i，否则为：我在你心中)的形象、口碑、名誉、信用，典型表现：打肿脸充胖子(虚荣心)；我帮助了某人，我在他心(情谊银行)中的情谊存量不可观测(他心难题)，只能猜测：在我落难时他会帮到多少？
         - 四阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k]}_t \right]\)，我对你的形象、口碑、名誉、信用的猜测，表现为羞辱、诽谤、奉承、赞美、印象管理、甚至杀人诛心；冯·诺伊曼打扑克十打九输，Bayes、全概率公式都用上了，却还是输？不懂**隐藏意图**，好牌得意忘形，烂牌垂头丧气，一举一动被看得透透的，不输才怪
         - 五阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l]}_t \right]\)，我猜到了你对他(包括我)的猜测；千古第一阴谋·王猛金刀计：施计者(王猛)，间谍(金熙)，受计者(慕容令、苻坚)，被害者(慕容垂)
         - 六阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m,n]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m]}_t \right]\)，千古第一阳谋·汉武帝推恩令：拉近朋友(政治联盟)最快方式是找共同敌人，对应负负得正(敌人的敌人)：Ιₜᵢⱼ<0∧Ιₜⱼₖ<0⇒ΙₜᵢⱼΙₜⱼₖ>0
         - 七阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m,n,o]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n,o]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m,n]}_t \right]\)，《红楼梦》：林黛玉认为贾宝玉知道贾母怀疑王夫人想让薛姨妈以为贾宝玉想娶薛宝钗，能处理此类复杂人情世故的绝对是人精
         - n阶信念奖励：\({\color{red}{Ω}}^{i_{:n}}_t={\color{red}Ι}_{t,i_0,i_1}\mathbb E\left[{\color{red}{Ω}}^{i_{1:n}}_t\middle|{\color{magenta}{Ω}}^{[i_{:n-1}]}_t \right]\)，我对你n-1阶信念奖励的期望乘上你我共情系数，通过操控你n-1阶信念实现奖励最大化；递归高阶信念奖励是信念脑补值(元认知心流)，不是生化系统分泌的多巴胺剂量，《人类简史》指出：操控人的生化系统产生快感，不等价于虚构故事(文明符号)驱动的人类福祉
-      - 连续半衰期/年：\(\beta_p \in R^{\mathfrak {N}}\)，一般亲情50、爱情30、友情15、人情7、人脉2，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
       - \(\color{red}{W_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {N}}\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
       - \(\color{red}P\)是一种状态依赖型期权：
         - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。千年史例印证：落魄苏秦归故郭，**妻不下纴，嫂不为炊，父母不与言**。一个人越失败、越失势、越失能，越难从人际关系资产获得实际支持
         - 金融系统的反向定价：在你生命抵押品(包括\(\color{red}P\))优质时行权(放贷)，在你生命抵押品折损时平仓(法拍)。还款能力\({\color{red}\phi}_t\)是条件期望，条件是你的全部身家(包括\(\color{red}P\))，合同白纸黑字写好，比苏秦的嫂子更讲契约精神。掏空6个口袋按揭还贷本质是差序格局金融化：你其实只有一个口袋，其它5个口袋就是银行把你的\(\color{red}P\)货币化了
+      - 半衰期/年：\(\beta_p \in R^{\mathfrak {N}}\)，一般亲情50、爱情30、友情15、人情7、人脉2，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
       - 人际关系日折旧率：\(δᵣ = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折旧的依据：心理学：艾宾浩斯遗忘曲线，社会交换理论：互惠义务具有时效性
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_t = {\color{red}P}_{t + 1} - {\color{red}P}_t = ΔPᵣ{\color{red}Θ}_t - {\color{red}P}_t\left(1 - e^{-δᵣ}\right)\)
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
