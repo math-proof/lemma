@@ -54,7 +54,7 @@
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_t]≈4\)，产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
         - 体育健身\(\color{red}θ\)：\(\mathbb E[{\color{red}θ}_t]≈0.5\)，室内外徒手运动，内生健康投资，享受运动艺术；附带ΔHₑ健身增益/h，满足ΔHₑ < ΔHₐ / 24
-        - 情感投资\(\color{red}Θ\)：\({\color{red}Θ}_t \in R^{\mathfrak {N}}\)，货币？￥，走亲访友，产生人际关系资产增益ΔPᵣ/h，精神效用增益ΔMᵣ/h
+        - 情感投资\(\color{red}Θ\)：\({\color{red}Θ}_t \in R^{\mathfrak {D}}\)，货币？￥，走亲访友，产生人际关系资产增益ΔPᵣ/h，精神效用增益ΔMᵣ/h
         - 发呆娱乐\(\color{red}ζ\)：\(\mathbb E[{\color{red}ζ}_t]≈1\)，创造灵感
       - 必要生理时间\(\color{red}ξ\)/h：
         - 睡眠\(\color{red}χ\)：\(\mathbb{E}({\color{red}χ}_t) = 7 + 2 · e^{-0.04·(A_t-18)}\)；根据睡眠医学，睡眠时长与全因死亡率呈非对称性U型曲线，故睡眠失调造成的健康损耗可建模为：\({\color{red}{ΔHᵪ}}_t=\alpha_\chi\left({\color{red}\chi}_t-\mathbb E[{\color{red}\chi}_t]\right)^2 \left(\frac 1 2 + \sigma\big(-\gamma_\chi({\color{red}\chi}_t-\mathbb E[{\color{red}\chi}_t])\big)\right)\)；睡梦中的快乐不是自由，梦里不知身是客，是缸中之脑
@@ -97,7 +97,7 @@
       - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
       - 破产，由随机不等式\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
-    - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉]关系价值，人脉包括仇人，共计\(\mathfrak {N}\)人
+    - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉(含仇人)]关系价值，共计\(\mathfrak {D} \le 150\)人
       - 心智理论，其中事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是关系网络有向图点对点权重，i表示人称代词(i=0表示我，j>0表示你，k表示他)，当天没有激活为0：
         - 一阶信念奖励：\({\color{red}{Ω}}^{[i]}_t\)，本体具身精神效用，我痛故我在
         - 二阶信念奖励：\({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)，我对你的同情心(或敌意：Ιₜᵢⱼ<0)，这是[4岁孩童智商](https://zhuanlan.zhihu.com/p/461128550))；条件期望的依据：庄子游于濠梁之上，体验了出游从容的快乐，故他感同身受地说：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑其估值的条件来源，凭什么知？[按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：你有个按钮，按一下你多活一天，地球上就有个陌生人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当你的共情系数Ιₘᵢₙ<6.37e-5时，大概率会按下按钮
@@ -107,11 +107,11 @@
         - 六阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m,n]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m]}_t \right]\)，操控群体立场，千古第一阳谋·推恩令：拉近朋友(政治联盟)最快方式是找共同敌人，对应负负得正(敌人之敌)：Ιₜᵢⱼ<0∧Ιₜⱼₖ<0⇒ΙₜᵢⱼΙₜⱼₖ>0
         - 七阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m,n,o]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n,o]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m,n]}_t \right]\)，《红楼梦》：林黛玉**认为**贾宝玉**知道**贾母**怀疑**王夫人**想让**薛姨妈**认可**贾宝玉**想娶**薛宝钗，最终驱动**焚稿断痴情**
         - n阶信念奖励：\({\color{red}{Ω}}^{i_{:n}}_t={\color{red}Ι}_{t,i_0,i_1}\mathbb E\left[{\color{red}{Ω}}^{i_{1:n}}_t\middle|{\color{magenta}{Ω}}^{[i_{:n-1}]}_t \right]\)，我对你n-1阶信念奖励的期望乘上你我共情系数；递归高阶信念奖励是信念脑补值(元认知心流)，不是生化系统分泌的多巴胺剂量。《人类简史》指出：操控人的生化系统产生快感，不等价于虚构故事(文明符号)驱动的人类福祉。一对夫妻遇到了死神。死神让他们猜拳：谁输谁将被带走。夫妻约定都出石头，结果丈夫出了布，妻子出了剪刀。用高阶信念和催产素分别怎么解释？
-      - \(\color{red}{W_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {N}}\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
+      - \(\color{red}{W_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
       - \(\color{red}P\)是一种状态依赖型期权：
         - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。千年史例印证：落魄苏秦归故郭，**妻不下纴，嫂不为炊，父母不与言**。一个人越失败、越失势、越失能，越难从人际关系资产获得实际支持
         - 金融系统的反向定价：在你生命抵押品(包括\(\color{red}P\))优质时行权(放贷)，在你生命抵押品折损时平仓(法拍)。还款能力\({\color{red}\phi}_t\)是条件期望，条件是你的全部身家(包括\(\color{red}P\))，合同白纸黑字写好，比苏秦的嫂子更讲契约精神。掏空6个口袋按揭还贷本质是差序格局金融化：你其实只有一个口袋，其它5个口袋就是银行把你的\(\color{red}P\)货币化了
-      - 半衰期/年：\(\beta_p \in R^{\mathfrak {N}}\)，一般亲情50、爱情30、友情15、人情7、人脉2，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
+      - 半衰期/年：\(\beta_p \in R^{\mathfrak {D}}\)，一般亲情50、爱情30、友情15、人情7、人脉2，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
       - 人际关系日折旧率：\(δᵣ = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折旧的依据：心理学：艾宾浩斯遗忘曲线，社会交换理论：互惠义务具有时效性
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_t = {\color{red}P}_{t + 1} - {\color{red}P}_t = ΔPᵣ{\color{red}Θ}_t - {\color{red}P}_t\left(1 - e^{-δᵣ}\right)\)
     - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
