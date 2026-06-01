@@ -96,37 +96,37 @@
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
       - 破产，由随机不等式\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
-  - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
+  - 社会资本，是指人际、组织、政治等关系价值，在主体遭遇风险(含生存竞争)时转化为实际支持的能力：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉(含仇人)]关系价值，共计\(\mathfrak {D} \le 150\)人
-      - 心智理论，其中事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是关系网络有向图点对点权重，i表示人称代词(i=0表示我，j>0表示你，k表示他)，没有激活为0：
+      - 心智理论，其中事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是关系网络有向图点对点权重，i表示人称代词(i=0表示我，j>0表示你，k表示他)，未激活为0：
         - 一阶信念：\({\color{red}{Ω}}^{[i]}_t\)，本体具身精神效用
-        - 二阶信念：\({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)，我对你的同情心(或敌意：Ιₜᵢⱼ<0)，这是[4岁孩童智商](https://zhuanlan.zhihu.com/p/461128550))；条件期望的依据：庄子游于濠梁之上，体验了出游从容的快乐，故他感同身受地说：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑其估值的条件来源？[按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：你有个按钮，按一下多活一天，地球上就有个陌生人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当你的共情系数Ιₘᵢₙ<6.37e-5时，大概率会按下按钮
+        - 二阶信念：\({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)，我对你的同情心(或敌意：Ιₜᵢⱼ<0)，是[4岁孩童智商](https://zhuanlan.zhihu.com/p/461128550))；条件期望的依据：庄子游于濠梁之上，体验了出游从容之乐，故他感同身受地说：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑其估值的条件来源？[按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：你有个按钮，按一下多活一天，地球上就有个陌生人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当你的共情系数Ιₘᵢₙ<6.37e-5时，大概率会按下按钮
         - 三阶信念：\({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)，他在你心中(k≠i，否则为：我在你心中)的口碑、名誉、尊严、信用，典例：打肿脸充胖子(虚荣心)；我帮了某人，我在他心(情谊银行)中的情谊存量不可观测(他心难题)，只能猜测：在我落难时他会帮到多少？
         - 四阶信念：\({\color{red}{Ω}}^{[i,j,k,l]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k]}_t \right]\)，虚构叙事、印象管理，表现为羞辱、诽谤、奉承、赞美、甚至杀人诛心；冯·诺伊曼打牌十打九输，Bayes、全概率公式都用上了，却还是输？不懂**隐藏意图**(我不想让对手获知我评估了各方的牌)，好牌得意忘形，烂牌垂头丧气，一举一动被看得透透的，不输才怪
-        - 五阶信念：\({\color{red}{Ω}}^{[i,j,k,l,m]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l]}_t \right]\)，群体意识，宗教信仰：我认为别人都相信祂希望我们期待死后去天堂；千古第一阴谋(利用信息差)·金刀计：施计者(王猛)，间谍(金熙：假情报)，受计者(慕容令、苻坚)，被害者(慕容垂)
+        - 五阶信念：\({\color{red}{Ω}}^{[i,j,k,l,m]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l]}_t \right]\)，群体意识，宗教信仰：我认为别人都相信祂希望我们期待死后去天堂；千古第一阴谋(利用信息差)·金刀计：施计者(王猛)，间谍(金熙)，受计者(慕容令、苻坚)，被害者(慕容垂)，王猛赌定[金熙接受[慕容令笃信[苻坚连坐猜忌[慕容垂要谋反]]]]，这个拓扑信念奖励的最大化，比如慕容垂亲信金熙被收买后用金刀卖力做局、假传父命、劝说慕容令叛逃，就是王猛的政治资本增量，而卖力强度∝收买力度∝王猛的\(\color{red}W\)
         - 六阶信念：\({\color{red}{Ω}}^{[i,j,k,l,m,n]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m]}_t \right]\)，操控群体立场，千古第一阳谋(利用信念差)·推恩令：表面施恩，实质削藩，拉近朋友(政治联盟)最快方式是找共同敌人，对应负负得正(敌人之敌)：Ιₜᵢⱼ<0∧Ιₜⱼₖ<0⇒ΙₜᵢⱼΙₜⱼₖ>0
         - 七阶信念：\({\color{red}{Ω}}^{[i,j,k,l,m,n,o]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n,o]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m,n]}_t \right]\)，《红楼梦》：林黛玉**认为**贾宝玉**知道**贾母**怀疑**王夫人**想让**薛姨妈**认可**贾宝玉**想娶**薛宝钗，最终驱动**焚稿断痴情**
-        - n阶信念：\({\color{red}{Ω}}^{i_{:n}}_t={\color{red}Ι}_{t,i_0,i_1}\mathbb E\left[{\color{red}{Ω}}^{i_{1:n}}_t\middle|{\color{magenta}{Ω}}^{[i_{:n-1}]}_t \right]\)，我对你n-1阶信念奖励的期望乘上你我共情系数；递归高阶信念奖励是信念脑补值(元认知心流)，不是生化系统分泌的多巴胺剂量。《人类简史》指出：操控人的生化系统产生快感，不等价于虚构故事(文明符号)驱动的人类福祉。夫妻遇死神，猜拳定生死；共谋出石头，一布一剪刀。用高阶信念和催产素(神经还原论)分别如何解释？
-      - \(\color{red}{W_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
+        - n阶信念：\({\color{red}{Ω}}^{i_{:n}}_t={\color{red}Ι}_{t,i_0,i_1}\mathbb E\left[{\color{red}{Ω}}^{i_{1:n}}_t\middle|{\color{magenta}{Ω}}^{[i_{:n-1}]}_t \right]\)，我对你n-1阶信念奖励期望乘上你我共情系数；递归高阶信念奖励是信念脑补值(元认知心流)，不是多巴胺分泌剂量。《人类简史》指出：操控人的生化系统产生快感，不等价于虚构故事(文明符号)驱动的人类福祉。夫妻遇死神，猜拳定生死；共谋出石头，一布一剪刀。用高阶信念和催产素(神经还原论)分别如何解释？
+      - \(\color{red}{W_p}\)/￥：锦上添花式资助，用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
       - \(\color{red}P\)是一种状态依赖型期权：
         - 人情社会的兑现逻辑：在你生命抵押品(不含\(\color{red}P\))优质时行权(兑现)概率高，在你生命抵押品折损时行权(兑现)概率低。千年史例印证：落魄苏秦归故郭，**妻不下纴，嫂不为炊，父母不与言**。一个人越失败、越失势、越失能，越难从人际关系资产获得实际支持
-        - 金融系统的反向定价：在你生命抵押品(包括\(\color{red}P\))优质时行权(放贷)，在你生命抵押品折损时平仓(法拍)。还款能力\({\color{red}\phi}_t\)是条件期望，条件是你的全部身家(包括\(\color{red}P\))，合同白纸黑字写好，比苏秦的嫂子更讲契约精神。掏空6个口袋按揭还贷本质是差序格局金融化：你其实只有一个口袋，其它5个口袋就是银行把你的\(\color{red}P\)货币化了
+        - 金融系统的反向定价：在你生命抵押品(包括\(\color{red}P\))优质时行权(放贷)，在你生命抵押品折损时平仓(法拍)。还款能力\({\color{red}\phi}_t\)是条件期望，条件是你的全部身家(包括\(\color{red}P\))，合同白纸黑字写好，比苏秦的嫂子更讲契约精神。掏空6个口袋按揭还贷本质是差序格局金融化：你其实只有一个口袋，其它5个口袋是银行把你的\(\color{red}P\)货币化了
       - 半衰期/年：\(\beta_p \in R^{\mathfrak {D}}\)，一般亲情50、爱情30、友情15、人情7、人脉2，依据社会学：格兰诺维特强弱关系理论，演化生物学：亲缘选择理论
       - 人际关系日折旧率：\(δᵣ = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折旧的依据：心理学：艾宾浩斯遗忘曲线，社会交换理论：互惠义务具有时效性
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_t = {\color{red}P}_{t + 1} - {\color{red}P}_t = ΔPᵣ{\color{red}Θ}_t - {\color{red}P}_t\left(1 - e^{-δᵣ}\right)\)
-    - 制度性支持\(\color{red}S\)：凭法律资格获得医保、低保等
+    - 普惠福利\(\color{red}S\)：凭法律资格获得医保、低保等
       - 部分可测：年龄、户籍、参保档位、收入口径
-      - \(\color{red}{W_s}\)/￥：雪中送炭式援助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_s}}_t\middle|{\color{magenta}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
+      - \(\color{red}{W_s}\)/￥：雪中送炭式援助，用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_s}}_t\middle|{\color{magenta}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
 - 行为策略假设2：
   - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日初观测到的多模态带噪生命特征：体检、表情、学历、存款、社交轨迹等，是客观状态的直接或代理观测值，是管中窥豹，不是庐山真面目
-  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种实际分配
+  - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的一种分配
   - 状态：描述当前生存状态存量，仅部分可观测
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
     - 后验滤波：\({\color{red}b}_t = \mathbb P({\color{red}{s}}_t | {\color{magenta}{o}}_{:t+1}, {\color{magenta}{a}}_{:t})\)，递推式：\({\color{red}b}_{t+1} = \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{o}}_{t+1}, {\color{magenta}{a}}_t)\)
     - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t}] =\int s_t \cdot {\color{red}b}_t d s_t\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
     - 信念校准：Bayes更新递推式(温故而知新)：\[{\color{red}b}_{t+1} = \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{o}}_{t+1}, {\color{magenta}{a}}_t) \\= \frac {\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{b}}_t,{\color{magenta}{a}}_t) \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)} {\mathbb P({\color{magenta}{o}}_{t+1}| {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)} \\\propto \mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t) \int \mathbb P({\color{red}{s}}_{t+1} | {\color{red}{s}}_t,{\color{magenta}{b}}_t, {\color{magenta}{a}}_t) \mathbb P({\color{red}{s}}_t | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t) d s_t  \\\propto \mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t) \int \mathbb P({\color{red}{s}}_{t+1} | {\color{red}{s}}_t,{\color{magenta}{a}}_t) {\color{red}{b}}_t d s_t\]，其中
       - Markov观测独立假设：\(\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{b}}_t,{\color{magenta}{a}}_t)=\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t)\)，观测结果不受主观信念支配
-      - Markov状态转移假设：\(\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)=\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{magenta}{a}}_t)\)，符合**一级混沌系统**公设：主观信念，观测行为不影响客观状态
+      - Markov状态转移假设：\(\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)=\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{magenta}{a}}_t)\)，符合**一级混沌系统**公设：主观信念不影响客观状态
       - \(\mathbb P({\color{red}{s}}_t | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)=\mathbb P({\color{red}{s}}_t | {\color{magenta}{b}}_t) = \mathbb P({\color{red}{s}}_t | {\color{magenta}{o}}_{:t+1}, {\color{magenta}{a}}_{:t}) = {\color{red}b}_t\)，当下行为不影响过去客观状态
   - 策略：
     - 概率分布
@@ -143,8 +143,8 @@
         | 到看山不是山 |Cₜ∈[0.2,0.8)|怀疑解构主义|反题：否定现实 |
         |最后看山还是山| Cₜ∈[0.8,1) |历史唯物主义|合题：否定之否定|
     - 策略分类：
-      - 躺平：m′≪1，作候鸟工不当社畜(如：技能零售)，赚到生存资料、风险兜底的钱见好就收，不为过多个别剩余价值买单，不花冤枉时间，自由健康优先
-      - 内卷：m′≫1，用自由健康换个别剩余价值，但没花在生存刚需上，如通胀稀释、理财圈套、广告洗脑、房价倒挂，在流通回收机制下属于资本的口袋
+      - 躺平：m′≪1，作候鸟工不当社畜(如：技能零售)，赚到生存资料、风险兜底的钱见好就收，不为过多个别剩余价值买单，不花冤枉时间，健康优先
+      - 内卷：m′≫1，用自由换个别剩余价值，但没花在生存刚需上，如通胀稀释、理财圈套、广告洗脑、房价倒挂，在流通回收机制下属于资本的口袋
 - 生命目标假设3：
   - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}M}}\right) < {\color{red}f}\)，信念估计值：\({\color{red}{\hat{r}}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}{\hat{M}}}}\right)\)，其负指数函数形式与经济学恒定绝对风险厌恶(CARA)的边际效用递减同构：越富足的人越不把富足当回事
     - 财富是可以自由支配的时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的使用或发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，而劳动时间又是用一定的时间单位如小时、日等作尺度。
@@ -157,12 +157,11 @@
     - \(Q_\pi(s_t, a_t) = \mathbb{E}_{ \substack{{\color{red}{r}}_t\\ {\color{red}{s}}_{t+1}\\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t,{\color{red}{a}}_t \right]\)
   - [策略梯度定理](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)(停时吸收态约定)：\(\nabla_\pi \mathbb{E}_{\substack{{\color{red}{r}} \\ {\color{red}{a}}\sim\pi}} \sum_{t=tₘᵢₙ}^{tₘₐₓ} {\color{red}{r}}_{t} = \mathbb{E}_{\substack{ {\color{red}{r}}\\ {\color{red}{a}}\sim\pi\\ {\color{red}{s}}}} \left[\sum_{t=tₘᵢₙ}^{tₘₐₓ} \nabla_\pi \log \mathbb{P}_\pi({\color{magenta}{a}}_t|{\color{magenta}{s}}_t)\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\right]\)
   - 后验终生福祉(上帝视角)：\(\sum_{t=tₘᵢₙ}^{tₘₐₓ}{r_t}\)，若离散时刻t连续化，就是精神效用在自由时间上的积分：\(\int_{t \in F} \mathrm{relu}\left(1-e^{-M_t}\right) dt\)
-  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{tₘₐₓ} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，依据Gary Becker《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
+  - 先验终身福祉(跨期效用)：\(V_\pi({\color{red}{s}}_t)\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{tₘₐₓ} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，《时间分配理论》：先验终身福祉最大化就是将时间视为一种稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现效用或价值的最大化。
   - 目标函数：先验终身福祉(信念估计值)最大化(\(t \ge tₘᵢₙ\))
 
 根据实验假定及各变量偏导，\(V_\pi({\color{red}{s}}_t)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。
-生命智能体的生存最优解就是求一个最优行为策略，延长寿命T，提高劳动生产率，控制劳动力价值，避免系统触发破产，使\(V_\pi({\color{red}{s}}_t)\)最大化。
-根据策略梯度定理，最优行为策略：存在一个内点最优内卷系数\(m′_{t,min}\)：当\(m′_t>m′_{t, min}\)，\(V_\pi({\color{red}{s}}_t)\)随\(m′_t\)严格递减。
+根据策略梯度定理，生命智能体生存最优解的最优行为策略(凸函数约定)：存在一个内点最优内卷系数\(m′_{t,min}\)：当\(m′_t>m′_{t, min}\)，\(V_\pi({\color{red}{s}}_t)\)随\(m′_t\)严格递减。
 
 ## 现实案例验证
 抛开形式逻辑，我们用**边界排除法**来验证行为策略是否存在内点最优解：
@@ -171,7 +170,7 @@
   - 张XF：高薪坐牢，手机是他的手铐(随时待命)，名利是他的刑具，最后被处以死刑(心源性过劳猝死)，没有死缓，立即执行(抢救无效)
   - 王JY：肠癌晚期英年早亡，身家百亿，人在天堂，钱在银行，人死了，钱没花完。有健康叫资产，没健康叫遗产，那遗产是不是他的财富？
 - 消极摆烂的策略：m′≈0
-  彻底躺平不是最优解：考虑刚性负债、养老风险，一个人年轻不努力，可能破产丧失人身自由，\(V_\pi({\color{red}{s}}_t)=0\)，也可能年老时无收入来源，导致孤苦无依：少壮不努力，老大徒伤悲；白了少年头，空悲切。史例：
+  彻底躺平不是最优解：考虑刚性负债、养老风险，年轻不努力，可能破产丧失人身自由，\(V_\pi({\color{red}{s}}_t)=0\)，也可能年老时无收入，导致孤苦无依：少壮不努力，老大徒伤悲；白了少年头，空悲切。史例：
   - 陈朝后主荒淫无道，沦为亡国囚徒
   - 盛恩颐富二代摆烂，晚年饿死街头
 
@@ -192,11 +191,11 @@
 **社会就是一辆汽车：经济发动机+哲学制动机**，只有油门、没有刹车的汽车肯定翻车。有人说要功名利禄，有人说要人间清醒，这叫多元化市场经济，哪里有需求，哪里就有消费。到底一个人怎么活才算没白活，依鄙人看，用先验终身福祉(怎么活)、后验终生福祉(是否白活)来计算最合理。
 
 ## 财富自由的谎言 
-马克思说，财富就是可以自由支配的时间。
+**财富就是可以自由支配的时间**。
 用这把奥卡姆剃刀剃尽财富幻象，我得出财富自由的定义：**以最小的必要劳动，换最大的自由时间**。
 梭罗在《瓦尔登湖》的最小必要劳动时间量化实验表明：1年只需6周(技能提升后可压缩至几天、几小时)，剩余时间自己掌控，就是财富自由。
 财富自由论不是教唆躺平，而是以自由论财富，是用人间清醒的算法符号暴力(\(C_t = e ^ {-\mathrm{KL}_t}\))解构收割自由时间的社会符号暴力(布迪厄社会学)，并重构财富自由的定义。
-它不靠死劳动(他人活劳动)产生的被动收入≥生活支出，那本质上是一套不劳而获的人上人寄生剥削思想。
+它不靠死劳动(他人活劳动)产生的被动收入≥生活支出，那是一套不劳而获的人上人寄生剥削思想。
 提高个别劳动生产率产生的劳动报酬增量，属于复杂劳动价值(多倍的简单劳动)，不是不劳而获，不算剥削他人。
 当然要有个极端风险兜底xx万，尽可能减小破产概率：\(\mathbb P\left({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t \middle| {\color{magenta}s}_t\right)\)。
 这笔钱不参与任何投机，它是你去阴曹地府跑一趟的**专属旅游基金**，因为天有不测风云，人有旦夕祸福：
