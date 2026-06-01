@@ -98,13 +98,13 @@
       - 破产，由随机不等式\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法的底层逻辑：为什么人类文明会选择人身自由作为债务违约的最后生命抵押品？因为自由是生命的折现，还不了钱，拿自由换
   - 社会资本，是指人际及制度性支持等关系价值，在主体遭遇风险(重疾、破产)时转化为实际支持的能力。包括：
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉(含仇人)]关系价值，共计\(\mathfrak {D} \le 150\)人
-      - 心智理论，其中事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是关系网络有向图点对点权重，i表示人称代词(i=0表示我，j>0表示你，k表示他)，当天没有激活为0：
-        - 一阶信念奖励：\({\color{red}{Ω}}^{[i]}_t\)，本体具身精神效用，与他人无关
-        - 二阶信念奖励：\({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)，我对你的同情心(或敌意：Ιₜᵢⱼ<0)，这是[4岁孩童智商](https://zhuanlan.zhihu.com/p/461128550))；条件期望的依据：庄子游于濠梁之上，体验了出游从容的快乐，故他感同身受地说：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑其估值的条件来源，凭什么知？[按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：你有个按钮，按一下你多活一天，地球上就有个陌生人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当你的共情系数Ιₘᵢₙ<6.37e-5时，大概率会按下按钮
-        - 三阶信念奖励：\({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)，他在你心中(k≠i，否则为：我在你心中)的口碑、名誉、尊严、信用，典例：打肿脸充胖子(虚荣心)；我帮助了某人，我在他心(情谊银行)中的情谊存量不可观测(他心难题)，只能猜测：在我落难时他会帮到多少？
+      - 心智理论，其中事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是关系网络有向图点对点权重，i表示人称代词(i=0表示我，j>0表示你，k表示他)，没有激活为0：
+        - 一阶信念奖励：\({\color{red}{Ω}}^{[i]}_t\)，本体具身精神效用
+        - 二阶信念奖励：\({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)，我对你的同情心(或敌意：Ιₜᵢⱼ<0)，这是[4岁孩童智商](https://zhuanlan.zhihu.com/p/461128550))；条件期望的依据：庄子游于濠梁之上，体验了出游从容的快乐，故他感同身受地说：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑其估值的条件来源？[按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：你有个按钮，按一下多活一天，地球上就有个陌生人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当你的共情系数Ιₘᵢₙ<6.37e-5时，大概率会按下按钮
+        - 三阶信念奖励：\({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)，他在你心中(k≠i，否则为：我在你心中)的口碑、名誉、尊严、信用，典例：打肿脸充胖子(虚荣心)；我帮了某人，我在他心(情谊银行)中的情谊存量不可观测(他心难题)，只能猜测：在我落难时他会帮到多少？
         - 四阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k]}_t \right]\)，虚构叙事、印象管理，表现为羞辱、诽谤、奉承、赞美、甚至杀人诛心；冯·诺伊曼打扑克十打九输，Bayes、全概率公式都用上了，却还是输？不懂**隐藏意图**，好牌得意忘形，烂牌垂头丧气，一举一动被看得透透的，不输才怪
-        - 五阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l]}_t \right]\)，群体意识，宗教信仰：我认为别人都相信祂希望我们期待死后能去天堂；千古第一阴谋·金刀计：施计者(王猛)，间谍(金熙)，受计者(慕容令、苻坚)，被害者(慕容垂)；
-        - 六阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m,n]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m]}_t \right]\)，操控群体立场，千古第一阳谋·推恩令：拉近朋友(政治联盟)最快方式是找共同敌人，对应负负得正(敌人之敌)：Ιₜᵢⱼ<0∧Ιₜⱼₖ<0⇒ΙₜᵢⱼΙₜⱼₖ>0
+        - 五阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l]}_t \right]\)，群体意识，宗教信仰：我认为别人都相信祂希望我们期待死后去天堂；千古第一阴谋(利用信息不对称)·金刀计：施计者(王猛)，间谍(金熙)，受计者(慕容令、苻坚)，被害者(慕容垂)；
+        - 六阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m,n]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m]}_t \right]\)，操控群体立场，千古第一阳谋(利用信念不对称)·推恩令：拉近朋友(政治联盟)最快方式是找共同敌人，对应负负得正(敌人之敌)：Ιₜᵢⱼ<0∧Ιₜⱼₖ<0⇒ΙₜᵢⱼΙₜⱼₖ>0
         - 七阶信念奖励：\({\color{red}{Ω}}^{[i,j,k,l,m,n,o]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n,o]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m,n]}_t \right]\)，《红楼梦》：林黛玉**认为**贾宝玉**知道**贾母**怀疑**王夫人**想让**薛姨妈**认可**贾宝玉**想娶**薛宝钗，最终驱动**焚稿断痴情**
         - n阶信念奖励：\({\color{red}{Ω}}^{i_{:n}}_t={\color{red}Ι}_{t,i_0,i_1}\mathbb E\left[{\color{red}{Ω}}^{i_{1:n}}_t\middle|{\color{magenta}{Ω}}^{[i_{:n-1}]}_t \right]\)，我对你n-1阶信念奖励的期望乘上你我共情系数；递归高阶信念奖励是信念脑补值(元认知心流)，不是生化系统分泌的多巴胺剂量。《人类简史》指出：操控人的生化系统产生快感，不等价于虚构故事(文明符号)驱动的人类福祉。夫妻遇死神，猜拳定生死；共谋出石头，一布一剪刀。用高阶信念和催产素分别怎么解释？
       - \(\color{red}{W_p}\)/￥：锦上添花式资助，采用逻辑回归建模：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，依据费孝通《乡土中国》差序格局理论：人际关系像水波纹，以己为心、亲疏有别、随势伸缩
@@ -318,7 +318,7 @@
 结婚三件套(房车、彩礼)是消费主义脂粉，与改革开放初期三转一响如出一辙。
 无房无车也能结婚，需保障租购同权，否则平民结不起婚，断嗣绝后。
 育儿不一定要结婚且更省钱，需法律支持，如法国。
-那些催婚催房的，本质是拿社会责任作道德绑架，站着说话不腰疼：
+那些催婚催房的，本质是拿社会责任作道德绑架(四阶信念)，站着说话不腰疼：
 - 问：你年轻不结婚，老了会不会很凄惨？
 - 答：如果结婚的利益在老了以后，那我等老了以后再结婚，到时候婚恋市场机会多的是，专挑丧偶老太婆，说不定还有意外的惊喜，比如她前任老头子的遗产？
 - 问：你连个房子都没有，老了睡哪里？
