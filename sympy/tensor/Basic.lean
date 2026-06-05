@@ -163,9 +163,6 @@ instance [Mul α] : HMul (Tensor α s) (Tensor α []) (Tensor α s) where
 instance : HAppend (Tensor α (n :: s)) (Tensor α (m :: s)) (Tensor α ((n + m) :: s)) where
   hAppend A B := ⟨cast (by simp [right_distrib]) (A.data ++ B.data)⟩
 
-def Tensor.fromVector (X : List.Vector (Tensor α s) n) : Tensor α (n :: s) :=
-  ⟨(X.map Tensor.data).flatten⟩
-
 /--
 Append two tensors with batching.
 -/
@@ -175,6 +172,8 @@ instance : HAppend (Tensor α (b_z ++ m :: s)) (Tensor α (b_z ++ n :: s)) (Tens
     let b : List.Vector (List.Vector α (n * s.prod)) b_z.prod := cast (by simp) (B.data.splitAt b_z.length)
     ⟨cast (congrArg (List.Vector α) (by grind)) (List.Vector.map₂ HAppend.hAppend a b).flatten⟩
 
+def Tensor.fromVector (X : List.Vector (Tensor α s) n) : Tensor α (n :: s) :=
+  ⟨(X.map Tensor.data).flatten⟩
 
 /--
 [torch.sum](https://docs.pytorch.org/docs/stable/generated/torch.sum.html)

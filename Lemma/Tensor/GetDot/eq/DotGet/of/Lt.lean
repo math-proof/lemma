@@ -169,6 +169,7 @@ private lemma main
       ·
         simp [EqAddMulDiv]
       ·
+        apply SEq.of.Eq
         rfl
   ·
     simp [EqAddMulDiv]
