@@ -368,30 +368,21 @@ UPDATE lemma set error = '[{"code": "", "file": "", "info": "", "line": 0, "type
     $sql | Add-Content -Path test.sql -Encoding UTF8
 }
 
-if (-not $env:MYSQL_PORT) {
-    $env:MYSQL_PORT = 3306 
-}
-# Create a temporary config file with .ini extension
-$tempConfigPath = [IO.Path]::ChangeExtension((New-TemporaryFile).FullName, '.ini')
-@"
-[client]
-user = $env:MYSQL_USER
-password = $env:MYSQL_PWD
-port = $env:MYSQL_PORT
-default-character-set=utf8mb4
-"@ | Set-Content $tempConfigPath
+$mysql = @(
+    "-u$env:USERNAME",
+    "--default-character-set=utf8mb4"
+)
 
 # Run the initial MySQL command and log output
 
-mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "update lemma set error = NULL" 2>&1 | Tee-Object -FilePath test.log
+mysql @mysql -D axiom -e "update lemma set error = NULL" 2>&1 | Tee-Object -FilePath test.log
 
 # Check for database existence error
 if (Select-String -Path test.log -Pattern "ERROR \d+ \(\d+\): Unknown database 'axiom'") {
     Write-Output "CREATE DATABASE axiom;"
-    
+
     # Create the database
-    mysql --defaults-extra-file="$tempConfigPath" -e "CREATE DATABASE axiom;"
-    # mysql "-u$env:MYSQL_USER" "-p$env:MYSQL_PWD" "-P$env:MYSQL_PORT" -e "CREATE DATABASE axiom;"
+    mysql @mysql -e "CREATE DATABASE axiom;"
     
     # Check if database creation was successful
     if ($LASTEXITCODE -eq 0) {
@@ -409,13 +400,12 @@ if (Select-String -Path test.log -Pattern "ERROR \d+ \(\d+\): Unknown database '
 
 # Run the MySQL command and log output
 
-Get-Content test.sql -Encoding UTF8 | mysql --defaults-extra-file="$tempConfigPath" -D axiom 2>&1 | Tee-Object -FilePath test.log
+Get-Content test.sql -Encoding UTF8 | mysql @mysql -D axiom 2>&1 | Tee-Object -FilePath test.log
 
 # Check for specific error pattern
 if (Select-String -Path test.log -Pattern "ERROR \d+ \(\w+\) at line \d+: Table 'axiom.lemma' doesn't exist" -Quiet) {
     # Create the table
-    Get-Content sql/create/lemma.sql | mysql --defaults-extra-file="$tempConfigPath" -D axiom
-    # Get-Content sql/create/lemma.sql | mysql "-u$env:MYSQL_USER" "-p$env:MYSQL_PWD" "-P$env:MYSQL_PORT" -D axiom
+    Get-Content sql/create/lemma.sql | mysql @mysql -D axiom
     if ($?) {
         Write-Host "Table 'lemma' created successfully."
         .\ps1\run.ps1
@@ -427,7 +417,7 @@ if (Select-String -Path test.log -Pattern "ERROR \d+ \(\w+\) at line \d+: Table 
 }
 
 # Execute MySQL command and log output
-mysql --defaults-extra-file="$tempConfigPath" -D axiom -e "delete from lemma where error is NULL" 2>&1 | Tee-Object -FilePath test.log
+mysql @mysql -D axiom -e "delete from lemma where error is NULL" 2>&1 | Tee-Object -FilePath test.log
 
 # Calculate time cost
 $end_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()
@@ -540,6 +530,5 @@ Write-Output "total failed    = $($failingModules.Count)"
 # Execute the delete_import.ps1 script located in the ps1 directory
 .\ps1\delete_import.ps1
 
-Remove-Item $tempConfigPath -Force -ErrorAction SilentlyContinue
 $Lines = (Get-ChildItem -Path @("Lemma", "sympy", "stdlib") -Filter "*.lean" -Exclude "*.echo.lean" -Recurse -File | Get-Content | Measure-Object -Line).Lines
 Write-Output "total lines     = $Lines"
