@@ -38,17 +38,17 @@
 \sum_{j=t + 1}^{t_{oo}} P\left({\color{red}T} \ge j \middle| {\color{red}H}_t \right) = 
 \sum_{j=0}^{t_{oo} - t - 1} P\left({\color{red}T} \ge j + t + 1 \middle| {\color{red}H}_t \right) = 
 \sum_{j=0}^{t_{oo} - t - 1} \mathbb E\left[ \prod_{j=0}^{j}(1-{\color{red}q}_{t+j}) \middle| {\color{red}H}_t \right]\]
-      - \(\color{red}ΔHᵥ\)：事件驱动型健康损伤脉冲，如：车祸，伤残，重疾，人身意外
+      - \(\color{red}ΔHᵥ\)：健康损伤脉冲，如：车祸，伤残，重疾，人身意外
       - 健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - ΔHₒ{\color{red}L}_t - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
     - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025
-      - 事件驱动型精神奖励脉冲(下文心智理论)：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m,n]}_t + \sum_{o=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n,o]}_t\right)\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心来瞌睡多，如：情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
+      - 信念奖励脉冲(下文心智理论)：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m,n]}_t + \sum_{o=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n,o]}_t\right)\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心来瞌睡多，如：情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
         - 半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\beta_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_t > 0\)，半衰期短，依据：享乐适应，快乐跑步机
         - 亲身体验的必然痛苦：\({\Xi_m}_t < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_t = \frac{M_t + |{\Xi_m}_t|}{M_t - |{\Xi_m}_t|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是追求幸福，而是规避痛苦
-        - 累计精神奖励：\({\color{red}E}_{t} = \sum_{j=tₘᵢₙ}^{t} {e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
-        - 累计精神奖励差分：\(\Delta {\color{red}E}_{t} = {\color{red}{\Xi_m}}_{t + 1} - \sum_{j=tₘᵢₙ}^{t} (1 - e ^ {-{{\color{red}{\delta_m}}_j}}){e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
+        - 累计信念奖励：\({\color{red}E}_{t} = \sum_{j=tₘᵢₙ}^{t} {e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
+        - 累计信念奖励差分：\(\Delta {\color{red}E}_{t} = {\color{red}{\Xi_m}}_{t + 1} - \sum_{j=tₘᵢₙ}^{t} (1 - e ^ {-{{\color{red}{\delta_m}}_j}}){e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
       - 精神效用指数差分：\(\Delta {\color{red}M}_t = {\color{red}M}_{t+1} - {\color{red}M}_t = ΔMₑ{\color{red}\varepsilon}_t + ΔMᵣ \times {\color{red}{\Theta}}_t + \Delta {\color{red}E}_t - ΔMₐ - {\color{red}{P_l}}_t\omega_m - ΔMₒ{\color{red}L}_t,\quad t \ge tₘᵢₙ\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：可自由支配(否决权)的时间，你不想花就可以不花的时间：
@@ -91,7 +91,7 @@
     - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=tₘᵢₙ}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda_w^{t-j}} {  \left(1 - \lambda_w^{t-tₘᵢₙ+1}\right)/ \left(1 - \lambda_w\right)  } \middle| {\color{magenta}s_t}\right],\quad \lambda_w \in (0, 1)\)
     - 负债毒性/天：\({\color{red}{P_l}}_t = \frac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t}\)，负债的本质是被抵押的自由时间
     - 负债毒性对(H, M)作用权重/天⁻¹：[ωₕ, ωₘ]≈[5e-7, 2e-6]
-    - \(\color{red}{ΔWᵥ}\)：事件驱动型财务脉冲，如：电信诈骗、彩票中奖、高端消费、重疾医疗
+    - \(\color{red}{ΔWᵥ}\)：财务脉冲，如：电信诈骗、彩票中奖、高端消费、重疾医疗
     - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge tₘᵢₙ\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
@@ -100,7 +100,7 @@
     - 人际关系资产\(\color{red}P\)：[亲情、爱情、友情、人情、人脉(含仇人)]关系价值，共计\(\mathfrak {D} \le 150\)人
       - 心智理论：事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是关系网络有向图点对点权重，i表示人称代词(i=0表示我)，未激活为0
         - 一阶信念：\({\color{red}{Ω}}^{[i]}_t\)，本自具足的精神效用
-        - 二阶信念：\({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)，我对你的互惠同情心(或敌意：Ιₜᵢⱼ<0)，[4岁孩童智商](https://zhuanlan.zhihu.com/p/461128550))；条件期望的依据：庄子游于濠梁之上，体验了出游从容之乐，故他感同身受地说：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑其估值的条件来源？[按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：你有个按钮，按一下多活一天，地球上就有个陌生人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当你的共情系数Ιₘᵢₙ<6.37e-5时，大概率会按下按钮
+        - 二阶信念：\({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)，我对你的互惠同情心(或敌意：Ιₜᵢⱼ<0)，[4岁孩童智商](https://zhuanlan.zhihu.com/p/461128550))；条件期望的依据：庄子游于濠梁之上，体验了出游从容之乐，故他感同身受地说：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑其估值的条件来源？[按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：你有个按钮，按一下多活一天，世上就有个陌生人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当你的共情系数Ιₘᵢₙ<6.37e-5时，大概率会按下按钮
         - 三阶信念：\({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)，他在你心中(k≠i，否则为：我在你心中)的口碑、名誉、尊严、信用、忠诚，典例：打肿脸充胖子(虚荣心)；我帮了某人，我在他心(情谊银行)中的情谊存量不可观测(他心难题)，只能猜测：在我落难时他会帮到多少？
         - 四阶信念：\({\color{red}{Ω}}^{[i,j,k,l]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k]}_t \right]\)，虚构叙事、印象管理，表现为羞辱、诽谤、奉承、赞美、甚至杀人诛心；真爱的双忠贞链：他(她)认为[她(他)不相信[他(她)想念[另一个她(他)]]]；冯·诺伊曼打牌十打九输，Bayes、全概率公式都用上了，却还是输？不懂**隐藏意图**(我不想让[对手获知[我评估[各方的牌]]])，好牌得意忘形，烂牌垂头丧气，一举一动被看得透透的，不输才怪
         - 五阶信念：\({\color{red}{Ω}}^{[i,j,k,l,m]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l]}_t \right]\)，群体共识：我相信[大家公认[祂希望[我们期待[人死后去天堂]]]]；千古第一阴谋(利用信息差)·金刀计：王猛赌定[金熙接受[慕容令笃信[慕容垂想让[慕容令叛逃]]]∧苻坚猜忌[慕容垂谋反]]，这个信念拓扑的最优调度，比如慕容垂亲信金熙(间谍)被收买后用金刀卖力做局、假传父命、劝说慕容令(受计者)叛逃，就是王猛(施计者)的政治资本增量：慕容垂(被害者)被苻坚(受计者)连坐，而卖力强度∝收买力度∝王猛的\(\color{red}W\)
@@ -312,7 +312,7 @@
 #### 间歇性奋斗
 努力方向远比盲目奋斗更重要。
 努力就会成功是资本收割奋斗逼的谎言。
-画饼式996福报(五阶信念)是精心设计的自然语言符号精神奖励劫持，类似望梅止渴，自愿加班被公开表扬，是其爱岗敬业的信念操控技术。
+画饼式996福报(五阶信念)是精心设计的自然语言符号信念奖励劫持，类似望梅止渴，自愿加班被公开表扬，是其爱岗敬业的信念操控技术。
 长期全职挤占成长时间，使技能停滞，时薪固化。
 用人单位是用人，治人，管人，整人的单位，上班目的是技术变现，不是人的全面自由发展。
 华为、字节、腾讯平均司龄为2~3年，是间歇性奋斗的现实原因。
