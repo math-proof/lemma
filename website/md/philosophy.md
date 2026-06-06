@@ -31,8 +31,8 @@
       - 基线日死亡概率：\(q_{min}=2.74 \cdot 10^{-7}\)，基于国际生命表
       - 死亡概率：\({\color{red}q} = e^{\frac{\ln q_{min}}{100} \cdot \mathrm{relu}({\color{red}H})}\)，依据：Gompertz死亡率定律
       - 身体衰老损耗/天：ΔHₐ = 0.0025
-      - tₒₒ：44723，极限生命末日，人类最长寿命纪录是法国的Jeanne Calment 122岁164天
-      - \(\color{red}T\)：寿命，寿险精算学尾和公式：\[\mathbb{E}\left[{\color{red}T} \middle| {\color{red}H}_t \right] - t = 
+      - tₒₒ：44723，极限生命末日，最长寿命是法国的Jeanne Calment 122岁164天
+      - 寿险精算学寿命\(\color{red}T\)尾和公式：\[\mathbb{E}\left[{\color{red}T} \middle| {\color{red}H}_t \right] - t = 
 \mathbb{E}\left[{\color{red}T} - t \middle| {\color{red}H}_t \right] = 
 \sum_{j=t + 1}^{t_{oo}} (j - t) \cdot P\left({\color{red}T}=j \middle| {\color{red}H}_t \right) = 
 \sum_{j=t + 1}^{t_{oo}} P\left({\color{red}T} \ge j \middle| {\color{red}H}_t \right) = 
