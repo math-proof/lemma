@@ -37,7 +37,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Derivative(f(x), (x, 2)) > 0, w=w, n=n)
 
-    Eq << Calculus.Imp.of.Gt_0.Jesson.induct.apply(Eq[0], w=w, n=n)
+    Eq << Calculus.Imp.of.Gt_0.Jensen.induct.apply(Eq[0], w=w, n=n)
 
 
 if __name__ == '__main__':

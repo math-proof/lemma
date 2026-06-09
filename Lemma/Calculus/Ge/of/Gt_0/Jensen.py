@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Ge.of.Le.Gt_0.Jesson, w=w)
+    Eq << Eq[-1].this.rhs.apply(Calculus.Ge.of.Le.Gt_0.Jensen, w=w)
 
     Eq << Bool.Imp.of.Cond.apply(Eq[0], cond=x0 > x1)
 
@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Le.of.Gt.relax)
 
-    Eq << Eq[-1].this.rhs.apply(Calculus.Ge.of.Le.Gt_0.Jesson, w=1-w)
+    Eq << Eq[-1].this.rhs.apply(Calculus.Ge.of.Le.Gt_0.Jensen, w=1-w)
 
 
 if __name__ == '__main__':

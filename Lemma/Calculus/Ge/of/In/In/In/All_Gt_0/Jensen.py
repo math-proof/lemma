@@ -32,7 +32,7 @@ def prove(Eq):
     x_ = Symbol('x', domain=domain)
     Eq << Algebra.Cond.of.All.subst.apply(Eq[3], x, x_)
 
-    Eq << Calculus.Ge.of.Gt_0.Jesson.apply(Eq[-1], w=w_)
+    Eq << Calculus.Ge.of.Gt_0.Jensen.apply(Eq[-1], w=w_)
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], w_)
 
