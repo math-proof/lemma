@@ -25,17 +25,15 @@ if ($sshOutput) {
 
 $mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PWD -P $env:REMOTE_MYSQL_PORT -D axiom -e 'ALTER TABLE $Table DISCARD TABLESPACE'"
 $sshOutput = ssh $env:REMOTE_MYSQL_USER@$env:REMOTE_MYSQL_HOST $mysqlCommand
-Write-Debug "Discard Tablespace Output: $sshOutput"
+Write-Host "Discard Tablespace Output: $sshOutput"
 # send the files from the table axiom.$Table in the data directory: $local_datadir\axiom\$Table#P#p*.ibd to the remote server
 scp "$local_datadir\axiom\$Table*.ibd" ${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}:${remote_datadir}axiom
 $mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PWD -P $env:REMOTE_MYSQL_PORT -D axiom -e 'ALTER TABLE $Table IMPORT TABLESPACE'"
 $sshOutput = ssh $env:REMOTE_MYSQL_USER@$env:REMOTE_MYSQL_HOST $mysqlCommand
-Write-Debug "Import Tablespace Output: $sshOutput"
+Write-Host "Import Tablespace Output: $sshOutput"
 
 # test : check the number of rows in the local and remote table
 $mysqlCommand = "$mysql -u $env:REMOTE_MYSQL_USER -p$env:REMOTE_MYSQL_PWD -P $env:REMOTE_MYSQL_PORT -D axiom -e 'select count(*) from $Table'"
 $remoteCount = ssh $env:REMOTE_MYSQL_USER@$env:REMOTE_MYSQL_HOST $mysqlCommand
-Write-Debug "Remote $Table count: $remoteCount"
+Write-Host "Remote $Table count: $remoteCount"
 
-# until git pull; do sleep 1; done
-$sshOutput = ssh $env:REMOTE_MYSQL_USER@$env:REMOTE_MYSQL_HOST "git pull"

@@ -39,17 +39,17 @@
 \sum_{j=0}^{t_{oo} - t - 1} P\left({\color{red}T} \ge j + t + 1 \middle| {\color{red}H}_t \right) = 
 \sum_{j=0}^{t_{oo} - t - 1} \mathbb E\left[ \prod_{j=0}^{j}(1-{\color{red}q}_{t+j}) \middle| {\color{red}H}_t \right]\]
       - \(\color{red}ΔHᵥ\)：健康损伤脉冲，如：车祸，伤残，重疾，人身意外
-      - 健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - ΔHₒ{\color{red}L}_t - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
+      - 健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - Hₒ({\color{red}L}_t) - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
     - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025
       - 信念奖励脉冲(下文心智理论)：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n]}_t\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心来瞌睡多，如：情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
-        - 半衰期/日：\({\color{red}{\beta_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
-        - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\beta_m}}\)
+        - 半衰期/日：\({\color{red}{\tau_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
+        - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\tau_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_t > 0\)，半衰期短，依据：享乐适应，快乐跑步机
         - 亲身体验的必然痛苦：\({\Xi_m}_t < 0\)，半衰期长，依据：恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_t = \frac{M_t + |{\Xi_m}_t|}{M_t - |{\Xi_m}_t|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；《人生的智慧》：人生首要任务不是追求幸福，而是规避痛苦
         - 累计信念奖励：\({\color{red}E}_{t} = \sum_{j=tₘᵢₙ}^{t} {e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
         - 累计信念奖励差分：\(\Delta {\color{red}E}_{t} = {\color{red}{\Xi_m}}_{t + 1} - \sum_{j=tₘᵢₙ}^{t} (1 - e ^ {-{{\color{red}{\delta_m}}_j}}){e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
-      - 精神效用指数差分：\(\Delta {\color{red}M}_t = {\color{red}M}_{t+1} - {\color{red}M}_t = ΔMₑ{\color{red}\varepsilon}_t + ΔMᵣ \times {\color{red}{\Theta}}_t + \Delta {\color{red}E}_t - ΔMₐ - {\color{red}{P_l}}_t\omega_m - ΔMₒ{\color{red}L}_t,\quad t \ge tₘᵢₙ\)
+      - 精神效用指数差分：\(\Delta {\color{red}M}_t = {\color{red}M}_{t+1} - {\color{red}M}_t = ΔMₑ{\color{red}\varepsilon}_t + ΔMᵣ \times {\color{red}{\Theta}}_t + \Delta {\color{red}E}_t - ΔMₐ - {\color{red}{P_l}}_t\omega_m - Mₒ({\color{red}L}_t),\quad t \ge tₘᵢₙ\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：可自由支配的时间，我不想花就可以不花的时间，其否决权是三阶信念：我否认[你认为[我的时间归你]]：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_t]≈4\)，产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
@@ -59,7 +59,7 @@
       - 必要生理时间\(\color{red}ξ\)/h：
         - 睡眠\(\color{red}χ\)：\(\mathbb{E}({\color{red}χ}_t) = 7 + 2 · e^{-0.04·(A_t-18)}\)；由睡眠医学，睡眠时长与全因死亡率呈非对称性U型曲线，故睡眠失调造成的健康损耗可建模为：\({\color{red}{ΔHᵪ}}_t=\alpha_\chi\left({\color{red}\chi}_t-\mathbb E[{\color{red}\chi}_t]\right)^2 \left(\frac 1 2 + \sigma\big(-\gamma_\chi({\color{red}\chi}_t-\mathbb E[{\color{red}\chi}_t])\big)\right)\)；睡梦中的快乐不是自由，梦里不知身是客，是缸中之脑
         - 起居\(\color{red}τ\)：\(\mathbb E[{\color{red}τ}_t]≈1\)，洗漱如厕等
-      - 异化劳动时间\(\color{red}L\)/h：\(\mathbb E[{\color{red}L}_t]≈8\)，工作日，受市场就业率、就业方式影响，产生文化资本增益ΔKₒ/h，造成身心过劳损耗ΔHₒ/h、ΔMₒ/h；上班摸鱼不算自由时间，主观快乐≠自由。因为时间否决权在老板手里，不在你的嘴里，你被依法炒掉，回家摸王八才算自由。\({\color{red}L} = {\color{red}n} + {\color{red}ς}\)：
+      - 异化劳动时间\(\color{red}L\)/h：\(\mathbb E[{\color{red}L}_t]≈8 e^{-\kappa_A (A_t - A_{t_{min}})}\)，工作日，受市场就业率、就业方式影响，产生文化资本增益ΔKₒ/h，造成身心过劳损耗\(Hₒ(L_t)=\alpha_h L_t + \beta_h L_t^2 \sigma\big(\gamma_h(L_t - \mathbb E[{\color{red}L}_t])\big)\)、\(Mₒ(L_t)=\alpha_m L_t + \beta_m L_t^2 \sigma\big(\gamma_m(L_t - \mathbb E[{\color{red}L}_t])\big)\)；上班摸鱼不算自由时间，主观快乐≠自由。因为时间否决权在老板手里，不在你的嘴里，你被依法炒掉，回家摸王八才算自由。\({\color{red}L} = {\color{red}n} + {\color{red}ς}\)：
         - \(\color{red}n\)：必要劳动时间，**劳动者为了生产自身劳动力价值，所必须付出的劳动时间。劳动力价值决定必要劳动时间的长短**
         - \(\color{red}ς\)：剩余劳动时间，定义内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
   - 文化资本\(\color{red}K\)：学历、专利、作品集可代理观测，腹中墨水不可测
@@ -350,7 +350,15 @@
   马克思指出，非间歇性劳动是对工人生命力的掠夺，导致工人早衰、职业病高发、死亡率上升，损害劳动力再生产，如育儿(小劳动者)。资本是死劳动，它像吸血鬼一样，只有吮吸活劳动才有生命，吮吸的活劳动越多，它的生命就越旺盛。
   它吸干你，扔掉干尸，再找活体。
   头部企业平均司龄为2~3年，呈现双向抛弃博弈：老板用完即弃，员工及时跑路，使间歇性奋斗常态化。
-  劳动经济学研究也证实：间歇务工优于高压全职。
+  劳动经济学研究证实：间歇务工优于高压全职。[Jensen不等式](http://www.lemma.cn/py/?module=Calculus.Ge.of.Gt_0.Eq.Jensen)可证，总工时相等实验假定条件下，轻量低强度工作的总健康损耗小于集中高强度工作：\[\begin{aligned}
+  &\textbf{公设：}\ T\text{ 个日历日，日工时 }L_t\ge 0\text{（不必相同）},\ H_o(0)=0,\ H_o''(L)>0.\\
+  &\text{总健康损耗 }\mathcal{H}=\sum_{t=1}^{T}H_o(L_t),\quad \bar{L}=\tfrac{1}{T}\sum_{t=1}^{T}L_t.\\
+  &\textbf{Jensen不等式：}\ \text{令 }w_t=\tfrac{1}{T},\ \sum w_t=1,\ \text{由 }H_o''>0\text{ 得}\\
+  &\qquad\frac{1}{T}\sum_{t=1}^{T}H_o(L_t)\ge H_o\!\left(\frac{1}{T}\sum_{t=1}^{T}L_t\right)=H_o(\bar{L}),\\
+  &\qquad\therefore\ \mathcal{H}\ge T\cdot H_o(\bar{L}),\ \text{等号成立当且仅当 }L_1=\cdots=L_T=\bar{L}.\\
+  &\textbf{推论：}\ \text{总工时 }W\text{ 固定时，均匀分配 }\bar{L}\text{ 为健康损耗下界；日工时方差越大，}\mathcal{H}\text{ 越大.}\qquad\square
+\end{aligned}\]
+
 
 #### 零负债跃迁
 无房无车、无妻无子是人生失败。
