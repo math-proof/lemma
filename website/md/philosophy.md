@@ -356,7 +356,7 @@
   &\textbf{Jensen不等式：}\ \text{令 }w_t=\tfrac{1}{T},\ \sum w_t=1,\ \text{由 }H_o''>0\text{ 得}\\
   &\qquad\frac{1}{T}\sum_{t=1}^{T}H_o(L_t)\ge H_o\!\left(\frac{1}{T}\sum_{t=1}^{T}L_t\right)=H_o(\bar{L}),\\
   &\qquad\therefore\ \mathcal{H}\ge T\cdot H_o(\bar{L}),\ \text{等号成立当且仅当 }L_1=\cdots=L_T=\bar{L}.\\
-  &\textbf{推论：}\ \text{总工时 }W\text{ 固定时，均匀分配 }\bar{L}\text{ 为健康损耗下界；日工时方差越大，}\mathcal{H}\text{ 越大.}\qquad\square
+  &\textbf{推论：}\ \text{总工时 }W\text{ 固定时，均匀分配 }\bar{L}\text{ 为健康损耗下界；日工时方差越大，}\mathcal{H}\text{ 越大.}
 \end{aligned}\]
 
 
