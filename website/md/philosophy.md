@@ -8,7 +8,6 @@
 - 为何要实现财富自由？
 - 如何实现财富自由？
 
-## 生命智能体生存最优解
 符号约定：
 - 同一字母：
   - \(\color{red}{\Large\bullet}\)表示随机变量：\(\mathbb P({\color{red}x}) = \mathbb P({\color{red}x} = x)\)
@@ -19,6 +18,43 @@
 - \(\times\)表示点积
 - \(\sigma(·)\)表示[torch.sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.sigmoid.html)
 
+## 心智理论
+将人际关系建模为有向图关系网络，设事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是点对点权重，i表示人称代词(i=0表示我)，未激活为0
+- 一阶信念  
+  \({\color{red}{Ω}}^{[i]}_t\)，本自具足的精神效用
+- 二阶信念  
+  \({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)
+  - 互惠、同情、恻隐或敌意(Ιₜᵢⱼ<0)
+  - Sally-Anne测试证明这是4岁孩童智商
+  - 庄子游于濠梁之上，知出游之乐，故感同身受曰：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑期望的条件来源？
+  - [按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)  
+  你有个按钮，按一下多活一天，世上就有个人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当共情系数Ιₘᵢₙ<6.37e-5，你就会按下按钮
+- 三阶信念
+  \({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)
+  - 口碑、尊严、信用、忠诚，威胁，虚荣心(打肿脸充胖子)，羞恶心，辞让心，人情债
+  - 自我意识  
+  我≈手持戈矛→战斗根源：我否认[你认为[我的地盘归你]]↔我的地盘我做主
+- 四阶信念
+  \({\color{red}{Ω}}^{[i,j,k,l]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k]}_t \right]\)
+  - 虚构叙事、印象管理，表现为羞辱、诽谤、奉承、赞美、欺骗、杀人诛心
+  - 冯·诺伊曼打牌十打九输，Bayes、全概率公式都用上了，却还是输？不懂**隐藏意图**(我不想让[对手获知[我评估[各方的牌]]])，好牌得意忘形，烂牌垂头丧气，一举一动被看透，不输才怪
+- 五阶信念
+  \({\color{red}{Ω}}^{[i,j,k,l,m]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l]}_t \right]\)
+  - 宗教信仰：我相信[大家公认[祂希望[我们期待[人死后去天堂]]]]
+  - 千古第一阴谋(利用信息差)·金刀计  
+  王猛赌定[金熙接受[慕容令笃信[慕容垂想让[慕容令叛逃]]]∧苻坚猜忌[慕容垂谋反]]，这个信念拓扑的最优调度，比如慕容垂亲信金熙(间谍)被收买后用金刀卖力做局、假传父命、劝说慕容令(受计者)叛逃，就是王猛(施计者)的政治资本增量：慕容垂(被害者)被苻坚(受计者)连坐，而卖力强度∝收买力度∝王猛的经济资本
+- 六阶信念：\({\color{red}{Ω}}^{[i,j,k,l,m,n]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m]}_t \right]\)
+  - 非暴力不合作  
+  甘地笃定[你可不信[大家公认[英王要求[印度人接受[食盐专营法]]]]]，法律是因众谴而定罪，因公信而立法，是比镇压成本更低的统治(政令被群体服从的概率)，食盐进军瓦解了其法治正当性：
+    - 英国人开枪，就撕毁了其文明遮羞布
+    - 不开枪，就宣告其殖民法破产
+  - 千古第一阳谋(利用信念差)·推恩令
+  汉武帝料定[诸侯王知道[嫡长子知道[庶子相信[汉武帝想让[庶子分封得利]]]]]，施恩造成嫡庶敌对，借此削藩，缔结联盟最快方式是找共同敌人，对应负负得正(敌人之敌)：Ιₜᵢⱼ<0∧Ιₜⱼₖ<0⇒ΙₜᵢⱼΙₜⱼₖ>0
+- n阶信念
+  \({\color{red}{Ω}}^{i_{:n}}_t={\color{red}Ι}_{t,i_0,i_1}\mathbb E\left[{\color{red}{Ω}}^{i_{1:n}}_t\middle|{\color{magenta}{Ω}}^{[i_{:n-1}]}_t \right]\)  
+  米勒定律(7±2法则)限制了工作记忆容量，故递归信念嵌套深度很难超过7层，是人的认知极限
+
+## 生命智能体生存最优解
 以下是基于信念MDP、生命智能体生存最优解的思想实验：
 - 生存边界公设1
   - 具身资本
@@ -42,7 +78,7 @@
       - 健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - Hₒ({\color{red}L}_t) - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
     - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025
-      - 信念奖励脉冲(下文心智理论)：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n]}_t\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心来瞌睡多，如情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
+      - 信念奖励脉冲：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n]}_t\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心来瞌睡多，如情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
         - 半衰期/日：\({\color{red}{\tau_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\tau_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_t > 0\)，半衰期短，依据享乐适应，快乐跑步机
@@ -98,14 +134,6 @@
       - 破产，由\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法逻辑：自由是生命的折现，还不了钱，拿自由换，故人类社会把人身自由作为债务违约的最后抵押品
   - 社会资本，是指人际、组织、政治等关系价值，在主体遭遇风险时转化为实际支持的能力：
     - 人脉资产\(\color{red}P\)：亲情、爱情、友情、人情、仇人等关系价值，共计\(\mathfrak {D} \le 150\)人
-      - 心智理论：事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是关系网络有向图点对点权重，i表示人称代词(i=0表示我)，未激活为0
-        - 一阶信念：\({\color{red}{Ω}}^{[i]}_t\)，本自具足的精神效用
-        - 二阶信念：\({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)，互惠、同情、恻隐或敌意(Ιₜᵢⱼ<0)，Sally-Anne测试证明这是4岁孩童智商；庄子游于濠梁之上，知出游之乐，故感同身受曰：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑期望的条件来源？[按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：你有个按钮，按一下多活一天，世上就有个人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当共情系数Ιₘᵢₙ<6.37e-5，你就会按下按钮
-        - 三阶信念：\({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)，口碑、尊严、信用、忠诚，威胁，虚荣心(打肿脸充胖子)，羞恶心，辞让心，人情债，自我意识(我≈手持戈矛→战斗根源：我否认[你认为[我的地盘归你]]↔我的地盘我做主)
-        - 四阶信念：\({\color{red}{Ω}}^{[i,j,k,l]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k]}_t \right]\)，虚构叙事、印象管理，表现为羞辱、诽谤、奉承、赞美、欺骗、杀人诛心；冯·诺伊曼打牌十打九输，Bayes、全概率公式都用上了，却还是输？不懂**隐藏意图**(我不想让[对手获知[我评估[各方的牌]]])，好牌得意忘形，烂牌垂头丧气，一举一动被看透，不输才怪
-        - 五阶信念：\({\color{red}{Ω}}^{[i,j,k,l,m]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l]}_t \right]\)，群体意识：我相信[大家公认[祂希望[我们期待[人死后去天堂]]]]；千古第一阴谋(利用信息差)·金刀计：王猛赌定[金熙接受[慕容令笃信[慕容垂想让[慕容令叛逃]]]∧苻坚猜忌[慕容垂谋反]]，这个信念拓扑的最优调度，比如慕容垂亲信金熙(间谍)被收买后用金刀卖力做局、假传父命、劝说慕容令(受计者)叛逃，就是王猛(施计者)的政治资本增量：慕容垂(被害者)被苻坚(受计者)连坐，而卖力强度∝收买力度∝王猛的\(\color{red}W\)
-        - 六阶信念：\({\color{red}{Ω}}^{[i,j,k,l,m,n]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m,n]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l,m]}_t \right]\)，非暴力不合作：甘地笃定[你可不信[大家公认[英王要求[印度人接受[食盐专营法]]]]]，法律是因众谴而定罪，因公信而立法，是比镇压成本更低的统治(《经济与社会》：政令被群体服从的概率)，食盐进军瓦解了其法治正当性：英国人开枪，就撕毁了其文明遮羞布；不开枪，就宣告其殖民法破产。千古第一阳谋(利用信念差)·推恩令：汉武帝料定[诸侯王知道[嫡长子知道[庶子相信[汉武帝想让[庶子分封得利]]]]]，施恩造成嫡庶敌对，借此削藩，缔结联盟最快方式是找共同敌人，对应负负得正(敌人之敌)：Ιₜᵢⱼ<0∧Ιₜⱼₖ<0⇒ΙₜᵢⱼΙₜⱼₖ>0
-        - n阶信念：\({\color{red}{Ω}}^{i_{:n}}_t={\color{red}Ι}_{t,i_0,i_1}\mathbb E\left[{\color{red}{Ω}}^{i_{1:n}}_t\middle|{\color{magenta}{Ω}}^{[i_{:n-1}]}_t \right]\)，我对你n-1阶信念奖励期望乘上你我共情系数。米勒定律(7±2法则)限制了工作记忆容量，故递归信念嵌套深度很难超过7层，是人的认知极限
       - 折当价\(\color{red}{W_p}\)/￥：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，《乡土中国》差序格局：人脉像水波纹，以己为心、亲疏有别、随势伸缩。我帮了某人(当品：情谊)，我在他心(情谊当铺)中的情谊当票不可观测(他心难题)，只能猜测：我落难赎当时那张当票的折当价是多少？情谊典当记名不记账，若绝当，我(当户)就算上**当**？
       - 半衰期/年：\(\beta_p \in R^{\mathfrak {D}}\)，一般亲情>爱情>友情>人情，依据社会学：强弱关系理论，演化生物学：亲缘选择理论
       - 人脉日折当率：\(δᵣ = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折当依据：心理学：艾宾浩斯遗忘曲线，社会交换理论：互惠义务时效性
@@ -160,7 +188,7 @@
 由策略梯度定理，生命智能体生存最优解的最优行为策略(凸函数约定)：存在一个内点最优内卷系数\(m′_{t,min}\)：当\(m′_t>m′_{t, min}\)，\(V_\pi({\color{red}{s}}_t)\)随\(m′_t\)严格递减。
 
 ## 现实案例验证
-我们用**边界排除法**来验证行为策略是否存在内点最优解：
+先用**边界排除法**来验证行为策略是否存在内点最优解
 - 内卷至死的穷鬼：m′≫1 
   后验终生福祉\(\sum_{t=tₘᵢₙ}^{tₘₐₓ}{r_t}≈0\)
   - 张XF：高薪坐牢，手机是他的手铐(随时待命)，名利是他的刑具，最后被处以死刑(心源性过劳猝死)，没有死缓，立即执行(抢救无效)
@@ -170,7 +198,7 @@
   - 陈后主荒淫，亡国为虏
   - 盛恩颐奢败，饿毙家门
 
-两个**角点解**是：卷不起，躺不平。历史经验**反证**了行为策略存在内点最优解。那中庸躺平是不是内点最优解？让我们用这把理论锤子来敲打现实钉子：
+两个**角点解**是：卷不起，躺不平。历史经验**反证**了行为策略存在内点最优解。那中庸躺平是不是内点最优解？让我用这把理论锤子来敲打现实钉子：
 - 体制内的明哲保身：
   - 躺赢曹魏的司马懿：
     - 拒绝无效内卷：知可以战与不可以战
@@ -350,7 +378,7 @@
   生育率低迷，未来可能无养老金或不足果腹，必须终生工作，如日本活到老、干到老。而终生工作的首要前提是你的真资产。
   用人单位是用人，治人，管人，整人的单位，上班目的是技能变现，不是你的全面发展。
   它今天雇你的原因，就是明天炒你的原因。
-  马克思指出，非间歇性劳动是对工人生命力的掠夺，导致工人早衰、职业病高发、死亡率上升，损害劳动力再生产，如育儿(小劳动者)。资本是死劳动，它像吸血鬼一样，只有吮吸活劳动才有生命，吮吸的活劳动越多，它的生命就越旺盛。
+  马克思指出，非间歇性劳动是对工人生命力的掠夺，导致工人早衰、职业病高发、死亡率上升，损害劳动力再生产，如育儿(小劳动者)。**资本是死劳动，它像吸血鬼一样，只有吮吸活劳动才有生命，吮吸的活劳动越多，它的生命就越旺盛**。
   它吸干你，扔掉干尸，再找活体。
   头部企业平均司龄为2~3年，呈现双向抛弃博弈：老板用完即弃，员工及时跑路，使间歇性奋斗常态化。
   劳动经济学研究证实：过劳区间内，工时越短，效率越高；间歇务工优于高压全职。[Jensen不等式](http://www.lemma.cn/py/?module=Calculus.Ge.of.Gt_0.Eq.Jensen)可证，假设总工时相等，轻量低强度工作的总健康损耗小于集中高强度工作：\[\begin{aligned}
