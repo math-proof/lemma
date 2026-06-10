@@ -350,7 +350,7 @@
   马克思指出，非间歇性劳动是对工人生命力的掠夺，导致工人早衰、职业病高发、死亡率上升，损害劳动力再生产，如育儿(小劳动者)。资本是死劳动，它像吸血鬼一样，只有吮吸活劳动才有生命，吮吸的活劳动越多，它的生命就越旺盛。
   它吸干你，扔掉干尸，再找活体。
   头部企业平均司龄为2~3年，呈现双向抛弃博弈：老板用完即弃，员工及时跑路，使间歇性奋斗常态化。
-  劳动经济学研究证实：间歇务工优于高压全职。[Jensen不等式](http://www.lemma.cn/py/?module=Calculus.Ge.of.Gt_0.Eq.Jensen)可证，假设总工时相等，轻量低强度工作的总健康损耗小于集中高强度工作：\[\begin{aligned}
+  劳动经济学研究证实：过劳区间内，工时越短，效率越高；间歇务工优于高压全职。[Jensen不等式](http://www.lemma.cn/py/?module=Calculus.Ge.of.Gt_0.Eq.Jensen)可证，假设总工时相等，轻量低强度工作的总健康损耗小于集中高强度工作：\[\begin{aligned}
   &\textbf{公设：}\ T\text{ 个日历日，日工时 }L_t\ge 0\text{（不必相同）},\ H_o(0)=0,\ H_o''(L)>0.\\
   &\text{总健康损耗 }\mathcal{H}=\sum_{t=1}^{T}H_o(L_t),\quad \bar{L}=\tfrac{1}{T}\sum_{t=1}^{T}L_t.\\
   &\textbf{Jensen不等式：}\ \text{令 }w_t=\tfrac{1}{T},\ \sum w_t=1,\ \text{由 }H_o''>0\text{ 得}\\
