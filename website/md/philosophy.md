@@ -19,7 +19,7 @@
 - \(\sigma(·)\)表示[torch.sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.sigmoid.html)
 
 ## 心智理论
-将人际关系建模为有向图关系网络，设事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是点对点权重，i表示人称代词(i=0表示我)，未激活为0
+将人际关系建模为有向图关系网络，设事件驱动型共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是点对点权重，i表示人称代词(i=0表示我，j>0表示你)，t表示离散时刻，未激活为0
 - 一阶信念  
   \({\color{red}{Ω}}^{[i]}_t\)，本自具足的精神效用
 - 二阶信念  
