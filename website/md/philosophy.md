@@ -119,7 +119,7 @@
       - 教育要素：学习300
       - 社会要素：通信40、社交？、公益性开源技术服务？
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
-    - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，《资本论》：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于剩余价值的范畴，是资本家的让渡份额
+    - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，《资本论》：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于剩余价值的范畴
     - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)
       - 全职工作条件下，可通过拒绝加班减小m′
       - 灵活就业条件下，可自由分配m′
