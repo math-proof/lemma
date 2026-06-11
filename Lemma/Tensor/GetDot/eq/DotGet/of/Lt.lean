@@ -1,3 +1,5 @@
+import Lemma.Vector.SplitAt0.eq.Zero
+import Lemma.Tensor.EqAppendS
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
@@ -169,8 +171,7 @@ private lemma main
       ·
         simp [EqAddMulDiv]
       ·
-        apply SEq.of.Eq
-        rfl
+        rw [EqAppendS]
   ·
     simp [EqAddMulDiv]
   ·
@@ -319,13 +320,68 @@ private lemma one
               rw [DataCast.eq.Cast_Data.of.Eq (by simpa)]
               rw [GetCast.eq.Get.of.Eq.fin (by grind)]
               simp
-              have h_s2 : ([n, k].take ↑1).prod * (n' / k * ([n, k].drop ↑1).prod) = ([n, k].set (↑1) (n' / k * [n, k][↑1])).prod := by
-                simp
-              have A : Tensor α (n :: [n' / k * k]) := ⟨cast (congrArg (List.Vector α) h_s2) ((X.data.splitAt 1).map fun x ↦ x.repeat (n' / k)).flatten⟩
-              have := DataAppend.eq.Cast_AppendDataS A (0 : Tensor α (n :: [n' % k]))
-              simp at this
+              let A : Tensor α ([n] ++ [n' / k * k]) := ⟨cast (congrArg (List.Vector α) (by simp)) ((X.data.splitAt 1).map fun x ↦ x.repeat (n' / k)).flatten⟩
+              have := Tensor.DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData A (0 : Tensor α ([n] ++ [n' % k]))
+              simp [A] at this
               rw [this]
-              sorry
+              rw [Vector.GetCast.eq.Get.of.Eq.fin (by simp)]
+              simp
+              have h_lt : ↑i * n' + ↑j < (n * 1) * (n' / k * k * 1 + n' % k * 1) := by
+                simp [Nat.EqAddMulDiv]
+                apply Nat.AddMul.lt.Mul.of.Lt.Lt
+                repeat grind
+              let ⟨i', j', h_i'j'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
+              rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j']
+              rw [GetMap₂.eq.BFnGetS.fin]
+              let ⟨h_i'_div, h_j'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_i'j'
+              simp [Nat.EqAddMulDiv] at h_i'_div h_j'_mod
+              have h_j := j.isLt
+              simp at h_j
+              rw [Nat.EqDivAddMul.of.Lt h_j] at h_i'_div
+              rw [Nat.EqMod.of.Lt h_j] at h_j'_mod
+              have h_j'_mod := Fin.Eq_Fin.of.EqVal h_j'_mod
+              have h_i'_div := Fin.Eq_Fin.of.EqVal h_i'_div
+              rw [EqData0'0]
+              rw [SplitAt0.eq.Zero]
+              rw [Vector.EqGet0_0.fin]
+              simp [h_i'_div, h_j'_mod]
+              congr
+              apply Bool.Eq_Cast.of.SEq
+              apply Vector.SEq.of.All_EqGetS.Eq.fin (by simp)
+              intro j
+              rw [Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+              rw [Vector.GetCast.eq.Get.of.Eq.fin (by simp)]
+              simp
+              have h_j : j < 1 * (n' / k * (k * 1)) := by
+                grind
+              let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_j
+              rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
+              have h_q := Fin.Eq_0 q'
+              simp [h_q] at h_q'r'
+              simp
+              rw [Vector.GetRepeat.eq.Get_Mod.fin]
+              simp [← h_q'r']
+              rw [h_q]
+              rw [Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+              simp
+              have h_lt : ↑i * (n' / k * k) + ↑j < (n * 1) * (n' / k * (k * 1)) := by
+                simp
+                apply Nat.AddMul.lt.Mul.of.Lt.Lt
+                repeat grind
+              let ⟨i', j', h_i'j'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
+              rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j']
+              let ⟨h_i'_div, h_j'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_i'j'
+              simp at h_i'_div h_j'_mod
+              have h_j := j.isLt
+              simp at h_j
+              rw [Nat.EqDivAddMul.of.Lt h_j] at h_i'_div
+              rw [Nat.EqMod.of.Lt h_j] at h_j'_mod
+              have h_j'_mod := Fin.Eq_Fin.of.EqVal h_j'_mod
+              have h_i'_div := Fin.Eq_Fin.of.EqVal h_i'_div
+              simp [h_i'_div, h_j'_mod]
+              rw [Vector.GetRepeat.eq.Get_Mod.fin]
+              simp
+              rw [Vector.GetSplitAt_1.eq.GetUnflatten.fin]
             ·
               simp [ProdSwap.eq.Prod]
           ·
