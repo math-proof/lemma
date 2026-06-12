@@ -23,7 +23,7 @@ private lemma main
 
 @[main, fin]
 private lemma one
-  [Mul α] [Add α] [Zero α]
+  [NonUnitalNonAssocSemiring α]
 -- given
   (X : Tensor α (n :: (s ++ [k])))
   (Y : Tensor α [n'])

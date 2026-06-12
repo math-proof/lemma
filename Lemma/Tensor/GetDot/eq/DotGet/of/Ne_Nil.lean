@@ -44,7 +44,7 @@ private lemma main
 
 @[main, fin]
 private lemma one
-  [Mul α] [Add α] [Zero α]
+  [NonUnitalNonAssocSemiring α]
 -- given
   (h_s : s ≠ [])
   (X : Tensor α (n :: s))

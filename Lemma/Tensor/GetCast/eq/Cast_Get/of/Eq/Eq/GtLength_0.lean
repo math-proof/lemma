@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength_0
-open Tensor Bool
+open Tensor
 
 
 @[main, fin]
@@ -12,16 +12,15 @@ private lemma main
   (X : Tensor α s)
   (i : Fin n) :
 -- imply
-  have h_s : s = n :: s.tail := (h_n.symm ▸ List.EqCons_Tail.of.GtLength_0 h₀).symm
-  have h := congrArg (Tensor α) h_s
+  have h_s : n :: s.tail = s := h_n.symm ▸ List.EqCons_Tail.of.GtLength_0 h₀
   have := GtLength.of.GtLength_0 h₀ X ⟨i, by grind⟩
-  (cast h X).get i = cast (by grind) X[i] := by
+  (cast (congrArg (Tensor α) h_s.symm) X)[i] = cast (by grind) X[i] := by
 -- proof
   intro h_s
   simp [GetElem.getElem]
-  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin h₀ h_s X ⟨i, by grind⟩
+  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin h₀ h_s.symm X ⟨i, by grind⟩
   simp at this
   rw [this]
 
-
+#check Tensor.GetCast.eq.Cast_Get.of.Eq.Eq.GtLength_0.fin
 -- created on 2026-06-12
