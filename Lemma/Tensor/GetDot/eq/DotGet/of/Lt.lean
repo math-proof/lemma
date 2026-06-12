@@ -1,17 +1,14 @@
-import Lemma.Vector.SplitAt0.eq.Zero
-import Lemma.Tensor.EqAppendS
-import Lemma.Vector.GetAppend.eq.Get.of.Lt
-import Lemma.Nat.Div.eq.Zero.of.Lt
-import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Fin.Eq_0
+import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.List.ProdSwap.eq.Prod
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.Div.eq.One.of.Ne_0
 import Lemma.Nat.EqAddMulDiv
+import Lemma.Nat.EqDivAddMul.of.Lt
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.EqMod_1'0
@@ -19,11 +16,13 @@ import Lemma.Nat.EqMulDiv
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataAppend.eq.Cast_AppendDataS
+import Lemma.Tensor.DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.DataTransposeTensor.eq.Cast
 import Lemma.Tensor.Eq.is.EqDataS
+import Lemma.Tensor.EqAppendS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqRepeatS.of.Eq
@@ -49,16 +48,20 @@ import Lemma.Tensor.SEqDataS.of.SEq
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
 import Lemma.Vector.Eq.is.All_EqGetS
+import Lemma.Vector.EqGet0_0
 import Lemma.Vector.EqSumS.of.SEq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt.Eq
+import Lemma.Vector.GetMap₂.eq.BFnGetS
 import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
+import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Repeat.eq.Cast.of.Eq_1
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
+import Lemma.Vector.SplitAt0.eq.Zero
 open Bool Fin List Nat Tensor Vector
 set_option maxHeartbeats 2000000
 
@@ -208,7 +211,7 @@ private lemma one
     have h_s1 : ([] ++ [1, 1, n']).set ([] : List ℕ).length (n * ([] ++ [1, 1, n'])[([] : List ℕ).length]) = [] ++ [n, 1, n'] := by
       simp
     have h_s2 : [n', 1].prod / [n'].prod * [n'].prod = [n', 1].prod := by
-      simp [Nat.EqMulDiv]
+      simp [EqMulDiv]
     let X' : Tensor α ([n] ++ [n' / k * k]) := X.repeat (n' / k) (1 : Fin 2)
     let X'Append : Tensor α ([n] ++ [n' / k * k + n' % k]) := X' ++ (0 : Tensor α ([n] ++ [n' % k]))
     let X'Repeat : Tensor α ([] ++ [n, 1, n']) := ((cast (congrArg (Tensor α) h_s0) X'Append).unsqueeze 1).repeat 1 (1 : Fin 3)
@@ -290,7 +293,6 @@ private lemma one
           rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           simp
           rw [GetCast.eq.Get.of.Eq.fin (by simp)]
-
           simp
           repeat rw [DataGet.eq.GetUnflattenData.fin]
           repeat rw [GetUnflatten.eq.Get_AddMul.fin]
@@ -321,52 +323,52 @@ private lemma one
               rw [GetCast.eq.Get.of.Eq.fin (by grind)]
               simp
               let A : Tensor α ([n] ++ [n' / k * k]) := ⟨cast (congrArg (List.Vector α) (by simp)) ((X.data.splitAt 1).map fun x ↦ x.repeat (n' / k)).flatten⟩
-              have := Tensor.DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData A (0 : Tensor α ([n] ++ [n' % k]))
+              have := DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData A (0 : Tensor α ([n] ++ [n' % k]))
               simp [A] at this
               rw [this]
-              rw [Vector.GetCast.eq.Get.of.Eq.fin (by simp)]
+              rw [GetCast.eq.Get.of.Eq.fin (by simp)]
               simp
               have h_lt : ↑i * n' + ↑j < (n * 1) * (n' / k * k * 1 + n' % k * 1) := by
-                simp [Nat.EqAddMulDiv]
-                apply Nat.AddMul.lt.Mul.of.Lt.Lt
+                simp [EqAddMulDiv]
+                apply AddMul.lt.Mul.of.Lt.Lt
                 repeat grind
               let ⟨i', j', h_i'j'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
               rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j']
               rw [GetMap₂.eq.BFnGetS.fin]
               let ⟨h_i'_div, h_j'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_i'j'
-              simp [Nat.EqAddMulDiv] at h_i'_div h_j'_mod
+              simp [EqAddMulDiv] at h_i'_div h_j'_mod
               have h_j := j.isLt
               simp at h_j
-              rw [Nat.EqDivAddMul.of.Lt h_j] at h_i'_div
-              rw [Nat.EqMod.of.Lt h_j] at h_j'_mod
-              have h_j'_mod := Fin.Eq_Fin.of.EqVal h_j'_mod
-              have h_i'_div := Fin.Eq_Fin.of.EqVal h_i'_div
+              rw [EqDivAddMul.of.Lt h_j] at h_i'_div
+              rw [EqMod.of.Lt h_j] at h_j'_mod
+              have h_j'_mod := Eq_Fin.of.EqVal h_j'_mod
+              have h_i'_div := Eq_Fin.of.EqVal h_i'_div
               rw [EqData0'0]
               rw [SplitAt0.eq.Zero]
-              rw [Vector.EqGet0_0.fin]
+              rw [@Vector.EqGet0_0.fin]
               simp [h_i'_div, h_j'_mod]
               congr
-              apply Bool.Eq_Cast.of.SEq
-              apply Vector.SEq.of.All_EqGetS.Eq.fin (by simp)
+              apply Eq_Cast.of.SEq
+              apply SEq.of.All_EqGetS.Eq.fin (by simp)
               intro j
-              rw [Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-              rw [Vector.GetCast.eq.Get.of.Eq.fin (by simp)]
+              rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+              rw [GetCast.eq.Get.of.Eq.fin (by simp)]
               simp
               have h_j : j < 1 * (n' / k * (k * 1)) := by
                 grind
               let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_j
               rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
-              have h_q := Fin.Eq_0 q'
+              have h_q := Eq_0 q'
               simp [h_q] at h_q'r'
               simp
-              rw [Vector.GetRepeat.eq.Get_Mod.fin]
+              rw [GetRepeat.eq.Get_Mod.fin]
               simp [← h_q'r']
               rw [h_q]
-              rw [Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+              rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
               simp
               have h_lt : ↑i * (n' / k * k) + ↑j < (n * 1) * (n' / k * (k * 1)) := by
                 simp
-                apply Nat.AddMul.lt.Mul.of.Lt.Lt
+                apply AddMul.lt.Mul.of.Lt.Lt
                 repeat grind
               let ⟨i', j', h_i'j'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
               rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_i'j']
@@ -374,14 +376,14 @@ private lemma one
               simp at h_i'_div h_j'_mod
               have h_j := j.isLt
               simp at h_j
-              rw [Nat.EqDivAddMul.of.Lt h_j] at h_i'_div
-              rw [Nat.EqMod.of.Lt h_j] at h_j'_mod
-              have h_j'_mod := Fin.Eq_Fin.of.EqVal h_j'_mod
-              have h_i'_div := Fin.Eq_Fin.of.EqVal h_i'_div
+              rw [EqDivAddMul.of.Lt h_j] at h_i'_div
+              rw [EqMod.of.Lt h_j] at h_j'_mod
+              have h_j'_mod := Eq_Fin.of.EqVal h_j'_mod
+              have h_i'_div := Eq_Fin.of.EqVal h_i'_div
               simp [h_i'_div, h_j'_mod]
-              rw [Vector.GetRepeat.eq.Get_Mod.fin]
+              rw [GetRepeat.eq.Get_Mod.fin]
               simp
-              rw [Vector.GetSplitAt_1.eq.GetUnflatten.fin]
+              rw [GetSplitAt_1.eq.GetUnflatten.fin]
             ·
               simp [ProdSwap.eq.Prod]
           ·
@@ -405,4 +407,4 @@ private lemma one
 
 
 -- created on 2026-01-10
--- updated on 2026-04-25
+-- updated on 2026-06-12

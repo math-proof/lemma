@@ -8,7 +8,7 @@ private lemma main
 -- given
   (h : s.length ≤ i) :
 -- imply
-  s.drop i = .nil := by
+  s.drop i = [] := by
 -- proof
   simp_all
 

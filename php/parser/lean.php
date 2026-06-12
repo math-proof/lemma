@@ -829,9 +829,9 @@ abstract class Lean extends IndentedNode
                         $this instanceof LeanProperty || 
                         $this instanceof LeanGetElem || $this instanceof LeanGetElemQue || $this instanceof LeanGetElemQuote || 
                         $this instanceof LeanUnaryArithmeticPost || 
+                        $this instanceof LeanBracket ||
                         $this instanceof LeanPairedGroup && $this->is_Expr()
                     ) {
-                        # consider the case: (f x)[n], f[m][n]
                         $this->parent->replace($this, new LeanGetElem($this, $caret, $indent, $level));
                         return $caret;
                     }
@@ -1622,7 +1622,10 @@ abstract class LeanPairedGroup extends LeanUnary
             $parent instanceof LeanProperty || 
             $parent instanceof LeanColon || 
             $parent instanceof LeanUnaryArithmeticPost || 
-            $parent instanceof LeanPairedGroup
+            $parent instanceof LeanPairedGroup ||
+            $parent instanceof LeanGetElem ||
+            $parent instanceof LeanGetElemQue ||
+            $parent instanceof LeanGetElemQuote
         );
     }
 

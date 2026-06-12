@@ -916,6 +916,7 @@ export class Lean extends IndentedNode {
                         this instanceof LeanGetElemQue ||
                         this instanceof LeanGetElemQuote ||
                         this instanceof LeanUnaryArithmeticPost ||
+                        this instanceof LeanBracket ||
                         (this instanceof LeanPairedGroup && this.is_Expr())
                     ) {
                         this.parent.replace(this, new LeanGetElem(this, caret, indent, level));
@@ -1826,7 +1827,10 @@ class LeanPairedGroup extends Closable(LeanUnary) {
             parent instanceof LeanProperty ||
             parent instanceof LeanColon ||
             parent instanceof LeanUnaryArithmeticPost ||
-            parent instanceof LeanPairedGroup
+            parent instanceof LeanPairedGroup ||
+            parent instanceof LeanGetElem ||
+            parent instanceof LeanGetElemQue ||
+            parent instanceof LeanGetElemQuote
         );
     }
 
