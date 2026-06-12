@@ -306,10 +306,6 @@ for module in ${failingModules[*]}; do
   echo "UPDATE lemma set error = '[{\"code\": \"\", \"file\": \"\", \"info\": \"\", \"line\": 0, \"type\": \"error\"}]' where user = '$user' and module = \"$module\";" >> test.sql
 done
 
-if [ -z "$MYSQL_USER" ]; then
-  echo "MYSQL_USER is not set, acquiring it from ~/.bash_profile"
-  source ~/.bash_profile
-fi
 MYSQL_PORT=${MYSQL_PORT:-3306}
 # Create a temporary config file with .cnf extension
 tempConfigPath=$(mktemp)
@@ -317,7 +313,6 @@ mv "$tempConfigPath" "${tempConfigPath}.cnf"
 tempConfigPath="${tempConfigPath}.cnf"
 cat > "$tempConfigPath" << EOF
 [client]
-user = $MYSQL_USER
 password = $MYSQL_PWD
 port = $MYSQL_PORT
 EOF

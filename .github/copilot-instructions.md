@@ -7,7 +7,7 @@ Keep changes small and local: many files are interdependent (imports are compute
 ## Essential commands
 - Build the Lean project (Linux/macOS):
   - `lake build`
-- Recompute import/test SQL and push lemma metadata into MySQL (requires env vars `MYSQL_USER` and `MYSQL_PWD`):
+- Recompute import/test SQL and push lemma metadata into MySQL (requires env vars `MYSQL_PWD`):
   - Linux: `bash sh/run.sh`
   - Windows PowerShell: `.\ps1\run.ps1`
 - Update pinned package dependencies (mathlib and other packages):
@@ -37,7 +37,7 @@ Keep changes small and local: many files are interdependent (imports are compute
 
 ## Integration points & external deps
 - mathlib4 and other third-party lean packages are pinned in `lake-manifest.json` (do not change pinned revisions without coordinating updates). Use `sh/update.sh` to incrementally update dependencies.
-- The `sh/run.sh` script writes SQL to `test.sql` and requires a running MySQL server (database `axiom`) if you want to populate the site's lemma table. Required env vars: `MYSQL_USER`, `MYSQL_PWD` (and optional `MYSQL_PORT`). The script will attempt to create the DB/table if missing.
+- The `sh/run.sh` script writes SQL to `test.sql` and requires a running MySQL server (database `axiom`) if you want to populate the site's lemma table. Required env vars: `MYSQL_PWD` (and optional `MYSQL_PORT`). The script will attempt to create the DB/table if missing.
 - Frontend visualization depends on static assets in `static/` and PHP endpoints in `php/`. If you change Lean AST->HTML output, update these components and re-generate any JSON indices in `json/`.
 
 ## Minimal checklist for common tasks
@@ -46,7 +46,7 @@ Keep changes small and local: many files are interdependent (imports are compute
 
 ## Quick examples
 - Rebuild and push lemma metadata to MySQL (Linux):
-  - `bash sh/run.sh` (requires `MYSQL_USER`/`MYSQL_PWD`)
+  - `bash sh/run.sh` (requires `MYSQL_PWD`)
 - Recompute imports only:
   - `lake setup-file test.lean`
 

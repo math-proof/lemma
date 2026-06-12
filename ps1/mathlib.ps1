@@ -4,11 +4,6 @@ param(
     [bool]$refresh = $false
 )
 
-# Check if MYSQL_USER is set
-if (-not $env:MYSQL_USER) {
-    Write-Host "MYSQL_USER is not set. Please ensure it is set in your environment."
-    exit 1
-}
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
 $OutputEncoding = [Text.Encoding]::UTF8
 
@@ -52,7 +47,6 @@ if (-not $env:MYSQL_PORT) {
 $tempConfigPath = [System.IO.Path]::ChangeExtension((New-TemporaryFile).FullName, '.ini')
 @"
 [client]
-user = $env:MYSQL_USER
 password = $env:MYSQL_PWD
 port = $env:MYSQL_PORT
 "@ | Set-Content $tempConfigPath

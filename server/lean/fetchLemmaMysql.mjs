@@ -3,7 +3,6 @@
  * and php/utility.php `fetch_from_mysql`.
  *
  * Env names match sibling `label/index.js`:
- *   MYSQL_HOST, MYSQL_USER, MYSQL_PWD, MYSQL_DATABASE, MYSQL_PORT
  *
  * Defaults when a host is set match php/init.php (DB `axiom`, user/user),
  * not label’s default DB (`corpus`).
@@ -44,8 +43,8 @@ export function getMysqlConfig() {
   const host = (process.env.MYSQL_HOST || '').trim();
   if (!host) return null;
   const port = Number(process.env.MYSQL_PORT || 3306);
-  const user = process.env.MYSQL_USER || 'user';
-  const password = process.env.MYSQL_PWD ?? 'user';
+  const user = process.env.USER || process.env.USERNAME;
+  const password = process.env.MYSQL_PWD;
   const database = 'axiom';
   return { host, port, user, password, database };
 }

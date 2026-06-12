@@ -443,6 +443,16 @@ export function resolveUnderscoreModuleAlias(moduleDot) {
     for (let i = 0; i < parts.length; i++) {
       const seg = parts[i];
       if (!seg.includes('_')) continue;
+      const m = seg.match(/^([SH]?Eq|Iff)_(.+)$/);
+      if (m) {
+        const eqFold = m[1] + m[2];
+        const alt = [...parts.slice(0, i), eqFold, ...parts.slice(i + 1)].join('.');
+        const p = moduleToLeanPath(alt);
+        if (p && fs.existsSync(p)) {
+          next = alt;
+          break;
+        }
+      }
       const pieces = seg.split('_').filter(Boolean);
       if (pieces.length < 2) continue;
       const merged =

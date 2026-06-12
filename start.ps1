@@ -18,7 +18,6 @@ $ErrorActionPreference = 'Stop'
 Set-Location -LiteralPath $PSScriptRoot
 
 # Optional MySQL (see server/lean/fetchLemmaMysql.mjs, server/app.mjs):
-#   $env:MYSQL_HOST = '127.0.0.1'; $env:MYSQL_USER = 'user'; $env:MYSQL_PWD = 'user'; $env:MYSQL_DATABASE = 'axiom'
 
 function Invoke-NodeCli {
     param(

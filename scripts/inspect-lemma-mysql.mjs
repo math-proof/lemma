@@ -18,7 +18,7 @@ const userArg =
 
 const cfg = getMysqlConfig();
 if (!cfg) {
-  console.error('No MYSQL_HOST — set MYSQL_HOST (and MYSQL_USER / MYSQL_PWD / MYSQL_DATABASE if needed).');
+  console.error('No MYSQL_HOST — set MYSQL_HOST (and MYSQL_PWD / MYSQL_DATABASE if needed).');
   process.exit(2);
 }
 

@@ -3,7 +3,6 @@ set -eu
 cd "$(dirname "$0")"
 
 # Optional MySQL (see server/lean/fetchLemmaMysql.mjs, server/app.mjs):
-#   export MYSQL_HOST=127.0.0.1 MYSQL_USER=user MYSQL_PWD=user MYSQL_DATABASE=axiom
 
 # Multi-processing: default 8 workers; set LEAN_WORKERS=max, 4, 1, etc.
 # One stuck request blocks one worker; others keep serving. Change count: pm2 delete lemma; ./start.sh

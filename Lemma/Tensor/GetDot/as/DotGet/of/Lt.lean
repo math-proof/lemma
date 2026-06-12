@@ -13,6 +13,7 @@ import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.SEq0S.of.Eq
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq.EqLengthS
 import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
@@ -145,7 +146,7 @@ private lemma main
 
 @[main, fin]
 private lemma one
-  [Mul α] [Add α] [Zero α]
+  [NonUnitalNonAssocSemiring α]
 -- given
   (h : k < n')
   (X : Tensor α (n :: (s ++ [k])))
@@ -157,9 +158,18 @@ private lemma one
   simp [GetElem.getElem]
   match s with
   | [] =>
-    sorry
+    rw [GetDot.eq.DotGet.of.Lt.one.fin h]
   | s₀ :: s =>
-    sorry
+    -- have h_min_length : s.length ⊓ (s.length + 1 + 1) = s.length := by omega
+    simp [MatMul.dot]
+    repeat rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
+    simp
+    apply SEq_Cast.of.SEq.Eq
+    ·
+      simp [matmul_shape]
+      cases s <;> simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
+    ·
+      sorry
 
 
 -- created on 2026-01-11
