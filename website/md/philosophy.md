@@ -78,7 +78,7 @@
       - 健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - Hₒ({\color{red}L}_t) - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
     - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
       - 精神衰老损耗/天：ΔMₐ = 0.0025
-      - 信念奖励脉冲：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n]}_t\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心来瞌睡多，如情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡当天以西方极乐世界为标的的往生居住权(**延迟奖励**)
+      - 信念奖励脉冲：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n]}_t\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心来瞌睡多，如情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡时以西方极乐世界为标的的往生居住权(**延迟奖励**)
         - 半衰期/日：\({\color{red}{\tau_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\tau_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_t > 0\)，半衰期短，依据享乐适应，快乐跑步机
@@ -131,7 +131,8 @@
     - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge tₘᵢₙ\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
-      - 破产，由\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法逻辑：自由是生命的折现，还不了钱，拿自由换，故人类社会把人身自由作为债务违约的最后抵押品
+      - 破产，由\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法逻辑：人类社会把人身自由作为债务违约的最后抵押品
+      - 绝望，由\(\max_{{\color{red}{a}}_t} Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t) < {\color{red}r}_{t_{max}}\)触发，唯一真正严肃的哲学命题是自杀(舍生取义)：生命是否值得活
   - 社会资本，是指人际、组织、政治等关系价值，在主体遭遇风险时转化为实际支持的能力：
     - 人脉资产\(\color{red}P\)：亲情、爱情、友情、人情、仇人等关系价值，共计\(\mathfrak {D} \le 150\)人
       - 折当价\(\color{red}{W_p}\)/￥：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，《乡土中国》差序格局：人脉像水波纹，以己为心、亲疏有别、随势伸缩。我帮了某人(当品：情谊)，我在他心(情谊当铺)中的情谊当票不可观测(他心难题)，只能猜测：我落难赎当时那张当票的折当价是多少？情谊典当记名不记账，若绝当，我(当户)就算上**当**？
