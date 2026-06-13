@@ -54,8 +54,8 @@
   \({\color{red}{Ω}}^{i_{:n}}_t={\color{red}Ι}_{t,i_0,i_1}\mathbb E\left[{\color{red}{Ω}}^{i_{1:n}}_t\middle|{\color{magenta}{Ω}}^{[i_{:n-1}]}_t \right]\)  
   米勒定律(7±2法则)限制了工作记忆容量，故递归信念嵌套深度很难超过7层，是人的认知极限
 
-## 生命智能体生存最优解
-以下是基于信念MDP、生命智能体生存最优解的思想实验：
+## 生命智能体最优解
+以下是基于信念MDP、生命智能体最优解的思想实验：
 - 生存边界公设1
   - 具身资本
     - \(t \in \mathbb N\)：第t天日初时刻
@@ -144,7 +144,7 @@
 - 行为策略公设2
   - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日初观测到的多模态带噪存量特征：体检、表情、学历、存款、社交轨迹等，是客观状态的直接或代理观测值，是管中窥豹，非庐山真面目
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋的分配
-  - 状态：描述生存状态存量
+  - 状态：描述生命状态存量
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
     - 后验滤波：\({\color{red}b}_t = \mathbb P({\color{red}{s}}_t | {\color{magenta}{o}}_{:t+1}, {\color{magenta}{a}}_{:t})\)，递推式：\({\color{red}b}_{t+1} = \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{o}}_{t+1}, {\color{magenta}{a}}_t)\)
     - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t}] =\int s_t \cdot {\color{red}b}_t d s_t\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
@@ -185,7 +185,7 @@
   - 目标函数：先验终身福祉(信念估计值)最大化(\(t \ge tₘᵢₙ\))
 
 由各变量偏导，\(V_\pi({\color{red}{s}}_t)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。
-由策略梯度定理，生命智能体生存最优解的最优行为策略(凸函数约定)：存在一个内点最优内卷系数\(m′_{t,min}\)：当\(m′_t>m′_{t, min}\)，\(V_\pi({\color{red}{s}}_t)\)随\(m′_t\)严格递减。
+由策略梯度定理，生命智能体最优解的最优行为策略(凸函数约定)：存在一个内点最优内卷系数\(m′_{t,min}\)：当\(m′_t>m′_{t, min}\)，\(V_\pi({\color{red}{s}}_t)\)随\(m′_t\)严格递减。
 
 ## 现实案例验证
 先用**边界排除法**来验证行为策略是否存在内点最优解
