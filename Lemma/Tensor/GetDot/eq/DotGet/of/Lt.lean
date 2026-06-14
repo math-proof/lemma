@@ -42,7 +42,7 @@ import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Tensor.Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
-import Lemma.Tensor.Matmul.eq.SelectBatchDot.of.Lt_Get_SubLength.GeLength_2
+import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.Lt_Get_SubLength.GeLength_2
 import Lemma.Tensor.Matmul.eq.SumMulDataS.of.Lt
 import Lemma.Tensor.SEqDataS.of.SEq
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
@@ -81,7 +81,7 @@ private lemma main
   simp [MatMul.dot]
   rw [Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
   simp
-  rw [Matmul.eq.SelectBatchDot.of.Lt_Get_SubLength.GeLength_2 (by simp) (by simpa)]
+  rw [Matmul.eq.Cast_SelectBatchDot.of.Lt_Get_SubLength.GeLength_2 (by simp) (by simpa)]
   simp
   let Xi : Tensor α ([n' / k * k]) := (X.get i).repeat (n' / k) (0 : Fin 1)
   let XiAppend : Tensor α [n' / k * k + n' % k] := Xi ++ (0 : Tensor α [n' % k])

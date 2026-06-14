@@ -10,7 +10,7 @@ private lemma main
 -- given
   (h_eq : a ≃ b) :
 -- imply
-  cast (by rw [h_eq.left]) a = b := by
+  cast (congrArg Vector h_eq.left) a = b := by
 -- proof
   simp [SEq] at h_eq
   aesop

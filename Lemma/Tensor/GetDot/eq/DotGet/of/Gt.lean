@@ -35,7 +35,7 @@ import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Tensor.Matmul.eq.Cast_BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2
-import Lemma.Tensor.Matmul.eq.SelectBatchDot.of.Gt_Get_SubLength.GeLength_2
+import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.Gt_Get_SubLength.GeLength_2
 import Lemma.Tensor.Matmul.eq.SumMulDataS.of.Gt
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
@@ -70,7 +70,7 @@ private lemma main
   rw [Matmul.eq.Cast_BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2]
   ·
     simp
-    rw [Matmul.eq.SelectBatchDot.of.Gt_Get_SubLength.GeLength_2]
+    rw [Matmul.eq.Cast_SelectBatchDot.of.Gt_Get_SubLength.GeLength_2]
     ·
       simp
       let Y' : Tensor α ([] ++ [k / n' * n', k']) := Y.repeat (k / n') (0 : Fin 2)

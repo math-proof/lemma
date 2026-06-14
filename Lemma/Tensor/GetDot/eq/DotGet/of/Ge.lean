@@ -18,7 +18,7 @@ import Lemma.Tensor.GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.eq.Cast_BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Matmul.eq.SelectBatchDot.of.Eq_Get_SubLength.GeLength_2
+import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.Eq_Get_SubLength.GeLength_2
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
 import Lemma.Vector.Eq.is.All_EqGetS
@@ -44,7 +44,7 @@ private lemma main
     rw [Matmul.eq.Cast_BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2]
     ·
       simp
-      rw [Matmul.eq.SelectBatchDot.of.Eq_Get_SubLength.GeLength_2 (by simp) (by simp)]
+      rw [Matmul.eq.Cast_SelectBatchDot.of.Eq_Get_SubLength.GeLength_2 (by simp) (by simp)]
       simp
       let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).broadcast [1, k] (by simp)
       have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) ⟨0, by simp⟩ (XiBroadcast.batch_dot Y)

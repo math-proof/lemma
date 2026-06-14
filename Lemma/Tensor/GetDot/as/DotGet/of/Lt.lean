@@ -1,3 +1,4 @@
+import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.GetSelect.eq.Cast_SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -167,7 +168,7 @@ private lemma one
     apply SEq_Cast.of.SEq.Eq
     ·
       simp [matmul_shape]
-      simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
+      simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
     ·
       conv_lhs => rw [show i = ⟨i, by simp⟩ by grind]
       rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin]
@@ -178,19 +179,39 @@ private lemma one
           apply Bool.SEqCast.of.SEq.Eq
           .
             simp [matmul_shape]
-            simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
+            simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
           .
+            apply SEqSelectS.of.SEq
+            -- have h_bz : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
+            --   simp
+            -- have h_nk : [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2], n'] = [(s₀ :: (s ++ [k]))[s.length], n'] := by
+            --   simp
+            -- have h_s₀ : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
+            --   simp
+            -- have h_s₀' : ((s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 - 2) ++ [n', 1]) = (s₀ :: (s ++ [k])).take s.length ++ [n', 1] := by
+            --   simp
             sorry
+            simp [Tensor.batch_dot]
+            apply SEq_Cast.of.SEq.Eq
+            .
+              simp [AppendTake_Length.eq.Cons_Append_List]
+              rw [EqMin.of.Lt (by omega)]
+              rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
+              simp
+              rw [EqMin.of.Lt (by omega)]
+              simp [AppendTake_Length.eq.Cons_Append_List]
+            .
+              sorry
         .
-          simp [← Cons_Append_List.eq.AppendTake_Length]
+          simp [AppendTake_Length.eq.Cons_Append_List]
         .
-          simp [← Cons_Append_List.eq.AppendTake_Length]
+          simp [AppendTake_Length.eq.Cons_Append_List]
           apply i.isLt
       .
         simp [matmul_shape]
       .
         simp [matmul_shape]
-        simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
+        simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
 
 
 -- created on 2026-01-11
