@@ -9,7 +9,7 @@ import Lemma.List.EqLengthSlice_Mul.of.Lt
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.List.LengthSlice.eq.One.of.Lt
-import Lemma.List.MapCast.eq.Cast_Map.of.Eq
+import Lemma.Vector.MapCast.eq.Cast_Map.of.Eq
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdCons.eq.Mul_Prod
 import Lemma.List.ProdEraseIdx.eq.MulProdS

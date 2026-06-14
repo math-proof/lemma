@@ -1,6 +1,6 @@
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.List.Map.as.MapCast.of.Eq
-open Bool List
+import Lemma.Vector.Map.as.MapCast.of.Eq
+open Bool Vector
 
 
 @[main]
