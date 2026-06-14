@@ -22,5 +22,5 @@ private lemma main
   simp at this
   rw [this]
 
-#check Tensor.GetCast.eq.Cast_Get.of.Eq.Eq.GtLength_0.fin
+
 -- created on 2026-06-12

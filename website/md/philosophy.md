@@ -132,7 +132,7 @@
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
       - 破产，由\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法逻辑：人类社会把人身自由作为债务违约的最后抵押品
-      - 绝望，由\(\max_{{\color{red}{a}}_t} Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t) < {\color{red}r}_{t_{max}}\)触发，唯一真正严肃的哲学命题是自杀(舍生取义)：生命是否值得活
+      - 绝望，由\(\max_{{\color{red}{a}}_t} Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t) < {\color{red}r}_{t_{max}}=涅槃值\) 触发，唯一真正严肃的哲学命题是自杀(舍生取义)：生命是否值得活
   - 社会资本，是指人际、组织、政治等关系价值，在主体遭遇风险时转化为实际支持的能力：
     - 人脉资产\(\color{red}P\)：亲情、爱情、友情、人情、仇人等关系价值，共计\(\mathfrak {D} \le 150\)人
       - 折当价\(\color{red}{W_p}\)/￥：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，《乡土中国》差序格局：人脉像水波纹，以己为心、亲疏有别、随势伸缩。我帮了某人(当品：情谊)，我在他心(情谊当铺)中的情谊当票不可观测(他心难题)，只能猜测：我落难赎当时那张当票的折当价是多少？情谊典当记名不记账，若绝当，我(当户)就算上**当**？

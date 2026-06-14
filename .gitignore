@@ -2,5 +2,6 @@ node_modules
 .lake
 test.*
 *.log
+__pycache__
 *.echo.lean
 .vscode/PythonImportHelper-v2-Completion.json

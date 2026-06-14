@@ -473,8 +473,32 @@ def Lean.Expr.getElem2get : Expr → Expr
                 none
               else
                 (usNat, (const `Fin.val usNat).mkApp [n, i])
+            | .app (.app (const `List.tail _) (const `Nat _)) S =>
+              if let .app (.app (.app (const `List.cons _) (const `Nat _)) _) (.app (.app (.app (const `List.cons _) (const `Nat _)) n') _) := S then
+                if n == n' then
+                  none
+                else
+                  (usNat, (const `Fin.val usNat).mkApp [n, i])
+              else if let .app (.app (.app (.app (const `Fin.val_lt_of_le _) (.app (.app (.app (const `Tensor.length _) _) s') _)) n') _) _ := isLt then
+                if s == s' && n == n' then
+                  none
+                else
+                  (usNat, (const `Fin.val usNat).mkApp [n, i])
+              else
+                (usNat, (const `Fin.val usNat).mkApp [n, i])
+            | .app (.app (.app (const `List.eraseIdx _) (const `Nat _)) (.app (.app (.app (const `List.cons _) (const `Nat _)) n') _)) (.app (.app (.app (const `OfNat.ofNat _) (const `Nat _)) (.lit (.natVal index))) (.app (const `instOfNatNat _) _)) =>
+              if index > 0 && n == n' then
+                none
+              else
+                (usNat, (const `Fin.val usNat).mkApp [n, i])
             | _ =>
-              none
+              if let .app (.app (.app (.app (const `Fin.val_lt_of_le _) (.app (.app (.app (const `Tensor.length _) _) s') (.app (.app (.app (const `Tensor.T _) _) (.app (.app (.app (const `List.cons _) (const `Nat _)) _) (.app (.app (.app (const `List.cons _) (const `Nat _)) n') _))) _))) n'') _) _ := isLt then
+                if s == s' && n == n' && n == n'' then
+                  none
+                else
+                  (usNat, (const `Fin.val usNat).mkApp [n, i])
+              else
+                (usNat, (const `Fin.val usNat).mkApp [n, i])
         | const `Nat usNat =>
           (usNat, i)
         | _ =>
