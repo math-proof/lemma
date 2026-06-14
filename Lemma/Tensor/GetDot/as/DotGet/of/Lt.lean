@@ -1,3 +1,4 @@
+import Lemma.Tensor.GetSelect.eq.Cast_SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
@@ -171,12 +172,20 @@ private lemma one
       conv_lhs => rw [show i = ⟨i, by simp⟩ by grind]
       rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin]
       .
-        apply Bool.SEqCast.of.SEq.Eq
+        rw [GetSelect.eq.Cast_SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length]
         .
-          simp [matmul_shape]
-          simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
+          simp
+          apply Bool.SEqCast.of.SEq.Eq
+          .
+            simp [matmul_shape]
+            simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
+          .
+            sorry
         .
-          sorry
+          simp [← Cons_Append_List.eq.AppendTake_Length]
+        .
+          simp [← Cons_Append_List.eq.AppendTake_Length]
+          apply i.isLt
       .
         simp [matmul_shape]
       .
