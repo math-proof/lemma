@@ -422,9 +422,9 @@ def Lean.Expr.getElem2get : Expr → Expr
       else
         expr
     | app (app (const `Tensor us) α) s =>
-      let args : Option (List Level × Expr) :=
+      let n : Option Expr :=
         match idx with
-        | app (const `Fin usNat) n =>
+        | app (const `Fin _) n =>
           match n with
           | app (app (app (const `List.get _) (const `Nat _)) _) -- s
               (app
@@ -453,60 +453,65 @@ def Lean.Expr.getElem2get : Expr → Expr
                 )
                 zero
               ) _ =>
-            if let app (app (app (const `OfNat.ofNat _) (const `Nat usNat)) (lit (.natVal 0))) (app (const `instOfNatNat _) (lit (.natVal 0))) := zero then
-              (usNat, (const `Fin.val usNat).mkApp [n, i])
+            if let app (app (app (const `OfNat.ofNat _) (const `Nat _)) (lit (.natVal 0))) (app (const `instOfNatNat _) (lit (.natVal 0))) := zero then
+              n
             else
               panic! s!"unmatched zero, got {zero}"
           | app (app (app (const `Tensor.length _) _) _) xs' =>
             if xs == xs' then
               none
             else
-              (usNat, (const `Fin.val usNat).mkApp [n, i])
+              n
           | app (app (const `Slice.length _) _) _ =>
-            (usNat, (const `Fin.val usNat).mkApp [n, i])
+            n
           | _ =>
             match s with
             | app (app (const `Tensor.matmul_shape _) _) _ =>
-              (usNat, (const `Fin.val usNat).mkApp [n, i])
+              n
             | app (app (app (const `List.cons _) (const `Nat _)) n') _ =>
               if n == n' then
                 none
               else
-                (usNat, (const `Fin.val usNat).mkApp [n, i])
+                n
             | .app (.app (const `List.tail _) (const `Nat _)) S =>
               if let .app (.app (.app (const `List.cons _) (const `Nat _)) _) (.app (.app (.app (const `List.cons _) (const `Nat _)) n') _) := S then
                 if n == n' then
                   none
                 else
-                  (usNat, (const `Fin.val usNat).mkApp [n, i])
+                  n
               else if let .app (.app (.app (.app (const `Fin.val_lt_of_le _) (.app (.app (.app (const `Tensor.length _) _) s') _)) n') _) _ := isLt then
                 if s == s' && n == n' then
                   none
                 else
-                  (usNat, (const `Fin.val usNat).mkApp [n, i])
+                  n
               else
-                (usNat, (const `Fin.val usNat).mkApp [n, i])
+                n
             | .app (.app (.app (const `List.eraseIdx _) (const `Nat _)) (.app (.app (.app (const `List.cons _) (const `Nat _)) n') _)) (.app (.app (.app (const `OfNat.ofNat _) (const `Nat _)) (.lit (.natVal index))) (.app (const `instOfNatNat _) _)) =>
               if index > 0 && n == n' then
                 none
               else
-                (usNat, (const `Fin.val usNat).mkApp [n, i])
+                n
             | _ =>
               if let .app (.app (.app (.app (const `Fin.val_lt_of_le _) (.app (.app (.app (const `Tensor.length _) _) s') (.app (.app (.app (const `Tensor.T _) _) (.app (.app (.app (const `List.cons _) (const `Nat _)) _) (.app (.app (.app (const `List.cons _) (const `Nat _)) n') _))) _))) n'') _) _ := isLt then
                 if s == s' && n == n' && n == n'' then
                   none
                 else
-                  (usNat, (const `Fin.val usNat).mkApp [n, i])
+                  n
               else
-                (usNat, (const `Fin.val usNat).mkApp [n, i])
-        | const `Nat usNat =>
-          (usNat, i)
+                n
+        | const `Nat _ =>
+          some default
         | _ =>
           panic! s!"Expected a Fin index, but got: {idx}"
       let i :=
-        if let some (usNat, i) := args then
+        if let some n := n then
+          let i :=
+            if n == default then
+              i
+            else
+              (const `Fin.val []).mkApp [n, i]
           let n := (const `Tensor.length us).mkApp [α, s, xs]
-          (const `Fin.mk usNat).mkApp [n, i, isLt]
+          (const `Fin.mk []).mkApp [n, i, isLt]
         else
           i
       (const `Tensor.get us).mkApp [α, s, xs.getElem2get, i]
