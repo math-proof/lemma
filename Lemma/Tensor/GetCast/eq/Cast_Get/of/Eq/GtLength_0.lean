@@ -23,4 +23,25 @@ private lemma main
   apply GetCast.as.Get.of.Eq.GtLength_0 h₀ h₁ X i
 
 
+@[main, fin]
+private lemma right
+  {s : List ℕ}
+-- given
+  (h₀ : s'.length > 0)
+  (h_s : s = s')
+  (X : Tensor α s)
+  (i : Fin s'[0]) :
+-- imply
+  have X' := cast (congrArg (Tensor α) h_s) X
+  have := GtLength.of.GtLength_0 h₀ X' i
+  have := GtLength.of.GtLength_0 (h_s ▸ h₀) X ⟨i, by grind⟩
+  X'[i] = cast (by grind) X[i] := by
+-- proof
+  intro X'
+  simp [X']
+  have := main (h_s ▸ h₀) (by grind) X ⟨i, by grind⟩ (s' := s')
+  simp at this
+  rw [this]
+
+
 -- created on 2025-07-04

@@ -160,16 +160,28 @@ private lemma one
   | [] =>
     rw [GetDot.eq.DotGet.of.Lt.one.fin h]
   | s₀ :: s =>
-    -- have h_min_length : s.length ⊓ (s.length + 1 + 1) = s.length := by omega
     simp [MatMul.dot]
     repeat rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
     simp
     apply SEq_Cast.of.SEq.Eq
     ·
       simp [matmul_shape]
-      cases s <;> simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
+      simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
     ·
-      sorry
+      conv_lhs => rw [show i = ⟨i, by simp⟩ by grind]
+      rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin]
+      .
+        apply Bool.SEqCast.of.SEq.Eq
+        .
+          simp [matmul_shape]
+          simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
+        .
+          sorry
+      .
+        simp [matmul_shape]
+      .
+        simp [matmul_shape]
+        simp [EraseIdx.eq.Append_Drop_Add_1, ← Cons_Append_List.eq.AppendTake_Length]
 
 
 -- created on 2026-01-11
