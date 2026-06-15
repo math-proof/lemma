@@ -1,6 +1,6 @@
 # 财富自由论
 
-社会上有一套钱生钱的财富自由论。本文将数理马克思主义、布迪厄社会学、认知博弈论、健康动力学融入简洁的概率公式、期望方程等**符号暴力美学**中，构建了一套个人社会主义强化学习算法，以回答：
+社会上有一套钱生钱的财富自由论。本文将数理马克思主义、布迪厄社会学、认知博弈论、健康动力学融入简洁的概率公式、期望方程等**符号暴力美学**中，构建了个人社会主义强化学习算法，以回答：
 - 什么是财富？
 - 什么是自由？
 - 什么是财富自由？
@@ -65,19 +65,19 @@
     - \(\color{red}H\)：健康指数(体检可观测)，\(H_{tₘᵢₙ} = 100\)
       - 基线日死亡概率：\(q_{min}=2.74 \cdot 10^{-7}\)
       - 死亡概率：\({\color{red}q} = e^{\frac{\ln q_{min}}{100} \cdot \mathrm{relu}({\color{red}H})}\)
-      - 身体衰老损耗/天：ΔHₐ = 0.0025
-      - tₒₒ：44723，极限生命末日，最长寿命是法国的Jeanne Calment 122岁164天
+      - 身体衰老损耗/天：ΔHₐ ≈ 0.0026
+      - tₒₒ：44723，极限生命末日，最长寿命记录：法国Jeanne Calment
       - 寿命\(\color{red}T\)尾和公式：\[\mathbb{E}\left[{\color{red}T} \middle| {\color{red}H}_t \right] - t = 
 \mathbb{E}\left[{\color{red}T} - t \middle| {\color{red}H}_t \right] = 
 \sum_{j=t + 1}^{t_{oo}} (j - t) \cdot P\left({\color{red}T}=j \middle| {\color{red}H}_t \right) = 
 \sum_{j=t + 1}^{t_{oo}} P\left({\color{red}T} \ge j \middle| {\color{red}H}_t \right) = 
 \sum_{j=0}^{t_{oo} - t - 1} P\left({\color{red}T} \ge j + t + 1 \middle| {\color{red}H}_t \right) = 
 \sum_{j=0}^{t_{oo} - t - 1} \mathbb E\left[ \prod_{j=0}^{j}(1-{\color{red}q}_{t+j}) \middle| {\color{red}H}_t \right]\]
-      - \(\color{red}ΔHᵥ\)：健康损伤脉冲，如车祸，伤残，重疾，人身意外
+      - \(\color{red}ΔHᵥ\)：健康损伤脉冲，如车祸，伤残，重疾
       - 健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - Hₒ({\color{red}L}_t) - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
     - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
-      - 精神衰老损耗/天：ΔMₐ = 0.0025
-      - 信念奖励脉冲：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n]}_t\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心来瞌睡多，如情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡时以西方极乐世界为标的的往生居住权(**延迟奖励**)
+      - 精神衰老损耗/天：ΔMₐ ≈ 0.0026
+      - 信念奖励脉冲：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n]}_t\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心头瞌睡多，如情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡时以极乐世界为标的的往生居住权(\({\color{red}r}_{t_{max}}\)：涅槃值)
         - 半衰期/日：\({\color{red}{\tau_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
         - 日折旧率：\({\color{red}{\delta_m}} = \frac{\ln 2}{\color{red}{\tau_m}}\)
         - 多半别人定义的幸福：\({\Xi_m}_t > 0\)，半衰期短，依据享乐适应，快乐跑步机
@@ -86,7 +86,7 @@
         - 累计信念奖励差分：\(\Delta {\color{red}E}_{t} = {\color{red}{\Xi_m}}_{t + 1} - \sum_{j=tₘᵢₙ}^{t} (1 - e ^ {-{{\color{red}{\delta_m}}_j}}){e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
       - 精神效用指数差分：\(\Delta {\color{red}M}_t = {\color{red}M}_{t+1} - {\color{red}M}_t = ΔMₑ{\color{red}\varepsilon}_t + ΔMᵣ \times {\color{red}{\Theta}}_t + \Delta {\color{red}E}_t - ΔMₐ - {\color{red}{P_l}}_t\omega_m - Mₒ({\color{red}L}_t),\quad t \ge tₘᵢₙ\)
     - 时间禀赋(24h)：
-      - 自由时间\(\color{red}f\)/h：可自由支配的时间，我不想花就可以不花的时间，其否决权是三阶信念：我否认[你认为[我的时间归你]]：
+      - 自由时间\(\color{red}f\)/h：我不想花就可以不花的时间，其否决权是三阶信念：我否认[你认为[我的时间归你]]：
         - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_t]≈4\)，产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
         - 体育健身\(\color{red}θ\)：\(\mathbb E[{\color{red}θ}_t]≈0.5\)，享受运动艺术；附带健康增益ΔHₑ/h，且ΔHₑ < ΔHₐ / 24
         - 情感投资\(\color{red}Θ\)：\({\color{red}Θ}_t \in R^{\mathfrak {D}}\)，货币？￥，产生人脉资产增量ΔPᵣ/h，精神效用增益ΔMᵣ/h
@@ -131,7 +131,7 @@
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡概率\({\color{red}q}_{tₘₐₓ}\)触发
       - 破产，由\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法逻辑：人类社会把人身自由作为债务违约的最后抵押品
-      - 绝望，由\(\max_{{\color{red}{a}}_t} Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t) < {\color{red}r}_{t_{max}}=涅槃值\) 触发，唯一真正严肃的哲学命题是自杀(舍生取义)：生命是否值得活
+      - 绝望，由\(\max_{{\color{red}{a}}_t} Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t) < {\color{red}r}_{t_{max}}\)触发，唯一真正严肃的哲学命题是自杀(舍生取义)：生不如死？
   - 社会资本，是指人际、组织、政治等关系价值，在主体遭遇风险时转化为实际支持的能力：
     - 人脉资产\(\color{red}P\)：亲情、爱情、友情、人情、仇人等关系价值，共计\(\mathfrak {D} \le 150\)人
       - 折当价\(\color{red}{W_p}\)/￥：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，《乡土中国》差序格局：人脉像水波纹，以己为心、亲疏有别、随势伸缩。我帮了某人(当品：情谊)，我在他心(情谊当铺)中的情谊当票不可观测(他心难题)，只能猜测：我落难赎当时那张当票的折当价是多少？情谊典当记名不记账，若绝当，我(当户)就算上**当**？
@@ -147,7 +147,7 @@
   - 状态：描述生命状态存量
     - 客观存量：\({\color{red}s} = [{\color{red}H}, {\color{red}M}, {\color{red}K}, {\color{red}W}, {\color{red}P}, {\color{red}S}, A]\)
     - 后验滤波：\({\color{red}b}_t = \mathbb P({\color{red}{s}}_t | {\color{magenta}{o}}_{:t+1}, {\color{magenta}{a}}_{:t})\)，递推式：\({\color{red}b}_{t+1} = \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{o}}_{t+1}, {\color{magenta}{a}}_t)\)
-    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t}] =\int s_t \cdot {\color{red}b}_t d s_t\)，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
+    - 信念估计：\({\color{red}{\hat{s}}} = [{\color{red}{\hat{H}}}, {\color{red}{\hat{M}}}, {\color{red}{\hat{K}}}, {\color{red}{\hat{W}}}, {\color{red}{\hat{P}}}, {\color{red}{\hat{S}}}, A]\)，其中\({\color{red}{\hat{s}}}_t = \mathbb{E}[{\color{red}s}_t \mid {\color{magenta}o}_{:t+1}, {\color{magenta}a}_{:t}] =\int s_t \cdot {\color{red}b}_t d s_t\)，是基于有限历史的有偏估计，信念随\({\color{red}o}_{:t+1}\)累积而更新，所谓路遥知马力，事久见人心
     - 信念校准：Bayes更新递推式(温故而知新)：\[{\color{red}b}_{t+1} = \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{o}}_{t+1}, {\color{magenta}{a}}_t) \\= \frac {\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{b}}_t,{\color{magenta}{a}}_t) \mathbb P({\color{red}{s}}_{t+1} | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)} {\mathbb P({\color{magenta}{o}}_{t+1}| {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)} \\\propto \mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t) \int \mathbb P({\color{red}{s}}_{t+1} | {\color{red}{s}}_t,{\color{magenta}{b}}_t, {\color{magenta}{a}}_t) \mathbb P({\color{red}{s}}_t | {\color{magenta}{b}}_t, {\color{magenta}{a}}_t) d s_t  \\\propto \mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t) \int \mathbb P({\color{red}{s}}_{t+1} | {\color{red}{s}}_t,{\color{magenta}{a}}_t) {\color{red}{b}}_t d s_t\]，其中
       - Markov观测独立假设：\(\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{b}}_t,{\color{magenta}{a}}_t)=\mathbb P({\color{magenta}{o}}_{t+1} | {\color{red}{s}}_{t+1},{\color{magenta}{a}}_t)\)，观测结果不受主观信念支配
       - Markov状态转移假设：\(\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{magenta}{b}}_t, {\color{magenta}{a}}_t)=\mathbb P({\color{red}s}_{t+1}| {\color{red}s}_t, {\color{magenta}{a}}_t)\)，符合**一级混沌系统**公设：主观信念不影响客观状态
@@ -171,11 +171,9 @@
       - 内卷：m′≫1，用自由换个别剩余价值，通过通胀稀释、理财圈套、广告洗脑、房价倒挂，在流通机制下回收至资本家的剩余价值
 - 生命目标公设3
   - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}M}}\right) < {\color{red}f}\)，信念估计值：\({\color{red}{\hat{r}}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}{\hat{M}}}}\right)\)，其负指数函数形式与经济学恒定绝对风险厌恶(CARA)的边际效用递减同构
-    - 财富是自由时间\({\color{red}f}\)：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中的无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，故**劳动时间是衡量商品价值的重要尺度**。商品价值表现为社会的物质或精神财富，不是个体财富；因时间禀赋的稀缺性，个体财富是扣除异化劳动时间后，剩下的可以自由支配的时间。
-    - 精神效用指数\(\color{red}{\hat{M}}_t\)是信念驱动的、基于有限历史的有偏估计，不是上帝观测值，其逼近程度取决于\(\mathfrak{C}_t\)
   - Markov历史无关假设：\({\color{red}{r}}_t \perp ({\color{red}{s}}_{:t},{\color{red}a}_{:t})\mid ({\color{red}{s}}_t,{\color{red}a}_t)\)​，当天动作已写入历史存量\({\color{red}{s}}_t\)，充分编码，故假设成立
-  - 状态价值函数：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t\right]\)，把握当下，眺望未来，预估人生的终局收益，比如陶渊明：**悟已往之不谏，知来者之可追**
-  - 动作价值函数：\(Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t,{\color{magenta}{a}}_t\right]\)，在人生岔路口，比较每一分叉路的收益期望，择一而往，比如《行路难》：**多歧路，今安在**？
+  - 状态价值函数：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t\right]\)，把握当下，眺望未来，预估人生终局收益，如：悟已往之不谏，知来者之可追
+  - 动作价值函数：\(Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t,{\color{magenta}{a}}_t\right]\)，给出「多歧路，今安在」的行动指南：未战庙算，深谋远虑，斟酌损益，当机立断
   - [Bellman](http://www.lemma.cn/py/?module=Tensor.And.Eq.Expect.of.Eq_Conditioned.Eq_Expect.Eq_Expect.Bellman)方程：
     - \(V_\pi(s_t) = \mathbb{E}_{{\color{red}{a}}_t \sim \pi} \left[ Q_\pi(s_t, {\color{red}{a}}_t) \middle| {\color{red}{s}}_t \right] =\mathbb{E}_{\substack{{\color{red}{r}}_t \\ {\color{red}{s}}_{t+1} \\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t \right]\)
     - \(Q_\pi(s_t, a_t) = \mathbb{E}_{ \substack{{\color{red}{r}}_t\\ {\color{red}{s}}_{t+1}\\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t,{\color{red}{a}}_t \right]\)
@@ -214,10 +212,10 @@
 
 **社会是一辆汽车：经济发动机+哲学制动机**，只有油门、没有刹车肯定翻车。
 有人说要功名利禄，有人说要人间清醒，这叫多元化市场经济，哪里有需求，哪里就有消费。
-一个人怎么活才算没白活？依鄙人看，用先验终身福祉(怎么活)、后验终生福祉(有没白活)来计算最合理。
+人怎么活才算没白活？依鄙人看，用先验终身福祉(怎么活)、后验终生福祉(有没白活)来计算最合理。
 
 ## 财富自由的谎言 
-**财富是可以自由支配的时间**。
+《资本论》：劳动力是人的劳动能力，是存在于人体中并在生产时发挥作用的体力和智力的总和。劳动是劳动力的发挥，是人通过有目的的活动改造自然的过程。商品的价值是凝结在商品中无差别的人类抽象劳动。劳动本身的量是用劳动的持续时间来计量，故**劳动时间是衡量商品价值的重要尺度**。商品价值表现为社会物质或精神财富，非个体财富；因时间禀赋的稀缺性，个体财富是扣除异化劳动时间后，剩下的可自由支配的时间。故**财富是可自由支配的时间**。
 用这把奥卡姆剃刀剃尽财富幻象，我得出财富自由的定义：**以最小必要劳动，换最大自由时间**。
 梭罗《瓦尔登湖》量化实验：岁劳6周，技进劳寡，余时自主，即财富自由。
 财富自由论不是教唆躺平，而是以自由论财富，是用人本主义的算法符号暴力(\(C_t = e ^ {-\mathrm{KL}_t}\))解构资本主义的(布迪厄)社会符号暴力，并重构财富自由的定义。
@@ -286,7 +284,7 @@
 ### 消费主义的陷阱
 #### 消费主义的本质
 上世纪末旧金山召开世界状况论坛，共议全球化下的贫富分化困局。**社会存在决定社会意识**，政商精英需要一套文化治理方案，奶头乐应运而生
-- 修改自由的定义(奖励劫持)：你以为是在自由地消费，其实是注意力被算法猎杀，多巴胺机制被操控。你成了活死人\(f_t > 0 \land r_t \to 0\)，不是你在消费，是它在消费你的时间
+- 修改自由的定义(即时奖励劫持)：你以为是在自由地消费，其实是注意力被算法猎杀，多巴胺机制被操控。你成了活死人\(f_t > 0 \land r_t \to 0\)，不是你在消费，是它在消费你的时间
 - 修改生存边界的定义：伪刚需规训抬高**活得像个人**的底线，篡改内卷系数。自由时间换来的个别剩余价值，你心甘情愿消费了，但没花在自己身上：被坑的不是钱，而是命
 
 #### 消费主义的识别
@@ -314,7 +312,7 @@
 - 存款：晒干鲜果变干果
 - 住房：猴洞
 - 劳动力价值：野果、水、休憩处等生活资料
-- 剩余劳动价值：统治阶层不劳而获的干果
+- 剩余劳动价值：统治阶级不劳而获的干果
 - 伪资产：猴子攀比的彩花石
 - 真资产：记熟哪片山坡果树最早熟(头脑)，能用石头砸开坚果(技能)
 - \(V_\pi({\color{red}{s}}_t)\)：晒太阳，发呆的自由时间
@@ -365,7 +363,7 @@
 ### 实现手段
 #### 间歇性奋斗
 - 成功学悖论  
-  画饼式996福报是自然语言信念奖励劫持，类似望梅止渴，其五阶信念：奋斗逼相信[同事公认[老板希望[我们期待[**努力就会成功**]]]]。
+  画饼式996福报是自然语言延迟奖励劫持(远期双曲贴现)，类似望梅止渴，其五阶信念：奋斗逼相信[同事公认[老板希望[我们期待[**努力就会成功**]]]]。
   资本主义相对奴隶制的先进性：以五阶信念替代三阶暴力(奴隶主认为[奴隶预判[偷懒被鞭抽]])，鞭子从一阶肉体痛苦换成了三阶精神折磨(我害怕[同事认为[我不努力]])，鞭子变免费，统治成本降低，是从肉体统治到精神统治的文明进化。
   自愿加班被公开表扬(操控群体共识)，是其爱岗敬业的六阶信念阴谋。
   其宣传的成功是零和博弈：职场编制，头部岗位，学阀名额。培根：愚蠢是别人的福气，故成功是别人的失败。因此学司马懿，颐养天年，熬死对手，也算成功。**不努力也成功**！为存量厮杀的成功学是生态位竞争技巧，默认优胜劣汰、弱肉强食，将人类降维至丛林斗兽场：物竞天择、适者生存。若你失败，就不算**活得像个人**，而是条沙丁鱼，应被末位淘汰(鲶鱼效应)。这是文明，还是野蛮？
@@ -403,7 +401,7 @@
 - 问：你连个房子都没有，老了睡哪里？
 - 答：如果买房的好处在老了以后，那我等老了以后再买房，要是两腿一蹬，房贷就不用还了，我卷钱跑了，你会到天地银行地下华尔街支行来找我吗？
 - 问：微观最优≠宏观可持续，若年轻人都像你一样，合法逃票，不婚不育，社会还能否支撑基础建设、医疗保障、养老体系的运转？
-- 答：我不婚不育，人类灭亡了，会成为人类的罪魁祸首吗？我不愿被吸血使蚊子灭绝被指责：为何蚊子不进化出光合作用？这不是逃票，是购票：
+- 答：我不婚不育，人类灭亡了，会成为人类的罪魁祸首吗？我不愿被吸血使蚊子灭绝被指责：为何蚊子不进化出光合作用？Ostrom：解决**公地悲剧**难道只能靠政商精英搞官僚中心化或市场私有化？这不是逃票，是购票：
   - 最先逃亡的奴隶，带走肉身，倒逼了农业革命
   - 最先背井离乡的农民，带走手艺，撬动了工业革命
   - 最先逃离异化劳动的工人，带走头脑，发展了复杂劳动，解放了生产力

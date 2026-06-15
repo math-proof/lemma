@@ -30,3 +30,17 @@ def SEq.rfl
   (a : Vector n) :
   a ≃ a :=
   ⟨by rfl, HEq.rfl⟩
+
+lemma SEq.cast.comm
+  {α : Type u} {Vector : α → Sort v} {n m : α} {a : Vector n} {b : Vector m}
+  (h : SEq a b) :
+  a = cast (congrArg Vector h.left.symm) b :=
+  match h with
+  | ⟨Eq.refl _, h⟩ => h.eq
+
+lemma SEq.cast
+  {α : Type u} {Vector : α → Sort v} {n m : α} {a : Vector n} {b : Vector m}
+  (h : SEq a b) :
+  cast (congrArg Vector h.left) a = b :=
+  match h with
+  | ⟨Eq.refl _, h⟩ => h.eq

@@ -40,7 +40,7 @@ import Lemma.Tensor.SelectStack.eq.Stack_Select.of.GtLength
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.FlattenCast.eq.Cast_Flatten.of.Eq.Eq
-import Lemma.Vector.FlattenMapRange.eq.Cast_UFn_0
+import Lemma.Vector.FlattenMapRange.as.UFn_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength

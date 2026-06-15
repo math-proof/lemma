@@ -8,12 +8,12 @@ private lemma main
   {a : Vector n}
   {b : Vector m}
 -- given
-  (h_eq : a ≃ b) :
+  (h : a ≃ b) :
 -- imply
-  cast (congrArg Vector h_eq.left) a = b := by
+  cast (congrArg Vector h.left) a = b :=
 -- proof
-  simp [SEq] at h_eq
-  aesop
+  match h with
+  | ⟨Eq.refl _, h⟩ => h.eq
 
 
 -- created on 2025-07-25

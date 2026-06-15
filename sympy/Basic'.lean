@@ -6,7 +6,7 @@ open Lean Lean.Meta
 def Expr.comm' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
-  let ⟨type, symm⟩ := type.decomposeType
+  let ⟨type, symm⟩ := type.decomposeComm
   let telescope := fun localBinders lam hint body => do
       let mut body := body
       let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
@@ -658,6 +658,80 @@ initialize registerBuiltinAttribute {
     let name := (← getEnv).module.lemmaName declName
     let name := name.str "val"
     println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+def Expr.cast' (type proof : Lean.Expr) (parity : ℕ := 0) (comm : Bool := false) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do
+  let ⟨binders, type⟩ := type.decompose_forallE
+  let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
+  type.println context "old type"
+  let proof := proof.mkApp ((List.range binders.length).map fun i => .bvar i).reverse
+  let .app (.app (.app (.app (.app (.app (.const `SEq us) α) Vector) n) m) a) b := type | throwError s!"Expected an operator of SEq, but got {type.ctorName} :\n{type}"
+  let [u, v] := us | throwError s!"Expected exactly two universe levels in SEq, but got {us}"
+  println! s!"us = {us}, u = {u}, v = {v}"
+  let hn := (Lean.Expr.const `Eq [u.succ]).mkApp [α, n, m]
+  let heq := (Lean.Expr.const `HEq [v]).mkApp [Vector.mkApp [n], a, Vector.mkApp [m], b]
+  let hn := (Lean.Expr.const `And.left []).mkApp [hn, heq, proof]
+  let (hn, cast) :=
+    if comm then
+      ((Lean.Expr.const `Eq.symm [u.succ]).mkApp [α, n, m, hn], `SEq.cast.comm)
+    else
+      (hn, `SEq.cast)
+  let A := Vector.mkApp [n]
+  let B := Vector.mkApp [m]
+  let congrArg := (Lean.Expr.const `congrArg [u.succ, v.succ]).mkApp ([α, .sort v] ++ (if comm then [m, n] else [n, m]) ++ [Vector, hn])
+  let type := (Lean.Expr.const `Eq [v]).mkApp
+    (if comm then
+      [A, a, (Lean.Expr.const `cast [v]).mkApp [B, A, congrArg, b]]
+    else
+      [B, (Lean.Expr.const `cast [v]).mkApp [A, B, congrArg, a], b])
+  type.println context "new type"
+  let binders := binders.zipParity parity
+  let telescope := fun localBinders lam hint body => do
+      let mut body := body
+      let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
+      body.println context s!"prior {hint}"
+      for ⟨declName, type, deBruijn⟩ in localBinders do
+          let type := type.incDeBruijnIndex (deBruijn + 1)
+          let declName :=
+            match declName with
+            | .str pre name => Name.str pre (name ++ "'")
+            | _ => declName
+          body := body.incDeBruijnIndex 1
+          body := body.setDeBruijnIndex (deBruijn + 1) 0
+          context := ⟨declName, type⟩ :: context
+          body := .letE declName type (.app type.comm.symm (.bvar deBruijn)) body false
+          body.println context hint
+      body := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo) body
+      body.println [] s!"final {hint}"
+      return body
+  let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
+  let (type, value) ← (type, (Lean.Expr.const cast us).mkApp [α, Vector, n, m, a, b, proof]).mapM
+    (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE "type")
+    (telescope valueBinders .lam "proof")
+  return (
+    binders.filterMap fun ⟨comm, _, binderType, binderInfo⟩ => if binderInfo == .default then some ⟨comm, binderType⟩ else none,
+    type, value
+  )
+
+initialize registerBuiltinAttribute {
+  name := `cast'
+  descr := "Automatically generate the cast equality from an as / ≃ theorem (testing)."
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let comm := stx.getIdent != `false
+    let parity := stx.getNum
+    let ⟨parity, type, value⟩ ← Expr.cast' decl.type (.const declName (levelParams.map .param)) parity comm
+    let name := (List.castPath (← getEnv).moduleTokens comm).foldl Name.str default |>.lemmaName declName
+    println! s!"cast' name = {name}"
+    println! s!"cast' type = {type}"
     addAndCompile <| .thmDecl {
       name := name
       levelParams := levelParams
