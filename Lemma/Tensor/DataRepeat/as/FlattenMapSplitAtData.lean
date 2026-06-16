@@ -1,10 +1,10 @@
-import Lemma.Tensor.DataRepeat.eq.Cast_FlattenMapSplitAtData
 import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-open Tensor Bool List
+import sympy.tensor.Basic
+open Bool List
 
 
-@[main]
+@[main, cast]
 private lemma main
   {s : List ℕ}
 -- given
@@ -15,7 +15,7 @@ private lemma main
   (X.repeat n d).data ≃ ((X.data.splitAt d).map (·.repeat n)).flatten := by
 -- proof
   apply SEq.of.Eq_Cast
-  apply DataRepeat.eq.Cast_FlattenMapSplitAtData
+  simp [Tensor.repeat]
   simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength d.isLt]
 
 

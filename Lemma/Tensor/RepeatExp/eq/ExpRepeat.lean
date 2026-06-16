@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Tensor.DataExp.eq.ExpData
-import Lemma.Tensor.DataRepeat.eq.Cast_FlattenMapSplitAtData
+import Lemma.Tensor.DataRepeat.as.FlattenMapSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetExp.eq.ExpGet
