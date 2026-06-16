@@ -8,7 +8,7 @@ import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 open Nat Vector Fin Bool
 
 
-@[main, cast, cast false]
+@[main, cast]
 private lemma main
   (u : Fin 1 → List.Vector α n) :
 -- imply

@@ -10,7 +10,7 @@ import Lemma.Tensor.SEqDataS.of.SEq
 open Bool List Nat Tensor
 
 
-@[main]
+@[main, cast]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}

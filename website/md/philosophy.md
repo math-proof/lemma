@@ -75,7 +75,7 @@
 \sum_{j=0}^{t_{oo} - t - 1} \mathbb E\left[ \prod_{j=0}^{j}(1-{\color{red}q}_{t+j}) \middle| {\color{red}H}_t \right]\]
       - \(\color{red}ΔHᵥ\)：健康损伤脉冲，如车祸，伤残，重疾
       - 健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - Hₒ({\color{red}L}_t) - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
-    - \(\color{red}M\)：精神效用指数，部分可观测(哭笑等表情)，真实心情不可测，\(M_{t_{min}} = 100\)
+    - \(\color{red}M\)：精神效用指数，表情可代理观测，心情不可测，\(M_{t_{min}} = 100\)
       - 精神衰老损耗/天：ΔMₐ ≈ 0.0026
       - 信念奖励脉冲：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n]}_t\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心头瞌睡多，如情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡时以极乐世界为标的的往生居住权(\({\color{red}r}_{t_{max}}\)：涅槃值)
         - 半衰期/日：\({\color{red}{\tau_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
@@ -97,7 +97,7 @@
       - 异化劳动时间\(\color{red}L\)/h：\(\mathbb E[{\color{red}L}_t]≈8 e^{-\kappa_A (A_t - A_{t_{min}})}\)，工作日，受市场就业率、就业方式影响，产生文化资本增益ΔKₒ/h，造成身心过劳损耗\(Hₒ(L_t)=\alpha_h L_t + \beta_h L_t^2 \sigma\big(\gamma_h(L_t - \mathbb E[{\color{red}L}_t])\big)\)、\(Mₒ(L_t)=\alpha_m L_t + \beta_m L_t^2 \sigma\big(\gamma_m(L_t - \mathbb E[{\color{red}L}_t])\big)\)；上班摸鱼不算自由时间，主观快乐≠自由。因为时间否决权在老板手里，不在你的嘴里，你被依法炒掉，回家摸王八才算自由。\({\color{red}L} = {\color{red}n} + {\color{red}ς}\)：
         - \(\color{red}n\)：必要劳动时间，**劳动者为了生产自身劳动力价值，所必须付出的劳动时间。劳动力价值决定必要劳动时间的长短**
         - \(\color{red}ς\)：剩余劳动时间，定义内卷系数\({\color{red}{m′}} = \frac{\color{red}ς}{\color{red}n}\)
-  - 文化资本\(\color{red}K\)：学历、专利、作品集可代理观测，腹中墨水不可测
+  - 文化资本\(\color{red}K\)：学位、作品可代理观测，腹中墨水不可测
     - 文化资本差分：\(\Delta{\color{red}K}_t = {\color{red}K}_{t + 1} - {\color{red}K}_t = ΔKₑ{\color{red}ε}_t + ΔKₒ{\color{red}L}_t\)，假定ΔKₑ > ΔKₒ
     - \(\color{red}{\mu_m}\)：市场供需因子，满足：\({\color{red}{\mu_m}}_t \perp ({\color{red}H}_t, {\color{red}M}_t, {\color{red}K}_t),\quad \mathbb E[{\color{red}{\mu_m}}_t] = 1\)
     - \(\color{red}{Lₚ}\)￥/h：劳动生产率，\(\mathbb E[{\color{red}{L_p}}_0]≈100\)，满足：\(\mathbb{E}[{\color{red}{L_p}}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}K}_t] = {\mu_m}_{t}{L_p}_{tₘᵢₙ}\left(\frac{\mathrm{relu}({\color{red}H}_t)}{H_{tₘᵢₙ}}\right)^{\alpha_H}\sigma(\gamma_M ({\color{red}M}_t - M_{tₘᵢₙ})) \left(1 + \delta_K\ln\left(1 + \frac{{\color{red}K}_t}{K_{tₘᵢₙ}}\right)\right)\)
@@ -203,7 +203,7 @@
     - 五阶信念博弈：识破孔明妇衣辱阵
     - 健康大于一切：**打不过你，我熬死你**
 - 体制外的犬儒主义：  
-  - 曳尾涂中的庄子：庙堂供奉的神龟，尊贵已死；江湖摇尾的泥龟，卑贱自由。**宁当王八，不作神龟**的庄子以其精神效用增益ΔMₑ，后验终生福祉反而更高
+  - 曳尾涂中的庄子：居庙堂之高的神龟，尊贵已死；处江湖之远的王八，卑贱自由。庄周贷粟却不为五斗米折腰，以其精神效用增益ΔMₑ，后验终生福祉反而更高
   - 木桶乞食的Diogenes：当Alexander大帝，世人眼里行走的Aladdin神灯，告诉这个**宇宙公民**：你想要任何东西，我都能满足你。他回答：滚开，别挡住我的太阳。
 
 犬，狗也；儒，智也。古典犬儒者被视为一条玩世不恭、愤世嫉俗的野狗，一条不当走狗、不屑合群的孤狗，一条在脑残家狗前标榜独善其身的**智狗**。而古典犬儒核心是**物物而不物于物**：以心有足乐者，不知口体之奉不若人，恰是古典版的《[简单致富](https://zhuanlan.zhihu.com/p/2025943598730846554)》：
@@ -388,9 +388,10 @@
 \end{aligned}\]
 
 
-#### 零负债跃迁
+#### 零负债越狱
 无房无车、无妻无子是人生失败。
 人为了规避社死(三阶信念·负面偏向)，背上负债化疗(一阶信念·负债毒性)，是以毒攻毒还是饮鸩止渴？
+自由不是牢房选牢饭(服毒/饮鸩)的权力，而是否认牢门合法性的权力。
 财富自由不是花更多自由时间赚更多钱，而是花更少钱换更多自由时间；不是想买什么就能买什么，而是不想买什么就能不买什么。
 结婚三件套(房车、彩礼)是消费主义脂粉，与改革开放初期三转一响如出一辙。
 无房无车也能结婚，需保障租购同权，否则平民结不起婚，断嗣绝后。

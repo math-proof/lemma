@@ -6,7 +6,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.NotGt.is.Le
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
-import Lemma.Tensor.DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data
+import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
 import Lemma.Vector.GetAdd.eq.AddGetS

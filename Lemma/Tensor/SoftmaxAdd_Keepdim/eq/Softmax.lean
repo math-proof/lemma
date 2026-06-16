@@ -10,7 +10,7 @@ import Lemma.Rat.DivMulS.eq.Div.of.Ne_0
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData
-import Lemma.Tensor.DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data
+import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.ExpAdd.eq.MulExpS

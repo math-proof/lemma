@@ -141,7 +141,7 @@ def List.extractParity (parity : List (Bool × Expr)) : CoreM (List String × Li
 def Expr.comm (type value : Expr) (parity : ℕ := 0) : List (Bool × Expr) × Expr × Expr :=
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
-  let ⟨type, symm⟩ := type.decompose .comm .symm
+  let ⟨type, symm⟩ := type.decompose (fun _ => .comm) .symm
   let telescope := fun localBinders lam body =>
     binders.foldl
       (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo)
@@ -926,7 +926,7 @@ def Expr.cast.extract: Expr → List Level × Expr × Expr × Expr × Expr × Ex
   | .app (.app (.app (.app (.app (.app (.const `SEq us) α) Vector) n) m) a) b => (us, α, Vector, n, m, a, b)
   | type => panic! s!"Expected an operator of SEq, but got {type.ctorName} :\n{type}"
 
-def Expr.cast.type (type value : Expr) (comm : Bool := false) : Expr :=
+def Expr.cast.type (deBruijn : Nat) (type value : Expr) (comm : Bool := false) : Expr :=
   let (us, α, Vector, n, m, a, b) := Expr.cast.extract type
   let (u, v) :=
     match us with
@@ -934,7 +934,7 @@ def Expr.cast.type (type value : Expr) (comm : Bool := false) : Expr :=
     | _ => panic! s!"Expected exactly two universe levels in SEq, but got {us}"
   let hn := (Expr.const `Eq [u.succ]).mkApp [α, n, m]
   let heq := (Expr.const `HEq [v]).mkApp [Vector.mkApp [n], a, Vector.mkApp [m], b]
-  let hn := (Expr.const `And.left []).mkApp [hn, heq, value]
+  let hn := (Expr.const `And.left []).mkApp [hn, heq, if deBruijn == 0 then value else value.incDeBruijnIndex deBruijn]
   let hn :=
     if comm then
       (Expr.const `Eq.symm [u.succ]).mkApp [α, n, m, hn]
@@ -996,6 +996,26 @@ initialize registerBuiltinAttribute {
     let parity := stx.getNum
     let ⟨parity, type, value⟩ := Expr.cast decl.type (.const declName (levelParams.map .param)) parity comm
     let name := (List.castPath (← getEnv).moduleTokens comm).foldl Name.str default |>.lemmaName declName
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `cast.fin
+  descr := "Automatically generate the cast.fin equality from an as / ≃ theorem (testing)."
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let comm := stx.getIdent != `false
+    let ⟨parity, type, value⟩ := Expr.cast decl.type (.const declName (levelParams.map .param)) stx.getNum comm
+    let ⟨type, value⟩ := Expr.subst type value Lean.Expr.getElem2get stx.getNum
+    let name := (List.castPath (← getEnv).moduleTokens comm).foldl Name.str default |>.lemmaName declName
+    let name := name.str "fin"
     addAndCompile <| .thmDecl {
       name := name
       levelParams := levelParams

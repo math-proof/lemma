@@ -27,7 +27,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData
-import Lemma.Tensor.DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data
+import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Tensor.Eq.is.EqDataS

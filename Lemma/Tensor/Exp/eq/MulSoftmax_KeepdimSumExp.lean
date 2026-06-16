@@ -12,7 +12,7 @@ import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Ne.of.Gt
 import Lemma.Real.GtExp_0
 import Lemma.Tensor.DataExp.eq.ExpData
-import Lemma.Tensor.DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data
+import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Tensor.EqMulDiv.of.All_Ne_0

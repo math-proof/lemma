@@ -6,7 +6,7 @@ open Lean Lean.Meta
 def Expr.comm' (type value : Lean.Expr) (parity : ℕ := 0) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
-  let ⟨type, symm⟩ := type.decompose .comm .symm
+  let ⟨type, symm⟩ := type.decompose (fun _ => .comm) .symm
   let telescope := fun localBinders lam hint body => do
     let mut body := body
     let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
@@ -666,12 +666,9 @@ initialize registerBuiltinAttribute {
 
 def Expr.cast' (type value : Lean.Expr) (parity : ℕ := 0) (comm : Bool := false) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
-  let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
+  -- let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
   -- type.println context "old type"
   let value := value.mkApp ((List.range binders.length).map fun i => .bvar i).reverse
-  -- let (fn, cast) := (Expr.cast.type (value := value) (comm := comm), Expr.cast.value (comm := comm))
-  -- let cast := cast type
-  -- let type := fn type
   let (type, cast) := type.decompose (Expr.cast.type (value := value) (comm := comm)) (Expr.cast.value (comm := comm))
   -- type.println context "new type"
   let binders := binders.zipParity parity
@@ -715,6 +712,27 @@ initialize registerBuiltinAttribute {
     let name := (List.castPath (← getEnv).moduleTokens comm).foldl Name.str default |>.lemmaName declName
     println! s!"cast' name = {name}"
     println! s!"cast' type = {type}"
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+initialize registerBuiltinAttribute {
+  name := `cast.fin'
+  descr := "Automatically generate the cast equality from an as / ≃ theorem (testing)."
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let comm := stx.getIdent != `false
+    let ⟨parity, type, value⟩ ← Expr.cast' decl.type (.const declName (levelParams.map .param)) stx.getNum comm
+    let ⟨type, value⟩ ← Expr.subst' type value Lean.Expr.getElem2get stx.getNum
+    let name := (List.castPath (← getEnv).moduleTokens comm).foldl Name.str default |>.lemmaName declName
+    let name := name.str "fin"
+    println! s!"name = {name}"
     addAndCompile <| .thmDecl {
       name := name
       levelParams := levelParams

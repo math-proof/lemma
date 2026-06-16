@@ -1,10 +1,9 @@
 import Lemma.Tensor.LengthDiv.eq.Length
-import sympy.tensor.tensor
 import Lemma.Tensor.EqLengthS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.ProdTake_1.eq.HeadD_1
-import Lemma.Vector.DivCastS.eq.Cast_Div.of.Eq
+import Lemma.Vector.DivCastS.as.Div.of.Eq
 import Lemma.Vector.SplitAtDiv.eq.DivSplitAtS
 import Lemma.Vector.GetDiv.eq.DivGetS
 open Tensor Vector List
