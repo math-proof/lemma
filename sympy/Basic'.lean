@@ -3,32 +3,32 @@ import stdlib.Prod
 import sympy.parsing.parser
 open Lean Lean.Meta
 
-def Expr.comm' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do
+def Expr.comm' (type value : Lean.Expr) (parity : ℕ := 0) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
-  let ⟨type, symm⟩ := type.decomposeComm
+  let ⟨type, symm⟩ := type.decompose .comm .symm
   let telescope := fun localBinders lam hint body => do
-      let mut body := body
-      let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
-      body.println context s!"prior {hint}"
-      for ⟨declName, type, deBruijn⟩ in localBinders do
-          let type := type.incDeBruijnIndex (deBruijn + 1)
-          let declName :=
-            match declName with
-            | .str pre name => Name.str pre (name ++ "'")
-            | _ => declName
-          body := body.incDeBruijnIndex 1
-          body := body.setDeBruijnIndex (deBruijn + 1) 0
-          context := ⟨declName, type⟩ :: context
-          body := .letE declName type (.app type.comm.symm (.bvar deBruijn)) body false
-          body.println context hint
-      body := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo) body
-      body.println [] s!"final {hint}"
-      return body
+    let mut body := body
+    let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
+    body.println context s!"prior {hint}"
+    for ⟨declName, type, deBruijn⟩ in localBinders do
+        let type := type.incDeBruijnIndex (deBruijn + 1)
+        let declName :=
+          match declName with
+          | .str pre name => Name.str pre (name ++ "'")
+          | _ => declName
+        body := body.incDeBruijnIndex 1
+        body := body.setDeBruijnIndex (deBruijn + 1) 0
+        context := ⟨declName, type⟩ :: context
+        body := .letE declName type (.app type.comm.symm (.bvar deBruijn)) body false
+        body.println context hint
+    body := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo) body
+    body.println [] s!"final {hint}"
+    return body
   let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
-  let (type, value) ← (type, .app symm (proof.mkApp ((List.range binders.length).map fun i => .bvar i).reverse)).mapM
+  let (type, value) ← (type, .app symm (value.mkApp ((List.range binders.length).map fun i => .bvar i).reverse)).mapM
     (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE "type")
-    (telescope valueBinders .lam "proof")
+    (telescope valueBinders .lam "value")
   return (
     binders.filterMap fun ⟨comm, _, binderType, binderInfo⟩ => if binderInfo == .default then some ⟨comm, binderType⟩ else none,
     type, value
@@ -55,13 +55,13 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.mp' (type proof : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := false) (and : Bool := false) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
+def Expr.mp' (type value : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := false) (and : Bool := false) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let deBruijn := (binders.zipParity parity .instImplicit).zipIdx.filterMap fun ⟨⟨bit, _⟩, deBruijn⟩ => if bit then some deBruijn else none
   for deBruijn in deBruijn do
     if type.containsBVar deBruijn then
       let ⟨_, instType, _⟩ := binders[deBruijn]!
-      panic! s!"The proof of the mp/mpr theorem must not contain the given TypeClass : {instType.getAppFn.constName!}."
+      panic! s!"The value of the mp/mpr theorem must not contain the given TypeClass : {instType.getAppFn.constName!}."
   let decDeBruijnIndex := fun type => deBruijn.foldr (fun deBruijn type => type.decDeBruijnIndex 1 deBruijn) type
   let type := decDeBruijnIndex type
   let binders := deBruijn.foldr
@@ -87,9 +87,9 @@ def Expr.mp' (type proof : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := fal
       body
     body.println [] s!"final {hint}"
     return body
-  let proof ←
+  let value ←
     if parity > 0 then
-      let ⟨lamBinders, intro⟩ := proof.decompose_lam []
+      let ⟨lamBinders, intro⟩ := value.decompose_lam []
       let ⟨us, mp, mpr⟩ := intro.decomposeIff
       let mp := if reverse then mpr else mp
       Lean.logInfo s!"us = {us}"
@@ -100,7 +100,7 @@ def Expr.mp' (type proof : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := fal
           throwError "The proof of the mp/mpr theorem must not contain the given TypeClass[#{deBruijn}] {instType.getAppFn.constName!}."
       pure (decDeBruijnIndex mp)
     else
-      pure ((Lean.Expr.const mp us).mkApp [lhs, rhs, proof.mkApp ((List.range binders.length).map fun i => .bvar i).reverse])
+      pure ((Lean.Expr.const mp us).mkApp [lhs, rhs, value.mkApp ((List.range binders.length).map fun i => .bvar i).reverse])
   let ⟨h_curr, h_next⟩ := if and then ⟨[given], []⟩ else given.decomposeAnd
   Lean.logInfo s!"and = {and}"
   let h_name := (List.range h_curr.length).map fun i => .str default ("h" ++ i.toSubscriptString)
@@ -120,11 +120,11 @@ def Expr.mp' (type proof : Lean.Expr) (parity : ℕ := 0) (reverse : Bool := fal
     )
     (.bvar 0)
   let imply := pNameType.foldr (fun ⟨name, type⟩ imply => (Expr.forallE name type imply .default).incDeBruijnIndex 1) imply
-  let proof := Expr.app (proof.incDeBruijnIndex size) bvar
-  let proof := (deBruijn.zip pNameType).foldr (fun ⟨deBruijn, name, type⟩ proof => (.lam name (type.incDeBruijnIndex deBruijn) proof .default)) proof
+  let value := Expr.app (value.incDeBruijnIndex size) bvar
+  let value := (deBruijn.zip pNameType).foldr (fun ⟨deBruijn, name, type⟩ value => (.lam name (type.incDeBruijnIndex deBruijn) value .default)) value
   return (
     binders.countP (·.snd.snd == .default),
-    ← (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type proof .default).mapM (telescope Expr.forallE "type") (telescope .lam "value")
+    ← (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type value .default).mapM (telescope Expr.forallE "type") (telescope .lam "value")
   )
 
 initialize registerBuiltinAttribute {
@@ -150,7 +150,7 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.mpr' (type proof : Lean.Expr) (parity : ℕ := 0) (and : Bool := false) : CoreM (ℕ × Lean.Expr × Lean.Expr) := Expr.mp' type proof parity true and
+def Expr.mpr' (type value : Lean.Expr) (parity : ℕ := 0) (and : Bool := false) : CoreM (ℕ × Lean.Expr × Lean.Expr) := Expr.mp' type value parity true and
 
 initialize registerBuiltinAttribute {
   name := `mpr'
@@ -225,27 +225,27 @@ def Expr.comm.is' (type mp mpr : Lean.Expr) (parity : ℕ := 0) : CoreM (List (B
   let lhs := lhs.comm
   let rhs := rhs.comm
   let telescope := fun localBinders lam hint body => do
-      let mut body := body
-      let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
-      body.println context s!"prior {hint}"
-      for ⟨declName, type, deBruijn⟩ in localBinders do
-          let type := type.incDeBruijnIndex (deBruijn + 1)
-          let declName :=
-            match declName with
-            | .str pre name => Name.str pre (name ++ "'")
-            | _ => declName
-          body := body.incDeBruijnIndex 1
-          body := body.setDeBruijnIndex (deBruijn + 1) 0
-          context := ⟨declName, type⟩ :: context
-          body := .letE declName type (.app type.comm.symm (.bvar deBruijn)) body false
-          body.println context hint
-      body := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo) body
-      body.println [] s!"final {hint}"
-      return body
+    let mut body := body
+    let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
+    body.println context s!"prior {hint}"
+    for ⟨declName, type, deBruijn⟩ in localBinders do
+        let type := type.incDeBruijnIndex (deBruijn + 1)
+        let declName :=
+          match declName with
+          | .str pre name => Name.str pre (name ++ "'")
+          | _ => declName
+        body := body.incDeBruijnIndex 1
+        body := body.setDeBruijnIndex (deBruijn + 1) 0
+        context := ⟨declName, type⟩ :: context
+        body := .letE declName type (.app type.comm.symm (.bvar deBruijn)) body false
+        body.println context hint
+    body := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo) body
+    body.println [] s!"final {hint}"
+    return body
   let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
   let (type, value) ← ((Lean.Expr.const `Iff us).mkApp [lhs, rhs], (Lean.Expr.const `Iff.intro us).mkApp [lhs, rhs, mp, mpr]).mapM
     (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE "type")
-    (telescope valueBinders .lam "proof")
+    (telescope valueBinders .lam "value")
   return (
     binders.filterMap fun ⟨comm, _, binderType, binderInfo⟩ => if binderInfo == .default then some ⟨comm, binderType⟩ else none,
     type, value
@@ -278,7 +278,7 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
+def Expr.mt' (type value : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let defaultCount := binders.countP (·.snd.snd == .default)
   let parity :=
@@ -322,9 +322,9 @@ def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.E
     body.println [] s!"final {hint}"
     return body
   -- mt {a b : Prop} (h₁ : a → b) (h₂ : ¬b) : ¬a
-  proof.println context "proof"
+  value.println context "value"
   a.println context "a"
-  let proof := ((Lean.Expr.const `mt []).mkApp [
+  let value := ((Lean.Expr.const `mt []).mkApp [
     a,
     b,
     if index > 0 then
@@ -332,12 +332,12 @@ def Expr.mt' (type proof : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.E
       let ⟨take, drop⟩ := bvar.splitAt index
       let drop := drop.tail.map fun e => e.incDeBruijnIndex 1
       let ⟨binderName, _, binderInfo⟩ := binders[index]!
-      .lam binderName a (proof.mkApp ((take ++ drop).reverse ++ [h_bvar])) binderInfo
+      .lam binderName a (value.mkApp ((take ++ drop).reverse ++ [h_bvar])) binderInfo
     else
-      proof.mkApp ((List.range binders.length).map fun i => (.bvar i)).tail.reverse,
+      value.mkApp ((List.range binders.length).map fun i => (.bvar i)).tail.reverse,
     h
   ])
-  return (index, ← (type, mp proof).mapM (telescope Expr.forallE "type") (telescope .lam "value"))
+  return (index, ← (type, mp value).mapM (telescope Expr.forallE "type") (telescope .lam "value"))
 
 initialize registerBuiltinAttribute {
   name := `mt'
@@ -368,7 +368,6 @@ initialize registerBuiltinAttribute {
     let constructor_order ← constructor_order declName
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let proof : Lean.Expr := .const declName (levelParams.map .param)
     let parity := stx.getNum
     let and := stx.getIdent == `and
     let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
@@ -393,7 +392,6 @@ initialize registerBuiltinAttribute {
     let constructor_order ← constructor_order declName
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
-    let proof : Lean.Expr := .const declName (levelParams.map .param)
     let parity := stx.getNum
     let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
     let ⟨_, type, value⟩ ← Expr.mt' type value
@@ -408,7 +406,7 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.disjunction' (type proof : Lean.Expr) (parity : ℕ := 0) (left : Bool := true) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
+def Expr.disjunction' (type value : Lean.Expr) (parity : ℕ := 0) (left : Bool := true) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let defaultCount := binders.countP (·.snd.snd == .default)
   let parity :=
@@ -440,19 +438,19 @@ def Expr.disjunction' (type proof : Lean.Expr) (parity : ℕ := 0) (left : Bool 
     return body
   let h_bvar := Lean.Expr.bvar index
   let intro := if left then `Or.inl else `Or.inr
-  let proof : Lean.Expr :=
+  let value : Lean.Expr :=
     if index > 0 then
       let bvar := ((List.range binders.length).map fun i => (Expr.bvar i))
       let ⟨take, drop⟩ := bvar.splitAt index
       let drop := drop.tail.map fun e => e.incDeBruijnIndex 1
       let ⟨binderName, type, binderInfo⟩ := binders[index]!
-      Lean.Expr.lam binderName type (proof.mkApp ((take ++ drop).reverse ++ [h_bvar])) binderInfo
+      Lean.Expr.lam binderName type (value.mkApp ((take ++ drop).reverse ++ [h_bvar])) binderInfo
     else
       let args := ((List.range binders.length).map fun i => (.bvar i))
       let args := args.set index ((Lean.Expr.const intro []).mkApp [inl.incDeBruijnIndex 1, inr.incDeBruijnIndex 1, h_bvar])
-      proof.mkApp args.reverse
-  proof.println context "proof"
-  return (index, ← (type, proof).mapM (telescope Expr.forallE "type") (telescope .lam "value"))
+      value.mkApp args.reverse
+  value.println context "value"
+  return (index, ← (type, value).mapM (telescope Expr.forallE "type") (telescope .lam "value"))
 
 initialize registerBuiltinAttribute {
   name := `left'
@@ -540,7 +538,7 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.subst' (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr) (parity : ℕ) : CoreM (Lean.Expr × Lean.Expr) := do
+def Expr.subst' (type value : Lean.Expr) (subst : Lean.Expr → Lean.Expr) (parity : ℕ) : CoreM (Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let binders := binders.zipParity parity
   let binders := binders.map fun ⟨comm, binderName, binderType, binderInfo⟩ =>
@@ -559,11 +557,11 @@ def Expr.subst' (type proof : Lean.Expr) (subst : Lean.Expr → Lean.Expr) (pari
       body
     body.println [] s!"final {hint}"
     return body
-  let proof : Lean.Expr :=
+  let value : Lean.Expr :=
     let args := ((List.range binders.length).map fun i => (.bvar i))
-    proof.mkApp args.reverse
-  proof.println context "proof"
-  (type, proof).mapM (telescope Expr.forallE "type") (telescope .lam "value")
+    value.mkApp args.reverse
+  value.println context "value"
+  (type, value).mapM (telescope Expr.forallE "type") (telescope .lam "value")
 
 initialize registerBuiltinAttribute {
   name := `fin'
@@ -666,52 +664,37 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.cast' (type proof : Lean.Expr) (parity : ℕ := 0) (comm : Bool := false) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do
+def Expr.cast' (type value : Lean.Expr) (parity : ℕ := 0) (comm : Bool := false) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let context := binders.map fun ⟨binderName, binderType, _⟩ => (binderName, binderType)
-  type.println context "old type"
-  let proof := proof.mkApp ((List.range binders.length).map fun i => .bvar i).reverse
-  let .app (.app (.app (.app (.app (.app (.const `SEq us) α) Vector) n) m) a) b := type | throwError s!"Expected an operator of SEq, but got {type.ctorName} :\n{type}"
-  let [u, v] := us | throwError s!"Expected exactly two universe levels in SEq, but got {us}"
-  println! s!"us = {us}, u = {u}, v = {v}"
-  let hn := (Lean.Expr.const `Eq [u.succ]).mkApp [α, n, m]
-  let heq := (Lean.Expr.const `HEq [v]).mkApp [Vector.mkApp [n], a, Vector.mkApp [m], b]
-  let hn := (Lean.Expr.const `And.left []).mkApp [hn, heq, proof]
-  let (hn, cast) :=
-    if comm then
-      ((Lean.Expr.const `Eq.symm [u.succ]).mkApp [α, n, m, hn], `SEq.cast.comm)
-    else
-      (hn, `SEq.cast)
-  let A := Vector.mkApp [n]
-  let B := Vector.mkApp [m]
-  let congrArg := (Lean.Expr.const `congrArg [u.succ, v.succ]).mkApp ([α, .sort v] ++ (if comm then [m, n] else [n, m]) ++ [Vector, hn])
-  let type := (Lean.Expr.const `Eq [v]).mkApp
-    (if comm then
-      [A, a, (Lean.Expr.const `cast [v]).mkApp [B, A, congrArg, b]]
-    else
-      [B, (Lean.Expr.const `cast [v]).mkApp [A, B, congrArg, a], b])
-  type.println context "new type"
+  -- type.println context "old type"
+  let value := value.mkApp ((List.range binders.length).map fun i => .bvar i).reverse
+  -- let (fn, cast) := (Expr.cast.type (value := value) (comm := comm), Expr.cast.value (comm := comm))
+  -- let cast := cast type
+  -- let type := fn type
+  let (type, cast) := type.decompose (Expr.cast.type (value := value) (comm := comm)) (Expr.cast.value (comm := comm))
+  -- type.println context "new type"
   let binders := binders.zipParity parity
   let telescope := fun localBinders lam hint body => do
-      let mut body := body
-      let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
-      body.println context s!"prior {hint}"
-      for ⟨declName, type, deBruijn⟩ in localBinders do
-          let type := type.incDeBruijnIndex (deBruijn + 1)
-          let declName :=
-            match declName with
-            | .str pre name => Name.str pre (name ++ "'")
-            | _ => declName
-          body := body.incDeBruijnIndex 1
-          body := body.setDeBruijnIndex (deBruijn + 1) 0
-          context := ⟨declName, type⟩ :: context
-          body := .letE declName type (.app type.comm.symm (.bvar deBruijn)) body false
-          body.println context hint
-      body := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo) body
-      body.println [] s!"final {hint}"
-      return body
+    let mut body := body
+    let mut context := binders.map fun ⟨_, binderName, binderType, _⟩ => (binderName, binderType)
+    -- body.println context s!"prior {hint}"
+    for ⟨declName, type, deBruijn⟩ in localBinders do
+        let type := type.incDeBruijnIndex (deBruijn + 1)
+        let declName :=
+          match declName with
+          | .str pre name => Name.str pre (name ++ "'")
+          | _ => declName
+        body := body.incDeBruijnIndex 1
+        body := body.setDeBruijnIndex (deBruijn + 1) 0
+        context := ⟨declName, type⟩ :: context
+        body := .letE declName type (.app type.comm.symm (.bvar deBruijn)) body false
+        body.println context hint
+    body := binders.foldl (fun body ⟨comm, binderName, binderType, binderInfo⟩ => lam binderName (if comm then binderType.comm else binderType) body binderInfo) body
+    body.println [] s!"final {hint}"
+    return body
   let valueBinders := binders.zipIdx.filterMap fun ⟨⟨comm, binderName, binderType, _⟩, deBruijn⟩ => if comm then some (binderName, binderType, deBruijn) else none
-  let (type, value) ← (type, (Lean.Expr.const cast us).mkApp [α, Vector, n, m, a, b, proof]).mapM
+  let (type, value) ← (type, .app cast value).mapM
     (telescope (valueBinders.filterMap fun args@⟨_, _, deBruijn⟩ => if type.containsBVar deBruijn then some args else none) Expr.forallE "type")
     (telescope valueBinders .lam "proof")
   return (

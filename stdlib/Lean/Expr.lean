@@ -314,18 +314,19 @@ def Lean.Expr.symm : Expr → Expr
   | e  =>
     panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, And, Or, but got {e.ctorName} :\n{e}"
 
-def Lean.Expr.decomposeComm : Expr → Expr × Expr
+def Lean.Expr.decompose (e : Expr) (type : Expr → Expr) (value : Expr → Expr) : Expr × Expr :=
+  match e with
   | .app (.app (.app (.app (.const `letFun us) α) β) v) (.lam binderName binderType body binderInfo) =>
-    let args := body.decomposeComm
+    let args := body.decompose type value
     ⟨
       (Expr.const `letFun us).mkApp [α, β, v, .lam binderName binderType args.fst binderInfo],
       .letE binderName binderType v args.snd false
     ⟩
-  | .letE declName type value body nondep =>
-    let fn := fun body => .letE declName type value body nondep
-    body.decomposeComm.map fn fn
+  | .letE declName t v body nondep =>
+    let fn := fun body => .letE declName t v body nondep
+    (body.decompose type value).map fn fn
   | e  =>
-    ⟨e.comm, e.symm⟩
+    ⟨type e, value e⟩
 
 def Lean.Expr.decomposeIff : Expr → List Level × Expr × Expr
   | .app (.app (.const `Iff us) a) b =>
