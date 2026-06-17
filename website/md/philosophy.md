@@ -27,17 +27,19 @@
   - 互惠、同情、恻隐或敌意(Ιₜᵢⱼ<0)
   - Sally-Anne测试证明这是4岁孩童智商
   - 庄子游于濠梁之上，知出游之乐，故感同身受曰：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑期望的条件来源？
-  - [按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)  
-  你有个按钮，按一下多活一天，世上就有个人死去，你会按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当共情系数Ιₘᵢₙ<6.37e-5，你就会按下按钮
+  - [按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：按一下多活一天，世上随机死一人
+  你按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当共情系数Ιₘᵢₙ<6.37e-5，你会按下按钮
 - 三阶信念
   \({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)
   - 口碑、尊严、信用、忠诚，威胁，虚荣心(打肿脸充胖子)，羞恶心，辞让心，人情债
   - 自我意识  
   我≈手持戈矛→战斗根源：我否认[你认为[我的地盘归你]]↔我的地盘我做主
+  - 中文房间：凭中英互译规则，英国人相信[房外他人误判[他理解中文]]
 - 四阶信念
   \({\color{red}{Ω}}^{[i,j,k,l]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k]}_t \right]\)
   - 虚构叙事、印象管理，表现为羞辱、诽谤、奉承、赞美、欺骗、杀人诛心
   - 冯·诺伊曼打牌十打九输，Bayes、全概率公式都用上了，却还是输？不懂**隐藏意图**(我不想让[对手获知[我评估[各方的牌]]])，好牌得意忘形，烂牌垂头丧气，一举一动被看透，不输才怪
+  - 忒修斯之船：你认为[忒修斯[认为[雅典人公认[船是忒修斯的]]]]，身份同一性取决于关系连续性、功能稳定性，故将废弃质料重建新船非忒修斯之船
 - 五阶信念
   \({\color{red}{Ω}}^{[i,j,k,l,m]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l,m]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k,l]}_t \right]\)
   - 神学因行称义：我相信[大家公认[祂希望[我们期待[行善者死后去天堂]]]]
