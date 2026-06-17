@@ -1,7 +1,7 @@
 import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
 import Lemma.Bool.SEq.of.SEq.SEq
-import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0
+import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -44,7 +44,7 @@ private lemma main
     apply SEq.of.SEq.SEq h
     have h := Select_0.as.Get.of.Lt_Get_0.GtLength_0 (by simpa) (by simp [LtMod.of.Lt_Mul h_i]) X (i := i % s[0])
     apply SEq.of.SEq.SEq h
-    apply GetRepeat.as.Get_Mod_Get.of.Lt_MulGet.GtLength_0.fin
+    apply GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0.fin
     assumption
   | succ d ih =>
     unfold Tensor.select

@@ -37,11 +37,11 @@ import Lemma.List.EqGetSet.of.GtLength
 open Tensor Vector List Bool Nat Fin
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma main
 -- given
   (h_s : s.length > 0)
-  (h_i : i < n * s[0])
+  (h_i : n * s[0] > i)
   (X : Tensor α s) :
 -- imply
   have h_i : i < (X.repeat n ⟨0, h_s⟩).length := by rwa [LengthRepeat.eq.Mul_Get_0.of.GtLength_0]

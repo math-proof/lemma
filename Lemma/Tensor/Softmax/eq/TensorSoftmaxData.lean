@@ -6,7 +6,7 @@ import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
-import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0
+import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetUnsqueeze
 import Lemma.Vector.GetSum.eq.SumMapGet
@@ -39,7 +39,7 @@ private lemma main
   rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
   rw [GetCast.eq.Get.of.Eq.fin (by simp)]
   rw [GetData.eq.GetDataGet.of.Lt.fin (by grind)]
-  have := GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0.fin (by simp) (by simp; omega) (((exp (⟨X⟩ : Tensor α [n])).sum 0).unsqueeze 0) (i := i) (n := n)
+  have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by simp) (by simp; omega) (((exp (⟨X⟩ : Tensor α [n])).sum 0).unsqueeze 0) (i := i) (n := n)
   simp at this
   simp [this]
   simp [EqMod_1'0]

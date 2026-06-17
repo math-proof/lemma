@@ -31,7 +31,7 @@ import Lemma.Tensor.EqUnsqueezeS.of.Eq
 import Lemma.Tensor.GetAppend.eq.Cast_AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0
+import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.Tensor.GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
@@ -98,7 +98,7 @@ private lemma main
   simp [GetSum_2.eq.SumGet__1.fin]
   simp [@Tensor.GetMul.eq.MulGetS.fin]
   apply EqSumS.of.Eq
-  have := GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := 0) (n := 1)
+  have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := 0) (n := 1)
   simp at this
   rw [this]
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
@@ -108,7 +108,7 @@ private lemma main
     ⟨i, by simp⟩
   simp at this
   rw [this]
-  have := GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := i) (n := n)
+  have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := i) (n := n)
   simp at this
   rw [this]
   simp [EqMod_1'0]
