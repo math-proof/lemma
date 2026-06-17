@@ -1,4 +1,4 @@
-import Lemma.Tensor.DataAppend.eq.Cast_FromVectorMap₂_CastS_ToVector.of.GtLength_0
+import Lemma.Tensor.DataAppend.as.FromVectorMap₂_CastS_ToVector.of.GtLength_0
 import Lemma.List.EqGetCons
 import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Tensor.GetToVector.eq.Get
@@ -26,7 +26,7 @@ private lemma main
   | nil =>
     contradiction
   | cons b₀ b =>
-    rw [Tensor.DataAppend.eq.Cast_FromVectorMap₂_CastS_ToVector.of.GtLength_0 (by grind)]
+    rw [DataAppend.eq.Cast_FromVectorMap₂_CastS_ToVector.of.GtLength_0 (by grind)]
     simp
     let A' : List.Vector (Tensor α (b ++ m :: s)) ((b₀ :: b ++ m :: s).headD 1) := A.toVector
     let B' : List.Vector (Tensor α (b ++ n :: s)) ((b₀ :: b ++ n :: s).headD 1) := B.toVector

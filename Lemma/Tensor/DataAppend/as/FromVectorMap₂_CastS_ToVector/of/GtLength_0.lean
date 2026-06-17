@@ -31,7 +31,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Fin List Nat Tensor Vector
 
 
-@[main]
+@[main, cast]
 private lemma main
   {b_z : List ℕ}
 -- given
