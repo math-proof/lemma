@@ -27,7 +27,7 @@
   - 互惠、同情、恻隐或敌意(Ιₜᵢⱼ<0)
   - Sally-Anne测试证明这是4岁孩童智商
   - 庄子游于濠梁之上，知出游之乐，故感同身受曰：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑期望的条件来源？
-  - [按钮思想实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：按一下多活一天，世上随机死一人
+  - [按钮实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：按一下多活一天，世上随机死一人
   你按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当共情系数Ιₘᵢₙ<6.37e-5，你会按下按钮
 - 三阶信念
   \({\color{red}{Ω}}^{[i,j,k]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k]}_t\middle|{\color{magenta}{Ω}}^{[i,j]}_t \right]\)
@@ -35,7 +35,7 @@
   - 自我意识  
   我≈手持戈矛→战斗根源：我否认[你认为[我的地盘归你]]↔我的地盘我做主
   - 中文房间：凭中英互译规则，英国人相信[房外他人误判[他理解中文]]
-  - 电车难题：你猜测[五人希望[你拉杆]∧一人希望[你不拉杆]∧公众评判[你拉杆是救人还是谋杀]]，道德被符号暴力殖民，法律经济学视角下不拉杆是最优解
+  - 电车难题：你猜测[五人希望[你拉杆]∧一人希望[你不拉杆]∧公众判定[你拉杆是救人还是谋杀]]，道德被符号暴力殖民，法律经济学视角下不拉杆是最优解
 - 四阶信念
   \({\color{red}{Ω}}^{[i,j,k,l]}_t={\color{red}Ι}_{t,i,j} \mathbb E\left[{\color{red}{Ω}}^{[j,k,l]}_t\middle|{\color{magenta}{Ω}}^{[i,j,k]}_t \right]\)
   - 虚构叙事、印象管理，表现为羞辱、诽谤、奉承、赞美、欺骗、杀人诛心
