@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
+import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 

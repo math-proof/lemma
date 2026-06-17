@@ -22,7 +22,7 @@ import Lemma.Tensor.DataTransposeTensor.eq.Cast
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.EqSumS.of.Eq
-import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
+import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
@@ -33,7 +33,7 @@ import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
-import Lemma.Tensor.Matmul.eq.Cast_BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.Gt_Get_SubLength.GeLength_2
 import Lemma.Tensor.Matmul.eq.SumMulDataS.of.Gt

@@ -348,6 +348,7 @@ async function renderLemmaPage(res, module, userSegment) {
   if (!code) {
     const source = readLeanFile(abs);
     code = render2vueFromSource(source, { user: PROJECT_USER });
+    code.module = module;
   }
 
   const title = titleFromModule(module);

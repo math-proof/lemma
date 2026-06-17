@@ -10,7 +10,7 @@ import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetAppend.eq.Cast_AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetBroadcastMatmul.eq.Cast_BroadcastMatmulRecGet.of.GtLength_0
-import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
+import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
@@ -173,40 +173,44 @@ private lemma one
       conv_lhs => rw [show i = ⟨i, by simp⟩ by grind]
       rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin]
       .
-        rw [GetSelect.eq.Cast_SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length]
+        apply SEqCast.of.SEq.Eq
         .
-          simp
-          apply Bool.SEqCast.of.SEq.Eq
+          simp [AppendTake_Length.eq.Cons_Append_List]
+          simp [matmul_shape]
+          grind
+        .
+          rw [GetSelect.eq.Cast_SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length]
           .
-            simp [matmul_shape]
-            simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
-          .
-            apply SEqSelectS.of.SEq
-            -- have h_bz : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
-            --   simp
-            -- have h_nk : [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2], n'] = [(s₀ :: (s ++ [k]))[s.length], n'] := by
-            --   simp
-            -- have h_s₀ : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
-            --   simp
-            -- have h_s₀' : ((s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 - 2) ++ [n', 1]) = (s₀ :: (s ++ [k])).take s.length ++ [n', 1] := by
-            --   simp
-            sorry
-            simp [Tensor.batch_dot]
-            apply SEq_Cast.of.SEq.Eq
+            apply SEqCast.of.SEq.Eq
             .
-              simp [AppendTake_Length.eq.Cons_Append_List]
-              rw [EqMin.of.Lt (by omega)]
-              rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
-              simp
-              rw [EqMin.of.Lt (by omega)]
-              simp [AppendTake_Length.eq.Cons_Append_List]
+              simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
             .
+              apply SEqSelectS.of.SEq
+              -- have h_bz : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
+              --   simp
+              -- have h_nk : [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2], n'] = [(s₀ :: (s ++ [k]))[s.length], n'] := by
+              --   simp
+              -- have h_s₀ : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
+              --   simp
+              -- have h_s₀' : ((s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 - 2) ++ [n', 1]) = (s₀ :: (s ++ [k])).take s.length ++ [n', 1] := by
+              --   simp
               sorry
-        .
-          simp [AppendTake_Length.eq.Cons_Append_List]
-        .
-          simp [AppendTake_Length.eq.Cons_Append_List]
-          apply i.isLt
+              simp [Tensor.batch_dot]
+              apply SEq_Cast.of.SEq.Eq
+              .
+                simp [AppendTake_Length.eq.Cons_Append_List]
+                rw [EqMin.of.Lt (by omega)]
+                rw [List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
+                simp
+                rw [EqMin.of.Lt (by omega)]
+                simp [AppendTake_Length.eq.Cons_Append_List]
+              .
+                sorry
+          .
+            simp [AppendTake_Length.eq.Cons_Append_List]
+          .
+            simp [AppendTake_Length.eq.Cons_Append_List]
+            apply i.isLt
       .
         simp [matmul_shape]
       .

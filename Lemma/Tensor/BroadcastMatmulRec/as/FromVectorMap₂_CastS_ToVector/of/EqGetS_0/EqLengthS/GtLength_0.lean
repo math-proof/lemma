@@ -3,7 +3,7 @@ import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.Nat.EqMax
-import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
+import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEqFromVectorS.of.SEq
 import Lemma.Tensor.SEqToVectorS.of.Eq

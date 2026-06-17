@@ -7,7 +7,7 @@ import Lemma.List.ZipWith__Append.eq.AppendZipWithS
 import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec.of.GtLengthS
 import Lemma.Tensor.GetBroadcast.as.Broadcast.of.GtLength_0
 import Lemma.Tensor.GetBroadcastMatmulRec.as.Map₂_ToVectorS.of.GtLengthS
-import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
+import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength
 import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq
 import Lemma.Tensor.SEqBroadcastS.of.Eq.Eq
@@ -61,7 +61,7 @@ private lemma main
         ·
           grind
         ·
-          have h_s : s.tail.take (s.tail.length - s'.length) ++ s' ++ [n, k] = (s.take (s.length - s'.length)).tail ++ (s' ++ [n, k]) := by 
+          have h_s : s.tail.take (s.tail.length - s'.length) ++ s' ++ [n, k] = (s.take (s.length - s'.length)).tail ++ (s' ++ [n, k]) := by
             simp
             rw [← TailTake.eq.TakeTail]
             grind

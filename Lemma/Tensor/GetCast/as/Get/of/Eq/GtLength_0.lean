@@ -5,7 +5,7 @@ import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma main
   {s s' : List ℕ}
 -- given
@@ -18,6 +18,24 @@ private lemma main
   have := GtLength.of.GtLength_0 h₀ X i
   have := GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
   (cast h X)[i] ≃ X[i] := by
+-- proof
+  subst h₁
+  rfl
+
+
+@[main, fin, cast, cast.fin]
+private lemma right
+  {s : List ℕ}
+-- given
+  (h₀ : s'.length > 0)
+  (h₁ : s = s')
+  (X : Tensor α s)
+  (i : Fin s'[0]) :
+-- imply
+  have X' := cast (congrArg (Tensor α) h₁) X
+  have := GtLength.of.GtLength_0 h₀ X' i
+  have := GtLength.of.GtLength_0 (h₁ ▸ h₀) X ⟨i, by grind⟩
+  X'[i] ≃ X[i] := by
 -- proof
   subst h₁
   rfl

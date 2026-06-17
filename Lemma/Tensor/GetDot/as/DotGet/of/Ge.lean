@@ -5,10 +5,10 @@ import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Tensor.BroadcastMatmul.eq.Cast_BroadcastMatmulRec
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetBroadcastMatmul.eq.Cast_BroadcastMatmulRecGet.of.GtLength_0
-import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
+import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Ge
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.Matmul.eq.Cast_BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.SEqBroadcastS.of.Eq.Eq
 open Bool List Tensor
@@ -35,9 +35,9 @@ private lemma main
     simp [MatMul.dot]
     have := Matmul.eq.Cast_BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
     rw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
-    rw [Matmul.eq.Cast_BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
-    simp
+    rw [Matmul.eq.Cast_BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) (X.get i)]
     apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
+    simp
     rw [GetBroadcastMatmul.eq.Cast_BroadcastMatmulRecGet.of.GtLength_0.fin (by simp) _ _ ⟨i, by simp⟩]
     simp [BroadcastMatmul.eq.Cast_BroadcastMatmulRec]
     apply SEqCastS.of.SEq.Eq.Eq

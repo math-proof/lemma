@@ -29,7 +29,7 @@ import Lemma.Tensor.EqRepeatS.of.Eq
 import Lemma.Tensor.EqSumS.of.Eq
 import Lemma.Tensor.EqUnsqueezeS.of.Eq
 import Lemma.Tensor.GetAppend.eq.Cast_AppendCastS_Get.of.GtLength_0
-import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0
+import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat.eq.Cast_Get_Mod_Get.of.Lt_Mul_Get.GtLength_0
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
