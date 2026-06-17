@@ -1,6 +1,5 @@
 import Lemma.Tensor.GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length
 import Lemma.List.EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Nat.Lt.of.LtAdd
 import Lemma.List.PermuteCons.eq.Cons_Permute
 import Lemma.Tensor.SEqSumS.of.SEq
@@ -33,8 +32,7 @@ private lemma main
   | zero =>
     simp at h
     rw [EqAdd0]
-    rw [@Tensor.Permute.eq.Ite]
-    simp
+    simp [@Tensor.Permute.eq.Ite]
     split_ifs with h_d0 h_pos h_s
     .
       subst h_d0
@@ -70,43 +68,25 @@ private lemma main
         intro t
         have h_t := t.isLt
         simp [EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt] at h_t
-        repeat rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin]
+        rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by simpa)]
+        apply SEqCast.of.SEq.Eq
         .
-          apply SEqCastS.of.SEq.Eq.Eq
-          .
-            simp [PermuteCons.eq.Cons_Permute (i := ⟨i, by omega⟩)]
-            rw [EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0 (by simp)]
-            simp
-          .
-            simp
-          .
-            rw [show i + 1 + d - 1 = i + d by simp]
-            simp
-            have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
-            have := SEqSumS.of.SEq this (i + d)
-            apply this.trans
-            .
-              apply ih h (X.get ⟨t, GtLength.of.GtLength_0 (s := s₀ :: s) (by simp) X ⟨t, by simpa⟩⟩)
-              rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by simp; omega)]
-              simp
-              omega
-            .
-              simpa
-            .
-              simp
-            .
-              simpa
+          simp [PermuteCons.eq.Cons_Permute (i := ⟨i, by omega⟩)]
+          rw [EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0 (by simp)]
+          simp
         .
+          rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin (by simpa) (by simp) (by simpa)]
+          apply SEq_Cast.of.SEq.Eq (by simp)
+          rw [show i + 1 + d - 1 = i + d by simp]
+          have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
+          have := SEqSumS.of.SEq this (i + d)
+          apply this.trans
+          apply ih h (X.get ⟨t, GtLength.of.GtLength_0 (s := s₀ :: s) (by simp) X ⟨t, by simpa⟩⟩)
+          rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by simp; omega)]
           simp
           omega
-        .
-          simp
-        .
-          simpa
       .
-        simp
-        rw [EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt]
-        simp
+        simp [EraseIdxPermute.eq.EraseIdx.of.GtLength_Add h_length_gt]
 
 
 -- created on 2025-10-31

@@ -10,7 +10,7 @@ import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Gt_0.Lt_SubLength
 import Lemma.List.TailInsertIdx.eq.InsertIdxTail.of.Gt_0.GtLength_0
 import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.List.GetInsertIdx.eq.Get.of.Gt.GeLength
-import Lemma.Tensor.GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
+import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength

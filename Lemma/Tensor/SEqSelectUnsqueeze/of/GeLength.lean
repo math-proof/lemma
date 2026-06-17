@@ -1,12 +1,10 @@
-import stdlib.SEq
-import sympy.tensor.tensor
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.Tensor.EqGetUnsqueeze
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
 import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Vector.EqGetRange
-import Lemma.Tensor.GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
+import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 open List Tensor Vector
 
 
