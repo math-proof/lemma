@@ -4,7 +4,7 @@ import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.ExpCast.eq.Cast_Exp.of.Eq
+import Lemma.Vector.ExpCast.as.Exp.of.Eq
 import Lemma.Vector.ExpFlatten.eq.FlattenExp
 import Lemma.Vector.ExpGetSlice.eq.GetSliceExp.of.Lt.Dvd
 import Lemma.Vector.ExpSplitAt.eq.SplitAtExp

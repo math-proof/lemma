@@ -4,7 +4,7 @@ import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.PermuteMul.eq.MulPermuteS__Neg
-import Lemma.Tensor.Select.eq.Cast_GetPermute
+import Lemma.Tensor.Select.as.GetPermute
 open List Tensor
 
 

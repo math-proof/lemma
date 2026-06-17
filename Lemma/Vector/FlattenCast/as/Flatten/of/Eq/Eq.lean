@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.vector.vector
 
 
-@[main, comm 3]
+@[main, comm 3, cast]
 private lemma main
 -- given
   (h_m : m = m')

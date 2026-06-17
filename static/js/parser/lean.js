@@ -3134,11 +3134,8 @@ export class LeanMul extends LeanArithmetic {
     }
 
     latexFormat() {
-        const command = this.command;
-        if (command) {
-            return `${this.lhs.toLatex()} ${command} ${this.rhs.toLatex()}`;
-        }
-        return `%s  %s`;
+        const {command} = this;
+        return `%s ${command} %s`;
     }
 }
 
@@ -6601,7 +6598,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         }
         if (func instanceof LeanToken) {
             const fn = func.text;
-            syntax[fn] = true;
+            if (syntax) syntax[fn] = true;
             switch (args.length) {
                 case 2:
                     switch (fn) {

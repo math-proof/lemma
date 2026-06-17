@@ -2,7 +2,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Drop.eq.Nil.of.LeLength
-import Lemma.Vector.FlattenCast.eq.Cast_Flatten.of.Eq.Eq
+import Lemma.Vector.FlattenCast.as.Flatten.of.Eq.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
