@@ -5,7 +5,7 @@ import Lemma.Tensor.LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0
 open Tensor
 
 
-@[main]
+@[main, cast]
 private lemma main
 -- given
   (h_s : s.length > 1)

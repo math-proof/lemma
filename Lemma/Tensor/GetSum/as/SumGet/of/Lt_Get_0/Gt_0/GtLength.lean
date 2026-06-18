@@ -25,8 +25,6 @@ private lemma main
   | succ d =>
     apply GetSum.as.SumGet.of.Lt_Get_0.LtAdd_1Length h_s h_i
 
-#check Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength
-#check Tensor.GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength
-#check Tensor.GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin
+
 -- created on 2025-06-22
 -- updated on 2025-07-01
