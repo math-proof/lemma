@@ -123,7 +123,7 @@
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
     - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，《资本论》：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于剩余价值的范畴
     - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)
-      - 全职工作条件下，可通过拒绝加班减小m′
+      - 全职工作条件下，拒绝加班可减小m′
       - 灵活就业条件下，可自由分配m′
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
     - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=tₘᵢₙ}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda_w^{t-j}} {  \left(1 - \lambda_w^{t-tₘᵢₙ+1}\right)/ \left(1 - \lambda_w\right)  } \middle| {\color{magenta}s_t}\right],\quad \lambda_w \in (0, 1)\)
@@ -134,7 +134,7 @@
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡率\({\color{red}q}_{tₘₐₓ}\)触发
       - 破产，由\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法逻辑：人类社会把人身自由作为债务违约的最后抵押品
-      - 绝望，由\(\max_{{\color{red}{a}}_t} Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t) < {\color{red}r}_{t_{max}}\)触发，唯一真正严肃的哲学命题是自杀(舍生取义)：生不如死？
+      - 绝望，由\(\max_{{\color{red}{a}}_t} Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t) < {\color{red}r}_{t_{max}}\)触发，唯一真正严肃的哲学命题是自杀(舍生取义)：不自由，毋宁死？
   - 社会资本，是指人际、组织、政治等关系价值，在主体遭遇风险时转化为实际支持的能力：
     - 人脉资产\(\color{red}P\)：亲情、爱情、友情、人情、仇人等关系价值，共计\(\mathfrak {D} \le 150\)人
       - 折当价\(\color{red}{W_p}\)/￥：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，《乡土中国》差序格局：人脉像水波纹，以己为心、亲疏有别、随势伸缩。我帮了某人(当品：情谊)，我在他心(情谊当铺)中的情谊当票不可观测(他心难题)，只能猜测：我落难赎当时那张当票的折当价是多少？情谊典当记名不记账，若绝当，我(当户)就算上**当**？
