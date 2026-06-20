@@ -8,7 +8,7 @@ import Lemma.Nat.EqAddMulDiv
 import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec
 import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
-import Lemma.Tensor.GetAppend.eq.Cast_AppendCastS_Get.of.GtLength_0
+import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetBroadcastMatmul.eq.Cast_BroadcastMatmulRecGet.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Lt

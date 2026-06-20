@@ -8,7 +8,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Tensor.DataAppend.eq.Cast_Append
 import Lemma.Tensor.DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData
-import Lemma.Tensor.GetAppend.eq.Cast_AppendCastS_Get.of.GtLength_0
+import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetAppend.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq

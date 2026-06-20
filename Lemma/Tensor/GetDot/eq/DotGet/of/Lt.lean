@@ -28,7 +28,7 @@ import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqRepeatS.of.Eq
 import Lemma.Tensor.EqSumS.of.Eq
 import Lemma.Tensor.EqUnsqueezeS.of.Eq
-import Lemma.Tensor.GetAppend.eq.Cast_AppendCastS_Get.of.GtLength_0
+import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
