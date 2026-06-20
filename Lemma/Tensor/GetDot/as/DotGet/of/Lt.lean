@@ -15,7 +15,7 @@ import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
+import Lemma.Tensor.Matmul.as.SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.SEq0S.of.Eq
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq.EqLengthS
 import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
@@ -163,7 +163,8 @@ private lemma one
     rw [GetDot.eq.DotGet.of.Lt.one.fin h]
   | s₀ :: s =>
     simp [MatMul.dot]
-    repeat rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
+    rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
+    rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa) (X.get i)]
     simp
     apply SEq_Cast.of.SEq.Eq
     ·

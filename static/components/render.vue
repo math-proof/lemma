@@ -398,9 +398,6 @@ const self = new Vue({
         },
     },
 
-    updated() {
-    },
-
     async mounted() {
         form_post('php/request/sections.php').then(sections => {
             this.sections = sections;
@@ -409,14 +406,9 @@ const self = new Vue({
         mounted(this);
         var {module} = this;
         var model = getParameterByName('model[proof]');
-        if (!module) {
-            var module = getParameterByName('module');
-            if (module) {
-                module = module.replace(/[\/\\]/g, '.');
-                this.module = module;
-                if (!model)
-                    await this.echo(module);
-            }
+        if (!model) {
+            if (this.lemma.any(lemma => this.heed_update(lemma)))
+                await this.echo(module);
         }
 
         var {hash} = location;
@@ -548,6 +540,16 @@ where
     },
 
     methods: {
+        heed_update(lemma) {
+            var {proof} = lemma;
+            var {by} = proof;
+            if (by) {
+                for (var {latex} of by)
+                    if (!latex)
+                        return true;
+            }
+        },
+
         leanSourceCode(index) {
             var {module} = this;
             if (!module)
