@@ -1,11 +1,10 @@
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 import stdlib.SEq
-import sympy.tensor.tensor
 open Tensor
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma main
   [AddCommMonoid α]
 -- given

@@ -1,7 +1,7 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.SEqSumS.of.All_SEq.Gt_0
-import Lemma.Tensor.Sum_0.eq.Cast_Sum_Get.of.GtLength_0
+import Lemma.Tensor.Sum_0.as.Sum_Get.of.GtLength_0
 open Bool Tensor
 
 
@@ -18,7 +18,8 @@ private lemma main
   X.sum 0 ≃ Y.sum 0 := by
 -- proof
   have h_length' := h_s ▸ h_length
-  repeat rw [Sum_0.eq.Cast_Sum_Get.of.GtLength_0.fin (by assumption)]
+  rw [Sum_0.eq.Cast_Sum_Get.of.GtLength_0.fin (by assumption)]
+  conv_rhs => rw [Sum_0.eq.Cast_Sum_Get.of.GtLength_0.fin (by assumption)]
   apply SEqCastS.of.SEq.Eq.Eq
   repeat simp
   if h₀ : s[0] = 0 then

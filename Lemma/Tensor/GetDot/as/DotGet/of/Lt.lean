@@ -164,7 +164,7 @@ private lemma one
   | s₀ :: s =>
     simp [MatMul.dot]
     rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
-    rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa) (X.get i)]
+    conv_rhs => rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
     simp
     apply SEq_Cast.of.SEq.Eq
     ·

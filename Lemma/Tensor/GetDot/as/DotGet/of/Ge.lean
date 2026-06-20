@@ -35,7 +35,7 @@ private lemma main
     simp [MatMul.dot]
     have := Matmul.eq.Cast_BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
     rw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
-    rw [Matmul.eq.Cast_BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) (X.get i)]
+    conv_rhs => rw [Matmul.eq.Cast_BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
     apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
     simp
     rw [GetBroadcastMatmul.eq.Cast_BroadcastMatmulRecGet.of.GtLength_0.fin (by simp) _ _ ⟨i, by simp⟩]

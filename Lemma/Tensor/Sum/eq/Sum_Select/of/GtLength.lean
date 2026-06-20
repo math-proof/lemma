@@ -16,7 +16,7 @@ import Lemma.Tensor.GtLength.of.GtLength
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Tensor.Sum.eq.Cast_Stack_Sum.of.LtAdd_1Length
-import Lemma.Tensor.Sum_0.eq.Cast_Sum_Get.of.GtLength_0
+import Lemma.Tensor.Sum_0.as.Sum_Get.of.GtLength_0
 import sympy.tensor.tensor
 open Bool List Nat Tensor
 
