@@ -5,7 +5,7 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Nat.EqAddMulDiv
-import Lemma.Tensor.BroadcastMatmul.eq.Cast_BroadcastMatmulRec
+import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec
 import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetAppend.eq.Cast_AppendCastS_Get.of.GtLength_0

@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.Tensor.BroadcastMatmul.eq.Cast_BroadcastMatmulRec
+import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetBroadcastMatmul.eq.Cast_BroadcastMatmulRecGet.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
