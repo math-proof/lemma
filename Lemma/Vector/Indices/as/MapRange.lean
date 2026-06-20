@@ -8,7 +8,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Vector List Nat Fin
 
 
-@[main]
+@[main, cast]
 private lemma main
   {n : ℕ}
 -- given
@@ -31,7 +31,7 @@ private lemma main
     simp
 
 
-@[main]
+@[main, cast]
 private lemma Comm
   {n : ℕ}
 -- given

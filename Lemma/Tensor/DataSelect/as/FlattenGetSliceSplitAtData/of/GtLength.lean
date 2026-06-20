@@ -46,7 +46,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
-import Lemma.Vector.Indices.eq.Cast_MapRange
+import Lemma.Vector.Indices.as.MapRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat Bool Int List Tensor Vector Fin
 set_option maxHeartbeats 2000000
