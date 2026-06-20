@@ -3,7 +3,7 @@ import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.Div.eq.One.of.All_Ne_0
 import Lemma.Tensor.EqKeepdimCast.of.LeLength
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
-import Lemma.Tensor.Sum.eq.Cast_Sum.of.LeLength
+import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Vector.GetExp.eq.ExpGet
 open Tensor Vector
 

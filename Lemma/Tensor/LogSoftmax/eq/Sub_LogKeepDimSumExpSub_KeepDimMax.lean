@@ -26,7 +26,7 @@ import Lemma.Tensor.Max.eq.Cast.of.LeLength
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Softmax.eq.One.of.LeLength
 import Lemma.Tensor.SoftmaxSub_Keepdim.eq.Softmax
-import Lemma.Tensor.Sum.eq.Cast_Sum.of.LeLength
+import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul

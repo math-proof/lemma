@@ -9,7 +9,7 @@ import Lemma.Tensor.EqSelectKeepdim
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SelectMul.eq.MulSelectS
-import Lemma.Tensor.Sum.eq.Cast_Sum.of.LeLength
+import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Tensor.Sum.eq.Sum_Select.of.GtLength
 import sympy.tensor.functions
 open Bool Fin List Nat Tensor
@@ -35,7 +35,8 @@ private lemma main
   else
     have h := Ge.of.NotLt h
     have h_s := Eq_EraseIdx.of.LeLength h
-    repeat rw [Sum.eq.Cast_Sum.of.LeLength (by omega)]
+    rw [Sum.eq.Cast_Sum.of.LeLength (by omega)]
+    conv_rhs => rw [Sum.eq.Cast_Sum.of.LeLength (by omega)]
     apply EqCast.of.SEq.Eq h_s
     apply SEqMulS.of.SEq.SEq
     ·

@@ -19,7 +19,7 @@ import Lemma.Tensor.EqMulDiv.of.All_Ne_0
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Softmax.eq.One.of.LeLength
-import Lemma.Tensor.Sum.eq.Cast_Sum.of.LeLength
+import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetExp.eq.ExpGet
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
