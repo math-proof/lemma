@@ -3,7 +3,7 @@ import sympy.tensor.Basic
 open Bool
 
 
-@[main, comm]
+@[main, comm, cast]
 private lemma main
 -- given
   (A : Tensor α (m :: s))

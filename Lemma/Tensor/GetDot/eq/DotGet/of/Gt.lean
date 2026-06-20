@@ -14,7 +14,7 @@ import Lemma.Nat.EqMulDiv
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Mul
-import Lemma.Tensor.DataAppend.eq.Cast_AppendDataS
+import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.DataMul.eq.MulDataS
@@ -251,9 +251,10 @@ private lemma one
         simp [@Tensor.GetMul.eq.MulGetS.fin]
         conv_rhs => simp [List.Vector.head]
         repeat rw [DataCast.eq.Cast_Data.of.Eq (by simp_all)]
-        repeat rw [DataAppend.eq.Cast_AppendDataS]
+        rw [DataAppend.eq.Cast_AppendDataS]
+        conv_rhs => rw [DataAppend.eq.Cast_AppendDataS]
         simp [X', Y']
-        rw [EqData0'0]
+        simp [EqData0'0]
         unfold Tensor.unsqueeze
         simp
         unfold Tensor.repeat
@@ -301,7 +302,7 @@ private lemma one
             rw [GetRepeat.eq.Get_Mod.fin]
             simp [ProdSwap.eq.Prod]
             rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            simp
+            simp [EqData0'0]
             rw [GetCast.eq.Get.of.Eq.fin]
             ·
               let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr

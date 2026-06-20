@@ -2,7 +2,7 @@ import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Fin.Eq_0
-import Lemma.Tensor.DataAppend.eq.Cast_AppendDataS
+import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.EqHeadSplitAt_0
