@@ -8,7 +8,7 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 open Tensor List Vector
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma main
   {s : List ℕ}
 -- given
@@ -19,7 +19,6 @@ private lemma main
   have := GtLength.of.GtLength_0 h X i
   X[i].data ≃ (X.data.splitAt 1)[i]'(Lt_LengthSplitAtData.of.GtLength_0 h X i) := by
 -- proof
-  simp
   match s with
   | [] =>
     contradiction

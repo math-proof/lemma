@@ -30,7 +30,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.SubAddS.eq.Sub
 import Lemma.Nat.ToNatSub_Neg.eq.Add_1
-import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetPermuteTail.as.PermuteTailGet.of.Lt_Get_0.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0

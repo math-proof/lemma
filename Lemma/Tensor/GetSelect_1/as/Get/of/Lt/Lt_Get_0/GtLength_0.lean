@@ -1,9 +1,10 @@
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Vector.EqGetS.of.Eq.Lt
-import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
 import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
+import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
@@ -28,10 +29,7 @@ private lemma main
 -- imply
   (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get ⟨j, by simp [LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0]; grind⟩ ≃ (X.get ⟨j, by simpa [Length.eq.Get_0.of.GtLength_0]⟩).get ⟨i, by simp_all [LengthGet.eq.Get_0.of.Lt_Get_0.GtLength_1]⟩ := by
 -- proof
-  unfold Tensor.get
-  simp
-  unfold toVector
-  simp
+  unfold Tensor.get toVector
   simp only [GetElem.getElem]
   repeat rw [GetCast.eq.Get.of.Eq.fin]
   ·
@@ -58,7 +56,6 @@ private lemma main
         .
           simp
         .
-          simp
           apply SEq.of.Eq
           apply EqGetS.of.Eq.Lt
           congr
@@ -66,10 +63,8 @@ private lemma main
           rw [GetToVector.eq.Get.fin (i := ⟨j, by simpa [Length.eq.Get_0.of.Ne_Nil]⟩)]
           rw [GetVal.eq.Get.of.Lt (by simp; grind)]
           apply Eq.of.EqDataS
-          simp
           rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨j, by grind⟩) (by simp)]
           apply EqCast.of.SEq
-          simp
           apply SEq.of.Eq
           simp [GetElem.getElem]
   ·

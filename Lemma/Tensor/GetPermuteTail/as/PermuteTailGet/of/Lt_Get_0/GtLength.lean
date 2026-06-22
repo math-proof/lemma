@@ -21,7 +21,7 @@ import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthPermuteTail.eq.Get_0.of.GtLength
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -78,7 +78,7 @@ private lemma main
           simp [TailAppend.eq.AppendTail.of.GtLength_0 (show (s.take (s.length - d)).length > 0 by simp; omega)] at h_t ⊢
           simp [ProdRotate.eq.Prod] at h_t ⊢
           simp [MulProdTailTake.eq.ProdTail.of.Gt_0 (show (s.length - d) > 0 by omega)] at h_t ⊢
-          have h_lt : t < (s.tail.take (s.tail.length - d)).prod * ((s.tail.drop (s.tail.length - d)).rotate (d ⊓ s.tail.length - 1)).prod := by 
+          have h_lt : t < (s.tail.take (s.tail.length - d)).prod * ((s.tail.drop (s.tail.length - d)).rotate (d ⊓ s.tail.length - 1)).prod := by
             simp [ProdRotate.eq.Prod]
             simp only [Drop.eq.DropTail]
             rw [MulProdS.eq.ProdAppend]
@@ -87,7 +87,7 @@ private lemma main
           have h_q := q.isLt
           have h_r := r.isLt
           let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
-          have h_lt : k * s.tail.prod + ↑t < (s.take (s.length - d)).prod * ((s.drop (s.length - d)).rotate (d ⊓ s.length - 1)).prod := by 
+          have h_lt : k * s.tail.prod + ↑t < (s.take (s.length - d)).prod * ((s.drop (s.length - d)).rotate (d ⊓ s.length - 1)).prod := by
             simp [ProdRotate.eq.Prod]
             conv_rhs => rw [Prod.eq.Mul_ProdTail.of.GtLength_0 (by omega)]
             exact AddMul.lt.Mul.of.Lt.Lt h_k h_t

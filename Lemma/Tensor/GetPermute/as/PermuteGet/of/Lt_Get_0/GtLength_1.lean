@@ -17,7 +17,7 @@ import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtAddMul.of.Lt.Lt.Eq
-import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthPermute.eq.Get_0.of.GtVal_0
 import Lemma.Tensor.Permute.eq.Ite

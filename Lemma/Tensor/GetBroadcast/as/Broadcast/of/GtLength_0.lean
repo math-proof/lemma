@@ -3,7 +3,7 @@ import Lemma.List.EqProd_0.is.In0
 import Lemma.List.TailAppend.eq.AppendTail.of.Ne_Nil
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq

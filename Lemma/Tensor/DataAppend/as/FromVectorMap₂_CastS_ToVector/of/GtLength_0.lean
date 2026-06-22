@@ -17,7 +17,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
-import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.Eq
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq

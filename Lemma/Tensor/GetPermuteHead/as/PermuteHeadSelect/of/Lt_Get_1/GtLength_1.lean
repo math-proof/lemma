@@ -55,7 +55,7 @@ import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
-import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.LengthPermuteHead.eq.Get_1.of.GtLength_1.Gt_1
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq

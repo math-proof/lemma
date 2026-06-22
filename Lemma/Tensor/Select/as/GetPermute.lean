@@ -37,7 +37,7 @@ import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
-import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.LengthPermute__Neg.eq.Get
 import Lemma.Tensor.Permute.eq.Ite
