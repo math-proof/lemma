@@ -45,7 +45,7 @@ import Lemma.Bool.SEqCast.of.Eq
 open Tensor Vector List Bool Nat
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma main
   {d : Fin s.length}
 -- given

@@ -8,7 +8,7 @@ import Lemma.Nat.Gt_0
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
+import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Bool.SEqCast.of.Eq.Eq

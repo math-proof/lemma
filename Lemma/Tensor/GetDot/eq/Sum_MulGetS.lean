@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GetCast.eq.Cast_Get.of.Lt_Get_0.Eq.GtLength_0
-import Lemma.Tensor.GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0
+import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtVal_0
 import Lemma.Tensor.EqGetRepeatUnsqueeze.of.Lt
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
