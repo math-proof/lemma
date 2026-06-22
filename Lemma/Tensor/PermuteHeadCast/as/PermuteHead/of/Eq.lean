@@ -1,8 +1,8 @@
-import sympy.Basic
+import stdlib.SEq
 import sympy.tensor.Basic
 
 
-@[main]
+@[main, cast]
 private lemma main
   {s : List ℕ}
 -- given
@@ -10,7 +10,7 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  (cast (congrArg (Tensor α) h) X).permuteHead n = cast (by rw [h]) (X.permuteHead n) := by
+  (cast (congrArg (Tensor α) h) X).permuteHead n ≃ X.permuteHead n := by
 -- proof
   subst h
   rfl

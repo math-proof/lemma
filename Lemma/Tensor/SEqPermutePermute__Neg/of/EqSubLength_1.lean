@@ -11,7 +11,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.ToNatSub_Neg.eq.Add1
 import Lemma.Tensor.Permute.eq.Ite
-import Lemma.Tensor.PermuteHeadCast.eq.Cast_PermuteHead.of.Eq
+import Lemma.Tensor.PermuteHeadCast.as.PermuteHead.of.Eq
 import Lemma.Tensor.SEqPermute__0
 import Lemma.Tensor.SEqPermuteHeadPermuteTail.of.Ne_Nil
 open Bool List Nat Tensor
