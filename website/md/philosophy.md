@@ -182,7 +182,7 @@
   - 策略：
     - 概率分布
       - 上帝理论值：\(\mathbb P_{\pi}\left({\color{red}a} \middle| {\color{red}{s}}\right)\)，基于客观状态\(\color{red}{s}\)输出动作\({\color{red}a}\)的概率分布
-        - 上帝定义：**永生智能体**，无限寿命(tₘₐₓ → ∞)，无限次环境交互，无限历史观测数据，无限次信念校准，其行为策略在任意状态下都能作出最优动作
+        - 上帝定义：**永生智能体**，无限寿命(tₘₐₓ → ∞)，无限环境交互，无限历史观测，无限信念校准，其行为策略在任意状态下都能命中最优动作
         - 凡人逼近上帝的样本轨迹：十五而有志于学，三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲不逾矩；真积力久则入圣，学至乎殁而后止，故**学不可以已**
       - 信念估计值：\(\mathbb P_\hat\pi\left({\color{red}a} \middle| {\color{red}{\hat{s}}}\right)\)，基于信念状态\(\color{red}{\hat{s}}\)输出动作\({\color{red}a}\)的概率分布，本文序贯决策约定：人不是被客观现实驱动的机器(机械决定论)，而是被主观信念驱动的自由梦游者(信念驱动论)
         - [信念错位指数](http://www.lemma.cn/py/?module=Probability.KL.ge.Zero)：\(\mathrm{KL}_t = \mathbb{KL}\left(\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\middle\|\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)\right)=\int \mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\log \frac {\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right) }{\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)} d a_t \gt 0\)，历史数据\({\color{red}o}_{:t+1}\)有限、观测不完全、信念污染，故等号不成立。所谓从心所欲不逾矩，是**知行合一**：\(\mathbb{P}_{\hat{\pi}} \to \mathbb{P}_{\pi}\)，KL散度 → 0
