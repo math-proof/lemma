@@ -43,7 +43,6 @@ private lemma main
   let Y' : Tensor α (batch_size' ++ [n, k]) := cast (by grind) Y'
   X.matmul Y ≃ Tensor.broadcast_matmul X' Y' := by
 -- proof
-  intro batch_size batch_size' m n n' k
   unfold Tensor.matmul
   apply SEq.of.Eq_Cast
   .
@@ -51,7 +50,7 @@ private lemma main
     repeat grind
   .
     congr
-    simp [batch_size, batch_size', m, k, Tensor.matmul_shape, Tensor.broadcast_shape]
+    simp [Tensor.matmul_shape, Tensor.broadcast_shape]
     grind
 
 

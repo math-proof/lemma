@@ -15,7 +15,7 @@ private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
   (h_s : s.length ≥ 2)
-  (h_s' : s[s.length - 1] < n')
+  (h_s' : s[s.length - 1] = n')
   (X : Tensor α s)
   (Y : Tensor α [n']) :
 -- imply
@@ -31,10 +31,7 @@ private lemma main
       apply Drop.eq.ListGetS.of.GeLength_2 h_s
     )
     X
-  let q := n' / n
-  let r := n' % n
-  let X' : Tensor α (batch_size ++ [k, n']) := cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp [batch_size]; grind) (X'.repeat q ⟨s.length - 1, by simp [batch_size]; omega⟩) : Tensor α (batch_size ++ [k] ++ [q * n])) ++ (0 : Tensor α (batch_size ++ [k] ++ [r])))
-  let Y' := Y.broadcast ((batch_size ++ [n', 1])) (by simp)
+  let Y' := Y.broadcast ((batch_size ++ [n, 1])) (by simp_all [n])
   X.matmul Y ≃ (X'.batch_dot Y').select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩ := by
 -- proof
   unfold Tensor.matmul
