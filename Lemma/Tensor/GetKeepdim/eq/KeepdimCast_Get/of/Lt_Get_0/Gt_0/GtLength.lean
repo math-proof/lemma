@@ -4,7 +4,7 @@ import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_LengthTail
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Keepdim.as.RepeatUnsqueeze
 import Lemma.Tensor.All_SEqGetS.of.SEq
-import Lemma.Tensor.RepeatCast.eq.Cast_Repeat.of.Eq
+import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength
 import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Gt_0.Lt_SubLength
 import Lemma.List.TailInsertIdx.eq.InsertIdxTail.of.Gt_0.GtLength_0

@@ -14,7 +14,7 @@ import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.GtLength
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Ge_1.of.Gt
-import Lemma.Tensor.RepeatCast.eq.Cast_Repeat.of.Eq
+import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
 import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
