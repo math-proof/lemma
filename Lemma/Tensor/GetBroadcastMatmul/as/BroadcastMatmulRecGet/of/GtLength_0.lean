@@ -5,7 +5,7 @@ import Lemma.Tensor.SEqBroadcastS.of.Eq.Eq
 open Tensor
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {s : List ℕ}
