@@ -3,7 +3,7 @@ import Lemma.Vector.EqGetS.of.Eq.Lt
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
-import Lemma.Tensor.Select_0.eq.Cast_Get.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.ProdTake_1.eq.HeadD_1

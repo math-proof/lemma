@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.Select_0.eq.Cast_Get.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
 import sympy.tensor.tensor
 open Tensor
 
