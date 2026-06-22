@@ -6,7 +6,7 @@ import Lemma.Nat.EqMulS.of.Eq
 open Vector List Bool Nat
 
 
-@[main, comm]
+@[main, comm, cast]
 private lemma main
   {s : List ℕ}
 -- given
