@@ -4,7 +4,7 @@ import Lemma.Tensor.Softmax.as.Stack_Softmax.of.Eq.GtLength
 open Tensor Nat
 
 
-@[main]
+@[main, cast]
 private lemma main
   [Exp α]
   {d : ℕ}
