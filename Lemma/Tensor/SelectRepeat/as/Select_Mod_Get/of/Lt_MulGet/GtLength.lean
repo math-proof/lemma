@@ -22,7 +22,7 @@ import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.List.LengthSet.eq.Length
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Vector.EqGetRange
-import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
+import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.List.EqCons_Tail.of.Eq_Get_0.GtLength_0
 import Lemma.Bool.SEqCast.of.Eq
 open Tensor List Vector Bool Nat

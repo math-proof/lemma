@@ -35,7 +35,7 @@ import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataStack.eq.FlattenMap_FunData
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.SEqStack_Get.of.GtLength_0
-import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
+import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectStack.eq.Stack_Select.of.GtLength
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Vector.EqGetRange

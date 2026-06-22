@@ -17,7 +17,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SEqSelectS.of.SEq
-import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
+import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Gt.GtLength
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Gt.GeLength
 import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq

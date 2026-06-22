@@ -1,6 +1,6 @@
 import sympy.tensor.functions
 import Lemma.Nat.EqMod_1'0
-import Lemma.Tensor.SelectCast.eq.Cast_Select.of.Eq
+import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
