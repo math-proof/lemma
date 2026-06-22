@@ -40,7 +40,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin Finset List Nat Tensor Vector
 
 
-@[main]
+@[main, cast]
 private lemma main
   {s : List ℕ}
   {k : ℕ}
