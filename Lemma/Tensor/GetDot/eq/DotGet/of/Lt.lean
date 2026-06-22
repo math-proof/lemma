@@ -16,7 +16,7 @@ import Lemma.Nat.EqMulDiv
 import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataAppend.as.AppendDataS
-import Lemma.Tensor.DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData
+import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.DataMul.eq.MulDataS
