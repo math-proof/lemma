@@ -4,7 +4,7 @@ import Lemma.Tensor.GtLength.of.GtLength_0
 open Tensor
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma main
   {s s' : List ℕ}
 -- given
@@ -16,12 +16,9 @@ private lemma main
   have h := congrArg (Tensor α) h₁
   have := GtLength.of.GtLength_0 h₀ X ⟨i, by grind⟩
   have := GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
-  (cast h X)[i] = cast (by rw [h₁]) X[i] := by
+  (cast h X)[i] ≃ X[i] := by
 -- proof
-  let i' : Fin s[0] := ⟨i, h_i⟩
-  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0 h₀ h₁ X i'
-  simp [i'] at this
-  assumption
+  aesop
 
 
 -- created on 2025-07-04
