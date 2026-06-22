@@ -4,7 +4,7 @@ import Lemma.Nat.Lt_Sub.of.LtAdd
 open Tensor Nat
 
 
-@[main]
+@[main, cast]
 private lemma main
   [Add α] [Zero α]
   {d : ℕ}
