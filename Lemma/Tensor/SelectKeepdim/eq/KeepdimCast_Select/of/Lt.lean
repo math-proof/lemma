@@ -18,7 +18,7 @@ import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
-import Lemma.Tensor.SelectRepeat.eq.Cast_RepeatSelect.of.Lt
+import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
 import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq
 import sympy.tensor.functions

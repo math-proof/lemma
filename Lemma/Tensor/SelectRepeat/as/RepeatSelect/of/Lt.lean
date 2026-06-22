@@ -52,7 +52,7 @@ open Nat List Bool Tensor Vector Fin
 set_option maxHeartbeats 2000000
 
 
-@[main]
+@[main, cast]
 private lemma main
   {d : Fin s.length}
   {k : ℕ}
@@ -201,8 +201,7 @@ private lemma main
         ·
           simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength (Lt.of.Lt.Lt h_k h_d)]
       ·
-        simp
-        rw [h_length_slice]
+        simp [h_length_slice]
         rw [EraseIdxSet.eq.SetEraseIdx.of.Lt h_k]
         rw [h_prod_set]
 
