@@ -9,7 +9,7 @@ import Lemma.Tensor.SEqPermuteTail_1
 open Bool Int List Nat Tensor
 
 
-@[main]
+@[main, cast]
 private lemma main
   {s : List ℕ}
   {i : Fin s.length}

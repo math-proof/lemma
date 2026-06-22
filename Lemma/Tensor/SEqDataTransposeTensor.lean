@@ -11,7 +11,7 @@ import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
 import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
 import Lemma.Tensor.GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0
 import Lemma.Tensor.Permute__0.eq.Cast
-import Lemma.Tensor.Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1
+import Lemma.Tensor.Permute__Neg.as.PermuteTail.of.Val.eq.SubLength_1
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq
