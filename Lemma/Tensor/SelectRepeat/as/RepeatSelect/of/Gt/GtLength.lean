@@ -42,7 +42,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open List Nat Bool Tensor Vector Fin
 
 
-@[main]
+@[main, cast]
 private lemma main
 -- given
   (h_k : s.length > k)
