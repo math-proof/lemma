@@ -17,7 +17,7 @@ import Lemma.Real.GtExp_0
 import Lemma.Real.NeExp_0
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
+import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Tensor.EqLogExp
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength

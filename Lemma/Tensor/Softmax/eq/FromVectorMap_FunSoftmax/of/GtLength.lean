@@ -28,7 +28,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.DataKeepdim.as.FlattenMapSplitAtCast_Data
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
+import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -111,7 +111,8 @@ private lemma main
   apply Sum.of.All_Eq.Eq (by simp)
   intro k
   have h_k := k.isLt
-  repeat rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
+  rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
+  conv_rhs => rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
   repeat rw [GetCast.eq.Get.of.Eq.fin]
   ·
     have h_dvdₑ := Get.dvd.Mul_ProdTake.of.GtLength h n

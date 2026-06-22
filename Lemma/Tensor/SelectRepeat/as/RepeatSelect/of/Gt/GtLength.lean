@@ -31,7 +31,7 @@ import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul_Mul
 import Lemma.Tensor.DataRepeat.as.FlattenMapSplitAtData
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
+import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul

@@ -2,7 +2,7 @@ import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.Tensor.DataExp.eq.ExpData
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
+import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.ExpCast.as.Exp.of.Eq
 import Lemma.Vector.ExpFlatten.eq.FlattenExp
@@ -24,7 +24,8 @@ private lemma main
 -- proof
   apply Eq.of.EqDataS
   conv_rhs => rw [DataExp.eq.ExpData]
-  repeat rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
+  rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
+  conv_rhs => rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
   have h_length_slice := MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength d.isLt i.isLt
   rw [ExpCast.eq.Cast_Exp.of.Eq]
   ·

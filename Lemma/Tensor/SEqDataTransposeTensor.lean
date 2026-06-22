@@ -7,7 +7,7 @@ import Lemma.List.LengthSlice.eq.One.of.Lt
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.TailPermute__Neg.eq.EraseIdx
 import Lemma.Nat.EqMod.of.Lt
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
+import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
 import Lemma.Tensor.GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0
 import Lemma.Tensor.Permute__0.eq.Cast

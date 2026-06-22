@@ -6,7 +6,7 @@ import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne_0
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
+import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -45,7 +45,10 @@ private lemma main
   rw [GetGetSlice.eq.Get.of.GtGet.GtLength d.isLt i.isLt]
   rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   repeat rw [GetDiv.eq.DivGetS.fin]
-  repeat rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
+  rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
+  conv_rhs =>
+    arg 2
+    rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
   repeat rw [GetCast.eq.Get.of.Eq.fin (by simp [h_length_slice])]
   simp
   repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]

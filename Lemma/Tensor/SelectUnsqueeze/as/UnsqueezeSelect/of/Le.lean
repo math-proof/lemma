@@ -15,7 +15,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqValCast.of.Lt.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
+import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataUnsqueeze.eq.Map_FunGetData
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.EqGetRange

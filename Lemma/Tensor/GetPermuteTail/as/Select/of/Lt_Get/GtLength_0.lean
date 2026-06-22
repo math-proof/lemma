@@ -23,7 +23,7 @@ import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
 import Lemma.Nat.Mul.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Tensor.DataGet.eq.Cast_GetSplitAtData.of.GtLength_0
-import Lemma.Tensor.DataSelect.eq.Cast_FlattenGetSliceSplitAtData
+import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.LengthPermuteTail.eq.Get.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
