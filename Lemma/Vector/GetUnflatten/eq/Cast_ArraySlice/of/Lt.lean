@@ -1,5 +1,5 @@
 import Lemma.Nat.EqMin_SubMulS
-import Lemma.Vector.GetUnflatten.eq.Cast_ArraySlice
+import Lemma.Vector.GetUnflatten.as.ArraySlice
 open Vector Nat
 
 

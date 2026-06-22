@@ -195,7 +195,7 @@ private lemma one
               --   simp
               -- have h_s₀' : ((s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 - 2) ++ [n', 1]) = (s₀ :: (s ++ [k])).take s.length ++ [n', 1] := by
               --   simp
-              sorry
+              -- sorry
               simp [Tensor.batch_dot]
               apply SEq_Cast.of.SEq.Eq
               .

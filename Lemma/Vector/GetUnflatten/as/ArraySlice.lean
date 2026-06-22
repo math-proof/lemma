@@ -5,7 +5,7 @@ import Lemma.Nat.Le_SubMulS
 open Vector Nat
 
 
-@[main, comm]
+@[main, comm, cast]
 private lemma main
 -- given
   (v : List.Vector α (m * n))
