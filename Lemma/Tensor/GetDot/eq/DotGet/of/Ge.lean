@@ -18,7 +18,7 @@ import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Matmul.eq.Cast_SelectBatchDot.of.Eq_Get_SubLength.GeLength_2
+import Lemma.Tensor.Matmul.as.SelectBatchDot.of.Eq_Get_SubLength.GeLength_2
 import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
 import Lemma.Vector.Eq.is.All_EqGetS

@@ -14,7 +14,7 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.SEq0S.of.Eq
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq.EqLengthS
