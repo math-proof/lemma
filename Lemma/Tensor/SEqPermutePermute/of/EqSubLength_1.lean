@@ -7,7 +7,7 @@ import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.ToNatAdd.eq.Add
 import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.Permute.eq.Ite
-import Lemma.Tensor.PermuteTailCast.eq.Cast_PermuteTail.of.Eq
+import Lemma.Tensor.PermuteTailCast.as.PermuteTail.of.Eq
 import Lemma.Tensor.SEqPermuteTailPermuteHead
 open Bool Tensor Nat List
 

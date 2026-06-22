@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.tensor.Basic
 
 
-@[main]
+@[main, cast]
 private lemma main
   {s : List ℕ}
 -- given
