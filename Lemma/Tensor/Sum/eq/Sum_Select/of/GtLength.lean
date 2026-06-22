@@ -14,7 +14,7 @@ import Lemma.Tensor.EqStackS.of.All_Eq
 import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
+import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Tensor.Sum.as.Stack_Sum.of.LtAdd_1Length
 import Lemma.Tensor.Sum_0.as.Sum_Get.of.GtLength_0
 import sympy.tensor.tensor

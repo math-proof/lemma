@@ -19,7 +19,7 @@ import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.Eq_Get_SubLength.GeLength_2
-import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
+import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.Repeat.eq.Cast.of.Eq_1
@@ -47,7 +47,7 @@ private lemma main
       rw [Matmul.eq.Cast_SelectBatchDot.of.Eq_Get_SubLength.GeLength_2 (by simp) (by simp)]
       simp
       let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).broadcast [1, k] (by simp)
-      have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) ⟨0, by simp⟩ (XiBroadcast.batch_dot Y)
+      have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiBroadcast.batch_dot Y) ⟨0, by simp⟩
       simp [XiBroadcast] at this
       rw [this]
       unfold broadcast_matmul

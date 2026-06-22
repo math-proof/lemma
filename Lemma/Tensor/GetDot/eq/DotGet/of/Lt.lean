@@ -45,7 +45,7 @@ import Lemma.Tensor.Matmul.as.SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.Lt_Get_SubLength.GeLength_2
 import Lemma.Tensor.Matmul.eq.SumMulDataS.of.Lt
 import Lemma.Tensor.SEqDataS.of.SEq
-import Lemma.Tensor.Select_0.eq.Cast_Get.of.GtLength_0
+import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqGet0_0
@@ -87,7 +87,7 @@ private lemma main
   let XiAppend : Tensor α [n' / k * k + n' % k] := Xi ++ (0 : Tensor α [n' % k])
   have h_s : [n' / k * k + n' % k] = [n'] := by simp [EqAddMulDiv]
   let XiAppendBroadcast : Tensor α ([] ++ [1, n']) := (cast (congrArg (Tensor α) h_s) XiAppend).broadcast [1, n'] (by simp)
-  have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) ⟨0, by simp⟩ (XiAppendBroadcast.batch_dot Y)
+  have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiAppendBroadcast.batch_dot Y) ⟨0, by simp⟩
   simp [XiAppendBroadcast] at this
   rw [this]
   unfold broadcast_matmul
