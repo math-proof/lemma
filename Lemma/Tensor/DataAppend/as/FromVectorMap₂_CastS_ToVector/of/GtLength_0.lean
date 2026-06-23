@@ -18,7 +18,7 @@ import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
-import Lemma.Tensor.GetCast.eq.Cast_Get.of.Eq.Eq
+import Lemma.Tensor.GetCast.as.Get.of.Eq.Eq
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
@@ -90,7 +90,11 @@ private lemma main
         let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
         simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
         repeat rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_n := by simp) (by simp)]
-        repeat rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_s := by grind) (by grind)]
+        rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_s := by grind) (by grind)]
+        conv_rhs =>
+          arg 1
+          arg 2
+          rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_s := by grind) (by grind)]
         simp [h_r'_mod] at h_rₐ_mod
         simp [MulAdd.eq.AddMulS] at h_rₐ_mod
         simp [← h_r_mod] at h_rₐ_mod

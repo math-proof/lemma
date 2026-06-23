@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.tensor.Basic
 
 
-@[main, fin]
+@[main, fin, cast.fin]
 private lemma val
 -- given
   (h_s : s = s')
@@ -16,7 +16,7 @@ private lemma val
   rfl
 
 
-@[main, fin]
+@[main, fin, cast.fin]
 private lemma main
 -- given
   (h_s : s = s')
