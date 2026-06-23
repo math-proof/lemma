@@ -151,7 +151,7 @@
       - 灵活就业条件下，可自由分配m′
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
     - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=tₘᵢₙ}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda_w^{t-j}} {  \left(1 - \lambda_w^{t-tₘᵢₙ+1}\right)/ \left(1 - \lambda_w\right)  } \middle| {\color{magenta}s_t}\right],\quad \lambda_w \in (0, 1)\)
-    - 负债毒性/天：\({\color{red}{P_l}}_t = \frac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t}\)，负债的本质是被抵押的自由时间
+    - 负债毒性/天：\({\color{red}{P_l}}_t = \frac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t}\)，负债是被抵押的自由时间
     - 负债毒性对(H, M)作用权重/天⁻¹：[ωₕ, ωₘ]≈[5e-7, 2e-6]
     - \(\color{red}{ΔWᵥ}\)：财务脉冲，如电信诈骗、彩票中奖、高端消费、重疾医疗
     - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge tₘᵢₙ\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
