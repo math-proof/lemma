@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Nat.Cast.eq.Fin.of.Lt.Eq
-import Lemma.Tensor.DataUnsqueeze.eq.Cast_Data
+import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Vector.EqGetRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector

@@ -4,7 +4,7 @@ import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataRepeat.as.FlattenMapSplitAtData
-import Lemma.Tensor.DataUnsqueeze.eq.Cast_Data
+import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Tensor.Keepdim.as.RepeatUnsqueeze
 import Lemma.Tensor.SEqDataS.of.SEq
 open Bool List Nat Tensor
