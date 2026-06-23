@@ -17,7 +17,7 @@ import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Gt_0
 import Lemma.Nat.ToNatSub_Neg.eq.Add_1
-import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
+import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqPermuteTail.of.Le_1

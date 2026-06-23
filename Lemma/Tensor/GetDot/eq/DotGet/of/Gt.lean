@@ -15,7 +15,7 @@ import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Mul
 import Lemma.Tensor.DataAppend.as.AppendDataS
-import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
+import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.DataTransposeTensor.eq.Cast
@@ -117,7 +117,8 @@ private lemma main
       apply Eq.of.EqDataS
       simp
       apply Eq_Cast.of.SEq.Eq (by simp)
-      repeat rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
+      rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
+      conv_rhs => rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
       apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
       have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind) X (i := i) (d := 1)
       simp at this
@@ -250,10 +251,11 @@ private lemma one
         subst h_t
         simp [@Tensor.GetMul.eq.MulGetS.fin]
         conv_rhs => simp [List.Vector.head]
-        repeat rw [DataCast.eq.Cast_Data.of.Eq (by simp_all)]
-        rw [DataAppend.eq.Cast_AppendDataS]
-        conv_rhs => rw [DataAppend.eq.Cast_AppendDataS]
-        simp [X', Y']
+        rw [DataCast.eq.Cast_Data.of.Eq (by simp_all)]
+        conv_rhs => rw [DataCast.eq.Cast_Data.of.Eq (by simp_all)]
+        simp [DataAppend.eq.Cast_AppendDataS]
+        conv_rhs => simp [DataAppend.eq.Cast_AppendDataS]
+        simp [X', Y'Append, Y']
         simp [EqData0'0]
         unfold Tensor.unsqueeze
         simp
@@ -291,24 +293,25 @@ private lemma one
           apply EqMulS.of.Eq.left
           rw [GetCast.eq.Get.of.Eq.fin]
           ·
-            rw [DataTransposeTensor.eq.Cast]
-            simp
+            simp [DataTransposeTensor.eq.Cast]
             have h_lt : ↑i * k + ↑j < 1 * (n * (1 * ([k, 1].swap 0 1).prod)) := by
               simp [ProdSwap.eq.Prod]
               apply AddMul.lt.Mul.of.Lt.Lt i.isLt h_j
             obtain ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
             rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-            simp
-            rw [GetRepeat.eq.Get_Mod.fin]
+            simp [GetRepeat.eq.Get_Mod.fin]
             simp [ProdSwap.eq.Prod]
             rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            simp [EqData0'0]
             rw [GetCast.eq.Get.of.Eq.fin]
             ·
               let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
               simp [ProdSwap.eq.Prod] at h_r_mod
               simp [h_r_mod]
               simp [EqMod.of.Lt h_j]
+              simp [DataAppend.eq.Cast_AppendDataS]
+              simp [EqData0'0]
+              rw [GetCast.eq.Get.of.Eq.fin]
+              grind
             ·
               simpa [ProdSwap.eq.Prod]
           ·

@@ -21,7 +21,7 @@ import Lemma.Nat.EqMod_1'0
 import Lemma.Nat.EqSub.of.EqAdd
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.SubSub
-import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
+import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqPermuteHeadS.of.LeLength

@@ -17,7 +17,7 @@ import Lemma.Nat.EqMulS.of.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
-import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
+import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.DataTransposeTensor.eq.Cast
@@ -261,7 +261,7 @@ private lemma one
         simp [@Tensor.GetMul.eq.MulGetS.fin]
         conv_rhs => simp [List.Vector.head]
         rw [DataCast.eq.Cast_Data.of.Eq (by simp_all)]
-        rw [DataAppend.eq.Cast_AppendDataS]
+        simp [DataAppend.eq.Cast_AppendDataS]
         simp [X'Repeat, X'Append, X']
         simp [EqData0'0]
         unfold Tensor.unsqueeze

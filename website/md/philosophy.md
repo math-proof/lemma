@@ -157,7 +157,7 @@
     - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge tₘᵢₙ\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
       - 死亡，由死亡率\({\color{red}q}_{tₘₐₓ}\)触发
-      - 破产，由\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，被剥夺人身自由，类似刑法逻辑：人类社会把人身自由作为债务违约的最后抵押品
+      - 破产，由\({\color{red}\phi}_t(\mathbb E[{\color{red}T}|{\color{magenta}H}_t] - t) + \mathbb{E}[{\color{red}{W_p}}_t\mid{\color{magenta}s}_t] + \mathbb{E}[{\color{red}{W_s}}_t\mid{\color{magenta}s}_t] < {\color{red}{W^-}}_t\)触发，剥夺人身自由：还不了债，拿自由换
       - 绝望，由\(\max_{{\color{red}{a}}_t} Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t) < {\color{red}r}_{t_{max}}\)触发，唯一真正严肃的哲学命题是自杀(舍生取义)：不自由，毋宁死？
   - 社会资本，是指人际、组织、政治等关系价值，在主体遭遇风险时转化为实际支持的能力：
     - 人脉资产\(\color{red}P\)：亲情、爱情、友情、人情、仇人等关系价值，共计\(\mathfrak {D} \le 150\)人

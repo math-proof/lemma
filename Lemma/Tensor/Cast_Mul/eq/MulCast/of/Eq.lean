@@ -1,4 +1,4 @@
-import Lemma.Tensor.DataCast.eq.Cast_Data.of.Eq
+import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.Cast_Mul.eq.MulCast.of.Eq
@@ -19,7 +19,7 @@ private lemma main
   apply Eq.of.EqDataS
   rw [DataMul.eq.MulData]
   simp [DataCast.eq.Cast_Data.of.Eq h]
-  rw [DataMul.eq.MulData]
+  simp [DataMul.eq.MulData]
   rw [Cast_Mul.eq.MulCast.of.Eq]
   rw [h]
 
