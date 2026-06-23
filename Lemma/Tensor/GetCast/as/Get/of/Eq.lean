@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.tensor.Basic
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma main
 -- given
   (h : s = s')
@@ -11,8 +11,7 @@ private lemma main
 -- imply
   (cast (congrArg (fun s => List.Vector (Tensor α s) n) h) v)[i] ≃ v[i] := by
 -- proof
-  subst h
-  rfl
+  aesop
 
 
 -- created on 2025-06-29
