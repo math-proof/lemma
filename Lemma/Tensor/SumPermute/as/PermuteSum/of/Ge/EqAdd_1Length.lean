@@ -51,7 +51,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Eq
 import Lemma.Tensor.Sum.eq.Sum_Select
 import Lemma.Tensor.Sum.eq.Sum_Select.of.GtLength
-import Lemma.Tensor.SumCast.eq.Cast_Sum.of.Eq
+import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength

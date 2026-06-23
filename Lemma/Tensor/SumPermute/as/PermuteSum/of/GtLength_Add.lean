@@ -12,7 +12,7 @@ import Lemma.Nat.EqAdd0
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
-import Lemma.Tensor.SumCast.eq.Cast_Sum.of.Eq
+import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Tensor.SumPermuteHead.as.Sum_0.of.GtLength
 import sympy.tensor.functions
 open Bool List Nat Tensor

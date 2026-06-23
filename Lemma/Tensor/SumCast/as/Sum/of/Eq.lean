@@ -3,7 +3,7 @@ import sympy.Basic
 import sympy.tensor.Basic
 
 
-@[main]
+@[main, cast]
 private lemma main
   [Add α] [Zero α]
 -- given
