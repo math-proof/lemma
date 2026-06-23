@@ -3,7 +3,7 @@ import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.GtProdTail_0.of.GtProd_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetSplitAt_1.eq.Cast_GetUnflatten
+import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.tensor
 open Vector List Tensor Nat
@@ -34,7 +34,7 @@ private lemma main
   rw [GetCast.eq.Get.of.Eq.fin]
   .
     simp
-    rw [GetSplitAt_1.eq.Cast_GetUnflatten.fin]
+    rw [GetSplitAt_1.eq.GetUnflattenCast.fin]
     rw [GetCast.eq.Get.of.Eq.fin]
     .
       rw [GetUnflatten.eq.Get_AddMul.fin]

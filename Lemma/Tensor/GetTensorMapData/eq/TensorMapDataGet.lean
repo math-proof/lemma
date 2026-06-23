@@ -5,7 +5,7 @@ import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Tensor.ProdTake_1.eq.Length.of.GtLength_0
 import Lemma.Nat.Gt_0
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Vector.GetSplitAt_1.eq.Cast_GetUnflatten
+import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
@@ -30,7 +30,7 @@ private lemma main
   have h_length := ProdTake_1.eq.Length.of.GtLength_0 (Gt_0 i)
   rw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp [h_length]) h_take_1]
   simp only [GetElem.getElem]
-  rw [GetSplitAt_1.eq.Cast_GetUnflatten.fin]
+  rw [GetSplitAt_1.eq.GetUnflattenCast.fin]
   apply EqCast.of.SEq
   apply SEq.of.All_EqGetS.Eq (by simp)
   intro j
@@ -41,7 +41,7 @@ private lemma main
   apply congrArg
   rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by simp [h_length]) h_take_1]
   simp
-  rw [GetSplitAt_1.eq.Cast_GetUnflatten.fin]
+  rw [GetSplitAt_1.eq.GetUnflattenCast.fin]
   rw [GetCast.eq.Get.of.Eq.fin (by simp)]
   simp [GetUnflatten.eq.Get_AddMul.fin]
   rw [GetCast.eq.Get.of.Eq.fin h_s]

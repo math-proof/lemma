@@ -5,7 +5,7 @@ import Lemma.Tensor.Length.eq.HeadD.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData1'1
 import Lemma.Bool.EqCast.of.SEq
-import Lemma.Vector.GetSplitAt_1.eq.Cast_GetUnflatten
+import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.List.Prod.eq.MulProdS
@@ -34,7 +34,7 @@ private lemma main
     apply Eq.of.EqDataS
     simp [EqData1'1]
     apply EqCast.of.SEq
-    simp [GetSplitAt_1.eq.Cast_GetUnflatten.fin (1 : List.Vector α s.prod) ⟨i, by simp_all⟩]
+    simp [GetSplitAt_1.eq.GetUnflattenCast.fin (1 : List.Vector α s.prod) ⟨i, by simp_all⟩]
     apply SEq.of.All_EqGetS.Eq.fin (by simp)
     intro j
     have h_j := j.isLt
