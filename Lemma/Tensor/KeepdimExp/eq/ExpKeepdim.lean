@@ -5,7 +5,7 @@ import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.Nat.NotGt.is.Le
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
-import Lemma.Tensor.Keepdim.eq.Cast_RepeatUnsqueeze
+import Lemma.Tensor.Keepdim.as.RepeatUnsqueeze
 import Lemma.Tensor.RepeatExp.eq.ExpRepeat
 import Lemma.Tensor.SEqExpS.of.SEq
 import Lemma.Tensor.UnsqueezeExp.eq.ExpUnsqueeze

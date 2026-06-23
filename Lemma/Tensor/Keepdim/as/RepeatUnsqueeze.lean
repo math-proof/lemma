@@ -1,10 +1,10 @@
 import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength
-import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.Tensor.Keepdim.eq.Cast_RepeatUnsqueeze
-open List Bool Tensor
+import Lemma.Bool.SEqCast.of.Eq
+import sympy.tensor.functions
+open List Bool
 
 
-@[main]
+@[main, cast]
 private lemma main
   {s : List ℕ}
   {d : Fin s.length}
@@ -13,12 +13,11 @@ private lemma main
 -- imply
   X.keepdim ≃ (X.unsqueeze d).repeat s[d] ⟨d, Lt_LengthInsertIdxEraseIdx.of.GtLength d.isLt 1⟩ := by
 -- proof
-  apply SEq.of.Eq_Cast
-  .
-    apply Keepdim.eq.Cast_RepeatUnsqueeze
-  .
-    simp
-    apply List.EqSetInsertIdxEraseIdx.of.GtLength
+  unfold Tensor.keepdim
+  simp [d.isLt]
+  apply SEqCast.of.Eq
+  simp
+  apply EqSetInsertIdxEraseIdx.of.GtLength
 
 
 -- created on 2025-10-09

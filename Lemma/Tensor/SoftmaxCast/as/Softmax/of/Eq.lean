@@ -3,7 +3,7 @@ import stdlib.SEq
 import sympy.tensor.Basic
 
 
-@[main, comm]
+@[main, comm, cast]
 private lemma main
   [Exp α]
   {s : List ℕ}
@@ -12,10 +12,9 @@ private lemma main
   (X : Tensor α s)
   (i : ℕ) :
 -- imply
-  X.softmax i ≃ (cast (congrArg (Tensor α) h) X).softmax i := by
+  (cast (congrArg (Tensor α) h) X).softmax i ≃ X.softmax i := by
 -- proof
-  subst h
-  rfl
+  aesop
 
 
 -- created on 2025-10-31

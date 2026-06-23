@@ -12,9 +12,8 @@ import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermute__0
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
-import Lemma.Tensor.SoftmaxCast.eq.Cast_Softmax.of.Eq
+import Lemma.Tensor.SoftmaxCast.as.Softmax.of.Eq
 import Lemma.Tensor.SoftmaxPermuteHead.as.PermuteHeadSoftmax.of.GtLength
-import sympy.tensor.functions
 open Bool List Nat Tensor
 
 
