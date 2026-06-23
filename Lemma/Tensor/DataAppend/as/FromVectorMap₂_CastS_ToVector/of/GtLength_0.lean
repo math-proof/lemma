@@ -23,7 +23,7 @@ import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
-import Lemma.Vector.GetCast.eq.Cast_Get.of.Eq.Eq
+import Lemma.Vector.GetCast.as.Get.of.Eq.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
@@ -89,7 +89,16 @@ private lemma main
         let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_r'
         let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
         simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
-        repeat rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_n := by simp) (by simp)]
+        conv_lhs =>
+          arg 1
+          rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_n := by simp) (by simp)]
+          arg 2
+          rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_n := by simp) (by simp)]
+        conv_rhs =>
+          arg 1
+          rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_n := by simp) (by simp)]
+          arg 2
+          rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_n := by simp) (by simp)]
         rw [GetCast.eq.Cast_Get.of.Eq.Eq.fin (h_s := by grind) (by grind)]
         conv_rhs =>
           arg 1

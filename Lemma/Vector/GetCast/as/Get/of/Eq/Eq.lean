@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.Basic
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma val
 -- given
   (h_n : n = n')
@@ -12,12 +12,10 @@ private lemma val
 -- imply
   (cast (congrArg₂ (fun n => List.Vector (List.Vector α n)) h_n h_m) v)[i] ≃ v[i] := by
 -- proof
-  simp [GetElem.getElem]
-  simp [List.Vector.get]
   aesop
 
 
-@[main, fin]
+@[main, fin, cast, cast.fin]
 private lemma main
 -- given
   (h_n : n = n')
@@ -27,8 +25,7 @@ private lemma main
 -- imply
   (cast (congrArg₂ (fun n => List.Vector (List.Vector α n)) h_n h_m) v)[i] ≃ v[i] := by
 -- proof
-  have := val h_n h_m v ⟨i, by aesop⟩
-  simp_all
+  aesop
 
 
 -- created on 2026-04-25
