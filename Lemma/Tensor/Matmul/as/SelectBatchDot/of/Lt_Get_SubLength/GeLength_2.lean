@@ -14,19 +14,19 @@ open List Nat Bool
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h_s' : s'.length ≥ 2)
-  (h_n : n < s'[s'.length - 2])
+  (h_s' : s.length ≥ 2)
+  (h_n : n < s[s.length - 2])
   (X : Tensor α [n])
-  (Y : Tensor α s') :
+  (Y : Tensor α s) :
 -- imply
-  let batch_size := s'.take (s'.length - 2)
-  let n' := s'[s'.length - 2]
-  let k' := s'[s'.length - 1]
+  let batch_size := s.take (s.length - 2)
+  let n' := s[s.length - 2]
+  let k' := s[s.length - 1]
   let Y' : Tensor α (batch_size ++ [n', k']) := cast
     (by
       congr
       simp [batch_size, n', k']
-      conv_lhs => rw [← EqAppendTake__Drop s' (s'.length - 2)]
+      conv_lhs => rw [← EqAppendTake__Drop s (s.length - 2)]
       apply EqAppendS.of.Eq.left
       apply Drop.eq.ListGetS.of.GeLength_2 h_s'
     )
@@ -37,7 +37,7 @@ private lemma main
     (by simp [q, r, EqAddMulDiv])
     ((cast (by grind) (X.repeat q ⟨0, by simp⟩) : Tensor α [q * n]) ++ (0 : Tensor α [r]))
   let X' := X'.broadcast ((batch_size ++ [1, n'])) (by simp)
-  X.matmul Y ≃ (X'.batch_dot Y').select ⟨s'.length - 2, by simp [batch_size]⟩ ⟨0, by grind⟩ := by
+  X.matmul Y ≃ (X'.batch_dot Y').select ⟨s.length - 2, by simp [batch_size]⟩ ⟨0, by grind⟩ := by
 -- proof
   unfold Tensor.matmul
   apply SEq.of.Eq_Cast
@@ -47,10 +47,10 @@ private lemma main
   .
     congr
     simp [Tensor.matmul_shape]
-    simp [show s' ≠ [] by grind]
+    simp [show s ≠ [] by grind]
     rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
     simp [EraseIdx.eq.Append_Drop_Add_1]
-    simp [show s'.length - 2 + 1 = s'.length - 1 by omega]
+    simp [show s.length - 2 + 1 = s.length - 1 by omega]
     rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
 
 

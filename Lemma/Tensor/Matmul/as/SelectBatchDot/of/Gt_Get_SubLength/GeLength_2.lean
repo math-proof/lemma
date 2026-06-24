@@ -14,28 +14,28 @@ open List Nat Bool
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h_s' : s'.length ≥ 2)
-  (h_n : n > s'[s'.length - 2])
+  (h_s : s.length ≥ 2)
+  (h_n : n > s[s.length - 2])
   (X : Tensor α [n])
-  (Y : Tensor α s') :
+  (Y : Tensor α s) :
 -- imply
-  let batch_size' := s'.take (s'.length - 2)
-  let n' := s'[s'.length - 2]
-  let k' := s'[s'.length - 1]
-  let Y' : Tensor α (batch_size' ++ [n', k']) := cast
+  let batch_size := s.take (s.length - 2)
+  let n' := s[s.length - 2]
+  let k' := s[s.length - 1]
+  let Y' : Tensor α (batch_size ++ [n', k']) := cast
     (by
       congr
-      simp [batch_size', n', k']
-      conv_lhs => rw [← EqAppendTake__Drop s' (s'.length - 2)]
+      simp [batch_size, n', k']
+      conv_lhs => rw [← EqAppendTake__Drop s (s.length - 2)]
       apply EqAppendS.of.Eq.left
-      apply Drop.eq.ListGetS.of.GeLength_2 h_s'
+      apply Drop.eq.ListGetS.of.GeLength_2 h_s
     )
     Y
   let q := n / n'
   let r := n % n'
-  let Y' : Tensor α (batch_size' ++ [n, k']) := cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp [batch_size']) (Y'.repeat q ⟨s'.length - 2, by simp [batch_size']⟩) : Tensor α (batch_size' ++ [q * n', k'])) ++ (0 : Tensor α (batch_size' ++ [r, k'])))
-  let X' := X.broadcast ((batch_size' ++ [1, n])) (by simp)
-  X.matmul Y ≃ (X'.batch_dot Y').select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩ := by
+  let Y' : Tensor α (batch_size ++ [n, k']) := cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp [batch_size]) (Y'.repeat q ⟨s.length - 2, by simp [batch_size]⟩) : Tensor α (batch_size ++ [q * n', k'])) ++ (0 : Tensor α (batch_size ++ [r, k'])))
+  let X' := X.broadcast ((batch_size ++ [1, n])) (by simp)
+  X.matmul Y ≃ (X'.batch_dot Y').select ⟨s.length - 2, by simp [batch_size]⟩ ⟨0, by grind⟩ := by
 -- proof
   unfold Tensor.matmul
   apply SEq.of.Eq_Cast
@@ -45,10 +45,10 @@ private lemma main
   .
     congr
     simp [Tensor.matmul_shape]
-    simp [show s' ≠ [] by grind]
+    simp [show s ≠ [] by grind]
     rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
     simp [EraseIdx.eq.Append_Drop_Add_1]
-    simp [show s'.length - 2 + 1 = s'.length - 1 by omega]
+    simp [show s.length - 2 + 1 = s.length - 1 by omega]
     rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
 
 -- created on 2026-01-06
