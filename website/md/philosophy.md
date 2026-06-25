@@ -19,13 +19,13 @@
 - \(\sigma(·)\)表示[torch.sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.sigmoid.html)
 
 ## 心智理论
-将人际关系网络建模为事件驱动型有向图，共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是指针权重，人称代词i=0是我，j>0是你，t是离散时刻，未激活为0
+将人际关系网络建模为事件驱动型有向图，共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是注意力指针权重，表征认知资源的动态分配。人称代词i=0是我，j>0是你，t是离散时刻，未激活为0
 - 一阶信念  
   \({\color{red}{Ω}}^{[i]}_t\)，本自具足的精神效用
 - 二阶信念  
   \({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)
   - 互惠、同情、恻隐或敌意(Ιₜᵢⱼ<0)
-  - Sally-Anne测试证实这是4岁孩童智商
+  - Sally-Anne测试证实这是4岁孩童智商：信念是注意力的他者投放
   - 庄子游于濠梁之上，知出游之乐，故感同身受曰：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑期望的条件来源？
   - [按钮实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：按一下多活一天，世上随机死一人
   你按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当共情系数Ιₘᵢₙ<6.37e-5，你会按下按钮
