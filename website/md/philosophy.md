@@ -25,7 +25,7 @@
 - 二阶信念  
   \({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)
   - 互惠、同情、恻隐或敌意(Ιₜᵢⱼ<0)
-  - Sally-Anne测试证明这是4岁孩童智商
+  - Sally-Anne测试证实这是4岁孩童智商
   - 庄子游于濠梁之上，知出游之乐，故感同身受曰：鲦鱼出游从容是鱼之乐也；惠子曰：子非鱼，**安**知鱼之乐，是在质疑期望的条件来源？
   - [按钮实验](https://lecturia.org/en/short-stories/richard-matheson-button-button/24784/)：按一下多活一天，世上随机死一人
   你按吗？求解期望不等式：\({\color{red}{Ω}}^{[i]}_t + {\color{red}{Ω}}^{[i,j]}_t={\color{red}{Ω}}^{[i]}_t + {\color{red}Ι}_{min}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\mathbb E\left[人类剩余寿命\right] = \frac 1 {Y_s} - {\color{red}Ι}_{min}\left(\mathbb E\left[人类寿命\right]-\mathbb E\left[人类年龄\right]\right) \approx \frac 1 {Y_s} - {\color{red}Ι}_{min}\cdot (73.5 - 30.5) > 0\)，当共情系数Ιₘᵢₙ<6.37e-5，你会按下按钮
@@ -151,7 +151,7 @@
       - 灵活就业条件下，可自由分配m′
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
     - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=tₘᵢₙ}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda_w^{t-j}} {  \left(1 - \lambda_w^{t-tₘᵢₙ+1}\right)/ \left(1 - \lambda_w\right)  } \middle| {\color{magenta}s_t}\right],\quad \lambda_w \in (0, 1)\)
-    - 负债毒性/天：\({\color{red}{P_l}}_t = \frac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t}\)，负债是被抵押的自由时间
+    - 负债毒性/天：\({\color{red}{P_l}}_t = \frac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t}\)，负债是被抵押的自由时间，文明制度下的贫困
     - 负债毒性对(H, M)作用权重/天⁻¹：[ωₕ, ωₘ]≈[5e-7, 2e-6]
     - \(\color{red}{ΔWᵥ}\)：财务脉冲，如电信诈骗、彩票中奖、高端消费、重疾医疗
     - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge tₘᵢₙ\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
@@ -486,7 +486,7 @@
   马克思指出，非间歇性劳动是对工人生命力的掠夺，导致工人早衰、职业病高发、死亡率上升，并影响育儿。**资本是死劳动，它像吸血鬼一样，只有吮吸活劳动才有生命，吮吸的活劳动越多，它的生命就越旺盛**。
   它吸干你，扔掉干尸，再找活体。
   头部企业平均司龄为2~3年，呈双向抛弃博弈：老板用完即弃，员工及时跑路，使间歇性奋斗常态化。
-  劳动经济学研究证实：过劳区间内，工时越短，效率越高；间歇务工优于高压全职。[Jensen不等式](http://www.lemma.cn/py/?module=Calculus.Ge.of.Gt_0.Eq.Jensen)可证，假设总工时相等，轻量低强度工作的总健康损耗小于集中高强度工作：\[\begin{aligned}
+  劳动经济学佐证：过劳区间内，工时越短，效率越高；间歇务工优于高压全职。[Jensen不等式](http://www.lemma.cn/py/?module=Calculus.Ge.of.Gt_0.Eq.Jensen)可证，假设总工时相等，轻量低强度工作的总健康损耗小于集中高强度工作：\[\begin{aligned}
   &\textbf{公设：}\ T\text{ 个日历日，日工时 }L_t\ge 0\text{（不必相同）},\ H_o(0)=0,\ H_o''(L)>0.\\
   &\text{总健康损耗 }\mathcal{H}=\sum_{t=1}^{T}H_o(L_t),\quad \bar{L}=\tfrac{1}{T}\sum_{t=1}^{T}L_t.\\
   &\textbf{Jensen不等式：}\ \text{令 }w_t=\tfrac{1}{T},\ \sum w_t=1,\ \text{由 }H_o''>0\text{ 得}\\
