@@ -23,11 +23,11 @@
 <p>
 	按照箭头方向所指单击即可进入<a
 		href='../axiom.php?module=Discrete.combinatorics.binomial.theorem'>牛顿二项式定理</a>的论证过程，
-	用户也可以直接访问get api: <a href='../axiom.php?keyword=binomial'>www.lemma.cn/sympy/axiom.php?keyword=binomial</a>
+	用户也可以直接访问get api: <a href='../axiom.php?q=binomial'>www.lemma.cn/py/search.php?q=binomial</a>
 	来获取搜索结果。 图形界面和get api同时也支持<a
 		href='http://www.regular-expressions.info/tutorial.html'>正则表达式</a>以及全字(whole
 	word)匹配，比如： <a
-		href='../axiom.php?keyword=Discrete.*binomial&regularExpression=true'>www.lemma.cn/sympy/axiom.php?keyword=Discrete.*binomial&amp;regularExpression=true</a>
+		href='../axiom.php?q=Discrete.*binomial&regularExpression=true'>www.lemma.cn/py/search.php?q=Discrete.*binomial&amp;regularExpression=true</a>
 	表示搜索在同时包含discrete和binomial单词的定理。
 </p>
 <hr />

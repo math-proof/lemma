@@ -28,12 +28,12 @@
 	proof process of <a
 		href='../axiom/Discrete/combinatorics/binomial/theorem.php'>binomial
 		theorem</a>, we can also directly visit the get api: <a
-		href='../axiom/search.php?keyword=binomial'>www.lemma.cn/sympy/axiom.php?keyword=binomial</a>
+		href='../axiom/search.php?q=binomial'>www.lemma.cn/py?q=binomial</a>
 	to acquire the search results. Both the graphical user interface and
 	get api support<a
 		href='http://www.regular-expressions.info/tutorial.html'>regular
 		expression</a>, and whole word matching, e.g., <a
-		href='../axiom/search.php?keyword=Discrete.*binomial&regularExpression=true'>www.lemma.cn/sympy/axiom.php?keyword=Discrete.*binomial&amp;regularExpression=true</a>
+		href='../axiom/search.php?q=Discrete.*binomial&regularExpression=true'>www.lemma.cn/py/axiom.php?q=Discrete.*binomial&amp;regularExpression=true</a>
 	which indicates searching theorems that include both 'Discrete' and
 	'binomial'.
 </p>

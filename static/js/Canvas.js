@@ -175,7 +175,7 @@ class Canvas {
 
 	get delta(){
 		if (this._delta == null){
-			//http://localhost/sympy/axiom.php?module=algebra.eq_add_sqrt.imply.eq.radical_conjugate
+			//http://www.lemma.cn/py/?module=Algebra.Eq.of.Eq_Add_Sqrt.radical_Conjugate
 			this._delta = this.distance * (1 / this.curvature - this.curvature) / 4;
 		}
 		return this._delta;
