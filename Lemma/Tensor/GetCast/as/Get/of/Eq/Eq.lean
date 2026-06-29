@@ -3,7 +3,7 @@ import sympy.tensor.Basic
 
 
 @[main, fin, cast.fin]
-private lemma val
+private lemma left
 -- given
   (h_s : s = s')
   (h_m : m = m')

@@ -3,7 +3,7 @@ import sympy.Basic
 
 
 @[main, fin, cast, cast.fin]
-private lemma val
+private lemma left
 -- given
   (h_n : n = n')
   (h_m : m = m')
