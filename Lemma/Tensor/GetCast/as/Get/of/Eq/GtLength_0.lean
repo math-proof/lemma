@@ -19,8 +19,7 @@ private lemma main
   have := GtLength.of.GtLength_0 (h₁ ▸ h₀) (cast h X) ⟨i, by grind⟩
   (cast h X)[i] ≃ X[i] := by
 -- proof
-  subst h₁
-  rfl
+  aesop
 
 
 @[main, fin, cast, cast.fin]
@@ -37,8 +36,7 @@ private lemma right
   have := GtLength.of.GtLength_0 (h₁ ▸ h₀) X ⟨i, by grind⟩
   X'[i] ≃ X[i] := by
 -- proof
-  subst h₁
-  rfl
+  aesop
 
 
 -- created on 2025-07-04
