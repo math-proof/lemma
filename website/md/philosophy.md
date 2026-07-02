@@ -20,8 +20,9 @@
 
 ## 心智理论
 将人际关系网络建模为事件驱动型有向图，共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是注意力指针权重，表征认知资源的动态分配。人称代词i=0是我，j>0是你，t是离散时刻，未激活为0
+### 信念奖励
 - 一阶信念  
-  \({\color{red}{Ω}}^{[i]}_t\)，本自具足的精神效用
+  \({\color{red}{Ω}}^{[i]}_t\)，本自具足的精神负熵。《生命是什么》：人活着就是在对抗熵增定律，生命以负熵为生。所谓体验(安详、顿悟、回忆)，是熵的有序舞蹈，还是Boltzmann大脑的意识觉醒？
 - 二阶信念  
   \({\color{red}{Ω}}^{[i,j]}_t={\color{red}Ι}_{t,i,j}\mathbb E\left[{\color{red}{Ω}}^{[j]}_t\middle|{\color{magenta}{Ω}}^{[i]}_t\right]\)
   - 互惠、同情、恻隐或敌意(Ιₜᵢⱼ<0)
@@ -56,6 +57,13 @@
 - n阶信念
   \({\color{red}{Ω}}^{i_{:n}}_t={\color{red}Ι}_{t,i_0,i_1}\mathbb E\left[{\color{red}{Ω}}^{i_{1:n}}_t\middle|{\color{magenta}{Ω}}^{[i_{:n-1}]}_t \right]\)  
   米勒定律(7±2法则)限制了工作记忆栈，故信念寻址递归超过7层易栈溢出，是人的认知极限
+### 信念分类
+|  类别 |条件式| 语义          | 注释          |
+| ----- |----|    ----------  |     ----------  |
+|互惠|Ιₜᵢⱼ>0∧Ιₜⱼᵢ>0|共生：互利共赢|用自己的快乐换别人的快乐|
+|垂钓|Ιₜᵢⱼ>0∧Ιₜⱼᵢ<0|诱猎：饵甜钩毒|用别人的痛苦换自己的快乐|
+|敌对|Ιₜᵢⱼ<0∧Ιₜⱼᵢ<0|互噬：相互残害|用自己的痛苦换别人的痛苦|
+
 
 ## 自由的辩证演进
 ### 正题：积极自由(新自由主义)
@@ -101,8 +109,8 @@
 \sum_{j=0}^{t_{oo} - t - 1} P\left({\color{red}T} \ge j + t + 1 \middle| {\color{red}H}_t \right) = 
 \sum_{j=0}^{t_{oo} - t - 1} \mathbb E\left[ \prod_{j=0}^{j}(1-{\color{red}q}_{t+j}) \middle| {\color{red}H}_t \right]\]
       - \(\color{red}ΔHᵥ\)：健康损伤脉冲，如车祸，伤残，重疾
-      - 健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t\omega_h - Hₒ({\color{red}L}_t) - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
-    - \(\color{red}M\)：精神效用指数，表情可观测，心情不可测，\(M_{t_{min}} = 100\)
+      - 健康指数差分：\(\Delta {\color{red}H}_t = {\color{red}H}_{t+1} - {\color{red}H}_t = ΔHₑ{\color{red}\theta}_t - ΔHₐ - {\color{red}{P_l}}_t κₕ - Hₒ({\color{red}L}_t) - {\color{red}{ΔHᵥ}}_t - {\color{red}{ΔHₗ}}_t - {\color{red}{ΔHᵪ}}_t,\quad t \ge tₘᵢₙ\)
+    - \(\color{red}M\)：精神负熵，表情可观测，心情不可测，\(M_{t_{min}} = 100\)
       - 精神衰老损耗/天：ΔMₐ ≈ 0.0026
       - 信念奖励脉冲：\({\color{red}{Ξ_m}}_t = {\color{red}{Ω}}^{[0]}_t + \sum_{j=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j]}_t + \sum_{k=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k]}_t+\sum_{l=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l]}_t+\sum_{m=1}^{\mathfrak{N}-1}\left({\color{red}{Ω}}^{[0,j,k,l,m]}_t+\sum_{n=1}^{\mathfrak{N}-1}{\color{red}{Ω}}^{[0,j,k,l,m,n]}_t\right)\right)\right)\right)\)，人逢喜事精神爽，闷上心头瞌睡多，如情人变心、仇人被杀，还有爱别离、怨憎会、求不得，甚至死亡时以极乐世界为标的的往生居住权(\({\color{red}r}_{t_{max}}\)：涅槃值)
         - 半衰期/日：\({\color{red}{\tau_m}} = \gamma_m\ln(1+{\color{red}{Ξ_m}}^2)\left(\tfrac12+\sigma(-\nu_m{\color{red}{Ξ_m}})\right)\)
@@ -111,12 +119,12 @@
         - 亲身体验的必然痛苦：\({\Xi_m}_t < 0\)，半衰期长，依据恢复动力学：创伤固着(反刍思维)；行为经济学前景理论：损失厌恶\({\lambda_m}_t = \frac{M_t + |{\Xi_m}_t|}{M_t - |{\Xi_m}_t|}\) ≈ 2.25，避害优先于趋利([KTO](https://arxiv.org/abs/2402.01306)算法)；
         - 累计信念奖励：\({\color{red}E}_{t} = \sum_{j=tₘᵢₙ}^{t} {e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
         - 累计信念奖励差分：\(\Delta {\color{red}E}_{t} = {\color{red}{\Xi_m}}_{t + 1} - \sum_{j=tₘᵢₙ}^{t} (1 - e ^ {-{{\color{red}{\delta_m}}_j}}){e ^ {-{{\color{red}{\delta_m}}_j(t-j)}}} {\color{red}{\Xi_m}}_j\)
-      - 精神效用指数差分：\(\Delta {\color{red}M}_t = {\color{red}M}_{t+1} - {\color{red}M}_t = ΔMₑ{\color{red}\varepsilon}_t + ΔMᵣ \times {\color{red}{\Theta}}_t + \Delta {\color{red}E}_t - ΔMₐ - {\color{red}{P_l}}_t\omega_m - Mₒ({\color{red}L}_t),\quad t \ge tₘᵢₙ\)
+      - 精神负熵差分：\(\Delta {\color{red}M}_t = {\color{red}M}_{t+1} - {\color{red}M}_t = ΔMₑ{\color{red}\varepsilon}_t + ΔMᵣ \times {\color{red}{\Theta}}_t + \Delta {\color{red}E}_t - ΔMₐ - {\color{red}{P_l}}_t κₘ - Mₒ({\color{red}L}_t),\quad t \ge tₘᵢₙ\)
     - 时间禀赋(24h)：
       - 自由时间\(\color{red}f\)/h：参与类本质实践的时间
-        - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_t]≈4\)，产生文化资本增益ΔKₑ/h，精神效用增益ΔMₑ/h
+        - 自由学习\(\color{red}ε\)：\(\mathbb E[{\color{red}ε}_t]≈4\)，产生文化资本增益ΔKₑ/h，精神熵减ΔMₑ/h
         - 体育健身\(\color{red}θ\)：\(\mathbb E[{\color{red}θ}_t]≈0.5\)，享受运动艺术；附带健康增益ΔHₑ/h，且ΔHₑ < ΔHₐ / 24
-        - 情感投资\(\color{red}Θ\)：\({\color{red}Θ}_t \in R^{\mathfrak {D}}\)，货币？￥，产生人脉资产增量ΔPᵣ/h，精神效用增益ΔMᵣ/h
+        - 情感投资\(\color{red}Θ\)：\({\color{red}Θ}_t \in R^{\mathfrak {D}}\)，货币？￥，产生人脉资产增量ΔPᵣ/h，精神熵减ΔMᵣ/h
         - 发呆娱乐\(\color{red}ζ\)：\(\mathbb E[{\color{red}ζ}_t]≈1\)，创造灵感
       - 必要生理时间\(\color{red}ξ\)/h：
         - 睡眠\(\color{red}χ\)：\(\mathbb{E}({\color{red}χ}_t) = 7 + 2 · e^{-0.04·(A_t-18)}\)；由睡眠医学，睡眠时长与全因死亡率呈非对称性U型曲线，故睡眠失调造成的健康损耗可建模为：\({\color{red}{ΔHᵪ}}_t=\alpha_\chi\left({\color{red}\chi}_t-\mathbb E[{\color{red}\chi}_t]\right)^2 \left(\frac 1 2 + \sigma\big(-\gamma_\chi({\color{red}\chi}_t-\mathbb E[{\color{red}\chi}_t])\big)\right)\)；睡梦中的快乐不是自由，梦里不知身是客，是缸中之脑
@@ -139,11 +147,11 @@
     - 利息：\([{\color{red}{I^+}}, {\color{red}{I^-}}] = [{\color{red}{W^+}}α⁺, {\color{red}{W^-}}α⁻]
 \)
     - \(\color{red}c\)/￥：当天本金还款额
-    - \(\color{red}v\)/￥：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}{\pi_s}}_{:t}] = v_{tₘᵢₙ}\prod_{j=tₘᵢₙ}^{t-1} (1+{\color{red}{\pi_s}}_j) \left(1 + \gamma_H (H_{tₘᵢₙ} - {\color{red}H}_t)\right) \left(1 + \gamma_M\mathrm{relu}(M_{tₘᵢₙ} - {\color{red}M}_t)\right)\)，量化分解每月示例：
-      - 生理要素：米饭60、蔬菜200、租房500、医保100、水电60、衣服40
-      - 家庭要素：赡养500，育儿？
-      - 教育要素：学习300
-      - 社会要素：通信40、社交？、公益性开源技术服务？
+    - \(\color{red}v\)/￥：劳动力价值(货币表现)，维持生存所需的生活资料价值，满足：\(\mathbb{E}[{\color{red}v}_t \mid {\color{magenta}H}_t, {\color{magenta}M}_t, {\color{magenta}{\pi_s}}_{:t}] = v_{tₘᵢₙ}\prod_{j=tₘᵢₙ}^{t-1} (1+{\color{red}{\pi_s}}_j) \left(1 + \gamma_H (H_{tₘᵢₙ} - {\color{red}H}_t)\right) \left(1 + \gamma_M\mathrm{relu}(M_{tₘᵢₙ} - {\color{red}M}_t)\right)\)，按要素量化分解每月示例：
+      - 生理：米饭60、蔬菜200、租房500、医保100、水电60、衣服40
+      - 家庭：赡养500，育儿？
+      - 教育：学习300
+      - 社会：通信40、社交？、公益性开源技术服务？
     - 日产值(血酬)：\({\color{red}w} = {\color{red}{Lₚ}}{\color{red}{L}}\)，活劳动创造的新价值(个人部分)
     - 个别剩余价值：\({\color{red}m} = {\color{red}w} - {\color{red}v}\)，《资本论》：活劳动创造的新价值 = 劳动力价值 + 剩余价值。这是超必要劳动盈余，属于剩余价值的范畴
     - 个别剩余价值率：\(\frac {\color{red}m} {\color{red}v} = \frac {{\color{red}w} - {\color{red}v}} {\color{red}v} = \frac {{\color{red}{L_p}}{\color{red}L} - {\color{red}{L_p}}{\color{red}n}} {{\color{red}{L_p}}{\color{red}n}} = \frac {{\color{red}L} - {\color{red}n}} {\color{red}n} = \frac {\color{red}ς} {\color{red}n} ={\color{red}{m′}}\)
@@ -152,7 +160,7 @@
     - 日收入：\({\color{red}{w^+}} = {\color{red}w} + {\color{red}{I^+}}\)
     - 日均净盈余(还款能力)：\({\color{red}\phi}_t = \mathbb{E}\left[ \frac {\sum_{j=tₘᵢₙ}^{t} \left({\color{red}{w^+}}_j - {\color{red}v}_j-{\color{red}{I^-}}_j\right) \lambda_w^{t-j}} {  \left(1 - \lambda_w^{t-tₘᵢₙ+1}\right)/ \left(1 - \lambda_w\right)  } \middle| {\color{magenta}s_t}\right],\quad \lambda_w \in (0, 1)\)
     - 负债毒性/天：\({\color{red}{P_l}}_t = \frac{{\color{red}{W^-}}_t}{{\color{red}\phi}_t}\)，负债是被抵押的自由时间，文明制度下的贫困
-    - 负债毒性对(H, M)作用权重/天⁻¹：[ωₕ, ωₘ]≈[5e-7, 2e-6]
+    - 负债毒性对(H, M)作用权重/天⁻¹：[κₕ, κₘ]≈[5e-7, 2e-6]
     - \(\color{red}{ΔWᵥ}\)：财务脉冲，如电信诈骗、彩票中奖、高端消费、重疾医疗
     - 经济资本差分：\(\Delta {\color{red}W}_t = {\color{red}W}_{t+1} - {\color{red}W}_t = {\color{red}{w^+}}_t + {\color{red}{ΔWᵥ}}_t - {\color{red}v}_t - {\color{red}c}_t - {\color{red}{I^-}}_t,\quad t \ge tₘᵢₙ\)，当\({\color{red}W}_{t+1}<0\)时，信用卡自动透支贴现续命
     - \(\color{red}{tₘₐₓ}\)：有效生命终点，t≤tₘₐₓ≤tₒₒ，直接原因
@@ -161,13 +169,13 @@
       - 绝望，由\(\max_{{\color{red}{a}}_t} Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t) < {\color{red}r}_{t_{max}}\)触发，唯一真正严肃的哲学命题是自杀(舍生取义)：不自由，毋宁死？
   - 社会资本，是指人际、组织、政治等关系价值，在主体遭遇风险时转化为实际支持的能力：
     - 人脉资产\(\color{red}P\)：亲情、爱情、友情、人情、仇人等关系价值，共计\(\mathfrak {D} \le 150\)人
-      - 折当价\(\color{red}{W_p}\)/￥：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \omega_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，《乡土中国》差序格局：人脉像水波纹，以己为心、亲疏有别、随势伸缩。我帮了某人(当品：情谊)，我在他心(情谊当铺)中的情谊当票不可观测(他心难题)，只能猜测：我落难赎当时那张当票的折当价是多少？情谊典当记名不记账，若绝当，我(当户)就算上**当**？
+      - 折当价\(\color{red}{W_p}\)/￥：\(\mathbb{E}\left[{\color{red}{W_p}}_t \middle|{\color{magenta}s}_t \right] = \kappa_p{\color{red}P}_t \times \sigma\left(\eta_W {\color{red}{W}}_t + \eta_H {\color{red}{H}}_t+ \eta_L {\color{red}{L_p}}_t- \eta_v {\color{red}{v}}_t\right),\qquad \eta_W,\eta_H, \eta_L, \eta_v\in \mathbb R^{\mathfrak {D}}\)，《乡土中国》差序格局：人脉像水波纹，以己为心、亲疏有别、随势伸缩。我帮了某人(当品：情谊)，我在他心(情谊当铺)中的情谊当票不可观测(他心难题)，只能猜测：我落难赎当时那张当票的折当价是多少？情谊典当记名不记账，若绝当，我(当户)就算上**当**？
       - 半衰期/年：\(\beta_p \in R^{\mathfrak {D}}\)，一般亲情>爱情>友情>人情，依据社会学：强弱关系理论，演化生物学：亲缘选择理论
       - 人脉日折当率：\(δᵣ = \frac{\ln 2}{\beta_p Y_s}\)，无形资产折当依据：心理学：艾宾浩斯遗忘曲线，社会交换理论：互惠义务时效性
       - \(\color{red}P\)存量差分：\(\Delta{\color{red}P}_t = {\color{red}P}_{t + 1} - {\color{red}P}_t = ΔPᵣ{\color{red}Θ}_t - {\color{red}P}_t\left(1 - e^{-δᵣ}\right)\)
     - 普惠福利\(\color{red}S\)：凭法律资格获得医保、低保等
       - 部分可测：年龄、户籍、参保档位、收入口径
-      - 雪中送炭式援助\(\color{red}{W_s}\)/￥：\(\mathbb{E}\left[{\color{red}{W_s}}_t\middle|{\color{magenta}s}_t\right]=\omega_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
+      - 雪中送炭式援助\(\color{red}{W_s}\)/￥：\(\mathbb{E}\left[{\color{red}{W_s}}_t\middle|{\color{magenta}s}_t\right]=\kappa_s{\color{red}S}_t\sigma\left(\zeta_{s}+\zeta_{v}{{\color{red}v}_t}+\zeta_{A}{A_t}-\zeta_{H}{{\color{red}H}_t}-\zeta_{M}{{\color{red}M}_t}-\zeta_{K}{{\color{red}K}_t}-\zeta_{W}{{\color{red}W}_t}-\zeta_{L}{{\color{red}{L_p}}_t}\right)\)
 - 行为策略公设2
   - 观测：\({\color{red}{o}}_t\in\mathbb R^N\)，表示第t天日初观测到的多模态带噪存量特征：体检、表情、学历、存款、社交轨迹等，是客观状态的直接或代理观测值，是管中窥豹，非庐山真面目
   - 动作：\({\color{red}a} = [{\color{red}ε}, {\color{red}θ}, {\color{red}Θ}, {\color{red}ζ}, {\color{red}χ}, {\color{red}τ}, {\color{red}n}, {\color{red}ς}]\)，时间禀赋分配
@@ -197,7 +205,8 @@
       - 佛系：m′≪1，作候鸟工不当社畜(如：技能零售)，赚到生存资料、风险兜底的钱见好就收，不为过多个别剩余价值买单，不花冤枉时间，健康优先
       - 内卷：m′≫1，用自由换个别剩余价值，通过通胀稀释、理财圈套、广告洗脑、房价倒挂，在流通机制下回收至资本家的剩余价值
 - 生命目标公设3
-  - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}M}}\right) < {\color{red}f}\)，信念估计值：\({\color{red}{\hat{r}}} = {\color{red}f} \cdot \mathrm{relu}\left(1-e^{-{\color{red}{\hat{M}}}}\right)\)，其负指数函数形式与经济学恒定绝对风险厌恶(CARA)的边际效用递减同构
+  - 精神效用：\({\color{red}\omega} = \mathrm{relu}\left(1-e^{-{\color{red}M}}\right)\)，信念估计值：\({\color{red}{\hat{\omega}}} = \mathrm{relu}\left(1-e^{-{\color{red}{\hat{M}}}}\right)\)，其负指数函数形式与经济学恒定绝对风险厌恶(CARA)的边际效用递减同构
+  - 即时奖励：有效自由时间，即自由时间的精神效用加权，\({\color{red}{r}} = {\color{red}f} {\color{red}\omega} < {\color{red}f}\)，信念估计值：\({\color{red}{\hat{r}}} = {\color{red}f} {\color{red}{\hat{\omega}}}\)
   - Markov历史无关假设：\({\color{red}{r}}_t \perp ({\color{red}{s}}_{:t},{\color{red}a}_{:t})\mid ({\color{red}{s}}_t,{\color{red}a}_t)\)​，当天动作已写入历史存量\({\color{red}{s}}_t\)，充分编码，故假设成立
   - 状态价值函数：\(V_\pi({\color{red}{s}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t\right]\)，把握当下，眺望未来，预估人生终局收益，如：悟已往之不谏，知来者之可追
   - 动作价值函数：\(Q_\pi({\color{red}{s}}_t,{\color{red}{a}}_t)=\mathbb E_{\substack{{\color{red}{r}}_{t:}\\{\color{red}a} \sim \pi}}\left[\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\middle| {\color{magenta}{s}}_t,{\color{magenta}{a}}_t\right]\)，给出「多歧路，今安在」的行动指南：未战庙算，深谋远虑，斟酌损益，当机立断
@@ -205,8 +214,8 @@
     - \(V_\pi(s_t) = \mathbb{E}_{{\color{red}{a}}_t \sim \pi} \left[ Q_\pi(s_t, {\color{red}{a}}_t) \middle| {\color{red}{s}}_t \right] =\mathbb{E}_{\substack{{\color{red}{r}}_t \\ {\color{red}{s}}_{t+1} \\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t \right]\)
     - \(Q_\pi(s_t, a_t) = \mathbb{E}_{ \substack{{\color{red}{r}}_t\\ {\color{red}{s}}_{t+1}\\ {\color{red}{a}} \sim \pi}} \left[ {\color{red}{r}}_t + V_\pi({\color{red}{s}}_{t+1}) \middle|{\color{red}{s}}_t,{\color{red}{a}}_t \right]\)
   - [策略梯度定理](http://www.lemma.cn/py/?module=Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.IsFinite.policy_gradient_theorem)(停时吸收态约定)：\(\nabla_\pi \mathbb{E}_{\substack{{\color{red}{r}} \\ {\color{red}{a}}\sim\pi}} \sum_{t=tₘᵢₙ}^{tₘₐₓ} {\color{red}{r}}_{t} = \mathbb{E}_{\substack{ {\color{red}{r}}\\ {\color{red}{a}}\sim\pi\\ {\color{red}{s}}}} \left[\sum_{t=tₘᵢₙ}^{tₘₐₓ} \nabla_\pi \log \mathbb{P}_\pi({\color{magenta}{a}}_t|{\color{magenta}{s}}_t)\sum_{t=t}^{tₘₐₓ} {\color{red}{r}}_t\right]\)
-  - 后验终生福祉(上帝视角)：\(\sum_{t=tₘᵢₙ}^{tₘₐₓ}{r_t}\)，若离散时刻t连续化，即精神效用在自由时间上的积分：\(\int_{t \in F} \mathrm{relu}\left(1-e^{-M_t}\right) dt\)
-  - 先验终身福祉：\(V_\pi({\color{red}{s}}_t)\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{tₘₐₓ} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，《时间分配理论》：时间经济学是将时间视为稀缺且不可再生的核心资源，并研究如何对其进行优化配置，以实现跨期效用最大化
+  - 后验终生福祉(上帝视角)：\(\sum_{t=tₘᵢₙ}^{tₘₐₓ}{r_t}\)，若离散时刻t连续化，即精神效用在自由时间上的积分：\(\int_{t \in F} \omega_t dt\)
+  - 先验终身福祉：\(V_\pi({\color{red}{s}}_t)\)，信念估计值：\(V_\hat\pi({\color{red}{\hat{s}}}_t)=\mathbb E_{\substack{{\color{red}{\hat{r}}}_{t:}\\{\color{red}a} \sim \hat\pi}}\left[\sum_{j=t}^{tₘₐₓ} {\color{red}{\hat{r}}}_j\middle| {\color{red}{\hat{s}}}_t\right]\)，《时间分配理论》：时间经济学是将时间视为唯一不可再生的稀缺生产资料，并研究如何对其进行优化配置，以实现跨期效用最大化
   - 目标函数：先验终身福祉(信念估计值)最大化(\(t \ge tₘᵢₙ\))
 
 由各变量偏导，\(V_\pi({\color{red}{s}}_t)\)最大化的决定因素包括：寿命T、劳动生产率Lₚ、内卷系数m′、劳动力价值v、破产触发条件。
@@ -227,10 +236,10 @@
 - 体制内的明哲保身：
   - 躺赢曹魏的司马懿：
     - 拒绝无效内卷：知可以战与不可以战
-    - 五阶信念博弈：识破孔明妇衣辱阵
+    - 五阶信念战术：笑纳孔明辱阵妇衣
     - 健康大于一切：**打不过你，我熬死你**
 - 体制外的犬儒圣体：  
-  - 曳尾涂中的庄子：宁当处江湖之远的活王八，不做居庙堂之高的死神龟。庄周贷粟却不为千金相折腰，以其精神效用增益ΔMₑ，后验终生福祉反而更高
+  - 曳尾涂中的庄子：宁当处江湖之远的活王八，不做居庙堂之高的死神龟。庄周贷粟却不为千金相折腰，以其精神熵减ΔMₑ，后验终生福祉反而更高
   - 木桶乞食的Diogenes：当Alexander大帝，世人眼里行走的Aladdin神灯，告诉这个**宇宙公民**：你想要什么，我都能满足。他回答：滚开，别挡我的太阳。
 
 犬，狗也；儒，智也。古典犬儒者被视为一条玩世不恭、吠世嫉俗的疯狗，一条生而为狗、不配为人的野狗，一条不当走狗、不屑合群的孤狗，一条在脑残家狗前标榜独善其身的**智狗**。而古典犬儒核心是**物物而不物于物**：以心有足乐者，不知口体之奉不若人，恰是古典版的《简单致富》：
@@ -267,7 +276,7 @@
 
 ## 资产是可兑换财富的筹码
 ### 认清真资产
-健康(一阶信念：我痛故我在)、头脑(一阶信念：我思故我在)、技能(三阶信念：我相信他人认可我的技能的使用价值)，是最不易被掠夺的资产，除非遭遇人身侵害：谋杀、绑架、监禁。古人云：家有万贯，不如一技在身；手艺是活宝，走遍天下饿不倒。活劳动是价值的唯一来源。资本告诉你：存款、文凭、人脉、汽车、黄金、房产、金融是资产。劳动价值论说，身外之物都是伪/次生资产，只是贸易的中间媒介。真资产就藏在你自己身上：一条命(身心) + 一门手艺。财富也藏在你自己身上：自由时间。关键是你怎么祛魅人类文明的面纱，用你的真资产来兑换属于你的财富。由资本论：
+健康(一阶信念：我痛故我在)、头脑(一阶信念：我思故我在)、技能(三阶信念：我相信他人认可我的技能的使用价值)，是最不易被掠夺的资产，除非遭遇人身侵害：谋杀、绑架、监禁。古人云：家有万贯，不如一技在身；手艺是活宝，走遍天下饿不倒。劳动价值论：活劳动是价值的唯一来源。资本告诉你：存款、文凭、人脉、汽车、黄金、房产、金融是资产。而此类伪/次生资产是贸易中间媒介、生命时间化石、异化生产资料，即支配人的生产要素。真资产藏在你自己身上：一条命(身心) + 一门手艺。财富也藏在你自己身上：自由时间。关键是你怎么祛魅人类文明的面纱，用你的真资产来兑换属于你的财富。由资本论：
 - 缩短必要劳动时间的唯一根本动力，是提高劳动生产率
 - 决定劳动生产率的个人可控因素：工人的熟练程度(技能)、科技在工艺上的应用程度(头脑)，以健康为前提
 
@@ -279,6 +288,10 @@
 《时间本体论》：时间是存在的绝对参照系。
 马克思也说：**一切经济最终都归结为时间经济**。
 社会科学是研究自由时间掠夺与反掠夺的学问。
+伪/次生资产的辩证认知：
+- 正题：它是身外之物
+- 反题：它不是物，钞票、文凭、房产、股票、期权、保单都是一张(A4)纸或一串代码
+- 合题：它是生产关系(生产资料所有制)，即人际信念博弈
 以下以自由时间兑现效率为标尺来分析各类资产的交换价值：
 - 存款  
   它是低风险次生资产，其三阶信念：我相信人们认可我手上的货币具有交换价值。
@@ -293,7 +306,7 @@
   异化劳动是自由时间的跨期买卖，赚钱是卖命买命！
   很多人卖亏本了：当下把发呆时间全卖光了，最后还被房贷、车贷、消费贷捆着，到老都没买到发呆资格，等于白卖了一辈子。
 - 文凭  
-  它是一张纸，不能饱腹御寒，是次生资产，不能直接兑现自由时间。
+  它是一张B5纸，不能饱腹御寒，是次生资产，不能直接兑现自由时间。
   其有用性是你的四阶信念：你知道[雇主会核验[教育部是否认可[你的文凭]]]。
   通过雇主的核验，才能参与劳动力交易。
   它是制度背书的求职许可证，价值依附公权力机构的法定确权。
@@ -383,9 +396,9 @@
 #### 针尖对麦芒的三角博弈
 - 子：我要接管母亲医疗事务并公开账目，为何要竭力反对？
 - 父：我管理母亲医务报销是为你好，你别操这个心。
-- 子：你把超额经济压力强加给我，逼我透支生命，加班加点，抑郁焦虑，长期负债高压，吸干我的血变干尸，叫为我好？
-- 父：抑郁是你心理素质差，能怪谁？别拿死来吓唬我，见多不怪！你死了家产就没了！你要是觉得压力大，钱可以少给点。
-- 子：医院是你开的吗？少开一点你说了算吗？我实际支付的赡养费是我法定支付的\(\frac {1.25} {(1 - 0.3) / 2}≈3.6\)倍，这叫为子女好还是为自己好？17年来你这吸血鬼把妈当活体提款机，医疗报销款吸了多少钱？
+- 子：我实际支付的赡养费是法定支付的\(\frac {1.25} {(1 - 0.3) / 2}≈3.6\)倍，长期透支生命，加班加点，抑郁焦虑，高压负债，叫为我好？
+- 父：抑郁是你心理素质差，能怪谁？你要是觉得压力大，钱可以少给点。
+- 子：医院是你开的吗？少开一点你说了算吗？17年来你把妈当活体提款机，医疗报销款吸了多少钱？
 - 父：我拿子女的钱天经地义，你孝敬父母的钱还要我吐出来吗？
 - 子：妈失能，出钱是义务，其报销款是她个人财产，非夫妻共同财产，监护人除为维护被监护人利益外，不得处分被监护人的财产。
 - 父：我跑前跑后办手续，上下打点，难道一点好处都没有？
@@ -531,7 +544,7 @@
 
 #### 自由王国
 **真正的自由王国，是作为目的本身的人的能力发展，只存在于必要劳动终止的彼岸**。
-财富自由的彼岸是自由王国：人的全面自由发展(精神效用最大化)，拔高后验终生福祉被积函数\(\mathrm{relu}\left(1-e^{-M_t}\right)\)值域，即*积分的高度*。
+财富自由的彼岸是自由王国：人的全面自由发展(精神效用最大化)，拔高后验终生福祉被积函数\(\omega_t\)值域，即*积分的高度*。
 **一个人怎么赚钱是他的本事，怎么花钱是他的境界**。
 你去哪里工作，是用脚投票；你选择什么人生道路，也是在投票。
 **个人的自由发展是一切人的自由发展的条件**。
