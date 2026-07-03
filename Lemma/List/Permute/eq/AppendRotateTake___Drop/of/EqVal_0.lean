@@ -1,7 +1,7 @@
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.Gt_0
-import Lemma.Nat.Eq_Fin
-open List Nat
+import Lemma.Fin.Eq_Fin
+open List Nat Fin
 
 
 @[main]

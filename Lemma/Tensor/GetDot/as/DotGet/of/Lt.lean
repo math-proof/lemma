@@ -1,3 +1,4 @@
+import Lemma.Tensor.GetBatchDot.eq.BatchDotGetS.of.Eq
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
@@ -187,15 +188,31 @@ private lemma one
               simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
             .
               apply SEqSelectS.of.SEq
-              -- have h_bz : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
-              --   simp
-              -- have h_nk : [(n :: s₀ :: (s ++ [k]))[(s ++ [k]).length + 1 + 1 - 2], n'] = [(s₀ :: (s ++ [k]))[s.length], n'] := by
-              --   simp
-              -- have h_s₀ : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
-              --   simp
-              -- have h_s₀' : ((s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 - 2) ++ [n', 1]) = (s₀ :: (s ++ [k])).take s.length ++ [n', 1] := by
-              --   simp
-              -- sorry
+              let sₙ := n :: s₀ :: (s ++ [k])
+              let bz := sₙ.take ((s ++ [k]).length + 1 + 1 - 2)
+              have : sₙ.length - 2 < sₙ.length := by simp [sₙ]
+              let s1 := bz ++ [sₙ[(s ++ [k]).length + 1 + 1 - 2], n']
+              let s2 := bz ++ [n', 1]
+              have h_bz : bz = n :: (s₀ :: (s ++ [k])).take s.length := by
+                simp [bz, sₙ]
+              have h_s₁ : sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2]] ++ [n' / sₙ[sₙ.length - 1] * sₙ[sₙ.length - 1] + n' % sₙ[sₙ.length - 1]] = (sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2], n']) := by
+                simp [sₙ]
+                simp [AppendTake_Length.eq.Cons_Append_List]
+                rw [Nat.EqAddMulDiv]
+              have : sₙ.length - 1 < (sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2], sₙ[sₙ.length - 1]]).length := by
+                simp [sₙ]
+                grind
+              have h_s₂ : ((sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2], sₙ[sₙ.length - 1]]).set (sₙ.length - 1) (n' / sₙ[sₙ.length - 1] * (sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2], sₙ[sₙ.length - 1]])[sₙ.length - 1])) =
+                sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2]] ++ [n' / sₙ[sₙ.length - 1] * sₙ[sₙ.length - 1]] := by
+                simp
+                sorry
+                -- grind
+              have := Tensor.GetBatchDot.eq.BatchDotGetS.of.Eq.fin
+                h_bz
+                (cast (congrArg (Tensor α) h_s₁) (cast (congrArg (Tensor α) h_s₂) ((cast ⋯ X).repeat (n' / (s₀ :: (s ++ [k]))[(s ++ [k]).length]) ⟨(s ++ [k]).length + 1, ⋯⟩) ++ 0))
+                (Y.broadcast (bz ++ [n', 1]) ⋯)
+                i
+              -- rw []
               simp [Tensor.batch_dot]
               apply SEq_Cast.of.SEq.Eq
               .
