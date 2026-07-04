@@ -4,12 +4,13 @@ import Lemma.List.TailTake.eq.TakeTail
 open List
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List ℕ}
-  {i d : ℕ}
+  {i : ℕ}
 -- given
-  (h : s.length > i + 1) :
+  (h : s.length > i + 1)
+  (d : ℕ) :
 -- imply
   (s.permute ⟨i + 1, by grind⟩ d).tail = s.tail.permute ⟨i, by grind⟩ d := by
 -- proof

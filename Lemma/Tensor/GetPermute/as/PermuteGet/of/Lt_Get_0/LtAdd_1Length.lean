@@ -48,14 +48,12 @@ private lemma main
   (X : Tensor α s)
   (d : ℕ) :
 -- imply
-  have h_Xk : k < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
-  (X.permute ⟨i + 1, by omega⟩ d).get ⟨k, by rwa [LengthPermute.eq.Get_0.of.GtVal_0 (by simp)]⟩ ≃ (X.get ⟨k, h_Xk⟩).permute ⟨i, by simp; omega⟩ d := by
+  (X.permute ⟨i + 1, by omega⟩ d).get ⟨k, by rwa [LengthPermute.eq.Get_0.of.GtVal_0 (by simp)]⟩ ≃ (X.get ⟨k, by rwa [Length.eq.Get_0.of.GtLength_0]⟩).permute ⟨i, by simp; omega⟩ d := by
 -- proof
-  intro h_Xk
   if h_d : d = 0 then
     subst h_d
     simp
-    have := SEqPermute__0 (X.get ⟨k, h_Xk⟩) ⟨i, by grind⟩
+    have := SEqPermute__0 (X.get ⟨k, by rwa [Length.eq.Get_0.of.GtLength_0]⟩) ⟨i, by grind⟩
     symm
     apply this.trans
     apply SEqGetS.of.SEq.GtLength

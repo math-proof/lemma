@@ -49,7 +49,7 @@ open Bool Fin List Nat Tensor Vector
 set_option maxHeartbeats 1000000
 
 
-@[main]
+@[main, cast]
 private lemma main
   {s : List ℕ}
   {i k d : ℕ}
@@ -59,15 +59,13 @@ private lemma main
   (h_d : i ≥ d)
   (X : Tensor α s) :
 -- imply
-  have h_Xk : k < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
-  (X.permute ⟨i + 1, h_i⟩ (-d)).get ⟨k, by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp; omega)]⟩ ≃ (X.get ⟨k, h_Xk⟩).permute ⟨i, by simp; omega⟩ (-d) := by
+  (X.permute ⟨i + 1, h_i⟩ (-d)).get ⟨k, by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp; omega)]⟩ ≃ (X.get ⟨k, by rwa [Length.eq.Get_0.of.GtLength_0]⟩).permute ⟨i, by simp; omega⟩ (-d) := by
 -- proof
-  intro h_Xk
   have h_toNat := ToNatSub_Neg.eq.Add_1 d
   if h_d0 : d = 0 then
     subst h_d0
     simp
-    have := SEqPermute__0 (X.get ⟨k, h_Xk⟩) ⟨i, by grind⟩
+    have := SEqPermute__0 (X.get ⟨k, by rwa [Length.eq.Get_0.of.GtLength_0]⟩) ⟨i, by grind⟩
     symm
     apply this.trans
     apply SEqGetS.of.SEq.GtLength
