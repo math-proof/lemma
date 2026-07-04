@@ -14,12 +14,11 @@ private lemma main
 -- imply
   (s.permute i d)[j]'(by simp; omega) = s[j] := by
 -- proof
-  by_cases h_d : i + d < s.length
-  .
+  if h_d : i + d < s.length then
     rw [GetPermute.eq.Ite.of.GtLength.GtLength h_d (by omega)]
     split_ifs
     repeat rfl
-  .
+  else
     simp at h_d
     have h_d : i + d ≥ s.length - 1 := by omega
     simp [EqPermuteS.of.Add.ge.SubLength_1 h_d]

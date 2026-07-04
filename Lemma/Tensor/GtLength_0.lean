@@ -12,8 +12,8 @@ private lemma main
 -- imply
   s.length > 0 := by
 -- proof
-  have h_length := Gt_0 i
-  apply GtLength_0.of.GtLength_0 h_length
+  apply GtLength_0.of.GtLength_0
+  apply Gt_0 i
 
 
 -- created on 2025-10-06

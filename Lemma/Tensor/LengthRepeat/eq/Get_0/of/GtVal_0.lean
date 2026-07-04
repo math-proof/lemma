@@ -1,8 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Nat.Gt_0
 import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
-open Tensor List Nat
+open Tensor List
 
 
 @[main]
@@ -21,8 +20,7 @@ private lemma main
     rw [GetSet.eq.Get.of.Ne.GtLength]
     linarith
   ·
-    apply Gt_0
-    trivial
+    grind
 
 
 -- created on 2025-07-05

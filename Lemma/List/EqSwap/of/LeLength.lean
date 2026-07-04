@@ -1,17 +1,16 @@
-import stdlib.List
 import Lemma.List.EqSwapS
 open List
 
 
 @[main]
 private lemma left
-  {a : List α}
+  {s : List α}
   {i : ℕ}
 -- given
-  (h : a.length ≤ i)
+  (h : s.length ≤ i)
   (j : ℕ) :
 -- imply
-  a.swap i j = a := by
+  s.swap i j = s := by
 -- proof
   unfold List.swap
   split_ifs with h_eq h_lt? h_j h_i
@@ -29,12 +28,12 @@ private lemma left
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length ≤ j)
+  (h : s.length ≤ j)
   (i : ℕ) :
 -- imply
-  a.swap i j = a := by
+  s.swap i j = s := by
 -- proof
   rw [EqSwapS]
   apply left h

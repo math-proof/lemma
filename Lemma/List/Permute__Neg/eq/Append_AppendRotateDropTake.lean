@@ -45,7 +45,7 @@ private lemma main
     ·
       simp [EqAddSub.of.Ge (Ge_1 i)]
     ·
-      apply Gt_0 i
+      grind
   ·
     unfold List.permute
     simp

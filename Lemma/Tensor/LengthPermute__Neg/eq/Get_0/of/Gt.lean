@@ -1,8 +1,7 @@
 import Lemma.List.GetPermute__Neg.eq.Get_0.of.Gt
-import Lemma.Nat.Gt_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.Basic
-open Nat Tensor List
+open Tensor List
 
 
 @[main]
@@ -13,14 +12,14 @@ private lemma main
   (h : i > d)
   (X : Tensor α s) :
 -- imply
-  (X.permute i (-d)).length = s[0]'(Gt_0 i) := by
+  (X.permute i (-d)).length = s[0]'(by grind) := by
 -- proof
   rw [Length.eq.Get_0.of.GtLength_0]
   ·
     apply GetPermute__Neg.eq.Get_0.of.Gt h
   ·
     simp
-    apply Gt_0 i
+    grind
 
 
 -- created on 2025-12-02

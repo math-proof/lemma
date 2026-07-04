@@ -1,5 +1,4 @@
 import Lemma.Nat.LtMod.of.Lt_Mul
-import Lemma.Nat.Gt_0
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet.GtLength
 open Tensor Nat
 
