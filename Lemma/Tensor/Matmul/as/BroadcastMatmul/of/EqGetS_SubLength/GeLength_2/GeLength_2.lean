@@ -1,6 +1,4 @@
-import Lemma.List.Drop.eq.ListGetS.of.GeLength_2
-import Lemma.List.EqAppendS.of.Eq
-import Lemma.List.EqAppendTake__Drop
+import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import sympy.tensor.tensor
 open List Bool
@@ -22,24 +20,8 @@ private lemma main
   let n := s[s.length - 1]
   let n' := s'[s'.length - 2]
   let k := s'[s'.length - 1]
-  let X' : Tensor α (batch_size ++ [m, n]) := cast
-    (by
-      congr
-      simp [batch_size, m, n]
-      conv_lhs => rw [← EqAppendTake__Drop s (s.length - 2)]
-      apply EqAppendS.of.Eq.left
-      apply Drop.eq.ListGetS.of.GeLength_2 h_s
-    )
-    X
-  let Y' : Tensor α (batch_size' ++ [n', k]) := cast
-    (by
-      congr
-      simp [batch_size', n', k]
-      conv_lhs => rw [← EqAppendTake__Drop s' (s'.length - 2)]
-      apply EqAppendS.of.Eq.left
-      apply Drop.eq.ListGetS.of.GeLength_2 h_s'
-    )
-    Y
+  let X' : Tensor α (batch_size ++ [m, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
+  let Y' : Tensor α (batch_size' ++ [n', k]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
   let Y' : Tensor α (batch_size' ++ [n, k]) := cast (by grind) Y'
   X.matmul Y ≃ Tensor.broadcast_matmul X' Y' := by
 -- proof

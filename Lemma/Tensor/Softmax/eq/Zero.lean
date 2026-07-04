@@ -3,7 +3,7 @@ import Lemma.Tensor.EqDiv_0'0
 import Lemma.Tensor.EqTensor0'0
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Vector.ArraySlice0.eq.Zero
-import Lemma.Vector.EqCast_0'0
+import Lemma.Vector.EqCast_0'0.of.Eq
 import Lemma.Vector.Flatten0.eq.Zero
 import Lemma.Vector.MapRange.eq.Zero
 import Lemma.Vector.Repeat0.eq.Zero
@@ -25,19 +25,19 @@ private lemma main
   simp
   unfold Tensor.unsqueeze
   simp [EqData0'0]
-  simp [EqCast_0'0]
+  simp [EqCast_0'0.of.Eq]
   simp [EqTensor0'0]
   unfold Tensor.repeat
   simp [EqData0'0]
   unfold List.Vector.splitAt
-  simp [EqCast_0'0]
+  simp [EqCast_0'0.of.Eq]
   unfold List.Vector.unflatten
   simp [ArraySlice0.eq.Zero]
-  simp [EqCast_0'0]
+  simp [EqCast_0'0.of.Eq]
   simp [Repeat0.eq.Zero]
   rw [MapRange.eq.Zero]
   rw [Flatten0.eq.Zero]
-  simp [EqCast_0'0]
+  simp [EqCast_0'0.of.Eq]
   simp [EqTensor0'0]
   apply @Tensor.EqDiv_0'0
 

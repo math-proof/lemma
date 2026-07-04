@@ -8,7 +8,7 @@ import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Int.LtToNatAdd_Mul_DivSub1Sign_2.of.In_IcoNeg
-import Lemma.List.Drop.eq.ListGetS.of.GeLength_2
+import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.ZipWith_Append.eq.AppendZipWithS
 import Lemma.List.ZipWith__Append.eq.AppendZipWithS
 import Lemma.List.DropLast.eq.Take_SubLength_1
@@ -217,15 +217,7 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
         let batch_size' := s'.take (s'.length - 2)
         let n' := s'[s'.length - 2]
         let k' := s'[s'.length - 1]
-        let Y : Tensor α (batch_size' ++ [n', k']) := cast
-          (by
-            congr
-            simp [batch_size', n', k']
-            conv_lhs => rw [← EqAppendTake__Drop s' (s'.length - 2)]
-            apply EqAppendS.of.Eq.left
-            apply Drop.eq.ListGetS.of.GeLength_2 h_s'
-          )
-          Y
+        let Y : Tensor α (batch_size' ++ [n', k']) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
         let ⟨X, Y⟩ : Tensor α [n ⊔ n'] × Tensor α (batch_size' ++ [n ⊔ n', k']) :=
           if h_n : n < n' then
             let q := n' / n
@@ -261,15 +253,7 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
       let batch_size := s.take (s.length - 2)
       let k := s[s.length - 2]
       let n := s[s.length - 1]
-      let X : Tensor α (batch_size ++ [k, n]) := cast
-        (by
-          congr
-          simp [batch_size, n, k]
-          conv_lhs => rw [← EqAppendTake__Drop s (s.length - 2)]
-          apply EqAppendS.of.Eq.left
-          apply Drop.eq.ListGetS.of.GeLength_2 h_s
-        )
-        X
+      let X : Tensor α (batch_size ++ [k, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
       let ⟨X, Y⟩ : Tensor α (batch_size ++ [k, n ⊔ n']) × Tensor α [n ⊔ n'] :=
         if h_n : n < n' then
           let q := n' / n
@@ -310,24 +294,8 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
     let n := s[s.length - 1]
     let n' := s'[s'.length - 2]
     let k := s'[s'.length - 1]
-    let X : Tensor α (batch_size ++ [m, n]) := cast
-      (by
-        congr
-        simp [batch_size, m, n]
-        conv_lhs => rw [← EqAppendTake__Drop s (s.length - 2)]
-        apply EqAppendS.of.Eq.left
-        apply Drop.eq.ListGetS.of.GeLength_2 h_s
-      )
-      X
-    let Y : Tensor α (batch_size' ++ [n', k]) := cast
-      (by
-        congr
-        simp [batch_size', n', k]
-        conv_lhs => rw [← EqAppendTake__Drop s' (s'.length - 2)]
-        apply EqAppendS.of.Eq.left
-        apply Drop.eq.ListGetS.of.GeLength_2 h_s'
-      )
-      Y
+    let X : Tensor α (batch_size ++ [m, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
+    let Y : Tensor α (batch_size' ++ [n', k]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
     let ⟨X, Y⟩ : Tensor α (batch_size ++ [m, n ⊔ n']) × Tensor α (batch_size' ++ [n ⊔ n', k]) :=
       if h_n : n < n' then
         let q := n' / n

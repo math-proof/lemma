@@ -1,4 +1,7 @@
-import Lemma.Tensor.GetBatchDot.eq.BatchDotGetS.of.Eq
+import Lemma.Tensor.EqCast_0'0.of.Eq
+import Lemma.List.Set.eq.AppendTake__List.of.GtLength_0
+import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
+import Lemma.Tensor.GetBatchDot.as.BatchDotGetS.of.Eq
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
@@ -188,42 +191,123 @@ private lemma one
               simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
             .
               apply SEqSelectS.of.SEq
-              let sₙ := n :: s₀ :: (s ++ [k])
-              let bz := sₙ.take ((s ++ [k]).length + 1 + 1 - 2)
-              have : sₙ.length - 2 < sₙ.length := by simp [sₙ]
-              let s1 := bz ++ [sₙ[(s ++ [k]).length + 1 + 1 - 2], n']
-              let s2 := bz ++ [n', 1]
-              have h_bz : bz = n :: (s₀ :: (s ++ [k])).take s.length := by
-                simp [bz, sₙ]
-              have h_s₁ : sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2]] ++ [n' / sₙ[sₙ.length - 1] * sₙ[sₙ.length - 1] + n' % sₙ[sₙ.length - 1]] = (sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2], n']) := by
-                simp [sₙ]
-                simp [AppendTake_Length.eq.Cons_Append_List]
-                rw [Nat.EqAddMulDiv]
-              have : sₙ.length - 1 < (sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2], sₙ[sₙ.length - 1]]).length := by
-                simp [sₙ]
-                grind
-              have h_s₂ : ((sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2], sₙ[sₙ.length - 1]]).set (sₙ.length - 1) (n' / sₙ[sₙ.length - 1] * (sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2], sₙ[sₙ.length - 1]])[sₙ.length - 1])) =
-                sₙ.take (sₙ.length - 2) ++ [sₙ[sₙ.length - 2]] ++ [n' / sₙ[sₙ.length - 1] * sₙ[sₙ.length - 1]] := by
+              have h_bz : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
                 simp
-                sorry
-                -- grind
-              have := Tensor.GetBatchDot.eq.BatchDotGetS.of.Eq.fin
-                h_bz
-                (cast (congrArg (Tensor α) h_s₁) (cast (congrArg (Tensor α) h_s₂) ((cast ⋯ X).repeat (n' / (s₀ :: (s ++ [k]))[(s ++ [k]).length]) ⟨(s ++ [k]).length + 1, ⋯⟩) ++ 0))
-                (Y.broadcast (bz ++ [n', 1]) ⋯)
-                i
-              -- rw []
-              simp [Tensor.batch_dot]
-              apply SEq_Cast.of.SEq.Eq
+              rw [GetBatchDot.eq.Cast_BatchDotGetS.of.Eq.fin h_bz]
+              apply SEqCast.of.SEq.Eq
               .
                 simp [AppendTake_Length.eq.Cons_Append_List]
-                rw [EqMin.of.Lt (by omega)]
-                rw [EraseIdxAppend.eq.Append_EraseIdx.of.LeLength (by grind)]
-                simp
-                rw [EqMin.of.Lt (by omega)]
-                simp [AppendTake_Length.eq.Cons_Append_List]
               .
-                sorry
+                apply SEqBatchDotS.of.SEq.SEq
+                .
+                  apply SEq_Cast.of.SEq.Eq
+                  .
+                    simp [EqAddMulDiv, AppendTake_Length.eq.Cons_Append_List]
+                  .
+                    rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin]
+                    .
+                      apply SEqCast.of.SEq.Eq
+                      .
+                        simp
+                      .
+                        simp
+                        rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩)]
+                        .
+                          apply SEqCast.of.SEq.Eq
+                          .
+                            simp [EqAddMulDiv, AppendTake_Length.eq.Cons_Append_List]
+                          .
+                            simp
+                            rw [Tensor.GetAppend.eq.Cast_AppendCastS_Get.of.GtLength_0.fin (i := ⟨i, by grind⟩)]
+                            .
+                              apply SEqCast.of.SEq.Eq
+                              .
+                                simp [EqAddMulDiv]
+                              .
+                                simp
+                                rw [Tensor.EqGet0_0.fin]
+                                rw [Tensor.EqCast_0'0.of.Eq (by grind)]
+                                apply Tensor.SEqAppendS.of.SEq.SEq.EqLengthS
+                                .
+                                  simp
+                                .
+                                  apply SEqCastS.of.SEq.Eq.Eq
+                                  .
+                                    simp
+                                  .
+                                    simp [EqMin.of.Lt (by linarith: s.length < s.length + 1 + 1)]
+                                    simp [AppendTake_Length.eq.Cons_Append_List]
+                                  .
+                                    rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (i := ⟨i, by grind⟩)]
+                                    .
+                                      apply SEqCast.of.SEq.Eq
+                                      .
+                                        simp [EqMin.of.Lt (by linarith: s.length < s.length + 1 + 1)]
+                                        simp [AppendTake_Length.eq.Cons_Append_List]
+                                      .
+                                        simp
+                                        rw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtLength_0.fin (by simp) (by grind) _ _ ⟨(s ++ [k]).length, by simp; grind⟩]
+                                        apply SEqCast.of.SEq.Eq
+                                        .
+                                          simp
+                                        .
+                                          apply SEqRepeatS.of.SEq (d := ⟨(s ++ [k]).length, by simp; grind⟩)
+                                          apply SEq_Cast.of.SEq.Eq
+                                          .
+                                            simp [AppendTake_Length.eq.Cons_Append_List]
+                                          .
+                                            simp
+                                            rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (i := ⟨i, by grind⟩)]
+                                            .
+                                              apply SEqCast.of.SEq.Eq
+                                              .
+                                                simp [AppendTake_Length.eq.Cons_Append_List]
+                                              .
+                                                rfl
+                                            .
+                                              simp [AppendTake_Length.eq.Cons_Append_List]
+                                            .
+                                              simp [AppendTake_Length.eq.Cons_Append_List]
+                                    .
+                                      simp [EqMin.of.Lt (by linarith: s.length < s.length + 1 + 1)]
+                                      simp [AppendTake_Length.eq.Cons_Append_List]
+                                    .
+                                      simp
+                                .
+                                  simp
+                                  apply Tensor.SEq0S.of.Eq
+                                  simp
+                            .
+                              simp
+                        .
+                          simp [EqAddMulDiv, AppendTake_Length.eq.Cons_Append_List]
+                        .
+                          simp
+                    .
+                      simp
+                    .
+                      simp
+                .
+                  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin]
+                  .
+                    apply SEqCast.of.SEq.Eq
+                    .
+                      simp
+                    .
+                      rw [GetBroadcast.eq.Cast_Broadcast.of.EqProdS.GtLength_0.fin (by grind) (by grind) Y ⟨i, by grind⟩]
+                      apply SEqCast.of.SEq.Eq
+                      .
+                        simp
+                      .
+                        apply Tensor.SEqBroadcastS.of.Eq.Eq
+                        .
+                          simp
+                        .
+                          rfl
+                  .
+                    simp
+                  .
+                    simp
           .
             simp [AppendTake_Length.eq.Cons_Append_List]
           .

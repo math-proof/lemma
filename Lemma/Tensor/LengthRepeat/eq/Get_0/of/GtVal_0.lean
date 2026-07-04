@@ -1,7 +1,7 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
-open Tensor List
+import Lemma.Tensor.LengthRepeat.eq.Length.of.GtVal_0
+import sympy.tensor.tensor
+open Tensor
 
 
 @[main]
@@ -14,13 +14,9 @@ private lemma main
 -- imply
   (X.repeat n d).length = s[0] := by
 -- proof
-  rw [Length.eq.Get_0.of.GtLength_0] <;>
-    simp
-  ·
-    rw [GetSet.eq.Get.of.Ne.GtLength]
-    linarith
-  ·
-    grind
+  rw [LengthRepeat.eq.Length.of.GtVal_0 h]
+  rw [Length.eq.Get_0.of.GtLength_0]
 
 
 -- created on 2025-07-05
+-- updated on 2026-07-04

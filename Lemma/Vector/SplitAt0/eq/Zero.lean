@@ -1,4 +1,4 @@
-import Lemma.Vector.EqCast_0'0
+import Lemma.Vector.EqCast_0'0.of.Eq
 import Lemma.Vector.Unflatten0.eq.Zero
 open Vector
 
@@ -14,7 +14,7 @@ private lemma main
   simp [List.Vector.splitAt]
   rw [Zero.eq.Unflatten0]
   congr
-  apply EqCast_0'0
+  apply EqCast_0'0.of.Eq
   simp
 
 

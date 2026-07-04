@@ -1,8 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.Drop.eq.ListGet.of.GtLength_0
-import Lemma.List.Drop.eq.ListGetS.of.GeLength_2
-import Lemma.List.EqAppendS.of.Eq
-import Lemma.List.EqAppendTake__Drop
+import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.Nat.EqAddMulDiv
@@ -22,15 +20,7 @@ private lemma main
   let batch_size := s.take (s.length - 2)
   let n' := s[s.length - 2]
   let k' := s[s.length - 1]
-  let Y' : Tensor α (batch_size ++ [n', k']) := cast
-    (by
-      congr
-      simp [batch_size, n', k']
-      conv_lhs => rw [← EqAppendTake__Drop s (s.length - 2)]
-      apply EqAppendS.of.Eq.left
-      apply Drop.eq.ListGetS.of.GeLength_2 h_s'
-    )
-    Y
+  let Y' : Tensor α (batch_size ++ [n', k']) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
   let q := n' / n
   let r := n' % n
   let X' : Tensor α [n'] := cast

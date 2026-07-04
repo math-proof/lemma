@@ -1,7 +1,5 @@
 import Lemma.List.Drop.eq.ListGet.of.GtLength_0
-import Lemma.List.Drop.eq.ListGetS.of.GeLength_2
-import Lemma.List.EqAppendS.of.Eq
-import Lemma.List.EqAppendTake__Drop
+import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.Nat.EqAddMulDiv
@@ -21,16 +19,7 @@ private lemma main
 -- imply
   let batch_size := s.take (s.length - 2)
   let k := s[s.length - 1]
-  let Y' : Tensor α (batch_size ++ [n, k]) := cast
-    (by
-      congr
-      simp [batch_size, k]
-      conv_lhs => rw [← EqAppendTake__Drop s (s.length - 2)]
-      apply EqAppendS.of.Eq.left
-      simp [h_n]
-      apply Drop.eq.ListGetS.of.GeLength_2 h_s
-    )
-    Y
+  let Y' : Tensor α (batch_size ++ [n, k]) := cast (by rwa [h_n, EqAppendTake__ListGet.of.GeLength_2]) Y
   let X' := X.broadcast (batch_size ++ [1, n]) (by simp)
   X.matmul Y ≃ (X'.batch_dot Y').select ⟨s.length - 2, by simp [batch_size]⟩ ⟨0, by grind⟩ := by
 -- proof
