@@ -124,8 +124,8 @@ else  {
 
 include_once 'script.php';
 ?>
-<script defer src="static/unpkg.com/katex@0.16.21/dist/katex.min.js"></script>
-<script defer src="static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js"></script>
+<script src="static/unpkg.com/katex@0.16.21/dist/katex.min.js" defer></script>
+<script src="static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js" defer></script>
 <script type=module>
 createApp('searchResult', {
     data: <?php echo std\encode($data)?>,

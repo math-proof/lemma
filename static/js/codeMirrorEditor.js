@@ -1,4 +1,22 @@
 /** Lean CodeMirror mount hook and trivial computeds shared by renderLean. */
+
+function ensureCodeMirror() {
+	if (!window.__cmReady) {
+		const base = document.baseURI;
+		const paths = [
+			'static/codemirror/lib/codemirror.js',
+			'static/codemirror/mode/lean/lean.js',
+			'static/codemirror/addon/selection/active-line.js',
+			'static/codemirror/addon/hint/show-hint.js',
+			'static/codemirror/addon/edit/matchbrackets.js',
+			'static/codemirror/addon/comment/comment.js',
+		];
+		window.__cmReady = import(new URL(paths[0], base).href).then(() =>
+			Promise.all(paths.slice(1).map((p) => import(new URL(p, base).href)))
+		);
+	}
+	return window.__cmReady;
+}
 export function cmComputedUser() {
 	return axiom_user();
 }
@@ -534,8 +552,9 @@ where
 			},
         };
         
+        ensureCodeMirror().then(() => {
         if (typeof CodeMirror == 'undefined')
-        	return;
+        	return console.error('[codeMirrorEditor] CodeMirror global missing after preload');
         
         this.editor = CodeMirror.fromTextArea(this.$el, {
             mode: {
@@ -830,4 +849,5 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
                 }
             }
         }
+        }).catch((err) => console.error('[codeMirrorEditor] mount failed', err));
 }

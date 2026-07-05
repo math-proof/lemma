@@ -49,13 +49,6 @@ $props['kwargs'] = $kwargs;
 ?>
 
 <script type=module>
-import * as codemirror from "./static/codemirror/lib/codemirror.js"
-import * as lean from "./static/codemirror/mode/lean/lean.js"
-import * as active_line from "./static/codemirror/addon/selection/active-line.js"
-import * as show_hint from "./static/codemirror/addon/hint/show-hint.js"
-import * as matchbrackets from "./static/codemirror/addon/edit/matchbrackets.js"
-import * as comment from "./static/codemirror/addon/comment/comment.js"
-
 createApp('<?php echo $component?>', <?php echo std\encode($props)?>);
 </script>
 </html>

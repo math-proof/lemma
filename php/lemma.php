@@ -678,21 +678,13 @@ EOF;
 <?php
 include_once 'script.php';
 ?>
-<script defer src="static/unpkg.com/lz-string@1.5.0/libs/lz-string.js"></script>
-<script defer src="static/unpkg.com/katex@0.16.21/dist/katex.min.js"></script>
-<script defer src="static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js"></script>
-<script defer src="static/unpkg.com/prismjs@1.30.0/prism.js"></script>
-<script defer src="static/unpkg.com/prismjs@1.30.0/components/prism-lean.js"></script>
+<script src="static/unpkg.com/lz-string@1.5.0/libs/lz-string.js" defer></script>
+<script src="static/unpkg.com/katex@0.16.21/dist/katex.min.js" defer></script>
+<script src="static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js" defer></script>
+<script src="static/unpkg.com/prismjs@1.30.0/prism.js" defer></script>
+<script src="static/unpkg.com/prismjs@1.30.0/components/prism-lean.js" defer></script>
 <script type=module>
-import * as codemirror from "./static/codemirror/lib/codemirror.js"
-import * as lean from "./static/codemirror/mode/lean/lean.js"
-import * as active_line from "./static/codemirror/addon/selection/active-line.js"
-import * as show_hint from "./static/codemirror/addon/hint/show-hint.js"
-import * as matchbrackets from "./static/codemirror/addon/edit/matchbrackets.js"
-import * as comment from "./static/codemirror/addon/comment/comment.js"
-
 createApp('render', <?php echo std\encode($code) ?>);
-
 //http://codemirror.net/doc/manual.html
 //http://docs.mathjax.org/en/latest/
 </script>

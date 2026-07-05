@@ -143,12 +143,6 @@ function auth_error($error) {
 	unset($_POST['auth']);
 	$_POST['hidden_fields'] = hidden_fields($_POST);
 	$adminer->loginForm($auth);
-	$props = array_merge($_POST, $_GET);
-    
-	$nonce = true;
-	$vue = 'login';
-	unset($props['with']);
-	include dirname(__file__).'/../templates/vue.php';
 	exit;
 }
 $user = get_user("pwds");

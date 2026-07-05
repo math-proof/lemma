@@ -493,7 +493,7 @@ where
             if (attr)
                 proof = proof[attr];
             proof = proof[0];
-            proof.editor.focus();
+            proof.editor?.focus();
         }
         if (model) {
             this.model = model;
