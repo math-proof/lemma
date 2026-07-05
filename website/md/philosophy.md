@@ -16,7 +16,7 @@
     - 条件期望定义：\(\mathbb E ({\color{red}y} | {\color{red}x})=\mathbb E ({\color{red}y} | {\color{red}x} = x)\)，则随机条件期望为：\(\mathbb E ({\color{red}y} | {\color{magenta}x})=\left. \mathbb E ({\color{red}y} | {\color{red}x} = x) \right|_{\substack{ x= {\color{red}x}}}\)
     - 条件概率定义：\(\mathbb P\left({\color{red}y} \middle|{\color{red}x}\right) = \mathbb P\left({\color{red}y}=y \middle|{\color{red}x}=x\right)\)，则随机条件概率为：\(\mathbb P\left({\color{magenta}y} \middle|{\color{magenta}x}\right) = \mathbb P\left({\color{red}y}=y \middle|{\color{red}x}=x\right)\bigg|_{x={\color{red}x}\atop y={\color{red}y}}\)
 - \(\times\)表示点积
-- \(\sigma(·)\)表示[torch.sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.sigmoid.html)
+- \(\sigma(·)\)表示[sigmoid](http://www.lemma.cn/lean/?module=Vector.Sigmoid.eq.Div1Add1ExpNeg)
 
 ## 心智理论
 将人际关系网络建模为事件驱动型有向图，共情系数\({\color{red}Ι}_{t,i,j}\in (-1,1)\)是注意力指针权重，表征认知资源的动态分配。人称代词i=0是我，j>0是你，t是离散时刻，未激活为0
