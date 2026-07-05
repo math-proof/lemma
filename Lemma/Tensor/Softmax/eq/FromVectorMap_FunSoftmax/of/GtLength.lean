@@ -40,6 +40,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
 open Finset List Nat Tensor Vector Fin
+set_option maxHeartbeats 400000
 
 
 @[main]

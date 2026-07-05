@@ -294,13 +294,14 @@ if ($content.Count -gt 0) {
 Write-Output "plausible:"
 
 # Extract and process the modules with 'sorry' warnings
-$cwd = [regex]::Escape((Get-Location).Path) 
-$cwd = "($cwd\\|(\.[\\/])*)"
-$sorryModules = Get-Content test.log | 
-    Select-String -Pattern "^warning: $cwd[\w'!₀-₉\\/]+\.lean:\d+:\d+: declaration uses 'sorry'" | 
+$cwd = [regex]::Escape((Get-Location).Path)
+$cwd = "(?:$cwd[\\/])?"
+$sorryPattern = "^warning: $cwd(.+\.lean):\d+:\d+: declaration uses ``sorry``"
+$sorryModules = Get-Content test.log |
+    Select-String -Pattern $sorryPattern |
     ForEach-Object {
-        $_.Line -replace "^warning: $cwd", '' -replace '\.lean:\d+:\d+: declaration uses ''sorry''', '' -replace '[\\/]', '.'
-    } | 
+        $_.Matches[0].Groups[1].Value -replace '\.lean$', '' -replace '[\\/]', '.'
+    } |
     Select-Object -Unique
 
 foreach ($module in $sorryModules) {

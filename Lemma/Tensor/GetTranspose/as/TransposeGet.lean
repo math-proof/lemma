@@ -88,7 +88,7 @@ private lemma main
             args').2 - (if bz'1 > bz'.length then
             args
           else
-            args').1)))[0] := by
+            args').1)))[0]'(by simp) := by
         simp only [GetElem.getElem]
         rw [GetPermute__Neg.eq.Get_0.of.Gt.fin (by simp [bz', args, args', bz'1])]
         simp [h_bz, bz', args, args', bz'1]

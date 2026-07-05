@@ -19,6 +19,8 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Fin List Nat Tensor Vector
+set_option maxHeartbeats 400000
+set_option synthInstance.maxHeartbeats 200000
 
 
 @[main]

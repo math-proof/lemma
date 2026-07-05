@@ -1,8 +1,8 @@
 # usage:
-# . .\ps1\update.ps1
+# .\ps1\update.ps1
 # Read the lean-toolchain file
 param(
-    [String]$version = "v4.27.0"
+    [String]$version = "v4.28.0"
 )
 $versionNumber = $version.Substring(1)
 # cd ~/.elan/toolchains

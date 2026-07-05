@@ -41,7 +41,7 @@ def buildNestedTacticSyntax (path : List (String × Bool)) (h₀ : Term) (h₁ :
       if let some h₁ := h₁ then
         `(tactic| apply $lem (by { $inner }) at $h₁)
       else
-        `(tactic| apply $lem (by { $inner }))
+        `(tactic| apply $lem:ident (by { $inner }))
   else
     panic! "buildNestedTacticSyntax: empty path"
 
