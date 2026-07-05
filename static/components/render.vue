@@ -544,8 +544,8 @@ where
             var {proof} = lemma;
             var {by} = proof;
             if (by) {
-                for (var {latex} of by)
-                    if (!latex)
+                for (var i of range(by.length - 1))
+                    if (!by[i].latex)
                         return true;
             }
         },

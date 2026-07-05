@@ -1,4 +1,4 @@
-/** Lean CodeMirror mount hook and trivial computeds shared by codeMirror / renderLean / renderPython. */
+/** Lean CodeMirror mount hook and trivial computeds shared by renderLean. */
 export function cmComputedUser() {
 	return axiom_user();
 }

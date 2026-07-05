@@ -96,6 +96,9 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
       case 'softmax':
         await maybeUnshift('sympy.tensor.functions');
         break;
+      case 'sigmoid':
+        await maybeUnshift('sympy.vector.functions');
+        break;
       default:
         break;
     }

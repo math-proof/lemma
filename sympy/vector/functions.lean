@@ -53,6 +53,9 @@ def softmax [Div α] [Exp α] (x : Vector α n) : Vector α n :=
   let x_exp := exp x
   x_exp / x_exp.sum
 
+def sigmoid [Exp α] (x : Vector α n) : Vector α n :=
+  1 / (1 + exp (-x))
+
 private def argminmax [NeZero n] (x : Vector α n) (cmp : α → α → Prop) [DecidableRel cmp] : Fin n :=
   Nat.rec
     (motive := fun n => n ≠ 0 → Vector α n → Fin n)

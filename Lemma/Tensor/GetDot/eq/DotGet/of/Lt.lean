@@ -63,7 +63,7 @@ import Lemma.Vector.Repeat.eq.Cast.of.Eq_1
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAt0.eq.Zero
 open Bool Fin List Nat Tensor Vector
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 @[main, fin]

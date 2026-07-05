@@ -2564,6 +2564,8 @@ export class LeanProperty extends LeanBinary {
                 case 'softmax':
                     if (syntax) syntax.softmax = true;
                     break;
+                case 'sigmoid':
+                    return [this.lhs.toLatex(syntax)];
             }
         }
         return super.latexArgs(syntax);
@@ -2609,6 +2611,8 @@ export class LeanProperty extends LeanBinary {
                         return '\\infty';
                     }
                     break;
+                case 'sigmoid':
+                    return '{\\color{RoyalBlue}\\sigma}\\left(%s\\right)';
             }
         }
         return `{%s}${this.command}{%s}`;

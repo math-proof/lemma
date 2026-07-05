@@ -79,6 +79,11 @@ def Tensor.softmax [Exp α] (x : Tensor α s) (dim : ℕ := s.length - 1) : Tens
   let x_exp := exp x
   x_exp / (x_exp.sum dim).keepdim
 
+/--
+[sigmoid](https://pytorch.org/docs/stable/generated/torch.sigmoid.html)
+-/
+def Tensor.sigmoid [Exp α] (x : Tensor α s) : Tensor α s :=
+  ⟨x.data.sigmoid⟩
 
 /--
 Reduces the tensor along `dim` by taking the minimum/maximum value.

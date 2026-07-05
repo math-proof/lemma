@@ -2289,9 +2289,11 @@ class LeanProperty extends LeanBinary
                 case 'card':
                     if (!($this->lhs instanceof LeanToken && $this->parent instanceof LeanArgsSpaceSeparated && $this->parent->args[0] === $this))
                         return [$this->lhs->toLatex($syntax)];
-                case 'softmax':
+                    case 'softmax':
                     $syntax['softmax'] = true;
                     break;
+                case 'sigmoid':
+                    return [$this->lhs->toLatex($syntax)];
             }
         }
         return parent::latexArgs($syntax);
@@ -2331,6 +2333,8 @@ class LeanProperty extends LeanBinary
                 case 'omega':
                     if ($this->lhs instanceof LeanToken && $this->lhs->text == 'Hyperreal')
                         return '\infty';
+                case 'sigmoid':
+                    return '{\\color{RoyalBlue}\\sigma}\\left(%s\\right)';
             }
         }
         return "{%s}$this->command{%s}";

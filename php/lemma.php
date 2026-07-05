@@ -656,6 +656,9 @@ EOF;
 		case 'softmax':
 			$modify |= $import_syntax('sympy.tensor.functions');
 			break;
+		case 'sigmoid':
+			$modify |= $import_syntax('sympy.vector.functions');
+			break;
 		}
 	}
 	if ($modify) {
@@ -675,11 +678,11 @@ EOF;
 <?php
 include_once 'script.php';
 ?>
-<script src="static/unpkg.com/lz-string@1.5.0/libs/lz-string.js"></script>
+<script defer src="static/unpkg.com/lz-string@1.5.0/libs/lz-string.js"></script>
 <script defer src="static/unpkg.com/katex@0.16.21/dist/katex.min.js"></script>
 <script defer src="static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js"></script>
-<script src="static/unpkg.com/prismjs@1.30.0/prism.js"></script>
-<script src="static/unpkg.com/prismjs@1.30.0/components/prism-lean.js"></script>
+<script defer src="static/unpkg.com/prismjs@1.30.0/prism.js"></script>
+<script defer src="static/unpkg.com/prismjs@1.30.0/components/prism-lean.js"></script>
 <script type=module>
 import * as codemirror from "./static/codemirror/lib/codemirror.js"
 import * as lean from "./static/codemirror/mode/lean/lean.js"
