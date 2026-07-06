@@ -414,7 +414,52 @@ EOT;
 
 function fetch_from_mysql($user, $module)
 {
-    foreach (get_rows("select * from lemma where user = '$user' and module = \"$module\"") as $code) {
+    $sql = <<<EOT
+SELECT
+    l.user,
+    l.module,
+    l.imports,
+    l.open,
+    l.set_option,
+    l.def,
+    l.error,
+    l.date,
+    JSON_ARRAYAGG(
+        JSON_OBJECT(
+            'comment', j.comment,
+            'attribute', j.attribute,
+            'accessibility', j.accessibility,
+            'name', j.name,
+            'instImplicit', j.instImplicit,
+            'strictImplicit', j.strictImplicit,
+            'implicit', j.implicit,
+            'explicit', j.explicit,
+            'given', j.given,
+            'default', j.defval,
+            'imply', j.imply
+        )
+    ) AS lemma
+FROM lemma AS l
+CROSS JOIN JSON_TABLE(
+    l.lemma,
+    '\$[*]' COLUMNS (
+        comment JSON PATH '\$.comment',
+        attribute JSON PATH '\$.attribute',
+        accessibility JSON PATH '\$.accessibility',
+        name JSON PATH '\$.name',
+        instImplicit JSON PATH '\$.instImplicit',
+        strictImplicit JSON PATH '\$.strictImplicit',
+        implicit JSON PATH '\$.implicit',
+        explicit JSON PATH '\$.explicit',
+        given JSON PATH '\$.given',
+        defval JSON PATH '\$.default',
+        imply JSON PATH '\$.imply'
+    )
+) AS j
+WHERE l.user = '$user' AND l.module = "$module"
+GROUP BY l.user, l.module, l.imports, l.open, l.set_option, l.def, l.error, l.date
+EOT;
+    foreach (get_rows($sql) as $code) {
         return $code;
     }
 }

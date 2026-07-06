@@ -541,11 +541,9 @@ where
 
     methods: {
         heed_update(lemma) {
-            var {proof, imply} = lemma;
-            if (!imply.latex) {
-                imply.insert = true;
+            var {proof} = lemma;
+            if (!proof) 
                 return false;
-            }
             var {by} = proof;
             if (by) {
                 for (var i of range(by.length - 1))
