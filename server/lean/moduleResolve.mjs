@@ -11,6 +11,33 @@ export function isInfixOperator(op) {
   return ['eq', 'is', 'as', 'ne', 'lt', 'le', 'gt', 'ge', 'in', 'ou', 'et'].includes(op);
 }
 
+/**
+ * Proof text cites `Foo.eq.Cast_Bar…` while `@[cast]` lemmas live at `Foo.as.Bar…`.
+ * @param {string} dotted
+ * @returns {string | null}
+ */
+export function resolveCastEqLemmaAlias(dotted) {
+  const parts = String(dotted).split('.');
+  for (let i = 0; i < parts.length - 1; i++) {
+    if (parts[i] === 'eq' && parts[i + 1].startsWith('Cast_')) {
+      return [...parts.slice(0, i), 'as', parts[i + 1].slice(5), ...parts.slice(i + 2)].join('.');
+    }
+  }
+  return null;
+}
+
+/**
+ * @param {string} module
+ * @param {string} repoRoot
+ * @returns {string | null}
+ */
+function tryCastEqLemmaRedirect(module, repoRoot) {
+  const castAlias = resolveCastEqLemmaAlias(module);
+  if (!castAlias) return null;
+  const castLean = path.join(repoRoot, 'Lemma', ...castAlias.split('.').filter(Boolean)) + '.lean';
+  return fs.existsSync(castLean) ? castAlias : null;
+}
+
 /** @param {string} op */
 function isSymmOperator(op) {
   return ['eq', 'is', 'as', 'ne'].includes(op);
@@ -201,7 +228,14 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
           }
           break;
         }
-        case 'eq':
+        case 'eq': {
+          const castHit = tryCastEqLemmaRedirect(module, repoRoot);
+          if (castHit) return castHit;
+          const tmp = tokens[1];
+          tokens[1] = tokens[3];
+          tokens[3] = tmp;
+          break;
+        }
         case 'as':
         case 'ne': {
           const tmp = tokens[1];
@@ -264,6 +298,10 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
               }
             }
           } else if (first.length === 3 && isInfixOperator(first[1])) {
+            if (first[1] === 'eq' && first[2].startsWith('Cast_')) {
+              const castHit = tryCastEqLemmaRedirect(module, repoRoot);
+              if (castHit) return castHit;
+            }
             // (e.g. `Nat.AddSub.eq.SubAdd.of.Ge` → `Nat.SubAdd.eq.AddSub.of.Ge`).
             const segment_ = segment.map((r) => [...r]);
             segment_[0] = [first[2], first[1], first[0]];
@@ -296,30 +334,24 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
       const mid = segment[1][0];
       switch (mid) {
         case 'is': {
-          index = tokens.indexOf('of');
-          if (index === -1) {
-            const s0 = segment[0];
-            const s2 = segment[2];
-            segment[0] = s2;
-            segment[2] = s0;
-            let m = tokensToModule(segment, section);
-            const p = moduleToLeanPath(m);
-            if (p && fs.existsSync(p)) return m;
-            tokens = [tokens[0], ...tokens.slice(3), 'is', tokens[1]];
-          } else {
-            let m1 = tokens[1].match(/^([SH]?Eq|Iff)_(.+)/);
-            if (m1) tokens[1] = m1[1] + m1[2];
-            tokens = [
-              tokens[0],
-              ...tokens.slice(3, index - 3),
-              'is',
-              tokens[1],
-              ...tokens.slice(index),
-            ];
-          }
+          const s0 = segment[0];
+          const s2 = segment[2];
+          segment[0] = s2;
+          segment[2] = s0;
+          let m = tokensToModule(segment, section);
+          const p = moduleToLeanPath(m);
+          if (p && fs.existsSync(p)) return m;
+          tokens = [tokens[0], ...tokens.slice(3), 'is', tokens[1]];
           break;
         }
-        case 'eq':
+        case 'eq': {
+          const castHit = tryCastEqLemmaRedirect(module, repoRoot);
+          if (castHit) return castHit;
+          const tmp = tokens[1];
+          tokens[1] = tokens[3];
+          tokens[3] = tmp;
+          break;
+        }
         case 'as':
         case 'ne': {
           const tmp = tokens[1];
@@ -327,40 +359,10 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
           tokens[3] = tmp;
           break;
         }
-        case 'of': {
-          const first = tokens[1];
-          const mEq = first.match(/^([SH]?Eq|Iff)_(.+)/);
-          if (mEq) {
-            tokens[1] = mEq[1] + mEq[2];
-            let m = tokens.join('.');
-            const p = moduleToLeanPath(m);
-            if (!p || !fs.existsSync(p)) {
-              tokens[1] = first;
-              tokens[2] = 'is';
-              if (tokens.length > 4) arrayInsert(tokens, 4, 'of');
-              if (segment[1]?.length === 1 && segment[1][0] === 'of') {
-                segment[1][0] = 'is';
-              }
-            }
-          } else {
-            if (tokens.length === 5) {
-              const tokens_ = [...tokens];
-              tokens_[1] = transformPrefix(tokens_[1]);
-              tokens_[3] = transformPrefix(tokens_[3]);
-              tokens_[4] = transformPrefix(tokens_[4]);
-              const m = tokens_.join('.');
-              const p = moduleToLeanPath(m);
-              if (p && fs.existsSync(p)) return m;
-            }
-            tokens[2] = 'is';
-          }
-          break;
-        }
         default: {
           const firstT = tokens[1];
           let mm = firstT.match(/^(S?Eq)_([\w'!₀-₉]+)$/);
           if (mm) tokens[1] = mm[1] + mm[2];
-          else if ((index = tokens.indexOf('of')) !== -1) tokens[index] = 'is';
           else if ((index = tokens.indexOf('is')) !== -1) {
             const sec = tokens[0];
             const first = tokens.slice(1, index);
@@ -376,6 +378,10 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
         let mm = first[0].match(/^(S?Eq)_([\w'!₀-₉]+)$/);
         if (mm) tokens[1] = mm[1] + mm[2];
       } else if (first.length === 3 && isSymmOperator(first[1])) {
+        if (first[1] === 'eq' && first[2].startsWith('Cast_')) {
+          const castHit = tryCastEqLemmaRedirect(module, repoRoot);
+          if (castHit) return castHit;
+        }
         let segment_ = segment.map((r) => [...r]);
         segment_[0] = [first[2], first[1], first[0]];
         let p = moduleToLeanFromSegment(segment_, section);
@@ -398,7 +404,6 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
       } else {
         let mm = first.join('.').match(/^(S?Eq)_([\w'!₀-₉]+)$/);
         if (mm) tokens[1] = mm[1] + mm[2];
-        else if ((index = tokens.indexOf('of')) !== -1) tokens[index] = 'is';
         else if ((index = tokens.indexOf('is')) !== -1) {
           const sec = tokens[0];
           const fr = tokens.slice(1, index);

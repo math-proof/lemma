@@ -59,11 +59,22 @@ export function filterImportsByLemmaCode(imports, lemmaCode, openSectionList) {
 
     switch (tokens[1]) {
       case 'eq':
-      case 'as':
       case 'ne': {
         const t = [...tokens];
         [t[0], t[2]] = [t[2], t[0]];
         if (tryPattern(t, lemmaCode)) return true;
+        break;
+      }
+      case 'as': {
+        const t = [...tokens];
+        [t[0], t[2]] = [t[2], t[0]];
+        if (tryPattern(t, lemmaCode)) return true;
+        // Proof cites fake `eq.Cast_X`; import path is real `as.X`.
+        const i = tokens.indexOf('as');
+        if (i !== -1 && tokens[i + 1]) {
+          const eqCast = [...tokens.slice(0, i), 'eq', `Cast_${tokens[i + 1]}`, ...tokens.slice(i + 2)];
+          if (tryPattern(eqCast, lemmaCode)) return true;
+        }
         break;
       }
       case 'is': {

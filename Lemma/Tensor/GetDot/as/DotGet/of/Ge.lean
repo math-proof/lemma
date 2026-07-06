@@ -2,9 +2,16 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.Ne_Nil.is.GeLength_1
+import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
+import Lemma.Tensor.GetBroadcastMatmul.as.BroadcastMatmulRecGet.of.GtLength_0
+import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Ge
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
+import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.SelectBatchDot.of.EqGet_SubLength_1.GeLength_2
+import Lemma.Tensor.Matmul.as.SelectBatchDot.of.GtGet_SubLength_1.GeLength_2
+import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.SEqBroadcastS.of.Eq.Eq
 open Bool List Tensor
@@ -83,7 +90,7 @@ private lemma main
 
 @[main, fin]
 private lemma one
-  [NonUnitalNonAssocSemiring α]
+  [Mul α] [AddCommMonoid α]
 -- given
   (h : k ≥ n')
   (X : Tensor α (n :: (s ++ [k])))
@@ -95,9 +102,23 @@ private lemma one
   simp [GetElem.getElem]
   match s with
   | [] =>
-    sorry
+    rw [GetDot.eq.DotGet.of.Ge.one.fin h]
   | s₀ :: s =>
-    sorry
+    simp [MatMul.dot]
+    if h : k > n' then
+      rw [Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
+      conv_rhs => rw [Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
+      simp
+      apply SEq_Cast.of.SEq.Eq
+      ·
+        simp [matmul_shape]
+        simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
+      ·
+        sorry
+    else
+      have h : k = n' := by omega
+      subst h
+      sorry
 
 
 -- created on 2026-01-13

@@ -176,8 +176,7 @@ private lemma main
 
 @[main, fin]
 private lemma one
-  [Mul α]
-  [AddCommMonoid α]
+  [Mul α] [AddCommMonoid α]
 -- given
   (h : k > n')
   (X : Tensor α [n, k])

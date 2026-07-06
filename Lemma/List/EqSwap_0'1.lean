@@ -1,19 +1,16 @@
 import stdlib.List
-import Lemma.List.Swap.eq.Ite
-import Lemma.List.Slice.eq.Nil
-open List
+import sympy.Basic
 
 
 @[main]
 private lemma main
 -- given
-  (a b : α) :
+  (a b : α)
+  (c : List α := []) :
 -- imply
-  [a, b].swap 0 1 = [b, a] := by
+  (a :: b :: c).swap 0 1 = b :: a :: c := by
 -- proof
-  rw [Swap.eq.Ite]
-  simp
-  apply Slice.eq.Nil
+  simp [List.swap, List.slice, List.array_slice]
 
 
 -- created on 2025-06-16

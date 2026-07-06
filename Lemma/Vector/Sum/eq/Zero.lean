@@ -1,11 +1,12 @@
-import sympy.vector.vector
 import sympy.Basic
+import sympy.vector.vector
 
 
 @[main]
 private lemma main
   [Add α] [Zero α]
-  {s : List.Vector α 0} :
+-- given
+  (s : List.Vector α 0) :
 -- imply
   s.sum = 0 := by
 -- proof
@@ -16,3 +17,4 @@ private lemma main
 
 
 -- created on 2024-07-01
+-- updated on 2026-07-06

@@ -6,9 +6,10 @@ open List
 @[main]
 private lemma main
 -- given
-  (a b : α) :
+  (a b : α)
+  (c : List α) :
 -- imply
-  [a, b].swap 1 0 = [b, a] := by
+  (a :: b :: c).swap 1 0 = b :: a :: c := by
 -- proof
   rw [EqSwapS]
   apply EqSwap_0'1
