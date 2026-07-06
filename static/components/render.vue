@@ -487,16 +487,8 @@ where
                 err.col = col;
             }
         }
-        else if (!hash) {
-            var {proof} = this.renderLean.back();
-            if (proof) {
-                var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
-                if (attr)
-                    proof = proof[attr];
-                proof = proof[0];
-                proof.editor?.focus();
-            }
-        }
+        else if (!hash && !this.lemma.any(lemma => !lemma.proof))
+            this.focus_main_proof_when_ready();
         if (model) {
             this.model = model;
             var i = this.lemma.findIndex(x => x.name == 'main');
@@ -1799,6 +1791,33 @@ GROUP BY l.user, l.module`;
                 this.lemma[i].proof = proof;
             }
             this.refresh = true;
+            this.focus_main_proof_when_ready();
+        },
+
+        focus_main_proof() {
+            var i = this.lemma.findIndex(lemma => lemma.name == 'main');
+            if (i < 0)
+                i = 0;
+            var proofLean = getitem(this.renderLean, i, 'proof');
+            if (!proofLean)
+                return false;
+            var attr = proofLean.by ? 'by' : (proofLean.calc ? 'calc' : null);
+            var step = attr ? proofLean[attr][0] : proofLean[0];
+            var cm = step?.editor;
+            if (!cm)
+                return false;
+            cm.setCursor(0, 0);
+            cm.focus();
+            return true;
+        },
+
+        focus_main_proof_when_ready(tries = 0) {
+            this.$nextTick(() => {
+                if (this.focus_main_proof())
+                    return;
+                if (tries < 60)
+                    requestAnimationFrame(() => this.focus_main_proof_when_ready(tries + 1));
+            });
         },
 
         async echo(module){
