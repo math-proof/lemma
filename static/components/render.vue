@@ -489,11 +489,13 @@ where
         }
         else if (!hash) {
             var {proof} = this.renderLean.back();
-            var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
-            if (attr)
-                proof = proof[attr];
-            proof = proof[0];
-            proof.editor?.focus();
+            if (proof) {
+                var attr = proof.by? 'by' : (proof.calc? 'calc' : null);
+                if (attr)
+                    proof = proof[attr];
+                proof = proof[0];
+                proof.editor?.focus();
+            }
         }
         if (model) {
             this.model = model;
@@ -537,6 +539,9 @@ where
                 }
             }
         }
+
+        if (this.lemma.any(lemma =>!lemma.proof))
+            this.fetch_proof(module).catch(err => console.error('[fetch_proof]', err));
     },
 
     methods: {
@@ -1766,6 +1771,34 @@ ${task}`;
                 proof.delete(i);
                 break;
             }
+        },
+
+        async fetch_proof(module) {
+            var {user} = this;
+            var sql = `
+SELECT
+    JSON_ARRAYAGG(
+        JSON_OBJECT('proof', j.proof)
+    ) AS lemma
+FROM lemma AS l
+CROSS JOIN JSON_TABLE(
+    l.lemma,
+    '$[*]' COLUMNS (
+        proof JSON PATH '$.proof'
+    )
+) AS j
+WHERE l.user = '${user}' AND l.module = "${module}"
+GROUP BY l.user, l.module`;
+            var rows = await form_post('php/request/execute.php', {sql, resultType: 1});
+            if (!rows?.length)
+                return;
+            var proofLemma = JSON.parse(rows[0].lemma);
+            if (!proofLemma?.length)
+                return;
+            for (var [i, {proof}] of enumerate(proofLemma)) {
+                this.lemma[i].proof = proof;
+            }
+            this.refresh = true;
         },
 
         async echo(module){

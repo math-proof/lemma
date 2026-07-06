@@ -376,7 +376,6 @@ const VUE_STYLES = [
 	'static/codemirror/theme/eclipse.css',
 	'static/codemirror/addon/hint/show-hint.css',
 	'static/unpkg.com/katex@0.16.21/dist/katex.min.css',
-	'static/unpkg.com/prismjs@1.30.0/themes/prism.min.css',
 ];
 
 const VUE_SCRIPTS = [
@@ -393,8 +392,6 @@ const VUE_DEFER_SCRIPTS = [
 	'static/unpkg.com/lz-string@1.5.0/libs/lz-string.js',
 	'static/unpkg.com/katex@0.16.21/dist/katex.min.js',
 	'static/unpkg.com/katex@0.16.21/dist/contrib/auto-render.min.js',
-	'static/unpkg.com/prismjs@1.30.0/prism.js',
-	'static/unpkg.com/prismjs@1.30.0/components/prism-lean.js',
 ];
 
 async function upgradeLemmaVue(code) {
