@@ -253,6 +253,20 @@ if ($code) {
 .latex-display.latex-formula-failed .latex-tag { position: static; transform: none; margin-left: auto; }
 .latex-display .lean-fallback { display: none; margin: 0; }
 .latex-display.latex-formula-failed .lean-fallback { display: block; }
+#lemma-shell.lemma-shell-fade-out {
+	opacity: 0;
+	transition: opacity 0.35s ease;
+	pointer-events: none;
+}
+#lemma-vue-root {
+	transition: opacity 0.35s ease;
+}
+#lemma-vue-root.lemma-vue-pending {
+	opacity: 0;
+}
+#lemma-vue-root.lemma-vue-visible {
+	opacity: 1;
+}
 .green { color: green; }
 .blue { color: blue; }
 .orange { color: orange; }
@@ -271,8 +285,17 @@ if ($code) {
 span.date {
     font-size: 12px;
 }
+#lemma-stage { position: relative; }
+#lemma-vue-root.lemma-vue-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+}
 </style>
 <body>
+<div id="lemma-stage">
 <div id="lemma-shell">
 <?php
 if ($code && !empty($code['lemma'])) {
@@ -301,6 +324,7 @@ if ($code && !empty($code['lemma'])) {
     echo '<p>', lemma_shell_h("No lemma data in MySQL for module: $module"), "</p>\n";
 }
 ?>
+</div>
 </div>
 </body>
 <script type="module">
@@ -382,14 +406,51 @@ async function upgradeLemmaVue(module) {
 	if (typeof code?.error === 'string' && code.error)
 		throw new Error(code.error);
 
-	document.body.replaceChildren();
-	await createApp('render', code);
+	const shell = document.getElementById('lemma-shell');
+	const stage = document.getElementById('lemma-stage');
+	const mountId = 'lemma-vue-root';
+	await createApp('render', code, mountId);
+
+	const mount = document.getElementById(mountId);
+	if (mount)
+		mount.classList.add('lemma-vue-pending');
+	if (stage && mount)
+		stage.appendChild(mount);
+
+	await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+	if (shell && stage)
+		stage.style.minHeight = shell.offsetHeight + 'px';
+	if (mount) {
+		mount.classList.remove('lemma-vue-pending');
+		mount.classList.add('lemma-vue-overlay');
+		mount.classList.add('lemma-vue-visible');
+	}
+
+	const finish = () => {
+		if (finish.done)
+			return;
+		finish.done = true;
+		if (shell)
+			shell.remove();
+		if (stage)
+			stage.style.minHeight = '';
+		if (mount)
+			mount.classList.remove('lemma-vue-overlay', 'lemma-vue-pending', 'lemma-vue-visible');
+	};
+
+	if (shell) {
+		shell.classList.add('lemma-shell-fade-out');
+		shell.addEventListener('transitionend', finish, { once: true });
+		setTimeout(finish, 450);
+	} else
+		finish();
 }
 
-// const module = <?php echo json_encode($module, JSON_UNESCAPED_UNICODE); ?>;
-// const run = () => upgradeLemmaVue(module).catch((err) => console.error('[upgradeLemmaVue]', err));
-// if ('requestIdleCallback' in window)
-// 	requestIdleCallback(run, { timeout: 2000 });
-// else
-// 	setTimeout(run, 0);
+const module = <?php echo json_encode($module, JSON_UNESCAPED_UNICODE); ?>;
+const run = () => upgradeLemmaVue(module).catch((err) => console.error('[upgradeLemmaVue]', err));
+if ('requestIdleCallback' in window)
+	requestIdleCallback(run, { timeout: 2000 });
+else
+	setTimeout(run, 0);
 </script>
