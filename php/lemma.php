@@ -684,6 +684,22 @@ include_once 'script.php';
 <script src="static/unpkg.com/prismjs@1.30.0/prism.js" defer></script>
 <script src="static/unpkg.com/prismjs@1.30.0/components/prism-lean.js" defer></script>
 <script type=module>
+<?php
+foreach ($code['lemma'] as &$lemma) {
+	$lemma['imply']['latex'] = null;
+	if (isset($lemma['given']) && is_array($lemma['given'])) {
+		foreach ($lemma['given'] as &$given) {
+			$given['latex'] = null;
+		}
+	}
+	$proof = &$lemma['proof'];
+	if (!is_array($proof) || !isset($proof['by']))
+		continue;
+	foreach ($proof['by'] as &$obj) {
+		$obj['latex'] = null;
+	}
+}
+?>
 createApp('render', <?php echo std\encode($code) ?>);
 //http://codemirror.net/doc/manual.html
 //http://docs.mathjax.org/en/latest/
