@@ -344,6 +344,6 @@ if (! str_ends_with($path_info, '/')) {
     }
 }
 
-$php = $leanFile ? 'lemma' : 'package';
+$php = $leanFile ? 'lemma_textarea' : 'package';
 require_once  "php/$php.php";
 ?>
