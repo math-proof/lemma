@@ -2,13 +2,9 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
-import Lemma.Tensor.GetBroadcastMatmul.as.BroadcastMatmulRecGet.of.GtLength_0
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Ge
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.SEqBroadcastS.of.Eq.Eq
 open Bool List Tensor
@@ -87,7 +83,7 @@ private lemma main
 
 @[main, fin]
 private lemma one
-  [Mul α] [Add α] [Zero α]
+  [NonUnitalNonAssocSemiring α]
 -- given
   (h : k ≥ n')
   (X : Tensor α (n :: (s ++ [k])))
@@ -105,3 +101,4 @@ private lemma one
 
 
 -- created on 2026-01-13
+-- updated on 2026-07-06

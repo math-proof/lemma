@@ -356,8 +356,8 @@ const self = new Vue({
         },
 
         initial_line() {
-            var {imports, open} = this;
-            return imports.length + open.length;
+            var {imports, open, set_option} = this;
+            return imports.length + open.length + set_option.length;
         },
 
         regexp_section() {
@@ -467,7 +467,7 @@ where
         var sorry = [];
         for (var err of reversed(error)) {
             var {line, col, info} = err;
-            if (info == "declaration uses 'sorry'")
+            if (info == "declaration uses `sorry`")
                 sorry.push(err);
             else
                 this.highlight(line, col, info);
@@ -1365,7 +1365,12 @@ ${task}`;
             selection.addRange(range);
         },
 
-        focus(cm, line, start, stop, title) {
+        focus(cmObj, line, start, stop, title) {
+            if (!cmObj.editor) {
+                console.log('editor not ready, retrying in 100ms...');
+                return sleep(100).then(() => this.focus(cmObj, line, start, stop, title));
+            }
+            let cm = cmObj.editor;
             if (title) {
                 // Mark the text range and apply styling/title
                 var tilde = '~'.repeat(stop - start);
@@ -1403,10 +1408,9 @@ ${task}`;
         },
 
         select(indices, line, col, title) {
+            var text = getitem(this.lemma, ...indices).lean.split('\n')[line];
             var cm = getitem(this.renderLean, ...indices);
             if (cm) {
-                var cm = cm.editor;
-                var text = cm.getLine(line);
                 if (col) {
                     // determine the end of the code segment
                     form_post('php/request/segment_detection.php', {lean: text.slice(col)}).then(data => {

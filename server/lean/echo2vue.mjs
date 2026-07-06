@@ -76,9 +76,6 @@ function collectStaleLemmaImports(tree, repoRoot) {
   return out;
 }
 
-/** Lean diagnostic line: `path.lean:line:col: severity: message` */
-const DIAG_RE = /^(.+\.lean):(\d+):(\d+): (\w+): (.+)$/;
-
 const SPAWN_MAX_BUFFER = 64 * 1024 * 1024;
 
 /**
@@ -242,7 +239,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
       tree.decode(parsed, latex);
       continue;
     }
-    const m = jsonline.match(DIAG_RE);
+    const m = jsonline.match(/^(.+\.lean):(\d+):(\d+): (\w+)(\([^()]+\))?: (.+)$/);
     if (m) {
       const lineNum = parseInt(m[2], 10);
       const col = parseInt(m[3], 10);
@@ -252,8 +249,8 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
         code,
         line: lineNum,
         col: col - 2,
-        type: m[4],
-        info: m[5],
+        type: m[4] + m[5],
+        info: m[6],
       });
     } else if (error.length) {
       const prev = error[error.length - 1];
