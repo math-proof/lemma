@@ -217,6 +217,18 @@ if ($code) {
     $code['error'] = std\decode($code['error']);
     $code['date'] = std\decode($code['date']);
 }
+
+if (!$code || !$code['lemma'] || !$code['date']) {
+    if (!is_readable($leanFile))
+        $code = null;
+    else {
+        $leanCode = compile(file_get_contents($leanFile));
+        $code = $leanCode->render2vue(false);
+    }
+}
+
+if ($code)
+    $code['module'] = $module;
 ?>
 <title><?php echo lemma_shell_h($title); ?></title>
 <style>
@@ -385,7 +397,7 @@ const VUE_DEFER_SCRIPTS = [
 	'static/unpkg.com/prismjs@1.30.0/components/prism-lean.js',
 ];
 
-async function upgradeLemmaVue(module) {
+async function upgradeLemmaVue(code) {
 	for (const path of VUE_STYLES)
 		await loadCss(asset(path));
 
@@ -398,13 +410,6 @@ async function upgradeLemmaVue(module) {
 	]);
 
 	await Promise.all(VUE_DEFER_SCRIPTS.map((path) => loadScript(asset(path))));
-
-	const res = await fetch(asset(`php/request/lemma_payload.php?module=${encodeURIComponent(module)}`));
-	if (!res.ok)
-		throw new Error(`lemma payload HTTP ${res.status}`);
-	const code = await res.json();
-	if (typeof code?.error === 'string' && code.error)
-		throw new Error(code.error);
 
 	const shell = document.getElementById('lemma-shell');
 	const stage = document.getElementById('lemma-stage');
@@ -447,8 +452,12 @@ async function upgradeLemmaVue(module) {
 		finish();
 }
 
-const module = <?php echo json_encode($module, JSON_UNESCAPED_UNICODE); ?>;
-const run = () => upgradeLemmaVue(module).catch((err) => console.error('[upgradeLemmaVue]', err));
+const lemmaCode = <?php echo $code ? std\encode($code) : 'null'; ?>;
+const run = () => {
+	if (!lemmaCode?.lemma)
+		return;
+	upgradeLemmaVue(lemmaCode).catch((err) => console.error('[upgradeLemmaVue]', err));
+};
 if ('requestIdleCallback' in window)
 	requestIdleCallback(run, { timeout: 2000 });
 else
