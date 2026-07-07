@@ -1,19 +1,25 @@
-import Lemma.Hyperreal.IsSt_St.of.NotInfinite
 import sympy.functions.elementary.exponential
-open Hyperreal
+import sympy.series.limits
 
 
 @[main]
 private lemma main
   {x : ℝ*}
 -- given
-  (h : ¬x.Infinite) :
+  (h : ¬x → ∞) :
 -- imply
-  x.exp.st = x.st.exp := by
+  stdPart x.exp = (stdPart x).exp := by
 -- proof
-  have h_st := IsSt_St.of.NotInfinite h
-  have h_map := h_st.map Real.continuous_exp.continuousAt
-  exact h_map.st_eq
+  have hx := not_lt.mp h
+  have h_tendsto : x.Tendsto (nhds (stdPart x)) := by
+    rw [tendsto_iff_forall]
+    constructor <;>
+      intro s hs
+    ·
+      exact (ArchimedeanClass.lt_of_lt_stdPart Hyperreal.coeRingHom hx hs).le
+    ·
+      exact (ArchimedeanClass.lt_of_stdPart_lt Hyperreal.coeRingHom hx hs).le
+  simpa [Hyperreal.exp] using stdPart_of_tendsto (stdPart_map Real.continuous_exp.continuousAt h_tendsto)
 
 
 -- created on 2025-12-27

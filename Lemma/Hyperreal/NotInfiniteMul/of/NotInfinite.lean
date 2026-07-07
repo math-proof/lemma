@@ -8,10 +8,10 @@ open Hyperreal Nat
 private lemma main
   {x : ℝ*}
 -- given
-  (h : ¬x.Infinite)
+  (h : ¬x → ∞)
   (r : ℝ) :
 -- imply
-  ¬Infinite (x * r) := by
+  ¬(x * r) → ∞ := by
 -- proof
   apply NotInfiniteMul.of.NotInfinite.NotInfinite h
   apply NotInfinite
@@ -22,9 +22,9 @@ private lemma left
   {x : ℝ*}
 -- given
   (r : ℝ)
-  (h : ¬x.Infinite) :
+  (h : ¬x → ∞) :
 -- imply
-  ¬Infinite (r * x) := by
+  ¬(r * x) → ∞ := by
 -- proof
   rw [Mul.comm]
   apply main h

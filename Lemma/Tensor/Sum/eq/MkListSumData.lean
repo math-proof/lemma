@@ -29,7 +29,7 @@ private lemma main
   ext i
   simp
   rw [Head.eq.Get_0.fin]
-  rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+  erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp
 
 

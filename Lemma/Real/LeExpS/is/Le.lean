@@ -12,7 +12,7 @@ private lemma main
 -- imply
   exp a ≤ exp b ↔ a ≤ b := by
 -- proof
-  simp [← NotGt.is.Le]
+  simp only [Ge.is.NotLt]
   rw [not_iff_not]
   apply LtExpS.is.Lt
 

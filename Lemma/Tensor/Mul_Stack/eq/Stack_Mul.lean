@@ -18,6 +18,7 @@ private lemma main
   rw [EqGetStack.fn]
   rw [GetMul.eq.MulGetS]
   rw [EqGetStack]
+  rfl
 
 
 -- created on 2025-07-20

@@ -92,7 +92,7 @@ private lemma main
         simp only [GetElem.getElem]
         rw [GetPermute__Neg.eq.Get_0.of.Gt.fin (by simp [bz', args, args', bz'1])]
         simp [h_bz, bz', args, args', bz'1]
-      rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, h_i⟩)]
+      erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, h_i⟩)]
       ·
         simp
         apply SEqCast.of.SEq.Eq
@@ -130,7 +130,7 @@ private lemma main
               .
                 simp
               .
-                rw [GetPermute.eq.Cast_PermuteGet.of.Lt_Get_0.GtLength.Gt_0.Ge_0]
+                erw [GetPermute.eq.Cast_PermuteGet.of.Lt_Get_0.GtLength.Gt_0.Ge_0]
                 .
                   apply SEqCast.of.SEq.Eq
                   .

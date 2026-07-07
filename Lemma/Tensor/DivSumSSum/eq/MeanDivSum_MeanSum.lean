@@ -42,17 +42,16 @@ private lemma main
     subst hb
     rw [Sum.eq.Zero (X := loss.sum)]
     rw [Sum.eq.Zero (X := mask.sum)]
-    rw [EqDiv0_0.scalar]
-    rfl
+    repeat erw [EqDiv0_0.scalar]
   else
-    rw [Div.eq.DivDivS.of.Ne_0 (A := ↑batch_size)]
+    erw [Div.eq.DivDivS.of.Ne_0 (A := ↑batch_size)]
     .
       simp [HDiv.hDiv]
       apply Eq.of.EqDataS
       ext i
       simp [Div.eq.HDiv]
-      simp [DataDiv.eq.DivDataS]
-      simp [GetDiv.eq.DivGetS.fin]
+      erw [DataDiv.eq.DivDataS]
+      erw [GetDiv.eq.DivGetS.fin]
       simp [Eq_0]
       simp [GetElem.getElem]
     .

@@ -11,13 +11,13 @@ open Hyperreal Rat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬Infinitesimal a)
-  (h_b : ¬Infinitesimal b)
-  (h_a_inf : ¬Infinite a)
-  (h_b_inf : ¬Infinite b)
-  (h : st (a / b) > 0) :
+  (h_a : ¬a → 0)
+  (h_b : ¬b → 0)
+  (h_a_inf : ¬a → ∞)
+  (h_b_inf : ¬b → ∞)
+  (h : stdPart (a / b) > 0) :
 -- imply
-  st (a * b)⁻¹ > 0 := by
+  stdPart (a * b)⁻¹ > 0 := by
 -- proof
   rw [StInv.eq.InvSt]
   simp

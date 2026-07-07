@@ -1,10 +1,11 @@
+import Lemma.Int.EqSubAdd
 import Lemma.Hyperreal.InfiniteInfty
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinite
 import Lemma.Hyperreal.NeInfty0
 import Lemma.Hyperreal.NotInfinitesimalInfty
 import Lemma.Hyperreal.Setoid.is.OrAndS
 import Lemma.Rat.DivAdd.eq.AddDiv.of.Ne_0
-open Hyperreal Rat
+open Hyperreal Rat Int
 
 
 @[main]
@@ -19,7 +20,7 @@ private lemma main
   constructor
   ·
     rw [DivAdd.eq.AddDiv.of.Ne_0 NeInfty0]
-    simp
+    simp only [EqSubAdd]
     apply InfinitesimalDiv.of.Infinite
     apply InfiniteInfty
   ·

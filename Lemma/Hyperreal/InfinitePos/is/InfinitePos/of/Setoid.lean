@@ -13,29 +13,26 @@ private lemma mp
   {a b : ℝ*}
 -- given
   (h : a ≈ b)
-  (h_a : a.InfinitePos) :
+  (h_a : a → +∞) :
 -- imply
-  b.InfinitePos := by
+  b → +∞ := by
 -- proof
   have h_or := OrAndS.of.Setoid h
   have h_a_eps := NotInfinitesimal.of.InfinitePos h_a
   simp [h_a_eps] at h_or
   let ⟨h_ab, h_b⟩ := h_or
   have h_st := EqSt.of.InfinitesimalSub h_ab
-  have ⟨h_a, h_a_neg⟩ := Infinite.Gt_0.of.InfinitePos h_a
-  if h_b_pos : b.InfinitePos then
+  have ⟨h_a, h_a_neg⟩ := Infinite.Gt_0.of.InfinitePos h_a.left h_a.right
+  if h_b_pos : b → +∞ then
     assumption
-  else if h_b_neg : b.InfiniteNeg then
-    have ⟨h_b, h_b_pos⟩ := Infinite.Lt_0.of.InfiniteNeg h_b_neg
+  else if h_b_neg : b → -∞ then
+    have ⟨h_b, h_b_pos⟩ := Infinite.Lt_0.of.InfiniteNeg h_b_neg.left h_b_neg.right
     have h_ab := Gt0Div.of.Gt_0.Lt_0 h_a_neg h_b_pos
     have h_ab_st := LeSt_0.of.Le_0 (by linarith) (x := a / b)
     linarith
   else if h_b : b = 0 then
     subst h_b
     simp at h_st
-    have := EqSt 0
-    simp at this
-    simp [this] at h_st
   else
     have : NeZero b := ⟨h_b⟩
     have h_b := NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_b_pos, h_b_neg⟩
@@ -50,7 +47,7 @@ private lemma main
 -- given
   (h : a ≈ b) :
 -- imply
-  a.InfinitePos ↔ b.InfinitePos :=
+  a → +∞ ↔ b → +∞ :=
 -- proof
   ⟨mp h, mp h.symm⟩
 

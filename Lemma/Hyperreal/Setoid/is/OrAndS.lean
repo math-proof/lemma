@@ -7,7 +7,7 @@ private lemma main
 -- given
   (a b : ℝ*) :
 -- imply
-  a ≈ b ↔ Infinitesimal a ∧ Infinitesimal b ∨ Infinitesimal (a / b - 1) ∧ ¬Infinitesimal b:= by
+  a ≈ b ↔ (a → 0) ∧ b → 0 ∨ (a / b - 1) → 0 ∧ ¬b → 0:= by
 -- proof
   rfl
 

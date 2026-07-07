@@ -12,10 +12,10 @@ open Hyperreal Nat Rat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : Infinite a)
-  (h_b : ¬Infinitesimal b) :
+  (h_a : a → ∞)
+  (h_b : ¬b → 0) :
 -- imply
-  Infinite (a * b) := by
+  (a * b) → ∞ := by
 -- proof
   apply Infinite.of.All_GtAbs
   intro ⟨δ, hδ⟩

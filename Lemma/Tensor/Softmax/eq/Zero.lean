@@ -25,21 +25,23 @@ private lemma main
   simp
   unfold Tensor.unsqueeze
   simp [EqData0'0]
-  simp [EqCast_0'0.of.Eq]
-  simp [EqTensor0'0]
+  erw [EqCast_0'0.of.Eq]
+  erw [EqTensor0'0]
   unfold Tensor.repeat
   simp [EqData0'0]
   unfold List.Vector.splitAt
-  simp [EqCast_0'0.of.Eq]
+  simp
+  erw [EqCast_0'0.of.Eq]
   unfold List.Vector.unflatten
-  simp [ArraySlice0.eq.Zero]
+  simp only [ArraySlice0.eq.Zero]
   simp [EqCast_0'0.of.Eq]
   simp [Repeat0.eq.Zero]
   rw [MapRange.eq.Zero]
   rw [Flatten0.eq.Zero]
   simp [EqCast_0'0.of.Eq]
-  simp [EqTensor0'0]
+  erw [EqTensor0'0]
   apply @Tensor.EqDiv_0'0
+  repeat simp [List.prod]
 
 
 -- created on 2025-11-30

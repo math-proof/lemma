@@ -18,7 +18,8 @@ private lemma main
   | [] =>
     contradiction
   | s₀ :: s =>
-    rw [GetAdd.eq.AddGetS.fin]
+    erw [GetAdd.eq.AddGetS.fin]
+    rfl
 
 
 -- created on 2025-11-06

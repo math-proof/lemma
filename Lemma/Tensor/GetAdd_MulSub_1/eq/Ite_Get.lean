@@ -42,7 +42,7 @@ private lemma main
   (A + (mask - 1) * ∞)[i, j] ≈ if p i j then
     A[i, j]
   else
-    (-∞ : Tensor ℝ* []) := by
+    (- ∞ : Tensor ℝ* []) := by
 -- proof
   intro mask
   simp [GetElem.getElem]
@@ -53,7 +53,7 @@ private lemma main
   simp
   have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) ((mask - 1).get i) ∞ (i := j)
   simp at this
-  rw [this]
+  simp [this]
   split_ifs with h_p
   ·
     rw [GetSub.eq.SubGetS.fin]

@@ -29,17 +29,17 @@ private lemma main
     simp [Sum.eq.Zero]
     have := Sum.eq.Zero X
     rw [EqGetS.of.Eq.GtLength_0 h_s this ⟨i, h_i⟩]
-    rw [EqGet0_0.fin]
+    erw [EqGet0_0.fin]
     apply SEq0S.of.Eq
     simp
   else
     have h_sum := Sum_0.eq.Sum_Get.fin X
-    have h_sum : (X.sum 0).get ⟨i, h_Xi⟩ = (∑ i : Fin s₀, X.get i).get ⟨i, by simpa [← h_sum]⟩ := by
+    have h_sum : (X.sum 0).get ⟨i, h_Xi⟩ = (∑ i : Fin s₀, X.get i).get ⟨i, by grind⟩ := by
       congr
       simp
       aesop
     simp [Sum_0.eq.Sum_Get.fin]
-    simp [h_sum]
+    erw [h_sum]
     have h_all : ∀ k : Fin s₀, (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get k ≃ (X.get ⟨k, by rw [Length.eq.Get_0.of.GtLength_0 (by simp)]; simp⟩).get ⟨i, by rw [Length.eq.Get_0.of.GtLength_0 (by simpa)]; simpa⟩ := by
       intro k
       apply GetSelect_1.as.Get.of.Lt.Lt_Get_0.GtLength_0 h_s h_i
@@ -48,7 +48,8 @@ private lemma main
     simp at this
     symm
     apply this.trans
-    rw [GetSum.eq.Sum_Get.of.GtLength_0 h_s (fun i : Fin s₀ => X.get i) ⟨i, by omega⟩]
+    erw [GetSum.eq.Sum_Get.of.GtLength_0 h_s (fun i : Fin s₀ => X.get i) ⟨i, by omega⟩]
+    rfl
 
 
 -- created on 2025-11-01

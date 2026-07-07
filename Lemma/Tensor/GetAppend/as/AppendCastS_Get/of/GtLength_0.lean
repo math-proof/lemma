@@ -30,7 +30,7 @@ private lemma main
     simp
     let A' : List.Vector (Tensor α (b ++ m :: s)) ((b₀ :: b ++ m :: s).headD 1) := A.toVector
     let B' : List.Vector (Tensor α (b ++ n :: s)) ((b₀ :: b ++ n :: s).headD 1) := B.toVector
-    rw [GetFromVector.eq.Get.fin (Vector.map₂ HAppend.hAppend A' B')]
+    erw [GetFromVector.eq.Get.fin (Vector.map₂ HAppend.hAppend A' B')]
     simp [A', B']
     have := GetToVector.eq.Get.fin A i
     simp at this
@@ -38,6 +38,7 @@ private lemma main
     have := GetToVector.eq.Get.fin B i
     simp at this
     rw [this]
+    rfl
 
 
 -- created on 2026-01-10

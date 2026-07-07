@@ -30,15 +30,15 @@ private lemma main
   apply Eq.of.EqDataS
   rw [DataDiv.eq.DivDataS]
   simp [DataExp.eq.ExpData]
-  rw [Div.eq.Div_Replicate]
+  erw [Div.eq.Div_Replicate]
   apply EqUFnS.of.Eq _ (exp X / ·)
   ext i
   simp
   unfold Tensor.keepdim
   simp
-  rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
-  rw [GetCast.eq.Get.of.Eq.fin (by simp)]
-  rw [GetData.eq.GetDataGet.of.Lt.fin (by grind)]
+  erw [DataCast.eq.Cast_Data.of.Eq (by simp)]
+  erw [GetCast.eq.Get.of.Eq.fin (by simp)]
+  erw [GetData.eq.GetDataGet.of.Lt.fin (by grind)]
   have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by simp) (by simp; omega) (((exp (⟨X⟩ : Tensor α [n])).sum 0).unsqueeze 0) (i := i) (n := n)
   simp at this
   simp [this]

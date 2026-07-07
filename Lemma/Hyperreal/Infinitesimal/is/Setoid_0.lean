@@ -7,10 +7,10 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  Infinitesimal x ↔ x ≈ 0 := by
+  x → 0 ↔ x ≈ 0 := by
 -- proof
   rw [Setoid.is.OrAndS]
-  simp [Infinitesimal0]
+  simp
 
 
 

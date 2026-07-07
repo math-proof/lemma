@@ -22,7 +22,7 @@ private lemma main
 -- given
   (a b : ℝ*) :
 -- imply
-  a ≈ b ↔ Infinitesimal (a - b) ∨ Infinitesimal (a / b + b / a - 2) := by
+  a ≈ b ↔ ((a - b) → 0) ∨ (a / b + b / a - 2) → 0 := by
 -- proof
   rw [show (2 : ℝ*) = (2 : ℝ) by rfl]
   rw [Setoid.is.OrAndS]
@@ -46,38 +46,37 @@ private lemma main
     apply NotInfinite.of.NeSt_0
     linarith
   ·
-    if h_a : a.Infinitesimal then
+    if h_a : a → 0 then
       simp [h_a]
-      if h_b : b.Infinitesimal then
+      if h_b : b → 0 then
         simp [h_b]
       else
         have := NotInfinitesimalSub.of.Infinitesimal.NotInfinitesimal h_a h_b
         contradiction
     else
       simp [h_a]
-      if h_b : b.Infinitesimal then
+      if h_b : b → 0 then
         have := NotInfinitesimalSub.of.NotInfinitesimal.Infinitesimal h_a h_b
         contradiction
       else
-        simp [h_b]
         rw [SubDiv.eq.DivSub.of.Ne_0 (by grind)]
-        apply InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h h_b
+        refine ⟨InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h h_b, ?_⟩
+        apply le_of_not_gt h_b
   ·
-    if h_a : a.Infinitesimal then
+    if h_a : a → 0 then
       simp [h_a]
-      if h_b : b.Infinitesimal then
+      if h_b : b → 0 then
         simp [h_b]
       else
         have := NotInfinitesimalSubAddDivS.of.NotInfinitesimal.Infinitesimal h_a h_b (d := 2)
         contradiction
     else
       simp [h_a]
-      if h_b : b.Infinitesimal then
+      if h_b : b → 0 then
         rw [Add.comm] at h
         have := NotInfinitesimalSubAddDivS.of.NotInfinitesimal.Infinitesimal h_b h_a (d := 2)
         contradiction
       else
-        simp [h_b]
         have h_st := EqSt.of.InfinitesimalSub h
         rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite] at h_st
         ·
@@ -85,9 +84,12 @@ private lemma main
             arg 2
             rw [StDiv.eq.InvStInv]
           have h := Eq_1.of.Add_Inv.eq.Two h_st
-          apply InfinitesimalSub.of.EqSt.NotInfinite _ h
-          apply NotInfinite.of.NeSt_0
-          linarith
+          refine ⟨InfinitesimalSub.of.EqSt.NotInfinite ?_ h, ?_⟩
+          .
+            apply NotInfinite.of.NeSt_0
+            linarith
+          .
+            apply le_of_not_gt h_b
         ·
           apply NotInfiniteDiv.of.InfinitesimalSubAddDivS.NotInfinitesimal h_a h
         ·

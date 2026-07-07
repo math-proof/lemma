@@ -35,13 +35,13 @@ private lemma main
   simp [Tensor.batch_dot]
   apply Eq_Cast.of.SEq.Eq (by grind)
   conv_lhs => rw [Eq_Fin i]
-  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]
+  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by simp; grind)]
   apply SEqCast.of.SEq.Eq (by simp; grind)
   apply SEq.of.Eq
   rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin (by grind) (by grind) (by grind)]
   apply EqSumS.of.Eq
-  rw [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind)]
-  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]
+  erw [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind)]
+  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]
   conv_lhs =>
     arg 2
     rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]

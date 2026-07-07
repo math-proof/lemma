@@ -9,15 +9,15 @@ private lemma mp
   {a b : ℝ*}
 -- given
   (h : a ≈ b)
-  (h_a : a.Infinitesimal) :
+  (h_a : a → 0) :
 -- imply
-  b.Infinitesimal := by
+  b → 0 := by
 -- proof
   have h_or := OrAndS.of.Setoid h
   simp [h_a] at h_or
   by_contra h_b
   simp [h_b] at h_or
-  have := EqSt.of.InfinitesimalSub h_or
+  have := EqSt.of.InfinitesimalSub h_or.left
   have := InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
   have := EqSt_0.of.Infinitesimal this
   linarith
@@ -29,7 +29,7 @@ private lemma main
 -- given
   (h : a ≈ b) :
 -- imply
-  a.Infinitesimal ↔ b.Infinitesimal :=
+  a → 0 ↔ b → 0 :=
 -- proof
   ⟨mp h, mp h.symm⟩
 

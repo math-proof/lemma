@@ -19,7 +19,8 @@ private lemma main
   have := GetNeg.eq.NegGet.fin (i := ⟨i, by grind⟩) B
   simp at this
   rw [this]
-  rw [Sub.eq.Add_Neg]
+  erw [Sub.eq.Add_Neg]
+  rfl
 
 
 -- created on 2025-12-08

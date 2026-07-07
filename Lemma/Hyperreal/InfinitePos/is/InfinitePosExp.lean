@@ -13,7 +13,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  x.InfinitePos ↔ x.exp.InfinitePos := by
+  x → +∞ ↔ x.exp → +∞ := by
 -- proof
   constructor
   <;> intro h

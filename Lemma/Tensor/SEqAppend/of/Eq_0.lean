@@ -78,7 +78,8 @@ private lemma main
     rw [Head.eq.Get_0.fin]
     rw [GetMap₂.eq.BFnGetS.fin]
     simp
-    repeat rw [EqHeadSplitAt_0]
+    repeat erw [EqHeadSplitAt_0]
+    rfl
   | cons b bz ih =>
     subst h
     apply SEq.of.All_SEqGetS.Eq.Eq

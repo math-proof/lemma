@@ -8,7 +8,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  x.exp.Infinite ↔ x.exp.InfinitePos := by
+  x.exp → ∞ ↔ x.exp → +∞ := by
 -- proof
   rw [InfinitePos.is.Infinite.Gt_0]
   have := GtExp_0 x

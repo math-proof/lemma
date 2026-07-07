@@ -1,9 +1,10 @@
+import Lemma.Int.Sub0.eq.Neg
 import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetSub.eq.SubGetS
 import sympy.tensor.functions
 import sympy.tensor.stack
-open Tensor
+open Tensor Int
 
 
 @[main]
@@ -24,11 +25,20 @@ private lemma main
   subst mask
   rw [GetSub.eq.SubGetS.fin]
   rw [EqGetStack.fn.fin]
-  rw [GetSub.eq.SubGetS.fin]
+  erw [GetSub.eq.SubGetS.fin]
   rw [EqGetStack.fn.fin]
-  repeat rw [EqGet1_1.fin]
-  split_ifs
-  repeat aesop
+  rw [EqGet1_1.fin]
+  erw [EqGet1_1.fin]
+  split_ifs with h
+  .
+    simp [h]
+    erw [Nat.Sub.eq.Zero]
+    rfl
+  .
+    simp [h]
+    erw [Sub0.eq.Neg]
+    rfl
+
 
 
 -- created on 2025-12-23

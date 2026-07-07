@@ -13,10 +13,10 @@ open Nat Real Hyperreal Int
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬Infinite a)
-  (h_b : ¬Infinite b) :
+  (h_a : ¬a → ∞)
+  (h_b : ¬b → ∞) :
 -- imply
-  ¬Infinite (a * b) := by
+  ¬(a * b) → ∞ := by
 -- proof
   apply NotInfinite.of.Any_LeAbs
   let ⟨⟨δ_a, hδ_a⟩, h_a⟩ := Any_LeAbs.of.NotInfinite h_a

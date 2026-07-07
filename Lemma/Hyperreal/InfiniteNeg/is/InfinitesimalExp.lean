@@ -1,4 +1,5 @@
 import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
+import Lemma.Hyperreal.InfiniteNeg.is.All_Lt
 import Lemma.Real.AbsExp.eq.Exp
 import Lemma.Real.LtExpS.is.Lt
 open Hyperreal Real
@@ -9,12 +10,12 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  InfiniteNeg x ↔ Infinitesimal x.exp := by
+  x → -∞ ↔ x.exp → 0 := by
 -- proof
   rw [Infinitesimal.is.All_LtAbs]
   have h_rfl : Exp.exp x = x.exp := rfl
   rw [← h_rfl, AbsExp.eq.Exp x, h_rfl]
-  unfold Hyperreal.InfiniteNeg
+  rw [InfiniteNeg.is.All_Lt]
   constructor <;>
     intro h
   ·

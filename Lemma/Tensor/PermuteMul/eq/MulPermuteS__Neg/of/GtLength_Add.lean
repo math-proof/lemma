@@ -56,7 +56,7 @@ private lemma main
       symm
       apply h_A_mul_B.trans
       have h_s := Eq_Permute__0 ⟨0, h_i⟩
-      rw [@Tensor.Cast_Mul.eq.MulCastS.of.Eq (h := h_s)]
+      erw [@Tensor.Cast_Mul.eq.MulCastS.of.Eq (h := h_s)]
       apply SEq.of.EqCast.Eq (h := h_s)
       rw [@Tensor.Cast_Mul.eq.MulCastS.of.Eq (h := h_s)]
     ·

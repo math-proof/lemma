@@ -27,7 +27,7 @@ private lemma main
   (h_j : j < n)
   (X : Tensor α (n :: s)) :
 -- imply
-  (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get ⟨j, by simp [LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0]; grind⟩ ≃ (X.get ⟨j, by simpa [Length.eq.Get_0.of.GtLength_0]⟩).get ⟨i, by simp_all [LengthGet.eq.Get_0.of.Lt_Get_0.GtLength_1]⟩ := by
+  (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get ⟨j, by grind⟩ ≃ (X.get ⟨j, by simpa [Length.eq.Get_0.of.GtLength_0]⟩).get ⟨i, by rwa [LengthGet.eq.Get_0.of.Lt_Get_0.GtLength_1 (by grind) (by grind)]⟩ := by
 -- proof
   unfold Tensor.get toVector
   simp only [GetElem.getElem]
@@ -41,17 +41,18 @@ private lemma main
       simp
     ·
       simp only [GetElem.getElem]
-      rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin h_j]
+      erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin h_j]
       unfold select
       simp [DataFromVector.eq.FlattenMapData]
-      simp [EqUnflattenFlatten]
-      rw [Select_0.eq.Cast_Get.of.Lt_Get_0.GtLength_0]
+      erw [EqUnflattenFlatten]
+      erw [Vector.GetMap.eq.UFnGet]
+      erw [Select_0.eq.Cast_Get.of.Lt_Get_0.GtLength_0]
       rw [DataCast.eq.Cast_Data.of.Eq (by simp)]
       apply SEqCast.of.SEq.Eq
       .
         simp
       .
-        rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (by grind) (X.toVector.get ⟨j, by grind⟩) ⟨i, by grind⟩]
+        erw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (by grind) (X.toVector.get ⟨j, by grind⟩) ⟨i, by grind⟩]
         apply SEqCast.of.SEq.Eq
         .
           simp
@@ -60,8 +61,8 @@ private lemma main
           apply EqGetS.of.Eq.Lt
           congr
           simp
-          rw [GetToVector.eq.Get.fin (i := ⟨j, by simpa [Length.eq.Get_0.of.Ne_Nil]⟩)]
-          rw [GetVal.eq.Get.of.Lt (by simp; grind)]
+          erw [GetToVector.eq.Get.fin (i := ⟨j, by simpa [Length.eq.Get_0.of.Ne_Nil]⟩)]
+          rw [GetVal.eq.Get.of.Lt (by grind)]
           apply Eq.of.EqDataS
           rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨j, by grind⟩) (by simp)]
           apply EqCast.of.SEq

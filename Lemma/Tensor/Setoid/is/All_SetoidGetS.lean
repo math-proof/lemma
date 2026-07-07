@@ -26,25 +26,24 @@ private lemma main
     simp [Foldr.eq.Prod]
   simp [Setoid.is.SetoidDataS]
   simp [Setoid.is.All_SetoidGetS.fin]
+  repeat simp_rw [Tensor.DataGet.eq.GetUnflattenData.fin]
   constructor <;>
     intro h
   ·
     intro t j
-    apply h ⟨t * s.prod + j, by
-      apply AddMul.lt.Mul.of.Lt.Lt
-      ·
-        grind
-      ·
-        have h_j := j.isLt
-        simp [Foldr.eq.Prod] at h_j
-        assumption⟩
+    simp [GetElem.getElem]
+    repeat erw [Vector.GetUnflatten.eq.Get_AddMul.fin]
+    refine h ⟨t * s.prod + j, ?_⟩
   ·
     intro k
     have h_k := k.isLt
     let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_k
     have h_qr := Eq_Fin.of.EqVal h_qr
     simp [h_qr]
-    apply h q r
+    have h := h q r
+    simp [GetElem.getElem] at h
+    repeat erw [Vector.GetUnflatten.eq.Get_AddMul.fin] at h
+    assumption
 
 
 -- created on 2025-12-24
