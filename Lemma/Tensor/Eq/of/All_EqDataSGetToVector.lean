@@ -25,6 +25,7 @@ private lemma main
   have h_eq := ArraySliceData.as.DataGetToVector a i
   apply h_eq.trans
   rw [h i]
+  rfl
 
 
 -- created on 2025-05-18

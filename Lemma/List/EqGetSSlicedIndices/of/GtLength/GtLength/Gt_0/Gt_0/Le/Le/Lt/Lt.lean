@@ -1,4 +1,4 @@
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt
 import Lemma.Rat.LeToNatCeil_1.of.Le_Add
 import Lemma.Nat.Lt.of.Lt.Le
@@ -25,13 +25,10 @@ private lemma main
 -- proof
   induction i generalizing start start' with
   | zero =>
-    -- Base case: The first elements of both slices are the same
     unfold Nat.sliced_indices
     split_ifs <;> simp_all
   | succ i ih =>
-    -- Inductive step: Use the inductive hypothesis to show the next elements are the same
     unfold Nat.sliced_indices
-    -- Split the cases based on whether the next index is within bounds
     split_ifs with h
     ·
       rw [LengthSlicedIndices.eq.ToNatCeilDivSub.of.Gt_0.Le.Lt] at h_i

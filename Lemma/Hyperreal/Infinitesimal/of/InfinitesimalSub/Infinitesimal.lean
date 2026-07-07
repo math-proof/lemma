@@ -15,10 +15,10 @@ constructor order of addition of (a - b) + b = a
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : Infinitesimal (a - b))
-  (h_b : Infinitesimal b) :
+  (h_a : (a - b) → 0)
+  (h_b : b → 0) :
 -- imply
-  Infinitesimal a := by
+  a → 0 := by
 -- proof
   have := InfinitesimalAdd.of.Infinitesimal.Infinitesimal h_a h_b
   simp_all

@@ -8,7 +8,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  ¬Infinitesimal x ↔ ∃ δ : ℝ⁺, |x| ≥ δ := by
+  ¬x → 0 ↔ ∃ δ : ℝ⁺, |x| ≥ δ := by
 -- proof
   rw [Infinitesimal.is.All_LtAbs]
   simp [NotAll.is.Any_Not]

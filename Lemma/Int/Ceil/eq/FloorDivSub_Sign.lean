@@ -64,8 +64,6 @@ private lemma main
     norm_num at h₁
     have := EqAddS.of.Eq.Eq h₀ h₁
     ring_nf at this
-    rw [Add_Sub.eq.SubAdd] at this
-    rw [Add_Neg.eq.Sub] at this
     rw [AddFModS.eq.FModNegSign] at this
     rw [FModNegSign.eq.Sub_Sign] at this
     rw [SubNeg.comm] at this

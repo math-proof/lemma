@@ -1,7 +1,7 @@
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Le.of.LtSub_1
 import Lemma.Nat.Sub.eq.Zero
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.NotOdd.is.Even
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Nat.EqAddSub_1.of.Lt_0

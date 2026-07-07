@@ -40,24 +40,26 @@ private lemma main
       simp [HDiv.hDiv]
       apply Eq.of.EqDataS
       simp [Div.eq.HDiv]
-      simp [Div_Broadcast.eq.Div]
       simp at h
-      simp [ih h]
+      have h_sum : ∀ x : Tensor α s, (x / n.broadcast s (by simp)).sum dim = x.sum dim / n := fun x => by
+        simpa [Div_Broadcast.eq.Div] using ih h x
+      erw [funext h_sum]
       have h_fun : (fun x : Tensor α s ↦ x.sum dim / n) = (fun x : Tensor α (s.eraseIdx dim) => x / n) ∘ (fun x : Tensor α s => x.sum dim) := by
         funext x
         simp
       simp [h_fun]
       simp only [Map_Comp.eq.MapMap]
-      let V : List.Vector (Tensor α (s.eraseIdx dim)) s₀ := X.toVector.map (fun x : Tensor α s ↦ x.sum dim)
-      have h_V : V = X.toVector.map (fun x : Tensor α s ↦ x.sum dim) := rfl
-      rw [← h_V]
       unfold Tensor.fromVector
       simp
+      have h_data : (fun x : Tensor α s => (x.sum dim / n).data) =
+          (fun x : Tensor α (s.eraseIdx dim) => (x / n).data) ∘ (fun x : Tensor α s => x.sum dim) := by
+        funext x
+        simp
+      simp only [h_data, Map_Comp.eq.MapMap]
       have h_fun : (fun x : Tensor α (s.eraseIdx dim) ↦ (x / n).data) = (fun x : Tensor α (s.eraseIdx dim) => x.data) ∘ (fun x => x / n) := by
         funext x
         simp
-      simp [h_fun]
-      simp only [Map_Comp.eq.MapMap]
+      simp only [h_fun, Map_Comp.eq.MapMap]
       have h_fun : (fun x : Tensor α (s.eraseIdx dim) => x.data) = Tensor.data := by
         simp
       simp only [h_fun]

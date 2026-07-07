@@ -7,7 +7,7 @@ open Hyperreal Rat
 private lemma main
   {x : ℝ*}
 -- given
-  (h : x⁻¹.Infinite) :
+  (h : x⁻¹ → ∞) :
 -- imply
   x ≠ 0 := by
 -- proof

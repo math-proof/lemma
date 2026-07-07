@@ -17,7 +17,7 @@ private lemma main
     contradiction
   | n :: s =>
     simp
-    rw [EqStack_Get]
+    erw [EqStack_Get]
 
 
 -- created on 2025-11-11

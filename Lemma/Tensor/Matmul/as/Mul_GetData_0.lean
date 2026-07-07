@@ -43,7 +43,7 @@ private lemma main
         subst h_i
         rw [GetMul.eq.MulGet]
         rw [GetMul.eq.Mul_Get]
-        simp
+        rfl
     ·
       simp
   .

@@ -4,7 +4,7 @@ import Lemma.List.LengthFlatten.eq.SumMapLength
 import Lemma.Vector.SumMapVal.eq.Mul
 import Lemma.Vector.GetVal.eq.Get
 import Lemma.Vector.GetVal.eq.Get.of.Lt
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.GetElem.eq.None.of.LeLength
 import Lemma.List.EqGetS.of.Eq.GtLength
 open Vector List Nat

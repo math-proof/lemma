@@ -2,6 +2,7 @@ import Lemma.List.Prod.eq.Foldr
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
+import Lemma.Vector.GetMap.eq.UFnGet
 import sympy.tensor.tensor
 open Tensor Vector List
 
@@ -28,9 +29,12 @@ private lemma main
     repeat rw [DataGet.eq.GetUnflattenData.fin]
     simp
     ext j
-    simp
-    repeat rw [GetUnflatten.eq.Get_AddMul.fin]
+    repeat erw [GetUnflatten.eq.Get_AddMul.fin]
     simp [Foldr.eq.Prod]
+    erw [GetMap.eq.UFnGet]
+    erw [GetMap.eq.UFnGet]
+    congr 1
+    exact (GetUnflatten.eq.Get_AddMul.fin (v := X.data) (i := ⟨i, by grind⟩) j).symm
 
 
 -- created on 2025-12-23

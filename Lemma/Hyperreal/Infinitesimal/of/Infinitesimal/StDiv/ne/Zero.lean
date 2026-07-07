@@ -1,17 +1,18 @@
+import Lemma.Rat.Ne_0.is.NeInv_0
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.StDiv.eq.InvStInv
-open Hyperreal
+open Hyperreal Rat
 
 
 @[main, mt]
 private lemma left
   {a b : ℝ*}
 -- given
-  (h_st : st (a / b) ≠ 0)
-  (h : a.Infinitesimal) :
+  (h_st : stdPart (a / b) ≠ 0)
+  (h : a → 0) :
 -- imply
-  b.Infinitesimal := by
+  b → 0 := by
 -- proof
   apply Infinitesimal.of.Infinitesimal.NotInfinitesimalDiv h
   apply NotInfinitesimal.of.NeSt_0 h_st
@@ -21,13 +22,13 @@ private lemma left
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_st : st (a / b) ≠ 0)
-  (h : b.Infinitesimal) :
+  (h_st : stdPart (a / b) ≠ 0)
+  (h : b → 0) :
 -- imply
-  a.Infinitesimal := by
+  a → 0 := by
 -- proof
   rw [StDiv.eq.InvStInv] at h_st
-  simp at h_st
+  have h_st := Ne_0.of.NeInv_0 h_st
   apply left h_st h
 
 

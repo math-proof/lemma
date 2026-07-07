@@ -9,7 +9,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  Infinite x ↔ Infinite |x| := by
+  x → ∞ ↔ |x| → ∞ := by
 -- proof
   if h : x ≥ 0 then
     rw [EqAbs.of.Ge_0 h]

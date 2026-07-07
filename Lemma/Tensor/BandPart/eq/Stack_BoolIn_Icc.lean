@@ -33,10 +33,12 @@ private lemma main
       linarith
     simp [h_u]
   ·
-    repeat rw [EqGet1_1.fin]
+    rw [EqGet1_1.fin]
+    erw [EqGet1_1.fin]
     simp at h_l
     simp at h_u
     simp [h_l, h_u]
+    rfl
 
 
 -- created on 2026-01-02

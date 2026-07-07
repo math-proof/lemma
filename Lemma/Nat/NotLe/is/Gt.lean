@@ -1,15 +1,23 @@
-import Lemma.Nat.NotGe.is.Lt
-open Nat
+import sympy.Basic
 
 
-@[main, comm, mp]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.NotLe.is.Gt |
+| comm | Nat.Gt.is.NotLe |
+| mp | Nat.Gt.of.NotLe |
+| mp.comm | Nat.Lt.of.NotGe |
+-/
+@[main, comm, mp, mp.comm]
 private lemma main
   [LinearOrder α]
   {a b : α} :
 -- imply
-  (¬a ≤ b) ↔ (a > b) :=
+  ¬(a ≤ b) ↔ a > b :=
 -- proof
-  ⟨Lt.of.NotGe, NotGe.of.Lt⟩
+  not_le
 
 
--- created on 2025-03-21
+-- created on 2025-03-29
+-- updated on 2025-03-30

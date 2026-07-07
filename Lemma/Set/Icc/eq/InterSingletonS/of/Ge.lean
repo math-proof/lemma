@@ -1,4 +1,4 @@
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Set.Icc.eq.Empty.of.Gt
 import Lemma.Set.InterSingletonS.subset.Icc
 import Lemma.Set.EqEmpty.is.Subset_Empty
@@ -15,15 +15,15 @@ private lemma main
 -- imply
   Icc x y = {x} ∩ {y} := by
 -- proof
-  
+
   by_cases h' : x > y
-  · 
+  ·
     have h := Icc.eq.Empty.of.Gt h'
     have h_subset := InterSingletonS.subset.Icc x y
     rw [h] at h_subset
     have h := EqEmpty.of.Subset_Empty h_subset
     aesop
-  · 
+  ·
     have h' := Le.of.NotGt h'
     have h := Eq.of.Le.Ge h' h
     aesop

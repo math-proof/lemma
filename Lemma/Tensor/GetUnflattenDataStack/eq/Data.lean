@@ -1,4 +1,5 @@
 import sympy.tensor.stack
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.EqUnflattenFlatten
 open Vector
 
@@ -12,8 +13,9 @@ private lemma fin
   ([i < n] f i).data.unflatten[i] = (f i).data := by
 -- proof
   unfold Stack Tensor.fromVector
-  simp [← Eq_UnflattenFlatten]
+  erw [← Eq_UnflattenFlatten]
   simp [GetElem.getElem]
+  erw [GetMap.eq.UFnGet]
   congr
   simp [List.Vector.get]
   simp [List.Vector.range]

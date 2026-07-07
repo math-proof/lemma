@@ -16,9 +16,9 @@ private lemma main
   conv in (A + B)[i] =>
     rw [Eq_Stack A]
     rw [Eq_Stack B]
-  rw [AddStackS.eq.Stack_Add]
+  erw [AddStackS.eq.Stack_Add]
   have := EqGetStack.fn fun i : Fin m => A[i] + B[i]
-  simp_all
+  erw [this]
 
 
 -- created on 2025-07-20

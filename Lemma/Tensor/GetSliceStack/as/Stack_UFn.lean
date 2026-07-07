@@ -20,7 +20,7 @@ private lemma main
     intro j
     simp only [GetElem.getElem]
     simp [EqGetStack.fin]
-    rw [GetGetSlice.eq.Get.fin]
+    erw [GetGetSlice.eq.Get.fin]
     rw [EqGetStack.fin]
   .
     simp [Tensor.length]

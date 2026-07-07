@@ -14,10 +14,10 @@ private lemma main
   [NeZero (b : ℝ*)]
   {a : ℝ*}
 -- given
-  (h_a : Infinite a)
-  (h_b : ¬Infinite b) :
+  (h_a : a → ∞)
+  (h_b : ¬b → ∞) :
 -- imply
-  Infinite (a / b) := by
+  (a / b) → ∞ := by
 -- proof
   have h_b_ne := NeZero.ne b
   apply Infinite.of.All_GtAbs

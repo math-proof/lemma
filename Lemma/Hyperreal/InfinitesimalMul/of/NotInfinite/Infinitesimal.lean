@@ -7,10 +7,10 @@ open Hyperreal Nat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬Infinite a)
-  (h_b : Infinitesimal b) :
+  (h_a : ¬a → ∞)
+  (h_b : b → 0) :
 -- imply
-  Infinitesimal (a * b) := by
+  (a * b) → 0 := by
 -- proof
   rw [Mul.comm]
   apply InfinitesimalMul.of.Infinitesimal.NotInfinite h_b h_a

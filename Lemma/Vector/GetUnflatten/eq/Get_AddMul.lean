@@ -1,4 +1,5 @@
-import Lemma.Vector.ValGetUnflatten.eq.ValArraySlice
+import Lemma.Vector.GetUnflatten.as.ArraySlice
+import Lemma.Vector.All_EqGetS.of.SEq
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Nat.AddMul.lt.Mul
@@ -12,21 +13,12 @@ private lemma main
   (i : Fin m)
   (j : Fin n):
 -- imply
-  have := AddMul.lt.Mul i j
-  v.unflatten[i, j] = v[i * n + j] := by
+  v.unflatten[i, j] = v[i * n + j]'(AddMul.lt.Mul i j) := by
 -- proof
-  intro h
-  simp [GetElem.getElem]
-  have := ValGetUnflatten.eq.ValArraySlice v i
-  simp [GetElem.getElem] at this
-  simp only [List.Vector.get] at this
-  simp at this
-  simp only [List.Vector.get]
-  simp
-  simp only [this]
+  have := AddMul.lt.Mul i j
+  have hbr : v.unflatten[i][j] = (v.array_slice (i * n) n)[j] := by simpa [GetElem.getElem] using All_EqGetS.of.SEq (GetUnflatten.as.ArraySlice v i) j
+  rw [hbr]
   apply GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
-  simp
-  apply Lt_Sub.of.LtAdd.left h
 
 
 -- created on 2025-05-31

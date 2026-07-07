@@ -70,15 +70,14 @@ private lemma main
       constructor
       ·
         simp [Eq.of.GetElemRange.eq.Some h_some]
-        have : i + 1 < (head :: tail).length := by
+        have h_lt : i + 1 < (head :: tail).length := by
           simp_all
-        have := GetElemEnumerate.eq.Some.of.GtLength this
-        simp_all
-        congr
+        have h_enum := GetElemEnumerate.eq.Some.of.GtLength h_lt
+        refine h_enum.trans ?_
         simp
-        have h_lt : i + 1 < tail.length + 1 := by
-          simp_all
-        rw [EqMod.of.Lt h_lt]
+        congr
+        have h_lt : i + 1 < tail.length + 1 := by simp_all
+        simp [EqMod.of.Lt h_lt]
       ·
         rw [← hc]
         simp [hi]

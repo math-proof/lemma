@@ -1,15 +1,16 @@
-import Mathlib.Analysis.Real.Hyperreal
-import sympy.Basic
+import sympy.series.limits
+import Lemma.Nat.NotLt.of.Ge
+open Nat
 
 
 @[main]
 private lemma main
 -- given
-  (r : ℝ) :
+  (x : ℝ) :
 -- imply
-  ¬Hyperreal.Infinite r :=
+  ¬(x : ℝ*) → ∞ :=
 -- proof
-  Hyperreal.not_infinite_real r
+  NotLt.of.Ge (Hyperreal.archimedeanClassMk_coe_nonneg x)
 
 
 -- created on 2025-12-11

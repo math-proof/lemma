@@ -1,7 +1,7 @@
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.List.EqRotateRotate.of.GeLength
+import Lemma.List.RotateRotate.eq.Rotate_Add
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
@@ -34,9 +34,7 @@ private lemma main
   simp
   apply SEq.of.SEqDataS.Eq
   ·
-    simp
-    apply EqRotateRotate.of.GeLength
-    omega
+    simp [show 1 + (s.length - 1) = s.length from by omega]
   ·
     simp
     apply SEqCast.of.SEq.Eq
@@ -50,6 +48,7 @@ private lemma main
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         have h_r := r.isLt
         simp at h_r
+        rw [Rotate_Add.eq.RotateRotate] at h_r
         rw [Rotate.eq.AppendDrop__Take.of.GeLength (n := s.length - 1) (by simp)] at h_r
         rw [ProdAppend.eq.MulProdS] at h_r
         simp [GetFlatten.eq.Get.of.Eq_AddMul h_qr]
@@ -125,9 +124,7 @@ private lemma main
           rw [MulProdS.eq.ProdAppend]
           rw [← Rotate.eq.AppendDrop__Take]
       ·
-        simp
-        rw [EqRotateRotate.of.GeLength]
-        omega
+        simp [show 1 + (s.length - 1) = s.length from by omega]
 
 
 -- created on 2025-10-20

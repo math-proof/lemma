@@ -15,10 +15,10 @@ constructor order of substraction of a - (a - b) = b
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : Infinitesimal a)
-  (h_b : Infinitesimal (a - b)) :
+  (h_a : a → 0)
+  (h_b : (a - b) → 0) :
 -- imply
-  Infinitesimal b := by
+  b → 0 := by
 -- proof
   have h_b := InfinitesimalSub.comm.mp h_b
   have := InfinitesimalAdd.of.Infinitesimal.Infinitesimal h_a h_b

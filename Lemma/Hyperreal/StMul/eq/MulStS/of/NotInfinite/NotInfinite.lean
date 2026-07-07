@@ -1,17 +1,17 @@
 import sympy.Basic
-import Mathlib.Analysis.Real.Hyperreal
+import sympy.series.limits
 
 
 @[main]
 private lemma main
   {x y : ℝ*}
 -- given
-  (hx : ¬Hyperreal.Infinite x)
-  (hy : ¬Hyperreal.Infinite y) :
+  (hx : ¬x → ∞)
+  (hy : ¬y → ∞) :
 -- imply
-  (x * y).st = x.st * y.st :=
+  stdPart (x * y) = stdPart x * stdPart y :=
 -- proof
-  Hyperreal.st_mul hx hy
+  ArchimedeanClass.stdPart_mul (not_lt.mp hx) (not_lt.mp hy)
 
 
 -- created on 2025-12-10

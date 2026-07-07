@@ -2108,6 +2108,12 @@ class LeanAngleBracket extends LeanPairedGroup {
     get operator() {
         return ['⟨', '⟩'];
     }
+
+    is_indented() {
+        const p = this.parent;
+        return !(p instanceof Lean_mapsto || p instanceof LeanAssign || p instanceof LeanTactic);
+    }
+
     latexFormat() {
         return '\\langle {%s} \\rangle';
     }

@@ -11,7 +11,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  |x|.st = |x.st| := by
+  stdPart |x| = |stdPart x| := by
 -- proof
   if h_x : x ≥ 0 then
     have := GeSt_0.of.Ge_0 h_x

@@ -19,13 +19,8 @@ private lemma main
   | [] =>
     simp [List.Vector.splitAt]
   | s₀ :: s =>
-    have hi := i.isLt
     simp [GetElem.getElem]
-    rw [GetSplitAt_1.eq.GetUnflatten.fin v ⟨i, by simp_all⟩]
-    ext j
-    simp [GetUnflatten.eq.Get_AddMul.fin]
-    rw [GetCast.eq.Get.of.Eq.fin]
-    simp [Foldr.eq.Prod]
+    erw [GetSplitAt_1.eq.GetUnflatten.fin v ⟨i, by simpa using i.isLt⟩]
 
 
 -- created on 2025-10-08

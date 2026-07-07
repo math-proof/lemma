@@ -1,16 +1,15 @@
-import sympy.Basic
-import Mathlib.Analysis.Real.Hyperreal
+import Lemma.Hyperreal.IsSt.is.Le0Mk.EqStdPart
+open Hyperreal
 
 
 @[main]
 private lemma main
   {x : ℝ*}
 -- given
-  (h : ¬x.Infinite) :
+  (h : ¬x → ∞) :
 -- imply
-  x.IsSt x.st :=
--- proof
-  Hyperreal.isSt_st' h
+  (x - stdPart x) → 0 :=
+  IsSt.of.Le0Mk.EqStdPart (not_lt.mp h) rfl
 
 
 -- created on 2025-12-27

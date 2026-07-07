@@ -41,6 +41,7 @@ private lemma main
       rw [GetCast.eq.Get.of.Eq.fin]
       .
         have := EqAddMulDiv i s.tail.prod
+        simp
         grind
       .
         simpa [ProdTake_1.eq.Get_0.of.GtLength_0 h_s]

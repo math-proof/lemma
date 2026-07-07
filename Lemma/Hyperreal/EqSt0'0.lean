@@ -6,7 +6,7 @@ open Hyperreal
 @[main]
 private lemma main :
 -- imply
-  st 0 = 0 :=
+  stdPart (0 : ℝ*) = 0 :=
 -- proof
   EqSt_0.of.Infinitesimal Infinitesimal0
 

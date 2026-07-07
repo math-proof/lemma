@@ -8,16 +8,16 @@ private lemma main
   {x : ℝ*}
   {r : ℝ}
 -- given
-  (h : Infinitesimal x)
+  (h : x → 0)
   (h_r : r ≠ 0) :
 -- imply
-  ¬Infinitesimal (x - r) := by
+  ¬(x - r) → 0 := by
 -- proof
   contrapose! h_r
   have h_r := EqSt.of.InfinitesimalSub h_r
   have h := EqSt_0.of.Infinitesimal h
   rw [h] at h_r
-  simp_all
+  aesop
 
 
 -- created on 2025-12-11

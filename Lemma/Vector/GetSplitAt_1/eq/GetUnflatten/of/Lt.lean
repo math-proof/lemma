@@ -11,7 +11,7 @@ private lemma main
   (v.splitAt 1)[i]'(by simp_all) = v.unflatten[i] := by
 -- proof
   have := GetSplitAt_1.eq.GetUnflatten v ⟨i, h⟩
-  simp_all
+  aesop
 
 
 -- created on 2025-07-16

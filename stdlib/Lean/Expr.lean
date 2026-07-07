@@ -274,8 +274,10 @@ def Lean.Expr.comm : Expr → Expr
     (Expr.const `Or us).mkApp [b, a]
   | .app (.app (.app (.app (.const `HasEquiv.Equiv us) α) self) a) b =>
     (Expr.const `HasEquiv.Equiv us).mkApp [α, self, b, a]
+  | .app (.const `Not usNot) p =>
+    (Expr.const `Not usNot).mkApp [p.comm]
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, And, Or, but got {e.ctorName} :\n{e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, but got {e.ctorName} :\n{e}"
 
 @[symm]
 theorem LT.symm [LT α] {a b : α} (h : a < b) : b > a := h
@@ -286,33 +288,49 @@ theorem GT.symm [LT α] {a b : α} (h : a > b) : b < a := h
 @[symm]
 theorem GE.symm [LE α] {a b : α} (h : a ≥ b) : b ≤ a := h
 
-def Lean.Expr.symm : Expr → Expr
+theorem Not.LT.symm [LT α] {a b : α} (h : ¬a < b) : ¬b > a := h
+theorem Not.LE.symm [LE α] {a b : α} (h : ¬a ≤ b) : ¬b ≥ a := h
+theorem Not.GT.symm [LT α] {a b : α} (h : ¬a > b) : ¬b < a := h
+theorem Not.GE.symm [LE α] {a b : α} (h : ¬a ≥ b) : ¬b ≤ a := h
+
+theorem Not.Iff.symm {a b : Prop} (h : ¬(a ↔ b)) : ¬(b ↔ a) := fun h' => h h'.symm
+theorem Not.And.symm {a b : Prop} (h : ¬(a ∧ b)) : ¬(b ∧ a) := fun h' => h h'.symm
+theorem Not.Or.symm {a b : Prop} (h : ¬(a ∨ b)) : ¬(b ∨ a) := fun h' => h h'.symm
+
+def Lean.Expr.symm_args : Expr → Name × List Level × List Expr
   | .app (.app (.app (.const `Eq us) α) a) b =>
-    (Expr.const `Eq.symm us).mkApp [α, a, b]
+    ⟨`Eq, us, [α, a, b]⟩
   | .app (.app (.const `Iff us) a) b =>
-    (Expr.const `Iff.symm us).mkApp [a, b]
+    ⟨`Iff, us, [a, b]⟩
   | .app (.app (.app (.app (.app (.app (.const `SEq us) α) Vector) n) m) a) b =>
-    (Expr.const `SEq.symm us).mkApp [α, Vector, n, m, a, b]
+    ⟨`SEq, us, [α, Vector, n, m, a, b]⟩
   | .app (.app (.app (.app (.const `HEq us) α) a) β) b =>
-    (Expr.const `HEq.symm us).mkApp [α, β, a, b]
+    ⟨`HEq, us, [α, β, a, b]⟩
   | .app (.app (.app (.const `Ne us) α) a) b =>
-    (Expr.const `Ne.symm us).mkApp [α, a, b]
+    ⟨`Ne, us, [α, a, b]⟩
   | .app (.app (.app (.app (.const `LT.lt us) α) I) a) b =>
-    (Expr.const `LT.symm us).mkApp [α, I, a, b]
+    ⟨`LT, us, [α, I, a, b]⟩
   | .app (.app (.app (.app (.const `LE.le us) α) I) a) b =>
-    (Expr.const `LE.symm us).mkApp [α, I, a, b]
+    ⟨`LE, us, [α, I, a, b]⟩
   | .app (.app (.app (.app (.const `GT.gt us) α) I) a) b =>
-    (Expr.const `GT.symm us).mkApp [α, I, a, b]
+    ⟨`GT, us, [α, I, a, b]⟩
   | .app (.app (.app (.app (.const `GE.ge us) α) I) a) b =>
-    (Expr.const `GE.symm us).mkApp [α, I, a, b]
+    ⟨`GE, us, [α, I, a, b]⟩
   | .app (.app (.const `And us) a) b =>
-    (Expr.const `And.symm us).mkApp [a, b]
+    ⟨`And, us, [a, b]⟩
   | .app (.app (.const `Or us) a) b =>
-    (Expr.const `Or.symm us).mkApp [a, b]
-  | .app (.app (.app (.app (.const `HasEquiv.Equiv us) α) self) a) b =>
-    (Expr.const `Setoid.symm us).mkApp [α, self, a, b]
+    ⟨`Or, us, [a, b]⟩
+  | .app (.app (.app (.app (.const `HasEquiv.Equiv us) α) I) a) b =>
+    ⟨`Setoid, us, [α, I, a, b]⟩
+  | .app (.const `Not _) p =>
+    let ⟨name, us, args⟩ := p.symm_args
+    ⟨`Not ++ name, us, args⟩
   | e  =>
-    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Gt, Lt, Ge, Le, And, Or, but got {e.ctorName} :\n{e}"
+    panic! s!"Expected an operator of Eq, Iff, SEq, HEq, Ne, Lt, Le, Gt, Ge, And, Or, Not, but got {e.ctorName} :\n{e}"
+
+def Lean.Expr.symm (e : Expr) : Expr :=
+  let ⟨name, us, args⟩ := e.symm_args
+  (Expr.const (name ++ `symm) us).mkApp args
 
 def Lean.Expr.decompose (e : Expr) (type : Nat → Expr → Expr) (value : Expr → Expr) (deBruijn : Nat := 0) : Expr × Expr :=
   match e with

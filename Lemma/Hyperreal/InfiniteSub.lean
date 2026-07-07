@@ -7,7 +7,7 @@ open Hyperreal Int
 private lemma Comm
   {a b : ℝ*} :
 -- imply
-  Infinite (a - b) ↔ Infinite (b - a) := by
+  (a - b) → ∞ ↔ (b - a) → ∞ := by
 -- proof
   rw [Sub.eq.NegSub]
   rw [InfiniteNeg.is.Infinite]

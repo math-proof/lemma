@@ -9,8 +9,7 @@ private lemma main
 -- imply
   ¬∃ x : α, ¬p x := by
 -- proof
-  push_neg
-  exact h
+  aesop
 
 
 -- created on 2025-04-06

@@ -1,4 +1,4 @@
-import Mathlib.Analysis.Real.Hyperreal
+import sympy.series.limits
 import sympy.Basic
 
 
@@ -6,12 +6,12 @@ import sympy.Basic
 private lemma main
   {x y : ℝ*}
 -- given
-  (h_a : ¬x.Infinite)
-  (h_b : ¬y.Infinite) :
+  (h_a : ¬x → ∞)
+  (h_b : ¬y → ∞) :
 -- imply
-  (x + y).st = x.st + y.st :=
+  stdPart (x + y) = stdPart x + stdPart y :=
 -- proof
-  Hyperreal.st_add h_a h_b
+  ArchimedeanClass.stdPart_add (not_lt.mp h_a) (not_lt.mp h_b)
 
 
 -- created on 2025-12-10

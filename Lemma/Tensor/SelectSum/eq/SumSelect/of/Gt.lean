@@ -31,7 +31,7 @@ import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Mod_Mul.eq.AddMul_Mod.of.Lt
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.NotGe.is.Lt
+import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.ValCast.eq.Val.of.Eq
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect

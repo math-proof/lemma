@@ -12,7 +12,7 @@ open Hyperreal Nat Rat
 private lemma main
   [NeZero (x : ℝ*)] :
 -- imply
-  Infinite x ↔ Infinitesimal x⁻¹ := by
+  x → ∞ ↔ x⁻¹ → 0 := by
 -- proof
   constructor <;>
     intro h

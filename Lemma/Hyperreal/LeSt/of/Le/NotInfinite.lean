@@ -8,12 +8,12 @@ private lemma main
   {x : ℝ*}
   {r : ℝ}
 -- given
-  (h : ¬x.Infinite)
+  (h : ¬x → ∞)
   (h_r : x ≤ r) :
 -- imply
-  x.st ≤ r := by
+  stdPart x ≤ r := by
 -- proof
-  suffices (x - r).st ≤ 0 by
+  suffices stdPart (x - r) ≤ 0 by
     rw [StSub.eq.SubSt.of.NotInfinite h] at this
     simpa
   apply LeSt_0.of.Le_0

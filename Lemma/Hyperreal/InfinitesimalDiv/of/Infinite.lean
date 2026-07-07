@@ -7,16 +7,16 @@ open Hyperreal
 
 @[main]
 private lemma main
+  {x : ℝ*}
 -- given
   (r : ℝ)
-  (h : x.Infinite) :
+  (h : x → ∞) :
 -- imply
-  Infinitesimal (r / x) := by
+  (r / x) → 0 := by
 -- proof
   if h_r : r = 0 then
     subst h_r
     simp
-    apply Infinitesimal0
   else
     apply InfinitesimalDiv.of.InfiniteDiv
     apply InfiniteDiv.of.Infinite.Ne_0 h h_r

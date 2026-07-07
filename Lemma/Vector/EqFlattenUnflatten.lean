@@ -35,7 +35,7 @@ private lemma main
       simp [v1]
       congr
       simp [h_eq]
-      simp
+      grind
     rw [h_v1] at h_append
     have h_eq : n ⊓ (m + 1) * n = n := by
       simp
@@ -45,7 +45,7 @@ private lemma main
       simp [v0]
       congr
       simp [h_eq]
-      simp
+      grind
     rw [h_v0] at h_append
     have ih := ih v1
     have h_eq : (v0.val ++ v1.val).length = (m + 1) * n := by

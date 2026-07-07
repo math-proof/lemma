@@ -8,10 +8,10 @@ private lemma main
   {a b : ℝ*}
 -- given
   (h : a * b ≥ 0)
-  (h_a : ¬Infinitesimal a)
-  (h_b : ¬Infinitesimal b) :
+  (h_a : ¬a → 0)
+  (h_b : ¬b → 0) :
 -- imply
-  ¬Infinitesimal (a + b) := by
+  ¬(a + b) → 0 := by
 -- proof
   apply NotInfinitesimal.of.Any_GeAbs
   let ⟨⟨A, hA⟩, h_a⟩ := Any_GeAbs.of.NotInfinitesimal h_a
@@ -19,7 +19,7 @@ private lemma main
   simp at h_a h_b
   use ⟨A + B, by linarith⟩
   simp
-  calc 
+  calc
     A + B ≤ |a| + |b| := by linarith
     _ = _ := (AbsAdd.eq.AddAbsS.of.Le0Mul h).symm
 

@@ -44,3 +44,15 @@ lemma SEq.cast
   cast (congrArg Vector h.left) a = b :=
   match h with
   | ⟨Eq.refl _, h⟩ => h.eq
+
+lemma Not.SEq.symm
+  {α : Type u} {Vector : α → Sort v} {n m : α} {a : Vector n} {b : Vector m}
+  (h : ¬SEq a b) :
+  ¬SEq b a :=
+  fun h' => h h'.symm
+
+lemma Not.HEq.symm
+  {α β : Sort u} {a : α} {b : β}
+  (h : ¬a ≍ b) :
+  ¬b ≍ a :=
+  fun h' => h h'.symm

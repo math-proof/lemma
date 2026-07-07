@@ -5,6 +5,7 @@ import Lemma.Nat.Le.of.Lt_Add_1
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Tensor.Eq.is.All_EqGetS
 open Tensor List Nat
+set_option maxHeartbeats 2000000
 
 
 /--
@@ -25,7 +26,8 @@ private lemma main
   intro i
   if h : i.val = n then
     simp only [GetElem.getElem]
-    repeat rw [GetGetSlice.eq.Get.fin]
+    rw [GetGetSlice.eq.Get.fin]
+    erw [GetGetSlice.eq.Get.fin]
     aesop
   else
     have h_i := i.isLt
@@ -43,9 +45,18 @@ private lemma main
       simp [Tensor.length]
       linarith
     specialize h₀ ⟨i, h_i⟩
-    repeat rw [GetGetSlice.eq.Get.of.Lt_Min.fin] at h₀
+    rw [GetGetSlice.eq.Get.of.Lt_Min.fin] at h₀
+    erw [GetGetSlice.eq.Get.of.Lt_Min.fin] at h₀
+    erw [GetGetSlice.eq.Get.of.Lt_Min.fin]
     assumption
-    repeat simp_all; linarith
+    .
+      simp_all
+    .
+      simp_all
+      linarith
+    .
+      simp_all
+      linarith
 
 
 -- created on 2025-08-04

@@ -16,9 +16,10 @@ private lemma main
 -- proof
   conv in (X * a)[i] =>
     rw [Eq_Stack X]
-  rw [MulStack.eq.Stack_Mul]
-  have := EqGetStack.fn fun i : Fin n => X[i] * a
-  simp_all
+  erw [MulStack.eq.Stack_Mul]
+  have := EqGetStack.fn.fin fun i : Fin n => X[i] * a
+  simp [GetElem.getElem] at this ⊢
+  rw [this]
 
 
 -- created on 2025-12-06

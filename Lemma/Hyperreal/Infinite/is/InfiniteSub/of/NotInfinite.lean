@@ -1,4 +1,5 @@
 import Lemma.Hyperreal.Infinite.is.InfiniteAdd.of.NotInfinite
+import Lemma.Hyperreal.Infinite.is.InfiniteNeg
 import Lemma.Int.Sub.eq.Add_Neg
 open Hyperreal Int
 
@@ -17,15 +18,14 @@ open Hyperreal Int
 private lemma main
   {x : ℝ*}
 -- given
-  (h : ¬x.Infinite)
+  (h : ¬x → ∞)
   (y : ℝ*) :
 -- imply
-  Infinite y ↔ Infinite (x - y) := by
+  y → ∞ ↔ (x - y) → ∞ := by
 -- proof
   have := Infinite.is.InfiniteAdd.of.NotInfinite h (-y)
-  simp at this
-  rw [Sub.eq.Add_Neg]
-  rw [this]
+  rw [InfiniteNeg.is.Infinite] at this
+  rwa [Sub.eq.Add_Neg]
 
 
 -- created on 2025-12-20

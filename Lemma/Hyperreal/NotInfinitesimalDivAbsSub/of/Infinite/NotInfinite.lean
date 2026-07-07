@@ -1,3 +1,4 @@
+import Lemma.Int.EqSubAdd
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.Eq_0.of.InfinitesimalAdd.Infinitesimal
@@ -23,10 +24,10 @@ open Hyperreal Nat Rat Int
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_inf_a : a.Infinite)
-  (h_inf_b : ¬b.Infinite) :
+  (h_inf_a : a → ∞)
+  (h_inf_b : ¬b → ∞) :
 -- imply
-  ¬Infinitesimal (|a - b| / (|a| + |b| + 1)) := by
+  ¬(|a - b| / (|a| + |b| + 1)) → 0:= by
 -- proof
   have h_a_ne_0 := Ne_0.of.Infinite h_inf_a
   have h_a_abs_ne_0 := NeAbs_0.of.Ne_0 h_a_ne_0
@@ -37,11 +38,11 @@ private lemma main
   rw [DivSub.eq.SubDivS]
   repeat rw [Div.eq.One.of.Ne_0 (by assumption)]
   have h_inf_div_ba := InfinitesimalDiv.of.NotInfinite.Infinite h_inf_b h_inf_a
-  have h_fin_sub_div : ¬(1 - b / a).Infinite := by
+  have h_fin_sub_div : ¬(1 - b / a) → ∞ := by
     apply NotInfiniteSub.of.NotInfinite.left
     apply NotInfinite.of.Infinitesimal h_inf_div_ba
   have h_fin_abs := NotInfiniteAbs.of.NotInfinite h_fin_sub_div
-  have h_eps_add_div_abs : ¬(1 + (|b| + 1) / |a|).Infinitesimal := by
+  have h_eps_add_div_abs : ¬(1 + (|b| + 1) / |a|) → 0 := by
     apply NotInfinitesimalAdd.of.Ne_0.Infinitesimal.left
     apply InfinitesimalDiv.of.NotInfinite.Infinite
     ·
@@ -51,15 +52,15 @@ private lemma main
       apply InfiniteAbs.of.Infinite h_inf_a
     ·
       simp
-  have h_st_square_sub : st |1 - b / a| = 1 := by
+  have h_st_square_sub : stdPart |1 - b / a| = 1 := by
     rw [StAbs.eq.AbsSt]
-    suffices st (1 - b / a) = 1 by
+    suffices stdPart (1 - b / a) = 1 by
       simp [this]
     apply EqSt.of.InfinitesimalSub
-    simpa
-  have h_st_add_div_abs : st (1 + (|b| + 1) / |a|) = 1 := by
+    simp_all
+  have h_st_add_div_abs : stdPart (1 + (|b| + 1) / |a|) = 1 := by
     apply EqSt.of.InfinitesimalSub
-    simp
+    erw [EqSubAdd.left]
     apply InfinitesimalDiv.of.NotInfinite.Infinite
     ·
       apply NotInfiniteAdd.of.NotInfinite

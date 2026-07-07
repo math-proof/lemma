@@ -11,7 +11,7 @@ private lemma main
   (h_r : r > 0)
   (h : x ≥ 0) :
 -- imply
-  ¬Infinitesimal (r + x) := by
+  ¬(r + x) → 0 := by
 -- proof
   rw [Add.comm]
   apply NotInfinitesimalAdd.of.Ge_0.Gt_0

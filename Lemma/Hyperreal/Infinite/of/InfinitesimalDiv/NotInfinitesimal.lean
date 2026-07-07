@@ -16,15 +16,16 @@ private lemma main
   [NeZero (b : ℝ*)]
   {a : ℝ*}
 -- given
-  (h_a : ¬Infinitesimal a)
-  (h_b : Infinitesimal (a / b)) :
+  (h_a : ¬a → 0)
+  (h_b : (a / b) → 0) :
 -- imply
-  Infinite b := by
+  b → ∞ := by
 -- proof
   contrapose! h_b
   rw [Div.eq.Mul_Inv]
+  apply not_lt.mp
   apply NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal h_a
-  apply NotInfinitesimalInv.of.NotInfinite h_b
+  apply NotInfinitesimalInv.of.NotInfinite (not_lt.mpr h_b)
 
 
 -- created on 2025-12-19

@@ -1,3 +1,4 @@
+import Lemma.Nat.NotGt.of.Le
 import Lemma.Nat.LeAddS.of.Le.Le
 import Lemma.Int.AbsAdd.le.AddAbsS
 import Lemma.Hyperreal.Infinite.is.InfiniteNeg
@@ -13,15 +14,16 @@ open Hyperreal Int Nat
 private lemma mpr
   {a b : ℝ*}
 -- given
-  (h_a : ¬Infinite a)
-  (h_b : Infinite (a + b)) :
+  (h_a : ¬a → ∞)
+  (h_b : (a + b) → ∞) :
 -- imply
-  Infinite b := by
+  b → ∞ := by
 -- proof
   contrapose! h_b
+  suffices ¬(a + b) → ∞ by grind
   apply NotInfinite.of.Any_LeAbs
-  let ⟨⟨δ_a, hδ_a⟩, h_a⟩ := Any_LeAbs.of.NotInfinite h_a
-  let ⟨⟨δ_b, hδ_b⟩, h_b⟩ := Any_LeAbs.of.NotInfinite h_b
+  obtain ⟨⟨δ_a, hδ_a⟩, h_le_a⟩ := Any_LeAbs.of.NotInfinite h_a
+  obtain ⟨⟨δ_b, hδ_b⟩, h_le_b⟩ := Any_LeAbs.of.NotInfinite (NotGt.of.Le h_b)
   use ⟨δ_a + δ_b, by linarith⟩
   calc
     _ ≤ _ := AbsAdd.le.AddAbsS a b
@@ -34,10 +36,10 @@ private lemma mpr
 private lemma mp
   {x r : ℝ*}
 -- given
-  (h : Infinite x)
-  (h_r : ¬Infinite r) :
+  (h : x → ∞)
+  (h_r : ¬r → ∞) :
 -- imply
-  Infinite (x + r) := by
+  (x + r) → ∞ := by
 -- proof
   have h_r := NotInfiniteNeg.of.NotInfinite h_r
   have h_r := mpr h_r (b := x + r)
@@ -59,10 +61,10 @@ private lemma mp
 private lemma main
   {x : ℝ*}
 -- given
-  (h : ¬x.Infinite)
+  (h : ¬x → ∞)
   (y : ℝ*) :
 -- imply
-  Infinite y ↔ Infinite (x + y) := by
+  y → ∞ ↔ (x + y) → ∞ := by
 -- proof
   rw [Add.comm]
   constructor

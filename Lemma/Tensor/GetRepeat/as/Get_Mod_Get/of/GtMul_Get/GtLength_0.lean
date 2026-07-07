@@ -97,10 +97,10 @@ private lemma main
               ·
                 rw [GetMap.eq.UFnGet.of.Lt.fin (by simp)]
                 simp only [GetElem.getElem]
-                rw [EqGetSplitAt_0'0.fin data]
-                repeat rw [EqGetS]
-                simp
-                rw [GetRepeat.eq.Get_Mod.of.Lt_Mul]
+                conv_lhs => erw [EqGetSplitAt_0'0.fin data]
+                conv_lhs => rw [EqGetS]
+                simp [GetRepeat.eq.Get_Mod.of.Lt_Mul h_lt_add]
+                simp [EqGetS]
                 congr
                 rw [MulAdd.eq.AddMulS]
                 rw [MulMul.eq.Mul_Mul]

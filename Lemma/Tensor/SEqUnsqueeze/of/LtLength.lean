@@ -40,6 +40,7 @@ private lemma main
           simp [h_nil] at h_i
           rw [Unsqueeze.eq.TensorMap_FunGetData]
           simp [h_i]
+          grind
         ·
           rw [h_nil]
   | cons s₀ s ih =>

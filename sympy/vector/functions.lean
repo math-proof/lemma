@@ -58,7 +58,7 @@ def sigmoid [Exp α] (x : Vector α n) : Vector α n :=
 
 private def argminmax [NeZero n] (x : Vector α n) (cmp : α → α → Prop) [DecidableRel cmp] : Fin n :=
   Nat.rec
-    (motive := fun n => n ≠ 0 → Vector α n → Fin n)
+    (motive := fun n => (n ≠ 0) → Vector α n → Fin n)
     (fun h_n _ => False.elim (h_n rfl))
     (fun n ih _ v =>
       if h_n : n = 0 then

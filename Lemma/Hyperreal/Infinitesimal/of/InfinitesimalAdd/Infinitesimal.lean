@@ -14,10 +14,10 @@ the hypotheses are arranged in the constructor order of substraction x + y - y
 private lemma main
   {x y : ℝ*}
 -- given
-  (h : Infinitesimal (x + y))
-  (h_x : Infinitesimal x) :
+  (h : (x + y) → 0)
+  (h_x : x → 0) :
 -- imply
-  Infinitesimal y := by
+  y → 0 := by
 -- proof
   have h_sub := InfinitesimalSub.of.Infinitesimal.Infinitesimal h h_x
   simp at h_sub

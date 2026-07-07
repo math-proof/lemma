@@ -3,7 +3,7 @@ import Lemma.List.EqPermute__0
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
 import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Le_0
 import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1

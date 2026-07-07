@@ -1,6 +1,6 @@
 import Lemma.Int.FDiv.eq.Sub_1.of.Gt_0.Lt_0
 import Lemma.Int.FDiv.eq.NegDivNeg.of.Le_0.Lt_0
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 open Int Nat
 
 

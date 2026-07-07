@@ -8,10 +8,10 @@ open Hyperreal Int
 private lemma main
   {x : ℝ*}
 -- given
-  (h : ¬x.Infinite)
+  (h : ¬x → ∞)
   (r : ℝ) :
 -- imply
-  (x - r).st = x.st - r := by
+  stdPart (x - r) = stdPart x - r := by
 -- proof
   have h := StAdd.eq.AddSt.of.NotInfinite h (-r)
   simp at h

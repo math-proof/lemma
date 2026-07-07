@@ -1,20 +1,5 @@
-import Lemma.Hyperreal.Infinite.is.All_GtAbs
-open Hyperreal
-
-
-@[main]
-private lemma mp
-  {x : ℝ*}
--- given
-  (h : Infinite x) :
--- imply
-  Infinite (-x) := by
--- proof
-  apply Infinite.of.All_GtAbs
-  intro ⟨δ, hδ⟩
-  have h := All_GtAbs.of.Infinite h
-  simp at ⊢ h
-  exact h δ hδ
+import sympy.series.limits
+import sympy.Basic
 
 
 @[main, comm, mp, mpr, mp.mt, mpr.mt]
@@ -22,16 +7,10 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  Infinite x ↔ Infinite (-x) := by
+  x → ∞ ↔ (-x) → ∞ := by
 -- proof
-  constructor
-  ·
-    apply mp
-  ·
-    intro h
-    have h := mp h
-    simp at h
-    exact h
+  aesop
 
 
 -- created on 2025-12-10
+-- updated on 2026-07-06

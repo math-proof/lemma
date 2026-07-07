@@ -13,6 +13,7 @@ private lemma main
   simp [GetElem.getElem]
   ext i
   simp
+  show (toVector X).get i = X.get ((List.Vector.range n).get i)
   rw [GetToVector.eq.Get.cons.fin]
   rw [EqGetRange.fin]
 

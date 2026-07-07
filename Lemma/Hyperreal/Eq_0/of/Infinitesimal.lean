@@ -7,13 +7,13 @@ open Hyperreal
 private lemma main
   {r : ℝ}
 -- given
-  (h : Infinitesimal r) :
+  (h : (↑r : ℝ*) → 0) :
 -- imply
   r = 0 := by
 -- proof
   contrapose! h
-  apply NotInfinitesimal.of.NeSt_0
-  rwa [EqSt]
+  apply le_of_not_gt
+  exact NotInfinitesimal.of.NeSt_0 (by rwa [EqSt])
 
 
 -- created on 2025-12-21

@@ -59,17 +59,14 @@ private lemma main
       have h_v := Eq_Cons_Tail v
       have h_v := EqUFnS.of.Eq h_v (List.Vector.toList)
       rw [h_v]
-      simp only [GetElem.getElem]
-      simp only [GetElem.getElem] at ih
+      simp only [GetElem.getElem] at ih ⊢
       rw [ih]
-      rw [FlattenMapToListCons.eq.Append_FlattenMapToList]
       simp
       rw [MulAdd_1.eq.Add_Mul]
       rw [Drop_Add.eq.DropDrop]
       have : (List.drop n (v.head.toList ++ (List.map List.Vector.toList v.tail.toList).flatten)) = (List.drop v.head.toList.length (v.head.toList ++ (List.map List.Vector.toList v.tail.toList).flatten)) := by
         simp
-      rw [this]
-      rw [EqDropAppend]
+      grind
 
 
 -- created on 2025-05-08

@@ -8,9 +8,9 @@ open Hyperreal Int
 private lemma main
   {x : ℝ*}
 -- given
-  (h : Infinitesimal x) :
+  (h : x → 0) :
 -- imply
-  st x = 0 :=
+  stdPart x = 0 :=
 -- proof
   EqSt.of.InfinitesimalSub (x := x) (r := 0) (by simpa)
 

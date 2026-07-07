@@ -21,7 +21,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  x.Infinite ↔ x.InfinitePos ∨ x.InfiniteNeg := by
+  x → ∞ ↔ x → +∞ ∨ x → -∞ := by
 -- proof
   simp [InfinitePos.is.Infinite.Gt_0]
   simp [InfiniteNeg.is.Infinite.Lt_0]

@@ -17,7 +17,9 @@ private lemma main
   apply Eq.of.EqDataS
   simp [EqData0'0]
   apply Eq.of.All_EqGetS
+  intro i
   simp [Sum.eq.Zero]
+  rfl
 
 
 -- created on 2025-09-04

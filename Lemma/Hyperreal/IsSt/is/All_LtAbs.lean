@@ -1,30 +1,16 @@
-import Mathlib.Analysis.Real.Hyperreal
-import sympy.core.singleton
-import Lemma.Int.LtAbsSub.is.LtSub.Lt_Add
-open Int
-open Hyperreal (IsSt)
+import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
+open Hyperreal
 
 
 @[main, comm, mp, mpr]
 private lemma main
 -- given
   (x : ℝ*)
-  (a : ℝ) :
+  (r : ℝ) :
 -- imply
-  IsSt x a ↔ ∀ δ : ℝ⁺, |x - a| < δ := by
+  ((x - r) → 0) ↔ ∀ δ : ℝ⁺, |x - r| < δ := by
 -- proof
-  constructor
-  ·
-    intro h ⟨δ, hδ⟩
-    simp [IsSt] at h
-    apply LtAbsSub.of.LtSub.Lt_Add
-    repeat grind
-  ·
-    intro h
-    simp [IsSt]
-    intro δ hδ
-    have h := h ⟨δ, hδ⟩
-    apply LtSub.Lt_Add.of.LtAbsSub h
+  rw [Infinitesimal.is.All_LtAbs]
 
 
 -- created on 2025-12-08

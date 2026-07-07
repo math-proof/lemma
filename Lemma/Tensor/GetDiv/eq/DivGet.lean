@@ -4,6 +4,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.List.Prod.eq.Foldr
+import Lemma.Vector.GetMap.eq.UFnGet
 open Tensor Vector List
 
 
@@ -23,13 +24,13 @@ private lemma main
   simp [Tensor.get]
   simp [Tensor.toVector]
   simp [GetElem.getElem]
-  repeat rw [GetCast.eq.Get.of.Eq.fin (by simp)]
+  repeat erw [GetCast.eq.Get.of.Eq.fin (by simp)]
   simp
-  repeat rw [GetSplitAt_1.eq.GetUnflatten.fin]
+  repeat erw [GetSplitAt_1.eq.GetUnflatten.fin]
   ext j
-  simp
-  repeat rw [GetUnflatten.eq.Get_AddMul.fin]
-  simp
+  erw [Vector.GetMap.eq.UFnGet (i := ⟨j, by grind⟩)]
+  repeat erw [GetUnflatten.eq.Get_AddMul.fin]
+  erw [Vector.GetMap.eq.UFnGet]
 
 
 -- created on 2025-09-24

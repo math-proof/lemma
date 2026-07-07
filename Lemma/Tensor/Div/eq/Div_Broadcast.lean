@@ -33,6 +33,7 @@ private lemma main
     simp [EqMod_1'0]
     rw [Head.eq.Get_0]
     simp [HDiv.hDiv]
+    rfl
   ·
     rw [EqMulDiv.of.Dvd]
     simp

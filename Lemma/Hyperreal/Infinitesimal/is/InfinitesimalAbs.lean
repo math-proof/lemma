@@ -9,7 +9,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  Infinitesimal x ↔ Infinitesimal |x| := by
+  x → 0 ↔ |x| → 0 := by
 -- proof
   if h : x ≥ 0 then
     rw [EqAbs.of.Ge_0 h]

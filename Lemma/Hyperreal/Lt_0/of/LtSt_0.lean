@@ -6,7 +6,7 @@ open Hyperreal
 private lemma main
   {x : ℝ*}
 -- given
-  (h : st x < 0) :
+  (h : stdPart x < 0) :
 -- imply
   x < 0 := by
 -- proof

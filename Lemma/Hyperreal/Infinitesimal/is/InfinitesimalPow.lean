@@ -10,7 +10,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  Infinitesimal x ↔ Infinitesimal (x ^ n) := by
+  x → 0 ↔ (x ^ n) → 0 := by
 -- proof
   have h_n := NeZero.ne n
   constructor <;>
@@ -26,8 +26,8 @@ private lemma main
       else
         have ih := ih h_n
         have := InfinitesimalMul.of.Infinitesimal.Infinitesimal h ih
-        simp [pow_succ]
-        grind
+        rw [pow_succ]
+        rwa [Mul.comm]
   .
     induction n with
     | zero =>

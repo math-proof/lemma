@@ -23,8 +23,11 @@ private lemma main
   have h_i := Lt_Min.of.Lt.Lt h_i.left h_i.right
   simp only [GetElem.getElem]
   have := GetGetSlice.eq.Get.of.Lt_Min.fin X h_i
+  simp at this
+  simp [this]
   have := GetGetSlice.eq.Get.of.Lt_Min.fin Y h_i
-  simp_all
+  simp at this
+  erw [this]
   have h_gets := All_EqGetS.of.Eq h
   specialize h_gets ⟨i, by linarith⟩
   simp only [GetElem.getElem] at h_gets

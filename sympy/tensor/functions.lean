@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import sympy.vector.functions
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength

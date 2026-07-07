@@ -181,7 +181,7 @@ def String.is_relational_operator : String → Bool
   | "et" | "ou" | "to" | "eq" | "ne" | "gt" | "lt" | "ge" | "le" | "in" | "as" | "dvd" | "subset" | "supset" => true
   | _ => false
 
-def String.transformPrefix (s : String) : String :=
+partial def String.transformPrefix (s : String) : String :=
   match s.toList with
   | s₀ :: s₁ :: expr =>
     match s₀, s₁, expr with
@@ -204,6 +204,8 @@ def String.transformPrefix (s : String) : String :=
         String.ofList (s₀ :: s₁ :: s₂.transformExpr expr)
       | _ =>
         String.ofList [s₀, s₁]
+    | 'N', 'o', 't' :: expr =>
+      "Not" ++ (String.ofList expr).transformPrefix
     | _, _, _ =>
       s
   | _ =>

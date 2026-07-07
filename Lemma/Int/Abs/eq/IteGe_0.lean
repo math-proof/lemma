@@ -1,4 +1,4 @@
-import Lemma.Nat.NotGe.is.Lt
+import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.Le.of.Lt
 open Nat
 

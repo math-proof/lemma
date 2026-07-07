@@ -15,16 +15,14 @@ private lemma main
   (v.splitAt 1)[i] = v.unflatten[i] := by
 -- proof
   unfold List.Vector.splitAt
-  simp
+  simp [GetElem.getElem]
   congr
   ·
     simp
   ·
-    apply HEq.of.All_Eq.Eq.Eq _ rfl
-    ·
-      simp_all
-    ·
-      simp [Prod.eq.Foldr]
+    simp
+  .
+    aesop
   repeat simp
 
 

@@ -36,7 +36,7 @@ private lemma main
     simp [Tensor.toVector]
     have h := Gt_0.of.Lt_Add.Ge h₀ h₁
     have h_lt := LtSub.of.Lt_Add.Ge h₀ h₁
-    repeat rw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp_all) (by simp_all)]
+    repeat erw [GetCast_Map.eq.UFnGet.of.Eq.Lt (by simp_all) (by simp_all)]
     simp
     apply Eq.of.SEq
     apply SEq.of.SEq.SEq (c := B.data.unflatten[i - m])
@@ -50,6 +50,7 @@ private lemma main
         apply this.symm.trans
         apply GetCast_SplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod <;>
           simp_all
+        grind
       ·
         simp at h_prod
         let ab : List.Vector α ((m + n) * s.prod) := cast (by simp_all) (A.data ++ B.data)
@@ -74,6 +75,7 @@ private lemma main
       have := GetUnflatten.eq.GetSplitAt_1.of.Lt h_lt B.data
       simp at this
       rw [this]
+      rfl
 
 
 -- created on 2025-06-01

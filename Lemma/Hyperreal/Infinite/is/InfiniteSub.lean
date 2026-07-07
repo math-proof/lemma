@@ -20,7 +20,7 @@ private lemma main
   (x : ℝ*)
   (r : ℝ) :
 -- imply
-  Infinite x ↔ Infinite (x - r) := by
+  x → ∞ ↔ (x - r) → ∞ := by
 -- proof
   simp [Infinite.is.InfiniteAdd x (-r)]
   rfl
@@ -32,7 +32,7 @@ private lemma left
   (r : ℝ)
   (x : ℝ*) :
 -- imply
-  Infinite x ↔ Infinite (r - x) := by
+  x → ∞ ↔ (r - x) → ∞ := by
 -- proof
   simp [Infinite.is.InfiniteAdd x (-r)]
   rw [Add_Neg.eq.Sub]

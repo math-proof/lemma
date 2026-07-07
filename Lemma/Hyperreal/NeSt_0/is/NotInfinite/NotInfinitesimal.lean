@@ -10,19 +10,20 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  x.st ≠ 0 ↔ ¬x.Infinite ∧ ¬x.Infinitesimal := by
+  stdPart x ≠ 0 ↔ ¬x → ∞ ∧ ¬x → 0  := by
 -- proof
   constructor <;>
     intro h
   .
     by_contra h'
     have h' := OrNotS.of.NotAnd h'
-    simp at h'
     obtain h' | h' := h'
     .
+      simp at h'
       have := EqSt_0.of.Infinite h'
       contradiction
     .
+      simp at h'
       have := EqSt_0.of.Infinitesimal h'
       contradiction
   .
@@ -30,7 +31,7 @@ private lemma main
     intro h
     apply h₁
     have h_isSt := IsSt_St.of.NotInfinite h₀
-    rwa [h] at h_isSt
+    simpa [h] using h_isSt
 
 
 -- created on 2025-12-18

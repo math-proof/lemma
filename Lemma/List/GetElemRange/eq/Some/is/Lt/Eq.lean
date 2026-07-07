@@ -1,4 +1,4 @@
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.GetElemRange.eq.None.of.Ge
 open List Nat
 

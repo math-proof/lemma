@@ -1,6 +1,6 @@
 import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.GetVal.eq.Get.of.Lt
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Nat.AddMul.lt.Mul.of.Lt
 import Lemma.Vector.Get_AddMul.eq.GetUnflatten.of.Lt
@@ -38,7 +38,7 @@ private lemma main
     have := GetAppend.eq.Get.of.Lt hi a.unflatten b.unflatten
     simp [GetElem.getElem] at this
     simp [List.Vector.get] at this
-    simp [GetElem.getElem]
+    simp only [GetElem.getElem]
     simp [List.Vector.get]
     simp [this]
     have := EqGetS.of.SEq.Lt (i := i * k + j) (by linarith) h
@@ -59,7 +59,7 @@ private lemma main
     have := GetAppend.eq.Get_Sub.of.Lt_Add.Ge hi h_i a.unflatten b.unflatten
     simp [GetElem.getElem] at this
     simp [List.Vector.get] at this
-    simp [GetElem.getElem]
+    simp only [GetElem.getElem]
     simp [List.Vector.get]
     simp [this]
     have := EqGetS.of.SEq.Lt (i := i * k + j) (by linarith) h

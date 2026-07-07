@@ -8,9 +8,9 @@ private lemma main
   {x : ℝ*}
 -- given
   (r : ℝ)
-  (h : ¬x.Infinite) :
+  (h : ¬x → ∞) :
 -- imply
-  (r * x).st = r * x.st := by
+  stdPart (r * x) = r * stdPart x := by
 -- proof
   rw [Mul.comm]
   rw [StMul.eq.MulSt.of.NotInfinite h]

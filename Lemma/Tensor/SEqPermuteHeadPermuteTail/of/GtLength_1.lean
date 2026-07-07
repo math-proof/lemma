@@ -37,8 +37,7 @@ private lemma main
   apply SEq.of.SEqDataS.Eq
   ·
     simp_all [Drop.eq.Nil.of.LeLength, EqTake.of.LeLength]
-    apply EqRotateRotate.of.Add.eq.Length
-    omega
+    simp [show s.length - 1 + 1 = s.length by omega]
   ·
     simp
     apply SEqCast.of.SEq.Eq

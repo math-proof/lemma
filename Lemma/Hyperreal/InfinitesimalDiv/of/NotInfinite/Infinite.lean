@@ -11,10 +11,10 @@ the hypotheses are arranged in the constructor order of division a / b
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬Infinite a)
-  (h_b : Infinite b) :
+  (h_a : ¬a → ∞)
+  (h_b : b → ∞) :
 -- imply
-  Infinitesimal (a / b) := by
+  (a / b) → 0 := by
 -- proof
   rw [Div.eq.Mul_Inv]
   apply InfinitesimalMul.of.NotInfinite.Infinitesimal h_a

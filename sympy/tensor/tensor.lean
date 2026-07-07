@@ -392,17 +392,16 @@ def Tensor.getSlices
     | .nil =>
       have := Length.eq.Get_0.of.GtLength_0 (s := s) (by simpa [h_shape]) X
       have : (index.length X.length :: s.tail).prod = (index.length s[0] :: List.drop 1 s).prod := by
-        simp_all
+        aesop
       (⟨cast (by rw [this]) (X.getSlice index).data⟩ : Tensor α (index.length s[0] :: s.drop 1))
     | slices'h :: slices't =>
       have h_shape : s.length ≥ (index :: slices).length:= by
-        simp_all
+        aesop
       have : s.length > slices.length := by
-        simp_all
+        aesop
       have : (s.drop 1).length ≥ slices.length:= by
         simp
-        apply Le_Sub_1.of.Lt
-        assumption
+        apply Le_Sub_1.of.Lt this
       let shape := slices.enumerate.map fun ⟨i, index⟩ => index.length (s.drop 1)[i]
       let s_rest := (s.drop 1).drop slices.length
       let indices :

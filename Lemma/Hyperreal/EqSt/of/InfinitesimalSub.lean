@@ -1,6 +1,5 @@
-import Lemma.Hyperreal.IsSt.is.All_LtAbs
-import Lemma.Int.LtAbsSub.is.LtSub.Lt_Add
-open Hyperreal Int
+import Lemma.Hyperreal.IsSt.is.Le0Mk.EqStdPart
+open Hyperreal
 
 
 @[main]
@@ -8,17 +7,11 @@ private lemma main
   {x : ℝ*}
   {r : ℝ}
 -- given
-  (h : Infinitesimal (x - r)) :
+  (h : (x - r) → 0) :
 -- imply
-  st x = r := by
+  stdPart x = r :=
 -- proof
-  unfold Infinitesimal at h
-  simp [IsSt.is.All_LtAbs] at h
-  apply IsSt.st_eq
-  simp [IsSt]
-  intro δ h_δ
-  rw [← LtAbsSub.is.LtSub.Lt_Add]
-  apply h δ h_δ
+  (Le0Mk.EqStdPart.of.IsSt h).right
 
 
 -- created on 2025-12-09

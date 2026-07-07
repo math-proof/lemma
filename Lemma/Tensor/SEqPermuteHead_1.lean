@@ -29,11 +29,11 @@ private lemma main
     apply SEq.of.All_EqGetS.Eq (by simp)
     intro t
     simp only [GetElem.getElem]
-    rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨0, by simp⟩) (by simp)]
+    erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨0, by simp⟩) (by simp)]
     unfold Tensor.rotate
     simp [EqGetS]
     simp only [GetElem.getElem]
-    rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨0, by simp⟩) (by simp)]
+    erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨0, by simp⟩) (by simp)]
     rw [GetTranspose.eq.Get.fin]
     repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
     simp

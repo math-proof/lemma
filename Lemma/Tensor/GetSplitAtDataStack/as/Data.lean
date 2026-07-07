@@ -1,4 +1,5 @@
 import sympy.tensor.stack
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.EqValS.of.SEq
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.EqUnflattenFlatten
@@ -18,11 +19,14 @@ private lemma main
 -- proof
   simp [SEq]
   unfold Stack Tensor.fromVector
-  simp
+  simp only [GetElem.getElem]
   have h_i := i.isLt
-  have := GetSplitAt_1.eq.GetUnflatten ((List.Vector.map Tensor.data ((List.Vector.range n).map (fun i : Fin n ↦ f i))).flatten) i
-  simp_all
-  simp [EqUnflattenFlatten]
+  have := GetSplitAt_1.eq.GetUnflatten.fin ((List.Vector.map Tensor.data ((List.Vector.range n).map (fun i : Fin n ↦ f i))).flatten) i
+  erw [this]
+  erw [EqUnflattenFlatten]
+  erw [GetMap.eq.UFnGet]
+  congr
+  erw [GetMap.eq.UFnGet]
   congr
   apply EqGetRange i
 

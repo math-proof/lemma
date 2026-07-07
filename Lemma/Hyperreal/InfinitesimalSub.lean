@@ -6,7 +6,7 @@ open Hyperreal
 private lemma Comm
   {a b : ℝ*} :
 -- imply
-  Infinitesimal (a - b) ↔ Infinitesimal (b - a) := by
+  (a - b) → 0 ↔ (b - a) → 0 := by
 -- proof
   rw [Infinitesimal.is.InfinitesimalNeg]
   simp

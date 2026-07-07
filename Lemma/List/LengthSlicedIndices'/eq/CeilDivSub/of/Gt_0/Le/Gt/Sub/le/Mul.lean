@@ -4,7 +4,7 @@ import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.Le.of.Sub.eq.Zero
 import Lemma.Nat.LeSubS.of.Le
 import Lemma.Nat.AddMul.eq.MulAdd_1
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Nat.EqSubAdd
 import Lemma.Int.SubSub

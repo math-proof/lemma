@@ -1,5 +1,5 @@
 import Lemma.Nat.Eq_0.of.Le_0
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 open Nat
 
 

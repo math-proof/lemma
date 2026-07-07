@@ -1,7 +1,7 @@
 import stdlib.List
 import Lemma.List.Swap.eq.Ite
 import Lemma.List.LengthSwap.eq.Length
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Ge.of.Gt
 import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.GtLength

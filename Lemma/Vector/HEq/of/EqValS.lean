@@ -21,7 +21,7 @@ private lemma main
     rw [h]
     congr
     rw [h_length]
-    simp_all
+    grind
   have h_Eq := Eq.of.EqValS h_Eq
   simp_all
   simp [b']

@@ -5,7 +5,7 @@ open Hyperreal
 @[main]
 private lemma main :
 -- imply
-  Infinitesimal 0 := by
+  (0 : ℝ*) → 0 := by
 -- proof
   apply Infinitesimal.of.All_LtAbs
   simp

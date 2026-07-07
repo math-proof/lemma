@@ -24,7 +24,7 @@ private lemma main
     contradiction
   | n :: s =>
     simp [GetElem.getElem]
-    rw [GetSplitAt_1.eq.GetUnflatten.fin]
+    erw [GetSplitAt_1.eq.GetUnflatten.fin]
     rw [DataGet.eq.GetUnflattenData.fin]
 
 

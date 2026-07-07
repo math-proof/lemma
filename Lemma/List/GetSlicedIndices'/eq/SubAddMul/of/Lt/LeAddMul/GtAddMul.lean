@@ -8,7 +8,7 @@ import Lemma.Nat.Add
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Gt_0
 import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Nat.MulAdd.eq.AddMulS

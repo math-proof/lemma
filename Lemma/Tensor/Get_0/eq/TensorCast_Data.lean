@@ -21,7 +21,7 @@ private lemma main
   apply SEq.of.All_EqGetS.Eq.fin
   .
     intro t
-    rw [GetUnflatten.eq.Get_AddMul.fin]
+    erw [GetUnflatten.eq.Get_AddMul.fin]
     simp
   .
     simp

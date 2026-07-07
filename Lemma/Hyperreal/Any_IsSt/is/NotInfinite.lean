@@ -1,5 +1,5 @@
-import Mathlib.Analysis.Real.Hyperreal
-import sympy.Basic
+import Lemma.Hyperreal.IsSt.is.Le0Mk.EqStdPart
+open Hyperreal
 
 
 @[main]
@@ -7,9 +7,9 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  (∃ r : ℝ, x.IsSt r) ↔ ¬x.Infinite :=
+  (∃ r : ℝ, (x - r) → 0) ↔ ¬x → ∞ := by
 -- proof
-  Hyperreal.exists_st_iff_not_infinite
+  simp [IsSt.is.Le0Mk.EqStdPart]
 
 
 -- created on 2025-12-18

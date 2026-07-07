@@ -11,13 +11,14 @@ open Hyperreal Int Nat
 @[main]
 private lemma main
   [NeZero (d : ℕ)]
+  {a b : ℝ*}
 -- given
-  (h_a : ¬Infinitesimal a)
-  (h : Infinitesimal (a / b + b / a - d)) :
+  (h_a : ¬a → 0)
+  (h : (a / b + b / a - d) → 0) :
 -- imply
-  ¬Infinite (a / b) := by
+  ¬(a / b) → ∞ := by
 -- proof
-  have h : Infinitesimal (a / b + b / a - (d : ℝ)) := h
+  have h : (a / b + b / a - (d : ℝ)) → 0 := h
   contrapose! h_a
   have h_ba := InfinitesimalDiv.of.InfiniteDiv h_a
   have h_sub := InfinitesimalSub.of.Infinitesimal.Infinitesimal h h_ba

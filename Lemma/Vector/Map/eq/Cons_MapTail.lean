@@ -1,5 +1,5 @@
-import sympy.vector.vector
-import sympy.Basic
+import Lemma.Vector.EqCons_Tail
+open Vector
 
 
 @[main]
@@ -9,9 +9,7 @@ private lemma main
 -- imply
   s.map f = f s.head ::ᵥ s.tail.map f := by
 -- proof
-  have h : s = s.head ::ᵥ s.tail := by simp
-  -- rewrite only the left-hand side
-  rw [h]
+  rw [← EqCons_Tail s]
   apply List.Vector.map_cons
 
 

@@ -1,5 +1,5 @@
 import Lemma.List.GetElemRange.eq.None.of.Ge
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 open List Nat
 
 

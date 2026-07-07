@@ -8,10 +8,10 @@ private lemma main
   {x : ℝ*}
   {r : ℝ}
 -- given
-  (h : Infinite x)
+  (h : x → ∞)
   (h_r : r ≠ 0) :
 -- imply
-  Infinite (x * r) := by
+  (x * r) → ∞ := by
 -- proof
   have h_r := NeInv_0.of.Ne_0 h_r
   have := InfiniteDiv.of.Infinite.Ne_0 h h_r

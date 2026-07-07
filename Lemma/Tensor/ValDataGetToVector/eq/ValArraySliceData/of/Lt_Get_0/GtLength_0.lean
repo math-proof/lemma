@@ -20,7 +20,7 @@ private lemma main
     contradiction
   | cons h_s t =>
     simp_all
-    rw [← ValDataGetToVector.eq.ValArraySliceData.of.Lt]
+    erw [← ValDataGetToVector.eq.ValArraySliceData.of.Lt]
     rfl
 
 

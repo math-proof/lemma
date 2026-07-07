@@ -13,7 +13,7 @@ private lemma main
   (h : x ≥ 0)
   (h_r : r > 0) :
 -- imply
-  ¬Infinitesimal (x + r) := by
+  ¬(x + r) → 0 := by
 -- proof
   apply NotInfinitesimal.of.Any_GeAbs
   use ⟨r, h_r⟩

@@ -19,11 +19,12 @@ private lemma main
   ext i
   simp
   rw [GetDiv.eq.DivGet.fin (A := A)]
-  rw [GetDiv.eq.DivGet.fin (a := A.broadcast s (by simp))]
+  erw [GetDiv.eq.DivGet.fin (a := A.broadcast s (by simp))]
   simp
   rw [EqGetRange.fin]
-  rw [Div.eq.Div_Broadcast]
+  erw [Div.eq.Div_Broadcast]
   simp
+  rfl
 
 
 -- created on 2025-09-24

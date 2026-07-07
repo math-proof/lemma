@@ -34,7 +34,7 @@ private lemma main
   repeat rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin]
   ·
     simp
-    repeat rw [GetSplitAt_1.eq.GetUnflatten.fin]
+    repeat erw [GetSplitAt_1.eq.GetUnflatten.fin]
     simp
     apply Eq.of.All_EqGetS
     intro t

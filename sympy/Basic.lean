@@ -332,7 +332,7 @@ initialize registerBuiltinAttribute {
 `@[mp.comm]` attribute automatically generates the commutative mp implication of a equivalence theorem.
 Usage:
 ```lean
-@[mpr]
+@[mp.comm]
 theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : lhs a b ↔ a = b := by proof
 -- Generates:
 theorem Section.RHS'.of.LHS {c : γ} {a : α} {b : β} (h : lhs a b) : b = a := (Section.LHS.eq.RHS a b).mp.symm
@@ -362,7 +362,7 @@ initialize registerBuiltinAttribute {
 `@[mpr.comm]` attribute automatically generates the commutative mpr implication of a equivalence theorem.
 Usage:
 ```lean
-@[mpr]
+@[mpr.comm]
 theorem Section.LHS.is.RHS {c : γ} (a : α) (b : β) : a = b ↔ rhs a b := by proof
 -- Generates:
 theorem Section.LHS'.of.RHS {c : γ} {a : α} {b : β} (h : rhs a b) : b = a := (Section.LHS.eq.RHS a b).mpr.symm

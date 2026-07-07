@@ -4,14 +4,15 @@ open Hyperreal
 
 @[main]
 private lemma main
+  {a b : ℝ*}
 -- given
-  (h : Infinite (a / b)) :
+  (h : (a / b) → ∞) :
 -- imply
-  Infinitesimal (b / a) := by
+  (b / a) → 0 := by
 -- proof
   have := InfinitesimalInv.of.Infinite h
   simp at this
-  assumption
+  aesop
 
 
 -- created on 2025-12-11

@@ -6,7 +6,7 @@ open Hyperreal
 @[main]
 private lemma main :
 -- imply
-  ¬Hyperreal.omega.Infinitesimal :=
+  ¬Hyperreal.omega → 0 :=
 -- proof
   NotInfinitesimal.of.Infinite InfiniteInfty
 

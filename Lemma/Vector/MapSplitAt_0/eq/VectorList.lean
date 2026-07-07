@@ -20,8 +20,9 @@ private lemma main
   have h_i := Eq_0.of.Lt_1 h_i
   have h_i := Eq_Fin.of.EqVal h_i
   rw [h_i]
-  rw [EqGetSplitAt_0'0.fin]
-  simp [List.Vector.head]
+  conv_rhs => simp [List.Vector.get]
+  congr
+  apply EqGetSplitAt_0'0.fin
 
 
 -- created on 2026-04-23

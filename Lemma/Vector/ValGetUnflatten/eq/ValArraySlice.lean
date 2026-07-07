@@ -19,9 +19,7 @@ private lemma main
   ·
     rw [EqMin_SubMulS]
   ·
-    simp
-    congr
-    simp_all
+    grind
 
 
 -- created on 2025-05-10

@@ -7,9 +7,9 @@ open Hyperreal
 private lemma main
   {x : ℝ*}
 -- given
-  (h : x.Infinitesimal) :
+  (h : x → 0) :
 -- imply
-  ¬x.Infinite := by
+  ¬x → ∞ := by
 -- proof
   rw [NotInfinite.is.Any_LeAbs]
   use 1

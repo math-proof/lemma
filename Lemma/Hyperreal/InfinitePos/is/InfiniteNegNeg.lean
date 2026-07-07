@@ -1,4 +1,3 @@
-import Lemma.Hyperreal.InfiniteNeg.is.Infinite.Lt_0
 import Lemma.Hyperreal.InfinitePos.is.Infinite.Gt_0
 open Hyperreal
 
@@ -8,9 +7,9 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  x.InfinitePos ↔ (-x).InfiniteNeg := by
+  x → +∞ ↔ (-x) → -∞ := by
 -- proof
-  simp [InfiniteNeg.is.Infinite.Lt_0, InfinitePos.is.Infinite.Gt_0]
+  simp [InfinitePos.is.Infinite.Gt_0]
 
 
 -- created on 2025-12-29

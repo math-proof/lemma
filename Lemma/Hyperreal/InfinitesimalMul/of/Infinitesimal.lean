@@ -6,10 +6,10 @@ open Hyperreal
 private lemma main
   {x : ℝ*}
 -- given
-  (h : Infinitesimal x)
+  (h : x → 0)
   (r : ℝ) :
 -- imply
-  Infinitesimal (x * r) := by
+  (x * r) → 0 := by
 -- proof
   have := InfinitesimalDiv.of.Infinitesimal h r⁻¹
   simp at this

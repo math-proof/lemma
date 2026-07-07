@@ -7,10 +7,10 @@ open Hyperreal
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : Infinitesimal a)
-  (h_b : Infinite b) :
+  (h_a : a → 0)
+  (h_b : b → ∞) :
 -- imply
-  Infinitesimal (a / b) := by
+  (a / b) → 0 := by
 -- proof
   apply InfinitesimalDiv.of.NotInfinite.Infinite _ h_b
   apply NotInfinite.of.Infinitesimal h_a

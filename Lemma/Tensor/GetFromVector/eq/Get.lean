@@ -3,6 +3,7 @@ import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
+import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.EqUnflattenFlatten
 open Vector Tensor Bool
 
@@ -32,8 +33,11 @@ private lemma main
     simp_all
   have h := GetSplitAt_1.eq.GetUnflatten.of.Lt hi (List.Vector.map data v).flatten
   simp at h
-  rw [h]
-  simp [EqUnflattenFlatten]
+  erw [h]
+  erw [EqUnflattenFlatten]
+  dsimp [Tensor.data]
+  simp only [GetElem.getElem]
+  apply GetMap.eq.UFnGet
 
 
 

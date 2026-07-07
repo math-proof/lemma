@@ -6,7 +6,7 @@ open Hyperreal
 private lemma main
   {x : ℝ*}
 -- given
-  (h : ¬Infinitesimal x) :
+  (h : ¬x → 0) :
 -- imply
   x ≠ 0 := by
 -- proof

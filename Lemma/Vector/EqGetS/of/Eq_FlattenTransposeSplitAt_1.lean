@@ -25,11 +25,10 @@ private lemma main
   have h_get := EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
     (n := m * 1) (m := n * 1) (n' := [m].prod) (m' := n) (i := j) (j := i)
     (by simp) (by simp) (by simp) (by simp) h
-  simp [GetElem.getElem] at h_get
-  rw [GetTranspose.eq.Get.fin] at h_get
-  rw [GetSplitAt_1.eq.GetUnflatten.fin] at h_get
-  repeat rw [GetUnflatten.eq.Get_AddMul.fin] at h_get
-  simp [EqGetS] at h_get
+  simp only [GetElem.getElem] at h_get
+  erw [GetTranspose.eq.Get.fin, GetSplitAt_1.eq.GetUnflatten.fin] at h_get
+  repeat erw [GetUnflatten.eq.Get_AddMul.fin] at h_get
+  simp only [GetElem.getElem, show [m].prod = m by simp, show n * 1 = n by simp] at h_get ⊢
   assumption
 
 

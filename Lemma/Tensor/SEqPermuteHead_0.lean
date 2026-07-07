@@ -1,3 +1,4 @@
+import Lemma.Vector.EqHeadSplitAt_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -30,10 +31,11 @@ private lemma main
     unfold Tensor.rotate
     simp
     simp only [GetElem.getElem]
-    rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by simp⟩) (j := ⟨0, by simp⟩) (by simp)]
+    erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by simp⟩) (j := ⟨0, by simp⟩) (by simp)]
     rw [GetTranspose.eq.Get.fin]
     repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
     simp
+    erw [Vector.EqHeadSplitAt_0]
 
 
 -- created on 2025-10-20

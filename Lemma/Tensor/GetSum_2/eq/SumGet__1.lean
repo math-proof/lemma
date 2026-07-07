@@ -14,8 +14,9 @@ private lemma main
 -- proof
   apply Eq.of.SEq
   have h_i := i.isLt
-  have := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength (d := 2) (s := [m, n, l]) (by simp) (by simp) h_i X
-  simp_all
+  have := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength.fin (d := 2) (s := [m, n, l]) (by simp) (by simp) h_i X
+  simp at this
+  simpa [GetElem.getElem]
 
 
 -- created on 2025-07-12

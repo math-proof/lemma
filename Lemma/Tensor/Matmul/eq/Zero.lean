@@ -21,8 +21,7 @@ private lemma main
   ext t
   have h_t := Eq_0 t
   subst h_t
-  rw [EqGet0_0.fin]
-  simp [List.Vector.get]
+  simp [List.Vector.head]
   apply Sum.eq.Zero
 
 

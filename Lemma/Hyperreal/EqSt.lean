@@ -8,11 +8,10 @@ private lemma main
 -- given
   (r : ℝ) :
 -- imply
-  st r = r := by
+  stdPart (r : ℝ*) = r := by
 -- proof
   apply EqSt.of.InfinitesimalSub
   simp
-  apply Infinitesimal0
 
 
 -- created on 2025-12-11

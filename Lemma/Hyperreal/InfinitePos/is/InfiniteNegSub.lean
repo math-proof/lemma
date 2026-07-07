@@ -12,7 +12,7 @@ private lemma main
   (x : ℝ*)
   (r : ℝ) :
 -- imply
-  x.InfinitePos ↔ (r - x).InfiniteNeg := by
+  x → +∞ ↔ (r - x) → -∞ := by
 -- proof
   rw [InfiniteNeg.is.Infinite.Lt_0]
   constructor <;>

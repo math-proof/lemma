@@ -14,10 +14,10 @@ the hypotheses are arranged in the constructor order of division a / b
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : Infinitesimal a)
-  (h_b : ¬Infinitesimal b) :
+  (h_a : a → 0)
+  (h_b : ¬b → 0) :
 -- imply
-  Infinitesimal (a / b) := by
+  (a / b) → 0 := by
 -- proof
   apply Infinitesimal.of.All_LtAbs
   intro ⟨δ, hδ⟩

@@ -7,10 +7,10 @@ open Hyperreal Nat
 private lemma mp
   {x : ℝ*}
 -- given
-  (h : Infinite x)
+  (h : x → ∞)
   (r : ℝ) :
 -- imply
-  Infinite (x + r) := by
+  (x + r) → ∞ := by
 -- proof
   rw [Add.comm]
   apply InfiniteAdd.of.Infinite.NotInfinite _ h
@@ -33,7 +33,7 @@ private lemma main
   (x : ℝ*)
   (r : ℝ) :
 -- imply
-  Infinite x ↔ Infinite (x + r) := by
+  x → ∞ ↔ (x + r) → ∞ := by
 -- proof
   constructor <;>
     intro h
@@ -51,7 +51,7 @@ private lemma left
   (r : ℝ)
   (x : ℝ*) :
 -- imply
-  Infinite x ↔ Infinite (r + x) := by
+  x → ∞ ↔ (r + x) → ∞:= by
 -- proof
   rw [Add.comm]
   apply main

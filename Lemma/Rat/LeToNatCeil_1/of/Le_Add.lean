@@ -8,7 +8,7 @@ import Lemma.Rat.LeDivS.of.Le.Gt_0
 import Lemma.Nat.LeCeil.is.Le
 import Lemma.Int.LeToNat.is.Le
 import Lemma.Nat.CoeSub.eq.SubCoeS.of.Ge
-import Lemma.Nat.NotGe.is.Lt
+import Lemma.Nat.NotLe.is.Gt
 import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Int.Lt.is.Gt0Sub
 import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0

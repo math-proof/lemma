@@ -1,9 +1,9 @@
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetElem.eq.SomeGet.of.GtLength
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.Lt.is.Le.Ne
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Nat.Sub.gt.Zero.is.Gt
 import Lemma.List.LengthSlice.eq.SubMin

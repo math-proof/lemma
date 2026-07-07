@@ -4,7 +4,7 @@ This is Lean4 machine learning project (related to Torch, SymPy, [KaTeX](https:/
 The main objectives of this project are formalizing in Lean4:
 
 * **machine learning framework Torch**
-  The most commonly used Torch operators: `softmax`, `sum`, `mean`, `unsqueeze`, `matmul`, `repeat`, `permute`, `transpose`, `select`, `max`, `min`, `argmax`, `argmin`, `exp`, and `log` — have been translated into Lean4.
+  The most commonly used Torch operators: `softmax`, `sum`, `mean`, `unsqueeze`, `matmul`, `repeat`, `permute`, `transpose`, `select`, `max`, `min`, `argmax`, `argmin`, `exp`, `log`, `sigmoid`.
 
 * **symbolic mathematics from SymPy (symbolic mathematics for Python).**
   SymPy is also a fundamental algorithmic component of the PyTorch framework.
@@ -14,7 +14,7 @@ The main objectives of this project are formalizing in Lean4:
 
 * **mathematical arguments from arXiv machine learning papers.**
   For example:
-  [Tensor.DivSumSSum.eq.MeanDivSum_MeanSum](http://www.lemma.cn/lean/index.php?module=Tensor.DivSumSSum.eq.MeanDivSum_MeanSum)
+  [Tensor.DivSumSSum.eq.MeanDivSum_MeanSum](http://www.lemma.cn/lean/?module=Tensor.DivSumSSum.eq.MeanDivSum_MeanSum)
   This theorem formalizes and proves a claim from a reinforcement learning paper on arXiv.
   More examples can be found in the theorem library at [www.lemma.cn](http://www.lemma.cn).
 
@@ -227,21 +227,22 @@ DivOneTwo, etc.
 small-letter binary infix operators are short name for Capital-letter operator name, eg:
 | infix operators  | prefix operators | sympy equivalent |
 | :--: |  :--: |  :--: | 
-| X.eq.Y | EqXY | Equal | 
-| X.ne.Y | NeXY | Unequal | 
-| X.gt.Y | GtXY | Greater |
-| X.lt.Y | LtXY | Less |
-| X.ge.Y | GeXY | GreaterThan |
-| X.le.Y | LeXY | LessThan
-| X.in.Y | InXY | Contains | 
-| X.is.Y | IffXY | Equivalent | 
-| X.as.Y | SEqXY | -- | 
-| X.ou.Y | OrXY | Or | 
-| X.et.Y | AndXY | And | 
-| X.to.Y | SetoidXY | Setoid | 
-| X.dvd.Y | DvdXY | -- | 
-| X.sub.Y | SubsetXY | Subset | 
-| X.sup.Y | SupsetXY | Supset | 
+| X.eq.Y | = | Equal | 
+| X.ne.Y | ≠  | Unequal | 
+| X.gt.Y | > | Greater |
+| X.lt.Y | < | Less |
+| X.ge.Y | ≥ | GreaterThan |
+| X.le.Y | ≤ | LessThan
+| X.in.Y | ∈ | Contains | 
+| X.is.Y | ↔ | Equivalent | 
+| X.as.Y | ≃ | -- | 
+| X.ou.Y | ∨ | Or | 
+| X.et.Y | ∧ | And | 
+| X.to.Y | ≈ | -- | 
+| X.to.Y | → | -- | 
+| X.dvd.Y | \| | -- | 
+| X.sub.Y | ⊆ | Subset | 
+| X.sup.Y | ⊇ | Supset | 
 
 ## Plural S
 The English Plural Letter S is used to denote double occurrence of types:

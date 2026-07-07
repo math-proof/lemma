@@ -1,6 +1,7 @@
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Real.LtExpS.is.Lt
 import sympy.functions.elementary.exponential
-open Real
+open Real Nat
 
 
 @[main, comm, mp, mpr]
@@ -11,7 +12,7 @@ private lemma main
 -- imply
   exp a ≤ exp b ↔ a ≤ b := by
 -- proof
-  simp [← not_lt]
+  simp [← NotGt.is.Le]
   rw [not_iff_not]
   apply LtExpS.is.Lt
 

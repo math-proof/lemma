@@ -11,7 +11,7 @@ import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.LtMod.of.Ne_0
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Real.EqLog1'0
 import Lemma.Real.GtExp_0
 import Lemma.Real.NeExp_0

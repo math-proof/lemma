@@ -12,20 +12,19 @@ private lemma main
   [NeZero (d : ℕ)]
   {a b : ℝ*}
 -- given
-  (h_a : Infinitesimal a)
-  (h_b : Infinitesimal (a / b + b / a - d)) :
+  (h_a : a → 0)
+  (h_b : (a / b + b / a - d) → 0) :
 -- imply
-  Infinitesimal b := by
+  b → 0 := by
 -- proof
   contrapose! h_b
   rw [EqCoeS d]
   by_contra h
-  have h_ab := InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
+  have h_ab := InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h_a (not_lt.mpr h_b)
   rw [show a / b + b / a - (d : ℝ) = (a / b) + (b / a - (d : ℝ)) by ring] at h
-  have h_ba := InfinitesimalSub.of.Infinitesimal.Infinitesimal h h_ab
+  have h_ba := InfinitesimalSub.of.Infinitesimal.Infinitesimal (lt_of_not_ge h) h_ab
   simp at h_ba
-  rw [show b / a - (d : ℝ) = b / a - (d : ℝ) by simp] at h_ba
-  have h_ba := EqSt.of.InfinitesimalSub h_ba
+  have h_ba := EqSt.of.InfinitesimalSub (show (b / a - (d : ℝ)) → 0 from h_ba)
   have h_ab := EqSt_0.of.Infinitesimal h_ab
   rw [StDiv.eq.InvStInv] at h_ab
   simp_all

@@ -21,7 +21,7 @@ private lemma main
   unfold List.Vector.splitAt
   simp
   rw [Head.eq.Get_0.fin]
-  rw [GetSum.eq.SumMapGet.fin]
+  erw [GetSum.eq.SumMapGet.fin]
   rw [EqSumS.of.SEq]
   apply SEq.of.All_EqGetS.Eq.fin
   ·
@@ -30,8 +30,7 @@ private lemma main
     simp
     rw [Head.eq.Get_0.fin]
     rw [GetUnflatten.eq.Get_AddMul.fin]
-    simp
-    rw [GetCast.eq.Get.of.Eq.fin (by simp)]
+    erw [GetCast.eq.Get.of.Eq.fin (by simp)]
     simp
   ·
     simp

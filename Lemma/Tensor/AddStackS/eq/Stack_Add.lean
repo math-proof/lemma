@@ -1,8 +1,9 @@
+import Lemma.Tensor.Eq.is.EqDataS
 import sympy.tensor.stack
 import Lemma.Nat.Add
 import Lemma.Vector.AddFlattenS.eq.FlattenAdd
 import Lemma.Vector.AddMapS.eq.Map_FunAdd
-open Vector Nat
+open Vector Nat Tensor
 
 
 @[main]
@@ -16,9 +17,14 @@ private lemma main
   unfold Stack Tensor.fromVector
   simp only [HAdd.hAdd]
   simp only [Add.add]
+  apply Eq.of.EqDataS
+  simp [GetElem.getElem]
+  let a := (List.Vector.range s₀).map fun x => (A.get x).data
+  let b := (List.Vector.range s₀).map fun x => (B.get x).data
+  show a.flatten + b.flatten = ((List.Vector.range s₀).map fun x => (A.get x).data + (B.get x).data).flatten
   rw [AddFlattenS.eq.FlattenAdd]
-  simp
-  rw [AddMapS.eq.Map_FunAdd]
+  congr
+  exact AddMapS.eq.Map_FunAdd _ _
 
 
 -- created on 2025-07-20

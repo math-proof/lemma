@@ -5,10 +5,11 @@ open Hyperreal
 
 @[main]
 private lemma main
+  {a b : ℝ*}
 -- given
-  (h : Infinite (a / b)) :
+  (h : (a / b) → ∞) :
 -- imply
-  ¬Infinite (b / a) := by
+  ¬(b / a) → ∞ := by
 -- proof
   apply NotInfinite.of.Infinitesimal
   apply InfinitesimalDiv.of.InfiniteDiv h

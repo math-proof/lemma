@@ -10,9 +10,9 @@ open Hyperreal Nat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h : (a / b + b / a).st ≠ 0) :
+  (h : stdPart (a / b + b / a) ≠ 0) :
 -- imply
-  ¬(a / b).Infinite := by
+  ¬(a / b) → ∞ := by
 -- proof
   by_contra h_inf
   have h_eps := InfinitesimalDiv.of.InfiniteDiv h_inf

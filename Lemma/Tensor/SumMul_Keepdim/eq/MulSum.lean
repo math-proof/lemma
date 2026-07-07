@@ -4,7 +4,7 @@ import Lemma.Fin.MulSum.eq.Sum_Mul
 import Lemma.Fin.Sum.of.All_Eq
 import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.Nat.EqMulS.of.Eq
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Tensor.EqSelectKeepdim
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
 import Lemma.Tensor.SEqMulS.of.SEq.SEq

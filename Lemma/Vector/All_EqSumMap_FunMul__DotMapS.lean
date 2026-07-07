@@ -1,8 +1,7 @@
 import Lemma.Vector.Sum.eq.Zero
 import Lemma.Vector.Dot.eq.Zero
-import Lemma.Vector.Map.eq.Cons_MapTail
-import Lemma.Vector.SumCons.eq.Add_Sum
-import Lemma.Vector.DotConsS.eq.AddDotS
+import Lemma.Vector.EqCons_Tail
+import Lemma.Vector.SumMapVal.eq.SumMap
 open Vector
 
 
@@ -15,16 +14,24 @@ private lemma main
 -- proof
   induction n with
   | zero =>
-  -- Base case: n = 0
     simp [Dot.eq.Zero, Sum.eq.Zero]
   | succ n ih =>
-  -- Inductive case: n = n + 1
     intro s
-    rw [Map.eq.Cons_MapTail]
-    rw [SumCons.eq.Add_Sum _ (List.Vector.map (fun x ↦ f₁ x * f₂ x) s.tail)]
-    repeat rw [Map.eq.Cons_MapTail]
-    rw [DotConsS.eq.AddDotS]
-    rw [ih]
+    rw [← SumMapVal.eq.SumMap (f := fun x => f₁ x * f₂ x)]
+    have hval : s.val = s.head :: s.tail.val := by
+      simpa using congrArg Subtype.val (EqCons_Tail s).symm
+    rw [hval, List.map_cons, List.sum_cons]
+    have h_dot₁ : s.map f₁ = f₁ s.head ::ᵥ s.tail.map f₁ := by
+      rw [← EqCons_Tail s]
+      apply List.Vector.map_cons
+    have h_dot₂ : s.map f₂ = f₂ s.head ::ᵥ s.tail.map f₂ := by
+      rw [← EqCons_Tail s]
+      apply List.Vector.map_cons
+    have : s.map f₁ ⬝ s.map f₂ = f₁ s.head * f₂ s.head + s.tail.map f₁ ⬝ s.tail.map f₂  := by
+      rw [h_dot₁, h_dot₂]
+      rfl
+    rw [this]
+    apply congr_arg₂ (· + ·) rfl ih
 
 
 -- created on 2024-07-01

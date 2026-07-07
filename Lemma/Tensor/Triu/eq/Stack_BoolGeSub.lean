@@ -30,7 +30,9 @@ private lemma main
   ·
     simp at h_u
     simp [h_u]
-    repeat rw [EqGet1_1.fin]
+    rw [EqGet1_1.fin]
+    erw [EqGet1_1.fin]
+    rfl
 
 
 -- created on 2026-01-03

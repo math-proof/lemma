@@ -9,10 +9,10 @@ open Hyperreal Int Rat
 private lemma main
   {x : ℝ*}
 -- given
-  (h : Infinitesimal x)
+  (h : x → 0)
   (r : ℝ) :
 -- imply
-  Infinitesimal (x / r) := by
+  (x / r) → 0 := by
 -- proof
   apply Infinitesimal.of.All_LtAbs
   intro ⟨δ, hδ⟩

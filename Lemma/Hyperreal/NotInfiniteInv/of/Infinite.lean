@@ -7,9 +7,9 @@ open Hyperreal
 private lemma main
   {x : ℝ*}
 -- given
-  (h : Infinite x) :
+  (h : x → ∞) :
 -- imply
-  ¬x⁻¹.Infinite := by
+  ¬x⁻¹ → ∞ := by
 -- proof
   apply NotInfiniteInv.of.NotInfinitesimal
   apply NotInfinitesimal.of.Infinite h

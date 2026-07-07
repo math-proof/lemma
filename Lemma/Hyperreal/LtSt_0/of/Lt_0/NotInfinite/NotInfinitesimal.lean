@@ -8,11 +8,11 @@ open Hyperreal Nat
 private lemma main
   {x : ℝ*}
 -- given
-  (h₀ : ¬x.Infinitesimal)
-  (h₁ : ¬x.Infinite)
+  (h₀ : ¬x → 0)
+  (h₁ : ¬x → ∞)
   (h_x : x < 0) :
 -- imply
-  st x < 0 := by
+  stdPart x < 0 := by
 -- proof
   apply Lt.of.Le.Ne
   ·

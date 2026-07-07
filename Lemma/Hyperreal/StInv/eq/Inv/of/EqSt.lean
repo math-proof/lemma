@@ -4,10 +4,13 @@ open Hyperreal
 
 @[main]
 private lemma main
+  [LinearOrder K] [Field K] [IsOrderedRing K]
+  {x : K}
+  {a : ℝ}
 -- given
-  (h : st x = a) :
+  (h : stdPart x = a) :
 -- imply
-  st x⁻¹ = a⁻¹ := by
+  stdPart x⁻¹ = a⁻¹ := by
 -- proof
   rw [StInv.eq.InvSt]
   rw [h]

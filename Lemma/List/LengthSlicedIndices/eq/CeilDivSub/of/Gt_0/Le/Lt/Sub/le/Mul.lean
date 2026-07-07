@@ -1,5 +1,5 @@
 import stdlib.Slice
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Rat.CeilDivSub.eq.One.of.GeAdd.Gt_0

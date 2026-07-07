@@ -1,4 +1,4 @@
-import Mathlib.Analysis.Real.Hyperreal
+import sympy.series.limits
 import sympy.Basic
 
 
@@ -7,9 +7,9 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  (-x).st = -x.st :=
+  stdPart (-x) = -stdPart x :=
 -- proof
-  Hyperreal.st_neg x
+  ArchimedeanClass.stdPart_neg x
 
 
 -- created on 2025-12-16

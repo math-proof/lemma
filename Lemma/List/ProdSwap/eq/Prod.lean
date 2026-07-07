@@ -1,5 +1,5 @@
 import stdlib.List
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.List.ProdAppend_Cons_Drop.eq.Prod.of.Lt.GtLength

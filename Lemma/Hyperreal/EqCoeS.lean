@@ -1,5 +1,5 @@
 import sympy.Basic
-import Mathlib.Analysis.Real.Hyperreal
+import sympy.series.limits
 
 
 @[main]

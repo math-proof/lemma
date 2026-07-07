@@ -1,4 +1,4 @@
-import Mathlib.Analysis.Real.Hyperreal
+import sympy.series.limits
 import sympy.Basic
 
 
@@ -6,11 +6,11 @@ import sympy.Basic
 private lemma main
   {x : ℝ*}
 -- given
-  (h : x.Infinite) :
+  (h : x → ∞) :
 -- imply
-  x.st = 0 :=
+  stdPart x = 0 :=
 -- proof
-  h.st_eq
+  ArchimedeanClass.stdPart_eq_zero.mpr (ne_of_lt h)
 
 
 -- created on 2025-12-12

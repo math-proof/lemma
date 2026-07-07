@@ -1,4 +1,5 @@
 import Lemma.Vector.SumCons.eq.Add_Sum
+import Lemma.Vector.EqCons_Tail
 import Lemma.Vector.Sum.eq.Zero
 import Lemma.Vector.EqHeadD
 import Lemma.Vector.EqHeadDCons
@@ -16,13 +17,12 @@ private lemma main
   | 0 =>
     simp [EqHeadD, Sum.eq.Zero]
   | n + 1 =>
-    have h : l = l.head ::ᵥ l.tail := by simp
-    rw [h]
-    rw [
-      SumCons.eq.Add_Sum l.head l.tail,
-      EqHeadDCons
-    ]
-    simp
+    rw [← EqCons_Tail l]
+    have h_add := SumCons.eq.Add_Sum l.head l.tail
+    have h_head:= EqHeadDCons l l.head 0
+    simp at h_head
+    conv_rhs at h_add => rw [← h_head]
+    simpa
 
 
 -- created on 2024-07-01

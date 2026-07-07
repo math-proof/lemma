@@ -1,5 +1,5 @@
 import stdlib.List
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Eq.of.Ge.Ge
 open Nat
 

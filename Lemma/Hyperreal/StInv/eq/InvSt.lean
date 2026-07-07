@@ -1,15 +1,16 @@
-import Mathlib.Analysis.Real.Hyperreal
+import sympy.series.limits
 import sympy.Basic
 
 
 @[main]
 private lemma main
+  [LinearOrder K] [Field K] [IsOrderedRing K]
 -- given
-  (x : ℝ*) :
+  (x : K) :
 -- imply
-  (x⁻¹).st = x.st⁻¹ :=
+  stdPart x⁻¹ = (stdPart x)⁻¹ :=
 -- proof
-  Hyperreal.st_inv x
+  ArchimedeanClass.stdPart_inv x
 
 
 -- created on 2025-12-09

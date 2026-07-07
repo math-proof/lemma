@@ -8,7 +8,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  ¬x.Infinite ↔ ∃ δ : ℝ⁺, |x| ≤ δ := by
+  ¬x → ∞ ↔ ∃ δ : ℝ⁺, |x| ≤ δ := by
 -- proof
   simp [Infinite.is.All_GtAbs]
 

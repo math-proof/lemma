@@ -1,4 +1,4 @@
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Lt.of.Lt.Le
 import Lemma.List.LengthSlicedIndices'.eq.ToNatCeilDivSub.of.Gt_0.Le.Gt
 import Lemma.Nat.LeSub.of.Le

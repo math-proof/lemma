@@ -1,7 +1,7 @@
 import Lemma.Bool.BFn_Ite.is.Imp.Imp
 import Lemma.Int.FDiv.eq.Div.of.Ge_0
 import Lemma.Bool.NotAnd.is.OrNotS
-import Lemma.Nat.NotGe.is.Lt
+import Lemma.Nat.NotLe.is.Gt
 import Lemma.Bool.Eq_Ite.of.Cond.NotAnd.Eq
 import Lemma.Bool.IffAndSAnd
 import Lemma.Nat.Gt.Lt.is.False
@@ -36,7 +36,7 @@ private lemma main
   intro ⟨_, h⟩
   apply FDiv.eq.Div.of.Ge_0 (n := n) h
   rw [NotAnd.is.OrNotS]
-  rw [NotGe.is.Lt, NotGe.is.Lt]
+  repeat rw [NotLe.is.Gt]
   intro h_Or
   cases h_Or with
   | inl h_neg =>

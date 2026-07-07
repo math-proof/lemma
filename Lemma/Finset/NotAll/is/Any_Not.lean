@@ -9,8 +9,7 @@ private lemma main
 -- imply
   (¬∀ x : s, p x) ↔ ∃ x : s, ¬p x := by
 -- proof
-  push_neg
-  rfl
+  aesop
 
 
 -- created on 2025-12-30

@@ -1,6 +1,4 @@
-import Lemma.Int.EqAbs.is.Ge_0
-import Lemma.Nat.Ge.of.Gt
-open Int Nat
+import sympy.Basic
 
 
 @[main]
@@ -10,11 +8,10 @@ private lemma main
 -- given
   (h : x > 0) :
 -- imply
-  |x| = x := by
+  |x| = x :=
 -- proof
-  apply EqAbs.of.Ge_0
-  apply Ge.of.Gt h
+  abs_of_pos h
 
 
 -- created on 2025-10-01
--- updated on 2025-12-25
+-- updated on 2026-07-06

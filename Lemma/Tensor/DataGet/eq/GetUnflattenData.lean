@@ -11,7 +11,7 @@ private lemma main
 -- imply
   X[i].data = X.data.unflatten[i] :=
 -- proof
-  DataGet.eq.Get.of.EqData_Flatten (v := X.data.unflatten) (X := X) (by rw [EqFlattenUnflatten]) i
+  DataGet.eq.Get.of.EqData_Flatten (v := X.data.unflatten) (X := X) (by erw [EqFlattenUnflatten]) i
 
 
 -- created on 2025-11-01

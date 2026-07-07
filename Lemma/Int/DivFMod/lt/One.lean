@@ -3,7 +3,7 @@ import Lemma.Rat.LtDivS.of.Lt.Gt_0
 import Lemma.Int.LtCoeS.is.Lt
 import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Int.GtFMod.of.Lt_0
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Rat.LtDivS.of.Gt.Lt_0
 import Lemma.Rat.Div.eq.One.of.Lt_0

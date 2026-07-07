@@ -7,9 +7,9 @@ open Hyperreal
 private lemma main
   {x : ℝ*}
 -- given
-  (h : x.Infinitesimal) :
+  (h : x → 0) :
 -- imply
-  ¬x.InfinitePos := by
+  ¬x → +∞ := by
 -- proof
   have h := NotInfinite.of.Infinitesimal h
   let ⟨h, h'⟩ := NotInfinitePos.NotInfiniteNeg.of.NotInfinite h

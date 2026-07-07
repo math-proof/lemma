@@ -32,9 +32,9 @@ private lemma main
     simp
   apply Eq.of.EqDataS
   simp
-  rw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]
-  rw [EqUnflattenFlatten]
-  rw [GetMap.eq.UFnGet.of.Lt.fin]
+  erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin]
+  erw [EqUnflattenFlatten]
+  erw [GetMap.eq.UFnGet.of.Lt.fin]
   congr
   apply Eq.of.EqValS (b := ⟨i, by aesop⟩)
   simp

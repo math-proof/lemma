@@ -9,10 +9,10 @@ open Hyperreal Int
 private lemma main
   {x y : ℝ*}
 -- given
-  (h_a : ¬Hyperreal.Infinite x)
-  (h_b : ¬Hyperreal.Infinite y) :
+  (h_a : ¬x → ∞)
+  (h_b : ¬y → ∞) :
 -- imply
-  (x - y).st = x.st - y.st := by
+  stdPart (x - y) = stdPart x - stdPart y := by
 -- proof
   rw [Sub.eq.Add_Neg]
   rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_a]

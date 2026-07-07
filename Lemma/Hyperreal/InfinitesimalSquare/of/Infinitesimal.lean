@@ -7,9 +7,9 @@ open Hyperreal
 private lemma main
   {x : ℝ*}
 -- given
-  (h : Infinitesimal x) :
+  (h : x → 0) :
 -- imply
-  Infinitesimal x² :=
+  x² → 0 :=
 -- proof
   InfinitesimalPow.of.Infinitesimal h
 

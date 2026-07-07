@@ -7,6 +7,7 @@ import Lemma.Hyperreal.EqSt_0.of.Infinite
 import Lemma.Hyperreal.StInv.eq.Inv.of.EqSt
 import Lemma.Hyperreal.Infinitesimal0
 import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalSubDiv.Infinitesimal
+import Lemma.Nat.NotLt.is.Ge
 open Hyperreal Rat Nat Int
 export Hyperreal (Infinite Infinitesimal IsSt st)
 
@@ -17,43 +18,40 @@ numerical analogy:
 - [numpy.isclose][https://numpy.org/doc/stable/reference/generated/numpy.isclose.html]
 -/
 instance : Setoid ℝ* where
-  r a b := Infinitesimal a ∧ Infinitesimal b ∨ Infinitesimal (a / b - 1) ∧ ¬Infinitesimal b
+  r a b := (a → 0) ∧ b → 0 ∨ (a / b - 1) → 0 ∧ ¬b → 0
   iseqv :=
     { refl x := by
         simp
-        if h : x.Infinitesimal then
+        if h : x → 0 then
           simp [h]
         else
           simp [h]
           rw [Div.eq.One.of.Ne_0]
           .
             simp
-            apply Infinitesimal0
+            aesop
           .
             contrapose! h
             subst h
             apply Infinitesimal0
       symm {a b} h := by
-        if h_a : Infinitesimal a then
+        if h_a : a → 0 then
           simp [h_a] at ⊢ h
-          if h_b : Infinitesimal b then
+          if h_b : b → 0 then
             simp [h_b]
           else
             obtain h | h := h
             ·
               assumption
             ·
-              simp [h_b] at h
               have := NotInfinitesimalSubDiv.of.NotInfinitesimal.Infinitesimal h_a h_b (d := 1)
-              simp at this
-              contradiction
+              aesop
         else
           simp [h_a] at ⊢ h
-          if h_b : Infinitesimal b then
-            simp [h_b] at h
+          if h_b : b → 0 then
+            grind
           else
-            simp [h_b] at h
-            have h := EqSt.of.InfinitesimalSub h
+            have h := EqSt.of.InfinitesimalSub h.left
             have h := StInv.eq.Inv.of.EqSt h
             rw [InvDiv.eq.Div] at h
             simp at h
@@ -61,47 +59,46 @@ instance : Setoid ℝ* where
             apply NotInfinite.of.NeSt_0
             linarith
       trans {a b c} h_ab h_bc:= by
-        if h_a : Infinitesimal a then
+        if h_a : a → 0 then
           simp [h_a] at ⊢ h_ab
-          if h_b : Infinitesimal b then
+          if h_b : b → 0 then
             simp [h_b] at ⊢ h_ab h_bc
-            if h_c : Infinitesimal c then
+            if h_c : c → 0 then
               simp [h_c]
             else
-              simp [h_c] at h_bc
               have := NotInfinitesimalSubDiv.of.NotInfinitesimal.Infinitesimal h_b h_c (d := 1)
-              simp at this
-              contradiction
+              aesop
           else
-            simp [h_b] at h_ab
             have := NotInfinitesimalSubDiv.of.NotInfinitesimal.Infinitesimal h_a h_b (d := 1)
-            simp at this
-            contradiction
+            aesop
         else
           simp [h_a] at ⊢ h_ab
-          if h_b : Infinitesimal b then
-            simp [h_b] at h_ab
+          if h_b : b → 0 then
+            grind
           else
             simp [h_b] at ⊢ h_ab h_bc
-            if h_c : Infinitesimal c then
-              simp [h_c] at h_bc
+            if h_c : c → 0 then
+              grind
             else
-              simp [h_c] at ⊢ h_bc
-              have h_ab := EqSt.of.InfinitesimalSub h_ab
-              have h_bc := EqSt.of.InfinitesimalSub h_bc
-              have h_abc := Hyperreal.st_mul
+              have h_ab := EqSt.of.InfinitesimalSub h_ab.left
+              have h_bc := EqSt.of.InfinitesimalSub h_bc.left
+              have h_abc := ArchimedeanClass.stdPart_mul
                 (x := a / b)
                 (y := b / c)
-                (NotInfinite.of.NeSt_0 (by linarith))
-                (NotInfinite.of.NeSt_0 (by linarith))
+                (Ge.of.NotLt (NotInfinite.of.NeSt_0 (by linarith)))
+                (Ge.of.NotLt (NotInfinite.of.NeSt_0 (by linarith)))
               rw [MulDivS.eq.Div.of.Ne_0] at h_abc
               .
-                apply InfinitesimalSub.of.EqSt.NotInfinite
+                constructor
                 .
-                  apply NotInfinite.of.NeSt_0
-                  simp_all
+                  apply InfinitesimalSub.of.EqSt.NotInfinite
+                  .
+                    apply NotInfinite.of.NeSt_0
+                    simp_all
+                  .
+                    simp_all
                 .
-                  simp_all
+                  grind
               .
                 contrapose! h_b
                 subst h_b
@@ -114,5 +111,7 @@ noncomputable instance : Coe ℝ ℝ* := ⟨Hyperreal.ofReal⟩
 def HasEquiv.Equiv.symm [Setoid α] {a b : α} (h : a ≈ b) : b ≈ a := Setoid.symm h
 
 def HasEquiv.Equiv.trans [Setoid α] {a b c : α} (h_ab : a ≈ b) (h_bc : b ≈ c) : a ≈ c := Setoid.trans h_ab h_bc
+
+def Not.Setoid.symm [Setoid α] {a b : α} (h : ¬a ≈ b) : ¬b ≈ a := fun h' => h h'.symm
 
 notation "∞" => Hyperreal.omega

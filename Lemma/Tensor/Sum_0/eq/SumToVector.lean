@@ -16,7 +16,7 @@ private lemma main
   rw [Sum.eq.Sum_Get]
   simp [GetElem.getElem]
   have h_all := GetToVector.eq.Get.cons.fin X
-  rw [Sum.of.All_Eq h_all]
+  erw [Sum.of.All_Eq h_all]
   rw [Sum_0.eq.Sum_Get.fin]
 
 

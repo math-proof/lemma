@@ -8,7 +8,7 @@ private lemma main
 -- given
   (a b : ℝ*) :
 -- imply
-  (a / b).st = (b / a).st⁻¹ := by
+  stdPart (a / b) = (stdPart (b / a))⁻¹ := by
 -- proof
   have := StInv.eq.InvSt (b / a)
   rwa [InvDiv.eq.Div] at this

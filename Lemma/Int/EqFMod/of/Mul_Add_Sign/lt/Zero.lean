@@ -1,5 +1,5 @@
 import Lemma.Int.EqSign_1.of.Gt_0
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0

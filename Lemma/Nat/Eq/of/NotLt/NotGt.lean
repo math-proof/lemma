@@ -1,6 +1,6 @@
 import Lemma.Nat.Eq.of.Le.Ge
-import Lemma.Nat.NotGt.is.Le
-import Lemma.Nat.Ge.of.NotLt
+import Lemma.Nat.NotLt.is.Ge
+import Lemma.Nat.NotLt.is.Ge
 open Nat
 
 

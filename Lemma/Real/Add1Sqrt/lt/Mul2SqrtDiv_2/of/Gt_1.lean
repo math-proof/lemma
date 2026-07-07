@@ -36,20 +36,20 @@ private lemma main
     rw [EqSquareSqrt.of.Ge_0]
     ·
       rw [SquareAdd.eq.AddAddSquareS_MulMul2]
-      ring_nf
       rw [EqSquareSqrt.of.Ge_0 (by linarith)]
       repeat apply LtAdd.of.Lt_Sub
       ring_nf
       apply Lt.of.Sub.gt.Zero
       rw [Add.comm]
-      rw [SubAdd.eq.Add_Sub]
-      norm_num
       rw [Mul.comm]
+      rw [Int.SubAdd.eq.AddSub]
+      rw [Int.SubAdd.eq.Add_Sub]
+      norm_num
       apply AddSub_Mul2Sqrt.gt.Zero.of.Gt_1 h
     ·
       apply Div.ge.Zero.of.Ge_0.Gt_0
       ·
-        linarith [h]
+        linarith
       ·
         norm_num
   ·

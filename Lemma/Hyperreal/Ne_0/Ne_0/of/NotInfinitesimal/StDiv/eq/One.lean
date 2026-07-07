@@ -9,12 +9,12 @@ open Hyperreal
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_st : st (a / b) = 1)
-  (h_a : ¬a.Infinitesimal) :
+  (h_st : stdPart (a / b) = 1)
+  (h_a : ¬a → 0) :
 -- imply
   a ≠ 0 ∧ b ≠ 0 := by
 -- proof
-  if h_a_inf : a.Infinite then
+  if h_a_inf : a → ∞ then
     have h_b_inf := Infinite.of.Infinite.StDiv.ne.Zero.left (by linarith) h_a_inf (b := b)
     exact ⟨Ne_0.of.Infinite h_a_inf, Ne_0.of.Infinite h_b_inf⟩
   else

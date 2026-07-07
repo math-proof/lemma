@@ -1,5 +1,5 @@
 import sympy.Basic
-import Mathlib.Analysis.Real.Hyperreal
+import sympy.series.limits
 
 
 @[main]
@@ -8,14 +8,16 @@ private lemma main
 -- given
   (h : x ≥ 0) :
 -- imply
-  x.st ≥ 0 := by
+  stdPart x ≥ 0 := by
 -- proof
-  unfold Hyperreal.st
-  split_ifs with h_r
-  .
-    exact (Hyperreal.isSt_refl_real 0).le (Classical.choose_spec h_r) h
-  .
-    simp
+  if hx : 0 ≤ ArchimedeanClass.mk x then
+    have h0 := Hyperreal.archimedeanClassMk_coe_nonneg 0
+    have := ArchimedeanClass.stdPart_monotoneOn (a := (0 : ℝ*)) (b := x) h0 hx h
+    simpa [ArchimedeanClass.stdPart_zero] using this
+  else
+    rw [ArchimedeanClass.stdPart_eq_zero.mpr]
+    apply ne_of_lt
+    apply lt_of_not_ge hx
 
 
 -- created on 2025-12-11

@@ -1,5 +1,5 @@
 import Lemma.List.LengthAppend_Cons_Drop.eq.Length.of.Lt.GtLength
-import Lemma.Nat.NotGt.is.Le
+import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Bool.Ne.is.NotEq
 open List Bool Nat

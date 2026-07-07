@@ -6,9 +6,9 @@ open Hyperreal
 private lemma main
   {a b : ℝ*}
 -- given
-  (h : st (b / a) = r) :
+  (h : stdPart (b / a) = r) :
 -- imply
-  (a / b).st = r⁻¹ := by
+  stdPart (a / b) = r⁻¹ := by
 -- proof
   rw [StDiv.eq.InvStInv]
   rw [h]

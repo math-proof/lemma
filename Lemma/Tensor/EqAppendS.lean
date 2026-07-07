@@ -27,18 +27,18 @@ private lemma main
   apply Eq.of.EqDataS
   rw [DataAppend.eq.Cast_AppendDataS]
   apply Eq_Cast.of.SEq
-  rw [DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData]
+  erw [DataAppend.eq.Cast_FlattenMap₂_CastS_SplitAtData]
   apply SEqCast.of.SEq.Eq (by grind)
   apply SEq.of.All_EqGetS.Eq.fin (by grind)
   intro t
   simp
   have h_t := t.isLt
   let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
-  rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
+  erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
   have h_q := Eq_0 q
   simp [h_q] at h_qr
   simp only [h_q]
-  rw [GetMap₂.eq.BFnGetS.fin]
+  erw [GetMap₂.eq.BFnGetS.fin]
   simp [h_qr]
   congr <;>
     apply EqHeadSplitAt_0

@@ -15,7 +15,7 @@ private lemma main
   rw [Head.eq.Get_0.fin]
   apply Eq.of.All_EqGetS.fin
   intros
-  rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+  erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp
 
 

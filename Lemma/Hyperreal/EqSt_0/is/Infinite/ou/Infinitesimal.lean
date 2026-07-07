@@ -1,6 +1,7 @@
+import sympy.series.limits
+import sympy.core.singleton
 import Lemma.Bool.Iff.is.IffNotS
-import Lemma.Hyperreal.NeSt_0.is.NotInfinite.NotInfinitesimal
-open Hyperreal Bool
+open Bool
 
 
 @[main, mp, mpr]
@@ -8,10 +9,10 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  x.st = 0 ↔ x.Infinite ∨ x.Infinitesimal := by
+  stdPart x = 0 ↔ x → ∞ ∨ x → 0 := by
 -- proof
   rw [Iff.is.IffNotS]
-  simp [NeSt_0.is.NotInfinite.NotInfinitesimal]
+  simp
 
 
 -- created on 2025-12-18

@@ -1,4 +1,5 @@
-import Lemma.Vector.ValGet.eq.ValArraySliceFlatten
+import Lemma.Vector.Get.as.ArraySliceFlatten
+import Lemma.Vector.All_EqGetS.of.SEq
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Nat.AddMul.lt.Mul
@@ -12,26 +13,12 @@ private lemma main
   (i : Fin m)
   (j : Fin n) :
 -- imply
-  have h := AddMul.lt.Mul i j
-  v.flatten[i * n + j] = v[i, j] := by
+  v.flatten[i * n + j]'(AddMul.lt.Mul i j) = v[i, j] := by
 -- proof
-  intro h
-  simp [GetElem.getElem]
-  have h_vi : v[(i : ℕ)].val = (v.flatten.array_slice ((i : ℕ) * n) n).val := ValGet.eq.ValArraySliceFlatten v i
-  have h_vi_val : v.val[(i : ℕ)].val = v[i].val := by
-    simp
-    simp only [GetElem.getElem]
-    simp [List.Vector.get]
-  simp [List.Vector.get]
-  simp [h_vi_val]
-  simp [h_vi]
-  have h_lt : j < n ⊓ (m * n - i * n) := by
-    simp_all
-    apply Lt_Sub.of.LtAdd.left h
-  have := GetArraySlice.eq.Get_Add.of.Lt_Min_Sub h_lt v.flatten
-  simp [GetElem.getElem] at this
-  simp [List.Vector.get] at this
-  rw [this]
+  have h := AddMul.lt.Mul i j
+  have hbr : v[i][j] = (v.flatten.array_slice (i * n) n)[j] := by
+    simpa [GetElem.getElem] using All_EqGetS.of.SEq (Get.as.ArraySliceFlatten v i) j
+  simpa [GetElem.getElem] using (GetArraySlice.eq.Get_Add.of.Lt_Min_Sub (lt_min j.isLt (Lt_Sub.of.LtAdd.left h)) v.flatten).symm.trans hbr.symm
 
 
 -- created on 2025-05-31

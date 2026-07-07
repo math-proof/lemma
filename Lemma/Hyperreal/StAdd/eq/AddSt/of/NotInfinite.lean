@@ -8,15 +8,14 @@ open Hyperreal
 private lemma main
   {x : ℝ*}
 -- given
-  (h : ¬x.Infinite)
+  (h : ¬x → ∞)
   (r : ℝ) :
 -- imply
-  (x + r).st = x.st + r := by
+  stdPart (x + r) = stdPart x + r := by
 -- proof
   rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite h]
   ·
     simp
-    apply EqSt
   ·
     apply NotInfinite
 

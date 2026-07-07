@@ -14,8 +14,8 @@ private lemma main
   {x : ℝ*}
   {r : ℝ}
 -- given
-  (h : Infinitesimal x)
-  (h_r : Infinitesimal (x + r)) :
+  (h : x → 0)
+  (h_r : (x + r) → 0) :
 -- imply
   r = 0 := by
 -- proof
@@ -30,8 +30,8 @@ private lemma left
   {x : ℝ*}
   {r : ℝ}
 -- given
-  (h : Infinitesimal x)
-  (h_r : Infinitesimal (r + x)) :
+  (h : x → 0)
+  (h_r : (r + x) → 0) :
 -- imply
   r = 0 := by
 -- proof

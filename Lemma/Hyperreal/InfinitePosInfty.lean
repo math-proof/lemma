@@ -7,7 +7,7 @@ open Hyperreal
 @[main]
 private lemma main :
 -- imply
-  Hyperreal.omega.InfinitePos :=
+  Hyperreal.omega → +∞ :=
 -- proof
   InfinitePos.of.Infinite.Gt_0 InfiniteInfty GtInfty0
 

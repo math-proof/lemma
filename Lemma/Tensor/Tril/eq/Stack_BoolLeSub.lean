@@ -24,13 +24,15 @@ private lemma main
   repeat rw [EqGetStack.fn.fin]
   split_ifs with h_l
   ·
-    have h_l : ¬(j : ℤ) ≤ d + i := by 
+    have h_l : ¬(j : ℤ) ≤ d + i := by
       linarith
     simp [h_l]
   ·
     simp at h_l
     simp [h_l]
-    repeat rw [EqGet1_1.fin]
+    rw [EqGet1_1.fin]
+    erw [EqGet1_1.fin]
+    rfl
 
 
 -- created on 2026-01-03
