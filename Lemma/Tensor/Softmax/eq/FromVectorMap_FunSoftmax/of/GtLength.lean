@@ -66,12 +66,13 @@ private lemma main
   have h_r := r.isLt
   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
   simp
-  repeat rw [GetDiv.eq.DivGetS.fin]
+  repeat erw [GetDiv.eq.DivGetS.fin]
   unfold Tensor.toVector
   simp [DataExp.eq.ExpData]
   rw [GetCast.eq.Get.of.Eq.fin (by simp)]
-  simp [GetExp.eq.ExpGet.fin]
-  rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+  repeat erw [GetExp.eq.ExpGet.fin]
+  simp
+  erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp [← h_qr]
   apply EqDivS.of.Eq.left
   rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d + 1, by grind⟩)]
@@ -97,24 +98,23 @@ private lemma main
   have h_qₐ := qₐ.isLt
   simp [TakeInsertIdx.eq.Take, TakeEraseIdx.eq.Take] at h_q' h_qₐ
   have h_rₐ := rₐ.isLt
-  repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
+  repeat erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
   simp
   repeat rw [GetRepeat.eq.Get_Mod.fin]
-  repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+  repeat erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp [ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength h] at ⊢ h_rₐ h_q'_div h_r'_mod h_qₐ_div h_rₐ_mod
   rw [DataSum.eq.Sum_DataSelect (d := ⟨d + 1, by grind⟩)]
   rw [DataSum.eq.Sum_DataSelect (d := ⟨d, by grind⟩)]
   have h_prod : (s.eraseIdx d).prod = ((s.eraseIdx d).insertIdx d 1).prod := by
     simp [ProdInsertIdx.eq.Prod]
-  repeat rw [GetCast.eq.Get.of.Eq.fin (by grind)]
-  repeat rw [GetSum.eq.Sum_Get.fin]
-  simp
+  repeat erw [GetCast.eq.Get.of.Eq.fin (by grind)]
+  repeat erw [GetSum.eq.Sum_Get.fin]
   apply Sum.of.All_Eq.Eq (by simp)
   intro k
   have h_k := k.isLt
   rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
   conv_rhs => rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
-  repeat rw [GetCast.eq.Get.of.Eq.fin]
+  repeat erw [GetCast.eq.Get.of.Eq.fin]
   ·
     have h_dvdₑ := Get.dvd.Mul_ProdTake.of.GtLength h n
     have h_dvdₕ := Get.dvd.ProdTake.of.GtLength h
@@ -144,22 +144,20 @@ private lemma main
     repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
     have := GetGetSlice.eq.Get.of.GtGet.GtLength (j := k) (by grind) (by grind) ((exp (⟨X⟩ : Tensor α _)).data.splitAt ((⟨d + 1, by grind⟩ : Fin (n :: s).length) + 1))
     simp at this
-    simp [this]
+    erw [this]
     have := GetGetSlice.eq.Get.of.GtGet.GtLength (j := k) (by grind) (by grind) ((exp (⟨(X.splitAt 1).get (⟨q, by grind⟩ : Fin (n * 1))⟩ : Tensor α _)).data.splitAt (d + 1))
     simp at this
-    simp [this]
+    erw [this]
     simp [DataExp.eq.ExpData]
-    repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-    rw [GetExp.eq.ExpGet.fin]
-    rw [GetExp.eq.ExpGet.fin]
-    rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+    repeat erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+    erw [GetExp.eq.ExpGet.fin]
+    erw [GetExp.eq.ExpGet.fin]
+    erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
     repeat apply congrArg
-    simp
     simp [MulAdd.eq.AddMulS]
     simp [Add_Add.eq.AddAdd]
     rw [AddAdd.comm]
     conv_rhs => rw [AddAdd.comm]
-    simp
     simp at h_rₕ_mod h_rₑ_mod
     rw [DivAddMul.eq.Add_Div.of.Ne_0 (by grind)] at h_qₕ_div h_qₑ_div
     simp at h_qₕ_div h_qₑ_div
@@ -177,7 +175,7 @@ private lemma main
   ·
     have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp (by grind) (by grind) (s := s) (d := d) (i := k)
     simp at ⊢ this
-    rw [this]
+    erw [this]
   ·
     have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp (by grind) (by grind) (s := n :: s) (d := d + 1) (i := k)
     simp at ⊢ this
