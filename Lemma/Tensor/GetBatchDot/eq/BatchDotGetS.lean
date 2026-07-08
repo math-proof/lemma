@@ -41,10 +41,18 @@ private lemma main
   rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin (by grind) (by grind) (by grind)]
   apply EqSumS.of.Eq
   erw [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind)]
-  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]
+  have h_s : (b :: bz ++ [m, k]).insertIdx ((b :: bz).length + 1) 1 = b :: bz ++ [m, 1, k] := by simp [List.InsertIdxAppend.eq.Append_InsertIdx]
+  have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
+    (s' := b :: (bz ++ [m, n, k]))
+    (by grind)
+    (by grind)
+    ((cast (congrArg (Tensor α) h_s) (X.unsqueeze (bz.length + 1 + 1))).repeat n ⟨bz.length + 1 + 1, by grind⟩)
+    ⟨i, by grind⟩
+  simp at this
+  simp [this]
   conv_lhs =>
     arg 2
-    rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]
+    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]
   have h_s₁ : (b :: bz ++ [m, k]).insertIdx ((b :: bz).length + 1) 1 = b :: bz ++ [m, 1, k] := by
     simp [InsertIdxAppend.eq.Append_InsertIdx]
   have := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtLength_0.fin
@@ -70,8 +78,8 @@ private lemma main
   simp at this
   simp [this]
   conv_lhs => rw [Eq_Fin i]
-  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := b :: bz ++ [m, 1, k]) (by grind) (by grind)]
-  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := b :: bz ++ [1, n, k]) (by grind) (by grind)]
+  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := b :: bz ++ [m, 1, k]) (by grind) (by grind)]
+  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := b :: bz ++ [1, n, k]) (by grind) (by grind)]
   have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.GtLength_0.fin
     (i := i)
     (by grind)
@@ -95,7 +103,7 @@ private lemma main
   simp at this
   simp [this]
   conv_lhs => rw [Eq_Fin i]
-  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := (b :: bz ++ [n, k])) (by grind) (by grind)]
+  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := (b :: bz ++ [n, k])) (by grind) (by grind)]
   simp
   apply EqUnsqueezeS.of.Eq
   apply EqCastS.of.SEq.Eq.left (by grind)
