@@ -13,15 +13,14 @@ the hypotheses are arranged in the constructor order of division a / b
 private lemma main
   {a : ℝ*}
 -- given
-  (h_a : ¬Infinitesimal a)
-  (h_b : Infinitesimal b) :
+  (h_a : ¬a → 0)
+  (h_b : b → 0) :
 -- imply
-  st (a / b) = 0 := by
+  stdPart (a / b) = 0 := by
 -- proof
   if h_b_0 : b = 0 then
     subst h_b_0
     simp
-    apply EqSt0'0
   else
     apply EqSt_0.of.Infinite.ou.Infinitesimal
     left

@@ -9,16 +9,12 @@ import Lemma.Nat.All_Eq.of.All_Eq.Eq
 import Lemma.Nat.All_Eq.of.All_Eq.Lt
 import Lemma.Nat.Eq.of.All_Eq.Lt
 import Lemma.Bool.All_EqUFnS.of.All_Eq
-import Lemma.Nat.Pow1.eq.One
+import Lemma.Real.Pow1.eq.One
 import Lemma.Nat.Ge.of.Eq
 import Lemma.Finset.All.of.All.All_Imp
 open Bool Real Finset Nat Rat
 
 
-/--
-This lemma establishes that for a sequence of real numbers indexed by natural numbers, the conditions of having the average of the first `n` terms equal to the `n`-th term, the sum of their roots matching a specific form, and all terms being at least one, are equivalent to all terms up to `n + 1` being exactly one.
-It provides a characterization of constant sequences under these constraints, useful in verifying uniqueness and optimality in related problems.
--/
 @[main, mp]
 private lemma main
   {n : ℕ}

@@ -14,10 +14,10 @@ open Hyperreal Rat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : Infinite a)
-  (h_b : Infinite (b / a)) :
+  (h_a : a → ∞)
+  (h_b : (b / a) → ∞) :
 -- imply
-  Infinite b := by
+  b → ∞ := by
 -- proof
   if h_a_0 : a = 0 then
     subst h_a_0

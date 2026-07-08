@@ -52,7 +52,7 @@ private lemma main
     rw [FloorAdd.eq.AddFloor]
     rw [MulAdd.eq.AddMulS]
     rw [Sub_Add.eq.SubSub]
-    rw [SubSub.eq.Neg]
+    rw [SubSub.eq.Neg.comm]
     rw [FDiv.eq.FloorDiv (α := ℚ)]
 
 

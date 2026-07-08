@@ -17,7 +17,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  x.Infinite ↔ x².Infinite :=
+  x → ∞ ↔ x² → ∞ :=
 -- proof
   Infinite.is.InfinitePow (n := 2) x
 

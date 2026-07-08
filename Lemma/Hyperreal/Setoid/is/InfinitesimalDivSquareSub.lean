@@ -24,7 +24,7 @@ private lemma main
 -- given
   (a b : ℝ*) :
 -- imply
-  a ≈ b ↔ Infinitesimal ((a - b)² / (a² + b² + 1)) := by
+  a ≈ b ↔ ((a - b)² / (a² + b² + 1)) → 0 := by
 -- proof
   rw [Setoid.is.OrAndS]
   constructor <;>
@@ -46,7 +46,7 @@ private lemma main
           simp
     ·
       let ⟨h_ab, h_b⟩ := h
-      if h_a : a.Infinitesimal then
+      if h_a : a → 0 then
         have h_ab_div := InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
         have := NotInfinitesimalSub.of.Infinitesimal.Ne_0 h_ab_div (by simp) (r := 1)
         contradiction
@@ -60,18 +60,19 @@ private lemma main
         ·
           apply StDiv_AddAddSquareS.eq.One.of.StDiv.eq.One h
   ·
-    if h_a : a.Infinitesimal then
+    if h_a : a → 0 then
       simp [h_a]
-      if h_b : b.Infinitesimal then
+      if h_b : b → 0 then
         simp [h_b]
       else
         have := Infinitesimal.of.Infinitesimal.InfinitesimalDivSquareSub h h_a
         contradiction
     else
-      simp [h_a]
-      if h_b : b.Infinitesimal then
+      suffices ((a / b - 1) → 0) ∧ ¬b → 0 by
+        simp [h_a, this.left, this.right]
+      if h_b : b → 0 then
         rw [SquareSub.comm] at h
-        conv at h =>
+        conv_rhs at h =>
           arg 1
           arg 2
           arg 1

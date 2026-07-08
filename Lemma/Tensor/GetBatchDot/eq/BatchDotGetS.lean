@@ -41,7 +41,7 @@ private lemma main
   rw [GetSum.eq.Cast_SumGet.of.Lt_Get_0.Gt_0.GtLength.fin (by grind) (by grind) (by grind)]
   apply EqSumS.of.Eq
   erw [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind)]
-  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]
+  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]
   conv_lhs =>
     arg 2
     rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by grind)]

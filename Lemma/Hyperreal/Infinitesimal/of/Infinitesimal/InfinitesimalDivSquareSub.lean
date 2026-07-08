@@ -9,10 +9,10 @@ open Hyperreal
 private lemma main
   {a b : ℝ*}
 -- given
-  (h : Infinitesimal ((a - b)² / (a² + b² + 1)))
-  (h_a : Infinitesimal a) :
+  (h : ((a - b)² / (a² + b² + 1)) → 0)
+  (h_a : a → 0) :
 -- imply
-  Infinitesimal b := by
+  b → 0 := by
 -- proof
   have : NeZero (a² + b² + 1) := ⟨by nlinarith⟩
   have h_not_finite := NotInfiniteAdd_Square.of.InfinitesimalDivSquare.Infinitesimal h_a h

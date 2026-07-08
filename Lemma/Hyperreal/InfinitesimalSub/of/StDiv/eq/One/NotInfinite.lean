@@ -18,12 +18,12 @@ open Hyperreal Rat Int
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬a.Infinite)
-  (h : (a / b).st = 1) :
+  (h_a : ¬a → ∞)
+  (h : stdPart (a / b) = 1) :
 -- imply
-  (a - b).Infinitesimal := by
+  (a - b) → 0 := by
 -- proof
-  if h_a_eps : a.Infinitesimal then
+  if h_a_eps : a → 0 then
     have h_b_eps := Infinitesimal.of.Infinitesimal.StDiv.ne.Zero.left (b := b) (by linarith) h_a_eps
     apply InfinitesimalSub.of.Infinitesimal.Infinitesimal h_a_eps h_b_eps
   else

@@ -49,9 +49,12 @@ private lemma main
         have h_t := t.isLt
         simp
         have h_s := Gt_0.of.Gt h
-        simp only [EqGetCons] at h_t
+        simp only [GetElem.getElem] at h_t
+        have := EqGetCons.fin (s.get ⟨0, by grind⟩) (s.tail.eraseIdx i)
+        simp only [this] at h_t
         have := EqGetStack.of.Lt.fin h_t (fun j : Fin s[0] => ∑ k, (X[j]'(GtLength.of.GtLength h X j)).select ⟨i, h_lt_length_tail⟩ k)
         simp at this
+        simp only [GetElem.getElem]
         rw [this]
         rw [GetSum.eq.Sum_Get.of.GtLength_0.fin _ (fun k : Fin s[i + 1] => X.select ⟨i + 1, h⟩ k) ⟨t, _⟩]
         ·
@@ -76,6 +79,8 @@ private lemma main
           apply Gt_0.of.Gt h_i
         ·
           rwa [GetEraseIdx.eq.Get.of.Gt.GtLength (by simpa) (by simp)]
+      .
+        grind
       .
         rw [EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0]
     .

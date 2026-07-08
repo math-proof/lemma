@@ -12,18 +12,18 @@ open Hyperreal Nat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬Infinitesimal a)
-  (h_b : ¬Infinitesimal b)
-  (h : ((2 * a * b + 1) / (a² + b² + 1)).st = 1) :
+  (h_a : ¬a → 0)
+  (h_b : ¬b → 0)
+  (h : stdPart ((2 * a * b + 1) / (a² + b² + 1)) = 1) :
 -- imply
-  st (a / b) = 1 := by
+  stdPart (a / b) = 1 := by
 -- proof
   have h_a_ne_0 := Ne_0.of.NotInfinitesimal h_a
   have h_b_ne_0 := Ne_0.of.NotInfinitesimal h_b
   have h_ab := Mul.ne.Zero.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0
-  if h_a_inf : a.Infinite then
+  if h_a_inf : a → ∞ then
     exact StDiv.eq.One.of.StDiv_AddAddSquareS.eq.One.Infinite.NotInfinitesimal.NotInfinitesimal h_a h_b h_a_inf h
-  else if h_b_inf : b.Infinite then
+  else if h_b_inf : b → ∞ then
     rw [MulMul.comm] at h
     conv_lhs at h =>
       arg 1

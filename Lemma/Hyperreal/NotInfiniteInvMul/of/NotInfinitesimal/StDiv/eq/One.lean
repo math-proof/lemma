@@ -11,12 +11,12 @@ open Hyperreal
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_st : st (a / b) = 1)
-  (h_a : ¬a.Infinitesimal) :
+  (h_st : stdPart (a / b) = 1)
+  (h_a : ¬a → 0) :
 -- imply
-  ¬(a * b)⁻¹.Infinite := by
+  ¬(a * b)⁻¹ → ∞ := by
 -- proof
-  if h_a_inf : a.Infinite then
+  if h_a_inf : a → ∞ then
     apply NotInfiniteInv.of.Infinite
     apply InfiniteMul.of.Infinite.Infinite h_a_inf
     apply Infinite.of.Infinite.StDiv.ne.Zero.left (by linarith) h_a_inf

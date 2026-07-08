@@ -1,3 +1,6 @@
+import Lemma.Int.Sub_Add.eq.Neg
+import Lemma.Int.EqSubAdd
+import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalNeg
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.Infinite.is.InfiniteAdd
@@ -29,17 +32,18 @@ open Hyperreal Int Nat Rat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : a.Infinitesimal)
-  (h : Infinitesimal ((a - b)² / (a² + b² + 1))) :
+  (h_a : a → 0)
+  (h : ((a - b)² / (a² + b² + 1)) → 0) :
 -- imply
-  ¬(a² + b² + 1).Infinite := by
+  ¬(a² + b² + 1) → ∞ := by
 -- proof
   by_contra h'
   have h' := Infinite.of.InfiniteAdd h'
   have h_a₂ := InfinitesimalSquare.of.Infinitesimal h_a
   have h_a₂ := NotInfinite.of.Infinitesimal h_a₂
   have h_b₂ := InfiniteSub.of.Infinite.NotInfinite h_a₂ h'
-  simp at h_b₂
+  rw [Int.Sub_Add.eq.Neg] at h_b₂
+  rw [InfiniteNeg.is.Infinite] at h_b₂
   have h_b₂_ne_0 := Ne_0.of.Infinite h_b₂
   rw [Div.eq.DivDivS.of.Ne_0 h_b₂_ne_0] at h
   rw [DivSquareS.eq.SquareDiv] at h
@@ -50,21 +54,22 @@ private lemma main
   repeat rw [Div.eq.One.of.Ne_0 (by assumption)] at h
   have h_b := Infinite.of.InfiniteSquare h_b₂
   have h := EqSt_0.of.Infinitesimal h
-  have h_eq_st_add_div_square : st ((a² + 1) / b² + 1) = 1 := by
+  have h_eq_st_add_div_square : stdPart ((a² + 1) / b² + 1) = 1 := by
     apply EqSt.of.InfinitesimalSub
-    simp
+    erw [EqSubAdd]
     apply InfinitesimalDiv.of.NotInfinite.Infinite _ h_b₂
     apply NotInfiniteAdd.of.NotInfinite h_a₂
   rw [StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal] at h
   ·
-    have h_eq_st_square_sub : st (a / b - 1)² = 1 := by
+    have h_eq_st_square_sub : stdPart (a / b - 1)² = 1 := by
       rw [SquareSub.comm]
       rw [StPow.eq.PowSt.of.NotInfinite]
       ·
-        suffices st (1 - a / b) = 1 by
+        suffices stdPart (1 - a / b) = 1 by
           simp [this]
         apply EqSt.of.InfinitesimalSub
-        simp
+        erw [SubSub.eq.Neg.comm]
+        apply InfinitesimalNeg.of.Infinitesimal
         apply InfinitesimalDiv.of.Infinitesimal.Infinite h_a h_b
       ·
         apply NotInfiniteSub.of.NotInfinite.left

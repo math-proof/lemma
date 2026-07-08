@@ -16,18 +16,18 @@ private lemma main
 -- given
   (h : a ≈ b) :
 -- imply
-  a.st = b.st := by
+  stdPart a = stdPart b := by
 -- proof
-  if h_a : a.Infinitesimal then
+  if h_a : a → 0 then
     have h_b := Infinitesimal.of.Infinitesimal.Setoid h h_a
     have h_a := EqSt_0.of.Infinitesimal h_a
     have h_b := EqSt_0.of.Infinitesimal h_b
-    aesop
-  else if h_a_inf : a.Infinite then
+    grind
+  else if h_a_inf : a → ∞ then
     have h_b := Infinite.of.Infinite.Setoid h h_a_inf
     have h_a := EqSt_0.of.Infinite h_a_inf
     have h_b := EqSt_0.of.Infinite h_b
-    aesop
+    grind
   else
     have h' := h.symm
     have h_b := NotInfinitesimal.of.NotInfinitesimal.Setoid h' h_a

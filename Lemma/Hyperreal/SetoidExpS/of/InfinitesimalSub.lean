@@ -25,37 +25,37 @@ open Hyperreal Real Rat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_sub : (a - b).Infinitesimal) :
+  (h_sub : (a - b) → 0) :
 -- imply
   a.exp ≈ b.exp := by
 -- proof
   have h := Setoid.of.InfinitesimalSub h_sub
   apply Setoid.of.OrAndS
-  if h_a_neg : a.InfiniteNeg then
-    have h_a_exp := InfinitesimalExp.of.InfiniteNeg h_a_neg
+  if h_a_neg : a → -∞ then
+    have h_a_exp := InfinitesimalExp.of.InfiniteNeg h_a_neg.left h_a_neg.right
     simp [h_a_exp]
     have h := OrAndS.of.Setoid h
-    have ⟨h_a, h_a_neg⟩ := Infinite.Lt_0.of.InfiniteNeg h_a_neg
+    have ⟨h_a, h_a_neg⟩ := Infinite.Lt_0.of.InfiniteNeg h_a_neg.left h_a_neg.right
     simp [NotInfinitesimal.of.Infinite h_a] at h
     have ⟨h, h_b_eps⟩ := h
     have h_st := EqSt.of.InfinitesimalSub h
-    if h_b_neg : b.InfiniteNeg then
-      have h_b_exp := InfinitesimalExp.of.InfiniteNeg h_b_neg
+    if h_b_neg : b → -∞ then
+      have h_b_exp := InfinitesimalExp.of.InfiniteNeg h_b_neg.left h_b_neg.right
       simp [h_b_exp]
-    else if h_b_pos : b.InfinitePos then
-      have ⟨h_b, h_b_neg⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos
+    else if h_b_pos : b → +∞ then
+      have ⟨h_b, h_b_neg⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos.left h_b_pos.right
       have h_ab := Gt0Div.of.Lt_0.Gt_0 h_a_neg h_b_neg
       have := LeSt_0.of.Le_0 (by linarith) (x := a / b)
       linarith
     else
       have h_b_inf := NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_b_pos, h_b_neg⟩
-      have : NeZero b := ⟨Ne_0.of.NotInfinitesimal h_b_eps⟩
+      have : NeZero b := ⟨Ne_0.of.NotInfinitesimal (not_lt.mpr h_b_eps)⟩
       have := InfiniteDiv.of.Infinite.NotInfinite h_a h_b_inf
       have := EqSt_0.of.Infinite this
       linarith
-  else if h_b_neg : b.InfiniteNeg then
-    have h_b := NotInfiniteNeg.of.NotInfiniteNeg.Setoid h.symm h_a_neg
-    contradiction
+  else if h_b_neg : b → -∞ then
+    have h_b := NotInfiniteNeg.of.NotInfiniteNeg.Setoid h.symm h_b_neg.left h_a_neg
+    exact False.elim (h_b h_b_neg.right)
   else
     have h_a_exp := NotInfinitesimalExp.of.NotInfiniteNeg h_a_neg
     have h_b_exp := NotInfinitesimalExp.of.NotInfiniteNeg h_b_neg
@@ -63,8 +63,8 @@ private lemma main
     have h_div_exp := DivExpS.eq.ExpSub a b
     simp at h_div_exp
     rw [h_div_exp]
-    if h_a_pos : a.InfinitePos then
-      have h_b_pos := InfinitePos.of.InfinitePos.Setoid h h_a_pos
+    if h_a_pos : a → +∞ then
+      have h_b_pos := InfinitePos.of.InfinitePos.Setoid h h_a_pos.left h_a_pos.right
       have h_eps := OrAndS.of.Setoid h
       have h_a := NotInfinitesimal.of.InfinitePos h_a_pos
       have h_b := NotInfinitesimal.of.InfinitePos h_b_pos
@@ -77,11 +77,10 @@ private lemma main
       ·
         rw [StExp.eq.ExpSt.of.NotInfinite]
         ·
-          simp
-          apply EqSt_0.of.Infinitesimal h_sub
+          simp [Real.exp_zero, EqSt_0.of.Infinitesimal h_sub]
         ·
-          apply NotInfinite.of.Infinitesimal h_sub
-    else if h_b_pos : b.InfinitePos then
+          exact NotInfinite.of.Infinitesimal h_sub
+    else if h_b_pos : b → +∞ then
       have h_a := NotInfinite.of.NotInfinitePos.NotInfiniteNeg ⟨h_a_pos, h_a_neg⟩
       have h_b := Infinite.of.InfinitePos h_b_pos
       have h_sub := InfiniteSub.of.Infinite.NotInfinite h_a h_b

@@ -31,11 +31,11 @@ open Hyperreal Nat Rat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h : st (a / b) = 1) :
+  (h : stdPart (a / b) = 1) :
 -- imply
-  ((2 * a * b + 1) / (a² + b² + 1)).st = 1 := by
+  stdPart ((2 * a * b + 1) / (a² + b² + 1)) = 1 := by
 -- proof
-  if h_a : a.Infinitesimal then
+  if h_a : a → 0 then
     have h_b := Infinitesimal.of.Infinitesimal.StDiv.ne.Zero.left (by linarith) h_a (b := b)
     have h_a₀ := EqSt_0.of.Infinitesimal h_a
     have h_b₀ := EqSt_0.of.Infinitesimal h_b
@@ -43,10 +43,10 @@ private lemma main
     have h_b' := NotInfinite.of.Infinitesimal h_b
     have h_a₂ := StPow.eq.PowSt.of.NotInfinite h_a' (n := 2)
     have h_b₂ := StPow.eq.PowSt.of.NotInfinite h_b' (n := 2)
-    simp [h_a₀] at h_a₂
-    simp [h_b₀] at h_b₂
+    rw [h_a₀] at h_a₂
+    rw [h_b₀] at h_b₂
     have h_ab := StMul.eq.MulStS.of.NotInfinite.NotInfinite h_a' h_b'
-    simp [h_a₀, h_b₀] at h_ab
+    rw [h_a₀, h_b₀] at h_ab
     have h_ab' := NotInfiniteMul.of.NotInfinite.NotInfinite h_a' h_b'
     have h_2ab := StMul.eq.Mul_St.of.NotInfinite 2 h_ab'
     have h_2ab' := NotInfiniteMul.of.NotInfinite.left 2 h_ab'
@@ -56,7 +56,7 @@ private lemma main
     have h_a₂' := NotInfinitePow.of.NotInfinite h_a' (n := 2)
     have h_b₂' := NotInfinitePow.of.NotInfinite h_b' (n := 2)
     have h_ab' := StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_a₂' h_b₂'
-    simp [h_a₂, h_b₂] at h_ab'
+    rw [h_a₂, h_b₂] at h_ab'
     have h_a₂b₂' := NotInfiniteAdd.of.NotInfinite.NotInfinite h_a₂' h_b₂'
     have h_add_a₂b₂_1 := StAdd.eq.AddSt.of.NotInfinite h_a₂b₂' 1
     simp [h_ab'] at h_add_a₂b₂_1

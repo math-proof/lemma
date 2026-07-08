@@ -15,10 +15,10 @@ open Hyperreal Real
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬a.Infinite)
+  (h_a : ¬a → ∞)
   (h : a ≈ b) :
 -- imply
-  (a - b).Infinitesimal := by
+  (a - b) → 0 := by
 -- proof
   have h' := h.symm
   have h_b := NotInfinite.of.NotInfinite.Setoid h' h_a
@@ -26,7 +26,7 @@ private lemma main
   ·
     assumption
   ·
-    if h_a_eps : a.Infinitesimal then
+    if h_a_eps : a → 0 then
       apply InfinitesimalSub.of.Infinitesimal.Infinitesimal h_a_eps
       apply Infinitesimal.of.Infinitesimal.Setoid h h_a_eps
     else

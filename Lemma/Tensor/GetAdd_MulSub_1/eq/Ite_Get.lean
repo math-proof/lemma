@@ -53,7 +53,7 @@ private lemma main
   simp
   have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) ((mask - 1).get i) ∞ (i := j)
   simp at this
-  simp [this]
+  erw [this]
   split_ifs with h_p
   ·
     rw [GetSub.eq.SubGetS.fin]

@@ -3,11 +3,12 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {x : ℝ} :
+  {x : ℕ} :
 -- imply
-  (1 : ℝ) ^ x = 1 := by
+  (1 : ℕ) ^ x = 1 :=
 -- proof
-  simp
+  Nat.one_pow x
 
 
 -- created on 2025-04-06
+-- updated on 2026-07-08

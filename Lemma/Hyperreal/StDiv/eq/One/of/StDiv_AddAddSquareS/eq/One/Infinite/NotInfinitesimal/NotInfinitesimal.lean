@@ -24,19 +24,19 @@ open Hyperreal Nat Rat Real
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬Infinitesimal a)
-  (h_b : ¬Infinitesimal b)
-  (h_a_inf : Infinite a)
-  (h : ((2 * a * b + 1) / (a² + b² + 1)).st = 1) :
+  (h_a : ¬a → 0)
+  (h_b : ¬b → 0)
+  (h_a_inf : a → ∞)
+  (h : stdPart ((2 * a * b + 1) / (a² + b² + 1)) = 1) :
 -- imply
-  (a / b).st = 1 := by
+  stdPart (a / b) = 1 := by
 -- proof
   have h_a_ne_0 := Ne_0.of.NotInfinitesimal h_a
   have h_b_ne_0 := Ne_0.of.NotInfinitesimal h_b
   rw [Div_AddAddSquareS.eq.Div_Add_AddDivS.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0] at h
   have h_ab := InfiniteMul.of.Infinite.NotInfinitesimal h_a_inf h_b
   have h_ab := InfinitesimalInv.of.Infinite h_ab
-  have h_eq_add_st : st ((a * b)⁻¹ + 2) = 2 := by
+  have h_eq_add_st : stdPart ((a * b)⁻¹ + 2) = 2 := by
     rw [show (2 : ℝ*) = (2 : ℝ) by rfl]
     rw [StAdd.eq.AddSt.of.NotInfinite]
     ·
@@ -51,7 +51,7 @@ private lemma main
     conv_rhs at h => simp
     rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite] at h
     ·
-      have h_eq_add_st : ((a * b)⁻¹ + (2 : ℝ)).st = 2 := by
+      have h_eq_add_st : stdPart ((a * b)⁻¹ + (2 : ℝ)) = 2 := by
         assumption
       rw [StAdd.eq.AddSt.of.NotInfinite] at h_eq_add_st
       ·

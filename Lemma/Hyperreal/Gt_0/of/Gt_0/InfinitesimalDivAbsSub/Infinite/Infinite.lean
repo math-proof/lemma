@@ -31,9 +31,9 @@ open Hyperreal Int Nat Rat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : a.Infinite)
-  (h_b : b.Infinite)
-  (h : Infinitesimal (|a - b| / (|a| + |b| + 1)))
+  (h_a : a → ∞)
+  (h_b : b → ∞)
+  (h : (|a - b| / (|a| + |b| + 1)) → 0)
   (h_0 : a > 0) :
 -- imply
   b > 0 := by
@@ -49,8 +49,8 @@ private lemma main
   simp at h_b_0
   have h_b_0 := Lt.of.Le.Ne h_b_0 h_b_ne_0
   have h_div_ba_neg := Gt0Div.of.Lt_0.Gt_0 h_b_0 h_0
-  have h_inf_add_divs : ¬(b / a - 1).Infinite := NotInfiniteSub.of.NotInfinite h_inf_ba (r := 1)
-  have h_eps_sub : ¬|b / a - 1|.Infinitesimal := by
+  have h_inf_add_divs : ¬(b / a - 1) → ∞ := NotInfiniteSub.of.NotInfinite h_inf_ba (r := 1)
+  have h_eps_sub : ¬|b / a - 1| → 0 := by
     apply NotInfinitesimalAbs.of.NotInfinitesimal
     have h_le : b / a - 1 ≤ (-1 : ℝ) := by
       simp
@@ -58,7 +58,7 @@ private lemma main
     have h_st_le := LeSt.of.Le.NotInfinite h_inf_add_divs h_le
     apply NotInfinitesimal.of.NeSt_0
     linarith
-  have h_inf_add : ¬(|b / a| + |a|⁻¹ + 1).Infinite := by
+  have h_inf_add : ¬(|b / a| + |a|⁻¹ + 1) → ∞ := by
     apply NotInfiniteAdd.of.NotInfinite.NotInfinite
     .
       apply NotInfiniteAdd.of.NotInfinite.NotInfinite

@@ -109,14 +109,14 @@ private lemma simp
     have := SelectCast.eq.Cast_Select.of.Eq h_s (([i < s[0]] (X[i]'(GtLength.of.GtLength_0 (by omega) X i)))) ⟨d + 1, by simp; grind⟩ ⟨i, by grind⟩
     simp at this
     simp [this]
-    rw [DataCast.eq.Cast_Data.of.Eq (by grind)]
+    erw [DataCast.eq.Cast_Data.of.Eq (by grind)]
     apply SEqCast.of.SEq.Eq (by grind)
     have h_d_lt_sub := GtSub.of.Gt_Add h
     apply SEq.of.All_EqGetS.Eq
     ·
       intro t
       have h_t := t.isLt
-      rw [SelectStack.eq.Stack_Select.of.GtLength]
+      erw [SelectStack.eq.Stack_Select.of.GtLength]
       have ih := ih (s := s.tail) (by simpa) (i := ⟨i, by simp⟩)
       simp at ih
       have h_eq : (⟨i, ((List.map Nat.cast s).tail.take (d + 1)).prod, s[d + 1]⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.drop (d + 1 + 1)).prod = (s.tail.eraseIdx d).prod := by
@@ -137,7 +137,7 @@ private lemma simp
           apply Eq_Cast.of.SEq
           apply ih
       rw [DataStack.eq.FlattenMap_FunData.fin]
-      simp [h_all]
+      erw [h_all]
       simp only [EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0 (show d + 1 > 0 by omega)] at h_t
       rw [@Nat.EqSubAdd] at h_t
       rw [ProdCons.eq.Mul_Prod] at h_t

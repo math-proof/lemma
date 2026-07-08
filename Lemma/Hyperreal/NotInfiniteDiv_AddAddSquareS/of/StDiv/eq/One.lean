@@ -7,9 +7,9 @@ open Hyperreal
 private lemma main
   {a b : ℝ*}
 -- given
-  (h : st (a / b) = 1) :
+  (h : stdPart (a / b) = 1) :
 -- imply
-  ¬((2 * a * b + 1) / (a² + b² + 1)).Infinite := by
+  ¬((2 * a * b + 1) / (a² + b² + 1)) → ∞ := by
 -- proof
   apply NotInfinite.of.NeSt_0
   linarith [StDiv_AddAddSquareS.eq.One.of.StDiv.eq.One h]

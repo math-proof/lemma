@@ -1,3 +1,5 @@
+import Lemma.Int.SubSub.eq.Neg
+import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalNeg
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.Infinite.is.InfiniteSquare
@@ -29,11 +31,11 @@ open Hyperreal Int Nat Rat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : Infinite a)
-  (h_b : Infinite b)
-  (h : Infinitesimal ((a - b)² / (a² + b² + 1))) :
+  (h_a : a → ∞)
+  (h_b : b → ∞)
+  (h : ((a - b)² / (a² + b² + 1)) → 0) :
 -- imply
-  ¬Infinite (a / b) := by
+  ¬(a / b) → ∞ := by
 -- proof
   by_contra h_inf_ba
   have h_a_ne_0 := Ne_0.of.Infinite h_a
@@ -46,17 +48,18 @@ private lemma main
   rw [DivSub.eq.SubDivS] at h
   simp [Div.eq.One.of.Ne_0 h_a_ne_0] at h
   have h_eps_ab := InfinitesimalDiv.of.InfiniteDiv h_inf_ba
-  have h_st_square_sub_div : st (1 - b / a)² = 1 := by
+  have h_st_square_sub_div : stdPart (1 - b / a)² = 1 := by
     rw [StPow.eq.PowSt.of.NotInfinite]
     ·
-      suffices (1 - b / a).st = 1 by
+      suffices stdPart (1 - b / a) = 1 by
         simp [this]
       apply EqSt.of.InfinitesimalSub
-      simpa
+      erw [SubSub.eq.Neg.comm]
+      apply InfinitesimalNeg.of.Infinitesimal h_eps_ab
     ·
       apply NotInfiniteSub.of.NotInfinite.left
       apply NotInfinite.of.Infinitesimal h_eps_ab
-  have h_st_add_add_square : st (1 + ((b / a)² + (a²)⁻¹)) = 1 := by
+  have h_st_add_add_square : stdPart (1 + ((b / a)² + (a²)⁻¹)) = 1 := by
     apply EqSt.of.InfinitesimalSub
     simp
     apply InfinitesimalAdd.of.Infinitesimal.Infinitesimal
@@ -65,11 +68,11 @@ private lemma main
     ·
       apply InfinitesimalInv.of.Infinite
       apply InfiniteSquare.of.Infinite h_a
-  have h_inf_square_sub_div : ¬((1 - b / a)²).Infinite := by
+  have h_inf_square_sub_div : ¬((1 - b / a)²) → ∞ := by
     apply NotInfiniteSquare.of.NotInfinite
     apply NotInfiniteSub.of.NotInfinite.left
     apply NotInfinite.of.Infinitesimal h_eps_ab
-  have h_eps_add_add_square : ¬(1 + ((b / a)² + (a²)⁻¹)).Infinitesimal := by
+  have h_eps_add_add_square : ¬(1 + ((b / a)² + (a²)⁻¹)) → 0 := by
     apply NotInfinitesimalAdd.of.Gt_0.Ge_0
     ·
       simp
@@ -82,7 +85,7 @@ private lemma main
   have h_div := StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal h_inf_square_sub_div h_eps_add_add_square
   rw [h_st_square_sub_div, h_st_add_add_square] at h_div
   have := NotInfinitesimal.of.NeSt_0 (by linarith)
-  contradiction
+  simp_all
 
 
 -- created on 2025-12-21

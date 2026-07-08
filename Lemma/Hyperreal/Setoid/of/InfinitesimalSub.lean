@@ -6,7 +6,7 @@ open Hyperreal
 private lemma main
   {a b : ℝ*}
 -- given
-  (h : Infinitesimal (a - b)):
+  (h : (a - b) → 0) :
 -- imply
   a ≈ b := by
 -- proof

@@ -8,7 +8,7 @@ private lemma main
 -- given
   (x : ℝ*) :
 -- imply
-  InfiniteNeg x ↔ x.exp ≈ 0 := by
+  x → -∞ ↔ x.exp ≈ 0 := by
 -- proof
   rw [InfiniteNeg.is.InfinitesimalExp]
   rw [Infinitesimal.is.Setoid_0]

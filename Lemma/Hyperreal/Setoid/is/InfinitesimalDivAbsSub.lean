@@ -1,3 +1,6 @@
+import Lemma.Rat.Pow1.eq.One
+import Lemma.Rat.Eq_0.is.EqInv_0
+import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Rat.Div.ne.Zero.of.Ne_0.Ne_0
 import Lemma.Hyperreal.GeSt.of.Ge.NotInfinite
 import Lemma.Hyperreal.Lt0Mul.of.InfinitesimalDivAbsSub.Infinite.Infinite
@@ -84,7 +87,7 @@ private lemma main
 -- given
   (a b : ℝ*) :
 -- imply
-  a ≈ b ↔ Infinitesimal (|a - b| / (|a| + |b| + 1)) := by
+  a ≈ b ↔ (|a - b| / (|a| + |b| + 1)) → 0 := by
 -- proof
   rw [Setoid.is.InfinitesimalDivSquareSub]
   have h_a_abs := GeAbs_0 a
@@ -94,9 +97,9 @@ private lemma main
   constructor <;>
     intro h
   ·
-    if h_inf_a : a.Infinite then
+    if h_inf_a : a → ∞ then
       have h_inf_a_abs := InfiniteAbs.of.Infinite h_inf_a
-      if h_inf_b : b.Infinite then
+      if h_inf_b : b → ∞ then
         have h_a_ne_0 := Ne_0.of.Infinite h_inf_a
         have h_b_ne_0 := Ne_0.of.Infinite h_inf_b
         have h_inf_ab := NotInfiniteDiv.of.InfinitesimalDivSquareSub.Infinite.Infinite h_inf_a h_inf_b h
@@ -106,22 +109,28 @@ private lemma main
         have h_mul_pos := Lt0Mul.is.InfinitesimalDivSquareSub.Infinite.Infinite h_inf_b h_inf_a h
         rw [DivSquareSub.eq.DivSubAddDivS.Ne_0.Ne_0 h_b_ne_0 h_a_ne_0] at h
         have h_inf_add_divs := NotInfiniteAdd.of.NotInfinite.NotInfinite h_inf_ab h_inf_ba
-        have h_st_sub_add_divs : st (a / b + b / a - 2) = st (a / b + b / a) - 2 := by
+        have h_st_sub_add_divs : stdPart (a / b + b / a - 2) = stdPart (a / b + b / a) - 2 := by
           rw [show (2 : ℝ*) = (2 : ℝ) by rfl]
           rw [StSub.eq.SubSt.of.NotInfinite h_inf_add_divs]
-        have h_st_add_add_divs : st (a / b + b / a + 1 / (b * a)) = st (a / b + b / a) := by
+        have h_st_add_add_divs : stdPart (a / b + b / a + 1 / (b * a)) = stdPart (a / b + b / a) := by
           rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_inf_add_divs]
           ·
-            simp
+            apply EqAdd.of.Eq_Sub.left
+            conv_lhs => simp
+            conv_rhs => simp
             apply EqSt_0.of.Infinitesimal
             apply InfinitesimalMul.of.Infinitesimal.Infinitesimal
             repeat apply InfinitesimalInv.of.Infinite (by assumption)
           ·
-            simp
+            conv =>
+              arg 1
+              arg 1
+              arg 1
+              simp
             apply NotInfiniteMul.of.NotInfinite.NotInfinite
             repeat apply NotInfiniteInv.of.Infinite (by assumption)
         have h := EqSt_0.of.Infinitesimal h
-        have h_st_div : (b / a).st > 0 := by
+        have h_st_div : stdPart (b / a) > 0 := by
           apply GtSt_0.of.Gt_0.NotInfinite.NotInfinitesimal _ h_inf_ba
           ·
             apply Lt0Div.of.Lt0Mul h_mul_pos
@@ -131,7 +140,7 @@ private lemma main
             rw [MulDivS.eq.One.of.Ne_0.Ne_0 (by assumption) (by assumption)] at this
             have := NotInfinitesimal.of.Ne_0 (r := 1) (by simp)
             contradiction
-        have h_st_add_divs : (a / b + b / a).st ≠ 0 := by
+        have h_st_add_divs : stdPart (a / b + b / a) ≠ 0 := by
           rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite h_inf_ab h_inf_ba]
           rw [StDiv.eq.InvStInv (a := a)]
           linarith [GtInv_0.of.Gt_0 h_st_div]
@@ -160,12 +169,13 @@ private lemma main
             rwa [InfinitesimalSub.comm]
           ·
             apply NotInfinitesimal.of.NeSt_0
-            suffices (1 + |b / a| + 1 / |a|).st = 2 by
+            suffices stdPart (1 + |b / a| + 1 / |a|) = 2 by
               linarith
             rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite]
             ·
-              have h_st_inv : |a|⁻¹.st = 0 := by
-                simp [StInv.eq.InvSt]
+              have h_st_inv : stdPart |a|⁻¹ = 0 := by
+                rw [StInv.eq.InvSt]
+                apply EqInv_0.of.Eq_0
                 apply EqSt_0.of.Infinite h_inf_a_abs
               simp [h_st_inv]
               have h_inf_div := NotInfiniteAbs.of.NotInfinite h_inf_ba
@@ -180,7 +190,11 @@ private lemma main
               apply NotInfinite.of.NeSt_0
               linarith
             ·
-              simp
+              conv =>
+                arg 1
+                arg 1
+                arg 1
+                simp
               apply NotInfiniteInv.of.Infinite h_inf_a_abs
         ·
           apply NotInfiniteSub.of.NotInfinite
@@ -200,14 +214,14 @@ private lemma main
       else
         have := NotInfinitesimalDivSquareSub.of.Infinite.NotInfinite h_inf_a h_inf_b
         contradiction
-    else if h_inf_b : b.Infinite then
+    else if h_inf_b : b → ∞ then
       have h := NotInfinitesimalDivSquareSub.of.Infinite.NotInfinite h_inf_b h_inf_a
       rw [SquareSub.comm] at h
       rw [Add.comm (a := b²)] at h
       contradiction
     else
       have : NeZero (a² + b² + 1) := ⟨by nlinarith⟩
-      have h_inf_add_squares : ¬(a² + b² + 1).Infinite := by
+      have h_inf_add_squares : ¬(a² + b² + 1) → ∞ := by
         apply NotInfiniteAdd.of.NotInfinite
         apply NotInfiniteAdd.of.NotInfinite.NotInfinite
         repeat apply NotInfinitePow.of.NotInfinite (by assumption)
@@ -220,9 +234,9 @@ private lemma main
         apply NotInfinitesimalAdd.of.Ge_0.Gt_0
         repeat linarith
   ·
-    if h_inf_a : a.Infinite then
+    if h_inf_a : a → ∞ then
       have h_inf_a_abs := InfiniteAbs.of.Infinite h_inf_a
-      if h_inf_b : b.Infinite then
+      if h_inf_b : b → ∞ then
         have h_a_ne_0 := Ne_0.of.Infinite h_inf_a
         have h_b_ne_0 := Ne_0.of.Infinite h_inf_b
         have h_inf_ab := NotInfiniteDiv.of.InfinitesimalDivAbsSub.Infinite.Infinite h_inf_a h_inf_b h
@@ -231,19 +245,19 @@ private lemma main
         have h_inf_ba := NotInfiniteDiv.of.InfinitesimalDivAbsSub.Infinite.Infinite h_inf_b h_inf_a h
         have h_mul_pos := Lt0Mul.of.InfinitesimalDivAbsSub.Infinite.Infinite h_inf_b h_inf_a h
         rw [Rat.DivAbsSub.eq.DivAbsSubDiv.Ne_0.Ne_0 h_a_ne_0] at h
-        have h_st_sub_add_divs : st |b / a - 1| = |st (b / a) - 1| := by
+        have h_st_sub_add_divs : stdPart |b / a - 1| = |stdPart (b / a) - 1| := by
           rw [StAbs.eq.AbsSt]
           rw [show (1 : ℝ*) = (1 : ℝ) by simp]
           rw [StSub.eq.SubSt.of.NotInfinite h_inf_ba]
-        have h_st_add_add_divs : st (|b / a| + |a|⁻¹ + 1) = |st (b / a)| + 1 := by
+        have h_st_add_add_divs : stdPart (|b / a| + |a|⁻¹ + 1) = |stdPart (b / a)| + 1 := by
           rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite]
           ·
-            have h_r := EqSt 1
-            simp at h_r
-            simp [h_r]
+            simp
             rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite]
             .
-              simp [StAbs.eq.AbsSt]
+              rw [StAbs.eq.AbsSt]
+              apply EqAdd.of.Eq_Sub.left
+              conv_rhs => simp
               apply EqSt_0.of.Infinitesimal
               apply InfinitesimalInv.of.Infinite h_inf_a_abs
             .
@@ -262,7 +276,7 @@ private lemma main
         rw [StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal] at h
         ·
           rw [h_st_sub_add_divs, h_st_add_add_divs] at h
-          have h_st_add_divs : |(b / a).st| + 1 ≠ 0 := by
+          have h_st_add_divs : |stdPart (b / a)| + 1 ≠ 0 := by
             apply Ne.of.Gt
             apply Lt0Add.of.Gt_0.Gt_0
             .
@@ -288,7 +302,7 @@ private lemma main
           repeat rw [DivSquareS.eq.SquareDiv]
           rw [DivSub.eq.SubDivS]
           repeat rw [Div.eq.One.of.Ne_0 (by assumption)]
-          simp
+          rw [Pow1.eq.One]
           apply InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
           ·
             apply InfinitesimalSquare.of.Infinitesimal
@@ -322,14 +336,14 @@ private lemma main
       else
         have := NotInfinitesimalDivAbsSub.of.Infinite.NotInfinite h_inf_a h_inf_b
         contradiction
-    else if h_inf_b : b.Infinite then
+    else if h_inf_b : b → ∞ then
       have h := NotInfinitesimalDivAbsSub.of.Infinite.NotInfinite h_inf_b h_inf_a
       rw [AbsSub.comm] at h
       rw [Add.comm (a := |b|)] at h
       contradiction
     else
       have : NeZero (|a| + |b| + 1) := ⟨by linarith⟩
-      have h_inf_add_abss : ¬(|a| + |b| + 1).Infinite := by
+      have h_inf_add_abss : ¬(|a| + |b| + 1) → ∞ := by
         apply NotInfiniteAdd.of.NotInfinite
         apply NotInfiniteAdd.of.NotInfinite.NotInfinite
         repeat apply NotInfiniteAbs.of.NotInfinite (by assumption)
@@ -339,7 +353,7 @@ private lemma main
         apply Infinitesimal.of.InfinitesimalAbs
         apply Infinitesimal.of.InfinitesimalDiv.NotInfinite h_inf_add_abss h
       .
-        have h_inf_add_squares : ¬(a² + b² + 1).Infinite := by
+        have h_inf_add_squares : ¬(a² + b² + 1) → ∞ := by
           apply NotInfiniteAdd.of.NotInfinite
           apply NotInfiniteAdd.of.NotInfinite.NotInfinite
           repeat apply NotInfiniteSquare.of.NotInfinite (by assumption)

@@ -9,15 +9,14 @@ open Hyperreal
 private lemma main
   {x : ℝ*}
 -- given
-  (h : ¬Hyperreal.Infinite x)
+  (h : ¬x → ∞)
   (n : ℕ) :
 -- imply
-  (x ^ n).st = x.st ^ n := by
+  stdPart (x ^ n) = stdPart x ^ n := by
 -- proof
   induction n with
   | zero =>
     simp
-    apply EqSt
   | succ n ih =>
     simp [pow_succ]
     rw [← ih]
@@ -25,7 +24,6 @@ private lemma main
     if h_n : n = 0 then
       subst h_n
       simp
-      apply NotInfinite
     else
       have : NeZero n := ⟨h_n⟩
       rwa [InfinitePow.is.Infinite]

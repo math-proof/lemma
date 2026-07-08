@@ -1,3 +1,6 @@
+import Lemma.Int.EqSubAdd
+import Lemma.Hyperreal.Infinitesimal.is.InfinitesimalNeg
+import Lemma.Int.SubSub.eq.Neg
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.Eq_0.of.InfinitesimalAdd.Infinitesimal
@@ -17,17 +20,17 @@ import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivSub.eq.SubDivS
 import Lemma.Rat.SquareDiv.eq.DivSquareS
-open Hyperreal Nat Rat
+open Hyperreal Nat Rat Int
 
 
 @[main]
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_inf_a : a.Infinite)
-  (h_inf_b : ¬b.Infinite) :
+  (h_inf_a : a → ∞)
+  (h_inf_b : ¬b → ∞) :
 -- imply
-  ¬Infinitesimal ((a - b)² / (a² + b² + 1)) := by
+  ¬((a - b)² / (a² + b² + 1)) → 0 := by
 -- proof
   have h_a_ne_0 := Ne_0.of.Infinite h_inf_a
   have h_a₂_ne_0 := NeSquare_0.of.Ne_0 h_a_ne_0
@@ -38,11 +41,11 @@ private lemma main
   rw [DivSub.eq.SubDivS]
   repeat rw [Div.eq.One.of.Ne_0 (by assumption)]
   have h_inf_div_ba := InfinitesimalDiv.of.NotInfinite.Infinite h_inf_b h_inf_a
-  have h_fin_sub_div : ¬(1 - b / a).Infinite := by
+  have h_fin_sub_div : ¬(1 - b / a) → ∞ := by
     apply NotInfiniteSub.of.NotInfinite.left
     apply NotInfinite.of.Infinitesimal h_inf_div_ba
   have h_fin_square := NotInfiniteSquare.of.NotInfinite h_fin_sub_div
-  have h_eps_add_div_square : ¬(1 + (b² + 1) / a²).Infinitesimal := by
+  have h_eps_add_div_square : ¬(1 + (b² + 1) / a²) → 0 := by
     apply NotInfinitesimalAdd.of.Ne_0.Infinitesimal.left
     apply InfinitesimalDiv.of.NotInfinite.Infinite
     ·
@@ -52,15 +55,16 @@ private lemma main
       apply InfinitePow.of.Infinite h_inf_a
     ·
       simp
-  have h_st_square_sub : st (1 - b / a)² = 1 := by
+  have h_st_square_sub : stdPart (1 - b / a)² = 1 := by
     rw [StPow.eq.PowSt.of.NotInfinite h_fin_sub_div]
-    suffices st (1 - b / a) = 1 by
+    suffices stdPart (1 - b / a) = 1 by
       simp [this]
     apply EqSt.of.InfinitesimalSub
-    simpa
-  have h_st_add_div_square : st (1 + (b² + 1) / a²) = 1 := by
+    erw [SubSub.eq.Neg.comm]
+    apply InfinitesimalNeg.of.Infinitesimal h_inf_div_ba
+  have h_st_add_div_square : stdPart (1 + (b² + 1) / a²) = 1 := by
     apply EqSt.of.InfinitesimalSub
-    simp
+    erw [EqSubAdd.left]
     apply InfinitesimalDiv.of.NotInfinite.Infinite
     ·
       apply NotInfiniteAdd.of.NotInfinite

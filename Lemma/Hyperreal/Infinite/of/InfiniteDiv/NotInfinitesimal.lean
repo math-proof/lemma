@@ -14,16 +14,14 @@ open Hyperreal Rat
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬Infinitesimal a)
-  (h_b : Infinite (b / a)) :
+  (h_a : ¬a → 0)
+  (h_b : (b / a) → ∞) :
 -- imply
-  Infinite b := by
+  b → ∞ := by
 -- proof
   if h_a_0 : a = 0 then
     subst h_a_0
     simp_all
-    have := NotInfinite 0
-    contradiction
   else
     have h_b := Hyperreal.InfiniteMul.of.Infinite.NotInfinitesimal h_b h_a
     rwa [EqMulDiv.of.Ne_0 h_a_0] at h_b

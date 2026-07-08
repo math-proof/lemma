@@ -35,31 +35,30 @@ open Hyperreal Nat Rat Real
 private lemma main
   {a b : ℝ*}
 -- given
-  (h_a : ¬Infinitesimal a)
-  (h_b : ¬Infinitesimal b)
-  (h_a_inf : ¬Infinite a)
-  (h_b_inf : ¬Infinite b)
-  (h : ((2 * a * b + 1) / (a² + b² + 1)).st = 1) :
+  (h_a : ¬a → 0)
+  (h_b : ¬b → 0)
+  (h_a_inf : ¬a → ∞)
+  (h_b_inf : ¬b → ∞)
+  (h : stdPart ((2 * a * b + 1) / (a² + b² + 1)) = 1) :
 -- imply
-  (a / b).st = 1 := by
+  stdPart (a / b) = 1 := by
 -- proof
   have h_a_ne_0 := Ne_0.of.NotInfinitesimal h_a
   have h_b_ne_0 := Ne_0.of.NotInfinitesimal h_b
   rw [Div_AddAddSquareS.eq.Div_Add_AddDivS.of.Ne_0.Ne_0 h_a_ne_0 h_b_ne_0] at h
   have h_ab_inf := NotInfiniteMul.of.NotInfinite.NotInfinite h_a_inf h_b_inf
   have h_ab_eps := NotInfinitesimalMul.of.NotInfinitesimal.NotInfinitesimal h_a h_b
-  have h_eq_st_add_inv : st ((a * b)⁻¹ + 2) = st (a * b)⁻¹ + 2 := by
+  have h_eq_st_add_inv : stdPart ((a * b)⁻¹ + 2) = stdPart (a * b)⁻¹ + 2 := by
     rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite]
     ·
       simp
-      apply EqSt
     ·
       apply NotInfiniteInv.of.NotInfinitesimal h_ab_eps
     ·
       apply NotInfinite
   have h_inf_div_ab := NotInfiniteDiv.of.NotInfinite.NotInfinitesimal h_b h_a_inf
   have h_inf_div_ba := NotInfiniteDiv.of.NotInfinite.NotInfinitesimal h_a h_b_inf
-  have h_eq_st_add_inv' : st ((a * b)⁻¹ + (a / b + b / a)) = st (a * b)⁻¹ + st (a / b + b / a) := by
+  have h_eq_st_add_inv' : stdPart ((a * b)⁻¹ + (a / b + b / a)) = stdPart (a * b)⁻¹ + stdPart (a / b + b / a) := by
     rw [StAdd.eq.AddStS.of.NotInfinite.NotInfinite]
     ·
       apply NotInfiniteInv.of.NotInfinitesimal h_ab_eps
@@ -68,7 +67,7 @@ private lemma main
   rw [StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal] at h
   ·
     rw [h_eq_st_add_inv, h_eq_st_add_inv'] at h
-    have h_add_st_ne_0 : (a * b)⁻¹.st + 2 ≠ 0 := by
+    have h_add_st_ne_0 : stdPart (a * b)⁻¹ + 2 ≠ 0 := by
       by_contra h_add_st_ne_0
       rw [h_add_st_ne_0] at h
       simp at h
