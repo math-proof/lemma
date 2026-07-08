@@ -3,7 +3,7 @@ import Lemma.Hyperreal.Infinitesimal.is.Setoid_0
 open Hyperreal
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp and, mpr]
 private lemma main
 -- given
   (x : ℝ*) :

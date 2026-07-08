@@ -6,7 +6,7 @@ import Lemma.Hyperreal.InfiniteNeg.is.Infinite.Lt_0
 open Hyperreal Int
 
 
-@[main, comm, mp, mpr]
+@[main, comm, mp and, mpr]
 private lemma main
 -- given
   (x : ℝ*)

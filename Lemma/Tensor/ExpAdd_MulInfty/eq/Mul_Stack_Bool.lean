@@ -21,6 +21,7 @@ import Lemma.Vector.GetExp.eq.ExpGet
 import sympy.tensor.functions
 import sympy.tensor.stack
 open Hyperreal Tensor Int Fin
+set_option maxHeartbeats 2000000
 
 
 @[main]
@@ -52,13 +53,18 @@ private lemma main
   rw [← h_A] at this
   simp [Ξ]
   apply Setoid.of.SetoidDataS
-  rw [DataExp.eq.ExpData]
-  repeat rw [GetAdd.eq.AddGetS.fin]
-  repeat rw [GetMul.eq.MulGetS.fin]
-  repeat rw [GetMul.eq.MulGet.fin]
-  repeat rw [GetSub.eq.SubGetS.fin]
+  erw [DataExp.eq.ExpData]
+  rw [GetAdd.eq.AddGetS.fin]
+  erw [GetAdd.eq.AddGetS.fin]
+  rw [GetMul.eq.MulGetS.fin]
+  erw [GetMul.eq.MulGetS.fin ((Exp.exp A').get i) (([i<n][j<n]↑(p i j).toNat).get i) j]
+  rw [GetMul.eq.MulGet.fin]
+  erw [GetMul.eq.MulGet.fin (([i<n][j<n]((p i j).toNat : Tensor ℝ* []) - 1).get i) ω j]
+  rw [GetSub.eq.SubGetS.fin]
+  erw [GetSub.eq.SubGetS.fin (([i<n][j<n]↑(p i j).toNat).get i) (Tensor.get (1 : Tensor ℝ* [n, n]) i) j]
   repeat rw [EqGetStack.fn.fin]
-  repeat rw [EqGet1_1.fin]
+  rw [EqGet1_1.fin]
+  erw [EqGet1_1.fin (s := [n, n].tail) j (α := ℝ*)]
   rw [DataMul.eq.MulDataS]
   have := GetExp.eq.ExpGet.fin A' ⟨i, by grind⟩
   simp at this
@@ -66,7 +72,7 @@ private lemma main
   have := GetExp.eq.ExpGet.fin (A'.get i) ⟨j, by grind⟩
   simp at this
   rw [this]
-  rw [DataExp.eq.ExpData]
+  erw [DataExp.eq.ExpData]
   rw [DataAdd.eq.AddDataS]
   rw [DataMul.eq.MulData]
   rw [DataSub.eq.SubDataS]
@@ -77,22 +83,24 @@ private lemma main
   have h_k := Eq_0 k
   subst h_k
   rw [Vector.GetExp.eq.ExpGet.fin]
-  rw [Vector.GetAdd.eq.AddGetS.fin]
+  erw [Vector.GetAdd.eq.AddGetS.fin]
   repeat rw [Tensor.DataGet.eq.GetUnflattenData.fin]
-  rw [Vector.GetMul.eq.MulGetS.fin]
-  rw [Vector.GetExp.eq.ExpGet.fin]
-  repeat rw [Vector.GetUnflatten.eq.Get_AddMul.fin]
-  rw [Vector.GetSub.eq.SubGetS.fin]
-  repeat rw [Vector.GetMul.eq.MulGet.fin]
-  rw [Vector.EqGet1_1.fin]
-  simp [EqHeadData.nat]
+  erw [Vector.GetMul.eq.MulGetS.fin]
+  erw [Vector.GetExp.eq.ExpGet.fin]
+  repeat erw [Vector.GetUnflatten.eq.Get_AddMul.fin]
+  erw [Vector.GetSub.eq.SubGetS.fin]
+  repeat erw [Vector.GetMul.eq.MulGet.fin]
+  erw [Vector.EqGet1_1.fin]
+  simp
+  erw [EqHeadData.nat]
   if h : p i j then
     simp [h]
   else
     simp [h]
     rw [Add_Neg.eq.Sub]
     apply SetoidExp_0.of.InfiniteNeg
-    simp [A', map]
+    simp only [A', map]
+    erw [Vector.GetMap.eq.UFnGet]
     apply InfiniteNegSub.of.InfinitePos _ InfinitePosInfty
 
 
