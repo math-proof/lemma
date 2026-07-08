@@ -1,4 +1,5 @@
 import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
+import Lemma.Hyperreal.NeSt_0.is.NotInfinite.NotInfinitesimal
 import Lemma.Hyperreal.EqSt_0.is.Infinite.ou.Infinitesimal
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinite
