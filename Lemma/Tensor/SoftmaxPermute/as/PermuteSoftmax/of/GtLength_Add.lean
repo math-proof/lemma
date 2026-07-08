@@ -78,8 +78,9 @@ private lemma main
       apply SEq.of.All_SEqGetS.Eq.GtLength_0 (by simp) (by simp)
       intro t
       have h_t := t.isLt
-      simp [GetPermute.eq.Get.of.Gt (by simp) d (s := s₀ :: s) (i := ⟨i + 1, by omega⟩) (j := 0)] at h_t
-      rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by simp)]
+      simp only [GetPermute.eq.Get.of.Gt (show i + 1 > 0 by simp) d (s := s₀ :: s) (i := ⟨i + 1, by omega⟩) (j := 0)] at h_t
+      simp at h_t
+      rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by grind)]
       simp
       have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
       have := SEqSoftmaxS.of.SEq this (i + d)
