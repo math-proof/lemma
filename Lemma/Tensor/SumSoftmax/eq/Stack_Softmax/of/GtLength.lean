@@ -19,7 +19,7 @@ private lemma main
   intro i
   rw [EqGetStack.fn]
   apply Eq.of.SEq
-  simp [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)]
+  erw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)]
   simp [GetElem.getElem]
   rw [EqGetStack.fn.fin]
 
