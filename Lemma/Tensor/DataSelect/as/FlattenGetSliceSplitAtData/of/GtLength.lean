@@ -1,3 +1,4 @@
+import Lemma.Vector.EqMapSRange.of.All_Eq
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
@@ -77,7 +78,7 @@ private lemma simp
       unfold List.Vector.getSlice
       simp [List.Vector.length]
       simp [GetElem.getElem]
-      rw [GetSplitAt_1.eq.GetUnflatten.fin]
+      erw [GetSplitAt_1.eq.GetUnflatten.fin]
       have h_i := i.isLt
       conv_rhs at h_i => simp
       have := Indices.eq.Cast_MapRange.comm ⟨i, h_i⟩ 1
@@ -94,7 +95,7 @@ private lemma simp
           ·
             rw [FlattenMapRange.eq.Cast_UFn_0]
             apply SEq_Cast.of.SEq.Eq (by simp)
-            rw [GetSplitAt_1.eq.GetUnflatten.fin]
+            erw [GetSplitAt_1.eq.GetUnflatten.fin]
         ·
           simp [LengthSlice.eq.One.of.Lt]
         ·
@@ -137,7 +138,7 @@ private lemma simp
           apply Eq_Cast.of.SEq
           apply ih
       rw [DataStack.eq.FlattenMap_FunData.fin]
-      erw [h_all]
+      erw [EqMapSRange.of.All_Eq h_all (fun i : Fin s[0] => X[i]'(by grind))]
       simp only [EraseIdxCons.eq.EraseIdx_Sub_1.of.Gt_0 (show d + 1 > 0 by omega)] at h_t
       rw [@Nat.EqSubAdd] at h_t
       rw [ProdCons.eq.Mul_Prod] at h_t
@@ -149,7 +150,7 @@ private lemma simp
       simp only [GetElem.getElem]
       let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
       let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
-      repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
+      repeat erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
       simp
       rw [GetCast.eq.Get.of.Eq.fin (by simp [h_eq])]
       rw [EqGetRange.fin]
