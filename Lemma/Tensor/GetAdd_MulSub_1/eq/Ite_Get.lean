@@ -1,3 +1,9 @@
+import Lemma.Tensor.Eq_TensorReplicate
+import Lemma.Int.Sub.eq.Zero.is.Eq
+import Lemma.Tensor.Mul.eq.Zero.of.Eq_0
+import Lemma.Real.Setoid.of.Eq
+import Lemma.Nat.EqMul0_0
+import Lemma.Nat.Sub.eq.Zero
 import Lemma.Hyperreal.Sub_Infty.to.NegInfty
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Fin.Eq_0
@@ -27,6 +33,7 @@ import Lemma.Vector.Setoid.is.All_SetoidGetS
 import sympy.tensor.functions
 import sympy.tensor.stack
 open Hyperreal Int Tensor Vector Fin
+set_option maxHeartbeats 1000000
 
 
 @[main, fin]
@@ -46,28 +53,40 @@ private lemma main
 -- proof
   intro mask
   simp [GetElem.getElem]
-  repeat rw [@Tensor.GetAdd.eq.AddGetS.fin]
+  rw [@Tensor.GetAdd.eq.AddGetS.fin]
+  erw [@Tensor.GetAdd.eq.AddGetS.fin]
   have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) (mask - 1) ∞ (i := i)
   simp at this
   rw [this]
   simp
   have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) ((mask - 1).get i) ∞ (i := j)
   simp at this
-  erw [this]
+  rw [this]
   split_ifs with h_p
   ·
     rw [GetSub.eq.SubGetS.fin]
     have := EqGet1_1.fin (i := ⟨i, by simp [Length.eq.Get_0.of.GtLength_0]⟩) (s := [n, n]) (α := ℝ*)
     simp at this
     rw [this]
-    rw [GetSub.eq.SubGetS.fin]
+    have := GetSub.eq.SubGetS.fin (mask.get i) 1 j
+    simp at this
+    erw [this]
     have := EqGet1_1.fin (i := ⟨j, by simp [Length.eq.Get_0.of.GtLength_0]⟩) (s := [n, n].tail) (α := ℝ*)
     simp at this
-    rw [this]
+    erw [this]
     simp [mask]
     repeat rw [EqGetStack.fn.fin]
     simp [h_p]
-    simp [@Tensor.EqMul0_0]
+    apply Real.Setoid.of.Eq
+    apply Int.EqAdd.of.Eq_Sub.left
+    rw [Nat.Sub.eq.Zero]
+    apply Mul.eq.Zero.of.Eq_0
+    apply Int.Sub.eq.Zero.of.Eq
+    apply Eq.of.EqDataS
+    rw [EqData1'1]
+    erw [Eq_TensorReplicate]
+    simp
+    rfl
   ·
     have := GetMap.eq.MapGet A Hyperreal.ofReal (i := ⟨i, by simp [Tensor.length]⟩)
     simp at this
@@ -77,30 +96,30 @@ private lemma main
     rw [this]
     simp [Tensor.map]
     apply Setoid.of.SetoidDataS
-    rw [DataAdd.eq.AddDataS]
+    erw [DataAdd.eq.AddDataS]
     simp [DataNeg.eq.NegData]
-    rw [DataMul.eq.MulData]
+    erw [DataMul.eq.MulData]
     apply Setoid.of.All_SetoidGetS.fin
     intro k
-    rw [@Vector.GetAdd.eq.AddGetS.fin]
-    rw [@Vector.GetNeg.eq.NegGet.fin]
+    erw [@Vector.GetAdd.eq.AddGetS.fin]
+    erw [@Vector.GetNeg.eq.NegGet.fin]
     simp
-    rw [@Vector.GetMul.eq.MulGet.fin]
+    erw [@Vector.GetMul.eq.MulGet.fin]
     have h_k := Eq_0 k
     subst h_k
     have := GetData.eq.GetDataGet.of.Lt.fin (i := j) (by simp) (A.get i)
     simp at this
     simp [← this]
-    rw [GetSubStackBool.eq.One]
+    erw [GetSubStackBool.eq.One]
     simp [h_p]
     rw [DataGet.eq.GetUnflattenData.fin A i]
-    rw [GetUnflatten.eq.Get_AddMul.fin]
+    erw [GetUnflatten.eq.Get_AddMul.fin]
     simp
-    rw [DataNeg.eq.NegData]
+    erw [DataNeg.eq.NegData]
     rw [EqData1'1]
     rw [Head.eq.Get_0.fin]
-    rw [@Vector.GetNeg.eq.NegGet.fin]
-    rw [@Vector.EqGet1_1.fin]
+    erw [@Vector.GetNeg.eq.NegGet.fin]
+    erw [@Vector.EqGet1_1.fin]
     simp [Add_Neg.eq.Sub]
     simp [List.Vector.head]
     apply Sub_Infty.to.NegInfty
