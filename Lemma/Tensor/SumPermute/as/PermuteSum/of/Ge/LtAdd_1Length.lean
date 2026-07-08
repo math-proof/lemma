@@ -1,3 +1,4 @@
+import Lemma.Nat.ModAddMul.eq.Mod
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Int.OfNat.eq.Cast
 import Lemma.List.AppendAppend.eq.Append_Append
@@ -176,7 +177,7 @@ private lemma main
           let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
           let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
           have h_qₐ := qₐ.isLt
-          rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
+          erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
           unfold permuteTail Tensor.rotate
           simp
           rw [GetCast.eq.Get.of.Eq.fin]
@@ -218,9 +219,9 @@ private lemma main
               rw [Mul_Mul.eq.MulMul] at h_qₐ_div
               rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_qₐ_div
               simp [h_qₐ_div] at h_qₕ_div h_rₕ_mod
-              rw [MulAdd.eq.AddMulS] at h_qₕ_div
-              simp [MulMul.eq.Mul_Mul, AddAdd.eq.Add_Add] at h_qₕ_div
-              rw [EqMod.of.Lt (AddMul.lt.Mul.of.Lt.Lt h_t (LtDiv.of.Lt_Mul h_r))] at h_qₕ_div
+              rw [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul, AddAdd.eq.Add_Add] at h_qₕ_div
+              erw [ModAddMul.eq.Mod] at h_qₕ_div
+              erw [EqMod.of.Lt (AddMul.lt.Mul.of.Lt.Lt h_t (LtDiv.of.Lt_Mul h_r))] at h_qₕ_div
               rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_qₕ_div
               rw [h_qₕ_div]
               repeat rw [MulAdd.eq.AddMulS]
@@ -237,15 +238,17 @@ private lemma main
                 rw [MulMul.eq.Mul_Mul]
               conv_rhs =>
                 rw [MulMul.eq.Mul_Mul]
-              simp [AddMulS.eq.MulAdd]
-              left
+              erw [AddMulS.eq.MulAdd]
+              apply Nat.EqMulS.of.Eq
               rw [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul, AddAdd.eq.Add_Add] at h_qₐ_div
               simp [h_rₕ_mod, h_qₑ_div, h_r_mod, h_qₐ_div]
-              rw [DivAddMul.eq.Add_Div.of.Gt_0]
+              erw [DivAddMul.eq.Add_Div.of.Gt_0]
               ·
                 rw [Div_Mul.eq.DivDiv.comm]
                 rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)]
-                simp [DivDiv.eq.Div_Mul.comm, Div.eq.Zero.of.Lt h_t, h_q_div]
+                simp [DivDiv.eq.Div_Mul.comm, h_q_div]
+                erw [Div.eq.Zero.of.Lt h_t]
+                simp
                 rw [Div_Mul.eq.DivDiv.comm]
                 rw [ModDivMod_Mul.eq.ModDiv]
                 simp [← h_q'_div]
