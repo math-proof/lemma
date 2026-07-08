@@ -33,6 +33,7 @@ private lemma main
       rw [EqGetStack.fn.fin]
       have hi := Lt_Sub.of.LtAdd h_d
       rw [ih (by simpa) (by simpa)]
+      rfl
     ·
       simp
     ·
