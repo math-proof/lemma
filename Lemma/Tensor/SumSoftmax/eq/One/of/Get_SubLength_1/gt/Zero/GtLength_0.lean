@@ -35,7 +35,7 @@ private lemma main
       simp
       ext i
       rw [EqData1'1]
-      simp [EqGet1_1.fin (n := [].prod)]
+      erw [EqGet1_1.fin (n := [].prod)]
       have h_0 := Eq_0 i
       subst h_0
       simp [List.Vector.get]
@@ -53,8 +53,8 @@ private lemma main
       simp [this]
       have := EqGet1_1.val (s := (s₀ :: s₁ :: s).eraseIdx ((s₀ :: s₁ :: s).length - 1)) (i := i) (α := α)
       simp at this
-      simp [this]
-      rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength (by simp) (by simp) (by simp)]
+      erw [this]
+      erw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength (by simp) (by simp) (by simp)]
       exact ih (by simp) (by simp_all) X[i]
 
 
