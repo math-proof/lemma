@@ -69,6 +69,7 @@ private lemma main
     apply EqCast.of.SEq
     apply SEq.of.Eq
     erw [GetTranspose.eq.Get.fin B]
+    rfl
 
 
 -- created on 2025-06-22
