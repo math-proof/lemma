@@ -1,4 +1,6 @@
 import sympy.tensor.tensor
+import Lemma.Nat.Eq_0.of.Lt_1
+import Lemma.Tensor.EqLengthUnsqueeze_0'1
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.Eq
@@ -9,7 +11,7 @@ import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqGetMapRange
 import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-open Bool Vector Tensor
+open Bool Nat Vector Tensor
 
 
 @[main, fin]
@@ -46,6 +48,22 @@ private lemma main
   apply EqCast.of.Eq
   repeat simp
 
+
+@[main, fin]
+private lemma nat
+-- given
+  (X : Tensor α s)
+  (z : Fin ((X.unsqueeze 0).length)) :
+-- imply
+  (X.unsqueeze 0)[z]'(by grind) = X := by
+-- proof
+  have h_z := z.isLt
+  simp only [Tensor.EqLengthUnsqueeze_0'1] at h_z
+  have h_z := Eq_0.of.Lt_1 h_z
+  have h_z := Fin.Eq_Fin.of.EqVal h_z
+  simp [h_z]
+  have := main X
+  aesop
 
 -- created on 2025-07-11
 -- updated on 2025-11-30

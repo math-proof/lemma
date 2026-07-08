@@ -11,7 +11,7 @@ private lemma main
 -- imply
   a * x = b * y := by
 -- proof
-  rw [h₀, h₁]
+  congr
 
 
 -- created on 2024-07-01

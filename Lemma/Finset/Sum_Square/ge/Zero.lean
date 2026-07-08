@@ -11,7 +11,7 @@ private lemma main
 -- imply
   ∑ i ∈ s, (a i)² ≥ 0 := by
 -- proof
-  refine' Finset.sum_nonneg _
+  refine Finset.sum_nonneg ?_
   intro i _
   exact sq_nonneg _
 
