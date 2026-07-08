@@ -44,42 +44,43 @@ private lemma main
     have h_permute := EqPermute__0 (0 : Fin (1 + 1)) (s := [n, 1])
     have := GetData.eq.GetDataGet.of.GtProd.GtLength_0.fin (i := t.val) (α := α) (s := (([n, 1].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)))
     simp at this
-    rw [this]
+    erw [this]
     ·
       have h_tail_permute := TailPermute__Neg.eq.EraseIdx (d := ⟨1, by grind⟩) (s := ([n, 1].permute (0 : Fin (1 + 1)) 0))
       simp at h_tail_permute
       have h_t : ↑t % (([n, 1].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)).tail.prod = t := by
-        rw [h_tail_permute]
+        erw [h_tail_permute]
         simp [h_permute]
         apply EqMod.of.Lt h_t
       simp [h_t]
       have h_0 : ↑t / (([n, 1].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)).tail.prod = 0 := by
         simp
         right
-        rw [h_tail_permute]
+        erw [h_tail_permute]
         simpa [h_permute]
       simp [h_0]
       have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by grind) (⟨v⟩ : Tensor α [n, 1]) (i := ⟨1, by grind⟩) (d := 1)
       simp at this
-      rw [this]
+      erw [this]
       have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by grind) (⟨v⟩ : Tensor α [n, 1]) (k := 0)
       simp at this
-      rw [this]
-      simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
-      rw [GetCast.eq.Get.of.Eq.fin]
+      erw [this]
+      erw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
+      erw [GetCast.eq.Get.of.Eq.fin]
       ·
         simp
         have h_t : t < ((⟨0, ↑n * 1, 1⟩ : Slice).length (n * 1)) * 1 := by
           simpa [LengthSlice.eq.Min]
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         have h_r := Eq_0 r
-        simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
+        erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
         simp [h_r] at h_qr
-        rw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨0, by simp⟩)]
-        rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+        erw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨0, by simp⟩)]
+        erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         simp [h_qr]
       ·
         simp_all [LengthSlice.eq.Min]
+        grind
     ·
       rw [ProdPermute.eq.Prod]
       grind
@@ -108,28 +109,29 @@ private lemma row
     have h_permute := EqPermute__0 (0 : Fin (1 + 1)) (s := [1, n])
     have := GetData.eq.GetDataGet.of.GtProd.GtLength_0.fin (i := t.val) (α := α) (s := (([1, n].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)))
     simp at this
-    rw [this]
+    erw [this]
     ·
       have h_tail_permute := TailPermute__Neg.eq.EraseIdx (d := ⟨1, by grind⟩) (s := ([1, n].permute (0 : Fin (1 + 1)) 0))
       simp at h_tail_permute
       have h_t : ↑t % (([1, n].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)).tail.prod = 0 := by
-        rw [h_tail_permute]
+        erw [h_tail_permute]
         simp [h_permute]
         omega
       simp only [h_t]
       have h_1 : ↑t / (([1, n].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)).tail.prod = t := by
-        rw [h_tail_permute]
+        erw [h_tail_permute]
         simp [h_permute]
       simp [h_1]
       have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by simp) (⟨v⟩ : Tensor α [1, n]) (i := ⟨1, by simp⟩) (d := 1)
       simp at this
-      rw [this]
+      erw [this]
       have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by simp; grind) (⟨v⟩ : Tensor α [1, n]) (k := t)
       simp at this
-      rw [this]
-      simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
+      erw [this]
+      erw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
+      erw [Vector.Get_0.eq.Head.fin]
       rw [Head.eq.Get_0.fin]
-      rw [GetCast.eq.Get.of.Eq.fin]
+      erw [GetCast.eq.Get.of.Eq.fin]
       ·
         simp
         have h_t : 0 < ((⟨t, 1 * (↑n * 1), n⟩ : Slice).length (1 * (n * 1))) * 1 := by
@@ -138,11 +140,11 @@ private lemma row
           simp
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         have h_r := Eq_0 r
-        simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
+        erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
         simp [h_r] at h_qr
         symm at h_qr
-        rw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨t, by simpa⟩)]
-        rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+        erw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨t, by simpa⟩)]
+        erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         simp [h_qr]
       ·
         simp

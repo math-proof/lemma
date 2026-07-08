@@ -26,7 +26,7 @@ private lemma main
   denote h_V' : V' = _
   have h_band_part := BandPart.eq.Stack_BoolIn_Icc n (l - 1) (u - 1) (α := ℝ*)
   have h_Ξ := ExpAdd_MulInfty.eq.Mul_Stack_Bool (fun i j => ((j - i : ℤ) ∈ Icc (-(l - 1 : ℕ) : ℤ) (u - 1 : ℕ) : Bool)) A
-  rw [← h_band_part] at h_Ξ
+  erw [← h_band_part] at h_Ξ
   simp [← h_A', ← h_Ξ_def] at h_Ξ
   denote h_a' : a' = (A' + (Ξ - 1) * ∞)
   rw [← h_a'] at h_Ξ ⊢
