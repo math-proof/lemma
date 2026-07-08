@@ -22,7 +22,7 @@ private lemma main
   have h_s := Permute__Neg.eq.Cons_EraseIdx d
   have h_i := i.isLt
   repeat rw [← GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp; grind) h_s _ ⟨i, by rwa [GetPermute__Neg.eq.Get]⟩ (s' := (s[d] :: s.eraseIdx d))]
-  simp
+  -- simp
   have h_all := GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin (s := s[d] :: s.eraseIdx d) (i := i) (by simp) (by simp) (α := α)
   simp at h_all
   simp [← h_all]

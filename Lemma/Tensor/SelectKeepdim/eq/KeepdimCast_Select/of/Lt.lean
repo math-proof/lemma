@@ -20,7 +20,7 @@ import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
-import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq
+import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
 import sympy.tensor.functions
 open Bool List Nat Tensor
 
@@ -62,7 +62,7 @@ private lemma main
     simp [EqSetInsertIdxEraseIdx.of.GtLength]
   ·
     rw [GetEraseIdx.eq.Get.of.Gt.GtLength (by omega) (by omega)]
-    rw [UnsqueezeCast.eq.CastUnsqueeze.of.Eq h_eraseIdx]
+    rw [UnsqueezeCast.eq.Cast_Unsqueeze.of.Eq h_eraseIdx]
     have h_insertIdx : (((s.eraseIdx k).eraseIdx (d - 1)).insertIdx k 1) = (((s.eraseIdx d).eraseIdx k).insertIdx k 1) := by
       rw [h_eraseIdx]
     have k_le : k ≤ ((s.eraseIdx k).eraseIdx (d - 1)).length := by

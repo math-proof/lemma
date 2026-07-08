@@ -2,7 +2,7 @@ import stdlib.SEq
 import sympy.tensor.Basic
 
 
-@[main]
+@[main, comm, cast]
 private lemma main
   {s : List ℕ}
   {d : ℕ}
@@ -10,7 +10,7 @@ private lemma main
   (h : s = s')
   (X : Tensor α s) :
 -- imply
-  X.unsqueeze d ≃ (cast (congrArg (Tensor α) h) X).unsqueeze d := by
+  (cast (congrArg (Tensor α) h) X).unsqueeze d ≃ X.unsqueeze d := by
 -- proof
   subst h
   rfl

@@ -1,5 +1,5 @@
 import Lemma.List.EqLengthSlice_Mul.of.Lt
-import Lemma.List.ProdTakeMapCast.eq.CastProdTake
+import Lemma.List.ProdTakeMapCast.eq.ProdTake
 open List
 
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   (⟨i, ((List.map Nat.cast s).take d).prod * s[d], s[d]⟩ : Slice).length ((s.take d).prod * s[d]) = (s.take d).prod := by
 -- proof
-  rw [ProdTakeMapCast.eq.CastProdTake]
+  rw [ProdTakeMapCast.eq.ProdTake]
   rw [EqLengthSlice_Mul.of.Lt (by omega)]
 
 

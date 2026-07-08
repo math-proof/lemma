@@ -28,7 +28,7 @@ private lemma main
 -- imply
   (⟨i, ((List.map Nat.cast s).take (d + 1)).prod, s[d]⟩ : Slice).length (s.take (d + 1)).prod = (s.take d).prod := by
 -- proof
-  rw [List.ProdTakeMapCast.eq.CastProdTake]
+  rw [List.ProdTakeMapCast.eq.ProdTake]
   apply simp h_d h_i
 
 

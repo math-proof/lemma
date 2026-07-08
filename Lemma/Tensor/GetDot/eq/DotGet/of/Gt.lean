@@ -175,7 +175,7 @@ private lemma main
 
 
 @[main, fin]
-private lemma one
+private lemma une
   [Mul α] [AddCommMonoid α]
 -- given
   (h : k > n')

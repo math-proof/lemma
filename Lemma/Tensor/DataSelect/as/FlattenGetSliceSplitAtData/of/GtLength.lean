@@ -18,7 +18,7 @@ import Lemma.List.ProdEraseIdx.eq.Mul_ProdEraseIdxTail.of.GtLength_0
 import Lemma.List.ProdTail.eq.MulProdTakeTail
 import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
-import Lemma.List.ProdTakeTailMapCast.eq.CastProdTakeTail
+import Lemma.List.ProdTakeTailMapCast.eq.ProdTakeTail
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.Nat.AddAdd
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -121,7 +121,7 @@ private lemma simp
       have ih := ih (s := s.tail) (by simpa) (i := ⟨i, by simp⟩)
       simp at ih
       have h_eq : (⟨i, ((List.map Nat.cast s).tail.take (d + 1)).prod, s[d + 1]⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.drop (d + 1 + 1)).prod = (s.tail.eraseIdx d).prod := by
-        rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
+        rw [ProdTakeTailMapCast.eq.ProdTakeTail]
         rw [ProdTake.eq.MulProdTake.of.GtLength (by grind)]
         rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 (by omega)]
         rw [EqLengthSlice_CoeMul.of.Lt (by omega)]
@@ -159,7 +159,7 @@ private lemma simp
       have h_r := r.isLt
       have h_lt : r < (⟨i, (s.tail.take (d + 1)).prod, s.tail[d]'(by simpa)⟩ : Slice).length (s.tail.take (d + 1)).prod * (s.tail.drop (d + 1)).prod := by
         simp
-        rw [ProdTakeTailMapCast.eq.CastProdTakeTail]
+        rw [ProdTakeTailMapCast.eq.ProdTakeTail]
         rw [ProdTake.eq.MulProdTake.of.GtLength h_d_lt]
         rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1 h_d_lt_sub]
         rw [EqLengthSlice_CoeMul.of.Lt (by omega)]

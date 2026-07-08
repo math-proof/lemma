@@ -75,7 +75,7 @@ private lemma main
     rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
     conv_rhs => rw [DataRepeat.eq.Cast_FlattenMapSplitAtData]
     have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s.set k (n * s[k])) (d := d) (i := i) (by grind) (by grind)
-    rw [List.ProdTakeMapCast.eq.CastProdTake] at h_length_slice
+    rw [List.ProdTakeMapCast.eq.ProdTake] at h_length_slice
     simp at h_length_slice
     have h_prod_set := ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength (s := s.eraseIdx d) (i := k) (by grind) n
     apply SEqCastS.of.SEq.Eq.Eq
@@ -97,7 +97,7 @@ private lemma main
         have h_d_lt_length := h_d
         simp only [← h_s] at h_d_lt_length
         have := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (i := i) h_d_lt_length (show ↑i < (s.set k (n * s[k]))[d.val] by grind)
-        rw [List.ProdTakeMapCast.eq.CastProdTake] at this
+        rw [List.ProdTakeMapCast.eq.ProdTake] at this
         simp only [this] at h_q
         let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
         simp [h_length_slice] at h_t
@@ -114,7 +114,7 @@ private lemma main
         rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
         simp [DataRepeat.eq.Cast_FlattenMapSplitAtData]
         have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
-        rw [List.ProdTakeMapCast.eq.CastProdTake] at h_length_slice
+        rw [List.ProdTakeMapCast.eq.ProdTake] at h_length_slice
         repeat rw [GetCast.eq.Get.of.Eq.fin]
         ·
           have h_prod_take := ProdTake.eq.MulProdTake.of.GtLength h_d

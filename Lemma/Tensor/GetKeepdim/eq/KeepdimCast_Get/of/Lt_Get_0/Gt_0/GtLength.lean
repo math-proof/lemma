@@ -20,7 +20,7 @@ import Lemma.List.EqSetInsertIdxEraseIdx.of.Eq_Get.GtLength
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Bool.SEq.of.SEq.SEq
-import Lemma.Tensor.UnsqueezeCast.eq.CastUnsqueeze.of.Eq
+import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
 import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
 open Tensor List Nat Bool
@@ -84,7 +84,7 @@ private lemma main
     simp at h
     apply SEq.of.SEq.SEq _ h
     rw [GetTail.eq.Get_Add_1.of.Lt_LengthTail h_lt_length_tail]
-    rw [UnsqueezeCast.eq.CastUnsqueeze.of.Eq h_eq]
+    rw [UnsqueezeCast.eq.Cast_Unsqueeze.of.Eq h_eq]
     have h_s : (s.eraseIdx d).tail.insertIdx (d - 1) 1 = (s.tail.eraseIdx (d - 1)).insertIdx (d - 1) 1 := by
       simp_all
     have := RepeatCast.as.Repeat.of.Eq h_s ((X.get ⟨i, h_i⟩).unsqueeze (d - 1)) s[d - 1 + 1] ⟨d - 1, h_lt_length⟩
