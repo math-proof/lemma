@@ -171,8 +171,7 @@ private lemma main
             rw [TailRotate.eq.DropLast.of.GtLength_0 (by omega)]
             rw [DropLast.eq.Take_SubLength_1]
       ·
-        simp
-        rwa [GetRotate.eq.Get.of.GtLength.Gt_0 (by omega) (by omega)]
+        simpa
 
 
 -- created on 2026-04-08
