@@ -43,11 +43,11 @@ private lemma main
   erw [GetMul.eq.MulGetS.fin _ _ j]
   erw [GetMul.eq.MulGetS.fin _ _ k]
   congr 1
+  <;> erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp) (by simp) (i := ⟨i, by simp⟩)]
+  <;> erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp) (i := ⟨j, by simp⟩)]
+  <;> simp
   ·
     apply EqGetS.of.Eq.fin
-    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp) (by simp) (i := ⟨i, by simp⟩)]
-    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp) (i := ⟨j, by simp⟩)]
-    simp
     erw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin (i := i) (by simp) (by simp)]
     simp
     erw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
@@ -56,9 +56,6 @@ private lemma main
     simp
     erw [EqGetUnsqueeze.fin]
   ·
-    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp) (by simp) (i := ⟨i, by simp⟩)]
-    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp) (i := ⟨j, by simp⟩)]
-    simp
     erw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
     simp
     erw [EqGetUnsqueeze.nat.fin]
