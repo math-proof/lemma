@@ -1,6 +1,6 @@
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Tensor.Resize_0.eq.Ite.of.GtLength_0
-open Bool Tensor List Nat Vector
+open Bool Tensor
 
 
 @[main, cast]
