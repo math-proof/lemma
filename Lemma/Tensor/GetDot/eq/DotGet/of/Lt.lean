@@ -63,7 +63,7 @@ import Lemma.Vector.Repeat.eq.Cast.of.Eq_1
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAt0.eq.Zero
 open Bool Fin List Nat Tensor Vector
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 10000000
 
 
 @[main, fin]
@@ -83,20 +83,25 @@ private lemma main
   simp
   rw [Matmul.eq.Cast_SelectBatchDot.of.Lt_Get_SubLength.GeLength_2 (by simp) (by simpa)]
   simp
-  let Xi : Tensor α ([n' / k * k]) := (X.get i).repeat (n' / k) (0 : Fin 1)
+  have h_s : [k].set 0 ([n', k'][[n', k'].length - 2] / k * [k][0]) = [[n', k'][[n', k'].length - 2] / k * k] := by
+    grind
+  let Xi : Tensor α [n' / k * k] := cast (congrArg (Tensor α) h_s) ((X.get i).repeat (n' / k) (0 : Fin 1))
   let XiAppend : Tensor α [n' / k * k + n' % k] := Xi ++ (0 : Tensor α [n' % k])
   have h_s : [n' / k * k + n' % k] = [n'] := by simp [EqAddMulDiv]
   let XiAppendBroadcast : Tensor α ([] ++ [1, n']) := (cast (congrArg (Tensor α) h_s) XiAppend).broadcast [1, n'] (by simp)
   have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiAppendBroadcast.batch_dot Y) ⟨0, by simp⟩
-  simp [XiAppendBroadcast] at this
-  rw [this]
+  simp only [XiAppendBroadcast, XiAppend, Xi] at this
+  symm
+  apply this.trans
   unfold broadcast_matmul
   simp [broadcast_matmul_rec]
   unfold broadcast
   unfold batch_dot
   simp [broadcast_shape]
-  simp [GetSum_2.eq.SumGet__1.fin]
-  simp [@Tensor.GetMul.eq.MulGetS.fin]
+  erw [GetSum_2.eq.SumGet__1.fin]
+  erw [@Tensor.GetMul.eq.MulGetS.fin]
+  simp
+  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by grind)]
   apply EqSumS.of.Eq
   have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := 0) (n := 1)
   simp at this
