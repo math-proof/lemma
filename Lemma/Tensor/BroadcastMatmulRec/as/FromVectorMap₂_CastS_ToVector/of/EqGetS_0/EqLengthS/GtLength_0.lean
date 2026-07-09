@@ -71,11 +71,11 @@ private lemma main
         have h_t := t.isLt
         simp only [EqMax] at h_t
         have h_s : (s₀ :: s ++ [m, n]) = (s₀ ⊔ s₀ :: s ++ [m, n]) := by simp
-        have := GetToVector.eq.Get.fin (cast (congrArg (Tensor α) h_s) X) ⟨t, by grind⟩
+        have := GetToVector.eq.Get.fin (X.resize ⟨0, by grind⟩ (s₀ ⊔ s₀)) ⟨t, by grind⟩
         simp at this
         rw [this]
         have h_s' : (s₀ :: s' ++ [n, k]) = (s₀ ⊔ s₀ :: s' ++ [n, k]) := by simp
-        have := GetToVector.eq.Get.fin (cast (congrArg (Tensor α) h_s') Y) ⟨t, by grind⟩
+        have := GetToVector.eq.Get.fin (Y.resize ⟨0, by grind⟩ (s₀ ⊔ s₀)) ⟨t, by grind⟩
         simp at this
         rw [this]
         have := GetToVector.eq.Get.fin X ⟨t, by grind⟩
@@ -86,10 +86,10 @@ private lemma main
         rw [this]
         have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) h_s X ⟨t, by grind⟩
         simp at this
-        rw [this]
+        erw [this]
         have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) h_s' Y ⟨t, by grind⟩
         simp at this
-        rw [this]
+        erw [this]
       .
         apply SEqToVectorS.of.Eq (by simp)
       .

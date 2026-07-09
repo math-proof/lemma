@@ -920,7 +920,12 @@ def List.castPath (list : List String) (comm : Bool) : List String :=
     | _ =>
       panic! s!"cast attribute requires an `as` segment followed by a file name, got: {list}"
   | none =>
-    panic! s!"cast attribute requires module path to contain `as`, got: {list}"
+    let first := list[1]!
+    if first.startsWith "SEq" then
+      let first := (first.drop 3).toString
+      list[0]! :: first :: ["eq", "Cast"] ++ list.drop 2
+    else
+      panic! s!"cast attribute requires module path to contain `SEq/as`, got: {list}"
 
 def Expr.cast.extract: Expr → List Level × Expr × Expr × Expr × Expr × Expr × Expr
   | .app (.app (.app (.app (.app (.app (.const `SEq us) α) Vector) n) m) a) b => (us, α, Vector, n, m, a, b)
