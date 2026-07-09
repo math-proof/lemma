@@ -3,7 +3,7 @@ import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Tensor.LengthResize.eq.Get_0
 import Lemma.Tensor.SEqResize_0.of.GtLength_0
-open Bool Tensor List Nat Vector
+open Bool Tensor
 
 
 @[main, cast]
