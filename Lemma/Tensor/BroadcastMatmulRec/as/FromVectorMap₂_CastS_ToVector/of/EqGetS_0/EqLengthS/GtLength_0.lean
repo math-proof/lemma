@@ -13,7 +13,7 @@ import sympy.tensor.tensor
 open Bool List Nat Tensor Vector
 
 
-@[main, fin]
+@[main]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {s s' : List ℕ}
@@ -90,7 +90,10 @@ private lemma main
         have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) h_s' Y ⟨t, by grind⟩
         simp at this
         rw [this]
-      repeat apply SEqToVectorS.of.Eq (by simp)
+      .
+        apply SEqToVectorS.of.Eq (by simp)
+      .
+        apply SEqToVectorS.of.Eq (by simp)
 
 
 -- created on 2026-01-11

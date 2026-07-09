@@ -98,11 +98,13 @@ def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) 
 /--
 [numpy.resize](https://numpy.org/doc/stable/reference/generated/numpy.resize.html) along one axis: tile then zero-pad when growing, take a prefix when shrinking.
 -/
-def Tensor.resize [Zero α] (X : Tensor α s) (n : ℕ) (dim : Fin s.length) : Tensor α (s.set dim n) :=
+def Tensor.resize [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : Tensor α (s.set dim n) :=
   let h_s := EqCons_Tail.of.GtLength_0 (show s.length > 0 by linarith [dim.isLt])
   match h : dim with
   | ⟨0, _⟩ =>
     match h_s : s with
+    | [] =>
+      False.elim (by contradiction)
     | k :: s =>
       if h_lt : k < n then
         let q := n / k
@@ -110,11 +112,8 @@ def Tensor.resize [Zero α] (X : Tensor α s) (n : ℕ) (dim : Fin s.length) : T
         cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp) (X.repeat q ⟨0, by simp⟩) : Tensor α (q * k :: s)) ++ (0 : Tensor α (r :: s)))
       else
         cast (by grind) (fromVector (X.toVector.take n))
-    | [] =>
-      -- nomatch h_s
-      False.elim (by contradiction)
   | ⟨d + 1, _⟩ =>
-    cast (congrArg (Tensor α) (show s.headD 1 :: s.tail.set d n = s.set (d + 1) n by grind)) (fromVector (X.toVector.map fun s => s.resize n ⟨d, by grind⟩))
+    cast (congrArg (Tensor α) (show s.headD 1 :: s.tail.set d n = s.set (d + 1) n by grind)) (fromVector (X.toVector.map fun s => s.resize ⟨d, by grind⟩ n))
 
 def Tensor.broadcast_matmul_rec [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, t])) (Y : Tensor α (s' ++ [t, k])) (h : s.length = s'.length) : Tensor α (broadcast_shape s s' ++ [m, k]) :=
   match s, s' with
@@ -122,8 +121,8 @@ def Tensor.broadcast_matmul_rec [Mul α] [Add α] [Zero α] (X : Tensor α (s ++
     batch_dot X Y
   | n :: s, n' :: s' =>
     have h : s.length = s'.length := by grind
-    let X : Tensor α (n ⊔ n' :: s ++ [m, t]) := X.resize (n ⊔ n') ⟨0, by grind⟩
-    let Y : Tensor α (n ⊔ n' :: s' ++ [t, k]) := Y.resize (n ⊔ n') ⟨0, by grind⟩
+    let X : Tensor α (n ⊔ n' :: s ++ [m, t]) := X.resize ⟨0, by grind⟩ (n ⊔ n')
+    let Y : Tensor α (n ⊔ n' :: s' ++ [t, k]) := Y.resize ⟨0, by grind⟩ (n ⊔ n')
     cast
       (by
         congr
@@ -200,18 +199,18 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
       if h_s' : s'.length = 1 then
         match s' with
         | [n'] =>
-          let X : Tensor α [n ⊔ n'] := X.resize (n ⊔ n') ⟨0, by grind⟩
-          let Y : Tensor α [n ⊔ n'] := Y.resize (n ⊔ n') ⟨0, by grind⟩
+          let X : Tensor α [n ⊔ n'] := X.resize ⟨0, by grind⟩ (n ⊔ n')
+          let Y : Tensor α [n ⊔ n'] := Y.resize ⟨0, by grind⟩ (n ⊔ n')
           ((X.data * Y.data).sum : Tensor α [])
       else
         have h_s' : s'.length ≥ 2 := by omega
         let batch_size' := s'.take (s'.length - 2)
         let n' := s'[s'.length - 2]
         let k' := s'[s'.length - 1]
-        let X : Tensor α [n ⊔ n'] := X.resize (n ⊔ n') ⟨0, by grind⟩
+        let X : Tensor α [n ⊔ n'] := X.resize ⟨0, by grind⟩ (n ⊔ n')
         let X := X.broadcast ((batch_size' ++ [1, n ⊔ n'])) (by simp)
         let Y : Tensor α (batch_size' ++ [n', k']) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
-        let Y : Tensor α (batch_size' ++ [n ⊔ n', k']) := cast (congrArg (Tensor α) (by simp)) (Y.resize (n ⊔ n') ⟨batch_size'.length, by grind⟩)
+        let Y : Tensor α (batch_size' ++ [n ⊔ n', k']) := cast (congrArg (Tensor α) (by simp)) (Y.resize ⟨batch_size'.length, by grind⟩ (n ⊔ n'))
         cast
           (by
             congr
@@ -232,8 +231,8 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
       let k := s[s.length - 2]
       let n := s[s.length - 1]
       let X : Tensor α (batch_size ++ [k, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
-      let X : Tensor α (batch_size ++ [k, n ⊔ n']) := cast (congrArg (Tensor α) (by simp)) (X.resize (n ⊔ n') ⟨batch_size.length + 1, by grind⟩)
-      let Y : Tensor α [n ⊔ n'] := Y.resize (n ⊔ n') ⟨0, by grind⟩
+      let X : Tensor α (batch_size ++ [k, n ⊔ n']) := cast (congrArg (Tensor α) (by simp)) (X.resize ⟨batch_size.length + 1, by grind⟩ (n ⊔ n'))
+      let Y : Tensor α [n ⊔ n'] := Y.resize ⟨0, by grind⟩ (n ⊔ n')
       let Y := Y.broadcast ((batch_size ++ [n ⊔ n', 1])) (by simp)
       cast
         (by
@@ -260,9 +259,9 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
     let n' := s'[s'.length - 2]
     let k := s'[s'.length - 1]
     let X : Tensor α (batch_size ++ [m, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
-    let X : Tensor α (batch_size ++ [m, n ⊔ n']) := cast (congrArg (Tensor α) (by simp)) (X.resize (n ⊔ n') ⟨batch_size.length + 1, by grind⟩)
+    let X : Tensor α (batch_size ++ [m, n ⊔ n']) := cast (congrArg (Tensor α) (by simp)) (X.resize ⟨batch_size.length + 1, by grind⟩ (n ⊔ n'))
     let Y : Tensor α (batch_size' ++ [n', k]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
-    let Y : Tensor α (batch_size' ++ [n ⊔ n', k]) := cast (congrArg (Tensor α) (by simp)) (Y.resize (n ⊔ n') ⟨batch_size'.length, by grind⟩)
+    let Y : Tensor α (batch_size' ++ [n ⊔ n', k]) := cast (congrArg (Tensor α) (by simp)) (Y.resize ⟨batch_size'.length, by grind⟩ (n ⊔ n'))
     cast
       (by
         congr
