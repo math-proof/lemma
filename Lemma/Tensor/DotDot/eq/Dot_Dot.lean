@@ -3,9 +3,10 @@ import Lemma.Tensor.GetDot.eq.Sum_MulGetS
 import Lemma.Finset.MulSum.eq.Sum_Mul
 import Lemma.Finset.Mul_Sum.eq.Sum_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
+import Lemma.Fin.Sum.of.All_Eq
 import Lemma.Finset.Sum_Sum
-open Tensor Nat Finset
-set_option maxHeartbeats 1000000
+open Tensor Nat Finset Fin
+set_option maxHeartbeats 20000000
 
 
 /--
@@ -20,28 +21,23 @@ private lemma main
 -- imply
   (L @ M) @ N = L @ (M @ N) := by
 -- proof
-  apply Eq.of.All_EqGetS (m := l)
+  apply Eq.of.All_EqGetS.fin
   intro i
-  apply Eq.of.All_EqGetS (m := o)
+  apply Eq.of.All_EqGetS.fin
   intro j
-  have := GetDot.eq.Sum_MulGetS (L @ M) N i j
-  simp_all
-  have := GetDot.eq.Sum_MulGetS L (M @ N) i j
-  simp_all
-  have := GetDot.eq.Sum_MulGetS L M i
-  simp_all
-  have := GetDot.eq.Sum_MulGetS M N (j := j)
-  simp_all
-  have : ∀ k : Fin n, (∑ ι : Fin m, L[i][ι] * M[ι][k]) * N[k][j] = ∑ ι : Fin m, L[i][ι] * M[ι][k] * N[k][j] := by
-    simp [MulSum.eq.Sum_Mul]
-  simp_all
-  have : ∀ k : Fin m, L[i][k] * ∑ ι : Fin n, M[k][ι] * N[ι][j] = ∑ ι : Fin n, L[i][k] * (M[k][ι] * N[ι][j]) := by
-    simp [Mul_Sum.eq.Sum_Mul]
-  simp_all
-  have : ∀ k : Fin m, ∑ ι : Fin n, L[i][k] * (M[k][ι] * N[ι][j]) = ∑ ι : Fin n, L[i][k] * M[k][ι] * N[ι][j] := by
-    simp [MulMul.eq.Mul_Mul]
-  simp_all
-  apply Sum_Sum.comm
+  erw [GetDot.eq.Sum_MulGetS.fin (L @ M) N i j]
+  erw [GetDot.eq.Sum_MulGetS.fin L (M @ N) i j]
+  erw [GetDot.eq.Sum_MulGetS.fin L M i]
+  erw [GetDot.eq.Sum_MulGetS.fin M N (j := j)]
+  erw [MulSum.eq.Sum_Mul]
+  erw [Mul_Sum.eq.Sum_Mul]
+  erw [Sum_Sum.comm]
+  erw [MulMul.eq.Mul_Mul]
+  apply @Fin.Sum.of.All_Eq
+  intro k
+  apply @Fin.Sum.of.All_Eq
+  intro ι
+  apply MulMul.eq.Mul_Mul
 
 
 -- created on 2025-05-03

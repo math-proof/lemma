@@ -43,7 +43,7 @@ private lemma main
 
 
 @[main, fin]
-private lemma one
+private lemma une
   [NonUnitalNonAssocSemiring α]
 -- given
   (h_s : s ≠ [])
@@ -55,7 +55,7 @@ private lemma one
 -- proof
   have h_s := GtLength_0.of.Ne_Nil h_s
   let X' : Tensor α (n :: (s.take (s.length - 1) ++ [s[s.length - 1]])) := cast (by simp; grind) X
-  have h_get := GetDot.as.DotGet.one.fin X' Y i
+  have h_get := GetDot.as.DotGet.une.fin X' Y i
   simp [X'] at h_get
   simp [GetElem.getElem]
   have h_cast := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp; grind) X ⟨i, by grind⟩ (s' := n :: (s.take (s.length - 1) ++ [s[s.length - 1]]))

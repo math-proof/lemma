@@ -151,7 +151,7 @@ private lemma main
 
 
 @[main, fin]
-private lemma one
+private lemma une
   [NonUnitalNonAssocSemiring α]
 -- given
   (h : k < n')
@@ -164,7 +164,7 @@ private lemma one
   simp [GetElem.getElem]
   match s with
   | [] =>
-    rw [GetDot.eq.DotGet.of.Lt.one.fin h]
+    rw [GetDot.eq.DotGet.of.Lt.une.fin h]
   | s₀ :: s =>
     simp [MatMul.dot]
     rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]

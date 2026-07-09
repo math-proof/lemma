@@ -94,7 +94,7 @@ private lemma main
 
 
 @[main, fin]
-private lemma one
+private lemma une
   [Mul α] [AddCommMonoid α]
 -- given
   (h : k ≥ n')
@@ -107,7 +107,7 @@ private lemma one
   simp [GetElem.getElem]
   match s with
   | [] =>
-    rw [GetDot.eq.DotGet.of.Ge.one.fin h]
+    rw [GetDot.eq.DotGet.of.Ge.une.fin h]
   | s₀ :: s =>
     simp [MatMul.dot]
     if h_gt : k > n' then

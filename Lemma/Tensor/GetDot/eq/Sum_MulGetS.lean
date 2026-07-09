@@ -20,7 +20,7 @@ set_option maxHeartbeats 20000000
 /--
 tensor version of Matrix.mul_apply
 -/
-@[main]
+@[main, fin]
 private lemma main
   [Mul α]
   [AddCommMonoid α]

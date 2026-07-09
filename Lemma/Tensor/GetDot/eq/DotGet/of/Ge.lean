@@ -170,7 +170,7 @@ private lemma main
 
 
 @[main, fin]
-private lemma one
+private lemma une
   [Mul α] [AddCommMonoid α]
 -- given
   (h : k ≥ n')
@@ -303,7 +303,7 @@ private lemma one
         ·
           simp [Div.eq.One.of.Ne_0 h_k]
   else
-    apply GetDot.eq.DotGet.of.Gt.one
+    apply GetDot.eq.DotGet.of.Gt.une
     omega
 
 

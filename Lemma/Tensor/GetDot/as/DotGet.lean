@@ -22,7 +22,7 @@ private lemma main
 
 
 @[main, fin]
-private lemma one
+private lemma une
   [NonUnitalNonAssocSemiring α]
 -- given
   (X : Tensor α (n :: (s ++ [k])))
@@ -32,9 +32,9 @@ private lemma one
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) ≃ X[i] @ Y := by
 -- proof
   if h_n : k < n' then
-    apply GetDot.as.DotGet.of.Lt.one h_n
+    apply GetDot.as.DotGet.of.Lt.une h_n
   else
-    apply GetDot.as.DotGet.of.Ge.one (by omega)
+    apply GetDot.as.DotGet.of.Ge.une (by omega)
 
 
 -- created on 2026-01-13

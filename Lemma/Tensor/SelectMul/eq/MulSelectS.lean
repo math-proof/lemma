@@ -6,6 +6,7 @@ import Lemma.Tensor.GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.PermuteMul.eq.MulPermuteS__Neg
 import Lemma.Tensor.Select.as.GetPermute
 open List Tensor
+set_option maxHeartbeats 1000000
 
 
 @[main]
@@ -21,11 +22,11 @@ private lemma main
   simp [Select.eq.Cast_GetPermute]
   have h_s := Permute__Neg.eq.Cons_EraseIdx d
   have h_i := i.isLt
-  repeat rw [← GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp; grind) h_s _ ⟨i, by rwa [GetPermute__Neg.eq.Get]⟩ (s' := (s[d] :: s.eraseIdx d))]
-  -- simp
+  repeat erw [← GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp; grind) h_s _ ⟨i, by rwa [GetPermute__Neg.eq.Get]⟩ (s' := (s[d] :: s.eraseIdx d))]
+  simp
   have h_all := GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin (s := s[d] :: s.eraseIdx d) (i := i) (by simp) (by simp) (α := α)
   simp at h_all
-  simp [← h_all]
+  erw [← h_all]
   congr
   rw [PermuteMul.eq.MulPermuteS__Neg]
   apply Cast_Mul.eq.MulCastS.of.Eq h_s

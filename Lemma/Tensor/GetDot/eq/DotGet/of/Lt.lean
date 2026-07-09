@@ -187,7 +187,7 @@ private lemma main
 
 
 @[main, fin]
-private lemma one
+private lemma une
   [NonUnitalNonAssocSemiring α]
 -- given
   (h : k < n')
