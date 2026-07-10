@@ -18,9 +18,12 @@ export function isInfixOperator(op) {
  */
 export function resolveCastEqLemmaAlias(dotted) {
   const parts = String(dotted).split('.');
-  for (let i = 0; i < parts.length - 1; i++) {
-    if (parts[i] === 'eq' && parts[i + 1].startsWith('Cast_')) {
-      return [...parts.slice(0, i), 'as', parts[i + 1].slice(5), ...parts.slice(i + 2)].join('.');
+  for (let i = 1; i < parts.length - 1; i++) {
+    if (parts[i] === 'eq') {
+      if (parts[i + 1].startsWith('Cast_'))
+        return [...parts.slice(0, i), 'as', parts[i + 1].slice(5), ...parts.slice(i + 2)].join('.');
+      if (parts[i + 1]== 'Cast')
+        return [...parts.slice(0, i - 1), 'SEq' + parts[i - 1], ...parts.slice(i + 2)].join('.');
     }
   }
   return null;
@@ -298,7 +301,7 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
               }
             }
           } else if (first.length === 3 && isInfixOperator(first[1])) {
-            if (first[1] === 'eq' && first[2].startsWith('Cast_')) {
+            if (first[1] === 'eq' && first[2].match(/Cast(?![a-zA-Z])/)) {
               const castHit = tryCastEqLemmaRedirect(module, repoRoot);
               if (castHit) return castHit;
             }

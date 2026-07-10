@@ -4,6 +4,7 @@ import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
+import Lemma.Tensor.SEqResize.of.GtVal_0
 import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
 import Lemma.Tensor.SEqResize_0.of.GtLength_0
 open Bool List Tensor Fin

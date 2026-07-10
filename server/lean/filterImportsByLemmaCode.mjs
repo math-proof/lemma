@@ -121,9 +121,15 @@ export function filterImportsByLemmaCode(imports, lemmaCode, openSectionList) {
         const t_ = [...tokens];
         let m = t_[0].match(/^([SH]?Eq|Iff)_(.+)/);
         if (m) t_[0] = m[1] + m[2];
-        else if ((m = t_[0].match(/^([SH]?Eq|Iff)(.+)/))) t_[0] = `${m[1]}_${m[2]}`;
+        else if (m = t_[0].match(/^([SH]?Eq|Iff)(?!_)(.+)/)) t_[0] = `${m[1]}_${m[2]}`;
         else break;
         if (tryPattern(t_, lemmaCode)) return true;
+        if (m = tokens[0].match(/^SEq(?!_)(.+)/)) {
+          t_[0] = m[1];
+          t_.splice(1, 0, 'eq', 'Cast');
+          if (tryPattern(t_, lemmaCode)) return true;
+        }
+
         for (let i = 2; i < tokens.length; i++) {
           const tokensCopy = tokens.slice(2).map(String);
           tokensCopy[i - 2] = String(Not(tokens[0]));
