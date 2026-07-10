@@ -90,15 +90,15 @@ private lemma main
         simp at this
         rw [this]
       .
+        rw [EqMax]
         have := Resize_0.eq.Cast.of.GtLength_0 (by grind) X
         simp at this
         rw [this]
-        apply SEqToVectorS.of.Eq (by simp)
       .
+        rw [EqMax]
         have := Resize_0.eq.Cast.of.GtLength_0 (by grind) Y
         simp at this
         rw [this]
-        apply SEqToVectorS.of.Eq (by simp)
 
 
 -- created on 2026-01-11

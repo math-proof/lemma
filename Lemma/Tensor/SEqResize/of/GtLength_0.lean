@@ -7,7 +7,7 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqResize.of.GtVal_0
 import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
 import Lemma.Tensor.SEqResize_0.of.GtLength_0
-open Bool List Tensor Fin
+open Bool List Tensor
 
 
 @[main, cast]

@@ -2,7 +2,7 @@ import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.Set.eq.Cons_Set.of.GtLength_0
 import sympy.tensor.tensor
-open Bool List Fin Nat Vector
+open Bool List
 
 
 @[main, cast]

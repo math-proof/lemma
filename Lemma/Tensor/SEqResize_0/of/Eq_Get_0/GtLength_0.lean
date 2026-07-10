@@ -1,5 +1,5 @@
 import Lemma.Tensor.SEqResize_0.of.GtLength_0
-open Tensor Bool
+open Tensor
 
 
 @[main, cast]
