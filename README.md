@@ -7,7 +7,7 @@ The main objectives of this project are formalizing in Lean4:
   The most commonly used Torch operators:  
   - `sum`, `mean`, `select`, `max`, `min`, `argmax`, `argmin`
   - `permute`, `transpose`
-  - `repeat`, `resize`, `unsqueeze`
+  - `repeat`, `resize`, `reshape`, `unsqueeze`
   - `einsum`, `tensordot`, `matmul`, `bmm`
   - `softmax`, `exp`, `log`, `sigmoid`
 

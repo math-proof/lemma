@@ -14,7 +14,7 @@ private lemma main
   (X : Tensor α s)
   (A : Tensor α []) :
 -- imply
-  X / A = X / A.broadcast s (by simp) := by
+  X / A = X / A.reshape s (by simp) := by
 -- proof
   simp [HDiv.hDiv]
   simp [Div.div]
@@ -22,7 +22,7 @@ private lemma main
   simp [Div.div]
   let ⟨X⟩ := X
   simp
-  simp [Tensor.broadcast]
+  simp [Tensor.reshape]
   let ⟨A⟩ := A
   simp
   ext i

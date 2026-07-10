@@ -12,7 +12,7 @@ private lemma main
   (h_s : s_A = s_B)
   (h : A = B) :
 -- imply
-  A.broadcast s_A h_dvd ≃ B.broadcast s_B (by rwa [← h_s]) := by
+  A.reshape s_A h_dvd ≃ B.reshape s_B (by rwa [← h_s]) := by
 -- proof
   apply SEqBroadcastS.of.SEq.Eq.Dvd _ h_s
   apply SEq.of.Eq h

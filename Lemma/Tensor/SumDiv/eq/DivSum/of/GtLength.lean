@@ -41,7 +41,7 @@ private lemma main
       apply Eq.of.EqDataS
       simp [Div.eq.HDiv]
       simp at h
-      have h_sum : ∀ x : Tensor α s, (x / n.broadcast s (by simp)).sum dim = x.sum dim / n := fun x => by
+      have h_sum : ∀ x : Tensor α s, (x / n.reshape s (by simp)).sum dim = x.sum dim / n := fun x => by
         simpa [Div_Broadcast.eq.Div] using ih h x
       erw [funext h_sum]
       have h_fun : (fun x : Tensor α s ↦ x.sum dim / n) = (fun x : Tensor α (s.eraseIdx dim) => x / n) ∘ (fun x : Tensor α s => x.sum dim) := by

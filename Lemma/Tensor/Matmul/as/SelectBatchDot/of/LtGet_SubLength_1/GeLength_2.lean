@@ -27,7 +27,7 @@ private lemma main
   let n := s[s.length - 1]
   let X' : Tensor α (batch_size ++ [k, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
   let X' : Tensor α (batch_size ++ [k, n']) := cast (by simp) (X'.resize ⟨batch_size.length + 1, by grind⟩ n')
-  let Y' := Y.broadcast ((batch_size ++ [n', 1])) (by simp)
+  let Y' := Y.reshape ((batch_size ++ [n', 1])) (by simp)
   X.einsum Y ≃ (X'.bmm Y').select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩ := by
 -- proof
   unfold Tensor.einsum

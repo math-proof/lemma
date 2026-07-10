@@ -375,13 +375,13 @@ def Expr.latexFormat : Expr → String
           if args.length ≤ idx then
             let op := name.toString.escape_specials
             let args := args.map fun arg =>
-              level.toColor (arg.priority ≥ func.priority)
+              level.toColor (arg.priority ≥ func.priority || arg.is_Div)
             let args := "\\ ".intercalate args
             s!"{op}\\ {args}"
           else if let obj :: args := args.swap 0 idx then
             let obj := level.toColor (obj.priority > func.priority || obj.toList != none)
             let args := args.map fun arg =>
-              level.toColor (arg.priority > func.priority)
+              level.toColor (arg.priority > func.priority || arg.is_Div)
             let args := "\\ ".intercalate args
             s!"{obj}.{attr}\\ {args}"
           else

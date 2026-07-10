@@ -16,9 +16,9 @@ private lemma main
 -- given
   (h : s' = s) :
 -- imply
-  A.broadcast s' (by simp_all) ≃ A := by
+  A.reshape s' (by simp_all) ≃ A := by
 -- proof
-  unfold Tensor.broadcast
+  unfold Tensor.reshape
   apply SEq.of.SEqDataS.Eq h
   simp
   apply SEqCast.of.SEq.Eq

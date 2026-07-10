@@ -1,7 +1,7 @@
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.List.ProdInsertIdx.eq.Prod
-import sympy.tensor.Basic
-open Bool List
+import Lemma.Tensor.Unsqueeze.eq.TensorCast_Data
+open Bool List Tensor
 
 
 @[main, cast]
@@ -13,9 +13,10 @@ private lemma main
 -- imply
   (X.unsqueeze d).data ≃ X.data := by
 -- proof
-  simp [Tensor.unsqueeze]
+  rw [Unsqueeze.eq.TensorCast_Data]
   apply SEqCast.of.Eq
   apply Prod.eq.ProdInsertIdx
 
 
 -- created on 2025-11-30
+-- updated on 2026-07-10

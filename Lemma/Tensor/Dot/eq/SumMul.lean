@@ -1,20 +1,14 @@
-import Lemma.Tensor.SEqSumS.of.SEq
-import Lemma.Tensor.SEqSelectS.of.SEq
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Bool.SEqCast.of.Eq
+import Lemma.Tensor.SEqResize.of.Eq_Get
+import Lemma.Tensor.Matmul.as.Bmm
+import Lemma.Tensor.SEqGetS.of.SEq.GtLength
+import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
+import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.EqSwap_0'1
-import Lemma.List.InsertIdxAppend.eq.Append_Cons
-import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
-import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
-import Lemma.Tensor.Matmul.as.Bmm.of.Eq
-import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
-import Lemma.Tensor.SEqSumS.of.SEq.Eq
-import Lemma.Tensor.SEqTransposeS.of.Eq
-import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
-open Bool List Tensor
+import Lemma.Tensor.SEqSelectS.of.SEq
+import Lemma.Tensor.SEqSumS.of.SEq
+open Bool Tensor
 
 
 @[main]
@@ -43,33 +37,28 @@ private lemma left
   (A : Tensor α [k])
   (B : Tensor α [k, n]) :
 -- imply
-  A @ B = ((A.unsqueeze 0 : Tensor α [1, k]) @ B).get ⟨0, by grind⟩ := by
+  A @ B = ((A.unsqueeze 0) @ B).get ⟨0, GtLengthDot.of.LeLengthS.Ne_Nil (by grind) (by grind) _ _ (i := ⟨0, by simp⟩)⟩ := by
 -- proof
   have h := main (A.unsqueeze 0) B
   simp at h
   simp [Dot.dot]
   simp [Tensor.einsum]
   apply EqCast.of.SEq.Eq (by simp [matmul_shape])
-  apply SEqSelectS.of.SEq
-  simp [Tensor.bmm]
-  apply Tensor.SEqSumS.of.SEq
-  apply SEqMulS.of.SEq.SEq
+  erw [Select_0.eq.Cast_Get.of.Lt_Get_0.GtLength_0 (by grind) (by grind)]
+  apply SEqCast.of.SEq.Eq (by simp)
+  apply SEqGetS.of.SEq.GtLength (by grind)
+  simp [Tensor.tensordot]
+  apply SEq_Cast.of.SEq.Eq (by simp [broadcast_shape, matmul_shape])
+  rw [Matmul.eq.Cast_Bmm]
+  apply SEq_Cast.of.SEq.Eq (by simp [broadcast_shape])
+  apply Tensor.SEqBatchDotS.of.SEq.SEq
   .
-    apply SEqCastS.of.SEq.Eq.Eq
-    .
-      sorry
-    .
-      sorry
-    .
-      sorry
+    symm
+    have := Tensor.SEqResize.of.Eq_Get (by grind) (A.unsqueeze 0) (i := ⟨1, by grind⟩) (n := k ⊔ k)
+    apply this.trans
+    sorry
   .
-    apply SEqCastS.of.SEq.Eq.Eq
-    .
-      sorry
-    .
-      sorry
-    .
-      sorry
+    sorry
 
 
 -- created on 2026-07-10

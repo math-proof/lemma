@@ -13,7 +13,7 @@ private lemma main
   (h_s : s_A = s_B)
   (h : A ≃ B) :
 -- imply
-  A.broadcast s_A h_dvd ≃ B.broadcast s_B (by rwa [← h_s, ← h.left]) := by
+  A.reshape s_A h_dvd ≃ B.reshape s_B (by rwa [← h_s, ← h.left]) := by
 -- proof
   subst h_s
   have h_s' := h.left

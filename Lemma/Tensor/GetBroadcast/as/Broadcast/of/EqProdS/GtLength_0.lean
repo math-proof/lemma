@@ -22,10 +22,10 @@ private lemma main
   (X : Tensor α s)
   (i : Fin bz[0]) :
 -- imply
-  (X.broadcast (bz ++ s') (by simp [h_s]))[i]'(by rw [Length.eq.Get_0.of.GtLength_0 (by grind)]; grind) ≃ X.broadcast (bz.tail ++ s') (by simp [h_s]) := by
+  (X.reshape (bz ++ s') (by simp [h_s]))[i]'(by rw [Length.eq.Get_0.of.GtLength_0 (by grind)]; grind) ≃ X.reshape (bz.tail ++ s') (by simp [h_s]) := by
 -- proof
   simp only [GetElem.getElem]
-  unfold Tensor.broadcast
+  unfold Tensor.reshape
   apply SEq.of.SEqDataS.Eq
   ·
     grind

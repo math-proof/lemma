@@ -6675,7 +6675,11 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             const stripped = this.strip_parenthesis();
             return [stripped[1].toLatex(syntax)];
         }
-        return super.latexArgs(syntax);
+        return args.map((arg) => {
+            if (arg instanceof LeanParenthesis && arg.arg instanceof LeanDiv)
+                arg = arg.arg;
+            return arg.toLatex(syntax)
+        });
     }
 
     latexFormat() {

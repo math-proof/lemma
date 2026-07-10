@@ -17,7 +17,7 @@ private lemma main
 -- imply
   let Xi : Tensor α (s.tail ++ [m, n]) := cast (by grind) (X[i]'(GtLength.of.GtLength (by simpa) X ⟨i, by grind⟩ (j := 2)))
   have h_i := GtLength.of.GtLength (by simp [broadcast_shape]; grind) (X.tensordot Y (s' := [])) ⟨i, by simp [broadcast_shape]; split_ifs; repeat simp_all⟩ (j := 2)
-  (X.tensordot Y)[i] ≃ Xi.matmul (Y.broadcast (s.tail ++ [n, k]) (by simp)) (by grind) := by
+  (X.tensordot Y)[i] ≃ Xi.matmul (Y.reshape (s.tail ++ [n, k]) (by simp)) (by grind) := by
 -- proof
   intro Xi
   simp [Xi]

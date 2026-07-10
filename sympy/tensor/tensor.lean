@@ -140,7 +140,7 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, t])) (Y :
 -/
 def Tensor.tensordot [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, n])) (Y : Tensor α (s' ++ [n, k])) : Tensor α (broadcast_shape s s' ++ [m, k]) :=
   if h : s.length < s'.length then
-    let X := X.broadcast (s'.take (s'.length - s.length) ++ s ++ [m, n]) (by simp)
+    let X := X.reshape (s'.take (s'.length - s.length) ++ s ++ [m, n]) (by simp)
     cast
       (by
         apply congrArg
@@ -160,7 +160,7 @@ def Tensor.tensordot [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, n])) (
       )
       (matmul X Y (by grind))
   else if h : s.length > s'.length then
-    let Y := Y.broadcast (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by simp)
+    let Y := Y.reshape (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by simp)
     cast
       (by
         apply congrArg
@@ -214,7 +214,7 @@ def Tensor.einsum [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
         let n' := s'[s'.length - 2]
         let k' := s'[s'.length - 1]
         let X : Tensor α [n ⊔ n'] := X.resize ⟨0, by grind⟩ (n ⊔ n')
-        let X := X.broadcast ((batch_size' ++ [1, n ⊔ n'])) (by simp)
+        let X := X.reshape ((batch_size' ++ [1, n ⊔ n'])) (by simp)
         let Y : Tensor α (batch_size' ++ [n', k']) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
         let Y : Tensor α (batch_size' ++ [n ⊔ n', k']) := cast (congrArg (Tensor α) (by simp)) (Y.resize ⟨batch_size'.length, by grind⟩ (n ⊔ n'))
         cast
@@ -239,7 +239,7 @@ def Tensor.einsum [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
       let X : Tensor α (batch_size ++ [k, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
       let X : Tensor α (batch_size ++ [k, n ⊔ n']) := cast (congrArg (Tensor α) (by simp)) (X.resize ⟨batch_size.length + 1, by grind⟩ (n ⊔ n'))
       let Y : Tensor α [n ⊔ n'] := Y.resize ⟨0, by grind⟩ (n ⊔ n')
-      let Y := Y.broadcast ((batch_size ++ [n ⊔ n', 1])) (by simp)
+      let Y := Y.reshape ((batch_size ++ [n ⊔ n', 1])) (by simp)
       cast
         (by
           congr

@@ -13,13 +13,13 @@ private lemma main
   (X : Tensor α (n :: s))
   (A : Tensor α []) :
 -- imply
-  (X / A).toVector = X.toVector / A.broadcast (n :: s).tail (by simp) := by
+  (X / A).toVector = X.toVector / A.reshape (n :: s).tail (by simp) := by
 -- proof
   repeat rw [ToVector.eq.MapRange_Get.fin]
   ext i
   simp
   rw [GetDiv.eq.DivGet.fin (A := A)]
-  erw [GetDiv.eq.DivGet.fin (a := A.broadcast s (by simp))]
+  erw [GetDiv.eq.DivGet.fin (a := A.reshape s (by simp))]
   simp
   rw [EqGetRange.fin]
   erw [Div.eq.Div_Broadcast]

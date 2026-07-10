@@ -76,13 +76,13 @@ private lemma main
     apply Eq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin]
     apply SEqCast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
-    let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).broadcast [1, k] (by simp)
+    let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).reshape [1, k] (by simp)
     have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiBroadcast.bmm Y) ⟨0, by simp⟩
     simp [XiBroadcast] at this
     erw [this]
     unfold tensordot
     simp [matmul]
-    unfold Tensor.broadcast
+    unfold Tensor.reshape
     unfold bmm
     simp [broadcast_shape]
     conv_lhs => erw [GetSum_2.eq.SumGet__1.fin]
@@ -191,7 +191,7 @@ private lemma une
     subst hn0
     simp [GetElem.getElem, Dot.dot]
     rw [Matmul.eq.Cast_SelectBatchDot.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
-    simp [Tensor.bmm, Tensor.broadcast, matmul_shape]
+    simp [Tensor.bmm, Tensor.reshape, matmul_shape]
     apply Eq.of.EqDataS
     apply @Vector.Eq.of.All_EqGetS.fin
     intro t
@@ -215,7 +215,7 @@ private lemma une
     rw [Matmul.eq.Cast_SelectBatchDot.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
     ·
       simp
-      unfold Tensor.broadcast Tensor.bmm
+      unfold Tensor.reshape Tensor.bmm
       simp
       have h_s0 : ([] ++ [1, 1, k]).set ([] : List ℕ).length (n * ([] ++ [1, 1, k])[([] : List ℕ).length]) = [n, 1, k] := by
         simp

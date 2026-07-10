@@ -27,7 +27,7 @@ private lemma main
   (i : Fin s[0]) :
 -- imply
   let Xi : Tensor α (s.tail ++ [m, n]) := cast (by grind) (X[i]'(GtLength.of.GtLength (by simpa) X ⟨i, by grind⟩ (j := s'.length + 2)))
-  (X.tensordot Y)[i]'(GtLength.of.GtLength (by simp [broadcast_shape]; grind) (X.tensordot Y) ⟨i, by simp [broadcast_shape]; grind⟩ (j := s'.length + 2)) ≃ Xi.matmul (Y.broadcast (s.tail.take (s.tail.length - s'.length) ++ s' ++ [n, k]) (by simp)) (by grind) := by
+  (X.tensordot Y)[i]'(GtLength.of.GtLength (by simp [broadcast_shape]; grind) (X.tensordot Y) ⟨i, by simp [broadcast_shape]; grind⟩ (j := s'.length + 2)) ≃ Xi.matmul (Y.reshape (s.tail.take (s.tail.length - s'.length) ++ s' ++ [n, k]) (by simp)) (by grind) := by
 -- proof
   simp only [GetElem.getElem]
   have := BroadcastMatmul.as.BroadcastMatmulRec.of.GtLengthS h X Y
@@ -48,7 +48,7 @@ private lemma main
       apply EqAppendS.of.Eq
       simp
     ·
-      have := GetBroadcastMatmulRec.as.Map₂_ToVectorS.of.GtLengthS (by grind) (by grind) (by grind) X (Y.broadcast (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by grind)) i
+      have := GetBroadcastMatmulRec.as.Map₂_ToVectorS.of.GtLengthS (by grind) (by grind) (by grind) X (Y.reshape (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by grind)) i
       apply this.trans
       apply SEqBroadcastMatmulRecS.of.SEq.SEq
       ·

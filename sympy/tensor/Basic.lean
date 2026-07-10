@@ -241,6 +241,12 @@ def Tensor.logicalIndices (index : ℕ) (shape : List ℕ) : List ℕ :=
     computeIdx index shape []
 
 /--
+[torch.reshape](https://docs.pytorch.org/docs/stable/generated/torch.reshape.html)
+-/
+def Tensor.reshape (X : Tensor α s) (s' : List ℕ) (h : s.prod ∣ s'.prod) : Tensor α s' :=
+  ⟨cast (by rw [EqMulDiv.of.Dvd h]) (X.data.repeat (s'.prod / s.prod))⟩
+
+/--
 [torch.unsqueeze](https://docs.pytorch.org/docs/stable/generated/torch.unsqueeze.html)
 
 given :
@@ -256,7 +262,7 @@ the following eqaulity holds:
 X[i₀, i₁, i₂, i₃, i₄, i₅, i₆, i₇, i₈, i₉] = t'[i₀, i₁, i₂, i₃, 0, i₄, i₅, i₆, i₇, i₈, i₉]
 -/
 def Tensor.unsqueeze (X : Tensor α s) (dim : ℕ) : Tensor α (s.insertIdx dim 1) :=
-  ⟨cast (congrArg (List.Vector α) (Prod.eq.ProdInsertIdx s dim)) X.data⟩
+  X.reshape (s.insertIdx dim 1) (by simp [Prod.eq.ProdInsertIdx s dim])
 
 /--
 [torch.repeat_interleave](https://docs.pytorch.org/docs/stable/generated/torch.repeat_interleave.html)
@@ -401,9 +407,6 @@ def Tensor.map₂ (f : α → β → γ) (X : Tensor α s) (Y : Tensor β s) : T
 
 instance [Coe α β] : Coe (Tensor α s) (Tensor β s) where
   coe X := X.map (fun a => Coe.coe a)
-
-def Tensor.broadcast (X : Tensor α s) (S : List ℕ) (h : s.prod ∣ S.prod) : Tensor α S :=
-  ⟨cast (by rw [EqMulDiv.of.Dvd h]) (X.data.repeat (S.prod / s.prod))⟩
 
 def Tensor.broadcast_shape (s : List ℕ) (s' : List ℕ) : List ℕ :=
   let ⟨batch_size, s, s'⟩ : List ℕ × List ℕ × List ℕ :=

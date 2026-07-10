@@ -14,7 +14,7 @@ private lemma main
   (X : Tensor α (s ++ [m, n]))
   (Y : Tensor α (s' ++ [n, k])) :
 -- imply
-  X.tensordot Y ≃ X.matmul (Y.broadcast (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by simp)) (by grind) := by
+  X.tensordot Y ≃ X.matmul (Y.reshape (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by simp)) (by grind) := by
 -- proof
   if h : s.length = s'.length then
     rw [BroadcastMatmul.eq.BroadcastMatmulRec.of.EqLengthS h]

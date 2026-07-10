@@ -11,7 +11,7 @@ private lemma main
   (X : Tensor α s)
   (i : Fin s'[0]) :
 -- imply
-  (X.broadcast (s' ++ s) (by simp))[i]'(by rw [Length.eq.Get_0.of.GtLength_0 (by grind)]; grind) ≃ X.broadcast (s'.tail ++ s) (by simp) := by
+  (X.reshape (s' ++ s) (by simp))[i]'(by rw [Length.eq.Get_0.of.GtLength_0 (by grind)]; grind) ≃ X.reshape (s'.tail ++ s) (by simp) := by
 -- proof
   apply GetBroadcast.as.Broadcast.of.EqProdS.GtLength_0 h (by grind) X (s' := s)
 

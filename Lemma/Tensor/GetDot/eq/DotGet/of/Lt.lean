@@ -84,14 +84,14 @@ private lemma main
   simp
   rw [Matmul.eq.Cast_SelectBatchDot.of.Lt_Get_SubLength.GeLength_2 (by simp) (by simpa)]
   simp
-  let XiAppendBroadcast : Tensor α ([] ++ [1, n']) := (((X.get i).resize ⟨0, by grind⟩ n')).broadcast [1, n'] (by simp)
+  let XiAppendBroadcast : Tensor α ([] ++ [1, n']) := (((X.get i).resize ⟨0, by grind⟩ n')).reshape [1, n'] (by simp)
   have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiAppendBroadcast.bmm Y) ⟨0, by simp⟩
   simp only [XiAppendBroadcast] at this
   symm
   apply this.trans
   unfold tensordot
   simp [matmul]
-  unfold broadcast
+  unfold reshape
   unfold bmm
   simp [broadcast_shape]
   erw [GetSum_2.eq.SumGet__1.fin (i := ⟨0, by grind⟩)]
@@ -212,7 +212,7 @@ private lemma une
   rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2]
   ·
     simp [Matmul.eq.SumMulDataS.of.Lt h]
-    unfold Tensor.broadcast
+    unfold Tensor.reshape
     unfold Tensor.bmm
     simp
     have h_nk : n' / k * k + n' % k = n' := by simp [EqAddMulDiv]
