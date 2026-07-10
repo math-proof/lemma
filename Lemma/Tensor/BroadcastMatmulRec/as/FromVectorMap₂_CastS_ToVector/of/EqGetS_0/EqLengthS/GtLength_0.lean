@@ -1,3 +1,5 @@
+import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
+import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
@@ -9,7 +11,6 @@ import Lemma.Tensor.SEqFromVectorS.of.SEq
 import Lemma.Tensor.SEqToVectorS.of.Eq
 import Lemma.Tensor.SEqToVectorS.of.SEq
 import Lemma.Vector.SEqMap₂S.of.All_Eq.SEq.SEq
-import sympy.tensor.tensor
 open Bool List Nat Tensor Vector
 
 
@@ -70,11 +71,9 @@ private lemma main
         intro t
         have h_t := t.isLt
         simp only [EqMax] at h_t
-        have h_s : (s₀ :: s ++ [m, n]) = (s₀ ⊔ s₀ :: s ++ [m, n]) := by simp
         have := GetToVector.eq.Get.fin (X.resize ⟨0, by grind⟩ (s₀ ⊔ s₀)) ⟨t, by grind⟩
         simp at this
         rw [this]
-        have h_s' : (s₀ :: s' ++ [n, k]) = (s₀ ⊔ s₀ :: s' ++ [n, k]) := by simp
         have := GetToVector.eq.Get.fin (Y.resize ⟨0, by grind⟩ (s₀ ⊔ s₀)) ⟨t, by grind⟩
         simp at this
         rw [this]
@@ -84,15 +83,21 @@ private lemma main
         have := GetToVector.eq.Get.fin Y ⟨t, by grind⟩
         simp at this
         rw [this]
-        have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) h_s X ⟨t, by grind⟩
+        have := GetResize_0.eq.Cast_Get.of.GtLength_0.fin (by grind) X ⟨t, by grind⟩
         simp at this
-        erw [this]
-        have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) h_s' Y ⟨t, by grind⟩
+        rw [this]
+        have := GetResize_0.eq.Cast_Get.of.GtLength_0.fin (by grind) Y ⟨t, by grind⟩
         simp at this
-        erw [this]
+        rw [this]
       .
+        have := Resize_0.eq.Cast.of.GtLength_0 (by grind) X
+        simp at this
+        rw [this]
         apply SEqToVectorS.of.Eq (by simp)
       .
+        have := Resize_0.eq.Cast.of.GtLength_0 (by grind) Y
+        simp at this
+        rw [this]
         apply SEqToVectorS.of.Eq (by simp)
 
 

@@ -16,11 +16,11 @@ private lemma main
   (d : Fin s.tail.length) :
 -- imply
   have h_d := d.isLt
-  have : i < (X.repeat n ⟨d + 1, by apply LtAdd.of.Lt_Sub; simp_all⟩).length := by
+  have : i < (X.repeat ⟨d + 1, by apply LtAdd.of.Lt_Sub; simp_all⟩ n).length := by
     rwa [LengthRepeat.eq.Get_0.of.GtVal_0]
     simp
   have : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
-  (X.repeat n ⟨d + 1, by grind⟩)[i] ≃ X[i].repeat n d := by
+  (X.repeat ⟨d + 1, by grind⟩ n)[i] ≃ X[i].repeat d n := by
 -- proof
   have := GetRepeat.as.RepeatGet.of.Lt_Get_0.GtVal_0 (by grind) h_i X n (d := ⟨d + 1, by grind⟩)
   simp_all

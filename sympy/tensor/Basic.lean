@@ -274,7 +274,7 @@ the following eqaulity holds:
 ∀ X : Fin 3,
   X[i₀, i₁, i₂, i₃, i₄, i₅, i₆, i₇, i₈, i₉] = t'[i₀, i₁, i₂, i₃, i₄ + s₄ * X, i₅, i₆, i₇, i₈, i₉]
 -/
-def Tensor.repeat (X : Tensor α s) (n : ℕ) (dim : Fin s.length) : Tensor α (s.set dim (n * s[dim])) :=
+def Tensor.repeat (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : Tensor α (s.set dim (n * s[dim])) :=
   ⟨cast (by simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength dim.isLt]) ((X.data.splitAt dim).map (·.repeat n)).flatten⟩
 
 def Tensor.rotate (X : Tensor α s) (i : ℕ): Tensor α (s.rotate i) :=
@@ -372,7 +372,7 @@ def Tensor.batch_dot [Mul α] [Add α] [Zero α] (A : Tensor α (batch_size ++ [
     (A.unsqueeze (batch_size.length + 1))
   let A : Tensor α (batch_size ++ [m, n, k]) := cast
     (by simp)
-    (A.repeat n ⟨batch_size.length + 1, by simp⟩)
+    (A.repeat ⟨batch_size.length + 1, by simp⟩ n)
   let B : Tensor α (batch_size ++ [n, k]) := cast
     (by
       rw [SwapAppend.eq.Append_Swap.of.LeLength.LeLength (by simp) (by simp)]
@@ -387,7 +387,7 @@ def Tensor.batch_dot [Mul α] [Add α] [Zero α] (A : Tensor α (batch_size ++ [
     (B.unsqueeze batch_size.length)
   let B : Tensor α (batch_size ++ [m, n, k]) := cast
     (by simp)
-    (B.repeat m ⟨batch_size.length, by simp⟩)
+    (B.repeat ⟨batch_size.length, by simp⟩ m)
   cast
     (by simp_all [EraseIdxAppend.eq.Append_EraseIdx])
     ((A * B).sum (batch_size.length + 2))

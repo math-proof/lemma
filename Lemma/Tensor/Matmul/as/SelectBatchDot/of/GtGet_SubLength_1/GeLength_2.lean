@@ -25,7 +25,7 @@ private lemma main
   let r := n % n'
   let Y' : Tensor α [n] := cast
     (by simp [q, r, EqAddMulDiv])
-    ((cast (by grind) (Y.repeat q ⟨0, by simp⟩) : Tensor α [q * n']) ++ (0 : Tensor α [r]))
+    ((cast (by grind) (Y.repeat ⟨0, by simp⟩ q) : Tensor α [q * n']) ++ (0 : Tensor α [r]))
   let Y' := Y'.broadcast ((batch_size ++ [n, 1])) (by simp)
   X.matmul Y ≃ (X'.batch_dot Y').select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩ := by
 -- proof

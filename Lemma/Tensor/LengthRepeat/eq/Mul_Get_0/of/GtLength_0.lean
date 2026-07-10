@@ -9,9 +9,9 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  (X.repeat n ⟨0, h⟩).length = n * s[0] := by
+  (X.repeat ⟨0, h⟩ n).length = n * s[0] := by
 -- proof
-  rw [Length.eq.Get_0.of.GtLength_0] <;> 
+  rw [Length.eq.Get_0.of.GtLength_0] <;>
     simp
   assumption
 

@@ -36,9 +36,9 @@ private lemma main
   have h_d_1 : d - 1 < s.tail.length := by
     simp
     apply LtSubS.of.Lt.Le (by linarith) (by simp)
-  (X.repeat n d).toVector = (List.Vector.range s₀).map fun i =>
+  (X.repeat d n).toVector = (List.Vector.range s₀).map fun i =>
     have := LtVal i
-    have : i < (X.repeat n d).length := by simp_all [LengthRepeat.eq.Get_0.of.GtVal_0 h]
+    have : i < (X.repeat d n).length := by simp_all [LengthRepeat.eq.Get_0.of.GtVal_0 h]
     cast
       (by
         congr
@@ -46,7 +46,7 @@ private lemma main
         congr
         repeat apply EqAddSub.of.Ge (by linarith)
       )
-      ((X.get ⟨i, GtLength.of.GtLength_0 (by grind) X ⟨i, by grind⟩⟩).repeat n ⟨d - 1, h_d_1⟩) := by
+      ((X.get ⟨i, GtLength.of.GtLength_0 (by grind) X ⟨i, by grind⟩⟩).repeat ⟨d - 1, h_d_1⟩ n) := by
 -- proof
   intro s₀ h_s h_s₀ h_head h_d_1
   ext i

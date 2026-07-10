@@ -8,15 +8,15 @@ private lemma main
   [Zero α]
   {s : List ℕ}
 -- given
-  (h : s.length > 0)
+  (h_s : s.length > 0)
   (X : Tensor α s) :
 -- imply
-  X.resize ⟨0, by grind⟩ (s[0] ⊔ s[0]) ≃ X := by
+  X.resize ⟨0, by grind⟩ s[0] ≃ X := by
 -- proof
-  rw [Resize_0.eq.Ite.of.GtLength_0 h]
+  rw [Resize_0.eq.Ite.of.GtLength_0 h_s]
   simp
   apply SEqCast.of.Eq
   simp
 
 
--- created on 2026-07-09
+-- created on 2026-07-10

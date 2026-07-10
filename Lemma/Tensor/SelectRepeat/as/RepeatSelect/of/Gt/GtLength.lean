@@ -51,7 +51,7 @@ private lemma main
   (i : Fin s[d])
   (n : ℕ) :
 -- imply
-  (X.repeat n ⟨k, h_k⟩).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select ⟨d, by grind⟩ i).repeat n ⟨k - 1, by grind⟩ := by
+  (X.repeat ⟨k, h_k⟩ n).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select ⟨d, by grind⟩ i).repeat ⟨k - 1, by grind⟩ n := by
 -- proof
   have h_i := i.isLt
   have h_get_eraseIdx : (s.eraseIdx d)[k - 1]'(by grind) = s[k] := by

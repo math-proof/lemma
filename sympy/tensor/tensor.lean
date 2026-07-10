@@ -89,7 +89,7 @@ def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) 
           rw [Eq_Cons_Tail.of.GtLength_0 (show (s.eraseIdx offset).length > 0 by grind)]
         congr
         rw [GetEraseIdx.eq.Get.of.Gt.GtLength]
-        · apply List.HeadD.eq.Get_0.of.GtLength_0
+        · apply HeadD.eq.Get_0.of.GtLength_0
         · simp
         · assumption
       )
@@ -109,7 +109,7 @@ def Tensor.resize [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : T
       if h_lt : k < n then
         let q := n / k
         let r := n % k
-        cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp) (X.repeat q ⟨0, by simp⟩) : Tensor α (q * k :: s)) ++ (0 : Tensor α (r :: s)))
+        cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp) (X.repeat ⟨0, by simp⟩ q) : Tensor α (q * k :: s)) ++ (0 : Tensor α (r :: s)))
       else
         cast (by grind) (fromVector (X.toVector.take n))
   | ⟨d + 1, _⟩ =>

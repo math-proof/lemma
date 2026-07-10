@@ -14,7 +14,7 @@ private lemma main
   (h_d : d.val = d'.val)
   (h : X ≃ X') :
 -- imply
-  X.repeat n d ≃ X'.repeat n' d' := by
+  X.repeat d n ≃ X'.repeat d' n' := by
 -- proof
   subst h_n
   have h_s := h.left

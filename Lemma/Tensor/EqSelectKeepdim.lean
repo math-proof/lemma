@@ -23,7 +23,7 @@ private lemma main
   have h_length := LengthInsertIdxEraseIdx.eq.Length.of.GtLength d.isLt 1
   have h_set : (((s.eraseIdx d).insertIdx d 1).set d (s[d] * ((s.eraseIdx d).insertIdx d 1)[d])) = s := by
     simp [EqSetInsertIdxEraseIdx.of.GtLength]
-  have := SelectCast.eq.Cast_Select.of.Eq (i := ⟨i, by simp⟩) (d := ⟨d, by rw [LengthSet.eq.Length]; omega⟩) h_set (X := ((X.unsqueeze d).repeat s[d] ⟨d, by simp [h_length]⟩))
+  have := SelectCast.eq.Cast_Select.of.Eq (i := ⟨i, by simp⟩) (d := ⟨d, by rw [LengthSet.eq.Length]; omega⟩) h_set (X := ((X.unsqueeze d).repeat ⟨d, by simp [h_length]⟩ s[d]))
   simp at this
   rw [this]
   apply EqCast.of.SEq.Eq

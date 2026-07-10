@@ -48,7 +48,7 @@ private lemma main
       simp [EqSetInsertIdxEraseIdx.of.GtLength]
     have h_length := LengthInsertIdxEraseIdx.eq.Length.of.GtLength h_k_length? 1
     have h_i_lt : i < ((s.eraseIdx k).insertIdx k 1)[d] := by grind
-    have := SelectCast.eq.Cast_Select.of.Eq (i := ⟨i, by simp; rwa [GetSet.eq.Get.of.Gt.GtLength (by omega) (by omega)]⟩) (d := ⟨d, by rw [LengthSet.eq.Length]; omega⟩) h_set (X := ((X.unsqueeze k).repeat s[k] ⟨k, by simpa [h_length]⟩))
+    have := SelectCast.eq.Cast_Select.of.Eq (i := ⟨i, by simp; rwa [GetSet.eq.Get.of.Gt.GtLength (by omega) (by omega)]⟩) (d := ⟨d, by rw [LengthSet.eq.Length]; omega⟩) h_set (X := ((X.unsqueeze k).repeat ⟨k, by simpa [h_length]⟩ s[k]))
     simp at this
     rw [this]
     apply EqCastS.of.SEq.Eq

@@ -68,7 +68,7 @@ def Tensor.keepdim (X : Tensor α (s.eraseIdx dim)) : Tensor α s :=
   if h : dim < s.length then
     cast
       (by simp [List.EqSetInsertIdxEraseIdx.of.GtLength h])
-      ((X.unsqueeze dim).repeat s[dim] ⟨dim, Lt_LengthInsertIdxEraseIdx.of.GtLength h 1⟩)
+      ((X.unsqueeze dim).repeat ⟨dim, Lt_LengthInsertIdxEraseIdx.of.GtLength h 1⟩ s[dim])
   else
     cast (by rw [EqEraseIdx.of.LeLength (Ge.of.NotLt h)]) X
 

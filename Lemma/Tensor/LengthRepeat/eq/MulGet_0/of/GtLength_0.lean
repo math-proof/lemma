@@ -10,7 +10,7 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  (X.repeat n ⟨0, h⟩).length = s[0] * n := by
+  (X.repeat ⟨0, h⟩ n).length = s[0] * n := by
 -- proof
   rw [LengthRepeat.eq.Mul_Get_0.of.GtLength_0]
   apply Mul.comm

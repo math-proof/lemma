@@ -12,7 +12,7 @@ private lemma main
   (d : Fin s.length):
 -- imply
   have h_s := h.left.symm
-  X.repeat n d ≃ X'.repeat n ⟨d, by simp [h_s]⟩ :=
+  X.repeat d n ≃ X'.repeat ⟨d, by simp [h_s]⟩ n :=
 -- proof
   SEqRepeatS.of.SEq.EqValS.Eq rfl (by simp) h
 

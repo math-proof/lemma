@@ -16,7 +16,6 @@ import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTake.eq.Get.of.Lt_Min
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import sympy.tensor.tensor
 open Bool Fin List Nat Tensor Vector
 
 
@@ -37,7 +36,7 @@ private lemma main
         (congrArg (Tensor α) (by simp [q, r, EqAddMulDiv, Set_0.eq.Cons_Tail.of.GtLength_0 h]))
         (((cast
           (congrArg (Tensor α) (by simp [q, Set_0.eq.Cons_Tail.of.GtLength_0 h]))
-          (X.repeat q ⟨0, h⟩)) : Tensor α (q * s[0] :: s.tail)) ++ (0 : Tensor α (r :: s.tail))
+          (X.repeat ⟨0, h⟩ q)) : Tensor α (q * s[0] :: s.tail)) ++ (0 : Tensor α (r :: s.tail))
         )
     else if h_n : s[0] > n then
       cast (congrArg (Tensor α) (by rw [HeadD.eq.Get_0.of.GtLength_0 h, EqMin.of.Lt h_n, Set_0.eq.Cons_Tail.of.GtLength_0 h])) (Tensor.fromVector (X.toVector.take n))

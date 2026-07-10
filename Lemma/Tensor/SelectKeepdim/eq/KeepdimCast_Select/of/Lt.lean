@@ -54,7 +54,7 @@ private lemma main
   have h_i_lt : i < ((s.eraseIdx k).insertIdx k 1)[d] := by
     simp [GetInsertIdx.eq.Get.of.Lt.GeLength (by omega) h_k (s := s.eraseIdx k) 1]
     omega
-  have := SelectCast.eq.Cast_Select.of.Eq (i := ⟨i, by simp; rwa [GetSet.eq.Get.of.Lt.GtLength (by omega) (by omega)]⟩) (d := ⟨d, by rw [LengthSet.eq.Length]; omega⟩) h_set (X := ((X.unsqueeze k).repeat s[k] ⟨k, by simpa [h_length]⟩))
+  have := SelectCast.eq.Cast_Select.of.Eq (i := ⟨i, by simp; rwa [GetSet.eq.Get.of.Lt.GtLength (by omega) (by omega)]⟩) (d := ⟨d, by rw [LengthSet.eq.Length]; omega⟩) h_set (X := ((X.unsqueeze k).repeat ⟨k, by simpa [h_length]⟩ s[k]))
   simp at this
   rw [this]
   apply EqCastS.of.SEq.Eq

@@ -407,8 +407,9 @@ const self = new Vue({
         var {module} = this;
         var model = getParameterByName('model[proof]');
         if (!model) {
-            if (this.lemma.any(lemma => this.heed_update(lemma)))
+            if (this.lemma.any(lemma => this.heed_update(lemma)) && !getParameterByName('new')) {
                 await this.echo(module);
+            }
         }
 
         var {hash} = location;

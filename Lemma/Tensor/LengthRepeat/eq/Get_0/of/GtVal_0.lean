@@ -12,7 +12,7 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  (X.repeat n d).length = s[0] := by
+  (X.repeat d n).length = s[0] := by
 -- proof
   rw [LengthRepeat.eq.Length.of.GtVal_0 h]
   rw [Length.eq.Get_0.of.GtLength_0]

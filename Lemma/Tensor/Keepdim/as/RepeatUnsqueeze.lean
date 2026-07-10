@@ -11,7 +11,7 @@ private lemma main
 -- given
   (X : Tensor α (s.eraseIdx d)) :
 -- imply
-  X.keepdim ≃ (X.unsqueeze d).repeat s[d] ⟨d, Lt_LengthInsertIdxEraseIdx.of.GtLength d.isLt 1⟩ := by
+  X.keepdim ≃ (X.unsqueeze d).repeat ⟨d, Lt_LengthInsertIdxEraseIdx.of.GtLength d.isLt 1⟩ s[d] := by
 -- proof
   unfold Tensor.keepdim
   simp [d.isLt]

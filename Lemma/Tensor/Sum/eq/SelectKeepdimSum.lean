@@ -27,7 +27,7 @@ private lemma main
   have h_dim := Lt_LengthInsertIdxEraseIdx.of.GtLength h_d 1
   have h_cast := SelectCast.eq.Cast_Select.of.Eq
     (by simp [EqSetInsertIdxEraseIdx.of.GtLength])
-    ((((X.sum d).unsqueeze d).repeat s[d] ⟨d, h_dim⟩)) ⟨d, by simpa⟩ ⟨i, by simp⟩
+    ((((X.sum d).unsqueeze d).repeat ⟨d, h_dim⟩ s[d])) ⟨d, by simpa⟩ ⟨i, by simp⟩
     (s' := s)
   simp at h_cast
   simp [h_cast]

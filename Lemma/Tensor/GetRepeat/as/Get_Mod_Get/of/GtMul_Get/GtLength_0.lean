@@ -44,12 +44,12 @@ private lemma main
   (h_i : n * s[0] > i)
   (X : Tensor α s) :
 -- imply
-  have h_i : i < (X.repeat n ⟨0, h_s⟩).length := by rwa [LengthRepeat.eq.Mul_Get_0.of.GtLength_0]
+  have h_i : i < (X.repeat ⟨0, h_s⟩ n).length := by rwa [LengthRepeat.eq.Mul_Get_0.of.GtLength_0]
   have h_mod : i % s[0] < X.length := by
     rw [Length.eq.Get_0.of.GtLength_0 h_s]
     apply LtMod.of.Gt_0 ∘ Gt_0.of.GtMul
     assumption
-  (X.repeat n ⟨0, h_s⟩)[i] ≃ X[i % s[0]] := by
+  (X.repeat ⟨0, h_s⟩ n)[i] ≃ X[i % s[0]] := by
 -- proof
   intros
   obtain ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_i

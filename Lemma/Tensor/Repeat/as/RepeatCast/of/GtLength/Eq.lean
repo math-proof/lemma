@@ -12,7 +12,7 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  X.repeat n ⟨d, h_d⟩ ≃ (cast (congrArg (Tensor α) h) X).repeat n ⟨d, by simpa [← h]⟩ := by
+  X.repeat ⟨d, h_d⟩ n ≃ (cast (congrArg (Tensor α) h) X).repeat ⟨d, by simpa [← h]⟩ n := by
 -- proof
   subst h
   rfl

@@ -195,8 +195,8 @@ private lemma une
       simp
       repeat apply congrArg
       rw [Matmul.eq.Zero]
-      let Xl : Tensor α [n, 1, 0] := (X.unsqueeze 1).repeat 1 ⟨1, by grind⟩
-      let Xr : Tensor α [n, 1, 0] := cast (congrArg (Tensor α) (by simp [EqSwap_0'1])) (((⟨Y.data.repeat 0⟩ : Tensor α [0, 1])ᵀ.unsqueeze 0).repeat n ⟨0, by grind⟩)
+      let Xl : Tensor α [n, 1, 0] := (X.unsqueeze 1).repeat ⟨1, by grind⟩ 1
+      let Xr : Tensor α [n, 1, 0] := cast (congrArg (Tensor α) (by simp [EqSwap_0'1])) (((⟨Y.data.repeat 0⟩ : Tensor α [0, 1])ᵀ.unsqueeze 0).repeat ⟨0, by grind⟩ n)
       have := GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1 (by simp) (by simp) (by grind) ((Xl * Xr).sum 2) (i := 0) (j := i)
       simp [Xl, Xr] at this
       rw [this]

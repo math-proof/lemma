@@ -17,7 +17,7 @@ private lemma main
   have h_d : d < (s.insertIdx d 1).length := by
     rw [LengthInsertIdx.eq.Add1Length.of.GeLength h_d]
     omega
-  ((X.unsqueeze d).repeat n ⟨d, h_d⟩).select ⟨d, by simpa⟩ ⟨i, by simp_all⟩ ≃ X := by
+  ((X.unsqueeze d).repeat ⟨d, h_d⟩ n).select ⟨d, by simpa⟩ ⟨i, by simp_all⟩ ≃ X := by
 -- proof
   intros
   let s' := s.insertIdx d 1

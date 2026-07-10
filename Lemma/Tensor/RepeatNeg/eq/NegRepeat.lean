@@ -22,7 +22,7 @@ private lemma main
   (n : ℕ)
   (d : Fin s.length) :
 -- imply
-  (-X).repeat n d = -X.repeat n d := by
+  (-X).repeat d n = -X.repeat d n := by
 -- proof
   apply Eq.of.EqDataS
   rw [DataNeg.eq.NegData]

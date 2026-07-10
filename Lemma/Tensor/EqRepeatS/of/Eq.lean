@@ -10,7 +10,7 @@ private lemma main
   (n : ℕ)
   (d : Fin s.length) :
 -- imply
-  A.repeat n d = B.repeat n d := by
+  A.repeat d n = B.repeat d n := by
 -- proof
   subst h
   simp

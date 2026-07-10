@@ -46,7 +46,7 @@ private lemma main
     (s' := b :: (bz ++ [m, n, k]))
     (by grind)
     (by grind)
-    ((cast (congrArg (Tensor α) h_s) (X.unsqueeze (bz.length + 1 + 1))).repeat n ⟨bz.length + 1 + 1, by grind⟩)
+    ((cast (congrArg (Tensor α) h_s) (X.unsqueeze (bz.length + 1 + 1))).repeat ⟨bz.length + 1 + 1, by grind⟩ n)
     ⟨i, by grind⟩
   simp at this
   simp [this]

@@ -62,7 +62,7 @@ private lemma main
   (i : Fin s[d])
   (n : ℕ) :
 -- imply
-  (X.repeat n ⟨k, h_k.trans d.isLt⟩).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select d i).repeat n ⟨k, by grind⟩ := by
+  (X.repeat ⟨k, h_k.trans d.isLt⟩ n).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select d i).repeat ⟨k, by grind⟩ n := by
 -- proof
   have h_i : i < s[d.val] := i.isLt
   have h_d := d.isLt

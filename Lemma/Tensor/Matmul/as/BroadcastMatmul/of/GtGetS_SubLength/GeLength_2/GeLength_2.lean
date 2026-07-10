@@ -27,7 +27,7 @@ private lemma main
   let r := n % n'
   let Y' : Tensor α (batch_size' ++ [n, k]) := cast
     (by simp [q, r, EqAddMulDiv])
-    ((cast (by simp [batch_size']) (Y'.repeat q ⟨s'.length - 2, by simp [batch_size']⟩) : Tensor α (batch_size' ++ [q * n', k])) ++ (0 : Tensor α (batch_size' ++ [r, k])))
+    ((cast (by simp [batch_size']) (Y'.repeat ⟨s'.length - 2, by simp [batch_size']⟩ q) : Tensor α (batch_size' ++ [q * n', k])) ++ (0 : Tensor α (batch_size' ++ [r, k])))
   X.matmul Y ≃ Tensor.broadcast_matmul X' Y' := by
 -- proof
   unfold Tensor.matmul

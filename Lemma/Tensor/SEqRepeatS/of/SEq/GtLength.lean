@@ -12,9 +12,9 @@ private lemma main
   (h : A ≃ B)
   (n : ℕ) :
 -- imply
-  A.repeat n ⟨d, h_d⟩ ≃ B.repeat n ⟨d, by rwa [← h.left]⟩ := by
+  A.repeat ⟨d, h_d⟩ n ≃ B.repeat ⟨d, by rwa [← h.left]⟩ n := by
 -- proof
-  apply EqTFnS.of.Eq.GtLength h_d h _ (fun (s : List ℕ) (d : Fin s.length) (X : Tensor α s) => X.repeat n d)
+  apply EqTFnS.of.Eq.GtLength h_d h _ (fun (s : List ℕ) (d : Fin s.length) (X : Tensor α s) => X.repeat d n)
 
 
 -- created on 2025-07-13

@@ -2,11 +2,11 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Tensor.LengthResize.eq.Get_0
-import Lemma.Tensor.SEqResize_0.of.GtLength_0
+import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 open Bool Tensor
 
 
-@[main, cast]
+@[main, fin, cast, cast.fin]
 private lemma main
   [Zero α]
 -- given
@@ -18,7 +18,7 @@ private lemma main
   have := Tensor.GtLength.of.GtLength_0 h X i
   (X.resize ⟨0, by grind⟩ (s[0] ⊔ s[0]))[i]'(by grind) ≃ X[i] := by
 -- proof
-  have := Resize_0.eq.Cast.of.GtLength_0 h X
+  have := Resize_0.eq.Cast.of.Eq_Get_0.GtLength_0 h (by grind) X (n := s[0] ⊔ s[0])
   simp [this]
   simp only [GetElem.getElem]
   rw [Tensor.GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp)]

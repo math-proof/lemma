@@ -13,7 +13,7 @@ private lemma main
   (h : n * s[d] = s[d])
   (X : Tensor α s) :
 -- imply
-  X.repeat n d ≃ X := by
+  X.repeat d n ≃ X := by
 -- proof
   if h_n : n = 1 then
     subst h_n

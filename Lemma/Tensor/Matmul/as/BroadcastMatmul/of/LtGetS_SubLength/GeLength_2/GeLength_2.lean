@@ -1,8 +1,12 @@
+import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
+import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import Lemma.Tensor.EqBroadcastMatmulS.of.SEq.SEq
+import Lemma.Tensor.EqBroadcastMatmulS.of.Eq.Eq
+import Lemma.Nat.EqMax.of.Lt
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import sympy.tensor.tensor
-open List Nat Bool
+open List Nat Bool Tensor
 
 
 @[main, cast]
@@ -22,19 +26,55 @@ private lemma main
   let n' := s'[s'.length - 2]
   let k := s'[s'.length - 1]
   let X' : Tensor α (batch_size ++ [m, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
+  let X' : Tensor α (batch_size ++ [m, n']) := cast (by simp) (X'.resize ⟨batch_size.length + 1, by grind⟩ n')
   let Y' : Tensor α (batch_size' ++ [n', k]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
-  let q := n' / n
-  let r := n' % n
-  let X' : Tensor α (batch_size ++ [m, n']) := cast
-    (by simp [q, r, EqAddMulDiv])
-    ((cast (by simp; grind) (X'.repeat q ⟨s.length - 1, by simp [batch_size]; omega⟩) : Tensor α (batch_size ++ [m] ++ [q * n])) ++ (0 : Tensor α (batch_size ++ [m] ++ [r])))
   X.matmul Y ≃ Tensor.broadcast_matmul X' Y' := by
 -- proof
   unfold Tensor.matmul
   apply SEq.of.Eq_Cast
   .
     split_ifs
-    repeat grind
+    .
+      grind
+    .
+      grind
+    .
+      grind
+    .
+      grind
+    .
+      grind
+    .
+      simp
+      apply EqBroadcastMatmulS.of.SEq.SEq
+      .
+        apply SEqCastS.of.SEq.Eq.Eq
+        .
+          simp
+        .
+          simp
+        .
+          rw [EqMax.of.Lt h_n]
+      .
+        apply SEqCastS.of.SEq.Eq.Eq
+        .
+          simp
+        .
+          rw [List.EqAppendTake__ListGet.of.GeLength_2 (by grind)]
+        .
+          rw [EqMax.of.Lt h_n]
+          rw [ResizeCast.eq.Cast_Resize.of.Eq]
+          .
+            simp
+            apply SEqCast.of.SEq.Eq
+            .
+              simp
+              rw [List.EqAppendTake__ListGet.of.GeLength_2 (by grind)]
+            .
+              sorry
+              erw [List.LengthTake.eq.Min_Length]
+          .
+            rw [List.EqAppendTake__ListGet.of.GeLength_2 (by grind)]
   .
     congr
     simp [Tensor.matmul_shape, Tensor.broadcast_shape]

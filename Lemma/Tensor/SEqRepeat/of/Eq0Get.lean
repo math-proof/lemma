@@ -16,7 +16,7 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  X.repeat n d ≃ X := by
+  X.repeat d n ≃ X := by
 -- proof
   unfold Tensor.repeat
   apply SEq.of.SEqDataS.Eq

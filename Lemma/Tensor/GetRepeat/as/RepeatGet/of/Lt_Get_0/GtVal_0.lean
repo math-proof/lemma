@@ -54,12 +54,12 @@ private lemma main
   (X : Tensor α s)
   (n : ℕ) :
 -- imply
-  have : i < (X.repeat n d).length := by simpa [LengthRepeat.eq.Get_0.of.GtVal_0 h]
+  have : i < (X.repeat d n).length := by simpa [LengthRepeat.eq.Get_0.of.GtVal_0 h]
   have : d - 1 < s.tail.length := by
     simp
     apply LtSubS.of.Lt.Le (by linarith) (by simp)
   have : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
-  (X.repeat n d)[i] ≃ X[i].repeat n ⟨d - 1, by assumption⟩ := by
+  (X.repeat d n)[i] ≃ X[i].repeat ⟨d - 1, by assumption⟩ n := by
 -- proof
   intro h_i' h_d' h_i'
   unfold Tensor.repeat

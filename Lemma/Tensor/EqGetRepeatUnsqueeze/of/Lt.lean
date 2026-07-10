@@ -12,10 +12,10 @@ private lemma main
   (h_i : i < n)
   (X : Tensor α s) :
 -- imply
-  have : i < ((X.unsqueeze 0).repeat n ⟨0, by simp⟩).length := by
+  have : i < ((X.unsqueeze 0).repeat ⟨0, by simp⟩ n).length := by
     rw [LengthRepeat.eq.MulGet_0.of.GtLength_0]
     simpa
-  ((X.unsqueeze 0).repeat n ⟨0, by simp⟩)[i] = X := by
+  ((X.unsqueeze 0).repeat ⟨0, by simp⟩ n)[i] = X := by
 -- proof
   intro h_i'
   rw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0]

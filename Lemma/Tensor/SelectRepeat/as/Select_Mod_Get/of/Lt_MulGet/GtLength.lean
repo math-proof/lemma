@@ -35,12 +35,12 @@ private lemma main
   (h_i : i < n * s[d])
   (X : Tensor α s) :
 -- imply
-  (X.repeat n ⟨d, h_d⟩).select ⟨d, by simp_all⟩ ⟨i, by aesop⟩ ≃ X.select ⟨d, h_d⟩ ⟨i % s[d], LtMod.of.Lt_Mul h_i⟩ := by
+  (X.repeat ⟨d, h_d⟩ n).select ⟨d, by simp_all⟩ ⟨i, by aesop⟩ ≃ X.select ⟨d, h_d⟩ ⟨i % s[d], LtMod.of.Lt_Mul h_i⟩ := by
 -- proof
   have h_s := Gt_0.of.Gt h_d
   induction d generalizing X s with
   | zero =>
-    have h := Select_0.as.Get.of.Lt_Get_0.GtLength_0 (by simpa) (by simpa) (X.repeat n ⟨0, h_s⟩)
+    have h := Select_0.as.Get.of.Lt_Get_0.GtLength_0 (by simpa) (by simpa) (X.repeat ⟨0, h_s⟩ n)
     apply SEq.of.SEq.SEq h
     have h := Select_0.as.Get.of.Lt_Get_0.GtLength_0 (by simpa) (by simp [LtMod.of.Lt_Mul h_i]) X (i := i % s[0])
     apply SEq.of.SEq.SEq h
@@ -93,7 +93,7 @@ private lemma main
         simp only [GetElem.getElem] at ih ⊢
         simp only [h_fin', h_fin]
         apply SEq.symm ∘ SEq.of.SEq.SEq ih.symm
-        rw [SelectCast.eq.Cast_Select.of.Eq (by simp) ((X.get ⟨t, by assumption⟩).repeat n ⟨d, by simpa⟩) ⟨d, by simpa⟩ ⟨i, by simpa⟩]
+        rw [SelectCast.eq.Cast_Select.of.Eq (by simp) ((X.get ⟨t, by assumption⟩).repeat ⟨d, by simpa⟩ n) ⟨d, by simpa⟩ ⟨i, by simpa⟩]
         apply SEqCast.of.Eq
         simp
       ·

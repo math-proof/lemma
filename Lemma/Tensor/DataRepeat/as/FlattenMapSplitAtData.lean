@@ -12,7 +12,7 @@ private lemma main
   (d : Fin s.length)
   (n : ℕ) :
 -- imply
-  (X.repeat n d).data ≃ ((X.data.splitAt d).map (·.repeat n)).flatten := by
+  (X.repeat d n).data ≃ ((X.data.splitAt d).map (·.repeat n)).flatten := by
 -- proof
   apply SEq.of.Eq_Cast
   simp [Tensor.repeat]

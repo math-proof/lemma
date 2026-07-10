@@ -23,7 +23,7 @@ private lemma main
   let Y' : Tensor α (batch_size ++ [n', k']) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
   let q := n / n'
   let r := n % n'
-  let Y' : Tensor α (batch_size ++ [n, k']) := cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp [batch_size]) (Y'.repeat q ⟨s.length - 2, by simp [batch_size]⟩) : Tensor α (batch_size ++ [q * n', k'])) ++ (0 : Tensor α (batch_size ++ [r, k'])))
+  let Y' : Tensor α (batch_size ++ [n, k']) := cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp [batch_size]) (Y'.repeat ⟨s.length - 2, by simp [batch_size]⟩ q) : Tensor α (batch_size ++ [q * n', k'])) ++ (0 : Tensor α (batch_size ++ [r, k'])))
   let X' := X.broadcast ((batch_size ++ [1, n])) (by simp)
   X.matmul Y ≃ (X'.batch_dot Y').select ⟨s.length - 2, by simp [batch_size]⟩ ⟨0, by grind⟩ := by
 -- proof

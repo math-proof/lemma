@@ -10,7 +10,7 @@ private lemma main
   (n : ℕ)
   (d : Fin s.length) :
 -- imply
-  (cast (congrArg (Tensor α) h) X).repeat n ⟨d, by simp [← h]⟩ ≃ X.repeat n d := by
+  (cast (congrArg (Tensor α) h) X).repeat ⟨d, by simp [← h]⟩ n ≃ X.repeat d n := by
 -- proof
   subst h
   rfl

@@ -11,7 +11,7 @@ private lemma main
   (h : n * s[d] = s[d])
   (X : Tensor α s) :
 -- imply
-  X.repeat n d = cast (by simp_all) X := by
+  X.repeat d n = cast (by simp_all) X := by
 -- proof
   apply Eq_Cast.of.SEq
   apply SEqRepeat.of.EqMul_Get h

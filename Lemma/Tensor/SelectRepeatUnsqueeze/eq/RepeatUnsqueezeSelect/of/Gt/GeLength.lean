@@ -17,7 +17,7 @@ private lemma main
   (i : Fin s[d])
   (n : ℕ) :
 -- imply
-  ((X.unsqueeze k).repeat n ⟨k, by grind⟩).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ ((X.select ⟨d, by omega⟩ i).unsqueeze (k - 1)).repeat n ⟨k - 1, by grind⟩ := by
+  ((X.unsqueeze k).repeat ⟨k, by grind⟩ n).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ ((X.select ⟨d, by omega⟩ i).unsqueeze (k - 1)).repeat ⟨k - 1, by grind⟩ n := by
 -- proof
   rw [SelectRepeat.eq.Cast_RepeatSelect.of.Gt.GtLength (by grind) h_d (X.unsqueeze k) ⟨i, by grind⟩]
   have h_d_length : s.length > d := by grind

@@ -21,7 +21,7 @@ private lemma main
   (n : ℕ)
   (d : Fin s.length) :
 -- imply
-  (exp X).repeat n d = exp (X.repeat n d) := by
+  (exp X).repeat d n = exp (X.repeat d n) := by
 -- proof
   apply Eq.of.EqDataS
   rw [DataExp.eq.ExpData]

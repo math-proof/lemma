@@ -10,7 +10,7 @@ private lemma main
   (h_i : i < n * s[d])
   (X : Tensor α s) :
 -- imply
-  (X.repeat n d).select ⟨d, by simp⟩ ⟨i, by simp_all⟩ ≃ X.select d ⟨i % s[d], LtMod.of.Lt_Mul h_i⟩ := by
+  (X.repeat d n).select ⟨d, by simp⟩ ⟨i, by simp_all⟩ ≃ X.select d ⟨i % s[d], LtMod.of.Lt_Mul h_i⟩ := by
 -- proof
   apply SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet.GtLength _ h_i
 
