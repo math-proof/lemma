@@ -1,3 +1,5 @@
+import Lemma.Tensor.SEqSumS.of.SEq
+import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -32,6 +34,42 @@ private lemma main
   simp [Dot.dot]
   simp [Tensor.bmm]
   congr 1
+
+
+@[main]
+private lemma left
+  [Mul α] [Add α] [Zero α]
+-- given
+  (A : Tensor α [k])
+  (B : Tensor α [k, n]) :
+-- imply
+  A @ B = ((A.unsqueeze 0 : Tensor α [1, k]) @ B).get ⟨0, by grind⟩ := by
+-- proof
+  have h := main (A.unsqueeze 0) B
+  simp at h
+  simp [Dot.dot]
+  simp [Tensor.einsum]
+  apply EqCast.of.SEq.Eq (by simp [matmul_shape])
+  apply SEqSelectS.of.SEq
+  simp [Tensor.bmm]
+  apply Tensor.SEqSumS.of.SEq
+  apply SEqMulS.of.SEq.SEq
+  .
+    apply SEqCastS.of.SEq.Eq.Eq
+    .
+      sorry
+    .
+      sorry
+    .
+      sorry
+  .
+    apply SEqCastS.of.SEq.Eq.Eq
+    .
+      sorry
+    .
+      sorry
+    .
+      sorry
 
 
 -- created on 2026-07-10

@@ -1,3 +1,4 @@
+import Lemma.Tensor.Dot.eq.SumMul
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Fin.Eq_0
@@ -58,15 +59,14 @@ set_option maxHeartbeats 10000000
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h_n : k = n')
   (X : Tensor α [n, k])
-  (Y : Tensor α [n', k'])
+  (Y : Tensor α [k, k'])
   (i : Fin n) :
 -- imply
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] @ Y := by
 -- proof
-  subst h_n
   simp [GetElem.getElem]
+  rw [Dot.eq.SumMul]
   simp [Dot.dot]
   rw [Matmul.eq.Cast_BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2]
   ·

@@ -29,7 +29,7 @@ import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.SEqPermuteTailS.of.Eq
 import Lemma.Tensor.SEqPermuteTail_1
-import Lemma.Tensor.SEqSelectS.of.SEq.Eq
+import Lemma.Tensor.SEqSelectS.of.Eq.EqValS
 import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -54,7 +54,7 @@ private lemma main
   if h_s : s.length = 1 then
     simp
     symm
-    apply SEq.trans (SEqSelectS.of.SEq.Eq (show ⟨s.length - 1, by grind⟩ = ⟨0, by grind⟩ by grind) (by rfl) (X := X) (i := ⟨k, by grind⟩) (i' := ⟨k, by grind⟩))
+    apply SEq.trans (SEqSelectS.of.Eq.EqValS (show ⟨s.length - 1, by grind⟩ = ⟨0, by grind⟩ by grind) (by rfl) (X := X) (i := ⟨k, by grind⟩) (i' := ⟨k, by grind⟩))
     apply SEq.trans (Select_0.as.Get.of.Lt_Get_0.GtLength_0 (by omega) (show k < s[0] by grind) X)
     apply SEqGetS.of.SEq.GtLength.fin
     symm
