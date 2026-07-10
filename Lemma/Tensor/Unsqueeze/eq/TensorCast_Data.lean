@@ -2,7 +2,7 @@ import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Vector.SEqRepeat_Div
 import sympy.tensor.Basic
-open Bool List Vector Nat
+open Bool List Vector
 
 
 @[main]

@@ -30,35 +30,4 @@ private lemma main
   congr 1
 
 
-@[main]
-private lemma left
-  [Mul α] [Add α] [Zero α]
--- given
-  (A : Tensor α [k])
-  (B : Tensor α [k, n]) :
--- imply
-  A @ B = ((A.unsqueeze 0) @ B).get ⟨0, GtLengthDot.of.LeLengthS.Ne_Nil (by grind) (by grind) _ _ (i := ⟨0, by simp⟩)⟩ := by
--- proof
-  have h := main (A.unsqueeze 0) B
-  simp at h
-  simp [Dot.dot]
-  simp [Tensor.einsum]
-  apply EqCast.of.SEq.Eq (by simp [matmul_shape])
-  erw [Select_0.eq.Cast_Get.of.Lt_Get_0.GtLength_0 (by grind) (by grind)]
-  apply SEqCast.of.SEq.Eq (by simp)
-  apply SEqGetS.of.SEq.GtLength (by grind)
-  simp [Tensor.tensordot]
-  apply SEq_Cast.of.SEq.Eq (by simp [broadcast_shape, matmul_shape])
-  rw [Matmul.eq.Cast_Bmm]
-  apply SEq_Cast.of.SEq.Eq (by simp [broadcast_shape])
-  apply Tensor.SEqBatchDotS.of.SEq.SEq
-  .
-    symm
-    have := Tensor.SEqResize.of.Eq_Get (by grind) (A.unsqueeze 0) (i := ⟨1, by grind⟩) (n := k ⊔ k)
-    apply this.trans
-    sorry
-  .
-    sorry
-
-
 -- created on 2026-07-10

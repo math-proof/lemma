@@ -17,7 +17,7 @@ import Lemma.Tensor.Matmul.as.SelectBatchDot.of.EqGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.GtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
 import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
-import Lemma.Tensor.SEqBroadcastS.of.Eq.Eq
+import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 import Lemma.Tensor.SEqSelectS.of.SEq
 open Bool List Tensor
 set_option maxHeartbeats 1000000
@@ -86,7 +86,7 @@ private lemma main
           ·
             simp
       ·
-        apply SEqBroadcastS.of.Eq.Eq
+        apply SEqReshapeS.of.Eq.Eq.Dvd
         ·
           simp
         ·
@@ -171,7 +171,7 @@ private lemma une
                     apply SEqCast.of.SEq.Eq (by simp)
                     rw [GetBroadcast.eq.Cast_Broadcast.of.EqProdS.GtLength_0.fin (by grind) (by grind) _ ⟨i, by grind⟩]
                     apply SEqCast.of.SEq.Eq (by simp)
-                    apply SEqBroadcastS.of.Eq.Eq
+                    apply SEqReshapeS.of.Eq.Eq.Dvd
                     repeat simp
             ·
               simp [AppendTake_Length.eq.Cons_Append_List]
@@ -246,7 +246,7 @@ private lemma une
                     apply SEqCast.of.SEq.Eq (by simp)
                     rw [GetBroadcast.eq.Cast_Broadcast.of.EqProdS.GtLength_0.fin (by grind) (by grind) Y ⟨i, by grind⟩]
                     apply SEqCast.of.SEq.Eq (by simp)
-                    apply SEqBroadcastS.of.Eq.Eq
+                    apply SEqReshapeS.of.Eq.Eq.Dvd
                     repeat simp
             ·
               simp [AppendTake_Length.eq.Cons_Append_List]

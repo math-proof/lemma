@@ -10,7 +10,7 @@ import Lemma.Tensor.GetBroadcastMatmulRec.as.Map₂_ToVectorS.of.GtLengthS
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength
 import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq
-import Lemma.Tensor.SEqBroadcastS.of.Eq.Eq
+import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import sympy.tensor.tensor
 open Tensor Bool List
@@ -65,14 +65,14 @@ private lemma main
             simp
             rw [← TailTake.eq.TakeTail]
             grind
-          have h_broadcast := SEqBroadcastS.of.Eq.Eq (by simp) h_s (by rfl) (A := Y)
+          have h_broadcast := SEqReshapeS.of.Eq.Eq.Dvd (by simp) h_s (by rfl) (A := Y)
           symm
           apply h_broadcast.trans
           have h_get := GetBroadcast.as.Broadcast.of.GtLength_0.fin (by grind) Y ⟨i, by grind⟩ (s' := s.take (s.length - s'.length))
           simp at h_get
           apply h_get.symm.trans
           apply SEqGetS.of.SEq.GtLength
-          apply SEqBroadcastS.of.Eq.Eq
+          apply SEqReshapeS.of.Eq.Eq.Dvd
           ·
             simp
           ·

@@ -19,11 +19,10 @@ private lemma main
 -- proof
   apply Eq.of.EqDataS
   rw [DataExp.eq.ExpData]
-
   have h_s := ProdInsertIdx.eq.Prod s d
   symm at h_s
-  apply EqCast.of.SEq.Eq h_s
   simp [DataUnsqueeze.eq.Cast_Data]
+  apply EqCast.of.SEq.Eq h_s
   apply SEqExpS.of.SEq
   apply SEq_Cast.of.Eq h_s
 

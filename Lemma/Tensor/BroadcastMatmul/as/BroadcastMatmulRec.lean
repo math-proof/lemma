@@ -1,6 +1,6 @@
 import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec.of.GeLengthS
 import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq
-import Lemma.Tensor.SEqBroadcastS.of.Eq.Eq
+import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 open Tensor
 
 
@@ -22,7 +22,7 @@ private lemma main
   ·
     rfl
   ·
-    apply SEqBroadcastS.of.Eq.Eq
+    apply SEqReshapeS.of.Eq.Eq.Dvd
     ·
       simp
     ·

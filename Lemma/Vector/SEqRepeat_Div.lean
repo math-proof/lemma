@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.Eq
 import Lemma.Nat.Div.eq.One.of.Ne_0
 import Lemma.Vector.SEqRepeat_1
 import sympy.vector.Basic
-open Bool Nat Vector List
+open Bool Nat Vector
 
 
 @[main]
