@@ -1,8 +1,13 @@
-import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
-import Lemma.Nat.EqAddMulDiv
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import sympy.tensor.tensor
-open List Nat Bool
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
+import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
+import Lemma.Nat.EqMax.of.Gt
+import Lemma.Tensor.EqBroadcastMatmulS.of.SEq.SEq
+import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
+import Lemma.Tensor.SEqResize.of.Eq_Get
+open Bool List Nat Tensor
 
 
 @[main, cast]
@@ -23,22 +28,60 @@ private lemma main
   let k := s'[s'.length - 1]
   let X' : Tensor α (batch_size ++ [m, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
   let Y' : Tensor α (batch_size' ++ [n', k]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
-  let q := n / n'
-  let r := n % n'
-  let Y' : Tensor α (batch_size' ++ [n, k]) := cast
-    (by simp [q, r, EqAddMulDiv])
-    ((cast (by simp [batch_size']) (Y'.repeat ⟨s'.length - 2, by simp [batch_size']⟩ q) : Tensor α (batch_size' ++ [q * n', k])) ++ (0 : Tensor α (batch_size' ++ [r, k])))
+  let Y' : Tensor α (batch_size' ++ [n, k]) := cast (by simp) (Y'.resize ⟨batch_size'.length, by grind⟩ n)
   X.matmul Y ≃ Tensor.broadcast_matmul X' Y' := by
 -- proof
   unfold Tensor.matmul
   apply SEq.of.Eq_Cast
-  .
-    split_ifs
-    repeat grind
-  .
+  ·
+    split_ifs with h h h h h
+    ·
+      grind
+    ·
+      grind
+    ·
+      grind
+    ·
+      grind
+    ·
+      grind
+    ·
+      simp
+      apply EqBroadcastMatmulS.of.SEq.SEq
+      ·
+        apply SEqCastS.of.SEq.Eq.Eq
+        ·
+          simp
+        ·
+          rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)]
+        ·
+          rw [ResizeCast.eq.Cast_Resize.of.Eq]
+          ·
+            apply SEqCast.of.SEq.Eq
+            ·
+              simp [EqMax.of.Gt h_n]
+              rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)]
+              rw [AddSub.eq.Sub_Sub.of.Ge.Ge (by assumption) (by simp)]
+              simp
+            ·
+              rw [EqMax.of.Gt h_n]
+              apply SEqResize.of.Eq_Get (i := ⟨(s.take (s.length - 2)).length + 1, by grind⟩)
+              grind
+          ·
+            rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)]
+      ·
+        apply SEqCastS.of.SEq.Eq.Eq
+        ·
+          simp
+        ·
+          simp
+        ·
+          rw [EqMax.of.Gt h_n]
+  ·
     congr
     simp [Tensor.matmul_shape, Tensor.broadcast_shape]
     grind
 
 
 -- created on 2026-01-10
+-- updated on 2026-07-10
