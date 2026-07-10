@@ -11,7 +11,7 @@ import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
 import Lemma.Tensor.SEqBroadcastS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
-open Bool List Tensor Nat
+open Bool List Tensor
 set_option maxHeartbeats 400000
 
 

@@ -18,7 +18,7 @@ private lemma main
   (j : Fin n)
   (k : Fin l) :
 -- imply
-  (((cast (congrArg (Tensor α) (show ([] ++ [1, n, l]).set 0 (m * ([] ++ [1, n, l])[0]) = [] ++ [m, n, l] by grind)) (((cast (congrArg (Tensor α) (show ([] ++ [l, n]).swap (([] ++ [l, n]).length - 2) (([] ++ [l, n]).length - 1) = [] ++ [n, l] by simp [EqSwap_0'1])) Bᵀ).unsqueeze 0).repeat m (0 : Fin 3))).get i).get j).get k = (B.get k).get j := by
+  (((cast (congrArg (Tensor α) (show ([] ++ [1, n, l]).set 0 (m * ([] ++ [1, n, l])[0]) = [] ++ [m, n, l] by grind)) (((cast (congrArg (Tensor α) (show ([] ++ [l, n]).swap (([] ++ [l, n]).length - 2) (([] ++ [l, n]).length - 1) = [] ++ [n, l] by simp [EqSwap_0'1])) Bᵀ).unsqueeze 0).repeat (0 : Fin 3) m)).get i).get j).get k = (B.get k).get j := by
 -- proof
   erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp) (by simp) (i := ⟨i, by simp⟩)]
   erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp) (i := ⟨j, by simp⟩)]
