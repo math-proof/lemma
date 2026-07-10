@@ -17,7 +17,7 @@ private lemma main
   (h_A : X ≃ X')
   (h_B : Y ≃ Y') :
 -- imply
-  X.batch_dot Y ≃ X'.batch_dot Y' := by
+  X.bmm Y ≃ X'.bmm Y' := by
 -- proof
   have h_s := h_A.left
   have h_s' := h_B.left

@@ -12,7 +12,7 @@ private lemma main
   (X : Tensor α (s ++ [m, n]))
   (Y : Tensor α [n, k]) :
 -- imply
-  (X.broadcast_matmul Y : Tensor α (broadcast_shape s [] ++ [m, k])) ≃ X.broadcast_matmul_rec (Y.broadcast (s ++ [n, k]) (by simp)) (by grind) := by
+  (X.tensordot Y : Tensor α (broadcast_shape s [] ++ [m, k])) ≃ X.matmul (Y.broadcast (s ++ [n, k]) (by simp)) (by grind) := by
 -- proof
   have := BroadcastMatmul.as.BroadcastMatmulRec.of.GeLengthS (by simp) X Y (s' := [])
   apply this.trans

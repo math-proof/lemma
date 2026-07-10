@@ -16,4 +16,16 @@ private lemma main
   apply SEqBFnS.of.SEq h
 
 
+@[main]
+private lemma T
+  {A : Tensor α s}
+  {B : Tensor α s'}
+-- given
+  (h : A ≃ B) :
+-- imply
+  Aᵀ ≃ Bᵀ  := by
+-- proof
+  apply SEqBFnS.of.SEq h
+
+
 -- created on 2025-07-13

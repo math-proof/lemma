@@ -2111,7 +2111,15 @@ class LeanAngleBracket extends LeanPairedGroup {
 
     is_indented() {
         const p = this.parent;
-        return !(p instanceof Lean_mapsto || p instanceof LeanAssign || p instanceof LeanTactic || p instanceof LeanArgsSpaceSeparated || p instanceof LeanRelational || p instanceof LeanRightarrow);
+        return !(p instanceof Lean_mapsto || 
+            p instanceof LeanAssign || 
+            p instanceof LeanTactic || 
+            p instanceof LeanArgsSpaceSeparated || 
+            p instanceof LeanRelational || 
+            p instanceof LeanRightarrow || 
+            p instanceof LeanColon || 
+            p instanceof LeanArgsCommaSeparated
+        );
     }
 
     latexFormat() {

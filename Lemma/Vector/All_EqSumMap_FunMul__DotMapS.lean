@@ -10,7 +10,7 @@ private lemma main
   [Add β] [Zero β] [Mul β]
   {f₁ f₂ : α → β} :
 -- imply
-  ∀ {s : List.Vector α n}, (s.map fun x => f₁ x * f₂ x).sum = s.map f₁ ⬝ s.map f₂ := by
+  ∀ {s : List.Vector α n}, (s.map fun x => f₁ x * f₂ x).sum = (s.map f₁) @ s.map f₂ := by
 -- proof
   induction n with
   | zero =>
@@ -27,7 +27,7 @@ private lemma main
     have h_dot₂ : s.map f₂ = f₂ s.head ::ᵥ s.tail.map f₂ := by
       rw [← EqCons_Tail s]
       apply List.Vector.map_cons
-    have : s.map f₁ ⬝ s.map f₂ = f₁ s.head * f₂ s.head + s.tail.map f₁ ⬝ s.tail.map f₂  := by
+    have : (s.map f₁) @ s.map f₂ = f₁ s.head * f₂ s.head + (s.tail.map f₁) @ s.tail.map f₂  := by
       rw [h_dot₁, h_dot₂]
       rfl
     rw [this]

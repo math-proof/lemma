@@ -29,10 +29,10 @@ private lemma main
   (Y : Tensor α ((b :: bz) ++ [k, n]))
   (i : Fin b) :
 -- imply
-  (X.batch_dot Y)[i] = X[i].batch_dot Y[i] := by
+  (X.bmm Y)[i] = X[i].bmm Y[i] := by
 -- proof
   simp [GetElem.getElem]
-  simp [Tensor.batch_dot]
+  simp [Tensor.bmm]
   apply Eq_Cast.of.SEq.Eq (by grind)
   conv_lhs => rw [Eq_Fin i]
   erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by grind) (by simp; grind)]

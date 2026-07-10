@@ -4,7 +4,7 @@ import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-import Lemma.Tensor.SEqResize.of.GtVal_0
+import Lemma.Tensor.Resize.as.FromVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
 import Lemma.Tensor.SEqResize_0.of.GtLength_0
 open Bool List Tensor
@@ -24,7 +24,7 @@ private lemma main
   | zero =>
     apply SEqResize_0.of.GtLength_0
   | succ i ih =>
-    rw [Resize.eq.Cast.of.GtVal_0 _ (by simp)]
+    rw [Resize.eq.Cast_FromVectorMapToVector.of.GtVal_0 _ (by simp)]
     have h_s := EqCons_Tail.of.GtLength_0 (show s.length > 0 by grind)
     apply SEqCast.of.SEq.Eq
     ·

@@ -15,7 +15,7 @@ private lemma main
   (h: s is constant)
   (default : α) :
 -- imply
-  s' ⬝ s = s'.sum * s.headD default := by
+  s' @ s = s'.sum * s.headD default := by
 -- proof
   have h_eq_sum := SumMap_FunMul.eq.DotMapS
     (s := s')
@@ -23,10 +23,7 @@ private lemma main
     (f₂ := fun _ => s.headD default)
   have h_eq := Eq_Replicate_HeadD.of.IsConstant h default (s := s)
   simp at h_eq_sum
-  rw [
-    Map.eq.Replicate,
-    h_eq.symm
-  ] at h_eq_sum
+  rw [Map.eq.Replicate, h_eq.symm] at h_eq_sum
   have h_eq := SumMap_FunMul.eq.MulSumMap
     (s := s')
     (f := id)

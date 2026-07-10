@@ -21,11 +21,11 @@ private lemma main
     rw [h]
   let X' := cast (congrArg (Tensor α) h_X) X
   let Y' := cast (congrArg (Tensor α) h_Y) Y
-  have h_i : i < (X.batch_dot Y).length := by
+  have h_i : i < (X.bmm Y).length := by
     rw [LengthBatchDot.eq.Length]
     rw [Length.eq.Get_0.of.GtLength_0 (by simp)]
     grind
-  (X.batch_dot Y)[i] ≃ X'[i].batch_dot Y'[i] := by
+  (X.bmm Y)[i] ≃ X'[i].bmm Y'[i] := by
 -- proof
   intros h_X h_Y X' Y' h_i
   rw [← GetBatchDot.eq.BatchDotGetS]

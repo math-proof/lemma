@@ -24,7 +24,7 @@ private lemma main
     have := h_B.left
     simp [h_k] at this
     assumption
-  A.broadcast_matmul_rec B (by grind) ≃ A'.broadcast_matmul_rec B' (by grind) := by
+  A.matmul B (by grind) ≃ A'.matmul B' (by grind) := by
 -- proof
   subst h_m h_k
   apply SEqBroadcastMatmulRecS.of.SEq.SEq h h_A h_B

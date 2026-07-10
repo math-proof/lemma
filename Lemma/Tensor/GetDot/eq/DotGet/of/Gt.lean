@@ -66,24 +66,24 @@ private lemma main
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] @ Y := by
 -- proof
   simp [GetElem.getElem]
-  simp [MatMul.dot]
+  simp [Dot.dot]
   rw [Matmul.eq.Cast_BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2]
   ·
     simp
     rw [Matmul.eq.Cast_SelectBatchDot.of.Gt_Get_SubLength.GeLength_2]
     ·
       simp
-      let Y' : Tensor α ([] ++ [k / n' * n', k']) := Y.repeat (k / n') (0 : Fin 2)
+      let Y' : Tensor α ([] ++ [k / n' * n', k']) := Y.repeat (0 : Fin 2) (k / n')
       let Y'Append : Tensor α [k / n' * n' + k % n', k'] := Y' ++ (0 : Tensor α ([] ++ [k % n', k']))
       have h_s : [k / n' * n' + k % n', k'] = [k, k'] := by simp [EqAddMulDiv]
       let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).broadcast [1, k] (by simp)
-      have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiBroadcast.batch_dot (cast (congrArg (Tensor α) h_s) Y'Append)) ⟨0, by simp⟩
+      have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiBroadcast.bmm (cast (congrArg (Tensor α) h_s) Y'Append)) ⟨0, by simp⟩
       simp [XiBroadcast] at this
       rw [this]
-      unfold Tensor.broadcast_matmul
-      simp [broadcast_matmul_rec]
+      unfold Tensor.tensordot
+      simp [matmul]
       unfold Tensor.broadcast
-      unfold Tensor.batch_dot
+      unfold Tensor.bmm
       simp [broadcast_shape]
       simp [GetSum_2.eq.SumGet__1.fin]
       simp [@Tensor.GetMul.eq.MulGetS.fin]
@@ -186,12 +186,12 @@ private lemma une
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) = X[i] @ Y := by
 -- proof
   simp [GetElem.getElem]
-  simp [MatMul.dot]
+  simp [Dot.dot]
   rw [Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2]
   ·
     simp [Matmul.eq.SumMulDataS.of.Gt h]
     unfold Tensor.broadcast
-    unfold Tensor.batch_dot
+    unfold Tensor.bmm
     simp
     have h_s0 : ([] ++ [1, 1, k]).set ([] : List ℕ).length (n * ([] ++ [1, 1, k])[([] : List ℕ).length]) = [n, 1, k] := by
       simp

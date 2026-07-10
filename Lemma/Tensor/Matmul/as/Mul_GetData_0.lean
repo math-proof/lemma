@@ -20,11 +20,11 @@ private lemma main
   (X : Tensor α s)
   (Y : Tensor α []) :
 -- imply
-  X.matmul Y ≃ X * Y.data[0] := by
+  X.einsum Y ≃ X * Y.data[0] := by
 -- proof
   apply SEq.of.Eq_Cast
   .
-    unfold Tensor.matmul
+    unfold Tensor.einsum
     simp
     split_ifs with h_s
     ·

@@ -15,9 +15,9 @@ private lemma main
   (X : Tensor α (s ++ [m, n]))
   (Y : Tensor α (s' ++ [n, k])) :
 -- imply
-  X.broadcast_matmul Y = X.broadcast_matmul_rec Y (by grind) := by
+  X.tensordot Y = X.matmul Y (by grind) := by
 -- proof
-  unfold Tensor.broadcast_matmul
+  unfold Tensor.tensordot
   simp [h]
 
 

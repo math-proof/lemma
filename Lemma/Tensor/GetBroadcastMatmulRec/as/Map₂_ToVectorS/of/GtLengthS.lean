@@ -30,11 +30,11 @@ private lemma main
   let Yi : Tensor α (s'.tail ++ [n, k]) := cast
     (by rw [TailAppend.eq.AppendTail.of.GtLength_0 (by grind)])
     (Y.get ⟨i, GtLength.of.GtLength_0 (by grind) Y ⟨i, by grind⟩⟩)
-  have h_i : i < (X.broadcast_matmul_rec Y h_length).length := by
+  have h_i : i < (X.matmul Y h_length).length := by
     rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
     simp [broadcast_shape]
     grind
-  (X.broadcast_matmul_rec Y (by grind)).get ⟨i, h_i⟩ ≃ Xi.broadcast_matmul_rec Yi (by simp; grind) := by
+  (X.matmul Y (by grind)).get ⟨i, h_i⟩ ≃ Xi.matmul Yi (by simp; grind) := by
 -- proof
   intro Xi Yi h_i
   have := BroadcastMatmulRec.as.FromVectorMap₂_CastS_ToVector.of.EqGetS_0.EqLengthS.GtLength_0 h h_length h_0 X Y

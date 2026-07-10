@@ -15,9 +15,9 @@ private lemma main
   (X : Tensor α (bz ++ [m, k]))
   (Y : Tensor α (bz ++ [k, n])) :
 -- imply
-  (X.batch_dot Y).length = X.length := by
+  (X.bmm Y).length = X.length := by
 -- proof
-  unfold Tensor.batch_dot
+  unfold Tensor.bmm
   rw [LengthCast.eq.Length.of.Eq (by grind)]
   rw [LengthSum.eq.Length.of.Gt_0 (by simp)]
   rw [LengthMul.eq.Length.of.GtLength_0 (by simp)]

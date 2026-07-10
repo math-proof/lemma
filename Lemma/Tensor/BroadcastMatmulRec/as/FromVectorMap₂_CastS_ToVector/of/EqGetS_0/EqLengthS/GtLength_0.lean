@@ -40,14 +40,14 @@ private lemma main
       rw [← h_0]
     )
     Y.toVector
-  X.broadcast_matmul_rec Y (by grind) ≃ Tensor.fromVector (List.Vector.map₂ (fun X Y => Tensor.broadcast_matmul_rec (cast (congrArg (Tensor α) (show (s ++ [m, n]).tail = s.tail ++ [m, n] by grind)) X) (cast (congrArg (Tensor α) (show (s' ++ [n, k]).tail = (s'.tail ++ [n, k]) by grind)) Y) (by grind)) Xs Ys) := by
+  X.matmul Y (by grind) ≃ Tensor.fromVector (List.Vector.map₂ (fun X Y => Tensor.matmul (cast (congrArg (Tensor α) (show (s ++ [m, n]).tail = s.tail ++ [m, n] by grind)) X) (cast (congrArg (Tensor α) (show (s' ++ [n, k]).tail = (s'.tail ++ [n, k]) by grind)) Y) (by grind)) Xs Ys) := by
 -- proof
   simp
   match s, s' with
   | [], [] =>
     contradiction
   | s₀ :: s, s'₀ :: s' =>
-    conv_lhs => unfold Tensor.broadcast_matmul_rec
+    conv_lhs => unfold Tensor.matmul
     simp
     apply SEqCast.of.SEq.Eq
     ·

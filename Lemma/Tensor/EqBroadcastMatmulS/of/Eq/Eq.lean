@@ -11,7 +11,7 @@ private lemma main
   (h_A : A = A')
   (h_B : B = B') :
 -- imply
-  A.broadcast_matmul B = A'.broadcast_matmul B' := by
+  A.tensordot B = A'.tensordot B' := by
 -- proof
   rw [h_A, h_B]
 

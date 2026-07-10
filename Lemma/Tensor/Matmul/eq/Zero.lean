@@ -12,7 +12,7 @@ private lemma main
 -- given
   (X Y : Tensor α [0]) :
 -- imply
-  X.matmul Y = 0 := by
+  X.einsum Y = 0 := by
 -- proof
   simp [Matmul.eq.SumMulDataS]
   apply Eq.of.EqDataS

@@ -115,10 +115,13 @@ def Tensor.resize [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : T
   | ⟨d + 1, _⟩ =>
     cast (congrArg (Tensor α) (show s.headD 1 :: s.tail.set d n = s.set (d + 1) n by grind)) (fromVector (X.toVector.map fun s => s.resize ⟨d, by grind⟩ n))
 
-def Tensor.broadcast_matmul_rec [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, t])) (Y : Tensor α (s' ++ [t, k])) (h : s.length = s'.length) : Tensor α (broadcast_shape s s' ++ [m, k]) :=
+/--
+[torch.matmul](https://docs.pytorch.org/docs/stable/generated/torch.matmul.html)
+-/
+def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, t])) (Y : Tensor α (s' ++ [t, k])) (h : s.length = s'.length) : Tensor α (broadcast_shape s s' ++ [m, k]) :=
   match s, s' with
   | [], [] =>
-    batch_dot X Y
+    bmm X Y
   | n :: s, n' :: s' =>
     have h : s.length = s'.length := by grind
     let X : Tensor α (n ⊔ n' :: s ++ [m, t]) := X.resize ⟨0, by grind⟩ (n ⊔ n')
@@ -130,9 +133,12 @@ def Tensor.broadcast_matmul_rec [Mul α] [Add α] [Zero α] (X : Tensor α (s ++
         split_ifs
         repeat simp_all
       )
-      (fromVector (List.Vector.map₂ (fun X Y => broadcast_matmul_rec X Y h) X.toVector Y.toVector))
+      (fromVector (List.Vector.map₂ (fun X Y => matmul X Y h) X.toVector Y.toVector))
 
-def Tensor.broadcast_matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, n])) (Y : Tensor α (s' ++ [n, k])) : Tensor α (broadcast_shape s s' ++ [m, k]) :=
+/--
+[torch.tensordot](https://docs.pytorch.org/docs/stable/generated/torch.tensordot.html)
+-/
+def Tensor.tensordot [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, n])) (Y : Tensor α (s' ++ [n, k])) : Tensor α (broadcast_shape s s' ++ [m, k]) :=
   if h : s.length < s'.length then
     let X := X.broadcast (s'.take (s'.length - s.length) ++ s ++ [m, n]) (by simp)
     cast
@@ -152,7 +158,7 @@ def Tensor.broadcast_matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m,
           apply EqAppendS.of.Eq
           simp
       )
-      (broadcast_matmul_rec X Y (by grind))
+      (matmul X Y (by grind))
   else if h : s.length > s'.length then
     let Y := Y.broadcast (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by simp)
     cast
@@ -172,13 +178,13 @@ def Tensor.broadcast_matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m,
           apply EqAppendS.of.Eq
           simp
       )
-      (broadcast_matmul_rec X Y (by grind))
+      (matmul X Y (by grind))
   else
-    broadcast_matmul_rec X Y (by grind)
+    matmul X Y (by grind)
 
 /--
 perform matrix multiplication between two tensors like
-[torch.matmul](https://docs.pytorch.org/docs/stable/generated/torch.matmul.html)
+[torch.einsum](https://docs.pytorch.org/docs/stable/generated/torch.einsum.html)
 if the batch dimensions are different, the shorter length is broadcasted to the longer one, eg:
 - if A.shape = [1, 4, 5], B.shape = [9, 5, 6], then the result is :
   A.repeat 9 0 @ B,  with shape of [9, 4, 6]
@@ -188,7 +194,7 @@ if the batch dimensions are different, the shorter length is broadcasted to the 
   A.repeat 4 0 ++ (0 : Tensor α [1, 4, 5]) @ B,  with shape of [9, 4, 6]
 -- instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α (batch_size ++ [m, k])) (Tensor α (batch_size ++ [k, n])) (Tensor α (batch_size ++ [m, n])) := ⟨dot⟩
 -/
-def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s') : Tensor α (matmul_shape s s') :=
+def Tensor.einsum [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s') : Tensor α (matmul_shape s s') :=
   if h_s : s.length = 0 then
     cast (by simp_all [matmul_shape]) (X.data[0]'(by simp_all) * Y)
   else if h_s' : s'.length = 0 then
@@ -222,7 +228,7 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
             simp [show s'.length - 2 + 1 = s'.length - 1 by omega]
             rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
           )
-          ((X.batch_dot Y).select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩)
+          ((X.bmm Y).select ⟨s'.length - 2, by simp [batch_size']⟩ ⟨0, by grind⟩)
   else if h_s' : s'.length = 1 then
     match s' with
     | [n'] =>
@@ -248,7 +254,7 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
           simp [show s.length - 2 + 1 = s.length - 1 by omega]
           rw [DropLast.eq.Take_SubLength_1]
         )
-        ((X.batch_dot Y).select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩)
+        ((X.bmm Y).select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩)
   else
     have h_s : s.length ≥ 2 := by omega
     have h_s' : s'.length ≥ 2 := by omega
@@ -268,14 +274,14 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
         simp [batch_size, batch_size', m, k, matmul_shape, broadcast_shape]
         grind
       )
-      (broadcast_matmul X Y)
+      (tensordot X Y)
 
-instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α s) (Tensor α s') (Tensor α (matmul_shape s s')) := ⟨matmul⟩
+instance [Mul α] [Add α] [Zero α] : Dot (Tensor α s) (Tensor α s') (Tensor α (matmul_shape s s')) := ⟨einsum⟩
 
-instance [Mul α] [Add α] [Zero α] : MatMul (Tensor α [m, k]) (Tensor α [k, n]) (Tensor α [m, n]) where
+instance [Mul α] [Add α] [Zero α] : Dot (Tensor α [m, k]) (Tensor α [k, n]) (Tensor α [m, n]) where
   dot A B :=
     let A : Tensor α ([] ++ [m, k]) := A
-    A.batch_dot B
+    A.bmm B
 
 instance : GetElem (Tensor α s) ℕ (Tensor α s.tail) fun X i => i < X.length where
   getElem X i h := X.get ⟨i, h⟩

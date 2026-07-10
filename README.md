@@ -4,7 +4,12 @@ This is Lean4 machine learning project (related to Torch, SymPy, [KaTeX](https:/
 The main objectives of this project are formalizing in Lean4:
 
 * **machine learning framework Torch**
-  The most commonly used Torch operators: `softmax`, `sum`, `mean`, `unsqueeze`, `matmul`, `repeat`, `permute`, `transpose`, `select`, `max`, `min`, `argmax`, `argmin`, `exp`, `log`, `sigmoid`, `resize`.
+  The most commonly used Torch operators:  
+  - `sum`, `mean`, `select`, `max`, `min`, `argmax`, `argmin`
+  - `permute`, `transpose`
+  - `repeat`, `resize`, `unsqueeze`
+  - `einsum`, `tensordot`, `matmul`, `bmm`
+  - `softmax`, `exp`, `log`, `sigmoid`
 
 * **symbolic mathematics from SymPy (symbolic mathematics for Python).**
   SymPy is also a fundamental algorithmic component of the PyTorch framework.

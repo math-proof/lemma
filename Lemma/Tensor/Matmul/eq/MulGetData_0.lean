@@ -9,9 +9,9 @@ private lemma main
   (X : Tensor α [])
   (Y : Tensor α s) :
 -- imply
-  X.matmul Y = X.data[0] * Y := by
+  X.einsum Y = X.data[0] * Y := by
 -- proof
-  unfold Tensor.matmul
+  unfold Tensor.einsum
   split_ifs
   repeat grind
 

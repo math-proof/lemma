@@ -20,8 +20,8 @@ private lemma main
 -- imply
   (A @ B)[i, j] = ∑ k : Fin l, A[i, k] * B[k, j] := by
 -- proof
-  simp [MatMul.dot]
-  simp [Tensor.batch_dot]
+  simp [Dot.dot]
+  simp [Tensor.bmm]
   simp [GetElem.getElem]
   erw [GetSum_2.eq.SumGet__0.fin]
   erw [Sum_0.eq.Sum_Get.fin]

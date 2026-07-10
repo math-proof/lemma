@@ -40,7 +40,7 @@ private lemma main
     rw [GetDot.eq.DotGet.of.Ge.fin h]
   | s₀ :: s =>
     have h_min_length : s.length ⊓ (s.length + 1 + 1) = s.length := by omega
-    simp [MatMul.dot]
+    simp [Dot.dot]
     have := Matmul.eq.Cast_BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
     rw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
     conv_rhs => rw [Matmul.eq.Cast_BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
@@ -109,7 +109,7 @@ private lemma une
   | [] =>
     rw [GetDot.eq.DotGet.of.Ge.une.fin h]
   | s₀ :: s =>
-    simp [MatMul.dot]
+    simp [Dot.dot]
     if h_gt : k > n' then
       rw [Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h_gt)]
       conv_rhs => rw [Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h_gt)]

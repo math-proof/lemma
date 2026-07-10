@@ -8,7 +8,7 @@ private lemma main
   {s : List.Vector α n}
   {f₁ f₂ : α → β} :
 -- imply
-  (s.map fun x => (f₁ x) * (f₂ x)).sum = (s.map f₁) ⬝ (s.map f₂) :=
+  (s.map fun x => (f₁ x) * (f₂ x)).sum = (s.map f₁) @ (s.map f₂) :=
 -- proof
   All_EqSumMap_FunMul__DotMapS
 

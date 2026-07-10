@@ -31,9 +31,9 @@ private lemma main
   let X' : Tensor α (batch_size ++ [k, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
   let Y' : Tensor α [n] := cast (by simp) (Y.resize ⟨0, by grind⟩ n)
   let Y' := Y'.broadcast ((batch_size ++ [n, 1])) (by simp)
-  X.matmul Y ≃ (X'.batch_dot Y').select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩ := by
+  X.einsum Y ≃ (X'.bmm Y').select ⟨s.length - 1, by simp [batch_size]; omega⟩ ⟨0, by grind⟩ := by
 -- proof
-  unfold Tensor.matmul
+  unfold Tensor.einsum
   apply SEq.of.Eq_Cast
   ·
     split_ifs with h h h h h

@@ -77,8 +77,7 @@ def BinaryInfix.func : BinaryInfix → Func
     | `Max.max => ⟨68, "⊔", "\\sqcup"⟩  -- Lean_sqcup
     | `Min.min => ⟨69, "⊓", "\\sqcap"⟩  -- Lean_sqcap
     | `Dot.dot
-    | `List.Vector.dot => ⟨70, "⬝", "{\\color{red}\\cdotp}"⟩  -- Lean_cdotp
-    | `MatMul.dot => ⟨70, "@", "{\\color{red}\\times}"⟩  -- LeanMatMul
+    | `List.Vector.dot => ⟨70, "@", "{\\color{red}\\times}"⟩  -- LeanMatMul
     | `HPow.hPow => ⟨80, "^", "^"⟩  -- LeanPow
     | `Function.comp => ⟨90, "∘", "\\circ"⟩  -- Lean_circ
     | `Prod => ⟨35, "×", "×"⟩  -- Lean_Prod
@@ -547,7 +546,6 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `List.cons
     | `List.Vector.cons
     | `List.Vector.dot
-    | `MatMul.dot
     | `Max.max
     | `Min.min
     | `HasSubset.Subset

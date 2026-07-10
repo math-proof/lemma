@@ -33,7 +33,7 @@ private lemma main
   let X' : Tensor α (batch_size ++ [m, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
   let Y' : Tensor α (batch_size' ++ [n', k]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
   let Y' : Tensor α (batch_size' ++ [n, k]) := cast (by simp) (Y'.resize ⟨batch_size'.length, by grind⟩ n)
-  X.matmul Y ≃ (Tensor.broadcast_matmul X' Y') := by
+  X.einsum Y ≃ (Tensor.tensordot X' Y') := by
 -- proof
   if h_n_eq : s[s.length - 1] = s'[s'.length - 2] then
     have := Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2 h_s h_s' h_n_eq X Y

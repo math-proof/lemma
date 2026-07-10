@@ -1,3 +1,4 @@
+import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
@@ -78,46 +79,50 @@ private lemma main
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] @ Y := by
 -- proof
   simp [GetElem.getElem]
-  simp [MatMul.dot]
+  simp [Dot.dot]
   rw [Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
   simp
   rw [Matmul.eq.Cast_SelectBatchDot.of.Lt_Get_SubLength.GeLength_2 (by simp) (by simpa)]
   simp
-  have h_s : [k].set 0 ([n', k'][[n', k'].length - 2] / k * [k][0]) = [[n', k'][[n', k'].length - 2] / k * k] := by
-    grind
-  let Xi : Tensor α [n' / k * k] := cast (congrArg (Tensor α) h_s) ((X.get i).repeat (n' / k) (0 : Fin 1))
-  let XiAppend : Tensor α [n' / k * k + n' % k] := Xi ++ (0 : Tensor α [n' % k])
-  have h_s : [n' / k * k + n' % k] = [n'] := by simp [EqAddMulDiv]
-  let XiAppendBroadcast : Tensor α ([] ++ [1, n']) := (cast (congrArg (Tensor α) h_s) XiAppend).broadcast [1, n'] (by simp)
-  have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiAppendBroadcast.batch_dot Y) ⟨0, by simp⟩
-  simp only [XiAppendBroadcast, XiAppend, Xi] at this
+  let XiAppendBroadcast : Tensor α ([] ++ [1, n']) := (((X.get i).resize ⟨0, by grind⟩ n')).broadcast [1, n'] (by simp)
+  have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiAppendBroadcast.bmm Y) ⟨0, by simp⟩
+  simp only [XiAppendBroadcast] at this
   symm
   apply this.trans
-  unfold broadcast_matmul
-  simp [broadcast_matmul_rec]
+  unfold tensordot
+  simp [matmul]
   unfold broadcast
-  unfold batch_dot
+  unfold bmm
   simp [broadcast_shape]
-  erw [GetSum_2.eq.SumGet__1.fin]
+  erw [GetSum_2.eq.SumGet__1.fin (i := ⟨0, by grind⟩)]
   erw [@Tensor.GetMul.eq.MulGetS.fin]
   simp
-  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by grind)]
-  apply EqSumS.of.Eq
-  have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := 0) (n := 1)
+  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp [matmul_shape, broadcast_shape]) (i := ⟨i, by grind⟩)]
+  apply Eq_Cast.of.SEq.Eq (by grind)
+  simp
+  erw [GetSum_2.eq.SumGet__1.fin (i := ⟨i, by grind⟩)]
+  apply SEqSumS.of.SEq
+  apply SEq.of.Eq
+  have h_s : (([] ++ [n', k']).swap (([] ++ [n', k']).length - 2) (([] ++ [n', k']).length - 1)) = [] ++ [k', n'] := by
+    simp [EqSwap_0'1]
+  have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) ((cast (congrArg (Tensor α) h_s) Yᵀ).unsqueeze 0) (i := 0) (n := 1)
   simp at this
-  rw [this]
+  simp
+  erw [this]
+  erw [@Tensor.GetMul.eq.MulGetS.fin]
+  apply EqMulS.of.Eq
+  have h_s : ((broadcast_shape [] [] ++ [n', k']).swap ((broadcast_shape [] [] ++ [n', k']).length - 2) ((broadcast_shape [] [] ++ [n', k']).length - 1)) = broadcast_shape [] [] ++ [k', n'] := by
+    simp [broadcast_shape, EqSwap_0'1]
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
     (by simp)
     (show [n * 1, k', n'] = [n, k', n'] by simp)
-    ((Yᵀ.unsqueeze 0).repeat n (0 : Fin 3))
+    (((cast (congrArg (Tensor α) h_s) Yᵀ).unsqueeze 0).repeat (0 : Fin 3) n)
     ⟨i, by simp⟩
   simp at this
-  rw [this]
+  erw [this]
   have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := i) (n := n)
   simp at this
   rw [this]
-  simp [EqMod_1'0]
-  apply EqMulS.of.Eq
   let X' : Tensor α ([] ++ [n] ++ [n' / k * k]) := X.repeat (n' / k) (1 : Fin 2)
   let X'Append : Tensor α [n, n' / k * k + n' % k] := X' ++ (0 : Tensor α ([] ++ [n] ++ [n' % k]))
   have h_s_list : [n, n' / k * k + n' % k] = [n, n'] := by simp [EqAddMulDiv]
@@ -203,12 +208,12 @@ private lemma une
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) = X[i] @ Y := by
 -- proof
   simp [GetElem.getElem]
-  simp [MatMul.dot]
+  simp [Dot.dot]
   rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2]
   ·
     simp [Matmul.eq.SumMulDataS.of.Lt h]
     unfold Tensor.broadcast
-    unfold Tensor.batch_dot
+    unfold Tensor.bmm
     simp
     have h_nk : n' / k * k + n' % k = n' := by simp [EqAddMulDiv]
     have h_s0 : [] ++ [n] ++ [n' / k * k + n' % k] = [] ++ [n, n'] := by

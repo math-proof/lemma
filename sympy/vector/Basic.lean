@@ -8,7 +8,7 @@ open Nat Lean
 class Dot (α : Type u) (β : Type v) (γ : outParam (Type w)) where
   dot : α → β → γ
 
-infix:70 " ⬝ " => Dot.dot
+infixl:70 " @ " => Dot.dot
 
 namespace List.Vector
 

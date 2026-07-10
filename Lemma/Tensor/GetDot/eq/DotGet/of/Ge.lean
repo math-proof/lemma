@@ -67,20 +67,20 @@ private lemma main
   if h_n : k = n' then
     subst h_n
     simp [GetElem.getElem]
-    simp [MatMul.dot]
+    simp [Dot.dot]
     rw [Matmul.eq.Cast_BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2]
     ·
       simp
       rw [Matmul.eq.Cast_SelectBatchDot.of.Eq_Get_SubLength.GeLength_2 (by simp) (by simp)]
       simp
       let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).broadcast [1, k] (by simp)
-      have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiBroadcast.batch_dot Y) ⟨0, by simp⟩
+      have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiBroadcast.bmm Y) ⟨0, by simp⟩
       simp [XiBroadcast] at this
       rw [this]
-      unfold broadcast_matmul
-      simp [broadcast_matmul_rec]
+      unfold tensordot
+      simp [matmul]
       unfold Tensor.broadcast
-      unfold batch_dot
+      unfold bmm
       simp [broadcast_shape]
       simp [GetSum_2.eq.SumGet__1.fin]
       simp [@Tensor.GetMul.eq.MulGetS.fin]
@@ -184,9 +184,9 @@ private lemma une
     subst hk
     if hn0 : k = 0 then
       subst hn0
-      simp [GetElem.getElem, MatMul.dot]
+      simp [GetElem.getElem, Dot.dot]
       rw [Matmul.eq.Cast_SelectBatchDot.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
-      simp [Tensor.batch_dot, Tensor.broadcast, matmul_shape]
+      simp [Tensor.bmm, Tensor.broadcast, matmul_shape]
       apply Eq.of.EqDataS
       apply @Vector.Eq.of.All_EqGetS.fin
       intro t
@@ -205,11 +205,11 @@ private lemma une
     else
       have h_k : k ≠ 0 := hn0
       simp [GetElem.getElem]
-      simp [MatMul.dot]
+      simp [Dot.dot]
       rw [Matmul.eq.Cast_SelectBatchDot.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
       ·
         simp
-        unfold Tensor.broadcast Tensor.batch_dot
+        unfold Tensor.broadcast Tensor.bmm
         simp
         have h_s0 : ([] ++ [1, 1, k]).set ([] : List ℕ).length (n * ([] ++ [1, 1, k])[([] : List ℕ).length]) = [n, 1, k] := by
           simp
