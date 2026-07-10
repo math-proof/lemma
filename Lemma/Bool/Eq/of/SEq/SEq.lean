@@ -1,4 +1,3 @@
-import stdlib.SEq
 import Lemma.Bool.SEq.is.Eq
 open Bool
 

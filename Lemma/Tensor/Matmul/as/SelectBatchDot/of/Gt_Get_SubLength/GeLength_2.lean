@@ -1,11 +1,16 @@
+import Lemma.Bool.SEq.is.EqCast.of.Eq
+import Lemma.Bool.SEq.is.Eq
+import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Drop.eq.ListGet.of.GtLength_0
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
-import Lemma.Nat.EqAddMulDiv
-import Lemma.Bool.SEq.is.EqCast.of.Eq
-import sympy.tensor.tensor
-open List Nat Bool
+import Lemma.Nat.EqMax.of.Gt
+import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
+import Lemma.Tensor.SEqBroadcastS.of.SEq.Eq.Dvd
+import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
+open Bool List Nat Tensor
+set_option maxHeartbeats 400000
 
 
 @[main, cast]
@@ -21,18 +26,51 @@ private lemma main
   let n' := s[s.length - 2]
   let k' := s[s.length - 1]
   let Y' : Tensor α (batch_size ++ [n', k']) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
-  let q := n / n'
-  let r := n % n'
-  let Y' : Tensor α (batch_size ++ [n, k']) := cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp [batch_size]) (Y'.repeat ⟨s.length - 2, by simp [batch_size]⟩ q) : Tensor α (batch_size ++ [q * n', k'])) ++ (0 : Tensor α (batch_size ++ [r, k'])))
+  let Y' : Tensor α (batch_size ++ [n, k']) := cast (by simp) (Y'.resize ⟨batch_size.length, by grind⟩ n)
   let X' := X.broadcast ((batch_size ++ [1, n])) (by simp)
   X.matmul Y ≃ (X'.batch_dot Y').select ⟨s.length - 2, by simp [batch_size]⟩ ⟨0, by grind⟩ := by
 -- proof
   unfold Tensor.matmul
   apply SEq.of.Eq_Cast
-  .
-    split_ifs
-    repeat grind
-  .
+  ·
+    split_ifs with h h h h h
+    ·
+      grind
+    ·
+      grind
+    ·
+      grind
+    ·
+      simp
+      congr 1
+      apply Eq.of.SEq
+      apply SEqBatchDotS.of.SEq.SEq
+      ·
+        apply SEqBroadcastS.of.SEq.Eq.Dvd
+        ·
+          rw [EqMax.of.Gt h_n]
+        ·
+          apply SEqResize_0.of.Eq_Get_0.GtLength_0
+          ·
+            rw [EqMax.of.Gt h_n]
+            grind
+          ·
+            grind
+      ·
+        apply SEqCastS.of.SEq.Eq.Eq
+        ·
+          rw [EqMax.of.Gt h_n]
+          simp
+        ·
+          simp
+        ·
+          rw [EqMax.of.Gt h_n]
+    ·
+      simp
+      grind
+    ·
+      grind
+  ·
     congr
     simp [Tensor.matmul_shape]
     simp [show s ≠ [] by grind]
@@ -41,5 +79,6 @@ private lemma main
     simp [show s.length - 2 + 1 = s.length - 1 by omega]
     rw [Drop.eq.ListGet.of.GtLength_0 (by omega)]
 
+
 -- created on 2026-01-06
--- updated on 2026-01-07
+-- updated on 2026-07-10
