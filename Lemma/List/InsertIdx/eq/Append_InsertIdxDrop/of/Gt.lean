@@ -22,8 +22,7 @@ private lemma main
   s.insertIdx i x = s.take j ++ (s.drop j).insertIdx (i - j) x := by
 -- proof
   if h_j : j ≤ s.length then
-    conv_lhs =>
-      rw [← EqAppendTake__Drop s j]
+    conv_lhs => rw [← EqAppendTake__Drop s j]
     rw [InsertIdxAppend.eq.Append_InsertIdx.of.LeLength] <;>
       rw [LengthTake.eq.Min_Length]
     ·

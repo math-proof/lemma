@@ -62,7 +62,6 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Vector.Repeat.eq.Cast.of.Eq_1
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAt0.eq.Zero
 open Bool Fin List Nat Tensor Vector

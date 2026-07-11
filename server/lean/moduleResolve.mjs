@@ -12,6 +12,15 @@ export function isInfixOperator(op) {
 }
 
 /**
+ * Drop plural `S` after removing `SEq`: `([A-Z][a-z]+)S(?![a-z])`.
+ * `PermuteS__Neg` → `Permute__Neg`; `PermuteSign` unchanged.
+ * @param {string} name
+ */
+export function dropSEqPluralS(name) {
+  return String(name).replace(/([A-Z][a-z]+)S(?![a-z])/g, '$1');
+}
+
+/**
  * Proof text cites `Foo.eq.Cast_Bar…` while `@[cast]` lemmas live at `Foo.as.Bar…`.
  * @param {string} dotted
  * @returns {string | null}
@@ -22,23 +31,33 @@ export function resolveCastEqLemmaAlias(dotted) {
     if (parts[i] === 'eq') {
       if (parts[i + 1].startsWith('Cast_'))
         return [...parts.slice(0, i), 'as', parts[i + 1].slice(5), ...parts.slice(i + 2)].join('.');
-      if (parts[i + 1]== 'Cast')
+      if (parts[i + 1] === 'Cast') {
+        let m;
+        if (m = parts[i - 1].match(/^([A-Z][a-z]+)(.*)/)) {
+          let pluralS = 'SEq' + m[1] + 'S' + m[2];
+          let module = [...parts.slice(0, i - 1), pluralS , ...parts.slice(i + 2)].join('.')
+          if (existsSync(module))
+            return module;
+        }
         return [...parts.slice(0, i - 1), 'SEq' + parts[i - 1], ...parts.slice(i + 2)].join('.');
+      }
     }
   }
   return null;
 }
 
+function existsSync(module) {
+  return fs.existsSync(path.join(REPO_ROOT, 'Lemma', ...module.split('.').filter(Boolean)) + '.lean');
+}
+
 /**
  * @param {string} module
- * @param {string} repoRoot
  * @returns {string | null}
  */
-function tryCastEqLemmaRedirect(module, repoRoot) {
+function tryCastEqLemmaRedirect(module) {
   const castAlias = resolveCastEqLemmaAlias(module);
-  if (!castAlias) return null;
-  const castLean = path.join(repoRoot, 'Lemma', ...castAlias.split('.').filter(Boolean)) + '.lean';
-  return fs.existsSync(castLean) ? castAlias : null;
+  if (castAlias && existsSync(castAlias))
+    return castAlias;
 }
 
 /** @param {string} op */
@@ -168,15 +187,14 @@ function moduleToLeanFromSegment(segment, section) {
 /**
  * If `Lemma/<module>.lean` is missing, apply the same rewrites as legacy `index.php`.
  * @param {string} moduleDot
- * @param {string} [repoRoot]
  * @returns {string | null} canonical module to redirect to, or null if no rewrite applies
  */
-export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
+export function resolveMissingModuleRedirect(moduleDot) {
   const module = String(moduleDot).trim().replace(/\//g, '.');
   if (!module) return null;
 
   const title = module.replace(/\./g, '/');
-  const pathInfo = path.join(repoRoot, 'Lemma', ...title.split('/').filter(Boolean));
+  const pathInfo = path.join(REPO_ROOT, 'Lemma', ...title.split('/').filter(Boolean));
 
   if (pathInfo.endsWith('/') || pathInfo.endsWith(path.sep)) {
     return null;
@@ -201,7 +219,6 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
   /** @type {string[][]} */
   let segment = parsed[1].map((row) => [...row]);
 
-  let leanFileFlag = leanFile;
   let index = tokens.indexOf('of');
 
   if (index !== -1) {
@@ -232,7 +249,7 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
           break;
         }
         case 'eq': {
-          const castHit = tryCastEqLemmaRedirect(module, repoRoot);
+          const castHit = tryCastEqLemmaRedirect(module);
           if (castHit) return castHit;
           const tmp = tokens[1];
           tokens[1] = tokens[3];
@@ -302,7 +319,7 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
             }
           } else if (first.length === 3 && isInfixOperator(first[1])) {
             if (first[1] === 'eq' && first[2].match(/Cast(?![a-zA-Z])/)) {
-              const castHit = tryCastEqLemmaRedirect(module, repoRoot);
+              const castHit = tryCastEqLemmaRedirect(module);
               if (castHit) return castHit;
             }
             // (e.g. `Nat.AddSub.eq.SubAdd.of.Ge` → `Nat.SubAdd.eq.AddSub.of.Ge`).
@@ -327,7 +344,8 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
             const first = tokens.slice(1, index);
             const second = tokens.slice(index + 1);
             tokens = [sec, ...second, 'is', ...first];
-          } else leanFileFlag = '';
+          } else 
+            return;
           break;
         }
       }
@@ -348,7 +366,7 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
           break;
         }
         case 'eq': {
-          const castHit = tryCastEqLemmaRedirect(module, repoRoot);
+          const castHit = tryCastEqLemmaRedirect(module);
           if (castHit) return castHit;
           const tmp = tokens[1];
           tokens[1] = tokens[3];
@@ -371,7 +389,8 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
             const first = tokens.slice(1, index);
             const second = tokens.slice(index + 1);
             tokens = [sec, ...second, 'is', ...first];
-          } else leanFileFlag = '';
+          } else 
+            return;
           break;
         }
       }
@@ -382,7 +401,7 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
         if (mm) tokens[1] = mm[1] + mm[2];
       } else if (first.length === 3 && isSymmOperator(first[1])) {
         if (first[1] === 'eq' && first[2].startsWith('Cast_')) {
-          const castHit = tryCastEqLemmaRedirect(module, repoRoot);
+          const castHit = tryCastEqLemmaRedirect(module);
           if (castHit) return castHit;
         }
         let segment_ = segment.map((r) => [...r]);
@@ -412,26 +431,23 @@ export function resolveMissingModuleRedirect(moduleDot, repoRoot = REPO_ROOT) {
           const fr = tokens.slice(1, index);
           const second = tokens.slice(index + 1);
           tokens = [sec, ...second, 'is', ...fr];
-        } else leanFileFlag = '';
+        } else 
+          return;
       }
     }
   }
 
-  if (leanFileFlag) {
-    const out = tokensToModule(segment, section);
-    if (out !== module) {
-      const p = moduleToLeanPath(out);
-      if (p && fs.existsSync(p)) return out;
-      /** Rewrites like `Eq_Cast` → `EqCast` in dotted segments. */
-      const folded = resolveUnderscoreModuleAlias(out);
-      if (folded) {
-        const p2 = moduleToLeanPath(folded);
-        if (p2 && fs.existsSync(p2)) return folded;
-      }
+  const out = tokensToModule(segment, section);
+  if (out !== module) {
+    const p = moduleToLeanPath(out);
+    if (p && fs.existsSync(p)) return out;
+    /** Rewrites like `Eq_Cast` → `EqCast` in dotted segments. */
+    const folded = resolveUnderscoreModuleAlias(out);
+    if (folded) {
+      const p2 = moduleToLeanPath(folded);
+      if (p2 && fs.existsSync(p2)) return folded;
     }
   }
-
-  return null;
 }
 
 /**

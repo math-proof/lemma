@@ -3,11 +3,10 @@ import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import stdlib.SEq
 open Fin Vector
 
 
-@[main]
+@[main, cast]
 private lemma main
 -- given
   (x : List.Vector α n) :

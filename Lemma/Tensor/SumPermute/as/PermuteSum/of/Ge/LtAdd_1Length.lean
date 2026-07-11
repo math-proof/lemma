@@ -236,8 +236,7 @@ private lemma main
               conv_lhs =>
                 arg 2
                 rw [MulMul.eq.Mul_Mul]
-              conv_rhs =>
-                rw [MulMul.eq.Mul_Mul]
+              conv_rhs => rw [MulMul.eq.Mul_Mul]
               erw [AddMulS.eq.MulAdd]
               apply Nat.EqMulS.of.Eq
               rw [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul, AddAdd.eq.Add_Add] at h_qₐ_div

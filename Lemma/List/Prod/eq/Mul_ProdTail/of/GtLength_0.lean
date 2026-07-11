@@ -12,8 +12,7 @@ private lemma main
 -- imply
   s.prod = s[0] * s.tail.prod := by
 -- proof
-  conv_lhs =>
-    rw [Eq_Cons_Tail.of.GtLength_0 h]
+  conv_lhs => rw [Eq_Cons_Tail.of.GtLength_0 h]
   rw [ProdCons.eq.Mul_Prod]
 
 

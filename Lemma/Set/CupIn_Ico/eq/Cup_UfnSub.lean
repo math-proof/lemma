@@ -17,9 +17,6 @@ private lemma main
 -- imply
   ⋃ i ∈ Ico a b, f i = ⋃ i ∈ Ico (c - b + 1) (c - a + 1), f (c - i) := by
 -- proof
-  -- have h_iff : ∀ x, decide (c - x ∈ Ico a b) ↔ x ∈ Ico (c - b + 1) (c - a + 1) := by
-    -- simp [IffInS_Ico c a b]
-  -- rw [Cup.eq.Cup_Ite (fun x => decidable_of_iff (h (c - x)).decide (h_iff x))]
   conv_rhs =>
     simp only [Cup.eq.Cup_Ite]
     rw [Cup_UFn.eq.Cup_UFnNeg]

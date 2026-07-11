@@ -907,6 +907,34 @@ initialize registerBuiltinAttribute {
     }
 }
 
+/--
+Drop the plural `S` after removing an `SEq` prefix.
+Matches `([A-Z][a-z]+)S(?![a-z])` — e.g. `PermuteS__Neg` → `Permute__Neg`, but `PermuteSign` unchanged.
+-/
+partial def List.dropSEqPluralS (cs : List Char) : List Char :=
+  match cs with
+  | [] => []
+  | c :: cs' =>
+    if c.isUpper then
+      let lowers := cs'.takeWhile (·.isLower)
+      if lowers.isEmpty then
+        cs
+      else
+        let rest := cs'.drop lowers.length
+        let dropPluralS :=
+          match rest with
+          | 'S' :: rest' =>
+            match rest' with
+            | [] => true
+            | c' :: _ => !c'.isLower
+          | _ => false
+        if dropPluralS then
+          c :: lowers ++ rest.drop 1
+        else
+          cs
+    else
+      cs
+
 def List.castPath (list : List String) (comm : Bool) : List String :=
   match list.findIdx? (· == "as") with
   | some i =>
@@ -922,7 +950,7 @@ def List.castPath (list : List String) (comm : Bool) : List String :=
   | none =>
     let first := list[1]!
     if first.startsWith "SEq" then
-      let first := (first.drop 3).toString
+      let first := String.ofList ((first.drop 3).chars.toList.dropSEqPluralS)
       list[0]! :: first :: ["eq", "Cast"] ++ list.drop 2
     else
       panic! s!"cast attribute requires module path to contain `SEq/as`, got: {list}"

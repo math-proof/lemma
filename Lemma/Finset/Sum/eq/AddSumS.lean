@@ -19,17 +19,13 @@ private lemma main
   ∑ x ∈ A, f x = (∑ x ∈ A ∩ B, f x) + ∑ x ∈ A \ B, f x := by
 -- proof
   rw [Sum.eq.Sum_MulBool]
-  conv_rhs =>
-    rw [Sum.eq.Sum_MulBool]
+  conv_rhs => rw [Sum.eq.Sum_MulBool]
   conv =>
-    arg 2
-    arg 2
+    pattern ∑ _ ∈ _, f _
     rw [Sum.eq.Sum_MulBool]
   rw [AddSumS.eq.Sum_Add]
   simp only [AddMulS.eq.MulAdd]
-  have h := In.is.In_Inter.ou.In_SDiff A B
-  conv_lhs =>
-    simp only [h]
+  conv_lhs => simp only [In.is.In_Inter.ou.In_SDiff A B]
   simp only [BoolOr.eq.SubAddBoolS]
   simp only [In_Inter.In_SDiff.is.False]
   simp

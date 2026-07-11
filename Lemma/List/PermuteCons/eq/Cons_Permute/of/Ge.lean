@@ -12,7 +12,8 @@ private lemma main
   {i : Fin s.length}
   {d : ℕ}
 -- given
-  (h_d : i ≥ d) :
+  (h_d : i ≥ d)
+  (s₀ : α) :
 -- imply
   (s₀ :: s).permute ⟨i + 1, by simp⟩ (-d) = s₀ :: s.permute i (-d) := by
 -- proof

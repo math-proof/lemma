@@ -1,3 +1,8 @@
+import Lemma.Tensor.EqGetUnsqueeze
+import Lemma.Tensor.SEqRepeatS.of.SEq
+import Lemma.Tensor.Dot.eq.GetSumMul
+import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
+import Lemma.Tensor.Dot.eq.SelectDot_Unsqueeze_1
 import Lemma.Tensor.Dot.eq.SumMul
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
@@ -49,7 +54,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Head.eq.Get_0
-import Lemma.Vector.Repeat.eq.Cast.of.Eq_1
+import Lemma.Vector.SEqRepeat.of.Eq_1
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Fin List Nat Tensor Vector Bool
 set_option maxHeartbeats 10000000
@@ -63,130 +68,49 @@ private lemma main
   (Y : Tensor α [k, k'])
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] @ Y := by
+  (X @ Y)[i] = X[i] @ Y := by
 -- proof
   simp [GetElem.getElem]
+  erw [Dot.eq.GetSumMul]
   rw [Dot.eq.SumMul]
-  simp [Dot.dot]
-  rw [Matmul.eq.Cast_BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2]
-  ·
+  rw [GetSum_2.eq.SumGet__1.fin]
+  erw [GetSum_2.eq.SumGet__1.fin]
+  simp
+  apply EqSumS.of.Eq
+  simp [@Tensor.GetMul.eq.MulGetS.fin]
+  congr 1
+  <;> erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp)]
+  <;> simp
+  .
+    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨0, by grind⟩) (by simp) (by simp)]
+    apply EqCastS.of.SEq.Eq (by simp)
     simp
-    rw [Matmul.eq.Cast_SelectBatchDot.of.Eq_Get_SubLength.GeLength_2 (by simp) (by simp)]
+    erw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin (i := i) (n := k') (d := ⟨1, by grind⟩) (by simp) (by simp)]
+    erw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin (i := 0) (n := k') (d := ⟨1, by grind⟩) (by simp) (by simp)]
     simp
-    apply Eq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
-    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin]
-    apply SEqCast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
-    let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).reshape [1, k] (by simp)
-    have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiBroadcast.bmm Y) ⟨0, by simp⟩
-    simp [XiBroadcast] at this
-    erw [this]
-    unfold tensordot
-    simp [matmul]
-    unfold Tensor.reshape
-    unfold bmm
-    simp [broadcast_shape]
-    conv_lhs => erw [GetSum_2.eq.SumGet__1.fin]
-    conv_rhs => erw [GetSum_2.eq.SumGet__1.fin]
-    erw [@Tensor.GetMul.eq.MulGetS.fin]
-    apply SEqSumS.of.SEq
-    have h_s : (broadcast_shape [] [] ++ [k, k']).swap ((broadcast_shape [] [] ++ [k, k']).length - 2) ((broadcast_shape [] [] ++ [k, k']).length - 1) = broadcast_shape [] [] ++ [k', k] := by
-      simp [broadcast_shape, EqSwap_0'1]
-    have h_s' : (broadcast_shape [] [] ++ [1, k', k]).set 0 (n * (broadcast_shape [] [] ++ [1, k', k])[0]) = broadcast_shape [] [] ++ [n, k', k] := by
-      simp [broadcast_shape]
-    have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
-      (by simp)
-      (h_s')
-      (((cast (congrArg (Tensor α) h_s) Yᵀ).unsqueeze 0).repeat (0 : Fin 3) n)
-      ⟨i, by simp [broadcast_shape]⟩
-    simp at this
-    erw [this]
-    have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := 0) (n := 1)
-    simp at this
-    rw [this]
-    have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := i) (n := n)
-    simp at this
-    rw [this]
+    apply SEqRepeatS.of.SEq
+    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (i := i) (by simp) (by simp) (by simp)]
+    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (i := 0) (by simp) (by simp) (by simp)]
+    simp
+    apply SEqUnsqueezeS.of.SEq
+    erw [EqGetUnsqueeze.fin]
+  .
+    erw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (i := i) (n := n) (by simp) (by simp)]
+    erw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (i := 0) (n := 1) (by simp) (by simp)]
     simp [EqMod_1'0]
-    apply EqMulS.of.Eq
-    have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
-      (by simp)
-      (show [n, k' * 1, k] = [n, k', k] by simp)
-      ((X.unsqueeze 1).repeat k' (1 : Fin 3))
-      ⟨i, by simp⟩
-    simp at this
-    rw [this]
-    have := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin (by grind) (by grind) (X.unsqueeze 1) k' (i := i) (d := ⟨1, by grind⟩)
-    simp at this
-    rw [this]
-    have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind) X (i := i) (d := 1)
-    simp at this
-    rw [this]
-    have h_s_prod : 1 * (k * 1) / (k * 1) * [n, k].tail.prod = [1, k].prod := by simp [EqMulDiv]
-    have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
-      (by simp)
-      (show [1, k' * 1, k] = [1, k', k] by simp)
-      (((⟨cast (congrArg (List.Vector α) h_s_prod) ((X.get i).data.repeat (1 * (k * 1) / (k * 1)))⟩ : Tensor α [1, k]).unsqueeze 1).repeat k' (1 : Fin 3))
-      ⟨0, by simp⟩
-    simp at this
-    rw [this]
-    have := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin
-      (by grind)
-      (by simp)
-      ((⟨cast (congrArg (List.Vector α) h_s_prod) ((X.get i).data.repeat (1 * (k * 1) / (k * 1)))⟩ : Tensor α [1, k]).unsqueeze 1)
-      k'
-      (i := 0)
-      (d := ⟨1, by simp⟩)
-    simp at this
-    rw [this]
-    have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by simp) (by grind) (by grind) ((⟨cast (congrArg (List.Vector α) h_s_prod) ((X.get i).data.repeat (1 * (k * 1) / (k * 1)))⟩ : Tensor α [1, k])) (i := 0) (d := 1)
-    simp at this
-    simp [this]
-    apply EqRepeatS.of.Eq
-    apply EqUnsqueezeS.of.Eq
-    if h_k : k = 0 then
-      subst h_k
-      simp
-      apply Eq.of.EqDataS
-      repeat rw [DataGet.eq.GetUnflattenData.fin]
-      apply @Vector.Eq.of.All_EqGetS.fin
-      intro t
-      have h_t := t.isLt
-      simp at h_t
-    else
-      rw [Repeat.eq.Cast.of.Eq_1]
-      ·
-        rw [Cast_Cast.eq.Cast.of.Eq.Eq]
-        ·
-          rw [Get_0.eq.TensorCast_Data]
-          simp
-          rfl
-        ·
-          rw [EqDivMul.of.Ne_0 (by omega)]
-          simp
-        ·
-          rw [EqDivMul.of.Ne_0 (by omega)]
-      ·
-        rw [EqDivMul.of.Ne_0 (by omega)]
-  ·
-    simp
-  ·
-    simp
-  ·
-    simp
 
 
 @[main, fin]
 private lemma une
   [Mul α] [AddCommMonoid α]
 -- given
-  (hk : k = n')
   (X : Tensor α [n, k])
-  (Y : Tensor α [n'])
+  (Y : Tensor α [k])
   (i : Fin n) :
 -- imply
-  (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) = X[i] @ Y := by
+  (X @ Y)[i] = X[i] @ Y := by
 -- proof
-  subst hk
+  simp [GetElem.getElem]
   if hn0 : k = 0 then
     subst hn0
     simp [GetElem.getElem, Dot.dot]

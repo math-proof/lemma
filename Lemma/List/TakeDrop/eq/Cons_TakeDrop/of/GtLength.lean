@@ -16,8 +16,7 @@ private lemma main
   (s.drop i).take (d + 1) = s[i] :: (s.drop (i + 1)).take d := by
 -- proof
   rw [TakeDrop.eq.DropTake]
-  conv_rhs =>
-    rw [TakeDrop.eq.DropTake]
+  conv_rhs => rw [TakeDrop.eq.DropTake]
   rw [Drop.eq.Cons_Drop_Add_1.of.GtLength]
   ·
     apply congrArg₂

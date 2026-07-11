@@ -17,13 +17,13 @@ private lemma main
 
 
 @[main]
-private lemma T
+private lemma t
   {A : Tensor α s}
   {B : Tensor α s'}
 -- given
   (h : A ≃ B) :
 -- imply
-  Aᵀ ≃ Bᵀ  := by
+  Aᵀ ≃ Bᵀ := by
 -- proof
   apply SEqBFnS.of.SEq h
 

@@ -20,8 +20,7 @@ private lemma main
   (s.permute i d).drop (i + d + 1) = s.drop (i + d + 1) := by
 -- proof
   if h : s.length > i + d then
-    conv_lhs =>
-      rw [AddAdd.eq.Add_Add]
+    conv_lhs => rw [AddAdd.eq.Add_Add]
     rw [Drop_Add.eq.DropDrop]
     rw [DropPermute.eq.AppendRotateTakeDrop]
     rw [EqDropAppend.of.Eq_Length]

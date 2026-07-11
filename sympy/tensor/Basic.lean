@@ -327,7 +327,7 @@ def Tensor.permute (X : Tensor α s) (i : Fin s.length) (d : ℤ) : Tensor α (s
 /--
 [torch.transpose](https://docs.pytorch.org/docs/stable/generated/torch.transpose.html)
 -/
-def Tensor.transpose (X : Tensor α s) (i : ℕ) (j : ℕ): Tensor α (s.swap i j) :=
+def Tensor.transpose (X : Tensor α s) (i j : ℕ) : Tensor α (s.swap i j) :=
   if h_eq : i = j then
     cast (by simp_all [EqSwap]) X
   else if h : i ≥ s.length ∨ j ≥ s.length then

@@ -48,7 +48,7 @@ import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Vector.Repeat.eq.Cast.of.Eq_1
+import Lemma.Vector.SEqRepeat.of.Eq_1
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin List Nat Tensor Vector
 set_option maxHeartbeats 1000000

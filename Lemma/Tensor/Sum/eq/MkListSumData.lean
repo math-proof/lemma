@@ -22,8 +22,7 @@ private lemma main
   subst h_0
   have := GetSum.eq.SumMapGet.fin (X.splitAt 1) ⟨0, by simp⟩
   simp at this
-  conv_lhs =>
-    simp [this]
+  conv_lhs => simp [this]
   simp [List.Vector.get]
   apply congrArg
   ext i

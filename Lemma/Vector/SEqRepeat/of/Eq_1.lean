@@ -1,16 +1,16 @@
-import Lemma.Bool.EqCast.of.SEq
 import Lemma.Vector.SEqRepeat_1
-open Bool Vector
+open Vector
 
 
-@[main]
+@[main, cast]
 private lemma main
 -- given
+  (h : d = 1)
   (x : List.Vector α n) :
 -- imply
-  x.repeat 1 = cast (by simp) x := by
+  x.repeat d ≃ x := by
 -- proof
-  apply Eq_Cast.of.SEq
+  subst h
   apply SEqRepeat_1
 
 

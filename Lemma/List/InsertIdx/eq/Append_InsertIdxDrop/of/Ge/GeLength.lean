@@ -23,8 +23,7 @@ private lemma main
     if h_j : i = j then
       subst h_j
       simp
-      conv_lhs =>
-        rw [← EqAppendTake__Drop s i]
+      conv_lhs => rw [← EqAppendTake__Drop s i]
       rw [InsertIdxAppend.eq.Append_InsertIdx.of.LeLength]
       <;> rw [LengthTake.eq.Min_Length]
       <;> rw [EqMin.of.Le h_i]

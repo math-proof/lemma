@@ -90,7 +90,6 @@ export function detectLemmaImportsFromScanText(text, sections, existingImports =
   }
   const importsSoFarFor = () => [...new Set([...existing, ...byKey.values()])];
 
-  // PHP line 163: strip `Tensor.` / `List.` … when followed by a `$term`, so short names match below.
   const stripSectionPrefix = new RegExp(`\\b(?<!@)(${sectionRe})\\.(?=${TERM})`, 'gu');
   const forUnqual = text.replace(stripSectionPrefix, '');
   const unqualRe = new RegExp(

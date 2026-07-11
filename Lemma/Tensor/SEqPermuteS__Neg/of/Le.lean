@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EqPermuteS.of.Le
+import Lemma.List.EqPermuteS__Neg.of.Le
 import Lemma.List.EqPermute__0
 import Lemma.List.Permute.eq.Ite
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
@@ -31,7 +31,7 @@ open List Tensor Nat Bool Vector Fin
 set_option maxHeartbeats 800000
 
 
-@[main]
+@[main, cast]
 private lemma main
   {i : Fin s.length}
   {d : ℕ}
@@ -95,7 +95,7 @@ private lemma main
     ·
       apply SEq.of.SEqDataS.Eq
       ·
-        apply EqPermuteS.of.Le
+        apply EqPermuteS__Neg.of.Le
         omega
       ·
         simp

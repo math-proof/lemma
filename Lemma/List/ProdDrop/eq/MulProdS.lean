@@ -12,8 +12,7 @@ private lemma main
 -- imply
   (s.drop i).prod = ((s.drop i).take d).prod * (s.drop (i + d)).prod := by
 -- proof
-  conv_lhs =>
-    rw [Drop.eq.AppendTakeDrop s i d]
+  conv_lhs => rw [Drop.eq.AppendTakeDrop s i d]
   rw [ProdAppend.eq.MulProdS]
 
 

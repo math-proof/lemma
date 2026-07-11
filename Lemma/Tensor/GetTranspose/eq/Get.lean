@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.PermuteCast.as.Permute.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.Tensor.Permute__0.eq.Cast
+import Lemma.Tensor.SEqPermute__0
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Vector.Eq.of.Eq_Cast.Eq
 import Lemma.Tensor.EqGetS.of.Data.as.FlattenTransposeSplitAt_1

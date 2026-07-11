@@ -2,7 +2,7 @@
  * Ports `php/lemma.php` (≈313–445) + `try_pattern`, `parseInfixSegments`, `Not` from `php/parser/lean.php`
  * so Node save keeps only imports referenced in proof bodies (same as PHP POST save).
  */
-import { parseInfixSegments, Not, tokensToModule } from './moduleResolve.mjs';
+import { dropSEqPluralS, parseInfixSegments, Not, tokensToModule } from './moduleResolve.mjs';
 
 /**
  * @param {(string | string[])[]} tokens
@@ -125,7 +125,7 @@ export function filterImportsByLemmaCode(imports, lemmaCode, openSectionList) {
         else break;
         if (tryPattern(t_, lemmaCode)) return true;
         if (m = tokens[0].match(/^SEq(?!_)(.+)/)) {
-          t_[0] = m[1];
+          t_[0] = dropSEqPluralS(m[1]);
           t_.splice(1, 0, 'eq', 'Cast');
           if (tryPattern(t_, lemmaCode)) return true;
         }
@@ -144,8 +144,12 @@ export function filterImportsByLemmaCode(imports, lemmaCode, openSectionList) {
           let m = t[0].match(/^([SH]?Eq|Iff)_(.+)/);
           if (m) t[0] = m[1] + m[2];
           else if ((m = t[0].match(/^([SH]?Eq|Iff)(.+)/))) t[0] = `${m[1]}_${m[2]}`;
-          else break;
           if (tryPattern(t, lemmaCode)) return true;
+          if (m = tokens[0].match(/^SEq(?!_)(.+)/)) {
+            t[0] = dropSEqPluralS(m[1]);
+            t.splice(1, 0, 'eq', 'Cast');
+            if (tryPattern(t, lemmaCode)) return true;
+          }
         } else if (
           segment.length === 3 &&
           segment[1].length === 1 &&
@@ -155,11 +159,8 @@ export function filterImportsByLemmaCode(imports, lemmaCode, openSectionList) {
           [seg[0], seg[2]] = [seg[2], seg[0]];
           seg[1] = ['of'];
           if (tryPattern(seg, lemmaCode)) return true;
-        } else {
-          return false;
         }
       }
     }
-    return false;
   });
 }

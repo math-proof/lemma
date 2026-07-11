@@ -195,10 +195,8 @@ private lemma main
                       simp
                       apply Eq.of.EqAddS (a := ↑qₕ * s.tail.tail.prod)
                       rw [Add_Add.eq.AddAdd]
-                      conv_rhs =>
-                        rw [AddAdd.eq.Add_Add]
-                      conv_rhs at h_qₕrₕ =>
-                        rw [Add.comm]
+                      conv_rhs => rw [AddAdd.eq.Add_Add]
+                      conv_rhs at h_qₕrₕ => rw [Add.comm]
                       rw [← h_qₕrₕ]
                       rw [Add_Add.eq.AddAdd]
                       rw [AddAdd.comm]
