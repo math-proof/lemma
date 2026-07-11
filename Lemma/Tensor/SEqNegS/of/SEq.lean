@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqBFnS.of.SEq
+import Lemma.Bool.SEqUFnS.of.SEq
 import sympy.tensor.Basic
 open Bool
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   -X ≃ -Y := by
 -- proof
-  apply SEqBFnS.of.SEq h
+  apply SEqUFnS.of.SEq h
 
 
 -- created on 2025-12-04

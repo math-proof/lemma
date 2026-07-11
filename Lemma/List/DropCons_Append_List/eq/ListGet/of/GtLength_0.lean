@@ -1,7 +1,7 @@
 import Lemma.List.Drop.eq.ListGet.of.GeLength_1
 import Lemma.List.DropAppend.eq.AppendDrop.of.GeLength
 import Lemma.List.DropCons.eq.Drop_Sub_1.of.Gt_0
-open List Nat
+open List
 
 
 @[main]

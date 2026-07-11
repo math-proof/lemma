@@ -9,7 +9,7 @@ private lemma main
 -- given
   (X Y : Tensor α [n]) :
 -- imply
-  X.einsum Y = ((X.data * Y.data).sum : Tensor α []) := by
+  X.einsum Y = (X * Y).sum := by
 -- proof
   unfold Tensor.einsum
   split_ifs with h h
@@ -31,16 +31,12 @@ private lemma main
     ·
       grind
     ·
-      grind
-    ·
       apply HEq.of.SEq
       apply SEqResize_0.of.Eq_Get_0.GtLength_0
       ·
         simp
       ·
         grind
-    ·
-      grind
     ·
       apply HEq.of.SEq
       apply SEqResize_0.of.Eq_Get_0.GtLength_0

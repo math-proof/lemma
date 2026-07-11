@@ -13,7 +13,7 @@ import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
 import Lemma.Tensor.TransposeCast.as.Transpose.of.Eq
 import Lemma.Tensor.TransposeUnsqueeze.eq.Unsqueeze
-open Bool List Tensor Vector
+open Bool List Tensor
 
 
 @[main]

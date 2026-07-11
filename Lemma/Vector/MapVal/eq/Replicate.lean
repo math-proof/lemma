@@ -9,11 +9,11 @@ private lemma main
 -- imply
   (v.val).map (List.length ∘ List.Vector.toList) = List.replicate m n := by
 -- proof
-  induction v using List.Vector.inductionOn
-  case nil =>
-    simp [List.replicate]
+  induction h : v using List.Vector.inductionOn with
+  | nil =>
     rfl
-  case cons h t ih =>
+  | cons ih =>
     simp_all [List.Vector.toList, List.replicate]
+
 
 -- created on 2025-05-27

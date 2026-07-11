@@ -11,7 +11,7 @@ private lemma main
   (X : Tensor α [n])
   (Y : Tensor α [n']) :
 -- imply
-  X.einsum Y = ((X.data * (cast (by simp) (Y.resize ⟨0, by simp⟩ n) : Tensor α [n]).data).sum : Tensor α []) := by
+  X.einsum Y = (X * (cast (by simp) (Y.resize ⟨0, by simp⟩ n) : Tensor α [n])).sum := by
 -- proof
   unfold Tensor.einsum
   split_ifs with h h h h h
@@ -35,13 +35,9 @@ private lemma main
     ·
       grind
     ·
-      grind
-    ·
       apply HEq.of.SEq
       apply SEqResize_0.of.Eq_Get_0.GtLength_0
       repeat grind
-    ·
-      grind
     ·
       grind
   ·

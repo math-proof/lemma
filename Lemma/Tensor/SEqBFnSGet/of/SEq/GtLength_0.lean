@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.GtLength.of.GtLength_0
-import Lemma.Bool.SEqBFnS.of.SEq
+import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.Bool.SEq.is.Eq
 open Tensor Bool
 
@@ -22,7 +22,7 @@ private lemma main
   f s.tail X[i] ≃ f s'.tail X'[i] := by
 -- proof
   intro _ h_i _
-  apply SEqBFnS.of.SEq
+  apply SEqUFnS.of.SEq
   apply SEqGetS.of.SEq.GtLength h_i h_X
 
 

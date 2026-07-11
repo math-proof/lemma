@@ -2245,7 +2245,14 @@ class LeanBrace extends LeanPairedGroup {
 
     is_indented() {
         const p = this.parent;
-        return !(p instanceof LeanQuantifier || p instanceof LeanBinaryBoolean || p instanceof LeanColon || p instanceof LeanSetOperator || p instanceof LeanTactic || p instanceof LeanAssign);
+        return !(p instanceof LeanQuantifier || 
+            p instanceof LeanBinaryBoolean || 
+            p instanceof LeanColon || 
+            p instanceof LeanSetOperator || 
+            p instanceof LeanTactic || 
+            p instanceof LeanAssign || 
+            p instanceof Lean_rightarrow
+        );
     }
 
     latexFormat() {

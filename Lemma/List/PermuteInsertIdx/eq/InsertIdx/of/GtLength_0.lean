@@ -8,7 +8,7 @@ import Lemma.List.SliceTake.eq.Slice.of.Ge
 import Lemma.List.Slice.eq.DropTake
 import Lemma.List.EqTake
 import Lemma.List.Drop.eq.Nil.of.LeLength
-open List Nat Int
+open List
 
 
 @[main]

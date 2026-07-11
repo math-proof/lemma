@@ -1,5 +1,5 @@
 import Lemma.Vector.Sum.eq.Zero
-import Lemma.Fin.Eq_0
+import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Matmul.eq.SumMulDataS
@@ -16,13 +16,11 @@ private lemma main
 -- proof
   simp [Matmul.eq.SumMulDataS]
   apply Eq.of.EqDataS
-  simp
-  rw [EqData0'0]
-  ext t
-  have h_t := Eq_0 t
-  subst h_t
-  simp [List.Vector.head]
-  apply Sum.eq.Zero
+  simp [Tensor.sum, EqData0'0]
+  apply Eq.of.All_EqGetS
+  intro i
+  simp [Sum.eq.Zero]
+  rfl
 
 
 -- created on 2026-07-06

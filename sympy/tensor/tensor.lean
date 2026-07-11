@@ -207,7 +207,7 @@ def Tensor.einsum [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
         | [n'] =>
           let X : Tensor α [n ⊔ n'] := X.resize ⟨0, by grind⟩ (n ⊔ n')
           let Y : Tensor α [n ⊔ n'] := Y.resize ⟨0, by grind⟩ (n ⊔ n')
-          ((X.data * Y.data).sum : Tensor α [])
+          (X * Y).sum
       else
         have h_s' : s'.length ≥ 2 := by omega
         let batch_size' := s'.take (s'.length - 2)

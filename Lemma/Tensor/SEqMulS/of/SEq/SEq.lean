@@ -1,5 +1,4 @@
-import Lemma.Bool.SEq.is.Eq
-import stdlib.SEq
+import Lemma.Bool.SEqBFnS.of.SEq.SEq
 import sympy.tensor.tensor
 open Bool
 
@@ -13,15 +12,10 @@ private lemma main
   (h_A : A ≃ A')
   (h_B : B ≃ B') :
 -- imply
-  A * B ≃ A' * B' := by
+  A * B ≃ A' * B' :=
 -- proof
-  have h_s := h_A.left
-  subst h_s
-  have h_A := Eq.of.SEq h_A
-  have h_B := Eq.of.SEq h_B
-  subst h_A h_B
-  rfl
+  SEqBFnS.of.SEq.SEq h_A h_B (· * ·)
 
 
 -- created on 2025-12-01
--- updated on 2025-12-03
+-- updated on 2026-07-11

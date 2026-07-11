@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqBFnS.of.SEq
+import Lemma.Bool.SEqUFnS.of.SEq
 import sympy.tensor.Basic
 open Bool
 
@@ -14,7 +14,7 @@ private lemma main
   A.rotate i ≃ B.rotate i' := by
 -- proof
   subst h_i
-  apply SEqBFnS.of.SEq h
+  apply SEqUFnS.of.SEq h
 
 
 -- created on 2025-10-19

@@ -1,5 +1,5 @@
 import Lemma.Tensor.LengthBatchDot.eq.Length
-import Lemma.Bool.SEqBFnS.of.SEq
+import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Eq.of.EqAppendS.EqLengthS
 import sympy.tensor.Basic

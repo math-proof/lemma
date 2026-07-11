@@ -1,4 +1,4 @@
-import Lemma.Bool.SEqBFnS.of.SEq
+import Lemma.Bool.SEqUFnS.of.SEq
 import sympy.vector.functions
 open Bool
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   exp x ≃ exp y := by
 -- proof
-  apply SEqBFnS.of.SEq h
+  apply SEqUFnS.of.SEq h
 
 
 -- created on 2025-12-04

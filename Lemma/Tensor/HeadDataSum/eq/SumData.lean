@@ -10,7 +10,7 @@ open Vector
 
 @[main, comm]
 private lemma main
-  [AddCommMonoid α]
+  [Add α] [Zero α]
 -- given
   (X : Tensor α [n]) :
 -- imply

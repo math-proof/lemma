@@ -1,5 +1,4 @@
 import sympy.Basic
-open Nat
 
 
 @[main]

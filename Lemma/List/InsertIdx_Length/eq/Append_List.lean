@@ -1,5 +1,5 @@
 import Lemma.List.InsertIdxAppend.eq.Append_Cons
-open List Nat
+open List
 
 
 @[main]

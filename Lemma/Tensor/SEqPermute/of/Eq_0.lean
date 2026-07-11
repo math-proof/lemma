@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqPermute__0
 import sympy.tensor.tensor
-open Tensor List
+open Tensor
 
 
 @[main, comm, cast]

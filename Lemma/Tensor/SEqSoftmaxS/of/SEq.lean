@@ -1,5 +1,5 @@
 import sympy.tensor.functions
-import Lemma.Bool.SEqBFnS.of.SEq
+import Lemma.Bool.SEqUFnS.of.SEq
 open Bool
 
 
@@ -12,9 +12,9 @@ private lemma main
   (h : A ≃ B)
   (i : ℕ) :
 -- imply
-  A.softmax i ≃ B.softmax i := by
+  A.softmax i ≃ B.softmax i :=
 -- proof
-  apply SEqBFnS.of.SEq h (fun (s : List ℕ) (X : Tensor α s) => X.softmax i)
+  SEqUFnS.of.SEq h (fun {s : List ℕ} (X : Tensor α s) => X.softmax i)
 
 
 -- created on 2025-10-31

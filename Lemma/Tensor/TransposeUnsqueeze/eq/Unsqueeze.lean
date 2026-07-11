@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.TransposeUnsqueeze_Length.as.Unsqueeze
-open Bool Tensor Fin List Nat Vector
+open Bool Tensor
 
 
 @[main]

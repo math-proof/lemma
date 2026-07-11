@@ -102,7 +102,7 @@ private lemma main
 
 @[main, fin]
 private lemma une
-  [Mul α] [AddCommMonoid α]
+  [Mul α] [Add α] [Zero α]
 -- given
   (X : Tensor α [n, k])
   (Y : Tensor α [k])
@@ -113,7 +113,7 @@ private lemma une
   simp [GetElem.getElem]
   if hn0 : k = 0 then
     subst hn0
-    simp [GetElem.getElem, Dot.dot]
+    simp [Dot.dot]
     rw [Matmul.eq.Cast_SelectBatchDot.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
     simp [Tensor.bmm, Tensor.reshape, matmul_shape]
     apply Eq.of.EqDataS
@@ -134,7 +134,6 @@ private lemma une
     rfl
   else
     have h_k : k ≠ 0 := hn0
-    simp [GetElem.getElem]
     simp [Dot.dot]
     rw [Matmul.eq.Cast_SelectBatchDot.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
     ·
@@ -166,7 +165,7 @@ private lemma une
       have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin
         (by grind)
         (by simp [EqSwap_0'1]; grind)
-        (((⟨cast (congrArg (List.Vector α) h_s1) (Y.data.repeat (k * 1 / (k * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat n (0 : Fin 3))
+        (((⟨cast (congrArg (List.Vector α) h_s1) (Y.data.repeat (k * 1 / (k * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat (0 : Fin 3) n)
         ⟨i, by grind⟩
         (s' := [n, 1, k])
       simp at this

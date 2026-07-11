@@ -10,9 +10,9 @@ private lemma main
   {g : N → N}
 -- given
   (h : a ≃ b)
-  (f : (n : N) → Vector n → Vector (g n)) :
+  (f : {n : N} → Vector n → Vector (g n)) :
 -- imply
-  f n a ≃ f n' b := by
+  f a ≃ f b := by
 -- proof
   let ⟨h_s, h⟩ := h
   constructor

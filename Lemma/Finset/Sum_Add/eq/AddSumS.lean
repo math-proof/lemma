@@ -11,7 +11,6 @@ private lemma main
   ∑ i ∈ s, (a i + b i) = ∑ i ∈ s, a i + ∑ i ∈ s, b i := by
 -- proof
   induction s using Finset.induction_on with
-  -- apply Finset.induction_on (motive := fun s => ∑ i ∈ s, (a i + b i) = ∑ i ∈ s, a i + ∑ i ∈ s, b i) s
   | empty =>
     simp
   | insert j s hj ih =>

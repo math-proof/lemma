@@ -16,7 +16,6 @@ private lemma main
   f (∑ i ∈ s, x i) = ∑ i ∈ s, f (x i) := by
 -- proof
   induction s using Finset.induction_on with
-  -- apply Finset.induction_on (motive := fun s => f (∑ i ∈ s, x i) = ∑ i ∈ s, f (x i)) s
   | empty =>
     simp_all
   | insert j s hj ih =>

@@ -1,5 +1,5 @@
 import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
-open List Bool Nat
+open List
 
 
 @[main, comm]

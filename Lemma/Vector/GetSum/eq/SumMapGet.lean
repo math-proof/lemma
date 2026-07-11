@@ -1,29 +1,26 @@
-import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
 import Lemma.Vector.EqGet0_0
-import Lemma.Vector.Sum.eq.Sum_Get
+import Lemma.Vector.GetAdd.eq.AddGetS
+import Lemma.Vector.SumCons.eq.Add_Sum
 open Vector Finset
 
 
 @[main, fin, val]
 private lemma main
-  [AddCommMonoid α]
+  [Add α] [Zero α]
 -- given
   (x : List.Vector (List.Vector α n) m)
   (i : Fin n) :
 -- imply
   x.sum[i] = (x.map (·[i])).sum := by
 -- proof
-  simp [Sum.eq.Sum_Get]
-  let f := fun v : List.Vector α n => v[i]
-  have h_f0 : f 0 = 0 := by
+  induction x using List.Vector.inductionOn with
+  | nil =>
+    simp [List.Vector.sum]
     apply EqGet0_0
-  have h_add : ∀ (a b : List.Vector α n), f (a + b) = f a + f b := by
-    intro a b
-    simp [f]
-    apply GetAdd.eq.AddGetS
-  have := UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0 h_f0 h_add (Finset.univ : Finset (Fin m)) (fun j => x[j])
-  simp [f] at this
-  assumption
+  | cons ih =>
+    rw [SumCons.eq.Add_Sum, GetAdd.eq.AddGetS, ih]
+    congr 1
 
 
 -- created on 2025-10-11
+-- updated on 2026-07-11

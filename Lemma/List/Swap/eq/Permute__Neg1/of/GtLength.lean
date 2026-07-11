@@ -1,6 +1,6 @@
 import Lemma.List.EqPermute__0
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
-open List Bool Nat
+open List
 
 
 @[main, comm]
