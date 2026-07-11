@@ -3,7 +3,7 @@ import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.Matmul.eq.SumMulDataS
-open Fin Tensor Vector
+open Tensor Vector
 
 
 @[main]

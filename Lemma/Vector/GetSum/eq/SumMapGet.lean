@@ -1,7 +1,7 @@
 import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.SumCons.eq.Add_Sum
-open Vector Finset
+open Vector
 
 
 @[main, fin, val]

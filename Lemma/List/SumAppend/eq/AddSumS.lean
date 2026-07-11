@@ -1,5 +1,4 @@
 import sympy.Basic
-open List
 
 
 @[main]
