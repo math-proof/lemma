@@ -10,7 +10,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool List Nat Tensor Vector Fin
+open Bool List Nat Tensor Vector
 
 
 @[main]
