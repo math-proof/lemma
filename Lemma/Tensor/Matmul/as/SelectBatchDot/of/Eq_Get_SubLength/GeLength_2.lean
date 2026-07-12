@@ -8,7 +8,7 @@ import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
-import Lemma.Tensor.SEqBroadcastS.of.SEq.Eq.Dvd
+import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 open Bool List Tensor
@@ -46,7 +46,7 @@ private lemma main
       apply Eq.of.SEq
       apply SEqBatchDotS.of.SEq.SEq
       ·
-        apply SEqBroadcastS.of.SEq.Eq.Dvd
+        apply SEqReshapeS.of.SEq.Eq.Dvd
         ·
           rw [h_n]
           simp

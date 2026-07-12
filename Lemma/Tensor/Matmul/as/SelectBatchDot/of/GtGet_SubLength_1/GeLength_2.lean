@@ -10,7 +10,7 @@ import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
 import Lemma.Nat.EqMax.of.Gt
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
-import Lemma.Tensor.SEqBroadcastS.of.SEq.Eq.Dvd
+import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 open Bool List Nat Tensor
 set_option maxHeartbeats 400000
@@ -71,7 +71,7 @@ private lemma main
           ·
             rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)]
       ·
-        apply SEqBroadcastS.of.SEq.Eq.Dvd
+        apply SEqReshapeS.of.SEq.Eq.Dvd
         repeat rw [EqMax.of.Gt h_s']
     ·
       grind

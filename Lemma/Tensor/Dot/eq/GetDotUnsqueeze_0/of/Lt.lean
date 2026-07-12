@@ -4,7 +4,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
-import Lemma.Tensor.SEqBroadcastS.of.SEq.Eq.Dvd
+import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
@@ -38,7 +38,7 @@ private lemma main
   simp
   apply SEq.of.Eq
   simp only [EqMax.of.Lt h]
-  apply SEqBroadcastS.of.SEq.Eq.Dvd (by simp) (by simp)
+  apply SEqReshapeS.of.SEq.Eq.Dvd (by simp) (by simp)
   symm
   apply SEqResize_0.of.Eq_Get_0.GtLength_0 (by simp) (by simp)
 

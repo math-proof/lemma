@@ -9,7 +9,7 @@ import Lemma.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 import Lemma.Nat.EqMax.of.Lt
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
-import Lemma.Tensor.SEqBroadcastS.of.SEq.Eq.Dvd
+import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 open Bool List Nat Tensor
 set_option maxHeartbeats 400000
@@ -48,7 +48,7 @@ private lemma main
       apply Eq.of.SEq
       apply SEqBatchDotS.of.SEq.SEq
       ·
-        apply SEqBroadcastS.of.SEq.Eq.Dvd
+        apply SEqReshapeS.of.SEq.Eq.Dvd
         repeat rw [EqMax.of.Lt h_n]
       ·
         apply SEqCastS.of.SEq.Eq.Eq
