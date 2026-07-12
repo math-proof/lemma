@@ -1,17 +1,17 @@
-import sympy.Basic
+import Lemma.Int.EqNeg0'0
+open Int
 
 
 @[main]
 private lemma main
-  [Ring α]
+  [AddGroup α]
   {a : α}
 -- given
   (h : a = 0) :
 -- imply
-  -a = 0 := by
+  -a = 0 :=
 -- proof
-  rw [h]
-  simp
+  h.symm ▸ Int.EqNeg0'0
 
 
 -- created on 2025-04-19

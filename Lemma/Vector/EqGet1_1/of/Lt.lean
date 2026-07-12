@@ -1,4 +1,4 @@
-import Lemma.Vector.EqGet_1.of.Eq_1.Lt
+import Lemma.Vector.EqGet1_1
 open Vector
 
 
@@ -8,10 +8,9 @@ private lemma main
 -- given
   (h_i : i < n) :
 -- imply
-  (1 : List.Vector α n)[i] = 1 := by
+  (1 : List.Vector α n)[i] = 1 :=
 -- proof
-  apply EqGet_1.of.Eq_1.Lt
-  rfl
+  EqGet1_1 ⟨i, h_i⟩
 
 
 -- created on 2025-09-23

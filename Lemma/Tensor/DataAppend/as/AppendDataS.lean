@@ -1,4 +1,4 @@
-import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import Lemma.Bool.SEq.is.EqCast.of.Eq
 import sympy.tensor.Basic
 open Bool
 
@@ -11,13 +11,11 @@ private lemma main
 -- imply
   (A ++ B).data ≃ A.data ++ B.data := by
 -- proof
-  conv_lhs => simp [HAppend.hAppend]
-  simp
-  apply SEqCast.of.SEq.Eq
-  ·
+  apply SEq.of.Eq_Cast
+  .
+    simp [HAppend.hAppend]
+  .
     grind
-  ·
-    rfl
 
 
 -- created on 2026-01-10

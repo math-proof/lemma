@@ -1,4 +1,5 @@
-import sympy.Basic
+import Lemma.Nat.Ne0'1
+open Nat
 
 
 @[main]
@@ -10,10 +11,9 @@ private lemma main
 -- given
   (h : a = 0) :
 -- imply
-  a ≠ 1 := by
+  a ≠ 1 :=
 -- proof
-  rw [h]
-  apply zero_ne_one
+  h.symm.subst (motive := fun a => a ≠ 1) Ne0'1
 
 
 -- created on 2025-04-20

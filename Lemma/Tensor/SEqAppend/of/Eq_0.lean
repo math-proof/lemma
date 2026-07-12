@@ -6,7 +6,7 @@ import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Fin.Eq_0
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Tensor.DataAppend.as.Append
+import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetAppend.eq.Get
@@ -55,7 +55,7 @@ private lemma main
   | nil =>
     have h := cons h X O
     have h := SEqDataS.of.SEq h
-    rw [DataAppend.eq.Cast_Append] at h
+    rw [DataAppend.eq.Cast_AppendDataS] at h
     have h_eq : n * s.prod + m * s.prod = (n + m) * s.prod := by grind
     have h := SEq.of.SEqCast.Eq h (h := h_eq)
     apply SEq.of.SEqDataS.Eq (by simpa)

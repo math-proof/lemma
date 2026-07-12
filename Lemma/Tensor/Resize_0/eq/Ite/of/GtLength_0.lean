@@ -1,3 +1,9 @@
+import Lemma.Tensor.SEqRepeat.of.Eq_1
+import Lemma.Nat.EqMulDiv
+import Lemma.Tensor.SEq0S.of.Eq
+import Lemma.Tensor.EqAppend0S0
+import Lemma.Tensor.EqCast_0'0.of.Eq
+import Lemma.Tensor.Repeat.eq.Zero.of.Eq_0
 import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.EqCast.of.SEq
@@ -56,9 +62,14 @@ private lemma main
       rfl
     ·
       apply EqCast.of.SEq
-      -- simp only [Div.eq.Zero.of.Lt h_n]
-      apply SEqCast.of.SEq.Eq --(by simp)
-      sorry
+      rw [Repeat.eq.Zero.of.Eq_0]
+      .
+        erw [EqCast_0'0.of.Eq (by grind)]
+        rw [Tensor.EqAppend0S0]
+        apply @Tensor.SEq0S.of.Eq
+        simp [Nat.EqAddMulDiv]
+      .
+        rw [Div.eq.Zero.of.Lt h_n]
     ·
       have h_n : k = n := by omega
       subst h_n
@@ -66,9 +77,18 @@ private lemma main
       ·
         grind
       ·
+        rw [Repeat.eq.Cast.of.Eq_1]
+        .
+          erw [Tensor.EqCast_0'0.of.Eq (by grind)]
+          rw [Tensor.EqAppend0S0]
+          apply @Tensor.SEq0S.of.Eq
+          simp [Nat.EqAddMulDiv]
+          sorry
+        .
+          sorry
         apply SEq.of.SEqDataS.Eq
         ·
-          grind
+          simp [Nat.EqMulDiv]
         ·
           rw [DataFromVector.eq.FlattenMapData]
           apply SEq.of.All_EqGetS.Eq.fin

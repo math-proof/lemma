@@ -1,15 +1,16 @@
-import sympy.Basic
+import Lemma.List.Take_0.eq.Nil
+open List
 
 
 @[main]
 private lemma main
-  {a : List α}
 -- given
+  (a : List α)
   (h : i = 0) :
 -- imply
-  a.take i = .nil := by
+  a.take i = .nil :=
 -- proof
-  simp_all
+  h.symm.subst (motive := fun i => a.take i = .nil) (Take_0.eq.Nil a)
 
 
 -- created on 2025-06-16

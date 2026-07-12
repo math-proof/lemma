@@ -1,5 +1,4 @@
-import Lemma.Vector.EqGet0_0.of.Lt
-open Vector
+import sympy.vector.Basic
 
 
 @[main, fin]
@@ -10,7 +9,8 @@ private lemma main
 -- imply
   (0 : List.Vector α n)[i] = 0 := by
 -- proof
-  apply EqGet0_0.of.Lt
+  simp [GetElem.getElem]
+  erw [List.Vector.get_replicate]
 
 
 -- created on 2025-09-04

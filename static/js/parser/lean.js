@@ -1343,20 +1343,13 @@ export class LeanLineComment extends Lean {
                 let parent = this.parent;
                 if (parent instanceof LeanStatements) {
                     if (parent.parent instanceof LeanBy) parent = parent.parent;
-                    if (
-                        (parent = parent.parent) instanceof LeanAssign &&
-                        parent.parent instanceof Lean_lemma
-                    )
+                    if ((parent = parent.parent) instanceof LeanAssign && parent.parent instanceof Lean_lemma)
                         return false;
-                } else if ((parent = this.parent) instanceof LeanArgsNewLineSeparated) {
-                    if (
-                        (parent = parent.parent) instanceof LeanAssign &&
-                        parent.parent instanceof Lean_lemma
-                    )
+                } else if (parent instanceof LeanArgsNewLineSeparated) {
+                    if ((parent = parent.parent) instanceof LeanAssign && parent.parent instanceof Lean_lemma)
                         return false;
                 }
             }
-            // fall through (PHP `case 'proof';` → `case 'imply':`)
             case 'imply': {
                 let parent = this.parent;
                 if (
@@ -2814,7 +2807,6 @@ export class LeanAssign extends LeanBinary {
                 return '\n';
             }
         }
-        // `:=` then newline before `-- proof` / term under `▸` (see Lemma/Nat/Lt/of/Lt_Add/Eq_Sub/Ge.lean).
         if (
             rhs instanceof Lean_blacktriangleright &&
             rhs.lhs instanceof LeanArgsNewLineSeparated &&
@@ -3515,7 +3507,7 @@ export class Lean_circ extends LeanArithmetic {
 }
 
 export class Lean_blacktriangleright extends LeanArithmetic {
-    static input_priority = 47;
+    static input_priority = 75;
 
     get operator() {
         return '▸';
@@ -4614,9 +4606,7 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
     const statements = [];
     for (const s of list) statements.push(...s.split(syntax));
 
-    /** @type {[import('../../../static/js/parser/lean.js').Lean[], string | number | null][]} */
     const code = [];
-    /** @type {import('../../../static/js/parser/lean.js').Lean[]} */
     let last = [];
 
     if (echo) {

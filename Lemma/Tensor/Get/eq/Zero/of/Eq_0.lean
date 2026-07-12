@@ -1,5 +1,5 @@
+import Lemma.Tensor.GtLength
 import Lemma.Tensor.EqGet0_0
-import sympy.tensor.tensor
 open Tensor
 
 
@@ -11,10 +11,9 @@ private lemma main
   (h : X = 0)
   (i : Fin X.length) :
 -- imply
-  X[i] = 0 := by
+  X[i] = 0 :=
 -- proof
-  subst h
-  apply EqGet0_0
+  h.symm.subst (motive := fun X : Tensor α s => X[i]'(by apply GtLength) = 0) (EqGet0_0 ⟨i, by grind⟩)
 
 
 -- created on 2025-12-06

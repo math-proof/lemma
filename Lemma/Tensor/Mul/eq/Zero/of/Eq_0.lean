@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.EqMul0_0
-open Vector Tensor
+import Lemma.Tensor.EqMul0_0
+open Tensor
 
 
 @[main]
@@ -11,11 +11,9 @@ private lemma main
   (h : X = 0)
   (a : α) :
 -- imply
-  X * a = 0 := by
+  X * a = 0 :=
 -- proof
-  subst h
-  apply Eq.of.EqDataS
-  apply EqMul0_0
+  h.symm.subst (motive := fun X : Tensor α s => X * a = 0) (EqMul0_0 s a)
 
 
 -- created on 2025-12-08

@@ -8,10 +8,9 @@ private lemma main
   (h : d = 1)
   (x : List.Vector α n) :
 -- imply
-  x.repeat d ≃ x := by
+  x.repeat d ≃ x :=
 -- proof
-  subst h
-  apply SEqRepeat_1
+  h.symm.subst (motive := fun d => x.repeat d ≃ x) (SEqRepeat_1 x)
 
 
 -- created on 2026-01-10

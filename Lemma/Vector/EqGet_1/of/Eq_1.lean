@@ -1,5 +1,5 @@
-import sympy.vector.Basic
-import sympy.Basic
+import Lemma.Vector.EqGet1_1
+open Vector
 
 
 @[main]
@@ -10,10 +10,9 @@ private lemma main
   (h : a = 1)
   (i : Fin n) :
 -- imply
-  a.get i = 1 := by
+  a.get i = 1 :=
 -- proof
-  rw [h]
-  apply List.Vector.get_replicate
+  h.symm.subst (motive := fun a : List.Vector α n => a.get i = 1) (EqGet1_1 i)
 
 
 -- created on 2025-09-23

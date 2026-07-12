@@ -9,10 +9,9 @@ private lemma main
   -- given
   (h : n = 1) :
 -- imply
-  a * n = a := by
+  a * n = a :=
 -- proof
-  subst h
-  apply EqMul_1
+  h.symm.subst (motive := fun n => a * n = a) (EqMul_1 a)
 
 
 -- created on 2025-10-26

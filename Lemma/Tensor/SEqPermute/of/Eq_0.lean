@@ -6,14 +6,13 @@ open Tensor
 @[main, comm, cast]
 private lemma main
 -- given
-  (h_n : n = 0)
+  (h : n = 0)
   (X : Tensor α s)
   (i : Fin s.length) :
 -- imply
-  X.permute i n ≃ X := by
+  X.permute i n ≃ X :=
 -- proof
-  subst h_n
-  apply SEqPermute__0
+  h.symm.subst (motive := fun n => X.permute i n ≃ X) (SEqPermute__0 X i)
 
 
 -- created on 2026-07-11

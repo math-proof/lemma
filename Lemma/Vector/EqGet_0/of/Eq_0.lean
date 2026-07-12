@@ -1,8 +1,8 @@
-import sympy.vector.Basic
-import sympy.Basic
+import Lemma.Vector.EqGet0_0
+open Vector
 
 
-@[main]
+@[main, fin]
 private lemma main
   [Zero α]
   {a : List.Vector α n}
@@ -10,10 +10,9 @@ private lemma main
   (h : a = 0)
   (i : Fin n) :
 -- imply
-  a.get i = 0 := by
+  a[i] = 0 :=
 -- proof
-  rw [h]
-  apply List.Vector.get_replicate
+  h.symm.subst (motive := fun a : List.Vector α n => a[i] = 0) (EqGet0_0 i)
 
 
 -- created on 2025-09-23
