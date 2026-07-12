@@ -100,18 +100,6 @@ def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) 
 [numpy.resize](https://numpy.org/doc/stable/reference/generated/numpy.resize.html)
 -/
 def Tensor.resize [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : Tensor α (s.set dim n) :=
-  let h_s := EqCons_Tail.of.GtLength_0 (show s.length > 0 by linarith [dim.isLt])
-  match h : dim with
-  | ⟨0, _⟩ =>
-    match h_s : s with
-    | [] =>
-      False.elim (by contradiction)
-    | k :: s =>
-      cast (by simp [EqAddMulDiv]) ((cast (by simp) (X.repeat ⟨0, by simp⟩ (n / k)) : Tensor α ((n / k) * k :: s)) ++ (0 : Tensor α (n % k :: s)))
-  | ⟨d + 1, _⟩ =>
-    cast (congrArg (Tensor α) (show s.headD 1 :: s.tail.set d n = s.set (d + 1) n by grind)) (fromVector (X.toVector.map fun s => s.resize ⟨d, by grind⟩ n))
-
-def Tensor.resize' [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : Tensor α (s.set dim n) :=
   ⟨cast (congrArg (List.Vector α) (MulProd_Mul_Prod.eq.ProdSet.of.GtLength dim.isLt n)) ((X.data.splitAt dim).map (·.resize (n * (s.drop dim.succ).prod))).flatten⟩
 
 /--

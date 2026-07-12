@@ -59,58 +59,62 @@ private lemma main
     simp
     split_ifs with h_n h_n
     ·
-      rfl
+      apply Eq_Cast.of.SEq
+      apply SEq.of.SEqDataS.Eq
+      .
+        simp [EqAddMulDiv]
+      .
+        simp
+        apply SEq_Cast.of.SEq.Eq
+        .
+          simp [MulAdd.eq.AddMulS]
+        .
+          apply SEqCast.of.SEq.Eq (by simp)
+          rw [EqData0'0]
+          sorry
     ·
+      apply Eq.of.EqDataS
+      simp [EqData0'0]
       apply EqCast.of.SEq
-      rw [Repeat.eq.Zero.of.Eq_0]
-      .
-        erw [EqCast_0'0.of.Eq (by grind)]
-        rw [Tensor.EqAppend0S0]
-        apply @Tensor.SEq0S.of.Eq
-        simp [Nat.EqAddMulDiv]
-      .
-        rw [Div.eq.Zero.of.Lt h_n]
+      -- rw [Repeat.eq.Zero.of.Eq_0]
+      -- .
+      --   erw [EqCast_0'0.of.Eq (by grind)]
+      --   rw [Tensor.EqAppend0S0]
+      --   apply @Tensor.SEq0S.of.Eq
+      --   simp [Nat.EqAddMulDiv]
+      -- .
+      --   rw [Div.eq.Zero.of.Lt h_n]
+      sorry
     ·
       have h_n : k = n := by omega
       subst h_n
-      apply EqCastS.of.SEq.Eq
+      apply Eq_Cast.of.SEq
+      apply SEq.of.SEqDataS.Eq (by simp)
+      simp
+      apply SEqCast.of.SEq.Eq
       ·
         grind
       ·
-        rw [Repeat.eq.Cast.of.Eq_1]
-        .
-          erw [Tensor.EqCast_0'0.of.Eq (by grind)]
-          rw [Tensor.EqAppend0S0]
-          apply @Tensor.SEq0S.of.Eq
-          simp [Nat.EqAddMulDiv]
-          sorry
-        .
-          sorry
-        apply SEq.of.SEqDataS.Eq
+        apply SEq.of.All_EqGetS.Eq.fin
         ·
-          simp [Nat.EqMulDiv]
+          intro t
+          have h_t := t.isLt
+          simp only [ProdCons.eq.Mul_Prod] at h_t
+          let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
+          let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
+          erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
+          erw [GetMap.eq.UFnGet]
+          rw [GetTake.eq.Get.of.Lt_Min.fin]
+          erw [GetToVector.eq.Get.cons.fin]
+          erw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨q, by grind⟩)]
+          ·
+            simp
+            erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+            simp [h_qr]
+          ·
+            simp
         ·
-          rw [DataFromVector.eq.FlattenMapData]
-          apply SEq.of.All_EqGetS.Eq.fin
-          ·
-            intro t
-            have h_t := t.isLt
-            simp only [ProdCons.eq.Mul_Prod] at h_t
-            let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
-            let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
-            erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-            erw [GetMap.eq.UFnGet]
-            rw [GetTake.eq.Get.of.Lt_Min.fin]
-            erw [GetToVector.eq.Get.cons.fin]
-            erw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨q, by grind⟩)]
-            ·
-              simp
-              erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-              simp [h_qr]
-            ·
-              simp
-          ·
-            grind
+          grind
 
 
 -- created on 2026-07-09
