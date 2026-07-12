@@ -5,7 +5,7 @@ import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.List.ZipWith__Append.eq.AppendZipWithS
 import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec.of.GtLengthS
-import Lemma.Tensor.GetBroadcast.as.Broadcast.of.GtLength_0
+import Lemma.Tensor.GetReshape.as.Broadcast.of.GtLength_0
 import Lemma.Tensor.GetBroadcastMatmulRec.as.Map₂_ToVectorS.of.GtLengthS
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength
@@ -68,7 +68,7 @@ private lemma main
           have h_broadcast := SEqReshapeS.of.Eq.Eq.Dvd (by simp) h_s (by rfl) (A := Y)
           symm
           apply h_broadcast.trans
-          have h_get := GetBroadcast.as.Broadcast.of.GtLength_0.fin (by grind) Y ⟨i, by grind⟩ (s' := s.take (s.length - s'.length))
+          have h_get := GetReshape.as.Broadcast.of.GtLength_0.fin (by grind) Y ⟨i, by grind⟩ (s' := s.take (s.length - s'.length))
           simp at h_get
           apply h_get.symm.trans
           apply SEqGetS.of.SEq.GtLength

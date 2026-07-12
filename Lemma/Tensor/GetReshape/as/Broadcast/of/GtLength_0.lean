@@ -1,4 +1,4 @@
-import Lemma.Tensor.GetBroadcast.as.Broadcast.of.EqProdS.GtLength_0
+import Lemma.Tensor.GetReshape.as.Reshape.of.EqProdS.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Tensor
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   (X.reshape (s' ++ s) (by simp))[i]'(by rw [Length.eq.Get_0.of.GtLength_0 (by grind)]; grind) ≃ X.reshape (s'.tail ++ s) (by simp) := by
 -- proof
-  apply GetBroadcast.as.Broadcast.of.EqProdS.GtLength_0 h (by grind) X (s' := s)
+  apply GetReshape.as.Reshape.of.EqProdS.GtLength_0 h (by grind) X (s' := s)
 
 
 -- created on 2026-01-12

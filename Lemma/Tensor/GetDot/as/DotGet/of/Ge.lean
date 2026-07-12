@@ -6,13 +6,13 @@ import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetBatchDot.as.BatchDotGetS.of.Eq
-import Lemma.Tensor.GetBroadcast.as.Broadcast.of.EqProdS.GtLength_0
+import Lemma.Tensor.GetReshape.as.Reshape.of.EqProdS.GtLength_0
 import Lemma.Tensor.GetBroadcastMatmul.as.BroadcastMatmulRecGet.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Ge
 import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.GeGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.EqGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.GtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
