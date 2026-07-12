@@ -1,6 +1,7 @@
-import stdlib.List
+import Lemma.List.LengthInsertIdx.eq.Add_Length_1.of.GeLength
 import Lemma.Nat.Add
-open Nat
+import stdlib.List
+open List Nat
 
 
 @[main]
@@ -12,8 +13,9 @@ private lemma main
 -- imply
   (s.insertIdx i a).length = 1 + s.length := by
 -- proof
-  rw [List.length_insertIdx_of_le_length h]
+  rw [LengthInsertIdx.eq.Add_Length_1.of.GeLength h]
   rw [Add.comm]
 
 
 -- created on 2025-06-08
+-- updated on 2026-07-12
