@@ -4,7 +4,7 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
 import Lemma.Nat.EqMax.of.Gt
-import Lemma.Tensor.EqBroadcastMatmulS.of.SEq.SEq
+import Lemma.Tensor.EqReshapeMatmulS.of.SEq.SEq
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqResize.of.Eq_Get
 open Bool List Nat Tensor
@@ -47,7 +47,7 @@ private lemma main
       grind
     ·
       simp
-      apply EqBroadcastMatmulS.of.SEq.SEq
+      apply EqReshapeMatmulS.of.SEq.SEq
       ·
         apply SEqCastS.of.SEq.Eq.Eq
         ·
