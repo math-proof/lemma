@@ -1,7 +1,6 @@
 import Lemma.Vector.EqReplicate0_0
 import Lemma.Vector.Flatten0.eq.Zero
 import sympy.tensor.tensor
-open Tensor
 
 
 @[main]
