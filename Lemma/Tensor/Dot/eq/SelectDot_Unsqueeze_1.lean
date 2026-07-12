@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.Matmul.as.Bmm
-import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
+import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
@@ -26,7 +26,7 @@ private lemma main
   apply SEq_Cast.of.SEq.Eq (by simp [broadcast_shape, matmul_shape])
   rw [Matmul.eq.Cast_Bmm]
   apply SEq_Cast.of.SEq.Eq (by simp [broadcast_shape])
-  apply SEqBatchDotS.of.SEq.SEq (by rfl)
+  apply SEqBmmS.of.SEq.SEq (by rfl)
   symm
   have := SEqResize.of.Eq_Get (by grind) (B.unsqueeze 1) (i := ⟨0, by grind⟩) (n := k ⊔ k)
   apply this.trans

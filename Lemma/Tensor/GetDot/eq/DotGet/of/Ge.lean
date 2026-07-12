@@ -31,10 +31,10 @@ import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
-import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Matmul.as.SelectBatchDot.of.EqGet_SubLength_1.GeLength_2
-import Lemma.Tensor.Matmul.as.SelectBatchDot.of.Eq_Get_SubLength.GeLength_2
-import Lemma.Tensor.Matmul.eq.Zero
+import Lemma.Tensor.Einsum.as.Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.EqGet_SubLength_1.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.Eq_Get_SubLength.GeLength_2
+import Lemma.Tensor.Einsum.eq.Zero
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
@@ -68,10 +68,10 @@ private lemma main
     subst h_n
     simp [GetElem.getElem]
     simp [Dot.dot]
-    rw [Matmul.eq.Cast_ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2]
+    rw [Matmul.eq.Cast_Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2]
     ·
       simp
-      rw [Matmul.eq.Cast_SelectBatchDot.of.Eq_Get_SubLength.GeLength_2 (by simp) (by simp)]
+      rw [Matmul.eq.Cast_SelectBmm.of.Eq_Get_SubLength.GeLength_2 (by simp) (by simp)]
       simp
       let XiBroadcast : Tensor α ([] ++ [1, k]) := (X.get i).reshape [1, k] (by simp)
       have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiBroadcast.bmm Y) ⟨0, by simp⟩
@@ -185,7 +185,7 @@ private lemma une
     if hn0 : k = 0 then
       subst hn0
       simp [GetElem.getElem, Dot.dot]
-      rw [Matmul.eq.Cast_SelectBatchDot.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
+      rw [Matmul.eq.Cast_SelectBmm.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
       simp [Tensor.bmm, Tensor.reshape, matmul_shape]
       apply Eq.of.EqDataS
       apply @Vector.Eq.of.All_EqGetS.fin
@@ -194,7 +194,7 @@ private lemma une
       subst h_t
       simp
       repeat apply congrArg
-      rw [Matmul.eq.Zero]
+      rw [Einsum.eq.Zero]
       let Xl : Tensor α [n, 1, 0] := (X.unsqueeze 1).repeat ⟨1, by grind⟩ 1
       let Xr : Tensor α [n, 1, 0] := cast (congrArg (Tensor α) (by simp [EqSwap_0'1])) (((⟨Y.data.repeat 0⟩ : Tensor α [0, 1])ᵀ.unsqueeze 0).repeat ⟨0, by grind⟩ n)
       have := GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1 (by simp) (by simp) (by grind) ((Xl * Xr).sum 2) (i := 0) (j := i)
@@ -206,7 +206,7 @@ private lemma une
       have h_k : k ≠ 0 := hn0
       simp [GetElem.getElem]
       simp [Dot.dot]
-      rw [Matmul.eq.Cast_SelectBatchDot.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
+      rw [Matmul.eq.Cast_SelectBmm.of.EqGet_SubLength_1.GeLength_2 (by simp) (by rfl)]
       ·
         simp
         unfold Tensor.reshape Tensor.bmm

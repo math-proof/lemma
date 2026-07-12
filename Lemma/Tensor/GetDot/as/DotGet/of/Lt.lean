@@ -1,7 +1,7 @@
 import Lemma.Tensor.EqCast_0'0.of.Eq
 import Lemma.List.Set.eq.AppendTake__List.of.GtLength_0
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
-import Lemma.Tensor.GetBatchDot.as.BatchDotGetS.of.Eq
+import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
@@ -9,20 +9,20 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Nat.EqAddMulDiv
-import Lemma.Tensor.ReshapeMatmul.as.ReshapeMatmulRec
+import Lemma.Tensor.Tensordot.as.Matmul
 import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
-import Lemma.Tensor.GetReshapeMatmul.as.ReshapeMatmulRecGet.of.GtLength_0
+import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Matmul.as.SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
+import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.SEq0S.of.Eq
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq.EqLengthS
-import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq.Eq.Eq
+import Lemma.Tensor.SEqMatmulS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 import Lemma.Tensor.SEqRepeatS.of.SEq
 open Tensor Bool List Nat
@@ -47,13 +47,13 @@ private lemma main
   | s₀ :: s =>
     have h_min_length : s.length ⊓ (s.length + 1 + 1) = s.length := by omega
     simp [Dot.dot]
-    have := Matmul.eq.Cast_ReshapeMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
+    have := Matmul.eq.Cast_Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
     rw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
-    conv_rhs => rw [Matmul.eq.Cast_ReshapeMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
+    conv_rhs => rw [Matmul.eq.Cast_Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
     simp
     apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
-    rw [GetBroadcastMatmul.eq.Cast_ReshapeMatmulRecGet.of.GtLength_0.fin (by simp) _ _ ⟨i, by simp⟩]
-    simp [BroadcastMatmul.eq.Cast_ReshapeMatmulRec]
+    rw [GetTensordot.eq.Cast_MatmulGet.of.GtLength_0.fin (by simp) _ _ ⟨i, by simp⟩]
+    simp [Tensordot.eq.Cast_Matmul]
     apply SEqCastS.of.SEq.Eq.Eq
     ·
       simp [matmul_shape, broadcast_shape]
@@ -62,7 +62,7 @@ private lemma main
       split_ifs
       repeat simp_all
     ·
-      apply SEqReshapeMatmulRecS.of.SEq.SEq.Eq.Eq
+      apply SEqMatmulS.of.SEq.SEq.Eq.Eq
       ·
         simp
       ·
@@ -167,8 +167,8 @@ private lemma une
     rw [GetDot.eq.DotGet.of.Lt.une.fin h]
   | s₀ :: s =>
     simp [Dot.dot]
-    rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
-    conv_rhs => rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
+    rw [Matmul.eq.Cast_SelectBmm.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
+    conv_rhs => rw [Matmul.eq.Cast_SelectBmm.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
     simp
     apply SEq_Cast.of.SEq.Eq
     ·
@@ -193,12 +193,12 @@ private lemma une
               apply SEqSelectS.of.SEq
               have h_bz : (n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2) = n :: (s₀ :: (s ++ [k])).take s.length := by
                 simp
-              rw [GetBatchDot.eq.Cast_BatchDotGetS.of.Eq.fin h_bz]
+              rw [GetBmm.eq.Cast_BmmGetS.of.Eq.fin h_bz]
               apply SEqCast.of.SEq.Eq
               .
                 simp [AppendTake_Length.eq.Cons_Append_List]
               .
-                apply SEqBatchDotS.of.SEq.SEq
+                apply SEqBmmS.of.SEq.SEq
                 .
                   apply SEq_Cast.of.SEq.Eq
                   .

@@ -4077,7 +4077,12 @@ function leanStatementsPreferWordOverTactic(stmts) {
         }
         if (ch.parent !== p) continue;
         if (p instanceof LeanColon && p.rhs === ch) return true;
-        if (p instanceof LeanBrace && p.arg === ch) return true;
+        if (p instanceof LeanBrace && p.arg === ch) {
+            /** `repeat { simp only … }` / `try { … }` — tactic block, not a term `{ … }`. */
+            let q = p.parent;
+            while (q instanceof LeanArgsSpaceSeparated) q = q.parent;
+            return !(q instanceof LeanTactic && q.is_inline_tactic_block());
+        }
         if ((p instanceof Lean_rightarrow || p instanceof Lean_mapsto) && p.rhs === ch) return true;
     }
     return false;

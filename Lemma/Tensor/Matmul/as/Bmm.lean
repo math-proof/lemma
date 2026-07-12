@@ -1,10 +1,10 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Tensor.GetBatchDot.as.BatchDotGetS.of.Eq
+import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq
+import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 open Bool Tensor
 
 
@@ -29,7 +29,7 @@ private lemma main
     ·
       intro j
       simp
-      erw [GetBatchDot.eq.Cast_BatchDotGetS.of.Eq.fin (b₀ := h) (b := t) (by simp) (i := ⟨j, by grind⟩)]
+      erw [GetBmm.eq.Cast_BmmGetS.of.Eq.fin (b₀ := h) (b := t) (by simp) (i := ⟨j, by grind⟩)]
       apply SEq_Cast.of.SEq.Eq (by simp)
       ·
         rw [GetFromVector.eq.Get.fin]
@@ -37,7 +37,7 @@ private lemma main
         have ih := ih (X.get ⟨j, by grind⟩) (Y.get ⟨j, by grind⟩)
         symm
         apply ih.symm.trans
-        apply SEqReshapeMatmulRecS.of.SEq.SEq (by simp) <;>
+        apply SEqMatmulS.of.SEq.SEq (by simp) <;>
         ·
           erw [GetToVector.eq.Get.fin]
           simp

@@ -42,10 +42,10 @@ import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
-import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Matmul.as.SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
-import Lemma.Tensor.Matmul.as.SelectBatchDot.of.Lt_Get_SubLength.GeLength_2
-import Lemma.Tensor.Matmul.eq.SumMulDataS.of.Lt
+import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.Lt_Get_SubLength.GeLength_2
+import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Lt
 import Lemma.Tensor.SEqDataS.of.SEq
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
@@ -83,10 +83,6 @@ private lemma main
   rw [Tensor.Dot.eq.SumMul.of.Lt h]
   erw [GetSum_2.eq.SumGet__1.fin (i := ⟨i, by grind⟩)]
   simp [Dot.dot]
-  rw [Matmul.eq.Cast_ReshapeMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
-  simp
-  rw [Matmul.eq.Cast_SelectBatchDot.of.Lt_Get_SubLength.GeLength_2 (by simp) (by simpa)]
-  simp
   let XiAppendBroadcast : Tensor α ([] ++ [1, n']) := (((X.get i).resize ⟨0, by grind⟩ n')).reshape [1, n'] (by simp)
   have := Select_0.eq.Cast_Get.of.GtLength_0 (by grind) (XiAppendBroadcast.bmm Y) ⟨0, by simp⟩
   simp only [XiAppendBroadcast] at this
@@ -212,9 +208,9 @@ private lemma une
 -- proof
   simp [GetElem.getElem]
   simp [Dot.dot]
-  rw [Matmul.eq.Cast_SelectBatchDot.of.LtGet_SubLength_1.GeLength_2]
+  rw [Einsum.eq.Cast_SelectBmm.of.LtGet_SubLength_1.GeLength_2]
   ·
-    simp [Matmul.eq.SumMulDataS.of.Lt h]
+    simp [Einsum.eq.SumMulDataS.of.Lt h]
     unfold Tensor.reshape
     unfold Tensor.bmm
     simp
@@ -225,16 +221,16 @@ private lemma une
       simp
     have h_s2 : [n', 1].prod / [n'].prod * [n'].prod = [n', 1].prod := by
       simp [EqMulDiv]
-    let X' : Tensor α ([n] ++ [n' / k * k]) := X.repeat (n' / k) (1 : Fin 2)
+    let X' : Tensor α ([n] ++ [n' / k * k]) := X.repeat (1 : Fin 2) (n' / k)
     let X'Append : Tensor α ([n] ++ [n' / k * k + n' % k]) := X' ++ (0 : Tensor α ([n] ++ [n' % k]))
-    let X'Repeat : Tensor α ([] ++ [n, 1, n']) := ((cast (congrArg (Tensor α) h_s0) X'Append).unsqueeze 1).repeat 1 (1 : Fin 3)
+    let X'Repeat : Tensor α ([] ++ [n, 1, n']) := ((cast (congrArg (Tensor α) h_s0) X'Append).unsqueeze 1).repeat (1 : Fin 3) 1
     have := GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
       (by grind)
       (by grind)
       (by grind)
       ((X'Repeat * cast (congrArg (Tensor α) h_s1)
         (((⟨cast (congrArg (List.Vector α) h_s2)
-          (Y.data.repeat (n' * 1 / (n' * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat n (0 : Fin 3))).sum 2
+          (Y.data.repeat (n' * 1 / (n' * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat (0 : Fin 3) n)).sum 2
       )
       (i := 0) (j := i)
     simp at this

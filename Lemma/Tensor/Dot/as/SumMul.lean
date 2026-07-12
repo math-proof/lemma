@@ -6,7 +6,7 @@ import Lemma.List.InsertIdxAppend.eq.Append_Cons
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
 import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
 import Lemma.Tensor.Matmul.as.Bmm.of.Eq
-import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Einsum.as.Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
@@ -30,7 +30,7 @@ private lemma main
   A @ B ≃ (A' * B').sum (bz.length + 2) := by
 -- proof
   simp [Dot.dot]
-  rw [Matmul.eq.Cast_ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2 (by grind) (by grind) (by grind)]
+  rw [Einsum.eq.Cast_Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2 (by grind) (by grind) (by grind)]
   apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, matmul_shape])
   simp [tensordot]
   rw [Matmul.eq.Cast_Bmm.of.Eq (by simp)]

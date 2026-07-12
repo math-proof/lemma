@@ -33,10 +33,10 @@ import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
-import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Matmul.as.SelectBatchDot.of.GtGet_SubLength_1.GeLength_2
-import Lemma.Tensor.Matmul.as.SelectBatchDot.of.Gt_Get_SubLength.GeLength_2
-import Lemma.Tensor.Matmul.eq.SumMulDataS.of.Gt
+import Lemma.Tensor.Einsum.as.Tensordot.of.GtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.GtGet_SubLength_1.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.Gt_Get_SubLength.GeLength_2
+import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Gt
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
 import Lemma.Vector.Eq.is.All_EqGetS
@@ -67,10 +67,10 @@ private lemma main
 -- proof
   simp [GetElem.getElem]
   simp [Dot.dot]
-  rw [Matmul.eq.Cast_ReshapeMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2]
+  rw [Einsum.eq.Cast_Tensordot.of.GtGetS_SubLength.GeLength_2.GeLength_2]
   ·
     simp
-    rw [Matmul.eq.Cast_SelectBatchDot.of.Gt_Get_SubLength.GeLength_2]
+    rw [Einsum.eq.Cast_SelectBmm.of.Gt_Get_SubLength.GeLength_2]
     ·
       simp
       let Y' : Tensor α ([] ++ [k / n' * n', k']) := Y.repeat (0 : Fin 2) (k / n')
@@ -187,9 +187,9 @@ private lemma une
 -- proof
   simp [GetElem.getElem]
   simp [Dot.dot]
-  rw [Matmul.eq.Cast_SelectBatchDot.of.GtGet_SubLength_1.GeLength_2]
+  rw [Einsum.eq.Cast_SelectBmm.of.GtGet_SubLength_1.GeLength_2]
   ·
-    simp [Matmul.eq.SumMulDataS.of.Gt h]
+    simp [Einsum.eq.SumMulDataS.of.Gt h]
     unfold Tensor.reshape
     unfold Tensor.bmm
     simp

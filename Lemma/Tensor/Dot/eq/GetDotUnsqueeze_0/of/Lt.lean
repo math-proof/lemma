@@ -3,7 +3,7 @@ import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Matmul.as.Bmm
-import Lemma.Tensor.SEqBatchDotS.of.SEq.SEq
+import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.SEqResize.of.Eq_Get
@@ -32,7 +32,7 @@ private lemma main
   apply SEq_Cast.of.SEq.Eq (by simp [broadcast_shape, matmul_shape])
   rw [Matmul.eq.Cast_Bmm]
   apply SEq_Cast.of.SEq.Eq (by simp [broadcast_shape])
-  apply SEqBatchDotS.of.SEq.SEq _ (by rfl)
+  apply SEqBmmS.of.SEq.SEq _ (by rfl)
   symm
   unfold unsqueeze
   simp
