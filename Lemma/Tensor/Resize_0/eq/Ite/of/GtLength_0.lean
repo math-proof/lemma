@@ -1,3 +1,6 @@
+import Lemma.Nat.Div.eq.Zero.of.Lt
+import Lemma.Bool.SEq.is.SEqCast.of.Eq
+import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.EqSet.of.EqGet
@@ -30,19 +33,16 @@ private lemma main
 -- imply
   X.resize ⟨0, by grind⟩ n =
     if h_n : s[0] < n then
-      let q := n / s[0]
-      let r := n % s[0]
       cast
-        (congrArg (Tensor α) (by simp [q, r, EqAddMulDiv, Set_0.eq.Cons_Tail.of.GtLength_0 h]))
+        (congrArg (Tensor α) (by simp [EqAddMulDiv, Set_0.eq.Cons_Tail.of.GtLength_0 h]))
         (((cast
-          (congrArg (Tensor α) (by simp [q, Set_0.eq.Cons_Tail.of.GtLength_0 h]))
-          (X.repeat ⟨0, h⟩ q)) : Tensor α (q * s[0] :: s.tail)) ++ (0 : Tensor α (r :: s.tail))
+          (congrArg (Tensor α) (by simp [Set_0.eq.Cons_Tail.of.GtLength_0 h]))
+          (X.repeat ⟨0, h⟩ (n / s[0]))) : Tensor α ((n / s[0]) * s[0] :: s.tail)) ++ (0 : Tensor α (n % s[0] :: s.tail))
         )
     else if h_n : s[0] > n then
-      cast (congrArg (Tensor α) (by rw [HeadD.eq.Get_0.of.GtLength_0 h, EqMin.of.Lt h_n, Set_0.eq.Cons_Tail.of.GtLength_0 h])) (Tensor.fromVector (X.toVector.take n))
+      cast (congrArg (Tensor α) (by rw [Set_0.eq.Cons_Tail.of.GtLength_0 h])) (0 : Tensor α (n :: s.tail))
     else
-      have h_n : s[0] = n := by omega
-      cast (congrArg (Tensor α) (by rw [EqSet.of.EqGet h_n (d := ⟨0, by grind⟩)])) X := by
+      cast (congrArg (Tensor α) (by rw [EqSet.of.EqGet (by grind) (d := ⟨0, by grind⟩)])) X := by
 -- proof
   unfold Tensor.resize
   simp
@@ -55,7 +55,10 @@ private lemma main
     ·
       rfl
     ·
-      simp
+      apply EqCast.of.SEq
+      -- simp only [Div.eq.Zero.of.Lt h_n]
+      apply SEqCast.of.SEq.Eq --(by simp)
+      sorry
     ·
       have h_n : k = n := by omega
       subst h_n

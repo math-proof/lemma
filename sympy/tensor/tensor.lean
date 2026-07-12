@@ -96,7 +96,7 @@ def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) 
       X
 
 /--
-[numpy.resize](https://numpy.org/doc/stable/reference/generated/numpy.resize.html) along one axis: tile then zero-pad when growing, take a prefix when shrinking.
+[numpy.resize](https://numpy.org/doc/stable/reference/generated/numpy.resize.html)
 -/
 def Tensor.resize [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : Tensor α (s.set dim n) :=
   let h_s := EqCons_Tail.of.GtLength_0 (show s.length > 0 by linarith [dim.isLt])
@@ -106,12 +106,7 @@ def Tensor.resize [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : T
     | [] =>
       False.elim (by contradiction)
     | k :: s =>
-      if h_lt : k < n then
-        let q := n / k
-        let r := n % k
-        cast (by simp [q, r, EqAddMulDiv]) ((cast (by simp) (X.repeat ⟨0, by simp⟩ q) : Tensor α (q * k :: s)) ++ (0 : Tensor α (r :: s)))
-      else
-        cast (by grind) (fromVector (X.toVector.take n))
+      cast (by simp [EqAddMulDiv]) ((cast (by simp) (X.repeat ⟨0, by simp⟩ (n / k)) : Tensor α ((n / k) * k :: s)) ++ (0 : Tensor α (n % k :: s)))
   | ⟨d + 1, _⟩ =>
     cast (congrArg (Tensor α) (show s.headD 1 :: s.tail.set d n = s.set (d + 1) n by grind)) (fromVector (X.toVector.map fun s => s.resize ⟨d, by grind⟩ n))
 
