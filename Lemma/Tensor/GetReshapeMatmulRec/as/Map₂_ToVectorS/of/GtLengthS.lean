@@ -1,11 +1,11 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
-import Lemma.Tensor.BroadcastMatmulRec.as.FromVectorMap₂_CastS_ToVector.of.EqGetS_0.EqLengthS.GtLength_0
+import Lemma.Tensor.ReshapeMatmulRec.as.FromVectorMap₂_CastS_ToVector.of.EqGetS_0.EqLengthS.GtLength_0
 import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq
+import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import sympy.tensor.tensor
@@ -37,14 +37,14 @@ private lemma main
   (X.matmul Y (by grind)).get ⟨i, h_i⟩ ≃ Xi.matmul Yi (by simp; grind) := by
 -- proof
   intro Xi Yi h_i
-  have := BroadcastMatmulRec.as.FromVectorMap₂_CastS_ToVector.of.EqGetS_0.EqLengthS.GtLength_0 h h_length h_0 X Y
+  have := ReshapeMatmulRec.as.FromVectorMap₂_CastS_ToVector.of.EqGetS_0.EqLengthS.GtLength_0 h h_length h_0 X Y
   simp at this
   have := SEqGetS.of.SEq.GtLength.fin h_i this (i := i)
   simp at this
   apply this.trans
   simp [GetFromVector.eq.Get.fin]
   simp [Xi, Yi]
-  apply SEqBroadcastMatmulRecS.of.SEq.SEq
+  apply SEqReshapeMatmulRecS.of.SEq.SEq
   ·
     grind
   repeat {

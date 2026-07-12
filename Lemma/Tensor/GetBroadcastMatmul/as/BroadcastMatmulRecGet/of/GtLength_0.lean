@@ -1,6 +1,6 @@
 import Lemma.Tensor.GetBroadcastMatmul.as.BroadcastMatmulRecGet.of.GtLengthS
 import Lemma.Tensor.GtLength.of.GtLength
-import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq
+import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 open Tensor
 
@@ -25,7 +25,7 @@ private lemma main
   have := GetBroadcastMatmul.as.BroadcastMatmulRecGet.of.GtLengthS.fin (by grind) X Y i (s' := [])
   simp at this
   apply this.trans
-  apply SEqBroadcastMatmulRecS.of.SEq.SEq
+  apply SEqReshapeMatmulRecS.of.SEq.SEq
   ·
     simp
   ·

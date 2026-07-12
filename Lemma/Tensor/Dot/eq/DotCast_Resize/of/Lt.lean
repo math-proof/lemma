@@ -42,7 +42,7 @@ import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.Lt_Get_SubLength.GeLength_2
 import Lemma.Tensor.Matmul.eq.SumMulDataS.of.Lt
@@ -80,7 +80,7 @@ private lemma main
 -- proof
   unfold Tensor.resize
   simp [Dot.dot]
-  conv_rhs => rw [Matmul.eq.Cast_BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simp)]
+  conv_rhs => rw [Matmul.eq.Cast_ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simp)]
   rw [Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
   apply EqCastS.of.SEq.Eq
   .

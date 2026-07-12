@@ -4,7 +4,7 @@ import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Tensor.GetResize_0.as.Get.of.GtLength_0
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq
+import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq
 open Bool Tensor
 
 
@@ -37,7 +37,7 @@ private lemma main
         have ih := ih (X.get ⟨j, by grind⟩) (Y.get ⟨j, by grind⟩)
         symm
         apply ih.symm.trans
-        apply SEqBroadcastMatmulRecS.of.SEq.SEq (by simp) <;>
+        apply SEqReshapeMatmulRecS.of.SEq.SEq (by simp) <;>
         ·
           erw [GetToVector.eq.Get.fin]
           simp

@@ -22,7 +22,7 @@ import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeL
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.LtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.SEq0S.of.Eq
 import Lemma.Tensor.SEqAppendS.of.SEq.SEq.EqLengthS
-import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
+import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 import Lemma.Tensor.SEqRepeatS.of.SEq
 open Tensor Bool List Nat
@@ -47,13 +47,13 @@ private lemma main
   | s₀ :: s =>
     have h_min_length : s.length ⊓ (s.length + 1 + 1) = s.length := by omega
     simp [Dot.dot]
-    have := Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
+    have := Matmul.eq.Cast_ReshapeMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
     rw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
-    conv_rhs => rw [Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
+    conv_rhs => rw [Matmul.eq.Cast_ReshapeMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
     simp
     apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
-    rw [GetBroadcastMatmul.eq.Cast_BroadcastMatmulRecGet.of.GtLength_0.fin (by simp) _ _ ⟨i, by simp⟩]
-    simp [BroadcastMatmul.eq.Cast_BroadcastMatmulRec]
+    rw [GetBroadcastMatmul.eq.Cast_ReshapeMatmulRecGet.of.GtLength_0.fin (by simp) _ _ ⟨i, by simp⟩]
+    simp [BroadcastMatmul.eq.Cast_ReshapeMatmulRec]
     apply SEqCastS.of.SEq.Eq.Eq
     ·
       simp [matmul_shape, broadcast_shape]
@@ -62,7 +62,7 @@ private lemma main
       split_ifs
       repeat simp_all
     ·
-      apply SEqBroadcastMatmulRecS.of.SEq.SEq.Eq.Eq
+      apply SEqReshapeMatmulRecS.of.SEq.SEq.Eq.Eq
       ·
         simp
       ·

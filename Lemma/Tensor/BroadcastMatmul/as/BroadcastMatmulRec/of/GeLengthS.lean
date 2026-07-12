@@ -1,7 +1,7 @@
-import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec.of.GtLengthS
-import Lemma.Tensor.BroadcastMatmul.eq.BroadcastMatmulRec.of.EqLengthS
-import Lemma.Tensor.SEqBroadcast.of.Eq
-import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq
+import Lemma.Tensor.ReshapeMatmul.as.BroadcastMatmulRec.of.GtLengthS
+import Lemma.Tensor.ReshapeMatmul.eq.BroadcastMatmulRec.of.EqLengthS
+import Lemma.Tensor.SEqReshape.of.Eq
+import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq
 open Tensor
 
 
@@ -17,18 +17,18 @@ private lemma main
   X.tensordot Y ≃ X.matmul (Y.reshape (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by simp)) (by grind) := by
 -- proof
   if h : s.length = s'.length then
-    rw [BroadcastMatmul.eq.BroadcastMatmulRec.of.EqLengthS h]
-    apply SEqBroadcastMatmulRecS.of.SEq.SEq
+    rw [ReshapeMatmul.eq.BroadcastMatmulRec.of.EqLengthS h]
+    apply SEqReshapeMatmulRecS.of.SEq.SEq
     ·
       assumption
     ·
       rfl
     ·
       rw [← h]
-      apply SEq_Broadcast.of.Eq
+      apply SEq_Reshape.of.Eq
       simp
   else
-    apply BroadcastMatmul.as.BroadcastMatmulRec.of.GtLengthS
+    apply ReshapeMatmul.as.BroadcastMatmulRec.of.GtLengthS
     omega
 
 

@@ -1,7 +1,7 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataDiv.eq.DivData
 import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
-import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Broadcast
+import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Reshape
 import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Nat.Div.eq.HDiv
 import Lemma.Tensor.Div.eq.Div_Broadcast
@@ -36,7 +36,7 @@ private lemma main
     | .nil =>
       contradiction
     | s₀ :: s =>
-      rw [ToVectorDiv.eq.DivToVector_Broadcast]
+      rw [ToVectorDiv.eq.DivToVector_Reshape]
       simp [HDiv.hDiv]
       apply Eq.of.EqDataS
       simp [Div.eq.HDiv]

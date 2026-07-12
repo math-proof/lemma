@@ -33,7 +33,7 @@ import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
-import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.GtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.Gt_Get_SubLength.GeLength_2
 import Lemma.Tensor.Matmul.eq.SumMulDataS.of.Gt
@@ -67,7 +67,7 @@ private lemma main
 -- proof
   simp [GetElem.getElem]
   simp [Dot.dot]
-  rw [Matmul.eq.Cast_BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2]
+  rw [Matmul.eq.Cast_ReshapeMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2]
   ·
     simp
     rw [Matmul.eq.Cast_SelectBatchDot.of.Gt_Get_SubLength.GeLength_2]
@@ -199,16 +199,16 @@ private lemma une
       simp [EqMulDiv]
     have h_s2 : k / n' * n' + k % n' = k := by simp [EqAddMulDiv]
     have h_s2 := congrArg (fun n : ℕ => [n]) h_s2
-    let Y' : Tensor α [k / n' * n'] := Y.repeat (k / n') (0 : Fin 1)
+    let Y' : Tensor α [k / n' * n'] := Y.repeat (0 : Fin 1) (k / n')
     let Y'Append : Tensor α [k / n' * n' + k % n'] := Y' ++ (0 : Tensor α [k % n'])
-    let X' : Tensor α [n, 1, k] := (X.unsqueeze 1).repeat 1 (1 : Fin 3)
+    let X' : Tensor α [n, 1, k] := (X.unsqueeze 1).repeat (1 : Fin 3) 1
     have := GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
       (by grind)
       (by grind)
       (by grind)
       ((X' * cast (congrArg (Tensor α) h_s0)
         (((⟨cast (congrArg (List.Vector α) h_s1)
-          ((cast (congrArg (Tensor α) h_s2) Y'Append).data.repeat (k * 1 / (k * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat n (0 : Fin 3)
+          ((cast (congrArg (Tensor α) h_s2) Y'Append).data.repeat (k * 1 / (k * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat (0 : Fin 3) n
         )).sum 2
       )
       (i := 0) (j := i)
@@ -228,7 +228,7 @@ private lemma une
           rfl
       )
       (((⟨cast (congrArg (List.Vector α) h_s1)
-        ((cast (congrArg (Tensor α) h_s2) Y'Append).data.repeat (k * 1 / (k * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat n (0 : Fin 3)
+        ((cast (congrArg (Tensor α) h_s2) Y'Append).data.repeat (k * 1 / (k * 1)))⟩ : Tensor α _)ᵀ.unsqueeze 0).repeat (0 : Fin 3) n
       )
       ⟨i, by grind⟩
       (s' := [n, 1, k])

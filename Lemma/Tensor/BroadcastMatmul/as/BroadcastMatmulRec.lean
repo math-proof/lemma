@@ -1,5 +1,5 @@
 import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec.of.GeLengthS
-import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq
+import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 open Tensor
 
@@ -16,7 +16,7 @@ private lemma main
 -- proof
   have := BroadcastMatmul.as.BroadcastMatmulRec.of.GeLengthS (by simp) X Y (s' := [])
   apply this.trans
-  apply SEqBroadcastMatmulRecS.of.SEq.SEq
+  apply SEqReshapeMatmulRecS.of.SEq.SEq
   ·
     simp
   ·

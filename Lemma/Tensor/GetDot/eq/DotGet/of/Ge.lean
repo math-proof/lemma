@@ -31,7 +31,7 @@ import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
-import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.EqGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Matmul.as.SelectBatchDot.of.Eq_Get_SubLength.GeLength_2
 import Lemma.Tensor.Matmul.eq.Zero
@@ -68,7 +68,7 @@ private lemma main
     subst h_n
     simp [GetElem.getElem]
     simp [Dot.dot]
-    rw [Matmul.eq.Cast_BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2]
+    rw [Matmul.eq.Cast_ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2]
     ·
       simp
       rw [Matmul.eq.Cast_SelectBatchDot.of.Eq_Get_SubLength.GeLength_2 (by simp) (by simp)]

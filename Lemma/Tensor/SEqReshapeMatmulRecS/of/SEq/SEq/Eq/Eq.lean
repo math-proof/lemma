@@ -1,4 +1,4 @@
-import Lemma.Tensor.SEqBroadcastMatmulRecS.of.SEq.SEq
+import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq
 open Tensor
 
 
@@ -27,7 +27,7 @@ private lemma main
   A.matmul B (by grind) ≃ A'.matmul B' (by grind) := by
 -- proof
   subst h_m h_k
-  apply SEqBroadcastMatmulRecS.of.SEq.SEq h h_A h_B
+  apply SEqReshapeMatmulRecS.of.SEq.SEq h h_A h_B
 
 
 -- created on 2026-01-12

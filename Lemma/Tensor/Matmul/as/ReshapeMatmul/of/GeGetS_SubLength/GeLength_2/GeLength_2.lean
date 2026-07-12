@@ -6,8 +6,8 @@ import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
 import Lemma.Tensor.EqReshapeMatmulS.of.Eq.Eq
-import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Matmul.as.ReshapeMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqResize.of.Eq_Get
 open Bool List Nat Tensor
@@ -36,7 +36,7 @@ private lemma main
   X.einsum Y ≃ (Tensor.tensordot X' Y') := by
 -- proof
   if h_n_eq : s[s.length - 1] = s'[s'.length - 2] then
-    have := Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2 h_s h_s' h_n_eq X Y
+    have := Matmul.as.ReshapeMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2 h_s h_s' h_n_eq X Y
     apply SEq.trans this
     apply SEq.of.Eq
     apply EqReshapeMatmulS.of.Eq.Eq
@@ -67,7 +67,7 @@ private lemma main
         ·
           rwa [EqAppendTake__ListGet.of.GeLength_2]
   else
-    apply Matmul.as.BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2 h_s h_s' (by omega) X Y
+    apply Matmul.as.ReshapeMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2 h_s h_s' (by omega) X Y
 
 
 -- created on 2026-01-13
