@@ -5,7 +5,7 @@ import Lemma.List.Drop.eq.ListGet.of.GeLength_1
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
-import Lemma.Tensor.EqBroadcastMatmulS.of.Eq.Eq
+import Lemma.Tensor.EqReshapeMatmulS.of.Eq.Eq
 import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.GtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
@@ -39,7 +39,7 @@ private lemma main
     have := Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeLength_2 h_s h_s' h_n_eq X Y
     apply SEq.trans this
     apply SEq.of.Eq
-    apply EqBroadcastMatmulS.of.Eq.Eq
+    apply EqReshapeMatmulS.of.Eq.Eq
     ·
       rfl
     ·

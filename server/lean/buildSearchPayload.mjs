@@ -193,6 +193,21 @@ export async function buildSearchPayload(rawDict, projectUser) {
     }
   }
 
+  if (replacement && data.length > 0 && regex != null) {
+    let pattern = regex;
+    if (like) {
+      pattern = pattern.replace(/\./g, '\\.');
+    } else {
+      pattern = pattern.replace(/\\\\/g, '\\');
+    }
+    const flags = caseSensitive ? '' : 'i';
+    const re = new RegExp(pattern, flags);
+    data = data.map((item) => ({
+      ...item,
+      replacement: item.module.replace(re, replacement),
+    }));
+  }
+
   return {
     data,
     user: projectUser,
