@@ -1,7 +1,7 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.EqSwap_0'1
-import Lemma.Tensor.EqGetUnsqueeze
+import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetTranspose.eq.Get
@@ -25,7 +25,7 @@ private lemma main
   simp
   erw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
   simp
-  erw [EqGetUnsqueeze.nat.fin]
+  erw [EqGetUnsqueeze_0.nat.fin]
   erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp [EqSwap_0'1]) (by simp [EqSwap_0'1]) (i := ⟨j, by simp [EqSwap_0'1]⟩)]
   simp
   erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp [EqSwap_0'1]) (by simp [EqSwap_0'1]) (i := ⟨k, by simp [EqSwap_0'1]⟩)]

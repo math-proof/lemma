@@ -8,7 +8,7 @@ import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Nat.EqMod_1'0
-import Lemma.Tensor.EqGetUnsqueeze
+import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Head.eq.Get_0
@@ -43,7 +43,7 @@ private lemma main
   simp at this
   simp [this]
   simp [EqMod_1'0]
-  have := EqGetUnsqueeze.fin ((exp (⟨X⟩ : Tensor α [n])).sum 0)
+  have := EqGetUnsqueeze_0.fin ((exp (⟨X⟩ : Tensor α [n])).sum 0)
   simp at this
   simp [this]
   unfold Tensor.sum

@@ -1,5 +1,5 @@
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
-import Lemma.Tensor.EqGetUnsqueeze
+import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
 import Lemma.Tensor.GetFromVector.eq.Get
@@ -19,7 +19,7 @@ private lemma main
   induction d generalizing s X with
   | zero =>
     unfold Tensor.select
-    have := EqGetUnsqueeze.fin X
+    have := EqGetUnsqueeze_0.fin X
     simp at this ⊢
     rw [this]
   | succ d ih =>

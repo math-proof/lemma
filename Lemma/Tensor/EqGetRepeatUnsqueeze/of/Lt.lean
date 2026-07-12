@@ -2,7 +2,7 @@ import sympy.tensor.tensor
 import Lemma.Tensor.LengthRepeat.eq.MulGet_0.of.GtLength_0
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Nat.EqMod_1'0
-import Lemma.Tensor.EqGetUnsqueeze
+import Lemma.Tensor.EqGetUnsqueeze_0
 open Tensor Nat
 
 
@@ -21,7 +21,7 @@ private lemma main
   rw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0]
   ·
     simp [EqMod_1'0]
-    apply EqGetUnsqueeze
+    apply EqGetUnsqueeze_0
   ·
     simpa
 

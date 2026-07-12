@@ -1,6 +1,6 @@
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetS.of.Eq
-import Lemma.Tensor.EqGetUnsqueeze
+import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtVal_0
@@ -30,7 +30,7 @@ private lemma main
   simp [EqMod_1'0]
   erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by simp) (by simp) (by grind)]
   simp
-  erw [EqGetUnsqueeze.fin]
+  erw [EqGetUnsqueeze_0.fin]
 
 
 -- created on 2026-07-09
