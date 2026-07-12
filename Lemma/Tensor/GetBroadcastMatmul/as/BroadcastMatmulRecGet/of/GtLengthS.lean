@@ -4,7 +4,7 @@ import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.List.ZipWith__Append.eq.AppendZipWithS
-import Lemma.Tensor.ReshapeMatmul.as.BroadcastMatmulRec.of.GtLengthS
+import Lemma.Tensor.ReshapeMatmul.as.ReshapeMatmulRec.of.GtLengthS
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
 import Lemma.Tensor.GetReshapeMatmulRec.as.Map₂_ToVectorS.of.GtLengthS
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
@@ -30,7 +30,7 @@ private lemma main
   (X.tensordot Y)[i]'(GtLength.of.GtLength (by simp [broadcast_shape]; grind) (X.tensordot Y) ⟨i, by simp [broadcast_shape]; grind⟩ (j := s'.length + 2)) ≃ Xi.matmul (Y.reshape (s.tail.take (s.tail.length - s'.length) ++ s' ++ [n, k]) (by simp)) (by grind) := by
 -- proof
   simp only [GetElem.getElem]
-  have := ReshapeMatmul.as.BroadcastMatmulRec.of.GtLengthS h X Y
+  have := ReshapeMatmul.as.ReshapeMatmulRec.of.GtLengthS h X Y
   have := Eq_Cast.of.SEq this
   rw [this]
   rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by simp [broadcast_shape]; grind⟩)]

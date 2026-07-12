@@ -1,4 +1,4 @@
-import Lemma.Tensor.ReshapeMatmul.as.BroadcastMatmulRec.of.GtLengthS
+import Lemma.Tensor.ReshapeMatmul.as.ReshapeMatmulRec.of.GtLengthS
 import Lemma.Tensor.ReshapeMatmul.eq.BroadcastMatmulRec.of.EqLengthS
 import Lemma.Tensor.SEqReshape.of.Eq
 import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq
@@ -28,7 +28,7 @@ private lemma main
       apply SEq_Reshape.of.Eq
       simp
   else
-    apply ReshapeMatmul.as.BroadcastMatmulRec.of.GtLengthS
+    apply ReshapeMatmul.as.ReshapeMatmulRec.of.GtLengthS
     omega
 
 
