@@ -1,4 +1,5 @@
 import Lemma.Nat.DivMulS.eq.Div.of.Ne_0
+import Lemma.Nat.Mod.eq.Sub_Mul_Div
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.MulSub.eq.SubMulS
 open Nat
@@ -15,7 +16,7 @@ private lemma main
     subst h
     simp
   else
-    simp [mod_def]
+    simp [Mod.eq.Sub_Mul_Div]
     rw [MulMul.eq.Mul_Mul.comm]
     rw [Mul_Mul.eq.MulMul]
     rw [SubMulS.eq.MulSub]
