@@ -20,7 +20,7 @@ import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq
 import Lemma.Vector.GetMul.eq.MulGetS
-open Bool Nat Tensor Vector Fin List
+open Bool Nat Tensor Vector
 set_option maxHeartbeats 10000000
 
 

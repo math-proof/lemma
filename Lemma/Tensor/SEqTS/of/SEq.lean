@@ -8,12 +8,11 @@ private lemma main
   {A : Tensor α s}
   {B : Tensor α s'}
 -- given
-  (h : A ≃ B)
-  (i j : ℕ) :
+  (h : A ≃ B) :
 -- imply
-  A.transpose i j ≃ B.transpose i j := by
+  Aᵀ ≃ Bᵀ := by
 -- proof
   apply SEqUFnS.of.SEq h
 
 
--- created on 2025-07-13
+-- created on 2026-07-12

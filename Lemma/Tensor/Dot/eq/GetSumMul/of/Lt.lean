@@ -18,16 +18,19 @@ open Bool List Tensor
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (A : Tensor α [k])
+  (h : k' < k)
+  (A : Tensor α [k'])
   (B : Tensor α [k, n]) :
 -- imply
-  let A' : Tensor α [1, 1, k] := (A.unsqueeze 0).unsqueeze 1
+  let A' : Tensor α [k] := A.resize ⟨0, by grind⟩ k
+  let A' : Tensor α [1, 1, k] := (A'.unsqueeze 0).unsqueeze 1
   let A' : Tensor α [1, n, k] := cast (congrArg (Tensor α) (by simp)) (A'.repeat ⟨1, by grind⟩ n)
   let B' : Tensor α [n, k] := Bᵀ
   let B' : Tensor α [1, n, k] := B'.unsqueeze 0
   let B' : Tensor α [1, n, k] := cast (congrArg (Tensor α) (by simp)) (B'.repeat ⟨0, by grind⟩ 1)
   A @ B = ((A' * B').sum 2).get ⟨0, by grind⟩ := by
 -- proof
+  simp
   rw [Dot.eq.GetDotUnsqueeze_0]
   apply Eq.of.SEq
   apply SEqGetS.of.SEq.GtLength
@@ -55,4 +58,4 @@ private lemma main
     simp
 
 
--- created on 2026-07-11
+-- created on 2026-07-12

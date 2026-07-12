@@ -10,7 +10,7 @@ import Lemma.Tensor.Matmul.as.BroadcastMatmul.of.EqGetS_SubLength.GeLength_2.GeL
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
-import Lemma.Tensor.SEqTransposeS.of.SEq
+import Lemma.Tensor.SEqTS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq.Eq
 open Bool List Tensor
 
@@ -66,7 +66,7 @@ private lemma main
       apply SEqUnsqueezeS.of.SEq.Eq _ (by grind)
       apply SEqCastS.of.SEq.Eq.Eq
       repeat rw [SwapAppend.eq.Append_Swap.of.LeLength.LeLength (by grind) (by grind)]; simp [EqSwap_0'1]
-      apply SEqTransposeS.of.SEq.t
+      apply SEqTS.of.SEq
       apply SEqCast.of.Eq
       simp
 

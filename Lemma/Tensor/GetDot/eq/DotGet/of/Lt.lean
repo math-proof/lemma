@@ -1,3 +1,4 @@
+import Lemma.Tensor.Dot.eq.SumMul.of.Lt
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
@@ -79,6 +80,8 @@ private lemma main
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] @ Y := by
 -- proof
   simp [GetElem.getElem]
+  rw [Tensor.Dot.eq.SumMul.of.Lt h]
+  erw [GetSum_2.eq.SumGet__1.fin (i := ⟨i, by grind⟩)]
   simp [Dot.dot]
   rw [Matmul.eq.Cast_BroadcastMatmul.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
   simp
