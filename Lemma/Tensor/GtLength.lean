@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqLengthS
-open Tensor Nat
+open Tensor
 
 
 @[main]

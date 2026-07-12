@@ -27,6 +27,7 @@ import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.In_CartesianProduct.of.In_CartesianProductCons
 import Lemma.List.Lt.of.In_CartesianProductCons
+import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
@@ -109,6 +110,9 @@ def Tensor.resize [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : T
       cast (by simp [EqAddMulDiv]) ((cast (by simp) (X.repeat ⟨0, by simp⟩ (n / k)) : Tensor α ((n / k) * k :: s)) ++ (0 : Tensor α (n % k :: s)))
   | ⟨d + 1, _⟩ =>
     cast (congrArg (Tensor α) (show s.headD 1 :: s.tail.set d n = s.set (d + 1) n by grind)) (fromVector (X.toVector.map fun s => s.resize ⟨d, by grind⟩ n))
+
+def Tensor.resize' [Zero α] (X : Tensor α s) (dim : Fin s.length) (n : ℕ) : Tensor α (s.set dim n) :=
+  ⟨cast (congrArg (List.Vector α) (MulProd_Mul_Prod.eq.ProdSet.of.GtLength dim.isLt n)) ((X.data.splitAt dim).map (·.resize (n * (s.drop dim.succ).prod))).flatten⟩
 
 /--
 [torch.matmul](https://docs.pytorch.org/docs/stable/generated/torch.matmul.html)

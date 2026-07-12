@@ -3111,7 +3111,8 @@ export class LeanMul extends LeanArithmetic {
             (lhs instanceof LeanMul && lhs.command) ||
             lhs.is_space_separated() ||
             lhs instanceof LeanFDiv ||
-            rhs instanceof LeanPow
+            rhs instanceof LeanPow || 
+            lhs instanceof LeanModular
         ) {
             return '\\cdot';
         }
