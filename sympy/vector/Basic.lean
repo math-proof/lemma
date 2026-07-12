@@ -1,5 +1,6 @@
 import Mathlib.Data.Vector.MapLemmas
 import Lemma.Nat.EqMin_SubMulS
+import Lemma.Nat.EqAddMulDiv
 import Lemma.List.LengthToList.eq.Length
 import Lemma.List.Prod.eq.MulProdS
 open Nat Lean
@@ -150,3 +151,6 @@ end List.Vector
 
 def List.Vector.repeat (x : Vector α n) (m : ℕ) : Vector α (m * n) :=
   (List.Vector.replicate m x).flatten
+
+def List.Vector.resize [Zero α] (x : Vector α n) (n' : ℕ) : Vector α n' :=
+  cast (congrArg (List.Vector α) (EqAddMulDiv _ _)) (x.repeat (n' / n) ++ (0 : Vector α (n' % n)))
