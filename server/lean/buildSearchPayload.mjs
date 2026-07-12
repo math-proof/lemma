@@ -4,6 +4,13 @@
  */
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
 import { searchLemmaFullText } from './lemmaFullTextSearch.mjs';
+import { moduleToLeanPath, fileExists } from './modulePath.mjs';
+
+/** True when `Lemma/…/Module.lean` exists for a dotted module name. */
+function moduleFileExists(module) {
+  const abs = moduleToLeanPath(module);
+  return abs != null && fileExists(abs);
+}
 
 /** @param {unknown} o @param {string} k */
 function hasKey(o, k) {
@@ -194,6 +201,7 @@ export async function buildSearchPayload(rawDict, projectUser) {
   }
 
   if (replacement && data.length > 0 && regex != null) {
+    data = data.filter((item) => moduleFileExists(item.module));
     let pattern = regex;
     if (like) {
       pattern = pattern.replace(/\./g, '\\.');

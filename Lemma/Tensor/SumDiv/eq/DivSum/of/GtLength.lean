@@ -4,7 +4,7 @@ import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
 import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Reshape
 import Lemma.Vector.MapMap.eq.Map_Comp
 import Lemma.Nat.Div.eq.HDiv
-import Lemma.Tensor.Div.eq.Div_Broadcast
+import Lemma.Tensor.Div.eq.Div_Reshape
 import Lemma.Vector.GetMap.eq.UFnGet
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Nat.Any_Eq_AddMul
@@ -42,7 +42,7 @@ private lemma main
       simp [Div.eq.HDiv]
       simp at h
       have h_sum : ∀ x : Tensor α s, (x / n.reshape s (by simp)).sum dim = x.sum dim / n := fun x => by
-        simpa [Div_Broadcast.eq.Div] using ih h x
+        simpa [Div_Reshape.eq.Div] using ih h x
       erw [funext h_sum]
       have h_fun : (fun x : Tensor α s ↦ x.sum dim / n) = (fun x : Tensor α (s.eraseIdx dim) => x / n) ∘ (fun x : Tensor α s => x.sum dim) := by
         funext x

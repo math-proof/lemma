@@ -2,7 +2,7 @@ import Lemma.Tensor.ToVector.eq.MapRange_Get
 import Lemma.Vector.EqGetRange
 import Lemma.Tensor.GetDiv.eq.DivGet
 import Lemma.Vector.GetDiv.eq.DivGet
-import Lemma.Tensor.Div.eq.Div_Broadcast
+import Lemma.Tensor.Div.eq.Div_Reshape
 open Tensor Vector
 
 
@@ -22,7 +22,7 @@ private lemma main
   erw [GetDiv.eq.DivGet.fin (a := A.reshape s (by simp))]
   simp
   rw [EqGetRange.fin]
-  erw [Div.eq.Div_Broadcast]
+  erw [Div.eq.Div_Reshape]
   simp
   rfl
 

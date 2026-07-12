@@ -1,4 +1,4 @@
-import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec.of.GeLengthS
+import Lemma.Tensor.ReshapeMatmul.as.ReshapeMatmulRec.of.GeLengthS
 import Lemma.Tensor.SEqReshapeMatmulRecS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 open Tensor
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   (X.tensordot Y : Tensor α (broadcast_shape s [] ++ [m, k])) ≃ X.matmul (Y.reshape (s ++ [n, k]) (by simp)) (by grind) := by
 -- proof
-  have := BroadcastMatmul.as.BroadcastMatmulRec.of.GeLengthS (by simp) X Y (s' := [])
+  have := ReshapeMatmul.as.ReshapeMatmulRec.of.GeLengthS (by simp) X Y (s' := [])
   apply this.trans
   apply SEqReshapeMatmulRecS.of.SEq.SEq
   ·

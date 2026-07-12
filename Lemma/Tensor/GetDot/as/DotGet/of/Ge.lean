@@ -3,11 +3,11 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.Tensor.BroadcastMatmul.as.BroadcastMatmulRec
+import Lemma.Tensor.ReshapeMatmul.as.ReshapeMatmulRec
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetBatchDot.as.BatchDotGetS.of.Eq
 import Lemma.Tensor.GetReshape.as.Reshape.of.EqProdS.GtLength_0
-import Lemma.Tensor.GetBroadcastMatmul.as.BroadcastMatmulRecGet.of.GtLength_0
+import Lemma.Tensor.GetReshapeMatmul.as.ReshapeMatmulRecGet.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Ge
 import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
