@@ -13,7 +13,7 @@ private lemma main
   (n : α)
   (a : α) :
 -- imply
-  (s.insertIdx i a).set i.succ n = (s.set i n).insertIdx i a := by
+  (s.insertIdx i.succ a).set i n = (s.set i n).insertIdx i.succ a := by
 -- proof
   induction s generalizing i with
   | nil =>
@@ -32,4 +32,4 @@ private lemma main
       rw [InsertIdxCons.eq.Cons_InsertIdx]
 
 
--- created on 2026-07-12
+-- created on 2026-07-13
