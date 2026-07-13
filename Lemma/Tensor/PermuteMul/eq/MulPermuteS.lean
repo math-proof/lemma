@@ -6,8 +6,8 @@ import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.Gt_0
 import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq
 import Lemma.Tensor.Eq.is.All_EqGetS.of.GtLength_0
-import Lemma.Tensor.GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0
-import Lemma.Tensor.GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length
+import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
+import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteHeadMul.eq.MulPermuteHeadS
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
@@ -58,9 +58,9 @@ private lemma main
     apply Eq.of.All_EqGetS.GtLength_0 (h := by simpa)
     intro t
     have h_t := t.isLt
-    rw [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin _ h_t]
+    rw [GetMul.eq.MulGetS.of.GtGet_0.GtLength_0.fin _ h_t]
     simp [GetPermute.eq.Get.of.Gt (by simp) d (s := s) (i := ⟨i + 1, h_i⟩) (j := 0)] at h_t
-    have h_all := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (s := s) (i := i) (k := t) h_i h_t (d := d) (α := α)
+    have h_all := GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length (s := s) (i := i) (k := t) h_i h_t (d := d) (α := α)
     have h_A := h_all A
     have h_B := h_all B
     have h_A_mul_B := SEqMulS.of.SEq.SEq h_A h_B
@@ -69,7 +69,7 @@ private lemma main
     apply h_A_mul_B.trans
     rw [← ih (s := s.tail) (by grind) (A.get ⟨t, by grind⟩) (B.get ⟨t, by grind⟩) d (by grind)]
     have h_AB := h_all (A * B)
-    simp [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin _ h_t] at h_AB
+    simp [GetMul.eq.MulGetS.of.GtGet_0.GtLength_0.fin _ h_t] at h_AB
     exact h_AB.symm
 
 

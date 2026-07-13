@@ -6,8 +6,8 @@ import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.AddAdd
 import Lemma.Nat.EqAdd0
-import Lemma.Tensor.GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length
-import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength
+import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length
+import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEqPermute__0
@@ -80,17 +80,17 @@ private lemma main
       have h_t := t.isLt
       simp only [GetPermute.eq.Get.of.Gt (show i + 1 > 0 by simp) d (s := s₀ :: s) (i := ⟨i + 1, by omega⟩) (j := 0)] at h_t
       simp at h_t
-      rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by grind)]
+      rw [GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by grind)]
       simp
-      have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
+      have := GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length (i := i) (by simp; omega) h_t X d
       have := SEqSoftmaxS.of.SEq this (i + d)
       apply this.trans
       have ih := ih h (X.get ⟨t, by grind⟩)
       apply ih.trans
-      have := GetPermute.as.PermuteGet.of.Lt_Get_0.LtAdd_1Length (i := i) (by simp; omega) h_t (X.softmax (i + 1)) d
+      have := GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length (i := i) (by simp; omega) h_t (X.softmax (i + 1)) d
       symm
       apply this.trans
-      rw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by simpa)]
+      rw [GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength.fin (by simp; omega) (by simp) (by simpa)]
       rfl
 
 

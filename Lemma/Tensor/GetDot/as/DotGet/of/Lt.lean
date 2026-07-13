@@ -3,7 +3,7 @@ import Lemma.List.Set.eq.AppendTake__List.of.GtLength_0
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.SEqSelectS.of.SEq
-import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
+import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.Lt_Get_Add_1.LtAdd_1Length
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
@@ -16,7 +16,7 @@ import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
-import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2
@@ -109,7 +109,7 @@ private lemma main
                       apply AppendTake_Length.eq.Cons_Append_List
                     ·
                       simp
-                      rw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtLength_0.fin (by simp) (by grind) _ _ ⟨(s ++ [k]).length, by simp; grind⟩]
+                      rw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtLength_0.fin (by simp) (by grind) _ _ ⟨(s ++ [k]).length, by simp; grind⟩]
                       apply SEqCast.of.SEq.Eq (by simp)
                       apply SEqRepeatS.of.SEq (d := ⟨(s ++ [k]).length, by simp; grind⟩)
                       rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩)]
@@ -184,7 +184,7 @@ private lemma une
           simp [matmul_shape]
           grind
         .
-          rw [GetSelect.eq.Cast_SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length]
+          rw [GetSelect.eq.Cast_SelectGet.of.GtGet_0.Lt_Get_Add_1.LtAdd_1Length]
           .
             apply SEqCast.of.SEq.Eq
             .
@@ -240,7 +240,7 @@ private lemma une
                                     simp [EqMin.of.Lt (by linarith: s.length < s.length + 1 + 1)]
                                     simp [AppendTake_Length.eq.Cons_Append_List]
                                   .
-                                    rw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtLength_0.fin (by simp) (by grind) _ _ ⟨(s ++ [k]).length, by simp; grind⟩]
+                                    rw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtLength_0.fin (by simp) (by grind) _ _ ⟨(s ++ [k]).length, by simp; grind⟩]
                                     apply SEqCast.of.SEq.Eq (by simp)
                                     apply SEqRepeatS.of.SEq (d := ⟨(s ++ [k]).length, by simp; grind⟩)
                                     rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (i := ⟨i, by grind⟩)]

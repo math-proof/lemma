@@ -71,6 +71,7 @@ export const tactics = [
     'rintro',
     'rw',
     'rwa',
+    'set',
     'simp',
     'simp_all',
     'simp_rw',

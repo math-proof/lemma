@@ -146,7 +146,7 @@ export async function buildSearchPayload(rawDict, projectUser) {
   let like = false;
   if (wholeWord && regex != null) {
     regex = `\\b${regex}\\b`;
-  // } else if (regularExpression && regex != null) {
+  } else if (regularExpression && regex != null) {
     // regex = regex.replace(/\\/g, '\\\\');
   } else {
     like = true;

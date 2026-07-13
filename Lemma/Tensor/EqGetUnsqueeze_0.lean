@@ -6,7 +6,7 @@ import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
-import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
+import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.EqGetMapRange
 import Lemma.Vector.GetArraySlice.eq.Get_Add.of.Lt_Min_Sub
@@ -28,7 +28,7 @@ private lemma main
   simp [Tensor.toVector]
   simp [GetElem.getElem]
   apply EqCast.of.SEq
-  rw [ArraySlice.eq.Cast_GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod (s := 1 :: s) _ (by grind)]
+  rw [ArraySlice.eq.Cast_GetCast_SplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod (s := 1 :: s) _ (by grind)]
   apply SEqCast.of.SEq.Eq <;>
     simp
   apply SEq.of.Eq

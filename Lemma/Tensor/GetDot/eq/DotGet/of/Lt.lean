@@ -33,12 +33,12 @@ import Lemma.Tensor.EqUnsqueezeS.of.Eq
 import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
-import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtVal_0
-import Lemma.Tensor.GetSelect_1.as.Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
+import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
+import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
+import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.Lt_Get_1.GtLength_1
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
-import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
+import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.Get_0.eq.TensorCast_Data
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
@@ -104,7 +104,7 @@ private lemma main
   apply SEq.of.Eq
   have h_s : (([] ++ [n', k']).swap (([] ++ [n', k']).length - 2) (([] ++ [n', k']).length - 1)) = [] ++ [k', n'] := by
     simp [EqSwap_0'1]
-  have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) ((cast (congrArg (Tensor α) h_s) Yᵀ).unsqueeze 0) (i := 0) (n := 1)
+  have := GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) ((cast (congrArg (Tensor α) h_s) Yᵀ).unsqueeze 0) (i := 0) (n := 1)
   simp at this
   simp
   erw [this]
@@ -119,7 +119,7 @@ private lemma main
     ⟨i, by simp⟩
   simp at this
   erw [this]
-  have := GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := i) (n := n)
+  have := GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind) (Yᵀ.unsqueeze 0) (i := i) (n := n)
   simp at this
   rw [this]
   let X' : Tensor α ([] ++ [n] ++ [n' / k * k]) := X.repeat (n' / k) (1 : Fin 2)
@@ -132,10 +132,10 @@ private lemma main
     ⟨i, by simp⟩
   simp at this
   rw [this]
-  have := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin (by grind) (by grind) ((cast (congrArg (Tensor α) h_s_list) X'Append).unsqueeze 1) k' (i := i) (d := ⟨1, by grind⟩)
+  have := GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind) ((cast (congrArg (Tensor α) h_s_list) X'Append).unsqueeze 1) k' (i := i) (d := ⟨1, by grind⟩)
   simp at this
   rw [this]
-  have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind) (cast (congrArg (Tensor α) h_s_list) X'Append) (i := i) (d := 1)
+  have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind) (cast (congrArg (Tensor α) h_s_list) X'Append) (i := i) (d := 1)
   simp at this
   rw [this]
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by simp) h_s_list X'Append ⟨i, by simp⟩
@@ -154,10 +154,10 @@ private lemma main
     ⟨0, by simp⟩
   simp at this
   rw [this]
-  have := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin (by grind) (by simp) ((⟨cast (congrArg (List.Vector α) h_s_prod) ((cast (congrArg (Tensor α) h_s) XiAppend).data.repeat (1 * (n' * 1) / (n' * 1)))⟩ : Tensor α [1, n']).unsqueeze 1) k' (i := 0) (d := ⟨1, by simp⟩)
+  have := GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by simp) ((⟨cast (congrArg (List.Vector α) h_s_prod) ((cast (congrArg (Tensor α) h_s) XiAppend).data.repeat (1 * (n' * 1) / (n' * 1)))⟩ : Tensor α [1, n']).unsqueeze 1) k' (i := 0) (d := ⟨1, by simp⟩)
   simp at this
   rw [this]
-  have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by simp) (by grind) (by grind) ((⟨cast (congrArg (List.Vector α) h_s_prod) ((cast (congrArg (Tensor α) h_s) XiAppend).data.repeat (1 * (n' * 1) / (n' * 1)))⟩ : Tensor α [1, n'])) (i := 0) (d := 1)
+  have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by simp) (by grind) (by grind) ((⟨cast (congrArg (List.Vector α) h_s_prod) ((cast (congrArg (Tensor α) h_s) XiAppend).data.repeat (1 * (n' * 1) / (n' * 1)))⟩ : Tensor α [1, n'])) (i := 0) (d := 1)
   simp at this
   simp [this]
   rw [DataCast.eq.Cast_Data.of.Eq (by simp [EqAddMulDiv])]
@@ -167,7 +167,7 @@ private lemma main
   ·
     rw [Get_0.eq.TensorCast_Data]
     simp
-    have := GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin (by grind) (by simp) X (n' / k) (i := i) (d := ⟨1, by simp⟩)
+    have := GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by simp) X (n' / k) (i := i) (d := ⟨1, by simp⟩)
     simp at this
     rw [this]
     apply EqRepeatS.of.Eq
@@ -224,7 +224,7 @@ private lemma une
     let X' : Tensor α ([n] ++ [n' / k * k]) := X.repeat (1 : Fin 2) (n' / k)
     let X'Append : Tensor α ([n] ++ [n' / k * k + n' % k]) := X' ++ (0 : Tensor α ([n] ++ [n' % k]))
     let X'Repeat : Tensor α ([] ++ [n, 1, n']) := ((cast (congrArg (Tensor α) h_s0) X'Append).unsqueeze 1).repeat (1 : Fin 3) 1
-    have := GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
+    have := GetSelect_1.eq.Cast_Get.of.GtGet_0.Lt_Get_1.GtLength_1
       (by grind)
       (by grind)
       (by grind)

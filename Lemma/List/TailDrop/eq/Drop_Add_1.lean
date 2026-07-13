@@ -3,9 +3,10 @@ import Lemma.List.Tail.eq.Drop_1
 open List
 
 
-@[main]
+@[main, comm]
 private lemma main
-  {s : List α} :
+  (s : List α)
+  (i : ℕ) :
 -- imply
   (s.drop i).tail = s.drop (i + 1) := by
 -- proof

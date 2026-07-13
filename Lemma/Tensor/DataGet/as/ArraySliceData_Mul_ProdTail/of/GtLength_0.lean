@@ -3,7 +3,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
 import Lemma.Tensor.SEqArraySliceSData.of.Eq
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
-import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.GtGet_0.GtLength_0
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Vector.HEq.of.EqValS
@@ -30,7 +30,7 @@ private lemma main
     simp [Le_SubMulS.of.Lt]
   .
     apply HEq.of.EqValS
-    rw [ValDataGetToVector.eq.ValArraySliceData.of.Lt_Get_0.GtLength_0 (by assumption)]
+    rw [ValDataGetToVector.eq.ValArraySliceData.of.GtGet_0.GtLength_0 (by assumption)]
     apply i.isLt
 
 

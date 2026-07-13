@@ -5,7 +5,7 @@ import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.ResizeUnsqueeze.as.UnsqueezeResize
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Tensor.Unsqueeze.eq.Reshape
 open Bool Tensor
 
@@ -22,7 +22,7 @@ private lemma main
   simp [Dot.dot]
   simp [Tensor.einsum]
   apply EqCast.of.SEq.Eq (by simp [matmul_shape])
-  erw [Select_0.eq.Cast_Get.of.Lt_Get_0.GtLength_0 (by grind) (by grind)]
+  erw [Select_0.eq.Cast_Get.of.GtGet_0.GtLength_0 (by grind) (by grind)]
   apply SEqCast.of.SEq.Eq (by simp)
   apply SEqGetS.of.SEq.GtLength (by grind)
   simp [Tensor.tensordot]

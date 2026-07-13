@@ -18,7 +18,7 @@ import Lemma.Tensor.EqMul0_0
 import Lemma.Tensor.GetAdd.eq.AddGetS
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetMap.eq.MapGet
-import Lemma.Tensor.GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.GetMul.eq.MulGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSub.eq.SubGetS
 import Lemma.Tensor.GetSubStackBool.eq.One
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
@@ -55,11 +55,11 @@ private lemma main
   simp [GetElem.getElem]
   rw [@Tensor.GetAdd.eq.AddGetS.fin]
   erw [@Tensor.GetAdd.eq.AddGetS.fin]
-  have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) (mask - 1) ∞ (i := i)
+  have := GetMul.eq.MulGet.of.GtGet_0.GtLength_0.fin (by grind) (by grind) (mask - 1) ∞ (i := i)
   simp at this
   rw [this]
   simp
-  have := GetMul.eq.MulGet.of.Lt_Get_0.GtLength_0.fin (by grind) (by grind) ((mask - 1).get i) ∞ (i := j)
+  have := GetMul.eq.MulGet.of.GtGet_0.GtLength_0.fin (by grind) (by grind) ((mask - 1).get i) ∞ (i := j)
   simp at this
   rw [this]
   split_ifs with h_p

@@ -2,7 +2,7 @@ import sympy.tensor.tensor
 import Lemma.Nat.EqMin_SubMulS
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Bool.HEq.of.SEq
-import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
+import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
 open Vector Bool Nat
 
 
@@ -30,7 +30,7 @@ private lemma main
     simp [GetElem.getElem]
     rw [this]
     apply HEq.of.SEq
-    apply GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
+    apply GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
     repeat grind
 
 

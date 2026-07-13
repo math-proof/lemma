@@ -10,12 +10,12 @@ import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.EqSumS.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
-import Lemma.Tensor.GetRepeat.as.RepeatGet.of.Lt_Get_0.GtVal_0
-import Lemma.Tensor.GetSelect_1.as.Get.of.Lt_Get_0.Lt_Get_1.GtLength_1
+import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
+import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
+import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.Lt_Get_1.GtLength_1
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
-import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
+import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq
@@ -51,18 +51,18 @@ private lemma main
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨0, by grind⟩) (by simp) (by simp)]
     apply EqCastS.of.SEq.Eq (by simp)
     simp
-    erw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin (i := i) (n := k') (d := ⟨1, by grind⟩) (by simp) (by simp)]
-    erw [GetRepeat.eq.Cast_RepeatGet.of.Lt_Get_0.GtVal_0.fin (i := 0) (n := k') (d := ⟨1, by grind⟩) (by simp) (by simp)]
+    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (i := i) (n := k') (d := ⟨1, by grind⟩) (by simp) (by simp)]
+    erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (i := 0) (n := k') (d := ⟨1, by grind⟩) (by simp) (by simp)]
     simp
     apply SEqRepeatS.of.SEq
-    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (i := i) (by simp) (by simp) (by simp)]
-    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (i := 0) (by simp) (by simp) (by simp)]
+    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (i := i) (by simp) (by simp) (by simp)]
+    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (i := 0) (by simp) (by simp) (by simp)]
     simp
     apply SEqUnsqueezeS.of.SEq
     erw [EqGetUnsqueeze_0.fin]
   ·
-    erw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (i := i) (n := n) (by simp) (by simp)]
-    erw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (i := 0) (n := 1) (by simp) (by simp)]
+    erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (i := i) (n := n) (by simp) (by simp)]
+    erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (i := 0) (n := 1) (by simp) (by simp)]
     simp [EqMod_1'0]
 
 
@@ -80,7 +80,7 @@ private lemma une
   rw [Dot.eq.SelectSumMul]
   simp
   erw [Dot.eq.SumMul__0]
-  erw [GetSelect_1.eq.Cast_Get.of.Lt_Get_0.Lt_Get_1.GtLength_1 (by simp) (by simp) (by grind)]
+  erw [GetSelect_1.eq.Cast_Get.of.GtGet_0.Lt_Get_1.GtLength_1 (by simp) (by simp) (by grind)]
   apply EqCast.of.SEq.Eq (by simp)
   erw [GetSum_2.eq.SumGet__0.fin]
   apply SEqSumS.of.SEq
@@ -89,7 +89,7 @@ private lemma une
   apply SEq.of.Eq
   congr 1
   ·
-    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
+    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by grind) (i := ⟨0, by grind⟩)]
     apply EqCast.of.SEq.Eq (by simp)
     simp
@@ -98,7 +98,7 @@ private lemma une
   ·
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by simp) (i := ⟨i, by grind⟩) (s' := [n, 1, k])]
     simp
-    erw [GetRepeat.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
+    erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (by grind) (by grind) (i := ⟨0, by grind⟩)]
     apply EqCast.of.SEq.Eq (by simp)
     simp

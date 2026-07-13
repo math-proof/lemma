@@ -1,7 +1,7 @@
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.Matmul.as.Bmm
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil

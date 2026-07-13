@@ -10,7 +10,7 @@ import Lemma.Tensor.GetReshape.as.Reshape.of.EqProdS.GtLength_0
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet.of.Ge
-import Lemma.Tensor.GetSelect.as.SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length
+import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.Lt_Get_Add_1.LtAdd_1Length
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.EqGet_SubLength_1.GeLength_2
@@ -128,7 +128,7 @@ private lemma une
             simp [matmul_shape]
             grind
           ·
-            rw [GetSelect.eq.Cast_SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length]
+            rw [GetSelect.eq.Cast_SelectGet.of.GtGet_0.Lt_Get_Add_1.LtAdd_1Length]
             ·
               apply SEqCast.of.SEq.Eq
               ·
@@ -203,7 +203,7 @@ private lemma une
             simp [matmul_shape]
             grind
           ·
-            rw [GetSelect.eq.Cast_SelectGet.of.Lt_Get_0.Lt_Get_Add_1.LtAdd_1Length]
+            rw [GetSelect.eq.Cast_SelectGet.of.GtGet_0.Lt_Get_Add_1.LtAdd_1Length]
             ·
               apply SEqCast.of.SEq.Eq
               ·

@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.LtAdd_1Length
+import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.LtAdd_1Length
 import sympy.tensor.stack
 open Bool Tensor
 
@@ -19,7 +19,7 @@ private lemma main
   intro i
   rw [EqGetStack.fn]
   apply Eq.of.SEq
-  erw [GetSoftmax.eq.SoftmaxGet.of.Lt_Get_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)]
+  erw [GetSoftmax.eq.SoftmaxGet.of.GtGet_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)]
   simp [GetElem.getElem]
   rw [EqGetStack.fn.fin]
 

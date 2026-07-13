@@ -8,7 +8,7 @@ import Lemma.Nat.Ne.of.Gt
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Eq_0.of.Le_0
 import Lemma.Bool.EqCast.of.Eq
-import Lemma.Vector.ArraySlice.as.GetSplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail
+import Lemma.Vector.ArraySlice.as.GetSplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Bool.EqCast.of.SEq
 open Vector Bool Nat
@@ -31,7 +31,7 @@ private lemma main
   simp [GetElem.getElem, Tensor.get, Tensor.toVector]
   rw [h_data]
   apply EqCast.of.SEq
-  have := ArraySlice.as.GetSplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail (s := s₀ :: s) (n := s.prod) (i := i) (by simp_all) (by simp_all) (by simp_all) data
+  have := ArraySlice.as.GetSplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail (s := s₀ :: s) (n := s.prod) (i := i) (by simp_all) (by simp_all) (by simp_all) data
   apply SEq.of.SEq.SEq this
   rw [GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (by grind) (by simp)]
   simp [GetElem.getElem]

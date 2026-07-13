@@ -1,8 +1,8 @@
 import Lemma.Nat.LtMod.of.Lt_Mul
-import Lemma.Tensor.Select_0.as.Get.of.Lt_Get_0.GtLength_0
+import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Bool.SEq.of.SEq.SEq
-import Lemma.Tensor.GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
-import Lemma.Tensor.ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0
+import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
+import Lemma.Tensor.ToVectorRepeat.as.Map_FunRepeatGet.of.GtGet_0.GtVal_0
 import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_SubLength_1
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Nat.Gt_0.of.Gt
@@ -40,16 +40,16 @@ private lemma main
   have h_s := Gt_0.of.Gt h_d
   induction d generalizing X s with
   | zero =>
-    have h := Select_0.as.Get.of.Lt_Get_0.GtLength_0 (by simpa) (by simpa) (X.repeat ⟨0, h_s⟩ n)
+    have h := Select_0.as.Get.of.GtGet_0.GtLength_0 (by simpa) (by simpa) (X.repeat ⟨0, h_s⟩ n)
     apply SEq.of.SEq.SEq h
-    have h := Select_0.as.Get.of.Lt_Get_0.GtLength_0 (by simpa) (by simp [LtMod.of.Lt_Mul h_i]) X (i := i % s[0])
+    have h := Select_0.as.Get.of.GtGet_0.GtLength_0 (by simpa) (by simp [LtMod.of.Lt_Mul h_i]) X (i := i % s[0])
     apply SEq.of.SEq.SEq h
-    apply GetRepeat.as.Get_Mod_Get.of.GtMul_Get.GtLength_0.fin
+    apply GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0.fin
     assumption
   | succ d ih =>
     unfold Tensor.select
     simp
-    rw [ToVectorRepeat.as.Map_FunRepeatGet.of.Lt_Get_0.GtVal_0 (by simp)]
+    rw [ToVectorRepeat.as.Map_FunRepeatGet.of.GtGet_0.GtVal_0 (by simp)]
     simp
     have h_tail : s.tail.length > 0 := by
       simp

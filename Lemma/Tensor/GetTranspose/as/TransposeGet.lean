@@ -1,5 +1,5 @@
 import Lemma.List.TailPermute.eq.PermuteTail.of.GtLength_Add_1.Ge_0
-import Lemma.Tensor.GetPermute.as.PermuteGet.of.Lt_Get_0.GtLength.Gt_0.Ge_0
+import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.GtLength.Gt_0.Ge_0
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 import Lemma.Tensor.SEqPermuteS.of.SEq.GtLength
 import Lemma.List.TailPermute.eq.PermuteTail.of.GtLength_Add_1
@@ -130,7 +130,7 @@ private lemma main
               .
                 simp
               .
-                erw [GetPermute.eq.Cast_PermuteGet.of.Lt_Get_0.GtLength.Gt_0.Ge_0]
+                erw [GetPermute.eq.Cast_PermuteGet.of.GtGet_0.GtLength.Gt_0.Ge_0]
                 .
                   apply SEqCast.of.SEq.Eq
                   .

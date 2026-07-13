@@ -11,8 +11,8 @@ import Lemma.Tensor.Cast_Mul.eq.MulCastS.of.Eq
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.Eq.is.All_EqGetS.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0
-import Lemma.Tensor.GetPermute__Neg.as.Permute__Neg_Get.of.Lt_Get_0.LtAdd_1Length
+import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
+import Lemma.Tensor.GetPermute__Neg.as.Permute__Neg_Get.of.GtGet_0.LtAdd_1Length
 import Lemma.Tensor.LengthPermute__Neg.eq.Get_0.of.Gt
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteTailMul.eq.MulPermuteTailS
@@ -107,9 +107,9 @@ private lemma main
     apply Eq.of.All_EqGetS.GtLength_0 (h := by simp; omega)
     intro t
     have h_t := t.isLt
-    rw [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin _ h_t]
+    rw [GetMul.eq.MulGetS.of.GtGet_0.GtLength_0.fin _ h_t]
     simp [GetPermute__Neg.eq.Get_0.of.Gt (by simp) (d := d) (s := s) (i := ⟨i + 1 + d, h_i⟩)] at h_t
-    have h_all := GetPermute__Neg.as.Permute__Neg_Get.of.Lt_Get_0.LtAdd_1Length (s := s) (i := i + d) (k := t) (by grind) h_t (d := d) (α := α) (by grind)
+    have h_all := GetPermute__Neg.as.Permute__Neg_Get.of.GtGet_0.LtAdd_1Length (s := s) (i := i + d) (k := t) (by grind) h_t (d := d) (α := α) (by grind)
     have h_A := h_all A
     have := SEqPermuteS.of.SEq.Eq.Eq.GtLength (s := s) (i := i + d + 1) (i' := i + 1 + d) (d := -d) (d' := -d) (by omega) (by omega) (by omega) (by rfl) (A := A)
     have := SEqGetS.of.SEq.GtLength.fin (i := t) (by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp)]) this
@@ -124,7 +124,7 @@ private lemma main
     apply h_A_mul_B.trans
     rw [← ih (s := s.tail) (by grind) (A.get ⟨t, by grind⟩) (B.get ⟨t, by grind⟩) (d := d)]
     have h_AB := h_all (A * B)
-    simp [GetMul.eq.MulGetS.of.Lt_Get_0.GtLength_0.fin _ h_t] at h_AB
+    simp [GetMul.eq.MulGetS.of.GtGet_0.GtLength_0.fin _ h_t] at h_AB
     have := SEqPermuteS.of.SEq.Eq.Eq.GtLength (s := s) (i := i + d + 1) (i' := i + 1 + d) (d := -d) (d' := -d) (by omega) (by omega) (by omega) (by rfl) (A := A * B)
     have := SEqGetS.of.SEq.GtLength.fin (i := t) (by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp)]) this
     have h_AB := this.symm.trans h_AB

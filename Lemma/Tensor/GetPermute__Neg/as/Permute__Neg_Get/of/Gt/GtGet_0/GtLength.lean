@@ -1,4 +1,4 @@
-import Lemma.Tensor.GetPermute__Neg.as.Permute__Neg_Get.of.Lt_Get_0.LtAdd_1Length
+import Lemma.Tensor.GetPermute__Neg.as.Permute__Neg_Get.of.GtGet_0.LtAdd_1Length
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthPermute__Neg.eq.Get_0.of.Gt
 open Tensor
@@ -16,7 +16,7 @@ private lemma main
 -- imply
   (X.permute ⟨i, h_i⟩ (-d)).get ⟨k, by rwa [LengthPermute__Neg.eq.Get_0.of.Gt (by simp; omega)]⟩ ≃ (X.get ⟨k, by rwa [Length.eq.Get_0.of.GtLength_0]⟩).permute ⟨i - 1, by simp; omega⟩ (-d) := by
 -- proof
-  have := GetPermute__Neg.as.Permute__Neg_Get.of.Lt_Get_0.LtAdd_1Length (i := i - 1) (d := d) (by grind) h_k (by grind) X
+  have := GetPermute__Neg.as.Permute__Neg_Get.of.GtGet_0.LtAdd_1Length (i := i - 1) (d := d) (by grind) h_k (by grind) X
   simp at this
   grind
 

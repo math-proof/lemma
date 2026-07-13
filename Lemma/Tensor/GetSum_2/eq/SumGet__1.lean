@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength
+import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
 open Tensor Bool
 
 
@@ -14,7 +14,7 @@ private lemma main
 -- proof
   apply Eq.of.SEq
   have h_i := i.isLt
-  have := GetSum.as.SumGet.of.Lt_Get_0.Gt_0.GtLength.fin (d := 2) (s := [m, n, l]) (by simp) (by simp) h_i X
+  have := GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength.fin (d := 2) (s := [m, n, l]) (by simp) (by simp) h_i X
   simp at this
   simpa [GetElem.getElem]
 

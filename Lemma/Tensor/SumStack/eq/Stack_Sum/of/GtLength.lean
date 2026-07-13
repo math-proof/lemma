@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
-import Lemma.Tensor.GetSum.as.SumGet.of.Lt_Get_0.LtAdd_1Length
+import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
 import sympy.tensor.stack
 open Bool Tensor
 set_option maxHeartbeats 400000
@@ -20,7 +20,7 @@ private lemma main
   intro i
   rw [EqGetStack.fn]
   apply Eq.of.SEq
-  have := GetSum.as.SumGet.of.Lt_Get_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)
+  have := GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length (i := i) (d := d) (by simpa) (by simp) ([k < n] f k)
   apply this.trans
   simp [GetElem.getElem]
   rw [EqGetStack.fn.fin]

@@ -1,7 +1,7 @@
 import Lemma.List.EqInsertIdx.of.LtLength
 import Lemma.List.InsertIdx.ne.Nil.of.Ne_Nil
 import Lemma.Nat.Gt_0.of.Gt
-import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0
+import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Tensor.Length.eq.Get_0.of.Ne_Nil
 import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
@@ -53,7 +53,7 @@ private lemma main
       have h_i := i.isLt
       simp [LengthUnsqueeze.eq.Length.of.Gt_0 h_d_pos] at h_i
       simp [Length.eq.Get_0.of.Ne_Nil] at h_i
-      have := GetUnsqueeze.as.UnsqueezeGet.of.Lt_Get_0.Gt_0.GtLength_0.fin (by simp) h_d_pos h_i X
+      have := GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by simp) h_d_pos h_i X
       apply this.trans
       ·
         simp at h_d

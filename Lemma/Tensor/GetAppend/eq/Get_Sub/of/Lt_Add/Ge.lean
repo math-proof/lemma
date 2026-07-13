@@ -13,8 +13,8 @@ import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
 import Lemma.Nat.Gt_0.of.Lt_Add.Ge
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
-import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0
-import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod
+import Lemma.Vector.GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0
+import Lemma.Vector.ArraySlice.as.GetCast_SplitAt_1.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod
 open Vector List Bool Nat
 
 
@@ -44,11 +44,11 @@ private lemma main
       have h_prod := AddProdSCons.eq.MulAdd m n s
       apply SEq.of.SEq.SEq (c := (A.data ++ B.data).array_slice (i * s.prod) s.prod)
       ·
-        have := GetSplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0 (s := (m + n) :: s) (by simp) h₁ (cast (congrArg (List.Vector α) (AddProdSCons.eq.ProdConsAdd s m n)) (A.data ++ B.data))
+        have := GetSplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0 (s := (m + n) :: s) (by simp) h₁ (cast (congrArg (List.Vector α) (AddProdSCons.eq.ProdConsAdd s m n)) (A.data ++ B.data))
         apply SEq.of.SEq.SEq this
         apply SEq.symm
         apply this.symm.trans
-        apply GetCast_SplitAt_1.as.ArraySlice.of.Lt_Get_0.GtLength_0.Eq_ProdTail.Eq_Prod <;>
+        apply GetCast_SplitAt_1.as.ArraySlice.of.GtGet_0.GtLength_0.Eq_ProdTail.Eq_Prod <;>
           simp_all
         grind
       ·
