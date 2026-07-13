@@ -12,7 +12,7 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
-import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.Lt_Get_1.GtLength_1
+import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.GtGet_1.GtLength_1
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
@@ -80,7 +80,7 @@ private lemma une
   rw [Dot.eq.SelectSumMul]
   simp
   erw [Dot.eq.SumMul__0]
-  erw [GetSelect_1.eq.Cast_Get.of.GtGet_0.Lt_Get_1.GtLength_1 (by simp) (by simp) (by grind)]
+  erw [GetSelect_1.eq.Cast_Get.of.GtGet_0.GtGet_1.GtLength_1 (by simp) (by simp) (by grind)]
   apply EqCast.of.SEq.Eq (by simp)
   erw [GetSum_2.eq.SumGet__0.fin]
   apply SEqSumS.of.SEq

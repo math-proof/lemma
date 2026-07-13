@@ -4,7 +4,7 @@ import Lemma.List.AppendFlattenS.eq.Flatten
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.Nat.LtAddS.is.Lt
 import Lemma.List.FlattenDrop.eq.Append_FlattenDrop.of.GtLength
-import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
+import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 import Lemma.List.AddMul.lt.LengthFlatten.of.Lt.GtLength.All_EqLength
 open List Nat
 
@@ -34,7 +34,7 @@ private lemma main
   rw [LengthFlattenTake.eq.Mul.of.GeLength.All_Eq h₀ this] at h₃
   have h₃ := Lt.of.LtAddS.left h₃
   have := LengthFlattenTake.eq.Mul.of.GeLength.All_Eq (by assumption) (by assumption)
-  rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by linarith)]
+  rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength (by linarith)]
   simp_all [FlattenDrop.eq.Append_FlattenDrop.of.GtLength h₁]
 
 

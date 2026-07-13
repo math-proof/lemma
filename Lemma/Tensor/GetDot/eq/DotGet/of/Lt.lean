@@ -35,7 +35,7 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
-import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.Lt_Get_1.GtLength_1
+import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.GtGet_1.GtLength_1
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
@@ -44,7 +44,7 @@ import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2
-import Lemma.Tensor.Einsum.as.SelectBmm.of.Lt_Get_SubLength.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.GtGet_SubLength.GeLength_2
 import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Lt
 import Lemma.Tensor.SEqDataS.of.SEq
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
@@ -224,7 +224,7 @@ private lemma une
     let X' : Tensor α ([n] ++ [n' / k * k]) := X.repeat (1 : Fin 2) (n' / k)
     let X'Append : Tensor α ([n] ++ [n' / k * k + n' % k]) := X' ++ (0 : Tensor α ([n] ++ [n' % k]))
     let X'Repeat : Tensor α ([] ++ [n, 1, n']) := ((cast (congrArg (Tensor α) h_s0) X'Append).unsqueeze 1).repeat (1 : Fin 3) 1
-    have := GetSelect_1.eq.Cast_Get.of.GtGet_0.Lt_Get_1.GtLength_1
+    have := GetSelect_1.eq.Cast_Get.of.GtGet_0.GtGet_1.GtLength_1
       (by grind)
       (by grind)
       (by grind)

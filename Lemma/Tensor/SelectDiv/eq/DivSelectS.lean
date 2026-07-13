@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
-import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength
+import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.EqDivMul.of.Ne_0
@@ -30,7 +30,7 @@ private lemma main
   simp [HDiv.hDiv]
   apply Eq.of.EqDataS
   rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
-  have h_length_slice := MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (i := i) (d := d) (by simp) (by simp)
+  have h_length_slice := MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength (s := s) (i := i) (d := d) (by simp) (by simp)
   apply EqCast.of.SEq.Eq (by simp [h_length_slice])
   simp [Div.div]
   apply SEq.of.All_EqGetS.Eq.fin (by simp [h_length_slice])
@@ -39,7 +39,7 @@ private lemma main
   let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
   have h_q := q.isLt
   simp at h_q
-  rw [LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength d.isLt i.isLt] at h_q
+  rw [LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength d.isLt i.isLt] at h_q
   rw [ProdTake.eq.DivProdTake.of.Ne_0.GtLength d.isLt (Ne_0 i)] at h_q
   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
   rw [GetGetSlice.eq.Get.of.GtGet.GtLength d.isLt i.isLt]

@@ -7,10 +7,10 @@ import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxPermute__Neg.eq.EraseIdx.of.Ge
 import Lemma.List.Get.dvd.ProdTake.of.GtLength
 import Lemma.List.GetPermute__Neg.eq.Get.of.Ge
-import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
-import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
+import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength
+import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
+import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdEraseIdx.eq.MulProdS
@@ -107,11 +107,11 @@ private lemma main
     apply SEqCastS.of.SEq.Eq.Eq
     ·
       simp
-      rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+      rw [MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength]
       simpa [h_get]
     ·
       simp
-      rw [LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength (by omega) (by omega)]
+      rw [LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength (by omega) (by omega)]
       rw [ProdEraseIdx.eq.MulProdS]
     ·
       simp at h_get
@@ -127,16 +127,16 @@ private lemma main
         simp [h_drop_permute] at h_r h_q_div h_r_mod
         have h_q := q.isLt
         simp at h_k
-        rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength h_sub_lt (by simpa [h_get])] at h_k
+        rw [MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength h_sub_lt (by simpa [h_get])] at h_k
         rw [EraseIdxPermute__Neg.eq.EraseIdx.of.Ge h_d] at h_k
         have h_lt : k < (⟨t, (X.data.splitAt (i + 1)).length, s[i]⟩ : Slice).length (s.take (i + 1)).prod * (s.drop (i + 1)).prod := by
           simp
-          rwa [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength (by simp) (by omega)]
+          rwa [MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength (by simp) (by omega)]
         obtain ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
         obtain ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
         have h_q' := q'.isLt
         simp [List.Vector.length] at h_q
-        rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength h_sub_lt (by simpa [h_get])] at h_q
+        rw [LengthSlice.eq.ProdTake.of.GtGet.GtLength h_sub_lt (by simpa [h_get])] at h_q
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
         rw [GetGetSlice.eq.Get.of.GtGet.GtLength (by omega) (by simp)]
@@ -271,9 +271,9 @@ private lemma main
           rw [Append_Append.eq.AppendAppend]
       ·
         simp
-        rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+        rw [MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength]
         ·
-          rw [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength _ h_t]
+          rw [MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength _ h_t]
           rw [h_eraseIdx]
         ·
           simpa [h_get]

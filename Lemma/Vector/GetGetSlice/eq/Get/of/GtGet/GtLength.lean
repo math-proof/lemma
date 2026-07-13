@@ -1,5 +1,5 @@
 import Lemma.List.Get.dvd.ProdTake.of.GtLength
-import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
 import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtProdTake.GtLength
@@ -16,7 +16,7 @@ private lemma main
   (v : List.Vector α (s.take (d + 1)).prod)
   (i : Fin ((⟨j, (s.take (d + 1)).prod, s[d]⟩ : Slice).length (s.take (d + 1)).prod)):
 -- imply
-  have h_length_slice := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength.simp h_d h_j
+  have h_length_slice := LengthSlice.eq.ProdTake.of.GtGet.GtLength.simp h_d h_j
   have h_i : i < (s.take d).prod := by
     have h_i := i.isLt
     simp_all

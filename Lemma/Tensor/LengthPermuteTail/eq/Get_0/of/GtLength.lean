@@ -1,5 +1,5 @@
 import Lemma.List.GetAppend.eq.Get.of.GtLength
-import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
+import Lemma.List.GetTake.eq.Get.of.GtLengthTake
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.Basic
 open List Tensor
@@ -17,7 +17,7 @@ private lemma main
   ·
     rw [GetAppend.eq.Get.of.GtLength]
     ·
-      rw [GetTake.eq.Get.of.Lt_LengthTake]
+      rw [GetTake.eq.Get.of.GtLengthTake]
     ·
       simpa
   ·

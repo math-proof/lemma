@@ -3,7 +3,7 @@ import sympy.tensor.tensor
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.GtLength.of.GtLength_0
-import Lemma.Tensor.Lt_LengthSplitAtData.of.GtLength_0
+import Lemma.Tensor.GtLengthSplitAtData.of.GtLength_0
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 open Tensor List Vector
 
@@ -17,7 +17,7 @@ private lemma main
   (i : Fin s[0]) :
 -- imply
   have := GtLength.of.GtLength_0 h X i
-  X[i].data ≃ (X.data.splitAt 1)[i]'(Lt_LengthSplitAtData.of.GtLength_0 h X i) := by
+  X[i].data ≃ (X.data.splitAt 1)[i]'(GtLengthSplitAtData.of.GtLength_0 h X i) := by
 -- proof
   match s with
   | [] =>

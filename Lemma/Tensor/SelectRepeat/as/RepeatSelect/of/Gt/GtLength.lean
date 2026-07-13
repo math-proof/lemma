@@ -4,8 +4,8 @@ import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Gt
 import Lemma.List.GetEraseIdx.eq.Get_Add_1.of.Le.LtAdd_1Length
 import Lemma.List.GetSet.eq.Get.of.Gt.GtLength
 import Lemma.List.LengthSet.eq.Length
-import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
+import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdDrop.eq.MulProdSDrop.of.Le
 import Lemma.List.ProdDropSet__Mul_Get.eq.Mul_ProdDrop.of.Ge.GtLength
@@ -64,7 +64,7 @@ private lemma main
   ·
     rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
     conv_rhs => rw [DataRepeat.eq.Cast_FlattenMapSplitAtData]
-    have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s.set k (n * s[k])) (d := d) (i := i) (by grind) (by grind)
+    have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength (s := s.set k (n * s[k])) (d := d) (i := i) (by grind) (by grind)
     simp at h_length_slice
     have h_prod_set := ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength (s := s.eraseIdx d) (i := k - 1) (by grind) n
     have h_d_length : d < s.length := by omega
@@ -85,7 +85,7 @@ private lemma main
         have h_r := r.isLt
         have h_d_lt_length := LengthSet.eq.Length s k (n * s[k]) ▸ h_k
         have h_d_lt_length := h_d.trans h_d_lt_length
-        have := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (i := i) (d := d) (s := s.set k (n * s[k])) (by grind) (by grind)
+        have := LengthSlice.eq.ProdTake.of.GtGet.GtLength (i := i) (d := d) (s := s.set k (n * s[k])) (by grind) (by grind)
         simp at this
         simp [this] at h_q
         let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
@@ -102,7 +102,7 @@ private lemma main
         simp [GetSet.eq.Get.of.Gt.GtLength h_d_length h_d]
         simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
         simp [DataRepeat.eq.Cast_FlattenMapSplitAtData]
-        have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
+        have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
         repeat rw [GetCast.eq.Get.of.Eq.fin]
         ·
           have h_prod_take := ProdTake.eq.MulProdTake.of.GtLength h_d_length

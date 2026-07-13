@@ -1,6 +1,6 @@
 import Lemma.Tensor.LengthKeepdim.eq.Length.of.Gt_0
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
-import Lemma.List.GetTail.eq.Get_Add_1.of.Lt_LengthTail
+import Lemma.List.GetTail.eq.Get_Add_1.of.GtLengthTail
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Keepdim.as.RepeatUnsqueeze
 import Lemma.Tensor.All_SEqGetS.of.SEq
@@ -13,7 +13,7 @@ import Lemma.List.GetInsertIdx.eq.Get.of.Gt.GeLength
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength
+import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
 import Lemma.Bool.Eq.of.SEq.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqSetInsertIdxEraseIdx.of.Eq_Get.GtLength
@@ -69,7 +69,7 @@ private lemma main
     omega
   have h_lt_length : d - 1 < ((s.eraseIdx d).tail.insertIdx (d - 1) 1).length := by
     rw [TailEraseIdx.eq.EraseIdxTail.of.Gt_0.Lt_SubLength h_s h_d]
-    apply Lt_LengthInsertIdxEraseIdx.of.GtLength h_lt_length_tail
+    apply GtLengthInsertIdxEraseIdx.of.GtLength h_lt_length_tail
   rw [RepeatCast.eq.Cast_Repeat.of.Eq h_tail ((X.get ⟨i, h_i⟩).unsqueeze (d - 1)) s[d] ⟨d - 1, h_lt_length⟩] at h
   apply Eq.of.SEq.SEq h
   apply SEqCast.of.SEq.Eq
@@ -83,7 +83,7 @@ private lemma main
     have h := Keepdim.as.RepeatUnsqueeze (cast (congrArg (Tensor α) h_eq) (X.get ⟨i, h_i⟩)) (d := ⟨d - 1, h_lt_length_tail⟩)
     simp at h
     apply SEq.of.SEq.SEq _ h
-    rw [GetTail.eq.Get_Add_1.of.Lt_LengthTail h_lt_length_tail]
+    rw [GetTail.eq.Get_Add_1.of.GtLengthTail h_lt_length_tail]
     rw [UnsqueezeCast.eq.Cast_Unsqueeze.of.Eq h_eq]
     have h_s : (s.eraseIdx d).tail.insertIdx (d - 1) 1 = (s.tail.eraseIdx (d - 1)).insertIdx (d - 1) 1 := by
       simp_all

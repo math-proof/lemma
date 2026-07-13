@@ -1,4 +1,4 @@
-import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 open List
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   (⟨i, ((List.map Nat.cast s).take d).prod * s[d], s[d]⟩ : Slice).length ((s.take d).prod * s[d]) * (s.drop (d + 1)).prod = (s.eraseIdx d).prod := by
 -- proof
-  rw [LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength h_d h_i]
+  rw [LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength h_d h_i]
   rw [ProdEraseIdx.eq.MulProdS]
 
 

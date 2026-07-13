@@ -1,4 +1,4 @@
-import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength
+import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.TakeInsertIdx.eq.Take.of.Ge
 import Lemma.List.TakeEraseIdx.eq.Take.of.Ge
@@ -28,6 +28,6 @@ private lemma main
     rw [DropEraseIdx.eq.Drop.of.Le (by rfl)]
     simp
   .
-    apply Lt_LengthInsertIdxEraseIdx.of.GtLength h
+    apply GtLengthInsertIdxEraseIdx.of.GtLength h
 
 -- created on 2025-10-04

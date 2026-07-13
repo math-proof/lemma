@@ -7,7 +7,7 @@ import Lemma.List.EraseIdxRotate.eq.Append_EraseIdxTake.of.LeLength_Add.GeLength
 import Lemma.List.GetRotate.eq.Get_0.of.Gt_0.GeLength
 import Lemma.List.Get_0.dvd.Prod.of.GtLength_0
 import Lemma.List.LengthRotate.eq.Length
-import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.Prod.eq.MulProdTail.of.GtLength_0
 import Lemma.List.ProdRotate.eq.Prod
 import Lemma.List.ProdTail.eq.DivProd.of.GtLength_0.Gt_0
@@ -80,7 +80,7 @@ private lemma main
     ·
       rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨k, ?_⟩) (by omega)]
       ·
-        have h_length_slice := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength _ h_k_rotate
+        have h_length_slice := LengthSlice.eq.ProdTake.of.GtGet.GtLength _ h_k_rotate
         simp at h_length_slice
         have h_EqAddSub := EqAddSub.of.Ge (show s.length ≥ 1 by omega)
         rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]

@@ -3,7 +3,7 @@ import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.GetFlatten_AddMul.eq.Get.of.Lt.GtLength.All_EqLength
-import Lemma.List.LengthGetCartesianProduct.eq.Length.of.Lt_LengthCartesianProduct
+import Lemma.List.LengthGetCartesianProduct.eq.Length.of.GtLengthCartesianProduct
 open List Nat Fin
 
 
@@ -15,7 +15,7 @@ private lemma main
   (h₂ : s.length > j) :
 -- imply
   have : j < s.cartesianProduct[i].length := by
-    rwa [← LengthGetCartesianProduct.eq.Length.of.Lt_LengthCartesianProduct] at h₂
+    rwa [← LengthGetCartesianProduct.eq.Length.of.GtLengthCartesianProduct] at h₂
   s.cartesianProduct[i][j] < s[j] := by
 -- proof
   intro h₁

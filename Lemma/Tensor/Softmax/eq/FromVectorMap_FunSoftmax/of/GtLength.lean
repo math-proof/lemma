@@ -2,7 +2,7 @@ import Lemma.Finset.Sum.of.All_Eq.Eq
 import Lemma.List.Get.dvd.Mul_ProdTake.of.GtLength
 import Lemma.List.Get.dvd.ProdTake.of.GtLength
 import Lemma.List.LengthSlice.eq.Div.of.Lt.Dvd
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdDrop.dvd.Prod
@@ -173,11 +173,11 @@ private lemma main
     rw [h_qₐ_div, h_q'_div, h_q_div, h_r_mod]
     apply Div.eq.AddMulDiv_Mul
   ·
-    have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp (by grind) (by grind) (s := s) (d := d) (i := k)
+    have := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp (by grind) (by grind) (s := s) (d := d) (i := k)
     simp at ⊢ this
     erw [this]
   ·
-    have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp (by grind) (by grind) (s := n :: s) (d := d + 1) (i := k)
+    have := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp (by grind) (by grind) (s := n :: s) (d := d + 1) (i := k)
     simp at ⊢ this
     rw [this]
 

@@ -1,4 +1,4 @@
-import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.ProdEraseIdx.eq.MulProdS
 open List
 
@@ -12,7 +12,7 @@ private lemma simp
 -- imply
   (⟨i, (s.take (d + 1)).prod, s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod = (s.eraseIdx d).prod := by
 -- proof
-  rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength.simp h_d h_i]
+  rw [LengthSlice.eq.ProdTake.of.GtGet.GtLength.simp h_d h_i]
   rw [ProdEraseIdx.eq.MulProdS]
 
 

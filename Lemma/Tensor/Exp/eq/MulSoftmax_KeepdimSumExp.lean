@@ -1,7 +1,7 @@
 import Lemma.Fin.Lt0Sum.of.All_Gt_0.Gt_0
 import Lemma.List.Get.dvd.ProdTake.of.GtLength
-import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
+import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength
 import Lemma.List.ProdInsertIdx.eq.Prod
@@ -82,7 +82,7 @@ private lemma main
           simp [TakeInsertIdxEraseIdx.eq.Take] at h_q
           have := GetFlatten_AddMul.eq.Get.fin
             (((exp X).data.splitAt (d + 1)).getSlice ⟨↑↑i, ↑(s.take (d + 1)).prod, ↑s[d]⟩)
-            ⟨q, by rwa [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength.simp h_d h_i]⟩
+            ⟨q, by rwa [LengthSlice.eq.ProdTake.of.GtGet.GtLength.simp h_d h_i]⟩
             ⟨r % (s.drop (d + 1)).prod, by apply LtMod.of.Gt_0 (by grind)⟩
           simp at this
           rw [this]
@@ -92,7 +92,7 @@ private lemma main
           rw [GetExp.eq.ExpGet.fin]
           apply GtExp_0
         ·
-          have := MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp h_d h_i
+          have := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp h_d h_i
           simp at this
           simp [this]
     ·

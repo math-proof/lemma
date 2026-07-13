@@ -1,6 +1,6 @@
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.GetAppend.eq.Get.of.GtLength
-import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
+import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 open List
 
 
@@ -28,7 +28,7 @@ private lemma main
     rw [GetAppend.eq.Get.of.GtLength (by simpa)]
     simp
   ·
-    rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+    rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
     ·
       simp
     ·

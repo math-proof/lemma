@@ -3,8 +3,8 @@ import Lemma.Int.OfNat.eq.Cast
 import Lemma.List.DropLast.eq.Take_SubLength_1
 import Lemma.List.EqPermute__0
 import Lemma.List.GetPermute__Neg.eq.Get
-import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength
+import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.Permute__Neg.eq.Rotate_SubLength_1.of.GtLength_0
 import Lemma.List.Prod.eq.Mul_ProdDropLast.of.GtLength_0
@@ -70,7 +70,7 @@ private lemma main
     rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨i, by simp [GetPermute__Neg.eq.Get]⟩) (by simpa)]
     apply SEqCastS.of.SEq.Eq.Eq
     ·
-      simp [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+      simp [MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength]
     ·
       simp
     ·
@@ -81,10 +81,10 @@ private lemma main
         have h_t := t.isLt
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
         simp at h_t
-        rw [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength (by omega) (by omega)] at h_t
+        rw [MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength (by omega) (by omega)] at h_t
         have h_q := q.isLt
         simp at h_q
-        rw [LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength (by omega) (by omega)] at h_q
+        rw [LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength (by omega) (by omega)] at h_q
         have h_r := r.isLt
         let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
@@ -257,7 +257,7 @@ private lemma main
             simp only [h_toNat]
             simp [Permute__Neg.eq.Append_AppendRotateDropTake]
       ·
-        simp [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+        simp [MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength]
         rw [EraseIdx.eq.TailPermute__Neg]
 
 

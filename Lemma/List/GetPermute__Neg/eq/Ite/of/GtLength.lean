@@ -1,13 +1,13 @@
 import Lemma.List.Permute.eq.Ite
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.Nat.EqMin.of.Lt
-import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
+import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthCons.eq.Add1Length
 import Lemma.List.Slice.eq.Nil
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
-import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
+import Lemma.List.GetSlice.eq.Get_Add.of.GtLengthSlice
 import Lemma.Nat.LeSub.is.Le_Add
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Nat.Sub.ge.One.of.Gt
@@ -54,11 +54,11 @@ private lemma main
       have h_i := LeSub.of.Le_Add h_i
       have h_i' := Lt.of.Le.Ne h_i (by simp_all [Ne.symm])
       have h_i'' := Sub.ge.One.of.Gt h_i'
-      rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp_all) (by simp_all)]
+      rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength (by simp_all) (by simp_all)]
       simp [EqMin.of.Lt h_sub]
       rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0 (by linarith)]
       rw [GetAppend.eq.Get.of.GtLength]
-      rw [GetSlice.eq.Get_Add.of.Lt_LengthSlice]
+      rw [GetSlice.eq.Get_Add.of.GtLengthSlice]
       ·
         grind
       ·
@@ -66,7 +66,7 @@ private lemma main
         grind
     ·
       simp at h_i h_1 h_eq
-      rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+      rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
       ·
         have h_i := LeSub.of.Le_Add h_i
         have h_i' := Lt.of.Le.Ne h_i (by simp_all [Ne.symm])
@@ -74,7 +74,7 @@ private lemma main
         simp [EqMin.of.Lt h_sub]
         rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
         ·
-          rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength] <;>
+          rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength] <;>
           ·
             simp [LengthSlice.eq.SubMin]
             grind

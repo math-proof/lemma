@@ -1,7 +1,7 @@
 import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
-import Lemma.Tensor.LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0
+import Lemma.Tensor.LengthSelect.eq.Get_0.of.GtGet.GtLength.Gt_0
 open Tensor
 
 
@@ -13,7 +13,7 @@ private lemma main
   (h_j : j < s[0])
   (X : Tensor α s) :
 -- imply
-  (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get ⟨j, by simp [LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0]; grind⟩ ≃ (X.get ⟨j, by rwa [Length.eq.Get_0.of.GtLength_0]⟩).get ⟨i, by simp_all [LengthGet.eq.Get_0.of.GtGet_0.GtLength_1]⟩ := by
+  (X.select ⟨1, by grind⟩ ⟨i, by grind⟩).get ⟨j, by simp [LengthSelect.eq.Get_0.of.GtGet.GtLength.Gt_0]; grind⟩ ≃ (X.get ⟨j, by rwa [Length.eq.Get_0.of.GtLength_0]⟩).get ⟨i, by simp_all [LengthGet.eq.Get_0.of.GtGet_0.GtLength_1]⟩ := by
 -- proof
   match s with
   | [] =>

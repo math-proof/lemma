@@ -4,7 +4,7 @@ import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EraseIdxTail.eq.Drop_2
-import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail
+import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.GetRotate.eq.Ite.of.GeLength.GtLength
 import Lemma.List.Get_0.dvd.ProdTakeEraseIdx.of.Gt_0.Gt_0.GtLength_1
@@ -337,11 +337,11 @@ private lemma main
               ·
                 simpa
             ·
-              rw [EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail]
+              rw [EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail]
               simp
               omega
           ·
-            rw [EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail]
+            rw [EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail]
             simp
             omega
           repeat {

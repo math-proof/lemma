@@ -4,7 +4,7 @@ import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropTail.eq.Drop
 import Lemma.List.GetPermute__Neg.eq.Get_0.of.Gt
-import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
+import Lemma.List.GetTake.eq.Get.of.GtLengthTake
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
@@ -168,7 +168,7 @@ private lemma main
               rw [MulMul.eq.Mul_Mul]
               apply AddMul.lt.Mul.of.Lt.Lt
               ·
-                rwa [GetTake.eq.Get.of.Lt_LengthTake (by simp; omega)]
+                rwa [GetTake.eq.Get.of.GtLengthTake (by simp; omega)]
               ·
                 rw [TailTake.eq.TakeTail]
                 rwa [Mul_Mul.eq.MulMul]

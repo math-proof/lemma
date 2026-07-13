@@ -3,8 +3,8 @@ import Lemma.Finset.Prod.eq.MulProdS
 import Lemma.List.DropInsertIdx.eq.InsertIdxDrop.of.Ge.GeLength
 import Lemma.List.EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength
 import Lemma.List.GetInsertIdx.eq.Get.of.Gt.GeLength
-import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
+import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.List.TakeInsertIdx.eq.Take.of.Ge
@@ -45,7 +45,7 @@ private lemma main
     apply SEqCast.of.SEq.Eq
     ·
       simp
-      rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+      rw [MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength]
       grind
     ·
       simp
@@ -66,12 +66,12 @@ private lemma main
           simp at h_q
           have h_r := r.isLt
           simp at h_t
-          rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (by grind) (by grind)] at h_t
+          rw [MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength (by grind) (by grind)] at h_t
           rw [EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength (by omega) h_k] at h_t
           rw [ProdInsertIdx.eq.Prod] at h_t
           have h_lt : t < (⟨i, (s.take (d + 1)).prod, s[d]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
             simp
-            rwa [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength (by omega) i.isLt]
+            rwa [MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength (by omega) i.isLt]
           let ⟨q', r', h_q'r'⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
           let ⟨h_q'_div, h_r'_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_q'r'
           have h_q' := q'.isLt
@@ -102,7 +102,7 @@ private lemma main
               simp [GetInsertIdx.eq.Get.of.Gt.GeLength h_d h_k]
               simp [ProdTake.eq.MulProdTake.of.GtLength (show d < s.length by omega)]
               apply AddMul.lt.Mul.of.Lt.Lt _ i.isLt
-              rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength (by grind) (by grind)] at h_q
+              rw [LengthSlice.eq.ProdTake.of.GtGet.GtLength (by grind) (by grind)] at h_q
               rwa [TakeInsertIdx.eq.Take.of.Ge (show k ≥ d by omega)] at h_q
           ·
             rw [← h_q'r']
@@ -110,11 +110,11 @@ private lemma main
             rw [ProdInsertIdx.eq.Prod]
         ·
           simp
-          rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+          rw [MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength]
           grind
       ·
         simp
-        rw [MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+        rw [MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength]
         rw [EraseIdxInsertIdx.eq.InsertIdxEraseIdx.of.Gt.GtLength (by omega) h_k]
         grind
 

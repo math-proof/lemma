@@ -1,4 +1,4 @@
-import Lemma.List.LengthGetProduct.eq.Length.of.Lt_LengthProduct
+import Lemma.List.LengthGetProduct.eq.Length.of.GtLengthProduct
 import Lemma.List.LengthMap.eq.Length
 open List
 
@@ -12,7 +12,7 @@ private lemma main
   s.cartesianProduct[i].length = s.length := by
 -- proof
   unfold List.cartesianProduct
-  rw [LengthGetProduct.eq.Length.of.Lt_LengthProduct]
+  rw [LengthGetProduct.eq.Length.of.GtLengthProduct]
   rw [LengthMap.eq.Length]
 
 

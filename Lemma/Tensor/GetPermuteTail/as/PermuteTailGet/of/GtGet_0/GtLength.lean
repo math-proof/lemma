@@ -3,7 +3,7 @@ import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.DropTail.eq.Drop
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.GetAppend.eq.Get.of.GtLength
-import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
+import Lemma.List.GetTake.eq.Get.of.GtLengthTake
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.ProdDrop.dvd.ProdTail.of.Gt_0
@@ -166,7 +166,7 @@ private lemma main
     ·
       rw [GetAppend.eq.Get.of.GtLength]
       ·
-        rwa [GetTake.eq.Get.of.Lt_LengthTake]
+        rwa [GetTake.eq.Get.of.GtLengthTake]
       ·
         simp
         omega

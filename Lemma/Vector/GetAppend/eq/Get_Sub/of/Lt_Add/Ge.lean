@@ -1,5 +1,5 @@
 import Lemma.Vector.ValAppend.eq.AppendValS
-import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
+import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 open List Vector
 
 
@@ -16,7 +16,7 @@ private lemma main
   simp [GetElem.getElem]
   simp [List.Vector.get]
   simp [ValAppend.eq.AppendValS]
-  rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength (by simp_all) (by simp_all)]
+  rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength (by simp_all) (by simp_all)]
   simp_all
 
 

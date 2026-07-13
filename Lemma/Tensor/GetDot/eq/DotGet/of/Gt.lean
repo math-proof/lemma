@@ -26,7 +26,7 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
-import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.Lt_Get_1.GtLength_1
+import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.GtGet_1.GtLength_1
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
@@ -202,7 +202,7 @@ private lemma une
     let Y' : Tensor α [k / n' * n'] := Y.repeat (0 : Fin 1) (k / n')
     let Y'Append : Tensor α [k / n' * n' + k % n'] := Y' ++ (0 : Tensor α [k % n'])
     let X' : Tensor α [n, 1, k] := (X.unsqueeze 1).repeat (1 : Fin 3) 1
-    have := GetSelect_1.eq.Cast_Get.of.GtGet_0.Lt_Get_1.GtLength_1
+    have := GetSelect_1.eq.Cast_Get.of.GtGet_0.GtGet_1.GtLength_1
       (by grind)
       (by grind)
       (by grind)

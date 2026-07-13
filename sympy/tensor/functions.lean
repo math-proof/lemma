@@ -12,7 +12,7 @@ import Lemma.List.DropInsertIdx.eq.Drop.of.Lt
 import Lemma.List.DropEraseIdx.eq.Drop.of.Le
 import Lemma.List.LengthInsertIdxEraseIdx.eq.Length.of.GtLength
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
-import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength
+import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
 import Lemma.List.ProdTake.ne.Zero.of.NeProd_0
 import Lemma.List.ProdTail.ne.Zero.of.NeProd_0
 open Algebra List Tensor Nat
@@ -68,7 +68,7 @@ def Tensor.keepdim (X : Tensor α (s.eraseIdx dim)) : Tensor α s :=
   if h : dim < s.length then
     cast
       (by simp [List.EqSetInsertIdxEraseIdx.of.GtLength h])
-      ((X.unsqueeze dim).repeat ⟨dim, Lt_LengthInsertIdxEraseIdx.of.GtLength h 1⟩ s[dim])
+      ((X.unsqueeze dim).repeat ⟨dim, GtLengthInsertIdxEraseIdx.of.GtLength h 1⟩ s[dim])
   else
     cast (by rw [EqEraseIdx.of.LeLength (Ge.of.NotLt h)]) X
 
@@ -101,7 +101,7 @@ def Tensor.aminmax [NeZero s.prod] (X : Tensor α s) (cmp : α → α → Prop) 
         apply Lt_Sub.of.LtAdd h_dim
       have : NeZero s.tail.prod := ⟨ProdTail.ne.Zero.of.NeProd_0 (NeZero.ne s.prod)⟩
       cast
-        (by simp_all [EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_lt 1])
+        (by simp_all [EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail h_lt 1])
         (Tensor.fromVector (X.toVector.map (·.aminmax cmp dim)))
   else
     cast (by simp at h_dim; rw [EqEraseIdx.of.LeLength h_dim]) X
@@ -136,7 +136,7 @@ def Tensor.argAminmax [NeZero s.prod] (X : Tensor α s) (cmp : α → α → Pro
       apply Lt_Sub.of.LtAdd h_dim
     have : NeZero s.tail.prod := ⟨ProdTail.ne.Zero.of.NeProd_0 (NeZero.ne s.prod)⟩
     cast
-      (by simp_all [EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_lt 1])
+      (by simp_all [EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail h_lt 1])
       (Tensor.fromVector (X.toVector.map (·.argAminmax cmp ⟨dim, h_lt⟩)))
 
 /--

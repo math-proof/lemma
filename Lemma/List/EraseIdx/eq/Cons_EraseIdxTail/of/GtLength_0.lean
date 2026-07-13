@@ -1,4 +1,4 @@
-import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail
+import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail
 import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.EqCons_Tail.of.Eq_Get_0.GtLength_0
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
@@ -15,7 +15,7 @@ private lemma main
   s.eraseIdx i.succ = s[0] :: s.tail.eraseIdx i := by
 -- proof
   if h_i : i < s.tail.length then
-    rw [EraseIdx.eq.Cons_EraseIdxTail.of.Lt_LengthTail h_i s[0]]
+    rw [EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail h_i s[0]]
     rw [HeadD.eq.Get_0.of.GtLength_0 h]
   else
     simp at h_i

@@ -10,7 +10,7 @@ import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthGet.eq.Get_0.of.GtGet_0.GtLength_1
-import Lemma.Tensor.LengthSelect.eq.Get_0.of.Lt_Get.GtLength.Gt_0
+import Lemma.Tensor.LengthSelect.eq.Get_0.of.GtGet.GtLength.Gt_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt

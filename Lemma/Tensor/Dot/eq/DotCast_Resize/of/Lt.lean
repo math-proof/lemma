@@ -1,70 +1,24 @@
-import Lemma.Tensor.Resize.as.FromVectorMapToVector.of.GtVal_0
+import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Fin.Eq_0
-import Lemma.Fin.Eq_Fin.of.EqVal
-import Lemma.List.EqSwap_0'1
-import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.List.ProdSwap.eq.Prod
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.Div.eq.One.of.Ne_0
-import Lemma.Nat.EqAddMulDiv
-import Lemma.Nat.EqDivAddMul.of.Lt
-import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Nat.EqMod.of.Lt
-import Lemma.Nat.EqMulDiv
-import Lemma.Nat.EqMulS.of.Eq
-import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Tensor.DataAppend.as.AppendDataS
-import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
-import Lemma.Tensor.DataCast.as.Data.of.Eq
-import Lemma.Tensor.DataGet.eq.GetUnflattenData
-import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.DataTransposeTensor.eq.Cast
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.EqAppendS
-import Lemma.Tensor.EqData0'0
-import Lemma.Tensor.EqGet0_0
-import Lemma.Tensor.EqRepeatS.of.Eq
-import Lemma.Tensor.EqUnsqueezeS.of.Eq
-import Lemma.Tensor.GetAppend.as.AppendCastS_Get.of.GtLength_0
-import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
-import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
-import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.Lt_Get_1.GtLength_1
-import Lemma.Tensor.GetSum_2.eq.SumGet__0
-import Lemma.Tensor.GetSum_2.eq.SumGet__1
-import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
-import Lemma.Tensor.Get_0.eq.TensorCast_Data
-import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.HeadDataSum.eq.SumData
-import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Nat.LtDiv.of.Lt_Mul
+import Lemma.Nat.LtMod.of.Lt_Mul
+import Lemma.Tensor.DataFromVector.eq.FlattenMapData
+import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
+import Lemma.Tensor.DataResize.as.FlattenMapSplitAtData
 import Lemma.Tensor.Einsum.as.Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2
-import Lemma.Tensor.Einsum.as.SelectBmm.of.Lt_Get_SubLength.GeLength_2
-import Lemma.Tensor.Einsum.eq.SumMulDataS.of.Lt
-import Lemma.Tensor.SEqDataS.of.SEq
-import Lemma.Tensor.SEqSumS.of.SEq
-import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
-import Lemma.Vector.Cast_Cast.eq.Cast.of.Eq.Eq
-import Lemma.Vector.Eq.is.All_EqGetS
-import Lemma.Vector.EqGet0_0
-import Lemma.Vector.EqSumS.of.SEq
+import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.EqTensordotS.of.SEq.SEq
+import Lemma.Tensor.GetToVector.eq.Get
+import Lemma.Tensor.Resize.as.FromVectorMapToVector.of.GtVal_0
+import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt.Eq
-import Lemma.Vector.GetMap₂.eq.BFnGetS
-import Lemma.Vector.GetMul.eq.MulGetS
-import Lemma.Vector.GetRepeat.eq.Get_Mod
+import Lemma.Vector.GetFlatten.eq.Get.of.Lt_Mul
+import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
-import Lemma.Vector.GetUnflatten.eq.Get_AddMul
+import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Vector.SplitAt0.eq.Zero
-open Bool Fin List Nat Tensor Vector
+open Bool Nat Tensor Vector
 set_option maxHeartbeats 10000000
 
 
@@ -83,13 +37,62 @@ private lemma main
   conv_rhs => rw [Einsum.eq.Cast_Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simp)]
   rw [Einsum.eq.Cast_Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
   apply EqCastS.of.SEq.Eq
-  .
+  ·
     simp [broadcast_shape, matmul_shape]
-  .
+  ·
     simp
     rw [Resize.eq.Cast_FromVectorMapToVector.of.GtVal_0 _ (by simp)]
     simp
-    rfl
+    apply SEq.of.Eq
+    apply EqTensordotS.of.SEq.SEq _ (by rfl)
+    apply SEq.of.SEqDataS.Eq
+    ·
+      simp
+    ·
+      simp
+      apply SEq_Cast.of.SEq.Eq (by simp)
+      apply SEq.of.All_EqGetS.Eq.fin (by simp)
+      intro t
+      have h_t := t.isLt
+      rw [DataFromVector.eq.FlattenMapData]
+      repeat erw [GetFlatten.eq.Get.of.Lt_Mul (by grind)]
+      simp
+      have h_t' : t < X.length * n' := by simpa [Tensor.length] using h_t
+      have h_div := LtDiv.of.Lt_Mul h_t'
+      have h_mod := LtMod.of.Lt_Mul h_t'
+      erw [GetToVector.eq.Get.fin (i := ⟨t / n', h_div⟩)]
+      simp [DataResize.eq.Cast_FlattenMapSplitAtData]
+      rw [GetCast.eq.Get.of.Eq.fin (by simp)]
+      simp
+      rw [GetResize.eq.Ite_Get_Mod.fin]
+      simp
+      split_ifs with h_it
+      ·
+        erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+        erw [GetFlatten.eq.Get.of.Lt_Mul (by simp [h_mod])]
+        simp
+        rw [GetResize.eq.Ite_Get_Mod.fin]
+        split_ifs with h_it'
+        ·
+          rw [Head.eq.Get_0.fin]
+          erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          simp
+          rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨t / n', h_div⟩) (by grind)]
+          simp
+          erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          congr 1
+          simp
+        ·
+          grind
+      ·
+        obtain h_eq | h_lt := Nat.eq_or_lt_of_le (Nat.div_mul_le_self n' k)
+        ·
+          grind
+        ·
+          erw [GetFlatten.eq.Get.of.Lt_Mul (by grind)]
+          simp [GetResize.eq.Ite_Get_Mod.fin]
+          grind
 
 
 -- created on 2026-07-10
+-- updated on 2026-07-13

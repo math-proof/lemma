@@ -1,6 +1,6 @@
 import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Eq
-import Lemma.List.Lt_Get.of.Lt_GetTail.Lt_LengthTail
-import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.Lt_Get_Add_1.LtAdd_1Length
+import Lemma.List.GtGet.of.GtGetTail.GtLengthTail
+import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.EqGetCons
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
@@ -66,11 +66,11 @@ private lemma main
             apply EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 h_i
           .
             intro l
-            apply Tensor.SelectGet.as.GetSelect.of.GtGet_0.Lt_Get_Add_1.LtAdd_1Length h _ h_t
+            apply Tensor.SelectGet.as.GetSelect.of.GtGet_0.GtGet_Add_1.LtAdd_1Length h _ h_t
             .
               simp
             .
-              apply List.Lt_Get.of.Lt_GetTail.Lt_LengthTail
+              apply List.GtGet.of.GtGetTail.GtLengthTail
               simp
               grind
           .

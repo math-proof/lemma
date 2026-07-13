@@ -1,5 +1,5 @@
 import Lemma.Set.In.is.Any_Eq_Get
-import Lemma.List.LengthGetProduct.eq.Length.of.Lt_LengthProduct
+import Lemma.List.LengthGetProduct.eq.Length.of.GtLengthProduct
 open Set List
 
 
@@ -14,7 +14,7 @@ private lemma main
   have h := Any_Eq_Get.of.In h
   let ⟨i, h_i⟩ := h
   rw [h_i]
-  simp [LengthGetProduct.eq.Length.of.Lt_LengthProduct]
+  simp [LengthGetProduct.eq.Length.of.GtLengthProduct]
 
 
 -- created on 2025-06-29

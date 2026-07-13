@@ -3,7 +3,7 @@ import Lemma.List.Set.eq.AppendTake__List.of.GtLength_0
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.SEqSelectS.of.SEq
-import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.Lt_Get_Add_1.LtAdd_1Length
+import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
@@ -184,7 +184,7 @@ private lemma une
           simp [matmul_shape]
           grind
         .
-          rw [GetSelect.eq.Cast_SelectGet.of.GtGet_0.Lt_Get_Add_1.LtAdd_1Length]
+          rw [GetSelect.eq.Cast_SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length]
           .
             apply SEqCast.of.SEq.Eq
             .

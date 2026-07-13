@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength
+import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
@@ -28,7 +28,7 @@ private lemma main
   simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
   have h_length_slice : (⟨↑↑i, ↑(s.take (↑d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (↑d + 1)).prod * (s.drop (↑d + 1)).prod = (s.eraseIdx ↑d).prod := by
     simp
-    rw [MulLengthSlice_Mul.eq.ProdEraseIdx.of.Lt_Get.GtLength]
+    rw [MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength]
     grind
   apply EqCast.of.SEq.Eq h_length_slice
   apply SEq.of.All_EqGetS.Eq.fin h_length_slice
@@ -38,7 +38,7 @@ private lemma main
   let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
   have h_q := q.isLt
   simp at h_q
-  rw [LengthSlice_Mul.eq.ProdTake.of.Lt_Get.GtLength d.isLt h_i] at h_q
+  rw [LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength d.isLt h_i] at h_q
   let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
   have h_prod := ProdTake.eq.Mul_ProdTake.of.GtLength d.isLt
   rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]

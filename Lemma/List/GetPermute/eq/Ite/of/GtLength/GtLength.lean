@@ -1,10 +1,10 @@
 import Lemma.List.Permute.eq.Ite
 import Lemma.List.GetAppend.eq.Get.of.GtLength
-import Lemma.List.GetTake.eq.Get.of.Lt_LengthTake
+import Lemma.List.GetTake.eq.Get.of.GtLengthTake
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.Nat.EqMin.of.Lt
-import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
-import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
+import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
+import Lemma.List.GetSlice.eq.Get_Add.of.GtLengthSlice
 import Lemma.Nat.SubAdd.eq.Add_Sub.of.Ge
 import Lemma.Nat.Add
 import Lemma.List.LengthSlice.eq.SubMin
@@ -62,14 +62,14 @@ private lemma main
     split_ifs with h_i h_1 h_eq
     ·
       rw [GetAppend.eq.Get.of.GtLength]
-      rw [GetTake.eq.Get.of.Lt_LengthTake]
+      rw [GetTake.eq.Get.of.GtLengthTake]
       rw [LengthTake.eq.Min_Length]
       simp_all
     ·
       simp at h_i
-      rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+      rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
       rw [GetAppend.eq.Get.of.GtLength]
-      rw [GetSlice.eq.Get_Add.of.Lt_LengthSlice]
+      rw [GetSlice.eq.Get_Add.of.GtLengthSlice]
       ·
         simp [Add_Sub.eq.SubAdd.of.Ge h_i]
         simp [Add.comm]
@@ -81,7 +81,7 @@ private lemma main
       ·
         simp_all
     ·
-      repeat rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+      repeat rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
       ·
         simp [LengthSlice.eq.SubMin]
         simp [h_eq_i]
@@ -100,7 +100,7 @@ private lemma main
         rw [EqAdd_Sub.of.Ge]
         apply Ge_Add_1.of.Gt
         apply Gt.of.Ge.Ne h_1 h_eq
-      repeat rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+      repeat rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
       simp [LengthSlice.eq.SubMin]
       simp [h_eq_i]
       rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]

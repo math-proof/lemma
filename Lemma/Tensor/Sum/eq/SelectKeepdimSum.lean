@@ -2,7 +2,7 @@ import sympy.tensor.functions
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength
+import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
 import Lemma.List.EqSetInsertIdxEraseIdx.of.GtLength
 import Lemma.Tensor.SelectRepeat.as.Select_Mod_Get.of.Lt_MulGet
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
@@ -24,7 +24,7 @@ private lemma main
   unfold Tensor.keepdim
   simp
   have h_d := d.isLt
-  have h_dim := Lt_LengthInsertIdxEraseIdx.of.GtLength h_d 1
+  have h_dim := GtLengthInsertIdxEraseIdx.of.GtLength h_d 1
   have h_cast := SelectCast.eq.Cast_Select.of.Eq
     (by simp [EqSetInsertIdxEraseIdx.of.GtLength])
     ((((X.sum d).unsqueeze d).repeat ⟨d, h_dim⟩ s[d])) ⟨d, by simpa⟩ ⟨i, by simp⟩

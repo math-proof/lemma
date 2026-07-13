@@ -1,4 +1,4 @@
-import Lemma.List.Lt_LengthInsertIdxEraseIdx.of.GtLength
+import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
 import Lemma.Bool.SEqCast.of.Eq
 import sympy.tensor.functions
 open List Bool
@@ -11,7 +11,7 @@ private lemma main
 -- given
   (X : Tensor α (s.eraseIdx d)) :
 -- imply
-  X.keepdim ≃ (X.unsqueeze d).repeat ⟨d, Lt_LengthInsertIdxEraseIdx.of.GtLength d.isLt 1⟩ s[d] := by
+  X.keepdim ≃ (X.unsqueeze d).repeat ⟨d, GtLengthInsertIdxEraseIdx.of.GtLength d.isLt 1⟩ s[d] := by
 -- proof
   unfold Tensor.keepdim
   simp [d.isLt]

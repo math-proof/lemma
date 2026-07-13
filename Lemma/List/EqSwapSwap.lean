@@ -4,7 +4,7 @@ import Lemma.List.LengthSwap.eq.Length
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Ge.of.Gt
-import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.GtLength
+import Lemma.List.GetSwap.eq.Get.of.GtLengthSwap.GtLength
 import Lemma.List.EqAppend_ConsAppend_Cons.of.GtLength.Lt
 import Lemma.List.EqSwapS
 open List Nat
@@ -25,8 +25,8 @@ private lemma main
     rw [h_eq]
     simp [List.swap]
   ·
-    rw [GetSwap.eq.Get.of.Lt_LengthSwap.GtLength (by linarith) (by linarith)]
-    rw [GetSwap.eq.Get.of.Lt_LengthSwap.GtLength.left h_i (by linarith)]
+    rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength (by linarith) (by linarith)]
+    rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength.left h_i (by linarith)]
     rw [EqSwapS]
     apply EqAppend_ConsAppend_Cons.of.GtLength.Lt h_lt? h_i
   ·
@@ -37,8 +37,8 @@ private lemma main
   ·
     have h_ge := Ge.of.NotLt h_lt?
     have h_gt := Gt.of.Ge.Ne h_ge h_eq
-    rw [GetSwap.eq.Get.of.Lt_LengthSwap.GtLength h_j (by linarith)]
-    rw [GetSwap.eq.Get.of.Lt_LengthSwap.GtLength.left (by linarith) (by linarith)]
+    rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength h_j (by linarith)]
+    rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength.left (by linarith) (by linarith)]
     apply EqAppend_ConsAppend_Cons.of.GtLength.Lt h_gt h_j
   ·
     unfold List.swap

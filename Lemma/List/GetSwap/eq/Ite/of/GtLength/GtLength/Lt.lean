@@ -1,12 +1,12 @@
-import Lemma.List.GetSwap.eq.Get.of.Lt_LengthSwap.GtLength
+import Lemma.List.GetSwap.eq.Get.of.GtLengthSwap.GtLength
 import Lemma.List.GetAppend.eq.Get.of.GtLength
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.Nat.Le.of.Lt
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.List.LengthCons.eq.Add1Length
-import Lemma.List.GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength
+import Lemma.List.GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength
 import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
-import Lemma.List.GetSlice.eq.Get_Add.of.Lt_LengthSlice
+import Lemma.List.GetSlice.eq.Get_Add.of.GtLengthSlice
 import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.List.GetDrop.eq.Get_Add.of.GtLength_Add
 import Lemma.List.LengthSwap.eq.Length
@@ -41,9 +41,9 @@ private lemma main
     grind
   split_ifs with h_ti h_tj
   ·
-    simp_all [GetSwap.eq.Get.of.Lt_LengthSwap.GtLength]
+    simp_all [GetSwap.eq.Get.of.GtLengthSwap.GtLength]
   ·
-    simp_all [GetSwap.eq.Get.of.Lt_LengthSwap.GtLength.left]
+    simp_all [GetSwap.eq.Get.of.GtLengthSwap.GtLength.left]
   ·
     unfold List.swap
     split_ifs with h_eq
@@ -59,9 +59,9 @@ private lemma main
         have h_lt := Gt.of.Ge.Ne h_ti (by assumption)
         if h_tj : t < j then
           rw [GetAppend.eq.Get.of.GtLength]
-          rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+          rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
           rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
-          rw [GetSlice.eq.Get_Add.of.Lt_LengthSlice]
+          rw [GetSlice.eq.Get_Add.of.GtLengthSlice]
           repeat grind
           rw [LengthAppend.eq.AddLengthS]
           rw [LengthCons.eq.Add1Length]
@@ -72,7 +72,7 @@ private lemma main
           have h_gt : t > j := Gt.of.Ge.Ne h_tj (by assumption)
           have h_eq_tj : j + 1 + (t - j - 1) = t := by
             grind
-          rw [GetAppend.eq.Get_Sub_Length.of.Lt_LengthAppend.GeLength]
+          rw [GetAppend.eq.Get_Sub_Length.of.GtLengthAppend.GeLength]
           simp [LengthSlice.eq.SubMin]
           simp [h_i, h_j]
           simp [h_eq_ij']

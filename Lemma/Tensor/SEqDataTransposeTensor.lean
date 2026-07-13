@@ -9,7 +9,7 @@ import Lemma.List.TailPermute__Neg.eq.EraseIdx
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
-import Lemma.Tensor.GetPermuteTail.as.Select.of.Lt_Get.GtLength_0
+import Lemma.Tensor.GetPermuteTail.as.Select.of.GtGet.GtLength_0
 import Lemma.Tensor.SEqPermute__0
 import Lemma.Tensor.Permute__Neg.as.PermuteTail.of.Val.eq.SubLength_1
 import Lemma.Vector.GetCast.eq.Get.of.Eq
@@ -62,7 +62,7 @@ private lemma main
       have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by grind) (⟨v⟩ : Tensor α [n, 1]) (i := ⟨1, by grind⟩) (d := 1)
       simp at this
       erw [this]
-      have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by grind) (⟨v⟩ : Tensor α [n, 1]) (k := 0)
+      have := GetPermuteTail.eq.Cast_Select.of.GtGet.GtLength_0 (by grind) (by grind) (⟨v⟩ : Tensor α [n, 1]) (k := 0)
       simp at this
       erw [this]
       erw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
@@ -125,7 +125,7 @@ private lemma row
       have := Permute__Neg.eq.Cast_PermuteTail.of.Val.eq.SubLength_1 (by simp) (⟨v⟩ : Tensor α [1, n]) (i := ⟨1, by simp⟩) (d := 1)
       simp at this
       erw [this]
-      have := GetPermuteTail.eq.Cast_Select.of.Lt_Get.GtLength_0 (by grind) (by simp; grind) (⟨v⟩ : Tensor α [1, n]) (k := t)
+      have := GetPermuteTail.eq.Cast_Select.of.GtGet.GtLength_0 (by grind) (by simp; grind) (⟨v⟩ : Tensor α [1, n]) (k := t)
       simp at this
       erw [this]
       erw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]

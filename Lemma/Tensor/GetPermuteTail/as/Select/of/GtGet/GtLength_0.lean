@@ -6,7 +6,7 @@ import Lemma.List.DropLast.dvd.Prod
 import Lemma.List.DropLast.eq.Take_SubLength_1
 import Lemma.List.Get.dvd.Prod.of.GtLength
 import Lemma.List.GetRotate.eq.Get.of.GtLength.Gt_0
-import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.Prod.eq.MulProdDropLast.of.GtLength_0
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdDrop.eq.Get.of.GtLength_0
@@ -77,7 +77,7 @@ private lemma main
           simp
         ·
           simp
-          rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength _ h_k]
+          rw [LengthSlice.eq.ProdTake.of.GtGet.GtLength _ h_k]
           simp [EqAddSub.of.Ge (show s.length ≥ 1 by omega)]
           rw [DropLast.eq.Take_SubLength_1]
         ·
@@ -90,7 +90,7 @@ private lemma main
             simp
             have h_t : t < ((⟨↑k, ↑(s.take (s.length - 1 + 1)).prod, ↑s[s.length - 1]⟩ : Slice).length (s.take (s.length - 1 + 1)).prod) * (s.drop (s.length - 1 + 1)).prod := by
               simp
-              rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength _ h_k]
+              rw [LengthSlice.eq.ProdTake.of.GtGet.GtLength _ h_k]
               simpa [EqAddSub.of.Ge (show s.length ≥ 1 by omega)]
             let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
             let ⟨h_q_div, _⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
@@ -100,7 +100,7 @@ private lemma main
             simp [h_s_drop] at h_q_div h_r
             have h_q := q.isLt
             simp at h_q
-            rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength _ h_k] at h_q
+            rw [LengthSlice.eq.ProdTake.of.GtGet.GtLength _ h_k] at h_q
             rw [Take_SubLength_1.eq.DropLast] at h_q
             simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
             rw [GetGetSlice.eq.Get.of.GtGet.GtLength]
@@ -165,7 +165,7 @@ private lemma main
               simpa
           ·
             simp
-            rw [LengthSlice.eq.ProdTake.of.Lt_Get.GtLength _ h_k]
+            rw [LengthSlice.eq.ProdTake.of.GtGet.GtLength _ h_k]
             rw [Drop.eq.Nil.of.LeLength (by grind)]
             simp
             rw [TailRotate.eq.DropLast.of.GtLength_0 (by omega)]

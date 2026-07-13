@@ -1,7 +1,7 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Fin.Sum.ne.Zero.of.All_Gt_0.Ne_0
-import Lemma.List.LengthSlice.eq.ProdTake.of.Lt_Get.GtLength
-import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength
+import Lemma.List.LengthSlice.eq.ProdTake.of.GtGet.GtLength
+import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.MulProdInsertIdxEraseIdx.eq.Prod.of.GtLength
 import Lemma.List.ProdDropInsertIdxEraseIdx.eq.ProdDrop.of.GtLength
 import Lemma.List.ProdInsertIdx.eq.Prod
@@ -98,7 +98,7 @@ private lemma main
             rw [GetCast.eq.Get.of.Eq.fin]
             ·
               simp
-              have h_length_slice := LengthSlice.eq.ProdTake.of.Lt_Get.GtLength.simp (s := s) h i.isLt
+              have h_length_slice := LengthSlice.eq.ProdTake.of.GtGet.GtLength.simp (s := s) h i.isLt
               have h_lt : ↑q * (((s.eraseIdx d).insertIdx d 1).drop d).prod + ↑r % (((s.eraseIdx d).insertIdx d 1).drop d).prod < ((⟨↑↑i, ↑(s.take (d + 1)).prod, ↑s[d]⟩ : Slice).length (s.take (d + 1)).prod) * (s.drop (d + 1)).prod := by
                 simp only [h_length_slice]
                 simp [h_prod_insertIdx]
@@ -116,7 +116,7 @@ private lemma main
               rw [GetExp.eq.ExpGet.fin]
               apply GtExp_0
             ·
-              apply MulLengthSlice.eq.ProdEraseIdx.of.Lt_Get.GtLength.simp h i.isLt
+              apply MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp h i.isLt
         ·
           rw [ProdInsertIdx.eq.Prod]
       ·
