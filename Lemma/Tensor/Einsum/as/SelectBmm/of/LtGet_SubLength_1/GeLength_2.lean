@@ -1,3 +1,4 @@
+import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -44,8 +45,8 @@ private lemma main
       grind
     ·
       simp
-      congr 1
       apply Eq.of.SEq
+      apply SEqSelectS.of.SEq
       apply SEqBmmS.of.SEq.SEq
       ·
         apply SEqCastS.of.SEq.Eq.Eq

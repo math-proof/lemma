@@ -15,4 +15,15 @@ private lemma main
   Length.eq.Get_0.of.GtLength_0 _ X
 
 
+@[main]
+private lemma list
+-- given
+  (X : Tensor α s)
+  (i : Fin s.length) :
+-- imply
+  X.length = s[0]'(Gt_0 i) :=
+-- proof
+  Length.eq.Get_0.of.GtLength_0 _ X
+
+
 -- created on 2026-07-12
