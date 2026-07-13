@@ -11,7 +11,7 @@ import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq
-open Bool List Tensor Fin Nat Vector
+open Bool List Tensor
 set_option maxHeartbeats 10000000
 
 

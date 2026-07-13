@@ -3,7 +3,7 @@ import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSumS.of.SEq
-open Bool Tensor Fin
+open Bool Tensor
 
 
 @[main]

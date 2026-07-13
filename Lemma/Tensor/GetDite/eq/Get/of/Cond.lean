@@ -1,6 +1,5 @@
 import sympy.Basic
 import sympy.tensor.tensor
-open Tensor
 
 
 @[main, fin]
