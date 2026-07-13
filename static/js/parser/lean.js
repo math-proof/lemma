@@ -5125,12 +5125,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     comment = null;
                 } else if (declspec && (typeof declspec.toLatex === 'function' || flatImplyStmts.length > 0)) {
                     const proof0 = assignment.rhs;
-                    const by =
-                        proof0 instanceof LeanBy
-                            ? 'by'
-                            : proof0 instanceof LeanCalc
-                              ? 'calc'
-                              : '';
+                    const by = proof0 instanceof LeanBy? 'by' : proof0 instanceof LeanCalc? 'calc': '';
                     /** When declspec is LeanColon, extract explicit (A:T)(V:T) from lhs and imply from rhs. */
                     let simpleExplicit = flatExplicit;
                     let implyNode = declspec;

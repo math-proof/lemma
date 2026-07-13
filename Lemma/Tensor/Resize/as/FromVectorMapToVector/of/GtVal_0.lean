@@ -1,3 +1,10 @@
+import Lemma.List.ProdTail.eq.MulProdTakeTail
+import Lemma.Nat.DivAdd.eq.AddDivS.of.Dvd
+import Lemma.Nat.EqAddMulDiv
+import Lemma.Nat.EqDivMul.of.Ne_0
+import Lemma.Nat.ModAddMul.eq.Mod
+import Lemma.Nat.ModMod.eq.Mod.of.Dvd
+import Lemma.Nat.Ne_0.of.GtMul
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.DropTail.eq.Drop
 import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
@@ -21,6 +28,7 @@ import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector
+set_option maxHeartbeats 1000000
 
 
 @[main, cast]
@@ -57,11 +65,13 @@ private lemma main
         ·
           intro t
           have h_t := t.isLt
+          have h_prodset := ProdSet.eq.MulProd_Mul_Prod.of.GtLength (by grind) n (i := j) (s := s.tail)
+          erw [← TailSet.eq.SetTail.of.Gt_0 (Nat.succ_pos j) s n] at h_prodset
           repeat rw [GetFlatten.eq.Get.of.Lt_Mul]
           ·
             simp
             have h_Xs := Length.eq.Get_0.list X i
-            have h_t : t / (s.set (j + 1) n).tail.prod < s[0] := by
+            have h_t_div : t / (s.set (j + 1) n).tail.prod < s[0] := by
               apply LtDiv.of.Lt_Mul
               simp [ProdTake.eq.Mul_ProdTakeTail.of.GtLength_0 (by grind) j (s := s)] at h_t
               rw [MulMul.eq.Mul_Mul] at h_t
@@ -77,26 +87,54 @@ private lemma main
               rw [GetFlatten.eq.Get.of.Lt_Mul]
               ·
                 simp [GetResize.eq.Ite_Get_Mod.fin]
-                split_ifs with h? h' h''
+                split_ifs with h? h' h'
                 ·
                   simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
                   rw [DataGet.eq.Cast_GetSplitAtData.of.GtLength_0.fin (i := ⟨t / (s.set (j + 1) n).tail.prod, by grind⟩) (by grind)]
-                  rw [GetCast.eq.Get.of.Eq.fin]
-                  ·
-                    simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-                    congr 1
+                  rw [GetCast.eq.Get.of.Eq.fin (by simp)]
+                  simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+                  congr 1
+                  simp
+                  set T := (s.set (j + 1) n).tail.prod
+                  set q := t / T
+                  set r := t % T
+                  rw [(EqAddMulDiv ↑t T).symm]
+                  simp only [q, r, T, h_prodset]
+                  rw [DropTail.eq.Drop]
+                  rw [ProdTail.eq.MulProdTakeTail (d := j)]
+                  conv_lhs =>
+                    pattern (_ * (_ * _) + _) % _
+                    rw [Mul_Mul.eq.MulMul]
+                    rw [ModAddMul.eq.Mod]
+                  conv_lhs =>
+                    pattern (_ * (_ * _) + _) / _
+                    rw [Mul_Mul.eq.MulMul]
+                    rw [DivAdd.eq.AddDivS.of.Dvd (by simp)]
                     simp
-                    sorry
-                  ·
-                    sorry
+                    rw [EqDivMul.of.Ne_0 (Ne_0.of.GtMul h_t)]
+                  grind
                 ·
-                  sorry
+                  rw [ModMod.eq.Mod.of.Dvd] at h'
+                  .
+                    omega
+                  .
+                    rw [h_prodset, DropTail.eq.Drop]
+                    aesop
                 ·
-                  sorry
+                  rw [ModMod.eq.Mod.of.Dvd] at h'
+                  .
+                    omega
+                  .
+                    rw [h_prodset, DropTail.eq.Drop]
+                    aesop
                 ·
                   rfl
               ·
-                sorry
+                simp [h_prodset]
+                apply LtMod.of.Lt_Mul (k := s[0])
+                simp [Mul_Mul.eq.MulMul]
+                rw [← ProdTake.eq.Mul_ProdTakeTail.of.GtLength_0 (by grind) j]
+                simp [MulMul.eq.Mul_Mul]
             ·
               rw [ProdSet.eq.MulProd_Mul_Prod.of.GtLength (by grind)]
               simp
