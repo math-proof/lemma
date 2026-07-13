@@ -1,4 +1,3 @@
-import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -11,6 +10,7 @@ import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
+import Lemma.Tensor.SEqSelectS.of.SEq
 open Bool List Nat Tensor
 set_option maxHeartbeats 400000
 
@@ -44,8 +44,8 @@ private lemma main
       grind
     ·
       simp
-      congr 1
       apply Eq.of.SEq
+      apply SEqSelectS.of.SEq
       apply SEqBmmS.of.SEq.SEq
       ·
         apply SEqReshapeS.of.SEq.Eq.Dvd
@@ -83,4 +83,4 @@ private lemma main
 
 
 -- created on 2026-01-07
--- updated on 2026-07-10
+-- updated on 2026-07-13
