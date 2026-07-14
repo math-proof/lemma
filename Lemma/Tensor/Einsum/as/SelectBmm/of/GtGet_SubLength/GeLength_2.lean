@@ -35,9 +35,8 @@ private lemma main
   unfold Tensor.einsum
   apply SEq.of.Eq_Cast
   ·
-    split_ifs with h h h h h
-    ·
-      grind
+    simp
+    split_ifs with h h
     ·
       grind
     ·
@@ -68,10 +67,6 @@ private lemma main
               grind
           ·
             rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)]
-    ·
-      grind
-    ·
-      grind
   ·
     congr
     simp [Tensor.matmul_shape]

@@ -15,39 +15,27 @@ private lemma main
   X.einsum Y = ((cast (by simp) (X.resize ⟨0, by simp⟩ n') : Tensor α [n']) * Y).sum := by
 -- proof
   unfold Tensor.einsum
-  split_ifs with h h h h h
+  simp
+  congr
   ·
-    grind
-  ·
-    grind
-  ·
-    simp
-    congr
-    ·
-      rw [EqMax.of.Lt h_n]
-    ·
-      grind
-    ·
-      grind
-    ·
-      grind
-    ·
-      grind
-    ·
-      grind
-    ·
-      grind
-    ·
-      rw [EqMax.of.Lt h_n]
-      apply HEq.of.SEq
-      apply SEqResize_0.of.Eq_Get_0.GtLength_0
-      repeat grind
+    rw [EqMax.of.Lt h_n]
   ·
     grind
   ·
     grind
   ·
     grind
+  ·
+    grind
+  ·
+    grind
+  ·
+    grind
+  ·
+    rw [EqMax.of.Lt h_n]
+    apply HEq.of.SEq
+    apply SEqResize_0.of.Eq_Get_0.GtLength_0
+    repeat grind
 
 
 -- created on 2026-01-05

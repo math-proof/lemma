@@ -52,7 +52,7 @@ private lemma main
     rw [EqMax.of.Lt h]
     apply ResizeUnsqueeze.as.UnsqueezeResize A ⟨0, by grind⟩
   ·
-    apply SEqCastS.of.SEq.Eq.Eq (by simp [broadcast_shape]) (by simp)
+    apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     apply SEqRepeatS.of.SEq.EqValS.Eq (by simp) (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])

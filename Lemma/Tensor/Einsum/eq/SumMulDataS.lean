@@ -12,40 +12,34 @@ private lemma main
   X.einsum Y = (X * Y).sum := by
 -- proof
   unfold Tensor.einsum
-  split_ifs with h h
+  simp
+  congr
+  ·
+    simp
   ·
     grind
   ·
-    simp
-    congr
+    grind
+  ·
+    grind
+  ·
+    grind
+  ·
+    grind
+  ·
+    apply HEq.of.SEq
+    apply SEqResize_0.of.Eq_Get_0.GtLength_0
     ·
       simp
     ·
       grind
-    ·
-      grind
-    ·
-      grind
-    ·
-      grind
-    ·
-      grind
-    ·
-      apply HEq.of.SEq
-      apply SEqResize_0.of.Eq_Get_0.GtLength_0
-      ·
-        simp
-      ·
-        grind
-    ·
-      apply HEq.of.SEq
-      apply SEqResize_0.of.Eq_Get_0.GtLength_0
-      ·
-        simp
-      ·
-        grind
   ·
-    grind
+    apply HEq.of.SEq
+    apply SEqResize_0.of.Eq_Get_0.GtLength_0
+    ·
+      simp
+    ·
+      grind
 
 
 -- created on 2026-01-05
