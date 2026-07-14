@@ -66,6 +66,7 @@ private lemma main
     conv_rhs => erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
     apply SEq.of.Eq ∘ EqCastS.of.SEq.Eq (by simp)
     apply SEq.of.Eq
+    simp
     grind
 
 

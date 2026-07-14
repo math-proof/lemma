@@ -3,7 +3,6 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.TailTake.eq.TakeTail
-import Lemma.List.ZipWith__Append.eq.AppendZipWithS
 import Lemma.Tensor.Tensordot.as.Matmul.of.GtLengthS
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
 import Lemma.Tensor.GetMatmul.as.MatmulCastS_Get.of.Eq.EqLengthS.GtLength_0
@@ -12,6 +11,8 @@ import Lemma.Tensor.GtLength.of.GtLength
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
+-- this is added to avoid a bug in the Lean 4 compiler that environment saying: already contains 'List.getElem?_zipWith.match_1.congr_eq_1._sparseCasesOn_2'
+import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 open Tensor Bool List
 
 

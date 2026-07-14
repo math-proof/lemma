@@ -128,44 +128,40 @@ def Tensor.matmul [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, t])) (Y :
 def Tensor.tensordot [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, n])) (Y : Tensor α (s' ++ [n, k])) : Tensor α (broadcast_shape s s' ++ [m, k]) :=
   if h : s.length < s'.length then
     let X := X.reshape (s'.take (s'.length - s.length) ++ s ++ [m, n]) (by simp)
-    cast
-      (by
-        apply congrArg
-        simp [broadcast_shape]
-        split_ifs with h_l h_u
-        .
-          grind
-        .
-          grind
-        .
-          simp
-          rw [Append_Append.eq.AppendAppend]
-          apply EqAppendS.of.Eq
-          rw [ZipWith_Append.eq.AppendZipWithS]
-          apply EqAppendS.of.Eq
-          simp
-      )
-      (matmul X Y (by grind))
+    cast (congrArg (Tensor α) (by
+      simp [broadcast_shape]
+      split_ifs with h_l h_u
+      .
+        grind
+      .
+        grind
+      .
+        simp
+        rw [Append_Append.eq.AppendAppend]
+        apply EqAppendS.of.Eq
+        rw [ZipWith_Append.eq.AppendZipWithS]
+        apply EqAppendS.of.Eq
+        simp
+    ))
+    (matmul X Y (by grind))
   else if h : s.length > s'.length then
     let Y := Y.reshape (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by simp)
-    cast
-      (by
-        apply congrArg
-        simp [broadcast_shape]
-        split_ifs with h_l h_u
-        .
-          grind
-        .
-          grind
-        .
-          simp
-          rw [Append_Append.eq.AppendAppend]
-          apply EqAppendS.of.Eq
-          rw [ZipWith__Append.eq.AppendZipWithS]
-          apply EqAppendS.of.Eq
-          simp
-      )
-      (matmul X Y (by grind))
+    cast (congrArg (Tensor α) (by
+      simp [broadcast_shape]
+      split_ifs with h_l h_u
+      .
+        grind
+      .
+        grind
+      .
+        simp
+        rw [Append_Append.eq.AppendAppend]
+        apply EqAppendS.of.Eq
+        rw [ZipWith__Append.eq.AppendZipWithS]
+        apply EqAppendS.of.Eq
+        simp
+    ))
+    (matmul X Y (by grind))
   else
     matmul X Y (by grind)
 

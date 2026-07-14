@@ -67,6 +67,7 @@ private lemma main
     conv_rhs => erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
     apply SEq.of.Eq ∘ EqCastS.of.SEq.Eq (by simp)
     apply SEq.of.Eq
+    simp
     grind
 
 
@@ -107,7 +108,6 @@ private lemma une
     simp
     erw [EqGetUnsqueeze_0.nat.fin (z := ⟨i % 1, by grind⟩)]
     erw [EqGetUnsqueeze_0.fin]
-    rfl
 
 
 -- created on 2026-01-10
