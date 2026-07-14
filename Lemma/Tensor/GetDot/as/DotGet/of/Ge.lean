@@ -110,8 +110,8 @@ private lemma une
   | s₀ :: s =>
     simp [Dot.dot]
     if h_gt : k > n' then
-      rw [Matmul.eq.Cast_SelectBmm.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h_gt)]
-      conv_rhs => rw [Matmul.eq.Cast_SelectBmm.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h_gt)]
+      rw [Einsum.eq.Cast_SelectBmm.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h_gt)]
+      conv_rhs => rw [Einsum.eq.Cast_SelectBmm.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h_gt)]
       simp
       apply SEq_Cast.of.SEq.Eq
       ·
@@ -185,8 +185,8 @@ private lemma une
     else
       have hk : k = n' := by omega
       subst hk
-      rw [Matmul.eq.Cast_SelectBmm.of.EqGet_SubLength_1.GeLength_2 (by simp) (by simp)]
-      conv_rhs => rw [Matmul.eq.Cast_SelectBmm.of.EqGet_SubLength_1.GeLength_2 (by simp) (by simp)]
+      rw [Einsum.eq.Cast_SelectBmm.of.EqGet_SubLength_1.GeLength_2 (by simp) (by simp)]
+      conv_rhs => rw [Einsum.eq.Cast_SelectBmm.of.EqGet_SubLength_1.GeLength_2 (by simp) (by simp)]
       simp
       apply SEq_Cast.of.SEq.Eq
       ·
