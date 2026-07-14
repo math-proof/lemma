@@ -41,7 +41,7 @@ private lemma main
   erw [GetData.eq.GetDataGet.of.Lt.fin (by grind)]
   have := GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by simp) (by simp; omega) (((exp (⟨X⟩ : Tensor α [n])).sum 0).unsqueeze 0) (i := i) (n := n)
   simp at this
-  simp [this]
+  erw [this]
   simp [EqMod_1'0]
   have := EqGetUnsqueeze_0.fin ((exp (⟨X⟩ : Tensor α [n])).sum 0)
   simp at this

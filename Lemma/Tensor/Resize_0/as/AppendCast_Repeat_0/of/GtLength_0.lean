@@ -83,7 +83,6 @@ private lemma main
             aesop
           ·
             simp
-            erw [EqGetCons k s]
             grind
         ·
           rw [DivMulS.eq.Div.of.Ne_0 (by grind)] at h_lt

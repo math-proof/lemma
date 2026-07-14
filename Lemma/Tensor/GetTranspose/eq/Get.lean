@@ -33,7 +33,6 @@ private lemma main
   let X' := (cast (congrArg (Tensor α) h_s) (X.permute ⟨1, by grind⟩ (-1)))
   have h_swap : ([m, n].permute 0 0).permute ⟨1, by grind⟩ (-1) = [m, n].swap 0 1 := by
     simp [List.Swap.eq.PermutePermute.of.Lt.GtLength]
-    rfl
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
     (s' := ([m, n].swap 0 1))
     (by simp [List.LengthSwap.eq.Length])

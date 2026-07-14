@@ -68,18 +68,8 @@ private lemma main
     simp [InsertIdxAppend.eq.Append_Cons]
   have h_s_t₂ : (b :: bz ++ [k, n]).swap ((b :: bz ++ [k, n]).length - 2) ((b :: bz ++ [k, n]).length - 1) = b :: bz ++ [n, k] := by
     simp [List.swap, AddAdd.eq.Add_Add, Slice.eq.Nil]
-  have := GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtLength_0.fin
-    (i := i)
-    (by grind)
-    (by simp)
-    (cast (congrArg (Tensor α) h_s_t₁) ((cast (congrArg (Tensor α) h_s_t₂) Yᵀ).unsqueeze (bz.length + 1)))
-    m
-    ⟨bz.length, by grind⟩
-  simp at this
-  simp [this]
   conv_lhs => rw [Eq_Fin i]
   erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := b :: bz ++ [m, 1, k]) (by grind) (by grind)]
-  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := b :: bz ++ [1, n, k]) (by grind) (by grind)]
   have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin
     (i := i)
     (by grind)
@@ -91,7 +81,9 @@ private lemma main
   apply EqMulS.of.Eq.left
   apply EqCastS.of.SEq.Eq.left (by grind)
   apply SEq.of.Eq
+  erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtLength_0.fin (d := ⟨bz.length, by grind⟩) (by grind) (by grind)]
   apply EqRepeatS.of.Eq
+  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (s' := b :: bz ++ [1, n, k]) (by grind) (by grind)]
   apply EqCastS.of.SEq.Eq.left (by grind)
   apply SEq.of.Eq
   have := GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin

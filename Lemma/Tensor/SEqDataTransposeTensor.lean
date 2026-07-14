@@ -3,6 +3,7 @@ import Lemma.Fin.Eq_0
 import Lemma.List.EqPermute__0
 import Lemma.List.EqSwap_0'1
 import Lemma.List.LengthSlice.eq.Min
+import Lemma.List.Permute__Neg1.eq.Swap.of.GtVal_0
 import Lemma.List.LengthSlice.eq.One.of.Lt
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.List.TailPermute__Neg.eq.EraseIdx
@@ -20,7 +21,6 @@ import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Fin List Nat Tensor Vector
 set_option maxHeartbeats 400000
-set_option synthInstance.maxHeartbeats 200000
 
 
 @[main]
@@ -41,19 +41,19 @@ private lemma main
     unfold Tensor.transpose
     simp
     rw [Permute__0.eq.Cast]
-    have h_permute := EqPermute__0 (0 : Fin (1 + 1)) (s := [n, 1])
-    have := GetData.eq.GetDataGet.of.GtProd.GtLength_0.fin (i := t.val) (α := α) (s := (([n, 1].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)))
+    have h_permute := EqPermute__0 (0 : Fin 2) (s := [n, 1])
+    have := GetData.eq.GetDataGet.of.GtProd.GtLength_0.fin (i := t.val) (α := α) (s := (([n, 1].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)))
     simp at this
     erw [this]
     ·
-      have h_tail_permute := TailPermute__Neg.eq.EraseIdx (d := ⟨1, by grind⟩) (s := ([n, 1].permute (0 : Fin (1 + 1)) 0))
+      have h_tail_permute := TailPermute__Neg.eq.EraseIdx (d := ⟨1, by grind⟩) (s := ([n, 1].permute (0 : Fin 2) 0))
       simp at h_tail_permute
-      have h_t : ↑t % (([n, 1].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)).tail.prod = t := by
+      have h_t : ↑t % (([n, 1].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)).tail.prod = t := by
         erw [h_tail_permute]
         simp [h_permute]
         apply EqMod.of.Lt h_t
       simp [h_t]
-      have h_0 : ↑t / (([n, 1].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)).tail.prod = 0 := by
+      have h_0 : ↑t / (([n, 1].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)).tail.prod = 0 := by
         simp
         right
         erw [h_tail_permute]
@@ -80,7 +80,7 @@ private lemma main
         simp [h_qr]
       ·
         simp_all [LengthSlice.eq.Min]
-        grind
+        simp [h_permute, Permute__Neg1.eq.Swap.of.GtVal_0, EqSwap_0'1]
     ·
       rw [ProdPermute.eq.Prod]
       grind
@@ -106,19 +106,19 @@ private lemma row
     unfold Tensor.transpose
     simp
     rw [Permute__0.eq.Cast]
-    have h_permute := EqPermute__0 (0 : Fin (1 + 1)) (s := [1, n])
-    have := GetData.eq.GetDataGet.of.GtProd.GtLength_0.fin (i := t.val) (α := α) (s := (([1, n].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)))
+    have h_permute := EqPermute__0 (0 : Fin 2) (s := [1, n])
+    have := GetData.eq.GetDataGet.of.GtProd.GtLength_0.fin (i := t.val) (α := α) (s := (([1, n].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)))
     simp at this
     erw [this]
     ·
-      have h_tail_permute := TailPermute__Neg.eq.EraseIdx (d := ⟨1, by grind⟩) (s := ([1, n].permute (0 : Fin (1 + 1)) 0))
+      have h_tail_permute := TailPermute__Neg.eq.EraseIdx (d := ⟨1, by grind⟩) (s := ([1, n].permute (0 : Fin 2) 0))
       simp at h_tail_permute
-      have h_t : ↑t % (([1, n].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)).tail.prod = 0 := by
+      have h_t : ↑t % (([1, n].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)).tail.prod = 0 := by
         erw [h_tail_permute]
         simp [h_permute]
         omega
       simp only [h_t]
-      have h_1 : ↑t / (([1, n].permute (0 : Fin (1 + 1)) 0).permute (1 : Fin ([].length + 2)) (-1)).tail.prod = t := by
+      have h_1 : ↑t / (([1, n].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)).tail.prod = t := by
         erw [h_tail_permute]
         simp [h_permute]
       simp [h_1]
@@ -134,7 +134,7 @@ private lemma row
       erw [GetCast.eq.Get.of.Eq.fin]
       ·
         simp
-        have h_t : 0 < ((⟨t, 1 * (↑n * 1), n⟩ : Slice).length (1 * (n * 1))) * 1 := by
+        have h_t : 0 < ((⟨t, 1 * (n * 1), n⟩ : Slice).length (1 * (n * 1))) * 1 := by
           simp
           rw [LengthSlice.eq.One.of.Lt (by assumption)]
           simp
