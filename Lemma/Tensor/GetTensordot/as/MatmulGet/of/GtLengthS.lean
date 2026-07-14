@@ -12,7 +12,6 @@ import Lemma.Tensor.GtLength.of.GtLength
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import sympy.tensor.tensor
 open Tensor Bool List
 
 

@@ -19,7 +19,7 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 open List Tensor Vector Bool
 
 
-@[main]
+@[main, cast]
 private lemma main
 -- given
   (h_s : s.length > 0)

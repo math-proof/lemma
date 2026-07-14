@@ -22,7 +22,7 @@ private lemma main
   | nil =>
     exact Fin.elim0 d
   | cons s₀ s ih =>
-    have h_s := SetInsertIdx.eq.InsertIdxSet.of.GtLength (i := d) (n := n) (s := s₀ :: s) (by grind)
+    have h_s := SetInsertIdx.eq.InsertIdxSet.of.GtLength (i := d) (n := n) (s := s₀ :: s) (by grind) 1
     apply SEq.of.All_SEqGetS.Eq.GtLength_0 (by grind) h_s
     intro t
     have h_t := t.isLt

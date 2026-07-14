@@ -1,17 +1,13 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Fin.Eq_0
 import Lemma.List.LengthInsertIdx.eq.Add_Length_1.of.GeLength
 import Lemma.List.SetInsertIdx_Succ.eq.InsertIdxSet.of.GtLength
-import Lemma.Tensor.EqGetUnsqueeze_0
-import Lemma.Tensor.GetDite.eq.Get.of.Not
-import Lemma.Tensor.GetDite.eq.Get.of.Cond
+import Lemma.Nat.EqMod.of.Lt
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
-import Lemma.Tensor.Resize_0.as.AppendCast_Repeat_0.of.GtLength_0
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
+import Lemma.Tensor.ResizeUnsqueeze.as.UnsqueezeResize_0.of.Gt_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-open Bool Fin List Tensor
+open Bool List Nat Tensor
 set_option maxHeartbeats 2000000
 
 
@@ -29,26 +25,20 @@ private lemma main
   | nil =>
     exact Fin.elim0 d
   | cons s₀ s ih =>
-    have h_s := SetInsertIdx_Succ.eq.InsertIdxSet.of.GtLength (i := d) (n := n) (s := s₀ :: s) (by grind) 1
-    apply SEq.of.All_SEqGetS.Eq.GtLength_0 (by grind) h_s
-    intro t
-    have h_t := t.isLt
-    erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin (by grind) (by grind)]
-    apply SEq_Cast.of.SEq.Eq (by simp; sorry)
-    simp
     match h_d : d with
     | ⟨0, h_lt⟩ =>
       simp
-      apply SEq.of.All_SEqGetS.Eq.Eq (by rfl) (by rfl)
-      intro i
-      have h_i := Eq_0 i
-      subst h_i
-      simp [GetElem.getElem]
-      erw [EqGetUnsqueeze_0.fin]
-      erw [Resize_0.eq.Cast_AppendCast_Repeat_0.of.GtLength_0 (by grind)]
-      conv_rhs => erw [Resize_0.eq.Cast_AppendCast_Repeat_0.of.GtLength_0 (by grind)]
-      sorry
+      apply ResizeUnsqueeze.as.UnsqueezeResize_0.of.Gt_0
+      simp
+      rw [EqMod.of.Lt (by omega)]
+      omega
     | ⟨d + 1, h_d⟩ =>
+      have h_s := SetInsertIdx_Succ.eq.InsertIdxSet.of.GtLength (i := d.succ) (n := n) (s := s₀ :: s) (by grind) 1
+      apply SEq.of.All_SEqGetS.Eq.GtLength_0 (by grind) h_s
+      intro t
+      have h_t := t.isLt
+      erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.GtLength_0.fin (by grind) (by grind)]
+      apply SEq_Cast.of.SEq.Eq (by simp)
       simp
       erw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (d := ⟨d + 1, by grind⟩) (by grind) (by grind)]
       conv_rhs => erw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (d := ⟨d + 1, by grind⟩) (by grind) (by grind)]
@@ -59,3 +49,4 @@ private lemma main
 
 
 -- created on 2026-07-13
+-- updated on 2026-07-14

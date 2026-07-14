@@ -1,13 +1,15 @@
-import Lemma.Tensor.Unsqueeze.eq.Reshape
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.Matmul.as.Bmm
+import Lemma.Tensor.ResizeUnsqueeze_Succ.as.UnsqueezeResize
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqReshapeS.of.SEq.Eq.Dvd
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSelectS.of.SEq
+import Lemma.Tensor.Unsqueeze.eq.Reshape
 open Bool Tensor
+set_option maxHeartbeats 1000000
 
 
 @[main]
@@ -39,11 +41,11 @@ private lemma main
     apply SEqResize_0.of.Eq_Get_0.GtLength_0 (by simp) (by grind)
   else
     have h_k : k' > k := by grind
-    have := Tensor.Reshape.eq.Unsqueeze (B.resize 0 (k' ⊔ k)) 1
+    have := Reshape.eq.Unsqueeze (B.resize 0 (k' ⊔ k)) 1
     simp at this
     erw [this]
-    rw [Tensor.ResizeUnsqueeze.as.UnsqueezeResize]
-    sorry
+    apply ResizeUnsqueeze_Succ.as.UnsqueezeResize B ⟨0, by grind⟩
 
 
 -- created on 2026-07-11
+-- updated on 2026-07-14

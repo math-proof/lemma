@@ -3,22 +3,19 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.Tensor.Tensordot.as.Matmul
+import Lemma.Tensor.Einsum.as.Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
-import Lemma.Tensor.GetReshape.as.Reshape.of.EqProdS.GtLength_0
-import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetDot.eq.DotGet.of.Ge
+import Lemma.Tensor.GetDot.eq.DotGet.of.Gt
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
+import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.Einsum.as.Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.Einsum.as.SelectBmm.of.EqGet_SubLength_1.GeLength_2
-import Lemma.Tensor.Einsum.as.SelectBmm.of.GtGet_SubLength_1.GeLength_2
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 import Lemma.Tensor.SEqSelectS.of.SEq
+import Lemma.Tensor.Tensordot.as.Matmul
 open Bool List Tensor
 set_option maxHeartbeats 1000000
 
@@ -27,7 +24,7 @@ set_option maxHeartbeats 1000000
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h : k ≥ n')
+  (h : k > n')
   (X : Tensor α (n :: (s ++ [k])))
   (Y : Tensor α [n', k'])
   (i : Fin n) :
@@ -37,15 +34,17 @@ private lemma main
   simp [GetElem.getElem]
   match s with
   | [] =>
-    rw [GetDot.eq.DotGet.of.Ge.fin h]
+    erw [GetDot.eq.DotGet.of.Gt.fin h]
+    rfl
   | s₀ :: s =>
     have h_min_length : s.length ⊓ (s.length + 1 + 1) = s.length := by omega
     simp [Dot.dot]
-    have := Matmul.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
-    rw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
-    conv_rhs => rw [Matmul.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
+    have := Einsum.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by grind) X Y
+    erw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
+    conv_rhs => rw [Einsum.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by grind)]
     apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
     simp
+    rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by simp [broadcast_shape]⟩) (by grind) (by simp [broadcast_shape, matmul_shape])]
     rw [GetTensordot.eq.Cast_MatmulGet.of.GtLength_0.fin (by simp) _ _ ⟨i, by simp⟩]
     simp [Tensordot.eq.Cast_Matmul]
     apply SEqCastS.of.SEq.Eq.Eq
@@ -95,9 +94,9 @@ private lemma main
 
 @[main, fin]
 private lemma une
-  [Mul α] [AddCommMonoid α]
+  [Mul α] [Add α] [Zero α]
 -- given
-  (h : k ≥ n')
+  (h : k > n')
   (X : Tensor α (n :: (s ++ [k])))
   (Y : Tensor α [n'])
   (i : Fin n) :
@@ -107,7 +106,7 @@ private lemma une
   simp [GetElem.getElem]
   match s with
   | [] =>
-    rw [GetDot.eq.DotGet.of.Ge.une.fin h]
+    rw [GetDot.eq.DotGet.of.Gt.une.fin h]
   | s₀ :: s =>
     simp [Dot.dot]
     if h_gt : k > n' then
@@ -261,4 +260,4 @@ private lemma une
 
 
 -- created on 2026-01-13
--- updated on 2026-07-06
+-- updated on 2026-07-14
