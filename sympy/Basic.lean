@@ -557,7 +557,7 @@ def constructor_order (declName : Name) : CoreM Bool := do
   let env ← getEnv
   match ← findDocString? env declName with
   | some doc =>
-    return doc.containsSubstr "constructor order"
+    return doc.contains "constructor order"
   | none =>
     return false
 
@@ -658,7 +658,7 @@ def List.disjunction (list : List String) (left : Bool := true): Name :=
   let intro :=
     if disjunction.startsWith "Or" then
       let disjunction := (disjunction.drop 2).toString
-      let index := (String.Legacy.posOf disjunction 'S').byteIdx
+      let index := (disjunction.find 'S').offset.byteIdx
       let left := disjunction.eraseIdx index
       left :: rest
     else if disjunctions[1]! == "ou" then

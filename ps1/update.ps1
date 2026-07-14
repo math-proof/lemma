@@ -2,7 +2,7 @@
 # .\ps1\update.ps1
 # Read the lean-toolchain file
 param(
-    [String]$version = "v4.29.0"
+    [String]$version = "v4.30.0"
 )
 $versionNumber = $version.Substring(1)
 # cd ~/.elan/toolchains
@@ -26,6 +26,7 @@ else {
             }
         }
         catch {
+            Pop-Location
             throw "Failed to download Lean $version from $url. Error: $_"
         }
     }
@@ -56,9 +57,11 @@ $versionRegex = "leanprover/lean4:(v[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)?)"
 # Use regex to extract the version (the part starting with v...)
 if ($content -match $versionRegex) {
     if ($matches[1] -eq $version) {
+        $needsClean = $false
         Write-Host "leanprover/lean4:$version is already installed, skipping"
     }
     else {
+        $needsClean = $true
         # write the text `leanprover/lean4:$version` into file lean-toolchain, without BOM
         $newContent = "leanprover/lean4:$version`n"
         # Write to file without BOM
@@ -200,7 +203,10 @@ if ($null -ne $node) {
 
 # Run lake commands
 $start = Get-Date
-lake clean
+if ($needsClean) {
+    Write-Host "Lean toolchain changed — running lake clean"
+    lake clean
+}
 # build proofwidgets to eliminate the following error:
 # error: ProofWidgets not up-to-date. Please run `lake exe cache get` to fetch the latest ProofWidgets. 
 $name = "proofwidgets"

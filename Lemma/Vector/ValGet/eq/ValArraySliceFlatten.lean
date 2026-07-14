@@ -66,7 +66,9 @@ private lemma main
       rw [Drop_Add.eq.DropDrop]
       have : (List.drop n (v.head.toList ++ (List.map List.Vector.toList v.tail.toList).flatten)) = (List.drop v.head.toList.length (v.head.toList ++ (List.map List.Vector.toList v.tail.toList).flatten)) := by
         simp
-      grind
+      erw [this]
+      rw [EqDropAppend]
+      rfl
 
 
 -- created on 2025-05-08

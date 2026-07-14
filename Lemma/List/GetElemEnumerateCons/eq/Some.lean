@@ -10,7 +10,6 @@ private lemma main
   (head :: tail).enumerate[0]? = some ⟨⟨0, by simp⟩, head⟩ := by
 -- proof
   simp [List.enumerate]
-  grind
 
 
 -- created on 2025-06-02
