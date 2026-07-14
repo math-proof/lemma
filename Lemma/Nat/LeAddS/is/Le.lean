@@ -12,7 +12,6 @@ private lemma left
 -- imply
   a + b ≤ a + c ↔ b ≤ c :=
 -- proof
-  -- add_le_add_iff_left a
   ⟨le_of_add_le_add_left, (add_le_add_right · a)⟩
 
 
@@ -38,7 +37,6 @@ private lemma main
 -- imply
   b + a ≤ c + a ↔ b ≤ c :=
 -- proof
-  -- add_le_add_iff_right a
   ⟨le_of_add_le_add_right, (add_le_add_left · a)⟩
 
 

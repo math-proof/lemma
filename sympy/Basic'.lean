@@ -138,7 +138,7 @@ initialize registerBuiltinAttribute {
     let and := stx.getIdent == `and
     Lean.logInfo s!"parity = {parity}"
     Lean.logInfo s!"and = {and}"
-    let ⟨_, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
+    let ⟨_, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := and)
     let name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
     Lean.logInfo s!"name = {name}"
     Lean.logInfo s!"(← getEnv).moduleTokens = {(← getEnv).moduleTokens}"
@@ -161,7 +161,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
-    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity and
+    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
     let name := ((← getEnv).moduleTokens.mpr.foldl Name.str default).lemmaName declName
     println! s!"name = {name}"
     addAndCompile <| .thmDecl {
@@ -181,7 +181,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
-    let ⟨n, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
+    let ⟨n, type, value⟩ ← Expr.mp' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := and)
     println! s!"n = {n}, 1 <<< n = {1 <<< n}"
     let ⟨parity, type, value⟩ ← Expr.comm' type value (1 <<< n)
     let ⟨moduleTokens, parity⟩ ← parity.extractParity
@@ -204,7 +204,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
-    let ⟨n, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity and
+    let ⟨n, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
     let ⟨parity, type, value⟩ ← Expr.comm' type value (1 <<< n)
     let ⟨moduleTokens, parity⟩ ← parity.extractParity
     addAndCompile <| .thmDecl {
@@ -370,7 +370,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
-    let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := and)
+    let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := and)
     let ⟨_, type, value⟩ ← Expr.mt' type value
     let moduleTokens := (← getEnv).moduleTokens.mp
     println! s!"moduleTokens.mp = {moduleTokens}"
@@ -393,7 +393,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
-    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
+    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
     let ⟨_, type, value⟩ ← Expr.mt' type value
     let moduleTokens := (← getEnv).moduleTokens.mpr
     let name := (moduleTokens.mt constructor_order).lemmaName declName
@@ -501,7 +501,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
-    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity and
+    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
     let moduleTokens := (← getEnv).moduleTokens.mpr
     println! s!"moduleTokens = {moduleTokens}"
     let ⟨parity, type, value⟩ ← Expr.disjunction' type value
@@ -524,7 +524,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
-    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity and
+    let ⟨_, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
     let moduleTokens := (← getEnv).moduleTokens.mpr
     println! s!"moduleTokens = {moduleTokens}"
     let ⟨parity, type, value⟩ ← Expr.disjunction' type value 0 false
@@ -748,5 +748,5 @@ initialize registerBuiltinAttribute {
   add := fun declName stx kind => do
     let decl ← getConstInfo declName
     Lean.logInfo s!"decl.type = \n{decl.type.format}"
-    Lean.logInfo s!"decl.value! = \n{decl.value!.format}"
+    Lean.logInfo s!"decl.proof = \n{decl.proof.format}"
 }

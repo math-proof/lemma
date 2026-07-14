@@ -2,6 +2,7 @@ import Mathlib.Tactic
 import stdlib.Lean.Syntax
 import stdlib.Lean.Environment
 import stdlib.Lean.Expr
+import stdlib.Lean.ConstantInfo
 open Lean
 open Lean.Meta
 
@@ -283,7 +284,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
-    let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
+    let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
     addAndCompile <| .thmDecl {
       name := ((← getEnv).moduleTokens.mp.foldl Name.str default).lemmaName declName
       levelParams := levelParams
@@ -319,7 +320,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
-    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
+    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
     addAndCompile <| .thmDecl {
       name := ((← getEnv).moduleTokens.mpr.foldl Name.str default).lemmaName declName
       levelParams := levelParams
@@ -346,7 +347,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
-    let ⟨n, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
+    let ⟨n, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
     -- 2ⁿ, where n is the number of default binders
     let ⟨parity, type, value⟩ := Expr.comm type value (1 <<< n)
     let ⟨moduleTokens, parity⟩ ← parity.extractParity
@@ -376,7 +377,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
-    let ⟨n, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
+    let ⟨n, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
     let ⟨parity, type, value⟩ := Expr.comm type value (1 <<< n)
     let ⟨moduleTokens, parity⟩ ← parity.extractParity
     addAndCompile <| .thmDecl {
@@ -607,7 +608,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
-    let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
+    let ⟨_, type, value⟩ := Expr.mp decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (and := stx.getIdent == `and)
     let ⟨_, type, value⟩ := Expr.mt type value
     let moduleTokens := (← getEnv).moduleTokens.mp
     addAndCompile <| .thmDecl {
@@ -637,7 +638,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let parity := stx.getNum
-    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
+    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity (stx.getIdent == `and)
     let ⟨_, type, value⟩ := Expr.mt type value
     let moduleTokens := (← getEnv).moduleTokens.mpr
     addAndCompile <| .thmDecl {
@@ -756,7 +757,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
-    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity and
+    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
     let moduleTokens := (← getEnv).moduleTokens.mpr
     let ⟨parity, type, value⟩ := Expr.disjunction type value
     let name := (moduleTokens.left).lemmaName declName
@@ -777,7 +778,7 @@ initialize registerBuiltinAttribute {
     let levelParams := decl.levelParams
     let parity := stx.getNum
     let and := stx.getIdent == `and
-    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.value! else .const declName (levelParams.map .param)) parity and
+    let ⟨_, type, value⟩ := Expr.mpr decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
     let moduleTokens := (← getEnv).moduleTokens.mpr
     let ⟨parity, type, value⟩ := Expr.disjunction type value 0 false
     let name := (moduleTokens.right).lemmaName declName

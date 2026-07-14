@@ -1,6 +1,5 @@
 import stdlib.Basic
 import stdlib.String
-import stdlib.ConstructorVal
 #eval mkCtorName ``Lean.ConstantInfo
 
 
@@ -110,3 +109,6 @@ def Lean.ConstantInfo.toString : Lean.ConstantInfo → String
   | .recInfo      val => val.toString
 
 instance : ToString Lean.ConstantInfo := ⟨Lean.ConstantInfo.toString⟩
+
+def Lean.ConstantInfo.proof (info : ConstantInfo) : Expr :=
+  info.value! (allowOpaque := true)
