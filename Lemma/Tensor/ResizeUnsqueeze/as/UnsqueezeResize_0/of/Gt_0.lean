@@ -17,7 +17,7 @@ import Lemma.Tensor.Resize_0.as.AppendCast_Repeat_0.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEq0S.of.Eq
 import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
-open Bool List Nat Tensor Fin
+open Bool List Nat Tensor
 set_option maxHeartbeats 2000000
 
 
