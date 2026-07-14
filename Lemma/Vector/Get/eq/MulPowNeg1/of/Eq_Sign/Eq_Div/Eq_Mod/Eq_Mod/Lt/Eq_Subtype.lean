@@ -3,8 +3,7 @@ import sympy.Basic
 
 
 /--
-[MXFP4](https://arxiv.org/abs/2502.20586) is a data type used by [gpt-oss](https://huggingface.co/openai/gpt-oss-20b).
-lemma applicable to :
+[MXFP4](https://arxiv.org/abs/2502.20586) is a data type used by [gpt-oss](https://huggingface.co/openai/gpt-oss-20b), applicable to :
   - ℚ ℝ ℝ* ℂ
 -/
 @[main]
