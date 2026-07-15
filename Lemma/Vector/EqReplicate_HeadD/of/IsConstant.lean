@@ -1,19 +1,20 @@
 import Lemma.Vector.Eq.of.EqValS
-import Lemma.List.Eq_Replicate_HeadD.of.IsConstant
+import Lemma.List.EqReplicate_HeadD.of.IsConstant
+import sympy.vector.Basic
 open Vector List
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List.Vector α n}
 -- given
   (h : s is constant)
   (default : α) :
 -- imply
-  s = List.Vector.replicate n (s.headD default) := by
+  List.Vector.replicate n (s.headD default) = s := by
 -- proof
-  have h := Eq_Replicate_HeadD.of.IsConstant h
-  have h : s.val = List.replicate s.val.length (s.val.headD default) := h default
+  have h := EqReplicate_HeadD.of.IsConstant h
+  have h := h default
   have h_eq_length : s.val.length = s.length := by simp [List.Vector.length]
   have h_eq_headD : s.val.headD default = s.headD default := rfl
   rw [h_eq_length, h_eq_headD] at h
@@ -27,7 +28,7 @@ private lemma main
     h_eq_length
   ⟩
   have h_eq_vec : vec.val = vec'.val := by
-    rw [h]
+    rw [← h]
   have h_eq_vec : vec = vec' := Eq.of.EqValS h_eq_vec
   have h_eq_s : s = vec' := rfl
   rw [h_eq_vector, h_eq_vec, h_eq_s]

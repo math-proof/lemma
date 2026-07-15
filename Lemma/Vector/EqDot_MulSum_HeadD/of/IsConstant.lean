@@ -2,7 +2,7 @@ import Lemma.List.SumCons.eq.Add_Sum
 import Lemma.Vector.SumMap_FunMul.eq.DotMapS
 import Lemma.Vector.EqMap_Id
 import Lemma.Vector.Map.eq.Replicate
-import Lemma.Vector.Eq_Replicate_HeadD.of.IsConstant
+import Lemma.Vector.EqReplicate_HeadD.of.IsConstant
 import Lemma.Vector.SumMap_FunMul.eq.MulSumMap
 open Vector List
 
