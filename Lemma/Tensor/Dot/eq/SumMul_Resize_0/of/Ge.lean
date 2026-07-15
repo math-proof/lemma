@@ -10,7 +10,7 @@ open Bool Tensor
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h_k : n > k)
+  (h_k : n ≥ k)
   (A : Tensor α [n])
   (B : Tensor α [k]) :
 -- imply

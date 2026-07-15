@@ -21,7 +21,7 @@ private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
   (h_s : s.length ≥ 2)
-  (h_s' : s[s.length - 1] > n')
+  (h_s' : s[s.length - 1] ≥ n')
   (X : Tensor α s)
   (Y : Tensor α [n']) :
 -- imply
@@ -53,7 +53,7 @@ private lemma main
       ·
         apply SEqCastS.of.SEq.Eq.Eq
         ·
-          simp [EqMax.of.Gt h_s']
+          simp [EqMax.of.Ge h_s']
         ·
           rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)]
         ·
@@ -61,7 +61,7 @@ private lemma main
           ·
             apply SEqCast.of.SEq.Eq
             ·
-              simp [EqMax.of.Gt h_s']
+              simp [EqMax.of.Ge h_s']
               rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)]
               rw [AddSub.eq.Sub_Sub.of.Ge.Ge (by grind) (by grind)]
               simp
@@ -72,7 +72,7 @@ private lemma main
             rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)]
       ·
         apply SEqReshapeS.of.SEq.Eq.Dvd
-        repeat rw [EqMax.of.Gt h_s']
+        repeat rw [EqMax.of.Ge h_s']
     ·
       grind
   ·

@@ -21,7 +21,7 @@ set_option maxHeartbeats 10000000
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h_k : k > k')
+  (h_k : k ≥ k')
   (A : Tensor α [m, k])
   (B : Tensor α [k']) :
 -- imply
@@ -47,7 +47,7 @@ private lemma main
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     rw [@Tensor.Repeat_1.eq.Cast]
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
-    rw [EqMax.of.Gt h_k]
+    rw [EqMax.of.Ge h_k]
     apply SEqResize.of.Eq_Get (i := ⟨1, by grind⟩)
     rfl
   ·
@@ -55,7 +55,7 @@ private lemma main
     apply SEqRepeatS.of.SEq.EqValS.Eq (by simp) (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])
-    rw [EqMax.of.Gt h_k]
+    rw [EqMax.of.Ge h_k]
     have := ResizeUnsqueeze_Succ.eq.Cast_UnsqueezeResize B ⟨0, by grind⟩ k
     simp at this
     rw [this]

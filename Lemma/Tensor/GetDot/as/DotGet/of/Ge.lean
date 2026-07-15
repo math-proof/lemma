@@ -3,12 +3,12 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.Tensor.Einsum.as.SelectBmm.of.GtGet_SubLength_1.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.GeGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetDot.eq.DotGet.of.Gt
+import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetReshape.as.Reshape.of.EqProdS.GtLength_0
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
@@ -26,7 +26,7 @@ set_option maxHeartbeats 1000000
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h : k > n')
+  (h : k ≥ n')
   (X : Tensor α (n :: (s ++ [k])))
   (Y : Tensor α [n', k'])
   (i : Fin n) :
@@ -36,7 +36,7 @@ private lemma main
   simp [GetElem.getElem]
   match s with
   | [] =>
-    erw [GetDot.eq.DotGet.of.Gt.fin h]
+    erw [GetDot.eq.DotGet.fin]
     rfl
   | s₀ :: s =>
     have h_min_length : s.length ⊓ (s.length + 1 + 1) = s.length := by omega
@@ -91,7 +91,7 @@ private lemma main
 private lemma une
   [Mul α] [Add α] [Zero α]
 -- given
-  (h : k > n')
+  (h : k ≥ n')
   (X : Tensor α (n :: (s ++ [k])))
   (Y : Tensor α [n'])
   (i : Fin n) :
@@ -101,12 +101,12 @@ private lemma une
   simp [GetElem.getElem]
   match s with
   | [] =>
-    erw [GetDot.eq.DotGet.of.Gt.une.fin h]
+    erw [GetDot.eq.DotGet.une.fin]
     rfl
   | s₀ :: s =>
     simp [Dot.dot]
-    rw [Einsum.eq.Cast_SelectBmm.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h)]
-    conv_rhs => rw [Einsum.eq.Cast_SelectBmm.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h)]
+    rw [Einsum.eq.Cast_SelectBmm.of.GeGet_SubLength_1.GeLength_2 (by simp) (by simpa using h)]
+    conv_rhs => rw [Einsum.eq.Cast_SelectBmm.of.GeGet_SubLength_1.GeLength_2 (by simp) (by simpa using h)]
     simp
     apply SEq_Cast.of.SEq.Eq
     ·

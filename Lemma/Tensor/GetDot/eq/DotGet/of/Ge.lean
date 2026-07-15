@@ -2,10 +2,10 @@ import Lemma.Bool.EqCastS.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Nat.Mul
-import Lemma.Tensor.Dot.eq.GetSumMul.of.Gt
-import Lemma.Tensor.Dot.eq.SelectSumMul.of.Gt
-import Lemma.Tensor.Dot.eq.SumMul.of.Gt
-import Lemma.Tensor.Dot.eq.SumMul_Resize_0.of.Gt
+import Lemma.Tensor.Dot.eq.GetSumMul.of.Ge
+import Lemma.Tensor.Dot.eq.SelectSumMul.of.Ge
+import Lemma.Tensor.Dot.eq.SumMul.of.Ge
+import Lemma.Tensor.Dot.eq.SumMul_Resize_0.of.Ge
 import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
@@ -28,7 +28,7 @@ set_option maxHeartbeats 10000000
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h : k > n')
+  (h : k ≥ n')
   (X : Tensor α [n, k])
   (Y : Tensor α [n', k'])
   (i : Fin n) :
@@ -36,9 +36,9 @@ private lemma main
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by apply GeLength_1.of.Ne_Nil (by simp)) X Y i) = X[i] @ Y := by
 -- proof
   simp [GetElem.getElem]
-  rw [Dot.eq.SumMul.of.Gt h]
+  rw [Dot.eq.SumMul.of.Ge h]
   erw [GetSum_2.eq.SumGet__1.fin (i := ⟨i, by grind⟩)]
-  erw [Dot.eq.GetSumMul.of.Gt h]
+  erw [Dot.eq.GetSumMul.of.Ge h]
   erw [GetSum_2.eq.SumGet__1.fin (i := ⟨0, by grind⟩)]
   apply Eq.of.SEq
   apply SEqSumS.of.SEq
@@ -75,7 +75,7 @@ private lemma main
 private lemma une
   [Mul α] [Add α] [Zero α]
 -- given
-  (h : k > n')
+  (h : k ≥ n')
   (X : Tensor α [n, k])
   (Y : Tensor α [n'])
   (i : Fin n) :
@@ -83,9 +83,9 @@ private lemma une
   (X @ Y)[i]'(GtLengthDot.of.LeLengthS.Ne_Nil (by simp) (by simp) X Y i) = X[i] @ Y := by
 -- proof
   simp [GetElem.getElem]
-  rw [Dot.eq.SelectSumMul.of.Gt h]
+  rw [Dot.eq.SelectSumMul.of.Ge h]
   erw [GetSelect_1.eq.Cast_Get.of.Lt.GtGet_0.GtLength_0 (by grind) (by grind) (by grind)]
-  erw [Dot.eq.SumMul_Resize_0.of.Gt h]
+  erw [Dot.eq.SumMul_Resize_0.of.Ge h]
   apply EqCast.of.SEq.Eq (by simp)
   erw [GetSum_2.eq.SumGet__0.fin]
   apply SEqSumS.of.SEq
