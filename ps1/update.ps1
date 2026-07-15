@@ -36,14 +36,15 @@ else {
     # delete $tarFile
     Remove-Item $tarFile -Force
     Write-Host "✅ Lean $version installed successfully."
-    # copy the entire folder $targetDir to C:\Windows\System32\config\systemprofile\.elan\toolchains
+    $systemprofile = "C:\Windows\System32\config\systemprofile\.elan\toolchains"
+    # copy the entire folder $targetDir to $systemprofile
     # if the destination folder already exists, skip copying
-    if (Test-Path "C:\Windows\System32\config\systemprofile\.elan\toolchains\$targetDir\bin\lean.exe") {
+    if (Test-Path "$systemprofile\$targetDir\bin\lean.exe") {
         Write-Host "Lean $version already exists in systemprofile, skipping copying."
     }
     else {
         Write-Host "Copying $targetDir to systemprofile..."
-        Copy-Item -Path "$targetDir" -Destination "C:\Windows\System32\config\systemprofile\.elan\toolchains\" -Recurse -Force
+        Copy-Item -Path "$targetDir" -Destination "$systemprofile" -Recurse -Force
     }
 }
 Pop-Location

@@ -1,5 +1,6 @@
-import sympy.Basic
-import sympy.vector.vector
+import Lemma.Vector.Dot.eq.SumMul
+import Lemma.Vector.Sum.eq.Zero
+open Vector
 
 
 @[main]
@@ -10,11 +11,8 @@ private lemma main
 -- imply
   x @ y = 0 := by
 -- proof
-  simp [Dot.dot]
-  match x, y with
-  | ⟨x, xProperty⟩, ⟨y, yProperty⟩ =>
-    simp at xProperty yProperty
-    simp [List.Vector.dot, xProperty, yProperty]
+  rw [Dot.eq.SumMul]
+  apply Sum.eq.Zero
 
 
 -- created on 2024-07-01
