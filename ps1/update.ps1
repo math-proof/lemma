@@ -48,7 +48,11 @@ else {
     }
 }
 Pop-Location
-elan override set leanprover/lean4:$versionNumber
+$toolchain = "leanprover/lean4:$version"
+elan default $toolchain
+elan override set $toolchain
+elan override unset --nonexistent
+Write-Host "✅ elan default and directory override set to $toolchain"
 
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
 $OutputEncoding = [Text.Encoding]::UTF8
