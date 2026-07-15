@@ -1,4 +1,3 @@
-import sympy.vector.Basic
 import Lemma.Nat.Ne_0
 import Lemma.Nat.Ne_0.of.Mul.ne.Zero
 import Lemma.Nat.LtMod.of.Ne_0

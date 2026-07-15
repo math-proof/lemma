@@ -1,4 +1,3 @@
-import sympy.vector.vector
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.Vector.Eq.of.EqValS
 open Vector Bool

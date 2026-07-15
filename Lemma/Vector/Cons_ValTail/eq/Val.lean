@@ -1,3 +1,4 @@
+import Lemma.Vector.EqCons_Tail
 import Lemma.Vector.Head.eq.Get_0
 open Vector
 
@@ -7,14 +8,9 @@ private lemma main
 -- given
   (s : List.Vector α (.succ n)) :
 -- imply
-  s[0] ::ᵥ s.tail = s := by
+  s[0] :: s.tail.val = s.val := by
 -- proof
-  let ⟨s, _⟩ := s
-  match s with
-  | [] =>
-    contradiction
-  | head :: tail =>
-    constructor
+  simpa using congrArg Subtype.val (EqCons_Tail s)
 
 
 @[main, comm]
@@ -22,11 +18,10 @@ private lemma head
 -- given
   (s : List.Vector α (.succ n)) :
 -- imply
-  s.head ::ᵥ s.tail = s := by
+  s.head :: s.tail.val = s.val := by
 -- proof
-  rw [Vector.Head.eq.Get_0]
+  rw [Head.eq.Get_0]
   apply main
 
 
--- created on 2025-05-08
--- updated on 2025-05-10
+-- created on 2026-07-15

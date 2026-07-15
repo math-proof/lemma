@@ -1,3 +1,4 @@
+import Lemma.Vector.Dot.eq.SumMul
 import Lemma.Vector.EqCons_Tail
 open Vector
 
@@ -10,8 +11,8 @@ private lemma main
 -- imply
   x @ y = x.head * y.head + x.tail @ y.tail := by
 -- proof
-  unfold Dot.dot
-  rw [← EqCons_Tail x, ← EqCons_Tail y]
+  repeat rw [Dot.eq.SumMul]
+  rw [Eq_Cons_Tail.head x, Eq_Cons_Tail.head y]
   rfl
 
 

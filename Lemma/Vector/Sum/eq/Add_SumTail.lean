@@ -9,20 +9,16 @@ open Vector
 @[main]
 private lemma main
   [AddMonoid α]
-  {l : List.Vector α n} :
+  (v : List.Vector α n) :
 -- imply
-  l.sum = (l.headD 0) + l.tail.sum := by
+  v.sum = (v.headD 0) + v.tail.sum := by
 -- proof
   match n with
   | 0 =>
     simp [EqHeadD, Sum.eq.Zero]
   | n + 1 =>
-    rw [← EqCons_Tail l]
-    have h_add := SumCons.eq.Add_Sum l.head l.tail
-    have h_head:= EqHeadDCons l l.head 0
-    simp at h_head
-    conv_rhs at h_add => rw [← h_head]
-    simpa
+    rw [Eq_Cons_Tail v]
+    simp [SumCons.eq.Add_Sum, EqHeadDCons]
 
 
 -- created on 2024-07-01

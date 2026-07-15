@@ -4,7 +4,8 @@ import sympy.Basic
 @[main]
 private lemma main
   [LinearOrder α]
-  {a : α} :
+-- given
+  (a : α) :
 -- imply
   a ⊔ a = a := by
 -- proof
@@ -12,3 +13,4 @@ private lemma main
 
 
 -- created on 2025-11-07
+-- updated on 2026-07-15

@@ -1,5 +1,6 @@
-import sympy.Basic
-import sympy.vector.Basic
+import Lemma.Nat.EqMax
+import Lemma.Vector.EqResize
+open Nat Vector
 
 
 @[main]
@@ -8,9 +9,11 @@ private lemma main
 -- given
   (a b : List.Vector α n) :
 -- imply
-  a @ b = (a * b).sum  := by
+  a @ b = (a * b).sum := by
 -- proof
-  rfl
+  dsimp only [Dot.dot]
+  rw [EqMax]
+  rw [EqResize a, EqResize b]
 
 
 -- created on 2026-07-15

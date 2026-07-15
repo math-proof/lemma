@@ -118,9 +118,6 @@ instance [Neg α] : Neg (Vector α n) where
 instance [Inv α] : Inv (Vector α n) where
   inv a := a.map (·⁻¹)
 
-instance [Add α] [Zero α] [Mul α] : Dot (Vector α n) (Vector α n) α where
-  dot v1 v2 := (v1 * v2).sum
-
 def transpose (xs : Vector (Vector α n) m) : Vector (Vector α m) n :=
   (range n).map fun j => (range m).map fun i => xs[i][j]
 
@@ -146,4 +143,4 @@ def List.Vector.resize [Zero α] (x : Vector α n) (n' : ℕ) : Vector α n' :=
 instance (priority := low) [Add α] [Zero α] [Mul α] : Dot (List.Vector α m) (List.Vector α n) α where
   dot v1 v2 :=
     let n := m ⊔ n
-    (v1.resize n) @ (v2.resize n)
+    (v1.resize n * v2.resize n).sum

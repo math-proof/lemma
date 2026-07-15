@@ -5,7 +5,6 @@ import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetRepeat.eq.Get_Mod
-import sympy.vector.vector
 open Nat Vector
 
 
@@ -24,13 +23,12 @@ private lemma main
 -- proof
   simp [GetElem.getElem]
   unfold List.Vector.resize
-  split_ifs with h
+  split_ifs
+  <;> rw [GetCast.eq.Get.of.Eq.fin (by simp [EqAddMulDiv])]
   ·
-    rw [GetCast.eq.Get.of.Eq.fin (by simp [EqAddMulDiv])]
     rw [GetAppend.eq.Get.of.Lt.fin (by grind)]
     rw [GetRepeat.eq.Get_Mod.fin]
   ·
-    rw [GetCast.eq.Get.of.Eq.fin (by simp [EqAddMulDiv])]
     rw [GetAppend.eq.Get_Sub.of.Lt_Add.Ge.fin (by grind)]
     apply EqGet0_0.fin
 

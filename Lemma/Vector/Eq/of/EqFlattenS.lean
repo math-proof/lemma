@@ -1,7 +1,4 @@
-import sympy.vector.vector
 import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.Vector.Eq_Cons_Tail
-import Lemma.Vector.ValFlattenCons.eq.ValAppend_Flatten
 import Lemma.Vector.Eq.of.EqFlattenSMap.EqLengthS
 open Vector Bool
 

@@ -1,5 +1,4 @@
-import Lemma.Vector.Eq_Cons_Tail
-import Lemma.Vector.FlattenMapToListCons.eq.Append_FlattenMapToList
+import Lemma.Vector.EqCons_Tail
 import Lemma.Nat.Add_Mul.eq.MulAdd_1
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.EqDropAppend
@@ -58,7 +57,7 @@ private lemma main
       rw [h_Cons]
       have h_v := Eq_Cons_Tail v
       have h_v := EqUFnS.of.Eq h_v (List.Vector.toList)
-      rw [h_v]
+      erw [h_v]
       simp only [GetElem.getElem] at ih ⊢
       rw [ih]
       simp
