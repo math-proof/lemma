@@ -4,6 +4,7 @@ import Lemma.Tensor.GetDot.eq.DotGet.of.Gt
 import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 open List Tensor
+set_option maxHeartbeats 10000000
 
 
 @[main, fin]
@@ -23,7 +24,10 @@ private lemma main
   else
     have h_n : k = n' := by omega
     subst h_n
-    apply GetDot.eq.DotGet.of.Eq
+    have := GetDot.eq.DotGet.of.Eq.akin X Y i
+    simp [Dot.dot] at this ⊢
+    -- simpa
+    exact this
 
 
 -- created on 2026-01-05

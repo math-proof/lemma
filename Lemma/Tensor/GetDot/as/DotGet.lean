@@ -1,5 +1,5 @@
 import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.Tensor.GetDot.as.DotGet.of.Ge
+import Lemma.Tensor.GetDot.as.DotGet.of.GT
 import Lemma.Tensor.GetDot.as.DotGet.of.Lt
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 open Tensor List
@@ -18,7 +18,7 @@ private lemma main
   if h_n : k < n' then
     apply GetDot.as.DotGet.of.Lt h_n
   else
-    apply GetDot.as.DotGet.of.Ge (by omega)
+    apply GetDot.as.DotGet.of.GT (by omega)
 
 
 @[main, fin]
@@ -34,7 +34,7 @@ private lemma une
   if h_n : k < n' then
     apply GetDot.as.DotGet.of.Lt.une h_n
   else
-    apply GetDot.as.DotGet.of.Ge.une (by omega)
+    apply GetDot.as.DotGet.of.GT.une (by omega)
 
 
 -- created on 2026-01-13

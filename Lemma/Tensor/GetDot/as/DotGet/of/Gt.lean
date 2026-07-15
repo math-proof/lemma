@@ -3,22 +3,19 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Cons_Append_List.eq.AppendTake_Length
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.List.SetAppend.eq.Append_Set.of.LeLength
-import Lemma.Tensor.Einsum.as.SelectBmm.of.LtGet_SubLength_1.GeLength_2
-import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Einsum.as.SelectBmm.of.GtGet_SubLength_1.GeLength_2
+import Lemma.Tensor.Einsum.as.Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
-import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
+import Lemma.Tensor.GetDot.eq.DotGet.of.Gt
 import Lemma.Tensor.GetReshape.as.Reshape.of.EqProdS.GtLength_0
-import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 import Lemma.Tensor.SEqBmmS.of.SEq.SEq
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
-import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.Tensordot.as.Matmul
 open Bool List Tensor
@@ -29,7 +26,7 @@ set_option maxHeartbeats 1000000
 private lemma main
   [Mul α] [Add α] [Zero α]
 -- given
-  (h : k < n')
+  (h : k > n')
   (X : Tensor α (n :: (s ++ [k])))
   (Y : Tensor α [n', k'])
   (i : Fin n) :
@@ -39,50 +36,62 @@ private lemma main
   simp [GetElem.getElem]
   match s with
   | [] =>
-    erw [GetDot.eq.DotGet.of.Lt.fin h]
+    erw [GetDot.eq.DotGet.of.Gt.fin h]
     rfl
   | s₀ :: s =>
     have h_min_length : s.length ⊓ (s.length + 1 + 1) = s.length := by omega
     simp [Dot.dot]
-    have := Einsum.eq.Cast_Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa) X Y
+    have := Einsum.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by grind) X Y
     erw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
-    conv_rhs => erw [Einsum.eq.Cast_Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
-    simp
+    conv_rhs => rw [Einsum.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by grind)]
     apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
+    simp
+    rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by simp [broadcast_shape]⟩) (by grind) (by simp [broadcast_shape, matmul_shape])]
+    apply SEqCast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
     erw [GetTensordot.eq.Cast_MatmulGet.of.GtLength_0.fin (by simp) _ _ ⟨i, by simp⟩]
     simp [Tensordot.eq.Cast_Matmul]
     apply SEqCastS.of.SEq.Eq.Eq
     ·
-      simp [matmul_shape, broadcast_shape]
+      simp [broadcast_shape]
     ·
       simp [broadcast_shape]
       split_ifs
       repeat simp_all
     ·
       apply SEqMatmulS.of.SEq.SEq.Eq.Eq (by simp) (by rfl) (by rfl)
-      apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
-      rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp)]
-      apply SEqCast.of.SEq.Eq (by simp)
-      simp
-      rw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (by simp) (by grind) (d := ⟨((n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2)).length + 1, by grind⟩)]
-      simp
-      apply SEqCast.of.SEq.Eq (by simp)
-      apply SEqResizeS.of.SEq.EqValS.Eq (by simp) (by simp)
-      have h_cons := Cons_Append_List.eq.AppendTake_Length s s₀ k k
-      erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by simpa)]
       ·
-        simp
-        apply SEqCastS.of.SEq.Eq.Eq (by simpa) (by simpa)
-        rfl
+        apply SEqCastS.of.SEq.Eq.Eq (by simp)
+        ·
+          simp
+          apply Cons_Append_List.eq.AppendTake_Length
+        ·
+          erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩)]
+          ·
+            apply SEqCast.of.SEq.Eq
+            ·
+              simp
+              apply Cons_Append_List.eq.AppendTake_Length
+            ·
+              simp
+              rfl
+          ·
+            simp
+            apply Cons_Append_List.eq.AppendTake_Length
+          ·
+            simp
       ·
-        apply SEqReshapeS.of.Eq.Eq.Dvd (by simp) (by simp) (by rfl)
+        apply SEqReshapeS.of.Eq.Eq.Dvd
+        ·
+          simp
+        ·
+          rfl
 
 
 @[main, fin]
 private lemma une
   [Mul α] [Add α] [Zero α]
 -- given
-  (h : k < n')
+  (h : k > n')
   (X : Tensor α (n :: (s ++ [k])))
   (Y : Tensor α [n'])
   (i : Fin n) :
@@ -92,12 +101,12 @@ private lemma une
   simp [GetElem.getElem]
   match s with
   | [] =>
-    erw [GetDot.eq.DotGet.of.Lt.une.fin h]
+    erw [GetDot.eq.DotGet.of.Gt.une.fin h]
     rfl
   | s₀ :: s =>
     simp [Dot.dot]
-    rw [Einsum.eq.Cast_SelectBmm.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
-    conv_rhs => rw [Einsum.eq.Cast_SelectBmm.of.LtGet_SubLength_1.GeLength_2 (by simp) (by simpa)]
+    rw [Einsum.eq.Cast_SelectBmm.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h)]
+    conv_rhs => rw [Einsum.eq.Cast_SelectBmm.of.GtGet_SubLength_1.GeLength_2 (by simp) (by simpa using h)]
     simp
     apply SEq_Cast.of.SEq.Eq
     ·
@@ -105,7 +114,7 @@ private lemma une
       simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
     ·
       conv_lhs => rw [show i = ⟨i, by simp⟩ by grind]
-      erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin]
+      erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (i := ⟨i, by simp [matmul_shape]⟩) (s' := (matmul_shape (n :: s₀ :: (s ++ [k])) [n']))]
       ·
         apply SEqCast.of.SEq.Eq
         ·
@@ -129,38 +138,39 @@ private lemma une
               ·
                 apply SEqBmmS.of.SEq.SEq
                 ·
-                  apply SEq_Cast.of.SEq.Eq (by simp)
+                  apply SEq_Cast.of.SEq.Eq
+                  ·
+                    simp [AppendTake_Length.eq.Cons_Append_List]
                   ·
                     rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by simp) (by simp)]
                     apply SEqCast.of.SEq.Eq (by simp)
-                    rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp)]
-                    apply SEqCast.of.SEq.Eq (by simp)
-                    rw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (by simp) (by grind) (d := ⟨((n :: s₀ :: (s ++ [k])).take ((s ++ [k]).length + 1 + 1 - 2)).length + 1, by grind⟩)]
-                    apply SEqCast.of.SEq.Eq (by simp)
-                    simp
-                    apply SEqResizeS.of.SEq.EqValS.Eq (by simp) (by simp)
-                    have h_cons := Cons_Append_List.eq.AppendTake_Length s s₀ k k
-                    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by simpa)]
-                    simp
-                    apply SEqCastS.of.SEq.Eq.Eq (by simpa) (by simpa) (by rfl)
+                    erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp [AppendTake_Length.eq.Cons_Append_List])]
+                    apply SEqCast.of.SEq.Eq
+                    ·
+                      simp [AppendTake_Length.eq.Cons_Append_List]
+                    ·
+                      simp
+                      rfl
                 ·
-                  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin]
+                  rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by simp) (by simp)]
                   apply SEqCast.of.SEq.Eq (by simp)
                   rw [GetReshape.eq.Cast_Reshape.of.EqProdS.GtLength_0.fin (by grind) (by grind) (i := ⟨i, by grind⟩)]
                   apply SEqCast.of.SEq.Eq (by simp)
                   apply SEqReshapeS.of.Eq.Eq.Dvd
-                  repeat simp
+                  ·
+                    simp
+                  ·
+                    rfl
           ·
             simp [AppendTake_Length.eq.Cons_Append_List]
           ·
             simp [AppendTake_Length.eq.Cons_Append_List]
-            apply i.isLt
-      ·
-        simp [matmul_shape]
       ·
         simp [matmul_shape]
         simp [EraseIdx.eq.Append_Drop_Add_1, AppendTake_Length.eq.Cons_Append_List]
+      ·
+        simp [matmul_shape]
 
 
--- created on 2026-01-11
+-- created on 2026-01-13
 -- updated on 2026-07-15

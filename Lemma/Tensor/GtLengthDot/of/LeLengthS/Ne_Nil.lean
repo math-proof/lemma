@@ -1,4 +1,5 @@
 import Lemma.Nat.Le.is.Lt.ou.Eq
+import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import sympy.tensor.tensor
 open Tensor Nat
 

@@ -25,7 +25,7 @@ set_option maxHeartbeats 10000000
 
 
 @[main, fin]
-private lemma main
+private lemma akin
   [Mul α] [Add α] [Zero α]
 -- given
   (X : Tensor α [n, k])

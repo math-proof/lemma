@@ -19,21 +19,6 @@ Implement the instance for Vector
 instance : IsConstant (Vector α n) where
   is_constant v := v.val is constant
 
-def dot [Add α] [Zero α] [Mul α] (v1 v2 : Vector α n) : α :=
-  match n, v1, v2 with
-  | 0, ⟨[], _⟩, ⟨[], _⟩ => 0
-  | n + 1, ⟨x :: xs, h₁⟩, ⟨y :: ys, h₂⟩ =>
-    have h₁ : xs.length = n := by
-      simp [List.length] at h₁
-      assumption
-    have h₂ : ys.length = n := by
-      simp [List.length] at h₂
-      assumption
-    x * y + dot ⟨xs, h₁⟩ ⟨ys, h₂⟩
-
-
-instance [Add α] [Zero α] [Mul α] : Dot (Vector α n) (Vector α n) α := ⟨dot⟩
-
 def sum [Add α] [Zero α] : Vector α n → α
   | ⟨v, _⟩ => v.sum
 
@@ -132,6 +117,10 @@ instance [Neg α] : Neg (Vector α n) where
 
 instance [Inv α] : Inv (Vector α n) where
   inv a := a.map (·⁻¹)
+
+def dot [Add α] [Zero α] [Mul α] (v1 v2 : Vector α n) : α := (v1 * v2).sum
+
+instance [Add α] [Zero α] [Mul α] : Dot (Vector α n) (Vector α n) α := ⟨dot⟩
 
 def transpose (xs : Vector (Vector α n) m) : Vector (Vector α m) n :=
   (range n).map fun j => (range m).map fun i => xs[i][j]
