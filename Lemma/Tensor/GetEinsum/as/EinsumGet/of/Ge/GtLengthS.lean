@@ -181,28 +181,11 @@ private lemma main
       apply SEqMatmulS.of.SEq.SEq.Eq.Eq (by simp) (by rfl) (by simp; grind)
       apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp [← List.Cons_Append_List.eq.AppendTake_Length])
       erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp [← List.Cons_Append_List.eq.AppendTake_Length])]
-      apply SEqCast.of.SEq.Eq (by simp [← List.Cons_Append_List.eq.AppendTake_Length])
+      apply SEqCast.of.SEq.Eq (by simp [← List.Cons_Append_List.eq.AppendTake_Length]) (by rfl)
+      rw [Tensor.Reshape.eq.Cast.of.Eq (by simp; grind)]
       simp
+      apply SEqCastS.of.SEq.Eq.Eq (by simp; grind) (by simp)
       rfl
-      apply SEq_Cast.of.SEq.Eq (by simp)
-      simp
-      apply SEqResizeS.of.SEq.EqValS.Eq (by simp) (by simp)
-      have h_cons := Cons_Append_List.eq.AppendTake_Length sₜ sₐ k k
-      erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by simpa)]
-      ·
-        simp
-        apply SEqCastS.of.SEq.Eq.Eq (by simpa) (by simpa)
-        rfl
-      ·
-        apply SEq_Cast.of.SEq.Eq (by simp)
-        erw [ReshapeCast.eq.Reshape.of.EqProdS.Eq (by simp) (by simp)]
-        apply SEqReshape.of.Eq
-        congr 1
-        ·
-          simp
-          omega
-        ·
-          simp
 
 
 -- created on 2026-07-17

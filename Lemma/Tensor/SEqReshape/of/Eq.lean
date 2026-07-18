@@ -5,17 +5,16 @@ import Lemma.Nat.EqMulDiv
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import sympy.tensor.tensor
 open Bool Fin Nat Tensor Vector
 
 
-@[main, comm 1]
+@[main, comm 1, cast]
 private lemma main
-  {A : Tensor α s}
 -- given
-  (h : s' = s) :
+  (h : s' = s)
+  (X : Tensor α s) :
 -- imply
-  A.reshape s' (by simp_all) ≃ A := by
+  X.reshape s' (by simp_all) ≃ X := by
 -- proof
   unfold Tensor.reshape
   apply SEq.of.SEqDataS.Eq h
