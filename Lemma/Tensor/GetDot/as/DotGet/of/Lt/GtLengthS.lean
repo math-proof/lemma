@@ -49,8 +49,7 @@ private lemma main
       simp [matmul_shape, broadcast_shape]
     ·
       simp [broadcast_shape]
-      split_ifs
-      <;> repeat simp_all
+      split_ifs <;> simp_all
     ·
       apply SEqMatmulS.of.SEq.SEq.Eq.Eq (by simp) (by rfl) (by rfl)
       apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
