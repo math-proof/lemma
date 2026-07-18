@@ -90,14 +90,13 @@ private lemma main
         rw [LengthSlice.eq.ProdTake.of.GtGet.GtLength (by grind) h_i_lt] at h_q'
         have h_r' := r'.isLt
         simp [DropEraseIdx.eq.Drop.of.Le (show k ≤ d - 1 + 1 by omega)] at h_r'
-        simp [EqAddSub.of.Ge (show d.val ≥ 1 by omega)] at h_r' h_q'_div h_r'_mod
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_q'r']
         rw [GetGetSlice.eq.Get.of.GtGet.GtLength (by grind) (by grind)]
         rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         rw [GetSum.eq.Sum_Get.fin]
         simp [GetEraseIdx.eq.Get.of.Lt.GtLength h_d h_k]
         simp [DropEraseIdx.eq.Drop.of.Le (show k ≤ d - 1 + 1 by omega)]
-        simp [show d.val - 1 + 1 = d by omega]
+        simp [EqAddSub.of.Ge (show d.val ≥ 1 by omega)] at h_r' h_q'_div h_r'_mod ⊢
         rw [DataSum.eq.Sum_DataSelect X ⟨k, h_k_length⟩]
         rw [GetSum.eq.Sum_Get.fin]
         have h_cast := (GetEraseIdx.eq.Get.of.Gt.GtLength h_d h_k).symm

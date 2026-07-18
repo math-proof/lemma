@@ -590,6 +590,74 @@ def Lean.Expr.fin2val : Expr → Expr
   | mdata data expr => mdata data expr.fin2val
   | expr => expr
 
+def Lean.Expr.ofNatLit? (e : Expr) (lit : Nat := 1) : Option (Expr × Expr) :=
+  match e with
+  | .app (.app (.app (.const `OfNat.ofNat _) α) (.lit (.natVal k))) inst =>
+    if k == lit then some (α, inst) else none
+  | _ =>
+    none
+
+partial def Lean.Expr.findOfNatLit (e : Expr) (lit : Nat := 1) : Option (Expr × Expr × Expr) :=
+  match e.ofNatLit? lit with
+  | some (α, inst) =>
+    some (α, inst, e)
+  | none =>
+    match e with
+    | .app fn arg =>
+      (findOfNatLit fn lit).or (findOfNatLit arg lit)
+    | .forallE _ binderType body _ =>
+      (findOfNatLit binderType lit).or (findOfNatLit body lit)
+    | .lam _ binderType body _ =>
+      (findOfNatLit binderType lit).or (findOfNatLit body lit)
+    | .letE _ type value body _ =>
+      (findOfNatLit type lit).or (findOfNatLit value lit) |>.or (findOfNatLit body lit)
+    | .mdata _ expr
+    | .proj _ _ expr =>
+      findOfNatLit expr lit
+    | _ =>
+      none
+
+def Lean.Expr.mkOfNatLit (α inst : Expr) (lit : Nat := 1) : Expr :=
+  (.app (.app (.app (.const `OfNat.ofNat []) α) (.lit (.natVal lit))) inst)
+
+partial def Lean.Expr.mapOfNatLit (e : Expr) (lit : Nat) (nIdx : Nat) : Expr × Nat :=
+  match e.ofNatLit? lit with
+  | some _ =>
+    (.bvar nIdx, 1)
+  | none =>
+    match e with
+    | .app fn arg =>
+      let ⟨fn', n₁⟩ := mapOfNatLit fn lit nIdx
+      let ⟨arg', n₂⟩ := mapOfNatLit arg lit nIdx
+      (.app fn' arg', n₁ + n₂)
+    | .forallE binderName binderType body binderInfo =>
+      let ⟨binderType', n₁⟩ := mapOfNatLit binderType lit nIdx
+      let ⟨body', n₂⟩ := mapOfNatLit body lit nIdx.succ
+      (.forallE binderName binderType' body' binderInfo, n₁ + n₂)
+    | .lam binderName binderType body binderInfo =>
+      let ⟨binderType', n₁⟩ := mapOfNatLit binderType lit nIdx
+      let ⟨body', n₂⟩ := mapOfNatLit body lit nIdx.succ
+      (.lam binderName binderType' body' binderInfo, n₁ + n₂)
+    | .letE declName type value body nondep =>
+      let ⟨type', n₁⟩ := mapOfNatLit type lit nIdx
+      let ⟨value', n₂⟩ := mapOfNatLit value lit nIdx
+      let ⟨body', n₃⟩ := mapOfNatLit body lit nIdx.succ
+      (.letE declName type' value' body' nondep, n₁ + n₂ + n₃)
+    | .mdata data expr =>
+      let ⟨expr', n⟩ := mapOfNatLit expr lit nIdx
+      (.mdata data expr', n)
+    | .proj typeName idx struct =>
+      let ⟨struct', n⟩ := mapOfNatLit struct lit nIdx
+      (.proj typeName idx struct', n)
+    | expr =>
+      (expr, 0)
+
+def Lean.Expr.oneBinderInsertPos (oneType : Expr) : Nat :=
+  match oneType with
+  | .const `Nat _ => 0
+  | .bvar k => k
+  | _ => 0
+
 def Lean.Expr.format (indent : Nat := 0) (is_indented : Bool := true): Expr → String
   | .lam binderName binderType body binderInfo =>
     let pairedGroup := binderInfo.pairedGroup

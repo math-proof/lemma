@@ -1,3 +1,4 @@
+import Lemma.Nat.EqAddSub.of.Gt
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqRotateRotate.of.Add.eq.Length
@@ -11,7 +12,7 @@ import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.EqMod.of.Lt
-import Lemma.Nat.EqMul_1.of.Eq_1
+import Lemma.Nat.EqMul_1
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -37,7 +38,7 @@ private lemma main
   apply SEq.of.SEqDataS.Eq
   ·
     simp_all [Drop.eq.Nil.of.LeLength, EqTake.of.LeLength]
-    simp [show s.length - 1 + 1 = s.length by omega]
+    simp [EqAddSub.of.Gt h]
   ·
     simp
     apply SEqCast.of.SEq.Eq

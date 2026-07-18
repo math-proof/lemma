@@ -908,6 +908,74 @@ initialize registerBuiltinAttribute {
     }
 }
 
+def Lean.Expr.replaceExpr (e replacement target : Expr) : Expr :=
+  if e == target then replacement else
+  match e with
+  | .app fn arg => .app (fn.replaceExpr replacement target) (arg.replaceExpr replacement target)
+  | .lam n t b i => .lam n (t.replaceExpr replacement target) (b.replaceExpr replacement target) i
+  | .forallE n t b i => .forallE n (t.replaceExpr replacement target) (b.replaceExpr replacement target) i
+  | .letE n t v b nd => .letE n (t.replaceExpr replacement target) (v.replaceExpr replacement target) (b.replaceExpr replacement target) nd
+  | .mdata d e => .mdata d (e.replaceExpr replacement target)
+  | .proj s i e => .proj s i (e.replaceExpr replacement target)
+  | _ => e
+
+def Expr.substOne (type value : Expr) (lit : Nat := 1) : MetaM (Expr × Expr) := do
+  forallTelescope type fun args body => do
+    let some (_, _, oneExpr) := body.findOfNatLit lit |
+      throwError "subst: no OfNat literal {lit} found in the theorem type"
+    let oneType ← inferType oneExpr
+    withLocalDecl `n BinderInfo.implicit oneType fun n => do
+      let body' := body.replaceExpr n oneExpr
+      let ⟨binders, _⟩ := type.decompose_forallE
+      let insertIdx :=
+        binders.map (·.2.2) |>.reverse |>.findIdx? (· == .default) |>.getD 0
+      let oneExpr' ← instantiateMVars oneExpr
+      let u ← getLevel oneType
+      let hType := mkAppN (mkConst ``Eq [u]) #[oneType, n, oneExpr']
+      withLocalDecl `h BinderInfo.default hType fun h => do
+        let motive ← mkLambdaFVars #[n] body'
+        let pr := value.mkApp args.toList
+        let symm := mkAppN (mkConst ``Eq.symm [u]) #[oneType, n, oneExpr', h]
+        let proofBody := mkAppN (mkConst ``Eq.subst [u]) #[oneType, motive, oneExpr', n, symm, pr]
+        let before := args.take insertIdx
+        let after := args.drop insertIdx
+        let allArgs := before.push n |>.push h |>.append after
+        let type' ← mkForallFVars allArgs body'
+        let value' ← mkLambdaFVars allArgs proofBody
+        return (← instantiateMVars type', ← instantiateMVars value')
+
+/--
+`@[subst]` automatically generates a theorem that replaces an `OfNat` literal by a variable.
+
+Usage:
+```lean
+@[subst 1]
+theorem Nat.EqMul_1 [MulOneClass M] (a : M) : a * 1 = a := mul_one a
+-- Generates `Nat.EqMul_1.of.Eq_1`:
+--   ∀ {M} {n : M} [MulOneClass M] (h : n = 1) (a : M), a * n = a
+-- `n` and `h` are inserted before the first `()` given binder (default `BinderInfo`), or at index 0.
+```
+-/
+initialize registerBuiltinAttribute {
+  name := `subst
+  descr := "Automatically generate the theorem with an OfNat literal substituted by a variable and an Eq hypothesis"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+    let lit := stx.getNum
+    if lit == 0 then
+      throwError "subst requires a non-zero literal argument, e.g. `@[subst 1]`"
+    let ⟨type, value⟩ ← MetaM.run' <| Expr.substOne decl.type (.const declName (levelParams.map .param)) lit
+    let name := (((← getEnv).module.str "of").str s!"Eq_{lit}").lemmaName declName
+    addAndCompile <| .thmDecl {
+      name := name
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
 /--
 Drop the plural `S` after removing an `SEq` prefix.
 Matches `([A-Z][a-z]+)S(?![a-z])` — e.g. `PermuteS__Neg` → `Permute__Neg`, but `PermuteSign` unchanged.
