@@ -964,8 +964,6 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let lit := stx.getNum
-    if lit == 0 then
-      throwError "subst requires a non-zero literal argument, e.g. `@[subst 1]`"
     let ⟨type, value⟩ ← MetaM.run' <| Expr.substOne decl.type (.const declName (levelParams.map .param)) lit
     let name := (((← getEnv).module.str "of").str s!"Eq_{lit}").lemmaName declName
     addAndCompile <| .thmDecl {
