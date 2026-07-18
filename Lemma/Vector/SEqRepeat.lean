@@ -6,7 +6,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Fin Vector
 
 
-@[main, cast]
+@[main, cast, subst 1]
 private lemma main
 -- given
   (x : List.Vector α n) :
@@ -29,3 +29,4 @@ private lemma main
 
 
 -- created on 2026-01-10
+-- updated on 2026-07-19
