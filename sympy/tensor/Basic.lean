@@ -23,7 +23,6 @@ import Lemma.List.EqPermute__0
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.Take.eq.Nil.of.Eq_0
-import Lemma.List.EqDrop.of.Eq_0
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
 import Lemma.List.EqSwapS.of.Prod.eq.IteGt
