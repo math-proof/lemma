@@ -11,7 +11,6 @@ open Bool Fin Nat Tensor Vector
 
 @[main, comm 1]
 private lemma main
-  [Mul α] [Zero α] [Add α]
   {A : Tensor α s}
 -- given
   (h : s' = s) :

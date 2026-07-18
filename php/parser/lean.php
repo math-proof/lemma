@@ -321,7 +321,15 @@ abstract class Lean extends IndentedNode
                 return $this->append("Lean_$token", "expr");
             case 'have':
             case 'let':
+            case 'set':
             case 'show':
+                if ($this instanceof LeanCaret && $this->parent instanceof LeanProperty) {
+                    while (preg_match("/['!?\w]/", $tokens[$i + 1])) {
+                        ++$i;
+                        $token .= $tokens[$i];
+                    }
+                    return $this->parent->insert_word($this, $token);
+                }
                 return $this->append("Lean_$token", "tactic");
             case 'public':
             case 'private':
@@ -5208,7 +5216,7 @@ class LeanModule extends LeanStatements
             }
         } else {
             foreach ($statements as $stmt) {
-                if ($stmt instanceof Lean_have || $stmt instanceof LeanTactic) {
+                if ($stmt instanceof Lean_let || $stmt instanceof LeanTactic) {
                     $last[] = $stmt;
                     $code[] = [$last, null];
                     $last = [];
@@ -9003,6 +9011,19 @@ class Lean_have extends Lean_let
 
 }
 
+class Lean_set extends Lean_let
+{
+    public function __get($vname)
+    {
+        switch ($vname) {
+            case 'operator':
+            case 'command':
+                return 'set';
+            default:
+                return parent::__get($vname);
+        }
+    }
+}
 
 class Lean_show extends LeanSyntax
 {

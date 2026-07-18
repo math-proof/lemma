@@ -1,5 +1,5 @@
 import Lemma.List.Ne_Nil.is.GeLength_1
-import Lemma.Tensor.GetDot.eq.DotGet.of.LtLengthS
+import Lemma.Tensor.GetDot.eq.DotGet.of.GtLengthS
 import Lemma.Tensor.GetDot.eq.DotGet.of.Ne_Nil
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 open List Tensor
@@ -26,7 +26,7 @@ private lemma main
 -- proof
   obtain h_len | h_len := h_len
   ·
-    apply GetDot.eq.DotGet.of.LtLengthS h_len
+    apply GetDot.eq.DotGet.of.GtLengthS h_len
   ·
     match s' with
     | [k'] =>

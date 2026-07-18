@@ -370,8 +370,7 @@ export class Lean extends IndentedNode {
         return this.strFormat();
     }
 
-    parse(token, parser) {
-        const self = parser;
+    parse(token, self) {
         const tokens = self.tokens;
         const count = tokens.length;
 
@@ -389,8 +388,12 @@ export class Lean extends IndentedNode {
                 return this.append(`Lean_${token}`, 'expr');
             case 'have':
             case 'let':
-            case 'show':
+            case 'set':
+            case 'show': {
+                const asPropertyField = self.parseKeywordAsPropertyField(this, token);
+                if (asPropertyField) return asPropertyField;
                 return this.append(`Lean_${token}`, 'tactic');
+            }
             case 'public':
             case 'private':
             case 'protected':
@@ -449,11 +452,8 @@ export class Lean extends IndentedNode {
                     return this.parent.insert_unary(this, 'LeanTacticBlock');
                 return this.push_binary('LeanProperty');
             case 'is': {
-                if (this instanceof LeanCaret && this.parent instanceof LeanProperty)
-                    return this.parent.insert_word(this, token);
-                // PHP `Lean::parse` treats non-property `is` as `Lean_is` / `Lean_is_not` only. In JS we also
-                // treat `is` as a plain identifier under import/open/def/… (e.g. `Setoid.is.All_SetoidGetS`)
-                // so round-trip and lemma paths match the tokenizer/AST shape the repo relies on.
+                const asPropertyField = self.parseKeywordAsPropertyField(this, token);
+                if (asPropertyField) return asPropertyField;
                 let p = this;
                 while (p && p.parent) {
                     const par = p.parent;
@@ -794,24 +794,16 @@ export class Lean extends IndentedNode {
             case 'in':
             case 'generalizing':
             case 'MOD':
-            case 'from':
-                if (this instanceof LeanCaret && this.parent instanceof LeanProperty) {
-                    while (isIdentContinueToken(tokens[self.start_idx + 1])) {
-                        self.start_idx++;
-                        token += tokens[self.start_idx];
-                    }
-                    return this.parent.insert_word(this, token);
-                }
+            case 'from': {
+                const asPropertyField = self.parseKeywordAsPropertyField(this, token);
+                if (asPropertyField) return asPropertyField;
                 return this.parent.insert(this, `Lean${token[0].toUpperCase() + token.slice(1)}`, 'modifier');
-            case 'calc':
-                if (this instanceof LeanCaret && this.parent instanceof LeanProperty) {
-                    while (isIdentContinueToken(tokens[self.start_idx + 1])) {
-                        self.start_idx++;
-                        token += tokens[self.start_idx];
-                    }
-                    return this.parent.insert_word(this, token);
-                }
+            }
+            case 'calc': {
+                const asPropertyField = self.parseKeywordAsPropertyField(this, token);
+                if (asPropertyField) return asPropertyField;
                 return this.parent.insert_calc(this);
+            }
             case '·':
                 if (this.parent instanceof LeanStatements || this.parent instanceof LeanSequentialTacticCombinator)
                     return this.parent.insert_unary(this, 'LeanTacticBlock');
@@ -4622,7 +4614,7 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
         }
     } else {
         for (const stmt of statements) {
-            if (stmt instanceof Lean_have || stmt instanceof LeanTactic) {
+            if (stmt instanceof Lean_let || stmt instanceof LeanTactic) {
                 last.push(stmt);
                 code.push([last, null]);
                 last = [];
@@ -4723,7 +4715,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             break;
                         }
                     }
-                    /** Collect Lean_let/Lean_have between lemma and main assignment for imply (JS parser may have them as siblings). */
+                    /** Collect Lean_let between lemma and main assignment for imply (JS parser may have them as siblings). */
                     for (let k = idx + 1; k < firstAssign; k++) {
                         const s = args[k];
                         if (s instanceof Lean_let) {
@@ -5524,7 +5516,7 @@ export class LeanModule extends LeanStatements {
                 let p = i - 1;
                 while (p >= 0 && (args[p] instanceof LeanCaret || args[p] == null || skip.has(p))) p--;
                 const prev = p >= 0 ? args[p] : null;
-                const indent = prev instanceof Lean_have ? prev.indent ?? 0 : 0;
+                const indent = prev instanceof Lean_let ? prev.indent ?? 0 : 0;
                 if (indent > 0) out = ' '.repeat(indent) + out;
             }
             parts.push(out);
@@ -7131,7 +7123,7 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
     insert_tactic(caret, type) {
         if (caret instanceof LeanCaret) {
             const p = this.parent;
-            if ((p instanceof LeanTactic && p.is_inline_tactic_block()) || p instanceof LeanBy) {
+            if ((p instanceof LeanTactic && p.is_inline_tactic_block()) || p instanceof LeanBy || p instanceof LeanStatements) {
                 this.replace(caret, new LeanTactic(type, caret, this.indent, caret.level));
                 return caret;
             }
@@ -7569,7 +7561,13 @@ export class LeanTactic extends LeanSyntax {
                 else this.replace(caret, new LeanArgsSemicolonSeparated([caret, $new], this.indent, caret.level));
                 return $new;
             }
-            if (this.parent instanceof LeanBy) {
+            if (this.parent instanceof LeanStatements) {
+                const $new = new LeanCaret(this.indent, caret.level);
+                if (caret instanceof LeanArgsSemicolonSeparated) caret.push($new);
+                else this.parent.replace(this, new LeanArgsSemicolonSeparated([this, $new], this.indent, caret.level));
+                return $new;
+            }
+            if (this.parent instanceof LeanBy && this.parent.arg === this) {
                 const $new = new LeanCaret(this.indent, caret.level);
                 if (caret instanceof LeanArgsSemicolonSeparated) caret.push($new);
                 else this.parent.replace(this, new LeanArgsSemicolonSeparated([this, $new], this.indent, caret.level));
@@ -7697,10 +7695,7 @@ export class LeanTactic extends LeanSyntax {
                     stmts.swap_echo_star(syntax, statements);
                     return statements;
                 }
-            } else if (
-                (block instanceof LeanTactic || block instanceof Lean_have || block instanceof Lean_let) &&
-                block.indent >= this.indent
-            ) {
+            } else if ((block instanceof LeanTactic || block instanceof Lean_let) && block.indent >= this.indent) {
                 const self = this.clone();
                 if (sequential_tactic_combinator.newline) {
                     block = self.sequential_tactic_combinator;
@@ -8920,6 +8915,7 @@ export class Lean_lemma extends Lean_def {
     }
 }
 
+// binding tactic
 class Lean_let extends LeanSyntax {
     static input_priority = 7;
 
@@ -9087,6 +9083,16 @@ class Lean_have extends Lean_let {
 
     strFormat() {
         return `${this.operator}${this.sep()}%s`;
+    }
+}
+
+class Lean_set extends Lean_let {
+    get command() {
+        return 'set';
+    }
+
+    get operator() {
+        return 'set';
     }
 }
 
@@ -9346,6 +9352,17 @@ export class LeanParser extends AbstractParser {
         this.caret = caret;
         this.root = new LeanModule([caret], 0, 0);
     }
+
+    parseKeywordAsPropertyField(caret, token) {
+        if (caret instanceof LeanCaret && caret.parent instanceof LeanProperty) {
+            let word = token;
+            while (isIdentContinueToken(this.tokens[this.start_idx + 1])) {
+                this.start_idx++;
+                word += this.tokens[this.start_idx];
+            }
+            return caret.parent.insert_word(caret, word);
+        }
+    }
 }
 
 /**
@@ -9421,6 +9438,7 @@ const LEAN_CLASSES = {
     LeanCaret,
     Lean_let,
     Lean_have,
+    Lean_set,
     Lean_fun,
     Lean_match,
     LeanWith,

@@ -5,7 +5,7 @@ import sympy.tensor.tensor
 open Bool List
 
 
-@[main]
+@[main, cast]
 private lemma main
   [Mul α] [Add α] [Zero α]
   {s s' : List ℕ}
