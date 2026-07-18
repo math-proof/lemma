@@ -10,7 +10,7 @@ import Lemma.Int.Sub.eq.Zero.is.Eq
 import Lemma.Nat.CoeMul.eq.MulCoeS
 import Lemma.Int.Sub_Mul.eq.Mul_Sub1
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
-import Lemma.Nat.Ne_1.of.Eq_0
+import Lemma.Nat.Ne_1
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Bool.Imp.is.OrNot
 open Bool Nat Int
@@ -42,8 +42,7 @@ private lemma main
     rw [Sub_Mul.eq.Mul_Sub1] at this
     have := OrEqS_0.of.Mul.eq.Zero this
     mp [Eq.of.Sub.eq.Zero (a := 1) (b := (Bool.toNat q : ℤ))] at this
-    -- mp [Eq.of.Sub.eq.Zero] at this
-    mp [Ne_1.of.Eq_0 (a := (Bool.toNat p : ℤ))] at this
+    mp [Ne_1.of.Eq_0 (n := (Bool.toNat p : ℤ))] at this
     rw [Ne.is.NotEq] at this
     have := Imp.of.OrNot this
     norm_cast at this

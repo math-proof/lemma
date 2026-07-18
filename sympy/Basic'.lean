@@ -760,7 +760,7 @@ def Expr.substOne' (type value : Lean.Expr) (lit : Nat := 1) : MetaM (Lean.Expr 
       let body' := body.replaceExpr n oneExpr
       let ⟨binders, _⟩ := type.decompose_forallE
       let insertIdx :=
-        binders.map (·.2.2) |>.reverse |>.findIdx? (· == .default) |>.getD 0
+        binders.map (·.2.2) |>.reverse |>.findIdx? (· == .default) |>.getD args.size
       let oneExpr' ← instantiateMVars oneExpr
       let u ← getLevel oneType
       let hType := mkAppN (mkConst ``Eq [u]) #[oneType, n, oneExpr']
