@@ -22,11 +22,11 @@ private lemma mp
   simp [h_a_eps] at h_or
   let ⟨h_ab, h_b⟩ := h_or
   have h_st := EqSt.of.InfinitesimalSub h_ab
-  have ⟨h_a, h_a_neg⟩ := Infinite.Lt_0.of.InfiniteNeg h_a.left h_a.right
+  have ⟨h_a, h_a_neg⟩ := Infinite.Lt_0.of.InfiniteNeg h_a
   if h_b_neg : b → -∞ then
     assumption
   else if h_b_pos : b → +∞ then
-    have ⟨h_b, h_b_pos⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos.left h_b_pos.right
+    have ⟨h_b, h_b_pos⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos
     have h_ab := Gt0Div.of.Lt_0.Gt_0 h_a_neg h_b_pos
     have h_ab_st := LeSt_0.of.Le_0 (by linarith) (x := a / b)
     linarith

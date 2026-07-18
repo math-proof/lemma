@@ -35,7 +35,7 @@ private lemma main
     have h_a_exp := InfinitesimalExp.of.InfiniteNeg h_a_neg
     simp [h_a_exp]
     have h := OrAndS.of.Setoid h
-    have ⟨h_a, h_a_neg⟩ := Infinite.Lt_0.of.InfiniteNeg h_a_neg.left h_a_neg.right
+    have ⟨h_a, h_a_neg⟩ := Infinite.Lt_0.of.InfiniteNeg h_a_neg
     simp [NotInfinitesimal.of.Infinite h_a] at h
     have ⟨h, h_b_eps⟩ := h
     have h_st := EqSt.of.InfinitesimalSub h
@@ -43,7 +43,7 @@ private lemma main
       have h_b_exp := InfinitesimalExp.of.InfiniteNeg h_b_neg
       simp [h_b_exp]
     else if h_b_pos : b → +∞ then
-      have ⟨h_b, h_b_neg⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos.left h_b_pos.right
+      have ⟨h_b, h_b_neg⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos
       have h_ab := Gt0Div.of.Lt_0.Gt_0 h_a_neg h_b_neg
       have := LeSt_0.of.Le_0 (by linarith) (x := a / b)
       linarith
