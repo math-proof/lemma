@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main]
+@[main, subst 0]
 private lemma main
 -- given
   (a : List α) :
@@ -12,3 +12,4 @@ private lemma main
 
 
 -- created on 2026-07-12
+-- updated on 2026-07-19
