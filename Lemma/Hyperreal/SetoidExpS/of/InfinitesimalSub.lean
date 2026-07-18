@@ -32,7 +32,7 @@ private lemma main
   have h := Setoid.of.InfinitesimalSub h_sub
   apply Setoid.of.OrAndS
   if h_a_neg : a → -∞ then
-    have h_a_exp := InfinitesimalExp.of.InfiniteNeg h_a_neg.left h_a_neg.right
+    have h_a_exp := InfinitesimalExp.of.InfiniteNeg h_a_neg
     simp [h_a_exp]
     have h := OrAndS.of.Setoid h
     have ⟨h_a, h_a_neg⟩ := Infinite.Lt_0.of.InfiniteNeg h_a_neg.left h_a_neg.right
@@ -40,7 +40,7 @@ private lemma main
     have ⟨h, h_b_eps⟩ := h
     have h_st := EqSt.of.InfinitesimalSub h
     if h_b_neg : b → -∞ then
-      have h_b_exp := InfinitesimalExp.of.InfiniteNeg h_b_neg.left h_b_neg.right
+      have h_b_exp := InfinitesimalExp.of.InfiniteNeg h_b_neg
       simp [h_b_exp]
     else if h_b_pos : b → +∞ then
       have ⟨h_b, h_b_neg⟩ := Infinite.Gt_0.of.InfinitePos h_b_pos.left h_b_pos.right
@@ -64,7 +64,7 @@ private lemma main
     simp at h_div_exp
     rw [h_div_exp]
     if h_a_pos : a → +∞ then
-      have h_b_pos := InfinitePos.of.InfinitePos.Setoid h h_a_pos.left h_a_pos.right
+      have h_b_pos := InfinitePos.of.InfinitePos.Setoid h h_a_pos
       have h_eps := OrAndS.of.Setoid h
       have h_a := NotInfinitesimal.of.InfinitePos h_a_pos
       have h_b := NotInfinitesimal.of.InfinitePos h_b_pos

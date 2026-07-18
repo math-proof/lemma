@@ -41,7 +41,14 @@ private lemma mp
     linarith
 
 
-@[main, mp, mp.mt]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.InfinitePos.is.InfinitePos.of.Setoid |
+| mp   | Hyperreal.InfinitePos.of.InfinitePos.Setoid |
+| mp.mt | Hyperreal.NotInfinitePos.of.NotInfinitePos.Setoid |
+-/
+@[main, mp and, mp.mt]
 private lemma main
   {a b : ℝ*}
 -- given

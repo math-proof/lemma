@@ -15,13 +15,20 @@ private lemma mp
   .
     apply Infinite.of.InfinitePos.ou.InfiniteNeg
     left
-    exact InfinitePos.of.InfinitePos.Setoid h h_a.left h_a.right
+    exact InfinitePos.of.InfinitePos.Setoid h h_a
   .
     apply Infinite.of.InfinitePos.ou.InfiniteNeg
     right
-    exact InfiniteNeg.of.InfiniteNeg.Setoid h h_a.left h_a.right
+    exact InfiniteNeg.of.InfiniteNeg.Setoid h h_a
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.Infinite.is.Infinite.of.Setoid |
+| mp   | Hyperreal.Infinite.of.Infinite.Setoid |
+| mp.mt | Hyperreal.NotInfinite.of.NotInfinite.Setoid |
+-/
 @[main, mp, mp.mt]
 private lemma main
   {a b : ℝ*}

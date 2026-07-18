@@ -5,7 +5,17 @@ import Lemma.Real.LtExpS.is.Lt
 open Hyperreal Real
 
 
-@[main, comm, mp, mpr, mp.mt, mpr.mt]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.InfiniteNeg.is.InfinitesimalExp |
+| comm | Hyperreal.InfinitesimalExp.is.InfiniteNeg |
+| mp   | Hyperreal.InfinitesimalExp.of.InfiniteNeg |
+| mpr | Hyperreal.InfiniteNeg.of.InfinitesimalExp |
+| mp.mt   | Hyperreal.NotInfiniteNeg.of.NotInfinitesimalExp |
+| mpr.mt | Hyperreal.NotInfinitesimalExp.of.NotInfiniteNeg |
+-/
+@[main, comm, mp and, mpr, mp.mt, mpr.mt]
 private lemma main
 -- given
   (x : ℝ*) :

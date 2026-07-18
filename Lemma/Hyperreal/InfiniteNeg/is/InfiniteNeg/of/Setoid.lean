@@ -41,7 +41,14 @@ private lemma mp
     linarith
 
 
-@[main, mp, mp.mt]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.InfiniteNeg.is.InfiniteNeg.of.Setoid |
+| mp   | Hyperreal.InfiniteNeg.of.InfiniteNeg.Setoid |
+| mp.mt | Hyperreal.NotInfiniteNeg.of.NotInfiniteNeg.Setoid |
+-/
+@[main, mp and, mp.mt]
 private lemma main
   {a b : ℝ*}
 -- given
