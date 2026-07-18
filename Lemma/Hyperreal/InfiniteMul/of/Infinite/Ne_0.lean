@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.InfiniteDiv.of.Infinite.Ne_0
-import Lemma.Rat.Ne_0.is.NeInv_0
+import Lemma.Rat.Eq_0.is.EqInv_0
 open Hyperreal Rat
 
 

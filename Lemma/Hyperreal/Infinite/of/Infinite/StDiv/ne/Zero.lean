@@ -1,4 +1,4 @@
-import Lemma.Rat.Ne_0.is.NeInv_0
+import Lemma.Rat.Eq_0.is.EqInv_0
 import Lemma.Hyperreal.InfiniteDiv.of.Infinite.NotInfinite
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.EqSt0'0
