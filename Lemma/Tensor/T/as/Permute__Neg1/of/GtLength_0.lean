@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqPermuteS__Neg.of.Le
 import Lemma.List.EqSwap
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
-import Lemma.Tensor.SEqPermute.of.Eq_0
+import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 import Lemma.Tensor.SEqPermuteS__Neg.of.Le
 open Bool List Tensor

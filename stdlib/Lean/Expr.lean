@@ -829,6 +829,23 @@ def Lean.Expr.replaceExpr (e replacement target : Expr) : Expr × Bool :=
     (.proj s i e', found)
   | _ => (e, false)
 
+def Lean.Expr.replaceAllExpr (e replacement target : Expr) : Expr :=
+  if e == target then replacement else
+  match e with
+  | .app fn arg =>
+    .app (fn.replaceAllExpr replacement target) (arg.replaceAllExpr replacement target)
+  | .lam n t b i =>
+    .lam n (t.replaceAllExpr replacement target) (b.replaceAllExpr replacement target) i
+  | .forallE n t b i =>
+    .forallE n (t.replaceAllExpr replacement target) (b.replaceAllExpr replacement target) i
+  | .letE n t v b nd =>
+    .letE n (t.replaceAllExpr replacement target) (v.replaceAllExpr replacement target) (b.replaceAllExpr replacement target) nd
+  | .mdata d e =>
+    .mdata d (e.replaceAllExpr replacement target)
+  | .proj s i e =>
+    .proj s i (e.replaceAllExpr replacement target)
+  | _ => e
+
 def Lean.Expr.format (indent : Nat := 0) (is_indented : Bool := true): Expr → String
   | .lam binderName binderType body binderInfo =>
     let pairedGroup := binderInfo.pairedGroup
