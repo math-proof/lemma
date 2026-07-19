@@ -1,7 +1,7 @@
 import sympy.vector.Basic
 
 
-@[main, fin]
+@[main, fin, subst 1]
 private lemma main
   [One α]
 -- given
@@ -14,4 +14,4 @@ private lemma main
 
 
 -- created on 2025-09-23
--- updated on 2026-07-12
+-- updated on 2026-07-19

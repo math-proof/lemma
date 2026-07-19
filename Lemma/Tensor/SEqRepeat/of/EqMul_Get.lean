@@ -1,7 +1,7 @@
 import Lemma.Nat.GtMul.of.Gt_0.Gt_1
 import Lemma.Nat.Mul
 import Lemma.Tensor.SEqRepeat.of.Eq0Get
-import Lemma.Tensor.SEqRepeat_1
+import Lemma.Tensor.SEqRepeat
 open Tensor Nat
 
 
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   if h_n : n = 1 then
     subst h_n
-    apply SEqRepeat_1
+    apply SEqRepeat
   else
     apply SEqRepeat.of.Eq0Get
     if h_n : n = 0 then

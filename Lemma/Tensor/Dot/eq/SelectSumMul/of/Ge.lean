@@ -7,7 +7,7 @@ import Lemma.Tensor.Dot.eq.SelectDot_Unsqueeze_1
 import Lemma.Tensor.ResizeUnsqueeze_Succ.as.UnsqueezeResize
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
-import Lemma.Tensor.SEqRepeat_1
+import Lemma.Tensor.SEqRepeat
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
@@ -45,7 +45,7 @@ private lemma main
   apply SEqMulS.of.SEq.SEq
   ·
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
-    rw [@Tensor.Repeat_1.eq.Cast]
+    rw [Repeat.eq.Cast]
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
     rw [EqMax.of.Ge h_k]
     apply SEqResize.of.Eq_Get (i := ⟨1, by grind⟩)

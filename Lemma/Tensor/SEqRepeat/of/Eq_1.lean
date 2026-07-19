@@ -1,4 +1,4 @@
-import Lemma.Tensor.SEqRepeat_1
+import Lemma.Tensor.SEqRepeat
 open Tensor
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   X.repeat d n ≃ X :=
 -- proof
-  h.symm.subst (motive := fun n => X.repeat d n ≃ X) (SEqRepeat_1 X d)
+  h.symm.subst (motive := fun n => X.repeat d n ≃ X) (SEqRepeat X d)
 
 
 -- created on 2026-07-12
