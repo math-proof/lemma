@@ -2,7 +2,7 @@ import Lemma.Vector.EqGet1_1
 open Vector
 
 
-@[main]
+@[main, subst 1]
 private lemma main
   [One α]
 -- given
@@ -14,3 +14,4 @@ private lemma main
 
 
 -- created on 2025-09-23
+-- updated on 2026-07-19
