@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqPermutePermute__Neg.of.In_Ioo_Length
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.EqRotate_Length
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
@@ -12,7 +12,7 @@ import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.ToNatSub_Neg.eq.Add1
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteHeadCast.as.PermuteHead.of.Eq
-import Lemma.Tensor.SEqPermute__0
+import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.SEqPermuteHeadPermuteTail.of.Ne_Nil
 open Bool List Nat Tensor
 
@@ -39,9 +39,9 @@ private lemma main
     apply SEqCast.of.SEq.Eq
     ·
       rw [h_permute]
-      simp [EqPermute__0]
+      simp [EqPermute]
     ·
-      apply SEqPermute__0
+      apply SEqPermute
   ·
     apply SEqCast.of.SEq.Eq
     ·

@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Int.OfNat.eq.Cast
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.Nat.Add
 import Lemma.Nat.ToNatSub_Neg.eq.Add_1
@@ -29,7 +29,7 @@ private lemma main
     simp
     apply SEqCast.of.SEq.Eq
     ·
-      rw [EqPermute__0]
+      rw [EqPermute]
     ·
       apply SEq.symm
       apply SEqPermuteTail_1

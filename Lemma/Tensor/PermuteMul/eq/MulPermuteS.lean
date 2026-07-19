@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.Nat.Gt_0
@@ -11,7 +11,7 @@ import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.PermuteHeadMul.eq.MulPermuteHeadS
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqPermute__0
+import Lemma.Tensor.SEqPermute
 open Bool List Nat Tensor
 
 
@@ -33,14 +33,14 @@ private lemma main
     split_ifs with h_d h_d h_d
     ·
       subst h_d
-      have h_all := SEqPermute__0 (i := ⟨0, h_i⟩) (s := s) (α := α)
+      have h_all := SEqPermute (i := ⟨0, h_i⟩) (s := s) (α := α)
       have h_A := h_all A
       have h_B := h_all B
       have h_A_mul_B := SEqMulS.of.SEq.SEq h_A h_B
       apply Eq.of.SEq
       symm
       apply h_A_mul_B.trans
-      have h_s := Eq_Permute__0 ⟨0, h_i⟩
+      have h_s := Eq_Permute ⟨0, h_i⟩
       rw [Cast_Mul.eq.MulCastS.of.Eq h_s]
       apply SEq.of.EqCast.Eq (h := h_s)
       rw [Cast_Mul.eq.MulCastS.of.Eq h_s]

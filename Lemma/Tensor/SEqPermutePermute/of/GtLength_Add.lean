@@ -1,4 +1,4 @@
-import Lemma.Tensor.SEqPermute__0
+import Lemma.Tensor.SEqPermute
 import Lemma.Nat.Add
 import Lemma.Nat.Le_Sub_1.of.Lt
 import Lemma.Nat.Lt.is.Le.Ne
@@ -23,8 +23,8 @@ private lemma main
   .
     subst h_d
     simp_all
-    apply (SEqPermute__0 (X.permute ⟨i, by grind⟩ 0) ⟨i, by simp; omega⟩).trans
-    apply SEqPermute__0
+    apply (SEqPermute (X.permute ⟨i, by grind⟩ 0) ⟨i, by simp; omega⟩).trans
+    apply SEqPermute
   .
     have : NeZero d := ⟨h_d⟩
     if h_i : i = 0 then

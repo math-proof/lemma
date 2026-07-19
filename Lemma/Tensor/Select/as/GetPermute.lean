@@ -1,7 +1,7 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.Int.OfNat.eq.Cast
 import Lemma.List.DropLast.eq.Take_SubLength_1
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.GetPermute__Neg.eq.Get
 import Lemma.List.LengthSlice_Mul.eq.ProdTake.of.GtGet.GtLength
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
@@ -108,7 +108,7 @@ private lemma main
               rw [ProdPermute.eq.Prod]
           ·
             simp [h_d0]
-            rw [EqPermute__0]
+            rw [EqPermute]
         ·
           omega
         ·

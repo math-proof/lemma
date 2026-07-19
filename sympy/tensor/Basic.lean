@@ -19,7 +19,7 @@ import Lemma.List.SwapAppend.eq.Append_Swap.of.LeLength.LeLength
 import Lemma.List.EqSwap_0'1
 import Lemma.List.ProdSwap.eq.Prod
 import Lemma.List.Rotate_Mod.eq.Rotate
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.LengthDrop.eq.SubLength
@@ -305,7 +305,7 @@ def Tensor.permute (X : Tensor α s) (i : Fin s.length) (d : ℤ) : Tensor α (s
   | .ofNat d =>
     match d with
     | 0 =>
-      cast (by simp [EqPermute__0]) X
+      cast (by simp [EqPermute]) X
     | d + 1 =>
       if h : i.val = 0 then
         have := Permute.eq.AppendRotateTake___Drop.of.EqVal_0 h d.succ

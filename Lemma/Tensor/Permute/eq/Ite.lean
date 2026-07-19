@@ -1,5 +1,5 @@
 import sympy.tensor.tensor
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
 import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
@@ -27,7 +27,7 @@ private lemma main
 -- imply
   X.permute i d =
     if h_k : d = 0 then
-      cast (by simp_all [EqPermute__0]) X
+      cast (by simp_all [EqPermute]) X
     else if h_k : d > 0 then
       if h_d : i.val = 0 then
         cast (by rw [Permute.eq.AppendRotateTake___Drop.of.Gt_0.EqVal_0 h_d h_k]) (X.permuteHead (d + 1).toNat)

@@ -1,4 +1,4 @@
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
 open List
 
@@ -15,7 +15,7 @@ private lemma main
   congr 1
   ·
     simp
-    rw [EqPermute__0]
+    rw [EqPermute]
   ·
     congr 1
     ·

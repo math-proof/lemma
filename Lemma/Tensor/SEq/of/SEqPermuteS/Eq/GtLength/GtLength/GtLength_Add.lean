@@ -4,7 +4,7 @@ import Lemma.Tensor.Length.of.SEq
 import Lemma.Tensor.SEqPermutePermute.of.GtLength_Add
 import Lemma.Tensor.SEqPermuteS.of.Add.ge.SubLength_1
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
-import Lemma.Tensor.SEqPermute__0
+import Lemma.Tensor.SEqPermute
 open Tensor Int
 
 

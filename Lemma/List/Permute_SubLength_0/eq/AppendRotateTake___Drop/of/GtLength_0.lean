@@ -2,7 +2,7 @@ import Lemma.List.Cons.eq.Append
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqAppendS.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.Drop.eq.Nil
 import Lemma.Int.NegSucc.eq.NegAdd_1
@@ -38,7 +38,7 @@ private lemma main
   match d with
   | 0 =>
     simp
-    rw [EqPermute__0]
+    rw [EqPermute]
   | d + 1 =>
     unfold List.permute
     simp

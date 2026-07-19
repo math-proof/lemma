@@ -28,7 +28,7 @@ import Lemma.Tensor.LengthPermute.eq.Get_0.of.GtVal_0
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Tensor.SEqPermute__0
+import Lemma.Tensor.SEqPermute
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
@@ -53,11 +53,11 @@ private lemma main
   if h_d : d = 0 then
     subst h_d
     simp
-    have := SEqPermute__0 (X.get ⟨k, by rwa [Length.eq.Get_0.of.GtLength_0]⟩) ⟨i, by grind⟩
+    have := SEqPermute (X.get ⟨k, by rwa [Length.eq.Get_0.of.GtLength_0]⟩) ⟨i, by grind⟩
     symm
     apply this.trans
     apply SEqGetS.of.SEq.GtLength
-    apply SEq_Permute__0
+    apply SEq_Permute
   else if h_i0 : i = 0 then
     have : NeZero d := ⟨h_d⟩
     subst h_i0

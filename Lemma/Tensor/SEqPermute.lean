@@ -1,6 +1,6 @@
 import stdlib.SEq
 import sympy.tensor.tensor
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 open List
 
 
@@ -14,7 +14,7 @@ private lemma main
 -- proof
   constructor
   ·
-    rw [EqPermute__0]
+    rw [EqPermute]
   ·
     unfold Tensor.permute
     split_ifs <;>

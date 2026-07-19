@@ -1,6 +1,6 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Fin.Eq_0
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.EqSwap_0'1
 import Lemma.List.LengthSlice.eq.Min
 import Lemma.List.Permute__Neg1.eq.Swap.of.GtVal_0
@@ -11,7 +11,7 @@ import Lemma.Nat.EqMod.of.Lt
 import Lemma.Tensor.DataSelect.as.FlattenGetSliceSplitAtData
 import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
 import Lemma.Tensor.GetPermuteTail.as.Select.of.GtGet.GtLength_0
-import Lemma.Tensor.SEqPermute__0
+import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.Permute__Neg.as.PermuteTail.of.Val.eq.SubLength_1
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -40,8 +40,8 @@ private lemma main
     unfold Tensor.T
     unfold Tensor.transpose
     simp
-    rw [Permute__0.eq.Cast]
-    have h_permute := EqPermute__0 (0 : Fin 2) (s := [n, 1])
+    rw [Permute.eq.Cast]
+    have h_permute := EqPermute (0 : Fin 2) (s := [n, 1])
     have := GetData.eq.GetDataGet.of.GtProd.GtLength_0.fin (i := t.val) (α := α) (s := (([n, 1].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)))
     simp at this
     erw [this]
@@ -105,15 +105,15 @@ private lemma row
     unfold Tensor.T
     unfold Tensor.transpose
     simp
-    rw [Permute__0.eq.Cast]
-    have h_permute := EqPermute__0 (0 : Fin 2) (s := [1, n])
+    rw [Permute.eq.Cast]
+    have h_permute := EqPermute (0 : Fin 2) (s := [1, n])
     have := GetData.eq.GetDataGet.of.GtProd.GtLength_0.fin (i := t.val) (α := α) (s := (([1, n].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)))
     simp at this
     erw [this]
     ·
       have h_tail_permute := TailPermute__Neg.eq.EraseIdx (d := ⟨1, by grind⟩) (s := ([1, n].permute (0 : Fin 2) 0))
       simp at h_tail_permute
-      have h_t : ↑t % (([1, n].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)).tail.prod = 0 := by
+      have h_t : t % (([1, n].permute (0 : Fin 2) 0).permute (1 : Fin 2) (-1)).tail.prod = 0 := by
         erw [h_tail_permute]
         simp [h_permute]
         omega

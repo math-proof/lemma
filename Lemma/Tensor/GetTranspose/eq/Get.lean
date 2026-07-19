@@ -2,7 +2,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.PermuteCast.as.Permute.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.Tensor.SEqPermute__0
+import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Vector.Eq.of.Eq_Cast.Eq
 import Lemma.Tensor.EqGetS.of.Data.as.FlattenTransposeSplitAt_1
@@ -23,25 +23,25 @@ private lemma main
   unfold Tensor.T
   simp
   unfold Tensor.transpose
-  simp [Permute__0.eq.Cast]
+  simp [Permute.eq.Cast]
   simp [GetElem.getElem]
-  have := Tensor.PermuteCast.eq.Cast_Permute.of.Eq (s' := [m, n].permute 0 0) (by rw [List.EqPermute__0]) X ⟨1, by grind⟩ (-1)
+  have := Tensor.PermuteCast.eq.Cast_Permute.of.Eq (s' := [m, n].permute 0 0) (by rw [List.EqPermute]) X ⟨1, by grind⟩ (-1)
   erw [this]
-  have h_s : [m, n] = [m, n].permute 0 0 := by rw [List.EqPermute__0]
+  have h_s : [m, n] = [m, n].permute 0 0 := by rw [List.EqPermute]
   have h_s : [m, n].permute ⟨1, by grind⟩ (-1) = ([m, n].permute 0 0).permute ⟨1, by grind⟩ (-1) := by
     grind
-  let X' := (cast (congrArg (Tensor α) h_s) (X.permute ⟨1, by grind⟩ (-1)))
+  let X' := cast (congrArg (Tensor α) h_s) (X.permute ⟨1, by grind⟩ (-1))
   have h_swap : ([m, n].permute 0 0).permute ⟨1, by grind⟩ (-1) = [m, n].swap 0 1 := by
     simp [List.Swap.eq.PermutePermute.of.Lt.GtLength]
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
-    (s' := ([m, n].swap 0 1))
+    (s' := [m, n].swap 0 1)
     (by simp [List.LengthSwap.eq.Length])
     h_swap
     X'
     ⟨j, by simp [List.EqSwap_0'1]⟩
   simp [X'] at this
   erw [this]
-  let X' := ((cast (congrArg (Tensor α) h_s) (X.permute 1 (-1))).get j)
+  let X' := (cast (congrArg (Tensor α) h_s) (X.permute 1 (-1))).get j
   have := GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin
     (s' := ([m, n].swap 0 1).tail)
     (by simp [EqSwap_0'1])

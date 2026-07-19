@@ -1,4 +1,4 @@
-import Lemma.Tensor.SEqPermute__0
+import Lemma.Tensor.SEqPermute
 import sympy.tensor.tensor
 open Tensor
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   X.permute i n ≃ X :=
 -- proof
-  h.symm.subst (motive := fun n => X.permute i n ≃ X) (SEqPermute__0 X i)
+  h.symm.subst (motive := fun n => X.permute i n ≃ X) (SEqPermute X i)
 
 
 -- created on 2026-07-11

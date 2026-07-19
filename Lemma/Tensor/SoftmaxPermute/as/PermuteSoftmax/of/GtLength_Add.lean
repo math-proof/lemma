@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCast.of.Eq
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
@@ -10,7 +10,7 @@ import Lemma.Tensor.GetPermute.as.PermuteGet.of.GtGet_0.LtAdd_1Length
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
-import Lemma.Tensor.SEqPermute__0
+import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.SEqSoftmaxS.of.SEq
 import Lemma.Tensor.SoftmaxCast.as.Softmax.of.Eq
 import Lemma.Tensor.SoftmaxPermuteHead.as.PermuteHeadSoftmax.of.GtLength
@@ -40,12 +40,12 @@ private lemma main
     ·
       subst h_d0
       simp
-      have := SEqPermute__0 (X.softmax 0) ⟨0, h⟩
+      have := SEqPermute (X.softmax 0) ⟨0, h⟩
       symm
       apply this.trans
       apply SEqSoftmaxS.of.SEq
       apply SEq_Cast.of.Eq
-      rw [EqPermute__0]
+      rw [EqPermute]
     ·
       rw [SoftmaxCast.eq.Cast_Softmax.of.Eq]
       ·

@@ -1,4 +1,4 @@
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.Nat.LeAdd_1
 import Lemma.Tensor.SumCast.as.Sum.of.Eq
 import Lemma.Tensor.SumPermute.as.PermuteSum.of.Ge.EqAdd_1Length
@@ -21,7 +21,7 @@ private lemma main
     subst h_d
     simp
     apply SumCast.as.Sum.of.Eq
-    rw [EqPermute__0]
+    rw [EqPermute]
   else
     have : NeZero d := ⟨h_d⟩
     if h_i : i.val + 1 = s.length then

@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
@@ -74,7 +74,7 @@ private lemma main
           apply SEq_Cast.of.SEq.Eq
           ·
             simp [h_s]
-            rw [EqPermute__0]
+            rw [EqPermute]
           ·
             have := SEqPermuteHeadS.of.LeLength (s := s) (n := d + 1) (by omega) X
             rw [h_s] at this
@@ -92,7 +92,7 @@ private lemma main
           apply SEq_Cast.of.SEq.Eq
           ·
             simp [h_s]
-            rw [EqPermute__0]
+            rw [EqPermute]
           ·
             have := SEqPermuteHeadS.of.LeLength (s := s) (n := d + 1) (by omega) X
             rw [h_s] at this
@@ -127,7 +127,7 @@ private lemma main
               apply SEq_Cast.of.SEq.Eq
               ·
                 simp [h_s]
-                rw [EqPermute__0]
+                rw [EqPermute]
               ·
                 apply SEq.of.All_EqGetS.Eq
                 ·
@@ -186,7 +186,7 @@ private lemma main
                   rw [ProdPermute.eq.Prod]
             ·
               simp [h_s]
-              rw [EqPermute__0]
+              rw [EqPermute]
           ·
             simp
             apply SEq_Cast.of.SEq.Eq

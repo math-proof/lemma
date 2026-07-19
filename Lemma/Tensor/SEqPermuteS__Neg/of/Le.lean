@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.EqPermuteS__Neg.of.Le
-import Lemma.List.EqPermute__0
+import Lemma.List.EqPermute
 import Lemma.List.Permute.eq.Ite
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
@@ -70,7 +70,7 @@ private lemma main
         apply SEq_Cast.of.SEq.Eq
         ·
           simp [h_i0]
-          rw [EqPermute__0]
+          rw [EqPermute]
         ·
           have := SEqPermuteTailS.of.LeLength (n := 1 + d) (by omega) X
           apply this.trans
@@ -127,7 +127,7 @@ private lemma main
               unfold Tensor.permuteTail
               simp
               have h_permute : s = (s.permute i (-i)) := by
-                simp [h_i0, EqPermute__0]
+                simp [h_i0, EqPermute]
               simp [DataCast.eq.Cast_Data.of.Eq h_permute]
               simp [h_i0, ProdTake_1.eq.Get_0.of.GtLength_0 (Gt_0 i), ← Prod.eq.Mul_ProdTail.of.GtLength_0] at h_t
               simp [GetElem.getElem]
