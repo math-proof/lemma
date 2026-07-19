@@ -751,7 +751,7 @@ initialize registerBuiltinAttribute {
     Lean.logInfo s!"decl.proof = \n{decl.proof.format}"
 }
 
-def Expr.substOne' (type value : Lean.Expr) (lit : Nat := 1) : MetaM (Lean.Expr × Lean.Expr) := do
+def Expr.substNat' (type value : Lean.Expr) (lit : Nat := 1) : MetaM (Lean.Expr × Lean.Expr) := do
   forallTelescope type fun args body => do
     let some (_, _, oneExpr) := body.findOfNatLit lit |
       throwError "subst': no OfNat literal {lit} found in the theorem type"
@@ -789,7 +789,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let lit := stx.getNum
-    let ⟨type, value⟩ ← MetaM.run' <| Expr.substOne' decl.type (.const declName (levelParams.map .param)) lit
+    let ⟨type, value⟩ ← MetaM.run' <| Expr.substNat' decl.type (.const declName (levelParams.map .param)) lit
     let name := (((← getEnv).module.str "of").str s!"Eq_{lit}").lemmaName declName
     println! s!"subst' name = {name}"
     println! s!"subst' type = {type.format}"

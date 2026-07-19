@@ -644,7 +644,7 @@ partial def Lean.Expr.replaceOfNatLitAsHMulLefts (e : Expr) (lit : Nat) (replace
     | .proj s i expr => .proj s i (replaceOfNatLitAsHMulLefts expr lit replacement)
     | e => e
 
-partial def Lean.Expr.replaceOfNatLitInConstArg (e : Expr) (lit : Nat) (constName : Name) (replacement : Expr) (argIdxFromEnd : Nat := 1) : Expr :=
+def Lean.Expr.replaceOfNatLitInConstArg (e : Expr) (lit : Nat) (constName : Name) (replacement : Expr) (argIdxFromEnd : Nat := 1) : Expr :=
   let rec go (e : Expr) : Expr :=
     if e.getAppFn.constName? == some constName then
       let args := e.getAppArgs

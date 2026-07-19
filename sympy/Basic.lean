@@ -908,7 +908,7 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Expr.substOne (type value : Expr) (lit : Nat := 1) : MetaM (Expr × Expr) := do
+def Expr.substNat (type value : Expr) (lit : Nat := 1) : MetaM (Expr × Expr) := do
   forallTelescope type fun args body => do
     let some (_, _, oneExpr) := body.findOfNatLit lit |
       throwError "subst: no OfNat literal {lit} found in the theorem type"
@@ -963,7 +963,7 @@ initialize registerBuiltinAttribute {
     let decl ← getConstInfo declName
     let levelParams := decl.levelParams
     let lit := stx.getNum
-    let ⟨type, value⟩ ← MetaM.run' <| Expr.substOne decl.type (.const declName (levelParams.map .param)) lit
+    let ⟨type, value⟩ ← MetaM.run' <| Expr.substNat decl.type (.const declName (levelParams.map .param)) lit
     let name := (((← getEnv).module.str "of").str s!"Eq_{lit}").lemmaName declName
     addAndCompile <| .thmDecl {
       name := name
