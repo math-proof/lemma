@@ -11,7 +11,7 @@ import sympy.tensor.tensor
 open Bool Fin List Tensor Vector
 
 
-@[main]
+@[main, subst 0]
 private lemma main
   [Zero α]
 -- given
@@ -38,3 +38,4 @@ private lemma main
 
 
 -- created on 2026-07-12
+-- updated on 2026-07-19
