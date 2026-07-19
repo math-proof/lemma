@@ -4,7 +4,8 @@ import sympy.Basic
 @[main]
 private lemma main
   [MulOneClass M]
-  {a : M} :
+-- given
+  (a : M) :
 -- imply
   1 * a = a := by
 -- proof
@@ -12,3 +13,4 @@ private lemma main
 
 
 -- created on 2024-07-01
+-- updated on 2026-07-19

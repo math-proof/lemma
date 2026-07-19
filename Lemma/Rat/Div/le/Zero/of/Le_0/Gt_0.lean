@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq.ou.Lt.of.Le
+import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Nat.Le.of.Lt
 import Lemma.Rat.Gt0Div.of.Lt_0.Gt_0
 open Nat Rat
@@ -14,12 +14,12 @@ private lemma main
 -- imply
   x / y ≤ 0 := by
 -- proof
-  obtain hx | hx := Eq.ou.Lt.of.Le h₀
-  ·
-    simp_all
+  obtain hx | hx := Lt.ou.Eq.of.Le h₀
   ·
     apply Le.of.Lt
     apply Gt0Div.of.Lt_0.Gt_0 hx h₁
+  ·
+    simp_all
 
 
 -- created on 2025-05-05

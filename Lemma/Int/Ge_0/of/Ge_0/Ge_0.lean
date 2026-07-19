@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq.ou.Gt.of.Ge
+import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Int.Ge_0.of.Gt_0.Ge_0
 open Nat Int
 
@@ -15,9 +15,9 @@ private lemma main
 -- imply
   x * y ≥ 0 := by
 -- proof
-  obtain hx | hx := Eq.ou.Gt.of.Ge h₀
+  obtain hx | hx := Eq.ou.Lt.of.Ge h₀
   ·
-    simp_all
+    aesop
   ·
     apply Ge_0.of.Gt_0.Ge_0 hx h₁
 

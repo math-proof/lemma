@@ -83,10 +83,10 @@ private lemma main
         have := GetToVector.eq.Get.fin Y ⟨t, by grind⟩
         simp at this
         rw [this]
-        have := GetResize_0.eq.Cast_Get.of.GtLength_0.fin (by grind) X ⟨t, by grind⟩
+        have := GetResize_0.eq.Cast_Get.of.GtLength_0.fin (by grind) X ⟨t, by grind⟩ s₀
         simp at this
         rw [this]
-        have := GetResize_0.eq.Cast_Get.of.GtLength_0.fin (by grind) Y ⟨t, by grind⟩
+        have := GetResize_0.eq.Cast_Get.of.GtLength_0.fin (by grind) Y ⟨t, by grind⟩ s₀
         simp at this
         rw [this]
       .

@@ -1,6 +1,6 @@
 import Lemma.Int.Gt_0.of.Lt_0.Lt_0
 import Lemma.Nat.Ge.of.Gt
-import Lemma.Nat.Eq.ou.Lt.of.Le
+import Lemma.Nat.Le.is.Lt.ou.Eq
 open Nat Int
 
 
@@ -19,10 +19,12 @@ private lemma main
 -- imply
   x * y ≥ 0 := by
 -- proof
-  obtain hx | hx := Eq.ou.Lt.of.Le h₁
-  simp_all
-  have := Gt_0.of.Lt_0.Lt_0 h₀ hx
-  exact Ge.of.Gt this
+  obtain hx | hx := Lt.ou.Eq.of.Le h₁
+  .
+    apply Ge.of.Gt
+    apply Gt_0.of.Lt_0.Lt_0 h₀ hx
+  .
+    simp_all
 
 
 -- created on 2025-03-23

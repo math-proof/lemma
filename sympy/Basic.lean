@@ -97,7 +97,7 @@ def List.comm (list : List String) (parity : List Bool) : List String :=
       if let first :: rest := list then
         if let op :: second :: rest := rest then
           match op with
-          | "eq" | "as" | "ne" | "le" | "ge" | "lt" | "gt" =>
+          | "eq" | "as" | "ne" | "le" | "ge" | "lt" | "gt" | "ou" =>
             [second, op, first] ++ rest
           | _ =>
             panic! s!"Expected the operator 'eq', 'as or 'ne', got: {op}"

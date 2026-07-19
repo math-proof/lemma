@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq.ou.Gt.of.Ge
+import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Rat.Div.le.Zero.of.Ge_0.Lt_0
 open Nat Rat
 
@@ -13,9 +13,9 @@ private lemma main
 -- imply
   x / y ≤ 0 := by
 -- proof
-  obtain hy | hy := Eq.ou.Gt.of.Ge h₁
+  obtain hy | hy := Eq.ou.Lt.of.Ge h₁
   ·
-    simp [← hy]
+    aesop
   ·
     apply Div.le.Zero.of.Ge_0.Lt_0 h₀ hy
 

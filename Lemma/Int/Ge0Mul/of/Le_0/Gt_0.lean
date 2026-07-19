@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq.ou.Lt.of.Le
+import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Nat.Le.of.Lt
 import Lemma.Int.Gt0Mul.of.Lt_0.Gt_0
 open Nat Int
@@ -16,12 +16,12 @@ private lemma main
 -- imply
   x * y ≤ 0 := by
 -- proof
-  obtain hx | hx := Eq.ou.Lt.of.Le h₀
-  ·
-    simp_all
+  obtain hx | hx := Lt.ou.Eq.of.Le h₀
   ·
     apply Le.of.Lt
     apply Gt0Mul.of.Lt_0.Gt_0 hx h₁
+  ·
+    simp_all
 
 
 -- created on 2025-03-23

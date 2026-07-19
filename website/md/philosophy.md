@@ -196,7 +196,7 @@
         - [信念错位指数](http://www.lemma.cn/py/?module=Probability.KL.ge.Zero)：\(\mathrm{KL}_t = \mathbb{KL}\left(\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\middle\|\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)\right)=\int \mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right)\log \frac {\mathbb P_\hat\pi\left({\color{red}a}_t \middle| {\color{red}{\hat{s}}}_t\right) }{\mathbb P_{\pi}\left({\color{red}a}_t \middle| {\color{red}{s}}_t\right)} d a_t \gt 0\)，历史数据\({\color{red}o}_{:t+1}\)有限、观测不完全、信念污染，故等号不成立。所谓从心所欲不逾矩，是**知行合一**：\(\mathbb{P}_{\hat{\pi}} \to \mathbb{P}_{\pi}\)，KL散度 → 0
         - 认知清醒：\(C_t = e ^ {-\mathrm{KL}_t} \in (0, 1)\)，生命智能体看穿信念脑补值与上帝理论值之间的偏差，其概率学定义：失真信念策略相对上帝最优策略的信息对齐度，负指数函数的依据：大偏差理论[Sanov定理](https://arxiv.org/abs/2112.04280)。所谓青原惟信禅宗三境是认知清醒的辩证演化
 
-        |   禅宗境界   | 认知清醒   |  哲学体系  |   辩证过程   |
+        |   修行次第   | 认知清醒   |  哲学体系  |   辩证过程   |
         |  :------:   | :------:  |  :------:  |   :-----:   |
         |  从看山是山  | Cₜ∈(0,0.2) |朴素唯物主义|正题：肯定现实 |
         | 到看山不是山 |Cₜ∈[0.2,0.8)|怀疑解构主义|反题：否定现实 |

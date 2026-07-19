@@ -1,4 +1,4 @@
-import Lemma.Nat.Eq.ou.Lt.of.Le
+import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Int.Le_0.of.Ge_0.Lt_0
 open Int Nat
 
@@ -15,9 +15,9 @@ private lemma main
 -- imply
   x * y ≤ 0 := by
 -- proof
-  obtain hy | hy' := Eq.ou.Lt.of.Le h₁
+  obtain hy | hy' := Eq.ou.Lt.of.Ge h₁
   ·
-    simp_all
+    aesop
   ·
     apply Le_0.of.Ge_0.Lt_0 h₀ hy'
 
