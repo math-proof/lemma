@@ -908,24 +908,18 @@ initialize registerBuiltinAttribute {
     }
 }
 
-def Lean.Expr.replaceExpr (e replacement target : Expr) : Expr :=
-  if e == target then replacement else
-  match e with
-  | .app fn arg => .app (fn.replaceExpr replacement target) (arg.replaceExpr replacement target)
-  | .lam n t b i => .lam n (t.replaceExpr replacement target) (b.replaceExpr replacement target) i
-  | .forallE n t b i => .forallE n (t.replaceExpr replacement target) (b.replaceExpr replacement target) i
-  | .letE n t v b nd => .letE n (t.replaceExpr replacement target) (v.replaceExpr replacement target) (b.replaceExpr replacement target) nd
-  | .mdata d e => .mdata d (e.replaceExpr replacement target)
-  | .proj s i e => .proj s i (e.replaceExpr replacement target)
-  | _ => e
-
 def Expr.substOne (type value : Expr) (lit : Nat := 1) : MetaM (Expr × Expr) := do
   forallTelescope type fun args body => do
     let some (_, _, oneExpr) := body.findOfNatLit lit |
       throwError "subst: no OfNat literal {lit} found in the theorem type"
     let oneType ← inferType oneExpr
     withLocalDecl `n BinderInfo.implicit oneType fun n => do
-      let body' := body.replaceExpr n oneExpr
+      let body' :=
+        if lit == 1 && (body.findOfNatLitInConstArg lit `List.Vector.repeat).isSome then
+          body.replaceOfNatLitInConstArg lit `List.Vector.repeat n
+            |>.replaceOfNatLitAsHMulLefts lit n
+        else
+          body.replaceExpr n oneExpr |>.1
       let ⟨binders, _⟩ := type.decompose_forallE
       let insertIdx :=
         binders.map (·.2.2) |>.reverse |>.findIdx? (· == .default) |>.getD args.size

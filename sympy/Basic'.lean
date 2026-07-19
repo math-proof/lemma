@@ -757,7 +757,12 @@ def Expr.substOne' (type value : Lean.Expr) (lit : Nat := 1) : MetaM (Lean.Expr 
       throwError "subst': no OfNat literal {lit} found in the theorem type"
     let oneType ← inferType oneExpr
     withLocalDecl `n BinderInfo.implicit oneType fun n => do
-      let body' := body.replaceExpr n oneExpr
+      let body' :=
+        if lit == 1 && (body.findOfNatLitInConstArg lit `List.Vector.repeat).isSome then
+          body.replaceOfNatLitInConstArg lit `List.Vector.repeat n
+            |>.replaceOfNatLitAsHMulLefts lit n
+        else
+          body.replaceExpr n oneExpr |>.1
       let ⟨binders, _⟩ := type.decompose_forallE
       let insertIdx :=
         binders.map (·.2.2) |>.reverse |>.findIdx? (· == .default) |>.getD args.size

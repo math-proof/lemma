@@ -1,15 +1,14 @@
 import Lemma.Nat.EqMul0_0
 import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetMul.eq.MulGet
-import sympy.vector.vector
 open Vector Nat
 
 
-@[main]
+@[main, subst 0]
 private lemma main
   [MulZeroClass α]
+  {n : ℕ}
 -- given
-  (n : ℕ)
   (a : α) :
 -- imply
   (0 : List.Vector α n) * a = 0 := by

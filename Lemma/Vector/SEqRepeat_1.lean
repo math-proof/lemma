@@ -9,7 +9,7 @@ open Fin Vector
 @[main, cast, subst 1]
 private lemma main
 -- given
-  (x : List.Vector α n) :
+  (x : List.Vector α m) :
 -- imply
   x.repeat 1 ≃ x := by
 -- proof

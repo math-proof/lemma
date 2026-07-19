@@ -597,30 +597,165 @@ def Lean.Expr.ofNatLit? (e : Expr) (lit : Nat := 1) : Option (Expr × Expr) :=
   | _ =>
     none
 
-partial def Lean.Expr.findOfNatLit (e : Expr) (lit : Nat := 1) : Option (Expr × Expr × Expr) :=
-  match e.ofNatLit? lit with
-  | some (α, inst) =>
-    some (α, inst, e)
+def Lean.Expr.asHMul? (e : Expr) : Option (Expr × Expr) :=
+  let fn := e.getAppFn
+  if fn.constName? != some `HMul.hMul && fn.constName? != some `Nat.mul then
+    none
+  else
+    let args := e.getAppArgs
+    if args.size < 2 then
+      none
+    else
+      some (args[args.size - 2]!, args[args.size - 1]!)
+
+def Lean.Expr.isOfNatLitUsedAsHMulLeft (root target : Expr) (lit : Nat) : Bool :=
+  if target.ofNatLit? lit |>.isNone then
+    false
+  else
+    match root.asHMul? with
+    | some (left, _) =>
+      left == target
+    | none =>
+      match root with
+      | .app fn arg =>
+        isOfNatLitUsedAsHMulLeft fn target lit || isOfNatLitUsedAsHMulLeft arg target lit
+      | _ =>
+        false
+
+partial def Lean.Expr.replaceOfNatLitAsHMulLefts (e : Expr) (lit : Nat) (replacement : Expr) : Expr :=
+  match e.asHMul? with
+  | some (left, right) =>
+    let left' :=
+      if (left.ofNatLit? lit).isSome then replacement else replaceOfNatLitAsHMulLefts left lit replacement
+    let right' := replaceOfNatLitAsHMulLefts right lit replacement
+    let fn := e.getAppFn
+    let args := e.getAppArgs
+    if args.size >= 2 then
+      mkAppN fn (args.take (args.size - 2) |>.push left' |>.push right')
+    else
+      e
   | none =>
     match e with
-    | .app fn arg =>
-      (findOfNatLit fn lit).or (findOfNatLit arg lit)
-    | .forallE _ binderType body _ =>
-      (findOfNatLit binderType lit).or (findOfNatLit body lit)
-    | .lam _ binderType body _ =>
-      (findOfNatLit binderType lit).or (findOfNatLit body lit)
-    | .letE _ type value body _ =>
-      (findOfNatLit type lit).or (findOfNatLit value lit) |>.or (findOfNatLit body lit)
-    | .mdata _ expr
-    | .proj _ _ expr =>
-      findOfNatLit expr lit
+    | .app fn arg => .app (replaceOfNatLitAsHMulLefts fn lit replacement) (replaceOfNatLitAsHMulLefts arg lit replacement)
+    | .forallE n t b i => .forallE n (replaceOfNatLitAsHMulLefts t lit replacement) (replaceOfNatLitAsHMulLefts b lit replacement) i
+    | .lam n t b i => .lam n (replaceOfNatLitAsHMulLefts t lit replacement) (replaceOfNatLitAsHMulLefts b lit replacement) i
+    | .letE n t v b nd => .letE n (replaceOfNatLitAsHMulLefts t lit replacement) (replaceOfNatLitAsHMulLefts v lit replacement) (replaceOfNatLitAsHMulLefts b lit replacement) nd
+    | .mdata d expr => .mdata d (replaceOfNatLitAsHMulLefts expr lit replacement)
+    | .proj s i expr => .proj s i (replaceOfNatLitAsHMulLefts expr lit replacement)
+    | e => e
+
+partial def Lean.Expr.replaceOfNatLitInConstArg (e : Expr) (lit : Nat) (constName : Name) (replacement : Expr) (argIdxFromEnd : Nat := 1) : Expr :=
+  let rec go (e : Expr) : Expr :=
+    if e.getAppFn.constName? == some constName then
+      let args := e.getAppArgs
+      if argIdxFromEnd ≤ args.size then
+        let idx := args.size - argIdxFromEnd
+        if (args[idx]!.ofNatLit? lit).isSome then
+          mkAppN e.getAppFn (args.take idx |>.push replacement |>.append (args.drop (idx + 1)))
+        else
+          match e with
+          | .app fn arg => .app (go fn) (go arg)
+          | .forallE n t b i => .forallE n (go t) (go b) i
+          | .lam n t b i => .lam n (go t) (go b) i
+          | .letE n t v b nd => .letE n (go t) (go v) (go b) nd
+          | .mdata d expr => .mdata d (go expr)
+          | .proj s i expr => .proj s i (go expr)
+          | e => e
+      else
+        match e with
+        | .app fn arg => .app (go fn) (go arg)
+        | .forallE n t b i => .forallE n (go t) (go b) i
+        | .lam n t b i => .lam n (go t) (go b) i
+        | .letE n t v b nd => .letE n (go t) (go v) (go b) nd
+        | .mdata d expr => .mdata d (go expr)
+        | .proj s i expr => .proj s i (go expr)
+        | e => e
+    else
+      match e with
+      | .app fn arg => .app (go fn) (go arg)
+      | .forallE n t b i => .forallE n (go t) (go b) i
+      | .lam n t b i => .lam n (go t) (go b) i
+      | .letE n t v b nd => .letE n (go t) (go v) (go b) nd
+      | .mdata d expr => .mdata d (go expr)
+      | .proj s i expr => .proj s i (go expr)
+      | e => e
+  go e
+
+def Lean.Expr.findOfNatLitInConstArg (e : Expr) (lit : Nat) (constName : Name) (argIdxFromEnd : Nat := 1) : Option (Expr × Expr × Expr) :=
+  let rec go (e : Expr) : Option (Expr × Expr × Expr) :=
+    if e.getAppFn.constName? == some constName then
+      let args := e.getAppArgs
+      if argIdxFromEnd ≤ args.size then
+        let arg := args[args.size - argIdxFromEnd]!
+        match arg.ofNatLit? lit with
+        | some (α, inst) => some (α, inst, arg)
+        | none => none
+      else
+        none
+    else
+      match e with
+      | .app fn arg => go fn <|> go arg
+      | .forallE _ binderType body _ => go binderType <|> go body
+      | .lam _ binderType body _ => go binderType <|> go body
+      | .letE _ type value body _ => go type <|> go value <|> go body
+      | .mdata _ expr
+      | .proj _ _ expr =>
+        go expr
+      | _ =>
+        none
+  go e
+
+def Lean.Expr.isOfNatLitRepeatCount (root target : Expr) (lit : Nat) : Bool :=
+  if target.ofNatLit? lit |>.isNone then
+    false
+  else
+    match root.getAppFn.constName? with
+    | some `List.Vector.repeat =>
+      let args := root.getAppArgs
+      args.size >= 2 && (args[args.size - 1]!.ofNatLit? lit).isSome
     | _ =>
-      none
+      match root with
+      | .app fn arg =>
+        isOfNatLitRepeatCount fn target lit || isOfNatLitRepeatCount arg target lit
+      | _ =>
+        false
+
+def Lean.Expr.collectOfNatLit (e : Expr) (lit : Nat := 1) : List (Expr × Expr × Expr) :=
+  let here := match e.ofNatLit? lit with | some (α, inst) => [(α, inst, e)] | none => []
+  match e with
+  | .app fn arg =>
+    collectOfNatLit fn lit ++ collectOfNatLit arg lit ++ here
+  | .forallE _ binderType body _ =>
+    collectOfNatLit binderType lit ++ collectOfNatLit body lit ++ here
+  | .lam _ binderType body _ =>
+    collectOfNatLit binderType lit ++ collectOfNatLit body lit ++ here
+  | .letE _ type value body _ =>
+    collectOfNatLit type lit ++ collectOfNatLit value lit ++ collectOfNatLit body lit ++ here
+  | .mdata _ expr
+  | .proj _ _ expr =>
+    collectOfNatLit expr lit ++ here
+  | _ =>
+    here
+
+def Lean.Expr.findOfNatLit (e : Expr) (lit : Nat := 1) : Option (Expr × Expr × Expr) :=
+  let found := e.collectOfNatLit lit
+  if lit == 1 then
+    match e.findOfNatLitInConstArg lit `List.Vector.repeat with
+    | some result => some result
+    | none =>
+      match found.find? fun ⟨_, _, target⟩ => e.isOfNatLitRepeatCount target lit with
+      | some result => some result
+      | none =>
+        match found.find? fun ⟨_, _, target⟩ => !e.isOfNatLitUsedAsHMulLeft target lit with
+        | some result => some result
+        | none => found[0]?
+  else
+    found[0]?
 
 def Lean.Expr.mkOfNatLit (α inst : Expr) (lit : Nat := 1) : Expr :=
   (.app (.app (.app (.const `OfNat.ofNat []) α) (.lit (.natVal lit))) inst)
 
-partial def Lean.Expr.mapOfNatLit (e : Expr) (lit : Nat) (nIdx : Nat) : Expr × Nat :=
+def Lean.Expr.mapOfNatLit (e : Expr) (lit : Nat) (nIdx : Nat) : Expr × Nat :=
   match e.ofNatLit? lit with
   | some _ =>
     (.bvar nIdx, 1)
@@ -657,6 +792,39 @@ def Lean.Expr.oneBinderInsertPos (oneType : Expr) : Nat :=
   | .const `Nat _ => 0
   | .bvar k => k
   | _ => 0
+
+def Lean.Expr.replaceExpr (e replacement target : Expr) : Expr × Bool :=
+  if e == target then (replacement, true) else
+  match e with
+  | .app fn arg =>
+    let (fn', found) := fn.replaceExpr replacement target
+    if found then (.app fn' arg, true) else
+      let (arg', found) := arg.replaceExpr replacement target
+      (.app fn arg', found)
+  | .lam n t b i =>
+    let (t', found) := t.replaceExpr replacement target
+    if found then (.lam n t' b i, true) else
+      let (b', found) := b.replaceExpr replacement target
+      (.lam n t b' i, found)
+  | .forallE n t b i =>
+    let (t', found) := t.replaceExpr replacement target
+    if found then (.forallE n t' b i, true) else
+      let (b', found) := b.replaceExpr replacement target
+      (.forallE n t b' i, found)
+  | .letE n t v b nd =>
+    let (t', found) := t.replaceExpr replacement target
+    if found then (.letE n t' v b nd, true) else
+      let (v', found) := v.replaceExpr replacement target
+      if found then (.letE n t v' b nd, true) else
+        let (b', found) := b.replaceExpr replacement target
+        (.letE n t v b' nd, found)
+  | .mdata d e =>
+    let (e', found) := e.replaceExpr replacement target
+    (.mdata d e', found)
+  | .proj s i e =>
+    let (e', found) := e.replaceExpr replacement target
+    (.proj s i e', found)
+  | _ => (e, false)
 
 def Lean.Expr.format (indent : Nat := 0) (is_indented : Bool := true): Expr → String
   | .lam binderName binderType body binderInfo =>
