@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Nat.Div.eq.One.of.Ne_0
-import Lemma.Vector.SEqRepeat
+import Lemma.Vector.SEqRepeat_1
 open Bool Nat Vector
 
 
@@ -20,7 +20,7 @@ private lemma main
     simp at h_i
   else
     rw [Div.eq.One.of.Ne_0 h]
-    apply SEqRepeat
+    apply SEqRepeat_1
 
 
 -- created on 2026-07-10

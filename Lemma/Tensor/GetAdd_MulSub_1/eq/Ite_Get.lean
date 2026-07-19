@@ -80,7 +80,7 @@ private lemma main
     apply Real.Setoid.of.Eq
     apply Int.EqAdd.of.Eq_Sub.left
     rw [Nat.Sub.eq.Zero]
-    apply Mul.eq.Zero.of.Eq_0
+    apply EqMul0_0.of.Eq_0
     apply Int.Sub.eq.Zero.of.Eq
     apply Eq.of.EqDataS
     rw [EqData1'1]
