@@ -713,6 +713,9 @@ def Lean.Expr.isOfNatLitRepeatCount (root target : Expr) (lit : Nat) : Bool :=
     | some `List.Vector.repeat =>
       let args := root.getAppArgs
       args.size >= 2 && (args[args.size - 1]!.ofNatLit? lit).isSome
+    | some `Tensor.repeat =>
+      let args := root.getAppArgs
+      args.size >= 3 && (args[args.size - 1]!.ofNatLit? lit).isSome
     | _ =>
       match root with
       | .app fn arg =>
@@ -740,7 +743,7 @@ def Lean.Expr.collectOfNatLit (e : Expr) (lit : Nat := 1) : List (Expr × Expr �
 def Lean.Expr.findOfNatLit (e : Expr) (lit : Nat := 1) : Option (Expr × Expr × Expr) :=
   let found := e.collectOfNatLit lit
   if lit == 1 then
-    match e.findOfNatLitInConstArg lit `List.Vector.repeat with
+    match e.findOfNatLitInConstArg lit `List.Vector.repeat <|> e.findOfNatLitInConstArg lit `Tensor.repeat with
     | some result => some result
     | none =>
       match found.find? fun ⟨_, _, target⟩ => e.isOfNatLitRepeatCount target lit with

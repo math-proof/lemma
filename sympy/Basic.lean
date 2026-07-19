@@ -918,6 +918,9 @@ def Expr.substOne (type value : Expr) (lit : Nat := 1) : MetaM (Expr × Expr) :=
         if lit == 1 && (body.findOfNatLitInConstArg lit `List.Vector.repeat).isSome then
           body.replaceOfNatLitInConstArg lit `List.Vector.repeat n
             |>.replaceOfNatLitAsHMulLefts lit n
+        else if lit == 1 && (body.findOfNatLitInConstArg lit `Tensor.repeat).isSome then
+          body.replaceOfNatLitInConstArg lit `Tensor.repeat n
+            |>.replaceOfNatLitAsHMulLefts lit n
         else
           body.replaceExpr n oneExpr |>.1
       let ⟨binders, _⟩ := type.decompose_forallE
