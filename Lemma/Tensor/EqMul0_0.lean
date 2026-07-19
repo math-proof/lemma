@@ -5,11 +5,11 @@ import Lemma.Vector.EqMul0_0
 open Vector Tensor
 
 
-@[main]
+@[main, subst 0]
 private lemma main
   [MulZeroClass α]
+  {s : List ℕ}
 -- given
-  (s : List ℕ)
   (a : α) :
 -- imply
   (0 : Tensor α s) * a = 0 := by
@@ -21,3 +21,4 @@ private lemma main
 
 
 -- created on 2025-12-23
+-- updated on 2026-07-19

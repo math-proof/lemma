@@ -1,6 +1,5 @@
 import Lemma.Tensor.Eq_TensorReplicate
 import Lemma.Int.Sub.eq.Zero.is.Eq
-import Lemma.Tensor.EqMul0_0.of.Eq_0
 import Lemma.Real.Setoid.of.Eq
 import Lemma.Nat.EqMul0_0
 import Lemma.Nat.Sub.eq.Zero
@@ -80,7 +79,7 @@ private lemma main
     apply Real.Setoid.of.Eq
     apply Int.EqAdd.of.Eq_Sub.left
     rw [Nat.Sub.eq.Zero]
-    apply EqMul0_0.of.Eq_0
+    apply @Tensor.EqMul0_0.of.Eq_0
     apply Int.Sub.eq.Zero.of.Eq
     apply Eq.of.EqDataS
     rw [EqData1'1]

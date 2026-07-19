@@ -921,8 +921,10 @@ def Expr.substOne (type value : Expr) (lit : Nat := 1) : MetaM (Expr × Expr) :=
         else if lit == 1 && (body.findOfNatLitInConstArg lit `Tensor.repeat).isSome then
           body.replaceOfNatLitInConstArg lit `Tensor.repeat n
             |>.replaceOfNatLitAsHMulLefts lit n
-        else
+        else if oneType.isNumericType then
           body.replaceAllExpr n oneExpr
+        else
+          body.replaceExpr n oneExpr |>.1
       let ⟨binders, _⟩ := type.decompose_forallE
       let insertIdx :=
         binders.map (·.2.2) |>.reverse |>.findIdx? (· == .default) |>.getD args.size

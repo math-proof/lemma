@@ -829,6 +829,11 @@ def Lean.Expr.replaceExpr (e replacement target : Expr) : Expr × Bool :=
     (.proj s i e', found)
   | _ => (e, false)
 
+def Lean.Expr.isNumericType (e : Expr) : Bool :=
+  match e with
+  | .const `Nat _ | .const `Int _ => true
+  | _ => false
+
 def Lean.Expr.replaceAllExpr (e replacement target : Expr) : Expr :=
   if e == target then replacement else
   match e with
