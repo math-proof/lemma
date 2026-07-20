@@ -6,7 +6,6 @@ import Lemma.Tensor.GetMatmul.as.MatmulCastS_Get.of.Eq.EqLengthS.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Matmul.as.MatmulResizeS.of.EqLengthS.GtLength_0
-import sympy.tensor.tensor
 open List Tensor
 set_option maxHeartbeats 4000000
 

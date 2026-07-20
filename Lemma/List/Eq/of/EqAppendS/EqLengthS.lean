@@ -1,5 +1,5 @@
-import Lemma.List.EqTakeAppend
 import Lemma.List.EqDropAppend
+import Lemma.List.EqTakeAppend
 open List
 
 
@@ -32,3 +32,4 @@ private lemma main
 
 
 -- created on 2025-05-11
+-- updated on 2026-07-20

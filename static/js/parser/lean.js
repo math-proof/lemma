@@ -7998,7 +7998,7 @@ class LeanUsing extends LeanUnary {
         return `${this.operator} %s`;
     }
     latexFormat() {
-        return `${this.command} %s`;
+        return `${this.command}\\ %s`;
     }
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && caret instanceof LeanCaret && caret === this.arg) {
