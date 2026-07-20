@@ -210,7 +210,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const modArgs = tree.args;
   const end = modArgs[modArgs.length - 1];
   const expectedLines = (codeStr.match(/\n/g) || []).length + 1;
-  if (end && typeof /** @type {{ line?: number }} */ (end).line === 'number' && end.line !== expectedLines) {
+  if (end && end.line !== expectedLines) {
     error.push({
       code: '',
       line: end.line,

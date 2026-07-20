@@ -2000,19 +2000,9 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (parent instanceof LeanStatements && this.indent > 0) return true;
         if (parent instanceof LeanArgsIndented && this.indent > 0) return true;
         if (leanParenthesisLemmaAssignByMultilineClose(this)) return true;
-        // `cast (by …)\n    (x i) = …`: `LeanParenthesis` under `LeanEq` inside newline-separated args (not other binaries).
-        if (
-            parent instanceof LeanEq &&
-            this.indent > 0 &&
-            parent.parent instanceof LeanArgsNewLineSeparated
-        ) {
+        if (parent instanceof LeanEq && this.indent > 0 && parent.parent instanceof LeanArgsNewLineSeparated)
             return true;
-        }
-        return (
-            parent instanceof LeanArgsNewLineSeparated ||
-            parent instanceof LeanArgsCommaNewLineSeparated ||
-            (parent instanceof LeanIte && this !== parent.if)
-        );
+        return parent instanceof LeanArgsNewLineSeparated || parent instanceof LeanArgsCommaNewLineSeparated || (parent instanceof LeanIte && this !== parent.if);
     }
 
     isProp(vars) {
@@ -2384,7 +2374,6 @@ export class LeanBinary extends LeanArgs {
         return `{%s} ${this.command} {%s}`;
     }
 
-    /** Space vs newline between lhs/rhs depending on rhs shape. */
     sep() {
         return this.rhs instanceof LeanStatements ? '\n' : ' ';
     }
@@ -2397,7 +2386,6 @@ export class LeanBinary extends LeanArgs {
         return this.rhs.set_line(line);
     }
 
-    /** Handle newline insertion for tactic contexts. */
     insert_newline(caret, newline_count, indent, next) {
         if (this.parent instanceof LeanTactic && indent > this.indent) {
             return this.parent.push_args_indented(indent, newline_count, false);
@@ -3863,7 +3851,6 @@ export class Lean_cap extends LeanSetOperator {
     }
 }
 
-/** Logic connectives under `LeanStatements` (`&&`, `∨`, …); hanging newline via `hanging_indentation`. */
 export class LeanLogic extends LeanBinaryBoolean {
     /** @type {boolean|undefined} */
     hanging_indentation;
@@ -4314,12 +4301,6 @@ function dedentEchoProofTacticLines(s) {
     return out.join('\n');
 }
 
-/**
- * Echo term proofs: `String(proof)` often already includes `proof.indent` spaces; `indentText` would add
- * `proofInd` again and widen the line so newline scanning picks a larger continuation indent and folds
- * the proof into `LeanAssign` (round-trip mismatch).
- * @param {string} s
- */
 function dedentEchoProofTermBlock(s) {
     const lines = s.split('\n');
     let minLead = Infinity;
@@ -7308,7 +7289,7 @@ export class LeanTactic extends LeanSyntax {
                 return [1, echo, this];
             const {by} = this;
             if (by && by.arg instanceof LeanStatements) by.echo();
-            if (has_sequential_tactic_combinator && sequential_tactic_combinator.newline) {
+            if (has_sequential_tactic_combinator && sequential_tactic_combinator.inline) {
                 echo.push(sequential_tactic_combinator);
                 this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, true);
                 sequential_tactic_combinator.echo();
@@ -7618,10 +7599,8 @@ export class LeanTactic extends LeanSyntax {
         if (p instanceof LeanStatements || p instanceof LeanIte) return true;
         if (p instanceof LeanArgsNewLineSeparated) return true;
         if (p instanceof LeanArgsSpaceSeparated && p.parent instanceof LeanTactic) return true;
-        if (p instanceof LeanSequentialTacticCombinator && p.arg === this) return true;
-        if (p instanceof LeanSequentialTacticCombinator) {
-            return this.indent >= p.indent && !p.newline;
-        }
+        if (p instanceof LeanSequentialTacticCombinator)
+            return !p.inline && (p.arg === this && this.indent > p.indent || this.indent >= p.indent);
         return false;
     }
 
@@ -7697,7 +7676,7 @@ export class LeanTactic extends LeanSyntax {
                 }
             } else if ((block instanceof LeanTactic || block instanceof Lean_let) && block.indent >= this.indent) {
                 const self = this.clone();
-                if (sequential_tactic_combinator.newline) {
+                if (sequential_tactic_combinator.inline) {
                     block = self.sequential_tactic_combinator;
                     const la = self.args[self.args.length - 1];
                     if (la instanceof LeanSequentialTacticCombinator) self.args.pop();
@@ -8127,13 +8106,13 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
      * @param {Lean} arg
      * @param {number} indent
      * @param {number} level
-     * @param {boolean} [newline] passed as `nextToken !== '\\n'` (inline combinator chain)
+     * @param {boolean} [inline]
      * @param {boolean} [lineBreakBefore] source had a newline before `<;>` (print newline before combinator)
      */
-    constructor(arg, indent, level, newline = false, lineBreakBefore = false) {
+    constructor(arg, indent, level, inline = false, lineBreakBefore = false) {
         super(arg, indent, level);
         /** @type {boolean} */
-        this.newline = !!newline;
+        this.inline = !!inline;
         /** @type {boolean} */
         this.lineBreakBefore = !!lineBreakBefore;
     }
@@ -8159,7 +8138,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
                 while ((sequential_tactic_combinator = arg.sequential_tactic_combinator) && sequential_tactic_combinator.arg.indent) arg = sequential_tactic_combinator;
                 arg.push(new LeanSequentialTacticCombinator(echo, indent, level, true));
             } else {
-                echo.push(new LeanSequentialTacticCombinator(arg, indent, level, this.newline));
+                echo.push(new LeanSequentialTacticCombinator(arg, indent, level, this.inline));
                 this.arg = echo;
                 arg.echo();
             }
@@ -8167,7 +8146,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     getEcho() {
-        if (this.newline) {
+        if (this.inline) {
             const e = this.arg;
             if (e instanceof LeanTactic && e.tacticName === 'echo') return e;
         }
@@ -8199,7 +8178,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     is_indented() {
-        return !!this.newline || !!this.lineBreakBefore;
+        return this.lineBreakBefore;
     }
 
     latexFormat() {
@@ -8208,16 +8187,14 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
 
     sep() {
         if (this.arg instanceof LeanTacticBlock) return '\n';
-        // Dangling `<;>` before `·` / next tactic: newline, not a trailing space before empty caret.
         if (this.arg instanceof LeanCaret) return '\n';
-        // `constructor <;>` then a more-indented `intro` / tactic on the next line (OrInS-style).
         if (this.arg instanceof LeanTactic && this.arg.indent > this.indent) return '\n';
-        return this.arg.indent > 0 && !this.newline ? '\n' : ' ';
+        return this.arg.indent > 0 && !this.inline ? '\n' : ' ';
     }
 
     set_line(line) {
         this.line = line;
-        if (this.arg instanceof LeanTacticBlock || this.arg.indent >= this.indent) line++;
+        if (this.arg instanceof LeanTacticBlock || this.arg.indent > this.indent) line++;
         return this.arg.set_line(line);
     }
 
@@ -8226,7 +8203,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
      * @returns {Lean[]}
      */
     split(syntax) {
-        if (!this.newline) return [this];
+        if (!this.inline) return [this];
         const arg = this.arg;
         const args = arg.split(syntax);
         const self = this.clone();
@@ -9036,7 +9013,7 @@ class Lean_let extends LeanSyntax {
             if (arg instanceof LeanCaret);
             else if (
                 arg instanceof LeanSequentialTacticCombinator &&
-                (arg.newline || arg.lineBreakBefore)
+                (arg.inline || arg.lineBreakBefore)
             ) {
                 parts.push('\n');
             } else parts.push(' ');
