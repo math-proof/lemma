@@ -1,8 +1,8 @@
 # usage:
-# .\ps1\update.ps1
-# Read the lean-toolchain file
+# .\ps1\update.ps1 -clean
 param(
-    [String]$version = "v4.30.0"
+    [switch]$clean,
+    [String]$version = "v4.31.0"
 )
 $versionNumber = $version.Substring(1)
 # cd ~/.elan/toolchains
@@ -208,8 +208,8 @@ if ($null -ne $node) {
 
 # Run lake commands
 $start = Get-Date
-if ($needsClean) {
-    Write-Host "Lean toolchain changed — running lake clean"
+if ($needsClean -or $clean) {
+    Write-Host "Lean toolchain changed recently — running lake clean"
     lake clean
 }
 # build proofwidgets to eliminate the following error:

@@ -81,7 +81,7 @@ private lemma main
           rfl
   | sₐ :: sₜ, s'ₐ :: s'ₜ =>
     simp [Dot.dot]
-    simpa using GetEinsum.as.EinsumGet.of.Ge.GtLengthS (by grind) h X Y i
+    simpa using GetEinsum.as.EinsumGet.of.Ge.GtLengthS.fin (by grind) h X Y i
 
 
 -- created on 2026-07-18

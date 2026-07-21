@@ -21,7 +21,6 @@ private lemma main
   have h_s := Ne_Nil.of.GtLength_0 h_s
   apply SEq.of.All_SEqGetS.Eq.Ne_Nil h_s h
   intro i
-  simp at i
   exact h_all ⟨i.val, by simp [← h_length]⟩
 
 

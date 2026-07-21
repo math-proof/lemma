@@ -12,7 +12,6 @@ private lemma main
   a = b := by
 -- proof
   have := EqGetS.of.Eq.Lt h_n h
-  simp at this
   repeat rw [EqGetReplicate.of.Lt] at this
   assumption
 

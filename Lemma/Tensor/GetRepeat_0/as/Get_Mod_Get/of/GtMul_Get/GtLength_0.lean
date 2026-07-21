@@ -110,7 +110,6 @@ private lemma main
                 rw [ModAddMul.eq.Mod]
                 apply EqMod.of.Lt
                 have := AddMul.lt.Mul.of.Lt.Lt (r.isLt) h_k
-                simp at this
                 rw [TailSet_0.eq.Tail] at this
                 convert this
               ·

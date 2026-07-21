@@ -11,9 +11,7 @@ open Vector Real
 @[main]
 private lemma main
   [NeZero n]
-  [LT α] [DecidableLT α]
-  [LogPos α]
-  [IsOrderedCancelAddMonoid α]
+  [LogPos α] [DecidableLT α] [IsOrderedCancelAddMonoid α]
 -- given
   (x : List.Vector α n) :
 -- imply

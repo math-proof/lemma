@@ -7,7 +7,7 @@ private lemma main
 -- imply
   s \ t ∪ s ∩ t = s :=
 -- proof
-  Set.diff_union_inter s t
+  Set.sdiff_union_inter s t
 
 
 -- created on 2025-04-08

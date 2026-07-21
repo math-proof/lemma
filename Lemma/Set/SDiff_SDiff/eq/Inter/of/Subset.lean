@@ -13,8 +13,7 @@ private lemma main
   ext x
   constructor <;>
   ·
-    simp [Set.mem_diff, Set.mem_inter_iff]
-    -- For each direction, we use the fact that A is a subset of B to simplify the set membership conditions.
+    simp [Set.mem_sdiff, Set.mem_inter_iff]
     tauto
 
 

@@ -8,7 +8,7 @@ private lemma main
 -- imply
   A \ B ⊆ A :=
 -- proof
-  Set.diff_subset
+  Set.sdiff_subset
 
 
 -- created on 2025-04-08

@@ -43,8 +43,7 @@ open Fin List Nat Real Tensor Vector
 @[main]
 private lemma main
   [NeZero s.prod]
-  [LT α] [DecidableLT α]
-  [LogPos α] [IsOrderedCancelAddMonoid α]
+  [LogPos α] [DecidableLT α] [IsOrderedCancelAddMonoid α]
 -- given
   (X : Tensor α s)
   (d : ℕ) :

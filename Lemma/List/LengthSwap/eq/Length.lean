@@ -22,11 +22,13 @@ private lemma main
   ·
     rfl
   ·
-    have h_le := Le.of.NotGt h_lt?
-    simp at h_eq
-    have h_ne := Ne.of.NotEq h_eq
-    have h_lt := Lt.of.Le.Ne h_le h_ne.symm
-    apply LengthAppend_Cons_Drop.eq.Length.of.Lt.GtLength h_lt h_i
+    apply LengthAppend_Cons_Drop.eq.Length.of.Lt.GtLength _ h_i
+    apply Lt.of.Le.Ne
+    ·
+      apply Le.of.NotGt h_lt?
+    ·
+      symm
+      apply Ne.of.NotEq h_eq
   ·
     rfl
 

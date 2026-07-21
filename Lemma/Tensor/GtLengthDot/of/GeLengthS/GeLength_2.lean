@@ -2,8 +2,6 @@ import Lemma.List.EqAppendDropLast.of.GtLength_0
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.GeLengthS
--- this is added to avoid a bug in the Lean 4 compiler that environment saying: already contains 'List.getElem?_zipWith.match_1.congr_eq_1._sparseCasesOn_2'
-import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 open List Tensor
 
 

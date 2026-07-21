@@ -9,7 +9,7 @@ private lemma main
   (s \ t) ∩ u = (s ∩ u) \ (t ∩ u) := by
 -- proof
   ext x
-  simp only [Set.mem_inter_iff, Set.mem_diff, not_and]
+  simp only [Set.mem_inter_iff, Set.mem_sdiff, not_and]
   constructor
   ·
     rintro ⟨⟨hs, hnt⟩, hu⟩

@@ -14,7 +14,6 @@ private lemma main
 -- proof
   have h_permute := TakePermute__Neg.eq.Append_RotateDropTake i d
   have h_permute := congrArg (·.drop (i - d)) h_permute
-  simp at h_permute
   rwa [EqDropAppend.of.Eq_Length] at h_permute
   simp
   omega

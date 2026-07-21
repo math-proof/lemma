@@ -15,7 +15,6 @@ private lemma main
 -- proof
   have := TakePermute__Neg.eq.Append_RotateDropTake i d
   have := congrArg (·.take (i - d)) this
-  simp at this
   rw [TakeTake.eq.Take.of.Ge (by omega)] at this
   rw [this]
   rw [EqTakeAppend.of.Eq_Length]

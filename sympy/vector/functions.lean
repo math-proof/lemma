@@ -49,7 +49,7 @@ instance [Log α] : Log (Vector α n) where
     simp [EqGet0_0.fin]
     apply Log.log_div_self
 
-def softmax [Div α] [Exp α] (x : Vector α n) : Vector α n :=
+def softmax [Exp α] (x : Vector α n) : Vector α n :=
   let x_exp := exp x
   x_exp / x_exp.sum
 

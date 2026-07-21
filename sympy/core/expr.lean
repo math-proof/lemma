@@ -543,6 +543,7 @@ e = {e}, e = {← ppExpr e}, e.type = {← inferType e}"
     | `Inter.inter
     | `Union.union
     | `Function.comp
+    | `Dot.dot
     | `List.cons
     | `List.Vector.cons
     | `List.Vector.dot

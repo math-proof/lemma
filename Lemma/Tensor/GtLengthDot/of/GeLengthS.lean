@@ -1,7 +1,6 @@
 import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
--- this is added to avoid a bug in the Lean 4 compiler that environment saying: already contains 'List.getElem?_zipWith.match_1.congr_eq_1._sparseCasesOn_2'
-import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
+import sympy.tensor.tensor
 open Tensor Nat
 
 

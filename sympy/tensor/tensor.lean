@@ -57,10 +57,7 @@ def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) 
   have h_s_length := Gt_0 offset
   if h : offset = ⟨0, h_s_length⟩ then
     cast
-      (by
-        substs h
-        simp
-      )
+      (by aesop)
       (X.get ⟨i, by
         have h_i := i.isLt
         simp [h] at h_i

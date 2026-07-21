@@ -29,7 +29,6 @@ private lemma main
   unfold List.swap
   split_ifs with h_eq h_lt? h_j h_i
   ·
-    simp at h_eq
     simp [h_eq]
   ·
     simp
@@ -39,7 +38,6 @@ private lemma main
     contradiction
   ·
     have h_le := Le.of.NotGt h_lt?
-    simp at h_eq
     have h_ne := Ne.of.NotEq h_eq
     have h_lt := Lt.of.Le.Ne h_le h_ne.symm
     simp_all

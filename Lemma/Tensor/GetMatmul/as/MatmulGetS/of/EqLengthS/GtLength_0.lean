@@ -8,8 +8,6 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
--- this is added to avoid a bug in the Lean 4 compiler that environment saying: already contains 'List.getElem?_zipWith.match_1.congr_eq_1._sparseCasesOn_2'
-import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 open Bool List Tensor
 set_option maxHeartbeats 4000000
 

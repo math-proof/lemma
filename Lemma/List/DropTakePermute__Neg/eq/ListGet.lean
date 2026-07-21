@@ -32,7 +32,6 @@ private lemma main
     rw [Sub_Sub.eq.Min] at h
     rw [EqSubAdd.left]
     have h := congrArg (·.take 1) h
-    simp at h
     rw [TakeTake.eq.Take.of.Ge (by omega)] at h
     rw [h]
     rw [EqMin.of.Le h_d]

@@ -22,7 +22,7 @@ private lemma main
   ·
     have hx : 0 < x := h 0
     refine ⟨h 0, fun n ↦ ?_⟩
-    simpa [EqAbs.of.Gt_0 hx] using h n
+    simpa [EqAbs.of.Gt_0 hx] using! h n
 
 
 @[main, comm, mp and, mpr]

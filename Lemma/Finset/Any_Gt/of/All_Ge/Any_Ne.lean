@@ -19,22 +19,10 @@ private lemma main
   ∃ i ∈ s, x i > a := by
 -- proof
   by_contra h
-  have h := All_Not.of.NotAny h
-  have : ∀ t : N, ¬t > a → t ≤ a := by
-    intro t h
-    aesop
-  have h_Ge_0 := All.of.All.All_Imp (α := N) this h
-  have h := All_And.of.All.All h₀ h_Ge_0
   have : ∀ t : N, t ≥ a ∧ t ≤ a → t = a := by
     intro t ⟨h_ge, h_le⟩
     apply Eq.of.Le.Ge h_le h_ge
-  have h := All.of.All.All_Imp this h
-  have := NotAny_Not.of.All h
-  have : ¬∃ i ∈ s, x i ≠ a := by
-    simp
-    simp at h
-    exact h
-  contradiction
+  aesop
 
 
 -- created on 2025-04-06

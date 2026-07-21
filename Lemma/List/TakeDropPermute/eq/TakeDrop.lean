@@ -27,9 +27,7 @@ private lemma main
   have := DropPermute.eq.AppendRotateTakeDrop i d
   if h : s.length > i + d then
     rw [EqMin.of.Le (by omega)]
-    have := congrArg (·.take d) this
-    simp at this
-    rw [this]
+    rw [congrArg (·.take d) this]
     rw [TakeAppend.eq.Take.of.GeLength]
     ·
       rw [Rotate.eq.AppendDrop__Take.of.GeLength]
@@ -54,7 +52,6 @@ private lemma main
   else
     simp at h
     have := congrArg (·.take (s.length - i)) this
-    simp at this
     rw [EqPermuteS.of.Add.ge.SubLength_1 (by omega)] at this ⊢
     rw [EqTake.of.LeLength (by simp)] at this
     rw [this]

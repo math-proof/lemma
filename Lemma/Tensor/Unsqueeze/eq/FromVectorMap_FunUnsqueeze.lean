@@ -46,7 +46,7 @@ private lemma main
     grind
   have h_bound : X.length / n ≤ n * s.prod - ↑(List.Vector.range n)[i] * (X.length / n) := by
     simp [GetElem.getElem, EqGetRange.fin i]
-    simpa only [← h_prod] using Le_SubMulS.of.Lt i.isLt (X.length / n)
+    simpa only [← h_prod] using! Le_SubMulS.of.Lt i.isLt (X.length / n)
   have h_get := GetCast_Map.eq.UFnGet.of.Eq.Lt.fin (i := i) (n := ((n :: s).take 1).prod) (n' := (n :: s).headD 1) (by simp_all) (by simp_all) (X.splitAt 1) (fun X ↦ (⟨X⟩ : Tensor α s))
   have h_split := GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop.fin (s := n :: s) (d := 1) (i := i) (j := (cast h_eq (List.Vector.range (s.insertIdx d 1).prod)[j]).val)
     (by simp_all) (by simp_all) X

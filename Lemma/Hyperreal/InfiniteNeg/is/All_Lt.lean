@@ -23,7 +23,7 @@ private lemma main
   ·
     have hx : x < 0 := h 0
     refine ⟨h 0, fun n ↦ ?_⟩
-    simpa [Abs.eq.Neg.of.Lt_0 hx, GtNeg.is.Lt_Neg] using h (-n)
+    simpa [Abs.eq.Neg.of.Lt_0 hx, GtNeg.is.Lt_Neg] using! h (-n)
 
 
 @[main, comm, mp and, mpr]

@@ -19,11 +19,7 @@ private lemma main
   rw [GetAdd.eq.AddGetS.fin]
   simp [Log.log]
   rw [GetMul.eq.MulGetS.fin]
-  apply LogMul.eq.AddLogS.of.Ne_0.Ne_0
-  ·
-    apply h₀
-  ·
-    apply h₁
+  apply LogMul.eq.AddLogS.of.Ne_0.Ne_0 (h₀ i) (h₁ i)
 
 
 -- created on 2025-12-03

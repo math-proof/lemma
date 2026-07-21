@@ -50,7 +50,6 @@ private lemma main
       if h_d : i + d = s.length - 1 then
         apply SEqPermutePermute.of.Add.eq.SubLength_1 h_d
       else
-        simp at h_i
         apply SEqPermutePermute.of.Add.lt.SubLength_1
         apply Lt.of.Le.Ne _ h_d
         apply Le_Sub_1.of.Lt h

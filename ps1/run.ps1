@@ -5,6 +5,9 @@ param(
 )
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
 $OutputEncoding = [Text.Encoding]::UTF8
+if (-not $env:LEAN_NUM_THREADS) {
+    $env:LEAN_NUM_THREADS = "8"
+}
 $start_time = [DateTimeOffset]::Now.ToUnixTimeSeconds()
 . .\ps1\utility.ps1
 

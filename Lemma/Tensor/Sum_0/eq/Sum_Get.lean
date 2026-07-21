@@ -1,5 +1,4 @@
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import sympy.vector.vector
 import Lemma.Vector.Sum.eq.Sum_Get
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataSum.eq.Sum_Data
@@ -20,7 +19,7 @@ private lemma main
   simp
   have h_data : ((∑ i : Fin n, X.get i) : Tensor α s).data = ∑ i : Fin n, (X.get i).data := by
     dsimp [GetElem.getElem]
-    simpa [List.tail_cons] using DataSum.eq.Sum_Data Finset.univ (A := fun i : Fin n => X[i])
+    simpa [List.tail_cons] using! DataSum.eq.Sum_Data Finset.univ (A := fun i : Fin n => X[i])
   apply Eq.trans (Sum.eq.Sum_Get (X.data.splitAt 1))
   apply Eq.trans _ h_data.symm
   congr
