@@ -188,6 +188,7 @@ https://www.arxiv.org/abs/2507.15855
 https://github.com/MathFoundationRL/Book-Mathematical-Foundation-of-Reinforcement-Learning
 https://arxiv.org/abs/2310.05328
 [LEAN-GitHub: Compiling GitHub LEAN repositories for a versatile LEAN prover](https://arxiv.org/abs/2407.17227)
+https://github.com/lean-dojo/TorchLean
 ```
 ## formal neural network
 https://github.com/or4nge19/NeuralNetworks  

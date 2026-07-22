@@ -80,6 +80,7 @@ app.set('view engine', 'ejs');
 app.set('views', VIEWS);
 
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.get(['/py', '/py/'], (req, res) => res.redirect(302, `http://localhost:8080${req.originalUrl}`));
 
 /** Lemma tree size for `website` home.md `<label id=count>` / `<label id=lines>`. */
 app.get('/:userSegment/api/repo-stats.json', ensureProjectUser, async (_req, res) => {

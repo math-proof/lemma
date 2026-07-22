@@ -7,9 +7,9 @@ import sympy.Basic
 private lemma main
   [AddMonoidWithOne α] [CharZero α] :
 -- imply
-  [i < n] [j < n] (KroneckerDelta i j) = eye (α := α) n := by
+  [i < n] [j < n] (KroneckerDelta i j) = Tensor.eye (α := α) n := by
 -- proof
-  unfold eye
+  unfold Tensor.eye
   rfl
 
 

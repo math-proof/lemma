@@ -78,6 +78,10 @@ def a : List ℕ := List.range 10
 def getSlice (L : Vector α n) (s : Slice) : Vector α (s.length n) :=
   (indices s L.length).map fun i => L[i]
 
+/-- Infoview: reverse `getSlice` to Python slice syntax. -/
+@[app_unexpander getSlice]
+def getSlice.unexpand := Slice.getSliceUnexpand
+
 /--
 substraction is automatically defined by typeclass SubNegMonoid:
 instance [Sub α] : Sub (Vector α n)

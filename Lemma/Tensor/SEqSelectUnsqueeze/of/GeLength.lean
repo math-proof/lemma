@@ -8,7 +8,7 @@ import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 open List Tensor Vector
 
 
-@[main]
+@[main, cast]
 private lemma main
 -- given
   (h_dim : s.length ≥ d)

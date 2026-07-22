@@ -249,7 +249,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
         code,
         line: lineNum,
         col: col - 2,
-        type: m[4] + m[5],
+        type: m[4] + (m[5] ?? ''),
         info: m[6],
       });
     } else if (error.length) {

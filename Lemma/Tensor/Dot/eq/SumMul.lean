@@ -1,14 +1,5 @@
-import Lemma.Tensor.SEqResize.of.Eq_Get
-import Lemma.Tensor.Matmul.as.Bmm
-import Lemma.Tensor.SEqGetS.of.SEq.GtLength
-import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
-import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
-import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqSelectS.of.SEq
-import Lemma.Tensor.SEqSumS.of.SEq
-open Bool Tensor
+import Lemma.Tensor.Dot.eq.Bmm
+open Tensor
 
 
 @[main]
@@ -25,9 +16,10 @@ private lemma main
   let B' : Tensor α [m, n, k] := cast (congrArg (Tensor α) (by simp)) (B'.repeat ⟨0, by grind⟩ m)
   A @ B = (A' * B').sum 2 := by
 -- proof
-  simp [Dot.dot]
+  rw [Dot.eq.Bmm]
   simp [Tensor.bmm]
   congr 1
 
 
 -- created on 2026-07-10
+-- updated on 2026-07-21

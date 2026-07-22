@@ -6,7 +6,7 @@ import Lemma.Tensor.EqGetStack
 open Tensor
 
 
-@[main]
+@[main, fin, cast, cast.fin]
 private lemma main
   [Add α] [Zero α]
   {d i : ℕ}

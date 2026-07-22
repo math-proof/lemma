@@ -1,9 +1,16 @@
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.EqGetS.of.Eq
+import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool
+import Lemma.Tensor.GetDiv.eq.DivGetS
+import Lemma.Tensor.GetDot.eq.DotGet
+import Lemma.Tensor.GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
+import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
 import Lemma.Tensor.Setoid.is.All_SetoidGetS
-import sympy.matrices.expressions.special
+import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
+import Lemma.Tensor.XEqGetS.of.XEq.GtLength
 open Tensor
+set_option maxHeartbeats 4000000
 
 
 @[main]
@@ -34,10 +41,32 @@ private lemma main
   rw [← h_z]
   apply Setoid.of.All_SetoidGetS.fin
   intro i
+  have h_Ξᵢ := XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) h_Ξ
+  simp at h_Ξᵢ
+  rw [GetMul.eq.MulGetS.fin] at h_Ξᵢ
   have h_zi := EqGetS.of.Eq.fin h_z i
   simp at h_zi
+  rw [Softmax.eq.DivExp_KeepdimSumExp] at h_zi
+  have := GetDot.eq.DotGet.fin (exp a' / ((exp a').sum 1).keepdim) V' i
+  simp at this
+  have h_zi := h_zi.trans this
+  conv_rhs at h_zi => erw [GetDiv.eq.DivGetS.fin]
+  simp at h_zi
+  have := GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
+    (i := i)
+    (by grind) (by grind) (by grind)
+    ((exp a').sum 1)
+  simp at this
+  rw [this] at h_zi
+  erw [GetSum.eq.Cast_SumGet.of.GtGet_0.LtAdd_1Length.fin (d := 0) (by grind) (by grind)] at h_zi
+  simp at h_zi
+  erw [h_Ξᵢ] at h_zi
+  conv_lhs => erw [h_zi]
+  rw [EqGetStack.fn.fin]
+  let band_A := A'[i, i + 1 - l : n ⊓ i + u]
+  let band_V := V'[i + 1 - l:n ⊓ i + u]
   sorry
 
 
 -- created on 2026-01-02
--- updated on 2026-01-04
+-- updated on 2026-07-21

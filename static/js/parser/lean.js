@@ -6530,13 +6530,20 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     is_Bool() {
         const args = this.args;
         const func = args[0];
-        return (
-            func instanceof LeanProperty &&
+        return func instanceof LeanProperty &&
             func.rhs instanceof LeanToken &&
             func.rhs.text === 'toNat' &&
             func.lhs instanceof LeanToken &&
-            func.lhs.text === 'Bool'
-        );
+            func.lhs.text === 'Bool';
+    }
+
+    is_Sum() {
+        const [func, zero] = this.args;
+        return func instanceof LeanProperty && 
+            func.lhs instanceof LeanParenthesis && func.lhs.arg instanceof LeanStack &&
+            func.rhs instanceof LeanToken && func.rhs.text === 'sum' && 
+            zero instanceof LeanToken && 
+            zero.text === '0';
     }
 
     is_indented() {
@@ -6645,6 +6652,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         } else if (this.is_Bool()) {
             const stripped = this.strip_parenthesis();
             return [stripped[1].toLatex(syntax)];
+        } else if (this.is_Sum()) {
+            return this.args[0].lhs.arg.latexArgs();
         }
         return args.map((arg) => {
             if (arg instanceof LeanParenthesis && arg.arg instanceof LeanDiv)
@@ -6714,6 +6723,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             }
         } else if (this.is_Bool()) {
             return '\\left|{%s}\\right|';
+        } else if (this.is_Sum()) {
+            return '\\sum\\limits_{\\substack{%s}} {%s}';
         } else if (func instanceof LeanProperty && func.rhs instanceof LeanToken) {
             if (func.rhs.text === 'fmod' && args.length === 2) return '{%s}{%s}';
         }
@@ -9278,9 +9289,9 @@ class LeanStack extends LeanBigOperator {
     }
 
     latexArgs(syntax) {
-        const s = syntax ?? {};
-        s[this.constructor.name] = true;
-        return super.latexArgs(s);
+        if (syntax)
+            syntax[this.constructor.name] = true;
+        return super.latexArgs(syntax);
     }
 
     latexFormat() {

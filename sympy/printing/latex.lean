@@ -109,6 +109,21 @@ def Expr.traceCases (e : Expr) : ℕ × Expr :=
   | _ =>
     ⟨0, e⟩
 
+def Expr.asStack? : Expr → Option (String × Expr × Expr)
+  | Basic (.ExprWithAttr (.Lean_operatorname `Stack)) [n, Basic (.ExprWithLimits .Lean_lambda) [fn, Binder .default binderName _ nil] _] _ =>
+    some (binderName.escape_specials "\\ ", n, fn)
+  | _ =>
+    none
+
+def Expr.methodFormat (obj : Expr) (args : List Expr) (func : Operator) (attr: String) (level : ℕ) : String :=
+  let obj := level.toColor (obj.priority > func.priority || obj.toList != none)
+  let args := args.map fun arg =>
+    level.toColor (arg.priority > func.priority || arg.is_Div)
+  let args := "\\ ".intercalate args
+  if args.isEmpty then
+    s!"{obj}.{attr}"
+  else
+    s!"{obj}.{attr}\\ {args}"
 
 def BinaryInfix.latexFormat (op : BinaryInfix) (left right : Expr) (level : ℕ) : String :=
   let func := op.func
@@ -371,6 +386,13 @@ def Expr.latexFormat : Expr → String
               "{%s}_{:%s:%s}"
             else
               "{%s}_{%s:%s:%s}"
+        | "sum", [X, dim] =>
+          if dim == const (.natVal 0) then
+            match Expr.asStack? X with
+            | some _ => "\\sum\\limits_{\\substack{%s}} {%s}"
+            | none => X.methodFormat [dim] func attr level
+          else
+            X.methodFormat [dim] func attr level
         | _, args =>
           if args.length ≤ idx then
             let op := name.toString.escape_specials
@@ -379,11 +401,7 @@ def Expr.latexFormat : Expr → String
             let args := "\\ ".intercalate args
             s!"{op}\\ {args}"
           else if let obj :: args := args.swap 0 idx then
-            let obj := level.toColor (obj.priority > func.priority || obj.toList != none)
-            let args := args.map fun arg =>
-              level.toColor (arg.priority > func.priority || arg.is_Div)
-            let args := "\\ ".intercalate args
-            s!"{obj}.{attr}\\ {args}"
+            obj.methodFormat args func attr level
           else
             opStr
       | .Lean_typeclass _ =>
@@ -558,6 +576,19 @@ where
                 map [base, start, stop, step]
           else
             map args
+        | .str _ "sum" =>
+          match args.swap 0 idx with
+          | [X, dim] =>
+            if dim == const (.natVal 0) then
+              match Expr.asStack? X with
+              | some (i, n, fn) =>
+                [s!"{i} < {n.toLatex}", fn.toLatex]
+              | none =>
+                map (args.swap 0 idx)
+            else
+              map (args.swap 0 idx)
+          | swapped =>
+            map swapped
         | _ =>
           map (args.swap 0 idx)
       | .Lean_operatorname `Stack =>

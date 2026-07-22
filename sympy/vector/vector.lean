@@ -214,4 +214,10 @@ instance [NeZero n] [Nontrivial α] : Nontrivial (Vector α n) where
     use List.Vector.replicate n x, List.Vector.replicate n y
     apply NeReplicateS.of.Ne.Gt_0 (NeZero.pos n) h_eq
 
+instance [CommMagma α] : CommMagma (Vector α n) where
+  mul_comm a b := by
+    repeat rw [Mul.eq.Map₂]
+    ext i
+    simp [CommMagma.mul_comm]
+
 end List.Vector

@@ -258,11 +258,6 @@ def Tensor.einsum [Mul α] [Add α] [Zero α] (X : Tensor α s) (Y : Tensor α s
 
 instance [Mul α] [Add α] [Zero α] : Dot (Tensor α s) (Tensor α s') (Tensor α (matmul_shape s s')) := ⟨einsum⟩
 
-instance [Mul α] [Add α] [Zero α] : Dot (Tensor α [m, k]) (Tensor α [k, n]) (Tensor α [m, n]) where
-  dot A B :=
-    let A : Tensor α ([] ++ [m, k]) := A
-    A.bmm B
-
 instance : GetElem (Tensor α s) ℕ (Tensor α s.tail) fun X i => i < X.length where
   getElem X i h := X.get ⟨i, h⟩
 
@@ -313,6 +308,10 @@ def Tensor.getSlice
   let tensors := (List.Vector.indices slice X.length).map fun i =>
     X[i].data
   ⟨cast (by simp) tensors.flatten⟩
+
+/-- Infoview: reverse `getSlice` to Python/PyTorch slice syntax. -/
+@[app_unexpander Tensor.getSlice]
+def Tensor.getSlice.unexpand := Slice.getSliceUnexpand
 
 def Tensor.getSlices
   (X : Tensor α s)
@@ -592,3 +591,9 @@ instance [NeZero s.prod] [Nontrivial α] : Nontrivial (Tensor α s) where
     let ⟨a, b, h_eq⟩ := Nontrivial.exists_pair_ne (α := List.Vector α s.prod)
     use ⟨a⟩, ⟨b⟩
     simp_all
+
+instance [CommMagma α] : CommMagma (Tensor α s) where
+  mul_comm X Y := by
+    apply Eq.of.EqDataS
+    repeat rw [DataMul.eq.MulDataS]
+    apply mul_comm

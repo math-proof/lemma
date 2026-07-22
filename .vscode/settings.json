@@ -1,5 +1,8 @@
 {
     "php.version": "8.0.26",
+    "terminal.integrated.env.windows": {
+        "LEAN_NUM_THREADS": "4"
+    },
     "terminal.integrated.profiles.windows": {
         "PowerShell 7": {
             "path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
