@@ -13,7 +13,8 @@ import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
-import Lemma.Tensor.Mul_Sum.eq.Sum_MulCast_RepeatUnsqueeze
+import Lemma.Tensor.MulSum_0.eq.Sum_Mul_Cast_RepeatUnsqueeze
+import Lemma.Tensor.Mul_Sum_0.eq.Sum_MulCast_RepeatUnsqueeze
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
@@ -31,7 +32,6 @@ set_option maxHeartbeats 1000000
 @[main]
 private lemma vec
   [NonUnitalSemiring α]
-  -- [CommMagma α] [Add α] [Zero α]
 -- given
   (L : Tensor α [m])
   (M : Tensor α [m, n])
@@ -146,8 +146,6 @@ private lemma vec
     arg 1
     arg 2
     erw [EqGetUnsqueeze_0.fin]
-  -- apply Eq.of.SEq
-  -- apply SEqSumS.of.SEq
   rw [Sum_1.eq.SumT_0]
   rw [Sum_1.eq.SumT_0]
   conv_lhs =>
@@ -166,7 +164,9 @@ private lemma vec
     arg 1
     arg 2
     erw [EqTT]
-  conv_lhs => erw [Mul_Sum.eq.Sum_MulCast_RepeatUnsqueeze]
+  conv_lhs => erw [Mul_Sum_0.eq.Sum_MulCast_RepeatUnsqueeze]
+  simp
+  conv_rhs => erw [MulSum_0.eq.Sum_Mul_Cast_RepeatUnsqueeze]
   simp
   sorry
 
@@ -176,8 +176,7 @@ tensor version of Matrix.mul_assoc
 -/
 @[main]
 private lemma main
-  -- [NonUnitalSemiring α]
-  [CommMagma α] [Add α] [Zero α]
+  [NonUnitalSemiring α]
 -- given
   (L : Tensor α [l, m])
   (M : Tensor α [m, n])

@@ -53,7 +53,7 @@ private lemma main
       rw [Pow1.eq.One]
       let b := fun _ : ℕ => (1 : ℝ)
       let f := fun (x : ℝ) (i : ℕ) => x ^ (1 / (i + 2) : ℝ)
-      have := All_EqUFnS.of.All_Eq.binary (b := b) (f := f) h_All_Eq
+      have := All_EqUFnS.of.All_Eq.bin (b := b) (f := f) h_All_Eq
       simp only [b, f] at this
       simp only [Pow1.eq.One] at this
       apply Sum.eq.Mul.of.All_Eq.range this

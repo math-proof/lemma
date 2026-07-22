@@ -6,7 +6,7 @@ import Lemma.Tensor.EqStack_Get
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.MulStack.eq.Stack_Mul
-import Lemma.Tensor.Mul_SumStack.eq.SumStack_Mul
+import Lemma.Tensor.MulSumStack.eq.SumStack_Mul
 open Fin Nat Tensor
 
 
@@ -39,7 +39,7 @@ private lemma main
   conv_rhs =>
     arg 1
     erw [h_mul_stack]
-  apply Mul_SumStack.eq.SumStack_Mul
+  apply MulSumStack.eq.SumStack_Mul
 
 
 -- created on 2026-07-22
