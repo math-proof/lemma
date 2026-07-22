@@ -1,16 +1,18 @@
-import sympy.Basic
-import sympy.tensor.stack
+import Lemma.Tensor.EqSumUnsqueeze
+import Lemma.Tensor.Stack.eq.Unsqueeze
+open Tensor
 
 
 @[main]
 private lemma main
-  [Mul α] [Add α] [Zero α]
+  [AddZeroClass α]
 -- given
   (X : Tensor α s) :
 -- imply
-  ∑ i < 1, X = X := by
+  ∑ _ < 1, X = X := by
 -- proof
-  sorry
+  rw [Stack.eq.Unsqueeze]
+  apply EqSumUnsqueeze
 
 
 -- created on 2026-07-22
