@@ -15,10 +15,8 @@ private lemma main
   (Y : Tensor α (bz ++ [k, n]))
   (i : Fin b₀) :
 -- imply
-  have h_X : bz ++ [m, k] = (b₀ :: b) ++ [m, k] := by
-    rw [h]
-  have h_Y : bz ++ [k, n] = (b₀ :: b) ++ [k, n] := by
-    rw [h]
+  have h_X : bz ++ [m, k] = (b₀ :: b) ++ [m, k] := by rw [h]
+  have h_Y : bz ++ [k, n] = (b₀ :: b) ++ [k, n] := by rw [h]
   let X' := cast (congrArg (Tensor α) h_X) X
   let Y' := cast (congrArg (Tensor α) h_Y) Y
   have h_i : i < (X.bmm Y).length := by
@@ -28,10 +26,10 @@ private lemma main
   (X.bmm Y)[i] ≃ X'[i].bmm Y'[i] := by
 -- proof
   intros h_X h_Y X' Y' h_i
-  rw [← GetBmm.eq.BmmGetS]
+  rw [BmmGetS.eq.GetBmm]
   simp [X', Y']
-  simp [GetElem.getElem]
-  apply SEqGetS.of.SEq.GtLength
+  simp only [GetElem.getElem]
+  apply SEqGetS.of.SEq.GtLength (by grind)
   apply SEqBmmS.of.SEq.SEq
   repeat aesop
 

@@ -1,21 +1,23 @@
-import sympy.tensor.functions
 import Lemma.Fin.Eq_0
+import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
+import Lemma.Tensor.Eq.is.EqDataS
+import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.Head.eq.Get_0
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
-open Vector Fin
+open Fin Tensor Vector
 
 
 @[main]
 private lemma main
-  [AddCommMonoid α]
+  [Add α] [Zero α]
 -- given
   (X : Tensor α [n]) :
 -- imply
   X.sum = ⟨[X.data.sum], by simp⟩ := by
 -- proof
   let ⟨X⟩ := X
-  unfold Tensor.sum
+  apply Eq.of.EqDataS
+  erw [DataSum_0.eq.SumSplitAtData]
   simp
   ext i
   have h_0 := Eq_0 i
@@ -33,3 +35,4 @@ private lemma main
 
 
 -- created on 2025-10-11
+-- updated on 2026-07-22

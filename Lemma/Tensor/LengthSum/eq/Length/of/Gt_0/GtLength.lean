@@ -11,6 +11,7 @@ private lemma main
   [Add α] [Zero α]
   {d : ℕ}
 -- given
+  (h_s : d < s.length)
   (h : d > 0)
   (X : Tensor α s) :
 -- imply
@@ -18,12 +19,8 @@ private lemma main
 -- proof
   if h : s.length > 0 then
     repeat rw [Length.eq.Get_0.of.GtLength_0 (by assumption)]
-    if h : d < s.length then
-      repeat rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
-      rw [GetEraseIdx.eq.Get.of.Gt.GtLength (by assumption) (by assumption)]
-    else
-      simp at h
-      apply LengthSum.eq.Length.of.LeLength h
+    repeat rw [Length.eq.Get_0.of.GtLength_0 (by grind)]
+    rw [GetEraseIdx.eq.Get.of.Gt.GtLength (by assumption) (by assumption)]
   else
     simp at h
     repeat rw [EqLength_0.of.Eq_Nil]

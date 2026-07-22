@@ -1,4 +1,4 @@
-import Lemma.Tensor.Sum.eq.FromVectorMapToVector.of.GtLength
+import Lemma.Tensor.Sum.eq.FromVectorMapToVector
 import Lemma.Tensor.FromVectorMapToVector.eq.Stack
 open Tensor
 
@@ -8,13 +8,12 @@ private lemma main
   [Add α] [Zero α]
   {d : ℕ}
 -- given
-  (h : s.length > d)
   (X : Tensor α (n :: s)) :
 -- imply
   X.sum (d + 1) = [i < n] (X[i].sum d) := by
 -- proof
-  rw [Sum.eq.FromVectorMapToVector.of.GtLength h]
-  apply FromVectorMapToVector.eq.Stack (fun s => s.eraseIdx d)
+  rw [Sum.eq.FromVectorMapToVector]
+  apply FromVectorMapToVector.eq.Stack (·.eraseIdx d)
 
 
 -- created on 2025-06-24

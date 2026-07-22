@@ -1,3 +1,5 @@
+import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
+import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.EqSumS.of.SEq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetSum.eq.SumMapGet
@@ -5,7 +7,7 @@ import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import sympy.tensor.tensor
-open Vector
+open Tensor Vector
 
 
 @[main, comm]
@@ -16,7 +18,7 @@ private lemma main
 -- imply
   (X.sum 0).data.head = X.data.sum := by
 -- proof
-  unfold Tensor.sum
+  rw [DataSum_0.eq.SumSplitAtData]
   simp
   unfold List.Vector.splitAt
   simp
@@ -37,3 +39,4 @@ private lemma main
 
 
 -- created on 2026-04-24
+-- updated on 2026-07-22

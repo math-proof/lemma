@@ -4,7 +4,7 @@ open Tensor
 
 @[main, cast]
 private lemma main
-  [Add α] [Zero α]
+  [AddZeroClass α]
   {d : ℕ}
 -- given
   (h : s.length ≤ d)

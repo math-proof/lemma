@@ -1,21 +1,23 @@
-import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Eq
-import Lemma.List.GtGet.of.GtGetTail.GtLengthTail
-import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.List.EqGetCons
 import Lemma.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0
+import Lemma.List.EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
+import Lemma.List.GtGet.of.GtGetTail.GtLengthTail
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Tensor.Cast_Sum.eq.Sum_Cast.of.Eq
 import Lemma.Tensor.EqGetStack.of.Lt
 import Lemma.Tensor.EqStackS.of.All_Eq
+import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
 import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength
+import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
+import Lemma.Tensor.SEqSumS.of.All_SEq.Eq.Eq
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
-import Lemma.Tensor.Sum.as.Stack_Sum.of.LtAdd_1Length
+import Lemma.Tensor.Sum.as.Stack_Sum.of.GtLength
 import Lemma.Tensor.Sum_0.as.Sum_Get.of.GtLength_0
 open Bool List Nat Tensor
 
@@ -38,10 +40,10 @@ private lemma main
   | succ i ih =>
     have h_i := Lt_Sub.of.LtAdd h
     have h_lt_length_tail : i < s.tail.length := by simpa
-    rw [Sum.eq.Cast_Stack_Sum.of.LtAdd_1Length h]
+    rw [Sum.eq.Cast_Stack_Sum.of.GtLength (by grind)]
     apply EqCast.of.SEq
     rw [EqStackS.of.All_Eq.fin (f := fun t : Fin s[0] => (X[t]'(by apply GtLength.of.GtLength_0)).sum i) (g := fun t : Fin s[0] => ∑ k, (X[t]'(by apply GtLength.of.GtLength_0)).select ⟨i, h_lt_length_tail⟩ k)]
-    .
+    ·
       apply SEq.of.All_SEqGetS.Eq.GtLength_0
       ·
         intro t
@@ -60,30 +62,31 @@ private lemma main
         ·
           simp only [GetElem.getElem]
           simp
-          apply Tensor.SEqSumS.of.All_SEq.Eq.Eq
-          .
+          apply SEqSumS.of.All_SEq.Eq.Eq
+          ·
             apply EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 h_i
-          .
+          ·
             intro l
-            apply Tensor.SelectGet.as.GetSelect.of.GtGet_0.GtGet_Add_1.LtAdd_1Length h _ h_t
-            .
+            apply SelectGet.as.GetSelect.of.GtGet_0.GtGet_Add_1.LtAdd_1Length h _ h_t
+            ·
               simp
-            .
-              apply List.GtGet.of.GtGetTail.GtLengthTail
+            ·
+              apply GtGet.of.GtGetTail.GtLengthTail
               simp
               grind
-          .
+          ·
             simp
         ·
           rw [LengthEraseIdx.eq.SubLength_1.of.GtLength (by simpa)]
           apply Gt_0.of.Gt h_i
         ·
           rwa [GetEraseIdx.eq.Get.of.Gt.GtLength (by simpa) (by simp)]
-      .
+      ·
         rw [EraseIdx.eq.Cons_EraseIdxTail.of.GtLength_0]
-    .
+    ·
       intro j
       apply ih
 
 
 -- created on 2025-11-07
+-- updated on 2026-07-22

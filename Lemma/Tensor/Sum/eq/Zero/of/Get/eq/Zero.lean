@@ -6,9 +6,8 @@ import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.SEq0S.of.Eq
-import Lemma.Tensor.Sum.as.Stack_Sum.of.LtAdd_1Length
+import Lemma.Tensor.Sum.as.Stack_Sum.of.GtLength
 import Lemma.Tensor.Sum.eq.Zero.of.EqGet_0'0.of.GtLength_0
-import sympy.tensor.tensor
 open Bool List Nat Tensor
 
 
@@ -27,7 +26,7 @@ private lemma main
     apply Sum.eq.Zero.of.EqGet_0'0.of.GtLength_0 h_d h
   | succ d ih =>
     apply Eq.of.SEq
-    have := Sum.as.Stack_Sum.of.LtAdd_1Length h_d X
+    have := Sum.as.Stack_Sum.of.GtLength (by grind) X (d := d)
     apply this.trans
     apply SEq.of.All_SEqGetS.Eq.GtLength_0
     ·

@@ -1,3 +1,4 @@
+import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.EqData0'0
 import Lemma.Vector.Eq.is.All_EqGetS
@@ -13,8 +14,8 @@ private lemma main
 -- imply
   X.sum 0 = 0 := by
 -- proof
-  simp [Tensor.sum]
   apply Eq.of.EqDataS
+  rw [DataSum_0.eq.SumSplitAtData]
   simp [EqData0'0]
   apply Eq.of.All_EqGetS
   intro i
@@ -23,4 +24,4 @@ private lemma main
 
 
 -- created on 2025-09-04
--- updated on 2025-11-30
+-- updated on 2026-07-22

@@ -2,7 +2,7 @@ import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
 import Lemma.Tensor.LengthCast.eq.Length.of.Eq
 import Lemma.Tensor.LengthMul.eq.Length.of.GtLength_0
 import Lemma.Tensor.LengthRepeat.eq.Length.of.GtVal_0
-import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0
+import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0.GtLength
 import Lemma.Tensor.LengthUnsqueeze.eq.Length.of.Gt_0
 import sympy.tensor.tensor
 open List Tensor
@@ -19,7 +19,7 @@ private lemma main
 -- proof
   unfold Tensor.bmm
   rw [LengthCast.eq.Length.of.Eq (by grind)]
-  rw [LengthSum.eq.Length.of.Gt_0 (by simp)]
+  rw [LengthSum.eq.Length.of.Gt_0.GtLength (by simp) (by simp)]
   rw [LengthMul.eq.Length.of.GtLength_0 (by simp)]
   rw [LengthCast.eq.Length.of.Eq (by simp)]
   rw [LengthRepeat.eq.Length.of.GtVal_0 (by simp)]

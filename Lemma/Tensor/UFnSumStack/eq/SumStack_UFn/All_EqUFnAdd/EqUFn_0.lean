@@ -1,6 +1,7 @@
+import Lemma.Tensor.SumAppend.eq.AddSumS
+import Lemma.Tensor.EqSumStack
 import Lemma.Tensor.Stack.eq.AppendStackS
 import Lemma.Tensor.Sum.eq.Zero
-import Lemma.Tensor.SumStack.eq.AddSumSStack
 open Tensor
 
 
@@ -24,10 +25,10 @@ private lemma main
     erw [Stack.eq.AppendStackS (f := fun i => f (X i))]
     simp
     erw [SumAppend.eq.AddSumS]
-    erw [SumAppend.eq.AddSumS]
+    rw [SumAppend.eq.AddSumS]
     rw [h_add]
     congr 1
-    sorry
+    simp [EqSumStack]
 
 
 @[main]
@@ -46,7 +47,10 @@ private lemma fin
     repeat rw [Sum.eq.Zero]
     aesop
   else
-    have := main h₀ h_add (fun i => if h_i : i < n then X ⟨i, by grind⟩ else X ⟨0, by grind⟩) (α := α) (n := n)
+    have := main h₀ h_add (fun i => if h_i : i < n then
+      X ⟨i, by grind⟩
+    else
+      X ⟨0, by grind⟩) (α := α) (n := n)
     simp at this
     assumption
 

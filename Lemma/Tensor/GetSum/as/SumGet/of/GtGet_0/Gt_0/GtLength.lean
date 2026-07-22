@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0
+import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0.GtLength
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
 open Tensor
 
@@ -14,8 +14,8 @@ private lemma main
   (h_i : i < s[0])
   (X : Tensor α s) :
 -- imply
-  let h_shape := LengthSum.eq.Length.of.Gt_0 h_d X
-  let h_i : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
+  let h_shape := LengthSum.eq.Length.of.Gt_0.GtLength (by grind) (by grind) (d := d) X
+  let h_i : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0 (by grind)]
   (X.sum d)[i] ≃ X[i].sum (d - 1) := by
 -- proof
   intro h_shape h_i'

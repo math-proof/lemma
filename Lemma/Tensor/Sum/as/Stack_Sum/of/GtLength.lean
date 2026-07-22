@@ -1,5 +1,5 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.Sum.as.Stack_Sum.of.Eq.GtLength
+import Lemma.Tensor.Sum.as.Stack_Sum.of.Eq
 import Lemma.Nat.Lt_Sub.of.LtAdd
 open Tensor Nat
 
@@ -9,7 +9,7 @@ private lemma main
   [Add α] [Zero α]
   {d : ℕ}
 -- given
-  (h : d + 1 < s.length)
+  (h : d < s.length)
   (X : Tensor α s) :
 -- imply
   have h_length : s.length > 0 := by linarith
@@ -20,8 +20,7 @@ private lemma main
   | [] =>
     contradiction
   | s₀ :: s =>
-    apply Sum.as.Stack_Sum.of.Eq.GtLength rfl
-    apply Lt_Sub.of.LtAdd h
+    apply Sum.as.Stack_Sum.of.Eq rfl
 
 
 -- created on 2025-06-27

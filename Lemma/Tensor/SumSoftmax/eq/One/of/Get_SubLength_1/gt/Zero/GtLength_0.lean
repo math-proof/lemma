@@ -55,7 +55,7 @@ private lemma main
       simp at this
       erw [this]
       erw [GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength (by simp) (by simp) (by simp)]
-      exact ih (by simp) (by simp_all) X[i]
+      apply ih (by simp) (by simp_all)
 
 
 -- created on 2025-10-07

@@ -1,14 +1,22 @@
-import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Tensor.DataDiv.eq.DivData
-import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
-import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Reshape
-import Lemma.Vector.MapMap.eq.Map_Comp
-import Lemma.Nat.Div.eq.HDiv
-import Lemma.Tensor.Div.eq.Div_Reshape
-import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
+import Lemma.Bool.EqCast.of.SEq
 import Lemma.Nat.Any_Eq_AddMul
-open Tensor Vector Nat
+import Lemma.Nat.Div.eq.HDiv
+import Lemma.Tensor.DataDiv.eq.DivData
+import Lemma.Tensor.DataSum_0.as.SumSplitAtData
+import Lemma.Tensor.Div.eq.Div_Reshape
+import Lemma.Tensor.Eq.is.EqDataS
+import Lemma.Tensor.GetDiv.eq.DivGet
+import Lemma.Tensor.GetToVector.eq.Get
+import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
+import Lemma.Tensor.Sum.as.FromVectorMapToVector.of.GtLength_0
+import Lemma.Tensor.Sum.eq.FromVectorMapToVector
+import Lemma.Tensor.ToVectorDiv.eq.DivToVector_Reshape
+import Lemma.Vector.CastSum.eq.DivCastSumSplitAt_1
+import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
+import Lemma.Vector.GetMap.eq.UFnGet
+import Lemma.Vector.MapMap.eq.Map_Comp
+import Lemma.Vector.SEq.of.All_EqGetS.Eq
+open Bool Nat Tensor Vector
 
 
 @[main]
@@ -23,22 +31,25 @@ private lemma main
 -- proof
   induction dim generalizing X s with
   | zero =>
-    unfold Tensor.sum
-    simp [h]
     apply Eq.of.EqDataS
+    erw [DataSum_0.eq.Cast_SumSplitAtData]
+    conv_rhs => erw [DataDiv.eq.DivData]
+    conv_rhs => erw [DataSum_0.eq.Cast_SumSplitAtData]
+    have := CastSum.eq.DivCastSumSplitAt_1 X.data n.data[0]
+    simp at this
     let ⟨data⟩ := X
-    repeat rw [DataDiv.eq.DivData]
-    rw [CastSum.eq.DivCastSumSplitAt_1]
+    simp at this
+    simpa
   | succ dim ih =>
-    unfold Tensor.sum
-    simp [h]
+    erw [Sum.eq.Cast_FromVectorMapToVector.of.GtLength_0 (by grind)]
+    apply EqCast.of.SEq
     match s with
     | .nil =>
       contradiction
     | s₀ :: s =>
       rw [ToVectorDiv.eq.DivToVector_Reshape]
       simp [HDiv.hDiv]
-      apply Eq.of.EqDataS
+      apply SEq.of.SEqDataS.Eq (by grind)
       simp [Div.eq.HDiv]
       simp at h
       have h_sum : ∀ x : Tensor α s, (x / n.reshape s (by simp)).sum dim = x.sum dim / n := fun x => by
@@ -63,14 +74,23 @@ private lemma main
       have h_fun : (fun x : Tensor α (s.eraseIdx dim) => x.data) = Tensor.data := by
         simp
       simp only [h_fun]
-      ext k
+      apply SEq.of.All_EqGetS.Eq.fin (by rfl)
+      intro k
       rw [GetMap.eq.UFnGet]
       let ⟨i, j, h_k⟩ := Any_Eq_AddMul k
       repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
       simp
       rw [DataDiv.eq.DivData]
       rw [GetDiv.eq.DivGet.fin (a := n.data[0])]
-      rfl
+      erw [GetToVector.eq.Get.fin]
+      congr 1
+      rw [Sum.eq.FromVectorMapToVector X dim]
+      unfold Tensor.fromVector
+      simp
+      repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_k]
+      simp
+      erw [GetToVector.eq.Get.fin]
 
 
 -- created on 2025-09-25
+-- updated on 2026-07-22

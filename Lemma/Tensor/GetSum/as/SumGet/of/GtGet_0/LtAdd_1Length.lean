@@ -1,6 +1,6 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0
-import Lemma.Tensor.Sum.as.Stack_Sum.of.LtAdd_1Length
+import Lemma.Tensor.LengthSum.eq.Length.of.Gt_0.GtLength
+import Lemma.Tensor.Sum.as.Stack_Sum.of.GtLength
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.EqGetStack
 open Tensor
@@ -16,12 +16,12 @@ private lemma main
   (X : Tensor α s) :
 -- imply
   have : i < X.length := by rwa [Length.eq.Get_0.of.GtLength_0]
-  have : i < (X.sum (d + 1)).length := by rwa [LengthSum.eq.Length.of.Gt_0 (by linarith)]
+  have : i < (X.sum (d + 1)).length := by rwa [LengthSum.eq.Length.of.Gt_0.GtLength (by linarith) (by linarith)]
   (X.sum (d + 1))[i] ≃ X[i].sum d := by
 -- proof
-  intro h_i_length h_i'
-  have := Sum.as.Stack_Sum.of.LtAdd_1Length h_d X
-  have := SEqGetS.of.SEq.GtLength.fin h_i' this
+  intro h_i_length h_i
+  have := Sum.as.Stack_Sum.of.GtLength (by linarith) X (d := d)
+  have := SEqGetS.of.SEq.GtLength.fin h_i this
   rwa [EqGetStack.fn.fin] at this
 
 
