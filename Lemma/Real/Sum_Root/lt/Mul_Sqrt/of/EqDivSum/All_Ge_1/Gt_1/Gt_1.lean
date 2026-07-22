@@ -19,7 +19,7 @@ import Lemma.Nat.Lt.of.Lt.Le
 import Lemma.Real.Pow1.eq.One
 import Lemma.Nat.SubNatNat.eq.Sub
 import Lemma.Real.SubAddSqrt.lt.Mul_SqrtDiv.of.Gt_1.Gt_1
-import Lemma.Bool.All_EqUFnS.of.All_Eq
+import Lemma.Finset.All_EqUFnS.of.All_Eq
 import Lemma.Nat.EqAdd0
 import Lemma.Nat.EqCast_0'0
 open Bool Finset Real Nat Int
@@ -69,7 +69,7 @@ private lemma main
       exact Eq.of.Le.Ge ht.left ht.right
     have h_All_Eq := All.of.All.All_Imp this h_All_And
     let f := fun (xi : ℝ) (i : ℕ) => xi ^ (1 / (i + 2) : ℝ)
-    have h_All_Eq_Root := All_EqUFnS.of.All_Eq.binary (f := f) h_All_Eq
+    have h_All_Eq_Root := All_EqUFnS.of.All_Eq.bin (f := f) h_All_Eq
     simp only [f] at h_All_Eq_Root
     let f := fun i : ℕ => (x i) ^ (1 / (i + 2) : ℝ)
     have h_Eq_Sum := Sum.eq.Add_Sum.of.Gt_0 (x := f) (by linarith [h₀])

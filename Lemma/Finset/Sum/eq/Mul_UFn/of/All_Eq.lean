@@ -1,6 +1,6 @@
 import Lemma.Finset.Sum.eq.Mul.of.All_Eq
-import Lemma.Bool.All_EqUFnS.of.All_Eq
-open Bool Finset
+import Lemma.Finset.All_EqUFnS.of.All_Eq
+open Finset
 
 
 @[main]
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   ∑ i ∈ s, f (x i) = s.card * f a := by
 -- proof
-  have := All_EqUFnS.of.All_Eq.is_constant (f := f) h
+  have := All_EqUFnS.of.All_Eq.const (f := f) h
   have := Sum.eq.Mul.of.All_Eq this
   assumption
 

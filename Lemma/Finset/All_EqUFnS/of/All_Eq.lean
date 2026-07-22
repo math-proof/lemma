@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma binary
+private lemma bin
   {s : Finset ι}
   {a b : ι → α}
   {f : α → ι → β}
@@ -30,7 +30,7 @@ private lemma main
 
 
 @[main]
-private lemma is_constant
+private lemma const
   {s : Finset ι}
   {x : ι → α}
   {f : α → β}

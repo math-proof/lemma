@@ -13,6 +13,7 @@ import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
+import Lemma.Tensor.Mul_Sum.eq.Sum_MulCast_RepeatUnsqueeze
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
@@ -165,6 +166,8 @@ private lemma vec
     arg 1
     arg 2
     erw [EqTT]
+  conv_lhs => erw [Mul_Sum.eq.Sum_MulCast_RepeatUnsqueeze]
+  simp
   sorry
 
 

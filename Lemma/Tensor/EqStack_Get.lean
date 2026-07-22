@@ -3,7 +3,7 @@ import Lemma.Tensor.EqGetStack
 open Tensor
 
 
-@[main]
+@[main, fin]
 private lemma main
 -- given
   (X : Tensor α (n :: s)) :

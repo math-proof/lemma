@@ -8,11 +8,11 @@ import Lemma.Nat.Gt.of.Gt.Gt
 import Lemma.Nat.All_Eq.of.All_Eq.Eq
 import Lemma.Nat.All_Eq.of.All_Eq.Lt
 import Lemma.Nat.Eq.of.All_Eq.Lt
-import Lemma.Bool.All_EqUFnS.of.All_Eq
+import Lemma.Finset.All_EqUFnS.of.All_Eq
 import Lemma.Real.Pow1.eq.One
 import Lemma.Nat.Ge.of.Eq
 import Lemma.Finset.All.of.All.All_Imp
-open Bool Real Finset Nat Rat
+open Real Finset Nat Rat
 
 
 @[main, mp]
