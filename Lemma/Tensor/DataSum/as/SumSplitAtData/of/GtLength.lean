@@ -12,7 +12,7 @@ import Lemma.Tensor.DataFromVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.GetToVector.eq.Get
-import Lemma.Tensor.Sum.eq.FromVectorMap_FunSum.of.GtLength
+import Lemma.Tensor.Sum.eq.FromVectorMapToVector.of.GtLength
 import Lemma.Vector.EqGetS.of.SEq.Lt
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
@@ -59,11 +59,11 @@ private lemma main
       have h_lt : d < s.length := Nat.lt_of_succ_le (Nat.lt_succ_iff.mp h)
       unfold Tensor.sum
       simp only [h]
-      rw [(Sum.eq.FromVectorMap_FunSum.of.GtLength (s := s) (n := s₀) (by simpa using h_lt) X).symm]
+      rw [(Sum.eq.FromVectorMapToVector.of.GtLength (s := s) (n := s₀) (by simpa using h_lt) X).symm]
       split_ifs
       ·
         refine SEq.trans (DataCast.as.Data.of.Eq (by grind) (X.sum (d + 1))) ?_
-        rw [congrArg Tensor.data (Sum.eq.FromVectorMap_FunSum.of.GtLength (s := s) (n := s₀) (by simpa using h_lt) X)]
+        rw [congrArg Tensor.data (Sum.eq.FromVectorMapToVector.of.GtLength (s := s) (n := s₀) (by simpa using h_lt) X)]
         rw [DataFromVector.eq.FlattenMapData]
         apply SEq.of.All_EqGetS.Eq.fin (by simp [ProdEraseIdx.eq.MulProdS]; grind)
         intro t

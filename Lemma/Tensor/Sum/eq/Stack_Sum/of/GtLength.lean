@@ -1,4 +1,4 @@
-import Lemma.Tensor.Sum.eq.FromVectorMap_FunSum.of.GtLength
+import Lemma.Tensor.Sum.eq.FromVectorMapToVector.of.GtLength
 import Lemma.Tensor.FromVectorMapToVector.eq.Stack
 open Tensor
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   X.sum (d + 1) = [i < n] (X[i].sum d) := by
 -- proof
-  rw [Sum.eq.FromVectorMap_FunSum.of.GtLength h]
+  rw [Sum.eq.FromVectorMapToVector.of.GtLength h]
   apply FromVectorMapToVector.eq.Stack (fun s => s.eraseIdx d)
 
 

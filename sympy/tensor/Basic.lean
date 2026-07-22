@@ -178,22 +178,7 @@ def Tensor.fromVector (X : List.Vector (Tensor α s) n) : Tensor α (n :: s) :=
 use (X.sum dim).keepdim to keep the dimension
 -/
 def Tensor.sum [Add α] [Zero α] (X : Tensor α s) (dim : ℕ := s.length - 1) : Tensor α (s.eraseIdx dim) :=
-  if h_dim : dim < s.length then
-    match h : dim with
-    | 0 =>
-      ⟨cast (by simp) (X.data.splitAt 1).sum⟩
-    | dim + 1 =>
-      have h_lt : dim < s.tail.length := by
-        simp
-        apply Lt_Sub.of.LtAdd h_dim
-      cast
-        (by simp_all [EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail h_lt 1])
-        (Tensor.fromVector (X.toVector.map (·.sum dim)))
-  else
-    cast (by
-      simp at h_dim
-      rw [EqEraseIdx.of.LeLength h_dim]
-    ) X
+  ⟨cast (by simp; grind) ((X.data.splitAt dim).map fun x => (x.splitAt 1).sum).flatten⟩
 
 /--
 [torch.mean](https://pytorch.org/docs/stable/generated/torch.mean.html)

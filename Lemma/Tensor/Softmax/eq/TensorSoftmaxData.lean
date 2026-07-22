@@ -1,19 +1,20 @@
-import Lemma.Tensor.Eq.is.EqDataS
+import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.List.Prod.eq.MulProdS
+import Lemma.Nat.EqMod_1'0
+import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Tensor.DataExp.eq.ExpData
-import Lemma.Vector.Div.eq.Div_Replicate
-import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.Tensor.DataCast.as.Data.of.Eq
-import Lemma.Vector.GetCast.eq.Get.of.Eq
+import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
+import Lemma.Tensor.Eq.is.EqDataS
+import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
-import Lemma.Nat.EqMod_1'0
-import Lemma.Tensor.EqGetUnsqueeze_0
+import Lemma.Vector.Div.eq.Div_Replicate
+import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Head.eq.Get_0
-import Lemma.List.Prod.eq.MulProdS
-open Tensor Vector Bool Nat List
+open Bool List Nat Tensor Vector
 
 
 @[main]
@@ -46,7 +47,7 @@ private lemma main
   have := EqGetUnsqueeze_0.fin ((exp (⟨X⟩ : Tensor α [n])).sum 0)
   simp at this
   simp [this]
-  unfold Tensor.sum
+  rw [DataSum_0.eq.SumSplitAtData]
   simp [DataExp.eq.ExpData]
   unfold List.Vector.splitAt
   have h_eq := Prod.eq.MulProdS [n] 1
@@ -64,3 +65,4 @@ private lemma main
 
 
 -- created on 2025-10-11
+-- updated on 2026-07-22
