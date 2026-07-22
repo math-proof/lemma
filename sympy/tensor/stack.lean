@@ -8,24 +8,26 @@ def Stack (n : ℕ) (f : Fin n → Tensor α shape) : Tensor α (n :: shape) :=
   Tensor.fromVector ((List.Vector.range n).map f)
 
 
-syntax "[" ident "<" term "]" term:67 : term
+syntax "[" binderIdent "<" term "]" term:67 : term
 macro_rules
-  | `([$x < $n] $body) => `(Stack $n fun $x => $body)
+  | `([_ < $n] $body) => `(Stack $n fun _ => $body)
+  | `([$x:ident < $n] $body) => `(Stack $n fun $x => $body)
 
 /--
 Tensor sum along axis 0 of a stack: `∑ i < n, f i` means `([i < n] f i).sum 0`.
 Uses priority above Mathlib's bounded `∑ i < n, …` (Finset.Iio) notation.
 -/
-syntax (priority := 10000) "∑ " ident "<" term ", " term:67 : term
+syntax (priority := 10000) "∑ " binderIdent "<" term ", " term:67 : term
 macro_rules
-  | `(∑ $x < $n, $body) => `(([ $x < $n ] $body).sum 0)
+  | `(∑ _ < $n, $body) => `(([ _ < $n ] $body).sum 0)
+  | `(∑ $x:ident < $n, $body) => `(([ $x:ident < $n ] $body).sum 0)
 
 
 -- Unexpander to convert Stack expressions back to custom syntax
 @[app_unexpander Stack]
 def Stack.unexpand : PrettyPrinter.Unexpander
   | `($_ $n:term fun $x:ident => $body) =>
-    `([$x < $n] $body)
+    `([$x:ident < $n] $body)
   | _ =>
     throw ()
 

@@ -1,6 +1,5 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
-import sympy.tensor.stack
 open Tensor
 
 
@@ -9,7 +8,7 @@ private lemma main
 -- given
   (X : Tensor α (n :: s)) :
 -- imply
-  [i < n] X[i.val] = X := by
+  [i < n] X[i] = X := by
 -- proof
   apply Eq.of.All_EqGetS
   intro i

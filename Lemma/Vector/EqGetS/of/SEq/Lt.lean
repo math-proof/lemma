@@ -4,7 +4,7 @@ import Lemma.Vector.All_EqGetS.of.SEq
 open Vector Bool
 
 
-@[main]
+@[main, fin]
 private lemma main
   {a : List.Vector α n}
   {b : List.Vector α m}

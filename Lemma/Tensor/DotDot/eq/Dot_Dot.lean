@@ -152,8 +152,8 @@ tensor version of Matrix.mul_assoc
 -/
 @[main]
 private lemma main
-  [NonUnitalSemiring α]
-  -- [CommMagma α] [Add α] [Zero α]
+  -- [NonUnitalSemiring α]
+  [CommMagma α] [Add α] [Zero α]
 -- given
   (L : Tensor α [l, m])
   (M : Tensor α [m, n])

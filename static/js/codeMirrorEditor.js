@@ -80,7 +80,14 @@ where
 			else
 				window.open(url);
 		}
-		
+
+		function *yield_modules(module) {
+			yield module;
+			let m;
+			if (m = module.match(/^(.+)\.eq\.Cast_([^.]+)(.*)$/))
+				yield m[1] + '.as.' + m[2] + m[3];
+		}
+
 		async function get_table_of_module(module, postfix) {
 			var symbol = null;
 			var table = 'module';
@@ -107,43 +114,46 @@ where
 					if (await select_mathlib(module))
 						table = 'mathlib';
 					else {
-						var char = postfix.match(/^\.[A-Z]/)? '\\.': '$|\\.';
-						var regexp = `^([\\w''!₀-₉]+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`;
-						var regexp_mysql = regexp.replace(/\\/g, "\\\\");
-						var sql = `
+						for (var module of yield_modules(module)) {
+							var char = postfix.match(/^\.[A-Z]/)? '\\.': '$|\\.';
+							var regexp = `^([\\w''!₀-₉]+)\\.${module.replace(/\.[a-z][^.]+$/, '').replace('.', '\\.')}(?=${char})`;
+							var regexp_mysql = regexp.replace(/\\/g, "\\\\");
+							var sql = `
 select 
 	regexp_replace(module, "${regexp_mysql}.*", '$1')
 from 
 	axiom.lemma
 where 
 	module regexp "${regexp_mysql}"`;
-						console.log('sql =', sql);
-						var section = await form_post(`php/request/execute.php`, {sql});
-						section = section.map(s => s[0]);
-						section = [...new Set(section)];
-						if (section.length > 1) {
-							var root = self.$parent.$parent;
-							var sectionIntersect = section.array_intersect(root.open_sections);
-							if (sectionIntersect.length) {
-								section = sectionIntersect;
-								if (section.length > 1) {
-									regexp = new RegExp(regexp);
-									for (var $import of root.imports) {
-										var m = $import.match(/^Lemma\.(.+)/);
-										if (m) {
-											m = m[1].match(regexp);
+							console.log('sql =', sql);
+							var section = await form_post(`php/request/execute.php`, {sql});
+							section = section.map(s => s[0]);
+							section = [...new Set(section)];
+							if (section.length > 1) {
+								var root = self.$parent.$parent;
+								var sectionIntersect = section.array_intersect(root.open_sections);
+								if (sectionIntersect.length) {
+									section = sectionIntersect;
+									if (section.length > 1) {
+										regexp = new RegExp(regexp);
+										for (var $import of root.imports) {
+											var m = $import.match(/^Lemma\.(.+)/);
 											if (m) {
-												if (section.includes(m[1])) {
-													section = [m[1]];
-													break;
+												m = m[1].match(regexp);
+												if (m) {
+													if (section.includes(m[1])) {
+														section = [m[1]];
+														break;
+													}
 												}
 											}
 										}
 									}
 								}
 							}
+							[section] = section;
+							if (section) break;
 						}
-						[section] = section;
 						if (!section) return;
 						module = section + '.' + module;
 					}
