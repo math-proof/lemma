@@ -43,7 +43,7 @@ async function updateAxiomModuleRow(projectUser, oldModule, newModule) {
       [lemmaOld, lemmaNew, projectUser, lemmaOld]
     );
   } catch (e) {
-    console.warn('[rename mysql]', /** @type {Error} */ (e).message);
+    console.warn('[rename mysql]', e.message);
   }
 }
 

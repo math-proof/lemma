@@ -128,7 +128,7 @@ group by
 
     return { state_count_pairs, repertoire };
   } catch (e) {
-    console.warn('[summary mysql]', /** @type {Error} */ (e).message);
+    console.warn('[summary mysql]', e.message);
     return empty;
   }
 }

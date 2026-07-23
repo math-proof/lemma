@@ -3892,7 +3892,7 @@ export class LeanLogicAnd extends LeanLogic {
         const lhs = this.lhs.toJSON();
         const rhs = this.rhs.toJSON();
         const f = this.func;
-        const rec = lhs && typeof lhs === 'object' ? /** @type {Record<string, unknown>} */ (lhs) : null;
+        const rec = lhs && typeof lhs === 'object' ? lhs : null;
         if (this.lhs instanceof LeanLogicAnd && rec && Array.isArray(rec[f])) {
             return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
         }
@@ -3923,7 +3923,7 @@ export class LeanLogicOr extends LeanLogic {
         const lhs = this.lhs.toJSON();
         const rhs = this.rhs.toJSON();
         const f = this.func;
-        const rec = lhs && typeof lhs === 'object' ? /** @type {Record<string, unknown>} */ (lhs) : null;
+        const rec = lhs && typeof lhs === 'object' ? lhs : null;
         if (this.lhs instanceof LeanLogicOr && rec && Array.isArray(rec[f])) {
             return { [f]: [.../** @type {unknown[]} */ (rec[f]), rhs] };
         }
@@ -4415,13 +4415,13 @@ function normalizeInstImplicit(s) {
  */
 function extractAttribute(attr) {
     if (!attr) return null;
-    let a = /** @type {*} */ (attr).arg;
+    let a = attr.arg;
     if (a instanceof LeanArgsSpaceSeparated) {
         const bracket = a.args.find((x) => x instanceof LeanBracket);
         a = bracket || null;
     }
     if (!a || !(a instanceof LeanBracket)) return null;
-    a = /** @type {*} */ (a).arg;
+    a = a.arg;
     if (a instanceof LeanArgsCommaSeparated || a instanceof LeanArgsSpaceSeparated)
         return a.args.map((x) => strStmt(x)).filter(Boolean);
     if (a instanceof LeanToken) return [strStmt(a)];
@@ -4487,7 +4487,7 @@ function arrayPushVars(vars, lhs, rhs) {
         let args = [lhs, rhs];
         while (args.length && args[args.length - 1] instanceof Lean_rightarrow) {
             const end = args[args.length - 1];
-            args.splice(args.length - 1, 1, /** @type {*} */ (end).lhs, /** @type {*} */ (end).rhs);
+            args.splice(args.length - 1, 1, end.lhs, end.rhs);
         }
         vars.push(args);
     } else if (lhs instanceof LeanArgsSpaceSeparated) {
@@ -4502,7 +4502,7 @@ function parseVars(implicit) {
     const vars = [];
     for (const brace of implicit) {
         if (brace instanceof LeanBrace) {
-            const colon = /** @type {*} */ (brace).arg;
+            const colon = brace.arg;
             if (colon instanceof LeanColon) arrayPushVars(vars, colon.lhs, colon.rhs);
         }
     }
@@ -4641,7 +4641,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
     for (let idx = 0; idx < args.length; idx++) {
         const stmt = args[idx];
         if (stmt instanceof Lean_import) {
-            import_.push(normalizeImportStr(strStmt(/** @type {*} */ (stmt).arg)));
+            import_.push(normalizeImportStr(strStmt(stmt.arg)));
         } else if (stmt instanceof Lean_lemma) {
             /** @type {import('../../../static/js/parser/lean.js').LeanAssign | null} */
             let assignment = stmt.assignment instanceof LeanAssign ? stmt.assignment : null;
@@ -4651,7 +4651,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                 let proofStart = args.length;
                 for (let k = idx + 1; k < args.length; k++) {
                     const x = args[k];
-                    if (x instanceof LeanLineComment && /** @type {*} */ (x).text === 'proof') {
+                    if (x instanceof LeanLineComment && x.text === 'proof') {
                         proofStart = k;
                         break;
                     }
@@ -4737,7 +4737,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         if (s instanceof LeanColon && s.lhs) {
                             const lb = s.lhs;
                             if (lb instanceof LeanBracket) {
-                                const inner = /** @type {*} */ (lb).arg;
+                                const inner = lb.arg;
                                 const lhsStr = inner ? strStmt(inner).trim() : strStmt(lb).trim();
                                 const rhsStr = s.rhs ? strStmt(s.rhs).trim() : '';
                                 const parts = lhsStr.split(/\s+/).filter(Boolean);
@@ -4756,7 +4756,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                         if (innerLhs instanceof LeanParenthesis && inner.rhs) {
                                             if (flatGiven === null) flatGiven = [];
                                             const varPart = strStmt(
-                                                /** @type {*} */ (innerLhs).arg
+                                                innerLhs.arg
                                             ).trim();
                                             const typePart = normalizeTypeStr(strStmt(inner.rhs));
                                             flatGiven.push({
@@ -4769,7 +4769,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                     if (flatGiven === null) flatGiven = [];
                                     let leanStr;
                                     if (lb instanceof LeanParenthesis && s.rhs) {
-                                        const varPart = strStmt(/** @type {*} */ (lb).arg).trim();
+                                        const varPart = strStmt(lb.arg).trim();
                                         const typePart = normalizeTypeStr(strStmt(s.rhs));
                                         leanStr = `(${varPart} : ${typePart})`;
                                     } else {
@@ -4884,7 +4884,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         const parens = collectParens(declspec);
                         if (parens.length > 0) {
                             const lines = parens.map((p) => {
-                                const arg = /** @type {*} */ (p).arg;
+                                const arg = p.arg;
                                 if (arg instanceof LeanColon && arg.lhs && arg.rhs)
                                     return `(${strStmt(arg.lhs).trim()} : ${normalizeTypeStr(strStmt(arg.rhs))})`;
                                 return strStmt(p);
@@ -4917,7 +4917,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         const st = declList[i];
                         if (st instanceof LeanBracket) {
                             instImplicit.push(strStmt(st));
-                            const ia = /** @type {*} */ (st).arg;
+                            const ia = st.arg;
                             if (ia instanceof LeanArgsSpaceSeparated && ia.args.length === 2) {
                                 const [l, r] = ia.args;
                                 if (l instanceof LeanToken && l.text === 'Decidable' && r instanceof LeanToken)
@@ -4944,12 +4944,12 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             if (implicit.length) implicit.push(strStmt(st));
                             else instImplicit.push(strStmt(st));
                         } else if (st instanceof LeanParenthesis) {
-                            const inner = /** @type {*} */ (st).arg;
+                            const inner = st.arg;
                             if (inner instanceof LeanColon) {
                                 declList.splice(
                                     i,
                                     0,
-                                    new LeanLineComment('given', st.indent, /** @type {*} */ (st).parent),
+                                    new LeanLineComment('given', st.indent, st.parent),
                                 );
                                 if (modify) modify.value = true;
                                 ++i;
@@ -4962,7 +4962,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     /** @type {unknown} */
                     let givenOut = null;
                     if (given !== null) {
-                        let givenSlice = declList.slice(/** @type {number} */ (given));
+                        let givenSlice = declList.slice(given);
                         /** @type {([string, string] | null)[]} */
                         const latex = [];
                         let givenStart = null;
@@ -4972,7 +4972,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
 
                         for (const [i, st] of givenSlice.entries()) {
                             if (st instanceof LeanParenthesis) {
-                                const colon = /** @type {*} */ (st).arg;
+                                const colon = st.arg;
                                 if (colon instanceof LeanColon) {
                                     const prop = colon.rhs;
                                     if (vars == null) {
@@ -4992,7 +4992,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             } else if (st.is_comment()) latex.push(null);
                             else if (st instanceof LeanBrace) {
                                 const pivot = i;
-                                const par = new LeanParenthesis(/** @type {*} */ (st).arg, st.indent, st.parent);
+                                const par = new LeanParenthesis(st.arg, st.indent, st.parent);
                                 par.is_closed = true;
                                 givenSlice[pivot] = par;
                                 break;
@@ -5062,7 +5062,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         let end = assignIdx + 1;
                         for (; end < args.length; ++end) {
                             const x = args[end];
-                            if (x instanceof LeanLineComment && /^(created|updated)\s/i.test(String(/** @type {*} */ (x).text || '')))
+                            if (x instanceof LeanLineComment && /^(created|updated)\s/i.test(String(x.text || '')))
                                 break;
                         }
                         proofNode = { args: args.slice(assignIdx + 1, end) };
@@ -5118,7 +5118,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         const parens = collectParens(binderNode);
                         if (parens.length > 0) {
                             const lines = parens.map((p) => {
-                                const arg = /** @type {*} */ (p).arg;
+                                const arg = p.arg;
                                 if (arg instanceof LeanColon && arg.lhs && arg.rhs)
                                     return `(${strStmt(arg.lhs).trim()} : ${normalizeTypeStr(strStmt(arg.rhs))})`;
                                 return strStmt(p);
@@ -5208,7 +5208,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
         } else if (stmt instanceof Lean_def) {
             def.push(strStmt(stmt));
         } else if (stmt instanceof Lean_open) {
-            let o = /** @type {*} */ (stmt).arg;
+            let o = stmt.arg;
             if (o instanceof LeanArgsSpaceSeparated) {
                 if (o.args.length === 2 && o.args[1] instanceof LeanParenthesis) {
                     const defs = /** @type {*} */ (o.args[1]).arg;
@@ -5216,19 +5216,19 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         [strStmt(o.args[0])]:
                             defs instanceof LeanArgsSpaceSeparated
                                 ? defs.args.map((a) => strStmt(a))
-                                : [strStmt(/** @type {*} */ (defs).arg)],
+                                : [strStmt(defs.arg)],
                     });
                 } else open.push(o.args.map((a) => strStmt(a)).filter((s) => s.trim()));
-            } else open.push([strStmt(/** @type {*} */ (o).text)]);
+            } else open.push([strStmt(o.text)]);
         } else if (stmt instanceof Lean_set_option) {
-            const a = /** @type {*} */ (stmt).arg;
+            const a = stmt.arg;
             if (a instanceof LeanArgsSpaceSeparated) set_option.push(a.args.map((x) => strStmt(x)));
         } else if (stmt instanceof LeanLineComment) {
             const m = /^(created|updated) on (\d\d\d\d-\d\d-\d\d)$/.exec(stmt.text);
             if (m) date[m[1]] = m[2];
             else comment = stmt.text;
         } else if (stmt instanceof LeanBlockComment) {
-            comment = /** @type {*} */ (stmt).text;
+            comment = stmt.text;
         }
     }
 
@@ -6271,16 +6271,12 @@ export class LeanIte extends LeanArgs {
 
     is_indented() {
         const p = this.parent;
-        return (
-            !p ||
-            p instanceof LeanStatements ||
-            (p instanceof LeanIte && (!p.then || this === p.then))
-        );
+        return !p || p instanceof LeanStatements || (p instanceof LeanIte && (!p.then || this === p.then));
     }
 
     latexArgs(syntax) {
         const cases = [];
-        let cur = /** @type {LeanIte | Lean} */ (this);
+        let cur = this;
         while (true) {
             const [$if, then, els] = cur.strip_parenthesis();
             const ifL = $if.toLatex(syntax);
@@ -6297,7 +6293,7 @@ export class LeanIte extends LeanArgs {
 
     latexFormat() {
         let n = 0;
-        let cur = /** @type {LeanIte | Lean} */ (this);
+        let cur = this;
         while (true) {
             const [, , els] = cur.strip_parenthesis();
             n++;
@@ -6345,7 +6341,7 @@ export class LeanIte extends LeanArgs {
             } else {
                 statements.push(new LeanIte([], this.indent, $else.level));
                 if (sElse instanceof LeanStatements) sElse.swap_echo_star(syntax, statements);
-                else statements.push(sElse);
+                else statements.push(...sElse.split(syntax));
             }
             return statements;
         }
@@ -6402,7 +6398,7 @@ class ParserPrefixExpr {
     }
 
     size() {
-        if (this.cache.size != null) return /** @type {number} */ (this.cache.size);
+        if (this.cache.size != null) return this.cache.size;
         let s = 1;
         for (const arg of this.args) s += arg.size();
         this.cache.size = s;
@@ -6431,7 +6427,7 @@ function leanVarsGetitem(root, keys) {
     for (const k of keys) {
         if (k === '' || k == null) return undefined;
         if (cur == null || typeof cur !== 'object') return undefined;
-        cur = /** @type {Record<string, unknown>} */ (cur)[k];
+        cur = cur[k];
     }
     return cur;
 }
@@ -6561,7 +6557,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const type0 = targs[0];
         if (type0 != null && typeof type0 === 'object') {
             const rest = targs.slice(1).map((x) => String(x ?? ''));
-            if (leanVarsGetitem(/** @type {Record<string, unknown>} */ (type0), rest) === 'Prop') return true;
+            if (leanVarsGetitem(type0, rest) === 'Prop') return true;
         }
         const func = this.args[0];
         if (func instanceof LeanToken) {
@@ -7298,8 +7294,9 @@ export class LeanTactic extends LeanSyntax {
             if (token instanceof LeanToken && token.text === '*') 
                 // echo * simp at *
                 return [1, echo, this];
-            const {by} = this;
+            const {by, with: $with} = this;
             if (by && by.arg instanceof LeanStatements) by.echo();
+            if ($with && $with.args.length) $with.echo();
             if (has_sequential_tactic_combinator && sequential_tactic_combinator.inline) {
                 echo.push(sequential_tactic_combinator);
                 this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, true);
@@ -8266,7 +8263,7 @@ class LeanTacticBlock extends LeanUnary {
             } else if (caret instanceof LeanStatements) {
                 const block = caret;
                 if (indent >= block.indent) {
-                    let last = /** @type {LeanCaret | null} */ (null);
+                    let last = null;
                     for (let i = 0; i < newline_count; i++) {
                         last = new LeanCaret(block.indent, block.level);
                         block.push(last);
@@ -8680,6 +8677,12 @@ class LeanWith extends LeanArgs {
         }
         return [];
     }
+
+    echo() {
+        for (var arg of this.args) {
+            arg.echo();
+        }
+    }
 }
 
 class LeanAttribute extends LeanUnary {
@@ -8754,8 +8757,8 @@ export class Lean_def extends LeanArgs {
      */
     constructor(accessibility, name, indent, level, parent = null) {
         if (level === null || level === undefined) {
-            indent = /** @type {number} */ (name);
-            name = /** @type {Lean} */ (accessibility);
+            indent = name;
+            name = accessibility;
             accessibility = 'public';
             level = name instanceof Lean ? name.level : 0;
         }

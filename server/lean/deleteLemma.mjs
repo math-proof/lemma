@@ -46,7 +46,7 @@ export async function handleDeleteLemma(projectUser, req, res) {
   try {
     await fs.unlink(leanPath);
   } catch (e) {
-    if (/** @type {NodeJS.ErrnoException} */ (e).code === 'ENOENT') {
+    if (e.code === 'ENOENT') {
       res.status(404).json({ error: 'file not found' });
       return;
     }
@@ -64,7 +64,7 @@ export async function handleDeleteLemma(projectUser, req, res) {
     try {
       await pool.query('DELETE FROM lemma WHERE user = ? AND module = ?', [projectUser, module]);
     } catch (err) {
-      console.warn('[delete-lemma mysql]', /** @type {Error} */ (err).message);
+      console.warn('[delete-lemma mysql]', err.message);
     }
   }
 

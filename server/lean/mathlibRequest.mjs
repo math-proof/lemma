@@ -17,7 +17,7 @@ function extractJsonObjectFromLeanOutput(text) {
   const tryParse = (t) => {
     try {
       const v = JSON.parse(t);
-      return v != null && typeof v === 'object' && !Array.isArray(v) ? /** @type {Record<string, unknown>} */ (v) : null;
+      return v != null && typeof v === 'object' && !Array.isArray(v) ? v : null;
     } catch {
       return null;
     }
@@ -98,7 +98,7 @@ import sympy.printing.json
     res.type('application/json; charset=utf-8').json(json);
   } catch (e) {
     console.error('[mathlib.php]', e);
-    res.status(500).json({ error: String(/** @type {Error} */ (e).message || e) });
+    res.status(500).json({ error: String(e.message || e) });
   } finally {
     try {
       await fs.unlink(absFile);

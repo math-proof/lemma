@@ -13,7 +13,7 @@ function tryPattern(tokens, lemmaCode) {
   if (tokens.length && Array.isArray(tokens[0])) {
     imp = tokensToModule(tokens, null);
   } else {
-    imp = /** @type {string[]} */ (tokens).join('.');
+    imp = tokens.join('.');
   }
   const escaped = imp.replace(/\./g, '\\.');
   const suffix = String.raw`(?!\.(?:of\.|[A-Z][\w'!₀-₉]*))`;

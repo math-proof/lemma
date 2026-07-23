@@ -32,7 +32,7 @@ function firstVarTokenString(args) {
  * @returns {Record<string, unknown>} `createApp('newTheorem', …)` payload
  */
 export function buildNewTheoremCodeFromMathlibRow(row, module) {
-  const lemma = cloneLemmaForNewTheorem(mathlibRowToLemmaPayload(/** @type {Record<string, unknown>} */ (row)));
+  const lemma = cloneLemmaForNewTheorem(mathlibRowToLemmaPayload(row));
   const imp = /** @type {{ lean?: string; latex?: string }} */ (lemma.imply);
   imp.lean = (imp.lean != null ? String(imp.lean) : '') + ' :=';
   imp.latex = (imp.latex != null ? String(imp.latex) : '') + '\\tag*{ :=}';

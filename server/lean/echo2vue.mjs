@@ -175,7 +175,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
         maxBuffer: SPAWN_MAX_BUFFER,
       });
     } catch (e) {
-      console.warn('[echo2vue] lake build:', /** @type {Error} */ (e).message || e);
+      console.warn('[echo2vue] lake build:', e.message || e);
     }
   }
 

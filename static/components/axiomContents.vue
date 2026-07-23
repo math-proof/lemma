@@ -161,7 +161,7 @@ const self = new Vue({
     folderSearchOpen: false,
     folderSearchQuery: '',
     folderSearchInputId: 'explorer-folder-search-q',
-    folderSearchHits: /** @type {null | object[]} */ (null),
+    folderSearchHits: null,
     folderSearchLoading: false,
     selectedIndex: 0,
   },
@@ -604,7 +604,7 @@ function formatExplorerDate(mtimeMs) {
 }
 
 /** Folder-search debounce (module scope; single explorer mount). */
-let folderSearchTimer = /** @type {ReturnType<typeof setTimeout> | null} */ (null);
+let folderSearchTimer = null;
 let folderSearchSeq = 0;
 </script>
 

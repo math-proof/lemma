@@ -45,7 +45,7 @@ export async function handleDeletePackage(projectUser, req, res) {
       return;
     }
   } catch (e) {
-    if (/** @type {NodeJS.ErrnoException} */ (e).code === 'ENOENT') {
+    if (e.code === 'ENOENT') {
       res.status(404).json({ error: 'folder not found' });
       return;
     }
@@ -62,7 +62,7 @@ export async function handleDeletePackage(projectUser, req, res) {
         [projectUser, module, `${module}.%`]
       );
     } catch (err) {
-      console.warn('[delete-package mysql]', /** @type {Error} */ (err).message);
+      console.warn('[delete-package mysql]', err.message);
     }
   }
 

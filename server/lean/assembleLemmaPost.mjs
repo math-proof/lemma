@@ -113,7 +113,7 @@ function normalizeProofByField(byRaw) {
  */
 function extractProofLines(proof) {
   if (!proof || typeof proof !== 'object') return { kind: '', lines: [] };
-  const o = /** @type {Record<string, unknown>} */ (proof);
+  const o = proof;
   const byRaw = o.by;
   const byStr = normalizeProofByField(byRaw);
   const hasBy = byStr.trim() !== '';

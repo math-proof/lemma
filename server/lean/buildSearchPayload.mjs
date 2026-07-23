@@ -194,7 +194,7 @@ export async function buildSearchPayload(rawDict, projectUser) {
           data = await queryByRegexp(pool, projectUser, regex, caseSensitive, limit, !!replacement);
         }
       } catch (e) {
-        console.warn('[search]', /** @type {Error} */ (e).message);
+        console.warn('[search]', e.message);
         data = [];
       }
     }

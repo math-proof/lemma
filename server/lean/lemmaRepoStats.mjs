@@ -90,7 +90,7 @@ async function getTheoremCountMysql(projectUser) {
       return Number(rows[0].c) || 0;
     }
   } catch (e) {
-    console.warn('[repo-stats mysql]', /** @type {Error} */ (e).message);
+    console.warn('[repo-stats mysql]', e.message);
   }
   return 0;
 }

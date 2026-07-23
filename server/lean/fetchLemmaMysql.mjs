@@ -109,10 +109,10 @@ export async function mysqlExecute(sql, resultType) {
       }
       return rows;
     }
-    const header = /** @type {import('mysql2').ResultSetHeader} */ (rows);
+    const header = rows;
     return header.affectedRows ?? 0;
   } catch (e) {
-    console.warn('[mysql execute]', /** @type {Error} */ (e).message);
+    console.warn('[mysql execute]', e.message);
     return 0;
   }
 }
@@ -192,7 +192,7 @@ export async function fetchMathlibRowByName(name) {
     if (!Array.isArray(rows) || rows.length === 0) return null;
     return /** @type {Record<string, unknown>} */ (rows[0]);
   } catch (e) {
-    console.warn('[mathlib row by name]', /** @type {Error} */ (e).message);
+    console.warn('[mathlib row by name]', e.message);
     return null;
   }
 }
@@ -241,7 +241,7 @@ export async function fetchMathlibLemmaPayloadsFromMysql(name, limit = 100) {
     if (nm) {
       const [exact] = await p.query('SELECT * FROM mathlib WHERE `name` = ? LIMIT ?', [nm, lim]);
       if (Array.isArray(exact) && exact.length > 0) {
-        return exact.map((row) => mathlibRowToLemmaPayload(/** @type {Record<string, unknown>} */ (row)));
+        return exact.map((row) => mathlibRowToLemmaPayload(row));
       }
       const esc = nm.replace(/\\/g, '\\\\').replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\./g, '\\.');
       const [rx] = await p.query(
@@ -249,7 +249,7 @@ export async function fetchMathlibLemmaPayloadsFromMysql(name, limit = 100) {
         [esc, lim]
       );
       if (Array.isArray(rx) && rx.length > 0) {
-        return rx.map((row) => mathlibRowToLemmaPayload(/** @type {Record<string, unknown>} */ (row)));
+        return rx.map((row) => mathlibRowToLemmaPayload(row));
       }
       return [];
     }
@@ -258,10 +258,10 @@ export async function fetchMathlibLemmaPayloadsFromMysql(name, limit = 100) {
       [lim]
     );
     return Array.isArray(rand)
-      ? rand.map((row) => mathlibRowToLemmaPayload(/** @type {Record<string, unknown>} */ (row)))
+      ? rand.map((row) => mathlibRowToLemmaPayload(row))
       : [];
   } catch (e) {
-    console.warn('[mathlib mysql]', /** @type {Error} */ (e).message);
+    console.warn('[mathlib mysql]', e.message);
     return [];
   }
 }

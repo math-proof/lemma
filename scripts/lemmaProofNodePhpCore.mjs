@@ -97,8 +97,8 @@ export function deepEqualProofPayload(a, b) {
     return true;
   }
   if (typeof a === 'object') {
-    const oa = /** @type {Record<string, unknown>} */ (a);
-    const ob = /** @type {Record<string, unknown>} */ (b);
+    const oa = a;
+    const ob = b;
     const ka = Object.keys(oa).sort();
     const kb = Object.keys(ob).sort();
     if (ka.length !== kb.length || ka.join() !== kb.join()) return false;
@@ -201,7 +201,7 @@ export async function compareLemmaProof(moduleName, bases) {
       fetchText(phpUrl),
     ]);
   } catch (e) {
-    const msg = String(/** @type {Error} */ (e).message || e);
+    const msg = String(e.message || e);
     return {
       code: 2,
       moduleName,
@@ -217,7 +217,7 @@ export async function compareLemmaProof(moduleName, bases) {
     nodePayload = extractPayload(nodeHtml);
     phpPayload = extractPayload(phpHtml);
   } catch (e) {
-    const msg = String(/** @type {Error} */ (e).message || e);
+    const msg = String(e.message || e);
     return {
       code: 2,
       moduleName,
@@ -233,7 +233,7 @@ export async function compareLemmaProof(moduleName, bases) {
     nodeProofs = proofListFromPayload(nodePayload);
     phpProofs = proofListFromPayload(phpPayload);
   } catch (e) {
-    const msg = String(/** @type {Error} */ (e).message || e);
+    const msg = String(e.message || e);
     return {
       code: 2,
       moduleName,
