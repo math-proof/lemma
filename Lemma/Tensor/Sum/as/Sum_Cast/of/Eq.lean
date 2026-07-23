@@ -31,4 +31,16 @@ private lemma main
     aesop
 
 
+@[main]
+private lemma fin
+  [AddCommMonoid α]
+-- given
+  (h : s = s')
+  (X : Fin n → Tensor α s) :
+-- imply
+  ∑ i : Fin n, X i ≃ ∑ i : Fin n, cast (congrArg (Tensor α) h) (X i) := by
+-- proof
+  apply main h
+
+
 -- created on 2025-11-06

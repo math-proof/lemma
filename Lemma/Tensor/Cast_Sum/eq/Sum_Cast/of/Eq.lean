@@ -20,4 +20,17 @@ private lemma main
   apply Sum.as.Sum_Cast.of.Eq h
 
 
+@[main]
+private lemma fin
+  [AddCommMonoid α]
+-- given
+  (h : s = s')
+  (X : Fin n → Tensor α s) :
+-- imply
+  let h := congrArg (Tensor α) h
+  cast h (∑ i : Fin n, X i) = ∑ i : Fin n, cast h (X i) :=
+-- proof
+  main h _ X
+
+
 -- created on 2025-11-07

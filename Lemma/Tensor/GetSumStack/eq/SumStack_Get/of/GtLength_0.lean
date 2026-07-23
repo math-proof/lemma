@@ -5,9 +5,9 @@ import Lemma.Tensor.UFnSumStack.eq.SumStack_UFn.All_EqUFnAdd.EqUFn_0
 open Tensor
 
 
-@[main, fin]
+@[main]
 private lemma main
-  [Mul α] [AddMonoid α]
+  [AddMonoid α]
   {s : List ℕ}
 -- given
   (h_s : s.length > 0)

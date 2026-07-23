@@ -4,7 +4,7 @@ import stdlib.SEq
 open Tensor
 
 /--
-similar to `Tensor.Sum_0.as.Sum_Stack_Get.of.GtLength_0`
+similar to `Tensor.Sum_0.as.SumStack_Get.of.GtLength_0`
 -/
 @[main, fin, cast, cast.fin]
 private lemma main

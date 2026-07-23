@@ -10,8 +10,8 @@ private lemma main
 -- imply
   X.sum 0 = ∑ i < n, X[i] := by
 -- proof
-  erw [EqStack_Get]
+  conv_lhs => rw [← EqStack_Get X]
   rfl
 
 
--- created on 2026-07-21
+-- created on 2026-07-22

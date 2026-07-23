@@ -5,7 +5,7 @@ open Bool Tensor
 
 @[main]
 private lemma main
-  [Mul α] [AddMonoid α]
+  [AddMonoid α]
 -- given
   (h : s = s')
   (X : Fin n → Tensor α s) :

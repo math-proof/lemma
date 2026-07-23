@@ -5,7 +5,7 @@ open Tensor
 
 @[main, fin, cast, cast.fin]
 private lemma main
-  [Mul α] [Add α] [Zero α]
+  [Add α] [Zero α]
 -- given
   (h : s.length > 0)
   (X : Tensor α s) :

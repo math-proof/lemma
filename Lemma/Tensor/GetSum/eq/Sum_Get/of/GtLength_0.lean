@@ -6,7 +6,7 @@ import sympy.tensor.tensor
 open Finset Tensor
 
 
-@[main, fin]
+@[main]
 private lemma main
   [AddCommMonoid α]
   [DecidableEq ι]
@@ -29,6 +29,20 @@ private lemma main
   have := UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0 h_f0 h_add S X
   simp [f] at this
   assumption
+
+
+@[main]
+private lemma fin
+  [AddCommMonoid α]
+  {s : List ℕ}
+-- given
+  (h_s : s.length > 0)
+  (X : Fin n → Tensor α s)
+  (k : Fin s[0]) :
+-- imply
+  (∑ i : Fin n, X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ = ∑ i : Fin n, (X i).get ⟨k, by apply GtLength.of.GtLength_0 h_s⟩ :=
+-- proof
+  main h_s X k (Finset.univ : Finset (Fin n))
 
 
 -- created on 2025-11-06
