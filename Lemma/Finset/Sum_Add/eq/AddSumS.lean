@@ -5,8 +5,9 @@ import sympy.Basic
 private lemma main
   [DecidableEq ι]
   [AddCommMonoid α]
-  {s : Finset ι}
-  {a b : ι → α} :
+-- given
+  (s : Finset ι)
+  (a b : ι → α) :
 -- imply
   ∑ i ∈ s, (a i + b i) = ∑ i ∈ s, a i + ∑ i ∈ s, b i := by
 -- proof
@@ -19,4 +20,4 @@ private lemma main
 
 
 -- created on 2025-04-06
--- updated on 2025-04-27
+-- updated on 2026-07-23
