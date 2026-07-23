@@ -50,7 +50,7 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.Indices.as.MapRange
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat Bool Int List Tensor Vector Fin
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 @[main]

@@ -8,7 +8,7 @@ import Lemma.Vector.Eq.of.Eq_Cast.Eq
 import Lemma.Tensor.EqGetS.of.Data.as.FlattenTransposeSplitAt_1
 import Lemma.Tensor.PermuteTail.eq.CastRotate.of.LeLength
 open Tensor Vector List Bool
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 @[main, fin]
@@ -109,7 +109,7 @@ private lemma main
     ((X.rotate 1).get j)
     ⟨i, by grind⟩
   simp at this
-  erw [this]
+  conv_lhs => erw [this]
   apply EqCast.of.SEq
   apply SEq.of.Eq
   unfold Tensor.rotate

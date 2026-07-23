@@ -7,7 +7,7 @@ import Lemma.Tensor.GtLength.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Matmul.as.MatmulResizeS.of.EqLengthS.GtLength_0
 open List Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[main, cast]

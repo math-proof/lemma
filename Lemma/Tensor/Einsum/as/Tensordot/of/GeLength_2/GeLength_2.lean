@@ -12,7 +12,7 @@ import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
 open Bool List Tensor Nat
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[main, cast]

@@ -12,7 +12,7 @@ import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.GtLength_0
 open Nat Tensor
-set_option maxHeartbeats 10000000
+set_option maxHeartbeats 1000000
 
 
 /--

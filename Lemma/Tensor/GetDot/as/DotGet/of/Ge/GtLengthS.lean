@@ -12,7 +12,7 @@ import Lemma.Tensor.SEqMatmulS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
 import Lemma.Tensor.Tensordot.as.Matmul
 open Bool List Tensor
-set_option maxHeartbeats 5000000
+set_option maxHeartbeats 1000000
 
 
 @[main, fin]

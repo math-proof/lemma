@@ -5,7 +5,7 @@ import Lemma.Nat.Le.of.Lt_Add_1
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Tensor.Eq.is.All_EqGetS
 open Tensor List Nat
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 /--

@@ -21,7 +21,7 @@ import Lemma.Tensor.SEqRepeatS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq
 import Lemma.Tensor.SEqUnsqueezeS.of.SEq
 open Bool List Nat Tensor
-set_option maxHeartbeats 10000000
+set_option maxHeartbeats 1000000
 
 
 @[main, fin]
@@ -106,7 +106,7 @@ private lemma une
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [1, k]) (i := ⟨0, by grind⟩) (by grind) (by grind)]
     apply SEq.of.Eq ∘ EqCast.of.SEq.Eq (by simp)
     simp
-    erw [EqGetUnsqueeze_0.nat.fin (z := ⟨i % 1, by grind⟩)]
+    erw [EqGetUnsqueeze_0.nat.fin (z := ⟨i % 1, by grind⟩) ((Y.resize 0 k).unsqueeze 0)]
     erw [EqGetUnsqueeze_0.fin]
 
 

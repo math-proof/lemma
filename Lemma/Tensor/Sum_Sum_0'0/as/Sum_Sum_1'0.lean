@@ -7,7 +7,7 @@ import Lemma.Tensor.Sum.eq.SumStack_Select
 import Lemma.Tensor.SumStack.of.All_Eq
 import Lemma.Tensor.Sum_0.eq.SumStack_Get
 import Lemma.Tensor.Sum_Sum
-open Bool Finset Tensor
+open Bool Tensor
 
 
 @[main, cast, comm]

@@ -21,7 +21,7 @@ import Lemma.Vector.GetExp.eq.ExpGet
 import sympy.tensor.functions
 import sympy.tensor.stack
 open Hyperreal Tensor Int Fin
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 @[main]

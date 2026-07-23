@@ -5,7 +5,7 @@ import Lemma.Tensor.GetEinsum.as.EinsumGetS.of.EqLengthS.GtLength_2
 import Lemma.Tensor.GtLengthEinsum.of.GeLengthS.GeLength_2
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 open Bool List Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[main, fin]

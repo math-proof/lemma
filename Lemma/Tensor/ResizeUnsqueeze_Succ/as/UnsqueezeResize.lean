@@ -8,7 +8,7 @@ import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.ResizeUnsqueeze.as.UnsqueezeResize_0.of.Gt_0
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 open Bool List Nat Tensor
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 1000000
 
 
 @[main, comm, cast]

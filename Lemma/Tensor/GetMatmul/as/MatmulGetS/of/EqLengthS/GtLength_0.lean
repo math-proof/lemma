@@ -9,7 +9,7 @@ import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
 open Bool List Tensor
-set_option maxHeartbeats 4000000
+set_option maxHeartbeats 1000000
 
 
 @[main, fin, cast, cast.fin]

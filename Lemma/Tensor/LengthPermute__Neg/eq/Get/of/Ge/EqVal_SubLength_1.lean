@@ -2,7 +2,7 @@ import Lemma.Tensor.Length.of.SEq
 import Lemma.Tensor.LengthPermuteTail.eq.Get.of.GtLength_0
 import Lemma.Tensor.Permute__Neg.as.PermuteTail.of.Val.eq.SubLength_1
 import Lemma.Tensor.SEqPermuteTailS.of.LeLength
-open Tensor Bool Fin Finset List Nat Vector
+open Tensor
 
 
 @[main]

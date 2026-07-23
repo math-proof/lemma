@@ -14,7 +14,7 @@ import Lemma.Tensor.GtLengthEinsum.of.GeLengthS.GeLength_2
 import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
 import Lemma.Tensor.SEqTensordotS.of.SEq.SEq.Eq.Eq
 open Bool List Tensor
-set_option maxHeartbeats 8000000
+set_option maxHeartbeats 1000000
 
 
 @[main, fin, cast, cast.fin]
@@ -66,7 +66,7 @@ private lemma main
       apply SEq_Cast.of.SEq.Eq (by erw [EqAppendTake__ListGet.of.GeLength_2 h_length_tail]; grind)
       erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)])]
       apply SEqCast.of.SEq.Eq (by rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)])
-      erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by rw [EqCons_Tail.of.GtLength h_s])]
+      conv_rhs => erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by rw [EqCons_Tail.of.GtLength h_s])]
       apply SEq_Cast.of.SEq.Eq (by grind)
       rfl
       simp
@@ -86,7 +86,7 @@ private lemma main
         apply SEq_Cast.of.SEq.Eq (by erw [EqAppendTake__ListGet.of.GeLength_2 (by grind)]; simp)
         erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)])]
         apply SEqCast.of.SEq.Eq (by rw [EqAppendTake__ListGet.of.GeLength_2 (by grind)])
-        erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by rw [EqCons_Tail.of.GtLength_0 (by grind)])]
+        conv_rhs => erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by rw [EqCons_Tail.of.GtLength_0 (by grind)])]
         apply SEq_Cast.of.SEq.Eq (by grind)
         rfl
       ·
