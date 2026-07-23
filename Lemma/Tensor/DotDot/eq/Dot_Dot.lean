@@ -1,4 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.Dot.eq.GetSumMul
 import Lemma.Tensor.Dot.eq.SelectSumMul
 import Lemma.Tensor.Dot.eq.SumMul__0
@@ -15,8 +16,9 @@ import Lemma.Tensor.GetSum_2.eq.SumGet__1
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
 import Lemma.Tensor.MulSum_0.eq.Sum_Mul_Cast_RepeatUnsqueeze
 import Lemma.Tensor.Mul_Sum_0.eq.Sum_MulCast_RepeatUnsqueeze
+import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqSelectUnsqueeze.of.GeLength
-import Lemma.Tensor.SEqSumS.of.SEq
+import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectMul.eq.MulSelectS
 import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
@@ -24,8 +26,9 @@ import Lemma.Tensor.SelectSum.as.SumSelect.of.Gt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Tensor.Sum_1.eq.SumT_0
+import Lemma.Tensor.Sum_Sum_0'0.eq.Sum_Sum_1'0
 import Lemma.Tensor.TMul.eq.MulTS
-open Bool Tensor
+open Bool Nat Tensor
 set_option maxHeartbeats 1000000
 
 
@@ -168,7 +171,23 @@ private lemma vec
   simp
   conv_rhs => erw [MulSum_0.eq.Sum_Mul_Cast_RepeatUnsqueeze]
   simp
-  sorry
+  conv_lhs => erw [Sum_Sum_0'0.eq.Sum_Sum_1'0]
+  apply Eq.of.SEq
+  apply SEqSumS.of.SEq.Eq (by rfl)
+  rw [Sum_1.eq.SumT_0]
+  apply SEqSumS.of.SEq.Eq (by rfl)
+  conv_lhs => erw [TMul.eq.MulTS]
+  conv_lhs => erw [TMul.eq.MulTS]
+  conv_lhs =>
+    arg 2
+    arg 1
+    erw [EqTT]
+  conv_lhs =>
+    arg 2
+    arg 2
+    erw [EqTT]
+  rw [Mul_Mul.eq.MulMul]
+  rfl
 
 
 /--
@@ -199,4 +218,4 @@ private lemma main
 
 
 -- created on 2025-05-03
--- updated on 2026-07-22
+-- updated on 2026-07-23

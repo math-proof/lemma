@@ -1,6 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Finset.Sum_Sum
 import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSumStack.eq.SumStack_Get.of.GtLength_0
 import Lemma.Tensor.LengthSum.eq.Get_0.of.GtLength_0
@@ -8,11 +7,11 @@ import Lemma.Tensor.Sum.eq.SumStack_Select
 import Lemma.Tensor.SumStack.of.All_Eq
 import Lemma.Tensor.Sum_0.eq.SumStack_Get
 import Lemma.Tensor.Sum_Sum
-open Bool Finset Tensor Fin
+open Bool Finset Tensor
 
 
 @[main, cast, comm]
-private lemma stack
+private lemma main
   [AddCommMonoid α]
 -- given
   (h : s.length > 1)
