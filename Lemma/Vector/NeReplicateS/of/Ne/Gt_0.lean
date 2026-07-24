@@ -1,4 +1,4 @@
-import Lemma.Vector.EqGetS.of.Eq
+import Lemma.Vector.Get.of.Eq
 open Vector
 
 
@@ -11,7 +11,7 @@ private lemma main
   List.Vector.replicate n x ≠ List.Vector.replicate n y := by
 -- proof
   intro h_eq
-  have h_head := EqGetS.of.Eq.fin h_eq ⟨0, hn⟩
+  have h_head := Get.of.Eq.fin h_eq ⟨0, hn⟩
   simp at h_head
   simp_all
 

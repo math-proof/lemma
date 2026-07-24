@@ -2,12 +2,12 @@ import sympy.tensor.tensor
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Vector.EqGetS
+import Lemma.Vector.Get
 import Lemma.Vector.EqFlattenUnflatten
-import Lemma.Vector.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
+import Lemma.Vector.Get.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
-import Lemma.Vector.EqGetS.of.Eq_FlattenTransposeSplitAt_1
+import Lemma.Vector.Get.of.Eq_FlattenTransposeSplitAt_1
 open Vector
 set_option maxHeartbeats 400000
 
@@ -26,7 +26,7 @@ private lemma main
   let ⟨v⟩ := X
   let ⟨v'⟩ := X'
   simp at h
-  have h := EqGetS.of.Eq_FlattenTransposeSplitAt_1 h i j
+  have h := Get.of.Eq_FlattenTransposeSplitAt_1 h i j
   simp [GetElem.getElem]
   unfold Tensor.get
   unfold Tensor.toVector
@@ -40,7 +40,7 @@ private lemma main
     intro t
     simp only [GetElem.getElem]
     repeat rw [GetUnflatten.eq.Get_AddMul.fin]
-    simpa [EqGetS]
+    simpa [Get]
   repeat simp_all
 
 

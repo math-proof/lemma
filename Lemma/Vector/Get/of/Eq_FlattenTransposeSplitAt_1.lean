@@ -1,7 +1,7 @@
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Vector.EqGetS
+import Lemma.Vector.Get
 import Lemma.Vector.EqFlattenUnflatten
-import Lemma.Vector.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
+import Lemma.Vector.Get.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Nat.AddMul.lt.Mul
@@ -22,7 +22,7 @@ private lemma main
   v'[j * m + i] = v[i * n + j] := by
 -- proof
   rw [← EqFlattenUnflatten v'] at h
-  have h_get := EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
+  have h_get := Get.of.EqFlattenS.Lt.Lt.Eq.Eq
     (n := m * 1) (m := n * 1) (n' := [m].prod) (m' := n) (i := j) (j := i)
     (by simp) (by simp) (by simp) (by simp) h
   simp only [GetElem.getElem] at h_get

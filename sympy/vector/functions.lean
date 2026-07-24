@@ -26,7 +26,7 @@ instance [NeZero n] [ExpNeZero α] : ExpNeZero (Vector α n) where
   exp_ne_zero x := by
     simp [Exp.exp]
     intro h_eq
-    have h_head := EqGetS.of.Eq.fin h_eq ⟨0, NeZero.pos n⟩
+    have h_head := Get.of.Eq.fin h_eq ⟨0, NeZero.pos n⟩
     simp at h_head
     simp [Zero.eq.Replicate] at h_head
     simp [ExpNeZero.exp_ne_zero] at h_head

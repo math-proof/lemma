@@ -11,7 +11,7 @@ import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Rat.EqCeilDivSubMul.of.Lt
-import Lemma.Vector.EqGetS
+import Lemma.Vector.Get
 import Lemma.List.EqLengthSlice_Mul.of.Lt
 import sympy.core.relational
 import sympy.vector.vector
@@ -68,7 +68,7 @@ private lemma main
       simp at h_stop_eq
       denote h_step_eq : step = n.succ
       simp [h_start_eq, h_stop_eq]
-      simp [EqGetS]
+      simp [Get]
       apply GetSlicedIndices.eq.AddMul.of.Gt_0.Gt_0.Lt.Lt _ h_j
       repeat linarith
 
@@ -123,7 +123,7 @@ private lemma Comm
       simp at h_stop_eq
       denote h_step_eq : step = n.succ
       simp [h_start_eq, h_stop_eq]
-      simp [EqGetS]
+      simp [Get]
       apply GetSlicedIndices.eq.AddMul.of.Gt_0.Gt_0.Lt.Lt.comm _ h_j
       repeat linarith
 

@@ -1,6 +1,6 @@
 import sympy.vector.vector
 import Lemma.Vector.EqGetS.of.Val.eq.ValAppend.of.Lt.Lt
-import Lemma.Vector.EqValS.of.SEq
+import Lemma.Vector.Val.of.SEq
 open Vector
 
 
@@ -17,7 +17,7 @@ private lemma main
   a[i] = b[i] := by
 -- proof
   apply EqGetS.of.Val.eq.ValAppend.of.Lt.Lt h₀ h₁
-  apply EqValS.of.SEq h₂
+  apply Val.of.SEq h₂
 
 
 -- created on 2025-06-04

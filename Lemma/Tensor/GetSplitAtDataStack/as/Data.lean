@@ -1,6 +1,6 @@
 import sympy.tensor.stack
 import Lemma.Vector.GetMap.eq.UFnGet
-import Lemma.Vector.EqValS.of.SEq
+import Lemma.Vector.Val.of.SEq
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.EqGetMapRange

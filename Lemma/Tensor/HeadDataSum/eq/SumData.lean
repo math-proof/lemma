@@ -1,6 +1,6 @@
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.EqSumS.of.SEq
+import Lemma.Vector.Sum.of.SEq
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
@@ -24,7 +24,7 @@ private lemma main
   simp
   rw [Head.eq.Get_0.fin]
   erw [GetSum.eq.SumMapGet.fin]
-  rw [EqSumS.of.SEq]
+  rw [Sum.of.SEq]
   apply SEq.of.All_EqGetS.Eq.fin
   ·
     intro i

@@ -8,7 +8,7 @@ import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Vector.EqGetS
+import Lemma.Vector.Get
 import Lemma.List.EqAppendTake__Drop
 import Lemma.List.ProdAppend.eq.MulProdS
 open List Vector Bool Tensor Fin
@@ -31,7 +31,7 @@ private lemma main
     simp only [GetElem.getElem]
     erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨0, by simp⟩) (by simp)]
     unfold Tensor.rotate
-    simp [EqGetS]
+    simp [Get]
     simp only [GetElem.getElem]
     erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (j := ⟨0, by simp⟩) (i := ⟨0, by simp⟩) (by simp)]
     rw [GetTranspose.eq.Get.fin]

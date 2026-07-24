@@ -5,9 +5,9 @@ import Lemma.Nat.AddMul.eq.MulAdd_1
 import Lemma.Nat.AddAdd
 import Lemma.Nat.LtAddS.is.Lt
 import Lemma.Nat.Lt.of.AddMul.lt.Mul
-import Lemma.Vector.EqValS.of.SEq
+import Lemma.Vector.Val.of.SEq
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
-import Lemma.Vector.EqGetS.of.SEq_Append.of.Lt.Lt
+import Lemma.Vector.Get.of.SEq_Append.of.Lt.Lt
 import Lemma.Vector.Get_Add.eq.Get.of.SEq_Append.of.Lt.LtAdd
 open Vector Nat
 
@@ -38,7 +38,7 @@ private lemma main
     have hj : j < (m + 1) * n := by
       nlinarith
     have hj' := j.isLt
-    have := EqGetS.of.SEq_Append.of.Lt.Lt hj hj' h
+    have := Get.of.SEq_Append.of.Lt.Lt hj hj' h
     assumption
   | i + 1 =>
     simp [MulAdd_1.eq.Add_Mul]

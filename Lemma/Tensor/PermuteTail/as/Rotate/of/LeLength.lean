@@ -6,7 +6,7 @@ import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Vector.EqGetS
+import Lemma.Vector.Get
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Nat.Sub.eq.Zero.of.Le
@@ -66,7 +66,7 @@ private lemma main
         have h_r := r.isLt
         simp at h_r
         let ⟨h_i, h_j⟩ := Eq.Eq.of.EqAddSMul.Lt.Lt h_r h_r' h_eq
-        repeat rw [EqGetS]
+        repeat rw [Get]
         simp [h_i, h_j]
         repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]
         simp [h₀, h_min]

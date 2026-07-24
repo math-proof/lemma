@@ -1,4 +1,4 @@
-import Lemma.Vector.EqMapS.of.All_Eq
+import Lemma.Vector.Map.of.All_Eq
 open Vector
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   (List.Vector.range n).map (fun i => f (X i)) = (List.Vector.range n).map (fun i => g (X i)) := by
 -- proof
-  apply EqMapS.of.All_Eq
+  apply Map.of.All_Eq
   aesop
 
 

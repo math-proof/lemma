@@ -7,7 +7,7 @@ import Lemma.Nat.EqValCast.of.Lt.Eq
 import Lemma.Nat.Le_SubMulS.of.Lt
 import Lemma.Tensor.Unsqueeze.eq.TensorMap_FunGetData
 import Lemma.Vector.EqGetRange
-import Lemma.Vector.EqGetS
+import Lemma.Vector.Get
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
@@ -33,7 +33,7 @@ private lemma main
   obtain ⟨i, j, h_ij⟩ := Any_Eq_AddMul.of.Lt_Mul h_k
   obtain ⟨k, hk⟩ := k
   simp at h_ij
-  simp [EqGetS]
+  simp [Get]
   simp [h_ij]
   have h_eq : Fin ((n :: s).tail.insertIdx d 1).prod = Fin (n :: s).tail.prod := by
     simp_all

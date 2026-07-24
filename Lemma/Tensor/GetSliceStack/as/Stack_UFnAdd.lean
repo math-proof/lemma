@@ -4,12 +4,12 @@ import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.List.EqLengthSlice
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqGetStack.of.Eq
-import Lemma.Vector.EqMapS.of.All_Eq
+import Lemma.Vector.Map.of.All_Eq
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.GetTensorFlatten.eq.TensorGet
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetValIndices.eq.Add.of.Lt
-import Lemma.Vector.EqGetS
+import Lemma.Vector.Get
 open Tensor List Vector Nat
 
 
@@ -44,14 +44,14 @@ private lemma main
       have h_all : ∀ i : Fin ([i < n + j] f i).length, ([i < n + j] f i)[i] = f i := by
         apply EqGetStack.of.Eq
         simp [EqLengthStack]
-      have h_map := EqMapS.of.All_Eq h_all (List.Vector.indices ⟨j, ([i < n + j] f i).length, 1⟩ ([i < n + j] f i).length)
+      have h_map := Map.of.All_Eq h_all (List.Vector.indices ⟨j, ([i < n + j] f i).length, 1⟩ ([i < n + j] f i).length)
       simp [Tensor.get]
       simp [Tensor.length]
       simp [GetElem.getElem]
       erw [GetToVector.eq.Get.cons.fin]
       rw [GetTensorFlatten.eq.TensorGet.fin]
       simp [EqGetStack.fin]
-      rw [Vector.EqGetS]
+      rw [Vector.Get]
       have h_i := i.isLt
       simp [← GetValIndices.eq.Add.of.Lt (i := i) (j := j) (n := n) (by simpa)]
       rfl

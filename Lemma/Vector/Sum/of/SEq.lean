@@ -1,4 +1,4 @@
-import Lemma.Vector.EqValS.of.SEq
+import Lemma.Vector.Val.of.SEq
 import sympy.vector.vector
 open Vector
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   a.sum = b.sum := by
 -- proof
-  have h := EqValS.of.SEq h
+  have h := Val.of.SEq h
   cases a
   cases b
   unfold List.Vector.sum

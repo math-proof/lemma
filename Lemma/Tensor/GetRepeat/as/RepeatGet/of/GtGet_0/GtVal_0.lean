@@ -28,7 +28,7 @@ import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul
-import Lemma.Vector.EqGetS
+import Lemma.Vector.Get
 import Lemma.List.ProdTakeSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
 import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.LtLength
@@ -36,8 +36,8 @@ import Lemma.List.ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0
 import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
-import Lemma.Vector.EqGetSSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0
-import Lemma.Vector.EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq
+import Lemma.Vector.GetSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0
+import Lemma.Vector.Get.of.EqFlattenS.Lt.Lt.Eq.Eq
 import Lemma.List.Lt_ProdTakeSet.of.Gt_0.GtGet_0.GtLength_0
 import Lemma.List.Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -117,11 +117,11 @@ private lemma main
             obtain ⟨j_i'', j_j'', h_eq⟩ := Any_EqAddMul.of.Lt_Mul h_j''
             obtain ⟨h_j_i''_eq, h_j_j''_eq⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_eq.symm
             simp [GetRepeat_AddMul.eq.Get.of.Eq_AddMul.fin h_eq.symm]
-            simp [EqGetS]
+            simp [Get]
             simp [h_i''_eq, h_j_j''_eq, h_j''_eq, h_i'_eq, h_j_j'_eq, h_j'_eq]
             simp [EqAddSub.of.Ge h_d]
-            rw [EqGetSSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0 h_s h_i h_d h_t X]
-            apply EqGetS.of.EqFlattenS.Lt.Lt.Eq.Eq (by simp) (by simp)
+            rw [GetSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0 h_s h_i h_d h_t X]
+            apply Get.of.EqFlattenS.Lt.Lt.Eq.Eq (by simp) (by simp)
             simp_all
             apply SEqFlattenSSplitAt.of.SEq
             .

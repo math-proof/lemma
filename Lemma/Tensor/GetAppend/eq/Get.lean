@@ -3,7 +3,7 @@ import Lemma.Nat.Lt_Add
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.of.SEq.SEq
-import Lemma.Vector.EqGetSUnflatten.of.Eq.Lt.Eq.Eq
+import Lemma.Vector.GetUnflatten.of.Eq.Lt.Eq.Eq
 import Lemma.Bool.EqCast.of.Eq
 import Lemma.Vector.GetUnflatten.as.ArraySliceAppend
 import Lemma.Vector.GetUnflatten.as.ArraySlice.of.Lt
@@ -51,7 +51,7 @@ private lemma main
     ·
       apply GetUnflatten.as.ArraySliceAppend
   ·
-    apply EqGetSUnflatten.of.Eq.Lt.Eq.Eq
+    apply GetUnflatten.of.Eq.Lt.Eq.Eq
     ·
       simp
     ·

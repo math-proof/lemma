@@ -20,7 +20,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.EqGetSplitAt_0'0
-import Lemma.Vector.EqGetS
+import Lemma.Vector.Get
 import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
 import Lemma.Nat.Gt_0
 import Lemma.List.GtProd_0.of.Get_0.gt.Zero.ProdTail.gt.Zero.GtLength_0
@@ -98,9 +98,9 @@ private lemma main
                 rw [GetMap.eq.UFnGet.of.Lt.fin (by simp)]
                 simp only [GetElem.getElem]
                 conv_lhs => erw [EqGetSplitAt_0'0.fin data]
-                conv_lhs => rw [EqGetS]
+                conv_lhs => rw [Get]
                 simp [GetRepeat.eq.Get_Mod.of.Lt_Mul h_lt_add]
-                simp [EqGetS]
+                simp [Get]
                 congr
                 rw [MulAdd.eq.AddMulS]
                 rw [MulMul.eq.Mul_Mul]
