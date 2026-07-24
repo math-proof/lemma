@@ -30,55 +30,51 @@ private lemma main
   unfold Tensor.select
   apply SEq.of.SEqDataS.Eq (by simp)
   simp
-  apply SEqCast.of.SEq.Eq
-  ·
-    exact MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp (d := 0) h_s h_i
-  ·
-    apply SEq.of.All_EqGetS.Eq.fin (by
-      rw [MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp (d := 0) h_s h_i]
-      simp)
-    intro t
-    have h_cons : ∃ n s', s = n :: s' := by
-      match s with
-      | [] =>
-        exfalso
-        simp at h_s
-      | n :: s' =>
-        exact ⟨n, s', rfl⟩
-    obtain ⟨n, s', hs⟩ := h_cons
-    subst hs
-    let s := n :: s'
-    have h_t := t.isLt
-    let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
-    let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
-    rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-    rw [GetGetSlice.eq.Get.of.GtGet.GtLength h_s h_i]
-    have h_prod := ProdTake_1.eq.Get_0.of.GtLength_0 h_s
-    have h_slice_nat : (⟨↑i, (s.take 1).prod, s[0]⟩ : Slice).length (s.take 1).prod = 1 := by
-      rw [h_prod]
-      exact LengthSlice.eq.One.of.Lt (n := s[0]) h_i
-    have h_t_lt : ↑t < (s.drop 1).prod := by
-      calc ↑t
-        _ < (⟨↑i, (s.take 1).prod, s[0]⟩ : Slice).length (s.take 1).prod * (s.drop 1).prod := h_t
-        _ = (s.drop 1).prod := by rw [h_slice_nat, one_mul]
-    have h_qval : (q : ℕ) = 0 := by
-      calc (q : ℕ)
-        _ = ↑t / (s.drop 1).prod := h_q_div
-        _ = 0 := Div.eq.Zero.of.Lt h_t_lt
-    have h_idx : q.val * s[0] + i = i := by simp [h_qval]
-    have h_get_idx :
-        (X.data.splitAt 1).get ⟨q.val * s[0] + i, by grind⟩ =
-          (X.data.splitAt 1).get ⟨i, by grind⟩ := by
-      congr 1
-      exact Fin.eq_of_val_eq h_idx
-    rw [h_get_idx]
-    simp only [GetElem.getElem]
-    rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-    erw [DataGet.eq.GetUnflattenData.fin]
-    erw [GetUnflatten.eq.Get_AddMul.fin]
+  have h_MulLengthSlice := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp (d := 0) h_s h_i
+  apply SEqCast.of.SEq.Eq h_MulLengthSlice
+  apply SEq.of.All_EqGetS.Eq.fin (by grind)
+  intro t
+  have h_cons : ∃ n s', s = n :: s' := by
+    match s with
+    | [] =>
+      exfalso
+      simp at h_s
+    | n :: s' =>
+      exact ⟨n, s', rfl⟩
+  obtain ⟨n, s', hs⟩ := h_cons
+  subst hs
+  let s := n :: s'
+  have h_t := t.isLt
+  let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
+  let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
+  rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
+  rw [GetGetSlice.eq.Get.of.GtGet.GtLength h_s h_i]
+  have h_prod := ProdTake_1.eq.Get_0.of.GtLength_0 h_s
+  have h_slice_nat : (⟨↑i, (s.take 1).prod, s[0]⟩ : Slice).length (s.take 1).prod = 1 := by
+    rw [h_prod]
+    exact LengthSlice.eq.One.of.Lt (n := s[0]) h_i
+  have h_t_lt : ↑t < (s.drop 1).prod := by
+    calc ↑t
+      _ < (⟨↑i, (s.take 1).prod, s[0]⟩ : Slice).length (s.take 1).prod * (s.drop 1).prod := h_t
+      _ = (s.drop 1).prod := by rw [h_slice_nat, one_mul]
+  have h_qval : (q : ℕ) = 0 := by
+    calc (q : ℕ)
+      _ = ↑t / (s.drop 1).prod := h_q_div
+      _ = 0 := Div.eq.Zero.of.Lt h_t_lt
+  have h_idx : q.val * s[0] + i = i := by simp [h_qval]
+  have h_get_idx :
+      (X.data.splitAt 1).get ⟨q.val * s[0] + i, by grind⟩ =
+        (X.data.splitAt 1).get ⟨i, by grind⟩ := by
     congr 1
-    apply Fin.eq_of_val_eq
-    simp [h_qval, h_qr]
+    exact Fin.eq_of_val_eq h_idx
+  rw [h_get_idx]
+  simp only [GetElem.getElem]
+  rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+  erw [DataGet.eq.GetUnflattenData.fin]
+  erw [GetUnflatten.eq.Get_AddMul.fin]
+  congr 1
+  apply Fin.eq_of_val_eq
+  simp [h_qval, h_qr]
 
 
 -- created on 2025-10-05

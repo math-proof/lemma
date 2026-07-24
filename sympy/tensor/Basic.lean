@@ -197,11 +197,10 @@ given:
 assuming that indices and shape have the same length
 -/
 def Tensor.physicalIndex (indices : List ℕ) (shape : List ℕ) : ℕ :=
-  let pairs := List.zip indices shape
   let (res, _) := List.foldr
     (fun (i, d) (acc, mult) => (acc + i * mult, mult * d))
     (0, 1)
-    pairs
+    (indices.zip shape)
   res
 
 /--
@@ -211,17 +210,12 @@ given:
   - `shape` - the shape of the tensor
 -/
 def Tensor.logicalIndices (index : ℕ) (shape : List ℕ) : List ℕ :=
-  if shape.any (· == 0) then
-    List.replicate shape.length 0
-  else
-    let rec computeIdx : ℕ → List ℕ → List ℕ → List ℕ
-      | _, [], _ => []
-      | rem, _ :: ds, acc =>
-        let prod := ds.prod
-        let idx := rem / prod
-        let rem' := rem % prod
-        idx :: computeIdx rem' ds acc
-    computeIdx index shape []
+  -- if shape.any (· == 0) then List.replicate shape.length 0 else
+  let (res, _) := List.foldr
+    (fun d (acc, rem) => (rem % d :: acc, rem / d))
+    ([], index)
+    shape
+  res
 
 /--
 [torch.reshape](https://docs.pytorch.org/docs/stable/generated/torch.reshape.html)

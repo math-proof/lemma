@@ -3,7 +3,7 @@ import Lemma.List.ProdEraseIdx.eq.MulProdS
 open List
 
 
-@[main]
+@[main, comm]
 private lemma simp
   {s : List ℕ}
 -- given
@@ -16,7 +16,7 @@ private lemma simp
   rw [ProdEraseIdx.eq.MulProdS]
 
 
-@[main]
+@[main, comm]
 private lemma main
   {s : List ℕ}
 -- given

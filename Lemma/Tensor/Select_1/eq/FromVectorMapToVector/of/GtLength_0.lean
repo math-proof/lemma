@@ -81,7 +81,7 @@ private lemma main
     left
     simpa [ProdTake_1.eq.Get_0.of.GtLength_0 h] using (Prod.eq.MulProdS s 1).symm
   ·
-    exact MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp (s := n :: s) (d := 1) (by grind) i.isLt
+    apply MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp (s := n :: s) (by grind) i.isLt
 
 
 -- created on 2026-07-23
