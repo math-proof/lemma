@@ -1,5 +1,5 @@
 import Lemma.Tensor.Unsqueeze.eq.Stack_Unsqueeze
-import Lemma.Tensor.EqStackSUFnGet.of.Eq
+import Lemma.Tensor.StackUFnGet.of.Eq
 open Tensor
 
 
@@ -14,7 +14,7 @@ private lemma main
   X.unsqueeze (dim + 1) ≃ [i < m] (X[i].unsqueeze dim) := by
 -- proof
   rw [Unsqueeze.eq.Stack_Unsqueeze]
-  apply EqStackSUFnGet.of.Eq h _ (·.unsqueeze dim)
+  apply StackUFnGet.of.Eq h _ (·.unsqueeze dim)
 
 
 -- created on 2025-07-13
