@@ -1,5 +1,5 @@
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
-import Lemma.Tensor.EqGetS.of.Eq
+import Lemma.Tensor.Get.of.Eq
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool
 import Lemma.Tensor.GetDiv.eq.DivGetS
@@ -44,7 +44,7 @@ private lemma main
   have h_Ξᵢ := XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) h_Ξ
   simp at h_Ξᵢ
   rw [GetMul.eq.MulGetS.fin] at h_Ξᵢ
-  have h_zi := EqGetS.of.Eq.fin h_z i
+  have h_zi := Get.of.Eq.fin h_z i
   simp at h_zi
   rw [Softmax.eq.DivExp_KeepdimSumExp] at h_zi
   have := GetDot.eq.DotGet.fin (exp a' / ((exp a').sum 1).keepdim) V' i

@@ -1,4 +1,4 @@
-import Lemma.Finset.EqUnionSDiff__Inter
+import Lemma.Finset.UnionDiff__Inter
 import Lemma.Finset.Union
 open Finset
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   s ∩ t ∪ s \ t = s := by
 -- proof
-  have := EqUnionSDiff__Inter (s := s) (t := t)
+  have := UnionDiff__Inter (s := s) (t := t)
   rwa [Union.comm] at this
 
 

@@ -6,7 +6,7 @@ import Lemma.Nat.Sub.eq.AddNeg
 import Lemma.Nat.Add.is.Eq
 import Lemma.Int.FDiv1.eq.Neg1.of.Lt_0
 import Lemma.Int.SubNeg
-import Lemma.Int.EqSubS.is.Eq
+import Lemma.Int.Sub.is.Eq
 import Lemma.Int.FDivNeg1.eq.Neg1.of.Gt_0
 open Int Nat
 

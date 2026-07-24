@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Tensor.EqMulS.of.Eq
+import Lemma.Tensor.Mul.of.Eq
 open Bool Tensor
 
 
@@ -17,7 +17,7 @@ private lemma main
   have h_n := h.left
   subst h_n
   apply SEq.of.Eq
-  apply EqMulS.of.Eq
+  apply Mul.of.Eq
   apply Eq.of.SEq h
 
 

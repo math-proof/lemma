@@ -1,4 +1,4 @@
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.EqPermute
@@ -73,7 +73,7 @@ private lemma main
         apply Rotate_SubLength_1.eq.Cons_DropLast.of.GtLength_0
         omega
       rw [MulCastS.eq.Cast_Mul.of.Eq h_permute]
-      apply EqCastS.of.SEq.Eq h_permute
+      apply Cast.of.SEq.Eq h_permute
       rw [PermuteTailMul.eq.MulPermuteTailS]
     ·
       simp [@Tensor.Permute.eq.Ite]

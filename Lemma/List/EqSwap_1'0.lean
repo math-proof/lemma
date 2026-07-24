@@ -1,4 +1,4 @@
-import Lemma.List.EqSwapS
+import Lemma.List.Swap
 import Lemma.List.EqSwap_0'1
 open List
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   (a :: b :: c).swap 1 0 = b :: a :: c := by
 -- proof
-  rw [EqSwapS]
+  rw [Swap]
   apply EqSwap_0'1
 
 

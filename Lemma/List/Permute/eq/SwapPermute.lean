@@ -2,7 +2,7 @@ import Lemma.List.LengthSwap.eq.Length
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.List.GetSwap.eq.Ite.of.GtLength.GtLength.GtLength
 import Lemma.List.EqSwap.of.LeLength
-import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
+import Lemma.List.Permute.of.Add.ge.SubLength_1
 import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
 open List Bool
 
@@ -19,8 +19,8 @@ private lemma main
   have h_length := LengthSwap.eq.Length (s.permute i d) (i + d) (i + d + 1)
   if h : i + d + 1 ≥ s.length then
     rw [EqSwap.of.LeLength (by simpa)]
-    rw [EqPermuteS.of.Add.ge.SubLength_1]
-    rw [EqPermuteS.of.Add.ge.SubLength_1.int]
+    rw [Permute.of.Add.ge.SubLength_1]
+    rw [Permute.of.Add.ge.SubLength_1.int]
     repeat grind
   else
     simp at h

@@ -1,4 +1,4 @@
-import Lemma.Int.EqNegS.is.Eq
+import Lemma.Int.Neg.is.Eq
 import Lemma.Int.EqNegNeg
 open Int
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   -a = b := by
 -- proof
-  apply Eq.of.EqNegS
+  apply Eq.of.Neg
   rwa [EqNegNeg]
 
 

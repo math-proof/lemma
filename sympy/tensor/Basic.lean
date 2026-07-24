@@ -24,7 +24,7 @@ import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
-import Lemma.List.EqSwapS.of.Prod.eq.IteGt
+import Lemma.List.Swap.of.Prod.eq.IteGt
 import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
 import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
@@ -337,7 +337,7 @@ def Tensor.transpose (X : Tensor α s) (i j : ℕ) : Tensor α (s.swap i j) :=
       (by
         apply EqUFnS.of.Eq (f := Tensor α)
         rw [PermutePermute.eq.Swap.of.Lt.GtLength h_j h_lt]
-        rw [EqSwapS.of.Prod.eq.IteGt h_ite]
+        rw [Swap.of.Prod.eq.IteGt h_ite]
       )
       ((X.permute ⟨i, h_i⟩ (d - 1)).permute ⟨j, h_j'⟩ (-d))
 

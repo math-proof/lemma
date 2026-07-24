@@ -56,13 +56,13 @@ private lemma main
     apply SEq.trans (Get.as.Select_0.of.GtGet_0.GtLength_0 (by omega) h_k X)
     apply SEqSelectS.of.SEq.EqValS.EqValS
     ·
-      symm
-      apply SEq.trans (SEqPermuteHeadS.of.Eq X h_s)
-      apply SEqPermuteHead_1
-    ·
       grind
     ·
       simp
+    ·
+      symm
+      apply SEq.trans (SEqPermuteHeadS.of.Eq X h_s)
+      apply SEqPermuteHead_1
   else
     have h_s : s.length > 1 := by omega
     intro h_s_length h_rotate h_k_rotate

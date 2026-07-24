@@ -99,9 +99,9 @@ def Tensor.tensordot [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, n])) (
       .
         simp
         rw [Append_Append.eq.AppendAppend]
-        apply EqAppendS.of.Eq
+        apply Append.of.Eq
         rw [ZipWith_Append.eq.AppendZipWithS]
-        apply EqAppendS.of.Eq
+        apply Append.of.Eq
         simp
     ))
     (matmul X Y (by grind))
@@ -117,9 +117,9 @@ def Tensor.tensordot [Mul α] [Add α] [Zero α] (X : Tensor α (s ++ [m, n])) (
       .
         simp
         rw [Append_Append.eq.AppendAppend]
-        apply EqAppendS.of.Eq
+        apply Append.of.Eq
         rw [ZipWith__Append.eq.AppendZipWithS]
-        apply EqAppendS.of.Eq
+        apply Append.of.Eq
         simp
     ))
     (matmul X Y (by grind))

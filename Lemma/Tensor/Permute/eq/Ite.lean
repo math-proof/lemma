@@ -5,7 +5,7 @@ import Lemma.List.ProdPermute.eq.MulProd_ProdAppend.of.Gt_0
 import Lemma.List.Permute.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1.Le_0
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.ProdPermute.eq.MulProd_ProdDrop.of.Le_0
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.List.Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1
 import Lemma.Int.NegSucc.eq.NegCoeAdd_1
 import Lemma.Nat.Add
@@ -61,7 +61,7 @@ private lemma main
     simp
     split_ifs with h_d
     ·
-      apply EqCastS.of.SEq.Eq.left
+      apply Cast.of.SEq.Eq.left
       ·
         rw [NegSucc.eq.NegCoeAdd_1]
         rwa [Permute__Neg.eq.AppendTake__RotateDrop.of.Val.eq.SubLength_1]
@@ -71,7 +71,7 @@ private lemma main
         rw [Add.comm]
     ·
       simp
-      apply EqCastS.of.SEq.Eq.left (n := (s.permute i (-↑(offset + 1))).prod)
+      apply Cast.of.SEq.Eq.left (n := (s.permute i (-↑(offset + 1))).prod)
       ·
         rw [Permute__Neg.eq.Append_AppendRotateDropTake]
         simp

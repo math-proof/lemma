@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqLengthS
+import Lemma.Tensor.Length
 open Tensor
 
 
@@ -12,7 +12,7 @@ private lemma main
   A.length = B.length := by
 -- proof
   subst h
-  apply EqLengthS
+  apply Length
 
 
 -- created on 2025-10-08

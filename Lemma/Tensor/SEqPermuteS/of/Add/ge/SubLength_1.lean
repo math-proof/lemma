@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.Drop.eq.Nil.of.LeLength
-import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
+import Lemma.List.Permute.of.Add.ge.SubLength_1
 import Lemma.List.EqPermute
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.Permute.eq.AppendRotateTake___Drop.of.EqVal_0
@@ -109,7 +109,7 @@ private lemma main
     ·
       apply SEq.of.SEqDataS.Eq
       ·
-        rw [EqPermuteS.of.Add.ge.SubLength_1 (by omega)]
+        rw [Permute.of.Add.ge.SubLength_1 (by omega)]
       ·
         simp
         apply SEqCast.of.SEq.Eq

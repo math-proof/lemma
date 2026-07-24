@@ -1,4 +1,4 @@
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Vector.SEqRepeat_Div
 import sympy.tensor.Basic

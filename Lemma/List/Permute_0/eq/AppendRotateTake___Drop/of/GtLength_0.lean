@@ -1,11 +1,11 @@
 import Lemma.List.Cons.eq.Append
 import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.EqAppendS.of.Eq
+import Lemma.List.Append.of.Eq
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.Nat.Le_Min.of.Le.Le
 import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.List.EqAppendS.of.Eq.Eq
+import Lemma.List.Append.of.Eq.Eq
 import Lemma.List.Take_1.eq.ListGet_0.of.GtLength_0
 import Lemma.List.TailTake.eq.TakeTail
 open List Nat
@@ -24,11 +24,11 @@ private lemma main
   simp
   rw [Cons.eq.Append]
   rw [Append_Append.eq.AppendAppend]
-  apply EqAppendS.of.Eq
+  apply Append.of.Eq
   rw [Rotate.eq.AppendDrop__Take.of.GeLength]
   ·
     rw [TakeTake.eq.Take.of.Ge (by linarith)]
-    apply EqAppendS.of.Eq.Eq
+    apply Append.of.Eq.Eq
     ·
       unfold List.slice List.array_slice
       simp

@@ -1,7 +1,7 @@
 import Lemma.Fin.All_EqUFnS.of.All_Eq
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.EqGetUnsqueeze_0
-import Lemma.Tensor.EqStackS.of.All_Eq
+import Lemma.Tensor.Stack.of.All_Eq
 import Lemma.Tensor.EqStack_Get
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
@@ -35,7 +35,7 @@ private lemma main
     simp [EqMod_1'0]
     erw [EqGetUnsqueeze_0.fin]
   have h_all := All_EqUFnS.of.All_Eq.bin h_all (f := fun a i => X.get i * a)
-  erw [EqStackS.of.All_Eq.fin h_all] at h_mul_stack
+  erw [Stack.of.All_Eq.fin h_all] at h_mul_stack
   conv_rhs =>
     arg 1
     erw [h_mul_stack]

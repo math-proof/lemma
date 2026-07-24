@@ -6,7 +6,7 @@ import Lemma.List.EqCons_Tail.of.GtLength
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.Take.eq.Cons_TailTake.of.Gt_0.GtLength_0
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeLength_2.GeLength_2
-import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
+import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetTensordot.as.TensordotGetS.of.EqLengthS.GtLength_0
@@ -37,7 +37,7 @@ private lemma main
   intros X' Y'
   simp only [GetElem.getElem]
   have h_cast := Einsum.eq.Cast_Tensordot.of.GeLength_2.GeLength_2 (by grind) (by grind) X Y
-  erw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]; grind) h_cast ⟨i, by simp [matmul_shape, broadcast_shape]; grind⟩]
+  erw [Get.of.Eq.GtLength_0 (by simp [matmul_shape]; grind) h_cast ⟨i, by simp [matmul_shape, broadcast_shape]; grind⟩]
   erw [Einsum.eq.Cast_Tensordot.of.GeLength_2.GeLength_2 (by grind) (by grind) (X'.get ⟨i, by grind⟩) (Y'.get ⟨i, by grind⟩)]
   rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by simp [matmul_shape, broadcast_shape]; grind) (by simp [matmul_shape, broadcast_shape]; grind)]
   apply SEqCastS.of.SEq.Eq.Eq (by simp [matmul_shape, broadcast_shape]; grind) (by simp [matmul_shape, broadcast_shape]; split_ifs   <;>   grind)

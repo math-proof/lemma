@@ -6,7 +6,7 @@ import Lemma.Vector.GetVal.eq.Get
 import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.List.GetElem.eq.None.of.LeLength
-import Lemma.List.EqGetS.of.Eq.GtLength
+import Lemma.List.Get.of.Eq.GtLength
 open Vector List Nat
 
 
@@ -25,7 +25,7 @@ private lemma main
     simp at h_lt
     by_cases h_j' : j < (v.flatten.array_slice (i * n) n).val.length
     ·
-      have h := EqGetS.of.Eq.GtLength h_j h
+      have h := Get.of.Eq.GtLength h_j h
       simp at h_j'
       have h_j : j < ((List.map List.Vector.toList v.toList).flatten.array_slice (i * n) n).length := by
         simp_all

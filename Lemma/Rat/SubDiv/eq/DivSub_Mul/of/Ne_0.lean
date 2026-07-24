@@ -1,4 +1,4 @@
-import Lemma.Int.EqNegS.is.Eq
+import Lemma.Int.Neg.is.Eq
 import Lemma.Int.Sub.eq.NegSub
 import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Rat.Sub_Div.eq.DivSubMul.of.Ne_0
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   a / b - x = (a - x * b) / b := by
 -- proof
-  apply Eq.of.EqNegS
+  apply Eq.of.Neg
   rw [NegDiv.eq.DivNeg]
   repeat rw [NegSub.eq.Sub]
   apply Sub_Div.eq.DivSubMul.of.Ne_0 h

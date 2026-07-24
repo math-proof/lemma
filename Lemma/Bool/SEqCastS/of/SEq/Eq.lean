@@ -1,5 +1,5 @@
 import stdlib.SEq
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 open Bool
 
 
@@ -14,7 +14,7 @@ private lemma left
 -- imply
   cast (congrArg Vector h_a) a ≃ cast (congrArg Vector (show n_b = n by rwa [← h_eq.left])) b := by
 -- proof
-  have := EqCastS.of.SEq.Eq.left h_a h_eq
+  have := Cast.of.SEq.Eq.left h_a h_eq
   aesop
 
 
@@ -29,7 +29,7 @@ private lemma main
 -- imply
   cast (congrArg Vector (show n_a = n by rwa [h_eq.left])) a ≃ cast (congrArg Vector h_b) b := by
 -- proof
-  have := EqCastS.of.SEq.Eq h_b h_eq
+  have := Cast.of.SEq.Eq h_b h_eq
   aesop
 
 

@@ -1,5 +1,5 @@
 import Lemma.Tensor.LengthDiv.eq.Length
-import Lemma.Tensor.EqLengthS
+import Lemma.Tensor.Length
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.ProdTake_1.eq.HeadD_1
@@ -16,7 +16,7 @@ private lemma main
   (A B : Tensor α s)
   (i : Fin A.length) :
 -- imply
-  (A / B)[i]'(by simp [LengthDiv.eq.Length.left A B]) = A[i] / B[i]'(by simp [EqLengthS B A]) := by
+  (A / B)[i]'(by simp [LengthDiv.eq.Length.left A B]) = A[i] / B[i]'(by simp [Length B A]) := by
 -- proof
   simp [GetElem.getElem]
   simp [HDiv.hDiv]

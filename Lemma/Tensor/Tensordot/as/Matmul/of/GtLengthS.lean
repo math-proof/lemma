@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.EqAppendS.of.Eq
+import Lemma.List.Append.of.Eq
 import sympy.tensor.tensor
 open Bool List
 
@@ -33,9 +33,9 @@ private lemma main
       ·
         simp
         rw [Append_Append.eq.AppendAppend]
-        apply EqAppendS.of.Eq
+        apply Append.of.Eq
         rw [ZipWith__Append.eq.AppendZipWithS]
-        apply EqAppendS.of.Eq
+        apply Append.of.Eq
         simp
     ·
       rfl

@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Eq_Nil.is.EqLength_0
 import Lemma.Fin.Eq_0
@@ -28,7 +28,7 @@ private lemma main
     simp
     split_ifs with h_s
     ·
-      apply EqCastS.of.SEq.Eq
+      apply Cast.of.SEq.Eq
       .
         simp [Tensor.matmul_shape]
       .

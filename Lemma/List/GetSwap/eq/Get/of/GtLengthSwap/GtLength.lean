@@ -1,4 +1,4 @@
-import Lemma.List.EqSwapS
+import Lemma.List.Swap
 import Lemma.List.LengthSwap.eq.Length
 import Lemma.List.GetElemSwap.eq.SomeGet
 open List
@@ -35,7 +35,7 @@ private lemma left
   let i : Fin a.length := ⟨i, h₀⟩
   let j : Fin a.length := ⟨j, h₁⟩
   have h_eq := GetElemSwap.eq.SomeGet a j i
-  rw [EqSwapS] at h_eq
+  rw [Swap] at h_eq
   aesop
 
 

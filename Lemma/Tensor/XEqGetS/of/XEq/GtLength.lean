@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqLengthS
+import Lemma.Tensor.Length
 import Lemma.Tensor.XEq.is.All_XEqGetS
 open Tensor
 
@@ -12,7 +12,7 @@ private lemma main
   (h₀ : A.length > i)
   (h₁ : A ≈ B) :
 -- imply
-  A[i] ≈ B[i]'(by rwa [EqLengthS A B] at h₀) := by
+  A[i] ≈ B[i]'(by rwa [Length A B] at h₀) := by
 -- proof
   match s with
   | [] =>

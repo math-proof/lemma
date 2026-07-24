@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
-import Lemma.Hyperreal.EqCoeS
+import Lemma.Hyperreal.Coe
 open Hyperreal
 
 
@@ -16,7 +16,7 @@ private lemma main
   b → 0 := by
 -- proof
   contrapose! h_b
-  rw [EqCoeS d]
+  rw [Coe d]
   have h_d := NeZero.ne d
   by_contra h
   have h_st := EqSt.of.InfinitesimalSub (x := a / b) (r := (d : ℝ)) (lt_of_not_ge h)

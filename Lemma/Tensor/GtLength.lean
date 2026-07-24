@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqLengthS
+import Lemma.Tensor.Length
 open Tensor
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   i < Y.length := by
 -- proof
-  rw [EqLengthS Y X]
+  rw [Length Y X]
 
   apply i.isLt
 

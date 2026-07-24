@@ -1,7 +1,7 @@
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.EqTakeAppend.of.Eq_Length
-import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
+import Lemma.List.Permute.of.Add.ge.SubLength_1
 open List
 
 
@@ -24,7 +24,7 @@ private lemma main
     have h_permute := congrArg (·.take (s.length - i)) h_permute
     rw [EqTakeAppend.of.Eq_Length] at h_permute
     ·
-      rw [EqPermuteS.of.Add.ge.SubLength_1 (by omega)] at h_permute ⊢
+      rw [Permute.of.Add.ge.SubLength_1 (by omega)] at h_permute ⊢
       rwa [EqTake.of.LeLength] at h_permute ⊢
       .
         simp

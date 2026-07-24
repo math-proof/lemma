@@ -2,7 +2,7 @@ import Lemma.Set.InterSDiff_Inter.eq.Empty
 import Lemma.Set.UnionCupS.eq.Cup.of.Inter.eq.Empty
 import Lemma.Set.UnionSDiff_Inter.eq.Union
 import Lemma.Set.InterSDiff.eq.Empty
-import Lemma.Set.EqUnionSDiff_Inter
+import Lemma.Set.UnionDiff_Inter
 import Lemma.Set.UnionUnion
 import Lemma.Set.EqUnion.of.Subset
 import Lemma.Set.Subset_Union.of.Subset
@@ -23,7 +23,7 @@ private lemma main
   rw [UnionSDiff_Inter.eq.Union A B] at this
   rw [← this]
   have h := UnionCupS.eq.Cup.of.Inter.eq.Empty (InterSDiff.eq.Empty A (A ∩ B)) f
-  rw [EqUnionSDiff_Inter A B] at h
+  rw [UnionDiff_Inter A B] at h
   rw [← h]
   rw [UnionUnion.comm]
   apply EqUnion.of.Subset.left

@@ -10,7 +10,7 @@ import Lemma.Vector.GetVal.eq.Get.of.Lt
 import Lemma.Vector.GetFlatten_AddMul.eq.Get
 import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.EqGetRange
-import Lemma.List.EqGetS.of.Eq.GtLength
+import Lemma.List.Get.of.Eq.GtLength
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
 import Lemma.Fin.Eq.of.EqValS
 import Lemma.Vector.Val.of.SEq
@@ -84,7 +84,7 @@ private lemma main
         repeat rw [GetVal.eq.Get.of.Lt (by simp_all)]
         have hq := h₂ q
         have hq := Val.of.SEq hq
-        apply EqGetS.of.Eq.GtLength (show r < A[q].data.val.length by simp_all) hq
+        apply Get.of.Eq.GtLength (show r < A[q].data.val.length by simp_all) hq
       else
         apply IffEqS.of.Eq
         have h := Ge.of.NotLt h

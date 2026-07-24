@@ -5,7 +5,7 @@ import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Tensor.SEqPermute
 import Lemma.Tensor.Permute.eq.Ite
 import Lemma.Vector.Eq.of.Eq_Cast.Eq
-import Lemma.Tensor.EqGetS.of.Data.as.FlattenTransposeSplitAt_1
+import Lemma.Tensor.Get.of.Data.as.FlattenTransposeSplitAt_1
 import Lemma.Tensor.PermuteTail.eq.CastRotate.of.LeLength
 open Tensor Vector List Bool
 set_option maxHeartbeats 1000000
@@ -121,7 +121,7 @@ private lemma main
   let X' : Tensor α [n, m] := ⟨data⟩
   have h_X' : X' = ⟨data⟩ := rfl
   erw [← h_X']
-  apply EqGetS.of.Data.as.FlattenTransposeSplitAt_1
+  apply Get.of.Data.as.FlattenTransposeSplitAt_1
   simp [X']
   apply Eq.of.Eq_Cast.Eq
   ·

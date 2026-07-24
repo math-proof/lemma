@@ -1,6 +1,6 @@
 import Lemma.List.DropDrop.eq.Drop_Add
 import Lemma.List.DropPermute__Neg.eq.Drop
-import Lemma.List.EqAppendS.of.Eq.Eq
+import Lemma.List.Append.of.Eq.Eq
 import Lemma.List.TakeDropPermute__Neg.eq.TakeDrop.of.GtLength_Add
 import Lemma.Nat.AddAdd
 open List Nat
@@ -19,7 +19,7 @@ private lemma main
   simp at h_drop
   rw [AddAdd.comm] at h_drop
   rw [Drop_Add.eq.DropDrop] at h_drop
-  have h := EqAppendS.of.Eq.Eq h_take h_drop
+  have h := Append.of.Eq.Eq h_take h_drop
   simp at h
   rw [AddAdd.comm] at h
   assumption

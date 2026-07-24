@@ -1,4 +1,4 @@
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Nat.LtDiv.of.Lt_Mul
@@ -8,7 +8,7 @@ import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataResize.as.FlattenMapSplitAtData
 import Lemma.Tensor.Einsum.as.Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.EqTensordotS.of.SEq.SEq
+import Lemma.Tensor.Tensordot.of.SEq.SEq
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.Resize.as.FromVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -36,7 +36,7 @@ private lemma main
   simp [Dot.dot]
   conv_rhs => rw [Einsum.eq.Cast_Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simp)]
   rw [Einsum.eq.Cast_Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
-  apply EqCastS.of.SEq.Eq
+  apply Cast.of.SEq.Eq
   ·
     simp [broadcast_shape, matmul_shape]
   ·
@@ -44,7 +44,7 @@ private lemma main
     rw [Resize.eq.Cast_FromVectorMapToVector.of.GtVal_0 _ (by simp)]
     simp
     apply SEq.of.Eq
-    apply EqTensordotS.of.SEq.SEq _ (by rfl)
+    apply Tensordot.of.SEq.SEq _ (by rfl)
     apply SEq.of.SEqDataS.Eq
     ·
       simp

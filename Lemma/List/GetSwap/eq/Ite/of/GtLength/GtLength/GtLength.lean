@@ -1,6 +1,6 @@
 import Lemma.Nat.Lt.ou.Eq.ou.Gt
 import Lemma.List.GetSwap.eq.Ite.of.GtLength.GtLength.Lt
-import Lemma.List.EqSwapS
+import Lemma.List.Swap
 import Lemma.List.EqSwap
 import Lemma.List.LengthSwap.eq.Length
 open List Nat
@@ -38,9 +38,9 @@ private lemma main
     ·
       rfl
   ·
-    rw [EqSwapS] at h₃
+    rw [Swap] at h₃
     have := GetSwap.eq.Ite.of.GtLength.GtLength.Lt h h₀ h₂
-    simp [EqSwapS] at this
+    simp [Swap] at this
     rw [this]
     split_ifs with h_j? h_i h_lt
     ·

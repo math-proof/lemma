@@ -1,5 +1,5 @@
 import Lemma.Int.Any_Eq_Mul.of.FMod.eq.Zero
-import Lemma.Int.EqNegS.is.Eq
+import Lemma.Int.Neg.is.Eq
 import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Int.FMod.eq.Zero.of.Any_Eq_Mul
 open Int
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   have := Any_Eq_Mul.of.FMod.eq.Zero h
   let ⟨k, h_Eq⟩ := this
-  have := EqNegS.of.Eq h_Eq
+  have := Neg.of.Eq h_Eq
   rw [NegMul.eq.MulNeg] at this
   apply FMod.eq.Zero.of.Any_Eq_Mul
   use -k

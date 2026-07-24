@@ -3,7 +3,7 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.Nat.EqMax.of.Lt
-import Lemma.Tensor.EqTensordotS.of.SEq.SEq
+import Lemma.Tensor.Tensordot.of.SEq.SEq
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqResize.of.Eq_Get
 open Bool List Nat Tensor
@@ -46,7 +46,7 @@ private lemma main
       grind
     ·
       simp
-      apply EqTensordotS.of.SEq.SEq
+      apply Tensordot.of.SEq.SEq
       ·
         apply SEqCastS.of.SEq.Eq.Eq
         ·

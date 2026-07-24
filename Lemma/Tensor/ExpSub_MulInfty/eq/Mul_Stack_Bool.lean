@@ -1,8 +1,8 @@
 import Lemma.Int.Sub.eq.NegSub
-import Lemma.Real.XEq.of.Eq
+import Lemma.Hyperreal.XEq.of.Eq
 import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool
 import Lemma.Tensor.NegMul.eq.MulNeg
-open Real Tensor Int
+open Tensor Int Hyperreal
 
 
 @[main]

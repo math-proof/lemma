@@ -5,7 +5,7 @@ import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Tensor.Einsum.as.SelectBmm.of.GeGet_SubLength_1.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
+import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet
@@ -42,7 +42,7 @@ private lemma main
     have h_min_length : s.length ⊓ (s.length + 1 + 1) = s.length := by omega
     simp [Dot.dot]
     have := Einsum.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by grind) X Y
-    erw [EqGetS.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
+    erw [Get.of.Eq.GtLength_0 (by simp [matmul_shape]) this ⟨i, by simp [matmul_shape, broadcast_shape]⟩]
     conv_rhs => rw [Einsum.eq.Cast_Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by grind)]
     apply SEq_Cast.of.SEq.Eq (by simp [matmul_shape, broadcast_shape])
     simp

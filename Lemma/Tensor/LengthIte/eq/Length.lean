@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqLengthS
+import Lemma.Tensor.Length
 open Tensor
 
 
@@ -17,7 +17,7 @@ private lemma left
   ·
     rfl
   ·
-    apply EqLengthS B A
+    apply Length B A
 
 
 @[main]
@@ -33,7 +33,7 @@ private lemma main
 -- proof
   split_ifs with h
   ·
-    apply EqLengthS A B
+    apply Length A B
   ·
     rfl
 

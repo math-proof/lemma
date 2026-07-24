@@ -14,7 +14,9 @@ private lemma main
   have h_s := h.left.symm
   A.select d i ≃ B.select ⟨d, by simp [h_s]⟩ ⟨i, by simp [h_s]⟩ := by
 -- proof
-  apply SEqSelectS.of.SEq.EqValS.EqValS h rfl rfl
+  apply SEqSelectS.of.SEq.EqValS.EqValS _ _ h
+  rfl
+  rfl
 
 
 -- created on 2025-11-28

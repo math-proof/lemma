@@ -2,9 +2,9 @@ import Lemma.Nat.EqMod_1'0
 import Lemma.Nat.Mul.of.Eq.Eq
 import Lemma.Tensor.Dot.eq.SumMul
 import Lemma.Tensor.Dot.eq.SumMul__0
-import Lemma.Tensor.EqGetS.of.Eq
+import Lemma.Tensor.Get.of.Eq
 import Lemma.Tensor.EqGetUnsqueeze_0
-import Lemma.Tensor.EqSumS.of.Eq
+import Lemma.Tensor.Sum.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
@@ -37,7 +37,7 @@ private lemma main
   erw [this]
   simp [GetElem.getElem]
   erw [GetSum_2.eq.SumGet__0.fin]
-  apply EqSumS.of.Eq
+  apply Sum.of.Eq
   rw [GetMul.eq.MulGetS.fin]
   conv_lhs => erw [GetMul.eq.MulGetS.fin]
   apply Mul.of.Eq.Eq
@@ -54,7 +54,7 @@ private lemma main
     simp
     apply EqGetUnsqueeze_0
   ·
-    apply EqGetS.of.Eq
+    apply Get.of.Eq
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (i := ⟨i, by grind⟩) (s' := [m, n, k]) (by grind) (by grind)]
     simp
     erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]

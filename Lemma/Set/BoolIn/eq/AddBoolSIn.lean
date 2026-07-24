@@ -1,5 +1,5 @@
 import Lemma.Set.In.is.In_Inter.ou.In_SDiff
-import Lemma.Bool.EqBoolS.of.Iff
+import Lemma.Bool.Bool.of.Iff
 import Lemma.Bool.BoolOr.eq.SubAddBoolS
 import Lemma.Set.In_Inter.is.In.In
 import Lemma.Set.InterInter.eq.Inter_Inter
@@ -15,7 +15,7 @@ private lemma main
   Bool.toNat (x ∈ A) = Bool.toNat (x ∈ A ∩ B) + Bool.toNat (x ∈ A \ B) := by
 -- proof
   have := In.is.In_Inter.ou.In_SDiff (x := x) (A := A) (B := B)
-  have := EqBoolS.of.Iff this
+  have := Bool.of.Iff this
   rw [BoolOr.eq.SubAddBoolS] at this
   rw [this]
   suffices h : Bool.toNat (x ∈ A ∩ B ∧ x ∈ A \ B) = 0 by

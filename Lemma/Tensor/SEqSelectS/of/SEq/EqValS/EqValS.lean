@@ -13,9 +13,9 @@ private lemma main
   {i : Fin s[d]}
   {i' : Fin s'[d']}
 -- given
-  (h : A ≃ B)
   (h_d : d.val = d'.val)
-  (h_i : i.val = i'.val) :
+  (h_i : i.val = i'.val)
+  (h : A ≃ B) :
 -- imply
   A.select d i ≃ B.select d' i' := by
 -- proof

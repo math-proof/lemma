@@ -2,7 +2,7 @@ import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.Cons.eq.Append
 import Lemma.List.Cons_Append.eq.AppendCons
 import Lemma.List.DropTake.eq.ListGet
-import Lemma.List.EqAppendS.of.Eq
+import Lemma.List.Append.of.Eq
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.LengthTake.eq.Min_Length
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
@@ -65,14 +65,14 @@ private lemma main
           rw [Append_Append.eq.AppendAppend]
           rw [Cons.eq.Append]
           repeat rw [Append_Append.eq.AppendAppend]
-          apply EqAppendS.of.Eq
+          apply Append.of.Eq
           rw [TakeDrop.eq.Slice]
           rw [EqAddSub.of.Ge (by assumption)]
           rw [TakeTake.eq.Take.of.Ge (by simp_all; linarith)]
           repeat rw [AppendAppend.eq.Append_Append]
-          apply EqAppendS.of.Eq.left
+          apply Append.of.Eq.left
           rw [DropTake.eq.ListGet]
-          apply EqAppendS.of.Eq.left
+          apply Append.of.Eq.left
           rw [SliceTake.eq.Slice.of.Ge]
           linarith
         ·
@@ -88,13 +88,13 @@ private lemma main
         simp [Sub.eq.Zero.of.Lt h_d]
         rw [Slice_0.eq.Take]
         rw [Cons_Append.eq.AppendCons]
-        apply EqAppendS.of.Eq
+        apply Append.of.Eq
         rw [EqMin.of.Gt (by omega)]
         rw [Rotate.eq.AppendDrop__Take.of.GeLength]
         ·
           rw [TakeTake.eq.Take.of.Ge (by linarith)]
           rw [Cons.eq.Append]
-          apply EqAppendS.of.Eq
+          apply Append.of.Eq
           simp [DropTake.eq.ListGet]
         ·
           simp_all

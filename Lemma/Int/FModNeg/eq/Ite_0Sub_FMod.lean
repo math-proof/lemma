@@ -1,6 +1,6 @@
 import sympy.core.relational
 import Lemma.Int.Any_Eq_Mul.of.FMod.eq.Zero
-import Lemma.Int.EqNegS.is.Eq
+import Lemma.Int.Neg.is.Eq
 import Lemma.Int.NegMul.eq.MulNeg
 import Lemma.Int.FMod.eq.Zero.of.Any_Eq_Mul
 import Lemma.Int.Any_Eq_AddMul.of.EqFMod
@@ -16,7 +16,7 @@ import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Int.FloorAdd.eq.Add_Floor
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Int.Sub_Add.eq.SubSub
-import Lemma.Int.EqSubS.is.Eq
+import Lemma.Int.Sub.is.Eq
 import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Int.FDivNegFMod.eq.Neg1.of.FMod.ne.Zero.Ne_0
 import Lemma.Int.DivInt.eq.Div
@@ -38,7 +38,7 @@ private lemma main
   ·
     have := Any_Eq_Mul.of.FMod.eq.Zero h
     let ⟨k, h⟩ := this
-    have := EqNegS.of.Eq h
+    have := Neg.of.Eq h
     rw [NegMul.eq.MulNeg] at this
     have : ∃ k, -n = k * d := by
       use -k

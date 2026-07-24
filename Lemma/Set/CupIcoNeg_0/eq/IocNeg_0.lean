@@ -5,7 +5,7 @@ import Lemma.Int.SubNeg
 import Lemma.Set.CupIco.eq.CupAnd
 import Lemma.Set.CupRange.eq.CupIco
 import Lemma.Int.EqToNat.of.Ge_0
-import Lemma.Set.EqCupS.of.All_Eq
+import Lemma.Set.Cup.of.All_Eq
 import Lemma.Int.CoeCoe.eq.Coe
 open Set Int Finset
 
@@ -28,7 +28,7 @@ private lemma main
     intro k hk
     rw [Coe.eq.CoeCoe]
     rw [EqToNat.of.Ge_0 hk.1]
-  have h_union := EqCupS.of.All_Eq.set h_all
+  have h_union := Cup.of.All_Eq.set h_all
   aesop
 
 

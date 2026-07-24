@@ -1,4 +1,4 @@
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.Tensor.DataExp.eq.ExpData
@@ -29,7 +29,7 @@ private lemma main
   have h_length_slice := MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength d.isLt i.isLt
   rw [ExpCast.eq.Cast_Exp.of.Eq]
   ·
-    apply EqCastS.of.SEq.Eq
+    apply Cast.of.SEq.Eq
     ·
       simp [h_length_slice]
     ·

@@ -31,7 +31,7 @@ import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.SubAddS.eq.Sub
 import Lemma.Nat.ToNatSub_Neg.eq.Add_1
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
-import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
+import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetPermuteTail.as.PermuteTailGet.of.GtGet_0.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.LengthPermute__Neg.eq.Get_0.of.Gt
@@ -104,7 +104,7 @@ private lemma main
     simp [h_d0, h_d0?, h_i_ne] at this
     have h_k' : k < (s.permute ⟨i + 1, by grind⟩ (-↑d))[0]'(by simp; grind) := by
       rwa [GetPermute__Neg.eq.Get_0.of.Gt (by simp; omega)]
-    simp [EqGetS.of.Eq.GtLength_0 (by simp; omega) this ⟨k, h_k'⟩]
+    simp [Get.of.Eq.GtLength_0 (by simp; omega) this ⟨k, h_k'⟩]
     apply SEq.of.SEqDataS.Eq
     ·
       rw [TailPermute__Neg.eq.PermuteTail.of.Gt (by simp; omega)]

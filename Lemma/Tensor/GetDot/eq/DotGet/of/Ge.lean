@@ -1,4 +1,4 @@
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Nat.Mul
@@ -50,22 +50,22 @@ private lemma main
   <;>
   erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [1, k', k]) (i := ⟨0, by grind⟩) (by grind) (by grind)]
   <;>
-  apply EqCastS.of.SEq.Eq (by simp)
+  apply Cast.of.SEq.Eq (by simp)
   ·
     erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
     conv_rhs => erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
-    apply SEq.of.Eq ∘ EqCastS.of.SEq.Eq (by simp)
+    apply SEq.of.Eq ∘ Cast.of.SEq.Eq (by simp)
     apply SEqRepeatS.of.SEq
     erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
     conv_rhs => erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
-    apply SEq.of.Eq ∘ EqCastS.of.SEq.Eq (by simp)
+    apply SEq.of.Eq ∘ Cast.of.SEq.Eq (by simp)
     apply SEqUnsqueezeS.of.SEq
     erw [EqGetUnsqueeze_0.fin]
     rfl
   ·
     erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
     conv_rhs => erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
-    apply SEq.of.Eq ∘ EqCastS.of.SEq.Eq (by simp)
+    apply SEq.of.Eq ∘ Cast.of.SEq.Eq (by simp)
     apply SEq.of.Eq
     simp
     grind

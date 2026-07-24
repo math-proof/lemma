@@ -15,7 +15,7 @@ private lemma main
 -- imply
   X.select d i ≃ X.select d' i' := by
 -- proof
-  apply SEqSelectS.of.SEq.EqValS.EqValS _ _ h_i
+  apply SEqSelectS.of.SEq.EqValS.EqValS _ h_i
   ·
     rfl
   ·

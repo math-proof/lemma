@@ -1,6 +1,6 @@
 import Lemma.Nat.Mul
 import Lemma.Tensor.Dot.eq.SumMul__0
-import Lemma.Tensor.EqSumS.of.Eq
+import Lemma.Tensor.Sum.of.Eq
 open Nat Tensor
 
 
@@ -14,7 +14,7 @@ private lemma Comm
 -- proof
   rw [Dot.eq.SumMul__0]
   rw [Dot.eq.SumMul__0]
-  apply EqSumS.of.Eq
+  apply Sum.of.Eq
   apply Mul.comm
 
 

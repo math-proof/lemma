@@ -8,7 +8,7 @@ import Lemma.List.GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0
 import Lemma.Nat.Sub.gt.Zero.is.Gt
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.Sub_Add.eq.SubSub
-import Lemma.List.EqSwapS
+import Lemma.List.Swap
 open List Bool Nat
 
 
@@ -61,7 +61,7 @@ private lemma left
 -- imply
   (a.swap i j)[j]? = some a[i] := by
 -- proof
-  rw [EqSwapS]
+  rw [Swap]
   rw [main]
 
 

@@ -3,7 +3,7 @@ import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
 import Lemma.Hyperreal.StDiv.eq.InvStInv
-import Lemma.Hyperreal.EqCoeS
+import Lemma.Hyperreal.Coe
 open Hyperreal
 
 
@@ -18,7 +18,7 @@ private lemma main
   b → 0 := by
 -- proof
   contrapose! h_b
-  rw [EqCoeS d]
+  rw [Coe d]
   by_contra h
   have h_ab := InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h_a (not_lt.mpr h_b)
   rw [show a / b + b / a - (d : ℝ) = (a / b) + (b / a - (d : ℝ)) by ring] at h

@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq_TensorReplicate
 import Lemma.Int.Sub.eq.Zero.is.Eq
-import Lemma.Real.XEq.of.Eq
+import Lemma.Hyperreal.XEq.of.Eq
 import Lemma.Nat.EqMul0_0
 import Lemma.Nat.Sub.eq.Zero
 import Lemma.Hyperreal.Sub_Infty.to.NegInfty
@@ -76,7 +76,7 @@ private lemma main
     simp [mask]
     repeat rw [EqGetStack.fn.fin]
     simp [h_p]
-    apply Real.XEq.of.Eq
+    apply Hyperreal.XEq.of.Eq
     apply Int.EqAdd.of.Eq_Sub.left
     rw [Nat.Sub.eq.Zero]
     apply @Tensor.EqMul0_0.of.Eq_0

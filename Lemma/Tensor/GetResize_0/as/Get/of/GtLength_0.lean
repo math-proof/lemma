@@ -7,7 +7,7 @@ import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.EqMul1
 import Lemma.Nat.LtMulS.of.Le.Lt.Gt_0.Gt_0
-import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
+import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetAppend.eq.Get.of.Lt
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
@@ -36,7 +36,7 @@ private lemma main
   ·
     have h_size : s[0] ⊔ n = n := by grind
     have := Resize_0.eq.Cast_AppendCast_Repeat_0.of.GtLength_0 h X (s[0] ⊔ n)
-    have := EqGetS.of.Eq.GtLength_0 (by grind) this ⟨i, by grind⟩
+    have := Get.of.Eq.GtLength_0 (by grind) this ⟨i, by grind⟩
     simp at this
     have := SEq.of.Eq this
     apply this.trans

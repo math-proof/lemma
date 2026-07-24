@@ -1,6 +1,6 @@
 import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
 import Lemma.List.Drop.eq.ListGet.of.GeLength_1
-import Lemma.List.EqConsS.is.Eq.Eq
+import Lemma.List.Cons.is.Eq.Eq
 open List
 
 
@@ -13,7 +13,7 @@ private lemma main
   s.drop (s.length - 2) = [s[s.length - 2], s[s.length - 1]] := by
 -- proof
   rw [Drop.eq.Cons_Drop_Add_1.of.GtLength (by omega)]
-  apply EqConsS.of.Eq.Eq
+  apply Cons.of.Eq.Eq
   ·
     rfl
   ·

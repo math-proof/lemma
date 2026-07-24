@@ -1,7 +1,7 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.Length.of.Eq
-import Lemma.List.EqConsS.is.Eq.Eq
+import Lemma.List.Cons.is.Eq.Eq
 open Tensor List
 
 
@@ -26,7 +26,7 @@ private lemma main
   | s_A₀ :: s_A, [] =>
     simp_all
   | s_A₀ :: s_A, s_B₀ :: s_B =>
-    have ⟨h₀, h⟩ := Eq.Eq.of.EqConsS h₀
+    have ⟨h₀, h⟩ := Eq.Eq.of.Cons h₀
     apply SEq.of.All_SEqGetS.Eq.Eq (by assumption) (by assumption)
     assumption
 

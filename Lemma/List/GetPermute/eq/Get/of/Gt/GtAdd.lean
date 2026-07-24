@@ -2,7 +2,7 @@ import Lemma.List.GetPermute__Neg.eq.Ite.of.GtLength
 import Lemma.Int.EqNegToNatNeg.of.Lt_0
 import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.Int.EqToNat.of.Ge_0
-import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
+import Lemma.List.Permute.of.Add.ge.SubLength_1
 import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
 open List
 

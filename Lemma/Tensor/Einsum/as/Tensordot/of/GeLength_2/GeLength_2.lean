@@ -7,7 +7,7 @@ import Lemma.Nat.EqMax.of.Ge
 import Lemma.Nat.EqMax.of.Lt
 import Lemma.Tensor.Einsum.as.Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
-import Lemma.Tensor.EqTensordotS.of.SEq.SEq
+import Lemma.Tensor.Tensordot.of.SEq.SEq
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
@@ -42,7 +42,7 @@ private lemma main
     have := Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 h_s h_s' h_n X Y
     apply this.trans
     apply SEq.of.Eq
-    apply EqTensordotS.of.SEq.SEq
+    apply Tensordot.of.SEq.SEq
     ·
       apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
       apply SEqResizeS.of.SEq.EqValS.Eq
@@ -71,7 +71,7 @@ private lemma main
     have := Einsum.as.Tensordot.of.GeGetS_SubLength.GeLength_2.GeLength_2 h_s h_s' (by omega) X Y
     apply this.trans
     apply SEq.of.Eq
-    apply EqTensordotS.of.SEq.SEq
+    apply Tensordot.of.SEq.SEq
     ·
       apply SEqCastS.of.SEq.Eq.Eq (by rwa [EqAppendTake__ListGet.of.GeLength_2]) (by simp)
       rw [EqMax.of.Ge (by omega)]

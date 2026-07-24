@@ -1,5 +1,5 @@
 import sympy.core.relational
-import Lemma.Set.EqUnionSDiff__Inter
+import Lemma.Set.UnionDiff__Inter
 import Lemma.Set.SDiffUnion.eq.UnionSDiffS
 import Lemma.Set.SubsetInter
 import Lemma.Set.SDiff_SDiff.eq.Inter.of.Subset
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   denote h_D : D = A \ B
   denote h_I : I = A ∩ B
-  have h := EqUnionSDiff__Inter (s := A) (t := B)
+  have h := UnionDiff__Inter (s := A) (t := B)
   rw [← h_I, ← h_D] at h
   have h := h.symm
   have h : A \ (B \ C) = (D ∪ I) \ (B \ C) := by

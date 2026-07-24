@@ -1,11 +1,11 @@
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Drop.eq.ListGet.of.GeLength_1
 import Lemma.List.EqAppendTake__ListGet.of.GeLength_2
 import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
-import Lemma.Tensor.EqTensordotS.of.Eq.Eq
+import Lemma.Tensor.Tensordot.of.Eq.Eq
 import Lemma.Tensor.Einsum.as.Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.GtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
@@ -39,11 +39,11 @@ private lemma main
     have := Einsum.as.Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2 h_s h_s' h_n_eq X Y
     apply SEq.trans this
     apply SEq.of.Eq
-    apply EqTensordotS.of.Eq.Eq
+    apply Tensordot.of.Eq.Eq
     ·
       rfl
     ·
-      apply EqCastS.of.SEq.Eq
+      apply Cast.of.SEq.Eq
       ·
         simp [h_n_eq]
       ·

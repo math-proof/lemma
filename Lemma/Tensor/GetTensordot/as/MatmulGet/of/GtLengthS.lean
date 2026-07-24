@@ -1,7 +1,7 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.EqAppendS.of.Eq
+import Lemma.List.Append.of.Eq
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.Tensor.Tensordot.as.Matmul.of.GtLengthS
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
@@ -43,7 +43,7 @@ private lemma main
       rw [Append_Append.eq.AppendAppend]
       congr
       rw [ZipWith__Append.eq.AppendZipWithS]
-      apply EqAppendS.of.Eq
+      apply Append.of.Eq
       simp
     ·
       have := GetMatmul.as.MatmulCastS_Get.of.Eq.EqLengthS.GtLength_0 (by grind) (by grind) (by grind) X (Y.reshape (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by grind)) i
@@ -81,9 +81,9 @@ private lemma main
     repeat omega
     simp
     rw [Append_Append.eq.AppendAppend]
-    apply EqAppendS.of.Eq
+    apply Append.of.Eq
     rw [ZipWith__Append.eq.AppendZipWithS]
-    apply EqAppendS.of.Eq
+    apply Append.of.Eq
     simp
   ·
     simp [broadcast_shape]

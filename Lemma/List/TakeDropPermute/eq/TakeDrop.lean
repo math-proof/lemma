@@ -2,7 +2,7 @@ import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.DropPermute.eq.AppendRotateTakeDrop
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.EqTake.of.LeLength
-import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
+import Lemma.List.Permute.of.Add.ge.SubLength_1
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeDrop.eq.DropTake
@@ -52,7 +52,7 @@ private lemma main
   else
     simp at h
     have := congrArg (·.take (s.length - i)) this
-    rw [EqPermuteS.of.Add.ge.SubLength_1 (by omega)] at this ⊢
+    rw [Permute.of.Add.ge.SubLength_1 (by omega)] at this ⊢
     rw [EqTake.of.LeLength (by simp)] at this
     rw [this]
     rw [Drop.eq.Nil.of.LeLength (i := i + d + 1) (by omega)]

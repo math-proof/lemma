@@ -6,7 +6,7 @@ import Lemma.List.TailPermute.eq.PermuteTail.of.GtLength_Add_1
 import Lemma.List.TailPermute__Neg.eq.PermuteTail.of.Ge
 import Lemma.Tensor.GetPermute__Neg.as.Permute__Neg_Get.of.Gt.GtGet_0.GtLength
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EqPermuteS.of.Eq.EqValS.Eq
+import Lemma.List.Permute.of.Eq.EqValS.Eq
 import Lemma.List.GetPermute.eq.Get.of.Gt
 import Lemma.List.GetPermute__Neg.eq.Get_0.of.Gt
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
@@ -38,7 +38,7 @@ private lemma main
     rw [Swap.eq.PermutePermute.of.Lt.GtLength]
     ·
       simp
-      repeat rw [EqPermuteS.of.Eq.EqValS.Eq]
+      repeat rw [Permute.of.Eq.EqValS.Eq]
       ·
         rfl
       ·
@@ -102,7 +102,7 @@ private lemma main
           rw [Swap.eq.PermutePermute.of.Lt.GtLength]
           ·
             simp [bz', args, args', bz'1]
-            repeat rw [EqPermuteS.of.Eq.EqValS.Eq]
+            repeat rw [Permute.of.Eq.EqValS.Eq]
             repeat simp
           ·
             simp
@@ -159,7 +159,7 @@ private lemma main
         rw [Swap.eq.PermutePermute.of.Lt.GtLength]
         ·
           simp [bz', args, args', bz'1]
-          repeat rw [EqPermuteS.of.Eq.EqValS.Eq]
+          repeat rw [Permute.of.Eq.EqValS.Eq]
           repeat simp
         ·
           simp

@@ -1,5 +1,5 @@
 import Lemma.Tensor.EqGet0_0
-import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
+import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSum.eq.Sum_Get.of.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
@@ -28,7 +28,7 @@ private lemma main
     subst h₀
     simp [Sum.eq.Zero]
     have := Sum.eq.Zero X
-    rw [EqGetS.of.Eq.GtLength_0 h_s this ⟨i, h_i⟩]
+    rw [Get.of.Eq.GtLength_0 h_s this ⟨i, h_i⟩]
     erw [EqGet0_0.fin]
     apply SEq0S.of.Eq
     simp

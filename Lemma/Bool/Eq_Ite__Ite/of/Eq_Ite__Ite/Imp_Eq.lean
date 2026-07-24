@@ -1,4 +1,4 @@
-import Lemma.Bool.EqIteS.of.Imp_Eq
+import Lemma.Bool.Ite.of.Imp_Eq
 open Bool
 
 
@@ -24,7 +24,7 @@ private lemma main
   else
     c := by
 -- proof
-  rwa [EqIteS.of.Imp_Eq h₀] at h₁
+  rwa [Ite.of.Imp_Eq h₀] at h₁
 
 
 -- created on 2025-04-19

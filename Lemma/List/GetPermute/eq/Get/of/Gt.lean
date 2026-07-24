@@ -1,4 +1,4 @@
-import Lemma.List.EqPermuteS.of.Add.ge.SubLength_1
+import Lemma.List.Permute.of.Add.ge.SubLength_1
 import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
 open List
 
@@ -21,7 +21,7 @@ private lemma main
   else
     simp at h_d
     have h_d : i + d ≥ s.length - 1 := by omega
-    simp [EqPermuteS.of.Add.ge.SubLength_1 h_d]
+    simp [Permute.of.Add.ge.SubLength_1 h_d]
     rw [GetPermute.eq.Ite.of.GtLength.GtLength (by omega) (by omega)]
     split_ifs
     repeat rfl

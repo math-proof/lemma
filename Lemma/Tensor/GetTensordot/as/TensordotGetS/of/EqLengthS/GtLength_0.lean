@@ -1,5 +1,5 @@
 import Lemma.List.EqCons_Tail.of.GtLength_0
-import Lemma.Tensor.EqGetS.of.Eq.GtLength_0
+import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMatmul.as.MatmulGetS.of.EqLengthS.GtLength_0
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.Tensordot.eq.Matmul.of.EqLengthS
@@ -36,7 +36,7 @@ private lemma main
   intros h_X h_Y X' Y' h_i
   simp only [GetElem.getElem]
   have h_tensordot := Tensordot.eq.Matmul.of.EqLengthS h_len X Y
-  rw [EqGetS.of.Eq.GtLength_0 (by grind) h_tensordot ⟨i, by simp [broadcast_shape]; grind⟩]
+  rw [Get.of.Eq.GtLength_0 (by grind) h_tensordot ⟨i, by simp [broadcast_shape]; grind⟩]
   rw [Tensordot.eq.Matmul.of.EqLengthS (by grind) (X'.get ⟨i, by grind⟩) (Y'.get ⟨i, by grind⟩)]
   apply GetMatmul.as.MatmulGetS.of.EqLengthS.GtLength_0.fin h_s h_len
 

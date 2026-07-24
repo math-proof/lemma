@@ -4,7 +4,7 @@ import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.EqSub.is.Eq_Add
-import Lemma.Int.EqNegS.is.Eq
+import Lemma.Int.Neg.is.Eq
 import Lemma.Int.Sub.eq.NegSub
 import Lemma.Int.Add.eq.Sub_Neg
 import Lemma.Nat.Add.of.Eq.Eq
@@ -18,7 +18,7 @@ import Lemma.Int.FModNegSign.eq.Sub_Sign
 import Lemma.Int.SubNeg
 import Lemma.Nat.Add
 import Lemma.Int.Sub_Add.eq.SubSub
-import Lemma.Int.EqSubS.is.Eq
+import Lemma.Int.Sub.is.Eq
 import Lemma.Nat.Mul
 import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.AddMul.eq.MulAdd_1
@@ -51,7 +51,7 @@ private lemma main
     norm_cast
     rw [FloorAdd1.eq.Add1Floor]
     apply Eq_Add.of.EqSub
-    apply Eq.of.EqNegS
+    apply Eq.of.Neg
     rw [NegSub.eq.Sub]
     rw [Sub_Neg.eq.Add]
     have h₀ := FMod.eq.Sub_MulFDiv (n := -n) (d := d)
@@ -70,9 +70,9 @@ private lemma main
     rw [SubSub.eq.Sub_Add] at this
     rw [Add.comm] at this
     rw [Sub_Add.eq.SubSub] at this
-    have := Eq.of.EqSubS this
+    have := Eq.of.Sub this
     rw [Mul.comm (a := d)] at this
-    have := EqNegS.of.Eq this
+    have := Neg.of.Eq this
     rw [NegSub.eq.Sub] at this
     rw [Sub_Neg.eq.Add] at this
     rw [← MulAdd.eq.AddMulS] at this

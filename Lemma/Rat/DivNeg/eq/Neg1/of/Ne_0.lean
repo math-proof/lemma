@@ -1,6 +1,6 @@
 import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.DivNeg.eq.NegDiv
-import Lemma.Int.EqNegS.is.Eq
+import Lemma.Int.Neg.is.Eq
 open Rat Int
 
 
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   rw [DivNeg.eq.NegDiv]
   have := Div.eq.One.of.Ne_0 h
-  apply EqNegS.of.Eq this
+  apply Neg.of.Eq this
 
 
 -- created on 2025-03-20

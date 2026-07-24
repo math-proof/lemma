@@ -1,4 +1,4 @@
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.EqSwap.of.LeLength_1
 import Lemma.List.Swap.eq.Permute__Neg1.of.GtLength
@@ -30,7 +30,7 @@ private lemma main
     have h_permute := Permute__Neg1.eq.Swap.of.GtLength (by simp; grind) (i := s.length - 2) (s := s)
     simp [AddSub.eq.Sub_Sub.of.Ge.Ge h (show 2 ≥ 1 by grind)] at h_permute
     rw [MulCastS.eq.Cast_Mul.of.Eq (by rw [← h_permute])]
-    apply EqCastS.of.SEq.Eq h_permute
+    apply Cast.of.SEq.Eq h_permute
     have h_permute_mul := PermuteMul.eq.MulPermuteS__Neg.of.GtLength_Add
       (i := s.length - 2)
       (d := 1)

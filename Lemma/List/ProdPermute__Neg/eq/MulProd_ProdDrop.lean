@@ -5,7 +5,7 @@ import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.EqAppendS.of.Eq
+import Lemma.List.Append.of.Eq
 import Lemma.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.MinAddS.eq.AddMin
 import Lemma.Nat.Val.lt.Sub_1.of.Val.ne.Sub_1

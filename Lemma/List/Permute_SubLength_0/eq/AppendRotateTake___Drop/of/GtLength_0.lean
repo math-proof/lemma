@@ -1,6 +1,6 @@
 import Lemma.List.Cons.eq.Append
 import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.EqAppendS.of.Eq
+import Lemma.List.Append.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.EqPermute
 import Lemma.Nat.EqAddSub.of.Ge
@@ -55,7 +55,7 @@ private lemma main
       subst h
       rw [SubSub.eq.Sub_Add]
       rw [Add.comm]
-      apply EqAppendS.of.Eq.left
+      apply Append.of.Eq.left
       rw [EqAddSub.of.Ge (by linarith)]
       rw [Drop.eq.Nil]
       simp

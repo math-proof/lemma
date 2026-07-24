@@ -1,4 +1,4 @@
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.List.ProdInsertIdx.eq.Prod
 import Lemma.Vector.SEqRepeat_Div
 import sympy.tensor.Basic
@@ -16,7 +16,7 @@ private lemma main
 -- proof
   unfold Tensor.unsqueeze Tensor.reshape
   simp
-  apply EqCastS.of.SEq.Eq (by rw [Prod.eq.ProdInsertIdx])
+  apply Cast.of.SEq.Eq (by rw [Prod.eq.ProdInsertIdx])
   rw [ProdInsertIdx.eq.Prod]
   apply SEqRepeat_Div
 

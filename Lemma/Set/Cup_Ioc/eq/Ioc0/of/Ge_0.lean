@@ -1,7 +1,7 @@
 import Lemma.Finset.Cup_Ioc.eq.Ioc0
 import Lemma.Set.CupRange.eq.CupIco
 import Lemma.Int.EqToNat.of.Ge_0
-import Lemma.Set.EqCupS.of.All_Eq
+import Lemma.Set.Cup.of.All_Eq
 import Lemma.Int.CoeCoe.eq.Coe
 open Set Int Finset
 
@@ -25,7 +25,7 @@ private lemma main
     rw [Coe.eq.CoeCoe k.toNat]
     rw [EqToNat.of.Ge_0]
     aesop
-  rw [EqCupS.of.All_Eq.set h_all] at h_n
+  rw [Cup.of.All_Eq.set h_all] at h_n
   rw [Coe.eq.CoeCoe n.toNat] at h_n
   rwa [EqToNat.of.Ge_0 h] at h_n
 

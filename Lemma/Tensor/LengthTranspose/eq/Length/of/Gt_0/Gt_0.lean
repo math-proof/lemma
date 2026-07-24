@@ -1,7 +1,7 @@
-import Lemma.List.EqPermuteS.of.Eq.EqValS.Eq
+import Lemma.List.Permute.of.Eq.EqValS.Eq
 import Lemma.List.EqSwap
 import Lemma.List.EqSwap.of.OrLeSLength
-import Lemma.List.EqSwapS
+import Lemma.List.Swap
 import Lemma.List.Swap.eq.PermutePermute.of.Lt.GtLength
 import Lemma.Tensor.LengthCast.eq.Length.of.Eq
 import Lemma.Tensor.LengthPermute.eq.Length.of.Ge_0.GtVal_0
@@ -47,10 +47,10 @@ private lemma main
         grind
     ·
       simp [h_gt]
-      rw [EqSwapS]
+      rw [Swap]
       rw [Swap.eq.PermutePermute.of.Lt.GtLength]
       ·
-        repeat rw [EqPermuteS.of.Eq.EqValS.Eq]
+        repeat rw [Permute.of.Eq.EqValS.Eq]
         ·
           rfl
         ·
@@ -85,7 +85,7 @@ private lemma main
       simp [h_gt]
       rw [Swap.eq.PermutePermute.of.Lt.GtLength]
       ·
-        repeat rw [EqPermuteS.of.Eq.EqValS.Eq]
+        repeat rw [Permute.of.Eq.EqValS.Eq]
         ·
           rfl
         ·

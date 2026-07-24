@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Eq.of.EqLengthS.EqAppendS
-import Lemma.Tensor.EqTensordotS.of.SEq.SEq
+import Lemma.Tensor.Tensordot.of.SEq.SEq
 open Bool List Tensor
 
 
@@ -25,7 +25,7 @@ private lemma main
   have h_sB := Eq.of.EqLengthS.EqAppendS h_B.left (by grind)
   subst h_sB
   apply SEq.of.Eq
-  apply EqTensordotS.of.SEq.SEq h_A h_B
+  apply Tensordot.of.SEq.SEq h_A h_B
 
 
 -- created on 2026-07-20

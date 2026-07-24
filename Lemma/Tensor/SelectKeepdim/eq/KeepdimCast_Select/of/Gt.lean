@@ -1,4 +1,4 @@
-import Lemma.Bool.EqCastS.of.SEq.Eq
+import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCast.of.Eq
@@ -51,7 +51,7 @@ private lemma main
     have := SelectCast.eq.Cast_Select.of.Eq (i := ⟨i, by simp; rwa [GetSet.eq.Get.of.Gt.GtLength (by omega) (by omega)]⟩) (d := ⟨d, by rw [LengthSet.eq.Length]; omega⟩) h_set (X := ((X.unsqueeze k).repeat ⟨k, by simpa [h_length]⟩ s[k]))
     simp at this
     rw [this]
-    apply EqCastS.of.SEq.Eq
+    apply Cast.of.SEq.Eq
     ·
       simp [EqSetInsertIdxEraseIdx.of.GtLength]
     ·

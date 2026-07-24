@@ -6,7 +6,7 @@ import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Ge.of.Gt
 import Lemma.List.GetSwap.eq.Get.of.GtLengthSwap.GtLength
 import Lemma.List.EqAppend_ConsAppend_Cons.of.GtLength.Lt
-import Lemma.List.EqSwapS
+import Lemma.List.Swap
 open List Nat
 
 
@@ -27,7 +27,7 @@ private lemma main
   ·
     rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength (by linarith) (by linarith)]
     rw [GetSwap.eq.Get.of.GtLengthSwap.GtLength.left h_i (by linarith)]
-    rw [EqSwapS]
+    rw [Swap]
     apply EqAppend_ConsAppend_Cons.of.GtLength.Lt h_lt? h_i
   ·
     unfold List.swap
@@ -57,7 +57,7 @@ private lemma swap
   (a.swap i j).swap i j = a := by
 -- proof
   have := main a i j
-  rwa [EqSwapS _ j i] at this
+  rwa [Swap _ j i] at this
 
 
 -- created on 2025-05-17

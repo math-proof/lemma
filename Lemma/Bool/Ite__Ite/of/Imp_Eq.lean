@@ -1,5 +1,5 @@
 import sympy.core.relational
-import Lemma.Bool.EqIteS.of.Imp_Eq
+import Lemma.Bool.Ite.of.Imp_Eq
 open Bool
 
 
@@ -28,7 +28,7 @@ private lemma main
     f x
   else
     c
-  have := EqIteS.of.Imp_Eq (f := f) (b := c) h
+  have := Ite.of.Imp_Eq (f := f) (b := c) h
   rw [this]
 
 

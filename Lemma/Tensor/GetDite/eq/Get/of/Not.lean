@@ -1,4 +1,4 @@
-import Lemma.Tensor.EqLengthS
+import Lemma.Tensor.Length
 import Lemma.Tensor.LengthIte.eq.Length
 import sympy.tensor.tensor
 open Tensor

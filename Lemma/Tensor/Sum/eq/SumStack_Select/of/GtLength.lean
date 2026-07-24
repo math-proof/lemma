@@ -10,7 +10,7 @@ import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Tensor.Cast_SumStack.eq.SumStack_Cast.of.Eq
 import Lemma.Tensor.EqGetStack.of.Lt
-import Lemma.Tensor.EqStackS.of.All_Eq
+import Lemma.Tensor.Stack.of.All_Eq
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
 import Lemma.Tensor.GetSumStack.eq.SumStack_Get.of.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength
@@ -51,7 +51,7 @@ private lemma main
       have h_lt_length_tail : i < s.tail.length := by simpa
       rw [Sum.eq.Cast_Stack_Sum.of.GtLength (by grind)]
       apply EqCast.of.SEq
-      rw [EqStackS.of.All_Eq.fin (f := fun t : Fin s[0] => (X[t]'(by apply GtLength.of.GtLength_0)).sum i) (g := fun t : Fin s[0] => ∑ k < s[i + 1], (X[t]'(by apply GtLength.of.GtLength_0)).select ⟨i, h_lt_length_tail⟩ ⟨k, by grind⟩)]
+      rw [Stack.of.All_Eq.fin (f := fun t : Fin s[0] => (X[t]'(by apply GtLength.of.GtLength_0)).sum i) (g := fun t : Fin s[0] => ∑ k < s[i + 1], (X[t]'(by apply GtLength.of.GtLength_0)).select ⟨i, h_lt_length_tail⟩ ⟨k, by grind⟩)]
       ·
         apply SEq.of.All_SEqGetS.Eq.GtLength_0
         ·

@@ -1,4 +1,4 @@
-import Lemma.List.EqSwapS
+import Lemma.List.Swap
 open List
 
 
@@ -35,7 +35,7 @@ private lemma main
 -- imply
   s.swap i j = s := by
 -- proof
-  rw [EqSwapS]
+  rw [Swap]
   apply left h
 
 
