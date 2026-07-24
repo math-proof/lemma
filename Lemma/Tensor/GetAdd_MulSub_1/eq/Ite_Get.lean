@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq_TensorReplicate
 import Lemma.Int.Sub.eq.Zero.is.Eq
-import Lemma.Real.Setoid.of.Eq
+import Lemma.Real.XEq.of.Eq
 import Lemma.Nat.EqMul0_0
 import Lemma.Nat.Sub.eq.Zero
 import Lemma.Hyperreal.Sub_Infty.to.NegInfty
@@ -21,14 +21,14 @@ import Lemma.Tensor.GetMul.eq.MulGet.of.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSub.eq.SubGetS
 import Lemma.Tensor.GetSubStackBool.eq.One
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.Setoid.is.SetoidDataS
+import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.EqGet1_1
 import Lemma.Vector.GetAdd.eq.AddGetS
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetNeg.eq.NegGet
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Head.eq.Get_0
-import Lemma.Vector.Setoid.is.All_SetoidGetS
+import Lemma.Vector.XEq.is.All_XEqGetS
 import sympy.tensor.functions
 import sympy.tensor.stack
 open Hyperreal Int Tensor Vector Fin
@@ -76,7 +76,7 @@ private lemma main
     simp [mask]
     repeat rw [EqGetStack.fn.fin]
     simp [h_p]
-    apply Real.Setoid.of.Eq
+    apply Real.XEq.of.Eq
     apply Int.EqAdd.of.Eq_Sub.left
     rw [Nat.Sub.eq.Zero]
     apply @Tensor.EqMul0_0.of.Eq_0
@@ -94,11 +94,11 @@ private lemma main
     simp at this
     rw [this]
     simp [Tensor.map]
-    apply Setoid.of.SetoidDataS
+    apply XEq.of.XEqDataS
     erw [DataAdd.eq.AddDataS]
     simp [DataNeg.eq.NegData]
     erw [DataMul.eq.MulData]
-    apply Setoid.of.All_SetoidGetS.fin
+    apply XEq.of.All_XEqGetS.fin
     intro k
     erw [@Vector.GetAdd.eq.AddGetS.fin]
     erw [@Vector.GetNeg.eq.NegGet.fin]

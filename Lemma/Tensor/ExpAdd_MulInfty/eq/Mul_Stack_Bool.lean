@@ -5,7 +5,7 @@ import Lemma.Vector.MulSub.eq.SubMulS
 import Lemma.Tensor.DataSub.eq.SubDataS
 import Lemma.Hyperreal.InfinitePos.is.InfiniteNegSub
 import Lemma.Hyperreal.InfinitePosInfty
-import Lemma.Hyperreal.InfiniteNeg.is.SetoidExp_0
+import Lemma.Hyperreal.InfiniteNeg.is.XEqExp_0
 import Lemma.Hyperreal.InfinitePos.is.InfiniteNegNeg
 import Lemma.Tensor.DataExp.eq.ExpData
 import Lemma.Tensor.EqData0'0
@@ -13,9 +13,9 @@ import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetAdd_MulSub_1.eq.Ite_Get
 import Lemma.Tensor.GetExp.eq.ExpGet
 import Lemma.Tensor.GetMul.eq.MulGetS
-import Lemma.Tensor.Setoid.is.All_SetoidGetS.of.GtLength_0
-import Lemma.Tensor.Setoid.is.SetoidDataS
-import Lemma.Tensor.SetoidExpS.of.Setoid_0
+import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
+import Lemma.Tensor.XEq.is.XEqDataS
+import Lemma.Tensor.XEqExpS.of.XEq_0
 import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetExp.eq.ExpGet
 import sympy.tensor.functions
@@ -37,9 +37,9 @@ private lemma main
 -- proof
   intro Ξ A'
   have h_A : A' = map Hyperreal.ofReal A := rfl
-  apply Setoid.of.All_SetoidGetS.GtLength_0 (h := by simp)
+  apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp)
   intro i
-  apply Setoid.of.All_SetoidGetS.GtLength_0 (h := by simp)
+  apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp)
   intro j
   simp
   have := GetExp.eq.ExpGet.fin (A' + (Ξ - 1) * ∞) ⟨i, by grind⟩
@@ -52,7 +52,7 @@ private lemma main
   simp at this
   rw [← h_A] at this
   simp [Ξ]
-  apply Setoid.of.SetoidDataS
+  apply XEq.of.XEqDataS
   erw [DataExp.eq.ExpData]
   rw [GetAdd.eq.AddGetS.fin]
   erw [GetAdd.eq.AddGetS.fin]
@@ -78,7 +78,7 @@ private lemma main
   rw [DataSub.eq.SubDataS]
   rw [EqData1'1]
   rw [@Vector.MulSub.eq.SubMulS]
-  apply @Vector.Setoid.of.All_SetoidGetS.fin
+  apply @Vector.XEq.of.All_XEqGetS.fin
   intro k
   have h_k := Eq_0 k
   subst h_k
@@ -98,7 +98,7 @@ private lemma main
   else
     simp [h]
     rw [Add_Neg.eq.Sub]
-    apply SetoidExp_0.of.InfiniteNeg
+    apply XEqExp_0.of.InfiniteNeg
     simp only [A', map]
     erw [Vector.GetMap.eq.UFnGet]
     apply InfiniteNegSub.of.InfinitePos _ InfinitePosInfty

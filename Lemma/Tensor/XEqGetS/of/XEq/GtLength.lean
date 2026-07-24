@@ -1,11 +1,11 @@
 import Lemma.Tensor.EqLengthS
-import Lemma.Tensor.Setoid.is.All_SetoidGetS
+import Lemma.Tensor.XEq.is.All_XEqGetS
 open Tensor
 
 
 @[main, fin]
 private lemma main
-  [Setoid α]
+  [XEq α]
   {A B : Tensor α s}
   {i : ℕ}
 -- given
@@ -18,7 +18,7 @@ private lemma main
   | [] =>
     simp [Tensor.length] at h₀
   | m :: s' =>
-    exact All_SetoidGetS.of.Setoid h₁ ⟨i, by simp [Tensor.length] at h₀ ⊢; omega⟩
+    exact All_XEqGetS.of.XEq h₁ ⟨i, by simp [Tensor.length] at h₀ ⊢; omega⟩
 
 
 -- created on 2026-07-21

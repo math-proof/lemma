@@ -6,7 +6,7 @@ import Lemma.Tensor.GetDiv.eq.DivGetS
 import Lemma.Tensor.GetDot.eq.DotGet
 import Lemma.Tensor.GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
-import Lemma.Tensor.Setoid.is.All_SetoidGetS
+import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
 open Tensor
@@ -39,7 +39,7 @@ private lemma main
   rw [← h_a'] at h_Ξ ⊢
   denote h_z : z = a'.softmax @ V'
   rw [← h_z]
-  apply Setoid.of.All_SetoidGetS.fin
+  apply XEq.of.All_XEqGetS.fin
   intro i
   have h_Ξᵢ := XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) h_Ξ
   simp at h_Ξᵢ

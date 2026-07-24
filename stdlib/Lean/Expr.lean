@@ -321,7 +321,7 @@ def Lean.Expr.symm_args : Expr → Name × List Level × List Expr
   | .app (.app (.const `Or us) a) b =>
     ⟨`Or, us, [a, b]⟩
   | .app (.app (.app (.app (.const `HasEquiv.Equiv us) α) I) a) b =>
-    ⟨`Setoid, us, [α, I, a, b]⟩
+    ⟨`XEq, us, [α, I, a, b]⟩
   | .app (.const `Not _) p =>
     let ⟨name, us, args⟩ := p.symm_args
     ⟨`Not ++ name, us, args⟩

@@ -159,7 +159,7 @@ the approx operator that defines asymptotically equivalence/closeness between hy
 numerical analogy:
 - [torch.isclose](https://docs.pytorch.org/docs/stable/generated/torch.isclose.html)
 -/
-instance [Setoid α] : Setoid (Tensor α s) where
+instance [XEq α] : XEq (Tensor α s) where
   r A B := A.data ≈ B.data
   iseqv :=
     {

@@ -231,24 +231,24 @@ DivOneTwo, etc.
 
 ## Infix Operators
 small-letter binary infix operators are short name for Capital-letter operator name, eg:
-| infix operators  | prefix operators | sympy equivalent |
-| :--: |  :--: |  :--: | 
-| X.eq.Y | = | Equal | 
-| X.ne.Y | ≠  | Unequal | 
-| X.gt.Y | > | Greater |
-| X.lt.Y | < | Less |
-| X.ge.Y | ≥ | GreaterThan |
-| X.le.Y | ≤ | LessThan
-| X.in.Y | ∈ | Contains | 
-| X.is.Y | ↔ | Equivalent | 
-| X.as.Y | ≃ | -- | 
-| X.ou.Y | ∨ | Or | 
-| X.et.Y | ∧ | And | 
-| X.to.Y | ≈ | -- | 
-| X.to.Y | → | -- | 
-| X.dvd.Y | \| | -- | 
-| X.sub.Y | ⊆ | Subset | 
-| X.sup.Y | ⊇ | Supset | 
+| infix operators  | prefix operators | Lean class | sympy equivalent |
+| :--: |  :--: |  :--: |   :--: | 
+| X.eq.Y | = | Eq |  Equal | 
+| X.ne.Y | ≠  | Ne |  Unequal | 
+| X.gt.Y | > | Gt | Greater |
+| X.lt.Y | < | Le | Less |
+| X.ge.Y | ≥ | Ge | GreaterThan |
+| X.le.Y | ≤ | Le | LessThan|
+| X.in.Y | ∈ | Membership |  Contains | 
+| X.is.Y | ↔ | Iff |  Equivalent | 
+| X.as.Y | ≃ | SEq |  -- | 
+| X.ou.Y | ∨ | Or |  Or | 
+| X.et.Y | ∧ | And |  And | 
+| X.at.Y | ≈ | XEq |  -- | 
+| X.to.Y | → | ·.stdPart = · |  -- | 
+| X.dvd.Y | \| | Dvd |  -- | 
+| X.sub.Y | ⊆ | Subset | Subset | 
+| X.sup.Y | ⊇ | Superset | Supset | 
 
 ## Plural S
 The English Plural Letter S is used to denote double occurrence of types:

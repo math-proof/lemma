@@ -3,7 +3,7 @@ import Lemma.Hyperreal.InfiniteInfty
 import Lemma.Hyperreal.InfinitesimalDiv.of.Infinite
 import Lemma.Hyperreal.NeInfty0
 import Lemma.Hyperreal.NotInfinitesimalInfty
-import Lemma.Hyperreal.Setoid.is.OrAndS
+import Lemma.Hyperreal.XEq.is.OrAndS
 import Lemma.Rat.DivAdd.eq.AddDiv.of.Ne_0
 open Hyperreal Rat Int
 
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   x + Hyperreal.omega ≈ Hyperreal.omega := by
 -- proof
-  apply Setoid.of.OrAndS
+  apply XEq.of.OrAndS
   right
   constructor
   ·

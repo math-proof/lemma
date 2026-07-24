@@ -104,7 +104,7 @@ def argAminmax [NeZero m] (x : Vector (Vector α n) m) (cmp : α → α → Prop
 
 end List.Vector
 
-instance [Setoid α] : Setoid (List.Vector α n) where
+instance [XEq α] : XEq (List.Vector α n) where
   r a b := ∀ i : Fin n, a[i] ≈ b[i]
   iseqv :=
     {

@@ -1,0 +1,37 @@
+import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
+import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
+import Lemma.Hyperreal.InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal
+import Lemma.Hyperreal.XEq.is.OrAndS
+open Hyperreal
+
+
+private lemma mp
+  {a b : ℝ*}
+-- given
+  (h : a ≈ b)
+  (h_a : a → 0) :
+-- imply
+  b → 0 := by
+-- proof
+  have h_or := OrAndS.of.XEq h
+  simp [h_a] at h_or
+  by_contra h_b
+  simp [h_b] at h_or
+  have := EqSt.of.InfinitesimalSub h_or.left
+  have := InfinitesimalDiv.of.Infinitesimal.NotInfinitesimal h_a h_b
+  have := EqSt_0.of.Infinitesimal this
+  linarith
+
+
+@[main, mp, mp.mt]
+private lemma main
+  {a b : ℝ*}
+-- given
+  (h : a ≈ b) :
+-- imply
+  a → 0 ↔ b → 0 :=
+-- proof
+  ⟨mp h, mp h.symm⟩
+
+
+-- created on 2025-12-27

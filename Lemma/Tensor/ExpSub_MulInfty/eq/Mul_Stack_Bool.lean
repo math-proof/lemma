@@ -1,5 +1,5 @@
 import Lemma.Int.Sub.eq.NegSub
-import Lemma.Real.Setoid.of.Eq
+import Lemma.Real.XEq.of.Eq
 import Lemma.Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool
 import Lemma.Tensor.NegMul.eq.MulNeg
 open Real Tensor Int
@@ -20,7 +20,7 @@ private lemma main
   simp
   symm
   apply this.symm.trans
-  apply Setoid.of.Eq
+  apply XEq.of.Eq
   congr
   rw [@Tensor.NegMul.eq.MulNeg]
   rw [NegSub.eq.Sub]

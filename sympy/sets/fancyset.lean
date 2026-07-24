@@ -11,13 +11,19 @@ import Lemma.Nat.NotLt.is.Ge
 open Hyperreal Rat Nat Int
 export Hyperreal (Infinite Infinitesimal IsSt st)
 
+abbrev XEq (α : Sort u) := Setoid α
+
+namespace XEq
+export Setoid (symm trans)
+end XEq
+
 /--
 the approx operator that defines asymptotically equivalence/closeness between hyperreal numbers.
 numerical analogy:
 - [math.isclose][https://docs.python.org/3/library/math.html#math.isclose]
 - [numpy.isclose][https://numpy.org/doc/stable/reference/generated/numpy.isclose.html]
 -/
-instance : Setoid ℝ* where
+instance : XEq ℝ* where
   r a b := (a → 0) ∧ b → 0 ∨ (a / b - 1) → 0 ∧ ¬b → 0
   iseqv :=
     { refl x := by
@@ -108,10 +114,10 @@ instance : Setoid ℝ* where
 noncomputable instance : Coe ℝ ℝ* := ⟨Hyperreal.ofReal⟩
 
 @[symm]
-def HasEquiv.Equiv.symm [Setoid α] {a b : α} (h : a ≈ b) : b ≈ a := Setoid.symm h
+def HasEquiv.Equiv.symm [XEq α] {a b : α} (h : a ≈ b) : b ≈ a := XEq.symm h
 
-def HasEquiv.Equiv.trans [Setoid α] {a b c : α} (h_ab : a ≈ b) (h_bc : b ≈ c) : a ≈ c := Setoid.trans h_ab h_bc
+def HasEquiv.Equiv.trans [XEq α] {a b c : α} (h_ab : a ≈ b) (h_bc : b ≈ c) : a ≈ c := XEq.trans h_ab h_bc
 
-def Not.Setoid.symm [Setoid α] {a b : α} (h : ¬a ≈ b) : ¬b ≈ a := fun h' => h h'.symm
+def Not.XEq.symm [XEq α] {a b : α} (h : ¬a ≈ b) : ¬b ≈ a := fun h' => h h'.symm
 
 notation "∞" => Hyperreal.omega

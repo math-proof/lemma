@@ -1,5 +1,5 @@
 import Lemma.Hyperreal.Add_Infty.to.Infty
-import Lemma.Hyperreal.SetoidNegS.of.Setoid
+import Lemma.Hyperreal.XEqNegS.of.XEq
 import Lemma.Nat.Sub.eq.AddNeg
 open Hyperreal Nat
 
@@ -14,7 +14,7 @@ private lemma main
   have := Add_Infty.to.Infty (-x)
   simp at this
   rw [AddNeg.eq.Sub] at this
-  have := SetoidNegS.of.Setoid this
+  have := XEqNegS.of.XEq this
   aesop
 
 
