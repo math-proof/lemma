@@ -1,6 +1,6 @@
 import Lemma.Tensor.SumDiv.eq.DivSum
 import Lemma.Tensor.Div.eq.Div_GetData_0
-import Lemma.Tensor.EqDivSDiv
+import Lemma.Tensor.DivDiv
 open Tensor
 
 
@@ -16,7 +16,7 @@ private lemma main
   simp [Tensor.mean]
   rw [SumDiv.eq.DivSum]
   repeat rw [Div.eq.Div_GetData_0]
-  rw [EqDivSDiv]
+  rw [DivDiv]
 
 
 -- created on 2025-08-29

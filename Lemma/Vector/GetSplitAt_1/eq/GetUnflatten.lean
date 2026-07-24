@@ -2,7 +2,7 @@ import sympy.vector.vector
 import Lemma.Bool.HEq.of.All_Eq.Eq.Eq
 import Lemma.List.Prod.eq.Foldr
 import Lemma.Bool.HEq.of.All_HEq.Eq
-import Lemma.Bool.EqImpS_Decidable.of.Eq
+import Lemma.Bool.Imp_Decidable.of.Eq
 open List Bool
 
 

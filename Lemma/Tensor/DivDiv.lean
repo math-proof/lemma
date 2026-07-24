@@ -1,5 +1,5 @@
 import sympy.tensor.Basic
-import Lemma.Rat.EqDivSDiv
+import Lemma.Rat.DivDiv
 open Rat
 
 
@@ -19,7 +19,7 @@ private lemma main
   have h_fun : (fun x ↦ Div.div (Div.div x b) a) = (fun x ↦ (x / b) / a) := by
     simp [HDiv.hDiv]
   simp [h_fun]
-  simp [EqDivSDiv]
+  simp [DivDiv]
 
 
 -- created on 2025-09-26

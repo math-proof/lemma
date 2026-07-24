@@ -1,4 +1,4 @@
-import Lemma.Vector.EqGetSUnflatten.of.Eq.Eq.Lt.Eq.Eq
+import Lemma.Vector.GetUnflatten.of.Eq.Eq.Lt.Eq.Eq
 open Vector
 
 
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   v.unflatten[i] ≃ v'.unflatten[i] := by
 -- proof
-  apply EqGetSUnflatten.of.Eq.Eq.Lt.Eq.Eq
+  apply GetUnflatten.of.Eq.Eq.Lt.Eq.Eq
   repeat assumption
   .
     rfl
