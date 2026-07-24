@@ -2,7 +2,7 @@ import Lemma.Int.GeSquare_0
 import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
 import Lemma.Int.SubAddS.eq.Sub
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Rat.Sub1Div.eq.DivSub.of.Ne_0
 open Int Nat Rat
 
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   rw [Sub1Div.eq.DivSub.of.Ne_0]
   ·
-    apply EqDivS.of.Eq
+    apply Div.of.Eq
     simp [SquareSub.eq.SubAddSquareS_MulMul2]
   ·
     have h_a := GeSquare_0 a

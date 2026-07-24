@@ -1,5 +1,5 @@
 import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Nat.EqMul_Div.of.Dvd
 import Lemma.Nat.Eq_0.of.Div.eq.Zero.Dvd
 open Nat
@@ -16,7 +16,7 @@ private lemma main
   a / (a / b) = b := by
 -- proof
   have := EqMul_Div.of.Dvd h_dvd
-  have := EqDivS.of.Eq this (a / b)
+  have := Div.of.Eq this (a / b)
   rw [Mul.comm] at this
   rw [EqDivMul.of.Ne_0.left] at this
   .

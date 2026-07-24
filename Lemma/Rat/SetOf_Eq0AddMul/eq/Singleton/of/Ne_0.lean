@@ -1,5 +1,5 @@
 import Lemma.Int.Eq_Neg.of.Add.eq.Zero
-import Lemma.Nat.EqMulS.is.Eq.of.Ne_0
+import Lemma.Nat.Mul.is.Eq.of.Ne_0
 import Lemma.Rat.EqMul_Div.of.Ne_0
 import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Nat.Mul
@@ -21,7 +21,7 @@ private lemma main
   ·
     field_simp [h] at h_In
     simp
-    apply Eq.of.EqMulS.Ne_0 h
+    apply Eq.of.Mul.Ne_0 h
     simp [EqMul_Div.of.Ne_0 h]
     apply Eq_Neg.of.Add.eq.Zero
     exact h_In.symm

@@ -1,6 +1,6 @@
 import Lemma.Rat.CeilAdd.eq.AddCeil
 import Lemma.Int.AddSub.eq.Add_Sub
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.Odd.is.Any_Eq_AddMul2
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Nat.AddAdd.eq.Add_Add
@@ -22,7 +22,7 @@ private lemma main
   rw [AddCeil.eq.CeilAdd]
   apply EqUFnS.of.Eq
   rw [AddSub.eq.Add_Sub]
-  apply EqAddS.of.Eq.left
+  apply Add.of.Eq.left
   let ⟨k, hk⟩ := Any_Eq_AddMul2.of.Odd h
   rw [hk]
   simp
@@ -33,7 +33,7 @@ private lemma main
   rw [DivAdd.eq.AddDivS]
   norm_num
   rw [Add_Add.eq.AddAdd]
-  apply EqAddS.of.Eq (k : α)
+  apply Add.of.Eq (k : α)
   norm_num
 
 

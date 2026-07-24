@@ -32,7 +32,7 @@ import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.DivDiv.eq.Div_Mul
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.EqMod.of.Lt
 import Lemma.Nat.EqSubAdd
@@ -228,7 +228,7 @@ private lemma main
                 rw [MulMul.eq.Mul_Mul]
                 rw [MulAdd.eq.AddMulS]
                 repeat rw [AddAdd.eq.Add_Add]
-                apply EqAddS.of.Eq.left
+                apply Add.of.Eq.left
                 simp [AddAdd.eq.Add_Add (a := i)]
                 rw [MulProdS.eq.ProdAppend]
                 rw [AppendTakeDrop.eq.Drop]
@@ -264,13 +264,13 @@ private lemma main
                 rw [MulAdd.eq.AddMulS]
                 rw [AddAdd.eq.Add_Add]
                 rw [AddAdd.eq.Add_Add (c := (r' : ℕ))]
-                apply EqAddS.of.Eq.left
+                apply Add.of.Eq.left
                 rw [EqMod.of.Lt]
                 ·
                   rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)]
                   rw [MulAdd.eq.AddMulS]
                   rw [AddAdd.eq.Add_Add]
-                  apply EqAddS.of.Eq.left
+                  apply Add.of.Eq.left
                   simp [Div.eq.Zero.of.Lt h_qₐ]
                   simp [h_rₑ_mod]
                   rw [Add_Add.eq.AddAdd]

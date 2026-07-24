@@ -1,5 +1,5 @@
 import Lemma.List.Prod.eq.Mul_ProdDropLast.of.GtLength_0
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 open List Nat
 
 
@@ -13,7 +13,7 @@ private lemma main
   s.dropLast.prod = s.prod / s[s.length - 1] := by
 -- proof
   have h_prod := Prod.eq.Mul_ProdDropLast.of.GtLength_0 h₀
-  have h_div := EqDivS.of.Eq h_prod s[s.length - 1]
+  have h_div := Div.of.Eq h_prod s[s.length - 1]
   simp [h₁] at h_div
   exact h_div.symm
 

@@ -5,7 +5,7 @@ import Lemma.Bool.Imp.is.Or_Not
 import Lemma.Bool.Bool.eq.Zero.of.Bool.ne.One
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Nat.Mul
-import Lemma.Nat.EqCoeS.is.Eq
+import Lemma.Nat.Coe.is.Eq
 import Lemma.Int.Sub.eq.Zero.is.Eq
 import Lemma.Nat.CoeMul.eq.MulCoeS
 import Lemma.Int.Sub_Mul.eq.Mul_Sub1
@@ -36,7 +36,7 @@ private lemma main
     .
       aesop
   .
-    have := EqCoeS.of.Eq (R := ℤ) h
+    have := Coe.of.Eq (R := ℤ) h
     rw [CoeMul.eq.MulCoeS] at this
     have := Sub.eq.Zero.of.Eq this
     rw [Sub_Mul.eq.Mul_Sub1] at this

@@ -1,4 +1,4 @@
-import Lemma.Vector.EqGetS.of.Eq.Lt
+import Lemma.Vector.Get.of.Eq.Lt
 import Lemma.Vector.EqGetReplicate.of.Lt
 open Vector
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   a = b := by
 -- proof
-  have := EqGetS.of.Eq.Lt h_n h
+  have := Get.of.Eq.Lt h_n h
   repeat rw [EqGetReplicate.of.Lt] at this
   assumption
 

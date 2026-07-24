@@ -44,7 +44,7 @@ import Lemma.Nat.Div.eq.Zero.of.Lt
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
 import Lemma.Nat.Dvd_Mul
 import Lemma.Nat.Dvd_Mul.of.Dvd
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.EqMin.of.Ge
 import Lemma.Nat.EqMin.of.Le
@@ -194,7 +194,7 @@ private lemma main
                       rw [MulMul.eq.Mul_Mul]
                       rw [MulProdS.eq.Prod]
                       simp
-                      apply Eq.of.EqAddS (a := ↑qₕ * s.tail.tail.prod)
+                      apply Eq.of.Add (a := ↑qₕ * s.tail.tail.prod)
                       rw [Add_Add.eq.AddAdd]
                       conv_rhs => rw [AddAdd.eq.Add_Add]
                       conv_rhs at h_qₕrₕ => rw [Add.comm]

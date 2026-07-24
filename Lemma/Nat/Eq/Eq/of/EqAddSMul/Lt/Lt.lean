@@ -1,6 +1,6 @@
 import Lemma.Nat.Gt_0.of.Gt
 import Lemma.Nat.EqMod.of.Lt
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 open Nat
 
 

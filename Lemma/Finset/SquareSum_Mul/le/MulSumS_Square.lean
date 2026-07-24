@@ -1,6 +1,6 @@
 import sympy.core.relational
 import sympy.core.power
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Rat.SquareDiv.eq.DivSquareS
 import Lemma.Nat.Le.of.Gt_0.LeMulS
 import Lemma.Rat.EqMul_Div.of.Ne_0
@@ -21,7 +21,7 @@ private lemma cauchy_schwarz
 -- proof
   denote hA : A = ∑ i ∈ s, (a i)²
   denote hB : B = 2 * ∑ i ∈ s, a i * b i
-  have hB := EqDivS.of.Eq hB 2
+  have hB := Div.of.Eq hB 2
   norm_num at hB
   denote hC : C = ∑ i ∈ s, (b i)²
   rw [← hA, ← hC, ← hB]

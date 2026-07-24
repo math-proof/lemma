@@ -1,4 +1,4 @@
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.Sum.eq.SelectKeepdimSum
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   rw [Softmax.eq.DivExp_KeepdimSumExp]
   rw [SelectDiv.eq.DivSelectS]
-  apply EqDivS.of.Eq.left
+  apply Div.of.Eq.left
   apply SelectKeepdimSum.eq.Sum
 
 

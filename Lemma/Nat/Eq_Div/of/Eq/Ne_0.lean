@@ -1,4 +1,4 @@
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Nat.EqDivMul.of.Ne_0
 open Nat
 
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   a = b / x := by
 -- proof
-  have h := EqDivS.of.Eq h₀ x
+  have h := Div.of.Eq h₀ x
   rwa [EqDivMul.of.Ne_0 h₁] at h
 
 

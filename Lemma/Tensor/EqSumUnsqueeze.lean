@@ -1,7 +1,7 @@
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.DataUnsqueeze.as.Data
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Vector.EqGetS.of.SEq.Lt
+import Lemma.Vector.Get.of.SEq.Lt
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Sum.eq.Head
@@ -25,7 +25,7 @@ private lemma main
   ext i
   rw [GetUnflatten.eq.Get_AddMul.fin]
   simp
-  apply EqGetS.of.SEq.Lt.fin
+  apply Get.of.SEq.Lt.fin
   apply DataUnsqueeze.as.Data
 
 

@@ -7,7 +7,7 @@ import Lemma.Int.EqSub.is.Eq_Add
 import Lemma.Int.EqNegS.is.Eq
 import Lemma.Int.Sub.eq.NegSub
 import Lemma.Int.Add.eq.Sub_Neg
-import Lemma.Nat.EqAddS.of.Eq.Eq
+import Lemma.Nat.Add.of.Eq.Eq
 import Lemma.Rat.FloorAdd1.eq.Add1Floor
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Int.FDivAdd.eq.Add1FDiv.of.Ne_0
@@ -20,7 +20,7 @@ import Lemma.Nat.Add
 import Lemma.Int.Sub_Add.eq.SubSub
 import Lemma.Int.EqSubS.is.Eq
 import Lemma.Nat.Mul
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.AddMul.eq.MulAdd_1
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Int.Eq_0.of.Mul.eq.Zero.Ne_0
@@ -62,7 +62,7 @@ private lemma main
     rw [FDivAdd.eq.Add1FDiv.of.Ne_0 h] at h₁
     rw [MulAdd.eq.AddMulS] at h₁
     norm_num at h₁
-    have := EqAddS.of.Eq.Eq h₀ h₁
+    have := Add.of.Eq.Eq h₀ h₁
     ring_nf at this
     rw [AddFModS.eq.FModNegSign] at this
     rw [FModNegSign.eq.Sub_Sign] at this
@@ -76,7 +76,7 @@ private lemma main
     rw [NegSub.eq.Sub] at this
     rw [Sub_Neg.eq.Add] at this
     rw [← MulAdd.eq.AddMulS] at this
-    have := EqAddS.of.Eq d this
+    have := Add.of.Eq d this
     simp at this
     have := this.symm
     rw [AddMul.eq.MulAdd_1] at this

@@ -1,4 +1,4 @@
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Complex.Or_Eq_NegSqrt.of.EqSquare
 import Lemma.Rat.DivNeg.eq.NegDiv
 open Nat Rat Complex
@@ -14,7 +14,7 @@ private lemma main
   x = √(a * c) / a ∨
     x = -√(a * c) / a := by
 -- proof
-  have h₁ := EqDivS.of.Eq h₁ a
+  have h₁ := Div.of.Eq h₁ a
   simp [h₀] at h₁
   have h := Or_Eq_NegSqrt.of.EqSquare h₁
   have h_EqSqrt : √(c / a) = √c / √a := by

@@ -7,7 +7,7 @@ import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.Int.EqToNat.of.Gt_0
 import Lemma.Nat.LeMulS.of.Le.Gt_0
 import Lemma.Rat.EqMulDiv.of.Gt_0
-import Lemma.Nat.EqCoeS.is.Eq
+import Lemma.Nat.Coe.is.Eq
 import Lemma.List.LengthSlicedIndices'.eq.CeilDivSub.of.Gt_0.Le.Gt.Sub.le.Mul
 open List Int Nat Rat
 
@@ -31,7 +31,7 @@ private lemma main
   have h_pos := Gt.of.Ge.Gt h_Le h_pos
   have h_pos := Gt.of.GtCoeS h_pos
   have h_Eq := EqToNat.of.Gt_0 h_pos
-  apply Eq.of.EqCoeS (R := ℤ)
+  apply Eq.of.Coe (R := ℤ)
   rw [h_Eq]
   have h_Le := LeMulS.of.Le.Gt_0 h_Le h_step'
   rw [EqMulDiv.of.Gt_0 h_step'] at h_Le

@@ -2,7 +2,7 @@ import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.GetTake.eq.Get.of.GtLengthTake
 import Lemma.List.ProdEraseIdx.eq.Mul_ProdDrop_2.of.GtLength_0
 import Lemma.List.TakeEraseIdx.eq.EraseIdxTake.of.Le
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 open List Nat
 
 
@@ -21,7 +21,7 @@ private lemma main
     rw [ProdEraseIdx.eq.Mul_ProdDrop_2.of.GtLength_0]
     ·
       rw [GetTake.eq.Get.of.GtLengthTake]
-      apply EqMulS.of.Eq.left
+      apply Mul.of.Eq.left
       apply congrArg
       rw [DropTake.eq.TakeDrop]
       simp

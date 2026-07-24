@@ -12,7 +12,7 @@ import Lemma.List.InsertIdxAppend.eq.Append_Cons
 import Lemma.List.InsertIdxAppend.eq.Append_InsertIdx
 import Lemma.List.Slice.eq.Nil
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.Tensor.EqRepeatS.of.Eq
 import Lemma.Tensor.EqSumS.of.Eq
 import Lemma.Tensor.EqUnsqueezeS.of.Eq
@@ -78,7 +78,7 @@ private lemma main
     (bz.length + 1)
   simp at this
   simp [this]
-  apply EqMulS.of.Eq.left
+  apply Mul.of.Eq.left
   apply EqCastS.of.SEq.Eq.left (by grind)
   apply SEq.of.Eq
   erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtLength_0.fin (d := ⟨bz.length, by grind⟩) (by grind) (by grind)]

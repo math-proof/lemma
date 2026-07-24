@@ -1,4 +1,4 @@
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 open Nat
 
 
@@ -13,7 +13,7 @@ private lemma main
   x - d ≠ y - d := by
 -- proof
   intro h'
-  have h' := EqAddS.of.Eq d h'
+  have h' := Add.of.Eq d h'
   simp at h'
   exact h h'
 

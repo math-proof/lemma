@@ -20,7 +20,7 @@ import Lemma.Int.EqSubS.is.Eq
 import Lemma.Rat.DivNeg.eq.NegDiv
 import Lemma.Int.FDivNegFMod.eq.Neg1.of.FMod.ne.Zero.Ne_0
 import Lemma.Int.DivInt.eq.Div
-import Lemma.Nat.EqSubS.of.Eq
+import Lemma.Nat.Sub.of.Eq
 open Bool Int Nat Rat
 
 
@@ -69,7 +69,7 @@ private lemma main
       rw [MulAdd.eq.AddMulS]
       rw [Sub_Add.eq.SubSub]
       ring_nf
-      apply EqSubS.of.Eq
+      apply Sub.of.Eq
       simp
       rw [DivInt.eq.Div]
       rw [FloorDiv.eq.FDiv]

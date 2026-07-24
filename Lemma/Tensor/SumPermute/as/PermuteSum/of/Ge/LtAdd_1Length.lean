@@ -238,7 +238,7 @@ private lemma main
                 rw [MulMul.eq.Mul_Mul]
               conv_rhs => rw [MulMul.eq.Mul_Mul]
               erw [AddMulS.eq.MulAdd]
-              apply Nat.EqMulS.of.Eq
+              apply Nat.Mul.of.Eq
               rw [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul, AddAdd.eq.Add_Add] at h_qₐ_div
               simp [h_rₕ_mod, h_qₑ_div, h_r_mod, h_qₐ_div]
               erw [DivAddMul.eq.Add_Div.of.Gt_0]

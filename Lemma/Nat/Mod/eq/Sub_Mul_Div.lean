@@ -1,6 +1,6 @@
 import Lemma.Nat.EqAddMul_Div
 import Lemma.Nat.EqSubAdd
-import Lemma.Nat.EqSubS.of.Eq
+import Lemma.Nat.Sub.of.Eq
 open Nat
 
 
@@ -12,7 +12,7 @@ private lemma main
   n % d = n - d * (n / d) := by
 -- proof
   have := EqAddMul_Div (n := n) (d := d)
-  have := EqSubS.of.Eq this (d * (n / d))
+  have := Sub.of.Eq this (d * (n / d))
   rwa [EqSubAdd.left] at this
 
 

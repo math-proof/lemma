@@ -3,7 +3,7 @@ import Lemma.Real.Root_Add_2.le.Sqrt.of.Ge_1
 import Lemma.Finset.LeSumS.of.All_Le
 import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
 import Lemma.Nat.Le.of.Le.Le
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.Rat.EqMulDiv.of.Ne_0
 import Lemma.Nat.Mul_Mul
 import Lemma.Nat.Square.eq.Mul
@@ -41,7 +41,7 @@ private lemma main
   have := Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0.cauchy_schwarz h_Ge_0
   simp only [Finset.card_range] at this
   have h_Le := Le.of.Le.Le h_Le this
-  have h_Eq := EqMulS.of.Eq h₂ n
+  have h_Eq := Mul.of.Eq h₂ n
   rw [EqMulDiv.of.Ne_0 (by simp [h₀] : (n : ℝ) ≠ 0)] at h_Eq
   rw [h_Eq] at h_Le
   rw [Mul_Mul.comm] at h_Le

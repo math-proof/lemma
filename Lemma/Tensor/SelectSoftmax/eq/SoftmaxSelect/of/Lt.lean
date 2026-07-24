@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.EqCast.of.Eq
 import Lemma.List.EraseIdxEraseIdx.of.Gt.GtLength
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
 import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Lt
@@ -24,7 +24,7 @@ private lemma main
   repeat rw [Softmax.eq.DivExp_KeepdimSumExp]
   rw [SelectDiv.eq.DivSelectS]
   rw [SelectExp.eq.ExpSelect]
-  apply EqDivS.of.Eq.left
+  apply Div.of.Eq.left
   rw [SelectKeepdim.eq.KeepdimCast_Select.of.Lt h_k]
   apply congrArg
   apply EqCast.of.SEq.Eq

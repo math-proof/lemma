@@ -2,7 +2,7 @@ import sympy.core.relational
 import sympy.sets.sets
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Add
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.EqSubAdd
 open Nat
 
@@ -24,7 +24,7 @@ private lemma main
   rw [h_n]
   rw [Finset.sum_range_succ']
   rw [Add.comm]
-  apply EqAddS.of.Eq.left
+  apply Add.of.Eq.left
   rw [Finset.sum_Ico_eq_sum_range]
   simp [Add.comm]
 

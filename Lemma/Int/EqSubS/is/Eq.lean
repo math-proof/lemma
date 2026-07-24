@@ -3,7 +3,7 @@ import sympy.Basic
 
 /--
 mpr is not defined for Int, it is defined in Nat:
-Nat.EqSubS.of.Eq [Sub α]
+Nat.Sub.of.Eq [Sub α]
 -/
 @[main, comm, mp]
 private lemma main

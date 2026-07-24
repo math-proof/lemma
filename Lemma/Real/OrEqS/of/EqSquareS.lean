@@ -1,7 +1,7 @@
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.Int.SubSquareS.eq.MulAdd__Sub
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
-import Lemma.Nat.EqSubS.of.Eq
+import Lemma.Nat.Sub.of.Eq
 open Nat Int
 
 
@@ -14,17 +14,17 @@ private lemma main
 -- imply
   x = c ∨ x = -c := by
 -- proof
-  have h := EqSubS.of.Eq h c²
+  have h := Sub.of.Eq h c²
   simp at h
   rw [SubSquareS.eq.MulAdd__Sub] at h
   have h := OrEqS_0.of.Mul.eq.Zero h
   cases h with
   | inl h =>
-    have h := EqSubS.of.Eq h c
+    have h := Sub.of.Eq h c
     simp at h
     exact Or.inr h
   | inr h =>
-    have h := EqAddS.of.Eq c h
+    have h := Add.of.Eq c h
     simp at h
     exact Or.inl h
 

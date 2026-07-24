@@ -4,7 +4,7 @@ import Lemma.Nat.Lt.of.Lt.Le
 import Lemma.Nat.Le.of.Eq
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 open List Nat
@@ -28,7 +28,7 @@ private lemma main
   apply Le.of.Eq
   repeat rw [Mul.comm (a := n)]
   repeat rw [Mul_Mul.eq.MulMul]
-  apply EqMulS.of.Eq
+  apply Mul.of.Eq
   rw [MulProdS.eq.ProdAppend]
   simp
   rw [Prod.eq.Mul_ProdTail.of.GtLength_0 (s := s)]

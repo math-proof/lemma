@@ -1,5 +1,5 @@
 import sympy.core.power
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Rat.DivAdd.eq.Add1Div.of.Ne_0
 open Nat Rat
 
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   rw [Add1Div.eq.DivAdd.of.Ne_0]
   ·
-    apply EqDivS.of.Eq
+    apply Div.of.Eq
     ring
   ·
     nlinarith

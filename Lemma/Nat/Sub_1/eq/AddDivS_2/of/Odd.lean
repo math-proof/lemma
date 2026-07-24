@@ -2,7 +2,7 @@ import sympy.functions.elementary.integers
 import Lemma.Nat.Mul_2.eq.Add
 import Lemma.Nat.EvenSub_1.of.Odd
 import Lemma.Nat.Eq_AddDivS_2.of.Even
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.Nat.EqDivS_2.of.Odd
 open Nat
 
@@ -20,7 +20,7 @@ private lemma main
   rw [Add.eq.Mul_2]
   rw [Eq_AddDivS_2.of.Even is_even]
   rw [Add.eq.Mul_2]
-  apply EqMulS.of.Eq
+  apply Mul.of.Eq
   apply EqDivS_2.of.Odd h
 
 

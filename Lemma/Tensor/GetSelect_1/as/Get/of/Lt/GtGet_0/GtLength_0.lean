@@ -1,6 +1,6 @@
 import Lemma.Tensor.Select_1.eq.FromVectorMapToVector.of.GtLength_0
 import Lemma.Tensor.GetToVector.eq.Get
-import Lemma.Vector.EqGetS.of.Eq.Lt
+import Lemma.Vector.Get.of.Eq.Lt
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
@@ -59,7 +59,7 @@ private lemma main
           simp
         .
           apply SEq.of.Eq
-          apply EqGetS.of.Eq.Lt
+          apply Get.of.Eq.Lt
           congr
           simp
           erw [GetToVector.eq.Get.fin (i := ⟨j, by simpa [Length.eq.Get_0.of.Ne_Nil]⟩)]

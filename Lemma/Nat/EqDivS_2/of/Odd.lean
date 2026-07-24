@@ -2,7 +2,7 @@ import Lemma.Nat.EqSubAdd
 import Lemma.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.EqAddMulDiv
 import Lemma.Nat.ModAddMul.eq.Mod
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Nat.EqMod.of.Lt.Ge_0
 import Lemma.Nat.Odd.is.Any_Eq_AddMul2
 open Nat
@@ -25,7 +25,7 @@ private lemma main
   rw [ModAddMul.eq.Mod.left] at h
   rw [EqMod.of.Lt.Ge_0 (by simp) (by simp)] at h
   simp at h
-  have h := EqDivS.of.Eq h 2
+  have h := Div.of.Eq h 2
   rw [EqDivMul.of.Ne_0.left (by norm_num)] at h
   rw [EqDivMul.of.Ne_0 (by norm_num)] at h
   aesop

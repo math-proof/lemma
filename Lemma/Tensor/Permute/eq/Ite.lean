@@ -11,7 +11,7 @@ import Lemma.Int.NegSucc.eq.NegCoeAdd_1
 import Lemma.Nat.Add
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.Int.ToNatSubOfNat_NegSucc.eq.AddAdd1
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.SubMin.eq.MinSubS
 import Lemma.Nat.Min.eq.Add_1
@@ -76,7 +76,7 @@ private lemma main
         rw [Permute__Neg.eq.Append_AppendRotateDropTake]
         simp
         rw [Mul_Mul.eq.MulMul]
-        apply EqMulS.of.Eq
+        apply Mul.of.Eq
         have h_rot : (offset + 2) ⊓ (i.val + 1) - 1 = (offset + 1) ⊓ i.val := by omega
         simp [h_rot]
       ·

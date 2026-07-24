@@ -1,5 +1,5 @@
 import Lemma.Nat.EqMod_1'0
-import Lemma.Nat.EqMulS.of.Eq.Eq
+import Lemma.Nat.Mul.of.Eq.Eq
 import Lemma.Tensor.Dot.eq.SumMul
 import Lemma.Tensor.Dot.eq.SumMul__0
 import Lemma.Tensor.EqGetS.of.Eq
@@ -40,7 +40,7 @@ private lemma main
   apply EqSumS.of.Eq
   rw [GetMul.eq.MulGetS.fin]
   conv_lhs => erw [GetMul.eq.MulGetS.fin]
-  apply EqMulS.of.Eq.Eq
+  apply Mul.of.Eq.Eq
   ·
     erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (i := ⟨i, by grind⟩) (s' := [m, n, k]) (by grind) (by grind)]
     simp

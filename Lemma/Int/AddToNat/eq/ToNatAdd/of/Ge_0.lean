@@ -1,4 +1,4 @@
-import Lemma.Nat.EqCoeS.is.Eq
+import Lemma.Nat.Coe.is.Eq
 import Lemma.Int.EqToNat.of.Ge_0
 import Lemma.Nat.Le0Add.of.Ge_0.Ge_0
 import Lemma.Nat.CoeAdd.eq.AddCoeS
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   n.toNat + m = (n + m).toNat := by
 -- proof
-  apply Eq.of.EqCoeS (R := ℤ)
+  apply Eq.of.Coe (R := ℤ)
   rw [EqToNat.of.Ge_0]
   ·
     rw [CoeAdd.eq.AddCoeS]

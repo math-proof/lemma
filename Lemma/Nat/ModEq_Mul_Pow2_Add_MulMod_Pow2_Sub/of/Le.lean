@@ -1,4 +1,4 @@
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Pow_Add.eq.MulPowS
 import Lemma.Nat.EqAddSub.of.Ge
@@ -21,7 +21,7 @@ private lemma main
   n * 2 ^ b ≡ n / 2 ^ (m - b) + n % 2 ^ (m - b) * 2 ^ b [MOD 2 ^ m - 1] := by
 -- proof
   have h_Eq_Add := EqAddMulDiv (n := n) (d := 2 ^ (m - b))
-  have := EqMulS.of.Eq h_Eq_Add (2 ^ b)
+  have := Mul.of.Eq h_Eq_Add (2 ^ b)
   rw [MulAdd.eq.AddMulS] at this
   rw [MulMul.eq.Mul_Mul] at this
   rw [MulPowS.eq.Pow_Add] at this

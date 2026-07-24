@@ -3,7 +3,7 @@ import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Nat.Add
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.Sub.eq.Add_Neg
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.Int.FDiv.eq.FloorDiv
 import Lemma.Int.CoeAdd.eq.AddCoeS
 import Lemma.Rat.DivAdd.eq.AddDivS
@@ -42,7 +42,7 @@ private lemma main
     rw [Add.comm]
     rw [SubAdd.eq.Add_Sub]
     rw [Sub.eq.Add_Neg (a := m)]
-    apply EqAddS.of.Eq.left
+    apply Add.of.Eq.left
     rw [FDiv.eq.FloorDiv (α := ℚ)]
     rw [CoeAdd.eq.AddCoeS]
     rw [DivAdd.eq.AddDivS]

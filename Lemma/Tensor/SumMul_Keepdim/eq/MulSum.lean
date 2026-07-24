@@ -3,7 +3,7 @@ import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Fin.MulSum.eq.Sum_Mul
 import Lemma.Fin.Sum.of.All_Eq
 import Lemma.List.EqEraseIdx.of.LeLength
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Tensor.EqSelectKeepdim
 import Lemma.Tensor.Keepdim.eq.Cast.of.LeLength
@@ -30,7 +30,7 @@ private lemma main
     apply @Fin.Sum.of.All_Eq
     intro i
     rw [SelectMul.eq.MulSelectS]
-    apply EqMulS.of.Eq.left
+    apply Mul.of.Eq.left
     apply EqSelectKeepdim (d := ⟨d, h⟩)
   else
     have h := Ge.of.NotLt h

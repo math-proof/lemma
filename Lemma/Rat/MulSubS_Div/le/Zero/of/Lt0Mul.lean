@@ -1,8 +1,8 @@
 import sympy.core.relational
-import Lemma.Nat.EqSubS.of.Eq
+import Lemma.Nat.Sub.of.Eq
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.Mul_Add.eq.AddMulS
-import Lemma.Nat.EqMulS.of.Eq.Eq
+import Lemma.Nat.Mul.of.Eq.Eq
 import Lemma.Int.Sub.eq.NegSub
 import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Rat.DivMul.eq.MulDiv
@@ -40,7 +40,7 @@ private lemma main
 -- proof
   denote h_A : A = _
   have h_Add_ne_Zero := Add.ne.Zero.of.Lt0Mul h₀
-  have h₁ := EqSubS.of.Eq h_A (TP / P)
+  have h₁ := Sub.of.Eq h_A (TP / P)
   have h_together := SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
     h_Add_ne_Zero
     (Ne_0.of.Lt0Mul.left h₀)
@@ -52,7 +52,7 @@ private lemma main
     Mul_Add.eq.AddMulS
   ] at h₁
   simp at h₁
-  have h₂ := EqSubS.of.Eq h_A (TN / N)
+  have h₂ := Sub.of.Eq h_A (TN / N)
   have h_together := SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
     h_Add_ne_Zero
     (Ne_0.of.Lt0Mul h₀)
@@ -65,7 +65,7 @@ private lemma main
   ] at h₂
   simp at h₂
   rw [Sub.eq.NegSub (a := TP * N)] at h₂
-  have h := EqMulS.of.Eq.Eq h₁ h₂
+  have h := Mul.of.Eq.Eq h₁ h₂
   rw [Mul_Div.eq.DivMul] at h
   rw [MulDiv.eq.DivMul] at h
   rw [Mul_Neg.eq.NegSquare] at h

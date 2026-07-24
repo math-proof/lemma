@@ -2,7 +2,7 @@ import Lemma.Finset.Prod.eq.MulProdS
 import Lemma.Set.Ico.eq.SDiffRangeS
 import Lemma.Set.In_Ico
 import Lemma.Set.EqInterSingleton.of.In
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.Finset.Ico.eq.SDiffIco
 open Set Finset Nat
 
@@ -19,7 +19,7 @@ private lemma main
 -- proof
   rw [Prod.eq.MulProdS (Finset.Ico (i : ℕ) n) {(i : ℕ)} f]
   simp
-  apply EqMulS.of.Eq.left
+  apply Mul.of.Eq.left
   congr
   apply Ico.eq.SDiffIco
 

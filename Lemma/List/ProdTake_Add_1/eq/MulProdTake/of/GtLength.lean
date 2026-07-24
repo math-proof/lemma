@@ -1,6 +1,6 @@
 import Lemma.List.DropTake.eq.ListGet.of.GtLength
 import Lemma.List.ProdTake.eq.Mul_ProdDropTake.of.Ge
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 open List Nat
 
 
@@ -14,7 +14,7 @@ private lemma main
   (s.take (i + 1)).prod = (s.take i).prod * s[i] := by
 -- proof
   rw [ProdTake.eq.Mul_ProdDropTake.of.Ge (j := i) (by omega)]
-  apply EqMulS.of.Eq.left
+  apply Mul.of.Eq.left
   rw [DropTake.eq.ListGet.of.GtLength h]
   simp
 

@@ -6,7 +6,7 @@ import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.Gt_0.of.Ne_0
 import Lemma.Nat.Lt.of.Prod.eq.IteGt.Ne
-import Lemma.Nat.EqMaxS.of.Prod.eq.IteGt
+import Lemma.Nat.Max.of.Prod.eq.IteGt
 import Lemma.Nat.EqMulDiv.of.Dvd
 import Lemma.Int.NegSucc.eq.NegAdd_1
 import Lemma.List.ProdInsertIdx.eq.Prod
@@ -325,7 +325,7 @@ def Tensor.transpose (X : Tensor α s) (i j : ℕ) : Tensor α (s.swap i j) :=
     let ⟨i, j⟩ := args
     have h_lt := Lt.of.Prod.eq.IteGt.Ne h_eq h_ite
     have h : i ⊔ j < s.length := by
-      simp_all [EqMaxS.of.Prod.eq.IteGt h_ite]
+      simp_all [Max.of.Prod.eq.IteGt h_ite]
     have h_i : i < s.length := by
       simp_all
     have h_j : j < s.length := by

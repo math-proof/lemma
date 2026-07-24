@@ -1,7 +1,7 @@
 import sympy.vector.vector
 import Lemma.List.Eq_Nil.is.EqLength_0
 import Lemma.List.LengthCons.eq.Add1Length
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.List.MapCons.eq.Cons_Map
 import Lemma.List.FlattenCons.eq.Append_Flatten
 import Lemma.List.Eq.of.EqAppendS.EqLengthS
@@ -29,7 +29,7 @@ private lemma main
       contradiction
     | b₀ :: b =>
       rw [LengthCons.eq.Add1Length, LengthCons.eq.Add1Length] at h₀
-      have h₀ := Eq.of.EqAddS.left h₀
+      have h₀ := Eq.of.Add.left h₀
       rw [MapCons.eq.Cons_Map, MapCons.eq.Cons_Map] at h₁
       rw [FlattenCons.eq.Append_Flatten, FlattenCons.eq.Append_Flatten] at h₁
       have h_head_length : a₀.toList.length = b₀.toList.length := by

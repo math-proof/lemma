@@ -3,7 +3,7 @@ import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.EqDropAppend.of.Eq_Length
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.LengthList.eq.One
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.List.LengthSlice.eq.SubMin
 import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.Nat.Le.of.Lt
@@ -33,7 +33,7 @@ private lemma main
     apply EqDropAppend.of.Eq_Length
     rw [LengthAppend.eq.AddLengthS]
     rw [LengthList.eq.One]
-    apply EqAddS.of.Eq
+    apply Add.of.Eq
     simp
     rw [LengthSlice.eq.SubMin]
     have h_i := Lt.of.Lt.Lt h h_j

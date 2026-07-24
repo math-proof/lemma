@@ -3,7 +3,7 @@ import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.Nat.Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.Tail.eq.AppendTailTake__Drop.of.Gt_0
 open List Nat
@@ -30,7 +30,7 @@ private lemma main
       rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength]
       rw [Mul.comm (a := n)]
       rw [Mul_Mul.eq.MulMul]
-      apply EqMulS.of.Eq
+      apply Mul.of.Eq
       rw [← ProdAppend.eq.MulProdS]
       congr
       rwa [← Tail.eq.AppendTailTake__Drop.of.Gt_0]

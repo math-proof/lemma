@@ -1,5 +1,5 @@
 import Lemma.Nat.EqDivMul.of.Ne_0
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Rat.EqMul_Div.of.Ne_0
 open Nat Rat
 
@@ -28,7 +28,7 @@ private lemma main
   constructor <;>
     intro h
   ·
-    exact EqDivMul.of.Ne_0 h₀ a ▸ EqDivS.of.Eq h b
+    exact EqDivMul.of.Ne_0 h₀ a ▸ Div.of.Eq h b
   ·
     subst h
     simp_all
@@ -47,7 +47,7 @@ private lemma left
   constructor <;>
     intro h
   ·
-    exact EqDivMul.of.Ne_0.left h₀ b ▸ EqDivS.of.Eq h a
+    exact EqDivMul.of.Ne_0.left h₀ b ▸ Div.of.Eq h a
   ·
     subst h
     apply EqMul_Div.of.Ne_0 h₀

@@ -1,7 +1,7 @@
 import sympy.sets.sets
 import Lemma.Real.All_Eq_1.of.All_Ge_1.Sum_Root.eq.Mul_Root_2.EqDivSum.Gt_1
 import Lemma.Finset.Sum.eq.Mul.of.All_Eq
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Rat.Div.eq.One.of.Gt_0
 import Lemma.Nat.LtCoeS.is.Lt
 import Lemma.Nat.Gt.of.Gt.Gt
@@ -32,7 +32,7 @@ private lemma main
     have h' := All_Eq_1.of.All_Ge_1.Sum_Root.eq.Mul_Root_2.EqDivSum.Gt_1 h h₀ h₁ h₂
     have := Sum.eq.Mul.of.All_Eq.range h'
     simp at this
-    have := EqDivS.of.Eq this n
+    have := Div.of.Eq this n
     simp [Div.eq.One.of.Gt_0 h_pos] at this
     have h₀ := h₀.symm.trans this
     apply All_Eq.of.All_Eq.Eq.is_constant h₀ h'
@@ -45,7 +45,7 @@ private lemma main
     ·
       have := Sum.eq.Mul.of.All_Eq.range h_All_Eq
       simp at this
-      have := EqDivS.of.Eq this n
+      have := Div.of.Eq this n
       simp [Div.eq.One.of.Gt_0 h_pos] at this
       apply this.trans h_Eq.symm
     ·

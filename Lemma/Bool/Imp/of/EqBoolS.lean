@@ -1,4 +1,4 @@
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.Bool.Bool.eq.SquareBool
 import Lemma.Nat.Square.eq.Mul
 import Lemma.Bool.Imp.is.Bool.eq.MulBoolS
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   p → q := by
 -- proof
-  have := EqMulS.of.Eq.left h (Bool.toNat p)
+  have := Mul.of.Eq.left h (Bool.toNat p)
   rw [Mul.eq.Square] at this
   rw [SquareBool.eq.Bool] at this
   exact Imp.of.Bool.eq.MulBoolS this

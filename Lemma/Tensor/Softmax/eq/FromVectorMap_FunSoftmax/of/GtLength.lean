@@ -19,7 +19,7 @@ import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Nat.Div.eq.AddMulDiv_Mul
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Ne_0
 import Lemma.Nat.DivMul.eq.Mul_Div.of.Dvd
-import Lemma.Nat.EqDivS.of.Eq
+import Lemma.Nat.Div.of.Eq
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Nat.LtMod.of.Ne_0
 import Lemma.Nat.ModMod.eq.Mod.of.Dvd
@@ -74,7 +74,7 @@ private lemma main
   simp
   erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
   simp [← h_qr]
-  apply EqDivS.of.Eq.left
+  apply Div.of.Eq.left
   rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d + 1, by grind⟩)]
   rw [DataKeepdim.eq.Cast_FlattenMapSplitAtCast_Data (d := ⟨d, by grind⟩)]
   simp

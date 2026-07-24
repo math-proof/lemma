@@ -1,7 +1,7 @@
 import Lemma.Vector.EqHeadSplitAt_0
 import Lemma.Vector.GetMap₂.eq.BFnGetS
 import Lemma.Vector.Head.eq.Get_0
-import Lemma.Vector.EqGetS.of.Eq.Lt
+import Lemma.Vector.Get.of.Eq.Lt
 import Lemma.Fin.Eq_Fin.of.EqVal
 import Lemma.Fin.Eq_0
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
@@ -74,7 +74,7 @@ private lemma main
     simp [Fin.Eq_0 q] at  ⊢ h_qr
     have h_r := Fin.Eq_Fin.of.EqVal h_qr.symm
     simp [h_r]
-    apply EqGetS.of.Eq.Lt
+    apply Get.of.Eq.Lt
     rw [Head.eq.Get_0.fin]
     rw [GetMap₂.eq.BFnGetS.fin]
     simp

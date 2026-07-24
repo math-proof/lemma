@@ -1,6 +1,6 @@
 import Lemma.Finset.All.of.All.All_Imp
 import Lemma.Real.Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0
-import Lemma.Nat.EqMulS.of.Eq
+import Lemma.Nat.Mul.of.Eq
 import Lemma.Rat.EqMulDiv.of.Ne_0
 import Lemma.Nat.Mul_Mul
 import Lemma.Nat.Square.eq.Mul
@@ -32,7 +32,7 @@ private lemma main
   have h_Ge_0 := All.of.All.All_Imp this h₁
   have h_Le := Sum_Sqrt.le.SqrtMul_Sum.of.All_Ge_0.cauchy_schwarz h_Ge_0
   simp only [Finset.card_range] at h_Le
-  have h_Eq := EqMulS.of.Eq h₂ n
+  have h_Eq := Mul.of.Eq h₂ n
   rw [EqMulDiv.of.Ne_0 (by simp [h₀] : (n : ℝ) ≠ 0)] at h_Eq
   rw [h_Eq] at h_Le
   rw [Mul_Mul.comm] at h_Le

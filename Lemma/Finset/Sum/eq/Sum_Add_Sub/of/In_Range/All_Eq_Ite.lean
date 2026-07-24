@@ -3,7 +3,7 @@ import Lemma.Set.Lt.of.In_Range
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Nat.Add
 import Lemma.Int.AddSub.eq.SubAdd
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.Finset.Filter.eq.Singleton.of.In
 open Set Nat Finset Int
 
@@ -27,7 +27,7 @@ private lemma main
   rw [Add.comm]
   rw [Add_Sub.eq.SubAdd]
   rw [SubAdd.eq.AddSub]
-  apply EqAddS.of.Eq (x i')
+  apply Add.of.Eq (x i')
   rw [Finset.sum_filter]
   let y'' := fun i => if i = i' then y i else y i
   have h_y'' : ∀ i ∈ s, y'' i = if i = i' then y i else y i := by

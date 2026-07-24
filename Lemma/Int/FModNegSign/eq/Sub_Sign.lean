@@ -3,7 +3,7 @@ import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 import Lemma.Int.EqSign_1.of.Gt_0
 import Lemma.Int.FMod.eq.Sub_MulFDiv
 import Lemma.Nat.Sub.eq.AddNeg
-import Lemma.Nat.EqAddS.is.Eq
+import Lemma.Nat.Add.is.Eq
 import Lemma.Int.FDiv1.eq.Neg1.of.Lt_0
 import Lemma.Int.SubNeg
 import Lemma.Int.EqSubS.is.Eq
@@ -24,7 +24,7 @@ private lemma main
     simp
     rw [FMod.eq.Sub_MulFDiv]
     rw [Sub.eq.AddNeg]
-    apply EqAddS.of.Eq 1
+    apply Add.of.Eq 1
     rw [FDiv1.eq.Neg1.of.Lt_0 h_d]
     simp
   ·
@@ -35,7 +35,7 @@ private lemma main
     rw [this]
     rw [FMod.eq.Sub_MulFDiv]
     rw [SubNeg.comm]
-    apply EqSubS.of.Eq (d := 1)
+    apply Sub.of.Eq (d := 1)
     rw [FDivNeg1.eq.Neg1.of.Gt_0 h_d]
     simp
 
