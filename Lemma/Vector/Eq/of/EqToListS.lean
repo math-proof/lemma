@@ -1,5 +1,5 @@
 import sympy.vector.vector
-import Lemma.Vector.Eq.of.EqValS
+import Lemma.Vector.Eq.of.Val
 open Vector
 
 
@@ -12,7 +12,7 @@ private lemma main
   a = b := by
 -- proof
   simp [List.Vector.toList]at h
-  apply Eq.of.EqValS h
+  apply Eq.of.Val h
 
 
 -- created on 2025-05-11

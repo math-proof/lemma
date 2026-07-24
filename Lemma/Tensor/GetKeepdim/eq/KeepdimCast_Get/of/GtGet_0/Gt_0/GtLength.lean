@@ -22,7 +22,7 @@ import Lemma.List.TailSet.eq.SetTail.of.Gt_0
 import Lemma.Bool.SEq.of.SEq.SEq
 import Lemma.Tensor.UnsqueezeCast.as.Unsqueeze.of.Eq
 import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
-import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 open Tensor List Nat Bool
 
 
@@ -96,7 +96,7 @@ private lemma main
     .
       simpa [h_dim_add_sub]
     .
-      apply SEqRepeatS.of.SEq.EqValS.Eq _ (by simp) (by rfl)
+      apply SEqRepeatS.of.SEq.Val.Eq _ (by simp) (by rfl)
       simp [EqAddSub.of.Ge (by omega : d ≥ 1)]
 
 

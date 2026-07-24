@@ -4,9 +4,9 @@ import sympy.Basic
 @[main, comm, mp, mpr]
 private lemma main
 -- given
-  (a : List α) :
+  (s : List α) :
 -- imply
-  a = [] ↔ a.length = 0 := by
+  s = [] ↔ s.length = 0 := by
 -- proof
   aesop
 

@@ -12,13 +12,13 @@ open List Nat
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
   {i j : ℕ}
 -- given
   (h₀ : i < j)
-  (h₁ : a.length > j) :
+  (h₁ : s.length > j) :
 -- imply
-  (a.take i ++ a[j] :: a.slice (i + 1) j ++ a[i] :: a.drop (j + 1)).length = a.length := by
+  (s.take i ++ s[j] :: s.slice (i + 1) j ++ s[i] :: s.drop (j + 1)).length = s.length := by
 -- proof
   rw [LengthAppend.eq.AddLengthS, LengthAppend.eq.AddLengthS]
   rw [LengthCons.eq.Add1Length, LengthCons.eq.Add1Length]

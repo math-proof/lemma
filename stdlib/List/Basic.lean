@@ -129,48 +129,48 @@ macro_rules
           Macro.throwUnsupported
     return x
 
-def List.enumerate (a : List α) : List (Fin a.length × α) :=
-  List.range a.length |>.pmap
+def List.enumerate (s : List α) : List (Fin s.length × α) :=
+  List.range s.length |>.pmap
     (
       fun i hi =>
-        let i : Fin a.length := ⟨i, (List.mem_range (n := a.length) (m := i)).mp hi⟩
-        ⟨i, a[i]⟩
+        let i : Fin s.length := ⟨i, (List.mem_range (n := s.length) (m := i)).mp hi⟩
+        ⟨i, s[i]⟩
     )
     (by simp)
 
-def List.swap (a : List α) (i : Nat) (j : Nat) : List α :=
+def List.swap (s : List α) (i : Nat) (j : Nat) : List α :=
   if i = j then
-    a
+    s
   else if h_lt : i < j then
-    if h_j : j < a.length then
-      -- a[:i] ++ [a[i]] ++ a[i + 1:j] ++ [a[j]] ++ a[j + 1:], transform to:
-      -- a[:i] ++ [a[j]] ++ a[i + 1:j] ++ [a[i]] ++ a[j + 1:]
-      a.take i ++ a[j] :: a.slice (i + 1) j ++ a[i] :: a.drop (j + 1)
+    if h_j : j < s.length then
+      -- s[:i] ++ [s[i]] ++ s[i + 1:j] ++ [s[j]] ++ s[j + 1:], transform to:
+      -- s[:i] ++ [s[j]] ++ s[i + 1:j] ++ [s[i]] ++ s[j + 1:]
+      s.take i ++ s[j] :: s.slice (i + 1) j ++ s[i] :: s.drop (j + 1)
     else
-      a
+      s
   else -- j < i
-    if h_i : i < a.length then
-      -- a[:j] ++ [a[j]] ++ a[j + 1:i] ++ [a[i]] ++ a[i + 1:], transform to:
-      -- a[:j] ++ [a[i]] ++ a[j + 1:i] ++ [a[j]] ++ a[i + 1:]
-      a.take j ++ a[i] :: a.slice (j + 1) i ++ a[j] :: a.drop (i + 1)
+    if h_i : i < s.length then
+      -- s[:j] ++ [s[j]] ++ s[j + 1:i] ++ [s[i]] ++ s[i + 1:], transform to:
+      -- s[:j] ++ [s[i]] ++ s[j + 1:i] ++ [s[j]] ++ s[i + 1:]
+      s.take j ++ s[i] :: s.slice (j + 1) i ++ s[j] :: s.drop (i + 1)
     else
-      a
+      s
 
-def List.permute (a : List α) (i : Fin a.length) (d : ℤ) : List α :=
+def List.permute (s : List α) (i : Fin s.length) (d : ℤ) : List α :=
   match d with
   | .ofNat d =>
     let d := d.succ
-    -- a[:i] ++ [a[i]] ++ a[i + 1:i + d] ++ a[i + d:], transform to:
-    -- a[:i] ++ a[i + 1:i + d] ++ [a[i]] ++ a[i + d:]
-    a.take i ++ a.slice (i + 1) (i + d) ++ a[i] :: a.drop (i + d)
+    -- s[:i] ++ [s[i]] ++ s[i + 1:i + d] ++ s[i + d:], transform to:
+    -- s[:i] ++ s[i + 1:i + d] ++ [s[i]] ++ s[i + d:]
+    s.take i ++ s.slice (i + 1) (i + d) ++ s[i] :: s.drop (i + d)
   | .negSucc d =>
-    -- a[:i - d] ++ a[i - d:i] ++ [a[i]] ++ a[i + 1:], transform to:
-    -- a[:i - d] ++ [a[i]] ++ a[i - d:i] ++ a[i + 1:]
+    -- s[:i - d] ++ s[i - d:i] ++ [s[i]] ++ s[i + 1:], transform to:
+    -- s[:i - d] ++ [s[i]] ++ s[i - d:i] ++ s[i + 1:]
     let d := d.succ
-    a.take (i - d) ++ a[i] :: a.slice (i - d) i ++ a.drop (i + 1)
+    s.take (i - d) ++ s[i] :: s.slice (i - d) i ++ s.drop (i + 1)
 
-def List.repeat (a : List α) (n : ℕ) : List α :=
-  (List.replicate n a).flatten
+def List.repeat (s : List α) (n : ℕ) : List α :=
+  (List.replicate n s).flatten
 
 /--
 [itertools.product](https://docs.python.org/3/library/itertools.html#itertools.product) in Lean 4

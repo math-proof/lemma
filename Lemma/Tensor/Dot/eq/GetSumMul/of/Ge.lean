@@ -6,7 +6,7 @@ import Lemma.Nat.EqMax.of.Gt
 import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
@@ -44,14 +44,14 @@ private lemma main
   apply SEqMulS.of.SEq.SEq
   ·
     apply SEqCastS.of.SEq.Eq.Eq (by simp [broadcast_shape]) (by simp)
-    apply SEqRepeatS.of.SEq.EqValS.Eq (by simp) (by simp [broadcast_shape])
+    apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
     rw [EqMax.of.Ge h]
     apply SEqResize.of.Eq_Get (by grind) (i := ⟨1, by grind⟩)
   ·
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
-    apply SEqRepeatS.of.SEq.EqValS.Eq (by simp) (by simp [broadcast_shape])
+    apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])
     apply SEqTS.of.SEq

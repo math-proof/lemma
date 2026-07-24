@@ -12,9 +12,9 @@ import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.EqGetRange
 import Lemma.List.Get.of.Eq.GtLength
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
-import Lemma.Fin.Eq.of.EqValS
+import Lemma.Fin.Eq.of.Val
 import Lemma.Vector.Val.of.SEq
-import Lemma.Vector.SEq.of.EqValS
+import Lemma.Vector.SEq.of.Val
 open Tensor Vector List Bool Nat Fin
 
 
@@ -53,7 +53,7 @@ private lemma main
       have h₂ := All_SEqDataSGet.of.All_SEqGetS.Eq h₀ h₂
       have h_n := Gt_0.of.Ne_0 h_n
       apply HEq.of.SEqDataS.Eq (by simp_all)
-      apply SEq.of.EqValS
+      apply SEq.of.Val
       ext k x
       if h : k < A.data.val.length then
         simp_all

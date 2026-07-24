@@ -1,4 +1,4 @@
-import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 open Tensor
 
 
@@ -14,6 +14,6 @@ private lemma main
   have h_s := h.left.symm
   X.repeat d n ≃ X'.repeat ⟨d, by simp [h_s]⟩ n :=
 -- proof
-  SEqRepeatS.of.SEq.EqValS.Eq rfl (by simp) h
+  SEqRepeatS.of.SEq.Val.Eq rfl (by simp) h
 
 -- created on 2025-11-18

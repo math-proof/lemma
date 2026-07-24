@@ -9,7 +9,7 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetTranspose.eq.Get
-import Lemma.Nat.Eq.Eq.of.EqAddSMul.Lt.Lt
+import Lemma.Nat.Eq.Eq.of.AddMul.Lt.Lt
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
 open Tensor Bool List Vector Nat Fin
@@ -68,7 +68,7 @@ private lemma main
             have h_r' := r'.isLt
             simp [h_take] at h_r'
             have h_r := r.isLt
-            let ⟨h_i, h_j⟩ := Eq.Eq.of.EqAddSMul.Lt.Lt h_r h_r' h_eq
+            let ⟨h_i, h_j⟩ := Eq.Eq.of.AddMul.Lt.Lt h_r h_r' h_eq
             simp [h_i, h_j, h_take]
             rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]
             simp [h_drop]

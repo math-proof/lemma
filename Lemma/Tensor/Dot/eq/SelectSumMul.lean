@@ -4,7 +4,7 @@ import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.Dot.eq.SelectDot_Unsqueeze_1
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqRepeat
 import Lemma.Tensor.SEqResize.of.Eq_Get
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
@@ -46,7 +46,7 @@ private lemma main
     apply SEqResize.of.Eq_Get (i := ⟨1, by grind⟩) (by simp)
   ·
     apply SEqCastS.of.SEq.Eq.Eq (by simp [broadcast_shape]) (by simp)
-    apply SEqRepeatS.of.SEq.EqValS.Eq (by simp) (by simp [broadcast_shape])
+    apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])
     erw [Resize_0.eq.Cast.of.Eq_Get_0.GtLength_0 (by simp) (by grind)]

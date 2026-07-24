@@ -8,11 +8,11 @@ open List
 @[main]
 private lemma main
   [MulZeroClass α]
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length ≥ l) :
+  (h : s.length ≥ l) :
 -- imply
-  List.zipWith HMul.hMul (List.replicate l 0) a = List.replicate l 0 := by
+  List.zipWith HMul.hMul (List.replicate l 0) s = List.replicate l 0 := by
 -- proof
   have h_Eq := EqLengthReplicate (0 : α) l
   rw [← h_Eq] at h

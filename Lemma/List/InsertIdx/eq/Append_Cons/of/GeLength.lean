@@ -3,14 +3,14 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length ≥ i)
+  (h : s.length ≥ i)
   (x : α) :
 -- imply
-  a.insertIdx i x = a.take i ++ x :: a.drop i := by
+  s.insertIdx i x = s.take i ++ x :: s.drop i := by
 -- proof
-  induction a generalizing i with
+  induction s generalizing i with
   | nil =>
     simp_all
   | cons hd tl ih =>

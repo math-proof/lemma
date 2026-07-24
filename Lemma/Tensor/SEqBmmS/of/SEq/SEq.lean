@@ -1,7 +1,7 @@
 import Lemma.Tensor.LengthBmm.eq.Length
 import Lemma.Bool.SEqUFnS.of.SEq
 import Lemma.Bool.SEq.is.Eq
-import Lemma.List.Eq.of.EqAppendS.EqLengthS
+import Lemma.List.Eq.of.Append.Length
 import sympy.tensor.Basic
 open Bool List
 
@@ -22,11 +22,11 @@ private lemma main
   have h_s := h_A.left
   have h_s' := h_B.left
   have h_bz_len : bz.length = bz'.length := by simpa using congrArg length h_s
-  have h_bz := Eq.of.EqAppendS.EqLengthS h_bz_len h_s
-  have h_mk := Eq.of.EqAppendS.EqLengthS.drop h_bz_len h_s
+  have h_bz := Eq.of.Append.Length h_bz_len h_s
+  have h_mk := Eq.of.Append.Length.drop h_bz_len h_s
   injection h_mk with h_m h_k_tail
   injection h_k_tail with h_k
-  have h_kn := Eq.of.EqAppendS.EqLengthS.drop h_bz_len h_s'
+  have h_kn := Eq.of.Append.Length.drop h_bz_len h_s'
   injection h_kn with _ h_n_tail
   injection h_n_tail with h_n
   subst h_bz h_m h_k h_n

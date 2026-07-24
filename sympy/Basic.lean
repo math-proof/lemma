@@ -808,9 +808,9 @@ def Expr.subst (type value : Expr) (subst : Expr → Expr) (parity : ℕ) : Expr
 Usage:
 ```lean
 @[fin 1]
-theorem Section.UFnGet {a : List α} {b : List α} {i j : ℕ} (h : f a[j] = g b[i]) : f a[i] = g b[j] := by proof
+theorem Section.UFnGet {s : List α} {b : List α} {i j : ℕ} (h : f s[j] = g b[i]) : f s[i] = g b[j] := by proof
 -- Generates:
-theorem Section.UFnGet.fin {a : List α} {b : List α} {i j : ℕ} (h : f (a.get ⟨j, by grind⟩) = g (b.get ⟨i, by grind⟩)) : f (a.get ⟨i, by grind⟩) = g (b.get ⟨j, by grind⟩) := by sorry
+theorem Section.UFnGet.fin {s : List α} {b : List α} {i j : ℕ} (h : f (s.get ⟨j, by grind⟩) = g (b.get ⟨i, by grind⟩)) : f (s.get ⟨i, by grind⟩) = g (b.get ⟨j, by grind⟩) := by sorry
 ```
 -/
 initialize registerBuiltinAttribute {

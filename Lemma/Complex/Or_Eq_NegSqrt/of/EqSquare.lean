@@ -1,5 +1,5 @@
 import Lemma.Complex.EqSquareSqrt
-import Lemma.Real.OrEqS.of.EqSquareS
+import Lemma.Real.OrEqS.of.Square
 open Real Complex
 
 
@@ -13,7 +13,7 @@ private lemma main
 -- proof
   let t := √c
   have h_t : t² = c := EqSquareSqrt
-  exact OrEqS.of.EqSquareS (h_t.symm ▸ h)
+  exact OrEqS.of.Square (h_t.symm ▸ h)
 
 
 -- created on 2024-07-01

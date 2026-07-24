@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
-import Lemma.List.Eq.of.EqLengthS.EqAppendS
+import Lemma.List.Eq.of.Length.Append
 import Lemma.Tensor.Tensordot.of.SEq.SEq
 open Bool List Tensor
 
@@ -20,9 +20,9 @@ private lemma main
   A.tensordot B ≃ A'.tensordot B' := by
 -- proof
   subst h_m h_k
-  have h_sA := Eq.of.EqLengthS.EqAppendS h_A.left (by grind)
+  have h_sA := Eq.of.Length.Append h_A.left (by grind)
   subst h_sA
-  have h_sB := Eq.of.EqLengthS.EqAppendS h_B.left (by grind)
+  have h_sB := Eq.of.Length.Append h_B.left (by grind)
   subst h_sB
   apply SEq.of.Eq
   apply Tensordot.of.SEq.SEq h_A h_B

@@ -15,21 +15,21 @@ open List Nat
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
   {i j t : ℕ}
 -- given
   (h₀ : i < j)
-  (h₁ : a.length > j)
-  (h₂ : a.length > t) :
+  (h₁ : s.length > j)
+  (h₂ : s.length > t) :
 -- imply
-  have : t < (a.swap i j).length := by simp_all [LengthSwap.eq.Length]
-  (a.swap i j)[t] =
+  have : t < (s.swap i j).length := by simp_all [LengthSwap.eq.Length]
+  (s.swap i j)[t] =
     if t = i then
-      a[j]
+      s[j]
     else if t = j then
-      a[i]
+      s[i]
     else
-      a[t] := by
+      s[t] := by
 -- proof
   intro h₃
   have h_i := h₀.trans h₁

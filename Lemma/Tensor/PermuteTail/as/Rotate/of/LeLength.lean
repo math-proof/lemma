@@ -1,5 +1,5 @@
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.Nat.Eq.Eq.of.EqAddSMul.Lt.Lt
+import Lemma.Nat.Eq.Eq.of.AddMul.Lt.Lt
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
@@ -65,7 +65,7 @@ private lemma main
         simp [h_min, h₀] at h_r'
         have h_r := r.isLt
         simp at h_r
-        let ⟨h_i, h_j⟩ := Eq.Eq.of.EqAddSMul.Lt.Lt h_r h_r' h_eq
+        let ⟨h_i, h_j⟩ := Eq.Eq.of.AddMul.Lt.Lt h_r h_r' h_eq
         repeat rw [Get]
         simp [h_i, h_j]
         repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop]

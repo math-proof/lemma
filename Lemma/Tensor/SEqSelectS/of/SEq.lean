@@ -1,4 +1,4 @@
-import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
+import Lemma.Tensor.SEqSelectS.of.SEq.Val.Val
 open Tensor
 
 
@@ -14,7 +14,7 @@ private lemma main
   have h_s := h.left.symm
   A.select d i ≃ B.select ⟨d, by simp [h_s]⟩ ⟨i, by simp [h_s]⟩ := by
 -- proof
-  apply SEqSelectS.of.SEq.EqValS.EqValS _ _ h
+  apply SEqSelectS.of.SEq.Val.Val _ _ h
   rfl
   rfl
 

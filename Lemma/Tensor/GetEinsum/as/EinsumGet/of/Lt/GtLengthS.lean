@@ -16,14 +16,14 @@ import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLengthS
 import Lemma.Tensor.GtLengthDot.of.GeLengthS
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Tensor.ReshapeCast.eq.Reshape.of.EqProdS.Eq
+import Lemma.Tensor.ReshapeCast.eq.Reshape.of.Prod.Eq
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq.Eq.Eq
 import Lemma.Tensor.SEqReshape.of.Eq
 import Lemma.Tensor.SEqReshapeS.of.Eq.Eq.Dvd
-import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.Tensordot.as.Matmul.of.GtLengthS
 import Lemma.Tensor.Tensordot.as.Matmul.of.LtLengthS
-import Lemma.Tensor.Tensordot.eq.Matmul.of.EqLengthS
+import Lemma.Tensor.Tensordot.eq.Matmul.of.Length
 open Bool List Tensor
 set_option maxHeartbeats 1000000
 
@@ -140,7 +140,7 @@ private lemma main
         rw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (by simp) (by grind)]
         simp
         apply SEqCast.of.SEq.Eq (by simp)
-        apply SEqResizeS.of.SEq.EqValS.Eq (by simp) (by simp)
+        apply SEqResizeS.of.SEq.Val.Eq (by simp) (by simp)
         have h_cons := Cons_Append_List.eq.AppendTake_Length sₜ sₐ k k
         erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by simpa)]
         ·
@@ -189,7 +189,7 @@ private lemma main
       ·
         omega
     ·
-      rw [Tensordot.eq.Matmul.of.EqLengthS (by simp [h_s]; omega)]
+      rw [Tensordot.eq.Matmul.of.Length (by simp [h_s]; omega)]
       apply SEqMatmulS.of.SEq.SEq.Eq.Eq (by simp) (by rfl) (by simp; grind)
       apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
       rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by simp) (by simp)]
@@ -198,7 +198,7 @@ private lemma main
       rw [GetResize.eq.Cast_ResizeGet.of.GtGet_0.GtVal_0.fin (by simp) (by grind) (d := ⟨((n :: sₐ :: (sₜ ++ [k])).take ((sₜ ++ [k]).length + 1 + 1 - 2)).length + 1, by grind⟩)]
       simp
       apply SEqCast.of.SEq.Eq (by simp)
-      apply SEqResizeS.of.SEq.EqValS.Eq (by simp) (by simp)
+      apply SEqResizeS.of.SEq.Val.Eq (by simp) (by simp)
       have h_cons := Cons_Append_List.eq.AppendTake_Length sₜ sₐ k k
       erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (i := ⟨i, by grind⟩) (by grind) (by simpa)]
       ·
@@ -207,7 +207,7 @@ private lemma main
         rfl
       ·
         apply SEq_Cast.of.SEq.Eq (by simp)
-        erw [ReshapeCast.eq.Reshape.of.EqProdS.Eq (by simp) (by simp)]
+        erw [ReshapeCast.eq.Reshape.of.Prod.Eq (by simp) (by simp)]
         apply SEqReshape.of.Eq
         congr 1
         ·

@@ -1,11 +1,11 @@
 import Lemma.Vector.AppendValS.eq.Val.of.EqAdd
-import Lemma.Vector.Eq.of.EqValS
+import Lemma.Vector.Eq.of.Val
 import Lemma.Vector.ValAppend.eq.AppendValS
 import Lemma.Nat.Add_Mul.eq.MulAdd_1
 import Lemma.Vector.ValFlattenCons.eq.ValAppend_Flatten
 import Lemma.Vector.Unflatten.eq.Cons_Unflatten.of.SEq_Append
 import Lemma.Bool.HEq.of.SEq
-import Lemma.Vector.HEq.of.EqValS
+import Lemma.Vector.HEq.of.Val
 open Vector Bool Nat
 
 
@@ -53,7 +53,7 @@ private lemma main
       rw [h_sum]
     let v' : List.Vector α ((m + 1) * n) := ⟨v0.val ++ v1.val, h_eq⟩
     have h_v : v = v' := by
-      apply Eq.of.EqValS
+      apply Eq.of.Val
       rw [← h_append]
     rw [h_v]
     have h_v_append : v' ≃ v0 ++ v1 := by
@@ -64,12 +64,12 @@ private lemma main
       .
         ring
       .
-        apply HEq.of.EqValS
+        apply HEq.of.Val
         simp
     rw [Unflatten.eq.Cons_Unflatten.of.SEq_Append h_v_append]
     have h_unflatten := ValFlattenCons.eq.ValAppend_Flatten v0 v1.unflatten
     rw [ih] at h_unflatten
-    apply Eq.of.EqValS
+    apply Eq.of.Val
     rw [h_unflatten]
     congr
     ·

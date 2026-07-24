@@ -1,4 +1,4 @@
-import Lemma.Vector.SEq.of.EqValS
+import Lemma.Vector.SEq.of.Val
 import sympy.vector.vector
 open Vector
 
@@ -14,7 +14,7 @@ private lemma main
   a ≃ b := by
 -- proof
   subst h_m h_n
-  apply SEq.of.EqValS
+  apply SEq.of.Val
   aesop
 
 

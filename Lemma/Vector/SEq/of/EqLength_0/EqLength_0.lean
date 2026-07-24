@@ -1,6 +1,6 @@
 import stdlib.SEq
 import Lemma.Vector.Val.eq.Nil.of.EqLength_0
-import Lemma.Vector.HEq.of.EqValS
+import Lemma.Vector.HEq.of.Val
 open Vector
 
 
@@ -18,7 +18,7 @@ private lemma main
   have h_a := Val.eq.Nil.of.EqLength_0 h₀
   have h_b := Val.eq.Nil.of.EqLength_0 h₁
   simp_all
-  apply HEq.of.EqValS
+  apply HEq.of.Val
   simp_all
 
 

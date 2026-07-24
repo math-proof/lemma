@@ -19,16 +19,16 @@ private lemma main
   {i j : ℕ}
 -- given
   (h : i < j)
-  (a : List α) :
+  (s : List α) :
 -- imply
-  (a.swap i j).drop (j + 1) = a.drop (j + 1) := by
+  (s.swap i j).drop (j + 1) = s.drop (j + 1) := by
 -- proof
   unfold List.swap
   split_ifs with h_eq h_j
   ·
     rfl
   ·
-    rw [Cons.eq.Append a[i]]
+    rw [Cons.eq.Append s[i]]
     rw [Append_Append.eq.AppendAppend]
     apply EqDropAppend.of.Eq_Length
     rw [LengthAppend.eq.AddLengthS]

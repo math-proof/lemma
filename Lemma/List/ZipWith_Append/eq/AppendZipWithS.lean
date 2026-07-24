@@ -1,5 +1,5 @@
 import Lemma.List.EqAppendTake__Drop
-import Lemma.List.ZipWith_AppendS.eq.AppendZipWithS.of.EqLengthS
+import Lemma.List.ZipWith_AppendS.eq.AppendZipWithS.of.Length
 open List
 
 
@@ -14,7 +14,7 @@ private lemma main
   conv_lhs =>
     arg 3
     rw [← EqAppendTake__Drop s i]
-  rw [ZipWith_AppendS.eq.AppendZipWithS.of.EqLengthS]
+  rw [ZipWith_AppendS.eq.AppendZipWithS.of.Length]
   rfl
 
 

@@ -13,10 +13,10 @@ open List Nat
 @[main]
 private lemma main
 -- given
-  (a : List α)
+  (s : List α)
   (i j : ℕ) :
 -- imply
-  (a.swap i j).swap j i = a := by
+  (s.swap i j).swap j i = s := by
 -- proof
   rw [Swap.eq.Ite]
   simp [LengthSwap.eq.Length]
@@ -51,12 +51,12 @@ private lemma main
 @[main]
 private lemma swap
 -- given
-  (a : List α)
+  (s : List α)
   (i j : ℕ) :
 -- imply
-  (a.swap i j).swap i j = a := by
+  (s.swap i j).swap i j = s := by
 -- proof
-  have := main a i j
+  have := main s i j
   rwa [Swap _ j i] at this
 
 

@@ -1,7 +1,7 @@
 import Lemma.List.DropTake.eq.ListGet
 import Lemma.List.DropTake.eq.TakeDrop
 import Lemma.List.DropTakePermute__Neg.eq.RotateDropTake
-import Lemma.List.EqPermuteS__Neg.of.Ge
+import Lemma.List.Permute__Neg.of.Ge
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.TakeAppend.eq.Take.of.GeLength
 import Lemma.List.TakeDrop.eq.DropTake
@@ -46,7 +46,7 @@ private lemma main
       omega
   else
     simp at h_d
-    rw [EqPermuteS__Neg.of.Ge (by omega)]
+    rw [Permute__Neg.of.Ge (by omega)]
     simp [Sub.eq.Zero.of.Lt h_d]
     apply TakePermute__Neg.eq.ListGet
 

@@ -5,7 +5,7 @@ import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.Resize.as.FromVectorMapToVector.of.GtVal_0
-import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqResize_0.of.GtLength_0
 open Bool List Tensor
 
@@ -42,7 +42,7 @@ private lemma main
         simp at ih
         symm
         apply ih.symm.trans
-        apply SEqResizeS.of.SEq.EqValS.Eq
+        apply SEqResizeS.of.SEq.Val.Eq
         ·
           grind
         ·

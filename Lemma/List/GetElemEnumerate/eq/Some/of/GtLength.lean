@@ -5,13 +5,13 @@ open List
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length > i) :
+  (h : s.length > i) :
 -- imply
-  a.enumerate[i]? = some ⟨⟨i, h⟩, a[i]⟩ := by
+  s.enumerate[i]? = some ⟨⟨i, h⟩, s[i]⟩ := by
 -- proof
-  have := LengthEnumerate.eq.Length a
+  have := LengthEnumerate.eq.Length s
   rw [← this] at h
   have := GetElem.eq.SomeGet.of.GtLength h
   rw [this]

@@ -3,8 +3,8 @@ import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqRepeatS.of.SEq.EqValS.Eq
-import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
+import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSumS.of.SEq.Eq
 import Lemma.Tensor.SEqTS.of.SEq
@@ -41,14 +41,14 @@ private lemma main
   apply SEqMulS.of.SEq.SEq
   ·
     apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
-    apply SEqRepeatS.of.SEq.EqValS.Eq (by simp) (by simp [broadcast_shape])
+    apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
-    apply SEqResizeS.of.SEq.EqValS.Eq (by grind) (by grind)
+    apply SEqResizeS.of.SEq.Val.Eq (by grind) (by grind)
     rfl
   ·
     apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
-    apply SEqRepeatS.of.SEq.EqValS.Eq (by simp) (by simp [broadcast_shape])
+    apply SEqRepeatS.of.SEq.Val.Eq (by simp) (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape])
     apply SEqUnsqueezeS.of.SEq.Eq _ (by simp [broadcast_shape])
     apply SEqCast.of.SEq.Eq (by simp [broadcast_shape, EqSwap_0'1])

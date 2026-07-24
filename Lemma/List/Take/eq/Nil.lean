@@ -4,9 +4,9 @@ import sympy.Basic
 @[main, subst 0]
 private lemma main
 -- given
-  (a : List α) :
+  (s : List α) :
 -- imply
-  a.take 0 = .nil := by
+  s.take 0 = .nil := by
 -- proof
   simp
 

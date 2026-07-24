@@ -16,7 +16,7 @@ import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.Nat.Ge_1.of.Gt
 import Lemma.Tensor.RepeatCast.as.Repeat.of.Eq
 import Lemma.Tensor.SEqRepeatS.of.SEq
-import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
+import Lemma.Tensor.SEqSelectS.of.SEq.Val.Val
 import Lemma.Tensor.SelectCast.as.Select.of.Eq
 import Lemma.Tensor.SelectRepeat.as.RepeatSelect.of.Lt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Le
@@ -87,7 +87,7 @@ private lemma main
         simp at this
         symm
         apply this.symm.trans
-        apply SEqSelectS.of.SEq.EqValS.EqValS
+        apply SEqSelectS.of.SEq.Val.Val
         .
           simp
           omega

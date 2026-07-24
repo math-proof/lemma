@@ -7,7 +7,7 @@ import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten.of.Lt
 import Lemma.Vector.EqUnflattenFlatten
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.EqGetIndices.of.Lt_Min
-import Lemma.Fin.Eq.of.EqValS
+import Lemma.Fin.Eq.of.Val
 open Tensor Vector List Fin
 
 
@@ -36,7 +36,7 @@ private lemma main
   erw [EqUnflattenFlatten]
   erw [GetMap.eq.UFnGet.of.Lt.fin]
   congr
-  apply Eq.of.EqValS (b := ⟨i, by aesop⟩)
+  apply Eq.of.Val (b := ⟨i, by aesop⟩)
   simp
   rw [EqGetIndices.of.Lt_Min.fin]
   .

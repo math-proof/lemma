@@ -1,4 +1,4 @@
-import Lemma.Complex.Eq.of.EqReS.EqImS
+import Lemma.Complex.Eq.of.Re.Im
 open Complex
 
 
@@ -11,7 +11,7 @@ private lemma main
 -- imply
   z = 0 := by
 -- proof
-  apply Eq.of.EqReS.EqImS <;>
+  apply Eq.of.Re.Im <;>
   ·
     simp
     assumption

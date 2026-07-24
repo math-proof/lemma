@@ -17,12 +17,12 @@ open List Nat
 private lemma main
 -- given
   (h : i < j)
-  (a : List α)
+  (s : List α)
   (x : α) :
 -- imply
-  (a.insertIdx i x).drop j = a.drop (j - 1) := by
+  (s.insertIdx i x).drop j = s.drop (j - 1) := by
 -- proof
-  if h_i : i ≤ a.length then
+  if h_i : i ≤ s.length then
     rw [InsertIdx.eq.Append_InsertIdxDrop.of.Ge.GeLength h_i (by rfl) (j := i)]
     simp
     rw [DropAppend.eq.Drop.of.LeLength] <;>

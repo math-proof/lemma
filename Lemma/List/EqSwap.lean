@@ -5,10 +5,10 @@ import sympy.Basic
 @[main]
 private lemma main
 -- given
-  (a : List α)
+  (s : List α)
   (i : ℕ) :
 -- imply
-  a.swap i i = a := by
+  s.swap i i = s := by
 -- proof
   unfold List.swap
   aesop

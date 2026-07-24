@@ -5,7 +5,7 @@ import Lemma.List.Append.of.Eq
 import Lemma.List.TailTake.eq.TakeTail
 import Lemma.Tensor.Tensordot.as.Matmul.of.GtLengthS
 import Lemma.Tensor.GetReshape.as.Reshape.of.GtLength_0
-import Lemma.Tensor.GetMatmul.as.MatmulCastS_Get.of.Eq.EqLengthS.GtLength_0
+import Lemma.Tensor.GetMatmul.as.MatmulCastS_Get.of.Eq.Length.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
@@ -46,7 +46,7 @@ private lemma main
       apply Append.of.Eq
       simp
     ·
-      have := GetMatmul.as.MatmulCastS_Get.of.Eq.EqLengthS.GtLength_0 (by grind) (by grind) (by grind) X (Y.reshape (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by grind)) i
+      have := GetMatmul.as.MatmulCastS_Get.of.Eq.Length.GtLength_0 (by grind) (by grind) (by grind) X (Y.reshape (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by grind)) i
       apply this.trans
       apply SEqMatmulS.of.SEq.SEq
       ·

@@ -1,4 +1,4 @@
-import Lemma.Vector.Eq.of.EqValS
+import Lemma.Vector.Eq.of.Val
 import Lemma.List.EqReplicate_HeadD.of.IsConstant
 import sympy.vector.Basic
 open Vector List
@@ -29,7 +29,7 @@ private lemma main
   ⟩
   have h_eq_vec : vec.val = vec'.val := by
     rw [← h]
-  have h_eq_vec : vec = vec' := Eq.of.EqValS h_eq_vec
+  have h_eq_vec : vec = vec' := Eq.of.Val h_eq_vec
   have h_eq_s : s = vec' := rfl
   rw [h_eq_vector, h_eq_vec, h_eq_s]
 

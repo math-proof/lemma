@@ -1,5 +1,5 @@
 import Lemma.Vector.Card.eq.PowCard
-import Lemma.Nat.Eq.of.EqPowS.Gt_1
+import Lemma.Nat.Eq.of.Pow.Gt_1
 open Vector Nat
 
 
@@ -16,7 +16,7 @@ private lemma main
   have h_m := Card.eq.PowCard (ι := ι) m
   have h_card : Fintype.card (List.Vector ι n) = Fintype.card (List.Vector ι m) := by simp_all
   have h_eq := h_n.symm.trans h_card |>.trans h_m
-  apply Eq.of.EqPowS.Gt_1 h₀ h_eq
+  apply Eq.of.Pow.Gt_1 h₀ h_eq
 
 
 -- created on 2025-05-23

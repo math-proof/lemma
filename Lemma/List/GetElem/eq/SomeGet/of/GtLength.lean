@@ -4,11 +4,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length > i) :
+  (h : s.length > i) :
 -- imply
-  a[i]? = some a[i] := by
+  s[i]? = some s[i] := by
 -- proof
   simp [h]
 

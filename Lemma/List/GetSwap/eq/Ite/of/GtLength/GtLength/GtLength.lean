@@ -8,22 +8,22 @@ open List Nat
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
   {i j t : ℕ}
 -- given
-  (h₀ : a.length > i)
-  (h₁ : a.length > j)
-  (h₂ : a.length > t) :
+  (h₀ : s.length > i)
+  (h₁ : s.length > j)
+  (h₂ : s.length > t) :
 -- imply
-  have : t < (a.swap i j).length := by
+  have : t < (s.swap i j).length := by
     rwa [LengthSwap.eq.Length]
-  (a.swap i j)[t] =
+  (s.swap i j)[t] =
     if t = i then
-      a[j]
+      s[j]
     else if t = j then
-      a[i]
+      s[i]
     else
-      a[t] := by
+      s[t] := by
 -- proof
   intro h₃
   rcases (Lt.ou.Eq.ou.Gt i j) with h | h | h

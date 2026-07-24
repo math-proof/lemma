@@ -6,7 +6,7 @@ import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData.of.GtGet_0.GtLength_0
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Nat.Le_SubMulS.of.Lt
-import Lemma.Vector.HEq.of.EqValS
+import Lemma.Vector.HEq.of.Val
 open Tensor List Vector Nat
 
 
@@ -29,7 +29,7 @@ private lemma main
     rw [Prod.eq.Mul_ProdTail.of.GtLength_0 h]
     simp [Le_SubMulS.of.Lt]
   .
-    apply HEq.of.EqValS
+    apply HEq.of.Val
     rw [ValDataGetToVector.eq.ValArraySliceData.of.GtGet_0.GtLength_0 (by assumption)]
     apply i.isLt
 

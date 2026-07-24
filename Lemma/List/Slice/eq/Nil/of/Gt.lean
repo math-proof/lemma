@@ -6,11 +6,11 @@ open List Nat
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
   (h : start > stop) :
 -- imply
-  a.slice start stop = .nil := by
+  s.slice start stop = .nil := by
 -- proof
   apply Slice.eq.Nil.of.Ge
   apply Ge.of.Gt h

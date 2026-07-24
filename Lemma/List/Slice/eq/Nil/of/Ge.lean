@@ -4,11 +4,11 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
   (h : start ≥ stop) :
 -- imply
-  a.slice start stop = .nil := by
+  s.slice start stop = .nil := by
 -- proof
   unfold List.slice List.array_slice
   simp_all

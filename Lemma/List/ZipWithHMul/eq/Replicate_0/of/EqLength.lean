@@ -4,13 +4,13 @@ import sympy.Basic
 @[main]
 private lemma main
   [MulZeroClass α]
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length = l) :
+  (h : s.length = l) :
 -- imply
-  List.zipWith HMul.hMul a (List.replicate l 0) = List.replicate l 0 := by
+  List.zipWith HMul.hMul s (List.replicate l 0) = List.replicate l 0 := by
 -- proof
-  induction a generalizing l with
+  induction s generalizing l with
   | nil =>
     simp_all
   | cons head tail ih =>

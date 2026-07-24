@@ -5,11 +5,11 @@ open List
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length ≤ stop) :
+  (h : s.length ≤ stop) :
 -- imply
-  a.slice start stop = a.slice start a.length := by
+  s.slice start stop = s.slice start s.length := by
 -- proof
   if h : start ≤ stop then
     unfold List.slice List.array_slice

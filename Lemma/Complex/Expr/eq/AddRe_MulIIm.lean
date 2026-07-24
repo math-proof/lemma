@@ -1,4 +1,4 @@
-import Lemma.Complex.Eq.of.EqReS.EqImS
+import Lemma.Complex.Eq.of.Re.Im
 open Complex
 
 
@@ -8,7 +8,7 @@ private lemma main
 -- imply
   z = re z + I * im z := by
 -- proof
-  apply Eq.of.EqReS.EqImS <;> simp
+  apply Eq.of.Re.Im <;> simp
 
 
 -- created on 2025-01-05

@@ -1,6 +1,6 @@
 import stdlib.SEq
 import Lemma.Vector.ValGet.eq.ValArraySliceFlatten
-import Lemma.Vector.HEq.of.EqValS
+import Lemma.Vector.HEq.of.Val
 import Lemma.Nat.Le_SubMulS
 open Vector Nat
 
@@ -18,7 +18,7 @@ private lemma main
   .
     apply Le_SubMulS
   .
-    apply HEq.of.EqValS
+    apply HEq.of.Val
     apply ValGet.eq.ValArraySliceFlatten
 
 

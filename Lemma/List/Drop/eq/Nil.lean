@@ -4,11 +4,13 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {a : List α} :
+-- given
+  (s : List α) :
 -- imply
-  a.drop a.length = .nil := by
+  s.drop s.length = .nil := by
 -- proof
   simp_all
 
 
 -- created on 2025-06-07
+-- updated on 2026-07-24

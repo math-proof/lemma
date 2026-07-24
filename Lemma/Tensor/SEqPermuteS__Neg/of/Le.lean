@@ -1,5 +1,5 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.List.EqPermuteS__Neg.of.Le
+import Lemma.List.Permute__Neg.of.Le
 import Lemma.List.EqPermute
 import Lemma.List.Permute.eq.Ite
 import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
@@ -95,7 +95,7 @@ private lemma main
     ·
       apply SEq.of.SEqDataS.Eq
       ·
-        apply EqPermuteS__Neg.of.Le
+        apply Permute__Neg.of.Le
         omega
       ·
         simp

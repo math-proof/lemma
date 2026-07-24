@@ -37,7 +37,7 @@ import Lemma.List.ProdTake_1.eq.HeadD_1
 import Lemma.Bool.EqUFnS.of.Eq
 import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.Vector.GetSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0
-import Lemma.Vector.Get.of.EqFlattenS.Lt.Lt.Eq.Eq
+import Lemma.Vector.Get.of.Flatten.Lt.Lt.Eq.Eq
 import Lemma.List.Lt_ProdTakeSet.of.Gt_0.GtGet_0.GtLength_0
 import Lemma.List.Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
@@ -121,7 +121,7 @@ private lemma main
             simp [h_i''_eq, h_j_j''_eq, h_j''_eq, h_i'_eq, h_j_j'_eq, h_j'_eq]
             simp [EqAddSub.of.Ge h_d]
             rw [GetSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0 h_s h_i h_d h_t X]
-            apply Get.of.EqFlattenS.Lt.Lt.Eq.Eq (by simp) (by simp)
+            apply Get.of.Flatten.Lt.Lt.Eq.Eq (by simp) (by simp)
             simp_all
             apply SEqFlattenSSplitAt.of.SEq
             .

@@ -6,35 +6,35 @@ open List
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
   {i j : ℕ}
 -- given
-  (h₀ : a.length > j)
-  (h₁ : a.length > i) :
+  (h₀ : s.length > j)
+  (h₁ : s.length > i) :
 -- imply
-  have : i < (a.swap i j).length := by rwa [LengthSwap.eq.Length]
-  (a.swap i j)[i] = a[j] := by
+  have : i < (s.swap i j).length := by rwa [LengthSwap.eq.Length]
+  (s.swap i j)[i] = s[j] := by
 -- proof
-  let i : Fin a.length := ⟨i, h₁⟩
-  let j : Fin a.length := ⟨j, h₀⟩
-  have h_eq := GetElemSwap.eq.SomeGet a i j
+  let i : Fin s.length := ⟨i, h₁⟩
+  let j : Fin s.length := ⟨j, h₀⟩
+  have h_eq := GetElemSwap.eq.SomeGet s i j
   aesop
 
 
 @[main]
 private lemma left
-  {a : List α}
+  {s : List α}
   {i j : ℕ}
 -- given
-  (h₀ : a.length > i)
-  (h₁ : a.length > j) :
+  (h₀ : s.length > i)
+  (h₁ : s.length > j) :
 -- imply
-  have : j < (a.swap i j).length := by rwa [LengthSwap.eq.Length]
-  (a.swap i j)[j] = a[i] := by
+  have : j < (s.swap i j).length := by rwa [LengthSwap.eq.Length]
+  (s.swap i j)[j] = s[i] := by
 -- proof
-  let i : Fin a.length := ⟨i, h₀⟩
-  let j : Fin a.length := ⟨j, h₁⟩
-  have h_eq := GetElemSwap.eq.SomeGet a j i
+  let i : Fin s.length := ⟨i, h₀⟩
+  let j : Fin s.length := ⟨j, h₁⟩
+  have h_eq := GetElemSwap.eq.SomeGet s j i
   rw [Swap] at h_eq
   aesop
 

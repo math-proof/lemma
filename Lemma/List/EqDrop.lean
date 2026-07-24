@@ -3,12 +3,13 @@ import sympy.Basic
 
 @[main, subst 0]
 private lemma main
-  (a : List α) :
+-- given
+  (s : List α) :
 -- imply
-  a.drop 0 = a := by
+  s.drop 0 = s := by
 -- proof
   aesop
 
 
 -- created on 2026-07-12
--- updated on 2026-07-19
+-- updated on 2026-07-24

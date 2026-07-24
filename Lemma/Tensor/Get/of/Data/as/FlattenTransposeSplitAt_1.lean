@@ -4,7 +4,7 @@ import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.Get
 import Lemma.Vector.EqFlattenUnflatten
-import Lemma.Vector.Get.of.EqFlattenS.Lt.Lt.Eq.Eq
+import Lemma.Vector.Get.of.Flatten.Lt.Lt.Eq.Eq
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflatten
 import Lemma.Vector.Get.of.Eq_FlattenTransposeSplitAt_1

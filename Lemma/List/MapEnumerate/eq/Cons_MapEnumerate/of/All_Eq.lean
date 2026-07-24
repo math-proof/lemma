@@ -2,7 +2,7 @@ import Lemma.Nat.LtAddS.is.Lt
 import Lemma.List.Eq.of.GetElemRange.eq.Some
 import Lemma.List.GetElemEnumerate.eq.Some.of.GtLength
 import Lemma.Nat.EqMod.of.Lt
-import Lemma.Fin.Eq.of.EqValS
+import Lemma.Fin.Eq.of.Val
 import Lemma.Nat.EqCast_1'1
 open List Nat Fin
 
@@ -86,7 +86,7 @@ private lemma main
         simp_all
         rw [← h]
         congr
-        apply Eq.of.EqValS
+        apply Eq.of.Val
         simp [HAdd.hAdd]
         simp [Add.add]
         simp [Fin.add]

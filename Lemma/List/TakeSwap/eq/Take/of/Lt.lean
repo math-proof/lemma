@@ -11,9 +11,9 @@ private lemma main
   {i j : ℕ}
 -- given
   (h : i < j)
-  (a : List α) :
+  (s : List α) :
 -- imply
-  (a.swap i j).take i = a.take i := by
+  (s.swap i j).take i = s.take i := by
 -- proof
   unfold List.swap
   split_ifs with h_eq h_j
@@ -22,7 +22,7 @@ private lemma main
   ·
     simp
     have h_i := Lt.of.Lt.Lt h h_j
-    have h_length := LengthTake.eq.Min_Length a i
+    have h_length := LengthTake.eq.Min_Length s i
     have h_min := EqMin.of.Lt h_i
     rw [h_min] at h_length
     apply EqTakeAppend.of.Eq_Length h_length

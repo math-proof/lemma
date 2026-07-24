@@ -6,7 +6,7 @@ import Lemma.Nat.LtMod.of.Lt_Mul
 import Lemma.Tensor.DataFromVector.eq.FlattenMapData
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.DataResize.as.FlattenMapSplitAtData
-import Lemma.Tensor.Einsum.as.Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2
+import Lemma.Tensor.Einsum.as.Tensordot.of.Get_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2
 import Lemma.Tensor.Tensordot.of.SEq.SEq
 import Lemma.Tensor.GetToVector.eq.Get
@@ -34,7 +34,7 @@ private lemma main
 -- proof
   unfold Tensor.resize
   simp [Dot.dot]
-  conv_rhs => rw [Einsum.eq.Cast_Tensordot.of.EqGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simp)]
+  conv_rhs => rw [Einsum.eq.Cast_Tensordot.of.Get_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simp)]
   rw [Einsum.eq.Cast_Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_2 (by simp) (by simp) (by simpa)]
   apply Cast.of.SEq.Eq
   ·

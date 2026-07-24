@@ -3,7 +3,7 @@ import Lemma.Nat.Mul_2.eq.Add
 import Lemma.Nat.EvenSub_1.of.Odd
 import Lemma.Nat.Eq_AddDivS_2.of.Even
 import Lemma.Nat.Mul.of.Eq
-import Lemma.Nat.EqDivS_2.of.Odd
+import Lemma.Nat.Div_2.of.Odd
 open Nat
 
 
@@ -21,7 +21,7 @@ private lemma main
   rw [Eq_AddDivS_2.of.Even is_even]
   rw [Add.eq.Mul_2]
   apply Mul.of.Eq
-  apply EqDivS_2.of.Odd h
+  apply Div_2.of.Odd h
 
 
 -- created on 2025-08-12

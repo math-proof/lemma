@@ -24,7 +24,7 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
 import Lemma.Tensor.SEqPermuteHeadS.of.Eq
 import Lemma.Tensor.SEqPermuteHead_1
-import Lemma.Tensor.SEqSelectS.of.SEq.EqValS.EqValS
+import Lemma.Tensor.SEqSelectS.of.SEq.Val.Val
 import Lemma.Tensor.Select_0.as.Get.of.GtGet_0.GtLength_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
@@ -54,7 +54,7 @@ private lemma main
     simp
     symm
     apply SEq.trans (Get.as.Select_0.of.GtGet_0.GtLength_0 (by omega) h_k X)
-    apply SEqSelectS.of.SEq.EqValS.EqValS
+    apply SEqSelectS.of.SEq.Val.Val
     ·
       grind
     ·

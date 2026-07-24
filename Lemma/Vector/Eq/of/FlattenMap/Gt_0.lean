@@ -1,0 +1,20 @@
+import sympy.vector.vector
+import Lemma.Vector.Length.of.FlattenMap.Gt_0
+import Lemma.Vector.Eq.of.FlattenMap.Length
+open Vector
+
+
+@[main]
+private lemma main
+  {a b : List (List.Vector α n)}
+-- given
+  (h₀ : n > 0)
+  (h₁ : (a.map List.Vector.toList).flatten = (b.map List.Vector.toList).flatten) :
+-- imply
+  a = b := by
+-- proof
+  have h_Eq := Length.of.FlattenMap.Gt_0 h₀ h₁
+  apply Eq.of.FlattenMap.Length h_Eq h₁
+
+
+-- created on 2025-05-11

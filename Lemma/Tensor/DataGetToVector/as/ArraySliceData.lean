@@ -1,4 +1,4 @@
-import Lemma.Vector.HEq.of.EqValS
+import Lemma.Vector.HEq.of.Val
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
 import Lemma.Nat.Le_SubMulS
 open Tensor Vector Nat
@@ -17,7 +17,7 @@ private lemma main
     simp_all
     apply Le_SubMulS
   .
-    apply HEq.of.EqValS
+    apply HEq.of.Val
     apply ValDataGetToVector.eq.ValArraySliceData
 
 

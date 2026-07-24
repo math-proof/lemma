@@ -5,9 +5,9 @@ import sympy.Basic
 @[main]
 private lemma main
 -- given
-  (a : List α) :
+  (s : List α) :
 -- imply
-  a.slice 0 n = a.take n := by
+  s.slice 0 n = s.take n := by
 -- proof
   unfold List.slice List.array_slice Function.comp
   simp

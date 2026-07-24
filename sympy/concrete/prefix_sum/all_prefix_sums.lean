@@ -25,10 +25,10 @@ class ODot (α : Type u) [OPlus α] [OTimes α] where
 infixl:65 "⊙" => ODot.odot
 
 -- Define the all-prefix-sums function
-def all_prefix_sums [Inhabited α] [OPlus α] (a : List α) (t : α := default) : List α :=
-  match a, t with
+def all_prefix_sums [Inhabited α] [OPlus α] (s : List α) (t : α := default) : List α :=
+  match s, t with
   | [], _  => []
-  | a₀ :: a, sum => (sum ⊕ a₀) :: all_prefix_sums a (sum ⊕ a₀)
+  | s₀ :: s, sum => (sum ⊕ s₀) :: all_prefix_sums s (sum ⊕ s₀)
 
 
 class Bullet (α : Type u) [OPlus α] [OTimes α] [ODot α] where

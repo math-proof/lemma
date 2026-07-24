@@ -1,5 +1,5 @@
 import sympy.tensor.Basic
-import Lemma.Vector.HEq.of.EqValS
+import Lemma.Vector.HEq.of.Val
 import Lemma.Bool.IffEqS.of.Eq
 import Lemma.Tensor.Length.of.SEq
 import Lemma.Bool.HEq.of.Cond.Cond

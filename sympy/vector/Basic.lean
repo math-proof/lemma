@@ -57,22 +57,22 @@ def unflatten (xs : Vector α (m * n)) : Vector (Vector α n) m :=
 Python-like slicing operator for List/Vector
 useage examples:
 ```lean
-def a : List ℕ := List.range 10
--- def a : List.Vector (Fin 10) 10 := List.Vector.range 10
-#eval a[-1:-1:-1]   -- []
-#eval a[-1:-10:-1]  -- [9, 8, 7, 6, 5, 4, 3, 2, 1]
-#eval a[9:0:-1]     -- [9, 8, 7, 6, 5, 4, 3, 2, 1]
-#eval a[-10:-11:-1] -- [0]
-#eval a[0:-1:-1]    -- []
-#eval a[-20:-9]     -- [0]
-#eval a[1:-2:5]     -- [1, 6]
-#eval a[0:9:2]      -- [0, 2, 4, 6, 8]
-#eval a[-2:0:-2]    -- [8, 6, 4, 2]
-#eval a[-2:]        -- [8, 9]
-#eval a[-2::-2]     -- [8, 6, 4, 2, 0]
-#eval a[2::2]       -- [2, 4, 6, 8]
-#eval a[::3]        -- [0, 3, 6, 9]
-#eval a[::-3]       -- [9, 6, 3, 0]
+def s : List ℕ := List.range 10
+-- def s : List.Vector (Fin 10) 10 := List.Vector.range 10
+#eval s[-1:-1:-1]   -- []
+#eval s[-1:-10:-1]  -- [9, 8, 7, 6, 5, 4, 3, 2, 1]
+#eval s[9:0:-1]     -- [9, 8, 7, 6, 5, 4, 3, 2, 1]
+#eval s[-10:-11:-1] -- [0]
+#eval s[0:-1:-1]    -- []
+#eval s[-20:-9]     -- [0]
+#eval s[1:-2:5]     -- [1, 6]
+#eval s[0:9:2]      -- [0, 2, 4, 6, 8]
+#eval s[-2:0:-2]    -- [8, 6, 4, 2]
+#eval s[-2:]        -- [8, 9]
+#eval s[-2::-2]     -- [8, 6, 4, 2, 0]
+#eval s[2::2]       -- [2, 4, 6, 8]
+#eval s[::3]        -- [0, 3, 6, 9]
+#eval s[::-3]       -- [9, 6, 3, 0]
 ```
 -/
 def getSlice (L : Vector α n) (s : Slice) : Vector α (s.length n) :=

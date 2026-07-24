@@ -10,7 +10,7 @@ import Lemma.Tensor.Einsum.as.Tensordot.of.LtGetS_SubLength.GeLength_2.GeLength_
 import Lemma.Tensor.Tensordot.of.SEq.SEq
 import Lemma.Tensor.ResizeCast.as.Resize.of.Eq
 import Lemma.Tensor.SEqResize.of.Eq_Get
-import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 open Bool List Tensor Nat
 set_option maxHeartbeats 1000000
 
@@ -45,7 +45,7 @@ private lemma main
     apply Tensordot.of.SEq.SEq
     ·
       apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
-      apply SEqResizeS.of.SEq.EqValS.Eq
+      apply SEqResizeS.of.SEq.Val.Eq
       ·
         grind
       ·
@@ -91,7 +91,7 @@ private lemma main
         rwa [EqAppendTake__ListGet.of.GeLength_2]
     ·
       apply SEqCastS.of.SEq.Eq.Eq (by grind) (by grind)
-      apply SEqResizeS.of.SEq.EqValS.Eq
+      apply SEqResizeS.of.SEq.Val.Eq
       ·
         grind
       ·

@@ -15,13 +15,13 @@ open List Bool Nat
 @[main]
 private lemma main
 -- given
-  (a : List α)
-  (i j : Fin a.length) :
+  (s : List α)
+  (i j : Fin s.length) :
 -- imply
-  (a.swap i j)[i]? = some a[j] := by
+  (s.swap i j)[i]? = some s[j] := by
 -- proof
-  have := LengthSwap.eq.Length a i j
-  have h_i : i < (a.swap i j).length := by
+  have := LengthSwap.eq.Length s i j
+  have h_i : i < (s.swap i j).length := by
     rw [this]
     simp
   have h_some := GetElem.eq.SomeGet.of.GtLength h_i
@@ -34,7 +34,7 @@ private lemma main
     simp
   ·
     have h_j := Ge.of.NotLt h_j
-    have h_j : j < a.length := by simp
+    have h_j : j < s.length := by simp
     contradiction
   ·
     have h_le := Le.of.NotGt h_lt?
@@ -43,7 +43,7 @@ private lemma main
     simp_all
     rw [GetCons.eq.Get_Sub_1.of.Lt_Add_1.Gt_0]
     ·
-      have h_length_slice := LengthSlice.eq.SubMin a (j + 1) i
+      have h_length_slice := LengthSlice.eq.SubMin s (j + 1) i
       rw [Sub_Add.eq.SubSub] at h_length_slice
       simp [h_length_slice]
     ·
@@ -56,10 +56,10 @@ private lemma main
 @[main]
 private lemma left
 -- given
-  (a : List α)
-  (i j : Fin a.length) :
+  (s : List α)
+  (i j : Fin s.length) :
 -- imply
-  (a.swap i j)[j]? = some a[i] := by
+  (s.swap i j)[j]? = some s[i] := by
 -- proof
   rw [Swap]
   rw [main]

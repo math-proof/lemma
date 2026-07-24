@@ -10,16 +10,16 @@ open List Nat
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
   {i j : ℕ}
 -- given
   (h₀ : i < j)
-  (h₁ : a.length > j) :
+  (h₁ : s.length > j) :
 -- imply
-  let a' := a.swap i j
-  a'.take i ++ a[i] :: (a'.slice (i + 1) j ++ a[j] :: a'.drop (j + 1)) = a := by
+  let s' := s.swap i j
+  s'.take i ++ s[i] :: (s'.slice (i + 1) j ++ s[j] :: s'.drop (j + 1)) = s := by
 -- proof
-  intro a'
+  intro s'
   rw [TakeSwap.eq.Take.of.Lt h₀]
   rw [SliceSwap.eq.Slice.of.Lt h₀]
   rw [DropSwap.eq.Drop.of.Lt h₀]
@@ -27,7 +27,7 @@ private lemma main
   unfold List.slice
   unfold List.array_slice
   simp
-  have h_eq := EqAppendTake__Drop (a.drop (i + 1)) (j - (i + 1))
+  have h_eq := EqAppendTake__Drop (s.drop (i + 1)) (j - (i + 1))
   simp only [DropDrop.eq.Drop_Add] at h_eq
   simp only [EqAdd_Sub.of.Ge (by apply LeAdd_1.of.Lt h₀)] at h_eq
   rw [h_eq]

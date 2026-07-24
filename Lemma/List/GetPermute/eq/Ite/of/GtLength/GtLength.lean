@@ -28,23 +28,23 @@ open List Nat
 
 @[main]
 private lemma main
-  {a : List α}
-  {i : Fin a.length}
+  {s : List α}
+  {i : Fin s.length}
   {d t : ℕ}
 -- given
-  (h₀ : i + d < a.length)
-  (h₁ : a.length > t) :
+  (h₀ : i + d < s.length)
+  (h₁ : s.length > t) :
 -- imply
-  have : t < (a.permute i d).length := by simp_all
-  (a.permute i d)[t] =
+  have : t < (s.permute i d).length := by simp_all
+  (s.permute i d)[t] =
     if t < i then
-      a[t]
+      s[t]
     else if h : t < i + d then
-      a[t + 1]
+      s[t + 1]
     else if t = i + d then
-      a[i]
+      s[i]
     else
-      a[t] := by
+      s[t] := by
 -- proof
   intro h₁
   simp [Permute.eq.Ite]
@@ -52,7 +52,7 @@ private lemma main
   ·
     linarith
   ·
-    have h_eq_i : (i + (d + 1)) ⊓ a.length - (i + 1) = d := by
+    have h_eq_i : (i + (d + 1)) ⊓ s.length - (i + 1) = d := by
       rw [EqMin.of.Le (by linarith)]
       rw [Add.comm]
       rw [AddAdd.eq.Add_Add]

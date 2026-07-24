@@ -2,7 +2,7 @@ import Lemma.Complex.Norm.eq.SqrtAddSqaureS
 import Lemma.Real.EqSqrt_0.is.Le_0
 import Lemma.Int.AddSquareS.ge.Zero
 import Lemma.Nat.Eq.of.Ge.Le
-import Lemma.Complex.Eq.of.EqReS.EqImS
+import Lemma.Complex.Eq.of.Re.Im
 import Lemma.Int.Eq_0.and.Eq_0.of.AddSquareS.eq.Zero
 open Nat Complex Int Real
 
@@ -21,7 +21,7 @@ private lemma main
   have h_Ge_0 := AddSquareS.ge.Zero (a := re z) (b := im z)
   have := Eq.of.Ge.Le h_Ge_0 h_Le_0
   have ⟨left, right⟩ := Eq_0.and.Eq_0.of.AddSquareS.eq.Zero this
-  apply Eq.of.EqReS.EqImS <;>
+  apply Eq.of.Re.Im <;>
   ·
     simp
     assumption

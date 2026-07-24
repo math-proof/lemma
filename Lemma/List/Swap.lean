@@ -7,10 +7,10 @@ open Nat
 @[main]
 private lemma main
 -- given
-  (a : List α)
+  (s : List α)
   (i j : ℕ) :
 -- imply
-  a.swap i j = a.swap j i := by
+  s.swap i j = s.swap j i := by
 -- proof
   unfold List.swap
   -- 0       1     2     3   4   5      6     7     8     9    10      11    12  13     14   15   16  17   18   19

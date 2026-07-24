@@ -9,7 +9,7 @@ import Lemma.Tensor.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetBmm.as.BmmGetS.of.Eq
 import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetDot.eq.DotGet
-import Lemma.Tensor.GetReshape.as.Reshape.of.EqProdS.GtLength_0
+import Lemma.Tensor.GetReshape.as.Reshape.of.Prod.GtLength_0
 import Lemma.Tensor.GetSelect.as.SelectGet.of.GtGet_0.GtGet_Add_1.LtAdd_1Length
 import Lemma.Tensor.GetTensordot.as.MatmulGet.of.GtLength_0
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
@@ -154,7 +154,7 @@ private lemma une
                 ·
                   rw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.right.fin (by simp) (by simp)]
                   apply SEqCast.of.SEq.Eq (by simp)
-                  rw [GetReshape.eq.Cast_Reshape.of.EqProdS.GtLength_0.fin (by grind) (by grind) (i := ⟨i, by grind⟩)]
+                  rw [GetReshape.eq.Cast_Reshape.of.Prod.GtLength_0.fin (by grind) (by grind) (i := ⟨i, by grind⟩)]
                   apply SEqCast.of.SEq.Eq (by simp)
                   apply SEqReshapeS.of.Eq.Eq.Dvd
                   ·

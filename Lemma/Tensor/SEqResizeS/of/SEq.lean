@@ -1,4 +1,4 @@
-import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 open Tensor
 
 
@@ -15,7 +15,7 @@ private lemma main
   have h_s := h.left.symm
   X.resize d n ≃ X'.resize ⟨d, by simp [h_s]⟩ n :=
 -- proof
-  SEqResizeS.of.SEq.EqValS.Eq rfl (by simp) h
+  SEqResizeS.of.SEq.Val.Eq rfl (by simp) h
 
 
 -- created on 2026-07-10

@@ -1,4 +1,4 @@
-import Lemma.List.Permute.of.Eq.EqValS.Eq
+import Lemma.List.Permute.of.Eq.Val.Eq
 import Lemma.List.EqSwap
 import Lemma.List.EqSwap.of.OrLeSLength
 import Lemma.List.Swap
@@ -50,7 +50,7 @@ private lemma main
       rw [Swap]
       rw [Swap.eq.PermutePermute.of.Lt.GtLength]
       ·
-        repeat rw [Permute.of.Eq.EqValS.Eq]
+        repeat rw [Permute.of.Eq.Val.Eq]
         ·
           rfl
         ·
@@ -85,7 +85,7 @@ private lemma main
       simp [h_gt]
       rw [Swap.eq.PermutePermute.of.Lt.GtLength]
       ·
-        repeat rw [Permute.of.Eq.EqValS.Eq]
+        repeat rw [Permute.of.Eq.Val.Eq]
         ·
           rfl
         ·

@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
-import Lemma.Tensor.SEqResizeS.of.SEq.EqValS.Eq
+import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSumS.of.SEq
 open Bool Tensor
@@ -24,7 +24,7 @@ private lemma main
   apply SEqSumS.of.SEq
   apply SEqMulS.of.SEq.SEq
   ·
-    apply SEqResizeS.of.SEq.EqValS.Eq
+    apply SEqResizeS.of.SEq.Val.Eq
     .
       grind
     .

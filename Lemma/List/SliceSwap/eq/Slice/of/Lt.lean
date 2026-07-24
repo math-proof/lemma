@@ -16,16 +16,16 @@ private lemma main
   {i j : ℕ}
 -- given
   (h : i < j)
-  (a : List α) :
+  (s : List α) :
 -- imply
-  (a.swap i j).slice (i + 1) j = a.slice (i + 1) j := by
+  (s.swap i j).slice (i + 1) j = s.slice (i + 1) j := by
 -- proof
   unfold List.swap
   split_ifs with h_eq h_j
   ·
     rfl
   ·
-    rw [Cons.eq.Append a[j]]
+    rw [Cons.eq.Append s[j]]
     rw [Append_Append.eq.AppendAppend]
     rw [AppendAppend.eq.Append_Append]
     rw [SliceAppend.eq.Take_Sub.of.Eq_Length]

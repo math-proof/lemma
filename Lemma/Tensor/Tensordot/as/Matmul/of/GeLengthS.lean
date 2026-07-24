@@ -1,5 +1,5 @@
 import Lemma.Tensor.Tensordot.as.Matmul.of.GtLengthS
-import Lemma.Tensor.Tensordot.eq.Matmul.of.EqLengthS
+import Lemma.Tensor.Tensordot.eq.Matmul.of.Length
 import Lemma.Tensor.SEqReshape.of.Eq
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 open Tensor
@@ -17,7 +17,7 @@ private lemma main
   X.tensordot Y ≃ X.matmul (Y.reshape (s.take (s.length - s'.length) ++ s' ++ [n, k]) (by simp)) (by grind) := by
 -- proof
   if h : s.length = s'.length then
-    rw [Tensordot.eq.Matmul.of.EqLengthS h]
+    rw [Tensordot.eq.Matmul.of.Length h]
     apply SEqMatmulS.of.SEq.SEq
     ·
       assumption

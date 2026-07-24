@@ -3,13 +3,12 @@ import sympy.Basic
 
 @[main]
 private lemma main
-  {a : List α}
+  {s : List α}
 -- given
-  (h : a.length ≥ l) :
+  (h : s.length ≥ l) :
 -- imply
-  (a.take l).length = l := by
+  (s.take l).length = l := by
 -- proof
-
   simp [h]
 
 

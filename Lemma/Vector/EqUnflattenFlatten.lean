@@ -1,5 +1,5 @@
 import Lemma.Vector.EqFlattenUnflatten
-import Lemma.Vector.Eq.of.EqFlattenS
+import Lemma.Vector.Eq.of.Flatten
 open Vector
 
 
@@ -10,7 +10,7 @@ private lemma main
 -- imply
   v.flatten.unflatten = v := by
 -- proof
-  apply Eq.of.EqFlattenS
+  apply Eq.of.Flatten
   apply EqFlattenUnflatten
 
 
