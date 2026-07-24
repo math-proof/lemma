@@ -1,3 +1,4 @@
+import Lemma.Tensor.Select.as.FromVectorMapToVector.of.GtVal_0
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.Drop.eq.Nil.of.LeLength
 import Lemma.List.DropDrop.eq.Drop_Add
@@ -65,7 +66,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool List Nat Tensor Vector Fin
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main]
@@ -146,7 +147,7 @@ private lemma main
           repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
           repeat rw [GetTranspose.eq.Get.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-          unfold select
+          rw [Select.eq.Cast_FromVectorMapToVector.of.GtVal_0 (by grind)]
           simp
           rw [DataCast.eq.Cast_Data.of.Eq]
           ·

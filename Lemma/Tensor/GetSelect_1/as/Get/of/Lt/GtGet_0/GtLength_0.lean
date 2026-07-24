@@ -1,3 +1,4 @@
+import Lemma.Tensor.Select_1.eq.FromVectorMapToVector.of.GtLength_0
 import Lemma.Tensor.GetToVector.eq.Get
 import Lemma.Vector.EqGetS.of.Eq.Lt
 import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
@@ -42,7 +43,7 @@ private lemma main
     ·
       simp only [GetElem.getElem]
       erw [GetSplitAt_1.eq.GetUnflatten.of.Lt.fin h_j]
-      unfold select
+      erw [Select_1.eq.FromVectorMapToVector.of.GtLength_0 (by grind) (i := ⟨i, by grind⟩)]
       simp [DataFromVector.eq.FlattenMapData]
       erw [EqUnflattenFlatten]
       erw [Vector.GetMap.eq.UFnGet]

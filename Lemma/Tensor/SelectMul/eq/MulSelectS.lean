@@ -6,7 +6,7 @@ import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
 import Lemma.Tensor.PermuteMul.eq.MulPermuteS__Neg
 import Lemma.Tensor.Select.as.GetPermute
 open List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main]

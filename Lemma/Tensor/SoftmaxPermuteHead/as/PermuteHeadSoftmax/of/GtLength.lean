@@ -19,7 +19,7 @@ import Lemma.Tensor.SEqSoftmaxS.of.SEq
 import Lemma.Tensor.SEqSumS.of.SEq
 import sympy.tensor.functions
 open Bool List Nat Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main]

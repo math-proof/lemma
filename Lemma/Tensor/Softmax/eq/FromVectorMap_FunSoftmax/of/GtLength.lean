@@ -40,7 +40,7 @@ import Lemma.Vector.GetRepeat.eq.Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.Sum_Get
 open Finset List Nat Tensor Vector Fin
-set_option maxHeartbeats 400000
+set_option maxHeartbeats 500000
 
 
 @[main]
@@ -163,15 +163,14 @@ private lemma main
     simp at h_qₕ_div h_qₑ_div
     simp [h_qₕ_div, h_qₑ_div, h_rₕ_mod, h_rₑ_mod]
     simp [h_r'_mod, h_rₐ_mod, h_r_mod]
-    rw [ModMod.eq.Mod.of.Dvd (by apply ProdDrop.dvd.Prod)]
-    simp [MulMul.eq.Mul_Mul]
+    conv_rhs => rw [ModMod.eq.Mod.of.Dvd (by apply ProdDrop.dvd.Prod)]
+    conv_lhs => simp [MulMul.eq.Mul_Mul]
     rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength h] at ⊢ h_qₐ_div h_q'_div
     simp only [Prod.eq.MulProdS s d] at ⊢ h_q_div h_r_mod
     rw [Mul_Mul.eq.MulMul]
-    simp [AddMulS.eq.MulAdd]
-    left
+    simp
     rw [h_qₐ_div, h_q'_div, h_q_div, h_r_mod]
-    apply Div.eq.AddMulDiv_Mul
+    grind [AddMulDiv_Mul.eq.Div, ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength h]
   ·
     have := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp (by grind) (by grind) (s := s) (d := d) (i := k)
     simp at ⊢ this

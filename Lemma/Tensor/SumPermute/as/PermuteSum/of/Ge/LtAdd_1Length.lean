@@ -67,7 +67,7 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Int Nat Tensor List Bool Vector Fin
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main]

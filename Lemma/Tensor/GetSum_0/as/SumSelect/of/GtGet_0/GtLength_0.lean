@@ -9,7 +9,7 @@ import Lemma.Tensor.SEqSumS.of.All_SEq.Gt_0
 import Lemma.Tensor.Sum.eq.Zero
 import Lemma.Tensor.Sum_0.eq.Sum_Get
 open Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main, comm]

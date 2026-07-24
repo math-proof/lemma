@@ -8,7 +8,7 @@ import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Vector.GetDiv.eq.DivGetS
 import Lemma.Fin.Eq_0
 open Tensor Vector Bool Nat Fin
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 /--

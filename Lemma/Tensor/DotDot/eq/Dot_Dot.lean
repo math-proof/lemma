@@ -29,7 +29,7 @@ import Lemma.Tensor.Sum_1.eq.SumT_0
 import Lemma.Tensor.Sum_Sum_0'0.eq.Sum_Sum_1'0
 import Lemma.Tensor.TMul.eq.MulTS
 open Bool Nat Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main]

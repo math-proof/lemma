@@ -27,7 +27,7 @@ import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAtMul.eq.MulSplitAtS
 open Bool List Nat Tensor Vector
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main]

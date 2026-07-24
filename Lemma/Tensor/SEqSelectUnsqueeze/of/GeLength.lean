@@ -1,10 +1,12 @@
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.Tensor.EqGetUnsqueeze_0
-import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
-import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
 import Lemma.Tensor.GetFromVector.eq.Get
-import Lemma.Vector.EqGetRange
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
+import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
+import Lemma.Tensor.Select.as.FromVectorMapToVector.of.GtVal_0
+import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
+import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
+import Lemma.Vector.EqGetRange
 open List Tensor Vector
 
 
@@ -18,7 +20,7 @@ private lemma main
 -- proof
   induction d generalizing s X with
   | zero =>
-    unfold Tensor.select
+    rw [Select_0.eq.Cast_Get.of.GtLength_0]
     have := EqGetUnsqueeze_0.fin X
     simp at this ⊢
     rw [this]
@@ -27,7 +29,7 @@ private lemma main
     | [] =>
       contradiction
     | s₀ :: s =>
-      unfold Tensor.select
+      rw [Select.eq.Cast_FromVectorMapToVector.of.GtVal_0 (by grind) (i := ⟨0, by grind⟩)]
       simp
       rw [ToVector.eq.MapRange_Get.of.GtLength_0]
       ·
@@ -52,3 +54,4 @@ private lemma main
 
 
 -- created on 2025-10-07
+-- updated on 2026-07-24

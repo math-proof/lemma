@@ -28,6 +28,7 @@ import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
 import Lemma.List.In_CartesianProduct.of.In_CartesianProductCons
 import Lemma.List.Lt.of.In_CartesianProductCons
 import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
+import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.GtLength_0.of.GtLength_0
 import Lemma.Tensor.Eq.is.EqDataS
@@ -53,45 +54,8 @@ def Tensor.get (X : Tensor α s) (i : Fin X.length) : Tensor α s.tail :=
 /--
 [torch.select](https://docs.pytorch.org/docs/stable/generated/torch.select.html)
 -/
-def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset])  : Tensor α (s.eraseIdx offset) :=
-  have h_s_length := Gt_0 offset
-  if h : offset = ⟨0, h_s_length⟩ then
-    cast
-      (by aesop)
-      (X.get ⟨i, by
-        have h_i := i.isLt
-        simp [h] at h_i
-        rwa [Length.eq.Get_0.of.GtLength_0 h_s_length]
-      ⟩)
-  else
-    have h := GtVal_0.of.Ne_0 h
-    have h_lt := LtSubS_1.of.Lt.Ne_0 (by linarith) (by simp) (n := offset) (m := s.length)
-    have h_1 := Ge_1.of.Gt_0 h
-    have X : Tensor α (s.headD 1 :: s.tail.eraseIdx (offset - 1)) := fromVector (
-      X.toVector.map (
-        ·.select
-          ⟨offset - 1, Sub_1.lt.LengthTail.of.In_Ioo0Length ⟨h, by simp⟩⟩
-          ⟨i, by
-            simp only [GetElem.getElem]
-            rw [GetTail.eq.Get_Add_1.of.Lt_SubLength_1.fin]
-            simp [EqAddSub.of.Ge h_1]
-            assumption
-          ⟩
-      )
-    )
-    cast
-      (by
-        rw [EraseIdxTail.eq.TailEraseIdx.of.Lt_SubLength_1 (by assumption)]
-        simp only [EqAddSub.of.Ge h_1]
-        conv_rhs =>
-          rw [Eq_Cons_Tail.of.GtLength_0 (show (s.eraseIdx offset).length > 0 by grind)]
-        congr
-        rw [GetEraseIdx.eq.Get.of.Gt.GtLength]
-        · apply HeadD.eq.Get_0.of.GtLength_0
-        · simp
-        · assumption
-      )
-      X
+def Tensor.select (X : Tensor α s) (offset : Fin s.length) (i : Fin s[offset]) : Tensor α (s.eraseIdx offset) :=
+  ⟨cast (congrArg (List.Vector α) (MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp offset.isLt i.isLt)) ((X.data.splitAt (offset + 1))[i : (s.take (offset + 1)).prod : s[offset]].flatten)⟩
 
 /--
 [numpy.resize](https://numpy.org/doc/stable/reference/generated/numpy.resize.html)

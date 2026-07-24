@@ -2000,7 +2000,7 @@ export class LeanParenthesis extends LeanPairedGroup {
         if (parent instanceof LeanStatements && this.indent > 0) return true;
         if (parent instanceof LeanArgsIndented && this.indent > 0) return true;
         if (leanParenthesisLemmaAssignByMultilineClose(this)) return true;
-        if (parent instanceof LeanEq && this.indent > 0 && parent.parent instanceof LeanArgsNewLineSeparated)
+        if (parent instanceof LeanRelational && this.indent > parent.indent && parent.parent instanceof LeanArgsNewLineSeparated)
             return true;
         return parent instanceof LeanArgsNewLineSeparated || parent instanceof LeanArgsCommaNewLineSeparated || (parent instanceof LeanIte && this !== parent.if);
     }
@@ -2708,9 +2708,8 @@ export class LeanColon extends LeanBinary {
                 const L = this.lhs;
                 // `lemma main:\n-- imply` stays tight; `{binders} :\n-- imply` and indented binder blocks
                 // `  (h : …) :\n-- imply` keep a space before `:`.
-                if (L instanceof LeanBrace || L instanceof LeanParenthesis || L instanceof LeanArgsIndented) {
+                if (L instanceof LeanBrace || L instanceof LeanParenthesis || L instanceof LeanArgsIndented)
                     first += ' ';
-                }
             }
         }
         return `${first}${this.operator}${sep}%s`;
@@ -2853,7 +2852,8 @@ export class LeanBinaryBoolean extends LeanProp(LeanBinary) {
     }
 
     is_indented() {
-        return this.parent instanceof LeanStatements;
+        const {parent} = this;
+        return parent instanceof LeanStatements || (parent instanceof LeanArgsNewLineSeparated && this.indent > 0);
     }
 
     sep() {
@@ -7121,7 +7121,8 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
     }
 
     is_indented() {
-        return false;
+        const p = this.parent;
+        return p instanceof LeanStatements && this.indent > 0 || p instanceof LeanBy && this.indent > p.indent;
     }
 
     latexFormat() {

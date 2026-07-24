@@ -5,7 +5,7 @@ import Lemma.Nat.Le.of.Lt_Add_1
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Tensor.Eq.is.All_EqGetS
 open Tensor List Nat
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 /--
@@ -46,8 +46,7 @@ private lemma main
       linarith
     specialize h₀ ⟨i, h_i⟩
     rw [GetGetSlice.eq.Get.of.Lt_Min.fin] at h₀
-    erw [GetGetSlice.eq.Get.of.Lt_Min.fin] at h₀
-    erw [GetGetSlice.eq.Get.of.Lt_Min.fin]
+    erw [GetGetSlice.eq.Get.of.Lt_Min.fin] at h₀ ⊢
     assumption
     .
       simp_all

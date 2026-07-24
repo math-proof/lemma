@@ -12,7 +12,7 @@ import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Vector.EqGetRange
 import Lemma.List.EqGetS.of.Eq.GtLength
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
-import Lemma.Nat.Eq.of.EqValS
+import Lemma.Fin.Eq.of.EqValS
 import Lemma.Vector.EqValS.of.SEq
 import Lemma.Vector.SEq.of.EqValS
 open Tensor Vector List Bool Nat Fin

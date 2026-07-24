@@ -2,9 +2,9 @@ import Lemma.Nat.LtAddS.is.Lt
 import Lemma.List.Eq.of.GetElemRange.eq.Some
 import Lemma.List.GetElemEnumerate.eq.Some.of.GtLength
 import Lemma.Nat.EqMod.of.Lt
-import Lemma.Nat.Eq.of.EqValS
+import Lemma.Fin.Eq.of.EqValS
 import Lemma.Nat.EqCast_1'1
-open List Nat
+open List Nat Fin
 
 
 @[main]

@@ -59,7 +59,7 @@ import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetTranspose.eq.Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat Vector List Bool Int Tensor Fin
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main]

@@ -18,7 +18,7 @@ import Lemma.Tensor.EqSumS.of.Eq
 import Lemma.Tensor.EqUnsqueezeS.of.Eq
 import Lemma.Tensor.GetMul.eq.MulGetS.of.GtGet_0.GtLength_0
 open Bool Fin List Nat Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main, fin, comm]

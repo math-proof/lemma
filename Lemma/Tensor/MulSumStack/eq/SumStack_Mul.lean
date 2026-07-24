@@ -2,7 +2,7 @@ import Lemma.Nat.EqMul0_0
 import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Tensor.UFnSumStack.eq.SumStack_UFn.All_EqUFnAdd.EqUFn_0
 open Nat Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main, comm]

@@ -1,7 +1,7 @@
 import Lemma.Bool.SEq.is.Eq
-import Lemma.Nat.Eq.of.EqValS
+import Lemma.Fin.Eq.of.EqValS
 import sympy.tensor.tensor
-open Bool Nat
+open Bool Fin
 
 
 @[main]

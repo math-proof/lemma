@@ -45,7 +45,7 @@ import Lemma.Vector.GetSum.eq.Sum_Get
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.Sum.of.All_Eq.Eq
 open Bool Finset List Nat Tensor Vector Fin
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main, comm]

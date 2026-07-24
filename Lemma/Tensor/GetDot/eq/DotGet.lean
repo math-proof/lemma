@@ -3,7 +3,7 @@ import Lemma.Tensor.GetDot.eq.DotGet.of.Ge
 import Lemma.Tensor.GetDot.eq.DotGet.of.Lt
 import Lemma.Tensor.GtLengthDot.of.LeLengthS.Ne_Nil
 open List Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main, fin]

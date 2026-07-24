@@ -1,5 +1,5 @@
 import Lemma.Tensor.FromVectorMapToVector.eq.Stack
-import Lemma.Tensor.Select.eq.FromVectorMap_FunSelect.of.GtLength
+import Lemma.Tensor.Select.eq.FromVectorMapToVector.of.GtLength
 open Tensor
 
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   X.select ⟨d + 1, by grind⟩ ⟨i, by grind⟩ = [k < n] (X[k].select ⟨d, by grind⟩ i) := by
 -- proof
-  rw [Select.eq.FromVectorMap_FunSelect.of.GtLength h]
+  rw [Select.eq.FromVectorMapToVector.of.GtLength h]
   apply FromVectorMapToVector.eq.Stack (fun s => s.eraseIdx d)
 
 

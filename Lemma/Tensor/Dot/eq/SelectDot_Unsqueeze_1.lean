@@ -9,7 +9,7 @@ import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqSelectS.of.SEq
 import Lemma.Tensor.Unsqueeze.eq.Reshape
 open Bool Tensor
-set_option maxHeartbeats 1000000
+set_option maxHeartbeats 500000
 
 
 @[main]
