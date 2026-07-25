@@ -4,7 +4,7 @@ require_once 'mysql.php';
 require_once 'init.php';
 
 function get_lemma($args) {
-    [$name, $type, $instImplicit, $strictImplicit, $implicit, $given, $explicit, $imply] = $args;
+    [$name, $type, $instImplicit, $strictImplicit, $implicit, $given, $default, $imply] = $args;
     return [
         'name' => $name,
         'type' => $type,
@@ -12,31 +12,33 @@ function get_lemma($args) {
         'strictImplicit' => $strictImplicit,
         'implicit' => $implicit,
         'given' => std\decode($given),
-        'explicit' => $explicit,
+        'default' => $default,
+        'explicit' => null,
         'imply' => std\decode($imply)
     ];
 }
 $name = $_GET["mathlib"];
 $lemma = [];
-foreach (get_rows("select * from mathlib where name = \"$name\"", MYSQLI_NUM) as $args)
-    $lemma[] = get_lemma($args);
+$nameEsc = mysql\mysqlStr($name);
+foreach (get_rows("select * from mathlib where name = $nameEsc", MYSQLI_NUM) as $row)
+    $lemma[] = get_lemma($row);
 if (!$lemma) {
-    $limit = $_GET["limit"]?? 100;
+    $limit = $_GET["limit"] ?? 100;
     if ($name) {
-        $regexp = str_replace(".", '\.', $name);
         $regexp = preg_replace("/(?<![\\\\])[\\\\]b/", '\\\\\\\\b', $name);
+        $regexp = mysql\mysqlStr($regexp, 'regexp');
         $binary = 'COLLATE utf8mb4_bin';
-        $where = "name $binary regexp \"$regexp\"";
+        $where = "name $binary regexp $regexp";
     }
     else {
         $where = "json_length(imply) = 0 order by rand()";
     }
-    foreach (get_rows("select * from mathlib where $where limit $limit", MYSQLI_NUM) as $args)
-        $lemma[] = get_lemma($args);
+    foreach (get_rows("select * from mathlib where $where limit $limit", MYSQLI_NUM) as $row)
+        $lemma[] = get_lemma($row);
 }
 ?>
 
-<title><?php echo $name;?></title>
+<title><?php echo htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');?></title>
 <link rel=stylesheet href="static/codemirror/lib/codemirror.css">
 <link rel=stylesheet href="static/codemirror/theme/eclipse.css">
 <link rel=stylesheet href="static/codemirror/addon/hint/show-hint.css">

@@ -2,6 +2,19 @@ import sympy.series.limits
 
 -- tests
 variable (x : ℝ*) (r : ℝ)
+
+/--
+info: x - ↑r → 0 : Prop
+-/
+#guard_msgs in
+#check (x - r) → 0
+
+/--
+info: (x - ↑r) → ∞ : Prop
+-/
+#guard_msgs in
+#check (x - r) → ∞
+
 /--
 info: (Hyperreal.omega - 1) → +∞ : Prop
 -/

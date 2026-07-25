@@ -1,44 +1,38 @@
 <template>
 	<div @keydown=keydown>
-		<lemma v-for="lemma, index of lemma" :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :explicit=lemma.explicit :given=lemma.given :default=lemma.default :imply=lemma.imply :index=index></lemma>
+		<lemma v-for="row, index in self.lemma" :name=row.name :instImplicit=row.instImplicit :strictImplicit=row.strictImplicit :implicit=row.implicit :explicit=row.explicit :given=row.given :default=row.default :imply=row.imply :index=index />
 	</div>
 </template>
 
-<script>
+<script setup>
 import lemma from "./lemma.vue"
+import Vue from "../js/vue.js"
 import { mounted, click_left } from "../js/lemma.js"
 
 console.log('import mathlib.vue');
 
-export default {
-	components: {
-		lemma
-	},
-	props : [ 'lemma' ],
-	
-	created() {
-	},
+const props = defineProps(['lemma']);
+
+const self = new Vue({
+	props,
 
 	data() {
 		return {
 			open_sections: [],
 			sections: [],
-			renderLean : {},
+			renderLean: {},
 			selectedIndex: [],
 		};
 	},
 
-	computed: {
-	},
-
 	methods: {
-        leanSourceCode(index) {
-            return this.lemma[index].type;
-        },
+		leanSourceCode(index) {
+			return this.lemma[index].type;
+		},
 
 		lemmaName(index) {
-            return this.lemma[index].name;
-        },
+			return this.lemma[index].name;
+		},
 
 		new_file() {
 			var {lemma} = this;
@@ -51,15 +45,16 @@ export default {
 			var m = search.match(/\?mathlib=(.*)/)
 			var mathlib = m[1];
 			location.search = `?q=${mathlib}&fullText=on`;
-        },
+		},
 
-        click_left,
+		click_left,
+
 		async keydown(event) {
 			switch (event.key) {
 			case 'F5':
 				console.log('F5 is pressed, refreshing');
-				for (var lemma of this.lemma)
-					delete lemma.type;
+				for (var row of this.lemma)
+					delete row.type;
 				await this.build();
 				event.preventDefault();
 				break;
@@ -67,8 +62,8 @@ export default {
 		},
 
 		has_remaining() {
-			for (var lemma of this.lemma) {
-				var {type, imply} = lemma;
+			for (var row of this.lemma) {
+				var {type, imply} = row;
 				if (!type || !imply || !imply.lean || !imply.latex)
 					return true;
 			}
@@ -76,10 +71,10 @@ export default {
 
 		async build(lemma) {
 			if (!lemma) {
-				for (var lemma of this.lemma) {
-					var {type, imply} = lemma;
+				for (var row of this.lemma) {
+					var {type, imply} = row;
 					if (!type || !imply || !imply.lean || !imply.latex)
-						this.build(lemma);
+						this.build(row);
 				}
 				return;
 			}
@@ -111,27 +106,27 @@ replace into
     )
 `;
 				Object.assign(lemma, {type, instImplicit, strictImplicit, implicit, given, explicit, imply});
-			}	
+			}
             console.log(sql);
             var rowcount = await form_post('php/request/execute.php', {sql});
             console.log("rowcount =", rowcount);
 		},
 	},
-	
+
 	async mounted() {
 		this.build();
 		mounted(this);
 		if (!getParameterByName('mathlib')) {
 			var count = 0;
 			while (this.has_remaining() && count++ < 30) {
-				// wait until all lemmas are built
 				await sleep(10, `waiting ${count * 10} seconds for all lemmas to be built`);
 			}
-			// refresh the current page with ?mathlib=
 			location.search = `?mathlib=`;
 		}
 	},
-}
+});
+
+const { keydown } = self.globals;
 </script>
 
 <style>

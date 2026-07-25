@@ -1,5 +1,4 @@
 import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
-import Lemma.Hyperreal.NeSt_0.is.NotInfinite.NotInfinitesimal
 import Lemma.Hyperreal.EqSt_0.is.Infinite.ou.Infinitesimal
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinite
@@ -37,7 +36,7 @@ private lemma main
     have h_st := EqSt.of.InfinitesimalSub h
     rw [StDiv.eq.DivStS.of.NotInfinite.NotInfinitesimal h_a_inf h_b] at h_st
     have h_b_inf := NotInfinite.of.NotInfinite.XEq h' h_a_inf
-    have h_st_b := NeSt_0.of.NotInfinite.NotInfinitesimal h_b_inf h_b
+    have h_st_b := NeSt_0.of.NotInfinite.NotInfinitesimal ⟨h_b_inf, h_b⟩
     have h_st := Eq_Mul.of.EqDiv.Ne_0 h_st_b h_st
     aesop
 

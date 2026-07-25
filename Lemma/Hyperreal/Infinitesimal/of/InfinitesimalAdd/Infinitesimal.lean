@@ -1,9 +1,10 @@
 import Lemma.Hyperreal.InfinitesimalSub.of.Infinitesimal.Infinitesimal
-open Hyperreal
+import Lemma.Nat.Add
+open Hyperreal Nat
 
 
 /--
-the hypotheses are arranged in the constructor order of substraction x + y - y
+the hypotheses are arranged in the constructor order of substraction x + y - x
 
 | attributes | lemma |
 | :---: | :---: |
@@ -24,4 +25,21 @@ private lemma main
   assumption
 
 
+/--
+the hypotheses are arranged in the constructor order of substraction y + x - x
+-/
+@[main, mt 1]
+private lemma Comm
+  {x y : ℝ*}
+-- given
+  (h : (y + x) → 0)
+  (h_x : x → 0) :
+-- imply
+  y → 0 := by
+-- proof
+  rw [Add.comm] at h
+  apply main h h_x
+
+
 -- created on 2025-12-20
+-- updated on 2026-07-25

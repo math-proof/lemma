@@ -1,5 +1,5 @@
 import Lemma.Nat.Gt.is.Ge.Ne
-import Lemma.Hyperreal.NeSt_0.is.NotInfinite.NotInfinitesimal
+import Lemma.Hyperreal.EqSt_0.is.Infinite.ou.Infinitesimal
 import Lemma.Hyperreal.GeSt_0.of.Ge_0
 open Hyperreal Nat
 
@@ -18,7 +18,7 @@ private lemma main
   .
     apply GeSt_0.of.Ge_0 (by linarith) (x := x)
   .
-    apply NeSt_0.of.NotInfinite.NotInfinitesimal h₁ h₀
+    apply NeSt_0.of.NotInfinite.NotInfinitesimal ⟨h₁, h₀⟩
 
 
 -- created on 2025-12-18

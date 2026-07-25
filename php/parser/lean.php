@@ -5656,6 +5656,10 @@ class Lean_rightarrow extends LeanBinary
     public function isProp($vars)
     {
         [$lhs, $rhs] = $this->args;
+        if (($rhs instanceof LeanToken && in_array($rhs->text, ['0', '∞'], true)) ||
+            (($rhs instanceof LeanPlus || $rhs instanceof LeanNeg) && $rhs->arg instanceof LeanToken && $rhs->arg->text === '∞') ||
+            (($rhs instanceof LeanPosPart || $rhs instanceof LeanNegPart) && $rhs->arg instanceof LeanToken && $rhs->arg->text === '0'))
+            return true;
         return ($lhs instanceof LeanToken && (($vars["$lhs"] ?? 'Prop') == 'Prop') || $lhs->isProp($vars)) &&
             ($rhs instanceof LeanToken && (($vars["$rhs"] ?? 'Prop') == 'Prop') || $rhs->isProp($vars));
     }

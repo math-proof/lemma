@@ -98,11 +98,6 @@ instance [Add α] : HAdd (Tensor α s) α (Tensor α s) where
 instance [Add α] : HAdd (Tensor α s) (Tensor α []) (Tensor α s) where
   hAdd A B := A + B.data[0]
 
-instance [Add α] : HAdd (Tensor α (n :: s).tail) (Tensor α s) (Tensor α s) where
-  hAdd A B :=
-    let A : Tensor α s := A
-    A + B
-
 instance [Sub α] : HSub (Tensor α s) α (Tensor α s) where
   hSub A b := ⟨A.data - b⟩
 
@@ -132,27 +127,6 @@ instance [Neg α] : Neg (Tensor α s) where
 
 instance [Inv α] : Inv (Tensor α s) where
   inv X := ⟨X.data⁻¹⟩
-
-instance [Mul α] : HMul (Tensor α [m, n].tail.tail) (Tensor α [m', n'].tail.tail) (Tensor α []) where
-  hMul A B :=
-    let A : Tensor α [] := A
-    let B : Tensor α [] := B
-    A * B
-
-instance [Mul α] : HMul (Tensor α []) (Tensor α [m, n].tail.tail) (Tensor α []) where
-  hMul A B :=
-    let B : Tensor α [] := B
-    A * B
-
-instance [Mul α] : HMul (Tensor α [m, n].tail.tail) (Tensor α []) (Tensor α []) where
-  hMul A B :=
-    let A : Tensor α [] := A
-    A * B
-
-instance [Mul α] : HMul (Tensor α (n :: s).tail) (Tensor α s) (Tensor α s) where
-  hMul A B :=
-    let A : Tensor α s := A
-    A * B
 
 instance [Mul α] : HMul (Tensor α s) (Tensor α []) (Tensor α s) where
   hMul A b := ⟨A.data * b.data[0]⟩

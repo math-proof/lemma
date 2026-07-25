@@ -1,3 +1,4 @@
+import Lemma.Tensor.Div_KeepdimSum.eq.Div_Sum
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Get.of.Eq
 import Lemma.Tensor.EqGetStack
@@ -60,6 +61,7 @@ private lemma main
   rw [this] at h_zi
   erw [GetSum.eq.Cast_SumGet.of.GtGet_0.LtAdd_1Length.fin (d := 0) (by grind) (by grind)] at h_zi
   simp at h_zi
+  erw [Div_KeepdimSum.eq.Div_Sum] at h_zi
   erw [h_Ξᵢ] at h_zi
   conv_lhs => erw [h_zi]
   rw [EqGetStack.fn.fin]

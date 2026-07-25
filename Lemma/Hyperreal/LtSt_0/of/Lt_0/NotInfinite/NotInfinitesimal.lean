@@ -1,6 +1,6 @@
 import Lemma.Nat.Lt.is.Le.Ne
 import Lemma.Hyperreal.LeSt_0.of.Le_0
-import Lemma.Hyperreal.NeSt_0.is.NotInfinite.NotInfinitesimal
+import Lemma.Hyperreal.EqSt_0.is.Infinite.ou.Infinitesimal
 open Hyperreal Nat
 
 
@@ -18,7 +18,7 @@ private lemma main
   ·
     apply LeSt_0.of.Le_0 (by linarith) (x := x)
   ·
-    apply NeSt_0.of.NotInfinite.NotInfinitesimal h₁ h₀
+    apply NeSt_0.of.NotInfinite.NotInfinitesimal ⟨h₁, h₀⟩
 
 
 -- created on 2025-12-18

@@ -2093,7 +2093,8 @@ class LeanAngleBracket extends LeanPairedGroup {
             p instanceof LeanRelational || 
             p instanceof LeanRightarrow || 
             p instanceof LeanColon || 
-            p instanceof LeanArgsCommaSeparated
+            p instanceof LeanArgsCommaSeparated ||
+            p instanceof LeanBitOr
         );
     }
 
@@ -2144,24 +2145,19 @@ class LeanBracket extends LeanPairedGroup {
     push_right(funcName) {
         if (funcName === this.constructor.name) {
             let lt = null;
-            const arg = this.arg;
-            if (arg instanceof Lean_lt && arg.lhs instanceof LeanToken) {
+            const {arg} = this;
+            if (arg instanceof Lean_lt && arg.lhs instanceof LeanToken)
                 lt = arg;
-            } else if (arg instanceof LeanArgsSpaceSeparated) {
+            else if (arg instanceof LeanArgsSpaceSeparated) {
                 const siblings = arg.args.filter((x) => !(x instanceof LeanCaret));
-                if (
-                    siblings.length === 1 &&
-                    siblings[0] instanceof Lean_lt &&
-                    siblings[0].lhs instanceof LeanToken
-                ) {
+                if (siblings.length === 1 && siblings[0] instanceof Lean_lt && siblings[0].lhs instanceof LeanToken)
                     lt = siblings[0];
-                }
             }
             if (lt) {
                 // Tensor index `[i < m]`: final tree is LeanStack(Lean_lt, scope), not bracket + wrapper.
                 this.arg = lt;
                 lt.parent = this;
-                const level = this.level;
+                const {level} = this;
                 const stack = new LeanStack(lt, this.indent, level);
                 const scope = new LeanCaret(this.indent, level);
                 stack.scope = scope;
@@ -5883,8 +5879,12 @@ export class Lean_rightarrow extends LeanBinary {
      * @param {Record<string, unknown>} [vars]
      */
     isProp(vars) {
-        const lhs = this.lhs;
         const rhs = this.rhs;
+        if ((rhs instanceof LeanToken && (rhs.text === '0' || rhs.text === '∞')) ||
+            ((rhs instanceof LeanPlus || rhs instanceof LeanNeg) && rhs.arg instanceof LeanToken && rhs.arg.text === '∞') ||
+            ((rhs instanceof LeanPosPart || rhs instanceof LeanNegPart) && rhs.arg instanceof LeanToken && rhs.arg.text === '0'))
+            return true;
+        const lhs = this.lhs;
         const lhsOk =
             (lhs instanceof LeanToken && (vars[lhs.text] ?? 'Prop') === 'Prop') ||
             (!(lhs instanceof LeanToken) && lhs.isProp(vars));

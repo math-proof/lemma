@@ -243,7 +243,7 @@ export async function fetchMathlibLemmaPayloadsFromMysql(name, limit = 100) {
       if (Array.isArray(exact) && exact.length > 0) {
         return exact.map((row) => mathlibRowToLemmaPayload(row));
       }
-      const esc = nm.replace(/\\/g, '\\\\').replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\./g, '\\.');
+      const esc = nm.replace(/(?<!\\)\\b/g, '\\\\b');
       const [rx] = await p.query(
         'SELECT * FROM mathlib WHERE `name` COLLATE utf8mb4_bin REGEXP ? LIMIT ?',
         [esc, lim]
