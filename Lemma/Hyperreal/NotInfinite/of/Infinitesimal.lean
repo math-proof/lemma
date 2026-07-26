@@ -3,6 +3,12 @@ import Lemma.Hyperreal.NotInfinite.is.Any_LeAbs
 open Hyperreal
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.NotInfinite.of.Infinitesimal |
+| mt | Hyperreal.NotInfinitesimal.of.Infinite |
+-/
 @[main, mt]
 private lemma main
   {x : ℝ*}
