@@ -211,7 +211,8 @@ export function mathlibRowToLemmaPayload(row) {
       ? /** @type {Record<string, unknown>} */ ({ ...implyRaw })
       : { insert: true, lean: '', latex: '' };
   const givenDec = decode(r.given);
-  const given = Array.isArray(givenDec) ? givenDec : givenDec != null ? [givenDec] : [];
+  let given = Array.isArray(givenDec) ? givenDec : givenDec != null ? [givenDec] : null;
+  if (isEmptyDecodedLemmaField(given)) given = null;
   return {
     name: String(r.name ?? ''),
     type: r.type != null ? String(r.type) : '',
@@ -227,7 +228,6 @@ export function mathlibRowToLemmaPayload(row) {
 }
 
 /**
- * `php/mathlib.php`: exact `name`, else `REGEXP` fallback (like PHP), else random rows with empty `imply`.
  * @param {string} name dotted Mathlib name (may be empty)
  * @param {number} [limit]
  * @returns {Promise<object[]>} payloads for `createApp('mathlib', { lemma })`

@@ -5,13 +5,16 @@ require_once 'init.php';
 
 function get_lemma($args) {
     [$name, $type, $instImplicit, $strictImplicit, $implicit, $given, $default, $imply] = $args;
+    $given = std\decode($given);
+    if (is_array($given) && count($given) === 0)
+        $given = null;
     return [
         'name' => $name,
         'type' => $type,
         'instImplicit' => $instImplicit,
         'strictImplicit' => $strictImplicit,
         'implicit' => $implicit,
-        'given' => std\decode($given),
+        'given' => $given,
         'default' => $default,
         'explicit' => null,
         'imply' => std\decode($imply)

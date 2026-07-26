@@ -11,10 +11,10 @@ import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
 import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
+import Lemma.Tensor.Le0GetData.of.Ge_0
 import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Tensor.XEq.is.XEqDataS
-import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.GetSum.eq.Sum_Get
@@ -22,19 +22,6 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.XEq.is.All_XEqGetS
 open Hyperreal Tensor Fin Vector List Nat
-
-set_option maxHeartbeats 8000000
-
-
-private lemma data_ge_of_ge
-  {A : Tensor ℝ* s}
-  (h_pos : A ≥ 0) :
-  ∀ k : Fin s.prod, (0 : ℝ*) ≤ A.data[k] := by
-  intro k
-  have h' := h_pos k
-  simp only [LE.le] at h'
-  rw [show ((0 : Tensor ℝ* s).data)[k] = 0 from EqGet0_0.fin (α := ℝ*) k] at h'
-  exact ge_iff_le.mp h'
 
 
 private lemma select_flat_idx_lt
@@ -96,7 +83,7 @@ private lemma main
     apply Vector.All_XEqGetS.of.XEq.fin (XEqDataS.of.XEq h_xeq) ⟨t, by grind⟩
   else
     have hi : i < s.length := Nat.lt_of_not_ge h
-    have h_ge := data_ge_of_ge h_pos
+    have h_ge := Le0GetData.of.Ge_0 h_pos
     have h_xeq_data := XEqDataS.of.XEq h_xeq
     rw [Tensor.XEq.is.XEqDataS]
     rw [DataSum.eq.Sum_DataSelect A ⟨i, hi⟩, DataSum.eq.Sum_DataSelect B ⟨i, hi⟩]

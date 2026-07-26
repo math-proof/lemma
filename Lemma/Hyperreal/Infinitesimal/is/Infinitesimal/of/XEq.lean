@@ -23,6 +23,13 @@ private lemma mp
   linarith
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.Infinitesimal.is.Infinitesimal.of.XEq |
+| mp   | Hyperreal.Infinitesimal.of.Infinitesimal.XEq |
+| mp.mt   | Hyperreal.NotInfinitesimal.of.NotInfinitesimal.XEq |
+-/
 @[main, mp, mp.mt]
 private lemma main
   {a b : ℝ*}

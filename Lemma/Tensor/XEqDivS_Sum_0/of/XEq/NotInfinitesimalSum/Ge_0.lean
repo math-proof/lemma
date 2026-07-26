@@ -1,9 +1,7 @@
-import sympy.series.limits
-import sympy.tensor.tensor
 import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.Head.eq.Get_0
-import Lemma.Vector.XEqDivS_Sum.of.XEq.Ge_0
+import Lemma.Vector.XEqDivS_Sum.of.XEq.NotInfinitesimalSum.Ge_0
 open Tensor Vector
 
 
@@ -22,7 +20,7 @@ private lemma main
   intro den_x den_y
   apply XEq.of.XEqDataS
   have h_pos_data : x.data ≥ 0 := h_pos
-  have h_vec := Vector.XEqDivS_Sum.of.XEq.Ge_0 h_pos_data h_not_sum (XEqDataS.of.XEq h)
+  have h_vec := XEqDivS_Sum.of.XEq.NotInfinitesimalSum.Ge_0 h_pos_data h_not_sum (XEqDataS.of.XEq h)
   have h_den_y : den_y = y.sum 0 := rfl
   have h_den_x : den_x = x.sum 0 := rfl
   have h_sum_scalar_y : den_y.data[0] = y.data.sum := calc
@@ -43,8 +41,7 @@ private lemma main
   have hx : (x / den_x).data = x.data / x.data.sum := by
     simp only [HDiv.hDiv]
     rw [h_sum_scalar_x]
-  rw [hy, hx]
-  exact h_vec
+  rwa [hy, hx]
 
 
 -- created on 2026-07-25
