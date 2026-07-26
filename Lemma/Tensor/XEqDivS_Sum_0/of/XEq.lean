@@ -4,7 +4,7 @@ import Lemma.Tensor.HeadDataSum.eq.SumData
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.XEqDivS_Sum.of.XEq.Ge_0
-open Hyperreal Tensor Vector
+open Tensor Vector
 
 
 @[main]
