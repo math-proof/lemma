@@ -115,6 +115,75 @@ def Expr.asStack? : Expr → Option (String × Expr × Expr)
   | _ =>
     none
 
+def Expr.isNatZero : Expr → Bool
+  | const (.natVal 0) => true
+  | _ => false
+
+def Expr.asArchimedeanMk? : Expr → Option Expr
+  | Basic (.Special ⟨`ArchimedeanClass.mk⟩) (x :: _) _ => some x
+  | _ => none
+
+def Expr.asLtNatZero? : Expr → Option Expr
+  | Basic (.BinaryInfix ⟨`LT.lt⟩) [const (.natVal 0), x] _ => some x
+  | _ => none
+
+def Expr.asNatZeroLt? : Expr → Option Expr
+  | Basic (.BinaryInfix ⟨`LT.lt⟩) [x, const (.natVal 0)] _ => some x
+  | _ => none
+
+def Expr.asTendsToZero? : Expr → Option Expr
+  | Basic (.BinaryInfix ⟨`LT.lt⟩) [left, right] _ =>
+    if left.isNatZero then
+      right.asArchimedeanMk?
+    else
+      none
+  | _ => none
+
+def Expr.asTendsToInf? : Expr → Option Expr
+  | Basic (.BinaryInfix ⟨`LT.lt⟩) [left, right] _ =>
+    if right.isNatZero then
+      left.asArchimedeanMk?
+    else
+      none
+  | _ => none
+
+def Expr.asTendsToPosInf? : Expr → Option Expr
+  | Basic (.BinaryInfix ⟨`And⟩) [l, r] _ =>
+    match l.asLtNatZero?, r.asTendsToInf? with
+    | some x, some y => if x == y then some x else none
+    | _, _ => none
+  | _ => none
+
+def Expr.asTendsToNegInf? : Expr → Option Expr
+  | Basic (.BinaryInfix ⟨`And⟩) [l, r] _ =>
+    match l.asNatZeroLt?, r.asTendsToInf? with
+    | some x, some y => if x == y then some x else none
+    | _, _ => none
+  | _ => none
+
+def Expr.asTendsToZeroPos? : Expr → Option Expr
+  | Basic (.BinaryInfix ⟨`And⟩) [l, r] _ =>
+    match l.asLtNatZero?, r.asTendsToZero? with
+    | some x, some y => if x == y then some x else none
+    | _, _ => none
+  | _ => none
+
+def Expr.asTendsToZeroNeg? : Expr → Option Expr
+  | Basic (.BinaryInfix ⟨`And⟩) [l, r] _ =>
+    match l.asNatZeroLt?, r.asTendsToZero? with
+    | some x, some y => if x == y then some x else none
+    | _, _ => none
+  | _ => none
+
+def Expr.tendsToLatexArg? : Expr → Option Expr
+  | e =>
+    e.asTendsToZero?
+    <|> e.asTendsToInf?
+    <|> e.asTendsToPosInf?
+    <|> e.asTendsToNegInf?
+    <|> e.asTendsToZeroPos?
+    <|> e.asTendsToZeroNeg?
+
 def Expr.methodFormat (obj : Expr) (args : List Expr) (func : Operator) (attr: String) (level : ℕ) : String :=
   let obj := level.toColor (obj.priority > func.priority || obj.toList != none)
   let args := args.map fun arg =>
@@ -161,7 +230,26 @@ def Expr.latexFormat : Expr → String
         | `HPow.hPow =>
           let left := level.toColor (left.priority ≥ func.priority || left.is_Abs || left.is_Bool || left.is_Card)
           s!"{left} {opStr} %s"
-        | `And
+        | `LT.lt =>
+          if e.asTendsToZero? != none then
+            "%s \\to 0"
+          else if e.asTendsToInf? != none then
+            "%s \\to \\infty"
+          else
+            binop.latexFormat left right level
+        | `And =>
+          if e.asTendsToPosInf? != none then
+            "%s \\to +\\infty"
+          else if e.asTendsToNegInf? != none then
+            "%s \\to -\\infty"
+          else if e.asTendsToZeroPos? != none then
+            "%s \\to 0^{+}"
+          else if e.asTendsToZeroNeg? != none then
+            "%s \\to 0^{-}"
+          else
+            let left := level.toColor (left.priority > func.priority)
+            let right := level.toColor (right.priority ≥ func.priority)
+            s!"{left} {opStr} {right}"
         | `Or =>
           -- right associative operators
           let left := level.toColor (left.priority > func.priority)
@@ -183,7 +271,19 @@ def Expr.latexFormat : Expr → String
         let format :=
           match op with
           | `Not =>
-            if arg.is_Mem then
+            if arg.asTendsToZero? != none then
+              "\\lnot\\left({%s} \\to 0\\right)"
+            else if arg.asTendsToInf? != none then
+              "\\lnot\\left({%s} \\to \\infty\\right)"
+            else if arg.asTendsToPosInf? != none then
+              "\\lnot\\left({%s} \\to +\\infty\\right)"
+            else if arg.asTendsToNegInf? != none then
+              "\\lnot\\left({%s} \\to -\\infty\\right)"
+            else if arg.asTendsToZeroPos? != none then
+              "\\lnot\\left({%s} \\to 0^{+}\\right)"
+            else if arg.asTendsToZeroNeg? != none then
+              "\\lnot\\left({%s} \\to 0^{-}\\right)"
+            else if arg.is_Mem then
               "%s \\notin %s"
             else
               ""
@@ -553,6 +653,16 @@ where
         map args
     | .BinaryInfix ⟨`Membership.mem⟩ =>
       map args |>.reverse
+    | .BinaryInfix ⟨`LT.lt⟩ =>
+      if let some x := e.tendsToLatexArg? then
+        [x.toLatex]
+      else
+        map args
+    | .BinaryInfix ⟨`And⟩ =>
+      if let some x := e.tendsToLatexArg? then
+        [x.toLatex]
+      else
+        map args
     | .BinaryInfix ⟨`List.cons⟩ =>
       if let some args := e.toList then
         map args
@@ -679,6 +789,8 @@ where
       | [arg] =>
         if arg.is_Mem then
           latexArgs arg
+        else if let some x := arg.tendsToLatexArg? then
+          [x.toLatex]
         else
           map args
       | _ =>

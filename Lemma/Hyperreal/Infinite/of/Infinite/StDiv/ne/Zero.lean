@@ -25,6 +25,12 @@ private lemma left
     apply NotInfinite.of.NeSt_0 h_st
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.Infinite.of.Infinite.StDiv.ne.Zero |
+| mt | Hyperreal.NotInfinite.of.NotInfinite.StDiv.ne.Zero |
+-/
 @[main, mt]
 private lemma main
   {a b : ℝ*}

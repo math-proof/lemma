@@ -34,14 +34,14 @@ def tendsToLt.unexpand : PrettyPrinter.Unexpander
     if let some x := archimedeanMkArg? a then
       if isZeroSyntax? b then
         let x : TSyntax `term := ⟨x⟩
-        `($x → ∞)
+        `(($x → ∞))
       else
         throw ()
     else if isZeroSyntax? a then
       match archimedeanMkArg? b with
       | some x =>
         let x : TSyntax `term := ⟨x⟩
-        `($x → 0)
+        `(($x → 0))
       | none => throw ()
     else
       throw ()

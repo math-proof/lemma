@@ -8,8 +8,13 @@ open Hyperreal Rat Nat
 
 /--
 the hypotheses are arranged in the constructor order of division a / b
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.InfiniteDiv.of.Infinite.NotInfinite |
+| mt | Hyperreal.Infinite.of.Infinite.NotInfiniteDiv |
+| mt 1 | Hyperreal.NotInfinite.of.NotInfiniteDiv.NotInfinite |
 -/
-@[main, mt]
+@[main, mt, mt 1]
 private lemma main
   [NeZero (b : ℝ*)]
   {a : ℝ*}

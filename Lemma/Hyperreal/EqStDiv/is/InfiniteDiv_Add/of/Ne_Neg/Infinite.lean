@@ -9,7 +9,7 @@ import Lemma.Rat.Div.eq.One.of.Ne_0
 import Lemma.Rat.Div1.eq.Inv
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.Eq.is.EqInv
-open Hyperreal Nat Rat Int
+open Hyperreal Nat Rat
 
 
 @[main, mp, mpr]

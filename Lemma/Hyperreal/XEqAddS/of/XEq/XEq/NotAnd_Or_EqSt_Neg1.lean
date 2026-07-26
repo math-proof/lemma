@@ -47,7 +47,7 @@ set_option maxHeartbeats 1000000
 private lemma main
   {a b x y : ℝ*}
 -- given
-  (h_or : ¬((b → ∞) ∧ (b + y = 0 ∨ stdPart (b / y) = -1)))
+  (h_or : ¬((b → ∞) ∧ (b = -y ∨ stdPart (b / y) = -1)))
   (h₀ : a ≈ b)
   (h₁ : x ≈ y) :
 -- imply
@@ -65,16 +65,16 @@ private lemma main
       .
         if h_by : b + y = 0 then
           left
-          assumption
+          aesop
         else
-          simp [h_by]
+          right
           apply EqStDiv.of.InfiniteDiv_Add.Ne_Neg.Infinite.left h_b (by grind) h_div_by
       .
         if h_by : b + y = 0 then
           left
-          assumption
+          aesop
         else
-          simp [h_by]
+          right
           apply EqStDiv.of.InfiniteDiv_Add.Ne_Neg.Infinite h_y (by grind) h_div_yb
   apply XEq.of.OrAndS
   obtain ⟨ha, hb⟩ | ⟨hab, hb⟩ := OrAndS.of.XEq h₀

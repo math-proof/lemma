@@ -4,13 +4,13 @@ import sympy.series.limits
 variable (x : ℝ*) (r : ℝ)
 
 /--
-info: x - ↑r → 0 : Prop
+info: (x - ↑r → 0) : Prop
 -/
 #guard_msgs in
 #check (x - r) → 0
 
 /--
-info: (x - ↑r) → ∞ : Prop
+info: ((x - ↑r) → ∞) : Prop
 -/
 #guard_msgs in
 #check (x - r) → ∞

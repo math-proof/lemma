@@ -122,6 +122,12 @@ instance [Neg α] : Neg (Vector α n) where
 instance [Inv α] : Inv (Vector α n) where
   inv a := a.map (·⁻¹)
 
+instance [LE α] : LE (Vector α n) where
+  le a b := ∀ (i : Fin n), a[i] ≤ b[i]
+
+instance [LT α] : LT (Vector α n) where
+  lt a b := ∀ (i : Fin n), a[i] < b[i]
+
 def transpose (xs : Vector (Vector α n) m) : Vector (Vector α m) n :=
   (range n).map fun j => (range m).map fun i => xs[i][j]
 

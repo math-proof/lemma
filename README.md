@@ -208,6 +208,9 @@ https://github.com/hhu-adam/lean4web-tools
 https://github.com/leanprover-community/lean4web
 
 # Lemma Naming Convention
+Rule of thumb: implyCondition.of.givenCondition₀.givenCondition₁...givenConditionₙ  
+The givenConditions are indexed using DeBruijn (the reverse order as appeared in lean code), unless otherwise stated, e.g.: constructor order wherein givenConditions are listed according to the parameter order of the constructor indicated by implyCondition.
+
 ## CamelCase
 CamelCase is used for unary function, eg:  
 LogSumExp denotes the expression: (exp x).sum.log
