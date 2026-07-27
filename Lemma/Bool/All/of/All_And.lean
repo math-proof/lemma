@@ -5,22 +5,24 @@ import sympy.Basic
 private lemma main
   {p q : α → Prop}
 -- given
-  (h : ∀ x : α, p x ∧ q x)
-  (left : Bool := true) :
+  (h : ∀ x : α, p x ∧ q x) :
 -- imply
-  match left with
-  | true =>
-    ∀ x : α, p x
-  | false =>
-    ∀ x : α, q x := by
+  ∀ x : α, q x := by
 -- proof
-  match left with
-  | true =>
-    intro x
-    exact (h x).left
-  | false =>
-    intro x
-    exact (h x).right
+  intro x
+  exact (h x).right
+
+
+@[main]
+private lemma left
+  {p q : α → Prop}
+-- given
+  (h : ∀ x : α, p x ∧ q x) :
+-- imply
+  ∀ x : α, p x := by
+-- proof
+  intro x
+  exact (h x).left
 
 
 -- created on 2024-07-01

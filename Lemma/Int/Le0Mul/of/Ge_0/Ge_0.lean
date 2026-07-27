@@ -1,6 +1,4 @@
-import Lemma.Int.LeMulS.of.Ge_0.Le
-import Lemma.Nat.EqMul_0'0
-open Int Nat
+import sympy.Basic
 
 
 @[main]
@@ -11,11 +9,9 @@ private lemma main
   (h₀ : a ≥ 0)
   (h₁ : b ≥ 0) :
 -- imply
-  a * b ≥ 0 := by
+  a * b ≥ 0 :=
 -- proof
-  have h := GeMulS.of.Ge_0.Ge h₀ h₁
-  simp only [EqMul_0'0] at h
-  exact h
+  mul_nonneg h₀ h₁
 
 
 -- created on 2025-01-14

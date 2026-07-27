@@ -1,5 +1,6 @@
-import Lemma.Tensor.LtStackS.of.All_Lt
 import Lemma.Tensor.Le.is.LeDataS
+import Lemma.Tensor.BFnStackS.of.All_BFn.All_Iff_All_BFnGetSData
+import sympy.tensor.stack
 open Tensor
 
 
@@ -10,17 +11,8 @@ private lemma main
 -- given
   (h : ∀ i : Fin n, X i ≤ Y i) :
 -- imply
-  [i < n] X i ≤ [i < n] Y i := by
--- proof
-  unfold Stack
-  apply Le.of.LeDataS
-  rw [DataFromVector.eq.FlattenMapData, DataFromVector.eq.FlattenMapData]
-  simp only [LE.le]
-  intro k
-  exact LtStackS.of.All_Lt.flatten_map_data (@LE.le α _) (fun i j => by
-    have hi := LeDataS.of.Le (h i)
-    simp only [LE.le] at hi
-    exact hi j) k
+  [i < n] X i ≤ [i < n] Y i :=
+  BFnStackS.of.All_BFn.All_Iff_All_BFnGetSData (R := (· ≤ ·)) (R₀ := (· ≤ ·)) (hDataS := Le.is.LeDataS) h
 
 
 -- created on 2026-07-27

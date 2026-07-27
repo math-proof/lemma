@@ -2222,7 +2222,8 @@ class LeanBrace extends LeanPairedGroup {
             p instanceof LeanSetOperator || 
             p instanceof LeanTactic || 
             p instanceof LeanAssign || 
-            p instanceof Lean_rightarrow
+            p instanceof Lean_rightarrow || 
+            p instanceof LeanArgsSpaceSeparated
         );
     }
 
