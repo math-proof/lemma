@@ -1,6 +1,9 @@
 import sympy.Basic
 
 
+/--
+Deprecated: use `fin_cases` instead of this lemma.
+-/
 @[main]
 private lemma main
 -- given

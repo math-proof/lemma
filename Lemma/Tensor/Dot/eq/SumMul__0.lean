@@ -1,5 +1,4 @@
 import Lemma.Bool.HEq.of.SEq
-import Lemma.Fin.Eq_0
 import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.HeadDataSum.eq.SumData
@@ -7,7 +6,7 @@ import Lemma.Tensor.SEqDataS.of.SEq
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Vector.Eq.is.All_EqGetS
 import Lemma.Vector.SEqMulS.of.SEq.SEq
-open Bool Fin Tensor Vector
+open Bool Tensor Vector
 
 
 @[main]
@@ -26,8 +25,7 @@ private lemma main
   simp
   apply @Vector.Eq.of.All_EqGetS.fin
   intro i
-  have h_i := Eq_0 i
-  subst h_i
+  fin_cases i
   simp [HeadDataSum.eq.SumData]
   rw [DataMul.eq.MulDataS]
   congr 1

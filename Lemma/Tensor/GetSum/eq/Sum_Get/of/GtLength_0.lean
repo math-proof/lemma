@@ -2,7 +2,6 @@ import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
 import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.GetAdd.eq.AddGetS.of.GtLength_0
 import Lemma.Tensor.GtLength.of.GtLength_0
-import sympy.tensor.tensor
 open Finset Tensor
 
 

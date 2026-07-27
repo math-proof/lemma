@@ -1,5 +1,4 @@
 import stdlib.SEq
-import sympy.tensor.tensor
 import Lemma.Tensor.Length.of.Eq
 open Tensor
 

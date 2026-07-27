@@ -1,6 +1,5 @@
 import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
-import sympy.tensor.tensor
 open Tensor
 
 

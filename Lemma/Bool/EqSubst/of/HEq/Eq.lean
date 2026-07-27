@@ -1,6 +1,12 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.EqSubst.of.HEq.Eq |
+| comm 3 | Bool.Eq_Subst.of.HEq.Eq |
+-/
 @[main, comm 3]
 private lemma main
   {Vector : α → Sort v}

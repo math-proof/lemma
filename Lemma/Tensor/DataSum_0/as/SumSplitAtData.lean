@@ -1,8 +1,7 @@
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
-import Lemma.Fin.Eq_0
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-open Bool Fin Tensor Vector
+open Bool Tensor Vector
 
 
 @[main, comm, cast]
@@ -23,8 +22,7 @@ private lemma main
       intro t
       have h_t := t.isLt
       conv_rhs at h_t => simp
-      have h_t := Eq_0 t
-      subst h_t
+      fin_cases t
       simp
       erw [GetFlatten.eq.Get.of.Eq_AddMul.fin (i := ⟨0, by grind⟩) (j := ⟨0, by grind⟩) (by grind)]
       simp

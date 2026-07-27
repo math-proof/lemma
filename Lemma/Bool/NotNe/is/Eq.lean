@@ -1,6 +1,14 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.NotNe.is.Eq |
+| comm | Bool.Eq.is.NotNe |
+| mp | Bool.Eq.of.NotNe |
+| mpr | Bool.NotNe.of.Eq |
+-/
 @[main, comm, mp, mpr]
 private lemma main
 -- given

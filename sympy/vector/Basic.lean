@@ -45,7 +45,7 @@ def indices (s : Slice) (n : ℕ) : Vector (Fin n) (s.length n) :=
   ⟨s.toList n, LengthToList.eq.Length (s := s) (n := n)⟩
 
 def flatten (xs : Vector (Vector α n) m) : Vector α (m * n) :=
-  ⟨(xs.toList.map Vector.toList).flatten, by rcases xs; simp_all [Function.comp_def, List.map_const']⟩
+  ⟨(xs.toList.map Vector.toList).flatten, by simp_all [Function.comp_def, List.map_const']⟩
 
 def array_slice (L : Vector α n) (start : Nat) (step : Nat) : Vector α (min step (n - start)) :=
   (take (step) ∘ drop start) L

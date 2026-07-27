@@ -5,6 +5,14 @@ import Lemma.Bool.NotOr.is.AndNotS
 open Bool
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.BFn_Ite__Ite.is.And.ou.OrAndS |
+| comm | Bool.And.ou.OrAndS.is.BFn_Ite__Ite |
+| mp | Bool.And.ou.OrAndS.of.BFn_Ite__Ite |
+| mpr | Bool.BFn_Ite__Ite.of.And.ou.OrAndS |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   [Decidable p]

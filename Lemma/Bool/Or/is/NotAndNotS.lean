@@ -1,6 +1,13 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.Or.is.NotAndNotS |
+| mp | Bool.NotAndNotS.of.Or |
+| mpr | Bool.Or.of.NotAndNotS |
+-/
 @[main, mp, mpr]
 private lemma main
   [Decidable a]

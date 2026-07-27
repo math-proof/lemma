@@ -32,7 +32,7 @@ private lemma main
         assumption
   ·
     intro h
-    rcases h with ⟨rfl, h⟩ | ⟨rfl, h⟩ <;>
+    obtain ⟨rfl, h⟩ | ⟨rfl, h⟩ := h <;>
     ·
       simp_all
 

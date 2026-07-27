@@ -2,6 +2,12 @@ import sympy.functions.special.tensor_functions
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.Delta.eq.Bool |
+| comm | Bool.Bool.eq.Delta |
+-/
 @[main, comm]
 private lemma main
   [DecidableEq α]

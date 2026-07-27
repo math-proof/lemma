@@ -2,7 +2,6 @@ import Lemma.List.EraseIdxPermute.eq.EraseIdx.of.Ge
 import Lemma.Nat.Le_Sub_1
 import Lemma.Tensor.EqData1'1
 import Lemma.Tensor.HEq.of.SEqDataS.Eq
-import sympy.tensor.tensor
 open List Nat Tensor
 
 

@@ -1,11 +1,10 @@
 import Lemma.Tensor.Stack.eq.AppendStackS
-import Lemma.Fin.Eq_0
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.Slice.Eq.of.Eq
 import Lemma.Tensor.GetSliceStack.as.Stack_UFn
 import Lemma.Bool.SEq.is.Eq
-open Tensor Bool Fin
+open Tensor Bool
 
 
 @[main, comm, mp, mpr]
@@ -40,7 +39,7 @@ private lemma main
         have : [i < 1] f (n + i) = [i < 1] g (n + i) := by
           apply Eq.of.All_EqGetS
           intro i
-          rw [Eq_0 i]
+          fin_cases i
           repeat rw [EqGetStack.fn]
           simpa
         rw [this]

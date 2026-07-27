@@ -1,5 +1,4 @@
 import sympy.sets.fancyset
-import sympy.tensor.tensor
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Hyperreal.XEqSumS.of.All_XEq.All_Ge_0
 import Lemma.List.EqEraseIdx.of.LeLength

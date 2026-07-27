@@ -162,7 +162,7 @@ function buildLemmaBlock(L) {
   const sections = listLemmaTopLevelDirs();
 
   let comment = '';
-  if (L.comment) comment = `/--\n${String(L.comment)}\n-/\n`;
+  if (L.comment) comment = `/--\n${L.comment.trim()}\n-/\n`;
 
   let attribute = '';
   if (L.attribute) {

@@ -26,7 +26,7 @@ private lemma main
       s[t] := by
 -- proof
   intro h₃
-  rcases (Lt.ou.Eq.ou.Gt i j) with h | h | h
+  obtain h | h | h := Lt.ou.Eq.ou.Gt i j
   ·
     apply GetSwap.eq.Ite.of.GtLength.GtLength.Lt h h₁ h₂
   ·

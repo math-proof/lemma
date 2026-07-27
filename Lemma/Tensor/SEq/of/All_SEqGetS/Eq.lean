@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 open Tensor
 

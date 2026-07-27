@@ -1,6 +1,5 @@
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Tensor.EqHeadData
-import Lemma.Fin.Eq_0
 import Lemma.Vector.MulSub.eq.SubMulS
 import Lemma.Tensor.DataSub.eq.SubDataS
 import Lemma.Hyperreal.InfinitePos.is.InfiniteNegSub
@@ -20,7 +19,7 @@ import Lemma.Vector.EqGet0_0
 import Lemma.Vector.GetExp.eq.ExpGet
 import sympy.tensor.functions
 import sympy.tensor.stack
-open Hyperreal Tensor Int Fin
+open Hyperreal Tensor Int
 set_option maxHeartbeats 1000000
 
 
@@ -80,8 +79,7 @@ private lemma main
   rw [@Vector.MulSub.eq.SubMulS]
   apply @Vector.XEq.of.All_XEqGetS.fin
   intro k
-  have h_k := Eq_0 k
-  subst h_k
+  fin_cases k
   rw [Vector.GetExp.eq.ExpGet.fin]
   erw [Vector.GetAdd.eq.AddGetS.fin]
   repeat rw [Tensor.DataGet.eq.GetUnflattenData.fin]

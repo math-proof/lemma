@@ -1,6 +1,5 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GetTranspose.eq.Get
-import sympy.tensor.tensor
 open Tensor
 
 

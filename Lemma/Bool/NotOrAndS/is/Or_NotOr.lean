@@ -1,6 +1,12 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.NotOrAndS.is.Or_NotOr |
+| comm | Bool.Or_NotOr.is.NotOrAndS |
+-/
 @[main, comm]
 private lemma main
 -- given

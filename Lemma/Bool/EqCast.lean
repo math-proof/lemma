@@ -2,6 +2,12 @@ import Lemma.Bool.SEq.is.Eq
 open Bool
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.EqCast |
+| comm | Bool.Eq_Cast |
+-/
 @[main, comm]
 private lemma main
   {Vector : α → Sort v}

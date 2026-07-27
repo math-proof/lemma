@@ -2,6 +2,12 @@ import stdlib.SEq
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.EqCast.of.SEq |
+| comm 1 | Bool.Eq_Cast.of.SEq |
+-/
 @[main, comm 1]
 private lemma main
   {Vector : α → Sort v}

@@ -2,7 +2,6 @@ import Lemma.Tensor.DataMul.eq.MulData
 import Lemma.Tensor.DataNeg.eq.NegData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.NegMul.eq.MulNeg
-import sympy.tensor.tensor
 open Tensor Vector
 
 

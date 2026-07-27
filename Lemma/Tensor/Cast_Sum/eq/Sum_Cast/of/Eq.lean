@@ -1,6 +1,5 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.Sum.as.Sum_Cast.of.Eq
-import sympy.tensor.tensor
 open Bool Tensor
 
 

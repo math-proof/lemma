@@ -3,6 +3,12 @@ import Lemma.Bool.HEq.is.EqCast.of.Eq
 open Bool
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.EqCast.of.HEq |
+| comm 1 | Bool.Eq_Cast.of.HEq |
+-/
 @[main, comm 1]
 private lemma main
   {a : α}

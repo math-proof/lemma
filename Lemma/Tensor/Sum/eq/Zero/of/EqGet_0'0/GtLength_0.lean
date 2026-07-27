@@ -1,5 +1,4 @@
 import Lemma.Tensor.Sum.eq.Zero
-import sympy.tensor.tensor
 open Tensor
 
 

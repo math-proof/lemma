@@ -3,7 +3,6 @@ import Lemma.Vector.GetMap₂.eq.BFnGetS
 import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.Get.of.Eq.Lt
 import Lemma.Fin.Eq_Fin.of.EqVal
-import Lemma.Fin.Eq_0
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Tensor.DataAppend.as.AppendDataS
@@ -71,7 +70,8 @@ private lemma main
       simp [h_t]
     let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
     rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-    simp [Fin.Eq_0 q] at  ⊢ h_qr
+    fin_cases q
+    simp at ⊢ h_qr
     have h_r := Fin.Eq_Fin.of.EqVal h_qr.symm
     simp [h_r]
     apply Get.of.Eq.Lt

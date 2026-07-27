@@ -3,7 +3,6 @@ import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.Eq.is.EqDataS
-import sympy.tensor.tensor
 open Bool Tensor Vector
 
 

@@ -2,6 +2,14 @@ import sympy.concrete.quantifier
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.Any_And.is.AnyAnd |
+| comm | Bool.AnyAnd.is.Any_And |
+| mp | Bool.AnyAnd.of.Any_And |
+| mpr | Bool.Any_And.of.AnyAnd |
+-/
 @[main, comm, mp, mpr]
 private lemma main
 -- given

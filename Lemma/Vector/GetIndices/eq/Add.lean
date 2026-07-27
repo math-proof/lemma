@@ -27,7 +27,7 @@ private lemma main
     repeat rw [EqAdd_Mul_DivSub1Sign_2] at h
     simp at h
     rw [OrOr.is.Or_Or] at h
-    rcases h with h | h | h <;> linarith
+    obtain h | h | h := h <;> linarith
   ·
     simp [GetElem.getElem]
     simp [List.Vector.get]

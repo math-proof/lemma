@@ -1,7 +1,6 @@
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Bool.SEq.is.SEqCast.of.Eq
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Fin.Eq_0
 import Lemma.Tensor.DataAppend.as.AppendDataS
 import Lemma.Tensor.DataAppend.as.FlattenMap₂_CastS_SplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
@@ -35,9 +34,7 @@ private lemma main
   have h_t := t.isLt
   let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
   erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-  have h_q := Eq_0 q
-  simp [h_q] at h_qr
-  simp only [h_q]
+  fin_cases q
   erw [GetMap₂.eq.BFnGetS.fin]
   simp [h_qr]
   congr <;>

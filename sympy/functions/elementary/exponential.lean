@@ -50,7 +50,7 @@ theorem Real.add_one_lt_exp_of_pos {x : ℝ} (hx : 0 < x) : x + 1 < exp x :=
 
 -- copied from Mathlib\Analysis\Complex\Exponential.lean
 theorem Real.add_one_le_exp_of_nonneg {x : ℝ} (hx : 0 ≤ x) : x + 1 ≤ exp x := by
-  rcases eq_or_lt_of_le hx with (rfl | h)
+  obtain rfl | h := eq_or_lt_of_le hx
   · simp
   exact (add_one_lt_exp_of_pos h).le
 

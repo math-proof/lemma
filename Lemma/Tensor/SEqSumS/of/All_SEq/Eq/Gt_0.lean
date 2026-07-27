@@ -1,6 +1,5 @@
 import Lemma.Tensor.SEqSumS.of.All_SEq.Gt_0
 import stdlib.SEq
-import sympy.tensor.tensor
 open Tensor
 
 

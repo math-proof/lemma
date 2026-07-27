@@ -1,8 +1,14 @@
-import Lemma.Bool.Any_Iff
-import Lemma.Bool.BFn_Ite__Ite.is.And.ou.OrAndS
-open Bool
+import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.BFnIte__Ite.is.And.ou.OrAndS |
+| comm | Bool.And.ou.OrAndS.is.BFnIte__Ite |
+| mp | Bool.And.ou.OrAndS.of.BFnIte__Ite |
+| mpr | Bool.BFnIte__Ite.of.And.ou.OrAndS |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   [Decidable p]
@@ -18,9 +24,8 @@ private lemma main
   else
     c) x ↔ R a x ∧ p ∨ R b x ∧ q ∧ ¬p ∨ R c x ∧ ¬(p ∨ q) := by
 -- proof
-  let ⟨_, h_Iff⟩ := Any_Iff (R := R)
-  rw [h_Iff, h_Iff, h_Iff, h_Iff] at *
-  apply BFn_Ite__Ite.is.And.ou.OrAndS
+  grind
 
 
 -- created on 2025-08-02
+-- updated on 2026-07-27

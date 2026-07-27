@@ -1,10 +1,9 @@
-import Lemma.Fin.Eq_0
 import Lemma.Tensor.DataSum_0.eq.SumSplitAtData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetSum.eq.SumMapGet
 import Lemma.Vector.Head.eq.Get_0
-open Fin Tensor Vector
+open Tensor Vector
 
 
 @[main]
@@ -20,8 +19,7 @@ private lemma main
   erw [DataSum_0.eq.SumSplitAtData]
   simp
   ext i
-  have h_0 := Eq_0 i
-  subst h_0
+  fin_cases i
   have := GetSum.eq.SumMapGet.fin (X.splitAt 1) ⟨0, by simp⟩
   simp at this
   conv_lhs => simp [this]

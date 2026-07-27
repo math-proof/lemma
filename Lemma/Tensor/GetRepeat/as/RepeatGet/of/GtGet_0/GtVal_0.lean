@@ -1,49 +1,41 @@
-import Lemma.Tensor.GtLength.of.GtLength_0
-import Lemma.Tensor.LengthRepeat.eq.Get_0.of.GtVal_0
-import Lemma.Nat.LtSubS.of.Lt.Le
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.List.TailSet.eq.SetTail.of.Gt_0
-import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
-import Lemma.Nat.Gt_0
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
-import Lemma.Nat.Ge_1.of.Gt_0
-import Lemma.Nat.Gt_0.of.Gt
-import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
-import Lemma.Nat.MulMul
-import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import Lemma.Nat.Mul_Mul
-import Lemma.List.MulProd_Mul_Prod.eq.Mul_Prod
-import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.List.AddMul_ProdSet.lt.MulProd_Mul_Prod.of.Lt_Mul_ProdTail.GtGet_0.GtVal_0.GtLength_0
-import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
-import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.GtLength
-import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
-import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
-import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
-import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.Mul
-import Lemma.Vector.Get
-import Lemma.List.ProdTakeSet.eq.Get_0.of.Gt_0.GtLength_0
-import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
-import Lemma.List.HeadDSet.eq.Get_0.of.Gt_0.LtLength
-import Lemma.List.ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0
-import Lemma.List.ProdTake_1.eq.HeadD_1
-import Lemma.Bool.EqUFnS.of.Eq
-import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
-import Lemma.Vector.GetSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0
-import Lemma.Vector.Get.of.Flatten.Lt.Lt.Eq.Eq
-import Lemma.List.Lt_ProdTakeSet.of.Gt_0.GtGet_0.GtLength_0
-import Lemma.List.Lt_ProdDropSet.of.Lt_Mul_ProdTail.GtVal_0
-import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.Vector.SEqFlattenSSplitAt.of.SEq
 import Lemma.Bool.SEqCast.of.Eq
-open Tensor Vector List Bool Nat
+import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import Lemma.List.GetSet.eq.Get_0.of.Gt_0.GtLength_0
+import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
+import Lemma.List.MulProd_Mul_Prod.eq.Mul_Prod
+import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
+import Lemma.List.ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength
+import Lemma.List.ProdSet__Mul_Get.eq.Mul_Prod.of.GtLength
+import Lemma.List.ProdTailSet.eq.Mul_ProdTail.LtLength_0.Gt_0
+import Lemma.List.ProdTailSet.eq.Mul_ProdTailDrop.LtLength_0.Gt_0
+import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
+import Lemma.List.ProdTake_1.eq.HeadD_1
+import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
+import Lemma.Nat.Any_EqAddMul.of.Lt_Mul
+import Lemma.Nat.EqAddSub.of.Ge
+import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
+import Lemma.Nat.Ge_1.of.Gt_0
+import Lemma.Nat.Gt_0
+import Lemma.Nat.Mul
+import Lemma.Nat.MulMul
+import Lemma.Nat.MulMul.eq.Mul_Mul
+import Lemma.Nat.Mul_Mul
+import Lemma.Tensor.GtLength.of.GtLength_0
+import Lemma.Tensor.LengthRepeat.eq.Length.of.GtVal_0
+import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
+import Lemma.Vector.Get
+import Lemma.Vector.Get.of.Flatten.Lt.Lt.Eq.Eq
+import Lemma.Vector.GetCast.eq.Get.of.Eq
+import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
+import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
+import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
+import Lemma.Vector.GetRepeat_AddMul.eq.Get.of.Eq_AddMul
+import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
+import Lemma.Vector.GetSplitAt.of.Lt_Mul_ProdTail.Gt_0.GtGet_0.GtLength_0
+import Lemma.Vector.SEq.of.All_EqGetS.Eq
+import Lemma.Vector.SEqFlattenSSplitAt.of.SEq
+import sympy.tensor.tensor
+open Bool List Nat Tensor Vector
 
 
 @[main, fin, cast, cast.fin]
@@ -124,10 +116,10 @@ private lemma main
             apply Get.of.Flatten.Lt.Lt.Eq.Eq (by simp) (by simp)
             simp_all
             apply SEqFlattenSSplitAt.of.SEq
-            .
+            ·
               apply SEq_Cast.of.Eq
               simp
-            .
+            ·
               simp_all
           ·
             apply MulProd_Mul_Prod.eq.ProdSet__Mul_Get.of.GtLength
@@ -138,12 +130,12 @@ private lemma main
       ·
         rw [ProdTake_1.eq.HeadD_1]
     ·
-      rw [List.HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
+      rw [HeadD.eq.Get_0.of.GtLength_0 (by simpa)]
       rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 h_s h_d]
-      rw [List.ProdTake_1.eq.Get_0.of.GtLength_0 (by simpa)]
+      rw [ProdTake_1.eq.Get_0.of.GtLength_0 (by simpa)]
       simp
       rw [GetSet.eq.Get_0.of.Gt_0.GtLength_0 h_s h_d]
 
 
 -- created on 2025-07-05
--- updated on 2025-07-17
+-- updated on 2026-07-27

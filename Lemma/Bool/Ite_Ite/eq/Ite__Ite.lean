@@ -13,6 +13,12 @@ import Lemma.Bool.Imp.is.ImpNotS
 open Bool
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.Ite_Ite.eq.Ite__Ite |
+| comm | Bool.Ite__Ite.eq.Ite_Ite |
+-/
 @[main, comm]
 private lemma main
   [Decidable p]

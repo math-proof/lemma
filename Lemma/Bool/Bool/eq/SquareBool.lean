@@ -2,6 +2,12 @@ import sympy.core.power
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.Bool.eq.SquareBool |
+| comm | Bool.SquareBool.eq.Bool |
+-/
 @[main, comm]
 private lemma main
   [Decidable p] :

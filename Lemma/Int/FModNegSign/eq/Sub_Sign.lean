@@ -17,7 +17,7 @@ private lemma main
 -- imply
   (-sign d).fmod d = d - sign d := by
 -- proof
-  rcases Lt.ou.Eq.ou.Gt d 0 with h_d | h_d | h_d
+  obtain h_d | h_d | h_d := Lt.ou.Eq.ou.Gt d 0
   ·
     have := Sign.eq.Neg1.of.Lt_0 h_d
     rw [this]

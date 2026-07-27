@@ -1,26 +1,20 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.Iff.is.IffNotS |
+| comm | Bool.IffNotS.is.Iff |
+| mp | Bool.IffNotS.of.Iff |
+| mpr | Bool.Iff.of.IffNotS |
+-/
 @[main, comm, mp, mpr]
 private lemma main :
 -- imply
   (p ↔ q) ↔ (¬p ↔ ¬q) := by
 -- proof
-  constructor <;>
-    intro h
-  ·
-    rw [h]
-  ·
-    constructor
-    · intro hp
-      by_contra hnq
-      have hnp := h.mpr hnq
-      exact hnp hp
-    · intro hq
-      by_contra hnp
-      have hnq := h.mp hnp
-      exact hnq hq
-
+  grind
 
 
 -- created on 2024-07-01

@@ -32,7 +32,7 @@ private lemma main
   simp only [NotAnd.is.Imp_Not, NotLe.is.Gt]
   intro h_ab h_!ab
   apply NotLt.of.Ge h
-  rcases Lt.ou.Eq.ou.Gt 0 a with ha | ha | ha
+  obtain ha | ha | ha := Lt.ou.Eq.ou.Gt 0 a
   ·
     have := Ge.of.Gt ha
     have := h_!ab this

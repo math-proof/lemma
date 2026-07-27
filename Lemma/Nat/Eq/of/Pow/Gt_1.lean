@@ -17,7 +17,7 @@ private lemma main
 -- imply
   n = m := by
 -- proof
-  rcases Lt.ou.Eq.ou.Gt n m with h_lt | h_eq | h_gt
+  obtain h_lt | h_eq | h_gt := Lt.ou.Eq.ou.Gt n m
   ·
     have := LtPowS.of.Lt.Gt_1 h₀ h_lt
     aesop

@@ -1,5 +1,4 @@
 import Lemma.Tensor.LengthTranspose.eq.Length.of.Gt_0.Gt_0
-import sympy.tensor.tensor
 open Tensor
 
 

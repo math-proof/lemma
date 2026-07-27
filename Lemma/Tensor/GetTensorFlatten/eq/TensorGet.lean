@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataGet.eq.Get.of.EqData_Flatten
 import Lemma.Bool.EqUFnS.of.Eq

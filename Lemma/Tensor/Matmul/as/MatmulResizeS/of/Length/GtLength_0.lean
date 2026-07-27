@@ -5,7 +5,6 @@ import Lemma.List.Set_0.eq.Cons_Tail.of.GtLength_0
 import Lemma.Tensor.SEqFromVectorS.of.SEq
 import Lemma.Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0
 import Lemma.Tensor.SEqToVectorS.of.SEq
-import sympy.tensor.tensor
 open Bool List Tensor
 set_option maxHeartbeats 1000000
 

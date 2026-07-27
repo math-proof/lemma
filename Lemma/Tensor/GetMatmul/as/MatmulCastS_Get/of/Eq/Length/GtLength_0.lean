@@ -8,7 +8,6 @@ import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.Tensor.SEqMatmulS.of.SEq.SEq
 import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 import Lemma.Vector.GetCast.eq.Get.of.Eq
-import sympy.tensor.tensor
 open Bool List Tensor Vector
 
 

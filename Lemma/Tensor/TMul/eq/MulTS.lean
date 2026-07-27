@@ -9,7 +9,6 @@ import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqPermuteS.of.SEq.Eq.Eq.GtLength
 import Lemma.Tensor.SEqT.of.LeLength_1
 import Lemma.Tensor.T.as.Permute__Neg1.of.GtLength_0
-import sympy.tensor.tensor
 open Bool List Nat Tensor
 
 

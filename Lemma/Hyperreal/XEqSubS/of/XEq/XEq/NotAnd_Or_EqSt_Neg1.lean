@@ -19,8 +19,8 @@ private lemma main
   apply XEqAddS.of.XEq.XEq.NotAnd_Or_EqSt_Neg1
   ·
     intro h_bad
-    rcases h_bad with ⟨h_b, h_or'⟩
-    rcases h_or' with h_sum | h_st
+    obtain ⟨h_b, h_or'⟩ := h_bad
+    obtain h_sum | h_st := h_or'
     ·
       exact h_or ⟨h_b, Or.inl (by aesop)⟩
     ·

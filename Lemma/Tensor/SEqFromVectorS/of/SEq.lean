@@ -1,6 +1,5 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import sympy.tensor.tensor
 open Tensor Bool
 
 

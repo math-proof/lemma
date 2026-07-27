@@ -1,5 +1,4 @@
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Fin.Eq_0
 import Lemma.List.EqPermute
 import Lemma.List.EqSwap_0'1
 import Lemma.List.LengthSlice.eq.Min
@@ -72,9 +71,9 @@ private lemma main
         have h_t : t < ((⟨0, ↑n * 1, 1⟩ : Slice).length (n * 1)) * 1 := by
           simpa [LengthSlice.eq.Min]
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
-        have h_r := Eq_0 r
+        fin_cases r
         erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-        simp [h_r] at h_qr
+        simp at h_qr
         erw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨0, by simp⟩)]
         erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         simp [h_qr]
@@ -139,9 +138,9 @@ private lemma row
           rw [LengthSlice.eq.One.of.Lt (by assumption)]
           simp
         let ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_t
-        have h_r := Eq_0 r
+        fin_cases r
         erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
-        simp [h_r] at h_qr
+        simp at h_qr
         symm at h_qr
         erw [GetGetSlice.eq.Get.of.Eq.Eq.Eq.Eq.fin (by simp) (by simp) (by simp) (by simp) (j := ⟨t, by simpa⟩)]
         erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]

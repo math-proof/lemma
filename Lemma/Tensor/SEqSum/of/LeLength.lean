@@ -11,7 +11,6 @@ import Lemma.Vector.MapCast.as.Map.of.Eq
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.SplitAt.as.VectorList.of.LeLength
 import Lemma.Vector.Sum.eq.Head.of.Eq_1
-import sympy.tensor.tensor
 open Bool List Tensor Vector
 
 

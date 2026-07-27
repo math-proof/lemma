@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Bool.EqCast.of.SEq
 import Lemma.Tensor.PermuteTail.as.Rotate.of.LeLength
 import Lemma.Nat.Sub.eq.Zero.of.Le

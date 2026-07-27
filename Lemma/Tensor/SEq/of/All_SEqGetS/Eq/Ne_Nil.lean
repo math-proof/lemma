@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.Eq
 import Lemma.Tensor.Length.of.Eq
 import Lemma.List.Cons.is.Eq.Eq

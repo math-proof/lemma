@@ -5,7 +5,6 @@ import Lemma.Nat.EqMul0_0
 import Lemma.Nat.Sub.eq.Zero
 import Lemma.Hyperreal.Sub_Infty.to.NegInfty
 import Lemma.Int.Sub.eq.Add_Neg
-import Lemma.Fin.Eq_0
 import Lemma.Tensor.DataAdd.eq.AddDataS
 import Lemma.Tensor.DataGet.eq.GetUnflattenData
 import Lemma.Tensor.DataMul.eq.MulData
@@ -31,7 +30,7 @@ import Lemma.Vector.Head.eq.Get_0
 import Lemma.Vector.XEq.is.All_XEqGetS
 import sympy.tensor.functions
 import sympy.tensor.stack
-open Hyperreal Int Tensor Vector Fin
+open Hyperreal Int Tensor Vector
 set_option maxHeartbeats 1000000
 
 
@@ -104,8 +103,7 @@ private lemma main
     erw [@Vector.GetNeg.eq.NegGet.fin]
     simp
     erw [@Vector.GetMul.eq.MulGet.fin]
-    have h_k := Eq_0 k
-    subst h_k
+    fin_cases k
     have := GetData.eq.GetDataGet.of.Lt.fin (i := j) (by simp) (A.get i)
     simp at this
     simp [← this]

@@ -2,7 +2,6 @@ import Lemma.Tensor.Data.eq.FlattenMapRange_GetToVector
 import Lemma.Tensor.DataGetToVector.as.ArraySliceData
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Vector.EqFlattenMapRange.of.All_SEqArraySlice
-import sympy.tensor.tensor
 open Tensor Vector
 
 

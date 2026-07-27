@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.LengthRepeat.eq.MulGet_0.of.GtLength_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Nat.EqMod_1'0

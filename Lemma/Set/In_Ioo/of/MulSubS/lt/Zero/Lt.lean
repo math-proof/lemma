@@ -18,7 +18,7 @@ private lemma main
   x ∈ Ioo a b := by
 -- proof
   have h_Or := OrAndSLt_0Gt_0.of.Gt0Mul h₀
-  rcases h_Or with h_And | h_And
+  obtain h_And | h_And := h_Or
   ·
     let ⟨h_Lt, h_Gt⟩ := h_And
     have h_Lt := Lt.of.Gt0Sub h_Lt

@@ -1,3 +1,4 @@
+import Lemma.Tensor.XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0
 import Lemma.Tensor.Div_KeepdimSum.eq.Div_Sum
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Get.of.Eq
@@ -62,9 +63,18 @@ private lemma main
   erw [GetSum.eq.Cast_SumGet.of.GtGet_0.LtAdd_1Length.fin (d := 0) (by grind) (by grind)] at h_zi
   simp at h_zi
   erw [Div_KeepdimSum.eq.Div_Sum] at h_zi
-  erw [h_Ξᵢ] at h_zi
-  conv_lhs => erw [h_zi]
-  rw [EqGetStack.fn.fin]
+  have h_Ξᵢ : (exp a').get i / (let den : Tensor ℝ* [] := ((exp a').get i).sum 0; den) ≈ (exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den) := by
+    simp
+    apply XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0 _ _ h_Ξᵢ
+    .
+      sorry
+    .
+      sorry
+  have h_zi : z.get i ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
+    simp
+    sorry
+  -- conv_lhs => erw [h_zi]
+  -- rw [EqGetStack.fn.fin]
   let band_A := A'[i, i + 1 - l : n ⊓ i + u]
   let band_V := V'[i + 1 - l:n ⊓ i + u]
   sorry

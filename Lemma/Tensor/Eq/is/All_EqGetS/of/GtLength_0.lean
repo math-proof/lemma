@@ -1,6 +1,5 @@
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.GtLength.of.GtLength_0
-import sympy.tensor.tensor
 open Tensor
 
 

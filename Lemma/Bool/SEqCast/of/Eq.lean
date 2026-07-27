@@ -2,6 +2,12 @@ import stdlib.SEq
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.SEqCast.of.Eq |
+| comm | Bool.SEq_Cast.of.Eq |
+-/
 @[main, comm]
 private lemma main
   {Vector : α → Sort v}
@@ -9,7 +15,7 @@ private lemma main
   (h : n = n')
   (a : Vector n) :
 -- imply
-  cast (by rw [h]) a ≃ a := by
+  cast (congrArg Vector h) a ≃ a := by
 -- proof
   simp_all [SEq]
 

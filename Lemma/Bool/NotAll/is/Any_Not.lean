@@ -2,6 +2,12 @@ import Lemma.Bool.Any.is.NotAll_Not
 open Bool
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.NotAll.is.Any_Not |
+| comm | Bool.Any_Not.is.NotAll |
+-/
 @[main, comm]
 private lemma main
 -- given

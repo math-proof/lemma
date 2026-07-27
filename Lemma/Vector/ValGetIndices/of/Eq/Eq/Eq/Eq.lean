@@ -55,7 +55,7 @@ private lemma main
             rw [AddCoe_1.eq.CoeAdd_1] at h_i
             simp at h_i
             rw [OrOr.is.Or_Or] at h
-            rcases h with h | h | h
+            obtain h | h | h := h
             ·
               have h := LeToNatS.of.Le h
               have h := CeilDivSubMin.le.Zero.of.Le h step n (α := ℚ)
@@ -104,7 +104,7 @@ private lemma main
         unfold Slice.length at h_i
         simp at h_i
         rw [OrOr.is.Or_Or] at h
-        rcases h with h | h | h
+        obtain h | h | h := h
         ·
           have h := LeAddS.of.Le 1 h
           have h := LeToNatS.of.Le h

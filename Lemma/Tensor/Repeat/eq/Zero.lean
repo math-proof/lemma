@@ -7,7 +7,6 @@ import Lemma.Vector.EqGet0_0
 import Lemma.Vector.EqRepeat_0'0
 import Lemma.Vector.GetFlatten.eq.Get.of.Eq_AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import sympy.tensor.tensor
 open Bool Fin List Tensor Vector
 
 

@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.Data.eq.FlattenMapRange
 open Tensor
 

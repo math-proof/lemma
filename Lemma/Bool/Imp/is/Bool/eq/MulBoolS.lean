@@ -16,6 +16,14 @@ import Lemma.Bool.Imp.is.OrNot
 open Bool Nat Int
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.Imp.is.Bool.eq.MulBoolS |
+| comm | Bool.Bool.eq.MulBoolS.is.Imp |
+| mp | Bool.Bool.eq.MulBoolS.of.Imp |
+| mpr | Bool.Imp.of.Bool.eq.MulBoolS |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   [Decidable p]

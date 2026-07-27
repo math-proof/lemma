@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.LengthTensorMapData.eq.Length
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.List.ProdTake_1.eq.HeadD_1

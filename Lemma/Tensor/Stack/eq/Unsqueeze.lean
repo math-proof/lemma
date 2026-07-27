@@ -1,8 +1,7 @@
-import Lemma.Fin.Eq_0
 import Lemma.Tensor.Eq.is.All_EqGetS
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.EqGetUnsqueeze_0
-open Fin Tensor
+open Tensor
 
 
 @[main]
@@ -14,8 +13,7 @@ private lemma main
 -- proof
   apply Eq.of.All_EqGetS.fin
   intro i
-  have h_i := Eq_0 i
-  subst h_i
+  fin_cases i
   erw [EqGetUnsqueeze_0.fin]
   rw [EqGetStack.fn.fin]
 

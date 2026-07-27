@@ -8,6 +8,12 @@ import Lemma.Bool.NotOr.is.AndNotS
 open Bool
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.IteOr.eq.Ite__Ite |
+| comm | Bool.Ite__Ite.eq.IteOr |
+-/
 @[main, comm]
 private lemma main
   [Decidable p]

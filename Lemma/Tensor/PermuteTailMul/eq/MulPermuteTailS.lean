@@ -7,7 +7,6 @@ import Lemma.Vector.Cast_Mul.eq.MulCastS.of.Eq
 import Lemma.Vector.FlattenMul.eq.MulFlattenS
 import Lemma.Vector.MapMul.eq.MulMapS.of.All_Eq_Mul
 import Lemma.Vector.SplitAtMul.eq.MulSplitAtS
-import sympy.tensor.tensor
 open List Tensor Vector
 
 

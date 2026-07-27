@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.ValDataGetToVector.eq.ValArraySliceData
 open Tensor
 

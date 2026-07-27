@@ -3,13 +3,12 @@ import Lemma.Tensor.Softmax.eq.TensorSoftmaxData
 import Lemma.Tensor.Sum.eq.MkListSumData
 import Lemma.Vector.SumSoftmax.eq.One
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Fin.Eq_0
 import Lemma.Vector.EqGet1_1
 import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.Gt_0.GtLength
 import Lemma.Tensor.EqData1'1
 import Lemma.Tensor.GetSoftmax.eq.SoftmaxGet.of.GtGet_0.Gt_0.GtLength
-open Tensor Vector Fin
+open Tensor Vector
 
 
 @[main]
@@ -36,8 +35,7 @@ private lemma main
       ext i
       rw [EqData1'1]
       erw [EqGet1_1.fin (n := [].prod)]
-      have h_0 := Eq_0 i
-      subst h_0
+      fin_cases i
       simp [List.Vector.get]
       simp at h
       have : NeZero (s₀ * 1) := by

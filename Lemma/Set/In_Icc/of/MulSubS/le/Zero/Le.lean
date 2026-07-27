@@ -20,7 +20,7 @@ private lemma main
 -- proof
   -- Split the proof into two parts: proving a ≤ x and x ≤ b
   have h_Or := OrAndSLe_0Ge_0.of.Mul.le.Zero h₀
-  rcases h_Or with h_And | h_And
+  obtain h_And | h_And := h_Or
   ·
     let ⟨h_Le, h_Ge⟩ := h_And
     have h_Le := Le.of.Sub.le.Zero h_Le

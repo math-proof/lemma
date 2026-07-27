@@ -14,7 +14,6 @@ import Lemma.Vector.GetGetSlice.eq.Get.of.GtGet.GtLength
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.GetUnflatten.eq.Get_AddMul
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
-import sympy.tensor.tensor
 open Bool Fin List Nat Tensor Vector
 
 

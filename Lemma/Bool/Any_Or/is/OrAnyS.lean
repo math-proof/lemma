@@ -1,29 +1,21 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.Any_Or.is.OrAnyS |
+| comm | Bool.OrAnyS.is.Any_Or |
+| mp | Bool.OrAnyS.of.Any_Or |
+| mpr | Bool.Any_Or.of.OrAnyS |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   {p q : α → Prop} :
 -- imply
   (∃ x : α, p x ∨ q x) ↔ (∃ x : α, p x) ∨ (∃ x : α, q x) := by
 -- proof
-  constructor <;>
-    intro h
-  ·
-    let ⟨x, hpq⟩ := h
-    cases hpq with
-    | inl hp =>
-      exact Or.inl ⟨x, hp⟩
-    | inr hq =>
-      exact Or.inr ⟨x, hq⟩
-  ·
-    cases h with
-    | inl h_p =>
-      let ⟨x, hp⟩ := h_p
-      exact ⟨x, Or.inl hp⟩
-    | inr h_q =>
-      let ⟨x, hq⟩ := h_q
-      exact ⟨x, Or.inr hq⟩
+  grind
 
 
 @[main, comm, mp, mpr]
@@ -33,7 +25,6 @@ private lemma set
 -- imply
   (∃ x ∈ s, p x ∨ q x) ↔ (∃ x ∈ s, p x) ∨ (∃ x ∈ s, q x) := by
 -- proof
-  rw [← main]
   aesop
 
 -- created on 2024-07-01

@@ -6,8 +6,7 @@ import Lemma.Nat.NeCoeS.of.Ne
 import Lemma.Tensor.Div.eq.DivDivS.of.Ne_0
 import Lemma.Tensor.DataDiv.eq.DivDataS
 import Lemma.Vector.GetDiv.eq.DivGetS
-import Lemma.Fin.Eq_0
-open Tensor Vector Bool Nat Fin
+open Tensor Vector Bool Nat
 set_option maxHeartbeats 500000
 
 
@@ -52,7 +51,7 @@ private lemma main
       simp [Div.eq.HDiv]
       erw [DataDiv.eq.DivDataS]
       erw [GetDiv.eq.DivGetS.fin]
-      simp [Eq_0]
+      fin_cases i
       simp [GetElem.getElem]
     .
       have := Ne.of.NotEq hb

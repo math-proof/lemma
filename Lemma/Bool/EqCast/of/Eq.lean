@@ -1,14 +1,19 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.EqCast.of.Eq |
+| comm | Bool.Eq_Cast.of.Eq |
+-/
 @[main, comm]
 private lemma main
 -- given
   (h_n : m = n)
   (i : Fin n) :
 -- imply
-  have h : Fin m = Fin n := by rw [h_n]
-  cast h ⟨i, by simp_all⟩ = i := by
+  cast (congrArg Fin h_n) ⟨i, by grind⟩ = i := by
 -- proof
   aesop
 

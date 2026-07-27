@@ -91,7 +91,7 @@ export function fetch_lemma(lemma, lemmaType, using_latex=true, using_given=fals
 		// proof = proof.map(line => line.lean);
 	}
 	if (comment && using_comment)
-		comment = `/--\n${comment}\n-/\n`;
+		comment = `/--\n${comment.trim()}\n-/\n`;
 	else
 		comment = '';
 	if (attribute && attribute.length) {

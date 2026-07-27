@@ -2,6 +2,13 @@ import sympy.concrete.quantifier
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Bool.All.is.All.AllNot |
+| mp | Bool.All.AllNot.of.All |
+| mpr | Bool.All.of.All.AllNot |
+-/
 @[main, mp, mpr]
 private lemma main
 -- given
@@ -9,13 +16,7 @@ private lemma main
 -- imply
   (∀ e, f e) ↔ (∀ e | p e, f e) ∧ (∀ e | ¬p e, f e) := by
 -- proof
-  constructor
-  .
-    aesop
-  .
-    rintro ⟨h₁, h₂⟩ e
-    by_cases hp : p e <;>
-      aesop
+  grind
 
 
 -- created on 2025-08-04

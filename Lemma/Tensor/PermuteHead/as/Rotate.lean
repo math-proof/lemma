@@ -1,4 +1,3 @@
-import sympy.tensor.tensor
 import Lemma.Tensor.PermuteHead.as.Rotate.of.LeLength
 open Tensor
 
