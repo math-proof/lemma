@@ -13,32 +13,31 @@ private lemma main
   [IsOrderedCancelAddMonoid α]
   [NeZero (1 : α)]
   [NeZero n]
+  {i : Fin m}
 -- given
-  (m l u : ℕ)
-  (i : Fin m)
-  (h : i ≤ n - 1 + l) :
+  (h : i.val ≤ n - 1 + l) :
 -- imply
   (((1 : Tensor α [m, n]).band_part l u).get i).sum > 0 := by
 -- proof
-  let j : Fin n :=
-    if hlt : i.val < n then ⟨i.val, hlt⟩ else ⟨n - 1, Nat.pred_lt (NeZero.ne n)⟩
+  let j : Fin n := if hlt : i.val < n then ⟨i.val, hlt⟩ else ⟨n - 1, Nat.pred_lt (NeZero.ne n)⟩
   have hband : (j - i : ℤ) ∈ Icc (-l : ℤ) u := by
     obtain hi | hi := Nat.lt_or_ge i.val n
-    · simp only [j, hi, dite_true, Set.mem_Icc, Fin.val_mk]
-      constructor <;> linarith
-    · have hjn : j = ⟨n - 1, Nat.pred_lt (NeZero.ne n)⟩ := by
+    ·
+      simp only [j, hi, dite_true, Set.mem_Icc, Fin.val_mk]
+      constructor <;>
+        linarith
+    ·
+      have hjn : j = ⟨n - 1, Nat.pred_lt (NeZero.ne n)⟩ := by
         dsimp [j]
         split_ifs
-        · exact absurd ‹_› (Nat.not_lt.mpr hi)
-        · rfl
+        ·
+          grind
+        ·
+          rfl
       rw [hjn, Set.mem_Icc, Fin.val_mk]
       omega
-  haveI : NeZero (1 : ℕ) := ⟨one_ne_zero⟩
-  have h_icc :
-      ⌈((↑(i - l) : ℤ) - ((i : ℤ) - l)) / (1 : ℚ)⌉ ≤
-        ⌊((↑((n - 1) ⊓ (i + u)) : ℤ) - ((i : ℤ) - l)) / (1 : ℚ)⌋ :=
-    LeCeil_Floor.of.Any_And_Dvd_AddSub (l := l) (u := u) (i := ↑i) ⟨j, hband, one_dvd _⟩
-  exact Lt0SumGetBandPart.of.LeCeil_Floor (m := m) (l := l) (u := u) (i := i) (d := 1) h_icc
+  apply Lt0SumGetBandPart.of.LeCeil_Floor
+  apply LeCeil_Floor.of.Any_And_Dvd_AddSub ⟨j, hband, one_dvd _⟩
 
 
 -- created on 2026-07-28
