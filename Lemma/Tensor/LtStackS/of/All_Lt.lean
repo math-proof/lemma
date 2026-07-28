@@ -1,6 +1,5 @@
-import Lemma.Tensor.Lt.is.LtDataS
 import Lemma.Tensor.BFnStackS.of.All_BFn.All_Iff_All_BFnGetSData
-import sympy.tensor.stack
+import Lemma.Tensor.Lt.is.LtDataS
 open Tensor
 
 
@@ -12,7 +11,9 @@ private lemma main
   (h : ∀ i : Fin n, X i < Y i) :
 -- imply
   [i < n] X i < [i < n] Y i :=
-  BFnStackS.of.All_BFn.All_Iff_All_BFnGetSData (R := LT.lt) (R₀ := LT.lt) (hDataS := Lt.is.LtDataS) h
+-- proof
+  BFnStackS.of.All_BFn.All_Iff_All_BFnGetSData (R := LT.lt) (R₀ := LT.lt) Lt.is.LtDataS h
 
 
 -- created on 2026-07-27
+-- updated on 2026-07-28

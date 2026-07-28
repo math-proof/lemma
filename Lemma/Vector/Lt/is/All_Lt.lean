@@ -1,5 +1,4 @@
 import sympy.vector.Basic
-open Bool Nat
 
 
 /--

@@ -1,5 +1,6 @@
-import sympy.functions.elementary.exponential
-import Lemma.Real.GeExp_0
+import Lemma.Tensor.Le0BandPart
+import Lemma.Tensor.Le0Stack.of.All_Ge_0
+import Lemma.Tensor.GeExp_0
 import Lemma.Tensor.Le0Mul.of.Ge_0.Ge_0
 import Lemma.Tensor.XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0
 import Lemma.Tensor.Div_KeepdimSum.eq.Div_Sum
@@ -14,7 +15,8 @@ import Lemma.Tensor.GetSum.as.SumGet.of.GtGet_0.LtAdd_1Length
 import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
-open Tensor Int Real
+import sympy.functions.elementary.exponential
+open Tensor
 set_option maxHeartbeats 1000000
 
 
@@ -74,10 +76,10 @@ private lemma main
       .
         erw [GetExp.eq.ExpGet.fin (i := ⟨i, by grind⟩)]
         simp
-        have := GeExp_0 (A'.get i)
         apply GeExp_0
-        sorry
       .
+        dsimp [Ξ]
+        have := Le0BandPart n (l - 1) (u - 1) (α := ℝ*)
         sorry
     .
       sorry

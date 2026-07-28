@@ -42,11 +42,13 @@ private lemma main
   ·
     rw [Set.mem_Icc, not_and_or] at hmem
     obtain h1 | h2 := hmem
-    · have h1' : ¬(↑ir : ℤ) ≤ ↑j + l := by linarith
+    ·
+      have h1' : ¬(↑ir : ℤ) ≤ ↑j + l := by linarith
       rw [decide_eq_false h1', Bool.false_and, Bool.toNat_false]
       simp only [Nat.cast_zero, EqData0'0, GetElem.getElem]
       rw [← Vector.EqGet0_0.fin (α := α)]
-    · have h2' : ¬(↑j : ℤ) ≤ ↑u + ↑ir := by linarith
+    ·
+      have h2' : ¬(↑j : ℤ) ≤ ↑u + ↑ir := by linarith
       rw [decide_eq_false h2', Bool.and_false, Bool.toNat_false]
       simp only [Nat.cast_zero, EqData0'0, GetElem.getElem]
       rw [← Vector.EqGet0_0.fin (α := α)]
