@@ -16,12 +16,8 @@ private lemma main
   (h_not_sum : ¬(b.sum → 0))
   (h : a ≈ b) :
 -- imply
-  let den_a := a.sum
-  let den_b := b.sum
-  a / den_a ≈ b / den_b := by
+  a / a.sum ≈ b / b.sum := by
 -- proof
-  intro den_a den_b
-  simp only [den_a, den_b]
   have h_sum := XEqSumS.of.XEq.Ge_0 h_pos h
   have h_not_sum_a := NotInfinitesimal.of.NotInfinitesimal.XEq h_sum h_not_sum
   refine Vector.XEq.of.All_XEqGetS.fin ?_

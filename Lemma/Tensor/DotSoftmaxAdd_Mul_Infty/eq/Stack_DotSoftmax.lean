@@ -1,3 +1,4 @@
+import Lemma.Tensor.Le0Get.of.Ge_0
 import Lemma.Tensor.Le0BandPart
 import Lemma.Tensor.Le0Stack.of.All_Ge_0
 import Lemma.Tensor.GeExp_0
@@ -78,9 +79,8 @@ private lemma main
         simp
         apply GeExp_0
       .
-        dsimp [Ξ]
-        have := Le0BandPart n (l - 1) (u - 1) (α := ℝ*)
-        sorry
+        apply Le0Get.of.Ge_0
+        apply Le0BandPart
     .
       sorry
   have h_zi : z.get i ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by

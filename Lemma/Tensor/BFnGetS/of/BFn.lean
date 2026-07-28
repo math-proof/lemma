@@ -3,7 +3,7 @@ import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Tensor.GetData.eq.GetDataGet.of.GtProd.GtLength_0
 import Lemma.Tensor.GtLength
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-open Tensor Vector List
+open Tensor List
 
 
 @[main, fin]

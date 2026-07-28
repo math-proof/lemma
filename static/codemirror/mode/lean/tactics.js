@@ -28,6 +28,7 @@ export const tactics = [
     'dsimp',
     'erw',
     'exact',
+    'exact_mod_cast',
     'exfalso',
     'exists',
     'ext',

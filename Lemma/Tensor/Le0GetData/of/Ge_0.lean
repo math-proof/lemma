@@ -1,12 +1,13 @@
-import sympy.series.limits
+import Lemma.Tensor.EqData0'0
 import sympy.tensor.tensor
 import Lemma.Vector.EqGet0_0
-open Vector
+open Tensor Vector
 
 
 @[main]
 private lemma main
-  {A : Tensor ℝ* s}
+  [LE α] [Zero α]
+  {A : Tensor α s}
 -- given
   (h_pos : A ≥ 0)
   (k : Fin s.prod) :
@@ -14,9 +15,9 @@ private lemma main
   A.data[k] ≥ 0 := by
 -- proof
   have h' := h_pos k
-  simp only [LE.le] at h'
-  rw [show ((0 : Tensor ℝ* s).data)[k] = 0 from EqGet0_0.fin (α := ℝ*) k] at h'
-  exact ge_iff_le.mp h'
+  dsimp [LE.le, GetElem.getElem] at h'
+  rw [EqData0'0] at h'
+  rwa [EqGet0_0.fin] at h'
 
 
 -- created on 2026-07-27
