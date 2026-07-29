@@ -1,6 +1,6 @@
 import Lemma.Vector.Sum.eq.Zero
 import Lemma.Vector.SumCons.eq.Add_Sum
-open Vector Nat
+open Vector
 
 
 /--

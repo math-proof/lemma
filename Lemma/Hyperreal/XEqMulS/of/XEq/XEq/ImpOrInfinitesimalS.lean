@@ -19,7 +19,8 @@ open Hyperreal Nat
 private lemma main
   {a b x y : ℝ*}
 -- given
-  (h_or : ((b → 0) ∧ y → 0) ∨ ¬((b → 0) ∨ y → 0))
+  (h_y : (y → ∞) → a⁻¹ ≈ b⁻¹)
+  (h_b : (b → ∞) → x⁻¹ ≈ y⁻¹)
   (h₀ : a ≈ b)
   (h₁ : x ≈ y) :
 -- imply

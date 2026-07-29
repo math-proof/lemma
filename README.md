@@ -261,3 +261,29 @@ The English Plural Letter S is used to denote double occurrence of types:
 The Identity is a simplified version of an Equality/Equivalence of the same type:
 - Sum is short for : EqSumS (which as rule of `Plural S`, is defined as Sum.eq.Sum)
 - And is abbreviated from : IffAndS (which as rule of `Plural S`, is defined as And.is.And)
+
+# LLM-Assisted Proving
+
+Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in this repository.
+
+### Naming and file layout
+- Create new lemmas according to the [Lemma Naming Convention](#lemma-naming-convention) above.
+- Mirror the directory path in the module name (e.g. `Lemma/Tensor/Foo/of/Bar.lean` → `Tensor.Foo.of.Bar`).
+
+### Attribute-generated lemmas
+- Read `sympy/Basic.lean` to understand attribute-generated lemmas (`@[comm]`, `@[mp]`, `@[mpr]`, `@[fin]`, `@[mt]`, …) and apply them wisely.
+- For `LHS.is.RHS` tagged with `@[mp]` / `@[mpr]`, prefer the generated one-direction lemmas `RHS.of.LHS` / `LHS.of.RHS` over calling `.mp` / `.mpr` on the iff.
+- For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp` / `rw [← LHS.eq.RHS]`.
+
+### Proof style
+- Use `obtain` instead of `rcases`, and `if … then … else …` instead of `by_cases`.
+- After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
+- Match the style of nearby proofs in the same directory (e.g. `grind`, `aesop`, `simpa`).
+
+### Formatting
+Run `python py/format.py <leanFile>` if necessary. It will:
+- generate the attribute docstring table (for markdown rendering) when the lemma uses `@[main, mp, mpr, mt, fin, comm, …]`;
+- remove redundant `import` statements
+
+### Verification
+- Confirm the file compiles with `lake build <Module.Name>` or `lake env lean <path/to/file.lean>`.

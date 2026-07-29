@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-"""Add attribute docstrings before `private lemma main` in a Lemma .lean file.
+"""Format a Lemma .lean file: remove redundant imports and add attribute docstrings.
 
-Generates lemma names via `sympy/parsing/AttrDocstringGen.lean`, then verifies each name
-with `#check` before writing the docstring.
+For files with `@[main, ...] private lemma main`, generates attribute docstrings via
+`sympy/parsing/AttrDocstringGen.lean` and verifies each name with `#check`.
+
+Redundant imports are detected by trying to remove each import (in order) and
+re-typechecking the file.
 
 Usage:
-  python py/add_attr_docstrings.py Lemma/Hyperreal/Eq_0/of/Infinitesimal.lean
-  python py/add_attr_docstrings.py --dry-run Lemma/...
-  python py/add_attr_docstrings.py --check-only Lemma/...
+  python py/format.py Lemma/Tensor/Lt0SumMul/of/GtSum_0/Ge_0/Gt_0.lean
+  python py/format.py --dry-run Lemma/...
+  python py/format.py --check-only Lemma/...
 """
 
 from __future__ import annotations
@@ -21,6 +24,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GEN = ROOT / "sympy" / "parsing" / "AttrDocstringGen.lean"
+SH_DIR = ROOT / "sh"
 
 CUSTOM_ATTR_HEADS = frozenset({
     "main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is",
@@ -28,6 +32,8 @@ CUSTOM_ATTR_HEADS = frozenset({
     "fin", "fin.comm", "fin.mp", "fin.mpr", "val", "subst", "cast", "cast.fin",
     "mp and", "mpr and", "mp.comm and", "mpr.comm and",
 })
+
+IMPORT_LINE_RE = re.compile(r"^import ([\w.']+)\s*$")
 
 MAIN_ATTR_RE = re.compile(
     r"@\[main,\s*([^\]]+)\]\s*\nprivate lemma main\b",
@@ -127,6 +133,71 @@ def module_name_for(path: Path) -> str:
     return rel[:-5].replace("/", ".")
 
 
+def parse_import_block(content: str) -> tuple[list[tuple[str, str]], str]:
+    lines = content.splitlines(keepends=True)
+    imports: list[tuple[str, str]] = []
+    idx = 0
+    while idx < len(lines):
+        match = IMPORT_LINE_RE.match(lines[idx].rstrip("\n"))
+        if not match:
+            break
+        imports.append((match.group(1), lines[idx]))
+        idx += 1
+    return imports, "".join(lines[idx:])
+
+
+def build_content(imports: list[tuple[str, str]], rest: str) -> str:
+    return "".join(line for _, line in imports) + rest
+
+
+def compiles(content: str) -> bool:
+    SH_DIR.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(
+        mode="w",
+        encoding="utf-8",
+        suffix=".lean",
+        delete=False,
+        dir=SH_DIR,
+        newline="\n",
+    ) as handle:
+        handle.write(content)
+        check_path = Path(handle.name)
+
+    try:
+        cmd = ["lake", "env", "lean", str(check_path.relative_to(ROOT))]
+        result = subprocess.run(
+            cmd,
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+        )
+        return result.returncode == 0
+    finally:
+        check_path.unlink(missing_ok=True)
+
+
+def remove_redundant_imports(content: str) -> tuple[str, list[str]]:
+    imports, rest = parse_import_block(content)
+    if not imports:
+        return content, []
+
+    kept: list[tuple[str, str]] = []
+    removed: list[str] = []
+
+    for index, (module, _line) in enumerate(imports):
+        candidate = build_content(kept + imports[index + 1 :], rest)
+        if compiles(candidate):
+            removed.append(module)
+        else:
+            kept.append(imports[index])
+
+    if not removed:
+        return content, []
+
+    return build_content(kept, rest), removed
+
+
 def generate_docstring(rel: str, attrs: list[str]) -> str:
     cmd = ["lake", "env", "lean", "--run", str(GEN), rel, *attrs]
     result = subprocess.run(
@@ -191,7 +262,7 @@ def check_lemma_names(module: str, names: list[str]) -> list[str]:
             encoding="utf-8",
             suffix=".lean",
             delete=False,
-            dir=ROOT / "sh",
+            dir=SH_DIR,
             newline="\n",
         ) as handle:
             handle.write(check_source)
@@ -216,20 +287,20 @@ def check_lemma_names(module: str, names: list[str]) -> list[str]:
     return failures
 
 
-def process_file(
+def process_docstrings(
+    content: str,
     lean_file: Path,
     *,
     dry_run: bool = False,
     check_only: bool = False,
     refresh: bool = False,
-) -> None:
-    content = read_text(lean_file)
+) -> tuple[str, bool]:
     rel = rel_path_for(lean_file)
     module = module_name_for(lean_file)
 
     found = find_main_attr_block(content)
     if not found:
-        raise ValueError(f"no @[main, ...] private lemma main in {rel}")
+        return content, False
 
     insert_at, attr_blob = found
     attrs = custom_attrs(parse_attr_tokens(attr_blob))
@@ -256,12 +327,12 @@ def process_file(
 
     existing = ATTR_DOCSTRING_RE.search(content)
     if existing and existing.group(0).strip() == doc.strip() and not refresh:
-        print(f"unchanged: {rel}")
-        return
+        print(f"docstring unchanged: {rel}")
+        return content, False
 
     if check_only:
-        print(f"check-only: {rel} (docstring not written)")
-        return
+        print(f"check-only: would update docstring for {rel}")
+        return content, False
 
     new_content = content
     if existing:
@@ -274,30 +345,72 @@ def process_file(
     new_content = insert_docstring(new_content, insert_at, doc)
 
     if dry_run:
-        print(f"dry-run: would update {rel}")
-        return
+        print(f"dry-run: would update docstring for {rel}")
+        return content, False
 
-    write_text(lean_file, new_content)
-    print(f"updated {rel}")
+    return new_content, True
+
+
+def process_file(
+    lean_file: Path,
+    *,
+    dry_run: bool = False,
+    check_only: bool = False,
+    refresh: bool = False,
+) -> None:
+    content = read_text(lean_file)
+    rel = rel_path_for(lean_file)
+    changed = False
+
+    print(f"checking imports for {rel} ...")
+    import_content, removed = remove_redundant_imports(content)
+    if removed:
+        print("removed redundant imports:")
+        for module in removed:
+            print(f"  import {module}")
+        if check_only:
+            print(f"check-only: would remove {len(removed)} import(s) from {rel}")
+        elif dry_run:
+            print(f"dry-run: would remove {len(removed)} import(s) from {rel}")
+        else:
+            content = import_content
+            changed = True
+    else:
+        print("imports ok: no redundant imports")
+
+    content, doc_changed = process_docstrings(
+        content,
+        lean_file,
+        dry_run=dry_run,
+        check_only=check_only,
+        refresh=refresh,
+    )
+    changed = changed or doc_changed
+
+    if changed and not dry_run and not check_only:
+        write_text(lean_file, content)
+        print(f"updated {rel}")
+    elif not changed:
+        print(f"unchanged: {rel}")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Add or refresh attribute docstrings for a Lemma main lemma.",
+        description="Format a Lemma .lean file (imports + attribute docstrings).",
     )
     parser.add_argument(
         "lean_file",
-        help="path to a Lemma .lean file (e.g. Lemma/Hyperreal/Eq_0/of/Infinitesimal.lean)",
+        help="path to a Lemma .lean file (e.g. Lemma/Tensor/Lt0SumMul/of/GtSum_0/Ge_0/Gt_0.lean)",
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="generate and verify, but do not write the file",
+        help="analyze and verify, but do not write the file",
     )
     parser.add_argument(
         "--check-only",
         action="store_true",
-        help="verify generated names with #check, but do not write the file",
+        help="verify changes, but do not write the file",
     )
     parser.add_argument(
         "--refresh",

@@ -1,3 +1,8 @@
+import Lemma.Tensor.XEq.of.Eq
+import Lemma.Tensor.GtExp_0
+import Lemma.Tensor.Lt0Get.of.Gt_0
+import Lemma.Tensor.Lt0SumGetBandPart
+import Lemma.Tensor.Lt0SumMul.of.GtSum_0.Ge_0.Gt_0
 import Lemma.Tensor.GtSumData_0.is.GtSum_0
 import Lemma.Hyperreal.Eq_0.of.Infinitesimal
 import Lemma.Vector.MapSum.eq.SumMap.of.All_EqUFnAdd
@@ -83,11 +88,11 @@ private lemma main
     simp
     apply XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0 _ _ h_Ξᵢ
     .
-      apply @Tensor.Le0Mul.of.Ge_0.Ge_0
+      apply Le0Mul.of.Ge_0.Ge_0
       .
         erw [GetExp.eq.ExpGet.fin (i := ⟨i, by grind⟩)]
         simp
-        apply @Tensor.GeExp_0
+        apply GeExp_0
       .
         apply Le0Get.of.Ge_0
         apply Le0BandPart
@@ -107,11 +112,20 @@ private lemma main
       erw [MulMapS.eq.MapMul.of.All_Eq_Mul (by aesop)]
       rw [DataMap.eq.MapData]
       erw [Vector.SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
-      apply Hyperreal.NotInfinitesimal.of.Ne_0
+      apply NotInfinitesimal.of.Ne_0
       apply Nat.Ne.of.Gt
       apply GtSumData_0.of.GtSum_0
-      sorry
-  have h_zi : z.get i ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
+      apply Lt0SumMul.of.GtSum_0.Ge_0.Gt_0
+      .
+        apply Lt0Get.of.Gt_0
+        apply GtExp_0
+      .
+        apply Le0Get.of.Ge_0
+        apply Le0BandPart
+      .
+        apply Lt0SumGetBandPart
+  have h_zi := Tensor.XEq.of.Eq h_zi
+  have h_xeq : ((Exp.exp a').get i / (let den : Tensor ℝ* [] := ((Exp.exp a').get i).sum 0; den)) @ V' ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
     simp
     sorry
   -- conv_lhs => erw [h_zi]

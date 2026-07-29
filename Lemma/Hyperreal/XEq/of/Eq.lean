@@ -11,8 +11,7 @@ private lemma main
 -- imply
   a ≈ b := by
 -- proof
-  subst h
-  rfl
+  aesop
 
 
 -- created on 2026-01-02

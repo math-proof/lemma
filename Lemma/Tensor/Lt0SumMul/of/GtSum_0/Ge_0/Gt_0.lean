@@ -1,9 +1,6 @@
-import Lemma.Tensor.EqData0'0
 import Lemma.Tensor.GtSumData_0.is.GtSum_0
 import Lemma.Tensor.Le.is.LeDataS
-import Lemma.Tensor.Lt.is.LtDataS
 import Lemma.Vector.Lt0SumMul.of.GtSum_0.Ge_0.Gt_0
-import sympy.tensor.tensor
 open Tensor
 
 
