@@ -7,7 +7,7 @@ open Nat
 
 
 /--
-similar with Ordinal.mul\_add\_mod\_mul
+similar with Ordinal.mul_add_mod_mul
 -/
 @[main]
 private lemma ord

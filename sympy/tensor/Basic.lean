@@ -86,6 +86,9 @@ instance [One α] : One (Tensor α s) := ⟨⟨One.one⟩⟩
 instance [AddMonoidWithOne α] [CharZero α] : NatCast (Tensor α []) where
   natCast n := ⟨[n], by simp⟩
 
+instance [NNRatCast α] : NNRatCast (Tensor α s) where
+  nnratCast q := ⟨NNRatCast.nnratCast q⟩
+
 instance [Add α] : Add (Tensor α s) where
   add A B := ⟨A.data + B.data⟩
 

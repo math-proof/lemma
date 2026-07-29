@@ -14,7 +14,7 @@ def Tensor.eye [AddMonoidWithOne α] [CharZero α] (n : Nat) : Tensor α [n, n] 
 /--
 [masked_fill](https://docs.pytorch.org/docs/stable/generated/torch.Tensor.masked_fill.html)
 -/
-def Tensor.masked_fill [Zero α] (X : Tensor α s) (d : ℤ) (cmp : ℤ → ℤ → Prop) [DecidableRel cmp]  : Tensor α s :=
+def Tensor.masked_fill [Zero α] (X : Tensor α s) (d : ℤ) (cmp : ℤ → ℤ → Bool) : Tensor α s :=
   if h_s : s.length > 2 then
     cast
       (by
@@ -33,12 +33,12 @@ def Tensor.masked_fill [Zero α] (X : Tensor α s) (d : ℤ) (cmp : ℤ → ℤ 
 /--
 [torch.tril](https://docs.pytorch.org/docs/stable/generated/torch.tril.html)
 -/
-def Tensor.tril [Zero α] (X : Tensor α s) (diagonal : ℤ) : Tensor α s := X.masked_fill diagonal GT.gt
+def Tensor.tril [Zero α] (X : Tensor α s) (diagonal : ℤ) : Tensor α s := X.masked_fill diagonal (· > ·)
 
 /--
 [torch.triu](https://docs.pytorch.org/docs/stable/generated/torch.triu.html)
 -/
-def Tensor.triu [Zero α] (X : Tensor α s) (diagonal : ℤ) : Tensor α s := X.masked_fill diagonal LT.lt
+def Tensor.triu [Zero α] (X : Tensor α s) (diagonal : ℤ) : Tensor α s := X.masked_fill diagonal (· < ·)
 
 /--
 dilated version of [band_part](https://tensorflow.google.cn/api_docs/python/tf/linalg/band_part)

@@ -5,7 +5,7 @@ import sympy.Basic
 | attributes | lemma |
 | :---: | :---: |
 | main | Int.Le.of.EqAdd.Ge_0 |
-| comm 2 | Int.Ge.of.Eq\_Add.Ge\_0 |
+| comm 2 | Int.Ge.of.Eq_Add.Ge_0 |
 -/
 @[main, comm 2]
 private lemma main

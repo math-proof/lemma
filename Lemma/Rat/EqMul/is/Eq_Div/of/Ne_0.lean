@@ -7,13 +7,13 @@ open Nat Rat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.EqMul.is.Eq\_Div.of.Ne\_0 |
-| comm | Rat.Eq\_Div.is.EqMul.of.Ne\_0 |
-| mp   | Rat.Eq\_Div.of.EqMul.Ne\_0 |
-| mpr  | Rat.EqMul.of.Eq\_Div.Ne\_0 |
-| mp.comm | Rat.EqDiv.of.Eq\_Mul.Ne\_0 |
-| mpr.comm | Rat.Eq\_Mul.of.EqDiv.Ne\_0 |
-| comm.is | Rat.Eq\_Mul.is.EqDiv.of.Ne\_0 |
+| main | Rat.EqMul.is.Eq_Div.of.Ne_0 |
+| comm | Rat.Eq_Div.is.EqMul.of.Ne_0 |
+| mp   | Rat.Eq_Div.of.EqMul.Ne_0 |
+| mpr  | Rat.EqMul.of.Eq_Div.Ne_0 |
+| mp.comm | Rat.EqDiv.of.Eq_Mul.Ne_0 |
+| mpr.comm | Rat.Eq_Mul.of.EqDiv.Ne_0 |
+| comm.is | Rat.Eq_Mul.is.EqDiv.of.Ne_0 |
 -/
 @[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main

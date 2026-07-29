@@ -973,7 +973,7 @@ function MarkdownIUnderscore(...args) {
 MarkdownIUnderscore.base = MarkdownI;
 MarkdownIUnderscore.char = '_';
 MarkdownIUnderscore.regex_skip = MarkdownI.regex_skip;
-MarkdownIUnderscore.regex_text = MarkdownIUnderscore.regex_span = /_(?![ \n\t])([^_]*)$/d;
+MarkdownIUnderscore.regex_text = MarkdownIUnderscore.regex_span = /(?<!\w)_(?![ \n\t])([^_]*)$/d;
 MarkdownIUnderscore.try_pattern = MarkdownI.try_pattern;
 
 class MarkdownB extends MarkdownUnary {

@@ -6,9 +6,9 @@ the hypotheses are arranged in the constructor order of division a / b
 
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.Div.ne.Zero.of.Ne\_0.Ne\_0 |
-| mt | Rat.Eq\_0.of.Ne\_0.Div.eq.Zero |
-| mt 1 | Rat.Eq\_0.of.Div.eq.Zero.Ne\_0 |
+| main | Rat.Div.ne.Zero.of.Ne_0.Ne_0 |
+| mt | Rat.Eq_0.of.Ne_0.Div.eq.Zero |
+| mt 1 | Rat.Eq_0.of.Div.eq.Zero.Ne_0 |
 -/
 @[main, mt, mt 1]
 private lemma main

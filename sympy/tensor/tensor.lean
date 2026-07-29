@@ -547,9 +547,6 @@ instance [DivInvMonoid α] : DivInvMonoid (Tensor α s) where
     rw [DataInv.eq.InvData]
     rw [DivInvMonoid.div_eq_mul_inv]
 
-instance [NNRatCast α] : NNRatCast (Tensor α s) where
-  nnratCast q := ⟨NNRatCast.nnratCast q⟩
-
 instance [NeZero s.prod] [Nontrivial α] : Nontrivial (Tensor α s) where
   exists_pair_ne := by
     let ⟨a, b, h_eq⟩ := Nontrivial.exists_pair_ne (α := List.Vector α s.prod)

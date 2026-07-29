@@ -8,9 +8,9 @@ import sympy.Basic
 | comm | Bool.AndBFnIte.is.AndBFn |
 | mp and | Bool.AndBFnIte.of.AndBFn |
 | mpr and | Bool.AndBFn.of.AndBFnIte |
-| mp.comm and | Bool.And\_BFnIte.of.And\_BFn |
-| mpr.comm and | Bool.And\_BFn.of.And\_BFnIte |
-| comm.is | Bool.And\_BFn.is.And\_BFnIte |
+| mp.comm and | Bool.And_BFnIte.of.And_BFn |
+| mpr.comm and | Bool.And_BFn.of.And_BFnIte |
+| comm.is | Bool.And_BFn.is.And_BFnIte |
 -/
 @[main, comm, mp and, mpr and, mp.comm and, mpr.comm and, comm.is]
 private lemma main

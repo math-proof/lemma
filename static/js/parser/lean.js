@@ -1606,12 +1606,6 @@ export class LeanArgs extends Lean {
         return i === 0 && j === mapped.length ? mapped : mapped.slice(i, j);
     }
 
-    /**
-     * @param {number} indent
-     * @param {number} newline_count
-     * @param {boolean} [functionCall]
-     * @returns {LeanCaret | undefined}
-     */
     push_args_indented(indent, newline_count, functionCall = true) {
         const end = this.args[this.args.length - 1];
         if (
@@ -1671,12 +1665,6 @@ export class LeanArgs extends Lean {
 export class LeanUnary extends LeanArgs {
     static input_priority = 47;
 
-    /**
-     * @param {Lean} arg
-     * @param {number} indent
-     * @param {number} level
-     * @param {import('./node.js').Node | null} [parent]
-     */
     constructor(arg, indent, level, parent = null) {
         super([], indent, level, parent);
         this.args = [arg];
@@ -8229,6 +8217,11 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
 }
 
 class LeanTacticBlock extends LeanUnary {
+    constructor(arg, indent, level, parent = null) {
+        super(arg, indent, level, parent);
+        arg.indent += 2;
+    }
+
     get command() {
         return '\\cdot';
     }
@@ -8987,6 +8980,7 @@ class Lean_let extends LeanSyntax {
     is_indented() {
         const parent = this.parent;
         if (parent instanceof LeanSequentialTacticCombinator) return this.indent > 0;
+        if (parent instanceof LeanTacticBlock) return this.indent > parent.indent;
         return true;
     }
 

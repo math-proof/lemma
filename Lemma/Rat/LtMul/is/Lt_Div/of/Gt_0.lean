@@ -9,13 +9,13 @@ open Rat Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.LtMul.is.Lt\_Div.of.Gt\_0 |
-| comm | Rat.Lt\_Div.is.LtMul.of.Gt\_0 |
-| mp   | Rat.Lt\_Div.of.LtMul.Gt\_0 |
-| mpr  | Rat.LtMul.of.Lt\_Div.Gt\_0 |
-| mp.comm | Rat.GtDiv.of.Gt\_Mul.Gt\_0 |
-| mpr.comm | Rat.Gt\_Mul.of.GtDiv.Gt\_0 |
-| comm.is | Rat.Gt\_Mul.is.GtDiv.of.Gt\_0 |
+| main | Rat.LtMul.is.Lt_Div.of.Gt_0 |
+| comm | Rat.Lt_Div.is.LtMul.of.Gt_0 |
+| mp   | Rat.Lt_Div.of.LtMul.Gt_0 |
+| mpr  | Rat.LtMul.of.Lt_Div.Gt_0 |
+| mp.comm | Rat.GtDiv.of.Gt_Mul.Gt_0 |
+| mpr.comm | Rat.Gt_Mul.of.GtDiv.Gt_0 |
+| comm.is | Rat.Gt_Mul.is.GtDiv.of.Gt_0 |
 -/
 @[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main

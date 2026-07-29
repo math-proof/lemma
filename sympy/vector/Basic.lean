@@ -131,6 +131,12 @@ instance [LT α] : LT (Vector α n) where
 instance (priority := low) [Coe α β] : Coe (Vector α n) (Vector β n) where
   coe v := v.map Coe.coe
 
+instance [NatCast α] : NatCast (Vector α n) where
+  natCast a := List.Vector.replicate n a
+
+instance [NNRatCast α] : NNRatCast (Vector α n) where
+  nnratCast q := List.Vector.replicate n (NNRatCast.nnratCast q)
+
 def transpose (xs : Vector (Vector α n) m) : Vector (Vector α m) n :=
   (range n).map fun j => (range m).map fun i => xs[i][j]
 

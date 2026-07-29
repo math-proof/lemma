@@ -6,11 +6,11 @@ open Nat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Nat.Eq\_0.is.EqSquare\_0 |
-| mp 6  | Nat.NeSquare\_0.of.Eq\_0 |
-| mpr | Nat.Eq\_0.of.EqSquare\_0 |
-| mp.mt 6  | Nat.Ne\_0.of.NeSquare\_0 |
-| mpr.mt | Nat.NeSquare\_0.of.Ne\_0 |
+| main | Nat.Eq_0.is.EqSquare_0 |
+| mp 6  | Nat.NeSquare_0.of.Eq_0 |
+| mpr | Nat.Eq_0.of.EqSquare_0 |
+| mp.mt 6  | Nat.Ne_0.of.NeSquare_0 |
+| mpr.mt | Nat.NeSquare_0.of.Ne_0 |
 -/
 @[main, mp 6, mpr, mp.mt 6, mpr.mt]
 private lemma main

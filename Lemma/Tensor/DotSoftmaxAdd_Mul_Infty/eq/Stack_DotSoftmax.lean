@@ -1,3 +1,8 @@
+import Lemma.Tensor.MapData.eq.DataMap
+import Lemma.Tensor.MapBandPart.eq.BandPartMap.of.EqUFn0'0
+import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
+import Lemma.Tensor.Eq1Coe1
+import Lemma.Tensor.GetMap.eq.MapGet
 import Lemma.Tensor.MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn
 import Lemma.Tensor.Le0Get.of.Ge_0
 import Lemma.Tensor.Le0BandPart
@@ -84,8 +89,20 @@ private lemma main
         apply Le0Get.of.Ge_0
         apply Le0BandPart
     .
-      dsimp [A', Ξ]
+      dsimp [A']
       rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
+      erw [GetMap.eq.MapGet.fin]
+      have hΞ : Ξ = (1 : Tensor ℝ [n, n]).band_part (l - 1) (u - 1) := by
+        simp [Ξ]
+        erw [Eq1Coe1]
+        rw [MapBandPart.eq.BandPartMap.of.EqUFn0'0]
+        rfl
+      rw [hΞ]
+      conv =>
+        pattern (map _ _).get _
+        erw [GetMap.eq.MapGet.fin]
+      erw [MulMapS.eq.MapMul.of.All_Eq_Mul (by aesop)]
+      rw [DataMap.eq.MapData]
       sorry
   have h_zi : z.get i ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
     simp

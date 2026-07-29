@@ -126,9 +126,6 @@ instance [MulZeroOneClass α] : MulZeroOneClass (Vector α n) where
   zero_mul
   mul_zero
 
-instance [NatCast α] : NatCast (Vector α n) where
-  natCast a := List.Vector.replicate n a
-
 instance [AddMonoidWithOne α] : AddMonoidWithOne (Vector α n) where
   natCast_zero := by
     simp [NatCast.natCast]
@@ -169,7 +166,6 @@ instance [Monoid α] : Monoid (Vector α n) where
   one_mul
   mul_one
 
-
 instance [SubNegMonoid α] : SubNegMonoid (Vector α n) where
   zsmul n v := v.map (fun x => n • x)
   zsmul_zero' x := by
@@ -204,9 +200,6 @@ instance [DivInvMonoid α] : DivInvMonoid (Vector α n) where
     rw [GetMul.eq.MulGetS.fin]
     rw [GetInv.eq.InvGet.fin]
     rw [DivInvMonoid.div_eq_mul_inv]
-
-instance [NNRatCast α] : NNRatCast (Vector α n) where
-  nnratCast q := List.Vector.replicate n (NNRatCast.nnratCast q)
 
 instance [NeZero n] [Nontrivial α] : Nontrivial (Vector α n) where
   exists_pair_ne := by

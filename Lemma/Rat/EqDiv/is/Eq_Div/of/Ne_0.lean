@@ -5,10 +5,10 @@ open Rat
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Rat.EqDiv.is.Eq\_Div.of.Ne\_0 |
-| comm | Rat.Eq\_Div.is.EqDiv.of.Ne\_0 |
-| mp   | Rat.Eq\_Div.of.EqDiv.Ne\_0 |
-| mpr  | Rat.EqDiv.of.Eq\_Div.Ne\_0 |
+| main | Rat.EqDiv.is.Eq_Div.of.Ne_0 |
+| comm | Rat.Eq_Div.is.EqDiv.of.Ne_0 |
+| mp   | Rat.Eq_Div.of.EqDiv.Ne_0 |
+| mpr  | Rat.EqDiv.of.Eq_Div.Ne_0 |
 -/
 @[main, comm, mp, mpr]
 private lemma main
