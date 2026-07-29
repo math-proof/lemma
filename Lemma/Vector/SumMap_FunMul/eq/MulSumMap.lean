@@ -1,14 +1,15 @@
-import Lemma.Vector.SumMapVal.eq.SumMap
 import Lemma.List.SumMap_FunMul.eq.MulSumMap
+import Lemma.Vector.SumMapVal.eq.SumMap
 open List Vector
 
 
 @[main]
 private lemma main
   [Add β] [MulZeroClass β] [RightDistribClass β]
-  {s : List.Vector α n}
-  {f : α → β}
-  {const : β} :
+-- given
+  (s : List.Vector α n)
+  (f : α → β)
+  (const : β) :
 -- imply
   (s.map fun x => (f x) * const).sum = (s.map f).sum * const := by
 -- proof
@@ -19,3 +20,4 @@ private lemma main
 
 
 -- created on 2025-10-03
+-- updated on 2026-07-29

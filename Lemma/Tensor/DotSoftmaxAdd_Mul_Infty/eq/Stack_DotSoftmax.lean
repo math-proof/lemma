@@ -1,3 +1,6 @@
+import Lemma.Tensor.GtSumData_0.is.GtSum_0
+import Lemma.Hyperreal.Eq_0.of.Infinitesimal
+import Lemma.Vector.MapSum.eq.SumMap.of.All_EqUFnAdd
 import Lemma.Tensor.MapData.eq.DataMap
 import Lemma.Tensor.MapBandPart.eq.BandPartMap.of.EqUFn0'0
 import Lemma.Tensor.MapMul.eq.MulMapS.of.All_Eq_Mul
@@ -23,7 +26,7 @@ import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 import Lemma.Tensor.XEqGetS.of.XEq.GtLength
 import sympy.functions.elementary.exponential
-open Tensor
+open Tensor Hyperreal
 set_option maxHeartbeats 1000000
 
 
@@ -54,18 +57,18 @@ private lemma main
   rw [← h_a'] at h_Ξ ⊢
   denote h_z : z = a'.softmax @ V'
   rw [← h_z]
-  apply XEq.of.All_XEqGetS.fin
+  apply @Tensor.XEq.of.All_XEqGetS.fin
   intro i
   have h_Ξᵢ := XEqGetS.of.XEq.GtLength.fin (i := i) (by grind) h_Ξ
   simp at h_Ξᵢ
-  rw [GetMul.eq.MulGetS.fin] at h_Ξᵢ
+  rw [@Tensor.GetMul.eq.MulGetS.fin] at h_Ξᵢ
   have h_zi := Get.of.Eq.fin h_z i
   simp at h_zi
   rw [Softmax.eq.DivExp_KeepdimSumExp] at h_zi
   have := GetDot.eq.DotGet.fin (exp a' / ((exp a').sum 1).keepdim) V' i
   simp at this
   have h_zi := h_zi.trans this
-  conv_rhs at h_zi => erw [GetDiv.eq.DivGetS.fin]
+  conv_rhs at h_zi => erw [@Tensor.GetDiv.eq.DivGetS.fin]
   simp at h_zi
   have := GetKeepdim.eq.KeepdimCast_Get.of.GtGet_0.Gt_0.GtLength
     (i := i)
@@ -80,11 +83,11 @@ private lemma main
     simp
     apply XEqDivS_Sum_0.of.XEq.NotInfinitesimalSum.Ge_0 _ _ h_Ξᵢ
     .
-      apply Le0Mul.of.Ge_0.Ge_0
+      apply @Tensor.Le0Mul.of.Ge_0.Ge_0
       .
         erw [GetExp.eq.ExpGet.fin (i := ⟨i, by grind⟩)]
         simp
-        apply GeExp_0
+        apply @Tensor.GeExp_0
       .
         apply Le0Get.of.Ge_0
         apply Le0BandPart
@@ -103,6 +106,10 @@ private lemma main
         erw [GetMap.eq.MapGet.fin]
       erw [MulMapS.eq.MapMul.of.All_Eq_Mul (by aesop)]
       rw [DataMap.eq.MapData]
+      erw [Vector.SumMap.eq.MapSum.of.All_EqUFnAdd (by aesop)]
+      apply Hyperreal.NotInfinitesimal.of.Ne_0
+      apply Nat.Ne.of.Gt
+      apply GtSumData_0.of.GtSum_0
       sorry
   have h_zi : z.get i ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
     simp

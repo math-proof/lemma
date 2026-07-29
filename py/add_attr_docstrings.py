@@ -164,7 +164,8 @@ def lemma_names_from_docstring(doc: str) -> list[str]:
 
 
 def build_module(lean_file: Path) -> None:
-    cmd = ["lake", "env", "lean", rel_path_for(lean_file)]
+    module = module_name_for(lean_file)
+    cmd = ["lake", "build", module]
     result = subprocess.run(
         cmd,
         cwd=ROOT,
@@ -174,7 +175,7 @@ def build_module(lean_file: Path) -> None:
     )
     if result.returncode != 0:
         raise RuntimeError(
-            f"failed to build {lean_file}:\n{result.stdout}\n{result.stderr}"
+            f"failed to build {module}:\n{result.stdout}\n{result.stderr}"
         )
 
 
@@ -209,7 +210,8 @@ def check_lemma_names(module: str, names: list[str]) -> list[str]:
             check_path.unlink(missing_ok=True)
 
         if result.returncode != 0:
-            failures.append(name)
+            detail = (result.stdout + result.stderr).strip()
+            failures.append(f"{name}: {detail}" if detail else name)
 
     return failures
 
