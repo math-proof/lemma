@@ -12,7 +12,7 @@ private lemma main
 -- imply
   exp (cast (congrArg (Tensor α) h) X) ≃ exp X := by
 -- proof
-  apply SEq.of.Eq_Cast
+  apply SEq.of.Eq_Cast.Eq
   .
     grind
   .

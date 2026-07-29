@@ -28,10 +28,10 @@ private lemma main
   let X' : Tensor α (batch_size ++ [m, n]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) X
   let X' : Tensor α (batch_size ++ [m, n']) := cast (by simp) (X'.resize ⟨batch_size.length + 1, by grind⟩ n')
   let Y' : Tensor α (batch_size' ++ [n', k]) := cast (by rwa [EqAppendTake__ListGet.of.GeLength_2]) Y
-  X.einsum Y ≃ Tensor.tensordot X' Y' := by
+  X.einsum Y ≃ X'.tensordot Y' := by
 -- proof
-  unfold Tensor.einsum
-  apply SEq.of.Eq_Cast
+  unfold einsum
+  apply SEq.of.Eq_Cast.Eq
   ·
     split_ifs with h h h h h
     ·

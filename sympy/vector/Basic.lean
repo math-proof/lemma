@@ -128,6 +128,9 @@ instance [LE α] : LE (Vector α n) where
 instance [LT α] : LT (Vector α n) where
   lt a b := ∀ (i : Fin n), a[i] < b[i]
 
+instance (priority := low) [Coe α β] : Coe (Vector α n) (Vector β n) where
+  coe v := v.map Coe.coe
+
 def transpose (xs : Vector (Vector α n) m) : Vector (Vector α m) n :=
   (range n).map fun j => (range m).map fun i => xs[i][j]
 

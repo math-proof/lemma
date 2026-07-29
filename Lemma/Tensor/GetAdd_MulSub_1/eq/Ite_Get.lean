@@ -1,3 +1,4 @@
+import Lemma.Tensor.Coe.eq.Map
 import Lemma.Tensor.Eq_TensorReplicate
 import Lemma.Int.Sub.eq.Zero.is.Eq
 import Lemma.Hyperreal.XEq.of.Eq
@@ -47,10 +48,11 @@ private lemma main
   (A + (mask - 1) * ∞)[i, j] ≈ if p i j then
     A[i, j]
   else
-    (- ∞ : Tensor ℝ* []) := by
+    (-∞ : Tensor ℝ* []) := by
 -- proof
   intro mask
   simp [GetElem.getElem]
+  erw [@Tensor.Coe.eq.Map]
   rw [@Tensor.GetAdd.eq.AddGetS.fin]
   erw [@Tensor.GetAdd.eq.AddGetS.fin]
   have := GetMul.eq.MulGet.of.GtGet_0.GtLength_0.fin (by grind) (by grind) (mask - 1) ∞ (i := i)
@@ -86,12 +88,8 @@ private lemma main
     simp
     rfl
   ·
-    have := GetMap.eq.MapGet A Hyperreal.ofReal (i := ⟨i, by simp [Tensor.length]⟩)
-    simp at this
-    rw [this]
-    have := GetMap.eq.MapGet (A.get i) Hyperreal.ofReal (i := ⟨j, by simp [Tensor.length]⟩)
-    simp at this
-    rw [this]
+    erw [GetMap.eq.MapGet.fin A Hyperreal.ofReal (i := ⟨i, by simp [Tensor.length]⟩)]
+    erw [GetMap.eq.MapGet.fin (A.get i) Hyperreal.ofReal (i := ⟨j, by simp [Tensor.length]⟩)]
     simp [Tensor.map]
     apply XEq.of.XEqDataS
     erw [DataAdd.eq.AddDataS]

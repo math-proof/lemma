@@ -32,8 +32,8 @@ private lemma main
   let X' := X'.reshape ((batch_size ++ [1, n'])) (by simp)
   X.einsum Y ≃ (X'.bmm Y').select ⟨s.length - 2, by simp [batch_size]⟩ ⟨0, by grind⟩ := by
 -- proof
-  unfold Tensor.einsum
-  apply SEq.of.Eq_Cast
+  unfold einsum
+  apply SEq.of.Eq_Cast.Eq
   ·
     simp
     split_ifs with h h

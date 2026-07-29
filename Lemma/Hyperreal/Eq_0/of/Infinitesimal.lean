@@ -3,6 +3,12 @@ import Lemma.Hyperreal.EqSt_0.of.Infinitesimal
 open Hyperreal
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Hyperreal.Eq_0.of.Infinitesimal |
+| mt   | Hyperreal.NotInfinitesimal.of.Ne_0 |
+-/
 @[main, mt]
 private lemma main
   {r : ℝ}

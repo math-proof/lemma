@@ -11,7 +11,7 @@ private lemma main
 -- imply
   (A ++ B).data ≃ A.data ++ B.data := by
 -- proof
-  apply SEq.of.Eq_Cast
+  apply SEq.of.Eq_Cast.Eq
   .
     simp [HAppend.hAppend]
   .

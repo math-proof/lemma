@@ -14,7 +14,7 @@ private lemma main
 -- imply
   ((List.Vector.range 1).map fun i => u i).flatten ≃ u 0 := by
 -- proof
-  apply SEq.of.Eq_Cast (h := by simp)
+  apply SEq.of.Eq_Cast.Eq (h := by simp)
   apply EqFlattenMapRange.of.All_EqGetUnflatten
   intro t
   have h_t := t.isLt

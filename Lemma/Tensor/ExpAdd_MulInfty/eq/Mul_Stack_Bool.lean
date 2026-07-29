@@ -1,3 +1,4 @@
+import Lemma.Tensor.Coe.eq.Map
 import Lemma.Int.Sub.eq.Add_Neg
 import Lemma.Tensor.EqHeadData
 import Lemma.Vector.MulSub.eq.SubMulS
@@ -35,7 +36,7 @@ private lemma main
   Exp.exp (A + (Ξ - 1) * ∞) ≈ exp A * Ξ := by
 -- proof
   intro Ξ A'
-  have h_A : A' = map Hyperreal.ofReal A := rfl
+  have h_A : A' = map Hyperreal.ofReal A := by rfl
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp)
   intro i
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp)

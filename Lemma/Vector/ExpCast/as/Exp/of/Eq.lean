@@ -12,7 +12,7 @@ private lemma main
 -- imply
   exp (cast (congrArg (List.Vector α) h) x) ≃ exp x := by
 -- proof
-  apply SEq.of.Eq_Cast
+  apply SEq.of.Eq_Cast.Eq
   .
     grind
   .

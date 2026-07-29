@@ -1,3 +1,4 @@
+import Lemma.Tensor.MapExp.eq.ExpMap.of.All_EqUFnExp_ExpUFn
 import Lemma.Tensor.Le0Get.of.Ge_0
 import Lemma.Tensor.Le0BandPart
 import Lemma.Tensor.Le0Stack.of.All_Ge_0
@@ -39,10 +40,11 @@ private lemma main
   denote h_Ξ_def : Ξ = _
   denote h_A' : A' = _
   denote h_V' : V' = _
-  have h_band_part := BandPart.eq.Stack_BoolIn_Icc n (l - 1) (u - 1) (α := ℝ*)
+  have h_band_part := BandPart.eq.Stack_BoolIn_Icc n n (l - 1) (u - 1) (α := ℝ*)
   have h_Ξ := ExpAdd_MulInfty.eq.Mul_Stack_Bool (fun i j => ((j - i : ℤ) ∈ Icc (-(l - 1 : ℕ) : ℤ) (u - 1 : ℕ) : Bool)) A
   erw [← h_band_part] at h_Ξ
-  simp [← h_A', ← h_Ξ_def] at h_Ξ
+  rw [← h_A'] at h_Ξ
+  simp [← h_Ξ_def] at h_Ξ
   denote h_a' : a' = (A' + (Ξ - 1) * ∞)
   rw [← h_a'] at h_Ξ ⊢
   denote h_z : z = a'.softmax @ V'
@@ -82,6 +84,8 @@ private lemma main
         apply Le0Get.of.Ge_0
         apply Le0BandPart
     .
+      dsimp [A', Ξ]
+      rw [ExpMap.eq.MapExp.of.All_EqUFnExp_ExpUFn (by aesop)]
       sorry
   have h_zi : z.get i ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
     simp

@@ -76,7 +76,10 @@ def List.decomposeOf (list : List String) (parity : List Bool) (map : List Strin
     let ⟨first, ofPart⟩ := list.splitAt i
     let ofPart :=
       if offset == 0 then
-        ofPart[0]! :: (ofPart.tail.parseInfixSegments.zipWith (fun s b => if b then s.transformPrefix else s) parity).flatten
+        let segments := ofPart.tail.parseInfixSegments
+        let ⟨transformed, rest⟩ := segments.splitAt parity.length
+        let transformed := transformed.zip parity |>.map fun ⟨s, b⟩ => if b then s.transformPrefix else s
+        ofPart[0]! :: (transformed ++ rest).flatten
       else
         ofPart.drop offset
     first.head! :: map first.tail ++ ofPart

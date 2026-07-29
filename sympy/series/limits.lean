@@ -49,12 +49,12 @@ def tendsToLt.unexpand : PrettyPrinter.Unexpander
     throw ()
 
 /-- `x → +∞` — x is positive infinite. -/
-syntax (name := tendsToPosInf) term:26 " → " "+∞" : term
+syntax (name := tendsToPosInf) term:26 " → " "+" "∞" : term
 macro_rules (kind := tendsToPosInf)
   | `($x → +∞) => `(0 < $x ∧ ArchimedeanClass.mk $x < 0)
 
 /-- `x → -∞` — x is negative infinite. -/
-syntax (name := tendsToNegInf) term:26 " → " "-∞" : term
+syntax (name := tendsToNegInf) term:26 " → " "-" "∞" : term
 macro_rules (kind := tendsToNegInf)
   | `($x → -∞) => `($x < 0 ∧ ArchimedeanClass.mk $x < 0)
 

@@ -6,7 +6,7 @@ import Lemma.Vector.GetMap.eq.UFnGet
 open Tensor Vector List
 
 
-@[main]
+@[main, fin, comm, fin.comm]
 private lemma main
   {β : Type*}
 -- given
@@ -14,7 +14,7 @@ private lemma main
   (f : α → β)
   (i : Fin X.length) :
 -- imply
-  (X.map f).get ⟨i, by grind⟩ = (X.get i).map f := by
+  (X.map f)[i]'(by grind) = X[i].map f := by
 -- proof
   match s with
   | [] =>
@@ -24,7 +24,7 @@ private lemma main
   | n :: s =>
     unfold Tensor.map
     apply Eq.of.EqDataS
-    simp
+    simp [GetElem.getElem]
     repeat rw [DataGet.eq.GetUnflattenData.fin]
     simp
     ext j
@@ -33,7 +33,7 @@ private lemma main
     erw [GetMap.eq.UFnGet]
     erw [GetMap.eq.UFnGet]
     congr 1
-    exact (GetUnflatten.eq.Get_AddMul.fin (v := X.data) (i := ⟨i, by grind⟩) j).symm
+    apply Get_AddMul.eq.GetUnflatten.fin
 
 
 -- created on 2025-12-23

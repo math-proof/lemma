@@ -14,7 +14,7 @@ private lemma main
 -- imply
   (X.repeat d n).data ≃ ((X.data.splitAt d).map (·.repeat n)).flatten := by
 -- proof
-  apply SEq.of.Eq_Cast
+  apply SEq.of.Eq_Cast.Eq
   simp [Tensor.repeat]
   simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength d.isLt]
 

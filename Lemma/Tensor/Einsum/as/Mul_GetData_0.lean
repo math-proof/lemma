@@ -21,15 +21,15 @@ private lemma main
 -- imply
   X.einsum Y ≃ X * Y.data[0] := by
 -- proof
-  apply SEq.of.Eq_Cast
+  apply SEq.of.Eq_Cast.Eq
   .
-    unfold Tensor.einsum
+    unfold einsum
     simp
     split_ifs with h_s
     ·
       apply Cast.of.SEq.Eq
       .
-        simp [Tensor.matmul_shape]
+        simp [matmul_shape]
       .
         subst h_s
         apply SEq.of.Eq
@@ -45,7 +45,7 @@ private lemma main
     ·
       simp
   .
-    simp [Tensor.matmul_shape]
+    simp [matmul_shape]
 
 
 -- created on 2026-01-06

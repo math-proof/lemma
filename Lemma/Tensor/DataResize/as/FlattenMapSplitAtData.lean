@@ -15,7 +15,7 @@ private lemma main
 -- imply
   (X.resize d n).data ≃ ((X.data.splitAt d).map (·.resize (n * (s.drop d.succ).prod))).flatten := by
 -- proof
-  apply SEq.of.Eq_Cast
+  apply SEq.of.Eq_Cast.Eq
   simp [Tensor.resize]
   simp [List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength d.isLt]
 

@@ -86,9 +86,6 @@ instance [One α] : One (Tensor α s) := ⟨⟨One.one⟩⟩
 instance [AddMonoidWithOne α] [CharZero α] : NatCast (Tensor α []) where
   natCast n := ⟨[n], by simp⟩
 
-instance : Coe α (Tensor α []) where
-  coe x := ⟨[x], by simp⟩
-
 instance [Add α] : Add (Tensor α s) where
   add A B := ⟨A.data + B.data⟩
 
@@ -362,8 +359,11 @@ def Tensor.map (f : α → β) (X : Tensor α s) : Tensor β s :=
 def Tensor.map₂ (f : α → β → γ) (X : Tensor α s) (Y : Tensor β s) : Tensor γ s :=
   ⟨X.data.map₂ f Y.data⟩
 
+instance : Coe α (Tensor α []) where
+  coe x := ⟨[x], by simp⟩
+
 instance [Coe α β] : Coe (Tensor α s) (Tensor β s) where
-  coe X := X.map (fun a => Coe.coe a)
+  coe X := X.map Coe.coe
 
 def Tensor.broadcast_shape (s : List ℕ) (s' : List ℕ) : List ℕ :=
   let ⟨batch_size, s, s'⟩ : List ℕ × List ℕ × List ℕ :=

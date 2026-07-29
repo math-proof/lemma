@@ -14,7 +14,7 @@ private lemma main
   let b : List.Vector (List.Vector α (n * s.prod)) b_z.prod := cast (by simp) (B.data.splitAt b_z.length)
   (A ++ B).data ≃ (List.Vector.map₂ HAppend.hAppend a b).flatten := by
 -- proof
-  apply SEq.of.Eq_Cast
+  apply SEq.of.Eq_Cast.Eq
   .
     simp [HAppend.hAppend]
   .
