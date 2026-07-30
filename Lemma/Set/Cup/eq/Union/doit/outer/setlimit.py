@@ -24,19 +24,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Cup.doit.outer.setlimit)
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Set.Union.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Equal(Cup[j:f(i), i:{c}](x[i, j]), Cup[j:f(c)](x[c, j]), plausible=True)
 
     Eq << Eq[-1].this.lhs.apply(Set.Cup.doit.outer.setlimit)
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Set.Union.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Equal(Cup[j:f(i), i:{d}](x[i, j]), Cup[j:f(d)](x[d, j]), plausible=True)
 
     Eq << Eq[-1].this.lhs.apply(Set.Cup.doit.outer.setlimit)
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Set.Union.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Set.Eq_Empty.of.Subset.apply(Eq[-1])
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq[0], Eq[-1])
+    Eq << Set.Union.of.Eq.Eq.apply(Eq[0], Eq[-1])
     Eq << Eq[-1].this.lhs.apply(Set.Union.eq.Icc)
 
 

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq.D_def = D.this.definition
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq.C_def, Eq.D_def)
+    Eq << Set.Union.of.Eq.Eq.apply(Eq.C_def, Eq.D_def)
 
     Eq << Set.EqCard.of.Eq.apply(Eq[-1])
 

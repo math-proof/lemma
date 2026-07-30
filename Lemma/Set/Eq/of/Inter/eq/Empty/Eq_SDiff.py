@@ -16,7 +16,7 @@ def prove(Eq):
     A, B, C = Symbol(etype=dtype.integer)
     Eq << apply(Equal(Intersection(A, B), A.etype.emptySet), Equal(A - B, C))
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq[0], Eq[1])
+    Eq << Set.Union.of.Eq.Eq.apply(Eq[0], Eq[1])
 
 
 if __name__ == '__main__':

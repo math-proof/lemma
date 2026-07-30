@@ -23,19 +23,19 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.simplify()
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Set.Union.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Equal(Cup[i:{c}](x[i]), x[c], plausible=True)
 
     Eq << Eq[-1].this.lhs.simplify()
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Set.Union.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
     Eq << Equal(Cup[i:{d}](x[i]), x[d], plausible=True)
 
     Eq << Eq[-1].this.lhs.simplify()
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq[-2], Eq[-1])
+    Eq << Set.Union.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

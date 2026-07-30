@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).apply(Nat.Ge_Add_1.of.Gt)
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq.eq_complement, Eq.is_empty)
+    Eq << Set.Union.of.Eq.Eq.apply(Eq.eq_complement, Eq.is_empty)
 
 
 

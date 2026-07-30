@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << apply(Equal(g(b), f(b)), Equal(Cup[k:a:b](g(k)), Cup[k:a:b](f(k))))
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq[0], Eq[1])
+    Eq << Set.Union.of.Eq.Eq.apply(Eq[0], Eq[1])
 
 #     Eq << Eq[2].this.lhs.bisect({b})
 

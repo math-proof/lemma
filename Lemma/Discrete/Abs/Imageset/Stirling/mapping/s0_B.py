@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq.x_union_s0, Eq[-1].reversed, simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Set.EqUnionS.of.Eq.Eq)
+    Eq << Eq[-1].this.expr.apply(Set.Union.of.Eq.Eq)
 
     Eq << Eq[-1].this().expr.lhs.simplify()
 

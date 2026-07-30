@@ -21,7 +21,7 @@ def prove(Eq):
     Eq.A_definition = A.this.definition
     Eq.B_definition = B.this.definition
 
-    Eq << Set.EqUnionS.of.Eq.Eq.apply(Eq.A_definition, Eq.B_definition)
+    Eq << Set.Union.of.Eq.Eq.apply(Eq.A_definition, Eq.B_definition)
 
     Eq << Eq[0].this.rhs.subs(Eq.A_definition.reversed, Eq.B_definition.reversed)
 
