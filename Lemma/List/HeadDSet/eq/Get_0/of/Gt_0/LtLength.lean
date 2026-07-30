@@ -7,15 +7,15 @@ open List Nat
 
 @[main]
 private lemma main
-  {x : List α}
+  {s : List α}
 -- given
-  (h_x : x.length > 0)
+  (h_s : s.length > 0)
   (h : d > 0)
   (a : α)
   (default : α):
 -- imply
-  have : (x.set d a).length > 0 := by rwa [LengthSet.eq.Length]
-  (x.set d a).headD default = x[0] := by
+  have : (s.set d a).length > 0 := by rwa [LengthSet.eq.Length]
+  (s.set d a).headD default = s[0] := by
 -- proof
   intro h_length
   rw [HeadD.eq.Get_0.of.GtLength_0 h_length]
