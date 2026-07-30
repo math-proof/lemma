@@ -1,6 +1,6 @@
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Tensor.Repeat.as.Resize.of.GtLength
-open Bool Tensor List Nat
+open Bool Tensor
 
 
 @[main]

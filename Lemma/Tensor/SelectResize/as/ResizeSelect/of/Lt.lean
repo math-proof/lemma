@@ -109,7 +109,7 @@ private lemma main
         rw [GetGetSlice.eq.Get.of.GtGet.GtLength (by grind) (by grind)]
         repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         simp [GetSet.eq.Get.of.Lt.GtLength h_d h_k]
-        simp [DataSelect.eq.Cast_FlattenGetSliceSplitAtData]
+        rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
         simp [DataResize.eq.Cast_FlattenMapSplitAtData]
         have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
         rw [List.ProdTakeMapCast.eq.ProdTake] at h_length_slice
@@ -146,15 +146,25 @@ private lemma main
             rw [h_prod_take_d] at h_q
             have h_take : (s.take d).take k = s.take k := by grind
             rw [h_take] at h_q
-            rw [h_prod_split, h_cons]
-            grind
+            rcases Nat.eq_zero_or_pos s[k] with hsk | hsk
+            · have htp : (s.take d).prod = 0 := by
+                rw [h_prod_split, h_cons, hsk, Nat.mul_eq_zero]
+              simp [htp, Nat.mul_eq_zero] at h_q ⊢
+              omega
+            · have h_rhs :
+                (s.take k).prod * (n * ((s.take d).drop (k + 1)).prod) ≤ n * (s.take d).prod := by
+                rw [← Nat.mul_assoc, h_prod_split, h_cons, Nat.mul_comm (a := n)]
+                apply Nat.mul_le_mul_left
+                exact Nat.succ_le_of_lt hsk
+              exact Nat.lt_of_lt_of_le h_q h_rhs
           let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
           let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
           have h_lt : ↑q' * ((s.eraseIdx d).drop k).prod + ↑r' % ((s.eraseIdx d).drop k).prod < (⟨↑i, ↑(s.take (d + 1)).prod, s[d.val]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
             rw [h_length_slice]
             rw [Prod.eq.MulProdS (s.eraseIdx d) k]
             apply AddMul.lt.Mul.of.Lt.Lt q'.isLt
-            exact LtMod.of.Gt_0 (by grind)
+            apply LtMod.of.Gt_0
+            grind
           let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
           have h_qₑ := qₑ.isLt
           let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
