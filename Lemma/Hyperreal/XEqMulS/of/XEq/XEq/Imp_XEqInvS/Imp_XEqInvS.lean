@@ -1,18 +1,31 @@
+import Lemma.Rat.Eq_0.is.EqInv_0
+import Lemma.Hyperreal.Infinitesimal0
 import Lemma.Hyperreal.EqSt.of.InfinitesimalSub
 import Lemma.Hyperreal.EqSt_0.of.Infinite
+import Lemma.Hyperreal.Eq_0.of.Infinitesimal
+import Lemma.Hyperreal.Infinite.is.Infinite.of.XEq
+import Lemma.Hyperreal.Infinite.is.InfinitesimalInv
 import Lemma.Hyperreal.InfiniteMul.of.Infinite.Infinite
 import Lemma.Hyperreal.InfiniteMul.of.Infinite.NotInfinitesimal
+import Lemma.Hyperreal.Infinitesimal.is.InfiniteInv
+import Lemma.Hyperreal.Infinitesimal.is.Infinitesimal.of.XEq
 import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalMul.NotInfinitesimal
 import Lemma.Hyperreal.InfinitesimalMul.of.Infinitesimal.Infinitesimal
+import Lemma.Hyperreal.InfinitesimalMul.of.NotInfinite.Infinitesimal
 import Lemma.Hyperreal.InfinitesimalMul.of.Infinitesimal.NotInfinite
+import Lemma.Hyperreal.InfiniteDiv.of.Infinite.NotInfinite
 import Lemma.Hyperreal.InfinitesimalSub.of.EqSt.NotInfinite
 import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
 import Lemma.Hyperreal.NotInfinite.of.Infinitesimal
 import Lemma.Hyperreal.NotInfiniteMul.of.NotInfinite.NotInfinite
+import Lemma.Hyperreal.StDiv.eq.InvStInv
 import Lemma.Hyperreal.StMul.eq.MulStS.of.NotInfinite.NotInfinite
 import Lemma.Hyperreal.XEq.is.OrAndS
+import Lemma.Hyperreal.XEqInvS.of.XEq.NotInfinitesimal
+import Lemma.Hyperreal.XEqMulS.of.XEq.XEq.XEqInvS.Infinite
 import Lemma.Nat.Mul.eq.Zero.is.OrEqS_0
-open Hyperreal Nat
+open Hyperreal Nat Rat
+set_option maxHeartbeats 400000
 
 
 @[main]
@@ -34,11 +47,48 @@ private lemma main
       left
       exact ⟨InfinitesimalMul.of.Infinitesimal.Infinitesimal ha hx, InfinitesimalMul.of.Infinitesimal.Infinitesimal hb hy⟩
     ·
-      grind
+      if h_y_infty : y → ∞ then
+        have h := XEqMulS.of.XEq.XEq.XEqInvS.Infinite h_y_infty (h_y h_y_infty) h₁ h₀
+        apply OrAndS.of.XEq (a := a * x) (b := b * y)
+        rwa [Mul.comm x a, Mul.comm y b] at h
+      else
+        apply XEq.of.OrAndS
+        left
+        have h_x_ninfty : ¬x → ∞ := by
+          intro h_x_infty
+          have hy0 := Ne_0.of.NotInfinitesimal hy
+          have : NeZero y := ⟨hy0⟩
+          have h_xy_infty : (x / y) → ∞ :=
+            InfiniteDiv.of.Infinite.NotInfinite h_x_infty h_y_infty
+          have h_st0 := EqSt_0.of.Infinite h_xy_infty
+          have h_st1 := EqSt.of.InfinitesimalSub hxy
+          linarith
+        have h_y_ninfty : ¬y → ∞ := h_y_infty
+        constructor
+        · exact InfinitesimalMul.of.Infinitesimal.NotInfinite ha h_x_ninfty
+        · exact InfinitesimalMul.of.Infinitesimal.NotInfinite hb h_y_ninfty
   ·
     obtain ⟨hx, hy⟩ | ⟨hxy, hy⟩ := OrAndS.of.XEq h₁
     ·
-      grind
+      if h_b_infty : b → ∞ then
+        apply OrAndS.of.XEq (a := a * x) (b := b * y)
+        apply XEqMulS.of.XEq.XEq.XEqInvS.Infinite h_b_infty (h_b h_b_infty) h₀ h₁
+      else
+        apply XEq.of.OrAndS
+        left
+        have h_a_ninfty : ¬a → ∞ := by
+          intro h_a_infty
+          have hb0 := Ne_0.of.NotInfinitesimal hb
+          have : NeZero b := ⟨hb0⟩
+          have h_ab_infty : (a / b) → ∞ :=
+            InfiniteDiv.of.Infinite.NotInfinite h_a_infty h_b_infty
+          have h_st0 := EqSt_0.of.Infinite h_ab_infty
+          have h_st1 := EqSt.of.InfinitesimalSub hab
+          linarith
+        have h_b_ninfty : ¬b → ∞ := h_b_infty
+        constructor
+        · exact InfinitesimalMul.of.NotInfinite.Infinitesimal h_a_ninfty hx
+        · exact InfinitesimalMul.of.NotInfinite.Infinitesimal h_b_ninfty hy
     ·
       have h_st_ab := EqSt.of.InfinitesimalSub hab
       have h_st_xy := EqSt.of.InfinitesimalSub hxy

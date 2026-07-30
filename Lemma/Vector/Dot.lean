@@ -1,5 +1,6 @@
+import Lemma.Nat.Mul
 import Lemma.Vector.Dot.eq.SumMul
-open Vector
+open Nat Vector
 
 
 @[main]
@@ -10,8 +11,7 @@ private lemma Comm
 -- imply
   a @ b = b @ a := by
 -- proof
-  rw [Dot.eq.SumMul, Dot.eq.SumMul]
-  exact congrArg (·.sum) (Mul.comm a b)
+  rw [Dot.eq.SumMul, Dot.eq.SumMul, Mul.comm]
 
 
 -- created on 2026-07-29

@@ -5,7 +5,8 @@ import Lemma.Hyperreal.InfinitesimalMul.of.Infinitesimal.NotInfinite
 import Lemma.Hyperreal.Infinitesimal.of.InfinitesimalMul.NotInfinitesimal
 import Lemma.Hyperreal.Ne_0.of.NotInfinitesimal
 import Lemma.Hyperreal.XEq.is.OrAndS
-import Lemma.Hyperreal.XEqMulS.of.XEq.XEq.ImpOrInfinitesimalS
+import Lemma.Hyperreal.XEqInvS.of.XEq.NotInfinitesimal
+import Lemma.Hyperreal.XEqMulS.of.XEq.XEq.Imp_XEqInvS.Imp_XEqInvS
 import Lemma.Rat.Div.eq.Mul_Inv
 open Hyperreal Rat
 
@@ -34,11 +35,10 @@ private lemma main
     have hb0 := Ne_0.of.NotInfinitesimal hb
     have hx0 := Ne_0.of.NotInfinitesimal h_not_x
     have hy0 := Ne_0.of.NotInfinitesimal h_not_y
-    have h_not_or_x : ¬((b → 0) ∨ x → 0) := fun h =>
-      match h with
-      | Or.inl hb' => hb hb'
-      | Or.inr hx => h_not_x hx
-    have h_cross := XEqMulS.of.XEq.XEq.ImpOrInfinitesimalS (by grind) h₀ h₁.symm
+    have h_cross := XEqMulS.of.XEq.XEq.Imp_XEqInvS.Imp_XEqInvS
+      (fun _ => XEqInvS.of.XEq.NotInfinitesimal (NotInfinitesimal.of.NotInfinitesimal.XEq h₀ hb) h₀)
+      (fun _ => XEqInvS.of.XEq.NotInfinitesimal h_not_y h₁.symm)
+      h₀ h₁.symm
     if h_by : (b / y) → 0 then
       left
       obtain ⟨hay, _⟩ | ⟨hr, hbx⟩ := OrAndS.of.XEq h_cross

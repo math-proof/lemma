@@ -276,7 +276,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp` / `rw [← LHS.eq.RHS]`.
 
 ### Proof style
-- Use `obtain` instead of `rcases`, and `if … then … else …` instead of `by_cases`.
+- Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases`, `have` instead of `haveI`, and `let` instead of `letI`.
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - Match the style of nearby proofs in the same directory (e.g. `grind`, `aesop`, `simpa`).
 

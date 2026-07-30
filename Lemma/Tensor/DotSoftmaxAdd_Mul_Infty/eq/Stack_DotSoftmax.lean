@@ -128,7 +128,6 @@ private lemma main
   have h_xeq : ((Exp.exp a').get i / (let den : Tensor ℝ* [] := ((Exp.exp a').get i).sum 0; den)) @ V' ≈ ((exp A').get i * Ξ.get i / (let den : Tensor ℝ* [] := ((exp A').get i * Ξ.get i).sum 0; den)) @ V' := by
     simp
     sorry
-  -- conv_lhs => erw [h_zi]
   -- rw [EqGetStack.fn.fin]
   let band_A := A'[i, i + 1 - l : n ⊓ i + u]
   let band_V := V'[i + 1 - l:n ⊓ i + u]

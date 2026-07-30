@@ -1,93 +1,99 @@
-import Lemma.Hyperreal.XEqMulS.of.XEq.XEq.ImpOrInfinitesimalS
-import Lemma.Tensor.DataMul.eq.Mul_Data
-import Lemma.Tensor.Einsum.eq.MulGetData_0
-import Lemma.Tensor.Einsum.eq.MulDataS_Get_0
-import Lemma.Tensor.XEq.is.All_XEqGetS
+import Lemma.Tensor.DataMul.eq.MulDataS
+import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
+import Lemma.Tensor.Dot.eq.SumMul__0
+import Lemma.Tensor.EqGetUnsqueeze_0
+import Lemma.Tensor.GetDot.eq.DotGet
+import Lemma.Tensor.GetDot.eq.DotGetS
+import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
 import Lemma.Tensor.XEq.is.XEqDataS
+import Lemma.Tensor.XEqSumS.of.XEq.Ge_0
+import Lemma.Vector.GetMul.eq.MulGetS
+import Lemma.Vector.XEq.is.All_XEqGetS
+import Lemma.Hyperreal.XEqMulS.of.XEq.Imp_XEqInvS
 import sympy.tensor.tensor
-open Tensor Hyperreal
+open Tensor Hyperreal Nat Vector
+set_option maxHeartbeats 400000
 
 
-private lemma mulGetData_0
-  {A B : Tensor ℝ* []}
-  (h : A ≈ B)
-  (X : Tensor ℝ* s_X) :
-  A @ X ≈ B @ X := by
-  rw [Einsum.eq.MulGetData_0, Einsum.eq.MulGetData_0]
-  apply XEq.of.XEqDataS
-  rw [DataMul.eq.Mul_Data, DataMul.eq.Mul_Data]
-  have h₀ := XEqDataS.of.XEq h
-  simp at h₀
-  refine Vector.XEq.of.All_XEqGetS.fin ?_
-  intro i
-  by_cases hx : X.data[i] → 0
-  · by_cases hb : B.data[0] → 0
-    · exact XEqMulS.of.XEq.XEq.ImpOrInfinitesimalS (fun h =>
-        rcases h with hb' | hx'
-        · exact ⟨hb', hx⟩
-        · exact ⟨hb, hx'⟩) h₀ (Setoid.refl _)
-    · grind
-  · exact XEqMulS.of.XEq.XEq.ImpOrInfinitesimalS (fun h_ant =>
-      absurd h_ant (by simpa using hx)) h₀ (Setoid.refl _)
+def tensor_col (X : Tensor ℝ* [n, m]) (j : Fin m) : Tensor ℝ* [n] :=
+  Xᵀ[j]
 
 
-private lemma getData_0_mul
-  {A B : Tensor ℝ* []}
-  (h : A ≈ B)
-  (X : Tensor ℝ* s_X) :
-  X @ A ≈ X @ B := by
-  rw [Einsum.eq.MulDataS_Get_0, Einsum.eq.MulDataS_Get_0]
-  apply XEq.of.XEqDataS
-  rw [DataMul.eq.Mul_Data, DataMul.eq.Mul_Data]
-  have h₀ := XEqDataS.of.XEq h
-  simp at h₀
-  refine Vector.XEq.of.All_XEqGetS.fin ?_
-  intro i
-  by_cases hx : X.data[i] → 0
-  · by_cases hb : B.data[0] → 0
-    · exact XEqMulS.of.XEq.XEq.ImpOrInfinitesimalS (fun h =>
-        rcases h with hb' | hx'
-        · exact ⟨hb', hx⟩
-        · exact ⟨hb, hx'⟩) (Setoid.refl _) h₀
-    · grind
-  · exact XEqMulS.of.XEq.XEq.ImpOrInfinitesimalS (fun h_ant =>
-      absurd h_ant (by simpa using hx)) (Setoid.refl _) h₀
+def tensor_row (X : Tensor ℝ* [m, n]) (i : Fin m) : Tensor ℝ* [n] :=
+  cast (by simp) (X.get ⟨i, by grind⟩)
+
+
+/-- `All_Imp_XEqInvS` / vector dot: `A @ c ≈ B @ c` from matching `h_xinfty`, `h_pos`, and `h`. -/
+private lemma dot_vec
+  {A B c : Tensor ℝ* [n]}
+  (h_xinfty : ∀ i : Fin n, (c.data[i] → ∞) → A.data[i]⁻¹ ≈ B.data[i]⁻¹)
+  (h_pos : B * c ≥ 0)
+  (h : A ≈ B) :
+  A @ c ≈ B @ c := by
+  rw [Dot.eq.SumMul__0, Dot.eq.SumMul__0]
+  have h_mul : A * c ≈ B * c := by
+    apply XEq.of.XEqDataS
+    rw [DataMul.eq.MulDataS, DataMul.eq.MulDataS]
+    refine Vector.XEq.of.All_XEqGetS.fin ?_
+    intro i
+    have hn : n = [n].prod := by simp
+    rw [GetMul.eq.MulGetS.fin A.data c.data i, GetMul.eq.MulGetS.fin B.data c.data i]
+    exact XEqMulS.of.XEq.Imp_XEqInvS
+      (All_XEqGetS.of.XEq.fin (XEqDataS.of.XEq h) i)
+      (h_xinfty (Fin.cast hn.symm i))
+  exact XEqSumS.of.XEq.Ge_0 h_pos h_mul 0
+
+
+private lemma get_dot
+  (A : Tensor ℝ* [n]) (X : Tensor ℝ* [n, m]) (j : Fin m) :
+  (A @ X : Tensor ℝ* [m]).get ⟨j, by simp [matmul_shape]; grind⟩ = A @ tensor_col X j := by
+  let Y := (A.unsqueeze 0) @ X
+  rw [← Dot.eq.GetDotUnsqueeze_0 (A := A) (B := X)]
+  simp [GetElem.getElem]
+  erw [GetDot.eq.DotGetS.fin (A := A.unsqueeze 0) X ⟨0, by simp⟩ j]
+  erw [EqGetUnsqueeze_0.fin (A)]
+  rfl
+
+
+private lemma get_row
+  (X : Tensor ℝ* [m, n]) (A : Tensor ℝ* [n]) (i : Fin m) :
+  (X @ A : Tensor ℝ* [m]).get ⟨i, by simp [matmul_shape]; grind⟩ = (tensor_row X i) @ A := by
+  rw [GetDot.eq.DotGet.une X A i]
+  unfold tensor_row
+  rfl
 
 
 @[main]
 private lemma main
-  {A B : Tensor ℝ* s}
+  {A B : Tensor ℝ* [n]}
+  {X : Tensor ℝ* [n, m]}
 -- given
-  (h : A ≈ B)
-  (X : Tensor ℝ* s_X) :
+  (h_xinfty : ∀ j : Fin m, ∀ i : Fin n, ((tensor_col X j).data[i] → ∞) → A.data[i]⁻¹ ≈ B.data[i]⁻¹)
+  (h_pos : ∀ j : Fin m, B * tensor_col X j ≥ 0)
+  (h : A ≈ B) :
 -- imply
   A @ X ≈ B @ X := by
 -- proof
-  match s with
-  | [] =>
-    exact mulGetData_0 h X
-  | _ :: _ =>
-    apply @Tensor.XEq.of.All_XEqGetS.GtLength_0 (h := by simp)
-    intro i
-    sorry
+  apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp [matmul_shape])
+  intro j
+  rw [get_dot A X j, get_dot B X j]
+  exact dot_vec (h_xinfty j) (h_pos j) h
 
 
 @[main]
 private lemma left
-  {A B : Tensor ℝ* s}
+  {A B : Tensor ℝ* [n]}
+  {X : Tensor ℝ* [m, n]}
 -- given
-  (h : A ≈ B)
-  (X : Tensor ℝ* s_X) :
+  (h_xinfty : ∀ i : Fin m, ∀ k : Fin n, ((tensor_row X i).data[k] → ∞) → A.data[k]⁻¹ ≈ B.data[k]⁻¹)
+  (h_pos : ∀ i : Fin m, B * tensor_row X i ≥ 0)
+  (h : A ≈ B) :
 -- imply
   X @ A ≈ X @ B := by
--- proof
-  match s with
-  | [] =>
-    exact getData_0_mul h X
-  | _ :: _ =>
-    apply @Tensor.XEq.of.All_XEqGetS.GtLength_0 (h := by simp)
-    intro i
-    sorry
+  apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp [matmul_shape])
+  intro i
+  rw [get_row X A i, get_row X B i]
+  exact dot_vec (h_xinfty i) (h_pos i) h
 
 
 -- created on 2026-07-29

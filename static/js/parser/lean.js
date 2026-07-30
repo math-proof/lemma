@@ -386,6 +386,9 @@ export class Lean extends IndentedNode {
             case 'fun':
             case 'match':
                 return this.append(`Lean_${token}`, 'expr');
+            case 'haveI':
+            case 'letI':
+                token = token.slice(0, -1);
             case 'have':
             case 'let':
             case 'set':

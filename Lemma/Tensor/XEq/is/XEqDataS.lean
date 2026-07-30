@@ -2,6 +2,14 @@ import sympy.Basic
 import sympy.tensor.functions
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Tensor.XEq.is.XEqDataS |
+| comm | Tensor.XEqDataS.is.XEq |
+| mp | Tensor.XEqDataS.of.XEq |
+| mpr | Tensor.XEq.of.XEqDataS |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   [XEq α]
