@@ -1,42 +1,29 @@
 import sympy.tensor.tensor
 import Lemma.Tensor.LengthRepeat.eq.Mul_Get_0.of.GtLength_0
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
-import Lemma.Nat.LtMod.of.Gt_0
-import Lemma.Nat.Gt_0.of.GtMul
-import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Nat.EqMod
-import Lemma.List.HeadD.eq.Get_0.of.GtLength_0
-import Lemma.Nat.AddMul.lt.Mul
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
-import Lemma.List.TailSet_0.eq.Tail
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop.of.Lt_ProdTake.Lt_ProdDrop
-import Lemma.Vector.GetCast.eq.Get.of.Eq
-import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Vector.GetFlatten_AddMul.eq.Get.of.Lt.Lt
-import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.Nat.MulMul.eq.Mul_Mul
-import Lemma.Nat.AddAdd.eq.Add_Add
 import Lemma.Vector.GetMap.eq.UFnGet.of.Lt
 import Lemma.Vector.EqGetSplitAt_0'0
 import Lemma.Vector.Get
 import Lemma.Vector.GetRepeat.eq.Get_Mod.of.Lt_Mul
-import Lemma.Nat.Gt_0
-import Lemma.List.GtProd_0.of.Get_0.gt.Zero.ProdTail.gt.Zero.GtLength_0
-import Lemma.Nat.MulAdd.eq.AddMulS
 import Lemma.Nat.ModAddMul.eq.Mod
-import Lemma.Nat.EqMod.of.Lt
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.List.EqProdTakeSet__1.of.GtLength_0
 import Lemma.List.AddMul_ProdTail.lt.Mul_Prod.of.Lt_ProdTailSet.Lt.GtGet_0.GtLength_0
 import Lemma.List.ProdSet__MulGet.eq.Mul_Prod.of.GtLength
-import Lemma.List.GtProdTail_0.of.Lt_ProdTailSet_0
-import Lemma.List.ProdTake_1.eq.HeadD_1
-import Lemma.List.EqGetSet.of.GtLength
-open Tensor Vector List Bool Nat Fin
+open Tensor Vector List Bool Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0 |
+| fin | Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0.fin |
+| cast | Tensor.GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0 |
+| cast.fin | Tensor.GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin |
+-/
 @[main, fin, cast, cast.fin]
 private lemma main
 -- given
@@ -52,7 +39,7 @@ private lemma main
   (X.repeat ⟨0, h_s⟩ n)[i] ≃ X[i % s[0]] := by
 -- proof
   intros
-  obtain ⟨q, r, h_qr⟩ := Any_Eq_AddMul.of.Lt_Mul h_i
+  obtain ⟨q, r, h_qr⟩ := Fin.Any_Eq_AddMul.of.Lt_Mul h_i
   simp [h_qr, EqMod]
   unfold Tensor.repeat
   simp

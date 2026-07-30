@@ -1,8 +1,13 @@
 import stdlib.SEq
 import sympy.tensor.tensor
-import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Tensor.SelectCast.as.Select.of.Eq |
+| cast | Tensor.SelectCast.eq.Cast_Select.of.Eq |
+-/
 @[main, cast]
 private lemma main
 -- given

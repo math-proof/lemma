@@ -12,9 +12,7 @@ private lemma main
   (h₁ : n_b = n_b')
   (h₂ : a ≃ b) :
 -- imply
-  have h : Vector n_a = Vector n_a' := by rw [h₀]
-  have h' : Vector n_b = Vector n_b' := by rw [h₁]
-  cast h a ≃ cast h' b := by
+  cast (congrArg Vector h₀) a ≃ cast (congrArg Vector h₁) b := by
 -- proof
   apply SEqCast.of.SEq.Eq h₀
   apply SEq_Cast.of.SEq.Eq h₁ h₂

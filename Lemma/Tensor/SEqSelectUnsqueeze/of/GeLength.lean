@@ -1,4 +1,3 @@
-import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetFromVector.eq.Get
 import Lemma.Tensor.GetUnsqueeze.as.UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0
@@ -6,17 +5,22 @@ import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
 import Lemma.Tensor.Select.as.FromVectorMapToVector.of.GtVal_0
 import Lemma.Tensor.Select_0.as.Get.of.GtLength_0
 import Lemma.Tensor.ToVector.eq.MapRange_Get.of.GtLength_0
-import Lemma.Vector.EqGetRange
-open List Tensor Vector
+open Tensor
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Tensor.SEqSelectUnsqueeze.of.GeLength |
+| cast | Tensor.SelectUnsqueeze.eq.Cast.of.GeLength |
+-/
 @[main, cast]
 private lemma main
 -- given
   (h_dim : s.length ≥ d)
   (X : Tensor α s) :
 -- imply
-  (X.unsqueeze d).select ⟨d, by rw [LengthInsertIdx.eq.Add1Length.of.GeLength h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by
+  (X.unsqueeze d).select ⟨d, by rw [List.LengthInsertIdx.eq.Add1Length.of.GeLength h_dim]; omega⟩ ⟨0, by simp⟩ ≃ X := by
 -- proof
   induction d generalizing s X with
   | zero =>
@@ -48,7 +52,7 @@ private lemma main
           have ih := ih h_dim (X.get (List.Vector.range s₀)[i])
           apply ih.trans
           simp [GetElem.getElem]
-          rw [EqGetRange.fin]
+          rw [Vector.EqGetRange.fin]
       ·
         simp
 

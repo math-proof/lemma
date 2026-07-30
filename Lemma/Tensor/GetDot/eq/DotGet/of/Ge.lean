@@ -2,7 +2,7 @@ import Lemma.Bool.Cast.of.SEq.Eq
 import Lemma.Bool.SEq.is.Eq
 import Lemma.List.Ne_Nil.is.GeLength_1
 import Lemma.Nat.Mul
-import Lemma.Tensor.Dot.eq.GetSumMul.of.Ge
+import Lemma.Tensor.Dot.eq.GetSumMul
 import Lemma.Tensor.Dot.eq.SelectSumMul.of.Ge
 import Lemma.Tensor.Dot.eq.SumMul.of.Ge
 import Lemma.Tensor.Dot.eq.SumMul_Resize_0.of.Ge
@@ -11,7 +11,6 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
-import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetSelect_1.as.Get.of.Lt.GtGet_0.GtLength_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
@@ -38,37 +37,36 @@ private lemma main
   simp [GetElem.getElem]
   rw [Dot.eq.SumMul.of.Ge h]
   erw [GetSum_2.eq.SumGet__1.fin (i := ⟨i, by grind⟩)]
-  erw [Dot.eq.GetSumMul.of.Ge h]
+  erw [Dot.eq.GetSumMul.resize]
   erw [GetSum_2.eq.SumGet__1.fin (i := ⟨0, by grind⟩)]
   apply Eq.of.SEq
   apply SEqSumS.of.SEq
   repeat rw [@Tensor.GetMul.eq.MulGetS.fin]
-  apply SEq.of.Eq
-  congr 1
-  <;>
-  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [n, k', k]) (i := ⟨i, by grind⟩) (by grind) (by grind)]
-  <;>
-  erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [1, k', k]) (i := ⟨0, by grind⟩) (by grind) (by grind)]
-  <;>
-  apply Cast.of.SEq.Eq (by simp)
+  apply SEqMulS.of.SEq.SEq
+  <;> erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [1, k', k ⊔ n']) (i := ⟨0, by grind⟩) (by grind) (by grind)]
+  <;> conv_lhs => erw [GetCast.eq.Cast_Get.of.Eq.GtLength_0.fin (s' := [n, k', k]) (i := ⟨i, by grind⟩) (by grind) (by grind)];
+  <;> apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
   ·
     erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
     conv_rhs => erw [GetRepeat.eq.Cast_RepeatGet.of.GtGet_0.GtVal_0.fin (by grind) (by grind)]
-    apply SEq.of.Eq ∘ Cast.of.SEq.Eq (by simp)
+    apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
     apply SEqRepeatS.of.SEq
     erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
     conv_rhs => erw [GetUnsqueeze.eq.Cast_UnsqueezeGet.of.GtGet_0.Gt_0.GtLength_0.fin (by grind) (by grind) (by grind)]
-    apply SEq.of.Eq ∘ Cast.of.SEq.Eq (by simp)
+    apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
     apply SEqUnsqueezeS.of.SEq
     erw [EqGetUnsqueeze_0.fin]
-    rfl
+    symm
+    apply Tensor.SEqResize_0.of.Eq_Get_0.GtLength_0 (by simp) (by grind)
   ·
-    erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
+    rw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
     conv_rhs => erw [GetRepeat_0.eq.Cast_Get_Mod_Get.of.GtMul_Get.GtLength_0.fin (by grind) (by grind)]
-    apply SEq.of.Eq ∘ Cast.of.SEq.Eq (by simp)
-    apply SEq.of.Eq
-    simp
-    grind
+    apply SEqCastS.of.SEq.Eq.Eq (by simp) (by simp)
+    erw [Tensor.EqGetUnsqueeze_0.fin]
+    erw [Tensor.EqGetUnsqueeze_0.nat.fin]
+    apply Tensor.SEqTS.of.SEq
+    apply Tensor.SEqResizeS.of.SEq.Val.Eq (by grind) (by grind)
+    rfl
 
 
 @[main, fin]

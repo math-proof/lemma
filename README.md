@@ -271,7 +271,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - Mirror the directory path in the module name (e.g. `Lemma/Tensor/Foo/of/Bar.lean` → `Tensor.Foo.of.Bar`).
 
 ### Attribute-generated lemmas
-- Read `sympy/Basic.lean` to understand attribute-generated lemmas (`@[comm]`, `@[mp]`, `@[mpr]`, `@[fin]`, `@[mt]`, …) and apply them wisely.
+- Read `sympy/Basic.lean` to understand attribute-generated lemmas (`@[comm]`, `@[cast]`, `@[mp]`, `@[mpr]`, `@[fin]`, `@[mt]`, …) and apply them wisely.
 - For `LHS.is.RHS` tagged with `@[mp]` / `@[mpr]`, prefer the generated one-direction lemmas `RHS.of.LHS` / `LHS.of.RHS` over calling `.mp` / `.mpr` on the iff.
 - For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp` / `rw [← LHS.eq.RHS]`.
 

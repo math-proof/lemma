@@ -1,9 +1,8 @@
 import Lemma.Tensor.DataMul.eq.MulDataS
-import Lemma.Tensor.Dot.eq.GetDotUnsqueeze_0
+import Lemma.Tensor.Dot
 import Lemma.Tensor.Dot.eq.SumMul__0
-import Lemma.Tensor.EqGetUnsqueeze_0
 import Lemma.Tensor.GetDot.eq.DotGet
-import Lemma.Tensor.GetDot.eq.DotGetS
+import Lemma.Tensor.GetDot.eq.Dot_GetT
 import Lemma.Tensor.XEq.is.All_XEqGetS.of.GtLength_0
 import Lemma.Tensor.XEq.is.XEqDataS
 import Lemma.Tensor.XEqSumS.of.XEq.Ge_0
@@ -11,8 +10,8 @@ import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.XEq.is.All_XEqGetS
 import Lemma.Hyperreal.XEqMulS.of.XEq.Imp_XEqInvS
 import sympy.tensor.tensor
-open Tensor Hyperreal Nat Vector
-set_option maxHeartbeats 400000
+open Tensor Hyperreal Vector
+set_option maxHeartbeats 1000000
 
 
 def tensor_col (X : Tensor ℝ* [n, m]) (j : Fin m) : Tensor ℝ* [n] :=
@@ -20,7 +19,7 @@ def tensor_col (X : Tensor ℝ* [n, m]) (j : Fin m) : Tensor ℝ* [n] :=
 
 
 def tensor_row (X : Tensor ℝ* [m, n]) (i : Fin m) : Tensor ℝ* [n] :=
-  cast (by simp) (X.get ⟨i, by grind⟩)
+  X[i]
 
 
 /-- `All_Imp_XEqInvS` / vector dot: `A @ c ≈ B @ c` from matching `h_xinfty`, `h_pos`, and `h`. -/
@@ -45,22 +44,18 @@ private lemma dot_vec
 
 
 private lemma get_dot
-  (A : Tensor ℝ* [n]) (X : Tensor ℝ* [n, m]) (j : Fin m) :
-  (A @ X : Tensor ℝ* [m]).get ⟨j, by simp [matmul_shape]; grind⟩ = A @ tensor_col X j := by
-  let Y := (A.unsqueeze 0) @ X
-  rw [← Dot.eq.GetDotUnsqueeze_0 (A := A) (B := X)]
-  simp [GetElem.getElem]
-  erw [GetDot.eq.DotGetS.fin (A := A.unsqueeze 0) X ⟨0, by simp⟩ j]
-  erw [EqGetUnsqueeze_0.fin (A)]
-  rfl
+  (A : Tensor ℝ* [n]) (X : Tensor ℝ* [n, m]) (j : Fin m)
+  (hj : j < (A @ X).length := by simp [matmul_shape]; grind) :
+  (A @ X).get ⟨j, hj⟩ = A @ tensor_col X j := by
+  simpa [tensor_col] using GetDot.eq.Dot_GetT.fin A X j hj
 
 
 private lemma get_row
-  (X : Tensor ℝ* [m, n]) (A : Tensor ℝ* [n]) (i : Fin m) :
-  (X @ A : Tensor ℝ* [m]).get ⟨i, by simp [matmul_shape]; grind⟩ = (tensor_row X i) @ A := by
-  rw [GetDot.eq.DotGet.une X A i]
-  unfold tensor_row
-  rfl
+  (X : Tensor ℝ* [m, n]) (A : Tensor ℝ* [n]) (i : Fin m)
+  (hi : i < (X @ A).length := by simp [matmul_shape]; grind) :
+  (X @ A).get ⟨i, hi⟩ = (tensor_row X i) @ A := by
+  convert GetDot.eq.DotGet.une X A i using 1
+  simp [GetElem.getElem, tensor_row]
 
 
 @[main]
@@ -93,6 +88,7 @@ private lemma left
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp [matmul_shape])
   intro i
   rw [get_row X A i, get_row X B i]
+  rw [Dot.comm, Dot.comm]
   exact dot_vec (h_xinfty i) (h_pos i) h
 
 

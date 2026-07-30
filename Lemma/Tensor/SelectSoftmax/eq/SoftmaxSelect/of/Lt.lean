@@ -4,7 +4,7 @@ import Lemma.Nat.Div.of.Eq
 import Lemma.Tensor.SelectDiv.eq.DivSelectS
 import Lemma.Tensor.SelectExp.eq.ExpSelect
 import Lemma.Tensor.SelectKeepdim.eq.KeepdimCast_Select.of.Lt
-import Lemma.Tensor.SelectSum.eq.SumSelect.of.Lt
+import Lemma.Tensor.SelectSum.as.SumSelect.of.Lt
 import Lemma.Tensor.Softmax.eq.DivExp_KeepdimSumExp
 open Bool List Nat Tensor
 
@@ -31,7 +31,7 @@ private lemma main
   ·
     conv_rhs => rw [EraseIdxEraseIdx.of.Gt.GtLength (by grind) h_k]
   ·
-    have := SelectSum.eq.SumSelect.of.Lt h_k (exp X) i
+    have := SelectSum.as.SumSelect.of.Lt h_k (exp X) i
     apply this.trans
     rw [SelectExp.eq.ExpSelect]
 
