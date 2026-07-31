@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Nat.Eq.of.Ge.Le.apply(Eq[1], Eq[-1])
 
-    Eq << Eq.eq.subs(Eq[2]).this.apply(Nat.EqAddS.Is.Eq)
+    Eq << Eq.eq.subs(Eq[2]).this.apply(Nat.Add.Is.Eq)
 
     Eq << Eq[-1].this.lhs.limits_subs(i, j)
 

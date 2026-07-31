@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.arg.args[2].rhs.definition
 
-    Eq << Bool.Iff.of.EqBoolS.apply(Eq[-1])
+    Eq << Bool.Iff.of.Bool.apply(Eq[-1])
 
     Eq << Bool.Cond.of.Iff.Cond.subst.apply(Eq[-1], Eq[-4])
 

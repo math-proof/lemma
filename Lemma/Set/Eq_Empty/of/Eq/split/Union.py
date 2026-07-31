@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.Add.Is.Eq)
 
     Eq << -Eq[-1]
 

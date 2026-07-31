@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq.eq.subs(Eq[3])
 
-    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.Add.Is.Eq)
 
     Eq << Eq[-1].this.lhs.limits_subs(i, j)
 

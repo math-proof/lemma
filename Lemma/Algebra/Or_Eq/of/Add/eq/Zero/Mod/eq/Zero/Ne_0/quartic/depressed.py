@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq[0]
 
-    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.Add.Is.Eq)
 
     Eq.eq = Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=slice(0, 3))
 

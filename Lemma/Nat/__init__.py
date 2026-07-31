@@ -11,8 +11,6 @@ from . import Mul
 from . import GtAddS
 from . import Add
 from . import Ne
-from . import EqAddS
-from . import LtAddS
 from . import AddMulS
 from . import Lt
 from . import Ge_Add_1
@@ -35,3 +33,4 @@ from . import Pow
 from . import Ne_0
 from . import OrEqS_0
 from . import Div
+from . import LtAddS

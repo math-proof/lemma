@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-3]
 
-    Eq << Eq[-1].apply(Set.In_Ico.of.Le.Gt)
+    Eq << Eq[-1].apply(Set.In_Ico.of.Le.Lt)
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], 2 * x * y)
 

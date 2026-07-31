@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq.x_equality
 
-    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.Add.Is.Eq)
 
     Eq << Int.Eq.of.Sub.eq.Zero.apply(Eq[-1])
 

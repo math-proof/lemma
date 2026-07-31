@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.Add.Is.Eq)
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

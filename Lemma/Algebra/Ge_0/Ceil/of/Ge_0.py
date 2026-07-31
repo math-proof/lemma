@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[1:].apply(Nat.Ge.of.Le.Ge, ret=0)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Set.In_Ico.of.Le.Gt)
+    Eq << Eq[-1].this.expr.args[:2].apply(Set.In_Ico.of.Le.Lt)
 
     Eq << Eq[-1].this.expr.args[1].apply(Set.EqCeil.of.In_Ioc)
 

@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-2] + Eq[-1]
 
-    Eq << Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
+    Eq << Eq[-1].this.apply(Nat.Add.Is.Eq)
 
     Eq << Bool.Imp.of.Bool.eq.MulBoolS.apply(Eq[-1])
 

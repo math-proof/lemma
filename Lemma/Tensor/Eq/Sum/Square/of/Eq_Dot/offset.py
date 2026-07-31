@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(Eq[-1])
 
-    Eq << -Eq[-1].this.apply(Nat.EqAddS.Is.Eq) / 2
+    Eq << -Eq[-1].this.apply(Nat.Add.Is.Eq) / 2
 
     Eq << Tensor.EqSum.of.Eq_Dot.apply(Eq[0], i)
 

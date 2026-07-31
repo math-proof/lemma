@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq[-2]
 
-    Eq.equality = Eq[-1].this.apply(Nat.EqAddS.Is.Eq)
+    Eq.equality = Eq[-1].this.apply(Nat.Add.Is.Eq)
 
     Eq.suffice = Imply(Equal(h[n], 1), Equal(h[n + 1], 1), plausible=True)
 
