@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Set.Neg.in.Ioc.of.In_Ico
 import Lemma.Set.Add.in.Ioc.of.In.In
 import Lemma.Int.Sub.eq.Add_Neg
@@ -15,7 +14,7 @@ private lemma main
 -- imply
   x₀ - x₁ ∈ Ioc (a - d) (b - c) := by
 -- proof
-  have h₁ := Neg.In.Ioc.of.In_Ico h₁
+  have h₁ := Neg.in.Ioc.of.In_Ico h₁
   have h := Add.in.Ioc.of.In.In h₀ h₁
   repeat rw [Add_Neg.eq.Sub] at h
   assumption

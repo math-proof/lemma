@@ -1,5 +1,5 @@
-import Lemma.List.MulLengthSlice_Mul.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
+import Lemma.List.ProdTakeSet.eq.MulProdSetTake.of.Lt.GtLength
 import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
@@ -106,174 +106,136 @@ private lemma main
         repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
         simp
         rw [GetGetSlice.eq.Get.of.GtGet.GtLength (by grind) (by grind)]
-        simp [GetResize.eq.Ite_Get_Mod.fin]
-        repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+        rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
         simp [GetSet.eq.Get.of.Lt.GtLength h_d h_k]
         rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
         simp [DataResize.eq.Cast_FlattenMapSplitAtData]
         have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
         rw [List.ProdTakeMapCast.eq.ProdTake] at h_length_slice
-        repeat rw [GetCast.eq.Get.of.Eq.fin]
+        rw [GetCast.eq.Get.of.Eq.fin (by simp [ProdSet.eq.MulProd_Mul_Prod.of.GtLength (Lt.of.Lt.Lt h_k h_d)])]
+        have h_lt : (↑q * s[↑d] + ↑i) * ((s.set k n).drop (↑d + 1)).prod + ↑r < (s.take k).prod * (n * (s.drop (k + 1)).prod) := by
+          rw [MulProd_Mul_Prod.eq.ProdSet.of.GtLength (by grind) n]
+          apply AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop _ h_r
+          apply Nat.lt_of_lt_of_eq _ (MulProdSetTake.eq.ProdTakeSet.of.Lt.GtLength h_d h_k n)
+          apply AddMul.lt.Mul.of.Lt.Lt _ h_i
+          rwa [TakeSet.eq.SetTake.of.Lt h_k] at h_q
+        let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
+        have h_qₑ := qₑ.isLt
+        let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
+        simp
+        erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₑrₑ]
+        simp [GetResize.eq.Ite_Get_Mod.fin]
+        split_ifs with h₁ h₂ h₃
         ·
-          have h_lt : (↑q * s[↑d] + ↑i) * ((s.set k n).drop (↑d + 1)).prod + ↑r < (s.take k).prod * (n * (s.drop (k + 1)).prod) := by
-            have h_row₀ : (↑q * s[↑d] + ↑i) < ((s.take ↑d).set k n).prod * s[↑d] := by
-              apply AddMul.lt.Mul.of.Lt.Lt _ h_i
-              rw [TakeSet.eq.SetTake.of.Lt h_k] at h_q
-              have hpt := ProdSet.eq.MulProd_Mul_Prod.of.GtLength (s := s.take d) (i := k) (by simp; grind) n
-              have htake : (s.take d).take k = s.take k := by grind
-              simp [htake] at hpt
-              exact h_q
-            have h_take_prod : ((s.set k n).take (↑d + 1)).prod = ((s.take ↑d).set k n).prod * s[↑d] := by
-              have h_append : (s.set k n).take (↑d + 1) = (s.take ↑d).set k n ++ [s[↑d]] := by
-                rw [TakeSet.eq.SetTake.of.Lt (show k < ↑d + 1 by omega)]
-                rw [Take.eq.AppendTake.of.GtLength h_d]
-                rw [SetAppend.eq.Append_Set.of.GtLength (show k < (s.take ↑d).length by simp; omega)]
-                grind
-              rw [h_append, ProdAppend.eq.MulProdS]
-              simp
-            have h_row : (↑q * s[↑d] + ↑i) < ((s.set k n).take (↑d + 1)).prod := Nat.lt_of_lt_of_eq h_row₀ h_take_prod.symm
-            have h_lt₀ := AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop (s := s.set k n) (d := ↑d + 1) h_row h_r
-            rwa [← ProdSet.eq.MulProd_Mul_Prod.of.GtLength (by grind) n]
-          let ⟨qₑ, rₑ, h_qₑrₑ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
-          have h_qₑ := qₑ.isLt
-          let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
+          simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          rw [GetCast.eq.Get.of.Eq.fin (by grind)]
           simp
-          erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₑrₑ]
-          simp [GetResize.eq.Ite_Get_Mod.fin]
-          split_ifs with h₁ h₂
-          ·
-            erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            simp
-            erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            simp
-            rw [GetCast.eq.Get.of.Eq.fin (by grind)]
-            simp
-            have h_lt : ↑q' * ((s.eraseIdx d).drop k).prod + ↑r' % ((s.eraseIdx d).drop k).prod < (⟨↑i, ↑(s.take (d + 1)).prod, s[d.val]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
-              rw [h_length_slice]
-              rw [Prod.eq.MulProdS (s.eraseIdx d) k]
-              apply AddMul.lt.Mul.of.Lt.Lt q'.isLt
-              apply LtMod.of.Gt_0
-              grind
-            let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
-            have h_qₐ := qₐ.isLt
-            let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
-            erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
-            erw [Vector.GetGetSlice.eq.Get.of.GtGet.GtLength (by grind) (by grind)]
-            erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            apply congrArg
-            simp
-            have h_k' := Le.of.Lt h_k
-            rw [ModAdd.eq.Mod.of.Dvd.left (Dvd_Mul.of.Dvd (ProdDrop.dvd.ProdDropEraseIdx.of.Ge h_k' s) q')] at h_rₐ_mod
-            simp at h_qₑ_div h_rₑ_mod h_q'_div h_r'_mod h_t
-            simp [h_rₑ_mod, h_qₑ_div, h_rₐ_mod]
-            simp [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at h_qₐ_div h_rₐ_mod h_q_div h_r_mod h_r
-            simp [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul] at h_qₐ_div h_rₐ_mod ⊢
-            generalize h_s_d : s[d] = s_d at *
-            have h_s_d2 : s[↑d] = s_d := (Eq.refl (s[↑d])).trans h_s_d
-            simp only [h_s_d2] at *
-            have h_prod_drop := ProdDrop.eq.MulProdSDrop.of.Le (i := k) (j := d) (by omega) s
-            have h_drop_set : ((s.set k n).drop (↑d + 1)).prod = (s.drop (↑d + 1)).prod := by
-              rw [DropSet.eq.Drop.of.Lt (show k < ↑d + 1 by omega)]
-            set A := (s.drop (↑d + 1)).prod with h_A
-            set C := ((s.take ↑d).drop (k + 1)).prod with h_C
-            have h_B' : ((s.eraseIdx ↑d).drop (k + 1)).prod = C * A := by
-              rw [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show ↑d ≥ k + 1 by omega)]
-            have h_M' : ((s.eraseIdx ↑d).drop k).prod = s[k] * C * A := by
-              rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (show (s.eraseIdx ↑d).length > k by grind)]
-              simp [GetEraseIdx.eq.Get.of.Gt.GtLength h_d h_k]
-              rw [h_B']
-              ring_nf
-            have h_B : (s.drop (k + 1)).prod = s_d * C * A := by
-              rw [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ ↑d by omega)]
-              rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength h_d]
-              ring_nf
-              sorry
-            have h_M : (s.drop k).prod = s[k] * s_d * C * A := by
-              rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (show s.length > k by omega)]
-              rw [h_B]
-              ring_nf
-            have h_A_pos : 0 < A := by
-              exact Nat.zero_lt_of_lt h_r
-            have h_r_A : ↑r < A := by
-              rw [← h_drop_set]
-              grind
-            have h_i_A : ↑i * A + ↑r < s_d * A := by
-              nlinarith [h_i, h_r_A]
-            have h_qr_A : ↑t = ↑q * A + ↑r := by
-              rw [h_qr]
-              simp [h_drop_set]
-            have h_q'_eq : ↑q' = ↑q / (n * C) := by
-              rw [h_q'_div]
-              rw [h_qr_A]
-              rw [h_B']
-              rw [show n * (C * A) = A * (n * C) by ring_nf]
-              rw [show (↑q * A + ↑r) / (A * (n * C)) = (↑q * A + ↑r) / A / (n * C) by
-                rw [← DivDiv.eq.Div_Mul]]
-              rw [show (↑q * A + ↑r) / A = ↑q by
-                rw [DivAddMul.eq.Add_Div.of.Gt_0 h_A_pos]
-                rw [Div.eq.Zero.of.Lt h_r_A]]
-            have h_r'_eq : ↑r' = (↑q % (n * C)) * A + ↑r := by
-              rw [h_r'_mod]
-              rw [h_qr_A]
-              rw [h_B']
-              rw [show n * (C * A) = n * C * A by ring_nf]
-              rw [Mod_Mul.eq.AddMul_Mod.of.Lt h_r_A]
-            have h_qₑ_eq : ↑qₑ = ↑q / (n * C) := by
-              rw [h_qₑ_div]
-              simp [h_drop_set]
-              rw [h_B]
-              rw [show n * (s_d * C * A) = (s_d * A) * (n * C) by ring_nf]
-              rw [show ((↑q * s_d + ↑i) * A + ↑r) / ((s_d * A) * (n * C)) = ((↑q * s_d + ↑i) * A + ↑r) / (s_d * A) / (n * C) by
-                rw [← DivDiv.eq.Div_Mul]]
-              rw [show ((↑q * s_d + ↑i) * A + ↑r) / (s_d * A) = ↑q by
-                rw [show (↑q * s_d + ↑i) * A + ↑r = ↑q * (s_d * A) + (↑i * A + ↑r) by ring_nf]
-                rw [DivAddMul.eq.Add_Div.of.Gt_0 (by nlinarith)]
-                rw [Div.eq.Zero.of.Lt h_i_A]]
-            have h_rₑ_eq : ↑rₑ = (↑q % (n * C) * s_d + ↑i) * A + ↑r := by
-              rw [h_rₑ_mod]
-              simp [h_drop_set]
-              rw [h_B]
-              rw [show n * (s_d * C * A) = (n * C) * (s_d * A) by ring_nf]
-              rw [show (↑q * s_d + ↑i) * A + ↑r = ↑q * (s_d * A) + (↑i * A + ↑r) by ring_nf]
-              rw [Mod_Mul.eq.AddMul_Mod.of.Lt h_i_A]
-              ring_nf
-            have h_r'_mod_M' : ↑r' % (s[k] * C * A) = (↑q % (n * C) % (s[k] * C)) * A + ↑r := by
-              rw [h_r'_eq]
-              rw [show s[k] * C * A = (s[k] * C) * A by ring_nf]
-              rw [Mod_Mul.eq.AddMul_Mod.of.Lt h_r_A]
-            have h_qₐ_eq : ↑qₐ = ↑q' * s[k] * C + (↑q % (n * C) % (s[k] * C)) := by
-              rw [h_qₐ_div]
-              simp [h_M']
-              rw [show ↑q' * (s[k] * C * A) + (↑r' % (s[k] * C * A)) = (↑q' * s[k] * C + (↑q % (n * C) % (s[k] * C))) * A + ↑r by
-                rw [h_r'_mod_M']
-                ring_nf]
-              rw [DivAddMul.eq.Add_Div.of.Gt_0 h_A_pos]
-              rw [Div.eq.Zero.of.Lt h_r_A]
-              ring_nf
-            have h_rₐ_eq : ↑rₐ = ↑r := by
-              rw [h_rₐ_mod]
-              simp [h_M']
-              rw [show ↑q' * (s[k] * C * A) + (↑r' % (s[k] * C * A)) = (↑q' * s[k] * C + (↑q % (n * C) % (s[k] * C))) * A + ↑r by
-                rw [h_r'_mod_M']
-                ring_nf]
-              rw [show ((↑q' * s[k] * C + (↑q % (n * C) % (s[k] * C))) * A + ↑r) % A = ↑r by
-                rw [ModAdd_Mul.eq.Mod.main]
-                rw [show ↑r % A = ↑r by apply Nat.mod_eq_of_lt h_r_A]]
-              ring_nf
-            rw [h_qₑ_eq, h_rₑ_eq, h_qₐ_eq, h_rₐ_eq, h_q'_eq, h_M, h_B]
+          have h_lt : ↑q' * ((s.eraseIdx d).drop k).prod + ↑r' % ((s.eraseIdx d).drop k).prod < (⟨↑i, ↑(s.take (d + 1)).prod, s[d.val]⟩ : Slice).length (s.take (d + 1)).prod * (s.drop (d + 1)).prod := by
+            rw [h_length_slice]
+            rw [Prod.eq.MulProdS (s.eraseIdx d) k]
+            apply AddMul.lt.Mul.of.Lt.Lt q'.isLt
+            apply LtMod.of.Gt_0
+            grind
+          let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
+          have h_qₐ := qₐ.isLt
+          let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
+          erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
+          erw [Vector.GetGetSlice.eq.Get.of.GtGet.GtLength (by grind) (by grind)]
+          erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
+          apply congrArg
+          simp
+          have h_k' := Le.of.Lt h_k
+          rw [ModAdd.eq.Mod.of.Dvd.left (Dvd_Mul.of.Dvd (ProdDrop.dvd.ProdDropEraseIdx.of.Ge h_k' s) q')] at h_rₐ_mod
+          simp at h_qₑ_div h_rₑ_mod h_q'_div h_r'_mod h_t
+          simp [h_rₑ_mod, h_qₑ_div, h_rₐ_mod]
+          simp [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at h_qₐ_div h_rₐ_mod h_q_div h_r_mod h_r
+          simp [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul] at h_qₐ_div h_rₐ_mod ⊢
+          generalize h_s_d : s[d] = s_d at *
+          have h_s_d2 : s[↑d] = s_d := (Eq.refl (s[↑d])).trans h_s_d
+          simp only [h_s_d2] at *
+          have h_prod_drop := ProdDrop.eq.MulProdSDrop.of.Le (i := k) (j := d) (by omega) s
+          have h_drop_set : ((s.set k n).drop (↑d + 1)).prod = (s.drop (↑d + 1)).prod := by rw [DropSet.eq.Drop.of.Lt (show k < ↑d + 1 by omega)]
+          set A := (s.drop (↑d + 1)).prod with h_A
+          set C := ((s.take ↑d).drop (k + 1)).prod with h_C
+          have h_B' : ((s.eraseIdx ↑d).drop (k + 1)).prod = C * A := by
+            rw [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show ↑d ≥ k + 1 by omega)]
+          have h_M' : ((s.eraseIdx ↑d).drop k).prod = s[k] * C * A := by
+            rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (show (s.eraseIdx ↑d).length > k by grind)]
+            simp [GetEraseIdx.eq.Get.of.Gt.GtLength h_d h_k]
+            rw [h_B']
             ring_nf
-          ·
-            erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            exfalso
+          have h_B : (s.drop (k + 1)).prod = s_d * C * A := by
+            rw [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ d by omega)]
+            rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength h_d]
+            ring_nf
             sorry
-          ·
-            erw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-            simp
+          have h_M : (s.drop k).prod = s[k] * s_d * C * A := by
+            rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (show s.length > k by omega)]
+            rw [h_B]
+            ring_nf
+          have h_A_pos := Nat.zero_lt_of_lt h_r
+          have h_r_A : ↑r < A := by
+            rw [← h_drop_set]
+            grind
+          have h_i_A : ↑i * A + ↑r < s_d * A := by
+            nlinarith [h_i, h_r_A]
+          have h_qr_A : ↑t = ↑q * A + ↑r := by
+            rw [h_qr]
+            simp [h_drop_set]
+          have h_q'_eq : ↑q' = ↑q / (n * C) := by
+            rw [h_q'_div]
+            rw [h_qr_A]
+            rw [h_B']
+            rw [show n * (C * A) = A * (n * C) by ring_nf]
+            rw [show (↑q * A + ↑r) / (A * (n * C)) = (↑q * A + ↑r) / A / (n * C) by
+              rw [← DivDiv.eq.Div_Mul]]
+            rw [show (↑q * A + ↑r) / A = ↑q by sorry]
+          have h_r'_eq : ↑r' = (↑q % (n * C)) * A + ↑r := by
+            rw [h_r'_mod]
+            rw [h_qr_A]
+            rw [h_B']
+            rw [show n * (C * A) = n * C * A by ring_nf]
+            rw [Mod_Mul.eq.AddMul_Mod.of.Lt h_r_A]
+          have h_qₑ_eq : ↑qₑ = ↑q / (n * C) := by
+            rw [h_qₑ_div]
+            simp [h_drop_set]
+            rw [h_B]
+            rw [show n * (s_d * C * A) = (s_d * A) * (n * C) by ring_nf]
+            rw [show ((↑q * s_d + ↑i) * A + ↑r) / ((s_d * A) * (n * C)) = ((↑q * s_d + ↑i) * A + ↑r) / (s_d * A) / (n * C) by
+              rw [← DivDiv.eq.Div_Mul]]
+            rw [show ((↑q * s_d + ↑i) * A + ↑r) / (s_d * A) = ↑q by sorry]
+          have h_rₑ_eq : ↑rₑ = (↑q % (n * C) * s_d + ↑i) * A + ↑r := by
+            rw [h_rₑ_mod]
+            simp [h_drop_set]
+            rw [h_B]
+            rw [show n * (s_d * C * A) = (n * C) * (s_d * A) by ring_nf]
+            rw [show (↑q * s_d + ↑i) * A + ↑r = ↑q * (s_d * A) + (↑i * A + ↑r) by ring_nf]
+            rw [Mod_Mul.eq.AddMul_Mod.of.Lt h_i_A]
+            ring_nf
+          have h_r'_mod_M' : ↑r' % (s[k] * C * A) = (↑q % (n * C) % (s[k] * C)) * A + ↑r := by
+            rw [h_r'_eq]
+            rw [show s[k] * C * A = (s[k] * C) * A by ring_nf]
+            rw [Mod_Mul.eq.AddMul_Mod.of.Lt h_r_A]
+          have h_qₐ_eq : ↑qₐ = ↑q' * s[k] * C + (↑q % (n * C) % (s[k] * C)) := by
+            rw [h_qₐ_div]
+            simp [h_M']
+            rw [show ↑q' * (s[k] * C * A) + (↑r' % (s[k] * C * A)) = (↑q' * s[k] * C + (↑q % (n * C) % (s[k] * C))) * A + ↑r by
+              rw [h_r'_mod_M']
+              ring_nf]
+            rw [DivAddMul.eq.Add_Div.of.Gt_0 h_A_pos]
+            rw [Div.eq.Zero.of.Lt h_r_A]
+            ring_nf
+          have h_rₐ_eq : ↑rₐ = r.val := by
             sorry
-          ·
-            rfl
+          rw [h_qₐ_eq, h_q'_eq, h_M, h_B]
+          ring_nf
+          sorry
         ·
-          simp [ProdSet.eq.MulProd_Mul_Prod.of.GtLength (Lt.of.Lt.Lt h_k h_d)]
+          sorry
+        ·
+          sorry
+        ·
+          rfl
       ·
         simp [h_length_slice]
         rw [EraseIdxSet.eq.SetEraseIdx.of.Lt h_k]

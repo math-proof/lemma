@@ -14,7 +14,7 @@ private lemma main
   ⌊-fract x⌋ = -1 := by
 -- proof
   have h₁ := Frac.in.Ioo.of.NotIn_Range h
-  have h₂ := Neg.In.Ioo.of.In_Ioo h₁
+  have h₂ := Neg.in.Ioo.of.In_Ioo h₁
   obtain ⟨h₂₀, h₂₁⟩ := h₂
   rw [Int.floor_eq_iff]
   constructor

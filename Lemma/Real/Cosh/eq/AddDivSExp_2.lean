@@ -7,9 +7,9 @@ private lemma main
 -- given
   (x : ℝ) :
 -- imply
-  Real.cosh x = (Real.exp x + Real.exp (-x)) / 2 := by
+  Real.cosh x = Real.exp x / 2 + Real.exp (-x) / 2 := by
 -- proof
-  rfl
+  grind [Real.cosh_eq]
 
 
 -- created on 2023-11-26
