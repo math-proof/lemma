@@ -8,7 +8,7 @@ def apply(contains):
     return Greater(sin(x), 0)
 
 
-@prove
+@prove(proved=False)
 def prove(Eq):
     from Lemma import Real
 

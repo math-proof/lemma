@@ -28,9 +28,9 @@ def apply(eq_M, x, w, r):
     return Equal(conv2d[r](x * M0, w) * M1, Stack[k:m](block))
 
 
-@prove(slow=True)
+@prove#(slow=True)
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Tensor
+    from Lemma import Set, Algebra, Bool, Tensor, Int, Nat
 
     m, d, d_quote = Symbol(integer=True, positive=True)
     n, l, r = Symbol(shape=(2,), integer=True, positive=True)
@@ -43,8 +43,7 @@ def prove(Eq):
     w = Symbol(real=True, shape=(l[0], l[1], d, d_quote))
     M = Symbol(real=True, shape=(m, n[0], n[1]))
     i, j, k = Symbol(integer=True)
-    Eq << apply(
-        Equal(M, Stack[j:n[1], i:n[0], k:m](Bool(Element(i, Range(β0[k], ζ0[k])) & Element(j, Range(β1[k], ζ1[k]))))), x, w, r)
+    Eq << apply(Equal(M, Stack[j:n[1], i:n[0], k:m]((Element(i, Range(β0[k], ζ0[k])) & Element(j, Range(β1[k], ζ1[k]))).toNat)), x, w, r)
 
     Eq.M_def = Eq[0].this.find(Element).apply(Set.In_Ico.Is.And).this.find(Element).apply(Set.In_Ico.Is.And)
 
@@ -68,7 +67,8 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum, Stack).subs(Eq.M_def)
 
-    Eq << Eq[-1].this.find(Bool).apply(Bool.Bool.eq.Ite)
+    from sympy import Bool as Boolean
+    Eq << Eq[-1].this.find(Boolean).apply(Bool.Bool.eq.Ite)
 
     Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite.nest, pivot=slice(1, None, 2))# select cond with j
 
@@ -86,7 +86,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.M_def)
 
-    Eq << Eq[-1].this.find(Bool).apply(Bool.Bool.eq.Ite)
+    Eq << Eq[-1].this.find(Boolean).apply(Bool.Bool.eq.Ite)
 
     Eq.convolution_definition = Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
