@@ -280,6 +280,18 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
         }
     }
+    if ($attributes -cmatch '\bis\.comm\b') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(\.of\..+)?$') {
+            $section = $matches[1]
+            $given = $matches[2]
+            $imply = $matches[3]
+            $arguments = $matches[4]
+            $given = transformPrefix $given
+            $imply = transformPrefix $imply
+            $new_module = "$section.$imply.is.$given$arguments"
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
+    }
     $mt_group = [regex]::Matches($attributes, '\b(?<!\.)mt(?:\s+(\d+))?\b')
     if ($mt_group -and $module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.of\.(.+)$') {
         $section = $matches[1]

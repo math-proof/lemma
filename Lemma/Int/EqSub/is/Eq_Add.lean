@@ -1,7 +1,7 @@
 import sympy.Basic
 
 
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is, mp.mt, mpr.mt]
+@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is, is.comm, mp.mt, mpr.mt]
 private lemma left
   [AddCommGroup α]
 -- given
@@ -17,15 +17,16 @@ private lemma left
 | :---: | :---: |
 | main | Int.EqSub.is.Eq_Add |
 | comm | Int.Eq_Add.is.EqSub |
-| mp   | Int.Eq_Add.of.EqSub |
-| mpr  | Int.EqSub.of.Eq_Add |
+| mp | Int.Eq_Add.of.EqSub |
+| mpr | Int.EqSub.of.Eq_Add |
 | mp.comm | Int.EqAdd.of.Eq_Sub |
 | mpr.comm | Int.Eq_Sub.of.EqAdd |
 | comm.is | Int.Eq_Sub.is.EqAdd |
-| mp.mt   | Int.NeSub.of.Ne_Add |
-| mpr.mt   | Int.Ne_Add.of.NeSub |
+| is.comm | Int.EqAdd.is.Eq_Sub |
+| mp.mt | Int.NeSub.of.Ne_Add |
+| mpr.mt | Int.Ne_Add.of.NeSub |
 -/
-@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is, mp.mt, mpr.mt]
+@[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is, is.comm, mp.mt, mpr.mt]
 private lemma main
   [AddGroup α]
 -- given

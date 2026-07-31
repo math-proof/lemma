@@ -6,13 +6,13 @@ open Vector
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Vector.EqUnflatten.is.Eq_Flatten.of.Eq |
-| comm | Vector.Eq_Flatten.is.EqUnflatten.of.Eq |
-| mp   | Vector.Eq_Flatten.of.EqUnflatten.Eq |
-| mpr  | Vector.EqUnflatten.of.Eq_Flatten.Eq |
-| mp.comm | Vector.EqFlatten.of.Eq_Unflatten.Eq |
+| main | Vector.EqUnflatten.is.Eq_Flatten |
+| comm | Vector.Eq_Flatten.is.EqUnflatten |
+| mp | Vector.Eq_Flatten.of.EqUnflatten |
+| mpr | Vector.EqUnflatten.of.Eq_Flatten |
+| mp.comm | Vector.EqFlatten.of.Eq_Unflatten |
 | mpr.comm | Vector.Eq_Unflatten.of.EqFlatten |
-| comm.is | Vector.Eq_Unflatten.is.EqFlatten.of.Eq |
+| comm.is | Vector.Eq_Unflatten.is.EqFlatten |
 -/
 @[main, comm, mp, mpr, mp.comm, mpr.comm, comm.is]
 private lemma main

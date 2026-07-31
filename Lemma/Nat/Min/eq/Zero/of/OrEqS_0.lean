@@ -1,6 +1,12 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.Min.eq.Zero.of.OrEqS_0 |
+| left | Nat.Min.eq.Zero.of.Eq_0 |
+-/
 @[main, left]
 private lemma main
   {n m : ℕ}

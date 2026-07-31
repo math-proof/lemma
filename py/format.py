@@ -27,7 +27,7 @@ GEN = ROOT / "sympy" / "parsing" / "AttrDocstringGen.lean"
 SH_DIR = ROOT / "sh"
 
 CUSTOM_ATTR_HEADS = frozenset({
-    "main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is",
+    "main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm",
     "mt", "mp.mt", "mpr.mt", "left", "right", "mpr.left", "mpr.right",
     "fin", "fin.comm", "fin.mp", "fin.mpr", "val", "subst", "cast", "cast.fin",
     "mp and", "mpr and", "mp.comm and", "mpr.comm and",

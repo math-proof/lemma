@@ -278,6 +278,38 @@ initialize registerBuiltinAttribute {
     }
 }
 
+def Expr.is.comm' (type mp mpr : Lean.Expr) (parity : ℕ := 0) : CoreM (List (Bool × Lean.Expr) × Lean.Expr × Lean.Expr) := do
+  let ⟨parity, type, value⟩ ← Expr.comm.is' type mp mpr parity
+  let ⟨_, type, value⟩ ← Expr.comm' type value 0
+  return (parity, type, value)
+
+initialize registerBuiltinAttribute {
+  name := `is.comm'
+  descr := "Automatically generate the swapped commutative version of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+
+    let proof : Lean.Expr := .const declName (levelParams.map .param)
+    let ⟨n, type, value⟩ ← Expr.mpr' decl.type proof (and := true)
+    let ⟨_, type, mpr⟩ := Expr.comm type value (1 <<< n)
+
+    let ⟨n, type, value⟩ ← Expr.mp' decl.type proof (and := true)
+    let ⟨_, type, mp⟩ := Expr.comm type value (1 <<< n)
+
+    let ⟨parity, type, value⟩ ← Expr.is.comm' decl.type mp mpr stx.getNum
+    let ⟨moduleTokens, parity⟩ ← parity.extractParity
+    let name := List.is.comm moduleTokens parity
+    println! s!"name = {name}"
+    addAndCompile <| .thmDecl {
+      name := (name.foldl Name.str default).lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
 def Expr.mt' (type value : Lean.Expr) (parity : ℕ := 0) : CoreM (ℕ × Lean.Expr × Lean.Expr) := do
   let ⟨binders, type⟩ := type.decompose_forallE
   let defaultCount := binders.countP (·.snd.snd == .default)

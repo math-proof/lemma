@@ -2,6 +2,14 @@ import sympy.sets.sets
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Set.In_Ioo.is.Lt.Lt |
+| comm | Set.Lt.Lt.is.In_Ioo |
+| mp | Set.Lt.Lt.of.In_Ioo |
+| mpr | Set.In_Ioo.of.Lt.Lt |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   [Preorder α]

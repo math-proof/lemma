@@ -64,7 +64,7 @@ def customAttrHead (attr : String) : String :=
   | _ => ""
 
 def customAttrHeads : List String :=
-  ["main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "mt", "mp.mt", "mpr.mt",
+  ["main", "comm", "mp", "mpr", "mp.comm", "mpr.comm", "comm.is", "is.comm", "mt", "mp.mt", "mpr.mt",
    "left", "right", "mpr.left", "mpr.right", "fin", "fin.comm", "fin.mp", "fin.mpr",
    "val", "subst", "cast", "cast.fin", "mp and", "mpr and", "mp.comm and", "mpr.comm and"]
 
@@ -79,6 +79,28 @@ def ofParityFromTokens (tokens : List String) : List Bool :=
     (List.range rest.length).map fun _ => false
   | none => []
 
+def simpleIsMpComm (tokens : List String) : Option (List String) :=
+  if (tokens.idxOf? "of").isNone && tokens.length >= 4 && tokens[2]! == "is" then
+    some [tokens[0]!, tokens[3]!.transformPrefix, "of", tokens[1]!.transformPrefix]
+  else
+    none
+
+def simpleIsMprComm (tokens : List String) : Option (List String) :=
+  if (tokens.idxOf? "of").isNone && tokens.length >= 4 && tokens[2]! == "is" then
+    some [tokens[0]!, tokens[1]!.transformPrefix, "of", tokens[3]!.transformPrefix]
+  else
+    none
+
+def mpCommLemmaTokens (tokens : List String) (parity : List Bool) : List String :=
+  match simpleIsMpComm tokens with
+  | some ts => ts
+  | none => List.comm (List.mp tokens) parity
+
+def mprCommLemmaTokens (tokens : List String) (parity : List Bool) : List String :=
+  match simpleIsMprComm tokens with
+  | some ts => ts
+  | none => List.comm (List.mpr tokens) parity
+
 def attrLemmaName (tokens : List String) (attr : String) : String :=
   let parts := (attr.trimAscii.toString).splitOn " " |>.filter (· != "")
   match parts with
@@ -91,14 +113,16 @@ def attrLemmaName (tokens : List String) (attr : String) : String :=
   | ["mpr"] => moduleName (List.mpr tokens)
   | ["mpr", "and"] => moduleName (List.mpr tokens)
   | ["mpr", _] => moduleName (List.mpr tokens)
-  | ["mp.comm"] => moduleName (List.comm (List.mp tokens) (ofParityFromTokens tokens))
-  | ["mp.comm", "and"] => moduleName (List.comm (List.mp tokens) (ofParityFromTokens tokens))
-  | ["mp.comm", _] => moduleName (List.comm (List.mp tokens) (ofParityFromTokens tokens))
-  | ["mpr.comm"] => moduleName (List.comm (List.mpr tokens) (ofParityFromTokens tokens))
-  | ["mpr.comm", "and"] => moduleName (List.comm (List.mpr tokens) (ofParityFromTokens tokens))
-  | ["mpr.comm", _] => moduleName (List.comm (List.mpr tokens) (ofParityFromTokens tokens))
+  | ["mp.comm"] => moduleName (mpCommLemmaTokens tokens (ofParityFromTokens tokens))
+  | ["mp.comm", "and"] => moduleName (mpCommLemmaTokens tokens (ofParityFromTokens tokens))
+  | ["mp.comm", _] => moduleName (mpCommLemmaTokens tokens (parityBits (parts[1]!.toNat!)))
+  | ["mpr.comm"] => moduleName (mprCommLemmaTokens tokens (ofParityFromTokens tokens))
+  | ["mpr.comm", "and"] => moduleName (mprCommLemmaTokens tokens (ofParityFromTokens tokens))
+  | ["mpr.comm", _] => moduleName (mprCommLemmaTokens tokens (parityBits (parts[1]!.toNat!)))
   | ["comm.is"] => moduleName (List.comm.is tokens [])
   | ["comm.is", n] => moduleName (List.comm.is tokens (parityBits (n.toNat!)))
+  | ["is.comm"] => moduleName (List.is.comm tokens [])
+  | ["is.comm", n] => moduleName (List.is.comm tokens (parityBits (n.toNat!)))
   | ["fin"] => moduleName (tokens ++ ["fin"])
   | ["fin", _] => moduleName (tokens ++ ["fin"])
   | ["fin.comm"] => moduleName (List.comm tokens [] ++ ["fin"])

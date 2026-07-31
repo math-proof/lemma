@@ -262,6 +262,14 @@ def List.comm.is (list : List String) (parity : List Bool) : List String :=
     let rhs := rhs.tail.transformPrefix
     lhs ++ "is" :: rhs
 
+def List.is.comm (list : List String) (parity : List Bool) : List String :=
+  list.decomposeOf parity fun list =>
+    let i := list.idxOf "is"
+    let ⟨lhs, rhs⟩ := list.splitAt i
+    let lhs := lhs.transformPrefix
+    let rhs := rhs.tail.transformPrefix
+    rhs ++ "is" :: lhs
+
 /--
 `@[mp]` (abbreviated from `modus ponens`) attribute automatically generates the mp implication of a equivalence theorem.
 Usage:
@@ -418,6 +426,11 @@ def Expr.comm.is (type mp mpr : Expr) (parity : ℕ := 0) : List (Bool × Expr) 
       (telescope valueBinders .lam)
   )
 
+def Expr.is.comm (type mp mpr : Expr) (parity : ℕ := 0) : List (Bool × Expr) × Expr × Expr :=
+  let ⟨parity, type, value⟩ := Expr.comm.is type mp mpr parity
+  let ⟨_, type, value⟩ := Expr.comm type value 0
+  (parity, type, value)
+
 /--
 `@[comm.is]` attribute automatically generates the commutative version of an equivalence (Iff) theorem.
 Usage:
@@ -447,6 +460,41 @@ initialize registerBuiltinAttribute {
     let ⟨moduleTokens, parity⟩ ← parity.extractParity
     addAndCompile <| .thmDecl {
       name := ((List.comm.is moduleTokens parity).foldl Name.str default).lemmaName declName
+      levelParams := levelParams
+      type := type
+      value := value
+    }
+}
+
+/--
+`@[is.comm]` attribute automatically generates the swapped commutative version of an equivalence (Iff) theorem.
+Usage:
+```lean
+@[mpr]
+theorem Section.LHS.is.RHS (a : α) (b : β) : a ≃ b ↔ a' = b' := by proof
+-- Generates:
+theorem Section.RHS'.is.LHS' {a : α} {b : β} : b' = a' ↔ b ≃ a := ⟨mpr.comm, mp.comm⟩
+```
+-/
+initialize registerBuiltinAttribute {
+  name := `is.comm
+  descr := "Automatically generate the swapped commutative version of an equivalence theorem"
+  applicationTime := .afterCompilation
+  add := fun declName stx kind => do
+    let decl ← getConstInfo declName
+    let levelParams := decl.levelParams
+
+    let proof := .const declName (levelParams.map .param)
+    let ⟨n, type, value⟩ := Expr.mpr decl.type proof (and := true)
+    let ⟨_, type, mpr⟩ := Expr.comm type value (1 <<< n)
+
+    let ⟨n, type, value⟩ := Expr.mp decl.type proof (and := true)
+    let ⟨_, type, mp⟩ := Expr.comm type value (1 <<< n)
+
+    let ⟨parity, type, value⟩ := Expr.is.comm decl.type mp mpr stx.getNum
+    let ⟨moduleTokens, parity⟩ ← parity.extractParity
+    addAndCompile <| .thmDecl {
+      name := ((List.is.comm moduleTokens parity).foldl Name.str default).lemmaName declName
       levelParams := levelParams
       type := type
       value := value
