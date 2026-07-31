@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << LessEqual(t - 1, 0, plausible=True)
 
-    Eq << Int.Mul.le.Zero.of.Le_0.Ge_0.apply(Eq[-1], Eq[0])
+    Eq << Int.Ge0Mul.of.Le_0.Ge_0.apply(Eq[-1], Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
 

@@ -29,8 +29,6 @@ from . import AllIn_Insert
 from . import And_Or
 from . import BFn
 from . import BFnIte
-from . import EqBoolS
-from . import ImpAndS
 from . import ImpOr
 from . import Ite
 from . import Ne_0
@@ -66,3 +64,4 @@ from . import Or_OrAndS
 from . import SquareBool
 from . import EqBool
 from . import And_BFnIte
+from . import ImpAndS

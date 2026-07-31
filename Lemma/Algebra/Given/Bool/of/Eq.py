@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Bool.Bool.eq.Zero.of.Bool.ne.One)
 
-    Eq << Nat.Mul.eq.Zero.of.OrEqS.apply(Eq[-1])
+    Eq << Nat.MulSubS.eq.Zero.of.OrEqS.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.expand()
 

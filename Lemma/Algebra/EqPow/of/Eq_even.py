@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.of.Eq_even.apply(Eq[0])
 
-    Eq << Eq[-1].this.expr.apply(Nat.EqPowS.of.Eq, base=-1)
+    Eq << Eq[-1].this.expr.apply(Nat.Pow.of.Eq, base=-1)
 
 
 if __name__ == '__main__':

@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2])
 
-    Eq << Eq[-1].this.lhs.apply(Nat.Mul.eq.Zero.of.OrEqS)
+    Eq << Eq[-1].this.lhs.apply(Nat.MulSubS.eq.Zero.of.OrEqS)
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 

@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] * t, Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
 
-    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Nat.EqPowS.of.Eq.apply(Eq[-1], exp=t)
+    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Nat.Pow.of.Eq.apply(Eq[-1], exp=t)
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
 

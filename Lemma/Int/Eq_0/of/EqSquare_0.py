@@ -15,7 +15,7 @@ def prove(Eq):
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(x ** 2, 0))
 
-    Eq << Nat.EqPowS.of.Eq.apply(Eq[0], exp=S.One / 2)
+    Eq << Nat.Pow.of.Eq.apply(Eq[0], exp=S.One / 2)
 
     Eq << Int.Eq_0.of.EqAbs_0.apply(Eq[-1])
 

@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq.eq = Eq[-1].this.find(Ceil[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Or(*Eq[-1].find(Or).args[:2]).this.apply(Nat.Mul.eq.Zero.of.OrEqS)
+    Eq << Or(*Eq[-1].find(Or).args[:2]).this.apply(Nat.MulSubS.eq.Zero.of.OrEqS)
 
     Eq << Eq[-1].subs(Eq.UV)
 

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And[Or]).apply(Bool.OrAndS.of.And_Or)
 
-    Eq << Eq[-1].this.find((Expr <= 0) & (Expr >= 0)).apply(Int.Mul.le.Zero.of.Le_0.Ge_0)
+    Eq << Eq[-1].this.find((Expr <= 0) & (Expr >= 0)).apply(Int.Ge0Mul.of.Le_0.Ge_0)
 
     Eq << Eq[-1].this.find((Expr <= 0) & (Expr >= 0)).apply(Int.Le_0.of.Ge_0.Le_0)
 

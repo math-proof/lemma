@@ -103,9 +103,9 @@ def prove(Eq):
 
     Eq.expand = Eq.expand.subs(Eq[-1])
 
-    Eq.A3_def = Nat.EqPowS.of.Eq.apply(Eq.A_def, exp=3)
+    Eq.A3_def = Nat.Pow.of.Eq.apply(Eq.A_def, exp=3)
 
-    Eq.B3_def = Nat.EqPowS.of.Eq.apply(Eq.B_def, exp=3)
+    Eq.B3_def = Nat.Pow.of.Eq.apply(Eq.B_def, exp=3)
 
     Eq << Eq.A3_def + Eq.B3_def
 

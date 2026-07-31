@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[1].apply(Bool.Or.of.ImpNot)
 
-    Eq.is_multiplication_zero = Nat.Mul.eq.Zero.of.OrEqS.apply(Eq.or_statement)
+    Eq.is_multiplication_zero = Nat.MulSubS.eq.Zero.of.OrEqS.apply(Eq.or_statement)
 
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)

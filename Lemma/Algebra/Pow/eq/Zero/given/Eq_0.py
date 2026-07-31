@@ -16,7 +16,7 @@ def prove(Eq):
     x = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** n, 0))
 
-    Eq << Nat.EqPowS.of.Eq.apply(Eq[1], exp=n)
+    Eq << Nat.Pow.of.Eq.apply(Eq[1], exp=n)
 
 
 

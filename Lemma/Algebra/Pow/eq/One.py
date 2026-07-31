@@ -26,7 +26,7 @@ def prove(Eq):
     t = Symbol(2 * binomial(n + a + 1, 2))
     Eq << t.this.definition
 
-    Eq << Nat.EqPowS.of.Eq.apply(Eq[1], base=-1)
+    Eq << Nat.Pow.of.Eq.apply(Eq[1], base=-1)
 
     Eq << Eq[1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
 

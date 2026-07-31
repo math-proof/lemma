@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.EqMulS.of.Eq)
 
-    Eq << Bool.EqBoolS.of.Iff.apply(Eq[-3])
+    Eq << Bool.Bool.of.Iff.apply(Eq[-3])
 
     Eq << Eq[4].subs(Eq[-1])
 

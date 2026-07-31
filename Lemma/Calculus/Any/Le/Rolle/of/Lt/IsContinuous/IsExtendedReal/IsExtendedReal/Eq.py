@@ -101,7 +101,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Int.Mul.le.Zero.of.Le_0.Ge_0)
+    Eq << Eq[-1].this.rhs.apply(Int.Ge0Mul.of.Le_0.Ge_0)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], 0)
 
@@ -120,7 +120,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] & Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Int.Mul.le.Zero.of.Le_0.Ge_0)
+    Eq << Eq[-1].this.rhs.apply(Int.Ge0Mul.of.Le_0.Ge_0)
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1], 0)
 

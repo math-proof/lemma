@@ -15,7 +15,7 @@ def prove(Eq):
     f, g, h = Symbol(integer=True, shape=(oo,))
     Eq << apply(Iff(f[n] > 0, g[n] > 0), All[n:f[n] > 0](h[n] > 0))
 
-    Eq << Bool.EqBoolS.of.Iff.apply(Eq[0])
+    Eq << Bool.Bool.of.Iff.apply(Eq[0])
 
     Eq << All[n:Equal(functions.Bool(f[n] > 0), 1)](h[n] > 0, plausible=True)
 

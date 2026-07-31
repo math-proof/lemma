@@ -33,7 +33,7 @@ def prove(Eq):
     x = Symbol(y * z)
     Eq << x.this.definition
 
-    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=n)
+    Eq << Nat.Pow.of.Eq.apply(Eq[-1], exp=n)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Pow.eq.Mul.split.base)
 

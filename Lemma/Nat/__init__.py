@@ -23,9 +23,6 @@ from . import EqMax
 from . import Eq_Div
 from . import LeAdd_1
 from . import LeAddS
-from . import EqPowS
-from . import Ne_0
-from . import OrEqS_0
 from . import Mul_Ite
 from . import Ne_1
 from . import Ite
@@ -35,3 +32,7 @@ from . import Pow_Ite
 from . import Min
 from . import Max
 from . import Ite_MulS
+from . import MulSubS
+from . import Pow
+from . import Ne_0
+from . import OrEqS_0

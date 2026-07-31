@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.arg.apply(Complex.Expr.eq.AddRe_MulIIm)
 
-    Eq.Square_is_zero = Nat.EqPowS.of.Eq.apply(Eq[-1], exp=2)
+    Eq.Square_is_zero = Nat.Pow.of.Eq.apply(Eq[-1], exp=2)
 
     Eq.Im_is_positive = Greater(Im(x) ** 2, 0, plausible=True)
 

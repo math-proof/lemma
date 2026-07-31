@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Set.OrEqS.of.In_Finset.apply(Eq[-1])
 
-    Eq << Nat.Mul.eq.Zero.of.OrEqS.apply(Eq[1])
+    Eq << Nat.MulSubS.eq.Zero.of.OrEqS.apply(Eq[1])
 
     Eq << Eq[-1].this.lhs.expand()
 

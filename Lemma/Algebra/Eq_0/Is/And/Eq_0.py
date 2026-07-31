@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Eq)
 
-    Eq << Eq[-1].this.lhs.apply(Nat.EqPowS.of.Eq, exp=2)
+    Eq << Eq[-1].this.lhs.apply(Nat.Pow.of.Eq, exp=2)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.And.Eq_0.of.Add.eq.Zero)
 

@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.w3, Eq.w_square)
 
-    Eq <<= Nat.EqPowS.of.Eq.apply(Eq.A, exp=3), Nat.EqPowS.of.Eq.apply(Eq.B, exp=3)
+    Eq <<= Nat.Pow.of.Eq.apply(Eq.A, exp=3), Nat.Pow.of.Eq.apply(Eq.B, exp=3)
 
     Eq << Eq[-1] + Eq[-2]
 
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq.A * Eq.B
 
-    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=3)
+    Eq << Nat.Pow.of.Eq.apply(Eq[-1], exp=3)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
 

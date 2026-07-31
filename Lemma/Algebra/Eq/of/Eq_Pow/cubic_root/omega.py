@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.difference)
 
-    Eq << Nat.EqPowS.of.Eq.apply(Eq[0], exp=S.One / 3)
+    Eq << Nat.Pow.of.Eq.apply(Eq[0], exp=S.One / 3)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Root.eq.Mul.ExpI.Arg)
 

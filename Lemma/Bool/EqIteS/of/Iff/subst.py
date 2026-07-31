@@ -15,7 +15,7 @@ def prove(Eq):
 
     Eq << apply(Iff(x > y, f(x) > f(y)), Piecewise((g(x, y), x > y), (h(x, y), True)))
 
-    Eq << Bool.EqBoolS.of.Iff.apply(Eq[0])
+    Eq << Bool.Bool.of.Iff.apply(Eq[0])
 
     Eq << Eq[1].lhs._subs(x > y, Equal(functions.Bool(x > y), 1)).this.args[0].cond.lhs.apply(Bool.Bool.eq.Ite)
 

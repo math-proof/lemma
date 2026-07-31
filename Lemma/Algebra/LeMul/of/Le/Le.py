@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(x, 0, plausible=True)
 
-    Eq << Int.Mul.le.Zero.of.Le_0.Ge_0.apply(Eq[-2], Eq[-1])
+    Eq << Int.Ge0Mul.of.Le_0.Ge_0.apply(Eq[-2], Eq[-1])
 
     Eq << Nat.Le.of.Ge.Le.apply(Eq.is_nonnegative, Eq[-1])
 

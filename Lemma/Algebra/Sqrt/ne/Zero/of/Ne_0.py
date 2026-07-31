@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Nat.EqPowS.of.Eq.apply(Eq[-1], exp=2)
+    Eq << Nat.Pow.of.Eq.apply(Eq[-1], exp=2)
     Eq << ~Eq[-1]
 
 

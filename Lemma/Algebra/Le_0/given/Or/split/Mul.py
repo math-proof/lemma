@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.args[1].apply(Int.Le_0.of.Ge_0.Le_0)
 
-    Eq << Eq[-1].this.find(And).apply(Int.Mul.le.Zero.of.Le_0.Ge_0)
+    Eq << Eq[-1].this.find(And).apply(Int.Ge0Mul.of.Le_0.Ge_0)
 
 
 
