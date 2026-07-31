@@ -66,10 +66,9 @@ private lemma main
 -- proof
   have h_i : i < s[d.val] := i.isLt
   have h_d := d.isLt
-  have h_get_eraseIdx := GetEraseIdx.eq.Get.of.Gt.GtLength h_d h_k
   apply SEq.of.SEqDataS.Eq
   ·
-    simp [h_get_eraseIdx]
+    simp
     grind
   ·
     rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
