@@ -1493,11 +1493,11 @@ export function LeanProp(Base) {
 export function LeanGetElemBase(Base) {
     return class extends Base {
         insert_comma(caret) {
-            const caret2 = new LeanCaret(this.indent, caret.level);
-            const commaSep = new LeanArgsCommaSeparated([caret, caret2], this.indent, caret2.level);
+            let $new = new LeanCaret(this.indent, caret.level);
+            const commaSep = new LeanArgsCommaSeparated([caret, $new], this.indent, $new.level);
             this.args[1] = commaSep;
             commaSep.parent = this;
-            return caret2;
+            return $new;
         }
 
         push_right(funcName) {
@@ -1725,24 +1725,35 @@ class LeanPairedGroup extends Closable(LeanUnary) {
                 return caret;
             }
             if (caret instanceof LeanToken) {
-                const caret2 = new LeanCaret(this.indent, caret.level);
+                const $new = new LeanCaret(this.indent, caret.level);
                 const Ctor = typeof func === 'string' ? LEAN_CLASSES[func] : func;
-                this.arg = new LeanArgsSpaceSeparated([this.arg, new Ctor(caret2, this.indent, caret.level)], this.indent, caret.level);
-                return caret2;
+                this.arg = new LeanArgsSpaceSeparated([this.arg, new Ctor($new, this.indent, caret.level)], this.indent, caret.level);
+                return $new;
             }
         }
         if (this.parent) return this.parent.insert(this, func, type);
     }
 
     insert_comma(caret) {
-        const caret2 = new LeanCaret(this.indent, caret.level);
+        caret = new LeanCaret(this.indent, caret.level);
         const a = this.arg;
         if (a instanceof LeanArgsCommaSeparated) {
-            a.push(caret2);
+            a.push(caret);
         } else {
-            this.arg = new LeanArgsCommaSeparated([a, caret2], this.indent, caret2.level);
+            this.arg = new LeanArgsCommaSeparated([a, caret], this.indent, caret.level);
         }
-        return caret2;
+        return caret;
+    }
+
+    insert_semicolon(caret) {
+        caret = new LeanCaret(this.indent, caret.level);
+        const a = this.arg;
+        if (a instanceof LeanArgsSemicolonSeparated) {
+            a.push(caret);
+        } else {
+            this.arg = new LeanArgsSemicolonSeparated([a, caret], this.indent, caret.level);
+        }
+        return caret;
     }
 
     insert_if(caret) {
@@ -7042,9 +7053,9 @@ export class LeanArgsCommaSeparated extends LeanArgs {
     }
 
     insert_comma(caret) {
-        const caret2 = new LeanCaret(this.indent, caret.level);
-        this.push(caret2);
-        return caret2;
+        caret = new LeanCaret(this.indent, caret.level);
+        this.push(caret);
+        return caret;
     }
 
     insert_tactic(caret, token) {
@@ -8984,7 +8995,7 @@ class Lean_let extends LeanSyntax {
         const parent = this.parent;
         if (parent instanceof LeanSequentialTacticCombinator) return this.indent > 0;
         if (parent instanceof LeanTacticBlock) return this.indent > parent.indent;
-        return true;
+        return !(parent instanceof LeanArgsSemicolonSeparated);
     }
 
     toJSON() {

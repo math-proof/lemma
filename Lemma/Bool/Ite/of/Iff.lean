@@ -2,7 +2,7 @@ import sympy.Basic
 
 
 @[main]
-private lemma subst
+private lemma main
   [Decidable p]
   [Decidable q]
 -- given

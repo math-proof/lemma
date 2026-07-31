@@ -1,6 +1,5 @@
-import Lemma.Nat.Le.is.Lt.ou.Eq
 import Lemma.Int.Ge0Mul.of.Le_0.Gt_0
-open Nat Int
+open Int
 
 
 @[main]
@@ -23,4 +22,4 @@ private lemma main
 
 
 -- created on 2025-03-24
--- updated on 2025-05-05
+-- updated on 2026-07-31

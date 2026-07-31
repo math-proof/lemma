@@ -180,8 +180,7 @@ export function tokensToModule(segment, section) {
 
 /** @param {string[][]} segment @param {string | null} section */
 function moduleToLeanFromSegment(segment, section) {
-  const dotted = tokensToModule(segment, section);
-  return moduleToLeanPath(dotted);
+  return moduleToLeanPath(tokensToModule(segment, section));
 }
 
 /**
@@ -299,20 +298,33 @@ export function resolveMissingModuleRedirect(moduleDot) {
               let hit = false;
               for (let i = 2; i < segment.length; i++) {
                 const segment_ = segment.map((r) => [...r]);
-                segment_[0] = /** @type {string[][]} */ (Not(segment_[i]));
-                segment_[i] = /** @type {string[][]} */ (Not(first));
-                const p = moduleToLeanFromSegment(segment_, section);
-                if (p && fs.existsSync(p)) {
+                segment_[0] = Not(segment_[i]);
+                segment_[i] = Not(first);
+                if (existsSync(tokensToModule(segment_, section))) {
                   hit = true;
                   segment = segment_;
                   break;
                 }
+                if (segment_[1].length == 1 && segment_[1][0] === 'of') {
+                  segment_[1][0] = 'is';
+                  if (existsSync(tokensToModule(segment_, section))) {
+                    hit = true;
+                    segment = segment_;
+                    break;
+                  }
+                }
               }
               if (!hit && segment[1]) {
+                if (segment[2].length == 1 && segment[2][0].match(/^Eq_[01]$/)) {
+                  let segment_ = segment.slice(0, 1);
+                  if (existsSync(tokensToModule(segment_, section))) {
+                    segment = segment_;
+                    break;
+                  }
+                }
                 segment[1][0] = 'is';
                 if (segment.length >= 4) arrayInsert(segment, 3, ['of']);
-                const p = moduleToLeanPath(tokensToModule(segment, section));
-                if (!fs.existsSync(p)) {
+                if (!existsSync(tokensToModule(segment, section))) {
                   [segment[0], segment[2]] = [segment[2], segment[0]];
                 }
               }
@@ -330,6 +342,9 @@ export function resolveMissingModuleRedirect(moduleDot) {
               segment = segment_;
             } else if (segment[1]) {
               segment[1][0] = 'is';
+              if (!existsSync(tokensToModule(segment, section))) {
+                [segment[0], segment[2]] = [segment[2], segment[0]];
+              }
             }
           }
           break;

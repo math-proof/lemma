@@ -185,7 +185,8 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
     $module = $file -creplace '^\.\\Lemma\\', ''
     $module = $module -replace '\\', '.'
     $module = $module -replace '\.lean$', ''
-    $constructor_order = $matches[1] -and $matches[1].Contains("constructor order")
+    $docstring = $matches[1]
+    $constructor_order = $docstring -and $docstring.Contains("constructor order")
     $attributes = $matches[2]
     $match = $attributes -cmatch '\b(?<!mpr?\.)comm(?: ([0-9]+))?\b'
     if ($match) {
@@ -255,6 +256,18 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             Write-Host "Ignoring @\[main, mp.comm] at $file"
         }
     }
+    if ($attributes -cmatch '\bmp\.mt\b') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(?:\.of(\..+))?$') {
+            $new_module = "$($matches[1]).$(Not $matches[2]).of.$(Not $matches[3])$($matches[4])"
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
+    }
+    if ($attributes -cmatch '\bmpr\.mt\b') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(?:\.of(\..+))?$') {
+            $new_module = "$($matches[1]).$(Not $matches[3]).of.$(Not $matches[2])$($matches[4])"
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
+    }
     if ($attributes -cmatch '\bcomm\.is\b') {
         if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(\.of\..+)?$') {
             $section = $matches[1]
@@ -281,6 +294,14 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             $arguments[$i] = $imply
             $new_given = $arguments -join '.'
             $new_module = "$section.$new_imply.of.$new_given"
+            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        }
+    }
+    $subst_group = [regex]::Matches($attributes, '\bsubst\s+(\d+)\b')
+    if ($subst_group) {
+        foreach ($m in $subst_group) {
+            $b = $m.Groups[1].Value
+            $new_module = "$module.of.Eq_$b"
             Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
         }
     }
