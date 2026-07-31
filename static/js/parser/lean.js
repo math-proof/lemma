@@ -2096,7 +2096,8 @@ class LeanAngleBracket extends LeanPairedGroup {
             p instanceof LeanRightarrow || 
             p instanceof LeanColon || 
             p instanceof LeanArgsCommaSeparated ||
-            p instanceof LeanBitOr
+            p instanceof LeanBitOr | 
+            p instanceof LeanWith
         );
     }
 

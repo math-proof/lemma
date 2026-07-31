@@ -8,8 +8,7 @@ private lemma main
   (h_i : x.length > i)
   (a : α) :
 -- imply
-  have : i < (x.set i a).length := by simpa
-  (x.set i a)[i] = a := by
+  (x.set i a)[i]'(by simpa) = a := by
 -- proof
   simp
 

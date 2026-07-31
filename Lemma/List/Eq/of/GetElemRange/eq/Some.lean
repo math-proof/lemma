@@ -11,14 +11,8 @@ private lemma main
 -- imply
   i = j := by
 -- proof
-  if hi : i < n then
-    rw [List.getElem?_range hi] at h
-    simp_all
-  else
-    have hi := Ge.of.NotLt hi
-    have := GetElemRange.eq.None.of.Ge hi
-    rw [this] at h
-    contradiction
+  by_cases i < n <;>
+    aesop
 
 
 -- created on 2025-06-02
