@@ -31,8 +31,6 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-
-
     i = Symbol(integer=True)
     x = Symbol(real=True)
     a = Symbol(real=True, shape=(oo,))
