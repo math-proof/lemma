@@ -323,6 +323,8 @@ export function resolveMissingModuleRedirect(moduleDot) {
                   }
                 }
                 segment[1][0] = 'is';
+                if (existsSync(tokensToModule(segment, section)))
+                  break;
                 if (segment.length >= 4) arrayInsert(segment, 3, ['of']);
                 if (!existsSync(tokensToModule(segment, section))) {
                   [segment[0], segment[2]] = [segment[2], segment[0]];
