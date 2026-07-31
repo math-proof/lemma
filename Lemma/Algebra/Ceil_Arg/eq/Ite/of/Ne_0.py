@@ -15,7 +15,7 @@ def apply(is_nonzero, q):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Set, Bool, Nat, Int
+    from Lemma import Algebra, Set, Bool, Nat, Int, Real
 
     p, q = Symbol(complex=True, given=True)
     Eq << apply(Unequal(p, 0), q)
@@ -97,7 +97,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.arg.apply(Algebra.Mul.eq.Exp)
 
-    Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Trigonometry.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 
     Eq.p3_contains = Set.Arg.In.IocNegPiPi.apply(-p ** 3)
 
@@ -127,7 +127,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.arg.apply(Algebra.Mul.eq.Exp)
 
-    Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Trigonometry.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq.arg_p3_w = Eq[-1].this.lhs.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 
     Eq << Set.InSub.of.In_Icc.apply(Eq.p3_contains, S.Pi * 2, simplify=None)
 

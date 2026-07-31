@@ -48,7 +48,7 @@ def rotary_matrix(i, j, k, clustered=False):
             [     0,      0, sin(k),       0,       0,  cos(k)]]
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Bool
+    from Lemma import Bool, Real
 
     # n denotes sequence length (seq_length)
     n = Symbol(integer=True, positive=True)
@@ -60,30 +60,30 @@ def prove(Eq):
 
     Eq << Eq[0].subs(i, i_quote).subs(j, j_quote).subs(k, k_quote).T @ Eq[0]
 
-    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Trigonometry.Add.eq.Cos),\
-        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Trigonometry.Sub.eq.Sin)
+    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Real.Add.eq.Cos),\
+        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
 
     Eq << -Eq[-1]
 
-    Eq << Eq[-1].find(-~Sin).this.apply(Trigonometry.Sin.eq.Neg.Sin)
+    Eq << Eq[-1].find(-~Sin).this.apply(Real.Sin.eq.Neg.Sin)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 
-    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Trigonometry.Add.eq.Cos),\
-        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Trigonometry.Sub.eq.Sin)
+    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Real.Add.eq.Cos),\
+        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
 
     Eq << -Eq[-1]
 
-    Eq << Eq[-1].find(-~Sin).this.apply(Trigonometry.Sin.eq.Neg.Sin)
+    Eq << Eq[-1].find(-~Sin).this.apply(Real.Sin.eq.Neg.Sin)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 
-    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Trigonometry.Add.eq.Cos),\
-        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Trigonometry.Sub.eq.Sin)
+    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Real.Add.eq.Cos),\
+        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
 
     Eq << -Eq[-1]
 
-    Eq << Eq[-1].find(-~Sin).this.apply(Trigonometry.Sin.eq.Neg.Sin)
+    Eq << Eq[-1].find(-~Sin).this.apply(Real.Sin.eq.Neg.Sin)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 

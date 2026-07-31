@@ -17,9 +17,9 @@ def prove(Eq):
     x, y = Symbol(super_complex=True)
     Eq << apply(Element(x, S.Complexes), Element(y, S.Complexes))
 
-    Eq << Set.Any.Eq.of.In.apply(Eq[0], var='a')
+    Eq << Set.Any_Eq.of.In.apply(Eq[0], var='a')
 
-    Eq << Set.Any.Eq.of.In.apply(Eq[1], var='b')
+    Eq << Set.Any_Eq.of.In.apply(Eq[1], var='b')
 
     Eq << Algebra.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2], simplify=None)
 

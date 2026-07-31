@@ -21,7 +21,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Equal(Limit[x:x0](f(x)), A), Element(A, Reals - {0}))
 
-    Eq << Set.Any.Eq.of.In.apply(Eq[1], var='a')
+    Eq << Set.Any_Eq.of.In.apply(Eq[1], var='a')
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=None)
 

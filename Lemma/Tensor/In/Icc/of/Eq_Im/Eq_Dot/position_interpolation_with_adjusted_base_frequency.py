@@ -18,7 +18,7 @@ def apply(eq_cosine_similarity, eq_rotary_ABF):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Trigonometry, Bool, Tensor, Nat, Finset
+    from Lemma import Algebra, Set, Bool, Tensor, Nat, Finset, Real
 
     # N denotes sequence length (seq_length)
     # b denotes 10000 adjusted to 500000
@@ -127,7 +127,7 @@ def prove(Eq):
 
     Eq << Set.In.Icc.of.Le.Gt.apply(Eq[-1], Eq.gt_zero_eta)
 
-    Eq << Trigonometry.Gt_0.Sin.of.In_Icc.apply(Eq[-1])
+    Eq << Real.Gt_0.Sin.of.In_Icc.apply(Eq[-1])
 
     Eq.gt_zero = Bool.All.of.Cond.apply(Eq[-1], j)
 
@@ -155,7 +155,7 @@ def prove(Eq):
 
     Eq.Sum_ge = Algebra.GeSum.of.All_Ge.apply(Eq[-1])
 
-    Eq << Trigonometry.Sin.ge.Mul_Sub_.One.Div_Pi.quadratic.apply(Eq.gt_zero_eta.lhs)
+    Eq << Real.Sin.ge.Mul_Sub_.One.Div_Pi.quadratic.apply(Eq.gt_zero_eta.lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
@@ -204,7 +204,7 @@ def prove(Eq):
 
     Eq.Sum_ge = Nat.Ge.of.Ge.Ge.apply(Eq.Sum_ge, Eq[-1])
 
-    Eq << Trigonometry.LeSin.of.Gt_0.apply(Eq.gt_zero_eta)
+    Eq << Real.LeSin.of.Gt_0.apply(Eq.gt_zero_eta)
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 

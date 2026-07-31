@@ -10,7 +10,7 @@ def apply(eq_conditioned, dist):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Set, Trigonometry, Bool, Nat
+    from Lemma import Probability, Algebra, Calculus, Set, Bool, Nat, Real
 
     i = Symbol(integer=True)
     x = Symbol(shape=(oo,), real=True, random=True)
@@ -109,7 +109,7 @@ def prove(Eq):
     Y = Eq[-1].lhs.variable
     Eq << Eq[-1].this.lhs.apply(Calculus.Integral.limits.subst, Y, y * sin(t) ** 2)
 
-    Eq << Eq[-1].this.find(-sin ** 2).args[2].apply(Trigonometry.Square.Sin.eq.Sub.Square.Cos)
+    Eq << Eq[-1].this.find(-sin ** 2).args[2].apply(Real.Square.Sin.eq.Sub.Square.Cos)
 
     Eq << Eq[-1].this.find(Mul[One - cos ** 2]).apply(Algebra.Mul_Add.eq.AddMulS)
 

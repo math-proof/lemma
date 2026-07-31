@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self):
-    from Lemma.Trigonometry.Sin.eq.Block import rewrite
+    from Lemma.Real.Sin.eq.Block import rewrite
     return Equal(self, rewrite(Conjugate, self))
 
 

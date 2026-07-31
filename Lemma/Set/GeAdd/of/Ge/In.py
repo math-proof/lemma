@@ -20,7 +20,7 @@ def prove(Eq):
     Eq << Set.In_Union.of.In.apply(Eq[1], Reals, simplify=None)
 
     z = Symbol(real=True)
-    Eq << Set.Any.Eq.of.In.apply(Eq[-1], var=z)
+    Eq << Set.Any_Eq.of.In.apply(Eq[-1], var=z)
 
     Eq << Eq[0] + z
 

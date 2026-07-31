@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Set.In.of.In.Subset.apply(Eq.contains, Eq[-1])
 
-    Eq << Set.Any.Eq.of.In.apply(Eq[-1])
+    Eq << Set.Any_Eq.of.In.apply(Eq[-1])
 
     Eq << Eq[-1] * 2 + 1
 

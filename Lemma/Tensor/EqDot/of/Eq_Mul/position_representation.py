@@ -36,7 +36,7 @@ def apply(eq_theta, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Tensor, Nat
+    from Lemma import Algebra, Tensor, Nat, Real
 
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -83,8 +83,8 @@ def prove(Eq):
     Eq <<= Eq[-1].find(Mul + Mul).this.apply(Nat.AddMulS.eq.Mul_Add),\
         Eq[-1].find(Mul[KroneckerDelta] - Mul).this.apply(Nat.AddMulS.eq.Mul_Add)
     Eq << Eq[-3].subs(*Eq[-2:])
-    Eq <<= Eq[-1].lhs.find(Sin * Sin + Cos * Cos).this.apply(Trigonometry.Add.eq.Cos), \
-        Eq[-1].lhs.find(Sin * Cos - Sin * Cos).this.apply(Trigonometry.Sub.eq.Sin)
+    Eq <<= Eq[-1].lhs.find(Sin * Sin + Cos * Cos).this.apply(Real.Add.eq.Cos), \
+        Eq[-1].lhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
@@ -104,7 +104,7 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(*Eq[-3:])
 
-    Eq <<= Eq[-1].find(Stack).this.apply(Trigonometry.Stack.eq.Cos), Eq[-1].find(Stack[Sin]).this.apply(Trigonometry.Stack.eq.Sin)
+    Eq <<= Eq[-1].find(Stack).this.apply(Real.Stack.eq.Cos), Eq[-1].find(Stack[Sin]).this.apply(Real.Stack.eq.Sin)
 
     Eq << Eq[-1].rhs.find(Stack).this.apply(Tensor.Stack.eq.Pow)
 

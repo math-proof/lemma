@@ -3,7 +3,6 @@ from . import Tensor
 from . import Probability
 from . import Algebra
 from . import Discrete
-from . import Trigonometry
 from . import Logic
 from . import Calculus
 from . import Real

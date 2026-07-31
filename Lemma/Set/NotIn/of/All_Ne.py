@@ -24,7 +24,7 @@ def prove(Eq):
     Eq << apply(All[i:n](Unequal(i, j)))
 
     Eq << ~Eq[-1]
-    Eq << Set.Any.Eq.of.In.apply(Eq[-1], reverse=True)
+    Eq << Set.Any_Eq.of.In.apply(Eq[-1], reverse=True)
     Eq << ~Eq[-1]
 
 

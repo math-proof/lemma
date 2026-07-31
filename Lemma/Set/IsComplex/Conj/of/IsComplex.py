@@ -15,7 +15,7 @@ def prove(Eq):
     x, y = Symbol(super_complex=True)
     Eq << apply(Element(x, S.Complexes))
 
-    Eq << Set.Any.Eq.of.In.apply(Eq[0], var='a')
+    Eq << Set.Any_Eq.of.In.apply(Eq[0], var='a')
 
     Eq << Eq[-1].this.expr.apply(Algebra.EqConj.of.Eq)
 

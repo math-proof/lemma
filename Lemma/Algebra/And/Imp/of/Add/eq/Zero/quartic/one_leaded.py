@@ -56,7 +56,7 @@ def apply(given, x=None):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x, a, b, c, d = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 4 + a * x ** 3 + b * x ** 2 + c * x + d, 0), x=x)

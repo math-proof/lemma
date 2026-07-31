@@ -42,8 +42,6 @@
 [数学归纳法](../?module=Bool.Eq_0.of.Eq_0.All_Imp)的证明；
 * [Set](../?module=Set) 集合论, 即sets theory，集合论是整个数学分析、数学推导系统的理论核心；比如
 [容斥原理](../?module=Set.CardUnion.eq.Sub_.AddCards.CardInter.principle.inclusion_exclusion)的证明。
-* [Trigonometry](../?module=Trigonometry) 几何学，包含不少三角函数恒等式，比如
-[和差化积](../?module=Trigonometry.CosSub.eq.AddSinSin_CosCos)，[积化和差](../?module=Trigonometry.MulSin_Cos.eq.AddDivSSin)，等等。
 * [Calculus](../?module=Calculus) 微积分，主要包含以下内容： 
 [极限定义](../?module=Calculus.Any.All.of.Eq_Limit.limit_definition) 及其理论；
 [分部积分](../?module=Calculus.Integral.eq.Add.by_parts) 定理；

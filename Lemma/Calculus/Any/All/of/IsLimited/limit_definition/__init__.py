@@ -46,7 +46,7 @@ def prove(Eq):
     f = Function(real=True, shape=())
     Eq << apply(Element(Limit[x:oo](f(x)), Reals))
 
-    Eq << Set.Any.Eq.of.In.apply(Eq[0], var='A')
+    Eq << Set.Any_Eq.of.In.apply(Eq[0], var='A')
 
     Eq << Eq[-1].this.expr.apply(Calculus.Any.All.of.Eq.limit_definition.Limit)
 

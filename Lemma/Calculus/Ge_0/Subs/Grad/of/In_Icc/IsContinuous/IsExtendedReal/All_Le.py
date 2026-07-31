@@ -53,7 +53,7 @@ def prove(Eq):
     Eq << Set.IsNegative.of.Lt_0.apply(Eq.lt_zero, simplify=None)
 
     δ = Symbol(real=True, negative=True)
-    Eq << Set.Any.Eq.of.In.apply(Eq[-1], var=δ)
+    Eq << Set.Any_Eq.of.In.apply(Eq[-1], var=δ)
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-3], Eq[-1], simplify=None)
 

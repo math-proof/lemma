@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     a = Symbol(real=True)
     b = Symbol(real=True, zero=False)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Eq_0.of.Eq)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.given.Eq_0)
+    Eq << Eq[-1].this.rhs.apply(Int.Eq.given.Sub.eq.Zero)
 
 
 if __name__ == '__main__':

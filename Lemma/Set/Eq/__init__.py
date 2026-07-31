@@ -5,7 +5,6 @@ from . import Square
 from . import Union
 from . import Arg
 from . import Bool
-from . import Floor
 from . import Cup
 from . import Delta
 from . import Is

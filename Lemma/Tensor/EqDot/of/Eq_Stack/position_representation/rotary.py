@@ -9,7 +9,7 @@ def apply(eq_R):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Algebra, Set, Trigonometry, Bool, Tensor
+    from Lemma import Algebra, Set, Bool, Tensor, Nat, Real
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # b denotes 10000
     b = Symbol(integer=True, positive=True)
@@ -108,10 +108,10 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd, deep=True, simplify=None)
 
-    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Trigonometry.Add.eq.Cos), \
-        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Trigonometry.Sub.eq.Sin), \
-        Eq[-1].rhs.args[1].find(Sin * Sin + Cos * Cos).this.apply(Trigonometry.Add.eq.Cos), \
-        Eq[-1].rhs.args[1].find(Sin * Cos - Sin * Cos).this.apply(Trigonometry.Sub.eq.Sin)
+    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Real.Add.eq.Cos), \
+        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin), \
+        Eq[-1].rhs.args[1].find(Sin * Sin + Cos * Cos).this.apply(Real.Add.eq.Cos), \
+        Eq[-1].rhs.args[1].find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 
@@ -129,10 +129,10 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal[Symbol - 1, Symbol]) + 1
 
-    Eq <<= Eq[-1].find(Cos).this.apply(Trigonometry.Cos.Neg), \
-        Eq[-1].find(Sin).this.apply(Trigonometry.Sin.eq.Neg.Sin), \
-        Eq[-1].rhs.args[1].find(Cos).this.apply(Trigonometry.Cos.Neg), \
-        Eq[-1].rhs.args[1].find(Sin).this.apply(Trigonometry.Sin.eq.Neg.Sin)
+    Eq <<= Eq[-1].find(Cos).this.apply(Real.Cos.Neg), \
+        Eq[-1].find(Sin).this.apply(Real.Sin.eq.Neg.Sin), \
+        Eq[-1].rhs.args[1].find(Cos).this.apply(Real.Cos.Neg), \
+        Eq[-1].rhs.args[1].find(Sin).this.apply(Real.Sin.eq.Neg.Sin)
 
     Eq << Eq[-5].this.rhs.subs(*Eq[-4:])
 

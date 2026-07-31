@@ -17,7 +17,7 @@ def prove(Eq):
     x = Symbol(hyper_real=True)
     Eq << apply(a <= b, Element(x, Interval.open(0, oo)))
 
-    Eq << Set.Any.Eq.of.In.apply(Eq[1])
+    Eq << Set.Any_Eq.of.In.apply(Eq[1])
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1], simplify=None)
 

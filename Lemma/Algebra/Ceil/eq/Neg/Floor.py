@@ -10,28 +10,28 @@ def apply(ceil):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Rat
+    from Lemma import Algebra, Set, Bool, Rat, Int
 
     x = Symbol(real=True)
     Eq << apply(ceil(x))
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Element(x, Integers))
 
-    Eq << Eq[-2].this.lhs.apply(Set.Any.Eq.of.In)
+    Eq << Eq[-2].this.lhs.apply(Set.Any_Eq.of.In)
 
     Eq << Eq[-1].this.lhs.expr.apply(Rat.Ceil.of.Eq, ret=0)
 
     Eq << -Eq[-1].this.lhs.expr.args[0]
 
-    Eq << Eq[-1].this.lhs.expr.args[0].apply(Algebra.EqFloor.of.Eq)
+    Eq << Eq[-1].this.lhs.expr.args[0].apply(Rat.Floor.of.Eq)
 
     Eq << Eq[-1].this.lhs.expr.apply(Algebra.EqAdd.of.Eq.Eq)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Eq.given.Eq_0)
+    Eq << Eq[-1].this.rhs.apply(Int.Eq.given.Sub.eq.Zero)
 
-    Eq << Eq[2].this.lhs.apply(Set.EqCeil.of.IsNotInteger, ret=0)
+    Eq << Eq[2].this.lhs.apply(Set.Ceil.eq.AddFloor_1.of.NotIn_Range, ret=0)
 
-    Eq << Eq[-1].this.find(NotElement).apply(Set.Eq.Floor.Frac.of.NotIn)
+    Eq << Eq[-1].this.find(NotElement).apply(Set.FloorNegFrac.eq.Neg1.of.NotIn_Range)
 
     Eq << Eq[-1].this.find(frac).apply(Rat.Frac.eq.Sub_Floor)
 

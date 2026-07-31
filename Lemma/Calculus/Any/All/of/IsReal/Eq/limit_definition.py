@@ -27,7 +27,7 @@ def prove(Eq):
     a = Symbol(complex=True)
     Eq << apply(Element(a, Reals), Equal(Limit[x:x0 + S.Infinitesimal](f(x)), a))
 
-    Eq << Set.Any.Eq.of.In.apply(Eq[0], var='A')
+    Eq << Set.Any_Eq.of.In.apply(Eq[0], var='A')
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[1], Eq[-1], simplify=None)
 

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Trigonometry, Algebra, Bool
+    from Lemma import Calculus, Algebra, Bool, Real
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(real=True)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.powsimp()
 
-    Eq << Eq[-1].this.find(sin ** 2).apply(Trigonometry.Square.Sin.eq.Sub.Square.Cos)
+    Eq << Eq[-1].this.find(sin ** 2).apply(Real.Square.Sin.eq.Sub.Square.Cos)
 
     Eq << Eq[-1].this.rhs.expr.apply(Algebra.Mul_Add.eq.AddMulS)
 

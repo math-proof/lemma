@@ -28,7 +28,7 @@ def prove(Eq):
     Eq << Set.In.Ico.of.Gt.apply(Eq[0])
 
     m = Symbol(integer=True, positive=True)
-    Eq << Set.Any.Eq.of.In.apply(Eq[-1], var=m)
+    Eq << Set.Any_Eq.of.In.apply(Eq[-1], var=m)
 
     Eq << Eq[-1].this.expr.apply(Set.Any.And.of.Eq_Card, simplify=None)
 

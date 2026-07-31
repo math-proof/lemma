@@ -20,7 +20,7 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor, Nat
+    from Lemma import Algebra, Bool, Tensor, Nat, Int
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -30,7 +30,7 @@ def prove(Eq):
     i = Symbol(domain=Range(n + 2))
     Eq << Tensor.Eq.given.All_EqGetS.apply(Eq[0], i)
 
-    Eq << Algebra.Eq.given.Eq_0.apply(Eq[-1])
+    Eq << Int.Eq.given.Sub.eq.Zero.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Nat.AddIteS.eq.IteAnd)
 

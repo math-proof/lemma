@@ -31,7 +31,7 @@ def apply(eq_theta_r, eq_theta_c, eq_theta_z, eq_R, i_, j_, k_):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Discrete, Algebra, Trigonometry, Bool
+    from Lemma import Tensor, Discrete, Algebra, Bool, Real
 
     # n denotes sequence length (seq_length)
     # b_r, b_c denotes 10000
@@ -165,8 +165,8 @@ def prove(Eq):
 
     Eq << Eq[3].subs(i, i_quote).subs(j, j_quote).subs(k, k_quote).T @ Eq[3]
 
-    Eq <<= Eq[-1].find(cos).this.apply(Trigonometry.Cos.eq.Block), Eq[-1].find(sin).this.apply(Trigonometry.Sin.eq.Block), \
-        Eq[-1].find(BlockMatrix[2]).find(cos).this.apply(Trigonometry.Cos.eq.Block), Eq[-1].find(BlockMatrix[2]).find(sin).this.apply(Trigonometry.Sin.eq.Block)
+    Eq <<= Eq[-1].find(cos).this.apply(Real.Cos.eq.Block), Eq[-1].find(sin).this.apply(Real.Sin.eq.Block), \
+        Eq[-1].find(BlockMatrix[2]).find(cos).this.apply(Real.Cos.eq.Block), Eq[-1].find(BlockMatrix[2]).find(sin).this.apply(Real.Sin.eq.Block)
 
     Eq << Eq[-5].subs(*Eq[-4:], Eq.identity)
 
@@ -186,7 +186,7 @@ def prove(Eq):
 
     Eq << Eq[3].subs(i, i - i_quote).subs(j, j - j_quote).subs(k, k - k_quote)
 
-    Eq <<= Eq[-1].find(cos).this.apply(Trigonometry.Cos.eq.Block), Eq[-1].find(sin).this.apply(Trigonometry.Sin.eq.Block)
+    Eq <<= Eq[-1].find(cos).this.apply(Real.Cos.eq.Block), Eq[-1].find(sin).this.apply(Real.Sin.eq.Block)
 
     Eq << Eq[-3].subs(*Eq[-2:], Eq.identity)
 

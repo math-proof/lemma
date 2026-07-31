@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Finset
+    from Lemma import Algebra, Discrete, Finset, Int
 
     x, k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Discrete.Sum.Binom.eq.Mul.Newton.deux)
 
-    Eq << Algebra.Eq.given.Eq_0.apply(Eq[-1])
+    Eq << Int.Eq.given.Sub.eq.Zero.apply(Eq[-1])
 
     Eq << Eq[-1].this.find(Mul + Mul).apply(Algebra.Add.collect, factor=(x + 1) ** (n - 3))
 

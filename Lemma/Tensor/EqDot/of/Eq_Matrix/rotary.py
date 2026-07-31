@@ -11,7 +11,7 @@ def apply(eq_R, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Bool
+    from Lemma import Bool, Real
 
     # R denotes rotary matrix
     R = Function(shape=(2, 2), real=True)
@@ -23,12 +23,12 @@ def prove(Eq):
 
     Eq << Eq[0].subs(k, t).T @ Eq[0]
 
-    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Trigonometry.Add.eq.Cos),\
-        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Trigonometry.Sub.eq.Sin)
+    Eq <<= Eq[-1].rhs.find(Sin * Sin + Cos * Cos).this.apply(Real.Add.eq.Cos),\
+        Eq[-1].rhs.find(Sin * Cos - Sin * Cos).this.apply(Real.Sub.eq.Sin)
 
     Eq << -Eq[-1]
 
-    Eq << Eq[-1].find(-~Sin).this.apply(Trigonometry.Sin.eq.Neg.Sin)
+    Eq << Eq[-1].find(-~Sin).this.apply(Real.Sin.eq.Neg.Sin)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 

@@ -33,7 +33,7 @@ def apply(is_zero, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Nat
+    from Lemma import Algebra, Nat, Real
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x, d=1)
@@ -84,7 +84,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[1])
 
-    Eq << Eq[-1].this.find(Exp).apply(Trigonometry.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq << Eq[-1].this.find(Exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 
     Eq << Eq[-1].subs(Eq.w_conj.reversed)
 

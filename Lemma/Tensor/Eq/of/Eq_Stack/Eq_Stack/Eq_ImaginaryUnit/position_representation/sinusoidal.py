@@ -15,7 +15,7 @@ def apply(eq_PE, eq_PE_quote, eq_Z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Tensor, Bool, Real, Nat
+    from Lemma import Algebra, Tensor, Bool, Real, Nat
 
     n, b = Symbol(positive=True, integer=True)
     d = Symbol(integer=True, positive=True, even=True)
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None), Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
-    Eq <<= Eq[-2].this.find(Cos[Piecewise]).apply(Trigonometry.Cos.eq.Ite), Eq[-1].this.find(Sin[Piecewise]).apply(Trigonometry.Sin.eq.Ite)
+    Eq <<= Eq[-2].this.find(Cos[Piecewise]).apply(Real.Cos.eq.Ite), Eq[-1].this.find(Sin[Piecewise]).apply(Real.Sin.eq.Ite)
 
     Eq <<= Eq[-2].this.find(Add).apply(Nat.AddMulS.eq.Mul_Add, simplify=None), Eq[-1].this.find(Add).apply(Nat.AddMulS.eq.Mul_Add, simplify=None)
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq.PE_definition.find(cos).this.arg.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq <<= Eq[-2].this.rhs.apply(Trigonometry.Sin.eq.Add), Eq[-1].this.rhs.apply(Trigonometry.Cos.eq.Sub)
+    Eq <<= Eq[-2].this.rhs.apply(Real.Sin.eq.Add), Eq[-1].this.rhs.apply(Real.Cos.eq.Sub)
 
     Eq.cossin = Eq.PE_definition.this.rhs.subs(Eq[-2], Eq[-1])
 
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq.PE_quote_definition.find(sin).this.arg.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq <<= Eq[-2].this.rhs.apply(Trigonometry.Cos.eq.Sub), Eq[-1].this.rhs.apply(Trigonometry.Sin.eq.Add)
+    Eq <<= Eq[-2].this.rhs.apply(Real.Cos.eq.Sub), Eq[-1].this.rhs.apply(Real.Sin.eq.Add)
 
     Eq <<= Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq[-2])
 
@@ -151,7 +151,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Add_Stack.eq.Stack_Add)
 
-    Eq << Eq[-1].this.find(Add).apply(Trigonometry.Add.eq.ExpI.Euler)
+    Eq << Eq[-1].this.find(Add).apply(Real.Add.eq.ExpI.Euler)
 
     Eq << Eq.geometric_progression.subs(Eq[-1])
 
@@ -175,7 +175,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.ExpAdd.eq.MulExpS)
 
-    Eq.eq_euler = Eq[-1].this.find(exp).apply(Trigonometry.ExpMulI.eq.AddCos_MulISin.Euler)
+    Eq.eq_euler = Eq[-1].this.find(exp).apply(Real.ExpMulI.eq.AddCos_MulISin.Euler)
 
     Eq << Algebra.Mod.eq.Ite.apply(Eq.eq_euler.find(Mod))
 
@@ -191,7 +191,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
-    Eq <<= Trigonometry.EqCos.of.Eq.apply(Eq[-1]), Trigonometry.EqSin.of.Eq.apply(Eq[-1])
+    Eq <<= Real.EqCos.of.Eq.apply(Eq[-1]), Real.EqSin.of.Eq.apply(Eq[-1])
 
     Eq << Eq.eq_euler.subs(Eq[-1], Eq[-2])
 
