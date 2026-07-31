@@ -105,7 +105,11 @@ def List.comm (list : List String) (parity : List Bool) : List String :=
           | _ =>
             panic! s!"Expected the operator 'eq', 'as or 'ne', got: {op}"
         else
-          [first.transformPrefix] ++ rest
+          let first' := first.transformPrefix
+          if first' == first then
+            list ++ ["comm"]
+          else
+            [first'] ++ rest
       else
         panic! s!"Declaration does not have the form `... eq/is/as/ne ...`, got: {list}"
     else

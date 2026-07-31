@@ -6,7 +6,8 @@ open Nat
 @[main]
 private lemma Comm
   [CommSemigroup α]
-  {a b : α} :
+-- given
+  (a b c : α) :
 -- imply
   a * b * c = a * c * b := by
 -- proof
@@ -14,15 +15,17 @@ private lemma Comm
   rw [Mul_Mul.eq.MulMul]
 
 
-@[main]
-private lemma main
+@[main, comm]
+private lemma rotate
   [CommSemigroup α]
-  {a b : α} :
+-- given
+  (a b c : α) :
 -- imply
-  a * b * c = c * a * b := by
+  a * b * c = b * c * a := by
 -- proof
-  rw [Mul.comm (b := c)]
-  rw [Mul_Mul.eq.MulMul]
+  rw [MulMul.eq.Mul_Mul]
+  rw [Mul.comm]
 
 
 -- created on 2024-11-29
+-- updated on 2026-07-31

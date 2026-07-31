@@ -6,19 +6,20 @@ open Nat
 @[main]
 private lemma Comm
   [AddCommSemigroup α]
-  {a b : α} :
+-- given
+  (a b c : α) :
 -- imply
   a + b + c = a + c + b := by
 -- proof
-  rw [Add.comm (b := c)]
-  rw [Add.comm (b := c)]
+  repeat rw [Add.comm (b := c)]
   rw [Add_Add.eq.AddAdd]
 
 
-@[main]
-private lemma permute
+@[main, comm]
+private lemma rotate
   [AddCommSemigroup α]
-  {a b c : α} :
+-- given
+  (a b c : α) :
 -- imply
   a + b + c = b + c + a := by
 -- proof
