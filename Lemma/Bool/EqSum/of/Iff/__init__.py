@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap)
 
-    Eq << Bool.EqIteS.of.Iff.subst.apply(Eq[0], Eq[-1].lhs)
+    Eq << Bool.Ite.of.Iff.apply(Eq[0], Eq[-1].lhs)
 
 
 if __name__ == '__main__':

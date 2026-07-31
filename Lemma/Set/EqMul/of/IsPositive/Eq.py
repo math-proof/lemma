@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Ne_0.of.IsPositive.apply(Eq[0])
 
-    Eq << Nat.EqMulS.of.Eq.apply(Eq[-1], Eq[1])
+    Eq << Nat.Mul.of.Eq.apply(Eq[-1], Eq[1])
 
 
 

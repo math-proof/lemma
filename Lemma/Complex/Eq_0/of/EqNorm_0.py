@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Nat.Eq_0.of.Le_0.apply(Eq[-1])
 
-    Eq.Im_is_zero = Int.Eq_0.of.EqSquare_0.apply(Eq[-1])
+    Eq.Im_is_zero = Nat.Eq_0.of.EqSquare_0.apply(Eq[-1])
 
     Eq.Re_is_positive = Greater(Re(x) ** 2, 0, plausible=True)
 
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Nat.Eq_0.of.Le_0.apply(Eq[-1])
 
-    Eq.Re_is_zero = Int.Eq_0.of.EqSquare_0.apply(Eq[-1])
+    Eq.Re_is_zero = Nat.Eq_0.of.EqSquare_0.apply(Eq[-1])
 
     Eq << Complex.Expr.eq.AddRe_MulIIm.apply(x)
 

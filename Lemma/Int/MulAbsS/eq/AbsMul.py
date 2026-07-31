@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].apply(Bool.Iff_And.of.Imp)
 
-    Eq << Bool.EqIteS.of.Iff.subst.apply(Eq[-1], Eq.equal.lhs)
+    Eq << Bool.Ite.of.Iff.apply(Eq[-1], Eq.equal.lhs)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite.subst, index=1, reverse=True)
 
@@ -81,9 +81,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Gt_0.of.Gt_0.Gt_0)
 
-    Eq << Eq.necessary.this.lhs.apply(Int.AndGtS_0.ou.AndLtS_0.of.Mul.gt.Zero)
+    Eq << Eq.necessary.this.lhs.apply(Int.AndGtS_0.ou.AndLtS_0.of.Lt0Mul)
 
-    Eq << Bool.EqIteS.of.Iff.subst.apply(Eq.equivalent, Eq.equal.lhs)
+    Eq << Bool.Ite.of.Iff.apply(Eq.equivalent, Eq.equal.lhs)
 
 
 if __name__ == '__main__':

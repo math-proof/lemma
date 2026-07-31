@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
-    Eq << Nat.EqDivS.of.Eq.apply(Eq[-1], Eq[2])
+    Eq << Nat.Div.of.Eq.apply(Eq[-1], Eq[2])
 
 
 

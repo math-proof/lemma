@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Algebra.Inv.ne.Zero.of.Ne_0.apply(Eq[-2])
 
-    Eq << Nat.EqMulS.of.Eq.apply(Eq[-1], Eq[0])
+    Eq << Nat.Mul.of.Eq.apply(Eq[-1], Eq[0])
 
 
 

@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Eq[-1].apply(Nat.EqMulS.of.Eq)
+    Eq << Eq[-1].apply(Nat.Mul.of.Eq)
 
     Eq <<= ~Eq[-1] & Eq[0]
 

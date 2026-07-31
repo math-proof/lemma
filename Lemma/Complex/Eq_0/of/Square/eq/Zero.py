@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Nat.OrEqS_0.of.Mul.eq.Zero.apply(Eq[-1])
 
-    Eq << Int.Eq_0.of.EqSquare_0.apply(Eq[-1])
+    Eq << Nat.Eq_0.of.EqSquare_0.apply(Eq[-1])
     Eq << Complex.Eq_0.of.EqNorm_0.apply(Eq[-1])
 
 

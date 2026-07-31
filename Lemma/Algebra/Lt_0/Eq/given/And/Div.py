@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Algebra.Ne.of.Lt.apply(Eq[0])
 
-    Eq << Nat.EqMulS.of.Eq.apply(Eq[-1], Eq[2])
+    Eq << Nat.Mul.of.Eq.apply(Eq[-1], Eq[2])
 
 
 

@@ -22,7 +22,7 @@ def apply(is_nonzero, fy, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex
 
     y, alpha, beta, gamma = Symbol(complex=True, given=True)
     fy = cubic_delta(y, alpha, beta, gamma)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[-1]) * -8
 
-    Eq << Algebra.Eq_0.of.Square.eq.Zero.complex.apply(Eq[-1])
+    Eq << Complex.Eq_0.of.Square.eq.Zero.apply(Eq[-1])
 
     Eq << ~Eq[-1]
 

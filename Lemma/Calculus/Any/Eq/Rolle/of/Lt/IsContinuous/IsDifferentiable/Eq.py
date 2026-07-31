@@ -59,7 +59,7 @@ def apply(lt, is_continuous, is_differentiable, equal):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Bool, Nat
+    from Lemma import Calculus, Set, Algebra, Bool, Nat, Complex
 
     a, b = Symbol(real=True)
     f = Function(shape=(), real=True)
@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Nat.Eq_0.of.Le_0)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Eq_0.of.Square.eq.Zero.complex)
+    Eq << Eq[-1].this.expr.apply(Complex.Eq_0.of.Square.eq.Zero)
 
     Eq << Eq[-1].this.expr.lhs.definition
     # https://en.wikipedia.org/wiki/Rolle%27s_theorem
