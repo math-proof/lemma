@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Set.Any.Eq.of.In)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.EqCeil.of.Eq, ret=0)
+    Eq << Eq[-1].this.lhs.expr.apply(Rat.Ceil.of.Eq, ret=0)
 
     Eq << -Eq[-1].this.lhs.expr.args[0]
 
