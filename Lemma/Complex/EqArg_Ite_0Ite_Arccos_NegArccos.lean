@@ -3,7 +3,7 @@ import Lemma.Bool.BFn_Ite.is.OrAndS
 import Lemma.Bool.BFn_Ite.is.Imp.Imp
 import Lemma.Bool.ImpEq.is.ImpEq
 import Lemma.Bool.Ne.is.NotEq
-import Lemma.Complex.Arg.eq.Ite__Ite_Arccos.of.Ne_0
+import Lemma.Complex.EqArg_Ite_Arccos_NegArccos.of.Ne_0
 open Bool Complex
 
 
@@ -25,7 +25,7 @@ private lemma main
   simp
   rw [NotEq.is.Ne]
   intro h_ne
-  apply Arg.eq.Ite__Ite_Arccos.of.Ne_0 h_ne
+  apply EqArg_Ite_Arccos_NegArccos.of.Ne_0 h_ne
 
 
 -- created on 2025-01-05

@@ -1,0 +1,17 @@
+import Lemma.Complex.Arg.eq.Ite__Ite_Arcsin
+open Complex
+
+
+@[main]
+private lemma main
+  {z : ℂ}
+-- given
+  (h : z ≠ 0)
+  (h_GeIm_0 : im z ≥ 0) :
+-- imply
+  arg z = arccos (re z / ‖z‖) :=
+-- proof
+  Complex.arg_of_im_nonneg_of_ne_zero h_GeIm_0 h
+
+
+-- created on 2025-01-13

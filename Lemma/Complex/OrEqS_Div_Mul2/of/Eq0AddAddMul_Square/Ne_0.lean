@@ -25,7 +25,11 @@ import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Int.MulSub.eq.SubMulS
 import Lemma.Rat.Div_Mul.eq.Inv.of.Ne_0
-open Rat Int Nat
+import Lemma.Rat.EqMul_Div.of.Ne_0
+import Lemma.Rat.EqMul.is.Eq_Div.of.Ne_0
+import Lemma.Rat.DivSub.eq.SubDivS
+import Lemma.Complex.Or_Eq_NegSqrt.of.EqSquare
+open Rat Int Nat Complex
 
 
 @[main]
@@ -36,12 +40,11 @@ private lemma main
   (h₁ : a * x² + b * x + c = 0) :
 -- imply
   let Δ : ℂ := b² - 4 * a * c
-  x = (-b + √Δ) / (2 * a) ∨
-    x = (-b - √Δ) / (2 * a) := by
+  x = (-b + √Δ) / (2 * a) ∨ x = (-b - √Δ) / (2 * a) := by
 -- proof
   let x' := x + b / (2 * a)
-  have h₂ : x = x' - b / (2 * a) := by simp [x']
-  rw [h₂] at h₁
+  have hx : x = x' - b / (2 * a) := by simp [x']
+  rw [hx] at h₁
   rw [
     SquareSub.eq.SubAddSquareS_MulMul2,
     Mul_Sub.eq.SubMulS,
@@ -66,7 +69,7 @@ private lemma main
   rw [Div_Mul.eq.DivDiv] at h₁
   rw [DivMul.eq.MulDiv] at h₁
   rw [DivMul.eq.Mul_Div] at h₁
-  rw [Eq_Inv_Div_Square.of.Ne_0] at h₁
+  rw [Eq_Inv_Div_Square.of.Ne_0 h₀] at h₁
   rw [(by norm_num : (2 : ℂ)² = 4)] at h₁
   rw [Mul_Inv.eq.Div] at h₁
   rw [DivDiv.eq.Div_Mul] at h₁
@@ -87,8 +90,30 @@ private lemma main
   rw [h_Δ] at h₁
   rw [DivAdd.eq.AddDivS] at h₁
   simp [h₃] at h₁
-  sorry
-  sorry
+  have h_quad : (2 * a * x') ^ 2 = Δ := by
+    have h_inner : 4 * a * (a * x' ^ 2) = Δ := by
+      rw [h₁]
+      exact EqMul_Div.of.Ne_0 h₃ Δ
+    grind
+  obtain h_pos | h_neg := Or_Eq_NegSqrt.of.EqSquare h_quad
+  ·
+    apply Or.inl
+    have h_x' : x' = √Δ / (2 * a) := Eq_Div.of.EqMul.Ne_0.left h₂ h_pos
+    calc
+      _ = x' - b / (2 * a) := hx
+      _ = √Δ / (2 * a) - b / (2 * a) := by rw [h_x']
+      _ = (√Δ - b) / (2 * a) := by rw [← DivSub.eq.SubDivS]
+      _ = (-b + √Δ) / (2 * a) := by congr 1; grind
+  ·
+    apply Or.inr
+    have h_x' : x' = -√Δ / (2 * a) := Eq_Div.of.EqMul.Ne_0.left h₂ h_neg
+    calc
+      _ = x' - b / (2 * a) := hx
+      _ = -√Δ / (2 * a) - b / (2 * a) := by rw [h_x']
+      _ = (-√Δ - b) / (2 * a) := by rw [← DivSub.eq.SubDivS]
+      _ = (-b - √Δ) / (2 * a) := by
+        congr 1
+        grind
 
 
 -- created on 2024-07-01

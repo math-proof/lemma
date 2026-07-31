@@ -1,4 +1,4 @@
-import Lemma.Complex.Arg.eq.Ite__Ite_Arccos
+import Lemma.Complex.EqArg_Ite_0Ite_Arccos_NegArccos
 import Lemma.Real.AbsAdd_MulI.eq.SqrtAddSquareS
 import Lemma.Real.EqAdd_MulI_0.eq.AndEqS_0
 open Complex Real
@@ -16,7 +16,7 @@ private lemma main
     else
       -arccos (x / √(x² + y²)) := by
 -- proof
-  have h := Arg.eq.Ite__Ite_Arccos (z := x + I * y)
+  have h := EqArg_Ite_0Ite_Arccos_NegArccos (z := x + I * y)
   rw [AbsAdd_MulI.eq.SqrtAddSquareS (x := x) (y := y)] at h
   have h_Eq : (↑x + I * ↑y).re = x := by
     simp

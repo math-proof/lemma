@@ -1,5 +1,5 @@
 import Lemma.Rat.ImpEq.ImpNe.of.AddMul.eq.Zero
-import Lemma.Complex.Or_Eq_Div_Mul2_Sub_Sqrt.of.Ne_0.AddMul_Square_Mul.eq.Zero
+import Lemma.Complex.OrEqS_Div_Mul2.of.Eq0AddAddMul_Square.Ne_0
 open Complex Rat
 
 
@@ -33,7 +33,7 @@ private lemma main
       exact (ImpEq.ImpNe.of.AddMul.eq.Zero h).right ha.right
     ·
       intro ha
-      apply Or_Eq_Div_Mul2_Sub_Sqrt.of.Ne_0.AddMul_Square_Mul.eq.Zero ha h
+      apply OrEqS_Div_Mul2.of.Eq0AddAddMul_Square.Ne_0 ha h
 
 
 -- created on 2024-07-01
