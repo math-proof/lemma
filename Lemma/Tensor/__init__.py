@@ -91,3 +91,4 @@ from . import ExpSub_MulInfty
 from . import ExpAdd_MulInfty
 from . import Stack_Dot
 from . import DotSoftmaxAdd_Mul_Infty
+from . import DotSoftmaxAdd_DivDot_T

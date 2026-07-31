@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << ζ.this.definition
 
-    Eq << Tensor.Eq.Dot.Softmax.of.Eq_Relu.Eq_Min.band_part_mask.bert.apply(*Eq[-2:], Q, K, V)
+    Eq << Tensor.DotSoftmaxAdd_DivDot_T.eq.Stack_DotSoftmaxDivDot_T.of.Eq_Relu.Eq_Min.apply(*Eq[-2:], Q, K, V)
 
     Eq << Eq[1].this.rhs().expr.defun()
 
