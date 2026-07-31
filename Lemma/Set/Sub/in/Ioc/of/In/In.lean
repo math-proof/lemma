@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Set.Neg.In.Ioc.of.In_Ico
+import Lemma.Set.Neg.in.Ioc.of.In_Ico
 import Lemma.Set.Add.in.Ioc.of.In.In
 import Lemma.Int.Sub.eq.Add_Neg
 open Set Int

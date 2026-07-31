@@ -1,6 +1,14 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Int.Sub.eq.Zero.is.Eq |
+| comm | Int.Eq.is.Sub.eq.Zero |
+| mp | Int.Eq.of.Sub.eq.Zero |
+| mpr | Int.Sub.eq.Zero.of.Eq |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   [AddGroup α]

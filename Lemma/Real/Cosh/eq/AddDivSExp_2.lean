@@ -1,0 +1,15 @@
+import sympy.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+
+
+@[main]
+private lemma main
+-- given
+  (x : ℝ) :
+-- imply
+  Real.cosh x = (Real.exp x + Real.exp (-x)) / 2 := by
+-- proof
+  rfl
+
+
+-- created on 2023-11-26

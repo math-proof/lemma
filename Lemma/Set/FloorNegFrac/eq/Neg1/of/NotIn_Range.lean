@@ -1,6 +1,5 @@
-import sympy.Basic
 import Lemma.Set.Frac.in.Ioo.of.NotIn_Range
-import Lemma.Set.Neg.In.Ioo.of.In_Ioo
+import Lemma.Set.Neg.in.Ioo.of.In_Ioo
 open Set
 
 
@@ -10,7 +9,7 @@ private lemma main
   [FloorRing α]
   {x : α}
 -- given
-  (h : x ∉ Set.range Int.cast) :
+  (h : x ∉ range Int.cast) :
 -- imply
   ⌊-fract x⌋ = -1 := by
 -- proof
