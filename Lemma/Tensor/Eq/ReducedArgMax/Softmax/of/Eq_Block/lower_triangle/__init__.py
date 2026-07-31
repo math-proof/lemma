@@ -23,7 +23,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Int, Int
+    from Lemma import Tensor, Algebra, Bool, Int
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))

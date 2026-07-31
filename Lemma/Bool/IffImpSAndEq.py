@@ -26,7 +26,7 @@ def apply(given, index=None, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x, y = Symbol(real=True)
     A = Symbol(etype=dtype.real)
     f, g = Function(real=True)

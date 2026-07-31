@@ -22,7 +22,7 @@ def apply(eq_M, x, w, r):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Tensor, Int, Int, Nat
+    from Lemma import Set, Algebra, Bool, Tensor, Int, Nat
 
     m, n, d, d_quote, l, r = Symbol(integer=True, positive=True)
     # r is the dilation rate

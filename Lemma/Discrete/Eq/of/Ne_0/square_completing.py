@@ -67,7 +67,7 @@ def apply(ne_zero, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(r"\vec x", real=True, shape=(n,))

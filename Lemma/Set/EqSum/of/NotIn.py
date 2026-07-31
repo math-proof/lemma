@@ -11,7 +11,7 @@ def apply(given, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Finset
+    from Lemma import Set, Finset
 
     S = Symbol(etype=dtype.integer)
     e, x = Symbol(integer=True)

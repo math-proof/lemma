@@ -10,7 +10,7 @@ def apply(eq_ab, eq_xy):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     a, b, x, y = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)

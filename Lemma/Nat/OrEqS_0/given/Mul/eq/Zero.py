@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     a, b = Symbol(real=True, given=True)
     Eq << apply(Equal(a, 0) | Equal(b, 0))

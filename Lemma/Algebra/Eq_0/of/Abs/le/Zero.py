@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat, Complex
+    from Lemma import Nat, Complex
 
     x = Symbol(real=True)
     Eq << apply(abs(x) <= 0)

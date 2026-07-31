@@ -11,7 +11,7 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x, y = Symbol(integer=True)
     f, g = Function(integer=True)
 

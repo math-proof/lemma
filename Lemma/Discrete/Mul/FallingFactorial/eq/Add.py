@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Int, Int
+    from Lemma import Discrete, Algebra, Int
 
     x = Symbol(complex=True)
     k = Symbol(integer=True, nonnegative=True)

@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Finset, Finset
+    from Lemma import Discrete, Algebra, Tensor, Finset
 
     m, d = Symbol(integer=True, positive=True)
     i, j = Symbol(integer=True)

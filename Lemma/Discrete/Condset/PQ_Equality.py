@@ -13,7 +13,7 @@ def apply(n, P_quote=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Discrete, Bool
+    from Lemma import Set, Discrete, Bool
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)

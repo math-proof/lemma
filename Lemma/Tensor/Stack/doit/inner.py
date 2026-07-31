@@ -21,7 +21,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)

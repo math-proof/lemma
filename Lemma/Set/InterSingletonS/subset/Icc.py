@@ -8,7 +8,7 @@ def apply(a, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x, y)

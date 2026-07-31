@@ -11,7 +11,7 @@ def apply(is_limited):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Calculus, Bool
+    from Lemma import Set, Calculus, Bool
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)

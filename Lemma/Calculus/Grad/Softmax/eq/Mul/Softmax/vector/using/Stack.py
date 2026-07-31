@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Calculus, Algebra, Vector
+    from Lemma import Tensor, Calculus, Vector
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))

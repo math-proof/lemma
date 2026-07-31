@@ -18,7 +18,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Tensor
 
     p = Symbol(complex=True, zero=False)
     m, n, k = Symbol(domain=Range(1, oo))

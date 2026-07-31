@@ -11,7 +11,7 @@ def apply(unequality, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Rat
+    from Lemma import Bool, Rat
     x, a, b = Symbol(real=True)
     Eq << apply(Unequal(x, 0), Unequal(x * a, b))
 

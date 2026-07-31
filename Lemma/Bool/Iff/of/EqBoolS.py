@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Nat
+    from Lemma import Bool, Int, Nat
     a, b = Symbol(integer=True)
     f = Function(shape=())
 

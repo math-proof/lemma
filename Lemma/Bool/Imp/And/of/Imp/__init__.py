@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     a, c = Symbol(integer=True)
     Eq << apply(boolalg.Imply(Equal(a, 0), Equal(c, 0)))

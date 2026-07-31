@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Nat
+    from Lemma import Calculus, Set, Bool, Nat
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, continuous=True)

@@ -21,7 +21,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Discrete, Tensor
+    from Lemma import Probability, Tensor
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(real=True, shape=(n, n))

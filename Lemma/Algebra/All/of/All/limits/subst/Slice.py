@@ -13,7 +13,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     n = Symbol(integer=True, positive=True)
 
     a, b = Symbol(real=True)

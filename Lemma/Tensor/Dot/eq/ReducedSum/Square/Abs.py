@@ -20,7 +20,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Vector
+    from Lemma import Algebra, Tensor, Vector
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))

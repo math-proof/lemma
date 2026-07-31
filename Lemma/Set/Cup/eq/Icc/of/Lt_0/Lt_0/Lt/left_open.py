@@ -14,7 +14,7 @@ def apply(a_is_negative, b_is_negative, lt, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     a, b = Symbol(integer=True, given=True)
     k = Symbol(integer=True)

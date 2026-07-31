@@ -10,7 +10,7 @@ def apply(Any_All_et_ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Bool, Nat
+    from Lemma import Calculus, Bool, Nat
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)

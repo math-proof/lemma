@@ -21,7 +21,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Logic, Bool
+    from Lemma import Algebra, Set, Bool
 
     x, y = Symbol(integer=True)
     f = Function(integer=True)

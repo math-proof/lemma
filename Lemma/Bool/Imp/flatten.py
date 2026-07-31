@@ -12,7 +12,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y, z = Symbol(real=True)
     A, B, C = Symbol(etype=dtype.real)

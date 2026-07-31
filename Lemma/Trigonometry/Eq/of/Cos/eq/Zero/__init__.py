@@ -9,7 +9,7 @@ def apply(is_zero, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Trigonometry, Algebra, Int
+    from Lemma import Set, Trigonometry, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(cos(x), 0))

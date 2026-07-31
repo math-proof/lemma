@@ -11,7 +11,7 @@ def apply(lt_r, γ, λ, k=None, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Discrete, Tensor, Finset
+    from Lemma import Algebra, Calculus, Set, Tensor, Finset
 
     t, k, i = Symbol(integer=True) # time step counter
     δ = Symbol(shape=(oo,), real=True) # TD residual

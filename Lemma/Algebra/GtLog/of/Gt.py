@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Bool, Nat
+    from Lemma import Algebra, Bool, Nat
 
     x = Symbol(real=True, given=True)
     y = Symbol(positive=True, given=True)

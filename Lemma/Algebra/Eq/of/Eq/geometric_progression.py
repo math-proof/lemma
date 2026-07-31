@@ -19,7 +19,7 @@ def apply(given, n=None, a=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     n = Symbol(integer=True, nonnegative=True, given=False)
     r = Symbol(complex=True)
     f = Symbol(shape=(oo,), complex=True)

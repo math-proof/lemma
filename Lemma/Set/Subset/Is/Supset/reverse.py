@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(Subset(A, B))

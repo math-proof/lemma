@@ -15,7 +15,7 @@ def apply(contains0, contains1, contains2, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     a, b, x0, x1, w = Symbol(real=True)
     domain = Interval(a, b, left_open=True)

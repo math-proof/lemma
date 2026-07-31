@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     m, n = Symbol(integer=True, positive=True)
     f = Function(real=True, shape=(m,))

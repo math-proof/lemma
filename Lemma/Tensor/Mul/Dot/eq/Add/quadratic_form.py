@@ -49,7 +49,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Tensor
 
     n = 5
     x = Symbol(real=True, shape=(n,))

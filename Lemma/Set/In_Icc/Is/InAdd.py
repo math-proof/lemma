@@ -11,7 +11,7 @@ def apply(self, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     x, a, b, t = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)), t)

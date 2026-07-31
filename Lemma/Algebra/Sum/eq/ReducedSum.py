@@ -20,7 +20,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Vector
+    from Lemma import Vector
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)

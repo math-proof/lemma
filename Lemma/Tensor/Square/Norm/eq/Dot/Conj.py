@@ -13,7 +13,7 @@ def apply(self, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))

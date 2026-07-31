@@ -13,7 +13,7 @@ def apply(ge, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat
+    from Lemma import Nat
 
     a, x, b = Symbol(real=True)
     Eq << apply(x >= b, x < a)

@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Tensor
+    from Lemma import Probability, Bool, Tensor
 
     d, n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n, d), real=True, random=True, given=True)

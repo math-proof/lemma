@@ -9,7 +9,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Bool
+    from Lemma import Discrete, Set, Bool
 
     n = Symbol(integer=True, positive=True, given=False)
     Eq << apply(n)

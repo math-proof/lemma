@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Tensor
+    from Lemma import Discrete, Bool, Tensor
 
     d = Symbol(integer=True, positive=True)
     m = Symbol(domain=Range(d + 2, oo))

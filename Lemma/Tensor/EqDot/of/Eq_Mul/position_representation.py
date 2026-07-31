@@ -36,7 +36,7 @@ def apply(eq_theta, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Trigonometry, Tensor, Nat, Nat, Nat
+    from Lemma import Algebra, Trigonometry, Tensor, Nat
 
     # n denotes sequence length (seq_length)
     # b denotes 10000

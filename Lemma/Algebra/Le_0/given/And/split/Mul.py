@@ -12,7 +12,7 @@ def apply(given, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x * y <= 0)

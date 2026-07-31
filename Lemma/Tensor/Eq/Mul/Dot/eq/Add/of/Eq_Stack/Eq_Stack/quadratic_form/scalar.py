@@ -27,7 +27,7 @@ def apply(eq_x, eq_a):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Tensor
 
     # n is the sequence lenth
     n = Symbol(integer=True, positive=True)

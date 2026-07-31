@@ -14,7 +14,7 @@ def apply(ne, NotIn):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     x, y = Symbol(integer=True, given=True)
     s = Symbol(etype=dtype.integer, given=True)

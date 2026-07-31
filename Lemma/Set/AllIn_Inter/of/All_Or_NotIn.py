@@ -32,7 +32,7 @@ def apply(given, index=0, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     x, a, b, c = Symbol(real=True)
     f = Function(shape=(), real=True)

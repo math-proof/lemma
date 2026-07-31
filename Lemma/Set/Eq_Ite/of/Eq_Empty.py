@@ -24,7 +24,7 @@ def apply(given, peicewise_A, peicewise_B):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     A, B = Symbol(etype=dtype.integer)
     x = Symbol(integer=True)

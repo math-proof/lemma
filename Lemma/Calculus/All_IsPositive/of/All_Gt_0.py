@@ -12,7 +12,7 @@ def apply(all_is_positive):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Set, Algebra, Calculus
+    from Lemma import Set, Calculus
 
     a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)

@@ -24,7 +24,7 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y = Symbol(real=True, given=True)
     f, g = Function(real=True)

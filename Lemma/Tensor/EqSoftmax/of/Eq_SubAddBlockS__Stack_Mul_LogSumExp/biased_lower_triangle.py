@@ -24,7 +24,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Int, Int, Nat
+    from Lemma import Algebra, Tensor, Int, Nat
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))

@@ -33,7 +33,7 @@ def apply(initial_condition, recurrence, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset, Finset, Nat, Nat, Nat
+    from Lemma import Algebra, Finset, Nat
 
     m, g = Symbol(shape=(oo,), real=True)
     t, k = Symbol(integer=True)

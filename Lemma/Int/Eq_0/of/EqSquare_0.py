@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(x ** 2, 0))

@@ -18,7 +18,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Finset, Nat, Finset
+    from Lemma import Probability, Finset, Nat
 
     n = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(n, n))

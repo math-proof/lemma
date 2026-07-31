@@ -8,7 +8,7 @@ def apply(x, k):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra
+
 
     k = Symbol(integer=True, positive=True)
     x = Symbol(integer=True)

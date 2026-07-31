@@ -11,7 +11,7 @@ def apply(given, ε=None, δ=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool
+    from Lemma import Calculus, Bool
 
     a = Symbol(real=True)
     x = Symbol(integer=True)

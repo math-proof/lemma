@@ -14,7 +14,7 @@ def apply(is_imply_P, is_imply_Q):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     p, q, x, y, a, b = Symbol(real=True, given=True)
 
     Eq << apply(Given(p > q, x > y), Given(x > y, a > b))

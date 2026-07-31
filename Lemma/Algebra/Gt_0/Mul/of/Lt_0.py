@@ -11,7 +11,7 @@ def apply(given, factor):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
     h = Symbol(real=True, shape=(n,))

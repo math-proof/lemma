@@ -39,7 +39,7 @@ def apply(self, coeff=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat
+    from Lemma import Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))

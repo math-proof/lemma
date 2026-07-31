@@ -12,7 +12,7 @@ def apply(equality_A, equality_B):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x, a, b = Symbol(integer=True)
 
     Eq << apply(Equal(x, a), Equal(x, b))

@@ -18,7 +18,7 @@ def apply(is_nonnegative, self, n=None, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Bool
+    from Lemma import Calculus, Bool
 
     x, a, b = Symbol(real=True)
     f = Function(real=True, finite=True, integrable=True)

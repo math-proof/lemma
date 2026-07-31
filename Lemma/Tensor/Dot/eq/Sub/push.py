@@ -18,7 +18,7 @@ def apply(self, pivot=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Tensor
 
     i, k, j = Symbol(integer=True)
     L, H = Symbol(real=True, shape=(oo, oo))

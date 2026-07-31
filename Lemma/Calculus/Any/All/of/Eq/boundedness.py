@@ -15,7 +15,7 @@ def apply(given, M=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Nat, Int
+    from Lemma import Calculus, Algebra, Set, Bool, Nat
 
     n = Symbol(integer=True)
     x = Symbol(real=True, shape=(oo,), given=True)

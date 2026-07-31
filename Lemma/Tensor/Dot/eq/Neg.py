@@ -21,7 +21,7 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     A, B, C, D = Symbol(real=True, shape=(n, n))

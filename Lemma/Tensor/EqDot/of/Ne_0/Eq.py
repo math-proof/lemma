@@ -10,7 +10,7 @@ def apply(unequality, equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Nat
+    from Lemma import Discrete, Tensor, Nat
     n = Symbol(integer=True)
     A = Symbol(real=True, shape=(n, n))
     a, b = Symbol(real=True, shape=(n,))

@@ -29,7 +29,7 @@ def apply(given, piecewise, index=None, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     x = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)

@@ -13,7 +13,7 @@ def apply(a, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Discrete, Tensor
 
     n = 5
     a, b = Symbol(shape=(n,), complex=True, zero=False)

@@ -12,7 +12,7 @@ def apply(le, n, N=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Int
+    from Lemma import Bool, Nat, Int
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n, N = Symbol(integer=True)

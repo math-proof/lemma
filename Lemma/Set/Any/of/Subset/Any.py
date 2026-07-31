@@ -23,7 +23,7 @@ def apply(subset, exist):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     n = Symbol(complex=True, positive=True)
     A, B = Symbol(etype=dtype.complex[n])

@@ -17,7 +17,7 @@ def apply(x0, x1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete
+    from Lemma import Discrete
 
     lamda0, lamda1 = Symbol(positive=True)
     x0 = Symbol(distribution=PoissonDistribution(lamda0))

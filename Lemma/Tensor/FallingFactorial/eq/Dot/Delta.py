@@ -13,7 +13,7 @@ def apply(self, upper=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     h = Symbol(real=True, shape=(oo,))
     n = Symbol(integer=True, positive=True)

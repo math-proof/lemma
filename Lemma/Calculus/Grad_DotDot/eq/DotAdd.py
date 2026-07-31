@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Calculus, Algebra, Tensor
+    from Lemma import Calculus, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(r"\vec x", real=True, shape=(n,))

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Trigonometry, Bool, Finset, Finset
+    from Lemma import Calculus, Algebra, Trigonometry, Bool, Finset
 
     x = Symbol(real=True)
     Eq << apply(exp(S.ImaginaryUnit * x))

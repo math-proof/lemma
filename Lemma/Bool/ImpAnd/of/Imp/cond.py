@@ -9,7 +9,7 @@ def apply(cond, suffice):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x, y, a, b = Symbol(integer=True, given=True)
 
 

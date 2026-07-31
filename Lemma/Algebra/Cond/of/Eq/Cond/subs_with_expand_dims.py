@@ -17,7 +17,7 @@ def apply(eq, f_eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     m, n = Symbol(integer=True, positive=True)
 
     a = Symbol(real=True, shape=(n,))

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Bool, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)

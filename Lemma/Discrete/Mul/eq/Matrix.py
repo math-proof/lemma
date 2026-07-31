@@ -18,7 +18,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat
+    from Lemma import Tensor, Nat
 
     a, b, c, d = Symbol(real=True)
     x = Symbol(real=True)

@@ -14,7 +14,7 @@ def apply(cond, forall):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y = Symbol(real=True)
     B = Symbol(etype=dtype.real, empty=False)

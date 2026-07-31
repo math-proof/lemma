@@ -12,7 +12,7 @@ def apply(fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Int
+    from Lemma import Algebra, Int
 
     x, alpha, gamma = Symbol(complex=True, given=True)
     fx = x ** 4 + alpha * x ** 2 + gamma

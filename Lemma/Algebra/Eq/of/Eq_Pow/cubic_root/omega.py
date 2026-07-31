@@ -16,7 +16,7 @@ def apply(eq_pow):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Int, Int, Nat, Complex
+    from Lemma import Algebra, Real, Int, Nat, Complex
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Equal(A ** 3, B ** 3))

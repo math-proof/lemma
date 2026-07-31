@@ -19,7 +19,7 @@ def apply(eq_K_quote, eq_V_quote, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Tensor, Bool
 
     n, k, l, u = Symbol(integer=True, positive=True)
     r = Symbol(shape=(n,), integer=True)

@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Tensor, Int, Int, Nat
+    from Lemma import Algebra, Bool, Tensor, Nat
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)

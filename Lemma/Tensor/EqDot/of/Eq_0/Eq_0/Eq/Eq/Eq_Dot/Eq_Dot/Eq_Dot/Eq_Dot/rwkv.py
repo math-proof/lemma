@@ -16,7 +16,7 @@ def apply(eq_a, eq_b, eq_a_t, eq_b_t, eq_r, eq_k, eq_v, eq_o, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra
 
     # T is the sequence length
     # d is the embedding size

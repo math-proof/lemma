@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex
+    from Lemma import Complex
 
     x = Symbol(complex=True)
     Eq << apply(x + ~x)

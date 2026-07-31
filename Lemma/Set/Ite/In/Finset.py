@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y, z, a, b = Symbol(real=True, given=True)
     Eq << apply(Piecewise((x, a > 0), (y, b > 0), (z, True)))

@@ -10,7 +10,7 @@ def apply(ne_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Probability, Bool
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)

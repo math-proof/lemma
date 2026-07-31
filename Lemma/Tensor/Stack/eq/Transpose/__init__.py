@@ -28,7 +28,7 @@ def apply(self, axis=(-2, 1), *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     i, j, k = Symbol(integer=True)
     n, m = Symbol(integer=True, positive=True)

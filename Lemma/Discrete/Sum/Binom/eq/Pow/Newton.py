@@ -24,7 +24,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete
+    from Lemma import Discrete
 
     x, y, k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)

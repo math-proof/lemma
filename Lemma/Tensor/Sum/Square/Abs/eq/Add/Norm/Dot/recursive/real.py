@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Nat, Nat, Nat
+    from Lemma import Algebra, Tensor, Nat
 
     t, k = Symbol(integer=True, positive=True)
     L = Symbol(shape=(oo, oo), super_real=True)

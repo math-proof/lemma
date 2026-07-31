@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset, Finset
+    from Lemma import Algebra, Finset
 
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)

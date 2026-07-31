@@ -19,7 +19,7 @@ def apply(eq_x_given_yz, z_given_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Logic, Bool, Nat, Nat, Rat
+    from Lemma import Probability, Calculus, Bool, Nat, Rat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x | y), Equal(z | y, z))

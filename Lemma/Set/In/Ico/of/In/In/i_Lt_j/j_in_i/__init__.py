@@ -23,7 +23,7 @@ def apply(contains_j, contains_i):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Nat
+    from Lemma import Set, Nat
 
     a, i, j, n, d = Symbol(integer=True)
     Eq << apply(Element(j, Range(i - d + 1, n)), Element(i, Range(a + d, d + n - 1)))

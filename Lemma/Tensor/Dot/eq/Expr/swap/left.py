@@ -18,7 +18,7 @@ def apply(x, i=None, j=None, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Nat
+    from Lemma import Tensor, Nat
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), real=True)

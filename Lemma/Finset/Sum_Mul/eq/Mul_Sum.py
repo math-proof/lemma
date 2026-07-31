@@ -26,7 +26,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Finset
     i, j = Symbol(integer=True)
 
     C = Symbol(etype=dtype.integer, given=True)

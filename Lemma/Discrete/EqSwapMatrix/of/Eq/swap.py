@@ -9,7 +9,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Nat, Int
+    from Lemma import Discrete, Tensor, Nat, Int
 
     n = Symbol(domain=Range(2, oo))
     i, j = Symbol(domain=Range(n))

@@ -18,7 +18,7 @@ def apply(given, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Bool, Nat
+    from Lemma import Bool, Nat
 
     x, y = Symbol(integer=True)
     t, f, g = Function(integer=True)

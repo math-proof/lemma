@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Rat, Nat
+    from Lemma import Probability, Rat, Nat
 
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x | y), 0))

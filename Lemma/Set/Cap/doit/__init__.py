@@ -23,7 +23,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Finset
 
     x = Symbol(real=True, shape=(oo,))
     i = Symbol(integer=True)

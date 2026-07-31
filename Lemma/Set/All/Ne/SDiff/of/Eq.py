@@ -13,7 +13,7 @@ def apply(given, exclude=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
     n = Symbol(integer=True, positive=True, given=True)
     x = Symbol(shape=(oo,), etype=dtype.integer, finiteset=True, given=True)
     Eq << apply(Equal(Card(x[:n].cup_finiteset()), n))

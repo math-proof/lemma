@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Tensor
+    from Lemma import Discrete, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x1, x2 = Symbol(complex=True)

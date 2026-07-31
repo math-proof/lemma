@@ -10,7 +10,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
     n, m = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
     x = Symbol(shape=(oo,), etype=dtype.complex[n])

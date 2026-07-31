@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Int, Int
+    from Lemma import Algebra, Tensor, Int
 
     n = Symbol(integer=True, positive=True, given=True)
     i = Symbol(integer=True)

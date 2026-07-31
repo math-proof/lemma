@@ -13,7 +13,7 @@ def apply(f_eq, *, cond=None, simplify=True, invert=False, assumptions={}):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Bool
+    from Lemma import Bool
 
     a, b = Symbol(real=True)
     A = Symbol(etype=dtype.real)

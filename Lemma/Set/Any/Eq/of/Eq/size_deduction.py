@@ -13,7 +13,7 @@ def apply(given, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Nat
+    from Lemma import Set, Nat
 
     S = Symbol(etype=dtype.integer)
     n = Symbol(integer=True, positive=True)

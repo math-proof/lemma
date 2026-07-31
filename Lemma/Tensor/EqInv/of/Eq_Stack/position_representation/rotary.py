@@ -9,7 +9,7 @@ def apply(eq_R):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Discrete, Int
+    from Lemma import Tensor, Int
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # b denotes 10000
     b = Symbol(integer=True, positive=True)

@@ -11,7 +11,7 @@ def apply(self, offset):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool, Int
+    from Lemma import Calculus, Bool, Int
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)

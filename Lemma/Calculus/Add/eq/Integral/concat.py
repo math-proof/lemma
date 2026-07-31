@@ -13,7 +13,7 @@ def apply(self):
 
 @prove(provable=False)
 def prove(Eq):
-    from Lemma import Calculus
+
 
     x, a, b, c = Symbol(real=True)
     f = Function(real=True)

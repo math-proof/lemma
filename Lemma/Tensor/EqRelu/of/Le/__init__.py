@@ -9,7 +9,7 @@ def apply(le, m):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Nat
+    from Lemma import Tensor, Nat
 
     k, n, m = Symbol(integer=True)
     Eq << apply(k <= n, m)

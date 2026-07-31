@@ -18,7 +18,7 @@ def apply(is_positive, eq, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool
+    from Lemma import Calculus, Bool
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)

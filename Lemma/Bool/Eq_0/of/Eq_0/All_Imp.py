@@ -18,7 +18,7 @@ def apply(f0, suffice, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
     n = Symbol(integer=True, nonnegative=True, given=False)
     f = Symbol(integer=True, shape=(oo,))
     Eq << apply(Equal(f[0], 0), Imply(Equal(f[n], 0), Equal(f[n + 1], 0)), n=n)

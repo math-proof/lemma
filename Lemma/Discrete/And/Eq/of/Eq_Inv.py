@@ -12,7 +12,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Algebra, Tensor
 
     m, n = Symbol(integer=True, positive=True)
     Σ_x = Symbol(shape=(n, n), real=True, singular=False)

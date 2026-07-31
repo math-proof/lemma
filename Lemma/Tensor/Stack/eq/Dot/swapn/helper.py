@@ -20,7 +20,7 @@ def apply(x, d, w=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Tensor
+    from Lemma import Bool, Tensor
     n = Symbol(domain=Range(2, oo))
     assert n.is_integer
 

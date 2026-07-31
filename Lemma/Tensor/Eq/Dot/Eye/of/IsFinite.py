@@ -12,7 +12,7 @@ def apply(lt_r, γ, λ, k=None, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Discrete
+    from Lemma import Tensor
 
     t, k, i = Symbol(integer=True) # time step counter
     δ = Symbol(shape=(oo,), real=True) # TD residual

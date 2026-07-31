@@ -17,7 +17,7 @@ def apply(Any_All, all):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     N, n = Symbol(integer=True)
     g, f = Function(shape=(), integer=True)

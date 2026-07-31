@@ -14,7 +14,7 @@ def apply(is_positive, x0, x1, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool
+    from Lemma import Calculus, Set, Bool
 
     a, b = Symbol(real=True)
     f = Function(real=True)

@@ -22,7 +22,7 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Nat, Nat, Rat
+    from Lemma import Probability, Calculus, Nat, Rat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | y & z, x))

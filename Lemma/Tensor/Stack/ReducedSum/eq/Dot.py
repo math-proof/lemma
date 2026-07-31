@@ -16,7 +16,7 @@ def apply(lamda):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Vector
+    from Lemma import Tensor, Vector
 
     i, j = Symbol(integer=True)
     n, m = Symbol(integer=True, positive=True)

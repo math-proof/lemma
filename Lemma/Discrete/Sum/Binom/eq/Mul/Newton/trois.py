@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Finset, Finset, Finset
+    from Lemma import Algebra, Discrete, Finset
 
     x, k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

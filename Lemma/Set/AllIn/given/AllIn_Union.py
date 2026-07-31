@@ -35,7 +35,7 @@ def apply(given, limit):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     A, B = Symbol(etype=dtype.real)
     e = Symbol(real=True)
     f = Function(shape=(), integer=True)

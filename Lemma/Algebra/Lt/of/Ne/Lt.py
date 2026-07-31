@@ -11,7 +11,7 @@ def apply(ne, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     a, x = Symbol(integer=True)
     Eq << apply(Unequal(x, a), x < a + 1)

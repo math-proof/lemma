@@ -12,7 +12,7 @@ def apply(eq, f_eq, *, reverse=False, simplify=True, assumptions={}, index=None)
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     m, n = Symbol(integer=True, positive=True)
     a, b, c = Symbol(real=True, shape=(m, n))

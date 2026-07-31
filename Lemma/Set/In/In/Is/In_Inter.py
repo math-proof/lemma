@@ -11,7 +11,7 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     e = Symbol(integer=True)
     A, B = Symbol(etype=dtype.integer)

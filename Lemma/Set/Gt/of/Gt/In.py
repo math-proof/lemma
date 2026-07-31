@@ -11,7 +11,7 @@ def apply(gt, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     a, b, x, y = Symbol(real=True)
     Eq << apply(x > y, Element(y, Interval(a, b)))

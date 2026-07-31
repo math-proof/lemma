@@ -10,7 +10,7 @@ def apply(ne_zero, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat, Nat
+    from Lemma import Algebra, Nat
 
     a, b, x, y, z = Symbol(complex=True)
     Eq << apply(Unequal(a + b, 0), a * (x - y) ** 2 + b * (x - z) ** 2)

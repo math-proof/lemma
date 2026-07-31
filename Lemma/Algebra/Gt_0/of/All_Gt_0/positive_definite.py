@@ -10,7 +10,7 @@ def apply(infer, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)

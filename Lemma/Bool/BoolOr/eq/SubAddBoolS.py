@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
     x = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)
     Eq << apply(functions.Bool(Or(Element(x, A), Element(x, B))))

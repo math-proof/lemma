@@ -16,7 +16,7 @@ def apply(given, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True, given=True)

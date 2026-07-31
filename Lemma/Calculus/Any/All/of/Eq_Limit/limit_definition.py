@@ -9,7 +9,7 @@ def apply(given, epsilon=None, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool
+    from Lemma import Calculus, Bool
 
     a = Symbol(real=True)
     x = Symbol(integer=True)

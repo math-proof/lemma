@@ -19,7 +19,7 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True, given=True)
     a, b = Symbol(shape=(n,), etype=dtype.integer)

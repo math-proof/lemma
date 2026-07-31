@@ -14,7 +14,7 @@ def apply(eq, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Nat, Finset
+    from Lemma import Algebra, Bool, Nat, Finset
 
     x = Symbol(real=True, negative=False, shape=(oo,), given=True)
     n = Symbol(integer=True, negative=False, given=True)

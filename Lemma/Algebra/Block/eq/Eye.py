@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor, Nat, Nat, Nat
+    from Lemma import Algebra, Bool, Tensor, Nat
 
     n, m = Symbol(integer=True, positive=True)
     Eq << apply(BlockMatrix([[Identity(n), Zeros(n, m)], [Zeros(m, n), Identity(m)]]))

@@ -19,7 +19,7 @@ def apply(is_real, given, epsilon=None, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Calculus, Bool
+    from Lemma import Set, Calculus, Bool
 
     n = Symbol(integer=True, positive=True)
     x, x0 = Symbol(real=True)

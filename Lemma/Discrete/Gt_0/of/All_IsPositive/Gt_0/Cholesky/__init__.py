@@ -13,7 +13,7 @@ def apply(all_is_positive, eq_initial):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Bool, Tensor, Int, Int
+    from Lemma import Algebra, Set, Bool, Tensor, Int
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), complex=True)

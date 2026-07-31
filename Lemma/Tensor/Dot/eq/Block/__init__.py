@@ -176,7 +176,7 @@ def apply(self, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Algebra, Tensor
 
     a, b, c, d, n, m = Symbol(integer=True, positive=True)
     A = Symbol(shape=(c, n), complex=True)

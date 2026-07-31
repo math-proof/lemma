@@ -21,7 +21,7 @@ def prove(Eq):
     from Lemma.Discrete.H.eq.Add.definition import H
     from Lemma.Discrete.K.eq.Add.definition import K
 
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete
     x = Symbol(real=True, positive=True, shape=(oo,))
     n = Symbol(integer=True)
 

@@ -39,7 +39,7 @@ def apply(eq_C, eq_V, eq_V_quote, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra
+    from Lemma import Tensor
 
     n, k, d = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))

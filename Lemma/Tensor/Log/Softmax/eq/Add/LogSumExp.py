@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Real
+    from Lemma import Tensor, Bool, Real
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))

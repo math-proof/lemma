@@ -12,7 +12,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int
+    from Lemma import Set, Bool, Int
 
     n, m = Symbol(integer=True)
     f = Function(integer=True)

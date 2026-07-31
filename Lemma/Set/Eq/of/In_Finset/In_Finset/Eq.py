@@ -15,7 +15,7 @@ def apply(x_el_finiteset, y_el_finiteset, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     a, b, x, y = Symbol(real=True)
     f = Function(real=True)

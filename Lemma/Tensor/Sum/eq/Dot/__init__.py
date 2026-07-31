@@ -24,7 +24,7 @@ def apply(self, pivot=-1, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

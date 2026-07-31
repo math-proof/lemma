@@ -20,7 +20,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex
+    from Lemma import Complex
 
     z, w = Symbol(complex=True)
     Eq << apply(Re(z) + Re(w))

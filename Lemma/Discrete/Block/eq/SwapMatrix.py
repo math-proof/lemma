@@ -10,7 +10,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor, Int
+    from Lemma import Bool, Tensor, Int
 
     n = Symbol(domain=Range(2, oo))
     Eq << apply(n)

@@ -13,7 +13,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Bool
+    from Lemma import Calculus, Set, Bool
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)

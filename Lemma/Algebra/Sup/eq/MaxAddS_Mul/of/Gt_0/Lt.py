@@ -15,7 +15,7 @@ def apply(is_positive, lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat
+    from Lemma import Algebra, Nat
 
     m, M, x, a, b = Symbol(real=True, given=True)
     Eq << apply(a > 0, m < M, a * x + b, x)

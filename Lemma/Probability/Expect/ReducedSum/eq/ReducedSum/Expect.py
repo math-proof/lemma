@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Vector
+    from Lemma import Probability, Vector
 
     n = Symbol(integer=True, positive=True)
     f = Function(real=True)

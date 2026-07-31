@@ -10,7 +10,7 @@ def apply(self, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n, m = Symbol(integer=True, positive=True)
     A, B = Symbol(real=True, shape=(m, n))

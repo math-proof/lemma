@@ -8,7 +8,7 @@ def apply(le_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Bool
+    from Lemma import Trigonometry, Bool
 
     x = Symbol(real=True)
     Eq << apply(x <= 0)

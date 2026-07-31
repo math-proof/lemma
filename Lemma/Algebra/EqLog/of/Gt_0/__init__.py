@@ -9,7 +9,7 @@ def apply(is_positive, z):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real, Nat, Nat, Nat
+    from Lemma import Set, Bool, Real, Nat
 
     z = Symbol(complex=True, given=True)
     r = Symbol(complex=True)

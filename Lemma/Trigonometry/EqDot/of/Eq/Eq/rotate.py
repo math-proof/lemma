@@ -11,7 +11,7 @@ def apply(eq_z, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Discrete, Tensor
+    from Lemma import Trigonometry, Algebra, Tensor
 
     p = Symbol(real=True, shape=(3, 2))
     theta = Symbol(real=True)

@@ -13,7 +13,7 @@ def apply(eq_F, eq_F_quote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Tensor, Nat
+    from Lemma import Trigonometry, Tensor, Nat
 
     n, b = Symbol(positive=True, integer=True)
     d = Symbol(integer=True, positive=True, even=True)

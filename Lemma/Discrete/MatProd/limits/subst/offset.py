@@ -9,7 +9,7 @@ def apply(self, index=0, offset=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Tensor
+    from Lemma import Bool, Tensor
 
     n, d = Symbol(integer=True)
     k = Symbol(integer=True, positive=True)

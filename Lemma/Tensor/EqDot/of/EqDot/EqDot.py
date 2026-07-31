@@ -17,7 +17,7 @@ def apply(eq_ab, eq_cd):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     A, B, C, D, X, Y = Symbol(shape=(n, n), real=True)

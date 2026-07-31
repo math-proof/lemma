@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y, z = Symbol(real=True)
     Eq << apply(Min(x, y) - z)

@@ -19,7 +19,7 @@ def apply(Any_All_0, Any_All_1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set
+    from Lemma import Bool, Set
 
     N, M = Symbol(integer=True)
     x, y = Symbol(real=True)

@@ -14,7 +14,7 @@ def apply(is_imply_P, is_imply_Q):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     p, q, r = Symbol(bool=True)
     Eq << apply(Imply(p, q), Imply(q, r))

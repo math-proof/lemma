@@ -10,7 +10,7 @@ def apply(given, pivot):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x <= y, z)

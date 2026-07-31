@@ -10,7 +10,7 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Nat
+    from Lemma import Algebra, Bool, Nat
 
     a, x, m, M = Symbol(real=True)
     f = Function(real=True)

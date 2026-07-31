@@ -14,7 +14,7 @@ def apply(is_negative, is_nonnegative, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     a, b, k = Symbol(integer=True)
     Eq << apply(a < 0, b >= 0, k)

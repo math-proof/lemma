@@ -10,7 +10,7 @@ def apply(self, i):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n, d_z = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)

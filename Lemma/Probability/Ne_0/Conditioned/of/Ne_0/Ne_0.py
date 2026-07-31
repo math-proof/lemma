@@ -26,7 +26,7 @@ def apply(ne_zero_given, ne_zero_joint):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Nat, Nat, Nat
+    from Lemma import Probability, Algebra, Nat
 
     x, y = Symbol(random=True, integer=True)
     Eq << apply(Unequal(Pr(y), 0),

@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     a = Symbol(real=True, given=True)
     Eq << apply(Unequal(a, 0))

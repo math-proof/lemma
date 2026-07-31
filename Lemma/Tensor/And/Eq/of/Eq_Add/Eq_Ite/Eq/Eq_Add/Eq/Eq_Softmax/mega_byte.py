@@ -31,7 +31,7 @@ def apply(eq_h_embed, eq_h_global_in, eq_h_global_out, eq_h_local_in, eq_h_local
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat, Nat, Nat, Int
+    from Lemma import Algebra, Tensor, Nat, Int
 
     # T is the byte sequence length
     # P is the patch size which is normally set to 4

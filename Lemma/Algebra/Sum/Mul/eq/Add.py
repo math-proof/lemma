@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset, Finset, Finset
+    from Lemma import Algebra, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)

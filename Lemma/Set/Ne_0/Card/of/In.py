@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Complex
+    from Lemma import Bool, Complex
 
     x = Symbol(complex=True, given=True)
     Eq << apply(Element(x, Reals - {0}))

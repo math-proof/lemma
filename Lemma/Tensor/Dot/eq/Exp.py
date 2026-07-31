@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Real
+    from Lemma import Tensor, Real
 
     n, k, m = Symbol(integer=True, positive=True)
 

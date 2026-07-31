@@ -17,7 +17,7 @@ def apply(self, *indices):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Discrete
+    from Lemma import Tensor
 
     n, d_z = Symbol(integer=True, positive=True)
     i, j, k = Symbol(integer=True)

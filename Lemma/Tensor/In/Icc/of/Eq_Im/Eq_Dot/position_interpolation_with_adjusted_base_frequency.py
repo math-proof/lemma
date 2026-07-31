@@ -18,7 +18,7 @@ def apply(eq_cosine_similarity, eq_rotary_ABF):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Trigonometry, Bool, Tensor, Nat, Nat, Finset, Finset, Finset
+    from Lemma import Algebra, Set, Trigonometry, Bool, Tensor, Nat, Finset
 
     # N denotes sequence length (seq_length)
     # b denotes 10000 adjusted to 500000

@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     m = Symbol(integer=True, positive=True)
     f, g = Function(real=True, shape=(m,))

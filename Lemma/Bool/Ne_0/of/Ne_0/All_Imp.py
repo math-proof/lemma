@@ -17,7 +17,7 @@ def apply(f0, suffice, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Finset, Nat, Int
+    from Lemma import Set, Bool, Tensor, Finset, Nat, Int
 
     n = Symbol(integer=True, nonnegative=True, given=False)
     f = Symbol(integer=True, shape=(oo,))

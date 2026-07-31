@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y = Symbol(real=True)
     Eq << apply(Piecewise((0, x > y), (1, True)))

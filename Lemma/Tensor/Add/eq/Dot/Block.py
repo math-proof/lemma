@@ -37,7 +37,7 @@ def apply(self, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Tensor
 
     t, k = Symbol(integer=True, positive=True)
     L = Symbol(shape=(oo, oo), super_complex=True)

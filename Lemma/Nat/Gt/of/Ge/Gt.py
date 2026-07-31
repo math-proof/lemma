@@ -12,7 +12,7 @@ def apply(ge, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, a, b = Symbol(real=True, given=True)
     Eq << apply(x >= b, a > x)

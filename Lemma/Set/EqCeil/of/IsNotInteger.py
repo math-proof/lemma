@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Nat, Nat, Int, Rat
+    from Lemma import Set, Nat, Int, Rat
 
     x = Symbol(real=True)
     Eq << apply(NotElement(x, Integers))

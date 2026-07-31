@@ -11,7 +11,7 @@ def apply(le, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     x, y, a, b = Symbol(real=True, given=True)
     t = Symbol(hyper_real=True, given=True)

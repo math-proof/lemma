@@ -11,7 +11,7 @@ def apply(lt, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Bool
+    from Lemma import Discrete, Set, Bool
 
     x = Symbol(real=True)
     n = Symbol(integer=True, positive=True)

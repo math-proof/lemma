@@ -21,7 +21,7 @@ def apply(contains_i, contains_j):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     a, i, j, n, d = Symbol(integer=True)
     Eq << apply(Element(i, Range(d + j, n)), Element(j, Range(a, n - d)))

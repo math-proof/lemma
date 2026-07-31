@@ -49,7 +49,7 @@ def apply(cond0, cond1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Nat
+    from Lemma import Set, Bool, Nat
 
     x, a, b = Symbol(integer=True)
     Eq << apply(a < x, x < b)

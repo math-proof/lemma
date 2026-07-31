@@ -31,7 +31,7 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x, y = Symbol(integer=True)
     f = Function(shape=(), integer=True)
     A, B = Symbol(etype=dtype.integer)

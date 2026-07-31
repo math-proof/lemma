@@ -15,7 +15,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool
+    from Lemma import Probability, Bool
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)

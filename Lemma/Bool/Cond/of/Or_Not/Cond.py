@@ -14,7 +14,7 @@ def apply(cond, ou):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x = Symbol(integer=True)
     S = Symbol(etype=dtype.integer)
     f, g = Function(shape=(), integer=True)

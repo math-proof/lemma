@@ -15,7 +15,7 @@ def apply(el, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Logic, Bool, Vector
+    from Lemma import Algebra, Tensor, Bool, Vector
 
     n = Symbol(domain=Range(2, oo))
     t = Symbol(integer=True)

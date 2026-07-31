@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Nat, Nat
+    from Lemma import Algebra, Discrete, Bool, Nat
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True, positive=True)

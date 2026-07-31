@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Real
 
     a, b = Symbol(real=True)
     Eq << apply(exp(a) * exp(b))

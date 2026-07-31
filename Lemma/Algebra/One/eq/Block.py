@@ -11,7 +11,7 @@ def apply(self, pivot):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     m = 4
     n = 5

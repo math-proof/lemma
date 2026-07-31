@@ -11,7 +11,7 @@ def apply(x, d=1, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Nat, Rat
     x = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)
 

@@ -12,7 +12,7 @@ def apply(x_imply_P, y_imply_P):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     p0, p1, q0, q1 = Symbol(bool=True)
     Eq << apply(Imply(p0, q0), Imply(p1, q1))

@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic, Bool
+    from Lemma import Set, Algebra, Bool
     x, y = Symbol(integer=True)
 
     Eq << apply(Equal({x, y}, {0, 1}))

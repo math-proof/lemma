@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Nat
+    from Lemma import Set, Nat
 
     n, a = Symbol(integer=True, given=True)
     Eq << apply(NotElement(n, Range(a, n + 1)))

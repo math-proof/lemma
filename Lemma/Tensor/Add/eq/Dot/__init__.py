@@ -94,7 +94,7 @@ def apply(self, deep=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     x, a, b = Symbol(shape=(n, n), complex=True)

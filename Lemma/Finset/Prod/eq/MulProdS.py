@@ -9,7 +9,7 @@ def apply(self, *, cond=None, wrt=None, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Finset
+    from Lemma import Set, Bool, Finset
 
     x = Symbol(integer=True)
     f = Function(real=True)

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex
+    from Lemma import Complex
     z = Symbol(complex=True)
     Eq << apply(abs(z))
     Eq << Eq[0].this.lhs.arg.apply(Complex.Expr.eq.AddRe_MulIIm)

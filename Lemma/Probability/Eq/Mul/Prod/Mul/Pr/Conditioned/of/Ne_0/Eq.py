@@ -19,7 +19,7 @@ def apply(eq, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool
+    from Lemma import Probability, Bool
 
     m, n, t = Symbol(integer=True, positive=True)
     # suppose you have a set of documents y which is labeled with some semantic tags called keywords x;

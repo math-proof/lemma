@@ -33,7 +33,7 @@ def apply(piecewise, i=0, offset=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(k,))

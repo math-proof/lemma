@@ -40,7 +40,7 @@ def apply(given, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Bool
+    from Lemma import Discrete, Set, Bool
 
     n = Symbol(domain=Range(2, oo))
 

@@ -29,7 +29,7 @@ def apply(eq_relu, eq_min, eq_K_quote, eq_V_quote, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n, k, l, u = Symbol(integer=True, positive=True)
     r = Symbol(shape=(n,), integer=True)

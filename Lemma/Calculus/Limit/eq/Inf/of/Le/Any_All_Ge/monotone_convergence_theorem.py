@@ -11,7 +11,7 @@ def apply(le, Any_All_Ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Bool, Nat, Nat
+    from Lemma import Algebra, Set, Calculus, Bool, Nat
 
     a = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True)

@@ -48,7 +48,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Nat, Nat
+    from Lemma import Algebra, Bool, Nat
 
     x, a, b, c, d = Symbol(complex=True, given=True)
     Eq << apply(Equal(a * x ** 3 + b * x ** 2 + c * x + d, 0), x=x)

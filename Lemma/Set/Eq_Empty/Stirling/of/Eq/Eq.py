@@ -16,7 +16,7 @@ def apply(equal_sum, equal_union):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
     x = Symbol(shape=(oo,), etype=dtype.integer, finite=True)
     k, n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)

@@ -10,7 +10,7 @@ def apply(gt_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Probability, Bool, Nat, Nat, Nat, Complex, Int
+    from Lemma import Algebra, Calculus, Probability, Bool, Nat, Complex, Int
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)

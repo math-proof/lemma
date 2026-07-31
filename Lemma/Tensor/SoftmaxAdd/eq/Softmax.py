@@ -11,7 +11,7 @@ def apply(x, delta):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Real
+    from Lemma import Tensor, Real
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))

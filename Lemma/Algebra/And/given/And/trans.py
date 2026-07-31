@@ -14,7 +14,7 @@ def apply(imply, swap=False, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x, i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     a, b, c = Symbol(integer=True, shape=(oo,))

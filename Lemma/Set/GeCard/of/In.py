@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     n = Symbol(integer=True, positive=True, given=True)
     x = Symbol(complex=True, shape=(n,), given=True)

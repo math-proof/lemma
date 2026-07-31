@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Finset
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo, k))
     i = Symbol(integer=True)

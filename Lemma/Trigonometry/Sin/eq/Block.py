@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Tensor
+    from Lemma import Trigonometry, Tensor
 
     n = Symbol(integer=True, positive=True)
     A, B, C, D = Symbol(real=True, shape=(n, n))

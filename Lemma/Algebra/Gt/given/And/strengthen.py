@@ -11,7 +11,7 @@ def apply(given, upper, strict=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(Greater(x, y), z, strict=True)

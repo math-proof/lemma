@@ -11,7 +11,7 @@ def apply(unequality, ne):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat, Nat
+    from Lemma import Nat
     x, a, b = Symbol(real=True, given=True)
     Eq << apply(Unequal(x, 0), Unequal(a, b))
 

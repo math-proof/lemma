@@ -11,7 +11,7 @@ def apply(unequality, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     n = Symbol(integer=True)
     A = Symbol(real=True, shape=(n, n), given=True)
     a, b = Symbol(real=True, shape=(n,), given=True)

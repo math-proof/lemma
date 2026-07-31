@@ -13,7 +13,7 @@ def apply(eq, eq_abs, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set
 
     n = Symbol(integer=True, positive=True)
     X = Symbol(etype=dtype.real)

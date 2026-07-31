@@ -11,7 +11,7 @@ def apply(inter0, inter1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     p0, q0, p1, q1 = Symbol(bool=True)
     a, b = Symbol(integer=True)

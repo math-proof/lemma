@@ -15,7 +15,7 @@ def apply(eq_sum, ge, all_is_nonnegative):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set, Nat, Nat, Finset
+    from Lemma import Algebra, Bool, Set, Nat, Finset
 
     x = Symbol(real=True, shape=(oo,), given=True)
     n = Symbol(integer=True, given=True, negative=False)

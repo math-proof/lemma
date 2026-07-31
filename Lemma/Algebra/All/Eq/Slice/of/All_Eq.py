@@ -18,7 +18,7 @@ def apply(self, index):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     n, u = Symbol(integer=True, positive=True)
     A, B = Symbol(real=True, shape=(n, n))

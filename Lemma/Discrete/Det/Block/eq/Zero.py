@@ -26,7 +26,7 @@ def apply(self):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra
+
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(complex=True, shape=(n, n - 1))

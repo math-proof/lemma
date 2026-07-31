@@ -19,7 +19,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     n = Symbol(integer=True, nonnegative=True)
     f, h, g = Symbol(integer=True, shape=(oo,))

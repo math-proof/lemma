@@ -14,7 +14,7 @@ def apply(eq, is_nonzero_real, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Calculus, Bool
+    from Lemma import Set, Calculus, Bool
 
     x, x0 = Symbol(real=True)
     A = Symbol(complex=True)

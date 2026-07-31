@@ -16,7 +16,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, a, b = Symbol(real=True, given=True)
     Eq << apply(Equal(x, b) | NotElement(x, Interval(a, b)))

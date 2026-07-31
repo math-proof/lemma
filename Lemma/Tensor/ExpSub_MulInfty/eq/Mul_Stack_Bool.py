@@ -15,7 +15,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor, Nat, Real
+    from Lemma import Bool, Tensor, Nat, Real
 
     n = Symbol(integer=True, positive=True)
     p = Function(bool=True)

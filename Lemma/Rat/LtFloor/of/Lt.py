@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Nat, Rat
     x, y = Symbol(real=True, given=True)
 
     Eq << apply(Less(x, y))

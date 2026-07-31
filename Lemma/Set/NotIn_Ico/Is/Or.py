@@ -13,7 +13,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     e, a, b = Symbol(integer=True, given=True)
     Eq << apply(NotElement(e, Range(a, b)))

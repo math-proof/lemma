@@ -16,7 +16,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     x, a, b = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)

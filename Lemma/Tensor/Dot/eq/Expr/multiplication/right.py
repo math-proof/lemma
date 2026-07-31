@@ -18,7 +18,7 @@ def apply(x, lamda, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), real=True)
     lamda = Symbol(real=True)

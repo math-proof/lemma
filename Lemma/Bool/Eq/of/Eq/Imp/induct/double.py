@@ -26,7 +26,7 @@ def apply(f0, suffice, n=None, x=None, start=0, return_hypothesis=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     n = Symbol(integer=True, nonnegative=True)
     f, g = Function(shape=(), real=True)
     x, y, z = Symbol(real=True)

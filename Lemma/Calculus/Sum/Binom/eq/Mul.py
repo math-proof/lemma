@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Finset
+    from Lemma import Calculus, Finset
 
     x, r = Symbol(real=True)
     n = Symbol(integer=True)

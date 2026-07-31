@@ -10,7 +10,7 @@ def apply(lt_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Probability, Bool, Complex, Complex, Complex
+    from Lemma import Algebra, Calculus, Probability, Bool, Complex
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)

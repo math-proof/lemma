@@ -17,7 +17,7 @@ def apply(self, swap=None, reverse=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Tensor
 
     h = Symbol(real=True, shape=(oo,))
     n = Symbol(integer=True, positive=True)

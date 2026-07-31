@@ -14,7 +14,7 @@ def apply(lt, given):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus
+
 
     a, b = Symbol(real=True)
     f = Function(real=True)

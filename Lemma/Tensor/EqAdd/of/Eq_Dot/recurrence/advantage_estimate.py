@@ -10,7 +10,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Algebra, Tensor
 
     t, i = Symbol(integer=True) # time step counter
     A, δ = Symbol(shape=(oo,), real=True) # advantages and TD residuals

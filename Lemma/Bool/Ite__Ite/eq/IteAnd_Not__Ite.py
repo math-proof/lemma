@@ -22,7 +22,7 @@ def apply(piecewise, i=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     k = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(k,))

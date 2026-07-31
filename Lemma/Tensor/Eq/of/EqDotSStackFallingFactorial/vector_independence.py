@@ -20,7 +20,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Bool
+    from Lemma import Tensor, Bool
 
     p = Symbol(complex=True)
     n = Symbol(integer=True, positive=True)

@@ -18,7 +18,7 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     A = Symbol(real=True, shape=(n, n))

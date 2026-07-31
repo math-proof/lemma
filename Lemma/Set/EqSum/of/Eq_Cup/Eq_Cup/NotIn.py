@@ -25,7 +25,7 @@ def apply(eq_cup, eq_cup_union, notcontains, sgm, *, assumptions=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Finset
+    from Lemma import Set, Finset
 
     i = Symbol(integer=True)
     X = Symbol(etype=dtype.real)

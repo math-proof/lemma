@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Finset, Nat, Nat
+    from Lemma import Discrete, Algebra, Tensor, Finset, Nat
 
     r = Symbol(real=True)
     n = Symbol(integer=True, positive=True)

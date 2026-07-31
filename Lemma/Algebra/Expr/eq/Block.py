@@ -57,7 +57,7 @@ def apply(self, *pivot, axis=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     m = Symbol(integer=True, positive=True)
     A = Symbol(real=True, shape=(m, m, m, m, m))

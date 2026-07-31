@@ -10,7 +10,7 @@ def apply(le, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Int
+    from Lemma import Bool, Int
 
     y, x = Symbol(real=True)
     Eq << apply(x <= y, x >= -y)

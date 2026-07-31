@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x = Symbol(domain=Interval(1, oo))
 
     Eq << apply(LessEqual(x, 1))

@@ -13,7 +13,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     a, b = Symbol(real=True, given=True)
     Eq << apply(a * b > 0)

@@ -9,7 +9,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     b, a = Symbol(real=True, given=True)
     Eq << apply(Equal(a, b))

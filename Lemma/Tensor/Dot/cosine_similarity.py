@@ -10,7 +10,7 @@ def apply(x, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
     n = Symbol(integer=True)
     x, y = Symbol(shape=(n,), real=True)
     i = Symbol(domain=Range(n))

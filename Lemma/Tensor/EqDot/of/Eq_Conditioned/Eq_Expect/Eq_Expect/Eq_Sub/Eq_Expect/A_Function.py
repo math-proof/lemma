@@ -13,7 +13,7 @@ def apply(eq, Q_def, V_def, A_def, A_def_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Tensor
+    from Lemma import Probability, Tensor
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation

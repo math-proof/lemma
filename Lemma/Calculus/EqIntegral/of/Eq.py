@@ -11,7 +11,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x = Symbol(real=True)
     f, g = Function(shape=(), real=True)
 

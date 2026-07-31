@@ -17,7 +17,7 @@ def apply(equality, inequality):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool, Nat
+    from Lemma import Probability, Bool, Nat
 
     x, y = Symbol(real=True, random=True)
     given = Equal(Pr(x, y), Pr(x) * Pr(y))

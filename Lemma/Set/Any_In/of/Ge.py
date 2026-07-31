@@ -13,7 +13,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Nat
+    from Lemma import Set, Nat
     S = Symbol(etype=dtype.integer, given=True)
 
     Eq << apply(Card(S) >= 1)

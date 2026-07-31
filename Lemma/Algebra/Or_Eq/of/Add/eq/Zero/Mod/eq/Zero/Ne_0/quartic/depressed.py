@@ -48,7 +48,7 @@ def apply(fx, mod_is_zero, is_nonzero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int, Int
+    from Lemma import Algebra, Nat, Int
     from Lemma.Algebra.Add.eq.Zero.given.And.Eq.cubic.one_leaded import cubic_solve
     from Lemma.Algebra.Ne.of.Ne_0.Add.eq.Zero import cubic_delta
 

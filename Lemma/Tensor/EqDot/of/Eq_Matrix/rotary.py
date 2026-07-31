@@ -11,7 +11,7 @@ def apply(eq_R, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Bool
+    from Lemma import Trigonometry, Bool
 
     # R denotes rotary matrix
     R = Function(shape=(2, 2), real=True)

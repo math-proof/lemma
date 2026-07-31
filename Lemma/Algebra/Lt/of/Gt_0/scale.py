@@ -10,7 +10,7 @@ def apply(given, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Int
+    from Lemma import Algebra, Int
 
     a = Symbol(real=True, given=True)
     t = Symbol(domain=Interval.open(-oo, 1))

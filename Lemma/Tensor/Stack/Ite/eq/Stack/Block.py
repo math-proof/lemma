@@ -33,7 +33,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     N, n0, n1, n2, n3, m = Symbol(positive=True, integer=True, given=False)
     X0 = Symbol(shape=(N, n0, m), real=True)

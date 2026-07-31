@@ -26,7 +26,7 @@ def apply(*imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset
+    from Lemma import Algebra, Finset
 
     k, a = Symbol(integer=True)
     b = Symbol(domain=Range(a + 1, oo))

@@ -9,7 +9,7 @@ def apply(eq_C):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Nat, Rat
+    from Lemma import Algebra, Tensor, Nat, Rat
 
     n, d = Symbol(domain=Range(2, oo))
     C, C_quote = Symbol(shape=(n, d), real=True)

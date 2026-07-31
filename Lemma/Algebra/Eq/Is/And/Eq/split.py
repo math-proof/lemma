@@ -26,7 +26,7 @@ def apply(given, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor
+    from Lemma import Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n + 1,))

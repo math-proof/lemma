@@ -12,7 +12,7 @@ def apply(given, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset
+    from Lemma import Set, Finset
 
     A, B = Symbol(etype=dtype.integer)
     x = Symbol(integer=True)

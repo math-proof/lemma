@@ -14,7 +14,7 @@ def apply(imply, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     n = Symbol(complex=True, positive=True)
     A, B = Symbol(etype=dtype.complex[n], given=True)

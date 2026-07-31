@@ -134,7 +134,7 @@ def apply(self, *, cond=None, wrt=None, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Finset, Nat
+    from Lemma import Set, Bool, Finset, Nat
 
     x = Symbol(integer=True)
     f = Function(real=True)

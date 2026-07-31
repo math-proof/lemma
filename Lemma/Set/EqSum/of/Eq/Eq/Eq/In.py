@@ -23,7 +23,7 @@ def apply(eq_cup, eq_cup_complement, eq, contains, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Logic, Bool, Finset, Finset, Int
+    from Lemma import Set, Bool, Finset, Int
 
     i = Symbol(integer=True, given=True)
     j = Symbol(integer=True)

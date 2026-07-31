@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     p, q = Symbol(bool=True)
     Eq << apply(Iff(p, q))

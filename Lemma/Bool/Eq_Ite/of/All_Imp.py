@@ -16,7 +16,7 @@ def apply(given, n=None, start=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     n = Symbol(integer=True, nonnegative=True)
     f, h = Symbol(integer=True, shape=(oo,))
     g = Stack[n](Piecewise((f[0], Equal(n, 0)), (h[n], True)))

@@ -14,7 +14,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     n, x, y = Symbol(integer=True, nonnegative=True)
     f, g, h = Function(integer=True)

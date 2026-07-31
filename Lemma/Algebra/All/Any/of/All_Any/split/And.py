@@ -18,7 +18,7 @@ def apply(given, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x, y, z, a, b = Symbol(real=True)
 
     f, g = Function(shape=(), real=True)

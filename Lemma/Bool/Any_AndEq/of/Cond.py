@@ -10,7 +10,7 @@ def apply(given, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set
     n = Symbol(integer=True, positive=True, given=True)
     e = Symbol(domain=Range(n), given=True)
     f = Function(integer=True, shape=())

@@ -21,7 +21,7 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Calculus, Algebra, Tensor
+    from Lemma import Calculus, Tensor
 
     n = Symbol(domain=Range(2, oo))
     t, x = Symbol(shape=(n,), real=True)

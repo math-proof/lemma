@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Finset, Finset
+    from Lemma import Probability, Algebra, Finset
 
     D = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))

@@ -16,7 +16,7 @@ def apply(given, *limits, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Bool, Finset
     n = Symbol(integer=True, positive=True)
     i = Symbol(domain=Range(n))
     f, g = Function(shape=(), complex=True)

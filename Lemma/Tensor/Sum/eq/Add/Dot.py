@@ -30,7 +30,7 @@ def apply(self, pivot=-1, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Finset, Finset
+    from Lemma import Tensor, Finset
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

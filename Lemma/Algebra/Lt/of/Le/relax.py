@@ -20,7 +20,7 @@ def apply(given, upper=None, lower=None, step=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, a = Symbol(real=True)
     Eq << apply(x <= a, step=1)

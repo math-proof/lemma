@@ -17,7 +17,7 @@ def apply(x):
 def prove(Eq):
     from Lemma import Bool
     from Lemma.Discrete.Alpha.gt.Zero import alpha
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete
     x = Symbol(real=True, positive=True, shape=(oo,))
     n = Symbol(integer=True, positive=True)
 

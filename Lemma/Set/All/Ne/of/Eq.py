@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     x = Symbol(shape=(oo,), etype=dtype.integer, finiteset=True, given=True)

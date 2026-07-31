@@ -53,7 +53,7 @@ def apply(eq_R, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Nat
+    from Lemma import Algebra, Tensor, Nat
 
     # n denotes sequence length (seq_length)
     # b denotes 10000

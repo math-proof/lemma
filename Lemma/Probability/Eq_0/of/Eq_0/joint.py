@@ -10,7 +10,7 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool
+    from Lemma import Probability, Bool
 
     x, y = Symbol(real=True, random=True)
     Eq << apply(Equal(Pr(x), 0), y)

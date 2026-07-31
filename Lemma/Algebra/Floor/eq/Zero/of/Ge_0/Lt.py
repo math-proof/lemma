@@ -14,7 +14,7 @@ def apply(is_nonnegative, less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Nat, Rat
 
     x = Symbol(real=True)
     Eq << apply(x >= 0, x < 1)

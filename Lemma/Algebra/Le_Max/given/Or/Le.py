@@ -12,7 +12,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x <= Max(y, z))

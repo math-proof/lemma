@@ -28,7 +28,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
     i, j = Symbol(integer=True)
     n = 4
     a = Symbol(real=True, shape=(oo,))

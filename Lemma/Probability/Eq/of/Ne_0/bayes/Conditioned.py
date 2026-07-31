@@ -12,7 +12,7 @@ def apply(eq, *vars):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Nat, Nat, Nat, Nat, Rat
+    from Lemma import Probability, Nat, Rat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(y | z), 0), x)

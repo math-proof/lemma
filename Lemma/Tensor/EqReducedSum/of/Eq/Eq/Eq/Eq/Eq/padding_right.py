@@ -16,7 +16,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote, eq_I_dquote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Int, Int, Nat, Finset, Vector
+    from Lemma import Algebra, Tensor, Bool, Int, Nat, Finset, Vector
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length

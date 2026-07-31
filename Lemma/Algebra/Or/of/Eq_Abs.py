@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Int
+    from Lemma import Bool, Int
     x, a = Symbol(real=True, given=True)
     Eq << apply(Equal(abs(x), a))
 

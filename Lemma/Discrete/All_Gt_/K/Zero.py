@@ -9,7 +9,7 @@ def apply(x, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Nat
+    from Lemma import Algebra, Set, Bool, Nat
 
     x = Symbol(integer=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)

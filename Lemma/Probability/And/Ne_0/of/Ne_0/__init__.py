@@ -29,7 +29,7 @@ def apply(given, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Nat
+    from Lemma import Probability, Calculus, Nat
 
     x, y = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y), 0))

@@ -29,7 +29,7 @@ def apply(contains, forall):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Bool
+    from Lemma import Bool
     n = Symbol(complex=True, positive=True)
     A = Symbol(etype=dtype.complex[n])
     a, b = Symbol(complex=True, shape=(n,))

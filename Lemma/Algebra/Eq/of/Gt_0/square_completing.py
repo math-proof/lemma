@@ -23,7 +23,7 @@ def apply(gt_zero, self, z=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Nat
+    from Lemma import Set, Nat
 
     z, a, b, c = Symbol(complex=True)
     Eq << apply(a > 0, a * z * ~z + b * z + ~b * ~z + c)

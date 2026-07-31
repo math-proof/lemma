@@ -12,7 +12,7 @@ def apply(et_eq, model):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Bool
+    from Lemma import Bool
 
     from Lemma.Algebra.And.Eq.of.And.just_intonation import equate
     λ_1, λ_2, λ_4, λ_5, λ_6 = Symbol(real=True, zero=False)

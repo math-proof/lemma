@@ -62,7 +62,7 @@ def apply(et, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Bool
+    from Lemma import Bool
 
     x, y, a, b, c, d = Symbol(etype=dtype.real)
     Eq << apply(Equal(b, x) & Equal(x, a) & Equal(c, a) & Equal(d, c) & Equal(b, y))

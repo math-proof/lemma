@@ -11,7 +11,7 @@ def apply(ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat
+    from Lemma import Algebra, Nat
 
     x = Symbol(real=True, positive=True)
     a = Symbol(real=True)

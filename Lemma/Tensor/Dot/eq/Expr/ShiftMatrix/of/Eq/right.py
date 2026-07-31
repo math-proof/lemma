@@ -10,7 +10,7 @@ def apply(eq, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Bool, Tensor, Nat
+    from Lemma import Set, Bool, Tensor, Nat
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), real=True)

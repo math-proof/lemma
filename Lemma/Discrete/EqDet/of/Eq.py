@@ -16,7 +16,7 @@ def apply(given, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     n, m = Symbol(integer=True, positive=True, given=True)
     i = Symbol(domain=Range(n))

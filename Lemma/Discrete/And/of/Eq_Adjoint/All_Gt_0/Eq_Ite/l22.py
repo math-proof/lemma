@@ -11,7 +11,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Set, Algebra, Tensor, Nat, Nat, Nat
+    from Lemma import Discrete, Set, Algebra, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(10, oo))

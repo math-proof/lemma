@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Int
+    from Lemma import Bool, Nat, Int
     x, y = Symbol(real=True, given=True)
 
     Eq << apply(x * y <= 0)

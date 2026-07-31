@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     x, p = Symbol(real=True, shape=())
     A, B = Symbol(etype=dtype.real)

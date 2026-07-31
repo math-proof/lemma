@@ -27,7 +27,7 @@ def analyze(*given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     n, m = Symbol(integer=True, positive=True)
     A = Symbol(etype=dtype.integer[n])

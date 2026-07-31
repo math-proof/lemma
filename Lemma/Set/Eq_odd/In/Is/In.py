@@ -13,7 +13,7 @@ def apply(is_odd, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     a, b, n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 1), Element(n, Range(a, b + 1)))

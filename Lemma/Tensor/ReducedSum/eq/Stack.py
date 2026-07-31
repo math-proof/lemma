@@ -26,7 +26,7 @@ def apply(self, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Vector
+    from Lemma import Tensor, Vector
 
     j = Symbol(integer=True)
     p, q, n, m = Symbol(integer=True, positive=True)

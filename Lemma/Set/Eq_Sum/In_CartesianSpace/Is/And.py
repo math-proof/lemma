@@ -13,7 +13,7 @@ def apply(eq, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     n = Symbol(integer=True, positive=True)
     t = Symbol(integer=True, shape=(oo,))

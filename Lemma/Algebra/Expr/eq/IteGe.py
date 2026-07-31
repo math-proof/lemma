@@ -22,7 +22,7 @@ def apply(self, lower=None, upper=None, strict=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     x, a = Symbol(real=True)
     Eq << apply(x, upper=a)

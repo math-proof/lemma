@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Finset
+    from Lemma import Set, Nat, Finset
 
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(Equal(Intersection(A, B), A.etype.emptySet))

@@ -26,7 +26,7 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x = Symbol(real=True)
     A = Symbol(etype=dtype.real)

@@ -27,7 +27,7 @@ def apply(self, factor=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y = Symbol(real=True)
     r = Symbol(real=True, positive=True)

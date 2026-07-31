@@ -12,7 +12,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     x, y = Symbol(real=True)
     f, g, h = Function(shape=(), integer=True)
     Eq << apply(Any[x:f(x) > 0, y:g(y) > 0](h(x, y) > 0))

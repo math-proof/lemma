@@ -26,7 +26,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset
+    from Lemma import Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))

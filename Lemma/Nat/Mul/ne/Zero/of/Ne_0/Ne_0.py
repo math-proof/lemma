@@ -10,7 +10,7 @@ def apply(is_nonzero_x, is_nonzero_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Int, Int, Nat, Nat, Nat
+    from Lemma import Int, Nat
 
     x, y = Symbol(complex=True)
     Eq << apply(Unequal(x, 0), Unequal(y, 0))

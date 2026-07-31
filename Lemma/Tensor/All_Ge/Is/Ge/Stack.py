@@ -11,7 +11,7 @@ def apply(all_le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor
+    from Lemma import Bool, Tensor
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True)

@@ -20,7 +20,7 @@ def apply(given, pivot=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(complex=True, shape=(n,))

@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat
+    from Lemma import Rat
     x = Symbol(real=True, given=True)
 
     Eq << apply(Equal(frac(x), 0))

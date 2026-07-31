@@ -25,7 +25,7 @@ def apply(eq0, eq1, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, a, b = Symbol(complex=True)
     c, d = Symbol(complex=True, zero=False)

@@ -19,7 +19,7 @@ def apply(self, pivot=-1, i=None, d=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Nat, Nat, Nat, Finset, Finset, Finset
+    from Lemma import Algebra, Discrete, Bool, Nat, Finset
 
     d = Symbol(integer=True, positive=True, given=False)
     n = Symbol(domain=Range(d, oo))

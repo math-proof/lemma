@@ -10,7 +10,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Nat
+    from Lemma import Discrete, Nat
 
     x = Symbol(real=True, positive=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)

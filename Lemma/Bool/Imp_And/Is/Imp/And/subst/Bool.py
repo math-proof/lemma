@@ -20,7 +20,7 @@ def apply(given, index=0, invert=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y = Symbol(integer=True)
     t, f, g = Function(integer=True)

@@ -9,7 +9,7 @@ def apply(eq, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Tensor, Bool
 
     n = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))

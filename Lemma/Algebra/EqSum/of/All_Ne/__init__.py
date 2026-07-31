@@ -13,7 +13,7 @@ def apply(given, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Int
 
     x = Symbol(complex=True, shape=(oo,))
     y, t = Symbol(complex=True)

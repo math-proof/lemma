@@ -10,7 +10,7 @@ def apply(lt, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat
+    from Lemma import Algebra, Nat
 
     x, y, z = Symbol(integer=True)
     Eq << apply(x < 0, Equal(x + y, z))

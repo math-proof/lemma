@@ -14,7 +14,7 @@ def apply(given, f):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
     x = Symbol(integer=True)
     y = Symbol(integer=True, given=True)
     f = Function(integer=True)

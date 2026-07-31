@@ -16,7 +16,7 @@ def apply(given, invert=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     y, x = Symbol(integer=True)
     A = Symbol(etype=dtype.integer)

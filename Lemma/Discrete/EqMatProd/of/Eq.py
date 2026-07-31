@@ -10,7 +10,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool
+    from Lemma import Discrete, Bool
     n = Symbol(integer=True, positive=True)
     i = Symbol(domain=Range(n))
     f, g = Function(shape=(), complex=True)

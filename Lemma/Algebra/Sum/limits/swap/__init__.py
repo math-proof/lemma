@@ -22,7 +22,7 @@ def apply(self, i=0, j=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Nat, Nat, Nat
+    from Lemma import Algebra, Bool, Finset, Nat
 
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)

@@ -9,7 +9,7 @@ def apply(All_And):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Discrete, Bool, Tensor
+    from Lemma import Algebra, Set, Bool, Tensor
 
     n, t = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, n), complex=True)

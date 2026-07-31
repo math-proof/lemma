@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, any, eq_argmax):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Set, Bool, Nat, Nat, Finset, Rat
+    from Lemma import Algebra, Probability, Set, Bool, Nat, Finset, Rat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation

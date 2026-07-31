@@ -10,7 +10,7 @@ def apply(prob_lhs, prob_rhs):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Finset, Finset, Finset
+    from Lemma import Probability, Algebra, Finset
 
     D, m, n = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))

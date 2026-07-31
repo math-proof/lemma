@@ -19,7 +19,7 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Int
+    from Lemma import Bool, Nat, Int
 
     x, a, b = Symbol(real=True)
     Eq << apply(Equal(a * x + b, 0), x=x)

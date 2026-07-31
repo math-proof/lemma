@@ -11,7 +11,7 @@ def apply(less_than_0, less_than_1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
 
     x, y, a, b = Symbol(real=True)
     Eq << apply(x < a, y < b)

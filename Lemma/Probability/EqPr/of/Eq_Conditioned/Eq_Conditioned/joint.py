@@ -11,7 +11,7 @@ def apply(x_given_z, y_given_z):
 
 @prove(provable=False)
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Equal(x | z, x), Equal(y | z, y))

@@ -15,7 +15,7 @@ def apply(given, pivot=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     k = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, shape=(k,))
 

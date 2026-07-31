@@ -15,7 +15,7 @@ def apply(given, i=-1, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     a, b, x, y = Symbol(real=True)
     Eq << apply(Greater(x, y) & Greater(a, b))

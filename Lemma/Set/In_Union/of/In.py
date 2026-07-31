@@ -13,7 +13,7 @@ def apply(given, S):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     e = Symbol(integer=True)
     U, S = Symbol(etype=dtype.integer)

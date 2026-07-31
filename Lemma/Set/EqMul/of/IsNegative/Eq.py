@@ -13,7 +13,7 @@ def apply(is_negative, equality):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Nat
+    from Lemma import Set, Nat
     x = Symbol(real=True, given=True)
     g, h = Function(real=True)
     Eq << apply(Element(x, Interval.open(-oo, 0)), Equal(g(x), h(x)))

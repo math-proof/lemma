@@ -10,7 +10,7 @@ def apply(is_complex):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Complex
+    from Lemma import Set, Complex
 
     x = Symbol(super_complex=True)
     Eq << apply(Element(x, S.Complexes))

@@ -27,7 +27,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Int
+    from Lemma import Tensor, Int
 
     j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

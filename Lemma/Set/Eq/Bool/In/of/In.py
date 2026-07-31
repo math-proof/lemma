@@ -8,7 +8,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     e = Symbol(integer=True)
     s = Symbol(etype=dtype.integer)
     Eq << apply(Element(e, s))

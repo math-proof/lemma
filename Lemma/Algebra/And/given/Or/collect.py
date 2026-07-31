@@ -22,7 +22,7 @@ def apply(self, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Logic, Bool
+    from Lemma import Bool
 
     p, q, r, s = Symbol(bool=True)
     Eq << apply(And(q | p, r | p, s | p), cond=p)

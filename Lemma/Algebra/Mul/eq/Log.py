@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real, Nat
+    from Lemma import Bool, Real, Nat
 
     t = Symbol(real=True)
     x = Symbol(real=True, positive=True)

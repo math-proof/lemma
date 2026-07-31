@@ -11,7 +11,7 @@ def apply(b_greater_than_x, x_greater_than_a):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
     a, x, b = Symbol(real=True)
 
     Eq << apply(b > x, x > a)

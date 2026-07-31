@@ -11,7 +11,7 @@ def apply(ne_zero, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat, Nat
+    from Lemma import Nat
 
     x, y, z = Symbol(integer=True)
     Eq << apply(Unequal(x, 0), Equal(1 / x + y, z))

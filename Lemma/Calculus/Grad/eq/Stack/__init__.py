@@ -45,7 +45,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n, m, d = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n, n))

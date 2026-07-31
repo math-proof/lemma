@@ -12,7 +12,7 @@ def apply(ge, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     a, b, c, x, y = Symbol(real=True)
     Eq << apply(a >= b, Element(x, Interval(a, b)))

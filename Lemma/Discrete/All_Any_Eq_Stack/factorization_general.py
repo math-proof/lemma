@@ -24,7 +24,7 @@ def apply(given):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Set, Discrete
+
 
     n = Symbol(domain=Range(2, oo), given=False)
     a = Symbol(shape=(oo,), etype=dtype.integer, given=True)

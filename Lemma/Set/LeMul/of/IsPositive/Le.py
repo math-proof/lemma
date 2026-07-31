@@ -13,7 +13,7 @@ def apply(is_positive, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     x = Symbol(real=True, given=True)
     g, h = Function(real=True)

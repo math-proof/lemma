@@ -29,7 +29,7 @@ def apply(self, k, axis=0, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     i = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)

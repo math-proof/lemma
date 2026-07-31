@@ -10,7 +10,7 @@ def apply(given, d=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x = Symbol(real=True, given=True)
     Eq << apply(Unequal(x, 0))

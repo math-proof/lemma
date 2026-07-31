@@ -13,7 +13,7 @@ def apply(given, scale, div=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat
+    from Lemma import Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(LessEqual(x, y), z, div=True)

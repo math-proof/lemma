@@ -17,7 +17,7 @@ def apply(given, epsilon=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Calculus
+
 
     a, b = Symbol(real=True)
     f = Function(real=True)

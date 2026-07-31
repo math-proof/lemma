@@ -8,7 +8,7 @@ def apply(f_eq, *, old=None, new=None, simplify=True, assumptions={}):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     a, b = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)

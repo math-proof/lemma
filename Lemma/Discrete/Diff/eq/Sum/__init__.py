@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool
+    from Lemma import Discrete, Bool
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

@@ -13,7 +13,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Int, Vector
+    from Lemma import Tensor, Int, Vector
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True)

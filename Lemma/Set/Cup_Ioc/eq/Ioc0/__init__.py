@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     n = Symbol(integer=True, nonnegative=True, given=False)
     k = Symbol(integer=True)

@@ -11,7 +11,7 @@ def apply(eq_x_bar, t, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset, Finset, Int, Int, Nat, Vector
+    from Lemma import Algebra, Finset, Int, Nat, Vector
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)

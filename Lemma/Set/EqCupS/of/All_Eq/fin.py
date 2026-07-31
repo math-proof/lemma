@@ -11,7 +11,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
     n = Symbol(integer=True, positive=True)
     i = Symbol(domain=Range(n))
     f, g = Function(shape=(), etype=dtype.integer)

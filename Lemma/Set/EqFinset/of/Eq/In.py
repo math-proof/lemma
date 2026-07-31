@@ -10,7 +10,7 @@ def apply(equal, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     A = Symbol(etype=dtype.integer, given=True)
     a = Symbol(integer=True, given=True)

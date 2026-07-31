@@ -17,7 +17,7 @@ def apply(x, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Tensor
+    from Lemma import Discrete, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(etype=dtype.integer, shape=(n,))

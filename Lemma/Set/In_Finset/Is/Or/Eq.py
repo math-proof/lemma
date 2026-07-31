@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     e, a, b, c = Symbol(integer=True, given=True)
     Eq << apply(Element(e, {a, b, c}))

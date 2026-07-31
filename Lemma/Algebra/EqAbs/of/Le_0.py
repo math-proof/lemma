@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
     x = Symbol(real=True)
 
     Eq << apply(x <= 0)

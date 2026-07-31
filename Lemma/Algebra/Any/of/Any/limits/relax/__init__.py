@@ -34,7 +34,7 @@ def apply(given, domain=None, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     a, b = Symbol(real=True, given=True)
     x, z = Symbol(real=True)

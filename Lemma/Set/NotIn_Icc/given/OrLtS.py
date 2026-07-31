@@ -20,7 +20,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     e, a, b = Symbol(real=True, given=True)
     Eq << apply(NotElement(e, Interval(a, b)))

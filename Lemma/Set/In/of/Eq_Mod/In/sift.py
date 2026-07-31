@@ -18,7 +18,7 @@ def apply(eq_mod, contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     x = Symbol(integer=True)
     Eq << apply(Equal(x % 3, 1), Element(x, {-2, -1, 0, 1, 2}))

@@ -22,7 +22,7 @@ def apply(lt, is_continuous, left_is_real, right_is_real, equal):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Bool, Int, Int
+    from Lemma import Calculus, Set, Algebra, Bool, Int
 
     a, b, x = Symbol(real=True)
     f = Function(shape=(), real=True)

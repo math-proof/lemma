@@ -13,7 +13,7 @@ def apply(cond, all):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     k, a = Symbol(integer=True)
     b = Symbol(domain=Range(a + 1, oo))

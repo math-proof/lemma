@@ -10,7 +10,7 @@ def apply(is_nonpositive_y, is_positive_x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
     x, y = Symbol(real=True)
 
     Eq << apply(y <= 0, x > 0)

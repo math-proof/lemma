@@ -11,7 +11,7 @@ def apply(s, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     S = Symbol(etype=dtype.integer)
 
     Eq << apply(S)

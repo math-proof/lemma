@@ -15,7 +15,7 @@ def apply(self, axis=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     d = Symbol(integer=True, positive=True)
     a, b, i = Symbol(integer=True)

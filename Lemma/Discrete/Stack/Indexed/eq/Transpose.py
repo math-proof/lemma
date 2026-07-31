@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n, d = Symbol(integer=True, positive=True)
     x = Symbol(shape=(n, n * 2, n), real=True)

@@ -25,7 +25,7 @@ def apply(x, w=None, left=True, reference=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Tensor
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), real=True)

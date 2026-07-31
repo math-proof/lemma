@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
     e = Symbol(integer=True)
     s, S = Symbol(etype=dtype.integer)
     Eq << apply(Element(e, S - s))

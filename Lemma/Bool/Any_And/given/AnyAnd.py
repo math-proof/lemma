@@ -9,7 +9,7 @@ def apply(given, index):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))

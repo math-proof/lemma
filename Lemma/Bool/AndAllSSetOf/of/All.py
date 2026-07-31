@@ -26,7 +26,7 @@ def apply(given, *, cond=None, wrt=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     e = Symbol(integer=True)
     f = Function(integer=True, shape=())

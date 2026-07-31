@@ -16,7 +16,7 @@ def apply(Q_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Calculus, Bool, Rat
+    from Lemma import Probability, Calculus, Bool, Rat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation

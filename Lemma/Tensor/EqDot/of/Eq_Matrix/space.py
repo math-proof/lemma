@@ -48,7 +48,7 @@ def rotary_matrix(i, j, k, clustered=False):
             [     0,      0, sin(k),       0,       0,  cos(k)]]
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Bool
+    from Lemma import Trigonometry, Bool
 
     # n denotes sequence length (seq_length)
     n = Symbol(integer=True, positive=True)

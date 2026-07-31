@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Algebra, Tensor
 
     n = Symbol(integer=True, positive=True)
     x, y, z = Symbol(complex=True, shape=(n,))

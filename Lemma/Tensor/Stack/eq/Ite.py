@@ -18,7 +18,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     i, a = Symbol(integer=True)
     j = Symbol(integer=True, given=True)

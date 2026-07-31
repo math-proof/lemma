@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     a, b = Symbol(integer=True)
     Eq << apply(FiniteSet(Piecewise((a, b > 0), (a + 2, True))))

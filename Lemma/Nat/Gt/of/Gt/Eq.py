@@ -9,7 +9,7 @@ def apply(gt, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     a, x, b = Symbol(real=True)
     # Eq << apply(b > x, Equal(x, a))

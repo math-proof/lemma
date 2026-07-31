@@ -33,7 +33,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Tensor
 
     a, b, n, m = Symbol(integer=True, positive=True)
     C = Symbol(shape=(m, n), complex=True)

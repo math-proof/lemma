@@ -13,7 +13,7 @@ def apply(given, limit):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     n = Symbol(positive=True, integer=True, given=False)
     x, k = Symbol(integer=True)
 

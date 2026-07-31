@@ -44,7 +44,7 @@ def apply(forall, exists):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     y, x, z = Symbol(real=True)
     f, g, h = Function(integer=True)

@@ -18,7 +18,7 @@ def apply(contains_x, contains_y, contains_z):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Nat
+    from Lemma import Set, Nat
 
     a, b, c, d, x, y, z = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True)), Element(y, Interval(c, d, right_open=True)), Element(z, Interval(x, y, left_open=True)))

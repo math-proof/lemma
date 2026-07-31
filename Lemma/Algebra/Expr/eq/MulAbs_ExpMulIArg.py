@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Trigonometry, Complex
+    from Lemma import Algebra, Trigonometry, Complex
 
     z = Symbol(complex=True, given=True)
     Eq << apply(z)

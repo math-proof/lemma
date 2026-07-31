@@ -42,7 +42,7 @@ def apply(given, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, y = Symbol(real=True, given=True)
     f, h, g = Function(real=True)

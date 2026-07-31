@@ -37,7 +37,7 @@ def apply(self, deep=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat
+    from Lemma import Tensor, Nat
 
     m, n = Symbol(integer=True, positive=True)
     A, B = Symbol(real=True, shape=(m, n))

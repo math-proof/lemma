@@ -24,7 +24,7 @@ def apply(eq_relu, eq_min, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Bool, Vector
+    from Lemma import Tensor, Algebra, Set, Bool, Vector
 
     n, l, u = Symbol(integer=True, positive=True)
     # l denotes the size of the preceding context including current position;

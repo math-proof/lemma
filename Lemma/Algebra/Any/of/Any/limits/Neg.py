@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int
+    from Lemma import Set, Bool, Int
 
     i, a, b = Symbol(integer=True)
     f = Function(real=True)

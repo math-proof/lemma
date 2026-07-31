@@ -24,7 +24,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Finset
+    from Lemma import Discrete, Tensor, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)

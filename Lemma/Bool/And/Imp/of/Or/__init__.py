@@ -63,7 +63,7 @@ def apply(given, pivot=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x, a, b, c, d = Symbol(real=True, given=True)
     f = Function(real=True)

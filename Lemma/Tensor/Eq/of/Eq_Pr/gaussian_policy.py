@@ -15,7 +15,7 @@ def apply(eq_given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Bool, Real
+    from Lemma import Calculus, Bool, Real
 
     n = Symbol(integer=True, positive=True)
     φ = Function(real=True, shape=(n,))

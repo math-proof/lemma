@@ -42,7 +42,7 @@ def apply(self, index=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Finset
 
     x, k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

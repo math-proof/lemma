@@ -25,7 +25,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Real, Real
+    from Lemma import Algebra, Tensor, Bool, Real
 
     n = Symbol(domain=Range(2, oo))
     l = Symbol(domain=Range(2, n + 1))

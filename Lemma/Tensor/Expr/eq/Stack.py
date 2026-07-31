@@ -33,7 +33,7 @@ def apply(self, *vars):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     p, q, n, m = Symbol(integer=True, positive=True)
     Y = Symbol(shape=(p, q, m, n), real=True)

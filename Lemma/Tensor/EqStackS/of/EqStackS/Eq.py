@@ -20,7 +20,7 @@ def apply(eq_historic, eq_n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)

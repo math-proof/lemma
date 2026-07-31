@@ -31,7 +31,7 @@ def apply(given, old, new):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+
 
     i = Symbol(integer=True)
     x = Symbol(real=True)

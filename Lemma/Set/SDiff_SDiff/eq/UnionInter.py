@@ -12,7 +12,7 @@ def apply(complement, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     A, B, C = Symbol(etype=dtype.integer)
     Eq << apply(A - (B - C))

@@ -11,7 +11,7 @@ def apply(is_nonzero, n, x2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Nat, Nat, Nat
+    from Lemma import Algebra, Discrete, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     x1, x2 = Symbol(complex=True)

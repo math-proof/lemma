@@ -10,7 +10,7 @@ def apply(is_nonzero):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Unequal(Ceil((Arg(A) + Arg(B)) / (S.Pi * 2) - S.One / 2), 0))

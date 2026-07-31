@@ -22,7 +22,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Nat, Nat, Nat, Nat
+    from Lemma import Probability, Nat
 
     n = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(n, n))

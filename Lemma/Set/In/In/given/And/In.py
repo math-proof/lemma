@@ -18,7 +18,7 @@ def apply(el_c, el_x, start=True, stop=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     a, b, c, x = Symbol(real=True)
     Eq << apply(Element(c, Interval.open(a, b)), Element(x, Interval(a, b)))

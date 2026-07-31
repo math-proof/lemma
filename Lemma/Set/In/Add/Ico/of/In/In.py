@@ -13,7 +13,7 @@ def apply(el1, el2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     a, b, c, d, x0, x1 = Symbol(integer=True)
     Eq << apply(Element(x0, Range(a, b)), Element(x1, Range(c, d)))

@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x >= y)

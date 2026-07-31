@@ -56,7 +56,7 @@ def apply(cond0, cond1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     x, a, b = Symbol(integer=True)
     Eq << apply(a < x, x < b)

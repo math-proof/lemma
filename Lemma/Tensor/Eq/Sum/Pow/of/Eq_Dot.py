@@ -16,7 +16,7 @@ def apply(given, m, i=None):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     m = Symbol(integer=True, positive=True, given=False)
     n = Symbol(integer=True, positive=True)

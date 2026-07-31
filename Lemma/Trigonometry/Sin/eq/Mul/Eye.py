@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Trigonometry, Tensor
+    from Lemma import Trigonometry, Tensor
 
     x = Symbol(complex=True)
     n = Symbol(integer=True, positive=True)

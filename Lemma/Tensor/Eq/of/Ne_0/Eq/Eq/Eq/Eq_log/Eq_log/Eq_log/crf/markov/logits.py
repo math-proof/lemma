@@ -15,7 +15,7 @@ def apply(x_independence_assumption, y_independence_assumption, xy_independence_
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Real, Finset, Finset
+    from Lemma import Tensor, Algebra, Bool, Real, Finset
 
     d, n = Symbol(domain=Range(2, oo))
     X = Symbol("x", shape=(n, d), real=True, random=True)

@@ -20,7 +20,7 @@ def apply(is_positive, eq, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat, Nat
+    from Lemma import Nat
 
     x = Symbol(real=True, given=True)
     f, g, h = Function(real=True)

@@ -11,7 +11,7 @@ def apply(ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Finset, Vector
+    from Lemma import Algebra, Bool, Finset, Vector
 
     n = Symbol(integer=True, positive=True, given=True)
     x = Symbol(real=True, shape=(n,), given=True)

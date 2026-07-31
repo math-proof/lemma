@@ -16,7 +16,7 @@ def apply(is_nonnegative, self, offset):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Bool
+    from Lemma import Calculus, Bool
 
     x, a, b, d = Symbol(real=True)
     f = Function(real=True, integrable=True)

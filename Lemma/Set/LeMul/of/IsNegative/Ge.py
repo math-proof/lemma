@@ -13,7 +13,7 @@ def apply(is_negative, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Int
 
     x = Symbol(real=True, given=True)
     g, h = Function(real=True)

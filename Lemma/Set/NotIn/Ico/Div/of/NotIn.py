@@ -21,7 +21,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Rat
+    from Lemma import Set, Rat
 
     x, a, b = Symbol(integer=True, given=True)
     d = Symbol(integer=True, positive=True, given=True)

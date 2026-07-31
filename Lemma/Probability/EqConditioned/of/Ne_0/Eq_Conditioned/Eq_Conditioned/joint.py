@@ -11,7 +11,7 @@ def apply(ne_zero, z_given_x, z_given_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Bool
+    from Lemma import Probability, Bool
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Unequal(Pr(x, y), 0), Equal(z | x, z), Equal(z | y, z))

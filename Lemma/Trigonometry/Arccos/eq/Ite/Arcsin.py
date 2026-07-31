@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Bool, Int
+    from Lemma import Trigonometry, Bool, Int
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(acos(x))

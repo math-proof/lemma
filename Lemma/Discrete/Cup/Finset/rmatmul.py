@@ -20,7 +20,7 @@ def apply(x, w=None, right=None, var=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Set, Tensor
+    from Lemma import Set, Tensor
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True)

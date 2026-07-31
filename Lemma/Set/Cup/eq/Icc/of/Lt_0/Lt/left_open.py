@@ -14,7 +14,7 @@ def apply(is_negative, lt, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     a, b, k = Symbol(integer=True)
     Eq << apply(a < 0, a < b, k)

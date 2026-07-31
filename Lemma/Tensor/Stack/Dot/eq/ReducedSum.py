@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Tensor
 
     i = Symbol(integer=True)
     n, d = Symbol(integer=True, positive=True)

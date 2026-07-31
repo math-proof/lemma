@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
     e = Symbol(etype=dtype.integer.set)
     s = Symbol(etype=dtype.integer.set.set)
     f = Function(etype=dtype.integer.set)

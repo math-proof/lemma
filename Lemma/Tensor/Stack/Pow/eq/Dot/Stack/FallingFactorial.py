@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     m, d = Symbol(integer=True, positive=True)
     i, j = Symbol(integer=True)

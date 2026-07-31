@@ -11,7 +11,7 @@ def apply(eq_conditioned, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool, Finset, Finset, Finset, Vector
+    from Lemma import Probability, Bool, Finset, Vector
 
     x = Symbol(real=True, shape=(oo,), random=True)
     n = Symbol(integer=True)

@@ -10,7 +10,7 @@ def apply(is_nonnegative):
 
 @prove
 def prove(Eq):
-    from Lemma import Trigonometry, Algebra, Set, Bool, Int
+    from Lemma import Trigonometry, Set, Bool, Int
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(x >= 0)

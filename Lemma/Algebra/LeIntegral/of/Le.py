@@ -10,7 +10,7 @@ def apply(given, *limits):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Bool
+    from Lemma import Calculus, Bool
     x, a, b = Symbol(real=True)
 
     f, g = Function(shape=(), real=True)

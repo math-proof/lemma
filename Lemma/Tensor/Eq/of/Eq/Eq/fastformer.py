@@ -10,7 +10,7 @@ def apply(eq_K, eq_V, i, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     n, d = Symbol(integer=True, positive=True)
     i, j = Symbol(integer=True)

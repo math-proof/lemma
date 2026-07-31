@@ -22,7 +22,7 @@ def apply(self, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Algebra, Tensor
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(complex=True, shape=(n,))

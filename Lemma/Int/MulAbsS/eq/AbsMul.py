@@ -22,7 +22,7 @@ def apply(self, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Int, Nat
+    from Lemma import Bool, Int, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(abs(x) * abs(y))

@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Bool
+    from Lemma import Probability, Bool
 
     b = Symbol(integer=True, positive=True)
     # states / observation of the agent

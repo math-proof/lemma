@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Finset
+    from Lemma import Algebra, Tensor, Finset
 
     n = Symbol(integer=True)
     x, y = Symbol(shape=(n,), real=True)

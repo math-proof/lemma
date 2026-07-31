@@ -14,7 +14,7 @@ def apply(self, t_p):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Tensor
 
     # m denotes batch size
     # n denotes sequence length

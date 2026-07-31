@@ -12,7 +12,7 @@ def apply(n, m, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Tensor
+    from Lemma import Discrete, Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     m = Symbol(positive=True, integer=True, given=False)

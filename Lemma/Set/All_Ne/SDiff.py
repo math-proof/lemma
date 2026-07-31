@@ -14,7 +14,7 @@ def apply(y, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
     y = Symbol(complex=True)
     Eq << apply(y)
 

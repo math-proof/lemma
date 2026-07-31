@@ -23,7 +23,7 @@ def apply(eq_max, eq_min, eq_K, eq_V, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Discrete, Bool, Vector
+    from Lemma import Tensor, Algebra, Set, Bool, Vector
 
     n, l, u, d = Symbol(integer=True, positive=True)
     d_z = Symbol(integer=True, positive=True)

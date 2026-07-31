@@ -14,7 +14,7 @@ def apply(given, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     a, b, c = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)

@@ -9,7 +9,7 @@ def apply(self, i=0, j=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)

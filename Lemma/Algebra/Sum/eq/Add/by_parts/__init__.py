@@ -16,7 +16,7 @@ def apply(self, pivot=-1, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset, Finset, Finset, Nat, Nat, Nat
+    from Lemma import Algebra, Finset, Nat
 
     n = Symbol(integer=True, nonnegative=True)
     i, k = Symbol(integer=True)

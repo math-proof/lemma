@@ -23,7 +23,7 @@ def apply(eq_D, eq_Ah, eq_Al, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Discrete, Algebra, Bool, Nat
+    from Lemma import Tensor, Algebra, Bool, Nat
 
     n, d_z = Symbol(integer=True, positive=True)
     h = Symbol(domain=Range(1, n))

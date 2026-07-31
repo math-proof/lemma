@@ -12,7 +12,7 @@ def apply(self, pivot):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Int
+    from Lemma import Tensor, Int
 
     n = Symbol(positive=True, integer=True, given=False)
     m = Symbol(domain=Range(2, oo))

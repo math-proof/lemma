@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
     n = Symbol(integer=True)
 
     Eq << apply(Unequal(n % 2, 1))

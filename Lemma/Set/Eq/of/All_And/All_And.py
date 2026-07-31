@@ -24,7 +24,7 @@ def apply(all_a, all_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool
+    from Lemma import Set, Bool
 
     n, m = Symbol(integer=True, positive=True)
 

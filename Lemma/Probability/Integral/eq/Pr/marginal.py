@@ -10,7 +10,7 @@ def apply(self):
 
 @prove(provable=False)
 def prove(Eq):
-    from Lemma import Probability
+
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Integral[x.var](Pr(x, y, z)))

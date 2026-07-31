@@ -24,7 +24,7 @@ def apply(m, d, w=None, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Tensor
+    from Lemma import Bool, Tensor
 
     n = Symbol(domain=Range(2, oo))
     m = Symbol(integer=True, nonnegative=True, given=False)

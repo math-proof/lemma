@@ -14,7 +14,7 @@ def apply(less_than_f, less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
     y, b, x, t = Symbol(real=True)
     k = Symbol(real=True, positive=True)
 

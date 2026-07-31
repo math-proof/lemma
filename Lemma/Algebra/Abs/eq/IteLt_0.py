@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int
+    from Lemma import Bool, Int
 
     x = Symbol(real=True)
     Eq << apply(abs(x))

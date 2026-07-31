@@ -11,7 +11,7 @@ def apply(imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     x, a, b = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, left_open=True, right_open=True)))

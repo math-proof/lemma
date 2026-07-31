@@ -11,7 +11,7 @@ def apply(self, i, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor
 
     k = Symbol(integer=True, positive=True)
     i, j = Symbol(integer=True)

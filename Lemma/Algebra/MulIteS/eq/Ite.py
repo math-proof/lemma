@@ -33,7 +33,7 @@ def mul(self, other):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     x = Symbol(real=True)
     A, B = Symbol(etype=dtype.real)

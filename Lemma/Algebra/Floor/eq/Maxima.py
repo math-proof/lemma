@@ -10,7 +10,7 @@ def apply(self):
 
 @prove(provable=False)
 def prove(Eq):
-    from Lemma import Algebra
+
 
     x = Symbol(real=True)
     Eq << apply(Floor(x))

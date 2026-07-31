@@ -14,7 +14,7 @@ def apply(lt, lt_max, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Int, Int
+    from Lemma import Algebra, Bool, Nat, Int
 
     m, M, U = Symbol(real=True, given=True)
     Eq << apply(m < M, U < Max(M ** 2, m ** 2))

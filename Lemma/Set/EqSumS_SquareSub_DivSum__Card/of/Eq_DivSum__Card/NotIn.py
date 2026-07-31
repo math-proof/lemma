@@ -13,7 +13,7 @@ def apply(notcontains, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     y = Symbol(integer=True, given=True)
     x = Symbol(integer=True)

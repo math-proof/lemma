@@ -10,7 +10,7 @@ def apply(sinx):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Trigonometry
+    from Lemma import Trigonometry
 
     x = Symbol(real=True)
     Eq << apply(sin(x))

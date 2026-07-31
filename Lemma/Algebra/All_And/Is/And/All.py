@@ -9,7 +9,7 @@ def apply(self, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)

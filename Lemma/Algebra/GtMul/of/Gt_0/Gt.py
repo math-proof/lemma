@@ -11,7 +11,7 @@ def apply(is_positive_x, strict_greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, a, b = Symbol(real=True)
     Eq << apply(x > 0, a > b)

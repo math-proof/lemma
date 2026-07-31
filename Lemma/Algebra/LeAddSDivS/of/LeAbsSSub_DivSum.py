@@ -24,7 +24,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Finset, Int, Int
+    from Lemma import Algebra, Tensor, Finset, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))

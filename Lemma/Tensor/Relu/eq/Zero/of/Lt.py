@@ -9,7 +9,7 @@ def apply(lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Nat
+    from Lemma import Tensor, Nat
 
     i, l = Symbol(integer=True)
     Eq << apply(i < l)

@@ -24,7 +24,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Bool
+    from Lemma import Discrete, Tensor, Bool
 
     p = Symbol(complex=True, zero=False)
     n, k = Symbol(integer=True, positive=True)

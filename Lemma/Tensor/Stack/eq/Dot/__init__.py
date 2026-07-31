@@ -24,7 +24,7 @@ def apply(lamda):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Tensor
 
     i, j, k = Symbol(integer=True)
     n, m, d = Symbol(integer=True, positive=True)
