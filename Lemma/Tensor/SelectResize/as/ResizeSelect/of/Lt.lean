@@ -3,7 +3,8 @@ import Lemma.Nat.DivMulS.eq.Div.of.Ne_0
 import Lemma.List.AddMul_ProdDrop.lt.ProdDrop.of.GtProdDrop_Succ.GtGet.Gtlength
 import Lemma.List.ProdDrop.eq.MulProdDrop_Add_1.of.GtLength
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
-import Lemma.List.ProdTakeSet.eq.MulProdSetTake.of.Lt.GtLength
+import Lemma.List.ProdTakeSet.eq.MulProdSetTake.of.Ne.GtLength
+import Lemma.Nat.Ne.of.Lt
 import Lemma.List.DropSet.eq.Drop.of.Lt
 import Lemma.List.EraseIdxSet.eq.SetEraseIdx.of.Lt
 import Lemma.List.GetEraseIdx.eq.Get.of.Gt.GtLength
@@ -123,7 +124,7 @@ private lemma main
         have h_lt : (↑q * s[↑d] + ↑i) * ((s.set k n).drop (↑d + 1)).prod + ↑r < (s.take k).prod * (n * (s.drop (k + 1)).prod) := by
           rw [MulProd_Mul_Prod.eq.ProdSet.of.GtLength (by grind) n]
           apply AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop _ h_r
-          apply Nat.lt_of_lt_of_eq _ (MulProdSetTake.eq.ProdTakeSet.of.Lt.GtLength d.isLt h_k n)
+          apply Nat.lt_of_lt_of_eq _ (MulProdSetTake.eq.ProdTakeSet.of.Ne.GtLength d.isLt (Ne.of.Lt h_k) n)
           apply AddMul.lt.Mul.of.Lt.Lt _ i.isLt
           rwa [TakeSet.eq.SetTake.of.Lt h_k] at h_q
         let ⟨qₐ, rₐ, h_qₐrₐ⟩ := Any_Eq_AddMul.of.Lt_Mul h_lt
