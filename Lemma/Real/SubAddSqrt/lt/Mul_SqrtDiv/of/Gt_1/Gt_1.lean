@@ -57,7 +57,7 @@ private lemma main
       rw [@Int.SubMulS.eq.MulSub]
       rw [EqSub_Sub]
       rw [Mul.comm]
-      rw [MulMul]
+      rw [MulMul.comm.rotate]
       rw [@Int.SubMulS.eq.MulSub]
       rw [AddMulS.eq.MulAdd]
       apply Lt0Mul.of.Gt_0.Gt_0
