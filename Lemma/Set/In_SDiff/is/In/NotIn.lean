@@ -1,6 +1,14 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Set.In_SDiff.is.In.NotIn |
+| comm | Set.In.NotIn.is.In_SDiff |
+| mp | Set.In.NotIn.of.In_SDiff |
+| mpr | Set.In_SDiff.of.In.NotIn |
+-/
 @[main, comm, mp, mpr]
 private lemma main
 -- given

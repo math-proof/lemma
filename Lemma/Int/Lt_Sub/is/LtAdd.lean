@@ -17,8 +17,8 @@ private lemma left
 | :---: | :---: |
 | main | Int.Lt_Sub.is.LtAdd |
 | comm | Int.LtAdd.is.Lt_Sub |
-| mp   | Int.LtAdd.of.Lt_Sub |
-| mpr  | Int.Lt_Sub.of.LtAdd |
+| mp | Int.LtAdd.of.Lt_Sub |
+| mpr | Int.Lt_Sub.of.LtAdd |
 | mp.comm | Int.Gt_Add.of.GtSub |
 | mpr.comm | Int.GtSub.of.Gt_Add |
 | comm.is | Int.GtSub.is.Gt_Add |

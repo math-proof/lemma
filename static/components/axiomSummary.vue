@@ -24,7 +24,7 @@
 			</li>
 		</ul>
 		<br>
-		in summary, the following is the total count of each type for all lemmas:
+		in summary, the following is the total count of each factor for all lemmas:
 		<br>
 		<table tabindex=2 align=left border=1>
 			<tr>
@@ -43,6 +43,16 @@
 			</tr>
 			<tr v-for="tuple of sectionStatistics">
 				<td><a :href="`?module=${tuple.section}`">{{tuple.section}}</a></td>
+				<td>{{tuple.count}}</td>
+			</tr>
+		</table>
+		<table tabindex=2 align=left border=1>
+			<tr>
+				<th>year</th>
+				<th>count</th>
+			</tr>
+			<tr v-for="tuple of yearStatistics">
+				<td>{{ tuple.year == null ? 'total' : tuple.year }}</td>
 				<td>{{tuple.count}}</td>
 			</tr>
 		</table><br>
@@ -70,6 +80,7 @@ export default {
 		return {
 			issearch: false,
 			sectionStatistics: [],
+			yearStatistics: [],
 			recentAxioms: [],
 			topk: 10,
 			q: '',
@@ -135,6 +146,25 @@ WITH ROLLUP;`;
 			this.sectionStatistics = await form_post('php/request/execute.php', {sql, resultType: 1});
 			console.log(this.sectionStatistics);
 		},
+
+		async updateYearStatistics() {
+			var sql = `
+select
+	left(json_unquote(json_extract(date, '$.created')), 4) as year,
+	count(*) as count
+from axiom.lemma
+where
+	user = 'lean' and json_length(imports) > 0
+	and json_extract(date, '$.created') is not null
+group by
+	year
+with rollup
+order by
+	year is null, year;`;
+			console.log(sql);
+			this.yearStatistics = await form_post('php/request/execute.php', {sql, resultType: 1});
+			console.log(this.yearStatistics);
+		},
 	},
 	
 	mounted() {
@@ -144,6 +174,7 @@ WITH ROLLUP;`;
 		if (error)
 			error.focus();
 		this.updateSectionStatistics();
+		this.updateYearStatistics();
 	},
 }
 </script>

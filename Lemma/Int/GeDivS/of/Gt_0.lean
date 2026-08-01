@@ -1,7 +1,7 @@
 import Lemma.Int.Mod.ge.Zero.of.Gt_0
 import Lemma.Int.Div.eq.AddDiv___Mod
 import Lemma.Rat.LeDivS.of.Le.Gt_0
-import Lemma.Int.Ge.of.Eq_Add.Ge_0
+import Lemma.Int.Le.of.EqAdd.Ge_0
 open Int Rat
 
 
@@ -18,8 +18,8 @@ private lemma main
   have h_Ge_0 : (n % d : ℤ) ≥ (0 : α) := by simp [h_Ge_0]
   have h_GeDivS := GeDivS.of.Ge.Gt_0 h_Ge_0 (by simp [h] : (d : α) > 0)
   norm_num at h_GeDivS
-  apply Ge.of.Eq_Add.Ge_0 _ h_GeDivS
-  apply Div.eq.AddDiv___Mod n d
+  apply Le.of.EqAdd.Ge_0 h_GeDivS
+  rw [Div.eq.AddDiv___Mod n d, add_comm]
 
 
 -- created on 2025-03-20

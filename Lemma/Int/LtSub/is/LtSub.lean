@@ -3,6 +3,14 @@ import Lemma.Nat.Add
 open Int Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Int.LtSub.is.LtSub |
+| mp | Int.LtSub.of.LtSub |
+| mp.comm | Int.Gt_Sub.of.Gt_Sub |
+| comm.is | Int.Gt_Sub.is.Gt_Sub |
+-/
 @[main, mp, mp.comm, comm.is]
 private lemma main
   [AddCommGroup α]

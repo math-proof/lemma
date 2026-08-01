@@ -8,7 +8,7 @@ import Lemma.Rat.Div.ge.Zero.of.Ge_0.Gt_0
 import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Rat.DivMul.eq.MulDiv
-import Lemma.Int.LtAdd.of.Lt_Sub
+import Lemma.Int.Lt_Sub.is.LtAdd
 import Lemma.Int.Sub.gt.Zero.is.Lt
 import Lemma.Nat.Add
 import Lemma.Int.SubAdd.eq.Add_Sub

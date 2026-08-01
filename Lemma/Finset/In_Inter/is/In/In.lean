@@ -1,6 +1,14 @@
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Finset.In_Inter.is.In.In |
+| comm | Finset.In.In.is.In_Inter |
+| mp | Finset.In.In.of.In_Inter |
+| mpr | Finset.In_Inter.of.In.In |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   [DecidableEq ι]

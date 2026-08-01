@@ -1,5 +1,5 @@
 import sympy.vector.vector
-import Lemma.Vector.Get_Add.eq.Get.of.Val.eq.ValAppend.of.Lt.LtAdd
+import Lemma.Vector.Get_Add.eq.Get.of.Val.eq.ValAppend.Lt.LtAdd
 import Lemma.Vector.Val.of.SEq
 open Vector
 
@@ -16,7 +16,7 @@ private lemma main
 -- imply
   a[m + i] = c[i] := by
 -- proof
-  apply Get_Add.eq.Get.of.Val.eq.ValAppend.of.Lt.LtAdd h₀ h₁
+  apply Get_Add.eq.Get.of.Val.eq.ValAppend.Lt.LtAdd h₀ h₁
   apply Val.of.SEq h₂
 
 

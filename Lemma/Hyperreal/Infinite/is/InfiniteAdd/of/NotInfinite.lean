@@ -68,7 +68,8 @@ private lemma main
 -- proof
   rw [Add.comm]
   constructor
-    <;> intro h'
+  <;>
+    intro h'
   ·
     apply mp h' h
   ·

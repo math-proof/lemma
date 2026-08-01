@@ -1,5 +1,5 @@
 import Lemma.Nat.Le.of.Lt
-import Lemma.Real.EqSqrt_0.of.Le_0
+import Lemma.Real.EqSqrt_0.is.Le_0
 open Nat Real
 
 

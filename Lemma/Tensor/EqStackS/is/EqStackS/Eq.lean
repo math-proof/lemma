@@ -7,6 +7,14 @@ import Lemma.Bool.SEq.is.Eq
 open Tensor Bool
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Tensor.EqStackS.is.EqStackS.Eq |
+| comm | Tensor.EqStackS.Eq.is.EqStackS |
+| mp | Tensor.EqStackS.Eq.of.EqStackS |
+| mpr | Tensor.EqStackS.of.EqStackS.Eq |
+-/
 @[main, comm, mp, mpr]
 private lemma main
 -- given

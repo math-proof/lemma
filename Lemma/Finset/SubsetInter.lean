@@ -1,4 +1,4 @@
-import Lemma.Finset.In.In.of.In_Inter
+import Lemma.Finset.In_Inter.is.In.In
 import Lemma.Finset.Inter
 open Finset
 

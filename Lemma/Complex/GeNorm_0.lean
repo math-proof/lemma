@@ -9,3 +9,6 @@ private lemma main
   ‖a‖ ≥ 0 :=
 -- proof
   norm_nonneg a
+
+
+-- created on 2019-01-03

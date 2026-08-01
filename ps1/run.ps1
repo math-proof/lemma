@@ -16,6 +16,62 @@ $root = Split-Path -Path $__file__ -Parent | Split-Path -Parent
 $user = $root | Split-Path -Leaf
 Write-Host "user = $user"
 
+function Get-LemmaDateJson {
+    param(
+        [string]$LeanFile
+    )
+
+    if (-not $LeanFile -or -not (Test-Path -LiteralPath $LeanFile)) {
+        return "'[]'"
+    }
+
+    $created = $null
+    $updated = $null
+    # Date comments are always in the last 3 lines of a lemma file.
+    foreach ($line in Get-Content -LiteralPath $LeanFile -Tail 3) {
+        if ($line -cmatch '^\s*--\s*created on (\d{4}-\d{2}-\d{2})\s*$') {
+            $created = $matches[1]
+        }
+        elseif ($line -cmatch '^\s*--\s*updated on (\d{4}-\d{2}-\d{2})\s*$') {
+            $updated = $matches[1]
+        }
+    }
+
+    if (-not $created) {
+        return "'[]'"
+    }
+
+    $date = [ordered]@{ created = $created }
+    if ($updated -and $updated -ne $created) {
+        $date.updated = $updated
+    }
+
+    $json = ($date | ConvertTo-Json -Compress) -replace "'", "''"
+    return "'$json'"
+}
+
+function Format-LemmaInsertRow {
+    param(
+        [string]$Module,
+        [string]$Submodules = '[]',
+        [string]$LeanFile = $null,
+        [switch]$Synthetic
+    )
+
+    if ($Synthetic) {
+        $dateJson = "'[]'"
+    } else {
+        if (-not $LeanFile) {
+            $rel = $Module -replace '\.', '/'
+            $LeanFile = Join-Path $root "Lemma/$rel.lean"
+        }
+        $dateJson = Get-LemmaDateJson -LeanFile $LeanFile
+    }
+
+    $submodules = $Submodules -replace "'", "''"
+    return "  ('$user', `"$Module`", '$submodules', '[]', '[]', '[]', '[]', $dateJson),"
+}
+
 Set-Content -Path test.lean -Value $null
 
 $imports_dict = @{}
@@ -92,8 +148,7 @@ foreach ($module in $imports) {
         continue
     }
     $submodules = $imports_dict[$module]
-    $submodules = $submodules -replace "'", "''"
-    "  ('$user', `"$module`", '$submodules', '[]', '[]', '[]', '[]', '[]')," | Add-Content -Path test.sql
+    Format-LemmaInsertRow -Module $module -Submodules $submodules | Add-Content -Path test.sql
 }
 
 function transformExpr {
@@ -188,12 +243,43 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
     $docstring = $matches[1]
     $constructor_order = $docstring -and $docstring.Contains("constructor order")
     $attributes = $matches[2]
-    $match = $attributes -cmatch '\b(?<!mpr?\.)comm(?: ([0-9]+))?\b'
+    $match = $attributes -cmatch '\b(?<!\.)comm(?!\.)(?: ([0-9]+))?\b'
     if ($match) {
         $tokens = $module -split '\.'
         $deBruijn = $matches[1]
+        $found = $false;
         switch -regex ($tokens[2]) {
-            "^(eq|is|as|ne|lt|le|gt|ge)$" {
+            "^is$" {
+                $found = $true;
+                if ([string]::IsNullOrEmpty($deBruijn)) {
+                    $ofIdx = [array]::IndexOf([object[]]$tokens, 'of')
+                    if ($ofIdx -lt 0) {
+                        $rest = $tokens[1..($tokens.Length - 1)]
+                        $isIdx = [array]::IndexOf([object[]]$rest, 'is')
+                        $first = @()
+                        if ($isIdx -gt 0) { $first = @($rest[0..($isIdx - 1)]) }
+                        $afterIs = @()
+                        if ($isIdx -lt $rest.Length - 1) { $afterIs = @($rest[($isIdx + 1)..($rest.Length - 1)]) }
+                        $newRest = $afterIs + @('is') + $first
+                        $tokens = @($tokens[0]) + $newRest
+                    } else {
+                        $prefix = $tokens[0..($ofIdx - 1)]
+                        $ofPart = $tokens[$ofIdx..($tokens.Length - 1)]
+                        $rest = $prefix[1..($prefix.Length - 1)]
+                        $isIdx = [array]::IndexOf([object[]]$rest, 'is')
+                        $first = @()
+                        if ($isIdx -gt 0) { $first = @($rest[0..($isIdx - 1)]) }
+                        $afterIs = @()
+                        if ($isIdx -lt $rest.Length - 1) { $afterIs = @($rest[($isIdx + 1)..($rest.Length - 1)]) }
+                        $newRest = $afterIs + @('is') + $first
+                        $tokens = @($prefix[0]) + $newRest + $ofPart
+                    }
+                } else {
+                    $tokens = @($tokens[0], $tokens[3], $tokens[2], $tokens[1]) + $tokens[4..($tokens.Length - 1)]
+                }
+            }
+            "^(eq|as|ne|lt|le|gt|ge)$" {
+                $found = $true;
                 $tmp = $tokens[1]
                 $tokens[1] = $tokens[3]
                 $tokens[3] = $tmp
@@ -204,27 +290,34 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
                 $increment = -1
                 while ($deBruijn) {
                     if ($deBruijn -band 1) {
+                        $found = $true;
                         $tokens[$index] = transformPrefix $tokens[$index]
                     }
                     $deBruijn = $deBruijn -shr 1
                     $index += $increment
                 }
-                $tokens[1] = transformPrefix $tokens[1]
+                $first = transformPrefix $tokens[1]
+                if ($tokens[1] -ne $first) {
+                    $found = $true;
+                    $tokens[1] = $first
+                }
             }
         }
-        $new_module = $tokens -join "."
-        Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+        if ($found) {
+            $new_module = $tokens -join "."
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
+        }
     }
     if ($attributes -cmatch '\bmp\b') {
-        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(?:\.of(\..+))?$') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$($matches[3]).of.$($matches[2])$($matches[4])"
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bmpr\b') {
-        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(?:\.of(\..+))?$') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$($matches[2]).of.$($matches[3])$($matches[4])"
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bmp\.comm\b') {
@@ -236,7 +329,7 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             $tokens[2] = "of"
             $tokens[3] = $tmp
             $new_module = $tokens -join "."
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
             Write-Host "Ignoring @\[main, mp.comm] at $file"
@@ -250,22 +343,22 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             $tokens[2] = "of"
             $tokens[3] = transformPrefix $tokens[3]
             $new_module = $tokens -join "."
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
         else {
             Write-Host "Ignoring @\[main, mp.comm] at $file"
         }
     }
     if ($attributes -cmatch '\bmp\.mt\b') {
-        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(?:\.of(\..+))?$') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$(Not $matches[2]).of.$(Not $matches[3])$($matches[4])"
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bmpr\.mt\b') {
-        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+)(?:\.of(\..+))?$') {
+        if ($module -cmatch '^([a-zA-Z0-9_]+)\.(.+)\.is\.(.+?)(?:\.of(\..+))?$') {
             $new_module = "$($matches[1]).$(Not $matches[3]).of.$(Not $matches[2])$($matches[4])"
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bcomm\.is\b') {
@@ -277,7 +370,7 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             $given = transformPrefix $given
             $imply = transformPrefix $imply
             $new_module = "$section.$given.is.$imply$arguments"
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     if ($attributes -cmatch '\bis\.comm\b') {
@@ -289,7 +382,7 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             $given = transformPrefix $given
             $imply = transformPrefix $imply
             $new_module = "$section.$imply.is.$given$arguments"
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     $mt_group = [regex]::Matches($attributes, '\b(?<!\.)mt(?:\s+(\d+))?\b')
@@ -306,15 +399,19 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
             $arguments[$i] = $imply
             $new_given = $arguments -join '.'
             $new_module = "$section.$new_imply.of.$new_given"
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
     $subst_group = [regex]::Matches($attributes, '\bsubst\s+(\d+)\b')
     if ($subst_group) {
         foreach ($m in $subst_group) {
             $b = $m.Groups[1].Value
-            $new_module = "$module.of.Eq_$b"
-            Add-Content -Path "test.sql" -Value "  ('$user', ""$new_module"", '[]', '[]', '[]', '[]', '[]', '[]'),"
+            if ($module -cmatch '\.of\.') {
+                $new_module = "$module.Eq_$b"
+            } else {
+                $new_module = "$module.of.Eq_$b"
+            }
+            Add-Content -Path "test.sql" -Value (Format-LemmaInsertRow -Module $new_module -Synthetic)
         }
     }
 }
@@ -323,7 +420,7 @@ Get-ChildItem -Recurse -Path "Lemma" -Include *.lean -Exclude *.echo.lean | ForE
 $content = Get-Content -Path test.sql
 if ($content.Count -gt 0) {
     $content[-1] = $content[-1] -replace ',$', ''
-    $content += "ON DUPLICATE KEY UPDATE imports = VALUES(imports), error = VALUES(error);"
+    $content += "ON DUPLICATE KEY UPDATE imports = VALUES(imports), error = VALUES(error), date = VALUES(date);"
     $content | Set-Content -Path test.sql
 }
 

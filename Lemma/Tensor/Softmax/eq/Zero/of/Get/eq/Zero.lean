@@ -5,7 +5,7 @@ import Lemma.Tensor.EqGet0_0
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq.GtLength_0
 import Lemma.Tensor.Softmax.as.Stack_Softmax.of.LtAdd_1Length
-import Lemma.Tensor.Softmax.eq.Zero.of.EqGet_0'0.of.GtLength_0
+import Lemma.Tensor.Softmax.eq.Zero.of.EqGet_0'0.GtLength_0
 open Bool Nat Tensor List
 
 
@@ -21,7 +21,7 @@ private lemma main
 -- proof
   induction d generalizing s X with
   | zero =>
-    apply Softmax.eq.Zero.of.EqGet_0'0.of.GtLength_0 h_d h
+    apply Softmax.eq.Zero.of.EqGet_0'0.GtLength_0 h_d h
   | succ d ih =>
     apply Eq.of.SEq
     have := Softmax.as.Stack_Softmax.of.LtAdd_1Length h_d X
