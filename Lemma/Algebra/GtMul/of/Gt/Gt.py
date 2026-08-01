@@ -13,13 +13,13 @@ def apply(a_less_than_b, x_less_than_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     a, x = Symbol(real=True)
     b, y = Symbol(real=True, nonnegative=True)
 
     Eq << apply(a > b, x > y)
 
-    Eq << Algebra.LtMul.of.Lt.Lt.apply(Eq[0].reversed, Eq[1].reversed)
+    Eq << Nat.LtMulS.of.Lt.Lt.Ge_0.Ge_0.apply(Eq[0].reversed, Eq[1].reversed)
 
     Eq << Eq[-1].reversed
 

@@ -11,7 +11,7 @@ def apply(lt, n, evaluate=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(real=True, nonnegative=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(n, n + 1)
 
-    Eq << Algebra.LtMul.of.Lt.Lt.apply(Eq[0], Eq[1])
+    Eq << Nat.LtMulS.of.Lt.Lt.Ge_0.Ge_0.apply(Eq[0], Eq[1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Pow.Add.exponent)
 

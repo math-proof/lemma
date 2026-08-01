@@ -32,5 +32,3 @@ if __name__ == '__main__':
 
 # created on 2019-12-31
 
-del Lt
-from . import Lt

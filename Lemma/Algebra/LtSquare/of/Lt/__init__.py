@@ -15,13 +15,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x = Symbol(real=True, nonnegative=True)
     y = Symbol(real=True)
 
     Eq << apply(Less(x, y))
 
-    Eq << Algebra.LtMul.of.Lt.Lt.apply(Eq[0], Eq[0])
+    Eq << Nat.LtMulS.of.Lt.Lt.Ge_0.Ge_0.apply(Eq[0], Eq[0])
 
 
 
