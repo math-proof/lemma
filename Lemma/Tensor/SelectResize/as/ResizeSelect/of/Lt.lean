@@ -1,3 +1,5 @@
+import Lemma.List.AddMul_ProdDrop.lt.ProdDrop.of.GtProdDrop_Succ.GtGet.Gtlength
+import Lemma.List.ProdDrop.eq.MulProdDrop_Add_1.of.GtLength
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Lemma.List.ProdTakeSet.eq.MulProdSetTake.of.Lt.GtLength
 import Lemma.List.DropSet.eq.Drop.of.Lt
@@ -100,9 +102,9 @@ private lemma main
         have h_s := LengthSet.eq.Length s k n
         have h_d_lt_length := h_d
         simp only [← h_s] at h_d_lt_length
-        have := LengthSlice.eq.ProdTake.of.GtGet.GtLength (i := i) h_d_lt_length (show ↑i < (s.set k n)[d.val] by grind)
-        rw [List.ProdTakeMapCast.eq.ProdTake] at this
-        simp only [this] at h_q
+        have h_length_slice' := LengthSlice.eq.ProdTake.of.GtGet.GtLength (i := i) h_d_lt_length (show ↑i < (s.set k n)[d.val] by grind)
+        rw [List.ProdTakeMapCast.eq.ProdTake] at h_length_slice'
+        simp only [h_length_slice'] at h_q
         simp [h_length_slice] at h_t
         rw [EraseIdxSet.eq.SetEraseIdx.of.Lt h_k] at h_t
         rw [h_prod_set] at h_t
@@ -174,14 +176,23 @@ private lemma main
           rw [Div.eq.Zero.of.Lt (n := (s.drop d).prod)] at h_qₐ_div
           ·
             simp [DivDiv.eq.Div_Mul.comm] at h_qₐ_div
+            have h_rₐ_mod := h_rₐ_mod
+            rw [Mul_Mul.eq.MulMul] at h_rₐ_mod
+            rw [AddAdd.eq.Add_Add] at h_rₐ_mod
+            have h_r := r.isLt
+            have h_q := h_q
+            simp [List.DropSet.eq.Drop.of.Lt (show d + 1 > k by grind)] at h_r
+            have h_lt_ir := AddMul_ProdDrop.lt.ProdDrop.of.GtProdDrop_Succ.GtGet.Gtlength h_d i.isLt h_r
+            rw [Nat.Mod_Mul.eq.AddMul_Mod.of.Lt h_lt_ir] at h_rₐ_mod
             simp [h_qₐ_div, h_rₐ_mod]
-            rw [h_prod_drop]
+            have h_qₕ_div := h_qₕ_div
+            have h_rₕ_mod := h_rₕ_mod
+            conv_rhs => rw [AddAdd.comm]
+            sorry
             rw [AddAdd.comm]
-            rw [AddAdd.eq.Add_Add]
             congr 1
             ·
-              simp [h_q_div, h_q'_div, h_qₕ_div, h_qₐ_div, h_prod_drop, Div_Mul.eq.DivDiv.comm,
-                ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show ↑d ≥ k + 1 by omega)]
+              simp [h_q_div, h_q'_div, h_qₕ_div, Div_Mul.eq.DivDiv.comm, ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show ↑d ≥ k + 1 by omega)]
               rw [DivDiv.eq.Div_Mul]
               ring_nf
               grind
