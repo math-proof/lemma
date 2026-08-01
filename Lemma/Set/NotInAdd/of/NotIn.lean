@@ -20,4 +20,4 @@ private lemma main
   contradiction
 
 
--- created on 2025-05-12
+-- created on 2018-04-09

@@ -33,4 +33,4 @@ private lemma main
     rwa [EqUnionInter__SDiff A B] at h_Union
 
 
--- created on 2025-07-20
+-- created on 2021-01-19

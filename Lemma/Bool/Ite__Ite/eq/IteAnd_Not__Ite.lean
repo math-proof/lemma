@@ -43,5 +43,5 @@ private lemma main
   rwa [BFn_Ite__Ite.is.And.ou.OrAndS (R := Eq)]
 
 
--- created on 2025-04-09
+-- created on 2018-01-17
 -- updated on 2025-04-11

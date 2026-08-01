@@ -54,5 +54,5 @@ private lemma swap
   BFnIteS.eq.IteAnd.of.All_Eq fun a b => Add.comm (a := a) (b := b)
 
 
--- created on 2025-04-27
+-- created on 2018-02-23
 -- updated on 2025-04-28

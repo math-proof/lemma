@@ -13,4 +13,4 @@ private lemma main
   rwa [AndOrS.is.Or_And]
 
 
--- created on 2025-07-19
+-- created on 2019-04-29

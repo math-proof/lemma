@@ -14,4 +14,4 @@ private lemma main
   gt_trans h₀ h₁
 
 
--- created on 2024-11-25
+-- created on 2018-05-19

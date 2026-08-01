@@ -15,5 +15,5 @@ private lemma main
   EqMin.of.Le (Le.of.Lt h)
 
 
--- created on 2025-05-17
+-- created on 2018-08-31
 -- updated on 2025-10-12

@@ -20,4 +20,4 @@ private lemma main
     exact Imp.of.Imp.Imp this h₁
 
 
--- created on 2025-04-10
+-- created on 2018-02-02

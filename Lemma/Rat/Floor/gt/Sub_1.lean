@@ -16,4 +16,4 @@ private lemma main
   apply LtSub.of.Lt_Add h.right
 
 
--- created on 2025-09-30
+-- created on 2018-03-02

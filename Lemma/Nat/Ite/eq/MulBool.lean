@@ -17,4 +17,4 @@ private lemma main
   simp [Ite.eq.AddMulSBool]
 
 
--- created on 2025-12-05
+-- created on 2023-06-18

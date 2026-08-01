@@ -15,5 +15,5 @@ private lemma main
   ⟨LeNegS.of.Ge h.right, LeNegS.of.Ge h.left⟩
 
 
--- created on 2025-04-04
+-- created on 2018-05-14
 -- updated on 2025-10-01

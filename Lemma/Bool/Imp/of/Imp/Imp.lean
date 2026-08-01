@@ -27,5 +27,5 @@ private lemma main
     h₁ (h₀ h)
 
 
--- created on 2024-07-01
+-- created on 2018-02-01
 -- updated on 2025-04-10

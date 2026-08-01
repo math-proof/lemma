@@ -18,4 +18,4 @@ private lemma main
     apply Imp.of.Bool (h.symm)
 
 
--- created on 2025-04-20
+-- created on 2018-03-22

@@ -20,4 +20,4 @@ private lemma main
   rwa [UnionSingletonS.eq.Finset] at this
 
 
--- created on 2025-04-04
+-- created on 2018-03-09

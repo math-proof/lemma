@@ -15,4 +15,4 @@ private lemma main
   rw [Sum_Add.eq.AddSumS]
 
 
--- created on 2025-07-19
+-- created on 2018-02-20

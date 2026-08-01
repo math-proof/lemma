@@ -16,4 +16,4 @@ private lemma main
   apply SubsetInter.left
 
 
--- created on 2025-07-29
+-- created on 2018-09-13

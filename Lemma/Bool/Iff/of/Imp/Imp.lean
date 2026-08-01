@@ -12,4 +12,4 @@ private lemma main
   ⟨h₀, h₁⟩
 
 
--- created on 2025-04-10
+-- created on 2018-01-23

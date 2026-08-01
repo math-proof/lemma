@@ -24,4 +24,4 @@ private lemma main
   apply Or_Not.of.Imp h
 
 
--- created on 2025-07-19
+-- created on 2019-02-07

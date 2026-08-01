@@ -103,5 +103,5 @@ private lemma main
     apply InfiniteNegSub.of.InfinitePos _ InfinitePosInfty
 
 
--- created on 2025-12-05
+-- created on 2023-06-18
 -- updated on 2025-12-29

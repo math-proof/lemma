@@ -18,4 +18,4 @@ private lemma main
     apply Ne_0.of.Mul.ne.Zero h
 
 
--- created on 2025-04-12
+-- created on 2018-01-22

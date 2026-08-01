@@ -17,4 +17,4 @@ private lemma main
   Any_And.of.Any.All.All_Imp h₀ h₁ h₂
 
 
--- created on 2025-04-28
+-- created on 2018-12-03

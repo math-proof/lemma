@@ -12,4 +12,4 @@ private lemma main
   simpa [OrAndS.is.And_Or]
 
 
--- created on 2025-04-21
+-- created on 2018-02-22

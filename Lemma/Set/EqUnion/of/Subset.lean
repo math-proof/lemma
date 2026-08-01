@@ -38,5 +38,5 @@ private lemma left
   apply main h
 
 
--- created on 2025-04-05
+-- created on 2018-01-11
 -- updated on 2025-07-20

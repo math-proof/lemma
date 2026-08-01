@@ -16,4 +16,4 @@ private lemma subst
   exact h_And.left ▸ h_And.right
 
 
--- created on 2025-06-06
+-- created on 2018-11-23

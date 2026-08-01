@@ -26,4 +26,4 @@ private lemma main
   rw [NegSub.eq.Sub]
 
 
--- created on 2026-01-02
+-- created on 2020-12-27

@@ -18,4 +18,4 @@ private lemma main
     exact h x hpx      -- Apply hypothesis h using p x
 
 
--- created on 2025-07-20
+-- created on 2018-04-01

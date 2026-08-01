@@ -19,4 +19,4 @@ private lemma main
   rwa [EqDivMul.of.Ne_0 h₁] at h
 
 
--- created on 2025-10-01
+-- created on 2018-08-13

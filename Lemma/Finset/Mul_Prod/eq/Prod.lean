@@ -24,4 +24,4 @@ private lemma main
   apply Ico.eq.SDiffIco
 
 
--- created on 2025-05-18
+-- created on 2018-04-15

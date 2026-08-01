@@ -25,5 +25,5 @@ private lemma main
   rwa [← Icc.eq.UnionIco.of.Le h₀] at this
 
 
--- created on 2025-07-20
+-- created on 2018-09-26
 -- updated on 2025-07-21

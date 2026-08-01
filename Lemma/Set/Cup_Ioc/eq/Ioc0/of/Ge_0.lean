@@ -30,4 +30,4 @@ private lemma main
   rwa [EqToNat.of.Ge_0 h] at h_n
 
 
--- created on 2025-10-01
+-- created on 2018-09-02

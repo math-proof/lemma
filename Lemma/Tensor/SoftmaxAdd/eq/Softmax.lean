@@ -17,5 +17,5 @@ private lemma main
   apply SoftmaxAdd_Keepdim.eq.Softmax
 
 
--- created on 2025-11-30
+-- created on 2021-01-05
 -- updated on 2025-12-04

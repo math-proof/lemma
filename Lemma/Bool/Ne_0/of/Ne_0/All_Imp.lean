@@ -16,4 +16,4 @@ private lemma main
   apply Cond.of.Cond.All_Imp n h₀ h₁
 
 
--- created on 2025-07-20
+-- created on 2018-04-16

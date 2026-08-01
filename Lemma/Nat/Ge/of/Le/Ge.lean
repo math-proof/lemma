@@ -14,4 +14,4 @@ private lemma main
   h₁.trans h₀
 
 
--- created on 2025-08-04
+-- created on 2018-02-26

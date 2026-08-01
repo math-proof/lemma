@@ -23,4 +23,4 @@ private lemma main
   rwa [Ico.cut.Singleton.eq.Ioo] at this
 
 
--- created on 2025-04-04
+-- created on 2018-05-17

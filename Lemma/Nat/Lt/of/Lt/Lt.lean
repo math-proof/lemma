@@ -18,5 +18,5 @@ private lemma main
   lt_trans h₀ h₁
 
 
--- created on 2024-11-25
+-- created on 2018-10-11
 -- updated on 2025-04-04

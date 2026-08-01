@@ -20,5 +20,5 @@ private lemma main
   apply BFn_Ite.eq.Ite_BFnS HPow.hPow
 
 
--- created on 2025-04-27
+-- created on 2018-04-13
 -- updated on 2025-04-30

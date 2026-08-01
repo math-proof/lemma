@@ -16,4 +16,4 @@ private lemma main
   rwa [Or_Not.is.Imp]
 
 
--- created on 2025-07-29
+-- created on 2018-06-19

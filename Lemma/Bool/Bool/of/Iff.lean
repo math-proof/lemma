@@ -21,4 +21,4 @@ private lemma main
   exact h₀.trans h₁.symm
 
 
--- created on 2025-04-12
+-- created on 2018-01-29

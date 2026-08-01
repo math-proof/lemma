@@ -17,4 +17,4 @@ private lemma main
   apply Lt.of.Le.Lt h' h
 
 
--- created on 2025-10-01
+-- created on 2018-05-18

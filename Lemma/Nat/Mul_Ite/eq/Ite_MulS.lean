@@ -19,4 +19,4 @@ private lemma main
   apply BFn_Ite.eq.Ite_BFnS Mul.mul
 
 
--- created on 2025-04-12
+-- created on 2018-01-20

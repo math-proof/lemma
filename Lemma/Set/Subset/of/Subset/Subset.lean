@@ -13,4 +13,4 @@ private lemma main
   subset_trans h₀ h₁
 
 
--- created on 2025-07-21
+-- created on 2018-04-20

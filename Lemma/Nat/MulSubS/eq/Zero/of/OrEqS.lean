@@ -25,5 +25,5 @@ private lemma main
     apply Sub.eq.Zero
 
 
--- created on 2025-04-11
+-- created on 2018-01-26
 -- updated on 2025-10-16

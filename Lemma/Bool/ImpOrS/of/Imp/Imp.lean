@@ -44,5 +44,5 @@ private lemma main
   contradiction
 
 
--- created on 2025-04-11
+-- created on 2018-02-09
 -- updated on 2025-04-12

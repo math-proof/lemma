@@ -15,4 +15,4 @@ private lemma main
   Eq.of.Le.Ge h₁ h₀
 
 
--- created on 2024-11-29
+-- created on 2018-05-16

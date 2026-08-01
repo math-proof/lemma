@@ -19,5 +19,5 @@ private lemma main
     simp_all [add_assoc, add_left_comm]
 
 
--- created on 2025-04-06
+-- created on 2018-02-20
 -- updated on 2026-07-23

@@ -15,4 +15,4 @@ private lemma main
   simp [Bool.eq.Ite]
 
 
--- created on 2025-07-19
+-- created on 2018-02-19

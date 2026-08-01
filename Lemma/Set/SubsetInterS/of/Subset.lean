@@ -20,4 +20,4 @@ private lemma main
   apply Subset_Inter.of.Subset.Subset h this
 
 
--- created on 2025-07-29
+-- created on 2018-09-13

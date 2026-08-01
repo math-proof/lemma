@@ -14,4 +14,4 @@ private lemma main
   lt_of_le_of_lt' h₀ h₁
 
 
--- created on 2025-01-17
+-- created on 2018-03-13

@@ -19,4 +19,4 @@ private lemma main
   · exact hq               -- Prove q x j₀ (hq)
 
 
--- created on 2025-07-19
+-- created on 2018-12-03

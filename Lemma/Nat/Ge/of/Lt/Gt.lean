@@ -15,4 +15,4 @@ private lemma main
   Ge.of.Gt.Gt h₀ h₁
 
 
--- created on 2025-10-01
+-- created on 2018-10-12

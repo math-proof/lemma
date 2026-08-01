@@ -24,5 +24,5 @@ private lemma main
     apply Gt0Mul.of.Lt_0.Gt_0 h₀ hy
 
 
--- created on 2025-03-23
+-- created on 2018-02-09
 -- updated on 2025-03-24

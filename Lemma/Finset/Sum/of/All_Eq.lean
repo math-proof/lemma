@@ -14,5 +14,5 @@ private lemma main
   rw [Finset.sum_congr rfl fun i hi => h i hi]
 
 
--- created on 2025-04-06
+-- created on 2018-02-18
 -- updated on 2025-12-01

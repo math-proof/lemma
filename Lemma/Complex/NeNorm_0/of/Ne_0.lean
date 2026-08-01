@@ -15,4 +15,4 @@ private lemma main
   contradiction
 
 
--- created on 2025-10-16
+-- created on 2018-03-17

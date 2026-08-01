@@ -14,5 +14,5 @@ private lemma main
   h₀.left
 
 
--- created on 2025-03-01
+-- created on 2021-02-16
 -- updated on 2025-05-18

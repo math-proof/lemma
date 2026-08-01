@@ -30,4 +30,4 @@ private lemma set
 -- proof
   apply main h₀ h₁
 
--- created on 2025-05-01
+-- created on 2018-12-03

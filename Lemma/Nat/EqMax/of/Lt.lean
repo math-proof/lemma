@@ -15,5 +15,5 @@ private lemma main
   EqMax.of.Le (Le.of.Lt h)
 
 
--- created on 2025-06-07
+-- created on 2018-09-17
 -- updated on 2025-10-12

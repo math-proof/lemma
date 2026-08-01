@@ -25,4 +25,4 @@ private lemma offset
   repeat rw [EqAddSub]
 
 
--- created on 2025-08-02
+-- created on 2018-07-11

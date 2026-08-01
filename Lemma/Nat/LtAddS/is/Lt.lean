@@ -42,4 +42,4 @@ private lemma left
   ⟨lt_of_add_lt_add_left, (add_lt_add_right · a)⟩
 
 
--- created on 2025-08-02
+-- created on 2018-10-10

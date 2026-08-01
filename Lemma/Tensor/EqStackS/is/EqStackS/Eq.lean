@@ -46,5 +46,5 @@ private lemma main
       _ = [i < n + 1] g i := (Stack.eq.AppendStackS g).symm
 
 
--- created on 2024-07-01
+-- created on 2019-05-01
 -- updated on 2025-06-14

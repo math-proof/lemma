@@ -24,4 +24,4 @@ private lemma main
   linarith
 
 
--- created on 2025-10-01
+-- created on 2018-05-20

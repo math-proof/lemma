@@ -19,4 +19,4 @@ private lemma main
   simp [Cup_Ite.eq.UnionCupS]
 
 
--- created on 2025-08-02
+-- created on 2018-10-04

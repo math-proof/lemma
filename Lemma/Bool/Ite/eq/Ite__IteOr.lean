@@ -30,4 +30,4 @@ private lemma main
   apply Ite__Ite.eq.Ite__IteAnd_Not
 
 
--- created on 2025-04-12
+-- created on 2023-05-10

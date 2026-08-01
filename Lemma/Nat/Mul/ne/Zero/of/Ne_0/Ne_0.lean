@@ -16,5 +16,5 @@ private lemma main
   mul_ne_zero h₀ h₁
 
 
--- created on 2025-03-30
+-- created on 2018-03-19
 -- updated on 2025-04-05

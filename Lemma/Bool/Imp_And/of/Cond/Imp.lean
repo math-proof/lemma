@@ -15,4 +15,4 @@ private lemma main
   · exact h₁ hp
 
 
--- created on 2025-07-20
+-- created on 2018-09-12

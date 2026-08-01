@@ -30,5 +30,5 @@ private lemma main
   simp [← Or.is.OrAnd]
 
 
--- created on 2025-04-28
+-- created on 2018-02-24
 -- updated on 2025-05-01

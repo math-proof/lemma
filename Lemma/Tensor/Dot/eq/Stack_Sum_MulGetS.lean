@@ -21,4 +21,4 @@ private lemma main
   apply GetDot.eq.Sum_MulGetS.fin
 
 
--- created on 2025-07-19
+-- created on 2018-04-02

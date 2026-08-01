@@ -22,5 +22,5 @@ private lemma main
     apply Ge0Mul.of.Le_0.Gt_0 h₀ hy
 
 
--- created on 2025-03-24
+-- created on 2018-02-10
 -- updated on 2026-07-31

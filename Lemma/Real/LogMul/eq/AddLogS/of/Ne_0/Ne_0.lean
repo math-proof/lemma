@@ -15,4 +15,4 @@ private lemma main
   LogPos.log_mul h₀ h₁
 
 
--- created on 2025-10-03
+-- created on 2018-08-27

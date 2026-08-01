@@ -15,4 +15,4 @@ private lemma main
   Le.of.Le.Le h₀ h₁
 
 
--- created on 2025-09-30
+-- created on 2018-05-06

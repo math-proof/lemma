@@ -18,4 +18,4 @@ private lemma main
     simp_all [mul_assoc, mul_left_comm]
 
 
--- created on 2025-04-27
+-- created on 2018-04-14

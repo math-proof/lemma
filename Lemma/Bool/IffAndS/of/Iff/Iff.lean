@@ -12,4 +12,4 @@ private lemma main
   rw [h₀, h₁]
 
 
--- created on 2025-07-19
+-- created on 2018-03-28

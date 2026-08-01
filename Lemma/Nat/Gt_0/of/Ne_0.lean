@@ -12,5 +12,5 @@ private lemma main
   Nat.pos_of_ne_zero h
 
 
--- created on 2024-07-01
+-- created on 2018-03-17
 -- updated on 2025-10-13

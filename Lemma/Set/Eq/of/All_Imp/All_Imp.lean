@@ -14,4 +14,4 @@ private lemma main
   Eq.of.All_In.All_In h₀ h₁
 
 
--- created on 2025-07-29
+-- created on 2018-09-20

@@ -13,5 +13,5 @@ private lemma main
   simp [FloorNeg.eq.NegCeil]
 
 
--- created on 2025-03-15
+-- created on 2018-05-21
 -- updated on 2025-11-07

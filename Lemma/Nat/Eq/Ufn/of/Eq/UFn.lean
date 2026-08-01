@@ -17,4 +17,4 @@ private lemma main
   simpa [KroneckerDelta]
 
 
--- created on 2025-08-02
+-- created on 2019-02-27

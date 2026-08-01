@@ -19,4 +19,4 @@ private lemma main
   mul_pos_of_neg_of_neg h₀ h₁
 
 
--- created on 2025-03-23
+-- created on 2018-02-05

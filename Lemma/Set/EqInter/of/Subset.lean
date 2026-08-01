@@ -23,5 +23,5 @@ private lemma main
   Set.inter_eq_self_of_subset_right h
 
 
--- created on 2025-05-18
+-- created on 2018-09-14
 -- updated on 2025-08-14

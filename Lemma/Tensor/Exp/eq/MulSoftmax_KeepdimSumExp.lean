@@ -104,5 +104,5 @@ private lemma main
     simp [Keepdim.eq.Cast.of.LeLength h_d]
 
 
--- created on 2025-12-30
+-- created on 2021-12-14
 -- updated on 2026-01-02

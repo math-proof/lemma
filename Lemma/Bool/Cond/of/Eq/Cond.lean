@@ -14,4 +14,4 @@ private lemma main
   exact h₀ ▸ h₁
 
 
--- created on 2025-01-12
+-- created on 2018-02-06

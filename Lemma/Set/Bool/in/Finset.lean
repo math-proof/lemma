@@ -16,4 +16,4 @@ private lemma main
   apply Or_Not
 
 
--- created on 2025-04-20
+-- created on 2018-03-08
