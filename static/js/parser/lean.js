@@ -238,7 +238,7 @@ export class Lean extends IndentedNode {
     }
 
     insert_assign(caret) {
-        return caret.push_binary('LeanAssign');
+        return caret.push_binary(LeanAssign);
     }
 
     insert_bar(caret, prevToken, next) {
@@ -259,7 +259,7 @@ export class Lean extends IndentedNode {
     }
 
     insert_colon(caret) {
-        return caret.push_binary('LeanColon');
+        return caret.push_binary(LeanColon);
     }
 
     insert_comma(caret) {
@@ -267,7 +267,7 @@ export class Lean extends IndentedNode {
     }
 
     insert_construct(caret) {
-        return caret.push_binary('LeanConstruct');
+        return caret.push_binary(LeanConstruct);
     }
 
     insert_else(caret) {
@@ -329,7 +329,7 @@ export class Lean extends IndentedNode {
     }
 
     insert_vconstruct(caret) {
-        return caret.push_binary('LeanVConstruct');
+        return caret.push_binary(LeanVConstruct);
     }
 
     insert_word(caret, word) {
@@ -342,12 +342,10 @@ export class Lean extends IndentedNode {
 
     is_indented() {
         const p = this.parent;
-        return (
-            p instanceof LeanArgsCommaNewLineSeparated ||
+        return p instanceof LeanArgsCommaNewLineSeparated ||
             p instanceof LeanArgsNewLineSeparated ||
             p instanceof LeanStatements ||
-            (p instanceof LeanIte && (this === p.then || this === p.else))
-        );
+            (p instanceof LeanIte && (this === p.then || this === p.else));
     }
 
     is_outsider() {
@@ -453,7 +451,7 @@ export class Lean extends IndentedNode {
                     (this.parent instanceof LeanStatements || this.parent instanceof LeanSequentialTacticCombinator)
                 )
                     return this.parent.insert_unary(this, 'LeanTacticBlock');
-                return this.push_binary('LeanProperty');
+                return this.push_binary(LeanProperty);
             case 'is': {
                 const asPropertyField = self.parseKeywordAsPropertyField(this, token);
                 if (asPropertyField) return asPropertyField;
@@ -483,7 +481,7 @@ export class Lean extends IndentedNode {
                     self.start_idx += 2;
                     func += '_not';
                 }
-                return this.push_binary(func);
+                return this.push_binary(LEAN_CLASSES[func]);
             }
             case '(':
                 return this.parent.insert_left(this, 'LeanParenthesis');
@@ -529,7 +527,7 @@ export class Lean extends IndentedNode {
             case '<':
                 if (tokens[self.start_idx + 1] === '=') {
                     self.start_idx++;
-                    return this.push_binary('Lean_le');
+                    return this.push_binary(Lean_le);
                 }
                 if (self.start_idx + 2 < count && tokens[self.start_idx + 1] === ';' && tokens[self.start_idx + 2] === '>') {
                     const { nextToken, inlineCombo } = tacticSequentialCombinatorLex(tokens, self.start_idx);
@@ -560,28 +558,28 @@ export class Lean extends IndentedNode {
                 }
                 return this.push_arithmetic(token);
             case '≤':
-                return this.push_binary('Lean_le');
+                return this.push_binary(Lean_le);
             case '≥':
-                return this.push_binary('Lean_ge');
+                return this.push_binary(Lean_ge);
             case '=':
                 if (tokens[self.start_idx + 1] === '>') {
                     self.start_idx++;
                     if (this.parent instanceof LeanAt && this.parent.parent instanceof LeanTactic) {
                         const newCaret = new LeanCaret(this.indent, this.level);
                         this.parent.parent.push(newCaret);
-                        return newCaret.push_binary('LeanRightarrow');
+                        return newCaret.push_binary(LeanRightarrow);
                     }
-                    return this.push_binary('LeanRightarrow');
+                    return this.push_binary(LeanRightarrow);
                 }
                 if (tokens[self.start_idx + 1] === '=') {
                     self.start_idx++;
-                    return this.push_binary('LeanBEq');
+                    return this.push_binary(LeanBEq);
                 }
-                return this.push_binary('LeanEq');
+                return this.push_binary(LeanEq);
             case '!':
                 if (tokens[self.start_idx + 1] === '=') {
                     self.start_idx++;
-                    return this.push_binary('Lean_ne');
+                    return this.push_binary(Lean_ne);
                 }
                 return this.parent.insert_unary(this, 'LeanNot');
             case ',':
@@ -626,9 +624,9 @@ export class Lean extends IndentedNode {
                     self.start_idx++;
                     if (tokens[self.start_idx + 1] === '|') {
                         self.start_idx++;
-                        return this.push_binary('LeanBitwiseOr');
+                        return this.push_binary(LeanBitwiseOr);
                     }
-                    return this.push_binary('LeanLogicOr');
+                    return this.push_binary(LeanLogicOr);
                 }
                 if (next === '>') {
                     self.start_idx++;
@@ -813,7 +811,7 @@ export class Lean extends IndentedNode {
                 return this.parent.insert_word(this, token);
             case '@':
                 if (this instanceof LeanCaret) return this.parent.insert_unary(this, 'LeanAttribute');
-                return this.push_binary('LeanMatMul');
+                return this.push_binary(LeanMatMul);
             case 'end':
                 return this.parent.insert_end(this);
             case 'only':
@@ -855,24 +853,23 @@ export class Lean extends IndentedNode {
     push_arithmetic(token) {
         const cls = token2classname[token];
         if (!cls) throw new Error(`push_arithmetic: unknown token ${JSON.stringify(token)}`);
-        return this.push_binary(cls);
+        return this.push_binary(LEAN_CLASSES[cls]);
     }
 
     push_attr(_caret) {
         throw new Error('push_attr is unexpected for ' + this.constructor.name);
     }
 
-    push_binary(funcName) {
+    push_binary(Ctor) {
         const parent = this.parent;
         if (!parent) return undefined;
-        const Ctor = LEAN_CLASSES[funcName];
         if (Ctor.input_priority > parent.stack_priority) {
             const level = this.level;
             const caret = new LeanCaret(this.indent, level);
             parent.replace(this, new Ctor(this, caret, this.indent, level));
             return caret;
         }
-        return parent.push_binary(funcName);
+        return parent.push_binary(Ctor);
     }
 
     push_block_comment(comment, docstring) {
@@ -2836,7 +2833,7 @@ export class LeanBinaryBoolean extends LeanProp(LeanBinary) {
             this.parent.replace(this, new LeanColon(this, newCaret, caret.indent, caret.level));
             return newCaret;
         }
-        return caret.push_binary('LeanColon');
+        return caret.push_binary(LeanColon);
     }
 
     insert_newline(caret, newline_count, indent, next) {
@@ -6190,7 +6187,7 @@ export class LeanIte extends LeanArgs {
             this.replace(caret, new LeanColon(caret, c, caret.indent, caret.level));
             return c;
         }
-        return caret.push_binary('LeanColon');
+        return caret.push_binary(LeanColon);
     }
 
     insert_else(caret) {
@@ -6498,7 +6495,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 return c;
             }
         }
-        return caret.push_binary('LeanColon');
+        return caret.push_binary(LeanColon);
     }
 
     insert_unary(caret, func) {
@@ -9185,6 +9182,7 @@ class LeanBigOperator extends LeanArgs {
     }
 
     get stack_priority() {
+        if (this.scope) return LeanRelational.input_priority;
         return LeanColon.input_priority - 1;
     }
 
@@ -9244,6 +9242,10 @@ class LeanQuantifier extends LeanProp(LeanBigOperator) {
         const cmd = this.command;
         if (this.args.length === 1) return `${cmd}\\ {%s},`;
         return `${cmd}\\ {%s}, {%s}`;
+    }
+
+    get stack_priority() {
+        return LeanColon.input_priority - 1;
     }
 }
 
