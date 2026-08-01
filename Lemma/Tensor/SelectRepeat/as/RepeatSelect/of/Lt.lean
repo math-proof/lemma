@@ -64,9 +64,7 @@ private lemma main
 -- imply
   (X.repeat ⟨k, h_k.trans d.isLt⟩ n).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select d i).repeat ⟨k, by grind⟩ n := by
 -- proof
-  have h_i : i < s[d.val] := i.isLt
-  have h_d := d.isLt
-  have h_get_eraseIdx := GetEraseIdx.eq.Get.of.Gt.GtLength h_d h_k
+  have h_get_eraseIdx := GetEraseIdx.eq.Get.of.Gt.GtLength d.isLt h_k
   apply SEq.of.SEqDataS.Eq
   ·
     simp [h_get_eraseIdx]
@@ -94,7 +92,7 @@ private lemma main
         have h_q := q.isLt
         have h_r := r.isLt
         have h_s := LengthSet.eq.Length s k (n * s[k])
-        have h_d_lt_length := h_d
+        have h_d_lt_length := d.isLt
         simp only [← h_s] at h_d_lt_length
         have := LengthSlice.eq.ProdTake.of.GtGet.GtLength (i := i) h_d_lt_length (show ↑i < (s.set k (n * s[k]))[d.val] by grind)
         rw [List.ProdTakeMapCast.eq.ProdTake] at this
@@ -110,14 +108,14 @@ private lemma main
         rw [GetGetSlice.eq.Get.of.GtGet.GtLength (by grind) (by grind)]
         rw [GetRepeat.eq.Get_Mod.fin]
         repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
-        simp [GetSet.eq.Get.of.Lt.GtLength h_d h_k]
+        simp [GetSet.eq.Get.of.Lt.GtLength d.isLt h_k]
         rw [DataSelect.eq.Cast_FlattenGetSliceSplitAtData.simp]
         simp [DataRepeat.eq.Cast_FlattenMapSplitAtData]
         have h_length_slice := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength (s := s) (d := d) (i := i) (by grind) (by grind)
         rw [List.ProdTakeMapCast.eq.ProdTake] at h_length_slice
         repeat rw [GetCast.eq.Get.of.Eq.fin]
         ·
-          have h_prod_take := ProdTake.eq.MulProdTake.of.GtLength h_d
+          have h_prod_take := ProdTake.eq.MulProdTake.of.GtLength d.isLt
           have h_lt : (↑q * s[d] + i) * ((s.set k (n * s[k])).drop (d + 1)).prod + ↑r < (s.take k).prod * (n * (s.drop k).prod) := by
             simp [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at ⊢ h_r
             rw [Mul_Mul.eq.MulMul]
@@ -129,7 +127,7 @@ private lemma main
             apply AddMul.lt.Mul.of.Lt.Lt _ h_r
             rw [h_prod_take]
             rw [Mul_Mul.eq.MulMul]
-            apply AddMul.lt.Mul.of.Lt.Lt _ h_i
+            apply AddMul.lt.Mul.of.Lt.Lt _ i.isLt
             rw [TakeSet.eq.SetTake.of.Lt h_k] at h_q
             have := ProdSet__Mul_Get.eq.Mul_Prod.of.GtLength (s := (s.take d)) (i := k) (by simp; grind) n
             rw [GetTake.eq.Get.of.GtLengthTake (by grind)] at this
@@ -146,7 +144,7 @@ private lemma main
           have h_qₑ := qₑ.isLt
           let ⟨h_qₑ_div, h_rₑ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₑrₑ
           repeat rw [GetFlatten.eq.Get.of.Eq_AddMul.fin (by assumption)]
-          rw [GetGetSlice.eq.Get.of.GtGet.GtLength h_d i.isLt]
+          rw [GetGetSlice.eq.Get.of.GtGet.GtLength d.isLt i.isLt]
           simp [GetRepeat.eq.Get_Mod.fin]
           repeat rw [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
           apply congrArg
@@ -180,13 +178,13 @@ private lemma main
             simp [Div_Mul.eq.DivDiv.comm]
             simp [AddAdd.eq.Add_Add]
             simp [Mul_Mul.eq.MulMul]
-            rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength h_d]
+            rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength d.isLt]
             rw [Mul_Mul.eq.MulMul]
             rw [Add_Add.eq.AddAdd]
             rw [AddMulS.eq.MulAdd]
             rw [Mul_Mul.eq.MulMul]
             rw [Mod_Mul.eq.AddMul_Mod.of.Ne_0 (by grind)]
-            rw [Mod_Mul.eq.AddMul_Mod.of.Lt h_i]
+            erw [Mod_Mul.eq.AddMul_Mod.of.Lt i.isLt]
             rw [MulAdd.eq.AddMulS]
             simp [Add_Add.eq.AddAdd]
             simp [Mul_Mul.eq.MulMul]
@@ -194,12 +192,12 @@ private lemma main
             simp [Mul.comm (b := (s.drop (d + 1)).prod)]
             rw [DivMod_Mul.eq.ModDiv]
           ·
-            rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength h_d]
-            apply AddMul.lt.Mul.of.Lt.Lt h_i h_r
+            rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength d.isLt]
+            apply AddMul.lt.Mul.of.Lt.Lt i.isLt h_r
         ·
           rw [h_length_slice]
         ·
-          simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength (Lt.of.Lt.Lt h_k h_d)]
+          simp [ProdSet__Mul_Get.eq.MulProd_Mul_Prod.of.GtLength (Lt.of.Lt.Lt h_k d.isLt)]
       ·
         simp [h_length_slice]
         rw [EraseIdxSet.eq.SetEraseIdx.of.Lt h_k]
