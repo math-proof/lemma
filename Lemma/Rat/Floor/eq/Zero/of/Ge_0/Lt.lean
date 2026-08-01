@@ -8,8 +8,8 @@ private lemma main
   [FloorRing α]
   {x : α}
 -- given
-  (h₁ : x < 1)
-  (h₀ : 0 ≤ x) :
+  (h₀ : 0 ≤ x)
+  (h₁ : x < 1) :
 -- imply
   ⌊x⌋ = 0 := by
 -- proof
