@@ -2524,10 +2524,11 @@ export class LeanProperty extends LeanBinary {
 
     latexArgs(syntax = null) {
         const [lhs, rhs] = this.args;
+        var arg;
         if (rhs instanceof LeanToken) {
             switch (rhs.text) {
                 case 'exp':
-                    let arg = '%s';
+                    arg = '%s';
                     if (lhs instanceof LeanToken) {
                         switch (lhs.text) {
                             case 'Real':
@@ -2545,6 +2546,17 @@ export class LeanProperty extends LeanBinary {
                 case 'sin':
                 case 'tan':
                 case 'log':
+                    arg = '%s';
+                    if (lhs instanceof LeanToken) {
+                        switch (lhs.text) {
+                            case 'Real':
+                            case 'Complex':
+                                arg = null;
+                        }
+                    }
+                    if (arg)
+                        return [this.lhs.toLatex(syntax)];
+                    break;
                 case 'fmod':
                     return [this.lhs.toLatex(syntax)];
                 case 'card':
@@ -2564,10 +2576,11 @@ export class LeanProperty extends LeanBinary {
 
     latexFormat() {
         const [lhs, rhs] = this.args;
+        var arg;
         if (rhs instanceof LeanToken) {
             switch (rhs.text) {
                 case 'exp':
-                    let arg = '%s';
+                    arg = '%s';
                     if (lhs instanceof LeanToken) {
                         switch (lhs.text) {
                             case 'Real':
@@ -2584,7 +2597,17 @@ export class LeanProperty extends LeanBinary {
                 case 'sin':
                 case 'tan':
                 case 'log':
-                    return `\\\\${rhs.text} {%s}`;
+                    arg = '%s';
+                    if (lhs instanceof LeanToken) {
+                        switch (lhs.text) {
+                            case 'Real':
+                            case 'Complex':
+                                arg = null;
+                        }
+                    }
+                    if (arg)
+                        return `\\\\${rhs.text} {%s}`;
+                    break;
                 case 'fmod':
                     return '{%s} {\\color{red}\\%%}';
                 case 'card':
