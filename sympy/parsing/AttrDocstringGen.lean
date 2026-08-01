@@ -80,14 +80,32 @@ def ofParityFromTokens (tokens : List String) : List Bool :=
   | none => []
 
 def simpleIsMpComm (tokens : List String) : Option (List String) :=
-  if (tokens.idxOf? "of").isNone && tokens.length >= 4 && tokens[2]! == "is" then
-    some [tokens[0]!, tokens[3]!.transformPrefix, "of", tokens[1]!.transformPrefix]
+  if tokens.length >= 4 && tokens[2]! == "is" then
+    match tokens.idxOf? "of" with
+    | some i =>
+      let beforeOf := tokens.take i
+      let ofRest := tokens.drop (i + 1)
+      if beforeOf.length >= 4 then
+        some ([beforeOf[0]!, beforeOf[3]!.transformPrefix, "of", beforeOf[1]!.transformPrefix] ++ ofRest)
+      else
+        none
+    | none =>
+      some [tokens[0]!, tokens[3]!.transformPrefix, "of", tokens[1]!.transformPrefix]
   else
     none
 
 def simpleIsMprComm (tokens : List String) : Option (List String) :=
-  if (tokens.idxOf? "of").isNone && tokens.length >= 4 && tokens[2]! == "is" then
-    some [tokens[0]!, tokens[1]!.transformPrefix, "of", tokens[3]!.transformPrefix]
+  if tokens.length >= 4 && tokens[2]! == "is" then
+    match tokens.idxOf? "of" with
+    | some i =>
+      let beforeOf := tokens.take i
+      let ofRest := tokens.drop (i + 1)
+      if beforeOf.length >= 4 then
+        some ([beforeOf[0]!, beforeOf[1]!.transformPrefix, "of", beforeOf[3]!.transformPrefix] ++ ofRest)
+      else
+        none
+    | none =>
+      some [tokens[0]!, tokens[1]!.transformPrefix, "of", tokens[3]!.transformPrefix]
   else
     none
 
