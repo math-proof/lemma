@@ -80,26 +80,6 @@ function isIdentContinueToken(s) {
     return /^[\p{L}\p{N}_'!?₀-₉]+$/u.test(s);
 }
 
-/**
- * Lexeme for `<;>`: `nextToken` for `insert_sequential_tactic_combinator`, plus whether `<;>` is
- * on the same line as the previous tactic (inline). The token after `>` is often `intros`, not
- * `\\n`, even when `<;>` starts a new line after `constructor`; scan backward from `<`.
- * @param {string[]} tokens
- * @param {number} ltIdx index of `<` in `<;>`
- */
-function tacticSequentialCombinatorLex(tokens, ltIdx) {
-    const count = tokens.length;
-    if (ltIdx + 2 >= count || tokens[ltIdx + 1] !== ';' || tokens[ltIdx + 2] !== '>') {
-        return { nextToken: tokens[ltIdx + 1] ?? ' ', inlineCombo: true };
-    }
-    let p = ltIdx - 1;
-    while (p >= 0 && tokens[p] === ' ') p--;
-    const inlineCombo = p < 0 || tokens[p] !== '\n';
-    const afterGt = ltIdx + 3 < count ? tokens[ltIdx + 3] : ' ';
-    const nextToken = inlineCombo ? afterGt : '\n';
-    return { nextToken, inlineCombo };
-}
-
 function escapeSpecialsForLatex(token) {
     const s = String(token);
     const m = /^(\w+?)_(.+)$/.exec(s);
@@ -299,8 +279,8 @@ export class Lean extends IndentedNode {
         if (this.parent) return this.parent.insert_semicolon(this);
     }
 
-    insert_sequential_tactic_combinator(caret, nextToken, inlineCombo = true) {
-        if (this.parent) return this.parent.insert_sequential_tactic_combinator(this, nextToken, inlineCombo);
+    insert_sequential_tactic_combinator(caret, prevToken, nextToken) {
+        if (this.parent) return this.parent.insert_sequential_tactic_combinator(this, prevToken, nextToken);
     }
 
     insert_space(caret) {
@@ -530,10 +510,14 @@ export class Lean extends IndentedNode {
                     return this.push_binary(Lean_le);
                 }
                 if (self.start_idx + 2 < count && tokens[self.start_idx + 1] === ';' && tokens[self.start_idx + 2] === '>') {
-                    const { nextToken, inlineCombo } = tacticSequentialCombinatorLex(tokens, self.start_idx);
+                    let p = self.start_idx - 1;
+                    while (p >= 0 && tokens[p] === ' ') --p;
+                    const prevToken = tokens[p];
+                    p = self.start_idx + 3;
+                    while (p < tokens.length && tokens[p] === ' ') ++p;
+                    const nextToken = tokens[p];
                     self.start_idx += 2;
-                    self.start_idx = self.start_idx;
-                    return this.parent.insert_sequential_tactic_combinator(this, nextToken, inlineCombo);
+                    return this.parent.insert_sequential_tactic_combinator(this, prevToken, nextToken);
                 }
                 if (tokens[self.start_idx + 1] === '<') {
                     self.start_idx++;
@@ -7264,12 +7248,6 @@ export class LeanSyntax extends LeanArgs {
 }
 
 export class LeanTactic extends LeanSyntax {
-    /**
-     * @param {string} name
-     * @param {Lean} arg
-     * @param {number} indent
-     * @param {number} level
-     */
     constructor(name, arg, indent, level) {
         super([arg], indent, level);
         this.tacticName = name;
@@ -7322,9 +7300,9 @@ export class LeanTactic extends LeanSyntax {
             const {by, with: $with} = this;
             if (by && by.arg instanceof LeanStatements) by.echo();
             if ($with && $with.args.length) $with.echo();
-            if (has_sequential_tactic_combinator && sequential_tactic_combinator.inline) {
+            if (has_sequential_tactic_combinator && sequential_tactic_combinator.newlineAfter) {
                 echo.push(sequential_tactic_combinator);
-                this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, true);
+                this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, false, true);
                 sequential_tactic_combinator.echo();
                 return;
             }
@@ -7591,7 +7569,7 @@ export class LeanTactic extends LeanSyntax {
         return super.insert_semicolon(caret);
     }
 
-    insert_sequential_tactic_combinator(caret, nextToken, inlineCombo = true) {
+    insert_sequential_tactic_combinator(caret, prevToken, nextToken) {
         const last = this.args[this.args.length - 1];
         if (caret !== last) {
             throw new Error(`LeanTactic.insert_sequential_tactic_combinator: unexpected for ${this.constructor.name}`);
@@ -7603,8 +7581,8 @@ export class LeanTactic extends LeanSyntax {
                     caret,
                     this.indent,
                     caret.level,
-                    nextToken !== '\n',
-                    !inlineCombo,
+                    prevToken == '\n',
+                    nextToken == '\n',
                 ),
             );
             return caret;
@@ -7632,8 +7610,7 @@ export class LeanTactic extends LeanSyntax {
         if (p instanceof LeanStatements || p instanceof LeanIte) return true;
         if (p instanceof LeanArgsNewLineSeparated) return true;
         if (p instanceof LeanArgsSpaceSeparated && p.parent instanceof LeanTactic) return true;
-        if (p instanceof LeanSequentialTacticCombinator)
-            return !p.inline && (p.arg === this && this.indent > p.indent || this.indent >= p.indent);
+        if (p instanceof LeanSequentialTacticCombinator) return p.newlineAfter;
         return false;
     }
 
@@ -7709,7 +7686,7 @@ export class LeanTactic extends LeanSyntax {
                 }
             } else if ((block instanceof LeanTactic || block instanceof Lean_let) && block.indent >= this.indent) {
                 const self = this.clone();
-                if (sequential_tactic_combinator.inline) {
+                if (sequential_tactic_combinator.newlineAfter) {
                     block = self.sequential_tactic_combinator;
                     const la = self.args[self.args.length - 1];
                     if (la instanceof LeanSequentialTacticCombinator) self.args.pop();
@@ -7751,7 +7728,7 @@ export class LeanTactic extends LeanSyntax {
         const parts = [];
         for (const arg of this.args) {
             if (arg instanceof LeanCaret);
-            else if (arg instanceof LeanSequentialTacticCombinator && arg.lineBreakBefore) parts.push('\n');
+            else if (arg instanceof LeanSequentialTacticCombinator && arg.newlineBefore) parts.push('\n');
             else parts.push(' ');
             parts.push('%s');
         }
@@ -8135,19 +8112,10 @@ class LeanGeneralizing extends LeanUnary {
 }
 
 export class LeanSequentialTacticCombinator extends LeanUnary {
-    /**
-     * @param {Lean} arg
-     * @param {number} indent
-     * @param {number} level
-     * @param {boolean} [inline]
-     * @param {boolean} [lineBreakBefore] source had a newline before `<;>` (print newline before combinator)
-     */
-    constructor(arg, indent, level, inline = false, lineBreakBefore = false) {
+    constructor(arg, indent, level, newlineBefore = false, newlineAfter = false) {
         super(arg, indent, level);
-        /** @type {boolean} */
-        this.inline = !!inline;
-        /** @type {boolean} */
-        this.lineBreakBefore = !!lineBreakBefore;
+        this.newlineBefore = newlineBefore;
+        this.newlineAfter = newlineAfter;
     }
 
     get operator() {
@@ -8169,9 +8137,9 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
             if (by_cases instanceof LeanTactic && by_cases.tacticName === 'by_cases' && by_cases.has_tactic_block_followed()) {
                 let sequential_tactic_combinator;
                 while ((sequential_tactic_combinator = arg.sequential_tactic_combinator) && sequential_tactic_combinator.arg.indent) arg = sequential_tactic_combinator;
-                arg.push(new LeanSequentialTacticCombinator(echo, indent, level, true));
+                arg.push(new LeanSequentialTacticCombinator(echo, indent, level, false, true));
             } else {
-                echo.push(new LeanSequentialTacticCombinator(arg, indent, level, this.inline));
+                echo.push(new LeanSequentialTacticCombinator(arg, indent, level, false, this.newlineAfter));
                 this.arg = echo;
                 arg.echo();
             }
@@ -8179,7 +8147,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     getEcho() {
-        if (this.inline) {
+        if (this.newlineAfter) {
             const e = this.arg;
             if (e instanceof LeanTactic && e.tacticName === 'echo') return e;
         }
@@ -8211,7 +8179,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     is_indented() {
-        return this.lineBreakBefore;
+        return this.newlineBefore;
     }
 
     latexFormat() {
@@ -8219,15 +8187,13 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     sep() {
-        if (this.arg instanceof LeanTacticBlock) return '\n';
-        if (this.arg instanceof LeanCaret) return '\n';
-        if (this.arg instanceof LeanTactic && this.arg.indent > this.indent) return '\n';
-        return this.arg.indent > 0 && !this.inline ? '\n' : ' ';
+        if (this.newlineAfter || this.arg instanceof LeanCaret) return '\n'
+        return ' ';
     }
 
     set_line(line) {
         this.line = line;
-        if (this.arg instanceof LeanTacticBlock || this.arg.indent > this.indent) line++;
+        if (this.newlineAfter) line++;
         return this.arg.set_line(line);
     }
 
@@ -8236,7 +8202,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
      * @returns {Lean[]}
      */
     split(syntax) {
-        if (!this.inline) return [this];
+        if (!this.newlineAfter) return [this];
         const arg = this.arg;
         const args = arg.split(syntax);
         const self = this.clone();
@@ -8989,7 +8955,7 @@ class Lean_let extends LeanSyntax {
         return super.insert_newline(caret, newline_count, indent, next);
     }
 
-    insert_sequential_tactic_combinator(caret, nextToken, inlineCombo = true) {
+    insert_sequential_tactic_combinator(caret, prevToken, nextToken) {
         const last = this.args[this.args.length - 1];
         if (caret === last) {
             if (caret instanceof LeanCaret) {
@@ -8999,8 +8965,8 @@ class Lean_let extends LeanSyntax {
                         caret,
                         this.indent,
                         caret.level,
-                        nextToken !== '\n',
-                        !inlineCombo,
+                        prevToken == '\n',
+                        nextToken == '\n'
                     ),
                 );
             } else {
@@ -9058,7 +9024,7 @@ class Lean_let extends LeanSyntax {
             if (arg instanceof LeanCaret);
             else if (
                 arg instanceof LeanSequentialTacticCombinator &&
-                (arg.inline || arg.lineBreakBefore)
+                (arg.newlineAfter || arg.newlineBefore)
             ) {
                 parts.push('\n');
             } else parts.push(' ');

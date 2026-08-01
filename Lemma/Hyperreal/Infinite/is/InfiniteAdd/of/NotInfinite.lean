@@ -67,8 +67,7 @@ private lemma main
   y → ∞ ↔ (x + y) → ∞ := by
 -- proof
   rw [Add.comm]
-  constructor
-  <;>
+  constructor <;>
     intro h'
   ·
     apply mp h' h
