@@ -207,8 +207,10 @@ initialize registerBuiltinAttribute {
     let ⟨n, type, value⟩ ← Expr.mpr' decl.type (if parity > 0 then decl.proof else .const declName (levelParams.map .param)) parity and
     let ⟨parity, type, value⟩ ← Expr.comm' type value (1 <<< n)
     let ⟨moduleTokens, parity⟩ ← parity.extractParity
+    let name := ((moduleTokens.mpr.comm parity).foldl Name.str default).lemmaName declName
+    println! s!"name = {name}"
     addAndCompile <| .thmDecl {
-      name := ((moduleTokens.mpr.comm parity).foldl Name.str default).lemmaName declName
+      name := name
       levelParams := levelParams
       type := type
       value := value

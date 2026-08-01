@@ -71,7 +71,7 @@ def List.transformPrefix (list : List String) : List String :=
     | _ =>
       list
 
-def List.decomposeOf (list : List String) (parity : List Bool) (map : List String → List String) (offset : ℕ := 0) : List String :=
+def List.decomposeOf (list : List String) (parity : List Bool) (fn : List String → Bool → List String) (offset : ℕ := 0) : List String :=
   if let some i := list.idxOf? "of" then
     let ⟨first, ofPart⟩ := list.splitAt i
     let ofPart :=
@@ -82,9 +82,9 @@ def List.decomposeOf (list : List String) (parity : List Bool) (map : List Strin
         ofPart[0]! :: (transformed ++ rest).flatten
       else
         ofPart.drop offset
-    first.head! :: map first.tail ++ ofPart
+    first.head! :: fn first.tail true ++ ofPart
   else
-    list.head! :: map list.tail
+    list.head! :: fn list.tail false
 
 def List.commutateIs (list : List String) (op : String := "is") : List String :=
   if let some i := list.idxOf? "is" then
@@ -94,7 +94,7 @@ def List.commutateIs (list : List String) (op : String := "is") : List String :=
     []
 
 def List.comm (list : List String) (parity : List Bool) : List String :=
-  list.decomposeOf parity fun list =>
+  list.decomposeOf parity fun list ofPart =>
     let list' := list.commutateIs
     if list'.isEmpty then
       if let first :: rest := list then
@@ -107,9 +107,9 @@ def List.comm (list : List String) (parity : List Bool) : List String :=
         else
           let first' := first.transformPrefix
           if first' == first then
-            list ++ ["comm"]
+            if ofPart then list else list ++ ["comm"]
           else
-            [first'] ++ rest
+            first' :: rest
       else
         panic! s!"Declaration does not have the form `... eq/is/as/ne ...`, got: {list}"
     else
@@ -257,9 +257,9 @@ def Expr.mp (type value : Expr) (parity : ℕ := 0) (reverse : Bool := false) (a
     (.forallE h₀ h₀Type imply .default, .lam h₀ h₀Type value .default).map (telescope Expr.forallE) (telescope .lam)
   )
 
-def List.mp (list : List String) : List String := list.decomposeOf [] (fun list => list.commutateIs "of") 1
+def List.mp (list : List String) : List String := list.decomposeOf [] (fun list _ => list.commutateIs "of") 1
 def List.comm.is (list : List String) (parity : List Bool) : List String :=
-  list.decomposeOf parity fun list =>
+  list.decomposeOf parity fun list _ =>
     let i := list.idxOf "is"
     let ⟨lhs, rhs⟩ := list.splitAt i
     let lhs := lhs.transformPrefix
@@ -267,7 +267,7 @@ def List.comm.is (list : List String) (parity : List Bool) : List String :=
     lhs ++ "is" :: rhs
 
 def List.is.comm (list : List String) (parity : List Bool) : List String :=
-  list.decomposeOf parity fun list =>
+  list.decomposeOf parity fun list _ =>
     let i := list.idxOf "is"
     let ⟨lhs, rhs⟩ := list.splitAt i
     let lhs := lhs.transformPrefix
@@ -311,7 +311,7 @@ initialize registerBuiltinAttribute {
 def Expr.mpr (type value : Expr) (parity : ℕ := 0) (and : Bool := false) : ℕ × Expr × Expr := Expr.mp type value parity true and
 def List.mpr (list : List String) : List String :=
   list.decomposeOf []
-    (fun list =>
+    (fun list _ =>
       let i := list.idxOf "is"
       let ⟨first, second⟩ := list.splitAt i
       first ++ "of" :: second.tail
