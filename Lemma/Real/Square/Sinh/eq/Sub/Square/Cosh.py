@@ -14,7 +14,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(sinh(x) ** 2)
 
-    Eq << Eq[-1].this.find(sinh).apply(Real.Sinh.eq.Sub.Exp)
+    Eq << Eq[-1].this.find(sinh).apply(Real.Sinh.eq.SubDivSExp_2)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 

@@ -14,9 +14,9 @@ def prove(Eq):
     x, y = Symbol(complex=True)
     Eq << apply(cos(x - y))
 
-    Eq << Eq[0].this.lhs.apply(Real.Cos.eq.Sub)
+    Eq << Eq[0].this.lhs.apply(Real.CosAdd.eq.SubCosCos_SinSin)
 
-    Eq << Eq[-1].this.rhs.apply(Real.Cos.eq.Sub)
+    Eq << Eq[-1].this.rhs.apply(Real.CosAdd.eq.SubCosCos_SinSin)
 
 
 

@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Rat.Frac.eq.Sub_Floor).reversed
 
-    Eq << Algebra.Floor.eq.Zero.of.Ge_0.Lt.apply(Eq[0], Eq[1])
+    Eq << Rat.Floor.eq.Zero.of.Ge_0.Lt.apply(Eq[0], Eq[1])
 
 
 if __name__ == '__main__':

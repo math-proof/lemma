@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sin[Add]).apply(Real.Sin.eq.Add)
 
-    Eq << Eq[-1].this.find(Cos[Add]).apply(Real.Cos.eq.Sub)
+    Eq << Eq[-1].this.find(Cos[Add]).apply(Real.CosAdd.eq.SubCosCos_SinSin)
 
 
 

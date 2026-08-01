@@ -10,7 +10,7 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(-1, 0, left_open=True)))
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Set.Floor.eq.Zero.of.In_Ico.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Floor.eq.Neg.Ceil)
+    Eq << Eq[-1].this.lhs.apply(Int.Floor.eq.NegCeilNeg)
     Eq << Eq[-1].reversed
 
 

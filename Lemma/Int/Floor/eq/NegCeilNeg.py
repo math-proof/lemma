@@ -10,13 +10,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x = Symbol(real=True)
     Eq << apply(floor(x))
 
     Eq << -Eq[0]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ceil.eq.Neg.Floor)
+    Eq << Eq[-1].this.rhs.apply(Int.Ceil.eq.NegFloorNeg)
 
 if __name__ == '__main__':
     run()

@@ -15,7 +15,7 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(sin(x + y))
 
-    Eq << Real.Cos.eq.Sub.apply(cos(x + y))
+    Eq << Real.CosAdd.eq.SubCosCos_SinSin.apply(cos(x + y))
 
     Eq << Eq[-1].subs(x, x + S.Pi / 2)
 

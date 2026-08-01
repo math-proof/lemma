@@ -15,15 +15,15 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(sinh(x + y))
 
-    Eq << Eq[0].this.lhs.apply(Real.Sinh.eq.Sub.Exp)
+    Eq << Eq[0].this.lhs.apply(Real.Sinh.eq.SubDivSExp_2)
 
     Eq << Eq[-1].this.rhs.find(Cosh).apply(Real.Cosh.eq.AddDivSExp_2)
 
     Eq << Eq[-1].this.rhs.find(Cosh).apply(Real.Cosh.eq.AddDivSExp_2)
 
-    Eq << Eq[-1].this.rhs.find(Sinh).apply(Real.Sinh.eq.Sub.Exp)
+    Eq << Eq[-1].this.rhs.find(Sinh).apply(Real.Sinh.eq.SubDivSExp_2)
 
-    Eq << Eq[-1].this.rhs.find(Sinh).apply(Real.Sinh.eq.Sub.Exp)
+    Eq << Eq[-1].this.rhs.find(Sinh).apply(Real.Sinh.eq.SubDivSExp_2)
 
     Eq << Eq[-1].this.rhs.expand()
 

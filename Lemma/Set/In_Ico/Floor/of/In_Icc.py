@@ -20,7 +20,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, right_open=True)))
@@ -29,13 +29,13 @@ def prove(Eq):
 
     Eq << Set.In_Ico.Ceil.of.In_Icc.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ceil.eq.Neg.Floor)
+    Eq << Eq[-1].this.lhs.apply(Int.Ceil.eq.NegFloorNeg)
 
     Eq << Set.Neg.In.Icc.of.In_Icc.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(-~Ceil).apply(Algebra.Ceil.eq.Neg.Floor)
+    Eq << Eq[-1].this.find(-~Ceil).apply(Int.Ceil.eq.NegFloorNeg)
 
-    Eq << Eq[-1].this.find(-~Floor).apply(Algebra.Floor.eq.Neg.Ceil)
+    Eq << Eq[-1].this.find(-~Floor).apply(Int.Floor.eq.NegCeilNeg)
 
 
 

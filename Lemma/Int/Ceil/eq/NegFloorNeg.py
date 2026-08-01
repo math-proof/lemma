@@ -10,7 +10,7 @@ def apply(ceil):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Rat, Int
+    from Lemma import Algebra, Set, Bool, Rat, Int, Nat
 
     x = Symbol(real=True)
     Eq << apply(ceil(x))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.args[0].apply(Rat.Floor.of.Eq)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.EqAdd.of.Eq.Eq)
+    Eq << Eq[-1].this.lhs.expr.apply(Nat.Add.of.Eq.Eq)
 
     Eq << Eq[-1].this.rhs.apply(Int.Eq.given.Sub.eq.Zero)
 
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(frac).apply(Rat.Frac.eq.Sub_Floor)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqAdd.of.Eq.Eq)
+    Eq << Eq[-1].this.lhs.apply(Nat.Add.of.Eq.Eq)
 
 
 

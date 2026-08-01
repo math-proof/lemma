@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Cos[Expr - Expr]).apply(Real.CosSub.eq.AddSinSin_CosCos)
 
-    Eq << Eq[-1].this.find(Cos[Expr + Expr]).apply(Real.Cos.eq.Sub)
+    Eq << Eq[-1].this.find(Cos[Expr + Expr]).apply(Real.CosAdd.eq.SubCosCos_SinSin)
 
 
 if __name__ == '__main__':

@@ -9,13 +9,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     n = Symbol(integer=True)
     d = Symbol(integer=True, zero=False)
     Eq << apply(ceil(n / d))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ceil.eq.Neg.Floor)
+    Eq << Eq[-1].this.lhs.apply(Int.Ceil.eq.NegFloorNeg)
 
     Eq << Eq[-1].this.rhs.expand()
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mod).apply(Algebra.Mod.eq.Sub_Mul_Div)
 
-    Eq << Eq[-1].this.find(Floor).apply(Algebra.Floor.eq.Neg.Ceil)
+    Eq << Eq[-1].this.find(Floor).apply(Int.Floor.eq.NegCeilNeg)
 
     Eq << Eq[-1].this.find(Ceil).apply(Algebra.Ceil.eq.One)
 

@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Real.Tanh.eq.Div)
 
-    Eq << Eq[-1].this.find(sinh).apply(Real.Sinh.eq.Sub.Exp)
+    Eq << Eq[-1].this.find(sinh).apply(Real.Sinh.eq.SubDivSExp_2)
 
     Eq << Eq[-1].this.find(cosh).apply(Real.Cosh.eq.AddDivSExp_2)
 

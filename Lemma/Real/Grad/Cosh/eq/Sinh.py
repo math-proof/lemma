@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.doit()
 
-    Eq << Eq[-1].this.rhs.apply(Real.Sinh.eq.Sub.Exp)
+    Eq << Eq[-1].this.rhs.apply(Real.Sinh.eq.SubDivSExp_2)
 
 
 

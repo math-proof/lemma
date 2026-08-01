@@ -16,7 +16,7 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Nat
 
     x0, x1, a, b, c, d, e = Symbol(integer=True)
     Eq << apply(Element(x0, {a, b, c}), Element(x1, {d, e}))
@@ -31,21 +31,21 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Bool.OrAndS.of.And_Or, simplify=None)
 
-    Eq << Eq[-1].this.args[0].apply(Algebra.EqAdd.of.Eq.Eq)
+    Eq << Eq[-1].this.args[0].apply(Nat.Add.of.Eq.Eq)
 
-    Eq << Eq[-1].this.args[1].apply(Algebra.EqAdd.of.Eq.Eq)
-
-    Eq << Eq[-1].this.find(And).apply(Bool.OrAndS.of.And_Or, simplify=None)
-
-    Eq << Eq[-1].this.args[2].apply(Algebra.EqAdd.of.Eq.Eq)
-
-    Eq << Eq[-1].this.args[3].apply(Algebra.EqAdd.of.Eq.Eq)
+    Eq << Eq[-1].this.args[1].apply(Nat.Add.of.Eq.Eq)
 
     Eq << Eq[-1].this.find(And).apply(Bool.OrAndS.of.And_Or, simplify=None)
 
-    Eq << Eq[-1].this.args[4].apply(Algebra.EqAdd.of.Eq.Eq)
+    Eq << Eq[-1].this.args[2].apply(Nat.Add.of.Eq.Eq)
 
-    Eq << Eq[-1].this.args[5].apply(Algebra.EqAdd.of.Eq.Eq)
+    Eq << Eq[-1].this.args[3].apply(Nat.Add.of.Eq.Eq)
+
+    Eq << Eq[-1].this.find(And).apply(Bool.OrAndS.of.And_Or, simplify=None)
+
+    Eq << Eq[-1].this.args[4].apply(Nat.Add.of.Eq.Eq)
+
+    Eq << Eq[-1].this.args[5].apply(Nat.Add.of.Eq.Eq)
 
     Eq << Set.In.given.Or.split.Finset.apply(Eq[2])
 

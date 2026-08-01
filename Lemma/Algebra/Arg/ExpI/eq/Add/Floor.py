@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x = Symbol(real=True)
     Eq << apply(Arg(exp(S.ImaginaryUnit * x)))
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Arg.ExpI.eq.Add.Ceil) / 2
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Floor.eq.Neg.Ceil)
+    Eq << Eq[-1].this.rhs.apply(Int.Floor.eq.NegCeilNeg)
 
 
 if __name__ == '__main__':

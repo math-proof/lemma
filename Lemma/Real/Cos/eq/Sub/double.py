@@ -15,7 +15,7 @@ def prove(Eq):
     Eq << apply(cos(x * 2))
 
     y = Symbol(real=True)
-    Eq << cos(x + y).this.apply(Real.Cos.eq.Sub)
+    Eq << cos(x + y).this.apply(Real.CosAdd.eq.SubCosCos_SinSin)
 
     Eq << Eq[-1].subs(y, x)
 

@@ -14,7 +14,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(Derivative[x](sinh(x)))
 
-    Eq << Eq[0].this.find(sinh).apply(Real.Sinh.eq.Sub.Exp)
+    Eq << Eq[0].this.find(sinh).apply(Real.Sinh.eq.SubDivSExp_2)
 
     Eq << Eq[-1].this.lhs.doit()
 

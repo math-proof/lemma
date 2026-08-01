@@ -15,7 +15,7 @@ def prove(Eq):
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(x <= 0)
 
-    Eq << Real.Cos.eq.Sub.apply(cos(Eq[1].lhs))
+    Eq << Real.CosAdd.eq.SubCosCos_SinSin.apply(cos(Eq[1].lhs))
 
     Eq << Algebra.EqAbs.of.Le_0.apply(Eq[0])
 

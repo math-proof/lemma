@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(i, n).limits_subs(j, i)
 
-    Eq << Set.EqCupS.of.All_Eq.apply(Eq[-1])
+    Eq << Set.Cup.of.All_Eq.apply(Eq[-1])
 
     Eq << Eq[-3].subs(Eq[-1])
 

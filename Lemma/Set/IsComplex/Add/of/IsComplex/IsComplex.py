@@ -12,7 +12,7 @@ def apply(a_is_complex, b_is_complex):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     x, y = Symbol(super_complex=True)
     Eq << apply(Element(x, S.Complexes), Element(y, S.Complexes))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.And.of.Any.Any.apply(Eq[-1], Eq[-2], simplify=None)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.EqAdd.of.Eq.Eq)
+    Eq << Eq[-1].this.expr.apply(Nat.Add.of.Eq.Eq)
 
     a, b = Eq[-1].variables
     c = Symbol(complex=True)

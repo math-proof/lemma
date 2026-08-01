@@ -194,8 +194,6 @@ from . import All_Eq_Empty
 from . import Eq_Empty
 from . import SubsetSingleton
 from . import AllIn
-from . import EqCupSIn_Icc
-from . import NotIn_Cup
 from . import SubsetInter
 from . import SubsetInterS
 from . import EqCupS
@@ -226,3 +224,5 @@ from . import EqSDiffS
 from . import Cup_UFn
 from . import Any_Eq
 from . import FloorNegFrac
+from . import CupIn_Icc
+from . import NotIn_Cup

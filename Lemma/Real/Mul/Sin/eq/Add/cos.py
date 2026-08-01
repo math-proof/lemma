@@ -21,9 +21,9 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(sin(x) * sin(y))
 
-    Eq << Eq[-1].this.find(Cos[Expr - Expr]).apply(Real.Cos.eq.Sub)
+    Eq << Eq[-1].this.find(Cos[Expr - Expr]).apply(Real.CosAdd.eq.SubCosCos_SinSin)
 
-    Eq << Eq[-1].this.find(Cos[Expr + Expr]).apply(Real.Cos.eq.Sub)
+    Eq << Eq[-1].this.find(Cos[Expr + Expr]).apply(Real.CosAdd.eq.SubCosCos_SinSin)
 
 
 if __name__ == '__main__':

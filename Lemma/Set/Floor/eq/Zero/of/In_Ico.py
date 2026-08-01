@@ -10,13 +10,13 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Rat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, 1, right_open=True)))
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
-    Eq << Algebra.Floor.eq.Zero.of.Ge_0.Lt.apply(Eq[-2], Eq[-1])
+    Eq << Rat.Floor.eq.Zero.of.Ge_0.Lt.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(cos(x - y))
 
-    Eq << Eq[-1].this.lhs.apply(Real.Cos.eq.Sub)
+    Eq << Eq[-1].this.lhs.apply(Real.CosAdd.eq.SubCosCos_SinSin)
 
     # https://baike.baidu.com/item/%E5%92%8C%E8%A7%92%E5%85%AC%E5%BC%8F
 

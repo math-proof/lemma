@@ -273,7 +273,6 @@ from . import EqReducedArgMin
 from . import EqReducedMin
 from . import EqSign
 from . import EqSqrt
-from . import EqAdd
 from . import EqNorm
 from . import EqSquare
 from . import EqIm

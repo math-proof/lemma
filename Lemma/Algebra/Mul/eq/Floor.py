@@ -9,11 +9,11 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x = Symbol(real=True)
     Eq << apply(-ceil(x))
 
-    Eq << Eq[0].this.rhs.apply(Algebra.Floor.eq.Neg.Ceil)
+    Eq << Eq[0].this.rhs.apply(Int.Floor.eq.NegCeilNeg)
 
 
 if __name__ == '__main__':

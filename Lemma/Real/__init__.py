@@ -74,3 +74,5 @@ from . import EqArcsin
 from . import EqSin
 from . import MulSin_Cos
 from . import Sign
+from . import CosAdd
+from . import CoshAdd

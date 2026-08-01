@@ -26,14 +26,14 @@ def apply(*imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Nat
 
     k, a = Symbol(integer=True)
     b = Symbol(domain=Range(a + 1, oo))
     g, f = Function(integer=True)
     Eq << apply(Equal(g(a - 1), f(a - 1)), Equal(Sum[k:a:b](g(k)), Sum[k:a:b](f(k))))
 
-    Eq << Algebra.EqAdd.of.Eq.Eq.apply(Eq[0], Eq[1])
+    Eq << Nat.Add.of.Eq.Eq.apply(Eq[0], Eq[1])
 
     Eq << Eq[2].this.lhs.apply(Finset.Sum.eq.AddSumS, cond={a - 1})
 

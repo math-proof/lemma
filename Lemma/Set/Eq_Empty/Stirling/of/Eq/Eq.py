@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].limits_subs(Eq[-1].variable, i)
 
-    Eq << Set.EqCupS.of.All_Eq.apply(Eq[-1])
+    Eq << Set.Cup.of.All_Eq.apply(Eq[-1])
 
 
 if __name__ == '__main__':

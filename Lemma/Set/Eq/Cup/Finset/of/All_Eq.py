@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.expr.apply(Set.Eq.of.Eq.set, simplify=False)
 
-    Eq << Set.EqCupS.of.All_Eq.apply(Eq[-1])
+    Eq << Set.Cup.of.All_Eq.apply(Eq[-1])
 
 
 if __name__ == '__main__':
