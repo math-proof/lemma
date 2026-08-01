@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[0].apply(Algebra.And.of.And.delete, index=-1, simplify=None)
 
-    Eq << Eq[-1].this.expr.args[0].apply(Algebra.Lt.of.Gt.Le)
+    Eq << Eq[-1].this.expr.args[0].apply(Nat.Lt.of.Le.Lt)
 
     Eq << Eq[-1].this.args[1].expr.apply(Algebra.And.of.And.delete, index=1)
 

@@ -2624,16 +2624,23 @@ class Greater(_Greater):
                     return res
                 if isinstance(res, tuple):
                     b, a = res
-                    return (a, b)
+                    return a, b
             elif cls.is_Less:
-                a, b = cls.args
-                cls = Basic.__new__(Greater, b, a)
-                res = Boolean.of(self, cls)
-                if b.is_Number:
-                    return res
-                if isinstance(res, tuple):
-                    b, a = res
-                    return (a, b)         
+                if isinstance(cls.args, property):
+                    cls = Greater
+                    res = Boolean.of(self, cls)
+                    if isinstance(res, tuple):
+                        b, a = res
+                        return a, b
+                else:
+                    a, b = cls.args
+                    cls = Basic.__new__(Greater, b, a)
+                    res = Boolean.of(self, cls)
+                    if b.is_Number:
+                        return res
+                    if isinstance(res, tuple):
+                        b, a = res
+                        return a, b
             
         return res
 

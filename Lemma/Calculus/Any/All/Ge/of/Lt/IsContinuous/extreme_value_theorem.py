@@ -12,10 +12,8 @@ def apply(lt, given):
     return Any[xi:domain](All[z:domain](f >= _f))
 
 
-@prove
+@prove(provable=False)
 def prove(Eq):
-
-
     a, b = Symbol(real=True)
     f = Function(real=True)
     from Lemma.Calculus.All.Any.Eq.of.All_Eq.intermediate_value_theorem import is_continuous

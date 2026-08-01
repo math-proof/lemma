@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[0], Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Algebra.Lt.of.Gt.Le, ret=0)
+    Eq << Eq[-1].this.expr.args[:2].apply(Nat.Lt.of.Le.Lt, ret=0)
 
     Eq << Eq[-1].this.expr.args[0].apply(Nat.Le_Sub_1.of.Lt)
 

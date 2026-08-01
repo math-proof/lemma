@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Lt.of.Gt.Le)
+    Eq << Eq[-1].this.rhs.apply(Nat.Lt.of.Le.Lt)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Le.of.Lt)
 
