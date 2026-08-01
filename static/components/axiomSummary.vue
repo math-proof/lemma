@@ -247,7 +247,7 @@ with statistic as (
 		left join 
 			axiom.lemma as _s 
 			on 
-				_s.module = regexp_replace(_t.axiom, '\\\\.[a-z]+$', '', 1, 0, 'c')
+				_s.module = regexp_replace(REPLACE(_t.axiom, '.given.', '.of.'), '\\\\.[a-z]+$', '', 1, 0, 'c')
 )
 select 
 	count(*) as count,
