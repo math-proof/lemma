@@ -8,7 +8,7 @@ open Nat
 private lemma main
   [Mul α] [Zero α] [Preorder α]
   [MulPosStrictMono α] [PosMulStrictMono α]
-  {x a b : α}
+  {x y a b : α}
 -- given
   (h_b : b > 0)
   (h_x : x > 0)

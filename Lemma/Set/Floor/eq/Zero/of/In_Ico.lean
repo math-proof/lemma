@@ -1,5 +1,5 @@
 import Lemma.Set.EqFloor.of.In_Ico
-open Set Int
+open Set
 
 
 @[main]

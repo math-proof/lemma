@@ -1,10 +1,6 @@
 import sympy.Basic
 
 
-/--
-This lemma states that in a preorder, if `a` is less than or equal to `b` (`a ≤ b`) and `b` is strictly less than `c` (`b < c`), then `a` is strictly less than `c` (`a < c`).
-It demonstrates the transitivity of the strict less-than relation under the given preorder constraints.
--/
 @[main]
 private lemma main
   [Preorder α]
