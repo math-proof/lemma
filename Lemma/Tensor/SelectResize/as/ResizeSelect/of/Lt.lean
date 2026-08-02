@@ -151,26 +151,15 @@ private lemma main
           simp
           have h_k' := Le.of.Lt h_k
           rw [ModAdd.eq.Mod.of.Dvd.left (Dvd_Mul.of.Dvd (ProdDrop.dvd.ProdDropEraseIdx.of.Ge h_k' s) q')] at h_rₕ_mod
-          simp [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge h_k'] at h_qₕ_div h_rₕ_mod h_q'_div h_r'_mod h_t h_r'
-          simp [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show d ≥ k + 1 by grind)] at h_r' h_q'_div h_r'_mod
-          rw [Mul_Mul.eq.MulMul (a := n)] at h_r'
-          rw [Nat.DivMulS.eq.Div.of.Ne_0 (by grind)] at h_r'
-          rw [Mul_Mul.eq.MulMul] at h_r'
-          rw [List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (show (s.take ↑d).length > k by grind)] at h_r'
-          rw [Nat.DivMulS.eq.Div.of.Ne_0 (by grind)] at h_r'
-          rw [List.GetTake.eq.Get.of.GtLengthTake (by grind)] at h_r'
-          rw [Mul_Mul.eq.MulMul] at h_r'
-          rw [List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (show s.length > k by grind)] at h_rₐ?
-          rw [Nat.DivMulS.eq.Div.of.Ne_0 (by grind)] at h_rₐ?
-          rw [Mul_Mul.eq.MulMul] at h_rₐ?
+          simp [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge h_k'] at h_qₕ_div h_rₕ_mod h_q'_div h_r'_mod
+          simp [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show d ≥ k + 1 by grind)] at h_q'_div h_r'_mod
           rw [Mul_Mul.eq.MulMul] at h_qₕ_div
           rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_qₕ_div
           simp [h_rₕ_mod]
           simp [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at h_qₐ_div h_rₐ_mod h_q_div h_r_mod h_r
-          simp [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ d by omega) s] at *
+          simp [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ d by omega) s] at h_qₐ_div h_rₐ_mod
           rw [MulAdd.eq.AddMulS, MulMul.eq.Mul_Mul] at h_qₐ_div h_rₐ_mod ⊢
           rw [Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength d.isLt] at h_qₐ_div h_rₐ_mod ⊢
-          have h_prod_drop := ProdDrop.eq.MulProdSDrop.of.Le (i := k) (j := d) (by omega) s
           simp [Mul_Mul.eq.MulMul, Div_Mul.eq.DivDiv.comm] at h_qₐ_div
           rw [AddAdd.comm] at h_qₐ_div
           conv at h_qₐ_div =>
@@ -179,29 +168,22 @@ private lemma main
             arg 1
             arg 1
             rw [AddAdd.eq.Add_Add]
+          have h_lt_ir := AddMul_ProdDrop.lt.ProdDrop.of.GtProdDrop_Succ.GtGet.Gtlength d.isLt i.isLt h_r
           conv at h_qₐ_div =>
             rhs
             arg 1
             arg 1
             rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)]
-          have h_lt_ir := AddMul_ProdDrop.lt.ProdDrop.of.GtProdDrop_Succ.GtGet.Gtlength d.isLt i.isLt h_r
           rw [Div.eq.Zero.of.Lt (n := (s.drop d).prod) (by grind)] at h_qₐ_div
           simp [DivDiv.eq.Div_Mul.comm] at h_qₐ_div
-          have h_rₐ_mod := h_rₐ_mod
           rw [Mul_Mul.eq.MulMul] at h_rₐ_mod
           rw [AddAdd.eq.Add_Add] at h_rₐ_mod
-          have h_r := r.isLt
-          have h_q := h_q
-          simp [List.DropSet.eq.Drop.of.Lt (show d + 1 > k by grind)] at h_r
           rw [Nat.Mod_Mul.eq.AddMul_Mod.of.Lt h_lt_ir] at h_rₐ_mod
           simp [h_qₐ_div, h_rₐ_mod]
-          have h_qₕ_div := h_qₕ_div
-          have h_rₕ_mod := h_rₕ_mod
           conv_rhs => rw [AddAdd.comm]
-          rw [h_prod_drop]
+          rw [ProdDrop.eq.MulProdSDrop.of.Le (i := k) (j := d) (by omega)]
           rw [List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (show (s.take ↑d).length > k by grind)]
           rw [List.GetTake.eq.Get.of.GtLengthTake (by grind)]
-          simp [h_rₐ_mod] at h_rₐ?
           rw [Nat.Mod_Mul.eq.AddMul_Mod.of.Lt h_lt_ir]
           rw [Add_Add.eq.AddAdd]
           rw [Add_Add.eq.AddAdd]
@@ -219,8 +201,8 @@ private lemma main
             ring_nf
           ·
             conv_rhs => rw [MulMul.eq.Mul_Mul.permute (a := s[k])]
-            conv_rhs => rw [DivMod_Mul.eq.ModDiv]
-            rw [Mul.comm _ (s.drop (↑d + 1)).prod]
+            rw [DivMod_Mul.eq.ModDiv]
+            rw [MulMul.eq.Mul_Mul.permute]
             rw [DivMod_Mul.eq.ModDiv]
         ·
           sorry
