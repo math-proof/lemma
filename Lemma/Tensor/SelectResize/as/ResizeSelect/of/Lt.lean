@@ -37,7 +37,6 @@ import Lemma.Nat.Add_Add
 import Lemma.Nat.Mul_Add.eq.AddMulS
 import Lemma.Nat.Mul_Mul
 import Lemma.Nat.DivMod.eq.Zero
-import Lemma.Nat.ModMod_Mul.eq.Mod
 import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
@@ -210,7 +209,25 @@ private lemma main
           rw [Add_Add.eq.AddAdd]
           rw [AddAdd.comm]
           congr 1
-          sorry
+          simp [h_q_div, h_r_mod, h_q'_div, h_r'_mod, h_qₕ_div]
+          rw [MulAdd.eq.AddMulS]
+          simp [Mul_Mul.eq.MulMul, Div_Mul.eq.DivDiv.comm]
+          rw [List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (s := s.take ↑d) (i := k) (by grind)]
+          rw [List.GetTake.eq.Get.of.GtLengthTake (by grind)]
+          have h_rhs :
+              (↑t % (n * ((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod) % (s[k] * ((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod) /
+                (s.drop (↑d + 1)).prod) =
+              (↑t % (n * ((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod) / (s.drop (↑d + 1)).prod % (s[k] * ((s.take ↑d).drop (k + 1)).prod)) := by
+            rw [show s[k] * ((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod = (s.drop (↑d + 1)).prod * (s[k] * ((s.take ↑d).drop (k + 1)).prod) by ring]
+            rw [DivMod_Mul.eq.ModDiv]
+          congr 2
+          ·
+            ring_nf
+          ·
+            congr 1
+            conv_lhs => arg 1; rw [← DivMod_Mul.eq.ModDiv]
+            rw [h_rhs]
+            ring_nf
         ·
           sorry
         ·
