@@ -11,7 +11,7 @@ def apply(el, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Calculus, Nat
+    from Lemma import Set, Algebra, Calculus, Nat, Int, Int
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, given=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq.is_zero = Calculus.Eq_0.Limit.of.In_Icc.geometric_series.positive.apply(Eq[-1], n)
 
-    Eq <<= Algebra.Ge_NegAbs.apply(Eq[1].find(Pow)), Algebra.Le_Abs.apply(Eq[1].find(Pow))
+    Eq <<= Algebra.Ge_NegAbs.apply(Eq[1].find(Pow)), Int.GeAbs.apply(Eq[1].find(Pow))
 
     Eq <<= Calculus.GeLimit.of.Ge.apply(Eq[-2], (n, oo)), Calculus.LeLimit.of.Le.apply(Eq[-1], (n, oo))
 

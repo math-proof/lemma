@@ -24,7 +24,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool
+    from Lemma import Tensor, Algebra, Set, Bool, Fin
 
     n, u = Symbol(domain=Range(2, oo))
     h = Symbol(integer=True, shape=(n,))
@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)
 
-    Eq.loss = -Algebra.Sum.of.Eq.apply(Eq[3] * (1 + log(1 + h[i] / 2)), (i, 0, n))
+    Eq.loss = -Fin.Sum.of.All_Eq.apply(Eq[3] * (1 + log(1 + h[i] / 2)), (i, 0, n))
 
 
 if __name__ == '__main__':

@@ -22,7 +22,7 @@ def apply(self, i=0, j=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Nat
+    from Lemma import Algebra, Bool, Finset, Nat, Fin
 
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)
@@ -38,7 +38,7 @@ def prove(Eq):
     s = Symbol(Sum[j:n + 1](f[i] * g[i, j]))
     Eq << s.this.definition
 
-    Eq << Eq[-1].apply(Algebra.Sum.of.Eq, (i, 0, m))
+    Eq << Eq[-1].apply(Fin.Sum.of.All_Eq, (i, 0, m))
 
     Eq << Eq[-2].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 

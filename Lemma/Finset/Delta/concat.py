@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Int.Eq.of.Sub.eq.Zero.apply(Eq[-1])
 
-    Eq << Eq[-1].apply(Tensor.Stack.of.Eq, (i,))
+    Eq << Eq[-1].apply(Tensor.Stack.of.All_Eq.fin, (i,))
 
     Eq << Eq[-1].subs(Eq[1]).subs(Eq[2])
 

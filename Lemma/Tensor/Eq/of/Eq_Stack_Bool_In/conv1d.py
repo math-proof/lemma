@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.convolution_definition, Eq[-1])
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n), (k, 0, m))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (i, 0, n), (k, 0, m))
 
     Eq << Eq[-1].subs(C.this.definition, C_quote.this.definition)
 

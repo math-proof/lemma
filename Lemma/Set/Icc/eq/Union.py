@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.given.Imp.delete.apply(Eq[-2]), Bool.Imp_And.given.Imp.delete.apply(Eq[-1], 0)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ge.of.Ge.relax, a)
+    Eq << Eq[-1].this.lhs.apply(Set.Ge.of.Ge.In_Iic, a)
 
     Eq << Eq[-2].this.lhs.apply(Algebra.Lt.of.Lt.relax, b)
 

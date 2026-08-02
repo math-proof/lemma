@@ -66,7 +66,7 @@ def prove(Eq):
     Eq << Eq[1].apply(Set.EqCard.of.Eq)
 
     x_quote_abs = Eq[-1]
-    Eq << Eq[-1].apply(Algebra.Sum.of.Eq, (i, 0, k + 1))
+    Eq << Eq[-1].apply(Fin.Sum.of.All_Eq, (i, 0, k + 1))
 
     Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args[1].arg.args)
 
@@ -118,7 +118,7 @@ def prove(Eq):
 
     Eq <<= Eq.x_quote_union & Eq.SqueezeTheorem & Eq.xi_all_is_positive
 
-    Eq.x_quote_definition = Eq[1].apply(Tensor.Stack.of.Eq, (i, 0, k + 1), simplify=False)
+    Eq.x_quote_definition = Eq[1].apply(Tensor.Stack.of.All_Eq.fin, (i, 0, k + 1), simplify=False)
 
     Eq.subset_A = Subset(Eq[4].lhs, Eq[4].rhs, plausible=True)
 

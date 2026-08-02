@@ -11,7 +11,7 @@ def apply(ne, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Set
 
     a, x = Symbol(real=True)
     Eq << apply(Unequal(x, a), x >= a - 1)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Nat.Ne.of.Gt.apply(Eq[2])
     Eq << Nat.Ge.of.Gt.apply(Eq[2])
-    Eq << Algebra.Ge.of.Ge.relax.apply(Eq[-1], a - 1)
+    Eq << Set.Ge.of.Ge.In_Iic.apply(Eq[-1], a - 1)
 
 
 

@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq.is_nonpositive = Eq[0] - x1
 
-    Eq <<= Algebra.LeMul.of.Le.apply(Eq.is_nonpositive, w) + x1, Algebra.GeMul.of.Ge.apply(Eq[0].reversed, 1 - w) + w * x0
+    Eq <<= Nat.LeMulS.of.Ge_0.Le.apply(Eq.is_nonpositive, w) + x1, Algebra.GeMul.of.Ge.apply(Eq[0].reversed, 1 - w) + w * x0
 
     Eq << Eq[-2].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 

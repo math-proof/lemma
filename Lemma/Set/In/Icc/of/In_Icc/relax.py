@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.Ge.of.Ge.relax.apply(Eq[-1], lower=a - 1)
+    Eq << Set.Ge.of.Ge.In_Iic.apply(Eq[-1], lower=a - 1)
 
 
 

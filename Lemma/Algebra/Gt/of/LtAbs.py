@@ -13,12 +13,12 @@ def apply(given, negate=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int, Int
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) < a)
 
-    Eq << Algebra.Le_Abs.apply(-x)
+    Eq << Int.GeAbs.apply(-x)
 
     Eq << -Eq[-1]
 

@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Finset, Int, Nat
+    from Lemma import Algebra, Finset, Finset, Int, Nat, Fin, Fin
 
     k, h = Symbol(complex=True)
     a, b, i = Symbol(integer=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=1)
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (i, a, b)).reversed
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (i, a, b)).reversed
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sub.telescope)
 

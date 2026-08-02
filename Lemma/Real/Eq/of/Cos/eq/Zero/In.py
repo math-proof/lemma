@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq.lt = Less(x, S.Pi / 2, plausible=True)
 
-    Eq << Set.In.Icc.Inter.of.Lt.In_Icc.apply(Eq.lt, Eq[1])
+    Eq << Set.In_Ico.of.In_Icc.Lt.apply(Eq.lt, Eq[1])
 
     Eq << Real.Gt_0.Cos.of.In_Icc.apply(Eq[-1])
 

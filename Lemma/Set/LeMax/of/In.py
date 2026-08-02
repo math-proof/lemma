@@ -11,7 +11,7 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Algebra, Nat, Int, Int
 
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Algebra.Le_Abs.given.And.apply(Eq[1])
 
-    Eq << Algebra.Le_Abs.apply(b)
+    Eq << Int.GeAbs.apply(b)
 
     Eq << LessEqual(abs(b), Max(abs(a), abs(b)), plausible=True)
 

@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     x, y = Symbol(integer=True)
     Eq << apply(x <= y)
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Lt.of.Le.relax)
+    Eq << Eq[-2].this.lhs.apply(Nat.Lt_Add_1.of.Le)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Le.given.Lt.relax)
 

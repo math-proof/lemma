@@ -24,7 +24,7 @@ def apply(given, x):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Finset
+    from Lemma import Algebra, Calculus, Finset, Fin
 
     A, B = Symbol(shape=(oo,), real=True)
     x = Symbol(real=True)
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq.hypothesis_k * x ** k
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (k,))
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (k,))
 
     _k = Symbol('k', integer=True)
     Eq << Eq[-1].this.lhs.limits_subs(k, _k)

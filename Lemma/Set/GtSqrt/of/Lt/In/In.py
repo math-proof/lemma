@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.Lt.of.Lt.In.apply(Eq[0], Eq[2])
 
-    Eq.x_contains = Set.In.Icc.Inter.of.Lt.In_Icc.apply(Eq[-1], Eq[1])
+    Eq.x_contains = Set.In_Ico.of.In_Icc.Lt.apply(Eq[-1], Eq[1])
 
     Eq << Set.Gt.of.Gt.In.apply(Eq[0].reversed, Eq[1])
 

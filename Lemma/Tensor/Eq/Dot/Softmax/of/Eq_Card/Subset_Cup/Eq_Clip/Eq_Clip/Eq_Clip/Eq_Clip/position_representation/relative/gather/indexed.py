@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq <<= Eq[2][:, d[j]], Eq[3][:, d[j]]
 
-    Eq <<= Tensor.Stack.of.Eq.apply(Eq[-2], (j, 0, m)), Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, m))
+    Eq <<= Tensor.Stack.of.All_Eq.fin.apply(Eq[-2], (j, 0, m)), Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (j, 0, m))
 
     Eq <<= Algebra.EqTranspose.of.Eq.apply(Eq[-2], (0, 1)), Algebra.EqTranspose.of.Eq.apply(Eq[-1], (0, 1))
 

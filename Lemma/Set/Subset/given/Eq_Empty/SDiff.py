@@ -14,7 +14,7 @@ def prove(Eq):
 
     Eq << apply(Subset(B, A))
 
-    Eq << Set.Subset.SDiff.of.Eq_Empty.apply(Eq[1])
+    Eq << Set.Subset.of.SDiff.eq.Empty.apply(Eq[1])
 
 
 if __name__ == '__main__':

@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Nat
+    from Lemma import Algebra, Finset, Nat, Nat, Fin
 
     i, j = Symbol(integer=True)
     m, n = Symbol(integer=True, positive=True)
@@ -24,7 +24,7 @@ def prove(Eq):
     _x_bar = Symbol(r"\overline{x'}", Stack[i:m](Sum[j:n](x[i, j])) / n)
     Eq <<= x_bar.this.definition, _x_bar[i].this.definition
 
-    Eq <<= Eq[-2] * (m * n), Eq[-1] * n, Algebra.Sum.of.Eq.apply(Eq[-1], (i, 0, m))
+    Eq <<= Eq[-2] * (m * n), Eq[-1] * n, Fin.Sum.of.All_Eq.apply(Eq[-1], (i, 0, m))
 
     Eq.eq_sum = Eq[-3].reversed
 

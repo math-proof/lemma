@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set
+    from Lemma import Algebra, Bool, Set, Nat, Nat
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.GtMul.of.Gt.Gt)
+    Eq << Eq[-1].this.rhs.apply(Nat.GtMulS.of.Gt.Gt.Ge_0.Ge_0)
 
     Eq << Imply(Eq[2], Eq.induct, plausible=True)
     Eq << Bool.Cond.of.All_Imp.apply(Eq[-1], n=n, start=1)

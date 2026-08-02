@@ -12,12 +12,12 @@ def apply(given, negate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int, Int
     M, a = Symbol(real=True)
 
     Eq << apply(LessEqual(abs(a), M), negate=True)
 
-    Eq << Algebra.Le_Abs.apply(a, negate=True)
+    Eq << Int.GeAbs.apply(a, negate=True)
 
     Eq << Nat.Le.of.Le.Le.apply(Eq[-1], Eq[0])
 

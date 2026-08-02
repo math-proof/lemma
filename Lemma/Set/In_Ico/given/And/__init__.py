@@ -13,16 +13,16 @@ def apply(imply, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Nat
 
     x, a, b = Symbol(integer=True, given=True)
     Eq << apply(Element(x, Range(a, b)), right_open=False)
 
-    Eq << Algebra.Lt.of.Le.relax.apply(Eq[-1], upper=b)
+    Eq << Nat.Lt_Add_1.of.Le.apply(Eq[-1], upper=b)
 
     Eq << Set.In.Ico.of.Lt.apply(Eq[-1])
 
-    Eq << Set.In.Ico.of.Ge.apply(Eq[1])
+    Eq << Set.In_Ioi.of.Gt.apply(Eq[1])
 
     Eq <<= Eq[-2] & Eq[-1]
 

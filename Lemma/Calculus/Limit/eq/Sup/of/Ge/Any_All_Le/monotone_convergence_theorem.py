@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.expr.apply(Algebra.LeSup.of.All_Le)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Lt.of.Le.relax, upper=oo)
+    Eq << Eq[-1].this.expr.apply(Nat.Lt_Add_1.of.Le, upper=oo)
 
     Eq.ge_sup = Algebra.All_GeSup.apply(Eq[-1].lhs)
 

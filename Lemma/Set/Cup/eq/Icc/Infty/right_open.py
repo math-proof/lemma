@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Algebra, Bool, Nat, Int
 
     k = Symbol(integer=True)
     Eq << apply(Cup[k:oo](Interval(k, k + 1, right_open=True)))
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-3].this.lhs.apply(Set.IsNotNegative.of.Ge_0, simplify=None)
 
-    Eq << Algebra.Lt_Add_.Floor.One.apply(x)
+    Eq << Int.GtAddFloor_1.apply(x)
 
     Eq << Algebra.Ge_Floor.apply(x)
 

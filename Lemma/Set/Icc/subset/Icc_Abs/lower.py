@@ -9,12 +9,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(Interval(x, y, right_open=True))
 
-    Eq << Algebra.Le_Abs.apply(y)
+    Eq << Int.GeAbs.apply(y)
 
     Eq << Set.Subset.Icc.of.Le.lower.apply(Eq[1], x, right_open=True)
 

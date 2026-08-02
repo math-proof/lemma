@@ -44,7 +44,7 @@ def prove(Eq):
     x = x_probability.lhs
     n = x.shape[0]
     s, t = Eq[4].lhs.args
-    Eq.z_definition = Eq[5].apply(Tensor.Stack.of.Eq, (Eq[5].lhs.indices[-1],))
+    Eq.z_definition = Eq[5].apply(Tensor.Stack.of.All_Eq.fin, (Eq[5].lhs.indices[-1],))
 
     Eq << Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov.apply(*Eq[:4])
 

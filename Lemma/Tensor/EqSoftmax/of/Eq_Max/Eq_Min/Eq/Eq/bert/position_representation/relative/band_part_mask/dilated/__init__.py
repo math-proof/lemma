@@ -132,7 +132,7 @@ def prove(Eq):
 
     Eq << Eq.zi_definition.subs(Eq[-1].reversed, Eq[-2].reversed)
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (i, 0, n))
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[1], Eq[-1])
 

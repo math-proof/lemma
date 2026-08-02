@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.cossin, Eq[-1])
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, d))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (j, 0, d))
 
     Eq.PE_equality = Eq[-1].this.rhs.apply(Tensor.Stack.eq.Add)
 
@@ -107,7 +107,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.coscos, Eq[-1])
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, d))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (j, 0, d))
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Add)
 

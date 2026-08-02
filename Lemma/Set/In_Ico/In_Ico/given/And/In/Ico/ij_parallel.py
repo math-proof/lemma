@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq <<= Algebra.And.Ge.of.Ge_Max.apply(Eq[-2]), Algebra.And.Lt.of.Lt_Min.apply(Eq[-1])
 
-    Eq << Algebra.Lt.of.Le.relax.apply(Eq[-2].reversed + n, lower=i)
+    Eq << Nat.Lt_Add_1.of.Le.apply(Eq[-2].reversed + n, lower=i)
 
     Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[-1]).reversed + d
 

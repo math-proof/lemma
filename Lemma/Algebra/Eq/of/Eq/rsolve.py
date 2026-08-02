@@ -19,7 +19,7 @@ def apply(self, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Nat
+    from Lemma import Algebra, Bool, Finset, Nat, Fin, Fin
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.All_OrNot.apply(Eq[-1], 1)
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (k, 0, n))
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (k, 0, n))
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

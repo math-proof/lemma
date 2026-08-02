@@ -10,7 +10,7 @@ def apply(ne, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Finset
+    from Lemma import Algebra, Nat, Finset, Fin, Fin
 
     k, n = Symbol(integer=True)
     λ = Symbol(real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Nat.Div.of.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (k, 0, n))
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (k, 0, n))
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Ite.eq.MulBool)
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
     Eq << Eq[-1].this.lhs.arg.definition
 

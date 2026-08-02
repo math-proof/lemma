@@ -32,7 +32,7 @@ def prove(Eq):
     _i = i.unbounded
     Eq << Eq[-1].this.find(Stack).limits_subs(i, _i)
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (_i, 0, n), simplify=False)
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (_i, 0, n), simplify=False)
 
 
 if __name__ == '__main__':

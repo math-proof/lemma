@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.simplify()
 
-    Eq << Eq[-1].apply(Tensor.Stack.of.Eq, (k,), (h,))
+    Eq << Eq[-1].apply(Tensor.Stack.of.All_Eq.fin, (k,), (h,))
 
     Eq << Eq[-1].subs(Eq[1], Eq[2])
 

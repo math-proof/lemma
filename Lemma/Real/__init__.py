@@ -34,8 +34,6 @@ from . import Le_0
 from . import Tan
 from . import Tanh
 from . import Add
-from . import All_Eq_0
-from . import Eq_Cot
 from . import EqArccos
 from . import EqArcsec
 from . import EqArctan
@@ -76,3 +74,5 @@ from . import MulSin_Cos
 from . import Sign
 from . import CosAdd
 from . import CoshAdd
+from . import EqCosSub_Mul_Pi0
+from . import Eq_Cot

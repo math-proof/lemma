@@ -12,14 +12,14 @@ def apply(given, bound):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Set
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(GreaterEqual(x, y), y + 1)
 
 
 
-    Eq << Algebra.Ge.of.Ge.relax.apply(Eq[1], lower=y)
+    Eq << Set.Ge.of.Ge.In_Iic.apply(Eq[1], lower=y)
 
 
 

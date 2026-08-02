@@ -37,3 +37,6 @@ from . import LtAddS
 from . import LtMulS
 from . import Ge_0
 from . import Mul_Add
+from . import Lt_Add_1
+from . import LeMulS
+from . import GtMulS

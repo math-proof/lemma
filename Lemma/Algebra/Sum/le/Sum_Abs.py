@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
     f = Function(real=True)
     Eq << apply(Sum[k:n](f(k)))
 
-    Eq << Algebra.Le_Abs.apply(f(k))
+    Eq << Int.GeAbs.apply(f(k))
 
     Eq << Algebra.LeSum.of.Le.apply(Eq[-1], (k, 0, n))
 

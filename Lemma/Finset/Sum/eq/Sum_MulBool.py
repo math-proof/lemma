@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Algebra, Bool, Finset, Fin
 
     A, B = Symbol(etype=dtype.integer)
     x, y = Symbol(integer=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (y,))
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (y,))
 
     Eq << Eq[1].this.rhs.subs(Eq[-1])
 

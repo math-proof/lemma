@@ -126,7 +126,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.zij_def, Eq[-1])
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_dquote_def, Eq[-1])
 

@@ -72,7 +72,7 @@ def prove(Eq):
     _i = Symbol('i', domain=Range(4))
     Eq << Eq.All_And.limits_subs(i, _i)
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (_i, 0, 4))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (_i, 0, 4))
 
     Eq << Eq[-1].this.lhs.definition
 

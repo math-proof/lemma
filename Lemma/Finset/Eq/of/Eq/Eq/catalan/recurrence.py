@@ -10,7 +10,7 @@ def apply(eq, eq1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Finset, Set, Bool, Finset
+    from Lemma import Algebra, Calculus, Finset, Set, Bool, Finset, Fin
 
     n, k = Symbol(integer=True)
     # n = Symbol(integer=True, nonnegative=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[1] * x ** n
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (n, 0, oo))
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (n, 0, oo))
 
     Eq << Calculus.Mul.Sum.eq.Sum.Sum.apply(C, C, n=n, k=k, x=x)
 

@@ -10,14 +10,14 @@ def apply(x, negate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(x)
 
     Eq << -Eq[-1]
 
-    Eq << Algebra.Le_Abs.apply(-x)
+    Eq << Int.GeAbs.apply(-x)
 
 
 if __name__ == '__main__':

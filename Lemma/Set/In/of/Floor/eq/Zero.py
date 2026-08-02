@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(Floor(x), 0))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Algebra.Lt_Add_.Floor.One.apply(x)
+    Eq << Int.GtAddFloor_1.apply(x)
 
     Eq << Eq[-1].subs(Eq[0])
 

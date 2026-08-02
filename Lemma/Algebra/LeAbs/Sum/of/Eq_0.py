@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Algebra.All_Le_Maxima.apply(Eq[1].find(Maxima))
 
-    Eq << Eq[-1].this.expr.apply(Algebra.LeMul.of.Le, Eq[-2].rhs.find(Abs[Sum]))
+    Eq << Eq[-1].this.expr.apply(Nat.LeMulS.of.Ge_0.Le, Eq[-2].rhs.find(Abs[Sum]))
 
     Eq << Algebra.LeSum.of.All_Le.apply(Eq[-1])
 

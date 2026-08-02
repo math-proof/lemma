@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(i, m).subs(j, d[m])
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq.hypothesis, (k, 0, n))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq.hypothesis, (k, 0, n))
 
     Eq << Eq[-1].subs(Eq[1])
 

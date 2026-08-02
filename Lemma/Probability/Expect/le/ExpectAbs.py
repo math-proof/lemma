@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability
+    from Lemma import Algebra, Probability, Int
 
     D = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(D,))
@@ -17,7 +17,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Expectation[θ](f(x)))
 
-    Eq << Algebra.Le_Abs.apply(f(x.var))
+    Eq << Int.GeAbs.apply(f(x.var))
 
     Eq << Probability.LeExpect.of.Le.apply(Eq[-1], (x,), (θ,))
 

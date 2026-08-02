@@ -24,7 +24,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x, y = Symbol(real=True)
 #     z = Symbol(real=True)
 #     Eq << apply(Min(floor(x), floor(y), floor(z)))
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[0].apply(Algebra.Eq.given.And.split.Floor)
 
-    Eq <<= Algebra.Lt_Add_.Floor.One.apply(x), Algebra.Lt_Add_.Floor.One.apply(y)
+    Eq <<= Int.GtAddFloor_1.apply(x), Int.GtAddFloor_1.apply(y)
 
     Eq << Algebra.LtMin.of.Lt.Lt.both.apply(Eq[-2], Eq[-1])
 

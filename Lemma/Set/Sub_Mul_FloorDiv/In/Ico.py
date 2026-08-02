@@ -9,7 +9,7 @@ def apply(n, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Rat, Nat
+    from Lemma import Set, Algebra, Rat, Nat, Int, Int
 
     n = Symbol(real=True)
     d = Symbol(real=True, positive=True)
@@ -19,11 +19,11 @@ def prove(Eq):
 
     Eq << Rat.LeFloor.apply(Eq[0].find(Floor).arg)
 
-    Eq << Algebra.LeMul.of.Le.apply(Eq[-1], d)
+    Eq << Nat.LeMulS.of.Ge_0.Le.apply(Eq[-1], d)
 
     Eq << -Eq[-1] + n
 
-    Eq << Algebra.Lt_Add_.Floor.One.apply(Eq[0].find(Floor).arg) - 1
+    Eq << Int.GtAddFloor_1.apply(Eq[0].find(Floor).arg) - 1
 
     Eq << Eq[-1] * d
 

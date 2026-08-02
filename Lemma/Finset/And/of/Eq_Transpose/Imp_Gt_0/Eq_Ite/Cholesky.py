@@ -114,7 +114,7 @@ def prove(Eq):
     Eq <<= Eq[-1] & Eq[-2]
     Eq << Tensor.EqDot.of.Imp_Eq_0.apply(Eq.L_is_zero)
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
 
 

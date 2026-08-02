@@ -108,7 +108,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i,))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (i,))
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Block)
 

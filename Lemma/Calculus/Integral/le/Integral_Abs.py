@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus
+    from Lemma import Algebra, Calculus, Int, Int
 
     a, b = Symbol(real=True)
     x = Symbol(integer=True)
@@ -17,7 +17,7 @@ def prove(Eq):
     Eq << apply(Integral[x:a:b](f(x)))
 
 
-    Eq << Algebra.Le_Abs.apply(f(x))
+    Eq << Int.GeAbs.apply(f(x))
     Eq << Calculus.LeIntegral.of.Le.apply(Eq[-1], (x, a, b))
 
 

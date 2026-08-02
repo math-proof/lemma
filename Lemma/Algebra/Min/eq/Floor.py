@@ -26,7 +26,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x, y = Symbol(real=True)
     n = Symbol(integer=True)
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     assert n + floor(x) <= n + x
 
-    Eq <<= Algebra.Lt_Add_.Floor.One.apply(x) + n, Algebra.Lt_Add_.Floor.One.apply(y)
+    Eq <<= Int.GtAddFloor_1.apply(x) + n, Int.GtAddFloor_1.apply(y)
 
     Eq << Algebra.LtMin.of.Lt.Lt.both.apply(Eq[-2], Eq[-1])
 

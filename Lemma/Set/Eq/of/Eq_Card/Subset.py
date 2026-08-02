@@ -34,7 +34,7 @@ def prove(Eq):
     Eq << Eq[-1].simplify()
 
     Eq << Set.Eq_Empty.of.Eq_0.apply(Eq[-1])
-    Eq << Set.Subset.SDiff.of.Eq_Empty.apply(Eq[-1])
+    Eq << Set.Subset.of.SDiff.eq.Empty.apply(Eq[-1])
     Eq <<= Eq[1] & Eq[-1]
 
 

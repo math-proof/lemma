@@ -9,12 +9,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int
 
     x = Symbol(real=True)
     Eq << apply(x)
 
-    Eq << Algebra.Le_Abs.apply(x).reversed - x
+    Eq << Int.GeAbs.apply(x).reversed - x
 
 
 

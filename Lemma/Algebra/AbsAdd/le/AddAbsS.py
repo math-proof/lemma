@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x + y)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << (Eq[0].rhs ** 2).this.expand()
 
-    Eq << Algebra.Le_Abs.apply(x * y)
+    Eq << Int.GeAbs.apply(x * y)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Abs.eq.Mul)
 

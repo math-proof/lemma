@@ -29,7 +29,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Fin
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
     f = Function(integer=True)
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << s[i].this.definition
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (i, finiteset))
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (i, finiteset))
 
     Eq << Eq[-1].reversed
 

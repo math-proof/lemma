@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Add).apply(Algebra.Sub.Square.eq.Mul), Eq[-1].this.rhs * 2
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge.of.Ge.relax, lower=0), Eq[-1].this.lhs.apply(Algebra.Ge.of.Ge.relax, lower=0)
+    Eq <<= Eq[-2].this.lhs.apply(Set.Ge.of.Ge.In_Iic, lower=0), Eq[-1].this.lhs.apply(Set.Ge.of.Ge.In_Iic, lower=0)
 
     Eq.is_nonnegative = Eq[-2].this.rhs.apply(Algebra.Mul.gt.Zero.given.And.Gt_0)
 

@@ -12,14 +12,14 @@ def apply(given, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     M, a, b = Symbol(real=True)
 
     Eq << apply(Less(abs(a - b), M))
 
     Eq << Algebra.Lt.of.Lt.split.Abs.apply(Eq[0]) + b
 
-    Eq << Algebra.Le_Abs.apply(M + b)
+    Eq << Int.GeAbs.apply(M + b)
 
     Eq << Algebra.Lt.of.Lt.Le.apply(Eq[-2], Eq[-1])
 
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Algebra.Lt.of.Lt.split.Abs.apply(Eq[0], negate=True) - b
 
-    Eq << Algebra.Le_Abs.apply(M - b)
+    Eq << Int.GeAbs.apply(M - b)
 
     Eq << Algebra.Lt.of.Lt.Le.apply(Eq[-2], Eq[-1])
 

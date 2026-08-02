@@ -34,5 +34,3 @@ if __name__ == '__main__':
 
 # created on 2019-07-23
 
-del Gt
-from . import Gt

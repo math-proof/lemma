@@ -24,7 +24,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Fin
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << s[i].this.definition
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (i, 0, m))
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (i, 0, m))
 
     Eq << Eq[-2].this.rhs.apply(Algebra.Sum.eq.Add.doit.setlimit)
 

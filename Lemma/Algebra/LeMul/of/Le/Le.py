@@ -13,7 +13,7 @@ def apply(a_less_than_b, x_less_than_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat
+    from Lemma import Algebra, Int, Nat, Set
 
     x, a = Symbol(real=True, nonnegative=True)
     b, y = Symbol(real=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[0].reversed
 
-    Eq << Algebra.Ge.of.Ge.relax.apply(Eq[-1], 0)
+    Eq << Set.Ge.of.Ge.In_Iic.apply(Eq[-1], 0)
 
     Eq << Eq[1] - x
 

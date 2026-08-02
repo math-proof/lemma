@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq.le_inf = Algebra.All_LeInf.apply(Eq[-1].lhs)
 
-    Eq << Algebra.Lt.of.Le.relax.apply(Eq.le_inf, upper=oo)
+    Eq << Nat.Lt_Add_1.of.Le.apply(Eq.le_inf, upper=oo)
 
     Eq.inf_is_real = Set.In_Ioo.of.Lt.Lt.apply(Eq[-2], Eq[-1], simplify=None)
 

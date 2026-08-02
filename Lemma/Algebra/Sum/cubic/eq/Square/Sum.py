@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Finset, Nat
+    from Lemma import Finset, Algebra, Finset, Nat, Fin
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (k, 0, n), simplify=None)
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (k, 0, n), simplify=None)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

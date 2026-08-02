@@ -30,7 +30,7 @@ def prove(Eq):
     w = Eq[1].lhs.base
     Eq << Finset.Get.eq.Ite.swap1.helper.apply(x, w[0])
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n), simplify=False)
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (i, 0, n), simplify=False)
 
     Eq.given = Eq[0].subs(Eq[-1].reversed)
 

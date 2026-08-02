@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Algebra.GeSqrt.of.Ge.apply(Eq[-2])
 
-    Eq << Algebra.Ge.of.Ge.relax.apply(Eq[-2], lower=0)
+    Eq << Set.Ge.of.Ge.In_Iic.apply(Eq[-2], lower=0)
 
     Eq << Algebra.LtSqrt.of.Ge_0.Lt.apply(Eq[-1], Eq[-2])
 

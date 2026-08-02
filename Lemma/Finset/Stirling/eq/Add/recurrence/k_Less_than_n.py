@@ -9,7 +9,7 @@ def apply(n, k):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Set, Algebra
+    from Lemma import Finset, Set, Algebra, Fin
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(domain=Range(1, n))
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Finset.Abs.Condset.Stirling.mapping.s1_Aj.apply(n, k, s1, A).reversed
 
-    Eq << Eq[-1].apply(Algebra.Sum.of.Eq, *Eq[-2].lhs.limits)
+    Eq << Eq[-1].apply(Fin.Sum.of.All_Eq, *Eq[-2].lhs.limits)
 
 
 if __name__ == '__main__':

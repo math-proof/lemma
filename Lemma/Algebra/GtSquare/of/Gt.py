@@ -11,13 +11,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x = Symbol(real=True)
     y = Symbol(real=True, nonnegative=True)
     Eq << apply(Greater(x, y))
 
-    Eq << Algebra.GtMul.of.Gt.Gt.apply(Eq[0], Eq[0])
+    Eq << Nat.GtMulS.of.Gt.Gt.Ge_0.Ge_0.apply(Eq[0], Eq[0])
 
 
 if __name__ == '__main__':

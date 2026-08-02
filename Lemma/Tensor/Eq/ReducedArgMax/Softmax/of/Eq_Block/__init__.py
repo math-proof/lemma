@@ -153,7 +153,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq.of.And.apply(Eq.four_blocks & Eq[-1] & Eq[-2] & Eq[-3]).reversed
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (i, 0, n))
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Stack.eq.ReducedArgMax)
 

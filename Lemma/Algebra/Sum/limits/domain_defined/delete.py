@@ -19,7 +19,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Fin, Fin
     i, j = Symbol(integer=True)
     k = Symbol(integer=True, positive=True)
     x = Symbol(shape=(k,), integer=True)
@@ -32,7 +32,7 @@ def prove(Eq):
     s = Symbol(Sum[j:f(i)](h(x[i], j)))
     Eq << s.this.definition
 
-    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (i, 0, k))
+    Eq << Fin.Sum.of.All_Eq.apply(Eq[-1], (i, 0, k))
 
     Eq << Eq[-1].this.lhs.expr.definition
 

@@ -10,7 +10,7 @@ def apply(lt, gt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Set, Int
 
     x, a, b = Symbol(real=True, given=True)
     Eq << apply(x < a, x > b)
@@ -19,11 +19,11 @@ def prove(Eq):
 
     Eq <<= ~Eq[-2], -~Eq[-1]
 
-    Eq <<= Algebra.Ge.of.Ge.relax.apply(Eq[-2], abs(a)), -Algebra.Ge.of.Ge.relax.apply(Eq[-1], abs(b))
+    Eq <<= Set.Ge.of.Ge.In_Iic.apply(Eq[-2], abs(a)), -Set.Ge.of.Ge.In_Iic.apply(Eq[-1], abs(b))
 
     Eq <<= Nat.Gt.of.Ge.Lt.apply(Eq[-2], Eq[0]), -Nat.Lt.of.Le.Lt.apply(Eq[1], Eq[-1])
 
-    Eq <<= Algebra.Le_Abs.apply(a), Algebra.Le_Abs.apply(b, negate=True)
+    Eq <<= Int.GeAbs.apply(a), Int.GeAbs.apply(b, negate=True)
 
     Eq <<= Eq[-2] & Eq[-4], Eq[-1] & Eq[-3]
 

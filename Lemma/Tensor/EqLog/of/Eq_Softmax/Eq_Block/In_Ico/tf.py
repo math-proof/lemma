@@ -38,7 +38,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Nat
+    from Lemma import Tensor, Algebra, Set, Bool, Nat, Fin
 
     n, l, u = Symbol(domain=Range(2, oo))
     h = Symbol(integer=True, shape=(n,))
@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)
 
-    Eq.loss = -Algebra.Sum.of.Eq.apply(Eq[3] * (1 + log(1 + abs(h[i]) / 2)), (i, 0, n))
+    Eq.loss = -Fin.Sum.of.All_Eq.apply(Eq[3] * (1 + log(1 + abs(h[i]) / 2)), (i, 0, n))
 
 
 

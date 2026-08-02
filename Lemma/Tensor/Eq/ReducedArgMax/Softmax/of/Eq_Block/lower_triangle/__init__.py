@@ -77,7 +77,7 @@ def prove(Eq):
     j = Symbol(integer=True)
     Eq << Eq[0][i, j + Min(l, n) - i - 1]
 
-    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, i + 1))
+    Eq << Tensor.Stack.of.All_Eq.fin.apply(Eq[-1], (j, 0, i + 1))
 
     Eq.zi_min_def = Eq[-1].this.find(Stack)(j).find(Symbol < 0).simplify()
 

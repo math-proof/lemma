@@ -12,7 +12,7 @@ def apply(x, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Int
 
     x = Symbol(real=True, given=True)
     Eq << apply(x)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
-    Eq << Algebra.Lt_Add_.Floor.One.apply(x)
+    Eq << Int.GtAddFloor_1.apply(x)
 
     Eq << Algebra.Ge_Floor.apply(x)
 
