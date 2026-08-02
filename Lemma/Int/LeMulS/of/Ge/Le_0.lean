@@ -1,8 +1,8 @@
-import Lemma.Int.LeMulS.of.Le.Ge_0
+import Lemma.Nat.LeMulS.of.Le.Ge_0
 import Lemma.Int.GeNeg_0.of.Le_0
 import Lemma.Int.Mul_Neg.eq.NegMul
 import Lemma.Int.Le.of.GeNegS
-open Int
+open Int Nat
 
 /--
 using comm 2 instead of comm 1 since conditions of the lemma is arranged according to the constructor order of multiplication

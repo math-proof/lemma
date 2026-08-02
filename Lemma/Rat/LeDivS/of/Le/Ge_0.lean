@@ -1,7 +1,7 @@
 import Lemma.Rat.Div.eq.Mul_Inv
 import Lemma.Rat.GeInv_0.is.Ge_0
-import Lemma.Int.LeMulS.of.Le.Ge_0
-open Rat Int
+import Lemma.Nat.LeMulS.of.Le.Ge_0
+open Rat Nat
 
 
 @[main, comm 2]

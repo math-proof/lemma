@@ -1,5 +1,5 @@
-import Lemma.Int.LeMulS.of.Le.Ge_0
-open Int
+import Lemma.Nat.LeMulS.of.Le.Ge_0
+open Nat
 
 
 @[main, comm 1]

@@ -1,7 +1,7 @@
 import Lemma.Nat.NotLt.is.Ge
-import Lemma.Int.LeMulS.of.Le.Ge_0
+import Lemma.Nat.LeMulS.of.Le.Ge_0
 import Lemma.Nat.LeAddS.is.Le
-open Nat Int
+open Nat
 
 
 @[main]
