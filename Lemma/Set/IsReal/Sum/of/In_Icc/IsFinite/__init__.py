@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq.upper_bound, Eq.lower_bound = Eq[-2].this.find(Limit).apply(Calculus.Limit.eq.Mul), Eq[-1].this.find(Limit).apply(Calculus.Limit.eq.Mul)
 
-    Eq << Algebra.Gt.of.Gt.relax.apply(Eq.gt_zero, -1)
+    Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq.gt_zero, -1)
 
     Eq << Algebra.LtAbs.of.Gt.Lt.apply(Eq[-1], Eq.lt)
 

@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq <<= Eq[-5].this.lhs.apply(Algebra.GtSqrt.of.Gt), Eq[-4].this.rhs.apply(Algebra.Add.gt.Zero.given.And), Eq[-2].subs(Eq.eq_abs_M), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq <<= Eq[-5].subs(Eq.eq_abs_m), Eq[-4].this.lhs.apply(Algebra.Gt.of.Gt.relax, lower=0), Eq[-3].this.rhs.apply(Algebra.Gt.transport, lhs=slice(1, None)), Bool.Imp.given.Cond.apply(Eq[-2]), Eq[-1].this.lhs.apply(Algebra.Gt.of.Gt.relax, lower=0)
+    Eq <<= Eq[-5].subs(Eq.eq_abs_m), Eq[-4].this.lhs.apply(Nat.Gt_Sub_1.of.Gt, lower=0), Eq[-3].this.rhs.apply(Algebra.Gt.transport, lhs=slice(1, None)), Bool.Imp.given.Cond.apply(Eq[-2]), Eq[-1].this.lhs.apply(Nat.Gt_Sub_1.of.Gt, lower=0)
 
     Eq << Eq[-4].this.lhs.apply(Algebra.Gt_0.of.Gt)
 

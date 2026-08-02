@@ -5143,17 +5143,59 @@ function track_mounted(tag){
 	};
 }
 
-function create_ClipboardJS(tag) {
-	var clipboard = new ClipboardJS(tag);
+const clipboard = {
+	instance: null,
 
-	clipboard.on('success', function(e) {
-		console.log(e);
-	});
+	contextmenu(event) {
+		event.stopPropagation();
+		event.preventDefault();
+		clipboard.instance.onClick(event);
+	},
 
-	clipboard.on('error', function(e) {
-		console.log(e);
-	});
-}
+	mounted(el) {
+		var {tagName, id} = el;
+		if (id) {
+			id = id.replace(/([.:])/g, '\\$1');
+			tagName += `#${id}`;
+		}
+
+		if (!el.getAttribute('data-clipboard-action'))
+			el.setAttribute('data-clipboard-action', 'copy');
+		el.setAttribute('data-clipboard-target', '[data-clipboard-action="copy"]');
+
+		el.addEventListener('contextmenu', clipboard.contextmenu);
+
+		if (!clipboard.instance) {
+			var instance = clipboard.instance = new ClipboardJS(`${tagName}[data-clipboard-action="copy"]`);
+
+			instance.on('success', function(event) {
+				var {trigger} = event;
+				if (trigger.getAttribute('data-clipboard-text')) {
+					var range = document.createRange();
+					range.selectNodeContents(trigger);
+					var selection = window.getSelection();
+					selection.removeAllRanges();
+					selection.addRange(range);
+				}
+				else
+					console.log(event);
+			});
+
+			instance.on('error', function(event) {
+				console.log(event);
+				event.clearSelection();
+			});
+
+			const onClick = ClipboardJS.prototype.onClick;
+
+			ClipboardJS.prototype.onClick = function(event) {
+				if (event.button === 0)
+					return;
+				onClick.call(this, event);
+			};
+		}
+	},
+};
 
 async function query(host, user, token, sql) {
 	var data = {sql};

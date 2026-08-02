@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq[0], x, c - x)
 
-    Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn.Neg.of.NotIn)
+    Eq << Eq[-1].this.find(NotElement).apply(Set.NotInNeg.of.NotIn_Icc)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotInAdd.of.NotIn, c)
 

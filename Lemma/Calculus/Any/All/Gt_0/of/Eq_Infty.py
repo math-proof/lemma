@@ -24,7 +24,7 @@ def apply(eq, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra
+    from Lemma import Calculus, Algebra, Nat
 
     x, x0 = Symbol(real=True)
     f = Function(real=True)
@@ -34,7 +34,7 @@ def prove(Eq):
     delta = Eq[-1].variable
     Eq << Calculus.Any.All.of.Eq_Limit.limit_definition.apply(Eq[0], epsilon, delta)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Gt.of.Gt.relax, lower=0)
+    Eq << Eq[-1].this.find(Greater).apply(Nat.Gt_Sub_1.of.Gt, lower=0)
 
 
 

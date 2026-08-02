@@ -410,6 +410,7 @@ div {{
 
 <script src="{parentPath}static/unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
 <script src="{parentPath}static/unpkg.com/qs@6.10.2/dist/qs.js"></script>
+<script src="{parentPath}static/unpkg.com/clipboard@2.0.10/dist/clipboard.min.js"></script>
 
 <script src='{parentPath}static/js/std.js'></script>
 <script src='{parentPath}static/js/utility.js'></script>

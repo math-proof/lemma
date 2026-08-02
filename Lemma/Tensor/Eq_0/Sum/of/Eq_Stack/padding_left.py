@@ -27,7 +27,7 @@ def prove(Eq):
 
 
     Eq << Eq[-2].subs(Eq[-1])
-    Eq << Eq[-1].this.expr.apply(Algebra.Gt.of.Gt.relax, upper=1)
+    Eq << Eq[-1].this.expr.apply(Nat.Gt_Sub_1.of.Gt, upper=1)
     Eq << Eq[0][k]
     Eq << Eq[-2].subs(Eq[-1])
     Eq << Eq[-1].this.expr.apply(Nat.Le_Sub_1.of.Lt)

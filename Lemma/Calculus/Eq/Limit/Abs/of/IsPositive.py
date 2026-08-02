@@ -11,7 +11,7 @@ def apply(is_positive):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Calculus, Algebra, Bool
+    from Lemma import Set, Calculus, Algebra, Bool, Nat
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)
@@ -31,7 +31,7 @@ def prove(Eq):
     δ_1 = Symbol(positive=True)
     Eq << Calculus.Any.All.Gt.of.Gt_0.Eq_Limit.apply(Eq[-1], Eq[2], delta=δ_1)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Gt.of.Gt.relax, 0)
+    Eq << Eq[-1].this.find(Greater).apply(Nat.Gt_Sub_1.of.Gt, 0)
 
     Eq << Algebra.Any.All.And.of.Any_All.Any_All.limits_Inter.apply(Eq[-1], Eq[3])
 

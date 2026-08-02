@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Nat.Ne.of.Gt.apply(Eq[2])
 
-    Eq << Algebra.Gt.of.Gt.relax.apply(Eq[2], a - 1)
+    Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq[2], a - 1)
 
 
 if __name__ == '__main__':

@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[0].reversed
 
-    Eq << Algebra.Gt.of.Gt.relax.apply(Eq[-1], 0)
+    Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq[-1], 0)
 
     Eq << Eq[1] - x
 

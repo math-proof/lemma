@@ -32,7 +32,7 @@ def apply(x, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
     x = Symbol(real=True, positive=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)
 
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + x[0]
 
-    Eq << Algebra.Gt.of.Gt.relax.apply(Eq[-1], 0)
+    Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq[-1], 0)
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

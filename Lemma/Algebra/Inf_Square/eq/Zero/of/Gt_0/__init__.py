@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.apply(Algebra.LeSqrt.of.Gt_0.Le, ret=0), Eq[-1].this.rhs.reversed
 
-    Eq <<= Eq[-2].subs(Eq[2]), Eq[-1].this.lhs.apply(Algebra.Gt.of.Gt.relax, lower=0, ret=0)
+    Eq <<= Eq[-2].subs(Eq[2]), Eq[-1].this.lhs.apply(Nat.Gt_Sub_1.of.Gt, lower=0, ret=0)
 
     Eq <<= Eq[-2].this.lhs.args[0].apply(Algebra.Gt_0.Sqrt.of.Gt_0), Eq[-1].this.lhs.args[0].apply(Algebra.GtMul.of.Gt_0.Gt_1, 4)
 

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.Gt.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.Gt.of.Gt.relax.apply(Eq[-1], 0)
+    Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq[-1], 0)
 
     Eq << Nat.Ne.of.Gt.apply(Eq[-1])
 

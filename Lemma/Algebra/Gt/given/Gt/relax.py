@@ -16,12 +16,12 @@ def apply(given, lower=None, upper=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(Greater(x, y), x - 1)
 
-    Eq << Algebra.Gt.of.Gt.relax.apply(Eq[1], upper=x)
+    Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq[1], upper=x)
 
 
 if __name__ == '__main__':

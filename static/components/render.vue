@@ -6,7 +6,7 @@
             <template v-if=given.latex>
                 <hr>
                 <h3>
-                    <font color=blue>{{given_hint}}</font>
+                    <font v-clipboard color=blue :data-clipboard-text="module">{{given_hint}}</font>
                 </h3>
                 <p v-for="latex of given_latex" v-latex.block=latex></p>
             </template>
@@ -24,7 +24,7 @@
             <hr>
             <h3 title='callee hierarchy'>
                 <a style='font-size: inherit' :href="`/${user}/?callee=${module}`" target="imply">
-                    <font color=blue>{{imply_hint}}</font>
+                    <font v-clipboard color=blue :data-clipboard-text="module">{{imply_hint}}</font>
                 </a>
             </h3>
             <p v-for="latex of imply_latex" v-latex.block=latex></p>
@@ -227,6 +227,7 @@ export default {
 
     directives: {
         latex,
+        clipboard,
         finish :{
             mounted(el, binding){
                 var self = binding.instance;

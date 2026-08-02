@@ -11,14 +11,14 @@ def apply(x_less_than_y, x_less_than_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, b = Symbol(real=True, given=True)
     Eq << apply(x > y, x > b)
 
-    Eq << Algebra.Gt.of.Gt.relax.apply(Eq[-1], b)
+    Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq[-1], b)
 
-    Eq << Algebra.Gt.of.Gt.relax.apply(Eq[-1], y)
+    Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq[-1], y)
 
 
 if __name__ == '__main__':

@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(i, -i)
 
-    Eq << Eq[-1].this.find(NotElement).apply(Set.NotIn.Neg.of.NotIn)
+    Eq << Eq[-1].this.find(NotElement).apply(Set.NotInNeg.of.NotIn_Icc)
 
     Eq << Bool.All.given.All_Or_Not.apply(Eq[1])
 

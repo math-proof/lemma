@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq[0], n, m - n)
 
-    Eq << Eq[-1].this.args[1].apply(Set.NotIn.Neg.of.NotIn)
+    Eq << Eq[-1].this.args[1].apply(Set.NotInNeg.of.NotIn_Icc)
 
     Eq << Eq[-1].this.find(NotElement).apply(Set.NotInAdd.of.NotIn, m)
 

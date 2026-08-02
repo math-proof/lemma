@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.And.apply(Eq[-1], 1).reversed + 1
 
-    Eq << Algebra.Gt.of.Gt.relax.apply(Eq[-1], lower=0)
+    Eq << Nat.Gt_Sub_1.of.Gt.apply(Eq[-1], lower=0)
 
     Eq << Algebra.Gt_0.Eq.given.And.Mul.apply(Eq[-1], Eq[1], simplify=None)
 
