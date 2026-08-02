@@ -1,3 +1,8 @@
+import Lemma.Nat.ModEq.of.EqMod
+import Lemma.Nat.ModEq.of.AddMul
+import Lemma.Nat.ModEq.of.EqAddMul
+import Lemma.Nat.Dvd_Mul
+import Lemma.Nat.SubMul.eq.Mul_Sub_1
 import Lemma.Nat.GeMul.of.Gt_0
 import Lemma.Nat.SubAdd.eq.AddSub.of.Ge
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
@@ -175,61 +180,21 @@ private lemma main
           rw [DivDiv.eq.Div_Mul]
           ring_nf
         ·
-          obtain h_eq | h_div_mul_lt := Nat.eq_or_lt_of_le (Nat.div_mul_le_self (n * (s.drop (k + 1)).prod) (s.drop k).prod)
-          ·
-            exfalso
-            simp only [DropEraseIdx.eq.Drop.of.Le (show d ≤ k - 1 by omega), DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] at h_r'?
-            have h_r'_lt : ↑r' < n * (s.drop (k + 1)).prod := by simpa [DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] using r'.isLt
-            exact h_r'? (Nat.lt_of_lt_of_eq h_r'_lt h_eq.symm)
-          ·
-            obtain h_prod_drop | h_prod_drop := Nat.eq_zero_or_pos (s.drop k).prod
-            ·
-              exfalso
-              simp [h_prod_drop, Nat.div_zero] at *
-            ·
-              if hD1 : (s.drop k).prod = 1 then
-                exfalso
-                have h_threshold : n * (s.drop (k + 1)).prod / (s.drop k).prod * (s.drop k).prod = n * (s.drop (k + 1)).prod := by simp [hD1, Nat.div_one]
-                simp [h_threshold, DropEraseIdx.eq.Drop.of.Le (show d ≤ k - 1 by omega), DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] at h_r'?
-                have h_r'_lt : ↑r' < n * (s.drop (k + 1)).prod := by simpa [DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] using r'.isLt
-                exact Nat.lt_irrefl r' (Nat.lt_of_lt_of_le h_r'_lt h_r'?)
-              else
-                exfalso
-                have h_drop := ProdDropSet.eq.MulProdDropTake.of.Ge.GtLength h_k (show k ≥ d + 1 by omega) n
-                have h_mod_eq : ((↑q * s[d] + ↑i) * ((s.set k n).drop (d + 1)).prod + ↑r) % (n * (s.drop (k + 1)).prod) = ↑t % (n * (s.drop (k + 1)).prod) := by
-                  have h_sd := Nat.lt_of_le_of_lt (Nat.zero_le ↑i) h_i
-                  have hdrop_le : ((s.set k n).drop (d + 1)).prod ≤ s[d] * ((s.set k n).drop (d + 1)).prod := by
-                    calc
-                      _ ≤ ((s.set k n).drop (d + 1)).prod * s[d] := Nat.le_mul_of_pos_right _ (Nat.pos_of_ne_zero (Nat.ne_of_gt h_sd))
-                      _ = s[d] * ((s.set k n).drop (d + 1)).prod := Nat.mul_comm _ _
-                  have h_le : ↑t ≤ (↑q * s[d] + ↑i) * ((s.set k n).drop (d + 1)).prod + ↑r := by
-                    rw [h_qr]
-                    apply Nat.add_le_add_right
-                    rw [Nat.add_mul]
-                    apply Nat.le_trans _ (Nat.le_add_right _ _)
-                    rw [Nat.mul_assoc]
-                    exact Nat.mul_le_mul_left _ hdrop_le
-                  have h_dvd : (n * (s.drop (k + 1)).prod) ∣ (↑q * s[d] + ↑i) * ((s.set k n).drop (d + 1)).prod + ↑r - ↑t := by
-                    rw [h_qr]
-                    have h_sub : (↑q * s[d] + ↑i) * ((s.set k n).drop (d + 1)).prod + ↑r - (↑q * ((s.set k n).drop (d + 1)).prod + ↑r) = (↑q * (s[d] - 1) + ↑i) * ((s.set k n).drop (d + 1)).prod := by
-                      rw [Nat.add_mul]
-                      rw [Nat.add_sub_add_right _ ↑r _]
-                      rw [AddMulS.eq.MulAdd]
-                      rw [SubMulS.eq.MulSub]
-                      rw [SubAdd.eq.AddSub.of.Ge (GeMul.of.Gt_0 h_sd)]
-                      grind
-                    rw [h_sub]
-                    rw [h_drop]
-                    refine ⟨(↑q * (s[d] - 1) + ↑i) * ((s.take k).drop (d + 1)).prod, ?_⟩
-                    ring_nf
-                  rw [← Nat.add_sub_of_le h_le]
-                  rw [Nat.add_mod]
-                  rw [Nat.mod_eq_zero_of_dvd h_dvd]
-                  rw [Nat.add_zero, Nat.mod_mod]
-                simp only [DropEraseIdx.eq.Drop.of.Le (show d ≤ k - 1 by omega), DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] at h_rₐ? h_r'? h_rₐ_mod h_r'_mod
-                rw [h_rₐ_mod, h_mod_eq] at h_rₐ?
-                rw [h_r'_mod] at h_r'?
-                exact h_r'? h_rₐ?
+          exfalso
+          simp only [DropEraseIdx.eq.Drop.of.Le (show d ≤ k - 1 by omega), DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] at h_rₐ? h_r'? h_rₐ_mod h_r'_mod
+          rw [MulAdd.eq.AddMulS] at h_qₐrₐ
+          simp [ProdDropSet.eq.MulProdDropTake.of.Ge.GtLength h_k (show k ≥ d + 1 by omega) n] at h_qₐrₐ h_qr
+          rw [MulMul.eq.Mul_Mul (b := n), Mul_Mul.eq.MulMul] at h_qₐrₐ h_qr
+          rw [Mul_Mul.eq.MulMul (a := i.val)] at h_qₐrₐ
+          rw [AddMulS.eq.MulAdd] at h_qₐrₐ
+          have h_mod_r := ModEq.of.AddMul h_qₐrₐ
+          have h_mod_t := ModEq.of.Eq_AddMul h_qr
+          have h_mod_rₐ := ModEq.of.Eq_Mod h_rₐ_mod
+          have h_mod := (h_mod_t.trans h_mod_r).trans h_mod_rₐ
+          simp [ModEq] at h_mod
+          rw [h_rₐ_mod, ← h_mod] at h_rₐ?
+          rw [h_r'_mod] at h_r'?
+          exact h_r'? h_rₐ?
         ·
           grind
         ·
