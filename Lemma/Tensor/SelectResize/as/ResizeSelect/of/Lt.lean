@@ -214,20 +214,14 @@ private lemma main
           simp [Mul_Mul.eq.MulMul, Div_Mul.eq.DivDiv.comm]
           rw [List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (s := s.take ↑d) (i := k) (by grind)]
           rw [List.GetTake.eq.Get.of.GtLengthTake (by grind)]
-          have h_rhs :
-              (↑t % (n * ((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod) % (s[k] * ((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod) /
-                (s.drop (↑d + 1)).prod) =
-              (↑t % (n * ((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod) / (s.drop (↑d + 1)).prod % (s[k] * ((s.take ↑d).drop (k + 1)).prod)) := by
-            rw [show s[k] * ((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod = (s.drop (↑d + 1)).prod * (s[k] * ((s.take ↑d).drop (k + 1)).prod) by ring]
+          congr 1
+          ·
+            ring_nf
+          ·
+            conv_rhs => rw [MulMul.eq.Mul_Mul.permute (a := s[k])]
+            conv_rhs => rw [DivMod_Mul.eq.ModDiv]
+            rw [Mul.comm _ (s.drop (↑d + 1)).prod]
             rw [DivMod_Mul.eq.ModDiv]
-          congr 2
-          ·
-            ring_nf
-          ·
-            congr 1
-            conv_lhs => arg 1; rw [← DivMod_Mul.eq.ModDiv]
-            rw [h_rhs]
-            ring_nf
         ·
           sorry
         ·

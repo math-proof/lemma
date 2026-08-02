@@ -1,6 +1,4 @@
-import Lemma.Nat.Mul
-import Lemma.Nat.MulMul.eq.Mul_Mul
-open Nat
+import sympy.Basic
 
 
 @[main]
@@ -11,8 +9,29 @@ private lemma Comm
 -- imply
   a * b * c = a * c * b := by
 -- proof
-  repeat rw [Mul.comm (b := c)]
-  rw [Mul_Mul.eq.MulMul]
+  grind
+
+
+@[main]
+private lemma swap
+  [CommSemigroup α]
+-- given
+  (a b c : α) :
+-- imply
+  a * b * c = b * a * c := by
+-- proof
+  grind
+
+
+@[main]
+private lemma reverse
+  [CommSemigroup α]
+-- given
+  (a b c : α) :
+-- imply
+  a * b * c = c * b * a := by
+-- proof
+  grind
 
 
 @[main, comm]
@@ -23,8 +42,7 @@ private lemma rotate
 -- imply
   a * b * c = b * c * a := by
 -- proof
-  rw [MulMul.eq.Mul_Mul]
-  rw [Mul.comm]
+  grind
 
 
 -- created on 2024-11-29
