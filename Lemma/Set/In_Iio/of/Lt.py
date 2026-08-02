@@ -5,6 +5,8 @@ from util import *
 def apply(given):
     n, b = given.of(Less)
     assert n.is_finite
+    if n.is_extended_integer:
+        return Element(n, Range(-oo, b))
     return Element(n, Interval.open(-oo, b))
 
 

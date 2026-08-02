@@ -10,7 +10,7 @@ def apply(is_nonnegative, less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Int, Int
     x = Symbol(real=True)
     a = Symbol(real=True, nonnegative=True)
 
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[1].reversed - x
 
-    Eq << Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-1], Eq[0])
+    Eq << Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-1], Eq[0])
 
     Eq << -Eq[-1]
 

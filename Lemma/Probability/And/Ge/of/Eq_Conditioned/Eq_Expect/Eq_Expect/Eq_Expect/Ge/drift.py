@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Probability, Bool, Nat, Rat
+    from Lemma import Algebra, Tensor, Probability, Bool, Nat, Rat, Int, Int, Int, Int
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -95,7 +95,7 @@ def prove(Eq):
 
     Eq <<= Probability.KL.ge.Zero.apply(Eq.ge.find(KL)), Probability.Pr.ge.Zero.apply(Eq.ge.find(Pr)), Rat.Ne_0.of.Div1.gt.Zero.apply(Eq.ge)
 
-    Eq <<= Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-2], Eq[-3]), Algebra.Inv.gt.Zero.of.Ne_0.apply(Eq[-1])
+    Eq <<= Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-2], Eq[-3]), Algebra.Inv.gt.Zero.of.Ne_0.apply(Eq[-1])
 
     Eq << Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[-2])
 

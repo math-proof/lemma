@@ -9,7 +9,7 @@ def apply(self, *, cond=None, wrt=None, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Bool
 
     x = Symbol(integer=True)
     f = Function(real=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.rhs.apply(Algebra.All.All.given.All.limits_union)
+    Eq << Eq[-2].this.rhs.apply(Bool.All.All.given.AllOr)
 
     Eq << Eq[-1].this.lhs.apply(Bool.AllOr.of.All.All)
 

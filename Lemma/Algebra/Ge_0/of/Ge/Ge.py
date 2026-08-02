@@ -11,7 +11,7 @@ def apply(greater_than, less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Int, Int
     x, y, a, b = Symbol(real=True)
 
     Eq << apply(x >= a, y >= b)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[1] - b
 
-    Eq << Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
+    Eq << Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
 
 
 if __name__ == '__main__':

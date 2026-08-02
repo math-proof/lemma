@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.In.Icc.Inter.of.Gt.In_Icc.apply(Eq.gt, Eq[1])
 
-    Eq << Real.Lt_0.Cos.of.In_Icc.apply(Eq[-1])
+    Eq << Real.Gt0Cos.of.In_Ioc.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[0]
 
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Set.In_Ico.of.In_Icc.Lt.apply(Eq.lt, Eq[1])
 
-    Eq << Real.Gt_0.Cos.of.In_Icc.apply(Eq[-1])
+    Eq << Real.Lt0Cos.of.In_Ico.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[0]
     Eq <<= ~Eq.gt & ~Eq.lt

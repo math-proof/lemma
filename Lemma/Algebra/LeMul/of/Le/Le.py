@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[1] - x
 
-    Eq.is_nonnegative = Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
+    Eq.is_nonnegative = Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[0] - a
 

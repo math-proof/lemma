@@ -20,9 +20,9 @@ def prove(Eq):
 
     Eq << Nat.Lt_Add_1.of.Le.apply(Eq[-1], upper=b)
 
-    Eq << Set.In.Ico.of.Lt.apply(Eq[-1])
+    Eq << Set.In_Iio.of.Lt.apply(Eq[-1])
 
-    Eq << Set.In_Ioi.of.Gt.apply(Eq[1])
+    Eq << Set.In_Ici.of.Ge.apply(Eq[1])
 
     Eq <<= Eq[-2] & Eq[-1]
 

@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
 
-    Eq << Set.In_Ioi.of.Gt.apply(Eq[-1])
+    Eq << Set.In_Ici.of.Ge.apply(Eq[-1])
 
     Eq <<= Eq[-1] & Eq[0]
 

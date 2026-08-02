@@ -10,12 +10,12 @@ def apply(is_nonpositive_x, is_nonpositive_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Int, Int
     x, y = Symbol(real=True)
 
     Eq << apply(x <= 0, y <= 0)
 
-    Eq << Algebra.Ge_0.of.Ge_0.Ge_0.apply(-Eq[0], -Eq[1])
+    Eq << Int.Le0Mul.of.Ge_0.Ge_0.apply(-Eq[0], -Eq[1])
 
 
 if __name__ == '__main__':

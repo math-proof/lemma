@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Nat, Real
+    from Lemma import Calculus, Algebra, Set, Bool, Nat, Real, Int, Int, Int, Int
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi / 2)))
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq <<= Algebra.Ge_0.Add.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-3]), Algebra.Ge_0.of.Le.apply(Eq[-2])
 
-    Eq <<= Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
+    Eq <<= Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
 
     Eq << Algebra.Ge.of.Eq.Ge.apply(Eq.eq_grad, Eq[-1]) * 2
 

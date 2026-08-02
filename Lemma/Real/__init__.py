@@ -65,8 +65,6 @@ from . import Csc
 from . import Csch
 from . import Eq_Arcsin
 from . import Eq_Cos
-from . import Lt_0
-from . import Sec
 from . import Eq_Tan
 from . import EqArcsin
 from . import EqSin
@@ -76,3 +74,6 @@ from . import CosAdd
 from . import CoshAdd
 from . import EqCosSub_Mul_Pi0
 from . import Eq_Cot
+from . import Gt0Cos
+from . import Lt0Cos
+from . import Sec

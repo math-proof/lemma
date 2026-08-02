@@ -10,7 +10,7 @@ def apply(given, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int, Int, Int, Int
 
     a = Symbol(real=True, given=True)
     t = Symbol(integer=True, positive=True, odd=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(t - 1, 0, plausible=True)
 
-    Eq << Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-1], Eq[0])
+    Eq << Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-1], Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 

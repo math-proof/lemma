@@ -9,12 +9,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Int, Int
 
     x = Symbol(real=True)
     Eq << apply(x >= 0)
 
-    Eq << Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[1], Eq[1])
+    Eq << Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[1], Eq[1])
 
 
 

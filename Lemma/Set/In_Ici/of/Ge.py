@@ -5,6 +5,8 @@ from util import *
 def apply(given):
     n, b = given.of(GreaterEqual)
     assert n.is_finite
+    if n.is_integer:
+        return Element(n, Range(b, oo))
     return Element(n, Interval(b, oo))
 
 

@@ -18,7 +18,7 @@ def apply(le, is_positive, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Nat
+    from Lemma import Calculus, Algebra, Set, Bool, Nat, Int, Int, Int, Int
 
     a, b = Symbol(real=True, given=True)
     domain = Interval(a, b, left_open=True, right_open=True)
@@ -94,10 +94,10 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.apply(Calculus.In.of.Le.In.In.All_gt_0)
     Eq.is_nonnegative = Eq[-1].this.rhs.apply(Algebra.Ge_0.of.Le)
     Eq << GreaterEqual(w * (1 - w), 0, plausible=True)
-    Eq << Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-1], -Eq.is_nonpositive)
+    Eq << Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-1], -Eq.is_nonpositive)
     Eq << Bool.Imp.of.Cond.apply(Eq[-1], cond=Eq[-3].lhs)
     Eq <<= Eq[-1] & Eq.is_nonnegative
-    Eq <<= Eq[-1].this.rhs.apply(Algebra.Ge_0.of.Ge_0.Ge_0)
+    Eq <<= Eq[-1].this.rhs.apply(Int.Le0Mul.of.Ge_0.Ge_0)
     Eq << Bool.All.of.Imp.apply(Eq[-1], wrt=(x_, x__))
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq.any)
     Eq << Eq[-1].this.expr.apply(Algebra.Ge.of.Ge.Eq)
