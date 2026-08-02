@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
 
-    Eq << Algebra.Le.of.Le_0.apply(Eq[-1])
+    Eq << Int.Le.of.Ge0Sub.apply(Eq[-1])
 
 
 if __name__ == '__main__':

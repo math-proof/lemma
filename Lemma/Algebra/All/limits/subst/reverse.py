@@ -17,8 +17,8 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.All.of.All.limits.subst.reverse, i, c - i)
-    Eq << Eq[-1].this.lhs.apply(Algebra.All.of.All.limits.subst.reverse, i, c - i)
+    Eq << Eq[-2].this.lhs.apply(Bool.All_UFnSub.of.All, i, c - i)
+    Eq << Eq[-1].this.lhs.apply(Bool.All_UFnSub.of.All, i, c - i)
 
 
 if __name__ == '__main__':
