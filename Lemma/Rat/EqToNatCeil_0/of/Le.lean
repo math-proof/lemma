@@ -1,6 +1,6 @@
 import Lemma.Nat.OfNat.eq.Cast
 import Lemma.Nat.LeCoeS.is.Le
-import Lemma.Int.Sub.le.Zero.of.Le
+import Lemma.Int.Ge0Sub.is.Le
 import Lemma.Rat.Div.le.Zero.of.Le_0.Ge_0
 import Lemma.Int.LeCeil.is.Le
 import Lemma.Nat.LeCeil.is.Le
@@ -19,7 +19,7 @@ private lemma main
   ⌈(a - b : α) / d⌉.toNat = 0 := by
 -- proof
   have h := LeCoeS.of.Le (R := α) h
-  have h := Sub.le.Zero.of.Le h
+  have h := Ge0Sub.of.Le h
   have h_Ge_0 : (d : α) ≥ 0 := by simp
   have h_Le := Div.le.Zero.of.Le_0.Ge_0 h h_Ge_0
   apply EqToNat_0.of.Le_0

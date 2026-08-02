@@ -1,5 +1,5 @@
 import Lemma.Int.FMod.eq.Sub_MulFDiv
-import Lemma.Int.Sub.le.Zero.of.Le
+import Lemma.Int.Ge0Sub.is.Le
 import Lemma.Int.GeMulFDiv.of.Lt_0
 open Int
 
@@ -15,7 +15,7 @@ private lemma main
 -- proof
   have := FMod.eq.Sub_MulFDiv (n := n) (d := d)
   rw [this]
-  apply Sub.le.Zero.of.Le
+  apply Ge0Sub.of.Le
   apply GeMulFDiv.of.Lt_0 h
 
 

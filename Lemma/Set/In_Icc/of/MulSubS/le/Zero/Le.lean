@@ -1,5 +1,5 @@
 import Lemma.Int.OrAndSLe_0Ge_0.of.Mul.le.Zero
-import Lemma.Int.Le.of.Sub.le.Zero
+import Lemma.Int.Ge0Sub.is.Le
 import Lemma.Int.Ge.of.Sub.ge.Zero
 import Lemma.Set.In_Icc.is.Le.Le
 import Lemma.Nat.Ge.of.Ge.Ge
@@ -23,7 +23,7 @@ private lemma main
   obtain h_And | h_And := h_Or
   ·
     let ⟨h_Le, h_Ge⟩ := h_And
-    have h_Le := Le.of.Sub.le.Zero h_Le
+    have h_Le := Le.of.Ge0Sub h_Le
     have h_Ge := Ge.of.Sub.ge.Zero h_Ge
     have := Ge.of.Ge.Ge h_Le h_Ge
     have := Eq.of.Ge.Le this h₁
@@ -34,7 +34,7 @@ private lemma main
       rwa [← this]
   ·
     let ⟨h_Le, h_Ge⟩ := h_And
-    have h_Le := Le.of.Sub.le.Zero h_Le
+    have h_Le := Le.of.Ge0Sub h_Le
     have h_Ge := Ge.of.Sub.ge.Zero h_Ge
     apply In_Icc.of.Le.Le h_Ge h_Le
 

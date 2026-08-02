@@ -1,6 +1,6 @@
 import Lemma.Nat.LeCoeS.is.Le
 import Lemma.Nat.LeMin.of.Le
-import Lemma.Int.Sub.le.Zero.of.Le
+import Lemma.Int.Ge0Sub.is.Le
 import Lemma.Int.GtAdd_1'0
 import Lemma.Rat.Div.le.Zero.of.Le_0.Gt_0
 import Lemma.Int.LeCeil.is.Le
@@ -22,7 +22,7 @@ private lemma main
   simp
   apply Div.le.Zero.of.Le_0.Gt_0
   .
-    apply Sub.le.Zero.of.Le
+    apply Ge0Sub.of.Le
     apply LeMin.of.Le
     apply LeCoeS.of.Le h
   .

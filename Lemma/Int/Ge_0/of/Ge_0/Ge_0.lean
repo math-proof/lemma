@@ -1,6 +1,6 @@
 import Lemma.Nat.Le.is.Lt.ou.Eq
-import Lemma.Int.Ge_0.of.Gt_0.Ge_0
-open Nat Int
+import Lemma.Nat.Ge_0.of.Gt_0.Ge_0
+open Nat
 
 
 @[main]

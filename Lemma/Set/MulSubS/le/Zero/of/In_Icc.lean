@@ -1,6 +1,6 @@
 import sympy.sets.sets
 import Lemma.Int.Sub.ge.Zero.is.Le
-import Lemma.Int.Sub.le.Zero.of.Le
+import Lemma.Int.Ge0Sub.is.Le
 import Lemma.Int.Le_0.of.Ge_0.Le_0
 open Int
 
@@ -16,7 +16,7 @@ private lemma main
 -- proof
   let ⟨h₀, h₁⟩ := h
   have h₀ := Sub.ge.Zero.of.Le h₀
-  have h₁ := Sub.le.Zero.of.Le h₁
+  have h₁ := Ge0Sub.of.Le h₁
   have := Le_0.of.Ge_0.Le_0 h₀ h₁
   assumption
 

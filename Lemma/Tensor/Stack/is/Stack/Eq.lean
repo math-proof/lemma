@@ -10,7 +10,7 @@ open Tensor Bool
 /--
 | attributes | lemma |
 | :---: | :---: |
-| main | Tensor.EqStackS.is.EqStackS.Eq |
+| main | Tensor.Stack.is.Stack.Eq |
 | comm | Tensor.EqStackS.Eq.is.EqStackS |
 | mp | Tensor.EqStackS.Eq.of.EqStackS |
 | mpr | Tensor.EqStackS.of.EqStackS.Eq |
