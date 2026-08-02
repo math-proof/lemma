@@ -41,11 +41,11 @@ def prove(Eq):
     Eq.initial = Eq.hypothesis.subs(m, 1)
 
     d = Eq[1].rhs.args[1].expr.indices[1].base
-    Eq << Tensor.Stack.Indexed.eq.Dot.swap.apply(x, w, left=False, reference=None).subs(i, 0).subs(j, d[0])
+    Eq << Tensor.Stack.Get.eq.Dot.swap.apply(x, w, left=False, reference=None).subs(i, 0).subs(j, d[0])
 
     Eq.induct = Eq.hypothesis.subs(m, m + 1)
 
-    Eq << Tensor.Indexed.eq.Dot.swap.apply(x, Stack[k](Eq[1].lhs.expr.indices[0]).simplify(), w)
+    Eq << Tensor.Get.eq.Dot.swap.apply(x, Stack[k](Eq[1].lhs.expr.indices[0]).simplify(), w)
 
     Eq << Eq[-1].subs(i, m).subs(j, d[m])
 

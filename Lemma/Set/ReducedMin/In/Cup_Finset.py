@@ -19,7 +19,7 @@ def prove(Eq):
     i = Eq[-1].variable
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], i, ReducedArgMin(x[:n]))
 
-    Eq << Algebra.ReducedMin.eq.IndexedReducedArgMin.apply(x[:n])
+    Eq << Algebra.ReducedMin.eq.GetReducedArgMin.apply(x[:n])
 
 
 if __name__ == '__main__':

@@ -17,7 +17,7 @@ def apply(x0, x1):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete
+    from Lemma import Finset
 
     lamda0, lamda1 = Symbol(positive=True)
     x0 = Symbol(distribution=PoissonDistribution(lamda0))
@@ -31,9 +31,9 @@ def prove(Eq):
     y = Eq[0].lhs.arg.rhs
     Eq << Eq[-1] * factorial(y)
 
-    Eq << Eq[-1].this.rhs.apply(Discrete.Pow.eq.Sum.Binom.Newton)
+    Eq << Eq[-1].this.rhs.apply(Finset.Pow.eq.Sum.Binom.Newton)
 
-    Eq << Eq[-1].this.find(binomial).apply(Discrete.Binom.eq.Mul)
+    Eq << Eq[-1].this.find(binomial).apply(Finset.Binom.eq.Mul)
 
 
 if __name__ == '__main__':

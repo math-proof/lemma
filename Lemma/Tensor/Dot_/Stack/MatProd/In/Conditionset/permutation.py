@@ -24,7 +24,7 @@ def apply(m, d, w=None, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Bool
+    from Lemma import Finset, Bool
     n = Symbol(domain=Range(2, oo), given=True)
     m = Symbol(integer=True, nonnegative=True)
     d = Symbol(shape=(n,), integer=True, nonnegative=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << apply(m, d, x=x)
 
-    Eq << Discrete.All_In_MatProd.permutation.apply(m, d, x=x)
+    Eq << Finset.All_In_MatProd.permutation.apply(m, d, x=x)
 
     Eq.ou = Bool.Or_NotIn.of.All.apply(Eq[-1], Eq[-1].variable, Eq[2].lhs.args[0])
 

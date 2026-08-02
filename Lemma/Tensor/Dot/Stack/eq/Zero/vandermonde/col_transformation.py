@@ -19,7 +19,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Finset, Algebra, Tensor
 
     m = Symbol(integer=True, positive=True)
     d = Symbol(integer=True, nonnegative=True)
@@ -36,9 +36,9 @@ def prove(Eq):
     # k < m
     Eq << Eq[-1].this.lhs().expr.simplify()
 
-    Eq << Eq[-1].this.find(Sum).apply(Discrete.Sum.Binom.eq.Mul.Diff)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Diff)
 
-    Eq << Eq[-1].this.find(Stack[Mul])().find(Difference).apply(Discrete.Diff.eq.Zero)
+    Eq << Eq[-1].this.find(Stack[Mul])().find(Difference).apply(Finset.Diff.eq.Zero)
 
 
 

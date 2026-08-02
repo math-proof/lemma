@@ -9,20 +9,20 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Finset, Nat
+    from Lemma import Finset, Algebra, Finset, Nat
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(3, oo))
     Eq << apply(Sum[k:n](k ** 3))
 
-    Eq << Discrete.Pow.eq.Sum.Stirling.FallingFactorial.apply(k ** 3)
+    Eq << Finset.Pow.eq.Sum.Stirling.FallingFactorial.apply(k ** 3)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Add.doit)
 
-    Eq << Binomial(k, 3).this.apply(Discrete.Binom.eq.Mul.FallingFactorial.doit).reversed * 6
+    Eq << Binomial(k, 3).this.apply(Finset.Binom.eq.Mul.FallingFactorial.doit).reversed * 6
 
-    Eq << Binomial(k, 2).this.apply(Discrete.Binom.eq.Mul.FallingFactorial.doit).reversed * 2
+    Eq << Binomial(k, 2).this.apply(Finset.Binom.eq.Mul.FallingFactorial.doit).reversed * 2
 
     Eq << Eq[-3].subs(*Eq[-2:])
 
@@ -46,13 +46,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.subst.offset, 3)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Discrete.Sum.Binom.eq.Binom)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Binom)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Discrete.Sum.Binom.eq.Binom)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Binom)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 

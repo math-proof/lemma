@@ -16,7 +16,7 @@ def apply(initial_condition, recurrence, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor, Algebra, Finset, Nat
+    from Lemma import Finset, Tensor, Algebra, Finset, Nat
 
     v, θ = Symbol(shape=(oo,), real=True)
     t, n = Symbol(integer=True)
@@ -24,7 +24,7 @@ def prove(Eq):
     Eq << apply(Equal(v[0], 0), Equal(v[t], β * v[t - 1] + (1 - β) * θ[t]), n)
 
     i = Symbol(integer=True)
-    Eq << Sum[i:t](Difference[i](θ[i])).this.apply(Discrete.Sum.Diff.eq.Sub.telescope)
+    Eq << Sum[i:t](Difference[i](θ[i])).this.apply(Finset.Sum.Diff.eq.Sub.telescope)
 
     Eq << Eq[-1].reversed + θ[0]
 

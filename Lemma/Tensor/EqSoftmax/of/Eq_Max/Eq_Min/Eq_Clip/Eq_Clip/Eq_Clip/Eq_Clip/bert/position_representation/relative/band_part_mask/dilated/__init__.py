@@ -101,6 +101,5 @@ if __name__ == '__main__':
 # created on 2021-12-27
 # updated on 2023-05-14
 
-del Indexed
-from . import Indexed
 from . import compact
+from . import Get

@@ -18,18 +18,18 @@ def apply(given, left=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete
+    from Lemma import Finset
 
     n = Symbol(integer=True, positive=True)
     A, B = Symbol(real=True, shape=(n, n))
     C = Symbol(real=True, shape=(n, n), singular=False)
     Eq << apply(Equal(A @ B, C))
 
-    Eq << Discrete.EqInv.of.Eq.apply(Eq[0])
+    Eq << Finset.EqInv.of.Eq.apply(Eq[0])
 
-    Eq << Discrete.Eq.of.Eq.rmatmul.apply(Eq[-1], B)
+    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], B)
 
-    Eq << Discrete.EqInv.of.Eq.apply(Eq[-1])
+    Eq << Finset.EqInv.of.Eq.apply(Eq[-1])
 
 
 

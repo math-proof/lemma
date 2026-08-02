@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Stack).apply(Tensor.Stack.eq.Pow)
 
-    Eq << Tensor.Softmax.eq.Block.of.Eq_Div_Stack_Mul_ReducedSumExpIndexed_SlicedRelu.lower_triangle.apply(Eq[-1])
+    Eq << Tensor.Softmax.eq.Block.of.Eq_Div_Stack_Mul_ReducedSumExpGet_SlicedRelu.lower_triangle.apply(Eq[-1])
 
 
 

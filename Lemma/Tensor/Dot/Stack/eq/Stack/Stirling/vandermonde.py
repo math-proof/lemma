@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Finset, Algebra, Tensor
 
     m, d = Symbol(integer=True, positive=True)
     d = Symbol(domain=Range(m))
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs().find(Sum).simplify()
 
-    Eq << Eq[-1].this.find(Sum).apply(Discrete.Sum.Binom.eq.Mul.Stirling)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Mul.Stirling)
 
 
 

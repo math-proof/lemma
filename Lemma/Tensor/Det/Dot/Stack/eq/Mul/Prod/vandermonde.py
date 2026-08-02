@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Finset, Tensor
 
     m = Symbol(integer=True, positive=True)
     d = Symbol(domain=Range(m))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.doit(deep=True)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
     Eq << Eq[-1].this.rhs.find(Mul).expand()
 

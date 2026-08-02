@@ -19,7 +19,7 @@ def apply(eq_initial, eq_B_def, eq_A_def):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor, Bool
+    from Lemma import Algebra, Finset, Tensor, Bool
 
     n = Symbol(integer=True, positive=True)
     n = 7
@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq.back_subs1 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs1, left=True)
 
-    Eq.back_subs1 = Eq.back_subs1.this.find(MatPow).apply(Discrete.Inv.eq.Block)
+    Eq.back_subs1 = Eq.back_subs1.this.find(MatPow).apply(Finset.Inv.eq.Block)
 
     Eq.back_subs1 = Eq.back_subs1.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
@@ -88,7 +88,7 @@ def prove(Eq):
 
     Eq.back_subs2 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs2, left=True)
 
-    Eq.back_subs2 = Eq.back_subs2.this.find(MatPow).apply(Discrete.Inv.eq.Block)
+    Eq.back_subs2 = Eq.back_subs2.this.find(MatPow).apply(Finset.Inv.eq.Block)
 
     Eq.back_subs2 = Eq.back_subs2.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
@@ -110,7 +110,7 @@ def prove(Eq):
 
     Eq.back_subs3 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs3, left=True)
 
-    Eq.back_subs3 = Eq.back_subs3.this.find(MatPow).apply(Discrete.Inv.eq.Block)
+    Eq.back_subs3 = Eq.back_subs3.this.find(MatPow).apply(Finset.Inv.eq.Block)
 
     Eq.back_subs3 = Eq.back_subs3.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
@@ -132,7 +132,7 @@ def prove(Eq):
 
     Eq.back_subs4 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs4, left=True)
 
-    Eq.back_subs4 = Eq.back_subs4.this.find(MatPow).apply(Discrete.Inv.eq.Block)
+    Eq.back_subs4 = Eq.back_subs4.this.find(MatPow).apply(Finset.Inv.eq.Block)
 
     Eq.back_subs4 = Eq.back_subs4.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
@@ -154,7 +154,7 @@ def prove(Eq):
 
     Eq.back_subs5 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs5, left=True)
 
-    Eq.back_subs5 = Eq.back_subs5.this.find(MatPow).apply(Discrete.Inv.eq.Block)
+    Eq.back_subs5 = Eq.back_subs5.this.find(MatPow).apply(Finset.Inv.eq.Block)
 
     Eq.back_subs5 = Eq.back_subs5.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
@@ -176,7 +176,7 @@ def prove(Eq):
 
     Eq.back_subs6 = Tensor.EqInv.of.Eq_Dot.apply(Eq.back_subs6, left=True)
 
-    Eq.back_subs6 = Eq.back_subs6.this.find(MatPow).apply(Discrete.Inv.eq.Block)
+    Eq.back_subs6 = Eq.back_subs6.this.find(MatPow).apply(Finset.Inv.eq.Block)
 
     Eq.back_subs6 = Eq.back_subs6.this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 

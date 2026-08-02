@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Finset, Tensor
 
     m = Symbol(integer=True, positive=True)
     d = Symbol(integer=True, nonnegative=True)
@@ -22,11 +22,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(MatMul).apply(Tensor.DotStackS.eq.DotStackS.vandermonde.col_transform)
 
-    Eq << Eq[-1].this.lhs.apply(Discrete.Det.eq.Mul, doit=True, deep=False)
+    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul, doit=True, deep=False)
 
-    Eq << Eq[-1].this.find(Sum).apply(Discrete.Sum.Binom.eq.Pow.Newton)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Pow.Newton)
 
-    Eq << Eq[-1].this.find(Det).apply(Discrete.DetStackPowAdd.eq.Prod_Factorial.vandermonde)
+    Eq << Eq[-1].this.find(Det).apply(Finset.DetStackPowAdd.eq.Prod_Factorial.vandermonde)
 
 
 

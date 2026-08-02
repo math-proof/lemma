@@ -1,8 +1,6 @@
 from . import Eq_Block
 from . import Eq_Sqrt
-from . import Eq_Div_Stack_Mul_ReducedSumExpIndexed_SlicedRelu
 from . import Eq_Sub_Stack_Mul_LogSumExp
-from . import Eq_DivBlock_Stack_ExpIndexed_Sliced_Add_Min
 from . import Eq_Sub_Stack_Mul_LogSumExpAddBlock
 from . import Eq_Div_Stack_ReducedSumExp
 from . import Eq_Sub_Stack_LogSumExp
@@ -10,3 +8,5 @@ from . import Eq_Sub_Stack_Mul_LogSumExpAdd_Block
 from . import Eq_SubAddBlockS__Stack_Mul_LogSumExp
 from . import Eq_Div_Stack_Mul_ReducedSumExp
 from . import Eq_SubBlock__Stack_Mul_LogSumExp
+from . import Eq_DivBlock_Stack_ExpGet_Sliced_Add_Min
+from . import Eq_Div_Stack_Mul_ReducedSumExpGet_SlicedRelu

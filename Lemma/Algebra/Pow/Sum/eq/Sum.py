@@ -11,7 +11,7 @@ def apply(self, var='k'):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Set, Bool, Finset, Int
+    from Lemma import Algebra, Finset, Set, Bool, Finset, Int
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(complex=True, shape=(oo,))
@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << Eq.induct.this.lhs.base.apply(Algebra.Sum.eq.Add.pop)
 
-    Eq << Eq[-1].this.lhs.apply(Discrete.Pow.eq.Sum.Binom.Newton)
+    Eq << Eq[-1].this.lhs.apply(Finset.Pow.eq.Sum.Binom.Newton)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul)
+    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 

@@ -24,7 +24,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor, Bool
+    from Lemma import Finset, Tensor, Bool
 
     p = Symbol(complex=True, zero=False)
     n, k = Symbol(integer=True, positive=True)
@@ -49,7 +49,7 @@ def prove(Eq):
     Eq.statement = Eq[-1].this.find(Add[Stack]).apply(Tensor.Add_Stack.eq.Stack_Add).this.find(Pow[Stack]).apply(Tensor.Pow.eq.Stack, simplify=None)
 
     i, k = Eq.statement.lhs.args[1].variables
-    Eq << Discrete.DetStackPowAdd.eq.Prod_Factorial.vandermonde.apply(Det(Stack[i:n, k:n]((i + 1) ** k)))
+    Eq << Finset.DetStackPowAdd.eq.Prod_Factorial.vandermonde.apply(Det(Stack[i:n, k:n]((i + 1) ** k)))
 
     Eq << Unequal(Eq[-1].rhs, 0, plausible=True)
 

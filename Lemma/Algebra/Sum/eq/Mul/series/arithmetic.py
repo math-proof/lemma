@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Finset, Int, Nat
+    from Lemma import Algebra, Finset, Finset, Int, Nat
 
     k, h = Symbol(complex=True)
     a, b, i = Symbol(integer=True)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq.eq = Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, 2)
 
-    Eq << Discrete.Binom.eq.Add.Pascal.apply(Binomial(i + 1, 2))
+    Eq << Finset.Binom.eq.Add.Pascal.apply(Binomial(i + 1, 2))
 
     Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=1)
 
@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sub.telescope)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
     Eq << Eq.eq.subs(Eq[-1])
 

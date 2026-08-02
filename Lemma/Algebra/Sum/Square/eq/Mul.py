@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Finset, Nat
+    from Lemma import Finset, Algebra, Finset, Nat
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(2, oo))
     Eq << apply(Sum[k:n](k ** 2))
 
-    Eq << Binomial(k, 2).this.apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Binomial(k, 2).this.apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
     Eq << Eq[-1] * 2
 
@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.subst.offset, 2)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Discrete.Sum.Binom.eq.Binom)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Binom)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 

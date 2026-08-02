@@ -34,7 +34,7 @@ swap = Function(eval=swap)
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor
+    from Lemma import Finset, Tensor
 
     n = Symbol(positive=True, integer=True)
     x = Symbol(shape=(n,), etype=dtype.integer)
@@ -46,12 +46,12 @@ def prove(Eq):
     Eq << Eq[-1].this.lhs.defun()
 
     w = Eq[-1].lhs.expr.indices[0].args[1].base
-    Eq << Tensor.Stack.Indexed.eq.Dot.swap.apply(w[i, j], left=False, w=w, reference=False)
+    Eq << Tensor.Stack.Get.eq.Dot.swap.apply(w[i, j], left=False, w=w, reference=False)
 
     k = Eq[-1].rhs.args[1].indices[-1]
     Eq << Eq[-2].lhs.expr.index.this.subs(Eq[-1])
 
-    Eq << Discrete.MatPow.eq.Eye.of.Eq.apply(w[i, j].this.definition)
+    Eq << Finset.MatPow.eq.Eye.of.Eq.apply(w[i, j].this.definition)
 
     Eq << Eq[-1][k].T
 

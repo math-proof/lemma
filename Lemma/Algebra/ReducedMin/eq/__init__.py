@@ -1,3 +1,3 @@
 from . import Minima
 from . import Neg
-from . import IndexedReducedArgMin
+from . import GetReducedArgMin

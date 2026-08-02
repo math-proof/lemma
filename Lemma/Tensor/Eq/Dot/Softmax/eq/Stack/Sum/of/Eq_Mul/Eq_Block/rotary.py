@@ -14,7 +14,7 @@ def apply(eq_theta, eq_R, Q, K, V, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Discrete, Bool, Finset, Nat
+    from Lemma import Tensor, Algebra, Finset, Bool, Finset, Nat
     from Lemma.Tensor.EqDot.of.Eq_Mul.position_representation import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(k, k - t).subs(i, k).subs(t, i)
 
-    Eq << Discrete.Eq.of.Eq.rmatmul.apply(Eq[-1], Q[i])
+    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], Q[i])
 
     Eq << Eq[-1].subs(Eq[0].subs(k, k - i))
 

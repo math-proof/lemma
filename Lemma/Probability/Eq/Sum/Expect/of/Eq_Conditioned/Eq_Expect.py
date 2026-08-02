@@ -15,7 +15,7 @@ def apply(eq_conditioned, eq_expect, j=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Probability, Algebra, Finset, Vector
+    from Lemma import Finset, Probability, Algebra, Finset, Vector
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -24,7 +24,7 @@ def prove(Eq):
     n = Symbol(domain=Range(2, oo))
     Eq << apply(Equal(x[k] | x[:k], x[k]), Equal(Expectation(x[k]), μ), j, n)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Div.Binom)
+    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Div.Binom)
 
     Eq << Probability.Var.eq.Sum.of.Eq_Conditioned.apply(Eq[0], n)
 

@@ -24,7 +24,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Tensor, Finset
+    from Lemma import Finset, Tensor, Finset
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs().find(Min).simplify()
 
-    Eq << Eq[-1].this.find(Sum).apply(Discrete.Sum.Mul.Stirling.eq.Delta)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Mul.Stirling.eq.Delta)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Stack.Delta.eq.Eye)
 

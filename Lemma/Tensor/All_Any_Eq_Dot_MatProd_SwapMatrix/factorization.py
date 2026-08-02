@@ -16,7 +16,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Discrete, Bool, Tensor, Nat, Int
+    from Lemma import Algebra, Set, Finset, Bool, Tensor, Nat, Int
 
     n = Symbol(domain=Range(2, oo), given=False)
     Eq << apply(n)
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq.induct.expr.expr.rhs.args[1].this.apply(Tensor.MatProd.eq.Dot.pop)
 
-    Eq << Discrete.Block.eq.MatProd.apply(n, n, b)
+    Eq << Finset.Block.eq.MatProd.apply(n, n, b)
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
@@ -87,7 +87,7 @@ def prove(Eq):
 
     Eq.deduction = Eq[-1].this.expr.expr @ Eq[-1].expr.expr.rhs.args[1]
 
-    Eq << Discrete.All_Any_Eq.permutation.basic.apply(n + 1)
+    Eq << Finset.All_Any_Eq.permutation.basic.apply(n + 1)
 
     Eq << Eq[-1].this.expr.limits_subs(Eq[-1].expr.variable, b[n])
 
@@ -125,7 +125,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Any_And.of.Any.All)
 
-    Eq << Eq[-1].this.expr.expr.apply(Discrete.Eq.of.Eq.Eq.permutation.pop.Icc)
+    Eq << Eq[-1].this.expr.expr.apply(Finset.Eq.of.Eq.Eq.permutation.pop.Icc)
 
     Eq << Bool.Or_NotIn.of.All.apply(Eq.hypothesis, Eq.hypothesis.variable, p_quote[:n])
 

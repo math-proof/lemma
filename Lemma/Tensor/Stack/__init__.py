@@ -7,10 +7,10 @@ from . import doit
 from . import limits
 from . import Block
 from . import Mul
-from . import Indexed
 from . import Pow
 from . import ReducedSum
 from . import Dot
 from . import Ico
 from . import of
 from . import Is
+from . import Get

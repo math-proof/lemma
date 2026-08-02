@@ -14,7 +14,7 @@ def apply(given, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Discrete
+    from Lemma import Set, Algebra, Finset
 
     n = Symbol(integer=True, positive=True)
     p, x = Symbol(integer=True, shape=(n,))
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq.definition = Eq[-1].apply(Set.In_Cup.given.Any_In)
 
-    Eq << Discrete.And.of.Eq.index.apply(Eq[0], _j)
+    Eq << Finset.And.of.Eq.index.apply(Eq[0], _j)
 
     index_j = Eq[-1].lhs.indices[0]
     Eq << Eq.definition.subs(Eq[-1].reversed)

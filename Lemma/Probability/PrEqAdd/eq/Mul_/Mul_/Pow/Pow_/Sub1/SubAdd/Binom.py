@@ -14,7 +14,7 @@ def apply(X0, X1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Tensor
+    from Lemma import Algebra, Finset, Tensor
 
     n0, n1 = Symbol(integer=True, positive=True)
     p = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
@@ -26,15 +26,15 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1])
 
-    Eq << Discrete.Pow.eq.Sum.Binom.Newton.apply((p + 1) ** n0, swap=True)
+    Eq << Finset.Pow.eq.Sum.Binom.Newton.apply((p + 1) ** n0, swap=True)
 
-    Eq << Discrete.Pow.eq.Sum.Binom.Newton.apply((p + 1) ** n1, swap=True)
+    Eq << Finset.Pow.eq.Sum.Binom.Newton.apply((p + 1) ** n1, swap=True)
 
     Eq << Eq[-1] * Eq[-2]
 
     Eq << Eq[-1].this.lhs.powsimp()
 
-    Eq << Discrete.Pow.eq.Sum.Binom.Newton.apply((p + 1) ** (n0 + n1), swap=True).subs(Eq[-1])
+    Eq << Finset.Pow.eq.Sum.Binom.Newton.apply((p + 1) ** (n0 + n1), swap=True).subs(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Sum.as_multiple_limits)
 

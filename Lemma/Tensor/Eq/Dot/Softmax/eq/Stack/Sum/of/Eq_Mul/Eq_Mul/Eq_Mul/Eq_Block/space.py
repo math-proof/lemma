@@ -16,7 +16,7 @@ def apply(eq_theta_r, eq_theta_c, eq_theta_z, eq_R, Q, K, V, r, c, z, t):
 
 @prove(slow=True)
 def prove(Eq):
-    from Lemma import Tensor, Discrete, Algebra, Finset, Nat, Real
+    from Lemma import Tensor, Finset, Algebra, Finset, Nat, Real
     from Lemma.Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Mul.Eq_Block.position_representation.space import rotary_matrix
     # n denotes sequence length (seq_length)
     # b_r, b_c denotes 10000
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(r[h], r[t] - r[i]).subs(c[h], c[t] - c[i]).subs(z[h], z[t] - z[i])
 
-    Eq << Discrete.Eq.of.Eq.rmatmul.apply(Eq[-1], Q[i])
+    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], Q[i])
 
     Eq.theta_r, Eq.theta_c, Eq.theta_z = Eq[0].subs(i, r[t] - r[i]), Eq[1].subs(j, c[t] - c[i]), Eq[2].subs(k, z[t] - z[i])
 

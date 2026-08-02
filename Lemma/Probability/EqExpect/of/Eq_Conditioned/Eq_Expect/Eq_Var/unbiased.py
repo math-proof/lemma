@@ -14,7 +14,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Discrete, Int, Nat, Vector
+    from Lemma import Algebra, Probability, Finset, Int, Nat, Vector
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.Sum.eq.Sum.Expect)
 
-    Eq << Eq[-1].this.rhs.args[1::2].apply(Discrete.Mul.eq.Mul.Binom)
+    Eq << Eq[-1].this.rhs.args[1::2].apply(Finset.Mul.eq.Mul.Binom)
 
     j = Eq[-1].lhs.variable
     Eq << Probability.Eq.Sum.Expect.of.Eq_Conditioned.Eq_Expect.apply(Eq[0], Eq[1], j, n)

@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor
+    from Lemma import Finset, Algebra, Tensor
 
     m = Symbol(integer=True, positive=True)
     d = Symbol(integer=True, nonnegative=True)
@@ -22,13 +22,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(MatMul).apply(Tensor.Dot.vandermonde.col_transform)
 
-    Eq << Eq[-1].this.lhs.apply(Discrete.Det.eq.Mul, doit=True, deep=False)
+    Eq << Eq[-1].this.lhs.apply(Finset.Det.eq.Mul, doit=True, deep=False)
 
-    Eq << Eq[-1].this.find(Sum).apply(Discrete.Sum.Binom.eq.Pow.Newton)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum.Binom.eq.Pow.Newton)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Mul)
 
-    Eq << Eq[-1].this.find(Det).apply(Discrete.Det.Mul.eq.Mul.Prod)
+    Eq << Eq[-1].this.find(Det).apply(Finset.Det.Mul.eq.Mul.Prod)
 
     Eq << Eq[-1].this.find(Product).apply(Algebra.Prod.eq.Pow.Sum)
 
@@ -38,9 +38,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow[Stack]).apply(Tensor.Pow.eq.Stack, simplify=None)
 
-    Eq << Eq[-1].this.find(Det).apply(Discrete.DetStackPowAdd.eq.Prod_Factorial.vandermonde)
+    Eq << Eq[-1].this.find(Det).apply(Finset.DetStackPowAdd.eq.Prod_Factorial.vandermonde)
 
-    Eq << Eq[-1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
 
 

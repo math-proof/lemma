@@ -9,7 +9,7 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Nat, Int
+    from Lemma import Algebra, Finset, Bool, Nat, Int
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq.given.Eq.Div.apply(Eq[-1], Eq[-1].find((~Add) ** 2))
 
-    Eq << Discrete.EqDiff.of.Eq_ReducedSum.apply(Eq[0])
+    Eq << Finset.EqDiff.of.Eq_ReducedSum.apply(Eq[0])
 
     Eq.diff = Eq[-1].this.lhs.doit()
 

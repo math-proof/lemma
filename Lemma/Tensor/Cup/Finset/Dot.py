@@ -24,7 +24,7 @@ def apply(a, var=None, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Set
+    from Lemma import Finset, Set
 
     n = Symbol(domain=Range(2, oo))
     x = Symbol(shape=(n,), integer=True)
@@ -37,7 +37,7 @@ def prove(Eq):
 
     Eq << Eq[0].subs(Eq[-1].reversed)
 
-    Eq << Discrete.Cup.Finset.rmatmul.apply(x, w, right=True, var=k)
+    Eq << Finset.Cup.Finset.rmatmul.apply(x, w, right=True, var=k)
 
     Eq << Eq[-2][k]
 

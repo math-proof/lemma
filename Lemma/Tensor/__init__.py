@@ -65,7 +65,6 @@ from . import MatProd
 from . import EqSum
 from . import Square
 from . import Cup
-from . import Indexed
 from . import FallingFactorial
 from . import In
 from . import One
@@ -90,3 +89,4 @@ from . import DotSoftmaxAdd_MulBandPart
 from . import LogSoftmax
 from . import SoftmaxAdd
 from . import GetSlice
+from . import Get

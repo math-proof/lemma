@@ -1,3 +1,3 @@
 from . import onehot
-from . import Indexed
 from . import Add
+from . import Get

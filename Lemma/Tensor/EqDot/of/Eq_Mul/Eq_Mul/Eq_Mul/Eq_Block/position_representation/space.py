@@ -31,7 +31,7 @@ def apply(eq_theta_r, eq_theta_c, eq_theta_z, eq_R, i_, j_, k_):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Discrete, Algebra, Bool, Real
+    from Lemma import Tensor, Finset, Algebra, Bool, Real
 
     # n denotes sequence length (seq_length)
     # b_r, b_c denotes 10000
@@ -125,7 +125,7 @@ def prove(Eq):
         [Zrr,  Ir, Zrc, Zrc, Zrz, Zrz],
         [Zcr, Zcr, -Ic, Zcc, Zcz, Zcz],
         [Zzr, Zzr, Zzc, Zzc, Zzz,  Iz]]
-    Eq << Discrete.Eq.of.Eq.rmatmul.apply(Eq[-1], D_r)
+    Eq << Finset.Eq.of.Eq.rmatmul.apply(Eq[-1], D_r)
 
     Eq << Eq[-1].this.lhs.args[:2].apply(Tensor.Dot.eq.Block, deep=True)
 

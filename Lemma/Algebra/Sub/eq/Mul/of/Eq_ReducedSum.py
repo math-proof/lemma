@@ -9,7 +9,7 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Nat, Int, Rat
+    from Lemma import Algebra, Finset, Bool, Nat, Int, Rat
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[::2].apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Discrete.EqDiff.of.Eq_ReducedSum.apply(Eq[0])
+    Eq << Finset.EqDiff.of.Eq_ReducedSum.apply(Eq[0])
 
     Eq << Eq[-1].this.lhs.doit()
 

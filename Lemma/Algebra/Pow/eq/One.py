@@ -18,7 +18,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Nat
+    from Lemma import Algebra, Finset, Nat
 
     n, a = Symbol(integer=True)
     Eq << apply((-1) ** (n ** 2 + n * (2 * a + 1) + a ** 2 + a))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Nat.Pow.of.Eq.apply(Eq[1], base=-1)
 
-    Eq << Eq[1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
+    Eq << Eq[1].this.find(Binomial).apply(Finset.Binom.eq.Mul.FallingFactorial.doit)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 

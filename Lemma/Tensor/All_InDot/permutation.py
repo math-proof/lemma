@@ -25,7 +25,7 @@ def apply(n, w=None, left=True, P=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete
+    from Lemma import Finset
     n = Symbol(domain=Range(2, oo))
 
     Eq << apply(n)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     x = Eq[2].variable
 
-    Eq << Discrete.Cup.Finset.rmatmul.apply(x, w)
+    Eq << Finset.Cup.Finset.rmatmul.apply(x, w)
 
     Eq << Eq[2].this.expr.rhs.definition.subs(Eq[-1])
 

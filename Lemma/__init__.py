@@ -2,7 +2,6 @@ from . import Set
 from . import Tensor
 from . import Probability
 from . import Algebra
-from . import Discrete
 from . import Logic
 from . import Calculus
 from . import Real

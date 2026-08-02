@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq.le.subs(Eq[-1])
 
-    Eq << Algebra.LeAddSDivS.of.LeAbsSSubIndexed_Sub_1DivSum.apply(Eq[-1])
+    Eq << Algebra.LeAddSDivS.of.LeAbsSSubGet_Sub_1DivSum.apply(Eq[-1])
 
     Eq << Eq[-1].rhs.args[0].args[1].this.apply(Finset.Sum.eq.AddSumS, cond={m - 1})
 

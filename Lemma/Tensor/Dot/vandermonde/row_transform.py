@@ -18,7 +18,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Finset
+    from Lemma import Finset, Algebra, Tensor, Finset
 
     n, m = Symbol(integer=True, positive=True)
     d = Symbol(integer=True, nonnegative=True)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Mul[~Sum]).apply(Discrete.Sum.Binom.eq.Pow.Newton)
+    Eq << Eq[-1].this.find(Mul[~Sum]).apply(Finset.Sum.Binom.eq.Pow.Newton)
 
 
 

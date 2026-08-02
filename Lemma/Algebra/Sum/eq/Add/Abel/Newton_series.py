@@ -19,7 +19,7 @@ def apply(self, pivot=-1, i=None, d=1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Nat, Finset
+    from Lemma import Algebra, Finset, Bool, Nat, Finset
 
     d = Symbol(integer=True, positive=True, given=False)
     n = Symbol(domain=Range(d, oo))
@@ -43,11 +43,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.rhs.apply(Discrete.Sum.Binom.telescope)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum.Binom.telescope)
 
-    Eq << Eq.abel.find(Sum[Tuple, Tuple]).this.apply(Algebra.Sum.limits.subst.offset, 1, -d).this.rhs.apply(Discrete.Sum.Binom.limits.swap.upper)
+    Eq << Eq.abel.find(Sum[Tuple, Tuple]).this.apply(Algebra.Sum.limits.subst.offset, 1, -d).this.rhs.apply(Finset.Sum.Binom.limits.swap.upper)
 
-    Eq << Eq.abel.rhs.args[1].find(Sum[Tuple, Tuple]).this.apply(Algebra.Sum.limits.subst.offset, 1, -d).this.rhs.apply(Discrete.Sum.Binom.limits.swap.upper)
+    Eq << Eq.abel.rhs.args[1].find(Sum[Tuple, Tuple]).this.apply(Algebra.Sum.limits.subst.offset, 1, -d).this.rhs.apply(Finset.Sum.Binom.limits.swap.upper)
 
     Eq << Eq[0].subs(Eq.abel.subs(*Eq[-3:]))
 
