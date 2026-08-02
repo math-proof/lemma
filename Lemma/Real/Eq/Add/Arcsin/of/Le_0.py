@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Real.Cos.Neg)
+    Eq << Eq[-1].this.lhs.apply(Real.CosSub)
     Eq << Real.Any.Eq.of.Cos.eq.Zero.apply(Eq[-1])
 
     Eq << -Eq[-1].this.expr

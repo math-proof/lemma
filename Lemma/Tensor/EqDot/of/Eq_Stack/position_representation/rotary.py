@@ -129,9 +129,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Equal[Symbol - 1, Symbol]) + 1
 
-    Eq <<= Eq[-1].find(Cos).this.apply(Real.Cos.Neg), \
+    Eq <<= Eq[-1].find(Cos).this.apply(Real.CosSub), \
         Eq[-1].find(Sin).this.apply(Real.Sin.eq.Neg.Sin), \
-        Eq[-1].rhs.args[1].find(Cos).this.apply(Real.Cos.Neg), \
+        Eq[-1].rhs.args[1].find(Cos).this.apply(Real.CosSub), \
         Eq[-1].rhs.args[1].find(Sin).this.apply(Real.Sin.eq.Neg.Sin)
 
     Eq << Eq[-5].this.rhs.subs(*Eq[-4:])
