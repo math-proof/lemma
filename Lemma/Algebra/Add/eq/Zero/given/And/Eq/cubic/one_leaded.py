@@ -44,7 +44,7 @@ def apply(given, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + a * x ** 2 + b * x + c, 0), x=x, d=1)
@@ -60,9 +60,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Add, simplify=None)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, simplify=None)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, simplify=None)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
     Eq << Algebra.Add.eq.Zero.given.And.Eq.cubic.depressed.apply(Eq[-1], x=x, d=1)
 

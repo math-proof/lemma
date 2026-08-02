@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Probability.Eq.of.Ne_0.bayes.Conditioned.apply(Eq.yt_given_x_nonzero, y[t])
 
-    Eq << Eq[-1].this.lhs.find(And).apply(Tensor.EqStackS.of.EqStackS.Eq)
+    Eq << Eq[-1].this.lhs.find(And).apply(Tensor.Stack.of.Stack.Eq)
 
     Eq << Eq[-1].subs(Eq.yt_given_y_historic)
 

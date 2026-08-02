@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Block)
 
-    Eq << Tensor.EqStackS.of.All_Eq.apply(Eq[-1])
+    Eq << Tensor.Stack.of.All_Eq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Add)
 

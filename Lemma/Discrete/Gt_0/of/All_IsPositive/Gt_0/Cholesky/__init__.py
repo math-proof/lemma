@@ -13,7 +13,7 @@ def apply(all_is_positive, eq_initial):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Tensor, Int
+    from Lemma import Algebra, Set, Bool, Tensor, Int, Nat
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), complex=True)
@@ -36,12 +36,12 @@ def prove(Eq):
 
     Eq.gt_zero = Eq.hypothesis.subs(*Eq[-2:])
 
-    Eq <<= Eq.gt_zero.find(Abs ** 2 * Norm ** 2).this.args[1].apply(Algebra.Square.Norm.eq.Add.pop).this.rhs.apply(Algebra.Mul_Add.eq.AddMulS),\
+    Eq <<= Eq.gt_zero.find(Abs ** 2 * Norm ** 2).this.args[1].apply(Algebra.Square.Norm.eq.Add.pop).this.rhs.apply(Nat.Mul_Add.eq.AddMulS),\
         Eq.gt_zero.find(-2 * ~Re).this.find(Expr @ Expr @ Expr).apply(Tensor.Dot.eq.Sub.push)
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack_Dot.eq.DotSliceS)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq.Lkk_is_positive = Algebra.Cond.of.All.subst.apply(Eq[0], i, k)
 

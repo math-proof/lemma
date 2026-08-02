@@ -164,12 +164,10 @@ from . import DivSubS
 from . import MulIteS
 from . import SquareSub_DivSum
 from . import Sum_SquareSub_DivSum
-from . import EqSupS
 from . import Mul_ModDiv
 from . import ReducedArgMaxBlock
 from . import Sup_Add_Mul_Square
 from . import InvAdd_Inv
-from . import EqInfS
 from . import Ceil
 from . import Eq_Ceil
 from . import CeilSubDivArg
@@ -283,12 +281,10 @@ from . import EqTranspose
 from . import AndImpS_Eq
 from . import And_Imp_Or_EqS
 from . import And_Imp_Or_EqS_Div
-from . import Mul_Add
 from . import EqFrac
 from . import Frac
 from . import One
 from . import Zero
-from . import EqSumS
 from . import AllIn_Icc
 from . import GeSqrt_0
 from . import SquareAdd

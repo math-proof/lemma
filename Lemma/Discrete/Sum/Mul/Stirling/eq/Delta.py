@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.FallingFactorial.eq.Dot.Delta)
 
-    Eq << Tensor.Eq.of.EqDotSStackFallingFactorial.vector_independence.apply(Eq[-1])
+    Eq << Tensor.Eq.of.DotStackFallingFactorial.vector_independence.apply(Eq[-1])
 
     Eq << Algebra.Cond.of.All.subst.apply(Eq[-1], Eq[-1].variable, i)
 

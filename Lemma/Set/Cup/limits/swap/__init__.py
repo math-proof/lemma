@@ -27,7 +27,7 @@ def prove(Eq):
     s = Symbol(Cup[j:n + 1](f[i] & g[i, j]))
     Eq << s.this.definition
 
-    Eq << Eq[-1].apply(Set.EqCupS.of.All_Eq.fin, (i, 0, m))
+    Eq << Eq[-1].apply(Set.Cup.of.All_Eq.fin, (i, 0, m))
 
     Eq << Eq[-2].this.rhs.apply(Set.Cup.eq.UnionCupS, cond={n})
 
@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << Eq.induct_dissected.subs(Eq[-1].reversed)
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[0], Eq[-1].find(Cup))
+    Eq << Set.Union.of.Eq.apply(Eq[0], Eq[-1].find(Cup))
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

@@ -94,7 +94,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.lhs.apply(Tensor.Square.Norm.eq.Dot.Conj, swap=True)
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq[-2], Eq[-3].rhs)
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq[-2], Eq[-3].rhs)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-4], Eq[-1])
 
@@ -114,7 +114,7 @@ def prove(Eq):
     Eq <<= Eq[-1] & Eq[-2]
     Eq << Tensor.EqDot.of.Imp_Eq_0.apply(Eq.L_is_zero)
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
 
 

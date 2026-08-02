@@ -32,11 +32,11 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Eq[-1].this.find(Sum[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Sum[~Mul]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, i=-1)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, i=-1)
 
     Eq << Eq[-1].this.find(Sum[Pow]).apply(Algebra.Sum.eq.Mul.series.geometric)
 
@@ -54,13 +54,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Pow]).args[:3].apply(Algebra.Div.cancel, factor=β)
 
-    Eq << Eq[-1].this.find(Sum).expr.args[:2].apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Sum).expr.args[:2].apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Mul - Pow * Pow).apply(Nat.AddMulS.eq.Mul_Add)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Sum).expr.args[:3].apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Sum).expr.args[:3].apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Pow * Pow).args[1:].apply(Algebra.Mul.eq.Pow.Add.exponent)
 

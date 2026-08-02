@@ -52,7 +52,7 @@ def prove(Eq):
             Stack[i:Min(u, n) - 1](BlockMatrix(A[i + n - Min(u, n) + 1, n - Min(u, n) + i + 1:], -oo * Ones(i + 1)))
         )) - Stack[i:n](Ones(breadth) * Log(ReducedSum(Exp(A[i, relu(i + 1 - l):Min(n, i + u)]))))))
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], exp)
+    Eq << Bool.UFn.of.Eq.apply(Eq[0], exp)
 
     Eq << Eq[-1].this.rhs.apply(Real.ExpAdd.eq.MulExpS)
 

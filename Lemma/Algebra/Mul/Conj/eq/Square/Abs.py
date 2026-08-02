@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Complex
+    from Lemma import Algebra, Bool, Complex, Nat
 
     x = Symbol(complex=True)
     Eq << apply(x * ~x)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Algebra.EqAbs.of.Eq.apply(Eq[1])
 

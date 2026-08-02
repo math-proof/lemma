@@ -12,7 +12,7 @@ def apply(fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat
 
     x, alpha, gamma = Symbol(complex=True, given=True)
     fx = x ** 4 + alpha * x ** 2 + gamma
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(y.this.definition)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.args[-1].apply(Algebra.OrEqS_0.of.Eq_Square)
 

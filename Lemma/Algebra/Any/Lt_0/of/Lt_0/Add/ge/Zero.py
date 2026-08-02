@@ -39,21 +39,21 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Expr ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Add.collect)
 
-    Eq << Eq[-1].this.find(Symbol * Add).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Symbol * Add).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Symbol * Add).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Symbol * Add).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1] / epsilon
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[0] * epsilon
 

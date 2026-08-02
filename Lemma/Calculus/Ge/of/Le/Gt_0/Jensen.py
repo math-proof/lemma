@@ -43,9 +43,9 @@ def prove(Eq):
 
     Eq <<= Algebra.LeMul.of.Le.apply(Eq.is_nonpositive, w) + x1, Algebra.GeMul.of.Ge.apply(Eq[0].reversed, 1 - w) + w * x0
 
-    Eq << Eq[-2].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS, simplify=None)
+    Eq << Eq[-2].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
-    Eq.ge = Eq[-2].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, simplify=None)
+    Eq.ge = Eq[-2].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
     Eq.le = Eq[-1].this.lhs.apply(Algebra.Add.collect, factor=x1)
 
@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq <<= Calculus.Any.Eq.of.Le.IsContinuous.IsDifferentiable.mean_value_theorem.Lagrange.close.apply(Eq.ge.reversed, Eq[-2], Eq[-4]), Calculus.Any.Eq.of.Le.IsContinuous.IsDifferentiable.mean_value_theorem.Lagrange.close.apply(Eq.le, Eq[-1], Eq[-3])
 
-    Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Algebra.Add.collect), Eq[-1].this.expr.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Algebra.Add.collect), Eq[-1].this.expr.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq <<= Eq[-2].this.expr.rhs.args[0].apply(Algebra.Add.collect, factor=1 - w), Eq[-1].this.expr.rhs.find(Add[Mul]).apply(Nat.AddMulS.eq.Mul_Add)
 
@@ -78,9 +78,9 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.apply(Algebra.EqSub.of.Eq.Eq, swap=True)
 
 
-    Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
-    Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
-    Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.expr.lhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
     Eq << Eq[-1].this.expr.lhs.apply(Algebra.Add.collect, factor=f(x1))
     Eq.any = Eq[-1].this.expr.rhs.apply(Algebra.Add.collect, factor=w * (1 - w) * (x1 - x0))
     Eq.suffice = Eq.any.limits_cond.this.apply(Set.Le.of.In.In)

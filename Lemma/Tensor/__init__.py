@@ -81,14 +81,12 @@ from . import All_Any_Eq_Dot_MatProd_SwapMatrix
 from . import DetDotMatPowShiftMatrix
 from . import All_InDot
 from . import DetDotStackS
-from . import EqStackS
 from . import Add_Stack
-from . import EqSliceS
-from . import SoftmaxAdd
-from . import LogSoftmax
-from . import GetSlice
 from . import ExpSub_MulInfty
 from . import ExpAdd_MulInfty
 from . import Stack_Dot
 from . import DotSoftmaxAdd_Mul_Infty
 from . import DotSoftmaxAdd_MulBandPart
+from . import LogSoftmax
+from . import SoftmaxAdd
+from . import GetSlice

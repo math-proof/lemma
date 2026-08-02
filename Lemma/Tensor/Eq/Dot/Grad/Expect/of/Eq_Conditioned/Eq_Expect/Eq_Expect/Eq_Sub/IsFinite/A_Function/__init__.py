@@ -11,7 +11,7 @@ def apply(eq, Q_def, V_def, A_def, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Probability
+    from Lemma import Tensor, Algebra, Probability, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq.hypothesis = Eq.hypothesis.subs(Eq[3].subs(s[t].var, s[t]).subs(a[t].var, a[t]))
 
-    Eq << Eq.hypothesis.this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq.hypothesis.this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.find(Expectation).apply(Probability.Expect.eq.Add)
 

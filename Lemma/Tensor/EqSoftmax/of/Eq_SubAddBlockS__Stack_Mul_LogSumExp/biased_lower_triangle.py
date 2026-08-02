@@ -89,7 +89,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul.eq.Block)
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n - Min(l, n)), simplify=None)
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n - Min(l, n)), simplify=None)
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Add)
 

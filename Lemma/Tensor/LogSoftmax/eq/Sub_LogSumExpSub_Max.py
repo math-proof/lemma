@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Tensor.SoftmaxAdd.eq.Softmax.apply(x, -ReducedMax(x)).reversed
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
+    Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)
 
     Eq << Eq[-1].this.rhs.arg.apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 

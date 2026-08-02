@@ -40,7 +40,7 @@ def apply(self, i=None, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Finset
+    from Lemma import Algebra, Tensor, Finset, Nat, Nat
     from sympy import Mul
     n = Symbol(integer=True, positive=True)
     x, a, b = Symbol(shape=(n, n), complex=True)
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 

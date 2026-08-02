@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[0], Eq[2])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
 
 

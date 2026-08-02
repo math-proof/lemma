@@ -13,7 +13,7 @@ def apply(eq, Q_def, V_def, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Finset
+    from Lemma import Tensor, Algebra, Bool, Finset, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -41,11 +41,11 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Sum[Add]).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Symbol * Pow).powsimp()
 

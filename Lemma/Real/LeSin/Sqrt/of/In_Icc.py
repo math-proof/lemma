@@ -9,7 +9,7 @@ def apply(el):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Bool
+    from Lemma import Algebra, Calculus, Bool, Nat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi / 4)))
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Limit).doit()
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq.all_el = All[t:0:S.Pi / 4](Element(Derivative[t](f(t)), Interval(-oo, oo)), plausible=True)
 

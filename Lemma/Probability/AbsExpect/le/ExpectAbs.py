@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Int
 
     D = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(D,))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << -Eq[-1].this.lhs.apply(Probability.Expect.eq.Mul)
 
-    Eq << Algebra.LeAbs.of.Le.Ge.apply(Eq[-3], Eq[-1])
+    Eq << Int.LeAbs.of.LeNeg.Le.apply(Eq[-3], Eq[-1])
 
 
 

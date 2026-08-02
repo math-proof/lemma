@@ -31,9 +31,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find((~Pow) * Pow).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Expectation[Add]).apply(Probability.Expect.eq.Add)
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Algebra.LtMul.of.Gt_0.Lt.apply(Eq[-1], Eq[-3])
 
-    Eq << Eq[2].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[2].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Add)
 

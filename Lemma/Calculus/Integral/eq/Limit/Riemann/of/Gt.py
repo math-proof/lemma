@@ -36,7 +36,7 @@ def prove(Eq):
     [(k, S[0], n)] = Eq.eq_integral.find(Sum).limits
     Eq << Eq.eq_integral.find(Sum).this.apply(Algebra.Sum.limits.subst.Neg, k, n - k)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.Add.collect, k / n)
 
@@ -54,7 +54,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Limit).apply(Calculus.Limit.Ite.subst)
 
-    Eq << Eq[-1].this.find(Limit[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Limit[~Mul]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Limit).apply(Calculus.Limit.eq.Add)
 

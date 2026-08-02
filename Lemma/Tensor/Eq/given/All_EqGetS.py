@@ -26,7 +26,7 @@ def prove(Eq):
     i = Symbol(domain=Range(n))
     Eq << apply(Equal(a, b), i=i)
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[1], (i,))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[1], (i,))
 
 
 

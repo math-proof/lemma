@@ -42,7 +42,7 @@ def prove(Eq):
     Eq << Eq[-2].subs(Eq[-1])
 
     interval_b = Eq[-1].lhs.args[0]
-    Eq << Set.EqSDiffS.of.Eq.apply(Eq[-1], interval_b)
+    Eq << Set.SDiff.of.Eq.apply(Eq[-1], interval_b)
 
     Eq.eq_complement = Eq[-1].subs(Eq.min_b0)
 

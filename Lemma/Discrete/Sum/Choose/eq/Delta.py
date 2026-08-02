@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Pow.eq.Dot.Delta)
 
-    Eq << Tensor.Eq.of.EqDotSStack_Pow.independence.vector.apply(Eq[-1])
+    Eq << Tensor.Eq.of.DotStack_Pow.independence.vector.apply(Eq[-1])
 
     Eq << Algebra.Cond.of.All.subst.apply(Eq[-1], i_, i)
 

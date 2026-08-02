@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     z = Symbol(complex=True)
     n = Symbol(integer=True, positive=True)
@@ -26,11 +26,11 @@ def prove(Eq):
 
     Eq << Set.InDiv.of.In_Icc.apply(Eq[-1], S.Pi * 2, simplify=None)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq.contains = Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq.contains = Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq.le = LessEqual(-1, Eq.contains.rhs.start, plausible=True)
 
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Set.In.Icc.of.Le.Ge.In.apply(Eq.le, Eq.ge, Eq.contains)
 
-    Eq << Set.Ceil.eq.Zero.of.In_Ioc.apply(Eq[-1])
+    Eq << Set.EqCeil_0.of.In_Ioc.apply(Eq[-1])
 
 
 

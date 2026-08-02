@@ -22,7 +22,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool
+    from Lemma import Discrete, Algebra, Bool, Nat, Nat
     from Lemma.Discrete.K.eq.Add.definition import K
     from Lemma.Discrete.Alpha.gt.Zero import alpha
 
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(K).defun()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Discrete.Alpha.ne.Zero.apply(reverse(x[1:n + 1]))
 

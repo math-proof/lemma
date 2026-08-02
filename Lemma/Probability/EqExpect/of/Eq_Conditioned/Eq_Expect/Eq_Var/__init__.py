@@ -14,7 +14,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Finset, Int
+    from Lemma import Probability, Algebra, Finset, Int, Nat
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
 
 if __name__ == '__main__':

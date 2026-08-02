@@ -10,12 +10,12 @@ def apply(ge, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     y, x = Symbol(real=True)
     Eq << apply(x >= -y, x <= y)
 
-    Eq << Algebra.LeAbs.of.Le.Ge.apply(Eq[1], Eq[0])
+    Eq << Int.LeAbs.of.LeNeg.Le.apply(Eq[1], Eq[0])
 
 
 

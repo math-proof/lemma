@@ -32,7 +32,7 @@ def dissect_variance(variance):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Nat, Nat
 
     n, m = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -52,7 +52,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
     # Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.to.mul)
-    Eq << Eq[-1].this.rhs.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].subs(x_[i].this.definition)
 

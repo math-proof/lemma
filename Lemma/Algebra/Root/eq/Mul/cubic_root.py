@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Algebra, Real, Nat
 
     p = Symbol(complex=True, given=True)
     Eq << apply((p ** 3) ** (S.One / 3))
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Arg).apply(Algebra.Arg.Pow.eq.Add)
 
-    Eq << Eq[-1].this.find(Exp[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Exp[~Mul]).apply(Nat.Mul_Add.eq.AddMulS)
     Eq << Eq[-1].this.find(Exp).apply(Real.ExpAdd.eq.MulExpS)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Expr.eq.MulAbs_ExpMulIArg)

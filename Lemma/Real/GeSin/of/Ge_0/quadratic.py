@@ -21,11 +21,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Le_0.given.Ge)
 
-    Eq << Eq[-1].find(Mul).this.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].find(Mul).this.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.Pow.eq.Add)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq.eq_identity = Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 

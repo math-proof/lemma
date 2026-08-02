@@ -9,7 +9,7 @@ def apply(n, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Rat
+    from Lemma import Set, Algebra, Rat, Nat
 
     n = Symbol(real=True)
     d = Symbol(real=True, positive=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * d
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << -Eq[-1] + n
 

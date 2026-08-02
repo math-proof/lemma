@@ -26,9 +26,9 @@ def prove(Eq):
 
     Eq <<= Set.Or.Eq.of.In_Finset.apply(Eq[0]), Set.Or.Eq.of.In_Finset.apply(Eq[1])
 
-    Eq <<= Eq[-2].this.args[0].apply(Bool.EqUFnS.of.Eq, f), Eq[-1].this.args[0].apply(Bool.EqUFnS.of.Eq, f)
+    Eq <<= Eq[-2].this.args[0].apply(Bool.UFn.of.Eq, f), Eq[-1].this.args[0].apply(Bool.UFn.of.Eq, f)
 
-    Eq <<= Eq[-2].this.args[0].apply(Bool.EqUFnS.of.Eq, f), Eq[-1].this.args[0].apply(Bool.EqUFnS.of.Eq, f)
+    Eq <<= Eq[-2].this.args[0].apply(Bool.UFn.of.Eq, f), Eq[-1].this.args[0].apply(Bool.UFn.of.Eq, f)
 
     Eq <<= Eq[-2].subs(Eq[2]), Eq[-1].subs(Eq[2])
 

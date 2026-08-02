@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra
+    from Lemma import Calculus, Algebra, Nat
 
     x = Symbol(real=True)
     f, g = Function(real=True)
@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Calculus.Grad.Mul.eq.Add)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Derivative).doit()
 

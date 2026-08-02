@@ -72,11 +72,11 @@ def prove(Eq):
 
     Eq << Probability.Pr.eq.Mul.Pr.of.Ne_0.bayes.apply(Eq.ne_zero, s[k + 1], a[k], r[k])
 
-    Eq << Eq[-1].this.lhs.arg.apply(Tensor.EqStackS.Is.EqStackS.Eq, i=3, j=0)
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=3, j=0)
 
-    Eq << Eq[-1].this.lhs.arg.apply(Tensor.EqStackS.Is.EqStackS.Eq, i=3, j=0)
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=3, j=0)
 
-    Eq << Eq[-1].this.lhs.arg.apply(Tensor.EqStackS.Is.EqStackS.Eq, i=3, j=0)
+    Eq << Eq[-1].this.lhs.arg.apply(Tensor.Stack.Is.Stack.Eq, i=3, j=0)
 
     Eq.recursion = Nat.Eq_Div.of.Eq.Ne_0.apply(Eq.ne_zero, Eq[-1])
 
@@ -110,7 +110,7 @@ def prove(Eq):
 
     Eq << Probability.Ne_0.Conditioned.of.Ne_0.apply(Eq.ne_zero_sar, a[k], s[k])
 
-    Eq << Probability.EqConditionedS.of.PrConditioned.ne.Zero.EqConditioned.joint.apply(Eq[-2], Eq[-1])
+    Eq << Probability.Conditioned.of.PrConditioned.ne.Zero.EqConditioned.joint.apply(Eq[-2], Eq[-1])
 
     Eq.recursion = Eq.recursion.subs(Eq[-1])
 

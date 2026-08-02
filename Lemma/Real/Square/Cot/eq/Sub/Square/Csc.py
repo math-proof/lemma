@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Algebra, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(cot(x) ** 2)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(cos ** 2).apply(Real.Square.Cos.eq.Sub.Square.Sin)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(csc).apply(Real.Csc.eq.Inv.Sin)
 

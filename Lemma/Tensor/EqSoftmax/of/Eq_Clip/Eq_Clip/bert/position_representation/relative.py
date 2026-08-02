@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1][i]
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n))
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-3], Eq[-1])
 

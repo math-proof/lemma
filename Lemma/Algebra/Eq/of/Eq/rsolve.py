@@ -19,7 +19,7 @@ def apply(self, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Algebra, Bool, Finset, Nat
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[0] / c ** (n + 1)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Symbol * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
 
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Bool.All.of.All_OrNot.apply(Eq[-1], 1)
 
-    Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (k, 0, n))
+    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (k, 0, n))
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * c ** n
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 

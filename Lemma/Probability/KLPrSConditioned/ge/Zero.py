@@ -10,7 +10,7 @@ def apply(prob_lhs, prob_rhs):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Finset
+    from Lemma import Probability, Algebra, Finset, Nat
 
     D, m, n = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Algebra.GeSum.of.Ge.apply(Eq[-1], (x.var,))
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

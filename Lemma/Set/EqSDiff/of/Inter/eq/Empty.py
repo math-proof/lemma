@@ -17,7 +17,7 @@ def prove(Eq):
     A, B = Symbol(etype=dtype.integer)
     Eq << apply(Equal(A & B, A.etype.emptySet))
 
-    Eq << Eq[0].apply(Set.EqUnionS.of.Eq, A - B).reversed
+    Eq << Eq[0].apply(Set.Union.of.Eq, A - B).reversed
 
 
 if __name__ == '__main__':

@@ -34,17 +34,17 @@ def prove(Eq):
 
     Eq << Eq[-1] * (n + 1)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, 1)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, 1)
 
     Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=1)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1] - (n + 1) * x[n]
 
     Eq << -Eq[-1]
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
     # Eq << Eq[-1].this.lhs.apply(Nat.AddMulS.eq.Mul_Add)
 
 

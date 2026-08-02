@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Real
+    from Lemma import Calculus, Algebra, Real, Nat, Nat
 
     x = Symbol(real=True)
     Eq << apply(Derivative[x](tanh(x)))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative).apply(Real.Grad.Cosh.eq.Sinh)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(sinh).apply(Real.Sinh.eq.Mul.Tanh)
 

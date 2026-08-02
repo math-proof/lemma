@@ -62,7 +62,7 @@ def prove(Eq):
     w = Eq.w.lhs
     Eq << Eq[-1].this.lhs.apply(Algebra.Add.collect, factor=A * B) * w
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Mul.distribute, 0)
 
@@ -74,7 +74,7 @@ def prove(Eq):
 
     Eq << Nat.Pow.of.Eq.apply(Eq[-1], exp=3)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Algebra.Eq.of.Eq_Pow.cubic_root.omega.apply(Eq[-1]) * 3
 

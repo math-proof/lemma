@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq.mapping_quote = All[x[:n + 1]:P_quote](Equal(x_quote, x[:n + 1]), plausible=True)
 
-    Eq << Eq.mapping_quote.this.expr.apply(Tensor.EqSliceS.given.EqSliceS.Eq.Lt)
+    Eq << Eq.mapping_quote.this.expr.apply(Tensor.Slice.given.Slice.Eq.Lt)
 
     Eq << Bool.All_And.given.All.All.apply(Eq[-1])
 

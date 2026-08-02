@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool, Nat
 
     n, d_z = Symbol(integer=True, positive=True)
     Q = Symbol(shape=(n, d_z), real=True)
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(MatMul[Add]).apply(Tensor.Dot.eq.Add)
 
-    Eq << Eq[-1].this.find(Transpose[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Transpose[~Mul]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[1], Eq[-1])
 

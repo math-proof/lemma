@@ -10,7 +10,7 @@ def apply(is_nonpositive):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int, Real
+    from Lemma import Algebra, Set, Bool, Int, Real, Nat
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(x <= 0)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Int.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], 1)
 
-    Eq.any_eq = Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq.any_eq = Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << GreaterEqual(x, -1, plausible=True)
 

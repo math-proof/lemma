@@ -20,11 +20,11 @@ def prove(Eq):
 
     Eq << Eq[-1] * 2
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].reversed + k
 
-    Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (k, 0, n), simplify=None)
+    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (k, 0, n), simplify=None)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

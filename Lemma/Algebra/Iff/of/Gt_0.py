@@ -15,7 +15,7 @@ def apply(gt_zero, *, cond=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.LtMul.of.Gt_0.Lt)
 
-    Eq << Eq[-1].this.lhs.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
 
 if __name__ == '__main__':

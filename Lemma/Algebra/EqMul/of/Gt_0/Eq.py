@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Nat.Mul.of.Eq.apply(Eq[-1], Eq[1])
 
-    Eq << Eq[2].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[2].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
 
 

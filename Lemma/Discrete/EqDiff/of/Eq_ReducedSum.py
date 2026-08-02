@@ -9,7 +9,7 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat, Nat
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul.together)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
 
 

@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].find(softmax).this.apply(Tensor.Softmax.eq.DivExp_KeepdimSumExp)
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
+    Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)
 
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 

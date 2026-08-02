@@ -10,7 +10,7 @@ def apply(is_complex):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Complex
+    from Lemma import Set, Algebra, Complex, Nat, Nat
 
     x = Symbol(super_complex=True)
     Eq << apply(Element(x, S.Complexes))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[1].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
 
 if __name__ == '__main__':

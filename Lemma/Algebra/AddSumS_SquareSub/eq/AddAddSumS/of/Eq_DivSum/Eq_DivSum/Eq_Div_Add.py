@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.find((~Add) ** 2).apply(Algebra.Add.eq.Mul.together), Eq[-1].this.rhs.find((~Add) ** 2).apply(Algebra.Add.eq.Mul.together)
 
-    Eq <<= Eq[-2].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS), Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq <<= Eq[-2].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS), Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq <<= Eq[-2].this.rhs.find((~Add) ** 2).apply(Nat.AddMulS.eq.Mul_Add), Eq[-1].this.rhs.find((~Add) ** 2).apply(Nat.AddMulS.eq.Mul_Add)
 

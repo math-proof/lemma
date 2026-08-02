@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq << Eq[1].this.find(Binomial).apply(Discrete.Binom.eq.Mul.FallingFactorial.doit)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[2].subs(Eq[-1])
 
-    Eq << Eq[0].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[0].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
 
 if __name__ == '__main__':

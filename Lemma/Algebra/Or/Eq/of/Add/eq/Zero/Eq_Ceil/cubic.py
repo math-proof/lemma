@@ -63,11 +63,11 @@ def prove(Eq):
 
     Eq.expand = Eq[-1].subs(Eq.mul_ww)
 
-    Eq << Eq.expand.find(Symbol * ~Add).this.args[0].apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq.expand.find(Symbol * ~Add).this.args[0].apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, deep=True, simplify=None)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, deep=True, simplify=None)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-1].subs(Eq.w_square, Eq.mul_ww)
 
@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.subs(Eq.w_sub)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq.expand = Eq.expand.subs(Eq[-1])
 
@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq.expand = Eq.expand.subs(Eq[-1])
 
-    Eq << -Eq.expand.rhs.args[-1].this.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << -Eq.expand.rhs.args[-1].this.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-1].subs(Eq.mul_ww, Eq.w_square)
 
@@ -115,7 +115,7 @@ def prove(Eq):
 
     Eq << Eq[-1] ** 3
 
-    Eq.eq_pow = Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq.eq_pow = Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq <<= Eq.A_def * 2 ** (S.One / 3), Eq.B_def * 2 ** (S.One / 3)
 
@@ -133,7 +133,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Exp).apply(Complex.Expr.eq.AddRe_MulIIm)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq.expand.subs(Eq[-1])
 

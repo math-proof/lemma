@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << u(i).this.defun()
 
-    Eq << Set.EqCupS.of.All_Eq.fin.apply(Eq[-1], (i, {a}))
+    Eq << Set.Cup.of.All_Eq.fin.apply(Eq[-1], (i, {a}))
 
     Eq << Eq[-1].this.lhs.defun()
 

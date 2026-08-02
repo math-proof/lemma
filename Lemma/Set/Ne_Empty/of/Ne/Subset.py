@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[-1], A)
+    Eq << Set.Union.of.Eq.apply(Eq[-1], A)
 
     Eq << Subset(B, A | B, plausible=True)
 

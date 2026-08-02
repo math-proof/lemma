@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq.U * Eq.V
 
-    Eq.UV = Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq.UV = Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[1].subs(Eq.U.reversed, Eq.V.reversed)
 
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Ceil[Piecewise]).apply(Algebra.Ceil.Ite.eq.Ite)
 
-    Eq.eq = Eq[-1].this.find(Ceil[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq.eq = Eq[-1].this.find(Ceil[~Mul]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Or(*Eq[-1].find(Or).args[:2]).this.apply(Nat.MulSubS.eq.Zero.of.OrEqS)
 
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[-6].subs(Eq[-1])
 
-    Eq.eq_simplified = Eq[-1].this.find(Ceil[Add[~Mul[Add]]]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq.eq_simplified = Eq[-1].this.find(Ceil[Add[~Mul[Add]]]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq.p_cubic * exp(S.ImaginaryUnit * 2 * S.Pi / 3)
 
@@ -113,7 +113,7 @@ def prove(Eq):
 
     Eq << Eq.eq_simplified.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(ExprCondPair[Ceil[Add[~Mul[Add]]]]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(ExprCondPair[Ceil[Add[~Mul[Add]]]]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq.eq_simplified = Eq[-1].this.find(Add[~Ceil]).apply(Algebra.CeilAddDiv_2.eq.AddCeilSub_Div12.of.IsOdd)
 
@@ -141,7 +141,7 @@ def prove(Eq):
 
     Eq << Eq.eq_simplified.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(ExprCondPair[Ceil[Add[~Mul[Add]]]]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(ExprCondPair[Ceil[Add[~Mul[Add]]]]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Add[~Ceil]).apply(Algebra.CeilAddDiv_2.eq.AddCeilSub_Div12.of.IsOdd)
 

@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Nat
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.args[1].limits_subs(j, i)
 
-    Eq << Eq[-1].this.lhs.args[1].expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.args[1].expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << -Eq[-1].this.lhs.args[1].apply(Finset.Sum_Add.eq.AddSumS)
 

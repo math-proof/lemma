@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Finset, Int
+    from Lemma import Algebra, Discrete, Finset, Int, Nat
 
     k, h = Symbol(complex=True)
     a, b, i = Symbol(integer=True)
@@ -20,13 +20,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq.eq = Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, 2)
+    Eq.eq = Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, 2)
 
     Eq << Discrete.Binom.eq.Add.Pascal.apply(Binomial(i + 1, 2))
 
     Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=1)
 
-    Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (i, a, b)).reversed
+    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (i, a, b)).reversed
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sub.telescope)
 

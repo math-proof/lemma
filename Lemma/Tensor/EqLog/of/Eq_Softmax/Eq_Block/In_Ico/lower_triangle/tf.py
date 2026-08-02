@@ -66,9 +66,9 @@ def prove(Eq):
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq.lt_1, Eq[-1])
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
+    Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)
 
-    Eq.loss = -Algebra.EqSumS.of.Eq.apply(Eq[3] * (1 + log(1 - h[i] / 2)), (i, 0, n))
+    Eq.loss = -Algebra.Sum.of.Eq.apply(Eq[3] * (1 + log(1 - h[i] / 2)), (i, 0, n))
 
 
 if __name__ == '__main__':

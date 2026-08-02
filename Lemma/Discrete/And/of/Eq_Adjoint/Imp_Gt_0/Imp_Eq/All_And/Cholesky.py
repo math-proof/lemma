@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Sum[2]).apply(Finset.Sum_Add.eq.AddSumS)
 

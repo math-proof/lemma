@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq.hypothesis_k * x ** k
 
-    Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (k,))
+    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (k,))
 
     _k = Symbol('k', integer=True)
     Eq << Eq[-1].this.lhs.limits_subs(k, _k)

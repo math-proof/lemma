@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Abs]).apply(Int.MulAbsS.eq.AbsMul)
 
-    Eq << Eq[-1].this.find(Abs[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Abs[~Mul]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.expr.expr.lhs.apply(Algebra.Abs.Neg)
 

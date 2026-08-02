@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq.induct.this.lhs.apply(Set.Cup.eq.UnionCupS, cond={n})
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[0], Interval(-n - 1, -n, right_open=True))
+    Eq << Set.Union.of.Eq.apply(Eq[0], Interval(-n - 1, -n, right_open=True))
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

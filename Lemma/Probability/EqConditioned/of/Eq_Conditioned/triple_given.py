@@ -25,13 +25,13 @@ def prove(Eq):
 
     Eq << Eq[0].apply(Bool.AllIn.of.All, (k, 2, oo))
 
-    Eq << Eq[-1].this().expr.lhs.rhs.args[1].apply(Tensor.EqSliceS.Eq.of.Eq)
+    Eq << Eq[-1].this().expr.lhs.rhs.args[1].apply(Tensor.Slice.Get.of.Eq)
 
     Eq << Probability.Eq.of.Eq_Conditioned.single_condition_w.apply(Eq[-1], wrt=Eq[-1].lhs.rhs.args[-1].lhs)
 
     Eq << Eq[1].apply(Bool.All.given.All.AllNot, cond=k >= 2)
 
-    Eq << Eq[-1].this().expr.lhs.rhs.apply(Tensor.EqSliceS.given.EqSliceS.Eq.Lt)
+    Eq << Eq[-1].this().expr.lhs.rhs.apply(Tensor.Slice.given.Slice.Eq.Lt)
 
 
 

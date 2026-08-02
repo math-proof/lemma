@@ -13,7 +13,7 @@ def apply(is_zero, n=None, negative=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real
+    from Lemma import Algebra, Bool, Real, Nat, Nat
 
     x = Symbol(real=True, given=True)
     n = Symbol(integer=True, given=False, nonnegative=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq.induct = Eq[-1].subs(n, n + 1)
 
-    Eq << Eq.induct.this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS).reversed
+    Eq << Eq.induct.this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS).reversed
 
     Eq << Eq[-1].this.lhs.apply(Real.CosSub)
     Eq << Imply(Eq[2], Eq.induct, plausible=True)

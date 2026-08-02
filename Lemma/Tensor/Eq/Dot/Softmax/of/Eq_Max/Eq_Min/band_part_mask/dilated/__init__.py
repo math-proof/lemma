@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(exp).apply(Tensor.Exp.eq.MulSoftmax_KeepdimSumExp)
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n))
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.z_definition, Eq[-1])
 

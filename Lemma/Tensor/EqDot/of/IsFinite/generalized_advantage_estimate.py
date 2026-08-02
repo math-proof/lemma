@@ -11,7 +11,7 @@ def apply(lt_r, γ, λ, k=None, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Tensor, Finset
+    from Lemma import Algebra, Calculus, Set, Tensor, Finset, Nat
 
     t, k, i = Symbol(integer=True) # time step counter
     δ = Symbol(shape=(oo,), real=True) # TD residual
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1]) * (1 - λ)
 
-    Eq << Eq[-1].this.find(Pow * Pow).apply(Algebra.Mul_Add.eq.AddMulS, 3)
+    Eq << Eq[-1].this.find(Pow * Pow).apply(Nat.Mul_Add.eq.AddMulS, 3)
 
     Eq << Eq[-1].this.rhs.find(Pow * Pow * Pow).args[1:3].apply(Algebra.Mul.eq.Pow.Add.exponent)
 

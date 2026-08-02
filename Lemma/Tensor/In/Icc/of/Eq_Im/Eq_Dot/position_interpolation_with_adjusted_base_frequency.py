@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].this.rhs.expr.args[:2].apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.expr.args[:2].apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-1].this.find(Exp * Exp).args[-2:].apply(Algebra.Mul.eq.Exp)
 
@@ -157,7 +157,7 @@ def prove(Eq):
 
     Eq << Real.Sin.ge.Mul_Sub_.One.Div_Pi.quadratic.apply(Eq.gt_zero_eta.lhs)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], j)
 

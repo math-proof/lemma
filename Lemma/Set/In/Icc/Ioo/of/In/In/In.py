@@ -16,7 +16,7 @@ def apply(contains0, contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat, Nat
 
     a, b, x0, x1, w = Symbol(real=True)
     domain = Interval(a, b, left_open=True)
@@ -32,9 +32,9 @@ def prove(Eq):
 
     Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
 
 if __name__ == '__main__':

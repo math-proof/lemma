@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Probability.Mul.eq.Expect)
 
-    Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (t, 0, oo))
+    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (t, 0, oo))
 
     Eq << Eq[-1].this.rhs.apply(Probability.Sum.Expect.eq.Expect.Sum)
 

@@ -83,7 +83,6 @@ from . import Iff
 from . import Ge_ReducedMin
 from . import SupAddMul_Square
 from . import And_EqModS
-from . import EqSumS_SquareSub_DivSum__Card
 from . import OrLt
 from . import OrGe
 from . import Cap_Ite
@@ -100,7 +99,6 @@ from . import SDiff_SDiff
 from . import SDiff
 from . import Neg
 from . import EqUnion
-from . import EqUnionS
 from . import SDiffUnion
 from . import Eq_Ite
 from . import Sqrt
@@ -196,7 +194,6 @@ from . import SubsetSingleton
 from . import AllIn
 from . import SubsetInter
 from . import SubsetInterS
-from . import EqCupS
 from . import Cup_Inter_Ite
 from . import Inter_Ite
 from . import NotInSub
@@ -220,10 +217,11 @@ from . import NotIn_Ioi
 from . import In_Range
 from . import GtFrac_0
 from . import In_Ioo
-from . import EqSDiffS
 from . import Cup_UFn
 from . import Any_Eq
 from . import FloorNegFrac
 from . import CupIn_Icc
 from . import NotIn_Cup
 from . import NotInNeg
+from . import EqCeil_0
+from . import Sum_SquareSub_DivSum__Card

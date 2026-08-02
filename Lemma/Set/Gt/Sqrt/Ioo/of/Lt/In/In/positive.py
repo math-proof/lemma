@@ -20,9 +20,9 @@ def prove(Eq):
 
     Eq << Greater(y ** 2 * (1 - x ** 2), x ** 2 * (1 - y ** 2), plausible=True)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Algebra.Gt_0.of.Lt.apply(Eq[0])
 
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * Eq[-2]
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Int.Gt.of.Sub.gt.Zero.apply(Eq[-1])
 

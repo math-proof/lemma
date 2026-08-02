@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Set.Eq_Empty.of.Eq_Empty.Subset.apply(Eq[0], Eq[1])
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[-1], Eq[-2].lhs)
+    Eq << Set.Union.of.Eq.apply(Eq[-1], Eq[-2].lhs)
 
     Eq << Eq[-1].reversed
 

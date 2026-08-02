@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq.eq2 = Bool.EqIteS.of.Imp_Eq.apply(Eq.suffice, Eq.eq1.lhs)
+    Eq.eq2 = Bool.Ite.of.Imp_Eq.apply(Eq.suffice, Eq.eq1.lhs)
 
     Eq.suffice = Imply(y < 0, Equal(asin(sqrt(1 - x ** 2 / (x ** 2 + y ** 2))), -asin(y / sqrt(x ** 2 + y ** 2))), plausible=True)
 
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Bool.Ite__Ite.eq.Ite__IteAnd_Not.apply(Eq.eq2.rhs, 1, 2)
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.suffice, Eq[-1].rhs)
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq.suffice, Eq[-1].rhs)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 2, 1)
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.suffice, Eq[-1].lhs)
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq.suffice, Eq[-1].lhs)
 
     Eq << Eq[-2].subs(Eq[-1])
 

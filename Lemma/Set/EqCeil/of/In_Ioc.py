@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.InSub.of.In_Icc.apply(Eq[0], a + 1)
 
-    Eq << Set.Ceil.eq.Zero.of.In_Ioc.apply(Eq[-1])
+    Eq << Set.EqCeil_0.of.In_Ioc.apply(Eq[-1])
     Eq << Eq[-1].reversed
 
 

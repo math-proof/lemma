@@ -86,9 +86,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddIteS.eq.IteAnd)
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
+    Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)
 
-    Eq.loss = -Algebra.EqSumS.of.Eq.apply(Eq[3] * (1 + log(1 + abs(h[i]) / 2)), (i, 0, n))
+    Eq.loss = -Algebra.Sum.of.Eq.apply(Eq[3] * (1 + log(1 + abs(h[i]) / 2)), (i, 0, n))
 
 
 

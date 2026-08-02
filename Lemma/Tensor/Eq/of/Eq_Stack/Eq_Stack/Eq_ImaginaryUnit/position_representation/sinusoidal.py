@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None), Eq[-1].this.find(Mul[Piecewise]).apply(Nat.Mul_Ite.eq.Ite_MulS, simplify=None)
 
-    Eq <<= Eq[-2].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, simplify=None), Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, simplify=None)
+    Eq <<= Eq[-2].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None), Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
     Eq <<= Eq[-2].this.find(Pow[Piecewise]).apply(Nat.Pow_Ite.eq.Ite_PowS, simplify=None), Eq[-1].this.find(Pow[Piecewise]).apply(Nat.Pow_Ite.eq.Ite_PowS, simplify=None)
 
@@ -55,9 +55,9 @@ def prove(Eq):
 
     Eq.PE_quote_definition = Eq[1][i + k, j]
 
-    Eq << Eq.PE_definition.find(sin).this.arg.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq.PE_definition.find(sin).this.arg.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq.PE_definition.find(cos).this.arg.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq.PE_definition.find(cos).this.arg.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq <<= Eq[-2].this.rhs.apply(Real.Sin.eq.Add), Eq[-1].this.rhs.apply(Real.CosAdd.eq.SubCosCos_SinSin)
 
@@ -77,13 +77,13 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.cossin, Eq[-1])
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, d))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, d))
 
     Eq.PE_equality = Eq[-1].this.rhs.apply(Tensor.Stack.eq.Add)
 
-    Eq << Eq.PE_quote_definition.find(cos).this.arg.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq.PE_quote_definition.find(cos).this.arg.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq.PE_quote_definition.find(sin).this.arg.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq.PE_quote_definition.find(sin).this.arg.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq <<= Eq[-2].this.rhs.apply(Real.CosAdd.eq.SubCosCos_SinSin), Eq[-1].this.rhs.apply(Real.Sin.eq.Add)
 
@@ -107,7 +107,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.coscos, Eq[-1])
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, d))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, d))
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.eq.Add)
 
@@ -171,7 +171,7 @@ def prove(Eq):
 
     Eq << Eq.geometric_progression.subs(Eq[-1])
 
-    Eq << Eq[3].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[3].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.apply(Real.ExpAdd.eq.MulExpS)
 

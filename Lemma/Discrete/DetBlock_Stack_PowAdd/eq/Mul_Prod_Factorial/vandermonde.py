@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Set, Tensor, Finset
+    from Lemma import Discrete, Algebra, Set, Tensor, Finset, Nat
 
     r = Symbol(real=True)
     n = Symbol(domain=Range(2, oo))
@@ -66,11 +66,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].this.find(Sum).expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Sum).expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
@@ -78,13 +78,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Sum).expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, 1)
 
     Eq << Eq[-1].this.rhs.find(MatMul).apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 
-    Eq << Eq[-1].this.find(Sum).expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, 1)
 

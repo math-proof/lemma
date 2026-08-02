@@ -56,9 +56,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.expr.args[1:3].apply(Nat.AddMulS.eq.Mul_Add)
 

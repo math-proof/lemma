@@ -11,7 +11,7 @@ def apply(ne_zero_lhs, ne_zero_rhs, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Calculus, Real
+    from Lemma import Probability, Algebra, Calculus, Real, Nat
 
 
     D, m, n = Symbol(integer=True, positive=True)
@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Log).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0, pivot=2)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.apply(Calculus.Integral.eq.Add)
 

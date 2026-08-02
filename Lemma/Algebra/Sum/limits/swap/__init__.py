@@ -38,7 +38,7 @@ def prove(Eq):
     s = Symbol(Sum[j:n + 1](f[i] * g[i, j]))
     Eq << s.this.definition
 
-    Eq << Eq[-1].apply(Algebra.EqSumS.of.Eq, (i, 0, m))
+    Eq << Eq[-1].apply(Algebra.Sum.of.Eq, (i, 0, m))
 
     Eq << Eq[-2].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={n})
 

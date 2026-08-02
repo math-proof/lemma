@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << ~Eq[1]
 
-    Eq << Tensor.EqStackS.of.All_Eq.apply(Eq[-1], simplify=None)
+    Eq << Tensor.Stack.of.All_Eq.apply(Eq[-1], simplify=None)
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Expr.eq.Stack, k)
 

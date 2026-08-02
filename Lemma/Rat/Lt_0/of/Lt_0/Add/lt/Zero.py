@@ -12,7 +12,7 @@ def apply(lt_zero, add_lt_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Algebra, Int, Nat
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -31,13 +31,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expr ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Int.Gt_0.of.Lt_0.Lt_0.apply(Eq.a_reciprocal_is_negative, Eq[1])
 
-    Eq << -Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS) / 4
+    Eq << -Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS) / 4
 
     Eq << GreaterEqual(t ** 2, 0, plausible=True)
 

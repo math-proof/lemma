@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Tensor
+    from Lemma import Probability, Algebra, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, random=True, shape=(n,))
@@ -25,23 +25,23 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Probability.Cov.eq.Expect)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Add)
 
     Eq << Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Probability.Expect.eq.Mul)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
-
-    Eq << Eq[-1].this.find(Expectation[Conditioned[Add]]).apply(Probability.Expect.eq.Add)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Expectation[Conditioned[Add]]).apply(Probability.Expect.eq.Add)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Expectation[Conditioned[Add]]).apply(Probability.Expect.eq.Add)
+
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Expectation[Conditioned[Mul]]).apply(Probability.Expect.eq.Mul)
 

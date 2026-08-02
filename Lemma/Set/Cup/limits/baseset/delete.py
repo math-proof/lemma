@@ -37,7 +37,7 @@ def prove(Eq):
     s = Symbol(Cup[j:f(k)](h(x[k], j)))
     Eq << s.this.definition
 
-    Eq << Set.EqCupS.of.All_Eq.fin.apply(Eq[-1], (k, x[k] > a[i], Range(n)))
+    Eq << Set.Cup.of.All_Eq.fin.apply(Eq[-1], (k, x[k] > a[i], Range(n)))
 
     Eq << Eq[-1].this.lhs.expr.definition
 

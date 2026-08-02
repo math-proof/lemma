@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.Cup_Inter_Ite.eq.UnionCupS_Inter)
 
-    Eq << Set.EqCupS.of.All_Eq.fin.apply(Eq[-1], (y,))
+    Eq << Set.Cup.of.All_Eq.fin.apply(Eq[-1], (y,))
 
     Eq << Eq[1].this.rhs.subs(Eq[-1])
 

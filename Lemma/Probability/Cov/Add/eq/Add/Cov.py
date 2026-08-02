@@ -23,20 +23,20 @@ def apply(self, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Nat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Covariance(x, y + z))
 
     Eq << Eq[0].this.lhs.apply(Probability.Cov.eq.Sub.Expect)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Expectation[Add]).apply(Probability.Expect.eq.Add)
 
     Eq << Eq[-1].this.find(Expectation[Add]).apply(Probability.Expect.eq.Add)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Covariance).apply(Probability.Cov.eq.Sub.Expect)
 

@@ -23,7 +23,7 @@ def prove(Eq):
     s = Symbol(Cup[j:f(i)](h(x[i], j)))
     Eq << s.this.definition
 
-    Eq << Set.EqCupS.of.All_Eq.fin.apply(Eq[-1], (i, 0, k))
+    Eq << Set.Cup.of.All_Eq.fin.apply(Eq[-1], (i, 0, k))
 
     Eq << Eq[-1].this.lhs.expr.definition
 

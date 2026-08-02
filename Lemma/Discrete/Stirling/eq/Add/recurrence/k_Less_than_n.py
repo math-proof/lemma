@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq << Discrete.Abs.Condset.Stirling.mapping.s1_Aj.apply(n, k, s1, A).reversed
 
-    Eq << Eq[-1].apply(Algebra.EqSumS.of.Eq, *Eq[-2].lhs.limits)
+    Eq << Eq[-1].apply(Algebra.Sum.of.Eq, *Eq[-2].lhs.limits)
 
 
 if __name__ == '__main__':

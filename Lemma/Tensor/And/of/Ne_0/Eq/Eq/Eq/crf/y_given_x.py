@@ -44,7 +44,7 @@ def prove(Eq):
     x = x_probability.lhs
     n = x.shape[0]
     s, t = Eq[4].lhs.args
-    Eq.z_definition = Eq[5].apply(Tensor.EqStackS.of.Eq, (Eq[5].lhs.indices[-1],))
+    Eq.z_definition = Eq[5].apply(Tensor.Stack.of.Eq, (Eq[5].lhs.indices[-1],))
 
     Eq << Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov.apply(*Eq[:4])
 
@@ -90,7 +90,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Log).apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
-    Eq.z_definition_by_x_quote = Bool.EqUFnS.of.Eq.apply(Eq[6].reversed, exp)
+    Eq.z_definition_by_x_quote = Bool.UFn.of.Eq.apply(Eq[6].reversed, exp)
 
     Eq << Eq[-1].subs(Eq.z_definition_by_x_quote)
 
@@ -121,7 +121,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.LogMul.eq.AddLogS.of.Ne_0.Ne_0)
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[4].reversed, exp)
+    Eq << Bool.UFn.of.Eq.apply(Eq[4].reversed, exp)
 
     Eq.y_given_x_log = Eq[-2].subs(Eq[-1])
 

@@ -66,7 +66,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i,))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i,))
 
     Eq << Eq[-1].subs(Eq.y_def)
 

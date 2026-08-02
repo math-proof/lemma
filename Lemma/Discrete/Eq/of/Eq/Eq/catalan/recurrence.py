@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[1] * x ** n
 
-    Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (n, 0, oo))
+    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (n, 0, oo))
 
     Eq << Calculus.Mul.Sum.eq.Sum.Sum.apply(C, C, n=n, k=k, x=x)
 

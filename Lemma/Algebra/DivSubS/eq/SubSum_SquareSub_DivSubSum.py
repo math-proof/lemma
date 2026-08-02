@@ -23,7 +23,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Int
+    from Lemma import Algebra, Bool, Finset, Int, Nat, Nat
 
     i, j = Symbol(integer=True)
     n = Symbol(domain=Range(2, oo))
@@ -52,9 +52,9 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.find(Add ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
 

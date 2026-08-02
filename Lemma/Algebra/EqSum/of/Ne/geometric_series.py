@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Nat.Div.of.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (k, 0, n))
+    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (k, 0, n))
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

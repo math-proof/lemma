@@ -49,7 +49,7 @@ def prove(Eq):
     s = Symbol(Stack[i](Sum[j:f(i)](x[i, j])))
     Eq << s[i].this.definition
 
-    Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (i, 0, n))
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.doit).reversed
 

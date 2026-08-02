@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << y[i].this.definition
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n))
 
     Eq << Eq[-1].this.lhs.definition
 

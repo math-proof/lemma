@@ -98,7 +98,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq.any.this.find(Imply[2]).apply(Bool.EqIteS.of.Imp_Eq, Eq[-1].find(Piecewise))
+    Eq << Eq.any.this.find(Imply[2]).apply(Bool.Ite.of.Imp_Eq, Eq[-1].find(Piecewise))
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-2], Eq[-1])
 

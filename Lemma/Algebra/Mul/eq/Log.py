@@ -17,14 +17,14 @@ def prove(Eq):
     x = Symbol(real=True, positive=True)
     Eq << apply(t * log(x))
 
-    Eq << Real.Eq.given.EqExpS.apply(Eq[0])
+    Eq << Real.Eq.given.Exp.apply(Eq[0])
 
     y = Symbol(log(x))
     Eq << y.this.definition
 
-    Eq <<= Eq[-1] * t, Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
+    Eq <<= Eq[-1] * t, Bool.UFn.of.Eq.apply(Eq[-1], exp)
 
-    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Nat.Pow.of.Eq.apply(Eq[-1], exp=t)
+    Eq <<= Bool.UFn.of.Eq.apply(Eq[-2], exp), Nat.Pow.of.Eq.apply(Eq[-1], exp=t)
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[-1])
 
 

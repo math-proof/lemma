@@ -33,7 +33,7 @@ def prove(Eq):
     Eq.eq_matmul = Eq.hypothesis.find(Expectation, MatMul)._subs(s, s.var)._subs(r, r.var).this.apply(Tensor.Dot.eq.Sum)
 
     k = Symbol(integer=True) # time step counter
-    Eq << Eq.eq_matmul.rhs._subs(oo, k).this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq.eq_matmul.rhs._subs(oo, k).this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.find(Symbol * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
 
@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << Eq.hypothesis.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Expectation[Add]).apply(Probability.Expect.eq.Add)
 

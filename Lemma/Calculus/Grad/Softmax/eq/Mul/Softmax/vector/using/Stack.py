@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * Eq[-1].find(Softmax)
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n))
 
     Eq << Eq[-1].this.find(Stack).apply(Tensor.Stack.eq.Add)
 

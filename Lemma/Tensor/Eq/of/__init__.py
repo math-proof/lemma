@@ -5,10 +5,10 @@ from . import Eq_Block
 from . import Eq_Pr
 from . import Eq_Add_Block
 from . import Eq_Stack
-from . import EqStackS_Get
 from . import Eq_Stack_Bool_In
 from . import In
 from . import Eq_DotSPow_Stack
-from . import EqDotS_Stack_Pow
-from . import EqDotSStackFallingFactorial
-from . import EqDotSStack_Pow
+from . import DotStackFallingFactorial
+from . import Dot_Stack_Pow
+from . import Stack_Get
+from . import DotStack_Pow

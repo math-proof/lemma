@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Algebra, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(sech(x) ** 2)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(sinh ** 2).apply(Real.Square.Sinh.eq.Sub.Square.Cosh)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(cosh).apply(Real.Cosh.eq.Inv.Sech)
 

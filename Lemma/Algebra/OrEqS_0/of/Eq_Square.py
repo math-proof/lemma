@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Nat.OrEqS_0.given.Mul.eq.Zero.apply(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True).reversed
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True).reversed
 
 
 if __name__ == '__main__':

@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << (n < 0).this.apply(Algebra.Sum.eq.Zero.of.Lt, Eq[-1].find(Sum))
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq[-1], Eq[-2].lhs)
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq[-1], Eq[-2].lhs)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite)
     Eq << Eq[-1].this.find(GreaterEqual).reversed

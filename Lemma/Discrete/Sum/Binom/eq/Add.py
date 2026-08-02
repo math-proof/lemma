@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra
+    from Lemma import Discrete, Algebra, Nat
 
     m, n, i = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.find(Binomial).apply(Discrete.Binom.eq.Add.Pascal)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.expr.args[1].apply(Algebra.Mul.Neg)
 

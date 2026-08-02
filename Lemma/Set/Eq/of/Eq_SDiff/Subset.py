@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << apply(Subset(C, A), Equal(A - C, B - C))
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[1], C)
+    Eq << Set.Union.of.Eq.apply(Eq[1], C)
 
     Eq << Set.EqUnion.of.Subset.apply(Eq[0])
 

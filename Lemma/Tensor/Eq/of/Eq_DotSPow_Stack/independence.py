@@ -6,7 +6,7 @@ def apply(given):
     (p_polynomial, *x), (S[p_polynomial], *y) = given.of(Equal[MatMul[2]])
     x = MatMul(*x)
     y = MatMul(*y)
-    from Lemma.Tensor.Eq.of.EqDotSStack_Pow.independence.vector import extract
+    from Lemma.Tensor.Eq.of.DotStack_Pow.independence.vector import extract
     return Equal(*extract(p_polynomial, x, y))
 
 @prove
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow[Stack]).apply(Tensor.Expr.eq.Stack, k)
 
-    Eq << Tensor.Eq.of.EqDotSStack_Pow.independence.matrix.apply(Eq[-1])
+    Eq << Tensor.Eq.of.DotStack_Pow.independence.matrix.apply(Eq[-1])
 
 
 

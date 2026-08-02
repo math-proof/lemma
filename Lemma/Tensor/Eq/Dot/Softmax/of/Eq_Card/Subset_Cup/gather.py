@@ -99,7 +99,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Stack[Tuple[2]]).apply(Tensor.Stack.eq.Transpose)
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n))
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack_Dot.eq.DotSliceS)
 

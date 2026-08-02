@@ -13,7 +13,7 @@ def apply(eq_R, eq_D, j):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Tensor, Bool
+    from Lemma import Discrete, Algebra, Tensor, Bool, Nat
 
     k = Symbol(domain=Range(2, oo))
     # k is the size of the rank list
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * (k * (k - 1))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, -1)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, -1)
 
     Eq << Eq.A_def.this.rhs.subs(Eq[0], Eq[1])
 
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Tensor.EqSigmoid.of.Eq.apply(Eq[-1])
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], log)
+    Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)
 
     Eq << Algebra.EqSum.of.Eq_Transpose.apply(Eq[-1], i, j)
 

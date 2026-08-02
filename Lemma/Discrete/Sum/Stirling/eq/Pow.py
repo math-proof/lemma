@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Finset
+    from Lemma import Discrete, Algebra, Bool, Finset, Nat
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True, given=False)
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.find(Stirling).apply(Discrete.Stirling.eq.Add.recurrence)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs().expr.args[:2].apply(Discrete.Mul.FallingFactorial.eq.Add)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 

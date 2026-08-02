@@ -16,7 +16,7 @@ def apply(eq_x_bar_A, eq_x_bar_B, eq_x_delta, eq_x_bar, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x_A = Symbol("x^A", real=True, shape=(oo,))
     x_B = Symbol("x^B", real=True, shape=(oo,))
@@ -34,9 +34,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul.together)
 
-    Eq << Eq[-1].this.find(~Mul + Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(~Mul + Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Algebra.AddSumS_SquareSub.eq.AddAddSumS.of.Eq_DivSum.Eq_DivSum.Eq_Div_Add.apply(*Eq[:2], Eq[-1], k)
 

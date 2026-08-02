@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Sum.eq.Dot)
 
-    Eq << Tensor.Eq.of.EqDotSStack_Pow.independence.vector.apply(Eq[-1])
+    Eq << Tensor.Eq.of.DotStack_Pow.independence.vector.apply(Eq[-1])
 
     Eq << Eq[-1].limits_subs(Eq[-1].variable, Eq[0].lhs.arg.rhs)
 

@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Calculus.Mul.eq.Limit)
 
-    Eq <<= Eq[-2].this.lhs.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS), Eq[-1].this.lhs.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq <<= Eq[-2].this.lhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS), Eq[-1].this.lhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Calculus.Eq_Limit.Add.of.Eq_Limit.Eq_Limit.apply(Eq[-1], Eq[-2])
 

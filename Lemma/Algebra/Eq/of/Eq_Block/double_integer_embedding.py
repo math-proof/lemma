@@ -9,7 +9,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     #|              63 - 32               |     31 - 16     | 15 - 8 | 7 - 0 |
     #|=======================================================================|
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(i, i + h * h)
 
-    Eq << Eq[-1].this.rhs.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-3])
 

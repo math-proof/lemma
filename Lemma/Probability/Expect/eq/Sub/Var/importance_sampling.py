@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra
+    from Lemma import Probability, Algebra, Nat
 
     D = Symbol(integer=True, positive=True)
     # D denotes the size of the trainable weights
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Expectation[Mul]).apply(Probability.Expect.importance_sampling, θ)
 
-    Eq << Eq[-1].this.lhs.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.apply(Probability.Expect.eq.Add)
 

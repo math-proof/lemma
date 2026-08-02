@@ -26,7 +26,7 @@ def prove(Eq):
     a = Symbol(integer=True, given=True)
     Eq << apply(Equal(A - a.set, B - a.set), Element(a, A))
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[0], a.set)
+    Eq << Set.Union.of.Eq.apply(Eq[0], a.set)
 
     Eq << Set.EqUnion.of.In.apply(Eq[1])
 

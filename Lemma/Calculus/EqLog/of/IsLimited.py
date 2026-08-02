@@ -50,9 +50,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Set.In.Div.of.Gt_0.In)
 
-    Eq << Eq[-1].this.expr.expr.rhs.args[0].apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.expr.expr.rhs.args[0].apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.expr.expr.rhs.args[1].apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.expr.expr.rhs.args[1].apply(Nat.Mul_Add.eq.AddMulS)
 
     epsilon1 = Symbol(domain=Interval(0, 1, left_open=True, right_open=True))
     Eq << Algebra.Or.of.Cond.subst.apply(Eq[-1], epsilon0, epsilon1 * A)

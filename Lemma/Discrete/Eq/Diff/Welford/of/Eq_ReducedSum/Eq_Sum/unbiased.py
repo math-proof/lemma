@@ -12,7 +12,7 @@ def apply(eq_x_bar, eq_s2):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Int, Rat
+    from Lemma import Discrete, Algebra, Bool, Int, Rat, Nat
 
     x, s = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, lhs=0)
 

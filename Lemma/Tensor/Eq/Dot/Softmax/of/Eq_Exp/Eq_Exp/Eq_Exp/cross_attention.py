@@ -98,7 +98,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1][h:n], Eq[-1][:h], Eq[-1][i]
 
-    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-3], exp), Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
+    Eq <<= Bool.UFn.of.Eq.apply(Eq[-3], exp), Bool.UFn.of.Eq.apply(Eq[-2], exp), Bool.UFn.of.Eq.apply(Eq[-1], exp)
 
     Eq << Eq[-1] * Ones(d_z)
 
@@ -108,7 +108,7 @@ def prove(Eq):
 
     Eq << Eq.divisor_definition * Ones(d_z)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, simplify=None)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, simplify=None)
 
     Eq << Eq[-1].this.rhs.subs(Eq.lower_part, Eq.upper_part, Eq.diagonal_part)
 
@@ -166,7 +166,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i,))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i,))
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Block)
 

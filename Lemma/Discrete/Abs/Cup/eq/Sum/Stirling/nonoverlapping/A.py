@@ -35,14 +35,14 @@ def prove(Eq):
     Eq.x_Union_s1 = Bool.All.of.All_And.apply(Eq.s1_quote_definition, 2)
 
     j = Symbol(domain=Range(k + 1))
-    Eq << Set.EqCupS.of.All_Eq.fin.apply(Eq[0], (i, 0, k + 1))
+    Eq << Set.Cup.of.All_Eq.fin.apply(Eq[0], (i, 0, k + 1))
 
     Eq.x_quote_Union = Algebra.All.of.All_Eq.Cond.subst.apply(Eq.x_Union_s1, Eq[-1])
 
     Eq << Eq[0].apply(Set.EqCard.of.Eq)
 
     x_quote_abs = Eq[-1]
-    Eq << Eq[-1].apply(Algebra.EqSumS.of.Eq, (i, 0, k + 1))
+    Eq << Eq[-1].apply(Algebra.Sum.of.Eq, (i, 0, k + 1))
 
     Eq << Set.CardUnion.le.AddCardS.apply(*Eq[-1].rhs.args[1].arg.args)
 
@@ -69,7 +69,7 @@ def prove(Eq):
 
     Eq <<= Eq.x_quote_Union & Eq.SqueezeTheorem & Eq[-1]
 
-    Eq.x_quote_definition = Tensor.EqStackS.of.Eq.apply(Eq[0], (i, 0, k + 1))
+    Eq.x_quote_definition = Tensor.Stack.of.Eq.apply(Eq[0], (i, 0, k + 1))
 
     Eq << Eq.x_Union_s1.this.expr.apply(Set.Eq.then.Eq.intersect, {n})
 

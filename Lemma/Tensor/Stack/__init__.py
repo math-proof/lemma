@@ -12,3 +12,5 @@ from . import Pow
 from . import ReducedSum
 from . import Dot
 from . import Ico
+from . import of
+from . import Is

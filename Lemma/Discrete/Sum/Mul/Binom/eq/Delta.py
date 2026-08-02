@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Bool, Finset
+    from Lemma import Algebra, Discrete, Bool, Finset, Nat
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True, given=False)
@@ -45,11 +45,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Pow * Binomial]).apply(Discrete.Sum.Binom.eq.Add)
 
-    Eq << Eq[-1].this.find(Sum).expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Pow * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
 
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Binomial]).apply(Algebra.Sum.eq.Sub.unshift)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Sum[Binomial]).apply(Algebra.Sum.limits.subst.offset, i)
 

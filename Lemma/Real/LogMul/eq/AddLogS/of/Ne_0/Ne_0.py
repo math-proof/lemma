@@ -26,7 +26,7 @@ def prove(Eq):
     a, b, c, d = Symbol(real=True, positive=True)
     Eq << apply(Log(a * b * c * d), pivot=2)
 
-    Eq << Real.Eq.given.EqExpS.apply(Eq[0])
+    Eq << Real.Eq.given.Exp.apply(Eq[0])
 
 
 

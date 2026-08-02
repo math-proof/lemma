@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) <= a)
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[1])
 
-    Eq << Algebra.LeAbs.of.Le.Ge.apply(Eq[-1], Eq[-2])
+    Eq << Int.LeAbs.of.LeNeg.Le.apply(Eq[-1], Eq[-2])
 
 
 if __name__ == '__main__':

@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + Min(u, n)))
 
-    Eq << Tensor.EqStackS.of.All_Eq.apply(Eq[-1])
+    Eq << Tensor.Stack.of.All_Eq.apply(Eq[-1])
 
     Eq << Eq.A_def[i][i:Min(n, i + u)]
 

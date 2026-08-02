@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-1].this.apply(Algebra.Gt.transport, lhs=1)
 

@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Integral.limits.offset, a)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Integral.eq.Add)
 
@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Integral).apply(Calculus.Integral.limits.offset, -a)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(-~Integral).apply(Calculus.Integral.eq.Add)
 

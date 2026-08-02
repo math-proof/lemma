@@ -28,7 +28,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra
+    from Lemma import Calculus, Algebra, Nat
 
     x, t, a = Symbol(real=True)
     f, h = Function(real=True, continuous=True)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq.Limit_f.this.lhs.apply(Calculus.Limit.eq.Expr.continuity)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[0].rhs.find(Derivative).this.apply(Calculus.Grad.eq.Limit, epsilon).reversed
 

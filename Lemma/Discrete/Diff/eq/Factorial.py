@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * binomial(n + 1, _k)
 
-    Eq << Eq[-1].apply(Algebra.EqSumS.of.Eq, (_k,))
+    Eq << Eq[-1].apply(Algebra.Sum.of.Eq, (_k,))
 
     Eq << Eq[-1].this.lhs.limits_subs(_k, k)
 

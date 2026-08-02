@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Int
+    from Lemma import Discrete, Algebra, Int, Nat
 
     x = Symbol(complex=True)
     k = Symbol(integer=True, nonnegative=True)
@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << FallingFactorial(x, k + 1).this.apply(Discrete.FallingFactorial.eq.Mul.pop)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub, rhs=-1)
 

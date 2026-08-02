@@ -15,7 +15,7 @@ def prove(Eq):
     r = Symbol(complex=True)
     Eq << apply(r > 0, z)
 
-    Eq << Real.Eq.given.EqExpS.apply(Eq[1])
+    Eq << Real.Eq.given.Exp.apply(Eq[1])
 
     Eq.el = Set.IsReal.Log.of.Gt_0.apply(Eq[0], simplify=None)
 
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Nat.Ne.of.Gt.apply(Eq[0])
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq.x_def, exp)
+    Eq << Bool.UFn.of.Eq.apply(Eq.x_def, exp)
 
     Eq << Nat.Pow.of.Eq.apply(Eq[-1], exp=z)
 

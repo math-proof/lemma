@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Algebra.GtDiv.of.Gt_0.Gt.apply(Eq.is_positive, Eq[-1])
 
-    Eq << ((sqrt(x) + sqrt(y))(-sqrt(x) + sqrt(y))).this.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << ((sqrt(x) + sqrt(y))(-sqrt(x) + sqrt(y))).this.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Algebra.EqDiv.of.Gt_0.Eq.apply(Eq.is_positive, Eq[-1], simplify=None)
 

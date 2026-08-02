@@ -14,7 +14,7 @@ def apply(w='w'):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     Eq << apply('omega')
 
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[1] * Eq[0]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq <<= Eq[0] ** 2, Eq[1] ** 2
 

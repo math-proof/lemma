@@ -8,12 +8,12 @@ def apply(self, factor=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, b, x, y = Symbol(complex=True)
     Eq << apply(a * x - a * y + b + b * y, factor=b)
 
-    Eq << Eq[0].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[0].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
 
 

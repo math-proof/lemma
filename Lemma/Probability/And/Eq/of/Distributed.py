@@ -9,7 +9,7 @@ def apply(dist):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Probability, Calculus, Algebra
+    from Lemma import Probability, Calculus, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(shape=(n,), random=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.limits.offset, μ)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Integral).apply(Calculus.Integral.eq.Add)
 

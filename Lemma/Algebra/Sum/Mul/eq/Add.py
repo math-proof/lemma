@@ -4,7 +4,7 @@ from util import *
 @apply
 def apply(self):
     mul, *limits = self.of(Sum)
-    from Lemma.Algebra.Mul_Add.eq.AddMulS import convert
+    from Lemma.Nat.Mul_Add.eq.AddMulS import convert
     add = convert(mul)
 
     from Lemma.Finset.Sum_Add.eq.AddSumS import associate
@@ -15,14 +15,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Nat
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
     f, h, g = Function(real=True)
     Eq << apply(Sum[i:n]((f(i) + h(i)) * g(i)))
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.expr.apply(Nat.Mul_Add.eq.AddMulS)
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
 

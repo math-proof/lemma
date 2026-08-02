@@ -26,7 +26,7 @@ def apply(eq, γ=None, k=None, weights=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Probability, Algebra
+    from Lemma import Tensor, Probability, Algebra, Nat
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Probability.Mul.eq.Expect)
 
-    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS, i=1)
+    Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS, i=1)
 
     print()
 

@@ -87,12 +87,12 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(*Eq[-3:])
 
-    Eq <<= Eq[-1].find(Mul[Add]).this.apply(Algebra.Mul_Add.eq.AddMulS),\
-        Eq[-1].find(Mul[2][Add]).this.apply(Algebra.Mul_Add.eq.AddMulS),\
-        Eq[-1].find(Sum[2], Mul[Add]).this.apply(Algebra.Mul_Add.eq.AddMulS), \
-        Eq[-1].find(Sum[2], Mul[Add][2]).this.apply(Algebra.Mul_Add.eq.AddMulS),\
-        Eq[-1].find(Sum[3], Mul[Add]).this.apply(Algebra.Mul_Add.eq.AddMulS), \
-        Eq[-1].find(Sum[3], Mul[Add][2]).this.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq <<= Eq[-1].find(Mul[Add]).this.apply(Nat.Mul_Add.eq.AddMulS),\
+        Eq[-1].find(Mul[2][Add]).this.apply(Nat.Mul_Add.eq.AddMulS),\
+        Eq[-1].find(Sum[2], Mul[Add]).this.apply(Nat.Mul_Add.eq.AddMulS), \
+        Eq[-1].find(Sum[2], Mul[Add][2]).this.apply(Nat.Mul_Add.eq.AddMulS),\
+        Eq[-1].find(Sum[3], Mul[Add]).this.apply(Nat.Mul_Add.eq.AddMulS), \
+        Eq[-1].find(Sum[3], Mul[Add][2]).this.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-7].subs(*Eq[-6:])
 

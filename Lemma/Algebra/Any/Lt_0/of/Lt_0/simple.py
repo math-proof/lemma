@@ -11,7 +11,7 @@ def apply(lt_zero, x=None, b=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -22,7 +22,7 @@ def prove(Eq):
     epsilon = Symbol(negative=True)
     Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], x, Eq[2].lhs * -b - epsilon)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << -Eq[0] * epsilon
 

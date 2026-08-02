@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.simplify()
 
-    Eq << Eq[-1].this.expr.expr.apply(Bool.EqUFnS.of.Eq, g)
+    Eq << Eq[-1].this.expr.expr.apply(Bool.UFn.of.Eq, g)
 
     Eq <<= Eq.supset_A & Eq.subset_A
 

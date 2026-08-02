@@ -22,7 +22,6 @@ from . import AbsExpect
 from . import Sup
 from . import And
 from . import All
-from . import EqConditionedS
 from . import Subs_Grad_KL
 from . import ExpectConditioned_Gt
 from . import Pr
@@ -44,3 +43,4 @@ from . import EqProd
 from . import Imp
 from . import Stack
 from . import Dot
+from . import Conditioned

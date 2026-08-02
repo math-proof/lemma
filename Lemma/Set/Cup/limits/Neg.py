@@ -22,9 +22,9 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[0], f(n + 1))
+    Eq << Set.Union.of.Eq.apply(Eq[0], f(n + 1))
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[-1], f(-n - 1))
+    Eq << Set.Union.of.Eq.apply(Eq[-1], f(-n - 1))
 
     Eq << Imply(Eq[0], Eq.induct, plausible=True)
 

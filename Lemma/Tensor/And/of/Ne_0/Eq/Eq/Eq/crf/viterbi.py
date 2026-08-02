@@ -42,7 +42,7 @@ def prove(Eq):
     x = x_probability.lhs
     n = x.shape[0]
     s, t = Eq[4].lhs.args
-    Eq.x_quote_definition = Eq[5].apply(Tensor.EqStackS.of.Eq, (Eq[5].lhs.indices[-1],))
+    Eq.x_quote_definition = Eq[5].apply(Tensor.Stack.of.Eq, (Eq[5].lhs.indices[-1],))
 
     y = Eq.x_quote_definition.rhs.variable.base
     Eq << Tensor.Eq.of.Ne_0.Eq.Eq.Eq.crf.markov.apply(*Eq[:4])
@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[4].reversed
 
-    Eq << Eq[-1].apply(Bool.EqUFnS.of.Eq, exp)
+    Eq << Eq[-1].apply(Bool.UFn.of.Eq, exp)
 
     Eq << Algebra.EqMaxima.of.Eq.apply(Eq[-1], (y[:t + 1],))
 

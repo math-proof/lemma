@@ -29,7 +29,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     c = Symbol(real=True)
     x, y = Symbol(complex=True)
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Re).apply(Algebra.Re.eq.Add)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
 
 

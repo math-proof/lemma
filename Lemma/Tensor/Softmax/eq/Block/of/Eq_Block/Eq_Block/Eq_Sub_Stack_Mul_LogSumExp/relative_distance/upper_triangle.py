@@ -52,11 +52,11 @@ def prove(Eq):
 
     Eq << Tensor.All.Eq.of.Eq_Block.Eq_Block.relative_distance.upper_triangle.lower_part.apply(Eq[0], Eq[1])
 
-    Eq << Tensor.EqStackS.of.All_Eq.apply(Eq[-1].this.expr.reversed, Eq[2].find(Stack).expr)
+    Eq << Tensor.Stack.of.All_Eq.apply(Eq[-1].this.expr.reversed, Eq[2].find(Stack).expr)
 
     Eq << Tensor.All.Eq.of.Eq_Block.Eq_Block.relative_distance.upper_triangle.upper_part.apply(Eq[0], Eq[1])
 
-    Eq << Tensor.EqStackS.of.All_Eq.apply(Eq[-1].this.expr.reversed)
+    Eq << Tensor.Stack.of.All_Eq.apply(Eq[-1].this.expr.reversed)
 
     Eq << Tensor.Eq.of.Eq_Block.Eq_Block.relative_distance.upper_triangle.apply(Eq[0], Eq[1])
 
@@ -73,7 +73,7 @@ def prove(Eq):
 
     Eq << Algebra.All.Eq.Slice.of.All_Eq.apply(Eq[-1], slice(i, i + u))
 
-    Eq << Tensor.EqStackS.of.All_Eq.apply(Eq[-1])
+    Eq << Tensor.Stack.of.All_Eq.apply(Eq[-1])
 
     Eq << Eq.A_quote_def[i + n - u][i + n - u:]
 

@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << apply(Equal(f(x), g(x)), (x, -oo, oo))
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], Integral[x:-oo:oo], simplify=False)
+    Eq << Bool.UFn.of.Eq.apply(Eq[0], Integral[x:-oo:oo], simplify=False)
 
 
 if __name__ == '__main__':

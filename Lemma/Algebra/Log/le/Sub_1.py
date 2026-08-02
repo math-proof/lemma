@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] * x0, Eq[-1] * x1
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS), Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq <<= Eq[-2].this.lhs.apply(Nat.Mul_Add.eq.AddMulS), Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Calculus.Lt.of.Gt_0.monotony.apply(Eq.is_positive)
 

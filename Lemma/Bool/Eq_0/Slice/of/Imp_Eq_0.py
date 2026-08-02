@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this(i).find(Max).simplify()
 
-    Eq << Tensor.EqStackS.of.All_Eq.apply(Eq[-1])
+    Eq << Tensor.Stack.of.All_Eq.apply(Eq[-1])
 
 
 

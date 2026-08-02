@@ -23,7 +23,7 @@ def prove(Eq):
     f, g = Function(shape=(m, m), integer=True)
     Eq << apply(Equal(f(i), g(i)))
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], det)
+    Eq << Bool.UFn.of.Eq.apply(Eq[0], det)
 
 
 

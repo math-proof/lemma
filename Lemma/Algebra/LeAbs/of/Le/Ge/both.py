@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Int.EqAbs.of.Ge_0.apply(Eq[-1])
 
-    Eq << Algebra.LeAbs.of.Le.Ge.apply(Eq[0], Eq[1])
+    Eq << Int.LeAbs.of.LeNeg.Le.apply(Eq[0], Eq[1])
 
     Eq << Eq[-1] + Eq[-2].reversed
 

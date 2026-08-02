@@ -1,2 +1,2 @@
-from . import EqExpS
-from . import EqLogS
+from . import Exp
+from . import Log

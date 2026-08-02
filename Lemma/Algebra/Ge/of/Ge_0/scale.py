@@ -10,7 +10,7 @@ def apply(given, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a = Symbol(real=True, given=True)
     t = Symbol(integer=True, positive=True, odd=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Algebra.Ge_0.of.Ge_0.Ge_0.apply(Eq[-1], Eq[0])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Algebra.Ge.of.Ge_0.apply(Eq[-1])
 

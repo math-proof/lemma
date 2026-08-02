@@ -15,7 +15,7 @@ def prove(Eq):
     Eq << apply(Equal(A.etype.emptySet, B - A))
 #     Eq << apply(Equal(B - A, A.etype.emptySet))
 
-    Eq << Eq[0].apply(Set.EqUnionS.of.Eq, A)
+    Eq << Eq[0].apply(Set.Union.of.Eq, A)
 
     Eq << Eq[1].subs(Eq[-1])
 

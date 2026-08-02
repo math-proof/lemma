@@ -8,7 +8,6 @@ from . import BoolNot
 from . import BoolOr
 from . import Cond
 from . import Eq
-from . import EqIteS
 from . import Iff
 from . import Imp_And
 from . import Imp_Imp
@@ -20,7 +19,6 @@ from . import OrAndS
 from . import All_And
 from . import And_And
 from . import Eq_0
-from . import EqUFnS
 from . import Given
 from . import Ite_Ite
 from . import Or_Not

@@ -10,14 +10,14 @@ def apply(gt, le):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, z = Symbol(integer=True)
     Eq << apply(x > 0, LessEqual(x + y, z))
 
     Eq << Algebra.LeDiv.of.Gt_0.Le.apply(Eq[0], Eq[2])
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
 
 

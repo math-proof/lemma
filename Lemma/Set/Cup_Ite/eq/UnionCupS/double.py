@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Cup[y:F(x)](Piecewise((f(x, y), Element(x, A)), (g(x, y), True))).this.apply(Set.Cup_Ite.eq.Ite_CupS)
 
-    Eq << Set.EqCupS.of.All_Eq.fin.apply(Eq[-1], (x, B))
+    Eq << Set.Cup.of.All_Eq.fin.apply(Eq[-1], (x, B))
 
     Eq << Eq[-1].this.rhs.apply(Set.Cup_Ite.eq.UnionCupS)
 

@@ -64,7 +64,7 @@ def prove(Eq):
 
     Eq.B_assertion = Set.All_Any_Eq.split.Imageset.apply(B)
 
-    Eq << Eq.B_assertion.this.expr.expr.apply(Set.EqSDiffS.of.Eq, {n.set})
+    Eq << Eq.B_assertion.this.expr.expr.apply(Set.SDiff.of.Eq, {n.set})
 
     Eq << Algebra.All.And.of.Cond.All.apply(Eq.all_s0_equality, Eq[-1], simplify=None)
 
@@ -80,7 +80,7 @@ def prove(Eq):
 
     Eq << Eq[-1].limits_subs(Eq.B_assertion.variable, Eq.B_assertion.expr.variable)
 
-    Eq.all_B_equality = Eq[-1].this.expr.apply(Set.EqUnionS.of.Eq, Eq[-1].variable)
+    Eq.all_B_equality = Eq[-1].this.expr.apply(Set.Union.of.Eq, Eq[-1].variable)
 
     Eq << Set.Eq.of.All_In.All_In.All_Eq.All_Eq.apply(Eq.all_s0_contains, Eq.all_B_contains, Eq.all_s0_equality, Eq.all_B_equality)
 

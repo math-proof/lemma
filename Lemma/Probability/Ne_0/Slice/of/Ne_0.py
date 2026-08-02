@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << apply(Unequal(Pr(x), 0), slice(0, t))
 
     t = Symbol(domain=Range(1, n))
-    Eq << Eq[0].this.lhs.arg.apply(Tensor.EqSliceS.Eq.of.Eq, t)
+    Eq << Eq[0].this.lhs.arg.apply(Tensor.Slice.Get.of.Eq, t)
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

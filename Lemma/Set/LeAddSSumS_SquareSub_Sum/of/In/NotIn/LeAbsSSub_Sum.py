@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[-2]
 
-    Eq << Eq[-1].this.rhs.apply(Set.EqSumS_SquareSub_DivSum__Card.of.Eq_DivSum__Card.NotIn)
+    Eq << Eq[-1].this.rhs.apply(Set.Sum_SquareSub_DivSum__Card.of.Eq_DivSum__Card.NotIn)
 
     Eq << Set.EqCard.of.NotIn.apply(Eq[2])
 

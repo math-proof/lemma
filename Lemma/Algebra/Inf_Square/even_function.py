@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.defun()
 
-    Eq << Algebra.EqInfS.of.Eq.even_function.apply(Eq[-2], Eq[0].find(Interval), x)
+    Eq << Algebra.Inf.of.Eq.even_function.apply(Eq[-2], Eq[0].find(Interval), x)
 
     Eq << Eq[-1].this.find(f).defun()
 

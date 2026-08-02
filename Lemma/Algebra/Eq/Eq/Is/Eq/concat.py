@@ -65,9 +65,9 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Tensor.EqStackS.of.EqStackS.Eq, simplify=None)
+    Eq << Eq[-2].this.lhs.apply(Tensor.Stack.of.Stack.Eq, simplify=None)
 
-    Eq << Eq[-1].this.lhs.apply(Tensor.EqSliceS.Eq.of.Eq, simplify=None)
+    Eq << Eq[-1].this.lhs.apply(Tensor.Slice.Get.of.Eq, simplify=None)
 
 
 

@@ -15,14 +15,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y, z = Symbol(complex=True)
     Eq << apply(abs(x + y + z) ** 2)
 
     Eq << Eq[-1].lhs.this.apply(Algebra.Square.Abs.eq.Mul.Conj)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Mul.Conj.eq.Square.Abs)
 

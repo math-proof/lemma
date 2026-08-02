@@ -77,10 +77,10 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[:2].apply(Finset.AddSumS.eq.Sum_Add_Sum)
 
-    Eq <<= Eq[-1].find(Mul[Add]).this.apply(Algebra.Mul_Add.eq.AddMulS), \
-        Eq[-1].find(Mul[2][Add]).this.apply(Algebra.Mul_Add.eq.AddMulS), \
-        Eq[-1].find(Sum[2], Mul[Add]).this.apply(Algebra.Mul_Add.eq.AddMulS), \
-        Eq[-1].find(Sum[2], Mul[Add][2]).this.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq <<= Eq[-1].find(Mul[Add]).this.apply(Nat.Mul_Add.eq.AddMulS), \
+        Eq[-1].find(Mul[2][Add]).this.apply(Nat.Mul_Add.eq.AddMulS), \
+        Eq[-1].find(Sum[2], Mul[Add]).this.apply(Nat.Mul_Add.eq.AddMulS), \
+        Eq[-1].find(Sum[2], Mul[Add][2]).this.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-5].subs(*Eq[-4:])
 

@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Bool, Real
+    from Lemma import Calculus, Algebra, Bool, Real, Nat
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(real=True)
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Cos ** 2).apply(Real.Square.Cos.eq.Sub.Square.Sin)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.expr.args[0].powsimp()
 

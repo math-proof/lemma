@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 
-    Eq << Algebra.EqSumS.of.Eq.apply(Eq[-1], (y,))
+    Eq << Algebra.Sum.of.Eq.apply(Eq[-1], (y,))
 
     Eq << Eq[1].this.rhs.subs(Eq[-1])
 

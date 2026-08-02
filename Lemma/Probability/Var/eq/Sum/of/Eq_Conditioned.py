@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
 
     Eq << Eq[-2].subs(Eq[-1])
 
@@ -43,12 +43,12 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
 
     Eq << Eq[-2].subs(Eq[-1])
 
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq.infer, Eq[-1].find(Piecewise))
     Eq << Eq[-2].subs(Eq[-1])
 
 

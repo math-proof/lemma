@@ -42,14 +42,14 @@ def prove(Eq):
 
     Eq << Eq[1] / beta ** t
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.powsimp()
 
     Eq << Eq[-1].this.rhs.collect(g[t])
 
     k = Eq[2].lhs.indices[0]
-    Eq << Eq[-1].apply(Algebra.EqSumS.of.Eq, (t, 1, k + 1))
+    Eq << Eq[-1].apply(Algebra.Sum.of.Eq, (t, 1, k + 1))
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

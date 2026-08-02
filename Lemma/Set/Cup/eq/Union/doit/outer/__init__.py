@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << s[i].this.definition
 
-    Eq << Set.EqCupS.of.All_Eq.fin.apply(Eq[-1], (i, 0, n))
+    Eq << Set.Cup.of.All_Eq.fin.apply(Eq[-1], (i, 0, n))
 
     Eq << Eq[-1].this.lhs.apply(Set.Cup.eq.Union.doit).reversed
 

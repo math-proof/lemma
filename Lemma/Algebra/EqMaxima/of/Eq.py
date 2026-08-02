@@ -17,7 +17,7 @@ def prove(Eq):
     f, g = Function(real=True)
     Eq << apply(Equal(f(i), g(i)), (i, 0, n))
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], Maxima[i:n], simplify=False)
+    Eq << Bool.UFn.of.Eq.apply(Eq[0], Maxima[i:n], simplify=False)
 
 
 if __name__ == '__main__':

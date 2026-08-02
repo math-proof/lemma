@@ -28,9 +28,9 @@ def prove(Eq):
     t = Symbol(domain=Range(1, n))
     Eq << apply(Unequal(Pr(x, y), 0), [slice(0, t), slice(0, t)])
 
-    Eq << Eq[0].this.lhs.arg.args[-1].apply(Tensor.EqSliceS.Eq.of.Eq, t)
+    Eq << Eq[0].this.lhs.arg.args[-1].apply(Tensor.Slice.Get.of.Eq, t)
 
-    Eq << Eq[-1].this.lhs.arg.args[0].apply(Tensor.EqSliceS.Eq.of.Eq, t)
+    Eq << Eq[-1].this.lhs.arg.args[0].apply(Tensor.Slice.Get.of.Eq, t)
 
     Eq << Probability.And.Ne_0.of.Ne_0.apply(Eq[-1])
 

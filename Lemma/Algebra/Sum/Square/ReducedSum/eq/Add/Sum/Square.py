@@ -29,7 +29,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Vector
+    from Lemma import Algebra, Vector, Nat
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * n
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum_SquareSub.eq.Sub_SquareSum)
 

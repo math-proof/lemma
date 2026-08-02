@@ -15,7 +15,7 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete
+    from Lemma import Algebra, Discrete, Nat
 
     n = Symbol(integer=True, positive=True)
     A, B = Symbol(real=True, shape=(n, n))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * t
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Discrete.EqInv.of.Eq.apply(Eq[-1])
 

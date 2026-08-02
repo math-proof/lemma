@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1][k]
     Eq << Eq.lhs_assertion.subs(Eq[-1].reversed)
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (k, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (k, 0, n))
 
 
 

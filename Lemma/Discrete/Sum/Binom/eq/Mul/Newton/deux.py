@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Discrete, Finset
+    from Lemma import Algebra, Discrete, Finset, Nat
 
     x, k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -23,11 +23,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent)
 
-    Eq << Eq[-1].this.find(Sum).expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Sum).expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Sum[Mul[Symbol]]).apply(Algebra.Sum.eq.Sub.unshift)
 

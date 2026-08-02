@@ -12,7 +12,7 @@ def apply(eq, Q_def, V_def, A_def, π_quote=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Probability, Algebra, Finset
+    from Lemma import Tensor, Probability, Algebra, Finset, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[Expectation]).apply(Probability.Mul.eq.Expect)
 
-    Eq << Eq[-1].this.find(Mul[Add]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Symbol * Pow).args[:2].apply(Algebra.Mul.eq.Pow.Add.exponent)
 

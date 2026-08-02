@@ -139,15 +139,15 @@ def prove(Eq):
 
     Eq.block1 = Eq[-1].this.rhs.apply(Int.EqAdd.Is.Eq_Sub, rhs=slice(0, 3))
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.block0, Eq.four_blocks.rhs, index=0, reverse=True)
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq.block0, Eq.four_blocks.rhs, index=0, reverse=True)
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.block1, Eq[-1].rhs, index=1, reverse=True)
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq.block1, Eq[-1].rhs, index=1, reverse=True)
 
-    Eq << Bool.EqIteS.of.Imp_Eq.apply(Eq.block3, Eq[-1].rhs, index=1, reverse=True)
+    Eq << Bool.Ite.of.Imp_Eq.apply(Eq.block3, Eq[-1].rhs, index=1, reverse=True)
 
     Eq << Algebra.Eq.of.And.apply(Eq.four_blocks & Eq[-1] & Eq[-2] & Eq[-3]).reversed
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i, 0, n))
 
     Eq << Eq[-1].this.lhs.apply(Tensor.Stack.eq.ReducedArgMax)
 

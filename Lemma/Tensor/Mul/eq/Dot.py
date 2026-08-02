@@ -41,7 +41,7 @@ def apply(self, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Nat
 
     m, n, d = Symbol(integer=True, positive=True)
     A, C = Symbol(real=True, shape=(m, n))
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(MatMul).apply(Tensor.Dot.eq.Add)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
 
 

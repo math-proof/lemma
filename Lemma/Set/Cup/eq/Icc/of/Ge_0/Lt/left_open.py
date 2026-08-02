@@ -39,7 +39,7 @@ def prove(Eq):
     Eq << Eq[-2].subs(Eq[-1])
 
     interval_a = Eq[-1].rhs.args[0]
-    Eq << Set.EqSDiffS.of.Eq.apply(Eq[-1], interval_a)
+    Eq << Set.SDiff.of.Eq.apply(Eq[-1], interval_a)
 
     Eq << Nat.EqMin.of.Ge.apply(Eq.b_is_nonnegative)
 

@@ -20,7 +20,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Discrete, Algebra, Bool, Tensor
+    from Lemma import Discrete, Algebra, Bool, Tensor, Nat
     from Lemma.Discrete.Alpha.gt.Zero import alpha
     from Lemma.Discrete.H.eq.Add.definition import H
 
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(H).defun()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(H).defun()
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Discrete.Alpha.ne.Zero.apply(reverse(x[:n]))
 

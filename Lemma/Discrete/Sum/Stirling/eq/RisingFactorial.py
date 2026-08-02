@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[1].this.find(Stirling1).apply(Discrete.Stirling1.eq.Add.recurrence)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 

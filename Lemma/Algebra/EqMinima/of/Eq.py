@@ -18,7 +18,7 @@ def prove(Eq):
     Eq << apply(Equal(f(i), g(i)), (i, 0, n))
 
 #     Eq << Eq[-1].subs(Eq[0])
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[0], Minima[i:n], simplify=False)
+    Eq << Bool.UFn.of.Eq.apply(Eq[0], Minima[i:n], simplify=False)
 
 
 if __name__ == '__main__':

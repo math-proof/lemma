@@ -64,7 +64,7 @@ def prove(Eq):
     k_ = Eq[-1].find(Cup).variable
     Eq << Piecewise((x[k_].set, Equal(x[k_], a[j])), (x[k_].emptySet, True)).this.simplify()
 
-    Eq << Set.EqCupS.of.All_Eq.fin.apply(Eq[-1].reversed, (k_, 0, n))
+    Eq << Set.Cup.of.All_Eq.fin.apply(Eq[-1].reversed, (k_, 0, n))
 
     Eq.distribute = Eq[-1].subs(Eq[-3]).reversed
 

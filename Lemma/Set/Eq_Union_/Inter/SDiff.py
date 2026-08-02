@@ -16,7 +16,7 @@ def prove(Eq):
     C = Symbol(A - B)
     Eq << C.this.definition
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[1], A & B)
+    Eq << Set.Union.of.Eq.apply(Eq[1], A & B)
 
     Eq << Eq[0].subs(Eq[1].reversed).reversed
 

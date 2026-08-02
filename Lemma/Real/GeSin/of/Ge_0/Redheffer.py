@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq.gt_1.this.rhs * Eq[-1].find((~Expr) ** -1)
 
-    Eq << Eq[-1].this.find(Mul).apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.Pow.eq.Add)
 

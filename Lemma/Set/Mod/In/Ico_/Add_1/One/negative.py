@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Rat
+    from Lemma import Algebra, Set, Rat, Nat
 
     n = Symbol(integer=True)
     d = Symbol(integer=True, negative=True)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2] / d, Eq[-1] / d
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Rat.Floor.gt.Sub_1.apply(n / d)
 

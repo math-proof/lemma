@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1][h:n], Eq[-1][:h]
 
-    Eq <<= Bool.EqUFnS.of.Eq.apply(Eq[-2], exp), Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
+    Eq <<= Bool.UFn.of.Eq.apply(Eq[-2], exp), Bool.UFn.of.Eq.apply(Eq[-1], exp)
 
     Eq.lower_part, Eq.upper_part = Bool.Eq.of.Eq.Eq.apply(Eq[-2], Eq[0][i]), \
         Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[1][i - h])
@@ -108,7 +108,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Mul_Ite.eq.Ite_MulS)
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (i,))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (i,))
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Stack.Ite.eq.Block)
 

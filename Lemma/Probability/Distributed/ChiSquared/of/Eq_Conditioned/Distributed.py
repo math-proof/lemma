@@ -111,7 +111,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(-sin ** 2).args[2].apply(Real.Square.Sin.eq.Sub.Square.Cos)
 
-    Eq << Eq[-1].this.find(Mul[One - cos ** 2]).apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.find(Mul[One - cos ** 2]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Integral)().find(Abs[Cos]).simplify()
 

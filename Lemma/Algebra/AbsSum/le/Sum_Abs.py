@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(integer=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << -Eq[-1].this.find(g).defun()
 
-    Eq << Algebra.LeAbs.of.Le.Ge.apply(Eq[1], Eq[-1])
+    Eq << Int.LeAbs.of.LeNeg.Le.apply(Eq[1], Eq[-1])
 
 
 if __name__ == '__main__':

@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << Eq[-1] + Eq.le_given.rhs.args[0]
 
-    Eq << Eq[-1].this.rhs.args[0].apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.args[0].apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq.le_given = Eq.le_given.subs(Eq[-1])
 
@@ -103,7 +103,7 @@ def prove(Eq):
 
     Eq << Eq[-1] / (m - 1)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.args[0].find(Sum).apply(Algebra.Sum.limits.swap.subst)
 
@@ -111,7 +111,7 @@ def prove(Eq):
 
     Eq << Eq[1] - Eq[1].rhs.args[1]
 
-    Eq << Eq[-1].this.lhs.args[2].apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.args[2].apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.collect(Eq[-1].lhs.args[-1].find(Sum))
 
@@ -119,7 +119,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * m
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond={m - 1})
 
@@ -138,9 +138,9 @@ def prove(Eq):
 
     Eq << Eq[-1] / m
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.find(Sum).expr.apply(Algebra.Square.Neg, simplify=None)
 
@@ -183,7 +183,7 @@ def prove(Eq):
 
     Eq << Eq.is_nonnegative.subs(Eq[-1])
 
-    Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.args[0].apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.collect(Eq[-1].lhs.find(Sum))
 
@@ -195,7 +195,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * (n ** 2 * (m - 1) * (n + 1) / (m + n))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.lhs.ratsimp()
 

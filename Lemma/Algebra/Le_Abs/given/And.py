@@ -11,12 +11,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x, a = Symbol(integer=True, given=True)
 
     Eq << apply(abs(x) <= a)
 
-    Eq << Algebra.LeAbs.of.Le.Ge.apply(Eq[-2], Eq[-1])
+    Eq << Int.LeAbs.of.LeNeg.Le.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

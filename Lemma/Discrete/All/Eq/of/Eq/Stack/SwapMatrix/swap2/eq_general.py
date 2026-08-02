@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().expr.simplify(wrt=True)
 
-    Eq << Eq[-1].this.rhs.expr.args[-1].expr.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.expr.args[-1].expr.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs().expr.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, -2)
 
@@ -80,7 +80,7 @@ def prove(Eq):
     Eq << Eq[-1].this(j).rhs().expr.simplify(wrt=True)
     Eq << Eq[-1].this.rhs.expr.apply(Int.Ite.eq.AddMulS)
     Eq << Eq.www_expansion.subs(Eq[-1].reversed)
-    Eq << Eq[-1].this.expr.apply(Tensor.Eq.of.EqDotS_Stack_Pow.independence.matrix)
+    Eq << Eq[-1].this.expr.apply(Tensor.Eq.of.Dot_Stack_Pow.independence.matrix)
 
 
 

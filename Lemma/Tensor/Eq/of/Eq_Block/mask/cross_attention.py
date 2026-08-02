@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq.Ξ_quote_definition, Eq[-1])
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
     Eq << Tensor.ExpAdd_MulInfty.eq.Mul_Stack_Bool.apply(exp(a) * Ξ_quote).reversed
 

@@ -21,7 +21,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     p, q = Symbol(complex=True, given=True)
     delta = 4 * p ** 3 / 27 + q ** 2
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Algebra.Mul.Root.eq.Mul.Ite.cubic_root.apply(Eq[-1].find(Arg[~Mul]))
 
-    Eq << Eq[-1].this.find(Pow[~Mul]).apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.find(Pow[~Mul]).apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
     Eq << Eq[-3].subs(Eq[-1])
 

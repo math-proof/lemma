@@ -20,7 +20,7 @@ def apply(is_nonzero_A, is_nonzero_B, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real, Complex
+    from Lemma import Algebra, Bool, Real, Complex, Nat
 
     A, B = Symbol(complex=True, given=True)
     Eq << apply(Unequal(A, 0), Unequal(B, 0), Equal(Ceil((Arg(A) + Arg(B)) / (S.Pi * 2) - S.One / 2), 1))
@@ -49,13 +49,13 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.args[1].arg.apply(Algebra.Mul_Add.eq.AddMulS)
+    Eq << Eq[-1].this.rhs.args[1].arg.apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Real.ExpAdd.eq.MulExpS)
 
     Eq << Eq[-1].this.rhs.args[1].apply(Complex.Expr.eq.AddRe_MulIIm)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Mul_Add.eq.AddMulS, deep=True)
+    Eq << Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
 
 

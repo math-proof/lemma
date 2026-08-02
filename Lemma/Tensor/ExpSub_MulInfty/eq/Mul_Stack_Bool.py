@@ -37,13 +37,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.Add_Ite.eq.Ite_AddS)
 
-    Eq << Bool.EqUFnS.of.Eq.apply(Eq[-1], exp)
+    Eq << Bool.UFn.of.Eq.apply(Eq[-1], exp)
 
     Eq << Eq[-1].this.rhs.apply(Real.ExpIte.eq.Ite_ExpS)
 
     Eq << Eq[-1].this.rhs.apply(Nat.Ite.eq.MulBool)
 
-    Eq << Tensor.EqStackS.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
+    Eq << Tensor.Stack.of.Eq.apply(Eq[-1], (j, 0, n), (i, 0, n))
 
     Eq << Eq[-1].this.lhs.arg.definition
 

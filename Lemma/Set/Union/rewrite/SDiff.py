@@ -20,7 +20,7 @@ def prove(Eq):
     C = Symbol(B - A)
     Eq << C.this.definition.reversed
 
-    Eq << Set.EqUnionS.of.Eq.apply(Eq[-1], A)
+    Eq << Set.Union.of.Eq.apply(Eq[-1], A)
     Eq << Eq[0].subs(Eq[1])
 
 
