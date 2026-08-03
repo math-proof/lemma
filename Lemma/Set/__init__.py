@@ -23,7 +23,6 @@ from . import All_And
 from . import Eq_Sum
 from . import Card
 from . import All_Subset
-from . import Subset_union
 from . import Subset_Cup
 from . import All_Supset
 from . import Supset_Cup
@@ -225,3 +224,4 @@ from . import Sum_SquareSub_DivSum__Card
 from . import In_Ioc
 from . import EqCeil
 from . import Any_In_SDiff
+from . import Subset_Union

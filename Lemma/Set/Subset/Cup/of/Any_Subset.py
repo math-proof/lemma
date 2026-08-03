@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Cup).apply(Set.Cup.eq.UnionCupS, cond={i})
 
-    Eq << Eq[-1].this.expr.apply(Set.Subset_union.given.Supset, 0)
+    Eq << Eq[-1].this.expr.apply(Set.Subset_Union.given.Supset, 0)
 
     Eq << Eq[-1].this().find(Intersection).simplify()
 
