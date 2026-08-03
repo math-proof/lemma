@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Set.Subset_Cup.given.Any.Subset.apply(Eq[-1])
 
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], i, j)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[-1], i, j)
 
     Eq << Set.EqInter.of.Subset.apply(Eq[-2])
 

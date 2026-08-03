@@ -17,13 +17,13 @@ def prove(Eq):
     d, k = Symbol(integer=True)
     Eq << apply(Mod(n % (d * k), d, evaluate=False))
 
-    Eq << Eq[0].this.find(Mod).apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[0].this.find(Mod).apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
-    Eq << Eq[-1].this.find(Mod).apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[-1].this.find(Mod).apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
-    Eq << Eq[-1].this.find(Mod).apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[-1].this.find(Mod).apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
-    Eq << Eq[-1].this.find(Mod).apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[-1].this.find(Mod).apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

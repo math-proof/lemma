@@ -19,7 +19,7 @@ def prove(Eq):
     x = Symbol(real=True, given=True)
     Eq << apply(x > 0)
 
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], Eq[1].variable, x / 2)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[1], Eq[1].variable, x / 2)
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 

@@ -14,7 +14,7 @@ def apply(is_positive, is_negative, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Bool, Set, Algebra
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -26,7 +26,7 @@ def prove(Eq):
     t = Symbol(real=True)
     Eq <<= Algebra.LeInf.given.All_Any_Lt.apply(Eq[-2], t), Algebra.GeInf.given.All.Ge.apply(Eq[-1])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.Any.given.Cond.subst, x, 0)
+    Eq << Eq[-1].this.expr.apply(Bool.Any_UFn.given.UFnUFn, x, 0)
 
     Eq << Eq[-1].this.args[1].apply(Algebra.All.Is.Or)
 

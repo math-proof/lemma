@@ -20,7 +20,7 @@ def prove(Eq):
     y = Symbol(Eq[0].lhs)
     Eq << y.this.definition
 
-    Eq <<= Algebra.All.Le.of.Eq_Sup.apply(Eq[-1]), Eq[0].subs(Eq[-1].reversed), Algebra.Any.given.Cond.subst.apply(Eq[1], M, (y + M0) / 2)
+    Eq <<= Algebra.All.Le.of.Eq_Sup.apply(Eq[-1]), Eq[0].subs(Eq[-1].reversed), Bool.Any_UFn.given.UFnUFn.apply(Eq[1], M, (y + M0) / 2)
 
     Eq.all, *Eq[-2:] = Algebra.All.And.of.Cond.All.apply(Eq[-2], Eq[-3], simplify=None), Bool.And_And.given.And.Cond.apply(Eq[-1])
 

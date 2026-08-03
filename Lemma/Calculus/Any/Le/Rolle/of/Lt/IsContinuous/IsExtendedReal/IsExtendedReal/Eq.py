@@ -154,7 +154,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.AllIn_SDiff.of.All, Interval.open(a, b))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Any.given.Cond.subst, x, (a + b) / 2)
+    Eq << Eq[-1].this.rhs.apply(Bool.Any_UFn.given.UFnUFn, x, (a + b) / 2)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Cond.of.All.subst, x, (a + b) / 2)
 

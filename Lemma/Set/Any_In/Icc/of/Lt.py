@@ -13,13 +13,13 @@ def apply(given, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Bool, Set
 
     a, b = Symbol(real=True, given=True)
     Eq << apply(a < b)
 
     x = Eq[1].variable
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], x, (a + b) / 2)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[-1], x, (a + b) / 2)
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 

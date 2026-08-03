@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 0))
 
-    Eq << Eq[1].lhs.this.apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[1].lhs.this.apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Mod.eq.Sub_Mul_Div).reversed
+    Eq << Eq[0].this.lhs.apply(Nat.Mod.eq.Sub_Mul_FloorDiv).reversed
 
 
 

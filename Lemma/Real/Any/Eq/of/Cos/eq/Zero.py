@@ -12,17 +12,13 @@ def apply(is_zero, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Bool, Real
 
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(cos(x), 0))
 
-
-
-
-
-    Eq << Real.Eq.of.Cos.eq.Zero.apply(Eq[0])
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], Eq[1].variable, Floor(x / S.Pi))
+    Eq << Real.Eq_AddMulPiFloorDiv_Pi.of.EqCos_0.apply(Eq[0])
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[1], Eq[1].variable, Floor(x / S.Pi))
 
     # https://en.wikipedia.org/wiki/Argument_(complex_analysis)
 

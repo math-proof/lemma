@@ -11,7 +11,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Set, Algebra, Tensor, Nat
+    from Lemma import Finset, Set, Algebra, Tensor, Nat, Bool
 
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(10, oo))
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Any.Ne)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Any.given.Cond.subst, i, 2)
+    Eq << Eq[-1].this.lhs.apply(Bool.Any_UFn.given.UFnUFn, i, 2)
 
     Eq << Eq[-1].this.lhs.args[:2].apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 

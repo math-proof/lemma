@@ -14,7 +14,7 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(Equal(x * x + y * y + z * z, 0))
@@ -25,13 +25,13 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.Add_.AddSquareS.Mul2.ge.Zero.apply(y)
+    Eq << Nat.Le0AddAddSquareSMulMul2.apply(y)
 
-    Eq << Algebra.Add_.AddSquareS.Mul2.ge.Zero.apply(z)
+    Eq << Nat.Le0AddAddSquareSMulMul2.apply(z)
 
     Eq << Algebra.Ge_0.Add.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Gt_0.Add.of.Ge_0.Gt_0.apply(Eq[-1], Eq[-4])
+    Eq << Nat.Lt0Add.of.Ge_0.Gt_0.apply(Eq[-1], Eq[-4])
 
     Eq << Eq[-1].subs(Eq[0])
 

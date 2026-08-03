@@ -11,7 +11,7 @@ def apply(lt_zero, x=None, b=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Bool, Algebra, Nat
 
     a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -20,7 +20,7 @@ def prove(Eq):
     Eq << Algebra.Div.lt.Zero.of.Lt_0.apply(Eq[0])
 
     epsilon = Symbol(positive=True)
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], x, Eq[2].lhs * -b - epsilon)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[1], x, Eq[2].lhs * -b - epsilon)
 
     Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 

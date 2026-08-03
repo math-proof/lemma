@@ -33,7 +33,7 @@ def prove(Eq):
     k = Symbol(ReducedArgMax(x[:n + 1]))
     Eq.k_def = k.this.definition
 
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], y[:n + 1], Stack[i:n + 1](Piecewise((x[i], i < k), (x[i + 1], i < n), (x[k], True))))
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[-1], y[:n + 1], Stack[i:n + 1](Piecewise((x[i], i < k), (x[i + 1], i < n), (x[k], True))))
 
     Eq.eq, Eq.all_gt, Eq.all_ne = Bool.And_And.given.And.Cond.apply(Eq[-1], None)
 

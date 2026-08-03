@@ -99,7 +99,6 @@ from . import SDiffUnion
 from . import Eq_Ite
 from . import Sqrt
 from . import LeDiv
-from . import LeMax
 from . import LeMul
 from . import LeAdd
 from . import LeSub
@@ -225,3 +224,4 @@ from . import In_Ioc
 from . import EqCeil
 from . import Any_In_SDiff
 from . import Subset_Union
+from . import LeAbs_MaxAbsS

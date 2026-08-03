@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Nat.Gt.of.Ge.Lt.apply(Eq[0], Eq[1])
 
-    Eq << Eq.lt.this.rhs.apply(Algebra.Any.given.Cond.subst, x, (m + M) / 2)
+    Eq << Eq.lt.this.rhs.apply(Bool.Any_UFn.given.UFnUFn, x, (m + M) / 2)
 
     Eq.gt, Eq.contains = Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Set.In.Icc.of.Lt.average.apply(Eq[1])
 
-    Eq << Eq.ge.this.rhs.apply(Algebra.Any.given.Cond.subst, x, (sqrt(U) + M) / 2)
+    Eq << Eq.ge.this.rhs.apply(Bool.Any_UFn.given.UFnUFn, x, (sqrt(U) + M) / 2)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Ico.given.Le.Lt)
 

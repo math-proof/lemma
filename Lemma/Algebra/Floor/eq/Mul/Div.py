@@ -10,12 +10,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     n, d = Symbol(integer=True)
     Eq << apply(n // d)
 
-    Eq << Eq[0].this.find(Mod).apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[0].this.find(Mod).apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
 
 

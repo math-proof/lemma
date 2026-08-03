@@ -12,7 +12,7 @@ def apply(given, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Nat
+    from Lemma import Bool, Set, Nat
 
     a, b = Symbol(integer=True, given=True)
     Eq << apply(a < b)
@@ -20,7 +20,7 @@ def prove(Eq):
     Eq << Nat.Le_Sub_1.of.Lt.apply(Eq[0]) + 1
 
     x = Eq[1].variable
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], x, b - 1)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[1], x, b - 1)
 
     Eq << Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[-1])
     Eq << Eq[-1].reversed

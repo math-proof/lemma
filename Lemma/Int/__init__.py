@@ -32,3 +32,4 @@ from . import Le0Mul
 from . import SubCeil
 from . import Lt
 from . import LeNegAbs
+from . import LeCeil

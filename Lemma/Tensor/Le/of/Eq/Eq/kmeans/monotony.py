@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Algebra.All.Le.of.Eq_ArgMin)
 
-    Eq << Eq[-1].this.expr.apply(Algebra.LeSquare.of.Le)
+    Eq << Eq[-1].this.expr.apply(Nat.LeSquareS.of.Le.Ge_0)
 
     Eq << Eq[-1].this.find(Norm).apply(Algebra.Norm.eq.Sqrt)
 

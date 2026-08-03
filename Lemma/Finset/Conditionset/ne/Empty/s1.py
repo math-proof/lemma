@@ -25,7 +25,7 @@ def prove(Eq):
     i = Symbol(integer=True)
     x, (_, k), *_ = Eq[-1].variable.args
     a = Symbol(Stack[i:k](Piecewise((Range(k - 1, n), Equal(i, k - 1)), (i.set, True))))
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], x[:k], a)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[-1], x[:k], a)
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], 1)
 

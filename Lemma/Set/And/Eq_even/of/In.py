@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Nat.Le.of.Le.Le.apply(Eq[-2], Rat.LeFloor.apply(b / 2) * 2)
 
-    Eq << Set.In.Ico.of.Ge.Le.apply(Eq[-2], Eq[-1])
+    Eq << Set.In_Ico.of.Ge.Le.apply(Eq[-2], Eq[-1])
 
     Eq << Subset(Eq.contains.rhs, Integers, plausible=True)
 

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat
 
     n = Symbol(integer=True)
     d = Symbol(integer=True, zero=False)
@@ -23,13 +23,13 @@ def prove(Eq):
 
     Eq << Eq[-1].reversed
 
-    Eq << Algebra.Mod.eq.Sub_Mul_Div.apply(-n % d)
+    Eq << Nat.Mod.eq.Sub_Mul_FloorDiv.apply(-n % d)
 
-    Eq << Algebra.Mod.eq.Sub_Mul_Div.apply((d + n - sign(d)) % d)
+    Eq << Nat.Mod.eq.Sub_Mul_FloorDiv.apply((d + n - sign(d)) % d)
 
     Eq << Eq[-1] + Eq[-2]
 
-    Eq << Eq[-1].this.find(Mod).apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[-1].this.find(Mod).apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
     Eq << Eq[-1].this.find(Floor).apply(Int.Floor.eq.NegCeilNeg)
 

@@ -26,4 +26,3 @@ if __name__ == '__main__':
 
 # created on 2018-12-02
 
-from . import subst

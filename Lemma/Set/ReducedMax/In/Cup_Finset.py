@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Bool
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(oo,))
@@ -17,7 +17,7 @@ def prove(Eq):
     Eq << Set.In_Cup.given.Any_In.apply(Eq[0])
 
     i = Eq[-1].variable
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], i, ReducedArgMax(x[:n]))
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[-1], i, ReducedArgMax(x[:n]))
 
     Eq << Algebra.ReducedMax.eq.GetReducedArgMax.apply(x[:n])
 

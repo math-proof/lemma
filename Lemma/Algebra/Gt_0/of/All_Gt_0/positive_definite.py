@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Ne.given.Any.Ne)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Any.given.Cond.subst, i, j)
+    Eq << Eq[-1].this.lhs.apply(Bool.Any_UFn.given.UFnUFn, i, j)
 
     Eq << Eq[-1].this.lhs.args[:2].apply(Tensor.Dot.eq.Stack_Sum_MulGetS)
 

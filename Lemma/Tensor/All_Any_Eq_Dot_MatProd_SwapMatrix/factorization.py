@@ -35,7 +35,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Sliced).apply(Algebra.Slice.eq.Matrix)
 
     p0 = Eq[-1].variable
-    Eq << Eq[-1].this.expr.apply(Algebra.Any.given.Cond.subst, b[:2], Matrix((0, KroneckerDelta(p0, 0))))
+    Eq << Eq[-1].this.expr.apply(Bool.Any_UFn.given.UFnUFn, b[:2], Matrix((0, KroneckerDelta(p0, 0))))
 
     Eq << Eq[-1].this.expr.rhs.expand()
 

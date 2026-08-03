@@ -35,7 +35,7 @@ def prove(Eq):
     i, j = Symbol(integer=True)
     Eq << apply(abs(y[m - 1] - Sum[i](x[i]) / n) <= abs(y[m - 1] - Sum[j](y[j]) / m))
 
-    Eq << Algebra.LeSquare.of.Le.apply(Eq[0])
+    Eq << Nat.LeSquareS.of.Le.Ge_0.apply(Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.SquareSub_DivSum.eq.DivSquareSum_Sub)
 

@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * 2
 
-    Eq << Algebra.Add_.AddSquareS.Mul2.ge.Zero.apply(sqrt(x[0]) - sqrt(x[1]))
+    Eq << Nat.Le0AddAddSquareSMulMul2.apply(sqrt(x[0]) - sqrt(x[1]))
 
     Eq << Algebra.Ge.of.Ge_0.apply(Eq[-1])
 

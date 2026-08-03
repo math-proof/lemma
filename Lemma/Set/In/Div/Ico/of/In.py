@@ -18,7 +18,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Algebra, Nat, Int
 
     x, a, b = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)
@@ -30,9 +30,9 @@ def prove(Eq):
 
     Eq <<= Eq[-3] / d, Eq[-1] / d
 
-    Eq <<= Algebra.GeCeil.of.Ge.integer.apply(Eq[-2]), Algebra.LeFloor.of.Le.integer.apply(Eq[-1])
+    Eq <<= Int.LeCeil.of.Le.apply(Eq[-2]), Algebra.LeFloor.of.Le.integer.apply(Eq[-1])
 
-    Eq << Set.In.Ico.of.Ge.Le.apply(Eq[-2], Eq[-1])
+    Eq << Set.In_Ico.of.Ge.Le.apply(Eq[-2], Eq[-1])
 
 
 if __name__ == '__main__':

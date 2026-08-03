@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Bool
 
     k = Symbol(integer=True)
     Eq << apply(Cup[k](Interval(k, k + 1, left_open=True)))
@@ -22,7 +22,7 @@ def prove(Eq):
     x = Eq[-1].lhs
     Eq <<= Set.In_Cup.given.Any_In.apply(Eq[-1])
 
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], Eq[-1].variable, Ceil(x) - 1)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[-1], Eq[-1].variable, Ceil(x) - 1)
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 

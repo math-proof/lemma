@@ -85,7 +85,7 @@ def prove(Eq):
 
     Eq << Eq[-1] / 5 * 8
 
-    Eq << Algebra.Add_.AddSquareS.Mul2.ge.Zero.apply(x0_ + x1_)
+    Eq << Nat.Le0AddAddSquareSMulMul2.apply(x0_ + x1_)
 
     Eq << Algebra.Lt.of.Lt.Le.apply(Eq.lt, Eq.le)
 

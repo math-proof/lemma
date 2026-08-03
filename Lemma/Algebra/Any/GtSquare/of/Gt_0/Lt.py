@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq << Eq.is_negative.this.rhs.apply(Algebra.Any.given.Cond.subst, x, 0)
+    Eq << Eq.is_negative.this.rhs.apply(Bool.Any_UFn.given.UFnUFn, x, 0)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[0].reversed
 
-    Eq << Eq.is_nonnegative.this.rhs.apply(Algebra.Any.given.Cond.subst, x, (sqrt(U) + M) / 2)
+    Eq << Eq.is_nonnegative.this.rhs.apply(Bool.Any_UFn.given.UFnUFn, x, (sqrt(U) + M) / 2)
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 

@@ -11,14 +11,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat
 
     x, a = Symbol(real=True)
     Eq << apply(x ** 2 <= a ** 2)
 
     Eq << Int.LeAbs.of.LeNeg.Le.apply(Eq[-2], Eq[-1].reversed)
 
-    Eq << Algebra.LeSquare.of.Le.apply(Eq[-1])
+    Eq << Nat.LeSquareS.of.Le.Ge_0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

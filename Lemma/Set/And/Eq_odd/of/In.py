@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Nat.Le.of.Le.Le.apply(Eq.less_than, Eq[-1])
 
-    Eq << Set.In.Ico.of.Ge.Le.apply(Eq[-3], Eq[-1])
+    Eq << Set.In_Ico.of.Ge.Le.apply(Eq[-3], Eq[-1])
 
     Eq << Subset(Eq.contains.rhs, Integers, plausible=True)
 

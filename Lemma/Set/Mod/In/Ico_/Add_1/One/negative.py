@@ -18,7 +18,7 @@ def prove(Eq):
     d = Symbol(integer=True, negative=True)
     Eq << apply(n % d)
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[0].this.lhs.apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
     Eq << Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[-1], right_open=False)
 

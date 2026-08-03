@@ -13,7 +13,7 @@ def apply(given, q=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Bool, Nat
 #     n = q * d + r
     n, d = Symbol(integer=True, given=True)
 
@@ -22,13 +22,13 @@ def prove(Eq):
 
     Eq << apply(Equal(n % d, r))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[0].this.lhs.apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
     Eq << Eq[-1] + n // d * d
 
     q = Eq[1].variable
 
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[1], q, n // d)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[1], q, n // d)
 
 
 if __name__ == '__main__':

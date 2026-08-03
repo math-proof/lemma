@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq.Ceiling_el = Set.In_Ico.Ceil.of.In_Icc.apply(Eq[-1])
 
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq.any, Eq.any.variable, Eq.Ceiling_el.lhs)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq.any, Eq.any.variable, Eq.Ceiling_el.lhs)
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 

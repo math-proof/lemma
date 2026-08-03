@@ -11,13 +11,13 @@ def apply(is_positive, lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real
 
     x, M = Symbol(real=True)
     Eq << apply(x > 0, x <= M)
 
     Eq << Algebra.Ge_0.of.Gt_0.apply(Eq[0])
-    Eq << Algebra.LeSqrt.of.Ge_0.Le.apply(Eq[-1], Eq[1])
+    Eq << Real.LeSqrtS.of.Le.Ge_0.apply(Eq[-1], Eq[1])
 
 
 if __name__ == '__main__':

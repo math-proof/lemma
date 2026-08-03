@@ -23,7 +23,7 @@ def prove(Eq):
 
     k = Eq[-1].rhs.variable
     x = Eq[-1].lhs.lhs
-    Eq <<= Eq[-2].this.lhs.expr.apply(Set.Gt.of.In_Icc), Eq[-1].this.rhs.apply(Algebra.Any.given.Cond.subst, k, Ceil(x) - 1)
+    Eq <<= Eq[-2].this.lhs.expr.apply(Set.Gt.of.In_Icc), Eq[-1].this.rhs.apply(Bool.Any_UFn.given.UFnUFn, k, Ceil(x) - 1)
 
     Eq <<= Eq[-2].this.lhs.apply(Bool.Any_And.of.AnySetOf_AnySetOf, simplify=None), Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 

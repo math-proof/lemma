@@ -33,7 +33,7 @@ def prove(Eq):
     epsilon = Symbol(negative=True)
     Eq << Set.InAdd.of.In_Icc.apply(Eq[-1], epsilon, simplify=None)
 
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[2], x, Eq[-1].lhs)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[2], x, Eq[-1].lhs)
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], simplify=None)
 

@@ -25,7 +25,7 @@ def prove(Eq):
     Eq << Eq[-1].this.expr.rhs.definition
 
     i = Symbol(integer=True)
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[-1], x[:n], Stack[i:n](i))
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[-1], x[:n], Stack[i:n](i))
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 

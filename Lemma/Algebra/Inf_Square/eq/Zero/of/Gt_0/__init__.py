@@ -28,9 +28,9 @@ def prove(Eq):
 
     Eq << Algebra.All.given.And.All.split.apply(Eq[-1], cond=t <= M ** 2)
 
-    Eq <<= Eq[-2].this.expr.apply(Algebra.Any.given.Cond.subst, x, sqrt(t) / 2)
+    Eq <<= Eq[-2].this.expr.apply(Bool.Any_UFn.given.UFnUFn, x, sqrt(t) / 2)
 
-    Eq <<= Eq[-1].this.find(Less).apply(Algebra.Lt.given.Gt_0), Eq[-2].this.expr.apply(Algebra.Any.given.Cond.subst, x, M / 2)
+    Eq <<= Eq[-1].this.find(Less).apply(Algebra.Lt.given.Gt_0), Eq[-2].this.expr.apply(Bool.Any_UFn.given.UFnUFn, x, M / 2)
 
     Eq <<= Eq[-2].this.find(Greater) * Rational(4, 3), Eq[-1].this.args[0].apply(Set.In_Ico.given.Le.Lt)
 

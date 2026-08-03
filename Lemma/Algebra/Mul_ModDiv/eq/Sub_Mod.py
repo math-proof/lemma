@@ -10,11 +10,11 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, d = Symbol(integer=True)
     Eq << apply(x // d * d)
 
-    Eq << Algebra.Mod.eq.Sub_Mul_Div.apply(x % d)
+    Eq << Nat.Mod.eq.Sub_Mul_FloorDiv.apply(x % d)
 
     Eq << Eq[0] - Eq[1]
 

@@ -11,16 +11,16 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat, Real, Real, Real, Real
 
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[1])
 
-    Eq << Set.LeMax.of.In.apply(Eq[0])
+    Eq << Set.LeAbs_MaxAbsS.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.LeSquare.of.Le.apply(Eq[-1]).reversed
+    Eq << Nat.LeSquareS.of.Le.Ge_0.apply(Eq[-1]).reversed
 
     Eq << Algebra.Ge_0.of.Ge.apply(Eq[-1])
 
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Algebra.LeAdd.of.Le.apply(Eq[-1], Max(abs(a), abs(b)) ** 2)
 
-    Eq << Algebra.LeSqrt.of.Ge_0.Le.apply(Eq[-3], Eq[-1])
+    Eq << Real.LeSqrtS.of.Le.Ge_0.apply(Eq[-3], Eq[-1])
 
 
 if __name__ == '__main__':

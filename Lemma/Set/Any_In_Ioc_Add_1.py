@@ -12,12 +12,12 @@ def apply(x, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Bool, Algebra, Set
 
     x = Symbol(real=True, given=True)
     Eq << apply(x)
 
-    Eq << Algebra.Any.given.Cond.subst.apply(Eq[0], Eq[0].variable, Ceil(x) - 1)
+    Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[0], Eq[0].variable, Ceil(x) - 1)
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 

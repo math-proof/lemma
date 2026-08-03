@@ -12,13 +12,13 @@ def apply(self, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     n = Symbol(integer=True)
     d = Symbol(integer=True, zero=False)
     Eq << apply(n, d)
 
-    Eq << Eq[0].this.find(Mod).apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[0].this.find(Mod).apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
 
 

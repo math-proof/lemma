@@ -12,7 +12,7 @@ def apply(self, t_p):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     # m denotes batch size
     # n denotes sequence length
@@ -27,7 +27,7 @@ def prove(Eq):
     Eq << apply(s @ W.T, t_p)
 
 
-    Eq << Eq[-1].this.find(Mod).apply(Algebra.Mod.eq.Sub_Mul_Div)
+    Eq << Eq[-1].this.find(Mod).apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
 
 
