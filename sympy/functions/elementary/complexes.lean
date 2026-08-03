@@ -1,4 +1,6 @@
-import Mathlib.Tactic
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 import sympy.core.numbers
 
-export Complex (re im arg)
+noncomputable def Complex.sign (z : ℂ) : ℂ := z / ‖z‖
+
+export Complex (re im arg sign)

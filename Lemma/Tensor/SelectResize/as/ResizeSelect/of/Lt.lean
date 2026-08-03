@@ -49,6 +49,8 @@ import Lemma.Nat.Mod_Mul.eq.AddMul_Mod.of.Lt
 import Lemma.Nat.Mod_Mul.eq.AddMul_Mod.of.Ne_0
 import Lemma.Nat.Mul
 import Lemma.Nat.MulAdd.eq.AddMulS
+import Lemma.Nat.MulDivMul.eq.Mul
+import Lemma.Nat.MulDivMulS.eq.Mul_MulDivMulS
 import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Tensor.DataResize.as.FlattenMapSplitAtData
@@ -151,9 +153,36 @@ private lemma main
         have h_mod := h_mod_qr.trans h_mod_r
         simp only [ModEq] at h_mod h_mod_r' h_mod_r
         have h_T_threshold : n * (((s.take ↑d).drop (k + 1)).prod * (s.drop ↑d).prod) / (s.drop k).prod * (s.drop k).prod = s[↑d] * (n * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod) / ((s.eraseIdx ↑d).drop k).prod * ((s.eraseIdx ↑d).drop k).prod) := by
-          -- ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ d by omega) s, ProdDropTake.eq.MulProdDropTake.of.Gt.GtLength (show s.length > ↑d by grind) (show ↑d > k by omega), Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength d.isLt
           simp only [ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show d ≥ k by omega)]
-          sorry
+          rw [ProdDrop.eq.MulProdSDrop.of.Le (show k ≤ ↑d by omega) s]
+          rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength d.isLt]
+          have h_take_drop : ((s.take ↑d).drop k).prod = ((s.take ↑d).drop (k + 1)).prod * s[k] := by
+            rw [ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength (by simp; grind)]
+            rw [List.GetTake.eq.Get.of.GtLengthTake (by grind)]
+            grind
+          rw [h_take_drop]
+          conv_lhs =>
+            arg 1; arg 1; arg 2
+            rw [← Nat.mul_assoc, Nat.mul_comm (n := ((s.take ↑d).drop (k + 1)).prod), Nat.mul_assoc]
+          conv_lhs =>
+            arg 1; arg 2
+            rw [MulMul.eq.Mul_Mul.swap]
+          conv_lhs =>
+            arg 1; arg 2; arg 2
+            rw [← Nat.mul_assoc, Nat.mul_comm (n := ((s.take ↑d).drop (k + 1)).prod), Nat.mul_assoc]
+          conv_lhs =>
+            arg 2
+            rw [MulMul.eq.Mul_Mul.swap]
+          conv_lhs =>
+            arg 2; arg 2
+            rw [← Nat.mul_assoc, Nat.mul_comm (n := ((s.take ↑d).drop (k + 1)).prod), Nat.mul_assoc]
+          conv_rhs =>
+            arg 2; arg 1; arg 2
+            rw [MulMul.eq.Mul_Mul.swap]
+          conv_rhs =>
+            arg 2; arg 2
+            rw [MulMul.eq.Mul_Mul.swap]
+          apply MulDivMulS.eq.Mul_MulDivMulS
         split_ifs with h_rₐ? h_r' h_r'
         ·
           simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]

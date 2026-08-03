@@ -1,6 +1,7 @@
 export const tactics = [
     'abel',
     'abel_nf',
+    'ac_rfl',
     'aesop',
     'all_goals',
     'apply',
