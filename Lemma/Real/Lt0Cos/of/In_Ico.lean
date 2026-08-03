@@ -1,22 +1,20 @@
 import Lemma.Set.Ge.of.In_Ico
 import Lemma.Set.Lt.of.In_Ico
-import sympy.functions.elementary.trigonometric
-import sympy.sets.sets
-import sympy.Basic
-open Set
+import Lemma.Real.GtPi0
+open Set Real
 
 
 @[main]
 private lemma main
   {x : ℝ}
 -- given
-  (h : x ∈ Ico (0 : ℝ) (π / 2)) :
+  (h : x ∈ Ico 0 (π / 2)) :
 -- imply
-  Real.cos x > 0 := by
+  cos x > 0 := by
 -- proof
   apply Real.cos_pos_of_mem_Ioo
   refine ⟨?_, Lt.of.In_Ico h⟩
-  linarith [Ge.of.In_Ico h, Real.pi_pos]
+  linarith [Ge.of.In_Ico h, GtPi0]
 
 
 -- created on 2018-06-23

@@ -11,9 +11,9 @@ private lemma main
     if re z ≥ 0 then
       arcsin (im z / ‖z‖)
     else if im z ≥ 0 then
-      arcsin (im (-z) / ‖z‖) + π
+      arcsin (im (-z) / ‖z‖) + Real.pi
     else
-      arcsin (im (-z) / ‖z‖) - π := by
+      arcsin (im (-z) / ‖z‖) - Real.pi := by
 -- proof
   rw [arg]
 

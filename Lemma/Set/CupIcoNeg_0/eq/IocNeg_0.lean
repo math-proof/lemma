@@ -16,7 +16,7 @@ private lemma main
 -- given
   (n : ℕ) :
 -- imply
-  ⋃ k ∈ Set.Ico (-n : ℤ) (0 : ℤ), Ioc (k : R) (k + 1 : R) = Ioc (-n : R) (0 : R) := by
+  ⋃ k ∈ Set.Ico (-n : ℤ) 0, Ioc (k : R) (k + 1 : R) = Ioc (-n : R) 0 := by
 -- proof
   rw [CupIn_Ico.eq.Cup_UFnSub (-1)]
   simp [AddSubNeg.eq.Neg]
@@ -24,7 +24,7 @@ private lemma main
   rw [CupAnd.eq.CupIco]
   have h := Cup_Ioc.eq.IocNeg_0 n (R := R)
   rw [CupRange.eq.CupIco] at h
-  have h_all : ∀ k ∈ Set.Ico (0 : ℤ) (n : ℤ), Ioc (-(k : R) - 1) (-(k : R)) = Ioc (-(k.toNat : R) - 1) (-(k.toNat : R)) := by
+  have h_all : ∀ k ∈ Set.Ico 0 (n : ℤ), Ioc (-(k : R) - 1) (-(k : R)) = Ioc (-(k.toNat : R) - 1) (-(k.toNat : R)) := by
     intro k hk
     rw [Coe.eq.CoeCoe]
     rw [EqToNat.of.Ge_0 hk.1]

@@ -3,6 +3,12 @@ import Lemma.Nat.Le.of.Le.Le
 open Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.LeAddS.of.Le.Le |
+| comm 3 | Nat.GeAddS.of.Ge.Ge |
+-/
 @[main, comm 3]
 private lemma main
   [Add α]

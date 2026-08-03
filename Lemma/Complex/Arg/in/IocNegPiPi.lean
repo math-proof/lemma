@@ -8,7 +8,7 @@ private lemma main
 -- given
   (z : ℂ) :
 -- imply
-  arg z ∈ Ioc (-π) π :=
+  arg z ∈ Ioc (-Real.pi) Real.pi :=
 -- proof
   Complex.arg_mem_Ioc z
 

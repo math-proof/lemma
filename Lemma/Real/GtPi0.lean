@@ -1,11 +1,11 @@
-import sympy.core.numbers
 import sympy.Basic
+import sympy.functions.elementary.trigonometric
 
 
 @[main]
-private lemma main:
+private lemma main :
 -- imply
-  π > 0 :=
+  Real.pi > 0 :=
 -- proof
   Real.pi_pos
 
