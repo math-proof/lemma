@@ -19,7 +19,10 @@ export function leanPathToModule(input, repoRoot = REPO_ROOT) {
   const resolved = path.isAbsolute(trimmed)
     ? path.normalize(trimmed)
     : path.normalize(
-        path.join(lemmaRoot, trimmed.replace(/\//g, path.sep))
+        path.join(
+          lemmaRoot,
+          trimmed.replace(/\//g, path.sep).replace(/^Lemma[/\\]/, '')
+        )
       );
   const rel = path.relative(path.resolve(lemmaRoot), path.resolve(resolved));
   if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) {

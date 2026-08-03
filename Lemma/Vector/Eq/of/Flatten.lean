@@ -1,4 +1,4 @@
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.Vector.Eq.of.FlattenMap.Length
 open Vector Bool
 
@@ -16,7 +16,7 @@ private lemma main
   let ⟨a, ha_length⟩ := a
   let ⟨b, hb_length⟩ := b
   congr
-  have h := EqUFnS.of.Eq h fun t => t.val
+  have h := UFn.of.Eq h fun t => t.val
   simp at h
   have h_length : a.length = b.length := by
     aesop

@@ -1,4 +1,4 @@
-import Lemma.Set.SDiff.eq.Empty.of.Subset
+import Lemma.Set.Subset.is.SDiff.eq.Empty
 open Set
 
 

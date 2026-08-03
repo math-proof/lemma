@@ -1,5 +1,5 @@
 import sympy.vector.vector
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.List.LengthFlatten.eq.SumMapLength
 import Lemma.List.MapMap.eq.Map_Comp
 open List Bool
@@ -14,7 +14,7 @@ private lemma main
 -- imply
   a.length = b.length := by
 -- proof
-  have h_length := EqUFnS.of.Eq h₁ List.length
+  have h_length := UFn.of.Eq h₁ List.length
   repeat rw [LengthFlatten.eq.SumMapLength, MapMap.eq.Map_Comp] at h_length
   have h_comp : (List.length ∘ List.Vector.toList : List.Vector α n → ℕ) = (List.Vector.length : List.Vector α n → ℕ) := by
     ext x

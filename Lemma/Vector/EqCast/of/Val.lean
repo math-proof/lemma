@@ -1,4 +1,4 @@
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.Vector.Eq.of.Val
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 open Vector Bool

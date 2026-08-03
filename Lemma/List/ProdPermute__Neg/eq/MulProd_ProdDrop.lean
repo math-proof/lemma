@@ -3,7 +3,7 @@ import Lemma.List.Permute__Neg.eq.Append_AppendRotateDropTake
 import Lemma.Nat.EqMin.of.Lt
 import Lemma.Nat.LtAdd.of.Lt_Sub
 import Lemma.List.ProdAppend.eq.MulProdS
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.List.AppendAppend.eq.Append_Append
 import Lemma.List.Append.of.Eq
 import Lemma.Nat.Sub_Add.eq.SubSub
@@ -27,7 +27,7 @@ private lemma main
   rw [Permute__Neg.eq.Append_AppendRotateDropTake]
   simp_all
   repeat rw [MulProdS.eq.ProdAppend]
-  apply EqUFnS.of.Eq _ List.prod
+  apply UFn.of.Eq _ List.prod
   rw [Append_Append.eq.AppendAppend]
 
 

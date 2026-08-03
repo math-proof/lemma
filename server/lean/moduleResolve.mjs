@@ -286,18 +286,20 @@ export function resolveMissingModuleRedirect(moduleDot) {
                 }
               }
             } else {
-              if (tokens.length === 5) {
-                const tokens_ = [...tokens];
-                tokens_[1] = transformPrefix(tokens_[1]);
-                tokens_[3] = transformPrefix(tokens_[3]);
-                tokens_[4] = transformPrefix(tokens_[4]);
-                const m = tokens_.join('.');
-                const p = moduleToLeanPath(m);
-                if (p && fs.existsSync(p)) return m;
+              if (segment.length >= 4 && segment[0].length == 1 && segment[2].length == 1 && segment[3].length == 1) {
+                // Nat.GtMulS.of.Gt.Gt.Ge_0.Ge_0 => Nat.LtMulS.of.Lt.Lt.Ge_0.Ge_0
+                const segment_ = [...segment];
+                segment_[0] = [transformPrefix(...segment[0])];
+                segment_[2] = [transformPrefix(...segment[2])];
+                segment_[3] = [transformPrefix(...segment[3])];
+                if (existsSync(tokensToModule(segment_, section))) {
+                  segment = segment_;
+                  break;
+                }
               }
               let hit = false;
               for (let i = 2; i < segment.length; i++) {
-                const segment_ = segment.map((r) => [...r]);
+                const segment_ = [...segment];
                 segment_[0] = Not(segment_[i]);
                 segment_[i] = Not(first);
                 if (existsSync(tokensToModule(segment_, section))) {

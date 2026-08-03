@@ -1,4 +1,4 @@
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.DataCast.as.Data.of.Eq
@@ -32,7 +32,7 @@ private lemma main
   rw [DataDiv.eq.DivDataS]
   simp [DataExp.eq.ExpData]
   erw [Div.eq.Div_Replicate]
-  apply EqUFnS.of.Eq _ (exp X / ·)
+  apply UFn.of.Eq _ (exp X / ·)
   ext i
   simp
   unfold Tensor.keepdim

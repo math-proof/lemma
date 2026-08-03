@@ -1,5 +1,5 @@
 import Lemma.Nat.Mul_Sub.eq.SubMulS
-open Int Nat
+open Nat
 
 
 @[main, comm]

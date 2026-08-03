@@ -1,6 +1,6 @@
 import Lemma.Nat.AddMul.eq.Mul_Add_1
-import Lemma.Int.LeMulS.of.Ge_0.Le
-open Nat Int
+import Lemma.Nat.LeMulS.of.Ge_0.Le
+open Nat
 
 
 @[main]

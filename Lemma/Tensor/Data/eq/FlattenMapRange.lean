@@ -1,6 +1,6 @@
 import sympy.tensor.tensor
 import Lemma.Vector.EqFlattenUnflatten
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.Nat.NotLt.is.Ge
 import Lemma.Vector.EqGetRange
 import Lemma.Nat.EqDivMul.of.Ne_0
@@ -24,7 +24,7 @@ private lemma main
   let data : List.Vector α (s₀ * s.prod) := X.data
   have h_data : X.data = data := rfl
   rw [h_data, Eq_FlattenUnflatten data]
-  apply EqUFnS.of.Eq _ List.Vector.flatten
+  apply UFn.of.Eq _ List.Vector.flatten
   rw [List.Vector.unflatten]
   congr
   funext i

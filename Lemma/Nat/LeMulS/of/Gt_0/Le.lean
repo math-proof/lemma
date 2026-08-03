@@ -1,6 +1,6 @@
-import Lemma.Int.LeMulS.of.Ge_0.Le
+import Lemma.Nat.LeMulS.of.Ge_0.Le
 import Lemma.Nat.Ge.of.Gt
-open Int Nat
+open Nat
 
 
 @[main, comm 1]

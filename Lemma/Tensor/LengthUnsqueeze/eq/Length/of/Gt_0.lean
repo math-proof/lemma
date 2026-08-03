@@ -1,7 +1,7 @@
 import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
 import Lemma.List.LengthInsertIdx.eq.Add1Length.of.GeLength
 import Lemma.List.LengthInsertIdx.eq.Length.of.LtLength
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.List.InsertIdxCons.eq.Cons_InsertIdx.of.Gt_0
 import Lemma.Nat.Ge_1.of.Gt_0
 import Lemma.Nat.Eq.of.Ge.Le
@@ -24,7 +24,7 @@ private lemma main
       simp
     | _ :: tail, t =>
       simp
-      have := EqUFnS.of.Eq h_insert List.length
+      have := UFn.of.Eq h_insert List.length
       simp at this
       rw [LengthInsertIdx.eq.Length.of.LtLength] at this
       ·

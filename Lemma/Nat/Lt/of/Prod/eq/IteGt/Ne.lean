@@ -1,6 +1,6 @@
 import Lemma.Nat.Le.of.Prod.eq.IteGt
 import Lemma.Nat.Lt.is.Le.Ne
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 open Bool Nat
 
 
@@ -23,9 +23,9 @@ private lemma main
   split at h₁ <;>
   ·
     rw [h] at h₁
-    have h_1 := EqUFnS.of.Eq h₁ Prod.fst
+    have h_1 := UFn.of.Eq h₁ Prod.fst
     simp at h_1
-    have h_2 := EqUFnS.of.Eq h₁ Prod.snd
+    have h_2 := UFn.of.Eq h₁ Prod.snd
     simp at h_2
     simp_all
 

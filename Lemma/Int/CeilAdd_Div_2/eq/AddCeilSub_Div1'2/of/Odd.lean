@@ -4,7 +4,7 @@ import Lemma.Nat.Add.is.Eq
 import Lemma.Nat.Odd.is.Any_Eq_AddMul2
 import Lemma.Rat.DivAdd.eq.AddDivS
 import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 open Bool Nat Rat Int
 
 
@@ -20,7 +20,7 @@ private lemma main
   ⌈x + n / 2⌉ = ⌈x - 1 / 2⌉ + (n + 1) / 2 := by
 -- proof
   rw [AddCeil.eq.CeilAdd]
-  apply EqUFnS.of.Eq
+  apply UFn.of.Eq
   rw [AddSub.eq.Add_Sub]
   apply Add.of.Eq.left
   let ⟨k, hk⟩ := Any_Eq_AddMul2.of.Odd h

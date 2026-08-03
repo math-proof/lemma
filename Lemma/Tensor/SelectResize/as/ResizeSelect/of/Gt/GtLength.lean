@@ -48,7 +48,6 @@ import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Bool Fin List Nat Tensor Vector
-set_option maxHeartbeats 4000000
 
 
 @[main, cast]
@@ -63,7 +62,6 @@ private lemma main
 -- imply
   (X.resize ⟨k, h_k⟩ n).select ⟨d, by grind⟩ ⟨i, by grind⟩ ≃ (X.select ⟨d, by grind⟩ i).resize ⟨k - 1, by grind⟩ n := by
 -- proof
-  have h_i := i.isLt
   apply SEq.of.SEqDataS.Eq
   ·
     simp
@@ -113,7 +111,7 @@ private lemma main
             simp [TakeSet.eq.Take.of.Ge (show k ≥ d + 1 by omega) n, ProdTake.eq.MulProdTake.of.GtLength h_d_length]
           have h_row₀ : (↑q * s[d] + ↑i) < (s.take (d + 1)).prod := by
             rw [ProdTake.eq.MulProdTake.of.GtLength h_d_length]
-            apply AddMul.lt.Mul.of.Lt.Lt _ h_i
+            apply AddMul.lt.Mul.of.Lt.Lt _ i.isLt
             rwa [← TakeSet.eq.Take.of.Ge (show k ≥ d by omega) n]
           have h_row : (↑q * s[d] + ↑i) < ((s.set k n).take (d + 1)).prod := Nat.lt_of_lt_of_eq h_row₀ h_prod_take'.symm
           have h_lt₀ := AddMul_ProdDrop.lt.Prod.of.Lt_ProdTake.Lt_ProdDrop (s := s.set k n) (d := d + 1) h_row h_r
@@ -122,6 +120,16 @@ private lemma main
         let ⟨h_qₐ_div, h_rₐ_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qₐrₐ
         rw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
         simp [GetResize.eq.Ite_Get_Mod.fin]
+        simp only [DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] at h_rₐ_mod h_r'_mod
+        rw [MulAdd.eq.AddMulS] at h_qₐrₐ
+        simp [ProdDropSet.eq.MulProdDropTake.of.Ge.GtLength h_k (show k ≥ d + 1 by omega) n] at h_qₐrₐ h_qr
+        rw [MulMul.eq.Mul_Mul (b := n), Mul_Mul.eq.MulMul] at h_qₐrₐ h_qr
+        rw [Mul_Mul.eq.MulMul (a := i.val), AddMulS.eq.MulAdd] at h_qₐrₐ
+        have h_mod_r := ModEq.of.AddMul h_qₐrₐ
+        have h_mod_t := ModEq.of.Eq_AddMul h_qr
+        have h_mod_rₐ := ModEq.of.Eq_Mod h_rₐ_mod
+        have h_mod := (h_mod_t.trans h_mod_r).trans h_mod_rₐ
+        simp [ModEq] at h_mod
         split_ifs with h_rₐ? h_r'? h_s_d h_r' h_s_d
         ·
           omega
@@ -148,7 +156,7 @@ private lemma main
           conv_rhs => rw [← ProdDrop.eq.MulProdSDrop.of.Le (show d + 1 ≤ k by omega)]
           rw [MulAdd.eq.AddMulS]
           simp [EqAddSub.of.Ge (show k ≥ 1 by omega)] at h_qₕ_div h_rₕ_mod
-          rw [DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega)] at h_q'_div h_r'_mod
+          rw [DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega)] at h_q'_div
           rw [DivAddMul.eq.Add_Div.of.Gt_0 (by grind)] at h_qₕ_div
           simp only [DivMod.eq.Zero] at h_qₕ_div
           simp at h_qₕ_div
@@ -181,42 +189,17 @@ private lemma main
           ring_nf
         ·
           exfalso
-          simp only [DropEraseIdx.eq.Drop.of.Le (show d ≤ k - 1 by omega), DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] at h_rₐ? h_r'? h_rₐ_mod h_r'_mod
-          rw [MulAdd.eq.AddMulS] at h_qₐrₐ
-          simp [ProdDropSet.eq.MulProdDropTake.of.Ge.GtLength h_k (show k ≥ d + 1 by omega) n] at h_qₐrₐ h_qr
-          rw [MulMul.eq.Mul_Mul (b := n), Mul_Mul.eq.MulMul] at h_qₐrₐ h_qr
-          rw [Mul_Mul.eq.MulMul (a := i.val)] at h_qₐrₐ
-          rw [AddMulS.eq.MulAdd] at h_qₐrₐ
-          have h_mod_r := ModEq.of.AddMul h_qₐrₐ
-          have h_mod_t := ModEq.of.Eq_AddMul h_qr
-          have h_mod_rₐ := ModEq.of.Eq_Mod h_rₐ_mod
-          have h_mod := (h_mod_t.trans h_mod_r).trans h_mod_rₐ
-          simp [ModEq] at h_mod
+          simp only [DropEraseIdx.eq.Drop.of.Le (show d ≤ k - 1 by omega), DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] at h_rₐ? h_r'?
           rw [h_rₐ_mod, ← h_mod] at h_rₐ?
           rw [h_r'_mod] at h_r'?
           exact h_r'? h_rₐ?
         ·
           grind
         ·
-          obtain hB0 | hBpos := Nat.eq_zero_or_pos ((s.eraseIdx d).drop (k - 1)).prod
-          ·
-            exfalso
-            simp [hB0, Nat.div_zero] at *
-          ·
-            obtain h_prod_drop | h_prod_drop := Nat.eq_zero_or_pos (s.drop k).prod
-            ·
-              exfalso
-              simp [h_prod_drop, Nat.div_zero] at *
-              sorry
-            ·
-              if hD1 : (s.drop k).prod = 1 then
-                simp [hD1, Nat.div_one] at *
-              else
-                obtain h_eq | h_div_mul_lt := Nat.eq_or_lt_of_le (Nat.div_mul_le_self (n * (s.drop (k + 1)).prod) (s.drop k).prod)
-                ·
-                  grind
-                ·
-                  sorry
+          exfalso
+          simp only [DropEraseIdx.eq.Drop.of.Le (show d ≤ k - 1 by omega), DropEraseIdx.eq.Drop.of.Le (show d ≤ k by omega), show k - 1 + 1 = k by omega] at h_rₐ? h_r'
+          rw [h_r'_mod, h_mod, ← h_rₐ_mod] at h_r'
+          exact h_rₐ? h_r'
         ·
           rfl
       ·

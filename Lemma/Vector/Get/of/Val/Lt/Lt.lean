@@ -1,4 +1,4 @@
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.Vector.ValAppend.eq.AppendValS
 import Lemma.List.LengthAppend.eq.AddLengthS
 import Lemma.List.Get.of.Eq.GtLength

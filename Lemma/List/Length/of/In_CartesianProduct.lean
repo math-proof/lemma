@@ -1,5 +1,5 @@
 import Lemma.Set.In.is.Any_Eq_Get
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.List.LengthGetProduct.eq.Length.of.GtLengthProduct
 open Set List Bool
 
@@ -14,7 +14,7 @@ private lemma main
 -- proof
   unfold List.cartesianProduct at h
   let ⟨i, h⟩ := Any_Eq_Get.of.In h
-  have h := EqUFnS.of.Eq h List.length
+  have h := UFn.of.Eq h List.length
   rw [h]
   have hi := i.isLt
   have := LengthGetProduct.eq.Length.of.GtLengthProduct hi

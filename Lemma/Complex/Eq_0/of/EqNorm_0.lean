@@ -1,4 +1,4 @@
-import Lemma.Complex.Norm.eq.SqrtAddSqaureS
+import Lemma.Complex.Norm.eq.SqrtAddSquareS
 import Lemma.Real.EqSqrt_0.is.Le_0
 import Lemma.Int.AddSquareS.ge.Zero
 import Lemma.Nat.Eq.of.Ge.Le
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   z = 0 := by
 -- proof
-  have := Norm.eq.SqrtAddSqaureS (z := z)
+  have := Norm.eq.SqrtAddSquareS (z := z)
   rw [h] at this
   have h_Le_0 := Le_0.of.EqSqrt_0 this.symm
   have h_Ge_0 := AddSquareS.ge.Zero (a := re z) (b := im z)

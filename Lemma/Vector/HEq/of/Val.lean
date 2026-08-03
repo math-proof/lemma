@@ -1,4 +1,4 @@
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.Vector.Eq.of.Val
 open Vector Bool
 
@@ -12,7 +12,7 @@ private lemma main
 -- imply
   HEq a b := by
 -- proof
-  have h_length := EqUFnS.of.Eq h (·.length)
+  have h_length := UFn.of.Eq h (·.length)
   simp at h_length
   let b' : List.Vector α n := cast (by rw [h_length]) b
   have h_Eq : a.val = b'.val := by

@@ -286,5 +286,6 @@ Run `python py/format.py <leanFile>` if necessary. It will:
 - generate the attribute docstring table (for markdown rendering) when the lemma uses `@[main, mp, mpr, mt, fin, comm, …]`;
 - remove redundant `import` statements
 
-### Verification
+### Debugging
+- print logging info via `sympy.printing.echo` by creating *.echo.lean tracing files for debugging.
 - Confirm the file compiles with `lake build <Module.Name>` or `lake env lean <path/to/file.lean>`.

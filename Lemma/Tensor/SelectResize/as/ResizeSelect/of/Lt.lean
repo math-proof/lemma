@@ -1,3 +1,7 @@
+import Lemma.Nat.ModMod_Mul.eq.Mod
+import Lemma.Nat.ModEq.of.EqMod
+import Lemma.Nat.ModEq.of.AddMul
+import Lemma.Nat.ModEq.of.EqAddMul
 import Lemma.Nat.MulDiv.eq.Sub_Mod
 import Lemma.Nat.DivMulS.eq.Div.of.Ne_0
 import Lemma.List.AddMul_ProdDrop.lt.ProdDrop.of.GtProdDrop_Succ.GtGet.Gtlength
@@ -15,7 +19,7 @@ import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.Prod.eq.MulProdS
 import Lemma.List.ProdDrop.dvd.ProdDropEraseIdx.of.Ge
 import Lemma.List.ProdDrop.eq.MulProdSDrop.of.Le
-import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
+import Lemma.List.ProdDropTake.eq.MulProdDropTake.of.Gt.GtLength
 import Lemma.List.ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge
 import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.List.ProdAppend.eq.MulProdS
@@ -131,6 +135,23 @@ private lemma main
         simp
         erw [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qₐrₐ]
         simp [GetResize.eq.Ite_Get_Mod.fin]
+        simp only [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at h_rₐ_mod h_r'_mod
+        rw [MulAdd.eq.AddMulS] at h_qₐrₐ
+        simp only [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] at h_qₐrₐ h_q'r' h_r'_mod
+        simp only [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ d by omega) s, ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show d ≥ k + 1 by grind)] at h_qₐrₐ h_q'r' h_r'_mod
+        rw [AddMulS.eq.MulAdd] at h_qₐrₐ
+        conv_rhs at h_qₐrₐ =>
+          arg 1; arg 2; arg 2; arg 2
+          rw [← Mul_ProdDrop_Add_1.eq.ProdDrop.of.GtLength d.isLt]
+        have h_rhs :
+            ↑qₐ * (n * (((s.take ↑d).drop (k + 1)).prod * (s[↑d] * (s.drop (↑d + 1)).prod))) + ↑rₐ =
+              (↑qₐ * n * ((s.take ↑d).drop (k + 1)).prod * s[↑d]) * (s.drop (↑d + 1)).prod + ↑rₐ := by
+          ring_nf
+        have h_mod_r := ModEq.of.AddMul (h_qₐrₐ.trans h_rhs)
+        have h_mod_r' := ModEq.of.Eq_AddMul h_q'r'
+        have h_mod_qr := ModEq.of.Eq_AddMul (by simpa [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] using h_qr)
+        have h_mod := h_mod_qr.trans h_mod_r
+        simp only [ModEq] at h_mod h_mod_r' h_mod_r
         split_ifs with h_rₐ? h_r' h_r'
         ·
           simp [GetSplitAt.eq.Get_AddMul_ProdDrop.fin]
@@ -205,7 +226,37 @@ private lemma main
             rw [MulMul.eq.Mul_Mul.permute]
             rw [DivMod_Mul.eq.ModDiv]
         ·
-          sorry
+          exfalso
+          have h_mod_r'ₐ :
+              ↑r' % (s.drop (↑d + 1)).prod = ↑rₐ % (s.drop (↑d + 1)).prod := by
+            set D := (s.drop (↑d + 1)).prod
+            set M := n * (((s.take ↑d).drop (k + 1)).prod * D)
+            have h_mod_r'_eq : ↑r' % M = ↑t % M := h_mod_r'.symm
+            calc
+              ↑r' % D
+                  = ↑r' % M % D := by
+                    unfold M
+                    conv_rhs =>
+                      arg 1; arg 2
+                      rw [show n * (((s.take ↑d).drop (k + 1)).prod * D) =
+                        n * ((s.take ↑d).drop (k + 1)).prod * D by ring_nf]
+                    rw [← ModMod_Mul.eq.Mod (k := ↑r') (m := n * ((s.take ↑d).drop (k + 1)).prod) (n := D)]
+              _ = ↑t % M % D := congrArg (fun x => x % D) h_mod_r'_eq
+              _ = ↑t % D := by
+                    unfold M
+                    rw [← show (n * ((s.take ↑d).drop (k + 1)).prod) * D =
+                      n * (((s.take ↑d).drop (k + 1)).prod * D) by ring_nf,
+                      ← ModMod_Mul.eq.Mod (k := ↑t) (m := n * ((s.take ↑d).drop (k + 1)).prod) (n := D)]
+              _ = ↑rₐ % D := by
+                    have h_r_at_D : ↑r = ↑t % D := by
+                      simpa [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] using h_r_mod
+                    have h_r_lt_D : ↑r < D := by
+                      simpa [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] using h_r
+                    exact Eq.trans (Eq.trans h_r_at_D.symm (Nat.mod_eq_of_lt h_r_lt_D).symm) h_mod_r
+          simp only [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ d by omega) s] at h_rₐ? h_r' h_r'_mod h_rₐ_mod
+          rw [h_rₐ_mod, ← h_mod] at h_rₐ?
+          rw [h_r'_mod] at h_r'
+          exact h_r' h_rₐ?
         ·
           sorry
         ·

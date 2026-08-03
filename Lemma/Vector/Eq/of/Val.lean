@@ -1,4 +1,4 @@
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 open Bool
 
 
@@ -22,7 +22,7 @@ private lemma nat
 -- imply
   n = n' := by
 -- proof
-  have := EqUFnS.of.Eq h List.length
+  have := UFn.of.Eq h List.length
   simp at this
   assumption
 

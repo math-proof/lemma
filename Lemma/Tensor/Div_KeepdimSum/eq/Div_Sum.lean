@@ -1,4 +1,4 @@
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.Nat.EqMod_1'0
 import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataDiv.eq.DivDataS
@@ -31,7 +31,7 @@ private lemma main
     _ = X.data / (X.sum 0).data[0] := by simp [HDiv.hDiv]
     _ = X.data / List.Vector.replicate [n].prod (X.sum 0).data[0] := Div.eq.Div_Replicate (v := X.data) (d := (X.sum 0).data[0])
   erw [h_rhs]
-  apply EqUFnS.of.Eq _ (X.data / ·)
+  apply UFn.of.Eq _ (X.data / ·)
   ext i
   simp
   unfold Tensor.keepdim

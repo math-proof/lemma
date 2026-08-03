@@ -1,6 +1,6 @@
 import stdlib.SEq
 import Lemma.Vector.Eq.of.Val
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 open Vector Bool
 
 
@@ -13,7 +13,7 @@ private lemma main
 -- imply
   a ≃ b := by
 -- proof
-  have h_length := EqUFnS.of.Eq h List.length
+  have h_length := UFn.of.Eq h List.length
   simp at h_length
   constructor
   .

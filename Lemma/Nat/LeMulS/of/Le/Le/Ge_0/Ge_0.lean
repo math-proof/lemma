@@ -1,7 +1,7 @@
-import Lemma.Int.LeMulS.of.Ge_0.Le
+import Lemma.Nat.LeMulS.of.Ge_0.Le
 import Lemma.Nat.LeMulS.of.Le.Ge_0
 import Lemma.Nat.Le.of.Le.Le
-open Int Nat
+open Nat
 
 
 @[main, comm 12]

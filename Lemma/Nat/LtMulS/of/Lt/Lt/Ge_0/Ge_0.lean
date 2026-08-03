@@ -4,6 +4,12 @@ import Lemma.Nat.LtMulS.of.Lt.Lt.Gt_0.Gt_0
 open Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.LtMulS.of.Lt.Lt.Ge_0.Ge_0 |
+| comm 12 | Nat.GtMulS.of.Gt.Gt.Ge_0.Ge_0 |
+-/
 @[main, comm 12]
 private lemma main
   [MulZeroClass α] [LinearOrder α]

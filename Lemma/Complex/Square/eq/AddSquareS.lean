@@ -1,7 +1,7 @@
-import Lemma.Complex.Norm.eq.SqrtAddSqaureS
+import Lemma.Complex.Norm.eq.SqrtAddSquareS
 import Lemma.Int.AddSquareS.ge.Zero
 import Lemma.Real.EqSquareSqrt.of.Ge_0
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 open Bool Complex Int Real
 
 
@@ -11,8 +11,8 @@ private lemma main
 -- imply
     ‖z‖² = (re z)² + (im z)² := by
 -- proof
-  have := Norm.eq.SqrtAddSqaureS (z := z)
-  have h := EqUFnS.of.Eq this (·²)
+  have := Norm.eq.SqrtAddSquareS (z := z)
+  have h := UFn.of.Eq this (·²)
   have := AddSquareS.ge.Zero (a := re z) (b := im z)
   have := EqSquareSqrt.of.Ge_0 this
   exact this ▸ h

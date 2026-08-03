@@ -1,6 +1,6 @@
 import stdlib.Nat
 import sympy.vector.vector
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Lt_Sub.of.LtAdd
 import Lemma.Nat.LtMod.of.Gt_0
@@ -315,7 +315,7 @@ def Tensor.transpose (X : Tensor α s) (i j : ℕ) : Tensor α (s.swap i j) :=
       simpa
     cast
       (by
-        apply EqUFnS.of.Eq (f := Tensor α)
+        apply UFn.of.Eq (f := Tensor α)
         rw [PermutePermute.eq.Swap.of.Lt.GtLength h_j h_lt]
         rw [Swap.of.Prod.eq.IteGt h_ite]
       )

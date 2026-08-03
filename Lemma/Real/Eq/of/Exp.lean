@@ -1,5 +1,4 @@
-import Lemma.Bool.EqUFnS.of.Eq
-open Bool
+import sympy.Basic
 
 
 @[main]
@@ -14,4 +13,4 @@ private lemma main
 
 
 -- created on 2025-10-02
--- updated on 2025-10-03
+-- updated on 2026-08-02

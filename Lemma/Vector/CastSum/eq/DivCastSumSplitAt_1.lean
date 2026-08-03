@@ -5,7 +5,7 @@ import Lemma.Vector.UnflattenDiv.eq.DivUnflatten_Replicate
 import Lemma.Vector.SumMul.eq.MulSum
 import Lemma.Vector.GetCast.eq.Get.of.Eq
 import Lemma.List.EraseIdx_0.eq.Drop_1
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.Vector.EqGetReplicate
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.GetMul.eq.MulGetS
@@ -34,7 +34,7 @@ private lemma main
   rw [SumMul.eq.MulSum]
   ext i
   have h_s := Drop_1.eq.EraseIdx_0 s
-  have h_s := EqUFnS.of.Eq h_s List.prod
+  have h_s := UFn.of.Eq h_s List.prod
   rw [GetCast.eq.Get.of.Eq.fin h_s]
   rw [GetMul.eq.MulGetS.fin]
   rw [InvReplicate.eq.ReplicateInv]

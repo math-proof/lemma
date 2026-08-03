@@ -1,7 +1,7 @@
 import Lemma.Bool.HEq.of.Eq_Cast
 import Lemma.Bool.EqCast.of.HEq
 import Lemma.Tensor.Eq.is.EqDataS
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 import Lemma.Tensor.DataCast.as.Data.of.Eq
 open Tensor Bool
 

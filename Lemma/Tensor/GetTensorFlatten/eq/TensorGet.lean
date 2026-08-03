@@ -1,6 +1,6 @@
 import Lemma.Tensor.Eq.is.EqDataS
 import Lemma.Tensor.DataGet.eq.Get.of.EqData_Flatten
-import Lemma.Bool.EqUFnS.of.Eq
+import Lemma.Bool.UFn.of.Eq
 open Tensor Bool
 
 
@@ -17,7 +17,7 @@ private lemma main
   rw [← h_t]
   apply Eq.of.EqDataS
   simp
-  have h_eq := EqUFnS.of.Eq h_t (·.data)
+  have h_eq := UFn.of.Eq h_t (·.data)
   simp at h_eq
   have := DataGet.eq.Get.of.EqData_Flatten h_eq i
   aesop

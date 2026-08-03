@@ -1,15 +1,11 @@
 import Lemma.Nat.LtAddS.of.Lt.Lt
 import Lemma.Nat.Lt.of.Le.Lt
-import Lemma.Int.LeMulS.of.Ge_0.Lt
+import Lemma.Nat.LeMulS.of.Ge_0.Lt
 import Lemma.Nat.LtMulS.of.Lt.Gt_0
 import Lemma.Set.LtSquareS.of.In_Ico0
-open Set Nat Int
+open Set Nat
 
 
-/--
-Given two real numbers \( x_0 \) and \( x_1 \) within the interval \([0, \frac{1}{2})\), the sum of their squares plus their product is strictly less than \(\frac{3}{4}\).
-This result leverages the strict monotonicity of addition and multiplication under non-negative constraints to establish the upper bound.
--/
 @[main]
 private lemma main
   {x₀ x₁ : ℝ}
