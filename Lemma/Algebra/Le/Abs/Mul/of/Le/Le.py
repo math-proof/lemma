@@ -14,13 +14,13 @@ def apply(x_less_than_a, y_less_than_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Algebra, Int, Nat
     x, y, a, b = Symbol(real=True)
 
 
     Eq << apply(abs(x) <= a, abs(y) <= b)
 
-    Eq << Algebra.LeMul.of.Le.Le.apply(Eq[0], Eq[1])
+    Eq << Nat.LeMulS.of.Le.Le.Ge_0.Ge_0.apply(Eq[0], Eq[1])
 
     Eq << Eq[-1].this.lhs.apply(Int.MulAbsS.eq.AbsMul)
 

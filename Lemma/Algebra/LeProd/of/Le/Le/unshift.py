@@ -9,7 +9,7 @@ def apply(*imply):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Nat
 
     k, a = Symbol(integer=True)
     b = Symbol(domain=Range(a + 1, oo))
@@ -17,7 +17,7 @@ def prove(Eq):
     f = Function(integer=True)
     Eq << apply((g(a - 1) <= f(a - 1)), Product[k:a:b](g(k)) <= Product[k:a:b](f(k)))
 
-    Eq << Algebra.LeMul.of.Le.Le.apply(Eq[0], Eq[1])
+    Eq << Nat.LeMulS.of.Le.Le.Ge_0.Ge_0.apply(Eq[0], Eq[1])
 
     Eq << Eq[2].this.lhs.apply(Finset.Prod.eq.MulProdS, cond={a - 1})
 

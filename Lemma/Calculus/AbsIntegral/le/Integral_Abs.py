@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Calculus.LeIntegral.of.Le.apply(Eq[-1], (x, a, b))
 
-    Eq << Algebra.Ge_NegAbs.apply(f(x))
+    Eq << Int.LeNegAbs.apply(f(x))
 
     Eq << Calculus.GeIntegral.of.Ge.apply(Eq[-1], (x, a, b))
 

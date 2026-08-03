@@ -19,7 +19,7 @@ def prove(Eq):
     Eq << Algebra.GeSqrt_0.of.Ge_0.apply(Eq[0])
 
     t = Symbol(nonnegative=True)
-    Eq << Algebra.Or.of.Ge.split.apply(Eq[-1], t)
+    Eq << Nat.Gt.ou.AndGeS.of.Ge.apply(Eq[-1], t)
 
     Eq.ou = Eq[-1].subs(t, sqrt(y))
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[-1], Eq.ou, invert=True)
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.GtSquare.of.Gt)
+    Eq << Eq[-1].this.find(Greater).apply(Nat.GtSquareS.of.Gt.Ge_0)
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[1], Eq[-1], invert=True)
 

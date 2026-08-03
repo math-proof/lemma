@@ -22,7 +22,7 @@ def prove(Eq):
     x, a, b = Symbol(integer=True, given=True)
     Eq << apply(Element(x, Range(a, b)), upper=b + 1)
 
-    Eq << Set.In_Ico.given.And.apply(Eq[1])
+    Eq << Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[1])
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0])
 

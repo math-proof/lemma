@@ -78,3 +78,4 @@ from . import Gt0Cos
 from . import Lt0Cos
 from . import Sec
 from . import Eq_DivPi2
+from . import EqCosAddMul_Pi_0

@@ -6,6 +6,5 @@ from . import Ite
 from . import Mul_
 from . import Mul
 from . import Inv
-from . import Zero
 from . import Sum
 from . import Re

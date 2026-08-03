@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Set.In.given.In.Sub.apply(Eq[2], d)
 
-    Eq <<= Set.In_Ico.given.And.apply(Eq[3]), Set.In_Ico.given.And.apply(Eq[-1])
+    Eq <<= Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[3]), Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[-1])
 
     Eq <<= Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[4]), Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[1])
 

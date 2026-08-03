@@ -20,7 +20,7 @@ def prove(Eq):
     A, B, C = Symbol(etype=dtype.integer)
     Eq << apply(Subset(A, B | C))
 
-    Eq << Set.Subset.Union.of.Subset.rhs.apply(Eq[1], B)
+    Eq << Set.Subset_Union.of.Subset.apply(Eq[1], B)
 
 
 if __name__ == '__main__':

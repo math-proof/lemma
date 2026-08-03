@@ -45,15 +45,11 @@
 * [Calculus](../?module=Calculus) 微积分，主要包含以下内容： 
 [极限定义](../?module=Calculus.Any.All.of.Eq_Limit.limit_definition) 及其理论；
 [分部积分](../?module=Calculus.Integral.eq.Add.by_parts) 定理；
-* [Discrete](../?module=Discrete) 数论，离散数学，组合数学，线性代数，[第二类Stirling数](../?module=Discrete.Stirling.eq.Add.recurrence)的组合学推导，
-[Catalan数](../?module=Discrete.Eq.of.Eq.Eq.catalan.recurrence)的推导，[连分数](../?module=Discrete.Add.eq.Pow.HK.recurrence)初步理论；[Cholesky矩阵分解](../?module=Discrete.Any.Eq.of.Eq_Adjoint.Imp_Gt_0.Cholesky)存在定理。
+* [Finset](../?module=Finset) 数论，离散数学，组合数学，线性代数，[第二类Stirling数](../?module=Finset.Stirling.eq.Add.recurrence)的组合学推导，
+[Catalan数](../?module=Finset.Eq.of.Eq.Eq.catalan.recurrence)的推导，[连分数](../?module=Finset.Add.eq.Pow.HK.recurrence)初步理论；[Cholesky矩阵分解](../?module=Finset.Any.Eq.of.Eq_Adjoint.Imp_Gt_0.Cholesky)存在定理。
 * [Probability](../?module=Probability) 概率统计学，比如[Bayes公式](../?module=Probability.Pr.eq.Div.Pr.bayes)，[大数定理](../?module=Probability.Eq.Limit.Pr.of.Eq_Conditioned.Eq_Expect.Eq_Var.law_of_large_numbers)；
 * [Tensor](../?module=Tensor) 机器学习，深度学习中的数学模型，
-[LSTM](../?module=Tensor.Eq.of.Eq.Eq.long_short_term_memory)，
-[GRU](../?module=Tensor.Eq_AddMulS.gated_recurrent_unit)，
-[CNN](../?module=Tensor.Eq.of.Eq_Stack_Bool_In.conv1d)，
-[BERT](../?module=Tensor.DotSoftmax.eq.Stack_Div.scaled_dot_product_attention)，
-[GPT](../?module=Tensor.DotSoftmax.eq.Stack_Dot.gpt)，
+[KV-Cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.GetSlice.eq.DotSoftmaxAdd_DivDot_Transpose.kv_cache)，
 条件自由场[CRF](../?module=Tensor.And.of.Ne_0.Eq.Eq.Eq.crf.y_given_x)，KMeans
 [聚类收敛性](../?module=Set.LeAddSSumS_SquareSub_Sum.of.In.NotIn.LeAbsSSub_Sum)、用于Vision Transformer的[广义旋转位置编码](../?module=Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane)、强化学习的[策略梯度定理](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate)的推导及证明。  
 

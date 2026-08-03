@@ -37,17 +37,13 @@ the proof of [inclusion-exclusion principle](../?module=Set.CardUnion.eq.Sub_.Ad
 [the definition of limit](../?module=Calculus.Any.All.of.Eq_Limit.limit_definition) and its fundamental theories which is the theoretical basis of Calculus.  
 proof of [integration by parts](../?module=Calculus.Integral.eq.Add.by_parts);  
 determination of some integral for certain transcendental functions;  
-* [Discrete](../?module=Discrete) section is comprised of number theory, Discrete mathematics, combinatorics, linear Algebra, some basic counting techniques involving permutations, such as 
-combinatoric induction for [second Stirling Number](../?module=Discrete.Stirling.eq.Add.recurrence),  
-derivation for [Catalan Number](../?module=Discrete.Eq.of.Eq.Eq.catalan.recurrence)， 
-basics of [continued fraction](../?module=Discrete.Add.eq.Pow.HK.recurrence); as well as the existence of [Cholesky decomposition](../?module=Discrete.Any.Eq.of.Eq_Adjoint.Imp_Gt_0.Cholesky).  
+* [Finset](../?module=Finset) section is comprised of number theory, Finset mathematics, combinatorics, linear Algebra, some basic counting techniques involving permutations, such as 
+combinatoric induction for [second Stirling Number](../?module=Finset.Stirling.eq.Add.recurrence),  
+derivation for [Catalan Number](../?module=Finset.Eq.of.Eq.Eq.catalan.recurrence)， 
+basics of [continued fraction](../?module=Finset.Add.eq.Pow.HK.recurrence); as well as the existence of [Cholesky decomposition](../?module=Finset.Any.Eq.of.Eq_Adjoint.Imp_Gt_0.Cholesky).  
 * [Probability](../?module=Probability) refers to statistics and probability theory, comprising: the derivation of the probability density formula of some common distribution (such as, binomial distribution, Gaussian distribution, poisson distribution, die distribution, Χ<sup>2</sup>distribution)，as well as propositions related to [Bayes theorem](../?module=Probability.Pr.eq.Div.Pr.bayes), and the [law of large numbers](../?module=Probability.Eq.Limit.Pr.of.Eq_Conditioned.Eq_Expect.Eq_Var.law_of_large_numbers);  
 * [Tensor](../?module=Tensor) section is related to the mathematical theories behind the contemporary deep learning / machine learning techniques, including the mathematical modeling used in natural language processing / understanding, formulae deduction or proof of
-[LSTM](../?module=Tensor.Eq.of.Eq.Eq.long_short_term_memory),
-[GRU](../?module=Tensor.Eq_AddMulS.gated_recurrent_unit),
-[CNN](../?module=Tensor.Eq.of.Eq_Stack_Bool_In.conv1d),
-[BERT](../?module=Tensor.DotSoftmax.eq.Stack_Div.scaled_dot_product_attention),
-[GPT](../?module=Tensor.DotSoftmax.eq.Stack_Dot.gpt),
+[KV-Cache](../?module=Tensor.GetSlice.eq.Append_DotSoftmaxDivDot_Append.of.GetSlice.eq.DotSoftmaxAdd_DivDot_Transpose.kv_cache),
 Conditional Random Field [CRF](../?module=Tensor.And.of.Ne_0.Eq.Eq.Eq.crf.y_given_x),
 KMeans [clustering convergence](../?module=Set.LeAddSSumS_SquareSub_Sum.of.In.NotIn.LeAbsSSub_Sum), [General Rotary Position Embedding](../?module=Tensor.Dot.eq.Add.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane) for Vision Transformer, [Policy Gradient Theorem](../?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.IsFinite.IsFinite.unbiased_advantage_estimate) from Reinforcement Learning. 
 Probability theory provides the fundamental theoretical basis for machine learning so that this contemporary technique can be  explainable.  

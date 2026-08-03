@@ -20,11 +20,11 @@ def prove(Eq):
     A, B = Symbol(etype=dtype.complex[n], given=True)
     Eq << apply(Subset(B, A))
 
-    Eq << Set.Subset.given.Eq_Empty.SDiff.apply(Eq[0])
+    Eq << Set.Subset.given.SDiff.eq.Empty.apply(Eq[0])
 
     Eq << ~Eq[-1]
 
-    Eq << Set.Any_In.of.SDiff.ne.Empty.apply(Eq[-1], simplify=False, wrt=Eq[1].variable)
+    Eq << Set.Any_In_SDiff.of.SDiff.ne.Empty.apply(Eq[-1], simplify=False, wrt=Eq[1].variable)
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-1], Eq[1])
 

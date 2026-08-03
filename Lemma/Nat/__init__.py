@@ -42,3 +42,4 @@ from . import LeMulS
 from . import GtMulS
 from . import SquareAdd
 from . import GeAddS
+from . import GtSquareS

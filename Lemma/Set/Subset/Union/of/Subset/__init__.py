@@ -14,7 +14,7 @@ def prove(Eq):
 
     Eq << apply(subset.Subset(A, B), S)
 
-    Eq << Set.Subset.Union.of.Subset.rhs.apply(Eq[0], S)
+    Eq << Set.Subset_Union.of.Subset.apply(Eq[0], S)
 
     Eq << subset.Subset(S, B | S, plausible=True)
 
@@ -28,4 +28,3 @@ if __name__ == '__main__':
 
 del Subset
 from . import Subset
-from . import rhs

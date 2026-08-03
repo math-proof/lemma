@@ -117,7 +117,7 @@ def prove(Eq):
 
     Eq << LessEqual(α, 1, plausible=True)
 
-    Eq << Algebra.LeMul.of.Le.Le.apply(Eq[-1], Eq[-2])
+    Eq << Nat.LeMulS.of.Le.Le.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.find(Pow).apply(Algebra.Pow.eq.Mul.split.base)
 

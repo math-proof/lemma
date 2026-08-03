@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[2].this.expr.apply(Set.EqUnion.of.Subset)
 
-    Eq << Eq[0].this.expr.apply(Set.Subset.Union.of.Subset.rhs, Eq[1].find(Cup))
+    Eq << Eq[0].this.expr.apply(Set.Subset_Union.of.Subset, Eq[1].find(Cup))
 
     Eq << Bool.Any_And.of.Any.All.All_Imp.apply(Eq[-2], Eq[-1])
 

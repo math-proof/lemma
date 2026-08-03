@@ -17,7 +17,7 @@ def prove(Eq):
     a, b, c, x, y = Symbol(integer=True)
     Eq << apply(x <= a, Element(x, Range(b, c)))
 
-    Eq << Set.In_Ico.given.And.apply(Eq[2])
+    Eq << Set.In_Ico.given.Ge.Le_Sub_1.apply(Eq[2])
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[1])
 

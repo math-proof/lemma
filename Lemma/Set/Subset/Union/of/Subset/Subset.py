@@ -17,9 +17,9 @@ def prove(Eq):
 
     Eq << apply(Subset(A, B), Subset(X, Y))
 
-    Eq << Set.Subset.Union.of.Subset.rhs.apply(Eq[0], Y)
+    Eq << Set.Subset_Union.of.Subset.apply(Eq[0], Y)
 
-    Eq << Set.Subset.Union.of.Subset.rhs.apply(Eq[1], B)
+    Eq << Set.Subset_Union.of.Subset.apply(Eq[1], B)
 
     Eq <<= Eq[-1] & Eq[-2]
 

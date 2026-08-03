@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq.is_zero = Calculus.Eq_0.Limit.of.In_Icc.geometric_series.positive.apply(Eq[-1], n)
 
-    Eq <<= Algebra.Ge_NegAbs.apply(Eq[1].find(Pow)), Int.GeAbs.apply(Eq[1].find(Pow))
+    Eq <<= Int.LeNegAbs.apply(Eq[1].find(Pow)), Int.GeAbs.apply(Eq[1].find(Pow))
 
     Eq <<= Calculus.GeLimit.of.Ge.apply(Eq[-2], (n, oo)), Calculus.LeLimit.of.Le.apply(Eq[-1], (n, oo))
 
