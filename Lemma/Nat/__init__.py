@@ -40,3 +40,5 @@ from . import Mul_Add
 from . import Lt_Add_1
 from . import LeMulS
 from . import GtMulS
+from . import SquareAdd
+from . import GeAddS

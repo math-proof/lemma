@@ -77,3 +77,4 @@ from . import Eq_Cot
 from . import Gt0Cos
 from . import Lt0Cos
 from . import Sec
+from . import Eq_DivPi2

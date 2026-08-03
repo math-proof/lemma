@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set
+    from Lemma import Algebra, Bool, Set, Nat
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.AllIn_Ico.Cond.given.AllIn_Icc.Le)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.GeAdd.of.Ge.Ge)
+    Eq << Eq[-1].this.rhs.apply(Nat.GeAddS.of.Ge.Ge)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Sub.push)
 

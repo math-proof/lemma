@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
     x = Symbol(integer=True)
     Eq << apply((x - 1) // 2)
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - x / 2
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Frac)
+    Eq << Eq[-1].this.rhs.apply(Int.SubCeil.eq.FracNeg)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Frac.half)
 

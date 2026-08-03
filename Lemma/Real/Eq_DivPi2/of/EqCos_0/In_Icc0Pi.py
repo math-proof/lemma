@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq.gt = Greater(x, S.Pi / 2, plausible=True)
 
-    Eq << Set.In.Icc.Inter.of.Gt.In_Icc.apply(Eq.gt, Eq[1])
+    Eq << Set.In_Ioc.of.In_Icc.Gt.apply(Eq.gt, Eq[1])
 
     Eq << Real.Gt0Cos.of.In_Ioc.apply(Eq[-1])
 

@@ -10,18 +10,18 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Algebra, Nat, Complex, Complex, Complex, Complex
 
     d = Symbol(integer=True, zero=False, given=True)
     Eq << apply(Ceil(sign(d) / d))
 
-    Eq << Set.Eq_Ceil.given.In.Icc.apply(Eq[0])
+    Eq << Set.Ceil.eq.Add_1.given.In_Ioc.apply(Eq[0])
 
     Eq << Set.In_Ico.given.Le.Lt.apply(Eq[-1])
 
-    Eq << Eq[-2].this.find(Sign).apply(Algebra.Sign.eq.Ite.Abs)
+    Eq << Eq[-2].this.find(Sign).apply(Complex.Sign.eq.Ite__Div_Abs)
 
-    Eq << Eq[-1].this.find(Sign).apply(Algebra.Sign.eq.Ite.Abs)
+    Eq << Eq[-1].this.find(Sign).apply(Complex.Sign.eq.Ite__Div_Abs)
 
     Eq << Eq[-1] * abs(d)
 

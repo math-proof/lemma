@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[0] / (S.Pi * 2)
 
-    Eq << Set.In.Icc.Inter.of.Gt.In_Icc.apply(Eq[-1], Eq[-2])
+    Eq << Set.In_Ioc.of.In_Icc.Gt.apply(Eq[-1], Eq[-2])
 
     Eq << Set.InSub.of.In_Icc.apply(Eq[-1], S.One / 2)
     Eq << Set.In_Ico.Ceil.of.In_Icc.apply(Eq[-1])

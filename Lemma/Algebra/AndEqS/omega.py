@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq <<= Eq[0] ** 2, Eq[1] ** 2
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2), Eq[-1].this.rhs.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq <<= Eq[-2].this.rhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add), Eq[-1].this.rhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq <<= Eq[-2].subs(Eq[1].reversed), Eq[-1].subs(Eq[0].reversed)
 

@@ -37,13 +37,13 @@ def prove(Eq):
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1], simplify=None)
 
-    Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.find(Add ** 2).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
     Eq << Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Expr ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.find(Expr ** 2).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Add.collect)
 

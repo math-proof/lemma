@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Calculus.Integral.limits.offset, - b / (2 * a))
 
-    Eq << Eq[-1].this.lhs.find(Add ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.lhs.find(Add ** 2).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.lhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

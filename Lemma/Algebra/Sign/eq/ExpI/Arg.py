@@ -10,12 +10,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Complex, Complex, Complex, Complex
 
     z = Symbol(complex=True, zero=False)
     Eq << apply(Sign(z))
 
-    Eq << Eq[0].lhs.this.apply(Algebra.Sign.eq.Ite.Abs)
+    Eq << Eq[0].lhs.this.apply(Complex.Sign.eq.Ite__Div_Abs)
 
     Eq << Algebra.Expr.eq.MulAbs_ExpMulIArg.apply(z)
 

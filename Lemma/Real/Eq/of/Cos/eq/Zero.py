@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Real.Cos.eq.Zero.of.Cos.eq.Zero.apply(Eq[0], -Floor(x / S.Pi))
 
-    Eq << Real.Eq.of.Cos.eq.Zero.In.apply(Eq[-1], Eq[-2])
+    Eq << Real.Eq_DivPi2.of.EqCos_0.In_Icc0Pi.apply(Eq[-1], Eq[-2])
 
     Eq << Eq[-1].this.apply(Int.EqAdd.Is.Eq_Sub)
 
@@ -29,4 +29,3 @@ if __name__ == '__main__':
     run()
 # created on 2018-06-24
 
-from . import In

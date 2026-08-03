@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Int
+    from Lemma import Algebra, Bool, Nat, Int, Complex, Complex, Complex, Complex
 
     x = Symbol(complex=True)
     Eq << apply(x > 0)
 
     Eq << Int.EqAbs.of.Gt_0.apply(Eq[0])
 
-    Eq << Eq[1].lhs.this.apply(Algebra.Sign.eq.Ite.Abs)
+    Eq << Eq[1].lhs.this.apply(Complex.Sign.eq.Ite__Div_Abs)
 
     Eq << Eq[-1].subs(Eq[-2])
 

@@ -11,12 +11,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int
+    from Lemma import Algebra, Bool, Int, Complex, Complex, Complex, Complex
 
     x = Symbol(real=True)
     Eq << apply(Sign(x))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sign.eq.Ite.Abs)
+    Eq << Eq[0].this.lhs.apply(Complex.Sign.eq.Ite__Div_Abs)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Ite__Ite.eq.IteAnd_Not__Ite, 1)
 
@@ -59,5 +59,3 @@ if __name__ == '__main__':
     run()
 # created on 2023-10-22
 
-del Abs
-from . import Abs

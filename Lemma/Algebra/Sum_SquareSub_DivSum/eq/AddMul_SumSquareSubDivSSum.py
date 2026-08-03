@@ -36,13 +36,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.domain_defined)
 
-    Eq << Sum[j:n, i:m]((x[i, j] - x_bar) ** 2).this.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Sum[j:n, i:m]((x[i, j] - x_bar) ** 2).this.expr.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
     Eq.St = Eq[-1].subs(Eq.eq_sum)
 
-    Eq << Sum[i:m]((_x_bar[i] - x_bar) ** 2).this.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2, simplify=None)
+    Eq << Sum[i:m]((_x_bar[i] - x_bar) ** 2).this.expr.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add, simplify=None)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq.SA = Eq[-1].this.rhs.apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Sum[j:n, i:m]((x[i, j] - _x_bar[i]) ** 2).this.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Sum[j:n, i:m]((x[i, j] - _x_bar[i]) ** 2).this.expr.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

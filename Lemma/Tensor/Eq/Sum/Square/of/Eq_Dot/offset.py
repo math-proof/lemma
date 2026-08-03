@@ -24,9 +24,9 @@ def prove(Eq):
     i, j = Symbol(domain=Range(n))
     Eq << apply(Equal(x @ SwapMatrix(n, i, j), y), a)
 
-    Eq << Eq[-1].this.lhs.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.lhs.expr.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
-    Eq << Eq[-1].this.rhs.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.rhs.expr.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     k = Eq[-1].lhs.variable
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)

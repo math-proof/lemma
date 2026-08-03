@@ -81,7 +81,7 @@ def prove(Eq):
 
     Eq << -Eq[-1].reversed
 
-    Eq << Algebra.GeAdd.of.Ge.Ge.apply(Eq[-1], Eq.ge)
+    Eq << Nat.GeAddS.of.Ge.Ge.apply(Eq[-1], Eq.ge)
 
     Eq << Eq[-1].this.find(Inf).limits_subs(s[t + 1].var, s[t].var)
 

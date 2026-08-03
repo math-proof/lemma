@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.of.Cond.apply(Eq[1], cond=x > 0), Bool.Imp_And.of.Cond.apply(Eq[2], cond=y > 0)
 
-    Eq <<= Eq[-2].this.rhs.apply(Set.In.Icc.Inter.of.Gt.In_Icc), Eq[-1].this.rhs.apply(Set.In.Icc.Inter.of.Gt.In_Icc)
+    Eq <<= Eq[-2].this.rhs.apply(Set.In_Ioc.of.In_Icc.Gt), Eq[-1].this.rhs.apply(Set.In_Ioc.of.In_Icc.Gt)
 
     Eq << Bool.ImpAndS.of.Imp.Imp.apply(Eq[-1], Eq[-2])
 

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Nat.Gt.of.Ge.Lt.apply(Eq[-1], Eq[0])
 
-    Eq.y_contains = Set.In.Icc.Inter.of.Gt.In_Icc.apply(Eq[-1], Eq[2])
+    Eq.y_contains = Set.In_Ioc.of.In_Icc.Gt.apply(Eq[-1], Eq[2])
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[3], cond=Equal(x, 0))
 

@@ -10,14 +10,14 @@ def apply(a, b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     n = Symbol(domain=Range(2, oo))
     a, b = Symbol(shape=(n,), real=True, given=True)
     Eq << apply(a, b)
 
     x = Symbol(real=True)
-    Eq << ReducedSum((x * a + b) ** 2).this.arg.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << ReducedSum((x * a + b) ** 2).this.arg.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.ReducedSum.eq.Add)
 

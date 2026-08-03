@@ -9,18 +9,18 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real
+    from Lemma import Algebra, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(sinh(x) ** 2)
 
     Eq << Eq[-1].this.find(sinh).apply(Real.Sinh.eq.SubDivSExp_2)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.lhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.find(cosh).apply(Real.Cosh.eq.AddDivSExp_2)
 
-    Eq << Eq[-1].this.find(Add ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.find(Add ** 2).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
 
 if __name__ == '__main__':

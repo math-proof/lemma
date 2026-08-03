@@ -10,14 +10,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, y = Symbol(real=True)
 
     Eq << apply((x - y) ** 2)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.lhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.rhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
 
 if __name__ == '__main__':

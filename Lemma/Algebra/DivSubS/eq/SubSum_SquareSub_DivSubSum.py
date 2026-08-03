@@ -56,13 +56,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.find(Add ** 2).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.rhs.find(Add ** 2).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[0].lhs.find(Sum).this.apply(Algebra.Sum_SquareSub.eq.Sub_SquareSum)
 
     Eq << Eq[-2] - Eq[-1]
 
-    Eq << Eq[0].lhs.find(-~Sum).this.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[0].lhs.find(-~Sum).this.expr.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

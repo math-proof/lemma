@@ -14,12 +14,12 @@ def apply(x_less_than_a, y_less_than_b):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int
 
     x, y, a, b = Symbol(real=True)
     Eq << apply(abs(x) <= a, abs(y) <= b)
 
-    Eq << Algebra.Le_Abs.given.And.apply(Eq[-1])
+    Eq << Int.LeAbs.given.LeNeg.Le.apply(Eq[-1])
 
     Eq << Algebra.And.of.Le.split.Abs.apply(Eq[0])
 
@@ -33,3 +33,4 @@ def prove(Eq):
 if __name__ == '__main__':
     run()
 # created on 2023-04-15
+-15

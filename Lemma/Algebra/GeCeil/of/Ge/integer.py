@@ -12,7 +12,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int
     x = Symbol(integer=True, given=True)
     y = Symbol(real=True, given=True)
 
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-1].reversed - (y - 1)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Frac)
+    Eq << Eq[-1].this.lhs.apply(Int.SubCeil.eq.FracNeg)
 
 
 if __name__ == '__main__':

@@ -19,7 +19,7 @@ def prove(Eq):
     x = Symbol(real=True, shape=(oo,))
     Eq << apply(Sum[j:i, i:n]((x[i] - x[j]) ** 2))
 
-    Eq << Eq[0].this.lhs.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[0].this.lhs.expr.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 

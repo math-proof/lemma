@@ -157,7 +157,7 @@ def prove(Eq):
 
     Eq.is_nonnegative = Eq.is_nonnegative.subs(Eq[-2], Eq[-1])
 
-    Eq << Eq.is_nonnegative.lhs.args[0].find(Sum).this.expr.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq.is_nonnegative.lhs.args[0].find(Sum).this.expr.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 

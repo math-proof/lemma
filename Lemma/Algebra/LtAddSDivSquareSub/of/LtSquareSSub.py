@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq.lt.lhs.this.subs(Eq.x0_defintion, Eq.x1_defintion)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.rhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].subs(x0_.this.definition, x1_.this.definition)
 
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq << Eq.lt.rhs.this.subs(Eq[-2], Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.rhs.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1].subs(y0_.this.definition, y1_.this.definition)
 

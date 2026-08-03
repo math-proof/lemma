@@ -11,12 +11,12 @@ def apply(function):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(x + y)
 
-    Eq << ((x + y) ** 2).this.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << ((x + y) ** 2).this.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[0].subs(Eq[-1].reversed)
 

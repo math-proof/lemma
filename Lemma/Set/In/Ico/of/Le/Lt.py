@@ -20,7 +20,7 @@ def apply(greater_than, strict_greater_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     a, b, x = Symbol(integer=True, given=True)
     # Eq << apply(x >= b, a > x)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Set.In_Ico.given.And.apply(Eq[-1])
 
-    Eq << Algebra.Lt.given.Le.strengthen.apply(Eq[-1])
+    Eq << Int.Lt.given.Le_Sub_1.apply(Eq[-1])
 
     Eq << Algebra.Ge.given.Gt.relax.apply(Eq[-2])
 

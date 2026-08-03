@@ -11,14 +11,14 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Int, Int
+    from Lemma import Set, Algebra, Nat, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int, Int
 
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
 
     Eq << Set.Le.Le.of.In_Icc.apply(Eq[0])
 
-    Eq << Algebra.Le_Abs.given.And.apply(Eq[1])
+    Eq << Int.LeAbs.given.LeNeg.Le.apply(Eq[1])
 
     Eq << Int.GeAbs.apply(b)
 

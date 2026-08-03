@@ -65,7 +65,7 @@ def prove(Eq):
 
     Eq << y.this.definition
 
-    Eq << ((x ** 2 + y) ** 2).this.apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << ((x ** 2 + y) ** 2).this.apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
     Eq << Eq[-1] + Eq[0]
 

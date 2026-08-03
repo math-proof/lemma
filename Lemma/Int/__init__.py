@@ -29,3 +29,5 @@ from . import LeAbs
 from . import GtAddFloor_1
 from . import GeAbs
 from . import Le0Mul
+from . import SubCeil
+from . import Lt

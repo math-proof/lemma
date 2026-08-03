@@ -78,8 +78,6 @@ from . import ReducedSum
 from . import ReducedArgMin
 from . import Inf
 from . import Lt_Abs
-from . import Le_Abs
-from . import Mod
 from . import Add
 from . import Any_Lt_0
 from . import Given
@@ -286,7 +284,6 @@ from . import One
 from . import Zero
 from . import AllIn_Icc
 from . import GeSqrt_0
-from . import SquareAdd
 from . import LeDivS
 from . import AddSumS_SquareSub
 from . import EqArg
@@ -296,3 +293,4 @@ from . import Ite
 from . import Eq_Ite
 from . import Any_AndEq
 from . import GivenAnd
+from . import Mod

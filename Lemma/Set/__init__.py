@@ -91,8 +91,6 @@ from . import OrLe
 from . import Or_Ge_Min
 from . import Inf_Add_Mul_Square
 from . import LeAddSSumS_SquareSub_Sum
-from . import Eq_Ceil
-from . import EqCeil
 from . import Ceil
 from . import Floor
 from . import SDiff_SDiff
@@ -225,3 +223,5 @@ from . import NotIn_Cup
 from . import NotInNeg
 from . import EqCeil_0
 from . import Sum_SquareSub_DivSum__Card
+from . import In_Ioc
+from . import EqCeil

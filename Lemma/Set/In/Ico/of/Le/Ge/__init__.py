@@ -13,7 +13,7 @@ def apply(le, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     a, b, x = Symbol(integer=True, given=True)
     # Eq << apply(x >= b, a >= x)
@@ -23,7 +23,7 @@ def prove(Eq):
 
 
 
-    Eq << Algebra.Lt.given.Le.strengthen.apply(Eq[-1])
+    Eq << Int.Lt.given.Le_Sub_1.apply(Eq[-1])
 
 
 if __name__ == '__main__':

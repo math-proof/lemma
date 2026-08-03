@@ -18,13 +18,13 @@ def apply(self, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
     x, y = Symbol(real=True)
     Eq << apply(4 * (x + y) ** 2)
 
-    Eq << Eq[-1].this.find(Pow).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.find(Pow).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
-    Eq << Eq[-1].this.find(Pow).apply(Algebra.SquareAdd.eq.AddAddSquareS_MulMul2)
+    Eq << Eq[-1].this.find(Pow).apply(Nat.SquareAdd.eq.AddAdd_SquareS_Mul2Add)
 
 
 if __name__ == '__main__':
