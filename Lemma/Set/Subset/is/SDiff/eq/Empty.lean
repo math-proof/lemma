@@ -22,8 +22,7 @@ private lemma main
     intro h x hx
     by_contra hnot
     have : x ∈ A \ B := ⟨hx, hnot⟩
-    rw [h] at this
-    exact this
+    rwa [h] at this
 
 
 -- created on 2018-03-03

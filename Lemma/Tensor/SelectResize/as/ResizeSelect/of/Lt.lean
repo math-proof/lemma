@@ -283,7 +283,42 @@ private lemma main
           rw [h_r'_mod] at h_r'
           apply h_r'
           have h_eq : ↑t % (n * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod)) = ↑rₐ % (n * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod)) := by
-            sorry
+            set M := n * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod)
+            change ↑t % M = ↑rₐ % M
+            have h_lhs :
+                ((↑q * s[↑d] + ↑i) * (s.drop (↑d + 1)).prod + ↑r) = (↑qₐ * s[↑d]) * M + ↑rₐ := by
+              refine (h_qₐrₐ.trans h_rhs).trans ?_
+              unfold M
+              ring_nf
+            have hM : 0 < M := by unfold M; grind
+            have h_lt_r' : ↑r' < M := by rw [h_r'_mod]; exact Nat.mod_lt _ hM
+            calc
+              ↑t % M = ↑r' % M := h_mod_r'
+              _ = ↑r' := Nat.mod_eq_of_lt h_lt_r'
+              _ = ↑rₐ % M := by
+                have h_M_sd : M * s[↑d] = n * (s.drop (k + 1)).prod := by
+                  unfold M
+                  rw [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ ↑d + 1 by omega) s]
+                  rw [ProdDropTake.eq.MulProdDropTake.of.Gt.GtLength d.isLt h_k]
+                  ac_rfl
+                have h_t_side :
+                    ↑t % (M * s[↑d]) = ↑q' % s[↑d] * M + ↑r' := by
+                  rw [h_q'r', ← Nat.mul_comm s[d] M, Mod_Mul.eq.AddMul_Mod.of.Lt h_lt_r']
+                have h_lhs_side :
+                    ((↑q * s[↑d] + ↑i) * (s.drop (↑d + 1)).prod + ↑r) % (M * s[↑d]) = ↑rₐ := by
+                  rw [show M * s[d] = n * (s.drop (k + 1)).prod from h_M_sd]
+                  exact h_rₐ_mod.symm
+                have h_full : ↑q' % s[↑d] * M + ↑r' = ↑rₐ := by
+                  calc
+                    ↑q' % s[↑d] * M + ↑r' = ↑t % (M * s[↑d]) := h_t_side.symm
+                    _ = ↑rₐ := by
+                      rw [← h_lhs_side]
+                      set_option maxHeartbeats 40000000 in
+                      grind
+                have h_r'_rₐ : ↑r' = ↑rₐ % M := by
+                  have := congrArg (fun x => x % M) h_full
+                  simpa [Nat.mul_mod, Nat.mod_eq_of_lt h_lt_r'] using this
+                exact h_r'_rₐ
           apply Nat.lt_of_le_of_lt (Nat.mod_le _ _)
           sorry
         ·

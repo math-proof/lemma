@@ -280,6 +280,8 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 ### Proof style
 - Use `obtain` instead of `rcases`, `if … then … else …` instead of `by_cases`, `have` instead of `haveI`, and `let` instead of `letI`.
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
+- implicit/instance (instImplicit) arguments should be put before the `given` section
+- default arguments should be put within the `given` section
 
 ### Formatting
 Run `python py/format.py <leanFile>` if necessary. It will:
