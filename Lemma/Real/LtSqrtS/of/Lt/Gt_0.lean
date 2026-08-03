@@ -9,14 +9,14 @@ open Nat Real
 private lemma main
   {x y : ℝ}
 -- given
-  (h₀ : x > y)
-  (h₁ : x > 0) :
+  (h₀ : x > 0)
+  (h_lt : y < x) :
 -- imply
-  √x > √y := by
+  √y < √x := by
 -- proof
   if h : y < 0 then
     rw [EqSqrt_0.of.Lt_0 h]
-    apply GtSqrt_0.of.Gt_0 h₁
+    apply GtSqrt_0.of.Gt_0 h₀
   else
     have h := Ge.of.NotLt h
     apply Real.lt_sqrt_of_sq_lt

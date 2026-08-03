@@ -1,5 +1,5 @@
 import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
-import Lemma.Real.GtSqrtS.of.Gt.Gt_0
+import Lemma.Real.LtSqrtS.of.Lt.Gt_0
 import Lemma.Int.Sub.gt.Zero.is.Gt
 import Lemma.Int.GtSquare_0.of.Gt_0
 import Lemma.Real.EqSquareSqrt.of.Gt_0
@@ -17,7 +17,7 @@ private lemma main
 -- proof
   have := SquareSub.eq.SubAddSquareS_MulMul2 (a := √x) (b := 1)
   norm_num at this
-  have h_Sqrt := GtSqrtS.of.Gt.Gt_0 h (by linarith [h])
+  have h_Sqrt := LtSqrtS.of.Lt.Gt_0 (by linarith [h]) h
   norm_num at h_Sqrt
   have h_Sqrt := Sub.gt.Zero.of.Gt h_Sqrt
   have h_pos := GtSquare_0.of.Gt_0 (a := √x - 1) h_Sqrt

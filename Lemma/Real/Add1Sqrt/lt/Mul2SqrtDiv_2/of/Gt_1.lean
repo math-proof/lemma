@@ -13,7 +13,7 @@ import Lemma.Int.Sub.gt.Zero.is.Lt
 import Lemma.Nat.Add
 import Lemma.Int.SubAdd.eq.Add_Sub
 import Lemma.Int.SquareSub.eq.SubAddSquareS_MulMul2
-import Lemma.Real.GtSqrtS.of.Gt.Gt_0
+import Lemma.Real.LtSqrtS.of.Lt.Gt_0
 import Lemma.Int.GtSquare_0.of.Gt_0
 import Lemma.Nat.Mul
 import Lemma.Real.EqSquareSqrt.of.Gt_0

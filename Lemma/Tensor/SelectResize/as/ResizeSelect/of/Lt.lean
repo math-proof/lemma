@@ -1,3 +1,7 @@
+import Lemma.Nat.LeMulS.of.Le
+import Lemma.Nat.ModEq.of.ModEqMul
+import Lemma.Nat.ModAdd_Mul.eq.Mod
+import Lemma.Nat.Mod.of.Eq
 import Lemma.Nat.ModMod_Mul.eq.Mod
 import Lemma.Nat.ModEq.of.EqMod
 import Lemma.Nat.ModEq.of.AddMul
@@ -45,6 +49,7 @@ import Lemma.Nat.Lt.of.Lt.Lt
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.Nat.ModAdd.eq.Mod.of.Dvd
 import Lemma.Nat.DivMod_Mul.eq.ModDiv
+import Lemma.Nat.Eq.Eq.of.AddMul.Lt.Lt
 import Lemma.Nat.Mod_Mul.eq.AddMul_Mod.of.Lt
 import Lemma.Nat.Mod_Mul.eq.AddMul_Mod.of.Ne_0
 import Lemma.Nat.Mul
@@ -257,7 +262,22 @@ private lemma main
             rw [MulMul.eq.Mul_Mul.permute]
             rw [DivMod_Mul.eq.ModDiv]
         ·
-          exfalso
+          simp [List.ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show d ≥ k + 1 by grind)] at h_r'
+          simp [List.ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show d ≥ k by grind)] at h_r'
+          simp [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ d by omega) s] at h_rₐ?
+          simp [ProdDrop.eq.MulProdSDrop.of.Le (show k ≤ d by omega) s] at h_rₐ?
+          rw [List.ProdDrop.eq.MulProdDrop_Add_1.of.GtLength d.isLt] at h_rₐ?
+-- n * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod)           / (((s.take ↑d).drop k).prod * (s.drop (↑d + 1)).prod) *           (((s.take ↑d).drop k).prod * (s.drop (↑d + 1)).prod)
+-- n * (((s.take ↑d).drop (k + 1)).prod * ((s.drop (↑d + 1)).prod * s[↑d])) / (((s.take ↑d).drop k).prod * ((s.drop (↑d + 1)).prod * s[↑d])) * (((s.take ↑d).drop k).prod * ((s.drop (↑d + 1)).prod * s[↑d]))
+          rw [Mul_Mul.eq.MulMul (c := s[d.val]), Mul_Mul.eq.MulMul (c := s[d.val]), Mul_Mul.eq.MulMul (c := s[d.val]), Mul_Mul.eq.MulMul (c := s[d.val])] at h_rₐ?
+          rw [Nat.DivMulS.eq.Div.of.Ne_0 (by grind)] at h_rₐ?
+          have h_r' := LeMulS.of.Le h_r' s[d]
+          have h_lt := Nat.Lt.of.Lt.Le h_rₐ? h_r'
+          -- h_mod_r : ↑r ≡ ↑rₐ [MOD (s.drop (↑d + 1)).prod]
+          rw [h_rₐ_mod] at h_lt
+          rw [h_r'_mod] at h_lt
+          simp only [DropSet.eq.Drop.of.Lt (show k < ↑d + 1 by omega)] at h_qr
+          rw [h_qr] at h_lt
           have h_mod_r'ₐ : ↑r' % (s.drop (↑d + 1)).prod = ↑rₐ % (s.drop (↑d + 1)).prod := by
             set D := (s.drop (↑d + 1)).prod
             set M := n * (((s.take ↑d).drop (k + 1)).prod * D)
@@ -273,53 +293,25 @@ private lemma main
               _ = ↑t % D := by
                 unfold M
                 rw [← show (n * ((s.take ↑d).drop (k + 1)).prod) * D = n * (((s.take ↑d).drop (k + 1)).prod * D) by ring_nf, ← ModMod_Mul.eq.Mod (k := ↑t) (m := n * ((s.take ↑d).drop (k + 1)).prod) (n := D)]
-              _ = ↑rₐ % D := by
-                have h_r_at_D : ↑r = ↑t % D := by
-                  simpa [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] using h_r_mod
-                have h_r_lt_D : ↑r < D := by
-                  simpa [DropSet.eq.Drop.of.Lt (show k < d + 1 by omega)] using h_r
-                exact Eq.trans (Eq.trans h_r_at_D.symm (Nat.mod_eq_of_lt h_r_lt_D).symm) h_mod_r
-          simp only [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ d by omega) s, ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge (show d ≥ k + 1 by grind)] at h_rₐ? h_r' h_r'_mod
+              _ = ↑rₐ % D := h_mod
           rw [h_r'_mod] at h_r'
-          apply h_r'
-          have h_eq : ↑t % (n * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod)) = ↑rₐ % (n * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod)) := by
-            set M := n * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod)
-            change ↑t % M = ↑rₐ % M
-            have h_lhs :
-                ((↑q * s[↑d] + ↑i) * (s.drop (↑d + 1)).prod + ↑r) = (↑qₐ * s[↑d]) * M + ↑rₐ := by
-              refine (h_qₐrₐ.trans h_rhs).trans ?_
-              unfold M
-              ring_nf
-            have hM : 0 < M := by unfold M; grind
-            have h_lt_r' : ↑r' < M := by rw [h_r'_mod]; exact Nat.mod_lt _ hM
-            calc
-              ↑t % M = ↑r' % M := h_mod_r'
-              _ = ↑r' := Nat.mod_eq_of_lt h_lt_r'
-              _ = ↑rₐ % M := by
-                have h_M_sd : M * s[↑d] = n * (s.drop (k + 1)).prod := by
-                  unfold M
-                  rw [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ ↑d + 1 by omega) s]
-                  rw [ProdDropTake.eq.MulProdDropTake.of.Gt.GtLength d.isLt h_k]
-                  ac_rfl
-                have h_t_side :
-                    ↑t % (M * s[↑d]) = ↑q' % s[↑d] * M + ↑r' := by
-                  rw [h_q'r', ← Nat.mul_comm s[d] M, Mod_Mul.eq.AddMul_Mod.of.Lt h_lt_r']
-                have h_lhs_side :
-                    ((↑q * s[↑d] + ↑i) * (s.drop (↑d + 1)).prod + ↑r) % (M * s[↑d]) = ↑rₐ := by
-                  rw [show M * s[d] = n * (s.drop (k + 1)).prod from h_M_sd]
-                  exact h_rₐ_mod.symm
-                have h_full : ↑q' % s[↑d] * M + ↑r' = ↑rₐ := by
-                  calc
-                    ↑q' % s[↑d] * M + ↑r' = ↑t % (M * s[↑d]) := h_t_side.symm
-                    _ = ↑rₐ := by
-                      rw [← h_lhs_side]
-                      set_option maxHeartbeats 40000000 in
-                      grind
-                have h_r'_rₐ : ↑r' = ↑rₐ % M := by
-                  have := congrArg (fun x => x % M) h_full
-                  simpa [Nat.mul_mod, Nat.mod_eq_of_lt h_lt_r'] using this
-                exact h_r'_rₐ
-          apply Nat.lt_of_le_of_lt (Nat.mod_le _ _)
+          set M := n * (((s.take ↑d).drop (k + 1)).prod * (s.drop (↑d + 1)).prod)
+          have h_lhs : ((↑q * s[↑d] + ↑i) * (s.drop (↑d + 1)).prod + ↑r) = (↑qₐ * s[↑d]) * M + ↑rₐ := by
+            refine (h_qₐrₐ.trans h_rhs).trans ?_
+            unfold M
+            ring_nf
+          have hM_pos : 0 < M := by unfold M; grind
+          have h_M_sd : M * s[↑d] = n * (s.drop (k + 1)).prod := by
+            unfold M
+            rw [ProdDrop.eq.MulProdSDrop.of.Le (show k + 1 ≤ ↑d + 1 by omega) s]
+            rw [ProdDropTake.eq.MulProdDropTake.of.Gt.GtLength d.isLt h_k]
+            ac_rfl
+          have h_lhs_side : ((↑q * s[↑d] + ↑i) * (s.drop (↑d + 1)).prod + ↑r) % (M * s[↑d]) = ↑rₐ := by
+            rw [show M * s[d] = n * (s.drop (k + 1)).prod from h_M_sd]
+            exact h_rₐ_mod.symm
+          have h_lt_r' : ↑r' < M := by rw [h_r'_mod]; exact Nat.mod_lt _ hM_pos
+          have h_t_side : ↑t % (M * s[↑d]) = ↑q' % s[↑d] * M + ↑r' := by
+            rw [h_q'r', ← Nat.mul_comm s[d] M, Mod_Mul.eq.AddMul_Mod.of.Lt h_lt_r']
           sorry
         ·
           sorry

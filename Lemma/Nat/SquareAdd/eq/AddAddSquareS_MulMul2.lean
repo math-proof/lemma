@@ -2,7 +2,7 @@ import sympy.core.power
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [CommSemiring α]
   {a b : α} :

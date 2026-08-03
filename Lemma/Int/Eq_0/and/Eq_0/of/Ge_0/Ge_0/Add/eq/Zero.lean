@@ -2,7 +2,7 @@ import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Bool.Ne.is.NotEq
 import Lemma.Nat.Gt.is.Ge.Ne
 import Lemma.Nat.Add.gt.Zero.of.Gt_0.Ge_0
-import Lemma.Nat.Add.gt.Zero.of.Ge_0.Gt_0
+import Lemma.Nat.Lt0Add.of.Ge_0.Gt_0
 import Lemma.Nat.Ne.of.Gt
 open Bool Nat
 
@@ -29,7 +29,7 @@ private lemma main
     contradiction
   | inr h =>
     have := Gt.of.Ge.Ne h_y h
-    have := Add.gt.Zero.of.Ge_0.Gt_0 h_x this
+    have := Lt0Add.of.Ge_0.Gt_0 h_x this
     have := Ne.of.Gt this
     contradiction
 
