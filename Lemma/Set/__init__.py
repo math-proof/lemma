@@ -226,3 +226,5 @@ from . import Any_In_SDiff
 from . import Subset_Union
 from . import LeAbs_MaxAbsS
 from . import SubsetUnionS
+from . import In_IcoMul
+from . import SqrtSubSquareS

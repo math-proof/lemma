@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq.contains = Eq[-1].subs(Eq[-2]).simplify()
 
-    Eq << Set.In.Mul.Ico.of.In.apply(Eq.contains, 2)
+    Eq << Set.In_IcoMul.of.In_Ico.Gt_0.apply(Eq.contains, 2)
 
     Eq.greater_than, Eq.less_than = Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[-1], right_open=False)
 

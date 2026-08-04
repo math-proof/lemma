@@ -27,4 +27,3 @@ if __name__ == '__main__':
     run()
 
 # created on 2019-02-19
-from . import Infty

@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Set.In_Icc.of.Le.Le.apply(Eq[-1], Eq[0])
 
-    Eq <<= Real.In.Arcsin.of.In.apply(Eq[-1]), Set.In.Sqrt.Max.of.In.apply(Eq[-1])
+    Eq <<= Real.In.Arcsin.of.In.apply(Eq[-1]), Set.SqrtSubSquareS.In.Icc0MaxAbsS.of.In_Icc.apply(Eq[-1])
 
     Eq << Real.In.Arcsin.of.In.apply(Eq[-1])
 

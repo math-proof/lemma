@@ -113,7 +113,7 @@ def prove(Eq):
 
     Eq << Eq.y.subs(Eq[-1])
 
-    Eq << Algebra.EqDiv.of.Eq.apply(Eq[-1], 3)
+    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[-1], 3)
 
     Eq << Eq[-1].this.rhs.args[2].apply(Algebra.Mul.eq.Pow.Mul.base)
 
@@ -129,7 +129,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Mul.eq.Pow.Mul.base)
 
-    Eq << Algebra.EqDiv.of.Eq.apply(Eq[-1], 27)
+    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[-1], 27)
 
     Eq << Eq[-4].subs(Eq[-1])
 

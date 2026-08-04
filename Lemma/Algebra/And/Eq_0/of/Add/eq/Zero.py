@@ -16,13 +16,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(Equal(x * x + y * y, 0))
 
-    Eq << Algebra.Eq_0.of.Add_Square.eq.Zero.apply(Eq[0], 0)
-    Eq << Algebra.Eq_0.of.Add_Square.eq.Zero.apply(Eq[0], 1)
+    Eq << Nat.Eq_0.of.EqAddSquareS0.apply(Eq[0], 0)
+    Eq << Nat.Eq_0.of.EqAddSquareS0.apply(Eq[0], 1)
 
 
 if __name__ == '__main__':

@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << ~Eq[-1]
 
-    Eq.contains = Set.In.Mul.Ico.of.In.apply(Eq[-1], d)
+    Eq.contains = Set.In_IcoMul.of.In_Ico.Gt_0.apply(Eq[-1], d)
 
     Eq << Rat.LeFloor.apply(b / d) * d
 

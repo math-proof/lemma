@@ -11,7 +11,7 @@ def apply(given, d):
 
     e *= d
 
-    return Element(e, Range(a * d, (b - 1) * d + 1, d))
+    return Element(e, Range(a * d, (b - 1) * d + 1))
 
 
 @prove
@@ -22,13 +22,16 @@ def prove(Eq):
     d = Symbol(integer=True, positive=True)
     Eq << apply(Element(x, Range(a, b)), d)
 
-    Eq << Set.In_IcoMul.of.In_Ico.Gt_0.apply(Eq[0], d)
+    Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[0], right_open=False)
 
-    Eq << Set.In_Ico.given.And.split.Ico.apply(Eq[1])
+    Eq <<= Eq[-1] * d, Eq[-2] * d
 
-
+    Eq << Set.In_Ico.of.Ge.Le.apply(Eq[-1], Eq[-2])
 
 
 if __name__ == '__main__':
     run()
-# created on 2023-05-30
+
+# created on 2018-05-26
+
+

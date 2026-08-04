@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Rat
+    from Lemma import Algebra, Bool, Rat, Nat
 
     # n = q * d + r
     n = Symbol(integer=True)
@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Algebra.Any.of.Eq_odd.apply(Eq[0])
 
-    Eq << Eq[-1].this.expr.apply(Algebra.EqDiv.of.Eq, 2, simplify=None)
+    Eq << Eq[-1].this.expr.apply(Nat.Div.of.Eq.Ne_0, 2, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Rat.Floor.of.Eq, ret=0)
 

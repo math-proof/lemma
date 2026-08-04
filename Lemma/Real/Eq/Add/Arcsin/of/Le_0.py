@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << -Eq[-1].this.expr
 
-    Eq << Eq[-1].this.apply(Algebra.Any.limits.Neg.Infty)
+    Eq << Eq[-1].this.apply(Bool.Any.Is.Any_UfnNeg)
 
     Eq << Int.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], 1)
 
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Set.In.Icc.of.Ge.Le.apply(Eq[-1], Eq[0])
 
-    Eq <<= Real.In.Arcsin.of.In.apply(Eq[-1]), Set.In.Sqrt.Max.of.In.apply(Eq[-1])
+    Eq <<= Real.In.Arcsin.of.In.apply(Eq[-1]), Set.SqrtSubSquareS.In.Icc0MaxAbsS.of.In_Icc.apply(Eq[-1])
 
     Eq <<= Set.Neg.In.Icc.of.In_Icc.apply(Eq[-2]), Real.In.Arcsin.of.In.apply(Eq[-1])
 

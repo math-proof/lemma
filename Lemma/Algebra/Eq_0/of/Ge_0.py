@@ -10,14 +10,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     x = Symbol(nonpositive=True)
     Eq << apply(x >= 0)
 
     Eq << LessEqual(x, 0, plausible=True)
 
-    Eq << Algebra.Eq_0.of.Le_0.Ge_0.apply(Eq[-1], Eq[0])
+    Eq << Nat.Eq_0.of.Le_0.Ge_0.apply(Eq[-1], Eq[0])
 
 
 if __name__ == '__main__':
