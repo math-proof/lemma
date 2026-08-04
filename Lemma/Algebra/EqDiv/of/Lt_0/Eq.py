@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Algebra.Ne.of.Lt.apply(Eq[0])
 
-    Eq << Nat.Div.of.Eq.apply(Eq[-1], Eq[1])
+    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[-1], Eq[1])
 
 
 

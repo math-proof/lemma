@@ -16,7 +16,7 @@ def prove(Eq):
     x, y, z = Symbol(integer=True)
     Eq << apply(Unequal(x, 0), Equal(1 / x + y, z))
 
-    Eq << Nat.Div.of.Eq.apply(Eq[0], Eq[2])
+    Eq << Nat.Div.of.Eq.Ne_0.apply(Eq[0], Eq[2])
 
     Eq << Eq[-1].this.lhs.ratsimp()
 

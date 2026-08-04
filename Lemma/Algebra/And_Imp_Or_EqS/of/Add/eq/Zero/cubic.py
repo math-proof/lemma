@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq <<= Bool.ImpEq.of.ImpEq.subst.apply(Eq[-2]), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq <<= Eq[-2].this.rhs.apply(Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic, x=x), Eq[-1].this.rhs.apply(Nat.Div.of.Eq)
+    Eq <<= Eq[-2].this.rhs.apply(Algebra.And_Imp_Or_EqS_Div.of.Add.eq.Zero.quadratic, x=x), Eq[-1].this.rhs.apply(Nat.Div.of.Eq.Ne_0)
 
     Eq <<= Bool.And.Imp.of.Imp.apply(Eq[-2], None), Bool.And.Imp.of.Imp.apply(Eq[-1].this.rhs.apply(Algebra.And.Imp.Or.Eq.of.Add.eq.Zero.cubic.one_leaded, x), None)
 

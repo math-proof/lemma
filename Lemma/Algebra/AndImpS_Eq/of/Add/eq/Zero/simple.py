@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.apply(Bool.Cond.of.Eq.Cond.subst), Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Nat.Div.of.Eq)
+    Eq << Eq[-1].this.rhs.apply(Nat.Div.of.Eq.Ne_0)
 
 
 if __name__ == '__main__':

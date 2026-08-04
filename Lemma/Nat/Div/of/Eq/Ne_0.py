@@ -2,20 +2,35 @@ from util import *
 
 
 @apply
-def apply(given, divisor=None):
-    lhs, rhs = given.of(Equal)
-    divisor = sympify(divisor)
-    assert divisor.is_nonzero
-    return Equal(lhs / divisor, rhs / divisor, evaluate=False)
+def apply(ne_zero, eq, *, simplify=True):
+    x = ne_zero.of(Unequal[0])
+    lhs, rhs = eq.of(Equal)
+    if simplify and lhs.is_Add:
+        lhs = Add(*(a / x for a in lhs.args))
+    else:
+        lhs /= x
+
+    if simplify and rhs.is_Add:
+        rhs = Add(*(a / x for a in rhs.args))
+    else:
+        rhs /= x
+    return Equal(lhs, rhs)
 
 
 @prove
 def prove(Eq):
-    x, y = Symbol(real=True)
-    d = Symbol(real=True, zero=False)
-    Eq << apply(Equal(x, y), d)
+    from Lemma import Bool
 
-    Eq << Eq[-1].subs(Eq[0])
+    x = Symbol(real=True, given=True)
+    f, g, h = Function(real=True)
+    Eq << apply(Unequal(f(x), 0), Equal(g(x) * f(x), h(x) * f(x) + x))
+
+    Eq << Eq[1] / f(x)
+
+    Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
+
+    Eq << Eq[2].this.rhs.ratsimp()
+
 
 
 
@@ -23,9 +38,5 @@ def prove(Eq):
 if __name__ == '__main__':
     run()
 
-# created on 2018-05-24
-# updated on 2023-04-18
-
-
-
-
+# created on 2018-01-24
+# updated on 2023-05-02
