@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << -Eq[-1].this.expr
 
-    Eq << Eq[-1].this.apply(Bool.Any.Is.Any_UfnNeg)
+    Eq << Eq[-1].this.apply(Bool.Any.Is.Any_UFnNeg)
 
     Eq << Int.AnyIn_Ico.of.AnyIn_Ico.offset.apply(Eq[-1], 1)
 
