@@ -5,7 +5,7 @@ import Lemma.Hyperreal.Infinite.is.InfinitePos.ou.InfiniteNeg
 import Lemma.Hyperreal.InfiniteNeg.is.Infinite.Lt_0
 import Lemma.Hyperreal.InfinitePos.is.Infinite.Gt_0
 import Lemma.Hyperreal.Ne_0.of.Infinite
-import Lemma.Int.GtSquare_0.of.Ne_0
+import Lemma.Nat.GtSquare_0.of.Ne_0
 import Lemma.Int.Gt0Mul.of.Lt_0.Gt_0
 import Lemma.Int.LtNeg_0.of.Gt_0
 import Lemma.Int.Mul_Neg.eq.NegSquare

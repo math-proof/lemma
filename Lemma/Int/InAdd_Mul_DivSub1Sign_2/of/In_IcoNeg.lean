@@ -2,7 +2,7 @@ import stdlib.Slice
 import sympy.sets.sets
 import Lemma.Int.DivSub1Sign_2.eq.Zero.of.Ge_0
 import Lemma.Int.DivSub1Sign_2.eq.One.of.Lt_0
-import Lemma.Int.Sub.ge.Zero.of.Ge
+import Lemma.Int.Le0Sub.is.Ge
 open Int
 
 
@@ -25,7 +25,7 @@ private lemma main
     else
       simp at h_i
       have := DivSub1Sign_2.eq.One.of.Lt_0 h_i
-      have := Sub.ge.Zero.of.Ge h_le
+      have := Le0Sub.of.Ge h_le
       simp_all
 
 

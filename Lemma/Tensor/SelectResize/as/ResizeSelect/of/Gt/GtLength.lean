@@ -130,7 +130,6 @@ private lemma main
         have h_mod_rₐ := ModEq.of.Eq_Mod h_rₐ_mod
         have h_mod := (h_mod_t.trans h_mod_r).trans h_mod_rₐ
         simp [ModEq] at h_mod
-        have h_r'rₐ := (h_r'_mod.trans h_mod).trans h_rₐ_mod.symm
         split_ifs with h_rₐ? h_r'? h_s_d h_r' h_s_d
         ·
           omega

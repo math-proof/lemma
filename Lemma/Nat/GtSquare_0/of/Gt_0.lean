@@ -1,12 +1,12 @@
-import sympy.core.power
-import Lemma.Int.GtSquare_0.of.Ne_0
+import Lemma.Nat.GtSquare_0.of.Ne_0
 import Lemma.Nat.Ne.of.Gt
-open Nat Int
+open Nat
 
 
 @[main]
 private lemma main
-  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
+  [Semiring α] [LinearOrder α] [ExistsAddOfLE α] [PosMulMono α] [AddLeftMono α]
+  [NoZeroDivisors α] [NeZero (1 : α)]
   {a : α}
 -- given
   (h : a > 0) :

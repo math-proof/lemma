@@ -3,7 +3,7 @@ import Lemma.Int.EqToNat.of.Ge_0
 import Lemma.Nat.CoeAdd.eq.AddCoeS
 import Lemma.Int.ToNatNeg.eq.Neg.of.Le_0
 import Lemma.Nat.Sub.eq.AddNeg
-import Lemma.Int.Sub.ge.Zero.of.Ge
+import Lemma.Int.Le0Sub.is.Ge
 open Int Nat
 
 
@@ -23,7 +23,7 @@ private lemma main
     rw [ToNatNeg.eq.Neg.of.Le_0 h]
     rw [AddNeg.eq.Sub]
   ·
-    apply Sub.ge.Zero.of.Ge
+    apply Le0Sub.of.Ge
     linarith
 
 

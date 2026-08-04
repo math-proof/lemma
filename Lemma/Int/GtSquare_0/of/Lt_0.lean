@@ -1,7 +1,6 @@
-import sympy.core.power
-import Lemma.Int.GtSquare_0.of.Ne_0
+import Lemma.Nat.GtSquare_0.of.Ne_0
 import Lemma.Nat.Ne.of.Lt
-open Nat Int
+open Nat
 
 
 @[main]

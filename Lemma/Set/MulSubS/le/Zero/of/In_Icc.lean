@@ -1,5 +1,5 @@
 import sympy.sets.sets
-import Lemma.Int.Sub.ge.Zero.is.Le
+import Lemma.Int.Le0Sub.is.Ge
 import Lemma.Int.Ge0Sub.is.Le
 import Lemma.Int.Le_0.of.Ge_0.Le_0
 open Int
@@ -15,7 +15,7 @@ private lemma main
   (x - a) * (x - b) ≤ 0 := by
 -- proof
   let ⟨h₀, h₁⟩ := h
-  have h₀ := Sub.ge.Zero.of.Le h₀
+  have h₀ := Le0Sub.of.Ge h₀
   have h₁ := Ge0Sub.of.Le h₁
   have := Le_0.of.Ge_0.Le_0 h₀ h₁
   assumption

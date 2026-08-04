@@ -4,7 +4,15 @@ import Lemma.Set.In_Union.is.OrInS
 open Set
 
 
-@[main]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Set.In.is.In_Inter.ou.In_SDiff |
+| comm | Set.In_Inter.ou.In_SDiff.is.In |
+| mp | Set.In_Inter.ou.In_SDiff.of.In |
+| mpr | Set.In.of.In_Inter.ou.In_SDiff |
+-/
+@[main, comm, mp, mpr]
 private lemma main
 -- given
   (A B : Set α)

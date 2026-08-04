@@ -3,13 +3,15 @@ import sympy.Basic
 
 @[main, comm 1]
 private lemma main
-  {x y : ℤ}
+  [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
+  {x y : α}
 -- given
   (h : x ≤ y) :
 -- imply
   x - 1 < y := by
 -- proof
-  linarith
+  have h' := sub_le_sub_right h 1
+  exact h'.trans_lt (sub_lt_self y zero_lt_one)
 
 
 -- created on 2025-03-28
