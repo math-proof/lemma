@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Set
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
     f = Function(integer=True)
@@ -18,16 +18,16 @@ def prove(Eq):
     Eq << apply(All[j:f(i), i:n](x[i, j] > 0))
 
     n -= 1
-    Eq << Eq[-1].this.lhs.apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.lhs.apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.lhs.args[-1].apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.lhs.args[-1].apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.lhs.args[-1].apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.lhs.args[-1].apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.lhs.args[-1].apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.lhs.args[-1].apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
 
 if __name__ == '__main__':

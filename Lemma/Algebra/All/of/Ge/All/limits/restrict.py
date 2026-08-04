@@ -18,7 +18,7 @@ def apply(le, given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set
+    from Lemma import Algebra, Bool, Set, Int
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -33,7 +33,7 @@ def prove(Eq):
     e = Eq[-1].lhs.lhs
     Eq << Eq[-1].subs(e, c - a)
 
-    Eq << Algebra.Ge_0.of.Ge.apply(Eq[0])
+    Eq << Int.Le0Sub.of.Ge.apply(Eq[0])
 
     Eq << Bool.Cond.of.Imp.Cond.apply(Eq[-1], Eq[-2])
 

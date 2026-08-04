@@ -14,7 +14,7 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(x >= y)
 
-    Eq << Algebra.Ge_0.of.Ge.apply(Eq[0])
+    Eq << Int.Le0Sub.of.Ge.apply(Eq[0])
     Eq << Int.EqAbs.of.Ge_0.apply(Eq[-1])
 
 

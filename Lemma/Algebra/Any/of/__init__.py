@@ -1,5 +1,4 @@
 from . import Any
-from . import Eq
 from . import Any_And
 from . import All_Eq
 from . import Or

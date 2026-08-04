@@ -13,7 +13,7 @@ def apply(is_nonnegative, lt, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat
+    from Lemma import Algebra, Set, Bool, Nat, Int
 
     a, b = Symbol(integer=True, given=True)
     k = Symbol(integer=True)
@@ -58,7 +58,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.And, slice(0, 3, 2))
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Gt_Sub_1.of.Ge, step=1, ret=0)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Int.LtSub_1.of.Le, step=1, ret=0)
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.EqMin.of.Gt)
 

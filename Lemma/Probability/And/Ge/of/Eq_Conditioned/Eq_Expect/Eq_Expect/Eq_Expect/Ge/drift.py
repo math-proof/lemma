@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[3] - Eq[-1]
 
-    Eq << Algebra.Ge_0.of.Ge.apply(Eq[4])
+    Eq << Int.Le0Sub.of.Ge.apply(Eq[4])
 
     Eq << Eq[-1].subs(Eq[-2])
 

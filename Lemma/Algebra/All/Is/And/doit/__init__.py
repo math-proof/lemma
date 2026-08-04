@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Set
     x = Symbol(real=True, shape=(oo,))
     i = Symbol(integer=True)
 
@@ -17,16 +17,16 @@ def prove(Eq):
     Eq << apply(All[i:n](x[i] > 0))
 
     n -= 1
-    Eq << Eq[-1].this.find(All).apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.find(All).apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.find(All).apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.find(All).apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.find(All).apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.find(All).apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
     n -= 1
-    Eq << Eq[-1].this.find(All).apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.find(All).apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
 
 if __name__ == '__main__':

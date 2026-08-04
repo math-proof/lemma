@@ -10,12 +10,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     a, b = Symbol(real=True, given=True)
     Eq << apply(LessEqual(0, a - b))
 
-    Eq << Algebra.Ge_0.of.Ge.apply(Eq[1]).reversed
+    Eq << Int.Le0Sub.of.Ge.apply(Eq[1]).reversed
 
 
 

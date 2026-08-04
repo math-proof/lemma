@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Nat.Ge.of.Ge.Ge.apply(Eq[-2], Eq[-1])
 
-    Eq <<= Algebra.Ge_0.Add.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-3]), Algebra.Ge_0.of.Le.apply(Eq[-2])
+    Eq <<= Nat.Le0Add.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-3]), Algebra.Ge_0.of.Le.apply(Eq[-2])
 
     Eq <<= Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
 

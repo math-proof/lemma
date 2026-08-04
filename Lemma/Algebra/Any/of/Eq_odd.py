@@ -12,7 +12,7 @@ def apply(given, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 #     n = q * d + r
     n = Symbol(integer=True, given=True)
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     k = Eq[1].variable
 
-    Eq << Algebra.Any.of.Eq.definition.Mod.apply(Eq[0], q=k)
+    Eq << Nat.Any_Eq_AddMul.of.EqMod.apply(Eq[0], q=k)
 
 
 if __name__ == '__main__':

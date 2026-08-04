@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(All).apply(Algebra.All.limits.subst.offset, -i)
 
-    Eq << Eq[-1].this.lhs.find(All).apply(Algebra.All.Is.And.split, cond={n - 1})
+    Eq << Eq[-1].this.lhs.find(All).apply(Set.All.Is.AllInter.AllSDiff, cond={n - 1})
 
 
 

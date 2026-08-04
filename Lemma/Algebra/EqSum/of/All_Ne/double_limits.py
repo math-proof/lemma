@@ -19,7 +19,7 @@ def apply(all_ne, sgm):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Nat
+    from Lemma import Algebra, Bool, Int, Nat, Set
 
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True, given=False)
@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq.induct = Eq.hypothesis.subs(n, n + 1)
 
-    Eq << Eq.induct.this.lhs.apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq.induct.this.lhs.apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
     Eq << Eq[-1].this.find(All).apply(Algebra.EqSum.of.All_Ne, Eq.hypothesis.rhs.lhs)
 

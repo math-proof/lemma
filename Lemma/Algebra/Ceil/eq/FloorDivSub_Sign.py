@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Floor).apply(Int.Floor.eq.NegCeilNeg)
 
-    Eq << Eq[-1].this.find(Ceil).apply(Algebra.Ceil.eq.One)
+    Eq << Eq[-1].this.find(Ceil).apply(Int.CeilDivSign.eq.One.of.Ne_0)
 
     Eq << -Eq[-1] / d
 

@@ -33,7 +33,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int
 
     di = Symbol('d_i', integer=True)
     i0 = Symbol(integer=True)
@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1] / r
 
-    Eq << Algebra.LeFloor.of.Le.integer.apply(Eq[-1])
+    Eq << Int.GeFloor.of.Ge.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Floor.eq.Min)
 

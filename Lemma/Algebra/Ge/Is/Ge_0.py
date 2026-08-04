@@ -9,14 +9,14 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(x >= y)
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Ge_0.of.Ge)
+    Eq << Eq[-2].this.lhs.apply(Int.Le0Sub.of.Ge)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Ge.given.Ge_0)
 

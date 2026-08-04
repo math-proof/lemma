@@ -225,3 +225,4 @@ from . import EqCeil
 from . import Any_In_SDiff
 from . import Subset_Union
 from . import LeAbs_MaxAbsS
+from . import SubsetUnionS

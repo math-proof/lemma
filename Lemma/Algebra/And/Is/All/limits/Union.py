@@ -22,13 +22,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Set
     e = Symbol(real=True)
     f, g = Function(integer=True)
 
     Eq << apply(And(All[e:g(e) > 0](f(e) > 0), All[e:g(e) < 0](f(e) > 0)))
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.All.Is.And.split, cond=g(e) < 0)
+    Eq << Eq[-1].this.rhs.apply(Set.All.Is.AllInter.AllSDiff, cond=g(e) < 0)
 
 
 if __name__ == '__main__':

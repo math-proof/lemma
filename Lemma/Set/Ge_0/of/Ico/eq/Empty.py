@@ -10,13 +10,13 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     a, b = Symbol(integer=True, given=True)
     Eq << apply(Equal(Range(a, b), a.emptySet))
 
     Eq << Set.Ge.of.Ico.eq.Empty.apply(Eq[0])
-    Eq << Algebra.Ge_0.of.Ge.apply(Eq[-1])
+    Eq << Int.Le0Sub.of.Ge.apply(Eq[-1])
 
 
 if __name__ == '__main__':

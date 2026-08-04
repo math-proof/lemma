@@ -10,14 +10,14 @@ def apply(lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int
 
     x = Symbol(integer=True)
     y = Symbol(real=True)
     Eq << apply(x < y)
 
     Eq << Nat.Le.of.Lt.apply(Eq[0])
-    Eq << Algebra.LeFloor.of.Le.integer.apply(Eq[-1])
+    Eq << Int.GeFloor.of.Ge.apply(Eq[-1])
 
 
 if __name__ == '__main__':

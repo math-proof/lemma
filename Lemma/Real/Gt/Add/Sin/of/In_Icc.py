@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Int, Rat, Real
+    from Lemma import Calculus, Algebra, Set, Bool, Int, Rat, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval.open(0, S.Pi)))
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Lt.apply(Eq[-1])
 
-    Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq[-1])
+    Eq << Nat.GtSquare_0.of.Gt_0.apply(Eq[-1])
 
     Eq << Algebra.Gt_0.Div.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-5]) / 2
 

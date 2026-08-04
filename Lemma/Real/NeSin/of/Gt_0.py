@@ -9,7 +9,7 @@ def apply(gt_zero):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Bool, Real
+    from Lemma import Algebra, Calculus, Set, Bool, Real, Nat
 
     x = Symbol(real=True, given=True)
     Eq << apply(x > 0)
@@ -75,7 +75,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.args[:2].apply(Bool.UFn.of.UFn.Eq, swap=True)
 
-    Eq << Eq[-1].this.find(Expr > 0).apply(Algebra.Gt_0.Square.of.Gt_0)
+    Eq << Eq[-1].this.find(Expr > 0).apply(Nat.GtSquare_0.of.Gt_0)
 
     # updated on 2023-10-03
 

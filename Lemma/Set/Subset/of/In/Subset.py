@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Set.SubsetSingleton.of.In.apply(Eq[0])
 
-    Eq << Set.Subset.Union.of.Subset.Subset.apply(Eq[-1], Eq[1])
+    Eq << Set.SubsetUnionS.of.Subset.Subset.apply(Eq[-1], Eq[1])
 
 if __name__ == '__main__':
     run()

@@ -26,5 +26,3 @@ if __name__ == '__main__':
 
 # created on 2020-07-19
 
-del Subset
-from . import Subset

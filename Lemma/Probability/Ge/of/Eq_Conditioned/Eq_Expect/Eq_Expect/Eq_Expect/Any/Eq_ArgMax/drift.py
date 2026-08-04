@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, any, eq_argmax):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Probability, Set, Bool, Nat, Finset, Rat
+    from Lemma import Algebra, Probability, Set, Bool, Nat, Finset, Rat, Int
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(π_quote, π_hat)
 
-    Eq << Algebra.Ge_0.of.Ge.apply(Eq[-1])
+    Eq << Int.Le0Sub.of.Ge.apply(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Probability.Add.Expect.eq.Expect)
 

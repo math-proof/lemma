@@ -59,9 +59,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(All).apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.find(All).apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
-    Eq << Eq[-1].this.find(All[2]).apply(Algebra.All.Is.And.split, cond={n})
+    Eq << Eq[-1].this.find(All[2]).apply(Set.All.Is.AllInter.AllSDiff, cond={n})
 
     Eq << Eq[-1].this.rhs.apply(Bool.Imp.fold, 2)
 

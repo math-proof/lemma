@@ -23,13 +23,13 @@ def prove(Eq):
 
     Eq << Int.GtAbs_0.of.Ne_0.apply(Eq[-1])
 
-    Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq[-1])
+    Eq << Nat.GtSquare_0.of.Gt_0.apply(Eq[-1])
 
     Eq << Nat.Le0AddAddSquareSMulMul2.apply(y)
 
     Eq << Nat.Le0AddAddSquareSMulMul2.apply(z)
 
-    Eq << Algebra.Ge_0.Add.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
+    Eq << Nat.Le0Add.of.Ge_0.Ge_0.apply(Eq[-1], Eq[-2])
 
     Eq << Nat.Lt0Add.of.Ge_0.Gt_0.apply(Eq[-1], Eq[-4])
 

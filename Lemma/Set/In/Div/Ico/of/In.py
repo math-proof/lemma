@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq <<= Eq[-3] / d, Eq[-1] / d
 
-    Eq <<= Int.LeCeil.of.Le.apply(Eq[-2]), Algebra.LeFloor.of.Le.integer.apply(Eq[-1])
+    Eq <<= Int.LeCeil.of.Le.apply(Eq[-2]), Int.GeFloor.of.Ge.apply(Eq[-1])
 
     Eq << Set.In_Ico.of.Ge.Le.apply(Eq[-2], Eq[-1])
 

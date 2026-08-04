@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(All).apply(Algebra.All.limits.subst.offset, -i)
 
-    Eq << Eq[-1].this.lhs.find(All).apply(Algebra.All.Is.And.split, cond={i})
+    Eq << Eq[-1].this.lhs.find(All).apply(Set.All.Is.AllInter.AllSDiff, cond={i})
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.shift.Slice)
 

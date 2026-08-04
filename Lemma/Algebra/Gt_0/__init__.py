@@ -11,6 +11,5 @@ from . import of
 from . import Abs
 from . import Mul
 from . import Pow
-from . import Square
 from . import Ceil
 from . import Is

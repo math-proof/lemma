@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << apply(Subset(g(b), f(b)), Subset(Cup[k:a:b](g(k)), Cup[k:a:b](f(k))))
 
-    Eq << Set.Subset.Union.of.Subset.Subset.apply(Eq[0], Eq[1])
+    Eq << Set.SubsetUnionS.of.Subset.Subset.apply(Eq[0], Eq[1])
 
 
 if __name__ == '__main__':

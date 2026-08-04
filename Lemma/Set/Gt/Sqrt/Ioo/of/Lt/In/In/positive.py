@@ -40,9 +40,9 @@ def prove(Eq):
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[2])
 
-    Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq[-1])
+    Eq << Nat.GtSquare_0.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq.x_is_positive)
+    Eq << Nat.GtSquare_0.of.Gt_0.apply(Eq.x_is_positive)
 
     Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
 

@@ -70,7 +70,7 @@ def prove(Eq):
     ε, δ = Symbol(positive=True)
     Eq << Algebra.Or.of.Cond.subst.apply(Eq[-1], ε_0, abs(A) ** 2 / 2 * ε)
 
-    Eq << Algebra.Gt_0.Square.of.Gt_0.apply(Eq.A_is_positive) * ε / 2
+    Eq << Nat.GtSquare_0.of.Gt_0.apply(Eq.A_is_positive) * ε / 2
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[-1], Eq[-2])
 

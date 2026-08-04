@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq <<= Eq[0].reversed, Eq[1].reversed
 
-    Eq << Set.Subset.Union.of.Subset.Subset.apply(Eq[-2], Eq[-1])
+    Eq << Set.SubsetUnionS.of.Subset.Subset.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].reversed
 

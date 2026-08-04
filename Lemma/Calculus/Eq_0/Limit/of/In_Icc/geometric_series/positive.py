@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Rat.GeCeil.apply(Eq.Ceiling_el.lhs.arg)
 
-    Eq << Nat.Gt_Sub_1.of.Ge.apply(Eq[-1], step=1)
+    Eq << Int.LtSub_1.of.Le.apply(Eq[-1], step=1)
 
     Eq << Bool.Cond.Imp.given.And.Imp.And.apply(Eq[-1], Eq[-3])
 

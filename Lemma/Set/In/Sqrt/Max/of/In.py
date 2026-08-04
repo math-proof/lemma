@@ -11,7 +11,7 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Real, Real, Real, Real
+    from Lemma import Set, Algebra, Nat, Real, Real, Real, Real, Int
 
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))
@@ -22,13 +22,13 @@ def prove(Eq):
 
     Eq << Nat.LeSquareS.of.Le.Ge_0.apply(Eq[-1]).reversed
 
-    Eq << Algebra.Ge_0.of.Ge.apply(Eq[-1])
+    Eq << Int.Le0Sub.of.Ge.apply(Eq[-1])
 
     Eq << Algebra.GeSqrt_0.of.Ge_0.apply(Eq[-1])
 
     Eq << LessEqual(-x ** 2, 0, plausible=True)
 
-    Eq << Algebra.LeAdd.of.Le.apply(Eq[-1], Max(abs(a), abs(b)) ** 2)
+    Eq << Nat.LeAddS.of.Le.apply(Eq[-1], Max(abs(a), abs(b)) ** 2)
 
     Eq << Real.LeSqrtS.of.Le.Ge_0.apply(Eq[-3], Eq[-1])
 

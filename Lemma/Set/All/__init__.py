@@ -3,3 +3,4 @@ from . import Ne
 from . import of
 from . import And
 from . import In
+from . import Is

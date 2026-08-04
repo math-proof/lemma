@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Finset
+    from Lemma import Algebra, Set, Bool, Nat, Finset, Int
 
     i, n = Symbol(integer=True)
     f = Function(real=True)
@@ -29,7 +29,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Less).reversed
 
-    Eq << Eq[-1].this.find(GreaterEqual).apply(Nat.Gt_Sub_1.of.Ge, lower=0)
+    Eq << Eq[-1].this.find(GreaterEqual).apply(Int.LtSub_1.of.Le, lower=0)
 
     Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1])
 
