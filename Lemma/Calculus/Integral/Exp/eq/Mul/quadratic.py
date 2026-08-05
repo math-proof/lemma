@@ -44,7 +44,7 @@ def apply(y):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Real, Nat
+    from Lemma import Calculus, Real, Nat
 
     a = Symbol(positive=True)
     b, c, x = Symbol(real=True)

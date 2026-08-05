@@ -10,7 +10,7 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Int
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(-1, 0, left_open=True)))

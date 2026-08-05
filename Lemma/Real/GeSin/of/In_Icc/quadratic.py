@@ -9,7 +9,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Nat, Real, Int, Int, Int, Int
+    from Lemma import Calculus, Algebra, Set, Bool, Nat, Real, Int
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi / 2)))

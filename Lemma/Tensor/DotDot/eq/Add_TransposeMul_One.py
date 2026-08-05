@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Nat
+    from Lemma import Tensor, Bool, Nat
 
     n, d_z = Symbol(integer=True, positive=True)
     Q = Symbol(shape=(n, d_z), real=True)

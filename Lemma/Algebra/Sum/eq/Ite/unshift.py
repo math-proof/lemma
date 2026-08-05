@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Finset, Int
+    from Lemma import Algebra, Set, Bool, Finset, Int
 
     i, n = Symbol(integer=True)
     f = Function(real=True)

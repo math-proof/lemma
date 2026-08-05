@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
     n, b = Symbol(integer=True, given=True)
 
     Eq << apply(n <= b)

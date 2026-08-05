@@ -17,7 +17,7 @@ def apply(given, index=-1, swap=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     a, b, c = Symbol(real=True, given=True)
     Eq << apply(a + b + c > 0)

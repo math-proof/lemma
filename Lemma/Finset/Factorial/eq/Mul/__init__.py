@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Finset
+    from Lemma import Finset
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(factorial(n))

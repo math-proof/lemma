@@ -18,7 +18,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Finset
+    from Lemma import Finset, Algebra, Tensor
 
     n, m = Symbol(integer=True, positive=True)
     d = Symbol(integer=True, nonnegative=True)

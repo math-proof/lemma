@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Int, Nat, Complex
+    from Lemma import Nat, Complex
 
     x = Symbol(complex=True, given=True)
     Eq << apply(Equal(abs(x), 0))

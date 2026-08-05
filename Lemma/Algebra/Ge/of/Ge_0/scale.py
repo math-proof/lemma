@@ -10,7 +10,7 @@ def apply(given, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int, Int, Int, Int
+    from Lemma import Algebra, Nat, Int
 
     a = Symbol(real=True, given=True)
     t = Symbol(integer=True, positive=True, odd=True)

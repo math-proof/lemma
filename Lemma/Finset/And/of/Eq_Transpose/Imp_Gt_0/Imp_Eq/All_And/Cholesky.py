@@ -17,7 +17,7 @@ def apply(eq, infer, eq_piece, All_And):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Tensor, Finset, Nat
+    from Lemma import Algebra, Finset, Bool, Tensor, Nat
 
     n = Symbol(domain=Range(10, oo))
     A = Symbol(shape=(n, n), real=True)

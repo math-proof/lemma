@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Real
+    from Lemma import Algebra, Real
 
     x = Symbol(real=True)
     Eq << apply(Greater(x, 0))
@@ -21,8 +21,6 @@ def prove(Eq):
     Eq << Real.NeSqrt_0.of.Gt_0.apply(Eq[0])
 
     Eq << Algebra.Gt_0.of.Ne_0.Ge_0.apply(Eq[-1], Eq[-2])
-
-
 
 
 

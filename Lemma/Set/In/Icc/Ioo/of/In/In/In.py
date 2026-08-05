@@ -16,7 +16,7 @@ def apply(contains0, contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Nat
+    from Lemma import Set, Nat
 
     a, b, x0, x1, w = Symbol(real=True)
     domain = Interval(a, b, left_open=True)

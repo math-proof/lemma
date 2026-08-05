@@ -13,7 +13,7 @@ def apply(given, negate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) < a)

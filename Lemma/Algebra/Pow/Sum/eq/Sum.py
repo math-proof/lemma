@@ -11,7 +11,7 @@ def apply(self, var='k'):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Set, Bool, Finset, Int
+    from Lemma import Algebra, Finset, Set, Bool, Int
 
     n = Symbol(integer=True, positive=True, given=False)
     x = Symbol(complex=True, shape=(oo,))

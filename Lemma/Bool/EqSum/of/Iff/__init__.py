@@ -26,7 +26,7 @@ def apply(given, function):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Fin
+    from Lemma import Bool, Finset, Fin
     i, j = Symbol(integer=True)
 
     A, B = Symbol(etype=dtype.integer)

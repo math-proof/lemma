@@ -20,7 +20,7 @@ def apply(el):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Int
 
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b, right_open=True)))

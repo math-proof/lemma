@@ -18,7 +18,7 @@ def apply(given, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Int
+    from Lemma import Set, Nat, Int
 
     x, a, b = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)

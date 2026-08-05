@@ -12,7 +12,7 @@ def apply(is_nonnegative, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool, Finset
+    from Lemma import Bool, Finset
 
     n, k = Symbol(integer=True)
     Eq << apply(n >= 0, k)

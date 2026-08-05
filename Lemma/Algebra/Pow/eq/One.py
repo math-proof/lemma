@@ -18,7 +18,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat
+    from Lemma import Finset, Nat
 
     n, a = Symbol(integer=True)
     Eq << apply((-1) ** (n ** 2 + n * (2 * a + 1) + a ** 2 + a))

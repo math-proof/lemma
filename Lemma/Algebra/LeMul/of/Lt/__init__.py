@@ -12,7 +12,7 @@ def apply(given, factor):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
     x, y = Symbol(real=True, given=True)
     k = Symbol(real=True, given=True, nonnegative=True)
 

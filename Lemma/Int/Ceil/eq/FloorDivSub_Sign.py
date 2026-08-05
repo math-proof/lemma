@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat
+    from Lemma import Int, Nat
 
     n = Symbol(integer=True)
     d = Symbol(integer=True, zero=False)

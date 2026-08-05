@@ -15,7 +15,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set, Nat, Nat
+    from Lemma import Algebra, Bool, Set, Nat
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)

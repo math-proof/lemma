@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex, Complex, Complex, Complex
+    from Lemma import Algebra, Complex
 
     z = Symbol(complex=True, zero=False)
     Eq << apply(Sign(z))

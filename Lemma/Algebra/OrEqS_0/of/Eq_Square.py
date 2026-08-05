@@ -13,7 +13,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     a, b = Symbol(complex=True, given=True)
     Eq << apply(Equal(a ** 2, b ** 2))

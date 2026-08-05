@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Finset, Nat, Fin
+    from Lemma import Finset, Algebra, Bool, Nat, Fin
 
     k = Symbol(integer=True, nonnegative=True, given=False)
     n = Symbol(integer=True, nonnegative=True)

@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.apply(Set.In_SetOf_In_IccDiv_2.of.In_Icc.Odd)
 
-    Eq << Eq[-1].this.lhs.apply(Set.And.Eq_odd.of.In)
+    Eq << Eq[-1].this.lhs.apply(Set.In_Icc.Odd.of.In_SetOf_In_IccDiv_2)
 
 
 if __name__ == '__main__':

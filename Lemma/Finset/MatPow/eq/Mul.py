@@ -15,7 +15,7 @@ def apply(self, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat
+    from Lemma import Finset, Nat
 
     n = Symbol(integer=True, positive=True)
     A, B = Symbol(real=True, shape=(n, n))

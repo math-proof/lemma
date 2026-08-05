@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Real, Nat, Nat
+    from Lemma import Calculus, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(Derivative[x](tanh(x)))

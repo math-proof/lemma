@@ -38,7 +38,7 @@ def apply(eq_z, eq_z_quote, el):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Nat, Fin, Fin
+    from Lemma import Tensor, Algebra, Set, Bool, Nat, Fin
 
     n, l, u = Symbol(domain=Range(2, oo))
     h = Symbol(integer=True, shape=(n,))

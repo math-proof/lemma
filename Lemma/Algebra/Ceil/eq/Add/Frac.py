@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat, Int
+    from Lemma import Rat, Int
     x = Symbol(real=True)
     Eq << apply(ceil(x))
 

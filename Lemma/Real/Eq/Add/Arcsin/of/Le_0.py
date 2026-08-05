@@ -10,7 +10,7 @@ def apply(is_nonpositive):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int, Real, Nat
+    from Lemma import Set, Bool, Int, Real, Nat
 
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(x <= 0)

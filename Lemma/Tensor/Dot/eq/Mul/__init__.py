@@ -29,7 +29,7 @@ def apply(self, i=None, factor=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat
+    from Lemma import Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     A, B, C, D = Symbol(real=True, shape=(n, n))

@@ -18,7 +18,7 @@ def apply(le, is_positive, w=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Nat, Int, Int, Int, Int
+    from Lemma import Calculus, Algebra, Set, Bool, Nat, Int
 
     a, b = Symbol(real=True, given=True)
     domain = Interval(a, b, left_open=True, right_open=True)

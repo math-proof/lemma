@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
     x, y = Symbol(real=True)
 
     Eq << apply((x - y) ** 2)

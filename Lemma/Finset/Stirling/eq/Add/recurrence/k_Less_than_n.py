@@ -9,7 +9,7 @@ def apply(n, k):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Set, Algebra, Fin
+    from Lemma import Finset, Set, Fin
 
     n = Symbol(integer=True, positive=True)
     k = Symbol(domain=Range(1, n))

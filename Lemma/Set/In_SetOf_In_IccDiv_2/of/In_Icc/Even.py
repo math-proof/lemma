@@ -14,7 +14,7 @@ def apply(is_even, contains_n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Int
+    from Lemma import Set, Bool, Nat, Int
 
     a, b, n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 0), Element(n, Range(a, b + 1)))

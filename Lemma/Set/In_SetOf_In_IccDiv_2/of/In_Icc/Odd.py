@@ -14,7 +14,7 @@ def apply(is_odd, contains_n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Int, Int, Int
+    from Lemma import Set, Bool, Nat, Int
 
     a, b, n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 1), Element(n, Range(a, b + 1)))

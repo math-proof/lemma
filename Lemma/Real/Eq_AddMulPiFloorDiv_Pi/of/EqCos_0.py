@@ -9,7 +9,7 @@ def apply(is_zero, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Int, Real, Rat
+    from Lemma import Int, Real, Rat
 
     x = Symbol(real=True, given=True)
     Eq << apply(Equal(cos(x), 0))

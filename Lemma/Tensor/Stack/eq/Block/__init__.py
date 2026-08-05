@@ -21,7 +21,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool, Fin
+    from Lemma import Tensor, Bool, Fin
 
     i = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)

@@ -17,7 +17,7 @@ def apply(given, upper=None, lower=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set
 
     x, a, b = Symbol(integer=True, given=True)
     Eq << apply(Element(x, Interval(a, b)), lower=a - 1)

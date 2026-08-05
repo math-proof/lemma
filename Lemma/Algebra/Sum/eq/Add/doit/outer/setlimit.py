@@ -29,7 +29,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Fin
+    from Lemma import Fin
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
     f = Function(integer=True)

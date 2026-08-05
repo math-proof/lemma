@@ -26,7 +26,7 @@ def apply(eq, γ=None, k=None, weights=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Probability, Algebra, Nat
+    from Lemma import Tensor, Probability, Nat
 
     b = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation

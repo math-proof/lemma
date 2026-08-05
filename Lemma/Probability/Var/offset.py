@@ -8,7 +8,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Nat
+    from Lemma import Probability, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, random=True, shape=(n,))

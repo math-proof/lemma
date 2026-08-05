@@ -32,7 +32,7 @@ def dissect_variance(variance):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Nat
+    from Lemma import Algebra, Finset, Nat
 
     n, m = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))

@@ -18,7 +18,7 @@ def apply(le, given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Set, Int
+    from Lemma import Bool, Set, Int
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)

@@ -52,7 +52,7 @@ def apply(self, x):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x = Symbol(complex=True, given=True)
     n = 4

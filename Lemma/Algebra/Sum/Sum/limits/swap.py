@@ -29,7 +29,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Fin
+    from Lemma import Finset, Fin
 
     i, j = Symbol(integer=True)
     n, m = Symbol(integer=True, positive=True)

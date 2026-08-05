@@ -17,7 +17,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Fin
+    from Lemma import Set, Fin
     a = Symbol(integer=True)
 
     Eq << apply(FiniteSet(a, a + 1, a + 2, a + 3))

@@ -12,7 +12,7 @@ def apply(self, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Tensor, Finset, Nat
+    from Lemma import Algebra, Finset, Bool, Tensor, Nat
 
     n = Symbol(domain=Range(2, oo), given=False)
     a = Symbol(shape=(oo,), complex=True)

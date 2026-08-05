@@ -14,7 +14,7 @@ def apply(eq_conditioned, eq_expect, eq_var, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Finset, Int, Nat
+    from Lemma import Probability, Finset, Int, Nat
 
     x = Symbol(real=True, shape=(oo,), random=True)
     μ = Symbol(real=True)

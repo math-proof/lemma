@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Int
+    from Lemma import Probability, Int
 
     D = Symbol(integer=True, positive=True)
     θ = Symbol(real=True, shape=(D,))

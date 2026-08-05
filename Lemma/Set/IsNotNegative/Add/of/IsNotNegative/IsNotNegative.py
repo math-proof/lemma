@@ -13,7 +13,7 @@ def apply(a_is_nonnegative, b_is_nonnegative):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     x, y = Symbol(super_real=True)
     Eq << apply(Element(x, Interval(0, oo)), Element(y, Interval(0, oo)))

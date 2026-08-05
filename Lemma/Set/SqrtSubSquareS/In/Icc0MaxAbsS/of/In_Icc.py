@@ -11,7 +11,7 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Real, Real, Real, Real, Int
+    from Lemma import Set, Algebra, Nat, Real, Int
 
     a, b, x = Symbol(real=True)
     Eq << apply(Element(x, Interval(a, b)))

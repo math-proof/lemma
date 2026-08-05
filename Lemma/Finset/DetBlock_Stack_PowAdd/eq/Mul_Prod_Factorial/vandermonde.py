@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Set, Tensor, Finset, Nat
+    from Lemma import Finset, Algebra, Set, Tensor, Nat
 
     r = Symbol(real=True)
     n = Symbol(domain=Range(2, oo))

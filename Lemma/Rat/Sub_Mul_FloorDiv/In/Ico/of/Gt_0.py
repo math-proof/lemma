@@ -9,7 +9,7 @@ def apply(n, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Rat, Nat, Int, Int
+    from Lemma import Set, Rat, Nat, Int
 
     n = Symbol(real=True)
     d = Symbol(real=True, positive=True)

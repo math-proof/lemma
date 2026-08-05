@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Finset, Nat
+    from Lemma import Algebra, Finset, Bool, Nat
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True, given=False)

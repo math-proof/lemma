@@ -11,7 +11,7 @@ def apply(gt_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Int, Real
+    from Lemma import Algebra, Bool, Int, Real
 
     a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -34,9 +34,6 @@ def prove(Eq):
     Eq << Bool.Imp_And.of.Cond.apply(Eq[0], cond=Eq[2].lhs)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Any.Lt_0.of.Ne_0.Add.gt.Zero, x=x)
-
-
-
 
 
 if __name__ == '__main__':

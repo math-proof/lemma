@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     i = Symbol(integer=True)
     k = Symbol(integer=True, positive=True, given=True)

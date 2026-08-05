@@ -10,7 +10,7 @@ def apply(lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int
 
     x = Symbol(integer=True)
     y = Symbol(real=True)

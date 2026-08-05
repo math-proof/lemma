@@ -13,7 +13,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int
     x = Symbol(integer=True, given=True)
     y = Symbol(real=True, given=True)
 

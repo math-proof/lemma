@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Complex, Complex, Complex, Complex
+    from Lemma import Algebra, Bool, Int, Complex
 
     x = Symbol(real=True)
     Eq << apply(Sign(x))

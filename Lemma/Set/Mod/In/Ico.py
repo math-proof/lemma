@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Rat, Nat, Nat
+    from Lemma import Set, Rat, Nat
 
     n = Symbol(integer=True)
     d = Symbol(integer=True, positive=True)

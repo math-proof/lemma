@@ -9,7 +9,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     #|              63 - 32               |     31 - 16     | 15 - 8 | 7 - 0 |
     #|=======================================================================|

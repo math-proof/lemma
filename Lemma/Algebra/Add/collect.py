@@ -8,7 +8,7 @@ def apply(self, factor=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     a, b, x, y = Symbol(complex=True)
     Eq << apply(a * x - a * y + b + b * y, factor=b)

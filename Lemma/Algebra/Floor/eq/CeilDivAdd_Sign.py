@@ -10,7 +10,7 @@ def apply(self, *, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
 
     n, d = Symbol(integer=True)
     Eq << apply(n // d)

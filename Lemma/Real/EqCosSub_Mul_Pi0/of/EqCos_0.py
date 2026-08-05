@@ -13,7 +13,7 @@ def apply(is_zero, n=None, negative=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real, Nat, Nat
+    from Lemma import Bool, Real, Nat
 
     x = Symbol(real=True, given=True)
     n = Symbol(integer=True, given=False, nonnegative=True)

@@ -16,7 +16,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(Equal(x * x + y * y, 0))

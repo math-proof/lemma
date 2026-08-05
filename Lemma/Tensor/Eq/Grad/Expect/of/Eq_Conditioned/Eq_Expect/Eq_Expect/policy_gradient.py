@@ -15,7 +15,7 @@ def apply(eq, Q_def, V_def, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Tensor, Algebra, Finset, Nat
+    from Lemma import Probability, Calculus, Tensor, Finset, Nat
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation

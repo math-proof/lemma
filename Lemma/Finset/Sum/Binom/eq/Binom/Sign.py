@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Bool, Finset
+    from Lemma import Algebra, Finset, Bool
 
     i, j = Symbol(integer=True)
     n, t = Symbol(integer=True, nonnegative=True)

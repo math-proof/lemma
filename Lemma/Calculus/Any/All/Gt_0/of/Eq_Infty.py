@@ -24,7 +24,7 @@ def apply(eq, delta=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Nat
+    from Lemma import Calculus, Nat
 
     x, x0 = Symbol(real=True)
     f = Function(real=True)

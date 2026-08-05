@@ -12,7 +12,7 @@ def apply(self, t_p):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     # m denotes batch size
     # n denotes sequence length

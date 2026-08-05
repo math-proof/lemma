@@ -104,7 +104,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Fin
+    from Lemma import Bool, Finset, Fin
 
     A, C = Symbol(etype=dtype.integer)
     B = Function(etype=dtype.integer)

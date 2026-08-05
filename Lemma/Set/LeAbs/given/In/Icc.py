@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int
+    from Lemma import Set, Int
 
     x, a = Symbol(real=True, given=True)
     Eq << apply(abs(x) <= a)

@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Rat, Int
+    from Lemma import Set, Nat, Rat, Int
 
     a, b, i, j, n, d = Symbol(integer=True)
     Eq << apply(Element(n, imageset(n, 2 * n, Range((a + 1) // 2, b // 2 + 1))))

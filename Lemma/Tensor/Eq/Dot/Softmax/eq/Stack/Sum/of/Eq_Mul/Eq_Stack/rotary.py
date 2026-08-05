@@ -13,7 +13,7 @@ def apply(eq_theta, eq_R, Q, K, V):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Finset, Bool, Finset, Nat
+    from Lemma import Tensor, Algebra, Finset, Bool, Nat
     from Lemma.Tensor.Dot.eq.Stack.of.Eq_Stack.position_representation.rotary import rotary_matrix
     # n denotes sequence length (seq_length)
     # b denotes 10000

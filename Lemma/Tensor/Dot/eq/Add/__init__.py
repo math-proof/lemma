@@ -40,7 +40,7 @@ def apply(self, i=None, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Finset, Nat, Nat
+    from Lemma import Tensor, Finset, Nat
     from sympy import Mul
     n = Symbol(integer=True, positive=True)
     x, a, b = Symbol(shape=(n, n), complex=True)

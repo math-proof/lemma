@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Nat
+    from Lemma import Probability, Nat
 
     D = Symbol(integer=True, positive=True)
     # D denotes the size of the trainable weights

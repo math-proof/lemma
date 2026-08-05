@@ -9,7 +9,7 @@ def apply(x, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Calculus, Algebra, Int, Nat, Set, Set
+    from Lemma import Probability, Calculus, Algebra, Int, Nat, Set
 
     x = Symbol(real=True, random=True)
     a = Symbol(positive=True)

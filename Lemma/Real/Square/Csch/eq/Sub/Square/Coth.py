@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Nat
+    from Lemma import Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(csch(x) ** 2)

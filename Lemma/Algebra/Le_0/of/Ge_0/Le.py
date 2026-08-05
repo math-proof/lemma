@@ -10,7 +10,7 @@ def apply(is_nonnegative, less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Int, Int, Int
+    from Lemma import Int
     x = Symbol(real=True)
     a = Symbol(real=True, nonnegative=True)
 

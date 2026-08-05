@@ -11,7 +11,7 @@ def apply(is_nonnegative, is_nonnegative1, *, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     a, y = Symbol(real=True)
     Eq << apply(y >= 0, a >= 0)

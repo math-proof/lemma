@@ -23,7 +23,7 @@ def apply(self, deep=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Nat
+    from Lemma import Probability, Nat
 
     x, y, z = Symbol(real=True, random=True)
     Eq << apply(Covariance(x, y + z))

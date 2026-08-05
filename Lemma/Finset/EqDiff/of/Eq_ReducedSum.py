@@ -9,7 +9,7 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Nat
+    from Lemma import Algebra, Nat
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)

@@ -18,7 +18,7 @@ def apply(self, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
     x, y = Symbol(real=True)
     Eq << apply(4 * (x + y) ** 2)
 

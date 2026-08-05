@@ -44,7 +44,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset, Fin
+    from Lemma import Set, Finset, Fin
 
     i, j, d, a = Symbol(integer=True)
     n, m = Symbol(integer=True, positive=True)

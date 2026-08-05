@@ -12,7 +12,7 @@ def apply(le, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Nat
+    from Lemma import Set, Algebra, Nat
 
     a, b, c, x, y = Symbol(integer=True)
     Eq << apply(x <= a, Element(x, Range(b, c)))

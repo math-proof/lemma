@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Tensor, Nat
+    from Lemma import Probability, Tensor, Nat
 
     n = Symbol(integer=True, positive=True)
     x, t = Symbol(integer=True, random=True, shape=(n,))

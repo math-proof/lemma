@@ -22,7 +22,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set
     e = Symbol(real=True)
     f, g = Function(integer=True)
 

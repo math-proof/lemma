@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Int
+    from Lemma import Set, Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(Interval(x, y, right_open=True))

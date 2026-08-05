@@ -16,7 +16,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Finset
+    from Lemma import Finset, Algebra, Tensor
 
     k = Symbol(integer=True)
     i = Symbol(integer=True, nonnegative=True)

@@ -11,7 +11,7 @@ def apply(greater_than, less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Int, Int, Int
+    from Lemma import Int
     x, y, a, b = Symbol(real=True)
 
     Eq << apply(x >= a, y >= b)

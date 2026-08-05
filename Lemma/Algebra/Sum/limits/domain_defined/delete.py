@@ -19,7 +19,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Fin, Fin
+    from Lemma import Fin
     i, j = Symbol(integer=True)
     k = Symbol(integer=True, positive=True)
     x = Symbol(shape=(k,), integer=True)

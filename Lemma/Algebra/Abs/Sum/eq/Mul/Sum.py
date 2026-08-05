@@ -18,7 +18,7 @@ def dissect_distance(variance):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Nat
+    from Lemma import Finset, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))

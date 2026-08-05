@@ -14,7 +14,7 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Nat
+    from Lemma import Int, Nat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(Equal(x * x + y * y + z * z, 0))

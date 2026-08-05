@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Nat
+    from Lemma import Calculus, Nat
 
     x = Symbol(real=True)
     f, g = Function(real=True)

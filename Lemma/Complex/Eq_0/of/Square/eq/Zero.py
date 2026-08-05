@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Complex, Int, Nat
+    from Lemma import Algebra, Complex, Nat
 
     x = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 2, 0))

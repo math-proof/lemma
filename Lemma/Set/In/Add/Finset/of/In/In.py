@@ -16,7 +16,7 @@ def apply(contains1, contains2):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     x0, x1, a, b, c, d, e = Symbol(integer=True)
     Eq << apply(Element(x0, {a, b, c}), Element(x1, {d, e}))

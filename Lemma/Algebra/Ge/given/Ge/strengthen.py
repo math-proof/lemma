@@ -12,7 +12,7 @@ def apply(given, bound):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(GreaterEqual(x, y), y + 1)

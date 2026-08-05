@@ -28,7 +28,7 @@ def apply(self, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Nat
+    from Lemma import Calculus, Nat
 
     x, t, a = Symbol(real=True)
     f, h = Function(real=True, continuous=True)

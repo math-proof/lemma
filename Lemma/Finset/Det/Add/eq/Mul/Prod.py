@@ -9,7 +9,7 @@ def apply(n, a):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Tensor, Finset, Nat
+    from Lemma import Finset, Algebra, Bool, Tensor, Nat
 
     n = Symbol(integer=True, positive=True, given=False)
     a = Symbol(shape=(oo,), complex=True, zero=False)

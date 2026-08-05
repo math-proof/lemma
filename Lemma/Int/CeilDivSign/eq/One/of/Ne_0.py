@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Complex, Complex, Complex, Complex
+    from Lemma import Set, Nat, Complex
 
     d = Symbol(integer=True, zero=False, given=True)
     Eq << apply(Ceil(sign(d) / d))

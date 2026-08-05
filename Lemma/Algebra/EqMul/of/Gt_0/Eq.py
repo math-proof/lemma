@@ -14,7 +14,7 @@ def apply(is_positive, eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
 
     x = Symbol(real=True, given=True)
     f, g, h = Function(real=True)

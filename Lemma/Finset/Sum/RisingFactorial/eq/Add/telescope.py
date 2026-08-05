@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Finset
+    from Lemma import Finset, Algebra
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)

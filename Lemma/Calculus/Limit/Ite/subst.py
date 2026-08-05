@@ -39,7 +39,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Set, Bool, Nat, Int
+    from Lemma import Calculus, Algebra, Set, Bool, Int
 
     n = Symbol(integer=True)
     a = Symbol(integer=True, given=True)

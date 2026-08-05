@@ -14,7 +14,7 @@ def apply(n, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool
 
     n = Symbol(integer=True, positive=True, given=True)
     k = Symbol(domain=Range(1, n + 1), given=True)

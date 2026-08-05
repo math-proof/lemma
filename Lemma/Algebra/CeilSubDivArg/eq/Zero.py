@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Nat
 
     z = Symbol(complex=True)
     n = Symbol(integer=True, positive=True)

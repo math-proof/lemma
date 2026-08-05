@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Nat
     x, d = Symbol(integer=True)
     Eq << apply(x // d * d)
 

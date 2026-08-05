@@ -17,7 +17,7 @@ def apply(is_nonzero, delta_is_zero, fx):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Nat
+    from Lemma import Bool, Int, Nat
 
     x, a, b, c = Symbol(complex=True, given=True)
     Eq << apply(Unequal(a, 0), Equal(b ** 2 - 4 * a * c, 0), a * x ** 2 + b * x + c)

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int, Int
+    from Lemma import Int
 
     x = Symbol(real=True)
     Eq << apply(x)

@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Int
+    from Lemma import Int
 
     a, b = Symbol(real=True, given=True)
     Eq << apply(LessEqual(0, a - b))

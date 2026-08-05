@@ -14,7 +14,7 @@ def apply(eq, Q_def, V_def, MDV_def, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Probability, Bool, Nat, Rat, Int, Int, Int, Int
+    from Lemma import Algebra, Tensor, Probability, Bool, Nat, Rat, Int
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), real=True, random=True) # states / observation

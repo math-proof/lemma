@@ -16,7 +16,7 @@ def apply(given, a, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat, Finset
+    from Lemma import Tensor, Nat, Finset
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(shape=(n,), real=True, given=True)

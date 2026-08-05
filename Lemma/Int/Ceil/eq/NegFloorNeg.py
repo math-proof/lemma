@@ -10,7 +10,7 @@ def apply(ceil):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Rat, Int, Nat
+    from Lemma import Set, Bool, Rat, Int, Nat
 
     x = Symbol(real=True)
     Eq << apply(ceil(x))

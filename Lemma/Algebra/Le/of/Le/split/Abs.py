@@ -12,7 +12,7 @@ def apply(given, negate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int, Int
+    from Lemma import Nat, Int
     M, a = Symbol(real=True)
 
     Eq << apply(LessEqual(abs(a), M), negate=True)

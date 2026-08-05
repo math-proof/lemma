@@ -20,7 +20,7 @@ def apply(self, index=-1):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Tensor, Nat, Int
+    from Lemma import Bool, Tensor, Nat, Int
 
     n = Symbol(integer=True, positive=True)
     i = Symbol(integer=True)

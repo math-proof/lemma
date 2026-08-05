@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Set
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
     f = Function(integer=True)

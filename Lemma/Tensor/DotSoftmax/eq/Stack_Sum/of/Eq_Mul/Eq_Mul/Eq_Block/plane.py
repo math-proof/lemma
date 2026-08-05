@@ -15,7 +15,7 @@ def apply(eq_theta_r, eq_theta_c, eq_R, Q, K, V, r, c, t):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Finset, Algebra, Finset, Nat, Real
+    from Lemma import Tensor, Finset, Algebra, Nat, Real
     from Lemma.Tensor.EqDot.of.Eq_Mul.Eq_Mul.Eq_Block.position_representation.plane import rotary_matrix
     # n denotes sequence length (seq_length)
     # b_r, b_c denotes 10000

@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset, Fin
+    from Lemma import Bool, Finset, Fin
 
     A, B = Symbol(etype=dtype.integer)
     x, y = Symbol(integer=True)

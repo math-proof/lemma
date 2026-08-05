@@ -22,7 +22,7 @@ def apply(x):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Nat, Nat
+    from Lemma import Finset, Algebra, Bool, Nat
     from Lemma.Finset.K.eq.Add.definition import K
     from Lemma.Finset.Alpha.gt.Zero import alpha
 

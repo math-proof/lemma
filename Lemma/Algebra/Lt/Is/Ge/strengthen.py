@@ -10,7 +10,7 @@ def apply(lt):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat, Int
+    from Lemma import Bool, Nat, Int
 
     x, a = Symbol(integer=True, given=True)
     Eq << apply(x < a)

@@ -41,7 +41,7 @@ def apply(self, index=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat
+    from Lemma import Tensor, Nat
 
     m, n, d = Symbol(integer=True, positive=True)
     A, C = Symbol(real=True, shape=(m, n))
