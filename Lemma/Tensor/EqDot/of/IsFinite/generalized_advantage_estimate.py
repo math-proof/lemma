@@ -26,7 +26,7 @@ def prove(Eq):
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
 
     i = Eq[-1].rhs.variable
-    Eq << Eq[-1].this.rhs.find(Mul[~Sum]).apply(Algebra.Sum.limits.subst.offset, i)
+    Eq << Eq[-1].this.rhs.find(Mul[~Sum]).apply(Finset.SumIco.eq.Sum_UFnAdd, i)
 
     Eq << Eq[-1].this.find(Pow[Add]).apply(Algebra.Pow.eq.Mul.split.exponent)
 

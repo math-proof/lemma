@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs().find(Binomial).apply(Finset.Binom.eq.Div.Binom)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.subst.offset, 1)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, 1)
 
     Eq << Eq[-1].this.lhs.find(Pow).apply(Algebra.Pow.eq.Mul.split.exponent)
 

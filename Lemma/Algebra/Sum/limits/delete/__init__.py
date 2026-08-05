@@ -1,2 +1,2 @@
 from . import baseset
-from . import Condset
+from . import SetOf

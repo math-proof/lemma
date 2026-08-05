@@ -12,13 +12,13 @@ def apply(is_nonnegative, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool
+    from Lemma import Set, Bool, Finset
 
     n, k = Symbol(integer=True)
     Eq << apply(n >= 0, k)
 
     m = Symbol(integer=True, nonnegative=True)
-    Eq << Set.Cup_Ioc.eq.Ioc0.apply(Cup[k:m](Eq[1].lhs.expr))
+    Eq << Finset.Cup_Ioc.eq.Ioc0.apply(Cup[k:m](Eq[1].lhs.expr))
 
     Eq << Eq[-1].subs(m, n)
 

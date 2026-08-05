@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Element).apply(Set.In_Icc.Is.InNeg)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.subst.offset, -c)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -c)
 
     Eq << Eq[-1].this.rhs.find(Element).apply(Set.In_Icc.Is.InAdd, c)
 

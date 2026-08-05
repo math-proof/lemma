@@ -17,7 +17,7 @@ def apply(A, B, n=None, k=None, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Fin
 
     A, B = Symbol(shape=(oo,), real=True)
     Eq << apply(A, B)
@@ -30,9 +30,9 @@ def prove(Eq):
     k = Eq[0].rhs.expr.args[1].variable
     Eq << Eq[-1].this.rhs.limits_subs(i, k)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.rhs.apply(Fin.Sum_BFn.comm)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.subst.offset, -k)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -k)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap.intlimit)
 

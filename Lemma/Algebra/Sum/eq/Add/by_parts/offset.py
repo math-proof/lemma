@@ -18,22 +18,22 @@ def apply(self, pivot=-1, j=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Finset
 
     i, j, k = Symbol(integer=True)
     f, g = Function(real=True)
     n = Symbol(domain=Range(i, oo))
     Eq << apply(Sum[k:i:n + 1](f(k) * g(k)), j=j)
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.limits.subst.offset, i)
+    Eq << Eq[0].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, i)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Add.by_parts)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.limits.subst.offset, -i)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, -i)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.limits.subst.offset, -i)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, -i)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, -i)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -i)
 
 
 

@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Set.In.of.Eq_odd.In)
+    Eq << Eq[-2].this.lhs.apply(Set.In_SetOf_In_IccDiv_2.of.In_Icc.Odd)
 
     Eq << Eq[-1].this.lhs.apply(Set.And.Eq_odd.of.In)
 

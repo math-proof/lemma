@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(And).apply(Nat.Eq.UFn.given.Eq.UFn), Eq[-1].this.find(And).apply(Nat.Eq.UFn.given.Eq.UFn)
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Any.of.Eq_even)
+    Eq << Eq[-2].this.lhs.apply(Nat.Any_Eq_Mul2.of.Even)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Any.of.Mod.ne.Zero)
 

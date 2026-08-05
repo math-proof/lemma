@@ -15,7 +15,7 @@ def prove(Eq):
     n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 0))
 
-    Eq << Algebra.Any.of.Eq_even.apply(Eq[0])
+    Eq << Nat.Any_Eq_Mul2.of.Even.apply(Eq[0])
 
     Eq << Eq[-1].this.expr.apply(Nat.Div.of.Eq, 2, simplify=None)
 

@@ -45,9 +45,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.Binom.telescope)
 
-    Eq << Eq.abel.find(Sum[Tuple, Tuple]).this.apply(Algebra.Sum.limits.subst.offset, 1, -d).this.rhs.apply(Finset.Sum.Binom.limits.swap.upper)
+    Eq << Eq.abel.find(Sum[Tuple, Tuple]).this.apply(Finset.SumIco.eq.Sum_UFnAdd, 1, -d).this.rhs.apply(Finset.Sum.Binom.limits.swap.upper)
 
-    Eq << Eq.abel.rhs.args[1].find(Sum[Tuple, Tuple]).this.apply(Algebra.Sum.limits.subst.offset, 1, -d).this.rhs.apply(Finset.Sum.Binom.limits.swap.upper)
+    Eq << Eq.abel.rhs.args[1].find(Sum[Tuple, Tuple]).this.apply(Finset.SumIco.eq.Sum_UFnAdd, 1, -d).this.rhs.apply(Finset.Sum.Binom.limits.swap.upper)
 
     Eq << Eq[0].subs(Eq.abel.subs(*Eq[-3:]))
 

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, index=0, offset=None):
-    from Lemma.Algebra.Sum.limits.subst.offset import limits_subs
+    from Lemma.Finset.SumIco.eq.Sum_UFnAdd import limits_subs
     return Equal(self, limits_subs(Cup, self, index, offset), evaluate=False)
 
 

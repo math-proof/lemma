@@ -26,7 +26,7 @@ def apply(given, function):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Algebra, Bool, Finset, Fin
     i, j = Symbol(integer=True)
 
     A, B = Symbol(etype=dtype.integer)
@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.rhs.apply(Fin.Sum_BFn.comm)
 
     Eq << Bool.Ite.of.Iff.apply(Eq[0], Eq[-1].lhs)
 

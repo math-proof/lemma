@@ -39,7 +39,7 @@ def prove(Eq):
     Eq << Eq.hypothesis - Eq[0]
 
     i = Eq[-1].find(Sum).variable
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.subst.offset, -1)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
 
     Eq << Eq[-1].this.find(-Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)
 

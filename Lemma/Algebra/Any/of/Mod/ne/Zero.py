@@ -12,7 +12,7 @@ def apply(given, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 #     n = q * d + r
     n = Symbol(integer=True, given=True)
 
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Algebra.Eq_odd.of.Ne_0.apply(Eq[0])
 
-    Eq << Algebra.Any.of.Eq_odd.apply(Eq[-1], k=Eq[1].variable)
+    Eq << Nat.Any_Eq_AddMul2.of.Odd.apply(Eq[-1], k=Eq[1].variable)
 
 
 if __name__ == '__main__':

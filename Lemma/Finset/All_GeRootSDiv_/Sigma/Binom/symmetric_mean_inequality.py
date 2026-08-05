@@ -39,9 +39,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Add.doit.outer)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.delete.Condset)
+    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.delete.SetOf)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.delete.Condset)
+    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.delete.SetOf)
 
     Eq << Eq[-1].this.find(Sum).simplify()
 

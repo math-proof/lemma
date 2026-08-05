@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Set.Any.of.Any.limits.swap.apply(Eq[-1], simplify=False)
 
-    Eq.S_supset = Eq[-1].this.expr.apply(Set.Subset.Finset.of.In.In, simplify=False)
+    Eq.S_supset = Eq[-1].this.expr.apply(Set.SubsetFinset.of.In.In, simplify=False)
 
     Eq << Eq.S_supset.this.expr.apply(Set.EqUnion.of.Subset, simplify=None, ret=0)
 

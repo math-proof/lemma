@@ -9,12 +9,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     n, d = Symbol(integer=True)
     Eq << apply(Ceil(n / d) - 1)
 
-    Eq << Eq[0].this.find(Ceil).apply(Algebra.Ceil.eq.FloorDivSub_Sign)
+    Eq << Eq[0].this.find(Ceil).apply(Int.Ceil.eq.FloorDivSub_Sign)
 
     Eq << Eq[-1].this.lhs.find(Floor).apply(Algebra.Floor.eq.Add.quotient)
 

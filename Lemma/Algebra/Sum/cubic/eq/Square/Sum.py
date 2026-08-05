@@ -42,9 +42,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[~Sum][2]).apply(Algebra.Sum.eq.Add.shift)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.subst.offset, 2)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, 2)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.subst.offset, 3)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, 3)
 
     Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum.Binom.eq.Binom)
 

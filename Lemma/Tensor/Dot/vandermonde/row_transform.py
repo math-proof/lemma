@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Sum.Sum.limits.swap)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Sum.limits.subst.offset, -i)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.SumIco.eq.Sum_UFnAdd, -i)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Mul_Sum.eq.Sum_Mul)
 

@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.limits_subs(n, m)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, b)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, b)
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, b)
 

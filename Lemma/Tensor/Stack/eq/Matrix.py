@@ -22,7 +22,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Bool
+    from Lemma import Algebra, Tensor, Bool, Fin
     i = Symbol(integer=True)
     n = 4
     a = Symbol(real=True, shape=(oo,))
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq.All_And = All[i:4](Equal(A[i], B[i]), plausible=True)
 
-    Eq << Eq.All_And.this.apply(Algebra.All.Is.And.doit)
+    Eq << Eq.All_And.this.apply(Fin.All_UFn.Is.AndAll)
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 

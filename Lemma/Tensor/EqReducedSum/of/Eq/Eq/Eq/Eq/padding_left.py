@@ -15,7 +15,7 @@ def apply(eq_A, eq_P, eq_P_quote, eq_I_quote):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Vector
+    from Lemma import Algebra, Bool, Vector, Finset
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -40,9 +40,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.lhs.args[0].apply(Algebra.Sum.limits.subst.offset, -Eq[-1].find(ReducedArgMax) - 1)
+    Eq << Eq[-1].this.lhs.args[0].apply(Finset.SumIco.eq.Sum_UFnAdd, -Eq[-1].find(ReducedArgMax) - 1)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.limits.subst.offset, n - Eq[-1].find(ReducedArgMax))
+    Eq << Eq[-1].this.lhs.args[1].apply(Finset.SumIco.eq.Sum_UFnAdd, n - Eq[-1].find(ReducedArgMax))
 
 
 

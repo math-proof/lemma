@@ -9,7 +9,7 @@ def apply(n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Set, Bool
+    from Lemma import Algebra, Calculus, Set, Bool, Finset
 
     n = Symbol(integer=True, positive=True)
     Eq << apply(n)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.doit(), Eq[-1].this.lhs.doit().reversed
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, -1) + 1
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -1) + 1
 
     Eq <<= Eq[-3] / Eq[-3].lhs, Eq[-1] / Eq[-3].lhs
 

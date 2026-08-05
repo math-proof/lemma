@@ -27,7 +27,6 @@ from . import Ne_0
 from . import Stirling
 from . import Stirling1
 from . import All_Any_Eq
-from . import Condset
 from . import DetBlock_Stack_PowAdd
 from . import EqInv
 from . import Factorial2
@@ -75,3 +74,6 @@ from . import DetBlock
 from . import GeKS
 from . import LtAlpha
 from . import Cup_Ioc
+from . import SetOf
+from . import SumIco
+from . import AddSumS_SquareSub

@@ -3,7 +3,7 @@ from util import *
 
 @apply
 def apply(self, i=0, j=1):
-    from Lemma.Algebra.Sum.limits.swap import rewrite
+    from Lemma.Fin.Sum_BFn.comm import rewrite
     return Equal(self, rewrite(Product, self, i, j))
 
 

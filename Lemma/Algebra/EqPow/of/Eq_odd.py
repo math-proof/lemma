@@ -15,7 +15,7 @@ def prove(Eq):
 
     Eq << apply(Equal(n % 2, 1))
 
-    Eq << Algebra.Any.of.Eq_odd.apply(Eq[0])
+    Eq << Nat.Any_Eq_AddMul2.of.Odd.apply(Eq[0])
 
     Eq << Eq[-1].this.expr.apply(Nat.Pow.of.Eq, base=-1)
 

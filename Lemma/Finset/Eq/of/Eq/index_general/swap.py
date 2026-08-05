@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq.expand = Bool.BFn.of.BFnIte.Cond.apply(Eq.dj_domain, Eq[-1])
 
-    Eq << Set.Subset.Finset.of.In.In.apply(Eq.dj_domain, Eq.di_domain, simplify=False)
+    Eq << Set.SubsetFinset.of.In.In.apply(Eq.dj_domain, Eq.di_domain, simplify=False)
 
     Eq.eq_intersection = Set.EqInter.of.Subset.apply(Eq[-1])
 

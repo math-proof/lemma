@@ -60,7 +60,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Greater).apply(Algebra.Gt_0.Is.Cond)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, -Eq[-1].find(ReducedArgMax))
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -Eq[-1].find(ReducedArgMax))
 
     Eq << Eq[-1].this.lhs().find(functions.Bool).simplify()
 

@@ -220,7 +220,7 @@ def prove(Eq):
 
     Eq.Sum_le = Nat.Le.of.Le.Le.apply(Eq.Sum_le, Eq[-1])
 
-    Eq << Set.In.Icc.of.Ge.Le.apply(Eq.Sum_ge, Eq.Sum_le)
+    Eq << Set.In_Icc.of.Le.Le.apply(Eq.Sum_ge, Eq.Sum_le)
 
     Eq << Eq[-1].subs(Eq.eq_cos.reversed)
 

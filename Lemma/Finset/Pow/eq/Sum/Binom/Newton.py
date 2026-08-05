@@ -37,7 +37,7 @@ def prove(Eq):
     (k, *_), *_ = Eq[-1].rhs.limits
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.rhs.args[1].apply(Algebra.Sum.limits.subst.offset, -1)
+    Eq << Eq[-1].this.rhs.args[1].apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
 
     Eq << Finset.Binom.eq.Add.Pascal.apply(Binomial(n + 1, k))
 

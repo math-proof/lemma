@@ -10,12 +10,12 @@ def apply(self, *, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Int
 
     n, d = Symbol(integer=True)
     Eq << apply(n // d)
 
-    Eq << Algebra.Ceil.eq.FloorDivSub_Sign.apply(Eq[0].rhs).reversed
+    Eq << Int.Ceil.eq.FloorDivSub_Sign.apply(Eq[0].rhs).reversed
 
 
 

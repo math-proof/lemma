@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.base.apply(Finset.FallingFactorial.eq.Mul.shift)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, -i - 1)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -i - 1)
 
     Eq << Eq[-1] * i
 

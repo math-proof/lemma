@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Multinomial).simplify()
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.limits.subst.offset, i).reversed
+    Eq << Eq[0].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, i).reversed
 
 
 

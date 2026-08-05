@@ -13,7 +13,7 @@ def apply(eq, Q_def, V_def):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Calculus, Probability, Algebra, Finset, Rat, Nat
+    from Lemma import Tensor, Calculus, Probability, Algebra, Finset, Rat, Nat, Fin
 
     b, D = Symbol(integer=True, positive=True)
     s = Symbol(shape=(oo, b), integer=True, random=True) # states / observation
@@ -33,9 +33,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Expectation).apply(Probability.Expect.eq.Sum)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.find(Sum).apply(Fin.Sum_BFn.comm)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.swap, 1, 2)
+    Eq << Eq[-1].this.find(Sum).apply(Fin.Sum_BFn.comm, 1, 2)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
 
@@ -64,7 +64,7 @@ def prove(Eq):
     Eq << Eq[-1].subs(Eq[-4])
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
     Eq << Eq[-1].this.find(Pr * Sum).apply(Finset.Mul_Sum.eq.Sum_Mul)
-    Eq << Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.find(Mul[~Sum]).apply(Fin.Sum_BFn.comm)
     Eq.eq_grad = Eq[-1].this.find(Mul[~Sum]).apply(Algebra.Sum.limits.separate)
     Eq << Rat.Ne_0.of.Div1.gt.Zero.apply(Eq[0]).subs(t, t + 1)
     Eq << Probability.Ne_0.of.Ne_0.joint_slice.apply(Eq[-1], [-1, -1])

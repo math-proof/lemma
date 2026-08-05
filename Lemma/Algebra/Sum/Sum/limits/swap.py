@@ -29,7 +29,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset
+    from Lemma import Algebra, Finset, Fin
 
     i, j = Symbol(integer=True)
     n, m = Symbol(integer=True, positive=True)
@@ -38,7 +38,7 @@ def prove(Eq):
     Eq << apply(Sum[i:m](h[i] * Sum[j:n](g[i, j])))
 
     Eq << Eq[0].this.lhs.expr.apply(Finset.Mul_Sum.eq.Sum_Mul)
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.rhs.apply(Fin.Sum_BFn.comm)
 
 
 if __name__ == '__main__':

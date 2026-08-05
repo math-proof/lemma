@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Mul.eq.Sum.as_multiple_limits)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, -Eq[-1].lhs.variables[1])
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -Eq[-1].lhs.variables[1])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap.intlimit.parallel)
 

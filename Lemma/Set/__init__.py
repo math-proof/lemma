@@ -212,8 +212,6 @@ from . import NotIn_Ioi
 from . import In_Range
 from . import GtFrac_0
 from . import In_Ioo
-from . import Cup_UFn
-from . import Any_Eq
 from . import FloorNegFrac
 from . import CupIn_Icc
 from . import NotIn_Cup
@@ -228,4 +226,8 @@ from . import LeAbs_MaxAbsS
 from . import SubsetUnionS
 from . import In_IcoMul
 from . import SqrtSubSquareS
-from . import In_IcoCeilDiv
+from . import Any_Eq
+from . import SubsetFinset
+from . import In_IccCeilDiv
+from . import In_SetOf_In_IccDiv_2
+from . import InsertToSet

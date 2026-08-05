@@ -3,8 +3,6 @@ from . import Any_And
 from . import All_Eq
 from . import Or
 from . import Cond
-from . import Eq_odd
-from . import Eq_even
 from . import All
 from . import Any_Eq
 from . import Mod

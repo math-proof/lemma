@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Piecewise).apply(Bool.Ite_Ite.eq.Ite__Ite)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, -Eq[-1].find(ReducedArgMax) - 1 + n)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, -Eq[-1].find(ReducedArgMax) - 1 + n)
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.AddSumS, cond=k <= Eq[-1].find(ReducedArgMax))
 

@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - 1
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.subst.offset, 1)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumIco.eq.Sum_UFnAdd, 1)
 
     Eq << Eq.g_squared * x
 
@@ -148,7 +148,7 @@ def prove(Eq):
 
     Eq << 1 - Eq[-1]
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.subst.offset, 1)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumIco.eq.Sum_UFnAdd, 1)
 
     Eq << Eq[-1] / (x * 2)
 

@@ -71,11 +71,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq <<= Eq[-1].find(Sum).this.apply(Algebra.Sum.limits.subst.offset, d_r / 2), \
-        Eq[-1].find(Sum[2]).this.apply(Algebra.Sum.limits.subst.offset, d_r + (d_c + d_z) / 2),\
-        Eq[-1].find(Sum[4]).this.apply(Algebra.Sum.limits.subst.offset, (d_r + d_c + d_z) / 2),\
-        Eq[-1].find(Sum[5]).this.apply(Algebra.Sum.limits.subst.offset, (d_r + d_c) / 2),\
-        Eq[-1].find(Sum[6]).this.apply(Algebra.Sum.limits.subst.offset, d_r + d_c + d_z / 2)
+    Eq <<= Eq[-1].find(Sum).this.apply(Finset.SumIco.eq.Sum_UFnAdd, d_r / 2), \
+        Eq[-1].find(Sum[2]).this.apply(Finset.SumIco.eq.Sum_UFnAdd, d_r + (d_c + d_z) / 2),\
+        Eq[-1].find(Sum[4]).this.apply(Finset.SumIco.eq.Sum_UFnAdd, (d_r + d_c + d_z) / 2),\
+        Eq[-1].find(Sum[5]).this.apply(Finset.SumIco.eq.Sum_UFnAdd, (d_r + d_c) / 2),\
+        Eq[-1].find(Sum[6]).this.apply(Finset.SumIco.eq.Sum_UFnAdd, d_r + d_c + d_z / 2)
 
     Eq << Eq[-6].subs(*Eq[-5:])
 

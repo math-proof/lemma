@@ -37,7 +37,7 @@ def prove(Eq):
     f = Function(real=True)
     Eq << apply(Sum[k:i:n + i + 1]((-1) ** (j - k) * Binomial(n, k - i) * f(k)))
 
-    Eq << Eq[0].this.lhs.apply(Algebra.Sum.limits.subst.offset, i)
+    Eq << Eq[0].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, i)
 
     Eq << Eq[-1] * (-1) ** (n - i - j)
 

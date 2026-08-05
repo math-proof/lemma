@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.Cup.eq.Cup_Ite)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Cup_UFn.eq.Cup_UFnNeg)
+    Eq << Eq[-1].this.rhs.apply(Set.Cup.eq.Cup_UFnNeg)
 
     Eq << Eq[-1].this.rhs.find(Element).apply(Set.In_Icc.Is.InNeg)
 

@@ -71,9 +71,9 @@ def prove(Eq):
     r = Symbol(real=True, positive=True)
     Eq << Eq[-1].subs(x, r)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.subst.offset, m + 1)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumIco.eq.Sum_UFnAdd, m + 1)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.subst.offset, m + 1)
+    Eq << Eq[-1].this.rhs.apply(Finset.SumIco.eq.Sum_UFnAdd, m + 1)
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Mul.eq.Mul_Sum)
 

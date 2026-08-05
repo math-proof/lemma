@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Finset
+    from Lemma import Algebra, Tensor, Finset, Fin
 
     n = Symbol(integer=True)
     x, y = Symbol(shape=(n,), real=True)
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.limits_subs(i, j)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.rhs.apply(Fin.Sum_BFn.comm)
 
     Eq << Eq.expansion.subs(Eq[-1].reversed)
 

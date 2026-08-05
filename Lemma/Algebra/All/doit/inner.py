@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Fin
     x = Symbol(real=True, shape=(oo, oo))
     i, j = Symbol(integer=True)
     m = Symbol(integer=True, positive=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 
-    Eq << Eq[-1].this.find(functions.Bool, All).apply(Algebra.All.Is.And.doit)
+    Eq << Eq[-1].this.find(functions.Bool, All).apply(Fin.All_UFn.Is.AndAll)
 
     Eq << Eq[-1].this.find(functions.Bool).apply(Bool.Bool.eq.Ite)
 

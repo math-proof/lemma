@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq <<= Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[-3])
 
-    Eq << Set.In.Icc.of.Ge.Le.apply(Eq[-1], Eq[4])
+    Eq << Set.In_Icc.of.Le.Le.apply(Eq[-1], Eq[4])
 
 
 if __name__ == '__main__':

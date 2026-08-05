@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(x, -1, plausible=True)
 
-    Eq << Set.In.Icc.of.Ge.Le.apply(Eq[-1], Eq[0])
+    Eq << Set.In_Icc.of.Le.Le.apply(Eq[-1], Eq[0])
 
     Eq <<= Real.InArcsin.of.In_Icc.apply(Eq[-1]), Set.SqrtSubSquareS.In.Icc0MaxAbsS.of.In_Icc.apply(Eq[-1])
 

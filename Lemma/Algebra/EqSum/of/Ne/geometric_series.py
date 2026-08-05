@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.rhs.find(Sum[Pow[Add]]).apply(Algebra.Sum.limits.subst.offset, -1)
+    Eq << Eq[-1].this.rhs.find(Sum[Pow[Add]]).apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
 
 
 

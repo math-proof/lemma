@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.separate)
 
-    Eq << Eq[-1].this.lhs.find(Sum).apply(Algebra.Sum.limits.subst.offset, offset=k)
+    Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, offset=k)
 
     Eq << Eq[-1].this.lhs.find(Sum).apply(Finset.Sum.Binom.eq.Binom)
 

@@ -43,10 +43,10 @@ def prove(Eq):
 
     Eq.s2_abs_plausible = Eq[0].subs(Eq.Stirling2, Eq.Stirling0, Eq.Stirling1)
 
-    Eq << Finset.Condset.eq.Cup.Stirling.mapping.s2_A.apply(n, k, s2)
+    Eq << Finset.SetOf.eq.Cup.Stirling.mapping.s2_A.apply(n, k, s2)
 
     A = Eq[-1].rhs.expr.base
-    Eq << Finset.Condset.Stirling.mapping.s2_B.apply(n, k, s2)
+    Eq << Finset.SetOf.Stirling.mapping.s2_B.apply(n, k, s2)
 
     B = Eq[-1].rhs
     Eq.s2_abs = Eq.s2_abs.subs(Eq[-1], Eq[-2])
@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq.A_union_abs.subs(Eq[-1])
 
-    Eq << Finset.Abs.Condset.Stirling.mapping.s1_Aj.apply(n, k, s1, A).reversed
+    Eq << Finset.Abs.SetOf.Stirling.mapping.s1_Aj.apply(n, k, s1, A).reversed
 
     Eq << Eq[-1].apply(Fin.Sum.of.All_Eq, *Eq[-2].lhs.limits)
 

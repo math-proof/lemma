@@ -1,4 +1,3 @@
-from . import Eq_even
 from . import In
 from . import Ne
 from . import Eq_Cup
@@ -8,7 +7,6 @@ from . import In_Inter
 from . import Eq
 from . import Floor
 from . import In_SDiff
-from . import Eq_odd
 from . import Ceil
 from . import Eq_Mod
 from . import Or

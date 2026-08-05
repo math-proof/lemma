@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq.induct = Eq[0].subs(n, n + 1)
 
-    Eq << Finset.Cup.eq.Condset.P2Q_union.apply(n)
+    Eq << Finset.Cup.eq.SetOf.P2Q_union.apply(n)
 
     Q = Eq[-1].lhs.expr.base
     Eq << Eq[-1].apply(Set.EqCard.of.Eq)
@@ -29,12 +29,12 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[-2])
 
-    Eq << Finset.Abs.Condset.inbetween.apply(n, Q=Q)
+    Eq << Finset.Abs.SetOf.inbetween.apply(n, Q=Q)
 
     P_quote = Eq[-1].rhs.arg
     Eq << Eq[-2].this.rhs.expr.subs(Eq[-1])
 
-    Eq << Finset.Abs.Condset.last.apply(n, P_quote=P_quote)
+    Eq << Finset.Abs.SetOf.last.apply(n, P_quote=P_quote)
 
     Eq.P_definition = Eq[-1].lhs.arg.this.definition
 

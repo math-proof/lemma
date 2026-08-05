@@ -67,7 +67,7 @@ def prove(Eq):
 
     Eq.di_domain, Eq.x_di_eqaulity = Eq[-2].subs(Eq.di_definition.reversed), Eq[-1].subs(Eq.di_definition.reversed)
 
-    Eq << Set.Subset.Finset.of.In.In.apply(Eq.dj_domain, Eq.di_domain, simplify=False)
+    Eq << Set.SubsetFinset.of.In.In.apply(Eq.dj_domain, Eq.di_domain, simplify=False)
 
     Eq << Eq.expand.subs(Eq.x_di_eqaulity)
 

@@ -104,7 +104,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Finset
+    from Lemma import Algebra, Bool, Finset, Fin
 
     A, C = Symbol(etype=dtype.integer)
     B = Function(etype=dtype.integer)
@@ -120,11 +120,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.find(functions.Bool[And]).apply(Bool.BoolAnd.eq.MulBoolS)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.lhs.apply(Fin.Sum_BFn.comm)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap, 1, 2)
+    Eq << Eq[-1].this.lhs.apply(Fin.Sum_BFn.comm, 1, 2)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.lhs.apply(Fin.Sum_BFn.comm)
 
 
 

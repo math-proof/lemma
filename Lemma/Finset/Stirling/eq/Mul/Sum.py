@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Finset, Nat
+    from Lemma import Finset, Algebra, Bool, Finset, Nat, Fin
 
     k = Symbol(integer=True, nonnegative=True, given=False)
     n = Symbol(integer=True, nonnegative=True)
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.find(Mul[Sum]).apply(Finset.Mul_Sum.eq.Sum_Mul)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.find(Sum).apply(Fin.Sum_BFn.comm)
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.separate)
 

@@ -11,7 +11,7 @@ def apply(ne_zero_lhs, ne_zero_rhs, y):
 
 @prove
 def prove(Eq):
-    from Lemma import Probability, Algebra, Real, Finset, Nat
+    from Lemma import Probability, Algebra, Real, Finset, Nat, Fin
 
     D, m, n = Symbol(integer=True, positive=True)
     θ, θ_quote = Symbol(real=True, shape=(D,))
@@ -36,13 +36,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.lhs.args[1].apply(Fin.Sum_BFn.comm)
 
     Eq << Eq[-1].this.lhs.args[1].apply(Algebra.Sum.limits.separate)
 
     Eq << Eq[-1].this.find(Sum[Pr[Conditioned]]).apply(Probability.Sum.eq.One.Conditioned)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.lhs.apply(Fin.Sum_BFn.comm)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.separate)
 

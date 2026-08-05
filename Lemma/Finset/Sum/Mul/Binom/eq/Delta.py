@@ -61,7 +61,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.find(Sum[Binomial]).apply(Algebra.Sum.limits.subst.offset, i)
+    Eq << Eq[-1].this.find(Sum[Binomial]).apply(Finset.SumIco.eq.Sum_UFnAdd, i)
 
     Eq << Eq[-1].this.find(Sum[Binomial]).apply(Finset.Sum.Binom.eq.Binom)
 

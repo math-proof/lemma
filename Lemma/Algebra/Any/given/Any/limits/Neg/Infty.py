@@ -9,13 +9,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Int
+    from Lemma import Int, Bool
 
     i = Symbol(integer=True)
     f = Function(real=True)
     Eq << apply(Any[i](f(i) >= 0))
 
-    Eq << Int.Any_UFnNeg.of.Any.apply(Eq[-1])
+    Eq << Bool.Any_UFnNeg.of.Any.apply(Eq[-1])
 
 
 

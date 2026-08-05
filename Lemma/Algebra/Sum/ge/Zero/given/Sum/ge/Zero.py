@@ -10,7 +10,7 @@ def apply(given, index=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Fin
     f = Function(real=True)
     i, j = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Algebra.GeSum.of.Ge.apply(Eq[1], (i, 0, n))
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.lhs.apply(Fin.Sum_BFn.comm)
 
 
 if __name__ == '__main__':

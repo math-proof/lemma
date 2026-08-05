@@ -709,11 +709,12 @@ def _prove(func, debug=True, **kwargs):
         
     except AttributeError as e:
         messages = source_error()
-        
-        m = re.match(r"^module 'sympy(?:\.\w+)*\.(algebra|sets|calculus|discrete|geometry|keras|stats)(?:\.\w+)*' has no attribute '(\w+)'$", str(e))
+        lemma_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Lemma')
+        regex = ('|').join(entry.name for entry in os.scandir(lemma_dir) if entry.is_dir() and entry.name != '__pycache__')
+        m = re.match(fr"^module 'sympy(?:\.\w+)*\.({regex})(?:\.\w+)*' has no attribute '(\w+)'$", str(e)) or re.match(fr"^type object '({regex})' has no attribute '(?:\w+)'$", str(e))
         if m: 
             import_axiom = False
-            if m[2] == 'func':
+            if len(m.groups()) >= 2 and m[2] == 'func':
                 * _, statement = messages
                 statement = statement.strip()
                 if statement == 'if not isinstance(self, cls.func):':

@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq <<= Eq[0].subs(i, j), Eq[0].subs(i, k)
 
-    Eq << Set.Subset.Finset.of.In.In.apply(Eq[-1], Eq[-2], simplify=None)
+    Eq << Set.SubsetFinset.of.In.In.apply(Eq[-1], Eq[-2], simplify=None)
 
     Eq << Set.Subset.of.Subset.In.apply(Eq[0], Eq[-1], simplify=None)
 

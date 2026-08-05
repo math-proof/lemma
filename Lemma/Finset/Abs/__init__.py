@@ -1,3 +1,3 @@
 from . import Imageset
 from . import Cup
-from . import Condset
+from . import SetOf

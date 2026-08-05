@@ -25,7 +25,7 @@ def prove(Eq):
     S = Symbol(etype=dtype.integer[k], given=True)
     Eq << apply(Equal(Card(S), n))
 
-    Eq << Set.Any.Eq.Condset.Eq.of.Eq_Card.apply(Eq[0])
+    Eq << Set.Any.Eq.SetOf.Eq.of.Eq_Card.apply(Eq[0])
 
     Eq << Bool.Any_And.of.AnySetOf_AnySetOf.apply(Eq[-1])
 

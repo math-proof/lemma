@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Add]).apply(Finset.Sum_Add.eq.AddSumS)
 
-    Eq << Eq[-1].this.find(-~Sum).apply(Algebra.Sum.limits.subst.offset, -1)
+    Eq << Eq[-1].this.find(-~Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
 
     Eq << Eq[-1].this.find(-~Sum).apply(Algebra.Sum.eq.Sub.unshift)
 

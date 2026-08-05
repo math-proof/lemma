@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Mul[~Expectation]]).apply(Probability.Expect.law_of_total_expectation)
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.subst.offset, -1)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.SumIco.eq.Sum_UFnAdd, -1)
 
     Eq << Eq[-1].this.find(Expectation[Sum]).apply(Probability.Expect.Sum.eq.Sum.Expect)
 

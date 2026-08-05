@@ -1,1 +1,1 @@
-from . import Condset
+from . import SetOf

@@ -63,7 +63,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset
+    from Lemma import Algebra, Set, Finset, Fin
 
     i, j, d, a = Symbol(integer=True)
     n = Symbol(integer=True, positive=True)
@@ -77,7 +77,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Finset.Sum.eq.Sum_MulBool)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.swap)
+    Eq << Eq[-1].this.rhs.apply(Fin.Sum_BFn.comm)
 
 
 

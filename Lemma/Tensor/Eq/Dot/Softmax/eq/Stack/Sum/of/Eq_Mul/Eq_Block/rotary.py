@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Tensor.Dot.eq.Sum)
 
-    Eq << Eq[-1].this.find(Sum[2]).apply(Algebra.Sum.limits.subst.offset, d / 2)
+    Eq << Eq[-1].this.find(Sum[2]).apply(Finset.SumIco.eq.Sum_UFnAdd, d / 2)
 
     Eq << Eq[-1].this.rhs.apply(Finset.AddSumS.eq.Sum_Add_Sum)
 

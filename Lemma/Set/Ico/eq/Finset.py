@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << apply(Range(a, a + 4))
 
-    Eq << Eq[0].this.rhs.apply(Set.Finset.eq.Icc)
+    Eq << Eq[0].this.rhs.apply(Set.InsertToSet.eq.ToSet)
 
 
 if __name__ == '__main__':
