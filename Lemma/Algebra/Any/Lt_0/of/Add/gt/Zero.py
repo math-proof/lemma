@@ -25,8 +25,6 @@ def prove(Eq):
 
     Eq << Bool.ImpEq.of.ImpEq.subst.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Nat.Ne.of.Gt)
-
     Eq << Eq[-1].this.rhs.apply(Real.NeSqrt_0.of.Gt_0)
 
     Eq << Eq[-1].this.rhs.apply(Int.Ne_0.of.NeAbs_0)

@@ -18,11 +18,9 @@ def prove(Eq):
 
     Eq << Algebra.GeSqrt_0.of.Ge_0.apply(Eq[-1])
 
-    Eq << Nat.Ne.of.Gt.apply(Eq[0])
+    Eq << Real.NeSqrt_0.of.Gt_0.apply(Eq[0])
 
-    Eq << Real.NeSqrt_0.of.Gt_0.apply(Eq[-1])
-
-    Eq << Algebra.Gt_0.of.Ne_0.Ge_0.apply(Eq[-1], Eq[-3])
+    Eq << Algebra.Gt_0.of.Ne_0.Ge_0.apply(Eq[-1], Eq[-2])
 
 
 
