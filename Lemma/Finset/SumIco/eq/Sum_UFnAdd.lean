@@ -1,7 +1,6 @@
 import sympy.Basic
 import Mathlib.Data.Int.Interval
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-open Int
 
 
 @[main]

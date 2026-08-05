@@ -1,4 +1,4 @@
-import Lemma.Nat.Odd.is.Any_Eq_AddMul2
+import Lemma.Nat.Even.is.Any_Eq_Mul2
 import Lemma.Set.In_Icc.is.Le.Le
 open Set Nat
 
@@ -7,12 +7,12 @@ open Set Nat
 private lemma main
   {a b n : ℤ}
 -- given
-  (h : n is odd)
+  (h : n is even)
   (h₁ : n ∈ Icc a b) :
 -- imply
-  n ∈ {2 * k + 1 | k ∈ Icc (a / 2) ((b - 1) / 2)} := by
+  n ∈ {2 * k | k ∈ Icc ((a + 1) / 2) (b / 2)} := by
 -- proof
-  obtain ⟨k, hk⟩ := Any_Eq_AddMul2.of.Odd h
+  obtain ⟨k, hk⟩ := Any_Eq_Mul2.of.Even h
   rw [Set.mem_setOf]
   refine ⟨k, ?_, hk.symm⟩
   rcases (In_Icc.is.Le.Le _ _).mp h₁ with ⟨ha, hb⟩
@@ -23,4 +23,4 @@ private lemma main
     grind
 
 
--- created on 2018-05-29
+-- created on 2018-05-26

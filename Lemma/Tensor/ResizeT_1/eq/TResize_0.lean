@@ -3,9 +3,10 @@ import Lemma.List.EqSwap_0'1
 import Lemma.Tensor.GetResize.as.ResizeGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetSelect_1.as.Get.of.GtGet_0.GtGet_1.GtLength_1
 import Lemma.Tensor.GetT.eq.Select
+import Lemma.Tensor.SelectResize.as.ResizeSelect.of.Lt
 import Lemma.Tensor.SEq.of.All_SEqGetS.Eq
+import Lemma.Tensor.SEqGetS.of.SEq.GtLength
 open Bool Tensor List
-set_option maxHeartbeats 1000000
 
 
 @[main]
@@ -34,16 +35,9 @@ private lemma main
     ·
       intro j
       simp only [GetElem.getElem]
-      rw [GetSelect_1.as.Get.of.GtGet_0.GtGet_1.GtLength_1]
-      apply Eq.of.SEq
-      apply SEq.of.All_EqGetS.Eq
-      ·
-        intro t
-        simp only [GetElem.getElem]
-        repeat rw [Vector.GetResize.eq.Ite_Get_Mod.fin]
-        split_ifs <;> grind
-      ·
-        simp
+      conv_lhs => erw [GetT.eq.Select]
+      apply SEqGetS.of.SEq.GtLength.fin (by grind) _ (i := j)
+      apply ResizeSelect.as.SelectResize.of.Lt (d := ⟨1, by grind⟩) (by grind) X i k
 
 
 -- created on 2026-07-30

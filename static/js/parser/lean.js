@@ -6567,7 +6567,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             const rest = targs.slice(1).map((x) => String(x ?? ''));
             if (leanVarsGetitem(type0, rest) === 'Prop') return true;
         }
-        const func = this.args[0];
+        const {args} = this;
+        const func = args[0];
         if (func instanceof LeanToken) {
             switch (func.text) {
                 case 'HEq':
@@ -6579,6 +6580,8 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 default:
             }
         }
+        if (args.length == 3 && args[1] instanceof LeanToken && args[1].text === 'is')
+            return true;
     }
 
     is_space_separated() {

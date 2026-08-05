@@ -16,7 +16,6 @@ import Lemma.Vector.GetResize.eq.Ite_Get_Mod
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
 import Lemma.Vector.SEq.of.All_EqGetS.Eq
 open Nat List Bool Tensor Vector
-set_option maxHeartbeats 16000000
 
 
 /--
@@ -25,7 +24,7 @@ set_option maxHeartbeats 16000000
 | main | Tensor.SelectResize.as.ResizeSelect.of.Lt |
 | cast | Tensor.SelectResize.eq.Cast_ResizeSelect.of.Lt |
 -/
-@[main, cast]
+@[main, comm, cast]
 private lemma main
   [Zero α]
   {d : Fin s.length}
