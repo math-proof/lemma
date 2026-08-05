@@ -17,6 +17,8 @@ class IntegerRing (Z : Type) extends Semiring Z, LinearOrder Z, IsStrictOrderedR
   le_pred_of_lt {a b : Z} : a < b → a ≤ b - 1
   add_sub_cancel (a b : Z) : a + b - b = a
   sub_add_cancel {a b : Z} : a ≤ b → b - a + a = b
+  sub_le_sub_left {a b c : Z} : a ≤ b → c - b ≤ c - a
+  sub_pred {n d : Z} (h : d > 0) : n - (d - 1) = n + 1 - d
   div_add_mod (n d : Z) : d * (n / d) + n % d = n
   mod_lt {d : Z} (h : d > 0) (n : Z) : n % d < d
   pred_le (n : Z) : n - 1 ≤ n
@@ -47,6 +49,10 @@ instance : IntegerRing ℕ where
   sub_add_cancel := by
     intro a b
     apply Nat.sub_add_cancel
+  sub_le_sub_left {a b c} h := by simpa using Nat.sub_le_sub_left h c
+  sub_pred := by
+    intro n d h
+    omega
   div_add_mod := by
     intro n d
     apply Nat.div_add_mod n d
@@ -81,6 +87,10 @@ instance : IntegerRing ℤ where
   sub_add_cancel := by
     intro a b h
     apply Int.sub_add_cancel
+  sub_le_sub_left {a b c} h := by simpa using Int.sub_le_sub_left h c
+  sub_pred := by
+    intro n d h
+    omega
   div_add_mod := by
     intro n d
     rw [Int.add_comm]

@@ -19,13 +19,14 @@ open Nat
 
 @[main]
 private lemma main
-  {n t K M D κ δ : ℕ}
+  {t K M κ n δ D : ℕ}
 -- given
   (h_i : i < δ)
   (h_t : t < K * n * M * D) :
 -- imply
   ((t / D * δ + i) * D + t % D) % (n * (M * D) * δ) < n * (M * D) / (κ * M * D) * (κ * M * D) * δ ↔
-  t % (n * (M * D)) < n * (M * D) / (κ * M * D) * (κ * M * D) := by
+    t % (n * (M * D)) < n * (M * D) / (κ * M * D) * (κ * M * D) := by
+-- proof
   rw [MulAdd.eq.AddMulS]
   rw [AddAdd.eq.Add_Add]
   rw [MulMul.comm]

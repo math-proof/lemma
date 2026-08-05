@@ -28,7 +28,7 @@ import Lemma.List.ProdDropEraseIdx.eq.ProdAppendDropTake.of.Ge
 import Lemma.List.ProdSet.eq.MulProd_Mul_Prod.of.GtLength
 import Lemma.List.ProdAppend.eq.MulProdS
 import Lemma.List.AddMul_ProdDrop.lt.Prod
-import Lemma.List.Mod_Mul.lt.MulDiv.of.Mod_Mul.lt.MulDiv.Lt_Mul.Lt
+import Lemma.List.Mod_Mul.lt.MulDiv.of.Lt_Mul.Lt
 import Lemma.List.ProdTake.eq.MulProdTake.of.GtLength
 import Lemma.List.SetAppend.eq.Append_Set.of.GtLength
 import Lemma.List.Take.eq.AppendTake.of.GtLength

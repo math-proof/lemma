@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.GeSt_0.of.Ge_0
 import Lemma.Hyperreal.LeSt_0.of.Le_0
 import Lemma.Hyperreal.StNeg.eq.NegSt
-import Lemma.Int.Abs.eq.Neg.of.Le_0
+import Lemma.Int.EqAbs_Neg.of.Le_0
 import Lemma.Int.EqAbs.is.Ge_0
 open Hyperreal Int
 
@@ -19,7 +19,7 @@ private lemma main
   else
     simp at h_x
     have := LeSt_0.of.Le_0 (by linarith)
-    repeat rw [Abs.eq.Neg.of.Le_0 (by linarith)]
+    repeat rw [EqAbs_Neg.of.Le_0 (by linarith)]
     rw [StNeg.eq.NegSt]
 
 
