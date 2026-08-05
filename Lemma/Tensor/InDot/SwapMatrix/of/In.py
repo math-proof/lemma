@@ -47,7 +47,7 @@ def prove(Eq):
 
     Eq << Set.Subset.Finset.of.In.In.apply(Eq[-1], Eq[-2], simplify=None)
 
-    Eq << Set.Subset.of.In.Subset.apply(Eq[0], Eq[-1], simplify=None)
+    Eq << Set.Subset.of.Subset.In.apply(Eq[0], Eq[-1], simplify=None)
 
     Eq << Set.In.Ite.of.Subset.apply(Eq[-1], piecewise=Eq.element_piecewise.lhs)
 

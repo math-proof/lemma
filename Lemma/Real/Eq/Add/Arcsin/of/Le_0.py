@@ -17,12 +17,12 @@ def prove(Eq):
 
     Eq << Real.CosAdd.eq.SubCosCos_SinSin.apply(cos(Eq[1].lhs))
 
-    Eq << Algebra.EqAbs.of.Le_0.apply(Eq[0])
+    Eq << Int.EqAbs_Neg.of.Le_0.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1])
 
     Eq << Eq[-1].this.lhs.apply(Real.CosSub)
-    Eq << Real.Any.Eq.of.Cos.eq.Zero.apply(Eq[-1])
+    Eq << Real.Any_Eq_AddMul_Pi.of.EqCos_0.apply(Eq[-1])
 
     Eq << -Eq[-1].this.expr
 
@@ -36,9 +36,9 @@ def prove(Eq):
 
     Eq << Set.In.Icc.of.Ge.Le.apply(Eq[-1], Eq[0])
 
-    Eq <<= Real.In.Arcsin.of.In.apply(Eq[-1]), Set.SqrtSubSquareS.In.Icc0MaxAbsS.of.In_Icc.apply(Eq[-1])
+    Eq <<= Real.InArcsin.of.In_Icc.apply(Eq[-1]), Set.SqrtSubSquareS.In.Icc0MaxAbsS.of.In_Icc.apply(Eq[-1])
 
-    Eq <<= Set.Neg.In.Icc.of.In_Icc.apply(Eq[-2]), Real.In.Arcsin.of.In.apply(Eq[-1])
+    Eq <<= Set.Neg.In.Icc.of.In_Icc.apply(Eq[-2]), Real.InArcsin.of.In_Icc.apply(Eq[-1])
 
     Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[-2])
 

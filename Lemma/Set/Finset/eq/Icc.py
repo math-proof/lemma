@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq << Element(a + 2, Eq[0].rhs, plausible=True)
 
-    Eq << Set.Subset.of.In.Subset.apply(Eq[-1], Eq[-2], simplify=None)
+    Eq << Set.Subset.of.Subset.In.apply(Eq[-1], Eq[-2], simplify=None)
 
     Eq << Element(a + 3, Eq[0].rhs, plausible=True)
 
-    Eq.subset = Set.Subset.of.In.Subset.apply(Eq[-1], Eq[-2], simplify=None)
+    Eq.subset = Set.Subset.of.Subset.In.apply(Eq[-1], Eq[-2], simplify=None)
 
     Eq.supset = Supset(*Eq.subset.args, plausible=True)
 

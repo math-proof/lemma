@@ -10,14 +10,14 @@ def apply(given, upper, left_open=False, right_open=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Int
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(x <= 0, z, left_open=True)
 
     Eq << Set.IccAbs.subset.Icc.upper.apply(Eq[1].rhs)
 
-    Eq << Algebra.EqAbs.of.Le_0.apply(Eq[0])
+    Eq << Int.EqAbs_Neg.of.Le_0.apply(Eq[0])
     Eq << Eq[-2].subs(Eq[-1])
 
 

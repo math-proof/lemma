@@ -25,11 +25,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst, ret=0)
 
-    Eq << Eq[-1].this.find(Element).apply(Set.In.Div.Ico.of.In, 2, simplify=None)
+    Eq << Eq[-1].this.find(Element).apply(Set.In_IcoCeilDiv.of.In_Ico, 2, simplify=None)
 
     Eq << Eq[-1].this.find(Equal).apply(Nat.Div.of.Eq, 2, simplify=None)
 
-    Eq << Eq[-1].this.find(Equal).apply(Algebra.Eq.of.Eq.reverse, simplify=None)
+    Eq << Eq[-1].this.find(Equal).apply(Nat.Eq.of.Eq, simplify=None)
 
     Eq << Eq[-1].this.expr.apply(Bool.Cond.of.Eq.Cond.subst)
 

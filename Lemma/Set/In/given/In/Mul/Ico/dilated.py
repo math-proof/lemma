@@ -25,7 +25,7 @@ def prove(Eq):
     Eq << Set.And.of.In_Ico.split.Ico.apply(Eq[1])
 
 
-    Eq << Set.In.Div.Ico.of.In.apply(Eq[-1], d)
+    Eq << Set.In_IcoCeilDiv.of.In_Ico.apply(Eq[-1], d)
 
 
 

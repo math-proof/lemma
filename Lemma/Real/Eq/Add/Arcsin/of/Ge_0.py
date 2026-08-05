@@ -21,15 +21,15 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1])
 
-    Eq.any_eq = Real.Any.Eq.of.Cos.eq.Zero.apply(Eq[-1])
+    Eq.any_eq = Real.Any_Eq_AddMul_Pi.of.EqCos_0.apply(Eq[-1])
 
     Eq << LessEqual(x, 1, plausible=True)
 
     Eq << Set.In_Icc.of.Le.Le.apply(Eq[-1], Eq[0])
 
-    Eq <<= Real.In.Arcsin.of.In.apply(Eq[-1]), Set.SqrtSubSquareS.In.Icc0MaxAbsS.of.In_Icc.apply(Eq[-1])
+    Eq <<= Real.InArcsin.of.In_Icc.apply(Eq[-1]), Set.SqrtSubSquareS.In.Icc0MaxAbsS.of.In_Icc.apply(Eq[-1])
 
-    Eq << Real.In.Arcsin.of.In.apply(Eq[-1])
+    Eq << Real.InArcsin.of.In_Icc.apply(Eq[-1])
 
     Eq << Set.Add.In.Ioc.of.In.In.apply(Eq[-1], Eq[-3])
 

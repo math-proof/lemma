@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Finset
 
     n = Symbol(integer=True, nonnegative=True)
     k = Symbol(integer=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Set.CupIn_Ico.eq.Cup_UFnSub, k, -1 - k)
 
-    Eq << Eq[-1].this.lhs.apply(Set.Cup_Ioc.eq.IocNeg_0)
+    Eq << Eq[-1].this.lhs.apply(Finset.Cup_Ioc.eq.IocNeg_0)
 
 
 if __name__ == '__main__':

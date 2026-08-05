@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq.strict_greater_than = Int.LtSub_1.of.Le.apply(Eq.greater_than)
 
-    Eq << Nat.Gt.of.Gt.Ge.apply(Eq.strict_greater_than, Algebra.Mul_FloorDiv.ge.SubAdd_1.apply(a, 2))
+    Eq << Nat.Gt.of.Gt.Ge.apply(Eq.strict_greater_than, Int.Mul_FloorDiv.ge.SubAdd_1.of.Gt_0.apply(a, 2))
 
     Eq << Nat.Ge_Add_1.of.Gt.apply(Eq[-1])
 

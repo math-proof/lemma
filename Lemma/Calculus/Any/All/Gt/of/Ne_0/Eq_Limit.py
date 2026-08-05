@@ -50,7 +50,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Calculus.Any.All.Lt.of.Lt_0.Eq_Limit)
 
-    Eq << (A <= 0).this.apply(Algebra.EqAbs.of.Le_0)
+    Eq << (A <= 0).this.apply(Int.EqAbs_Neg.of.Le_0)
 
     Eq << -Eq[-1].this.rhs
 

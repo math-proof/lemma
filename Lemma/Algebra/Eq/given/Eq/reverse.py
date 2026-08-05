@@ -9,12 +9,12 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     b, a = Symbol(real=True, given=True)
     Eq << apply(Equal(a, b))
 
-    Eq << Algebra.Eq.of.Eq.reverse.apply(Eq[1])
+    Eq << Nat.Eq.of.Eq.apply(Eq[1])
 
 
 

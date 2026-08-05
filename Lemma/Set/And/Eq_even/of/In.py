@@ -14,7 +14,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Rat
+    from Lemma import Set, Algebra, Nat, Rat, Int
 
     a, b, i, j, n, d = Symbol(integer=True)
     Eq << apply(Element(n, imageset(n, 2 * n, Range((a + 1) // 2, b // 2 + 1))))
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Set.Ge.Le_Sub_1.of.In_Ico.apply(Eq[-1], right_open=False)
 
-    Eq << Nat.Ge.of.Ge.Ge.apply(Eq[-2], Algebra.Mul_FloorDiv.ge.SubAdd_1.apply(a + 1, 2))
+    Eq << Nat.Ge.of.Ge.Ge.apply(Eq[-2], Int.Mul_FloorDiv.ge.SubAdd_1.of.Gt_0.apply(a + 1, 2))
 
     Eq << Nat.Le.of.Le.Le.apply(Eq[-2], Rat.LeFloor.apply(b / 2) * 2)
 

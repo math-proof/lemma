@@ -74,3 +74,4 @@ from . import DetBlock_Stack_MulPowS
 from . import DetBlock
 from . import GeKS
 from . import LtAlpha
+from . import Cup_Ioc

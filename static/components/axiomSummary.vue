@@ -114,7 +114,8 @@ export default {
 				'Bool.All.of.Given', // plausible
 				'Bool.All.of.Cond', // plausible
 				'Bool.Imp.Is.All', // plausible
-
+				
+				'Nat.Div.of.Eq.Ne_0',
 				'Set.Eq.of.ImpIn.ImpIn', // plausible
 				
 				'Algebra.Eq.of.Ge.squeeze',

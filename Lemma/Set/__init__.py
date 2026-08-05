@@ -228,3 +228,4 @@ from . import LeAbs_MaxAbsS
 from . import SubsetUnionS
 from . import In_IcoMul
 from . import SqrtSubSquareS
+from . import In_IcoCeilDiv
