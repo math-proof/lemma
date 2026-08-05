@@ -10,28 +10,22 @@ private lemma main
 -- proof
   apply ext
   intro x
-  -- Use logical equivalences to break down the membership conditions.
-  -- The `simp` tactic simplifies the logical conditions using commutativity and associativity of disjunction.
   constructor
   ·
     intro h
     obtain h | h := h
     ·
-      -- If x ∈ {a}, then x = a.
       rw [h]
       apply In_Finset
     ·
-      -- If x ∈ {b}, then x = b.
       simp [h]
   ·
     intro h
     obtain h | h := h
     ·
-      -- If x = a, then x ∈ {a}.
       rw [h]
       apply In_Finset
     ·
-      -- If x = b, then x ∈ {b}.
       rw [h]
       simp
 

@@ -1,5 +1,5 @@
 import Lemma.Int.EqNegNeg
-open Int Bool
+open Int
 
 
 /--

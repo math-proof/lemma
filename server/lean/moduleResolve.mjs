@@ -208,7 +208,10 @@ export function resolveMissingModuleRedirect(moduleDot) {
   if (fs.existsSync(parentLean) && fs.statSync(parentLean).isFile()) {
     const lastDot = module.lastIndexOf('.');
     if (lastDot === -1) return null;
-    return `${module.slice(0, lastDot)}#${module.slice(lastDot + 1)}`;
+    const lastToken = module.slice(lastDot + 1);
+    /** Lowercase suffix → private lemma anchor in parent `.lean` (PHP `?module=Foo#bar`). */
+    if (!/^[a-z]+$/.test(lastToken)) return null;
+    return `${module.slice(0, lastDot)}#${lastToken}`;
   }
 
   /** @type {string[]} */

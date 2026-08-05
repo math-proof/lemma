@@ -1,6 +1,6 @@
 import Lemma.Set.Cup.eq.Cup_Ite
 import Lemma.Set.IffInS_Ico
-import Lemma.Set.Cup_UFn.eq.Cup_UFnNeg
+import Lemma.Set.Cup.eq.Cup_UFnNeg
 import Lemma.Int.Add.eq.Sub_Neg
 import Lemma.Set.In_Ico.is.InNeg_Ioc
 import Lemma.Set.Ioc.eq.Ico
@@ -19,7 +19,7 @@ private lemma main
 -- proof
   conv_rhs =>
     simp only [Cup.eq.Cup_Ite]
-    rw [Cup_UFn.eq.Cup_UFnNeg]
+    rw [Cup.eq.Cup_UFnNeg]
     simp only [Sub_Neg.eq.Add]
     simp only [In_Ico.is.InNeg_Ioc]
     simp only [EqNegNeg]

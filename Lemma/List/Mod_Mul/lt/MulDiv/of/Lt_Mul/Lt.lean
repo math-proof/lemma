@@ -9,7 +9,7 @@ import Lemma.Nat.Mod_Mul.lt.MulDiv.of.Lt_Mul.Lt
 import Lemma.Nat.MulMul
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.Mul_Mul
-open List Nat Fin
+open List Nat
 
 
 @[main]

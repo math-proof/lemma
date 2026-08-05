@@ -1,7 +1,7 @@
 import Lemma.Set.Eq.of.All_Imp.All_Imp
 import Lemma.Set.In_Cup.is.Any_In
 import Lemma.Bool.Any.is.Any_UFnNeg
-open Set Int Bool
+open Set Bool
 
 
 @[main]

@@ -2,6 +2,14 @@ import sympy.functions.elementary.integers
 import sympy.Basic
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.Odd.is.Any_Eq_AddMul2 |
+| comm | Nat.Any_Eq_AddMul2.is.Odd |
+| mp | Nat.Any_Eq_AddMul2.of.Odd |
+| mpr | Nat.Odd.of.Any_Eq_AddMul2 |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   [Semiring α]

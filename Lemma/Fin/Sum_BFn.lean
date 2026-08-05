@@ -1,4 +1,4 @@
-import Lemma.Finset.Sum_Sum
+import Lemma.Finset.Sum_BFn
 open Finset
 
 
@@ -10,7 +10,7 @@ private lemma Comm
 -- imply
   ∑ i : Fin m, ∑ j : Fin n, f i j = ∑ j : Fin n, ∑ i : Fin m, f i j :=
 -- proof
-  Sum_Sum.comm Finset.univ Finset.univ f
+  Sum_BFn.comm Finset.univ Finset.univ f
 
 
 -- created on 2026-07-23

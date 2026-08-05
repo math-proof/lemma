@@ -1,4 +1,3 @@
-import sympy.sets.sets
 import Lemma.Int.EqSign_1.of.Gt_0
 import Lemma.Int.Sign.eq.Neg1.of.Lt_0
 import Lemma.Int.GeSign.of.Lt_0

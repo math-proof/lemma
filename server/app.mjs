@@ -313,14 +313,12 @@ async function renderLemmaPage(res, module, userSegment) {
     }
     const underscored = resolveUnderscoreModuleAlias(module);
     if (underscored) {
-      const seg = userSegment || PROJECT_USER;
-      res.redirect(302, `/${seg}/?module=${encodeURIComponent(underscored)}`);
+      redirectToModule(res, userSegment, underscored);
       return;
     }
     const canonical = resolveMissingModuleRedirect(module);
     if (canonical) {
-      const seg = userSegment || PROJECT_USER;
-      res.redirect(302, `/${seg}/?module=${encodeURIComponent(canonical)}`);
+      redirectToModule(res, userSegment, canonical);
       return;
     }
     res.status(404).type('html').send(
@@ -364,6 +362,22 @@ function escapeHtml(s) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+/**
+ * Redirect to `?module=`; put `#suffix` in the URL fragment (not `%23` in the query value).
+ * Matches PHP `header("location:?module=$module")` when `$module` contains `#`.
+ */
+function redirectToModule(res, userSegment, module) {
+  const seg = userSegment || PROJECT_USER;
+  const hashIdx = module.indexOf('#');
+  if (hashIdx !== -1) {
+    const base = module.slice(0, hashIdx);
+    const frag = module.slice(hashIdx + 1);
+    res.redirect(302, `/${seg}/?module=${encodeURIComponent(base)}#${frag}`);
+    return;
+  }
+  res.redirect(302, `/${seg}/?module=${encodeURIComponent(module)}`);
 }
 
 /** PHP `lean.php/website` → marketing/docs shell (`website/index.php`). */
@@ -456,7 +470,7 @@ async function handleLemmaSavePost(res, userSegment, body) {
   await fs.mkdir(path.dirname(leanPath), { recursive: true });
   await fs.writeFile(leanPath, text, 'utf8');
 
-  res.redirect(302, `/${userSegment}/?module=${encodeURIComponent(module)}`);
+  redirectToModule(res, userSegment, module);
 }
 
 /** POST body from `searchForm.vue` (PHP `index.php`); same logic as `/:userSegment/` POST. */
@@ -700,11 +714,14 @@ async function handleLeanGet(req, res) {
       );
       return;
     }
-    const userSegment = req.params.userSegment || PROJECT_USER;
-    res.redirect(302, `/${userSegment}/?module=${encodeURIComponent(canonical)}`);
+    redirectToModule(res, req.params.userSegment || PROJECT_USER, canonical);
     return;
   }
   module = module.replace(/\//g, '.');
+  const hashInQuery = module.indexOf('#');
+  if (hashInQuery !== -1) {
+    module = module.slice(0, hashInQuery);
+  }
   renderLemmaPage(res, module, userSeg).catch((err) => {
     console.error('[lean]', err);
     res.status(500).type('html').send(
