@@ -1,17 +1,18 @@
 import sympy.Basic
-import sympy.sets.sets
+import Mathlib.Algebra.Order.Interval.Finset.SuccPred
 
 
 @[main]
 private lemma main
-  [Preorder α] [LocallyFiniteOrder α]
+  {α : Type*}
+  [LinearOrder α] [One α] [LocallyFiniteOrder α] [Add α] [SuccAddOrder α] [NoMaxOrder α]
+  {a b : α}
 -- given
-  (a n : α) :
+  (h : a ≤ b) :
 -- imply
-  insert (a + n) (Finset.Ico a (a + n)) = Finset.Ico a (a + n + 1) := by
+  insert b (Finset.Ico a b) = Finset.Ico a (b + 1) :=
 -- proof
-  have h : a ≤ a + n := by omega
-  simpa [Nat.cast_add, add_assoc] using Finset.insert_Ico_right_eq_Ico_add_one (a := a) (b := a + n) h
+  Finset.insert_Ico_right_eq_Ico_add_one h
 
 
 -- created on 2026-08-05
