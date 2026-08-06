@@ -1,4 +1,3 @@
-from . import Ne_0
 from . import All_Gt_0
 from . import Le
 from . import Ge

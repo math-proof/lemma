@@ -4,11 +4,10 @@ from . import distribute
 from . import given
 from . import Eq
 from . import of
-from . import Eq_0
-from . import Le
-from . import Gt
 from . import Ge
 from . import Lt
 from . import All_Any
 from . import Imp
 from . import Is
+from . import Le
+from . import Gt

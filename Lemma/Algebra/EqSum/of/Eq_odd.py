@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq[0])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.absorb)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum.odd)
 

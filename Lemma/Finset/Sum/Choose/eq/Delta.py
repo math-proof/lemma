@@ -40,7 +40,7 @@ def prove(Eq):
     k0, k1, k2 = Eq[-1].rhs.variables
     Eq << Eq[-1].this.find(And).apply(Algebra.Eq.Cond.Is.And.subst)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.absorb)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.separate)
 

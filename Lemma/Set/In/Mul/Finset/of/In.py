@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Set.In_Finset.given.Or.Eq.apply(Eq[1])
 
-    Eq << Set.Or.Eq.of.In_Finset.apply(Eq[0])
+    Eq << Set.Eq.ou.In.of.In_Insert.apply(Eq[0])
 
     Eq << Eq[-1].this.args[0] * d
 

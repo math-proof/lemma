@@ -2,7 +2,6 @@ from . import Im
 from . import Log
 from . import Max
 from . import Sum
-from . import Floor
 from . import Min
 from . import Mul
 from . import Block

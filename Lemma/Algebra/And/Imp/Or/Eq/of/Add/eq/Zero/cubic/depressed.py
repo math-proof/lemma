@@ -57,7 +57,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(Eq.eq_peicewise.reversed)
 
-    Eq.ou = Set.Or.Eq.of.In_Finset.apply(Eq[-1])
+    Eq.ou = Set.Eq.ou.In.of.In_Insert.apply(Eq[-1])
 
     Eq <<= Eq.ou & Eq[0]
 

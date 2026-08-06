@@ -52,3 +52,6 @@ from . import Le0Add
 from . import GtSquare_0
 from . import Any_Eq_Mul2
 from . import Any_Eq_AddMul2
+from . import AndEqS_0
+from . import OddAdd_1
+from . import Div_2

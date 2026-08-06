@@ -14,7 +14,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset
+    from Lemma import Set, Finset
 
     n, a, b, m = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
@@ -31,14 +31,13 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).apply(Set.In_Icc.Is.InSub, b)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.limits.absorb)
+    Eq << Eq[-1].this.lhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.Imageset.proportional)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumSetOf.eq.Sum_UFnMul)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.absorb)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
 
 if __name__ == '__main__':
     run()
 # created on 2018-05-02
-from . import proportional

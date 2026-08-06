@@ -9,7 +9,7 @@ def apply(eq, infer, eq_piece):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Real
 
     n = Symbol(integer=True, positive=True)
     n = Symbol(domain=Range(10, oo))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(i, 0)
 
-    Eq << Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-1])
+    Eq << Real.GtSqrt_0.of.Gt_0.apply(Eq[-1])
 
     Eq << Set.IsPositive.of.Gt_0.apply(Eq[-1], simplify=None)
 

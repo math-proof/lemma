@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Pow.of.Eq, exp=2)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.And.Eq_0.of.Add.eq.Zero)
+    Eq << Eq[-1].this.lhs.apply(Nat.AndEqS_0.of.EqAddSquareS0)
 
     Eq << Eq[2].this.rhs.lhs.apply(Complex.Expr.eq.AddRe_MulIIm)
 

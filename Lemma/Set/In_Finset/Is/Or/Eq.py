@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Set.Or.Eq.of.In_Finset)
+    Eq << Eq[-2].this.lhs.apply(Set.Eq.ou.In.of.In_Insert)
 
     Eq << Eq[-1].this.rhs.apply(Set.In_Finset.given.Or.Eq)
 

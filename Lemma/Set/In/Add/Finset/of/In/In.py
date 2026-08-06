@@ -21,9 +21,9 @@ def prove(Eq):
     x0, x1, a, b, c, d, e = Symbol(integer=True)
     Eq << apply(Element(x0, {a, b, c}), Element(x1, {d, e}))
 
-    Eq << Set.Or.Eq.of.In_Finset.apply(Eq[0])
+    Eq << Set.Eq.ou.In.of.In_Insert.apply(Eq[0])
 
-    Eq << Set.Or.Eq.of.In_Finset.apply(Eq[1])
+    Eq << Set.Eq.ou.In.of.In_Insert.apply(Eq[1])
 
     Eq <<= Eq[-1] & Eq[-2]
 

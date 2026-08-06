@@ -11,7 +11,7 @@ def apply(all_lt, subset, A):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Bool, Vector
+    from Lemma import Tensor, Algebra, Bool, Vector, Finset
 
     n, m = Symbol(integer=True, positive=True)
     A = Symbol(shape=(n, m), real=True)
@@ -52,7 +52,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get, j)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.absorb)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
     Eq << Eq[-1].this.find(Greater).reversed
 

@@ -23,7 +23,7 @@ def prove(Eq):
     x = Symbol(integer=True)
     Eq << apply(Equal(x % 3, 1), Element(x, {-2, -1, 0, 1, 2}))
 
-    Eq << Set.Or.Eq.of.In_Finset.apply(Eq[1])
+    Eq << Set.Eq.ou.In.of.In_Insert.apply(Eq[1])
 
     Eq <<= Eq[-1] & Eq[0]
 

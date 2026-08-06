@@ -10,7 +10,7 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real, Nat
+    from Lemma import Set, Bool, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi)))

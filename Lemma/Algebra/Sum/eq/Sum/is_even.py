@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset
+    from Lemma import Algebra, Set, Finset, Rat
 
     n, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Set.Eq_even.In.Is.In)
 
-    Eq << Eq[-1].this.find(Floor + 1).apply(Algebra.Add.eq.Floor)
+    Eq << Eq[-1].this.find(Floor + 1).apply(Rat.AddFloorSub.eq.FloorAdd)
 
 
 

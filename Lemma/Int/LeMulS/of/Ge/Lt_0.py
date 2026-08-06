@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[1] - b
 
-    Eq << Int.Le_0.of.Lt_0.Ge_0.apply(Eq[0], Eq[-1])
+    Eq << Int.Ge0Mul.of.Lt_0.Ge_0.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].this.lhs.expand()
 

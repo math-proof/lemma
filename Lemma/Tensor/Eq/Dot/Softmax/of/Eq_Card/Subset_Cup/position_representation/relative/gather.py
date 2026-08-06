@@ -14,7 +14,7 @@ def apply(eq_cup, subset, Q, K, V, K_quote, V_quote):
 
 @prove
 def prove(Eq):
-    from Lemma import Tensor, Algebra, Set, Bool, Vector
+    from Lemma import Tensor, Algebra, Set, Bool, Vector, Finset
 
     n, k, m = Symbol(integer=True, positive=True)
     r = Symbol(shape=(n,), integer=True)
@@ -55,7 +55,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Vector.Sum.eq.Sum_Get, j)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Sum.limits.absorb)
+    Eq << Eq[-1].this.rhs.apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
     Eq.eq_intersect = Set.EqInter.of.Subset.apply(Eq[1])
 
@@ -76,7 +76,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.rhs.subs(Eq[-1])
 
-    Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.limits.absorb)
+    Eq << Eq[-1].this.find(Sum).apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
     Eq << Eq[-1].subs(Eq.eq_intersect)
 

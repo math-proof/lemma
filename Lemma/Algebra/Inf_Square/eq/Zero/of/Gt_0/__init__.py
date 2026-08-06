@@ -13,7 +13,7 @@ def apply(is_positive, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Nat, Int
+    from Lemma import Algebra, Set, Bool, Nat, Int, Real
 
     M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].subs(Eq[2]), Eq[-1].this.lhs.apply(Nat.Gt_Sub_1.of.Gt, lower=0, ret=0)
 
-    Eq <<= Eq[-2].this.lhs.args[0].apply(Algebra.Gt_0.Sqrt.of.Gt_0), Eq[-1].this.lhs.args[0].apply(Algebra.GtMul.of.Gt_0.Gt_1, 4)
+    Eq <<= Eq[-2].this.lhs.args[0].apply(Real.GtSqrt_0.of.Gt_0), Eq[-1].this.lhs.args[0].apply(Algebra.GtMul.of.Gt_0.Gt_1, 4)
 
     Eq <<= Eq[-1].this.lhs.apply(Nat.Gt.of.Gt.Gt)
 

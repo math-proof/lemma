@@ -14,7 +14,7 @@ def apply(is_nonnegative, lt, left_open=True, right_open=True, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat, Int
+    from Lemma import Set, Algebra, Bool, Nat, Int, Real
 
     m, M = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-4].this.lhs.apply(Algebra.Gt_0.of.Gt)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Gt_0.Sqrt.of.Gt_0)
+    Eq << Eq[-1].this.lhs.apply(Real.GtSqrt_0.of.Gt_0)
 
     Eq <<= Bool.Imp_And.given.Imp.Imp.apply(Eq[-3]), Eq[-2].this.rhs.apply(Algebra.Gt.given.And.strengthen, M, strict=True)
 

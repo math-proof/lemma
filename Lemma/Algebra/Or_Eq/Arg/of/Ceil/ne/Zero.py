@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Set.Ico.eq.Finset)
 
-    Eq << Set.Or.Eq.of.In_Finset.apply(Eq[-1])
+    Eq << Set.Eq.ou.In.of.In_Insert.apply(Eq[-1])
 
     Eq << Bool.Cond.of.Or_Not.Cond.apply(Eq[0], Eq[-1])
 

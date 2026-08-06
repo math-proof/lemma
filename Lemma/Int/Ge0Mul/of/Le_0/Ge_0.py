@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq.is_negative = Imply((x < 0) & (y >= 0), x * y <= 0, plausible=True)
 
-    Eq << Eq.is_negative.this.lhs.apply(Int.Le_0.of.Lt_0.Ge_0)
+    Eq << Eq.is_negative.this.lhs.apply(Int.Ge0Mul.of.Lt_0.Ge_0)
 
     Eq << Bool.ImpOrS.of.Imp.Imp.apply(Eq.is_zero, Eq.is_negative)
 

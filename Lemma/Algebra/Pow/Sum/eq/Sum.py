@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs().find(And).apply(Set.Eq_Sum.In_CartesianSpace.Is.And)
 
-    Eq << Eq[-1].this.rhs.find(Sum).apply(Algebra.Sum.limits.absorb)
+    Eq << Eq[-1].this.rhs.find(Sum).apply(Finset.Sum_MulBoolAnd.eq.Sum)
 
     Eq << Eq[0].subs(m, m - k)
 

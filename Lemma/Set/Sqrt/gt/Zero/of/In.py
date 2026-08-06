@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Int, Nat
+    from Lemma import Set, Int, Nat, Real
 
     x = Symbol(real=True, given=True)
     Eq << apply(Element(x, Interval(-1, 1, left_open=True, right_open=True)))
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS, deep=True)
 
-    Eq << Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-1])
+    Eq << Real.GtSqrt_0.of.Gt_0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Real
 
     x = Symbol(real=True)
     Eq << apply(x > 0)
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq[0])
 
-    Eq << Eq[-2].this.lhs.apply(Algebra.Gt_0.Sqrt.of.Gt_0)
+    Eq << Eq[-2].this.lhs.apply(Real.GtSqrt_0.of.Gt_0)
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Gt_0.given.Gt_0.Sqrt)
 
@@ -24,4 +24,3 @@ def prove(Eq):
 if __name__ == '__main__':
     run()
 # created on 2023-06-20
-from . import of

@@ -6,5 +6,4 @@ from . import domain_defined
 from . import pop
 from . import separate
 from . import Neg
-from . import absorb
 from . import subst

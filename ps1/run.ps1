@@ -60,3 +60,5 @@ Read-Host "Please enter any key to continue"
 # Run subsequent Python scripts
 python -c "exec(open('./util/hierarchy.py').read())"
 python -c "exec(open('./util/function.py').read())"
+python util/clean_prove_imports.py
+python util/sync_created_dates.py

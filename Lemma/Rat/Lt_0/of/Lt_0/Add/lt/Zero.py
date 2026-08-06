@@ -41,7 +41,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(t ** 2, 0, plausible=True)
 
-    Eq << Int.Le_0.of.Lt_0.Ge_0.apply(Eq[0], Eq[-1])
+    Eq << Int.Ge0Mul.of.Lt_0.Ge_0.apply(Eq[0], Eq[-1])
 
     Eq << Algebra.Lt_0.Add.of.Le_0.Lt_0.apply(Eq[-1], Eq[-3])
 

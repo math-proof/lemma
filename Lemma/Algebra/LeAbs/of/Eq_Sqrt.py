@@ -9,7 +9,7 @@ def apply(eq_C):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor, Nat, Rat
+    from Lemma import Algebra, Tensor, Nat, Rat, Real
 
     n, d = Symbol(domain=Range(2, oo))
     C, C_quote = Symbol(shape=(n, d), real=True)
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].subs(i, j)
 
-    Eq <<= Algebra.Le_1.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2]), Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-1]) * Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-2])
+    Eq <<= Algebra.Le_1.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2]), Real.GtSqrt_0.of.Gt_0.apply(Eq[-1]) * Real.GtSqrt_0.of.Gt_0.apply(Eq[-2])
 
     Eq << Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[-2])
 

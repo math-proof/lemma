@@ -24,9 +24,9 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Bool.OrAndS.of.And_Or)
 
-    Eq << Eq[-1].this.find((Expr < 0) & (Expr >= 0)).apply(Int.Le_0.of.Ge_0.Lt_0)
+    Eq << Eq[-1].this.find((Expr < 0) & (Expr >= 0)).apply(Int.Ge0Mul.of.Ge_0.Lt_0)
 
-    Eq << Eq[-1].this.find((Expr < 0) & (Expr >= 0)).apply(Int.Le_0.of.Ge_0.Lt_0)
+    Eq << Eq[-1].this.find((Expr < 0) & (Expr >= 0)).apply(Int.Ge0Mul.of.Ge_0.Lt_0)
 
     Eq << Eq[-1].this.find((Expr > 0) & (Expr <= 0)).args[:2].apply(Int.Ge0Mul.of.Gt_0.Le_0)
 

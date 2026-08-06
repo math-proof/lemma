@@ -24,7 +24,7 @@ def prove(Eq):
         Element(y, {a, b}),
         Equal(f(a), f(b)))
 
-    Eq <<= Set.Or.Eq.of.In_Finset.apply(Eq[0]), Set.Or.Eq.of.In_Finset.apply(Eq[1])
+    Eq <<= Set.Eq.ou.In.of.In_Insert.apply(Eq[0]), Set.Eq.ou.In.of.In_Insert.apply(Eq[1])
 
     Eq <<= Eq[-2].this.args[0].apply(Bool.UFn.of.Eq, f), Eq[-1].this.args[0].apply(Bool.UFn.of.Eq, f)
 

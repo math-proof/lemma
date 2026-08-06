@@ -9,19 +9,19 @@ def apply(ou):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Bool, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(Unequal(x, 0) | Unequal(y, 0))
 
-    Eq << Equal(x ** 2 + y ** 2, 0).this.apply(Algebra.And.Eq_0.of.Add.eq.Zero)
+    Eq << Equal(x ** 2 + y ** 2, 0).this.apply(Nat.AndEqS_0.of.EqAddSquareS0)
 
     Eq.is_nonzero = Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
 
     Eq <<= Nat.Le0AddAddSquareSMulMul2.apply(x), Nat.Le0AddAddSquareSMulMul2.apply(y)
 
     Eq << Eq[-1] + Eq[-2]
-    Eq << Algebra.Gt_0.of.Ne_0.Ge_0.apply(Eq.is_nonzero, Eq[-1])
+    Eq << Nat.Gt.of.Ge.Ne.apply(Eq.is_nonzero, Eq[-1])
 
 
 if __name__ == '__main__':

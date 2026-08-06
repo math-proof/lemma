@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Finset, Finset, Finset, Finset
+    from Lemma import Finset
     a = Symbol(integer=True)
 
     Eq << apply(Range(a, a + 4))

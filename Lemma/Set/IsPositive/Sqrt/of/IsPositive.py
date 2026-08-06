@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Real
 
     x = Symbol(super_complex=True)
     Eq << apply(Element(x, Interval.open(0, oo)))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Set.Gt_0.of.IsPositive.apply(Eq[-1])
 
-    Eq << Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-1], simplify=None)
+    Eq << Real.GtSqrt_0.of.Gt_0.apply(Eq[-1], simplify=None)
 
     Eq << Set.IsPositive.of.Gt_0.apply(Eq[-1], simplify=None)
 

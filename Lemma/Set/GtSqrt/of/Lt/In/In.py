@@ -13,7 +13,7 @@ def apply(lt, contains, contains_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool, Real
 
     x, y = Symbol(real=True)
     Eq << apply(x < y, Element(x, Interval(-1, 1)), Element(y, Interval(-1, 1, right_open=True)))
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << -Set.LtSquare.of.In.apply(Eq.y_contains) + 1
 
-    Eq << Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-1])
+    Eq << Real.GtSqrt_0.of.Gt_0.apply(Eq[-1])
 
     Eq << Bool.Imp.of.Cond.apply(Eq.x_contains, cond=Eq[-4].lhs)
 

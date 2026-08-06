@@ -31,7 +31,7 @@ def prove(Eq):
     x, a, b, c = Symbol(real=True, given=True)
     Eq << apply(Equal(x, a) | Equal(x, b) | Equal(x, c))
 
-    Eq << Set.Or.Eq.of.In_Finset.apply(Eq[1])
+    Eq << Set.Eq.ou.In.of.In_Insert.apply(Eq[1])
 
 
 

@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.rhs.apply(Set.Ico.eq.Finset)
 
-    Eq << Set.Or.Eq.of.In_Finset.apply(Eq[-1])
+    Eq << Set.Eq.ou.In.of.In_Insert.apply(Eq[-1])
 
 
 if __name__ == '__main__':

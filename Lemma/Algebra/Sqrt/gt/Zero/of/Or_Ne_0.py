@@ -10,13 +10,13 @@ def apply(ou):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Real
 
     x, y = Symbol(real=True)
     Eq << apply(Unequal(x, 0) | Unequal(y, 0))
 
     Eq << Algebra.Add.gt.Zero.Square.of.Or_Ne_0.apply(Eq[0])
-    Eq << Algebra.Gt_0.Sqrt.of.Gt_0.apply(Eq[-1])
+    Eq << Real.GtSqrt_0.of.Gt_0.apply(Eq[-1])
 
 
 if __name__ == '__main__':

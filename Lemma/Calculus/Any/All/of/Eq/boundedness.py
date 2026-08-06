@@ -79,7 +79,7 @@ def prove(Eq):
 
     Eq << GreaterEqual(M, 0, plausible=True)
 
-    Eq << Algebra.Gt_0.of.Ne_0.Ge_0.apply(Eq.is_nonzero, Eq[-1])
+    Eq << Nat.Gt.of.Ge.Ne.apply(Eq.is_nonzero, Eq[-1])
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq.any)
 
