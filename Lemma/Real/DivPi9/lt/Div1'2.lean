@@ -6,7 +6,7 @@ import sympy.Basic
 @[main]
 private lemma main:
 -- imply
-  Real.pi / 9 < 1 / 2 := by
+  π / 9 < 1 / 2 := by
 -- proof
   linarith [Real.pi_lt_four]
 

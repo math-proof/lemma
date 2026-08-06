@@ -1,4 +1,5 @@
 import sympy.Basic
+import sympy.core.numbers
 import sympy.sets.sets
 
 
@@ -8,7 +9,7 @@ private lemma main
 -- given
   (hx₀ : x ≠ 0)
   (hy₀ : y ≠ 0)
-  (h : x.arg + y.arg ∈ Ioc (-Real.pi) Real.pi) :
+  (h : x.arg + y.arg ∈ Ioc (-π) π) :
 -- imply
   (x * y).log = x.log + y.log :=
 -- proof

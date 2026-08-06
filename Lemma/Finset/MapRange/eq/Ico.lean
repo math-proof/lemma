@@ -1,5 +1,5 @@
 import Lemma.Finset.Insert_Ico.eq.Ico_Add_1
-open Finset Int
+open Finset
 
 
 @[main]

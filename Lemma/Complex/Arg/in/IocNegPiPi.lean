@@ -1,5 +1,6 @@
 import sympy.functions.elementary.complexes
 import sympy.sets.sets
+import sympy.core.numbers
 import sympy.Basic
 
 
@@ -8,7 +9,7 @@ private lemma main
 -- given
   (z : ℂ) :
 -- imply
-  arg z ∈ Ioc (-Real.pi) Real.pi :=
+  arg z ∈ Ioc (-π) π :=
 -- proof
   Complex.arg_mem_Ioc z
 

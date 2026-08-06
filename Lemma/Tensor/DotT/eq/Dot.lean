@@ -12,6 +12,7 @@ import Lemma.Tensor.GetMul.eq.MulGetS
 import Lemma.Tensor.GetRepeat.as.RepeatGet.of.GtGet_0.GtVal_0
 import Lemma.Tensor.GetRepeat_0.as.Get_Mod_Get.of.GtMul_Get.GtLength_0
 import Lemma.Tensor.GetSum_2.eq.SumGet__1
+import Lemma.Tensor.ResizeT_1.eq.TResize_0
 import Lemma.Tensor.SEqMulS.of.SEq.SEq
 import Lemma.Tensor.SEqRepeatS.of.SEq.Val.Eq
 import Lemma.Tensor.SEqResizeS.of.SEq.Val.Eq
@@ -25,7 +26,6 @@ import Lemma.Tensor.SelectSum.as.SumSelect.of.Gt
 import Lemma.Tensor.SelectUnsqueeze.as.UnsqueezeSelect.of.Lt.GeLength
 import Lemma.Tensor.UnsqueezeUnsqueeze_0
 open Bool Nat Tensor
-set_option maxHeartbeats 4000000
 
 
 @[main]
@@ -115,7 +115,8 @@ private lemma resize
     simp
     erw [EqGetUnsqueeze_0.fin]
     rw [Max.comm]
-    sorry
+    apply SEq.of.Eq
+    apply ResizeT_1.eq.TResize_0
 
 
 -- created on 2026-07-30

@@ -4,10 +4,10 @@
 # Multi-processing: Node is one thread per process; one stuck request can block that process.
 # PM2 cluster mode runs several Node workers; other workers still accept new connections.
 #   Default: 8 Node workers (PM2 -i 8). Override:
-#   $env:LEAN_WORKERS = 'max'   # one worker per logical CPU (PM2 -i max)
-#   $env:LEAN_WORKERS = '4'     # exactly four workers
-#   $env:LEAN_WORKERS = '1'     # single process
-# After changing LEAN_WORKERS, run:  pm2 delete lemma  then  .\start.ps1
+#   $env:LEAN_NUM_THREADS = 'max'   # one worker per logical CPU (PM2 -i max)
+#   $env:LEAN_NUM_THREADS = '4'     # exactly four workers
+#   $env:LEAN_NUM_THREADS = '1'     # single process
+# After changing LEAN_NUM_THREADS, run:  pm2 delete lemma  then  .\start.ps1
 # (pm2 restart lemma keeps the previous instance count.)
 #
 # On Windows, PowerShell may pick npx.ps1 / npm.ps1 / pm2.ps1 (blocked by
@@ -65,7 +65,7 @@ function Invoke-Pm2 {
 }
 
 $pm2Instances = '8'
-$lw = $env:LEAN_WORKERS
+$lw = $env:LEAN_NUM_THREADS
 if ($null -ne $lw -and $lw.Trim() -ne '') {
     $t = $lw.Trim()
     if ($t -eq 'max') {
@@ -78,7 +78,7 @@ if ($null -ne $lw -and $lw.Trim() -ne '') {
         $pm2Instances = $t
     }
     else {
-        Write-Warning "LEAN_WORKERS='$t' not recognized; using 8. Use 1, a positive integer, or max."
+        Write-Warning "LEAN_NUM_THREADS='$t' not recognized; using 8. Use 1, a positive integer, or max."
     }
 }
 
@@ -92,7 +92,7 @@ if ($LASTEXITCODE -ne 0) {
     throw "pm2 start/restart failed (exit $LASTEXITCODE)"
 }
 
-Write-Host "PM2 lemma: pm2 list. New installs use -i $pm2Instances (set LEAN_WORKERS); pm2 restart keeps existing instance count."
+Write-Host "PM2 lemma: pm2 list. New installs use -i $pm2Instances (set LEAN_NUM_THREADS); pm2 restart keeps existing instance count."
 
 Invoke-Pm2 save
 if ($LASTEXITCODE -ne 0) {

@@ -1,10 +1,11 @@
 import Lemma.Int.Sub0.eq.Neg
+import Lemma.Nat.Sub.eq.Zero
 import Lemma.Tensor.EqGet1_1
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetSub.eq.SubGetS
 import sympy.tensor.functions
 import sympy.tensor.stack
-open Tensor Int
+open Tensor Int Nat
 
 
 @[main]
@@ -32,7 +33,7 @@ private lemma main
   split_ifs with h
   .
     simp [h]
-    erw [Nat.Sub.eq.Zero]
+    erw [Sub.eq.Zero]
     rfl
   .
     simp [h]

@@ -1,5 +1,6 @@
 import sympy.functions.elementary.trigonometric
 import sympy.functions.elementary.complexes
+import sympy.core.numbers
 import sympy.Basic
 
 
@@ -11,9 +12,9 @@ private lemma main
     if re z ≥ 0 then
       arcsin (im z / ‖z‖)
     else if im z ≥ 0 then
-      arcsin (im (-z) / ‖z‖) + Real.pi
+      arcsin (im (-z) / ‖z‖) + π
     else
-      arcsin (im (-z) / ‖z‖) - Real.pi := by
+      arcsin (im (-z) / ‖z‖) - π := by
 -- proof
   rw [arg]
 

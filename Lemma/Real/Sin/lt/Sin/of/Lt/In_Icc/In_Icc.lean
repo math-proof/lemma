@@ -1,4 +1,5 @@
 import sympy.sets.sets
+import sympy.core.numbers
 import sympy.functions.elementary.trigonometric
 import sympy.Basic
 
@@ -8,8 +9,8 @@ private lemma main
   {x y : ℝ}
 -- given
   (h₀ : x < y)
-  (h₁ : x ∈ Icc (-(Real.pi / 2)) (Real.pi / 2))
-  (h₂ : y ∈ Icc (-(Real.pi / 2)) (Real.pi / 2)) :
+  (h₁ : x ∈ Icc (-(π / 2)) (π / 2))
+  (h₂ : y ∈ Icc (-(π / 2)) (π / 2)) :
 -- imply
   sin x < sin y := by
 -- proof
