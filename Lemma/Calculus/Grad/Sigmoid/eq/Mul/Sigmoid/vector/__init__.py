@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Add).apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq[-1].this.rhs.find(Add).apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.lhs.doit()
 

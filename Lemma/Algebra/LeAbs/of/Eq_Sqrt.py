@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Algebra.LeDiv.of.Gt_0.Le.apply(Eq[-4], Eq[-2])
 
-    Eq << Algebra.GeDiv.of.Gt_0.Ge.apply(Eq[-4], Eq[-1])
+    Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq[-4], Eq[-1])
 
 
 

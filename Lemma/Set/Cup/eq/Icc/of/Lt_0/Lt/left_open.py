@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq <<= Bool.Imp_And.of.Cond.apply(Eq[0], cond=Eq[-2].lhs), Bool.Imp_And.of.Cond.apply(Eq[0] & Eq[1], cond=Eq[-1].lhs)
 
-    Eq << Eq[-2].this.rhs.apply(Set.Cup.eq.Icc.of.Lt_0.Ge_0.left_open)
+    Eq << Eq[-2].this.rhs.apply(Set.Cup_Ioc.eq.Ioc.of.Lt_0.Ge_0)
 
     Eq << Eq[-1].this.rhs.apply(Set.Cup.eq.Icc.of.Lt_0.Lt_0.Lt.left_open)
 

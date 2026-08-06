@@ -14,7 +14,7 @@ def prove(Eq):
     x = Symbol(real=True)
     Eq << apply(x >= 0)
 
-    Eq << Eq[-1].this.lhs.apply(Real.Arccos.eq.Ite.Arcsin)
+    Eq << Eq[-1].this.lhs.apply(Real.Arccos.eq.Ite_Arcsin_Sub_Arcsin)
 
     Eq << Algebra.Cond.given.Cond.subst.Bool.apply(Eq[-1], cond=Eq[0])
 

@@ -16,7 +16,7 @@ def prove(Eq):
     n = Symbol(integer=True, nonnegative=True)
     Eq << apply(Sum[k:1:n + 1](1 / (k * (k + 1))))
 
-    Eq << (1 / k - 1 / (k + 1)).this.apply(Rat.SubDivS1.eq.DivSub)
+    Eq << (1 / k - 1 / (k + 1)).this.apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[0].subs(Eq[-1].reversed)
 

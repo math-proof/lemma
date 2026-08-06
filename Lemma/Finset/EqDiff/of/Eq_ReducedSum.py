@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.rhs.apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq[-1].this.rhs.apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

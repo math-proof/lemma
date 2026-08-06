@@ -15,7 +15,7 @@ def apply(ne_zero_A, ne_zero_B, ne_zero, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Bool, Rat
+    from Lemma import Finset, Algebra, Tensor, Bool, Rat, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(r"\vec x", real=True, shape=(n,))
@@ -72,7 +72,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq.eq = Algebra.Eq.of.Eq.transport.apply(Eq[-1], rhs=2)
+    Eq.eq = Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], rhs=2)
 
     W = Symbol(Eq.eq.rhs)
     Eq << W.this.definition
@@ -143,7 +143,7 @@ def prove(Eq):
 
     Eq << Bool.Eq.of.Eq.Eq.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], lhs=-1)
+    Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], lhs=-1)
 
     Eq << Eq[-1].this.lhs.definition
 

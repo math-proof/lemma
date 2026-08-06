@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * x2 ** n
 
-    Eq << Eq[-1].this.rhs.find((~Add) ** Symbol).apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq[-1].this.rhs.find((~Add) ** Symbol).apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.rhs.find(Mul ** Symbol).apply(Algebra.Pow.eq.Mul.split.base)
 

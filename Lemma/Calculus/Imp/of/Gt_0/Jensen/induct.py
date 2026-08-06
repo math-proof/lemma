@@ -25,7 +25,7 @@ def apply(is_positive, x=None, w=None, i=None, n=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Calculus, Bool, Finset, Nat
+    from Lemma import Algebra, Set, Calculus, Bool, Finset, Nat, Rat
 
     n = Symbol(integer=True, positive=True, given=False)
     a, b = Symbol(real=True)
@@ -98,7 +98,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(And).apply(Algebra.All.And.of.Cond.All, simplify=None)
 
-    Eq << Eq[-1].this.find(And).apply(Algebra.GeDiv.of.Gt_0.Ge, ret=0)
+    Eq << Eq[-1].this.find(And).apply(Rat.GeDivS.of.Ge.Gt_0, ret=0)
 
     Eq << Eq[-1].this.rhs.apply(Bool.Imp.flatten)
 

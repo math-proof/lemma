@@ -25,9 +25,9 @@ def prove(Eq):
 
     Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[-1])
 
-    Eq << Algebra.GeDiv.of.Gt_0.Ge.apply(Eq[-2], Eq[0])
+    Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq[-2], Eq[0])
 
-    Eq << Algebra.GeDiv.of.Gt_0.Ge.apply(Eq[-2], Eq[-1])
+    Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq[-2], Eq[-1])
 
     Eq << Eq[-1].reversed
 

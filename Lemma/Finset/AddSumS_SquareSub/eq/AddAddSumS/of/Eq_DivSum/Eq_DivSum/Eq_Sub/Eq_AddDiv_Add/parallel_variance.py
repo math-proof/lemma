@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq << Eq[3].subs(Eq[2])
 
-    Eq << Eq[-1].this.rhs.apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq[-1].this.rhs.apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.find(~Mul + Mul).apply(Nat.Mul_Add.eq.AddMulS)
 

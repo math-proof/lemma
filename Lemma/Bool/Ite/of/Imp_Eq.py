@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq << Bool.BFn_Ite.given.OrAndS.apply(Eq[-1])
 
-    Eq << Bool.Or.given.Imp.apply(Eq[-1], 0)
+    Eq << Bool.OrNot.given.Imp.apply(Eq[-1], 0)
 
     Eq << Eq[-1].this.rhs.reversed
 

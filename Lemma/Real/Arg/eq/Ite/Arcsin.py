@@ -20,11 +20,11 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Real.Arg.eq.Ite.Arccos)
 
-    Eq << Eq[-1].this.find(acos).apply(Real.Arccos.eq.Ite.Arcsin)
+    Eq << Eq[-1].this.find(acos).apply(Real.Arccos.eq.Ite_Arcsin_Sub_Arcsin)
 
     Eq << Eq[-1].this.lhs.apply(Bool.Ite_Ite.eq.Ite__Ite, 1)
 
-    Eq << Eq[-1].this.find(acos).apply(Real.Arccos.eq.Ite.Arcsin)
+    Eq << Eq[-1].this.find(acos).apply(Real.Arccos.eq.Ite_Arcsin_Sub_Arcsin)
 
     Eq << Eq[-1].this.find(-Piecewise).apply(Nat.Mul_Ite.eq.Ite_MulS)
 
@@ -35,13 +35,13 @@ def prove(Eq):
 
     Eq << Bool.Iff.given.Imp.Imp.apply(Eq.equivalent)
 
-    Eq <<= Eq[-2].this.find(Or).apply(Algebra.Sqrt.gt.Zero.of.Or_Ne_0), Eq[-1].this.find(Or).apply(Algebra.Sqrt.gt.Zero.of.Or_Ne_0)
+    Eq <<= Eq[-2].this.find(Or).apply(Real.GtSqrt_0.of.OrNeS_0), Eq[-1].this.find(Or).apply(Real.GtSqrt_0.of.OrNeS_0)
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge_0.of.Ge_0.Gt_0), Eq[-1].this.lhs.apply(Algebra.GeDiv.of.Gt_0.Ge)
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.Ge_0.of.Ge_0.Gt_0), Eq[-1].this.lhs.apply(Rat.GeDivS.of.Ge.Gt_0)
 
     Eq << Algebra.Cond.given.Cond.subst.Cond.apply(Eq.eq, old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Ite.invert.delete)
+    Eq << Eq[-1].this.lhs.apply(Bool.Ite__IteAndNot.eq.Ite__Ite)
 
     Eq << Eq[-1].this.lhs.apply(Bool.Ite__Ite.eq.Ite__IteAnd_Not, 1)
 
@@ -49,11 +49,11 @@ def prove(Eq):
 
     Eq << Algebra.Cond.given.Cond.subst.Cond.apply(Eq[-1], old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
 
-    Eq.eq1 = Eq[-1].this.lhs.apply(Algebra.Ite.invert.delete, 0, 3)
+    Eq.eq1 = Eq[-1].this.lhs.apply(Bool.Ite__IteAndNot.eq.Ite__Ite, 0, 3)
 
     Eq.suffice = Imply(y >= 0, Equal(asin(sqrt(1 - x ** 2 / (x ** 2 + y ** 2))), asin(y / sqrt(x ** 2 + y ** 2))), plausible=True)
 
-    Eq << Eq.suffice.this.find(Pow).base.apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq.suffice.this.find(Pow).base.apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.lhs.apply(Int.EqAbs.of.Ge_0)
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq.suffice = Imply(y < 0, Equal(asin(sqrt(1 - x ** 2 / (x ** 2 + y ** 2))), -asin(y / sqrt(x ** 2 + y ** 2))), plausible=True)
 
-    Eq << Eq.suffice.this.find(Pow).base.apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq.suffice.this.find(Pow).base.apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Lt_0)
 

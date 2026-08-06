@@ -13,7 +13,7 @@ def apply(is_positive, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Rat
 
     x = Symbol(real=True, given=True)
     g, h = Function(real=True)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Gt_0.of.IsPositive.apply(Eq[0])
 
-    Eq << Algebra.GeDiv.of.Gt_0.Ge.apply(Eq[-1], Eq[1], simplify=None)
+    Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq[-1], Eq[1], simplify=None)
 
 
 

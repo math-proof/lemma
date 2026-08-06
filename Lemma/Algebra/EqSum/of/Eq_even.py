@@ -12,7 +12,7 @@ def apply(given, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset
+    from Lemma import Algebra, Set, Finset, Int
 
     i, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Sum.eq.Sum.is_even)
 
-    Eq << Algebra.Eq.Floor.One.of.Eq_even.apply(Eq[0])
+    Eq << Int.Div_2.of.Even.apply(Eq[0])
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 

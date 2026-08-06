@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Pow * Pow]).apply(Algebra.Sum.eq.Mul.series.geometric)
 
-    Eq << Eq[-1].this.find(Sum).find(Expr ** -1).base.apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq[-1].this.find(Sum).find(Expr ** -1).base.apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Div.Binom.increase)
 

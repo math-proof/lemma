@@ -25,7 +25,7 @@ def prove(Eq):
     t = Symbol(x + Eq.a_reciprocal_is_negative.lhs * b / 2)
     Eq << t.this.definition
 
-    Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], rhs=1)
+    Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], rhs=1)
 
     Eq << Eq[2].subs(Eq[-1].reversed)
 

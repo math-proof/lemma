@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra
+    from Lemma import Set, Algebra, Nat
 
     A = Symbol(etype=dtype.integer, finiteset=True)
     B = Symbol(etype=dtype.integer)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], lhs=0)
+    Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], lhs=0)
 
 
 

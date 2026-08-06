@@ -18,7 +18,7 @@ def prove(Eq):
 
     Eq << Eq[0].this.lhs.apply(Nat.Mod.eq.Sub_Mul_FloorDiv)
 
-    Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1])
+    Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1])
 
     Eq << Eq[-3].this.rhs.subs(Eq[-1])
 

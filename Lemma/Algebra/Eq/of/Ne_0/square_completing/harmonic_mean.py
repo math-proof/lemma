@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Add * (~Add) ** 2).args[1].apply(Algebra.Mul.Neg)
 
-    Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], rhs=2)
+    Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], rhs=2)
 
     Eq << Eq[-1].this.rhs.find(Add[Mul, Mul, Mul]).apply(Nat.AddMulS.eq.Mul_Add)
 
@@ -33,11 +33,11 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Pow + Pow).apply(Algebra.Add.eq.Add.square_completing, y)
 
-    Eq << Eq[-1].this.rhs.find(Add[Pow]).apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq[-1].this.rhs.find(Add[Pow]).apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.rhs.find(Add[Add * Pow]).apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], lhs=2)
+    Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], lhs=2)
 
     # https://en.wikipedia.org/wiki/Normal_distribution# Scalar_form
 

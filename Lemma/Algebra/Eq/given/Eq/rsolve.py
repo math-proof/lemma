@@ -40,7 +40,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum).apply(Algebra.Sum.eq.Add.pop)
 
-    Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], lhs=-1)
+    Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], lhs=-1)
 
 
 

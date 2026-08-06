@@ -10,12 +10,12 @@ def apply(gt_zero, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Rat
 
     x, y, z = Symbol(integer=True)
     Eq << apply(x > 0, GreaterEqual(x + y, z))
 
-    Eq << Algebra.GeDiv.of.Gt_0.Ge.apply(Eq[0], Eq[2])
+    Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq[0], Eq[2])
 
     Eq << Eq[-1].this.lhs.apply(Nat.Mul_Add.eq.AddMulS)
 

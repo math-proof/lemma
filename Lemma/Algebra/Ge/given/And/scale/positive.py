@@ -13,12 +13,12 @@ def apply(given, scale, div=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(GreaterEqual(x, y), z)
 
-    Eq << Algebra.GeDiv.of.Gt_0.Ge.apply(Eq[2], Eq[1])
+    Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq[2], Eq[1])
 
 
 if __name__ == '__main__':

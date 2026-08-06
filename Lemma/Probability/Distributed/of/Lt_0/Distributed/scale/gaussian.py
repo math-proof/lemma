@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative).doit()
 
-    Eq << Eq[-1].this.find(Exp[~Mul]).find(Add).apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq[-1].this.find(Exp[~Mul]).find(Add).apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
 
 

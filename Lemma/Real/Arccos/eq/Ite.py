@@ -31,5 +31,3 @@ if __name__ == '__main__':
 # created on 2022-01-20
 
 # updated on 2023-04-30
-del Arcsin
-from . import Arcsin

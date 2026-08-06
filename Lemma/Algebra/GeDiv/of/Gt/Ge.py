@@ -13,13 +13,13 @@ def apply(gt, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
     x, y, a, b = Symbol(real=True)
     Eq << apply(x > y, a * (y - x) >= b)
 
     Eq << Algebra.Gt_0.of.Gt.apply(Eq[0])
 
-    Eq << Algebra.GeDiv.of.Gt_0.Ge.apply(Eq[-1], Eq[1])
+    Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq[-1], Eq[1])
 
 
 if __name__ == '__main__':

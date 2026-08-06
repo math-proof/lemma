@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.subs(Eq[2]), Eq[-1].this.rhs.subs(Eq[2])
 
-    Eq <<= Eq[-2].this.rhs.find((~Add) ** 2).apply(Rat.SubDivS1.eq.DivSub), Eq[-1].this.rhs.find((~Add) ** 2).apply(Rat.SubDivS1.eq.DivSub)
+    Eq <<= Eq[-2].this.rhs.find((~Add) ** 2).apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0), Eq[-1].this.rhs.find((~Add) ** 2).apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq <<= Eq[-2].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS), Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

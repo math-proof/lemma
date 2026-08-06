@@ -12,7 +12,7 @@ def apply(eq):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Algebra, Tensor, Nat
 
     m, n = Symbol(integer=True, positive=True)
     Σ_x = Symbol(shape=(n, n), real=True, singular=False)
@@ -44,7 +44,7 @@ def prove(Eq):
 
     Eq.eq_identity_y = Eq[-1].T
 
-    Eq <<= Algebra.Eq.of.Eq.transport.apply(Eq.is_zero_xy, 0), Algebra.Eq.of.Eq.transport.apply(Eq.is_zero_yx, 0)
+    Eq <<= Nat.Eq_Sub.of.EqAdd.apply(Eq.is_zero_xy, 0), Nat.Eq_Sub.of.EqAdd.apply(Eq.is_zero_yx, 0)
 
     Eq << Eq[-2] @ (Σ_y ^ -1)
 

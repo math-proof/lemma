@@ -71,7 +71,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum)().find(sign).simplify()
 
-    Eq << Algebra.Eq.of.Eq.transport.apply(Eq[-1], rhs=0).reversed
+    Eq << Nat.Eq_Sub.of.EqAdd.apply(Eq[-1], rhs=0).reversed
 
     # reference:
     # https://arxiv.org/pdf/2203.02155.pdf#page=8

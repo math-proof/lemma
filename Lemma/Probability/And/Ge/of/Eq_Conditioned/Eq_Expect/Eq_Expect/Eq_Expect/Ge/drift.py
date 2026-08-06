@@ -91,7 +91,7 @@ def prove(Eq):
 
     Eq.gt_zero = Greater(1 - γ, 0, plausible=True)
 
-    Eq.ge = Algebra.GeDiv.of.Gt_0.Ge.apply(Eq.gt_zero, Eq[-1])
+    Eq.ge = Rat.GeDivS.of.Ge.Gt_0.apply(Eq.gt_zero, Eq[-1])
 
     Eq <<= Probability.KL.ge.Zero.apply(Eq.ge.find(KL)), Probability.Pr.ge.Zero.apply(Eq.ge.find(Pr)), Rat.Ne_0.of.Div1.gt.Zero.apply(Eq.ge)
 
@@ -103,7 +103,7 @@ def prove(Eq):
 
     Eq << Algebra.GeInf.of.All_Ge.apply(Eq[-1])
 
-    Eq << Algebra.GeDiv.of.Gt_0.Ge.apply(Eq.gt_zero, Eq[-1])
+    Eq << Rat.GeDivS.of.Ge.Gt_0.apply(Eq.gt_zero, Eq[-1])
 
     Eq << Nat.Ge.of.Ge.Ge.apply(Eq.ge, Eq[-1])
 

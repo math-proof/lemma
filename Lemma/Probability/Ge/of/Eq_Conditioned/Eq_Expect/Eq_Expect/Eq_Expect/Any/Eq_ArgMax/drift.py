@@ -110,7 +110,7 @@ def prove(Eq):
 
     Eq << Bool.Any_And.of.Any.All.apply(Eq[-1], Eq[-3])
 
-    Eq << Eq[-1].this.expr.args[:2].apply(Algebra.GeDiv.of.Gt_0.Ge)
+    Eq << Eq[-1].this.expr.args[:2].apply(Rat.GeDivS.of.Ge.Gt_0)
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Algebra.Ge.of.Ge_0)
 

@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.rhs.args[2].apply(Rat.SubDivS1.eq.DivSub)
+    Eq << Eq[-1].this.rhs.args[2].apply(Rat.SubDivS1.eq.DivSub.of.Ne_0.Ne_0)
 
     Eq << Eq[-1].this.rhs.args[2].expand()
 
