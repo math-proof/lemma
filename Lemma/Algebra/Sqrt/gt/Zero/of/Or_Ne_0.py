@@ -10,7 +10,7 @@ def apply(ou):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Real, Nat
+    from Lemma import Real, Nat
 
     x, y = Symbol(real=True)
     Eq << apply(Unequal(x, 0) | Unequal(y, 0))

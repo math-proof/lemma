@@ -15,7 +15,7 @@ def prove(Eq):
     x = Symbol(domain=Interval(-1, 1))
     Eq << apply(acos(x))
 
-    Eq << Eq[0].this.lhs.apply(Real.Arccos.eq.Add.Arcsin)
+    Eq << Eq[0].this.lhs.apply(Real.Arccos.eq.Sub_Arcsin)
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x >= 0)
 

@@ -19,7 +19,7 @@ def prove(Eq):
     x, y = Symbol(real=True)
     Eq << apply(Unequal(x, 0) | Unequal(y, 0))
 
-    Eq << Eq[-1].this.lhs.apply(Real.Arccos.eq.Add.Arcsin)
+    Eq << Eq[-1].this.lhs.apply(Real.Arccos.eq.Sub_Arcsin)
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x >= 0)
 

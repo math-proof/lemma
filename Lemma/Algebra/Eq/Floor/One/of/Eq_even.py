@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Int
+    from Lemma import Nat, Int
 
     n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 0))

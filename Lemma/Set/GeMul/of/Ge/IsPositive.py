@@ -11,7 +11,7 @@ def apply(lt, is_positive):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Bool, Nat
 
     a, b = Symbol(real=True)
     x = Symbol(hyper_real=True)
