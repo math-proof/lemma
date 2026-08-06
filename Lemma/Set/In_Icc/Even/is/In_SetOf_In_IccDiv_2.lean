@@ -43,5 +43,5 @@ private lemma main
     · exact Even.of.Any_Eq_Mul2 ⟨k, hk_eq.symm⟩
 
 
--- created on 2018-05-26
+-- created on 2018-05-28
 -- updated on 2026-08-06

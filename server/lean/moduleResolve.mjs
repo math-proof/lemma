@@ -293,19 +293,26 @@ export function resolveMissingModuleRedirect(moduleDot) {
                 }
               }
             } else {
-              if (segment.length >= 4 && segment[0].length == 1 && segment[2].length == 1 && segment[3].length == 1) {
-                // Nat.GtMulS.of.Gt.Gt.Ge_0.Ge_0 => Nat.LtMulS.of.Lt.Lt.Ge_0.Ge_0
+              if (segment.length >= 3 && segment[0].length == 1) {
                 const segment_ = [...segment];
                 segment_[0] = [transformPrefix(...segment[0])];
-                segment_[2] = [transformPrefix(...segment[2])];
                 if (existsSync(tokensToModule(segment_, section))) {
                   segment = segment_;
                   break;
                 }
-                segment_[3] = [transformPrefix(...segment[3])];
-                if (existsSync(tokensToModule(segment_, section))) {
-                  segment = segment_;
-                  break;
+                if (segment[2].length == 1) {
+                  segment_[2] = [transformPrefix(...segment[2])];
+                  if (existsSync(tokensToModule(segment_, section))) {
+                    segment = segment_;
+                    break;
+                  }
+                  if (segment.length >= 4 && segment[3].length == 1) {
+                    segment_[3] = [transformPrefix(...segment[3])];
+                    if (existsSync(tokensToModule(segment_, section))) {
+                      segment = segment_;
+                      break;
+                    }
+                  }
                 }
               }
               let hit = false;

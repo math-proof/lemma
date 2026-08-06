@@ -4,7 +4,7 @@ import Lemma.Hyperreal.XEq.is.OrAndS
 import Lemma.Hyperreal.XEqDivS.of.XEq.XEq.NotInfinitesimal
 import Lemma.Vector.GetDiv.eq.DivGet
 import Lemma.Vector.XEq.is.All_XEqGetS
-import Lemma.Vector.XEqSumS.of.XEq.Ge_0
+import Lemma.Vector.XEqSumS.of.XEq.OrAll_NotInfinite
 open Hyperreal Vector
 
 
@@ -18,7 +18,7 @@ private lemma main
 -- imply
   a / a.sum ≈ b / b.sum := by
 -- proof
-  have h_sum := XEqSumS.of.XEq.Ge_0 h_pos h
+  have h_sum := XEqSumS.of.XEq.OrAll_NotInfinite (Or.inr (Or.inl h_pos)) h
   have h_not_sum_a := NotInfinitesimal.of.NotInfinitesimal.XEq h_sum h_not_sum
   refine Vector.XEq.of.All_XEqGetS.fin ?_
   intro i

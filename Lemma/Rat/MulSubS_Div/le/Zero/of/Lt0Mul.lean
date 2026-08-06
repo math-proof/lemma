@@ -6,7 +6,7 @@ import Lemma.Nat.Mul.of.Eq.Eq
 import Lemma.Int.Sub.eq.NegSub
 import Lemma.Rat.DivMul.eq.Mul_Div
 import Lemma.Rat.DivMul.eq.MulDiv
-import Lemma.Rat.SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
+import Lemma.Rat.SubDivS.eq.DivSubMulS.of.Ne_0.Ne_0
 import Lemma.Int.Mul_Neg.eq.NegSquare
 import Lemma.Rat.DivDiv.eq.Div_Mul
 import Lemma.Nat.MulMul.eq.Mul_Mul
@@ -41,7 +41,7 @@ private lemma main
   denote h_A : A = _
   have h_Add_ne_Zero := Add.ne.Zero.of.Lt0Mul h₀
   have h₁ := Sub.of.Eq h_A (TP / P)
-  have h_together := SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
+  have h_together := SubDivS.eq.DivSubMulS.of.Ne_0.Ne_0
     h_Add_ne_Zero
     (Ne_0.of.Lt0Mul.left h₀)
     (x := TP + TN)
@@ -53,7 +53,7 @@ private lemma main
   ] at h₁
   simp at h₁
   have h₂ := Sub.of.Eq h_A (TN / N)
-  have h_together := SubDivS.eq.Div_Mul__SubMulS.of.Ne_0.Ne_0
+  have h_together := SubDivS.eq.DivSubMulS.of.Ne_0.Ne_0
     h_Add_ne_Zero
     (Ne_0.of.Lt0Mul h₀)
     (x := TP + TN)

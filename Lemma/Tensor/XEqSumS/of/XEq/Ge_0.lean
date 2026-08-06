@@ -1,6 +1,6 @@
 import sympy.sets.fancyset
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
-import Lemma.Hyperreal.XEqSumS.of.All_XEq.All_Ge_0
+import Lemma.Hyperreal.XEqSumS.of.All_XEq.OrAll_NotInfinite
 import Lemma.List.EqEraseIdx.of.LeLength
 import Lemma.List.MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength
 import Lemma.List.AddMul_ProdDrop.lt.Prod
@@ -10,7 +10,8 @@ import Lemma.List.ProdTake.eq.DivProdTake.of.Ne_0.GtLength
 import Lemma.Nat.LtAddMul.of.Lt.Lt_Div.Dvd
 import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Tensor.DataSum.eq.Sum_DataSelect
-import Lemma.Tensor.Le0GetData.of.Ge_0
+import Lemma.Tensor.Ge_0.is.All_Le0GetData
+import Lemma.Tensor.Le_0.is.All_Ge0GetData
 import Lemma.Tensor.Sum.as.Sum.of.LeLength
 import Lemma.Tensor.XEq.is.All_XEqGetS
 import Lemma.Tensor.XEq.is.XEqDataS
@@ -64,7 +65,10 @@ private lemma select_data_get
 private lemma main
   {A B : Tensor ℝ* s}
 -- given
-  (h_pos : B ≥ 0)
+  (h_or :
+    (∀ k : Fin s.prod, ¬(B.data[k] → ∞)) ∨
+    (B ≥ 0) ∨
+    (B ≤ 0))
   (h_xeq : A ≈ B)
   (i : ℕ) :
 -- imply
@@ -82,7 +86,6 @@ private lemma main
     apply Vector.All_XEqGetS.of.XEq.fin (XEqDataS.of.XEq h_xeq) ⟨t, by grind⟩
   else
     have hi : i < s.length := Nat.lt_of_not_ge h
-    have h_ge := Le0GetData.of.Ge_0 h_pos
     have h_xeq_data := XEqDataS.of.XEq h_xeq
     rw [Tensor.XEq.is.XEqDataS]
     rw [DataSum.eq.Sum_DataSelect A ⟨i, hi⟩, DataSum.eq.Sum_DataSelect B ⟨i, hi⟩]
@@ -90,15 +93,38 @@ private lemma main
     intro j
     conv_lhs => rw [GetSum.eq.Sum_Get.fin (s := Finset.univ) (x := fun k => (A.select ⟨i, hi⟩ k).data) j]
     conv_rhs => rw [GetSum.eq.Sum_Get.fin (s := Finset.univ) (x := fun k => (B.select ⟨i, hi⟩ k).data) j]
-    apply Hyperreal.XEqSumS.of.All_XEq.All_Ge_0
+    apply Hyperreal.XEqSumS.of.All_XEq.OrAll_NotInfinite
     ·
-      intro k
-      have hlen := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp hi k.isLt
-      have hj := Nat.lt_of_lt_of_eq j.isLt hlen.symm
-      obtain ⟨q, r, hqr⟩ := Any_Eq_AddMul.of.Lt_Mul hj
-      refine ge_iff_le.mpr ?_
-      rw [select_data_get hi B k j hqr]
-      exact h_ge ⟨(q * s[i] + k) * (s.drop (i + 1)).prod + r, select_flat_idx_lt hi k⟩
+      obtain h_fin | h_ge | h_le := h_or
+      ·
+        apply Or.inl
+        intro k h_inf
+        have hlen := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp hi k.isLt
+        have hj := Nat.lt_of_lt_of_eq j.isLt hlen.symm
+        obtain ⟨q, r, hqr⟩ := Any_Eq_AddMul.of.Lt_Mul hj
+        have hB := select_data_get hi B k j hqr
+        exact h_fin ⟨(q * s[i] + k) * (s.drop (i + 1)).prod + r, select_flat_idx_lt hi k⟩ (hB.symm ▸ h_inf)
+      ·
+        have h_ge_data := All_Le0GetData.of.Ge_0 h_ge
+        apply Or.inr
+        apply Or.inl
+        intro k
+        have hlen := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp hi k.isLt
+        have hj := Nat.lt_of_lt_of_eq j.isLt hlen.symm
+        obtain ⟨q, r, hqr⟩ := Any_Eq_AddMul.of.Lt_Mul hj
+        refine ge_iff_le.mpr ?_
+        rw [select_data_get hi B k j hqr]
+        exact h_ge_data ⟨(q * s[i] + k) * (s.drop (i + 1)).prod + r, select_flat_idx_lt hi k⟩
+      ·
+        have h_le_data := All_Ge0GetData.of.Le_0 h_le
+        apply Or.inr
+        apply Or.inr
+        intro k
+        have hlen := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp hi k.isLt
+        have hj := Nat.lt_of_lt_of_eq j.isLt hlen.symm
+        obtain ⟨q, r, hqr⟩ := Any_Eq_AddMul.of.Lt_Mul hj
+        rw [select_data_get hi B k j hqr]
+        exact h_le_data ⟨(q * s[i] + k) * (s.drop (i + 1)).prod + r, select_flat_idx_lt hi k⟩
     ·
       intro k
       have hlen := MulLengthSlice.eq.ProdEraseIdx.of.GtGet.GtLength.simp hi k.isLt

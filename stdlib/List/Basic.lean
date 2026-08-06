@@ -16,7 +16,7 @@ def List.slice (L : List α) (start : Nat) (stop : Nat) : List α :=
   L.array_slice start (stop - start)
 
 def List.getSlice (L : List α) (slice : Slice) : List α :=
-  (slice.toList L.length).map fun i => L[i]
+  (slice.range L.length).map fun i => L[i]
 
 class IsConstant (T : Type v) where
   is_constant : T → Prop

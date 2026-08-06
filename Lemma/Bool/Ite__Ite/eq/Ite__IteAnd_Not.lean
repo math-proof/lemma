@@ -1,10 +1,7 @@
-import sympy.core.relational
-import Lemma.Bool.Ite__Ite.eq.IteAnd_Not__Ite
-import Lemma.Bool.IffAnd_NotAnd_Not
-open Bool
+import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [Decidable p]
   [Decidable q]
@@ -23,13 +20,8 @@ private lemma main
   else
     c := by
 -- proof
-  denote h_P : P = left
-  -- simp doen't work here
-  -- simp [Ite__Ite.eq.IteAnd_Not__Ite] at h_P
-  rw [Ite__Ite.eq.IteAnd_Not__Ite] at h_P
-  rw [Ite__Ite.eq.IteAnd_Not__Ite] at h_P
-  simp only [IffAnd_NotAnd_Not (p := p)] at h_P
-  assumption
+  grind
 
 
 -- created on 2018-01-30
+-- updated on 2026-08-06

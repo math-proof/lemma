@@ -27,7 +27,7 @@ private lemma main
   (List.Vector.indices ⟨start, stop, step⟩ n)[i].val = (List.Vector.indices ⟨start', stop', step'⟩ n')[i].val := by
 -- proof
   unfold List.Vector.indices
-  unfold Slice.toList
+  unfold Slice.range
   match step with
   | .ofNat step =>
     match step' with

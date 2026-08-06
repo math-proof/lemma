@@ -1,7 +1,7 @@
 import Mathlib.Data.Vector.MapLemmas
 import Lemma.Nat.EqMin_SubMulS
 import Lemma.Nat.EqAddMulDiv
-import Lemma.List.LengthToList.eq.Length
+import Lemma.List.LengthRange.eq.Length
 import Lemma.List.Prod.eq.MulProdS
 open Nat Lean
 
@@ -42,7 +42,7 @@ def range (n : Nat) : Vector (Fin n) n :=
   ⟩
 
 def indices (s : Slice) (n : ℕ) : Vector (Fin n) (s.length n) :=
-  ⟨s.toList n, LengthToList.eq.Length (s := s) (n := n)⟩
+  ⟨s.range n, LengthRange.eq.Length (s := s) (n := n)⟩
 
 def flatten (xs : Vector (Vector α n) m) : Vector α (m * n) :=
   ⟨(xs.toList.map Vector.toList).flatten, by simp_all [Function.comp_def, List.map_const']⟩

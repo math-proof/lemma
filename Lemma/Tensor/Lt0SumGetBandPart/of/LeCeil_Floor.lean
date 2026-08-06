@@ -7,7 +7,7 @@ import Lemma.Tensor.EqData1'1
 import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetData.eq.GetDataGet.of.Lt
 import Lemma.Tensor.Le.is.LeDataS
-import Lemma.Tensor.Le0GetData.of.Ge_0
+import Lemma.Tensor.Ge_0.is.All_Le0GetData
 import Lemma.Tensor.Le0Stack.of.All_Ge_0
 import Lemma.Tensor.Sum.eq.MkListSumData
 import Lemma.Vector.EqGet1_1
@@ -96,7 +96,7 @@ private lemma main
     have hpos := GtSumS.of.Any_Gt.All_Ge
       (x := row.data.get)
       (y := fun _ => 0)
-      (fun k _ => Le0GetData.of.Ge_0 h_row_ge k)
+      (fun k _ => All_Le0GetData.of.Ge_0 h_row_ge k)
       ⟨hj, Finset.mem_univ hj, h_gt⟩
     simp [Finset.sum_const_zero] at hpos
     simpa

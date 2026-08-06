@@ -1,6 +1,6 @@
 import Lemma.Rat.Div.eq.Mul_Inv
 import Lemma.Int.Mul_Sub.eq.SubMulS
-import Lemma.Rat.Eq_Div_Mul__Sub__SubInvS.of.Ne_0.Ne_0
+import Lemma.Rat.SubInvS.eq.DivSub.of.Ne_0.Ne_0
 open Int Rat
 
 

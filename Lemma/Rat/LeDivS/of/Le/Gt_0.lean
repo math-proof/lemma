@@ -3,6 +3,12 @@ import Lemma.Rat.LeDivS.of.Le.Ge_0
 open Nat Rat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Rat.LeDivS.of.Le.Gt_0 |
+| comm 2 | Rat.GeDivS.of.Ge.Gt_0 |
+-/
 @[main, comm 2]
 private lemma main
   [GroupWithZero α]

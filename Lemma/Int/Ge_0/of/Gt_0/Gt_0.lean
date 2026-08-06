@@ -1,6 +1,6 @@
-import Lemma.Nat.Ge_0.of.Gt_0.Ge_0
+import Lemma.Int.Le0Mul.of.Gt_0.Ge_0
 import Lemma.Nat.Ge.of.Gt
-open Nat
+open Int Nat
 
 
 @[main]
@@ -15,7 +15,7 @@ private lemma main
 -- imply
   x * y ≥ 0 := by
 -- proof
-  apply Ge_0.of.Gt_0.Ge_0 h₀
+  apply Le0Mul.of.Gt_0.Ge_0 h₀
   apply Ge.of.Gt h₁
 
 

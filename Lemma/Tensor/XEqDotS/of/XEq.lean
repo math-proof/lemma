@@ -9,17 +9,8 @@ import Lemma.Tensor.XEqSumS.of.XEq.Ge_0
 import Lemma.Vector.GetMul.eq.MulGetS
 import Lemma.Vector.XEq.is.All_XEqGetS
 import Lemma.Hyperreal.XEqMulS.of.XEq.Imp_XEqInvS
-import sympy.tensor.tensor
 open Tensor Hyperreal Vector
 set_option maxHeartbeats 1000000
-
-
-def tensor_col (X : Tensor ℝ* [n, m]) (j : Fin m) : Tensor ℝ* [n] :=
-  Xᵀ[j]
-
-
-def tensor_row (X : Tensor ℝ* [m, n]) (i : Fin m) : Tensor ℝ* [n] :=
-  X[i]
 
 
 private lemma dot_vec
@@ -39,28 +30,22 @@ private lemma dot_vec
     exact XEqMulS.of.XEq.Imp_XEqInvS
       (All_XEqGetS.of.XEq.fin (XEqDataS.of.XEq h) i)
       (h_xinfty (Fin.cast hn.symm i))
-  exact XEqSumS.of.XEq.Ge_0 h_pos h_mul 0
-
-
-private lemma col_get (X : Tensor ℝ* [n, m]) (j : Fin m) :
-    tensor_col X j = Xᵀ.get j := by
-  simp [tensor_col, GetElem.getElem]
+  exact XEqSumS.of.XEq.Ge_0 (Or.inr (Or.inl h_pos)) h_mul 0
 
 
 private lemma get_dot
   (A : Tensor ℝ* [n]) (X : Tensor ℝ* [n, m]) (j : Fin m)
   (hj : j < (A @ X).length := by simp [matmul_shape]; grind) :
-  (A @ X).get ⟨j, hj⟩ = A @ tensor_col X j := by
+  (A @ X).get ⟨j, hj⟩ = A @ Xᵀ.get j := by
   have h := GetDot.eq.Dot_GetT.fin A X j
   conv_lhs => simp [GetElem.getElem]
-  rw [← col_get X j] at h
   exact h
 
 
 private lemma get_row
   (X : Tensor ℝ* [m, n]) (A : Tensor ℝ* [n]) (i : Fin m)
   (hi : i < (X @ A).length := by simp [matmul_shape]; grind) :
-  (X @ A).get ⟨i, hi⟩ = (tensor_row X i) @ A := by
+  (X @ A).get ⟨i, hi⟩ = (let row : Tensor ℝ* [n] := X[i]; row) @ A := by
   convert GetDot.eq.DotGet.une X A i using 2
   · simp [GetElem.getElem]
   · rfl
@@ -72,14 +57,16 @@ private lemma main
   {X : Tensor ℝ* [n, m]}
 -- given
   (h_xinfty : ∀ j : Fin m, ∀ i : Fin n,
-    ((tensor_col X j).data[i] → ∞) → A.data[i]⁻¹ ≈ B.data[i]⁻¹)
-  (h_pos : ∀ j : Fin m, B * tensor_col X j ≥ 0)
+    ((let col : Tensor ℝ* [n] := Xᵀ[j]; col).data[i] → ∞) → A.data[i]⁻¹ ≈ B.data[i]⁻¹)
+  (h_pos : ∀ j : Fin m, B * (let col : Tensor ℝ* [n] := Xᵀ[j]; col) ≥ 0)
   (h : A ≈ B) :
 -- imply
   A @ X ≈ B @ X := by
   apply XEq.of.All_XEqGetS.GtLength_0 (h := by simp [matmul_shape])
   intro j
   rw [get_dot A X j, get_dot B X j]
+  conv_lhs => simp [GetElem.getElem]
+  conv_rhs => simp [GetElem.getElem]
   exact dot_vec (h_xinfty j) (h_pos j) h
 
 
@@ -89,8 +76,8 @@ private lemma left
   {X : Tensor ℝ* [m, n]}
 -- given
   (h_xinfty : ∀ i : Fin m, ∀ k : Fin n,
-    ((tensor_row X i).data[k] → ∞) → A.data[k]⁻¹ ≈ B.data[k]⁻¹)
-  (h_pos : ∀ i : Fin m, B * tensor_row X i ≥ 0)
+    ((let row : Tensor ℝ* [n] := X[i]; row).data[k] → ∞) → A.data[k]⁻¹ ≈ B.data[k]⁻¹)
+  (h_pos : ∀ i : Fin m, B * (let row : Tensor ℝ* [n] := X[i]; row) ≥ 0)
   (h : A ≈ B) :
 -- imply
   X @ A ≈ X @ B := by

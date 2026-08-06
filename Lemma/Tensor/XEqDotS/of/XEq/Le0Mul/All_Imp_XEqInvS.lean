@@ -30,7 +30,7 @@ private lemma main
     exact XEqMulS.of.XEq.Imp_XEqInvS
       (All_XEqGetS.of.XEq.fin (XEqDataS.of.XEq h) i)
       (h_xinfty (Fin.cast hn.symm i))
-  exact XEqSumS.of.XEq.Ge_0 h_pos h_mul 0
+  exact XEqSumS.of.XEq.Ge_0 (Or.inr (Or.inl h_pos)) h_mul 0
 
 
 @[main]

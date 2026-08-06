@@ -16,7 +16,7 @@ private lemma main
   unfold List.Vector.indices
   simp [GetElem.getElem]
   simp [List.Vector.get]
-  simp [Slice.toList]
+  simp [Slice.range]
   split_ifs with h
   ·
     simp [EqAdd_Mul_DivSub1Sign_2] at h

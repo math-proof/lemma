@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.Infinitesimal.is.All_LtAbs
 import Lemma.Int.AbsAdd.le.AddAbsS
 import Lemma.Nat.LtAddS.of.Lt.Lt
-import Lemma.Rat.Div.gt.Zero.of.Gt_0
+import Lemma.Rat.Lt0Div.of.Gt_0
 open Hyperreal Int Nat Rat
 
 
@@ -21,7 +21,7 @@ private lemma main
   simp at h_a
   have h_b := All_LtAbs.of.Infinitesimal h_b
   simp at h_b
-  have hδ_2 := Div.gt.Zero.of.Gt_0.left hδ (d := 2)
+  have hδ_2 := Lt0Div.of.Gt_0.left hδ (d := 2)
   have h_a := h_a (δ / 2) hδ_2
   have h_b := h_b (δ / 2) hδ_2
   calc _ ≤ _ := AbsAdd.le.AddAbsS (a := a) (b := b)

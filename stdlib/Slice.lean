@@ -28,7 +28,7 @@ def Nat.sliced_indices' (h_stop : start > stop) (h_start : start ≤ n) (h_step 
   ⟨start - 1, LtSub_1.of.Le.Gt_0 (by linarith [Gt.of.Ge.Gt h_start h_stop]) h_start⟩ :: (if h_stop : start - step > stop then Nat.sliced_indices' h_stop (show start - step ≤ n by simp; linarith) h_step else [])
 
 
-def Slice.toList (s : Slice) (n : ℕ) : List (Fin n) :=
+def Slice.range (s : Slice) (n : ℕ) : List (Fin n) :=
   match s.step with
   | .ofNat step =>
     match step with
@@ -60,6 +60,14 @@ def Slice.toList (s : Slice) (n : ℕ) : List (Fin n) :=
         simp at h_Le
         assumption
       Nat.sliced_indices' h_stop h_start (Nat.succ_pos step)
+
+def Slice.begin (s : Slice) (n : ℕ) : ℕ :=
+  if 0 < s.step then
+    (Add_Mul_DivSub1Sign_2 n s.start).toNat
+  else if s.step < 0 then
+    (Add_Mul_DivSub1Sign_2 n s.start + 1).toNat.min n - 1
+  else
+    0
 
 def Slice.length (s : Slice) (n : ℕ) : ℕ :=
   match s.step with

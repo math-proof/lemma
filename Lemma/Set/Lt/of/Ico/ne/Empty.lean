@@ -1,10 +1,15 @@
-import sympy.sets.sets
 import Lemma.Set.Any_In.is.Ne_Empty
 import Lemma.Nat.Lt.of.Le.Lt
 open Set Nat
 
 
-@[main]
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Set.Lt.of.Ico.ne.Empty |
+| comm | Set.Gt.of.Ico.ne.Empty |
+-/
+@[main, comm]
 private lemma main
   [Preorder α]
   {a b : α}

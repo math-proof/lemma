@@ -1,7 +1,7 @@
 import Lemma.Hyperreal.XEqMulS.of.XEq.Imp_XEqInvS
 import Lemma.Nat.Mul
 import Lemma.Vector.Dot
-import Lemma.Vector.XEqSumS.of.XEq.Ge_0
+import Lemma.Vector.XEqSumS.of.XEq.OrAll_NotInfinite
 open Hyperreal Vector Nat
 
 
@@ -16,7 +16,7 @@ private lemma main
   a @ x ≈ b @ x := by
 -- proof
   rw [Dot.eq.SumMul, Dot.eq.SumMul]
-  apply XEqSumS.of.XEq.Ge_0 h_pos
+  apply XEqSumS.of.XEq.OrAll_NotInfinite (Or.inr (Or.inl h_pos))
   refine Vector.XEq.of.All_XEqGetS.fin ?_
   intro i
   rw [GetMul.eq.MulGetS.fin a x i, GetMul.eq.MulGetS.fin b x i]

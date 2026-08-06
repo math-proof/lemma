@@ -43,5 +43,5 @@ private lemma main
     · exact Odd.of.Any_Eq_AddMul2 ⟨k, hk_eq.symm⟩
 
 
--- created on 2018-05-29
+-- created on 2018-05-31
 -- updated on 2026-08-06

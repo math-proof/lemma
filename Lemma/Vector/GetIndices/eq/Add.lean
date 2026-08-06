@@ -17,7 +17,7 @@ private lemma main
   (List.Vector.indices ⟨j, n + j, 1⟩ (n + j))[i] = (i : ℕ) + j := by
 -- proof
   unfold List.Vector.indices
-  unfold Slice.toList
+  unfold Slice.range
   simp
   have hi := i.isLt
   simp [EqLengthSlice] at hi
