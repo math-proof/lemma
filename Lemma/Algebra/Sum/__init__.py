@@ -6,7 +6,6 @@ from . import cubic
 from . import halve
 from . import Square
 from . import Inv
-from . import Imageset
 from . import eq
 from . import le
 from . import SDiff

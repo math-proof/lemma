@@ -32,7 +32,7 @@ def apply(is_zero, x=None, d=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Algebra, Bool, Finset
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x, d=1)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Set.In_Ico.Ceil.of.In_Icc.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Set.Ico.eq.Finset)
+    Eq << Eq[-1].this.rhs.apply(Finset.Ico.eq.MapRange)
 
     Eq << Set.Ite.In.Finset.apply(Eq[1].find(Piecewise))
 

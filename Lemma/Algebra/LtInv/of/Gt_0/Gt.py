@@ -33,7 +33,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[0], Eq.x_is_positive)
 
-    Eq << ~Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[-2]).reversed
+    Eq << ~Nat.GeMulS.of.Ge.Gt_0.apply(Eq[-1], Eq[-2]).reversed
 
 
 

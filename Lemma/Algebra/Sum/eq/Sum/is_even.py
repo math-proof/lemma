@@ -9,7 +9,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Finset, Rat
+    from Lemma import Set, Finset, Rat
 
     n, a, b = Symbol(integer=True)
     f = Symbol(shape=(oo,), real=True)
@@ -24,7 +24,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.limits[0][1].definition
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Sum.Imageset)
+    Eq << Eq[-1].this.lhs.apply(Finset.SumSetOf.eq.Sum_UFnAddMul)
 
     Eq << Eq[1].subs(Eq[-1])
 

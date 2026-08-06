@@ -26,7 +26,7 @@ def apply(is_zero, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool, Nat
+    from Lemma import Set, Algebra, Bool, Nat, Finset
 
     x, p, q = Symbol(complex=True, given=True)
     Eq << apply(Equal(x ** 3 + p * x + q, 0), x=x)
@@ -43,7 +43,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Mul).apply(Nat.Mul_Add.eq.AddMulS)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Ico.eq.Finset)
+    Eq << Eq[-1].this.rhs.apply(Finset.Ico.eq.MapRange)
 
     Eq << Set.Ite.In.Finset.apply(Eq[1].find(Piecewise))
 

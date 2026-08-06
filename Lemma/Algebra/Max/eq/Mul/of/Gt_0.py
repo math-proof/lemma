@@ -32,7 +32,7 @@ def prove(Eq):
 
     Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Algebra.Given.given.Given_And.apply(Eq[-1], cond=Eq[0])
 
-    Eq <<= Eq[-2].this.lhs.apply(Algebra.GeDiv.of.Gt_0.Ge), Eq[-1].this.rhs.apply(Algebra.GeMul.of.Gt_0.Ge)
+    Eq <<= Eq[-2].this.lhs.apply(Algebra.GeDiv.of.Gt_0.Ge), Eq[-1].this.rhs.apply(Nat.GeMulS.of.Ge.Gt_0)
 
     Eq << Algebra.Cond.given.Cond.subst.Cond.apply(Eq.eq, old=Eq.equivalent.lhs, new=Eq.equivalent.rhs)
 

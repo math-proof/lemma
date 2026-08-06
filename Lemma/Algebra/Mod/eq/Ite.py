@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Bool
+    from Lemma import Set, Bool, Finset
 
     n = Symbol(integer=True)
     Eq << apply(n % 2)
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Set.Mod.In.Ico.apply(Eq[-1].lhs)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Ico.eq.Finset)
+    Eq << Eq[-1].this.rhs.apply(Finset.Ico.eq.MapRange)
 
 
 

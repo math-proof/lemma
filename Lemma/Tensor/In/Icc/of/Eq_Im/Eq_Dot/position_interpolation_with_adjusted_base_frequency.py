@@ -151,7 +151,7 @@ def prove(Eq):
 
     Eq <<= Eq.gt_zero & Eq[-1]
 
-    Eq << Eq[-1].this.expr.apply(Algebra.GeMul.of.Gt_0.Ge)
+    Eq << Eq[-1].this.expr.apply(Nat.GeMulS.of.Ge.Gt_0)
 
     Eq.Sum_ge = Algebra.GeSum.of.All_Ge.apply(Eq[-1])
 

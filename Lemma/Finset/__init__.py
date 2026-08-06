@@ -80,3 +80,4 @@ from . import AddSumS_SquareSub
 from . import MapRange
 from . import Sum_MulBoolAnd
 from . import SumSetOf
+from . import Ico

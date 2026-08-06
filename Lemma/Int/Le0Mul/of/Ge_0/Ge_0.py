@@ -10,7 +10,7 @@ def apply(is_nonnegative_x, is_nonnegative_y):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Nat
+    from Lemma import Bool, Nat, Int
 
     x, y = Symbol(real=True)
     Eq << apply(x >= 0, y >= 0)
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.ImpAnd.apply(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.apply(Nat.Ge_0.of.Gt_0.Ge_0)
+    Eq << Eq[-1].this.rhs.apply(Int.Le0Mul.of.Gt_0.Ge_0)
 
     Eq <<= Eq.case0 & Eq[-1]
 

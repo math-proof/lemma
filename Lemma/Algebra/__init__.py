@@ -251,7 +251,6 @@ from . import EqReducedSum
 from . import EqSum
 from . import EqConj
 from . import EqBool
-from . import EqFloor
 from . import EqLog
 from . import EqMinima
 from . import EqSlice

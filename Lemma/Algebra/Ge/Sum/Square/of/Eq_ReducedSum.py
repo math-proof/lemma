@@ -11,7 +11,7 @@ def apply(eq_x_bar, t, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Rat
+    from Lemma import Algebra, Bool, Rat, Nat
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.of.And.apply(Eq[-1], 1).reversed
 
-    Eq << Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[-3])
+    Eq << Nat.GeMulS.of.Ge.Gt_0.apply(Eq[-1], Eq[-3])
 
     Eq << Algebra.GeAdd.of.Ge.Eq.apply(Eq[-1], Eq[2])
 

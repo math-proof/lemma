@@ -44,7 +44,7 @@ def prove(Eq):
     Eq << Eq[-1].this.find(Element).apply(Set.Ge.of.In_Ico)
     Eq << Eq[-1].this.find(GreaterEqual[2]).apply(Algebra.Gt_0.of.Ge, ret=True, simplify=None)
     Eq << Eq[-1].this.find(Greater).apply(Algebra.Div.gt.Zero.of.Gt_0)
-    Eq << Eq[-1].this.expr.args[:2].apply(Algebra.GeMul.of.Gt_0.Ge, ret=0)
+    Eq << Eq[-1].this.expr.args[:2].apply(Nat.GeMulS.of.Ge.Gt_0, ret=0)
     Eq << Eq[-1].this.find(GreaterEqual).apply(Int.LtSub_1.of.Le)
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.GtMul.of.Gt_0.Gt)
     Eq << Eq[-1].this.expr.apply(Algebra.Lt.of.Lt.Ge)

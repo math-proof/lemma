@@ -97,7 +97,7 @@ def prove(Eq):
 
     Eq <<= Int.Le0Mul.of.Ge_0.Ge_0.apply(Eq[-2], Eq[-3]), Algebra.Inv.gt.Zero.of.Ne_0.apply(Eq[-1])
 
-    Eq << Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[-2])
+    Eq << Nat.GeMulS.of.Ge.Gt_0.apply(Eq[-1], Eq[-2])
 
     Eq << Bool.All.of.Cond.apply(Eq[-1], s[t].var, simplify=None)
 

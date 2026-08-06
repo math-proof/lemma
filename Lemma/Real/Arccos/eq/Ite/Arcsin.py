@@ -29,9 +29,9 @@ def prove(Eq):
 
     Eq << -Eq[-1].this.rhs
 
-    Eq << Eq.is_nonnegative.this.lhs.apply(Real.Eq.Add.Arcsin.of.Ge_0)
+    Eq << Eq.is_nonnegative.this.lhs.apply(Real.AddArcsinS.eq.DivPi2.of.Ge_0)
 
-    Eq << Eq[-1].this.lhs.apply(Real.Eq.Add.Arcsin.of.Lt_0)
+    Eq << Eq[-1].this.lhs.apply(Real.SubArcsinS.eq.DivPi2.of.Lt_0)
 
     # https://en.wikipedia.org/wiki/Argument_(complex_analysis)
 

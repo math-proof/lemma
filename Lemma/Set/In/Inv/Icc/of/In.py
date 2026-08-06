@@ -36,7 +36,7 @@ def prove(Eq):
 
     Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[-1])
 
-    Eq <<= Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[-3])
+    Eq <<= Nat.GeMulS.of.Ge.Gt_0.apply(Eq[-1], Eq[-3])
 
     Eq << Set.In_Icc.of.Le.Le.apply(Eq[-1], Eq[4])
 

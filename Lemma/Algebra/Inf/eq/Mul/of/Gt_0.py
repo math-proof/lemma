@@ -10,7 +10,7 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Nat
 
     a, x, m, M = Symbol(real=True)
     f = Function(real=True)
@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].subs(z, z * Eq.reciprocal.lhs), Bool.Imp_And.of.Cond.Imp.apply(Eq[0], Eq[-1])
 
-    Eq <<= Bool.ImpAndS.of.Imp.apply(Eq[-2], cond=Eq[0]), Eq[-1].this.rhs.apply(Algebra.GeMul.of.Gt_0.Ge)
+    Eq <<= Bool.ImpAndS.of.Imp.apply(Eq[-2], cond=Eq[0]), Eq[-1].this.rhs.apply(Nat.GeMulS.of.Ge.Gt_0)
 
     Eq << Eq[-2].this.rhs.apply(Bool.Any_And.of.Any.All, simplify=None)
 

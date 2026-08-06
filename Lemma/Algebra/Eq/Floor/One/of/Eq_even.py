@@ -9,7 +9,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int
 
     n = Symbol(integer=True)
     Eq << apply(Equal(n % 2, 0))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-3].subs(Eq[-1])
 
-    Eq << Algebra.EqFloor.of.Eq_even.apply(Eq[0])
+    Eq << Int.FloorDiv_2.eq.Div_2.of.Even.apply(Eq[0])
 
 
 

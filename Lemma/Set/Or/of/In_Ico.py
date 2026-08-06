@@ -14,12 +14,12 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Finset
 
     e, a = Symbol(integer=True, given=True)
     Eq << apply(Element(e, Range(a, a + 4)))
 
-    Eq << Eq[0].this.rhs.apply(Set.Ico.eq.Finset)
+    Eq << Eq[0].this.rhs.apply(Finset.Ico.eq.MapRange)
 
     Eq << Set.Eq.ou.In.of.In_Insert.apply(Eq[-1])
 

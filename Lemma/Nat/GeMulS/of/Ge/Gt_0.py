@@ -10,14 +10,14 @@ def apply(is_positive_x, strict_less_than):
 
 @prove
 def prove(Eq):
-    from Lemma import Nat
+    from Lemma import Nat, Int
     x, a, b = Symbol(real=True)
 
     Eq << apply(x > 0, a >= b)
 
     Eq << Eq[1] - b
 
-    Eq << Nat.Ge_0.of.Gt_0.Ge_0.apply(Eq[0], Eq[-1])
+    Eq << Int.Le0Mul.of.Gt_0.Ge_0.apply(Eq[0], Eq[-1])
 
     Eq << Eq[-1].this.lhs.expand()
 

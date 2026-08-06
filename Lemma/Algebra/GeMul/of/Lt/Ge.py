@@ -11,14 +11,14 @@ def apply(lt, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Nat
 
     a, b, x, y = Symbol(real=True)
     Eq << apply(a < b, x >= y)
 
     Eq << Algebra.Gt_0.of.Lt.apply(Eq[0])
 
-    Eq << Algebra.GeMul.of.Gt_0.Ge.apply(Eq[-1], Eq[1])
+    Eq << Nat.GeMulS.of.Ge.Gt_0.apply(Eq[-1], Eq[1])
 
 
 
