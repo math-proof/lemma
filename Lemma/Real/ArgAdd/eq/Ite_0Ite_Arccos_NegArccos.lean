@@ -1,6 +1,6 @@
 import Lemma.Complex.EqArg_Ite_0Ite_Arccos_NegArccos
 import Lemma.Real.AbsAdd_MulI.eq.SqrtAddSquareS
-import Lemma.Real.EqAdd_MulI_0.eq.AndEqS_0
+import Lemma.Real.EqAdd_MulI_0.is.AndEqS_0
 open Complex Real
 
 
@@ -24,7 +24,7 @@ private lemma main
   have h_Eq : (↑x + I * ↑y).im = y := by
     simp
   rw [h_Eq] at h
-  simp [EqAdd_MulI_0.eq.AndEqS_0 (x := x) (y := y)] at h
+  simp [EqAdd_MulI_0.is.AndEqS_0 (x := x) (y := y)] at h
   exact h
 
 

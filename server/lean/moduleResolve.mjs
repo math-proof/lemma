@@ -220,10 +220,16 @@ export function resolveMissingModuleRedirect(moduleDot) {
   const section = parsed[0];
   /** @type {string[][]} */
   let segment = parsed[1].map((row) => [...row]);
+  let hit = false;
+  var index = -1;
+  for (index = 0; index < segment.length; index++) {
+    if (segment[index].length === 1 && segment[index][0] === 'of') {
+      hit = true;
+      break;
+    }
+  }
 
-  let index = tokens.indexOf('of');
-
-  if (index !== -1) {
+  if (hit) {
     if (segment[1] && segment[1].length === 1) {
       const mid = segment[1][0];
       switch (mid) {
@@ -356,20 +362,10 @@ export function resolveMissingModuleRedirect(moduleDot) {
           }
           break;
         }
-        default: {
-          const firstT = tokens[1];
-          let m = firstT.match(/^(S?Eq)_([\w'!₀-₉]+)$/);
-          if (m) tokens[1] = m[1] + m[2];
-          else if ((index = tokens.indexOf('of')) !== -1) tokens[index] = 'is';
-          else if ((index = tokens.indexOf('is')) !== -1) {
-            const sec = tokens[0];
-            const first = tokens.slice(1, index);
-            const second = tokens.slice(index + 1);
-            tokens = [sec, ...second, 'is', ...first];
-          } else 
-            return;
-          break;
-        }
+        default:
+          if (index > 1) {
+            segment[index][0] = 'is';
+          }
       }
     }
   } else {
