@@ -13,7 +13,7 @@ def apply(is_positive, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Rat
+    from Lemma import Set, Rat
 
     x = Symbol(real=True, given=True)
     g, h = Function(real=True)

@@ -11,7 +11,7 @@ def apply(given, *, evaluate=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat, Rat
+    from Lemma import Set, Nat, Rat
 
     n = Symbol(real=True)
     b = Symbol(real=True, positive=True)

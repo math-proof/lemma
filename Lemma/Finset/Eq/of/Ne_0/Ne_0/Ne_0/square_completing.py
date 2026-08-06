@@ -15,7 +15,7 @@ def apply(ne_zero_A, ne_zero_B, ne_zero, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Tensor, Bool, Rat, Nat
+    from Lemma import Finset, Tensor, Bool, Rat, Nat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(r"\vec x", real=True, shape=(n,))

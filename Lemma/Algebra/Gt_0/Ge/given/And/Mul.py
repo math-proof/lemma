@@ -10,7 +10,7 @@ def apply(gt_zero, ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat, Rat
+    from Lemma import Nat, Rat
 
     x, y, z = Symbol(integer=True)
     Eq << apply(x > 0, GreaterEqual(x + y, z))

@@ -13,7 +13,7 @@ def apply(given, scale, div=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Rat
+    from Lemma import Rat
 
     x, y, z = Symbol(real=True, given=True)
     Eq << apply(GreaterEqual(x, y), z)
