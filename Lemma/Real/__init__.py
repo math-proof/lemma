@@ -84,3 +84,4 @@ from . import LeSqrtS
 from . import InArcsin
 from . import Any_Eq_AddMul_Pi
 from . import NeSqrt_0
+from . import SubArcsinS

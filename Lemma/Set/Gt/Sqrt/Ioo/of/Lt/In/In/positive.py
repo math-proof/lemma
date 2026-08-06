@@ -46,7 +46,7 @@ def prove(Eq):
 
     Eq << Nat.Gt_0.of.Gt_0.Gt_0.apply(Eq[-1], Eq[-2])
 
-    Eq << Algebra.Ge_0.of.Gt_0.apply(Eq[-1])
+    Eq << Nat.Ge.of.Gt.apply(Eq[-1])
 
     Eq << Algebra.GtSqrt.of.Ge_0.Gt.apply(Eq[-1], Eq[4])
 

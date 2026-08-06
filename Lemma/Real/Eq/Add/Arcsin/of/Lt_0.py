@@ -17,7 +17,7 @@ def prove(Eq):
 
     Eq << Nat.Le.of.Lt.apply(Eq[0])
 
-    Eq << Real.Eq.Add.Arcsin.of.Le_0.apply(Eq[-1])
+    Eq << Real.SubArcsinS.eq.DivPi2.of.Le_0.apply(Eq[-1])
 
     # https://en.wikipedia.org/wiki/Argument_(complex_analysis)
 

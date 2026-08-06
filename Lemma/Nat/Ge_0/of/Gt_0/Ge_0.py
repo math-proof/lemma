@@ -15,7 +15,7 @@ def prove(Eq):
 
     Eq << apply(x > 0, y >= 0)
 
-    Eq << -Int.Le_0.of.Gt_0.Le_0.apply(Eq[0], -Eq[1])
+    Eq << -Int.Ge0Mul.of.Gt_0.Le_0.apply(Eq[0], -Eq[1])
 
 
 if __name__ == '__main__':

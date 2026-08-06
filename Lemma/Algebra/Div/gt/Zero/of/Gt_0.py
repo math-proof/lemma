@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq <<= Eq[-1] & Eq[0]
 
-    Eq << Eq[-1].apply(Int.Mul.le.Zero.of.Le_0.Gt_0)
+    Eq << Eq[-1].apply(Int.Ge0Mul.of.Gt_0.Le_0)
 
 
 if __name__ == '__main__':

@@ -12,12 +12,12 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Set
+    from Lemma import Set, Finset, Finset, Finset, Finset
     a = Symbol(integer=True)
 
     Eq << apply(Range(a, a + 4))
 
-    Eq << Eq[0].this.rhs.apply(Set.InsertToSet.eq.ToSet)
+    Eq << Eq[0].this.rhs.apply(Finset.MapRange.eq.Ico)
 
 
 if __name__ == '__main__':

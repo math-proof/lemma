@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find((Expr < 0) & (Expr >= 0)).apply(Int.Le_0.of.Ge_0.Lt_0)
 
-    Eq << Eq[-1].this.find((Expr > 0) & (Expr <= 0)).args[:2].apply(Int.Mul.le.Zero.of.Le_0.Gt_0)
+    Eq << Eq[-1].this.find((Expr > 0) & (Expr <= 0)).args[:2].apply(Int.Ge0Mul.of.Gt_0.Le_0)
 
     Eq << Bool.BFn.of.BFnIte.Cond.apply(Eq[0], Eq[-1], invert=True)
 

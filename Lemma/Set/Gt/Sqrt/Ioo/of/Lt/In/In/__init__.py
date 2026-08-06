@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq[-1], cond=x <= 0)
 
-    Eq.x_is_nonpositive = Eq[-1].this.rhs.apply(Int.Mul.le.Zero.of.Le_0.Gt_0)
+    Eq.x_is_nonpositive = Eq[-1].this.rhs.apply(Int.Ge0Mul.of.Gt_0.Le_0)
 
     Eq << Set.Sqrt.gt.Zero.of.In.apply(Eq[1])
 

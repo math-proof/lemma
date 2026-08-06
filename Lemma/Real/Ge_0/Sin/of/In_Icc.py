@@ -10,7 +10,7 @@ def apply(contains):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Real
+    from Lemma import Algebra, Set, Bool, Real, Nat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval(0, S.Pi)))
@@ -35,7 +35,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Real.Gt_0.Sin.of.In_Icc)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Ge_0.of.Gt_0)
+    Eq << Eq[-1].this.rhs.apply(Nat.Ge.of.Gt)
 
 
 

@@ -77,3 +77,4 @@ from . import Cup_Ioc
 from . import SetOf
 from . import SumIco
 from . import AddSumS_SquareSub
+from . import MapRange

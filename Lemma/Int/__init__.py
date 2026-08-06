@@ -4,7 +4,6 @@ from . import Le_0
 from . import Ge_0
 from . import Or
 from . import And
-from . import Mul
 from . import LeMulS
 from . import Abs
 from . import Ge
