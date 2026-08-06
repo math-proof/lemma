@@ -10,13 +10,13 @@ def apply(gt_zero, given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x = Symbol(real=True)
     n = Symbol(integer=True)
     Eq << apply(n < 0, x > 0)
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[1])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[1])
 
     Eq << Algebra.Gt_0.Pow.of.Gt_0.Gt_0.apply(-Eq[0], Eq[-1])
 

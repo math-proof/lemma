@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x >= 0)
 
-    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
     Eq <<= Eq[-2].this.rhs.apply(Int.EqAdd.Is.Eq_Sub), Eq[-1].this.rhs.apply(Int.EqAdd.Is.Eq_Sub)
 

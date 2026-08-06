@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra, Bool, Nat, Fin
+    from Lemma import Finset, Algebra, Bool, Nat, Fin, Rat
 
     k = Symbol(integer=True, nonnegative=True, given=False)
     n = Symbol(integer=True, nonnegative=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Sum[Pow * Pow]).apply(Algebra.Sum.eq.Mul.series.geometric)
 
-    Eq << Eq[-1].this.find(Sum).find(Expr ** -1).base.apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.find(Sum).find(Expr ** -1).base.apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[-1].this.find(Binomial).apply(Finset.Binom.eq.Div.Binom.increase)
 

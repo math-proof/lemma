@@ -10,13 +10,13 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Rat
 
     a, x, m, M = Symbol(real=True)
     f = Function(real=True)
     Eq << apply(a > 0, Sup[x:m:M](f(x)))
 
-    Eq.reciprocal = Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[0])
+    Eq.reciprocal = Rat.Lt0Div.of.Gt_0.apply(Eq[0])
 
     y = Symbol(Eq[1].rhs.args[1])
     Eq << y.this.definition.reversed

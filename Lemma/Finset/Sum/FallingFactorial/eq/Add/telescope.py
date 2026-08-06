@@ -12,7 +12,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Finset, Algebra
+    from Lemma import Finset, Algebra, Rat
 
     k = Symbol(integer=True)
     i, n = Symbol(integer=True, positive=True)
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << (1 / FallingFactorial(k - 1, i) - 1 / FallingFactorial(k, i)).this.subs(Eq[-1], Eq[-2])
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.rhs.apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[-1].subs(Eq[-4].reversed)
 

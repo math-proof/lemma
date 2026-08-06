@@ -1,5 +1,5 @@
 <template>
-	<a v-if="mode == 'a'" v-focus tabindex=2 :href=href @contextmenu.prevent=contextmenu @keydown=keydown_a target="module">
+	<a v-if="mode == 'a'" v-focus tabindex=2 :href=href @contextmenu.prevent=contextmenu @keydown=keydown_a>
         {{module.isArray? module[1]: module}}
        	<searchContextmenu v-if='showContextmenu' :left=left :top=top></searchContextmenu>
     </a>

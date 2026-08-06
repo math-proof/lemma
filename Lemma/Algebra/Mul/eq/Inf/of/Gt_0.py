@@ -10,13 +10,13 @@ def apply(is_positive, self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Rat
 
     m, M, x, a, b, c = Symbol(real=True, given=True)
     f = Function(real=True)
     Eq << apply(a > 0, Inf[x:Interval(m, M, left_open=True, right_open=True)](f(x)))
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[0])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[0])
 
     y = Symbol(Eq[1].lhs.args[1])
     Eq << y.this.definition

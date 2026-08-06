@@ -12,7 +12,7 @@ def apply(limited_f, limited_g):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Bool
+    from Lemma import Calculus, Set, Algebra, Bool, Rat
 
     x, x0 = Symbol(real=True)
     f, g = Function(real=True)
@@ -56,7 +56,7 @@ def prove(Eq):
 
     Eq.lt_fx = Eq[-1].this.expr.expr * B
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq.abs_gt_zero, ε / 2, simplify=None)
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq.abs_gt_zero, ε / 2, simplify=None)
 
     Eq << Eq.Limit_B_definition.subs(ε_1, Eq[-1].lhs)
 

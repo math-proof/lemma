@@ -23,7 +23,7 @@
 
             <hr>
             <h3 title='callee hierarchy'>
-                <a style='font-size: inherit' :href="`/${user}/?callee=${module}`" target="imply">
+                <a style='font-size: inherit' :href="`/${user}/?callee=${module}`">
                     <font v-clipboard color=blue :data-clipboard-text="module">{{imply_hint}}</font>
                 </a>
             </h3>
@@ -31,7 +31,7 @@
 
             <hr>
             <h3 title='caller hierarchy'>
-                <a style='font-size: inherit' :href="`/${user}/?caller=${module}`" target="proof">
+                <a style='font-size: inherit' :href="`/${user}/?caller=${module}`">
                     <font color=blue>proof</font>
                 </a>
             </h3>

@@ -24,12 +24,12 @@ def apply(gt_zero, lt, *, simplify=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x, a, b = Symbol(real=True)
     Eq << apply(x > 0, a < b)
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[0])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[0])
 
     Eq << Algebra.LtMul.of.Gt_0.Lt.apply(Eq[-1], Eq[1])
 

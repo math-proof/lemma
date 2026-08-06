@@ -11,7 +11,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Bool
+    from Lemma import Set, Bool, Rat
 
     x = Symbol(hyper_real=True)
     Eq << apply(Element(x, Interval.open(0, oo)))
@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element).simplify()
 
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Div.gt.Zero.of.Gt_0)
+    Eq << Eq[-1].this.find(Greater).apply(Rat.Lt0Div.of.Gt_0)
 
     Eq << Eq[-1].this.find(Greater).apply(Set.IsPositive.of.Gt_0, simplify=None)
 

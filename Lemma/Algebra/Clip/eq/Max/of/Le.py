@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.lhs.reversed, Eq[-1].this.lhs.reversed
 
-    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2], invert=True), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1])
+    Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2], invert=True), Bool.Imp_Ite.given.Imp.apply(Eq[-1])
 
     Eq <<= Eq[-2].this.rhs.apply(Algebra.Eq_Max.given.Ge), Eq[-1].subs(Eq[2])
 

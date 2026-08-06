@@ -28,13 +28,13 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-2])
 
-    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq << Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Or.of.Ne_0)
 
     Eq.lt_zero, Eq.gt_zero = Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq.gt_zero)
+    Eq << Bool.Imp_Ite.given.Imp.apply(Eq.gt_zero)
 
     Eq << Eq[-1].this.lhs.apply(Int.EqAbs.of.Gt_0)
 

@@ -16,7 +16,7 @@ def prove(Eq):
     d = Symbol(integer=True)
     Eq << apply(Element(x, Range(a, b, d)))
 
-    Eq << Eq[0].this.apply(Set.In_Ico.Is.And.split.Ico)
+    Eq << Eq[0].this.apply(Set.In_Range.Is.Mod.In_Range)
 
     Eq << Bool.And_And.given.And.Cond.apply(Eq[-1])
 

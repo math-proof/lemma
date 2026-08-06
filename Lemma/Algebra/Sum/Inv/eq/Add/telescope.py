@@ -10,13 +10,13 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, nonnegative=True)
     Eq << apply(Sum[k:1:n + 1](1 / (k * (k + 1))))
 
-    Eq << (1 / k - 1 / (k + 1)).this.apply(Algebra.Add.eq.Mul.together)
+    Eq << (1 / k - 1 / (k + 1)).this.apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[0].subs(Eq[-1].reversed)
 

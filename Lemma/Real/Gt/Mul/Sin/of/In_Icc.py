@@ -9,7 +9,7 @@ def apply(el):
 
 @prove(proved=False)
 def prove(Eq):
-    from Lemma import Calculus, Algebra, Nat, Real
+    from Lemma import Calculus, Nat, Real, Rat
 
     x = Symbol(real=True)
     Eq << apply(Element(x, Interval.open(0, S.Pi)))
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.apply(Nat.AddMulS.eq.Mul_Add)
 
-    Eq << Eq[-1].this.rhs.args[2].apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.rhs.args[2].apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[-1].this.rhs.args[2].expand()
 

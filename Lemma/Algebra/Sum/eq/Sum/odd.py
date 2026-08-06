@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Element[Symbol, ~Symbol]).definition
 
-    Eq << Eq[-1].this.find(And).apply(Set.Eq_odd.In.Is.In)
+    Eq << Eq[-1].this.find(And).apply(Set.In_Icc.Odd.Is.In_SetOf_In_IccDiv_2)
 
 
 

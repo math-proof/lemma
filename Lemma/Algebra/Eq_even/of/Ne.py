@@ -16,7 +16,7 @@ def prove(Eq):
 
     Eq << apply(Unequal(n % 2, 1))
 
-    Eq << Set.Mod.In.Ico.apply(n % 2)
+    Eq << Set.Mod.In.Range.of.Gt_0.apply(n % 2)
 
     Eq << Set.Or.of.In_Ico.apply(Eq[-1])
 

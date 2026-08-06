@@ -19,12 +19,12 @@ def apply(gt_zero, lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Bool, Int, Nat
+    from Lemma import Algebra, Set, Bool, Int, Nat, Rat
 
     m, M, x, a, b, c = Symbol(real=True, given=True)
     Eq << apply(a > 0, m < M, a * x ** 2 + b * x + c, x)
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[0])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[0])
 
     Eq << Eq[2].this.lhs.apply(Algebra.Inf.eq.Add)
 
@@ -34,7 +34,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Eq[-1].find(Element))
 
-    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
     Eq <<= Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-2]), Eq[-1].this.lhs.apply(Set.Or.of.NotIn_Icc)
 

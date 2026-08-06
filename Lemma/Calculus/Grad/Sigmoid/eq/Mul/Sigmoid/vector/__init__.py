@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Eq[-4].subs(Eq[-1])
 
-    Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.rhs.find(Add).apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[-1].this.lhs.doit()
 

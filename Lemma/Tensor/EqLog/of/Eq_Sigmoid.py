@@ -10,7 +10,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool
+    from Lemma import Algebra, Bool, Rat
 
     x, y = Symbol(real=True)
     Eq << apply(Equal(y, sigmoid(x)))
@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Eq[-1] - 1
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.lhs.apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Bool.UFn.of.Eq.apply(Eq[-1], log)
 

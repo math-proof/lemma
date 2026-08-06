@@ -9,7 +9,7 @@ def apply(eq_x_bar):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Rat
 
     x = Symbol(real=True, shape=(oo,))
     n, k = Symbol(integer=True)
@@ -26,7 +26,7 @@ def prove(Eq):
 
     Eq << Eq[-2].subs(Eq[-1].reversed)
 
-    Eq << Eq[-1].this.rhs.apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.rhs.apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[-1].this.rhs.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

@@ -11,7 +11,7 @@ def apply(is_limited):
 
 @prove
 def prove(Eq):
-    from Lemma import Calculus, Set, Algebra, Bool, Int, Nat
+    from Lemma import Calculus, Set, Algebra, Bool, Int, Nat, Rat
 
     x, x0 = Symbol(real=True)
     g = Function(real=True)
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.expr.expr.apply(Algebra.LtInv.of.Gt_0.Gt)
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq.A_is_positive)
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq.A_is_positive)
 
     Eq << Algebra.Any.All.And.of.Cond.Any_All.apply(Eq[-1], Eq[-2])
 

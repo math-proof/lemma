@@ -13,7 +13,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Int, Nat, Real
+    from Lemma import Algebra, Bool, Int, Nat, Real, Rat
 
     x, y = Symbol(real=True)
     Eq << apply(Arg(x + y * S.ImaginaryUnit))
@@ -53,7 +53,7 @@ def prove(Eq):
 
     Eq.suffice = Imply(y >= 0, Equal(asin(sqrt(1 - x ** 2 / (x ** 2 + y ** 2))), asin(y / sqrt(x ** 2 + y ** 2))), plausible=True)
 
-    Eq << Eq.suffice.this.find(Pow).base.apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq.suffice.this.find(Pow).base.apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[-1].this.lhs.apply(Int.EqAbs.of.Ge_0)
 
@@ -63,7 +63,7 @@ def prove(Eq):
 
     Eq.suffice = Imply(y < 0, Equal(asin(sqrt(1 - x ** 2 / (x ** 2 + y ** 2))), -asin(y / sqrt(x ** 2 + y ** 2))), plausible=True)
 
-    Eq << Eq.suffice.this.find(Pow).base.apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq.suffice.this.find(Pow).base.apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Lt_0)
 

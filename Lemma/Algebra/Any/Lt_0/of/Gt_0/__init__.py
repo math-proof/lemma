@@ -11,13 +11,13 @@ def apply(gt_zero, x=None, b=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Bool, Algebra, Nat
+    from Lemma import Bool, Nat, Rat
 
     a, b = Symbol(real=True, given=True)
     x = Symbol(real=True)
     Eq << apply(a > 0, x=x, b=b)
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[0])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[0])
 
     epsilon = Symbol(positive=True)
     Eq << Bool.Any_UFn.given.UFnUFn.apply(Eq[1], x, Eq[2].lhs * -b - epsilon)

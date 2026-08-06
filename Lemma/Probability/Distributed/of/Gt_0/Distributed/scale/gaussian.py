@@ -10,7 +10,7 @@ def apply(gt_zero, dist, b=0):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Calculus, Probability, Bool, Nat, Complex, Int
+    from Lemma import Algebra, Calculus, Probability, Bool, Nat, Complex, Int, Rat
 
     x = Symbol(real=True, random=True)
     mu, b = Symbol(real=True)
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Derivative).doit()
 
-    Eq << Eq[-1].this.find(Exp[~Mul]).find(Add).apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.find(Exp[~Mul]).find(Add).apply(Rat.SubDivS1.eq.DivSub)
 
 
 

@@ -16,9 +16,9 @@ def prove(Eq):
 
     Eq << Bool.Cond_Ite.given.And.Imp.apply(Eq[0])
 
-    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2])
+    Eq << Bool.Imp_Ite.given.Imp.apply(Eq[-2])
 
-    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq << Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
 
 if __name__ == '__main__':

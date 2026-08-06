@@ -20,7 +20,7 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Set, Algebra, Nat
+    from Lemma import Set, Algebra, Nat, Rat
 
     x, b = Symbol(real=True)
     a = Symbol(real=True, positive=True)
@@ -30,11 +30,11 @@ def prove(Eq):
 
     Eq <<= Algebra.LeInv.of.Ge.apply(Eq[-2]), Algebra.Gt_0.of.Ge.apply(Eq[-2])
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[-1])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[-1])
 
     Eq <<= Nat.LeMul.of.Gt_0.Le.apply(Eq[-1], Eq[3]), Algebra.Gt.of.Gt.Le.apply(Eq[-2], Eq[3])
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[-1])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[-1])
 
     Eq <<= Nat.GeMulS.of.Ge.Gt_0.apply(Eq[-1], Eq[-3])
 

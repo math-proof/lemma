@@ -10,7 +10,7 @@ def apply(given, num=1, evaluate=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Rat
 
     x = Symbol(real=True, given=True)
     d = Symbol(real=True, positive=True)
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << -Eq[0]
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[-1])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[-1])
     Eq << -Eq[-1]
 
 

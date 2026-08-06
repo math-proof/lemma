@@ -14,7 +14,7 @@ def apply(ou, reverse=False):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Real
+    from Lemma import Algebra, Bool, Real, Rat
 
     x, y = Symbol(real=True)
     Eq << apply(Unequal(x, 0) | Unequal(y, 0))
@@ -23,7 +23,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[1], cond=x >= 0)
 
-    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
     Eq.x_is_nonnegative, Eq.x_is_negative = Eq[-2].this.find(acos).apply(Real.Arccos.eq.Ite.Arcsin), Eq[-1].this.find(acos).apply(Real.Arccos.eq.Ite.Arcsin)
 
@@ -39,7 +39,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(Pow[~Add]).apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.find(Pow[~Add]).apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Bool.Imp_And.of.Cond.apply(Eq.sqrt_is_positive, cond=Eq.x_is_negative.lhs)
 
@@ -51,7 +51,7 @@ def prove(Eq):
 
     Eq << Bool.Imp_And.given.Imp.Imp.apply(Eq[-1])
 
-    Eq << Eq[-1].this.find(Pow[~Add]).apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.find(Pow[~Add]).apply(Rat.SubDivS1.eq.DivSub)
 
     # https://en.wikipedia.org/wiki/Argument_(complex_analysis)
 

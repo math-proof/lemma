@@ -22,7 +22,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Eq[-1].find(GreaterEqual))
 
-    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
     Eq << Bool.Imp.given.And.Imp.split.apply(Eq[-2], cond=A_t > 0)
 

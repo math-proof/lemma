@@ -15,7 +15,7 @@ def apply(is_positive, el, fx, x=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set
+    from Lemma import Algebra, Set, Rat
 
     m, M, a, b, c = Symbol(real=True, given=True)
     x = Symbol(real=True)
@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.lhs.expr.expand()
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[0])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[0])
 
     Eq << Algebra.Inf.eq.Mul.of.Gt_0.apply(Eq[-1], Eq[-2].lhs) * a
 

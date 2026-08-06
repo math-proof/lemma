@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=a >= 0)
 
-    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2], invert=True), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1])
+    Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2], invert=True), Bool.Imp_Ite.given.Imp.apply(Eq[-1])
 
     Eq <<= Bool.Cond.given.Imp.ImpNot.apply(Eq[-2], cond=a > 0), Bool.Cond.Imp.given.And.Imp.And.apply(Eq[0], Eq[-1])
 

@@ -11,7 +11,7 @@ def apply(ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Algebra, Rat
 
     x = Symbol(real=True, positive=True)
     a = Symbol(real=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Lt.trans.apply(Eq[0])
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[-1])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[-1])
 
     Eq << Algebra.LtMul.of.Gt_0.Lt.apply(Eq[-1], Eq[0])
 

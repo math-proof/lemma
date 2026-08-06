@@ -17,12 +17,12 @@ def apply(is_positive, lt, fx, x=None, left_open=True, right_open=True):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Rat
 
     m, M, x, a, b, c = Symbol(real=True, given=True)
     Eq << apply(a > 0, m < M, a * x ** 2 + b * x + c, x)
 
-    Eq.a_reciprocal = Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[0])
+    Eq.a_reciprocal = Rat.Lt0Div.of.Gt_0.apply(Eq[0])
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sup.limits.subst.offset, -b * Eq.a_reciprocal.lhs / 2)
 

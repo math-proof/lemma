@@ -11,7 +11,7 @@ def apply(eq_A):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Set, Nat, Finset, Int
+    from Lemma import Algebra, Set, Nat, Finset, Int, Rat
 
     k = Symbol(integer=True)
     n = Symbol(integer=True, positive=True) # seq_length
@@ -43,7 +43,7 @@ def prove(Eq):
     Eq << Algebra.All.And.of.All.apply(Eq[-1])
     Eq << Eq[-1].this.find(Element).apply(Set.Ge.of.In_Ico)
     Eq << Eq[-1].this.find(GreaterEqual[2]).apply(Algebra.Gt_0.of.Ge, ret=True, simplify=None)
-    Eq << Eq[-1].this.find(Greater).apply(Algebra.Div.gt.Zero.of.Gt_0)
+    Eq << Eq[-1].this.find(Greater).apply(Rat.Lt0Div.of.Gt_0)
     Eq << Eq[-1].this.expr.args[:2].apply(Nat.GeMulS.of.Ge.Gt_0, ret=0)
     Eq << Eq[-1].this.find(GreaterEqual).apply(Int.LtSub_1.of.Le)
     Eq << Eq[-1].this.expr.args[:2].apply(Algebra.GtMul.of.Gt_0.Gt)

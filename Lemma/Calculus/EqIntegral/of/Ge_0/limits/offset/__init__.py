@@ -28,7 +28,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.find(Equal[~Integral]).apply(Calculus.Integral.eq.Ite), Eq[-1].this.find(Equal[~Integral]).apply(Calculus.Integral.eq.Ite)
 
-    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
     Eq << -Eq[-2].this.rhs
 

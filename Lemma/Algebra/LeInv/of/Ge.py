@@ -11,7 +11,7 @@ def apply(ge):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Rat
 
     x = Symbol(real=True)
     a = Symbol(real=True, positive=True)
@@ -19,7 +19,7 @@ def prove(Eq):
 
     Eq << Algebra.Gt_0.of.Ge.apply(Eq[0])
 
-    Eq << Algebra.Div.gt.Zero.of.Gt_0.apply(Eq[-1])
+    Eq << Rat.Lt0Div.of.Gt_0.apply(Eq[-1])
 
     Eq << Nat.GeMulS.of.Ge.Gt_0.apply(Eq[-1], Eq[0])
 

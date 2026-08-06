@@ -12,7 +12,7 @@ def apply(is_nonzero, x1, m, d):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor
+    from Lemma import Algebra, Finset, Tensor, Rat
 
     d = Symbol(integer=True, positive=True)
     m = Symbol(domain=Range(d + 1, oo))
@@ -49,7 +49,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(Symbol ** ~Add).expand()
 
-    Eq << Eq[-1].this.rhs.find((~Add) ** Mul).apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.rhs.find((~Add) ** Mul).apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[-1].this.rhs.find(Mul ** Mul).apply(Algebra.Pow.eq.Mul.split.base)
 

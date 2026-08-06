@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=n >= 1)
 
-    Eq <<= Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp_Ite.given.Imp.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
     Eq << Eq[-1].this.lhs.apply(Algebra.Sum.eq.Zero.of.Lt, Eq[-1].find(Sum))
 
@@ -31,7 +31,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.find(GreaterEqual).apply(Int.LtSub_1.of.Le, lower=0)
 
-    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1])
+    Eq << Bool.Imp_Ite.given.Imp.apply(Eq[-1])
 
 
 if __name__ == '__main__':

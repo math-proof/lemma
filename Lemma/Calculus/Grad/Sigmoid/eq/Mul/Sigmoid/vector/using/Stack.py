@@ -10,7 +10,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Tensor
+    from Lemma import Tensor, Rat
 
     n = Symbol(integer=True, positive=True)
     x = Symbol(real=True, shape=(n,))
@@ -38,7 +38,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * Eq[-2]
 
-    Eq << Eq[-1].this.rhs.find(Add).apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.rhs.find(Add).apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq.final.subs(Eq[-1].reversed)
 

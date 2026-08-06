@@ -15,7 +15,7 @@ def apply(eq_x_bar_A, eq_x_bar_B, eq_x_bar, k=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Nat, Int, Vector
+    from Lemma import Algebra, Finset, Nat, Int, Vector, Rat
 
     x_A = Symbol("x^A", real=True, shape=(oo,))
     x_B = Symbol("x^B", real=True, shape=(oo,))
@@ -42,7 +42,7 @@ def prove(Eq):
 
     Eq <<= Eq[-2].this.rhs.subs(Eq[2]), Eq[-1].this.rhs.subs(Eq[2])
 
-    Eq <<= Eq[-2].this.rhs.find((~Add) ** 2).apply(Algebra.Add.eq.Mul.together), Eq[-1].this.rhs.find((~Add) ** 2).apply(Algebra.Add.eq.Mul.together)
+    Eq <<= Eq[-2].this.rhs.find((~Add) ** 2).apply(Rat.SubDivS1.eq.DivSub), Eq[-1].this.rhs.find((~Add) ** 2).apply(Rat.SubDivS1.eq.DivSub)
 
     Eq <<= Eq[-2].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS), Eq[-1].this.find(Mul[Add]).apply(Nat.Mul_Add.eq.AddMulS)
 

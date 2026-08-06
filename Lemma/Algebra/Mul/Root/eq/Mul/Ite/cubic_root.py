@@ -21,7 +21,7 @@ def prove(Eq):
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[0], cond=Equal(A, 0) | Equal(B, 0))
 
-    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[-2])
+    Eq << Bool.Imp_Ite.given.Imp.apply(Eq[-2])
 
     Eq << Bool.ImpOr.given.Imp.Imp.apply(Eq[-1])
 
@@ -29,11 +29,11 @@ def prove(Eq):
 
     Eq << Bool.Imp.given.ImpEq.apply(Eq[-1])
 
-    Eq << Bool.Imp.given.Imp.subst.Bool.apply(Eq[2], invert=True)
+    Eq << Bool.Imp_Ite.given.Imp.apply(Eq[2], invert=True)
 
     Eq << Bool.Cond.given.Imp.ImpNot.apply(Eq[-1], cond=Eq[-1].find(ExprCondPair[~Equal]))
 
-    Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-2]), Bool.Imp.given.Imp.subst.Bool.apply(Eq[-1], invert=True)
+    Eq <<= Bool.Imp.given.ImpEq.apply(Eq[-2]), Bool.Imp_Ite.given.Imp.apply(Eq[-1], invert=True)
 
     Eq <<= Eq[-2].this.apply(Bool.Imp.flatten), Eq[-1].this.lhs.apply(Algebra.Or_Eq.Arg.of.Ceil.ne.Zero)
 

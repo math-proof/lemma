@@ -32,7 +32,7 @@ def apply(x, n):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Nat
+    from Lemma import Algebra, Bool, Nat, Rat
     x = Symbol(real=True, positive=True, shape=(oo,))
     n = Symbol(integer=True, positive=True, given=False)
 
@@ -48,7 +48,7 @@ def prove(Eq):
 
     Eq << Algebra.Cond.of.Cond.subst.apply(Eq[0], x[:n], x[1:n + 1])
 
-    Eq << Eq[-1].apply(Algebra.Div.gt.Zero.of.Gt_0)
+    Eq << Eq[-1].apply(Rat.Lt0Div.of.Gt_0)
 
     Eq << Eq[-1] + x[0]
 

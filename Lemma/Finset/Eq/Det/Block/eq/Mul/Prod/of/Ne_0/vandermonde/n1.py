@@ -11,7 +11,7 @@ def apply(is_nonzero, n, x2):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Finset, Tensor, Nat
+    from Lemma import Algebra, Finset, Tensor, Nat, Rat
 
     n = Symbol(integer=True, positive=True)
     x1, x2 = Symbol(complex=True)
@@ -59,7 +59,7 @@ def prove(Eq):
 
     Eq << Eq[-1] * x2 ** n
 
-    Eq << Eq[-1].this.rhs.find((~Add) ** Symbol).apply(Algebra.Add.eq.Mul.together)
+    Eq << Eq[-1].this.rhs.find((~Add) ** Symbol).apply(Rat.SubDivS1.eq.DivSub)
 
     Eq << Eq[-1].this.rhs.find(Mul ** Symbol).apply(Algebra.Pow.eq.Mul.split.base)
 

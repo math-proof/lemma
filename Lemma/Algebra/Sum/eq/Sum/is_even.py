@@ -30,7 +30,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.expr.args[1].arg.rhs.definition
 
-    Eq << Eq[-1].this.find(And).apply(Set.Eq_even.In.Is.In)
+    Eq << Eq[-1].this.find(And).apply(Set.In_Icc.Even.Is.In_Setof_In_IccDiv_2)
 
     Eq << Eq[-1].this.find(Floor + 1).apply(Rat.AddFloorSub.eq.FloorAdd)
 
