@@ -14,4 +14,4 @@ private lemma main
   exact Eq_AddMulPiFloorDiv_Pi.of.EqCos_0 h
 
 
--- created on 2026-08-05
+-- created on 2018-06-24

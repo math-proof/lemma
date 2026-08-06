@@ -23,5 +23,5 @@ private lemma main
   Lt.of.Lt.Le (lt_add_one x) (LeAdd.of.Le_Sub h)
 
 
--- created on 2025-03-30
+-- created on 2018-05-23
 -- updated on 2025-05-07

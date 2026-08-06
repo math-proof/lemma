@@ -14,5 +14,5 @@ private lemma main
   exact mul_le_mul_of_nonneg_left h₁ h₀
 
 
--- created on 2024-07-01
+-- created on 2018-06-17
 -- updated on 2025-04-04

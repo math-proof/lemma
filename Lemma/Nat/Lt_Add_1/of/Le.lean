@@ -14,4 +14,4 @@ private lemma main
   IntegerRing.lt_succ_of_le h
 
 
--- created on 2025-03-28
+-- created on 2018-02-27

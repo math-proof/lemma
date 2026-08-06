@@ -18,4 +18,4 @@ private lemma main
   exact Eq_0.of.EqAddSquareS0 h
 
 
--- created on 2018-05-31
+-- created on 2018-06-09

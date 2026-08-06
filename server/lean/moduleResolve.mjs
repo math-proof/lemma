@@ -280,8 +280,6 @@ export function resolveMissingModuleRedirect(moduleDot) {
               let m = tokens.join('.');
               const p = moduleToLeanPath(m);
               if (!p || !fs.existsSync(p)) {
-                tokens[1] = first[0];
-                tokens[2] = 'is';
                 if (tokens.length > 4) arrayInsert(tokens, 4, 'of');
                 // `tokens` was updated but `tokensToModule(segment, …)` still read `of` from segment[1].
                 if (segment[1]?.length === 1 && segment[1][0] === 'of') {
@@ -300,6 +298,10 @@ export function resolveMissingModuleRedirect(moduleDot) {
                 const segment_ = [...segment];
                 segment_[0] = [transformPrefix(...segment[0])];
                 segment_[2] = [transformPrefix(...segment[2])];
+                if (existsSync(tokensToModule(segment_, section))) {
+                  segment = segment_;
+                  break;
+                }
                 segment_[3] = [transformPrefix(...segment[3])];
                 if (existsSync(tokensToModule(segment_, section))) {
                   segment = segment_;

@@ -14,4 +14,4 @@ private lemma main
   mul_nonneg h₀ h₁
 
 
--- created on 2025-01-14
+-- created on 2018-07-02

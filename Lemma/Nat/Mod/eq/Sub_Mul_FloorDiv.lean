@@ -20,4 +20,4 @@ private lemma main
   rw [SubNatNat.eq.Sub, h, Nat.cast_sub h_le, Nat.cast_mul]
 
 
--- created on 2026-08-03
+-- created on 2018-02-25

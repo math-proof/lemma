@@ -17,4 +17,4 @@ private lemma main
   apply GtSquare_0.of.Ne_0 this
 
 
--- created on 2025-04-06
+-- created on 2018-06-05

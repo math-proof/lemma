@@ -14,5 +14,5 @@ private lemma main
   exact h'.trans_lt (sub_lt_self y zero_lt_one)
 
 
--- created on 2025-03-28
+-- created on 2018-05-29
 -- updated on 2025-05-03

@@ -2,6 +2,14 @@ import Lemma.Nat.Lt.is.Le.Ne
 open Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.Gt.is.Ge.Ne |
+| comm | Nat.Ge.Ne.is.Gt |
+| mp | Nat.Ge.Ne.of.Gt |
+| mpr | Nat.Gt.of.Ge.Ne |
+-/
 @[main, comm, mp, mpr]
 private lemma main
   [LinearOrder α]

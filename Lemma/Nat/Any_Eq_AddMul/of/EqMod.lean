@@ -16,4 +16,4 @@ private lemma main
   exact Eq_AddMulDiv n d
 
 
--- created on 2026-08-04
+-- created on 2018-05-03

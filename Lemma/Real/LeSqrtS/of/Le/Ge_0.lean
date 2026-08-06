@@ -23,4 +23,4 @@ private lemma main
     exact GeSqrt_0 (x := y)
 
 
--- created on 2026-08-03
+-- created on 2018-07-07

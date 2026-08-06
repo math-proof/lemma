@@ -11,4 +11,4 @@ private lemma main
   rw [← Real.cos_neg, neg_sub]
 
 
--- created on 2025-08-02
+-- created on 2023-05-20

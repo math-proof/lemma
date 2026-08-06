@@ -1,5 +1,5 @@
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import sympy.Basic
+import Lemma.Finset.SumSetOf.eq.Sum_UFnAddMul
+open Finset
 
 
 @[main]
@@ -12,11 +12,9 @@ private lemma main
   (h : ℤ → ℝ)
   (f : ℤ → α) :
 -- imply
-  ∑ m ∈ {n ∈ s | h n > 0}.image (fun n => a * n), f m = ∑ n ∈ {n ∈ s | h n > 0}, f (a * n) := by
+  ∑ m ∈ {n ∈ s | h n > 0}.image (a * ·), f m = ∑ n ∈ {n ∈ s | h n > 0}, f (a * n) := by
 -- proof
-  rw [Finset.sum_image]
-  intro _ _ _ _ hxy
-  exact mul_left_cancel₀ ha hxy
+  simpa using SumSetOf.eq.Sum_UFnAddMul (α := α) (a := a) (b := 0) ha s h f
 
 
 -- created on 2018-05-01

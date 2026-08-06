@@ -2,7 +2,7 @@ import Lemma.Finset.Insert_Ico.eq.Ico_Add_1
 open Finset
 
 
-@[main]
+@[main, comm]
 private lemma main
 -- given
   (a : ℤ)

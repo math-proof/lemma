@@ -33,4 +33,4 @@ private lemma main
     · exact h_sdiff x h'
 
 
--- created on 2026-08-04
+-- created on 2018-04-23

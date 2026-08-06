@@ -3,6 +3,12 @@ import Lemma.Nat.LeMulS.of.Le.Ge_0
 open Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| main | Nat.LeMulS.of.Le.Gt_0 |
+| comm 2 | Nat.GeMulS.of.Ge.Gt_0 |
+-/
 @[main, comm 2]
 private lemma main
   [Mul α] [Zero α] [Preorder α] [MulPosMono α]

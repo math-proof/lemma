@@ -22,4 +22,4 @@ private lemma main
   apply LeMulS.of.Ge_0.Le h_b h₂
 
 
--- created on 2025-12-17
+-- created on 2018-07-02

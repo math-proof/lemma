@@ -27,4 +27,4 @@ private lemma main
     apply (le_trans hb (le_trans (GeAbs b) (GeMax |a| |b|)))
 
 
--- created on 2026-08-03
+-- created on 2018-06-30

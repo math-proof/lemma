@@ -16,4 +16,4 @@ private lemma main
   In_Ico.of.Le.Lt h₀ (Lt_Add_1.of.Le h₁)
 
 
--- created on 2026-08-03
+-- created on 2018-05-23

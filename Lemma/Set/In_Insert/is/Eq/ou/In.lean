@@ -1,5 +1,4 @@
 import sympy.Basic
-open Set
 
 
 /--
@@ -17,7 +16,7 @@ private lemma main
 -- imply
   e ∈ insert a s ↔ e = a ∨ e ∈ s :=
 -- proof
-  mem_insert_iff
+  Set.mem_insert_iff
 
 
 -- created on 2026-08-06

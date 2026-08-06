@@ -12,5 +12,5 @@ private lemma main
   Real.exp_injective h
 
 
--- created on 2025-10-02
+-- created on 2018-08-05
 -- updated on 2026-08-02

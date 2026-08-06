@@ -14,4 +14,4 @@ private lemma main
   apply GeSquare_0
 
 
--- created on 2026-08-03
+-- created on 2018-06-06

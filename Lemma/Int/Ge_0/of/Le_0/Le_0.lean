@@ -1,5 +1,5 @@
 import Lemma.Nat.Le.is.Lt.ou.Eq
-import Lemma.Int.Ge_0.of.Lt_0.Le_0
+import Lemma.Int.Le0Mul.of.Lt_0.Le_0
 open Int Nat
 
 
@@ -20,7 +20,7 @@ private lemma main
 -- proof
   obtain hx | hx := Lt.ou.Eq.of.Le h₀
   ·
-    apply Ge_0.of.Lt_0.Le_0 hx h₁
+    apply Le0Mul.of.Lt_0.Le_0 hx h₁
   ·
     simp_all
 

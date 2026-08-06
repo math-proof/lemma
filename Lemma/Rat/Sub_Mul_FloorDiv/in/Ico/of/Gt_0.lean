@@ -32,4 +32,4 @@ private lemma main
     simpa [mul_comm, one_mul] using LtMulS.of.Lt.Gt_0 this h
 
 
--- created on 2026-08-03
+-- created on 2018-06-18

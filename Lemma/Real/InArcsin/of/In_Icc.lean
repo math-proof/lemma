@@ -16,4 +16,4 @@ private lemma main
   exact Real.arcsin_nonneg.mpr h.1
 
 
--- created on 2026-08-05
+-- created on 2018-06-25

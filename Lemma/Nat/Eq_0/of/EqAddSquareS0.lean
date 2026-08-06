@@ -26,4 +26,4 @@ private lemma main
   exact lt_irrefl 0 h_gt
 
 
--- created on 2026-08-04
+-- created on 2018-06-08

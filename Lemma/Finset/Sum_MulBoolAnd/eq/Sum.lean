@@ -9,12 +9,12 @@ private lemma main
   [DecidableEq ι]
   [Fintype ι]
   [NonAssocSemiring β]
+-- given
   (A : Finset ι)
   (B : ι → Finset ι)
   (f : ι → ι → β) :
 -- imply
-  ∑ x, ∑ y, Bool.toNat (x ∈ A ∧ y ∈ B x) * f x y =
-    ∑ x ∈ A, ∑ y ∈ B x, f x y := by
+  ∑ x, ∑ y, Bool.toNat (x ∈ A ∧ y ∈ B x) * f x y = ∑ x ∈ A, ∑ y ∈ B x, f x y := by
 -- proof
   have h_rhs : ∑ x ∈ A, ∑ y ∈ B x, f x y = ∑ x, ∑ y, Bool.toNat (x ∈ A) * Bool.toNat (y ∈ B x) * f x y := calc
     _ = ∑ x, Bool.toNat (x ∈ A) * (∑ y ∈ B x, f x y) := by rw [Sum.eq.Sum_MulBool]

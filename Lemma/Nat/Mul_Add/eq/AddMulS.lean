@@ -12,5 +12,5 @@ private lemma main
   mul_add x a b
 
 
--- created on 2024-07-01
+-- created on 2018-03-01
 -- updated on 2025-07-14

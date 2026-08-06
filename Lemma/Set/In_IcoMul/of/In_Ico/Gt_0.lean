@@ -22,4 +22,4 @@ private lemma main
     simpa [mul_comm] using Lt_Add_1.of.Le h_mul_le
 
 
--- created on 2026-08-04
+-- created on 2018-05-26

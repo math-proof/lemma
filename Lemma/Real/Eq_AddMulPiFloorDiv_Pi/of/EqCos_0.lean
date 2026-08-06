@@ -28,4 +28,5 @@ private lemma main
       rw [hy, CosSub.eq.AddCosCos_SinSin, h, zero_mul]
       simp [sin_int_mul_pi, mul_comm π]
 
--- created on 2026-08-03
+
+-- created on 2018-06-24

@@ -20,4 +20,4 @@ private lemma main
     apply Lt.of.Le.Ne h h_0
 
 
--- created on 2025-12-21
+-- created on 2018-07-09
