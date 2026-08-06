@@ -282,6 +282,8 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 - After a bullet tactic (`·`), put the next statement on a new line when that branch contains more than one step.
 - implicit/instance (instImplicit) arguments should be put before the `given` section
 - default arguments should be put within the `given` section
+- conclusion must be put within the `imply` section
+- proof body must be put within the `proof` section
 
 ### Formatting
 Run `python py/format.py <leanFile>` if necessary. It will:

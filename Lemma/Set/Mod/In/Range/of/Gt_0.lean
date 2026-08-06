@@ -23,4 +23,4 @@ private lemma main
     exact_mod_cast Lt.of.In_Ico (α := ℚ) hIco
 
 
--- created on 2026-08-06
+-- created on 2018-03-02

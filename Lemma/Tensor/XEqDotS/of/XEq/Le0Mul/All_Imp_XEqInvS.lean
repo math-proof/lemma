@@ -4,7 +4,7 @@ import Lemma.Tensor.DataMul.eq.MulDataS
 import Lemma.Tensor.Dot
 import Lemma.Tensor.Dot.eq.SumMul__0
 import Lemma.Tensor.XEq.is.XEqDataS
-import Lemma.Tensor.XEqSumS.of.XEq.Ge_0
+import Lemma.Tensor.XEqSumS.of.XEq.OrAll_NotInfinite
 import Lemma.Vector.GetMul.eq.MulGetS
 open Hyperreal Nat Tensor Vector
 
@@ -14,7 +14,10 @@ private lemma main
   {A B X : Tensor ℝ* [n]}
 -- given
   (h_xinfty : ∀ i : Fin n, (X.data[i] → ∞) → A.data[i]⁻¹ ≈ B.data[i]⁻¹)
-  (h_pos : B * X ≥ 0)
+  (h_or :
+    (∀ i : Fin n, ¬((B * X).data[i] → ∞)) ∨
+    (B * X ≥ 0) ∨
+    (B * X ≤ 0))
   (h : A ≈ B) :
 -- imply
   A @ X ≈ B @ X := by
@@ -30,7 +33,15 @@ private lemma main
     exact XEqMulS.of.XEq.Imp_XEqInvS
       (All_XEqGetS.of.XEq.fin (XEqDataS.of.XEq h) i)
       (h_xinfty (Fin.cast hn.symm i))
-  exact XEqSumS.of.XEq.Ge_0 (Or.inr (Or.inl h_pos)) h_mul 0
+  obtain h_fin | h_ge | h_le := h_or
+  have hn : n = [n].prod := by simp
+  ·
+    exact XEqSumS.of.XEq.OrAll_NotInfinite
+      (Or.inl fun i => h_fin (Fin.cast hn.symm i)) h_mul 0
+  ·
+    exact XEqSumS.of.XEq.OrAll_NotInfinite (Or.inr (Or.inl h_ge)) h_mul 0
+  ·
+    exact XEqSumS.of.XEq.OrAll_NotInfinite (Or.inr (Or.inr h_le)) h_mul 0
 
 
 @[main]
@@ -46,8 +57,7 @@ private lemma left
   rw [Dot.comm]
   conv_rhs =>
     rw [Dot.comm]
-  apply main h_xinfty _ h
-  rwa [← Mul.comm X B]
+  apply main h_xinfty (Or.inr (Or.inl (by rw [Mul.comm]; exact h_pos))) h
 
 
 -- created on 2026-07-29

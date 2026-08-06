@@ -15,4 +15,4 @@ private lemma main
   simpa using SubDivS.eq.DivMul_Sub.of.Ne_0.Ne_0 (x := (1 : α)) h₀ h₁
 
 
--- created on 2026-08-06
+-- created on 2018-07-21
