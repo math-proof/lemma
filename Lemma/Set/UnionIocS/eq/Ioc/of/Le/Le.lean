@@ -2,7 +2,7 @@ import sympy.sets.sets
 import sympy.Basic
 
 
-@[main]
+@[main, comm]
 private lemma main
   [LinearOrder α]
   {a b c : α}

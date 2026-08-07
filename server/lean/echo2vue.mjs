@@ -138,12 +138,6 @@ export function spawnLakeLean(command, args, { cwd, env, windowsHide = true }) {
   });
 }
 
-/**
- * @param {InstanceType<typeof LeanModule>} tree
- * @param {string} leanFileAbs absolute path to the source `.lean` file
- * @param {{ module?: string }} [opts]
- * @returns {Promise<Record<string, unknown>>}
- */
 export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   if (!(tree instanceof LeanModule)) throw new Error('runEcho2Vue expects LeanModule');
   const repoRoot = REPO_ROOT;
@@ -201,9 +195,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const outText = `${r.stdout || ''}\n${r.stderr || ''}`;
   const outputLines = outText.split('\n').filter((l) => l.length > 0);
 
-  /** @type {Record<string, unknown>} */
   const latex = {};
-  /** @type {Array<Record<string, unknown>>} */
   const error = [];
 
   tree.set_line(1);
@@ -219,7 +211,6 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     });
   }
 
-  /** @type {string[] | null} */
   let echo_codes = null;
   const ensureEchoCodes = () => {
     if (!echo_codes) {
@@ -260,13 +251,13 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
 
   for (const node of tree.traverse()) {
     if (node instanceof LeanTactic && node.tacticName === 'echo') {
-      const ln = /** @type {{ line?: unknown }} */ (node).line;
-      if (Number.isInteger(ln)) {
-        const key = String(ln);
+      const {line} = node;
+      if (Number.isInteger(line)) {
+        const key = String(line);
         if (!Object.prototype.hasOwnProperty.call(latex, key)) {
           latex[key] = null;
         }
-        /** @type {{ line: unknown }} */ (node).line = latex[key];
+        node.line = latex[key];
       }
     }
   }
@@ -279,7 +270,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const echoLines = ensureEchoCodes();
   for (let i = 0; i < error.length; i++) {
     const err = error[i];
-    const line = /** @type {number} */ (err.line);
+    const {line} = err;
     const code = String(err.code ?? '');
     if (/^ +echo /.test(code)) {
       if (err.type === 'error' && err.info === 'No goals to be solved') {

@@ -2801,13 +2801,22 @@ export class LeanAssign extends LeanBinary {
     }
 
     split(syntax) {
-        const by = this.rhs;
-        if (by instanceof LeanBy && by.arg instanceof LeanStatements) {
+        const {rhs} = this;
+        if (rhs instanceof LeanBy && rhs.arg instanceof LeanStatements) {
             const self = this.clone();
-            const stmts = by.arg;
-            self.rhs.arg = new LeanCaret(by.indent, by.level);
+            const stmts = rhs.arg;
+            self.rhs.arg = new LeanCaret(rhs.indent, rhs.level);
             const statements = [self];
             stmts.swap_echo_star(syntax, statements);
+            return statements;
+        }
+        if (rhs instanceof LeanCalc) {
+            if (syntax) syntax.calc = true;
+            const self = this.clone();
+            const calc = self.rhs;
+            const statements = calc.split(syntax);
+            calc.arg = new LeanCaret(calc.indent, calc.level);
+            statements[0] = self;
             return statements;
         }
         return [this];
@@ -4126,6 +4135,8 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
             } else {
                 const rb = tactic.repeat_block();
                 if (rb) rb.echo();
+                const {using} = tactic;
+                if (using) using.echo();
             }
         } else if (tactic instanceof LeanTacticBlock || tactic instanceof LeanIte || tactic instanceof LeanCalc) {
             tactic.echo();
@@ -4519,13 +4530,6 @@ function parseVars(implicit) {
     return kwargs;
 }
 
-/**
- * PHP `std\zipped` for two arrays (php/std.php ~1856+).
- * @template T, U
- * @param {T[]} a
- * @param {U[]} b
- * @returns {[T, U][]}
- */
 function zipped(a, b) {
     const n = Math.min(a.length, b.length);
     /** @type {[T, U][]} */
@@ -4534,12 +4538,6 @@ function zipped(a, b) {
     return out;
 }
 
-/**
- * Build a map from let-binding names to their RHS AST nodes.
- * Used to expand `_` holes in denote tactics (e.g. denote h_Ξ_def : Ξ = _).
- * @param {import('../../../static/js/parser/lean.js').Lean[]} implyStmts
- * @returns {Record<string, import('../../../static/js/parser/lean.js').Lean>}
- */
 function buildLetBindings(implyStmts) {
     const bindings = {};
     if (!implyStmts.length) return bindings;
@@ -4569,18 +4567,11 @@ function buildLetBindings(implyStmts) {
     return bindings;
 }
 
-/**
- * Port of `LeanModule::merge_proof` (php/parser/lean.php ~5182–5222).
- * `latex` is `$code[1]`: null when `echo` is false; when `echo` is true, null if `echo->line` is int else `echo->line`.
- * @param {import('../../../static/js/parser/lean.js').LeanArgs} proof
- * @param {boolean} echo
- * @param {Record<string, unknown>} [syntax]
- */
 function leanModuleMergeProof(proof, echo, syntax = {}) {
     let list = proof.args;
     if (list[0] instanceof LeanLineComment && list[0].text === 'proof') list = list.slice(1);
     list = list.filter((s) => !(s instanceof LeanCaret));
-    /** @type {import('../../../static/js/parser/lean.js').Lean[]} */
+
     const statements = [];
     for (const s of list) statements.push(...s.split(syntax));
 
@@ -4591,8 +4582,8 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
         for (const stmt of statements) {
             const echoNode = stmt.getEcho();
             if (echoNode) {
-                const line = /** @type {{ line?: unknown }} */ (echoNode).line;
-                /** PHP: `is_int($echo->line) ? null : $echo->line` */
+                const {line} = echoNode;
+
                 code.push([last, Number.isInteger(line) ? null : line == null ? null : line]);
                 last = [];
             } else last.push(stmt);
@@ -4624,21 +4615,21 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
 function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
     if (!echo) mod.relocate_last_comment();
 
-    /** @type {string[]} */
+
     const import_ = [];
-    /** @type {unknown[]} */
+
     const open = [];
-    /** @type {unknown[]} */
+
     const set_option = [];
-    /** @type {string[]} */
+
     const def = [];
-    /** @type {unknown[]} */
+
     const lemma = [];
-    /** @type {Record<string, string>} */
+
     const date = {};
-    /** @type {unknown[]} */
+
     const error = [];
-    /** @type {string | null} */
+
     let comment = null;
 
     const args = mod.args;
@@ -4647,9 +4638,9 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
         if (stmt instanceof Lean_import) {
             import_.push(normalizeImportStr(strStmt(stmt.arg)));
         } else if (stmt instanceof Lean_lemma) {
-            /** @type {import('../../../static/js/parser/lean.js').LeanAssign | null} */
+
             let assignment = stmt.assignment instanceof LeanAssign ? stmt.assignment : null;
-            /** @type {number} */
+
             let assignIdx = -1;
             if (!assignment) {
                 let proofStart = args.length;
@@ -4690,7 +4681,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                 let flatInstImplicit = [];
                 let flatExplicit = '';
                 let flatGiven = null;
-                /** @type {import('../../../static/js/parser/lean.js').Lean[]} */
+
                 let flatImplyStmts = [];
                 if (assignIdx >= 0) {
                     let firstAssign = assignIdx;
@@ -4829,9 +4820,9 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                 if (declspec instanceof LeanColon && !useSimpleDeclspec) {
                     const rhsColon = declspec.rhs;
                     let attribute = extractAttribute(stmt.attribute);
-                    let imply = /** @type {import('../../../static/js/parser/lean.js').Lean[]} */ (
-                        /** @type {{ args: import('../../../static/js/parser/lean.js').Lean[] }} */ (rhsColon).args.slice()
-                    );
+                    let imply =  rhsColon.args.slice()
+
+
                     if (imply[0] instanceof LeanLineComment && imply[0].text === 'imply') imply.shift();
 
                     const proof0 = assignment.rhs;
@@ -4859,26 +4850,26 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     const implyOut = { lean: implyLean + assignSuffix, latex: implyLatex };
 
                     declspec = declspec.lhs;
-                    /** @type {string[] | null} */
+
                     let collectedExplicit = null;
-                    /** @type {import('../../../static/js/parser/lean.js').Lean} */
+
                     let name;
                     if (declspec instanceof LeanToken || declspec instanceof LeanProperty) {
                         name = declspec;
-                        declspec = /** @type {*} */ ([]);
+                        declspec = [];
                     } else if (
                         declspec &&
                         declspec.args &&
                         declspec.args.length >= 2 &&
                         !(declspec.args[0] && declspec.args[0] instanceof LeanParenthesis)
                     ) {
-                        /** PHP [name, binders]; skip when args are binders (LeanParenthesis) not name+binders. */
+
                         const dargs = declspec.args;
                         name = dargs[0];
                         const binders = dargs[1] && dargs[1].args ? dargs[1].args : (dargs.length > 2 ? dargs.slice(1) : []);
                         declspec = binders;
                     } else if (declspec && (declspec.lhs != null || declspec.args)) {
-                        /** Parser may produce LeanArgsIndented/LeanArgsSpaceSeparated for (A:T)(V:T). Extract LeanParenthesis nodes. */
+
                         const collectParens = (/** @type {*} */ n) => {
                             if (!n) return [];
                             if (n instanceof LeanParenthesis) return [n];
@@ -4897,23 +4888,23 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                             collectedExplicit = lines;
                         }
                         name = stmt.assignment;
-                        declspec = /** @type {*} */ ([]);
+                        declspec = [];
                     } else {
                         name = stmt.assignment;
-                        declspec = /** @type {*} */ ([]);
+                        declspec = [];
                     }
 
-                    /** @type {string[]} */
+
                     const instImplicit = [];
-                    /** @type {unknown[]} */
+
                     const implicit = [];
-                    /** @type {string[]} */
+
                     let explicit = [];
-                    /** @type {number | null} */
+
                     let given = null;
-                    /** @type {string[]} */
+
                     let default_ = [];
-                    /** @type {string[]} */
+
                     const decidables = [];
 
                     const declList = declspec;
@@ -4963,15 +4954,15 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                         }
                     }
 
-                    /** @type {unknown} */
+
                     let givenOut = null;
                     if (given !== null) {
                         let givenSlice = declList.slice(given);
-                        /** @type {([string, string] | null)[]} */
+
                         const latex = [];
                         let givenStart = null;
                         let givenStop = null;
-                        /** @type {Record<string, unknown> | null} */
+
                         let vars = null;
 
                         for (const [i, st] of givenSlice.entries()) {
@@ -5054,9 +5045,9 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                     }
 
                     const proof = assignment.rhs;
-                    /** @type {unknown} */
+
                     let proofOut;
-                    /** When rhs is LeanCaret, proof statements live as siblings after the assignment. */
+
                     let proofNode = proof;
                     if (
                         assignIdx >= 0 &&
@@ -5103,17 +5094,17 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                 } else if (declspec && (typeof declspec.toLatex === 'function' || flatImplyStmts.length > 0)) {
                     const proof0 = assignment.rhs;
                     const by = proof0 instanceof LeanBy? 'by' : proof0 instanceof LeanCalc? 'calc': '';
-                    /** When declspec is LeanColon, extract explicit (A:T)(V:T) from lhs and imply from rhs. */
+
                     let simpleExplicit = flatExplicit;
                     let implyNode = declspec;
                     if (declspec instanceof LeanColon && declspec.lhs && !flatExplicit) {
                         const inner = declspec.lhs;
-                        /** Binders may be in inner (LeanColon), inner.lhs (LeanArgsIndented), or inner.lhs.lhs. */
+
                         const binderNode =
                             inner.lhs instanceof LeanColon
                                 ? inner.lhs.lhs
                                 : inner;
-                        const collectParens = (/** @type {import('../../../static/js/parser/lean.js').Lean} */ n) => {
+                        const collectParens = n => {
                             if (!n) return [];
                             if (n instanceof LeanParenthesis) return [n];
                             const a = n.args ?? (n.lhs != null && n.rhs != null ? [n.lhs, n.rhs] : []);
@@ -5132,7 +5123,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
                                 simpleExplicit = lines.join('\n');
                             }
                         }
-                        /** Imply = LeanStatements from inner.rhs, or inner.lhs.rhs when triple-nested. */
+
                         const innerLhs = inner.lhs;
                         implyNode =
                             (innerLhs &&
@@ -5215,7 +5206,7 @@ function leanModuleRender2vue(mod, echo, modify = null, syntax = {}) {
             let o = stmt.arg;
             if (o instanceof LeanArgsSpaceSeparated) {
                 if (o.args.length === 2 && o.args[1] instanceof LeanParenthesis) {
-                    const defs = /** @type {*} */ (o.args[1]).arg;
+                    const defs = o.args[1].arg;
                     open.push({
                         [strStmt(o.args[0])]:
                             defs instanceof LeanArgsSpaceSeparated
@@ -7279,6 +7270,12 @@ export class LeanTactic extends LeanSyntax {
         }
     }
 
+    get using() {
+        for (let i = this.args.length - 1; i >= 0; i--) {
+            if (this.args[i] instanceof LeanUsing) return this.args[i];
+        }
+    }
+
     get by() {
         for (let i = this.args.length - 1; i >= 0; i--) {
             if (this.args[i] instanceof LeanBy) return this.args[i];
@@ -7303,7 +7300,7 @@ export class LeanTactic extends LeanSyntax {
             const {by, with: $with} = this;
             if (by && by.arg instanceof LeanStatements) by.echo();
             if ($with && $with.args.length) $with.echo();
-            if (has_sequential_tactic_combinator && sequential_tactic_combinator.newlineAfter) {
+            if (has_sequential_tactic_combinator && sequential_tactic_combinator.newlineBehind) {
                 echo.push(sequential_tactic_combinator);
                 this.sequential_tactic_combinator = new LeanSequentialTacticCombinator(echo, this.indent, this.level, false, true);
                 sequential_tactic_combinator.echo();
@@ -7574,25 +7571,16 @@ export class LeanTactic extends LeanSyntax {
 
     insert_sequential_tactic_combinator(caret, prevToken, nextToken) {
         const last = this.args[this.args.length - 1];
-        if (caret !== last) {
+        if (caret !== last)
             throw new Error(`LeanTactic.insert_sequential_tactic_combinator: unexpected for ${this.constructor.name}`);
+        let construct = caret => new LeanSequentialTacticCombinator(caret, this.indent, caret.level, prevToken == '\n', nextToken == '\n');
+        if (caret instanceof LeanCaret)
+            this.replace(caret, construct(caret));
+        else {
+            caret = new LeanCaret(this.indent, caret.level);
+            this.push(construct(caret));
         }
-        if (caret instanceof LeanCaret) {
-            this.replace(
-                caret,
-                new LeanSequentialTacticCombinator(
-                    caret,
-                    this.indent,
-                    caret.level,
-                    prevToken == '\n',
-                    nextToken == '\n',
-                ),
-            );
-            return caret;
-        }
-        const ph = new LeanCaret(0, 0);
-        this.push(new LeanSequentialTacticCombinator(ph, this.indent, ph.level));
-        return ph;
+        return caret;
     }
 
     insert_tactic(caret, type) {
@@ -7613,7 +7601,7 @@ export class LeanTactic extends LeanSyntax {
         if (p instanceof LeanStatements || p instanceof LeanIte) return true;
         if (p instanceof LeanArgsNewLineSeparated) return true;
         if (p instanceof LeanArgsSpaceSeparated && p.parent instanceof LeanTactic) return true;
-        if (p instanceof LeanSequentialTacticCombinator) return p.newlineAfter;
+        if (p instanceof LeanSequentialTacticCombinator) return p.newlineBehind;
         return false;
     }
 
@@ -7674,7 +7662,7 @@ export class LeanTactic extends LeanSyntax {
             for (const stmt of w.args) statements.push(...stmt.split(syntax));
             return statements;
         }
-        const sequential_tactic_combinator = this.sequential_tactic_combinator;
+        const {sequential_tactic_combinator} = this;
         if (sequential_tactic_combinator) {
             let block = sequential_tactic_combinator.arg;
             if (block instanceof LeanTacticBlock) {
@@ -7689,7 +7677,7 @@ export class LeanTactic extends LeanSyntax {
                 }
             } else if ((block instanceof LeanTactic || block instanceof Lean_let) && block.indent >= this.indent) {
                 const self = this.clone();
-                if (sequential_tactic_combinator.newlineAfter) {
+                if (sequential_tactic_combinator.newlineBehind) {
                     block = self.sequential_tactic_combinator;
                     const la = self.args[self.args.length - 1];
                     if (la instanceof LeanSequentialTacticCombinator) self.args.pop();
@@ -7714,12 +7702,21 @@ export class LeanTactic extends LeanSyntax {
                 return arr;
             }
         }
-        const by = this.by;
+        const {by} = this;
         if (by && by.arg instanceof LeanStatements) {
             const self = this.clone();
             self.by.arg = new LeanCaret(by.indent, by.level);
             const statements = [self];
             by.arg.swap_echo_star(syntax, statements);
+            return statements;
+        }
+        const {using} = this;
+        if (using && using.arg instanceof LeanCalc) {
+            const self = this.clone();
+            let calc = self.using.arg;
+            let statements = calc.split(syntax);
+            calc.arg = new LeanCaret(using.indent, using.level);
+            statements[0] = self;
             return statements;
         }
         return [this];
@@ -7937,18 +7934,18 @@ class LeanCalc extends LeanUnary {
     split(syntax) {
         const arg = this.arg;
         if (arg instanceof LeanArgsNewLineSeparated) {
-            if (syntax && typeof syntax === 'object') syntax.calc = true;
+            if (syntax) syntax.calc = true;
             const self = this.clone();
-            const stmts = /** @type {LeanArgsNewLineSeparated} */ (self.arg).args;
+            const stmts = self.arg.args;
             self.arg = new LeanCaret(this.indent, this.level);
             const statements = [self];
             for (const stmt of stmts) statements.push(...stmt.split(syntax));
             return statements;
         }
         if (arg instanceof LeanArgsIndented) {
-            if (syntax && typeof syntax === 'object') syntax.calc = true;
+            if (syntax) syntax.calc = true;
             const self = this.clone();
-            const a = /** @type {LeanArgsIndented} */ (self.arg);
+            const a = self.arg;
             const content = a.rhs;
             a.rhs = new LeanCaret(content.indent, content.level);
             const statements = [self];
@@ -8011,6 +8008,10 @@ class LeanUsing extends LeanUnary {
     get command() {
         return 'using';
     }
+
+    echo() {
+        this.arg.echo();
+    }    
 }
 
 export class LeanAt extends LeanUnary {
@@ -8115,10 +8116,10 @@ class LeanGeneralizing extends LeanUnary {
 }
 
 export class LeanSequentialTacticCombinator extends LeanUnary {
-    constructor(arg, indent, level, newlineBefore = false, newlineAfter = false) {
+    constructor(arg, indent, level, newlineBefore = false, newlineBehind = false) {
         super(arg, indent, level);
         this.newlineBefore = newlineBefore;
-        this.newlineAfter = newlineAfter;
+        this.newlineBehind = newlineBehind;
     }
 
     get operator() {
@@ -8142,7 +8143,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
                 while ((sequential_tactic_combinator = arg.sequential_tactic_combinator) && sequential_tactic_combinator.arg.indent) arg = sequential_tactic_combinator;
                 arg.push(new LeanSequentialTacticCombinator(echo, indent, level, false, true));
             } else {
-                echo.push(new LeanSequentialTacticCombinator(arg, indent, level, false, this.newlineAfter));
+                echo.push(new LeanSequentialTacticCombinator(arg, indent, level, false, this.newlineBehind));
                 this.arg = echo;
                 arg.echo();
             }
@@ -8150,7 +8151,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     getEcho() {
-        if (this.newlineAfter) {
+        if (this.newlineBehind) {
             const e = this.arg;
             if (e instanceof LeanTactic && e.tacticName === 'echo') return e;
         }
@@ -8190,13 +8191,13 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     sep() {
-        if (this.newlineAfter || this.arg instanceof LeanCaret) return '\n'
+        if (this.newlineBehind || this.arg instanceof LeanCaret) return '\n'
         return ' ';
     }
 
     set_line(line) {
         this.line = line;
-        if (this.newlineAfter) line++;
+        if (this.newlineBehind) line++;
         return this.arg.set_line(line);
     }
 
@@ -8205,7 +8206,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
      * @returns {Lean[]}
      */
     split(syntax) {
-        if (!this.newlineAfter) return [this];
+        if (!this.newlineBehind) return [this];
         const arg = this.arg;
         const args = arg.split(syntax);
         const self = this.clone();
@@ -9027,7 +9028,7 @@ class Lean_let extends LeanSyntax {
             if (arg instanceof LeanCaret);
             else if (
                 arg instanceof LeanSequentialTacticCombinator &&
-                (arg.newlineAfter || arg.newlineBefore)
+                (arg.newlineBehind || arg.newlineBefore)
             ) {
                 parts.push('\n');
             } else parts.push(' ');
