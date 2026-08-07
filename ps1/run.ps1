@@ -630,7 +630,7 @@ function remove_invalid_echo_file {
     $moduleName = "$moduleBase.lean"
     $modulePath = Join-Path -Path $dir -ChildPath $moduleName
     if (-not (Test-Path -Path $modulePath -PathType Leaf)) {
-        Write-Host "rm $file, because $modulePath does not exist"
+        Write-Host "rm $file, since $modulePath doesn't exist"
         Remove-Item -Path $file
     }
 }
