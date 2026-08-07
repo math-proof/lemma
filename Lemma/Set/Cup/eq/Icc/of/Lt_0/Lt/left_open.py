@@ -25,7 +25,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.rhs.apply(Set.Cup_Ioc.eq.Ioc.of.Lt_0.Ge_0)
 
-    Eq << Eq[-1].this.rhs.apply(Set.Cup.eq.Icc.of.Lt_0.Lt_0.Lt.left_open)
+    Eq << Eq[-1].this.rhs.apply(Set.Cup_Ioc.eq.Ioc.of.Lt.Lt_0.Lt_0)
 
 
 

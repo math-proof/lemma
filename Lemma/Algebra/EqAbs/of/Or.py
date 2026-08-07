@@ -16,14 +16,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Int
 
     x, y = Symbol(real=True, given=True)
     Eq << apply(Equal(y, x) | Equal(y, -x))
 
-    Eq << Eq[0].this.args[0].apply(Algebra.EqAbs.of.Eq)
+    Eq << Eq[0].this.args[0].apply(Int.Abs.of.Eq)
 
-    Eq << Eq[-1].this.args[0].apply(Algebra.EqAbs.of.Eq)
+    Eq << Eq[-1].this.args[0].apply(Int.Abs.of.Eq)
 
 
 if __name__ == '__main__':

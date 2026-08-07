@@ -16,7 +16,7 @@ def apply(given, t, alpha, beta):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int
 
     n = Symbol(integer=True, positive=True)
     x, y = Symbol(real=True, shape=(n,))
@@ -45,7 +45,7 @@ def prove(Eq):
 
     Eq << Eq[-1].this.rhs.factor()
 
-    Eq << Algebra.EqAbs.of.Eq.apply(Eq[-1])
+    Eq << Int.Abs.of.Eq.apply(Eq[-1])
 
     Eq << Eq[-1].this.rhs.apply(Algebra.Abs.eq.Mul)
 

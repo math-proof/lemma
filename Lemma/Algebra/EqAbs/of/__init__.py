@@ -1,5 +1,4 @@
 from . import Ge
-from . import Eq
 from . import Lt_0
 from . import Gt
 from . import Le

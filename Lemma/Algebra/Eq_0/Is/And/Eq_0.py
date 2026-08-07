@@ -11,7 +11,7 @@ def apply(self):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Bool, Complex, Nat
+    from Lemma import Bool, Complex, Nat, Int
 
     z = Symbol(complex=True, given=True)
     Eq << apply(Equal(z, 0))
@@ -20,7 +20,7 @@ def prove(Eq):
 
     Eq << Eq[-2].this.lhs.lhs.apply(Complex.Expr.eq.AddRe_MulIIm)
 
-    Eq << Eq[-1].this.lhs.apply(Algebra.EqAbs.of.Eq)
+    Eq << Eq[-1].this.lhs.apply(Int.Abs.of.Eq)
 
     Eq << Eq[-1].this.lhs.apply(Nat.Pow.of.Eq, exp=2)
 

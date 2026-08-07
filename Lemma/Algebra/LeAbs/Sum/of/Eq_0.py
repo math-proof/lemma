@@ -18,7 +18,7 @@ def apply(is_zero, self, pivot=-1, i=None):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra, Nat
+    from Lemma import Algebra, Nat, Int
 
     n = Symbol(integer=True, nonnegative=True)
     i, k = Symbol(integer=True)
@@ -27,7 +27,7 @@ def prove(Eq):
 
     Eq << Algebra.Sum.eq.Neg.Sum.of.Eq_0.apply(Eq[0], Eq[1].find(Sum), i=i)
 
-    Eq << Algebra.EqAbs.of.Eq.apply(Eq[-1])
+    Eq << Int.Abs.of.Eq.apply(Eq[-1])
 
     Eq << Algebra.AbsSum.le.Sum_Abs.apply(Eq[-1].rhs.arg)
 

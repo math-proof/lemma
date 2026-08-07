@@ -9,14 +9,14 @@ def apply(given):
 
 @prove
 def prove(Eq):
-    from Lemma import Algebra
+    from Lemma import Int
 
     a = Symbol(complex=True, given=True)
     Eq << apply(Unequal(a, 0))
 
     Eq << ~Eq[0]
 
-    Eq << Algebra.EqAbs.of.Eq.apply(Eq[-1])
+    Eq << Int.Abs.of.Eq.apply(Eq[-1])
     Eq << Eq[1].subs(Eq[-1])
 
 
